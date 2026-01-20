@@ -1,333 +1,339 @@
-﻿module("modules.logic.player.view.PlayerViewAchievement", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerViewAchievement.lua
 
-local var_0_0 = class("PlayerViewAchievement", BaseView)
+module("modules.logic.player.view.PlayerViewAchievement", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goachievement = gohelper.findChild(arg_1_0.viewGO, "go_achievement")
-	arg_1_0._goshow = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show")
-	arg_1_0._btneditachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_achievement/#go_show/#btn_editachievement")
-	arg_1_0._gosinglecontainer = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_singlecontainer")
-	arg_1_0._gogroupcontainer = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_groupcontainer")
-	arg_1_0._gosingleitem = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_singlecontainer/horizontal/#go_singleitem")
-	arg_1_0._goshowempty = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_showempty")
-	arg_1_0._simagegroupbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_achievement/#go_show/#go_groupcontainer/#simage_groupbg")
-	arg_1_0._gogrouparea = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_groupcontainer/#go_grouparea")
-	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "go_achievement/#go_show/#go_groupcontainer/#txt_Title")
-	arg_1_0._gomisihai = gohelper.findChild(arg_1_0.viewGO, "go_achievement/#go_show/#go_misihai")
+local PlayerViewAchievement = class("PlayerViewAchievement", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function PlayerViewAchievement:onInitView()
+	self._goachievement = gohelper.findChild(self.viewGO, "go_achievement")
+	self._goshow = gohelper.findChild(self.viewGO, "go_achievement/#go_show")
+	self._btneditachievement = gohelper.findChildButtonWithAudio(self.viewGO, "go_achievement/#go_show/#btn_editachievement")
+	self._gosinglecontainer = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_singlecontainer")
+	self._gogroupcontainer = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_groupcontainer")
+	self._gosingleitem = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_singlecontainer/horizontal/#go_singleitem")
+	self._goshowempty = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_showempty")
+	self._simagegroupbg = gohelper.findChildSingleImage(self.viewGO, "go_achievement/#go_show/#go_groupcontainer/#simage_groupbg")
+	self._gogrouparea = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_groupcontainer/#go_grouparea")
+	self._txtTitle = gohelper.findChildText(self.viewGO, "go_achievement/#go_show/#go_groupcontainer/#txt_Title")
+	self._gomisihai = gohelper.findChild(self.viewGO, "go_achievement/#go_show/#go_misihai")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btneditachievement:AddClickListener(arg_2_0._btneditachievementOnClick, arg_2_0)
+function PlayerViewAchievement:addEvents()
+	self._btneditachievement:AddClickListener(self._btneditachievementOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btneditachievement:RemoveClickListener()
+function PlayerViewAchievement:removeEvents()
+	self._btneditachievement:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function PlayerViewAchievement:_editableInitView()
 	return
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	arg_5_0:_tryDisposeSingleItems()
-	arg_5_0:_tryDisposeGroupItems()
-	arg_5_0._simagegroupbg:UnLoadImage()
+function PlayerViewAchievement:onDestroyView()
+	self:_tryDisposeSingleItems()
+	self:_tryDisposeGroupItems()
+	self._simagegroupbg:UnLoadImage()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._playerSelf = arg_6_0.viewParam.playerSelf
-	arg_6_0._info = arg_6_0.viewParam.playerInfo
-	arg_6_0._singleAchieveTabs = {}
+function PlayerViewAchievement:onOpen()
+	self._playerSelf = self.viewParam.playerSelf
+	self._info = self.viewParam.playerInfo
+	self._singleAchieveTabs = {}
 
-	arg_6_0:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_6_0.refreshUI, arg_6_0)
-	arg_6_0:refreshUI()
+	self:addEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, self.refreshUI, self)
+	self:refreshUI()
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, arg_7_0.refreshUI, arg_7_0)
+function PlayerViewAchievement:onClose()
+	self:removeEventCb(AchievementController.instance, AchievementEvent.AchievementSaveSucc, self.refreshUI, self)
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:_refreshAchievements()
+function PlayerViewAchievement:refreshUI()
+	self:_refreshAchievements()
 end
 
-function var_0_0._getOrCreateSingleItem(arg_9_0, arg_9_1)
-	if not arg_9_0._singleAchieveTabs[arg_9_1] then
-		local var_9_0 = arg_9_0:getUserDataTb_()
+function PlayerViewAchievement:_getOrCreateSingleItem(index)
+	if not self._singleAchieveTabs[index] then
+		local achievementItem = self:getUserDataTb_()
 
-		var_9_0.viewGo = gohelper.cloneInPlace(arg_9_0._gosingleitem, "singleitem_" .. arg_9_1)
-		var_9_0.goempty = gohelper.findChild(var_9_0.viewGo, "go_empty")
-		var_9_0.gohas = gohelper.findChild(var_9_0.viewGo, "go_has")
-		var_9_0.simageicon = gohelper.findChildSingleImage(var_9_0.viewGo, "go_has/simage_icon")
+		achievementItem.viewGo = gohelper.cloneInPlace(self._gosingleitem, "singleitem_" .. index)
+		achievementItem.goempty = gohelper.findChild(achievementItem.viewGo, "go_empty")
+		achievementItem.gohas = gohelper.findChild(achievementItem.viewGo, "go_has")
+		achievementItem.simageicon = gohelper.findChildSingleImage(achievementItem.viewGo, "go_has/simage_icon")
 
-		table.insert(arg_9_0._singleAchieveTabs, arg_9_1, var_9_0)
+		table.insert(self._singleAchieveTabs, index, achievementItem)
 	end
 
-	return arg_9_0._singleAchieveTabs[arg_9_1]
+	return self._singleAchieveTabs[index]
 end
 
-function var_0_0._refreshAchievements(arg_10_0)
-	local var_10_0 = arg_10_0._playerSelf and PlayerModel.instance:getShowAchievement() or arg_10_0._info.showAchievement
-	local var_10_1, var_10_2, var_10_3 = PlayerViewAchievementModel.instance:getShowAchievements(var_10_0)
-	local var_10_4 = not var_10_2 or tabletool.len(var_10_2) <= 0
+function PlayerViewAchievement:_refreshAchievements()
+	local showStr = self._playerSelf and PlayerModel.instance:getShowAchievement() or self._info.showAchievement
+	local isGroup, showTaskList, isNamePlate = PlayerViewAchievementModel.instance:getShowAchievements(showStr)
+	local isEmpty = not showTaskList or tabletool.len(showTaskList) <= 0
 
-	gohelper.setActive(arg_10_0._goshowempty, var_10_4)
-	gohelper.setActive(arg_10_0._gogroupcontainer, var_10_1 and not var_10_4)
-	gohelper.setActive(arg_10_0._gosinglecontainer, not var_10_1 and not var_10_4 and not var_10_3)
-	gohelper.setActive(arg_10_0._gomisihai, not var_10_1 and not var_10_4 and var_10_3)
+	gohelper.setActive(self._goshowempty, isEmpty)
+	gohelper.setActive(self._gogroupcontainer, isGroup and not isEmpty)
+	gohelper.setActive(self._gosinglecontainer, not isGroup and not isEmpty and not isNamePlate)
+	gohelper.setActive(self._gomisihai, not isGroup and not isEmpty and isNamePlate)
 
-	if var_10_4 then
+	if isEmpty then
 		return
 	end
 
-	if not var_10_1 then
-		if not var_10_3 then
-			local var_10_5 = 1
+	if not isGroup then
+		if not isNamePlate then
+			local index = 1
 
-			for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-				local var_10_6 = arg_10_0:_getOrCreateSingleItem(var_10_5)
+			for k, v in ipairs(showTaskList) do
+				local achievementItem = self:_getOrCreateSingleItem(index)
 
-				gohelper.setActive(var_10_6.viewGo, true)
-				gohelper.setActive(var_10_6.goempty, false)
-				gohelper.setActive(var_10_6.gohas, true)
+				gohelper.setActive(achievementItem.viewGo, true)
+				gohelper.setActive(achievementItem.goempty, false)
+				gohelper.setActive(achievementItem.gohas, true)
 
-				local var_10_7 = AchievementConfig.instance:getTask(iter_10_1)
+				local taskCO = AchievementConfig.instance:getTask(v)
 
-				if var_10_7 then
-					var_10_6.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. var_10_7.icon))
+				if taskCO then
+					achievementItem.simageicon:LoadImage(ResUrl.getAchievementIcon("badgeicon/" .. taskCO.icon))
 				end
 
-				var_10_5 = var_10_5 + 1
+				index = index + 1
 			end
 
-			for iter_10_2 = var_10_5, AchievementEnum.ShowMaxSingleCount do
-				local var_10_8 = arg_10_0:_getOrCreateSingleItem(iter_10_2)
+			for i = index, AchievementEnum.ShowMaxSingleCount do
+				local achievementItem = self:_getOrCreateSingleItem(i)
 
-				gohelper.setActive(var_10_8.viewGo, true)
-				gohelper.setActive(var_10_8.goempty, true)
-				gohelper.setActive(var_10_8.gohas, false)
+				gohelper.setActive(achievementItem.viewGo, true)
+				gohelper.setActive(achievementItem.goempty, true)
+				gohelper.setActive(achievementItem.gohas, false)
 			end
 		else
-			arg_10_0:_refreshNamePlate(var_10_2)
+			self:_refreshNamePlate(showTaskList)
 		end
 	else
-		for iter_10_3, iter_10_4 in pairs(var_10_2) do
-			arg_10_0:_refreshGroupAchievements(iter_10_3, iter_10_4)
+		for k, v in pairs(showTaskList) do
+			self:_refreshGroupAchievements(k, v)
 		end
 	end
 end
 
-function var_0_0._refreshNamePlate(arg_11_0, arg_11_1)
-	arg_11_0._gonameplateitem = arg_11_0._gonameplateitem or arg_11_0:_getOrCreateNamePlate()
+function PlayerViewAchievement:_refreshNamePlate(showTaskList)
+	self._gonameplateitem = self._gonameplateitem or self:_getOrCreateNamePlate()
 
-	local var_11_0 = AchievementConfig.instance:getTask(arg_11_1[1])
+	local taskCO = AchievementConfig.instance:getTask(showTaskList[1])
 
-	if not var_11_0 then
+	if not taskCO then
 		return
 	end
 
-	local var_11_1 = AchievementConfig.instance:getAchievement(var_11_0.achievementId)
+	local achievementCfg = AchievementConfig.instance:getAchievement(taskCO.achievementId)
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._gonameplateitem.levelItemList) do
-		gohelper.setActive(iter_11_1.go, false)
+	for index, item in ipairs(self._gonameplateitem.levelItemList) do
+		gohelper.setActive(item.go, false)
 	end
 
-	local var_11_2 = arg_11_0._gonameplateitem.levelItemList[var_11_0.level]
-	local var_11_3
-	local var_11_4
+	local item = self._gonameplateitem.levelItemList[taskCO.level]
+	local bgName, titlebgName
 
-	if var_11_0.image and not string.nilorempty(var_11_0.image) then
-		local var_11_5 = string.split(var_11_0.image, "#")
+	if taskCO.image and not string.nilorempty(taskCO.image) then
+		local temp = string.split(taskCO.image, "#")
 
-		var_11_3 = var_11_5[1]
-		var_11_4 = var_11_5[2]
+		bgName = temp[1]
+		titlebgName = temp[2]
 	end
 
-	local function var_11_6()
-		local var_12_0 = var_11_2._bgLoader:getInstGO()
+	local function callback()
+		local go = item._bgLoader:getInstGO()
 	end
 
-	if var_11_2._bgLoader then
-		var_11_2._bgLoader:dispose()
+	if item._bgLoader then
+		item._bgLoader:dispose()
 
-		var_11_2._bgLoader = nil
+		item._bgLoader = nil
 	end
 
-	var_11_2._bgLoader = PrefabInstantiate.Create(var_11_2.gobg)
+	item._bgLoader = PrefabInstantiate.Create(item.gobg)
 
-	var_11_2._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(var_11_3), var_11_6, arg_11_0)
-	var_11_2.simagetitle:LoadImage(ResUrl.getAchievementLangIcon(var_11_4))
+	item._bgLoader:startLoad(AchievementUtils.getBgPrefabUrl(bgName), callback, self)
+	item.simagetitle:LoadImage(ResUrl.getAchievementLangIcon(titlebgName))
 
-	local var_11_7 = var_11_0.listenerType
-	local var_11_8 = AchievementUtils.getAchievementProgressBySourceType(var_11_1.rule)
-	local var_11_9
+	local listenerType = taskCO.listenerType
+	local maxProgress = AchievementUtils.getAchievementProgressBySourceType(achievementCfg.rule)
+	local num
 
-	if var_11_7 and var_11_7 == "TowerPassLayer" then
-		if var_11_0.listenerParam and not string.nilorempty(var_11_0.listenerParam) then
-			local var_11_10 = string.split(var_11_0.listenerParam, "#")
+	if listenerType and listenerType == "TowerPassLayer" then
+		if taskCO.listenerParam and not string.nilorempty(taskCO.listenerParam) then
+			local temp = string.split(taskCO.listenerParam, "#")
 
-			var_11_9 = var_11_10 and var_11_10[3]
-			var_11_9 = var_11_9 * 10
+			num = temp and temp[3]
+			num = num * 10
 		end
 	else
-		var_11_9 = var_11_0 and var_11_0.maxProgress
+		num = taskCO and taskCO.maxProgress
 	end
 
-	var_11_2.txtlevel.text = var_11_9 < var_11_8 and var_11_8 or var_11_9
-
-	gohelper.setActive(var_11_2.go, true)
-end
-
-function var_0_0._getOrCreateNamePlate(arg_13_0)
-	local var_13_0 = arg_13_0:getUserDataTb_()
-
-	var_13_0.go = gohelper.findChild(arg_13_0._gomisihai, "go_icon")
-	var_13_0.levelItemList = {}
-
-	for iter_13_0 = 1, 3 do
-		local var_13_1 = {
-			go = gohelper.findChild(var_13_0.go, "deep" .. iter_13_0)
-		}
-
-		var_13_1.gobg = gohelper.findChild(var_13_1.go, "#simage_bg")
-		var_13_1.simagetitle = gohelper.findChildSingleImage(var_13_1.go, "#simage_title")
-		var_13_1.txtlevel = gohelper.findChildText(var_13_1.go, "#txt_deep_" .. iter_13_0)
-
-		gohelper.setActive(var_13_1.go, false)
-		table.insert(var_13_0.levelItemList, var_13_1)
+	if not self._playerSelf then
+		item.txtlevel.text = self._info.towerLayerMetre
+	else
+		item.txtlevel.text = num < maxProgress and maxProgress or num
 	end
 
-	return var_13_0
+	gohelper.setActive(item.go, true)
 end
 
-function var_0_0._refreshGroupAchievements(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = AchievementConfig.instance:getGroup(arg_14_1)
+function PlayerViewAchievement:_getOrCreateNamePlate()
+	local item = self:getUserDataTb_()
 
-	if var_14_0 then
-		arg_14_0:_refreshGroupTitle(var_14_0)
-		arg_14_0:_refreshGroupBg(var_14_0, arg_14_2)
-		arg_14_0:_buildAchievementIconInGroup(arg_14_1, arg_14_2)
+	item.go = gohelper.findChild(self._gomisihai, "go_icon")
+	item.levelItemList = {}
+
+	for i = 1, 3 do
+		local levelitem = {}
+
+		levelitem.go = gohelper.findChild(item.go, "deep" .. i)
+		levelitem.gobg = gohelper.findChild(levelitem.go, "#simage_bg")
+		levelitem.simagetitle = gohelper.findChildSingleImage(levelitem.go, "#simage_title")
+		levelitem.txtlevel = gohelper.findChildText(levelitem.go, "#txt_deep_" .. i)
+
+		gohelper.setActive(levelitem.go, false)
+		table.insert(item.levelItemList, levelitem)
 	end
+
+	return item
 end
 
-function var_0_0._refreshGroupBg(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = false
+function PlayerViewAchievement:_refreshGroupAchievements(groupId, taskList)
+	local groupCfg = AchievementConfig.instance:getGroup(groupId)
 
-	if arg_15_1 and arg_15_1.unLockAchievement ~= 0 and arg_15_2 then
-		var_15_0 = tabletool.indexOf(arg_15_2, arg_15_1.unLockAchievement) ~= nil
-	end
-
-	local var_15_1 = AchievementConfig.instance:getGroupBgUrl(arg_15_1.id, AchievementEnum.GroupParamType.Player, var_15_0)
-
-	arg_15_0._simagegroupbg:LoadImage(var_15_1)
-end
-
-function var_0_0._refreshGroupTitle(arg_16_0, arg_16_1)
-	if arg_16_1 then
-		arg_16_0._txtTitle.text = tostring(arg_16_1.name)
-
-		local var_16_0 = AchievementConfig.instance:getGroupTitleColorConfig(arg_16_1.id, AchievementEnum.GroupParamType.Player)
-
-		SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtTitle, var_16_0)
+	if groupCfg then
+		self:_refreshGroupTitle(groupCfg)
+		self:_refreshGroupBg(groupCfg, taskList)
+		self:_buildAchievementIconInGroup(groupId, taskList)
 	end
 end
 
-function var_0_0._buildAchievementIconInGroup(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_17_1)
-	local var_17_1 = arg_17_0:buildAchievementAndTaskMap(arg_17_2)
-	local var_17_2 = {}
-	local var_17_3 = AchievementConfig.instance:getGroupParamIdTab(arg_17_1, AchievementEnum.GroupParamType.Player)
+function PlayerViewAchievement:_refreshGroupBg(groupCfg, taskList)
+	local isGroupUpGrade = false
 
-	if var_17_3 then
-		for iter_17_0, iter_17_1 in ipairs(var_17_3) do
-			local var_17_4 = arg_17_0:getOrCreateSingleItemInGroup(iter_17_0)
+	if groupCfg and groupCfg.unLockAchievement ~= 0 and taskList then
+		isGroupUpGrade = tabletool.indexOf(taskList, groupCfg.unLockAchievement) ~= nil
+	end
 
-			arg_17_0:_setGroupAchievementPosAndScale(var_17_4.viewGO, arg_17_1, iter_17_0)
+	local groupBgUrl = AchievementConfig.instance:getGroupBgUrl(groupCfg.id, AchievementEnum.GroupParamType.Player, isGroupUpGrade)
 
-			var_17_2[var_17_4] = true
+	self._simagegroupbg:LoadImage(groupBgUrl)
+end
 
-			local var_17_5 = var_17_0 and var_17_0[iter_17_1]
+function PlayerViewAchievement:_refreshGroupTitle(groupCfg)
+	if groupCfg then
+		self._txtTitle.text = tostring(groupCfg.name)
 
-			gohelper.setActive(var_17_4.viewGO, var_17_5 ~= nil)
+		local groupTitleColor = AchievementConfig.instance:getGroupTitleColorConfig(groupCfg.id, AchievementEnum.GroupParamType.Player)
 
-			if var_17_5 then
-				local var_17_6 = arg_17_0:getExistTaskCo(var_17_1, var_17_5)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtTitle, groupTitleColor)
+	end
+end
 
-				var_17_4:setSelectIconVisible(false)
-				var_17_4:setNameTxtVisible(false)
+function PlayerViewAchievement:_buildAchievementIconInGroup(groupId, taskList)
+	local achievementCfgs = AchievementConfig.instance:getAchievementsByGroupId(groupId)
+	local achievement2TaskMap = self:buildAchievementAndTaskMap(taskList)
+	local processMap = {}
+	local idTab = AchievementConfig.instance:getGroupParamIdTab(groupId, AchievementEnum.GroupParamType.Player)
 
-				if var_17_6 then
-					var_17_4:setData(var_17_6)
-					var_17_4:setIconVisible(true)
-					var_17_4:setBgVisible(false)
+	if idTab then
+		for k, v in ipairs(idTab) do
+			local item = self:getOrCreateSingleItemInGroup(k)
+
+			self:_setGroupAchievementPosAndScale(item.viewGO, groupId, k)
+
+			processMap[item] = true
+
+			local achievementCO = achievementCfgs and achievementCfgs[v]
+
+			gohelper.setActive(item.viewGO, achievementCO ~= nil)
+
+			if achievementCO then
+				local taskCO = self:getExistTaskCo(achievement2TaskMap, achievementCO)
+
+				item:setSelectIconVisible(false)
+				item:setNameTxtVisible(false)
+
+				if taskCO then
+					item:setData(taskCO)
+					item:setIconVisible(true)
+					item:setBgVisible(false)
 				else
-					gohelper.setActive(var_17_4.viewGO, false)
+					gohelper.setActive(item.viewGO, false)
 				end
 			end
 		end
 	end
 
-	for iter_17_2, iter_17_3 in pairs(arg_17_0._groupItems) do
-		if not var_17_2[iter_17_3] then
-			gohelper.setActive(iter_17_3.viewGO, false)
+	for _, item in pairs(self._groupItems) do
+		if not processMap[item] then
+			gohelper.setActive(item.viewGO, false)
 		end
 	end
 end
 
-function var_0_0.buildAchievementAndTaskMap(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function PlayerViewAchievement:buildAchievementAndTaskMap(taskList)
+	local map = {}
 
-	if arg_18_1 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-			local var_18_1 = AchievementConfig.instance:getTask(iter_18_1)
-			local var_18_2 = var_18_1.achievementId
+	if taskList then
+		for k, v in ipairs(taskList) do
+			local taskCo = AchievementConfig.instance:getTask(v)
+			local id = taskCo.achievementId
 
-			if not var_18_0[var_18_2] then
-				var_18_0[var_18_2] = var_18_1
+			if not map[id] then
+				map[id] = taskCo
 			end
 		end
 	end
 
-	return var_18_0
+	return map
 end
 
-function var_0_0.getExistTaskCo(arg_19_0, arg_19_1, arg_19_2)
-	return arg_19_1[arg_19_2.id]
+function PlayerViewAchievement:getExistTaskCo(taskMap, achievementCO)
+	local taskCo = taskMap[achievementCO.id]
+
+	return taskCo
 end
 
-function var_0_0.getOrCreateSingleItemInGroup(arg_20_0, arg_20_1)
-	arg_20_0._groupItems = arg_20_0._groupItems or arg_20_0:getUserDataTb_()
+function PlayerViewAchievement:getOrCreateSingleItemInGroup(index)
+	self._groupItems = self._groupItems or self:getUserDataTb_()
 
-	local var_20_0 = arg_20_0._groupItems[arg_20_1]
+	local item = self._groupItems[index]
 
-	if not var_20_0 then
-		var_20_0 = AchievementMainIcon.New()
+	if not item then
+		item = AchievementMainIcon.New()
 
-		local var_20_1 = arg_20_0:getResInst(AchievementEnum.MainIconPath, arg_20_0._gogrouparea, "#go_icon" .. arg_20_1)
+		local goIcon = self:getResInst(AchievementEnum.MainIconPath, self._gogrouparea, "#go_icon" .. index)
 
-		var_20_0:init(var_20_1)
+		item:init(goIcon)
 
-		arg_20_0._groupItems[arg_20_1] = var_20_0
+		self._groupItems[index] = item
 	end
 
-	return var_20_0
+	return item
 end
 
-function var_0_0._setGroupAchievementPosAndScale(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0, var_21_1, var_21_2, var_21_3 = AchievementConfig.instance:getAchievementPosAndScaleInGroup(arg_21_2, arg_21_3, AchievementEnum.GroupParamType.Player)
+function PlayerViewAchievement:_setGroupAchievementPosAndScale(go, groupId, index)
+	local posX, posY, scaleX, scaleY = AchievementConfig.instance:getAchievementPosAndScaleInGroup(groupId, index, AchievementEnum.GroupParamType.Player)
 
-	if arg_21_1 then
-		recthelper.setAnchor(arg_21_1.transform, var_21_0 or 0, var_21_1 or 0)
-		transformhelper.setLocalScale(arg_21_1.transform, var_21_2 or 1, var_21_3 or 1, 1)
+	if go then
+		recthelper.setAnchor(go.transform, posX or 0, posY or 0)
+		transformhelper.setLocalScale(go.transform, scaleX or 1, scaleY or 1, 1)
 	end
 end
 
-function var_0_0._btneditachievementOnClick(arg_22_0)
-	if arg_22_0._playerSelf then
+function PlayerViewAchievement:_btneditachievementOnClick()
+	if self._playerSelf then
 		if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 			ViewMgr.instance:openView(ViewName.AchievementSelectView)
 		else
@@ -336,26 +342,26 @@ function var_0_0._btneditachievementOnClick(arg_22_0)
 	end
 end
 
-function var_0_0._tryDisposeSingleItems(arg_23_0)
-	if arg_23_0._singleAchieveTabs then
-		for iter_23_0, iter_23_1 in pairs(arg_23_0._singleAchieveTabs) do
-			if iter_23_1.simageicon then
-				iter_23_1.simageicon:UnLoadImage()
+function PlayerViewAchievement:_tryDisposeSingleItems()
+	if self._singleAchieveTabs then
+		for _, v in pairs(self._singleAchieveTabs) do
+			if v.simageicon then
+				v.simageicon:UnLoadImage()
 			end
 		end
 
-		arg_23_0._singleAchieveTabs = nil
+		self._singleAchieveTabs = nil
 	end
 end
 
-function var_0_0._tryDisposeGroupItems(arg_24_0)
-	if arg_24_0._groupItems then
-		for iter_24_0, iter_24_1 in pairs(arg_24_0._groupItems) do
-			iter_24_1:dispose()
+function PlayerViewAchievement:_tryDisposeGroupItems()
+	if self._groupItems then
+		for _, v in pairs(self._groupItems) do
+			v:dispose()
 		end
 
-		arg_24_0._groupItems = nil
+		self._groupItems = nil
 	end
 end
 
-return var_0_0
+return PlayerViewAchievement

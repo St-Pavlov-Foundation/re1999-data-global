@@ -1,16 +1,18 @@
-﻿module("modules.logic.survival.controller.work.step.SurvivalDelTalentWork", package.seeall)
+﻿-- chunkname: @modules/logic/survival/controller/work/step/SurvivalDelTalentWork.lua
 
-local var_0_0 = class("SurvivalDelTalentWork", SurvivalStepBaseWork)
+module("modules.logic.survival.controller.work.step.SurvivalDelTalentWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = SurvivalShelterModel.instance:getWeekInfo()
+local SurvivalDelTalentWork = class("SurvivalDelTalentWork", SurvivalStepBaseWork)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_0._stepMo.paramInt) do
-		tabletool.removeValue(var_1_0.talents, iter_1_1)
+function SurvivalDelTalentWork:onStart(context)
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	for i, v in ipairs(self._stepMo.paramInt) do
+		tabletool.removeValue(weekInfo.talents, v)
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnTalentChange)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return SurvivalDelTalentWork

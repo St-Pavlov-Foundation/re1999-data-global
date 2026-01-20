@@ -1,525 +1,525 @@
-﻿module("modules.logic.equip.view.EquipView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipView.lua
 
-local var_0_0 = class("EquipView", BaseView)
+module("modules.logic.equip.view.EquipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_category")
-	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "#go_center")
-	arg_1_0._gocentereffect = gohelper.findChild(arg_1_0.viewGO, "#go_center/effect")
-	arg_1_0._simageequip = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/#simage_equip")
-	arg_1_0._gostarList = gohelper.findChild(arg_1_0.viewGO, "#go_center/#go_starList")
-	arg_1_0._scrollcostequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_costequip")
-	arg_1_0._scrollbreakequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_breakquip")
-	arg_1_0._gobreakequipcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_breakquip/Viewport/Content")
-	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
-	arg_1_0._scrollequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_equip")
-	arg_1_0._scrollrefineequip = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_refine_equip")
-	arg_1_0._scrollcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_refine_equip/viewport/scrollcontent")
-	arg_1_0._gotitle = gohelper.findChild(arg_1_0.viewGO, "#go_title")
-	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_title/rare/#rare")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_name")
-	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_title/#txt_name/#txt_nameen")
-	arg_1_0._animscrollequip = arg_1_0._scrollequip:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animscrollrefineequip = arg_1_0._scrollrefineequip:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animcenter = arg_1_0._gocenter:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._animtitle = arg_1_0._gotitle:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._goscrollArea = gohelper.findChild(arg_1_0.viewGO, "#go_scrollArea")
-	arg_1_0._equipSlide = SLFramework.UGUI.UIDragListener.Get(arg_1_0._goscrollArea)
+local EquipView = class("EquipView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#scroll_category")
+	self._gocenter = gohelper.findChild(self.viewGO, "#go_center")
+	self._gocentereffect = gohelper.findChild(self.viewGO, "#go_center/effect")
+	self._simageequip = gohelper.findChildSingleImage(self.viewGO, "#go_center/#simage_equip")
+	self._gostarList = gohelper.findChild(self.viewGO, "#go_center/#go_starList")
+	self._scrollcostequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_costequip")
+	self._scrollbreakequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_breakquip")
+	self._gobreakequipcontent = gohelper.findChild(self.viewGO, "#scroll_breakquip/Viewport/Content")
+	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
+	self._scrollequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_equip")
+	self._scrollrefineequip = gohelper.findChildScrollRect(self.viewGO, "#scroll_refine_equip")
+	self._scrollcontent = gohelper.findChild(self.viewGO, "#scroll_refine_equip/viewport/scrollcontent")
+	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
+	self._imagerare = gohelper.findChildImage(self.viewGO, "#go_title/rare/#rare")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_title/#txt_name")
+	self._txtnameen = gohelper.findChildText(self.viewGO, "#go_title/#txt_name/#txt_nameen")
+	self._animscrollequip = self._scrollequip:GetComponent(typeof(UnityEngine.Animator))
+	self._animscrollrefineequip = self._scrollrefineequip:GetComponent(typeof(UnityEngine.Animator))
+	self._animcenter = self._gocenter:GetComponent(typeof(UnityEngine.Animator))
+	self._animtitle = self._gotitle:GetComponent(typeof(UnityEngine.Animator))
+	self._goscrollArea = gohelper.findChild(self.viewGO, "#go_scrollArea")
+	self._equipSlide = SLFramework.UGUI.UIDragListener.Get(self._goscrollArea)
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._equipSlide:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	arg_2_0._equipSlide:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
+function EquipView:addEvents()
+	self._equipSlide:AddDragBeginListener(self._onDragBegin, self)
+	self._equipSlide:AddDragEndListener(self._onDragEnd, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._equipSlide:RemoveDragBeginListener()
-	arg_3_0._equipSlide:RemoveDragEndListener()
+function EquipView:removeEvents()
+	self._equipSlide:RemoveDragBeginListener()
+	self._equipSlide:RemoveDragEndListener()
 end
 
-var_0_0.DragAbsPositionX = 30
+EquipView.DragAbsPositionX = 30
 
-function var_0_0.initRightRopStatus(arg_4_0)
-	arg_4_0._animgorighttop = arg_4_0._gorighttop:GetComponent(typeof(UnityEngine.Animator))
+function EquipView:initRightRopStatus()
+	self._animgorighttop = self._gorighttop:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(arg_4_0._gorighttop, true)
-	arg_4_0._animgorighttop:Play("go_righttop_out", 0, 1)
+	gohelper.setActive(self._gorighttop, true)
+	self._animgorighttop:Play("go_righttop_out", 0, 1)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getEquipBg("full/bg_equipbg.png"))
+function EquipView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getEquipBg("full/bg_equipbg.png"))
 
-	arg_5_0._rareLineColor = {
+	self._rareLineColor = {
 		"#DCF5D5",
 		"#9EB7D7",
 		"#7D5B7E",
 		"#D2D79E",
 		"#D6A181"
 	}
-	arg_5_0._starList = arg_5_0:getUserDataTb_()
+	self._starList = self:getUserDataTb_()
 
-	for iter_5_0 = 1, 6 do
-		local var_5_0 = gohelper.findChild(arg_5_0._gostarList, "star" .. iter_5_0)
+	for i = 1, 6 do
+		local starGO = gohelper.findChild(self._gostarList, "star" .. i)
 
-		table.insert(arg_5_0._starList, var_5_0)
+		table.insert(self._starList, starGO)
 	end
 
-	arg_5_0._breakCostItems = arg_5_0:getUserDataTb_()
+	self._breakCostItems = self:getUserDataTb_()
 
-	gohelper.setActive(arg_5_0._scrollequip.gameObject, false)
-	gohelper.setActive(arg_5_0._gocentereffect, false)
+	gohelper.setActive(self._scrollequip.gameObject, false)
+	gohelper.setActive(self._gocentereffect, false)
 
-	arg_5_0._viewAnim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0.costEquipScrollAnim = arg_5_0._scrollcostequip:GetComponent(typeof(UnityEngine.Animator))
-	arg_5_0.breakEquipScrollAnim = arg_5_0._scrollbreakequip:GetComponent(typeof(UnityEngine.Animator))
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self.costEquipScrollAnim = self._scrollcostequip:GetComponent(typeof(UnityEngine.Animator))
+	self.breakEquipScrollAnim = self._scrollbreakequip:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_5_0:initRightRopStatus()
+	self:initRightRopStatus()
 end
 
-function var_0_0._onDragBegin(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_0.viewContainer:getIsOpenLeftBackpack() then
+function EquipView:_onDragBegin(param, pointerEventData)
+	if self.viewContainer:getIsOpenLeftBackpack() then
 		return
 	end
 
-	arg_6_0.startDragPosX = arg_6_2.position.x
+	self.startDragPosX = pointerEventData.position.x
 end
 
-function var_0_0._onDragEnd(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.viewContainer:getIsOpenLeftBackpack() then
+function EquipView:_onDragEnd(param, pointerEventData)
+	if self.viewContainer:getIsOpenLeftBackpack() then
 		return
 	end
 
-	local var_7_0 = arg_7_2.position.x
+	local endDragPosX = pointerEventData.position.x
 
-	if math.abs(var_7_0 - arg_7_0.startDragPosX) > var_0_0.DragAbsPositionX then
+	if math.abs(endDragPosX - self.startDragPosX) > EquipView.DragAbsPositionX then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_view_switch)
-		arg_7_0:_onSlide(var_7_0 < arg_7_0.startDragPosX)
+		self:_onSlide(endDragPosX < self.startDragPosX)
 	end
 end
 
-function var_0_0._onSlide(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:_getCurEquipIndex()
+function EquipView:_onSlide(isSlideNext)
+	local curEquipIndex = self:_getCurEquipIndex()
 
-	if arg_8_1 then
-		var_8_0 = var_8_0 + 1 > GameUtil.getTabLen(arg_8_0._allEquipList) and 1 or var_8_0 + 1
+	if isSlideNext then
+		curEquipIndex = curEquipIndex + 1 > GameUtil.getTabLen(self._allEquipList) and 1 or curEquipIndex + 1
 	else
-		var_8_0 = var_8_0 - 1 <= 0 and GameUtil.getTabLen(arg_8_0._allEquipList) or var_8_0 - 1
+		curEquipIndex = curEquipIndex - 1 <= 0 and GameUtil.getTabLen(self._allEquipList) or curEquipIndex - 1
 	end
 
-	local var_8_1 = arg_8_0._allEquipList[var_8_0]
+	local targetMo = self._allEquipList[curEquipIndex]
 
-	if var_8_1 ~= arg_8_0._equipMO then
-		local var_8_2 = EquipHelper.isNormalEquip(arg_8_0._config)
-		local var_8_3 = EquipHelper.isNormalEquip(var_8_1.config)
+	if targetMo ~= self._equipMO then
+		local lastNormalEquip = EquipHelper.isNormalEquip(self._config)
+		local targetNormalEquip = EquipHelper.isNormalEquip(targetMo.config)
 
-		if var_8_2 ~= var_8_3 then
-			if var_8_2 and EquipCategoryListModel.instance.curCategoryIndex ~= 4 then
+		if lastNormalEquip ~= targetNormalEquip then
+			if lastNormalEquip and EquipCategoryListModel.instance.curCategoryIndex ~= 4 then
 				EquipCategoryListModel.instance.curCategoryIndex = 1
 			end
 
-			if var_8_3 and EquipCategoryListModel.instance.curCategoryIndex == 2 then
+			if targetNormalEquip and EquipCategoryListModel.instance.curCategoryIndex == 2 then
 				EquipCategoryListModel.instance.curCategoryIndex = 4
 			end
 		end
 	end
 
-	arg_8_0._equipMO = arg_8_0._allEquipList[var_8_0]
-	arg_8_0._equipId = arg_8_0._equipMO and arg_8_0._equipMO.config.id or arg_8_0._equipMO.equipId
-	arg_8_0._config = arg_8_0._equipMO and arg_8_0._equipMO.config or EquipConfig.instance:getEquipCo(arg_8_0._equipId)
+	self._equipMO = self._allEquipList[curEquipIndex]
+	self._equipId = self._equipMO and self._equipMO.config.id or self._equipMO.equipId
+	self._config = self._equipMO and self._equipMO.config or EquipConfig.instance:getEquipCo(self._equipId)
 
-	arg_8_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_8_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_8_0.flow:addWork(DelayFuncWork.New(arg_8_0.playTableViewCloseAnimation, arg_8_0, EquipEnum.AnimationDurationTime))
-	arg_8_0.flow:addWork(DelayFuncWork.New(arg_8_0._reSelectEquip, arg_8_0))
-	arg_8_0.flow:registerDoneListener(arg_8_0.endAnimBlock, arg_8_0)
-	arg_8_0:startAnimBlock()
-	arg_8_0.flow:start()
+	self.flow:addWork(DelayFuncWork.New(self.playTableViewCloseAnimation, self, EquipEnum.AnimationDurationTime))
+	self.flow:addWork(DelayFuncWork.New(self._reSelectEquip, self))
+	self.flow:registerDoneListener(self.endAnimBlock, self)
+	self:startAnimBlock()
+	self.flow:start()
 end
 
-function var_0_0._reSelectEquip(arg_9_0)
-	local var_9_0 = {
-		equipMO = arg_9_0._equipMO,
-		defaultTabIds = {
-			[2] = EquipCategoryListModel.instance.curCategoryIndex
-		}
+function EquipView:_reSelectEquip()
+	local param = {}
+
+	param.equipMO = self._equipMO
+	param.defaultTabIds = {
+		[2] = EquipCategoryListModel.instance.curCategoryIndex
 	}
 
-	EquipController.instance:openEquipView(var_9_0)
+	EquipController.instance:openEquipView(param)
 end
 
-function var_0_0.startAnimBlock(arg_10_0)
+function EquipView:startAnimBlock()
 	UIBlockMgr.instance:startBlock("EquipAnimBlock")
 end
 
-function var_0_0.endAnimBlock(arg_11_0)
+function EquipView:endAnimBlock()
 	UIBlockMgr.instance:endBlock("EquipAnimBlock")
 end
 
-function var_0_0.destroyFlow(arg_12_0)
-	if arg_12_0.flow then
-		arg_12_0.flow:destroy()
+function EquipView:destroyFlow()
+	if self.flow then
+		self.flow:destroy()
 
-		arg_12_0.flow = nil
+		self.flow = nil
 	end
 
-	arg_12_0:endAnimBlock()
+	self:endAnimBlock()
 end
 
-function var_0_0._getCurEquipIndex(arg_13_0)
-	local var_13_0 = 0
+function EquipView:_getCurEquipIndex()
+	local curEquipIndex = 0
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._allEquipList) do
-		if iter_13_1.uid == arg_13_0._equipMO.uid then
-			var_13_0 = iter_13_0
+	for k, v in ipairs(self._allEquipList) do
+		if v.uid == self._equipMO.uid then
+			curEquipIndex = k
 		end
 	end
 
-	return var_13_0
+	return curEquipIndex
 end
 
-function var_0_0.playTableViewCloseAnimation(arg_14_0)
-	arg_14_0.viewContainer.tableView:playCloseAnimation()
+function EquipView:playTableViewCloseAnimation()
+	self.viewContainer.tableView:playCloseAnimation()
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
-	arg_15_0._equipMO = arg_15_0.viewParam.equipMO
-	arg_15_0._equipId = arg_15_0._equipMO and arg_15_0._equipMO.config.id or arg_15_0.viewParam.equipId
-	arg_15_0._config = arg_15_0._equipMO and arg_15_0._equipMO.config or EquipConfig.instance:getEquipCo(arg_15_0._equipId)
+function EquipView:onUpdateParam()
+	self._equipMO = self.viewParam.equipMO
+	self._equipId = self._equipMO and self._equipMO.config.id or self.viewParam.equipId
+	self._config = self._equipMO and self._equipMO.config or EquipConfig.instance:getEquipCo(self._equipId)
 
-	arg_15_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.showStar(arg_16_0)
-	for iter_16_0, iter_16_1 in pairs(arg_16_0._starList) do
-		gohelper.setActive(arg_16_0._starList[iter_16_0], iter_16_0 <= arg_16_0._config.rare + 1)
+function EquipView:showStar()
+	for i, star in pairs(self._starList) do
+		gohelper.setActive(self._starList[i], i <= self._config.rare + 1)
 	end
 end
 
-function var_0_0.onOpen(arg_17_0)
-	arg_17_0._equipMO = arg_17_0.viewParam.equipMO
-	arg_17_0._equipId = arg_17_0._equipMO and arg_17_0._equipMO.config.id or arg_17_0.viewParam.equipId
-	arg_17_0._config = arg_17_0._equipMO and arg_17_0._equipMO.config or EquipConfig.instance:getEquipCo(arg_17_0._equipId)
-	arg_17_0.fromHandBook = arg_17_0.viewParam.fromHandBook
+function EquipView:onOpen()
+	self._equipMO = self.viewParam.equipMO
+	self._equipId = self._equipMO and self._equipMO.config.id or self.viewParam.equipId
+	self._config = self._equipMO and self._equipMO.config or EquipConfig.instance:getEquipCo(self._equipId)
+	self.fromHandBook = self.viewParam.fromHandBook
 
-	arg_17_0:_refreshUI()
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onChangeStrengthenScrollState, arg_17_0.changeStrengthenScrollVisibleState, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onShowBreakCostListModelContainer, arg_17_0.showBreakContainer, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onShowStrengthenListModelContainer, arg_17_0.showStrengthenContainer, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onHideBreakAndStrengthenListModelContainer, arg_17_0.hideStrengthenAndBreakContainer, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onCloseEquipStrengthenView, arg_17_0.hideStrengthenAndBreakContainer, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onChangeRefineScrollState, arg_17_0.changeRefineScrollVisibleState, arg_17_0)
-	arg_17_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_17_0.updateSlideEquipList, arg_17_0)
-	arg_17_0:hideStrengthenAndBreakContainer()
+	self:_refreshUI()
+	self:addEventCb(EquipController.instance, EquipEvent.onChangeStrengthenScrollState, self.changeStrengthenScrollVisibleState, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onShowBreakCostListModelContainer, self.showBreakContainer, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onShowStrengthenListModelContainer, self.showStrengthenContainer, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onHideBreakAndStrengthenListModelContainer, self.hideStrengthenAndBreakContainer, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onCloseEquipStrengthenView, self.hideStrengthenAndBreakContainer, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onChangeRefineScrollState, self.changeRefineScrollVisibleState, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self.updateSlideEquipList, self)
+	self:hideStrengthenAndBreakContainer()
 
-	arg_17_0._allEquipList = arg_17_0.viewParam.equipList or EquipModel.instance:getEquips()
+	self._allEquipList = self.viewParam.equipList or EquipModel.instance:getEquips()
 
-	NavigateMgr.instance:addEscape(ViewName.EquipView, arg_17_0._onEscapeBtnClick, arg_17_0)
+	NavigateMgr.instance:addEscape(ViewName.EquipView, self._onEscapeBtnClick, self)
 
-	arg_17_0._isShowRefineScroll = false
-	arg_17_0._isShowStrengthenScroll = false
+	self._isShowRefineScroll = false
+	self._isShowStrengthenScroll = false
 
 	EquipChooseListModel.instance:openEquipView()
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Open)
-	arg_17_0._viewAnim:Play(UIAnimationName.Open)
+	self._viewAnim:Play(UIAnimationName.Open)
 end
 
-function var_0_0._onEscapeBtnClick(arg_18_0)
-	if arg_18_0._isShowStrengthenScroll then
+function EquipView:_onEscapeBtnClick()
+	if self._isShowStrengthenScroll then
 		EquipController.instance:dispatchEvent(EquipEvent.onChangeStrengthenScrollState, false)
-	elseif arg_18_0._isShowRefineScroll then
+	elseif self._isShowRefineScroll then
 		EquipController.instance:dispatchEvent(EquipEvent.onChangeRefineScrollState, false)
 	else
-		arg_18_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._refreshUI(arg_19_0)
-	local var_19_0 = arg_19_0.viewParam.defaultTabIds and arg_19_0.viewParam.defaultTabIds[2] or 1
+function EquipView:_refreshUI()
+	local tabIndex = self.viewParam.defaultTabIds and self.viewParam.defaultTabIds[2] or 1
 
-	transformhelper.setLocalPosXY(arg_19_0._gocenter.transform, 0, 0)
-	EquipCategoryListModel.instance:initCategory(arg_19_0._equipMO, arg_19_0._config)
-	arg_19_0.viewContainer._views[1]:selectCell(var_19_0, true)
-	arg_19_0._simageequip:LoadImage(ResUrl.getEquipSuit(arg_19_0._config.icon))
+	transformhelper.setLocalPosXY(self._gocenter.transform, 0, 0)
+	EquipCategoryListModel.instance:initCategory(self._equipMO, self._config)
+	self.viewContainer._views[1]:selectCell(tabIndex, true)
+	self._simageequip:LoadImage(ResUrl.getEquipSuit(self._config.icon))
 
-	if arg_19_0.fromHandBook and not HandbookModel.instance:haveEquip(arg_19_0._config.id) then
-		ZProj.UGUIHelper.SetGrayscale(arg_19_0._simageequip.gameObject, true)
-		gohelper.setActive(arg_19_0._goscrollArea, false)
+	if self.fromHandBook and not HandbookModel.instance:haveEquip(self._config.id) then
+		ZProj.UGUIHelper.SetGrayscale(self._simageequip.gameObject, true)
+		gohelper.setActive(self._goscrollArea, false)
 	else
-		gohelper.setActive(arg_19_0._goscrollArea, arg_19_0._equipMO and arg_19_0._equipId)
+		gohelper.setActive(self._goscrollArea, self._equipMO and self._equipId)
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_19_0._imagerare, arg_19_0._rareLineColor[arg_19_0._config.rare])
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagerare, self._rareLineColor[self._config.rare])
 
-	if not string.nilorempty(arg_19_0._config.name) then
-		arg_19_0._txtname.text = arg_19_0._config.name
-		arg_19_0._txtnameen.text = arg_19_0._config.name_en
+	if not string.nilorempty(self._config.name) then
+		self._txtname.text = self._config.name
+		self._txtnameen.text = self._config.name_en
 	else
-		arg_19_0._txtname.text = ""
-		arg_19_0._txtnameen.text = ""
+		self._txtname.text = ""
+		self._txtnameen.text = ""
 	end
 
-	arg_19_0:showStar()
+	self:showStar()
 end
 
-function var_0_0.updateSlideEquipList(arg_20_0)
-	local var_20_0 = {}
-	local var_20_1
+function EquipView:updateSlideEquipList()
+	local equipList = {}
+	local tempEquipMO
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._allEquipList) do
-		local var_20_2 = EquipModel.instance:getEquip(iter_20_1.uid)
+	for _, equipMO in ipairs(self._allEquipList) do
+		tempEquipMO = EquipModel.instance:getEquip(equipMO.uid)
 
-		if var_20_2 then
-			table.insert(var_20_0, var_20_2)
+		if tempEquipMO then
+			table.insert(equipList, tempEquipMO)
 		end
 	end
 
-	arg_20_0._allEquipList = var_20_0
+	self._allEquipList = equipList
 end
 
-function var_0_0.playOpenStrengthenEquipScrollAnimator(arg_21_0)
-	arg_21_0.viewContainer.equipStrengthenView:showScrollContainer()
-	arg_21_0._animscrollequip:Play("scroll_equip_in")
+function EquipView:playOpenStrengthenEquipScrollAnimator()
+	self.viewContainer.equipStrengthenView:showScrollContainer()
+	self._animscrollequip:Play("scroll_equip_in")
 end
 
-function var_0_0.playCloseStrengthenEquipScrollAnimator(arg_22_0)
-	arg_22_0.viewContainer.equipStrengthenView:hideScrollContainer()
-	arg_22_0._animscrollequip:Play("scroll_equip_out")
+function EquipView:playCloseStrengthenEquipScrollAnimator()
+	self.viewContainer.equipStrengthenView:hideScrollContainer()
+	self._animscrollequip:Play("scroll_equip_out")
 end
 
-function var_0_0.playOpenRefineEquipScrollAnimator(arg_23_0)
-	arg_23_0.viewContainer.equipRefineView:showScrollContainer()
-	arg_23_0._animscrollrefineequip:Play("scroll_refine_equip_in")
+function EquipView:playOpenRefineEquipScrollAnimator()
+	self.viewContainer.equipRefineView:showScrollContainer()
+	self._animscrollrefineequip:Play("scroll_refine_equip_in")
 end
 
-function var_0_0.playCloseRefineEquipScrollAnimator(arg_24_0)
-	arg_24_0.viewContainer.equipRefineView:hideScrollContainer()
-	arg_24_0._animscrollrefineequip:Play("scroll_refine_equip_out")
+function EquipView:playCloseRefineEquipScrollAnimator()
+	self.viewContainer.equipRefineView:hideScrollContainer()
+	self._animscrollrefineequip:Play("scroll_refine_equip_out")
 end
 
-function var_0_0.playOpenCenterAndTitleAnimator(arg_25_0)
-	arg_25_0._animtitle:Play("title_in")
-	arg_25_0._animcenter:Play("center_in")
+function EquipView:playOpenCenterAndTitleAnimator()
+	self._animtitle:Play("title_in")
+	self._animcenter:Play("center_in")
 end
 
-function var_0_0.playCloseCenterAndTitleAnimator(arg_26_0)
-	arg_26_0._animtitle:Play("title_out")
-	arg_26_0._animcenter:Play("center_out")
+function EquipView:playCloseCenterAndTitleAnimator()
+	self._animtitle:Play("title_out")
+	self._animcenter:Play("center_out")
 end
 
-function var_0_0.showStrengthenScrollEquip(arg_27_0)
-	gohelper.setActive(arg_27_0._scrollequip.gameObject, true)
-	gohelper.setActive(arg_27_0._scrollrefineequip.gameObject, false)
+function EquipView:showStrengthenScrollEquip()
+	gohelper.setActive(self._scrollequip.gameObject, true)
+	gohelper.setActive(self._scrollrefineequip.gameObject, false)
 end
 
-function var_0_0.hideStrengthenScrollEquip(arg_28_0)
-	gohelper.setActive(arg_28_0._scrollequip.gameObject, false)
+function EquipView:hideStrengthenScrollEquip()
+	gohelper.setActive(self._scrollequip.gameObject, false)
 end
 
-function var_0_0.showRefineScrollEquip(arg_29_0)
-	gohelper.setActive(arg_29_0._scrollrefineequip.gameObject, true)
-	gohelper.setActive(arg_29_0._scrollequip.gameObject, false)
+function EquipView:showRefineScrollEquip()
+	gohelper.setActive(self._scrollrefineequip.gameObject, true)
+	gohelper.setActive(self._scrollequip.gameObject, false)
 end
 
-function var_0_0.setStrengthenScrollVerticalNormalizedPosition(arg_30_0, arg_30_1)
-	arg_30_0._scrollequip.verticalNormalizedPosition = arg_30_1
+function EquipView:setStrengthenScrollVerticalNormalizedPosition(value)
+	self._scrollequip.verticalNormalizedPosition = value
 end
 
-function var_0_0.hideRefineScrollEquip(arg_31_0)
-	gohelper.setActive(arg_31_0._scrollrefineequip.gameObject, false)
+function EquipView:hideRefineScrollEquip()
+	gohelper.setActive(self._scrollrefineequip.gameObject, false)
 end
 
-function var_0_0.showCenterAndTitle(arg_32_0)
-	gohelper.setActive(arg_32_0._gocenter, true)
-	gohelper.setActive(arg_32_0._gocentereffect, arg_32_0._isClickRefine)
-	gohelper.setActive(arg_32_0._gotitle, true)
+function EquipView:showCenterAndTitle()
+	gohelper.setActive(self._gocenter, true)
+	gohelper.setActive(self._gocentereffect, self._isClickRefine)
+	gohelper.setActive(self._gotitle, true)
 end
 
-function var_0_0.hideCenterAndTitle(arg_33_0)
-	gohelper.setActive(arg_33_0._gocenter, false)
-	gohelper.setActive(arg_33_0._gocentereffect, false)
-	gohelper.setActive(arg_33_0._gotitle, false)
+function EquipView:hideCenterAndTitle()
+	gohelper.setActive(self._gocenter, false)
+	gohelper.setActive(self._gocentereffect, false)
+	gohelper.setActive(self._gotitle, false)
 end
 
-function var_0_0.showTitleAndCenter(arg_34_0)
-	arg_34_0._isShowStrengthenScroll = false
-	arg_34_0._isShowRefineScroll = false
+function EquipView:showTitleAndCenter()
+	self._isShowStrengthenScroll = false
+	self._isShowRefineScroll = false
 
-	arg_34_0:hideStrengthenScrollEquip()
-	arg_34_0:hideRefineScrollEquip()
-	arg_34_0:showCenterAndTitle()
-	arg_34_0:playOpenCenterAndTitleAnimator()
-	arg_34_0.viewContainer:setIsOpenLeftBackpack(false)
+	self:hideStrengthenScrollEquip()
+	self:hideRefineScrollEquip()
+	self:showCenterAndTitle()
+	self:playOpenCenterAndTitleAnimator()
+	self.viewContainer:setIsOpenLeftBackpack(false)
 end
 
-function var_0_0.showStrengthenContainer(arg_35_0)
-	gohelper.setActive(arg_35_0._scrollbreakequip.gameObject, false)
-	gohelper.setActive(arg_35_0._scrollcostequip.gameObject, true)
+function EquipView:showStrengthenContainer()
+	gohelper.setActive(self._scrollbreakequip.gameObject, false)
+	gohelper.setActive(self._scrollcostequip.gameObject, true)
 end
 
-function var_0_0.showBreakContainer(arg_36_0, arg_36_1)
-	gohelper.setActive(arg_36_0._scrollbreakequip.gameObject, true)
-	gohelper.setActive(arg_36_0._scrollcostequip.gameObject, false)
+function EquipView:showBreakContainer(costItems)
+	gohelper.setActive(self._scrollbreakequip.gameObject, true)
+	gohelper.setActive(self._scrollcostequip.gameObject, false)
 
-	for iter_36_0, iter_36_1 in pairs(arg_36_1) do
-		local var_36_0 = arg_36_0._breakCostItems[iter_36_0]
+	for k, v in pairs(costItems) do
+		local costItem = self._breakCostItems[k]
 
-		if not var_36_0 then
-			var_36_0 = IconMgr.instance:getCommonItemIcon(arg_36_0._gobreakequipcontent)
+		if not costItem then
+			costItem = IconMgr.instance:getCommonItemIcon(self._gobreakequipcontent)
 
-			table.insert(arg_36_0._breakCostItems, var_36_0)
+			table.insert(self._breakCostItems, costItem)
 		end
 
-		local var_36_1 = string.splitToNumber(iter_36_1, "#")
-		local var_36_2 = var_36_1[1]
-		local var_36_3 = var_36_1[2]
-		local var_36_4 = var_36_1[3]
+		local consume = string.splitToNumber(v, "#")
+		local materilType, materilId, needquantity = consume[1], consume[2], consume[3]
 
-		var_36_0:setMOValue(var_36_2, var_36_3, var_36_4)
-		var_36_0:setCountFontSize(38)
-		var_36_0:setRecordFarmItem({
-			type = var_36_2,
-			id = var_36_3,
-			quantity = var_36_4
+		costItem:setMOValue(materilType, materilId, needquantity)
+		costItem:setCountFontSize(38)
+		costItem:setRecordFarmItem({
+			type = materilType,
+			id = materilId,
+			quantity = needquantity
 		})
 
-		local var_36_5 = var_36_0:getCount()
-		local var_36_6 = ItemModel.instance:getItemQuantity(var_36_2, var_36_3)
+		local countTxt = costItem:getCount()
+		local quantity = ItemModel.instance:getItemQuantity(materilType, materilId)
 
-		if var_36_4 <= var_36_6 then
-			var_36_5.text = tostring(GameUtil.numberDisplay(var_36_6)) .. "/" .. tostring(GameUtil.numberDisplay(var_36_4))
+		if needquantity <= quantity then
+			countTxt.text = tostring(GameUtil.numberDisplay(quantity)) .. "/" .. tostring(GameUtil.numberDisplay(needquantity))
 		else
-			var_36_5.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_36_6)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(var_36_4))
+			countTxt.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(quantity)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(needquantity))
 		end
 	end
 end
 
-function var_0_0.hideStrengthenAndBreakContainer(arg_37_0)
-	gohelper.setActive(arg_37_0._scrollbreakequip.gameObject, false)
-	gohelper.setActive(arg_37_0._scrollcostequip.gameObject, false)
+function EquipView:hideStrengthenAndBreakContainer()
+	gohelper.setActive(self._scrollbreakequip.gameObject, false)
+	gohelper.setActive(self._scrollcostequip.gameObject, false)
 end
 
-function var_0_0.changeStrengthenScrollVisibleState(arg_38_0, arg_38_1)
-	if arg_38_0._isShowStrengthenScroll == arg_38_1 then
+function EquipView:changeStrengthenScrollVisibleState(isShowStrengthenScroll)
+	if self._isShowStrengthenScroll == isShowStrengthenScroll then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Inking_Addmood)
 
-	arg_38_0._isShowStrengthenScroll = arg_38_1
+	self._isShowStrengthenScroll = isShowStrengthenScroll
 
-	arg_38_0.viewContainer:setIsOpenLeftBackpack(arg_38_0._isShowStrengthenScroll)
-	arg_38_0:destroyFlow()
+	self.viewContainer:setIsOpenLeftBackpack(self._isShowStrengthenScroll)
+	self:destroyFlow()
 
-	arg_38_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	if arg_38_0._isShowStrengthenScroll then
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.playCloseCenterAndTitleAnimator, arg_38_0, EquipEnum.AnimationDurationTime))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.hideCenterAndTitle, arg_38_0, 0))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.showStrengthenScrollEquip, arg_38_0, 0))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.playOpenStrengthenEquipScrollAnimator, arg_38_0, 0))
+	if self._isShowStrengthenScroll then
+		self.flow:addWork(DelayFuncWork.New(self.playCloseCenterAndTitleAnimator, self, EquipEnum.AnimationDurationTime))
+		self.flow:addWork(DelayFuncWork.New(self.hideCenterAndTitle, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.showStrengthenScrollEquip, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playOpenStrengthenEquipScrollAnimator, self, 0))
 	else
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.playCloseStrengthenEquipScrollAnimator, arg_38_0, EquipEnum.AnimationDurationTime))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.hideStrengthenScrollEquip, arg_38_0, 0))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.showCenterAndTitle, arg_38_0, 0))
-		arg_38_0.flow:addWork(DelayFuncWork.New(arg_38_0.playOpenCenterAndTitleAnimator, arg_38_0, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playCloseStrengthenEquipScrollAnimator, self, EquipEnum.AnimationDurationTime))
+		self.flow:addWork(DelayFuncWork.New(self.hideStrengthenScrollEquip, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.showCenterAndTitle, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playOpenCenterAndTitleAnimator, self, 0))
 	end
 
-	arg_38_0.flow:start()
+	self.flow:start()
 end
 
-function var_0_0._clearClickRefine(arg_39_0)
-	arg_39_0._isClickRefine = false
+function EquipView:_clearClickRefine()
+	self._isClickRefine = false
 end
 
-function var_0_0.changeRefineScrollVisibleState(arg_40_0, arg_40_1, arg_40_2)
-	if arg_40_0._isShowRefineScroll == arg_40_1 then
+function EquipView:changeRefineScrollVisibleState(isShow, clickRefine)
+	if self._isShowRefineScroll == isShow then
 		return
 	end
 
-	arg_40_0._isShowRefineScroll = arg_40_1
-	arg_40_0._isClickRefine = arg_40_2
+	self._isShowRefineScroll = isShow
+	self._isClickRefine = clickRefine
 
-	arg_40_0.viewContainer:setIsOpenLeftBackpack(arg_40_0._isShowRefineScroll)
-	arg_40_0:destroyFlow()
+	self.viewContainer:setIsOpenLeftBackpack(self._isShowRefineScroll)
+	self:destroyFlow()
 
-	arg_40_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	if arg_40_0._isShowRefineScroll then
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.playCloseCenterAndTitleAnimator, arg_40_0, EquipEnum.AnimationDurationTime))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.hideCenterAndTitle, arg_40_0, 0))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.showRefineScrollEquip, arg_40_0, 0))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.playOpenRefineEquipScrollAnimator, arg_40_0, 0))
+	if self._isShowRefineScroll then
+		self.flow:addWork(DelayFuncWork.New(self.playCloseCenterAndTitleAnimator, self, EquipEnum.AnimationDurationTime))
+		self.flow:addWork(DelayFuncWork.New(self.hideCenterAndTitle, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.showRefineScrollEquip, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playOpenRefineEquipScrollAnimator, self, 0))
 	else
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.playCloseRefineEquipScrollAnimator, arg_40_0, EquipEnum.AnimationDurationTime))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.hideRefineScrollEquip, arg_40_0, 0))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.showCenterAndTitle, arg_40_0, 0))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0.playOpenCenterAndTitleAnimator, arg_40_0, 0))
-		arg_40_0.flow:addWork(DelayFuncWork.New(arg_40_0._clearClickRefine, arg_40_0, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playCloseRefineEquipScrollAnimator, self, EquipEnum.AnimationDurationTime))
+		self.flow:addWork(DelayFuncWork.New(self.hideRefineScrollEquip, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.showCenterAndTitle, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self.playOpenCenterAndTitleAnimator, self, 0))
+		self.flow:addWork(DelayFuncWork.New(self._clearClickRefine, self, 0))
 	end
 
-	arg_40_0.flow:start()
+	self.flow:start()
 end
 
-function var_0_0.hideRefineScrollAndShowStrengthenScroll(arg_41_0)
-	arg_41_0._isShowStrengthenScroll = true
-	arg_41_0._isShowRefineScroll = false
+function EquipView:hideRefineScrollAndShowStrengthenScroll()
+	self._isShowStrengthenScroll = true
+	self._isShowRefineScroll = false
 
-	arg_41_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_41_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_41_0.flow:addWork(DelayFuncWork.New(arg_41_0.playCloseRefineEquipScrollAnimator, arg_41_0, EquipEnum.AnimationDurationTime))
-	arg_41_0.flow:addWork(DelayFuncWork.New(arg_41_0.showStrengthenScrollEquip, arg_41_0, 0))
-	arg_41_0.flow:addWork(DelayFuncWork.New(arg_41_0.playOpenStrengthenEquipScrollAnimator, arg_41_0, 0))
-	arg_41_0.flow:start()
+	self.flow:addWork(DelayFuncWork.New(self.playCloseRefineEquipScrollAnimator, self, EquipEnum.AnimationDurationTime))
+	self.flow:addWork(DelayFuncWork.New(self.showStrengthenScrollEquip, self, 0))
+	self.flow:addWork(DelayFuncWork.New(self.playOpenStrengthenEquipScrollAnimator, self, 0))
+	self.flow:start()
 end
 
-function var_0_0.hideStrengthenScrollAndShowRefineScroll(arg_42_0)
-	arg_42_0._isShowStrengthenScroll = false
-	arg_42_0._isShowRefineScroll = true
+function EquipView:hideStrengthenScrollAndShowRefineScroll()
+	self._isShowStrengthenScroll = false
+	self._isShowRefineScroll = true
 
-	arg_42_0:destroyFlow()
+	self:destroyFlow()
 
-	arg_42_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	arg_42_0.flow:addWork(DelayFuncWork.New(arg_42_0.playCloseStrengthenEquipScrollAnimator, arg_42_0, EquipEnum.AnimationDurationTime))
-	arg_42_0.flow:addWork(DelayFuncWork.New(arg_42_0.showRefineScrollEquip, arg_42_0, 0))
-	arg_42_0.flow:addWork(DelayFuncWork.New(arg_42_0.playOpenRefineEquipScrollAnimator, arg_42_0, 0))
-	arg_42_0.flow:start()
+	self.flow:addWork(DelayFuncWork.New(self.playCloseStrengthenEquipScrollAnimator, self, EquipEnum.AnimationDurationTime))
+	self.flow:addWork(DelayFuncWork.New(self.showRefineScrollEquip, self, 0))
+	self.flow:addWork(DelayFuncWork.New(self.playOpenRefineEquipScrollAnimator, self, 0))
+	self.flow:start()
 end
 
-function var_0_0.refreshRefineEquipList(arg_43_0)
-	local var_43_0 = EquipRefineListModel.instance:getDataCount()
-	local var_43_1 = recthelper.getHeight(arg_43_0._scrollcontent.transform)
-	local var_43_2 = recthelper.getAnchorY(arg_43_0._scrollcontent.transform)
-	local var_43_3 = var_43_2 <= var_43_1 - 480 and var_43_2 >= var_43_1 - 700
+function EquipView:refreshRefineEquipList()
+	local equipListCount = EquipRefineListModel.instance:getDataCount()
+	local refineEquipListHeight = recthelper.getHeight(self._scrollcontent.transform)
+	local refineEquipListPosY = recthelper.getAnchorY(self._scrollcontent.transform)
+	local isBetweenLastLine = refineEquipListPosY <= refineEquipListHeight - 480 and refineEquipListPosY >= refineEquipListHeight - 700
 
-	if var_43_0 % 3 == 0 and var_43_3 then
-		arg_43_0._scrollrefineequip.verticalNormalizedPosition = 0
+	if equipListCount % 3 == 0 and isBetweenLastLine then
+		self._scrollrefineequip.verticalNormalizedPosition = 0
 	end
 end
 
-function var_0_0.playCurrencyViewAnimation(arg_44_0, arg_44_1)
-	arg_44_0._animgorighttop:Play(arg_44_1)
+function EquipView:playCurrencyViewAnimation(animationName)
+	self._animgorighttop:Play(animationName)
 end
 
-function var_0_0.onClose(arg_45_0)
+function EquipView:onClose()
 	EquipChooseListModel.instance:clear()
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
-	arg_45_0:destroyFlow()
+	self:destroyFlow()
 end
 
-function var_0_0.onDestroyView(arg_46_0)
-	arg_46_0._simagebg:UnLoadImage()
-	arg_46_0._simageequip:UnLoadImage()
+function EquipView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simageequip:UnLoadImage()
 end
 
-return var_0_0
+return EquipView

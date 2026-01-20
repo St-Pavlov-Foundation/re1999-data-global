@@ -1,13 +1,15 @@
-﻿module("modules.logic.seasonver.act166.view.Season166HeroGroupTargetViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/Season166HeroGroupTargetViewContainer.lua
 
-local var_0_0 = class("Season166HeroGroupTargetViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act166.view.Season166HeroGroupTargetViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Season166HeroGroupTargetViewContainer = class("Season166HeroGroupTargetViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Season166HeroGroupTargetView.New())
+function Season166HeroGroupTargetViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Season166HeroGroupTargetView.New())
+
+	return views
 end
 
-return var_0_0
+return Season166HeroGroupTargetViewContainer

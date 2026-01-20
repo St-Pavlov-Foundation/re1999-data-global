@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityTipsViewContainer.lua
 
-local var_0_0 = class("VersionActivityTipsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityTipsViewContainer = class("VersionActivityTipsViewContainer", BaseViewContainer)
+
+function VersionActivityTipsViewContainer:buildViews()
 	return {
 		VersionActivityTipsView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function VersionActivityTipsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return VersionActivityTipsViewContainer

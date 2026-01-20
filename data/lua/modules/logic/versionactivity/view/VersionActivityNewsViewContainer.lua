@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityNewsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityNewsViewContainer.lua
 
-local var_0_0 = class("VersionActivityNewsViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity.view.VersionActivityNewsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivityNewsViewContainer = class("VersionActivityNewsViewContainer", BaseViewContainer)
+
+function VersionActivityNewsViewContainer:buildViews()
 	return {
 		VersionActivityNewsView.New()
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+function VersionActivityNewsViewContainer:buildTabViews(tabContainerId)
 	return
 end
 
-return var_0_0
+return VersionActivityNewsViewContainer

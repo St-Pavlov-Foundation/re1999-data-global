@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_5.challenge.controller.Act183Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/controller/Act183Controller.lua
 
-local var_0_0 = class("Act183Controller", BaseController)
+module("modules.logic.versionactivity2_5.challenge.controller.Act183Controller", package.seeall)
 
-function var_0_0.openAct183MainView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Act183Model.instance:getActivityId()
+local Act183Controller = class("Act183Controller", BaseController)
 
-	if not var_1_0 then
+function Act183Controller:openAct183MainView(params, callback, callbackObj)
+	local activityId = Act183Model.instance:getActivityId()
+
+	if not activityId then
 		logError("挑战玩法活动id为空!!!先设置活动id再请求数据")
 
 		return
@@ -16,139 +18,144 @@ function var_0_0.openAct183MainView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	}, function()
 		return
 	end)
-	Activity183Rpc.instance:sendAct183GetInfoRequest(var_1_0, function(arg_3_0, arg_3_1)
-		if arg_3_1 ~= 0 then
+	Activity183Rpc.instance:sendAct183GetInfoRequest(activityId, function(__, resultCode)
+		if resultCode ~= 0 then
 			return
 		end
 
-		ViewMgr.instance:openView(ViewName.Act183MainView, arg_1_1)
+		ViewMgr.instance:openView(ViewName.Act183MainView, params)
 
-		if arg_1_2 then
-			arg_1_2(arg_1_3)
+		if callback then
+			callback(callbackObj)
 		end
 	end)
 end
 
-function var_0_0.openAct183DungeonView(arg_4_0, arg_4_1)
-	ViewMgr.instance:openView(ViewName.Act183DungeonView, arg_4_1)
+function Act183Controller:openAct183DungeonView(params)
+	ViewMgr.instance:openView(ViewName.Act183DungeonView, params)
 end
 
-function var_0_0.openAct183TaskView(arg_5_0, arg_5_1)
-	local var_5_0 = Act183Model.instance:getActivityId()
-	local var_5_1 = ActivityHelper.getActivityStatus(var_5_0)
+function Act183Controller:openAct183TaskView(params)
+	local activityId = Act183Model.instance:getActivityId()
+	local status = ActivityHelper.getActivityStatus(activityId)
 
-	if not Act183Model.instance:isInitDone() and var_5_1 == ActivityEnum.ActivityStatus.Normal then
-		Activity183Rpc.instance:sendAct183GetInfoRequest(var_5_0)
+	if not Act183Model.instance:isInitDone() and status == ActivityEnum.ActivityStatus.Normal then
+		Activity183Rpc.instance:sendAct183GetInfoRequest(activityId)
 	end
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity183
 	}, function()
-		ViewMgr.instance:openView(ViewName.Act183TaskView, arg_5_1)
+		ViewMgr.instance:openView(ViewName.Act183TaskView, params)
 	end)
 end
 
-function var_0_0.openAct183BadgeView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.Act183BadgeView, arg_7_1)
+function Act183Controller:openAct183BadgeView(params)
+	ViewMgr.instance:openView(ViewName.Act183BadgeView, params)
 end
 
-function var_0_0.openAct183ReportView(arg_8_0, arg_8_1)
-	local var_8_0 = Act183Model.instance:getActivityId()
+function Act183Controller:openAct183ReportView(params)
+	local activityId = Act183Model.instance:getActivityId()
 
-	Activity183Rpc.instance:sendAct183GetRecordRequest(var_8_0, function(arg_9_0, arg_9_1)
-		if arg_9_1 ~= 0 then
+	Activity183Rpc.instance:sendAct183GetRecordRequest(activityId, function(__, resultCode)
+		if resultCode ~= 0 then
 			return
 		end
 
-		ViewMgr.instance:openView(ViewName.Act183ReportView, arg_8_1)
+		ViewMgr.instance:openView(ViewName.Act183ReportView, params)
 	end)
 end
 
-function var_0_0.openAct183FinishView(arg_10_0, arg_10_1)
-	ViewMgr.instance:openView(ViewName.Act183FinishView, arg_10_1)
+function Act183Controller:openAct183FinishView(params)
+	ViewMgr.instance:openView(ViewName.Act183FinishView, params)
 end
 
-function var_0_0.openAct183SettlementView(arg_11_0, arg_11_1)
-	ViewMgr.instance:openView(ViewName.Act183SettlementView, arg_11_1)
+function Act183Controller:openAct183SettlementView(params)
+	ViewMgr.instance:openView(ViewName.Act183SettlementView, params)
 end
 
-function var_0_0.openAct183RepressView(arg_12_0, arg_12_1)
-	ViewMgr.instance:openView(ViewName.Act183RepressView, arg_12_1)
+function Act183Controller:openAct183RepressView(params)
+	ViewMgr.instance:openView(ViewName.Act183RepressView, params)
 end
 
-function var_0_0.openAct183StoreView(arg_13_0, arg_13_1)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, arg_13_1)
+function Act183Controller:openAct183StoreView(params)
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, params)
 end
 
-function var_0_0.openAct183CurrencyReplaceTipsView(arg_14_0, arg_14_1)
-	ViewMgr.instance:openView(ViewName.Act183CurrencyReplaceTipsView, arg_14_1)
+function Act183Controller:openAct183CurrencyReplaceTipsView(params)
+	ViewMgr.instance:openView(ViewName.Act183CurrencyReplaceTipsView, params)
 end
 
-function var_0_0.resetGroupEpisode(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 and arg_15_1 ~= 0 and arg_15_2 and arg_15_2 ~= 0 then
-		arg_15_0:_clearGroupEpisodeRefreshAnimRecord(arg_15_2)
-		Activity183Rpc.instance:sendAct183ResetGroupRequest(arg_15_1, arg_15_2)
+function Act183Controller:resetGroupEpisode(activityId, groupId)
+	if activityId and activityId ~= 0 and groupId and groupId ~= 0 then
+		self:_clearGroupEpisodeRefreshAnimRecord(groupId)
+		Activity183Rpc.instance:sendAct183ResetGroupRequest(activityId, groupId)
 	end
 end
 
-function var_0_0.updateResetGroupEpisodeInfo(arg_16_0, arg_16_1, arg_16_2)
-	Act183Model.instance:getActInfo():updateGroupMo(arg_16_2)
-	arg_16_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
+function Act183Controller:updateResetGroupEpisodeInfo(activityId, groupInfo)
+	local actInfo = Act183Model.instance:getActInfo()
+
+	actInfo:updateGroupMo(groupInfo)
+	self:dispatchEvent(Act183Event.OnUpdateGroupInfo)
 end
 
-function var_0_0.resetEpisode(arg_17_0, arg_17_1, arg_17_2)
-	if not arg_17_2 then
+function Act183Controller:resetEpisode(activityId, episodeId)
+	if not episodeId then
 		return
 	end
 
-	local var_17_0 = Act183Model.instance:getEpisodeMoById(arg_17_2)
-	local var_17_1 = var_17_0 and var_17_0:getGroupId()
+	local episodeMo = Act183Model.instance:getEpisodeMoById(episodeId)
+	local groupId = episodeMo and episodeMo:getGroupId()
 
-	arg_17_0:_clearGroupEpisodeRefreshAnimRecord(var_17_1)
-	Activity183Rpc.instance:sendAct183ResetEpisodeRequest(arg_17_1, arg_17_2)
+	self:_clearGroupEpisodeRefreshAnimRecord(groupId)
+	Activity183Rpc.instance:sendAct183ResetEpisodeRequest(activityId, episodeId)
 end
 
-function var_0_0._clearGroupEpisodeRefreshAnimRecord(arg_18_0, arg_18_1)
-	local var_18_0 = Act183Model.instance:getGroupEpisodeMo(arg_18_1)
-	local var_18_1 = var_18_0 and var_18_0:getEpisodeListByPassOrder()
-	local var_18_2 = {}
+function Act183Controller:_clearGroupEpisodeRefreshAnimRecord(groupId)
+	local groupMo = Act183Model.instance:getGroupEpisodeMo(groupId)
+	local passOrderEpisodes = groupMo and groupMo:getEpisodeListByPassOrder()
+	local recordResult = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1 or {}) do
-		Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(iter_18_1:getEpisodeId(), var_18_2)
+	for _, passOrderEpisode in ipairs(passOrderEpisodes or {}) do
+		Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(passOrderEpisode:getEpisodeId(), recordResult)
 	end
 end
 
-function var_0_0.updateResetEpisodeInfo(arg_19_0, arg_19_1)
-	Act183Model.instance:getActInfo():updateGroupMo(arg_19_1)
-	arg_19_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
+function Act183Controller:updateResetEpisodeInfo(groupInfo)
+	local actInfo = Act183Model.instance:getActInfo()
+
+	actInfo:updateGroupMo(groupInfo)
+	self:dispatchEvent(Act183Event.OnUpdateGroupInfo)
 end
 
-function var_0_0.tryChooseRepress(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
-	Activity183Rpc.instance:sendAct183ChooseRepressRequest(arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
+function Act183Controller:tryChooseRepress(activityId, episodeId, ruleIndex, heroIndex, callback, callbackObj)
+	Activity183Rpc.instance:sendAct183ChooseRepressRequest(activityId, episodeId, ruleIndex, heroIndex, callback, callbackObj)
 end
 
-function var_0_0.updateChooseRepressInfo(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = Act183Model.instance:getActInfo()
+function Act183Controller:updateChooseRepressInfo(episodeId, repressInfo)
+	local actInfo = Act183Model.instance:getActInfo()
 
-	if not var_21_0 then
+	if not actInfo then
 		return
 	end
 
-	local var_21_1 = Act183Config.instance:getEpisodeCo(arg_21_1)
-	local var_21_2 = var_21_0:getGroupEpisodeMo(var_21_1.groupId):getEpisodeMo(arg_21_1)
+	local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
+	local groupMo = actInfo:getGroupEpisodeMo(episodeCo.groupId)
+	local episodeMo = groupMo:getEpisodeMo(episodeId)
 
-	var_21_2:updateRepressMo(arg_21_2)
-	Act183Model.instance:recordLastRepressEpisodeId(arg_21_1)
-	var_0_0.instance:dispatchEvent(Act183Event.OnUpdateRepressInfo, arg_21_1, var_21_2)
+	episodeMo:updateRepressMo(repressInfo)
+	Act183Model.instance:recordLastRepressEpisodeId(episodeId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnUpdateRepressInfo, episodeId, episodeMo)
 end
 
-function var_0_0.onReconnectFight(arg_22_0, arg_22_1)
-	local var_22_0 = Act183Config.instance:getEpisodeCo(arg_22_1)
-	local var_22_1 = var_22_0 and var_22_0.activityId
+function Act183Controller:onReconnectFight(episodeId)
+	local episodeCo = Act183Config.instance:getEpisodeCo(episodeId)
+	local activityId = episodeCo and episodeCo.activityId
 
-	Act183Model.instance:setActivityId(var_22_1)
+	Act183Model.instance:setActivityId(activityId)
 end
 
-var_0_0.instance = var_0_0.New()
+Act183Controller.instance = Act183Controller.New()
 
-return var_0_0
+return Act183Controller

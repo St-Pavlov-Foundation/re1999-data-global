@@ -1,55 +1,58 @@
-﻿module("modules.logic.versionactivity1_2.dreamtail.config.Activity119Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/dreamtail/config/Activity119Config.lua
 
-local var_0_0 = class("Activity119Config", BaseConfig)
+module("modules.logic.versionactivity1_2.dreamtail.config.Activity119Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity119Config = class("Activity119Config", BaseConfig)
+
+function Activity119Config:reqConfigNames()
 	return {
 		"activity119_episode",
 		"activity119_task"
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+function Activity119Config:onConfigLoaded(configName, configTable)
 	return
 end
 
-function var_0_0.onInit(arg_3_0)
-	arg_3_0._dict = nil
+function Activity119Config:onInit()
+	self._dict = nil
 end
 
-function var_0_0.getConfig(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_0._dict then
-		arg_4_0._dict = {}
+function Activity119Config:getConfig(activityId, tabId)
+	if not self._dict then
+		self._dict = {}
 
-		for iter_4_0, iter_4_1 in ipairs(lua_activity119_episode.configList) do
-			if not arg_4_0._dict[iter_4_1.activityId] then
-				arg_4_0._dict[iter_4_1.activityId] = {}
+		for _, episodeCO in ipairs(lua_activity119_episode.configList) do
+			if not self._dict[episodeCO.activityId] then
+				self._dict[episodeCO.activityId] = {}
 			end
 
-			if not arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId] then
-				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId] = {
+			if not self._dict[episodeCO.activityId][episodeCO.tabId] then
+				self._dict[episodeCO.activityId][episodeCO.tabId] = {
 					taskList = {},
-					tabId = iter_4_1.tabId
+					tabId = episodeCO.tabId
 				}
 			end
 
-			local var_4_0 = DungeonConfig.instance:getEpisodeCO(iter_4_1.id)
+			local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeCO.id)
+			local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-			if DungeonConfig.instance:getChapterCO(var_4_0.chapterId).type == DungeonEnum.ChapterType.DreamTailHard then
-				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId].hardCO = iter_4_1
+			if chapterConfig.type == DungeonEnum.ChapterType.DreamTailHard then
+				self._dict[episodeCO.activityId][episodeCO.tabId].hardCO = episodeCO
 			else
-				arg_4_0._dict[iter_4_1.activityId][iter_4_1.tabId].normalCO = iter_4_1
+				self._dict[episodeCO.activityId][episodeCO.tabId].normalCO = episodeCO
 			end
 		end
 
-		for iter_4_2, iter_4_3 in ipairs(lua_activity119_task.configList) do
-			arg_4_0._dict[iter_4_3.activityId][iter_4_3.tabId].taskList[iter_4_3.sort] = iter_4_3
+		for _, taskCO in ipairs(lua_activity119_task.configList) do
+			self._dict[taskCO.activityId][taskCO.tabId].taskList[taskCO.sort] = taskCO
 		end
 	end
 
-	return arg_4_0._dict[arg_4_1][arg_4_2]
+	return self._dict[activityId][tabId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity119Config.instance = Activity119Config.New()
 
-return var_0_0
+return Activity119Config

@@ -1,19 +1,21 @@
-﻿module("modules.configs.excel2json.lua_activity166_info_bonus", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity166_info_bonus.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity166_info_bonus", package.seeall)
+
+local lua_activity166_info_bonus = {}
+local fields = {
 	analyCount = 2,
 	activityId = 1,
 	bonus = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"activityId",
 	"analyCount"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity166_info_bonus.onLoad(json)
+	lua_activity166_info_bonus.configList, lua_activity166_info_bonus.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity166_info_bonus

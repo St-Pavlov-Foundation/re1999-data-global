@@ -1,12 +1,14 @@
-﻿module("modules.logic.character.model.HeroEquipAttributeMO", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/HeroEquipAttributeMO.lua
 
-local var_0_0 = pureTable("HeroEquipAttributeMO")
+module("modules.logic.character.model.HeroEquipAttributeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.equipAttr = HeroAttributeMO.New()
+local HeroEquipAttributeMO = pureTable("HeroEquipAttributeMO")
 
-	arg_1_0.equipAttr:init(arg_1_1.equipAttr)
+function HeroEquipAttributeMO:init(info)
+	self.id = info.id
+	self.equipAttr = HeroAttributeMO.New()
+
+	self.equipAttr:init(info.equipAttr)
 end
 
-return var_0_0
+return HeroEquipAttributeMO

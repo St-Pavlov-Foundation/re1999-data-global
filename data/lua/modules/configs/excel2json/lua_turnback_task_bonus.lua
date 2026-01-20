@@ -1,24 +1,27 @@
-﻿module("modules.configs.excel2json.lua_turnback_task_bonus", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_turnback_task_bonus.lua
 
-local var_0_0 = {}
-local var_0_1 = {
-	needPoint = 6,
-	character = 4,
+module("modules.configs.excel2json.lua_turnback_task_bonus", package.seeall)
+
+local lua_turnback_task_bonus = {}
+local fields = {
+	character = 5,
+	needPoint = 7,
+	extraBonus = 4,
 	id = 2,
 	turnbackId = 1,
-	content = 5,
+	content = 6,
 	bonus = 3
 }
-local var_0_2 = {
+local primaryKey = {
 	"turnbackId",
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	content = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_turnback_task_bonus.onLoad(json)
+	lua_turnback_task_bonus.configList, lua_turnback_task_bonus.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_turnback_task_bonus

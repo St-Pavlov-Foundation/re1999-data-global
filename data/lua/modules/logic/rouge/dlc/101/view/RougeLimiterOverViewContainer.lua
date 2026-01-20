@@ -1,18 +1,20 @@
-﻿module("modules.logic.rouge.dlc.101.view.RougeLimiterOverViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/view/RougeLimiterOverViewContainer.lua
 
-local var_0_0 = class("RougeLimiterOverViewContainer", BaseViewContainer)
+module("modules.logic.rouge.dlc.101.view.RougeLimiterOverViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeLimiterOverViewContainer = class("RougeLimiterOverViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeLimiterOverView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_container"))
+function RougeLimiterOverViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeLimiterOverView.New())
+	table.insert(views, TabViewGroup.New(1, "root/#go_container"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function RougeLimiterOverViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			RougeLimiterDebuffOverView.New(),
 			RougeLimiterBuffOverView.New()
@@ -20,8 +22,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.switchTab(arg_3_0, arg_3_1)
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_3_1)
+function RougeLimiterOverViewContainer:switchTab(tabId)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 1, tabId)
 end
 
-return var_0_0
+return RougeLimiterOverViewContainer

@@ -1,91 +1,93 @@
-﻿module("modules.logic.signin.controller.work.CheckSignInViewWork_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/signin/controller/work/CheckSignInViewWork_1_3.lua
 
-local var_0_0 = class("CheckSignInViewWork_1_3", BaseWork)
+module("modules.logic.signin.controller.work.CheckSignInViewWork_1_3", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0._funcs = {}
+local CheckSignInViewWork_1_3 = class("CheckSignInViewWork_1_3", BaseWork)
 
-	SignInController.instance:registerCallback(SignInEvent.OnSignInPopupFlowUpdate, arg_1_0._onSignInPopupFlowUpdate, arg_1_0)
+function CheckSignInViewWork_1_3:onStart()
+	self._funcs = {}
+
+	SignInController.instance:registerCallback(SignInEvent.OnSignInPopupFlowUpdate, self._onSignInPopupFlowUpdate, self)
 end
 
-function var_0_0._removeSingleEvent(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0._funcs[arg_2_1]
+function CheckSignInViewWork_1_3:_removeSingleEvent(eventName)
+	local func = self._funcs[eventName]
 
-	if var_2_0 then
-		SignInController.instance:unregisterCallback(arg_2_1, var_2_0, arg_2_0)
+	if func then
+		SignInController.instance:unregisterCallback(eventName, func, self)
 
-		arg_2_0._funcs[arg_2_1] = nil
+		self._funcs[eventName] = nil
 	end
 
-	if not next(arg_2_0._funcs) then
-		arg_2_0:_startBlock()
-		arg_2_0:onDone(true)
+	if not next(self._funcs) then
+		self:_startBlock()
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onSignInPopupFlowUpdate(arg_3_0, arg_3_1)
-	if arg_3_1 == false then
-		arg_3_0:_clear()
-		arg_3_0:onDone(true)
+function CheckSignInViewWork_1_3:_onSignInPopupFlowUpdate(eventName)
+	if eventName == false then
+		self:_clear()
+		self:onDone(true)
 
 		return
 	end
 
-	if arg_3_1 == nil then
+	if eventName == nil then
 		logError("impossible ?!")
 
 		return
 	end
 
-	if arg_3_0._funcs[arg_3_1] then
+	if self._funcs[eventName] then
 		return
 	end
 
-	local var_3_0 = string.format("__internal_%s", arg_3_1)
+	local funcName = string.format("__internal_%s", eventName)
 
-	arg_3_0[var_3_0] = function()
-		arg_3_0:_removeSingleEvent(arg_3_1)
+	self[funcName] = function()
+		self:_removeSingleEvent(eventName)
 	end
-	arg_3_0._funcs[arg_3_1] = arg_3_0[var_3_0]
+	self._funcs[eventName] = self[funcName]
 
-	SignInController.instance:registerCallback(arg_3_1, arg_3_0[var_3_0], arg_3_0)
+	SignInController.instance:registerCallback(eventName, self[funcName], self)
 end
 
-function var_0_0._clear(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._funcs) do
-		SignInController.instance:unregisterCallback(iter_5_0, iter_5_1, arg_5_0)
+function CheckSignInViewWork_1_3:_clear()
+	for eventName, func in pairs(self._funcs) do
+		SignInController.instance:unregisterCallback(eventName, func, self)
 	end
 
-	arg_5_0._funcs = {}
+	self._funcs = {}
 end
 
-function var_0_0.clearWork(arg_6_0)
-	if not arg_6_0.isSuccess then
-		arg_6_0:_endBlock()
+function CheckSignInViewWork_1_3:clearWork()
+	if not self.isSuccess then
+		self:_endBlock()
 	end
 
-	arg_6_0:_clear()
-	SignInController.instance:unregisterCallback(SignInEvent.OnSignInPopupFlowUpdate, arg_6_0._onSignInPopupFlowUpdate, arg_6_0)
+	self:_clear()
+	SignInController.instance:unregisterCallback(SignInEvent.OnSignInPopupFlowUpdate, self._onSignInPopupFlowUpdate, self)
 end
 
-function var_0_0._endBlock(arg_7_0)
-	if not arg_7_0:_isBlock() then
+function CheckSignInViewWork_1_3:_endBlock()
+	if not self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:endBlock()
 end
 
-function var_0_0._startBlock(arg_8_0)
-	if arg_8_0:_isBlock() then
+function CheckSignInViewWork_1_3:_startBlock()
+	if self:_isBlock() then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock()
 end
 
-function var_0_0._isBlock(arg_9_0)
+function CheckSignInViewWork_1_3:_isBlock()
 	return UIBlockMgr.instance:isBlock() and true or false
 end
 
-return var_0_0
+return CheckSignInViewWork_1_3

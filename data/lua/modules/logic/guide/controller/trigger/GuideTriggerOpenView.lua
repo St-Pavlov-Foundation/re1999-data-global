@@ -1,18 +1,20 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerOpenView", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerOpenView.lua
 
-local var_0_0 = class("GuideTriggerOpenView", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerOpenView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
+local GuideTriggerOpenView = class("GuideTriggerOpenView", BaseGuideTrigger)
+
+function GuideTriggerOpenView:ctor(triggerKey)
+	GuideTriggerOpenView.super.ctor(self, triggerKey)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == arg_2_2
+function GuideTriggerOpenView:assertGuideSatisfy(param, configParam)
+	return param == configParam
 end
 
-function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerOpenView:_onOpenView(viewName, viewParam)
+	self:checkStartGuide(viewName)
 end
 
-return var_0_0
+return GuideTriggerOpenView

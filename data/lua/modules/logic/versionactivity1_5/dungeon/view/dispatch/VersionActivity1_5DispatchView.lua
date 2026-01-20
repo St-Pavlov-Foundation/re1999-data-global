@@ -1,366 +1,370 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/dispatch/VersionActivity1_5DispatchView.lua
 
-local var_0_0 = class("VersionActivity1_5DispatchView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goback = gohelper.findChild(arg_1_0.viewGO, "#go_back")
-	arg_1_0._gomapcontainer = gohelper.findChild(arg_1_0.viewGO, "container/left/#go_mapcontainer")
-	arg_1_0._simagemap = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/left/#go_mapcontainer/#simage_map")
-	arg_1_0._goherocontainer = gohelper.findChild(arg_1_0.viewGO, "container/left/#go_herocontainer")
-	arg_1_0._goclosehero = gohelper.findChild(arg_1_0.viewGO, "container/left/#go_herocontainer/header/#go_closehero")
-	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "container/right/#go_close")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "container/right/#txt_title")
-	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "container/right/Scroll View/Viewport/Content/#txt_desc")
-	arg_1_0._txtcosttime = gohelper.findChildText(arg_1_0.viewGO, "container/right/#txt_costtime")
-	arg_1_0._gotimelock = gohelper.findChild(arg_1_0.viewGO, "container/right/#txt_costtime/locked")
-	arg_1_0._btnstartdispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/right/#btn_startdispatch")
-	arg_1_0._btninterruptdispatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/right/#btn_interruptdispatch")
+local VersionActivity1_5DispatchView = class("VersionActivity1_5DispatchView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_5DispatchView:onInitView()
+	self._goback = gohelper.findChild(self.viewGO, "#go_back")
+	self._gomapcontainer = gohelper.findChild(self.viewGO, "container/left/#go_mapcontainer")
+	self._simagemap = gohelper.findChildSingleImage(self.viewGO, "container/left/#go_mapcontainer/#simage_map")
+	self._goherocontainer = gohelper.findChild(self.viewGO, "container/left/#go_herocontainer")
+	self._goclosehero = gohelper.findChild(self.viewGO, "container/left/#go_herocontainer/header/#go_closehero")
+	self._goclose = gohelper.findChild(self.viewGO, "container/right/#go_close")
+	self._txttitle = gohelper.findChildText(self.viewGO, "container/right/#txt_title")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "container/right/Scroll View/Viewport/Content/#txt_desc")
+	self._txtcosttime = gohelper.findChildText(self.viewGO, "container/right/#txt_costtime")
+	self._gotimelock = gohelper.findChild(self.viewGO, "container/right/#txt_costtime/locked")
+	self._btnstartdispatch = gohelper.findChildButtonWithAudio(self.viewGO, "container/right/#btn_startdispatch")
+	self._btninterruptdispatch = gohelper.findChildButtonWithAudio(self.viewGO, "container/right/#btn_interruptdispatch")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnstartdispatch:AddClickListener(arg_2_0._btnstartdispatchOnClick, arg_2_0)
-	arg_2_0._btninterruptdispatch:AddClickListener(arg_2_0._btninterruptdispatchOnClick, arg_2_0)
+function VersionActivity1_5DispatchView:addEvents()
+	self._btnstartdispatch:AddClickListener(self._btnstartdispatchOnClick, self)
+	self._btninterruptdispatch:AddClickListener(self._btninterruptdispatchOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnstartdispatch:RemoveClickListener()
-	arg_3_0._btninterruptdispatch:RemoveClickListener()
+function VersionActivity1_5DispatchView:removeEvents()
+	self._btnstartdispatch:RemoveClickListener()
+	self._btninterruptdispatch:RemoveClickListener()
 end
 
-var_0_0.DarkColor = "#3d5a4a"
-var_0_0.LightColor = "#287B4D"
+VersionActivity1_5DispatchView.DarkColor = "#3d5a4a"
+VersionActivity1_5DispatchView.LightColor = "#287B4D"
 
-function var_0_0._btnstartdispatchOnClick(arg_4_0)
-	if arg_4_0.status ~= VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch then
+function VersionActivity1_5DispatchView:_btnstartdispatchOnClick()
+	if self.status ~= VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch then
 		return
 	end
 
-	if VersionActivity1_5HeroListModel.instance:getSelectedHeroCount() < arg_4_0.dispatchCo.minCount then
+	local selectedCount = VersionActivity1_5HeroListModel.instance:getSelectedHeroCount()
+
+	if selectedCount < self.dispatchCo.minCount then
 		GameFacade.showToast(ToastEnum.V1a5_DungeonDispatchLessMinHero)
 
 		return
 	end
 
-	VersionActivity1_5DungeonRpc.instance:sendAct139DispatchRequest(arg_4_0.dispatchId, VersionActivity1_5HeroListModel.instance:getSelectedHeroIdList(), arg_4_0.onDispatchSuccess, arg_4_0)
+	VersionActivity1_5DungeonRpc.instance:sendAct139DispatchRequest(self.dispatchId, VersionActivity1_5HeroListModel.instance:getSelectedHeroIdList(), self.onDispatchSuccess, self)
 end
 
-function var_0_0.onDispatchSuccess(arg_5_0)
+function VersionActivity1_5DispatchView:onDispatchSuccess()
 	GameFacade.showToast(ToastEnum.V1a5_DungeonDispatchSuccess)
 end
 
-function var_0_0._btninterruptdispatchOnClick(arg_6_0)
-	if arg_6_0.status ~= VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
+function VersionActivity1_5DispatchView:_btninterruptdispatchOnClick()
+	if self.status ~= VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
 		return
 	end
 
-	if arg_6_0.dispatchMo:isFinish() then
+	if self.dispatchMo:isFinish() then
 		return
 	end
 
-	VersionActivity1_5DungeonRpc.instance:sendAct139InterruptDispatchRequest(arg_6_0.dispatchId)
+	VersionActivity1_5DungeonRpc.instance:sendAct139InterruptDispatchRequest(self.dispatchId)
 end
 
-function var_0_0.onClickHeroClose(arg_7_0)
+function VersionActivity1_5DispatchView:onClickHeroClose()
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, false)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.backClick = gohelper.getClick(arg_8_0._goback)
+function VersionActivity1_5DispatchView:_editableInitView()
+	self.backClick = gohelper.getClick(self._goback)
 
-	arg_8_0.backClick:AddClickListener(arg_8_0.closeThis, arg_8_0)
+	self.backClick:AddClickListener(self.closeThis, self)
 
-	arg_8_0.closeClick = gohelper.getClick(arg_8_0._goclose)
+	self.closeClick = gohelper.getClick(self._goclose)
 
-	arg_8_0.closeClick:AddClickListener(arg_8_0.closeThis, arg_8_0)
+	self.closeClick:AddClickListener(self.closeThis, self)
 
-	arg_8_0.heroCloseClick = gohelper.getClick(arg_8_0._goclosehero)
+	self.heroCloseClick = gohelper.getClick(self._goclosehero)
 
-	arg_8_0.heroCloseClick:AddClickListener(arg_8_0.onClickHeroClose, arg_8_0)
+	self.heroCloseClick:AddClickListener(self.onClickHeroClose, self)
 
-	arg_8_0.simagebg = gohelper.findChildSingleImage(arg_8_0.viewGO, "container/bg02")
+	self.simagebg = gohelper.findChildSingleImage(self.viewGO, "container/bg02")
 
-	arg_8_0.simagebg:LoadImage(ResUrl.getV1a5DungeonSingleBg("paiqian/v1a5_dungeon_bg_paiqian02"))
-	arg_8_0:changeHeroContainerVisible(false)
+	self.simagebg:LoadImage(ResUrl.getV1a5DungeonSingleBg("paiqian/v1a5_dungeon_bg_paiqian02"))
+	self:changeHeroContainerVisible(false)
 
-	arg_8_0.checkShortedTimeFuncDict = {
-		[VersionActivity1_5DungeonEnum.DispatchShortedType.Career] = arg_8_0.checkCareer,
-		[VersionActivity1_5DungeonEnum.DispatchShortedType.HeroId] = arg_8_0.checkHeroID
+	self.checkShortedTimeFuncDict = {
+		[VersionActivity1_5DungeonEnum.DispatchShortedType.Career] = self.checkCareer,
+		[VersionActivity1_5DungeonEnum.DispatchShortedType.HeroId] = self.checkHeroID
 	}
 
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, arg_8_0.changeHeroContainerVisible, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.AddDispatchInfo, arg_8_0.onAddDispatchInfo, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.RemoveDispatchInfo, arg_8_0.onRemoveDispatchInfo, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnDispatchFinish, arg_8_0.onDispatchFinish, arg_8_0)
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, arg_8_0.onSelectHeroMoChange, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0.everySecondCall, arg_8_0, 1)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, self.changeHeroContainerVisible, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.AddDispatchInfo, self.onAddDispatchInfo, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.RemoveDispatchInfo, self.onRemoveDispatchInfo, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnDispatchFinish, self.onDispatchFinish, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, self.onSelectHeroMoChange, self)
+	TaskDispatcher.runRepeat(self.everySecondCall, self, 1)
 end
 
-function var_0_0.changeHeroContainerVisible(arg_9_0, arg_9_1)
-	if arg_9_0.preIsShow == arg_9_1 then
+function VersionActivity1_5DispatchView:changeHeroContainerVisible(isShow)
+	if self.preIsShow == isShow then
 		return
 	end
 
-	arg_9_0.preIsShow = arg_9_1
+	self.preIsShow = isShow
 
-	if arg_9_0.preIsShow then
+	if self.preIsShow then
 		AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_unlock)
 	end
 
-	gohelper.setActive(arg_9_0._goherocontainer, arg_9_1)
-	gohelper.setActive(arg_9_0._gomapcontainer, not arg_9_1)
+	gohelper.setActive(self._goherocontainer, isShow)
+	gohelper.setActive(self._gomapcontainer, not isShow)
 end
 
-function var_0_0.onDispatchFinish(arg_10_0)
-	arg_10_0:refreshHeroContainer()
+function VersionActivity1_5DispatchView:onDispatchFinish()
+	self:refreshHeroContainer()
 end
 
-function var_0_0.onRemoveDispatchInfo(arg_11_0, arg_11_1)
-	if arg_11_1 ~= arg_11_0.dispatchId then
+function VersionActivity1_5DispatchView:onRemoveDispatchInfo(dispatchId)
+	if dispatchId ~= self.dispatchId then
 		return
 	end
 
 	VersionActivity1_5HeroListModel.instance:resetSelectHeroList()
-	arg_11_0:onDispatchInfoChange()
+	self:onDispatchInfoChange()
 end
 
-function var_0_0.onAddDispatchInfo(arg_12_0, arg_12_1)
-	if arg_12_1 ~= arg_12_0.dispatchId then
+function VersionActivity1_5DispatchView:onAddDispatchInfo(dispatchId)
+	if dispatchId ~= self.dispatchId then
 		return
 	end
 
-	arg_12_0:changeHeroContainerVisible(false)
-	arg_12_0:onDispatchInfoChange()
+	self:changeHeroContainerVisible(false)
+	self:onDispatchInfoChange()
 end
 
-function var_0_0.onDispatchInfoChange(arg_13_0)
-	arg_13_0:changeDispatchStatus()
+function VersionActivity1_5DispatchView:onDispatchInfoChange()
+	self:changeDispatchStatus()
 
-	if arg_13_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
-		arg_13_0:closeThis()
-
-		return
-	end
-
-	arg_13_0:refreshHeroContainer()
-	arg_13_0:refreshSelectedHero()
-	arg_13_0:refreshCostTime()
-	arg_13_0:refreshBtn()
-end
-
-function var_0_0.onSelectHeroMoChange(arg_14_0)
-	arg_14_0:refreshStartBtnGray()
-	arg_14_0:refreshCostTime()
-end
-
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0.dispatchId = arg_15_0.viewParam.dispatchId
-	arg_15_0.dispatchCo = VersionActivity1_5DungeonConfig.instance:getDispatchCo(arg_15_0.dispatchId)
-
-	arg_15_0:changeDispatchStatus()
-
-	if arg_15_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
-		arg_15_0:closeThis()
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
+		self:closeThis()
 
 		return
 	end
 
-	VersionActivity1_5HeroListModel.instance:onOpenDispatchView(arg_15_0.dispatchCo)
-	arg_15_0:initSelectedHeroItem()
-	arg_15_0:refreshUI()
+	self:refreshHeroContainer()
+	self:refreshSelectedHero()
+	self:refreshCostTime()
+	self:refreshBtn()
 end
 
-function var_0_0.initSelectedHeroItem(arg_16_0)
-	arg_16_0.selectedHeroItemList = {}
+function VersionActivity1_5DispatchView:onSelectHeroMoChange()
+	self:refreshStartBtnGray()
+	self:refreshCostTime()
+end
 
-	for iter_16_0 = 1, 4 do
-		local var_16_0 = gohelper.findChild(arg_16_0.viewGO, "container/right/selectedherocontainer/herocontainer/go_selectheroitem" .. iter_16_0)
+function VersionActivity1_5DispatchView:onOpen()
+	self.dispatchId = self.viewParam.dispatchId
+	self.dispatchCo = VersionActivity1_5DungeonConfig.instance:getDispatchCo(self.dispatchId)
 
-		if iter_16_0 <= arg_16_0.dispatchCo.maxCount then
-			table.insert(arg_16_0.selectedHeroItemList, VersionActivity1_5DispatchSelectHeroItem.createItem(var_16_0, iter_16_0))
+	self:changeDispatchStatus()
+
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
+		self:closeThis()
+
+		return
+	end
+
+	VersionActivity1_5HeroListModel.instance:onOpenDispatchView(self.dispatchCo)
+	self:initSelectedHeroItem()
+	self:refreshUI()
+end
+
+function VersionActivity1_5DispatchView:initSelectedHeroItem()
+	self.selectedHeroItemList = {}
+
+	for i = 1, 4 do
+		local go = gohelper.findChild(self.viewGO, "container/right/selectedherocontainer/herocontainer/go_selectheroitem" .. i)
+
+		if i <= self.dispatchCo.maxCount then
+			table.insert(self.selectedHeroItemList, VersionActivity1_5DispatchSelectHeroItem.createItem(go, i))
 		else
-			gohelper.setActive(var_16_0, false)
+			gohelper.setActive(go, false)
 		end
 	end
 end
 
-function var_0_0.refreshUI(arg_17_0)
-	arg_17_0:refreshLeft()
-	arg_17_0:refreshRight()
+function VersionActivity1_5DispatchView:refreshUI()
+	self:refreshLeft()
+	self:refreshRight()
 end
 
-function var_0_0.refreshLeft(arg_18_0)
-	arg_18_0:refreshMap()
-	arg_18_0:refreshHeroContainer()
+function VersionActivity1_5DispatchView:refreshLeft()
+	self:refreshMap()
+	self:refreshHeroContainer()
 end
 
-function var_0_0.refreshRight(arg_19_0)
-	arg_19_0._txttitle.text = arg_19_0.dispatchCo.title
-	arg_19_0._txtdesc.text = arg_19_0.dispatchCo.desc
+function VersionActivity1_5DispatchView:refreshRight()
+	self._txttitle.text = self.dispatchCo.title
+	self._txtdesc.text = self.dispatchCo.desc
 
-	arg_19_0:refreshSelectedHero()
-	arg_19_0:refreshCostTime()
-	arg_19_0:refreshBtn()
+	self:refreshSelectedHero()
+	self:refreshCostTime()
+	self:refreshBtn()
 end
 
-function var_0_0.refreshMap(arg_20_0)
-	arg_20_0._simagemap:LoadImage(ResUrl.getV1a5DungeonSingleBg("paiqian/v1a5_dungeon_img_chahua_" .. arg_20_0.dispatchCo.image))
+function VersionActivity1_5DispatchView:refreshMap()
+	self._simagemap:LoadImage(ResUrl.getV1a5DungeonSingleBg("paiqian/v1a5_dungeon_img_chahua_" .. self.dispatchCo.image))
 end
 
-function var_0_0.refreshHeroContainer(arg_21_0)
+function VersionActivity1_5DispatchView:refreshHeroContainer()
 	VersionActivity1_5HeroListModel.instance:refreshHero()
 end
 
-function var_0_0.refreshSelectedHero(arg_22_0)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.selectedHeroItemList) do
-		iter_22_1:refreshUI()
+function VersionActivity1_5DispatchView:refreshSelectedHero()
+	for _, selectedHeroItem in ipairs(self.selectedHeroItemList) do
+		selectedHeroItem:refreshUI()
 	end
 end
 
-function var_0_0.refreshCostTime(arg_23_0)
-	if arg_23_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
+function VersionActivity1_5DispatchView:refreshCostTime()
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Finished then
 		logError("dispatch finished")
 
 		return
 	end
 
-	if arg_23_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
-		if arg_23_0.dispatchMo:isFinish() then
-			arg_23_0:closeThis()
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
+		if self.dispatchMo:isFinish() then
+			self:closeThis()
 
 			return
 		end
 
-		gohelper.setActive(arg_23_0._gotimelock, false)
+		gohelper.setActive(self._gotimelock, false)
 
-		arg_23_0._txtcosttime.text = arg_23_0.dispatchMo:getRemainTimeStr()
+		self._txtcosttime.text = self.dispatchMo:getRemainTimeStr()
 
 		return
 	end
 
-	local var_23_0 = string.splitToNumber(arg_23_0.dispatchCo.time, "|")
-	local var_23_1 = var_23_0[1]
-	local var_23_2 = var_0_0.DarkColor
-	local var_23_3 = arg_23_0.checkShortedTimeFuncDict[arg_23_0.dispatchCo.shortType]
+	local timeArray = string.splitToNumber(self.dispatchCo.time, "|")
+	local costTime = timeArray[1]
+	local color = VersionActivity1_5DispatchView.DarkColor
+	local checkShortFunc = self.checkShortedTimeFuncDict[self.dispatchCo.shortType]
 
-	if var_23_3 and var_23_3(arg_23_0) then
-		var_23_1 = var_23_1 - var_23_0[2]
-		var_23_2 = var_0_0.LightColor
+	if checkShortFunc and checkShortFunc(self) then
+		costTime = costTime - timeArray[2]
+		color = VersionActivity1_5DispatchView.LightColor
 
-		gohelper.setActive(arg_23_0._gotimelock, false)
+		gohelper.setActive(self._gotimelock, false)
 	else
-		gohelper.setActive(arg_23_0._gotimelock, true)
+		gohelper.setActive(self._gotimelock, true)
 	end
 
-	local var_23_4 = Mathf.Floor(var_23_1 / TimeUtil.OneHourSecond)
-	local var_23_5 = var_23_1 % TimeUtil.OneHourSecond
-	local var_23_6 = Mathf.Floor(var_23_5 / TimeUtil.OneMinuteSecond)
-	local var_23_7 = var_23_5 % TimeUtil.OneMinuteSecond
-	local var_23_8
+	local hour = Mathf.Floor(costTime / TimeUtil.OneHourSecond)
+	local minuteSeconds = costTime % TimeUtil.OneHourSecond
+	local minute = Mathf.Floor(minuteSeconds / TimeUtil.OneMinuteSecond)
+	local second = minuteSeconds % TimeUtil.OneMinuteSecond
+	local text
 
 	if LangSettings.instance:isEn() then
-		var_23_8 = string.format("%s%s%s %s%s %s%s", luaLang("dispatch_cost_time"), var_23_4, luaLang("time_hour"), var_23_6, luaLang("time_minute"), var_23_7, luaLang("time_second"))
+		text = string.format("%s%s%s %s%s %s%s", luaLang("dispatch_cost_time"), hour, luaLang("time_hour"), minute, luaLang("time_minute"), second, luaLang("time_second"))
 	else
-		var_23_8 = string.format("%s%s%s%s%s%s%s", luaLang("dispatch_cost_time"), var_23_4, luaLang("time_hour"), var_23_6, luaLang("time_minute"), var_23_7, luaLang("time_second"))
+		text = string.format("%s%s%s%s%s%s%s", luaLang("dispatch_cost_time"), hour, luaLang("time_hour"), minute, luaLang("time_minute"), second, luaLang("time_second"))
 	end
 
-	arg_23_0._txtcosttime.text = string.format("<color=%s>%s</color>", var_23_2, var_23_8)
+	self._txtcosttime.text = string.format("<color=%s>%s</color>", color, text)
 end
 
-function var_0_0.checkCareer(arg_24_0)
-	local var_24_0 = VersionActivity1_5HeroListModel.instance:getSelectedHeroList()
+function VersionActivity1_5DispatchView:checkCareer()
+	local heroList = VersionActivity1_5HeroListModel.instance:getSelectedHeroList()
 
-	if not var_24_0 or #var_24_0 == 0 then
+	if not heroList or #heroList == 0 then
 		return false
 	end
 
-	local var_24_1 = string.splitToNumber(arg_24_0.dispatchCo.extraParam, "|")
-	local var_24_2 = var_24_1[1]
-	local var_24_3 = var_24_1[2]
-	local var_24_4 = 0
+	local paramList = string.splitToNumber(self.dispatchCo.extraParam, "|")
+	local count = paramList[1]
+	local career = paramList[2]
+	local careerCount = 0
 
-	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-		if iter_24_1.config.career == var_24_3 then
-			var_24_4 = var_24_4 + 1
+	for _, heroMo in ipairs(heroList) do
+		if heroMo.config.career == career then
+			careerCount = careerCount + 1
 		end
 	end
 
-	return var_24_2 <= var_24_4
+	return count <= careerCount
 end
 
-function var_0_0.checkHeroID(arg_25_0)
-	local var_25_0 = VersionActivity1_5HeroListModel.instance:getSelectedHeroList()
+function VersionActivity1_5DispatchView:checkHeroID()
+	local heroList = VersionActivity1_5HeroListModel.instance:getSelectedHeroList()
 
-	if not var_25_0 then
+	if not heroList then
 		return false
 	end
 
-	local var_25_1 = string.split(arg_25_0.dispatchCo.extraParam, "|")
-	local var_25_2 = tonumber(var_25_1[1])
-	local var_25_3 = string.splitToNumber(var_25_1[2], "#")
-	local var_25_4 = 0
+	local paramList = string.split(self.dispatchCo.extraParam, "|")
+	local count = tonumber(paramList[1])
+	local heroIdList = string.splitToNumber(paramList[2], "#")
+	local heroCount = 0
 
-	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
-		if tabletool.indexOf(var_25_3, iter_25_1.heroId) then
-			var_25_4 = var_25_4 + 1
+	for _, heroMo in ipairs(heroList) do
+		if tabletool.indexOf(heroIdList, heroMo.heroId) then
+			heroCount = heroCount + 1
 		end
 	end
 
-	return var_25_2 <= var_25_4
+	return count <= heroCount
 end
 
-function var_0_0.refreshBtn(arg_26_0)
-	gohelper.setActive(arg_26_0._btnstartdispatch.gameObject, arg_26_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch)
-	gohelper.setActive(arg_26_0._btninterruptdispatch.gameObject, arg_26_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching)
-	arg_26_0:refreshStartBtnGray()
+function VersionActivity1_5DispatchView:refreshBtn()
+	gohelper.setActive(self._btnstartdispatch.gameObject, self.status == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch)
+	gohelper.setActive(self._btninterruptdispatch.gameObject, self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching)
+	self:refreshStartBtnGray()
 end
 
-function var_0_0.refreshStartBtnGray(arg_27_0)
-	if arg_27_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch then
-		local var_27_0 = VersionActivity1_5HeroListModel.instance:getSelectedHeroCount()
+function VersionActivity1_5DispatchView:refreshStartBtnGray()
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.NotDispatch then
+		local selectedCount = VersionActivity1_5HeroListModel.instance:getSelectedHeroCount()
 
-		ZProj.UGUIHelper.SetGrayscale(arg_27_0._btnstartdispatch.gameObject, var_27_0 < arg_27_0.dispatchCo.minCount)
+		ZProj.UGUIHelper.SetGrayscale(self._btnstartdispatch.gameObject, selectedCount < self.dispatchCo.minCount)
 	end
 end
 
-function var_0_0.changeDispatchStatus(arg_28_0)
-	arg_28_0.status = VersionActivity1_5DungeonModel.instance:getDispatchStatus(arg_28_0.dispatchId)
-	arg_28_0.dispatchMo = VersionActivity1_5DungeonModel.instance:getDispatchMo(arg_28_0.dispatchId)
+function VersionActivity1_5DispatchView:changeDispatchStatus()
+	self.status = VersionActivity1_5DungeonModel.instance:getDispatchStatus(self.dispatchId)
+	self.dispatchMo = VersionActivity1_5DungeonModel.instance:getDispatchMo(self.dispatchId)
 
-	VersionActivity1_5HeroListModel.instance:setDispatchViewStatus(arg_28_0.status)
+	VersionActivity1_5HeroListModel.instance:setDispatchViewStatus(self.status)
 end
 
-function var_0_0.everySecondCall(arg_29_0)
-	if arg_29_0.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
-		arg_29_0:refreshCostTime()
+function VersionActivity1_5DispatchView:everySecondCall()
+	if self.status == VersionActivity1_5DungeonEnum.DispatchStatus.Dispatching then
+		self:refreshCostTime()
 	end
 end
 
-function var_0_0.onClose(arg_30_0)
-	arg_30_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, arg_30_0.changeHeroContainerVisible, arg_30_0)
-	arg_30_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.AddDispatchInfo, arg_30_0.onAddDispatchInfo, arg_30_0)
-	arg_30_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.RemoveDispatchInfo, arg_30_0.onRemoveDispatchInfo, arg_30_0)
-	arg_30_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnDispatchFinish, arg_30_0.onDispatchFinish, arg_30_0)
-	arg_30_0:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, arg_30_0.onSelectHeroMoChange, arg_30_0)
+function VersionActivity1_5DispatchView:onClose()
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, self.changeHeroContainerVisible, self)
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.AddDispatchInfo, self.onAddDispatchInfo, self)
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.RemoveDispatchInfo, self.onRemoveDispatchInfo, self)
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnDispatchFinish, self.onDispatchFinish, self)
+	self:removeEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, self.onSelectHeroMoChange, self)
 	VersionActivity1_5HeroListModel.instance:onCloseDispatchView()
-	TaskDispatcher.cancelTask(arg_30_0.everySecondCall, arg_30_0)
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-function var_0_0.onDestroyView(arg_31_0)
-	arg_31_0.backClick:RemoveClickListener()
-	arg_31_0.closeClick:RemoveClickListener()
-	arg_31_0.heroCloseClick:RemoveClickListener()
-	arg_31_0.simagebg:UnLoadImage()
-	arg_31_0._simagemap:UnLoadImage()
+function VersionActivity1_5DispatchView:onDestroyView()
+	self.backClick:RemoveClickListener()
+	self.closeClick:RemoveClickListener()
+	self.heroCloseClick:RemoveClickListener()
+	self.simagebg:UnLoadImage()
+	self._simagemap:UnLoadImage()
 
-	for iter_31_0, iter_31_1 in ipairs(arg_31_0.selectedHeroItemList) do
-		iter_31_1:destroy()
+	for _, selectedItem in ipairs(self.selectedHeroItemList) do
+		selectedItem:destroy()
 	end
 
-	arg_31_0.selectedHeroItemList = nil
+	self.selectedHeroItemList = nil
 end
 
-return var_0_0
+return VersionActivity1_5DispatchView

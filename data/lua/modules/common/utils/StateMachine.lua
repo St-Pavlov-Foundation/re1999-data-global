@@ -1,70 +1,72 @@
-﻿module("modules.common.utils.StateMachine", package.seeall)
+﻿-- chunkname: @modules/common/utils/StateMachine.lua
 
-local var_0_0 = class("StateMachine")
+module("modules.common.utils.StateMachine", package.seeall)
 
-function var_0_0.Create()
-	local var_1_0 = var_0_0.New()
+local StateMachine = class("StateMachine")
 
-	var_1_0.states = {}
-	var_1_0.currentState = nil
+function StateMachine.Create()
+	local instance = StateMachine.New()
 
-	return var_1_0
+	instance.states = {}
+	instance.currentState = nil
+
+	return instance
 end
 
-function var_0_0.addState(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	if arg_2_0.states[arg_2_1] == nil then
-		arg_2_0.states[arg_2_1] = {}
+function StateMachine:addState(name, onEnter, onUpdate, onExit, cbObj)
+	if self.states[name] == nil then
+		self.states[name] = {}
 	end
 
-	arg_2_0.states[arg_2_1].onEnter = arg_2_2
-	arg_2_0.states[arg_2_1].onUpdate = arg_2_3
-	arg_2_0.states[arg_2_1].onExit = arg_2_4
-	arg_2_0._cbObj = arg_2_5
+	self.states[name].onEnter = onEnter
+	self.states[name].onUpdate = onUpdate
+	self.states[name].onExit = onExit
+	self._cbObj = cbObj
 end
 
-function var_0_0.setInitialState(arg_3_0, arg_3_1)
-	arg_3_0.currentState = arg_3_1
+function StateMachine:setInitialState(name)
+	self.currentState = name
 
-	if arg_3_0.states[arg_3_1] and arg_3_0.states[arg_3_1].onEnter then
-		arg_3_0.states[arg_3_1].onEnter(arg_3_0._cbObj)
+	if self.states[name] and self.states[name].onEnter then
+		self.states[name].onEnter(self._cbObj)
 	end
 end
 
-function var_0_0.transitionTo(arg_4_0, arg_4_1)
-	if arg_4_0.currentState == arg_4_1 then
+function StateMachine:transitionTo(name)
+	if self.currentState == name then
 		return
 	end
 
-	local var_4_0 = arg_4_0.states[arg_4_0.currentState]
-	local var_4_1 = arg_4_0.states[arg_4_1]
+	local current = self.states[self.currentState]
+	local nextState = self.states[name]
 
-	if var_4_0 and var_4_0.onExit then
-		var_4_0.onExit(arg_4_0._cbObj)
+	if current and current.onExit then
+		current.onExit(self._cbObj)
 	end
 
-	arg_4_0.currentState = arg_4_1
+	self.currentState = name
 
-	if var_4_1 and var_4_1.onEnter then
-		var_4_1.onEnter(arg_4_0._cbObj)
-	end
-end
-
-function var_0_0.update(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0.states[arg_5_0.currentState]
-
-	if var_5_0 and var_5_0.onUpdate then
-		var_5_0.onUpdate(arg_5_0._cbObj, arg_5_1)
+	if nextState and nextState.onEnter then
+		nextState.onEnter(self._cbObj)
 	end
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	if arg_6_0.states ~= nil then
-		tabletool.clear(arg_6_0.states)
+function StateMachine:update(deltaTime)
+	local current = self.states[self.currentState]
 
-		arg_6_0.states = nil
+	if current and current.onUpdate then
+		current.onUpdate(self._cbObj, deltaTime)
 	end
-
-	arg_6_0._cbObj = nil
 end
 
-return var_0_0
+function StateMachine:onDestroy()
+	if self.states ~= nil then
+		tabletool.clear(self.states)
+
+		self.states = nil
+	end
+
+	self._cbObj = nil
+end
+
+return StateMachine

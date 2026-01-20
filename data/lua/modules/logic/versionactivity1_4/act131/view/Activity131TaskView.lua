@@ -1,56 +1,58 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131TaskView.lua
 
-local var_0_0 = class("Activity131TaskView", BaseView)
+module("modules.logic.versionactivity1_4.act131.view.Activity131TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
-	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
-	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_BackBtns")
+local Activity131TaskView = class("Activity131TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity131TaskView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simagelangtxt = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_langtxt")
+	self._scrollTaskList = gohelper.findChildScrollRect(self.viewGO, "#scroll_TaskList")
+	self._goBackBtns = gohelper.findChild(self.viewGO, "#go_BackBtns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Activity131TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Activity131TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageFullBG:LoadImage(ResUrl.getV1a4Role6SingleBg("v1a4_role6_mission_fullbg"))
+function Activity131TaskView:_editableInitView()
+	self._simageFullBG:LoadImage(ResUrl.getV1a4Role6SingleBg("v1a4_role6_mission_fullbg"))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function Activity131TaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0._oneClaimReward, arg_6_0)
-	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0._onFinishTask, arg_6_0)
+function Activity131TaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self._oneClaimReward, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self._onFinishTask, self)
 	Activity131TaskListModel.instance:init()
 end
 
-function var_0_0._oneClaimReward(arg_7_0)
+function Activity131TaskView:_oneClaimReward()
 	Activity131TaskListModel.instance:refreshData()
 end
 
-function var_0_0._onFinishTask(arg_8_0, arg_8_1)
-	if Activity131TaskListModel.instance:getById(arg_8_1) then
+function Activity131TaskView:_onFinishTask(taskId)
+	if Activity131TaskListModel.instance:getById(taskId) then
 		Activity131TaskListModel.instance:refreshData()
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function Activity131TaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageFullBG:UnLoadImage()
+function Activity131TaskView:onDestroyView()
+	self._simageFullBG:UnLoadImage()
 end
 
-return var_0_0
+return Activity131TaskView

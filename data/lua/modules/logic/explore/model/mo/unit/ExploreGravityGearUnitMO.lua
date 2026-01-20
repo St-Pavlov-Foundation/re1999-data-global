@@ -1,14 +1,16 @@
-﻿module("modules.logic.explore.model.mo.unit.ExploreGravityGearUnitMO", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/mo/unit/ExploreGravityGearUnitMO.lua
 
-local var_0_0 = pureTable("ExploreGravityGearUnitMO", ExploreBaseUnitMO)
+module("modules.logic.explore.model.mo.unit.ExploreGravityGearUnitMO", package.seeall)
 
-function var_0_0.initTypeData(arg_1_0)
-	arg_1_0.keyUnitTypes = string.splitToNumber(arg_1_0.specialDatas[1], "#")
-	arg_1_0.enterTriggerType = true
+local ExploreGravityGearUnitMO = pureTable("ExploreGravityGearUnitMO", ExploreBaseUnitMO)
+
+function ExploreGravityGearUnitMO:initTypeData()
+	self.keyUnitTypes = string.splitToNumber(self.specialDatas[1], "#")
+	self.enterTriggerType = true
 end
 
-function var_0_0.getUnitClass(arg_2_0)
+function ExploreGravityGearUnitMO:getUnitClass()
 	return ExploreGravityTriggerUnit
 end
 
-return var_0_0
+return ExploreGravityGearUnitMO

@@ -39,7 +39,7 @@
     "name": "language_10062659",
     "icon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a4_tutushizi_enter_banner.png",
     "sortId": 3,
-    "show": 1
+    "show": 0
   },
   {
     "id": 8,
@@ -66,6 +66,13 @@
     "id": 11,
     "name": "language_10080262",
     "icon": "singlebg_lang/txt_survival_singlebg/survival_mainenter_banner.png",
+    "sortId": 4,
+    "show": 1
+  },
+  {
+    "id": 12,
+    "name": "",
+    "icon": "singlebg_lang/txt_rouge2/main/rouge2_enter_banner.png",
     "sortId": 4,
     "show": 1
   }

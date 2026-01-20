@@ -1,213 +1,219 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorActionSelectView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorActionSelectView.lua
 
-local var_0_0 = class("SkillEditorActionSelectView", BaseView)
+module("modules.logic.fight.view.preview.SkillEditorActionSelectView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._itemGOs = arg_1_0:getUserDataTb_()
-	arg_1_0._actionViewGO = gohelper.findChild(arg_1_0.viewGO, "selectAction")
-	arg_1_0._btnActionPreviewL = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "scene/Grid/btnActionPreview")
-	arg_1_0._itemGOParent = gohelper.findChild(arg_1_0.viewGO, "selectAction/scroll/content")
-	arg_1_0._itemGOPrefab = gohelper.findChild(arg_1_0.viewGO, "selectAction/scroll/item")
+local SkillEditorActionSelectView = class("SkillEditorActionSelectView", BaseView)
 
-	gohelper.setActive(arg_1_0._itemGOPrefab, false)
+function SkillEditorActionSelectView:onInitView()
+	self._itemGOs = self:getUserDataTb_()
+	self._actionViewGO = gohelper.findChild(self.viewGO, "selectAction")
+	self._btnActionPreviewL = gohelper.findChildButtonWithAudio(self.viewGO, "scene/Grid/btnActionPreview")
+	self._itemGOParent = gohelper.findChild(self.viewGO, "selectAction/scroll/content")
+	self._itemGOPrefab = gohelper.findChild(self.viewGO, "selectAction/scroll/item")
 
-	arg_1_0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_1_0.viewGO, "selectAction/btnClose")
-	arg_1_0._btnMulti = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "selectAction/btnMulti")
-	arg_1_0._txtMulti = gohelper.findChildText(arg_1_0.viewGO, "selectAction/btnMulti/image/txtMulti")
-	arg_1_0._toggleLoop = gohelper.findChildToggle(arg_1_0.viewGO, "selectAction/toggleLoop")
-	arg_1_0._toggleMulti = gohelper.findChildToggle(arg_1_0.viewGO, "selectAction/toggleMulti")
-	arg_1_0._multiImgTr = gohelper.findChild(arg_1_0.viewGO, "selectAction/btnMulti/image").transform
-	arg_1_0._toggleLoop.isOn = false
-	arg_1_0._toggleMulti.isOn = false
+	gohelper.setActive(self._itemGOPrefab, false)
 
-	gohelper.setActive(arg_1_0._btnMulti.gameObject, false)
+	self._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(self.viewGO, "selectAction/btnClose")
+	self._btnMulti = gohelper.findChildButtonWithAudio(self.viewGO, "selectAction/btnMulti")
+	self._txtMulti = gohelper.findChildText(self.viewGO, "selectAction/btnMulti/image/txtMulti")
+	self._toggleLoop = gohelper.findChildToggle(self.viewGO, "selectAction/toggleLoop")
+	self._toggleMulti = gohelper.findChildToggle(self.viewGO, "selectAction/toggleMulti")
+	self._multiImgTr = gohelper.findChild(self.viewGO, "selectAction/btnMulti/image").transform
+	self._toggleLoop.isOn = false
+	self._toggleMulti.isOn = false
 
-	arg_1_0._multiList = {}
+	gohelper.setActive(self._btnMulti.gameObject, false)
+
+	self._multiList = {}
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnActionPreviewL:AddClickListener(arg_2_0._showThis, arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0._hideThis, arg_2_0)
-	arg_2_0._btnMulti:AddClickListener(arg_2_0._onClickMulti, arg_2_0)
-	arg_2_0._toggleMulti:AddOnValueChanged(arg_2_0._onToggleMultiChange, arg_2_0)
-	SLFramework.UGUI.UIClickListener.Get(arg_2_0._actionViewGO):AddClickListener(arg_2_0._hideThis, arg_2_0)
+function SkillEditorActionSelectView:addEvents()
+	self._btnActionPreviewL:AddClickListener(self._showThis, self)
+	self._btnClose:AddClickListener(self._hideThis, self)
+	self._btnMulti:AddClickListener(self._onClickMulti, self)
+	self._toggleMulti:AddOnValueChanged(self._onToggleMultiChange, self)
+	SLFramework.UGUI.UIClickListener.Get(self._actionViewGO):AddClickListener(self._hideThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnActionPreviewL:RemoveClickListener()
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnMulti:RemoveClickListener()
-	arg_3_0._toggleMulti:RemoveOnValueChanged()
-	SLFramework.UGUI.UIClickListener.Get(arg_3_0._actionViewGO):RemoveClickListener()
+function SkillEditorActionSelectView:removeEvents()
+	self._btnActionPreviewL:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
+	self._btnMulti:RemoveClickListener()
+	self._toggleMulti:RemoveOnValueChanged()
+	SLFramework.UGUI.UIClickListener.Get(self._actionViewGO):RemoveClickListener()
 end
 
-function var_0_0._showThis(arg_4_0, arg_4_1)
-	local var_4_0 = GameSceneMgr.instance:getCurScene()
+function SkillEditorActionSelectView:_showThis(side)
+	local scene = GameSceneMgr.instance:getCurScene()
 
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		arg_4_0._attacker = var_4_0.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		self._attacker = scene.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		arg_4_0._attacker = var_4_0.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		self._attacker = scene.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
-	if not arg_4_0._attacker then
+	if not self._attacker then
 		logError("所选对象错误，请从新选择对象")
 
 		return
 	end
 
-	arg_4_0._skinId = arg_4_0._attacker:getMO().skin
+	self._skinId = self._attacker:getMO().skin
 
-	gohelper.setActive(arg_4_0._actionViewGO, true)
-	arg_4_0:_updateItems()
+	gohelper.setActive(self._actionViewGO, true)
+	self:_updateItems()
 end
 
-function var_0_0._hideThis(arg_5_0)
+function SkillEditorActionSelectView:_hideThis()
 	FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-	gohelper.setActive(arg_5_0._actionViewGO, false)
+	gohelper.setActive(self._actionViewGO, false)
 end
 
-function var_0_0._updateItems(arg_6_0)
-	local var_6_0 = arg_6_0:_getActionNameList()
+function SkillEditorActionSelectView:_updateItems()
+	local actionNameList = self:_getActionNameList()
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = arg_6_0._itemGOs[iter_6_0]
+	for i, actionName in ipairs(actionNameList) do
+		local itemGO = self._itemGOs[i]
 
-		if not var_6_1 then
-			var_6_1 = gohelper.clone(arg_6_0._itemGOPrefab, arg_6_0._itemGOParent, "item" .. iter_6_0)
+		if not itemGO then
+			itemGO = gohelper.clone(self._itemGOPrefab, self._itemGOParent, "item" .. i)
 
-			arg_6_0:addClickCb(SLFramework.UGUI.UIClickListener.Get(var_6_1), arg_6_0._onClickItem, arg_6_0, iter_6_0)
-			table.insert(arg_6_0._itemGOs, var_6_1)
+			self:addClickCb(SLFramework.UGUI.UIClickListener.Get(itemGO), self._onClickItem, self, i)
+			table.insert(self._itemGOs, itemGO)
 		end
 
-		gohelper.setActive(var_6_1, true)
+		gohelper.setActive(itemGO, true)
 
-		local var_6_2 = gohelper.findChildText(var_6_1, "Text")
-		local var_6_3 = arg_6_0._attacker.spine:hasAnimation(iter_6_1)
+		local text = gohelper.findChildText(itemGO, "Text")
+		local hasAnimation = self._attacker.spine:hasAnimation(actionName)
 
-		var_6_2.text = iter_6_1 .. (var_6_3 and "" or "(缺)")
+		text.text = actionName .. (hasAnimation and "" or "(缺)")
 	end
 
-	for iter_6_2 = #var_6_0 + 1, #arg_6_0._itemGOs do
-		gohelper.setActive(arg_6_0._itemGOs[iter_6_2], false)
+	for i = #actionNameList + 1, #self._itemGOs do
+		gohelper.setActive(self._itemGOs[i], false)
 	end
 
-	local var_6_4 = (#var_6_0 / 6 + 1) * 100
+	local height = (#actionNameList / 6 + 1) * 100
 
-	recthelper.setHeight(arg_6_0._itemGOParent.transform, var_6_4)
+	recthelper.setHeight(self._itemGOParent.transform, height)
 end
 
-function var_0_0._onClickMulti(arg_7_0)
-	if #arg_7_0._multiList > 0 then
-		arg_7_0._multiIndex = 1
+function SkillEditorActionSelectView:_onClickMulti()
+	if #self._multiList > 0 then
+		self._multiIndex = 1
 
-		arg_7_0:_playMultiAction()
+		self:_playMultiAction()
 	else
 		GameFacade.showToast(ToastEnum.IconId, "未选择动作")
 	end
 end
 
-function var_0_0._onToggleMultiChange(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0._btnMulti.gameObject, arg_8_0._toggleMulti.isOn)
+function SkillEditorActionSelectView:_onToggleMultiChange(isOn)
+	gohelper.setActive(self._btnMulti.gameObject, self._toggleMulti.isOn)
 
-	if not arg_8_1 then
-		tabletool.clear(arg_8_0._multiList)
+	if not isOn then
+		tabletool.clear(self._multiList)
 
-		arg_8_0._txtMulti.text = ""
+		self._txtMulti.text = ""
 
-		recthelper.setWidth(arg_8_0._multiImgTr, 0)
+		recthelper.setWidth(self._multiImgTr, 0)
 	end
 end
 
-function var_0_0._playMultiAction(arg_9_0)
-	local var_9_0 = arg_9_0._multiList[arg_9_0._multiIndex]
+function SkillEditorActionSelectView:_playMultiAction()
+	local actionName = self._multiList[self._multiIndex]
 
-	if var_9_0 then
-		arg_9_0._attacker.spine:removeAnimEventCallback(arg_9_0._onMultiAnimEvent, arg_9_0)
-		arg_9_0._attacker.spine:addAnimEventCallback(arg_9_0._onMultiAnimEvent, arg_9_0)
-		arg_9_0._attacker.spine.super.play(arg_9_0._attacker.spine, var_9_0, false, true)
-		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, arg_9_0._attacker)
+	if actionName then
+		self._attacker.spine:removeAnimEventCallback(self._onMultiAnimEvent, self)
+		self._attacker.spine:addAnimEventCallback(self._onMultiAnimEvent, self)
+
+		local unitSpine = self._attacker.spine.super
+
+		unitSpine.play(self._attacker.spine, actionName, false, true)
+		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, self._attacker)
 	else
 		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-		arg_9_0._attacker.spine:removeAnimEventCallback(arg_9_0._onAnimEvent, arg_9_0)
-		arg_9_0._attacker:resetAnimState()
+		self._attacker.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		self._attacker:resetAnimState()
 	end
 
-	local var_9_1 = ""
+	local str = ""
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._multiList) do
-		local var_9_2 = iter_9_0 == #arg_9_0._multiList and "" or "->"
+	for i, name in ipairs(self._multiList) do
+		local linkStr = i == #self._multiList and "" or "->"
 
-		if iter_9_0 == arg_9_0._multiIndex then
-			var_9_1 = string.format("%s<color=red>%s</color>%s", var_9_1, iter_9_1, var_9_2)
+		if i == self._multiIndex then
+			str = string.format("%s<color=red>%s</color>%s", str, name, linkStr)
 		else
-			var_9_1 = string.format("%s%s%s", var_9_1, iter_9_1, var_9_2)
+			str = string.format("%s%s%s", str, name, linkStr)
 		end
 	end
 
-	arg_9_0._txtMulti.text = var_9_1
+	self._txtMulti.text = str
 end
 
-function var_0_0._onMultiAnimEvent(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	if arg_10_2 == SpineAnimEvent.ActionComplete then
-		arg_10_0._multiIndex = arg_10_0._multiIndex + 1
+function SkillEditorActionSelectView:_onMultiAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete then
+		self._multiIndex = self._multiIndex + 1
 
-		arg_10_0:_playMultiAction()
+		self:_playMultiAction()
 	end
 end
 
-function var_0_0._onClickItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:_getActionNameList()[arg_11_1]
+function SkillEditorActionSelectView:_onClickItem(index)
+	local actionNameList = self:_getActionNameList()
+	local actionName = actionNameList[index]
 
-	if arg_11_0._toggleMulti.isOn then
-		table.insert(arg_11_0._multiList, var_11_0)
+	if self._toggleMulti.isOn then
+		table.insert(self._multiList, actionName)
 
-		arg_11_0._txtMulti.text = table.concat(arg_11_0._multiList, "->")
+		self._txtMulti.text = table.concat(self._multiList, "->")
 
-		recthelper.setWidth(arg_11_0._multiImgTr, arg_11_0._txtMulti.preferredWidth)
-	elseif arg_11_0._toggleLoop.isOn then
-		arg_11_0._attacker.spine:play(var_11_0, true, true)
+		recthelper.setWidth(self._multiImgTr, self._txtMulti.preferredWidth)
+	elseif self._toggleLoop.isOn then
+		self._attacker.spine:play(actionName, true, true)
 	else
-		arg_11_0._attacker.spine:removeAnimEventCallback(arg_11_0._onAnimEvent, arg_11_0)
-		TaskDispatcher.cancelTask(arg_11_0._delayResetAnim, arg_11_0)
+		self._attacker.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		TaskDispatcher.cancelTask(self._delayResetAnim, self)
 
-		local var_11_1 = FightConfig.instance:getSkinSpineActionDict(arg_11_0._skinId)
-		local var_11_2 = var_11_1 and var_11_1[var_11_0]
+		local spineActionDict = FightConfig.instance:getSkinSpineActionDict(self._skinId)
+		local spineActionCO = spineActionDict and spineActionDict[actionName]
 
-		if var_11_2 and var_11_2.effectRemoveTime > 0 then
-			local var_11_3 = var_11_2.effectRemoveTime / FightModel.instance:getSpeed()
+		if spineActionCO and spineActionCO.effectRemoveTime > 0 then
+			local animDuration = spineActionCO.effectRemoveTime / FightModel.instance:getSpeed()
 
-			TaskDispatcher.runDelay(arg_11_0._delayResetAnim, arg_11_0, var_11_3)
+			TaskDispatcher.runDelay(self._delayResetAnim, self, animDuration)
 		else
-			arg_11_0._ani_need_transition, arg_11_0._transition_ani = FightHelper.needPlayTransitionAni(arg_11_0._attacker, var_11_0)
+			self._ani_need_transition, self._transition_ani = FightHelper.needPlayTransitionAni(self._attacker, actionName)
 
-			arg_11_0._attacker.spine:addAnimEventCallback(arg_11_0._onAnimEvent, arg_11_0)
+			self._attacker.spine:addAnimEventCallback(self._onAnimEvent, self)
 		end
 
-		arg_11_0._attacker.spine:play(var_11_0, false, true)
-		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, arg_11_0._attacker)
+		self._attacker.spine:play(actionName, false, true)
+		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, self._attacker)
 	end
 end
 
-function var_0_0._delayResetAnim(arg_12_0)
+function SkillEditorActionSelectView:_delayResetAnim()
 	FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-	arg_12_0._attacker.spine:removeAnimEventCallback(arg_12_0._onAnimEvent, arg_12_0)
-	arg_12_0._attacker:resetAnimState()
+	self._attacker.spine:removeAnimEventCallback(self._onAnimEvent, self)
+	self._attacker:resetAnimState()
 end
 
-function var_0_0._onAnimEvent(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_2 == SpineAnimEvent.ActionComplete then
-		if arg_13_0._ani_need_transition and arg_13_0._transition_ani == arg_13_1 then
+function SkillEditorActionSelectView:_onAnimEvent(actionName, eventName, eventArgs)
+	if eventName == SpineAnimEvent.ActionComplete then
+		if self._ani_need_transition and self._transition_ani == actionName then
 			return
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-		arg_13_0._attacker.spine:removeAnimEventCallback(arg_13_0._onAnimEvent, arg_13_0)
-		arg_13_0._attacker:resetAnimState()
+		self._attacker.spine:removeAnimEventCallback(self._onAnimEvent, self)
+		self._attacker:resetAnimState()
 	end
 end
 
-local var_0_1 = {
+local NeedActions = {
 	"die",
 	"hit",
 	"idle",
@@ -215,22 +221,22 @@ local var_0_1 = {
 	"freeze"
 }
 
-function var_0_0._getActionNameList(arg_14_0)
-	local var_14_0 = {}
+function SkillEditorActionSelectView:_getActionNameList()
+	local actionList = {}
 
-	for iter_14_0, iter_14_1 in pairs(SpineAnimState) do
-		if type(iter_14_1) == "string" and arg_14_0._attacker.spine:hasAnimation(iter_14_1) then
-			table.insert(var_14_0, iter_14_1)
+	for _, actionName in pairs(SpineAnimState) do
+		if type(actionName) == "string" and self._attacker.spine:hasAnimation(actionName) then
+			table.insert(actionList, actionName)
 		end
 	end
 
-	for iter_14_2, iter_14_3 in ipairs(var_0_1) do
-		if not tabletool.indexOf(var_14_0, iter_14_3) then
-			table.insert(var_14_0, iter_14_3)
+	for _, needAction in ipairs(NeedActions) do
+		if not tabletool.indexOf(actionList, needAction) then
+			table.insert(actionList, needAction)
 		end
 	end
 
-	return var_14_0
+	return actionList
 end
 
-return var_0_0
+return SkillEditorActionSelectView

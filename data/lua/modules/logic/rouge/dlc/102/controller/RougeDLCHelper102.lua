@@ -1,141 +1,150 @@
-﻿module("modules.logic.rouge.dlc.102.controller.RougeDLCHelper102", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/102/controller/RougeDLCHelper102.lua
 
-local var_0_0 = class("RougeDLCHelper102")
+module("modules.logic.rouge.dlc.102.controller.RougeDLCHelper102", package.seeall)
 
-function var_0_0.getSpCollectionHeaderInfo(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	if not RougeDLCHelper.isUsingTargetDLC(RougeDLCEnum.DLCEnum.DLC_102) then
+local RougeDLCHelper102 = class("RougeDLCHelper102")
+
+function RougeDLCHelper102.getSpCollectionHeaderInfo(collectionId, collectionCfgId, enchantCfgIds, resultAttrMap, params)
+	local isUsing_102 = RougeDLCHelper.isUsingTargetDLC(RougeDLCEnum.DLCEnum.DLC_102)
+
+	if not isUsing_102 then
 		return
 	end
 
-	local var_1_0 = RougeDLCConfig102.instance:getCollectionOwnerCo(arg_1_1)
+	local ownerCo = RougeDLCConfig102.instance:getCollectionOwnerCo(collectionCfgId)
 
-	if var_1_0 then
+	if ownerCo then
 		return {
-			var_1_0
+			ownerCo
 		}
 	end
 end
 
-function var_0_0.getSpCollectionDescInfo(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if not RougeDLCHelper.isUsingTargetDLC(RougeDLCEnum.DLCEnum.DLC_102) then
+function RougeDLCHelper102.getSpCollectionDescInfo(collectionId, collectionCfgId, enchantCfgIds, resultAttrMap, params)
+	local isUsing_102 = RougeDLCHelper.isUsingTargetDLC(RougeDLCEnum.DLCEnum.DLC_102)
+
+	if not isUsing_102 then
 		return
 	end
 
-	local var_2_0 = RougeDLCConfig102.instance:getSpCollectionDescCos(arg_2_1)
+	local descCos = RougeDLCConfig102.instance:getSpCollectionDescCos(collectionCfgId)
 
-	if not var_2_0 then
+	if not descCos then
 		return
 	end
 
-	local var_2_1 = arg_2_4 and arg_2_4.infoType
-	local var_2_2 = RougeCollectionModel.instance:getCurCollectionInfoType()
-	local var_2_3 = (var_2_1 or var_2_2) == RougeEnum.CollectionInfoType.Complex
-	local var_2_4 = arg_2_4 and arg_2_4.isAllActive
-	local var_2_5 = arg_2_4 and arg_2_4.isKeepConditionVisible
-	local var_2_6 = arg_2_4 and arg_2_4.activeEffectMap
+	local infoTypeParam = params and params.infoType
+	local defaultInfoType = RougeCollectionModel.instance:getCurCollectionInfoType()
+	local infoType = infoTypeParam or defaultInfoType
+	local isComplextType = infoType == RougeEnum.CollectionInfoType.Complex
+	local isAllActive = params and params.isAllActive
+	local isKeepConditionVisible = params and params.isKeepConditionVisible
+	local activeEffectMap = params and params.activeEffectMap
+	local isUseDefaultEffectMap = not isAllActive and not activeEffectMap and collectionId ~= nil
 
-	if not var_2_4 and not var_2_6 and arg_2_0 ~= nil then
-		var_2_6 = RougeCollectionModel.instance:getCollectionActiveEffectMap(arg_2_0)
+	if isUseDefaultEffectMap then
+		activeEffectMap = RougeCollectionModel.instance:getCollectionActiveEffectMap(collectionId)
 	end
 
-	local var_2_7 = {}
-	local var_2_8 = arg_2_4 and arg_2_4.spDescExpressionFunc
-	local var_2_9 = arg_2_4 and arg_2_4.spConditionExpressionFunc
+	local infoList = {}
+	local spDescExpressionFunc = params and params.spDescExpressionFunc
+	local spConditionExpressionFunc = params and params.spConditionExpressionFunc
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_10 = var_2_3 and iter_2_1.desc or iter_2_1.descSimply
-		local var_2_11 = var_2_3 and iter_2_1.condition or iter_2_1.conditionSimply
+	for index, descCo in ipairs(descCos) do
+		local desc = isComplextType and descCo.desc or descCo.descSimply
+		local condition = isComplextType and descCo.condition or descCo.conditionSimply
 
-		if not string.nilorempty(var_2_10) then
-			local var_2_12 = RougeCollectionExpressionHelper.getDescExpressionResult(var_2_10, arg_2_3, var_2_8)
-			local var_2_13 = RougeCollectionExpressionHelper.getDescExpressionResult(var_2_11, arg_2_3, var_2_9)
-			local var_2_14 = var_2_4 or var_2_6 and var_2_6[iter_2_1.effectId] == true
-			local var_2_15 = var_2_5 or var_0_0.checkpCollectionConditionVisible(arg_2_0, iter_2_0)
-			local var_2_16 = {
-				isActive = var_2_14,
-				content = var_2_12,
-				isConditionVisible = var_2_15,
-				condition = var_2_13
+		if not string.nilorempty(desc) then
+			local descResult = RougeCollectionExpressionHelper.getDescExpressionResult(desc, resultAttrMap, spDescExpressionFunc)
+			local conditionResult = RougeCollectionExpressionHelper.getDescExpressionResult(condition, resultAttrMap, spConditionExpressionFunc)
+			local isActive = isAllActive or activeEffectMap and activeEffectMap[descCo.effectId] == true
+			local isConditionVisible = isKeepConditionVisible or RougeDLCHelper102.checkpCollectionConditionVisible(collectionId, index)
+			local spInfo = {
+				isActive = isActive,
+				content = descResult,
+				isConditionVisible = isConditionVisible,
+				condition = conditionResult
 			}
 
-			table.insert(var_2_7, var_2_16)
+			table.insert(infoList, spInfo)
 		end
 	end
 
-	return var_2_7
+	return infoList
 end
 
-local var_0_1 = {
+local SpCollectionLevelUpAttrMap = {
 	3001,
 	3002,
 	4001
 }
 
-function var_0_0.checkpCollectionConditionVisible(arg_3_0, arg_3_1)
-	local var_3_0 = true
+function RougeDLCHelper102.checkpCollectionConditionVisible(collectionId, descIndex)
+	local visible = true
 
-	if arg_3_0 and arg_3_0 ~= 0 then
-		local var_3_1 = RougeCollectionModel.instance:getCollectionByUid(arg_3_0)
+	if collectionId and collectionId ~= 0 then
+		local collectionMo = RougeCollectionModel.instance:getCollectionByUid(collectionId)
 
-		if var_3_1 and var_0_1[arg_3_1] then
-			var_3_0 = not var_3_1:isAttrExist(var_0_1[arg_3_1])
+		if collectionMo and SpCollectionLevelUpAttrMap[descIndex] then
+			visible = not collectionMo:isAttrExist(SpCollectionLevelUpAttrMap[descIndex])
 		end
 	end
 
-	return var_3_0
+	return visible
 end
 
-function var_0_0._defaultSpDescExpressionFunc()
+function RougeDLCHelper102._defaultSpDescExpressionFunc()
 	return
 end
 
-function var_0_0._defaultSpConditionExpressionFunc()
+function RougeDLCHelper102._defaultSpConditionExpressionFunc()
 	return
 end
 
-function var_0_0._showSpCollectionHeader(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.name
+function RougeDLCHelper102._showSpCollectionHeader(goItem, contentInfo)
+	local characterName = contentInfo.name
+	local txtDesc = gohelper.findChildText(goItem, "txt_desc")
 
-	gohelper.findChildText(arg_6_0, "txt_desc").text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_spcollection_header"), var_6_0)
+	txtDesc.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_spcollection_header"), characterName)
 end
 
-local var_0_2 = "#B7B7B7"
-local var_0_3 = "#7E7E7E"
-local var_0_4 = 1
-local var_0_5 = 1
-local var_0_6 = "#A08156"
+local ActiveSpDescColor = "#B7B7B7"
+local DisactiveSpDescColor = "#7E7E7E"
+local ActiveSpDescAlpha = 1
+local DisactiveSpDescAlpha = 1
+local SpConditionColor = "#A08156"
 
-function var_0_0._showSpCollectionDescInfo(arg_7_0, arg_7_1)
-	local var_7_0 = gohelper.findChildText(arg_7_0, "txt_desc")
-	local var_7_1 = gohelper.findChildText(arg_7_0, "txt_desc2")
-	local var_7_2 = gohelper.findChildImage(arg_7_0, "txt_desc/image_point")
-	local var_7_3 = arg_7_1.isActive
+function RougeDLCHelper102._showSpCollectionDescInfo(goItem, contentInfo)
+	local txtDesc = gohelper.findChildText(goItem, "txt_desc")
+	local txtDesc2 = gohelper.findChildText(goItem, "txt_desc2")
+	local imagePoint = gohelper.findChildImage(goItem, "txt_desc/image_point")
+	local isActive = contentInfo.isActive
 
-	var_7_0.text = SkillHelper.buildDesc(arg_7_1.content)
+	txtDesc.text = SkillHelper.buildDesc(contentInfo.content)
 
-	SLFramework.UGUI.GuiHelper.SetColor(var_7_0, var_7_3 and var_0_2 or var_0_3)
-	ZProj.UGUIHelper.SetColorAlpha(var_7_0, var_7_3 and var_0_4 or var_0_5)
+	SLFramework.UGUI.GuiHelper.SetColor(txtDesc, isActive and ActiveSpDescColor or DisactiveSpDescColor)
+	ZProj.UGUIHelper.SetColorAlpha(txtDesc, isActive and ActiveSpDescAlpha or DisactiveSpDescAlpha)
 
-	local var_7_4 = var_7_3 and "rouge_collection_point1" or "rouge_collection_point2"
+	local pointImageName = isActive and "rouge_collection_point1" or "rouge_collection_point2"
 
-	UISpriteSetMgr.instance:setRougeSprite(var_7_2, var_7_4)
-	SkillHelper.addHyperLinkClick(var_7_0)
-	RougeCollectionDescHelper.addFixTmpBreakLine(var_7_0)
-	LuaUtil.updateTMPRectHeight_LayoutElement(var_7_0)
+	UISpriteSetMgr.instance:setRougeSprite(imagePoint, pointImageName)
+	SkillHelper.addHyperLinkClick(txtDesc)
+	RougeCollectionDescHelper.addFixTmpBreakLine(txtDesc)
+	LuaUtil.updateTMPRectHeight_LayoutElement(txtDesc)
 
-	local var_7_5 = arg_7_1.isConditionVisible
+	local isConditionVisible = contentInfo.isConditionVisible
 
-	gohelper.setActive(var_7_1, var_7_5)
+	gohelper.setActive(txtDesc2, isConditionVisible)
 
-	if var_7_5 then
-		local var_7_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_spcollection_unlock"), {
-			arg_7_1.condition
+	if isConditionVisible then
+		local conditionTxt = GameUtil.getSubPlaceholderLuaLang(luaLang("rouge_spcollection_unlock"), {
+			contentInfo.condition
 		})
 
-		var_7_1.text = SkillHelper.buildDesc(var_7_6)
+		txtDesc2.text = SkillHelper.buildDesc(conditionTxt)
 
-		SLFramework.UGUI.GuiHelper.SetColor(var_7_1, var_0_6)
+		SLFramework.UGUI.GuiHelper.SetColor(txtDesc2, SpConditionColor)
 	end
 end
 
-return var_0_0
+return RougeDLCHelper102

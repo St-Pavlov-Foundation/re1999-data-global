@@ -1,26 +1,28 @@
-﻿module("modules.logic.room.define.RoomProductLineEnum", package.seeall)
+﻿-- chunkname: @modules/logic/room/define/RoomProductLineEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.room.define.RoomProductLineEnum", package.seeall)
 
-var_0_0.ProductType = {
+local RoomProductLineEnum = _M
+
+RoomProductLineEnum.ProductType = {
 	Product = 1,
 	Change = 2
 }
-var_0_0.ProductItemType = {
+RoomProductLineEnum.ProductItemType = {
 	ProductGold = 2,
 	ProductExp = 1,
 	Change = 3
 }
-var_0_0.Line = {
+RoomProductLineEnum.Line = {
 	Spring = 7
 }
-var_0_0.AnimTime = {
+RoomProductLineEnum.AnimTime = {
 	TreeAnim = 0.1
 }
-var_0_0.AnimName = {
+RoomProductLineEnum.AnimName = {
 	TreeShow = "show",
 	TreeIdle = "idle",
 	TreeHide = "hide"
 }
 
-return var_0_0
+return RoomProductLineEnum

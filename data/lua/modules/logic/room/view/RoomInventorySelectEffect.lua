@@ -1,94 +1,96 @@
-﻿module("modules.logic.room.view.RoomInventorySelectEffect", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/RoomInventorySelectEffect.lua
 
-local var_0_0 = class("RoomInventorySelectEffect", BaseView)
+module("modules.logic.room.view.RoomInventorySelectEffect", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RoomInventorySelectEffect = class("RoomInventorySelectEffect", BaseView)
+
+function RoomInventorySelectEffect:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomInventorySelectEffect:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomInventorySelectEffect:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goreclaim = gohelper.findChild(arg_4_0.viewGO, "go_content/go_count/#reclaim")
-	arg_4_0._gomassif = gohelper.findChild(arg_4_0.viewGO, "go_content/go_count/#reclaim/reclaim_massif/#massif")
-	arg_4_0._goreclaimtips = gohelper.findChild(arg_4_0.viewGO, "go_content/#go_reclaimtips")
-	arg_4_0._gomassiftips = gohelper.findChild(arg_4_0.viewGO, "go_content/#go_reclaimtips/#massiftips")
+function RoomInventorySelectEffect:_editableInitView()
+	self._goreclaim = gohelper.findChild(self.viewGO, "go_content/go_count/#reclaim")
+	self._gomassif = gohelper.findChild(self.viewGO, "go_content/go_count/#reclaim/reclaim_massif/#massif")
+	self._goreclaimtips = gohelper.findChild(self.viewGO, "go_content/#go_reclaimtips")
+	self._gomassiftips = gohelper.findChild(self.viewGO, "go_content/#go_reclaimtips/#massiftips")
 
-	gohelper.setActive(arg_4_0._gomassif, false)
-	gohelper.setActive(arg_4_0._gomassiftips, false)
-	gohelper.setActive(arg_4_0._goreclaimtips, true)
+	gohelper.setActive(self._gomassif, false)
+	gohelper.setActive(self._gomassiftips, false)
+	gohelper.setActive(self._goreclaimtips, true)
 
-	arg_4_0._isViewShow = false
-	arg_4_0._isViewShowing = false
-	arg_4_0._nextPlayTipsTime = 0
-	arg_4_0._isFlag = false
-	arg_4_0._massifEffList = {}
-	arg_4_0._massifTipEffList = {}
-	arg_4_0._reclaimEffTab = arg_4_0:_getUserDataTbEffect(arg_4_0._goreclaim)
-	arg_4_0._backBlockIds = {}
-	arg_4_0._tipsInfoList = {}
+	self._isViewShow = false
+	self._isViewShowing = false
+	self._nextPlayTipsTime = 0
+	self._isFlag = false
+	self._massifEffList = {}
+	self._massifTipEffList = {}
+	self._reclaimEffTab = self:_getUserDataTbEffect(self._goreclaim)
+	self._backBlockIds = {}
+	self._tipsInfoList = {}
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockListDataChanged, arg_5_0._onBackBlockChanged, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.BackBlockPlayUIAnim, arg_5_0._onBackBlockPlayUIAnim, arg_5_0)
+function RoomInventorySelectEffect:onOpen()
+	self:addEventCb(RoomMapController.instance, RoomEvent.BackBlockListDataChanged, self._onBackBlockChanged, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.BackBlockPlayUIAnim, self._onBackBlockPlayUIAnim, self)
 end
 
-function var_0_0.onClose(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._delayPlayTipsEffect, arg_6_0)
+function RoomInventorySelectEffect:onClose()
+	TaskDispatcher.cancelTask(self._delayPlayTipsEffect, self)
 
-	if arg_6_0._reclaimEffTab then
-		arg_6_0._reclaimEffTab:dispose()
+	if self._reclaimEffTab then
+		self._reclaimEffTab:dispose()
 	end
 
-	arg_6_0._reclaimEffTab = nil
+	self._reclaimEffTab = nil
 
-	for iter_6_0 = 1, #arg_6_0._massifEffList do
-		arg_6_0._massifEffList[iter_6_0]:dispose()
+	for i = 1, #self._massifEffList do
+		self._massifEffList[i]:dispose()
 	end
 
-	arg_6_0._massifEffList = {}
+	self._massifEffList = {}
 
-	for iter_6_1 = 1, #arg_6_0._massifTipEffList do
-		arg_6_0._massifTipEffList[iter_6_1]:dispose()
+	for i = 1, #self._massifTipEffList do
+		self._massifTipEffList[i]:dispose()
 	end
 
-	arg_6_0._massifTipEffList = {}
+	self._massifTipEffList = {}
 end
 
-function var_0_0._onBackBlockChanged(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	tabletool.addValues(arg_7_0._backBlockIds, arg_7_1)
+function RoomInventorySelectEffect:_onBackBlockChanged(blockIds, isFlag, buildingIds)
+	tabletool.addValues(self._backBlockIds, blockIds)
 
-	for iter_7_0 = 1, #arg_7_1 do
-		local var_7_0 = RoomConfig.instance:getBlock(arg_7_1[iter_7_0])
+	for i = 1, #blockIds do
+		local blockCfg = RoomConfig.instance:getBlock(blockIds[i])
 
-		if var_7_0 then
-			arg_7_0:_addPackageId(var_7_0.packageId)
+		if blockCfg then
+			self:_addPackageId(blockCfg.packageId)
 		end
 	end
 
-	if arg_7_3 and #arg_7_3 > 0 then
-		for iter_7_1 = 1, #arg_7_3 do
-			arg_7_0:_addBuildingId(arg_7_3[iter_7_1])
+	if buildingIds and #buildingIds > 0 then
+		for i = 1, #buildingIds do
+			self:_addBuildingId(buildingIds[i])
 		end
 	end
 
-	arg_7_0:_playEffect()
+	self:_playEffect()
 end
 
-function var_0_0._onBackBlockPlayUIAnim(arg_8_0)
-	arg_8_0:_playEffect()
+function RoomInventorySelectEffect:_onBackBlockPlayUIAnim()
+	self:_playEffect()
 end
 
-function var_0_0._getIsShow(arg_9_0)
+function RoomInventorySelectEffect:_getIsShow()
 	if RoomMapBlockModel.instance:isBackMore() or RoomBuildingController.instance:isBuildingListShow() then
 		return false
 	end
@@ -96,218 +98,218 @@ function var_0_0._getIsShow(arg_9_0)
 	return true
 end
 
-function var_0_0._playEffect(arg_10_0)
-	arg_10_0:_playMassifEffect()
-	arg_10_0:_playTipsEffect()
+function RoomInventorySelectEffect:_playEffect()
+	self:_playMassifEffect()
+	self:_playTipsEffect()
 end
 
-function var_0_0._addPackageId(arg_11_0, arg_11_1)
-	local var_11_0 = true
-	local var_11_1 = arg_11_0:_getTipsInfo(arg_11_1, var_11_0)
+function RoomInventorySelectEffect:_addPackageId(packageId)
+	local isBlock = true
+	local info = self:_getTipsInfo(packageId, isBlock)
 
-	if var_11_1 then
-		var_11_1.count = var_11_1.count + 1
+	if info then
+		info.count = info.count + 1
 	else
-		local var_11_2 = RoomConfig.instance:getBlockPackageConfig(arg_11_1)
+		local packageCfg = RoomConfig.instance:getBlockPackageConfig(packageId)
 
-		if var_11_2 then
-			local var_11_3 = {
+		if packageCfg then
+			info = {
 				count = 1,
-				id = arg_11_1,
-				isBlock = var_11_0,
-				name = var_11_2.name,
-				rare = var_11_2.rare
+				id = packageId,
+				isBlock = isBlock,
+				name = packageCfg.name,
+				rare = packageCfg.rare
 			}
 
-			table.insert(arg_11_0._tipsInfoList, var_11_3)
+			table.insert(self._tipsInfoList, info)
 		end
 	end
 end
 
-function var_0_0._addBuildingId(arg_12_0, arg_12_1)
-	local var_12_0 = false
-	local var_12_1 = arg_12_0:_getTipsInfo(arg_12_1, var_12_0)
+function RoomInventorySelectEffect:_addBuildingId(buildingId)
+	local isBlock = false
+	local info = self:_getTipsInfo(buildingId, isBlock)
 
-	if var_12_1 then
-		var_12_1.count = var_12_1.count + 1
+	if info then
+		info.count = info.count + 1
 	else
-		local var_12_2 = RoomConfig.instance:getBuildingConfig(arg_12_1)
+		local buildingCfg = RoomConfig.instance:getBuildingConfig(buildingId)
 
-		if var_12_2 then
-			local var_12_3 = {
+		if buildingCfg then
+			info = {
 				count = 1,
-				id = arg_12_1,
-				isBlock = var_12_0,
-				name = var_12_2.name,
-				rare = var_12_2.rare
+				id = buildingId,
+				isBlock = isBlock,
+				name = buildingCfg.name,
+				rare = buildingCfg.rare
 			}
 
-			table.insert(arg_12_0._tipsInfoList, var_12_3)
+			table.insert(self._tipsInfoList, info)
 		end
 	end
 end
 
-function var_0_0._getTipsInfo(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0._tipsInfoList
+function RoomInventorySelectEffect:_getTipsInfo(id, isBlock)
+	local list = self._tipsInfoList
 
-	for iter_13_0 = 1, #var_13_0 do
-		local var_13_1 = var_13_0[iter_13_0]
+	for i = 1, #list do
+		local info = list[i]
 
-		if var_13_1.id == arg_13_1 and var_13_1.isBlock == arg_13_2 then
-			return var_13_1
+		if info.id == id and info.isBlock == isBlock then
+			return info
 		end
 	end
 end
 
-function var_0_0._getUserDataTbEffect(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getUserDataTb_()
+function RoomInventorySelectEffect:_getUserDataTbEffect(go)
+	local tab = self:getUserDataTb_()
 
-	var_14_0.go = arg_14_1
-	var_14_0.effectTime = 2
-	var_14_0.isRunning = false
+	tab.go = go
+	tab.effectTime = 2
+	tab.isRunning = false
 
-	function var_14_0.playEffect(arg_15_0, arg_15_1)
-		arg_15_0.isRunning = true
+	function tab:playEffect(delay)
+		self.isRunning = true
 
-		TaskDispatcher.cancelTask(arg_15_0._playEffect, arg_15_0)
-		TaskDispatcher.runDelay(arg_15_0._playEffect, arg_15_0, arg_15_1 or 0)
+		TaskDispatcher.cancelTask(self._playEffect, self)
+		TaskDispatcher.runDelay(self._playEffect, self, delay or 0)
 	end
 
-	function var_14_0._playEffect(arg_16_0)
-		gohelper.setActive(arg_16_0.go, false)
-		gohelper.setActive(arg_16_0.go, true)
-		TaskDispatcher.cancelTask(arg_16_0._stopEffect, arg_16_0)
-		TaskDispatcher.runDelay(arg_16_0._stopEffect, arg_16_0, arg_16_0.effectTime or 1.5)
+	function tab:_playEffect()
+		gohelper.setActive(self.go, false)
+		gohelper.setActive(self.go, true)
+		TaskDispatcher.cancelTask(self._stopEffect, self)
+		TaskDispatcher.runDelay(self._stopEffect, self, self.effectTime or 1.5)
 	end
 
-	function var_14_0._stopEffect(arg_17_0)
-		arg_17_0.isRunning = false
+	function tab:_stopEffect()
+		self.isRunning = false
 
-		gohelper.setActive(arg_17_0.go, false)
+		gohelper.setActive(self.go, false)
 	end
 
-	function var_14_0._clearTask(arg_18_0)
-		TaskDispatcher.cancelTask(arg_18_0._playEffect, arg_18_0)
-		TaskDispatcher.cancelTask(arg_18_0._stopEffect, arg_18_0)
+	function tab:_clearTask()
+		TaskDispatcher.cancelTask(self._playEffect, self)
+		TaskDispatcher.cancelTask(self._stopEffect, self)
 	end
 
-	function var_14_0.dispose(arg_19_0)
-		arg_19_0:_clearTask()
-		arg_19_0:_stopEffect()
+	function tab:dispose()
+		self:_clearTask()
+		self:_stopEffect()
 	end
 
-	return var_14_0
+	return tab
 end
 
-function var_0_0._playMassifEffect(arg_20_0)
-	if not arg_20_0:_getIsShow() then
+function RoomInventorySelectEffect:_playMassifEffect()
+	if not self:_getIsShow() then
 		return
 	end
 
-	local var_20_0 = arg_20_0._backBlockIds
+	local blockIds = self._backBlockIds
 
-	arg_20_0._backBlockIds = {}
+	self._backBlockIds = {}
 
-	local var_20_1 = math.min(5, #var_20_0)
+	local maxCount = math.min(5, #blockIds)
 
-	if var_20_1 > 0 then
-		arg_20_0._reclaimEffTab.effectTime = 3
+	if maxCount > 0 then
+		self._reclaimEffTab.effectTime = 3
 
-		arg_20_0._reclaimEffTab:playEffect()
+		self._reclaimEffTab:playEffect()
 	end
 
-	for iter_20_0 = 1, var_20_1 do
-		local var_20_2 = arg_20_0._massifEffList[iter_20_0]
+	for i = 1, maxCount do
+		local effTab = self._massifEffList[i]
 
-		if not var_20_2 then
-			local var_20_3 = gohelper.cloneInPlace(arg_20_0._gomassif, "massif" .. iter_20_0)
+		if not effTab then
+			local cloneGo = gohelper.cloneInPlace(self._gomassif, "massif" .. i)
 
-			var_20_2 = arg_20_0:_getUserDataTbEffect(var_20_3)
+			effTab = self:_getUserDataTbEffect(cloneGo)
 
-			table.insert(arg_20_0._massifEffList, var_20_2)
+			table.insert(self._massifEffList, effTab)
 		end
 
-		var_20_2:playEffect(iter_20_0 * 0.06)
+		effTab:playEffect(i * 0.06)
 	end
 end
 
-function var_0_0._delayPlayTipsEffect(arg_21_0)
-	if #arg_21_0._tipsInfoList > 0 then
-		arg_21_0:_playTipsEffect()
+function RoomInventorySelectEffect:_delayPlayTipsEffect()
+	if #self._tipsInfoList > 0 then
+		self:_playTipsEffect()
 	end
 end
 
-function var_0_0._playTipsEffect(arg_22_0)
-	if not arg_22_0:_getIsShow() then
+function RoomInventorySelectEffect:_playTipsEffect()
+	if not self:_getIsShow() then
 		return
 	end
 
-	local var_22_0 = Time.time
-	local var_22_1 = arg_22_0._tipsInfoList
-	local var_22_2 = 1
-	local var_22_3 = RoomInventoryBlockModel.instance:getCurPackageMO()
+	local curTime = Time.time
+	local infoList = self._tipsInfoList
+	local nextDelayTime = 1
+	local blockPackageMO = RoomInventoryBlockModel.instance:getCurPackageMO()
 
-	for iter_22_0 = 1, 5 do
-		local var_22_4 = arg_22_0._massifTipEffList[iter_22_0]
+	for i = 1, 5 do
+		local effTab = self._massifTipEffList[i]
 
-		if not var_22_4 then
-			local var_22_5 = gohelper.cloneInPlace(arg_22_0._gomassiftips, "gomassiftips" .. iter_22_0)
+		if not effTab then
+			local cloneGo = gohelper.cloneInPlace(self._gomassiftips, "gomassiftips" .. i)
 
-			var_22_4 = arg_22_0:_getUserDataTbEffect(var_22_5)
-			var_22_4._imagerare = gohelper.findChildImage(var_22_5, "bg/rare")
-			var_22_4._txtname = gohelper.findChildText(var_22_5, "bg/txt_name")
-			var_22_4._txtnum = gohelper.findChildText(var_22_5, "bg/txt_num")
-			var_22_4._goicon = gohelper.findChild(var_22_5, "bg/txt_num/icon")
-			var_22_4._gobuildingicon = gohelper.findChild(var_22_5, "bg/txt_num/building_icon")
-			var_22_4.finishTime = 0
-			var_22_4.effectTime = 3.7
+			effTab = self:_getUserDataTbEffect(cloneGo)
+			effTab._imagerare = gohelper.findChildImage(cloneGo, "bg/rare")
+			effTab._txtname = gohelper.findChildText(cloneGo, "bg/txt_name")
+			effTab._txtnum = gohelper.findChildText(cloneGo, "bg/txt_num")
+			effTab._goicon = gohelper.findChild(cloneGo, "bg/txt_num/icon")
+			effTab._gobuildingicon = gohelper.findChild(cloneGo, "bg/txt_num/building_icon")
+			effTab.finishTime = 0
+			effTab.effectTime = 3.7
 
-			table.insert(arg_22_0._massifTipEffList, var_22_4)
+			table.insert(self._massifTipEffList, effTab)
 		end
 
-		if var_22_0 < var_22_4.finishTime then
-			var_22_2 = math.min(var_22_2, var_22_4.finishTime - var_22_0)
-		elseif #var_22_1 > 0 then
-			local var_22_6 = var_22_1[1]
+		if curTime < effTab.finishTime then
+			nextDelayTime = math.min(nextDelayTime, effTab.finishTime - curTime)
+		elseif #infoList > 0 then
+			local info = infoList[1]
 
-			table.remove(var_22_1, 1)
+			table.remove(infoList, 1)
 
-			local var_22_7 = var_22_3 and var_22_6.isBlock and var_22_3.id == var_22_6.id
-			local var_22_8 = var_22_7 and "#FFFFFF" or "#FFFFFF"
+			local isCurPackage = blockPackageMO and info.isBlock and blockPackageMO.id == info.id
+			local colorStr = isCurPackage and "#FFFFFF" or "#FFFFFF"
 
-			var_22_4._txtname.text = var_22_7 and luaLang("room_backblock_curpackage") or var_22_6.name
-			var_22_4._txtnum.text = "+" .. var_22_6.count
-			var_22_4.finishTime = var_22_0 + var_22_4.effectTime
+			effTab._txtname.text = isCurPackage and luaLang("room_backblock_curpackage") or info.name
+			effTab._txtnum.text = "+" .. info.count
+			effTab.finishTime = curTime + effTab.effectTime
 
-			if var_22_4.isBlock ~= var_22_6.isBlock then
-				var_22_4.isBlock = var_22_6.isBlock
+			if effTab.isBlock ~= info.isBlock then
+				effTab.isBlock = info.isBlock
 
-				gohelper.setActive(var_22_4._goicon, var_22_6.isBlock)
-				gohelper.setActive(var_22_4._gobuildingicon, not var_22_6.isBlock)
+				gohelper.setActive(effTab._goicon, info.isBlock)
+				gohelper.setActive(effTab._gobuildingicon, not info.isBlock)
 			end
 
-			if var_22_4.txtColorStr ~= var_22_8 then
-				var_22_4.txtColorStr = var_22_8
+			if effTab.txtColorStr ~= colorStr then
+				effTab.txtColorStr = colorStr
 
-				SLFramework.UGUI.GuiHelper.SetColor(var_22_4._txtnum, var_22_8)
-				SLFramework.UGUI.GuiHelper.SetColor(var_22_4._txtname, var_22_8)
+				SLFramework.UGUI.GuiHelper.SetColor(effTab._txtnum, colorStr)
+				SLFramework.UGUI.GuiHelper.SetColor(effTab._txtname, colorStr)
 			end
 
-			local var_22_9 = RoomBlockPackageEnum.RareIcon[var_22_6.rare] or RoomBlockPackageEnum.RareIcon[1]
+			local splitName = RoomBlockPackageEnum.RareIcon[info.rare] or RoomBlockPackageEnum.RareIcon[1]
 
-			UISpriteSetMgr.instance:setRoomSprite(var_22_4._imagerare, var_22_9)
-			var_22_4:playEffect()
-			gohelper.setAsLastSibling(var_22_4.go)
+			UISpriteSetMgr.instance:setRoomSprite(effTab._imagerare, splitName)
+			effTab:playEffect()
+			gohelper.setAsLastSibling(effTab.go)
 		end
 
-		if #var_22_1 < 1 then
+		if #infoList < 1 then
 			break
 		end
 	end
 
-	if #var_22_1 > 0 then
-		TaskDispatcher.runDelay(arg_22_0._delayPlayTipsEffect, arg_22_0, var_22_2)
+	if #infoList > 0 then
+		TaskDispatcher.runDelay(self._delayPlayTipsEffect, self, nextDelayTime)
 	end
 end
 
-return var_0_0
+return RoomInventorySelectEffect

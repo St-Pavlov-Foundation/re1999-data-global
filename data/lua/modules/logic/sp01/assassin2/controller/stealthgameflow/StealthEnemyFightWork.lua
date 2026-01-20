@@ -1,55 +1,61 @@
-﻿module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyFightWork", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/controller/stealthgameflow/StealthEnemyFightWork.lua
 
-local var_0_0 = class("StealthEnemyFightWork", BaseWork)
+module("modules.logic.sp01.assassin2.controller.stealthgameflow.StealthEnemyFightWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
-	local var_1_1 = var_1_0 and var_1_0.battleGrids
+local StealthEnemyFightWork = class("StealthEnemyFightWork", BaseWork)
 
-	if var_1_1 and #var_1_1 > 0 then
-		local var_1_2 = {}
+function StealthEnemyFightWork:onStart(context)
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local battleGridList = enemyOperationData and enemyOperationData.battleGrids
+	local hasBattle = battleGridList and #battleGridList > 0
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = AssassinStealthGameModel.instance:getGridEntityIdList(iter_1_1, false)
+	if hasBattle then
+		local beAttackedHeroList = {}
 
-			for iter_1_2, iter_1_3 in ipairs(var_1_3) do
-				if AssassinStealthGameModel.instance:getHeroMo(iter_1_3, true):getStatus() == AssassinEnum.HeroStatus.Expose then
-					var_1_2[#var_1_2 + 1] = iter_1_3
+		for _, gridId in ipairs(battleGridList) do
+			local gridHeroList = AssassinStealthGameModel.instance:getGridEntityIdList(gridId, false)
+
+			for _, heroUid in ipairs(gridHeroList) do
+				local heroMo = AssassinStealthGameModel.instance:getHeroMo(heroUid, true)
+				local status = heroMo:getStatus()
+
+				if status == AssassinEnum.HeroStatus.Expose then
+					beAttackedHeroList[#beAttackedHeroList + 1] = heroUid
 				end
 			end
 		end
 
-		if #var_1_2 > 0 then
-			for iter_1_4, iter_1_5 in ipairs(var_1_2) do
-				AssassinStealthGameEntityMgr.instance:playHeroEff(iter_1_5, AssassinEnum.EffectId.EnemyAttack)
+		if #beAttackedHeroList > 0 then
+			for _, heroUid in ipairs(beAttackedHeroList) do
+				AssassinStealthGameEntityMgr.instance:playHeroEff(heroUid, AssassinEnum.EffectId.EnemyAttack)
 			end
 
-			local var_1_4 = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.EnemyAttack)
+			local duration = AssassinConfig.instance:getAssassinEffectDuration(AssassinEnum.EffectId.EnemyAttack)
 
-			TaskDispatcher.cancelTask(arg_1_0.playAttackEffFinished, arg_1_0)
-			TaskDispatcher.runDelay(arg_1_0.playAttackEffFinished, arg_1_0, var_1_4)
+			TaskDispatcher.cancelTask(self.playAttackEffFinished, self)
+			TaskDispatcher.runDelay(self.playAttackEffFinished, self, duration)
 		else
-			arg_1_0:playAttackEffFinished()
+			self:playAttackEffFinished()
 		end
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.playAttackEffFinished(arg_2_0)
-	local var_2_0 = AssassinStealthGameModel.instance:getEnemyOperationData()
-	local var_2_1 = var_2_0 and var_2_0.battleGrids
-	local var_2_2 = var_2_1 and var_2_1[1]
+function StealthEnemyFightWork:playAttackEffFinished()
+	local enemyOperationData = AssassinStealthGameModel.instance:getEnemyOperationData()
+	local battleGridList = enemyOperationData and enemyOperationData.battleGrids
+	local battleGrid = battleGridList and battleGridList[1]
 
-	if var_2_2 then
-		AssassinStealthGameController.instance:enterBattleGrid(var_2_2)
+	if battleGrid then
+		AssassinStealthGameController.instance:enterBattleGrid(battleGrid)
 	end
 
-	arg_2_0:onDone(false)
+	self:onDone(false)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.playAttackEffFinished, arg_3_0)
+function StealthEnemyFightWork:clearWork()
+	TaskDispatcher.cancelTask(self.playAttackEffFinished, self)
 end
 
-return var_0_0
+return StealthEnemyFightWork

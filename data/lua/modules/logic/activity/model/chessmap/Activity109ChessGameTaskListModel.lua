@@ -1,45 +1,49 @@
-﻿module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/chessmap/Activity109ChessGameTaskListModel.lua
 
-local var_0_0 = class("Activity109ChessGameTaskListModel", ListScrollModel)
+module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity109)
-	local var_1_1 = Activity106Config.instance:getTaskByActId(arg_1_1)
-	local var_1_2 = {}
+local Activity109ChessGameTaskListModel = class("Activity109ChessGameTaskListModel", ListScrollModel)
 
-	if var_1_0 ~= nil then
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = Activity109ChessGameTaskMO.New()
-			local var_1_4 = var_1_0[iter_1_1.id]
+function Activity109ChessGameTaskListModel:init(actId)
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity109)
+	local taskCfgs = Activity106Config.instance:getTaskByActId(actId)
+	local data = {}
 
-			var_1_3:init(var_1_4)
-			table.insert(var_1_2, var_1_3)
+	if taskDict ~= nil then
+		for _, taskCO in ipairs(taskCfgs) do
+			local mo = Activity109ChessGameTaskMO.New()
+			local taskMO = taskDict[taskCO.id]
+
+			mo:init(taskMO)
+			table.insert(data, mo)
 		end
 
-		table.sort(var_1_2, var_0_0.sortMO)
+		table.sort(data, Activity109ChessGameTaskListModel.sortMO)
 	end
 
-	arg_1_0:setList(var_1_2)
+	self:setList(data)
 end
 
-function var_0_0.sortMO(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:alreadyGotReward()
-	local var_2_1 = arg_2_1:alreadyGotReward()
+function Activity109ChessGameTaskListModel.sortMO(objA, objB)
+	local alreadyGotA = objA:alreadyGotReward()
+	local alreadyGotB = objB:alreadyGotReward()
 
-	if var_2_0 ~= var_2_1 then
-		return var_2_1
+	if alreadyGotA ~= alreadyGotB then
+		return alreadyGotB
 	else
-		return arg_2_0.id < arg_2_1.id
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.createMO(arg_3_0, arg_3_1, arg_3_2)
-	return {
-		config = arg_3_2.config,
-		originTaskMO = arg_3_2
-	}
+function Activity109ChessGameTaskListModel:createMO(co, taskMO)
+	local mo = {}
+
+	mo.config = taskMO.config
+	mo.originTaskMO = taskMO
+
+	return mo
 end
 
-var_0_0.instance = var_0_0.New()
+Activity109ChessGameTaskListModel.instance = Activity109ChessGameTaskListModel.New()
 
-return var_0_0
+return Activity109ChessGameTaskListModel

@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapTaskViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/map/VersionActivity1_5DungeonMapTaskViewContainer.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonMapTaskViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapTaskViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity1_5DungeonMapTaskViewContainer = class("VersionActivity1_5DungeonMapTaskViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity1_5DungeonMapTaskView.New())
+function VersionActivity1_5DungeonMapTaskViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity1_5DungeonMapTaskView.New())
+
+	return views
 end
 
-return var_0_0
+return VersionActivity1_5DungeonMapTaskViewContainer

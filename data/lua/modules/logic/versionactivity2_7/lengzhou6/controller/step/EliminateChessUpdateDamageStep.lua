@@ -1,43 +1,50 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessUpdateDamageStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/controller/step/EliminateChessUpdateDamageStep.lua
 
-local var_0_0 = class("EliminateChessUpdateDamageStep", EliminateChessStepBase)
+module("modules.logic.versionactivity2_7.lengzhou6.controller.step.EliminateChessUpdateDamageStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data.damage
-	local var_1_1 = arg_1_0._data.hp
+local EliminateChessUpdateDamageStep = class("EliminateChessUpdateDamageStep", EliminateChessStepBase)
 
-	arg_1_0._isRound = arg_1_0._data.isRound
+function EliminateChessUpdateDamageStep:onStart()
+	local totalPlayerDamage = self._data.damage
+	local totalPlayerHp = self._data.hp
 
-	LengZhou6GameModel.instance:getEnemy():changeHp(-var_1_0)
-	LengZhou6GameModel.instance:getPlayer():changeHp(var_1_1)
+	self._isRound = self._data.isRound
+
+	local enemyEntity = LengZhou6GameModel.instance:getEnemy()
+
+	enemyEntity:changeHp(-totalPlayerDamage)
+
+	local playerEntity = LengZhou6GameModel.instance:getPlayer()
+
+	playerEntity:changeHp(totalPlayerHp)
 	LengZhou6EliminateController.instance:dispatchEvent(LengZhou6Event.UpdateEliminateDamage)
 
-	local var_1_2 = LengZhou6EliminateController.instance:dispatchShowAssess()
+	local asset = LengZhou6EliminateController.instance:dispatchShowAssess()
 
 	LengZhou6EliminateController.instance:resetCurEliminateCount()
 
-	local var_1_3 = 0
+	local time = 0
 
-	if var_1_2 ~= nil then
-		var_1_3 = math.max(var_1_3, EliminateEnum_2_7.AssessShowTime)
+	if asset ~= nil then
+		time = math.max(time, EliminateEnum_2_7.AssessShowTime)
 	end
 
-	local var_1_4, var_1_5 = LengZhou6GameModel.instance:getTotalPlayerSettle()
+	local damage, _ = LengZhou6GameModel.instance:getTotalPlayerSettle()
 
-	if var_1_4 > 0 then
-		var_1_3 = math.max(var_1_3, EliminateEnum_2_7.UpdateDamageStepTime)
+	if damage > 0 then
+		time = math.max(time, EliminateEnum_2_7.UpdateDamageStepTime)
 	end
 
-	if var_1_3 == 0 then
-		arg_1_0:_onDone()
+	if time == 0 then
+		self:_onDone()
 	else
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
+		TaskDispatcher.runDelay(self._onDone, self, time)
 	end
 end
 
-function var_0_0._onDone(arg_2_0)
-	LengZhou6GameController.instance:_updateRoundAndCD(arg_2_0._isRound)
-	var_0_0.super._onDone(arg_2_0)
+function EliminateChessUpdateDamageStep:_onDone()
+	LengZhou6GameController.instance:_updateRoundAndCD(self._isRound)
+	EliminateChessUpdateDamageStep.super._onDone(self)
 end
 
-return var_0_0
+return EliminateChessUpdateDamageStep

@@ -1,31 +1,35 @@
-﻿module("modules.logic.common.prerecvmsg.PreReciveLogicMsg", package.seeall)
+﻿-- chunkname: @modules/logic/common/prerecvmsg/PreReciveLogicMsg.lua
 
-local var_0_0 = class("PreReciveLogicMsg", BasePreReceiver)
+module("modules.logic.common.prerecvmsg.PreReciveLogicMsg", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local PreReciveLogicMsg = class("PreReciveLogicMsg", BasePreReceiver)
+
+function PreReciveLogicMsg:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0)
-	LuaSocketMgr.instance:registerPreReceiver(arg_2_0)
+function PreReciveLogicMsg:init()
+	LuaSocketMgr.instance:registerPreReceiver(self)
 end
 
-function var_0_0.preReceiveMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
-	if arg_3_1 == 0 then
+function PreReciveLogicMsg:preReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId)
+	if resultCode == 0 then
 		return
 	end
 
-	if not lua_toast.configDict[arg_3_1] then
-		logError("PreReciveLogicMsg:preReceiveMsg 没有为业务错误码：" .. arg_3_1 .. " 配置提示语！！《P飘字表》- export_飘字表")
+	local tipsCfg = lua_toast.configDict[resultCode]
+
+	if not tipsCfg then
+		logError("PreReciveLogicMsg:preReceiveMsg 没有为业务错误码：" .. resultCode .. " 配置提示语！！《P飘字表》- export_飘字表")
 
 		return
 	end
 
-	GameFacade.showToast(arg_3_1)
+	GameFacade.showToast(resultCode)
 end
 
-function var_0_0.preReceiveSysMsg(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6)
-	if arg_4_1 == 0 then
+function PreReciveLogicMsg:preReceiveSysMsg(resultCode, cmd, responseName, msg, downTag, socketId)
+	if resultCode == 0 then
 		return
 	end
 
@@ -33,9 +37,9 @@ function var_0_0.preReceiveSysMsg(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, a
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.StopLoading)
 	MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.ForbidLogin, MsgBoxEnum.BoxType.Yes, function()
 		LoginController.instance:logout()
-	end, nil, nil, nil, nil, nil, arg_4_4.reason)
+	end, nil, nil, nil, nil, nil, msg.reason)
 end
 
-var_0_0.instance = var_0_0.New()
+PreReciveLogicMsg.instance = PreReciveLogicMsg.New()
 
-return var_0_0
+return PreReciveLogicMsg

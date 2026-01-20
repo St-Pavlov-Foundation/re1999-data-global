@@ -1,50 +1,52 @@
-﻿module("modules.logic.fight.view.FightDouQuQuCoinView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightDouQuQuCoinView.lua
 
-local var_0_0 = class("FightDouQuQuCoinView", FightBaseView)
+module("modules.logic.fight.view.FightDouQuQuCoinView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.coinText = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_CoinCnt1")
-	arg_1_0.changeText = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_num")
-	arg_1_0.addEffect = gohelper.findChild(arg_1_0.viewGO, "root/#add")
-	arg_1_0.subEffect = gohelper.findChild(arg_1_0.viewGO, "root/#subtract")
+local FightDouQuQuCoinView = class("FightDouQuQuCoinView", FightBaseView)
 
-	gohelper.setActive(arg_1_0.addEffect, false)
-	gohelper.setActive(arg_1_0.subEffect, false)
+function FightDouQuQuCoinView:onInitView()
+	self.coinText = gohelper.findChildText(self.viewGO, "root/#txt_CoinCnt1")
+	self.changeText = gohelper.findChildText(self.viewGO, "root/#txt_num")
+	self.addEffect = gohelper.findChild(self.viewGO, "root/#add")
+	self.subEffect = gohelper.findChild(self.viewGO, "root/#subtract")
 
-	arg_1_0.changeText.text = ""
+	gohelper.setActive(self.addEffect, false)
+	gohelper.setActive(self.subEffect, false)
+
+	self.changeText.text = ""
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registFightEvent(FightEvent.UpdateFightParam, arg_2_0.onUpdateFightParam)
+function FightDouQuQuCoinView:addEvents()
+	self:com_registFightEvent(FightEvent.UpdateFightParam, self.onUpdateFightParam)
 end
 
-function var_0_0.onUpdateFightParam(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_1 ~= FightParamData.ParamKey.ACT191_COIN then
+function FightDouQuQuCoinView:onUpdateFightParam(keyId, oldValue, currValue, offset)
+	if keyId ~= FightParamData.ParamKey.ACT191_COIN then
 		return
 	end
 
-	arg_3_0.changeText.text = -arg_3_4
+	self.changeText.text = -offset
 
-	gohelper.setActive(arg_3_0.subEffect, false)
-	gohelper.setActive(arg_3_0.subEffect, true)
-	arg_3_0:com_registSingleTimer(arg_3_0.hideEffect, 1)
-	arg_3_0:com_scrollNumTween(arg_3_0.coinText, arg_3_2, arg_3_3, 0.5)
+	gohelper.setActive(self.subEffect, false)
+	gohelper.setActive(self.subEffect, true)
+	self:com_registSingleTimer(self.hideEffect, 1)
+	self:com_scrollNumTween(self.coinText, oldValue, currValue, 0.5)
 end
 
-function var_0_0.hideEffect(arg_4_0)
-	gohelper.setActive(arg_4_0.subEffect, false)
+function FightDouQuQuCoinView:hideEffect()
+	gohelper.setActive(self.subEffect, false)
 
-	arg_4_0.changeText.text = ""
+	self.changeText.text = ""
 end
 
-function var_0_0.refreshData(arg_5_0)
-	local var_5_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ACT191_COIN]
+function FightDouQuQuCoinView:refreshData()
+	local coin = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ACT191_COIN]
 
-	arg_5_0.coinText.text = var_5_0
+	self.coinText.text = coin
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:refreshData()
+function FightDouQuQuCoinView:onOpen()
+	self:refreshData()
 end
 
-return var_0_0
+return FightDouQuQuCoinView

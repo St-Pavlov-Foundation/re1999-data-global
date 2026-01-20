@@ -1,293 +1,305 @@
-﻿module("modules.logic.fight.model.FightEntityModel", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/FightEntityModel.lua
 
-local var_0_0 = class("FightEntityModel", BaseModel)
+module("modules.logic.fight.model.FightEntityModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._mySideModel = BaseModel.New()
-	arg_1_0._mySideSubModel = BaseModel.New()
-	arg_1_0._mySideDeadModel = BaseModel.New()
-	arg_1_0._mySideSpModel = BaseModel.New()
-	arg_1_0._enemySideModel = FightEnemySideModel.New()
-	arg_1_0._enemySideSubModel = BaseModel.New()
-	arg_1_0._enemySideDeadModel = BaseModel.New()
-	arg_1_0._enemySideSpModel = BaseModel.New()
+local FightEntityModel = class("FightEntityModel", BaseModel)
+
+function FightEntityModel:onInit()
+	self._mySideModel = BaseModel.New()
+	self._mySideSubModel = BaseModel.New()
+	self._mySideDeadModel = BaseModel.New()
+	self._mySideSpModel = BaseModel.New()
+	self._enemySideModel = FightEnemySideModel.New()
+	self._enemySideSubModel = BaseModel.New()
+	self._enemySideDeadModel = BaseModel.New()
+	self._enemySideSpModel = BaseModel.New()
 end
 
-function var_0_0.clear(arg_2_0)
-	var_0_0.super.clear(arg_2_0)
-	arg_2_0._mySideModel:clear()
-	arg_2_0._mySideSubModel:clear()
-	arg_2_0._mySideDeadModel:clear()
-	arg_2_0._mySideSpModel:clear()
-	arg_2_0._enemySideModel:clear()
-	arg_2_0._enemySideSubModel:clear()
-	arg_2_0._enemySideDeadModel:clear()
-	arg_2_0._enemySideSpModel:clear()
+function FightEntityModel:clear()
+	FightEntityModel.super.clear(self)
+	self._mySideModel:clear()
+	self._mySideSubModel:clear()
+	self._mySideDeadModel:clear()
+	self._mySideSpModel:clear()
+	self._enemySideModel:clear()
+	self._enemySideSubModel:clear()
+	self._enemySideDeadModel:clear()
+	self._enemySideSpModel:clear()
 end
 
-function var_0_0.clearExistEntitys(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0._mySideModel:clear()
-	arg_3_0._mySideSubModel:clear()
-	arg_3_0._mySideSpModel:clear()
-	arg_3_0._enemySideModel:clear()
-	arg_3_0._enemySideSubModel:clear()
-	arg_3_0._enemySideSpModel:clear()
+function FightEntityModel:clearExistEntitys()
+	FightEntityModel.super.clear(self)
+	self._mySideModel:clear()
+	self._mySideSubModel:clear()
+	self._mySideSpModel:clear()
+	self._enemySideModel:clear()
+	self._enemySideSubModel:clear()
+	self._enemySideSpModel:clear()
 end
 
-function var_0_0.clientTestSetEntity(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 == FightEnum.EntitySide.MySide then
-		arg_4_0._mySideModel:setList(arg_4_2)
-		arg_4_0._mySideSubModel:setList(arg_4_3)
+function FightEntityModel:clientTestSetEntity(side, entityMOList, subEntityMOList)
+	if side == FightEnum.EntitySide.MySide then
+		self._mySideModel:setList(entityMOList)
+		self._mySideSubModel:setList(subEntityMOList)
 	else
-		arg_4_0._enemySideModel:setList(arg_4_2)
-		arg_4_0._enemySideSubModel:setList(arg_4_3)
+		self._enemySideModel:setList(entityMOList)
+		self._enemySideSubModel:setList(subEntityMOList)
 	end
 
-	arg_4_0:addList(arg_4_2)
-	arg_4_0:addList(arg_4_3)
+	self:addList(entityMOList)
+	self:addList(subEntityMOList)
 end
 
-function var_0_0.setMySide(arg_5_0, arg_5_1)
-	arg_5_0:_setEntityMOList(arg_5_0._mySideModel, arg_5_1.entitys, FightEnum.EntitySide.MySide)
-	arg_5_0:_setEntityMOList(arg_5_0._mySideSubModel, arg_5_1.subEntitys, FightEnum.EntitySide.MySide)
-	arg_5_0:_setEntityMOList(arg_5_0._mySideSpModel, arg_5_1.spEntitys, FightEnum.EntitySide.MySide)
+function FightEntityModel:setMySide(fightTeam)
+	self:_setEntityMOList(self._mySideModel, fightTeam.entitys, FightEnum.EntitySide.MySide)
+	self:_setEntityMOList(self._mySideSubModel, fightTeam.subEntitys, FightEnum.EntitySide.MySide)
+	self:_setEntityMOList(self._mySideSpModel, fightTeam.spEntitys, FightEnum.EntitySide.MySide)
 end
 
-function var_0_0.setEnemySide(arg_6_0, arg_6_1)
-	arg_6_0:_setEntityMOList(arg_6_0._enemySideModel, arg_6_1.entitys, FightEnum.EntitySide.EnemySide)
-	arg_6_0:_setEntityMOList(arg_6_0._enemySideSubModel, arg_6_1.subEntitys, FightEnum.EntitySide.EnemySide)
-	arg_6_0:_setEntityMOList(arg_6_0._enemySideSpModel, arg_6_1.spEntitys, FightEnum.EntitySide.EnemySide)
+function FightEntityModel:setEnemySide(fightTeam)
+	self:_setEntityMOList(self._enemySideModel, fightTeam.entitys, FightEnum.EntitySide.EnemySide)
+	self:_setEntityMOList(self._enemySideSubModel, fightTeam.subEntitys, FightEnum.EntitySide.EnemySide)
+	self:_setEntityMOList(self._enemySideSpModel, fightTeam.spEntitys, FightEnum.EntitySide.EnemySide)
 end
 
-function var_0_0._setEntityMOList(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = arg_7_1:getList()
+function FightEntityModel:_setEntityMOList(entityModel, fightEntityInfos, side)
+	local oldList = entityModel:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_1 = var_7_0[iter_7_0]
+	for i, info in ipairs(fightEntityInfos) do
+		local entityMO = oldList[i]
 
-		if not var_7_1 then
-			var_7_1 = FightEntityMO.New()
+		if not entityMO then
+			entityMO = FightEntityMO.New()
 
-			table.insert(var_7_0, var_7_1)
+			table.insert(oldList, entityMO)
 		end
 
-		var_7_1:init(iter_7_1, arg_7_3)
+		entityMO:init(info, side)
 	end
 
-	for iter_7_2 = #arg_7_2 + 1, #var_7_0 do
-		var_7_0[iter_7_2] = nil
+	for i = #fightEntityInfos + 1, #oldList do
+		oldList[i] = nil
 	end
 
-	arg_7_1:setList(var_7_0)
-	arg_7_0:addList(arg_7_1:getList())
+	entityModel:setList(oldList)
+	self:addList(entityModel:getList())
 
-	for iter_7_3, iter_7_4 in ipairs(arg_7_2) do
-		if iter_7_4.currentHp <= 0 then
-			arg_7_0:onDead(iter_7_4.uid)
+	for _, info in ipairs(fightEntityInfos) do
+		if info.currentHp <= 0 then
+			self:onDead(info.uid)
 		end
 	end
 end
 
-function var_0_0.onDead(arg_8_0, arg_8_1)
-	arg_8_0:_checkDeadModel(arg_8_1, arg_8_0._mySideModel, arg_8_0._mySideDeadModel)
-	arg_8_0:_checkDeadModel(arg_8_1, arg_8_0._mySideSpModel, arg_8_0._mySideDeadModel)
-	arg_8_0:_checkDeadModel(arg_8_1, arg_8_0._enemySideModel, arg_8_0._enemySideDeadModel)
-	arg_8_0:_checkDeadModel(arg_8_1, arg_8_0._enemySideSpModel, arg_8_0._enemySideDeadModel)
+function FightEntityModel:onDead(entityId)
+	self:_checkDeadModel(entityId, self._mySideModel, self._mySideDeadModel)
+	self:_checkDeadModel(entityId, self._mySideSpModel, self._mySideDeadModel)
+	self:_checkDeadModel(entityId, self._enemySideModel, self._enemySideDeadModel)
+	self:_checkDeadModel(entityId, self._enemySideSpModel, self._enemySideDeadModel)
 end
 
-function var_0_0._checkDeadModel(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_2:getById(arg_9_1)
+function FightEntityModel:_checkDeadModel(entityId, model, deadModel)
+	local entityMO = model:getById(entityId)
 
-	if var_9_0 then
-		arg_9_2:remove(var_9_0)
+	if entityMO then
+		model:remove(entityMO)
 
-		if not arg_9_3:getById(arg_9_1) then
-			arg_9_3:addAtLast(var_9_0)
+		if not deadModel:getById(entityId) then
+			deadModel:addAtLast(entityMO)
 		end
 
-		arg_9_0:remove(var_9_0)
+		self:remove(entityMO)
 	end
 end
 
-function var_0_0.replaceEntityMO(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1.id
-	local var_10_1 = arg_10_0:removeEntityById(var_10_0) or arg_10_0:getModel(arg_10_1.side)
+function FightEntityModel:replaceEntityMO(entityMO)
+	local entityId = entityMO.id
+	local sideModel = self:removeEntityById(entityId)
 
-	if not var_10_1 then
+	sideModel = sideModel or self:getModel(entityMO.side)
+
+	if not sideModel then
 		return
 	end
 
-	var_10_1:addAtLast(arg_10_1)
-	arg_10_0:addAtLast(arg_10_1)
-	FightController.instance:dispatchEvent(FightEvent.ReplaceEntityMO, arg_10_1)
+	sideModel:addAtLast(entityMO)
+	self:addAtLast(entityMO)
+	FightController.instance:dispatchEvent(FightEvent.ReplaceEntityMO, entityMO)
 end
 
-function var_0_0.addEntityMO(arg_11_0, arg_11_1)
-	arg_11_0:removeEntityById(arg_11_1.id)
+function FightEntityModel:addEntityMO(entityMO)
+	self:removeEntityById(entityMO.id)
 
-	local var_11_0 = arg_11_0:getModel(arg_11_1.side)
+	local model = self:getModel(entityMO.side)
 
-	if var_11_0 then
-		var_11_0:addAtLast(arg_11_1)
-		arg_11_0:addAtLast(arg_11_1)
+	if model then
+		model:addAtLast(entityMO)
+		self:addAtLast(entityMO)
 	end
 end
 
-function var_0_0.removeEntityById(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._mySideModel:getById(arg_12_1)
+function FightEntityModel:removeEntityById(entityId)
+	local entityMO = self._mySideModel:getById(entityId)
 
-	if var_12_0 then
-		arg_12_0._mySideModel:remove(var_12_0)
-		arg_12_0:remove(var_12_0)
+	if entityMO then
+		self._mySideModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._mySideModel
+		return self._mySideModel
 	end
 
-	local var_12_1 = arg_12_0._mySideSubModel:getById(arg_12_1)
+	entityMO = self._mySideSubModel:getById(entityId)
 
-	if var_12_1 then
-		arg_12_0._mySideSubModel:remove(var_12_1)
-		arg_12_0:remove(var_12_1)
+	if entityMO then
+		self._mySideSubModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._mySideSubModel
+		return self._mySideSubModel
 	end
 
-	local var_12_2 = arg_12_0._mySideSpModel:getById(arg_12_1)
+	entityMO = self._mySideSpModel:getById(entityId)
 
-	if var_12_2 then
-		arg_12_0._mySideSpModel:remove(var_12_2)
-		arg_12_0:remove(var_12_2)
+	if entityMO then
+		self._mySideSpModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._mySideSpModel
+		return self._mySideSpModel
 	end
 
-	local var_12_3 = arg_12_0._enemySideModel:getById(arg_12_1)
+	entityMO = self._enemySideModel:getById(entityId)
 
-	if var_12_3 then
-		arg_12_0._enemySideModel:remove(var_12_3)
-		arg_12_0:remove(var_12_3)
+	if entityMO then
+		self._enemySideModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._enemySideModel
+		return self._enemySideModel
 	end
 
-	local var_12_4 = arg_12_0._enemySideSubModel:getById(arg_12_1)
+	entityMO = self._enemySideSubModel:getById(entityId)
 
-	if var_12_4 then
-		arg_12_0._enemySideSubModel:remove(var_12_4)
-		arg_12_0:remove(var_12_4)
+	if entityMO then
+		self._enemySideSubModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._enemySideSubModel
+		return self._enemySideSubModel
 	end
 
-	local var_12_5 = arg_12_0._enemySideSpModel:getById(arg_12_1)
+	entityMO = self._enemySideSpModel:getById(entityId)
 
-	if var_12_5 then
-		arg_12_0._enemySideSpModel:remove(var_12_5)
-		arg_12_0:remove(var_12_5)
+	if entityMO then
+		self._enemySideSpModel:remove(entityMO)
+		self:remove(entityMO)
 
-		return arg_12_0._enemySideSpModel
+		return self._enemySideSpModel
 	end
 end
 
-function var_0_0.getModel(arg_13_0, arg_13_1)
-	return arg_13_1 == FightEnum.EntitySide.MySide and arg_13_0._mySideModel or arg_13_0._enemySideModel
+function FightEntityModel:getModel(side)
+	return side == FightEnum.EntitySide.MySide and self._mySideModel or self._enemySideModel
 end
 
-function var_0_0.getSubModel(arg_14_0, arg_14_1)
-	return arg_14_1 == FightEnum.EntitySide.MySide and arg_14_0._mySideSubModel or arg_14_0._enemySideSubModel
+function FightEntityModel:getSubModel(side)
+	return side == FightEnum.EntitySide.MySide and self._mySideSubModel or self._enemySideSubModel
 end
 
-function var_0_0.getSpModel(arg_15_0, arg_15_1)
-	return arg_15_1 == FightEnum.EntitySide.MySide and arg_15_0._mySideSpModel or arg_15_0._enemySideSpModel
+function FightEntityModel:getSpModel(side)
+	return side == FightEnum.EntitySide.MySide and self._mySideSpModel or self._enemySideSpModel
 end
 
-function var_0_0.getDeadModel(arg_16_0, arg_16_1)
-	return arg_16_1 == FightEnum.EntitySide.MySide and arg_16_0._mySideDeadModel or arg_16_0._enemySideDeadModel
+function FightEntityModel:getDeadModel(side)
+	return side == FightEnum.EntitySide.MySide and self._mySideDeadModel or self._enemySideDeadModel
 end
 
-function var_0_0.getMySideModel(arg_17_0)
-	return arg_17_0._mySideModel
+function FightEntityModel:getMySideModel()
+	return self._mySideModel
 end
 
-function var_0_0.getEnemySideModel(arg_18_0)
-	return arg_18_0._enemySideModel
+function FightEntityModel:getEnemySideModel()
+	return self._enemySideModel
 end
 
-function var_0_0.getMySideList(arg_19_0)
-	return arg_19_0._mySideModel:getList()
+function FightEntityModel:getMySideList()
+	return self._mySideModel:getList()
 end
 
-function var_0_0.getEnemySideList(arg_20_0)
-	return arg_20_0._enemySideModel:getList()
+function FightEntityModel:getEnemySideList()
+	return self._enemySideModel:getList()
 end
 
-function var_0_0.getMySideDeadListLength(arg_21_0)
-	return #arg_21_0._mySideDeadModel:getList()
+function FightEntityModel:getMySideDeadListLength()
+	return #self._mySideDeadModel:getList()
 end
 
-function var_0_0.getByPosId(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0:getModel(arg_22_1):getList()
+function FightEntityModel:getByPosId(side, posId)
+	local model = self:getModel(side)
+	local list = model:getList()
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		if iter_22_1.position == arg_22_2 then
-			return iter_22_1
+	for _, entityMO in ipairs(list) do
+		if entityMO.position == posId then
+			return entityMO
 		end
 	end
 
-	local var_22_1 = arg_22_0:getSubModel(arg_22_1):getList()
+	local subModel = self:getSubModel(side)
+	local subList = subModel:getList()
 
-	for iter_22_2, iter_22_3 in ipairs(var_22_1) do
-		if iter_22_3.position == arg_22_2 then
-			return iter_22_3
+	for _, entityMO in ipairs(subList) do
+		if entityMO.position == posId then
+			return entityMO
 		end
 	end
 end
 
-function var_0_0.isSub(arg_23_0, arg_23_1)
-	if arg_23_0._mySideSubModel:getById(arg_23_1) then
+function FightEntityModel:isSub(uid)
+	local mySub = self._mySideSubModel:getById(uid)
+
+	if mySub then
 		return true
 	end
 
-	return arg_23_0._enemySideSubModel:getById(arg_23_1) and true or false
+	local enemySub = self._enemySideSubModel:getById(uid)
+
+	return enemySub and true or false
 end
 
-function var_0_0.getDeadById(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._mySideDeadModel:getById(arg_24_1)
+function FightEntityModel:getDeadById(uid)
+	local myDead = self._mySideDeadModel:getById(uid)
 
-	if var_24_0 then
-		return var_24_0
+	if myDead then
+		return myDead
 	end
 
-	return (arg_24_0._enemySideDeadModel:getById(arg_24_1))
+	local enemyDead = self._enemySideDeadModel:getById(uid)
+
+	return enemyDead
 end
 
-function var_0_0.addDeadUid(arg_25_0, arg_25_1)
-	arg_25_0.deadUids = arg_25_0.deadUids or {}
-	arg_25_0.deadUids[arg_25_1] = true
+function FightEntityModel:addDeadUid(uid)
+	self.deadUids = self.deadUids or {}
+	self.deadUids[uid] = true
 end
 
-function var_0_0.isDeadUid(arg_26_0, arg_26_1)
-	return arg_26_0.deadUids and arg_26_0.deadUids[arg_26_1]
+function FightEntityModel:isDeadUid(uid)
+	return self.deadUids and self.deadUids[uid]
 end
 
-function var_0_0.clearDeadUids(arg_27_0)
-	arg_27_0.deadUids = {}
+function FightEntityModel:clearDeadUids()
+	self.deadUids = {}
 end
 
-function var_0_0.sortSubEntityList(arg_28_0, arg_28_1)
-	return arg_28_0.position > arg_28_1.position
+function FightEntityModel.sortSubEntityList(item1, item2)
+	return item1.position > item2.position
 end
 
-var_0_0.instance = var_0_0.New()
+FightEntityModel.instance = FightEntityModel.New()
 
-var_0_0.instance:onInit()
-setmetatable(var_0_0.instance, {
-	__index = function(arg_29_0, arg_29_1)
+FightEntityModel.instance:onInit()
+setmetatable(FightEntityModel.instance, {
+	__index = function(tab, key)
 		logError("FightEntityModel 已废弃。新的entity数据管理为 FightEntityDataMgr ,访问数据请用 FightDataHelper.entityMgr ,如果疑问或需要支持联系左皓文")
 
-		return var_0_0[arg_29_1]
+		return FightEntityModel[key]
 	end
 })
 
-return var_0_0
+return FightEntityModel

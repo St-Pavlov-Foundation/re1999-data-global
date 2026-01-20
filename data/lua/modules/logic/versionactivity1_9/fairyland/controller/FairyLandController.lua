@@ -1,67 +1,69 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.controller.FairyLandController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/controller/FairyLandController.lua
 
-local var_0_0 = class("FairyLandController", BaseController)
+module("modules.logic.versionactivity1_9.fairyland.controller.FairyLandController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local FairyLandController = class("FairyLandController", BaseController)
+
+function FairyLandController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function FairyLandController:onInitFinish()
 	return
 end
 
-function var_0_0.openFairyLandView(arg_3_0, arg_3_1)
-	arg_3_0.viewParam = arg_3_1
+function FairyLandController:openFairyLandView(param)
+	self.viewParam = param
 
 	if FairyLandModel.instance.hasInfo then
-		arg_3_0:_openView()
+		self:_openView()
 	else
-		FairyLandRpc.instance:sendGetFairylandInfoRequest(arg_3_0._openView, arg_3_0)
+		FairyLandRpc.instance:sendGetFairylandInfoRequest(self._openView, self)
 	end
 end
 
-function var_0_0._openView(arg_4_0)
+function FairyLandController:_openView()
 	if FairyLandModel.instance:isFinishFairyLand() then
-		arg_4_0:checkFinishFairyLandElement()
+		self:checkFinishFairyLandElement()
 
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.FairyLandView, arg_4_0.viewParam)
+	ViewMgr.instance:openView(ViewName.FairyLandView, self.viewParam)
 end
 
-function var_0_0.checkFinishFairyLandElement(arg_5_0)
+function FairyLandController:checkFinishFairyLandElement()
 	if not DungeonMapModel.instance:elementIsFinished(FairyLandEnum.ElementId) then
 		DungeonRpc.instance:sendMapElementRequest(FairyLandEnum.ElementId)
 	end
 end
 
-function var_0_0.openDialogView(arg_6_0, arg_6_1)
-	var_0_0.instance:dispatchEvent(FairyLandEvent.ShowDialogView, arg_6_1)
+function FairyLandController:openDialogView(param)
+	FairyLandController.instance:dispatchEvent(FairyLandEvent.ShowDialogView, param)
 end
 
-function var_0_0.closeDialogView(arg_7_0)
-	var_0_0.instance:dispatchEvent(FairyLandEvent.CloseDialogView)
+function FairyLandController:closeDialogView()
+	FairyLandController.instance:dispatchEvent(FairyLandEvent.CloseDialogView)
 end
 
-function var_0_0.openCompleteView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = FairyLandEnum.Puzzle2ShapeType[arg_8_1]
+function FairyLandController:openCompleteView(puzzleId, callback, callbackObj)
+	local shapeType = FairyLandEnum.Puzzle2ShapeType[puzzleId]
 
-	if var_8_0 then
+	if shapeType then
 		ViewMgr.instance:openView(ViewName.FairyLandCompleteView, {
-			shapeType = var_8_0,
-			callback = arg_8_2,
-			callbackObj = arg_8_3
+			shapeType = shapeType,
+			callback = callback,
+			callbackObj = callbackObj
 		})
-	elseif arg_8_2 then
-		arg_8_2(arg_8_3)
+	elseif callback then
+		callback(callbackObj)
 	end
 end
 
-function var_0_0.endFairyLandStory()
-	var_0_0.instance:checkFinishFairyLandElement()
+function FairyLandController.endFairyLandStory()
+	FairyLandController.instance:checkFinishFairyLandElement()
 end
 
-var_0_0.instance = var_0_0.New()
+FairyLandController.instance = FairyLandController.New()
 
-return var_0_0
+return FairyLandController

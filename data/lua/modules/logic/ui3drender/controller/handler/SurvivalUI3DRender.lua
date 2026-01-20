@@ -1,269 +1,271 @@
-﻿module("modules.logic.ui3drender.controller.handler.SurvivalUI3DRender", package.seeall)
+﻿-- chunkname: @modules/logic/ui3drender/controller/handler/SurvivalUI3DRender.lua
 
-local var_0_0 = class("SurvivalUI3DRender", UserDataDispose)
+module("modules.logic.ui3drender.controller.handler.SurvivalUI3DRender", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:__onInit()
+local SurvivalUI3DRender = class("SurvivalUI3DRender", UserDataDispose)
 
-	arg_1_0.texW = arg_1_1
-	arg_1_0.texH = arg_1_2
-	arg_1_0.pos = arg_1_3
+function SurvivalUI3DRender:ctor(texW, texH, pos)
+	self:__onInit()
+
+	self.texW = texW
+	self.texH = texH
+	self.pos = pos
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0._rt = UnityEngine.RenderTexture.GetTemporary(arg_2_0.texW, arg_2_0.texH, 0, UnityEngine.RenderTextureFormat.ARGB32)
-	arg_2_0._modelList = {}
-	arg_2_0._hangeRoots = arg_2_0:getUserDataTb_()
-	arg_2_0._loader = SequenceAbLoader.New()
+function SurvivalUI3DRender:init()
+	self._rt = UnityEngine.RenderTexture.GetTemporary(self.texW, self.texH, 0, UnityEngine.RenderTextureFormat.ARGB32)
+	self._modelList = {}
+	self._hangeRoots = self:getUserDataTb_()
+	self._loader = SequenceAbLoader.New()
 
-	arg_2_0._loader:addPath("survival/common/survivalcamera.prefab")
-	arg_2_0._loader:startLoad(arg_2_0._onResLoad, arg_2_0)
-	arg_2_0:initCamera()
+	self._loader:addPath("survival/common/survivalcamera.prefab")
+	self._loader:startLoad(self._onResLoad, self)
+	self:initCamera()
 end
 
-function var_0_0.dispose(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._modelList) do
-		gohelper.destroy(iter_3_1)
+function SurvivalUI3DRender:dispose()
+	for _, item in pairs(self._modelList) do
+		gohelper.destroy(item)
 	end
 
-	arg_3_0._modelList = {}
+	self._modelList = {}
 
-	if arg_3_0._rt then
-		UnityEngine.RenderTexture.ReleaseTemporary(arg_3_0._rt)
+	if self._rt then
+		UnityEngine.RenderTexture.ReleaseTemporary(self._rt)
 
-		arg_3_0._rt = nil
+		self._rt = nil
 	end
 
-	if arg_3_0._loader then
-		arg_3_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_3_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_3_0._cameraObj then
-		gohelper.destroy(arg_3_0._cameraObj)
+	if self._cameraObj then
+		gohelper.destroy(self._cameraObj)
 
-		arg_3_0._cameraObj = nil
+		self._cameraObj = nil
 	end
 
-	arg_3_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0.getRenderTexture(arg_4_0)
-	return arg_4_0._rt
+function SurvivalUI3DRender:getRenderTexture()
+	return self._rt
 end
 
-function var_0_0._onResLoad(arg_5_0)
-	local var_5_0 = arg_5_0._loader:getFirstAssetItem():GetResource()
+function SurvivalUI3DRender:_onResLoad()
+	local prefab = self._loader:getFirstAssetItem():GetResource()
 
-	arg_5_0._cameraObj = gohelper.clone(var_5_0)
+	self._cameraObj = gohelper.clone(prefab)
 
-	local var_5_1 = arg_5_0._cameraObj.transform
+	local trans = self._cameraObj.transform
 
-	transformhelper.setLocalPos(var_5_1, arg_5_0.pos[1], arg_5_0.pos[2], arg_5_0.pos[3])
+	transformhelper.setLocalPos(trans, self.pos[1], self.pos[2], self.pos[3])
 
-	local var_5_2 = arg_5_0._cameraObj:GetComponentInChildren(typeof(UnityEngine.Camera))
+	local camera = self._cameraObj:GetComponentInChildren(typeof(UnityEngine.Camera))
 
-	var_5_2.targetTexture = arg_5_0._rt
+	camera.targetTexture = self._rt
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Survival then
-		var_5_2.farClipPlane = 1
-		var_5_2.nearClipPlane = 0.05
+		camera.farClipPlane = 1
+		camera.nearClipPlane = 0.05
 
-		transformhelper.setLocalScale(var_5_1, 0.16, 0.16, 0.16)
+		transformhelper.setLocalScale(trans, 0.16, 0.16, 0.16)
 	end
 
-	arg_5_0:setHangRoot(var_5_1)
+	self:setHangRoot(trans)
 
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._modelList) do
-		if arg_5_0._hangeRoots[iter_5_0] then
-			iter_5_1.transform:SetParent(arg_5_0._hangeRoots[iter_5_0], false)
+	for hangPath, item in pairs(self._modelList) do
+		if self._hangeRoots[hangPath] then
+			item.transform:SetParent(self._hangeRoots[hangPath], false)
 		end
 	end
 end
 
-function var_0_0.setHangRoot(arg_6_0, arg_6_1, arg_6_2)
-	for iter_6_0 = 0, arg_6_1.childCount - 1 do
-		local var_6_0 = arg_6_1:GetChild(iter_6_0)
-		local var_6_1 = var_6_0.name
+function SurvivalUI3DRender:setHangRoot(trans, preName)
+	for i = 0, trans.childCount - 1 do
+		local child = trans:GetChild(i)
+		local path = child.name
 
-		if arg_6_2 then
-			var_6_1 = arg_6_2 .. var_6_1
+		if preName then
+			path = preName .. path
 		end
 
-		arg_6_0._hangeRoots[var_6_1] = var_6_0
+		self._hangeRoots[path] = child
 
-		arg_6_0:setHangRoot(var_6_0, var_6_1 .. "/")
+		self:setHangRoot(child, path .. "/")
 	end
 end
 
-function var_0_0.addModel(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._modelList[arg_7_1] or UnityEngine.GameObject.New()
-	local var_7_1 = PrefabInstantiate.Create(var_7_0)
+function SurvivalUI3DRender:addModel(hangPath, resPath)
+	local go = self._modelList[hangPath] or UnityEngine.GameObject.New()
+	local loader = PrefabInstantiate.Create(go)
 
-	if var_7_1:getPath() ~= arg_7_2 then
-		if arg_7_0._loaderEndCallBack and arg_7_0._loaderEndCallBack[var_7_1] then
-			arg_7_0._loaderEndCallBack[var_7_1] = nil
+	if loader:getPath() ~= resPath then
+		if self._loaderEndCallBack and self._loaderEndCallBack[loader] then
+			self._loaderEndCallBack[loader] = nil
 		end
 
-		if arg_7_0._curAnims then
-			arg_7_0._curAnims[arg_7_1] = nil
+		if self._curAnims then
+			self._curAnims[hangPath] = nil
 		end
 
-		var_7_1:dispose()
+		loader:dispose()
 
-		if not string.nilorempty(arg_7_2) then
-			var_7_1:startLoad(arg_7_2, arg_7_0._onModelLoaded, arg_7_0)
+		if not string.nilorempty(resPath) then
+			loader:startLoad(resPath, self._onModelLoaded, self)
 		end
 	end
 
-	arg_7_0._modelList[arg_7_1] = var_7_0
+	self._modelList[hangPath] = go
 
-	if arg_7_0._hangeRoots[arg_7_1] then
-		var_7_0.transform:SetParent(arg_7_0._hangeRoots[arg_7_1], false)
+	if self._hangeRoots[hangPath] then
+		go.transform:SetParent(self._hangeRoots[hangPath], false)
 	end
 
-	return var_7_0
+	return go
 end
 
-function var_0_0.playAnim(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0._modelList[arg_8_1]
+function SurvivalUI3DRender:playAnim(hangPath, animName)
+	local go = self._modelList[hangPath]
 
-	if not var_8_0 then
+	if not go then
 		return
 	end
 
-	arg_8_0._curAnims = arg_8_0._curAnims or {}
+	self._curAnims = self._curAnims or {}
 
-	if arg_8_0._curAnims[arg_8_1] == arg_8_2 then
+	if self._curAnims[hangPath] == animName then
 		return
 	end
 
-	arg_8_0._curAnims[arg_8_1] = arg_8_2
+	self._curAnims[hangPath] = animName
 
-	local var_8_1 = PrefabInstantiate.Create(var_8_0)
-	local var_8_2 = var_8_1:getInstGO()
+	local loader = PrefabInstantiate.Create(go)
+	local resGo = loader:getInstGO()
 
-	if not var_8_2 then
-		table.insert(arg_8_0:getEndCallback(var_8_1), {
-			arg_8_0.playAnim,
-			arg_8_0,
-			arg_8_1,
-			arg_8_2
+	if not resGo then
+		table.insert(self:getEndCallback(loader), {
+			self.playAnim,
+			self,
+			hangPath,
+			animName
 		})
 	else
-		local var_8_3 = gohelper.findChildAnim(var_8_2, "")
+		local anim = gohelper.findChildAnim(resGo, "")
 
-		if var_8_3 and var_8_3.isActiveAndEnabled then
-			var_8_3:Play(arg_8_2, 0, 0)
+		if anim and anim.isActiveAndEnabled then
+			anim:Play(animName, 0, 0)
 		end
 	end
 end
 
-function var_0_0.getEndCallback(arg_9_0, arg_9_1)
-	arg_9_0._loaderEndCallBack = arg_9_0._loaderEndCallBack or {}
-	arg_9_0._loaderEndCallBack[arg_9_1] = arg_9_0._loaderEndCallBack[arg_9_1] or {}
+function SurvivalUI3DRender:getEndCallback(loader)
+	self._loaderEndCallBack = self._loaderEndCallBack or {}
+	self._loaderEndCallBack[loader] = self._loaderEndCallBack[loader] or {}
 
-	return arg_9_0._loaderEndCallBack[arg_9_1]
+	return self._loaderEndCallBack[loader]
 end
 
-function var_0_0.setModelPathActive(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0._modelList[arg_10_1]
+function SurvivalUI3DRender:setModelPathActive(hangPath, path, isActive)
+	local go = self._modelList[hangPath]
 
-	if not var_10_0 then
+	if not go then
 		return
 	end
 
-	local var_10_1 = PrefabInstantiate.Create(var_10_0)
-	local var_10_2 = var_10_1:getInstGO()
+	local loader = PrefabInstantiate.Create(go)
+	local resGo = loader:getInstGO()
 
-	if not var_10_2 then
-		table.insert(arg_10_0:getEndCallback(var_10_1), {
-			arg_10_0.setModelPathActive,
-			arg_10_0,
-			arg_10_1,
-			arg_10_2,
-			arg_10_3
+	if not resGo then
+		table.insert(self:getEndCallback(loader), {
+			self.setModelPathActive,
+			self,
+			hangPath,
+			path,
+			isActive
 		})
 	else
-		local var_10_3 = gohelper.findChild(var_10_2, arg_10_2)
+		local go2 = gohelper.findChild(resGo, path)
 
-		gohelper.setActive(var_10_3, arg_10_3)
+		gohelper.setActive(go2, isActive)
 	end
 end
 
-function var_0_0._onModelLoaded(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._loaderEndCallBack and arg_11_0._loaderEndCallBack[arg_11_1]
+function SurvivalUI3DRender:_onModelLoaded(loader)
+	local list = self._loaderEndCallBack and self._loaderEndCallBack[loader]
 
-	if var_11_0 then
-		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-			iter_11_1[1](iter_11_1[2], unpack(iter_11_1, 3))
+	if list then
+		for _, v in ipairs(list) do
+			v[1](v[2], unpack(v, 3))
 		end
 
-		arg_11_0._loaderEndCallBack[arg_11_1] = nil
+		self._loaderEndCallBack[loader] = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function SurvivalUI3DRender:onDestroy()
 	return
 end
 
-local var_0_1 = {
+local allRolePath = {
 	"node1/role",
 	"node2/role",
 	"node6/role"
 }
 
-function var_0_0.initCamera(arg_13_0)
-	local var_13_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
+function SurvivalUI3DRender:initCamera()
+	local path = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
 
-	arg_13_0._allResGo = arg_13_0:getUserDataTb_()
+	self._allResGo = self:getUserDataTb_()
 
-	for iter_13_0, iter_13_1 in ipairs(var_0_1) do
-		arg_13_0._allResGo[iter_13_1] = arg_13_0:addModel(iter_13_1, var_13_0)
+	for i, v in ipairs(allRolePath) do
+		self._allResGo[v] = self:addModel(v, path)
 	end
 
-	arg_13_0:hideOtherModel()
+	self:hideOtherModel()
 end
 
-function var_0_0.setSurvival3DModelMO(arg_14_0, arg_14_1)
-	arg_14_0._curHeroPath = arg_14_1.curHeroPath
-	arg_14_0._curUnitPath = arg_14_1.curUnitPath
-	arg_14_0.unitPath = arg_14_1.unitPath
+function SurvivalUI3DRender:setSurvival3DModelMO(survival3DModelMO)
+	self._curHeroPath = survival3DModelMO.curHeroPath
+	self._curUnitPath = survival3DModelMO.curUnitPath
+	self.unitPath = survival3DModelMO.unitPath
 
-	if arg_14_0._curUnitPath then
-		arg_14_0._allResGo[arg_14_0._curUnitPath] = arg_14_0:addModel(arg_14_0._curUnitPath, arg_14_0.unitPath)
+	if self._curUnitPath then
+		self._allResGo[self._curUnitPath] = self:addModel(self._curUnitPath, self.unitPath)
 	end
 
-	if arg_14_1.isHandleHeroPath and arg_14_0._curHeroPath then
-		arg_14_0:setModelPathActive(arg_14_0._curHeroPath, "#go_effect", arg_14_1.isSearch)
-		arg_14_0:playAnim(arg_14_0._curHeroPath, arg_14_1.isSearch and "search" or "idle")
+	if survival3DModelMO.isHandleHeroPath and self._curHeroPath then
+		self:setModelPathActive(self._curHeroPath, "#go_effect", survival3DModelMO.isSearch)
+		self:playAnim(self._curHeroPath, survival3DModelMO.isSearch and "search" or "idle")
 	end
 
-	arg_14_0:hideOtherModel()
+	self:hideOtherModel()
 end
 
-function var_0_0.hideOtherModel(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0._allResGo) do
-		gohelper.setActive(iter_15_1, iter_15_0 == arg_15_0._curHeroPath or iter_15_0 == arg_15_0._curUnitPath)
+function SurvivalUI3DRender:hideOtherModel()
+	for path, go in pairs(self._allResGo) do
+		gohelper.setActive(go, path == self._curHeroPath or path == self._curUnitPath)
 	end
 end
 
-local var_0_2 = {
+local animTypeToName = {
 	[0] = "idle",
 	"jump",
 	"jump2",
 	"down_idle"
 }
 
-function var_0_0.playNextAnim(arg_16_0, arg_16_1)
-	if arg_16_0._curHeroPath then
-		if var_0_2[arg_16_1] then
-			arg_16_0:playAnim(arg_16_0._curHeroPath, var_0_2[arg_16_1])
+function SurvivalUI3DRender:playNextAnim(animType)
+	if self._curHeroPath then
+		if animTypeToName[animType] then
+			self:playAnim(self._curHeroPath, animTypeToName[animType])
 		else
-			logError("未处理角色动作类型" .. tostring(arg_16_1))
+			logError("未处理角色动作类型" .. tostring(animType))
 		end
 	end
 end
 
-return var_0_0
+return SurvivalUI3DRender

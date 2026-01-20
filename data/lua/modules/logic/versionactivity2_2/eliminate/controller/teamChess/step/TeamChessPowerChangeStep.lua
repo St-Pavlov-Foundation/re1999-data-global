@@ -1,40 +1,42 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPowerChangeStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/TeamChessPowerChangeStep.lua
 
-local var_0_0 = class("TeamChessPowerChangeStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.TeamChessPowerChangeStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
-	local var_1_1 = var_1_0.needShowDamage
-	local var_1_2 = var_1_0.reasonId
+local TeamChessPowerChangeStep = class("TeamChessPowerChangeStep", EliminateTeamChessStepBase)
 
-	if var_1_0.uid == nil or var_1_0.diffValue == nil then
-		arg_1_0:onDone(true)
+function TeamChessPowerChangeStep:onStart()
+	local data = self._data
+	local needShowDamage = data.needShowDamage
+	local reasonId = data.reasonId
+
+	if data.uid == nil or data.diffValue == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	local var_1_3 = EliminateTeamChessEnum.teamChessPowerChangeStepTime
-	local var_1_4 = EliminateTeamChessEnum.HpDamageType.Chess
+	local delayTime = EliminateTeamChessEnum.teamChessPowerChangeStepTime
+	local hpChangeType = EliminateTeamChessEnum.HpDamageType.Chess
 
-	if var_1_2 ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(var_1_2)) then
-		var_1_3 = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
-		var_1_4 = EliminateTeamChessEnum.HpDamageType.GrowUpToChess
+	if reasonId ~= nil and EliminateTeamChessModel.instance.chessSkillIsGrowUp(tonumber(reasonId)) then
+		delayTime = EliminateTeamChessEnum.teamChessGrowUpToChangePowerStepTime
+		hpChangeType = EliminateTeamChessEnum.HpDamageType.GrowUpToChess
 	end
 
-	EliminateTeamChessModel.instance:updateChessPower(var_1_0.uid, var_1_0.diffValue)
+	EliminateTeamChessModel.instance:updateChessPower(data.uid, data.diffValue)
 
-	if var_1_1 then
-		local var_1_5 = TeamChessUnitEntityMgr.instance:getEntity(var_1_0.uid)
+	if needShowDamage then
+		local entity = TeamChessUnitEntityMgr.instance:getEntity(data.uid)
 
-		if var_1_5 ~= nil then
-			local var_1_6, var_1_7, var_1_8 = var_1_5:getTopPosXYZ()
+		if entity ~= nil then
+			local x, y, _ = entity:getTopPosXYZ()
 
-			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, var_1_0.diffValue, var_1_6, var_1_7 + 0.5, var_1_4)
+			EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.PlayDamageEffect, data.diffValue, x, y + 0.5, hpChangeType)
 		end
 	end
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessPowerChange, var_1_0.uid, var_1_0.diffValue)
-	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.TeamChessPowerChange, data.uid, data.diffValue)
+	TaskDispatcher.runDelay(self._onDone, self, delayTime)
 end
 
-return var_0_0
+return TeamChessPowerChangeStep

@@ -1,79 +1,107 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapTaskItem", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapTaskItem.lua
 
-local var_0_0 = class("DungeonMapTaskItem", DungeonMapTaskInfoItem)
+module("modules.logic.dungeon.view.map.DungeonMapTaskItem", package.seeall)
 
-function var_0_0.setParam(arg_1_0, arg_1_1)
-	if arg_1_0._anim and (not arg_1_0.viewGO.activeInHierarchy or arg_1_0._elementId ~= arg_1_1[2]) then
-		arg_1_0._anim:Play("taskitem_in", 0, 0)
+local DungeonMapTaskItem = class("DungeonMapTaskItem", DungeonMapTaskInfoItem)
+
+function DungeonMapTaskItem:setParam(param)
+	if self._anim and (not self.viewGO.activeInHierarchy or self._elementId ~= param[2]) then
+		self._anim:Play("taskitem_in", 0, 0)
 	end
 
-	arg_1_0._index = arg_1_1[1]
-	arg_1_0._elementId = arg_1_1[2]
+	self._index = param[1]
+	self._elementId = param[2]
+	self._episodeId = param[3]
+	self._isMain = param[4]
 
-	local var_1_0 = lua_chapter_map_element.configDict[arg_1_0._elementId]
+	local elementConfig = lua_chapter_map_element.configDict[self._elementId]
 
-	if not var_1_0 then
-		logError("元件表找不到元件id:" .. arg_1_0._elementId)
+	if not elementConfig then
+		logError("元件表找不到元件id:" .. self._elementId)
 	end
 
-	arg_1_0._txtinfo.text = var_1_0.title
+	self._txtinfo.text = elementConfig.title
 
-	if arg_1_0:_showIcon(var_1_0) then
-		DungeonMapTaskInfoItem.setIcon(arg_1_0._icon, arg_1_0._elementId, "zhuxianditu_renwuicon_")
-		gohelper.setActive(arg_1_0._icon, true)
+	if self:_showIcon(elementConfig) then
+		DungeonMapTaskInfoItem.setIcon(self._icon, self._elementId, "zhuxianditu_renwuicon_")
+		gohelper.setActive(self._icon, true)
 	else
-		gohelper.setActive(arg_1_0._icon, false)
+		gohelper.setActive(self._icon, false)
 	end
 
-	arg_1_0:refreshStatus()
+	self:refreshStatus()
 end
 
-function var_0_0._showIcon(arg_2_0, arg_2_1)
-	if arg_2_1.type == DungeonEnum.ElementType.Investigate then
+function DungeonMapTaskItem:_showIcon(elementConfig)
+	if elementConfig.type == DungeonEnum.ElementType.Investigate then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.refreshStatus(arg_3_0)
-	if DungeonMapModel.instance:elementIsFinished(arg_3_0._elementId) then
-		local var_3_0 = GameUtil.parseColor("#272525b2")
+function DungeonMapTaskItem:refreshStatus()
+	local isFinish = DungeonMapModel.instance:elementIsFinished(self._elementId)
 
-		arg_3_0._txtinfo.color = var_3_0
-		arg_3_0._txtprogress.color = var_3_0
-		arg_3_0._icon.color = GameUtil.parseColor("#b2562b")
-		arg_3_0._txtprogress.text = "1/1"
+	if isFinish then
+		local color = GameUtil.parseColor("#272525b2")
+
+		self._txtinfo.color = color
+		self._txtprogress.color = color
+		self._icon.color = GameUtil.parseColor("#b2562b")
+		self._txtprogress.text = "1/1"
 	else
-		local var_3_1 = GameUtil.parseColor("#272525")
+		local color = GameUtil.parseColor("#272525")
 
-		arg_3_0._txtinfo.color = var_3_1
-		arg_3_0._txtprogress.color = var_3_1
-		arg_3_0._icon.color = GameUtil.parseColor("#81807f")
-		arg_3_0._txtprogress.text = "0/1"
+		self._txtinfo.color = color
+		self._txtprogress.color = color
+		self._icon.color = GameUtil.parseColor("#81807f")
+		self._txtprogress.text = "0/1"
 	end
+
+	local episodeId = self._episodeId
+	local episodeConfig = lua_episode.configDict[episodeId]
+	local showArrow = not isFinish and DungeonModel.instance:isFinishElementList(episodeConfig)
+
+	gohelper.setActive(self._goarrow, showArrow)
+	gohelper.setActive(self._btnclick, showArrow)
 end
 
-function var_0_0.init(arg_4_0, arg_4_1)
-	var_0_0.super.init(arg_4_0, arg_4_1)
+function DungeonMapTaskItem:init(go)
+	DungeonMapTaskItem.super.init(self, go)
 
-	arg_4_0._txtprogress = gohelper.findChildText(arg_4_0.viewGO, "progress")
+	self._txtprogress = gohelper.findChildText(self.viewGO, "progress")
+	self._goarrow = gohelper.findChild(self.viewGO, "arrow")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_goto")
 end
 
-function var_0_0.addEventListeners(arg_5_0)
+function DungeonMapTaskItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+end
+
+function DungeonMapTaskItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+end
+
+function DungeonMapTaskItem:_btnclickOnClick()
+	ViewMgr.instance:closeView(ViewName.DungeonMapTaskView)
+
+	if self._isMain then
+		ViewMgr.instance:closeView(ViewName.DungeonMapLevelView)
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnJumpEpisodeItemAndElement, self._episodeId, self._elementId)
+
+		return
+	end
+
+	VersionActivityFixedDungeonController.instance:dispatchEvent(VersionActivityFixedDungeonEvent.ManualClickElement, self._elementId)
+end
+
+function DungeonMapTaskItem:onStart()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function DungeonMapTaskItem:onDestroy()
 	return
 end
 
-function var_0_0.onStart(arg_7_0)
-	return
-end
-
-function var_0_0.onDestroy(arg_8_0)
-	return
-end
-
-return var_0_0
+return DungeonMapTaskItem

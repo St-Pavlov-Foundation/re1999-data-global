@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.system.work.FightWorkAddHandCardContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAddHandCardContainer.lua
 
-local var_0_0 = class("FightWorkAddHandCardContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkAddHandCardContainer", package.seeall)
+
+local FightWorkAddHandCardContainer = class("FightWorkAddHandCardContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0:getAdjacentSameEffectList(var_0_1, true)
-	local var_1_1 = arg_1_0:com_registWorkDoneFlowParallel()
-	local var_1_2 = 0
+function FightWorkAddHandCardContainer:onStart()
+	local list = self:getAdjacentSameEffectList(parallelEffectType, true)
+	local flow = self:com_registWorkDoneFlowParallel()
+	local count = 0
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_3 = iter_1_1.actEffectData.effectType
-		local var_1_4 = FightStepBuilder.ActEffectWorkCls[var_1_3]
+	for i, data in ipairs(list) do
+		local effectType = data.actEffectData.effectType
+		local class = FightStepBuilder.ActEffectWorkCls[effectType]
 
-		var_1_2 = var_1_2 + 1
+		count = count + 1
 
-		local var_1_5 = var_1_1:registWork(FightWorkFlowSequence)
+		local sequence = flow:registWork(FightWorkFlowSequence)
 
-		var_1_5:registWork(FightWorkDelayTimer, 0.05 * var_1_2)
-		var_1_5:registWork(var_1_4, iter_1_1.fightStepData, iter_1_1.actEffectData)
+		sequence:registWork(FightWorkDelayTimer, 0.05 * count)
+		sequence:registWork(class, data.fightStepData, data.actEffectData)
 	end
 
-	var_1_1:start()
+	flow:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkAddHandCardContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkAddHandCardContainer

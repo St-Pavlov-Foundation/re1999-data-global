@@ -1,42 +1,44 @@
-﻿module("modules.logic.gift.model.GiftModel", package.seeall)
+﻿-- chunkname: @modules/logic/gift/model/GiftModel.lua
 
-local var_0_0 = class("GiftModel", BaseModel)
+module("modules.logic.gift.model.GiftModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._multipleChoiceIndex = 0
-	arg_1_0._multipleChoiceId = 0
-	arg_1_0._needProps = {}
+local GiftModel = class("GiftModel", BaseModel)
+
+function GiftModel:onInit()
+	self._multipleChoiceIndex = 0
+	self._multipleChoiceId = 0
+	self._needProps = {}
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0._multipleChoiceIndex = 0
-	arg_2_0._multipleChoiceId = 0
-	arg_2_0._needProps = {}
+function GiftModel:reset()
+	self._multipleChoiceIndex = 0
+	self._multipleChoiceId = 0
+	self._needProps = {}
 end
 
-function var_0_0.setMultipleChoiceIndex(arg_3_0, arg_3_1)
-	arg_3_0._multipleChoiceIndex = arg_3_1
+function GiftModel:setMultipleChoiceIndex(index)
+	self._multipleChoiceIndex = index
 end
 
-function var_0_0.getMultipleChoiceIndex(arg_4_0)
-	return arg_4_0._multipleChoiceIndex
+function GiftModel:getMultipleChoiceIndex()
+	return self._multipleChoiceIndex
 end
 
-function var_0_0.setMultipleChoiceId(arg_5_0, arg_5_1)
-	arg_5_0._multipleChoiceId = arg_5_1
+function GiftModel:setMultipleChoiceId(id)
+	self._multipleChoiceId = id
 end
 
-function var_0_0.getMultipleChoiceId(arg_6_0)
-	return arg_6_0._multipleChoiceId
+function GiftModel:getMultipleChoiceId()
+	return self._multipleChoiceId
 end
 
-function var_0_0.setNeedGift(arg_7_0, arg_7_1)
-	table.insert(arg_7_0._needProps, arg_7_1)
+function GiftModel:setNeedGift(propId)
+	table.insert(self._needProps, propId)
 end
 
-function var_0_0.isGiftNeed(arg_8_0, arg_8_1)
-	for iter_8_0, iter_8_1 in pairs(arg_8_0._needProps) do
-		if iter_8_1 == arg_8_1 then
+function GiftModel:isGiftNeed(propId)
+	for _, v in pairs(self._needProps) do
+		if v == propId then
 			return true
 		end
 	end
@@ -44,6 +46,6 @@ function var_0_0.isGiftNeed(arg_8_0, arg_8_1)
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+GiftModel.instance = GiftModel.New()
 
-return var_0_0
+return GiftModel

@@ -1,52 +1,56 @@
-﻿module("modules.logic.mail.view.MailViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/mail/view/MailViewContainer.lua
 
-local var_0_0 = class("MailViewContainer", BaseViewContainer)
+module("modules.logic.mail.view.MailViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local MailViewContainer = class("MailViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "mailtipview/#go_left/#scroll_mail"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = MailCategoryListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 523.3303
-	var_1_1.cellHeight = 113.2241
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 2.48
-	var_1_1.startSpace = 8
+function MailViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "mailtipview/#go_left/#scroll_mail"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = MailCategoryListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 523.3303
+	scrollParam.cellHeight = 113.2241
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 2.48
+	scrollParam.startSpace = 8
 
-	for iter_1_0 = 1, 6 do
-		var_1_2[iter_1_0] = 0
+	local AnimationDelayTimes = {}
+
+	for i = 1, 6 do
+		local delayTime = 0
+
+		AnimationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(MailCategroyModel.instance, var_1_1, var_1_2))
-	table.insert(var_1_0, MailView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, LuaListScrollViewWithAnimator.New(MailCategroyModel.instance, scrollParam, AnimationDelayTimes))
+	table.insert(views, MailView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigationView = NavigateButtonsView.New({
+function MailViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigationView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigationView
+			self.navigationView
 		}
 	end
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mail_close)
+function MailViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Mail_close)
 end
 
-return var_0_0
+return MailViewContainer

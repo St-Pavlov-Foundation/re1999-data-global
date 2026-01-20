@@ -1,116 +1,118 @@
-﻿module("modules.logic.room.model.interact.RoomInteractBuildingModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/interact/RoomInteractBuildingModel.lua
 
-local var_0_0 = class("RoomInteractBuildingModel", BaseModel)
+module("modules.logic.room.model.interact.RoomInteractBuildingModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local RoomInteractBuildingModel = class("RoomInteractBuildingModel", BaseModel)
+
+function RoomInteractBuildingModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function RoomInteractBuildingModel:reInit()
 	return
 end
 
-function var_0_0.clear(arg_3_0)
-	RoomMapBuildingAreaModel.super.clear(arg_3_0)
+function RoomInteractBuildingModel:clear()
+	RoomMapBuildingAreaModel.super.clear(self)
 
-	arg_3_0._heroId2BuildingUidDict = {}
+	self._heroId2BuildingUidDict = {}
 end
 
-function var_0_0.init(arg_4_0)
-	arg_4_0._heroId2BuildingUidDict = {}
+function RoomInteractBuildingModel:init()
+	self._heroId2BuildingUidDict = {}
 
-	local var_4_0 = RoomMapBuildingModel.instance:getBuildingMOList()
-	local var_4_1 = RoomCharacterModel.instance
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
+	local tRoomCharacterModel = RoomCharacterModel.instance
 
-	for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-		local var_4_2 = iter_4_1:getInteractMO()
+	for _, buildingMO in ipairs(buildingMOList) do
+		local interactMO = buildingMO:getInteractMO()
 
-		if var_4_2 then
-			local var_4_3 = var_4_2.id
-			local var_4_4 = var_4_2:getHeroIdList()
+		if interactMO then
+			local buildingUid = interactMO.id
+			local heroIdList = interactMO:getHeroIdList()
 
-			for iter_4_2 = #var_4_4, 1, -1 do
-				local var_4_5 = var_4_4[iter_4_2]
+			for i = #heroIdList, 1, -1 do
+				local heroId = heroIdList[i]
 
-				if var_4_1:getCharacterMOById(var_4_5) == nil then
-					var_4_2:removeHeroId(var_4_5)
-				elseif arg_4_0._heroId2BuildingUidDict[var_4_5] == nil then
-					arg_4_0._heroId2BuildingUidDict[var_4_5] = var_4_3
-				elseif arg_4_0._heroId2BuildingUidDict[var_4_5] ~= var_4_3 then
-					var_4_2:removeHeroId(var_4_5)
+				if tRoomCharacterModel:getCharacterMOById(heroId) == nil then
+					interactMO:removeHeroId(heroId)
+				elseif self._heroId2BuildingUidDict[heroId] == nil then
+					self._heroId2BuildingUidDict[heroId] = buildingUid
+				elseif self._heroId2BuildingUidDict[heroId] ~= buildingUid then
+					interactMO:removeHeroId(heroId)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.checkAllHero(arg_5_0)
-	local var_5_0 = RoomMapBuildingModel.instance:getBuildingMOList()
+function RoomInteractBuildingModel:checkAllHero()
+	local buildingMOList = RoomMapBuildingModel.instance:getBuildingMOList()
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = iter_5_1:getInteractMO()
+	for _, buildingMO in ipairs(buildingMOList) do
+		local interactMO = buildingMO:getInteractMO()
 
-		if var_5_1 then
-			var_5_1:checkHeroIdList()
+		if interactMO then
+			interactMO:checkHeroIdList()
 		end
 	end
 end
 
-function var_0_0.setSelectBuildingMO(arg_6_0, arg_6_1)
-	arg_6_0._selectBuildingMO = arg_6_1
-	arg_6_0._selectInteractMO = nil
+function RoomInteractBuildingModel:setSelectBuildingMO(buildingMO)
+	self._selectBuildingMO = buildingMO
+	self._selectInteractMO = nil
 
-	if arg_6_1 then
-		arg_6_0._selectInteractMO = arg_6_1:getInteractMO()
+	if buildingMO then
+		self._selectInteractMO = buildingMO:getInteractMO()
 	end
 end
 
-function var_0_0.isSelectHeroId(arg_7_0, arg_7_1)
-	if arg_7_0._selectInteractMO and arg_7_0._selectInteractMO:isHasHeroId(arg_7_1) then
+function RoomInteractBuildingModel:isSelectHeroId(heroId)
+	if self._selectInteractMO and self._selectInteractMO:isHasHeroId(heroId) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.addInteractHeroId(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = arg_8_0:_getInteractMOByUid(arg_8_1)
+function RoomInteractBuildingModel:addInteractHeroId(buildingUid, heroId)
+	local interactMO = self:_getInteractMOByUid(buildingUid)
 
-	if var_8_0 and not var_8_0:isHeroMax() then
-		local var_8_1 = arg_8_0._heroId2BuildingUidDict[arg_8_2]
+	if interactMO and not interactMO:isHeroMax() then
+		local oldUid = self._heroId2BuildingUidDict[heroId]
 
-		arg_8_0._heroId2BuildingUidDict[arg_8_2] = arg_8_1
+		self._heroId2BuildingUidDict[heroId] = buildingUid
 
-		var_8_0:addHeroId(arg_8_2)
+		interactMO:addHeroId(heroId)
 
-		if var_8_1 then
-			arg_8_0:removeInteractHeroId(var_8_1, arg_8_2)
+		if oldUid then
+			self:removeInteractHeroId(oldUid, heroId)
 		end
 	end
 end
 
-function var_0_0.removeInteractHeroId(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0:_getInteractMOByUid(arg_9_1)
+function RoomInteractBuildingModel:removeInteractHeroId(buildingUid, heroId)
+	local interactMO = self:_getInteractMOByUid(buildingUid)
 
-	if var_9_0 and var_9_0:isHasHeroId(arg_9_2) then
-		var_9_0:removeHeroId(arg_9_2)
+	if interactMO and interactMO:isHasHeroId(heroId) then
+		interactMO:removeHeroId(heroId)
 
-		if arg_9_0._heroId2BuildingUidDict[arg_9_2] == arg_9_1 then
-			arg_9_0._heroId2BuildingUidDict[arg_9_2] = nil
+		if self._heroId2BuildingUidDict[heroId] == buildingUid then
+			self._heroId2BuildingUidDict[heroId] = nil
 		end
 	end
 end
 
-function var_0_0._getInteractMOByUid(arg_10_0, arg_10_1)
-	local var_10_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_10_1)
+function RoomInteractBuildingModel:_getInteractMOByUid(buildingUid)
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(buildingUid)
 
-	if var_10_0 then
-		return var_10_0:getInteractMO()
+	if buildingMO then
+		return buildingMO:getInteractMO()
 	end
 
 	return nil
 end
 
-var_0_0.instance = var_0_0.New()
+RoomInteractBuildingModel.instance = RoomInteractBuildingModel.New()
 
-return var_0_0
+return RoomInteractBuildingModel

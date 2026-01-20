@@ -1,147 +1,150 @@
-﻿module("modules.logic.weather.controller.WeatherEggContainerComp", package.seeall)
+﻿-- chunkname: @modules/logic/weather/controller/WeatherEggContainerComp.lua
 
-local var_0_0 = class("WeatherEggContainerComp")
+module("modules.logic.weather.controller.WeatherEggContainerComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local WeatherEggContainerComp = class("WeatherEggContainerComp")
+
+function WeatherEggContainerComp:ctor()
 	return
 end
 
-function var_0_0.onSceneHide(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._switchEgg, arg_2_0)
+function WeatherEggContainerComp:onSceneHide()
+	TaskDispatcher.cancelTask(self._switchEgg, self)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._serialEggList) do
-		iter_2_1:onDisable()
+	for i, v in ipairs(self._serialEggList) do
+		v:onDisable()
 	end
 
-	for iter_2_2, iter_2_3 in ipairs(arg_2_0._parallelEggList) do
-		iter_2_3:onDisable()
-	end
-end
-
-function var_0_0.onSceneShow(arg_3_0)
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._parallelEggList) do
-		iter_3_1:onEnable()
-	end
-
-	arg_3_0:_startTimer()
-end
-
-function var_0_0.onReportChange(arg_4_0, arg_4_1)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._serialEggList) do
-		iter_4_1:onReportChange(arg_4_1)
-	end
-
-	for iter_4_2, iter_4_3 in ipairs(arg_4_0._parallelEggList) do
-		iter_4_3:onReportChange(arg_4_1)
+	for i, v in ipairs(self._parallelEggList) do
+		v:onDisable()
 	end
 end
 
-function var_0_0.onInit(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._context = {
-		isMainScene = arg_5_2
+function WeatherEggContainerComp:onSceneShow()
+	for i, v in ipairs(self._parallelEggList) do
+		v:onEnable()
+	end
+
+	self:_startTimer()
+end
+
+function WeatherEggContainerComp:onReportChange(report)
+	for i, v in ipairs(self._serialEggList) do
+		v:onReportChange(report)
+	end
+
+	for i, v in ipairs(self._parallelEggList) do
+		v:onReportChange(report)
+	end
+end
+
+function WeatherEggContainerComp:onInit(sceneId, isMainScene)
+	self._context = {
+		isMainScene = isMainScene
 	}
-	arg_5_0._sceneId = arg_5_1
+	self._sceneId = sceneId
 
-	local var_5_0 = lua_scene_switch.configDict[arg_5_1]
+	local sceneConfig = lua_scene_switch.configDict[sceneId]
 
-	arg_5_0._eggList = var_5_0.eggList
-	arg_5_0._eggSwitchTime = var_5_0.eggSwitchTime
-	arg_5_0._serialEggList = {}
-	arg_5_0._parallelEggList = {}
-	arg_5_0._index = 0
+	self._eggList = sceneConfig.eggList
+	self._eggSwitchTime = sceneConfig.eggSwitchTime
+	self._serialEggList = {}
+	self._parallelEggList = {}
+	self._index = 0
 end
 
-function var_0_0._startTimer(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._switchEgg, arg_6_0)
+function WeatherEggContainerComp:_startTimer()
+	TaskDispatcher.cancelTask(self._switchEgg, self)
 
-	if #arg_6_0._serialEggList > 0 then
-		arg_6_0._time = arg_6_0._time or Time.time
+	if #self._serialEggList > 0 then
+		self._time = self._time or Time.time
 
-		TaskDispatcher.runRepeat(arg_6_0._switchEgg, arg_6_0, 0)
+		TaskDispatcher.runRepeat(self._switchEgg, self, 0)
 	end
 end
 
-function var_0_0._switchEgg(arg_7_0)
-	if not arg_7_0._time or Time.time - arg_7_0._time <= arg_7_0._eggSwitchTime then
+function WeatherEggContainerComp:_switchEgg()
+	if not self._time or Time.time - self._time <= self._eggSwitchTime then
 		return
 	end
 
-	arg_7_0._time = Time.time
+	self._time = Time.time
 
-	local var_7_0 = arg_7_0._serialEggList[arg_7_0._index]
+	local egg = self._serialEggList[self._index]
 
-	if var_7_0 then
-		var_7_0:onDisable()
+	if egg then
+		egg:onDisable()
 	end
 
-	local var_7_1 = arg_7_0:getNextIndex()
-	local var_7_2 = arg_7_0._serialEggList[var_7_1]
+	local index = self:getNextIndex()
+	local egg = self._serialEggList[index]
 
-	if var_7_2 then
-		var_7_2:onEnable()
+	if egg then
+		egg:onEnable()
 	end
 end
 
-function var_0_0.getNextIndex(arg_8_0)
-	arg_8_0._index = arg_8_0._index + 1
+function WeatherEggContainerComp:getNextIndex()
+	self._index = self._index + 1
 
-	if arg_8_0._index > #arg_8_0._serialEggList then
-		arg_8_0._index = 1
+	if self._index > #self._serialEggList then
+		self._index = 1
 	end
 
-	return arg_8_0._index
+	return self._index
 end
 
-function var_0_0.getSceneNode(arg_9_0, arg_9_1)
-	return gohelper.findChild(arg_9_0._sceneGo, arg_9_1)
+function WeatherEggContainerComp:getSceneNode(nodePath)
+	return gohelper.findChild(self._sceneGo, nodePath)
 end
 
-function var_0_0.getGoList(arg_10_0, arg_10_1)
-	local var_10_0 = string.split(arg_10_1, "|")
+function WeatherEggContainerComp:getGoList(path)
+	local list = string.split(path, "|")
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = arg_10_0:getSceneNode(iter_10_1)
+	for i, v in ipairs(list) do
+		local go = self:getSceneNode(v)
 
-		var_10_0[iter_10_0] = var_10_1
+		list[i] = go
 
-		if not var_10_1 then
-			logError(string.format("WeatherEggContainerComp can not find go by path:%s", iter_10_1))
+		if not go then
+			logError(string.format("WeatherEggContainerComp can not find go by path:%s", v))
 		end
 	end
 
-	return var_10_0
+	return list
 end
 
-function var_0_0.initSceneGo(arg_11_0, arg_11_1)
-	arg_11_0._sceneGo = arg_11_1
+function WeatherEggContainerComp:initSceneGo(sceneGo)
+	self._sceneGo = sceneGo
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._eggList) do
-		local var_11_0 = lua_scene_eggs.configDict[iter_11_1]
-		local var_11_1 = _G[var_11_0.actionClass].New()
-		local var_11_2 = arg_11_0:getGoList(var_11_0.path)
+	for i, id in ipairs(self._eggList) do
+		local eggConfig = lua_scene_eggs.configDict[id]
+		local cls = _G[eggConfig.actionClass]
+		local actionInstance = cls.New()
+		local goList = self:getGoList(eggConfig.path)
 
-		var_11_1:init(arg_11_0._sceneGo, var_11_2, var_11_0, arg_11_0._context)
+		actionInstance:init(self._sceneGo, goList, eggConfig, self._context)
 
-		if var_11_0.parallel == 1 then
-			table.insert(arg_11_0._parallelEggList, var_11_1)
+		if eggConfig.parallel == 1 then
+			table.insert(self._parallelEggList, actionInstance)
 		else
-			table.insert(arg_11_0._serialEggList, var_11_1)
+			table.insert(self._serialEggList, actionInstance)
 		end
 	end
 
-	arg_11_0:_startTimer()
+	self:_startTimer()
 end
 
-function var_0_0.onSceneClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._switchEgg, arg_12_0)
+function WeatherEggContainerComp:onSceneClose()
+	TaskDispatcher.cancelTask(self._switchEgg, self)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._serialEggList) do
-		iter_12_1:onSceneClose()
+	for i, v in ipairs(self._serialEggList) do
+		v:onSceneClose()
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(arg_12_0._parallelEggList) do
-		iter_12_3:onSceneClose()
+	for i, v in ipairs(self._parallelEggList) do
+		v:onSceneClose()
 	end
 end
 
-return var_0_0
+return WeatherEggContainerComp

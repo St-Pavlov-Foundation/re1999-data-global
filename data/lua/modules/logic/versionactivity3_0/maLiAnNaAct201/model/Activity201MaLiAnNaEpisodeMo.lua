@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.Activity201MaLiAnNaEpisodeMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/maLiAnNaAct201/model/Activity201MaLiAnNaEpisodeMo.lua
 
-local var_0_0 = class("Activity201MaLiAnNaEpisodeMo")
+module("modules.logic.versionactivity3_0.maLiAnNaAct201.model.Activity201MaLiAnNaEpisodeMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.episodeId = 0
-	arg_1_0.isFinished = false
-	arg_1_0.unlockBranchIds = nil
-	arg_1_0.progress = ""
+local Activity201MaLiAnNaEpisodeMo = class("Activity201MaLiAnNaEpisodeMo")
+
+function Activity201MaLiAnNaEpisodeMo:ctor()
+	self.episodeId = 0
+	self.isFinished = false
+	self.unlockBranchIds = nil
+	self.progress = ""
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.episodeId = arg_2_1.episodeId
-	arg_2_0.isFinished = arg_2_1.isFinished
-	arg_2_0.unlockBranchIds = arg_2_1.unlockBranchIds
-	arg_2_0.progress = arg_2_1.progress
-	arg_2_0._actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+function Activity201MaLiAnNaEpisodeMo:init(info)
+	self.episodeId = info.episodeId
+	self.isFinished = info.isFinished
+	self.unlockBranchIds = info.unlockBranchIds
+	self.progress = info.progress
+	self._actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0.episodeId = arg_3_1.episodeId
-	arg_3_0.isFinished = arg_3_1.isFinished
-	arg_3_0.status = arg_3_1.status
-	arg_3_0.progress = arg_3_1.progress
+function Activity201MaLiAnNaEpisodeMo:update(info)
+	self.episodeId = info.episodeId
+	self.isFinished = info.isFinished
+	self.status = info.status
+	self.progress = info.progress
 end
 
-function var_0_0.checkFinishGame(arg_4_0)
-	return arg_4_0.progress and arg_4_0.progress == "1"
+function Activity201MaLiAnNaEpisodeMo:checkFinishGame()
+	return self.progress and self.progress == "1"
 end
 
-function var_0_0.isGame(arg_5_0)
-	local var_5_0 = Activity201MaLiAnNaConfig:getEpisodeCo(arg_5_0._actId, arg_5_0.episodeId)
+function Activity201MaLiAnNaEpisodeMo:isGame()
+	local config = Activity201MaLiAnNaConfig:getEpisodeCo(self._actId, self.episodeId)
 
-	return var_5_0 and var_5_0.gameId ~= 0
+	return config and config.gameId ~= 0
 end
 
-return var_0_0
+return Activity201MaLiAnNaEpisodeMo

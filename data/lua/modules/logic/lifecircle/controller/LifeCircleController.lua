@@ -1,248 +1,255 @@
-﻿module("modules.logic.lifecircle.controller.LifeCircleController", package.seeall)
+﻿-- chunkname: @modules/logic/lifecircle/controller/LifeCircleController.lua
 
-local var_0_0 = class("LifeCircleController", BaseController)
-local var_0_1 = table.insert
+module("modules.logic.lifecircle.controller.LifeCircleController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local LifeCircleController = class("LifeCircleController", BaseController)
+local ti = table.insert
+
+function LifeCircleController:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._stageid = nil
-	arg_2_0._materialDataMOList = nil
-	arg_2_0._onReceiveHeroGainPushMsg = nil
+function LifeCircleController:reInit()
+	self._stageid = nil
+	self._materialDataMOList = nil
+	self._onReceiveHeroGainPushMsg = nil
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function LifeCircleController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, arg_4_0._onSignInTotalRewardReply, arg_4_0)
-	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, arg_4_0._onReceiveSignInTotalRewardAllReply, arg_4_0)
+function LifeCircleController:addConstEvents()
+	SignInController.instance:registerCallback(SignInEvent.OnSignInTotalRewardReply, self._onSignInTotalRewardReply, self)
+	SignInController.instance:registerCallback(SignInEvent.OnReceiveSignInTotalRewardAllReply, self._onReceiveSignInTotalRewardAllReply, self)
 end
 
-function var_0_0.sendSignInTotalRewardRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	SignInRpc.instance:sendSignInTotalRewardRequest(arg_5_1, arg_5_2, arg_5_3)
+function LifeCircleController:sendSignInTotalRewardRequest(id, callback, callbackObj)
+	SignInRpc.instance:sendSignInTotalRewardRequest(id, callback, callbackObj)
 end
 
-function var_0_0.sendSignInTotalRewardAllRequest(arg_6_0, arg_6_1, arg_6_2)
-	return SignInRpc.instance:sendSignInTotalRewardAllRequest(arg_6_1, arg_6_2)
+function LifeCircleController:sendSignInTotalRewardAllRequest(callback, callbackObj)
+	return SignInRpc.instance:sendSignInTotalRewardAllRequest(callback, callbackObj)
 end
 
-function var_0_0.sendSignInTotalRewardAllRequestIfClaimable(arg_7_0, arg_7_1, arg_7_2)
-	if not arg_7_0:isClaimableAccumulateReward() then
-		if arg_7_1 then
-			arg_7_1(arg_7_2)
+function LifeCircleController:sendSignInTotalRewardAllRequestIfClaimable(callback, callbackObj)
+	if not self:isClaimableAccumulateReward() then
+		if callback then
+			callback(callbackObj)
 		end
 
 		return
 	end
 
-	arg_7_0:sendSignInTotalRewardAllRequest(arg_7_1, arg_7_2)
+	self:sendSignInTotalRewardAllRequest(callback, callbackObj)
 end
 
-function var_0_0.sendSignInRequest(arg_8_0)
-	arg_8_0:sendSignInTotalRewardAllRequestIfClaimable(SignInRpc.sendSignInRequest, SignInRpc.instance)
+function LifeCircleController:sendSignInRequest()
+	self:sendSignInTotalRewardAllRequestIfClaimable(SignInRpc.sendSignInRequest, SignInRpc.instance)
 end
 
-function var_0_0.isClaimedAccumulateReward(arg_9_0, arg_9_1)
-	return SignInModel.instance:isClaimedAccumulateReward(arg_9_1)
+function LifeCircleController:isClaimedAccumulateReward(id)
+	return SignInModel.instance:isClaimedAccumulateReward(id)
 end
 
-function var_0_0.isClaimableAccumulateReward(arg_10_0, arg_10_1)
-	return SignInModel.instance:isClaimableAccumulateReward(arg_10_1)
+function LifeCircleController:isClaimableAccumulateReward(idOrNil)
+	return SignInModel.instance:isClaimableAccumulateReward(idOrNil)
 end
 
-local var_0_2 = -11235
+local kRewardAllStageId = -11235
 
-function var_0_0._onReceiveSignInTotalRewardAllReply(arg_11_0)
-	arg_11_0:dispatchRedDotEventUpdateRelateDotInfo()
+function LifeCircleController:_onReceiveSignInTotalRewardAllReply()
+	self:dispatchRedDotEventUpdateRelateDotInfo()
 
-	arg_11_0._stageid = var_0_2
+	self._stageid = kRewardAllStageId
 
-	if not arg_11_0._materialDataMOList then
+	if not self._materialDataMOList then
 		return
 	end
 
-	arg_11_0:_openLifeCircleRewardView()
+	self:_openLifeCircleRewardView()
 end
 
-function var_0_0._onSignInTotalRewardReply(arg_12_0, arg_12_1)
-	arg_12_0:dispatchRedDotEventUpdateRelateDotInfo()
+function LifeCircleController:_onSignInTotalRewardReply(stageid)
+	self:dispatchRedDotEventUpdateRelateDotInfo()
 
-	arg_12_0._stageid = arg_12_1
+	self._stageid = stageid
 
-	if not arg_12_0._materialDataMOList then
+	if not self._materialDataMOList then
 		return
 	end
 
-	arg_12_0:_openLifeCircleRewardView()
+	self:_openLifeCircleRewardView()
 end
 
-function var_0_0.openLifeCircleRewardView(arg_13_0, arg_13_1)
-	if not arg_13_1 or #arg_13_1 == 0 then
+function LifeCircleController:openLifeCircleRewardView(materialDataMOList)
+	if not materialDataMOList or #materialDataMOList == 0 then
 		return
 	end
 
-	arg_13_0._materialDataMOList = arg_13_1
+	self._materialDataMOList = materialDataMOList
 
-	if not arg_13_0._stageid then
+	if not self._stageid then
 		return
 	end
 
-	arg_13_0:_openLifeCircleRewardView()
+	self:_openLifeCircleRewardView()
 end
 
-function var_0_0._openLifeCircleRewardView(arg_14_0)
-	if not arg_14_0._stageid then
+function LifeCircleController:_openLifeCircleRewardView()
+	if not self._stageid then
 		return
 	end
 
-	if not arg_14_0._materialDataMOList then
+	if not self._materialDataMOList then
 		return
 	end
 
-	local var_14_0 = arg_14_0._materialDataMOList
-	local var_14_1 = arg_14_0._stageid
-	local var_14_2 = 0
+	local materialDataMOList = self._materialDataMOList
+	local stageid = self._stageid
+	local loginDayCount = 0
 
-	if var_0_2 == var_14_1 then
-		var_14_2 = PlayerModel.instance:getPlayinfo().totalLoginDays or 0
+	if kRewardAllStageId == stageid then
+		local playinfo = PlayerModel.instance:getPlayinfo()
+
+		loginDayCount = playinfo.totalLoginDays or 0
 	else
-		var_14_2 = SignInConfig.instance:getSignInLifeTimeBonusCO(var_14_1).logindaysid
+		local CO = SignInConfig.instance:getSignInLifeTimeBonusCO(stageid)
+
+		loginDayCount = CO.logindaysid
 	end
 
-	arg_14_0._materialDataMOList = nil
-	arg_14_0._stageid = nil
+	self._materialDataMOList = nil
+	self._stageid = nil
 
-	RoomController.instance:popUpRoomBlockPackageView(var_14_0)
+	RoomController.instance:popUpRoomBlockPackageView(materialDataMOList)
 
-	local var_14_3 = {
-		materialDataMOList = var_14_0,
-		loginDayCount = var_14_2
+	local viewParam = {
+		materialDataMOList = materialDataMOList,
+		loginDayCount = loginDayCount
 	}
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.LifeCircleRewardView, var_14_3)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.LifeCircleRewardView, viewParam)
 end
 
-function var_0_0.onReceiveHeroGainPush(arg_15_0, arg_15_1)
-	arg_15_0._onReceiveHeroGainPushMsg = arg_15_1
+function LifeCircleController:onReceiveHeroGainPush(msg)
+	self._onReceiveHeroGainPushMsg = msg
 end
 
-function var_0_0.onReceiveMaterialChangePush(arg_16_0, arg_16_1)
-	local var_16_0, var_16_1, var_16_2, var_16_3 = MaterialRpc.receiveMaterial(arg_16_1)
+function LifeCircleController:onReceiveMaterialChangePush(msg)
+	local materialDataMOList, faithCO, equip_cards, season123EquipCards = MaterialRpc.receiveMaterial(msg)
 
-	if not var_16_0 or #var_16_0 == 0 then
-		arg_16_0._onReceiveHeroGainPushMsg = nil
+	if not materialDataMOList or #materialDataMOList == 0 then
+		self._onReceiveHeroGainPushMsg = nil
 
 		return
 	end
 
-	local var_16_4 = {}
-	local var_16_5 = {}
+	local heroIdList = {}
+	local others_materialDataMOList = {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_6 = iter_16_1.materilType
-		local var_16_7 = iter_16_1.materilId
+	for _, mo in ipairs(materialDataMOList) do
+		local materilType = mo.materilType
+		local materilId = mo.materilId
 
-		if var_16_6 == MaterialEnum.MaterialType.Hero then
-			var_0_1(var_16_4, var_16_7)
+		if materilType == MaterialEnum.MaterialType.Hero then
+			ti(heroIdList, materilId)
 		else
-			var_0_1(var_16_5, iter_16_1)
+			ti(others_materialDataMOList, mo)
 		end
 	end
 
-	if #var_16_4 == 0 then
-		if arg_16_0._onReceiveHeroGainPushMsg then
-			HeroRpc.instance:_onReceiveHeroGainPush(arg_16_0._onReceiveHeroGainPushMsg)
+	if #heroIdList == 0 then
+		if self._onReceiveHeroGainPushMsg then
+			HeroRpc.instance:_onReceiveHeroGainPush(self._onReceiveHeroGainPushMsg)
 		end
 
-		MaterialRpc.instance:_onReceiveMaterialChangePush_default(arg_16_1, var_16_0, var_16_1, var_16_2, var_16_3)
+		MaterialRpc.instance:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 	else
-		arg_16_0._onReceiveHeroGainPushMsg = nil
+		self._onReceiveHeroGainPushMsg = nil
 
-		arg_16_0:_doVirtualSummonBehavior(var_16_4, var_16_5)
+		self:_doVirtualSummonBehavior(heroIdList, others_materialDataMOList)
 	end
 end
 
-function var_0_0._doVirtualSummonBehavior(arg_17_0, arg_17_1, arg_17_2)
+function LifeCircleController:_doVirtualSummonBehavior(heroIdList, others_materialDataMOList)
 	ViewMgr.instance:closeView(ViewName.BackpackView)
-	SummonController.instance:simpleEnterSummonScene(arg_17_1, function()
+	SummonController.instance:simpleEnterSummonScene(heroIdList, function()
 		if ViewMgr.instance:isOpen(ViewName.BackpackView) then
 			return
 		end
 
 		BackpackController.instance:enterItemBackpack(ItemEnum.CategoryType.UseType)
-		MaterialRpc.instance:simpleShowView(arg_17_2)
+		MaterialRpc.instance:simpleShowView(others_materialDataMOList)
 	end)
 end
 
-function var_0_0.isShowRed(arg_19_0)
-	if arg_19_0:isExistsNewConfig() then
+function LifeCircleController:isShowRed()
+	if self:isExistsNewConfig() then
 		return true
 	end
 
-	if arg_19_0:isClaimableAccumulateReward() then
+	if self:isClaimableAccumulateReward() then
 		return true
 	end
 
 	return false
 end
 
-local var_0_3 = "LifeCircleController|"
+local kPrefix = "LifeCircleController|"
 
-function var_0_0.getPrefsKeyPrefix(arg_20_0)
-	return var_0_3
+function LifeCircleController:getPrefsKeyPrefix()
+	return kPrefix
 end
 
-function var_0_0.saveInt(arg_21_0, arg_21_1, arg_21_2)
-	GameUtil.playerPrefsSetNumberByUserId(arg_21_1, arg_21_2)
+function LifeCircleController:saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
 end
 
-function var_0_0.getInt(arg_22_0, arg_22_1, arg_22_2)
-	return GameUtil.playerPrefsGetNumberByUserId(arg_22_1, arg_22_2)
+function LifeCircleController:getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
 end
 
-local var_0_4 = "NewConfig"
+local kNewConfig = "NewConfig"
 
-function var_0_0.setLatestConfigCount(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:getPrefsKeyPrefix() .. var_0_4
+function LifeCircleController:setLatestConfigCount(count)
+	local key = self:getPrefsKeyPrefix() .. kNewConfig
 
-	arg_23_0:saveInt(var_23_0, arg_23_1)
+	self:saveInt(key, count)
 end
 
-function var_0_0.getLatestConfigCount(arg_24_0)
-	local var_24_0 = arg_24_0:getPrefsKeyPrefix() .. var_0_4
+function LifeCircleController:getLatestConfigCount()
+	local key = self:getPrefsKeyPrefix() .. kNewConfig
 
-	return arg_24_0:getInt(var_24_0, 0)
+	return self:getInt(key, 0)
 end
 
-function var_0_0.isExistsNewConfig(arg_25_0)
-	local var_25_0 = SignInConfig.instance:getSignInLifeTimeBonusCount()
+function LifeCircleController:isExistsNewConfig()
+	local cnt = SignInConfig.instance:getSignInLifeTimeBonusCount()
 
-	return arg_25_0:getLatestConfigCount() ~= var_25_0
+	return self:getLatestConfigCount() ~= cnt
 end
 
-function var_0_0.markLatestConfigCount(arg_26_0)
-	local var_26_0 = SignInConfig.instance:getSignInLifeTimeBonusCount()
+function LifeCircleController:markLatestConfigCount()
+	local newValue = SignInConfig.instance:getSignInLifeTimeBonusCount()
+	local curValue = self:getLatestConfigCount()
 
-	if arg_26_0:getLatestConfigCount() ~= var_26_0 then
-		arg_26_0:setLatestConfigCount(var_26_0)
-		arg_26_0:dispatchRedDotEventUpdateRelateDotInfo()
+	if curValue ~= newValue then
+		self:setLatestConfigCount(newValue)
+		self:dispatchRedDotEventUpdateRelateDotInfo()
 	end
 end
 
-function var_0_0.dispatchRedDotEventUpdateRelateDotInfo(arg_27_0)
-	local var_27_0 = RedDotEnum.DotNode.LifeCircleNewConfig
-	local var_27_1 = RedDotConfig.instance:getParentRedDotId(var_27_0)
+function LifeCircleController:dispatchRedDotEventUpdateRelateDotInfo()
+	local redDot = RedDotEnum.DotNode.LifeCircleNewConfig
+	local parentReddot = RedDotConfig.instance:getParentRedDotId(redDot)
 
 	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
-		[tonumber(var_27_1)] = true,
-		[var_27_0] = true
+		[tonumber(parentReddot)] = true,
+		[redDot] = true
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+LifeCircleController.instance = LifeCircleController.New()
 
-return var_0_0
+return LifeCircleController

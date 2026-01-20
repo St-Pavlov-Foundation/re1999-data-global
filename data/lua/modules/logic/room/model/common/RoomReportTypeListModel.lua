@@ -1,46 +1,48 @@
-﻿module("modules.logic.room.model.common.RoomReportTypeListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/common/RoomReportTypeListModel.lua
 
-local var_0_0 = class("RoomReportTypeListModel", ListScrollModel)
+module("modules.logic.room.model.common.RoomReportTypeListModel", package.seeall)
 
-function var_0_0.sortFunc(arg_1_0, arg_1_1)
-	return arg_1_0.id < arg_1_1.id
+local RoomReportTypeListModel = class("RoomReportTypeListModel", ListScrollModel)
+
+function RoomReportTypeListModel.sortFunc(a, b)
+	return a.id < b.id
 end
 
-function var_0_0.initType(arg_2_0, arg_2_1)
-	table.sort(arg_2_1, arg_2_0.sortFunc)
-	arg_2_0:setList(arg_2_1)
+function RoomReportTypeListModel:initType(reportTypeList)
+	table.sort(reportTypeList, self.sortFunc)
+	self:setList(reportTypeList)
 end
 
-function var_0_0.setSelectId(arg_3_0, arg_3_1)
-	if arg_3_0.selectId == arg_3_1 then
+function RoomReportTypeListModel:setSelectId(selectId)
+	if self.selectId == selectId then
 		return
 	end
 
-	arg_3_0._selectId = arg_3_1
+	self._selectId = selectId
 
-	arg_3_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.isSelect(arg_4_0, arg_4_1)
-	return arg_4_0._selectId == arg_4_1
+function RoomReportTypeListModel:isSelect(id)
+	return self._selectId == id
 end
 
-function var_0_0.getSelectId(arg_5_0)
-	return arg_5_0._selectId
+function RoomReportTypeListModel:getSelectId()
+	return self._selectId
 end
 
-function var_0_0.clearSelect(arg_6_0)
-	arg_6_0._selectId = nil
+function RoomReportTypeListModel:clearSelect()
+	self._selectId = nil
 end
 
-function var_0_0._refreshSelect(arg_7_0)
-	local var_7_0 = arg_7_0:getById(arg_7_0._selectId)
+function RoomReportTypeListModel:_refreshSelect()
+	local selectMO = self:getById(self._selectId)
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._scrollViews) do
-		iter_7_1:setSelect(var_7_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoomReportTypeListModel.instance = RoomReportTypeListModel.New()
 
-return var_0_0
+return RoomReportTypeListModel

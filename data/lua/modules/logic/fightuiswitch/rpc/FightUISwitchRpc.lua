@@ -1,7 +1,9 @@
-﻿module("modules.logic.fightuiswitch.rpc.FightUISwitchRpc", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/rpc/FightUISwitchRpc.lua
 
-local var_0_0 = class("FightUISwitchRpc", BaseRpc)
+module("modules.logic.fightuiswitch.rpc.FightUISwitchRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local FightUISwitchRpc = class("FightUISwitchRpc", BaseRpc)
 
-return var_0_0
+FightUISwitchRpc.instance = FightUISwitchRpc.New()
+
+return FightUISwitchRpc

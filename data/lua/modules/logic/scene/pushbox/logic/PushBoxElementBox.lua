@@ -1,87 +1,89 @@
-﻿module("modules.logic.scene.pushbox.logic.PushBoxElementBox", package.seeall)
+﻿-- chunkname: @modules/logic/scene/pushbox/logic/PushBoxElementBox.lua
 
-local var_0_0 = class("PushBoxElementBox", UserDataDispose)
+module("modules.logic.scene.pushbox.logic.PushBoxElementBox", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:__onInit()
+local PushBoxElementBox = class("PushBoxElementBox", UserDataDispose)
 
-	arg_1_0._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
-	arg_1_0._gameObject = arg_1_1
-	arg_1_0._transform = arg_1_1.transform
-	arg_1_0._cell = arg_1_2
+function PushBoxElementBox:ctor(gameObject, cell)
+	self:__onInit()
 
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, arg_1_0._onRefreshElement, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, arg_1_0._onStepFinished, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, arg_1_0._onRevertStep, arg_1_0)
-	arg_1_0:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, arg_1_0._onStartElement, arg_1_0)
+	self._game_mgr = GameSceneMgr.instance:getCurScene().gameMgr
+	self._gameObject = gameObject
+	self._transform = gameObject.transform
+	self._cell = cell
+
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RefreshElement, self._onRefreshElement, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StepFinished, self._onStepFinished, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.RevertStep, self._onRevertStep, self)
+	self:addEventCb(PushBoxController.instance, PushBoxEvent.StartElement, self._onStartElement, self)
 end
 
-function var_0_0._onStartElement(arg_2_0)
+function PushBoxElementBox:_onStartElement()
 	return
 end
 
-function var_0_0._onRevertStep(arg_3_0)
+function PushBoxElementBox:_onRevertStep()
 	return
 end
 
-function var_0_0._onRefreshElement(arg_4_0)
+function PushBoxElementBox:_onRefreshElement()
 	return
 end
 
-function var_0_0._onStepFinished(arg_5_0)
+function PushBoxElementBox:_onStepFinished()
 	return
 end
 
-function var_0_0.hideLight(arg_6_0)
-	gohelper.setActive(gohelper.findChild(arg_6_0._gameObject, "#vx_light_left"), false)
-	gohelper.setActive(gohelper.findChild(arg_6_0._gameObject, "#vx_light_right"), false)
-	gohelper.setActive(gohelper.findChild(arg_6_0._gameObject, "#vx_light_down"), false)
+function PushBoxElementBox:hideLight()
+	gohelper.setActive(gohelper.findChild(self._gameObject, "#vx_light_left"), false)
+	gohelper.setActive(gohelper.findChild(self._gameObject, "#vx_light_right"), false)
+	gohelper.setActive(gohelper.findChild(self._gameObject, "#vx_light_down"), false)
 end
 
-function var_0_0.refreshLightRenderer(arg_7_0, arg_7_1)
-	local var_7_0 = gohelper.findChild(arg_7_0._gameObject, "#vx_light_left"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+function PushBoxElementBox:refreshLightRenderer(sort_order)
+	local meshRenderer = gohelper.findChild(self._gameObject, "#vx_light_left"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-	if var_7_0 then
-		for iter_7_0 = 0, var_7_0.Length - 1 do
-			var_7_0[iter_7_0].sortingOrder = arg_7_1 + 7
+	if meshRenderer then
+		for index = 0, meshRenderer.Length - 1 do
+			meshRenderer[index].sortingOrder = sort_order + 7
 		end
 	end
 
-	local var_7_1 = gohelper.findChild(arg_7_0._gameObject, "#vx_light_right"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+	meshRenderer = gohelper.findChild(self._gameObject, "#vx_light_right"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-	if var_7_1 then
-		for iter_7_1 = 0, var_7_1.Length - 1 do
-			var_7_1[iter_7_1].sortingOrder = arg_7_1 + 7
+	if meshRenderer then
+		for index = 0, meshRenderer.Length - 1 do
+			meshRenderer[index].sortingOrder = sort_order + 7
 		end
 	end
 
-	local var_7_2 = gohelper.findChild(arg_7_0._gameObject, "#vx_light_down"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
+	meshRenderer = gohelper.findChild(self._gameObject, "#vx_light_down"):GetComponentsInChildren(typeof(UnityEngine.MeshRenderer))
 
-	if var_7_2 then
-		for iter_7_2 = 0, var_7_2.Length - 1 do
-			var_7_2[iter_7_2].sortingOrder = arg_7_1 + 7
+	if meshRenderer then
+		for index = 0, meshRenderer.Length - 1 do
+			meshRenderer[index].sortingOrder = sort_order + 7
 		end
 	end
 end
 
-function var_0_0.getPosX(arg_8_0)
-	return arg_8_0._cell:getPosX()
+function PushBoxElementBox:getPosX()
+	return self._cell:getPosX()
 end
 
-function var_0_0.getPosY(arg_9_0)
-	return arg_9_0._cell:getPosY()
+function PushBoxElementBox:getPosY()
+	return self._cell:getPosY()
 end
 
-function var_0_0.getObj(arg_10_0)
-	return arg_10_0._gameObject
+function PushBoxElementBox:getObj()
+	return self._gameObject
 end
 
-function var_0_0.getCell(arg_11_0)
-	return arg_11_0._cell
+function PushBoxElementBox:getCell()
+	return self._cell
 end
 
-function var_0_0.releaseSelf(arg_12_0)
-	arg_12_0:__onDispose()
+function PushBoxElementBox:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return PushBoxElementBox

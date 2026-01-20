@@ -1,13 +1,19 @@
-﻿module("modules.logic.fight.fightcomponent.FightLoaderComponent", package.seeall)
+﻿-- chunkname: @modules/logic/fight/fightcomponent/FightLoaderComponent.lua
 
-local var_0_0 = class("FightLoaderComponent", FightBaseClass)
+module("modules.logic.fight.fightcomponent.FightLoaderComponent", package.seeall)
 
-function var_0_0.loadAsset(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:newClass(FightLoaderItem, arg_1_1, arg_1_2, arg_1_3, arg_1_4):startLoad()
+local FightLoaderComponent = class("FightLoaderComponent", FightBaseClass)
+
+function FightLoaderComponent:loadAsset(url, callback, handle, param)
+	local item = self:newClass(FightLoaderItem, url, callback, handle, param)
+
+	item:startLoad()
 end
 
-function var_0_0.loadListAsset(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
-	arg_2_0:newClass(FightLoaderList, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5):startLoad()
+function FightLoaderComponent:loadListAsset(urlList, oneCallback, finishCallback, handle, paramList)
+	local item = self:newClass(FightLoaderList, urlList, oneCallback, finishCallback, handle, paramList)
+
+	item:startLoad()
 end
 
-return var_0_0
+return FightLoaderComponent

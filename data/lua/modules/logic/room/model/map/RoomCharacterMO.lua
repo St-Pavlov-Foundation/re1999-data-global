@@ -1,430 +1,442 @@
-﻿module("modules.logic.room.model.map.RoomCharacterMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomCharacterMO.lua
 
-local var_0_0 = pureTable("RoomCharacterMO")
+module("modules.logic.room.model.map.RoomCharacterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.heroId
-	arg_1_0.heroId = arg_1_1.heroId
-	arg_1_0.currentFaith = arg_1_1.currentFaith or 0
-	arg_1_0.currentMinute = arg_1_1.currentMinute or 0
-	arg_1_0.nextRefreshTime = arg_1_1.nextRefreshTime or 0
-	arg_1_0.skinId = arg_1_1.skinId
+local RoomCharacterMO = pureTable("RoomCharacterMO")
 
-	if (not arg_1_0.skinId or arg_1_0.skinId == 0) and (RoomController.instance:isObMode() or RoomController.instance:isEditMode()) then
-		local var_1_0 = HeroModel.instance:getByHeroId(arg_1_0.heroId)
+function RoomCharacterMO:init(info)
+	self.id = info.heroId
+	self.heroId = info.heroId
+	self.currentFaith = info.currentFaith or 0
+	self.currentMinute = info.currentMinute or 0
+	self.nextRefreshTime = info.nextRefreshTime or 0
+	self.skinId = info.skinId
 
-		arg_1_0.skinId = var_1_0 and var_1_0.skin or arg_1_0.skinId
+	if (not self.skinId or self.skinId == 0) and (RoomController.instance:isObMode() or RoomController.instance:isEditMode()) then
+		local heroMO = HeroModel.instance:getByHeroId(self.heroId)
+
+		self.skinId = heroMO and heroMO.skin or self.skinId
 	end
 
-	if not arg_1_0.skinId or arg_1_0.skinId == 0 then
-		arg_1_0.skinId = HeroConfig.instance:getHeroCO(arg_1_0.heroId).skinId
+	if not self.skinId or self.skinId == 0 then
+		local heroConfig = HeroConfig.instance:getHeroCO(self.heroId)
+
+		self.skinId = heroConfig.skinId
 	end
 
-	arg_1_0.currentPosition = arg_1_1.currentPosition
-	arg_1_0.characterState = arg_1_1.characterState
-	arg_1_0.heroConfig = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
-	arg_1_0.skinConfig = SkinConfig.instance:getSkinCo(arg_1_0.skinId)
-	arg_1_0.roomCharacterConfig = RoomConfig.instance:getRoomCharacterConfig(arg_1_0.skinId)
-	arg_1_0._nextPositions = arg_1_1.nextPositions or {}
-	arg_1_0._movePoint = arg_1_1.movePoint or 0
-	arg_1_0._moveValue = arg_1_1.moveValue or 0
-	arg_1_0._moveState = arg_1_1.moveState or RoomCharacterEnum.CharacterMoveState.Idle
-	arg_1_0.stateDuration = arg_1_1.stateDuration or 0
-	arg_1_0._moveDir = arg_1_1.moveDir or Vector2.zero
-	arg_1_0._preMovePositions = arg_1_1.preMovePositions
-	arg_1_0.isAnimal = arg_1_1.isAnimal or false
-	arg_1_0.isTouch = arg_1_1.isTouch or false
-	arg_1_0.trainCritterUid = arg_1_1.trainCritterUid or arg_1_0.trainCritterUid or nil
-	arg_1_0.sourceState = arg_1_1.sourceState or RoomCharacterEnum.SourceState.Place
-	arg_1_0._currentInteractionId = nil
-	arg_1_0._replaceIdleState = nil
-	arg_1_0._positionCodeId = arg_1_0._positionCodeId or 0
-	arg_1_0.tranMoveRate = 0.8
+	self.currentPosition = info.currentPosition
+	self.characterState = info.characterState
+	self.heroConfig = HeroConfig.instance:getHeroCO(self.heroId)
+	self.skinConfig = SkinConfig.instance:getSkinCo(self.skinId)
+	self.roomCharacterConfig = RoomConfig.instance:getRoomCharacterConfig(self.skinId)
+	self._nextPositions = info.nextPositions or {}
+	self._movePoint = info.movePoint or 0
+	self._moveValue = info.moveValue or 0
+	self._moveState = info.moveState or RoomCharacterEnum.CharacterMoveState.Idle
+	self.stateDuration = info.stateDuration or 0
+	self._moveDir = info.moveDir or Vector2.zero
+	self._preMovePositions = info.preMovePositions
+	self.isAnimal = info.isAnimal or false
+	self.isTouch = info.isTouch or false
+	self.trainCritterUid = info.trainCritterUid or self.trainCritterUid or nil
+	self.sourceState = info.sourceState or RoomCharacterEnum.SourceState.Place
+	self._currentInteractionId = nil
+	self._replaceIdleState = nil
+	self._positionCodeId = self._positionCodeId or 0
+	self.tranMoveRate = 0.8
 
-	arg_1_0:_updatePositionCodeId()
+	self:_updatePositionCodeId()
 
-	local var_1_1 = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.HeroMoveRate)
+	local str = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.HeroMoveRate)
 
-	if not string.nilorempty(var_1_1) then
-		arg_1_0.tranMoveRate = tonumber(var_1_1) * 0.001
+	if not string.nilorempty(str) then
+		self.tranMoveRate = tonumber(str) * 0.001
 	end
 end
 
-function var_0_0.getCanWade(arg_2_0)
-	return arg_2_0.skinConfig.canWade > 0
+function RoomCharacterMO:getCanWade()
+	return self.skinConfig.canWade > 0
 end
 
-function var_0_0.getMoveSpeed(arg_3_0)
-	return arg_3_0.roomCharacterConfig and arg_3_0.roomCharacterConfig.moveSpeed or 1
+function RoomCharacterMO:getMoveSpeed()
+	return self.roomCharacterConfig and self.roomCharacterConfig.moveSpeed or 1
 end
 
-function var_0_0.getMoveInterval(arg_4_0)
-	return arg_4_0.roomCharacterConfig and arg_4_0.roomCharacterConfig.moveInterval or 5
+function RoomCharacterMO:getMoveInterval()
+	return self.roomCharacterConfig and self.roomCharacterConfig.moveInterval or 5
 end
 
-function var_0_0.getMoveRate(arg_5_0)
-	if arg_5_0.trainCritterUid then
-		return arg_5_0.tranMoveRate
+function RoomCharacterMO:getMoveRate()
+	if self.trainCritterUid then
+		return self.tranMoveRate
 	end
 
-	return arg_5_0.roomCharacterConfig and arg_5_0.roomCharacterConfig.moveRate / 1000 or 0.5
+	return self.roomCharacterConfig and self.roomCharacterConfig.moveRate / 1000 or 0.5
 end
 
-function var_0_0.getSpecialRate(arg_6_0)
-	return arg_6_0.roomCharacterConfig and arg_6_0.roomCharacterConfig.specialRate / 1000 or 0.5
+function RoomCharacterMO:getSpecialRate()
+	return self.roomCharacterConfig and self.roomCharacterConfig.specialRate / 1000 or 0.5
 end
 
-function var_0_0.isHasSpecialIdle(arg_7_0)
-	return arg_7_0.roomCharacterConfig.specialIdle > 0
+function RoomCharacterMO:isHasSpecialIdle()
+	return self.roomCharacterConfig.specialIdle > 0
 end
 
-function var_0_0.getMoveState(arg_8_0)
-	if arg_8_0._replaceIdleState and arg_8_0._moveState == RoomCharacterEnum.CharacterMoveState.Idle then
-		return arg_8_0._replaceIdleState
+function RoomCharacterMO:getMoveState()
+	if self._replaceIdleState and self._moveState == RoomCharacterEnum.CharacterMoveState.Idle then
+		return self._replaceIdleState
 	end
 
-	return arg_8_0._moveState
+	return self._moveState
 end
 
-function var_0_0.isPlaceSourceState(arg_9_0)
-	return arg_9_0.sourceState ~= RoomCharacterEnum.SourceState.Train
+function RoomCharacterMO:isPlaceSourceState()
+	return self.sourceState ~= RoomCharacterEnum.SourceState.Train
 end
 
-function var_0_0.isTrainSourceState(arg_10_0)
-	return arg_10_0.sourceState == RoomCharacterEnum.SourceState.Train
+function RoomCharacterMO:isTrainSourceState()
+	return self.sourceState == RoomCharacterEnum.SourceState.Train
 end
 
-function var_0_0.isCanPlaceByResId(arg_11_0, arg_11_1)
-	if arg_11_1 == RoomResourceEnum.ResourceId.Empty or arg_11_1 == RoomResourceEnum.ResourceId.None or arg_11_1 == RoomResourceEnum.ResourceId.Flag or arg_11_1 == RoomResourceEnum.ResourceId.River and arg_11_0:getCanWade() then
+function RoomCharacterMO:isCanPlaceByResId(resId)
+	if resId == RoomResourceEnum.ResourceId.Empty or resId == RoomResourceEnum.ResourceId.None or resId == RoomResourceEnum.ResourceId.Flag or resId == RoomResourceEnum.ResourceId.River and self:getCanWade() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isTraining(arg_12_0)
-	if arg_12_0.trainCritterUid and arg_12_0.trainCritterUid ~= 0 then
+function RoomCharacterMO:isTraining()
+	if self.trainCritterUid and self.trainCritterUid ~= 0 then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getMovingDir(arg_13_0)
-	return arg_13_0._moveDir
+function RoomCharacterMO:getMovingDir()
+	return self._moveDir
 end
 
-function var_0_0.getPositionCodeId(arg_14_0)
-	return arg_14_0._positionCodeId
+function RoomCharacterMO:getPositionCodeId()
+	return self._positionCodeId
 end
 
-function var_0_0._updatePositionCodeId(arg_15_0)
-	arg_15_0._positionCodeId = arg_15_0._positionCodeId + 1
+function RoomCharacterMO:_updatePositionCodeId()
+	self._positionCodeId = self._positionCodeId + 1
 end
 
-function var_0_0.getSpecialIdleWaterDistance(arg_16_0)
-	return arg_16_0.roomCharacterConfig and arg_16_0.roomCharacterConfig.waterDistance / 1000 or 0.5
+function RoomCharacterMO:getSpecialIdleWaterDistance()
+	return self.roomCharacterConfig and self.roomCharacterConfig.waterDistance / 1000 or 0.5
 end
 
-function var_0_0.setPosition(arg_17_0, arg_17_1)
-	arg_17_0.currentPosition = arg_17_1
+function RoomCharacterMO:setPosition(pos)
+	self.currentPosition = pos
 
-	arg_17_0:_updatePositionCodeId()
+	self:_updatePositionCodeId()
 end
 
-function var_0_0.setPositionXYZ(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	arg_18_0.currentPosition:Set(arg_18_1, arg_18_2, arg_18_3)
-	arg_18_0:_updatePositionCodeId()
+function RoomCharacterMO:setPositionXYZ(x, y, z)
+	self.currentPosition:Set(x, y, z)
+	self:_updatePositionCodeId()
 end
 
-function var_0_0.getMoveTargetPosition(arg_19_0)
-	local var_19_0 = arg_19_0.currentPosition
+function RoomCharacterMO:getMoveTargetPosition()
+	local position = self.currentPosition
 
-	if arg_19_0._nextPositions and #arg_19_0._nextPositions > 0 then
-		var_19_0 = arg_19_0._nextPositions[#arg_19_0._nextPositions]
+	if self._nextPositions and #self._nextPositions > 0 then
+		position = self._nextPositions[#self._nextPositions]
 	end
 
-	return var_19_0
+	return position
 end
 
-function var_0_0.getMoveTargetPoint(arg_20_0)
-	local var_20_0 = arg_20_0:getMoveTargetPosition()
+function RoomCharacterMO:getMoveTargetPoint()
+	local position = self:getMoveTargetPosition()
 
-	return RoomCharacterHelper.positionRoundToPoint(var_20_0)
+	return RoomCharacterHelper.positionRoundToPoint(position)
 end
 
-function var_0_0.getNearestPoint(arg_21_0)
-	local var_21_0 = arg_21_0.currentPosition
+function RoomCharacterMO:getNearestPoint()
+	local position = self.currentPosition
 
-	return RoomCharacterHelper.positionRoundToPoint(var_21_0)
+	return RoomCharacterHelper.positionRoundToPoint(position)
 end
 
-function var_0_0.setPreMove(arg_22_0, arg_22_1)
-	arg_22_0._preMovePositions = arg_22_1
+function RoomCharacterMO:setPreMove(preMovePositions)
+	self._preMovePositions = preMovePositions
 
-	arg_22_0:_tryNextMovePosition()
+	self:_tryNextMovePosition()
 end
 
-function var_0_0._tryNextMovePosition(arg_23_0)
-	local var_23_0 = GameSceneMgr.instance:getCurScene()
+function RoomCharacterMO:_tryNextMovePosition()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	var_23_0.path:stopGetPath(arg_23_0)
+	scene.path:stopGetPath(self)
 
-	local var_23_1 = var_23_0.charactermgr:getCharacterEntity(arg_23_0.id)
+	local entity = scene.charactermgr:getCharacterEntity(self.id)
 
-	if not var_23_1 then
+	if not entity then
 		return
 	end
 
-	local var_23_2 = var_23_1.charactermove:getSeeker()
+	local seeker = entity.charactermove:getSeeker()
 
-	if not var_23_2 then
+	if not seeker then
 		return
 	end
 
-	while arg_23_0._preMovePositions and #arg_23_0._preMovePositions > 0 do
-		local var_23_3 = arg_23_0._preMovePositions[#arg_23_0._preMovePositions]
+	while self._preMovePositions and #self._preMovePositions > 0 do
+		local preMovePosition = self._preMovePositions[#self._preMovePositions]
 
-		table.remove(arg_23_0._preMovePositions, #arg_23_0._preMovePositions)
+		table.remove(self._preMovePositions, #self._preMovePositions)
 
-		if ZProj.AStarPathBridge.HasPossiblePath(arg_23_0.currentPosition, var_23_3, var_23_2:GetTag()) then
-			var_23_0.path:tryGetPath(arg_23_0, arg_23_0.currentPosition, var_23_3, arg_23_0.onPathCall, arg_23_0)
+		if ZProj.AStarPathBridge.HasPossiblePath(self.currentPosition, preMovePosition, seeker:GetTag()) then
+			scene.path:tryGetPath(self, self.currentPosition, preMovePosition, self.onPathCall, self)
 
 			return
 		end
 	end
 end
 
-function var_0_0.setMove(arg_24_0, arg_24_1)
-	if not arg_24_1 or #arg_24_1 <= 0 then
+function RoomCharacterMO:setMove(nextPositions)
+	if not nextPositions or #nextPositions <= 0 then
 		return
 	end
 
-	arg_24_0._moveState = RoomCharacterEnum.CharacterMoveState.Move
-	arg_24_0._moveStartPosition = arg_24_0.currentPosition
+	self._moveState = RoomCharacterEnum.CharacterMoveState.Move
+	self._moveStartPosition = self.currentPosition
 
-	arg_24_0:clearPath()
-	tabletool.addValues(arg_24_0._nextPositions, arg_24_1)
+	self:clearPath()
+	tabletool.addValues(self._nextPositions, nextPositions)
 
-	arg_24_0._movePoint = 0
-	arg_24_0.stateDuration = 0
+	self._movePoint = 0
+	self.stateDuration = 0
 
-	GameSceneMgr.instance:getCurScene().path:stopGetPath(arg_24_0)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	arg_24_0._preMovePositions = nil
+	scene.path:stopGetPath(self)
+
+	self._preMovePositions = nil
 end
 
-function var_0_0.getRemainMovePositions(arg_25_0)
-	local var_25_0 = {}
+function RoomCharacterMO:getRemainMovePositions()
+	local remainMovePositions = {}
 
-	if arg_25_0._moveState ~= RoomCharacterEnum.CharacterMoveState.Move then
-		return var_25_0
+	if self._moveState ~= RoomCharacterEnum.CharacterMoveState.Move then
+		return remainMovePositions
 	end
 
-	if not arg_25_0._nextPositions or #arg_25_0._nextPositions <= 0 then
-		return var_25_0
+	if not self._nextPositions or #self._nextPositions <= 0 then
+		return remainMovePositions
 	end
 
-	table.insert(var_25_0, arg_25_0.currentPosition)
+	table.insert(remainMovePositions, self.currentPosition)
 
-	for iter_25_0 = arg_25_0._movePoint + 1, #arg_25_0._nextPositions do
-		table.insert(var_25_0, arg_25_0._nextPositions[iter_25_0])
+	for i = self._movePoint + 1, #self._nextPositions do
+		table.insert(remainMovePositions, self._nextPositions[i])
 	end
 
-	return var_25_0
+	return remainMovePositions
 end
 
-function var_0_0.endMove(arg_26_0, arg_26_1)
-	if arg_26_0._moveState == RoomCharacterEnum.CharacterMoveState.Move then
-		if not arg_26_1 and arg_26_0:_hasNextPosition() then
-			local var_26_0 = arg_26_0._nextPositions[#arg_26_0._nextPositions]
+function RoomCharacterMO:endMove(isNotMoveToEndPoint)
+	if self._moveState == RoomCharacterEnum.CharacterMoveState.Move then
+		if not isNotMoveToEndPoint and self:_hasNextPosition() then
+			local endPos = self._nextPositions[#self._nextPositions]
 
-			arg_26_0:setPositionXYZ(var_26_0.x, var_26_0.y, var_26_0.z)
+			self:setPositionXYZ(endPos.x, endPos.y, endPos.z)
 		end
 
-		arg_26_0:_moveEnd()
+		self:_moveEnd()
 	end
 end
 
-function var_0_0.canMove(arg_27_0)
-	if arg_27_0.isAnimal then
+function RoomCharacterMO:canMove()
+	if self.isAnimal then
 		return false
 	end
 
-	if arg_27_0.isTouch then
+	if self.isTouch then
 		return false
 	end
 
-	if arg_27_0._currentInteractionId then
+	if self._currentInteractionId then
 		return false
 	end
 
-	if arg_27_0._isHasLockTime then
-		arg_27_0._isHasLockTime = arg_27_0._nextUnLockTime > Time.time
+	if self._isHasLockTime then
+		self._isHasLockTime = self._nextUnLockTime > Time.time
 
 		return false
 	end
 
-	local var_27_0 = RoomCharacterController.instance:getPlayingInteractionParam()
+	local playingInteractionParam = RoomCharacterController.instance:getPlayingInteractionParam()
 
-	if var_27_0 and (var_27_0.heroId == arg_27_0.heroId or var_27_0.relateHeroId == arg_27_0.heroId) then
+	if playingInteractionParam and (playingInteractionParam.heroId == self.heroId or playingInteractionParam.relateHeroId == self.heroId) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.setLockTime(arg_28_0, arg_28_1)
-	arg_28_0._isHasLockTime = true
-	arg_28_0._nextUnLockTime = Time.time + arg_28_1
+function RoomCharacterMO:setLockTime(lockTime)
+	self._isHasLockTime = true
+	self._nextUnLockTime = Time.time + lockTime
 
-	if arg_28_0._moveState == RoomCharacterEnum.CharacterMoveState.Move then
-		arg_28_0._moveState = RoomCharacterEnum.CharacterMoveState.Idle
+	if self._moveState == RoomCharacterEnum.CharacterMoveState.Move then
+		self._moveState = RoomCharacterEnum.CharacterMoveState.Idle
 	end
 end
 
-function var_0_0._tryMoveNeighbor(arg_29_0)
+function RoomCharacterMO:_tryMoveNeighbor()
 	if RoomCharacterController.instance:isCharacterListShow() then
 		return
 	end
 
-	if not arg_29_0:canMove() then
+	if not self:canMove() then
 		return
 	end
 
-	if arg_29_0:getMoveRate() <= math.random() then
-		RoomCharacterController.instance:tryPlaySpecialIdle(arg_29_0.heroId)
+	local moveRate = self:getMoveRate()
+
+	if moveRate <= math.random() then
+		RoomCharacterController.instance:tryPlaySpecialIdle(self.heroId)
 
 		return
 	end
 
-	arg_29_0:moveNeighbor()
+	self:moveNeighbor()
 end
 
-function var_0_0.moveNeighbor(arg_30_0)
-	local var_30_0 = {}
-	local var_30_1 = {}
-	local var_30_2 = arg_30_0:getMoveTargetPoint()
-	local var_30_3 = var_30_2.hexPoint:getInRanges(2)
-	local var_30_4 = RoomCharacterHelper.getCharacterPosition(var_30_2)
+function RoomCharacterMO:moveNeighbor()
+	local points = {}
+	local pointParams = {}
+	local currentPoint = self:getMoveTargetPoint()
+	local hexPoint = currentPoint.hexPoint
+	local ranges = hexPoint:getInRanges(2)
+	local currentPosition = RoomCharacterHelper.getCharacterPosition(currentPoint)
 
-	for iter_30_0, iter_30_1 in ipairs(var_30_3) do
-		for iter_30_2 = 0, 6 do
-			local var_30_5 = ResourcePoint(iter_30_1, iter_30_2)
+	for _, range in ipairs(ranges) do
+		for direction = 0, 6 do
+			local resourcePoint = ResourcePoint(range, direction)
 
-			if var_30_5 ~= var_30_2 then
-				local var_30_6 = RoomCharacterHelper.getCharacterPosition(var_30_5)
-				local var_30_7 = Vector2.Distance(var_30_6, var_30_4)
+			if resourcePoint ~= currentPoint then
+				local position = RoomCharacterHelper.getCharacterPosition(resourcePoint)
+				local distance = Vector2.Distance(position, currentPosition)
 
-				table.insert(var_30_1, {
-					resourcePoint = var_30_5,
-					distance = var_30_7
+				table.insert(pointParams, {
+					resourcePoint = resourcePoint,
+					distance = distance
 				})
 			end
 		end
 	end
 
-	local var_30_8 = GameUtil.randomTable(var_30_1)
+	pointParams = GameUtil.randomTable(pointParams)
 
-	table.sort(var_30_8, function(arg_31_0, arg_31_1)
-		if math.abs(arg_31_0.distance - arg_31_1.distance) > 0.001 then
-			return arg_31_0.distance < arg_31_1.distance
+	table.sort(pointParams, function(x, y)
+		if math.abs(x.distance - y.distance) > 0.001 then
+			return x.distance < y.distance
 		end
 
 		return false
 	end)
 
-	local var_30_9 = RoomCharacterHelper.getBridgePositions(arg_30_0.currentPosition)
-	local var_30_10
+	local bridgePositions = RoomCharacterHelper.getBridgePositions(self.currentPosition)
+	local index
 
-	if math.random() < 0.4 and (not arg_30_0._preBridge or arg_30_0._preBridge < 2) then
-		var_30_10 = 1
+	if math.random() < 0.4 and (not self._preBridge or self._preBridge < 2) then
+		index = 1
 	else
-		arg_30_0._preBridge = 0
+		self._preBridge = 0
 	end
 
-	for iter_30_3, iter_30_4 in ipairs(var_30_9) do
-		local var_30_11 = {
+	for _, bridgePosition in ipairs(bridgePositions) do
+		local pointParam = {
 			isBridge = true,
-			position = iter_30_4
+			position = bridgePosition
 		}
 
-		if var_30_10 then
-			table.insert(var_30_8, var_30_10, var_30_11)
+		if index then
+			table.insert(pointParams, index, pointParam)
 		else
-			table.insert(var_30_8, var_30_11)
+			table.insert(pointParams, pointParam)
 		end
 	end
 
-	local var_30_12 = GameSceneMgr.instance:getCurScene().charactermgr:getCharacterEntity(arg_30_0.id)
+	local scene = GameSceneMgr.instance:getCurScene()
+	local entity = scene.charactermgr:getCharacterEntity(self.id)
 
-	if var_30_12 ~= nil then
-		local var_30_13 = {}
+	if entity ~= nil then
+		local preMovePositions = {}
 
-		for iter_30_5, iter_30_6 in ipairs(var_30_8) do
-			local var_30_14 = iter_30_6.position or RoomCharacterHelper.getCharacterPosition3D(iter_30_6.resourcePoint, false)
+		for _, pointParam in ipairs(pointParams) do
+			local position = pointParam.position or RoomCharacterHelper.getCharacterPosition3D(pointParam.resourcePoint, false)
 
-			if RoomCharacterHelper.checkMoveStraightRule(arg_30_0.currentPosition, var_30_14, arg_30_0.heroId, var_30_12, iter_30_6.isBridge) then
-				arg_30_0._preBridge = (arg_30_0._preBridge or 0) + (iter_30_6.isBridge and 1 or 0)
+			if RoomCharacterHelper.checkMoveStraightRule(self.currentPosition, position, self.heroId, entity, pointParam.isBridge) then
+				self._preBridge = (self._preBridge or 0) + (pointParam.isBridge and 1 or 0)
 
-				table.insert(var_30_13, var_30_14)
+				table.insert(preMovePositions, position)
 			end
 		end
 
-		arg_30_0:setPreMove(var_30_13)
+		self:setPreMove(preMovePositions)
 	end
 end
 
-function var_0_0.onPathCall(arg_32_0, arg_32_1, arg_32_2, arg_32_3, arg_32_4)
-	if not arg_32_3 then
-		local var_32_0 = RoomVectorPool.instance:packPosList(arg_32_2)
-		local var_32_1 = var_32_0[#var_32_0]
+function RoomCharacterMO:onPathCall(param, pathList, isError, errorMsg)
+	if not isError then
+		local list = RoomVectorPool.instance:packPosList(pathList)
+		local targetPosition = list[#list]
 
-		if RoomCharacterHelper.isMoveCameraWalkable(var_32_0) and not RoomCharacterHelper.isOtherCharacter(var_32_1, arg_32_0.heroId) then
-			arg_32_0:setMove(var_32_0)
+		if RoomCharacterHelper.isMoveCameraWalkable(list) and not RoomCharacterHelper.isOtherCharacter(targetPosition, self.heroId) then
+			self:setMove(list)
 
 			return
 		end
 	else
-		logNormal("Room pathfinding Error : " .. tostring(arg_32_4))
+		logNormal("Room pathfinding Error : " .. tostring(errorMsg))
 	end
 
-	arg_32_0:_tryNextMovePosition()
+	self:_tryNextMovePosition()
 end
 
-function var_0_0._moveEnd(arg_33_0, arg_33_1)
-	arg_33_0._moveState = RoomCharacterEnum.CharacterMoveState.Idle
+function RoomCharacterMO:_moveEnd(moveOver)
+	self._moveState = RoomCharacterEnum.CharacterMoveState.Idle
 
-	arg_33_0:clearPath()
+	self:clearPath()
 
-	arg_33_0._movePoint = 0
-	arg_33_0._moveValue = 0
-	arg_33_0.stateDuration = 0
+	self._movePoint = 0
+	self._moveValue = 0
+	self.stateDuration = 0
 
-	GameSceneMgr.instance:getCurScene().path:stopGetPath(arg_33_0)
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	arg_33_0._preMovePositions = nil
+	scene.path:stopGetPath(self)
 
-	if arg_33_1 then
-		RoomCharacterController.instance:tryPlaySpecialIdle(arg_33_0.heroId)
+	self._preMovePositions = nil
+
+	if moveOver then
+		RoomCharacterController.instance:tryPlaySpecialIdle(self.heroId)
 	end
 end
 
-function var_0_0.replaceIdleState(arg_34_0, arg_34_1)
-	arg_34_0._replaceIdleState = arg_34_1
+function RoomCharacterMO:replaceIdleState(animState)
+	self._replaceIdleState = animState
 end
 
-function var_0_0.clearPath(arg_35_0)
-	if #arg_35_0._nextPositions > 0 then
-		for iter_35_0 = #arg_35_0._nextPositions, 1, -1 do
-			RoomVectorPool.instance:recycle(arg_35_0._nextPositions[iter_35_0])
-			table.remove(arg_35_0._nextPositions, iter_35_0)
+function RoomCharacterMO:clearPath()
+	if #self._nextPositions > 0 then
+		for i = #self._nextPositions, 1, -1 do
+			RoomVectorPool.instance:recycle(self._nextPositions[i])
+			table.remove(self._nextPositions, i)
 		end
 	end
 end
 
-function var_0_0.updateMove(arg_36_0, arg_36_1)
-	if arg_36_0.characterState ~= RoomCharacterEnum.CharacterState.Map then
+function RoomCharacterMO:updateMove(deltaTime)
+	if self.characterState ~= RoomCharacterEnum.CharacterState.Map then
 		return
 	end
 
@@ -432,96 +444,101 @@ function var_0_0.updateMove(arg_36_0, arg_36_1)
 		return
 	end
 
-	if not arg_36_0:canMove() then
+	if not self:canMove() then
 		return
 	end
 
-	arg_36_0.stateDuration = arg_36_0.stateDuration + arg_36_1
+	self.stateDuration = self.stateDuration + deltaTime
 
-	if arg_36_0:getMoveInterval() < arg_36_0.stateDuration and arg_36_0._moveState ~= RoomCharacterEnum.CharacterMoveState.Move then
-		arg_36_0:_tryMoveNeighbor()
+	local moveInterval = self:getMoveInterval()
 
-		arg_36_0.stateDuration = 0
+	if moveInterval < self.stateDuration and self._moveState ~= RoomCharacterEnum.CharacterMoveState.Move then
+		self:_tryMoveNeighbor()
+
+		self.stateDuration = 0
 	end
 
-	if arg_36_0._moveState == RoomCharacterEnum.CharacterMoveState.Move then
-		local var_36_0 = arg_36_1 * arg_36_0:getMoveSpeed() * 0.2
+	if self._moveState == RoomCharacterEnum.CharacterMoveState.Move then
+		local moveSpeed = self:getMoveSpeed()
+		local moveDistance = deltaTime * moveSpeed * 0.2
 
-		arg_36_0:_move(var_36_0)
+		self:_move(moveDistance)
 	end
 end
 
-function var_0_0._move(arg_37_0, arg_37_1)
-	if not arg_37_0:_hasNextPosition() then
-		arg_37_0:_moveEnd()
+function RoomCharacterMO:_move(moveDistance)
+	if not self:_hasNextPosition() then
+		self:_moveEnd()
 
 		return
 	end
 
-	if arg_37_1 <= 0 then
+	if moveDistance <= 0 then
 		return
 	end
 
-	local var_37_0 = arg_37_1
-	local var_37_1 = arg_37_0.currentPosition
-	local var_37_2 = arg_37_0:_getNextPosition()
-	local var_37_3 = Vector3.Distance(var_37_1, var_37_2)
+	local waitMoveDistance = moveDistance
+	local prePosition = self.currentPosition
+	local nextPosition = self:_getNextPosition()
+	local distance = Vector3.Distance(prePosition, nextPosition)
 
-	while var_37_3 < var_37_0 do
-		var_37_0 = var_37_0 - var_37_3
-		var_37_1 = var_37_2
+	while distance < waitMoveDistance do
+		waitMoveDistance = waitMoveDistance - distance
+		prePosition = nextPosition
 
-		arg_37_0:_moveToNextPosition()
+		self:_moveToNextPosition()
 
-		if arg_37_0:_hasNextPosition() then
-			var_37_2 = arg_37_0:_getNextPosition()
-			var_37_3 = Vector3.Distance(var_37_1, var_37_2)
+		if self:_hasNextPosition() then
+			nextPosition = self:_getNextPosition()
+			distance = Vector3.Distance(prePosition, nextPosition)
 		else
-			var_37_3 = 0
+			distance = 0
 
 			break
 		end
 	end
 
-	if var_37_3 > 0 then
-		arg_37_0:setPosition(Vector3.Lerp(var_37_1, var_37_2, var_37_0 / var_37_3))
+	if distance > 0 then
+		self:setPosition(Vector3.Lerp(prePosition, nextPosition, waitMoveDistance / distance))
 
-		arg_37_0._moveDir = Vector2(var_37_2.x - var_37_1.x, var_37_2.z - var_37_1.z):SetNormalize()
+		local toDir = Vector2(nextPosition.x - prePosition.x, nextPosition.z - prePosition.z)
+
+		self._moveDir = toDir:SetNormalize()
 	else
-		arg_37_0:setPositionXYZ(var_37_1.x, var_37_1.y, var_37_1.z)
+		self:setPositionXYZ(prePosition.x, prePosition.y, prePosition.z)
 	end
 
-	if not arg_37_0:_hasNextPosition() then
-		arg_37_0:_moveEnd(true)
+	if not self:_hasNextPosition() then
+		self:_moveEnd(true)
 	end
 end
 
-function var_0_0._hasNextPosition(arg_38_0)
-	return #arg_38_0._nextPositions > arg_38_0._movePoint
+function RoomCharacterMO:_hasNextPosition()
+	return #self._nextPositions > self._movePoint
 end
 
-function var_0_0._getNextPosition(arg_39_0)
-	return arg_39_0._nextPositions[arg_39_0._movePoint + 1]
+function RoomCharacterMO:_getNextPosition()
+	return self._nextPositions[self._movePoint + 1]
 end
 
-function var_0_0._moveToNextPosition(arg_40_0)
-	arg_40_0._movePoint = arg_40_0._movePoint + 1
+function RoomCharacterMO:_moveToNextPosition()
+	self._movePoint = self._movePoint + 1
 end
 
-function var_0_0.setCurrentInteractionId(arg_41_0, arg_41_1)
-	arg_41_0._currentInteractionId = arg_41_1
+function RoomCharacterMO:setCurrentInteractionId(interactionId)
+	self._currentInteractionId = interactionId
 end
 
-function var_0_0.getCurrentInteractionId(arg_42_0)
-	return arg_42_0._currentInteractionId
+function RoomCharacterMO:getCurrentInteractionId()
+	return self._currentInteractionId
 end
 
-function var_0_0.setIsFreeze(arg_43_0, arg_43_1)
-	arg_43_0._freeze = arg_43_1
+function RoomCharacterMO:setIsFreeze(isFreeze)
+	self._freeze = isFreeze
 end
 
-function var_0_0.getIsFreeze(arg_44_0)
-	return arg_44_0._freeze
+function RoomCharacterMO:getIsFreeze()
+	return self._freeze
 end
 
-return var_0_0
+return RoomCharacterMO

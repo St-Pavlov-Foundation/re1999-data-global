@@ -1,11 +1,13 @@
-﻿module("modules.logic.explore.view.ExploreGuideDialogueViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/explore/view/ExploreGuideDialogueViewContainer.lua
 
-local var_0_0 = class("ExploreGuideDialogueViewContainer", BaseViewContainer)
+module("modules.logic.explore.view.ExploreGuideDialogueViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ExploreGuideDialogueViewContainer = class("ExploreGuideDialogueViewContainer", BaseViewContainer)
+
+function ExploreGuideDialogueViewContainer:buildViews()
 	return {
 		ExploreGuideDialogueView.New()
 	}
 end
 
-return var_0_0
+return ExploreGuideDialogueViewContainer

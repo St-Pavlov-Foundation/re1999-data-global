@@ -1,118 +1,120 @@
-﻿module("modules.logic.fight.view.FightSurvivalTalent2View", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightSurvivalTalent2View.lua
 
-local var_0_0 = class("FightSurvivalTalent2View", FightBaseView)
+module("modules.logic.fight.view.FightSurvivalTalent2View", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.imageProgress = gohelper.findChildImage(arg_1_0.viewGO, "root/progress/#image_progress")
-	arg_1_0.txtProgress = gohelper.findChildText(arg_1_0.viewGO, "root/progress/#txt_progress")
-	arg_1_0.goFull = gohelper.findChild(arg_1_0.viewGO, "root/#go_full")
+local FightSurvivalTalent2View = class("FightSurvivalTalent2View", FightBaseView)
 
-	gohelper.setActive(arg_1_0.goFull, false)
+function FightSurvivalTalent2View:onInitView()
+	self.imageProgress = gohelper.findChildImage(self.viewGO, "root/progress/#image_progress")
+	self.txtProgress = gohelper.findChildText(self.viewGO, "root/progress/#txt_progress")
+	self.goFull = gohelper.findChild(self.viewGO, "root/#go_full")
 
-	arg_1_0.powerType = FightEnum.PowerType.SurvivalDot
-	arg_1_0.entityMo = FightDataHelper.entityMgr:getVorpalith()
-	arg_1_0.entityId = arg_1_0.entityMo.id
+	gohelper.setActive(self.goFull, false)
+
+	self.powerType = FightEnum.PowerType.SurvivalDot
+	self.entityMo = FightDataHelper.entityMgr:getVorpalith()
+	self.entityId = self.entityMo.id
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_2_0.onPowerChange, arg_2_0)
+function FightSurvivalTalent2View:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.PowerChange, self.onPowerChange, self)
 end
 
-function var_0_0.onPowerChange(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_1 ~= arg_3_0.entityId then
+function FightSurvivalTalent2View:onPowerChange(entityId, powerId, oldValue, newValue)
+	if entityId ~= self.entityId then
 		return
 	end
 
-	if arg_3_2 ~= arg_3_0.powerType then
+	if powerId ~= self.powerType then
 		return
 	end
 
-	arg_3_0:changePower()
+	self:changePower()
 end
 
-var_0_0.TweenDuration = 0.5
+FightSurvivalTalent2View.TweenDuration = 0.5
 
-function var_0_0.changePower(arg_4_0)
-	local var_4_0 = arg_4_0.entityMo and arg_4_0.entityMo:getPowerInfo(arg_4_0.powerType)
+function FightSurvivalTalent2View:changePower()
+	local powerInfo = self.entityMo and self.entityMo:getPowerInfo(self.powerType)
 
-	if not var_4_0 then
+	if not powerInfo then
 		return
 	end
 
-	arg_4_0:killTween()
+	self:killTween()
 
-	local var_4_1 = var_4_0.num / var_4_0.max
-	local var_4_2 = arg_4_0.imageProgress.fillAmount
+	local curProgress = powerInfo.num / powerInfo.max
+	local oldProgress = self.imageProgress.fillAmount
 
-	arg_4_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_4_2, var_4_1, arg_4_0.TweenDuration, arg_4_0.onFrameCallback, arg_4_0.onDoneCallback, arg_4_0)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(oldProgress, curProgress, self.TweenDuration, self.onFrameCallback, self.onDoneCallback, self)
 end
 
-function var_0_0.onFrameCallback(arg_5_0, arg_5_1)
-	arg_5_0:directSetProgress(arg_5_1)
+function FightSurvivalTalent2View:onFrameCallback(progress)
+	self:directSetProgress(progress)
 end
 
-function var_0_0.onDoneCallback(arg_6_0)
-	arg_6_0.tweenId = nil
+function FightSurvivalTalent2View:onDoneCallback()
+	self.tweenId = nil
 
-	arg_6_0:refreshProgress()
-	arg_6_0:tryPlayFullAnim()
+	self:refreshProgress()
+	self:tryPlayFullAnim()
 end
 
-function var_0_0.tryPlayFullAnim(arg_7_0)
-	if arg_7_0:checkTriggerEffect() then
-		gohelper.setActive(arg_7_0.goFull, false)
-		gohelper.setActive(arg_7_0.goFull, true)
+function FightSurvivalTalent2View:tryPlayFullAnim()
+	if self:checkTriggerEffect() then
+		gohelper.setActive(self.goFull, false)
+		gohelper.setActive(self.goFull, true)
 		AudioMgr.instance:trigger(410000031)
 	end
 end
 
-function var_0_0.checkTriggerEffect(arg_8_0)
-	local var_8_0 = arg_8_0.entityMo and arg_8_0.entityMo:getPowerInfo(arg_8_0.powerType)
+function FightSurvivalTalent2View:checkTriggerEffect()
+	local powerInfo = self.entityMo and self.entityMo:getPowerInfo(self.powerType)
 
-	if not var_8_0 then
+	if not powerInfo then
 		return
 	end
 
-	local var_8_1 = var_8_0.max
+	local triggerValue = powerInfo.max
 
-	if arg_8_0.entityMo:hasBuffId(107311008) then
-		var_8_1 = 0.8 * var_8_1
+	if self.entityMo:hasBuffId(107311008) then
+		triggerValue = 0.8 * triggerValue
 	end
 
-	return var_8_1 <= var_8_0.num
+	return triggerValue <= powerInfo.num
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:refreshProgress()
+function FightSurvivalTalent2View:onOpen()
+	self:refreshProgress()
 end
 
-function var_0_0.directSetProgress(arg_10_0, arg_10_1)
-	arg_10_0.imageProgress.fillAmount = arg_10_1
-	arg_10_0.txtProgress.text = string.format("%s%%", math.floor(arg_10_1 * 100))
+function FightSurvivalTalent2View:directSetProgress(rate)
+	self.imageProgress.fillAmount = rate
+	self.txtProgress.text = string.format("%s%%", math.floor(rate * 100))
 end
 
-function var_0_0.refreshProgress(arg_11_0)
-	local var_11_0 = arg_11_0.entityMo and arg_11_0.entityMo:getPowerInfo(arg_11_0.powerType)
+function FightSurvivalTalent2View:refreshProgress()
+	local powerInfo = self.entityMo and self.entityMo:getPowerInfo(self.powerType)
 
-	if not var_11_0 then
+	if not powerInfo then
 		return
 	end
 
-	local var_11_1 = var_11_0.num / var_11_0.max
+	local progress = powerInfo.num / powerInfo.max
 
-	arg_11_0:directSetProgress(var_11_1)
+	self:directSetProgress(progress)
 end
 
-function var_0_0.killTween(arg_12_0)
-	if arg_12_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_12_0.tweenId)
+function FightSurvivalTalent2View:killTween()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_12_0.tweenId = nil
+		self.tweenId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0:killTween()
+function FightSurvivalTalent2View:onDestroyView()
+	self:killTween()
 end
 
-return var_0_0
+return FightSurvivalTalent2View

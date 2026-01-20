@@ -1,13 +1,15 @@
-﻿module("modules.logic.fight.system.work.FightWorkZXQRemoveCardContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkZXQRemoveCardContainer.lua
 
-local var_0_0 = class("FightWorkZXQRemoveCardContainer", FightStepEffectFlow)
+module("modules.logic.fight.system.work.FightWorkZXQRemoveCardContainer", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentSequenceEffect(nil, true)
+local FightWorkZXQRemoveCardContainer = class("FightWorkZXQRemoveCardContainer", FightStepEffectFlow)
+
+function FightWorkZXQRemoveCardContainer:onStart()
+	self:playAdjacentSequenceEffect(nil, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkZXQRemoveCardContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkZXQRemoveCardContainer

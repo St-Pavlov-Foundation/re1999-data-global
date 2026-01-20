@@ -1,80 +1,82 @@
-﻿module("modules.logic.character.view.CharacterSwitchItem", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterSwitchItem.lua
 
-local var_0_0 = class("CharacterSwitchItem", ListScrollCellExtend)
+module("modules.logic.character.view.CharacterSwitchItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gorandom = gohelper.findChild(arg_1_0.viewGO, "#go_random")
-	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_icon")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_name")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+local CharacterSwitchItem = class("CharacterSwitchItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function CharacterSwitchItem:onInitView()
+	self._gorandom = gohelper.findChild(self.viewGO, "#go_random")
+	self._gonormal = gohelper.findChild(self.viewGO, "#go_normal")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_normal/#simage_icon")
+	self._txtname = gohelper.findChildText(self.viewGO, "#go_normal/#txt_name")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_selected")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function CharacterSwitchItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function CharacterSwitchItem:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._click = SLFramework.UGUI.UIClickListener.Get(arg_4_0.viewGO)
+function CharacterSwitchItem:_editableInitView()
+	self._click = SLFramework.UGUI.UIClickListener.Get(self.viewGO)
 end
 
-function var_0_0._editableAddEvents(arg_5_0)
-	arg_5_0._click:AddClickListener(arg_5_0._onClick, arg_5_0)
+function CharacterSwitchItem:_editableAddEvents()
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0._editableRemoveEvents(arg_6_0)
-	arg_6_0._click:RemoveClickListener()
+function CharacterSwitchItem:_editableRemoveEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0._onClick(arg_7_0)
-	if arg_7_0._isSelect then
+function CharacterSwitchItem:_onClick()
+	if self._isSelect then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Store_Good_Click)
-	arg_7_0._view:selectCell(arg_7_0._index, true)
+	self._view:selectCell(self._index, true)
 	CharacterController.instance:dispatchEvent(CharacterEvent.SwitchHero, {
-		arg_7_0._heroId,
-		arg_7_0._skinId,
-		arg_7_0._mo.isRandom
+		self._heroId,
+		self._skinId,
+		self._mo.isRandom
 	})
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
-	arg_8_0._skinId = arg_8_0._mo.skinId
-	arg_8_0._heroId = nil
+function CharacterSwitchItem:onUpdateMO(mo)
+	self._mo = mo
+	self._skinId = self._mo.skinId
+	self._heroId = nil
 
-	gohelper.setActive(arg_8_0._gorandom, arg_8_0._mo.isRandom)
-	gohelper.setActive(arg_8_0._gonormal, not arg_8_0._mo.isRandom)
+	gohelper.setActive(self._gorandom, self._mo.isRandom)
+	gohelper.setActive(self._gonormal, not self._mo.isRandom)
 
-	if arg_8_0._mo.isRandom then
+	if self._mo.isRandom then
 		return
 	end
 
-	arg_8_0._config = arg_8_0._mo.heroMO.config
-	arg_8_0._heroId = arg_8_0._mo.heroMO.heroId
-	arg_8_0._txtname.text = arg_8_0._config.name
+	self._config = self._mo.heroMO.config
+	self._heroId = self._mo.heroMO.heroId
+	self._txtname.text = self._config.name
 
-	arg_8_0._simageicon:LoadImage(ResUrl.getHeadIconSmall(arg_8_0._skinId))
+	self._simageicon:LoadImage(ResUrl.getHeadIconSmall(self._skinId))
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
-	arg_9_0._isSelect = arg_9_1
+function CharacterSwitchItem:onSelect(isSelect)
+	self._isSelect = isSelect
 
-	arg_9_0._goselected:SetActive(arg_9_1)
+	self._goselected:SetActive(isSelect)
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simageicon:UnLoadImage()
+function CharacterSwitchItem:onDestroyView()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return CharacterSwitchItem

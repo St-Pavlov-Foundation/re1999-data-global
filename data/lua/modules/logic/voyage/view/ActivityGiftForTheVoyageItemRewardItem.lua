@@ -1,47 +1,49 @@
-﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemRewardItem", package.seeall)
+﻿-- chunkname: @modules/logic/voyage/view/ActivityGiftForTheVoyageItemRewardItem.lua
 
-local var_0_0 = class("ActivityGiftForTheVoyageItemRewardItem", LuaCompBase)
+module("modules.logic.voyage.view.ActivityGiftForTheVoyageItemRewardItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_item")
-	arg_1_0._gohasGet = gohelper.findChild(arg_1_0.viewGO, "#go_hasGet")
+local ActivityGiftForTheVoyageItemRewardItem = class("ActivityGiftForTheVoyageItemRewardItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityGiftForTheVoyageItemRewardItem:onInitView()
+	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
+	self._gohasGet = gohelper.findChild(self.viewGO, "#go_hasGet")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
+function ActivityGiftForTheVoyageItemRewardItem:init(go)
+	self.viewGO = go
 
-	arg_2_0:onInitView()
+	self:onInitView()
 end
 
-function var_0_0._editableInitView(arg_3_0)
-	gohelper.setActive(arg_3_0._gohasGet, false)
+function ActivityGiftForTheVoyageItemRewardItem:_editableInitView()
+	gohelper.setActive(self._gohasGet, false)
 
-	arg_3_0._item = IconMgr.instance:getCommonItemIcon(arg_3_0._goitem)
+	self._item = IconMgr.instance:getCommonItemIcon(self._goitem)
 end
 
-function var_0_0.refreshRewardItem(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0._item
+function ActivityGiftForTheVoyageItemRewardItem:refreshRewardItem(itemCo, isActiveTick)
+	local cell_component = self._item
 
-	var_4_0:setMOValue(arg_4_1[1], arg_4_1[2], arg_4_1[3], nil, true)
-	var_4_0:setConsume(true)
-	var_4_0:isShowEffect(true)
-	var_4_0:setAutoPlay(true)
-	var_4_0:setCountFontSize(48)
-	var_4_0:showStackableNum2()
-	var_4_0:setGetMask(arg_4_2)
-	gohelper.setActive(arg_4_0._gohasGet, arg_4_2)
+	cell_component:setMOValue(itemCo[1], itemCo[2], itemCo[3], nil, true)
+	cell_component:setConsume(true)
+	cell_component:isShowEffect(true)
+	cell_component:setAutoPlay(true)
+	cell_component:setCountFontSize(48)
+	cell_component:showStackableNum2()
+	cell_component:setGetMask(isActiveTick)
+	gohelper.setActive(self._gohasGet, isActiveTick)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	GameUtil.onDestroyViewMemberList(arg_5_0, "_item")
+function ActivityGiftForTheVoyageItemRewardItem:onDestroyView()
+	GameUtil.onDestroyViewMemberList(self, "_item")
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	arg_6_0:onDestroyView()
+function ActivityGiftForTheVoyageItemRewardItem:onDestroy()
+	self:onDestroyView()
 end
 
-return var_0_0
+return ActivityGiftForTheVoyageItemRewardItem

@@ -1,445 +1,450 @@
-﻿module("modules.logic.sp01.assassin2.story.littlegame.AssassinEyeGameView", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/story/littlegame/AssassinEyeGameView.lua
 
-local var_0_0 = class("AssassinEyeGameView", BaseView)
-local var_0_1 = 2
-local var_0_2 = "AssassinController;AssassinEvent;OnEyeGameFinished"
-local var_0_3 = {
+module("modules.logic.sp01.assassin2.story.littlegame.AssassinEyeGameView", package.seeall)
+
+local AssassinEyeGameView = class("AssassinEyeGameView", BaseView)
+local WaitFindAreaTime = 2
+local WaitGameDoneWorkParam = "AssassinController;AssassinEvent;OnEyeGameFinished"
+local ShakeType = {
 	Intense = 2,
 	Slight = 1,
 	None = 0
 }
-local var_0_4 = {
-	[var_0_3.None] = 0,
-	[var_0_3.Slight] = 10,
-	[var_0_3.Intense] = 0
+local ShakeType2ShakeRange = {
+	[ShakeType.None] = 0,
+	[ShakeType.Slight] = 10,
+	[ShakeType.Intense] = 0
 }
-local var_0_5 = {
-	[var_0_3.None] = 0,
-	[var_0_3.Slight] = 0.1,
-	[var_0_3.Intense] = 0.05
+local ShakeType2ShakeInterval = {
+	[ShakeType.None] = 0,
+	[ShakeType.Slight] = 0.1,
+	[ShakeType.Intense] = 0.05
 }
-local var_0_6 = {
+local TwoRectPositionType = {
 	Intersect = 2,
 	Include = 3,
 	Away = 1
 }
-local var_0_7 = 0.06
-local var_0_8 = {
-	[var_0_6.Away] = var_0_3.None,
-	[var_0_6.Intersect] = var_0_3.Slight,
-	[var_0_6.Include] = var_0_3.Intense
+local ShakeTweenDuration = 0.06
+local RectPositionType2ShakeType = {
+	[TwoRectPositionType.Away] = ShakeType.None,
+	[TwoRectPositionType.Intersect] = ShakeType.Slight,
+	[TwoRectPositionType.Include] = ShakeType.Intense
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gogame1 = gohelper.findChild(arg_1_0.viewGO, "root/#go_game1")
-	arg_1_0._gogame2 = gohelper.findChild(arg_1_0.viewGO, "root/#go_game2")
-	arg_1_0._goframe = gohelper.findChild(arg_1_0.viewGO, "root/#go_frame")
-	arg_1_0._imageframe = gohelper.findChildImage(arg_1_0.viewGO, "root/#go_frame/#image_frame")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/top/#txt_title")
-	arg_1_0._gopoints = gohelper.findChild(arg_1_0.viewGO, "root/top/#go_points")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "root/top/#go_points/#go_point")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright")
-	arg_1_0._btnfind = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#go_topright/#btn_find")
-	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "root/#go_frame/#image_frame/#go_mask")
-	arg_1_0._golightbg = gohelper.findChild(arg_1_0.viewGO, "root/simage_light")
-	arg_1_0._golighteye = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright/#btn_find/image_light")
-	arg_1_0._gogreyeye = gohelper.findChild(arg_1_0.viewGO, "root/#go_topright/#btn_find/image_grey")
+function AssassinEyeGameView:onInitView()
+	self._gogame1 = gohelper.findChild(self.viewGO, "root/#go_game1")
+	self._gogame2 = gohelper.findChild(self.viewGO, "root/#go_game2")
+	self._goframe = gohelper.findChild(self.viewGO, "root/#go_frame")
+	self._imageframe = gohelper.findChildImage(self.viewGO, "root/#go_frame/#image_frame")
+	self._txttitle = gohelper.findChildText(self.viewGO, "root/top/#txt_title")
+	self._gopoints = gohelper.findChild(self.viewGO, "root/top/#go_points")
+	self._gopoint = gohelper.findChild(self.viewGO, "root/top/#go_points/#go_point")
+	self._gotopleft = gohelper.findChild(self.viewGO, "root/#go_topleft")
+	self._gotopright = gohelper.findChild(self.viewGO, "root/#go_topright")
+	self._btnfind = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_topright/#btn_find")
+	self._gomask = gohelper.findChild(self.viewGO, "root/#go_frame/#image_frame/#go_mask")
+	self._golightbg = gohelper.findChild(self.viewGO, "root/simage_light")
+	self._golighteye = gohelper.findChild(self.viewGO, "root/#go_topright/#btn_find/image_light")
+	self._gogreyeye = gohelper.findChild(self.viewGO, "root/#go_topright/#btn_find/image_grey")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnfind:AddClickListener(arg_2_0._btnfindOnClick, arg_2_0)
-	SLFramework.UGUI.UIDragListener.Get(arg_2_0._goframe):AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
-	SLFramework.UGUI.UIDragListener.Get(arg_2_0._goframe):AddDragListener(arg_2_0._onDrag, arg_2_0)
-	SLFramework.UGUI.UIDragListener.Get(arg_2_0._goframe):AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
-	arg_2_0:addEventCb(AssassinController.instance, AssassinEvent.OnGameAfterStoryDone, arg_2_0.closeThis, arg_2_0)
+function AssassinEyeGameView:addEvents()
+	self._btnfind:AddClickListener(self._btnfindOnClick, self)
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):AddDragBeginListener(self._onDragBegin, self)
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):AddDragListener(self._onDrag, self)
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):AddDragEndListener(self._onDragEnd, self)
+	self:addEventCb(AssassinController.instance, AssassinEvent.OnGameAfterStoryDone, self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnfind:RemoveClickListener()
-	SLFramework.UGUI.UIDragListener.Get(arg_3_0._goframe):RemoveDragBeginListener()
-	SLFramework.UGUI.UIDragListener.Get(arg_3_0._goframe):RemoveDragListener()
-	SLFramework.UGUI.UIDragListener.Get(arg_3_0._goframe):RemoveDragEndListener()
+function AssassinEyeGameView:removeEvents()
+	self._btnfind:RemoveClickListener()
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):RemoveDragBeginListener()
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):RemoveDragListener()
+	SLFramework.UGUI.UIDragListener.Get(self._goframe):RemoveDragEndListener()
 end
 
-function var_0_0._btnfindOnClick(arg_4_0)
-	if arg_4_0._isUseEye then
+function AssassinEyeGameView:_btnfindOnClick()
+	if self._isUseEye then
 		return
 	end
 
-	arg_4_0._isUseEye = true
+	self._isUseEye = true
 
-	arg_4_0:refreshMaskPoint()
-	gohelper.setActive(arg_4_0._goframe, true)
-	gohelper.setActive(arg_4_0._golightbg, true)
-	gohelper.setActive(arg_4_0._golighteye, arg_4_0._isUseEye)
-	gohelper.setActive(arg_4_0._gogreyeye, not arg_4_0._isUseEye)
+	self:refreshMaskPoint()
+	gohelper.setActive(self._goframe, true)
+	gohelper.setActive(self._golightbg, true)
+	gohelper.setActive(self._golighteye, self._isUseEye)
+	gohelper.setActive(self._gogreyeye, not self._isUseEye)
 	AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_clickeye)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._isUseEye = false
+function AssassinEyeGameView:_editableInitView()
+	self._isUseEye = false
 
-	gohelper.setActive(arg_5_0._goframe, false)
-	gohelper.setActive(arg_5_0._gogame1, false)
-	gohelper.setActive(arg_5_0._gogame2, false)
-	gohelper.setActive(arg_5_0._golightbg, false)
-	gohelper.setActive(arg_5_0._golighteye, arg_5_0._isUseEye)
-	gohelper.setActive(arg_5_0._gogreyeye, not arg_5_0._isUseEye)
+	gohelper.setActive(self._goframe, false)
+	gohelper.setActive(self._gogame1, false)
+	gohelper.setActive(self._gogame2, false)
+	gohelper.setActive(self._golightbg, false)
+	gohelper.setActive(self._golighteye, self._isUseEye)
+	gohelper.setActive(self._gogreyeye, not self._isUseEye)
 
-	arg_5_0._frameTran = arg_5_0._goframe.transform
-	arg_5_0._framePosTab = arg_5_0:calcPosRangeInRect(0, 0, arg_5_0._frameTran)
-	arg_5_0._frameImgTran = arg_5_0._imageframe.transform
-	arg_5_0.viewTran = arg_5_0.viewGO.transform
-	arg_5_0._maskTran = arg_5_0._gomask.transform
-	arg_5_0._animator = gohelper.onceAddComponent(arg_5_0.viewGO, gohelper.Type_Animator)
-	arg_5_0._gointersecteffect = gohelper.findChild(arg_5_0._goframe, "#image_frame/#faguang")
-	arg_5_0._goincludeeffect = gohelper.findChild(arg_5_0._goframe, "#image_frame/#jiexi")
-	arg_5_0._dialogIdList = VersionActivity2_9DungeonHelper.getLittleGameDialogIds(AssassinEnum.ConstId.DialogId_EyeGame)
+	self._frameTran = self._goframe.transform
+	self._framePosTab = self:calcPosRangeInRect(0, 0, self._frameTran)
+	self._frameImgTran = self._imageframe.transform
+	self.viewTran = self.viewGO.transform
+	self._maskTran = self._gomask.transform
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._gointersecteffect = gohelper.findChild(self._goframe, "#image_frame/#faguang")
+	self._goincludeeffect = gohelper.findChild(self._goframe, "#image_frame/#jiexi")
+	self._dialogIdList = VersionActivity2_9DungeonHelper.getLittleGameDialogIds(AssassinEnum.ConstId.DialogId_EyeGame)
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._episodeId = arg_6_0.viewParam and arg_6_0.viewParam.episodeId
-	arg_6_0._flow = FlowSequence.New()
+function AssassinEyeGameView:onOpen()
+	self._episodeId = self.viewParam and self.viewParam.episodeId
+	self._flow = FlowSequence.New()
 
-	arg_6_0._flow:addWork(arg_6_0:buildGameFlow(1))
-	arg_6_0._flow:addWork(FunctionWork.New(arg_6_0.beforeSwitchNextGame, arg_6_0))
-	arg_6_0._flow:addWork(arg_6_0:buildGameFlow(2))
-	arg_6_0._flow:registerDoneListener(arg_6_0.onGameDone, arg_6_0)
-	arg_6_0._flow:start()
-	arg_6_0:playDialog(1, arg_6_0.triggerGuideEvent, arg_6_0)
+	self._flow:addWork(self:buildGameFlow(1))
+	self._flow:addWork(FunctionWork.New(self.beforeSwitchNextGame, self))
+	self._flow:addWork(self:buildGameFlow(2))
+	self._flow:registerDoneListener(self.onGameDone, self)
+	self._flow:start()
+	self:playDialog(1, self.triggerGuideEvent, self)
 end
 
-function var_0_0.triggerGuideEvent(arg_7_0)
+function AssassinEyeGameView:triggerGuideEvent()
 	AssassinController.instance:dispatchEvent(AssassinEvent.TriggerEyeGameGuide)
 end
 
-function var_0_0.buildGameFlow(arg_8_0, arg_8_1)
-	local var_8_0 = FlowSequence.New()
+function AssassinEyeGameView:buildGameFlow(index)
+	local flow = FlowSequence.New()
 
-	var_8_0:addWork(FunctionWork.New(arg_8_0.init, arg_8_0, arg_8_1))
-	var_8_0:addWork(WaitEventWork.New(var_0_2 .. ";" .. arg_8_1))
-	var_8_0:addWork(AssassinDialogWork.New(arg_8_0._dialogIdList[arg_8_1 + 1]))
+	flow:addWork(FunctionWork.New(self.init, self, index))
+	flow:addWork(WaitEventWork.New(WaitGameDoneWorkParam .. ";" .. index))
+	flow:addWork(AssassinDialogWork.New(self._dialogIdList[index + 1]))
 
-	return var_8_0
+	return flow
 end
 
-function var_0_0.beforeSwitchNextGame(arg_9_0)
-	arg_9_0._animator:Play("switch", 0, 0)
+function AssassinEyeGameView:beforeSwitchNextGame()
+	self._animator:Play("switch", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_switchNext)
 end
 
-function var_0_0.playDialog(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_0._dialogIdList and arg_10_0._dialogIdList[arg_10_1]
+function AssassinEyeGameView:playDialog(index, callback, callbackObj)
+	local dialogId = self._dialogIdList and self._dialogIdList[index]
 
-	if not var_10_0 then
+	if not dialogId then
 		return
 	end
 
-	VersionActivity2_9DungeonController.instance:openAssassinStoryDialogView(var_10_0, arg_10_2, arg_10_3)
+	VersionActivity2_9DungeonController.instance:openAssassinStoryDialogView(dialogId, callback, callbackObj)
 end
 
-function var_0_0.onGameDone(arg_11_0)
-	arg_11_0.viewContainer:stat(StatEnum.Result.Success)
-	AssassinController.instance:dispatchEvent(AssassinEvent.OnGameEpisodeFinished, arg_11_0._episodeId)
+function AssassinEyeGameView:onGameDone()
+	self.viewContainer:stat(StatEnum.Result.Success)
+	AssassinController.instance:dispatchEvent(AssassinEvent.OnGameEpisodeFinished, self._episodeId)
 end
 
-function var_0_0.init(arg_12_0, arg_12_1)
-	arg_12_0._curGameIndex = arg_12_1
-	arg_12_0._rootGO, arg_12_0._maskRootGO = arg_12_0:_activeTargetGame(arg_12_1)
-	arg_12_0._rootTran = arg_12_0._rootGO.transform
-	arg_12_0._maskRootTran = arg_12_0._maskRootGO.transform
-	arg_12_0._gofindarea = gohelper.findChild(arg_12_0._rootGO, "go_findarea")
-	arg_12_0._findAreaTran = arg_12_0._gofindarea.transform
-	arg_12_0._findAreaWidth = recthelper.getWidth(arg_12_0._findAreaTran)
-	arg_12_0._findAreaHeight = recthelper.getHeight(arg_12_0._findAreaTran)
-	arg_12_0._frameTran.parent = arg_12_0._findAreaTran
+function AssassinEyeGameView:init(index)
+	self._curGameIndex = index
+	self._rootGO, self._maskRootGO = self:_activeTargetGame(index)
+	self._rootTran = self._rootGO.transform
+	self._maskRootTran = self._maskRootGO.transform
+	self._gofindarea = gohelper.findChild(self._rootGO, "go_findarea")
+	self._findAreaTran = self._gofindarea.transform
+	self._findAreaWidth = recthelper.getWidth(self._findAreaTran)
+	self._findAreaHeight = recthelper.getHeight(self._findAreaTran)
+	self._frameTran.parent = self._findAreaTran
 
-	gohelper.setActive(arg_12_0._goframe, arg_12_0._isUseEye)
+	gohelper.setActive(self._goframe, self._isUseEye)
 
-	arg_12_0._maskPointsGO = gohelper.findChild(arg_12_0._maskRootGO, "go_points")
-	arg_12_0._maskPointsTran = arg_12_0._maskPointsGO.transform
-	arg_12_0._minFindAreaPosX = -arg_12_0._findAreaWidth / 2 + arg_12_0._framePosTab.width / 2
-	arg_12_0._maxFindAreaPosX = arg_12_0._findAreaWidth / 2 - arg_12_0._framePosTab.width / 2
-	arg_12_0._minFindAreaPosY = -arg_12_0._findAreaHeight / 2 + arg_12_0._framePosTab.height / 2
-	arg_12_0._maxFindAreaPosY = arg_12_0._findAreaHeight / 2 - arg_12_0._framePosTab.height / 2
-	arg_12_0._findAreaIndex = 0
-	arg_12_0._rectPositionType = var_0_6.Away
-	arg_12_0._findAreaIndexDict = {}
-	arg_12_0._pointRectPosList = {}
-	arg_12_0._pointTranList = arg_12_0:getUserDataTb_()
-	arg_12_0._pointIconTranList = arg_12_0:getUserDataTb_()
+	self._maskPointsGO = gohelper.findChild(self._maskRootGO, "go_points")
+	self._maskPointsTran = self._maskPointsGO.transform
+	self._minFindAreaPosX = -self._findAreaWidth / 2 + self._framePosTab.width / 2
+	self._maxFindAreaPosX = self._findAreaWidth / 2 - self._framePosTab.width / 2
+	self._minFindAreaPosY = -self._findAreaHeight / 2 + self._framePosTab.height / 2
+	self._maxFindAreaPosY = self._findAreaHeight / 2 - self._framePosTab.height / 2
+	self._findAreaIndex = 0
+	self._rectPositionType = TwoRectPositionType.Away
+	self._findAreaIndexDict = {}
+	self._pointRectPosList = {}
+	self._pointTranList = self:getUserDataTb_()
+	self._pointIconTranList = self:getUserDataTb_()
 
-	arg_12_0:refreshMaskPoint()
+	self:refreshMaskPoint()
 
-	for iter_12_0 = 1, math.huge do
-		local var_12_0 = gohelper.findChild(arg_12_0._maskPointsGO, "go_area" .. iter_12_0)
+	for i = 1, math.huge do
+		local gopoint = gohelper.findChild(self._maskPointsGO, "go_area" .. i)
 
-		if gohelper.isNil(var_12_0) then
+		if gohelper.isNil(gopoint) then
 			break
 		end
 
-		local var_12_1 = gohelper.findChildImage(var_12_0, "icon")
-		local var_12_2 = var_12_0.transform
-		local var_12_3, var_12_4 = recthelper.rectToRelativeAnchorPos2(var_12_2.position, arg_12_0._findAreaTran)
-		local var_12_5 = arg_12_0:calcPosRangeInRect(var_12_3, var_12_4, var_12_2)
+		local imagepoint = gohelper.findChildImage(gopoint, "icon")
+		local pointTran = gopoint.transform
+		local pointPosX, pointPosY = recthelper.rectToRelativeAnchorPos2(pointTran.position, self._findAreaTran)
+		local rectPosDict = self:calcPosRangeInRect(pointPosX, pointPosY, pointTran)
 
-		table.insert(arg_12_0._pointRectPosList, var_12_5)
-		table.insert(arg_12_0._pointTranList, var_12_0.transform)
-		table.insert(arg_12_0._pointIconTranList, var_12_1.transform)
+		table.insert(self._pointRectPosList, rectPosDict)
+		table.insert(self._pointTranList, gopoint.transform)
+		table.insert(self._pointIconTranList, imagepoint.transform)
 	end
 
-	arg_12_0._allPointNum = #arg_12_0._pointRectPosList
+	self._allPointNum = #self._pointRectPosList
 
-	gohelper.setActive(arg_12_0._findAreaTran, true)
-	gohelper.setActive(arg_12_0._goincludeeffect, false)
-	gohelper.setActive(arg_12_0._gointersecteffect, false)
-	arg_12_0:refreshFindProgress()
+	gohelper.setActive(self._findAreaTran, true)
+	gohelper.setActive(self._goincludeeffect, false)
+	gohelper.setActive(self._gointersecteffect, false)
+	self:refreshFindProgress()
 end
 
-function var_0_0._activeTargetGame(arg_13_0, arg_13_1)
-	local var_13_0
-	local var_13_1
+function AssassinEyeGameView:_activeTargetGame(index)
+	local rootGO, maskRootGO
 
-	for iter_13_0 = 1, math.huge do
-		local var_13_2 = gohelper.findChild(arg_13_0.viewGO, "root/#go_game" .. iter_13_0)
-		local var_13_3 = gohelper.findChild(arg_13_0._gomask, "#go_gamemask" .. iter_13_0)
+	for i = 1, math.huge do
+		local goroot = gohelper.findChild(self.viewGO, "root/#go_game" .. i)
+		local gomaskroot = gohelper.findChild(self._gomask, "#go_gamemask" .. i)
 
-		if gohelper.isNil(var_13_2) or gohelper.isNil(var_13_3) then
+		if gohelper.isNil(goroot) or gohelper.isNil(gomaskroot) then
 			break
 		end
 
-		local var_13_4 = iter_13_0 == arg_13_1
+		local isFind = i == index
 
-		gohelper.setActive(var_13_2, var_13_4)
-		gohelper.setActive(var_13_3, var_13_4)
+		gohelper.setActive(goroot, isFind)
+		gohelper.setActive(gomaskroot, isFind)
 
-		if var_13_4 then
-			var_13_0 = var_13_2
-			var_13_1 = var_13_3
+		if isFind then
+			rootGO = goroot
+			maskRootGO = gomaskroot
 		end
 	end
 
-	return var_13_0, var_13_1
+	return rootGO, maskRootGO
 end
 
-function var_0_0._onDragBegin(arg_14_0)
-	arg_14_0:_processDragEvent()
+function AssassinEyeGameView:_onDragBegin()
+	self:_processDragEvent()
 	AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_beginDragFrame)
 end
 
-function var_0_0._onDrag(arg_15_0)
-	arg_15_0:_processDragEvent()
+function AssassinEyeGameView:_onDrag()
+	self:_processDragEvent()
 end
 
-function var_0_0._onDragEnd(arg_16_0)
-	arg_16_0:_processDragEvent()
+function AssassinEyeGameView:_onDragEnd()
+	self:_processDragEvent()
 end
 
-function var_0_0._processDragEvent(arg_17_0)
-	local var_17_0 = GamepadController.instance:getMousePosition()
-	local var_17_1, var_17_2 = recthelper.screenPosToAnchorPos2(var_17_0, arg_17_0._findAreaTran)
-	local var_17_3 = Mathf.Clamp(var_17_1, arg_17_0._minFindAreaPosX, arg_17_0._maxFindAreaPosX)
-	local var_17_4 = Mathf.Clamp(var_17_2, arg_17_0._minFindAreaPosY, arg_17_0._maxFindAreaPosY)
+function AssassinEyeGameView:_processDragEvent()
+	local mousePosition = GamepadController.instance:getMousePosition()
+	local frameTmpPosX, frameTmpPosY = recthelper.screenPosToAnchorPos2(mousePosition, self._findAreaTran)
 
-	recthelper.setAnchor(arg_17_0._frameTran, var_17_3, var_17_4)
+	frameTmpPosX = Mathf.Clamp(frameTmpPosX, self._minFindAreaPosX, self._maxFindAreaPosX)
+	frameTmpPosY = Mathf.Clamp(frameTmpPosY, self._minFindAreaPosY, self._maxFindAreaPosY)
 
-	local var_17_5, var_17_6 = arg_17_0:checkIsFindArea(var_17_3, var_17_4)
+	recthelper.setAnchor(self._frameTran, frameTmpPosX, frameTmpPosY)
 
-	if var_17_6 ~= arg_17_0._findAreaIndex or var_17_5 ~= arg_17_0._rectPositionType then
-		arg_17_0._rectPositionType = var_17_5
-		arg_17_0._findAreaIndex = var_17_6
+	local type, findAreaIndex = self:checkIsFindArea(frameTmpPosX, frameTmpPosY)
 
-		TaskDispatcher.cancelTask(arg_17_0._wait2FindAreaSuccee, arg_17_0)
+	if findAreaIndex ~= self._findAreaIndex or type ~= self._rectPositionType then
+		self._rectPositionType = type
+		self._findAreaIndex = findAreaIndex
 
-		if var_17_6 and var_17_5 == var_0_6.Include then
-			TaskDispatcher.cancelTask(arg_17_0._wait2FindAreaSuccee, arg_17_0)
-			TaskDispatcher.runDelay(arg_17_0._wait2FindAreaSuccee, arg_17_0, var_0_1)
+		TaskDispatcher.cancelTask(self._wait2FindAreaSuccee, self)
+
+		if findAreaIndex and type == TwoRectPositionType.Include then
+			TaskDispatcher.cancelTask(self._wait2FindAreaSuccee, self)
+			TaskDispatcher.runDelay(self._wait2FindAreaSuccee, self, WaitFindAreaTime)
 			AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_findEye)
 		end
 
-		local var_17_7 = var_0_8[var_17_5]
+		local shakeType = RectPositionType2ShakeType[type]
 
-		arg_17_0:tickShake(var_17_7)
+		self:tickShake(shakeType)
 	end
 
-	gohelper.setActive(arg_17_0._gointersecteffect, var_17_5 == var_0_6.Intersect)
-	gohelper.setActive(arg_17_0._goincludeeffect, var_17_5 == var_0_6.Include)
-	arg_17_0:refreshMaskPoint()
+	gohelper.setActive(self._gointersecteffect, type == TwoRectPositionType.Intersect)
+	gohelper.setActive(self._goincludeeffect, type == TwoRectPositionType.Include)
+	self:refreshMaskPoint()
 end
 
-function var_0_0.checkIsFindArea(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:calcPosRangeInRect(arg_18_1, arg_18_2, arg_18_0._frameTran, arg_18_0._framePosTab)
+function AssassinEyeGameView:checkIsFindArea(frameTmpPosX, frameTmpPosY)
+	self:calcPosRangeInRect(frameTmpPosX, frameTmpPosY, self._frameTran, self._framePosTab)
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0._pointRectPosList) do
-		if not arg_18_0._findAreaIndexDict[iter_18_0] then
-			local var_18_0 = arg_18_0:calcTwoRectPositionType(arg_18_0._framePosTab, iter_18_1)
+	for index, pointRectPos in ipairs(self._pointRectPosList) do
+		if not self._findAreaIndexDict[index] then
+			local type = self:calcTwoRectPositionType(self._framePosTab, pointRectPos)
 
-			if var_18_0 ~= var_0_6.Away then
-				return var_18_0, iter_18_0
+			if type ~= TwoRectPositionType.Away then
+				return type, index
 			end
 		end
 	end
 
-	return var_0_6.Away
+	return TwoRectPositionType.Away
 end
 
-function var_0_0.calcTwoRectPositionType(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_1.minPosX
-	local var_19_1 = arg_19_1.maxPosX
-	local var_19_2 = arg_19_1.minPosY
-	local var_19_3 = arg_19_1.maxPosY
-	local var_19_4 = arg_19_2.minPosX
-	local var_19_5 = arg_19_2.maxPosX
-	local var_19_6 = arg_19_2.minPosY
-	local var_19_7 = arg_19_2.maxPosY
+function AssassinEyeGameView:calcTwoRectPositionType(rectTab1, rectTab2)
+	local minPosX_Rect1 = rectTab1.minPosX
+	local maxPosX_Rect1 = rectTab1.maxPosX
+	local minPosY_Rect1 = rectTab1.minPosY
+	local maxPosY_Rect1 = rectTab1.maxPosY
+	local minPosX_Rect2 = rectTab2.minPosX
+	local maxPosX_Rect2 = rectTab2.maxPosX
+	local minPosY_Rect2 = rectTab2.minPosY
+	local maxPosY_Rect2 = rectTab2.maxPosY
 
-	if var_19_0 <= var_19_4 and var_19_5 <= var_19_1 and var_19_2 <= var_19_6 and var_19_7 <= var_19_3 then
-		return var_0_6.Include
+	if minPosX_Rect1 <= minPosX_Rect2 and maxPosX_Rect2 <= maxPosX_Rect1 and minPosY_Rect1 <= minPosY_Rect2 and maxPosY_Rect2 <= maxPosY_Rect1 then
+		return TwoRectPositionType.Include
 	else
-		local var_19_8 = math.max(var_19_0, var_19_4)
-		local var_19_9 = math.min(var_19_1, var_19_5)
-		local var_19_10 = math.max(var_19_2, var_19_6)
-		local var_19_11 = math.min(var_19_3, var_19_7)
+		local minPosX = math.max(minPosX_Rect1, minPosX_Rect2)
+		local maxPosX = math.min(maxPosX_Rect1, maxPosX_Rect2)
+		local minPosY = math.max(minPosY_Rect1, minPosY_Rect2)
+		local maxPosY = math.min(maxPosY_Rect1, maxPosY_Rect2)
 
-		if var_19_8 < var_19_9 and var_19_10 < var_19_11 then
-			return var_0_6.Intersect
+		if minPosX < maxPosX and minPosY < maxPosY then
+			return TwoRectPositionType.Intersect
 		end
 	end
 
-	return var_0_6.Away
+	return TwoRectPositionType.Away
 end
 
-function var_0_0.calcPosRangeInRect(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
-	arg_20_4 = arg_20_4 or {
-		width = recthelper.getWidth(arg_20_3),
-		height = recthelper.getHeight(arg_20_3)
+function AssassinEyeGameView:calcPosRangeInRect(posX, posY, rectTran, dataTab)
+	dataTab = dataTab or {
+		width = recthelper.getWidth(rectTran),
+		height = recthelper.getHeight(rectTran)
 	}
 
-	local var_20_0 = arg_20_4.width
-	local var_20_1 = arg_20_4.height
+	local width = dataTab.width
+	local height = dataTab.height
 
-	arg_20_4.minPosX = arg_20_1 - var_20_0 / 2
-	arg_20_4.maxPosX = arg_20_1 + var_20_0 / 2
-	arg_20_4.minPosY = arg_20_2 - var_20_1 / 2
-	arg_20_4.maxPosY = arg_20_2 + var_20_1 / 2
-	arg_20_4.posX = arg_20_1
-	arg_20_4.posY = arg_20_2
-	arg_20_4.screenPos = recthelper.uiPosToScreenPos(arg_20_3)
+	dataTab.minPosX = posX - width / 2
+	dataTab.maxPosX = posX + width / 2
+	dataTab.minPosY = posY - height / 2
+	dataTab.maxPosY = posY + height / 2
+	dataTab.posX = posX
+	dataTab.posY = posY
+	dataTab.screenPos = recthelper.uiPosToScreenPos(rectTran)
 
-	return arg_20_4
+	return dataTab
 end
 
-function var_0_0._wait2FindAreaSuccee(arg_21_0)
-	if arg_21_0._findAreaIndex then
-		arg_21_0._findAreaIndexDict[arg_21_0._findAreaIndex] = true
+function AssassinEyeGameView:_wait2FindAreaSuccee()
+	if self._findAreaIndex then
+		self._findAreaIndexDict[self._findAreaIndex] = true
 
-		gohelper.setActive(arg_21_0._pointTranList[arg_21_0._findAreaIndex], true)
+		gohelper.setActive(self._pointTranList[self._findAreaIndex], true)
 		AudioMgr.instance:trigger(AudioEnum2_9.DungeonMiniGame.play_ui_findEyeSucc)
-		gohelper.onceAddComponent(arg_21_0._pointTranList[arg_21_0._findAreaIndex], gohelper.Type_Animator):Play("finish", 0, 0)
-		arg_21_0:refreshFindProgress()
-		arg_21_0:tickShake(var_0_3.None)
-		TaskDispatcher.cancelTask(arg_21_0._shake, arg_21_0)
 
-		arg_21_0._findAreaIndex = nil
+		local animator = gohelper.onceAddComponent(self._pointTranList[self._findAreaIndex], gohelper.Type_Animator)
+
+		animator:Play("finish", 0, 0)
+		self:refreshFindProgress()
+		self:tickShake(ShakeType.None)
+		TaskDispatcher.cancelTask(self._shake, self)
+
+		self._findAreaIndex = nil
 	end
 end
 
-function var_0_0.refreshFindProgress(arg_22_0)
-	arg_22_0._hasFindNum = tabletool.len(arg_22_0._findAreaIndexDict)
-	arg_22_0._txttitle.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassineyegameview_title"), arg_22_0._hasFindNum, arg_22_0._allPointNum)
+function AssassinEyeGameView:refreshFindProgress()
+	self._hasFindNum = tabletool.len(self._findAreaIndexDict)
+	self._txttitle.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassineyegameview_title"), self._hasFindNum, self._allPointNum)
 
-	gohelper.CreateObjList(arg_22_0, arg_22_0.refreshSingleProgress, arg_22_0._pointRectPosList, arg_22_0._gopoints, arg_22_0._gopoint)
+	gohelper.CreateObjList(self, self.refreshSingleProgress, self._pointRectPosList, self._gopoints, self._gopoint)
 
-	if arg_22_0._hasFindNum >= arg_22_0._allPointNum then
-		AssassinController.instance:dispatchEvent(AssassinEvent.OnEyeGameFinished, arg_22_0._curGameIndex)
+	if self._hasFindNum >= self._allPointNum then
+		AssassinController.instance:dispatchEvent(AssassinEvent.OnEyeGameFinished, self._curGameIndex)
 	end
 end
 
-function var_0_0.refreshSingleProgress(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_3 <= arg_23_0._hasFindNum
-	local var_23_1 = arg_23_1:GetComponent(gohelper.Type_Image)
-	local var_23_2 = gohelper.findChild(arg_23_1, "#eyelight")
+function AssassinEyeGameView:refreshSingleProgress(obj, data, index)
+	local isFind = index <= self._hasFindNum
+	local imageicon = obj:GetComponent(gohelper.Type_Image)
+	local goeffect = gohelper.findChild(obj, "#eyelight")
 
-	gohelper.setActive(var_23_2, var_23_0)
-	UISpriteSetMgr.instance:setSp01AssassinSprite(var_23_1, var_23_0 and "assassin2_threegames_eyes_3_1" or "assassin2_threegames_eyes_3_2")
+	gohelper.setActive(goeffect, isFind)
+	UISpriteSetMgr.instance:setSp01AssassinSprite(imageicon, isFind and "assassin2_threegames_eyes_3_1" or "assassin2_threegames_eyes_3_2")
 end
 
-function var_0_0.tickShake(arg_24_0, arg_24_1)
-	if arg_24_0._curShakeType == arg_24_1 then
+function AssassinEyeGameView:tickShake(shakeType)
+	if self._curShakeType == shakeType then
 		return
 	end
 
-	arg_24_0._curShakeType = arg_24_1
+	self._curShakeType = shakeType
 
-	arg_24_0:_shake()
-	TaskDispatcher.cancelTask(arg_24_0._shake, arg_24_0)
+	self:_shake()
+	TaskDispatcher.cancelTask(self._shake, self)
 
-	if arg_24_1 ~= var_0_3.None then
-		local var_24_0 = var_0_5[arg_24_1]
+	if shakeType ~= ShakeType.None then
+		local shakeInterval = ShakeType2ShakeInterval[shakeType]
 
-		TaskDispatcher.runRepeat(arg_24_0._shake, arg_24_0, var_24_0)
+		TaskDispatcher.runRepeat(self._shake, self, shakeInterval)
 	end
 end
 
-function var_0_0._shake(arg_25_0)
-	local var_25_0 = var_0_4[arg_25_0._curShakeType]
+function AssassinEyeGameView:_shake()
+	local shakeRange = ShakeType2ShakeRange[self._curShakeType]
 
-	if not var_25_0 then
-		logError(string.format("未配置震动移动范围(ShakeType2ShakeRange) shakeType = %s", arg_25_0._curShakeType))
+	if not shakeRange then
+		logError(string.format("未配置震动移动范围(ShakeType2ShakeRange) shakeType = %s", self._curShakeType))
 
 		return
 	end
 
-	arg_25_0:_killTweenId("_frameTweenId")
-	arg_25_0:_killTweenId("_iconTweenId")
+	self:_killTweenId("_frameTweenId")
+	self:_killTweenId("_iconTweenId")
 
-	local var_25_1, var_25_2 = GameUtil.getRandomPosInCircle(0, 0, var_25_0)
+	local framePosX, framePosY = GameUtil.getRandomPosInCircle(0, 0, shakeRange)
 
-	arg_25_0._frameTweenId = ZProj.TweenHelper.DOAnchorPos(arg_25_0._frameImgTran, var_25_1, var_25_2, var_0_7)
+	self._frameTweenId = ZProj.TweenHelper.DOAnchorPos(self._frameImgTran, framePosX, framePosY, ShakeTweenDuration)
 
-	if arg_25_0._findAreaIndex and arg_25_0._pointIconTranList[arg_25_0._findAreaIndex] then
-		local var_25_3, var_25_4 = GameUtil.getRandomPosInCircle(0, 0, var_25_0)
+	if self._findAreaIndex and self._pointIconTranList[self._findAreaIndex] then
+		local pointPosX, pointPosY = GameUtil.getRandomPosInCircle(0, 0, shakeRange)
 
-		arg_25_0._iconTweenId = ZProj.TweenHelper.DOAnchorPos(arg_25_0._pointIconTranList[arg_25_0._findAreaIndex], var_25_3, var_25_4, var_0_7)
+		self._iconTweenId = ZProj.TweenHelper.DOAnchorPos(self._pointIconTranList[self._findAreaIndex], pointPosX, pointPosY, ShakeTweenDuration)
 	end
 
-	arg_25_0:refreshMaskPoint()
+	self:refreshMaskPoint()
 end
 
-function var_0_0._killTweenId(arg_26_0, arg_26_1)
-	if arg_26_1 and arg_26_0[arg_26_1] then
-		ZProj.TweenHelper.KillById(arg_26_0[arg_26_1])
+function AssassinEyeGameView:_killTweenId(tweenId)
+	if tweenId and self[tweenId] then
+		ZProj.TweenHelper.KillById(self[tweenId])
 
-		arg_26_0[arg_26_1] = nil
+		self[tweenId] = nil
 	end
 end
 
-function var_0_0.refreshMaskPoint(arg_27_0)
-	local var_27_0, var_27_1 = recthelper.rectToRelativeAnchorPos2(arg_27_0._rootTran.position, arg_27_0._maskTran)
+function AssassinEyeGameView:refreshMaskPoint()
+	local maskGamePosX, maskGamePosY = recthelper.rectToRelativeAnchorPos2(self._rootTran.position, self._maskTran)
 
-	recthelper.setAnchor(arg_27_0._maskRootTran, var_27_0, var_27_1)
+	recthelper.setAnchor(self._maskRootTran, maskGamePosX, maskGamePosY)
 end
 
-function var_0_0.onClose(arg_28_0)
-	if arg_28_0._flow then
-		arg_28_0._flow:destroy()
+function AssassinEyeGameView:onClose()
+	if self._flow then
+		self._flow:destroy()
 
-		arg_28_0._flow = nil
+		self._flow = nil
 	end
 
-	arg_28_0:_killTweenId("_frameTweenId")
-	arg_28_0:_killTweenId("_iconTweenId")
-	TaskDispatcher.cancelTask(arg_28_0._wait2FindAreaSuccee, arg_28_0)
-	TaskDispatcher.cancelTask(arg_28_0._shake, arg_28_0)
+	self:_killTweenId("_frameTweenId")
+	self:_killTweenId("_iconTweenId")
+	TaskDispatcher.cancelTask(self._wait2FindAreaSuccee, self)
+	TaskDispatcher.cancelTask(self._shake, self)
 end
 
-function var_0_0.onDestroyView(arg_29_0)
+function AssassinEyeGameView:onDestroyView()
 	return
 end
 
-return var_0_0
+return AssassinEyeGameView

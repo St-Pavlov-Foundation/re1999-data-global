@@ -1,14 +1,16 @@
-﻿module("modules.logic.room.model.critter.RoomTrainCritterMO", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/critter/RoomTrainCritterMO.lua
 
-local var_0_0 = pureTable("RoomTrainCritterMO")
+module("modules.logic.room.model.critter.RoomTrainCritterMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.critterMO = CritterModel.instance:getCritterMOByUid(arg_1_0.id)
-	arg_1_0.heroId = arg_1_0.heroMO.heroId
-	arg_1_0.skinId = arg_1_0.heroMO.skin
-	arg_1_0.heroConfig = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
-	arg_1_0.skinConfig = SkinConfig.instance:getSkinCo(arg_1_0.skinId)
+local RoomTrainCritterMO = pureTable("RoomTrainCritterMO")
+
+function RoomTrainCritterMO:init(info)
+	self.id = info.id
+	self.critterMO = CritterModel.instance:getCritterMOByUid(self.id)
+	self.heroId = self.heroMO.heroId
+	self.skinId = self.heroMO.skin
+	self.heroConfig = HeroConfig.instance:getHeroCO(self.heroId)
+	self.skinConfig = SkinConfig.instance:getSkinCo(self.skinId)
 end
 
-return var_0_0
+return RoomTrainCritterMO

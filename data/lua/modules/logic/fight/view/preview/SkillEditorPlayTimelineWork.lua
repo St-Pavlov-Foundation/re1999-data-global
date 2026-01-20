@@ -1,145 +1,151 @@
-﻿module("modules.logic.fight.view.preview.SkillEditorPlayTimelineWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/preview/SkillEditorPlayTimelineWork.lua
 
-local var_0_0 = class("SkillEditorPlayTimelineWork", BaseWork)
+module("modules.logic.fight.view.preview.SkillEditorPlayTimelineWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SkillEditorPlayTimelineWork = class("SkillEditorPlayTimelineWork", BaseWork)
+
+function SkillEditorPlayTimelineWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._StopAutoPlayFlow1, arg_2_0._stopFlow, arg_2_0)
+function SkillEditorPlayTimelineWork:onStart()
+	SkillEditorMgr.instance:registerCallback(SkillEditorMgr._StopAutoPlayFlow1, self._stopFlow, self)
 
-	arg_2_0._completeList = {}
-	arg_2_0._skillCount = 0
+	self._completeList = {}
+	self._skillCount = 0
 
-	local var_2_0 = false
+	local canplay = false
 
-	arg_2_0.flow = FlowSequence.New()
+	self.flow = FlowSequence.New()
 
-	local var_2_1 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)
-	local var_2_2 = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMOs = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)
+	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
-	if var_2_1 and #var_2_1 > 0 then
-		for iter_2_0, iter_2_1 in ipairs(var_2_1) do
-			local var_2_3 = arg_2_0:_getEntitySkillCOList(iter_2_1)
+	if entityMOs and #entityMOs > 0 then
+		for _, entityMO in ipairs(entityMOs) do
+			local skillList = self:_getEntitySkillCOList(entityMO)
 
-			if #var_2_3 > 0 then
-				for iter_2_2, iter_2_3 in ipairs(var_2_3) do
-					local var_2_4 = iter_2_1.id
-					local var_2_5 = var_2_2:getEntityByPosId(SceneTag.UnitMonster, SkillEditorView.selectPosId[FightEnum.EntitySide.EnemySide]).id
-					local var_2_6 = FightEnum.EntitySide.MySide
-					local var_2_7 = FightHelper.getTargetLimits(var_2_6, iter_2_3)
+			if #skillList > 0 then
+				for index, skillId in ipairs(skillList) do
+					local attackerId = entityMO.id
+					local targetId = entityMgr:getEntityByPosId(SceneTag.UnitMonster, SkillEditorView.selectPosId[FightEnum.EntitySide.EnemySide]).id
+					local side = FightEnum.EntitySide.MySide
+					local targetLimit = FightHelper.getTargetLimits(side, skillId)
 
-					if var_2_7 and #var_2_7 > 0 and not tabletool.indexOf(var_2_7, var_2_5) then
-						var_2_5 = var_2_7[1]
+					if targetLimit and #targetLimit > 0 and not tabletool.indexOf(targetLimit, targetId) then
+						targetId = targetLimit[1]
 					end
 
-					local var_2_8 = SkillEditorStepBuilder.buildFightStepDataList(iter_2_3, var_2_4, var_2_5)
+					local fightStepDataList = SkillEditorStepBuilder.buildFightStepDataList(skillId, attackerId, targetId)
 
-					for iter_2_4, iter_2_5 in ipairs(var_2_8) do
-						arg_2_0.flow:addWork(FunctionWork.New(function()
-							local var_3_0 = lua_skill.configDict[iter_2_3].name
-							local var_3_1 = iter_2_3 .. "\n" .. string.format("当前技能\n%s\n剩余技能%s/%s", var_3_0, #var_2_3 - iter_2_2, #var_2_3)
+					for _, fightStepData in ipairs(fightStepDataList) do
+						self.flow:addWork(FunctionWork.New(function()
+							local skillCO = lua_skill.configDict[skillId]
+							local name = skillCO.name
+							local str = skillId .. "\n" .. string.format("当前技能\n%s\n剩余技能%s/%s", name, #skillList - index, #skillList)
 
 							SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._onSwitchEnityOrSkill, {
-								skillstr = var_3_1
+								skillstr = str
 							})
-						end, arg_2_0))
-						arg_2_0.flow:addWork(FightSkillEditorFlow.New(iter_2_5))
+						end, self))
+						self.flow:addWork(FightSkillEditorFlow.New(fightStepData))
 					end
 
-					arg_2_0.flow:addWork(FunctionWork.New(function()
-						arg_2_0._skillCount = arg_2_0._skillCount + 1
-					end, arg_2_0))
-					arg_2_0.flow:addWork(FunctionWork.New(arg_2_0._checkSkillDone, arg_2_0, {
-						count = #var_2_3,
-						id = iter_2_1.id
+					self.flow:addWork(FunctionWork.New(function()
+						self._skillCount = self._skillCount + 1
+					end, self))
+					self.flow:addWork(FunctionWork.New(self._checkSkillDone, self, {
+						count = #skillList,
+						id = entityMO.id
 					}))
 				end
 
-				var_2_0 = true
+				canplay = true
 
-				arg_2_0.flow:addWork(FunctionWork.New(arg_2_0._checkSkillDone, arg_2_0, {
-					count = #var_2_1
+				self.flow:addWork(FunctionWork.New(self._checkSkillDone, self, {
+					count = #entityMOs
 				}))
 			end
 		end
 
-		if var_2_0 then
-			arg_2_0.flow:start()
+		if canplay then
+			self.flow:start()
 		else
-			arg_2_0:onDone(true)
+			self:onDone(true)
 		end
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._getEntitySkillCOList(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = {}
+function SkillEditorPlayTimelineWork:_getEntitySkillCOList(entityMO)
+	local list = {}
+	local nameDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_1.skillIds) do
-		local var_5_2 = FightConfig.instance:getSkinSkillTimeline(arg_5_1.skin, iter_5_1)
-		local var_5_3 = string.split(var_5_2, "_")
+	for i, skillId in ipairs(entityMO.skillIds) do
+		local timeline = FightConfig.instance:getSkinSkillTimeline(entityMO.skin, skillId)
+		local temp = string.split(timeline, "_")
 
-		if iter_5_1 and not string.nilorempty(var_5_2) and not var_5_1[var_5_3[#var_5_3]] then
-			var_5_1[var_5_3[#var_5_3]] = true
+		if skillId and not string.nilorempty(timeline) and not nameDict[temp[#temp]] then
+			nameDict[temp[#temp]] = true
 
-			table.insert(var_5_0, iter_5_1)
+			table.insert(list, skillId)
 		end
 	end
 
-	local var_5_4 = tostring(arg_5_1.modelId)
+	local modelIdStr = tostring(entityMO.modelId)
 
-	for iter_5_2, iter_5_3 in ipairs(lua_skill.configList) do
-		local var_5_5 = tostring(iter_5_3.id)
-		local var_5_6 = iter_5_3.timeline
+	for _, skillCO in ipairs(lua_skill.configList) do
+		local skillIdStr = tostring(skillCO.id)
+		local timeline = skillCO.timeline
 
-		if string.find(var_5_5, var_5_4) == 1 and not string.nilorempty(var_5_6) then
-			local var_5_7 = string.split(var_5_6, "_")
+		if string.find(skillIdStr, modelIdStr) == 1 and not string.nilorempty(timeline) then
+			local temp = string.split(timeline, "_")
 
-			if iter_5_3.id and not string.nilorempty(var_5_6) and not var_5_1[var_5_7[#var_5_7]] then
-				var_5_1[var_5_7[#var_5_7]] = true
+			if skillCO.id and not string.nilorempty(timeline) and not nameDict[temp[#temp]] then
+				nameDict[temp[#temp]] = true
 
-				table.insert(var_5_0, iter_5_3.id)
+				table.insert(list, skillCO.id)
 			end
 		end
 	end
 
-	return var_5_0
+	return list
 end
 
-function var_0_0._stopFlow(arg_6_0)
-	if arg_6_0.flow and arg_6_0.flow.status == WorkStatus.Running then
-		local var_6_0 = arg_6_0.flow:getWorkList()
+function SkillEditorPlayTimelineWork:_stopFlow()
+	if self.flow and self.flow.status == WorkStatus.Running then
+		local workList = self.flow:getWorkList()
+		local curWorkIdx = self.flow._curIndex
 
-		for iter_6_0 = arg_6_0.flow._curIndex, #var_6_0 do
-			var_6_0[iter_6_0]:onDone(true)
+		for i = curWorkIdx, #workList do
+			local work = workList[i]
+
+			work:onDone(true)
 		end
 
-		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._StopAutoPlayFlow2, arg_6_0)
-		arg_6_0:onDone(true)
+		SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr._StopAutoPlayFlow2, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._checkSkillDone(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.count
-	local var_7_1 = arg_7_1.id
+function SkillEditorPlayTimelineWork:_checkSkillDone(param)
+	local count = param.count
+	local id = param.id
 
-	if not var_7_1 then
-		if #arg_7_0._completeList == var_7_0 then
-			arg_7_0:onDone(true)
+	if not id then
+		if #self._completeList == count then
+			self:onDone(true)
 		end
-	elseif arg_7_0._skillCount == var_7_0 then
-		table.insert(arg_7_0._completeList, var_7_1)
+	elseif self._skillCount == count then
+		table.insert(self._completeList, id)
 
-		arg_7_0._skillCount = 0
+		self._skillCount = 0
 	end
 end
 
-function var_0_0.clearWork(arg_8_0)
-	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._StopAutoPlayFlow1, arg_8_0._stopFlow, arg_8_0)
+function SkillEditorPlayTimelineWork:clearWork()
+	SkillEditorMgr.instance:unregisterCallback(SkillEditorMgr._StopAutoPlayFlow1, self._stopFlow, self)
 end
 
-return var_0_0
+return SkillEditorPlayTimelineWork

@@ -1,124 +1,126 @@
-﻿module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_1/Season123_2_1CelebrityCardItem.lua
 
-local var_0_0 = class("Season123_2_1CelebrityCardItem", LuaCompBase)
+module("modules.logic.seasonver.act123.view2_1.Season123_2_1CelebrityCardItem", package.seeall)
 
-var_0_0.AssetPath = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
+local Season123_2_1CelebrityCardItem = class("Season123_2_1CelebrityCardItem", LuaCompBase)
 
-function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.go = arg_1_1
-	arg_1_0._equipId = arg_1_2
+Season123_2_1CelebrityCardItem.AssetPath = "ui/viewres/seasonver/v2a1_act123/season123celebritycarditem.prefab"
 
-	local var_1_0 = var_0_0.AssetPath
+function Season123_2_1CelebrityCardItem:init(go, equipId, params)
+	self.go = go
+	self._equipId = equipId
 
-	arg_1_0._showTag = false
-	arg_1_0._showNewFlag = arg_1_3 and arg_1_3.showNewFlag
-	arg_1_0._showNewFlag2 = arg_1_3 and arg_1_3.showNewFlag2
-	arg_1_0._targetFlagUIScale = arg_1_3 and arg_1_3.targetFlagUIScale
-	arg_1_0._targetFlagUIPosX = arg_1_3 and arg_1_3.targetFlagUIPosX
-	arg_1_0._targetFlagUIPosY = arg_1_3 and arg_1_3.targetFlagUIPosY
-	arg_1_0._noClick = arg_1_3 and arg_1_3.noClick
-	arg_1_0._gorares = {}
-	arg_1_0._gocarditem = gohelper.create2d(arg_1_0.go, "cardItem")
-	arg_1_0._resLoader = PrefabInstantiate.Create(arg_1_0._gocarditem)
+	local assetPath = Season123_2_1CelebrityCardItem.AssetPath
 
-	arg_1_0._resLoader:startLoad(var_1_0, arg_1_0.handleCardLoaded, arg_1_0)
+	self._showTag = false
+	self._showNewFlag = params and params.showNewFlag
+	self._showNewFlag2 = params and params.showNewFlag2
+	self._targetFlagUIScale = params and params.targetFlagUIScale
+	self._targetFlagUIPosX = params and params.targetFlagUIPosX
+	self._targetFlagUIPosY = params and params.targetFlagUIPosY
+	self._noClick = params and params.noClick
+	self._gorares = {}
+	self._gocarditem = gohelper.create2d(self.go, "cardItem")
+	self._resLoader = PrefabInstantiate.Create(self._gocarditem)
+
+	self._resLoader:startLoad(assetPath, self.handleCardLoaded, self)
 end
 
-function var_0_0.handleCardLoaded(arg_2_0)
-	arg_2_0._cardGo = arg_2_0._resLoader:getInstGO()
-	arg_2_0._icon = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0._cardGo, Season123_2_1CelebrityCardEquip)
+function Season123_2_1CelebrityCardItem:handleCardLoaded()
+	self._cardGo = self._resLoader:getInstGO()
+	self._icon = MonoHelper.addNoUpdateLuaComOnceToGo(self._cardGo, Season123_2_1CelebrityCardEquip)
 
-	if not arg_2_0._noClick then
-		arg_2_0._icon:setClickCall(arg_2_0.onBtnClick, arg_2_0)
+	if not self._noClick then
+		self._icon:setClickCall(self.onBtnClick, self)
 	end
 
-	arg_2_0:refreshItem()
+	self:refreshItem()
 end
 
-function var_0_0.onBtnClick(arg_3_0)
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, arg_3_0._equipId)
+function Season123_2_1CelebrityCardItem:onBtnClick()
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Season123EquipCard, self._equipId)
 end
 
-function var_0_0.refreshItem(arg_4_0)
-	arg_4_0._icon:updateData(arg_4_0._equipId)
-	arg_4_0._icon:setShowTag(arg_4_0._showTag)
-	arg_4_0._icon:setShowNewFlag(arg_4_0._showNewFlag)
-	arg_4_0._icon:setShowNewFlag2(arg_4_0._showNewFlag2)
-	arg_4_0._icon:setFlagUIScale(arg_4_0._targetFlagUIScale)
-	arg_4_0._icon:setFlagUIPos(arg_4_0._targetFlagUIPosX, arg_4_0._targetFlagUIPosY)
-	arg_4_0._icon:setColorDark(arg_4_0._colorDarkEnable)
+function Season123_2_1CelebrityCardItem:refreshItem()
+	self._icon:updateData(self._equipId)
+	self._icon:setShowTag(self._showTag)
+	self._icon:setShowNewFlag(self._showNewFlag)
+	self._icon:setShowNewFlag2(self._showNewFlag2)
+	self._icon:setFlagUIScale(self._targetFlagUIScale)
+	self._icon:setFlagUIPos(self._targetFlagUIPosX, self._targetFlagUIPosY)
+	self._icon:setColorDark(self._colorDarkEnable)
 end
 
-function var_0_0.showTag(arg_5_0, arg_5_1)
-	arg_5_0._showTag = arg_5_1
+function Season123_2_1CelebrityCardItem:showTag(enable)
+	self._showTag = enable
 
-	if arg_5_0._icon then
-		arg_5_0._icon:setShowTag(arg_5_1)
-	end
-end
-
-function var_0_0.showProbability(arg_6_0, arg_6_1)
-	arg_6_0._showTag = arg_6_1
-
-	if arg_6_0._icon then
-		arg_6_0._icon:setShowProbability(arg_6_1)
+	if self._icon then
+		self._icon:setShowTag(enable)
 	end
 end
 
-function var_0_0.showNewFlag(arg_7_0, arg_7_1)
-	arg_7_0._showNewFlag = arg_7_1
+function Season123_2_1CelebrityCardItem:showProbability(enable)
+	self._showTag = enable
 
-	if arg_7_0._icon then
-		arg_7_0._icon:setShowNewFlag(arg_7_1)
+	if self._icon then
+		self._icon:setShowProbability(enable)
 	end
 end
 
-function var_0_0.showNewFlag2(arg_8_0, arg_8_1)
-	arg_8_0._showNewFlag2 = arg_8_1
+function Season123_2_1CelebrityCardItem:showNewFlag(enable)
+	self._showNewFlag = enable
 
-	if arg_8_0._icon then
-		arg_8_0._icon:setShowNewFlag2(arg_8_1)
+	if self._icon then
+		self._icon:setShowNewFlag(enable)
 	end
 end
 
-function var_0_0.reset(arg_9_0, arg_9_1)
-	arg_9_0._equipId = arg_9_1
+function Season123_2_1CelebrityCardItem:showNewFlag2(enable)
+	self._showNewFlag2 = enable
 
-	if arg_9_0._cardGo then
-		arg_9_0:refreshItem()
+	if self._icon then
+		self._icon:setShowNewFlag2(enable)
 	end
 end
 
-function var_0_0.setColorDark(arg_10_0, arg_10_1)
-	arg_10_0._colorDarkEnable = arg_10_1
+function Season123_2_1CelebrityCardItem:reset(equipId)
+	self._equipId = equipId
 
-	if arg_10_0._icon then
-		arg_10_0._icon:setColorDark(arg_10_1)
+	if self._cardGo then
+		self:refreshItem()
 	end
 end
 
-function var_0_0.destroy(arg_11_0)
-	if arg_11_0._icon then
-		arg_11_0._icon:disposeUI()
+function Season123_2_1CelebrityCardItem:setColorDark(enable)
+	self._colorDarkEnable = enable
 
-		arg_11_0._icon = nil
-	end
-
-	if arg_11_0._gocarditem then
-		gohelper.destroy(arg_11_0._gocarditem)
-
-		arg_11_0._gocarditem = nil
-	end
-
-	if arg_11_0._cardGo then
-		arg_11_0._cardGo = nil
-	end
-
-	if arg_11_0._resloader then
-		arg_11_0._resloader:dispose()
-
-		arg_11_0._resloader = nil
+	if self._icon then
+		self._icon:setColorDark(enable)
 	end
 end
 
-return var_0_0
+function Season123_2_1CelebrityCardItem:destroy()
+	if self._icon then
+		self._icon:disposeUI()
+
+		self._icon = nil
+	end
+
+	if self._gocarditem then
+		gohelper.destroy(self._gocarditem)
+
+		self._gocarditem = nil
+	end
+
+	if self._cardGo then
+		self._cardGo = nil
+	end
+
+	if self._resloader then
+		self._resloader:dispose()
+
+		self._resloader = nil
+	end
+end
+
+return Season123_2_1CelebrityCardItem

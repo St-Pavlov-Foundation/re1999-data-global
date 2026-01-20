@@ -1,272 +1,283 @@
-﻿module("modules.logic.rouge.view.RougeCollectionChessPoolComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeCollectionChessPoolComp.lua
 
-local var_0_0 = class("RougeCollectionChessPoolComp", BaseView)
+module("modules.logic.rouge.view.RougeCollectionChessPoolComp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclosetipArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/#btn_closetipArea")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessContainer")
-	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
-	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
-	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer")
-	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_cellModel")
-	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
-	arg_1_0._goraychessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_raychessitem")
-	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
-	arg_1_0._scrollbag = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_bag")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content")
-	arg_1_0._gocollectionItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
-	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
-	arg_1_0._gosingleTipsContent = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
-	arg_1_0._gosingleAttributeItem = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
-	arg_1_0._gosizeitem = gohelper.findChild(arg_1_0.viewGO, "#go_sizebag/#go_sizecollections/#go_sizeitem")
-	arg_1_0._golevelupeffect = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer/#go_levelupeffect")
-	arg_1_0._goengulfeffect = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer/#go_engulfeffect")
-	arg_1_0._goplaceeffect = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer/#go_placeeffect")
-	arg_1_0._goareaeffect = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer/#go_areaeffect")
-	arg_1_0._golightingeffect = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_effectContainer/#go_lightingeffect")
-	arg_1_0._golinelevelup = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_lineContainer/#go_linelevelup")
-	arg_1_0._golineengulf = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_lineContainer/#go_lineengulf")
-	arg_1_0._goleveluptrigger1 = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_triggerContainer/#go_levelup1")
-	arg_1_0._goleveluptrigger2 = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_triggerContainer/#go_levelup2")
-	arg_1_0._goengulftrigger1 = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_triggerContainer/#go_engulf1")
-	arg_1_0._goengulftrigger2 = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_triggerContainer/#go_engulf2")
+local RougeCollectionChessPoolComp = class("RougeCollectionChessPoolComp", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionChessPoolComp:onInitView()
+	self._btnclosetipArea = gohelper.findChildButtonWithAudio(self.viewGO, "bg/#btn_closetipArea")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._gochessContainer = gohelper.findChild(self.viewGO, "chessboard/#go_chessContainer")
+	self._gomeshContainer = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer")
+	self._gomeshItem = gohelper.findChild(self.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
+	self._godragContainer = gohelper.findChild(self.viewGO, "chessboard/#go_dragContainer")
+	self._gocellModel = gohelper.findChild(self.viewGO, "chessboard/#go_cellModel")
+	self._gochessitem = gohelper.findChild(self.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
+	self._goraychessitem = gohelper.findChild(self.viewGO, "chessboard/#go_raychessitem")
+	self._goblock = gohelper.findChild(self.viewGO, "#go_block")
+	self._scrollbag = gohelper.findChildScrollRect(self.viewGO, "#scroll_bag")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_bag/Viewport/#go_Content")
+	self._gocollectionItem = gohelper.findChild(self.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
+	self._gotip = gohelper.findChild(self.viewGO, "#go_tip")
+	self._gosingleTipsContent = gohelper.findChild(self.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
+	self._gosingleAttributeItem = gohelper.findChild(self.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
+	self._gosizeitem = gohelper.findChild(self.viewGO, "#go_sizebag/#go_sizecollections/#go_sizeitem")
+	self._golevelupeffect = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer/#go_levelupeffect")
+	self._goengulfeffect = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer/#go_engulfeffect")
+	self._goplaceeffect = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer/#go_placeeffect")
+	self._goareaeffect = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer/#go_areaeffect")
+	self._golightingeffect = gohelper.findChild(self.viewGO, "chessboard/#go_effectContainer/#go_lightingeffect")
+	self._golinelevelup = gohelper.findChild(self.viewGO, "chessboard/#go_lineContainer/#go_linelevelup")
+	self._golineengulf = gohelper.findChild(self.viewGO, "chessboard/#go_lineContainer/#go_lineengulf")
+	self._goleveluptrigger1 = gohelper.findChild(self.viewGO, "chessboard/#go_triggerContainer/#go_levelup1")
+	self._goleveluptrigger2 = gohelper.findChild(self.viewGO, "chessboard/#go_triggerContainer/#go_levelup2")
+	self._goengulftrigger1 = gohelper.findChild(self.viewGO, "chessboard/#go_triggerContainer/#go_engulf1")
+	self._goengulftrigger2 = gohelper.findChild(self.viewGO, "chessboard/#go_triggerContainer/#go_engulf2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeCollectionChessPoolComp:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeCollectionChessPoolComp:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._buildDragItemCount = 0
-	arg_4_0._buildEffectItemCount = 0
+function RougeCollectionChessPoolComp:_editableInitView()
+	self._buildDragItemCount = 0
+	self._buildEffectItemCount = 0
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function RougeCollectionChessPoolComp:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
+function RougeCollectionChessPoolComp:onOpen()
 	return
 end
 
-function var_0_0.getCollectionItem(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getOrCreateCollectionPool(arg_7_1)
+function RougeCollectionChessPoolComp:getCollectionItem(cls)
+	local clsPool = self:getOrCreateCollectionPool(cls)
 
-	if var_7_0 then
-		return (var_7_0:getObject())
+	if clsPool then
+		local collectionItem = clsPool:getObject()
+
+		return collectionItem
 	end
 end
 
-function var_0_0.recycleCollectionItem(arg_8_0, arg_8_1, arg_8_2)
-	if not arg_8_2 then
+function RougeCollectionChessPoolComp:recycleCollectionItem(cls, collectionItem)
+	if not collectionItem then
 		return
 	end
 
-	local var_8_0 = arg_8_0._poolMap and arg_8_0._poolMap[arg_8_1]
+	local clsPool = self._poolMap and self._poolMap[cls]
 
-	if var_8_0 then
-		var_8_0:putObject(arg_8_2)
+	if clsPool then
+		clsPool:putObject(collectionItem)
 	end
 end
 
-function var_0_0.getOrCreateCollectionPool(arg_9_0, arg_9_1)
-	arg_9_0._poolMap = arg_9_0._poolMap or arg_9_0:getUserDataTb_()
+function RougeCollectionChessPoolComp:getOrCreateCollectionPool(cls)
+	self._poolMap = self._poolMap or self:getUserDataTb_()
 
-	local var_9_0 = arg_9_0._poolMap[arg_9_1]
+	local clsPool = self._poolMap[cls]
 
-	if not var_9_0 then
-		if arg_9_1 == RougeCollectionDragItem.__cname then
-			var_9_0 = arg_9_0:buildCollectionDragItemPool()
+	if not clsPool then
+		if cls == RougeCollectionDragItem.__cname then
+			clsPool = self:buildCollectionDragItemPool()
 		else
-			var_9_0 = arg_9_0:buildCollectionSizePool()
+			clsPool = self:buildCollectionSizePool()
 		end
 
-		arg_9_0._poolMap[arg_9_1] = var_9_0
+		self._poolMap[cls] = clsPool
 	end
 
-	return var_9_0
+	return clsPool
 end
 
-function var_0_0.buildCollectionDragItemPool(arg_10_0)
-	local var_10_0 = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y
+function RougeCollectionChessPoolComp:buildCollectionDragItemPool()
+	local poolCollectionMaxCount = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y
+	local pool = LuaObjPool.New(poolCollectionMaxCount, function()
+		local cacheCollectionCount = self._buildDragItemCount
 
-	return (LuaObjPool.New(var_10_0, function()
-		local var_11_0 = arg_10_0._buildDragItemCount
+		self._buildDragItemCount = cacheCollectionCount + 1
 
-		arg_10_0._buildDragItemCount = var_11_0 + 1
+		local creatGOName = string.format("collection_%s", self._buildDragItemCount)
+		local collectionDragItem = RougeCollectionDragItem.New()
 
-		local var_11_1 = string.format("collection_%s", arg_10_0._buildDragItemCount)
-		local var_11_2 = RougeCollectionDragItem.New()
+		collectionDragItem:onInit(creatGOName, self)
 
-		var_11_2:onInit(var_11_1, arg_10_0)
+		return collectionDragItem
+	end, self.releaseCollectionItemFunction, self.resetCollectionItemFunction)
 
-		return var_11_2
-	end, arg_10_0.releaseCollectionItemFunction, arg_10_0.resetCollectionItemFunction))
+	return pool
 end
 
-function var_0_0.releaseCollectionItemFunction(arg_12_0)
-	if arg_12_0 then
-		arg_12_0:destroy()
-	end
-end
-
-function var_0_0.resetCollectionItemFunction(arg_13_0)
-	if arg_13_0 then
-		arg_13_0:reset()
+function RougeCollectionChessPoolComp.releaseCollectionItemFunction(collectionDragItem)
+	if collectionDragItem then
+		collectionDragItem:destroy()
 	end
 end
 
-function var_0_0.buildCollectionSizePool(arg_14_0)
-	local var_14_0 = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y
-
-	return (LuaObjPool.New(var_14_0, function()
-		return (RougeCollectionSizeBagItem.New())
-	end, arg_14_0.releaseSizeItemFunction, arg_14_0.resetSizeItemFunction))
-end
-
-function var_0_0.releaseSizeItemFunction(arg_16_0)
-	if arg_16_0 then
-		arg_16_0:destroy()
+function RougeCollectionChessPoolComp.resetCollectionItemFunction(collectionDragItem)
+	if collectionDragItem then
+		collectionDragItem:reset()
 	end
 end
 
-function var_0_0.resetSizeItemFunction(arg_17_0)
-	if arg_17_0 then
-		arg_17_0:reset()
+function RougeCollectionChessPoolComp:buildCollectionSizePool()
+	local poolCollectionMaxCount = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y
+	local pool = LuaObjPool.New(poolCollectionMaxCount, function()
+		local collectionSizeItem = RougeCollectionSizeBagItem.New()
+
+		return collectionSizeItem
+	end, self.releaseSizeItemFunction, self.resetSizeItemFunction)
+
+	return pool
+end
+
+function RougeCollectionChessPoolComp.releaseSizeItemFunction(collectionSizeItem)
+	if collectionSizeItem then
+		collectionSizeItem:destroy()
 	end
 end
 
-function var_0_0.getEffectItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:getOrCreateEffectPool(arg_18_1)
+function RougeCollectionChessPoolComp.resetSizeItemFunction(collectionSizeItem)
+	if collectionSizeItem then
+		collectionSizeItem:reset()
+	end
+end
 
-	if var_18_0 then
-		return (var_18_0:getObject())
+function RougeCollectionChessPoolComp:getEffectItem(effectType)
+	local effectPool = self:getOrCreateEffectPool(effectType)
+
+	if effectPool then
+		local effectGO = effectPool:getObject()
+
+		return effectGO
 	else
-		logError("cannot find effectpool, effectType = " .. tostring(arg_18_1))
+		logError("cannot find effectpool, effectType = " .. tostring(effectType))
 	end
 end
 
-function var_0_0.recycleEffectItem(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_1 or not arg_19_2 then
+function RougeCollectionChessPoolComp:recycleEffectItem(effectType, effectItem)
+	if not effectType or not effectItem then
 		return
 	end
 
-	local var_19_0 = arg_19_0._effectPoolMap and arg_19_0._effectPoolMap[arg_19_1]
+	local effectPool = self._effectPoolMap and self._effectPoolMap[effectType]
 
-	if var_19_0 then
-		var_19_0:putObject(arg_19_2)
+	if effectPool then
+		effectPool:putObject(effectItem)
 	end
 end
 
-function var_0_0.getOrCreateEffectPool(arg_20_0, arg_20_1)
-	arg_20_0._effectPoolMap = arg_20_0._effectPoolMap or arg_20_0:getUserDataTb_()
+function RougeCollectionChessPoolComp:getOrCreateEffectPool(effectType)
+	self._effectPoolMap = self._effectPoolMap or self:getUserDataTb_()
 
-	local var_20_0 = arg_20_0._effectPoolMap[arg_20_1]
+	local effectPool = self._effectPoolMap[effectType]
 
-	if not var_20_0 then
-		var_20_0 = arg_20_0:buildEffectPool(arg_20_1)
-		arg_20_0._effectPoolMap[arg_20_1] = var_20_0
+	if not effectPool then
+		effectPool = self:buildEffectPool(effectType)
+		self._effectPoolMap[effectType] = effectPool
 	end
 
-	return var_20_0
+	return effectPool
 end
 
-local var_0_1 = 4
+local maxEffectPerCell = 4
 
-function var_0_0.buildEffectPool(arg_21_0, arg_21_1)
-	local var_21_0 = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y * var_0_1
+function RougeCollectionChessPoolComp:buildEffectPool(effectType)
+	local poolCollectionMaxCount = RougeEnum.MaxCollectionSlotSize.x * RougeEnum.MaxCollectionSlotSize.y * maxEffectPerCell
+	local pool = LuaObjPool.New(poolCollectionMaxCount, function()
+		local cacheEffectCount = self._buildEffectItemCount
 
-	return (LuaObjPool.New(var_21_0, function()
-		local var_22_0 = arg_21_0._buildEffectItemCount
+		self._buildEffectItemCount = cacheEffectCount + 1
 
-		arg_21_0._buildEffectItemCount = var_22_0 + 1
+		local creatGOName = string.format("effect_%s_%s", effectType, self._buildEffectItemCount)
+		local prefab = self:getEffectClonePrefab(effectType)
 
-		local var_22_1 = string.format("effect_%s_%s", arg_21_1, arg_21_0._buildEffectItemCount)
-		local var_22_2 = arg_21_0:getEffectClonePrefab(arg_21_1)
-
-		if not var_22_2 then
-			logError("克隆造物动效失败,失败原因:找不到指定效果类型的动效预制体,效果类型effectType = " .. tostring(arg_21_1))
+		if not prefab then
+			logError("克隆造物动效失败,失败原因:找不到指定效果类型的动效预制体,效果类型effectType = " .. tostring(effectType))
 		end
 
-		local var_22_3 = gohelper.cloneInPlace(var_22_2, var_22_1)
+		local effectGO = gohelper.cloneInPlace(prefab, creatGOName)
 
-		if arg_21_1 == RougeEnum.CollectionArtType.LevelUpLine then
-			local var_22_4 = gohelper.findChildImage(var_22_3, "line")
+		if effectType == RougeEnum.CollectionArtType.LevelUpLine then
+			local lineImg = gohelper.findChildImage(effectGO, "line")
 
-			var_22_4.material = UnityEngine.GameObject.Instantiate(var_22_4.material)
+			lineImg.material = UnityEngine.GameObject.Instantiate(lineImg.material)
 
-			local var_22_5 = gohelper.findChildImage(var_22_3, "lineup")
+			local lineupImage = gohelper.findChildImage(effectGO, "lineup")
 
-			var_22_5.material = UnityEngine.GameObject.Instantiate(var_22_5.material)
-		elseif arg_21_1 == RougeEnum.CollectionArtType.EngulfLine then
-			local var_22_6 = gohelper.findChildImage(var_22_3, "line")
+			lineupImage.material = UnityEngine.GameObject.Instantiate(lineupImage.material)
+		elseif effectType == RougeEnum.CollectionArtType.EngulfLine then
+			local lineImg = gohelper.findChildImage(effectGO, "line")
 
-			var_22_6.material = UnityEngine.GameObject.Instantiate(var_22_6.material)
+			lineImg.material = UnityEngine.GameObject.Instantiate(lineImg.material)
 
-			local var_22_7 = gohelper.findChildImage(var_22_3, "lineup")
+			local lineupImage = gohelper.findChildImage(effectGO, "lineup")
 
-			var_22_7.material = UnityEngine.GameObject.Instantiate(var_22_7.material)
+			lineupImage.material = UnityEngine.GameObject.Instantiate(lineupImage.material)
 		end
 
-		return var_22_3
-	end, arg_21_0.releaseEffectItemFunction, arg_21_0.resetEffectItemFunction))
+		return effectGO
+	end, self.releaseEffectItemFunction, self.resetEffectItemFunction)
+
+	return pool
 end
 
-function var_0_0.getEffectClonePrefab(arg_23_0, arg_23_1)
-	if not arg_23_0._effectPrefabTab then
-		arg_23_0._effectPrefabTab = arg_23_0:getUserDataTb_()
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.Place] = arg_23_0._goplaceeffect
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.Effect] = arg_23_0._goareaeffect
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.Lighting] = arg_23_0._golightingeffect
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.LevelUpLine] = arg_23_0._golinelevelup
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.EngulfLine] = arg_23_0._golineengulf
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.LevelUP] = arg_23_0._golevelupeffect
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.LevelUPTrigger1] = arg_23_0._goleveluptrigger1
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.LevelUPTrigger2] = arg_23_0._goleveluptrigger2
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.EngulfTrigger1] = arg_23_0._goengulftrigger1
-		arg_23_0._effectPrefabTab[RougeEnum.CollectionArtType.EngulfTrigger2] = arg_23_0._goengulftrigger2
+function RougeCollectionChessPoolComp:getEffectClonePrefab(effectType)
+	if not self._effectPrefabTab then
+		self._effectPrefabTab = self:getUserDataTb_()
+		self._effectPrefabTab[RougeEnum.CollectionArtType.Place] = self._goplaceeffect
+		self._effectPrefabTab[RougeEnum.CollectionArtType.Effect] = self._goareaeffect
+		self._effectPrefabTab[RougeEnum.CollectionArtType.Lighting] = self._golightingeffect
+		self._effectPrefabTab[RougeEnum.CollectionArtType.LevelUpLine] = self._golinelevelup
+		self._effectPrefabTab[RougeEnum.CollectionArtType.EngulfLine] = self._golineengulf
+		self._effectPrefabTab[RougeEnum.CollectionArtType.LevelUP] = self._golevelupeffect
+		self._effectPrefabTab[RougeEnum.CollectionArtType.LevelUPTrigger1] = self._goleveluptrigger1
+		self._effectPrefabTab[RougeEnum.CollectionArtType.LevelUPTrigger2] = self._goleveluptrigger2
+		self._effectPrefabTab[RougeEnum.CollectionArtType.EngulfTrigger1] = self._goengulftrigger1
+		self._effectPrefabTab[RougeEnum.CollectionArtType.EngulfTrigger2] = self._goengulftrigger2
 	end
 
-	return arg_23_0._effectPrefabTab and arg_23_0._effectPrefabTab[arg_23_1]
+	return self._effectPrefabTab and self._effectPrefabTab[effectType]
 end
 
-function var_0_0.releaseEffectItemFunction(arg_24_0)
-	if arg_24_0 then
-		gohelper.destroy(arg_24_0)
-	end
-end
-
-function var_0_0.resetEffectItemFunction(arg_25_0)
-	if arg_25_0 then
-		gohelper.setActive(arg_25_0, false)
+function RougeCollectionChessPoolComp.releaseEffectItemFunction(effectItem)
+	if effectItem then
+		gohelper.destroy(effectItem)
 	end
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	if arg_26_0._poolMap then
-		for iter_26_0, iter_26_1 in pairs(arg_26_0._poolMap) do
-			iter_26_1:dispose()
+function RougeCollectionChessPoolComp.resetEffectItemFunction(effectItem)
+	if effectItem then
+		gohelper.setActive(effectItem, false)
+	end
+end
+
+function RougeCollectionChessPoolComp:onDestroyView()
+	if self._poolMap then
+		for _, clsPool in pairs(self._poolMap) do
+			clsPool:dispose()
 		end
 
-		arg_26_0._poolMap = nil
+		self._poolMap = nil
 	end
 
-	if arg_26_0._effectPoolMap then
-		for iter_26_2, iter_26_3 in pairs(arg_26_0._effectPoolMap) do
-			iter_26_3:dispose()
+	if self._effectPoolMap then
+		for _, effectPool in pairs(self._effectPoolMap) do
+			effectPool:dispose()
 		end
 
-		arg_26_0._effectPoolMap = nil
+		self._effectPoolMap = nil
 	end
 end
 
-return var_0_0
+return RougeCollectionChessPoolComp

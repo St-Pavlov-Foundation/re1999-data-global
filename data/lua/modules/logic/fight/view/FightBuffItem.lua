@@ -1,45 +1,47 @@
-﻿module("modules.logic.fight.view.FightBuffItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightBuffItem.lua
 
-local var_0_0 = class("FightBuffItem", LuaCompBase)
+module("modules.logic.fight.view.FightBuffItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.tr = arg_1_1.transform
-	arg_1_0._imgIcon = gohelper.findChildImage(arg_1_1, "icon")
-	arg_1_0._txtBadBuff = gohelper.findChildText(arg_1_1, "badText")
-	arg_1_0._txtGoodBuff = gohelper.findChildText(arg_1_1, "goodText")
-	arg_1_0._txtBadCount = gohelper.findChildText(arg_1_1, "badText_count")
-	arg_1_0._txtGoodCount = gohelper.findChildText(arg_1_1, "goodText_count")
-	arg_1_0._bgIcon = gohelper.findChildImage(arg_1_1, "bg")
-	arg_1_0.bgeffect = gohelper.findChild(arg_1_1, "bgeffect")
-	arg_1_0.buffquan = gohelper.findChild(arg_1_1, "buffquan")
-	arg_1_0.bufffinish = gohelper.findChild(arg_1_1, "bufffinish")
-	arg_1_0.buffdot = gohelper.findChild(arg_1_1, "buffdot")
-	arg_1_0._animator = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._click = gohelper.getClick(arg_1_1)
+local FightBuffItem = class("FightBuffItem", LuaCompBase)
 
-	gohelper.addUIClickAudio(arg_1_1, AudioEnum.UI.UI_Common_Click)
+function FightBuffItem:init(go)
+	self.go = go
+	self.tr = go.transform
+	self._imgIcon = gohelper.findChildImage(go, "icon")
+	self._txtBadBuff = gohelper.findChildText(go, "badText")
+	self._txtGoodBuff = gohelper.findChildText(go, "goodText")
+	self._txtBadCount = gohelper.findChildText(go, "badText_count")
+	self._txtGoodCount = gohelper.findChildText(go, "goodText_count")
+	self._bgIcon = gohelper.findChildImage(go, "bg")
+	self.bgeffect = gohelper.findChild(go, "bgeffect")
+	self.buffquan = gohelper.findChild(go, "buffquan")
+	self.bufffinish = gohelper.findChild(go, "bufffinish")
+	self.buffdot = gohelper.findChild(go, "buffdot")
+	self._animator = go:GetComponent(typeof(UnityEngine.Animator))
+	self._click = gohelper.getClick(go)
 
-	arg_1_0._tipsOffsetX = 0
-	arg_1_0._tipsOffsetY = 0
+	gohelper.addUIClickAudio(go, AudioEnum.UI.UI_Common_Click)
 
-	arg_1_0:closeAni()
+	self._tipsOffsetX = 0
+	self._tipsOffsetY = 0
+
+	self:closeAni()
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+function FightBuffItem:addEventListeners()
+	self._click:AddClickListener(self._onClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function FightBuffItem:removeEventListeners()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.setClickCallback(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._callback = arg_4_1
-	arg_4_0._callbackObj = arg_4_2
+function FightBuffItem:setClickCallback(callback, callbackObj)
+	self._callback = callback
+	self._callbackObj = callbackObj
 end
 
-function var_0_0._onClick(arg_5_0)
+function FightBuffItem:_onClick()
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		return
 	end
@@ -48,182 +50,182 @@ function var_0_0._onClick(arg_5_0)
 		return
 	end
 
-	if arg_5_0._callback then
-		arg_5_0._callback(arg_5_0._callbackObj, arg_5_0.buffMO.entityId)
+	if self._callback then
+		self._callback(self._callbackObj, self.buffMO.entityId)
 	else
-		FightController.instance:dispatchEvent(FightEvent.OnBuffClick, arg_5_0.buffMO.entityId, arg_5_0.tr, arg_5_0._tipsOffsetX, arg_5_0._tipsOffsetY)
+		FightController.instance:dispatchEvent(FightEvent.OnBuffClick, self.buffMO.entityId, self.tr, self._tipsOffsetX, self._tipsOffsetY)
 	end
 end
 
-function var_0_0.setTipsOffset(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._tipsOffsetX = arg_6_1
-	arg_6_0._tipsOffsetY = arg_6_2
+function FightBuffItem:setTipsOffset(x, y)
+	self._tipsOffsetX = x
+	self._tipsOffsetY = y
 end
 
-function var_0_0.updateBuffMO(arg_7_0, arg_7_1)
-	if arg_7_0.buffMO and arg_7_0.buffMO.buffId ~= arg_7_1.buffId and not FightHelper.shouUIPoisoningEffect(arg_7_1.buffId) then
-		arg_7_0:_hidePoisoningEffect()
+function FightBuffItem:updateBuffMO(buffMO)
+	if self.buffMO and self.buffMO.buffId ~= buffMO.buffId and not FightHelper.shouUIPoisoningEffect(buffMO.buffId) then
+		self:_hidePoisoningEffect()
 	end
 
-	arg_7_0.buffMO = arg_7_1
+	self.buffMO = buffMO
 
-	local var_7_0 = lua_skill_buff.configDict[arg_7_1.buffId]
+	local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-	if var_7_0 then
-		gohelper.onceAddComponent(arg_7_0.go, gohelper.Type_CanvasGroup).alpha = 1
+	if buffCO then
+		gohelper.onceAddComponent(self.go, gohelper.Type_CanvasGroup).alpha = 1
 
-		local var_7_1 = var_7_0.iconId
+		local buffIconId = buffCO.iconId
 
-		if string.nilorempty(var_7_1) or var_7_1 == "0" then
-			logError(string.format("try show buff icon, but buffId : %s, buffName : %s, buffIconId : %s", var_7_0.id, var_7_0.name, var_7_1))
+		if string.nilorempty(buffIconId) or buffIconId == "0" then
+			logError(string.format("try show buff icon, but buffId : %s, buffName : %s, buffIconId : %s", buffCO.id, buffCO.name, buffIconId))
 		else
-			UISpriteSetMgr.instance:setBuffSprite(arg_7_0._imgIcon, var_7_0.iconId)
+			UISpriteSetMgr.instance:setBuffSprite(self._imgIcon, buffCO.iconId)
 		end
 
-		arg_7_0:refreshTxt(arg_7_1, var_7_0)
+		self:refreshTxt(buffMO, buffCO)
 
-		local var_7_2 = lua_skill_bufftype.configDict[var_7_0.typeId]
+		local buffTypeCo = lua_skill_bufftype.configDict[buffCO.typeId]
 
-		if arg_7_0:isTimeBuff(var_7_0) then
-			gohelper.setActive(arg_7_0._bgIcon.gameObject, true)
-			UISpriteSetMgr.instance:setFightSprite(arg_7_0._bgIcon, "buff_jishiqi_" .. arg_7_0:calculateBuffType(var_7_2.type))
-		elseif var_7_2.cannotRemove then
-			UISpriteSetMgr.instance:setFightSprite(arg_7_0._bgIcon, "buff_bukechexiao_" .. arg_7_0:calculateBuffType(var_7_2.type))
-			gohelper.setActive(arg_7_0._bgIcon.gameObject, true)
+		if self:isTimeBuff(buffCO) then
+			gohelper.setActive(self._bgIcon.gameObject, true)
+			UISpriteSetMgr.instance:setFightSprite(self._bgIcon, "buff_jishiqi_" .. self:calculateBuffType(buffTypeCo.type))
+		elseif buffTypeCo.cannotRemove then
+			UISpriteSetMgr.instance:setFightSprite(self._bgIcon, "buff_bukechexiao_" .. self:calculateBuffType(buffTypeCo.type))
+			gohelper.setActive(self._bgIcon.gameObject, true)
 		else
-			gohelper.setActive(arg_7_0._bgIcon.gameObject, false)
+			gohelper.setActive(self._bgIcon.gameObject, false)
 		end
 	else
-		logError("buff config not exist, id = " .. arg_7_1.buffId)
+		logError("buff config not exist, id = " .. buffMO.buffId)
 	end
 end
 
-function var_0_0.getBuffGoodText(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function FightBuffItem:getBuffGoodText(buffMO)
+	if not buffMO then
 		return ""
 	end
 
-	if FightBuffHelper.isCountContinueChanelBuff(arg_8_1) then
-		return arg_8_1.exInfo
+	if FightBuffHelper.isCountContinueChanelBuff(buffMO) then
+		return buffMO.exInfo
 	end
 
-	if arg_8_1.duration > 0 then
-		return arg_8_1.duration
+	if buffMO.duration > 0 then
+		return buffMO.duration
 	end
 
 	return ""
 end
 
-function var_0_0.refreshTxt(arg_9_0, arg_9_1, arg_9_2)
+function FightBuffItem:refreshTxt(buffMO, buffCO)
 	if isDebugBuild and GMController.instance.hideBuffLayer then
-		gohelper.setActive(arg_9_0._txtGoodBuff.gameObject, false)
-		gohelper.setActive(arg_9_0._txtGoodCount.gameObject, false)
-		gohelper.setActive(arg_9_0._txtBadBuff.gameObject, false)
-		gohelper.setActive(arg_9_0._txtBadCount.gameObject, false)
+		gohelper.setActive(self._txtGoodBuff.gameObject, false)
+		gohelper.setActive(self._txtGoodCount.gameObject, false)
+		gohelper.setActive(self._txtBadBuff.gameObject, false)
+		gohelper.setActive(self._txtBadCount.gameObject, false)
 
 		return
 	end
 
-	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_9_1.buffId) then
-		arg_9_0:refreshKSDLSpecialBuffTxt(arg_9_1, arg_9_2)
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(buffMO.buffId) then
+		self:refreshKSDLSpecialBuffTxt(buffMO, buffCO)
 
 		return
 	end
 
-	if FightBuffHelper.isDeadlyPoisonBuff(arg_9_1) then
-		arg_9_0:refreshDeadlyPoisonTxt(arg_9_1, arg_9_2)
+	if FightBuffHelper.isDeadlyPoisonBuff(buffMO) then
+		self:refreshDeadlyPoisonTxt(buffMO, buffCO)
 
 		return
 	end
 
-	if FightBuffHelper.isDuduBoneContinueChannelBuff(arg_9_1) then
-		arg_9_0:refreshDuduBoneContinueChannelTxt(arg_9_1, arg_9_2)
+	if FightBuffHelper.isDuduBoneContinueChannelBuff(buffMO) then
+		self:refreshDuduBoneContinueChannelTxt(buffMO, buffCO)
 
 		return
 	end
 
-	if arg_9_2.isGoodBuff == 1 then
-		gohelper.setActive(arg_9_0._txtGoodBuff.gameObject, true)
-		gohelper.setActive(arg_9_0._txtGoodCount.gameObject, true)
-		gohelper.setActive(arg_9_0._txtBadBuff.gameObject, false)
-		gohelper.setActive(arg_9_0._txtBadCount.gameObject, false)
+	if buffCO.isGoodBuff == 1 then
+		gohelper.setActive(self._txtGoodBuff.gameObject, true)
+		gohelper.setActive(self._txtGoodCount.gameObject, true)
+		gohelper.setActive(self._txtBadBuff.gameObject, false)
+		gohelper.setActive(self._txtBadCount.gameObject, false)
 
-		if FightSkillBuffMgr.instance:buffIsStackerBuff(arg_9_2) then
-			arg_9_0._txtGoodBuff.text = ""
-			arg_9_0._txtGoodCount.text = FightSkillBuffMgr.instance:getStackedCount(arg_9_1.entityId, arg_9_1)
+		if FightSkillBuffMgr.instance:buffIsStackerBuff(buffCO) then
+			self._txtGoodBuff.text = ""
+			self._txtGoodCount.text = FightSkillBuffMgr.instance:getStackedCount(buffMO.entityId, buffMO)
 		else
-			arg_9_0._txtGoodBuff.text = arg_9_0:getBuffGoodText(arg_9_1)
+			self._txtGoodBuff.text = self:getBuffGoodText(buffMO)
 
-			if arg_9_1.layer and arg_9_1.layer > 0 then
-				arg_9_0._txtGoodCount.text = arg_9_1.layer
+			if buffMO.layer and buffMO.layer > 0 then
+				self._txtGoodCount.text = buffMO.layer
 			else
-				arg_9_0._txtGoodCount.text = arg_9_1.count > 0 and arg_9_1.count or ""
+				self._txtGoodCount.text = buffMO.count > 0 and buffMO.count or ""
 			end
 		end
 	else
-		gohelper.setActive(arg_9_0._txtGoodBuff.gameObject, false)
-		gohelper.setActive(arg_9_0._txtGoodCount.gameObject, false)
-		gohelper.setActive(arg_9_0._txtBadBuff.gameObject, true)
-		gohelper.setActive(arg_9_0._txtBadCount.gameObject, true)
+		gohelper.setActive(self._txtGoodBuff.gameObject, false)
+		gohelper.setActive(self._txtGoodCount.gameObject, false)
+		gohelper.setActive(self._txtBadBuff.gameObject, true)
+		gohelper.setActive(self._txtBadCount.gameObject, true)
 
-		local var_9_0, var_9_1 = FightSkillBuffMgr.instance:buffIsStackerBuff(arg_9_2)
+		local is_stacked, tar_type = FightSkillBuffMgr.instance:buffIsStackerBuff(buffCO)
 
-		if var_9_0 then
-			arg_9_0._txtBadBuff.text = ""
+		if is_stacked then
+			self._txtBadBuff.text = ""
 
-			if var_9_1 == FightEnum.BuffIncludeTypes.Stacked12 then
-				arg_9_0._txtBadBuff.text = arg_9_1.duration > 0 and arg_9_1.duration or ""
+			if tar_type == FightEnum.BuffIncludeTypes.Stacked12 then
+				self._txtBadBuff.text = buffMO.duration > 0 and buffMO.duration or ""
 			end
 
-			arg_9_0._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(arg_9_1.entityId, arg_9_1)
+			self._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(buffMO.entityId, buffMO)
 		else
-			arg_9_0._txtBadBuff.text = arg_9_1.duration > 0 and arg_9_1.duration or ""
+			self._txtBadBuff.text = buffMO.duration > 0 and buffMO.duration or ""
 
-			if arg_9_1.layer and arg_9_1.layer > 0 then
-				arg_9_0._txtBadCount.text = arg_9_1.layer
+			if buffMO.layer and buffMO.layer > 0 then
+				self._txtBadCount.text = buffMO.layer
 			else
-				arg_9_0._txtBadCount.text = arg_9_1.count > 0 and arg_9_1.count or ""
+				self._txtBadCount.text = buffMO.count > 0 and buffMO.count or ""
 			end
 		end
 	end
 end
 
-function var_0_0.refreshDeadlyPoisonTxt(arg_10_0, arg_10_1, arg_10_2)
-	gohelper.setActive(arg_10_0._txtGoodBuff.gameObject, false)
-	gohelper.setActive(arg_10_0._txtGoodCount.gameObject, false)
-	gohelper.setActive(arg_10_0._txtBadBuff.gameObject, true)
-	gohelper.setActive(arg_10_0._txtBadCount.gameObject, true)
+function FightBuffItem:refreshDeadlyPoisonTxt(buffMo, buffCo)
+	gohelper.setActive(self._txtGoodBuff.gameObject, false)
+	gohelper.setActive(self._txtGoodCount.gameObject, false)
+	gohelper.setActive(self._txtBadBuff.gameObject, true)
+	gohelper.setActive(self._txtBadCount.gameObject, true)
 
-	arg_10_0._txtBadBuff.text = arg_10_1.duration > 0 and arg_10_1.duration or ""
-	arg_10_0._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(arg_10_1.entityId, arg_10_1)
+	self._txtBadBuff.text = buffMo.duration > 0 and buffMo.duration or ""
+	self._txtBadCount.text = FightSkillBuffMgr.instance:getStackedCount(buffMo.entityId, buffMo)
 end
 
-function var_0_0.refreshDuduBoneContinueChannelTxt(arg_11_0, arg_11_1, arg_11_2)
-	gohelper.setActive(arg_11_0._txtGoodBuff.gameObject, true)
-	gohelper.setActive(arg_11_0._txtGoodCount.gameObject, true)
-	gohelper.setActive(arg_11_0._txtBadBuff.gameObject, false)
-	gohelper.setActive(arg_11_0._txtBadCount.gameObject, false)
+function FightBuffItem:refreshDuduBoneContinueChannelTxt(buffMo, buffCo)
+	gohelper.setActive(self._txtGoodBuff.gameObject, true)
+	gohelper.setActive(self._txtGoodCount.gameObject, true)
+	gohelper.setActive(self._txtBadBuff.gameObject, false)
+	gohelper.setActive(self._txtBadCount.gameObject, false)
 
-	arg_11_0._txtGoodBuff.text = arg_11_1.exInfo
-	arg_11_0._txtGoodCount.text = ""
+	self._txtGoodBuff.text = buffMo.exInfo
+	self._txtGoodCount.text = ""
 end
 
-function var_0_0.refreshKSDLSpecialBuffTxt(arg_12_0, arg_12_1, arg_12_2)
-	gohelper.setActive(arg_12_0._txtGoodBuff.gameObject, false)
-	gohelper.setActive(arg_12_0._txtGoodCount.gameObject, false)
-	gohelper.setActive(arg_12_0._txtBadBuff.gameObject, false)
-	gohelper.setActive(arg_12_0._txtBadCount.gameObject, false)
+function FightBuffItem:refreshKSDLSpecialBuffTxt(buffMo, buffCo)
+	gohelper.setActive(self._txtGoodBuff.gameObject, false)
+	gohelper.setActive(self._txtGoodCount.gameObject, false)
+	gohelper.setActive(self._txtBadBuff.gameObject, false)
+	gohelper.setActive(self._txtBadCount.gameObject, false)
 end
 
-function var_0_0.calculateBuffType(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
-		if arg_13_1 == iter_13_1 then
+function FightBuffItem:calculateBuffType(buffType)
+	for _, type in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
+		if buffType == type then
 			return FightEnum.FightBuffType.GoodBuff
 		end
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(FightEnum.BuffTypeList.BadBuffList) do
-		if arg_13_1 == iter_13_3 then
+	for _, type in ipairs(FightEnum.BuffTypeList.BadBuffList) do
+		if buffType == type then
 			return FightEnum.FightBuffType.BadBuff
 		end
 	end
@@ -231,20 +233,20 @@ function var_0_0.calculateBuffType(arg_13_0, arg_13_1)
 	return FightEnum.FightBuffType.NormalBuff
 end
 
-function var_0_0.isTimeBuff(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_1.features
+function FightBuffItem:isTimeBuff(buffCo)
+	local featureStr = buffCo.features
 
-	if string.nilorempty(var_14_0) then
+	if string.nilorempty(featureStr) then
 		return false
 	end
 
-	local var_14_1 = FightStrUtil.instance:getSplitCache(var_14_0, "|")
-	local var_14_2
+	local featureList = FightStrUtil.instance:getSplitCache(featureStr, "|")
+	local tempFeature
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_3 = FightStrUtil.instance:getSplitToNumberCache(iter_14_1, "#")
+	for _, feature in ipairs(featureList) do
+		tempFeature = FightStrUtil.instance:getSplitToNumberCache(feature, "#")
 
-		if #var_14_3 >= 2 and var_14_3[1] == 702 and var_14_3[2] > 2 then
+		if #tempFeature >= 2 and tempFeature[1] == 702 and tempFeature[2] > 2 then
 			return true
 		end
 	end
@@ -252,57 +254,58 @@ function var_0_0.isTimeBuff(arg_14_0, arg_14_1)
 	return false
 end
 
-function var_0_0.showPoisoningEffect(arg_15_0)
-	arg_15_0:playAni("buffeffect")
+function FightBuffItem:showPoisoningEffect()
+	self:playAni("buffeffect")
 end
 
-function var_0_0._hidePoisoningEffect(arg_16_0)
-	arg_16_0:closeAni()
+function FightBuffItem:_hidePoisoningEffect()
+	self:closeAni()
 end
 
-function var_0_0.playAni(arg_17_0, arg_17_1)
-	local var_17_0 = FightModel.instance:getUISpeed()
+function FightBuffItem:playAni(name)
+	local speed = FightModel.instance:getUISpeed()
 
-	arg_17_0._animator.enabled = true
-	arg_17_0._animator.speed = var_17_0
+	self._animator.enabled = true
+	self._animator.speed = speed
 
-	arg_17_0._animator:Play(arg_17_1, 0, 0)
+	self._animator:Play(name, 0, 0)
 
-	local var_17_1 = arg_17_0._animator:GetCurrentAnimatorStateInfo(0).length / var_17_0
+	local stateInfo = self._animator:GetCurrentAnimatorStateInfo(0)
+	local duration = stateInfo.length / speed
 
-	TaskDispatcher.runDelay(arg_17_0.closeAni, arg_17_0, var_17_1)
+	TaskDispatcher.runDelay(self.closeAni, self, duration)
 
-	return var_17_1
+	return duration
 end
 
-function var_0_0.closeAni(arg_18_0)
-	if not arg_18_0._animator then
+function FightBuffItem:closeAni()
+	if not self._animator then
 		return
 	end
 
-	arg_18_0._animator.enabled = false
+	self._animator.enabled = false
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_18_0._imgIcon, 1)
+	ZProj.UGUIHelper.SetColorAlpha(self._imgIcon, 1)
 
-	gohelper.onceAddComponent(arg_18_0.go, gohelper.Type_CanvasGroup).alpha = 1
+	gohelper.onceAddComponent(self.go, gohelper.Type_CanvasGroup).alpha = 1
 
-	gohelper.setActive(arg_18_0.bgeffect, false)
-	gohelper.setActive(arg_18_0.buffquan, false)
-	gohelper.setActive(arg_18_0.bufffinish, false)
-	gohelper.setActive(arg_18_0.buffdot, false)
-	transformhelper.setLocalScale(arg_18_0._txtBadBuff.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_18_0._txtGoodBuff.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_18_0._txtBadCount.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_18_0._txtGoodCount.transform, 0.4, 0.4, 1)
+	gohelper.setActive(self.bgeffect, false)
+	gohelper.setActive(self.buffquan, false)
+	gohelper.setActive(self.bufffinish, false)
+	gohelper.setActive(self.buffdot, false)
+	transformhelper.setLocalScale(self._txtBadBuff.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(self._txtGoodBuff.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(self._txtBadCount.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(self._txtGoodCount.transform, 0.4, 0.4, 1)
 end
 
-function var_0_0.onDestroy(arg_19_0)
-	arg_19_0._imgIcon = nil
-	arg_19_0._callback = nil
-	arg_19_0._callbackObj = nil
+function FightBuffItem:onDestroy()
+	self._imgIcon = nil
+	self._callback = nil
+	self._callbackObj = nil
 
-	TaskDispatcher.cancelTask(arg_19_0._hidePoisoningEffect, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.closeAni, arg_19_0)
+	TaskDispatcher.cancelTask(self._hidePoisoningEffect, self)
+	TaskDispatcher.cancelTask(self.closeAni, self)
 end
 
-return var_0_0
+return FightBuffItem

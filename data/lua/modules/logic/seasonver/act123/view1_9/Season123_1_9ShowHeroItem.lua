@@ -1,266 +1,270 @@
-﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9ShowHeroItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view1_9/Season123_1_9ShowHeroItem.lua
 
-local var_0_0 = class("Season123_1_9ShowHeroItem", UserDataDispose)
+module("modules.logic.seasonver.act123.view1_9.Season123_1_9ShowHeroItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:__onInit()
+local Season123_1_9ShowHeroItem = class("Season123_1_9ShowHeroItem", UserDataDispose)
+
+function Season123_1_9ShowHeroItem:ctor()
+	self:__onInit()
 end
 
-function var_0_0.dispose(arg_2_0)
-	arg_2_0:removeEvents()
-	arg_2_0:__onDispose()
+function Season123_1_9ShowHeroItem:dispose()
+	self:removeEvents()
+	self:__onDispose()
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.viewGO = gohelper.findChild(arg_3_1, "root")
+function Season123_1_9ShowHeroItem:init(viewGO)
+	self.viewGO = gohelper.findChild(viewGO, "root")
 
-	arg_3_0:initComponent()
+	self:initComponent()
 end
 
-var_0_0.exSkillFillAmount = {
+Season123_1_9ShowHeroItem.exSkillFillAmount = {
 	0.2,
 	0.4,
 	0.6,
 	0.79,
 	1
 }
-var_0_0.MaxRare = 5
+Season123_1_9ShowHeroItem.MaxRare = 5
 
-function var_0_0.initComponent(arg_4_0)
-	arg_4_0._goadd = gohelper.findChild(arg_4_0.viewGO, "#go_add")
-	arg_4_0._gohero = gohelper.findChild(arg_4_0.viewGO, "#go_hero")
-	arg_4_0._goempty = gohelper.findChild(arg_4_0.viewGO, "#go_empty")
-	arg_4_0._goassist = gohelper.findChild(arg_4_0.viewGO, "#go_assit")
-	arg_4_0._godead = gohelper.findChild(arg_4_0.viewGO, "#go_roledead")
-	arg_4_0._simageicon = gohelper.findChildSingleImage(arg_4_0._gohero, "#simage_rolehead")
-	arg_4_0._txtlevel = gohelper.findChildText(arg_4_0._gohero, "#txt_roleLv1")
-	arg_4_0._txttalentevel2 = gohelper.findChildText(arg_4_0._gohero, "#txt_roleLv2")
-	arg_4_0._goexskill = gohelper.findChild(arg_4_0._gohero, "#go_exskill")
-	arg_4_0._imageexskill = gohelper.findChildImage(arg_4_0._gohero, "#go_exskill/#image_exskill")
-	arg_4_0._imagecareer = gohelper.findChildImage(arg_4_0._gohero, "career")
-	arg_4_0._goselfsupport = gohelper.findChild(arg_4_0.viewGO, "#btn_selfassit")
-	arg_4_0._goothersupport = gohelper.findChild(arg_4_0.viewGO, "#btn_otherassit")
-	arg_4_0._sliderhp = gohelper.findChildSlider(arg_4_0.viewGO, "#slider_hp")
-	arg_4_0._imagehp = gohelper.findChildImage(arg_4_0.viewGO, "#slider_hp/Fill Area/Fill")
-	arg_4_0._txtrolename = gohelper.findChildText(arg_4_0._gohero, "#txt_rolename")
-	arg_4_0._gotalentline = gohelper.findChild(arg_4_0._gohero, "line")
-	arg_4_0._rectheadicon = arg_4_0._simageicon.transform
-	arg_4_0._btnclick = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "btn_click")
-	arg_4_0._gorank = gohelper.findChild(arg_4_0._gohero, "rank")
-	arg_4_0._rankList = arg_4_0:getUserDataTb_()
+function Season123_1_9ShowHeroItem:initComponent()
+	self._goadd = gohelper.findChild(self.viewGO, "#go_add")
+	self._gohero = gohelper.findChild(self.viewGO, "#go_hero")
+	self._goempty = gohelper.findChild(self.viewGO, "#go_empty")
+	self._goassist = gohelper.findChild(self.viewGO, "#go_assit")
+	self._godead = gohelper.findChild(self.viewGO, "#go_roledead")
+	self._simageicon = gohelper.findChildSingleImage(self._gohero, "#simage_rolehead")
+	self._txtlevel = gohelper.findChildText(self._gohero, "#txt_roleLv1")
+	self._txttalentevel2 = gohelper.findChildText(self._gohero, "#txt_roleLv2")
+	self._goexskill = gohelper.findChild(self._gohero, "#go_exskill")
+	self._imageexskill = gohelper.findChildImage(self._gohero, "#go_exskill/#image_exskill")
+	self._imagecareer = gohelper.findChildImage(self._gohero, "career")
+	self._goselfsupport = gohelper.findChild(self.viewGO, "#btn_selfassit")
+	self._goothersupport = gohelper.findChild(self.viewGO, "#btn_otherassit")
+	self._sliderhp = gohelper.findChildSlider(self.viewGO, "#slider_hp")
+	self._imagehp = gohelper.findChildImage(self.viewGO, "#slider_hp/Fill Area/Fill")
+	self._txtrolename = gohelper.findChildText(self._gohero, "#txt_rolename")
+	self._gotalentline = gohelper.findChild(self._gohero, "line")
+	self._rectheadicon = self._simageicon.transform
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "btn_click")
+	self._gorank = gohelper.findChild(self._gohero, "rank")
+	self._rankList = self:getUserDataTb_()
 
-	local var_4_0 = HeroConfig.instance:getMaxRank(var_0_0.MaxRare)
+	local maxRank = HeroConfig.instance:getMaxRank(Season123_1_9ShowHeroItem.MaxRare)
 
-	for iter_4_0 = 1, var_4_0 do
-		arg_4_0._rankList[iter_4_0] = gohelper.findChild(arg_4_0._gorank, "rank" .. tostring(iter_4_0))
+	for i = 1, maxRank do
+		self._rankList[i] = gohelper.findChild(self._gorank, "rank" .. tostring(i))
 	end
 
-	arg_4_0._gorare = gohelper.findChild(arg_4_0._gohero, "rare")
-	arg_4_0._rareList = arg_4_0:getUserDataTb_()
+	self._gorare = gohelper.findChild(self._gohero, "rare")
+	self._rareList = self:getUserDataTb_()
 
-	for iter_4_1 = 1, CharacterEnum.MaxRare + 1 do
-		arg_4_0._rareList[iter_4_1] = gohelper.findChild(arg_4_0._gorare, "go_rare" .. tostring(iter_4_1))
+	for i = 1, CharacterEnum.MaxRare + 1 do
+		self._rareList[i] = gohelper.findChild(self._gorare, "go_rare" .. tostring(i))
 	end
 
-	gohelper.setActive(arg_4_0._goselfsupport, false)
-	gohelper.setActive(arg_4_0._goothersuppor, false)
+	gohelper.setActive(self._goselfsupport, false)
+	gohelper.setActive(self._goothersuppor, false)
 
-	arg_4_0._heroAnim = arg_4_0._gohero:GetComponent(gohelper.Type_Animator)
+	self._heroAnim = self._gohero:GetComponent(gohelper.Type_Animator)
 
-	arg_4_0._btnclick:AddClickListener(arg_4_0.onClickSelf, arg_4_0)
+	self._btnclick:AddClickListener(self.onClickSelf, self)
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1)
-	arg_5_0._index = arg_5_1
+function Season123_1_9ShowHeroItem:initData(index)
+	self._index = index
 
-	arg_5_0:refreshUI()
-	arg_5_0:OpenAnim()
+	self:refreshUI()
+	self:OpenAnim()
 end
 
-function var_0_0.removeEvents(arg_6_0)
-	arg_6_0._btnclick:RemoveClickListener()
+function Season123_1_9ShowHeroItem:removeEvents()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0.onClose(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.playOpenAnim, arg_7_0)
+function Season123_1_9ShowHeroItem:onClose()
+	TaskDispatcher.cancelTask(self.playOpenAnim, self)
 
-	if arg_7_0._mo and arg_7_0._mo.hpRate <= 0 then
-		Season123ShowHeroModel.instance:setPlayedHeroDieAnim(arg_7_0._mo.uid)
+	if self._mo and self._mo.hpRate <= 0 then
+		Season123ShowHeroModel.instance:setPlayedHeroDieAnim(self._mo.uid)
 	end
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	local var_8_0 = Season123ShowHeroModel.instance:getByIndex(arg_8_0._index)
+function Season123_1_9ShowHeroItem:refreshUI()
+	local mo = Season123ShowHeroModel.instance:getByIndex(self._index)
 
-	arg_8_0._mo = var_8_0
+	self._mo = mo
 
-	if var_8_0 then
-		local var_8_1 = false
+	if mo then
+		local isEmpty = false
 
-		gohelper.setActive(arg_8_0._goadd, false)
-		gohelper.setActive(arg_8_0._goempty, false)
-		gohelper.setActive(arg_8_0._gohero, true)
+		gohelper.setActive(self._goadd, false)
+		gohelper.setActive(self._goempty, false)
+		gohelper.setActive(self._gohero, true)
 
-		local var_8_2 = SkinConfig.instance:getSkinCo(var_8_0.heroMO.skin)
+		local skinConfig = SkinConfig.instance:getSkinCo(mo.heroMO.skin)
 
-		if not var_8_2 then
-			logError("Season123_1_9ShowHeroItem.refreshUI error, skinCfg is nil, id:" .. tostring(var_8_0.heroMO.skin))
+		if not skinConfig then
+			logError("Season123_1_9ShowHeroItem.refreshUI error, skinCfg is nil, id:" .. tostring(mo.heroMO.skin))
 
 			return
 		end
 
-		arg_8_0._simageicon:LoadImage(ResUrl.getRoomHeadIcon(var_8_2.headIcon))
+		self._simageicon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
 
-		if var_8_0.heroMO.config then
-			arg_8_0._txtrolename.text = var_8_0.heroMO.config.name
+		if mo.heroMO.config then
+			self._txtrolename.text = mo.heroMO.config.name
 
-			UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagecareer, "lssx_" .. tostring(var_8_0.heroMO.config.career))
+			UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(mo.heroMO.config.career))
 		else
-			arg_8_0._txtrolename.text = ""
+			self._txtrolename.text = ""
 
-			gohelper.setActive(arg_8_0._imagecareer, false)
+			gohelper.setActive(self._imagecareer, false)
 		end
 
-		arg_8_0:refreshRare(var_8_0.heroMO)
-		arg_8_0:refreshRank(var_8_0.heroMO)
-		arg_8_0:refreshExSkill(var_8_0.heroMO)
-		arg_8_0:refreshHp(var_8_0)
+		self:refreshRare(mo.heroMO)
+		self:refreshRank(mo.heroMO)
+		self:refreshExSkill(mo.heroMO)
+		self:refreshHp(mo)
 
-		if var_8_0.heroMO then
-			arg_8_0._txtlevel.text = "Lv." .. tostring(HeroConfig.instance:getShowLevel(var_8_0.heroMO.level))
+		if mo.heroMO then
+			self._txtlevel.text = "Lv." .. tostring(HeroConfig.instance:getShowLevel(mo.heroMO.level))
 
-			local var_8_3 = false
+			local isOpenTalent = false
 
-			if var_8_0.heroMO:isOtherPlayerHero() then
-				var_8_3 = var_8_0.heroMO:getOtherPlayerIsOpenTalent()
+			if mo.heroMO:isOtherPlayerHero() then
+				isOpenTalent = mo.heroMO:getOtherPlayerIsOpenTalent()
 			else
-				local var_8_4 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent)
-				local var_8_5 = var_8_0.heroMO.rank >= CharacterEnum.TalentRank
+				local isFunctionUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent)
+				local isTalentRank = mo.heroMO.rank >= CharacterEnum.TalentRank
 
-				var_8_3 = var_8_4 and var_8_5
+				isOpenTalent = isFunctionUnlock and isTalentRank
 			end
 
-			if var_8_3 then
-				gohelper.setActive(arg_8_0._gotalentline, true)
-				gohelper.setActive(arg_8_0._txttalentevel2, true)
+			if isOpenTalent then
+				gohelper.setActive(self._gotalentline, true)
+				gohelper.setActive(self._txttalentevel2, true)
 
-				arg_8_0._txttalentevel2.text = "Lv." .. tostring(var_8_0.heroMO.talent)
+				self._txttalentevel2.text = "Lv." .. tostring(mo.heroMO.talent)
 			else
-				gohelper.setActive(arg_8_0._gotalentline, false)
-				gohelper.setActive(arg_8_0._txttalentevel2, false)
+				gohelper.setActive(self._gotalentline, false)
+				gohelper.setActive(self._txttalentevel2, false)
 			end
 		else
-			arg_8_0._txtlevel.text = ""
+			self._txtlevel.text = ""
 
-			gohelper.setActive(arg_8_0._gotalentline, false)
-			gohelper.setActive(arg_8_0._txttalentevel2, false)
+			gohelper.setActive(self._gotalentline, false)
+			gohelper.setActive(self._txttalentevel2, false)
 		end
 
-		gohelper.setActive(arg_8_0._goassist, var_8_0.isAssist)
+		gohelper.setActive(self._goassist, mo.isAssist)
 	else
-		gohelper.setActive(arg_8_0._gohero, false)
-		gohelper.setActive(arg_8_0._goempty, true)
+		gohelper.setActive(self._gohero, false)
+		gohelper.setActive(self._goempty, true)
 	end
 end
 
-function var_0_0.refreshRare(arg_9_0, arg_9_1)
-	for iter_9_0 = 1, #arg_9_0._rareList do
-		gohelper.setActive(arg_9_0._rareList[iter_9_0], iter_9_0 <= arg_9_1.config.rare + 1)
+function Season123_1_9ShowHeroItem:refreshRare(heroMO)
+	for rare = 1, #self._rareList do
+		gohelper.setActive(self._rareList[rare], rare <= heroMO.config.rare + 1)
 	end
 end
 
-function var_0_0.refreshRank(arg_10_0, arg_10_1)
-	if arg_10_1 and arg_10_1.rank and arg_10_1.rank > 1 then
-		gohelper.setActive(arg_10_0._gorank, true)
+function Season123_1_9ShowHeroItem:refreshRank(heroMO)
+	if heroMO and heroMO.rank and heroMO.rank > 1 then
+		gohelper.setActive(self._gorank, true)
 
-		local var_10_0 = 5
+		local maxRank = 5
 
-		for iter_10_0 = 1, var_10_0 do
-			gohelper.setActive(arg_10_0._rankList[iter_10_0], arg_10_1.rank - 1 == iter_10_0)
+		for i = 1, maxRank do
+			gohelper.setActive(self._rankList[i], heroMO.rank - 1 == i)
 		end
 	else
-		gohelper.setActive(arg_10_0._gorank, false)
+		gohelper.setActive(self._gorank, false)
 	end
 end
 
-function var_0_0.refreshExSkill(arg_11_0, arg_11_1)
-	if arg_11_1.exSkillLevel <= 0 then
-		arg_11_0._imageexskill.fillAmount = 0
+function Season123_1_9ShowHeroItem:refreshExSkill(heroMO)
+	if heroMO.exSkillLevel <= 0 then
+		self._imageexskill.fillAmount = 0
 
 		return
 	end
 
-	gohelper.setActive(arg_11_0._goexskill, true)
+	gohelper.setActive(self._goexskill, true)
 
-	arg_11_0._imageexskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[arg_11_1.exSkillLevel] or 1
+	self._imageexskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[heroMO.exSkillLevel] or 1
 end
 
-function var_0_0.refreshHp(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._sliderhp, true)
+function Season123_1_9ShowHeroItem:refreshHp(mo)
+	gohelper.setActive(self._sliderhp, true)
 
-	local var_12_0 = math.floor(arg_12_1.hpRate / 10)
-	local var_12_1 = Mathf.Clamp(var_12_0 / 100, 0, 1)
+	local hp100Per = math.floor(mo.hpRate / 10)
+	local rate = Mathf.Clamp(hp100Per / 100, 0, 1)
 
-	arg_12_0._sliderhp:SetValue(var_12_1)
+	self._sliderhp:SetValue(rate)
 
-	if arg_12_1.hpRate <= 0 then
-		gohelper.setActive(arg_12_0._godead, true)
+	if mo.hpRate <= 0 then
+		gohelper.setActive(self._godead, true)
 	else
-		gohelper.setActive(arg_12_0._godead, false)
+		gohelper.setActive(self._godead, false)
 	end
 
-	Season123HeroGroupUtils.setHpBar(arg_12_0._imagehp, var_12_1)
+	Season123HeroGroupUtils.setHpBar(self._imagehp, rate)
 end
 
-function var_0_0.onClickSelf(arg_13_0)
-	logNormal("onClickSelf ： " .. tostring(arg_13_0._index))
+function Season123_1_9ShowHeroItem:onClickSelf()
+	logNormal("onClickSelf ： " .. tostring(self._index))
 
-	local var_13_0 = Season123ShowHeroModel.instance:getByIndex(arg_13_0._index)
+	local mo = Season123ShowHeroModel.instance:getByIndex(self._index)
 
-	if not var_13_0 then
+	if not mo then
 		return
 	end
 
-	if var_13_0.hpRate <= 0 then
+	if mo.hpRate <= 0 then
 		GameFacade.showToast(ToastEnum.Season123HeroDead)
 
 		return
 	end
 
-	if arg_13_0._index == Activity123Enum.SupportPosIndex and var_13_0.isSupport then
+	if self._index == Activity123Enum.SupportPosIndex and mo.isSupport then
 		return
 	end
 
-	local var_13_1 = Season123ShowHeroModel.instance:getList()
-	local var_13_2 = {}
+	local totalHeroList = Season123ShowHeroModel.instance:getList()
+	local heroList = {}
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if iter_13_1.hpRate > 0 then
-			table.insert(var_13_2, iter_13_1.heroMO)
+	for _, showHeroMO in ipairs(totalHeroList) do
+		if showHeroMO.hpRate > 0 then
+			table.insert(heroList, showHeroMO.heroMO)
 		end
 	end
 
-	CharacterController.instance:openCharacterView(var_13_0.heroMO, var_13_2)
+	CharacterController.instance:openCharacterView(mo.heroMO, heroList)
 end
 
-function var_0_0.OpenAnim(arg_14_0)
-	gohelper.setActive(arg_14_0.viewGO, false)
+function Season123_1_9ShowHeroItem:OpenAnim()
+	gohelper.setActive(self.viewGO, false)
 
-	local var_14_0 = (arg_14_0._index - 1) % 4 * 0.03
+	local time = (self._index - 1) % 4 * 0.03
 
-	TaskDispatcher.runDelay(arg_14_0.playOpenAnim, arg_14_0, var_14_0)
+	TaskDispatcher.runDelay(self.playOpenAnim, self, time)
 end
 
-function var_0_0.playOpenAnim(arg_15_0)
-	gohelper.setActive(arg_15_0.viewGO, true)
+function Season123_1_9ShowHeroItem:playOpenAnim()
+	gohelper.setActive(self.viewGO, true)
 
-	local var_15_0 = "idle"
+	local animClip = "idle"
 
-	if arg_15_0._mo and arg_15_0._mo.hpRate <= 0 then
-		var_15_0 = Season123ShowHeroModel.instance:isFirstPlayHeroDieAnim(arg_15_0._mo.uid) and "todie" or "die"
+	if self._mo and self._mo.hpRate <= 0 then
+		local isFirstPlayDieAnim = Season123ShowHeroModel.instance:isFirstPlayHeroDieAnim(self._mo.uid)
+
+		animClip = isFirstPlayDieAnim and "todie" or "die"
 	end
 
-	arg_15_0._heroAnim:Play(var_15_0, 0, 0)
+	self._heroAnim:Play(animClip, 0, 0)
 end
 
-return var_0_0
+return Season123_1_9ShowHeroItem

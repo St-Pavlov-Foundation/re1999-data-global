@@ -1,7 +1,9 @@
-﻿module("modules.logic.chessgame.rpc.ChessGameRpc", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/rpc/ChessGameRpc.lua
 
-local var_0_0 = class("ChessGameRpc", BaseRpc)
+module("modules.logic.chessgame.rpc.ChessGameRpc", package.seeall)
 
-var_0_0.instance = var_0_0.New()
+local ChessGameRpc = class("ChessGameRpc", BaseRpc)
 
-return var_0_0
+ChessGameRpc.instance = ChessGameRpc.New()
+
+return ChessGameRpc

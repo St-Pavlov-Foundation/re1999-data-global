@@ -1,396 +1,398 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapDragContext", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/model/GaoSiNiaoMapDragContext.lua
 
-local var_0_0 = class("GaoSiNiaoMapDragContext", UserDataDispose)
+module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapDragContext", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0:clear()
+local GaoSiNiaoMapDragContext = class("GaoSiNiaoMapDragContext", UserDataDispose)
+
+function GaoSiNiaoMapDragContext:ctor()
+	self:clear()
 end
 
-function var_0_0._mapMO(arg_2_0)
+function GaoSiNiaoMapDragContext:_mapMO()
 	return GaoSiNiaoBattleModel.instance:mapMO()
 end
 
-function var_0_0._single(arg_3_0, arg_3_1, arg_3_2)
-	return arg_3_0:_mapMO():single(arg_3_1, arg_3_2)
+function GaoSiNiaoMapDragContext:_single(gridItemList, isKeepDirty)
+	return self:_mapMO():single(gridItemList, isKeepDirty)
 end
 
-function var_0_0._single1(arg_4_0, arg_4_1, arg_4_2)
-	return arg_4_0:_mapMO():single({
-		arg_4_1._mo
-	}, arg_4_2)
+function GaoSiNiaoMapDragContext:_single1(gridItemObj, isKeepDirty)
+	return self:_mapMO():single({
+		gridItemObj._mo
+	}, isKeepDirty)
 end
 
-function var_0_0._tryMergeAll(arg_5_0, arg_5_1)
-	return arg_5_0:_mapMO():tryMergeAll(arg_5_1)
+function GaoSiNiaoMapDragContext:_tryMergeAll(gridItemList)
+	return self:_mapMO():tryMergeAll(gridItemList)
 end
 
-function var_0_0._tryMerge1(arg_6_0, arg_6_1)
-	return arg_6_0:_tryMergeAll({
-		arg_6_1._mo
+function GaoSiNiaoMapDragContext:_tryMerge1(gridItemObj)
+	return self:_tryMergeAll({
+		gridItemObj._mo
 	})
 end
 
-function var_0_0._gridObjList(arg_7_0)
-	return arg_7_0._viewObj._gridObjList
+function GaoSiNiaoMapDragContext:_gridObjList()
+	return self._viewObj._gridObjList
 end
 
-function var_0_0._goMapTransform(arg_8_0)
-	return arg_8_0._viewObj._goMapTran
+function GaoSiNiaoMapDragContext:_goMapTransform()
+	return self._viewObj._goMapTran
 end
 
-function var_0_0.clear(arg_9_0)
-	arg_9_0:__onDispose()
-	arg_9_0:__onInit()
+function GaoSiNiaoMapDragContext:clear()
+	self:__onDispose()
+	self:__onInit()
 
-	arg_9_0._enabled = false
-	arg_9_0._viewObj = false
-	arg_9_0._viewContainer = false
-	arg_9_0._draggingItemTran = false
-	arg_9_0._draggingItemImg = false
-	arg_9_0._hitGridItemObj = false
-	arg_9_0._isCompleted = false
-	arg_9_0._gridItem2placedBagItem = {}
-	arg_9_0._gridItemObj2placedBagItemObj = arg_9_0:getUserDataTb_()
-	arg_9_0._draggingBagItemFromGrid = arg_9_0:getUserDataTb_()
+	self._enabled = false
+	self._viewObj = false
+	self._viewContainer = false
+	self._draggingItemTran = false
+	self._draggingItemImg = false
+	self._hitGridItemObj = false
+	self._isCompleted = false
+	self._gridItem2placedBagItem = {}
+	self._gridItemObj2placedBagItemObj = self:getUserDataTb_()
+	self._draggingBagItemFromGrid = self:getUserDataTb_()
 end
 
-function var_0_0.reset(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0:clear()
+function GaoSiNiaoMapDragContext:reset(current_V3a1_GaoSiNiao_GameView, dragItemTran, dragItemImage)
+	self:clear()
 
-	arg_10_0._viewObj = arg_10_1
-	arg_10_0._viewContainer = arg_10_0._viewObj.viewContainer
-	arg_10_0._draggingItemTran = arg_10_2
-	arg_10_0._draggingItemImg = arg_10_3
-	arg_10_0._draggingItemImgTran = arg_10_3.transform
+	self._viewObj = current_V3a1_GaoSiNiao_GameView
+	self._viewContainer = self._viewObj.viewContainer
+	self._draggingItemTran = dragItemTran
+	self._draggingItemImg = dragItemImage
+	self._draggingItemImgTran = dragItemImage.transform
 
-	arg_10_0:_setActive(false)
-	gohelper.setActive(arg_10_2.gameObject, true)
-	arg_10_0:setEnabled(true)
+	self:_setActive(false)
+	gohelper.setActive(dragItemTran.gameObject, true)
+	self:setEnabled(true)
 end
 
-function var_0_0.isPlacedBagItemObj(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function GaoSiNiaoMapDragContext:isPlacedBagItemObj(gridItemObj)
+	if not gridItemObj then
 		return nil
 	end
 
-	return arg_11_0:getPlacedBagItemObj(arg_11_1) and true or false
+	return self:getPlacedBagItemObj(gridItemObj) and true or false
 end
 
-function var_0_0.getPlacedBagItemObj(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function GaoSiNiaoMapDragContext:getPlacedBagItemObj(gridItemObj)
+	if not gridItemObj then
 		return nil
 	end
 
-	return arg_12_0._gridItemObj2placedBagItemObj[arg_12_1]
+	return self._gridItemObj2placedBagItemObj[gridItemObj]
 end
 
-function var_0_0.isPlacedBagItem(arg_13_0, arg_13_1)
-	if not arg_13_1 then
+function GaoSiNiaoMapDragContext:isPlacedBagItem(gridItem)
+	if not gridItem then
 		return nil
 	end
 
-	return arg_13_0:getPlacedBagItem(arg_13_1) and true or false
+	return self:getPlacedBagItem(gridItem) and true or false
 end
 
-function var_0_0.getPlacedBagItem(arg_14_0, arg_14_1)
-	if not arg_14_1 then
+function GaoSiNiaoMapDragContext:getPlacedBagItem(gridItem)
+	if not gridItem then
 		return nil
 	end
 
-	return arg_14_0._gridItem2placedBagItem[arg_14_1]
+	return self._gridItem2placedBagItem[gridItem]
 end
 
-function var_0_0._setPlacedBagItemObj(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._gridItemObj2placedBagItemObj[arg_15_1] = arg_15_2
+function GaoSiNiaoMapDragContext:_setPlacedBagItemObj(toGridItemObj, fromBagItemObj)
+	self._gridItemObj2placedBagItemObj[toGridItemObj] = fromBagItemObj
 
-	local var_15_0 = arg_15_1._mo
-	local var_15_1 = arg_15_2 and arg_15_2._mo or nil
+	local toGridItem = toGridItemObj._mo
+	local fromBagItem = fromBagItemObj and fromBagItemObj._mo or nil
 
-	arg_15_0._gridItem2placedBagItem[var_15_0] = var_15_1
+	self._gridItem2placedBagItem[toGridItem] = fromBagItem
 end
 
-function var_0_0._setLocalRotZ(arg_16_0, arg_16_1)
-	arg_16_0._viewContainer:setLocalRotZ(arg_16_0._draggingItemImgTran, arg_16_1)
+function GaoSiNiaoMapDragContext:_setLocalRotZ(zRot)
+	self._viewContainer:setLocalRotZ(self._draggingItemImgTran, zRot)
 end
 
-function var_0_0._setAPos(arg_17_0, arg_17_1, arg_17_2)
-	recthelper.setAnchor(arg_17_0._draggingItemTran, arg_17_1, arg_17_2)
+function GaoSiNiaoMapDragContext:_setAPos(x, y)
+	recthelper.setAnchor(self._draggingItemTran, x, y)
 end
 
-function var_0_0._setActive(arg_18_0, arg_18_1)
-	GameUtil.setActive01(arg_18_0._draggingItemTran, arg_18_1)
+function GaoSiNiaoMapDragContext:_setActive(isActive)
+	GameUtil.setActive01(self._draggingItemTran, isActive)
 end
 
-function var_0_0._setSprite(arg_19_0, arg_19_1)
-	arg_19_0._draggingItemImg.sprite = arg_19_1
+function GaoSiNiaoMapDragContext:_setSprite(sprite)
+	self._draggingItemImg.sprite = sprite
 end
 
-function var_0_0._refreshDraggingItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0:_setActive(arg_20_1)
+function GaoSiNiaoMapDragContext:_refreshDraggingItem(isActive, optAnchorPosV2, optDragObjItem)
+	self:_setActive(isActive)
 
-	if arg_20_2 then
-		arg_20_0:_setAPos(arg_20_2.x, arg_20_2.y)
+	if optAnchorPosV2 then
+		self:_setAPos(optAnchorPosV2.x, optAnchorPosV2.y)
 	end
 
-	if arg_20_3 then
-		local var_20_0, var_20_1 = arg_20_3:getDraggingSpriteAndZRot()
+	if optDragObjItem then
+		local sprite, zRot = optDragObjItem:getDraggingSpriteAndZRot()
 
-		arg_20_0:_setLocalRotZ(var_20_1)
-		arg_20_0:_setSprite(var_20_0)
+		self:_setLocalRotZ(zRot)
+		self:_setSprite(sprite)
 	end
 end
 
-function var_0_0._isInsideMapArea(arg_21_0, arg_21_1)
-	return gohelper.isMouseOverGo(arg_21_0:_goMapTransform(), arg_21_1.screenPos)
+function GaoSiNiaoMapDragContext:_isInsideMapArea(dragObj)
+	return gohelper.isMouseOverGo(self:_goMapTransform(), dragObj.screenPos)
 end
 
-function var_0_0._setDragInstToTargetItemObj(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_1:screenPosV2ToAnchorPosV2(arg_22_0._draggingItemTran)
+function GaoSiNiaoMapDragContext:_setDragInstToTargetItemObj(dragObj, targetItemObj)
+	local anchorPosV2 = dragObj:screenPosV2ToAnchorPosV2(self._draggingItemTran)
 
-	arg_22_0:_refreshDraggingItem(true, var_22_0, arg_22_2)
+	self:_refreshDraggingItem(true, anchorPosV2, targetItemObj)
 end
 
-function var_0_0._calcHitWhichGridItemObj(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0:_gridObjList()
+function GaoSiNiaoMapDragContext:_calcHitWhichGridItemObj(dragObj)
+	local gridObjList = self:_gridObjList()
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		if gohelper.isMouseOverGo(iter_23_1:transform(), arg_23_1.screenPos) and iter_23_1:isSelectable() then
-			arg_23_0:_onHitGridItemObj(iter_23_1)
+	for _, gridItemObj in ipairs(gridObjList) do
+		if gohelper.isMouseOverGo(gridItemObj:transform(), dragObj.screenPos) and gridItemObj:isSelectable() then
+			self:_onHitGridItemObj(gridItemObj)
 
 			return
 		end
 	end
 
-	arg_23_0:_onHitGridItemObj(nil)
+	self:_onHitGridItemObj(nil)
 end
 
-function var_0_0._isValidDrag_TargetItemObj(arg_24_0, arg_24_1)
-	if not arg_24_0._enabled then
+function GaoSiNiaoMapDragContext:_isValidDrag_TargetItemObj(targetItemObj)
+	if not self._enabled then
 		return false
 	end
 
-	if arg_24_0:_peakFlyingBagItemObj(arg_24_1) then
+	if self:_peakFlyingBagItemObj(targetItemObj) then
 		return true
 	end
 
-	if not arg_24_1:isDraggable() then
+	if not targetItemObj:isDraggable() then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0._clearHitInfo(arg_25_0)
-	arg_25_0:_onHitGridItemObj(nil)
-	arg_25_0:_collectFlyingBagItemObjBackToBag()
+function GaoSiNiaoMapDragContext:_clearHitInfo()
+	self:_onHitGridItemObj(nil)
+	self:_collectFlyingBagItemObjBackToBag()
 end
 
-function var_0_0._critical_beforeClear(arg_26_0)
-	arg_26_0:setEnabled(false)
-	arg_26_0:_onHitGridItemObj(nil)
+function GaoSiNiaoMapDragContext:_critical_beforeClear()
+	self:setEnabled(false)
+	self:_onHitGridItemObj(nil)
 end
 
-function var_0_0._onHitGridItemObj(arg_27_0, arg_27_1)
-	if arg_27_0._hitGridItemObj then
-		arg_27_0._hitGridItemObj:setSelected(false)
+function GaoSiNiaoMapDragContext:_onHitGridItemObj(gridItemObj)
+	if self._hitGridItemObj then
+		self._hitGridItemObj:setSelected(false)
 	end
 
-	arg_27_0._hitGridItemObj = arg_27_1
+	self._hitGridItemObj = gridItemObj
 
-	if arg_27_1 then
-		arg_27_1:setSelected(true)
-	end
-end
-
-function var_0_0._peakFlyingBagItemObj(arg_28_0, arg_28_1)
-	return arg_28_0._draggingBagItemFromGrid[arg_28_1]
-end
-
-function var_0_0._detachFlyingBagItemObj(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:_peakFlyingBagItemObj(arg_29_1)
-
-	if var_29_0 then
-		rawset(arg_29_0._draggingBagItemFromGrid, arg_29_1, nil)
-
-		return var_29_0
+	if gridItemObj then
+		gridItemObj:setSelected(true)
 	end
 end
 
-function var_0_0._collectFlyingBagItemObjBackToBag(arg_30_0)
-	local var_30_0 = false
+function GaoSiNiaoMapDragContext:_peakFlyingBagItemObj(gridItemObj)
+	return self._draggingBagItemFromGrid[gridItemObj]
+end
 
-	for iter_30_0, iter_30_1 in pairs(arg_30_0._draggingBagItemFromGrid) do
-		if iter_30_1 then
-			iter_30_1._mo:addCnt(1)
+function GaoSiNiaoMapDragContext:_detachFlyingBagItemObj(gridItemObj)
+	local bagItemObj = self:_peakFlyingBagItemObj(gridItemObj)
 
-			var_30_0 = true
+	if bagItemObj then
+		rawset(self._draggingBagItemFromGrid, gridItemObj, nil)
+
+		return bagItemObj
+	end
+end
+
+function GaoSiNiaoMapDragContext:_collectFlyingBagItemObjBackToBag()
+	local isNeedRefreshBag = false
+
+	for gridItemObj, danglingBagItemObj in pairs(self._draggingBagItemFromGrid) do
+		if danglingBagItemObj then
+			danglingBagItemObj._mo:addCnt(1)
+
+			isNeedRefreshBag = true
 		end
 
-		rawset(arg_30_0._draggingBagItemFromGrid, iter_30_0, nil)
+		rawset(self._draggingBagItemFromGrid, gridItemObj, nil)
 	end
 
-	if var_30_0 and arg_30_0._viewObj then
-		arg_30_0._viewObj:_refreshBagList()
+	if isNeedRefreshBag and self._viewObj then
+		self._viewObj:_refreshBagList()
 	end
 end
 
-function var_0_0.onBeginDrag_BagItemObj(arg_31_0, arg_31_1, arg_31_2)
-	if not arg_31_0._enabled then
+function GaoSiNiaoMapDragContext:onBeginDrag_BagItemObj(bagItemObj, dragObj)
+	if not self._enabled then
 		return
 	end
 
-	arg_31_0:_clearHitInfo()
+	self:_clearHitInfo()
 
-	if not arg_31_0:_isValidDrag_TargetItemObj(arg_31_1) then
+	if not self:_isValidDrag_TargetItemObj(bagItemObj) then
 		return
 	end
 
-	arg_31_1:setShowCount(arg_31_1:getCount() - 1)
-	arg_31_0:_setDragInstToTargetItemObj(arg_31_2, arg_31_1)
+	bagItemObj:setShowCount(bagItemObj:getCount() - 1)
+	self:_setDragInstToTargetItemObj(dragObj, bagItemObj)
 	AudioMgr.instance:trigger(AudioEnum3_1.GaoSiNiao.play_ui_mingdi_gsn_anzhu)
 end
 
-function var_0_0.onDragging_BagItemObj(arg_32_0, arg_32_1, arg_32_2)
-	if not arg_32_0:_isValidDrag_TargetItemObj(arg_32_1) then
-		arg_32_0:_clearHitInfo()
+function GaoSiNiaoMapDragContext:onDragging_BagItemObj(bagItemObj, dragObj)
+	if not self:_isValidDrag_TargetItemObj(bagItemObj) then
+		self:_clearHitInfo()
 
 		return
 	end
 
-	arg_32_2:tweenToScreenPos(arg_32_0._draggingItemTran, nil, 0.1)
+	dragObj:tweenToScreenPos(self._draggingItemTran, nil, 0.1)
 
-	if not arg_32_0:_isInsideMapArea(arg_32_2) then
-		arg_32_0:_onHitGridItemObj(nil)
+	if not self:_isInsideMapArea(dragObj) then
+		self:_onHitGridItemObj(nil)
 
 		return
 	end
 
-	arg_32_0:_calcHitWhichGridItemObj(arg_32_2)
+	self:_calcHitWhichGridItemObj(dragObj)
 end
 
-function var_0_0.onEndDrag_BagItemObj(arg_33_0, arg_33_1, arg_33_2)
-	if not arg_33_0:_isValidDrag_TargetItemObj(arg_33_1) then
-		arg_33_0:_clearHitInfo()
+function GaoSiNiaoMapDragContext:onEndDrag_BagItemObj(bagItemObj, dragObj)
+	if not self:_isValidDrag_TargetItemObj(bagItemObj) then
+		self:_clearHitInfo()
 
 		return
 	end
 
-	if arg_33_0._hitGridItemObj then
-		arg_33_0:onPushBagToGrid(arg_33_1, arg_33_0._hitGridItemObj, arg_33_2)
+	if self._hitGridItemObj then
+		self:onPushBagToGrid(bagItemObj, self._hitGridItemObj, dragObj)
 	end
 
-	arg_33_0:_refreshDraggingItem(false)
-	arg_33_1:refresh()
-	arg_33_0:_clearHitInfo()
+	self:_refreshDraggingItem(false)
+	bagItemObj:refresh()
+	self:_clearHitInfo()
 end
 
-function var_0_0.onPushBagToGrid(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	if not gohelper.isMouseOverGo(arg_34_2:transform(), arg_34_3.screenPos) then
+function GaoSiNiaoMapDragContext:onPushBagToGrid(bagItemObj, gridItemObj, dragObj)
+	if not gohelper.isMouseOverGo(gridItemObj:transform(), dragObj.screenPos) then
 		return
 	end
 
-	arg_34_1._mo:addCnt(-1)
+	bagItemObj._mo:addCnt(-1)
 
-	if arg_34_0:_onPushBagToGrid(arg_34_1, arg_34_2) == false then
-		arg_34_1._mo:addCnt(1)
+	if self:_onPushBagToGrid(bagItemObj, gridItemObj) == false then
+		bagItemObj._mo:addCnt(1)
 	end
 end
 
-function var_0_0._onPushBagToGrid(arg_35_0, arg_35_1, arg_35_2)
-	local var_35_0 = arg_35_0:getPlacedBagItemObj(arg_35_2)
-	local var_35_1 = var_35_0 and true or false
+function GaoSiNiaoMapDragContext:_onPushBagToGrid(bagItemObj, gridItemObj)
+	local lastBagItemObj = self:getPlacedBagItemObj(gridItemObj)
+	local isAlreadyExist = lastBagItemObj and true or false
 
-	if var_35_1 then
-		if var_35_0:getType() == arg_35_1:getType() then
+	if isAlreadyExist then
+		if lastBagItemObj:getType() == bagItemObj:getType() then
 			return false
 		end
 
-		var_35_0._mo:addCnt(1)
-		var_35_0:refresh()
+		lastBagItemObj._mo:addCnt(1)
+		lastBagItemObj:refresh()
 	end
 
-	arg_35_0:_setPlacedBagItemObj(arg_35_2, arg_35_1)
+	self:_setPlacedBagItemObj(gridItemObj, bagItemObj)
 
-	if var_35_1 then
-		arg_35_0:_single1(arg_35_2)
+	if isAlreadyExist then
+		self:_single1(gridItemObj)
 	else
-		arg_35_0:_tryMerge1(arg_35_2)
+		self:_tryMerge1(gridItemObj)
 	end
 
-	arg_35_2:refresh()
-	arg_35_2:onPushBagToGrid()
-	arg_35_0._viewObj:_refresh()
-	arg_35_0:_checkCompleteAndSetFinished()
+	gridItemObj:refresh()
+	gridItemObj:onPushBagToGrid()
+	self._viewObj:_refresh()
+	self:_checkCompleteAndSetFinished()
 end
 
-function var_0_0.onBeginDrag_GridItemObj(arg_36_0, arg_36_1, arg_36_2)
-	arg_36_0:_clearHitInfo()
+function GaoSiNiaoMapDragContext:onBeginDrag_GridItemObj(gridItemObj, dragObj)
+	self:_clearHitInfo()
 
-	if not arg_36_0:_isValidDrag_TargetItemObj(arg_36_1) then
+	if not self:_isValidDrag_TargetItemObj(gridItemObj) then
 		return
 	end
 
-	local var_36_0 = arg_36_0:getPlacedBagItemObj(arg_36_1)
+	local lastBagItemObj = self:getPlacedBagItemObj(gridItemObj)
 
-	arg_36_0._draggingBagItemFromGrid[arg_36_1] = var_36_0
+	self._draggingBagItemFromGrid[gridItemObj] = lastBagItemObj
 
-	arg_36_0:_setDragInstToTargetItemObj(arg_36_2, arg_36_1)
-	arg_36_0:_setPlacedBagItemObj(arg_36_1, nil)
-	arg_36_0:_single1(arg_36_1)
-	arg_36_0._viewObj:_refresh()
+	self:_setDragInstToTargetItemObj(dragObj, gridItemObj)
+	self:_setPlacedBagItemObj(gridItemObj, nil)
+	self:_single1(gridItemObj)
+	self._viewObj:_refresh()
 	AudioMgr.instance:trigger(AudioEnum3_1.GaoSiNiao.play_ui_mingdi_gsn_anzhu)
 end
 
-function var_0_0.onDragging_GridItemObj(arg_37_0, arg_37_1, arg_37_2)
-	if not arg_37_0:_isValidDrag_TargetItemObj(arg_37_1) then
-		arg_37_0:_clearHitInfo()
+function GaoSiNiaoMapDragContext:onDragging_GridItemObj(gridItemObj, dragObj)
+	if not self:_isValidDrag_TargetItemObj(gridItemObj) then
+		self:_clearHitInfo()
 
 		return
 	end
 
-	arg_37_2:tweenToScreenPos(arg_37_0._draggingItemTran, nil, 0.1)
+	dragObj:tweenToScreenPos(self._draggingItemTran, nil, 0.1)
 
-	if not arg_37_0:_isInsideMapArea(arg_37_2) then
-		arg_37_0:_onHitGridItemObj(nil)
+	if not self:_isInsideMapArea(dragObj) then
+		self:_onHitGridItemObj(nil)
 
 		return
 	end
 
-	arg_37_0:_calcHitWhichGridItemObj(arg_37_2)
+	self:_calcHitWhichGridItemObj(dragObj)
 end
 
-function var_0_0.onEndDrag_GridItemObj(arg_38_0, arg_38_1, arg_38_2)
-	if not arg_38_0:_isValidDrag_TargetItemObj(arg_38_1) then
-		arg_38_0:_clearHitInfo()
+function GaoSiNiaoMapDragContext:onEndDrag_GridItemObj(gridItemObj, dragObj)
+	if not self:_isValidDrag_TargetItemObj(gridItemObj) then
+		self:_clearHitInfo()
 
 		return
 	end
 
-	arg_38_0._hitGridItemObj = arg_38_0._hitGridItemObj or arg_38_1
+	self._hitGridItemObj = self._hitGridItemObj or gridItemObj
 
-	arg_38_0:_onPushGridToGrid(arg_38_1, arg_38_0._hitGridItemObj, arg_38_2)
-	arg_38_0:_refreshDraggingItem(false)
-	arg_38_0:_clearHitInfo()
+	self:_onPushGridToGrid(gridItemObj, self._hitGridItemObj, dragObj)
+	self:_refreshDraggingItem(false)
+	self:_clearHitInfo()
 end
 
-function var_0_0._onPushGridToGrid(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	if not gohelper.isMouseOverGo(arg_39_2:transform(), arg_39_3.screenPos) then
+function GaoSiNiaoMapDragContext:_onPushGridToGrid(fromGridItemObj, toGridItemObj, dragObj)
+	if not gohelper.isMouseOverGo(toGridItemObj:transform(), dragObj.screenPos) then
 		return
 	end
 
-	local var_39_0 = arg_39_0:_detachFlyingBagItemObj(arg_39_1)
+	local fromGridBagObj = self:_detachFlyingBagItemObj(fromGridItemObj)
 
-	if arg_39_1 == arg_39_2 then
-		arg_39_0:_onPushBagToGrid(var_39_0, arg_39_2)
+	if fromGridItemObj == toGridItemObj then
+		self:_onPushBagToGrid(fromGridBagObj, toGridItemObj)
 
 		return
 	end
 
-	local var_39_1 = arg_39_0:getPlacedBagItemObj(arg_39_2)
+	local toBagItemObj = self:getPlacedBagItemObj(toGridItemObj)
 
-	if not var_39_1 then
-		if arg_39_2._mo:isEmpty() then
-			arg_39_0:_onPushBagToGrid(var_39_0, arg_39_2)
+	if not toBagItemObj then
+		if toGridItemObj._mo:isEmpty() then
+			self:_onPushBagToGrid(fromGridBagObj, toGridItemObj)
 		else
 			logError("unsupported")
 		end
@@ -398,37 +400,37 @@ function var_0_0._onPushGridToGrid(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
 		return
 	end
 
-	local var_39_2 = arg_39_0:_single({
-		arg_39_1._mo,
-		arg_39_2._mo
+	local dirtyGridItemList = self:_single({
+		fromGridItemObj._mo,
+		toGridItemObj._mo
 	}, true)
 
-	arg_39_0:_setPlacedBagItemObj(arg_39_1, var_39_1)
-	arg_39_0:_setPlacedBagItemObj(arg_39_2, var_39_0)
-	arg_39_0:_tryMergeAll(var_39_2)
-	arg_39_1:refresh()
-	arg_39_1:onPushBagToGrid()
-	arg_39_2:refresh()
-	arg_39_2:onPushBagToGrid()
-	arg_39_0._viewObj:_refresh()
-	arg_39_0:_checkCompleteAndSetFinished()
+	self:_setPlacedBagItemObj(fromGridItemObj, toBagItemObj)
+	self:_setPlacedBagItemObj(toGridItemObj, fromGridBagObj)
+	self:_tryMergeAll(dirtyGridItemList)
+	fromGridItemObj:refresh()
+	fromGridItemObj:onPushBagToGrid()
+	toGridItemObj:refresh()
+	toGridItemObj:onPushBagToGrid()
+	self._viewObj:_refresh()
+	self:_checkCompleteAndSetFinished()
 end
 
-function var_0_0.setEnabled(arg_40_0, arg_40_1)
-	arg_40_0._enabled = arg_40_1 and true or false
+function GaoSiNiaoMapDragContext:setEnabled(isEnabled)
+	self._enabled = isEnabled and true or false
 end
 
-function var_0_0.isCompleted(arg_41_0)
-	return arg_41_0._isCompleted
+function GaoSiNiaoMapDragContext:isCompleted()
+	return self._isCompleted
 end
 
-function var_0_0._checkCompleteAndSetFinished(arg_42_0)
-	if arg_42_0:_mapMO():isCompleted() then
-		arg_42_0._isCompleted = true
+function GaoSiNiaoMapDragContext:_checkCompleteAndSetFinished()
+	if self:_mapMO():isCompleted() then
+		self._isCompleted = true
 
-		arg_42_0:setEnabled(false)
-		arg_42_0._viewObj:completeGame()
+		self:setEnabled(false)
+		self._viewObj:completeGame()
 	end
 end
 
-return var_0_0
+return GaoSiNiaoMapDragContext

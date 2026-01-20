@@ -1,13 +1,15 @@
-﻿module("modules.logic.tower.view.fight.TowerPermanentResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/tower/view/fight/TowerPermanentResultViewContainer.lua
 
-local var_0_0 = class("TowerPermanentResultViewContainer", BaseViewContainer)
+module("modules.logic.tower.view.fight.TowerPermanentResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local TowerPermanentResultViewContainer = class("TowerPermanentResultViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TowerPermanentResultView.New())
+function TowerPermanentResultViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TowerPermanentResultView.New())
+
+	return views
 end
 
-return var_0_0
+return TowerPermanentResultViewContainer

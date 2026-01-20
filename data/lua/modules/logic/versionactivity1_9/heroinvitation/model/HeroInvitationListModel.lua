@@ -1,27 +1,31 @@
-﻿module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/heroinvitation/model/HeroInvitationListModel.lua
 
-local var_0_0 = class("HeroInvitationListModel", ListScrollModel)
+module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationListModel", package.seeall)
 
-function var_0_0.refreshList(arg_1_0)
-	local var_1_0 = HeroInvitationConfig.instance:getInvitationList()
+local HeroInvitationListModel = class("HeroInvitationListModel", ListScrollModel)
 
-	arg_1_0.count = #var_1_0
-	arg_1_0.finishCount = 0
+function HeroInvitationListModel:refreshList()
+	local invitations = HeroInvitationConfig.instance:getInvitationList()
 
-	local var_1_1 = {}
+	self.count = #invitations
+	self.finishCount = 0
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if HeroInvitationModel.instance:getInvitationState(iter_1_1.id) == HeroInvitationEnum.InvitationState.Finish then
-			arg_1_0.finishCount = arg_1_0.finishCount + 1
+	local list = {}
+
+	for i, v in ipairs(invitations) do
+		local state = HeroInvitationModel.instance:getInvitationState(v.id)
+
+		if state == HeroInvitationEnum.InvitationState.Finish then
+			self.finishCount = self.finishCount + 1
 		end
 
-		table.insert(var_1_1, iter_1_1)
+		table.insert(list, v)
 	end
 
-	table.sort(var_1_1, SortUtil.keyLower("id"))
-	arg_1_0:setList(var_1_1)
+	table.sort(list, SortUtil.keyLower("id"))
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+HeroInvitationListModel.instance = HeroInvitationListModel.New()
 
-return var_0_0
+return HeroInvitationListModel

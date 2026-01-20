@@ -1,166 +1,169 @@
-﻿module("modules.logic.toast.view.ToastView", package.seeall)
+﻿-- chunkname: @modules/logic/toast/view/ToastView.lua
 
-local var_0_0 = class("ToastView", BaseView)
-local var_0_1 = 10000
+module("modules.logic.toast.view.ToastView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_template")
-	arg_1_0._gopoint = gohelper.findChild(arg_1_0.viewGO, "#go_point")
+local ToastView = class("ToastView", BaseView)
+local OutSidePos = 10000
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ToastView:onInitView()
+	self._gotemplate = gohelper.findChild(self.viewGO, "#go_template")
+	self._gopoint = gohelper.findChild(self.viewGO, "#go_point")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function ToastView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function ToastView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._usingList = {}
-	arg_4_0._freeList = {}
-	arg_4_0._cacheMsgList = {}
-	arg_4_0._maxCount = 4
-	arg_4_0.space = 5
-	arg_4_0._showNextToastInterval = 0.1
-	arg_4_0.hadTask = false
+function ToastView:_editableInitView()
+	self._usingList = {}
+	self._freeList = {}
+	self._cacheMsgList = {}
+	self._maxCount = 4
+	self.space = 5
+	self._showNextToastInterval = 0.1
+	self.hadTask = false
 
-	local var_4_0 = arg_4_0._gotemplate.transform
+	local templateTransform = self._gotemplate.transform
 
-	arg_4_0._itemHeight = recthelper.getHeight(var_4_0)
-	arg_4_0._itemWidth = recthelper.getWidth(var_4_0)
+	self._itemHeight = recthelper.getHeight(templateTransform)
+	self._itemWidth = recthelper.getWidth(templateTransform)
 
-	arg_4_0:_initExpandedSpace()
-	recthelper.setAnchor(arg_4_0._gotemplate.transform, var_0_1, var_0_1)
+	self:_initExpandedSpace()
+	recthelper.setAnchor(self._gotemplate.transform, OutSidePos, OutSidePos)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function ToastView:onUpdateParam()
 	return
 end
 
-function var_0_0.onDestroyView(arg_6_0)
+function ToastView:onDestroyView()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0:addToastMsg(arg_7_0.viewParam)
+function ToastView:onOpen()
+	self:addToastMsg(self.viewParam)
 
-	local var_7_0 = ToastController.instance._msgList
+	local msgList = ToastController.instance._msgList
 
-	while #var_7_0 > 0 do
-		arg_7_0:addToastMsg(table.remove(var_7_0, 1))
+	while #msgList > 0 do
+		self:addToastMsg(table.remove(msgList, 1))
 	end
 
-	arg_7_0:addEventCb(ToastController.instance, ToastEvent.ShowToast, arg_7_0.addToastMsg, arg_7_0)
-	arg_7_0:addEventCb(ToastController.instance, ToastEvent.RecycleToast, arg_7_0._doRecycleAnimation, arg_7_0)
+	self:addEventCb(ToastController.instance, ToastEvent.ShowToast, self.addToastMsg, self)
+	self:addEventCb(ToastController.instance, ToastEvent.RecycleToast, self._doRecycleAnimation, self)
 end
 
-function var_0_0.onClose(arg_8_0)
-	arg_8_0:removeEventCb(ToastController.instance, ToastEvent.ShowToast, arg_8_0.addToastMsg, arg_8_0)
-	arg_8_0:removeEventCb(ToastController.instance, ToastEvent.RecycleToast, arg_8_0._doRecycleAnimation, arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0._showToast, arg_8_0)
+function ToastView:onClose()
+	self:removeEventCb(ToastController.instance, ToastEvent.ShowToast, self.addToastMsg, self)
+	self:removeEventCb(ToastController.instance, ToastEvent.RecycleToast, self._doRecycleAnimation, self)
+	TaskDispatcher.cancelTask(self._showToast, self)
 
-	arg_8_0.hadTask = false
+	self.hadTask = false
 end
 
-function var_0_0.addToastMsg(arg_9_0, arg_9_1)
-	table.insert(arg_9_0._cacheMsgList, arg_9_1)
+function ToastView:addToastMsg(msg)
+	table.insert(self._cacheMsgList, msg)
 
-	if not arg_9_0.hadTask then
-		arg_9_0:_showToast()
-		TaskDispatcher.runRepeat(arg_9_0._showToast, arg_9_0, arg_9_0._showNextToastInterval)
+	if not self.hadTask then
+		self:_showToast()
+		TaskDispatcher.runRepeat(self._showToast, self, self._showNextToastInterval)
 
-		arg_9_0.hadTask = true
+		self.hadTask = true
 	end
 end
 
-function var_0_0._showToast(arg_10_0)
-	local var_10_0 = table.remove(arg_10_0._cacheMsgList, 1)
+function ToastView:_showToast()
+	local msg = table.remove(self._cacheMsgList, 1)
 
-	if not var_10_0 then
-		TaskDispatcher.cancelTask(arg_10_0._showToast, arg_10_0)
+	if not msg then
+		TaskDispatcher.cancelTask(self._showToast, self)
 
-		arg_10_0.hadTask = false
+		self.hadTask = false
 
 		return
 	end
 
-	local var_10_1 = table.remove(arg_10_0._freeList, 1)
+	local newItem = table.remove(self._freeList, 1)
 
-	if not var_10_1 then
-		local var_10_2 = gohelper.clone(arg_10_0._gotemplate, arg_10_0._gopoint)
+	if not newItem then
+		local go = gohelper.clone(self._gotemplate, self._gopoint)
 
-		var_10_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_2, ToastItem)
+		newItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, ToastItem)
 	end
 
-	local var_10_3
+	local item
 
-	if #arg_10_0._usingList >= arg_10_0._maxCount then
-		local var_10_4 = arg_10_0._usingList[1]
+	if #self._usingList >= self._maxCount then
+		item = self._usingList[1]
 
-		arg_10_0:_doRecycleAnimation(var_10_4, true)
+		self:_doRecycleAnimation(item, true)
 	end
 
-	table.insert(arg_10_0._usingList, var_10_1)
-	var_10_1:setMsg(var_10_0)
-	var_10_1:appearAnimation(var_10_0)
-	arg_10_0:_refreshAllItemsAnimation()
+	table.insert(self._usingList, newItem)
+	newItem:setMsg(msg)
+	newItem:appearAnimation(msg)
+	self:_refreshAllItemsAnimation()
 end
 
-function var_0_0._doRecycleAnimation(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = tabletool.indexOf(arg_11_0._usingList, arg_11_1)
+function ToastView:_doRecycleAnimation(item, isManualRecycle)
+	local index = tabletool.indexOf(self._usingList, item)
 
-	if var_11_0 then
-		table.remove(arg_11_0._usingList, var_11_0)
+	if index then
+		table.remove(self._usingList, index)
 	end
 
-	arg_11_1:clearAllTask()
-	arg_11_1:quitAnimation(arg_11_0._recycleToast, arg_11_0)
+	item:clearAllTask()
+	item:quitAnimation(self._recycleToast, self)
 end
 
-function var_0_0._recycleToast(arg_12_0, arg_12_1)
-	arg_12_1:reset()
-	table.insert(arg_12_0._freeList, arg_12_1)
+function ToastView:_recycleToast(item)
+	item:reset()
+	table.insert(self._freeList, item)
 end
 
-function var_0_0._refreshAllItemsAnimation(arg_13_0)
-	local var_13_0 = 0
+function ToastView:_refreshAllItemsAnimation()
+	local anchorY = 0
 
-	arg_13_0._preAnchorY = 0
+	self._preAnchorY = 0
 
-	for iter_13_0 = 1, #arg_13_0._usingList do
-		if iter_13_0 > 1 then
-			local var_13_1 = arg_13_0._usingList[iter_13_0 - 1]:getToastItemHeight()
-			local var_13_2 = arg_13_0._usingList[iter_13_0]:getToastItemHeight()
-			local var_13_3 = var_13_1 > arg_13_0._templateMinHeight and var_13_2 > arg_13_0._templateMinHeight and arg_13_0._spaceWhenExpanded or arg_13_0.space
+	for i = 1, #self._usingList do
+		if i > 1 then
+			local lastItemHeight = self._usingList[i - 1]:getToastItemHeight()
+			local curItemHeight = self._usingList[i]:getToastItemHeight()
+			local isExpanded = lastItemHeight > self._templateMinHeight and curItemHeight > self._templateMinHeight
+			local space = isExpanded and self._spaceWhenExpanded or self.space
 
-			var_13_0 = arg_13_0._preAnchorY - var_13_1 - var_13_3
+			anchorY = self._preAnchorY - lastItemHeight - space
 		end
 
-		arg_13_0._preAnchorY = var_13_0
+		self._preAnchorY = anchorY
 
-		if iter_13_0 == #arg_13_0._usingList then
-			recthelper.setAnchorY(arg_13_0._usingList[iter_13_0].tr, var_13_0)
+		if i == #self._usingList then
+			recthelper.setAnchorY(self._usingList[i].tr, anchorY)
 		else
-			arg_13_0._usingList[iter_13_0]:upAnimation(var_13_0)
+			self._usingList[i]:upAnimation(anchorY)
 		end
 	end
 end
 
-function var_0_0._initExpandedSpace(arg_14_0)
-	local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "#go_template/#go_normal/bg").transform
-	local var_14_1 = arg_14_0._gotemplate:GetComponent(typeof(UnityEngine.UI.LayoutElement))
+function ToastView:_initExpandedSpace()
+	local bgTrans = gohelper.findChild(self.viewGO, "#go_template/#go_normal/bg").transform
+	local layoutElement = self._gotemplate:GetComponent(typeof(UnityEngine.UI.LayoutElement))
 
-	arg_14_0._spaceWhenExpanded = arg_14_0.space
-	arg_14_0._templateMinHeight = var_14_1.minHeight
+	self._spaceWhenExpanded = self.space
+	self._templateMinHeight = layoutElement.minHeight
 
-	if var_14_0.anchorMin.y == 0 and var_14_0.anchorMax.y == 1 then
-		arg_14_0._spaceWhenExpanded = (var_14_0.offsetMax.y - var_14_0.offsetMin.y) * 0.5
+	if bgTrans.anchorMin.y == 0 and bgTrans.anchorMax.y == 1 then
+		self._spaceWhenExpanded = (bgTrans.offsetMax.y - bgTrans.offsetMin.y) * 0.5
 	end
 end
 
-return var_0_0
+return ToastView

@@ -1,13 +1,15 @@
-﻿module("modules.logic.meilanni.view.MeilanniBossInfoViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniBossInfoViewContainer.lua
 
-local var_0_0 = class("MeilanniBossInfoViewContainer", BaseViewContainer)
+module("modules.logic.meilanni.view.MeilanniBossInfoViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local MeilanniBossInfoViewContainer = class("MeilanniBossInfoViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, MeilanniBossInfoView.New())
+function MeilanniBossInfoViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, MeilanniBossInfoView.New())
+
+	return views
 end
 
-return var_0_0
+return MeilanniBossInfoViewContainer

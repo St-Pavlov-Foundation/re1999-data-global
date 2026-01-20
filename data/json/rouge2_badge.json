@@ -1,0 +1,186 @@
+[
+  {
+    "id": 1,
+    "name": "language_10100874",
+    "desc": "language_10100875",
+    "icon": "rouge2_achieve_icon_6",
+    "trigger": "20:12",
+    "score": 50
+  },
+  {
+    "id": 2,
+    "name": "language_10100876",
+    "desc": "language_10100877",
+    "icon": "rouge2_achieve_icon_8",
+    "trigger": "13:2#10",
+    "score": 50
+  },
+  {
+    "id": 3,
+    "name": "language_10100878",
+    "desc": "language_10100879",
+    "icon": "rouge2_achieve_icon_16",
+    "trigger": "13:1#20",
+    "score": 50
+  },
+  {
+    "id": 4,
+    "name": "language_10100880",
+    "desc": "language_10100881",
+    "icon": "rouge2_achieve_icon_19",
+    "trigger": "21:1000",
+    "score": 50
+  },
+  {
+    "id": 5,
+    "name": "language_10100882",
+    "desc": "language_10100883",
+    "icon": "rouge2_achieve_icon_4",
+    "trigger": "22:12",
+    "score": 50
+  },
+  {
+    "id": 6,
+    "name": "language_10100884",
+    "desc": "language_10100885",
+    "icon": "rouge2_achieve_icon_24",
+    "trigger": "23:50",
+    "score": 50
+  },
+  {
+    "id": 7,
+    "name": "language_10100886",
+    "desc": "language_10100887",
+    "icon": "rouge2_achieve_icon_18",
+    "trigger": "9:20",
+    "score": 50
+  },
+  {
+    "id": 8,
+    "name": "language_10100888",
+    "desc": "language_10100889",
+    "icon": "rouge2_achieve_icon_17",
+    "trigger": "24",
+    "score": 50
+  },
+  {
+    "id": 9,
+    "name": "language_10100890",
+    "desc": "language_10100891",
+    "icon": "rouge2_achieve_icon_10",
+    "trigger": "25:101#5",
+    "score": 50
+  },
+  {
+    "id": 10,
+    "name": "language_10100892",
+    "desc": "language_10100893",
+    "icon": "rouge2_achieve_icon_15",
+    "trigger": "25:103#5",
+    "score": 50
+  },
+  {
+    "id": 11,
+    "name": "language_10100894",
+    "desc": "language_10100895",
+    "icon": "rouge2_achieve_icon_20",
+    "trigger": "25:102#5",
+    "score": 50
+  },
+  {
+    "id": 12,
+    "name": "language_10100896",
+    "desc": "language_10100897",
+    "icon": "rouge2_achieve_icon_14",
+    "trigger": "25:104#5",
+    "score": 50
+  },
+  {
+    "id": 13,
+    "name": "language_10100898",
+    "desc": "language_10100899",
+    "icon": "rouge2_achieve_icon_5",
+    "trigger": "25:105#5",
+    "score": 50
+  },
+  {
+    "id": 14,
+    "name": "language_10100900",
+    "desc": "language_10100901",
+    "icon": "rouge2_achieve_icon_1",
+    "trigger": "26:1",
+    "score": 50
+  },
+  {
+    "id": 15,
+    "name": "language_10100902",
+    "desc": "language_10100903",
+    "icon": "rouge2_achieve_icon_12",
+    "trigger": "27:5",
+    "score": 50
+  },
+  {
+    "id": 17,
+    "name": "language_10100904",
+    "desc": "language_10100905",
+    "icon": "rouge2_achieve_icon_7",
+    "trigger": "28",
+    "score": 50
+  },
+  {
+    "id": 18,
+    "name": "language_10100906",
+    "desc": "language_10100907",
+    "icon": "rouge2_achieve_icon_2",
+    "trigger": "29:3",
+    "score": 50
+  },
+  {
+    "id": 19,
+    "name": "language_10100908",
+    "desc": "language_10100909",
+    "icon": "rouge2_achieve_icon_9",
+    "trigger": "30",
+    "score": 50
+  },
+  {
+    "id": 20,
+    "name": "language_10100910",
+    "desc": "language_10100911",
+    "icon": "rouge2_achieve_icon_3",
+    "trigger": "31:3",
+    "score": 50
+  },
+  {
+    "id": 21,
+    "name": "language_10100912",
+    "desc": "language_10100913",
+    "icon": "rouge2_achieve_icon_11",
+    "trigger": "19",
+    "score": 50
+  },
+  {
+    "id": 22,
+    "name": "language_10100914",
+    "desc": "language_10100915",
+    "icon": "rouge2_achieve_icon_21",
+    "trigger": "1:140002",
+    "score": 50
+  },
+  {
+    "id": 23,
+    "name": "language_10100916",
+    "desc": "language_10100917",
+    "icon": "rouge2_achieve_icon_13",
+    "trigger": "1:140021",
+    "score": 50
+  },
+  {
+    "id": 24,
+    "name": "language_10100918",
+    "desc": "language_10100919",
+    "icon": "rouge2_achieve_icon_22",
+    "trigger": "1:140004",
+    "score": 50
+  }
+]

@@ -1,18 +1,20 @@
-﻿module("modules.logic.chessgame.defines.ChessGameEnum", package.seeall)
+﻿-- chunkname: @modules/logic/chessgame/defines/ChessGameEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.chessgame.defines.ChessGameEnum", package.seeall)
 
-var_0_0.NodeXOffset = 1.259
-var_0_0.NodeYOffset = 0.804
-var_0_0.NodeZOffset = 0.005
-var_0_0.NodePath = "scenes/common_m_s12_dfw/prefab/m_s12_diban_1×1.prefab"
-var_0_0.SceneResPath = {
+local ChessGameEnum = _M
+
+ChessGameEnum.NodeXOffset = 1.259
+ChessGameEnum.NodeYOffset = 0.804
+ChessGameEnum.NodeZOffset = 0.005
+ChessGameEnum.NodePath = "scenes/common_m_s12_dfw/prefab/m_s12_diban_1×1.prefab"
+ChessGameEnum.SceneResPath = {
 	AlarmItem3 = "scenes/v1a5_m_s12_dfw_krd/perefab/diban_red.prefab",
 	DirItem = "scenes/v2a1_m_s12_lsp_jshd/prefab/diban_selected.prefab",
 	AlarmItem = "scenes/common_m_s12_dfw/prefab/m_s12_qipan_red_1×1.prefab",
 	AlarmItem2 = "scenes/v1a5_m_s12_dfw_krd/perefab/diban_yellow.prefab"
 }
-var_0_0.InteractType = {
+ChessGameEnum.InteractType = {
 	Hit = 4,
 	Teleport = 3,
 	Obstacle = 8,
@@ -22,14 +24,14 @@ var_0_0.InteractType = {
 	Save = 5,
 	Normal = 1
 }
-var_0_0.ChessSelectType = {
+ChessGameEnum.ChessSelectType = {
 	CatchObj = 2,
 	Normal = 1
 }
-var_0_0.ClickRangeX = 90
-var_0_0.ClickRangeY = 55
-var_0_0.ClickYWeight = 1.2
-var_0_0.TileShowSettings = {
+ChessGameEnum.ClickRangeX = 90
+ChessGameEnum.ClickRangeY = 55
+ChessGameEnum.ClickYWeight = 1.2
+ChessGameEnum.TileShowSettings = {
 	width = 152.7,
 	height = 54.6,
 	offsetYX = 24.6,
@@ -37,44 +39,44 @@ var_0_0.TileShowSettings = {
 	offsetX = 154.8,
 	offsetXY = -29.3
 }
-var_0_0.GameEventType = {
+ChessGameEnum.GameEventType = {
 	FinishEvent = 3,
 	Battle = 1,
 	UseItem = 2,
 	Lock = -1,
 	Normal = 0
 }
-var_0_0.OptType = {
+ChessGameEnum.OptType = {
 	WithInteract = 1,
 	Single = 0,
 	UseItem = 2
 }
-var_0_0.GameEffectType = {
+ChessGameEnum.GameEffectType = {
 	Display = 2,
 	Talk = 1,
 	None = 0
 }
-var_0_0.EffectPath = {
-	[var_0_0.GameEffectType.Display] = "scenes/v2a1_m_s12_lsp_jshd/prefab/hudong.prefab",
-	[var_0_0.GameEffectType.Talk] = "scenes/v2a1_m_s12_lsp_jshd/prefab/duihua.prefab"
+ChessGameEnum.EffectPath = {
+	[ChessGameEnum.GameEffectType.Display] = "scenes/v2a1_m_s12_lsp_jshd/prefab/hudong.prefab",
+	[ChessGameEnum.GameEffectType.Talk] = "scenes/v2a1_m_s12_lsp_jshd/prefab/duihua.prefab"
 }
-var_0_0.ChessClearCondition = {
+ChessGameEnum.ChessClearCondition = {
 	InteractFinish = 2,
 	RoundLimit = 1,
 	HpLimit = 3,
 	InteractAllFinish = 4
 }
-var_0_0.TileBaseType = {
+ChessGameEnum.TileBaseType = {
 	Normal = 1,
 	None = 0
 }
-var_0_0.InteractTypeToName = {}
+ChessGameEnum.InteractTypeToName = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.InteractType) do
-	var_0_0.InteractTypeToName[iter_0_1] = iter_0_0
+for name, index in pairs(ChessGameEnum.InteractType) do
+	ChessGameEnum.InteractTypeToName[index] = name
 end
 
-var_0_0.EventType = {
+ChessGameEnum.EventType = {
 	Hide = 4,
 	Story = 2,
 	Finish = 9,
@@ -87,7 +89,7 @@ var_0_0.EventType = {
 	MoveOther = 11,
 	Dead = 8
 }
-var_0_0.StepType = {
+ChessGameEnum.StepType = {
 	Pass = 8,
 	ChangeModule = 13,
 	Talk = 16,
@@ -106,45 +108,45 @@ var_0_0.StepType = {
 	Dialogue = 10,
 	Move = 2
 }
-var_0_0.StepTypeToName = {}
+ChessGameEnum.StepTypeToName = {}
 
-for iter_0_2, iter_0_3 in pairs(var_0_0.StepType) do
-	var_0_0.StepTypeToName[iter_0_3] = iter_0_2
+for name, index in pairs(ChessGameEnum.StepType) do
+	ChessGameEnum.StepTypeToName[index] = name
 end
 
-var_0_0.ContainerOffsetZ = {
+ChessGameEnum.ContainerOffsetZ = {
 	Interact = -2,
 	Background = -0.5,
 	TipArea = -1,
 	Path = -1.5
 }
-var_0_0.SelectPosStatus = {
+ChessGameEnum.SelectPosStatus = {
 	CatchObj = 3,
 	SelectObjWaitPos = 2,
 	ShowTalk = 4,
 	None = 1
 }
-var_0_0.Direction = {
+ChessGameEnum.Direction = {
 	Down = 2,
 	Up = 8,
 	Left = 4,
 	Right = 6
 }
-var_0_0.RollBack = {
+ChessGameEnum.RollBack = {
 	LastPoint = 1,
 	CheckPoint = 0
 }
-var_0_0.GameState = {
+ChessGameEnum.GameState = {
 	Fail = 2,
 	Win = 1
 }
-var_0_0.ChessClearCondition = {
+ChessGameEnum.ChessClearCondition = {
 	InteractFinish = 2,
 	RoundLimit = 1,
 	HpLimit = 3,
 	InteractAllFinish = 4
 }
-var_0_0.CloseAnimTime = 0.5
-var_0_0.TitleOpenAnimTime = 2.5
+ChessGameEnum.CloseAnimTime = 0.5
+ChessGameEnum.TitleOpenAnimTime = 2.5
 
-return var_0_0
+return ChessGameEnum

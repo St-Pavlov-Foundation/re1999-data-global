@@ -1,14 +1,16 @@
-﻿module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fightuiswitch/view/FightUISkinMaterialTipViewContainer.lua
 
-local var_0_0 = class("FightUISkinMaterialTipViewContainer", BaseViewContainer)
+module("modules.logic.fightuiswitch.view.FightUISkinMaterialTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local FightUISkinMaterialTipViewContainer = class("FightUISkinMaterialTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, FightUISkinMaterialTipView.New())
-	table.insert(var_1_0, FightUISkinMaterialTipViewBanner.New())
+function FightUISkinMaterialTipViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, FightUISkinMaterialTipView.New())
+	table.insert(views, FightUISkinMaterialTipViewBanner.New())
+
+	return views
 end
 
-return var_0_0
+return FightUISkinMaterialTipViewContainer

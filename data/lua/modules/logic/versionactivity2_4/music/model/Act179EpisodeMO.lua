@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity2_4.music.model.Act179EpisodeMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/model/Act179EpisodeMO.lua
 
-local var_0_0 = pureTable("Act179EpisodeMO")
+module("modules.logic.versionactivity2_4.music.model.Act179EpisodeMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.episodeId = arg_1_1.episodeId
-	arg_1_0.isFinished = arg_1_1.isFinished
-	arg_1_0.highScore = arg_1_1.highScore
-	arg_1_0.config = Activity179Config.instance:getEpisodeConfig(arg_1_0.episodeId)
+local Act179EpisodeMO = pureTable("Act179EpisodeMO")
+
+function Act179EpisodeMO:init(info)
+	self.episodeId = info.episodeId
+	self.isFinished = info.isFinished
+	self.highScore = info.highScore
+	self.config = Activity179Config.instance:getEpisodeConfig(self.episodeId)
 end
 
-return var_0_0
+return Act179EpisodeMO

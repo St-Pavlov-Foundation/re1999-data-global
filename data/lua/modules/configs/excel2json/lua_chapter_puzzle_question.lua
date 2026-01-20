@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_chapter_puzzle_question", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_chapter_puzzle_question.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_chapter_puzzle_question", package.seeall)
+
+local lua_chapter_puzzle_question = {}
+local fields = {
 	descEn = 5,
 	answer = 9,
 	question = 8,
@@ -12,10 +14,10 @@ local var_0_1 = {
 	titleEn = 3,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	answer = 5,
 	question = 4,
 	questionTitle = 3,
@@ -23,8 +25,8 @@ local var_0_3 = {
 	desc = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_chapter_puzzle_question.onLoad(json)
+	lua_chapter_puzzle_question.configList, lua_chapter_puzzle_question.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_chapter_puzzle_question

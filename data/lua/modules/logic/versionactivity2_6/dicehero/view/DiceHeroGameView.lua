@@ -1,191 +1,195 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroGameView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/view/DiceHeroGameView.lua
 
-local var_0_0 = class("DiceHeroGameView", BaseView)
+module("modules.logic.versionactivity2_6.dicehero.view.DiceHeroGameView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "")
-	arg_1_0._godice = gohelper.findChild(arg_1_0.viewGO, "#go_dice")
-	arg_1_0._maskAnim = gohelper.findChildAnim(arg_1_0.viewGO, "#simage_mask")
-	arg_1_0._gocard = gohelper.findChild(arg_1_0.viewGO, "#go_card/item")
-	arg_1_0._goenemy = gohelper.findChild(arg_1_0.viewGO, "#go_enemy/#go_item")
-	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "#go_hero")
-	arg_1_0._curRound = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_target/roundbg/anim/curround/#txt_curround")
-	arg_1_0._txttarget = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_target/#go_tasklist/#go_taskitem/txt_desc")
-	arg_1_0._damageEffectHero = gohelper.findChild(arg_1_0.viewGO, "#screeneff_attack/hero")
-	arg_1_0._damageEffectEnemy = gohelper.findChild(arg_1_0.viewGO, "#screeneff_attack/enemy")
+local DiceHeroGameView = class("DiceHeroGameView", BaseView)
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "#go_texture_ref")
+function DiceHeroGameView:onInitView()
+	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._godice = gohelper.findChild(self.viewGO, "#go_dice")
+	self._maskAnim = gohelper.findChildAnim(self.viewGO, "#simage_mask")
+	self._gocard = gohelper.findChild(self.viewGO, "#go_card/item")
+	self._goenemy = gohelper.findChild(self.viewGO, "#go_enemy/#go_item")
+	self._gohero = gohelper.findChild(self.viewGO, "#go_hero")
+	self._curRound = gohelper.findChildTextMesh(self.viewGO, "#go_target/roundbg/anim/curround/#txt_curround")
+	self._txttarget = gohelper.findChildTextMesh(self.viewGO, "#go_target/#go_tasklist/#go_taskitem/txt_desc")
+	self._damageEffectHero = gohelper.findChild(self.viewGO, "#screeneff_attack/hero")
+	self._damageEffectEnemy = gohelper.findChild(self.viewGO, "#screeneff_attack/enemy")
 
-	if var_1_0 then
-		local var_1_1 = var_1_0.transform
+	local textureRef = gohelper.findChild(self.viewGO, "#go_texture_ref")
 
-		for iter_1_0 = 0, var_1_1.childCount - 1 do
-			local var_1_2 = var_1_1:GetChild(iter_1_0)
-			local var_1_3 = var_1_2.gameObject:GetComponent(gohelper.Type_RawImage)
+	if textureRef then
+		local trans = textureRef.transform
 
-			if var_1_3 then
-				DiceHeroHelper.instance:setDiceTexture(var_1_2.name, var_1_3.texture)
+		for i = 0, trans.childCount - 1 do
+			local child = trans:GetChild(i)
+			local image = child.gameObject:GetComponent(gohelper.Type_RawImage)
+
+			if image then
+				DiceHeroHelper.instance:setDiceTexture(child.name, image.texture)
 			end
 		end
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.RoundEnd, arg_2_0.beginRound, arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.ConfirmDice, arg_2_0.confirmDice, arg_2_0)
-	DiceHeroController.instance:registerCallback(DiceHeroEvent.OnDamage, arg_2_0.onDamageEffect, arg_2_0)
+function DiceHeroGameView:addEvents()
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.RoundEnd, self.beginRound, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.ConfirmDice, self.confirmDice, self)
+	DiceHeroController.instance:registerCallback(DiceHeroEvent.OnDamage, self.onDamageEffect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.RoundEnd, arg_3_0.beginRound, arg_3_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.ConfirmDice, arg_3_0.confirmDice, arg_3_0)
-	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.OnDamage, arg_3_0.onDamageEffect, arg_3_0)
+function DiceHeroGameView:removeEvents()
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.RoundEnd, self.beginRound, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.ConfirmDice, self.confirmDice, self)
+	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.OnDamage, self.onDamageEffect, self)
 end
 
-function var_0_0.onOpen(arg_4_0)
-	gohelper.setActive(arg_4_0._maskAnim, true)
+function DiceHeroGameView:onOpen()
+	gohelper.setActive(self._maskAnim, true)
 
-	local var_4_0 = arg_4_0.viewContainer._viewSetting.otherRes.roleinfoitem
-	local var_4_1 = arg_4_0.viewContainer._viewSetting.otherRes.effect
-	local var_4_2 = arg_4_0:getResInst(var_4_1, arg_4_0.viewGO)
+	local heroitempath = self.viewContainer._viewSetting.otherRes.roleinfoitem
+	local effectpath = self.viewContainer._viewSetting.otherRes.effect
+	local effectItem = self:getResInst(effectpath, self.viewGO)
 
-	gohelper.setActive(var_4_2, false)
-	DiceHeroHelper.instance:setEffectItem(var_4_2)
+	gohelper.setActive(effectItem, false)
+	DiceHeroHelper.instance:setEffectItem(effectItem)
 
-	arg_4_0._diceBox = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._godice, DiceHeroDiceBoxItem, arg_4_0)
+	self._diceBox = MonoHelper.addNoUpdateLuaComOnceToGo(self._godice, DiceHeroDiceBoxItem, self)
 
-	local var_4_3 = arg_4_0:getResInst(var_4_0, arg_4_0._gohero)
+	local heroInstGo = self:getResInst(heroitempath, self._gohero)
 
-	arg_4_0._hero = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_3, DiceHeroHeroItem)
-	arg_4_0._txttarget.text = luaLang("dicehero_target")
+	self._hero = MonoHelper.addNoUpdateLuaComOnceToGo(heroInstGo, DiceHeroHeroItem)
+	self._txttarget.text = luaLang("dicehero_target")
 
-	arg_4_0:refreshCards()
-	arg_4_0:refreshEnemys()
-	arg_4_0:beginRound()
+	self:refreshCards()
+	self:refreshEnemys()
+	self:beginRound()
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	if not arg_5_0._diceBox then
+function DiceHeroGameView:onUpdateParam()
+	if not self._diceBox then
 		return
 	end
 
-	arg_5_0._anim:Play("open", 0, 0)
-	arg_5_0._diceBox:onStepEnd(true)
-	arg_5_0._hero:refreshAll()
-	arg_5_0:refreshCards()
-	arg_5_0:refreshEnemys()
-	arg_5_0:beginRound()
+	self._anim:Play("open", 0, 0)
+	self._diceBox:onStepEnd(true)
+	self._hero:refreshAll()
+	self:refreshCards()
+	self:refreshEnemys()
+	self:beginRound()
 end
 
-function var_0_0.beginRound(arg_6_0)
-	arg_6_0._maskAnim:Play("out", 0, 1)
+function DiceHeroGameView:beginRound()
+	self._maskAnim:Play("out", 0, 1)
 
-	local var_6_0 = DiceHeroFightModel.instance:getGameData()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
 
-	arg_6_0._curRound.text = var_6_0.round
-	arg_6_0._roundFlow = FlowSequence.New()
+	self._curRound.text = gameInfo.round
+	self._roundFlow = FlowSequence.New()
 
-	arg_6_0._roundFlow:addWork(FunctionWork.New(arg_6_0._hideDiceAndShowEnemyBehavior, arg_6_0))
-	arg_6_0._roundFlow:addWork(DelayDoFuncWork.New(arg_6_0._showMask, arg_6_0, 1))
-	arg_6_0._roundFlow:addWork(DelayDoFuncWork.New(arg_6_0._showDiceAndHideEnemyBehavior, arg_6_0, 0.1))
-	arg_6_0._roundFlow:registerDoneListener(arg_6_0.flowDone, arg_6_0)
-	arg_6_0._roundFlow:start()
+	self._roundFlow:addWork(FunctionWork.New(self._hideDiceAndShowEnemyBehavior, self))
+	self._roundFlow:addWork(DelayDoFuncWork.New(self._showMask, self, 1))
+	self._roundFlow:addWork(DelayDoFuncWork.New(self._showDiceAndHideEnemyBehavior, self, 0.1))
+	self._roundFlow:registerDoneListener(self.flowDone, self)
+	self._roundFlow:start()
 end
 
-function var_0_0._hideDiceAndShowEnemyBehavior(arg_7_0)
+function DiceHeroGameView:_hideDiceAndShowEnemyBehavior()
 	UIBlockHelper.instance:startBlock("DiceHeroGameView_RoundStart", 1)
-	gohelper.setActive(arg_7_0._godice, false)
+	gohelper.setActive(self._godice, false)
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_0._enemys) do
-		iter_7_1:refreshAll()
-		iter_7_1:showBehavior()
+	for _, enemyItem in pairs(self._enemys) do
+		enemyItem:refreshAll()
+		enemyItem:showBehavior()
 	end
 
-	arg_7_0._hero:refreshAll()
+	self._hero:refreshAll()
 end
 
-function var_0_0._showMask(arg_8_0)
-	arg_8_0._anim:Play("camerain", 0, 0)
-	arg_8_0._maskAnim:Play("in", 0, 0)
+function DiceHeroGameView:_showMask()
+	self._anim:Play("camerain", 0, 0)
+	self._maskAnim:Play("in", 0, 0)
 end
 
-function var_0_0.onDamageEffect(arg_9_0, arg_9_1)
-	gohelper.setActive(arg_9_0._damageEffectHero, arg_9_1)
-	gohelper.setActive(arg_9_0._damageEffectEnemy, not arg_9_1)
+function DiceHeroGameView:onDamageEffect(isFromHero)
+	gohelper.setActive(self._damageEffectHero, isFromHero)
+	gohelper.setActive(self._damageEffectEnemy, not isFromHero)
 
-	if DiceHeroFightModel.instance:getGameData().confirmed then
-		arg_9_0._anim:Play("damage", 0, 0)
+	local gameData = DiceHeroFightModel.instance:getGameData()
+
+	if gameData.confirmed then
+		self._anim:Play("damage", 0, 0)
 	else
-		arg_9_0._anim:Play("damage1", 0, 0)
+		self._anim:Play("damage1", 0, 0)
 	end
 end
 
-function var_0_0._showDiceAndHideEnemyBehavior(arg_10_0)
-	gohelper.setActive(arg_10_0._godice, true)
-	arg_10_0._diceBox:startRoll()
+function DiceHeroGameView:_showDiceAndHideEnemyBehavior()
+	gohelper.setActive(self._godice, true)
+	self._diceBox:startRoll()
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._enemys) do
-		iter_10_1:hideBehavior()
+	for _, enemyItem in pairs(self._enemys) do
+		enemyItem:hideBehavior()
 	end
 end
 
-function var_0_0.flowDone(arg_11_0)
-	local var_11_0 = DiceHeroFightModel.instance:getGameData()
+function DiceHeroGameView:flowDone()
+	local gameInfo = DiceHeroFightModel.instance:getGameData()
 
-	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.DiceHeroGuideRoundInfo, string.format("%s_%s", DiceHeroModel.instance.lastEnterLevelId, var_11_0.round))
+	DiceHeroController.instance:dispatchEvent(DiceHeroEvent.DiceHeroGuideRoundInfo, string.format("%s_%s", DiceHeroModel.instance.lastEnterLevelId, gameInfo.round))
 
-	arg_11_0._roundFlow = nil
+	self._roundFlow = nil
 
 	if DiceHeroHelper.instance.afterFlow then
-		local var_11_1 = DiceHeroHelper.instance.afterFlow
+		local flow = DiceHeroHelper.instance.afterFlow
 
 		DiceHeroHelper.instance.afterFlow = nil
 
-		DiceHeroHelper.instance:startFlow(var_11_1)
+		DiceHeroHelper.instance:startFlow(flow)
 	end
 end
 
-function var_0_0.confirmDice(arg_12_0)
-	arg_12_0._anim:Play("cameraout", 0, 0)
-	arg_12_0._maskAnim:Play("out", 0, 0)
+function DiceHeroGameView:confirmDice()
+	self._anim:Play("cameraout", 0, 0)
+	self._maskAnim:Play("out", 0, 0)
 end
 
-function var_0_0.refreshCards(arg_13_0)
-	local var_13_0 = DiceHeroFightModel.instance:getGameData().skillCards
+function DiceHeroGameView:refreshCards()
+	local skillCards = DiceHeroFightModel.instance:getGameData().skillCards
 
-	arg_13_0._cards = arg_13_0._cards or {}
+	self._cards = self._cards or {}
 
-	gohelper.CreateObjList(arg_13_0, arg_13_0._createCard, var_13_0, nil, arg_13_0._gocard, DiceHeroCardItem)
+	gohelper.CreateObjList(self, self._createCard, skillCards, nil, self._gocard, DiceHeroCardItem)
 end
 
-function var_0_0._createCard(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1:initData(arg_14_2)
+function DiceHeroGameView:_createCard(obj, data, index)
+	obj:initData(data)
 
-	arg_14_0._cards[arg_14_2.skillId] = arg_14_1
+	self._cards[data.skillId] = obj
 end
 
-function var_0_0.refreshEnemys(arg_15_0)
-	local var_15_0 = DiceHeroFightModel.instance:getGameData().enemyHeros
+function DiceHeroGameView:refreshEnemys()
+	local enemyHeros = DiceHeroFightModel.instance:getGameData().enemyHeros
 
-	arg_15_0._enemys = arg_15_0._enemys or {}
+	self._enemys = self._enemys or {}
 
-	gohelper.CreateObjList(arg_15_0, arg_15_0._createEnemy, var_15_0, nil, arg_15_0._goenemy, DiceHeroEnemyItem, nil, nil, 1)
+	gohelper.CreateObjList(self, self._createEnemy, enemyHeros, nil, self._goenemy, DiceHeroEnemyItem, nil, nil, 1)
 end
 
-function var_0_0._createEnemy(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	arg_16_1:initData(arg_16_2)
+function DiceHeroGameView:_createEnemy(obj, data, index)
+	obj:initData(data)
 
-	arg_16_0._enemys[arg_16_2.uid] = arg_16_1
+	self._enemys[data.uid] = obj
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	if arg_17_0._roundFlow then
-		arg_17_0._roundFlow:onDestroyInternal()
+function DiceHeroGameView:onDestroyView()
+	if self._roundFlow then
+		self._roundFlow:onDestroyInternal()
 
-		arg_17_0._roundFlow = nil
+		self._roundFlow = nil
 	end
 
 	DiceHeroHelper.instance:clear()
 end
 
-return var_0_0
+return DiceHeroGameView

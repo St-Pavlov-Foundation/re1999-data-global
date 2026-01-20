@@ -1,12 +1,14 @@
-﻿module("modules.logic.season.config.SeasonConfig", package.seeall)
+﻿-- chunkname: @modules/logic/season/config/SeasonConfig.lua
 
-local var_0_0 = class("SeasonConfig", BaseConfig)
+module("modules.logic.season.config.SeasonConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local SeasonConfig = class("SeasonConfig", BaseConfig)
+
+function SeasonConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function SeasonConfig:reqConfigNames()
 	return {
 		"activity104_episode",
 		"activity104_const",
@@ -21,259 +23,262 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity104_episode" then
-		arg_3_0._episodeConfig = arg_3_2
-	elseif arg_3_1 == "activity104_const" then
-		arg_3_0._constConfig = arg_3_2
-	elseif arg_3_1 == "activity104_retail" then
-		arg_3_0._retailConfig = arg_3_2
-	elseif arg_3_1 == "activity104_special" then
-		arg_3_0._specialConfig = arg_3_2
-	elseif arg_3_1 == "activity104_equip" then
-		arg_3_0._equipConfig = arg_3_2
+function SeasonConfig:onConfigLoaded(configName, configTable)
+	if configName == "activity104_episode" then
+		self._episodeConfig = configTable
+	elseif configName == "activity104_const" then
+		self._constConfig = configTable
+	elseif configName == "activity104_retail" then
+		self._retailConfig = configTable
+	elseif configName == "activity104_special" then
+		self._specialConfig = configTable
+	elseif configName == "activity104_equip" then
+		self._equipConfig = configTable
 
-		arg_3_0:preprocessEquip()
-	elseif arg_3_1 == "activity104_equip_tag" then
-		arg_3_0._equipTagConfig = arg_3_2
-	elseif arg_3_1 == "activity104_equip_attr" then
-		arg_3_0._equipAttrConfig = arg_3_2
-	elseif arg_3_1 == "activity104_equip_attr" then
-		arg_3_0._equipAttrConfig = arg_3_2
-	elseif arg_3_1 == "activity104_trial" then
-		arg_3_0._trialConfig = arg_3_2
-	elseif arg_3_1 == "activity104_story" then
-		arg_3_0._storyConfig = arg_3_2
-	elseif arg_3_1 == "activity104_retail_new" then
-		arg_3_0._retailNewConfig = arg_3_2
+		self:preprocessEquip()
+	elseif configName == "activity104_equip_tag" then
+		self._equipTagConfig = configTable
+	elseif configName == "activity104_equip_attr" then
+		self._equipAttrConfig = configTable
+	elseif configName == "activity104_equip_attr" then
+		self._equipAttrConfig = configTable
+	elseif configName == "activity104_trial" then
+		self._trialConfig = configTable
+	elseif configName == "activity104_story" then
+		self._storyConfig = configTable
+	elseif configName == "activity104_retail_new" then
+		self._retailNewConfig = configTable
 	end
 end
 
-function var_0_0.getTrialConfig(arg_4_0, arg_4_1, arg_4_2)
-	return arg_4_0._trialConfig.configDict[arg_4_1] and arg_4_0._trialConfig.configDict[arg_4_1][arg_4_2]
+function SeasonConfig:getTrialConfig(seasonId, layer)
+	return self._trialConfig.configDict[seasonId] and self._trialConfig.configDict[seasonId][layer]
 end
 
-function var_0_0.getTrialCount(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._trialConfig.configDict[arg_5_1]
+function SeasonConfig:getTrialCount(seasonId)
+	local dict = self._trialConfig.configDict[seasonId]
 
-	return tabletool.len(var_5_0)
+	return tabletool.len(dict)
 end
 
-function var_0_0.preprocessEquip(arg_6_0)
-	arg_6_0._equipIsOptionalDict = {}
-	arg_6_0._equipIsOptionalList = {}
+function SeasonConfig:preprocessEquip()
+	self._equipIsOptionalDict = {}
+	self._equipIsOptionalList = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._equipConfig.configList) do
-		if iter_6_1.isOptional == 1 then
-			arg_6_0._equipIsOptionalDict[iter_6_1.equipId] = true
+	for _, cfg in pairs(self._equipConfig.configList) do
+		if cfg.isOptional == 1 then
+			self._equipIsOptionalDict[cfg.equipId] = true
 
-			table.insert(arg_6_0._equipIsOptionalList, iter_6_1)
+			table.insert(self._equipIsOptionalList, cfg)
 		end
 	end
 end
 
-function var_0_0.getSeasonEpisodeCos(arg_7_0, arg_7_1)
-	return arg_7_0._episodeConfig.configDict[arg_7_1]
+function SeasonConfig:getSeasonEpisodeCos(seasonId)
+	return self._episodeConfig.configDict[seasonId]
 end
 
-function var_0_0.getSeasonEpisodeCo(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._episodeConfig.configDict[arg_8_1][arg_8_2]
+function SeasonConfig:getSeasonEpisodeCo(seasonId, layer)
+	return self._episodeConfig.configDict[seasonId][layer]
 end
 
-function var_0_0.getSeasonConstCo(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0._constConfig.configDict[arg_9_1]
-	local var_9_1 = var_9_0 and var_9_0[arg_9_2]
+function SeasonConfig:getSeasonConstCo(seasonId, constId)
+	local dict = self._constConfig.configDict[seasonId]
+	local co = dict and dict[constId]
 
-	if not var_9_1 then
-		logError(string.format("const no exist seasonid:%s constid:%s", arg_9_1, arg_9_2))
+	if not co then
+		logError(string.format("const no exist seasonid:%s constid:%s", seasonId, constId))
 	end
 
-	return var_9_1
+	return co
 end
 
-function var_0_0.getSeasonRetailCos(arg_10_0, arg_10_1)
-	return arg_10_0._retailConfig.configDict[arg_10_1]
+function SeasonConfig:getSeasonRetailCos(seasonId)
+	return self._retailConfig.configDict[seasonId]
 end
 
-function var_0_0.getSeasonRetailCo(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0._retailConfig.configDict[arg_11_1][arg_11_2]
+function SeasonConfig:getSeasonRetailCo(seasonId, stage)
+	return self._retailConfig.configDict[seasonId][stage]
 end
 
-function var_0_0.getSeasonSpecialCos(arg_12_0, arg_12_1)
-	return arg_12_0._specialConfig.configDict[arg_12_1]
+function SeasonConfig:getSeasonSpecialCos(seasonId)
+	return self._specialConfig.configDict[seasonId]
 end
 
-function var_0_0.getSeasonSpecialCo(arg_13_0, arg_13_1, arg_13_2)
-	return arg_13_0._specialConfig.configDict[arg_13_1][arg_13_2]
+function SeasonConfig:getSeasonSpecialCo(seasonId, layer)
+	return self._specialConfig.configDict[seasonId][layer]
 end
 
-function var_0_0.getSeasonEquipCos(arg_14_0)
-	return arg_14_0._equipConfig.configDict
+function SeasonConfig:getSeasonEquipCos()
+	return self._equipConfig.configDict
 end
 
-function var_0_0.getSeasonEquipCo(arg_15_0, arg_15_1)
-	return arg_15_0._equipConfig.configDict[arg_15_1]
+function SeasonConfig:getSeasonEquipCo(equipId)
+	return self._equipConfig.configDict[equipId]
 end
 
-function var_0_0.getSeasonOptionalEquipCos(arg_16_0)
-	return arg_16_0._equipIsOptionalList
+function SeasonConfig:getSeasonOptionalEquipCos()
+	return self._equipIsOptionalList
 end
 
-function var_0_0.getSeasonTagDict(arg_17_0, arg_17_1)
-	return arg_17_0._equipTagConfig.configDict[arg_17_1]
+function SeasonConfig:getSeasonTagDict(actId)
+	return self._equipTagConfig.configDict[actId]
 end
 
-function var_0_0.getSeasonTagDesc(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0:getSeasonTagDict(arg_18_1)
-	local var_18_1 = var_18_0 and var_18_0[arg_18_2]
+function SeasonConfig:getSeasonTagDesc(actId, id)
+	local dcit = self:getSeasonTagDict(actId)
+	local data = dcit and dcit[id]
 
-	if not var_18_1 then
-		logError(string.format("not tag config seasonId:%s tagId:%s", arg_18_1, arg_18_2))
+	if not data then
+		logError(string.format("not tag config seasonId:%s tagId:%s", actId, id))
 	end
 
-	return var_18_1
+	return data
 end
 
-function var_0_0.getEquipIsOptional(arg_19_0, arg_19_1)
-	return arg_19_0._equipIsOptionalDict[arg_19_1]
+function SeasonConfig:getEquipIsOptional(equipId)
+	return self._equipIsOptionalDict[equipId]
 end
 
-function var_0_0.getEquipCoByCondition(arg_20_0, arg_20_1)
-	local var_20_0 = {}
+function SeasonConfig:getEquipCoByCondition(filterFunc)
+	local list = {}
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0._equipConfig.configList) do
-		if arg_20_1(iter_20_1) then
-			table.insert(var_20_0, iter_20_1)
+	for _, cfg in ipairs(self._equipConfig.configList) do
+		if filterFunc(cfg) then
+			table.insert(list, cfg)
 		end
 	end
 
-	return var_20_0
+	return list
 end
 
-function var_0_0.getSeasonEquipAttrCo(arg_21_0, arg_21_1)
-	return arg_21_0._equipAttrConfig.configDict[arg_21_1]
+function SeasonConfig:getSeasonEquipAttrCo(attrId)
+	return self._equipAttrConfig.configDict[attrId]
 end
 
-function var_0_0.getConfigByEpisodeId(arg_22_0, arg_22_1)
-	arg_22_0:_initEpisodeId2Config()
+function SeasonConfig:getConfigByEpisodeId(episode_id)
+	self:_initEpisodeId2Config()
 
-	return arg_22_0._episodeId2Config and arg_22_0._episodeId2Config[arg_22_1]
+	return self._episodeId2Config and self._episodeId2Config[episode_id]
 end
 
-function var_0_0._initEpisodeId2Config(arg_23_0)
-	if arg_23_0._episodeId2Config then
+function SeasonConfig:_initEpisodeId2Config()
+	if self._episodeId2Config then
 		return
 	end
 
-	arg_23_0._episodeId2Config = {}
+	self._episodeId2Config = {}
 
-	for iter_23_0, iter_23_1 in pairs(arg_23_0._episodeConfig.configDict) do
-		arg_23_0._episodeId2Config[iter_23_1.episodeId] = iter_23_1
+	for k, v in pairs(self._episodeConfig.configDict) do
+		self._episodeId2Config[v.episodeId] = v
 	end
 end
 
-function var_0_0.getStoryIds(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getSeasonConstCo(arg_24_1, Activity104Enum.ConstEnum.SeasonOpenStorys)
+function SeasonConfig:getStoryIds(actId)
+	local co = self:getSeasonConstCo(actId, Activity104Enum.ConstEnum.SeasonOpenStorys)
 
 	return {
-		var_24_0.value1
+		co.value1
 	}
 end
 
-function var_0_0.getRetailTicket(arg_25_0, arg_25_1)
-	return arg_25_0:getSeasonConstCo(arg_25_1, Activity104Enum.ConstEnum.RetailTicket).value1
+function SeasonConfig:getRetailTicket(actId)
+	local co = self:getSeasonConstCo(actId, Activity104Enum.ConstEnum.RetailTicket)
+
+	return co.value1
 end
 
-function var_0_0.getRuleTips(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getSeasonConstCo(arg_26_1, Activity104Enum.ConstEnum.RuleTips)
+function SeasonConfig:getRuleTips(actId)
+	local co = self:getSeasonConstCo(actId, Activity104Enum.ConstEnum.RuleTips)
+	local list = string.splitToNumber(co.value2, "#")
 
-	return (string.splitToNumber(var_26_0.value2, "#"))
+	return list
 end
 
-function var_0_0.isExistInRuleTips(arg_27_0, arg_27_1, arg_27_2)
-	if not arg_27_0._ruleDict then
-		arg_27_0._ruleDict = {}
+function SeasonConfig:isExistInRuleTips(actId, ruleId)
+	if not self._ruleDict then
+		self._ruleDict = {}
 	end
 
-	if not arg_27_0._ruleDict[arg_27_1] then
-		arg_27_0._ruleDict[arg_27_1] = {}
+	if not self._ruleDict[actId] then
+		self._ruleDict[actId] = {}
 
-		local var_27_0 = arg_27_0:getRuleTips(arg_27_1)
+		local list = self:getRuleTips(actId)
 
-		if var_27_0 then
-			for iter_27_0, iter_27_1 in pairs(var_27_0) do
-				arg_27_0._ruleDict[arg_27_1][iter_27_1] = true
+		if list then
+			for k, v in pairs(list) do
+				self._ruleDict[actId][v] = true
 			end
 		end
 	end
 
-	return arg_27_0._ruleDict[arg_27_1][arg_27_2] ~= nil
+	return self._ruleDict[actId][ruleId] ~= nil
 end
 
-function var_0_0.filterRule(arg_28_0, arg_28_1)
-	local var_28_0 = {}
+function SeasonConfig:filterRule(ruleList)
+	local list = {}
 
-	if arg_28_1 then
-		local var_28_1 = Activity104Model.instance:getCurSeasonId()
+	if ruleList then
+		local actId = Activity104Model.instance:getCurSeasonId()
 
-		for iter_28_0, iter_28_1 in pairs(arg_28_1) do
-			if not arg_28_0:isExistInRuleTips(var_28_1, iter_28_1[2]) then
-				table.insert(var_28_0, iter_28_1)
+		for k, v in pairs(ruleList) do
+			if not self:isExistInRuleTips(actId, v[2]) then
+				table.insert(list, v)
 			end
 		end
 	end
 
-	return var_28_0
+	return list
 end
 
-function var_0_0.getAllStoryCo(arg_29_0, arg_29_1)
-	return arg_29_0._storyConfig.configDict[arg_29_1]
+function SeasonConfig:getAllStoryCo(actId)
+	return self._storyConfig.configDict[actId]
 end
 
-function var_0_0.getStoryConfig(arg_30_0, arg_30_1, arg_30_2)
-	return arg_30_0._storyConfig.configDict[arg_30_1][arg_30_2]
+function SeasonConfig:getStoryConfig(actId, storyId)
+	return self._storyConfig.configDict[actId][storyId]
 end
 
-function var_0_0.getSeasonConstStr(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_0:getSeasonConstCo(arg_31_1, arg_31_2)
+function SeasonConfig:getSeasonConstStr(actId, constId)
+	local co = self:getSeasonConstCo(actId, constId)
 
-	if not var_31_0 then
+	if not co then
 		return
 	end
 
-	return var_31_0.value2
+	return co.value2
 end
 
-function var_0_0.getSeasonConstLangStr(arg_32_0, arg_32_1, arg_32_2)
-	local var_32_0 = arg_32_0:getSeasonConstCo(arg_32_1, arg_32_2)
+function SeasonConfig:getSeasonConstLangStr(actId, constId)
+	local co = self:getSeasonConstCo(actId, constId)
 
-	if not var_32_0 then
+	if not co then
 		return
 	end
 
-	return var_32_0.value3
+	return co.value3
 end
 
-function var_0_0.getSeasonRetailEpisodeCo(arg_33_0, arg_33_1, arg_33_2)
-	local var_33_0 = arg_33_0._retailNewConfig.configDict[arg_33_1][arg_33_2]
+function SeasonConfig:getSeasonRetailEpisodeCo(seasonId, episodeId)
+	local co = self._retailNewConfig.configDict[seasonId][episodeId]
 
-	if not var_33_0 then
-		logError(string.format("not retail config seasonId:%s episodeId:%s", arg_33_1, arg_33_2))
+	if not co then
+		logError(string.format("not retail config seasonId:%s episodeId:%s", seasonId, episodeId))
 	end
 
-	return var_33_0
+	return co
 end
 
-function var_0_0.getSeasonRetailEpisodes(arg_34_0, arg_34_1)
-	local var_34_0 = arg_34_0._retailNewConfig.configDict[arg_34_1]
+function SeasonConfig:getSeasonRetailEpisodes(seasonId)
+	local dict = self._retailNewConfig.configDict[seasonId]
 
-	if not var_34_0 then
-		logError(string.format("not retail episodelist seasonId:%s", arg_34_1))
+	if not dict then
+		logError(string.format("not retail episodelist seasonId:%s", seasonId))
 	end
 
-	return var_34_0
+	return dict
 end
 
-var_0_0.instance = var_0_0.New()
+SeasonConfig.instance = SeasonConfig.New()
 
-return var_0_0
+return SeasonConfig

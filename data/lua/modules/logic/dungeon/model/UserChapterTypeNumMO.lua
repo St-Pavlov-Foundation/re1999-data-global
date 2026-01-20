@@ -1,10 +1,12 @@
-﻿module("modules.logic.dungeon.model.UserChapterTypeNumMO", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/model/UserChapterTypeNumMO.lua
 
-local var_0_0 = pureTable("UserChapterTypeNumMO")
+module("modules.logic.dungeon.model.UserChapterTypeNumMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.chapterType = arg_1_1.chapterType
-	arg_1_0.todayPassNum = arg_1_1.todayPassNum
+local UserChapterTypeNumMO = pureTable("UserChapterTypeNumMO")
+
+function UserChapterTypeNumMO:init(info)
+	self.chapterType = info.chapterType
+	self.todayPassNum = info.todayPassNum
 end
 
-return var_0_0
+return UserChapterTypeNumMO

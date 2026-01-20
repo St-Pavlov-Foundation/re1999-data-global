@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity2_7.act191.controller.Activity191Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/controller/Activity191Event.lua
 
-local var_0_0 = _M
-local var_0_1 = GameUtil.getUniqueTb()
+module("modules.logic.versionactivity2_7.act191.controller.Activity191Event", package.seeall)
 
-var_0_0.UpdateGameInfo = var_0_1()
-var_0_0.UpdateBadgeMo = var_0_1()
-var_0_0.EndGame = var_0_1()
-var_0_0.UpdateTeamInfo = var_0_1()
-var_0_0.ClickHeroEditItem = var_0_1()
-var_0_0.ClickCollectionItem = var_0_1()
-var_0_0.ZTrigger31501 = var_0_1()
-var_0_0.ZTrigger31502 = var_0_1()
-var_0_0.ZTrigger31503 = var_0_1()
-var_0_0.ZTrigger31504 = var_0_1()
+local Activity191Event = _M
+local _get = GameUtil.getUniqueTb()
 
-return var_0_0
+Activity191Event.UpdateGameInfo = _get()
+Activity191Event.UpdateBadgeMo = _get()
+Activity191Event.EndGame = _get()
+Activity191Event.UpdateTeamInfo = _get()
+Activity191Event.ClickHeroEditItem = _get()
+Activity191Event.ClickCollectionItem = _get()
+Activity191Event.ZTrigger31501 = _get()
+Activity191Event.ZTrigger31502 = _get()
+Activity191Event.ZTrigger31503 = _get()
+Activity191Event.ZTrigger31504 = _get()
+
+return Activity191Event

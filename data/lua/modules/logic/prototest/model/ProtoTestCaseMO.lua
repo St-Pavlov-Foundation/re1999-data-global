@@ -1,94 +1,97 @@
-﻿module("modules.logic.prototest.model.ProtoTestCaseMO", package.seeall)
+﻿-- chunkname: @modules/logic/prototest/model/ProtoTestCaseMO.lua
 
-local var_0_0 = pureTable("ProtoTestCaseMO")
+module("modules.logic.prototest.model.ProtoTestCaseMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.cmd = nil
-	arg_1_0.time = nil
-	arg_1_0.struct = nil
-	arg_1_0.value = nil
+local ProtoTestCaseMO = pureTable("ProtoTestCaseMO")
+
+function ProtoTestCaseMO:ctor()
+	self.cmd = nil
+	self.time = nil
+	self.struct = nil
+	self.value = nil
 end
 
-function var_0_0.initFromProto(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.cmd = arg_2_1
-	arg_2_0.time = ServerTime.now()
-	arg_2_0.struct = arg_2_2.__cname
-	arg_2_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_2_2)
+function ProtoTestCaseMO:initFromProto(cmd, protoMsg)
+	self.cmd = cmd
+	self.time = ServerTime.now()
+	self.struct = protoMsg.__cname
+	self.value = ProtoParamHelper.buildProtoParamsByProto(protoMsg)
 end
 
-function var_0_0.initFromJson(arg_3_0, arg_3_1)
+function ProtoTestCaseMO:initFromJson(jsonTable)
 	return
 end
 
-function var_0_0.clone(arg_4_0)
-	local var_4_0 = var_0_0.New()
+function ProtoTestCaseMO:clone()
+	local mo = ProtoTestCaseMO.New()
 
-	var_4_0.cmd = arg_4_0.cmd
-	var_4_0.time = ServerTime.now()
-	var_4_0.struct = arg_4_0.struct
-	var_4_0.value = {}
+	mo.cmd = self.cmd
+	mo.time = ServerTime.now()
+	mo.struct = self.struct
+	mo.value = {}
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.value) do
-		table.insert(var_4_0.value, iter_4_1:clone())
+	for _, paramMO in ipairs(self.value) do
+		table.insert(mo.value, paramMO:clone())
 	end
 
-	return var_4_0
+	return mo
 end
 
-function var_0_0.buildProtoMsg(arg_5_0)
-	local var_5_0 = LuaSocketMgr.instance:getCmdSetting(arg_5_0.cmd)
+function ProtoTestCaseMO:buildProtoMsg()
+	local moduleCmd = LuaSocketMgr.instance:getCmdSetting(self.cmd)
 
-	if not var_5_0 then
-		logError("module not exist, cmd = " .. arg_5_0.cmd)
+	if not moduleCmd then
+		logError("module not exist, cmd = " .. self.cmd)
 
 		return
 	end
 
-	local var_5_1 = var_5_0[1] .. "Module_pb"
-	local var_5_2 = getGlobal(var_5_1) or addGlobalModule("modules.proto." .. var_5_1, var_5_1)
+	local pbName = moduleCmd[1] .. "Module_pb"
+	local pbTable = getGlobal(pbName) or addGlobalModule("modules.proto." .. pbName, pbName)
 
-	if not var_5_2 then
-		logError(string.format("pb not exist: %s.%s", var_5_1, arg_5_0.struct))
+	if not pbTable then
+		logError(string.format("pb not exist: %s.%s", pbName, self.struct))
 
 		return
 	end
 
-	local var_5_3 = var_5_2[arg_5_0.struct]()
+	local msgStruct = pbTable[self.struct]
+	local protoMsg = msgStruct()
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.value) do
-		iter_5_1:fillProtoMsg(var_5_3)
+	for _, paramMO in ipairs(self.value) do
+		paramMO:fillProtoMsg(protoMsg)
 	end
 
-	return var_5_3
+	return protoMsg
 end
 
-function var_0_0.serialize(arg_6_0)
-	local var_6_0 = {
-		cmd = arg_6_0.cmd,
-		time = arg_6_0.time,
-		struct = arg_6_0.struct,
-		value = {}
-	}
+function ProtoTestCaseMO:serialize()
+	local jsonTable = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.value) do
-		table.insert(var_6_0.value, iter_6_1:serialize())
+	jsonTable.cmd = self.cmd
+	jsonTable.time = self.time
+	jsonTable.struct = self.struct
+	jsonTable.value = {}
+
+	for _, paramMO in ipairs(self.value) do
+		table.insert(jsonTable.value, paramMO:serialize())
 	end
 
-	return var_6_0
+	return jsonTable
 end
 
-function var_0_0.deserialize(arg_7_0, arg_7_1)
-	arg_7_0.cmd = arg_7_1.cmd
-	arg_7_0.time = arg_7_1.time
-	arg_7_0.struct = arg_7_1.struct
-	arg_7_0.value = {}
+function ProtoTestCaseMO:deserialize(jsonTable)
+	self.cmd = jsonTable.cmd
+	self.time = jsonTable.time
+	self.struct = jsonTable.struct
+	self.value = {}
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_1.value) do
-		local var_7_0 = ProtoTestCaseParamMO.New()
+	for _, paramJsonTable in ipairs(jsonTable.value) do
+		local paramMO = ProtoTestCaseParamMO.New()
 
-		var_7_0:deserialize(iter_7_1)
-		table.insert(arg_7_0.value, var_7_0)
+		paramMO:deserialize(paramJsonTable)
+		table.insert(self.value, paramMO)
 	end
 end
 
-return var_0_0
+return ProtoTestCaseMO

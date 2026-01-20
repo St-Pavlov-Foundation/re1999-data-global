@@ -1,13 +1,15 @@
-﻿module("modules.logic.story.view.StoryLeadRoleSpineViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryLeadRoleSpineViewContainer.lua
 
-local var_0_0 = class("StoryLeadRoleSpineViewContainer", BaseViewContainer)
+module("modules.logic.story.view.StoryLeadRoleSpineViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local StoryLeadRoleSpineViewContainer = class("StoryLeadRoleSpineViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, StoryLeadRoleSpineView.New())
+function StoryLeadRoleSpineViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, StoryLeadRoleSpineView.New())
+
+	return views
 end
 
-return var_0_0
+return StoryLeadRoleSpineViewContainer

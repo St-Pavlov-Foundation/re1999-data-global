@@ -1,33 +1,35 @@
-﻿module("modules.logic.dungeon.view.DungeonEquipGuideView", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/DungeonEquipGuideView.lua
 
-local var_0_0 = class("DungeonEquipGuideView", BaseView)
+module("modules.logic.dungeon.view.DungeonEquipGuideView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_bg")
-	arg_1_0._simageequip = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_center/#simage_equip")
-	arg_1_0._btnlook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_look")
-	arg_1_0._simagedecorate1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate1")
-	arg_1_0._simagedecorate3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "commen/#simage_decorate3")
+local DungeonEquipGuideView = class("DungeonEquipGuideView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function DungeonEquipGuideView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_bg")
+	self._simageequip = gohelper.findChildSingleImage(self.viewGO, "#go_center/#simage_equip")
+	self._btnlook = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_look")
+	self._simagedecorate1 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate1")
+	self._simagedecorate3 = gohelper.findChildSingleImage(self.viewGO, "commen/#simage_decorate3")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlook:AddClickListener(arg_2_0._btnlookOnClick, arg_2_0)
+function DungeonEquipGuideView:addEvents()
+	self._btnlook:AddClickListener(self._btnlookOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlook:RemoveClickListener()
+function DungeonEquipGuideView:removeEvents()
+	self._btnlook:RemoveClickListener()
 end
 
-function var_0_0._btnlookOnClick(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._delayClick, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0._delayClick, arg_4_0, 0.015)
+function DungeonEquipGuideView:_btnlookOnClick()
+	TaskDispatcher.cancelTask(self._delayClick, self)
+	TaskDispatcher.runDelay(self._delayClick, self, 0.015)
 end
 
-function var_0_0._delayClick(arg_5_0)
+function DungeonEquipGuideView:_delayClick()
 	if ViewMgr.instance:hasOpenFullView() then
 		ViewMgr.instance:openView(ViewName.GuideTransitionBlackView)
 	else
@@ -37,65 +39,65 @@ function var_0_0._delayClick(arg_5_0)
 	JumpController.instance:jumpTo("5#2")
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
-	arg_6_0._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
-	arg_6_0._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
+function DungeonEquipGuideView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getCommonIcon("yd_yindaodi_2"))
+	self._simagedecorate1:LoadImage(ResUrl.getCommonIcon("yd_biaoti_di"))
+	self._simagedecorate3:LoadImage(ResUrl.getCommonIcon("yd_blxian"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function DungeonEquipGuideView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
+function DungeonEquipGuideView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_artificial_ui_openfunction)
 
-	local var_8_0 = lua_open.configDict[OpenEnum.UnlockFunc.EquipDungeon].episodeId
-	local var_8_1 = DungeonConfig.instance:getEpisodeCO(var_8_0)
-	local var_8_2 = lua_bonus.configDict[var_8_1.firstBonus]
-	local var_8_3 = string.splitToNumber(var_8_2.fixBonus, "#")
+	local openEpisodeId = lua_open.configDict[OpenEnum.UnlockFunc.EquipDungeon].episodeId
+	local episodeCfg = DungeonConfig.instance:getEpisodeCO(openEpisodeId)
+	local bonusCfg = lua_bonus.configDict[episodeCfg.firstBonus]
+	local params = string.splitToNumber(bonusCfg.fixBonus, "#")
 
-	arg_8_0._equipId = 1306
-	arg_8_0._showMax = false
+	self._equipId = 1306
+	self._showMax = false
 
-	if not arg_8_0._equipMO and arg_8_0._equipId then
-		arg_8_0._showMax = true
-		arg_8_0._equipMO = EquipHelper.createMaxLevelEquipMo(arg_8_0._equipId)
+	if not self._equipMO and self._equipId then
+		self._showMax = true
+		self._equipMO = EquipHelper.createMaxLevelEquipMo(self._equipId)
 	end
 
-	arg_8_0._config = arg_8_0._equipMO.config
+	self._config = self._equipMO.config
 
-	local var_8_4 = EquipTeamListModel.instance:getHero()
+	local heroMO = EquipTeamListModel.instance:getHero()
 
-	arg_8_0._heroId = var_8_4 and var_8_4.heroId
+	self._heroId = heroMO and heroMO.heroId
 
-	arg_8_0._simageequip:LoadImage(ResUrl.getEquipSuit(arg_8_0._config.icon))
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_8_0._onOpenViewFinish, arg_8_0)
-	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0, LuaEventSystem.Low)
+	self._simageequip:LoadImage(ResUrl.getEquipSuit(self._config.icon))
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0._onOpenViewFinish(arg_9_0, arg_9_1)
+function DungeonEquipGuideView:_onOpenViewFinish(viewName)
 	return
 end
 
-function var_0_0._onCloseViewFinish(arg_10_0, arg_10_1)
-	if arg_10_1 == ViewName.DungeonEquipGuideView then
+function DungeonEquipGuideView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.DungeonEquipGuideView then
 		ViewMgr.instance:closeView(ViewName.GuideTransitionBlackView)
 	end
 end
 
-function var_0_0.onOpenFinish(arg_11_0)
+function DungeonEquipGuideView:onOpenFinish()
 	return
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._delayClick, arg_12_0)
+function DungeonEquipGuideView:onClose()
+	TaskDispatcher.cancelTask(self._delayClick, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._simagebg:UnLoadImage()
-	arg_13_0._simagedecorate1:UnLoadImage()
-	arg_13_0._simagedecorate3:UnLoadImage()
+function DungeonEquipGuideView:onDestroyView()
+	self._simagebg:UnLoadImage()
+	self._simagedecorate1:UnLoadImage()
+	self._simagedecorate3:UnLoadImage()
 end
 
-return var_0_0
+return DungeonEquipGuideView

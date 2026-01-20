@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectCardLevelChangeContainer", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectCardLevelChangeContainer.lua
 
-local var_0_0 = class("FightWorkEffectCardLevelChangeContainer", FightStepEffectFlow)
-local var_0_1 = {
+module("modules.logic.fight.system.work.FightWorkEffectCardLevelChangeContainer", package.seeall)
+
+local FightWorkEffectCardLevelChangeContainer = class("FightWorkEffectCardLevelChangeContainer", FightStepEffectFlow)
+local parallelEffectType = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.POWERCHANGE] = true
 }
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:playAdjacentParallelEffect(var_0_1, true)
+function FightWorkEffectCardLevelChangeContainer:onStart()
+	self:playAdjacentParallelEffect(parallelEffectType, true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkEffectCardLevelChangeContainer:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkEffectCardLevelChangeContainer

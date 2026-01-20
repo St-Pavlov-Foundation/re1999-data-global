@@ -1,14 +1,16 @@
-﻿module("modules.logic.bgmswitch.config.BGMSwitchConfig", package.seeall)
+﻿-- chunkname: @modules/logic/bgmswitch/config/BGMSwitchConfig.lua
 
-local var_0_0 = class("BGMSwitchConfig", BaseConfig)
+module("modules.logic.bgmswitch.config.BGMSwitchConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._bgmSwitchConfig = nil
-	arg_1_0._bgmTypeConfig = nil
-	arg_1_0._bgmEasterEggConfig = nil
+local BGMSwitchConfig = class("BGMSwitchConfig", BaseConfig)
+
+function BGMSwitchConfig:ctor()
+	self._bgmSwitchConfig = nil
+	self._bgmTypeConfig = nil
+	self._bgmEasterEggConfig = nil
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function BGMSwitchConfig:reqConfigNames()
 	return {
 		"bgm_switch",
 		"bgm_type",
@@ -16,82 +18,82 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "bgm_switch" then
-		arg_3_0._bgmSwitchConfig = arg_3_2
-	elseif arg_3_1 == "bgm_type" then
-		arg_3_0._bgmTypeConfig = arg_3_2
-	elseif arg_3_1 == "bgm_easteregg" then
-		arg_3_0._bgmEasterEggConfig = arg_3_2
+function BGMSwitchConfig:onConfigLoaded(configName, configTable)
+	if configName == "bgm_switch" then
+		self._bgmSwitchConfig = configTable
+	elseif configName == "bgm_type" then
+		self._bgmTypeConfig = configTable
+	elseif configName == "bgm_easteregg" then
+		self._bgmEasterEggConfig = configTable
 	end
 end
 
-function var_0_0.getBGMSwitchCos(arg_4_0)
-	return arg_4_0._bgmSwitchConfig.configDict
+function BGMSwitchConfig:getBGMSwitchCos()
+	return self._bgmSwitchConfig.configDict
 end
 
-function var_0_0.getBGMSwitchCO(arg_5_0, arg_5_1)
-	return arg_5_0._bgmSwitchConfig.configDict[arg_5_1]
+function BGMSwitchConfig:getBGMSwitchCO(id)
+	return self._bgmSwitchConfig.configDict[id]
 end
 
-function var_0_0.getBGMSwitchCoByAudioId(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0._bgmSwitchConfig.configDict) do
-		if iter_6_1.audio == arg_6_1 then
-			return iter_6_1
+function BGMSwitchConfig:getBGMSwitchCoByAudioId(audioId)
+	for _, v in pairs(self._bgmSwitchConfig.configDict) do
+		if v.audio == audioId then
+			return v
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getBGMTypeCos(arg_7_0)
-	return arg_7_0._bgmTypeConfig.configDict
+function BGMSwitchConfig:getBGMTypeCos()
+	return self._bgmTypeConfig.configDict
 end
 
-function var_0_0.getBGMTypeCO(arg_8_0, arg_8_1)
-	return arg_8_0._bgmTypeConfig.configDict[arg_8_1]
+function BGMSwitchConfig:getBGMTypeCO(typeId)
+	return self._bgmTypeConfig.configDict[typeId]
 end
 
-function var_0_0.getBgmEasterEggCos(arg_9_0)
-	return arg_9_0._bgmEasterEggConfig.configDict
+function BGMSwitchConfig:getBgmEasterEggCos()
+	return self._bgmEasterEggConfig.configDict
 end
 
-function var_0_0.getBgmEasterEggCosByType(arg_10_0, arg_10_1)
-	local var_10_0 = {}
+function BGMSwitchConfig:getBgmEasterEggCosByType(type)
+	local cos = {}
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._bgmEasterEggConfig.configDict) do
-		if iter_10_1.type == arg_10_1 then
-			table.insert(var_10_0, iter_10_1)
+	for _, v in pairs(self._bgmEasterEggConfig.configDict) do
+		if v.type == type then
+			table.insert(cos, v)
 		end
 	end
 
-	return var_10_0
+	return cos
 end
 
-function var_0_0.getBgmEasterEggCo(arg_11_0, arg_11_1)
-	return arg_11_0._bgmEasterEggConfig.configDict[arg_11_1]
+function BGMSwitchConfig:getBgmEasterEggCo(id)
+	return self._bgmEasterEggConfig.configDict[id]
 end
 
-function var_0_0.getBgmNames(arg_12_0, arg_12_1)
-	local var_12_0 = {}
+function BGMSwitchConfig:getBgmNames(bgmIds)
+	local ans = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		local var_12_1 = var_0_0.instance:getBGMSwitchCO(iter_12_1)
+	for _, bgm in ipairs(bgmIds) do
+		local bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(bgm)
 
-		if var_12_1 then
-			table.insert(var_12_0, var_12_1.audioName)
+		if bgmCo then
+			table.insert(ans, bgmCo.audioName)
 		end
 	end
 
-	return var_12_0
+	return ans
 end
 
-function var_0_0.getBgmName(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_0.instance:getBGMSwitchCO(arg_13_1)
+function BGMSwitchConfig:getBgmName(bgm)
+	local bgmCo = BGMSwitchConfig.instance:getBGMSwitchCO(bgm)
 
-	return var_13_0 and var_13_0.audioName
+	return bgmCo and bgmCo.audioName
 end
 
-var_0_0.instance = var_0_0.New()
+BGMSwitchConfig.instance = BGMSwitchConfig.New()
 
-return var_0_0
+return BGMSwitchConfig

@@ -1,41 +1,45 @@
-﻿module("modules.ugui.icon.IconMgrConfig", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/IconMgrConfig.lua
 
-local var_0_0 = _M
+module("modules.ugui.icon.IconMgrConfig", package.seeall)
 
-var_0_0.UrlItemIcon = "ui/viewres/common/item/commonitemicon.prefab"
-var_0_0.UrlPropItemIcon = "ui/viewres/common/commonpropitem.prefab"
-var_0_0.UrlEquipIcon = "ui/viewres/common/item/commonequipicon.prefab"
-var_0_0.UrlHeroIcon = "ui/viewres/common/item/commonheroicon.prefab"
-var_0_0.UrlHeroIconNew = "ui/viewres/common/item/commonheroiconnew.prefab"
-var_0_0.UrlHeroItemNew = "ui/viewres/common/item/commonheroitemnew.prefab"
-var_0_0.UrlPlayerIcon = "ui/viewres/common/item/commonplayericon.prefab"
-var_0_0.UrlRedDotIcon = "ui/viewres/common/item/commonreddoticon.prefab"
-var_0_0.UrlRoomGoodsItemIcon = "ui/viewres/room/roomgoodsitem.prefab"
-var_0_0.UrlCommonTextMarkTop = "ui/viewres/common/item/commontextmarktop.prefab"
-var_0_0.UrlCommonTextDotBottom = "ui/viewres/common/item/commontextdotbottom.prefab"
-var_0_0.UrlHeadIcon = "ui/viewres/common/item/commonheadicon.prefab"
-var_0_0.UrlCritterIcon = "ui/viewres/common/item/commoncrittericon.prefab"
+local IconMgrConfig = _M
 
-function var_0_0.getPreloadList()
+IconMgrConfig.UrlItemIcon = "ui/viewres/common/item/commonitemicon.prefab"
+IconMgrConfig.UrlPropItemIcon = "ui/viewres/common/commonpropitem.prefab"
+IconMgrConfig.UrlEquipIcon = "ui/viewres/common/item/commonequipicon.prefab"
+IconMgrConfig.UrlHeroIcon = "ui/viewres/common/item/commonheroicon.prefab"
+IconMgrConfig.UrlHeroIconNew = "ui/viewres/common/item/commonheroiconnew.prefab"
+IconMgrConfig.UrlHeroItemNew = "ui/viewres/common/item/commonheroitemnew.prefab"
+IconMgrConfig.UrlPlayerIcon = "ui/viewres/common/item/commonplayericon.prefab"
+IconMgrConfig.UrlRedDotIcon = "ui/viewres/common/item/commonreddoticon.prefab"
+IconMgrConfig.UrlRoomGoodsItemIcon = "ui/viewres/room/roomgoodsitem.prefab"
+IconMgrConfig.UrlCommonTextMarkTop = "ui/viewres/common/item/commontextmarktop.prefab"
+IconMgrConfig.UrlCommonTextDotBottom = "ui/viewres/common/item/commontextdotbottom.prefab"
+IconMgrConfig.UrlHeadIcon = "ui/viewres/common/item/commonheadicon.prefab"
+IconMgrConfig.UrlCritterIcon = "ui/viewres/common/item/commoncrittericon.prefab"
+IconMgrConfig.UrlIconTag = "ui/viewres/common/item/commonicontag.prefab"
+
+function IconMgrConfig.getPreloadList()
 	return {
-		var_0_0.UrlItemIcon,
-		var_0_0.UrlPropItemIcon,
-		var_0_0.UrlEquipIcon,
-		var_0_0.UrlHeroIcon,
-		var_0_0.UrlHeroIconNew,
-		var_0_0.UrlHeroItemNew,
-		var_0_0.UrlPlayerIcon,
-		var_0_0.UrlRedDotIcon,
-		var_0_0.UrlCommonTextMarkTop,
-		var_0_0.UrlCommonTextDotBottom,
-		var_0_0.UrlHeadIcon,
-		var_0_0.UrlCritterIcon
+		IconMgrConfig.UrlItemIcon,
+		IconMgrConfig.UrlPropItemIcon,
+		IconMgrConfig.UrlEquipIcon,
+		IconMgrConfig.UrlHeroIcon,
+		IconMgrConfig.UrlHeroIconNew,
+		IconMgrConfig.UrlHeroItemNew,
+		IconMgrConfig.UrlPlayerIcon,
+		IconMgrConfig.UrlRedDotIcon,
+		IconMgrConfig.UrlCommonTextMarkTop,
+		IconMgrConfig.UrlCommonTextDotBottom,
+		IconMgrConfig.UrlHeadIcon,
+		IconMgrConfig.UrlCritterIcon,
+		IconMgrConfig.UrlIconTag
 	}
 end
 
-var_0_0.HeadIconType = {
+IconMgrConfig.HeadIconType = {
 	Static = 0,
 	Dynamic = 1
 }
 
-return var_0_0
+return IconMgrConfig

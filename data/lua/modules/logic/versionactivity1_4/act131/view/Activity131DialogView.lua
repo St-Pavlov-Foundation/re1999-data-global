@@ -1,225 +1,229 @@
-﻿module("modules.logic.versionactivity1_4.act131.view.Activity131DialogView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/view/Activity131DialogView.lua
 
-local var_0_0 = class("Activity131DialogView", BaseView)
+module("modules.logic.versionactivity1_4.act131.view.Activity131DialogView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_next")
-	arg_1_0._gotopcontent = gohelper.findChild(arg_1_0.viewGO, "#go_topcontent")
-	arg_1_0._godialoghead = gohelper.findChild(arg_1_0.viewGO, "#go_topcontent/#go_dialoghead")
-	arg_1_0._simagehead = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_topcontent/#go_dialoghead/#image_headicon")
-	arg_1_0._txtdialogdesc = gohelper.findChildText(arg_1_0.viewGO, "#go_topcontent/#txt_dialogdesc")
-	arg_1_0._gobottomcontent = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#simage_bg")
-	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#txt_info")
-	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#go_options")
-	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "#go_bottomcontent/#go_content/#go_options/#go_talkitem")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_bottomcontent/#btn_skip")
+local Activity131DialogView = class("Activity131DialogView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Activity131DialogView:onInitView()
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_next")
+	self._gotopcontent = gohelper.findChild(self.viewGO, "#go_topcontent")
+	self._godialoghead = gohelper.findChild(self.viewGO, "#go_topcontent/#go_dialoghead")
+	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "#go_topcontent/#go_dialoghead/#image_headicon")
+	self._txtdialogdesc = gohelper.findChildText(self.viewGO, "#go_topcontent/#txt_dialogdesc")
+	self._gobottomcontent = gohelper.findChild(self.viewGO, "#go_bottomcontent")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_bottomcontent/#go_content")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_bottomcontent/#go_content/#simage_bg")
+	self._txtinfo = gohelper.findChildText(self.viewGO, "#go_bottomcontent/#go_content/#txt_info")
+	self._gooptions = gohelper.findChild(self.viewGO, "#go_bottomcontent/#go_content/#go_options")
+	self._gotalkitem = gohelper.findChild(self.viewGO, "#go_bottomcontent/#go_content/#go_options/#go_talkitem")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_bottomcontent/#btn_skip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+function Activity131DialogView:addEvents()
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnskip:RemoveClickListener()
+function Activity131DialogView:removeEvents()
+	self._btnnext:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
 end
 
-function var_0_0._btnskipOnClick(arg_4_0)
+function Activity131DialogView:_btnskipOnClick()
 	GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_4_0:_skipStory()
+		self:_skipStory()
 	end)
 end
 
-function var_0_0._skipStory(arg_6_0)
-	arg_6_0._isSkip = true
+function Activity131DialogView:_skipStory()
+	self._isSkip = true
 
-	if arg_6_0._skipOptionParams then
-		arg_6_0:_skipOption(arg_6_0._skipOptionParams[1], arg_6_0._skipOptionParams[2])
+	if self._skipOptionParams then
+		self:_skipOption(self._skipOptionParams[1], self._skipOptionParams[2])
 	end
 
-	for iter_6_0 = 1, 100 do
-		arg_6_0:_playNextSectionOrDialog()
+	for i = 1, 100 do
+		self:_playNextSectionOrDialog()
 
-		if arg_6_0._finishClose then
+		if self._finishClose then
 			break
 		end
 	end
 end
 
-function var_0_0._btnnextOnClick(arg_7_0)
-	if not arg_7_0._btnnext.gameObject.activeInHierarchy or arg_7_0._finishClose then
+function Activity131DialogView:_btnnextOnClick()
+	if not self._btnnext.gameObject.activeInHierarchy or self._finishClose then
 		return
 	end
 
-	if not arg_7_0:_checkClickCd() then
+	if not self:_checkClickCd() then
 		return
 	end
 
-	arg_7_0:_playNextSectionOrDialog()
+	self:_playNextSectionOrDialog()
 end
 
-function var_0_0._checkClickCd(arg_8_0)
-	if Time.time - arg_8_0._time < 0.5 then
+function Activity131DialogView:_checkClickCd()
+	local time = Time.time - self._time
+
+	if time < 0.5 then
 		return
 	end
 
-	arg_8_0._time = Time.time
+	self._time = Time.time
 
 	return true
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	arg_9_0._time = Time.time
-	arg_9_0._optionBtnList = arg_9_0:getUserDataTb_()
-	arg_9_0._dialogItemList = arg_9_0:getUserDataTb_()
-	arg_9_0._dialogItemCacheList = arg_9_0:getUserDataTb_()
+function Activity131DialogView:_editableInitView()
+	self._time = Time.time
+	self._optionBtnList = self:getUserDataTb_()
+	self._dialogItemList = self:getUserDataTb_()
+	self._dialogItemCacheList = self:getUserDataTb_()
 
-	gohelper.addUIClickAudio(arg_9_0._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+	gohelper.addUIClickAudio(self._btnnext.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
 
-	arg_9_0._txtmarktop = IconMgr.instance:getCommonTextMarkTop(arg_9_0._txtinfo.gameObject):GetComponent(gohelper.Type_TextMesh)
-	arg_9_0._conMark = gohelper.onceAddComponent(arg_9_0._txtinfo.gameObject, typeof(ZProj.TMPMark))
+	self._txtmarktop = IconMgr.instance:getCommonTextMarkTop(self._txtinfo.gameObject):GetComponent(gohelper.Type_TextMesh)
+	self._conMark = gohelper.onceAddComponent(self._txtinfo.gameObject, typeof(ZProj.TMPMark))
 
-	arg_9_0._conMark:SetMarkTopGo(arg_9_0._txtmarktop.gameObject)
+	self._conMark:SetMarkTopGo(self._txtmarktop.gameObject)
 
-	arg_9_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_9_0.viewGO)
-	arg_9_0._nexticon = gohelper.findChild(arg_9_0.viewGO, "#go_content/nexticon")
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._nexticon = gohelper.findChild(self.viewGO, "#go_content/nexticon")
 end
 
-function var_0_0.onOpen(arg_10_0)
+function Activity131DialogView:onOpen()
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnSetEpisodeListVisible, false)
 
-	arg_10_0._elementInfo = arg_10_0.viewParam
+	self._elementInfo = self.viewParam
 
-	arg_10_0:_playStory()
-	arg_10_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_wz.png"))
-	NavigateMgr.instance:addSpace(ViewName.Activity131DialogView, arg_10_0._onSpace, arg_10_0)
+	self:_playStory()
+	self._simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_wz.png"))
+	NavigateMgr.instance:addSpace(ViewName.Activity131DialogView, self._onSpace, self)
 end
 
-function var_0_0._onSpace(arg_11_0)
-	if not arg_11_0._btnnext.gameObject.activeInHierarchy then
+function Activity131DialogView:_onSpace()
+	if not self._btnnext.gameObject.activeInHierarchy then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
-	arg_11_0:_btnnextOnClick()
+	self:_btnnextOnClick()
 end
 
-function var_0_0._playNextSectionOrDialog(arg_12_0)
-	if #arg_12_0._sectionList >= arg_12_0._dialogIndex then
-		arg_12_0:_playNextDialog()
+function Activity131DialogView:_playNextSectionOrDialog()
+	if #self._sectionList >= self._dialogIndex then
+		self:_playNextDialog()
 
 		return
 	end
 
-	local var_12_0 = table.remove(arg_12_0._sectionStack)
+	local prevSectionInfo = table.remove(self._sectionStack)
 
-	if var_12_0 then
-		arg_12_0:_playSection(var_12_0[1], var_12_0[2])
+	if prevSectionInfo then
+		self:_playSection(prevSectionInfo[1], prevSectionInfo[2])
 	else
-		arg_12_0:_refreshDialogBtnState()
+		self:_refreshDialogBtnState()
 	end
 end
 
-function var_0_0._playStory(arg_13_0, arg_13_1)
-	arg_13_0._sectionStack = {}
-	arg_13_0._optionId = 0
-	arg_13_0._mainSectionId = "0"
-	arg_13_0._sectionId = arg_13_0._mainSectionId
-	arg_13_0._dialogIndex = nil
-	arg_13_0._historyList = {}
-	arg_13_0._dialogId = arg_13_1 or tonumber(arg_13_0._elementInfo:getParam())
+function Activity131DialogView:_playStory(id)
+	self._sectionStack = {}
+	self._optionId = 0
+	self._mainSectionId = "0"
+	self._sectionId = self._mainSectionId
+	self._dialogIndex = nil
+	self._historyList = {}
+	self._dialogId = id or tonumber(self._elementInfo:getParam())
 
-	arg_13_0:_initHistoryItem()
+	self:_initHistoryItem()
 
-	arg_13_0._historyList.id = arg_13_0._dialogId
+	self._historyList.id = self._dialogId
 
-	arg_13_0:_playSection(arg_13_0._sectionId, arg_13_0._dialogIndex)
+	self:_playSection(self._sectionId, self._dialogIndex)
 end
 
-function var_0_0._initHistoryItem(arg_14_0)
-	local var_14_0 = arg_14_0._elementInfo.historylist
+function Activity131DialogView:_initHistoryItem()
+	local historyList = self._elementInfo.historylist
 
-	if #var_14_0 == 0 then
+	if #historyList == 0 then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1 = string.split(iter_14_1, "#")
+	for i, v in ipairs(historyList) do
+		local param = string.split(v, "#")
 
-		arg_14_0._historyList[var_14_1[1]] = tonumber(var_14_1[2])
+		self._historyList[param[1]] = tonumber(param[2])
 	end
 
-	local var_14_2 = arg_14_0._historyList.id
+	local historyId = self._historyList.id
 
-	if not var_14_2 or var_14_2 ~= arg_14_0._dialogId then
-		arg_14_0._historyList = {}
+	if not historyId or historyId ~= self._dialogId then
+		self._historyList = {}
 
 		return
 	end
 
-	arg_14_0._option_param = arg_14_0._historyList.option
+	self._option_param = self._historyList.option
 
-	local var_14_3 = arg_14_0._mainSectionId
-	local var_14_4 = arg_14_0._historyList[var_14_3]
+	local sectionId = self._mainSectionId
+	local dialogIndex = self._historyList[sectionId]
 
-	arg_14_0:_addSectionHistory(var_14_3, var_14_4)
+	self:_addSectionHistory(sectionId, dialogIndex)
 
-	if not arg_14_0._dialogIndex then
-		arg_14_0._dialogIndex = var_14_4
-		arg_14_0._sectionId = var_14_3
+	if not self._dialogIndex then
+		self._dialogIndex = dialogIndex
+		self._sectionId = sectionId
 	end
 end
 
-function var_0_0._addSectionHistory(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = Activity131Config.instance:getDialog(arg_15_0._dialogId, arg_15_1)
-	local var_15_1
+function Activity131DialogView:_addSectionHistory(sectionId, dialogIndex)
+	local dialogList = Activity131Config.instance:getDialog(self._dialogId, sectionId)
+	local finish
 
-	if arg_15_1 == arg_15_0._mainSectionId then
-		var_15_1 = arg_15_2 > #var_15_0
+	if sectionId == self._mainSectionId then
+		finish = dialogIndex > #dialogList
 	else
-		var_15_1 = arg_15_2 >= #var_15_0
+		finish = dialogIndex >= #dialogList
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		if iter_15_0 < arg_15_2 or var_15_1 then
-			if iter_15_1.type == Activity131Enum.dialogType.options then
-				local var_15_2 = string.split(iter_15_1.content, "#")
-				local var_15_3 = string.split(iter_15_1.param, "#")
-				local var_15_4 = {}
-				local var_15_5 = {}
+	for i, v in ipairs(dialogList) do
+		if i < dialogIndex or finish then
+			if v.type == Activity131Enum.dialogType.options then
+				local optionList = string.split(v.content, "#")
+				local sectionIdList = string.split(v.param, "#")
+				local allContentList = {}
+				local allSectionList = {}
 
-				for iter_15_2, iter_15_3 in ipairs(var_15_3) do
-					local var_15_6 = Activity131Config.instance:getDialog(arg_15_0._dialogId, iter_15_3)
+				for j, id in ipairs(sectionIdList) do
+					local list = Activity131Config.instance:getDialog(self._dialogId, id)
 
-					if var_15_6 and var_15_6.type == "random" then
-						for iter_15_4, iter_15_5 in ipairs(var_15_6) do
-							local var_15_7 = string.split(iter_15_5.option_param, "#")
-							local var_15_8 = var_15_7[2]
-							local var_15_9 = var_15_7[3]
+					if list and list.type == "random" then
+						for _, randomDialog in ipairs(list) do
+							local paramList = string.split(randomDialog.option_param, "#")
+							local succSectionId = paramList[2]
+							local failSectionId = paramList[3]
 
-							table.insert(var_15_4, var_15_2[iter_15_2])
-							table.insert(var_15_5, var_15_8)
-							table.insert(var_15_4, var_15_2[iter_15_2])
-							table.insert(var_15_5, var_15_9)
+							table.insert(allContentList, optionList[j])
+							table.insert(allSectionList, succSectionId)
+							table.insert(allContentList, optionList[j])
+							table.insert(allSectionList, failSectionId)
 						end
-					elseif var_15_6 then
-						table.insert(var_15_4, var_15_2[iter_15_2])
-						table.insert(var_15_5, iter_15_3)
+					elseif list then
+						table.insert(allContentList, optionList[j])
+						table.insert(allSectionList, id)
 					end
 				end
 
-				for iter_15_6, iter_15_7 in ipairs(var_15_5) do
-					local var_15_10 = arg_15_0._historyList[iter_15_7]
+				for j, id in ipairs(allSectionList) do
+					local index = self._historyList[id]
 
-					if var_15_10 then
-						arg_15_0:_addSectionHistory(iter_15_7, var_15_10)
+					if index then
+						self:_addSectionHistory(id, index)
 					end
 				end
 			end
@@ -228,417 +232,424 @@ function var_0_0._addSectionHistory(arg_15_0, arg_15_1, arg_15_2)
 		end
 	end
 
-	if not var_15_1 then
-		if not arg_15_0._dialogIndex then
-			arg_15_0._dialogIndex = arg_15_2
-			arg_15_0._sectionId = arg_15_1
+	if not finish then
+		if not self._dialogIndex then
+			self._dialogIndex = dialogIndex
+			self._sectionId = sectionId
 
 			return
 		end
 
-		table.insert(arg_15_0._sectionStack, 1, {
-			arg_15_1,
-			arg_15_2
+		table.insert(self._sectionStack, 1, {
+			sectionId,
+			dialogIndex
 		})
 	end
 end
 
-function var_0_0._playSection(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0:_setSectionData(arg_16_1, arg_16_2)
-	arg_16_0:_playNextDialog()
+function Activity131DialogView:_playSection(sectionId, dialogIndex)
+	self:_setSectionData(sectionId, dialogIndex)
+	self:_playNextDialog()
 end
 
-function var_0_0._setSectionData(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_0._sectionList = Activity131Config.instance:getDialog(arg_17_0._dialogId, arg_17_1)
+function Activity131DialogView:_setSectionData(sectionId, dialogIndex)
+	self._sectionList = Activity131Config.instance:getDialog(self._dialogId, sectionId)
 
-	if arg_17_0._sectionList and not string.nilorempty(arg_17_0._sectionList.option_param) then
-		arg_17_0._option_param = arg_17_0._sectionList.option_param
+	if self._sectionList and not string.nilorempty(self._sectionList.option_param) then
+		self._option_param = self._sectionList.option_param
 	end
 
-	if not string.nilorempty(arg_17_0._option_param) then
-		arg_17_0._historyList.option = arg_17_0._option_param
+	if not string.nilorempty(self._option_param) then
+		self._historyList.option = self._option_param
 	end
 
-	arg_17_0._dialogIndex = arg_17_2 or 1
-	arg_17_0._sectionId = arg_17_1
+	self._dialogIndex = dialogIndex or 1
+	self._sectionId = sectionId
 end
 
-function var_0_0._playNextDialog(arg_18_0)
-	local var_18_0 = arg_18_0._sectionList[arg_18_0._dialogIndex]
+function Activity131DialogView:_playNextDialog()
+	local config = self._sectionList[self._dialogIndex]
 
-	if not var_18_0 then
+	if not config then
 		return
 	end
 
-	if var_18_0.type == Activity131Enum.dialogType.dialog then
-		arg_18_0:_showDialog(Activity131Enum.dialogType.dialog, var_18_0.content, var_18_0.speaker)
+	if config.type == Activity131Enum.dialogType.dialog then
+		self:_showDialog(Activity131Enum.dialogType.dialog, config.content, config.speaker)
 
-		arg_18_0._dialogIndex = arg_18_0._dialogIndex + 1
+		self._dialogIndex = self._dialogIndex + 1
 
-		if #arg_18_0._sectionStack > 0 and #arg_18_0._sectionList < arg_18_0._dialogIndex then
-			local var_18_1 = table.remove(arg_18_0._sectionStack)
+		if #self._sectionStack > 0 and #self._sectionList < self._dialogIndex then
+			local prevSectionInfo = table.remove(self._sectionStack)
 
-			arg_18_0:_setSectionData(var_18_1[1], var_18_1[2])
+			self:_setSectionData(prevSectionInfo[1], prevSectionInfo[2])
 		end
 
-		arg_18_0:_refreshDialogBtnState()
-	elseif var_18_0.type == Activity131Enum.dialogType.option then
-		arg_18_0:_showOptionByConfig(var_18_0)
-	elseif var_18_0.type == Activity131Enum.dialogType.talk then
-		arg_18_0:_showTalk(Activity131Enum.dialogType.talk, var_18_0)
+		self:_refreshDialogBtnState()
+	elseif config.type == Activity131Enum.dialogType.option then
+		self:_showOptionByConfig(config)
+	elseif config.type == Activity131Enum.dialogType.talk then
+		self:_showTalk(Activity131Enum.dialogType.talk, config)
 
-		arg_18_0._dialogIndex = arg_18_0._dialogIndex + 1
+		self._dialogIndex = self._dialogIndex + 1
 
-		if #arg_18_0._sectionStack > 0 and #arg_18_0._sectionList < arg_18_0._dialogIndex then
-			local var_18_2 = table.remove(arg_18_0._sectionStack)
+		if #self._sectionStack > 0 and #self._sectionList < self._dialogIndex then
+			local prevSectionInfo = table.remove(self._sectionStack)
 
-			arg_18_0:_setSectionData(var_18_2[1], var_18_2[2])
+			self:_setSectionData(prevSectionInfo[1], prevSectionInfo[2])
 		end
 
-		arg_18_0:_refreshDialogBtnState()
+		self:_refreshDialogBtnState()
 	end
 end
 
-function var_0_0._showDialog(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if arg_19_0._audioId and arg_19_0._audioId > 0 then
-		AudioEffectMgr.instance:stopAudio(arg_19_0._audioId, 0)
+function Activity131DialogView:_showDialog(type, text, speaker)
+	if self._audioId and self._audioId > 0 then
+		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
 	end
 
-	gohelper.setActive(arg_19_0._gobottomcontent, true)
-	gohelper.setActive(arg_19_0._gotopcontent, false)
-	arg_19_0:_updateHistory()
+	gohelper.setActive(self._gobottomcontent, true)
+	gohelper.setActive(self._gotopcontent, false)
+	self:_updateHistory()
 
-	if arg_19_0._isSkip then
+	if self._isSkip then
 		return
 	end
 
-	local var_19_0 = arg_19_0:_addDialogItem(arg_19_1, arg_19_2, arg_19_3)
+	local item = self:_addDialogItem(type, text, speaker)
 end
 
-function var_0_0._showTalk(arg_20_0, arg_20_1, arg_20_2)
-	gohelper.setActive(arg_20_0._gobottomcontent, false)
-	gohelper.setActive(arg_20_0._gotopcontent, true)
-	arg_20_0:_updateHistory()
+function Activity131DialogView:_showTalk(type, config)
+	gohelper.setActive(self._gobottomcontent, false)
+	gohelper.setActive(self._gotopcontent, true)
+	self:_updateHistory()
 
-	arg_20_0._isSkip = false
-	arg_20_0._txtdialogdesc.text = arg_20_2.content
+	self._isSkip = false
+	self._txtdialogdesc.text = config.content
 
-	local var_20_0 = string.splitToNumber(arg_20_2.param, "#")
-	local var_20_1 = string.format("singlebg/headicon_small/%s.png", var_20_0[1])
+	local params = string.splitToNumber(config.param, "#")
+	local path = string.format("singlebg/headicon_small/%s.png", params[1])
 
-	arg_20_0._simagehead:LoadImage(var_20_1)
+	self._simagehead:LoadImage(path)
 
-	if arg_20_0._audioId and arg_20_0._audioId > 0 then
-		AudioEffectMgr.instance:stopAudio(arg_20_0._audioId, 0)
+	if self._audioId and self._audioId > 0 then
+		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
 	end
 
-	arg_20_0._audioId = var_20_0[2]
+	self._audioId = params[2]
 
-	if arg_20_0._audioId > 0 then
-		AudioEffectMgr.instance:playAudio(arg_20_0._audioId)
+	if self._audioId > 0 then
+		AudioEffectMgr.instance:playAudio(self._audioId)
 	end
 end
 
-function var_0_0._showOptionByConfig(arg_21_0, arg_21_1)
-	local var_21_0 = false
+function Activity131DialogView:_showOptionByConfig(nextConfig)
+	local showOption = false
 
-	if arg_21_1 and arg_21_1.type == Activity131Enum.dialogType.option then
-		arg_21_0:_updateHistory()
+	if nextConfig and nextConfig.type == Activity131Enum.dialogType.option then
+		self:_updateHistory()
 
-		arg_21_0._dialogIndex = arg_21_0._dialogIndex + 1
+		self._dialogIndex = self._dialogIndex + 1
 
-		local var_21_1 = string.split(arg_21_1.content, "#")
-		local var_21_2 = string.split(arg_21_1.param, "#")
+		local optionList = string.split(nextConfig.content, "#")
+		local sectionIdList = string.split(nextConfig.param, "#")
 
-		arg_21_0._isSingle = arg_21_1.single == 1
+		self._isSingle = nextConfig.single == 1
 
-		if arg_21_0._isSkip then
-			var_21_0 = true
+		if self._isSkip then
+			showOption = true
 
-			arg_21_0:_refreshDialogBtnState(var_21_0)
-			arg_21_0:_skipOption(var_21_1, var_21_2)
+			self:_refreshDialogBtnState(showOption)
+			self:_skipOption(optionList, sectionIdList)
 
 			return
 		else
-			arg_21_0._skipOptionParams = {
-				var_21_1,
-				var_21_2
+			self._skipOptionParams = {
+				optionList,
+				sectionIdList
 			}
 
-			for iter_21_0, iter_21_1 in pairs(arg_21_0._optionBtnList) do
-				gohelper.setActive(iter_21_1[1], false)
+			for _, v in pairs(self._optionBtnList) do
+				gohelper.setActive(v[1], false)
 			end
 
-			for iter_21_2 = #var_21_1, 1, -1 do
-				arg_21_0:_addDialogOption(iter_21_2, var_21_2[iter_21_2], var_21_1[iter_21_2])
+			for i = #optionList, 1, -1 do
+				self:_addDialogOption(i, sectionIdList[i], optionList[i])
 			end
 
-			gohelper.setActive(arg_21_0._nexticon, false)
+			gohelper.setActive(self._nexticon, false)
 		end
 
-		var_21_0 = true
+		showOption = true
 	end
 
-	arg_21_0:_refreshDialogBtnState(var_21_0)
+	self:_refreshDialogBtnState(showOption)
 end
 
-function var_0_0._skipOption(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = 1
-	local var_22_1 = Activity131Model.instance:getCurMapId()
+function Activity131DialogView:_skipOption(optionList, sectionIdList)
+	local optionIndex = 1
+	local mapId = Activity131Model.instance:getCurMapId()
 
-	if var_22_1 >= 201 and var_22_1 <= 205 then
-		var_22_0 = #arg_22_1
+	if mapId >= 201 and mapId <= 205 then
+		optionIndex = #optionList
 	end
 
-	local var_22_2 = var_22_0
-	local var_22_3 = arg_22_2[var_22_0]
-	local var_22_4 = arg_22_1[var_22_0]
+	local index, sectionId, text = optionIndex, sectionIdList[optionIndex], optionList[optionIndex]
 
-	arg_22_0:_onOptionClick({
-		var_22_3,
-		var_22_4,
-		var_22_2
+	self:_onOptionClick({
+		sectionId,
+		text,
+		index
 	})
 end
 
-function var_0_0._refreshDialogBtnState(arg_23_0, arg_23_1)
-	if arg_23_1 then
-		gohelper.setActive(arg_23_0._gooptions, true)
+function Activity131DialogView:_refreshDialogBtnState(showOption)
+	if showOption then
+		gohelper.setActive(self._gooptions, true)
 	else
-		arg_23_0:_playCloseTalkItemEffect()
+		self:_playCloseTalkItemEffect()
 	end
 
-	gohelper.setActive(arg_23_0._txtinfo, not arg_23_1)
-	gohelper.setActive(arg_23_0._btnnext, not arg_23_1)
+	gohelper.setActive(self._txtinfo, not showOption)
+	gohelper.setActive(self._btnnext, not showOption)
 
-	if arg_23_1 then
+	if showOption then
 		return
 	end
 
-	local var_23_0 = not (#arg_23_0._sectionStack > 0 or #arg_23_0._sectionList >= arg_23_0._dialogIndex)
+	local hasNext = #self._sectionStack > 0 or #self._sectionList >= self._dialogIndex
+	local isFinish = not hasNext
 
-	if arg_23_0._isFinish then
-		SLFramework.AnimatorPlayer.Get(arg_23_0.viewGO):Play(UIAnimationName.Close, arg_23_0._fadeOutDone, arg_23_0)
+	if self._isFinish then
+		local player = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
-		arg_23_0._finishClose = true
+		player:Play(UIAnimationName.Close, self._fadeOutDone, self)
+
+		self._finishClose = true
 	end
 
-	arg_23_0._isFinish = var_23_0
+	self._isFinish = isFinish
 end
 
-function var_0_0._fadeOutDone(arg_24_0)
-	if arg_24_0._elementInfo.config.skipFinish ~= 1 then
-		arg_24_0:_sendFinishDialog()
+function Activity131DialogView:_fadeOutDone()
+	if self._elementInfo.config.skipFinish ~= 1 then
+		self:_sendFinishDialog()
 	end
 
-	if arg_24_0._elementInfo:getNextType() == Activity131Enum.ElementType.Battle then
-		local var_24_0 = arg_24_0._elementInfo.elementId
+	local type = self._elementInfo:getNextType()
 
-		var_0_0.startBattle(var_24_0)
+	if type == Activity131Enum.ElementType.Battle then
+		local id = self._elementInfo.elementId
+
+		Activity131DialogView.startBattle(id)
 	end
 
-	arg_24_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._playCloseTalkItemEffect(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._optionBtnList) do
-		iter_25_1[1]:GetComponent(typeof(UnityEngine.Animator)):Play("weekwalk_options_out")
+function Activity131DialogView:_playCloseTalkItemEffect()
+	for k, v in pairs(self._optionBtnList) do
+		local talkItemAnim = v[1]:GetComponent(typeof(UnityEngine.Animator))
+
+		talkItemAnim:Play("weekwalk_options_out")
 	end
 
-	TaskDispatcher.runDelay(arg_25_0._hideOption, arg_25_0, 0.133)
+	TaskDispatcher.runDelay(self._hideOption, self, 0.133)
 end
 
-function var_0_0._hideOption(arg_26_0)
-	gohelper.setActive(arg_26_0._gooptions, false)
+function Activity131DialogView:_hideOption()
+	gohelper.setActive(self._gooptions, false)
 end
 
-function var_0_0.startBattle(arg_27_0)
+function Activity131DialogView.startBattle(id)
 	return
 end
 
-function var_0_0._sendFinishDialog(arg_28_0)
-	local var_28_0 = tonumber(arg_28_0._option_param) or 0
-	local var_28_1 = Activity131Config.instance:getOptionParamList(arg_28_0._dialogId)
+function Activity131DialogView:_sendFinishDialog()
+	local index = tonumber(self._option_param) or 0
+	local list = Activity131Config.instance:getOptionParamList(self._dialogId)
 
-	if var_28_1 and #var_28_1 > 0 then
-		local var_28_2 = 1
-		local var_28_3 = Activity131Model.instance:getCurMapId()
+	if list and #list > 0 then
+		local optionIndex = 1
+		local mapId = Activity131Model.instance:getCurMapId()
 
-		if var_28_3 >= 201 and var_28_3 <= 205 then
-			var_28_2 = 2
+		if mapId >= 201 and mapId <= 205 then
+			optionIndex = 2
 		end
 
-		if var_28_0 ~= var_28_2 then
-			var_28_0 = var_28_2
+		if index ~= optionIndex then
+			index = optionIndex
 		end
 	end
 
-	local var_28_4 = VersionActivity1_4Enum.ActivityId.Role6
-	local var_28_5 = Activity131Model.instance:getCurEpisodeId()
+	local actId = VersionActivity1_4Enum.ActivityId.Role6
+	local episodeId = Activity131Model.instance:getCurEpisodeId()
 
-	Activity131Rpc.instance:sendAct131DialogRequest(var_28_4, var_28_5, arg_28_0._elementInfo.elementId, var_28_0)
+	Activity131Rpc.instance:sendAct131DialogRequest(actId, episodeId, self._elementInfo.elementId, index)
 end
 
-function var_0_0._addDialogOption(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	local var_29_0 = arg_29_0._optionBtnList[arg_29_1] and arg_29_0._optionBtnList[arg_29_1][1] or gohelper.cloneInPlace(arg_29_0._gotalkitem)
+function Activity131DialogView:_addDialogOption(index, sectionId, text)
+	local item = self._optionBtnList[index] and self._optionBtnList[index][1] or gohelper.cloneInPlace(self._gotalkitem)
 
-	gohelper.setActive(var_29_0, true)
+	gohelper.setActive(item, true)
 
-	gohelper.findChildText(var_29_0, "txt_talkitem").text = arg_29_3
+	local txt = gohelper.findChildText(item, "txt_talkitem")
 
-	local var_29_1 = gohelper.findChildButtonWithAudio(var_29_0, "btn_talkitem", AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
+	txt.text = text
 
-	var_29_1:AddClickListener(arg_29_0._onOptionClick, arg_29_0, {
-		arg_29_2,
-		arg_29_3,
-		arg_29_1
+	local btn = gohelper.findChildButtonWithAudio(item, "btn_talkitem", AudioEnum.WeekWalk.play_artificial_ui_talkchoose)
+
+	btn:AddClickListener(self._onOptionClick, self, {
+		sectionId,
+		text,
+		index
 	})
 
-	if not arg_29_0._optionBtnList[arg_29_1] then
-		arg_29_0._optionBtnList[arg_29_1] = {
-			var_29_0,
-			var_29_1
+	if not self._optionBtnList[index] then
+		self._optionBtnList[index] = {
+			item,
+			btn
 		}
 	end
 
-	if not arg_29_0._isSingle then
+	if not self._isSingle then
 		return
 	end
 
-	local var_29_2 = Activity131Model.instance:getCurMapConfig()
+	local mapConfig = Activity131Model.instance:getCurMapConfig()
 
-	if arg_29_1 == 1 then
-		local var_29_3 = gohelper.findChild(var_29_0, "mask")
-		local var_29_4 = var_29_2.type ~= 1
+	if index == 1 then
+		local mask = gohelper.findChild(item, "mask")
+		local showMask = mapConfig.type ~= 1
 
-		gohelper.setActive(var_29_3, var_29_4)
+		gohelper.setActive(mask, showMask)
 
-		local var_29_5 = gohelper.findChild(var_29_0, "chaticon")
+		local chaticon = gohelper.findChild(item, "chaticon")
 
-		gohelper.setActive(var_29_5, not var_29_4)
-		gohelper.setActive(var_29_1.gameObject, not var_29_4)
+		gohelper.setActive(chaticon, not showMask)
+		gohelper.setActive(btn.gameObject, not showMask)
 	end
 
-	if arg_29_1 == 2 then
-		gohelper.setActive(var_29_0, var_29_2.type ~= 1)
+	if index == 2 then
+		gohelper.setActive(item, mapConfig.type ~= 1)
 	end
 end
 
-function var_0_0._onOptionClick(arg_30_0, arg_30_1)
-	arg_30_0._skipOptionParams = nil
+function Activity131DialogView:_onOptionClick(param)
+	self._skipOptionParams = nil
 
-	if not arg_30_0:_checkClickCd() then
+	if not self:_checkClickCd() then
 		return
 	end
 
-	local var_30_0 = arg_30_1[1]
-	local var_30_1 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", arg_30_1[2])
+	local sectionId = param[1]
+	local text = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", param[2])
 
-	arg_30_0:_showDialog("option", var_30_1)
+	self:_showDialog("option", text)
 
-	arg_30_0._showOption = true
-	arg_30_0._optionId = arg_30_1[3]
+	self._showOption = true
+	self._optionId = param[3]
 
-	arg_30_0:_checkOption(var_30_0)
+	self:_checkOption(sectionId)
 end
 
-function var_0_0._checkOption(arg_31_0, arg_31_1)
-	local var_31_0 = Activity131Config.instance:getDialog(arg_31_0._dialogId, arg_31_1)
+function Activity131DialogView:_checkOption(sectionId)
+	local dialogList = Activity131Config.instance:getDialog(self._dialogId, sectionId)
 
-	if not var_31_0 then
-		arg_31_0:_playNextSectionOrDialog()
+	if not dialogList then
+		self:_playNextSectionOrDialog()
 
 		return
 	end
 
-	if #arg_31_0._sectionList >= arg_31_0._dialogIndex then
-		table.insert(arg_31_0._sectionStack, {
-			arg_31_0._sectionId,
-			arg_31_0._dialogIndex
+	if #self._sectionList >= self._dialogIndex then
+		table.insert(self._sectionStack, {
+			self._sectionId,
+			self._dialogIndex
 		})
 	end
 
-	if var_31_0.type == "random" then
-		for iter_31_0, iter_31_1 in ipairs(var_31_0) do
-			local var_31_1 = string.split(iter_31_1.option_param, "#")
-			local var_31_2 = tonumber(var_31_1[1])
-			local var_31_3 = var_31_1[2]
-			local var_31_4 = var_31_1[3]
-			local var_31_5 = math.random(100)
-			local var_31_6
+	if dialogList.type == "random" then
+		for i, v in ipairs(dialogList) do
+			local paramList = string.split(v.option_param, "#")
+			local value = tonumber(paramList[1])
+			local succSectionId = paramList[2]
+			local failSectionId = paramList[3]
+			local randomValue = math.random(100)
+			local randomSectionId
 
-			if var_31_5 <= var_31_2 then
-				var_31_6 = var_31_3
+			if randomValue <= value then
+				randomSectionId = succSectionId
 			else
-				var_31_6 = var_31_4
+				randomSectionId = failSectionId
 			end
 
-			arg_31_0:_playSection(var_31_6)
+			self:_playSection(randomSectionId)
 
 			break
 		end
 	else
-		arg_31_0:_playSection(arg_31_1)
+		self:_playSection(sectionId)
 	end
 end
 
-function var_0_0._updateHistory(arg_32_0)
-	if arg_32_0._isSkip then
+function Activity131DialogView:_updateHistory()
+	if self._isSkip then
 		return
 	end
 
-	if arg_32_0._elementInfo.config.skipFinish == 1 then
+	if self._elementInfo.config.skipFinish == 1 then
 		return
 	end
 
-	arg_32_0._historyList[arg_32_0._sectionId] = arg_32_0._dialogIndex
+	self._historyList[self._sectionId] = self._dialogIndex
 
-	local var_32_0 = {}
+	local list = {}
 
-	for iter_32_0, iter_32_1 in pairs(arg_32_0._historyList) do
-		table.insert(var_32_0, string.format("%s#%s", iter_32_0, iter_32_1))
+	for k, v in pairs(self._historyList) do
+		table.insert(list, string.format("%s#%s", k, v))
 	end
 
-	arg_32_0._elementInfo:updateHistoryList(var_32_0)
+	self._elementInfo:updateHistoryList(list)
 
-	local var_32_1 = VersionActivity1_4Enum.ActivityId.Role6
-	local var_32_2 = Activity131Model.instance:getCurEpisodeId()
+	local actId = VersionActivity1_4Enum.ActivityId.Role6
+	local episodeId = Activity131Model.instance:getCurEpisodeId()
 
-	Activity131Rpc.instance:sendAct131DialogHistoryRequest(var_32_1, var_32_2, arg_32_0._elementInfo.elementId, var_32_0)
+	Activity131Rpc.instance:sendAct131DialogHistoryRequest(actId, episodeId, self._elementInfo.elementId, list)
 end
 
-function var_0_0._addDialogItem(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	local var_33_0 = not string.nilorempty(arg_33_3) and "<#FAFAFA>" .. arg_33_3 .. ":  " .. arg_33_2 or arg_33_2
-	local var_33_1 = StoryTool.getMarkTopTextList(var_33_0)
-	local var_33_2 = StoryTool.filterMarkTop(var_33_0)
+function Activity131DialogView:_addDialogItem(type, text, speaker)
+	local speakerStr = not string.nilorempty(speaker) and "<#FAFAFA>" .. speaker .. ":  " .. text or text
+	local markTopList = StoryTool.getMarkTopTextList(speakerStr)
 
-	arg_33_0._txtinfo.text = var_33_2
+	speakerStr = StoryTool.filterMarkTop(speakerStr)
+	self._txtinfo.text = speakerStr
 
 	TaskDispatcher.runDelay(function()
-		arg_33_0._conMark:SetMarksTop(var_33_1)
+		self._conMark:SetMarksTop(markTopList)
 	end, nil, 0.01)
 
-	arg_33_0._txtinfo.text = var_33_2
+	self._txtinfo.text = speakerStr
 
-	arg_33_0._animatorPlayer:Play(UIAnimationName.Click, arg_33_0._animDone, arg_33_0)
-	gohelper.setActive(arg_33_0._nexticon, true)
+	self._animatorPlayer:Play(UIAnimationName.Click, self._animDone, self)
+	gohelper.setActive(self._nexticon, true)
 end
 
-function var_0_0._animDone(arg_35_0)
+function Activity131DialogView:_animDone()
 	return
 end
 
-function var_0_0.onClose(arg_36_0)
-	for iter_36_0, iter_36_1 in pairs(arg_36_0._optionBtnList) do
-		iter_36_1[2]:RemoveClickListener()
+function Activity131DialogView:onClose()
+	for k, v in pairs(self._optionBtnList) do
+		v[2]:RemoveClickListener()
 	end
 
 	Activity131Controller.instance:dispatchEvent(Activity131Event.OnSetEpisodeListVisible, true)
-	TaskDispatcher.cancelTask(arg_36_0._hideOption, arg_36_0)
+	TaskDispatcher.cancelTask(self._hideOption, self)
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	arg_37_0._simagebg:UnLoadImage()
+function Activity131DialogView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return Activity131DialogView

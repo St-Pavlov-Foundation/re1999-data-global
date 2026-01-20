@@ -1,78 +1,81 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/map/VersionActivity1_5DungeonMapTaskView.lua
 
-local var_0_0 = class("VersionActivity1_5DungeonMapTaskView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.map.VersionActivity1_5DungeonMapTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
-	arg_1_0._gotasklist = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist")
-	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "#go_tasklist/#go_taskitem")
-	arg_1_0._txtopen = gohelper.findChildText(arg_1_0.viewGO, "#go_tipbg/#txt_open")
-	arg_1_0._gotipsbg = gohelper.findChild(arg_1_0.viewGO, "#go_tipbg")
+local VersionActivity1_5DungeonMapTaskView = class("VersionActivity1_5DungeonMapTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_5DungeonMapTaskView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#txt_title")
+	self._gotasklist = gohelper.findChild(self.viewGO, "#go_tasklist")
+	self._gotaskitem = gohelper.findChild(self.viewGO, "#go_tasklist/#go_taskitem")
+	self._txtopen = gohelper.findChildText(self.viewGO, "#go_tipbg/#txt_open")
+	self._gotipsbg = gohelper.findChild(self.viewGO, "#go_tipbg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function VersionActivity1_5DungeonMapTaskView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function VersionActivity1_5DungeonMapTaskView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function VersionActivity1_5DungeonMapTaskView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._simagebg:LoadImage(ResUrl.getV1a5DungeonSingleBg("v1a5_dungeonmaptask_tipbg"))
+function VersionActivity1_5DungeonMapTaskView:_editableInitView()
+	self._simagebg:LoadImage(ResUrl.getV1a5DungeonSingleBg("v1a5_dungeonmaptask_tipbg"))
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function VersionActivity1_5DungeonMapTaskView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.episodeId
+function VersionActivity1_5DungeonMapTaskView:onOpen()
+	local episodeId = self.viewParam.episodeId
 
-	arg_7_0:_showTaskList(var_7_0)
+	self:_showTaskList(episodeId)
 
-	arg_7_0._txtopen.text = luaLang("v1a5_revival_task_finish_tip")
+	self._txtopen.text = luaLang("v1a5_revival_task_finish_tip")
 end
 
-function var_0_0._showTaskList(arg_8_0, arg_8_1)
-	local var_8_0 = DungeonConfig.instance:getEpisodeCO(arg_8_1).elementList
+function VersionActivity1_5DungeonMapTaskView:_showTaskList(episodeId)
+	local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local listStr = episodeCO.elementList
 
-	if string.nilorempty(var_8_0) then
+	if string.nilorempty(listStr) then
 		return
 	end
 
-	local var_8_1 = string.splitToNumber(var_8_0, "#")
+	local list = string.splitToNumber(listStr, "#")
 
-	arg_8_0._listCount = #var_8_1
+	self._listCount = #list
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
-		local var_8_2 = gohelper.cloneInPlace(arg_8_0._gotaskitem)
-		local var_8_3 = MonoHelper.addLuaComOnceToGo(var_8_2, VersionActivity1_5DungeonMapTaskItem)
+	for i, id in ipairs(list) do
+		local go = gohelper.cloneInPlace(self._gotaskitem)
+		local item = MonoHelper.addLuaComOnceToGo(go, VersionActivity1_5DungeonMapTaskItem)
 
-		var_8_3:setParam({
-			iter_8_0,
-			iter_8_1
+		item:setParam({
+			i,
+			id
 		})
-		gohelper.setActive(var_8_3.viewGO, true)
+		gohelper.setActive(item.viewGO, true)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function VersionActivity1_5DungeonMapTaskView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
-	arg_10_0._simagebg:UnLoadImage()
+function VersionActivity1_5DungeonMapTaskView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_5DungeonMapTaskView

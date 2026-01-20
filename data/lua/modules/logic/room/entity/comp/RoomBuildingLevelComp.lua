@@ -1,90 +1,94 @@
-﻿module("modules.logic.room.entity.comp.RoomBuildingLevelComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomBuildingLevelComp.lua
 
-local var_0_0 = class("RoomBuildingLevelComp", LuaCompBase)
+module("modules.logic.room.entity.comp.RoomBuildingLevelComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.entity = arg_1_1
-	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
-	arg_1_0._levelPathDict = {}
+local RoomBuildingLevelComp = class("RoomBuildingLevelComp", LuaCompBase)
+
+function RoomBuildingLevelComp:ctor(entity)
+	self.entity = entity
+	self._effectKey = RoomEnum.EffectKey.BuildingGOKey
+	self._levelPathDict = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.go = arg_2_1
-	arg_2_0._level = arg_2_0:_getLevel()
+function RoomBuildingLevelComp:init(go)
+	self.go = go
+	self._level = self:_getLevel()
 end
 
-function var_0_0.addEventListeners(arg_3_0)
-	RoomMapController.instance:registerCallback(RoomEvent.BuildingLevelUpPush, arg_3_0._onBuildingLevelUpPush, arg_3_0)
+function RoomBuildingLevelComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.BuildingLevelUpPush, self._onBuildingLevelUpPush, self)
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingLevelUpPush, arg_4_0._onBuildingLevelUpPush, arg_4_0)
+function RoomBuildingLevelComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingLevelUpPush, self._onBuildingLevelUpPush, self)
 end
 
-function var_0_0.beforeDestroy(arg_5_0)
-	arg_5_0:removeEventListeners()
+function RoomBuildingLevelComp:beforeDestroy()
+	self:removeEventListeners()
 end
 
-function var_0_0._onBuildingLevelUpPush(arg_6_0)
-	arg_6_0:refreshLevel()
+function RoomBuildingLevelComp:_onBuildingLevelUpPush()
+	self:refreshLevel()
 end
 
-function var_0_0.refreshLevel(arg_7_0)
-	local var_7_0 = arg_7_0:_getLevel()
+function RoomBuildingLevelComp:refreshLevel()
+	local level = self:_getLevel()
 
-	if arg_7_0._level ~= var_7_0 then
-		arg_7_0._level = var_7_0
+	if self._level ~= level then
+		self._level = level
 
-		arg_7_0.entity:refreshBuilding()
-		arg_7_0:_updateLevel()
+		self.entity:refreshBuilding()
+		self:_updateLevel()
 	end
 end
 
-function var_0_0._updateLevel(arg_8_0)
-	local var_8_0 = arg_8_0:getMO()
+function RoomBuildingLevelComp:_updateLevel()
+	local mo = self:getMO()
 
-	if not var_8_0 then
+	if not mo then
 		return
 	end
 
-	local var_8_1 = arg_8_0.entity.effect
+	local effect = self.entity.effect
 
-	if not var_8_1:isHasEffectGOByKey(arg_8_0._effectKey) then
+	if not effect:isHasEffectGOByKey(self._effectKey) then
 		return
 	end
 
-	local var_8_2 = RoomConfig.instance:getLevelGroupLevelDict(var_8_0.buildingId)
+	local levelCfgDict = RoomConfig.instance:getLevelGroupLevelDict(mo.buildingId)
 
-	for iter_8_0, iter_8_1 in pairs(var_8_2) do
-		if not arg_8_0._levelPathDict[iter_8_0] then
-			arg_8_0._levelPathDict[iter_8_0] = string.format(RoomEnum.EffectPath.BuildingLevelPath, iter_8_0)
+	for level, cfg in pairs(levelCfgDict) do
+		if not self._levelPathDict[level] then
+			self._levelPathDict[level] = string.format(RoomEnum.EffectPath.BuildingLevelPath, level)
 		end
 
-		local var_8_3 = var_8_1:getGameObjectByPath(arg_8_0._effectKey, arg_8_0._levelPathDict[iter_8_0])
+		local levelGO = effect:getGameObjectByPath(self._effectKey, self._levelPathDict[level])
 
-		if var_8_3 then
-			gohelper.setActive(var_8_3, iter_8_0 <= arg_8_0._level)
+		if levelGO then
+			gohelper.setActive(levelGO, level <= self._level)
 		end
 	end
 end
 
-function var_0_0._getLevel(arg_9_0)
-	return arg_9_0:getMO().level or 0
+function RoomBuildingLevelComp:_getLevel()
+	local mo = self:getMO()
+
+	return mo.level or 0
 end
 
-function var_0_0.getMO(arg_10_0)
-	return arg_10_0.entity:getMO()
+function RoomBuildingLevelComp:getMO()
+	return self.entity:getMO()
 end
 
-function var_0_0.onEffectRebuild(arg_11_0)
-	local var_11_0 = arg_11_0.entity.effect
+function RoomBuildingLevelComp:onEffectRebuild()
+	local effect = self.entity.effect
 
-	if var_11_0:isHasEffectGOByKey(arg_11_0._effectKey) and not var_11_0:isSameResByKey(arg_11_0._effectKey, arg_11_0._effectRes) then
-		arg_11_0._effectRes = var_11_0:getEffectRes(arg_11_0._effectKey)
-		arg_11_0._level = arg_11_0:_getLevel()
+	if effect:isHasEffectGOByKey(self._effectKey) and not effect:isSameResByKey(self._effectKey, self._effectRes) then
+		self._effectRes = effect:getEffectRes(self._effectKey)
+		self._level = self:_getLevel()
 
-		arg_11_0:_updateLevel()
+		self:_updateLevel()
 	end
 end
 
-return var_0_0
+return RoomBuildingLevelComp

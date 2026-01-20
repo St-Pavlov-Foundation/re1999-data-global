@@ -1,11 +1,13 @@
-﻿module("modules.logic.player.view.PlayerLevelUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/PlayerLevelUpViewContainer.lua
 
-local var_0_0 = class("PlayerLevelUpViewContainer", BaseViewContainer)
+module("modules.logic.player.view.PlayerLevelUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local PlayerLevelUpViewContainer = class("PlayerLevelUpViewContainer", BaseViewContainer)
+
+function PlayerLevelUpViewContainer:buildViews()
 	return {
 		PlayerLevelUpView.New()
 	}
 end
 
-return var_0_0
+return PlayerLevelUpViewContainer

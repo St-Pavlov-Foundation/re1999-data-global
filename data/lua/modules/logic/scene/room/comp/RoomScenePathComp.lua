@@ -1,13 +1,15 @@
-﻿module("modules.logic.scene.room.comp.RoomScenePathComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/RoomScenePathComp.lua
 
-local var_0_0 = class("RoomScenePathComp", BaseSceneComp)
+module("modules.logic.scene.room.comp.RoomScenePathComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local RoomScenePathComp = class("RoomScenePathComp", BaseSceneComp)
+
+function RoomScenePathComp:onInit()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._scene = arg_2_0:getCurScene()
+function RoomScenePathComp:init(sceneId, levelId)
+	self._scene = self:getCurScene()
 
 	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() then
 		return
@@ -15,98 +17,98 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 
 	if RoomEnum.UseAStarPath then
 		if RoomEnum.MeshUseOptimize then
-			local var_2_0, var_2_1, var_2_2, var_2_3 = RoomMapBlockModel.instance:getFullMapSizeAndCenter()
+			local wight, height, offsetX, offsetY = RoomMapBlockModel.instance:getFullMapSizeAndCenter()
 
-			ZProj.AStarPathBridge.ScanAStarMesh(var_2_0, var_2_1, var_2_2, var_2_3)
+			ZProj.AStarPathBridge.ScanAStarMesh(wight, height, offsetX, offsetY)
 		else
 			ZProj.AStarPathBridge.ScanAStarMesh()
 		end
 	end
 
-	arg_2_0._isInited = true
+	self._isInited = true
 end
 
-function var_0_0.tryGetPath(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
-	local var_3_0 = arg_3_0._scene.charactermgr:getCharacterEntity(arg_3_1.id)
+function RoomScenePathComp:tryGetPath(charMO, startPos, endPos, callback, callbackObj, param)
+	local entity = self._scene.charactermgr:getCharacterEntity(charMO.id)
 
-	if not var_3_0 then
+	if not entity then
 		return
 	end
 
-	local var_3_1 = var_3_0.charactermove:getSeeker()
+	local seeker = entity.charactermove:getSeeker()
 
-	if not var_3_1 then
+	if not seeker then
 		return
 	end
 
-	var_3_1:RemoveOnPathCall()
-	var_3_1:AddOnPathCall(arg_3_4, arg_3_5, arg_3_6)
-	var_3_1:StartPath(arg_3_2, arg_3_3)
+	seeker:RemoveOnPathCall()
+	seeker:AddOnPathCall(callback, callbackObj, param)
+	seeker:StartPath(startPos, endPos)
 end
 
-function var_0_0.stopGetPath(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0._scene.charactermgr:getCharacterEntity(arg_4_1.id)
+function RoomScenePathComp:stopGetPath(charMO)
+	local entity = self._scene.charactermgr:getCharacterEntity(charMO.id)
 
-	if not var_4_0 then
+	if not entity then
 		return
 	end
 
-	local var_4_1 = var_4_0.charactermove:getSeeker()
+	local seeker = entity.charactermove:getSeeker()
 
-	if not var_4_1 then
+	if not seeker then
 		return
 	end
 
-	var_4_1:RemoveOnPathCall()
+	seeker:RemoveOnPathCall()
 end
 
-function var_0_0.updatePathGraphic(arg_5_0, arg_5_1)
-	if not arg_5_0._isInited then
+function RoomScenePathComp:updatePathGraphic(go)
+	if not self._isInited then
 		return
 	end
 
-	ZProj.AStarPathBridge.UpdateColliderGrid(arg_5_1, GameSceneMgr.instance:isLoading() and 0 or 0.1)
+	ZProj.AStarPathBridge.UpdateColliderGrid(go, GameSceneMgr.instance:isLoading() and 0 or 0.1)
 	RoomCharacterModel.instance:clearNodePositionList()
 end
 
-function var_0_0.addPathCollider(arg_6_0, arg_6_1)
+function RoomScenePathComp:addPathCollider(go)
 	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() then
-		arg_6_0._needPathGOs = arg_6_0._needPathGOs or {}
+		self._needPathGOs = self._needPathGOs or {}
 
-		table.insert(arg_6_0._needPathGOs, arg_6_1)
+		table.insert(self._needPathGOs, go)
 
 		return
 	end
 
-	if not gohelper.isNil(arg_6_1) then
-		local var_6_0 = {}
+	if not gohelper.isNil(go) then
+		local list = {}
 
-		ZProj.AStarPathBridge.FindChildrenByName(arg_6_1, "#collider", var_6_0)
+		ZProj.AStarPathBridge.FindChildrenByName(go, "#collider", list)
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-			gohelper.setLayer(iter_6_1, UnityLayer.Scene, true)
-			arg_6_0:updatePathGraphic(iter_6_1)
+		for _, goColliderRoot in ipairs(list) do
+			gohelper.setLayer(goColliderRoot, UnityLayer.Scene, true)
+			self:updatePathGraphic(goColliderRoot)
 		end
 	end
 end
 
-function var_0_0.doNeedPathGOs(arg_7_0)
-	if arg_7_0._needPathGOs then
-		local var_7_0 = tabletool.copy(arg_7_0._needPathGOs)
+function RoomScenePathComp:doNeedPathGOs()
+	if self._needPathGOs then
+		local temp = tabletool.copy(self._needPathGOs)
 
-		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-			if not gohelper.isNil(iter_7_1) then
-				arg_7_0:addPathCollider(iter_7_1)
+		for _, go in ipairs(temp) do
+			if not gohelper.isNil(go) then
+				self:addPathCollider(go)
 			end
 		end
 	end
 
-	arg_7_0._needPathGOs = nil
+	self._needPathGOs = nil
 end
 
-function var_0_0.onSceneClose(arg_8_0)
-	arg_8_0._isInited = false
-	arg_8_0._needPathGOs = nil
+function RoomScenePathComp:onSceneClose()
+	self._isInited = false
+	self._needPathGOs = nil
 
 	if RoomEnum.UseAStarPath then
 		ZProj.AStarPathBridge.StopScan()
@@ -116,30 +118,30 @@ function var_0_0.onSceneClose(arg_8_0)
 	ZProj.AStarPathBridge.CleanCache()
 end
 
-function var_0_0.addEntityCollider(arg_9_0)
+function RoomScenePathComp.addEntityCollider(go)
 	if not RoomEnum.UseAStarPath then
 		return
 	end
 
-	local var_9_0 = GameSceneMgr.instance:getCurScene()
+	local scene = GameSceneMgr.instance:getCurScene()
 
-	if var_9_0.path and not gohelper.isNil(arg_9_0) then
-		var_9_0.path:addPathCollider(arg_9_0)
+	if scene.path and not gohelper.isNil(go) then
+		scene.path:addPathCollider(go)
 	end
 end
 
-function var_0_0.getNearestNodeHeight(arg_10_0, arg_10_1)
-	if not RoomEnum.UseAStarPath or not arg_10_0._isInited then
+function RoomScenePathComp:getNearestNodeHeight(position)
+	if not RoomEnum.UseAStarPath or not self._isInited then
 		return 0
 	end
 
-	local var_10_0, var_10_1 = ZProj.AStarPathBridge.GetNearestNodeHeight(arg_10_1, 0)
+	local success, height = ZProj.AStarPathBridge.GetNearestNodeHeight(position, 0)
 
-	if not var_10_0 then
+	if not success then
 		return 0
 	end
 
-	return var_10_1
+	return height
 end
 
-return var_0_0
+return RoomScenePathComp

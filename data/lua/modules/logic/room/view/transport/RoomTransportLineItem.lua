@@ -1,123 +1,125 @@
-﻿module("modules.logic.room.view.transport.RoomTransportLineItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/transport/RoomTransportLineItem.lua
 
-local var_0_0 = class("RoomTransportLineItem", ListScrollCellExtend)
+module("modules.logic.room.view.transport.RoomTransportLineItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_content")
-	arg_1_0._btnitemclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_itemclick")
-	arg_1_0._imagetype1 = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_type1")
-	arg_1_0._imagetype2 = gohelper.findChildImage(arg_1_0.viewGO, "#go_content/#image_type2")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_select")
-	arg_1_0._btndelectPath = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_content/#btn_delectPath")
-	arg_1_0._golinkfail = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_linkfail")
-	arg_1_0._golinksuccess = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_linksuccess")
+local RoomTransportLineItem = class("RoomTransportLineItem", ListScrollCellExtend)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomTransportLineItem:onInitView()
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_content")
+	self._btnitemclick = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_itemclick")
+	self._imagetype1 = gohelper.findChildImage(self.viewGO, "#go_content/#image_type1")
+	self._imagetype2 = gohelper.findChildImage(self.viewGO, "#go_content/#image_type2")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_content/#go_select")
+	self._btndelectPath = gohelper.findChildButtonWithAudio(self.viewGO, "#go_content/#btn_delectPath")
+	self._golinkfail = gohelper.findChild(self.viewGO, "#go_content/#go_linkfail")
+	self._golinksuccess = gohelper.findChild(self.viewGO, "#go_content/#go_linksuccess")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnitemclick:AddClickListener(arg_2_0._btnitemclickOnClick, arg_2_0)
-	arg_2_0._btndelectPath:AddClickListener(arg_2_0._btndelectPathOnClick, arg_2_0)
+function RoomTransportLineItem:addEvents()
+	self._btnitemclick:AddClickListener(self._btnitemclickOnClick, self)
+	self._btndelectPath:AddClickListener(self._btndelectPathOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnitemclick:RemoveClickListener()
-	arg_3_0._btndelectPath:RemoveClickListener()
+function RoomTransportLineItem:removeEvents()
+	self._btnitemclick:RemoveClickListener()
+	self._btndelectPath:RemoveClickListener()
 end
 
-function var_0_0._btnitemclickOnClick(arg_4_0)
-	if arg_4_0._view and arg_4_0._view.viewContainer then
-		arg_4_0._view.viewContainer:dispatchEvent(RoomEvent.TransportPathSelectLineItem, arg_4_0:getDataMO())
+function RoomTransportLineItem:_btnitemclickOnClick()
+	if self._view and self._view.viewContainer then
+		self._view.viewContainer:dispatchEvent(RoomEvent.TransportPathSelectLineItem, self:getDataMO())
 	end
 end
 
-function var_0_0._btndelectPathOnClick(arg_5_0)
-	local var_5_0 = arg_5_0:getTransportPathMO()
+function RoomTransportLineItem:_btndelectPathOnClick()
+	local transportMO = self:getTransportPathMO()
 
-	if var_5_0 and var_5_0:isLinkFinish() or var_5_0:getHexPointCount() > 0 then
-		var_5_0:clear()
-		var_5_0:setIsEdit(true)
-		arg_5_0:refreshLinkUI()
+	if transportMO and transportMO:isLinkFinish() or transportMO:getHexPointCount() > 0 then
+		transportMO:clear()
+		transportMO:setIsEdit(true)
+		self:refreshLinkUI()
 		RoomMapTransportPathModel.instance:updateSiteHexPoint()
 		RoomTransportController.instance:updateBlockUseState()
 	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._gofinishAnim = gohelper.findChild(arg_6_0._golinksuccess, "finish")
+function RoomTransportLineItem:_editableInitView()
+	self._gofinishAnim = gohelper.findChild(self._golinksuccess, "finish")
 
-	gohelper.setActive(arg_6_0._goselect, false)
+	gohelper.setActive(self._goselect, false)
 end
 
-function var_0_0._editableAddEvents(arg_7_0)
+function RoomTransportLineItem:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_8_0)
+function RoomTransportLineItem:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
-	arg_9_0._dataMO = arg_9_1
+function RoomTransportLineItem:onUpdateMO(mo)
+	self._dataMO = mo
 
-	arg_9_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.getDataMO(arg_10_0)
-	return arg_10_0._dataMO
+function RoomTransportLineItem:getDataMO()
+	return self._dataMO
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._goselect, arg_11_1)
+function RoomTransportLineItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	gohelper.setActive(arg_12_0._gocontent, arg_12_0._dataMO ~= nil)
+function RoomTransportLineItem:refreshUI()
+	gohelper.setActive(self._gocontent, self._dataMO ~= nil)
 
-	if arg_12_0._dataMO then
-		UISpriteSetMgr.instance:setRoomSprite(arg_12_0._imagetype1, RoomBuildingEnum.BuildingTypeLineIcon[arg_12_0._dataMO.fromType])
-		UISpriteSetMgr.instance:setRoomSprite(arg_12_0._imagetype2, RoomBuildingEnum.BuildingTypeLineIcon[arg_12_0._dataMO.toType])
+	if self._dataMO then
+		UISpriteSetMgr.instance:setRoomSprite(self._imagetype1, RoomBuildingEnum.BuildingTypeLineIcon[self._dataMO.fromType])
+		UISpriteSetMgr.instance:setRoomSprite(self._imagetype2, RoomBuildingEnum.BuildingTypeLineIcon[self._dataMO.toType])
 	end
 
-	arg_12_0:refreshLinkUI()
+	self:refreshLinkUI()
 end
 
-function var_0_0.refreshLinkUI(arg_13_0)
-	local var_13_0 = arg_13_0:_isCheckLinkFinish()
+function RoomTransportLineItem:refreshLinkUI()
+	local isSuccess = self:_isCheckLinkFinish()
 
-	gohelper.setActive(arg_13_0._btndelectPath, var_13_0)
-	gohelper.setActive(arg_13_0._golinksuccess, var_13_0)
-	gohelper.setActive(arg_13_0._golinkfail, var_13_0 == false)
+	gohelper.setActive(self._btndelectPath, isSuccess)
+	gohelper.setActive(self._golinksuccess, isSuccess)
+	gohelper.setActive(self._golinkfail, isSuccess == false)
 
-	if arg_13_0._isLinkFinishAnim ~= var_13_0 then
-		if arg_13_0._isLinkFinishAnim ~= nil then
-			gohelper.setActive(arg_13_0._gofinishAnim, var_13_0)
+	if self._isLinkFinishAnim ~= isSuccess then
+		if self._isLinkFinishAnim ~= nil then
+			gohelper.setActive(self._gofinishAnim, isSuccess)
 		end
 
-		arg_13_0._isLinkFinishAnim = var_13_0
+		self._isLinkFinishAnim = isSuccess
 	end
 end
 
-function var_0_0._isCheckLinkFinish(arg_14_0)
-	local var_14_0 = arg_14_0:getTransportPathMO()
+function RoomTransportLineItem:_isCheckLinkFinish()
+	local transportMO = self:getTransportPathMO()
 
-	if var_14_0 and var_14_0:isLinkFinish() then
+	if transportMO and transportMO:isLinkFinish() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.getTransportPathMO(arg_15_0)
-	if arg_15_0._dataMO then
-		return RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(arg_15_0._dataMO.fromType, arg_15_0._dataMO.toType)
+function RoomTransportLineItem:getTransportPathMO()
+	if self._dataMO then
+		return RoomMapTransportPathModel.instance:getTransportPathMOBy2Type(self._dataMO.fromType, self._dataMO.toType)
 	end
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function RoomTransportLineItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomTransportLineItem

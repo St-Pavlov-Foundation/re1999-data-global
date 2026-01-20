@@ -80,12 +80,12 @@
     "id": 10008,
     "name": "language_10086209",
     "nameEn": "Dushuo Festival",
-    "show": false,
+    "show": true,
     "order": 8,
-    "des": "language_10086196",
-    "scenePath": "",
-    "nameRes": "",
-    "iconRes": ""
+    "des": "language_10103714",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10008.prefab",
+    "nameRes": "skinhandbook_titletxt_09",
+    "iconRes": "skinhandbook_titleicon_09"
   },
   {
     "id": 10009,

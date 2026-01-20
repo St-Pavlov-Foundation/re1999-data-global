@@ -1,94 +1,96 @@
-﻿module("modules.logic.activity.model.warmup.ActivityWarmUpGameModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/warmup/ActivityWarmUpGameModel.lua
 
-local var_0_0 = class("ActivityWarmUpGameModel", BaseModel)
+module("modules.logic.activity.model.warmup.ActivityWarmUpGameModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local ActivityWarmUpGameModel = class("ActivityWarmUpGameModel", BaseModel)
+
+function ActivityWarmUpGameModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function ActivityWarmUpGameModel:reInit()
 	return
 end
 
-function var_0_0.release(arg_3_0)
-	arg_3_0._settings = nil
-	arg_3_0._blockDatas = nil
-	arg_3_0._matDatas = nil
-	arg_3_0._bindMap = nil
-	arg_3_0._targetMatList = nil
-	arg_3_0.curMatIndex = 0
+function ActivityWarmUpGameModel:release()
+	self._settings = nil
+	self._blockDatas = nil
+	self._matDatas = nil
+	self._bindMap = nil
+	self._targetMatList = nil
+	self.curMatIndex = 0
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0:release()
+function ActivityWarmUpGameModel:init(settings, totalPoolIds, keepPointerValue)
+	self:release()
 
-	arg_4_0._settings = arg_4_1
+	self._settings = settings
 
-	if arg_4_0:checkParamAvalid() then
-		arg_4_0._blockDatas = arg_4_0:genLevelData()
+	if self:checkParamAvalid() then
+		self._blockDatas = self:genLevelData()
 	end
 
-	if not arg_4_3 then
-		arg_4_0.pointerVal = 0.5
+	if not keepPointerValue then
+		self.pointerVal = 0.5
 	end
 
-	arg_4_0:initMatTarget(arg_4_2)
-	arg_4_0:bindMaterials()
+	self:initMatTarget(totalPoolIds)
+	self:bindMaterials()
 end
 
-function var_0_0.initMatTarget(arg_5_0, arg_5_1)
-	if #arg_5_1 <= 0 then
+function ActivityWarmUpGameModel:initMatTarget(totalPoolIds)
+	if #totalPoolIds <= 0 then
 		logError("totalPoolIds length can't be Zero!")
 
 		return
 	end
 
-	arg_5_0._matDatas = tabletool.copy(arg_5_1)
-	arg_5_0._targetMatList = {}
-	arg_5_0.curMatIndex = 1
+	self._matDatas = tabletool.copy(totalPoolIds)
+	self._targetMatList = {}
+	self.curMatIndex = 1
 
-	local var_5_0 = tabletool.copy(arg_5_1)
+	local copyIds = tabletool.copy(totalPoolIds)
 
-	for iter_5_0 = 1, arg_5_0._settings.blockCount do
-		local var_5_1 = #var_5_0
+	for i = 1, self._settings.blockCount do
+		local len = #copyIds
 
-		if var_5_1 <= 0 then
-			for iter_5_1, iter_5_2 in pairs(arg_5_1) do
-				var_5_0[iter_5_1] = iter_5_2
+		if len <= 0 then
+			for k, v in pairs(totalPoolIds) do
+				copyIds[k] = v
 			end
 
-			var_5_1 = #var_5_0
+			len = #copyIds
 		end
 
-		local var_5_2 = math.random(var_5_1)
-		local var_5_3 = var_5_0[var_5_2]
+		local rndIndex = math.random(len)
+		local matId = copyIds[rndIndex]
 
-		table.insert(arg_5_0._targetMatList, var_5_3)
-		table.remove(var_5_0, var_5_2)
+		table.insert(self._targetMatList, matId)
+		table.remove(copyIds, rndIndex)
 	end
 end
 
-function var_0_0.bindMaterials(arg_6_0)
-	arg_6_0._bindMap = {}
+function ActivityWarmUpGameModel:bindMaterials()
+	self._bindMap = {}
 
-	local var_6_0 = tabletool.copy(arg_6_0._targetMatList)
+	local copyIds = tabletool.copy(self._targetMatList)
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._blockDatas) do
-		local var_6_1 = #var_6_0
-		local var_6_2 = math.random(var_6_1)
-		local var_6_3 = var_6_0[var_6_2]
+	for i, levelData in ipairs(self._blockDatas) do
+		local len = #copyIds
+		local rndIndex = math.random(len)
+		local mat = copyIds[rndIndex]
 
-		arg_6_0._bindMap[iter_6_1] = var_6_3
+		self._bindMap[levelData] = mat
 
-		table.remove(var_6_0, var_6_2)
+		table.remove(copyIds, rndIndex)
 	end
 end
 
-function var_0_0.getBlockDataByPointer(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._blockDatas) do
-		if arg_7_1 >= iter_7_1.startPos then
-			if arg_7_1 <= iter_7_1.endPos then
-				return iter_7_1
+function ActivityWarmUpGameModel:getBlockDataByPointer(pointerValue)
+	for _, data in ipairs(self._blockDatas) do
+		if pointerValue >= data.startPos then
+			if pointerValue <= data.endPos then
+				return data
 			end
 		else
 			return nil
@@ -96,21 +98,23 @@ function var_0_0.getBlockDataByPointer(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0.isCurrentTarget(arg_8_0, arg_8_1)
-	if arg_8_0._bindMap[arg_8_1] == arg_8_0._targetMatList[arg_8_0.curMatIndex] then
+function ActivityWarmUpGameModel:isCurrentTarget(levelData)
+	local matId = self._bindMap[levelData]
+
+	if matId == self._targetMatList[self.curMatIndex] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.matIsUsed(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._targetMatList) do
-		if iter_9_0 >= arg_9_0.curMatIndex then
+function ActivityWarmUpGameModel:matIsUsed(matId)
+	for index, targetId in ipairs(self._targetMatList) do
+		if index >= self.curMatIndex then
 			return false
 		end
 
-		if iter_9_1 == arg_9_1 then
+		if targetId == matId then
 			return true
 		end
 	end
@@ -118,119 +122,124 @@ function var_0_0.matIsUsed(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0.gotoNextTarget(arg_10_0)
-	arg_10_0.curMatIndex = arg_10_0.curMatIndex + 1
+function ActivityWarmUpGameModel:gotoNextTarget()
+	self.curMatIndex = self.curMatIndex + 1
 end
 
-function var_0_0.isAllTargetClean(arg_11_0)
-	return arg_11_0.curMatIndex > arg_11_0._settings.blockCount
+function ActivityWarmUpGameModel:isAllTargetClean()
+	return self.curMatIndex > self._settings.blockCount
 end
 
-function var_0_0.getBlockDatas(arg_12_0)
-	return arg_12_0._blockDatas
+function ActivityWarmUpGameModel:getBlockDatas()
+	return self._blockDatas
 end
 
-function var_0_0.getTargetMatIDs(arg_13_0)
-	return arg_13_0._targetMatList
+function ActivityWarmUpGameModel:getTargetMatIDs()
+	return self._targetMatList
 end
 
-function var_0_0.getBindMatByBlock(arg_14_0, arg_14_1)
-	return arg_14_0._bindMap[arg_14_1]
+function ActivityWarmUpGameModel:getBindMatByBlock(blockData)
+	return self._bindMap[blockData]
 end
 
-function var_0_0.getRoundInfo(arg_15_0)
-	if arg_15_0._settings ~= nil then
-		return arg_15_0.round, arg_15_0._settings.victoryRound
+function ActivityWarmUpGameModel:getRoundInfo()
+	if self._settings ~= nil then
+		return self.round, self._settings.victoryRound
 	end
 
 	return nil
 end
 
-function var_0_0.genLevelData(arg_16_0)
-	local var_16_0 = arg_16_0:step1BreakInterval()
-	local var_16_1 = arg_16_0:step2PickBasePos(var_16_0)
+function ActivityWarmUpGameModel:genLevelData()
+	local buckets = self:step1BreakInterval()
+	local results = self:step2PickBasePos(buckets)
 
-	arg_16_0:step3Grow(var_16_1)
+	self:step3Grow(results)
 
-	return var_16_1
+	return results
 end
 
-function var_0_0.step1BreakInterval(arg_17_0)
-	local var_17_0 = arg_17_0._settings.minBlock + arg_17_0._settings.blockInterval
-	local var_17_1 = math.floor(1 / var_17_0)
-	local var_17_2 = {}
+function ActivityWarmUpGameModel:step1BreakInterval()
+	local minInterval = self._settings.minBlock + self._settings.blockInterval
+	local count = math.floor(1 / minInterval)
+	local splitArr = {}
 
-	if var_17_1 > 200 then
+	if count > 200 then
 		logWarn("ActivityWarmUpGameModel data amount over 200!")
 	end
 
-	for iter_17_0 = 1, var_17_1 do
-		table.insert(var_17_2, (iter_17_0 - 1) * var_17_0)
+	for i = 1, count do
+		table.insert(splitArr, (i - 1) * minInterval)
 	end
 
-	return var_17_2
+	return splitArr
 end
 
-function var_0_0.step2PickBasePos(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._settings.blockCount
-	local var_18_1 = {}
+function ActivityWarmUpGameModel:step2PickBasePos(buckets)
+	local needCount = self._settings.blockCount
+	local blockArr = {}
 
-	for iter_18_0 = 1, var_18_0 do
-		local var_18_2 = {}
-		local var_18_3 = math.random(#arg_18_1)
+	for i = 1, needCount do
+		local blockData = {}
+		local bucketIndex = math.random(#buckets)
 
-		var_18_2.startPos = arg_18_1[var_18_3] + arg_18_0._settings.blockInterval
+		blockData.startPos = buckets[bucketIndex] + self._settings.blockInterval
 
-		table.remove(arg_18_1, var_18_3)
+		table.remove(buckets, bucketIndex)
 
-		var_18_2.endPos = var_18_2.startPos + arg_18_0._settings.minBlock
+		blockData.endPos = blockData.startPos + self._settings.minBlock
 
-		table.insert(var_18_1, var_18_2)
+		table.insert(blockArr, blockData)
 	end
 
-	table.sort(var_18_1, var_0_0.sortBlockWithPos)
+	table.sort(blockArr, ActivityWarmUpGameModel.sortBlockWithPos)
 
-	return var_18_1
+	return blockArr
 end
 
-function var_0_0.step3Grow(arg_19_0, arg_19_1)
-	for iter_19_0 = #arg_19_1, 1, -1 do
-		local var_19_0 = arg_19_1[iter_19_0]
+function ActivityWarmUpGameModel:step3Grow(blocks)
+	for i = #blocks, 1, -1 do
+		local curBlock = blocks[i]
 
-		arg_19_0:growSingleBlock(var_19_0, arg_19_1, iter_19_0)
-	end
-end
-
-function var_0_0.growSingleBlock(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_2[arg_20_3 + 1]
-	local var_20_1 = 1
-
-	if var_20_0 then
-		var_20_1 = var_20_0.startPos - arg_20_0._settings.blockInterval
-	end
-
-	local var_20_2 = var_20_1 - arg_20_1.endPos
-	local var_20_3 = math.min(var_20_2, arg_20_0._settings.randomLength)
-	local var_20_4 = math.random() * var_20_3
-
-	arg_20_1.endPos = arg_20_1.endPos + var_20_4
-
-	local var_20_5 = var_20_2 - var_20_4
-
-	if var_20_5 > 0 and math.random() >= arg_20_0._settings.stayProb then
-		local var_20_6 = var_20_5 * math.random()
-
-		arg_20_1.startPos = arg_20_1.startPos + var_20_6
-		arg_20_1.endPos = arg_20_1.endPos + var_20_6
+		self:growSingleBlock(curBlock, blocks, i)
 	end
 end
 
-function var_0_0.sortBlockWithPos(arg_21_0, arg_21_1)
-	return arg_21_0.startPos < arg_21_1.startPos
+function ActivityWarmUpGameModel:growSingleBlock(curBlock, blocks, index)
+	local next = blocks[index + 1]
+	local bound = 1
+
+	if next then
+		bound = next.startPos - self._settings.blockInterval
+	end
+
+	local randomSpace = bound - curBlock.endPos
+	local expandSpace = math.min(randomSpace, self._settings.randomLength)
+	local expandValue = math.random() * expandSpace
+
+	curBlock.endPos = curBlock.endPos + expandValue
+	randomSpace = randomSpace - expandValue
+
+	if randomSpace > 0 then
+		local rnd = math.random()
+
+		if rnd >= self._settings.stayProb then
+			local offset = randomSpace * math.random()
+
+			curBlock.startPos = curBlock.startPos + offset
+			curBlock.endPos = curBlock.endPos + offset
+		end
+	end
 end
 
-function var_0_0.checkParamAvalid(arg_22_0)
-	if (arg_22_0._settings.minBlock + arg_22_0._settings.blockInterval) * arg_22_0._settings.blockCount >= 1 then
+function ActivityWarmUpGameModel.sortBlockWithPos(a, b)
+	return a.startPos < b.startPos
+end
+
+function ActivityWarmUpGameModel:checkParamAvalid()
+	local maxInterval = self._settings.minBlock + self._settings.blockInterval
+
+	if maxInterval * self._settings.blockCount >= 1 then
 		logError("generate param error, min interval too large!")
 
 		return false
@@ -239,6 +248,6 @@ function var_0_0.checkParamAvalid(arg_22_0)
 	return true
 end
 
-var_0_0.instance = var_0_0.New()
+ActivityWarmUpGameModel.instance = ActivityWarmUpGameModel.New()
 
-return var_0_0
+return ActivityWarmUpGameModel

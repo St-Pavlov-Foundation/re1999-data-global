@@ -1,355 +1,372 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/VersionActivity1_8FactoryBlueprintView.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryBlueprintView", BaseView)
-local var_0_1 = 1
+module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryBlueprintView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._factoryAnimator = gohelper.findChildComponent(arg_1_0.viewGO, "factory", typeof(UnityEngine.Animator))
+local VersionActivity1_8FactoryBlueprintView = class("VersionActivity1_8FactoryBlueprintView", BaseView)
+local REWARD_HAS_GET_ANIM_TIME = 1
 
-	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "factory")
+function VersionActivity1_8FactoryBlueprintView:onInitView()
+	self._factoryAnimator = gohelper.findChildComponent(self.viewGO, "factory", typeof(UnityEngine.Animator))
 
-	arg_1_0._factoryAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(var_1_0)
-	arg_1_0._gocomposite = gohelper.findChild(arg_1_0.viewGO, "factory/#go_composite")
-	arg_1_0._btncomposite = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "factory/#go_composite")
-	arg_1_0._btnbubble = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "factory/#btn_bubble", AudioEnum.UI.Act157GetBubbleReward)
-	arg_1_0._gobubble = gohelper.findChild(arg_1_0.viewGO, "factory/#btn_bubble")
-	arg_1_0._simagecangeticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "factory/#btn_bubble/icon")
-	arg_1_0._gobubbletime = gohelper.findChild(arg_1_0.viewGO, "factory/#btn_bubble/finishing/time")
-	arg_1_0._txtbubbletime = gohelper.findChildText(arg_1_0.viewGO, "factory/#btn_bubble/finishing/time/#txt_time")
-	arg_1_0._gobubblenum = gohelper.findChild(arg_1_0.viewGO, "factory/#btn_bubble/finishing/num")
-	arg_1_0._txtbubblenum = gohelper.findChildText(arg_1_0.viewGO, "factory/#btn_bubble/finishing/num/#txt_num")
-	arg_1_0._gobubblecanget = gohelper.findChild(arg_1_0.viewGO, "factory/#btn_bubble/canget")
-	arg_1_0._gorewardwindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardwindow")
-	arg_1_0._rewardwindowAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0._gorewardwindow)
-	arg_1_0._btnclosereward = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#go_rewardwindow")
-	arg_1_0._sliderreward = gohelper.findChildSlider(arg_1_0.viewGO, "#go_rewardwindow/#go_progress/slider")
-	arg_1_0._btnreward = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_reward")
-	arg_1_0._btnrewardAnimator = gohelper.findChildComponent(arg_1_0.viewGO, "#btn_reward", typeof(UnityEngine.Animator))
-	arg_1_0._goRewardReddot = gohelper.findChild(arg_1_0.viewGO, "#btn_reward/#go_reddot")
+	local goFactory = gohelper.findChild(self.viewGO, "factory")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._factoryAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(goFactory)
+	self._gocomposite = gohelper.findChild(self.viewGO, "factory/#go_composite")
+	self._btncomposite = gohelper.findChildClickWithDefaultAudio(self.viewGO, "factory/#go_composite")
+	self._btnbubble = gohelper.findChildButtonWithAudio(self.viewGO, "factory/#btn_bubble", AudioEnum.UI.Act157GetBubbleReward)
+	self._gobubble = gohelper.findChild(self.viewGO, "factory/#btn_bubble")
+	self._simagecangeticon = gohelper.findChildSingleImage(self.viewGO, "factory/#btn_bubble/icon")
+	self._gobubbletime = gohelper.findChild(self.viewGO, "factory/#btn_bubble/finishing/time")
+	self._txtbubbletime = gohelper.findChildText(self.viewGO, "factory/#btn_bubble/finishing/time/#txt_time")
+	self._gobubblenum = gohelper.findChild(self.viewGO, "factory/#btn_bubble/finishing/num")
+	self._txtbubblenum = gohelper.findChildText(self.viewGO, "factory/#btn_bubble/finishing/num/#txt_num")
+	self._gobubblecanget = gohelper.findChild(self.viewGO, "factory/#btn_bubble/canget")
+	self._gorewardwindow = gohelper.findChild(self.viewGO, "#go_rewardwindow")
+	self._rewardwindowAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self._gorewardwindow)
+	self._btnclosereward = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#go_rewardwindow")
+	self._sliderreward = gohelper.findChildSlider(self.viewGO, "#go_rewardwindow/#go_progress/slider")
+	self._btnreward = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#btn_reward")
+	self._btnrewardAnimator = gohelper.findChildComponent(self.viewGO, "#btn_reward", typeof(UnityEngine.Animator))
+	self._goRewardReddot = gohelper.findChild(self.viewGO, "#btn_reward/#go_reddot")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnbubble:AddClickListener(arg_2_0._btnbubbleOnClick, arg_2_0)
-	arg_2_0._btncomposite:AddClickListener(arg_2_0._btncompositeOnClick, arg_2_0)
-	arg_2_0._btnreward:AddClickListener(arg_2_0._btnrewardOnClick, arg_2_0)
-	arg_2_0._btnclosereward:AddClickListener(arg_2_0._btncloserewardOnClick, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, arg_2_0.onRepairComponent, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, arg_2_0.refreshBubble, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157OnGetComponentReward, arg_2_0.onGetRepairReward, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+function VersionActivity1_8FactoryBlueprintView:addEvents()
+	self._btnbubble:AddClickListener(self._btnbubbleOnClick, self)
+	self._btncomposite:AddClickListener(self._btncompositeOnClick, self)
+	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
+	self._btnclosereward:AddClickListener(self._btncloserewardOnClick, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, self.onRepairComponent, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, self.refreshBubble, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157OnGetComponentReward, self.onGetRepairReward, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnbubble:RemoveClickListener()
-	arg_3_0._btncomposite:RemoveClickListener()
-	arg_3_0._btnreward:RemoveClickListener()
-	arg_3_0._btnclosereward:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, arg_3_0.onRepairComponent, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, arg_3_0.refreshBubble, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157OnGetComponentReward, arg_3_0.onGetRepairReward, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
+function VersionActivity1_8FactoryBlueprintView:removeEvents()
+	self._btnbubble:RemoveClickListener()
+	self._btncomposite:RemoveClickListener()
+	self._btnreward:RemoveClickListener()
+	self._btnclosereward:RemoveClickListener()
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, self.onRepairComponent, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, self.refreshBubble, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157OnGetComponentReward, self.onGetRepairReward, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
-function var_0_0._btnbubbleOnClick(arg_4_0)
+function VersionActivity1_8FactoryBlueprintView:_btnbubbleOnClick()
 	Activity157Controller.instance:getFactoryProduction()
 end
 
-function var_0_0._btncompositeOnClick(arg_5_0)
-	if Activity157Model.instance:getIsFirstComponentRepair() then
+function VersionActivity1_8FactoryBlueprintView:_btncompositeOnClick()
+	local isFirstComponentRepair = Activity157Model.instance:getIsFirstComponentRepair()
+
+	if isFirstComponentRepair then
 		Activity157Controller.instance:openCompositeView()
 	else
 		GameFacade.showToast(ToastEnum.V1a8Activity157NotUnlockFactoryBlueprint)
 	end
 end
 
-function var_0_0._btnrewardOnClick(arg_6_0)
-	arg_6_0:refreshRewardProgress()
-	gohelper.setActive(arg_6_0._gorewardwindow, true)
-	arg_6_0._rewardwindowAnimatorPlayer:Play("open")
+function VersionActivity1_8FactoryBlueprintView:_btnrewardOnClick()
+	self:refreshRewardProgress()
+	gohelper.setActive(self._gorewardwindow, true)
+	self._rewardwindowAnimatorPlayer:Play("open")
 
-	local var_6_0 = Activity157Model.instance:getLastArchiveRewardComponent()
+	local lastArchiveRewardComponent = Activity157Model.instance:getLastArchiveRewardComponent()
 
-	if var_6_0 then
-		Activity157Rpc.instance:sendAct157GainMilestoneRewardRequest(arg_6_0.actId, var_6_0, arg_6_0.refreshRewardProgress, arg_6_0)
+	if lastArchiveRewardComponent then
+		Activity157Rpc.instance:sendAct157GainMilestoneRewardRequest(self.actId, lastArchiveRewardComponent, self.refreshRewardProgress, self)
 	end
 end
 
-function var_0_0._btncloserewardOnClick(arg_7_0)
-	arg_7_0._rewardwindowAnimatorPlayer:Play("close", arg_7_0.hideRewardWindow, arg_7_0)
+function VersionActivity1_8FactoryBlueprintView:_btncloserewardOnClick()
+	self._rewardwindowAnimatorPlayer:Play("close", self.hideRewardWindow, self)
 end
 
-function var_0_0.hideRewardWindow(arg_8_0)
-	gohelper.setActive(arg_8_0._gorewardwindow, false)
+function VersionActivity1_8FactoryBlueprintView:hideRewardWindow()
+	gohelper.setActive(self._gorewardwindow, false)
 end
 
-function var_0_0.onRepairComponent(arg_9_0)
-	local var_9_0 = ViewMgr.instance:getOpenViewNameList()
+function VersionActivity1_8FactoryBlueprintView:onRepairComponent()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
+	local topView = viewNameList[#viewNameList]
 
-	if var_9_0[#var_9_0] ~= arg_9_0.viewName then
-		arg_9_0._waitOnRepairComponent = true
+	if topView ~= self.viewName then
+		self._waitOnRepairComponent = true
 	else
-		arg_9_0._waitOnRepairComponent = false
+		self._waitOnRepairComponent = false
 
-		arg_9_0:checkFactoryAnim()
-		arg_9_0:refresh()
+		self:checkFactoryAnim()
+		self:refresh()
 	end
 end
 
-function var_0_0.onGetRepairReward(arg_10_0, arg_10_1)
-	arg_10_0._rewardsMaterials = arg_10_1
+function VersionActivity1_8FactoryBlueprintView:onGetRepairReward(materials)
+	self._rewardsMaterials = materials
 
-	arg_10_0:refreshRepairReward(true)
+	self:refreshRepairReward(true)
 end
 
-function var_0_0._onCloseView(arg_11_0, arg_11_1)
-	if not arg_11_0._waitOnRepairComponent then
+function VersionActivity1_8FactoryBlueprintView:_onCloseView(viewName)
+	if not self._waitOnRepairComponent then
 		return
 	end
 
-	local var_11_0 = ViewMgr.instance:getOpenViewNameList()
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
+	local topView = viewNameList[#viewNameList]
 
-	if var_11_0[#var_11_0] ~= arg_11_0.viewName then
+	if topView ~= self.viewName then
 		return
 	end
 
-	arg_11_0:onRepairComponent()
+	self:onRepairComponent()
 
-	if Activity157Model.instance:getIsFirstComponentRepair() then
+	local isFirstComponentRepair = Activity157Model.instance:getIsFirstComponentRepair()
+
+	if isFirstComponentRepair then
 		Activity157Controller.instance:dispatchEvent(Activity157Event.GuideHasRepairFirstComponent)
 	end
 
-	arg_11_0._waitOnRepairComponent = false
+	self._waitOnRepairComponent = false
 end
 
-function var_0_0._editableInitView(arg_12_0)
-	arg_12_0.actId = Activity157Model.instance:getActId()
+function VersionActivity1_8FactoryBlueprintView:_editableInitView()
+	self.actId = Activity157Model.instance:getActId()
 
-	local var_12_0 = Activity157Config.instance:getComponentIdList(arg_12_0.actId)
-	local var_12_1 = #var_12_0
+	local componentIdList = Activity157Config.instance:getComponentIdList(self.actId)
+	local partCount = #componentIdList
 
-	arg_12_0.partItemList = {}
-	arg_12_0.rewardWindowItemList = {}
+	self.partItemList = {}
+	self.rewardWindowItemList = {}
 
-	for iter_12_0 = 1, var_12_1 do
-		local var_12_2 = var_12_0[iter_12_0]
-		local var_12_3 = gohelper.findChild(arg_12_0.viewGO, "factory/part_" .. iter_12_0)
+	for i = 1, partCount do
+		local componentId = componentIdList[i]
+		local partGo = gohelper.findChild(self.viewGO, "factory/part_" .. i)
 
-		if var_12_3 then
-			local var_12_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_3, VersionActivity1_8FactoryBlueprintPartItem, var_12_2)
+		if partGo then
+			local partItem = MonoHelper.addNoUpdateLuaComOnceToGo(partGo, VersionActivity1_8FactoryBlueprintPartItem, componentId)
 
-			table.insert(arg_12_0.partItemList, var_12_4)
+			table.insert(self.partItemList, partItem)
 		end
 
-		local var_12_5 = gohelper.findChild(arg_12_0.viewGO, "#go_rewardwindow/#go_progress/point/" .. iter_12_0)
-		local var_12_6 = gohelper.findChild(arg_12_0.viewGO, "#go_rewardwindow/layout/item" .. iter_12_0)
+		local progressPointGo = gohelper.findChild(self.viewGO, "#go_rewardwindow/#go_progress/point/" .. i)
+		local rewardItemGo = gohelper.findChild(self.viewGO, "#go_rewardwindow/layout/item" .. i)
 
-		if var_12_6 then
-			local var_12_7 = VersionActivity1_8FactoryBlueprintRewardItem.New(var_12_6, var_12_2, var_12_5)
+		if rewardItemGo then
+			local rewardItem = VersionActivity1_8FactoryBlueprintRewardItem.New(rewardItemGo, componentId, progressPointGo)
 
-			table.insert(arg_12_0.rewardWindowItemList, var_12_7)
+			table.insert(self.rewardWindowItemList, rewardItem)
 		end
 	end
 
-	local var_12_8 = Activity157Config.instance:getAct157Const(arg_12_0.actId, Activity157Enum.ConstId.FactoryCompositeCost)
-	local var_12_9 = var_12_8 and string.splitToNumber(var_12_8, "#")
+	local strProductionItem = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FactoryCompositeCost)
+	local productionParam = strProductionItem and string.splitToNumber(strProductionItem, "#")
 
-	if var_12_9 then
-		local var_12_10, var_12_11 = ItemModel.instance:getItemConfigAndIcon(var_12_9[1], var_12_9[2])
+	if productionParam then
+		local _, icon = ItemModel.instance:getItemConfigAndIcon(productionParam[1], productionParam[2])
 
-		if var_12_11 then
-			arg_12_0._simagecangeticon:LoadImage(var_12_11)
+		if icon then
+			self._simagecangeticon:LoadImage(icon)
 		end
 	end
 
-	arg_12_0:hideRewardWindow()
-	RedDotController.instance:addRedDot(arg_12_0._goRewardReddot, RedDotEnum.DotNode.V1a8DungeonFactoryRepairReward, arg_12_0.actId, arg_12_0.checkRewardReddot, arg_12_0)
+	self:hideRewardWindow()
+	RedDotController.instance:addRedDot(self._goRewardReddot, RedDotEnum.DotNode.V1a8DungeonFactoryRepairReward, self.actId, self.checkRewardReddot, self)
 end
 
-function var_0_0.checkRewardReddot(arg_13_0, arg_13_1)
-	arg_13_1:defaultRefreshDot()
+function VersionActivity1_8FactoryBlueprintView:checkRewardReddot(redDotIcon)
+	redDotIcon:defaultRefreshDot()
 
-	if arg_13_1.show then
-		arg_13_0._btnrewardAnimator:Play("receive", 0, 0)
+	if redDotIcon.show then
+		self._btnrewardAnimator:Play("receive", 0, 0)
 	else
-		arg_13_0._btnrewardAnimator:Play("open", 0, 1)
+		self._btnrewardAnimator:Play("open", 0, 1)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
+function VersionActivity1_8FactoryBlueprintView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_15_0)
-	arg_15_0:checkFactoryAnim()
-	arg_15_0:refresh()
-	arg_15_0:everySecondCall()
-	TaskDispatcher.runRepeat(arg_15_0.everySecondCall, arg_15_0, 1)
+function VersionActivity1_8FactoryBlueprintView:onOpen()
+	self:checkFactoryAnim()
+	self:refresh()
+	self:everySecondCall()
+	TaskDispatcher.runRepeat(self.everySecondCall, self, 1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act157OpenBlueprintView)
 
-	if Activity157Model.instance:getIsFirstComponentRepair() then
+	local isFirstComponentRepair = Activity157Model.instance:getIsFirstComponentRepair()
+
+	if isFirstComponentRepair then
 		Activity157Controller.instance:dispatchEvent(Activity157Event.GuideHasRepairFirstComponent)
 	end
 end
 
-function var_0_0.checkFactoryAnim(arg_16_0)
-	if not Activity157Model.instance:isAllComponentRepair() then
+function VersionActivity1_8FactoryBlueprintView:checkFactoryAnim()
+	local isAllComponentRepair = Activity157Model.instance:isAllComponentRepair()
+
+	if not isAllComponentRepair then
 		return
 	end
 
-	local var_16_0 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedBlueprintAllFinish
+	local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedBlueprintAllFinish
+	local hasPlayed = Activity157Model.instance:getHasPlayedAnim(prefsKey)
 
-	if Activity157Model.instance:getHasPlayedAnim(var_16_0) then
-		arg_16_0._factoryAnimator:Play("loop")
+	if hasPlayed then
+		self._factoryAnimator:Play("loop")
 	else
-		arg_16_0._factoryAnimator:Play("finish", 0, 0)
-		Activity157Model.instance:setHasPlayedAnim(var_16_0)
+		self._factoryAnimator:Play("finish", 0, 0)
+		Activity157Model.instance:setHasPlayedAnim(prefsKey)
 	end
 end
 
-function var_0_0.refreshRewardProgress(arg_17_0)
-	local var_17_0 = 0
-	local var_17_1 = Activity157Model.instance:getLastHasGotRewardComponent()
+function VersionActivity1_8FactoryBlueprintView:refreshRewardProgress()
+	local progress = 0
+	local lastGotRewardComponent = Activity157Model.instance:getLastHasGotRewardComponent()
 
-	if var_17_1 then
-		local var_17_2 = Activity157Config.instance:getComponentIdList(arg_17_0.actId)
-		local var_17_3 = #var_17_2
+	if lastGotRewardComponent then
+		local componentIdList = Activity157Config.instance:getComponentIdList(self.actId)
+		local allComponentCount = #componentIdList
 
-		for iter_17_0, iter_17_1 in ipairs(var_17_2) do
-			if var_17_1 == iter_17_1 then
-				var_17_0 = (iter_17_0 - 1) / (var_17_3 - 1)
+		for i, componentId in ipairs(componentIdList) do
+			if lastGotRewardComponent == componentId then
+				progress = (i - 1) / (allComponentCount - 1)
 
 				break
 			end
 		end
 	end
 
-	arg_17_0._sliderreward:SetValue(math.max(var_17_0, 0))
+	self._sliderreward:SetValue(math.max(progress, 0))
 end
 
-function var_0_0.refresh(arg_18_0)
-	if Activity157Model.instance:getIsFirstComponentRepair() then
-		local var_18_0 = Activity157Model.instance:isAllComponentRepair()
+function VersionActivity1_8FactoryBlueprintView:refresh()
+	local isFirstComponentRepair = Activity157Model.instance:getIsFirstComponentRepair()
 
-		gohelper.setActive(arg_18_0._gocomposite, not var_18_0)
-		arg_18_0.viewContainer:setCurrencyType({
+	if isFirstComponentRepair then
+		local isAllComponentRepair = Activity157Model.instance:isAllComponentRepair()
+
+		gohelper.setActive(self._gocomposite, not isAllComponentRepair)
+		self.viewContainer:setCurrencyType({
 			CurrencyEnum.CurrencyType.V1a8FactoryPart,
 			CurrencyEnum.CurrencyType.V1a8FactoryRawMat
 		})
 	else
-		gohelper.setActive(arg_18_0._gocomposite, false)
-		arg_18_0.viewContainer:setCurrencyType({
+		gohelper.setActive(self._gocomposite, false)
+		self.viewContainer:setCurrencyType({
 			CurrencyEnum.CurrencyType.V1a8FactoryPart
 		})
 	end
 
-	arg_18_0:refreshPartItem()
-	arg_18_0:refreshBubble()
-	arg_18_0:refreshRepairReward()
+	self:refreshPartItem()
+	self:refreshBubble()
+	self:refreshRepairReward()
 end
 
-function var_0_0.refreshPartItem(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.partItemList) do
-		iter_19_1:refresh()
+function VersionActivity1_8FactoryBlueprintView:refreshPartItem()
+	for _, partItem in ipairs(self.partItemList) do
+		partItem:refresh()
 	end
 end
 
-function var_0_0.refreshBubble(arg_20_0)
-	local var_20_0 = Activity157Model.instance:getFactoryNextRecoverCountdown()
-	local var_20_1 = string.nilorempty(var_20_0)
-	local var_20_2 = Activity157Model.instance:getFactoryProductionNum()
-	local var_20_3 = var_20_2 > 0
-	local var_20_4 = not var_20_3 and var_20_1
+function VersionActivity1_8FactoryBlueprintView:refreshBubble()
+	local nextRecoverTime = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local isLastDay = string.nilorempty(nextRecoverTime)
+	local canGetNum = Activity157Model.instance:getFactoryProductionNum()
+	local isCanGet = canGetNum > 0
+	local isFinished = not isCanGet and isLastDay
 
-	gohelper.setActive(arg_20_0._gobubble, not var_20_4)
+	gohelper.setActive(self._gobubble, not isFinished)
 
-	if var_20_4 then
+	if isFinished then
 		return
 	end
 
-	arg_20_0:refreshBubbleTime()
+	self:refreshBubbleTime()
 
-	local var_20_5 = Activity157Config.instance:getAct157FactoryProductCapacity(arg_20_0.actId, Activity157Enum.ConstId.FactoryProductCapacity)
-	local var_20_6 = var_20_5 <= var_20_2
+	local fullCapacity = Activity157Config.instance:getAct157FactoryProductCapacity(self.actId, Activity157Enum.ConstId.FactoryProductCapacity)
+	local isFull = fullCapacity <= canGetNum
 
-	gohelper.setActive(arg_20_0._gobubblecanget, var_20_6)
-	gohelper.setActive(arg_20_0._gobubblenum, not var_20_6)
+	gohelper.setActive(self._gobubblecanget, isFull)
+	gohelper.setActive(self._gobubblenum, not isFull)
 
-	if var_20_6 then
+	if isFull then
 		return
 	end
 
-	local var_20_7 = "#F5744D"
+	local color = "#F5744D"
 
-	if var_20_3 then
-		var_20_7 = "#88CB7F"
+	if isCanGet then
+		color = "#88CB7F"
 	end
 
-	arg_20_0._txtbubblenum.text = string.format("<color=%s>%s</color>/%s", var_20_7, var_20_2, var_20_5)
+	self._txtbubblenum.text = string.format("<color=%s>%s</color>/%s", color, canGetNum, fullCapacity)
 end
 
-function var_0_0.refreshBubbleTime(arg_21_0)
-	local var_21_0 = Activity157Model.instance:getFactoryNextRecoverCountdown()
-	local var_21_1 = string.nilorempty(var_21_0)
-	local var_21_2 = Activity157Model.instance:getFactoryProductionNum() >= Activity157Config.instance:getAct157FactoryProductCapacity(arg_21_0.actId, Activity157Enum.ConstId.FactoryProductCapacity)
-	local var_21_3 = not var_21_1 and not var_21_2
+function VersionActivity1_8FactoryBlueprintView:refreshBubbleTime()
+	local nextRecoverTime = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local isLastDay = string.nilorempty(nextRecoverTime)
+	local canGetNum = Activity157Model.instance:getFactoryProductionNum()
+	local fullCapacity = Activity157Config.instance:getAct157FactoryProductCapacity(self.actId, Activity157Enum.ConstId.FactoryProductCapacity)
+	local isFull = fullCapacity <= canGetNum
+	local isShowTime = not isLastDay and not isFull
 
-	gohelper.setActive(arg_21_0._gobubbletime, var_21_3)
+	gohelper.setActive(self._gobubbletime, isShowTime)
 
-	if var_21_1 then
+	if isLastDay then
 		return
 	end
 
-	arg_21_0._txtbubbletime.text = var_21_0
+	self._txtbubbletime.text = nextRecoverTime
 end
 
-function var_0_0.refreshRepairReward(arg_22_0, arg_22_1)
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.rewardWindowItemList) do
-		iter_22_1:refresh(arg_22_1)
+function VersionActivity1_8FactoryBlueprintView:refreshRepairReward(isPlayAnim)
+	for _, rewardItem in ipairs(self.rewardWindowItemList) do
+		rewardItem:refresh(isPlayAnim)
 	end
 
-	if arg_22_0._rewardsMaterials then
+	if self._rewardsMaterials then
 		AudioMgr.instance:trigger(AudioEnum.RewardPoint.play_ui_track_achievement_single)
-		TaskDispatcher.cancelTask(arg_22_0._showMaterials, arg_22_0)
+		TaskDispatcher.cancelTask(self._showMaterials, self)
 		UIBlockMgr.instance:startBlock(VersionActivity1_8DungeonEnum.BlockKey.GetComponentRepairReward)
-		TaskDispatcher.runDelay(arg_22_0._showMaterials, arg_22_0, var_0_1)
+		TaskDispatcher.runDelay(self._showMaterials, self, REWARD_HAS_GET_ANIM_TIME)
 	end
 end
 
-function var_0_0._showMaterials(arg_23_0)
-	RoomController.instance:popUpRoomBlockPackageView(arg_23_0._rewardsMaterials)
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, arg_23_0._rewardsMaterials)
+function VersionActivity1_8FactoryBlueprintView:_showMaterials()
+	RoomController.instance:popUpRoomBlockPackageView(self._rewardsMaterials)
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self._rewardsMaterials)
 
-	arg_23_0._rewardsMaterials = nil
+	self._rewardsMaterials = nil
 
 	UIBlockMgr.instance:endBlock(VersionActivity1_8DungeonEnum.BlockKey.GetComponentRepairReward)
 end
 
-function var_0_0.everySecondCall(arg_24_0)
-	arg_24_0:refreshBubbleTime()
+function VersionActivity1_8FactoryBlueprintView:everySecondCall()
+	self:refreshBubbleTime()
 end
 
-function var_0_0.onClose(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0.everySecondCall, arg_25_0)
+function VersionActivity1_8FactoryBlueprintView:onClose()
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 
-	arg_25_0._waitOnRepairComponent = false
+	self._waitOnRepairComponent = false
 
 	UIBlockMgr.instance:endBlock(VersionActivity1_8DungeonEnum.BlockKey.GetComponentRepairReward)
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0.partItemList) do
-		iter_26_1:destroy()
+function VersionActivity1_8FactoryBlueprintView:onDestroyView()
+	for _, partItem in ipairs(self.partItemList) do
+		partItem:destroy()
 	end
 
-	for iter_26_2, iter_26_3 in ipairs(arg_26_0.rewardWindowItemList) do
-		iter_26_3:destroy()
+	for _, rewardItem in ipairs(self.rewardWindowItemList) do
+		rewardItem:destroy()
 	end
 
-	arg_26_0._simagecangeticon:UnLoadImage()
+	self._simagecangeticon:UnLoadImage()
 end
 
-return var_0_0
+return VersionActivity1_8FactoryBlueprintView

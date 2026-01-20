@@ -1,153 +1,159 @@
-﻿module("modules.logic.guide.model.GuideMO", package.seeall)
+﻿-- chunkname: @modules/logic/guide/model/GuideMO.lua
 
-local var_0_0 = pureTable("GuideMO")
+module("modules.logic.guide.model.GuideMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.id = 0
-	arg_1_0.serverStepId = -1
-	arg_1_0.clientStepId = -1
-	arg_1_0.currGuideId = -1
-	arg_1_0.currStepId = -1
-	arg_1_0.isFinish = false
-	arg_1_0.isExceptionFinish = false
-	arg_1_0.isJumpPass = false
-	arg_1_0.targetStepId = nil
-	arg_1_0._againStepCOs = nil
+local GuideMO = pureTable("GuideMO")
+
+function GuideMO:ctor()
+	self.id = 0
+	self.serverStepId = -1
+	self.clientStepId = -1
+	self.currGuideId = -1
+	self.currStepId = -1
+	self.isFinish = false
+	self.isExceptionFinish = false
+	self.isJumpPass = false
+	self.targetStepId = nil
+	self._againStepCOs = nil
 end
 
-function var_0_0.getCurStepCO(arg_2_0)
-	return (GuideConfig.instance:getStepCO(arg_2_0.currGuideId, arg_2_0.currStepId))
+function GuideMO:getCurStepCO()
+	local currStepCO = GuideConfig.instance:getStepCO(self.currGuideId, self.currStepId)
+
+	return currStepCO
 end
 
-function var_0_0.init(arg_3_0, arg_3_1)
-	arg_3_0.id = arg_3_1.guideId
-	arg_3_0.serverStepId = arg_3_1.stepId or 0
-	arg_3_0.clientStepId = arg_3_1.stepId or 0
+function GuideMO:init(guideInfo)
+	self.id = guideInfo.guideId
+	self.serverStepId = guideInfo.stepId or 0
+	self.clientStepId = guideInfo.stepId or 0
 
-	arg_3_0:_setCurrStep()
+	self:_setCurrStep()
 
-	arg_3_0.isFinish = arg_3_0.serverStepId == -1
+	self.isFinish = self.serverStepId == -1
 
-	local var_3_0 = GuideConfig.instance:getStepCO(arg_3_0.id, arg_3_0.currStepId)
+	local currStepCO = GuideConfig.instance:getStepCO(self.id, self.currStepId)
 
-	if var_3_0 ~= nil and string.nilorempty(var_3_0.againSteps) == false then
-		arg_3_0._againStepCOs = {}
+	if currStepCO ~= nil and string.nilorempty(currStepCO.againSteps) == false then
+		self._againStepCOs = {}
 
-		local var_3_1 = GameUtil.splitString2(var_3_0.againSteps, true, "|", "#")
+		local steps = GameUtil.splitString2(currStepCO.againSteps, true, "|", "#")
 
-		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
-			local var_3_2 = #iter_3_1 == 1 and arg_3_0.id or iter_3_1[1]
-			local var_3_3 = #iter_3_1 == 1 and iter_3_1[1] or iter_3_1[2]
-			local var_3_4 = GuideConfig.instance:getStepCO(var_3_2, var_3_3)
+		for _, oneStep in ipairs(steps) do
+			local guideId = #oneStep == 1 and self.id or oneStep[1]
+			local stepId = #oneStep == 1 and oneStep[1] or oneStep[2]
+			local stepCO = GuideConfig.instance:getStepCO(guideId, stepId)
 
-			if var_3_4 then
-				table.insert(arg_3_0._againStepCOs, var_3_4)
+			if stepCO then
+				table.insert(self._againStepCOs, stepCO)
 			else
-				logError("againSteps invalid: guide_" .. arg_3_0.id .. "_" .. var_3_0.stepId)
+				logError("againSteps invalid: guide_" .. self.id .. "_" .. currStepCO.stepId)
 			end
 		end
 
-		if #arg_3_0._againStepCOs > 0 then
-			arg_3_0.currGuideId = arg_3_0._againStepCOs[1].id
-			arg_3_0.currStepId = arg_3_0._againStepCOs[1].stepId
+		if #self._againStepCOs > 0 then
+			self.currGuideId = self._againStepCOs[1].id
+			self.currStepId = self._againStepCOs[1].stepId
 
-			table.remove(arg_3_0._againStepCOs, 1)
+			table.remove(self._againStepCOs, 1)
 		end
 	end
 end
 
-function var_0_0.exceptionFinishGuide(arg_4_0)
-	arg_4_0.serverStepId = -1
-	arg_4_0.clientStepId = -1
-	arg_4_0.currGuideId = -1
-	arg_4_0.currStepId = -1
-	arg_4_0.isFinish = true
-	arg_4_0.isExceptionFinish = true
+function GuideMO:exceptionFinishGuide()
+	self.serverStepId = -1
+	self.clientStepId = -1
+	self.currGuideId = -1
+	self.currStepId = -1
+	self.isFinish = true
+	self.isExceptionFinish = true
 end
 
-function var_0_0.updateGuide(arg_5_0, arg_5_1)
-	arg_5_0._againStepCOs = nil
-	arg_5_0.id = arg_5_1.guideId
-	arg_5_0.serverStepId = arg_5_1.stepId
+function GuideMO:updateGuide(guideInfo)
+	self._againStepCOs = nil
+	self.id = guideInfo.guideId
+	self.serverStepId = guideInfo.stepId
 
-	if arg_5_0.targetStepId then
-		arg_5_0.clientStepId = GuideConfig.instance:getPrevStepId(arg_5_0.id, arg_5_0.targetStepId)
-		arg_5_0.targetStepId = nil
-	elseif arg_5_0.isJumpPass then
-		arg_5_0.clientStepId = -1
-	elseif arg_5_1.stepId ~= -1 then
-		arg_5_0.clientStepId = arg_5_1.stepId
+	if self.targetStepId then
+		self.clientStepId = GuideConfig.instance:getPrevStepId(self.id, self.targetStepId)
+		self.targetStepId = nil
+	elseif self.isJumpPass then
+		self.clientStepId = -1
+	elseif guideInfo.stepId ~= -1 then
+		self.clientStepId = guideInfo.stepId
 	else
-		local var_5_0 = -1
-		local var_5_1 = GuideConfig.instance:getStepList(arg_5_0.id)
+		local targetClientStepId = -1
+		local stepCOList = GuideConfig.instance:getStepList(self.id)
 
-		if var_5_1[#var_5_1].keyStep ~= 1 then
-			for iter_5_0 = #var_5_1 - 1, 1, -1 do
-				local var_5_2 = var_5_1[iter_5_0]
+		if stepCOList[#stepCOList].keyStep ~= 1 then
+			for i = #stepCOList - 1, 1, -1 do
+				local oneStepCO = stepCOList[i]
 
-				if var_5_2.keyStep == 1 then
-					var_5_0 = var_5_2.stepId
+				if oneStepCO.keyStep == 1 then
+					targetClientStepId = oneStepCO.stepId
 
 					break
 				end
 			end
 		end
 
-		arg_5_0.clientStepId = var_5_0
+		self.clientStepId = targetClientStepId
 	end
 
-	arg_5_0:_setCurrStep()
+	self:_setCurrStep()
 
-	arg_5_0.isFinish = arg_5_0.serverStepId == -1
+	self.isFinish = self.serverStepId == -1
 end
 
-function var_0_0.setClientStep(arg_6_0, arg_6_1)
-	if (arg_6_0._againStepCOs and #arg_6_0._againStepCOs or 0) == 0 and arg_6_1 < arg_6_0.serverStepId then
-		arg_6_0.clientStepId = arg_6_0.serverStepId
+function GuideMO:setClientStep(stepId)
+	local interruptStepsCount = self._againStepCOs and #self._againStepCOs or 0
+
+	if interruptStepsCount == 0 and stepId < self.serverStepId then
+		self.clientStepId = self.serverStepId
 	else
-		arg_6_0.clientStepId = arg_6_1
+		self.clientStepId = stepId
 
-		local var_6_0 = GuideConfig.instance:getStepList(arg_6_0.id)
-		local var_6_1 = var_6_0 and var_6_0[#var_6_0]
+		local stepCOList = GuideConfig.instance:getStepList(self.id)
+		local lastStepCO = stepCOList and stepCOList[#stepCOList]
 
-		if var_6_1 and arg_6_0.clientStepId == var_6_1.stepId then
-			arg_6_0.clientStepId = -1
+		if lastStepCO and self.clientStepId == lastStepCO.stepId then
+			self.clientStepId = -1
 		end
 	end
 
-	arg_6_0:_setCurrStep()
+	self:_setCurrStep()
 end
 
-function var_0_0.gotoStep(arg_7_0, arg_7_1)
-	arg_7_0._againStepCOs = nil
-	arg_7_0.clientStepId = GuideConfig.instance:getPrevStepId(arg_7_0.id, arg_7_1)
+function GuideMO:gotoStep(stepId)
+	self._againStepCOs = nil
+	self.clientStepId = GuideConfig.instance:getPrevStepId(self.id, stepId)
 
-	arg_7_0:_setCurrStep()
+	self:_setCurrStep()
 end
 
-function var_0_0.toGotoStep(arg_8_0, arg_8_1)
-	arg_8_0._againStepCOs = nil
-	arg_8_0.targetStepId = arg_8_1
+function GuideMO:toGotoStep(stepId)
+	self._againStepCOs = nil
+	self.targetStepId = stepId
 end
 
-function var_0_0._setCurrStep(arg_9_0)
-	local var_9_0 = GuideConfig.instance:getStepList(arg_9_0.id)
+function GuideMO:_setCurrStep()
+	local stepCOList = GuideConfig.instance:getStepList(self.id)
 
-	arg_9_0.currGuideId = -1
-	arg_9_0.currStepId = -1
+	self.currGuideId = -1
+	self.currStepId = -1
 
-	if arg_9_0._againStepCOs and #arg_9_0._againStepCOs > 0 then
-		arg_9_0.currGuideId = arg_9_0._againStepCOs[1].id
-		arg_9_0.currStepId = arg_9_0._againStepCOs[1].stepId
+	if self._againStepCOs and #self._againStepCOs > 0 then
+		self.currGuideId = self._againStepCOs[1].id
+		self.currStepId = self._againStepCOs[1].stepId
 
-		table.remove(arg_9_0._againStepCOs, 1)
-	elseif arg_9_0.clientStepId == 0 then
-		arg_9_0.currGuideId = arg_9_0.id
-		arg_9_0.currStepId = var_9_0[1].stepId
-	elseif arg_9_0.clientStepId > 0 then
-		arg_9_0.currGuideId = arg_9_0.id
-		arg_9_0.currStepId = GuideConfig.instance:getNextStepId(arg_9_0.id, arg_9_0.clientStepId)
+		table.remove(self._againStepCOs, 1)
+	elseif self.clientStepId == 0 then
+		self.currGuideId = self.id
+		self.currStepId = stepCOList[1].stepId
+	elseif self.clientStepId > 0 then
+		self.currGuideId = self.id
+		self.currStepId = GuideConfig.instance:getNextStepId(self.id, self.clientStepId)
 	end
 end
 
-return var_0_0
+return GuideMO

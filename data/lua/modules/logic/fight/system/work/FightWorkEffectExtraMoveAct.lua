@@ -1,10 +1,12 @@
-﻿module("modules.logic.fight.system.work.FightWorkEffectExtraMoveAct", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkEffectExtraMoveAct.lua
 
-local var_0_0 = class("FightWorkEffectExtraMoveAct", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkEffectExtraMoveAct", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkEffectExtraMoveAct = class("FightWorkEffectExtraMoveAct", FightEffectBase)
+
+function FightWorkEffectExtraMoveAct:onStart()
 	FightController.instance:dispatchEvent(FightEvent.OnEffectExtraMoveAct)
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkEffectExtraMoveAct

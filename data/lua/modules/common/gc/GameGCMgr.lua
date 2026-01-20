@@ -1,132 +1,134 @@
-﻿module("modules.common.gc.GameGCMgr", package.seeall)
+﻿-- chunkname: @modules/common/gc/GameGCMgr.lua
 
-local var_0_0 = class("GameGCMgr")
+module("modules.common.gc.GameGCMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	LuaEventSystem.addEventMechanism(arg_1_0)
+local GameGCMgr = class("GameGCMgr")
 
-	arg_1_0.minInterval = 2
-	arg_1_0.minAudioGcInterval = 2
+function GameGCMgr:ctor()
+	LuaEventSystem.addEventMechanism(self)
+
+	self.minInterval = 2
+	self.minAudioGcInterval = 2
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0:addGCEvent()
+function GameGCMgr:init()
+	self:addGCEvent()
 end
 
-function var_0_0.addGCEvent(arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.FullGC, arg_3_0._fullGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.DelayFullGC, arg_3_0._delayFullGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.ResGC, arg_3_0._resGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.CancelDelayFullGC, arg_3_0._cancelDelayFullGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.StoryGC, arg_3_0._storyGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.AudioGC, arg_3_0._audioGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.DelayAudioGC, arg_3_0._delayAudioGC, arg_3_0)
-	arg_3_0:registerCallback(GameGCEvent.CancelDelayAudioGC, arg_3_0._cancelDelayAudioGC, arg_3_0)
+function GameGCMgr:addGCEvent()
+	self:registerCallback(GameGCEvent.FullGC, self._fullGC, self)
+	self:registerCallback(GameGCEvent.DelayFullGC, self._delayFullGC, self)
+	self:registerCallback(GameGCEvent.ResGC, self._resGC, self)
+	self:registerCallback(GameGCEvent.CancelDelayFullGC, self._cancelDelayFullGC, self)
+	self:registerCallback(GameGCEvent.StoryGC, self._storyGC, self)
+	self:registerCallback(GameGCEvent.AudioGC, self._audioGC, self)
+	self:registerCallback(GameGCEvent.DelayAudioGC, self._delayAudioGC, self)
+	self:registerCallback(GameGCEvent.CancelDelayAudioGC, self._cancelDelayAudioGC, self)
 end
 
-function var_0_0._fullGC(arg_4_0, arg_4_1)
-	if arg_4_0.lastCgTime and UnityEngine.Time.realtimeSinceStartup - arg_4_0.lastCgTime < arg_4_0.minInterval then
-		logNormal("GameGCMgr._fullGC, interval less than " .. arg_4_0.minInterval .. "s, cancel this gc call !!")
+function GameGCMgr:_fullGC(callGCObj)
+	if self.lastCgTime and UnityEngine.Time.realtimeSinceStartup - self.lastCgTime < self.minInterval then
+		logNormal("GameGCMgr._fullGC, interval less than " .. self.minInterval .. "s, cancel this gc call !!")
 
 		return
 	end
 
-	if arg_4_1 then
-		logNormal("GameGCMgr FullGC Called By " .. arg_4_1.__cname)
+	if callGCObj then
+		logNormal("GameGCMgr FullGC Called By " .. callGCObj.__cname)
 	else
 		logNormal("GameGCMgr FullGC !")
 	end
 
-	arg_4_0.lastCgTime = UnityEngine.Time.realtimeSinceStartup
+	self.lastCgTime = UnityEngine.Time.realtimeSinceStartup
 
 	SLFramework.UnityHelper.LuaGC()
-	arg_4_0:_resGC(arg_4_1)
-	arg_4_0:dispatchEvent(GameGCEvent.OnFullGC)
+	self:_resGC(callGCObj)
+	self:dispatchEvent(GameGCEvent.OnFullGC)
 end
 
-function var_0_0._storyGC(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		logNormal("GameGCMgr StoryGC Called By " .. arg_5_1.__cname)
+function GameGCMgr:_storyGC(callGCObj)
+	if callGCObj then
+		logNormal("GameGCMgr StoryGC Called By " .. callGCObj.__cname)
 	else
 		logNormal("GameGCMgr StoryGC !")
 	end
 
 	SLFramework.UnityHelper.LuaGC()
 	PostProcessingMgr.instance:ClearPPRenderRts()
-	arg_5_0:_tryDispose()
+	self:_tryDispose()
 	SLFramework.UnityHelper.ResGC()
 end
 
-function var_0_0._audioGC(arg_6_0, arg_6_1)
-	if arg_6_0._audioLastGcTime and UnityEngine.Time.realtimeSinceStartup - arg_6_0._audioLastGcTime < arg_6_0.minAudioGcInterval then
-		logNormal("GameGCMgr._audioGC, interval less than " .. arg_6_0.minAudioGcInterval .. "s, cancel this audio gc call !!")
+function GameGCMgr:_audioGC(callGCObj)
+	if self._audioLastGcTime and UnityEngine.Time.realtimeSinceStartup - self._audioLastGcTime < self.minAudioGcInterval then
+		logNormal("GameGCMgr._audioGC, interval less than " .. self.minAudioGcInterval .. "s, cancel this audio gc call !!")
 
 		return
 	end
 
-	if arg_6_1 then
-		logNormal("GameGCMgr AudioGC Called By " .. arg_6_1.__cname)
+	if callGCObj then
+		logNormal("GameGCMgr AudioGC Called By " .. callGCObj.__cname)
 	else
 		logNormal("GameGCMgr AudioGC !")
 	end
 
-	arg_6_0._audioLastGcTime = UnityEngine.Time.realtimeSinceStartup
+	self._audioLastGcTime = UnityEngine.Time.realtimeSinceStartup
 
 	AudioMgr.instance:clearUnusedBanks()
 end
 
-function var_0_0._resGC(arg_7_0, arg_7_1)
-	if arg_7_1 then
-		logNormal("GameGCMgr ResGC Called By " .. arg_7_1.__cname)
+function GameGCMgr:_resGC(callResGCObj)
+	if callResGCObj then
+		logNormal("GameGCMgr ResGC Called By " .. callResGCObj.__cname)
 	else
 		logNormal("GameGCMgr ResGC !")
 	end
 
 	AudioMgr.instance:clearUnusedBanks()
 	PostProcessingMgr.instance:ClearPPRenderRts()
-	arg_7_0:_tryDispose()
+	self:_tryDispose()
 	SLFramework.UnityHelper.ResGC()
 end
 
-function var_0_0._tryDispose(arg_8_0)
+function GameGCMgr:_tryDispose()
 	logNormal("GameGCMgr TryDispose!")
 	UISpriteSetMgr.instance:tryDispose()
 	LuaMonoContainer.tryDispose()
 	LuaNoUpdateMonoContainer.tryDispose()
 end
 
-function var_0_0._delayFullGC(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_2 then
-		logNormal("GameGCMgr DelayFullGC In " .. arg_9_1 .. " Second By " .. arg_9_2.__cname)
+function GameGCMgr:_delayFullGC(delay, callDelayGCObj)
+	if callDelayGCObj then
+		logNormal("GameGCMgr DelayFullGC In " .. delay .. " Second By " .. callDelayGCObj.__cname)
 	else
-		logNormal("GameGCMgr DelayFullGC In " .. arg_9_1 .. " Second")
+		logNormal("GameGCMgr DelayFullGC In " .. delay .. " Second")
 	end
 
-	TaskDispatcher.cancelTask(arg_9_0._fullGC, arg_9_0)
-	TaskDispatcher.runDelay(arg_9_0._fullGC, arg_9_0, arg_9_1)
+	TaskDispatcher.cancelTask(self._fullGC, self)
+	TaskDispatcher.runDelay(self._fullGC, self, delay)
 end
 
-function var_0_0._cancelDelayFullGC(arg_10_0)
+function GameGCMgr:_cancelDelayFullGC()
 	logNormal("GameGCMgr CancelDelayFullGC !")
-	TaskDispatcher.cancelTask(arg_10_0._fullGC, arg_10_0)
+	TaskDispatcher.cancelTask(self._fullGC, self)
 end
 
-function var_0_0._delayAudioGC(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_2 then
-		logNormal("GameGCMgr._delayAudioGC In " .. arg_11_1 .. " Second By " .. arg_11_2.__cname)
+function GameGCMgr:_delayAudioGC(delay, callObj)
+	if callObj then
+		logNormal("GameGCMgr._delayAudioGC In " .. delay .. " Second By " .. callObj.__cname)
 	else
-		logNormal("GameGCMgr._delayAudioGC In " .. arg_11_1 .. " Second")
+		logNormal("GameGCMgr._delayAudioGC In " .. delay .. " Second")
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0._audioGC, arg_11_0)
-	TaskDispatcher.runDelay(arg_11_0._audioGC, arg_11_0, arg_11_1)
+	TaskDispatcher.cancelTask(self._audioGC, self)
+	TaskDispatcher.runDelay(self._audioGC, self, delay)
 end
 
-function var_0_0._cancelDelayAudioGC(arg_12_0)
+function GameGCMgr:_cancelDelayAudioGC()
 	logNormal("GameGCMgr._cancelDelayAudioGC !")
-	TaskDispatcher.cancelTask(arg_12_0._audioGC, arg_12_0)
+	TaskDispatcher.cancelTask(self._audioGC, self)
 end
 
-var_0_0.instance = var_0_0.New()
+GameGCMgr.instance = GameGCMgr.New()
 
-return var_0_0
+return GameGCMgr

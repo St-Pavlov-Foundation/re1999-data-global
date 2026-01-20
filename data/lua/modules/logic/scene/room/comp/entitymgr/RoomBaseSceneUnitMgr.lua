@@ -1,17 +1,19 @@
-﻿module("modules.logic.scene.room.comp.entitymgr.RoomBaseSceneUnitMgr", package.seeall)
+﻿-- chunkname: @modules/logic/scene/room/comp/entitymgr/RoomBaseSceneUnitMgr.lua
 
-local var_0_0 = class("RoomBaseSceneUnitMgr", BaseSceneUnitMgr)
+module("modules.logic.scene.room.comp.entitymgr.RoomBaseSceneUnitMgr", package.seeall)
 
-function var_0_0.addUnit(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1:getTag()
-	local var_1_1 = arg_1_0._tagUnitDict[var_1_0]
+local RoomBaseSceneUnitMgr = class("RoomBaseSceneUnitMgr", BaseSceneUnitMgr)
 
-	if not var_1_1 then
-		var_1_1 = {}
-		arg_1_0._tagUnitDict[var_1_0] = var_1_1
+function RoomBaseSceneUnitMgr:addUnit(unit)
+	local tag = unit:getTag()
+	local tagUnits = self._tagUnitDict[tag]
+
+	if not tagUnits then
+		tagUnits = {}
+		self._tagUnitDict[tag] = tagUnits
 	end
 
-	var_1_1[arg_1_1.id] = arg_1_1
+	tagUnits[unit.id] = unit
 end
 
-return var_0_0
+return RoomBaseSceneUnitMgr

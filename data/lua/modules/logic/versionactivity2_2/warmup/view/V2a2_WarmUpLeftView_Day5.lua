@@ -1,158 +1,160 @@
-﻿module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day5", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/warmup/view/V2a2_WarmUpLeftView_Day5.lua
 
-local var_0_0 = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
-local var_0_1 = class("V2a2_WarmUpLeftView_Day5", var_0_0)
+module("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_Day5", package.seeall)
 
-function var_0_1.onInitView(arg_1_0)
-	arg_1_0._simageicon1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "before/#simage_icon1")
-	arg_1_0._goValidArea = gohelper.findChild(arg_1_0.viewGO, "before/#go_ValidArea")
-	arg_1_0._btn1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "before/#btn_1")
-	arg_1_0._simageicon2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "after/#simage_icon2")
+local Base = require("modules.logic.versionactivity2_2.warmup.view.V2a2_WarmUpLeftView_DayBase")
+local V2a2_WarmUpLeftView_Day5 = class("V2a2_WarmUpLeftView_Day5", Base)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a2_WarmUpLeftView_Day5:onInitView()
+	self._simageicon1 = gohelper.findChildSingleImage(self.viewGO, "before/#simage_icon1")
+	self._goValidArea = gohelper.findChild(self.viewGO, "before/#go_ValidArea")
+	self._btn1 = gohelper.findChildButtonWithAudio(self.viewGO, "before/#btn_1")
+	self._simageicon2 = gohelper.findChildSingleImage(self.viewGO, "after/#simage_icon2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_1.addEvents(arg_2_0)
-	arg_2_0._btn1:AddClickListener(arg_2_0._btn1OnClick, arg_2_0)
+function V2a2_WarmUpLeftView_Day5:addEvents()
+	self._btn1:AddClickListener(self._btn1OnClick, self)
 end
 
-function var_0_1.removeEvents(arg_3_0)
-	arg_3_0._btn1:RemoveClickListener()
+function V2a2_WarmUpLeftView_Day5:removeEvents()
+	self._btn1:RemoveClickListener()
 end
 
-local var_0_2 = {
+local States = {
 	Clicked = 1
 }
 
-function var_0_1._btn1OnClick(arg_4_0)
+function V2a2_WarmUpLeftView_Day5:_btn1OnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20220226)
 end
 
-function var_0_1.ctor(arg_5_0, arg_5_1)
-	var_0_0.ctor(arg_5_0, arg_5_1)
+function V2a2_WarmUpLeftView_Day5:ctor(ctorParam)
+	Base.ctor(self, ctorParam)
 
-	arg_5_0._dragEnabled = false
-	arg_5_0._needWaitCount = 0
+	self._dragEnabled = false
+	self._needWaitCount = 0
 end
 
-function var_0_1._editableInitView(arg_6_0)
-	var_0_0._editableInitView(arg_6_0)
+function V2a2_WarmUpLeftView_Day5:_editableInitView()
+	Base._editableInitView(self)
 
-	arg_6_0._guideGo = gohelper.findChild(arg_6_0.viewGO, "guide_day5")
-	arg_6_0._startGo = arg_6_0._btn1.gameObject
-	arg_6_0._startTrans = arg_6_0._startGo.transform
-	arg_6_0._startX, arg_6_0._startY = recthelper.getAnchor(arg_6_0._startTrans)
-	arg_6_0._startAnimation = arg_6_0._startGo:GetComponent(gohelper.Type_Animation)
-	arg_6_0._endGo = arg_6_0._goValidArea
-	arg_6_0._endTrans = arg_6_0._endGo.transform
+	self._guideGo = gohelper.findChild(self.viewGO, "guide_day5")
+	self._startGo = self._btn1.gameObject
+	self._startTrans = self._startGo.transform
+	self._startX, self._startY = recthelper.getAnchor(self._startTrans)
+	self._startAnimation = self._startGo:GetComponent(gohelper.Type_Animation)
+	self._endGo = self._goValidArea
+	self._endTrans = self._endGo.transform
 
-	CommonDragHelper.instance:registerDragObj(arg_6_0._startGo, arg_6_0._onBeginDrag, arg_6_0._onDrag, arg_6_0._onEndDrag, arg_6_0._checkCanDrag, arg_6_0)
+	CommonDragHelper.instance:registerDragObj(self._startGo, self._onBeginDrag, self._onDrag, self._onEndDrag, self._checkCanDrag, self)
 end
 
-function var_0_1.onDestroyView(arg_7_0)
-	CommonDragHelper.instance:unregisterDragObj(arg_7_0._startGo)
+function V2a2_WarmUpLeftView_Day5:onDestroyView()
+	CommonDragHelper.instance:unregisterDragObj(self._startGo)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_youyu_yure_cut_loop_20220229)
-	var_0_0.onDestroyView(arg_7_0)
+	Base.onDestroyView(self)
 end
 
-function var_0_1._checkCanDrag(arg_8_0)
-	return not arg_8_0:_canDrag()
+function V2a2_WarmUpLeftView_Day5:_checkCanDrag()
+	return not self:_canDrag()
 end
 
-function var_0_1._canDrag(arg_9_0)
-	return arg_9_0._dragEnabled
+function V2a2_WarmUpLeftView_Day5:_canDrag()
+	return self._dragEnabled
 end
 
-function var_0_1._onBeginDrag(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day5:_onBeginDrag(_, pointerEventData)
+	if not self:_canDrag() then
 		return
 	end
 
-	arg_10_0._startAnimation.enabled = false
+	self._startAnimation.enabled = false
 
-	var_0_0._onDragBegin(arg_10_0)
+	Base._onDragBegin(self)
 end
 
-function var_0_1._onDrag(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day5:_onDrag(_, pointerEventData)
+	if not self:_canDrag() then
 		return
 	end
 
-	if gohelper.isMouseOverGo(arg_11_0._endTrans, arg_11_2.position) then
+	if gohelper.isMouseOverGo(self._endTrans, pointerEventData.position) then
 		CommonDragHelper.instance:setGlobalEnabled(false)
 
-		arg_11_0._dragEnabled = false
+		self._dragEnabled = false
 
-		arg_11_0:saveState(var_0_2.Clicked)
-		arg_11_0:_onStateClicked()
+		self:saveState(States.Clicked)
+		self:_onStateClicked()
 	end
 end
 
-function var_0_1._onEndDrag(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_0:_canDrag() then
+function V2a2_WarmUpLeftView_Day5:_onEndDrag(_, pointerEventData)
+	if not self:_canDrag() then
 		return
 	end
 
-	arg_12_0:tweenAnchorPos(arg_12_0._startTrans, arg_12_0._startX, arg_12_0._startY)
+	self:tweenAnchorPos(self._startTrans, self._startX, self._startY)
 end
 
-function var_0_1._onStateClicked(arg_13_0)
+function V2a2_WarmUpLeftView_Day5:_onStateClicked()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_youyu_yure_cut_loop_20220227)
-	arg_13_0:playAnim_before_click(arg_13_0._click_before_doneCb, arg_13_0)
+	self:playAnim_before_click(self._click_before_doneCb, self)
 end
 
-function var_0_1._click_before_doneCb(arg_14_0)
+function V2a2_WarmUpLeftView_Day5:_click_before_doneCb()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_youyu_yure_cut_loop_20220229)
 
-	arg_14_0._needWaitCount = 2
+	self._needWaitCount = 2
 
-	arg_14_0:playAnim_before_out(arg_14_0._onAfterDone, arg_14_0)
-	arg_14_0:playAnim_after_in(arg_14_0._onAfterDone, arg_14_0)
+	self:playAnim_before_out(self._onAfterDone, self)
+	self:playAnim_after_in(self._onAfterDone, self)
 end
 
-function var_0_1._onAfterDone(arg_15_0)
-	arg_15_0._needWaitCount = arg_15_0._needWaitCount - 1
+function V2a2_WarmUpLeftView_Day5:_onAfterDone()
+	self._needWaitCount = self._needWaitCount - 1
 
-	if arg_15_0._needWaitCount > 0 then
+	if self._needWaitCount > 0 then
 		return
 	end
 
-	arg_15_0:saveStateDone(true)
-	arg_15_0:setActive_before(false)
-	arg_15_0:setActive_after(true)
-	arg_15_0:openDesc()
+	self:saveStateDone(true)
+	self:setActive_before(false)
+	self:setActive_after(true)
+	self:openDesc()
 end
 
-function var_0_1.setData(arg_16_0)
-	var_0_0.setData(arg_16_0)
+function V2a2_WarmUpLeftView_Day5:setData()
+	Base.setData(self)
 
-	local var_16_0 = arg_16_0:checkIsDone()
+	local isDone = self:checkIsDone()
 
-	arg_16_0:setActive_before(not var_16_0)
-	arg_16_0:setActive_after(var_16_0)
-	arg_16_0:playAnimRaw_before_idle(0, 1)
+	self:setActive_before(not isDone)
+	self:setActive_after(isDone)
+	self:playAnimRaw_before_idle(0, 1)
 
-	arg_16_0._startAnimation.enabled = true
+	self._startAnimation.enabled = true
 
-	if var_16_0 then
-		arg_16_0._dragEnabled = false
+	if isDone then
+		self._dragEnabled = false
 	else
-		local var_16_1 = arg_16_0:getState()
+		local state = self:getState()
 
-		if var_16_1 == 0 then
-			arg_16_0._dragEnabled = true
+		if state == 0 then
+			self._dragEnabled = true
 
-			recthelper.setAnchor(arg_16_0._startTrans, arg_16_0._startX, arg_16_0._startY)
-		elseif var_0_2.Clicked == var_16_1 then
-			arg_16_0._dragEnabled = false
+			recthelper.setAnchor(self._startTrans, self._startX, self._startY)
+		elseif States.Clicked == state then
+			self._dragEnabled = false
 
-			arg_16_0:_onStateClicked()
+			self:_onStateClicked()
 		else
-			logError("[V2a2_WarmUpLeftView_Day5] invalid state:" .. var_16_1)
+			logError("[V2a2_WarmUpLeftView_Day5] invalid state:" .. state)
 		end
 	end
 end
 
-return var_0_1
+return V2a2_WarmUpLeftView_Day5

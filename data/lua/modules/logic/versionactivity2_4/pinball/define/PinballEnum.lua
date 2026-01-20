@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity2_4.pinball.define.PinballEnum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/define/PinballEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity2_4.pinball.define.PinballEnum", package.seeall)
 
-var_0_0.Shape = {
+local PinballEnum = _M
+
+PinballEnum.Shape = {
 	Rect = 1,
 	Circle = 2
 }
-var_0_0.Dir = {
+PinballEnum.Dir = {
 	Down = -1,
 	Up = 1,
 	Right = -2,
 	Left = 2,
 	None = 0
 }
-var_0_0.UnitType = {
+PinballEnum.UnitType = {
 	MarblesElasticity = 5,
 	MarblesDivision = 2,
 	TriggerBlackHole = 101,
@@ -31,41 +33,41 @@ var_0_0.UnitType = {
 	TriggerNone = 105,
 	CommonEffect = 302
 }
-var_0_0.UnitLayers = {
+PinballEnum.UnitLayers = {
 	{
-		var_0_0.UnitType.TriggerBlackHole
+		PinballEnum.UnitType.TriggerBlackHole
 	},
 	{
-		var_0_0.UnitType.ResStone,
-		var_0_0.UnitType.ResFood,
-		var_0_0.UnitType.ResWood,
-		var_0_0.UnitType.ResMine,
-		var_0_0.UnitType.ResSmallFood
+		PinballEnum.UnitType.ResStone,
+		PinballEnum.UnitType.ResFood,
+		PinballEnum.UnitType.ResWood,
+		PinballEnum.UnitType.ResMine,
+		PinballEnum.UnitType.ResSmallFood
 	},
 	{
-		var_0_0.UnitType.TriggerRefresh
+		PinballEnum.UnitType.TriggerRefresh
 	},
 	{
-		var_0_0.UnitType.TriggerObstacle,
-		var_0_0.UnitType.TriggerElasticity,
-		var_0_0.UnitType.TriggerNone
+		PinballEnum.UnitType.TriggerObstacle,
+		PinballEnum.UnitType.TriggerElasticity,
+		PinballEnum.UnitType.TriggerNone
 	}
 }
-var_0_0.UnitTypeToLayer = {}
+PinballEnum.UnitTypeToLayer = {}
 
-for iter_0_0, iter_0_1 in pairs(var_0_0.UnitLayers) do
-	for iter_0_2, iter_0_3 in pairs(iter_0_1) do
-		var_0_0.UnitTypeToLayer[iter_0_3] = iter_0_0
+for layer, list in pairs(PinballEnum.UnitLayers) do
+	for _, unitType in pairs(list) do
+		PinballEnum.UnitTypeToLayer[unitType] = layer
 	end
 end
 
-var_0_0.BuildingType = {
+PinballEnum.BuildingType = {
 	Food = 4,
 	Talent = 2,
 	MainCity = 1,
 	House = 3
 }
-var_0_0.ResType = {
+PinballEnum.ResType = {
 	Complaint = 12,
 	Play = 11,
 	Mine = 2,
@@ -74,21 +76,21 @@ var_0_0.ResType = {
 	Stone = 3,
 	Wood = 1
 }
-var_0_0.OperType = {
+PinballEnum.OperType = {
 	Rest = 2,
 	Episode = 1,
 	None = 0
 }
-var_0_0.BuildingOperType = {
+PinballEnum.BuildingOperType = {
 	Remove = 3,
 	Upgrade = 2,
 	Build = 1
 }
-var_0_0.ConditionType = {
+PinballEnum.ConditionType = {
 	Score = 2,
 	Talent = 1
 }
-var_0_0.TalentEffectType = {
+PinballEnum.TalentEffectType = {
 	MarblesNum = 2,
 	UnlockMarbles = 1,
 	AddResPer = 4,
@@ -98,7 +100,7 @@ var_0_0.TalentEffectType = {
 	PlayDec = 6,
 	MarblesHoleNum = 3
 }
-var_0_0.BuildingEffectType = {
+PinballEnum.BuildingEffectType = {
 	CostFood = 5,
 	AddScore = 1,
 	AddFood = 2,
@@ -107,7 +109,7 @@ var_0_0.BuildingEffectType = {
 	TriggerBubble = 3,
 	UnlockTalent = 4
 }
-var_0_0.ConstId = {
+PinballEnum.ConstId = {
 	NoPlayAddComplaint = 9,
 	PlayEnoughSubComplaint = 12,
 	ComplaintLimit = 5,
@@ -123,10 +125,10 @@ var_0_0.ConstId = {
 	EpisodeCost = 13,
 	ComplaintThreshold = 6
 }
-var_0_0.UnitTypeToName = {}
+PinballEnum.UnitTypeToName = {}
 
-for iter_0_4, iter_0_5 in pairs(var_0_0.UnitType) do
-	var_0_0.UnitTypeToName[iter_0_5] = iter_0_4
+for name, index in pairs(PinballEnum.UnitType) do
+	PinballEnum.UnitTypeToName[index] = name
 end
 
-return var_0_0
+return PinballEnum

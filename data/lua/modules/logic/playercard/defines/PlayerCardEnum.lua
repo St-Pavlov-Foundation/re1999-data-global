@@ -1,23 +1,26 @@
-﻿module("modules.logic.playercard.defines.PlayerCardEnum", package.seeall)
+﻿-- chunkname: @modules/logic/playercard/defines/PlayerCardEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.playercard.defines.PlayerCardEnum", package.seeall)
 
-var_0_0.LeftContent = {
-	ExploreCollection = 5,
-	TowerBossPassCount = 7,
+local PlayerCardEnum = _M
+
+PlayerCardEnum.LeftContent = {
 	Act148SSSCount = 4,
-	RoomCollection = 3,
+	TowerBossPassCount = 7,
+	Act128Level = 9,
+	ExploreCollection = 5,
+	RougeDifficulty = 1,
 	WeekwalkVer2PlatinumCup = 8,
+	RoomCollection = 3,
 	TowerLayer = 6,
-	WeekWalkDeep = 2,
-	RougeDifficulty = 1
+	WeekWalkDeep = 2
 }
-var_0_0.ProgressShowType = {
+PlayerCardEnum.ProgressShowType = {
 	Explore = 4,
 	Room = 5,
 	Normal = 1
 }
-var_0_0.RightContent = {
+PlayerCardEnum.RightContent = {
 	LoginDay = 3,
 	AssitCount = 5,
 	CreatTime = 2,
@@ -28,27 +31,27 @@ var_0_0.RightContent = {
 	TotalCostPower = 8,
 	CompleteConfidence = 6
 }
-var_0_0.BaseInfoType = {
+PlayerCardEnum.BaseInfoType = {
 	HeroCount = 1,
 	CreatTime = 3,
 	Normal = 2
 }
-var_0_0.EmptyString = "—"
-var_0_0.EmptyString2 = "— —"
-var_0_0.MaxProgressCardNum = 5
-var_0_0.MaxBaseInfoNum = 4
-var_0_0.CompType = {
+PlayerCardEnum.EmptyString = "—"
+PlayerCardEnum.EmptyString2 = "— —"
+PlayerCardEnum.MaxProgressCardNum = 5
+PlayerCardEnum.MaxBaseInfoNum = 4
+PlayerCardEnum.CompType = {
 	Layout = 2,
 	Normal = 1
 }
-var_0_0.FriendViewType = {
+PlayerCardEnum.FriendViewType = {
 	black = 5,
 	offline = 2,
 	add = 3,
 	online = 1,
 	playerinfo = 4
 }
-var_0_0.PlayerCardGuideId = 24110
-var_0_0.TowerMaxStageId = 7
+PlayerCardEnum.PlayerCardGuideId = 24110
+PlayerCardEnum.TowerMaxStageId = 7
 
-return var_0_0
+return PlayerCardEnum

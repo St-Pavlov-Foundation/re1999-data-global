@@ -1,40 +1,43 @@
-﻿module("modules.logic.fight.system.work.FightWorkTriggerStress", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkTriggerStress.lua
 
-local var_0_0 = class("FightWorkTriggerStress", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkTriggerStress", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.targetId
+local FightWorkTriggerStress = class("FightWorkTriggerStress", FightEffectBase)
 
-	if not FightDataHelper.entityMgr:getById(var_1_0) then
-		return arg_1_0:onDone(true)
+function FightWorkTriggerStress:onStart()
+	local targetId = self.actEffectData.targetId
+	local entityMo = FightDataHelper.entityMgr:getById(targetId)
+
+	if not entityMo then
+		return self:onDone(true)
 	end
 
-	local var_1_1 = arg_1_0.actEffectData.effectNum
-	local var_1_2 = FightEnum.StressBehaviourConstId[var_1_1]
-	local var_1_3 = var_1_2 and lua_stress_const.configDict[var_1_2]
+	local behavior = self.actEffectData.effectNum
+	local constId = FightEnum.StressBehaviourConstId[behavior]
+	local constCo = constId and lua_stress_const.configDict[constId]
 
-	if not var_1_3 then
-		return arg_1_0:onDone(true)
+	if not constCo then
+		return self:onDone(true)
 	end
 
-	if arg_1_0:checkNeedWaitTimeLineHandle(arg_1_0.actEffectData) then
-		FightModel.instance:recordDelayHandleStressBehaviour(arg_1_0.actEffectData)
+	if self:checkNeedWaitTimeLineHandle(self.actEffectData) then
+		FightModel.instance:recordDelayHandleStressBehaviour(self.actEffectData)
 	else
-		local var_1_4 = tonumber(var_1_3.value)
-		local var_1_5 = var_1_3.value2
+		local type = tonumber(constCo.value)
+		local content = constCo.value2
 
-		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_5, var_1_4, false)
-		FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_1)
+		FightFloatMgr.instance:float(targetId, FightEnum.FloatType.stress, content, type, false)
+		FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, targetId, behavior)
 	end
 
-	return arg_1_0:onDone(true)
+	return self:onDone(true)
 end
 
-function var_0_0.checkNeedWaitTimeLineHandle(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.configEffect
-	local var_2_1 = var_2_0 and lua_stress_rule.configDict[var_2_0]
+function FightWorkTriggerStress:checkNeedWaitTimeLineHandle(actEffectData)
+	local configEffect = actEffectData.configEffect
+	local stressRule = configEffect and lua_stress_rule.configDict[configEffect]
 
-	return var_2_1 and var_2_1.type == "triggerSkill"
+	return stressRule and stressRule.type == "triggerSkill"
 end
 
-return var_0_0
+return FightWorkTriggerStress

@@ -1,20 +1,27 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomReset", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerRoomReset.lua
 
-local var_0_0 = class("GuideTriggerRoomReset", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerRoomReset", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	RoomMapController.instance:registerCallback(RoomEvent.Reset, arg_1_0._onReset, arg_1_0)
+local GuideTriggerRoomReset = class("GuideTriggerRoomReset", BaseGuideTrigger)
+
+function GuideTriggerRoomReset:ctor(triggerKey)
+	GuideTriggerRoomReset.super.ctor(self, triggerKey)
+	RoomMapController.instance:registerCallback(RoomEvent.Reset, self._onReset, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return GameSceneMgr.instance:getCurSceneType() == SceneType.Room
+function GuideTriggerRoomReset:assertGuideSatisfy(param, configParam)
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local isRoomScene = sceneType == SceneType.Room
+
+	return isRoomScene
 end
 
-function var_0_0._onReset(arg_3_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		arg_3_0:checkStartGuide()
+function GuideTriggerRoomReset:_onReset()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+
+	if sceneType == SceneType.Room then
+		self:checkStartGuide()
 	end
 end
 
-return var_0_0
+return GuideTriggerRoomReset

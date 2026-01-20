@@ -1,85 +1,87 @@
-﻿module("modules.logic.summon.model.SummonLuckyBagChoiceListModel", package.seeall)
+﻿-- chunkname: @modules/logic/summon/model/SummonLuckyBagChoiceListModel.lua
 
-local var_0_0 = class("SummonLuckyBagChoiceListModel", ListScrollModel)
+module("modules.logic.summon.model.SummonLuckyBagChoiceListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:clear()
+local SummonLuckyBagChoiceListModel = class("SummonLuckyBagChoiceListModel", ListScrollModel)
+
+function SummonLuckyBagChoiceListModel:onInit()
+	self:clear()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:clear()
+function SummonLuckyBagChoiceListModel:reInit()
+	self:clear()
 end
 
-local function var_0_1(arg_3_0, arg_3_1)
-	local var_3_0 = HeroModel.instance:getByHeroId(arg_3_0.id)
-	local var_3_1 = HeroModel.instance:getByHeroId(arg_3_1.id)
-	local var_3_2 = var_3_0 ~= nil
-	local var_3_3 = var_3_1 ~= nil
+local function sortFunc(a, b)
+	local aHeroMo = HeroModel.instance:getByHeroId(a.id)
+	local bHeroMo = HeroModel.instance:getByHeroId(b.id)
+	local aHasHero = aHeroMo ~= nil
+	local bHasHero = bHeroMo ~= nil
 
-	if var_3_2 ~= var_3_3 then
-		return var_3_3
+	if aHasHero ~= bHasHero then
+		return bHasHero
 	end
 
-	local var_3_4 = var_3_0 and var_3_0.exSkillLevel or -1
-	local var_3_5 = var_3_1 and var_3_1.exSkillLevel or -1
+	local aSkillLevel = aHeroMo and aHeroMo.exSkillLevel or -1
+	local bSkillLevel = bHeroMo and bHeroMo.exSkillLevel or -1
 
-	if var_3_4 ~= var_3_5 then
-		return var_3_4 < var_3_5
+	if aSkillLevel ~= bSkillLevel then
+		return aSkillLevel < bSkillLevel
 	end
 
-	return arg_3_0.id < arg_3_1.id
+	return a.id < b.id
 end
 
-function var_0_0.initDatas(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._poolId = arg_4_2
-	arg_4_0._luckyBagId = arg_4_1
-	arg_4_0._selectHeroId = nil
+function SummonLuckyBagChoiceListModel:initDatas(luckyBagId, poolId)
+	self._poolId = poolId
+	self._luckyBagId = luckyBagId
+	self._selectHeroId = nil
 
-	arg_4_0:initList()
+	self:initList()
 end
 
-function var_0_0.initList(arg_5_0)
-	local var_5_0 = arg_5_0:getCharIdList()
+function SummonLuckyBagChoiceListModel:initList()
+	local charIdList = self:getCharIdList()
 
-	arg_5_0.noGainList = {}
-	arg_5_0.ownList = {}
+	self.noGainList = {}
+	self.ownList = {}
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = SummonLuckyBagChoiceMO.New()
+	for _, characterId in ipairs(charIdList) do
+		local mo = SummonLuckyBagChoiceMO.New()
 
-		var_5_1:init(iter_5_1)
+		mo:init(characterId)
 
-		if var_5_1:hasHero() then
-			table.insert(arg_5_0.ownList, var_5_1)
+		if mo:hasHero() then
+			table.insert(self.ownList, mo)
 		else
-			table.insert(arg_5_0.noGainList, var_5_1)
+			table.insert(self.noGainList, mo)
 		end
 	end
 
-	table.sort(arg_5_0.ownList, var_0_1)
-	table.sort(arg_5_0.noGainList, var_0_1)
+	table.sort(self.ownList, sortFunc)
+	table.sort(self.noGainList, sortFunc)
 end
 
-function var_0_0.setSelectId(arg_6_0, arg_6_1)
-	arg_6_0._selectHeroId = arg_6_1
+function SummonLuckyBagChoiceListModel:setSelectId(heroId)
+	self._selectHeroId = heroId
 end
 
-function var_0_0.getSelectId(arg_7_0)
-	return arg_7_0._selectHeroId
+function SummonLuckyBagChoiceListModel:getSelectId()
+	return self._selectHeroId
 end
 
-function var_0_0.getLuckyBagId(arg_8_0)
-	return arg_8_0._luckyBagId
+function SummonLuckyBagChoiceListModel:getLuckyBagId()
+	return self._luckyBagId
 end
 
-function var_0_0.getPoolId(arg_9_0)
-	return arg_9_0._poolId
+function SummonLuckyBagChoiceListModel:getPoolId()
+	return self._poolId
 end
 
-function var_0_0.getCharIdList(arg_10_0)
-	return SummonConfig.instance:getLuckyBagHeroIds(arg_10_0._poolId, arg_10_0._luckyBagId)
+function SummonLuckyBagChoiceListModel:getCharIdList()
+	return SummonConfig.instance:getLuckyBagHeroIds(self._poolId, self._luckyBagId)
 end
 
-var_0_0.instance = var_0_0.New()
+SummonLuckyBagChoiceListModel.instance = SummonLuckyBagChoiceListModel.New()
 
-return var_0_0
+return SummonLuckyBagChoiceListModel

@@ -1,58 +1,61 @@
-﻿module("modules.logic.fight.system.work.FightWorkStartBornEnemy", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkStartBornEnemy.lua
 
-local var_0_0 = class("FightWorkStartBornEnemy", BaseWork)
-local var_0_1 = 10
+module("modules.logic.fight.system.work.FightWorkStartBornEnemy", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
+local FightWorkStartBornEnemy = class("FightWorkStartBornEnemy", BaseWork)
+local BornTime = 10
+
+function FightWorkStartBornEnemy:onStart()
 	if FightWorkAppearTimeline.getAppearTimeline() then
-		arg_1_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._flowParallel = FlowParallel.New()
+	self._flowParallel = FlowParallel.New()
 
-	local var_1_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
+	local newEnemyList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if not arg_1_0.context.oldEntityIdDict or not arg_1_0.context.oldEntityIdDict[iter_1_1.id] then
-			local var_1_1 = true
-			local var_1_2 = iter_1_1:getMO()
+	for _, entity in ipairs(newEnemyList) do
+		if not self.context.oldEntityIdDict or not self.context.oldEntityIdDict[entity.id] then
+			local playEffect = true
+			local entityMO = entity:getMO()
+			local evolution = FightMsgMgr.sendMsg(FightMsgId.IsEvolutionSkin, entityMO.skin)
 
-			if FightMsgMgr.sendMsg(FightMsgId.IsEvolutionSkin, var_1_2.skin) then
-				var_1_1 = false
+			if evolution then
+				playEffect = false
 			end
 
-			if var_1_1 then
-				arg_1_0._flowParallel:addWork(FightWorkStartBornNormal.New(iter_1_1, false))
+			if playEffect then
+				self._flowParallel:addWork(FightWorkStartBornNormal.New(entity, false))
 			else
-				FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBornNormal, iter_1_1.id)
+				FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBornNormal, entity.id)
 			end
 		end
 	end
 
-	TaskDispatcher.runDelay(arg_1_0._onBornTimeout, arg_1_0, var_0_1)
-	arg_1_0._flowParallel:registerDoneListener(arg_1_0._onEnemyBornDone, arg_1_0)
-	arg_1_0._flowParallel:start()
+	TaskDispatcher.runDelay(self._onBornTimeout, self, BornTime)
+	self._flowParallel:registerDoneListener(self._onEnemyBornDone, self)
+	self._flowParallel:start()
 end
 
-function var_0_0._onEnemyBornDone(arg_2_0)
-	arg_2_0._flowParallel:unregisterDoneListener(arg_2_0._onEnemyBornDone, arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkStartBornEnemy:_onEnemyBornDone()
+	self._flowParallel:unregisterDoneListener(self._onEnemyBornDone, self)
+	self:onDone(true)
 end
 
-function var_0_0._onBornTimeout(arg_3_0)
-	logError("播放出生效果时间超过" .. var_0_1 .. "秒")
-	arg_3_0:onDone(true)
+function FightWorkStartBornEnemy:_onBornTimeout()
+	logError("播放出生效果时间超过" .. BornTime .. "秒")
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flowParallel then
-		arg_4_0._flowParallel:stop()
-		arg_4_0._flowParallel:unregisterDoneListener(arg_4_0._onEnemyBornDone, arg_4_0)
+function FightWorkStartBornEnemy:clearWork()
+	if self._flowParallel then
+		self._flowParallel:stop()
+		self._flowParallel:unregisterDoneListener(self._onEnemyBornDone, self)
 	end
 
-	TaskDispatcher.cancelTask(arg_4_0._onBornTimeout, arg_4_0)
+	TaskDispatcher.cancelTask(self._onBornTimeout, self)
 end
 
-return var_0_0
+return FightWorkStartBornEnemy

@@ -1,129 +1,132 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityStoreItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityStoreItem.lua
 
-local var_0_0 = class("VersionActivityStoreItem", UserDataDispose)
+module("modules.logic.versionactivity.view.VersionActivityStoreItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local VersionActivityStoreItem = class("VersionActivityStoreItem", UserDataDispose)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.gotag = gohelper.findChild(arg_1_0.go, "tag")
-	arg_1_0.canvasGroup = arg_1_0.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0.imageTagType = gohelper.findChildImage(arg_1_0.go, "tag/image_tagType")
-	arg_1_0.txtTagFirstName = gohelper.findChildText(arg_1_0.go, "tag/image_tagType/txt_tagNameFirst")
-	arg_1_0.txtTagRemainName = gohelper.findChildText(arg_1_0.go, "tag/image_tagType/txt_tagNameRemain")
-	arg_1_0.goStoreGoodsItem = gohelper.findChild(arg_1_0.go, "#go_storegoodsitem")
+function VersionActivityStoreItem:onInitView(go)
+	self:__onInit()
 
-	gohelper.setActive(arg_1_0.goStoreGoodsItem, false)
+	self.go = go
+	self.gotag = gohelper.findChild(self.go, "tag")
+	self.canvasGroup = self.gotag:GetComponent(typeof(UnityEngine.CanvasGroup))
+	self.imageTagType = gohelper.findChildImage(self.go, "tag/image_tagType")
+	self.txtTagFirstName = gohelper.findChildText(self.go, "tag/image_tagType/txt_tagNameFirst")
+	self.txtTagRemainName = gohelper.findChildText(self.go, "tag/image_tagType/txt_tagNameRemain")
+	self.goStoreGoodsItem = gohelper.findChild(self.go, "#go_storegoodsitem")
 
-	arg_1_0.goodsItemList = arg_1_0:getUserDataTb_()
-	arg_1_0.tagMaskList = arg_1_0:getUserDataTb_()
+	gohelper.setActive(self.goStoreGoodsItem, false)
 
-	table.insert(arg_1_0.tagMaskList, arg_1_0.imageTagType)
-	table.insert(arg_1_0.tagMaskList, arg_1_0.txtTagFirstName)
-	table.insert(arg_1_0.tagMaskList, arg_1_0.txtTagRemainName)
+	self.goodsItemList = self:getUserDataTb_()
+	self.tagMaskList = self:getUserDataTb_()
 
-	arg_1_0._clipPosY = 424
-	arg_1_0._startFadePosY = 382.32
-	arg_1_0._showTagPosY = 300
+	table.insert(self.tagMaskList, self.imageTagType)
+	table.insert(self.tagMaskList, self.txtTagFirstName)
+	table.insert(self.tagMaskList, self.txtTagRemainName)
 
-	arg_1_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_1_0.onBuyGoodsSuccess, arg_1_0)
+	self._clipPosY = 424
+	self._startFadePosY = 382.32
+	self._showTagPosY = 300
 
-	arg_1_0._contentHorizontal = arg_1_0.imageTagType.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	arg_1_0._adjustcontent = gohelper.findChild(arg_1_0.go, "tag/langadjust")
-	arg_1_0._contentHorizontal.padding.left = arg_1_0._adjustcontent.transform.localPosition.x
-	arg_1_0._contentHorizontal.padding.top = arg_1_0._adjustcontent.transform.localPosition.y
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self.onBuyGoodsSuccess, self)
+
+	self._contentHorizontal = self.imageTagType.gameObject:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self._adjustcontent = gohelper.findChild(self.go, "tag/langadjust")
+	self._contentHorizontal.padding.left = self._adjustcontent.transform.localPosition.x
+	self._contentHorizontal.padding.top = self._adjustcontent.transform.localPosition.y
 end
 
-function var_0_0.onBuyGoodsSuccess(arg_2_0)
-	arg_2_0:sortGoodsCoList()
-	arg_2_0:refreshGoods()
+function VersionActivityStoreItem:onBuyGoodsSuccess()
+	self:sortGoodsCoList()
+	self:refreshGoods()
 end
 
-function var_0_0.sortGoodsCoList(arg_3_0)
-	table.sort(arg_3_0.groupGoodsCoList, var_0_0.sortGoods)
+function VersionActivityStoreItem:sortGoodsCoList()
+	table.sort(self.groupGoodsCoList, VersionActivityStoreItem.sortGoods)
 end
 
-function var_0_0.updateInfo(arg_4_0, arg_4_1, arg_4_2)
-	gohelper.setActive(arg_4_0.go, true)
+function VersionActivityStoreItem:updateInfo(groupId, groupGoodsCoList)
+	gohelper.setActive(self.go, true)
 
-	arg_4_0.groupGoodsCoList = arg_4_2
-	arg_4_0.groupId = arg_4_1
+	self.groupGoodsCoList = groupGoodsCoList
+	self.groupId = groupId
 
-	arg_4_0:sortGoodsCoList()
-	arg_4_0:refreshTag()
-	arg_4_0:refreshGoods()
+	self:sortGoodsCoList()
+	self:refreshTag()
+	self:refreshGoods()
 end
 
-function var_0_0.refreshTag(arg_5_0)
-	arg_5_0.tagName = luaLang("versionactivity_store_tag_" .. arg_5_0.groupId)
+function VersionActivityStoreItem:refreshTag()
+	self.tagName = luaLang("versionactivity_store_tag_" .. self.groupId)
 
-	UISpriteSetMgr.instance:setVersionActivitySprite(arg_5_0.imageTagType, "img_title_label_" .. arg_5_0.groupId)
+	UISpriteSetMgr.instance:setVersionActivitySprite(self.imageTagType, "img_title_label_" .. self.groupId)
 
-	arg_5_0.firstName = GameUtil.utf8sub(arg_5_0.tagName, 1, 1)
-	arg_5_0.remainName = ""
+	self.firstName = GameUtil.utf8sub(self.tagName, 1, 1)
+	self.remainName = ""
 
-	local var_5_0 = GameUtil.utf8len(arg_5_0.tagName)
+	local tagNameLen = GameUtil.utf8len(self.tagName)
 
-	if var_5_0 > 1 then
-		arg_5_0.remainName = GameUtil.utf8sub(arg_5_0.tagName, 2, var_5_0 - 1)
+	if tagNameLen > 1 then
+		self.remainName = GameUtil.utf8sub(self.tagName, 2, tagNameLen - 1)
 	end
 
-	arg_5_0.txtTagFirstName.text = arg_5_0.firstName
-	arg_5_0.txtTagRemainName.text = arg_5_0.remainName
+	self.txtTagFirstName.text = self.firstName
+	self.txtTagRemainName.text = self.remainName
 end
 
-function var_0_0.refreshGoods(arg_6_0)
-	local var_6_0
+function VersionActivityStoreItem:refreshGoods()
+	local goodsItem
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.groupGoodsCoList) do
-		local var_6_1 = arg_6_0.goodsItemList[iter_6_0]
+	for index, goodsCo in ipairs(self.groupGoodsCoList) do
+		goodsItem = self.goodsItemList[index]
 
-		if not var_6_1 then
-			var_6_1 = VersionActivityStoreGoodsItem.New()
+		if not goodsItem then
+			goodsItem = VersionActivityStoreGoodsItem.New()
 
-			var_6_1:onInitView(gohelper.cloneInPlace(arg_6_0.goStoreGoodsItem))
-			table.insert(arg_6_0.goodsItemList, var_6_1)
+			goodsItem:onInitView(gohelper.cloneInPlace(self.goStoreGoodsItem))
+			table.insert(self.goodsItemList, goodsItem)
 		end
 
-		var_6_1:updateInfo(iter_6_1)
+		goodsItem:updateInfo(goodsCo)
 	end
 
-	for iter_6_2 = #arg_6_0.groupGoodsCoList + 1, #arg_6_0.goodsItemList do
-		arg_6_0.goodsItemList[iter_6_2]:hide()
-	end
-end
-
-function var_0_0.refreshTagClip(arg_7_0, arg_7_1)
-	local var_7_0 = recthelper.rectToRelativeAnchorPos(arg_7_0.gotag.transform.position, arg_7_1.transform)
-	local var_7_1 = Mathf.Clamp((arg_7_0._clipPosY - var_7_0.y) / (arg_7_0._clipPosY - arg_7_0._startFadePosY), 0, 1)
-
-	arg_7_0.canvasGroup.alpha = var_7_1
-
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.tagMaskList) do
-		iter_7_1.maskable = var_7_0.y <= arg_7_0._showTagPosY
+	for i = #self.groupGoodsCoList + 1, #self.goodsItemList do
+		self.goodsItemList[i]:hide()
 	end
 end
 
-function var_0_0.sortGoods(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.maxBuyCount ~= 0 and arg_8_0.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, arg_8_0.id) <= 0
+function VersionActivityStoreItem:refreshTagClip(scrollStore)
+	local tagPosY = recthelper.rectToRelativeAnchorPos(self.gotag.transform.position, scrollStore.transform)
+	local rate = Mathf.Clamp((self._clipPosY - tagPosY.y) / (self._clipPosY - self._startFadePosY), 0, 1)
 
-	if var_8_0 ~= (arg_8_1.maxBuyCount ~= 0 and arg_8_1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, arg_8_1.id) <= 0) then
-		if var_8_0 then
+	self.canvasGroup.alpha = rate
+
+	for k, v in ipairs(self.tagMaskList) do
+		v.maskable = tagPosY.y <= self._showTagPosY
+	end
+end
+
+function VersionActivityStoreItem.sortGoods(goodCo1, goodCo2)
+	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, goodCo1.id) <= 0
+	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(VersionActivityEnum.ActivityId.Act107, goodCo2.id) <= 0
+
+	if goods1SellOut ~= goods2SellOut then
+		if goods1SellOut then
 			return false
 		end
 
 		return true
 	end
 
-	return arg_8_0.id < arg_8_1.id
+	return goodCo1.id < goodCo2.id
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.goodsItemList) do
-		iter_9_1:onDestroy()
+function VersionActivityStoreItem:onDestroy()
+	for _, goodsItem in ipairs(self.goodsItemList) do
+		goodsItem:onDestroy()
 	end
 
-	arg_9_0:__onDispose()
+	self:__onDispose()
 end
 
-return var_0_0
+return VersionActivityStoreItem

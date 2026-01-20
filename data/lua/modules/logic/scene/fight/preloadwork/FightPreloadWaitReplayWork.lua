@@ -1,27 +1,29 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadWaitReplayWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadWaitReplayWork.lua
 
-local var_0_0 = class("FightPreloadWaitReplayWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadWaitReplayWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = FightModel.instance:getFightParam()
+local FightPreloadWaitReplayWork = class("FightPreloadWaitReplayWork", BaseWork)
 
-	if var_1_0 and var_1_0.isReplay then
+function FightPreloadWaitReplayWork:onStart(context)
+	local fightParam = FightModel.instance:getFightParam()
+
+	if fightParam and fightParam.isReplay then
 		if FightDataHelper.stateMgr.isReplay then
-			arg_1_0:onDone(true)
+			self:onDone(true)
 		else
-			FightController.instance:registerCallback(FightEvent.StartReplay, arg_1_0._onStartReplay, arg_1_0)
+			FightController.instance:registerCallback(FightEvent.StartReplay, self._onStartReplay, self)
 		end
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onStartReplay(arg_2_0)
-	arg_2_0:onDone(true)
+function FightPreloadWaitReplayWork:_onStartReplay()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.StartReplay, arg_3_0._onStartReplay, arg_3_0)
+function FightPreloadWaitReplayWork:clearWork()
+	FightController.instance:unregisterCallback(FightEvent.StartReplay, self._onStartReplay, self)
 end
 
-return var_0_0
+return FightPreloadWaitReplayWork

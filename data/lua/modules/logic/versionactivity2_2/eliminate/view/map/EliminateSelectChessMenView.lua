@@ -1,325 +1,329 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/view/map/EliminateSelectChessMenView.lua
 
-local var_0_0 = class("EliminateSelectChessMenView", BaseView)
+module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateSelectChessMenView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
-	arg_1_0._goSort = gohelper.findChild(arg_1_0.viewGO, "Left/#go_Sort")
-	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_Sort/#btn_lvrank")
-	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_Sort/#btn_rarerank")
-	arg_1_0._btnfaithrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_Sort/#btn_faithrank")
-	arg_1_0._btnclassify = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#go_Sort/#btn_classify")
-	arg_1_0._scrollChessList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_ChessList")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Empty")
-	arg_1_0._goDetail = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail")
-	arg_1_0._imageChessQualityBG = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#image_ChessQualityBG")
-	arg_1_0._imageChess = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#image_Chess")
-	arg_1_0._goResource = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource")
-	arg_1_0._goResourceItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem")
-	arg_1_0._imageResourceQuality = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
-	arg_1_0._txtResourceNum = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
-	arg_1_0._txtFireNum = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Detail/Info/image_Fire/#txt_FireNum")
-	arg_1_0._goStar1 = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Detail/Info/Stars/#go_Star1")
-	arg_1_0._txtChessName = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Detail/Info/#txt_ChessName")
-	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Right/#go_Detail/Scroll View/Viewport/#txt_Descr")
-	arg_1_0._btnAdd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Detail/#btn_Add")
-	arg_1_0._btnOut = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#go_Detail/#btn_Out")
-	arg_1_0._goSlot = gohelper.findChild(arg_1_0.viewGO, "Bottom/#go_Slot")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Bottom/#btn_Enter")
+local EliminateSelectChessMenView = class("EliminateSelectChessMenView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EliminateSelectChessMenView:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._goSort = gohelper.findChild(self.viewGO, "Left/#go_Sort")
+	self._btnlvrank = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_Sort/#btn_lvrank")
+	self._btnrarerank = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_Sort/#btn_rarerank")
+	self._btnfaithrank = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_Sort/#btn_faithrank")
+	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#go_Sort/#btn_classify")
+	self._scrollChessList = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_ChessList")
+	self._goEmpty = gohelper.findChild(self.viewGO, "Right/#go_Empty")
+	self._goDetail = gohelper.findChild(self.viewGO, "Right/#go_Detail")
+	self._imageChessQualityBG = gohelper.findChildImage(self.viewGO, "Right/#go_Detail/Info/#image_ChessQualityBG")
+	self._imageChess = gohelper.findChildSingleImage(self.viewGO, "Right/#go_Detail/Info/#image_Chess")
+	self._goResource = gohelper.findChild(self.viewGO, "Right/#go_Detail/Info/#go_Resource")
+	self._goResourceItem = gohelper.findChild(self.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem")
+	self._imageResourceQuality = gohelper.findChildImage(self.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality")
+	self._txtResourceNum = gohelper.findChildText(self.viewGO, "Right/#go_Detail/Info/#go_Resource/#go_ResourceItem/#image_ResourceQuality/#txt_ResourceNum")
+	self._txtFireNum = gohelper.findChildText(self.viewGO, "Right/#go_Detail/Info/image_Fire/#txt_FireNum")
+	self._goStar1 = gohelper.findChild(self.viewGO, "Right/#go_Detail/Info/Stars/#go_Star1")
+	self._txtChessName = gohelper.findChildText(self.viewGO, "Right/#go_Detail/Info/#txt_ChessName")
+	self._txtDescr = gohelper.findChildText(self.viewGO, "Right/#go_Detail/Scroll View/Viewport/#txt_Descr")
+	self._btnAdd = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Detail/#btn_Add")
+	self._btnOut = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_Detail/#btn_Out")
+	self._goSlot = gohelper.findChild(self.viewGO, "Bottom/#go_Slot")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "Bottom/#btn_Enter")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
-	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
-	arg_2_0._btnfaithrank:AddClickListener(arg_2_0._btnfaithrankOnClick, arg_2_0)
-	arg_2_0._btnclassify:AddClickListener(arg_2_0._btnclassifyOnClick, arg_2_0)
-	arg_2_0._btnAdd:AddClickListener(arg_2_0._btnAddOnClick, arg_2_0)
-	arg_2_0._btnOut:AddClickListener(arg_2_0._btnOutOnClick, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0._btnEnterOnClick, arg_2_0)
+function EliminateSelectChessMenView:addEvents()
+	self._btnlvrank:AddClickListener(self._btnlvrankOnClick, self)
+	self._btnrarerank:AddClickListener(self._btnrarerankOnClick, self)
+	self._btnfaithrank:AddClickListener(self._btnfaithrankOnClick, self)
+	self._btnclassify:AddClickListener(self._btnclassifyOnClick, self)
+	self._btnAdd:AddClickListener(self._btnAddOnClick, self)
+	self._btnOut:AddClickListener(self._btnOutOnClick, self)
+	self._btnEnter:AddClickListener(self._btnEnterOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnlvrank:RemoveClickListener()
-	arg_3_0._btnrarerank:RemoveClickListener()
-	arg_3_0._btnfaithrank:RemoveClickListener()
-	arg_3_0._btnclassify:RemoveClickListener()
-	arg_3_0._btnAdd:RemoveClickListener()
-	arg_3_0._btnOut:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
+function EliminateSelectChessMenView:removeEvents()
+	self._btnlvrank:RemoveClickListener()
+	self._btnrarerank:RemoveClickListener()
+	self._btnfaithrank:RemoveClickListener()
+	self._btnclassify:RemoveClickListener()
+	self._btnAdd:RemoveClickListener()
+	self._btnOut:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
 end
 
-function var_0_0._btnlvrankOnClick(arg_4_0)
+function EliminateSelectChessMenView:_btnlvrankOnClick()
 	EliminateSelectChessMenListModel.instance:setCurSortType(EliminateMapEnum.SortType.Rare)
-	arg_4_0:_refreshBtnStatus()
+	self:_refreshBtnStatus()
 end
 
-function var_0_0._btnrarerankOnClick(arg_5_0)
+function EliminateSelectChessMenView:_btnrarerankOnClick()
 	EliminateSelectChessMenListModel.instance:setCurSortType(EliminateMapEnum.SortType.Power)
-	arg_5_0:_refreshBtnStatus()
+	self:_refreshBtnStatus()
 end
 
-function var_0_0._btnfaithrankOnClick(arg_6_0)
+function EliminateSelectChessMenView:_btnfaithrankOnClick()
 	EliminateSelectChessMenListModel.instance:setCurSortType(EliminateMapEnum.SortType.Resource)
-	arg_6_0:_refreshBtnStatus()
+	self:_refreshBtnStatus()
 end
 
-function var_0_0._btnclassifyOnClick(arg_7_0)
+function EliminateSelectChessMenView:_btnclassifyOnClick()
 	if EliminateTeamSelectionModel.instance:isPreset() then
 		GameFacade.showToast(ToastEnum.EliminatePresetTip1)
 
 		return
 	end
 
-	local var_7_0 = EliminateSelectChessMenListModel.instance:getQuickEdit()
+	local value = EliminateSelectChessMenListModel.instance:getQuickEdit()
 
-	EliminateSelectChessMenListModel.instance:setQuickEdit(not var_7_0)
+	EliminateSelectChessMenListModel.instance:setQuickEdit(not value)
 	EliminateSelectChessMenListModel.instance:setSelectedChessMen()
-	arg_7_0:_refreshQuickEditBtnStatus()
+	self:_refreshQuickEditBtnStatus()
 end
 
-function var_0_0._btnAddOnClick(arg_8_0)
-	local var_8_0 = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+function EliminateSelectChessMenView:_btnAddOnClick()
+	local selectedChessMen = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
 
-	if EliminateSelectChessMenListModel.instance:canAddChessMen(var_8_0) then
-		EliminateSelectChessMenListModel.instance:addSelectedChessMen(var_8_0)
+	if EliminateSelectChessMenListModel.instance:canAddChessMen(selectedChessMen) then
+		EliminateSelectChessMenListModel.instance:addSelectedChessMen(selectedChessMen)
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_youyu_pawn_add)
 	else
 		GameFacade.showToast(ToastEnum.EliminateAddedFull)
 	end
 end
 
-function var_0_0._btnOutOnClick(arg_9_0)
-	local var_9_0 = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+function EliminateSelectChessMenView:_btnOutOnClick()
+	local selectedChessMen = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
 
-	EliminateSelectChessMenListModel.instance:removeSelectedChessMen(var_9_0)
+	EliminateSelectChessMenListModel.instance:removeSelectedChessMen(selectedChessMen)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2EliminateChess.play_ui_mln_receive)
 end
 
-function var_0_0._btnEnterOnClick(arg_10_0)
-	local var_10_0 = #EliminateSelectChessMenListModel.instance:getAddIds()
+function EliminateSelectChessMenView:_btnEnterOnClick()
+	local list = EliminateSelectChessMenListModel.instance:getAddIds()
+	local num = #list
 
-	if var_10_0 == 0 then
+	if num == 0 then
 		GameFacade.showToast(ToastEnum.EliminateAddedEmpty)
 
 		return
 	end
 
-	if not EliminateTeamSelectionModel.instance:isPreset() and var_10_0 < EliminateSelectChessMenListModel.instance:getAddMaxCount() then
+	if not EliminateTeamSelectionModel.instance:isPreset() and num < EliminateSelectChessMenListModel.instance:getAddMaxCount() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.EliminateAddedNotEnough, MsgBoxEnum.BoxType.Yes_No, function()
-			arg_10_0:_enterEpisode()
+			self:_enterEpisode()
 		end)
 
 		return
 	end
 
-	arg_10_0:_enterEpisode()
+	self:_enterEpisode()
 end
 
-function var_0_0._enterEpisode(arg_12_0)
-	local var_12_0 = EliminateSelectChessMenListModel.instance:getAddIds()
-	local var_12_1 = EliminateTeamSelectionModel.instance:getSelectedEpisodeId()
-	local var_12_2 = EliminateTeamSelectionModel.instance:getSelectedCharacterId()
+function EliminateSelectChessMenView:_enterEpisode()
+	local list = EliminateSelectChessMenListModel.instance:getAddIds()
+	local episodeId = EliminateTeamSelectionModel.instance:getSelectedEpisodeId()
+	local characterId = EliminateTeamSelectionModel.instance:getSelectedCharacterId()
 
-	EliminateLevelController.instance:enterLevel(var_12_1, var_12_2, var_12_0)
+	EliminateLevelController.instance:enterLevel(episodeId, characterId, list)
 
 	if not EliminateTeamSelectionModel.instance:isPreset() then
-		EliminateMapController.setPrefsString(EliminateMapEnum.PrefsKey.RoleSelected, var_12_2)
+		EliminateMapController.setPrefsString(EliminateMapEnum.PrefsKey.RoleSelected, characterId)
 
-		local var_12_3 = EliminateSelectChessMenListModel.instance:serializeAddList()
+		local str = EliminateSelectChessMenListModel.instance:serializeAddList()
 
-		EliminateMapController.setPrefsString(EliminateMapEnum.PrefsKey.ChessSelected, var_12_3)
+		EliminateMapController.setPrefsString(EliminateMapEnum.PrefsKey.ChessSelected, str)
 	end
 end
 
-function var_0_0._initSortNode(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = gohelper.findChild(arg_13_0.viewGO, string.format("Left/#go_Sort/%s/btn1", arg_13_2))
-	local var_13_1 = gohelper.findChild(arg_13_0.viewGO, string.format("Left/#go_Sort/%s/btn1/txt/arrow", arg_13_2))
-	local var_13_2 = gohelper.findChild(arg_13_0.viewGO, string.format("Left/#go_Sort/%s/btn2", arg_13_2))
-	local var_13_3 = gohelper.findChild(arg_13_0.viewGO, string.format("Left/#go_Sort/%s/btn2/txt/arrow", arg_13_2))
+function EliminateSelectChessMenView:_initSortNode(sortType, btnName)
+	local btn1 = gohelper.findChild(self.viewGO, string.format("Left/#go_Sort/%s/btn1", btnName))
+	local btn1Arrow = gohelper.findChild(self.viewGO, string.format("Left/#go_Sort/%s/btn1/txt/arrow", btnName))
+	local btn2 = gohelper.findChild(self.viewGO, string.format("Left/#go_Sort/%s/btn2", btnName))
+	local btn2Arrow = gohelper.findChild(self.viewGO, string.format("Left/#go_Sort/%s/btn2/txt/arrow", btnName))
 
-	arg_13_0._sortBtnNodeList[arg_13_1] = {
-		btn1 = var_13_0,
-		btn1ArrowTrans = var_13_1 and var_13_1.transform,
-		btn2 = var_13_2,
-		btn2ArrowTrans = var_13_3 and var_13_3.transform
+	self._sortBtnNodeList[sortType] = {
+		btn1 = btn1,
+		btn1ArrowTrans = btn1Arrow and btn1Arrow.transform,
+		btn2 = btn2,
+		btn2ArrowTrans = btn2Arrow and btn2Arrow.transform
 	}
 end
 
-function var_0_0._refreshBtnStatus(arg_14_0)
-	local var_14_0 = EliminateSelectChessMenListModel.instance:getCurSortType()
+function EliminateSelectChessMenView:_refreshBtnStatus()
+	local curSortType = EliminateSelectChessMenListModel.instance:getCurSortType()
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._sortBtnNodeList) do
-		local var_14_1 = iter_14_0 == var_14_0
+	for sortType, v in ipairs(self._sortBtnNodeList) do
+		local isSelected = sortType == curSortType
 
-		gohelper.setActive(iter_14_1.btn1, not var_14_1)
-		gohelper.setActive(iter_14_1.btn2, var_14_1)
+		gohelper.setActive(v.btn1, not isSelected)
+		gohelper.setActive(v.btn2, isSelected)
 
-		local var_14_2 = EliminateSelectChessMenListModel.instance:getSortState(iter_14_0)
+		local sortState = EliminateSelectChessMenListModel.instance:getSortState(sortType)
 
-		transformhelper.setLocalScale(iter_14_1.btn1ArrowTrans, 1, var_14_2, 1)
-		transformhelper.setLocalScale(iter_14_1.btn2ArrowTrans, 1, var_14_2, 1)
+		transformhelper.setLocalScale(v.btn1ArrowTrans, 1, sortState, 1)
+		transformhelper.setLocalScale(v.btn2ArrowTrans, 1, sortState, 1)
 	end
 end
 
-function var_0_0._refreshQuickEditBtnStatus(arg_15_0)
-	local var_15_0 = EliminateSelectChessMenListModel.instance:getQuickEdit()
+function EliminateSelectChessMenView:_refreshQuickEditBtnStatus()
+	local isSelected = EliminateSelectChessMenListModel.instance:getQuickEdit()
 
-	gohelper.setActive(arg_15_0._quickEditBtns.btn1, not var_15_0)
-	gohelper.setActive(arg_15_0._quickEditBtns.btn2, var_15_0)
+	gohelper.setActive(self._quickEditBtns.btn1, not isSelected)
+	gohelper.setActive(self._quickEditBtns.btn2, isSelected)
 end
 
-function var_0_0._editableInitView(arg_16_0)
-	arg_16_0._goStars = gohelper.findChild(arg_16_0.viewGO, "Right/#go_Detail/Info/Stars")
-	arg_16_0._sortBtnNodeList = arg_16_0:getUserDataTb_()
+function EliminateSelectChessMenView:_editableInitView()
+	self._goStars = gohelper.findChild(self.viewGO, "Right/#go_Detail/Info/Stars")
+	self._sortBtnNodeList = self:getUserDataTb_()
 
-	arg_16_0:_initSortNode(EliminateMapEnum.SortType.Rare, "#btn_lvrank")
-	arg_16_0:_initSortNode(EliminateMapEnum.SortType.Power, "#btn_rarerank")
-	arg_16_0:_initSortNode(EliminateMapEnum.SortType.Resource, "#btn_faithrank")
+	self:_initSortNode(EliminateMapEnum.SortType.Rare, "#btn_lvrank")
+	self:_initSortNode(EliminateMapEnum.SortType.Power, "#btn_rarerank")
+	self:_initSortNode(EliminateMapEnum.SortType.Resource, "#btn_faithrank")
 
-	arg_16_0._levelList = {}
+	self._levelList = {}
 
-	for iter_16_0 = 1, 5 do
-		table.insert(arg_16_0._levelList, iter_16_0)
+	for i = 1, 5 do
+		table.insert(self._levelList, i)
 	end
 
-	local var_16_0 = "quickEdit"
+	local quickEdit = "quickEdit"
 
-	arg_16_0:_initSortNode(var_16_0, "#btn_classify")
+	self:_initSortNode(quickEdit, "#btn_classify")
 
-	arg_16_0._quickEditBtns = arg_16_0._sortBtnNodeList[var_16_0]
+	self._quickEditBtns = self._sortBtnNodeList[quickEdit]
 
-	arg_16_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.QuickSelectChessMen, arg_16_0._onQuickSelectChessMen, arg_16_0)
-	arg_16_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.SelectChessMen, arg_16_0._onSelectChessMen, arg_16_0)
-	arg_16_0:addEventCb(EliminateMapController.instance, EliminateMapEvent.ChangeChessMen, arg_16_0._onChangeChessMen, arg_16_0)
-	gohelper.setActive(arg_16_0._goEmpty, true)
-	gohelper.setActive(arg_16_0._goDetail, false)
+	self:addEventCb(EliminateMapController.instance, EliminateMapEvent.QuickSelectChessMen, self._onQuickSelectChessMen, self)
+	self:addEventCb(EliminateMapController.instance, EliminateMapEvent.SelectChessMen, self._onSelectChessMen, self)
+	self:addEventCb(EliminateMapController.instance, EliminateMapEvent.ChangeChessMen, self._onChangeChessMen, self)
+	gohelper.setActive(self._goEmpty, true)
+	gohelper.setActive(self._goDetail, false)
 	EliminateSelectChessMenListModel.instance:initList()
-	arg_16_0:_initSlots()
-	arg_16_0:_updateSlots()
+	self:_initSlots()
+	self:_updateSlots()
 	EliminateLevelController.instance:BgSwitch(EliminateEnum.AudioFightStep.ComeShow)
 end
 
-function var_0_0._onQuickSelectChessMen(arg_17_0)
-	local var_17_0 = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+function EliminateSelectChessMenView:_onQuickSelectChessMen()
+	local selectedChessMen = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+	local isAdded = EliminateSelectChessMenListModel.instance:isInAddList(selectedChessMen)
 
-	if EliminateSelectChessMenListModel.instance:isInAddList(var_17_0) then
-		arg_17_0:_btnOutOnClick()
+	if isAdded then
+		self:_btnOutOnClick()
 	else
-		arg_17_0:_btnAddOnClick()
+		self:_btnAddOnClick()
 	end
 end
 
-function var_0_0._onChangeChessMen(arg_18_0)
-	arg_18_0:_updateSlots()
-	arg_18_0:_onSelectChessMen()
+function EliminateSelectChessMenView:_onChangeChessMen()
+	self:_updateSlots()
+	self:_onSelectChessMen()
 end
 
-function var_0_0._onSelectChessMen(arg_19_0)
-	local var_19_0 = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+function EliminateSelectChessMenView:_onSelectChessMen()
+	local selectedChessMen = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
 
-	gohelper.setActive(arg_19_0._goEmpty, not var_19_0)
-	gohelper.setActive(arg_19_0._goDetail, var_19_0)
+	gohelper.setActive(self._goEmpty, not selectedChessMen)
+	gohelper.setActive(self._goDetail, selectedChessMen)
 
-	if not var_19_0 then
+	if not selectedChessMen then
 		return
 	end
 
-	local var_19_1 = var_19_0.config
+	local config = selectedChessMen.config
 
-	arg_19_0._txtFireNum.text = var_19_1.defaultPower
+	self._txtFireNum.text = config.defaultPower
 
-	local var_19_2 = arg_19_0:_getSkillDesc(var_19_1.skillId)
+	local skillDesc = self:_getSkillDesc(config.skillId)
 
-	arg_19_0._txtDescr.text = EliminateLevelModel.instance.formatString(var_19_2, EliminateTeamChessEnum.PreBattleFormatType)
-	arg_19_0._txtChessName.text = var_19_1.name
+	self._txtDescr.text = EliminateLevelModel.instance.formatString(skillDesc, EliminateTeamChessEnum.PreBattleFormatType)
+	self._txtChessName.text = config.name
 
-	arg_19_0:_showOperationBtns()
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(arg_19_0._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. var_19_1.level, false)
+	self:_showOperationBtns()
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(self._imageChessQualityBG, "v2a2_eliminate_infochess_qualitybg_0" .. config.level, false)
 
-	local var_19_3 = var_19_0.costList
+	local costList = selectedChessMen.costList
 
-	gohelper.CreateObjList(arg_19_0, arg_19_0._onItemShow, var_19_3, arg_19_0._goResource, arg_19_0._goResourceItem)
-	SurvivalUnitIconHelper.instance:setNpcIcon(arg_19_0._imageChess, var_19_1.resPic)
-	gohelper.setActive(arg_19_0._goStar1, false)
+	gohelper.CreateObjList(self, self._onItemShow, costList, self._goResource, self._goResourceItem)
+	SurvivalUnitIconHelper.instance:setNpcIcon(self._imageChess, config.resPic)
+	gohelper.setActive(self._goStar1, false)
 end
 
-function var_0_0._getSkillDesc(arg_20_0, arg_20_1)
-	local var_20_0 = ""
-	local var_20_1 = string.splitToNumber(arg_20_1, "#")
+function EliminateSelectChessMenView:_getSkillDesc(skillIds)
+	local str = ""
+	local list = string.splitToNumber(skillIds, "#")
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
-		local var_20_2 = lua_soldier_skill.configDict[iter_20_1]
+	for i, id in ipairs(list) do
+		local config = lua_soldier_skill.configDict[id]
 
-		var_20_0 = string.nilorempty(var_20_0) and var_20_2.skillDes or var_20_0 .. "\n" .. var_20_2.skillDes
+		str = string.nilorempty(str) and config.skillDes or str .. "\n" .. config.skillDes
 	end
 
-	return var_20_0
+	return str
 end
 
-function var_0_0._onItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = gohelper.findChildImage(arg_21_1, "#image_ResourceQuality")
-	local var_21_1 = gohelper.findChildText(arg_21_1, "#image_ResourceQuality/#txt_ResourceNum")
-	local var_21_2 = arg_21_2[1]
+function EliminateSelectChessMenView:_onItemShow(obj, data, index)
+	local resourceImage = gohelper.findChildImage(obj, "#image_ResourceQuality")
+	local txt = gohelper.findChildText(obj, "#image_ResourceQuality/#txt_ResourceNum")
+	local resourceId = data[1]
 
-	UISpriteSetMgr.instance:setV2a2EliminateSprite(var_21_0, EliminateTeamChessEnum.ResourceTypeToImagePath[var_21_2], false)
+	UISpriteSetMgr.instance:setV2a2EliminateSprite(resourceImage, EliminateTeamChessEnum.ResourceTypeToImagePath[resourceId], false)
 
-	var_21_1.text = arg_21_2[2]
+	txt.text = data[2]
 end
 
-function var_0_0._showOperationBtns(arg_22_0)
-	local var_22_0 = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
-	local var_22_1 = EliminateSelectChessMenListModel.instance:isInAddList(var_22_0)
+function EliminateSelectChessMenView:_showOperationBtns()
+	local selectedChessMen = EliminateSelectChessMenListModel.instance:getSelectedChessMen()
+	local isAdded = EliminateSelectChessMenListModel.instance:isInAddList(selectedChessMen)
 
 	if EliminateSelectChessMenListModel.instance:getQuickEdit() or EliminateTeamSelectionModel.instance:isPreset() then
-		gohelper.setActive(arg_22_0._btnAdd, false)
-		gohelper.setActive(arg_22_0._btnOut, false)
+		gohelper.setActive(self._btnAdd, false)
+		gohelper.setActive(self._btnOut, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_22_0._btnAdd, not var_22_1)
-	gohelper.setActive(arg_22_0._btnOut, var_22_1)
+	gohelper.setActive(self._btnAdd, not isAdded)
+	gohelper.setActive(self._btnOut, isAdded)
 end
 
-function var_0_0._initSlots(arg_23_0)
-	arg_23_0._slotList = arg_23_0:getUserDataTb_()
+function EliminateSelectChessMenView:_initSlots()
+	self._slotList = self:getUserDataTb_()
 
-	local var_23_0 = arg_23_0.viewContainer:getSetting().otherRes[2]
+	local path = self.viewContainer:getSetting().otherRes[2]
 
-	for iter_23_0 = 1, 8 do
-		local var_23_1 = arg_23_0:getResInst(var_23_0, arg_23_0._goSlot)
-		local var_23_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_23_1, EliminateSelectChessMenSlot)
+	for i = 1, 8 do
+		local itemGO = self:getResInst(path, self._goSlot)
+		local slotItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGO, EliminateSelectChessMenSlot)
 
-		arg_23_0._slotList[iter_23_0] = var_23_2
+		self._slotList[i] = slotItem
 
-		var_23_2:setIndex(iter_23_0)
+		slotItem:setIndex(i)
 	end
 end
 
-function var_0_0._updateSlots(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0._slotList) do
-		local var_24_0 = EliminateSelectChessMenListModel.instance:getAddChessMen(iter_24_0)
+function EliminateSelectChessMenView:_updateSlots()
+	for i, v in ipairs(self._slotList) do
+		local mo = EliminateSelectChessMenListModel.instance:getAddChessMen(i)
 
-		iter_24_1:onUpdateMO(var_24_0)
+		v:onUpdateMO(mo)
 	end
 end
 
-function var_0_0.onOpen(arg_25_0)
-	arg_25_0:_refreshBtnStatus()
-	arg_25_0:_refreshQuickEditBtnStatus()
+function EliminateSelectChessMenView:onOpen()
+	self:_refreshBtnStatus()
+	self:_refreshQuickEditBtnStatus()
 end
 
-function var_0_0.onClose(arg_26_0)
+function EliminateSelectChessMenView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_27_0)
+function EliminateSelectChessMenView:onDestroyView()
 	EliminateSelectChessMenListModel.instance:clearList()
 end
 
-return var_0_0
+return EliminateSelectChessMenView

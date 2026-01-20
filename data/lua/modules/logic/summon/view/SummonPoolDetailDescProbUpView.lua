@@ -1,291 +1,291 @@
-﻿module("modules.logic.summon.view.SummonPoolDetailDescProbUpView", package.seeall)
+﻿-- chunkname: @modules/logic/summon/view/SummonPoolDetailDescProbUpView.lua
 
-local var_0_0 = class("SummonPoolDetailDescProbUpView", BaseView)
+module("modules.logic.summon.view.SummonPoolDetailDescProbUpView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
-	arg_1_0._godesctitle = gohelper.findChild(arg_1_0.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
+local SummonPoolDetailDescProbUpView = class("SummonPoolDetailDescProbUpView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SummonPoolDetailDescProbUpView:onInitView()
+	self._goheroitem = gohelper.findChild(self.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem")
+	self._godesctitle = gohelper.findChild(self.viewGO, "infoScroll/Viewport/#go_Content/#go_heroItem/#go_desctitle")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SummonPoolDetailDescProbUpView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SummonPoolDetailDescProbUpView:removeEvents()
 	return
 end
 
-local var_0_1 = 5
-local var_0_2 = 5
+local MAX_RARE_LV = 5
+local SSR_RARE_LV = 5
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._probUpItemMap = {}
+function SummonPoolDetailDescProbUpView:_editableInitView()
+	self._probUpItemMap = {}
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._probUpItemMap) do
-		for iter_5_2, iter_5_3 in pairs(iter_5_1.heroIcons) do
-			iter_5_3.simageHero:UnLoadImage()
-			iter_5_3.btn:RemoveClickListener()
+function SummonPoolDetailDescProbUpView:onDestroyView()
+	for _, probUpItem in pairs(self._probUpItemMap) do
+		for __, heroIcon in pairs(probUpItem.heroIcons) do
+			heroIcon.simageHero:UnLoadImage()
+			heroIcon.btn:RemoveClickListener()
 		end
 	end
 
-	for iter_5_4, iter_5_5 in pairs(arg_5_0._probUpItemMap) do
-		for iter_5_6, iter_5_7 in pairs(iter_5_5.equipIcons) do
-			iter_5_7.simageEquip:UnLoadImage()
-			iter_5_7.btn:RemoveClickListener()
+	for _, probUpItem in pairs(self._probUpItemMap) do
+		for __, equipIcon in pairs(probUpItem.equipIcons) do
+			equipIcon.simageEquip:UnLoadImage()
+			equipIcon.btn:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
-	arg_6_0:onOpen()
+function SummonPoolDetailDescProbUpView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0._poolParam = SummonController.instance:getPoolInfo()
-	arg_7_0._poolDetailId = arg_7_0._poolParam.poolDetailId
-	arg_7_0._poolId = arg_7_0._poolParam.poolId
+function SummonPoolDetailDescProbUpView:onOpen()
+	self._poolParam = SummonController.instance:getPoolInfo()
+	self._poolDetailId = self._poolParam.poolDetailId
+	self._poolId = self._poolParam.poolId
 
-	local var_7_0 = SummonConfig.instance:getSummonPool(arg_7_0._poolId)
+	local poolCo = SummonConfig.instance:getSummonPool(self._poolId)
 
-	arg_7_0._resultType = SummonMainModel.getResultType(var_7_0)
-	arg_7_0._poolType = var_7_0.type
+	self._resultType = SummonMainModel.getResultType(poolCo)
+	self._poolType = poolCo.type
 
-	arg_7_0:refreshUI()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0._probUpRareIds, arg_8_0._probUpIds, arg_8_0._hasProbUpItem = SummonPoolDetailCategoryListModel.buildProbUpDict(arg_8_0._poolId)
+function SummonPoolDetailDescProbUpView:refreshUI()
+	self._probUpRareIds, self._probUpIds, self._hasProbUpItem = SummonPoolDetailCategoryListModel.buildProbUpDict(self._poolId)
 
-	arg_8_0:refreshPropUpAD()
+	self:refreshPropUpAD()
 end
 
-function var_0_0.refreshPropUpAD(arg_9_0)
-	local var_9_0 = SummonConfig.instance:getSummonPool(arg_9_0._poolId)
-	local var_9_1 = SummonMainModel.isProbUp(var_9_0)
+function SummonPoolDetailDescProbUpView:refreshPropUpAD()
+	local poolCo = SummonConfig.instance:getSummonPool(self._poolId)
+	local isProbUp = SummonMainModel.isProbUp(poolCo)
 
-	if var_9_1 then
-		for iter_9_0 = var_0_1, 1, -1 do
-			arg_9_0:addProbUpItemByRare(iter_9_0)
+	if isProbUp then
+		for i = MAX_RARE_LV, 1, -1 do
+			self:addProbUpItemByRare(i)
 		end
 	end
 
-	gohelper.setActive(arg_9_0._goheroitem, var_9_1 and arg_9_0._hasProbUpItem)
+	gohelper.setActive(self._goheroitem, isProbUp and self._hasProbUpItem)
 end
 
-function var_0_0.addProbUpItemByRare(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0._probUpRareIds[arg_10_1]
+function SummonPoolDetailDescProbUpView:addProbUpItemByRare(rare)
+	local idList = self._probUpRareIds[rare]
 
-	if not var_10_0 then
+	if not idList then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = arg_10_0:getProbUpItem(arg_10_1)
+	for _, id in ipairs(idList) do
+		local item = self:getProbUpItem(rare)
 
-		gohelper.setActive(var_10_1.go, true)
-		arg_10_0:applyRareStar(var_10_1, arg_10_1)
-		arg_10_0:refreshProbIcons(var_10_1, var_10_0)
+		gohelper.setActive(item.go, true)
+		self:applyRareStar(item, rare)
+		self:refreshProbIcons(item, idList)
 
-		if arg_10_1 ~= var_0_2 or not ConstEnum.SummonSSRUpProb then
-			local var_10_2 = ConstEnum.SummonSRUpProb
-		end
+		local constKey = rare == SSR_RARE_LV and ConstEnum.SummonSSRUpProb or ConstEnum.SummonSRUpProb
 
-		if arg_10_0._poolType == SummonEnum.Type.MultiProbUp4 and arg_10_1 == var_0_2 then
-			var_10_1.txtProbability.text = ""
+		if self._poolType == SummonEnum.Type.MultiProbUp4 and rare == SSR_RARE_LV then
+			item.txtProbability.text = ""
 
-			local var_10_3 = {
-				arg_10_1 + 1,
+			local args = {
+				rare + 1,
 				tostring(SummonEnum.MultiProbUp4ShowRate)
 			}
 
-			var_10_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_multiup4_rule_title"), var_10_3)
-		elseif arg_10_0._poolType == SummonEnum.Type.DoubleSsrUp then
-			var_10_1.txtProbability.text = ""
-			var_10_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
-				arg_10_1 + 1,
+			item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_multiup4_rule_title"), args)
+		elseif self._poolType == SummonEnum.Type.DoubleSsrUp then
+			item.txtProbability.text = ""
+			item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
+				rare + 1,
 				CommonConfig.instance:getConstNum(ConstEnum.SummonPoolDoubleSSRRate) / 10
 			})
 		else
-			var_10_1.txtProbability.text = ""
-			var_10_1.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
-				arg_10_1 + 1,
+			item.txtProbability.text = ""
+			item.txtProbabilityLabel.text = GameUtil.getSubPlaceholderLuaLang(luaLang("p_summonpooldetail_up_probability"), {
+				rare + 1,
 				CommonConfig.instance:getConstNum(ConstEnum.SummonSSRUpProb) / 10
 			})
 		end
 	end
 end
 
-function var_0_0.getProbUpItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0._probUpItemMap[arg_11_1]
+function SummonPoolDetailDescProbUpView:getProbUpItem(rare)
+	local item = self._probUpItemMap[rare]
 
-	if not var_11_0 then
-		var_11_0 = arg_11_0:getUserDataTb_()
-		var_11_0.heroIcons = {}
-		var_11_0.equipIcons = {}
+	if not item then
+		item = self:getUserDataTb_()
+		item.heroIcons = {}
+		item.equipIcons = {}
 
-		local var_11_1 = gohelper.clone(arg_11_0._godesctitle, arg_11_0._goheroitem, "prob_up_item_" .. tostring(arg_11_1))
+		local itemGo = gohelper.clone(self._godesctitle, self._goheroitem, "prob_up_item_" .. tostring(rare))
 
-		var_11_0.go = var_11_1
-		var_11_0.starList = arg_11_0:getUserDataTb_()
-		var_11_0.iconContainerGo = gohelper.findChild(var_11_1, "heroshowlist")
-		var_11_0.iconEquipContainerGo = gohelper.findChild(var_11_1, "equipshowlist")
-		var_11_0.iconTemplateGo = gohelper.findChild(var_11_1, "heroshowlist/summonpooldetailheroitem")
-		var_11_0.iconEquipTemplateGo = gohelper.findChild(var_11_1, "equipshowlist/summonpooldetailequipitem")
+		item.go = itemGo
+		item.starList = self:getUserDataTb_()
+		item.iconContainerGo = gohelper.findChild(itemGo, "heroshowlist")
+		item.iconEquipContainerGo = gohelper.findChild(itemGo, "equipshowlist")
+		item.iconTemplateGo = gohelper.findChild(itemGo, "heroshowlist/summonpooldetailheroitem")
+		item.iconEquipTemplateGo = gohelper.findChild(itemGo, "equipshowlist/summonpooldetailequipitem")
 
-		local var_11_2 = gohelper.findChild(var_11_1, "#go_starList")
+		local starContainerGo = gohelper.findChild(itemGo, "#go_starList")
 
-		for iter_11_0 = 1, var_0_1 + 1 do
-			var_11_0.starList[iter_11_0] = gohelper.findChild(var_11_2, "star" .. tostring(iter_11_0))
+		for i = 1, MAX_RARE_LV + 1 do
+			item.starList[i] = gohelper.findChild(starContainerGo, "star" .. tostring(i))
 		end
 
-		var_11_0.txtProbability = gohelper.findChildText(var_11_2, "probability/#txt_probability")
-		var_11_0.txtProbabilityLabel = gohelper.findChildText(var_11_2, "probability")
-		arg_11_0._probUpItemMap[arg_11_1] = var_11_0
+		item.txtProbability = gohelper.findChildText(starContainerGo, "probability/#txt_probability")
+		item.txtProbabilityLabel = gohelper.findChildText(starContainerGo, "probability")
+		self._probUpItemMap[rare] = item
 	end
 
-	return var_11_0
+	return item
 end
 
-function var_0_0.applyRareStar(arg_12_0, arg_12_1, arg_12_2)
-	for iter_12_0 = 1, var_0_1 + 1 do
-		gohelper.setActive(arg_12_1.starList[iter_12_0], iter_12_0 <= arg_12_2 + 1)
-	end
-end
-
-function var_0_0.refreshProbIcons(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_0._resultType == SummonEnum.ResultType.Char then
-		arg_13_0:refreshHeroProbIcons(arg_13_1, arg_13_2)
-	elseif arg_13_0._resultType == SummonEnum.ResultType.Equip then
-		arg_13_0:refreshEquipProbIcons(arg_13_1, arg_13_2)
-	end
-
-	gohelper.setActive(arg_13_1.iconContainerGo, arg_13_0._resultType == SummonEnum.ResultType.Char)
-	gohelper.setActive(arg_13_1.iconEquipContainerGo, arg_13_0._resultType == SummonEnum.ResultType.Equip)
-end
-
-function var_0_0.refreshHeroProbIcons(arg_14_0, arg_14_1, arg_14_2)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_2) do
-		local var_14_0 = arg_14_0:getProbUpHeroIconItem(arg_14_1, iter_14_0)
-
-		gohelper.setActive(var_14_0.go, true)
-		arg_14_0:refreshProbUpHeroIconItem(iter_14_1, var_14_0)
+function SummonPoolDetailDescProbUpView:applyRareStar(item, rare)
+	for i = 1, MAX_RARE_LV + 1 do
+		gohelper.setActive(item.starList[i], i <= rare + 1)
 	end
 end
 
-function var_0_0.refreshEquipProbIcons(arg_15_0, arg_15_1, arg_15_2)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_2) do
-		local var_15_0 = arg_15_0:getProbUpEquipIconItem(arg_15_1, iter_15_0)
+function SummonPoolDetailDescProbUpView:refreshProbIcons(probUpItem, idList)
+	if self._resultType == SummonEnum.ResultType.Char then
+		self:refreshHeroProbIcons(probUpItem, idList)
+	elseif self._resultType == SummonEnum.ResultType.Equip then
+		self:refreshEquipProbIcons(probUpItem, idList)
+	end
 
-		gohelper.setActive(var_15_0.go, true)
-		arg_15_0:refreshProbUpEquipIconItem(iter_15_1, var_15_0)
+	gohelper.setActive(probUpItem.iconContainerGo, self._resultType == SummonEnum.ResultType.Char)
+	gohelper.setActive(probUpItem.iconEquipContainerGo, self._resultType == SummonEnum.ResultType.Equip)
+end
+
+function SummonPoolDetailDescProbUpView:refreshHeroProbIcons(probUpItem, idList)
+	for index, id in ipairs(idList) do
+		local item = self:getProbUpHeroIconItem(probUpItem, index)
+
+		gohelper.setActive(item.go, true)
+		self:refreshProbUpHeroIconItem(id, item)
 	end
 end
 
-function var_0_0.getProbUpHeroIconItem(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_1.heroIcons[arg_16_2]
+function SummonPoolDetailDescProbUpView:refreshEquipProbIcons(probUpItem, idList)
+	for index, id in ipairs(idList) do
+		local item = self:getProbUpEquipIconItem(probUpItem, index)
 
-	if not var_16_0 then
-		var_16_0 = arg_16_0:getUserDataTb_()
+		gohelper.setActive(item.go, true)
+		self:refreshProbUpEquipIconItem(id, item)
+	end
+end
 
-		local var_16_1 = gohelper.clone(arg_16_1.iconTemplateGo, arg_16_1.iconContainerGo, "prob_up_item")
+function SummonPoolDetailDescProbUpView:getProbUpHeroIconItem(probUpItem, index)
+	local item = probUpItem.heroIcons[index]
 
-		var_16_0.go = var_16_1
-		var_16_0.imageRare = gohelper.findChildImage(var_16_1, "image_rare")
-		var_16_0.imageCareer = gohelper.findChildImage(var_16_1, "image_career")
-		var_16_0.simageHero = gohelper.findChildSingleImage(var_16_1, "simage_hero")
-		var_16_0.imageNameEn = gohelper.findChildImage(var_16_1, "image_nameen")
-		var_16_0.txtNameCn = gohelper.findChildText(var_16_1, "txt_namecn")
-		var_16_0.data = {}
-		var_16_0.btn = gohelper.findChildButtonWithAudio(var_16_1, "simage_hero")
+	if not item then
+		item = self:getUserDataTb_()
 
-		var_16_0.btn:AddClickListener(arg_16_0.onClickHeroItem, arg_16_0, var_16_0.data)
+		local itemGo = gohelper.clone(probUpItem.iconTemplateGo, probUpItem.iconContainerGo, "prob_up_item")
 
-		arg_16_1.heroIcons[arg_16_2] = var_16_0
+		item.go = itemGo
+		item.imageRare = gohelper.findChildImage(itemGo, "image_rare")
+		item.imageCareer = gohelper.findChildImage(itemGo, "image_career")
+		item.simageHero = gohelper.findChildSingleImage(itemGo, "simage_hero")
+		item.imageNameEn = gohelper.findChildImage(itemGo, "image_nameen")
+		item.txtNameCn = gohelper.findChildText(itemGo, "txt_namecn")
+		item.data = {}
+		item.btn = gohelper.findChildButtonWithAudio(itemGo, "simage_hero")
+
+		item.btn:AddClickListener(self.onClickHeroItem, self, item.data)
+
+		probUpItem.heroIcons[index] = item
 	end
 
-	return var_16_0
+	return item
 end
 
-function var_0_0.refreshProbUpHeroIconItem(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = HeroConfig.instance:getHeroCO(arg_17_1)
+function SummonPoolDetailDescProbUpView:refreshProbUpHeroIconItem(heroId, item)
+	local heroCo = HeroConfig.instance:getHeroCO(heroId)
 
-	UISpriteSetMgr.instance:setSummonSprite(arg_17_2.imageRare, var_17_0.rare < var_0_2 and "bg_choukahuang" or "bg_choukaju")
-	UISpriteSetMgr.instance:setCommonSprite(arg_17_2.imageCareer, "lssx_" .. tostring(var_17_0.career))
-	arg_17_2.simageHero:LoadImage(ResUrl.getHandbookheroIcon(var_17_0.skinId))
+	UISpriteSetMgr.instance:setSummonSprite(item.imageRare, heroCo.rare < SSR_RARE_LV and "bg_choukahuang" or "bg_choukaju")
+	UISpriteSetMgr.instance:setCommonSprite(item.imageCareer, "lssx_" .. tostring(heroCo.career))
+	item.simageHero:LoadImage(ResUrl.getHandbookheroIcon(heroCo.skinId))
 
-	arg_17_2.data.clickId = arg_17_1
-	arg_17_2.txtNameCn.text = var_17_0.name
+	item.data.clickId = heroId
+	item.txtNameCn.text = heroCo.name
 end
 
-function var_0_0.getProbUpEquipIconItem(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_1.equipIcons[arg_18_2]
+function SummonPoolDetailDescProbUpView:getProbUpEquipIconItem(probUpItem, index)
+	local item = probUpItem.equipIcons[index]
 
-	if not var_18_0 then
-		var_18_0 = arg_18_0:getUserDataTb_()
+	if not item then
+		item = self:getUserDataTb_()
 
-		local var_18_1 = gohelper.clone(arg_18_1.iconEquipTemplateGo, arg_18_1.iconEquipContainerGo, "prob_up_equip_item")
+		local itemGo = gohelper.clone(probUpItem.iconEquipTemplateGo, probUpItem.iconEquipContainerGo, "prob_up_equip_item")
 
-		var_18_0.go = var_18_1
-		var_18_0.imageCareer = gohelper.findChildImage(var_18_1, "txt_namecn/image_career")
-		var_18_0.simageEquip = gohelper.findChildSingleImage(var_18_1, "simage_equip")
-		var_18_0.imageNameEn = gohelper.findChildImage(var_18_1, "image_nameen")
-		var_18_0.txtNameCn = gohelper.findChildText(var_18_1, "txt_namecn")
-		var_18_0.data = {}
-		var_18_0.btn = gohelper.findChildButtonWithAudio(var_18_1, "simage_equip")
+		item.go = itemGo
+		item.imageCareer = gohelper.findChildImage(itemGo, "txt_namecn/image_career")
+		item.simageEquip = gohelper.findChildSingleImage(itemGo, "simage_equip")
+		item.imageNameEn = gohelper.findChildImage(itemGo, "image_nameen")
+		item.txtNameCn = gohelper.findChildText(itemGo, "txt_namecn")
+		item.data = {}
+		item.btn = gohelper.findChildButtonWithAudio(itemGo, "simage_equip")
 
-		var_18_0.btn:AddClickListener(arg_18_0.onClickEquipItem, arg_18_0, var_18_0.data)
+		item.btn:AddClickListener(self.onClickEquipItem, self, item.data)
 
-		arg_18_1.equipIcons[arg_18_2] = var_18_0
+		probUpItem.equipIcons[index] = item
 	end
 
-	return var_18_0
+	return item
 end
 
-function var_0_0.refreshProbUpEquipIconItem(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = EquipConfig.instance:getEquipCo(arg_19_1)
+function SummonPoolDetailDescProbUpView:refreshProbUpEquipIconItem(equipId, item)
+	local equipCo = EquipConfig.instance:getEquipCo(equipId)
 
-	arg_19_2.simageEquip:LoadImage(ResUrl.getEquipSuit(var_19_0.icon))
-	transformhelper.setLocalScale(arg_19_2.simageEquip.transform, 0.39, 0.39, 1)
+	item.simageEquip:LoadImage(ResUrl.getEquipSuit(equipCo.icon))
+	transformhelper.setLocalScale(item.simageEquip.transform, 0.39, 0.39, 1)
 
-	local var_19_1 = EquipHelper.createMaxLevelEquipMo(arg_19_1)
-	local var_19_2 = EquipHelper.getEquipSkillCareer(arg_19_1, var_19_1.refineLv)
+	local maxEquipMO = EquipHelper.createMaxLevelEquipMo(equipId)
+	local equipCarrer = EquipHelper.getEquipSkillCareer(equipId, maxEquipMO.refineLv)
 
-	if not string.nilorempty(var_19_2) then
-		gohelper.setActive(arg_19_2.imageCareer.gameObject, true)
+	if not string.nilorempty(equipCarrer) then
+		gohelper.setActive(item.imageCareer.gameObject, true)
 
-		local var_19_3 = "jinglian_" .. var_19_2
+		local carrerIconName = "jinglian_" .. equipCarrer
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_19_2.imageCareer, var_19_3)
+		UISpriteSetMgr.instance:setCommonSprite(item.imageCareer, carrerIconName)
 	else
-		gohelper.setActive(arg_19_2.imageCareer.gameObject, false)
+		gohelper.setActive(item.imageCareer.gameObject, false)
 	end
 
-	arg_19_2.data.clickId = arg_19_1
-	arg_19_2.txtNameCn.text = var_19_0.name
+	item.data.clickId = equipId
+	item.txtNameCn.text = equipCo.name
 end
 
-function var_0_0.onClickHeroItem(arg_20_0, arg_20_1)
-	if arg_20_1.clickId ~= nil then
+function SummonPoolDetailDescProbUpView:onClickHeroItem(item)
+	if item.clickId ~= nil then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			heroId = arg_20_1.clickId
+			heroId = item.clickId
 		})
 	end
 end
 
-function var_0_0.onClickEquipItem(arg_21_0, arg_21_1)
-	if arg_21_1.clickId ~= nil then
-		local var_21_0 = {
-			equipId = arg_21_1.clickId
-		}
+function SummonPoolDetailDescProbUpView:onClickEquipItem(item)
+	if item.clickId ~= nil then
+		local param = {}
 
-		EquipController.instance:openEquipView(var_21_0)
+		param.equipId = item.clickId
+
+		EquipController.instance:openEquipView(param)
 	end
 end
 
-return var_0_0
+return SummonPoolDetailDescProbUpView

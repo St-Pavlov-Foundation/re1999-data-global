@@ -1,42 +1,44 @@
-﻿module("modules.logic.season.model.Activity104TaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/season/model/Activity104TaskModel.lua
 
-local var_0_0 = class("Activity104TaskModel", BaseModel)
+module("modules.logic.season.model.Activity104TaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local Activity104TaskModel = class("Activity104TaskModel", BaseModel)
+
+function Activity104TaskModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function Activity104TaskModel:reInit()
 	return
 end
 
-function var_0_0.getTaskSeasonList(arg_3_0)
-	local var_3_0 = Activity104Model.instance:getCurSeasonId()
-	local var_3_1 = {}
-	local var_3_2 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)
+function Activity104TaskModel:getTaskSeasonList()
+	local curSeasonId = Activity104Model.instance:getCurSeasonId()
+	local list = {}
+	local unlockTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Season)
 
-	for iter_3_0, iter_3_1 in pairs(var_3_2) do
-		if iter_3_1.config and iter_3_1.config.seasonId == var_3_0 then
-			table.insert(var_3_1, iter_3_1)
+	for _, v in pairs(unlockTasks) do
+		if v.config and v.config.seasonId == curSeasonId then
+			table.insert(list, v)
 		end
 	end
 
-	table.sort(var_3_1, function(arg_4_0, arg_4_1)
-		local var_4_0 = arg_4_0.finishCount >= arg_4_0.config.maxFinishCount and 3 or arg_4_0.hasFinished and 1 or 2
-		local var_4_1 = arg_4_1.finishCount >= arg_4_1.config.maxFinishCount and 3 or arg_4_1.hasFinished and 1 or 2
+	table.sort(list, function(a, b)
+		local aValue = a.finishCount >= a.config.maxFinishCount and 3 or a.hasFinished and 1 or 2
+		local bValue = b.finishCount >= b.config.maxFinishCount and 3 or b.hasFinished and 1 or 2
 
-		if var_4_0 ~= var_4_1 then
-			return var_4_0 < var_4_1
-		elseif arg_4_0.config.sortId ~= arg_4_1.config.sortId then
-			return arg_4_0.config.sortId < arg_4_1.config.sortId
+		if aValue ~= bValue then
+			return aValue < bValue
+		elseif a.config.sortId ~= b.config.sortId then
+			return a.config.sortId < b.config.sortId
 		else
-			return arg_4_0.config.id < arg_4_1.config.id
+			return a.config.id < b.config.id
 		end
 	end)
 
-	return var_3_1
+	return list
 end
 
-var_0_0.instance = var_0_0.New()
+Activity104TaskModel.instance = Activity104TaskModel.New()
 
-return var_0_0
+return Activity104TaskModel

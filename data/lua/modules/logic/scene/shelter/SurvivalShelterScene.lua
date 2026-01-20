@@ -1,31 +1,33 @@
-﻿module("modules.logic.scene.shelter.SurvivalShelterScene", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/SurvivalShelterScene.lua
 
-local var_0_0 = class("SurvivalShelterScene", BaseScene)
+module("modules.logic.scene.shelter.SurvivalShelterScene", package.seeall)
 
-function var_0_0._createAllComps(arg_1_0)
-	arg_1_0:_addComp("camera", SurvivalSceneCameraComp)
-	arg_1_0:_addComp("director", SurvivalShelterSceneDirector)
-	arg_1_0:_addComp("block", SurvivalShelterSceneMapBlock)
-	arg_1_0:_addComp("level", SurvivalShelterSceneLevel)
-	arg_1_0:_addComp("view", SurvivalShelterSceneViewComp)
-	arg_1_0:_addComp("preloader", SurvivalShelterScenePreloader)
-	arg_1_0:_addComp("unit", SurvivalShelterSceneMapUnitComp)
-	arg_1_0:_addComp("graphics", SurvivalShelterSceneGraphicsComp)
-	arg_1_0:_addComp("volume", SurvivalScenePPVolume)
-	arg_1_0:_addComp("path", SurvivalShelterScenePathComp)
-	arg_1_0:_addComp("fog", SurvivalShelterSceneFogComp)
-	arg_1_0:_addComp("ambient", SurvivalShelterSceneAmbientComp)
-	arg_1_0:_addComp("bubble", SurvivalBubbleComp)
+local SurvivalShelterScene = class("SurvivalShelterScene", BaseScene)
+
+function SurvivalShelterScene:_createAllComps()
+	self:_addComp("camera", SurvivalSceneCameraComp)
+	self:_addComp("director", SurvivalShelterSceneDirector)
+	self:_addComp("block", SurvivalShelterSceneMapBlock)
+	self:_addComp("level", SurvivalShelterSceneLevel)
+	self:_addComp("view", SurvivalShelterSceneViewComp)
+	self:_addComp("preloader", SurvivalShelterScenePreloader)
+	self:_addComp("unit", SurvivalShelterSceneMapUnitComp)
+	self:_addComp("graphics", SurvivalShelterSceneGraphicsComp)
+	self:_addComp("volume", SurvivalScenePPVolume)
+	self:_addComp("path", SurvivalShelterScenePathComp)
+	self:_addComp("fog", SurvivalShelterSceneFogComp)
+	self:_addComp("ambient", SurvivalShelterSceneAmbientComp)
+	self:_addComp("bubble", SurvivalBubbleComp)
 end
 
-function var_0_0.onClose(arg_2_0)
-	local var_2_0 = GameSceneMgr.instance:getNextSceneType()
+function SurvivalShelterScene:onClose()
+	local nextSceneType = GameSceneMgr.instance:getNextSceneType()
 
-	if var_2_0 ~= SceneType.Survival and var_2_0 ~= SceneType.SurvivalShelter and var_2_0 ~= SceneType.SurvivalSummaryAct then
+	if nextSceneType ~= SceneType.Survival and nextSceneType ~= SceneType.SurvivalShelter and nextSceneType ~= SceneType.SurvivalSummaryAct then
 		SurvivalMapHelper.instance:clear()
 	end
 
-	var_0_0.super.onClose(arg_2_0)
+	SurvivalShelterScene.super.onClose(self)
 end
 
-return var_0_0
+return SurvivalShelterScene

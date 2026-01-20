@@ -1,78 +1,80 @@
-﻿module("modules.logic.settings.view.SettingsView", package.seeall)
+﻿-- chunkname: @modules/logic/settings/view/SettingsView.lua
 
-local var_0_0 = class("SettingsView", BaseView)
+module("modules.logic.settings.view.SettingsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gosettingscontent = gohelper.findChild(arg_1_0.viewGO, "#go_settingscontent")
-	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_category")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local SettingsView = class("SettingsView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SettingsView:onInitView()
+	self._gosettingscontent = gohelper.findChild(self.viewGO, "#go_settingscontent")
+	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#scroll_category")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function SettingsView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function SettingsView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg = gohelper.findChildSingleImage(arg_4_0.viewGO, "bg/bgimg")
+function SettingsView:_editableInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/bgimg")
 
-	arg_4_0._simagebg:LoadImage(ResUrl.getSettingsBg("full/shezhi_bj.jpg"))
+	self._simagebg:LoadImage(ResUrl.getSettingsBg("full/shezhi_bj.jpg"))
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	local var_5_0 = SettingsModel.instance:getSettingsCategoryList()
+function SettingsView:onUpdateParam()
+	local cateList = SettingsModel.instance:getSettingsCategoryList()
 
-	arg_5_0:_selectCategory(var_5_0[1].id)
+	self:_selectCategory(cateList[1].id)
 end
 
-function var_0_0._selectCategory(arg_6_0, arg_6_1)
-	SettingsModel.instance:setCurCategoryId(arg_6_1)
-	SettingsModel.instance:setSettingsCategoryList(arg_6_0.viewParam.cateList)
+function SettingsView:_selectCategory(id)
+	SettingsModel.instance:setCurCategoryId(id)
+	SettingsModel.instance:setSettingsCategoryList(self.viewParam.cateList)
 
-	local var_6_0 = SettingsModel.instance:getSettingsCategoryList()
+	local cateList = SettingsModel.instance:getSettingsCategoryList()
 
-	SettingsCategoryListModel.instance:setCategoryList(var_6_0)
-	arg_6_0:_refreshView()
+	SettingsCategoryListModel.instance:setCategoryList(cateList)
+	self:_refreshView()
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = SettingsModel.instance:getSettingsCategoryList()
+function SettingsView:onOpen()
+	local cateList = SettingsModel.instance:getSettingsCategoryList()
 
-	arg_7_0:_selectCategory(var_7_0[1].id)
-	arg_7_0:addEventCb(SettingsController.instance, SettingsEvent.SelectCategory, arg_7_0._selectCategory, arg_7_0)
-	arg_7_0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_7_0._refreshLangTxt, arg_7_0)
+	self:_selectCategory(cateList[1].id)
+	self:addEventCb(SettingsController.instance, SettingsEvent.SelectCategory, self._selectCategory, self)
+	self:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._refreshLangTxt, self)
 end
 
-function var_0_0._refreshView(arg_8_0)
-	local var_8_0 = SettingsModel.instance:getCurCategoryId()
+function SettingsView:_refreshView()
+	local id = SettingsModel.instance:getCurCategoryId()
 
-	arg_8_0.viewContainer:switchTab(var_8_0)
+	self.viewContainer:switchTab(id)
 end
 
-function var_0_0.onClose(arg_9_0)
-	arg_9_0:removeEventCb(SettingsController.instance, SettingsEvent.SelectCategory, arg_9_0._selectCategory, arg_9_0)
-	arg_9_0:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_9_0._refreshLangTxt, arg_9_0)
+function SettingsView:onClose()
+	self:removeEventCb(SettingsController.instance, SettingsEvent.SelectCategory, self._selectCategory, self)
+	self:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._refreshLangTxt, self)
 	SettingsController.instance:dispatchEvent(SettingsEvent.PlayCloseCategoryAnim)
 end
 
-function var_0_0._refreshLangTxt(arg_10_0)
-	local var_10_0 = arg_10_0.viewGO:GetComponentsInChildren(typeof(SLFramework.LangTxt), true)
-	local var_10_1 = var_10_0.Length
+function SettingsView:_refreshLangTxt()
+	local arr = self.viewGO:GetComponentsInChildren(typeof(SLFramework.LangTxt), true)
+	local len = arr.Length
 
-	for iter_10_0 = 0, var_10_1 - 1 do
-		SLFramework.LanguageMgr.Instance:ApplyLangTxt(var_10_0[iter_10_0])
+	for i = 0, len - 1 do
+		SLFramework.LanguageMgr.Instance:ApplyLangTxt(arr[i])
 	end
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function SettingsView:onDestroyView()
+	self._simagebg:UnLoadImage()
 end
 
-return var_0_0
+return SettingsView

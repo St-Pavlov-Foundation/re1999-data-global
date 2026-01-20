@@ -1,118 +1,120 @@
-﻿module("modules.logic.rouge.dlc.102.view.RougeCollectionChessView_1_102", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/102/view/RougeCollectionChessView_1_102.lua
 
-local var_0_0 = class("RougeCollectionChessView_1_102", BaseViewExtended)
+module("modules.logic.rouge.dlc.102.view.RougeCollectionChessView_1_102", package.seeall)
 
-var_0_0.AssetUrl = "ui/viewres/rouge/dlc/102/rougecollectiontrammelview.prefab"
-var_0_0.ParentObjPath = "#go_left"
+local RougeCollectionChessView_1_102 = class("RougeCollectionChessView_1_102", BaseViewExtended)
 
-local var_0_1 = "#A08156"
-local var_0_2 = "#616161"
-local var_0_3 = 1
-local var_0_4 = 0.6
-local var_0_5 = "#A08156"
-local var_0_6 = "#616161"
+RougeCollectionChessView_1_102.AssetUrl = "ui/viewres/rouge/dlc/102/rougecollectiontrammelview.prefab"
+RougeCollectionChessView_1_102.ParentObjPath = "#go_left"
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btntrammel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_trammel")
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_trammel/#image_icon")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_tips/#btn_close")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_tips/go_content")
-	arg_1_0._godecitem = gohelper.findChild(arg_1_0.viewGO, "#go_tips/#go_content/#txt_decitem")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_tips/#txt_title")
+local ActiveTrammelColor = "#A08156"
+local DisactiveTrammelColor = "#616161"
+local ActiveTrammelAlpha = 1
+local DisactiveTrammelAlpha = 0.6
+local ActiveTrammelCountColor = "#A08156"
+local DisactiveTrammelCountColor = "#616161"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionChessView_1_102:onInitView()
+	self._btntrammel = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_trammel")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#btn_trammel/#image_icon")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tips/#btn_close")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_tips/go_content")
+	self._godecitem = gohelper.findChild(self.viewGO, "#go_tips/#go_content/#txt_decitem")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_tips/#txt_title")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntrammel:AddClickListener(arg_2_0._btntrammelOnClick, arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0:addEventCb(RougeController.instance, RougeEvent.AdjustBackPack, arg_2_0._adjustBackPack, arg_2_0)
+function RougeCollectionChessView_1_102:addEvents()
+	self._btntrammel:AddClickListener(self._btntrammelOnClick, self)
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(RougeController.instance, RougeEvent.AdjustBackPack, self._adjustBackPack, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntrammel:RemoveClickListener()
-	arg_3_0._btnclose:RemoveClickListener()
+function RougeCollectionChessView_1_102:removeEvents()
+	self._btntrammel:RemoveClickListener()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btntrammelOnClick(arg_4_0)
-	arg_4_0._waitShowTips = true
+function RougeCollectionChessView_1_102:_btntrammelOnClick()
+	self._waitShowTips = true
 
-	arg_4_0:_tryGetTrammelInfoAndRefreshUI()
+	self:_tryGetTrammelInfoAndRefreshUI()
 end
 
-function var_0_0._tryGetTrammelInfoAndRefreshUI(arg_5_0)
-	local var_5_0 = RougeModel.instance:getSeason()
+function RougeCollectionChessView_1_102:_tryGetTrammelInfoAndRefreshUI()
+	local season = RougeModel.instance:getSeason()
 
-	RougeRpc.instance:sendRougeItemTrammelsRequest(var_5_0, arg_5_0._sendRougeItemTrammelsRequestCallBack, arg_5_0)
+	RougeRpc.instance:sendRougeItemTrammelsRequest(season, self._sendRougeItemTrammelsRequestCallBack, self)
 end
 
-function var_0_0._sendRougeItemTrammelsRequestCallBack(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_2 ~= 0 then
+function RougeCollectionChessView_1_102:_sendRougeItemTrammelsRequestCallBack(_, resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	arg_6_0._activeIds = arg_6_3.ids
-	arg_6_0._activeIdMap = {}
-	arg_6_0._activeIdCount = arg_6_0._activeIds and #arg_6_0._activeIds or 0
+	self._activeIds = msg.ids
+	self._activeIdMap = {}
+	self._activeIdCount = self._activeIds and #self._activeIds or 0
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_3.ids) do
-		arg_6_0._activeIdMap[iter_6_1] = true
+	for _, id in ipairs(msg.ids) do
+		self._activeIdMap[id] = true
 	end
 
-	gohelper.setActive(arg_6_0._gotips, arg_6_0._waitShowTips)
-	arg_6_0:_refreshUI()
+	gohelper.setActive(self._gotips, self._waitShowTips)
+	self:_refreshUI()
 end
 
-function var_0_0._adjustBackPack(arg_7_0)
-	arg_7_0:_tryGetTrammelInfoAndRefreshUI()
+function RougeCollectionChessView_1_102:_adjustBackPack()
+	self:_tryGetTrammelInfoAndRefreshUI()
 end
 
-function var_0_0._btncloseOnClick(arg_8_0)
-	gohelper.setActive(arg_8_0._gotips, false)
+function RougeCollectionChessView_1_102:_btncloseOnClick()
+	gohelper.setActive(self._gotips, false)
 
-	arg_8_0._waitShowTips = false
+	self._waitShowTips = false
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:_tryGetTrammelInfoAndRefreshUI()
+function RougeCollectionChessView_1_102:onOpen()
+	self:_tryGetTrammelInfoAndRefreshUI()
 end
 
-function var_0_0._refreshUI(arg_10_0)
-	local var_10_0 = string.format("rouge_dlc2_icon" .. arg_10_0._activeIdCount)
+function RougeCollectionChessView_1_102:_refreshUI()
+	local trammelIconName = string.format("rouge_dlc2_icon" .. self._activeIdCount)
 
-	UISpriteSetMgr.instance:setRouge4Sprite(arg_10_0._imageicon, var_10_0)
+	UISpriteSetMgr.instance:setRouge4Sprite(self._imageicon, trammelIconName)
 
-	local var_10_1 = RougeDLCConfig102.instance:getAllCollectionTrammelCo()
-	local var_10_2 = {}
+	local trammelCos = RougeDLCConfig102.instance:getAllCollectionTrammelCo()
+	local trammelCountList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-		local var_10_3 = arg_10_0._activeIdMap and arg_10_0._activeIdMap[iter_10_1.id]
-		local var_10_4 = iter_10_1.num
-		local var_10_5 = var_10_3 and var_0_5 or var_0_6
-		local var_10_6 = string.format("<%s>%s</color>", var_10_5, var_10_4)
+	for _, trammelCo in ipairs(trammelCos) do
+		local isActive = self._activeIdMap and self._activeIdMap[trammelCo.id]
+		local count = trammelCo.num
+		local countColor = isActive and ActiveTrammelCountColor or DisactiveTrammelCountColor
+		local countStr = string.format("<%s>%s</color>", countColor, count)
 
-		table.insert(var_10_2, var_10_6)
+		table.insert(trammelCountList, countStr)
 	end
 
-	local var_10_7 = table.concat(var_10_2, "/")
+	local trammelCountStr = table.concat(trammelCountList, "/")
 
-	arg_10_0._txttitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_trammels_title"), var_10_7)
+	self._txttitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge_trammels_title"), trammelCountStr)
 
-	gohelper.CreateObjList(arg_10_0, arg_10_0.refreshTip, var_10_1, arg_10_0._gocontent, arg_10_0._godecitem)
+	gohelper.CreateObjList(self, self.refreshTip, trammelCos, self._gocontent, self._godecitem)
 end
 
-function var_0_0.refreshTip(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_1:GetComponent(gohelper.Type_TextMesh)
+function RougeCollectionChessView_1_102:refreshTip(obj, trammelCo, index)
+	local txtdesc = obj:GetComponent(gohelper.Type_TextMesh)
 
-	var_11_0.text = arg_11_2.desc
+	txtdesc.text = trammelCo.desc
 
-	local var_11_1 = arg_11_0._activeIdMap and arg_11_0._activeIdMap[arg_11_2.id]
+	local isActive = self._activeIdMap and self._activeIdMap[trammelCo.id]
 
-	SLFramework.UGUI.GuiHelper.SetColor(var_11_0, var_11_1 and var_0_1 or var_0_2)
-	ZProj.UGUIHelper.SetColorAlpha(var_11_0, var_11_1 and var_0_3 or var_0_4)
+	SLFramework.UGUI.GuiHelper.SetColor(txtdesc, isActive and ActiveTrammelColor or DisactiveTrammelColor)
+	ZProj.UGUIHelper.SetColorAlpha(txtdesc, isActive and ActiveTrammelAlpha or DisactiveTrammelAlpha)
 end
 
-return var_0_0
+return RougeCollectionChessView_1_102

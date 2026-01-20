@@ -1,140 +1,142 @@
-﻿module("modules.logic.room.model.debug.RoomDebugPackageListModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/debug/RoomDebugPackageListModel.lua
 
-local var_0_0 = class("RoomDebugPackageListModel", ListScrollModel)
+module("modules.logic.room.model.debug.RoomDebugPackageListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomDebugPackageListModel = class("RoomDebugPackageListModel", ListScrollModel)
+
+function RoomDebugPackageListModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomDebugPackageListModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomDebugPackageListModel:clear()
+	RoomDebugPackageListModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._selectBlockId = nil
-	arg_4_0._filterPackageId = 0
-	arg_4_0._filterMainRes = nil
+function RoomDebugPackageListModel:_clearData()
+	self._selectBlockId = nil
+	self._filterPackageId = 0
+	self._filterMainRes = nil
 end
 
-function var_0_0.setDebugPackageList(arg_5_0)
-	local var_5_0 = {}
-	local var_5_1 = RoomDebugController.instance:getTempPackageConfig()
+function RoomDebugPackageListModel:setDebugPackageList()
+	local moList = {}
+	local packageMapConfigs = RoomDebugController.instance:getTempPackageConfig()
 
-	if var_5_1 then
-		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-			for iter_5_2, iter_5_3 in ipairs(iter_5_1.infos) do
-				if arg_5_0._filterPackageId > 0 and arg_5_0:isFilterPackageId(iter_5_3.packageId) and arg_5_0:isFilterMainRes(iter_5_3.mainRes) then
-					local var_5_2 = RoomDebugPackageMO.New()
+	if packageMapConfigs then
+		for _, packageMapConfig in ipairs(packageMapConfigs) do
+			for _, info in ipairs(packageMapConfig.infos) do
+				if self._filterPackageId > 0 and self:isFilterPackageId(info.packageId) and self:isFilterMainRes(info.mainRes) then
+					local roomDebugPackageMO = RoomDebugPackageMO.New()
 
-					var_5_2:init({
-						id = iter_5_3.blockId,
-						packageId = iter_5_3.packageId,
-						packageOrder = iter_5_3.packageOrder,
-						defineId = iter_5_3.defineId,
-						mainRes = iter_5_3.mainRes
+					roomDebugPackageMO:init({
+						id = info.blockId,
+						packageId = info.packageId,
+						packageOrder = info.packageOrder,
+						defineId = info.defineId,
+						mainRes = info.mainRes
 					})
-					table.insert(var_5_0, var_5_2)
+					table.insert(moList, roomDebugPackageMO)
 				end
 			end
 		end
 	end
 
-	table.sort(var_5_0, arg_5_0._sortFunction)
-	arg_5_0:setList(var_5_0)
-	arg_5_0:_refreshSelect()
+	table.sort(moList, self._sortFunction)
+	self:setList(moList)
+	self:_refreshSelect()
 end
 
-function var_0_0.getCountByMainRes(arg_6_0, arg_6_1)
-	local var_6_0 = 0
-	local var_6_1 = RoomDebugController.instance:getTempPackageConfig()
+function RoomDebugPackageListModel:getCountByMainRes(mainRes)
+	local count = 0
+	local packageMapConfigs = RoomDebugController.instance:getTempPackageConfig()
 
-	if var_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
-			for iter_6_2, iter_6_3 in ipairs(iter_6_1.infos) do
-				if arg_6_0._filterPackageId > 0 and arg_6_0:isFilterPackageId(iter_6_3.packageId) and (arg_6_1 == iter_6_3.mainRes or (not arg_6_1 or arg_6_1 < 0) and (not iter_6_3.mainRes or iter_6_3.mainRes < 0)) then
-					var_6_0 = var_6_0 + 1
+	if packageMapConfigs then
+		for _, packageMapConfig in ipairs(packageMapConfigs) do
+			for _, info in ipairs(packageMapConfig.infos) do
+				if self._filterPackageId > 0 and self:isFilterPackageId(info.packageId) and (mainRes == info.mainRes or (not mainRes or mainRes < 0) and (not info.mainRes or info.mainRes < 0)) then
+					count = count + 1
 				end
 			end
 		end
 	end
 
-	return var_6_0
+	return count
 end
 
-function var_0_0._sortFunction(arg_7_0, arg_7_1)
-	if arg_7_0.packageOrder ~= arg_7_1.packageOrder then
-		return arg_7_0.packageOrder < arg_7_1.packageOrder
+function RoomDebugPackageListModel._sortFunction(x, y)
+	if x.packageOrder ~= y.packageOrder then
+		return x.packageOrder < y.packageOrder
 	end
 
-	return arg_7_0.id < arg_7_1.id
+	return x.id < y.id
 end
 
-function var_0_0.setFilterPackageId(arg_8_0, arg_8_1)
-	arg_8_0._filterPackageId = arg_8_1
+function RoomDebugPackageListModel:setFilterPackageId(packageId)
+	self._filterPackageId = packageId
 end
 
-function var_0_0.isFilterPackageId(arg_9_0, arg_9_1)
-	return arg_9_0._filterPackageId == arg_9_1
+function RoomDebugPackageListModel:isFilterPackageId(packageId)
+	return self._filterPackageId == packageId
 end
 
-function var_0_0.getFilterPackageId(arg_10_0)
-	return arg_10_0._filterPackageId
+function RoomDebugPackageListModel:getFilterPackageId()
+	return self._filterPackageId
 end
 
-function var_0_0.setFilterMainRes(arg_11_0, arg_11_1)
-	arg_11_0._filterMainRes = arg_11_1
+function RoomDebugPackageListModel:setFilterMainRes(mainRes)
+	self._filterMainRes = mainRes
 end
 
-function var_0_0.isFilterMainRes(arg_12_0, arg_12_1)
-	return arg_12_0._filterMainRes == arg_12_1 or not arg_12_0._filterMainRes and (not arg_12_1 or arg_12_1 == -1)
+function RoomDebugPackageListModel:isFilterMainRes(mainRes)
+	return self._filterMainRes == mainRes or not self._filterMainRes and (not mainRes or mainRes == -1)
 end
 
-function var_0_0.getFilterMainRes(arg_13_0)
-	return arg_13_0._filterMainRes
+function RoomDebugPackageListModel:getFilterMainRes()
+	return self._filterMainRes
 end
 
-function var_0_0.clearSelect(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
-		iter_14_1:setSelect(nil)
+function RoomDebugPackageListModel:clearSelect()
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(nil)
 	end
 
-	arg_14_0._selectBlockId = nil
+	self._selectBlockId = nil
 end
 
-function var_0_0._refreshSelect(arg_15_0)
-	local var_15_0
-	local var_15_1 = arg_15_0:getList()
+function RoomDebugPackageListModel:_refreshSelect()
+	local selectMO
+	local moList = self:getList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
-		if iter_15_1.id == arg_15_0._selectBlockId then
-			var_15_0 = iter_15_1
+	for i, mo in ipairs(moList) do
+		if mo.id == self._selectBlockId then
+			selectMO = mo
 		end
 	end
 
-	for iter_15_2, iter_15_3 in ipairs(arg_15_0._scrollViews) do
-		iter_15_3:setSelect(var_15_0)
+	for i, view in ipairs(self._scrollViews) do
+		view:setSelect(selectMO)
 	end
 end
 
-function var_0_0.setSelect(arg_16_0, arg_16_1)
-	arg_16_0._selectBlockId = arg_16_1
+function RoomDebugPackageListModel:setSelect(blockId)
+	self._selectBlockId = blockId
 
-	arg_16_0:_refreshSelect()
+	self:_refreshSelect()
 end
 
-function var_0_0.getSelect(arg_17_0)
-	return arg_17_0._selectBlockId
+function RoomDebugPackageListModel:getSelect()
+	return self._selectBlockId
 end
 
-function var_0_0.initDebugPackage(arg_18_0)
-	arg_18_0:setDebugPackageList()
+function RoomDebugPackageListModel:initDebugPackage()
+	self:setDebugPackageList()
 end
 
-var_0_0.instance = var_0_0.New()
+RoomDebugPackageListModel.instance = RoomDebugPackageListModel.New()
 
-return var_0_0
+return RoomDebugPackageListModel

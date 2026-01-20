@@ -1,72 +1,74 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadViewWork.lua
 
-local var_0_0 = class("FightPreloadViewWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadViewWork", package.seeall)
 
-var_0_0.ui_chupai_01 = "ui_chupai_01"
-var_0_0.ui_chupai_02 = "ui_chupai_02"
-var_0_0.ui_chupai_03 = "ui_chupai_03"
-var_0_0.ui_chupai_skin01 = "skin/ui_chupai_skin01"
-var_0_0.ui_chupai_skin03 = "skin/ui_chupai_skin03"
-var_0_0.ui_kapaituowei = "ui_kapaituowei"
-var_0_0.ui_dazhaoka = "ui_dazhaoka"
-var_0_0.ui_effect_dna_c = "ui/viewres/fight/ui_effect_dna_c.prefab"
-var_0_0.FightSpriteAssets = "ui/spriteassets/fight.asset"
+local FightPreloadViewWork = class("FightPreloadViewWork", BaseWork)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0._loader = SequenceAbLoader.New()
+FightPreloadViewWork.ui_chupai_01 = "ui_chupai_01"
+FightPreloadViewWork.ui_chupai_02 = "ui_chupai_02"
+FightPreloadViewWork.ui_chupai_03 = "ui_chupai_03"
+FightPreloadViewWork.ui_chupai_skin01 = "skin/ui_chupai_skin01"
+FightPreloadViewWork.ui_chupai_skin03 = "skin/ui_chupai_skin03"
+FightPreloadViewWork.ui_kapaituowei = "ui_kapaituowei"
+FightPreloadViewWork.ui_dazhaoka = "ui_dazhaoka"
+FightPreloadViewWork.ui_effect_dna_c = "ui/viewres/fight/ui_effect_dna_c.prefab"
+FightPreloadViewWork.FightSpriteAssets = "ui/spriteassets/fight.asset"
 
-	arg_1_0._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightfloat"))
-	arg_1_0._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightname"))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_01))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_02))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_03))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_skin01))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_skin03))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_kapaituowei))
-	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_dazhaoka))
-	arg_1_0._loader:addPath(var_0_0.FightSpriteAssets)
-	arg_1_0._loader:addPath(var_0_0.ui_effect_dna_c)
+function FightPreloadViewWork:onStart(context)
+	self._loader = SequenceAbLoader.New()
 
-	local var_1_0 = ViewMgr.instance:getSetting(ViewName.FightView)
+	self._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightfloat"))
+	self._loader:addPath(ResUrl.getSceneUIPrefab("fight", "fightname"))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin03))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_kapaituowei))
+	self._loader:addPath(ResUrl.getUIEffect(FightPreloadViewWork.ui_dazhaoka))
+	self._loader:addPath(FightPreloadViewWork.FightSpriteAssets)
+	self._loader:addPath(FightPreloadViewWork.ui_effect_dna_c)
 
-	arg_1_0._loader:addPath(var_1_0.mainRes)
+	local fightViewSetting = ViewMgr.instance:getSetting(ViewName.FightView)
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0.otherRes) do
-		arg_1_0._loader:addPath(iter_1_1)
+	self._loader:addPath(fightViewSetting.mainRes)
+
+	for _, one in ipairs(fightViewSetting.otherRes) do
+		self._loader:addPath(one)
 	end
 
-	local var_1_1 = ViewMgr.instance:getSetting(ViewName.FightRoundView)
+	local roundViewSetting = ViewMgr.instance:getSetting(ViewName.FightRoundView)
 
-	arg_1_0._loader:addPath(var_1_1.mainRes)
+	self._loader:addPath(roundViewSetting.mainRes)
 
-	local var_1_2 = ViewMgr.instance:getSetting(ViewName.FightSkillSelectView)
+	local skillSelectViewSetting = ViewMgr.instance:getSetting(ViewName.FightSkillSelectView)
 
-	arg_1_0._loader:addPath(var_1_2.mainRes)
-	arg_1_0._loader:setConcurrentCount(10)
-	arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	self._loader:addPath(skillSelectViewSetting.mainRes)
+	self._loader:setConcurrentCount(10)
+	self._loader:setLoadFailCallback(self._onPreloadOneFail)
+	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	local var_2_0 = arg_2_0._loader:getAssetItemDict()
+function FightPreloadViewWork:_onPreloadFinish()
+	local assetItemDict = self._loader:getAssetItemDict()
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		self.context.callback(self.context.callbackObj, assetItem)
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0._onPreloadOneFail(arg_3_0, arg_3_1, arg_3_2)
-	logError("战斗资源加载失败：" .. arg_3_2.ResPath)
+function FightPreloadViewWork:_onPreloadOneFail(loader, assetItem)
+	logError("战斗资源加载失败：" .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._loader then
-		arg_4_0._loader:dispose()
+function FightPreloadViewWork:clearWork()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_4_0._loader = nil
+		self._loader = nil
 	end
 end
 
-return var_0_0
+return FightPreloadViewWork

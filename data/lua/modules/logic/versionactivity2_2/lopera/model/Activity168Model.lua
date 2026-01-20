@@ -1,207 +1,209 @@
-﻿module("modules.logic.versionactivity2_2.lopera.model.Activity168Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/lopera/model/Activity168Model.lua
 
-local var_0_0 = class("Activity168Model", BaseModel)
+module("modules.logic.versionactivity2_2.lopera.model.Activity168Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._passEpisodes = {}
-	arg_1_0._unlockEpisodes = {}
-	arg_1_0._episodeDatas = {}
-	arg_1_0._itemDatas = {}
-	arg_1_0._unLockCount = 0
-	arg_1_0._finishedCount = 0
-	arg_1_0._curActionPoint = 0
-	arg_1_0._curGameState = nil
+local Activity168Model = class("Activity168Model", BaseModel)
+
+function Activity168Model:onInit()
+	self._passEpisodes = {}
+	self._unlockEpisodes = {}
+	self._episodeDatas = {}
+	self._itemDatas = {}
+	self._unLockCount = 0
+	self._finishedCount = 0
+	self._curActionPoint = 0
+	self._curGameState = nil
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._passEpisodes = {}
-	arg_2_0._unlockEpisodes = {}
-	arg_2_0._episodeDatas = {}
-	arg_2_0._itemDatas = {}
-	arg_2_0._unLockCount = 0
-	arg_2_0._finishedCount = 0
-	arg_2_0._curActionPoint = 0
-	arg_2_0._curGameState = nil
+function Activity168Model:reInit()
+	self._passEpisodes = {}
+	self._unlockEpisodes = {}
+	self._episodeDatas = {}
+	self._itemDatas = {}
+	self._unLockCount = 0
+	self._finishedCount = 0
+	self._curActionPoint = 0
+	self._curGameState = nil
 end
 
-function var_0_0.setCurActId(arg_3_0, arg_3_1)
-	arg_3_0._curActId = arg_3_1
+function Activity168Model:setCurActId(actId)
+	self._curActId = actId
 end
 
-function var_0_0.getCurActId(arg_4_0)
-	return arg_4_0._curActId
+function Activity168Model:getCurActId()
+	return self._curActId
 end
 
-function var_0_0.setCurEpisodeId(arg_5_0, arg_5_1)
-	arg_5_0._curEpisodeId = arg_5_1
+function Activity168Model:setCurEpisodeId(episodeId)
+	self._curEpisodeId = episodeId
 end
 
-function var_0_0.getCurEpisodeId(arg_6_0)
-	return arg_6_0._curEpisodeId
+function Activity168Model:getCurEpisodeId()
+	return self._curEpisodeId
 end
 
-function var_0_0.setCurBattleEpisodeId(arg_7_0, arg_7_1)
-	arg_7_0._curBattleEpisodeId = arg_7_1
+function Activity168Model:setCurBattleEpisodeId(episodeId)
+	self._curBattleEpisodeId = episodeId
 end
 
-function var_0_0.getCurBattleEpisodeId(arg_8_0)
-	return arg_8_0._curBattleEpisodeId
+function Activity168Model:getCurBattleEpisodeId()
+	return self._curBattleEpisodeId
 end
 
-function var_0_0.setCurActionPoint(arg_9_0, arg_9_1)
-	arg_9_0._curActionPoint = arg_9_1
+function Activity168Model:setCurActionPoint(point)
+	self._curActionPoint = point
 end
 
-function var_0_0.getCurActionPoint(arg_10_0)
-	return arg_10_0._curActionPoint
+function Activity168Model:getCurActionPoint()
+	return self._curActionPoint
 end
 
-function var_0_0.setCurGameState(arg_11_0, arg_11_1)
-	arg_11_0._curGameState = arg_11_1
+function Activity168Model:setCurGameState(state)
+	self._curGameState = state
 end
 
-function var_0_0.getCurGameState(arg_12_0)
-	return arg_12_0._curGameState
+function Activity168Model:getCurGameState()
+	return self._curGameState
 end
 
-function var_0_0.isEpisodeFinish(arg_13_0, arg_13_1)
-	return arg_13_0._passEpisodes[arg_13_1]
+function Activity168Model:isEpisodeFinish(episodeId)
+	return self._passEpisodes[episodeId]
 end
 
-function var_0_0.onGetActInfoReply(arg_14_0, arg_14_1)
-	arg_14_0._unLockCount = 0
-	arg_14_0._finishedCount = 0
+function Activity168Model:onGetActInfoReply(act168Episodes)
+	self._unLockCount = 0
+	self._finishedCount = 0
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-		local var_14_0 = iter_14_1.episodeId
+	for _, episodeData in ipairs(act168Episodes) do
+		local episodeId = episodeData.episodeId
 
-		arg_14_0._episodeDatas[var_14_0] = iter_14_1
-		arg_14_0._unlockEpisodes[var_14_0] = true
-		arg_14_0._unLockCount = arg_14_0._unLockCount + 1
+		self._episodeDatas[episodeId] = episodeData
+		self._unlockEpisodes[episodeId] = true
+		self._unLockCount = self._unLockCount + 1
 
-		if iter_14_1.isFinished then
-			arg_14_0._passEpisodes[var_14_0] = true
-			arg_14_0._finishedCount = arg_14_0._finishedCount + 1
+		if episodeData.isFinished then
+			self._passEpisodes[episodeId] = true
+			self._finishedCount = self._finishedCount + 1
 		end
 
-		if iter_14_1.act168Game then
-			arg_14_0:onItemInfoUpdate(var_14_0, iter_14_1.act168Game.act168Items)
+		if episodeData.act168Game then
+			self:onItemInfoUpdate(episodeId, episodeData.act168Game.act168Items)
 		end
 	end
 end
 
-function var_0_0.onEpisodeInfoUpdate(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.episodeId
+function Activity168Model:onEpisodeInfoUpdate(episodeData)
+	local episodeId = episodeData.episodeId
 
-	arg_15_0._episodeDatas[var_15_0] = arg_15_1
+	self._episodeDatas[episodeId] = episodeData
 
-	if not arg_15_0._passEpisodes[var_15_0] and arg_15_1.isFinished then
-		arg_15_0._passEpisodes[var_15_0] = true
-		arg_15_0._finishedCount = arg_15_0._finishedCount + 1
+	if not self._passEpisodes[episodeId] and episodeData.isFinished then
+		self._passEpisodes[episodeId] = true
+		self._finishedCount = self._finishedCount + 1
 	end
 
-	if not arg_15_0._unlockEpisodes[var_15_0] then
-		arg_15_0._unlockEpisodes[var_15_0] = true
-		arg_15_0._unLockCount = arg_15_0._unLockCount + 1
+	if not self._unlockEpisodes[episodeId] then
+		self._unlockEpisodes[episodeId] = true
+		self._unLockCount = self._unLockCount + 1
 	end
 
-	if arg_15_1.act168Game then
-		arg_15_0:onItemInfoUpdate(var_15_0, arg_15_1.act168Game.act168Items)
+	if episodeData.act168Game then
+		self:onItemInfoUpdate(episodeId, episodeData.act168Game.act168Items)
 	end
 end
 
-function var_0_0.getUnlockCount(arg_16_0)
-	return arg_16_0._unLockCount and arg_16_0._unLockCount or 10
+function Activity168Model:getUnlockCount()
+	return self._unLockCount and self._unLockCount or 10
 end
 
-function var_0_0.getFinishedCount(arg_17_0)
-	return arg_17_0._finishedCount
+function Activity168Model:getFinishedCount()
+	return self._finishedCount
 end
 
-function var_0_0.isEpisodeUnlock(arg_18_0, arg_18_1)
-	return arg_18_0._unlockEpisodes[arg_18_1]
+function Activity168Model:isEpisodeUnlock(episodeId)
+	return self._unlockEpisodes[episodeId]
 end
 
-function var_0_0.isEpisodeFinished(arg_19_0, arg_19_1)
-	return arg_19_0._passEpisodes[arg_19_1]
+function Activity168Model:isEpisodeFinished(episodeId)
+	return self._passEpisodes[episodeId]
 end
 
-function var_0_0.getEpisodeData(arg_20_0, arg_20_1)
-	return arg_20_0._episodeDatas[arg_20_1]
+function Activity168Model:getEpisodeData(episodeId)
+	return self._episodeDatas[episodeId]
 end
 
-function var_0_0.getCurMoveCost(arg_21_0, arg_21_1)
-	arg_21_1 = arg_21_1 or 1
+function Activity168Model:getCurMoveCost(oriCost)
+	oriCost = oriCost or 1
 
-	local var_21_0 = arg_21_0:getCurGameState()
-	local var_21_1 = var_21_0 and var_21_0.buffs
+	local curGameState = self:getCurGameState()
+	local buffs = curGameState and curGameState.buffs
 
-	if var_21_1 then
-		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-			arg_21_1 = iter_21_1.ext + arg_21_1
+	if buffs then
+		for _, buff in ipairs(buffs) do
+			oriCost = buff.ext + oriCost
 		end
 	end
 
-	return arg_21_1
+	return oriCost
 end
 
-function var_0_0.clearEpisodeItemInfo(arg_22_0, arg_22_1)
-	arg_22_0._itemDatas[arg_22_1] = {}
+function Activity168Model:clearEpisodeItemInfo(episodeId)
+	self._itemDatas[episodeId] = {}
 end
 
-function var_0_0.onItemInfoUpdate(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	arg_23_0._itemChanged = arg_23_0._itemChanged or {}
-	arg_23_0._itemDatas[arg_23_1] = arg_23_0._itemDatas[arg_23_1] or {}
+function Activity168Model:onItemInfoUpdate(episodeId, updateItems, deleteItems, changed)
+	self._itemChanged = self._itemChanged or {}
+	self._itemDatas[episodeId] = self._itemDatas[episodeId] or {}
 
-	local var_23_0 = arg_23_0._itemDatas[arg_23_1]
+	local episodeItems = self._itemDatas[episodeId]
 
-	if arg_23_2 then
-		for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
-			local var_23_1 = iter_23_1.itemId
-			local var_23_2 = iter_23_1.count
-			local var_23_3 = var_23_0[var_23_1] or 0
+	if updateItems then
+		for idx, itemData in ipairs(updateItems) do
+			local itemId = itemData.itemId
+			local count = itemData.count
+			local oriCount = episodeItems[itemId] or 0
 
-			var_23_0[var_23_1] = var_23_2
+			episodeItems[itemId] = count
 
-			if arg_23_4 then
-				arg_23_0._itemChanged[var_23_1] = var_23_2 - var_23_3
+			if changed then
+				self._itemChanged[itemId] = count - oriCount
 			end
 		end
 	end
 
-	if arg_23_3 then
-		for iter_23_2, iter_23_3 in ipairs(arg_23_3) do
-			local var_23_4 = iter_23_3.itemId
+	if deleteItems then
+		for idx, itemData in ipairs(deleteItems) do
+			local itemId = itemData.itemId
 
-			if arg_23_4 then
-				arg_23_0._itemChanged[var_23_4] = -iter_23_3.count
+			if changed then
+				self._itemChanged[itemId] = -itemData.count
 			end
 
-			var_23_0[var_23_4] = 0
+			episodeItems[itemId] = 0
 		end
 	end
 end
 
-function var_0_0.getItemCount(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getCurEpisodeId()
+function Activity168Model:getItemCount(itemId)
+	local curEpisodeId = self:getCurEpisodeId()
 
-	return arg_24_0._itemDatas[var_24_0] and arg_24_0._itemDatas[var_24_0][arg_24_1] or 0
+	return self._itemDatas[curEpisodeId] and self._itemDatas[curEpisodeId][itemId] or 0
 end
 
-function var_0_0.clearItemChangeDict(arg_25_0)
-	arg_25_0._itemChanged = {}
+function Activity168Model:clearItemChangeDict()
+	self._itemChanged = {}
 end
 
-function var_0_0.getItemChangeDict(arg_26_0)
-	return arg_26_0._itemChanged
+function Activity168Model:getItemChangeDict()
+	return self._itemChanged
 end
 
-function var_0_0.getCurEpisodeItems(arg_27_0)
-	local var_27_0 = arg_27_0:getCurEpisodeId()
+function Activity168Model:getCurEpisodeItems()
+	local curEpisodeId = self:getCurEpisodeId()
 
-	return arg_27_0._itemDatas[var_27_0]
+	return self._itemDatas[curEpisodeId]
 end
 
-var_0_0.instance = var_0_0.New()
+Activity168Model.instance = Activity168Model.New()
 
-return var_0_0
+return Activity168Model

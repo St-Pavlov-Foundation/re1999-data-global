@@ -1,8 +1,10 @@
-﻿module("modules.logic.popup.define.PopupEnum", package.seeall)
+﻿-- chunkname: @modules/logic/popup/define/PopupEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.popup.define.PopupEnum", package.seeall)
 
-var_0_0.PriorityType = {
+local PopupEnum = _M
+
+PopupEnum.PriorityType = {
 	GainSkinView = 400,
 	RoomBlockPackageGetView = 701,
 	DungeonFragmentInfoView = 200,
@@ -11,34 +13,35 @@ var_0_0.PriorityType = {
 	SummonResultView = 500,
 	ChargeStoreQuickUseTip = 2,
 	SkinCouponTipView = 399,
-	SpecialEquipOpenTip = 1,
+	SigninPropView = 1001,
 	GainCharacterView = 600,
-	CollectionGet = 100002,
+	SpecialEquipOpenTip = 1,
 	RoomGetCritterView = 801,
-	NuoDiKaUnitTip = 100003,
+	CollectionGet = 100002,
 	CommonPropView = 300,
+	NuoDiKaUnitTip = 100003,
 	AdventureCompleteView = 100
 }
-var_0_0.CacheType = {
+PopupEnum.CacheType = {
 	Fight = 1,
 	Summon = 3,
 	Guide = 2
 }
-var_0_0.CheckCacheHandler = {
-	[var_0_0.CacheType.Fight] = PopupHelper.checkInFight,
-	[var_0_0.CacheType.Guide] = PopupHelper.checkInGuide,
-	[var_0_0.CacheType.Summon] = PopupHelper.checkInSummonDrawing
+PopupEnum.CheckCacheHandler = {
+	[PopupEnum.CacheType.Fight] = PopupHelper.checkInFight,
+	[PopupEnum.CacheType.Guide] = PopupHelper.checkInGuide,
+	[PopupEnum.CacheType.Summon] = PopupHelper.checkInSummonDrawing
 }
-var_0_0.CheckCacheGetApproach = {
+PopupEnum.CheckCacheGetApproach = {
 	[MaterialEnum.GetApproach.Charge] = {
-		var_0_0.CacheType.Fight,
-		var_0_0.CacheType.Guide
+		PopupEnum.CacheType.Fight,
+		PopupEnum.CacheType.Guide
 	},
 	[MaterialEnum.GetApproach.MonthCard] = {
-		var_0_0.CacheType.Fight,
-		var_0_0.CacheType.Guide,
-		var_0_0.CacheType.Summon
+		PopupEnum.CacheType.Fight,
+		PopupEnum.CacheType.Guide,
+		PopupEnum.CacheType.Summon
 	}
 }
 
-return var_0_0
+return PopupEnum

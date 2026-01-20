@@ -1,36 +1,38 @@
-﻿module("modules.logic.main.view.MainNoticeRequestView", package.seeall)
+﻿-- chunkname: @modules/logic/main/view/MainNoticeRequestView.lua
 
-local var_0_0 = class("MainNoticeRequestView", BaseView)
+module("modules.logic.main.view.MainNoticeRequestView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local MainNoticeRequestView = class("MainNoticeRequestView", BaseView)
+
+function MainNoticeRequestView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_2_0)
+function MainNoticeRequestView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function MainNoticeRequestView:removeEvents()
 	return
 end
 
-var_0_0.RequestCD = 600
+MainNoticeRequestView.RequestCD = 600
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0, LuaEventSystem.Low)
-	arg_4_0:requestNotice()
+function MainNoticeRequestView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self, LuaEventSystem.Low)
+	self:requestNotice()
 end
 
-function var_0_0._onCloseView(arg_5_0)
-	if ViewHelper.instance:checkViewOnTheTop(arg_5_0.viewName) then
-		arg_5_0:requestNotice()
+function MainNoticeRequestView:_onCloseView()
+	if ViewHelper.instance:checkViewOnTheTop(self.viewName) then
+		self:requestNotice()
 	end
 end
 
-function var_0_0.requestNotice(arg_6_0)
-	local var_6_0 = MainController.instance:getLastRequestNoticeTime()
+function MainNoticeRequestView:requestNotice()
+	local lastRequestTime = MainController.instance:getLastRequestNoticeTime()
 
-	if var_6_0 and Time.realtimeSinceStartup - var_6_0 < var_0_0.RequestCD then
+	if lastRequestTime and Time.realtimeSinceStartup - lastRequestTime < MainNoticeRequestView.RequestCD then
 		return
 	end
 
@@ -38,4 +40,4 @@ function var_0_0.requestNotice(arg_6_0)
 	NoticeController.instance:startRequest()
 end
 
-return var_0_0
+return MainNoticeRequestView

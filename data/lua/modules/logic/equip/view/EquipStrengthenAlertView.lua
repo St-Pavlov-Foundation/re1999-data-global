@@ -1,74 +1,76 @@
-﻿module("modules.logic.equip.view.EquipStrengthenAlertView", package.seeall)
+﻿-- chunkname: @modules/logic/equip/view/EquipStrengthenAlertView.lua
 
-local var_0_0 = class("EquipStrengthenAlertView", BaseView)
+module("modules.logic.equip.view.EquipStrengthenAlertView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
-	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_select")
-	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#btn_select/#go_selected")
-	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_cancel")
-	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#btn_ok")
-	arg_1_0._simagebgnum = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg_num")
+local EquipStrengthenAlertView = class("EquipStrengthenAlertView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EquipStrengthenAlertView:onInitView()
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "#simage_tipbg")
+	self._txtcontent = gohelper.findChildText(self.viewGO, "#txt_content")
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnselect = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btns/#btn_select")
+	self._goselected = gohelper.findChild(self.viewGO, "#go_btns/#btn_select/#go_selected")
+	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btns/#btn_cancel")
+	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_btns/#btn_ok")
+	self._simagebgnum = gohelper.findChildSingleImage(self.viewGO, "#simage_bg_num")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
-	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
-	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+function EquipStrengthenAlertView:addEvents()
+	self._btnselect:AddClickListener(self._btnselectOnClick, self)
+	self._btncancel:AddClickListener(self._btncancelOnClick, self)
+	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnselect:RemoveClickListener()
-	arg_3_0._btncancel:RemoveClickListener()
-	arg_3_0._btnok:RemoveClickListener()
+function EquipStrengthenAlertView:removeEvents()
+	self._btnselect:RemoveClickListener()
+	self._btncancel:RemoveClickListener()
+	self._btnok:RemoveClickListener()
 end
 
-function var_0_0._btnselectOnClick(arg_4_0)
-	arg_4_0._isSelected = not arg_4_0._isSelected
+function EquipStrengthenAlertView:_btnselectOnClick()
+	self._isSelected = not self._isSelected
 
-	arg_4_0._goselected:SetActive(arg_4_0._isSelected)
+	self._goselected:SetActive(self._isSelected)
 end
 
-function var_0_0._btncancelOnClick(arg_5_0)
-	arg_5_0:closeThis()
+function EquipStrengthenAlertView:_btncancelOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnokOnClick(arg_6_0)
-	arg_6_0:closeThis()
-	arg_6_0.viewParam.callback(arg_6_0._isSelected)
+function EquipStrengthenAlertView:_btnokOnClick()
+	self:closeThis()
+	self.viewParam.callback(self._isSelected)
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
-	arg_7_0._simagebgnum:LoadImage(ResUrl.getMessageIcon("bg_num"))
-	gohelper.addUIClickAudio(arg_7_0._btncancel.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
-	gohelper.addUIClickAudio(arg_7_0._btnok.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+function EquipStrengthenAlertView:_editableInitView()
+	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	self._simagebgnum:LoadImage(ResUrl.getMessageIcon("bg_num"))
+	gohelper.addUIClickAudio(self._btncancel.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
+	gohelper.addUIClickAudio(self._btnok.gameObject, AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function EquipStrengthenAlertView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._txtcontent.text = arg_9_0.viewParam.content
-	arg_9_0._isSelected = false
+function EquipStrengthenAlertView:onOpen()
+	self._txtcontent.text = self.viewParam.content
+	self._isSelected = false
 
-	arg_9_0._goselected:SetActive(arg_9_0._isSelected)
+	self._goselected:SetActive(self._isSelected)
 end
 
-function var_0_0.onClose(arg_10_0)
+function EquipStrengthenAlertView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0._simagetipbg:UnLoadImage()
-	arg_11_0._simagebgnum:UnLoadImage()
+function EquipStrengthenAlertView:onDestroyView()
+	self._simagetipbg:UnLoadImage()
+	self._simagebgnum:UnLoadImage()
 end
 
-return var_0_0
+return EquipStrengthenAlertView

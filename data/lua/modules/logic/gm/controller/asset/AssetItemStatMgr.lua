@@ -1,33 +1,38 @@
-﻿module("modules.logic.gm.controller.asset.AssetItemStatMgr", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/asset/AssetItemStatMgr.lua
 
-local var_0_0 = class("AssetItemStatMgr", BaseController)
-local var_0_1 = SLFramework.ResMgr.Instance
+module("modules.logic.gm.controller.asset.AssetItemStatMgr", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local AssetItemStatMgr = class("AssetItemStatMgr", BaseController)
+local resMgr = SLFramework.ResMgr.Instance
+
+function AssetItemStatMgr:start()
 	return
 end
 
-function var_0_0.initReflection()
-	if var_0_0.initedRef then
+function AssetItemStatMgr.initReflection()
+	if AssetItemStatMgr.initedRef then
 		return
 	end
 
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
 
-	local var_2_0 = tolua.findtype("SLFramework.ResMgr")
-	local var_2_1 = System.Reflection.BindingFlags
-	local var_2_2 = var_2_1.GetMask(var_2_1.Instance, var_2_1.NonPublic)
-	local var_2_3 = tolua.getfield(var_2_0, "assetCache", var_2_2):Get(var_0_1):GetEnumerator()
+	local type = tolua.findtype("SLFramework.ResMgr")
+	local BindingFlags = System.Reflection.BindingFlags
+	local getMask = BindingFlags.GetMask
+	local mask = getMask(BindingFlags.Instance, BindingFlags.NonPublic)
+	local field = tolua.getfield(type, "assetCache", mask)
+	local assetCache = field:Get(resMgr)
+	local iter = assetCache:GetEnumerator()
 
-	while var_2_3:MoveNext() do
-		local var_2_4 = var_2_3.Current.Key
-		local var_2_5 = var_2_3.Current.Value
+	while iter:MoveNext() do
+		local key = iter.Current.Key
+		local value = iter.Current.Value
 
-		logError(var_2_5.ReferenceCount)
+		logError(value.ReferenceCount)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+AssetItemStatMgr.instance = AssetItemStatMgr.New()
 
-return var_0_0
+return AssetItemStatMgr

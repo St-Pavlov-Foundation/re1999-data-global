@@ -1,39 +1,41 @@
-﻿module("modules.logic.toughbattle.define.ToughBattleEnum", package.seeall)
+﻿-- chunkname: @modules/logic/toughbattle/define/ToughBattleEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.toughbattle.define.ToughBattleEnum", package.seeall)
 
-var_0_0.Mode = {
+local ToughBattleEnum = _M
+
+ToughBattleEnum.Mode = {
 	Act = 2,
 	Story = 1
 }
-var_0_0.HeroType = {
+ToughBattleEnum.HeroType = {
 	Skill = 3,
 	Hero = 1,
 	Rule = 2
 }
-var_0_0.MapId_stage1 = 10731
-var_0_0.MapId_stage2 = 10732
-var_0_0.TicketConstId = 2
-var_0_0.HoldTicketMaxLimitConstId = 4
-var_0_0.DungeonMapCameraSize = 6.6
-var_0_0.MapId_7_28 = 10728
-var_0_0.ActElementId = 100709
-var_0_0.FinishIconPos = {
+ToughBattleEnum.MapId_stage1 = 10731
+ToughBattleEnum.MapId_stage2 = 10732
+ToughBattleEnum.TicketConstId = 2
+ToughBattleEnum.HoldTicketMaxLimitConstId = 4
+ToughBattleEnum.DungeonMapCameraSize = 6.6
+ToughBattleEnum.MapId_7_28 = 10728
+ToughBattleEnum.ActElementId = 100709
+ToughBattleEnum.FinishIconPos = {
 	Vector2.New(37.7, -19.76),
 	Vector2.New(48.75, -24.42),
 	Vector2.New(42.58, -19.16),
 	Vector2.New(34.11, -24.03),
 	(Vector2.New(48.37, -17.84))
 }
-var_0_0.WordInterval = 3.5
-var_0_0.WordTxtPosYOffset = 5
-var_0_0.WordTxtPosXOffset = 2
-var_0_0.WordTxtInterval = 0.2
-var_0_0.WordTxtOpen = 0.7
-var_0_0.WordTxtIdle = 1.1
-var_0_0.WordTxtClose = 0.5
-var_0_0.WordLine2Delay = 1
-var_0_0.WordPlace = {
+ToughBattleEnum.WordInterval = 3.5
+ToughBattleEnum.WordTxtPosYOffset = 5
+ToughBattleEnum.WordTxtPosXOffset = 2
+ToughBattleEnum.WordTxtInterval = 0.2
+ToughBattleEnum.WordTxtOpen = 0.7
+ToughBattleEnum.WordTxtIdle = 1.1
+ToughBattleEnum.WordTxtClose = 0.5
+ToughBattleEnum.WordLine2Delay = 1
+ToughBattleEnum.WordPlace = {
 	{
 		x = -600,
 		y = -50
@@ -68,4 +70,4 @@ var_0_0.WordPlace = {
 	}
 }
 
-return var_0_0
+return ToughBattleEnum

@@ -1,157 +1,155 @@
-﻿module("modules.logic.versionactivity.view.VersionActivityVideoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity/view/VersionActivityVideoView.lua
 
-local var_0_0 = class("VersionActivityVideoView", BaseView)
+module("modules.logic.versionactivity.view.VersionActivityVideoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnblock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_block")
-	arg_1_0._gorightbtn = gohelper.findChild(arg_1_0.viewGO, "#go_rightbtn")
-	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_rightbtn/#btn_skip")
+local VersionActivityVideoView = class("VersionActivityVideoView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivityVideoView:onInitView()
+	self._btnblock = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_block")
+	self._gorightbtn = gohelper.findChild(self.viewGO, "#go_rightbtn")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rightbtn/#btn_skip")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnblock:AddClickListener(arg_2_0._btnblockOnClick, arg_2_0)
-	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+function VersionActivityVideoView:addEvents()
+	self._btnblock:AddClickListener(self._btnblockOnClick, self)
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnblock:RemoveClickListener()
-	arg_3_0._btnskip:RemoveClickListener()
+function VersionActivityVideoView:removeEvents()
+	self._btnblock:RemoveClickListener()
+	self._btnskip:RemoveClickListener()
 end
 
-function var_0_0._btnblockOnClick(arg_4_0)
-	gohelper.setActive(arg_4_0._gorightbtn, true)
-	TaskDispatcher.cancelTask(arg_4_0.hideRightBtn, arg_4_0)
-	TaskDispatcher.runDelay(arg_4_0.hideRightBtn, arg_4_0, 10)
+function VersionActivityVideoView:_btnblockOnClick()
+	gohelper.setActive(self._gorightbtn, true)
+	TaskDispatcher.cancelTask(self.hideRightBtn, self)
+	TaskDispatcher.runDelay(self.hideRightBtn, self, 10)
 end
 
-function var_0_0._btnskipOnClick(arg_5_0)
-	arg_5_0._videoPlayer:Pause()
+function VersionActivityVideoView:_btnskipOnClick()
+	self._videoPlayer:Pause()
 	GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, function()
-		arg_5_0:closeThis()
+		self:closeThis()
 	end, function()
-		arg_5_0._videoPlayer:Play()
+		self._videoPlayer:playLoadMedia()
 	end)
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0:hideRightBtn()
+function VersionActivityVideoView:_editableInitView()
+	self:hideRightBtn()
 
-	arg_8_0._goVideoPlayer = gohelper.findChild(arg_8_0.viewGO, "VideoPlayer")
-	arg_8_0._videoPlayer = arg_8_0._goVideoPlayer:GetComponent(typeof(ZProj.AvProUGUIPlayer))
-	arg_8_0._displauUGUI = arg_8_0._goVideoPlayer:GetComponent(typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
-	arg_8_0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+	self._goVideoPlayer = gohelper.findChild(self.viewGO, "VideoPlayer")
+	self._videoPlayer = VideoPlayerMgr.instance:createVideoPlayer(self._goVideoPlayer)
 
-	if SettingsModel.instance:getVideoEnabled() == false then
-		arg_8_0._videoPlayer = AvProUGUIPlayer_adjust.instance
-	end
-
-	arg_8_0._videoPlayer:AddDisplayUGUI(arg_8_0._displauUGUI)
-	arg_8_0._videoPlayer:SetEventListener(arg_8_0._videoStatusUpdate, arg_8_0)
-	NavigateMgr.instance:addEscape(ViewName.VersionActivityVideoView, arg_8_0._btnskipOnClick, arg_8_0)
+	self._videoPlayer:setScaleMode(UnityEngine.ScaleMode.ScaleAndCrop)
+	self._videoPlayer:setEventListener(self._videoStatusUpdate, self)
+	NavigateMgr.instance:addEscape(ViewName.VersionActivityVideoView, self._btnskipOnClick, self)
 end
 
-function var_0_0._videoStatusUpdate(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		arg_9_0:closeThis()
+function VersionActivityVideoView:_videoStatusUpdate(path, status, errorCode)
+	if status == VideoEnum.PlayerStatus.FinishedPlaying then
+		self:closeThis()
 	end
 end
 
-function var_0_0.initViewParam(arg_10_0)
-	arg_10_0.actId = arg_10_0.viewParam.actId
-	arg_10_0.firstEnter = arg_10_0.viewParam.firstEnter
-	arg_10_0.activityIdList = arg_10_0.viewParam.activityIdList
-	arg_10_0.doneOpenViewName = arg_10_0.viewParam.doneOpenViewName
-	arg_10_0.closeCallback = arg_10_0.viewParam.closeCallback
-	arg_10_0.closeCallbackObj = arg_10_0.viewParam.closeCallbackObj
+function VersionActivityVideoView:initViewParam()
+	self.actId = self.viewParam.actId
+	self.firstEnter = self.viewParam.firstEnter
+	self.activityIdList = self.viewParam.activityIdList
+	self.doneOpenViewName = self.viewParam.doneOpenViewName
+	self.closeCallback = self.viewParam.closeCallback
+	self.closeCallbackObj = self.viewParam.closeCallbackObj
 end
 
-function var_0_0.onUpdateParam(arg_11_0)
+function VersionActivityVideoView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0:initViewParam()
+function VersionActivityVideoView:onOpen()
+	self:initViewParam()
 
-	local var_12_0 = lua_activity105.configDict[arg_12_0.actId]
+	local actCo = lua_activity105.configDict[self.actId]
 
-	if not var_12_0 or string.nilorempty(var_12_0.pv) then
-		logError(string.format("not found actId ：%s config pv", arg_12_0.actId))
-		arg_12_0:closeThis()
+	if not actCo or string.nilorempty(actCo.pv) then
+		logError(string.format("not found actId ：%s config pv", self.actId))
+		self:closeThis()
 	end
 
-	arg_12_0._videoPlayer:LoadMedia(langVideoUrl(var_12_0.pv))
-	arg_12_0._videoPlayer:Play()
+	self._videoPlayer:loadMedia(actCo.pv)
+	self._videoPlayer:playLoadMedia()
 end
 
-function var_0_0.hideRightBtn(arg_13_0)
-	gohelper.setActive(arg_13_0._gorightbtn, false)
+function VersionActivityVideoView:hideRightBtn()
+	gohelper.setActive(self._gorightbtn, false)
 end
 
-function var_0_0.closeThis(arg_14_0)
-	if not arg_14_0.firstEnter then
-		arg_14_0:_closeThis()
+function VersionActivityVideoView:closeThis()
+	if not self.firstEnter then
+		self:_closeThis()
 
 		return
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.activityIdList) do
-		if ActivityHelper.getActivityStatus(iter_14_1) == ActivityEnum.ActivityStatus.Normal then
-			ActivityEnterMgr.instance:enterActivity(iter_14_1)
+	for _, actId in ipairs(self.activityIdList) do
+		local activityStatus = ActivityHelper.getActivityStatus(actId)
+
+		if activityStatus == ActivityEnum.ActivityStatus.Normal then
+			ActivityEnterMgr.instance:enterActivity(actId)
 		end
 	end
 
-	ActivityRpc.instance:sendActivityNewStageReadRequest(VersionActivityEnum.EnterViewActIdList, arg_14_0.onReceiveReply, arg_14_0)
+	ActivityRpc.instance:sendActivityNewStageReadRequest(VersionActivityEnum.EnterViewActIdList, self.onReceiveReply, self)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView2)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.OpenLoading, SceneType.Main)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_14_0.onOpenViewFinish, arg_14_0)
-	arg_14_0.closeCallback(arg_14_0.closeCallbackObj)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
+	self.closeCallback(self.closeCallbackObj)
 end
 
-function var_0_0.onOpenViewFinish(arg_15_0, arg_15_1)
-	if arg_15_1 == arg_15_0.doneOpenViewName then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_15_0.onOpenViewFinish, arg_15_0)
+function VersionActivityVideoView:onOpenViewFinish(viewName)
+	if viewName == self.doneOpenViewName then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 
-		arg_15_0.openViewDone = true
+		self.openViewDone = true
 
-		arg_15_0:_checkCanCloseThisView()
+		self:_checkCanCloseThisView()
 	end
 end
 
-function var_0_0.onReceiveReply(arg_16_0)
-	arg_16_0.receiveMsgDone = true
+function VersionActivityVideoView:onReceiveReply()
+	self.receiveMsgDone = true
 
-	arg_16_0:_checkCanCloseThisView()
+	self:_checkCanCloseThisView()
 end
 
-function var_0_0._checkCanCloseThisView(arg_17_0)
-	if arg_17_0.openViewDone and arg_17_0.receiveMsgDone then
-		arg_17_0:_closeThis()
+function VersionActivityVideoView:_checkCanCloseThisView()
+	if self.openViewDone and self.receiveMsgDone then
+		self:_closeThis()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.CloseLoading)
 	end
 end
 
-function var_0_0._closeThis(arg_18_0)
-	var_0_0.super.closeThis(arg_18_0)
+function VersionActivityVideoView:_closeThis()
+	VersionActivityVideoView.super.closeThis(self)
 end
 
-function var_0_0.onClose(arg_19_0)
+function VersionActivityVideoView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	if arg_20_0._videoPlayer then
+function VersionActivityVideoView:onDestroyView()
+	if self._videoPlayer then
 		if not BootNativeUtil.isIOS() then
-			arg_20_0._videoPlayer:Stop()
+			self._videoPlayer:stop()
 		end
 
-		arg_20_0._videoPlayer:Clear()
+		self._videoPlayer:clear()
 
-		arg_20_0._videoPlayer = nil
+		self._videoPlayer = nil
 	end
 end
 
-return var_0_0
+return VersionActivityVideoView

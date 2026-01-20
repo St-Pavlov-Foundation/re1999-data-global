@@ -1,8 +1,10 @@
-﻿module("modules.logic.sp01.enter.define.VersionActivity2_9Enum", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/enter/define/VersionActivity2_9Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.sp01.enter.define.VersionActivity2_9Enum", package.seeall)
 
-var_0_0.ActivityId = {
+local VersionActivity2_9Enum = _M
+
+VersionActivity2_9Enum.ActivityId = {
 	EnterView2 = 130506,
 	Outside = 130504,
 	Dungeon2 = 130507,
@@ -37,47 +39,47 @@ if GameBranchMgr.instance:isOnVer(2, 9) and SettingsModel.instance:isOverseas() 
 		}
 	end
 
-	var_0_0.ActivityId.Reactivity = VersionActivity3_0Enum.ActivityId.Reactivity
-	var_0_0.ActivityId.ReactivityStore = VersionActivity3_0Enum.ActivityId.ReactivityStore
+	VersionActivity2_9Enum.ActivityId.Reactivity = VersionActivity3_0Enum.ActivityId.Reactivity
+	VersionActivity2_9Enum.ActivityId.ReactivityStore = VersionActivity3_0Enum.ActivityId.ReactivityStore
 end
 
-var_0_0.EnterViewActIdListWithGroup = {
-	[var_0_0.ActivityId.EnterView] = {
-		var_0_0.ActivityId.Outside,
-		var_0_0.ActivityId.BossRush,
-		var_0_0.ActivityId.DungeonStore,
-		var_0_0.ActivityId.Dungeon
+VersionActivity2_9Enum.EnterViewActIdListWithGroup = {
+	[VersionActivity2_9Enum.ActivityId.EnterView] = {
+		VersionActivity2_9Enum.ActivityId.Outside,
+		VersionActivity2_9Enum.ActivityId.BossRush,
+		VersionActivity2_9Enum.ActivityId.DungeonStore,
+		VersionActivity2_9Enum.ActivityId.Dungeon
 	},
-	[var_0_0.ActivityId.EnterView2] = {
-		var_0_0.ActivityId.Outside,
-		var_0_0.ActivityId.DungeonStore,
-		var_0_0.ActivityId.Dungeon,
-		var_0_0.ActivityId.BossRush,
-		var_0_0.ActivityId.Dungeon2
+	[VersionActivity2_9Enum.ActivityId.EnterView2] = {
+		VersionActivity2_9Enum.ActivityId.Outside,
+		VersionActivity2_9Enum.ActivityId.DungeonStore,
+		VersionActivity2_9Enum.ActivityId.Dungeon,
+		VersionActivity2_9Enum.ActivityId.BossRush,
+		VersionActivity2_9Enum.ActivityId.Dungeon2
 	}
 }
-var_0_0.EnterViewMainActIdList = {
-	var_0_0.ActivityId.EnterView,
-	var_0_0.ActivityId.EnterView2
+VersionActivity2_9Enum.EnterViewMainActIdList = {
+	VersionActivity2_9Enum.ActivityId.EnterView,
+	VersionActivity2_9Enum.ActivityId.EnterView2
 }
-var_0_0.ActId2Ambient = {
-	[var_0_0.ActivityId.EnterView] = 3290001,
-	[var_0_0.ActivityId.EnterView2] = 3290002
+VersionActivity2_9Enum.ActId2Ambient = {
+	[VersionActivity2_9Enum.ActivityId.EnterView] = 3290001,
+	[VersionActivity2_9Enum.ActivityId.EnterView2] = 3290002
 }
-var_0_0.ActId2OpenAudio = {
-	[var_0_0.ActivityId.EnterView] = 20305301,
-	[var_0_0.ActivityId.EnterView2] = 20305301
+VersionActivity2_9Enum.ActId2OpenAudio = {
+	[VersionActivity2_9Enum.ActivityId.EnterView] = 20305301,
+	[VersionActivity2_9Enum.ActivityId.EnterView2] = 20305301
 }
-var_0_0.DelaySwitchBgTime = 2.01
-var_0_0.DelaySwitchHero2Idle = 2
-var_0_0.DelayPlayGroupBgm = 2.5
-var_0_0.NextGroupGuideId = 130501
-var_0_0.actId2GuideId = {
-	[var_0_0.ActivityId.EnterView2] = var_0_0.NextGroupGuideId
+VersionActivity2_9Enum.DelaySwitchBgTime = 2.01
+VersionActivity2_9Enum.DelaySwitchHero2Idle = 2
+VersionActivity2_9Enum.DelayPlayGroupBgm = 2.5
+VersionActivity2_9Enum.NextGroupGuideId = 130501
+VersionActivity2_9Enum.actId2GuideId = {
+	[VersionActivity2_9Enum.ActivityId.EnterView2] = VersionActivity2_9Enum.NextGroupGuideId
 }
-var_0_0.ActId2BgAudioName = {
-	[var_0_0.ActivityId.EnterView] = "sp01_kv_up",
-	[var_0_0.ActivityId.EnterView2] = "sp01_kv_down"
+VersionActivity2_9Enum.ActId2BgAudioName = {
+	[VersionActivity2_9Enum.ActivityId.EnterView] = "sp01_kv_up",
+	[VersionActivity2_9Enum.ActivityId.EnterView2] = "sp01_kv_down"
 }
 
-return var_0_0
+return VersionActivity2_9Enum

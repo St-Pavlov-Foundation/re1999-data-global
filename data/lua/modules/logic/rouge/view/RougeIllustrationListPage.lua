@@ -1,78 +1,82 @@
-﻿module("modules.logic.rouge.view.RougeIllustrationListPage", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/RougeIllustrationListPage.lua
 
-local var_0_0 = class("RougeIllustrationListPage", ListScrollCellExtend)
+module("modules.logic.rouge.view.RougeIllustrationListPage", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local RougeIllustrationListPage = class("RougeIllustrationListPage", ListScrollCellExtend)
+
+function RougeIllustrationListPage:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RougeIllustrationListPage:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RougeIllustrationListPage:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goList = arg_4_0:getUserDataTb_()
-	arg_4_0._itemList = arg_4_0:getUserDataTb_()
+function RougeIllustrationListPage:_editableInitView()
+	self._goList = self:getUserDataTb_()
+	self._itemList = self:getUserDataTb_()
 
-	for iter_4_0 = 1, RougeEnum.IllustrationNumOfPage do
-		arg_4_0._goList[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, tostring(iter_4_0))
+	for i = 1, RougeEnum.IllustrationNumOfPage do
+		self._goList[i] = gohelper.findChild(self.viewGO, tostring(i))
 	end
 end
 
-function var_0_0._getItem(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._itemList[arg_5_1]
+function RougeIllustrationListPage:_getItem(index)
+	local item = self._itemList[index]
 
-	if not var_5_0 then
-		local var_5_1 = arg_5_0._goList[arg_5_1]
-		local var_5_2 = arg_5_0._view.viewContainer._viewSetting.otherRes[2]
-		local var_5_3 = arg_5_0._view.viewContainer:getResInst(var_5_2, var_5_1)
+	if not item then
+		local go = self._goList[index]
+		local path = self._view.viewContainer._viewSetting.otherRes[2]
+		local itemGo = self._view.viewContainer:getResInst(path, go)
 
-		var_5_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_3, RougeIllustrationListItem)
-		arg_5_0._itemList[arg_5_1] = var_5_0
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, RougeIllustrationListItem)
+		self._itemList[index] = item
 	end
 
-	return var_5_0
+	return item
 end
 
-function var_0_0._editableAddEvents(arg_6_0)
+function RougeIllustrationListPage:_editableAddEvents()
 	return
 end
 
-function var_0_0._editableRemoveEvents(arg_7_0)
+function RougeIllustrationListPage:_editableRemoveEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0.viewGO, not arg_8_1.isSplitSpace)
+function RougeIllustrationListPage:onUpdateMO(mo)
+	gohelper.setActive(self.viewGO, not mo.isSplitSpace)
 
-	if arg_8_1.isSplitSpace then
+	if mo.isSplitSpace then
 		return
 	end
 
-	for iter_8_0 = 1, RougeEnum.IllustrationNumOfPage do
-		local var_8_0 = arg_8_1[iter_8_0]
-		local var_8_1 = arg_8_0._goList[iter_8_0]
+	for i = 1, RougeEnum.IllustrationNumOfPage do
+		local itemMo = mo[i]
+		local go = self._goList[i]
 
-		gohelper.setActive(var_8_1, var_8_0 ~= nil)
+		gohelper.setActive(go, itemMo ~= nil)
 
-		if var_8_0 then
-			arg_8_0:_getItem(iter_8_0):onUpdateMO(var_8_0)
+		if itemMo then
+			local item = self:_getItem(i)
+
+			item:onUpdateMO(itemMo)
 		end
 	end
 end
 
-function var_0_0.onSelect(arg_9_0, arg_9_1)
+function RougeIllustrationListPage:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function RougeIllustrationListPage:onDestroyView()
 	return
 end
 
-return var_0_0
+return RougeIllustrationListPage

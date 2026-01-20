@@ -1,126 +1,128 @@
-﻿module("modules.logic.season.view1_3.Season1_3TaskView", package.seeall)
+﻿-- chunkname: @modules/logic/season/view1_3/Season1_3TaskView.lua
 
-local var_0_0 = class("Season1_3TaskView", BaseView)
+module("modules.logic.season.view1_3.Season1_3TaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._goScroll = gohelper.findChild(arg_1_0.viewGO, "#scroll_tasklist")
-	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_tasklist/Viewport/Content")
+local Season1_3TaskView = class("Season1_3TaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function Season1_3TaskView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._goScroll = gohelper.findChild(self.viewGO, "#scroll_tasklist")
+	self._goContent = gohelper.findChild(self.viewGO, "#scroll_tasklist/Viewport/Content")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function Season1_3TaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function Season1_3TaskView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(SeasonViewHelper.getSeasonIcon("full/bg1.png"))
+function Season1_3TaskView:_editableInitView()
+	self._simagebg:LoadImage(SeasonViewHelper.getSeasonIcon("full/bg1.png"))
 
-	arg_4_0._items = {}
+	self._items = {}
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_5_0.updateTask, arg_5_0)
-	arg_5_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_5_0.updateTask, arg_5_0)
-	arg_5_0:refreshTask(true)
+function Season1_3TaskView:onOpen()
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.updateTask, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.updateTask, self)
+	self:refreshTask(true)
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.updateTask, arg_6_0)
-	arg_6_0:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.updateTask, arg_6_0)
+function Season1_3TaskView:onClose()
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.updateTask, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.updateTask, self)
 end
 
-function var_0_0.updateTask(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.refreshTask, arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0.refreshTask, arg_7_0, 0.2)
+function Season1_3TaskView:updateTask()
+	TaskDispatcher.cancelTask(self.refreshTask, self)
+	TaskDispatcher.runDelay(self.refreshTask, self, 0.2)
 end
 
-function var_0_0.refreshTask(arg_8_0, arg_8_1)
-	local var_8_0 = Activity104TaskModel.instance:getTaskSeasonList()
-	local var_8_1 = {}
-	local var_8_2 = 0
+function Season1_3TaskView:refreshTask(open)
+	local dataList = Activity104TaskModel.instance:getTaskSeasonList()
+	local list = {}
+	local finishCount = 0
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		var_8_1[iter_8_0] = iter_8_1
+	for i, v in ipairs(dataList) do
+		list[i] = v
 
-		if iter_8_1.hasFinished then
-			var_8_2 = var_8_2 + 1
+		if v.hasFinished then
+			finishCount = finishCount + 1
 		end
 	end
 
-	if var_8_2 > 1 then
-		table.insert(var_8_1, 1, {
+	if finishCount > 1 then
+		table.insert(list, 1, {
 			isTotalGet = true
 		})
 	end
 
-	arg_8_0._dataList = var_8_1
+	self._dataList = list
 
-	TaskDispatcher.cancelTask(arg_8_0.showByLine, arg_8_0)
+	TaskDispatcher.cancelTask(self.showByLine, self)
 
-	if arg_8_1 then
-		for iter_8_2, iter_8_3 in ipairs(arg_8_0._items) do
-			iter_8_3:hide()
+	if open then
+		for i, v in ipairs(self._items) do
+			v:hide()
 		end
 
-		arg_8_0._repeatCount = 0
+		self._repeatCount = 0
 
-		TaskDispatcher.runRepeat(arg_8_0.showByLine, arg_8_0, 0.04, #arg_8_0._dataList)
+		TaskDispatcher.runRepeat(self.showByLine, self, 0.04, #self._dataList)
 	else
-		for iter_8_4 = 1, math.max(#arg_8_0._dataList, #arg_8_0._items) do
-			local var_8_3 = arg_8_0:getItem(iter_8_4)
-			local var_8_4 = arg_8_0._dataList[iter_8_4]
+		for i = 1, math.max(#self._dataList, #self._items) do
+			local item = self:getItem(i)
+			local data = self._dataList[i]
 
-			var_8_3:onUpdateMO(var_8_4)
+			item:onUpdateMO(data)
 		end
 	end
 end
 
-function var_0_0.showByLine(arg_9_0)
-	arg_9_0._repeatCount = arg_9_0._repeatCount + 1
+function Season1_3TaskView:showByLine()
+	self._repeatCount = self._repeatCount + 1
 
-	local var_9_0 = arg_9_0._repeatCount
-	local var_9_1 = arg_9_0:getItem(var_9_0)
-	local var_9_2 = arg_9_0._dataList[var_9_0]
+	local index = self._repeatCount
+	local item = self:getItem(index)
+	local data = self._dataList[index]
 
-	var_9_1:onUpdateMO(var_9_2, true)
+	item:onUpdateMO(data, true)
 
-	if var_9_0 >= #arg_9_0._dataList then
-		TaskDispatcher.cancelTask(arg_9_0.showByLine, arg_9_0)
+	if index >= #self._dataList then
+		TaskDispatcher.cancelTask(self.showByLine, self)
 	end
 end
 
-function var_0_0.getItem(arg_10_0, arg_10_1)
-	if arg_10_0._items[arg_10_1] then
-		return arg_10_0._items[arg_10_1]
+function Season1_3TaskView:getItem(index)
+	if self._items[index] then
+		return self._items[index]
 	end
 
-	local var_10_0 = arg_10_0.viewContainer:getSetting().otherRes[1]
-	local var_10_1 = arg_10_0:getResInst(var_10_0, arg_10_0._goContent, "item" .. arg_10_1)
-	local var_10_2 = Season1_3TaskItem.New(var_10_1, arg_10_0._goScroll)
+	local res = self.viewContainer:getSetting().otherRes[1]
+	local go = self:getResInst(res, self._goContent, "item" .. index)
+	local item = Season1_3TaskItem.New(go, self._goScroll)
 
-	arg_10_0._items[arg_10_1] = var_10_2
+	self._items[index] = item
 
-	return var_10_2
+	return item
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshTask, arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.showByLine, arg_11_0)
-	arg_11_0._simagebg:UnLoadImage()
+function Season1_3TaskView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshTask, self)
+	TaskDispatcher.cancelTask(self.showByLine, self)
+	self._simagebg:UnLoadImage()
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._items) do
-		iter_11_1:destroy()
+	for k, v in pairs(self._items) do
+		v:destroy()
 	end
 
-	arg_11_0._items = nil
+	self._items = nil
 end
 
-return var_0_0
+return Season1_3TaskView

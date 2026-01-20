@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity2_3.act174.view.Act174ForcePickViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_3/act174/view/Act174ForcePickViewContainer.lua
 
-local var_0_0 = class("Act174ForcePickViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_3.act174.view.Act174ForcePickViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local Act174ForcePickViewContainer = class("Act174ForcePickViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, Act174ForcePickView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function Act174ForcePickViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, Act174ForcePickView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function Act174ForcePickViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-return var_0_0
+return Act174ForcePickViewContainer

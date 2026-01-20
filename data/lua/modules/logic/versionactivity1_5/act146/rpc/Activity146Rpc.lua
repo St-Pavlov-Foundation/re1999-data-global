@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity1_5.act146.rpc.Activity146Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act146/rpc/Activity146Rpc.lua
 
-local var_0_0 = class("Activity146Rpc", BaseRpc)
+module("modules.logic.versionactivity1_5.act146.rpc.Activity146Rpc", package.seeall)
 
-function var_0_0.sendGetAct146InfosRequest(arg_1_0, arg_1_1)
-	local var_1_0 = Activity146Module_pb.GetAct146InfosRequest()
+local Activity146Rpc = class("Activity146Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity146Rpc:sendGetAct146InfosRequest(actId)
+	local req = Activity146Module_pb.GetAct146InfosRequest()
 
-	arg_1_0:sendMsg(var_1_0)
+	req.activityId = actId
+
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveGetAct146InfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		Activity146Model.instance:setActivityInfo(arg_2_2.act146Episodes)
+function Activity146Rpc:onReceiveGetAct146InfosReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity146Model.instance:setActivityInfo(msg.act146Episodes)
 		Activity146Controller.instance:onActModelUpdate()
 	end
 end
 
-function var_0_0.sendFinishAct146EpisodeRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = Activity146Module_pb.FinishAct146EpisodeRequest()
+function Activity146Rpc:sendFinishAct146EpisodeRequest(actId, episodeId)
+	local req = Activity146Module_pb.FinishAct146EpisodeRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.episodeId = arg_3_2
+	req.activityId = actId
+	req.episodeId = episodeId
 
-	arg_3_0:sendMsg(var_3_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveFinishAct146EpisodeReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		Activity146Model.instance:setActivityInfo(arg_4_2.updateAct146Episodes)
+function Activity146Rpc:onReceiveFinishAct146EpisodeReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity146Model.instance:setActivityInfo(msg.updateAct146Episodes)
 		Activity146Controller.instance:onActModelUpdate()
 	end
 end
 
-function var_0_0.sendAct146EpisodeBonusRequest(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = Activity146Module_pb.Act146EpisodeBonusRequest()
+function Activity146Rpc:sendAct146EpisodeBonusRequest(actId, episodeId)
+	local req = Activity146Module_pb.Act146EpisodeBonusRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.episodeId = arg_5_2
+	req.activityId = actId
+	req.episodeId = episodeId
 
-	arg_5_0:sendMsg(var_5_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveAct146EpisodeBonusReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		Activity146Model.instance:setActivityInfo(arg_6_2.updateAct146Episodes)
+function Activity146Rpc:onReceiveAct146EpisodeBonusReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity146Model.instance:setActivityInfo(msg.updateAct146Episodes)
 		Activity146Controller.instance:onActModelUpdate()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity146Rpc.instance = Activity146Rpc.New()
 
-return var_0_0
+return Activity146Rpc

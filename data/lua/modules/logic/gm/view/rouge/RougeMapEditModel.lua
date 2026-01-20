@@ -1,303 +1,303 @@
-﻿module("modules.logic.gm.view.rouge.RougeMapEditModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/rouge/RougeMapEditModel.lua
 
-local var_0_0 = class("RougeMapEditModel")
+module("modules.logic.gm.view.rouge.RougeMapEditModel", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.middleLayerId = arg_1_1
-	arg_1_0.middleLayerCo = RougeMapConfig.instance:getMiddleLayerCo(arg_1_0.middleLayerId)
-	arg_1_0.idCounter = 0
-	arg_1_0.pathPointIdCounter = 0
+local RougeMapEditModel = class("RougeMapEditModel")
 
-	arg_1_0:loadLayerCo()
+function RougeMapEditModel:init(middleLayerId)
+	self.middleLayerId = middleLayerId
+	self.middleLayerCo = RougeMapConfig.instance:getMiddleLayerCo(self.middleLayerId)
+	self.idCounter = 0
+	self.pathPointIdCounter = 0
+
+	self:loadLayerCo()
 end
 
-function var_0_0.getMiddleLayerId(arg_2_0)
-	return arg_2_0.middleLayerId
+function RougeMapEditModel:getMiddleLayerId()
+	return self.middleLayerId
 end
 
-function var_0_0.loadLayerCo(arg_3_0)
-	arg_3_0:loadPoints()
-	arg_3_0:loadPathPoints()
-	arg_3_0:loadPath()
-	arg_3_0:loadLeavePoint()
+function RougeMapEditModel:loadLayerCo()
+	self:loadPoints()
+	self:loadPathPoints()
+	self:loadPath()
+	self:loadLeavePoint()
 end
 
-function var_0_0.getPointId(arg_4_0)
-	arg_4_0.idCounter = arg_4_0.idCounter + 1
+function RougeMapEditModel:getPointId()
+	self.idCounter = self.idCounter + 1
 
-	return arg_4_0.idCounter
+	return self.idCounter
 end
 
-function var_0_0.getPathPointId(arg_5_0)
-	arg_5_0.pathPointIdCounter = arg_5_0.pathPointIdCounter + 1
+function RougeMapEditModel:getPathPointId()
+	self.pathPointIdCounter = self.pathPointIdCounter + 1
 
-	return arg_5_0.pathPointIdCounter
+	return self.pathPointIdCounter
 end
 
-function var_0_0.loadPoints(arg_6_0)
-	local var_6_0 = arg_6_0.middleLayerCo.pointPos
+function RougeMapEditModel:loadPoints()
+	local pointList = self.middleLayerCo.pointPos
 
-	arg_6_0.pointDict = {}
-	arg_6_0.pointList = {}
-	arg_6_0.pointId2PathIdDict = {}
+	self.pointDict = {}
+	self.pointList = {}
+	self.pointId2PathIdDict = {}
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = Vector3.New(iter_6_1.x, iter_6_1.y, 0)
-		local var_6_2 = arg_6_0:getPointId()
+	for _, pointPos in ipairs(pointList) do
+		local pos = Vector3.New(pointPos.x, pointPos.y, 0)
+		local id = self:getPointId()
 
-		arg_6_0.pointDict[var_6_2] = var_6_1
+		self.pointDict[id] = pos
 
-		table.insert(arg_6_0.pointList, {
-			id = var_6_2,
-			pos = var_6_1
+		table.insert(self.pointList, {
+			id = id,
+			pos = pos
 		})
 
-		arg_6_0.pointId2PathIdDict[var_6_2] = iter_6_1.z
+		self.pointId2PathIdDict[id] = pointPos.z
 	end
 
-	table.sort(arg_6_0.pointList, function(arg_7_0, arg_7_1)
-		return arg_7_0.id < arg_7_1.id
+	table.sort(self.pointList, function(a, b)
+		return a.id < b.id
 	end)
 end
 
-function var_0_0.loadPathPoints(arg_8_0)
-	local var_8_0 = arg_8_0.middleLayerCo.pathPointPos
+function RougeMapEditModel:loadPathPoints()
+	local pointList = self.middleLayerCo.pathPointPos
 
-	arg_8_0.pathPointDict = {}
-	arg_8_0.pathPointList = {}
+	self.pathPointDict = {}
+	self.pathPointList = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = Vector3.New(iter_8_1.x, iter_8_1.y, 0)
-		local var_8_2 = arg_8_0:getPathPointId()
+	for _, pointPos in ipairs(pointList) do
+		local pos = Vector3.New(pointPos.x, pointPos.y, 0)
+		local id = self:getPathPointId()
 
-		arg_8_0.pathPointDict[var_8_2] = var_8_1
+		self.pathPointDict[id] = pos
 
-		table.insert(arg_8_0.pathPointList, {
-			id = var_8_2,
-			pos = var_8_1
+		table.insert(self.pathPointList, {
+			id = id,
+			pos = pos
 		})
 	end
 
-	table.sort(arg_8_0.pathPointList, function(arg_9_0, arg_9_1)
-		return arg_9_0.id < arg_9_1.id
+	table.sort(self.pathPointList, function(a, b)
+		return a.id < b.id
 	end)
 end
 
-function var_0_0.loadPath(arg_10_0)
-	local var_10_0 = arg_10_0.middleLayerCo.path
+function RougeMapEditModel:loadPath()
+	local pathList = self.middleLayerCo.path
 
-	arg_10_0.lineList = {}
+	self.lineList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		table.insert(arg_10_0.lineList, {
-			startId = iter_10_1.x,
-			endId = iter_10_1.y
+	for _, path in ipairs(pathList) do
+		table.insert(self.lineList, {
+			startId = path.x,
+			endId = path.y
 		})
 	end
 
-	arg_10_0.point2PathMapLineList = {}
+	self.point2PathMapLineList = {}
 
-	for iter_10_2, iter_10_3 in pairs(arg_10_0.pointId2PathIdDict) do
-		table.insert(arg_10_0.point2PathMapLineList, {
-			startId = iter_10_2,
-			endId = iter_10_3
+	for pointId, pathPointId in pairs(self.pointId2PathIdDict) do
+		table.insert(self.point2PathMapLineList, {
+			startId = pointId,
+			endId = pathPointId
 		})
 	end
 end
 
-function var_0_0.loadLeavePoint(arg_11_0)
-	local var_11_0 = arg_11_0.middleLayerCo.leavePos
+function RougeMapEditModel:loadLeavePoint()
+	local leavePos = self.middleLayerCo.leavePos
 
-	if not var_11_0 then
-		arg_11_0:setLeavePoint(nil)
+	if not leavePos then
+		self:setLeavePoint(nil)
 
 		return
 	end
 
-	local var_11_1 = Vector2(var_11_0.x, var_11_0.y)
-	local var_11_2 = var_11_0.z
+	local pos = Vector2(leavePos.x, leavePos.y)
+	local pathId = leavePos.z
 
-	arg_11_0:setLeavePoint(var_11_1)
+	self:setLeavePoint(pos)
 
-	if not arg_11_0.pathPointDict[var_11_2] then
+	if not self.pathPointDict[pathId] then
 		return
 	end
 
-	table.insert(arg_11_0.point2PathMapLineList, {
+	table.insert(self.point2PathMapLineList, {
 		startId = RougeMapEnum.LeaveId,
-		endId = var_11_2
+		endId = pathId
 	})
 
-	arg_11_0.pointId2PathIdDict[RougeMapEnum.LeaveId] = var_11_2
+	self.pointId2PathIdDict[RougeMapEnum.LeaveId] = pathId
 end
 
-function var_0_0.addPoint(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getPointId()
+function RougeMapEditModel:addPoint(pos)
+	local id = self:getPointId()
 
-	arg_12_0.pointDict[var_12_0] = arg_12_1
+	self.pointDict[id] = pos
 
-	table.insert(arg_12_0.pointList, {
-		id = var_12_0,
-		pos = arg_12_1
+	table.insert(self.pointList, {
+		id = id,
+		pos = pos
 	})
-	table.sort(arg_12_0.pointList, function(arg_13_0, arg_13_1)
-		return arg_13_0.id < arg_13_1.id
+	table.sort(self.pointList, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_12_0
+	return id
 end
 
-function var_0_0.addPathPoint(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getPathPointId()
+function RougeMapEditModel:addPathPoint(pos)
+	local id = self:getPathPointId()
 
-	arg_14_0.pathPointDict[var_14_0] = arg_14_1
+	self.pathPointDict[id] = pos
 
-	table.insert(arg_14_0.pathPointList, {
-		id = var_14_0,
-		pos = arg_14_1
+	table.insert(self.pathPointList, {
+		id = id,
+		pos = pos
 	})
-	table.sort(arg_14_0.pathPointList, function(arg_15_0, arg_15_1)
-		return arg_15_0.id < arg_15_1.id
+	table.sort(self.pathPointList, function(a, b)
+		return a.id < b.id
 	end)
 
-	return var_14_0
+	return id
 end
 
-function var_0_0.setLeavePoint(arg_16_0, arg_16_1)
-	arg_16_0.leavePos = arg_16_1
+function RougeMapEditModel:setLeavePoint(pos)
+	self.leavePos = pos
 end
 
-function var_0_0.getLeavePos(arg_17_0)
-	return arg_17_0.leavePos
+function RougeMapEditModel:getLeavePos()
+	return self.leavePos
 end
 
-function var_0_0.deleteLeavePoint(arg_18_0)
-	arg_18_0.leavePos = nil
-	arg_18_0.pointId2PathIdDict[RougeMapEnum.LeaveId] = nil
+function RougeMapEditModel:deleteLeavePoint()
+	self.leavePos = nil
+	self.pointId2PathIdDict[RougeMapEnum.LeaveId] = nil
 end
 
-function var_0_0.deletePoint(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_2 == RougeMapEnum.MiddleLayerPointType.Pieces then
-		arg_19_0.pointDict[arg_19_1] = nil
+function RougeMapEditModel:deletePoint(id, type)
+	if type == RougeMapEnum.MiddleLayerPointType.Pieces then
+		self.pointDict[id] = nil
 
-		local var_19_0 = arg_19_0:getPointIndex(arg_19_1)
+		local index = self:getPointIndex(id)
 
-		if var_19_0 then
-			table.remove(arg_19_0.pointList, var_19_0)
-			table.sort(arg_19_0.pointList, function(arg_20_0, arg_20_1)
-				return arg_20_0.id < arg_20_1.id
+		if index then
+			table.remove(self.pointList, index)
+			table.sort(self.pointList, function(a, b)
+				return a.id < b.id
 			end)
 		end
 
-		arg_19_0.pointId2PathIdDict[arg_19_1] = nil
+		self.pointId2PathIdDict[id] = nil
 
 		return
 	end
 
-	arg_19_0.pathPointDict[arg_19_1] = nil
+	self.pathPointDict[id] = nil
 
-	local var_19_1 = arg_19_0:getPathPointIndex(arg_19_1)
+	local index = self:getPathPointIndex(id)
 
-	if var_19_1 then
-		table.remove(arg_19_0.pathPointList, var_19_1)
-		table.sort(arg_19_0.pathPointList, function(arg_21_0, arg_21_1)
-			return arg_21_0.id < arg_21_1.id
+	if index then
+		table.remove(self.pathPointList, index)
+		table.sort(self.pathPointList, function(a, b)
+			return a.id < b.id
 		end)
 
-		for iter_19_0, iter_19_1 in pairs(arg_19_0.pointId2PathIdDict) do
-			if iter_19_1 == arg_19_1 then
-				arg_19_0.pointId2PathIdDict[iter_19_0] = nil
+		for pointId, pathId in pairs(self.pointId2PathIdDict) do
+			if pathId == id then
+				self.pointId2PathIdDict[pointId] = nil
 			end
 		end
 	end
 end
 
-function var_0_0.addLine(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	if arg_22_1 == RougeMapEnum.MiddleLayerPointType.Pieces or arg_22_1 == RougeMapEnum.MiddleLayerPointType.Leave then
-		arg_22_0.pointId2PathIdDict[arg_22_2] = arg_22_4
+function RougeMapEditModel:addLine(startType, startId, endType, endId)
+	if startType == RougeMapEnum.MiddleLayerPointType.Pieces or startType == RougeMapEnum.MiddleLayerPointType.Leave then
+		self.pointId2PathIdDict[startId] = endId
 
-		table.insert(arg_22_0.point2PathMapLineList, {
-			startId = arg_22_2,
-			endId = arg_22_4
+		table.insert(self.point2PathMapLineList, {
+			startId = startId,
+			endId = endId
 		})
 
 		return
 	end
 
-	table.insert(arg_22_0.lineList, {
-		startId = arg_22_2,
-		endId = arg_22_4
+	table.insert(self.lineList, {
+		startId = startId,
+		endId = endId
 	})
 end
 
-function var_0_0.removeLine(arg_23_0, arg_23_1)
-	table.remove(arg_23_0.lineList, arg_23_1)
+function RougeMapEditModel:removeLine(index)
+	table.remove(self.lineList, index)
 end
 
-function var_0_0.removeMapLine(arg_24_0, arg_24_1)
-	table.remove(arg_24_0.point2PathMapLineList, arg_24_1)
+function RougeMapEditModel:removeMapLine(index)
+	table.remove(self.point2PathMapLineList, index)
 end
 
-function var_0_0.checkNeedRemoveMap(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_3.startType
-	local var_25_1 = arg_25_3.startId
-	local var_25_2 = arg_25_3.endType
-	local var_25_3 = arg_25_3.endId
+function RougeMapEditModel:checkNeedRemoveMap(pointId, pathId, lineItem)
+	local startType, startId = lineItem.startType, lineItem.startId
+	local endType, endId = lineItem.endType, lineItem.endId
 
-	if var_25_0 == RougeMapEnum.MiddleLayerPointType.Pieces and var_25_1 == arg_25_1 then
+	if startType == RougeMapEnum.MiddleLayerPointType.Pieces and startId == pointId then
 		return true
 	end
 
-	if var_25_0 == RougeMapEnum.MiddleLayerPointType.Path and var_25_1 == arg_25_2 then
+	if startType == RougeMapEnum.MiddleLayerPointType.Path and startId == pathId then
 		return true
 	end
 
-	if var_25_2 == RougeMapEnum.MiddleLayerPointType.Pieces and var_25_3 == arg_25_1 then
+	if endType == RougeMapEnum.MiddleLayerPointType.Pieces and endId == pointId then
 		return true
 	end
 
-	if var_25_2 == RougeMapEnum.MiddleLayerPointType.Path and var_25_3 == arg_25_2 then
+	if endType == RougeMapEnum.MiddleLayerPointType.Path and endId == pathId then
 		return true
 	end
 end
 
-function var_0_0.getPointsDict(arg_26_0)
-	return arg_26_0.pointDict
+function RougeMapEditModel:getPointsDict()
+	return self.pointDict
 end
 
-function var_0_0.getPointList(arg_27_0)
-	return arg_27_0.pointList
+function RougeMapEditModel:getPointList()
+	return self.pointList
 end
 
-function var_0_0.getPointMap(arg_28_0)
-	return arg_28_0.pointId2PathIdDict
+function RougeMapEditModel:getPointMap()
+	return self.pointId2PathIdDict
 end
 
-function var_0_0.getPathPointsDict(arg_29_0)
-	return arg_29_0.pathPointDict
+function RougeMapEditModel:getPathPointsDict()
+	return self.pathPointDict
 end
 
-function var_0_0.getPathPointList(arg_30_0)
-	return arg_30_0.pathPointList
+function RougeMapEditModel:getPathPointList()
+	return self.pathPointList
 end
 
-function var_0_0.getLineList(arg_31_0)
-	return arg_31_0.lineList
+function RougeMapEditModel:getLineList()
+	return self.lineList
 end
 
-function var_0_0.getMapLineList(arg_32_0)
-	return arg_32_0.point2PathMapLineList
+function RougeMapEditModel:getMapLineList()
+	return self.point2PathMapLineList
 end
 
-function var_0_0.getPointPos(arg_33_0, arg_33_1)
-	return arg_33_0.pointDict[arg_33_1]
+function RougeMapEditModel:getPointPos(id)
+	return self.pointDict[id]
 end
 
-function var_0_0.getPathPointPos(arg_34_0, arg_34_1)
-	return arg_34_0.pathPointDict[arg_34_1]
+function RougeMapEditModel:getPathPointPos(id)
+	return self.pathPointDict[id]
 end
 
-var_0_0.PointTypeCanAddLineDict = {
+RougeMapEditModel.PointTypeCanAddLineDict = {
 	[RougeMapEnum.MiddleLayerPointType.Pieces] = {
 		[RougeMapEnum.MiddleLayerPointType.Pieces] = {
 			false,
@@ -337,17 +337,17 @@ var_0_0.PointTypeCanAddLineDict = {
 	}
 }
 
-function var_0_0.checkCanAddLine(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4)
-	local var_35_0 = var_0_0.PointTypeCanAddLineDict
+function RougeMapEditModel:checkCanAddLine(startType, startId, endType, endId)
+	local canAddLine = RougeMapEditModel.PointTypeCanAddLineDict
 
-	if not var_35_0[1] then
-		GameFacade.showToastString(var_35_0[1])
+	if not canAddLine[1] then
+		GameFacade.showToastString(canAddLine[1])
 
 		return false
 	end
 
-	if arg_35_1 == RougeMapEnum.MiddleLayerPointType.Leave or arg_35_4 == RougeMapEnum.MiddleLayerPointType.Leave then
-		if arg_35_0.pointId2PathIdDict[RougeMapEnum.LeaveId] then
+	if startType == RougeMapEnum.MiddleLayerPointType.Leave or endId == RougeMapEnum.MiddleLayerPointType.Leave then
+		if self.pointId2PathIdDict[RougeMapEnum.LeaveId] then
 			GameFacade.showToastString("一个离开点只能映射一个路径点")
 
 			return false
@@ -356,9 +356,9 @@ function var_0_0.checkCanAddLine(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_
 		return false
 	end
 
-	for iter_35_0, iter_35_1 in ipairs(arg_35_0.lineList) do
-		if arg_35_1 == iter_35_1.startType and arg_35_2 == iter_35_1.startId and arg_35_3 == iter_35_1.endType and arg_35_4 == iter_35_1.endId or arg_35_1 == iter_35_1.endType and arg_35_2 == iter_35_1.endId and arg_35_3 == iter_35_1.startType and arg_35_4 == iter_35_1.startId then
-			if arg_35_1 == arg_35_3 then
+	for _, lineItem in ipairs(self.lineList) do
+		if startType == lineItem.startType and startId == lineItem.startId and endType == lineItem.endType and endId == lineItem.endId or startType == lineItem.endType and startId == lineItem.endId and endType == lineItem.startType and endId == lineItem.startId then
+			if startType == endType then
 				GameFacade.showToastString("已添加路径")
 			else
 				GameFacade.showToastString("已添加映射")
@@ -368,9 +368,9 @@ function var_0_0.checkCanAddLine(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_
 		end
 	end
 
-	arg_35_1, arg_35_2, arg_35_3, arg_35_4 = RougeMapHelper.formatLineParam(arg_35_1, arg_35_2, arg_35_3, arg_35_4)
+	startType, startId, endType, endId = RougeMapHelper.formatLineParam(startType, startId, endType, endId)
 
-	if arg_35_1 ~= arg_35_3 and arg_35_0.pointId2PathIdDict[arg_35_2] then
+	if startType ~= endType and self.pointId2PathIdDict[startId] then
 		GameFacade.showToastString("一个元件只能映射一个路径点")
 
 		return
@@ -379,233 +379,233 @@ function var_0_0.checkCanAddLine(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_
 	return true
 end
 
-var_0_0.Radius = 1
+RougeMapEditModel.Radius = 1
 
-function var_0_0.getPointByPos(arg_36_0, arg_36_1)
-	for iter_36_0, iter_36_1 in pairs(arg_36_0.pointDict) do
-		if Vector2.Distance(iter_36_1, arg_36_1) <= var_0_0.Radius then
-			return iter_36_0, RougeMapEnum.MiddleLayerPointType.Pieces
+function RougeMapEditModel:getPointByPos(scenePos)
+	for id, pos in pairs(self.pointDict) do
+		if Vector2.Distance(pos, scenePos) <= RougeMapEditModel.Radius then
+			return id, RougeMapEnum.MiddleLayerPointType.Pieces
 		end
 	end
 
-	for iter_36_2, iter_36_3 in pairs(arg_36_0.pathPointDict) do
-		if Vector2.Distance(iter_36_3, arg_36_1) <= var_0_0.Radius then
-			return iter_36_2, RougeMapEnum.MiddleLayerPointType.Path
+	for id, pos in pairs(self.pathPointDict) do
+		if Vector2.Distance(pos, scenePos) <= RougeMapEditModel.Radius then
+			return id, RougeMapEnum.MiddleLayerPointType.Path
 		end
 	end
 
-	if arg_36_0.leavePos and Vector2.Distance(arg_36_0.leavePos, arg_36_1) <= var_0_0.Radius then
+	if self.leavePos and Vector2.Distance(self.leavePos, scenePos) <= RougeMapEditModel.Radius then
 		return RougeMapEnum.LeaveId, RougeMapEnum.MiddleLayerPointType.Leave
 	end
 end
 
-function var_0_0.generateNodeConfig(arg_37_0)
-	local var_37_0 = arg_37_0.pointList
+function RougeMapEditModel:generateNodeConfig()
+	local pointList = self.pointList
 
-	if #var_37_0 < 1 then
+	if #pointList < 1 then
 		GameFacade.showToastString("没有添加任何节点")
 
 		return
 	end
 
-	local var_37_1 = {}
+	local strList = {}
 
-	for iter_37_0, iter_37_1 in ipairs(var_37_0) do
-		local var_37_2 = iter_37_1.pos
-		local var_37_3 = arg_37_0.pointId2PathIdDict[iter_37_1.id]
-		local var_37_4 = arg_37_0:getPathPointIndex(var_37_3)
+	for _, point in ipairs(pointList) do
+		local pos = point.pos
+		local pathPointId = self.pointId2PathIdDict[point.id]
+		local pathPointIndex = self:getPathPointIndex(pathPointId)
 
-		if var_37_4 == nil then
-			local var_37_5 = string.format("节点id : %s 没有添加路径节点映射", iter_37_1.id)
+		if pathPointIndex == nil then
+			local message = string.format("节点id : %s 没有添加路径节点映射", point.id)
 
-			GameFacade.showToastString(var_37_5)
-			logError(var_37_5)
+			GameFacade.showToastString(message)
+			logError(message)
 
 			return
 		end
 
-		table.insert(var_37_1, string.format("%s#%s#%s", var_37_2.x, var_37_2.y, var_37_4))
+		table.insert(strList, string.format("%s#%s#%s", pos.x, pos.y, pathPointIndex))
 	end
 
-	if not arg_37_0:checkNavigation() then
+	if not self:checkNavigation() then
 		return
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(var_37_1, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(strList, "|"))
 	GameFacade.showToastString("生成节点配置成功")
 end
 
-function var_0_0.generatePathNodeConfig(arg_38_0)
-	local var_38_0 = arg_38_0.pathPointList
+function RougeMapEditModel:generatePathNodeConfig()
+	local pointList = self.pathPointList
 
-	if #var_38_0 < 1 then
+	if #pointList < 1 then
 		GameFacade.showToastString("没有添加任何路径节点")
 
 		return
 	end
 
-	if not arg_38_0:checkNavigation() then
+	if not self:checkNavigation() then
 		return
 	end
 
-	local var_38_1 = {}
+	local strList = {}
 
-	for iter_38_0, iter_38_1 in ipairs(var_38_0) do
-		local var_38_2 = iter_38_1.pos
+	for _, point in ipairs(pointList) do
+		local pos = point.pos
 
-		table.insert(var_38_1, string.format("%s#%s", var_38_2.x, var_38_2.y))
+		table.insert(strList, string.format("%s#%s", pos.x, pos.y))
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(var_38_1, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(strList, "|"))
 	GameFacade.showToastString("生成路径节点配置成功")
 end
 
-function var_0_0.generateNodePath(arg_39_0)
-	if #arg_39_0.lineList < 1 then
+function RougeMapEditModel:generateNodePath()
+	if #self.lineList < 1 then
 		GameFacade.showToastString("没有添加任何路径")
 
 		return
 	end
 
-	local var_39_0 = {}
+	local strList = {}
 
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0.lineList) do
-		local var_39_1 = arg_39_0:getPathPointIndex(iter_39_1.startId)
-		local var_39_2 = arg_39_0:getPathPointIndex(iter_39_1.endId)
+	for _, line in ipairs(self.lineList) do
+		local s_index = self:getPathPointIndex(line.startId)
+		local e_index = self:getPathPointIndex(line.endId)
 
-		table.insert(var_39_0, string.format("%s#%s", var_39_1, var_39_2))
+		table.insert(strList, string.format("%s#%s", s_index, e_index))
 	end
 
-	if not arg_39_0:checkNavigation() then
+	if not self:checkNavigation() then
 		return
 	end
 
-	ZProj.GameHelper.SetSystemBuffer(table.concat(var_39_0, "|"))
+	ZProj.GameHelper.SetSystemBuffer(table.concat(strList, "|"))
 	GameFacade.showToastString("生成路径配置成功")
 end
 
-function var_0_0.getPointIndex(arg_40_0, arg_40_1)
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0.pointList) do
-		if iter_40_1.id == arg_40_1 then
-			return iter_40_0
+function RougeMapEditModel:getPointIndex(id)
+	for index, point in ipairs(self.pointList) do
+		if point.id == id then
+			return index
 		end
 	end
 end
 
-function var_0_0.getPathPointIndex(arg_41_0, arg_41_1)
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0.pathPointList) do
-		if iter_41_1.id == arg_41_1 then
-			return iter_41_0
+function RougeMapEditModel:getPathPointIndex(id)
+	for index, point in ipairs(self.pathPointList) do
+		if point.id == id then
+			return index
 		end
 	end
 end
 
-function var_0_0.getLineDict(arg_42_0)
-	arg_42_0.lineDict = {}
+function RougeMapEditModel:getLineDict()
+	self.lineDict = {}
 
-	for iter_42_0, iter_42_1 in ipairs(arg_42_0.lineList) do
-		arg_42_0.lineDict[iter_42_1.startId] = arg_42_0.lineDict[iter_42_1.startId] or {}
-		arg_42_0.lineDict[iter_42_1.endId] = arg_42_0.lineDict[iter_42_1.endId] or {}
-		arg_42_0.lineDict[iter_42_1.startId][iter_42_1.endId] = true
-		arg_42_0.lineDict[iter_42_1.endId][iter_42_1.startId] = true
+	for _, line in ipairs(self.lineList) do
+		self.lineDict[line.startId] = self.lineDict[line.startId] or {}
+		self.lineDict[line.endId] = self.lineDict[line.endId] or {}
+		self.lineDict[line.startId][line.endId] = true
+		self.lineDict[line.endId][line.startId] = true
 	end
 
-	return arg_42_0.lineDict
+	return self.lineDict
 end
 
-function var_0_0.checkNavigation(arg_43_0)
-	arg_43_0:getLineDict()
+function RougeMapEditModel:checkNavigation()
+	self:getLineDict()
 
-	local var_43_0 = true
-	local var_43_1 = #arg_43_0.pointList
-	local var_43_2 = arg_43_0.pointId2PathIdDict[arg_43_0.pointList[1].id]
-	local var_43_3 = {}
+	local canArrive = true
+	local pointLen = #self.pointList
+	local startPathId = self.pointId2PathIdDict[self.pointList[1].id]
+	local arrivedList = {}
 
-	for iter_43_0 = 2, var_43_1 do
-		local var_43_4 = arg_43_0.pointList[iter_43_0]
-		local var_43_5 = arg_43_0.pointId2PathIdDict[var_43_4.id]
+	for i = 2, pointLen do
+		local point = self.pointList[i]
+		local endId = self.pointId2PathIdDict[point.id]
 
-		tabletool.clear(var_43_3)
+		tabletool.clear(arrivedList)
 
-		if not arg_43_0:navigationTo(var_43_2, var_43_5, 1, var_43_3) then
-			local var_43_6 = string.format("id : %s, 不可达", var_43_4.id)
+		if not self:navigationTo(startPathId, endId, 1, arrivedList) then
+			local msg = string.format("id : %s, 不可达", point.id)
 
-			GameFacade.showToastString(var_43_6)
+			GameFacade.showToastString(msg)
 
-			var_43_0 = false
+			canArrive = false
 		end
 	end
 
-	return var_43_0
+	return canArrive
 end
 
-function var_0_0.navigationTo(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4)
-	if tabletool.indexOf(arg_44_4, arg_44_1) then
+function RougeMapEditModel:navigationTo(startId, endId, level, arrivedList)
+	if tabletool.indexOf(arrivedList, startId) then
 		return
 	end
 
-	table.insert(arg_44_4, arg_44_1)
+	table.insert(arrivedList, startId)
 
-	if arg_44_3 > 20 then
+	if level > 20 then
 		GameFacade.showToastString("死循环了...")
-		table.remove(arg_44_4)
+		table.remove(arrivedList)
 
 		return
 	end
 
-	local var_44_0 = arg_44_0.lineDict[arg_44_1]
+	local nextDict = self.lineDict[startId]
 
-	if not var_44_0 then
-		table.remove(arg_44_4)
+	if not nextDict then
+		table.remove(arrivedList)
 
 		return
 	end
 
-	for iter_44_0, iter_44_1 in pairs(var_44_0) do
-		if iter_44_0 == arg_44_2 then
-			table.insert(arg_44_4, arg_44_2)
+	for pathId, _ in pairs(nextDict) do
+		if pathId == endId then
+			table.insert(arrivedList, endId)
 
 			return true
 		end
 	end
 
-	for iter_44_2, iter_44_3 in pairs(var_44_0) do
-		if arg_44_0:navigationTo(iter_44_2, arg_44_2, arg_44_3 + 1, arg_44_4) then
+	for pathId, _ in pairs(nextDict) do
+		if self:navigationTo(pathId, endId, level + 1, arrivedList) then
 			return true
 		end
 	end
 end
 
-function var_0_0.generateLeaveNodeConfig(arg_45_0)
-	local var_45_0 = arg_45_0.pointId2PathIdDict[RougeMapEnum.LeaveId]
+function RougeMapEditModel:generateLeaveNodeConfig()
+	local pathPointId = self.pointId2PathIdDict[RougeMapEnum.LeaveId]
 
-	if not var_45_0 then
+	if not pathPointId then
 		GameFacade.showToastString("离开点 没有添加路径节点映射")
 
 		return
 	end
 
-	local var_45_1 = arg_45_0:getPathPointIndex(var_45_0)
-	local var_45_2 = arg_45_0:getLeavePos()
+	local pathPointIndex = self:getPathPointIndex(pathPointId)
+	local leavePos = self:getLeavePos()
 
-	ZProj.GameHelper.SetSystemBuffer(string.format("%s#%s#%s", var_45_2.x, var_45_2.y, var_45_1))
+	ZProj.GameHelper.SetSystemBuffer(string.format("%s#%s#%s", leavePos.x, leavePos.y, pathPointIndex))
 	GameFacade.showToastString("生成离开点配置成功")
 end
 
-function var_0_0.setHook(arg_46_0)
-	local var_46_0 = UnityEngine.Time.frameCount
-	local var_46_1 = os.clock()
+function RougeMapEditModel:setHook()
+	local frame = UnityEngine.Time.frameCount
+	local _t = os.clock()
 
 	debug.sethook(function()
-		if var_46_0 ~= UnityEngine.Time.frameCount then
-			var_46_0 = UnityEngine.Time.frameCount
-			var_46_1 = os.clock()
-		elseif os.clock() - var_46_1 > 5 then
+		if frame ~= UnityEngine.Time.frameCount then
+			frame = UnityEngine.Time.frameCount
+			_t = os.clock()
+		elseif os.clock() - _t > 5 then
 			error("loop !!!")
 		end
 	end, "l")
 end
 
-var_0_0.instance = var_0_0.New()
+RougeMapEditModel.instance = RougeMapEditModel.New()
 
-return var_0_0
+return RougeMapEditModel

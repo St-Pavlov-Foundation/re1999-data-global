@@ -1,148 +1,152 @@
-﻿module("modules.logic.character.model.recommed.CharacterRecommedHeroListModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/recommed/CharacterRecommedHeroListModel.lua
 
-local var_0_0 = class("CharacterRecommedHeroListModel", ListScrollModel)
+module("modules.logic.character.model.recommed.CharacterRecommedHeroListModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local CharacterRecommedHeroListModel = class("CharacterRecommedHeroListModel", ListScrollModel)
+
+function CharacterRecommedHeroListModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._levelAscend = false
-	arg_2_0._rareAscend = false
+function CharacterRecommedHeroListModel:reInit()
+	self._levelAscend = false
+	self._rareAscend = false
 end
 
-function var_0_0.setMoList(arg_3_0, arg_3_1)
-	local var_3_0 = {}
+function CharacterRecommedHeroListModel:setMoList(heroId)
+	local moList = {}
 
-	for iter_3_0, iter_3_1 in pairs(CharacterRecommedModel.instance:getAllHeroRecommendMos()) do
-		if iter_3_1:isOwnHero() then
-			table.insert(var_3_0, iter_3_1)
+	for _, mo in pairs(CharacterRecommedModel.instance:getAllHeroRecommendMos()) do
+		if mo:isOwnHero() then
+			table.insert(moList, mo)
 		end
 	end
 
-	arg_3_0._selectheroId = arg_3_1
+	self._selectheroId = heroId
 
-	arg_3_0:_sortByLevel(var_3_0)
-	arg_3_0:setList(var_3_0)
+	self:_sortByLevel(moList)
+	self:setList(moList)
 end
 
-function var_0_0.selectById(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0:getById(arg_4_1)
-	local var_4_1 = arg_4_0:getIndex(var_4_0)
+function CharacterRecommedHeroListModel:selectById(id)
+	local mo = self:getById(id)
+	local index = self:getIndex(mo)
 
-	arg_4_0:selectCell(var_4_1, true)
+	self:selectCell(index, true)
 end
 
-function var_0_0._sortByLevel(arg_5_0, arg_5_1)
-	arg_5_1 = arg_5_1 or arg_5_0:getList()
+function CharacterRecommedHeroListModel:_sortByLevel(moList)
+	moList = moList or self:getList()
 
-	table.sort(arg_5_1, function(arg_6_0, arg_6_1)
-		local var_6_0 = arg_6_0.heroId
-		local var_6_1 = arg_6_1.heroId
+	table.sort(moList, function(a_heroMo, b_heroMo)
+		local a_heroId = a_heroMo.heroId
+		local b_heroId = b_heroMo.heroId
 
-		if not arg_6_0 or not arg_6_1 then
-			return var_6_1 < var_6_0
+		if not a_heroMo or not b_heroMo then
+			return b_heroId < a_heroId
 		end
 
-		local var_6_2 = arg_6_0:isFavor()
+		local a_isFavor = a_heroMo:isFavor()
+		local b_isFavor = b_heroMo:isFavor()
 
-		if var_6_2 ~= arg_6_1:isFavor() then
-			return var_6_2
+		if a_isFavor ~= b_isFavor then
+			return a_isFavor
 		end
 
-		local var_6_3 = arg_6_0:getHeroLevel()
-		local var_6_4 = arg_6_1:getHeroLevel()
+		local a_level = a_heroMo:getHeroLevel()
+		local b_level = b_heroMo:getHeroLevel()
 
-		if var_6_3 ~= var_6_4 then
-			if arg_5_0._levelAscend then
-				return var_6_3 < var_6_4
+		if a_level ~= b_level then
+			if self._levelAscend then
+				return a_level < b_level
 			else
-				return var_6_4 < var_6_3
+				return b_level < a_level
 			end
 		end
 
-		local var_6_5 = arg_6_0:getHeroConfig().rare
-		local var_6_6 = arg_6_1:getHeroConfig().rare
+		local a_rare = a_heroMo:getHeroConfig().rare
+		local b_rare = b_heroMo:getHeroConfig().rare
 
-		if var_6_5 ~= var_6_6 then
-			return var_6_6 < var_6_5
+		if a_rare ~= b_rare then
+			return b_rare < a_rare
 		end
 
-		local var_6_7 = arg_6_0:getExSkillLevel()
-		local var_6_8 = arg_6_1:getExSkillLevel()
+		local a_exSkillLevel = a_heroMo:getExSkillLevel()
+		local b_exSkillLevel = b_heroMo:getExSkillLevel()
 
-		if var_6_7 ~= var_6_8 then
-			return var_6_8 < var_6_7
+		if a_exSkillLevel ~= b_exSkillLevel then
+			return b_exSkillLevel < a_exSkillLevel
 		end
 
-		return var_6_1 < var_6_0
+		return b_heroId < a_heroId
 	end)
 end
 
-function var_0_0._sortByRare(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or arg_7_0:getList()
+function CharacterRecommedHeroListModel:_sortByRare(moList)
+	moList = moList or self:getList()
 
-	table.sort(arg_7_1, function(arg_8_0, arg_8_1)
-		local var_8_0 = arg_8_0.heroId
-		local var_8_1 = arg_8_1.heroId
+	table.sort(moList, function(a_heroMo, b_heroMo)
+		local a_heroId = a_heroMo.heroId
+		local b_heroId = b_heroMo.heroId
 
-		if not arg_8_0 or not arg_8_1 then
-			return var_8_1 < var_8_0
+		if not a_heroMo or not b_heroMo then
+			return b_heroId < a_heroId
 		end
 
-		local var_8_2 = arg_8_0:isFavor()
+		local a_isFavor = a_heroMo:isFavor()
+		local b_isFavor = b_heroMo:isFavor()
 
-		if var_8_2 ~= arg_8_1:isFavor() then
-			return var_8_2
+		if a_isFavor ~= b_isFavor then
+			return a_isFavor
 		end
 
-		local var_8_3 = arg_8_0:getHeroConfig().rare
-		local var_8_4 = arg_8_1:getHeroConfig().rare
+		local a_rare = a_heroMo:getHeroConfig().rare
+		local b_rare = b_heroMo:getHeroConfig().rare
 
-		if var_8_3 ~= var_8_4 then
-			if arg_7_0._rareAscend then
-				return var_8_3 < var_8_4
+		if a_rare ~= b_rare then
+			if self._rareAscend then
+				return a_rare < b_rare
 			else
-				return var_8_4 < var_8_3
+				return b_rare < a_rare
 			end
 		end
 
-		local var_8_5 = arg_8_0:getHeroLevel()
-		local var_8_6 = arg_8_1:getHeroLevel()
+		local a_level = a_heroMo:getHeroLevel()
+		local b_level = b_heroMo:getHeroLevel()
 
-		if var_8_5 ~= var_8_6 then
-			return var_8_6 < var_8_5
+		if a_level ~= b_level then
+			return b_level < a_level
 		end
 
-		local var_8_7 = arg_8_0:getExSkillLevel()
-		local var_8_8 = arg_8_1:getExSkillLevel()
+		local a_exSkillLevel = a_heroMo:getExSkillLevel()
+		local b_exSkillLevel = b_heroMo:getExSkillLevel()
 
-		if var_8_7 ~= var_8_8 then
-			return var_8_8 < var_8_7
+		if a_exSkillLevel ~= b_exSkillLevel then
+			return b_exSkillLevel < a_exSkillLevel
 		end
 
-		return var_8_1 < var_8_0
+		return b_heroId < a_heroId
 	end)
 end
 
-function var_0_0.setSortLevel(arg_9_0)
-	arg_9_0._levelAscend = not arg_9_0._levelAscend
+function CharacterRecommedHeroListModel:setSortLevel()
+	self._levelAscend = not self._levelAscend
 
-	arg_9_0:_sortByLevel()
-	arg_9_0:onModelUpdate()
+	self:_sortByLevel()
+	self:onModelUpdate()
 end
 
-function var_0_0.setSortByRare(arg_10_0)
-	arg_10_0._rareAscend = not arg_10_0._rareAscend
+function CharacterRecommedHeroListModel:setSortByRare()
+	self._rareAscend = not self._rareAscend
 
-	arg_10_0:_sortByRare()
-	arg_10_0:onModelUpdate()
+	self:_sortByRare()
+	self:onModelUpdate()
 end
 
-function var_0_0.getSortStatus(arg_11_0)
-	return arg_11_0._levelAscend, arg_11_0._rareAscend
+function CharacterRecommedHeroListModel:getSortStatus()
+	return self._levelAscend, self._rareAscend
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterRecommedHeroListModel.instance = CharacterRecommedHeroListModel.New()
 
-return var_0_0
+return CharacterRecommedHeroListModel

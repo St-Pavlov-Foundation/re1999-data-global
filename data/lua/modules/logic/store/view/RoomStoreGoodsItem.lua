@@ -1,53 +1,57 @@
-﻿module("modules.logic.store.view.RoomStoreGoodsItem", package.seeall)
+﻿-- chunkname: @modules/logic/store/view/RoomStoreGoodsItem.lua
 
-local var_0_0 = class("RoomStoreGoodsItem", NormalStoreGoodsItem)
-local var_0_1 = {
+module("modules.logic.store.view.RoomStoreGoodsItem", package.seeall)
+
+local RoomStoreGoodsItem = class("RoomStoreGoodsItem", NormalStoreGoodsItem)
+local NeedShowIconItemType = {
 	MaterialEnum.MaterialType.Equip,
 	MaterialEnum.MaterialType.Item
 }
 
-function var_0_0.onUpdateMO(arg_1_0, arg_1_1)
-	var_0_0.super.onUpdateMO(arg_1_0, arg_1_1)
+function RoomStoreGoodsItem:onUpdateMO(mo)
+	RoomStoreGoodsItem.super.onUpdateMO(self, mo)
 end
 
-function var_0_0.refreshRare(arg_2_0)
-	local var_2_0 = false
-	local var_2_1 = {}
+function RoomStoreGoodsItem:refreshRare()
+	local isShowRare = false
+	local rect = {}
 
-	var_2_1.anchorX = -9.5
-	var_2_1.anchorY = -2
-	var_2_1.width = 354.5
-	var_2_1.height = 280
+	rect.anchorX = -9.5
+	rect.anchorY = -2
+	rect.width = 354.5
+	rect.height = 280
 
-	if arg_2_0._mo:getIsActGoods() then
-		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_2_0._rare, FurnaceTreasureEnum.RareBgName)
+	if self._mo:getIsActGoods() then
+		UISpriteSetMgr.instance:setStoreGoodsSprite(self._rare, FurnaceTreasureEnum.RareBgName)
 
-		var_2_0 = true
-	elseif arg_2_0.itemConfig then
-		if arg_2_0.itemConfig.subType == 23 then
-			arg_2_0:_setSpecialBg(var_2_1)
+		isShowRare = true
+	elseif self.itemConfig then
+		local subType = self.itemConfig.subType
 
-			var_2_0 = true
+		if subType == 23 then
+			self:_setSpecialBg(rect)
+
+			isShowRare = true
 		else
-			UISpriteSetMgr.instance:setStoreGoodsSprite(arg_2_0._rare, "rare" .. arg_2_0.itemConfig.rare)
+			UISpriteSetMgr.instance:setStoreGoodsSprite(self._rare, "rare" .. self.itemConfig.rare)
 
-			var_2_0 = true
+			isShowRare = true
 		end
 	end
 
-	recthelper.setAnchor(arg_2_0._rare.transform, var_2_1.anchorX, var_2_1.anchorY)
-	recthelper.setWidth(arg_2_0._rare.transform, var_2_1.width)
-	recthelper.setHeight(arg_2_0._rare.transform, var_2_1.height)
-	gohelper.setActive(arg_2_0._rare.gameObject, var_2_0)
+	recthelper.setAnchor(self._rare.transform, rect.anchorX, rect.anchorY)
+	recthelper.setWidth(self._rare.transform, rect.width)
+	recthelper.setHeight(self._rare.transform, rect.height)
+	gohelper.setActive(self._rare.gameObject, isShowRare)
 end
 
-function var_0_0._setSpecialBg(arg_3_0, arg_3_1)
-	UISpriteSetMgr.instance:setRoomSprite(arg_3_0._rare, "room_qualityframe_" .. arg_3_0.itemConfig.rare)
+function RoomStoreGoodsItem:_setSpecialBg(rect)
+	UISpriteSetMgr.instance:setRoomSprite(self._rare, "room_qualityframe_" .. self.itemConfig.rare)
 
-	arg_3_1.anchorX = 4.5
-	arg_3_1.anchorY = 29
-	arg_3_1.width = 335
-	arg_3_1.height = 310
+	rect.anchorX = 4.5
+	rect.anchorY = 29
+	rect.width = 335
+	rect.height = 310
 end
 
-return var_0_0
+return RoomStoreGoodsItem

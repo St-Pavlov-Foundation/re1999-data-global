@@ -1,59 +1,61 @@
-﻿module("modules.logic.mail.model.MailCategroyModel", package.seeall)
+﻿-- chunkname: @modules/logic/mail/model/MailCategroyModel.lua
 
-local var_0_0 = class("MailCategroyModel", ListScrollModel)
+module("modules.logic.mail.model.MailCategroyModel", package.seeall)
 
-function var_0_0.setCategoryList(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._moList = {}
+local MailCategroyModel = class("MailCategroyModel", ListScrollModel)
 
-	if arg_1_1 then
-		arg_1_0._moList = arg_1_1
+function MailCategroyModel:setCategoryList(infos, sort)
+	self._moList = {}
 
-		if arg_1_2 then
-			table.sort(arg_1_0._moList, arg_1_0._sortFunction)
+	if infos then
+		self._moList = infos
+
+		if sort then
+			table.sort(self._moList, self._sortFunction)
 		end
 	end
 
-	arg_1_0:setList(arg_1_0._moList)
-	arg_1_0:_refreshCount()
+	self:setList(self._moList)
+	self:_refreshCount()
 end
 
-function var_0_0._sortFunction(arg_2_0, arg_2_1)
-	local var_2_0 = 0
-	local var_2_1 = 0
+function MailCategroyModel._sortFunction(x, y)
+	local stateScore = 0
+	local timeScore = 0
 
-	if arg_2_0.state < arg_2_1.state then
-		var_2_0 = 2
-	elseif arg_2_0.state > arg_2_1.state then
-		var_2_0 = -2
+	if x.state < y.state then
+		stateScore = 2
+	elseif x.state > y.state then
+		stateScore = -2
 	end
 
-	if arg_2_0.createTime < arg_2_1.createTime then
-		var_2_1 = -1
-	elseif arg_2_0.createTime > arg_2_1.createTime then
-		var_2_1 = 1
+	if x.createTime < y.createTime then
+		timeScore = -1
+	elseif x.createTime > y.createTime then
+		timeScore = 1
 	end
 
-	return var_2_0 + var_2_1 > 0
+	return stateScore + timeScore > 0
 end
 
-function var_0_0.addMail(arg_3_0)
-	arg_3_0:_refreshCount()
+function MailCategroyModel:addMail()
+	self:_refreshCount()
 end
 
-function var_0_0.refreshCategoryList(arg_4_0, arg_4_1)
-	MailController.instance:dispatchEvent(MailEvent.OnMailDel, arg_4_1)
-	arg_4_0:_refreshCount()
+function MailCategroyModel:refreshCategoryList(ids)
+	MailController.instance:dispatchEvent(MailEvent.OnMailDel, ids)
+	self:_refreshCount()
 end
 
-function var_0_0.refreshCategoryItem(arg_5_0, arg_5_1)
-	MailController.instance:dispatchEvent(MailEvent.OnMailRead, arg_5_1)
-	arg_5_0:_refreshCount()
+function MailCategroyModel:refreshCategoryItem(ids)
+	MailController.instance:dispatchEvent(MailEvent.OnMailRead, ids)
+	self:_refreshCount()
 end
 
-function var_0_0._refreshCount(arg_6_0)
+function MailCategroyModel:_refreshCount()
 	MailController.instance:dispatchEvent(MailEvent.OnMailCountChange)
 end
 
-var_0_0.instance = var_0_0.New()
+MailCategroyModel.instance = MailCategroyModel.New()
 
-return var_0_0
+return MailCategroyModel

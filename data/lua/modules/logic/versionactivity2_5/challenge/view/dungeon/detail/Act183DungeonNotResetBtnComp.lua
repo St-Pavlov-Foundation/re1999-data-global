@@ -1,15 +1,17 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonNotResetBtnComp", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/detail/Act183DungeonNotResetBtnComp.lua
 
-local var_0_0 = class("Act183DungeonNotResetBtnComp", Act183DungeonBaseComp)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.detail.Act183DungeonNotResetBtnComp", package.seeall)
 
-function var_0_0.updateInfo(arg_1_0, arg_1_1)
-	var_0_0.super.updateInfo(arg_1_0, arg_1_1)
+local Act183DungeonNotResetBtnComp = class("Act183DungeonNotResetBtnComp", Act183DungeonBaseComp)
 
-	arg_1_0._isSimulate = arg_1_0._episodeMo:isSimulate()
+function Act183DungeonNotResetBtnComp:updateInfo(episodeMo)
+	Act183DungeonNotResetBtnComp.super.updateInfo(self, episodeMo)
+
+	self._isSimulate = self._episodeMo:isSimulate()
 end
 
-function var_0_0.checkIsVisible(arg_2_0)
-	return arg_2_0._isSimulate and arg_2_0._episodeType ~= Act183Enum.EpisodeType.Boss
+function Act183DungeonNotResetBtnComp:checkIsVisible()
+	return self._isSimulate and self._episodeType ~= Act183Enum.EpisodeType.Boss
 end
 
-return var_0_0
+return Act183DungeonNotResetBtnComp

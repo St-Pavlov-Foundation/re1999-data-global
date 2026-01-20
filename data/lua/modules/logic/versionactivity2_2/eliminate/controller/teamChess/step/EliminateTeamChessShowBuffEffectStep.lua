@@ -1,39 +1,41 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessShowBuffEffectStep", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/controller/teamChess/step/EliminateTeamChessShowBuffEffectStep.lua
 
-local var_0_0 = class("EliminateTeamChessShowBuffEffectStep", EliminateTeamChessStepBase)
+module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessShowBuffEffectStep", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._data
-	local var_1_1 = var_1_0.vxEffectType
-	local var_1_2 = var_1_0.uid
-	local var_1_3 = var_1_0.time
-	local var_1_4 = TeamChessUnitEntityMgr.instance:getEntity(var_1_2)
+local EliminateTeamChessShowBuffEffectStep = class("EliminateTeamChessShowBuffEffectStep", EliminateTeamChessStepBase)
 
-	if var_1_4 == nil then
-		arg_1_0:onDone(true)
+function EliminateTeamChessShowBuffEffectStep:onStart()
+	local data = self._data
+	local vxEffectType = data.vxEffectType
+	local uid = data.uid
+	local time = data.time
+	local entity = TeamChessUnitEntityMgr.instance:getEntity(uid)
 
-		return
-	end
-
-	local var_1_5 = EliminateTeamChessEnum.VxEffectTypeToPath[var_1_1]
-
-	if string.nilorempty(var_1_5) then
-		arg_1_0:onDone(true)
+	if entity == nil then
+		self:onDone(true)
 
 		return
 	end
 
-	var_1_3 = var_1_3 or EliminateTeamChessEnum.VxEffectTypePlayTime[var_1_1]
+	local path = EliminateTeamChessEnum.VxEffectTypeToPath[vxEffectType]
 
-	local var_1_6, var_1_7, var_1_8 = var_1_4:getPosXYZ()
+	if string.nilorempty(path) then
+		self:onDone(true)
 
-	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, var_1_1, var_1_6, var_1_7, var_1_8, var_1_3)
+		return
+	end
 
-	if var_1_3 ~= nil then
-		TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, var_1_3)
+	time = time or EliminateTeamChessEnum.VxEffectTypePlayTime[vxEffectType]
+
+	local x, y, z = entity:getPosXYZ()
+
+	EliminateTeamChessController.instance:dispatchEvent(EliminateChessEvent.ShowChessEffect, vxEffectType, x, y, z, time)
+
+	if time ~= nil then
+		TaskDispatcher.runDelay(self._onDone, self, time)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return EliminateTeamChessShowBuffEffectStep

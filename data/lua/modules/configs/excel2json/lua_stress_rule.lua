@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_stress_rule", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_stress_rule.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_stress_rule", package.seeall)
+
+local lua_stress_rule = {}
+local fields = {
 	param = 5,
 	targetLimit = 4,
 	type = 2,
@@ -10,15 +12,15 @@ local var_0_1 = {
 	target = 3,
 	desc = 7
 }
-local var_0_2 = {
+local primaryKey = {
 	"id"
 }
-local var_0_3 = {
+local mlStringKey = {
 	desc = 1
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_stress_rule.onLoad(json)
+	lua_stress_rule.configList, lua_stress_rule.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_stress_rule

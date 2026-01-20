@@ -1,35 +1,37 @@
-﻿module("modules.logic.currency.view.CurrencyExchangeViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/currency/view/CurrencyExchangeViewContainer.lua
 
-local var_0_0 = class("CurrencyExchangeViewContainer", BaseViewContainer)
+module("modules.logic.currency.view.CurrencyExchangeViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CurrencyExchangeViewContainer = class("CurrencyExchangeViewContainer", BaseViewContainer)
+
+function CurrencyExchangeViewContainer:buildViews()
 	return {
 		CurrencyExchangeView.New(),
 		TabViewGroup.New(1, "#go_righttop")
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		return arg_2_0:_buildCurrency()
+function CurrencyExchangeViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		return self:_buildCurrency()
 	end
 end
 
-function var_0_0._buildCurrency(arg_3_0)
-	local var_3_0 = {}
+function CurrencyExchangeViewContainer:_buildCurrency()
+	local currencyList = {}
 
-	if arg_3_0.viewParam and arg_3_0.viewParam.costData then
-		table.insert(var_3_0, arg_3_0.viewParam.costData)
+	if self.viewParam and self.viewParam.costData then
+		table.insert(currencyList, self.viewParam.costData)
 	end
 
-	table.insert(var_3_0, CurrencyEnum.CurrencyType.Diamond)
-	table.insert(var_3_0, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+	table.insert(currencyList, CurrencyEnum.CurrencyType.Diamond)
+	table.insert(currencyList, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
 
-	arg_3_0._currencyView = CurrencyView.New(var_3_0, nil, nil, nil, true)
+	self._currencyView = CurrencyView.New(currencyList, nil, nil, nil, true)
 
 	return {
-		arg_3_0._currencyView
+		self._currencyView
 	}
 end
 
-return var_0_0
+return CurrencyExchangeViewContainer

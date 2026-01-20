@@ -1,82 +1,84 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.view.Activity114EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/view/Activity114EnterView.lua
 
-local var_0_0 = class("Activity114EnterView", BaseView)
+module("modules.logic.versionactivity1_2.jiexika.view.Activity114EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
-	arg_1_0._golightspine = gohelper.findChild(arg_1_0.viewGO, "scale/#go_lightspine")
-	arg_1_0._normalGo = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
-	arg_1_0._btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Reward")
-	arg_1_0._btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_reset")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Enter")
-	arg_1_0._goSchoolBack = gohelper.findChild(arg_1_0.viewGO, "#btn_Enter/#go_schoolback")
-	arg_1_0._goSchoolEnter = gohelper.findChild(arg_1_0.viewGO, "#btn_Enter/#go_schoolenter")
-	arg_1_0._btnPhoto = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_photos/#btn_photot")
-	arg_1_0._txtphotoprogress = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_photos/title/#txt_progress")
-	arg_1_0._txtdurTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_info/#txt_durTime")
+local Activity114EnterView = class("Activity114EnterView", BaseView)
 
-	gohelper.setActive(arg_1_0._txtdurTime, false)
+function Activity114EnterView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._golightspine = gohelper.findChild(self.viewGO, "scale/#go_lightspine")
+	self._normalGo = gohelper.findChild(self.viewGO, "#go_normal")
+	self._btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Reward")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reset")
+	self._btnEnter = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Enter")
+	self._goSchoolBack = gohelper.findChild(self.viewGO, "#btn_Enter/#go_schoolback")
+	self._goSchoolEnter = gohelper.findChild(self.viewGO, "#btn_Enter/#go_schoolenter")
+	self._btnPhoto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_photos/#btn_photot")
+	self._txtphotoprogress = gohelper.findChildTextMesh(self.viewGO, "#go_photos/title/#txt_progress")
+	self._txtdurTime = gohelper.findChildTextMesh(self.viewGO, "#go_info/#txt_durTime")
 
-	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	gohelper.setActive(self._txtdurTime, false)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnReward:AddClickListener(arg_2_0.openTaskView, arg_2_0)
-	arg_2_0._btnPhoto:AddClickListener(arg_2_0.openPhotoView, arg_2_0)
-	arg_2_0._btnEnter:AddClickListener(arg_2_0.enter, arg_2_0)
-	arg_2_0._btnReset:AddClickListener(arg_2_0.reset, arg_2_0)
-	arg_2_0:addEventCb(Activity114Controller.instance, Activity114Event.OnCGUpdate, arg_2_0.onPhotoChange, arg_2_0)
-	arg_2_0:addEventCb(Activity114Controller.instance, Activity114Event.OnEnterSchoolUpdate, arg_2_0.onEnterSchoolUpdate, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, arg_2_0._onCloseFullViewFinish, arg_2_0, LuaEventSystem.Low)
+function Activity114EnterView:addEvents()
+	self._btnReward:AddClickListener(self.openTaskView, self)
+	self._btnPhoto:AddClickListener(self.openPhotoView, self)
+	self._btnEnter:AddClickListener(self.enter, self)
+	self._btnReset:AddClickListener(self.reset, self)
+	self:addEventCb(Activity114Controller.instance, Activity114Event.OnCGUpdate, self.onPhotoChange, self)
+	self:addEventCb(Activity114Controller.instance, Activity114Event.OnEnterSchoolUpdate, self.onEnterSchoolUpdate, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullViewFinish, self._onCloseFullViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnReward:RemoveClickListener()
-	arg_3_0._btnPhoto:RemoveClickListener()
-	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0._btnReset:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity114Controller.instance, Activity114Event.OnCGUpdate, arg_3_0.onPhotoChange, arg_3_0)
-	arg_3_0:removeEventCb(Activity114Controller.instance, Activity114Event.OnEnterSchoolUpdate, arg_3_0.onEnterSchoolUpdate, arg_3_0)
+function Activity114EnterView:removeEvents()
+	self._btnReward:RemoveClickListener()
+	self._btnPhoto:RemoveClickListener()
+	self._btnEnter:RemoveClickListener()
+	self._btnReset:RemoveClickListener()
+	self:removeEventCb(Activity114Controller.instance, Activity114Event.OnCGUpdate, self.onPhotoChange, self)
+	self:removeEventCb(Activity114Controller.instance, Activity114Event.OnEnterSchoolUpdate, self.onEnterSchoolUpdate, self)
 end
 
-var_0_0.canShowSpineView = {
+Activity114EnterView.canShowSpineView = {
 	ViewName.Activity114PhotoView
 }
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._taskRed = gohelper.findChild(arg_4_0.viewGO, "#btn_Reward/redPoint")
-	arg_4_0._photoRed = gohelper.findChild(arg_4_0.viewGO, "#go_photos/redPoint")
-	arg_4_0._photoGo = arg_4_0:getUserDataTb_()
+function Activity114EnterView:_editableInitView()
+	self._taskRed = gohelper.findChild(self.viewGO, "#btn_Reward/redPoint")
+	self._photoRed = gohelper.findChild(self.viewGO, "#go_photos/redPoint")
+	self._photoGo = self:getUserDataTb_()
 
-	for iter_4_0 = 1, 9 do
-		arg_4_0._photoGo[iter_4_0] = gohelper.findChildImage(arg_4_0.viewGO, "#go_photos/photo/" .. iter_4_0)
+	for i = 1, 9 do
+		self._photoGo[i] = gohelper.findChildImage(self.viewGO, "#go_photos/photo/" .. i)
 	end
 
-	RedDotController.instance:addRedDot(arg_4_0._taskRed, RedDotEnum.DotNode.ActivityJieXiKaTask)
-	RedDotController.instance:addRedDot(arg_4_0._photoRed, RedDotEnum.DotNode.ActivityJieXiKaPhoto)
+	RedDotController.instance:addRedDot(self._taskRed, RedDotEnum.DotNode.ActivityJieXiKaTask)
+	RedDotController.instance:addRedDot(self._photoRed, RedDotEnum.DotNode.ActivityJieXiKaPhoto)
 end
 
-function var_0_0.onOpen(arg_5_0)
-	gohelper.setActive(arg_5_0._btnReset.gameObject, Activity114Model.instance.serverData.canReset and Activity114Model.instance.serverData.isEnterSchool)
-	arg_5_0:onPhotoChange()
-	arg_5_0:onEnterSchoolUpdate()
-	arg_5_0._viewAnim:Play("open", 0, 0)
+function Activity114EnterView:onOpen()
+	gohelper.setActive(self._btnReset.gameObject, Activity114Model.instance.serverData.canReset and Activity114Model.instance.serverData.isEnterSchool)
+	self:onPhotoChange()
+	self:onEnterSchoolUpdate()
+	self._viewAnim:Play("open", 0, 0)
 end
 
-function var_0_0.onOpenFinish(arg_6_0)
-	arg_6_0._viewAnim.enabled = true
+function Activity114EnterView:onOpenFinish()
+	self._viewAnim.enabled = true
 end
 
-function var_0_0.openTaskView(arg_7_0)
-	arg_7_0.viewContainer:switchTab(Activity114Enum.TabIndex.TaskView)
-	arg_7_0._viewAnim:Play("close", 0, 0)
+function Activity114EnterView:openTaskView()
+	self.viewContainer:switchTab(Activity114Enum.TabIndex.TaskView)
+	self._viewAnim:Play("close", 0, 0)
 end
 
-function var_0_0.enter(arg_8_0)
+function Activity114EnterView:enter()
 	if Activity114Model.instance:isEnd() then
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
@@ -84,77 +86,77 @@ function var_0_0.enter(arg_8_0)
 	end
 
 	if Activity114Model.instance.serverData.battleEventId > 0 then
-		local var_8_0 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId)
+		local eventCo = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId)
 
-		Activity114Controller.instance:enterActivityFight(var_8_0.config.battleId)
+		Activity114Controller.instance:enterActivityFight(eventCo.config.battleId)
 
 		return
 	end
 
-	arg_8_0.viewContainer:switchTab(Activity114Enum.TabIndex.MainView)
-	arg_8_0._viewAnim:Play("close", 0, 0)
+	self.viewContainer:switchTab(Activity114Enum.TabIndex.MainView)
+	self._viewAnim:Play("close", 0, 0)
 end
 
-function var_0_0.openPhotoView(arg_9_0)
-	arg_9_0:playCloseAnimAndOpenView(ViewName.Activity114PhotoView)
+function Activity114EnterView:openPhotoView()
+	self:playCloseAnimAndOpenView(ViewName.Activity114PhotoView)
 end
 
-function var_0_0.playCloseAnimAndOpenView(arg_10_0, arg_10_1)
-	arg_10_0.viewContainer.openViewName = arg_10_1
+function Activity114EnterView:playCloseAnimAndOpenView(viewName)
+	self.viewContainer.openViewName = viewName
 
-	arg_10_0.viewContainer:playCloseTransition()
+	self.viewContainer:playCloseTransition()
 end
 
-function var_0_0.reset(arg_11_0)
+function Activity114EnterView:reset()
 	GameFacade.showMessageBox(MessageBoxIdDefine.Act114Reset, MsgBoxEnum.BoxType.Yes_No, function()
 		Activity114Rpc.instance:resetRequest(Activity114Model.instance.id)
 	end)
 end
 
-function var_0_0.onEnterSchoolUpdate(arg_13_0)
-	gohelper.setActive(arg_13_0._goSchoolBack, Activity114Model.instance.serverData.isEnterSchool)
-	gohelper.setActive(arg_13_0._btnReset.gameObject, Activity114Model.instance.serverData.canReset and Activity114Model.instance.serverData.isEnterSchool)
-	gohelper.setActive(arg_13_0._goSchoolEnter, not Activity114Model.instance.serverData.isEnterSchool)
+function Activity114EnterView:onEnterSchoolUpdate()
+	gohelper.setActive(self._goSchoolBack, Activity114Model.instance.serverData.isEnterSchool)
+	gohelper.setActive(self._btnReset.gameObject, Activity114Model.instance.serverData.canReset and Activity114Model.instance.serverData.isEnterSchool)
+	gohelper.setActive(self._goSchoolEnter, not Activity114Model.instance.serverData.isEnterSchool)
 end
 
-function var_0_0.onPhotoChange(arg_14_0)
-	arg_14_0._txtphotoprogress.text = #Activity114Model.instance.serverData.photos .. "/9"
+function Activity114EnterView:onPhotoChange()
+	self._txtphotoprogress.text = #Activity114Model.instance.serverData.photos .. "/9"
 
-	local var_14_0 = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)
+	local photoCo = Activity114Config.instance:getPhotoCoList(Activity114Model.instance.id)
 
-	for iter_14_0 = 1, 9 do
-		if Activity114Model.instance.unLockPhotoDict[iter_14_0] then
-			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(arg_14_0._photoGo[iter_14_0], var_14_0[iter_14_0].smallCg)
-		elseif iter_14_0 == 9 then
-			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(arg_14_0._photoGo[iter_14_0], "img_empty1")
+	for i = 1, 9 do
+		if Activity114Model.instance.unLockPhotoDict[i] then
+			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(self._photoGo[i], photoCo[i].smallCg)
+		elseif i == 9 then
+			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(self._photoGo[i], "img_empty1")
 		else
-			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(arg_14_0._photoGo[iter_14_0], "img_empty2")
+			UISpriteSetMgr.instance:setVersionActivitywhitehouseSprite(self._photoGo[i], "img_empty2")
 		end
 	end
 end
 
-function var_0_0.refreshTime(arg_15_0)
-	local var_15_0 = ActivityModel.instance:getActivityInfo()[Activity114Model.instance.id]
+function Activity114EnterView:refreshTime()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[Activity114Model.instance.id]
 
-	if Activity114Model.instance:isEnd() or not var_15_0 then
-		arg_15_0._txtdurTime.text = luaLang("versionactivity_1_2_114enterview_isend")
+	if Activity114Model.instance:isEnd() or not actInfoMo then
+		self._txtdurTime.text = luaLang("versionactivity_1_2_114enterview_isend")
 	else
-		arg_15_0._txtdurTime.text = string.format(luaLang("remain"), var_15_0:getRemainTimeStr2ByEndTime())
+		self._txtdurTime.text = string.format(luaLang("remain"), actInfoMo:getRemainTimeStr2ByEndTime())
 	end
 end
 
-function var_0_0._onCloseFullViewFinish(arg_16_0, arg_16_1)
-	for iter_16_0, iter_16_1 in pairs(var_0_0.canShowSpineView) do
-		if iter_16_1 == arg_16_1 and arg_16_0._viewAnim then
-			arg_16_0.viewContainer:playOpenTransition()
+function Activity114EnterView:_onCloseFullViewFinish(viewName)
+	for k, v in pairs(Activity114EnterView.canShowSpineView) do
+		if v == viewName and self._viewAnim then
+			self.viewContainer:playOpenTransition()
 
 			return
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_17_0)
+function Activity114EnterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return Activity114EnterView

@@ -1,97 +1,242 @@
-﻿module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListComp", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/survivalsimplelistcomp/SurvivalSimpleListComp.lua
 
-local var_0_0 = class("SurvivalSimpleListComp", LuaCompBase)
+module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.param = arg_1_1.listScrollParam
-	arg_1_0.viewContainer = arg_1_1.viewContainer
+local SurvivalSimpleListComp = class("SurvivalSimpleListComp", LuaCompBase)
+
+function SurvivalSimpleListComp:ctor(param)
+	self.param = param.listScrollParam
+	self.viewContainer = param.viewContainer
+	self.className = self.param.cellClass.__cname
+	self.items = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.scrollRect = arg_2_1:GetComponent(gohelper.Type_ScrollRect)
-	arg_2_0.scrollDir = arg_2_0.scrollRect.vertical and ScrollEnum.ScrollDirV or ScrollEnum.ScrollDirH
-	arg_2_0.content = arg_2_0.scrollRect.content
-	arg_2_0.csListScroll = SLFramework.UGUI.ListScrollView.Get(arg_2_1)
+function SurvivalSimpleListComp:init(go)
+	self.go = go
 
-	arg_2_0.csListScroll:Init(arg_2_0.scrollDir, arg_2_0.param.lineCount, arg_2_0.param.cellWidth, arg_2_0.param.cellHeight, arg_2_0.param.cellSpaceH, arg_2_0.param.cellSpaceV, arg_2_0.param.startSpace, arg_2_0.param.endSpace, arg_2_0.param.sortMode, arg_2_0.param.frameUpdateMs, arg_2_0.param.minUpdateCountInFrame, arg_2_0.onUpdateCell, nil, nil, arg_2_0)
+	local _, scrollRect = go:TryGetComponent(gohelper.Type_ScrollRect, self.scrollRect)
 
-	if arg_2_0.param.cloneRef then
-		gohelper.setActive(arg_2_0.param.cloneRef, false)
+	self.scrollRect = scrollRect
+
+	if self.scrollRect then
+		self.scrollbarWrap = gohelper.onceAddComponent(self.go, typeof(SLFramework.UGUI.ScrollRectWrap))
+		self.isScrollMode = true
+		self.scrollDir = self.scrollRect.vertical and ScrollEnum.ScrollDirV or ScrollEnum.ScrollDirH
+		self.content = self.scrollRect.content
+		self.csListScroll = SLFramework.UGUI.ListScrollView.Get(go)
+
+		self.csListScroll:Init(self.scrollDir, self.param.lineCount, self.param.cellWidth, self.param.cellHeight, self.param.cellSpaceH, self.param.cellSpaceV, self.param.startSpace, self.param.endSpace, self.param.sortMode, self.param.frameUpdateMs, self.param.minUpdateCountInFrame, self.onUpdateCell, nil, nil, self)
+		self.scrollbarWrap:AddOnValueChanged(self.onValueChanged, self)
+	end
+
+	if self.param.cloneRef then
+		gohelper.setActive(self.param.cloneRef, false)
 	end
 end
 
-function var_0_0.setRes(arg_3_0, arg_3_1)
-	arg_3_0.res = arg_3_1
+function SurvivalSimpleListComp:setRes(res)
+	self.res = res
+	self.isResString = type(self.res) == "string"
+
+	if not self.isResString then
+		gohelper.setActive(self.res, false)
+	end
 end
 
-function var_0_0.setList(arg_4_0, arg_4_1)
-	arg_4_0.items = {}
-	arg_4_0.datas = arg_4_1
-
-	arg_4_0.csListScroll:UpdateTotalCount(#arg_4_1)
+function SurvivalSimpleListComp:addEventListeners()
+	return
 end
 
-function var_0_0.onUpdateCell(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_2 = arg_5_2 + 1
+function SurvivalSimpleListComp:removeEventListeners()
+	if self.scrollbarWrap then
+		self.scrollbarWrap:RemoveOnValueChanged()
+	end
+end
 
-	local var_5_0 = gohelper.findChild(arg_5_1, "instGo")
-	local var_5_1
+function SurvivalSimpleListComp:setOnValueChanged(onValueChangedCallBack, context)
+	self.callBackContext = context
+	self.onValueChangedCallBack = onValueChangedCallBack
+end
 
-	if not var_5_0 then
-		if type(arg_5_0.res) == "string" then
-			var_5_0 = arg_5_0.viewContainer:getResInst(arg_5_0.res, arg_5_1, "instGo")
-		else
-			var_5_0 = gohelper.clone(arg_5_0.res, arg_5_1, "instGo")
-		end
+function SurvivalSimpleListComp:onValueChanged(scrollX, scrollY)
+	if self.onValueChangedCallBack then
+		self.onValueChangedCallBack(self.callBackContext, scrollX, scrollY)
+	end
+end
 
-		gohelper.setActive(var_5_0, true)
+function SurvivalSimpleListComp:setList(datas)
+	self.datas = datas
 
-		var_5_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, arg_5_0.param.cellClass, arg_5_0.viewContainer)
+	if self.isScrollMode then
+		tabletool.clear(self.items)
+		self.csListScroll:UpdateTotalCount(#datas)
 	else
-		var_5_1 = MonoHelper.getLuaComFromGo(var_5_0, arg_5_0.param.cellClass, arg_5_0.viewContainer)
-	end
-
-	if arg_5_0.items[arg_5_2] and arg_5_0.items[arg_5_2] ~= var_5_1 then
-		arg_5_0.items[arg_5_2]:hideItem()
-	end
-
-	arg_5_0.items[arg_5_2] = var_5_1
-
-	local var_5_2 = arg_5_2 == arg_5_0.select
-
-	var_5_1:showItem(arg_5_0.datas[arg_5_2], arg_5_2, var_5_2)
-	var_5_1:setSelect(arg_5_0.select == arg_5_2)
-end
-
-function var_0_0.getItems(arg_6_0)
-	return arg_6_0.items
-end
-
-function var_0_0.setSelect(arg_7_0, arg_7_1)
-	if (not arg_7_1 or not arg_7_0.select or arg_7_0.select ~= arg_7_1) and (not not arg_7_1 or not not arg_7_0.select) then
-		if arg_7_0.select and arg_7_0.items[arg_7_0.select] then
-			arg_7_0.items[arg_7_0.select]:setSelect(false)
-		end
-
-		arg_7_0.select = arg_7_1
-
-		if arg_7_0.select and arg_7_0.items[arg_7_0.select] then
-			arg_7_0.items[arg_7_0.select]:setSelect(true)
-		end
-
-		if arg_7_0.onSelectCallBack then
-			arg_7_0.onSelectCallBack(arg_7_0.onSelectCallBackContext, arg_7_0.select)
-		end
+		self:refreshCustomMode()
 	end
 end
 
-function var_0_0.setSelectCallBack(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.onSelectCallBack = arg_8_1
-	arg_8_0.onSelectCallBackContext = arg_8_2
+function SurvivalSimpleListComp:setRefreshAnimation(interval, groupNum, startDelayS)
+	self.animInterval = interval
+	self.animationStartTime = Time.time
+	self.groupNum = groupNum or 1
+	self.startDelayS = startDelayS or 0
 end
 
-function var_0_0.getSelect(arg_9_0)
-	return arg_9_0.select
+function SurvivalSimpleListComp:onUpdateCell(cellGO, index)
+	index = index + 1
+
+	local go = gohelper.findChild(cellGO, self.className)
+	local item
+
+	if not go then
+		if self.isResString then
+			go = self.viewContainer:getResInst(self.res, cellGO, self.className)
+		else
+			go = gohelper.clone(self.res, cellGO, self.className)
+		end
+
+		gohelper.setActive(go, true)
+
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass, self.viewContainer)
+	else
+		item = MonoHelper.getLuaComFromGo(go, self.param.cellClass, self.viewContainer)
+	end
+
+	if self.items[index] and self.items[index] ~= item then
+		self.items[index]:hideItem()
+	end
+
+	self.items[index] = item
+
+	local isSelect = index == self.select
+
+	item:showItem(self.datas[index], index, isSelect)
+	item:setSelect(self.select == index)
+
+	if self.animationStartTime then
+		local animators = item:getItemAnimators()
+
+		if animators then
+			for i, animator in ipairs(animators) do
+				animator:Play(UIAnimationName.Open, 0, 0)
+				animator:Update(0)
+
+				local num = math.floor(index / self.groupNum)
+				local openAnimTime = self.startDelayS + self.animationStartTime + self.animInterval * num
+				local currentAnimatorStateInfo = animator:GetCurrentAnimatorStateInfo(0)
+				local length = currentAnimatorStateInfo.length
+				local nor = (Time.time - openAnimTime) / length
+
+				animator:Play(UIAnimationName.Open, 0, nor)
+				animator:Update(0)
+			end
+		end
+	end
 end
 
-return var_0_0
+function SurvivalSimpleListComp:refreshCustomMode()
+	local customItemAmount = #self.items
+	local listLength = #self.datas
+
+	for index = 1, listLength do
+		if customItemAmount < index then
+			local go
+
+			if self.isResString then
+				go = self.viewContainer:getResInst(self.res, self.go, self.className)
+			else
+				go = gohelper.clone(self.res, self.go, self.className)
+			end
+
+			gohelper.setActive(go, true)
+
+			self.items[index] = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass)
+		end
+
+		local item = self.items[index]
+
+		gohelper.setActive(item.viewGO, true)
+
+		local isSelect = index == self.select
+
+		item:showItem(self.datas[index], index, isSelect)
+	end
+
+	for i = listLength + 1, customItemAmount do
+		local item = self.items[i]
+
+		gohelper.setActive(item.viewGO, false)
+		self.items[i]:hideItem()
+	end
+end
+
+function SurvivalSimpleListComp:addCustomItem(go)
+	self.items[#self.items + 1] = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass)
+end
+
+function SurvivalSimpleListComp:getItems()
+	return self.items
+end
+
+function SurvivalSimpleListComp:setSelect(tarSelect)
+	local haveChange = (not tarSelect or not self.select or self.select ~= tarSelect) and (not not tarSelect or not not self.select)
+
+	if haveChange then
+		if self.select and self.items[self.select] then
+			self.items[self.select]:setSelect(false)
+		end
+
+		self.select = tarSelect
+
+		if self.select and self.items[self.select] then
+			self.items[self.select]:setSelect(true)
+		end
+
+		if self.onSelectCallBack then
+			self.onSelectCallBack(self.onSelectCallBackContext, self.select)
+		end
+	end
+end
+
+function SurvivalSimpleListComp:setSelectCallBack(onSelectCallBack, onSelectCallBackContext)
+	self.onSelectCallBack = onSelectCallBack
+	self.onSelectCallBackContext = onSelectCallBackContext
+end
+
+function SurvivalSimpleListComp:getSelect()
+	return self.select
+end
+
+function SurvivalSimpleListComp:getScrollPixel()
+	if self.scrollDir == ScrollEnum.ScrollDirV then
+		return self.csListScroll.VerticalScrollPixel
+	elseif self.scrollDir == ScrollEnum.ScrollDirH then
+		return self.csListScroll.HorizontalScrollPixel
+	end
+end
+
+function SurvivalSimpleListComp:getScrollSpace()
+	if self.scrollDir == ScrollEnum.ScrollDirV then
+		return self.param.cellSpaceV
+	elseif self.scrollDir == ScrollEnum.ScrollDirH then
+		return self.param.cellSpaceH
+	end
+end
+
+function SurvivalSimpleListComp:moveTo(index)
+	index = index - 1
+
+	local space = 0
+
+	if index > 0 then
+		space = self:getScrollSpace()
+	end
+
+	if self.scrollDir == ScrollEnum.ScrollDirV then
+		self.csListScroll.VerticalScrollPixel = (self.param.cellHeight + space) * index
+	elseif self.scrollDir == ScrollEnum.ScrollDirH then
+		self.csListScroll.HorizontalScrollPixel = (self.param.cellWidth + space) * index
+	end
+end
+
+return SurvivalSimpleListComp

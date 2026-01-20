@@ -1,58 +1,62 @@
-﻿module("modules.logic.player.view.ShowCharacterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/ShowCharacterViewContainer.lua
 
-local var_0_0 = class("ShowCharacterViewContainer", BaseViewContainer)
+module("modules.logic.player.view.ShowCharacterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local ShowCharacterViewContainer = class("ShowCharacterViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#go_rolecontainer/#scroll_card"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = ShowCharacterCardItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 7
-	var_1_1.cellWidth = 267
-	var_1_1.cellHeight = 550
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 0
-	var_1_1.startSpace = 0
-	var_1_1.frameUpdateMs = 100
+function ShowCharacterViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	local var_1_2 = {}
+	scrollParam.scrollGOPath = "#go_rolecontainer/#scroll_card"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = ShowCharacterCardItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 7
+	scrollParam.cellWidth = 267
+	scrollParam.cellHeight = 550
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 0
+	scrollParam.startSpace = 0
+	scrollParam.frameUpdateMs = 100
 
-	for iter_1_0 = 1, 14 do
-		var_1_2[iter_1_0] = math.ceil(iter_1_0 - 1) % 7 * 0.06
+	local animationDelayTimes = {}
+
+	for i = 1, 14 do
+		local delayTime = math.ceil(i - 1) % 7 * 0.06
+
+		animationDelayTimes[i] = delayTime
 	end
 
-	table.insert(var_1_0, LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, var_1_1, var_1_2))
-	table.insert(var_1_0, ShowCharacterView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(views, LuaListScrollViewWithAnimator.New(CharacterBackpackCardListModel.instance, scrollParam, animationDelayTimes))
+	table.insert(views, ShowCharacterView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_btns"))
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	arg_2_0.navigationView = NavigateButtonsView.New({
+function ShowCharacterViewContainer:buildTabViews(tabContainerId)
+	self.navigationView = NavigateButtonsView.New({
 		true,
 		true,
 		false
-	}, 101, arg_2_0.onClose, arg_2_0.onClose, nil, arg_2_0)
+	}, 101, self.onClose, self.onClose, nil, self)
 
 	return {
-		arg_2_0.navigationView
+		self.navigationView
 	}
 end
 
-function var_0_0.onContainerOpenFinish(arg_3_0)
-	arg_3_0.navigationView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Open)
-	arg_3_0.navigationView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Close)
+function ShowCharacterViewContainer:onContainerOpenFinish()
+	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Open)
+	self.navigationView:resetHomeBtnAudioId(AudioEnum.UI.Play_UI_Player_Interface_Close)
 end
 
-function var_0_0.onClose(arg_4_0)
-	local var_4_0 = PlayerModel.instance:getShowHeroUid()
+function ShowCharacterViewContainer:onClose()
+	local showHeroUniqueIds = PlayerModel.instance:getShowHeroUid()
 
-	PlayerRpc.instance:sendSetShowHeroUniqueIdsRequest(var_4_0)
+	PlayerRpc.instance:sendSetShowHeroUniqueIdsRequest(showHeroUniqueIds)
 end
 
-return var_0_0
+return ShowCharacterViewContainer

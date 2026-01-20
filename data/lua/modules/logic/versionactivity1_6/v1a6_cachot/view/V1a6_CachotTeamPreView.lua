@@ -1,132 +1,135 @@
-﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/v1a6_cachot/view/V1a6_CachotTeamPreView.lua
 
-local var_0_0 = class("V1a6_CachotTeamPreView", BaseView)
+module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTeamPreView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left")
-	arg_1_0._simageselect = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/#simage_select")
-	arg_1_0._gopresetcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/scroll_view/Viewport/#go_presetcontent")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_right")
-	arg_1_0._gopreparecontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_right/scroll_view/Viewport/#go_preparecontent")
-	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+local V1a6_CachotTeamPreView = class("V1a6_CachotTeamPreView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a6_CachotTeamPreView:onInitView()
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "#scroll_view")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content")
+	self._goleft = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_left")
+	self._simageselect = gohelper.findChildSingleImage(self.viewGO, "#scroll_view/Viewport/#go_content/#go_left/#simage_select")
+	self._gopresetcontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_left/scroll_view/Viewport/#go_presetcontent")
+	self._goright = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_right")
+	self._gopreparecontent = gohelper.findChild(self.viewGO, "#scroll_view/Viewport/#go_content/#go_right/scroll_view/Viewport/#go_preparecontent")
+	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#simage_title")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function V1a6_CachotTeamPreView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function V1a6_CachotTeamPreView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function V1a6_CachotTeamPreView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._contentSizeFitter = arg_5_0._gocontent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
-	arg_5_0._horizontal = arg_5_0._gocontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	arg_5_0._limitedScrollRect = arg_5_0._scrollview:GetComponent(typeof(ZProj.LimitedScrollRect))
+function V1a6_CachotTeamPreView:_editableInitView()
+	self._contentSizeFitter = self._gocontent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	self._horizontal = self._gocontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	self._limitedScrollRect = self._scrollview:GetComponent(typeof(ZProj.LimitedScrollRect))
 
-	arg_5_0:_initPresetItemList()
+	self:_initPresetItemList()
 end
 
-function var_0_0._initPresetItemList(arg_6_0)
-	if arg_6_0._presetItemList then
+function V1a6_CachotTeamPreView:_initPresetItemList()
+	if self._presetItemList then
 		return
 	end
 
-	arg_6_0._presetItemList = arg_6_0:getUserDataTb_()
+	self._presetItemList = self:getUserDataTb_()
 
-	local var_6_0 = arg_6_0.viewContainer:getSetting().otherRes[1]
+	local path = self.viewContainer:getSetting().otherRes[1]
 
-	for iter_6_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		local var_6_1 = arg_6_0:getResInst(var_6_0, arg_6_0._gopresetcontent, "item" .. tostring(iter_6_0))
-		local var_6_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, V1a6_CachotTeamPreviewPresetItem)
+	for i = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local childGO = self:getResInst(path, self._gopresetcontent, "item" .. tostring(i))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_CachotTeamPreviewPresetItem)
 
-		arg_6_0._presetItemList[iter_6_0] = var_6_2
+		self._presetItemList[i] = item
 	end
 end
 
-function var_0_0._initPrepareItemList(arg_7_0)
-	if arg_7_0._prepareItemList then
+function V1a6_CachotTeamPreView:_initPrepareItemList()
+	if self._prepareItemList then
 		return
 	end
 
-	arg_7_0._prepareItemList = arg_7_0:getUserDataTb_()
+	self._prepareItemList = self:getUserDataTb_()
 
-	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[2]
-	local var_7_1 = V1a6_CachotTeamPreviewPrepareListModel.instance:getList()
+	local path = self.viewContainer:getSetting().otherRes[2]
+	local list = V1a6_CachotTeamPreviewPrepareListModel.instance:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_2 = arg_7_0:getResInst(var_7_0, arg_7_0._gopreparecontent, "item" .. tostring(iter_7_0))
-		local var_7_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_2, V1a6_CachotTeamPreviewPrepareItem)
+	for i, v in ipairs(list) do
+		local childGO = self:getResInst(path, self._gopreparecontent, "item" .. tostring(i))
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, V1a6_CachotTeamPreviewPrepareItem)
 
-		arg_7_0._prepareItemList[iter_7_0] = var_7_3
+		self._prepareItemList[i] = item
 
-		var_7_3:hideEquipNone()
-		var_7_3:onUpdateMO(iter_7_1)
+		item:hideEquipNone()
+		item:onUpdateMO(v)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function V1a6_CachotTeamPreView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
+function V1a6_CachotTeamPreView:onOpen()
 	V1a6_CachotTeamModel.instance:clearSeatInfos()
 	V1a6_CachotTeamPreviewPrepareListModel.instance:initList()
-	arg_9_0:_updatePresetItemList()
-	arg_9_0:_initPrepareItemList()
+	self:_updatePresetItemList()
+	self:_initPrepareItemList()
 
-	local var_9_0 = #V1a6_CachotTeamPreviewPrepareListModel.instance:getList()
+	local list = V1a6_CachotTeamPreviewPrepareListModel.instance:getList()
+	local num = #list
 
-	if var_9_0 <= 4 then
-		arg_9_0._limitedScrollRect.enabled = false
-		arg_9_0._contentSizeFitter.enabled = false
+	if num <= 4 then
+		self._limitedScrollRect.enabled = false
+		self._contentSizeFitter.enabled = false
 
-		recthelper.setWidth(arg_9_0._goleft.transform, 800)
-		recthelper.setWidth(arg_9_0._goright.transform, 700)
-	elseif var_9_0 <= 8 then
-		arg_9_0._limitedScrollRect.enabled = false
-		arg_9_0._gocontent.transform.anchorMin = Vector2.New(0.5, 0.5)
-		arg_9_0._gocontent.transform.anchorMax = Vector2.New(0.5, 0.5)
+		recthelper.setWidth(self._goleft.transform, 800)
+		recthelper.setWidth(self._goright.transform, 700)
+	elseif num <= 8 then
+		self._limitedScrollRect.enabled = false
+		self._gocontent.transform.anchorMin = Vector2.New(0.5, 0.5)
+		self._gocontent.transform.anchorMax = Vector2.New(0.5, 0.5)
 
-		recthelper.setAnchorX(arg_9_0._gocontent.transform, -1206)
+		recthelper.setAnchorX(self._gocontent.transform, -1206)
 	else
-		recthelper.setWidth(arg_9_0._goleft.transform, 720)
+		recthelper.setWidth(self._goleft.transform, 720)
 
-		local var_9_1 = arg_9_0._horizontal.padding
+		local padding = self._horizontal.padding
 
-		var_9_1.right = 300
-		arg_9_0._horizontal.padding = var_9_1
+		padding.right = 300
+		self._horizontal.padding = padding
 	end
 end
 
-function var_0_0._updatePresetItemList(arg_10_0)
-	local var_10_0 = V1a6_CachotTeamPreviewPresetListModel.instance:initList()
+function V1a6_CachotTeamPreView:_updatePresetItemList()
+	local list = V1a6_CachotTeamPreviewPresetListModel.instance:initList()
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._presetItemList) do
-		local var_10_1 = var_10_0[iter_10_0]
+	for i, item in ipairs(self._presetItemList) do
+		local mo = list[i]
 
-		iter_10_1:onUpdateMO(var_10_1)
+		item:onUpdateMO(mo)
 	end
 end
 
-function var_0_0.onClose(arg_11_0)
+function V1a6_CachotTeamPreView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function V1a6_CachotTeamPreView:onDestroyView()
 	return
 end
 
-return var_0_0
+return V1a6_CachotTeamPreView

@@ -1,30 +1,32 @@
-﻿module("modules.logic.battlepass.flow.BpChargeFlow", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/flow/BpChargeFlow.lua
 
-local var_0_0 = class("BpChargeFlow", FlowSequence)
+module("modules.logic.battlepass.flow.BpChargeFlow", package.seeall)
 
-function var_0_0.buildFlow(arg_1_0)
+local BpChargeFlow = class("BpChargeFlow", FlowSequence)
+
+function BpChargeFlow:buildFlow()
 	PopupController.instance:setPause("BpChargeFlow", true)
 	UIBlockMgrExtend.instance.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("BpChargeFlow")
 
-	local var_1_0 = BpController.instance:needShowLevelUp()
+	local needShowLevelUp = BpController.instance:needShowLevelUp()
 
 	BpController.instance:pauseShowLevelUp()
-	arg_1_0:addWork(BpWaitSecWork.New(0.06))
+	self:addWork(BpWaitSecWork.New(0.06))
 
-	if var_1_0 then
-		arg_1_0:addWork(BpOpenAndWaitCloseWork.New(ViewName.BpLevelupTipView))
+	if needShowLevelUp then
+		self:addWork(BpOpenAndWaitCloseWork.New(ViewName.BpLevelupTipView))
 	end
 
-	arg_1_0:addWork(BpCloseViewWork.New(ViewName.BpChargeView))
-	arg_1_0:addWork(BpWaitBonusAnimWork.New())
-	arg_1_0:start()
+	self:addWork(BpCloseViewWork.New(ViewName.BpChargeView))
+	self:addWork(BpWaitBonusAnimWork.New())
+	self:start()
 end
 
-function var_0_0.clearWork(arg_2_0)
+function BpChargeFlow:clearWork()
 	UIBlockMgrExtend.instance.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("BpChargeFlow")
 	PopupController.instance:setPause("BpChargeFlow", false)
 end
 
-return var_0_0
+return BpChargeFlow

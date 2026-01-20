@@ -1,11 +1,13 @@
-﻿module("modules.logic.dungeon.view.jump.DungeonJumpGameResultViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/jump/DungeonJumpGameResultViewContainer.lua
 
-local var_0_0 = class("DungeonJumpGameResultViewContainer", BaseViewContainer)
+module("modules.logic.dungeon.view.jump.DungeonJumpGameResultViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local DungeonJumpGameResultViewContainer = class("DungeonJumpGameResultViewContainer", BaseViewContainer)
+
+function DungeonJumpGameResultViewContainer:buildViews()
 	return {
 		DungeonJumpGameResultView.New()
 	}
 end
 
-return var_0_0
+return DungeonJumpGameResultViewContainer

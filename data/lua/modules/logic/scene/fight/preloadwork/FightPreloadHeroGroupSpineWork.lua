@@ -1,129 +1,131 @@
-﻿module("modules.logic.scene.fight.preloadwork.FightPreloadHeroGroupSpineWork", package.seeall)
+﻿-- chunkname: @modules/logic/scene/fight/preloadwork/FightPreloadHeroGroupSpineWork.lua
 
-local var_0_0 = class("FightPreloadHeroGroupSpineWork", BaseWork)
+module("modules.logic.scene.fight.preloadwork.FightPreloadHeroGroupSpineWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_0:_getSpineUrlList()
+local FightPreloadHeroGroupSpineWork = class("FightPreloadHeroGroupSpineWork", BaseWork)
 
-	if var_1_0 and #var_1_0 > 0 then
-		arg_1_0._loader = SequenceAbLoader.New()
+function FightPreloadHeroGroupSpineWork:onStart(context)
+	local spineUrlList = self:_getSpineUrlList()
 
-		arg_1_0._loader:setPathList(var_1_0)
-		arg_1_0._loader:setConcurrentCount(10)
-		arg_1_0._loader:setLoadFailCallback(arg_1_0._onPreloadOneFail)
-		arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
+	if spineUrlList and #spineUrlList > 0 then
+		self._loader = SequenceAbLoader.New()
+
+		self._loader:setPathList(spineUrlList)
+		self._loader:setConcurrentCount(10)
+		self._loader:setLoadFailCallback(self._onPreloadOneFail)
+		self._loader:startLoad(self._onPreloadFinish, self)
 	else
-		arg_1_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._onPreloadFinish(arg_2_0)
-	local var_2_0 = arg_2_0._loader:getAssetItemDict()
+function FightPreloadHeroGroupSpineWork:_onPreloadFinish()
+	local assetItemDict = self._loader:getAssetItemDict()
 
-	arg_2_0._needCreateList = {}
-	arg_2_0._hasCreateList = {}
+	self._needCreateList = {}
+	self._hasCreateList = {}
 
-	for iter_2_0, iter_2_1 in pairs(var_2_0) do
-		FightSpinePool.setAssetItem(iter_2_0, iter_2_1)
-		table.insert(arg_2_0._needCreateList, iter_2_0)
-		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
+	for url, assetItem in pairs(assetItemDict) do
+		FightSpinePool.setAssetItem(url, assetItem)
+		table.insert(self._needCreateList, url)
+		self.context.callback(self.context.callbackObj, assetItem)
 	end
 
-	local var_2_1 = #arg_2_0._needCreateList
+	local needCreateCount = #self._needCreateList
 
-	if var_2_1 > 0 then
-		TaskDispatcher.runRepeat(arg_2_0._createSpineGO, arg_2_0, 0.1, var_2_1)
+	if needCreateCount > 0 then
+		TaskDispatcher.runRepeat(self._createSpineGO, self, 0.1, needCreateCount)
 	else
-		arg_2_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0._createSpineGO(arg_3_0)
-	local var_3_0 = table.remove(arg_3_0._needCreateList)
-	local var_3_1 = FightSpinePool.getSpine(var_3_0)
+function FightPreloadHeroGroupSpineWork:_createSpineGO()
+	local url = table.remove(self._needCreateList)
+	local spineGO = FightSpinePool.getSpine(url)
 
-	gohelper.setActive(var_3_1, false)
+	gohelper.setActive(spineGO, false)
 
-	local var_3_2 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+	local container = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
 
-	gohelper.addChild(var_3_2, var_3_1)
-	table.insert(arg_3_0._hasCreateList, {
-		var_3_0,
-		var_3_1
+	gohelper.addChild(container, spineGO)
+	table.insert(self._hasCreateList, {
+		url,
+		spineGO
 	})
 
-	if #arg_3_0._needCreateList == 0 then
-		FightPreloadController.instance:cacheFirstPreloadSpine(arg_3_0._hasCreateList)
-		TaskDispatcher.cancelTask(arg_3_0._createSpineGO, arg_3_0)
-		arg_3_0:_returnSpineToPool()
-		arg_3_0:onDone(true)
+	if #self._needCreateList == 0 then
+		FightPreloadController.instance:cacheFirstPreloadSpine(self._hasCreateList)
+		TaskDispatcher.cancelTask(self._createSpineGO, self)
+		self:_returnSpineToPool()
+		self:onDone(true)
 	end
 end
 
-function var_0_0._returnSpineToPool(arg_4_0)
-	if arg_4_0._hasCreateList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._hasCreateList) do
-			local var_4_0 = iter_4_1[1]
-			local var_4_1 = iter_4_1[2]
+function FightPreloadHeroGroupSpineWork:_returnSpineToPool()
+	if self._hasCreateList then
+		for _, tb in ipairs(self._hasCreateList) do
+			local url = tb[1]
+			local spineGO = tb[2]
 
-			iter_4_1[1] = nil
-			iter_4_1[2] = nil
+			tb[1] = nil
+			tb[2] = nil
 
-			FightSpinePool.putSpine(var_4_0, var_4_1)
+			FightSpinePool.putSpine(url, spineGO)
 		end
 	end
 
-	arg_4_0._needCreateList = nil
-	arg_4_0._hasCreateList = nil
+	self._needCreateList = nil
+	self._hasCreateList = nil
 end
 
-function var_0_0._onPreloadOneFail(arg_5_0, arg_5_1, arg_5_2)
-	logError("战斗Spine加载失败：" .. arg_5_2.ResPath)
+function FightPreloadHeroGroupSpineWork:_onPreloadOneFail(loader, assetItem)
+	logError("战斗Spine加载失败：" .. assetItem.ResPath)
 end
 
-function var_0_0.clearWork(arg_6_0)
-	arg_6_0:_returnSpineToPool()
-	TaskDispatcher.cancelTask(arg_6_0._createSpineGO, arg_6_0)
+function FightPreloadHeroGroupSpineWork:clearWork()
+	self:_returnSpineToPool()
+	TaskDispatcher.cancelTask(self._createSpineGO, self)
 
-	if arg_6_0._loader then
-		arg_6_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_6_0._loader = nil
+		self._loader = nil
 	end
 end
 
-function var_0_0._getSpineUrlList(arg_7_0)
-	local var_7_0 = {}
+function FightPreloadHeroGroupSpineWork:_getSpineUrlList()
+	local roleSkinUrlList = {}
 
-	for iter_7_0 = 1, 3 do
-		local var_7_1 = HeroSingleGroupModel.instance:getById(iter_7_0)
-		local var_7_2 = var_7_1:getHeroMO()
-		local var_7_3 = var_7_1:getMonsterCO()
-		local var_7_4
+	for i = 1, 3 do
+		local heroSingleGroupMO = HeroSingleGroupModel.instance:getById(i)
+		local heroMO = heroSingleGroupMO:getHeroMO()
+		local monsterCO = heroSingleGroupMO:getMonsterCO()
+		local skinId
 
-		if var_7_2 then
-			var_7_4 = var_7_2.skin
-		elseif var_7_3 then
-			var_7_4 = var_7_3.skinId
+		if heroMO then
+			skinId = heroMO.skin
+		elseif monsterCO then
+			skinId = monsterCO.skinId
 		end
 
-		if var_7_4 then
-			local var_7_5 = true
+		if skinId then
+			local needLoad = true
 
-			if FightHelper.getZongMaoShaLiMianJuPath(var_7_4) then
-				var_7_5 = false
+			if FightHelper.getZongMaoShaLiMianJuPath(skinId) then
+				needLoad = false
 			end
 
-			if var_7_5 then
-				local var_7_6 = FightConfig.instance:getSkinCO(var_7_4)
-				local var_7_7 = ResUrl.getSpineFightPrefabBySkin(var_7_6)
+			if needLoad then
+				local skinCO = FightConfig.instance:getSkinCO(skinId)
+				local url = ResUrl.getSpineFightPrefabBySkin(skinCO)
 
-				table.insert(var_7_0, var_7_7)
+				table.insert(roleSkinUrlList, url)
 			end
 		end
 	end
 
-	return var_7_0
+	return roleSkinUrlList
 end
 
-return var_0_0
+return FightPreloadHeroGroupSpineWork

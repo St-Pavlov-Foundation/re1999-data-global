@@ -1,127 +1,134 @@
-﻿module("modules.logic.bossrush.model.v2a9.V2a9BossRushModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/v2a9/V2a9BossRushModel.lua
 
-local var_0_0 = class("V2a9BossRushModel", BaseModel)
+module("modules.logic.bossrush.model.v2a9.V2a9BossRushModel", package.seeall)
 
-function var_0_0.isV2a9BossRush(arg_1_0)
+local V2a9BossRushModel = class("V2a9BossRushModel", BaseModel)
+
+function V2a9BossRushModel:isV2a9BossRush()
 	return BossRushConfig.instance:getActivityId() == VersionActivity2_9Enum.ActivityId.BossRush
 end
 
-function var_0_0.onRefresh128InfosReply(arg_2_0, arg_2_1)
-	arg_2_0._equipMos = {}
+function V2a9BossRushModel:onRefresh128InfosReply(msg)
+	self._equipMos = {}
 
-	if not arg_2_0._spHighestPoint then
-		arg_2_0._spHighestPoint = {}
+	if not self._spHighestPoint then
+		self._spHighestPoint = {}
 	end
 
-	for iter_2_0 = 1, #arg_2_1.bossDetail do
-		local var_2_0 = arg_2_1.bossDetail[iter_2_0]
-		local var_2_1 = var_2_0.bossId
+	for j = 1, #msg.bossDetail do
+		local bossDetail = msg.bossDetail[j]
+		local stage = bossDetail.bossId
 
-		if not arg_2_0._equipMos[var_2_1] then
-			arg_2_0._equipMos[var_2_1] = {}
+		if not self._equipMos[stage] then
+			self._equipMos[stage] = {}
 		end
 
-		if not arg_2_0._spHighestPoint[var_2_1] then
-			arg_2_0._spHighestPoint[var_2_1] = {}
+		if not self._spHighestPoint[stage] then
+			self._spHighestPoint[stage] = {}
 		end
 
-		local var_2_2 = var_2_0.spItemTypeIds or {}
-		local var_2_3 = arg_2_0:getMaxEquipCount()
+		local spItemIds = bossDetail.spItemTypeIds or {}
+		local maxCount = self:getMaxEquipCount()
 
-		for iter_2_1 = 1, BossRushEnum.V2a9FightEquipSkillMaxCount do
-			local var_2_4 = var_2_2[iter_2_1]
-			local var_2_5 = V2a9BossRushAssassinEquipMO.New()
-			local var_2_6 = var_2_3 < iter_2_1
+		for i = 1, BossRushEnum.V2a9FightEquipSkillMaxCount do
+			local itemType = spItemIds[i]
+			local mo = V2a9BossRushAssassinEquipMO.New()
+			local isLock = maxCount < i
 
-			var_2_5:init(iter_2_1, var_2_4, var_2_6)
-			table.insert(arg_2_0._equipMos[var_2_1], var_2_5)
+			mo:init(i, itemType, isLock)
+			table.insert(self._equipMos[stage], mo)
 		end
 
-		arg_2_0._spHighestPoint[var_2_1] = var_2_0.spHighestPoint
+		self._spHighestPoint[stage] = bossDetail.spHighestPoint
 	end
 end
 
-function var_0_0.getHighestPoint(arg_3_0, arg_3_1)
-	return arg_3_0._spHighestPoint[arg_3_1] or 0
+function V2a9BossRushModel:getHighestPoint(stage)
+	return self._spHighestPoint[stage] or 0
 end
 
-function var_0_0.isV2a9BossRushSecondStageSpecialLayer(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == DungeonEnum.EpisodeType.BossRush then
-		local var_4_0 = BossRushConfig.instance:getEpisodeCoByEpisodeId(arg_4_2)
+function V2a9BossRushModel:isV2a9BossRushSecondStageSpecialLayer(episodeType, episodeId)
+	if episodeType == DungeonEnum.EpisodeType.BossRush then
+		local bossrushCo = BossRushConfig.instance:getEpisodeCoByEpisodeId(episodeId)
 
-		if var_4_0 and arg_4_0:isV2a9SecondStageSpecialLayer(var_4_0.stage, var_4_0.layer) then
+		if bossrushCo and self:isV2a9SecondStageSpecialLayer(bossrushCo.stage, bossrushCo.layer) then
 			return true
 		end
 	end
 end
 
-function var_0_0.isV2a9SecondStageSpecialLayer(arg_5_0, arg_5_1, arg_5_2)
-	return arg_5_1 == BossRushEnum.V2a9StageEnum.Second and arg_5_2 == BossRushEnum.LayerEnum.V2a9
+function V2a9BossRushModel:isV2a9SecondStageSpecialLayer(stage, layer)
+	return stage == BossRushEnum.V2a9StageEnum.Second and layer == BossRushEnum.LayerEnum.V2a9
 end
 
-function var_0_0.getMaxEquipCount(arg_6_0)
-	local var_6_0 = lua_activity128_const.configDict[BossRushEnum.V2a9FightCanEquipSkillCountConst]
+function V2a9BossRushModel:getMaxEquipCount()
+	local constCo = lua_activity128_const.configDict[BossRushEnum.V2a9FightCanEquipSkillCountConst]
+	local canEquipMaxCount = constCo and constCo.value1
 
-	return var_6_0 and var_6_0.value1 or 4
+	return canEquipMaxCount or 4
 end
 
-function var_0_0.getAllEquipMos(arg_7_0, arg_7_1)
-	return arg_7_0._equipMos and arg_7_0._equipMos[arg_7_1]
+function V2a9BossRushModel:getAllEquipMos(stage)
+	return self._equipMos and self._equipMos[stage]
 end
 
-function var_0_0.selectSpItemId(arg_8_0, arg_8_1)
-	arg_8_0._selectItemId = arg_8_1
+function V2a9BossRushModel:selectSpItemId(id)
+	self._selectItemId = id
 end
 
-function var_0_0.getSelectedItemId(arg_9_0)
-	return arg_9_0._selectItemId
+function V2a9BossRushModel:getSelectedItemId()
+	return self._selectItemId
 end
 
-function var_0_0.getItemIdByItemType(arg_10_0, arg_10_1)
-	if not arg_10_0._itemTypeDict then
-		arg_10_0._itemTypeDict = {}
+function V2a9BossRushModel:getItemIdByItemType(itemType)
+	if not self._itemTypeDict then
+		self._itemTypeDict = {}
 	end
 
-	local var_10_0 = arg_10_0._itemTypeDict[arg_10_1]
+	local id = self._itemTypeDict[itemType]
 
-	if var_10_0 then
-		return var_10_0
+	if id then
+		return id
 	end
 
-	return (AssassinConfig.instance:getAssassinItemId(arg_10_1, 2))
+	local id = AssassinConfig.instance:getAssassinItemId(itemType, 2)
+
+	return id
 end
 
-function var_0_0.isEquip(arg_11_0, arg_11_1, arg_11_2)
-	return arg_11_0:getEquipIndex(arg_11_1, arg_11_2) ~= nil
+function V2a9BossRushModel:isEquip(stage, id)
+	local index = self:getEquipIndex(stage, id)
+
+	return index ~= nil
 end
 
-function var_0_0.getEquipIndex(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getAllEquipMos(arg_12_1)
+function V2a9BossRushModel:getEquipIndex(stage, id)
+	local equipMos = self:getAllEquipMos(stage)
 
-	if not var_12_0 then
+	if not equipMos then
 		return
 	end
 
-	local var_12_1 = AssassinConfig.instance:getAssassinItemType(arg_12_2)
+	local itemType = AssassinConfig.instance:getAssassinItemType(id)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-		if iter_12_1:getItemType() == var_12_1 then
-			return iter_12_1:getIndex()
+	for _, mo in ipairs(equipMos) do
+		if mo:getItemType() == itemType then
+			return mo:getIndex()
 		end
 	end
 end
 
-function var_0_0.isFullEquip(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getAllEquipMos(arg_13_1)
+function V2a9BossRushModel:isFullEquip(stage)
+	local equipMos = self:getAllEquipMos(stage)
 
-	if not var_13_0 then
+	if not equipMos then
 		return
 	end
 
-	for iter_13_0 = 1, arg_13_0:getMaxEquipCount() do
-		local var_13_1 = var_13_0[iter_13_0]
+	for i = 1, self:getMaxEquipCount() do
+		local mo = equipMos[i]
 
-		if var_13_1 and not var_13_1:isEquip() then
+		if mo and not mo:isEquip() then
 			return false
 		end
 	end
@@ -129,127 +136,127 @@ function var_0_0.isFullEquip(arg_13_0, arg_13_1)
 	return true
 end
 
-function var_0_0.changeEquippedSelectItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	local var_14_0 = arg_14_0:getAllEquipMos(arg_14_1)
+function V2a9BossRushModel:changeEquippedSelectItem(stage, callback, callbackobj)
+	local equipMos = self:getAllEquipMos(stage)
 
-	if not var_14_0 then
+	if not equipMos then
 		return
 	end
 
-	local var_14_1 = arg_14_0:getSelectedItemId()
-	local var_14_2 = AssassinConfig.instance:getAssassinItemType(var_14_1)
-	local var_14_3 = {}
-	local var_14_4 = arg_14_0:getEquipIndex(arg_14_1, var_14_1)
+	local id = self:getSelectedItemId()
+	local itemType = AssassinConfig.instance:getAssassinItemType(id)
+	local itemIds = {}
+	local equipIndex = self:getEquipIndex(stage, id)
 
-	if var_14_4 then
-		local var_14_5 = var_14_0[var_14_4]
+	if equipIndex then
+		local mo = equipMos[equipIndex]
 
-		if var_14_5 then
-			var_14_5:setEquipItemType()
+		if mo then
+			mo:setEquipItemType()
 		end
 	else
-		local var_14_6 = arg_14_0:_getNullIndex(var_14_0)
+		local index = self:_getNullIndex(equipMos)
 
-		if var_14_6 then
-			local var_14_7 = var_14_0[var_14_6]
+		if index then
+			local mo = equipMos[index]
 
-			if var_14_7 then
-				var_14_7:setEquipItemType(var_14_2)
+			if mo then
+				mo:setEquipItemType(itemType)
 			end
 		else
 			logError("没位置了，应该改变按钮状态")
 		end
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_8 = iter_14_1:getItemType()
+	for _, mo in ipairs(equipMos) do
+		local itemType = mo:getItemType()
 
-		if iter_14_1:isEquip() then
-			table.insert(var_14_3, var_14_8)
+		if mo:isEquip() then
+			table.insert(itemIds, itemType)
 		end
 	end
 
-	local var_14_9 = BossRushConfig.instance:getActivityId()
+	local actId = BossRushConfig.instance:getActivityId()
 
-	Activity128Rpc.instance:sendAct128SpFirstHalfSelectItemRequest(var_14_9, arg_14_1, var_14_3, arg_14_2, arg_14_3)
+	Activity128Rpc.instance:sendAct128SpFirstHalfSelectItemRequest(actId, stage, itemIds, callback, callbackobj)
 end
 
-function var_0_0._getNullIndex(arg_15_0, arg_15_1)
-	if not arg_15_1 then
+function V2a9BossRushModel:_getNullIndex(equipMos)
+	if not equipMos then
 		return
 	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		if not iter_15_1:isEquip() then
-			return iter_15_0
+	for i, mo in ipairs(equipMos) do
+		if not mo:isEquip() then
+			return i
 		end
 	end
 end
 
-function var_0_0.onReceiveAct128SpFirstHalfSelectItemReply(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.itemTypeIds or {}
-	local var_16_1 = arg_16_1.bossId
+function V2a9BossRushModel:onReceiveAct128SpFirstHalfSelectItemReply(msg)
+	local spItemIds = msg.itemTypeIds or {}
+	local stage = msg.bossId
 
-	if arg_16_0._equipMos and arg_16_0._equipMos[var_16_1] then
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._equipMos[var_16_1]) do
-			local var_16_2 = var_16_0[iter_16_0]
+	if self._equipMos and self._equipMos[stage] then
+		for i, mo in ipairs(self._equipMos[stage]) do
+			local itemType = spItemIds[i]
 
-			iter_16_1:setEquipItemType(var_16_2)
+			mo:setEquipItemType(itemType)
 		end
 	end
 end
 
-function var_0_0.getUnlockEpisodeDisplay(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = DungeonConfig.instance:getEpisodeCO(arg_17_2)
-	local var_17_1 = var_17_0 and var_17_0.chapterId
-	local var_17_2 = DungeonConfig.instance:getChapterCO(var_17_1)
-	local var_17_3 = ActivityConfig.instance:getActivityCo(var_17_2 and var_17_2.actId)
-	local var_17_4
+function V2a9BossRushModel:getUnlockEpisodeDisplay(stage, episodeId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local chapterId = episodeCo and episodeCo.chapterId
+	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
+	local actCo = ActivityConfig.instance:getActivityCo(chapterCo and chapterCo.actId)
+	local episodeDisplay
 
-	if arg_17_1 == 1 then
-		var_17_4 = DungeonConfig.instance:getEpisodeDisplay(arg_17_2)
+	if stage == 1 then
+		episodeDisplay = DungeonConfig.instance:getEpisodeDisplay(episodeId)
 	else
-		local var_17_5 = DungeonConfig.instance:getChapterEpisodeCOList(var_17_1)
+		local episodeCoList = DungeonConfig.instance:getChapterEpisodeCOList(chapterId)
 
-		table.sort(var_17_5, function(arg_18_0, arg_18_1)
-			return arg_18_0.id < arg_18_1.id
+		table.sort(episodeCoList, function(a, b)
+			return a.id < b.id
 		end)
 
-		local var_17_6 = arg_17_0:_getEpisodeIndex(var_17_1, arg_17_2)
+		local index = self:_getEpisodeIndex(chapterId, episodeId)
 
-		if var_17_6 then
-			local var_17_7 = var_17_2.chapterIndex
+		if index then
+			local chapterIndex = chapterCo.chapterIndex
 
-			var_17_4 = string.format(luaLang("V2a9BossRushModel_getUnlockEpisodeDisplay"), var_17_7, var_17_6, var_17_0.name)
+			episodeDisplay = string.format(luaLang("V2a9BossRushModel_getUnlockEpisodeDisplay"), chapterIndex, index, episodeCo.name)
 		end
 	end
 
-	return var_17_3 and var_17_3.name, var_17_4
+	return actCo and actCo.name, episodeDisplay
 end
 
-function var_0_0._getEpisodeIndex(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_19_1)
+function V2a9BossRushModel:_getEpisodeIndex(chapterId, episodeId)
+	local episodeCoList = DungeonConfig.instance:getChapterEpisodeCOList(chapterId)
 
-	table.sort(var_19_0, function(arg_20_0, arg_20_1)
-		local var_20_0 = SLFramework.FrameworkSettings.IsEditor and {}
-		local var_20_1 = SLFramework.FrameworkSettings.IsEditor and {}
-		local var_20_2 = DungeonConfig.instance:_getEpisodeIndex(arg_20_0, var_20_0)
-		local var_20_3 = DungeonConfig.instance:_getEpisodeIndex(arg_20_1, var_20_1)
+	table.sort(episodeCoList, function(a, b)
+		local aMap = SLFramework.FrameworkSettings.IsEditor and {}
+		local bMap = SLFramework.FrameworkSettings.IsEditor and {}
+		local aIndex = DungeonConfig.instance:_getEpisodeIndex(a, aMap)
+		local bIndex = DungeonConfig.instance:_getEpisodeIndex(b, bMap)
 
-		if var_20_2 ~= var_20_3 then
-			return var_20_2 < var_20_3
+		if aIndex ~= bIndex then
+			return aIndex < bIndex
 		end
 
-		return arg_20_0.id < arg_20_1.id
+		return a.id < b.id
 	end)
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if iter_19_1.id == arg_19_2 then
-			return iter_19_0
+	for i, episodeCoList in ipairs(episodeCoList) do
+		if episodeCoList.id == episodeId then
+			return i
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+V2a9BossRushModel.instance = V2a9BossRushModel.New()
 
-return var_0_0
+return V2a9BossRushModel

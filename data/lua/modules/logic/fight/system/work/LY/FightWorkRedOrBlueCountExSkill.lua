@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountExSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/LY/FightWorkRedOrBlueCountExSkill.lua
 
-local var_0_0 = class("FightWorkRedOrBlueCountExSkill", FightEffectBase)
+module("modules.logic.fight.system.work.LY.FightWorkRedOrBlueCountExSkill", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightStrUtil.instance:getSplitToNumberCache(arg_1_0.actEffectData.reserveStr, "#")
+local FightWorkRedOrBlueCountExSkill = class("FightWorkRedOrBlueCountExSkill", FightEffectBase)
 
-	if not var_1_0 then
-		return arg_1_0:onDone(true)
+function FightWorkRedOrBlueCountExSkill:onStart()
+	local array = FightStrUtil.instance:getSplitToNumberCache(self.actEffectData.reserveStr, "#")
+
+	if not array then
+		return self:onDone(true)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.LY_TriggerCountSkill, var_1_0[1], var_1_0[2], tonumber(arg_1_0.actEffectData.reserveId))
+	FightController.instance:dispatchEvent(FightEvent.LY_TriggerCountSkill, array[1], array[2], tonumber(self.actEffectData.reserveId))
 
-	return arg_1_0:onDone(true)
+	return self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkRedOrBlueCountExSkill:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkRedOrBlueCountExSkill

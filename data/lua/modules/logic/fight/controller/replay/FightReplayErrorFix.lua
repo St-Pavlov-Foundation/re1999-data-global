@@ -1,89 +1,91 @@
-﻿module("modules.logic.fight.controller.replay.FightReplayErrorFix", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/replay/FightReplayErrorFix.lua
 
-local var_0_0 = class("FightReplayErrorFix")
-local var_0_1 = 2
+module("modules.logic.fight.controller.replay.FightReplayErrorFix", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._hasStartErrorCheck = false
-	arg_1_0._lostConnect = false
-	arg_1_0._startTime = Time.time
+local FightReplayErrorFix = class("FightReplayErrorFix")
+local ErrorTime = 2
+
+function FightReplayErrorFix:ctor()
+	self._hasStartErrorCheck = false
+	self._lostConnect = false
+	self._startTime = Time.time
 end
 
-function var_0_0.addConstEvents(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_2_0._stopReplay, arg_2_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_2_0._onLostConnect, arg_2_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, arg_2_0._onReconnectSucc, arg_2_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, arg_2_0._onServerKickedOut, arg_2_0)
+function FightReplayErrorFix:addConstEvents()
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self._stopReplay, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, self._onLostConnect, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, self._onServerKickedOut, self)
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0:_stopReplay()
+function FightReplayErrorFix:reInit()
+	self:_stopReplay()
 end
 
-function var_0_0.startReplayErrorFix(arg_4_0)
-	arg_4_0._lostConnect = false
-	arg_4_0._hasStartErrorCheck = true
-	arg_4_0._startTime = Time.time
+function FightReplayErrorFix:startReplayErrorFix()
+	self._lostConnect = false
+	self._hasStartErrorCheck = true
+	self._startTime = Time.time
 
-	TaskDispatcher.runRepeat(arg_4_0._onSecond, arg_4_0, 1)
+	TaskDispatcher.runRepeat(self._onSecond, self, 1)
 
-	arg_4_0._callbackDict = {}
+	self._callbackDict = {}
 
-	for iter_4_0, iter_4_1 in pairs(FightEvent) do
-		local function var_4_0()
-			arg_4_0._startTime = Time.time
+	for _, evtId in pairs(FightEvent) do
+		local function callback()
+			self._startTime = Time.time
 		end
 
-		arg_4_0._callbackDict[iter_4_1] = var_4_0
+		self._callbackDict[evtId] = callback
 
-		FightController.instance:registerCallback(iter_4_1, var_4_0, nil)
+		FightController.instance:registerCallback(evtId, callback, nil)
 	end
 
-	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, arg_4_0._onApplicationPause, arg_4_0)
+	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, self._onApplicationPause, self)
 end
 
-function var_0_0._onApplicationPause(arg_6_0)
-	arg_6_0._startTime = Time.time
+function FightReplayErrorFix:_onApplicationPause()
+	self._startTime = Time.time
 end
 
-function var_0_0._onLostConnect(arg_7_0)
-	arg_7_0._lostConnect = true
+function FightReplayErrorFix:_onLostConnect()
+	self._lostConnect = true
 end
 
-function var_0_0._onReconnectSucc(arg_8_0)
-	arg_8_0._startTime = Time.time
-	arg_8_0._lostConnect = false
+function FightReplayErrorFix:_onReconnectSucc()
+	self._startTime = Time.time
+	self._lostConnect = false
 end
 
-function var_0_0._onServerKickedOut(arg_9_0)
-	arg_9_0:_stopReplay()
+function FightReplayErrorFix:_onServerKickedOut()
+	self:_stopReplay()
 end
 
-function var_0_0._stopReplay(arg_10_0)
-	if arg_10_0._hasStartErrorCheck then
-		arg_10_0._hasStartErrorCheck = false
+function FightReplayErrorFix:_stopReplay()
+	if self._hasStartErrorCheck then
+		self._hasStartErrorCheck = false
 
-		TaskDispatcher.cancelTask(arg_10_0._onSecond, arg_10_0)
-		arg_10_0:_clearEvtCbs()
+		TaskDispatcher.cancelTask(self._onSecond, self)
+		self:_clearEvtCbs()
 	end
 
-	arg_10_0._hasLog = nil
+	self._hasLog = nil
 end
 
-function var_0_0._clearEvtCbs(arg_11_0)
-	if arg_11_0._callbackDict then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0._callbackDict) do
-			FightController.instance:unregisterCallback(iter_11_0, iter_11_1, nil)
+function FightReplayErrorFix:_clearEvtCbs()
+	if self._callbackDict then
+		for evtId, callback in pairs(self._callbackDict) do
+			FightController.instance:unregisterCallback(evtId, callback, nil)
 		end
 
-		arg_11_0._callbackDict = nil
+		self._callbackDict = nil
 	end
 
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, arg_11_0._onApplicationPause, arg_11_0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, self._onApplicationPause, self)
 end
 
-function var_0_0._onSecond(arg_12_0)
-	if arg_12_0._lostConnect then
+function FightReplayErrorFix:_onSecond()
+	if self._lostConnect then
 		return
 	end
 
@@ -91,12 +93,14 @@ function var_0_0._onSecond(arg_12_0)
 		return
 	end
 
-	if Time.time - arg_12_0._startTime > var_0_1 then
-		arg_12_0:_fixErrorState()
+	local now = Time.time
+
+	if now - self._startTime > ErrorTime then
+		self:_fixErrorState()
 	end
 end
 
-function var_0_0._fixErrorState(arg_13_0)
+function FightReplayErrorFix:_fixErrorState()
 	FightMsgMgr.sendMsg(FightMsgId.ForceReleasePlayFlow)
 
 	if FightModel.instance:isFinish() then
@@ -107,20 +111,20 @@ function var_0_0._fixErrorState(arg_13_0)
 	end
 end
 
-function var_0_0._log(arg_14_0, arg_14_1)
-	if not arg_14_0._hasLog then
-		arg_14_0._hasLog = true
+function FightReplayErrorFix:_log(str)
+	if not self._hasLog then
+		self._hasLog = true
 
-		local var_14_0 = FightModel.instance:getFightParam()
-		local var_14_1 = var_14_0 and var_14_0.episodeId
-		local var_14_2 = var_14_0 and var_14_0.battleId
+		local fightParam = FightModel.instance:getFightParam()
+		local episodeId = fightParam and fightParam.episodeId
+		local battleId = fightParam and fightParam.battleId
 
-		if var_14_1 then
-			logError(arg_14_1 .. " episode_" .. var_14_1)
+		if episodeId then
+			logError(str .. " episode_" .. episodeId)
 		else
-			logError(arg_14_1 .. " battle_" .. (var_14_2 or "nil"))
+			logError(str .. " battle_" .. (battleId or "nil"))
 		end
 	end
 end
 
-return var_0_0
+return FightReplayErrorFix

@@ -1,194 +1,196 @@
-﻿module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_0/dungeon/view/graffiti/VersionActivity2_0DungeonGraffitiItem.lua
 
-local var_0_0 = class("VersionActivity2_0DungeonGraffitiItem", LuaCompBase)
+module("modules.logic.versionactivity2_0.dungeon.view.graffiti.VersionActivity2_0DungeonGraffitiItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local VersionActivity2_0DungeonGraffitiItem = class("VersionActivity2_0DungeonGraffitiItem", LuaCompBase)
 
-	arg_1_0.go = arg_1_1
-	arg_1_0.canvasGroup = gohelper.findChild(arg_1_0.go, "icon"):GetComponent(typeof(UnityEngine.CanvasGroup))
-	arg_1_0.picture = gohelper.findChildSingleImage(arg_1_0.go, "icon/simage_picture")
-	arg_1_0.imagePicture = gohelper.findChildImage(arg_1_0.go, "icon/simage_picture")
-	arg_1_0.lock = gohelper.findChild(arg_1_0.go, "icon/simage_picture/go_lock")
-	arg_1_0.goLockTime = gohelper.findChild(arg_1_0.go, "icon/simage_picture/go_lockTime")
-	arg_1_0.txtUnlockTime = gohelper.findChildText(arg_1_0.go, "icon/simage_picture/go_lockTime/txt_unlockTime")
-	arg_1_0.toUnlock = gohelper.findChild(arg_1_0.go, "go_toUnlock")
-	arg_1_0.goUnlockEffect = gohelper.findChild(arg_1_0.go, "go_unlockEffect")
-	arg_1_0.goUnlockEffect1 = gohelper.findChild(arg_1_0.go, "unlock")
-	arg_1_0.goFinishEffect = gohelper.findChild(arg_1_0.go, "finish")
-	arg_1_0.simageEffect = gohelper.findChildSingleImage(arg_1_0.go, "go_unlockEffect/simage_effect")
-	arg_1_0.gocompleted = gohelper.findChild(arg_1_0.go, "icon/simage_picture/go_completed")
-	arg_1_0.btnClick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
-	arg_1_0.isRunTime = false
-	arg_1_0.isNewUnlock = false
+function VersionActivity2_0DungeonGraffitiItem:init(go)
+	self:__onInit()
+
+	self.go = go
+	self.canvasGroup = gohelper.findChild(self.go, "icon"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	self.picture = gohelper.findChildSingleImage(self.go, "icon/simage_picture")
+	self.imagePicture = gohelper.findChildImage(self.go, "icon/simage_picture")
+	self.lock = gohelper.findChild(self.go, "icon/simage_picture/go_lock")
+	self.goLockTime = gohelper.findChild(self.go, "icon/simage_picture/go_lockTime")
+	self.txtUnlockTime = gohelper.findChildText(self.go, "icon/simage_picture/go_lockTime/txt_unlockTime")
+	self.toUnlock = gohelper.findChild(self.go, "go_toUnlock")
+	self.goUnlockEffect = gohelper.findChild(self.go, "go_unlockEffect")
+	self.goUnlockEffect1 = gohelper.findChild(self.go, "unlock")
+	self.goFinishEffect = gohelper.findChild(self.go, "finish")
+	self.simageEffect = gohelper.findChildSingleImage(self.go, "go_unlockEffect/simage_effect")
+	self.gocompleted = gohelper.findChild(self.go, "icon/simage_picture/go_completed")
+	self.btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+	self.isRunTime = false
+	self.isNewUnlock = false
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0.btnClick:AddClickListener(arg_2_0.onPictureClick, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.GraffitiCdRefresh, arg_2_0.refreshUnlockTime, arg_2_0)
-	arg_2_0:addEventCb(Activity161Controller.instance, Activity161Event.ToUnlockGraffiti, arg_2_0.toUnlockGraffiti, arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0, LuaEventSystem.Low)
+function VersionActivity2_0DungeonGraffitiItem:addEventListeners()
+	self.btnClick:AddClickListener(self.onPictureClick, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.GraffitiCdRefresh, self.refreshUnlockTime, self)
+	self:addEventCb(Activity161Controller.instance, Activity161Event.ToUnlockGraffiti, self.toUnlockGraffiti, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0.btnClick:RemoveClickListener()
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.GraffitiCdRefresh, arg_3_0.refreshUnlockTime, arg_3_0)
-	arg_3_0:removeEventCb(Activity161Controller.instance, Activity161Event.ToUnlockGraffiti, arg_3_0.toUnlockGraffiti, arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0, LuaEventSystem.Low)
+function VersionActivity2_0DungeonGraffitiItem:removeEventListeners()
+	self.btnClick:RemoveClickListener()
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.GraffitiCdRefresh, self.refreshUnlockTime, self)
+	self:removeEventCb(Activity161Controller.instance, Activity161Event.ToUnlockGraffiti, self.toUnlockGraffiti, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self, LuaEventSystem.Low)
 end
 
-function var_0_0.onPictureClick(arg_4_0)
-	local var_4_0 = Activity161Model.instance.graffitiInfoMap[arg_4_0.elementId]
+function VersionActivity2_0DungeonGraffitiItem:onPictureClick()
+	local graffitiMO = Activity161Model.instance.graffitiInfoMap[self.elementId]
 
-	if var_4_0.state == Activity161Enum.graffitiState.Normal or var_4_0.state == Activity161Enum.graffitiState.IsFinished then
+	if graffitiMO.state == Activity161Enum.graffitiState.Normal or graffitiMO.state == Activity161Enum.graffitiState.IsFinished then
 		Activity161Controller.instance:openGraffitiDrawView({
-			graffitiMO = var_4_0,
-			normalMaterial = arg_4_0.normalMaterial
+			graffitiMO = graffitiMO,
+			normalMaterial = self.normalMaterial
 		})
-		arg_4_0:resetPicture()
-	elseif var_4_0.state == Activity161Enum.graffitiState.ToUnlock then
-		Activity161Controller.instance:jumpToElement(var_4_0)
-	elseif arg_4_0.showLockTime then
+		self:resetPicture()
+	elseif graffitiMO.state == Activity161Enum.graffitiState.ToUnlock then
+		Activity161Controller.instance:jumpToElement(graffitiMO)
+	elseif self.showLockTime then
 		GameFacade.showToast(ToastEnum.GraffitiLockWidthTime)
 	else
 		GameFacade.showToast(ToastEnum.GraffitiLock)
 	end
 end
 
-function var_0_0.initData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.elementId = arg_5_2
-	arg_5_0.actId = arg_5_1
-	arg_5_0.config = Activity161Config.instance:getGraffitiCo(arg_5_0.actId, arg_5_0.elementId)
+function VersionActivity2_0DungeonGraffitiItem:initData(actId, elementId, materialTab)
+	self.elementId = elementId
+	self.actId = actId
+	self.config = Activity161Config.instance:getGraffitiCo(self.actId, self.elementId)
 
-	local var_5_0 = string.format("%s_effect", arg_5_0.config.picture)
+	local effectRes = string.format("%s_effect", self.config.picture)
 
-	arg_5_0.simageEffect:LoadImage(ResUrl.getGraffitiIcon(var_5_0), arg_5_0.setNativeSize, arg_5_0)
+	self.simageEffect:LoadImage(ResUrl.getGraffitiIcon(effectRes), self.setNativeSize, self)
 
-	arg_5_0.oldState = Activity161Model.instance.graffitiInfoMap[arg_5_0.elementId].state
-	arg_5_0.lockMaterial = arg_5_3[1]
-	arg_5_0.normalMaterial = arg_5_3[2]
+	self.oldState = Activity161Model.instance.graffitiInfoMap[self.elementId].state
+	self.lockMaterial = materialTab[1]
+	self.normalMaterial = materialTab[2]
 end
 
-function var_0_0.refreshItem(arg_6_0)
-	arg_6_0.graffitiMO = Activity161Model.instance.graffitiInfoMap[arg_6_0.elementId]
-	arg_6_0.isUnlock = Activity161Model.instance:isUnlockState(arg_6_0.graffitiMO) == Activity161Enum.unlockState
+function VersionActivity2_0DungeonGraffitiItem:refreshItem()
+	self.graffitiMO = Activity161Model.instance.graffitiInfoMap[self.elementId]
+	self.isUnlock = Activity161Model.instance:isUnlockState(self.graffitiMO) == Activity161Enum.unlockState
 
-	local var_6_0 = Activity161Model.instance:getInCdGraffiti()
+	local curInCdMoList = Activity161Model.instance:getInCdGraffiti()
 
-	arg_6_0:refreshUnlockTime(var_6_0)
-	gohelper.setActive(arg_6_0.lock, arg_6_0.graffitiMO.state == Activity161Enum.graffitiState.Lock and not arg_6_0.showLockTime)
-	gohelper.setActive(arg_6_0.toUnlock, arg_6_0.graffitiMO.state == Activity161Enum.graffitiState.ToUnlock)
-	gohelper.setActive(arg_6_0.gocompleted, arg_6_0.graffitiMO.state == Activity161Enum.graffitiState.IsFinished)
+	self:refreshUnlockTime(curInCdMoList)
+	gohelper.setActive(self.lock, self.graffitiMO.state == Activity161Enum.graffitiState.Lock and not self.showLockTime)
+	gohelper.setActive(self.toUnlock, self.graffitiMO.state == Activity161Enum.graffitiState.ToUnlock)
+	gohelper.setActive(self.gocompleted, self.graffitiMO.state == Activity161Enum.graffitiState.IsFinished)
 end
 
-function var_0_0.refreshUnlockTime(arg_7_0, arg_7_1)
-	local var_7_0
+function VersionActivity2_0DungeonGraffitiItem:refreshUnlockTime(curInCdMoList)
+	local curInCdMo
 
-	for iter_7_0, iter_7_1 in pairs(arg_7_1) do
-		if iter_7_1.id == arg_7_0.graffitiMO.id then
-			var_7_0 = iter_7_1
+	for _, mo in pairs(curInCdMoList) do
+		if mo.id == self.graffitiMO.id then
+			curInCdMo = mo
 
 			break
 		end
 	end
 
-	arg_7_0.showLockTime = var_7_0 ~= nil
+	self.showLockTime = curInCdMo ~= nil
 
-	gohelper.setActive(arg_7_0.goLockTime, arg_7_0.graffitiMO.state == Activity161Enum.graffitiState.Lock and arg_7_0.showLockTime)
+	gohelper.setActive(self.goLockTime, self.graffitiMO.state == Activity161Enum.graffitiState.Lock and self.showLockTime)
 
-	local var_7_1 = Mathf.Floor(arg_7_0.graffitiMO:getRemainUnlockTime())
+	local unlockTime = Mathf.Floor(self.graffitiMO:getRemainUnlockTime())
 
-	arg_7_0.txtUnlockTime.text = TimeUtil.getFormatTime1(var_7_1, true)
+	self.txtUnlockTime.text = TimeUtil.getFormatTime1(unlockTime, true)
 
-	arg_7_0:refreshPicture()
+	self:refreshPicture()
 end
 
-function var_0_0.refreshPicture(arg_8_0)
-	local var_8_0
-	local var_8_1 = 1
+function VersionActivity2_0DungeonGraffitiItem:refreshPicture()
+	local pictureMaterial
+	local pictureAlpha = 1
 
-	if not arg_8_0.isNewUnlock then
-		if arg_8_0.graffitiMO.state == Activity161Enum.graffitiState.Lock then
-			var_8_0 = arg_8_0.lockMaterial
-			var_8_1 = arg_8_0.showLockTime and 1 or 0.5
-		elseif arg_8_0.graffitiMO.state == Activity161Enum.graffitiState.ToUnlock then
-			var_8_0 = arg_8_0.lockMaterial
-			var_8_1 = 1
-		elseif arg_8_0.graffitiMO.state == Activity161Enum.graffitiState.Normal then
-			var_8_0 = arg_8_0.normalMaterial
-			var_8_1 = 1
+	if not self.isNewUnlock then
+		if self.graffitiMO.state == Activity161Enum.graffitiState.Lock then
+			pictureMaterial = self.lockMaterial
+			pictureAlpha = self.showLockTime and 1 or 0.5
+		elseif self.graffitiMO.state == Activity161Enum.graffitiState.ToUnlock then
+			pictureMaterial = self.lockMaterial
+			pictureAlpha = 1
+		elseif self.graffitiMO.state == Activity161Enum.graffitiState.Normal then
+			pictureMaterial = self.normalMaterial
+			pictureAlpha = 1
 		end
 	else
-		var_8_0 = (arg_8_0.graffitiMO.state ~= Activity161Enum.graffitiState.IsFinished or nil) and arg_8_0.normalMaterial
+		pictureMaterial = (self.graffitiMO.state ~= Activity161Enum.graffitiState.IsFinished or nil) and self.normalMaterial
 	end
 
-	local var_8_2 = string.format("%s_manual", arg_8_0.config.picture)
+	local pictureRes = string.format("%s_manual", self.config.picture)
 
-	arg_8_0.picture:LoadImage(ResUrl.getGraffitiIcon(var_8_2), arg_8_0.setNativeSize, arg_8_0)
+	self.picture:LoadImage(ResUrl.getGraffitiIcon(pictureRes), self.setNativeSize, self)
 
-	arg_8_0.imagePicture.material = var_8_0
+	self.imagePicture.material = pictureMaterial
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_8_0.imagePicture, var_8_1)
+	ZProj.UGUIHelper.SetColorAlpha(self.imagePicture, pictureAlpha)
 end
 
-function var_0_0.setNativeSize(arg_9_0)
-	ZProj.UGUIHelper.SetImageSize(arg_9_0.picture.gameObject)
-	ZProj.UGUIHelper.SetImageSize(arg_9_0.simageEffect.gameObject)
+function VersionActivity2_0DungeonGraffitiItem:setNativeSize()
+	ZProj.UGUIHelper.SetImageSize(self.picture.gameObject)
+	ZProj.UGUIHelper.SetImageSize(self.simageEffect.gameObject)
 end
 
-function var_0_0.refreshUnlockState(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1 == Activity161Enum.unlockState
+function VersionActivity2_0DungeonGraffitiItem:refreshUnlockState(saveUnlockState)
+	local unlockState = saveUnlockState == Activity161Enum.unlockState
 
-	if arg_10_0.isUnlock and arg_10_0.isUnlock ~= var_10_0 then
-		gohelper.setActive(arg_10_0.goUnlockEffect, true)
-		arg_10_0:playUnlockEffect()
+	if self.isUnlock and self.isUnlock ~= unlockState then
+		gohelper.setActive(self.goUnlockEffect, true)
+		self:playUnlockEffect()
 	else
-		gohelper.setActive(arg_10_0.goUnlockEffect, false)
-		gohelper.setActive(arg_10_0.goUnlockEffect1, false)
+		gohelper.setActive(self.goUnlockEffect, false)
+		gohelper.setActive(self.goUnlockEffect1, false)
 	end
 end
 
-function var_0_0.toUnlockGraffiti(arg_11_0, arg_11_1)
-	if arg_11_1.id == arg_11_0.elementId then
-		gohelper.setActive(arg_11_0.goLockTime, false)
-		arg_11_0:refreshItem()
+function VersionActivity2_0DungeonGraffitiItem:toUnlockGraffiti(mo)
+	if mo.id == self.elementId then
+		gohelper.setActive(self.goLockTime, false)
+		self:refreshItem()
 	end
 end
 
-function var_0_0.playUnlockEffect(arg_12_0)
-	arg_12_0.isNewUnlock = true
+function VersionActivity2_0DungeonGraffitiItem:playUnlockEffect()
+	self.isNewUnlock = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.OpenRewardView)
-	arg_12_0:refreshPicture()
-	gohelper.setActive(arg_12_0.goUnlockEffect1, true)
+	self:refreshPicture()
+	gohelper.setActive(self.goUnlockEffect1, true)
 end
 
-function var_0_0.resetPicture(arg_13_0)
-	arg_13_0.isNewUnlock = false
+function VersionActivity2_0DungeonGraffitiItem:resetPicture()
+	self.isNewUnlock = false
 
-	gohelper.setActive(arg_13_0.goUnlockEffect, false)
-	gohelper.setActive(arg_13_0.goUnlockEffect1, false)
-	arg_13_0:refreshPicture()
+	gohelper.setActive(self.goUnlockEffect, false)
+	gohelper.setActive(self.goUnlockEffect1, false)
+	self:refreshPicture()
 end
 
-function var_0_0._onCloseViewFinish(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.VersionActivity2_0DungeonGraffitiDrawView then
-		if arg_14_0.graffitiMO.state == Activity161Enum.graffitiState.IsFinished and arg_14_0.oldState ~= arg_14_0.graffitiMO.state then
-			gohelper.setActive(arg_14_0.goFinishEffect, true)
+function VersionActivity2_0DungeonGraffitiItem:_onCloseViewFinish(viewName)
+	if viewName == ViewName.VersionActivity2_0DungeonGraffitiDrawView then
+		if self.graffitiMO.state == Activity161Enum.graffitiState.IsFinished and self.oldState ~= self.graffitiMO.state then
+			gohelper.setActive(self.goFinishEffect, true)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_unlock)
 
-			arg_14_0.oldState = arg_14_0.graffitiMO.state
+			self.oldState = self.graffitiMO.state
 		end
 	else
-		gohelper.setActive(arg_14_0.goFinishEffect, false)
+		gohelper.setActive(self.goFinishEffect, false)
 	end
 end
 
-function var_0_0.destroy(arg_15_0)
-	arg_15_0.picture:UnLoadImage()
-	arg_15_0.simageEffect:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_15_0.freshUnlockTime, arg_15_0)
-	arg_15_0:__onDispose()
+function VersionActivity2_0DungeonGraffitiItem:destroy()
+	self.picture:UnLoadImage()
+	self.simageEffect:UnLoadImage()
+	TaskDispatcher.cancelTask(self.freshUnlockTime, self)
+	self:__onDispose()
 end
 
-return var_0_0
+return VersionActivity2_0DungeonGraffitiItem

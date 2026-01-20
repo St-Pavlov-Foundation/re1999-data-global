@@ -1,39 +1,41 @@
-﻿module("modules.logic.scene.main.comp.MainSceneLevelComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/main/comp/MainSceneLevelComp.lua
 
-local var_0_0 = class("MainSceneLevelComp", CommonSceneLevelComp)
+module("modules.logic.scene.main.comp.MainSceneLevelComp", package.seeall)
 
-function var_0_0.loadLevel(arg_1_0, arg_1_1)
-	if arg_1_0._isLoadingRes then
-		logError("is loading scene level res, cur id = " .. (arg_1_0._levelId or "nil") .. ", try to load id = " .. (arg_1_1 or "nil"))
+local MainSceneLevelComp = class("MainSceneLevelComp", CommonSceneLevelComp)
+
+function MainSceneLevelComp:loadLevel(levelId)
+	if self._isLoadingRes then
+		logError("is loading scene level res, cur id = " .. (self._levelId or "nil") .. ", try to load id = " .. (levelId or "nil"))
 
 		return
 	end
 
-	if arg_1_0._assetItem then
-		gohelper.destroy(arg_1_0._instGO)
-		arg_1_0._assetItem:Release()
+	if self._assetItem then
+		gohelper.destroy(self._instGO)
+		self._assetItem:Release()
 
-		arg_1_0._assetItem = nil
-		arg_1_0._instGO = nil
+		self._assetItem = nil
+		self._instGO = nil
 
-		arg_1_0:releaseSceneEffectsLoader()
+		self:releaseSceneEffectsLoader()
 	end
 
-	arg_1_0._isLoadingRes = true
-	arg_1_0._levelId = arg_1_1
+	self._isLoadingRes = true
+	self._levelId = levelId
 
-	arg_1_0:getCurScene():setCurLevelId(arg_1_0._levelId)
+	self:getCurScene():setCurLevelId(self._levelId)
 	MainSceneSwitchModel.instance:initSceneId()
 
-	local var_1_0 = MainSceneSwitchModel.instance:getCurSceneResName()
+	local resName = MainSceneSwitchModel.instance:getCurSceneResName()
 
-	arg_1_0._resPath = ResUrl.getSceneRes(var_1_0)
+	self._resPath = ResUrl.getSceneRes(resName)
 
-	loadAbAsset(arg_1_0._resPath, false, arg_1_0._onLoadCallback, arg_1_0)
+	loadAbAsset(self._resPath, false, self._onLoadCallback, self)
 end
 
-function var_0_0.switchLevel(arg_2_0)
-	arg_2_0:loadLevel(arg_2_0._levelId)
+function MainSceneLevelComp:switchLevel()
+	self:loadLevel(self._levelId)
 end
 
-return var_0_0
+return MainSceneLevelComp

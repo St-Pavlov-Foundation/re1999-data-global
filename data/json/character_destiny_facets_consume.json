@@ -6,7 +6,10 @@
     "tend": 0,
     "icon": "",
     "facetsSort": 0,
-    "keyword": ""
+    "keyword": "",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 305201,
@@ -15,7 +18,10 @@
     "tend": 2,
     "icon": "305201",
     "facetsSort": 100,
-    "keyword": "language_10097037"
+    "keyword": "language_10097037",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300401,
@@ -24,7 +30,10 @@
     "tend": 1,
     "icon": "300401",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300402,
@@ -33,7 +42,10 @@
     "tend": 1,
     "icon": "300402",
     "facetsSort": 200,
-    "keyword": "language_10097038"
+    "keyword": "language_10097038",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 307201,
@@ -42,7 +54,10 @@
     "tend": 5,
     "icon": "307201",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 302001,
@@ -51,7 +66,10 @@
     "tend": 4,
     "icon": "302001",
     "facetsSort": 100,
-    "keyword": "language_10097039"
+    "keyword": "language_10097039",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300301,
@@ -60,7 +78,10 @@
     "tend": 5,
     "icon": "300301",
     "facetsSort": 100,
-    "keyword": "language_10015041"
+    "keyword": "language_10015041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300901,
@@ -69,7 +90,10 @@
     "tend": 3,
     "icon": "300901",
     "facetsSort": 100,
-    "keyword": "language_10097040"
+    "keyword": "language_10097040",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 305101,
@@ -78,7 +102,10 @@
     "tend": 1,
     "icon": "305101",
     "facetsSort": 100,
-    "keyword": "language_10097041"
+    "keyword": "language_10097041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 305601,
@@ -87,7 +114,10 @@
     "tend": 1,
     "icon": "305601",
     "facetsSort": 100,
-    "keyword": "language_10015372"
+    "keyword": "language_10015372",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 304301,
@@ -96,7 +126,10 @@
     "tend": 4,
     "icon": "304301",
     "facetsSort": 100,
-    "keyword": "language_10097042"
+    "keyword": "language_10097042",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 304801,
@@ -105,7 +138,10 @@
     "tend": 4,
     "icon": "304801",
     "facetsSort": 100,
-    "keyword": "language_10063814"
+    "keyword": "language_10063814",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 304101,
@@ -114,7 +150,10 @@
     "tend": 4,
     "icon": "304101",
     "facetsSort": 100,
-    "keyword": "language_10063814"
+    "keyword": "language_10063814",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 306301,
@@ -123,7 +162,10 @@
     "tend": 4,
     "icon": "306301",
     "facetsSort": 100,
-    "keyword": "language_10018041"
+    "keyword": "language_10018041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 303901,
@@ -132,7 +174,10 @@
     "tend": 5,
     "icon": "303901",
     "facetsSort": 100,
-    "keyword": "language_10097043"
+    "keyword": "language_10097043",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 306201,
@@ -141,7 +186,10 @@
     "tend": 1,
     "icon": "306201",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 304701,
@@ -150,7 +198,10 @@
     "tend": 3,
     "icon": "304701",
     "facetsSort": 100,
-    "keyword": "language_10097044"
+    "keyword": "language_10097044",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 307401,
@@ -159,7 +210,10 @@
     "tend": 4,
     "icon": "307401",
     "facetsSort": 200,
-    "keyword": "language_10017063"
+    "keyword": "language_10017063",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 307402,
@@ -168,7 +222,10 @@
     "tend": 4,
     "icon": "307402",
     "facetsSort": 100,
-    "keyword": "language_10074378"
+    "keyword": "language_10074378",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 308301,
@@ -177,7 +234,10 @@
     "tend": 1,
     "icon": "308301",
     "facetsSort": 100,
-    "keyword": "language_10018041"
+    "keyword": "language_10018041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 308601,
@@ -186,7 +246,10 @@
     "tend": 1,
     "icon": "308601",
     "facetsSort": 100,
-    "keyword": "language_10017063"
+    "keyword": "language_10017063",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 302501,
@@ -195,7 +258,10 @@
     "tend": 5,
     "icon": "302501",
     "facetsSort": 100,
-    "keyword": "language_10063814"
+    "keyword": "language_10063814",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 305602,
@@ -204,7 +270,10 @@
     "tend": 1,
     "icon": "305602",
     "facetsSort": 200,
-    "keyword": "language_10015372"
+    "keyword": "language_10015372",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 308801,
@@ -213,7 +282,10 @@
     "tend": 4,
     "icon": "308801",
     "facetsSort": 100,
-    "keyword": "language_10074378"
+    "keyword": "language_10074378",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300302,
@@ -222,7 +294,10 @@
     "tend": 5,
     "icon": "300302",
     "facetsSort": 200,
-    "keyword": "language_10072746"
+    "keyword": "language_10072746",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 303201,
@@ -231,7 +306,10 @@
     "tend": 1,
     "icon": "303201",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 308401,
@@ -240,7 +318,10 @@
     "tend": 4,
     "icon": "308401",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 306501,
@@ -249,7 +330,10 @@
     "tend": 1,
     "icon": "306501",
     "facetsSort": 100,
-    "keyword": "language_10072746"
+    "keyword": "language_10072746",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 308701,
@@ -258,7 +342,10 @@
     "tend": 3,
     "icon": "308701",
     "facetsSort": 100,
-    "keyword": "language_10072746"
+    "keyword": "language_10072746",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 305102,
@@ -267,7 +354,10 @@
     "tend": 1,
     "icon": "305102",
     "facetsSort": 200,
-    "keyword": "language_10097045"
+    "keyword": "language_10097045",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 309701,
@@ -276,7 +366,10 @@
     "tend": 1,
     "icon": "309701",
     "facetsSort": 100,
-    "keyword": "language_10072746"
+    "keyword": "language_10072746",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   },
   {
     "facetsId": 300701,
@@ -285,6 +378,45 @@
     "tend": 1,
     "icon": "300701",
     "facetsSort": 100,
-    "keyword": "language_10042206"
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 307001,
+    "name": "language_10100269",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 1,
+    "icon": "307001",
+    "facetsSort": 100,
+    "keyword": "language_10018041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 308101,
+    "name": "language_10100270",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111006#3",
+    "tend": 5,
+    "icon": "308101",
+    "facetsSort": 100,
+    "keyword": "language_10100054",
+    "type": 1,
+    "titleName": "",
+    "tag": "101#103#129"
+  },
+  {
+    "facetsId": 310001,
+    "name": "language_10100271",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111007#3",
+    "tend": 1,
+    "icon": "310001",
+    "facetsSort": 100,
+    "keyword": "language_10018041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   }
 ]

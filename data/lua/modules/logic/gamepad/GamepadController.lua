@@ -1,133 +1,135 @@
-﻿module("modules.logic.gamepad.GamepadController", package.seeall)
+﻿-- chunkname: @modules/logic/gamepad/GamepadController.lua
 
-local var_0_0 = class("GamepadController", BaseController)
+module("modules.logic.gamepad.GamepadController", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local GamepadController = class("GamepadController", BaseController)
+
+function GamepadController:onInit()
 	if GamepadBooter ~= nil then
-		arg_1_0:setUp()
+		self:setUp()
 	end
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function GamepadController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function GamepadController:addConstEvents()
 	return
 end
 
-function var_0_0.reInit(arg_4_0)
+function GamepadController:reInit()
 	return
 end
 
-function var_0_0.isOpen(arg_5_0)
-	return arg_5_0._isOpen
+function GamepadController:isOpen()
+	return self._isOpen
 end
 
-function var_0_0.isDownA(arg_6_0)
-	return arg_6_0._down
+function GamepadController:isDownA()
+	return self._down
 end
 
-function var_0_0.getMousePosition(arg_7_0)
-	if arg_7_0:isOpen() then
-		return arg_7_0:getScreenPos()
+function GamepadController:getMousePosition()
+	if self:isOpen() then
+		return self:getScreenPos()
 	else
 		return UnityEngine.Input.mousePosition
 	end
 end
 
-function var_0_0.getScreenPos(arg_8_0)
-	arg_8_0:_updateScreenPos()
+function GamepadController:getScreenPos()
+	self:_updateScreenPos()
 
-	return Vector2.New(arg_8_0._screenPosV2.x, arg_8_0._screenPosV2.y)
+	return Vector2.New(self._screenPosV2.x, self._screenPosV2.y)
 end
 
-function var_0_0.setPointerAnchor(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_0._pointer:setAnchor(arg_9_1, arg_9_2)
-	arg_9_0:_updateScreenPos()
+function GamepadController:setPointerAnchor(x, y)
+	self._pointer:setAnchor(x, y)
+	self:_updateScreenPos()
 end
 
-function var_0_0.setUp(arg_10_0)
-	arg_10_0:_checkGamepadModel()
+function GamepadController:setUp()
+	self:_checkGamepadModel()
 
-	if arg_10_0._isOpen == false then
+	if self._isOpen == false then
 		return
 	end
 
-	local var_10_0 = {}
+	local keys = {}
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._useKeyType.JoystickKeys) do
-		table.insert(var_10_0, iter_10_0)
+	for i, v in pairs(self._useKeyType.JoystickKeys) do
+		table.insert(keys, i)
 	end
 
-	local var_10_1 = {}
+	local axiskeys = {}
 
-	for iter_10_2, iter_10_3 in pairs(arg_10_0._useKeyType.AxisKeys) do
-		table.insert(var_10_1, iter_10_2)
+	for i, v in pairs(self._useKeyType.AxisKeys) do
+		table.insert(axiskeys, i)
 	end
 
-	arg_10_0._mgrInst = ZProj.GamepadManager.Instance
-	arg_10_0._eventMgrInst = ZProj.GamepadEvent.Instance
-	arg_10_0._eventMgr = ZProj.GamepadEvent
+	self._mgrInst = ZProj.GamepadManager.Instance
+	self._eventMgrInst = ZProj.GamepadEvent.Instance
+	self._eventMgr = ZProj.GamepadEvent
 
-	arg_10_0._eventMgrInst:ClearLuaListener()
-	arg_10_0._mgrInst:SetKeyListLua(var_10_0, var_10_1)
+	self._eventMgrInst:ClearLuaListener()
+	self._mgrInst:SetKeyListLua(keys, axiskeys)
 
-	arg_10_0._pointer = GamepadPointer.New()
-	arg_10_0._screenPosV2 = Vector2.New()
+	self._pointer = GamepadPointer.New()
+	self._screenPosV2 = Vector2.New()
 
-	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.DownKey, arg_10_0._onDownKey, arg_10_0)
-	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.UpKey, arg_10_0._onUpKey, arg_10_0)
-	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.ClickKey, arg_10_0._onClickKey, arg_10_0)
-	arg_10_0._eventMgrInst:AddLuaLisenter(arg_10_0._eventMgr.AxisChange, arg_10_0._onAxisChange, arg_10_0)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.DownKey, self._onDownKey, self)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.UpKey, self._onUpKey, self)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.ClickKey, self._onClickKey, self)
+	self._eventMgrInst:AddLuaLisenter(self._eventMgr.AxisChange, self._onAxisChange, self)
 
-	arg_10_0._axisHandleFunc = {
-		[GamepadEnum.KeyCode.LeftStickHorizontal] = arg_10_0._onLeftStickHorizontal,
-		[GamepadEnum.KeyCode.LeftStickVertical] = arg_10_0._onLeftStickVertical,
-		[GamepadEnum.KeyCode.RightStickHorizontal] = arg_10_0._onRightStickHorizontal,
-		[GamepadEnum.KeyCode.RightStickVertical] = arg_10_0._onRightStickVertical
+	self._axisHandleFunc = {
+		[GamepadEnum.KeyCode.LeftStickHorizontal] = self._onLeftStickHorizontal,
+		[GamepadEnum.KeyCode.LeftStickVertical] = self._onLeftStickVertical,
+		[GamepadEnum.KeyCode.RightStickHorizontal] = self._onRightStickHorizontal,
+		[GamepadEnum.KeyCode.RightStickVertical] = self._onRightStickVertical
 	}
-	arg_10_0._buttonHandleFunc = {
+	self._buttonHandleFunc = {
 		[GamepadEnum.KeyCode.A] = {
-			arg_10_0._onDownA,
-			arg_10_0._onUpA
+			self._onDownA,
+			self._onUpA
 		},
 		[GamepadEnum.KeyCode.B] = {
-			arg_10_0._onDownB,
-			arg_10_0._onUpB
+			self._onDownB,
+			self._onUpB
 		},
 		[GamepadEnum.KeyCode.LB] = {},
 		[GamepadEnum.KeyCode.RB] = {}
 	}
 end
 
-function var_0_0._checkGamepadModel(arg_11_0)
-	arg_11_0._isOpen = SDKNativeUtil.isGamePad()
+function GamepadController:_checkGamepadModel()
+	self._isOpen = SDKNativeUtil.isGamePad()
 
-	if arg_11_0._isOpen then
-		local var_11_0 = UnityEngine.Input.GetJoystickNames()
-		local var_11_1 = false
+	if self._isOpen then
+		local joystickNames = UnityEngine.Input.GetJoystickNames()
+		local matchGamepadType = false
 
-		if var_11_0 and var_11_0.Length > 0 then
-			for iter_11_0 = 0, var_11_0.Length - 1 do
-				if var_11_1 then
+		if joystickNames and joystickNames.Length > 0 then
+			for i = 0, joystickNames.Length - 1 do
+				if matchGamepadType then
 					break
 				end
 
-				local var_11_2 = var_11_0[iter_11_0]
+				local name = joystickNames[i]
 
-				for iter_11_1, iter_11_2 in pairs(GamepadKeyMapEnum.KeyMap) do
-					if string.find(var_11_2, iter_11_1) then
-						var_11_1 = true
+				for key, mapType in pairs(GamepadKeyMapEnum.KeyMap) do
+					if string.find(name, key) then
+						matchGamepadType = true
 
 						if BootNativeUtil.isAndroid() then
-							arg_11_0._useKeyType = iter_11_2[2]
+							self._useKeyType = mapType[2]
 
 							break
 						end
 
 						if BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-							arg_11_0._useKeyType = iter_11_2[1]
+							self._useKeyType = mapType[1]
 						end
 
 						break
@@ -136,161 +138,161 @@ function var_0_0._checkGamepadModel(arg_11_0)
 			end
 		end
 
-		if var_11_1 == false then
+		if matchGamepadType == false then
 			if BootNativeUtil.isAndroid() then
-				arg_11_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
+				self._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[2]
 			elseif BootNativeUtil.isWindows() or SLFramework.FrameworkSettings.IsEditor then
-				arg_11_0._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
+				self._useKeyType = GamepadKeyMapEnum.KeyMap.XIAOM[1]
 			end
 		end
 	end
 end
 
-function var_0_0._onDownKey(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._useKeyType.JoystickKeys[arg_12_1]
-	local var_12_1 = arg_12_0._buttonHandleFunc[var_12_0][1]
+function GamepadController:_onDownKey(keyCode)
+	local key = self._useKeyType.JoystickKeys[keyCode]
+	local func = self._buttonHandleFunc[key][1]
 
-	if var_12_1 then
-		var_12_1(arg_12_0)
+	if func then
+		func(self)
 	end
 
-	arg_12_0:dispatchEvent(GamepadEvent.KeyDown, var_12_0)
+	self:dispatchEvent(GamepadEvent.KeyDown, key)
 end
 
-function var_0_0._onUpKey(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0._useKeyType.JoystickKeys[arg_13_1]
-	local var_13_1 = arg_13_0._buttonHandleFunc[var_13_0][2]
+function GamepadController:_onUpKey(keyCode)
+	local key = self._useKeyType.JoystickKeys[keyCode]
+	local func = self._buttonHandleFunc[key][2]
 
-	if var_13_1 then
-		var_13_1(arg_13_0)
+	if func then
+		func(self)
 	end
 
-	arg_13_0:dispatchEvent(GamepadEvent.KeyUp, var_13_0)
+	self:dispatchEvent(GamepadEvent.KeyUp, key)
 end
 
-function var_0_0._updateScreenPos(arg_14_0)
-	local var_14_0, var_14_1 = arg_14_0._pointer:getScreenPos()
+function GamepadController:_updateScreenPos()
+	local x, y = self._pointer:getScreenPos()
 
-	if var_14_0 and var_14_1 then
-		arg_14_0._screenPosV2.x = var_14_0
-		arg_14_0._screenPosV2.y = var_14_1
+	if x and y then
+		self._screenPosV2.x = x
+		self._screenPosV2.y = y
 	end
 end
 
-function var_0_0._setUIClick(arg_15_0, arg_15_1)
-	arg_15_0._mgrInst:SendClickEvent(arg_15_0._screenPosV2, arg_15_1)
+function GamepadController:_setUIClick(isDown)
+	self._mgrInst:SendClickEvent(self._screenPosV2, isDown)
 end
 
-function var_0_0._sendDragEvent(arg_16_0)
-	arg_16_0:_updateScreenPos()
-	arg_16_0._mgrInst:SendDragEvent(arg_16_0._screenPosV2)
+function GamepadController:_sendDragEvent()
+	self:_updateScreenPos()
+	self._mgrInst:SendDragEvent(self._screenPosV2)
 end
 
-function var_0_0._onClickKey(arg_17_0, arg_17_1)
+function GamepadController:_onClickKey(keyCode)
 	return
 end
 
-function var_0_0._onAxisChange(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = arg_18_0._useKeyType.AxisKeys[arg_18_1]
-	local var_18_1 = arg_18_0._axisHandleFunc[var_18_0]
+function GamepadController:_onAxisChange(name, value)
+	local key = self._useKeyType.AxisKeys[name]
+	local func = self._axisHandleFunc[key]
 
-	if var_18_1 then
-		var_18_1(arg_18_0, arg_18_2)
+	if func then
+		func(self, value)
 	end
 
-	arg_18_0:dispatchEvent(GamepadEvent.AxisChange, var_18_0, arg_18_2)
+	self:dispatchEvent(GamepadEvent.AxisChange, key, value)
 end
 
-function var_0_0._onDownA(arg_19_0)
-	arg_19_0._down = true
+function GamepadController:_onDownA()
+	self._down = true
 
-	arg_19_0:_updateScreenPos()
-	arg_19_0:_setUIClick(true)
-	GameGlobalMgr.instance:playTouchEffect(arg_19_0._screenPosV2)
+	self:_updateScreenPos()
+	self:_setUIClick(true)
+	GameGlobalMgr.instance:playTouchEffect(self._screenPosV2)
 
-	local var_19_0 = TouchEventMgrHepler.getAllMgrs()
+	local allTouchMgr = TouchEventMgrHepler.getAllMgrs()
 
-	arg_19_0:_clearDownActiveTouchMgrDic()
+	self:_clearDownActiveTouchMgrDic()
 
-	arg_19_0._downActiveTouchMgrDic = {}
+	self._downActiveTouchMgrDic = {}
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if not gohelper.isNil(iter_19_1) and iter_19_1.isActiveAndEnabled then
-			iter_19_1:TriggerOnTouchDown(arg_19_0._screenPosV2)
+	for i, v in ipairs(allTouchMgr) do
+		if not gohelper.isNil(v) and v.isActiveAndEnabled then
+			v:TriggerOnTouchDown(self._screenPosV2)
 
-			arg_19_0._downActiveTouchMgrDic[iter_19_1] = true
+			self._downActiveTouchMgrDic[v] = true
 		end
 	end
 end
 
-function var_0_0._onUpA(arg_20_0)
-	arg_20_0._down = false
+function GamepadController:_onUpA()
+	self._down = false
 
-	arg_20_0:_updateScreenPos()
-	arg_20_0:_setUIClick(false)
+	self:_updateScreenPos()
+	self:_setUIClick(false)
 
-	if arg_20_0._downActiveTouchMgrDic then
-		local var_20_0 = TouchEventMgrHepler.getAllMgrs()
+	if self._downActiveTouchMgrDic then
+		local allTouchMgr = TouchEventMgrHepler.getAllMgrs()
 
-		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-			if not gohelper.isNil(iter_20_1) and iter_20_1.isActiveAndEnabled and arg_20_0._downActiveTouchMgrDic[iter_20_1] then
-				iter_20_1:TriggerOnClick(arg_20_0._screenPosV2)
-				iter_20_1:TriggerOnTouchUp(arg_20_0._screenPosV2)
+		for i, v in ipairs(allTouchMgr) do
+			if not gohelper.isNil(v) and v.isActiveAndEnabled and self._downActiveTouchMgrDic[v] then
+				v:TriggerOnClick(self._screenPosV2)
+				v:TriggerOnTouchUp(self._screenPosV2)
 			end
 		end
 	end
 
-	arg_20_0:_clearDownActiveTouchMgrDic()
+	self:_clearDownActiveTouchMgrDic()
 end
 
-function var_0_0._clearDownActiveTouchMgrDic(arg_21_0)
-	if arg_21_0._downActiveTouchMgrDic then
-		for iter_21_0, iter_21_1 in pairs(arg_21_0._downActiveTouchMgrDic) do
-			arg_21_0._downActiveTouchMgrDic[iter_21_0] = nil
+function GamepadController:_clearDownActiveTouchMgrDic()
+	if self._downActiveTouchMgrDic then
+		for v, _ in pairs(self._downActiveTouchMgrDic) do
+			self._downActiveTouchMgrDic[v] = nil
 		end
 
-		arg_21_0._downActiveTouchMgrDic = nil
+		self._downActiveTouchMgrDic = nil
 	end
 end
 
-function var_0_0._onDownB(arg_22_0)
+function GamepadController:_onDownB()
 	return
 end
 
-function var_0_0._onUpB(arg_23_0)
-	if not arg_23_0._down then
+function GamepadController:_onUpB()
+	if not self._down then
 		NavigateMgr.instance:onEscapeBtnClick()
 	end
 end
 
-function var_0_0._onLeftStickHorizontal(arg_24_0, arg_24_1)
-	local var_24_0 = Time.deltaTime / 0.016
+function GamepadController:_onLeftStickHorizontal(value)
+	local scale = Time.deltaTime / 0.016
 
-	arg_24_0._pointer:updateX(var_24_0 * arg_24_1)
+	self._pointer:updateX(scale * value)
 
-	if arg_24_0._down then
-		arg_24_0:_sendDragEvent()
+	if self._down then
+		self:_sendDragEvent()
 	end
 end
 
-function var_0_0._onLeftStickVertical(arg_25_0, arg_25_1)
-	local var_25_0 = Time.deltaTime / 0.016
+function GamepadController:_onLeftStickVertical(value)
+	local scale = Time.deltaTime / 0.016
 
-	arg_25_0._pointer:updateY(-1 * var_25_0 * arg_25_1)
+	self._pointer:updateY(-1 * scale * value)
 
-	if arg_25_0._down then
-		arg_25_0:_sendDragEvent()
+	if self._down then
+		self:_sendDragEvent()
 	end
 end
 
-function var_0_0._onRightStickHorizontal(arg_26_0, arg_26_1)
+function GamepadController:_onRightStickHorizontal(value)
 	return
 end
 
-function var_0_0._onRightStickVertical(arg_27_0, arg_27_1)
+function GamepadController:_onRightStickVertical(value)
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+GamepadController.instance = GamepadController.New()
 
-return var_0_0
+return GamepadController

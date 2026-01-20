@@ -1,40 +1,42 @@
-﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType166", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/restart/FightRestartRequestType/FightRestartRequestType166.lua
 
-local var_0_0 = class("FightRestartRequestType166", FightRestartRequestType1)
+module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType166", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0:__onInit()
+local FightRestartRequestType166 = class("FightRestartRequestType166", FightRestartRequestType1)
 
-	arg_1_0._fight_work = arg_1_1
-	arg_1_0._fightParam = arg_1_2
-	arg_1_0._episode_config = arg_1_3
-	arg_1_0._chapter_config = arg_1_4
+function FightRestartRequestType166:ctor(fight_work, fightParam, episode_config, chapter_config)
+	self:__onInit()
+
+	self._fight_work = fight_work
+	self._fightParam = fightParam
+	self._episode_config = episode_config
+	self._chapter_config = chapter_config
 end
 
-function var_0_0.requestFight(arg_2_0)
-	local var_2_0 = FightModel.instance:getFightParam()
-	local var_2_1 = Season166Model.instance:getBattleContext()
-	local var_2_2 = var_2_1.actId
-	local var_2_3 = var_2_0.episodeId
-	local var_2_4 = var_2_1.episodeType
-	local var_2_5 = Season166HeroGroupModel.instance:getEpisodeConfigId(var_2_0.episodeId)
-	local var_2_6 = var_2_1.talentId
-	local var_2_7 = var_2_0.chapterId
+function FightRestartRequestType166:requestFight()
+	local fightParam = FightModel.instance:getFightParam()
+	local context = Season166Model.instance:getBattleContext()
+	local actId = context.actId
+	local episodeId = fightParam.episodeId
+	local episodeType = context.episodeType
+	local configId = Season166HeroGroupModel.instance:getEpisodeConfigId(fightParam.episodeId)
+	local talentId = context.talentId
+	local chapterId = fightParam.chapterId
 
-	Activity166Rpc.instance:sendStartAct166BattleRequest(var_2_2, var_2_4, var_2_5, var_2_6, var_2_7, var_2_3, var_2_0, 1, nil, nil, true, arg_2_0._onReceiveBeforeStartBattleReply, arg_2_0)
-	arg_2_0._fight_work:onDone(true)
+	Activity166Rpc.instance:sendStartAct166BattleRequest(actId, episodeType, configId, talentId, chapterId, episodeId, fightParam, 1, nil, nil, true, self._onReceiveBeforeStartBattleReply, self)
+	self._fight_work:onDone(true)
 end
 
-function var_0_0._onReceiveBeforeStartBattleReply(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if arg_3_2 ~= 0 then
+function FightRestartRequestType166:_onReceiveBeforeStartBattleReply(cmd, resultCode, msg)
+	if resultCode ~= 0 then
 		FightGameMgr.restartMgr:restartFightFail()
 
 		return
 	end
 end
 
-function var_0_0.releaseSelf(arg_4_0)
-	arg_4_0:__onDispose()
+function FightRestartRequestType166:releaseSelf()
+	self:__onDispose()
 end
 
-return var_0_0
+return FightRestartRequestType166

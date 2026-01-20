@@ -1,11 +1,13 @@
-﻿module("modules.ugui.icon.IconMaterialMgr", package.seeall)
+﻿-- chunkname: @modules/ugui/icon/IconMaterialMgr.lua
 
-local var_0_0 = class("IconMaterialMgr")
+module("modules.ugui.icon.IconMaterialMgr", package.seeall)
 
-var_0_0.LoadFail = -1
+local IconMaterialMgr = class("IconMaterialMgr")
 
-function var_0_0.init(arg_1_0)
-	arg_1_0.variantIdToMaterialPath = {
+IconMaterialMgr.LoadFail = -1
+
+function IconMaterialMgr:init()
+	self.variantIdToMaterialPath = {
 		"ui/materials/dynamic/ui_headicon_stylization_1.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_2.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_3.mat",
@@ -18,7 +20,7 @@ function var_0_0.init(arg_1_0)
 		"ui/materials/dynamic/ui_halfgray2.mat",
 		"ui/materials/dynamic/ui_halfgray.mat"
 	}
-	arg_1_0.variantIdToMaterialPathWithRound = {
+	self.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_1_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_2_round.mat",
@@ -30,80 +32,82 @@ function var_0_0.init(arg_1_0)
 		"ui/materials/dynamic/ui_headicon_stylization_7_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_shadow_round.mat"
 	}
-	arg_1_0.needSetMaterialIconImages = {}
-	arg_1_0.loadedMaterials = {}
-	arg_1_0.loadingMaterialCount = 0
-	arg_1_0.assetItems = {}
+	self.needSetMaterialIconImages = {}
+	self.loadedMaterials = {}
+	self.loadingMaterialCount = 0
+	self.assetItems = {}
 end
 
-function var_0_0.getMaterialPath(arg_2_0, arg_2_1)
-	return arg_2_0.variantIdToMaterialPath[arg_2_1]
+function IconMaterialMgr:getMaterialPath(variantId)
+	return self.variantIdToMaterialPath[variantId]
 end
 
-function var_0_0.getMaterialPathWithRound(arg_3_0, arg_3_1)
-	return arg_3_0.variantIdToMaterialPathWithRound[arg_3_1]
+function IconMaterialMgr:getMaterialPathWithRound(variantId)
+	return self.variantIdToMaterialPathWithRound[variantId]
 end
 
-function var_0_0.loadMaterialAddSet(arg_4_0, arg_4_1, arg_4_2)
-	if not arg_4_1 then
+function IconMaterialMgr:loadMaterialAddSet(materialPath, image)
+	if not materialPath then
 		logError("materialPath is nil")
 
 		return
 	end
 
-	if arg_4_0.loadedMaterials[arg_4_1] then
-		if arg_4_0.loadedMaterials[arg_4_1] ~= var_0_0.LoadFail then
-			arg_4_2.material = arg_4_0.loadedMaterials[arg_4_1]
+	if self.loadedMaterials[materialPath] then
+		local material = self.loadedMaterials[materialPath]
+
+		if material ~= IconMaterialMgr.LoadFail then
+			image.material = self.loadedMaterials[materialPath]
 		end
 
 		return
 	end
 
-	arg_4_0.loadingMaterialCount = arg_4_0.loadingMaterialCount + 1
+	self.loadingMaterialCount = self.loadingMaterialCount + 1
 
-	if not arg_4_0.needSetMaterialIconImages[arg_4_1] then
-		arg_4_0.needSetMaterialIconImages[arg_4_1] = {}
+	if not self.needSetMaterialIconImages[materialPath] then
+		self.needSetMaterialIconImages[materialPath] = {}
 	end
 
-	table.insert(arg_4_0.needSetMaterialIconImages[arg_4_1], arg_4_2)
-	loadAbAsset(arg_4_1, false, arg_4_0.loadAssetCallback, arg_4_0)
+	table.insert(self.needSetMaterialIconImages[materialPath], image)
+	loadAbAsset(materialPath, false, self.loadAssetCallback, self)
 end
 
-function var_0_0.loadAssetCallback(arg_5_0, arg_5_1)
-	if arg_5_1.IsLoadSuccess then
-		table.insert(arg_5_0.assetItems, arg_5_1)
-		arg_5_1:Retain()
+function IconMaterialMgr:loadAssetCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		table.insert(self.assetItems, assetItem)
+		assetItem:Retain()
 
-		arg_5_0.loadedMaterials[arg_5_1.AssetUrl] = arg_5_1:GetResource(arg_5_1.AssetUrl)
+		self.loadedMaterials[assetItem.AssetUrl] = assetItem:GetResource(assetItem.AssetUrl)
 	else
-		logError(string.format("load '%s' failed", arg_5_1.AssetUrl))
+		logError(string.format("load '%s' failed", assetItem.AssetUrl))
 
-		arg_5_0.loadedMaterials[arg_5_1.AssetUrl] = var_0_0.LoadFail
+		self.loadedMaterials[assetItem.AssetUrl] = IconMaterialMgr.LoadFail
 	end
 
-	arg_5_0.loadingMaterialCount = arg_5_0.loadingMaterialCount - 1
+	self.loadingMaterialCount = self.loadingMaterialCount - 1
 
-	if arg_5_0.loadingMaterialCount == 0 then
-		for iter_5_0, iter_5_1 in pairs(arg_5_0.needSetMaterialIconImages) do
-			for iter_5_2 = 1, #iter_5_1 do
-				local var_5_0 = arg_5_0.loadedMaterials[iter_5_0]
+	if self.loadingMaterialCount == 0 then
+		for materialPath, images in pairs(self.needSetMaterialIconImages) do
+			for i = 1, #images do
+				local material = self.loadedMaterials[materialPath]
 
-				if var_5_0 ~= var_0_0.LoadFail and not gohelper.isNil(iter_5_1[iter_5_2]) then
-					iter_5_1[iter_5_2].material = var_5_0
+				if material ~= IconMaterialMgr.LoadFail and not gohelper.isNil(images[i]) then
+					images[i].material = material
 				end
 			end
 		end
 
-		arg_5_0:recycleNeedSetMaterialImages()
+		self:recycleNeedSetMaterialImages()
 	end
 end
 
-function var_0_0.recycleNeedSetMaterialImages(arg_6_0)
-	for iter_6_0, iter_6_1 in pairs(arg_6_0.needSetMaterialIconImages) do
-		tabletool.clear(iter_6_1)
+function IconMaterialMgr:recycleNeedSetMaterialImages()
+	for _, list in pairs(self.needSetMaterialIconImages) do
+		tabletool.clear(list)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+IconMaterialMgr.instance = IconMaterialMgr.New()
 
-return var_0_0
+return IconMaterialMgr

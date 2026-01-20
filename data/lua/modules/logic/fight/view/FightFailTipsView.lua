@@ -1,147 +1,151 @@
-﻿module("modules.logic.fight.view.FightFailTipsView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightFailTipsView.lua
 
-local var_0_0 = class("FightFailTipsView", BaseView)
-local var_0_1 = "m_s63_zjmzd/m_s63_zjmzd"
+module("modules.logic.fight.view.FightFailTipsView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
-	arg_1_0._simagetipbg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_outofround/ani/#simage_tipbg")
-	arg_1_0._simagetipbg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_fail/#simage_tipbg")
-	arg_1_0._gooutofround = gohelper.findChild(arg_1_0.viewGO, "#go_outofround")
-	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+local FightFailTipsView = class("FightFailTipsView", BaseView)
+local EffectPath = "m_s63_zjmzd/m_s63_zjmzd"
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightFailTipsView:onInitView()
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "#simage_tipbg")
+	self._simagetipbg1 = gohelper.findChildSingleImage(self.viewGO, "#go_outofround/ani/#simage_tipbg")
+	self._simagetipbg2 = gohelper.findChildSingleImage(self.viewGO, "#go_fail/#simage_tipbg")
+	self._gooutofround = gohelper.findChild(self.viewGO, "#go_outofround")
+	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightFailTipsView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FightFailTipsView:removeEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_4_0)
+function FightFailTipsView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Summon.Play_UI_CallFor_Open)
-	arg_4_0._simagetipbg:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
-	arg_4_0._simagetipbg1:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
-	arg_4_0._simagetipbg2:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
+	self._simagetipbg:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
+	self._simagetipbg1:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
+	self._simagetipbg2:LoadImage(ResUrl.getFightQuitResultIcon("zhandou_icon_di"))
 
-	local var_4_0 = arg_4_0.viewParam.fight_result
+	local fightResult = self.viewParam.fight_result
 
-	gohelper.setActive(arg_4_0._gofail, var_4_0 ~= FightEnum.FightResult.OutOfRoundFail)
-	gohelper.setActive(arg_4_0._gooutofround, var_4_0 == FightEnum.FightResult.OutOfRoundFail)
-	TaskDispatcher.runDelay(arg_4_0._waitForFailAnimFinish, arg_4_0, 2)
+	gohelper.setActive(self._gofail, fightResult ~= FightEnum.FightResult.OutOfRoundFail)
+	gohelper.setActive(self._gooutofround, fightResult == FightEnum.FightResult.OutOfRoundFail)
+	TaskDispatcher.runDelay(self._waitForFailAnimFinish, self, 2)
 end
 
-function var_0_0._waitForFailAnimFinish(arg_5_0)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause_sp", FightEvent.OnGuideFightEndPause_sp, FightEvent.OnGuideFightEndContinue_sp, arg_5_0._onGuideContinue, arg_5_0)
+function FightFailTipsView:_waitForFailAnimFinish()
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause_sp", FightEvent.OnGuideFightEndPause_sp, FightEvent.OnGuideFightEndContinue_sp, self._onGuideContinue, self)
 end
 
-function var_0_0._onGuideContinue(arg_6_0)
-	if arg_6_0.viewParam.show_scene_dissolve_effect then
-		local var_6_0 = GameSceneMgr.instance:getCurScene().level._sceneId
+function FightFailTipsView:_onGuideContinue()
+	if self.viewParam.show_scene_dissolve_effect then
+		local cur_scene_id = GameSceneMgr.instance:getCurScene().level._sceneId
 
-		if var_6_0 and var_6_0 == 11501 then
+		if cur_scene_id and cur_scene_id == 11501 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_effects_fight_backtime)
-			arg_6_0:_showDissolveEffect()
+			self:_showDissolveEffect()
 		else
-			arg_6_0:_restartSpAndCloseView()
+			self:_restartSpAndCloseView()
 		end
 	else
-		arg_6_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._restartSpAndCloseView(arg_7_0)
-	arg_7_0:_requestRestart()
-	arg_7_0:closeThis()
+function FightFailTipsView:_restartSpAndCloseView()
+	self:_requestRestart()
+	self:closeThis()
 end
 
-function var_0_0._showDissolveEffect(arg_8_0)
+function FightFailTipsView:_showDissolveEffect()
 	if GameSceneMgr.instance:useDefaultScene() then
-		arg_8_0:_removeEntity()
-		arg_8_0:_requestRestart()
-		arg_8_0:_onFinish()
+		self:_removeEntity()
+		self:_requestRestart()
+		self:_onFinish()
 
 		return
 	end
 
-	gohelper.setActive(arg_8_0.viewGO, false)
+	gohelper.setActive(self.viewGO, false)
 
-	arg_8_0._loader = MultiAbLoader.New()
+	self._loader = MultiAbLoader.New()
 
-	arg_8_0._loader:addPath(FightHelper.getCameraAniPath(var_0_1))
-	arg_8_0._loader:startLoad(arg_8_0._onLoaded, arg_8_0)
-	TaskDispatcher.runDelay(arg_8_0.closeThis, arg_8_0, 10)
+	self._loader:addPath(FightHelper.getCameraAniPath(EffectPath))
+	self._loader:startLoad(self._onLoaded, self)
+	TaskDispatcher.runDelay(self.closeThis, self, 10)
 end
 
-function var_0_0._onLoaded(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.closeThis, arg_9_0, 10)
+function FightFailTipsView:_onLoaded()
+	TaskDispatcher.cancelTask(self.closeThis, self, 10)
 	UnityEngine.Shader.EnableKeyword("_USEPOP_ON")
 
-	arg_9_0.scene_animation = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
+	self.scene_animation = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
 
-	arg_9_0.scene_animation:Play("m_s63_ani")
+	self.scene_animation:Play("m_s63_ani")
 
-	local var_9_0 = arg_9_0._loader:getFirstAssetItem():GetResource(ResUrl.getCameraAnim(var_0_1))
+	local _animatorInst = self._loader:getFirstAssetItem():GetResource(ResUrl.getCameraAnim(EffectPath))
 
-	arg_9_0._animComp = CameraMgr.instance:getCameraRootAnimator()
-	arg_9_0._animComp.enabled = true
-	arg_9_0._animComp.runtimeAnimatorController = nil
-	arg_9_0._animComp.runtimeAnimatorController = var_9_0
-	arg_9_0._animComp.speed = FightModel.instance:getSpeed()
+	self._animComp = CameraMgr.instance:getCameraRootAnimator()
+	self._animComp.enabled = true
+	self._animComp.runtimeAnimatorController = nil
+	self._animComp.runtimeAnimatorController = _animatorInst
+	self._animComp.speed = FightModel.instance:getSpeed()
 
-	arg_9_0._animComp:Play("popcam")
+	self._animComp:Play("popcam")
 
-	local var_9_1 = arg_9_0.scene_animation.clip.length
+	local time_len = self.scene_animation.clip.length
 
-	TaskDispatcher.runDelay(arg_9_0._onFinish, arg_9_0, var_9_1)
-	TaskDispatcher.runDelay(arg_9_0._removeEntity, arg_9_0, var_9_1 - 2.5)
-	TaskDispatcher.runDelay(arg_9_0._requestRestart, arg_9_0, var_9_1 - 1.5)
+	TaskDispatcher.runDelay(self._onFinish, self, time_len)
+	TaskDispatcher.runDelay(self._removeEntity, self, time_len - 2.5)
+	TaskDispatcher.runDelay(self._requestRestart, self, time_len - 1.5)
 end
 
-function var_0_0._requestRestart(arg_10_0)
+function FightFailTipsView:_requestRestart()
 	FightController.instance:dispatchEvent(FightEvent.OnEndFightForGuide)
 	FightSystem.instance:dispose()
 	DungeonFightController.instance.restartSpStage()
 end
 
-function var_0_0._removeEntity(arg_11_0)
-	GameSceneMgr.instance:getCurScene().entityMgr:removeAllUnits()
+function FightFailTipsView:_removeEntity()
+	local cur_scene = GameSceneMgr.instance:getCurScene()
+
+	cur_scene.entityMgr:removeAllUnits()
 end
 
-function var_0_0._onFinish(arg_12_0)
+function FightFailTipsView:_onFinish()
 	UnityEngine.Shader.DisableKeyword("_USEPOP_ON")
-	arg_12_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0.viewParam.callback then
-		arg_13_0.viewParam.callback()
+function FightFailTipsView:onClose()
+	if self.viewParam.callback then
+		self.viewParam.callback()
 
-		arg_13_0.viewParam.callback = nil
+		self.viewParam.callback = nil
 	end
 
-	TaskDispatcher.cancelTask(arg_13_0.closeThis, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._onFinish, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._removeEntity, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._requestRestart, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._waitForFailAnimFinish, arg_13_0)
+	TaskDispatcher.cancelTask(self.closeThis, self)
+	TaskDispatcher.cancelTask(self._onFinish, self)
+	TaskDispatcher.cancelTask(self._removeEntity, self)
+	TaskDispatcher.cancelTask(self._requestRestart, self)
+	TaskDispatcher.cancelTask(self._waitForFailAnimFinish, self)
 
-	if arg_13_0._loader then
-		arg_13_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 	end
 
 	UnityEngine.Shader.DisableKeyword("_USEPOP_ON")
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	arg_14_0._simagetipbg:UnLoadImage()
-	arg_14_0._simagetipbg1:UnLoadImage()
-	arg_14_0._simagetipbg2:UnLoadImage()
+function FightFailTipsView:onDestroyView()
+	self._simagetipbg:UnLoadImage()
+	self._simagetipbg1:UnLoadImage()
+	self._simagetipbg2:UnLoadImage()
 end
 
-return var_0_0
+return FightFailTipsView

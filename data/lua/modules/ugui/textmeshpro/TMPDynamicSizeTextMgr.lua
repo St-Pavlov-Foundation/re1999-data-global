@@ -1,33 +1,37 @@
-﻿module("modules.ugui.textmeshpro.TMPDynamicSizeTextMgr", package.seeall)
+﻿-- chunkname: @modules/ugui/textmeshpro/TMPDynamicSizeTextMgr.lua
 
-local var_0_0 = class("TMPDynamicSizeTextMgr")
+module("modules.ugui.textmeshpro.TMPDynamicSizeTextMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local TMPDynamicSizeTextMgr = class("TMPDynamicSizeTextMgr")
+
+function TMPDynamicSizeTextMgr:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0)
-	arg_2_0.csharpInst = ZProj.LangTextDynamicSizeMgr.Instance
+function TMPDynamicSizeTextMgr:init()
+	self.csharpInst = ZProj.LangTextDynamicSizeMgr.Instance
 
-	arg_2_0.csharpInst:SetChangeSizeFunc(arg_2_0._changeSize, arg_2_0)
-	arg_2_0.csharpInst:SetFilterRichTextFunc(arg_2_0._filterRichText, arg_2_0)
+	self.csharpInst:SetChangeSizeFunc(self._changeSize, self)
+	self.csharpInst:SetFilterRichTextFunc(self._filterRichText, self)
 end
 
-function var_0_0._changeSize(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	for iter_3_0, iter_3_1 in (string.gmatch(arg_3_3, "<size=(%d+)>(.+)</size>")) do
-		local var_3_0 = string.format("<size=%d>%s</size>", iter_3_0, iter_3_1)
-		local var_3_1 = string.format("<size=%d>%s</size>", iter_3_0 * arg_3_2, iter_3_1)
+function TMPDynamicSizeTextMgr:_changeSize(comp, fontSizeScale, text)
+	local arr = string.gmatch(text, "<size=(%d+)>(.+)</size>")
 
-		arg_3_3 = string.gsub(arg_3_3, var_3_0, var_3_1)
+	for size, str in arr do
+		local str1 = string.format("<size=%d>%s</size>", size, str)
+		local str2 = string.format("<size=%d>%s</size>", size * fontSizeScale, str)
+
+		text = string.gsub(text, str1, str2)
 	end
 
-	arg_3_1:SetText(arg_3_3)
+	comp:SetText(text)
 end
 
-function var_0_0._filterRichText(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_1:FilterRichTextCb(arg_4_2)
+function TMPDynamicSizeTextMgr:_filterRichText(comp, text)
+	comp:FilterRichTextCb(text)
 end
 
-var_0_0.instance = var_0_0.New()
+TMPDynamicSizeTextMgr.instance = TMPDynamicSizeTextMgr.New()
 
-return var_0_0
+return TMPDynamicSizeTextMgr

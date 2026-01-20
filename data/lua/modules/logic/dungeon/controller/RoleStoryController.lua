@@ -1,23 +1,25 @@
-﻿module("modules.logic.dungeon.controller.RoleStoryController", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/controller/RoleStoryController.lua
 
-local var_0_0 = class("RoleStoryController", BaseController)
+module("modules.logic.dungeon.controller.RoleStoryController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._onGetInfoFinish, arg_1_0)
-	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, arg_1_0._onFuncOpen, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0._onDailyRefresh, arg_1_0)
+local RoleStoryController = class("RoleStoryController", BaseController)
+
+function RoleStoryController:addConstEvents()
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
+	OpenController.instance:registerCallback(OpenEvent.NewFuncUnlock, self._onFuncOpen, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
 end
 
-function var_0_0.onInit(arg_2_0)
+function RoleStoryController:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_3_0)
+function RoleStoryController:onInitFinish()
 	return
 end
 
-function var_0_0._onFuncOpen(arg_4_0, arg_4_1)
-	if tabletool.indexOf(arg_4_1, OpenEnum.UnlockFunc.RoleStory) then
+function RoleStoryController:_onFuncOpen(newIds)
+	if tabletool.indexOf(newIds, OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.NecrologistStory
@@ -25,8 +27,9 @@ function var_0_0._onFuncOpen(arg_4_0, arg_4_1)
 	end
 end
 
-function var_0_0._onGetInfoFinish(arg_5_0)
+function RoleStoryController:_onGetInfoFinish()
 	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(NecrologistStoryEnum.RoleStoryId.V3A1)
+	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(NecrologistStoryEnum.RoleStoryId.V3A2)
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()
@@ -36,7 +39,7 @@ function var_0_0._onGetInfoFinish(arg_5_0)
 	end
 end
 
-function var_0_0.openRoleStoryDispatchMainView(arg_6_0, arg_6_1)
+function RoleStoryController:openRoleStoryDispatchMainView(param)
 	if not RoleStoryModel.instance:checkActStoryOpen() then
 		if ViewMgr.instance:isOpen(ViewName.RoleStoryDispatchMainView) then
 			ViewMgr.instance:closeView(ViewName.RoleStoryDispatchMainView)
@@ -48,13 +51,13 @@ function var_0_0.openRoleStoryDispatchMainView(arg_6_0, arg_6_1)
 	end
 
 	HeroStoryRpc.instance:sendGetHeroStoryRequest(function()
-		ViewMgr.instance:openView(ViewName.RoleStoryDispatchMainView, arg_6_1)
+		ViewMgr.instance:openView(ViewName.RoleStoryDispatchMainView, param)
 	end)
 
 	return true
 end
 
-function var_0_0.openRoleStoryActivityMainView(arg_8_0, arg_8_1)
+function RoleStoryController:openRoleStoryActivityMainView(param)
 	if not RoleStoryModel.instance:checkActStoryOpen() then
 		if ViewMgr.instance:isOpen(ViewName.RoleStoryActivityMainView) then
 			ViewMgr.instance:closeView(ViewName.RoleStoryActivityMainView)
@@ -66,59 +69,59 @@ function var_0_0.openRoleStoryActivityMainView(arg_8_0, arg_8_1)
 	end
 
 	HeroStoryRpc.instance:sendGetHeroStoryRequest(function()
-		ViewMgr.instance:openView(ViewName.RoleStoryActivityMainView, arg_8_1)
+		ViewMgr.instance:openView(ViewName.RoleStoryActivityMainView, param)
 	end)
 
 	return true
 end
 
-function var_0_0.enterRoleStoryChapter(arg_10_0, arg_10_1)
-	if not arg_10_1 or arg_10_1 == 0 then
+function RoleStoryController:enterRoleStoryChapter(storyId)
+	if not storyId or storyId == 0 then
 		return
 	end
 
-	RoleStoryModel.instance:setCurStoryId(arg_10_1)
+	RoleStoryModel.instance:setCurStoryId(storyId)
 
-	local var_10_0 = RoleStoryConfig.instance:getStoryById(arg_10_1)
-	local var_10_1 = {
-		chapterId = var_10_0.chapterId
-	}
+	local cfg = RoleStoryConfig.instance:getStoryById(storyId)
+	local param = {}
 
-	DungeonController.instance:openDungeonChapterView(var_10_1)
+	param.chapterId = cfg.chapterId
+
+	DungeonController.instance:openDungeonChapterView(param)
 end
 
-function var_0_0.openDispatchView(arg_11_0, arg_11_1)
-	if not arg_11_1 or arg_11_1 == 0 then
+function RoleStoryController:openDispatchView(storyId)
+	if not storyId or storyId == 0 then
 		return
 	end
 
-	local var_11_0 = {
-		storyId = arg_11_1
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.RoleStoryDispatchView, var_11_0)
+	param.storyId = storyId
+
+	ViewMgr.instance:openView(ViewName.RoleStoryDispatchView, param)
 end
 
-function var_0_0.openReviewView(arg_12_0)
-	local var_12_0 = RoleStoryModel.instance:getCurStoryId()
+function RoleStoryController:openReviewView()
+	local storyId = RoleStoryModel.instance:getCurStoryId()
 
-	if not var_12_0 or var_12_0 == 0 then
+	if not storyId or storyId == 0 then
 		return
 	end
 
-	local var_12_1 = {
-		storyId = var_12_0
-	}
+	local param = {}
 
-	ViewMgr.instance:openView(ViewName.RoleStoryReviewView, var_12_1)
+	param.storyId = storyId
+
+	ViewMgr.instance:openView(ViewName.RoleStoryReviewView, param)
 end
 
-function var_0_0._onDailyRefresh(arg_13_0)
+function RoleStoryController:_onDailyRefresh()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+RoleStoryController.instance = RoleStoryController.New()
 
-return var_0_0
+return RoleStoryController

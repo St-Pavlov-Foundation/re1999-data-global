@@ -1,49 +1,51 @@
-﻿module("modules.logic.fight.controller.FightConditionHelper", package.seeall)
+﻿-- chunkname: @modules/logic/fight/controller/FightConditionHelper.lua
 
-local var_0_0 = _M
+module("modules.logic.fight.controller.FightConditionHelper", package.seeall)
 
-function var_0_0.initConditionHandle()
-	if not var_0_0.ConditionHandle then
-		var_0_0.ConditionHandle = {
-			[FightEnum.ConditionType.HasBuffId] = var_0_0.checkHasBuffId
+local FightConditionHelper = _M
+
+function FightConditionHelper.initConditionHandle()
+	if not FightConditionHelper.ConditionHandle then
+		FightConditionHelper.ConditionHandle = {
+			[FightEnum.ConditionType.HasBuffId] = FightConditionHelper.checkHasBuffId
 		}
 	end
 end
 
-function var_0_0.checkCondition(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	var_0_0.initConditionHandle()
+function FightConditionHelper.checkCondition(condition, conditionTarget, useSkillEntityId, targetEntityId)
+	FightConditionHelper.initConditionHandle()
 
-	local var_2_0 = FightStrUtil.splitToNumber(arg_2_0, "#")
-	local var_2_1 = lua_skill_behavior_condition.configDict[tonumber(var_2_0[1])]
+	local conditionArr = FightStrUtil.splitToNumber(condition, "#")
+	local conditionCo = lua_skill_behavior_condition.configDict[tonumber(conditionArr[1])]
 
-	if not var_2_1 then
+	if not conditionCo then
 		return true
 	end
 
-	local var_2_2 = var_0_0.ConditionHandle[var_2_1.type]
+	local handle = FightConditionHelper.ConditionHandle[conditionCo.type]
 
-	if var_2_2 then
-		return var_2_2(var_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if handle then
+		return handle(conditionArr, conditionTarget, useSkillEntityId, targetEntityId)
 	end
 
 	return true
 end
 
-function var_0_0.checkHasBuffId(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_3 = FightConditionTargetHelper.getTarget(arg_3_1, arg_3_2, arg_3_3)
+function FightConditionHelper.checkHasBuffId(conditionArr, conditionTarget, useSkillEntityId, targetEntityId)
+	targetEntityId = FightConditionTargetHelper.getTarget(conditionTarget, useSkillEntityId, targetEntityId)
 
-	if not arg_3_3 then
+	if not targetEntityId then
 		return false
 	end
 
-	local var_3_0 = FightDataHelper.entityMgr:getById(arg_3_3)
+	local entityMo = FightDataHelper.entityMgr:getById(targetEntityId)
 
-	if not var_3_0 then
+	if not entityMo then
 		return false
 	end
 
-	for iter_3_0 = 2, #arg_3_0 do
-		if var_3_0:hasBuffId(tonumber(arg_3_0[iter_3_0])) then
+	for i = 2, #conditionArr do
+		if entityMo:hasBuffId(tonumber(conditionArr[i])) then
 			return true
 		end
 	end
@@ -51,4 +53,4 @@ function var_0_0.checkHasBuffId(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	return false
 end
 
-return var_0_0
+return FightConditionHelper

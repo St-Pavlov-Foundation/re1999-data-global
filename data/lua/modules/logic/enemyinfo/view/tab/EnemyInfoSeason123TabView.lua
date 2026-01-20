@@ -1,103 +1,107 @@
-﻿module("modules.logic.enemyinfo.view.tab.EnemyInfoSeason123TabView", package.seeall)
+﻿-- chunkname: @modules/logic/enemyinfo/view/tab/EnemyInfoSeason123TabView.lua
 
-local var_0_0 = class("EnemyInfoSeason123TabView", UserDataDispose)
+module("modules.logic.enemyinfo.view.tab.EnemyInfoSeason123TabView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goseasontab = gohelper.findChild(arg_1_0.viewGO, "#go_tab_container/#go_season123tab")
-	arg_1_0.simagebg = gohelper.findChildSingleImage(arg_1_0.goseasontab, "#simage_bg")
-	arg_1_0.golayeritem = gohelper.findChild(arg_1_0.goseasontab, "scroll_layer/Viewport/layer_content/#go_layeritem")
+local EnemyInfoSeason123TabView = class("EnemyInfoSeason123TabView", UserDataDispose)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function EnemyInfoSeason123TabView:onInitView()
+	self.goseasontab = gohelper.findChild(self.viewGO, "#go_tab_container/#go_season123tab")
+	self.simagebg = gohelper.findChildSingleImage(self.goseasontab, "#simage_bg")
+	self.golayeritem = gohelper.findChild(self.goseasontab, "scroll_layer/Viewport/layer_content/#go_layeritem")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function EnemyInfoSeason123TabView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function EnemyInfoSeason123TabView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0.golayeritem, false)
+function EnemyInfoSeason123TabView:_editableInitView()
+	gohelper.setActive(self.golayeritem, false)
 
-	arg_4_0.layerItemList = {}
+	self.layerItemList = {}
 
-	arg_4_0.simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
+	self.simagebg:LoadImage(ResUrl.getWeekWalkBg("bg_zuodi.png"))
 end
 
-function var_0_0.onOpen(arg_5_0)
-	gohelper.setActive(arg_5_0.goseasontab, true)
+function EnemyInfoSeason123TabView:onOpen()
+	gohelper.setActive(self.goseasontab, true)
 
-	arg_5_0.actId = arg_5_0.viewParam.activityId
-	arg_5_0.stage = arg_5_0.viewParam.stage
+	self.actId = self.viewParam.activityId
+	self.stage = self.viewParam.stage
 
-	local var_5_0 = Season123Config.instance:getSeasonEpisodeByStage(arg_5_0.actId, arg_5_0.stage)
+	local coList = Season123Config.instance:getSeasonEpisodeByStage(self.actId, self.stage)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
-		local var_5_1 = arg_5_0:getLayerItem()
+	for index, co in ipairs(coList) do
+		local layerItem = self:getLayerItem()
 
-		var_5_1.layer = iter_5_1.layer
-		var_5_1.txt.text = string.format("%02d", iter_5_0)
+		layerItem.layer = co.layer
+		layerItem.txt.text = string.format("%02d", index)
 	end
 
-	local var_5_2 = arg_5_0.viewParam.layer or var_5_0[1].layer
+	local layer = self.viewParam.layer
 
-	arg_5_0:selectLayer(var_5_2)
+	layer = layer or coList[1].layer
+
+	self:selectLayer(layer)
 end
 
-function var_0_0.getLayerItem(arg_6_0)
-	local var_6_0 = arg_6_0:getUserDataTb_()
+function EnemyInfoSeason123TabView:getLayerItem()
+	local layerItem = self:getUserDataTb_()
 
-	var_6_0.go = gohelper.cloneInPlace(arg_6_0.golayeritem)
-	var_6_0.txt = gohelper.findChildText(var_6_0.go, "txt")
-	var_6_0.goSelect = gohelper.findChild(var_6_0.go, "select")
-	var_6_0.click = gohelper.getClickWithDefaultAudio(var_6_0.go)
+	layerItem.go = gohelper.cloneInPlace(self.golayeritem)
+	layerItem.txt = gohelper.findChildText(layerItem.go, "txt")
+	layerItem.goSelect = gohelper.findChild(layerItem.go, "select")
+	layerItem.click = gohelper.getClickWithDefaultAudio(layerItem.go)
 
-	var_6_0.click:AddClickListener(arg_6_0.onClickLayerItem, arg_6_0, var_6_0)
-	gohelper.setActive(var_6_0.go, true)
-	table.insert(arg_6_0.layerItemList, var_6_0)
+	layerItem.click:AddClickListener(self.onClickLayerItem, self, layerItem)
+	gohelper.setActive(layerItem.go, true)
+	table.insert(self.layerItemList, layerItem)
 
-	return var_6_0
+	return layerItem
 end
 
-function var_0_0.onClickLayerItem(arg_7_0, arg_7_1)
-	arg_7_0:selectLayer(arg_7_1.layer)
+function EnemyInfoSeason123TabView:onClickLayerItem(layerItem)
+	self:selectLayer(layerItem.layer)
 end
 
-function var_0_0.updateLayerItemSelect(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.layerItemList) do
-		gohelper.setActive(iter_8_1.goSelect, iter_8_1.layer == arg_8_0.selectLayerId)
+function EnemyInfoSeason123TabView:updateLayerItemSelect()
+	for _, layerItem in ipairs(self.layerItemList) do
+		gohelper.setActive(layerItem.goSelect, layerItem.layer == self.selectLayerId)
 	end
 end
 
-function var_0_0.selectLayer(arg_9_0, arg_9_1)
-	if arg_9_0.selectLayerId == arg_9_1 then
+function EnemyInfoSeason123TabView:selectLayer(layerId)
+	if self.selectLayerId == layerId then
 		return
 	end
 
-	arg_9_0.selectLayerId = arg_9_1
+	self.selectLayerId = layerId
 
-	arg_9_0:updateLayerItemSelect()
+	self:updateLayerItemSelect()
 
-	local var_9_0 = Season123Config.instance:getSeasonEpisodeCo(arg_9_0.actId, arg_9_0.stage, arg_9_0.selectLayerId)
-	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0.episodeId)
+	local co = Season123Config.instance:getSeasonEpisodeCo(self.actId, self.stage, self.selectLayerId)
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(co.episodeId)
 
-	arg_9_0.enemyInfoMo:updateBattleId(var_9_1.battleId)
+	self.enemyInfoMo:updateBattleId(episodeCo.battleId)
 end
 
-function var_0_0.onClose(arg_10_0)
+function EnemyInfoSeason123TabView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
-	arg_11_0.simagebg:UnLoadImage()
+function EnemyInfoSeason123TabView:onDestroyView()
+	self.simagebg:UnLoadImage()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0.layerItemList) do
-		iter_11_1.click:RemoveClickListener()
+	for _, layerItem in ipairs(self.layerItemList) do
+		layerItem.click:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return EnemyInfoSeason123TabView

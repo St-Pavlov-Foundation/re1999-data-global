@@ -1,232 +1,266 @@
-﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicChapterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/music/view/VersionActivity2_4MusicChapterView.lua
 
-local var_0_0 = class("VersionActivity2_4MusicChapterView", BaseView)
+module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicChapterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_Title")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/time/#txt_time")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_task")
-	arg_1_0._goreddottask = gohelper.findChild(arg_1_0.viewGO, "root/#btn_task/#go_reddottask")
-	arg_1_0._btnmodeentry = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_modeentry")
-	arg_1_0._gov2a4bakaluoerchapterlayout = gohelper.findChild(arg_1_0.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout")
-	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content")
-	arg_1_0._gocurrentdown = gohelper.findChild(arg_1_0.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content/#go_currentdown")
-	arg_1_0._gocurrentBG = gohelper.findChild(arg_1_0.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content/#go_currentBG")
-	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
+local VersionActivity2_4MusicChapterView = class("VersionActivity2_4MusicChapterView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity2_4MusicChapterView:onInitView()
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "root/#simage_Title")
+	self._txttime = gohelper.findChildText(self.viewGO, "root/time/#txt_time")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_task")
+	self._goreddottask = gohelper.findChild(self.viewGO, "root/#btn_task/#go_reddottask")
+	self._btnmodeentry = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_modeentry")
+	self._gov2a4bakaluoerchapterlayout = gohelper.findChild(self.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout")
+	self._scrollChapterList = gohelper.findChildScrollRect(self.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList")
+	self._gocontent = gohelper.findChild(self.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content")
+	self._gocurrentdown = gohelper.findChild(self.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content/#go_currentdown")
+	self._gocurrentBG = gohelper.findChild(self.viewGO, "root/#go_v2a4_bakaluoer_chapterlayout/#scroll_ChapterList/Viewport/#go_content/#go_currentBG")
+	self._goleft = gohelper.findChild(self.viewGO, "#go_left")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_Try/image_TryBtn")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0._btnmodeentry:AddClickListener(arg_2_0._btnmodeentryOnClick, arg_2_0)
+function VersionActivity2_4MusicChapterView:addEvents()
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnmodeentry:AddClickListener(self._btnmodeentryOnClick, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0._btnmodeentry:RemoveClickListener()
+function VersionActivity2_4MusicChapterView:removeEvents()
+	self._btntask:RemoveClickListener()
+	self._btnmodeentry:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 end
 
-function var_0_0._btntaskOnClick(arg_4_0)
+function VersionActivity2_4MusicChapterView:_clickTrial()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function VersionActivity2_4MusicChapterView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function VersionActivity2_4MusicChapterView:_btntaskOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicTaskView()
 end
 
-function var_0_0._btnmodeentryOnClick(arg_5_0)
+function VersionActivity2_4MusicChapterView:_btnmodeentryOnClick()
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
+function VersionActivity2_4MusicChapterView:_editableInitView()
 	Activity179Model.instance:clearSelectedEpisodeId()
 
-	arg_6_0._taskAnimator = arg_6_0._btntask.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._taskAnimator = self._btntask.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
-	RedDotController.instance:addRedDot(arg_6_0._goreddottask, RedDotEnum.DotNode.V2a4MusicTaskRed, nil, arg_6_0._refreshRedDot, arg_6_0)
-	arg_6_0:_initChapterList()
+	RedDotController.instance:addRedDot(self._goreddottask, RedDotEnum.DotNode.V2a4MusicTaskRed, nil, self._refreshRedDot, self)
+
+	self.actId = VersionActivity2_4Enum.ActivityId.MusicGame
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
+
+	self:_initChapterList()
 end
 
-function var_0_0._refreshRedDot(arg_7_0, arg_7_1)
-	arg_7_1:defaultRefreshDot()
+function VersionActivity2_4MusicChapterView:_refreshRedDot(reddot)
+	reddot:defaultRefreshDot()
 
-	local var_7_0 = arg_7_1.show
+	local showRedDot = reddot.show
 
-	arg_7_0._taskAnimator:Play(var_7_0 and "loop" or "idle")
+	self._taskAnimator:Play(showRedDot and "loop" or "idle")
 end
 
-function var_0_0._initChapterList(arg_8_0)
-	arg_8_0._itemList = arg_8_0:getUserDataTb_()
+function VersionActivity2_4MusicChapterView:_initChapterList()
+	self._itemList = self:getUserDataTb_()
 
-	local var_8_0 = Activity179Config.instance:getEpisodeCfgList(Activity179Model.instance:getActivityId())
+	local list = Activity179Config.instance:getEpisodeCfgList(Activity179Model.instance:getActivityId())
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		if iter_8_1.episodeType ~= VersionActivity2_4MusicEnum.EpisodeType.Free then
-			local var_8_1 = arg_8_0.viewContainer:getSetting().otherRes[1]
-			local var_8_2 = arg_8_0:getResInst(var_8_1, arg_8_0._gocontent)
-			local var_8_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_2, VersionActivity2_4MusicChapterItem)
+	for i, v in ipairs(list) do
+		if v.episodeType ~= VersionActivity2_4MusicEnum.EpisodeType.Free then
+			local path = self.viewContainer:getSetting().otherRes[1]
+			local childGO = self:getResInst(path, self._gocontent)
+			local item = MonoHelper.addNoUpdateLuaComOnceToGo(childGO, VersionActivity2_4MusicChapterItem)
 
-			var_8_3:onUpdateMO(iter_8_1)
-			table.insert(arg_8_0._itemList, var_8_3)
+			item:onUpdateMO(v)
+			table.insert(self._itemList, item)
 		end
 	end
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function VersionActivity2_4MusicChapterView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	TaskDispatcher.runRepeat(arg_10_0._updateTime, arg_10_0, 1)
-	arg_10_0:_updateTime()
-	arg_10_0:addEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, arg_10_0._onEpisodeStoryBeforeFinished, arg_10_0)
-	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_10_0._onCloseViewFinish, arg_10_0)
-	arg_10_0:_updateItemList()
-	arg_10_0:_moveChapterItem(arg_10_0:_getSelectedEpisodeIndex())
+function VersionActivity2_4MusicChapterView:onOpen()
+	TaskDispatcher.runRepeat(self._updateTime, self, 1)
+	self:_updateTime()
+	self:addEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, self._onEpisodeStoryBeforeFinished, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:_updateItemList()
+	self:_moveChapterItem(self:_getSelectedEpisodeIndex())
 end
 
-function var_0_0._getSelectedEpisodeIndex(arg_11_0)
-	local var_11_0 = Activity179Model.instance:getSelectedEpisodeId()
+function VersionActivity2_4MusicChapterView:_getSelectedEpisodeIndex()
+	local episodeId = Activity179Model.instance:getSelectedEpisodeId()
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._itemList) do
-		if iter_11_1:getHasOpened() and iter_11_1:getEpisodeId() == var_11_0 then
-			return iter_11_0
+	for i, v in ipairs(self._itemList) do
+		if v:getHasOpened() and v:getEpisodeId() == episodeId then
+			return i
 		end
 	end
 
 	Activity179Model.instance:clearSelectedEpisodeId()
 	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.Version2_4MusicSelectEpisode, VersionActivity2_4MusicEnum.FirstEpisodeId)
 
-	for iter_11_2, iter_11_3 in ipairs(arg_11_0._itemList) do
-		iter_11_3:updateSelectedFlag()
+	for i, v in ipairs(self._itemList) do
+		v:updateSelectedFlag()
 	end
 
 	return 1
 end
 
-function var_0_0._moveChapterItem(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function VersionActivity2_4MusicChapterView:_moveChapterItem(openIndex)
+	if not openIndex then
 		return
 	end
 
-	local var_12_0 = recthelper.getWidth(arg_12_0._scrollChapterList.transform)
+	local viewWidth = recthelper.getWidth(self._scrollChapterList.transform)
 
-	recthelper.setAnchorX(arg_12_0._gocontent.transform, -VersionActivity2_4MusicEnum.EpisodeItemWidth * arg_12_1 + VersionActivity2_4MusicEnum.EpisodeItemWidth / 2 + var_12_0 / 2)
+	recthelper.setAnchorX(self._gocontent.transform, -VersionActivity2_4MusicEnum.EpisodeItemWidth * openIndex + VersionActivity2_4MusicEnum.EpisodeItemWidth / 2 + viewWidth / 2)
 end
 
-function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
-	if arg_13_1 ~= ViewName.VersionActivity2_4MusicBeatView then
+function VersionActivity2_4MusicChapterView:_onCloseViewFinish(viewName)
+	if viewName ~= ViewName.VersionActivity2_4MusicBeatView then
 		return
 	end
 
-	arg_13_0:_updateItemList(true)
+	self:_updateItemList(true)
 end
 
-function var_0_0._onEpisodeStoryBeforeFinished(arg_14_0)
+function VersionActivity2_4MusicChapterView:_onEpisodeStoryBeforeFinished()
 	if ViewMgr.instance:isOpen(ViewName.VersionActivity2_4MusicBeatView) then
 		return
 	end
 
-	arg_14_0:_updateItemList(true)
+	self:_updateItemList(true)
 end
 
-function var_0_0._updateItemList(arg_15_0, arg_15_1)
-	local var_15_0
-	local var_15_1
+function VersionActivity2_4MusicChapterView:_updateItemList(tween)
+	local lastFinishedIndex, lastOpenIndex
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._itemList) do
-		iter_15_1:updateView()
+	for i, v in ipairs(self._itemList) do
+		v:updateView()
 
-		if iter_15_1:getHasFinished() then
-			var_15_0 = iter_15_0
+		if v:getHasFinished() then
+			lastFinishedIndex = i
 		end
 
-		if iter_15_1:getHasOpened() then
-			var_15_1 = iter_15_0
+		if v:getHasOpened() then
+			lastOpenIndex = i
 		end
 	end
 
-	arg_15_0._lastFinishedIndex = var_15_0
+	self._lastFinishedIndex = lastFinishedIndex
 
-	arg_15_0:_updateProgress(arg_15_1, var_15_1)
+	self:_updateProgress(tween, lastOpenIndex)
 
-	local var_15_2 = var_15_0 == #arg_15_0._itemList
+	local showFree = lastFinishedIndex == #self._itemList
 
-	gohelper.setActive(arg_15_0._btnmodeentry, var_15_2)
+	gohelper.setActive(self._btnmodeentry, showFree)
 
-	if var_15_2 then
+	if showFree then
 		GuideController.instance:dispatchEvent(GuideEvent.TriggerActive, GuideEnum.EventTrigger.MusicFreeView)
 	end
 end
 
-function var_0_0._updateProgress(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0._oldOpenIndex = arg_16_0._lastOpenIndex
-	arg_16_0._lastOpenIndex = arg_16_2
+function VersionActivity2_4MusicChapterView:_updateProgress(tween, lastOpenIndex)
+	self._oldOpenIndex = self._lastOpenIndex
+	self._lastOpenIndex = lastOpenIndex
 
-	if not arg_16_1 or not arg_16_0._oldOpenIndex or arg_16_0._oldOpenIndex == arg_16_0._lastOpenIndex then
-		arg_16_0:_setProgress(arg_16_0._lastOpenIndex - 1, 1)
+	if not tween or not self._oldOpenIndex or self._oldOpenIndex == self._lastOpenIndex then
+		self:_setProgress(self._lastOpenIndex - 1, 1)
 
 		return
 	end
 
-	arg_16_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_16_0._tweenFrame, arg_16_0._tweenFinish, arg_16_0)
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, self._tweenFrame, self._tweenFinish, self)
 
-	arg_16_0:_moveChapterItem(arg_16_0._lastOpenIndex)
+	self:_moveChapterItem(self._lastOpenIndex)
 	AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_unlock)
 end
 
-function var_0_0._tweenFrame(arg_17_0, arg_17_1)
-	arg_17_0:_setProgress(arg_17_0._oldOpenIndex, arg_17_1)
+function VersionActivity2_4MusicChapterView:_tweenFrame(value)
+	self:_setProgress(self._oldOpenIndex, value)
 end
 
-function var_0_0._tweenFinish(arg_18_0)
-	arg_18_0:_setProgress(arg_18_0._oldOpenIndex, 1)
+function VersionActivity2_4MusicChapterView:_tweenFinish()
+	self:_setProgress(self._oldOpenIndex, 1)
 end
 
-function var_0_0._setProgress(arg_19_0, arg_19_1, arg_19_2)
-	if gohelper.isNil(arg_19_0._gocurrentdown) then
+function VersionActivity2_4MusicChapterView:_setProgress(startIndex, percent)
+	if gohelper.isNil(self._gocurrentdown) then
 		return
 	end
 
-	local var_19_0 = (arg_19_1 - 1) * VersionActivity2_4MusicEnum.EpisodeItemWidth + VersionActivity2_4MusicEnum.EpisodeItemWidth * arg_19_2
+	local offsetWidth = (startIndex - 1) * VersionActivity2_4MusicEnum.EpisodeItemWidth + VersionActivity2_4MusicEnum.EpisodeItemWidth * percent
 
-	recthelper.setAnchorX(arg_19_0._gocurrentdown.transform, VersionActivity2_4MusicEnum.ProgressLightPos + var_19_0)
-	recthelper.setWidth(arg_19_0._gocurrentBG.transform, VersionActivity2_4MusicEnum.ProgressBgWidth + var_19_0)
+	recthelper.setAnchorX(self._gocurrentdown.transform, VersionActivity2_4MusicEnum.ProgressLightPos + offsetWidth)
+	recthelper.setWidth(self._gocurrentBG.transform, VersionActivity2_4MusicEnum.ProgressBgWidth + offsetWidth)
 end
 
-function var_0_0._updateTime(arg_20_0)
-	local var_20_0 = Activity179Model.instance:getActivityId()
-	local var_20_1 = ActivityModel.instance:getActivityInfo()[var_20_0]
+function VersionActivity2_4MusicChapterView:_updateTime()
+	local activityId = Activity179Model.instance:getActivityId()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[activityId]
 
-	if var_20_1 then
-		local var_20_2 = var_20_1:getRealEndTimeStamp() - ServerTime.now()
+	if actInfoMo then
+		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
-		if var_20_2 > 0 then
-			local var_20_3 = TimeUtil.SecondToActivityTimeFormat(var_20_2)
+		if offsetSecond > 0 then
+			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
 
-			arg_20_0._txttime.text = var_20_3
+			self._txttime.text = dateStr
 
 			return
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_20_0._updateTime, arg_20_0)
+	TaskDispatcher.cancelTask(self._updateTime, self)
 end
 
-function var_0_0.onClose(arg_21_0)
-	arg_21_0:removeEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, arg_21_0._onEpisodeStoryBeforeFinished, arg_21_0)
-	arg_21_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_21_0._onCloseViewFinish, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._updateTime, arg_21_0)
+function VersionActivity2_4MusicChapterView:onClose()
+	self:removeEventCb(StoryController.instance, StoryEvent.StoryFrontViewDestroy, self._onEpisodeStoryBeforeFinished, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	TaskDispatcher.cancelTask(self._updateTime, self)
 
-	if arg_21_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_21_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_21_0._tweenId = nil
+		self._tweenId = nil
 	end
 end
 
-function var_0_0.onDestroyView(arg_22_0)
+function VersionActivity2_4MusicChapterView:onDestroyView()
 	return
 end
 
-return var_0_0
+return VersionActivity2_4MusicChapterView

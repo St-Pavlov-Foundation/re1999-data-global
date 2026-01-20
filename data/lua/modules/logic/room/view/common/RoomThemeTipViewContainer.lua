@@ -1,34 +1,36 @@
-﻿module("modules.logic.room.view.common.RoomThemeTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/common/RoomThemeTipViewContainer.lua
 
-local var_0_0 = class("RoomThemeTipViewContainer", BaseViewContainer)
+module("modules.logic.room.view.common.RoomThemeTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomThemeTipViewContainer = class("RoomThemeTipViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomThemeTipView.New())
+function RoomThemeTipViewContainer:buildViews()
+	local views = {}
 
-	local var_1_1 = ListScrollParam.New()
+	table.insert(views, RoomThemeTipView.New())
 
-	var_1_1.scrollGOPath = "content/go_scroll/#scroll_item"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "content/themeitem"
-	var_1_1.cellClass = RoomThemeTipItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 680
-	var_1_1.cellHeight = 60
-	var_1_1.cellSpaceH = 0
-	var_1_1.cellSpaceV = 4
-	var_1_1.startSpace = 0
-	var_1_1.endSpace = 0
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(RoomThemeItemListModel.instance, var_1_1))
+	scrollParam.scrollGOPath = "content/go_scroll/#scroll_item"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "content/themeitem"
+	scrollParam.cellClass = RoomThemeTipItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 680
+	scrollParam.cellHeight = 60
+	scrollParam.cellSpaceH = 0
+	scrollParam.cellSpaceV = 4
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(RoomThemeItemListModel.instance, scrollParam))
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function RoomThemeTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return RoomThemeTipViewContainer

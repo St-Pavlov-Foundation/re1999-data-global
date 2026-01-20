@@ -1,33 +1,35 @@
-﻿module("modules.logic.versionactivity1_5.act142.view.Activity142StoryViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/act142/view/Activity142StoryViewContainer.lua
 
-local var_0_0 = class("Activity142StoryViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity1_5.act142.view.Activity142StoryViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local Activity142StoryViewContainer = class("Activity142StoryViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "#simage_blackbg/#scroll_storylist"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "#simage_blackbg/#go_storyitem"
-	var_1_1.cellClass = Activity142StoryItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirH
-	var_1_1.cellWidth = 690
-	var_1_1.cellHeight = 750
-	var_1_1.cellSpaceH = 178
+function Activity142StoryViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(Activity142StoryListModel.instance, var_1_1))
-	table.insert(var_1_0, Activity142StoryView.New())
+	scrollParam.scrollGOPath = "#simage_blackbg/#scroll_storylist"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#simage_blackbg/#go_storyitem"
+	scrollParam.cellClass = Activity142StoryItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellWidth = 690
+	scrollParam.cellHeight = 750
+	scrollParam.cellSpaceH = 178
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(Activity142StoryListModel.instance, scrollParam))
+	table.insert(views, Activity142StoryView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
+function Activity142StoryViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_2_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.buildTabViews(arg_3_0, arg_3_1)
-	if arg_3_1 == 1 then
+function Activity142StoryViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -38,4 +40,4 @@ function var_0_0.buildTabViews(arg_3_0, arg_3_1)
 	end
 end
 
-return var_0_0
+return Activity142StoryViewContainer

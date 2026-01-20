@@ -1,196 +1,203 @@
-﻿module("modules.logic.dungeon.view.map.DungeonMapFinishElement", package.seeall)
+﻿-- chunkname: @modules/logic/dungeon/view/map/DungeonMapFinishElement.lua
 
-local var_0_0 = class("DungeonMapFinishElement", LuaCompBase)
+module("modules.logic.dungeon.view.map.DungeonMapFinishElement", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._config = arg_1_1[1]
-	arg_1_0._mapScene = arg_1_1[2]
-	arg_1_0._sceneElements = arg_1_1[3]
-	arg_1_0._existGo = arg_1_1[4]
+local DungeonMapFinishElement = class("DungeonMapFinishElement", LuaCompBase)
+
+function DungeonMapFinishElement:ctor(param)
+	self._config = param[1]
+	self._mapScene = param[2]
+	self._sceneElements = param[3]
+	self._existGo = param[4]
 end
 
-function var_0_0.getElementId(arg_2_0)
-	return arg_2_0._config.id
+function DungeonMapFinishElement:getElementId()
+	return self._config.id
 end
 
-function var_0_0.hide(arg_3_0)
-	gohelper.setActive(arg_3_0._go, false)
+function DungeonMapFinishElement:hide()
+	gohelper.setActive(self._go, false)
 end
 
-function var_0_0.show(arg_4_0)
-	gohelper.setActive(arg_4_0._go, true)
+function DungeonMapFinishElement:show()
+	gohelper.setActive(self._go, true)
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0._go = arg_5_1
-	arg_5_0._transform = arg_5_1.transform
+function DungeonMapFinishElement:init(go)
+	self._go = go
+	self._transform = go.transform
 
-	local var_5_0 = string.splitToNumber(arg_5_0._config.pos, "#")
+	local pos = string.splitToNumber(self._config.pos, "#")
 
-	transformhelper.setLocalPos(arg_5_0._transform, var_5_0[1] or 0, var_5_0[2] or 0, var_5_0[3] or 0)
+	transformhelper.setLocalPos(self._transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
 
-	arg_5_0.resPath = arg_5_0._config.res
-	arg_5_0.effectPath = arg_5_0._config.effect
+	self.resPath = self._config.res
+	self.effectPath = self._config.effect
 
-	if arg_5_0._existGo then
-		arg_5_0._itemGo = gohelper.findChild(arg_5_0._go, arg_5_0:getPathName(arg_5_0.resPath) .. "(Clone)")
+	if self._existGo then
+		self._itemGo = gohelper.findChild(self._go, self:getPathName(self.resPath) .. "(Clone)")
 
-		var_0_0.addBoxColliderListener(arg_5_0._itemGo, arg_5_0._onDown, arg_5_0)
+		DungeonMapFinishElement.addBoxColliderListener(self._itemGo, self._onDown, self)
 
-		if not string.nilorempty(arg_5_0.effectPath) then
-			arg_5_0._effectGo = gohelper.findChild(arg_5_0._go, arg_5_0:getPathName(arg_5_0.effectPath) .. "(Clone)")
+		if not string.nilorempty(self.effectPath) then
+			self._effectGo = gohelper.findChild(self._go, self:getPathName(self.effectPath) .. "(Clone)")
 
-			var_0_0.addBoxColliderListener(arg_5_0._effectGo, arg_5_0._onDown, arg_5_0)
+			DungeonMapFinishElement.addBoxColliderListener(self._effectGo, self._onDown, self)
 		end
 	else
-		if arg_5_0._resLoader then
+		if self._resLoader then
 			return
 		end
 
-		arg_5_0._resLoader = MultiAbLoader.New()
+		self._resLoader = MultiAbLoader.New()
 
-		arg_5_0._resLoader:addPath(arg_5_0.resPath)
+		self._resLoader:addPath(self.resPath)
 
-		if not string.nilorempty(arg_5_0.effectPath) then
-			arg_5_0._resLoader:addPath(arg_5_0.effectPath)
+		if not string.nilorempty(self.effectPath) then
+			self._resLoader:addPath(self.effectPath)
 		end
 
-		arg_5_0._resLoader:startLoad(arg_5_0._onResLoaded, arg_5_0)
+		self._resLoader:startLoad(self._onResLoaded, self)
 	end
 end
 
-function var_0_0._onResLoaded(arg_6_0)
-	local var_6_0 = arg_6_0._resLoader:getAssetItem(arg_6_0.resPath):GetResource(arg_6_0.resPath)
+function DungeonMapFinishElement:_onResLoaded()
+	local assetItem = self._resLoader:getAssetItem(self.resPath)
+	local mainPrefab = assetItem:GetResource(self.resPath)
 
-	arg_6_0._itemGo = gohelper.clone(var_6_0, arg_6_0._go)
+	self._itemGo = gohelper.clone(mainPrefab, self._go)
 
-	local var_6_1 = arg_6_0._config.resScale
+	local resScale = self._config.resScale
 
-	if var_6_1 and var_6_1 ~= 0 then
-		transformhelper.setLocalScale(arg_6_0._itemGo.transform, var_6_1, var_6_1, 1)
+	if resScale and resScale ~= 0 then
+		transformhelper.setLocalScale(self._itemGo.transform, resScale, resScale, 1)
 	end
 
-	gohelper.setLayer(arg_6_0._itemGo, UnityLayer.Scene, true)
-	var_0_0.addBoxColliderListener(arg_6_0._itemGo, arg_6_0._onDown, arg_6_0)
-	transformhelper.setLocalPos(arg_6_0._itemGo.transform, 0, 0, -1)
+	gohelper.setLayer(self._itemGo, UnityLayer.Scene, true)
+	DungeonMapFinishElement.addBoxColliderListener(self._itemGo, self._onDown, self)
+	transformhelper.setLocalPos(self._itemGo.transform, 0, 0, -1)
 
-	if not string.nilorempty(arg_6_0.effectPath) then
-		local var_6_2 = string.splitToNumber(arg_6_0._config.tipOffsetPos, "#")
+	if not string.nilorempty(self.effectPath) then
+		local offsetPos = string.splitToNumber(self._config.tipOffsetPos, "#")
 
-		arg_6_0._offsetX = var_6_2[1] or 0
-		arg_6_0._offsetY = var_6_2[2] or 0
+		self._offsetX = offsetPos[1] or 0
+		self._offsetY = offsetPos[2] or 0
+		assetItem = self._resLoader:getAssetItem(self.effectPath)
+		mainPrefab = assetItem:GetResource(self.effectPath)
+		self._effectGo = gohelper.clone(mainPrefab, self._go)
 
-		local var_6_3 = arg_6_0._resLoader:getAssetItem(arg_6_0.effectPath):GetResource(arg_6_0.effectPath)
+		DungeonMapFinishElement.addBoxColliderListener(self._effectGo, self._onDown, self)
+		transformhelper.setLocalPos(self._effectGo.transform, self._offsetX, self._offsetY, -3)
 
-		arg_6_0._effectGo = gohelper.clone(var_6_3, arg_6_0._go)
+		local aniGo = gohelper.findChild(self._effectGo, "ani/yuanjian_new_07/gou")
 
-		var_0_0.addBoxColliderListener(arg_6_0._effectGo, arg_6_0._onDown, arg_6_0)
-		transformhelper.setLocalPos(arg_6_0._effectGo.transform, arg_6_0._offsetX, arg_6_0._offsetY, -3)
+		if aniGo then
+			gohelper.setActive(aniGo, true)
 
-		local var_6_4 = gohelper.findChild(arg_6_0._effectGo, "ani/yuanjian_new_07/gou")
+			local animator = aniGo:GetComponent(typeof(UnityEngine.Animator))
 
-		if var_6_4 then
-			gohelper.setActive(var_6_4, true)
-			var_6_4:GetComponent(typeof(UnityEngine.Animator)):Play("idle")
+			animator:Play("idle")
 		end
 	end
 end
 
-function var_0_0.onDown(arg_7_0)
-	arg_7_0:_onDown()
+function DungeonMapFinishElement:onDown()
+	self:_onDown()
 end
 
-function var_0_0._onDown(arg_8_0)
-	arg_8_0._sceneElements:setElementDown(arg_8_0)
+function DungeonMapFinishElement:_onDown()
+	self._sceneElements:setElementDown(self)
 end
 
-function var_0_0.onClick(arg_9_0)
+function DungeonMapFinishElement:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	if arg_9_0._config.type == DungeonEnum.ElementType.PuzzleGame then
+	if self._config.type == DungeonEnum.ElementType.PuzzleGame then
 		ViewMgr.instance:openView(ViewName.VersionActivityPuzzleView, {
 			isFinish = true,
-			elementCo = arg_9_0._config
+			elementCo = self._config
 		})
 
 		return
 	end
 
-	local var_9_0 = lua_chapter_map_fragment.configDict[arg_9_0._config.fragment]
+	local fragmentCo = lua_chapter_map_fragment.configDict[self._config.fragment]
 
-	if var_9_0 and var_9_0.type == DungeonEnum.FragmentType.LeiMiTeBeiNew then
+	if fragmentCo and fragmentCo.type == DungeonEnum.FragmentType.LeiMiTeBeiNew then
 		ViewMgr.instance:openView(ViewName.VersionActivityNewsView, {
-			fragmentId = var_9_0.id
+			fragmentId = fragmentCo.id
 		})
 	end
 end
 
-function var_0_0._onSetEpisodeListVisible(arg_10_0, arg_10_1)
-	gohelper.setActive(arg_10_0._go, arg_10_1)
+function DungeonMapFinishElement:_onSetEpisodeListVisible(value)
+	gohelper.setActive(self._go, value)
 end
 
-function var_0_0.addEventListeners(arg_11_0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, arg_11_0._onSetEpisodeListVisible, arg_11_0)
+function DungeonMapFinishElement:addEventListeners()
+	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, self._onSetEpisodeListVisible, self)
 end
 
-function var_0_0.removeEventListeners(arg_12_0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, arg_12_0._onSetEpisodeListVisible, arg_12_0)
+function DungeonMapFinishElement:removeEventListeners()
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, self._onSetEpisodeListVisible, self)
 end
 
-function var_0_0.addBoxCollider2D(arg_13_0)
-	local var_13_0 = ZProj.BoxColliderClickListener.Get(arg_13_0)
-	local var_13_1 = gohelper.onceAddComponent(arg_13_0, typeof(UnityEngine.BoxCollider2D))
+function DungeonMapFinishElement.addBoxCollider2D(go)
+	local clickListener = ZProj.BoxColliderClickListener.Get(go)
+	local box = gohelper.onceAddComponent(go, typeof(UnityEngine.BoxCollider2D))
 
-	var_13_1.enabled = true
-	var_13_1.size = Vector2(1.5, 1.5)
+	box.enabled = true
+	box.size = Vector2(1.5, 1.5)
 
-	var_13_0:SetIgnoreUI(true)
+	clickListener:SetIgnoreUI(true)
 
-	return var_13_0
+	return clickListener
 end
 
-function var_0_0.addBoxColliderListener(arg_14_0, arg_14_1, arg_14_2)
-	var_0_0.addBoxCollider2D(arg_14_0):AddClickListener(arg_14_1, arg_14_2)
+function DungeonMapFinishElement.addBoxColliderListener(go, callback, callbackTarget)
+	local clickListener = DungeonMapFinishElement.addBoxCollider2D(go)
+
+	clickListener:AddClickListener(callback, callbackTarget)
 end
 
-function var_0_0.isValid(arg_15_0)
-	return not gohelper.isNil(arg_15_0._go)
+function DungeonMapFinishElement:isValid()
+	return not gohelper.isNil(self._go)
 end
 
-function var_0_0.onDestroy(arg_16_0)
-	gohelper.setActive(arg_16_0._go, true)
+function DungeonMapFinishElement:onDestroy()
+	gohelper.setActive(self._go, true)
 
-	if arg_16_0._effectGo then
-		gohelper.destroy(arg_16_0._effectGo)
+	if self._effectGo then
+		gohelper.destroy(self._effectGo)
 
-		arg_16_0._effectGo = nil
+		self._effectGo = nil
 	end
 
-	if arg_16_0._itemGo then
-		gohelper.destroy(arg_16_0._itemGo)
+	if self._itemGo then
+		gohelper.destroy(self._itemGo)
 
-		arg_16_0._itemGo = nil
+		self._itemGo = nil
 	end
 
-	if arg_16_0._go then
-		gohelper.destroy(arg_16_0._go)
+	if self._go then
+		gohelper.destroy(self._go)
 
-		arg_16_0._go = nil
+		self._go = nil
 	end
 
-	if arg_16_0._resLoader then
-		arg_16_0._resLoader:dispose()
+	if self._resLoader then
+		self._resLoader:dispose()
 
-		arg_16_0._resLoader = nil
+		self._resLoader = nil
 	end
 end
 
-function var_0_0.getPathName(arg_17_0, arg_17_1)
-	arg_17_1 = string.split(arg_17_1, ".")[1]
+function DungeonMapFinishElement:getPathName(path)
+	path = string.split(path, ".")[1]
 
-	local var_17_0 = string.split(arg_17_1, "/")
+	local pathArr = string.split(path, "/")
 
-	return var_17_0[#var_17_0]
+	return pathArr[#pathArr]
 end
 
-return var_0_0
+return DungeonMapFinishElement

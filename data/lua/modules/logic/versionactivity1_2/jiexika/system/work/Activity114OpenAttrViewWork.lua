@@ -1,17 +1,19 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenAttrViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114OpenAttrViewWork.lua
 
-local var_0_0 = class("Activity114OpenAttrViewWork", Activity114OpenViewWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114OpenAttrViewWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	if not Activity114Helper.haveAttrOrFeatureChange(arg_1_0.context) then
-		arg_1_0:onDone(true)
+local Activity114OpenAttrViewWork = class("Activity114OpenAttrViewWork", Activity114OpenViewWork)
+
+function Activity114OpenAttrViewWork:onStart(context)
+	if not Activity114Helper.haveAttrOrFeatureChange(self.context) then
+		self:onDone(true)
 
 		return
 	end
 
-	arg_1_0._viewName = ViewName.Activity114FinishEventView
+	self._viewName = ViewName.Activity114FinishEventView
 
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	Activity114OpenAttrViewWork.super.onStart(self, context)
 end
 
-return var_0_0
+return Activity114OpenAttrViewWork

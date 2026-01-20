@@ -1,0 +1,236 @@
+[
+  {
+    "id": 111001,
+    "entrustType": 2,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 11104,
+    "bossEffect": 0
+  },
+  {
+    "id": 111002,
+    "entrustType": 1,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 11101,
+    "bossEffect": 0
+  },
+  {
+    "id": 111003,
+    "entrustType": 1,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 11102,
+    "bossEffect": 0
+  },
+  {
+    "id": 111004,
+    "entrustType": 1,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 11103,
+    "bossEffect": 0
+  },
+  {
+    "id": 111005,
+    "entrustType": 0,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 111006,
+    "entrustType": 0,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 111007,
+    "entrustType": 0,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112001,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11201,
+    "bossEffect": 0
+  },
+  {
+    "id": 112002,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11204,
+    "bossEffect": 0
+  },
+  {
+    "id": 112003,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112004,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112005,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112006,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11202,
+    "bossEffect": 0
+  },
+  {
+    "id": 112007,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112008,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112011,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11203,
+    "bossEffect": 0
+  },
+  {
+    "id": 113001,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11301,
+    "bossEffect": 0
+  },
+  {
+    "id": 113002,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11304,
+    "bossEffect": 0
+  },
+  {
+    "id": 113003,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 113004,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11302,
+    "bossEffect": 0
+  },
+  {
+    "id": 113005,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 114001,
+    "entrustType": 5,
+    "pieceRes": "v3a2_m_s16_chess_8",
+    "title": "",
+    "desc": "",
+    "talkId": 11303,
+    "bossEffect": 0
+  },
+  {
+    "id": 114002,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 114003,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 114004,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 114005,
+    "entrustType": 0,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  }
+]

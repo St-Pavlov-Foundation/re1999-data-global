@@ -1,54 +1,56 @@
-﻿module("modules.logic.settings.controller.SettingsVoicePackageController", package.seeall)
+﻿-- chunkname: @modules/logic/settings/controller/SettingsVoicePackageController.lua
 
-local var_0_0 = class("SettingsVoicePackageController", BaseController)
+module("modules.logic.settings.controller.SettingsVoicePackageController", package.seeall)
 
-var_0_0.NotDownload = 1
-var_0_0.InDownload = 2
-var_0_0.NeedUpdate = 3
-var_0_0.AlreadyLatest = 4
-var_0_0.DownloadFailedToast = 173
-var_0_0.NoEnoughDisk = 5
-var_0_0.MD5CheckError = 6
+local SettingsVoicePackageController = class("SettingsVoicePackageController", BaseController)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._httpGetter = nil
-	arg_1_0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
-	arg_1_0._optionalUpdateInst = arg_1_0._optionalUpdate.Instance
-	arg_1_0._downLoadStartTime = math.floor(Time.realtimeSinceStartup * 1000)
-	arg_1_0._statHotUpdatePerList = {}
-	arg_1_0._statHotUpdatePerList[1] = {
+SettingsVoicePackageController.NotDownload = 1
+SettingsVoicePackageController.InDownload = 2
+SettingsVoicePackageController.NeedUpdate = 3
+SettingsVoicePackageController.AlreadyLatest = 4
+SettingsVoicePackageController.DownloadFailedToast = 173
+SettingsVoicePackageController.NoEnoughDisk = 5
+SettingsVoicePackageController.MD5CheckError = 6
+
+function SettingsVoicePackageController:onInit()
+	self._httpGetter = nil
+	self._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
+	self._optionalUpdateInst = self._optionalUpdate.Instance
+	self._downLoadStartTime = math.floor(Time.realtimeSinceStartup * 1000)
+	self._statHotUpdatePerList = {}
+	self._statHotUpdatePerList[1] = {
 		0,
 		"start"
 	}
-	arg_1_0._statHotUpdatePerList[2] = {
+	self._statHotUpdatePerList[2] = {
 		0.2,
 		"20%"
 	}
-	arg_1_0._statHotUpdatePerList[3] = {
+	self._statHotUpdatePerList[3] = {
 		0.4,
 		"40%"
 	}
-	arg_1_0._statHotUpdatePerList[4] = {
+	self._statHotUpdatePerList[4] = {
 		0.6,
 		"60%"
 	}
-	arg_1_0._statHotUpdatePerList[5] = {
+	self._statHotUpdatePerList[5] = {
 		0.8,
 		"80%"
 	}
-	arg_1_0._statHotUpdatePerList[6] = {
+	self._statHotUpdatePerList[6] = {
 		1,
 		"100%"
 	}
-	arg_1_0._statHotUpdatePerNum = 6
-	arg_1_0._nowStatHotUpdatePerIndex = 1
+	self._statHotUpdatePerNum = 6
+	self._nowStatHotUpdatePerIndex = 1
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function SettingsVoicePackageController:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
+function SettingsVoicePackageController:addConstEvents()
 	if not HotUpdateVoiceMgr then
 		return
 	end
@@ -57,566 +59,586 @@ function var_0_0.addConstEvents(arg_3_0)
 		return
 	end
 
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.NotEnoughDiskSpace, arg_3_0._onNotEnoughDiskSpace, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.DownloadStart, arg_3_0._onDownloadStart, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.DownloadProgressRefresh, arg_3_0._onDownloadProgressRefresh, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.DownloadPackFail, arg_3_0._onDownloadPackFail, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.DownloadPackSuccess, arg_3_0._onDownloadPackSuccess, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.PackUnZipFail, arg_3_0._onPackUnZipFail, arg_3_0)
-	arg_3_0._optionalUpdateInst:Register(arg_3_0._optionalUpdate.PackItemStateChange, arg_3_0._onPackItemStateChange, arg_3_0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, arg_3_0._onReconnectSucc, arg_3_0)
+	self._optionalUpdateInst:Register(self._optionalUpdate.NotEnoughDiskSpace, self._onNotEnoughDiskSpace, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadStart, self._onDownloadStart, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadProgressRefresh, self._onDownloadProgressRefresh, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadPackFail, self._onDownloadPackFail, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadPackSuccess, self._onDownloadPackSuccess, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.PackUnZipFail, self._onPackUnZipFail, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.PackItemStateChange, self._onPackItemStateChange, self)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, self._onReconnectSucc, self)
 end
 
-function var_0_0.register(arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.NotEnoughDiskSpace, arg_4_0._onNotEnoughDiskSpace, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.DownloadStart, arg_4_0._onDownloadStart, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.DownloadProgressRefresh, arg_4_0._onDownloadProgressRefresh, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.DownloadPackFail, arg_4_0._onDownloadPackFail, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.DownloadPackSuccess, arg_4_0._onDownloadPackSuccess, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.PackUnZipFail, arg_4_0._onPackUnZipFail, arg_4_0)
-	arg_4_0._optionalUpdateInst:Register(arg_4_0._optionalUpdate.PackItemStateChange, arg_4_0._onPackItemStateChange, arg_4_0)
+function SettingsVoicePackageController:register()
+	self._optionalUpdateInst:Register(self._optionalUpdate.NotEnoughDiskSpace, self._onNotEnoughDiskSpace, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadStart, self._onDownloadStart, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadProgressRefresh, self._onDownloadProgressRefresh, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadPackFail, self._onDownloadPackFail, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.DownloadPackSuccess, self._onDownloadPackSuccess, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.PackUnZipFail, self._onPackUnZipFail, self)
+	self._optionalUpdateInst:Register(self._optionalUpdate.PackItemStateChange, self._onPackItemStateChange, self)
 end
 
-function var_0_0.reInit(arg_5_0)
+function SettingsVoicePackageController:reInit()
 	return
 end
 
-function var_0_0.getLocalVersionInt(arg_6_0, arg_6_1)
+function SettingsVoicePackageController:getLocalVersionInt(packName)
 	if not GameConfig.CanHotUpdate then
 		return 0
 	end
 
-	if not arg_6_0._optionalUpdateInst then
-		arg_6_0._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
-		arg_6_0._optionalUpdateInst = arg_6_0._optionalUpdate.Instance
+	if not self._optionalUpdateInst then
+		self._optionalUpdate = SLFramework.GameUpdate.OptionalUpdate
+		self._optionalUpdateInst = self._optionalUpdate.Instance
 	end
 
-	local var_6_0 = arg_6_0._optionalUpdateInst:GetLocalVersion(arg_6_1)
+	local versionStr = self._optionalUpdateInst:GetLocalVersion(packName)
 
-	if not string.nilorempty(var_6_0) then
-		return tonumber(var_6_0)
+	if not string.nilorempty(versionStr) then
+		return tonumber(versionStr)
 	end
 
 	return 0
 end
 
-function var_0_0.switchVoiceType(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	local var_7_0 = GameConfig:GetCurVoiceShortcut()
-	local var_7_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(arg_7_1)
+function SettingsVoicePackageController:switchVoiceType(voiceType, entrance, auto)
+	local oldvoiceType = GameConfig:GetCurVoiceShortcut()
+	local lanIndex = GameLanguageMgr.instance:getStoryIndexByShortCut(voiceType)
 
-	PlayerPrefsHelper.setNumber("StoryAudioLanType", var_7_1 - 1)
-	GameLanguageMgr.instance:setVoiceTypeByStoryIndex(var_7_1)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.VoiceTypeKey_Story, arg_7_1)
-	AudioMgr.instance:changeLang(arg_7_1)
-	GameConfig:SetCurVoiceType(arg_7_1)
+	PlayerPrefsHelper.setNumber("StoryAudioLanType", lanIndex - 1)
+	GameLanguageMgr.instance:setVoiceTypeByStoryIndex(lanIndex)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.VoiceTypeKey_Story, voiceType)
+	AudioMgr.instance:changeLang(voiceType)
+	GameConfig:SetCurVoiceType(voiceType)
 
-	if arg_7_3 then
+	if auto then
 		return
 	end
 
-	arg_7_0:dispatchEvent(SettingsEvent.OnChangeVoiceType)
+	self:dispatchEvent(SettingsEvent.OnChangeVoiceType)
 
-	local var_7_2 = {
-		current_language = GameConfig:GetCurLangShortcut(),
-		entrance = arg_7_2 or "",
-		current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList() or {},
-		current_voice_pack_used = arg_7_1 or "",
-		voice_pack_before = var_7_0 or ""
-	}
+	local data = {}
 
-	if arg_7_2 == "in_settings" or arg_7_2 == "in_voiceview" then
-		StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_switch, var_7_2)
+	data.current_language = GameConfig:GetCurLangShortcut()
+	data.entrance = entrance or ""
+	data.current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList() or {}
+	data.current_voice_pack_used = voiceType or ""
+	data.voice_pack_before = oldvoiceType or ""
+
+	if entrance == "in_settings" or entrance == "in_voiceview" then
+		StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_switch, data)
 	else
-		SDKDataTrackMgr.instance:trackVoicePackSwitch(var_7_2)
+		SDKDataTrackMgr.instance:trackVoicePackSwitch(data)
 	end
 end
 
-function var_0_0.openVoicePackageView(arg_8_0)
-	if not arg_8_0._httpGetter then
-		arg_8_0._httpGetter = SettingVoiceHttpGetter.New()
+function SettingsVoicePackageController:openVoicePackageView()
+	if not self._httpGetter then
+		self._httpGetter = SettingVoiceHttpGetter.New()
 
-		arg_8_0._httpGetter:start(arg_8_0._onGetVoiceInfoAndOpenView, arg_8_0)
+		self._httpGetter:start(self._onGetVoiceInfoAndOpenView, self)
 	else
-		arg_8_0:_openVoicePackageView()
+		self:_openVoicePackageView()
 	end
 end
 
-function var_0_0.RequsetVoiceInfo(arg_9_0, arg_9_1, arg_9_2)
-	if not arg_9_0._httpGetter then
-		arg_9_0._httpGetter = SettingVoiceHttpGetter.New()
-	end
-
-	arg_9_0._httpGetter:start(function()
-		arg_9_0:_onGetVoiceInfo()
-
-		if arg_9_1 then
-			arg_9_1(arg_9_2)
+function SettingsVoicePackageController:RequsetVoiceInfo(callback, callbackObj)
+	if not ProjBooter.instance:isUseBigZip() then
+		if callback then
+			callback(callbackObj)
 		end
-	end, arg_9_0)
-end
+	else
+		if not self._httpGetter then
+			self._httpGetter = SettingVoiceHttpGetter.New()
+		end
 
-function var_0_0.onSettingVoiceDropDown(arg_11_0)
-	if not arg_11_0._httpGetter then
-		arg_11_0._httpGetter = SettingVoiceHttpGetter.New()
+		self._httpGetter:start(function()
+			self:_onGetVoiceInfo()
 
-		arg_11_0._httpGetter:start(arg_11_0._onGetVoiceInfo, arg_11_0)
+			if callback then
+				callback(callbackObj)
+			end
+		end, self)
 	end
 end
 
-function var_0_0._onGetVoiceInfo(arg_12_0)
-	local var_12_0 = arg_12_0._httpGetter:getHttpResult()
+function SettingsVoicePackageController:onSettingVoiceDropDown()
+	if not self._httpGetter then
+		self._httpGetter = SettingVoiceHttpGetter.New()
 
-	for iter_12_0, iter_12_1 in pairs(var_12_0) do
-		local var_12_1 = SettingsVoicePackageModel.instance:getPackInfo(iter_12_0)
+		self._httpGetter:start(self._onGetVoiceInfo, self)
+	end
+end
 
-		if var_12_1 then
-			var_12_1:setLangInfo(iter_12_1)
+function SettingsVoicePackageController:_onGetVoiceInfo()
+	local result = self._httpGetter:getHttpResult()
 
-			if #var_12_1.downloadResList.names > 0 then
-				local var_12_2 = var_12_1.downloadResList
+	for lang, langInfo in pairs(result) do
+		local mo = SettingsVoicePackageModel.instance:getPackInfo(lang)
 
-				arg_12_0._optionalUpdateInst:InitBreakPointInfo(var_12_2.names, var_12_2.hashs, var_12_2.orders, var_12_2.lengths)
+		if mo then
+			mo:setLangInfo(langInfo)
 
-				local var_12_3 = arg_12_0._optionalUpdateInst:GetRecvSize()
-				local var_12_4 = tonumber(var_12_3)
+			if #mo.downloadResList.names > 0 then
+				local res = mo.downloadResList
 
-				var_12_1:setLocalSize(var_12_4)
-				arg_12_0:dispatchEvent(SettingsEvent.OnPackItemStateChange, var_12_1.lang)
+				self._optionalUpdateInst:InitBreakPointInfo(res.names, res.hashs, res.orders, res.lengths)
+
+				local recvSize = self._optionalUpdateInst:GetRecvSize()
+
+				recvSize = tonumber(recvSize)
+
+				mo:setLocalSize(recvSize)
+				self:dispatchEvent(SettingsEvent.OnPackItemStateChange, mo.lang)
 			end
 		end
 	end
 end
 
-function var_0_0._onGetVoiceInfoAndOpenView(arg_13_0)
-	arg_13_0:_onGetVoiceInfo()
-	arg_13_0:_openVoicePackageView()
+function SettingsVoicePackageController:_onGetVoiceInfoAndOpenView()
+	self:_onGetVoiceInfo()
+	self:_openVoicePackageView()
 end
 
-function var_0_0._openVoicePackageView(arg_14_0)
+function SettingsVoicePackageController:_openVoicePackageView()
 	ViewMgr.instance:openView(ViewName.SettingsVoicePackageView)
 end
 
-function var_0_0.getHttpResult(arg_15_0)
-	if arg_15_0._httpGetter then
-		return arg_15_0._httpGetter:getHttpResult()
+function SettingsVoicePackageController:getHttpResult()
+	if self._httpGetter then
+		return self._httpGetter:getHttpResult()
 	end
 end
 
-function var_0_0.getLangSize(arg_16_0, arg_16_1)
-	if arg_16_0._httpGetter then
-		return arg_16_0._httpGetter:getLangSize(arg_16_1)
+function SettingsVoicePackageController:getLangSize(lang)
+	if self._httpGetter then
+		return self._httpGetter:getLangSize(lang)
 	end
 end
 
-function var_0_0.tryDownload(arg_17_0, arg_17_1, arg_17_2)
+function SettingsVoicePackageController:tryDownload(packInfo, needTip)
 	if ViewMgr.instance:isOpen(ViewName.SettingsVoiceDownloadView) then
 		return
 	end
 
-	if #arg_17_1.downloadResList.names == 0 then
-		if arg_17_0._httpGetter then
-			arg_17_0._httpGetter:stop()
+	if #packInfo.downloadResList.names == 0 and ProjBooter.instance:isUseBigZip() then
+		if self._httpGetter then
+			self._httpGetter:stop()
 
-			arg_17_0._httpGetter = nil
+			self._httpGetter = nil
 		end
 
-		arg_17_0:openVoicePackageView()
+		self:openVoicePackageView()
 
 		return
 	end
 
-	if arg_17_2 then
-		local var_17_0, var_17_1, var_17_2 = arg_17_1:getLeftSizeMBorGB()
+	if needTip then
+		local leftSize, size, units = packInfo:getLeftSizeMBorGB()
 
 		MessageBoxController.instance:showMsgBox(MessageBoxIdDefine.DownloadVoicePack, MsgBoxEnum.BoxType.Yes_No, function()
-			local var_18_0 = {}
+			local data = {}
 
-			var_18_0.entrance = "voice_list"
-			var_18_0.update_amount = arg_17_1:getLeftSizeMBNum()
-			var_18_0.download_voice_pack_list = {
-				arg_17_1.lang
+			data.entrance = "voice_list"
+			data.update_amount = packInfo:getLeftSizeMBNum()
+			data.download_voice_pack_list = {
+				packInfo.lang
 			}
-			var_18_0.current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList()
-			var_18_0.current_language = GameConfig:GetCurLangShortcut()
-			var_18_0.current_voice_pack_used = GameConfig:GetCurVoiceShortcut()
+			data.current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList()
+			data.current_language = GameConfig:GetCurLangShortcut()
+			data.current_voice_pack_used = GameConfig:GetCurVoiceShortcut()
 
-			StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_download_confirm, var_18_0)
-			arg_17_0:startDownload(arg_17_1)
+			StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_download_confirm, data)
+			self:startDownload(packInfo)
 			ViewMgr.instance:openView(ViewName.SettingsVoiceDownloadView, {
-				packItemMO = arg_17_1
+				packItemMO = packInfo
 			})
 		end, function()
 			return
-		end, nil, nil, nil, nil, luaLang(arg_17_1.nameLangId), string.format("%.2f%s", var_17_0, var_17_2))
+		end, nil, nil, nil, nil, luaLang(packInfo.nameLangId), string.format("%.2f%s", leftSize, units))
 	else
-		arg_17_0:startDownload(arg_17_1)
+		self:startDownload(packInfo)
 		ViewMgr.instance:openView(ViewName.SettingsVoiceDownloadView, {
-			packItemMO = arg_17_1
+			packItemMO = packInfo
 		})
 	end
 end
 
-function var_0_0.getPackItemState(arg_20_0, arg_20_1, arg_20_2)
-	return arg_20_0._optionalUpdateInst:GetPackItemState(arg_20_1, arg_20_2)
+function SettingsVoicePackageController:getPackItemState(lang, latestVersion)
+	return self._optionalUpdateInst:GetPackItemState(lang, latestVersion)
 end
 
-function var_0_0.startDownload(arg_21_0, arg_21_1)
-	logNormal("startDownload lang = " .. arg_21_1.lang .. " version = " .. arg_21_1.latestVersion)
+function SettingsVoicePackageController:startDownload(mo)
+	logNormal("startDownload lang = " .. mo.lang .. " version = " .. mo.latestVersion)
 
-	local var_21_0 = arg_21_1.downloadResList
-	local var_21_1 = arg_21_1.download_url
-	local var_21_2 = arg_21_1.download_url_bak
-
-	arg_21_0._optionalUpdateInst:SetRemoteAssetUrl(var_21_1, var_21_2)
-	arg_21_0:_setUseReserveUrl()
-	arg_21_0._optionalUpdateInst:StartDownload(arg_21_1.lang, var_21_0.names, var_21_0.hashs, var_21_0.orders, var_21_0.lengths, arg_21_1.latestVersion)
-	arg_21_0:_onDownloadPrepareStart(arg_21_1.lang)
-end
-
-function var_0_0.stopDownload(arg_22_0, arg_22_1)
-	arg_22_0._optionalUpdateInst:StopDownload()
-	arg_22_0._optionalUpdateInst:ClearThread()
-	arg_22_0:dispatchEvent(SettingsEvent.OnDownloadPackFail, arg_22_1.lang)
-end
-
-function var_0_0.startDownloadAll(arg_23_0)
-	local var_23_0 = SettingsVoicePackageListModel.instance:getList()
-
-	for iter_23_0, iter_23_1 in pairs(var_23_0) do
-		local var_23_1 = iter_23_1:getStatus()
-
-		if var_23_1 == var_0_0.NotDownload or var_23_1 == var_0_0.NeedUpdate then
-			arg_23_0:startDownload(iter_23_1)
-		end
-	end
-end
-
-function var_0_0.deleteVoicePack(arg_24_0, arg_24_1)
-	local var_24_0 = SettingsVoicePackageModel.instance:getPackInfo(arg_24_1)
-	local var_24_1 = {
-		current_language = GameConfig:GetCurLangShortcut(),
-		current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList(),
-		current_voice_pack_used = GameConfig:GetCurVoiceShortcut(),
-		voice_pack_delete = var_24_0.lang
-	}
-
-	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, var_24_1)
-	var_24_0:setLocalSize(0)
-	arg_24_0._optionalUpdateInst:RemovePackInfo(arg_24_1)
-
-	if arg_24_1 == "res-HD" then
-		local var_24_2 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/HD"
-
-		SLFramework.FileHelper.ClearDir(var_24_2)
-		logNormal("removeVoicePack  hdDir=" .. var_24_2)
+	if not ProjBooter.instance:isUseBigZip() then
+		OptionPackageDownloadMgr.instance:startDownload(mo.lang, {}, {
+			mo.lang
+		})
 	else
-		for iter_24_0, iter_24_1 in pairs(OptionPackageEnum.Package) do
-			local var_24_3 = HotUpdateOptionPackageMgr.instance:formatLangPackName(arg_24_1, iter_24_1)
+		local res = mo.downloadResList
+		local downloadUrl, downloadUrlBak = mo.download_url, mo.download_url_bak
 
-			arg_24_0._optionalUpdateInst:RemovePackInfo(var_24_3)
-		end
-
-		local var_24_4 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/audios/" .. SLFramework.FrameworkSettings.CurPlatformName .. "/" .. arg_24_1
-
-		SLFramework.FileHelper.ClearDir(var_24_4)
-
-		local var_24_5 = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/" .. arg_24_1
-
-		SLFramework.FileHelper.ClearDir(var_24_5)
-		logNormal("removeVoicePack  audiosDir=" .. var_24_4)
-		logNormal("removeVoicePack  voideoDir=" .. var_24_5)
+		self._optionalUpdateInst:SetRemoteAssetUrl(downloadUrl, downloadUrlBak)
+		self:_setUseReserveUrl()
+		self._optionalUpdateInst:StartDownload(mo.lang, res.names, res.hashs, res.orders, res.lengths, mo.latestVersion)
 	end
 
-	ToastController.instance:showToast(183, luaLang(var_24_0.nameLangId))
-	SettingsVoicePackageModel.instance:onDeleteVoicePack(arg_24_1)
-	arg_24_0:dispatchEvent(SettingsEvent.OnPackItemStateChange, arg_24_1)
-
-	if arg_24_0._httpGetter then
-		arg_24_0._httpGetter:stop()
-
-		arg_24_0._httpGetter = nil
-	end
-
-	arg_24_0:openVoicePackageView()
+	self:_onDownloadPrepareStart(mo.lang)
 end
 
-function var_0_0._onReconnectSucc(arg_25_0)
-	if arg_25_0.errorCode then
-		local var_25_0 = SLFramework.GameUpdate.FailError
+function SettingsVoicePackageController:stopDownload(resItem)
+	if not ProjBooter.instance:isUseBigZip() then
+		OptionPackageDownloadMgr.instance:StopDownload()
+	else
+		self._optionalUpdateInst:StopDownload()
+		self._optionalUpdateInst:ClearThread()
+	end
 
-		if arg_25_0.errorCode == var_25_0.NoEnoughDisk or arg_25_0.errorCode == var_25_0.MD5CheckError then
-			arg_25_0:_cancelDownload()
+	self:dispatchEvent(SettingsEvent.OnDownloadPackFail, resItem.lang)
+end
+
+function SettingsVoicePackageController:startDownloadAll()
+	local data = SettingsVoicePackageListModel.instance:getList()
+
+	for _, item in pairs(data) do
+		local itemStatus = item:getStatus()
+
+		if itemStatus == SettingsVoicePackageController.NotDownload or itemStatus == SettingsVoicePackageController.NeedUpdate then
+			self:startDownload(item)
+		end
+	end
+end
+
+function SettingsVoicePackageController:deleteVoicePack(packname)
+	local resItem = SettingsVoicePackageModel.instance:getPackInfo(packname)
+	local data = {}
+
+	data.current_language = GameConfig:GetCurLangShortcut()
+	data.current_voice_pack_list = SettingsVoicePackageModel.instance:getLocalVoiceTypeList()
+	data.current_voice_pack_used = GameConfig:GetCurVoiceShortcut()
+	data.voice_pack_delete = resItem.lang
+
+	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_delete, data)
+	resItem:setLocalSize(0)
+	self._optionalUpdateInst:RemovePackInfo(packname)
+
+	if packname == "res-HD" then
+		local HDdir = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/HD"
+
+		SLFramework.FileHelper.ClearDir(HDdir)
+		logNormal("removeVoicePack  hdDir=" .. HDdir)
+	else
+		for k, packageType in pairs(OptionPackageEnum.Package) do
+			local optionPackname = HotUpdateOptionPackageMgr.instance:formatLangPackName(packname, packageType)
+
+			self._optionalUpdateInst:RemovePackInfo(optionPackname)
+		end
+
+		local audiosDir = SLFramework.FrameworkSettings.PersistentResRootDir .. "/audios/" .. SLFramework.FrameworkSettings.CurPlatformName .. "/" .. packname
+
+		SLFramework.FileHelper.ClearDir(audiosDir)
+
+		local voideoDir = SLFramework.FrameworkSettings.PersistentResRootDir .. "/videos/" .. packname
+
+		SLFramework.FileHelper.ClearDir(voideoDir)
+		logNormal("removeVoicePack  audiosDir=" .. audiosDir)
+		logNormal("removeVoicePack  voideoDir=" .. voideoDir)
+	end
+
+	ToastController.instance:showToast(183, luaLang(resItem.nameLangId))
+	SettingsVoicePackageModel.instance:onDeleteVoicePack(packname)
+	OptionPackageDownloadMgr.instance:deletePack(packname)
+	self:dispatchEvent(SettingsEvent.OnPackItemStateChange, packname)
+
+	if self._httpGetter then
+		self._httpGetter:stop()
+
+		self._httpGetter = nil
+	end
+
+	self:openVoicePackageView()
+end
+
+function SettingsVoicePackageController:_onReconnectSucc()
+	if self.errorCode then
+		local ErrorDefine = SLFramework.GameUpdate.FailError
+
+		if self.errorCode == ErrorDefine.NoEnoughDisk or self.errorCode == ErrorDefine.MD5CheckError then
+			self:_cancelDownload()
 		else
-			arg_25_0._optionalUpdateInst:RunNextStepAction()
+			self._optionalUpdateInst:RunNextStepAction()
 		end
 
-		arg_25_0.errorCode = nil
+		self.errorCode = nil
 	end
 end
 
-function var_0_0._onDownloadPrepareStart(arg_26_0, arg_26_1)
-	logNormal("SettingsVoicePackageController:_onDownloadPrepareStart, packName = " .. arg_26_1)
-	arg_26_0:dispatchEvent(SettingsEvent.OnDownloadPrepareStart, arg_26_1)
+function SettingsVoicePackageController:_onDownloadPrepareStart(packName)
+	logNormal("SettingsVoicePackageController:_onDownloadPrepareStart, packName = " .. packName)
+	self:dispatchEvent(SettingsEvent.OnDownloadPrepareStart, packName)
 end
 
-function var_0_0._onDownloadStart(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	logNormal("SettingsVoicePackageController:_onDownloadStart, packName = " .. arg_27_1 .. " curSize = " .. arg_27_2 .. " allSize = " .. arg_27_3)
-	SettingsVoicePackageModel.instance:setDownloadProgress(arg_27_1, arg_27_2, arg_27_3)
-	arg_27_0:dispatchEvent(SettingsEvent.OnDownloadStart, arg_27_1, arg_27_2, arg_27_3)
+function SettingsVoicePackageController:_onDownloadStart(packName, curSize, allSize)
+	logNormal("SettingsVoicePackageController:_onDownloadStart, packName = " .. packName .. " curSize = " .. curSize .. " allSize = " .. allSize)
+	SettingsVoicePackageModel.instance:setDownloadProgress(packName, curSize, allSize)
+	self:dispatchEvent(SettingsEvent.OnDownloadStart, packName, curSize, allSize)
 
-	local var_27_0 = SettingsVoicePackageModel.instance:getPackInfo(arg_27_1)
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(packName)
 
-	arg_27_0._nowStatHotUpdatePerIndex = 1
-	arg_27_0._downLoadStartTime = math.floor(Time.realtimeSinceStartup * 1000)
+	self._nowStatHotUpdatePerIndex = 1
+	self._downLoadStartTime = math.floor(Time.realtimeSinceStartup * 1000)
 
-	arg_27_0:statHotUpdate(arg_27_2 / arg_27_3, var_27_0)
+	self:statHotUpdate(curSize / allSize, packInfo)
 end
 
-function var_0_0._onDownloadProgressRefresh(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
-	local var_28_0 = not arg_28_0._prevSize or arg_28_2 ~= arg_28_0._prevSize
+function SettingsVoicePackageController:_onDownloadProgressRefresh(packName, curSize, allSize)
+	local progressChanged = not self._prevSize or curSize ~= self._prevSize
 
-	arg_28_0._prevSize = arg_28_2
+	self._prevSize = curSize
 
-	if LoginModel.instance:getFailCount() > 0 and var_28_0 then
+	if LoginModel.instance:getFailCount() > 0 and progressChanged then
 		LoginModel.instance:resetFailCount()
 	end
 
-	logNormal("SettingsVoicePackageController:_onDownloadProgressRefresh, packName = " .. arg_28_1 .. " curSize = " .. arg_28_2 .. " allSize = " .. arg_28_3)
-	SettingsVoicePackageModel.instance:setDownloadProgress(arg_28_1, arg_28_2, arg_28_3)
-	arg_28_0:dispatchEvent(SettingsEvent.OnDownloadProgressRefresh, arg_28_1, arg_28_2, arg_28_3)
+	logNormal("SettingsVoicePackageController:_onDownloadProgressRefresh, packName = " .. packName .. " curSize = " .. curSize .. " allSize = " .. allSize)
+	SettingsVoicePackageModel.instance:setDownloadProgress(packName, curSize, allSize)
+	self:dispatchEvent(SettingsEvent.OnDownloadProgressRefresh, packName, curSize, allSize)
 
-	local var_28_1 = SettingsVoicePackageModel.instance:getPackInfo(arg_28_1)
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(packName)
 
-	if arg_28_0.initFinish == false then
-		arg_28_2 = string.format("%0.2f", arg_28_2)
-		arg_28_3 = string.format("%0.2f", arg_28_3)
+	if self.initFinish == false then
+		curSize = string.format("%0.2f", curSize)
+		allSize = string.format("%0.2f", allSize)
 
-		local var_28_2 = var_28_1.nameLangId
-		local var_28_3 = {
-			luaLang(var_28_2),
-			arg_28_2,
-			arg_28_3
+		local nameLangId = packInfo.nameLangId
+		local tag = {
+			luaLang(nameLangId),
+			curSize,
+			allSize
 		}
-		local var_28_4 = GameUtil.getSubPlaceholderLuaLang(luaLang("voice_package_update_2"), var_28_3)
+		local text = GameUtil.getSubPlaceholderLuaLang(luaLang("voice_package_update_2"), tag)
 
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.ShowDownloadInfo, arg_28_2 / arg_28_3, var_28_4)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.ShowDownloadInfo, curSize / allSize, text)
 	end
 
-	arg_28_0:statHotUpdate(arg_28_2 / arg_28_3, var_28_1)
+	self:statHotUpdate(curSize / allSize, packInfo)
 end
 
-function var_0_0.statHotUpdate(arg_29_0, arg_29_1, arg_29_2)
-	for iter_29_0 = arg_29_0._nowStatHotUpdatePerIndex, arg_29_0._statHotUpdatePerNum do
-		local var_29_0 = arg_29_0._statHotUpdatePerList[iter_29_0]
+function SettingsVoicePackageController:statHotUpdate(percent, packInfo)
+	for i = self._nowStatHotUpdatePerIndex, self._statHotUpdatePerNum do
+		local v = self._statHotUpdatePerList[i]
+		local startPoint = v[1]
 
-		if arg_29_1 >= var_29_0[1] then
-			local var_29_1 = {
-				step = var_29_0[2],
-				spend_time = math.floor(Time.realtimeSinceStartup * 1000) - arg_29_0._downLoadStartTime,
-				update_amount = arg_29_2:getLeftSizeMBNum(),
-				download_voice_pack_list = {
-					arg_29_2.lang
-				}
+		if startPoint <= percent then
+			local data = {}
+
+			data.step = v[2]
+			data.spend_time = math.floor(Time.realtimeSinceStartup * 1000) - self._downLoadStartTime
+			data.update_amount = packInfo:getLeftSizeMBNum()
+			data.download_voice_pack_list = {
+				packInfo.lang
 			}
-
-			var_29_1.result_msg = "", StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_downloading, var_29_1)
-			arg_29_0._nowStatHotUpdatePerIndex = iter_29_0 + 1
+			data.result_msg = "", StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_downloading, data)
+			self._nowStatHotUpdatePerIndex = i + 1
 		else
 			break
 		end
 	end
 end
 
-function var_0_0._onPackItemStateChange(arg_30_0, arg_30_1)
-	logNormal("SettingsVoicePackageController:_onPackItemStateChange, packName = " .. arg_30_1)
-	arg_30_0:dispatchEvent(SettingsEvent.OnPackItemStateChange, arg_30_1)
+function SettingsVoicePackageController:_onPackItemStateChange(packName)
+	logNormal("SettingsVoicePackageController:_onPackItemStateChange, packName = " .. packName)
+	self:dispatchEvent(SettingsEvent.OnPackItemStateChange, packName)
 end
 
-function var_0_0._onDownloadPackSuccess(arg_31_0, arg_31_1)
-	logNormal("SettingsVoicePackageController:_onDownloadPackSuccess, packName = " .. arg_31_1)
-	SettingsVoicePackageModel.instance:onDownloadSucc(arg_31_1)
-	arg_31_0:dispatchEvent(SettingsEvent.OnDownloadPackSuccess, arg_31_1)
+function SettingsVoicePackageController:_onDownloadPackSuccess(packName)
+	logNormal("SettingsVoicePackageController:_onDownloadPackSuccess, packName = " .. packName)
+	SettingsVoicePackageModel.instance:onDownloadSucc(packName)
+	self:dispatchEvent(SettingsEvent.OnDownloadPackSuccess, packName)
 
-	if arg_31_0.initFinish == false and arg_31_0.needUpdateMODic[arg_31_1] then
-		arg_31_0.allUpdateSize = 0
-		arg_31_0.alreadyUpdateSize = arg_31_0.needUpdateMODic[arg_31_1].size
-		arg_31_0.needUpdateMODic[arg_31_1] = nil
+	if self.initFinish == false and self.needUpdateMODic[packName] then
+		self.allUpdateSize = 0
+		self.alreadyUpdateSize = self.needUpdateMODic[packName].size
+		self.needUpdateMODic[packName] = nil
 
-		for iter_31_0, iter_31_1 in pairs(arg_31_0.needUpdateMODic) do
-			arg_31_0.allUpdateSize = arg_31_0.allUpdateSize + iter_31_1.size
+		for i, v in pairs(self.needUpdateMODic) do
+			self.allUpdateSize = self.allUpdateSize + v.size
 		end
 
-		arg_31_0.allUpdateSize = arg_31_0.allUpdateSize / 1024 / 1024
+		self.allUpdateSize = self.allUpdateSize / 1024 / 1024
 
-		if arg_31_0.allUpdateSize == 0 then
-			arg_31_0:_tryOptionDataInitedCallBack(true)
+		if self.allUpdateSize == 0 then
+			self:_tryOptionDataInitedCallBack(true)
 		end
 	end
 end
 
-function var_0_0._setUseReserveUrl(arg_32_0)
+function SettingsVoicePackageController:_setUseReserveUrl()
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
 
-	local var_32_0 = typeof(SLFramework.GameUpdate.OptionalUpdate)
+	local type_OptionalUpdate = typeof(SLFramework.GameUpdate.OptionalUpdate)
+	local field_useReserveUrl = tolua.getfield(type_OptionalUpdate, "_useReserveUrl", 36)
 
-	tolua.getfield(var_32_0, "_useReserveUrl", 36):Set(SLFramework.GameUpdate.OptionalUpdate.Instance, LoginModel.instance:getUseBackup())
+	field_useReserveUrl:Set(SLFramework.GameUpdate.OptionalUpdate.Instance, LoginModel.instance:getUseBackup())
 end
 
-function var_0_0._onDownloadPackFail(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
-	logNormal("SettingsVoicePackageController:_onDownloadPackFail, packName = " .. arg_33_1 .. " resUrl = " .. arg_33_2 .. " failError = " .. arg_33_3)
-	arg_33_0:dispatchEvent(SettingsEvent.OnDownloadPackFail, arg_33_1, arg_33_2, arg_33_3)
+function SettingsVoicePackageController:_onDownloadPackFail(packName, resUrl, failError, errorMsg)
+	logNormal("SettingsVoicePackageController:_onDownloadPackFail, packName = " .. packName .. " resUrl = " .. resUrl .. " failError = " .. failError)
+	self:dispatchEvent(SettingsEvent.OnDownloadPackFail, packName, resUrl, failError)
 
-	local var_33_0 = SettingsVoicePackageModel.instance:getPackLangName(arg_33_1)
+	local langeName = SettingsVoicePackageModel.instance:getPackLangName(packName)
 
-	if arg_33_3 == 5 then
-		arg_33_0:_onNotEnoughDiskSpace(arg_33_1)
+	if failError == 5 then
+		self:_onNotEnoughDiskSpace(packName)
 	else
 		LoginModel.instance:inverseUseBackup()
-		arg_33_0:_setUseReserveUrl()
+		self:_setUseReserveUrl()
 		LoginModel.instance:incFailCount()
 
 		if LoginModel.instance:isFailNeedAlert() then
 			LoginModel.instance:resetFailAlertCount()
 
-			local var_33_1 = arg_33_0:_getDownloadFailedTip(arg_33_3, arg_33_4)
+			local tips = self:_getDownloadFailedTip(failError, errorMsg)
 
-			if arg_33_0.initFinish == false then
+			if self.initFinish == false then
 				MessageBoxController.instance:showSystemMsgBoxAndSetBtn(MessageBoxIdDefine.VoiceDownloadCurFailed_1, MsgBoxEnum.BoxType.Yes_No, luaLang("retry"), "RETRY", booterLang("exit"), "EXIT", function()
-					arg_33_0._optionalUpdateInst:RunNextStepAction()
+					self._optionalUpdateInst:RunNextStepAction()
 
-					arg_33_0.errorCode = nil
+					self.errorCode = nil
 				end, function()
 					ProjBooter.instance:quitGame()
-				end, nil, nil, nil, nil, var_33_0, var_33_1)
+				end, nil, nil, nil, nil, langeName, tips)
 			else
 				MessageBoxController.instance:showMsgBoxAndSetBtn(MessageBoxIdDefine.VoiceDownloadCurFailed_1, MsgBoxEnum.BoxType.Yes_No, luaLang("retry"), "RETRY", luaLang("cancel"), "CANCEL", function()
-					arg_33_0._optionalUpdateInst:RunNextStepAction()
+					self._optionalUpdateInst:RunNextStepAction()
 
-					arg_33_0.errorCode = nil
+					self.errorCode = nil
 				end, function()
-					SettingsVoicePackageModel.instance:clearNeedDownloadSize(arg_33_1)
-					arg_33_0:_cancelDownload()
-				end, nil, nil, nil, nil, var_33_0, var_33_1)
+					SettingsVoicePackageModel.instance:clearNeedDownloadSize(packName)
+					self:_cancelDownload()
+				end, nil, nil, nil, nil, langeName, tips)
 			end
 		else
-			arg_33_0:_retryDownload()
+			self:_retryDownload()
 		end
 	end
 
-	local var_33_2 = SettingsVoicePackageModel.instance:getPackInfo(arg_33_1)
-	local var_33_3 = {}
+	local packInfo = SettingsVoicePackageModel.instance:getPackInfo(packName)
+	local data = {}
 
-	var_33_3.step = ""
-	var_33_3.spend_time = math.floor(Time.realtimeSinceStartup * 1000) - arg_33_0._downLoadStartTime
-	var_33_3.update_amount = var_33_2:getLeftSizeMBNum()
-	var_33_3.download_voice_pack_list = {
-		var_33_2.lang
+	data.step = ""
+	data.spend_time = math.floor(Time.realtimeSinceStartup * 1000) - self._downLoadStartTime
+	data.update_amount = packInfo:getLeftSizeMBNum()
+	data.download_voice_pack_list = {
+		packInfo.lang
 	}
-	var_33_3.result_msg = arg_33_0:_getDownloadFailedTip(arg_33_3, arg_33_4)
+	data.result_msg = self:_getDownloadFailedTip(failError, errorMsg)
 
-	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_downloading, var_33_3)
+	StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_downloading, data)
 end
 
-function var_0_0._retryDownload(arg_38_0)
-	arg_38_0._optionalUpdateInst:RunNextStepAction()
+function SettingsVoicePackageController:_retryDownload()
+	self._optionalUpdateInst:RunNextStepAction()
 
-	arg_38_0.errorCode = nil
+	self.errorCode = nil
 end
 
-function var_0_0._getDownloadFailedTip(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = SLFramework.GameUpdate.FailError
+function SettingsVoicePackageController:_getDownloadFailedTip(errorCode, errorMsg)
+	local ErrorDefine = SLFramework.GameUpdate.FailError
 
-	arg_39_1 = var_39_0.IntToEnum(arg_39_1)
-	arg_39_0.errorCode = arg_39_1
-	arg_39_2 = arg_39_2 or ""
+	errorCode = ErrorDefine.IntToEnum(errorCode)
+	self.errorCode = errorCode
+	errorMsg = errorMsg or ""
 
-	if arg_39_1 == var_39_0.DownloadErrer then
+	if errorCode == ErrorDefine.DownloadErrer then
 		return booterLang("download_fail_download_error")
-	elseif arg_39_1 == var_39_0.NotFound then
+	elseif errorCode == ErrorDefine.NotFound then
 		return booterLang("download_fail_not_found")
-	elseif arg_39_1 == var_39_0.ServerPause then
+	elseif errorCode == ErrorDefine.ServerPause then
 		return booterLang("download_fail_server_pause")
-	elseif arg_39_1 == var_39_0.TimeOut then
+	elseif errorCode == ErrorDefine.TimeOut then
 		return booterLang("download_fail_time_out")
-	elseif arg_39_1 == var_39_0.NoEnoughDisk then
+	elseif errorCode == ErrorDefine.NoEnoughDisk then
 		return booterLang("download_fail_no_enough_disk")
-	elseif arg_39_1 == var_39_0.MD5CheckError then
+	elseif errorCode == ErrorDefine.MD5CheckError then
 		return booterLang("download_fail_md5_check_error")
 	else
-		return booterLang("download_fail_other") .. tostring(arg_39_2)
+		return booterLang("download_fail_other") .. tostring(errorMsg)
 	end
 end
 
-function var_0_0._onNotEnoughDiskSpace(arg_40_0, arg_40_1)
-	logNormal("SettingsVoicePackageController:_onNotEnoughDiskSpace, packName = " .. arg_40_1)
-	arg_40_0:dispatchEvent(SettingsEvent.OnNotEnoughDiskSpace, arg_40_1)
+function SettingsVoicePackageController:_onNotEnoughDiskSpace(packName)
+	logNormal("SettingsVoicePackageController:_onNotEnoughDiskSpace, packName = " .. packName)
+	self:dispatchEvent(SettingsEvent.OnNotEnoughDiskSpace, packName)
 
-	local var_40_0 = SettingsVoicePackageModel.instance:getPackLangName(arg_40_1)
-	local var_40_1 = arg_40_0:_getDownloadFailedTip(var_0_0.NoEnoughDisk)
+	local langeName = SettingsVoicePackageModel.instance:getPackLangName(packName)
+	local tips = self:_getDownloadFailedTip(SettingsVoicePackageController.NoEnoughDisk)
 
-	if arg_40_0.initFinish == false then
+	if self.initFinish == false then
 		MessageBoxController.instance:showSystemMsgBoxAndSetBtn(MessageBoxIdDefine.VoiceDownloadCurFailed_3, MsgBoxEnum.BoxType.Yes_No, luaLang("retry"), "RETRY", booterLang("exit"), "EXIT", function()
-			arg_40_0._optionalUpdateInst:RunNextStepAction()
+			self._optionalUpdateInst:RunNextStepAction()
 
-			arg_40_0.errorCode = nil
+			self.errorCode = nil
 		end, function()
 			ProjBooter.instance:quitGame()
-		end, nil, nil, nil, nil, var_40_0)
+		end, nil, nil, nil, nil, langeName)
 	else
-		SettingsVoicePackageModel.instance:clearNeedDownloadSize(arg_40_1)
+		SettingsVoicePackageModel.instance:clearNeedDownloadSize(packName)
 		GameFacade.showMessageBox(MessageBoxIdDefine.VoiceDownloadCurFailed_3, MsgBoxEnum.BoxType.Yes, function()
-			arg_40_0:_cancelDownload()
-		end, nil, nil, nil, nil, nil, var_40_0)
+			self:_cancelDownload()
+		end, nil, nil, nil, nil, nil, langeName)
 	end
 end
 
-function var_0_0._onPackUnZipFail(arg_44_0, arg_44_1, arg_44_2)
-	logNormal("SettingsVoicePackageController:_onPackUnZipFail, packName = " .. arg_44_1 .. " failReason = " .. arg_44_2)
-	arg_44_0:dispatchEvent(SettingsEvent.OnPackUnZipFail, arg_44_1, arg_44_2)
+function SettingsVoicePackageController:_onPackUnZipFail(packName, failReason)
+	logNormal("SettingsVoicePackageController:_onPackUnZipFail, packName = " .. packName .. " failReason = " .. failReason)
+	self:dispatchEvent(SettingsEvent.OnPackUnZipFail, packName, failReason)
 
-	local var_44_0 = SettingsVoicePackageModel.instance:getPackLangName(arg_44_1)
-	local var_44_1 = arg_44_0:_getDownloadFailedTip(var_0_0.MD5CheckError)
+	local langeName = SettingsVoicePackageModel.instance:getPackLangName(packName)
+	local tips = self:_getDownloadFailedTip(SettingsVoicePackageController.MD5CheckError)
 
-	if arg_44_0.initFinish == false then
+	if self.initFinish == false then
 		MessageBoxController.instance:showSystemMsgBoxAndSetBtn(MessageBoxIdDefine.VoiceDownloadCurFailed_2, MsgBoxEnum.BoxType.Yes_No, luaLang("retry"), "RETRY", booterLang("exit"), "EXIT", function()
-			arg_44_0._optionalUpdateInst:RunNextStepAction()
+			self._optionalUpdateInst:RunNextStepAction()
 
-			arg_44_0.errorCode = nil
+			self.errorCode = nil
 		end, function()
 			ProjBooter.instance:quitGame()
-		end, nil, nil, nil, nil, var_44_0)
+		end, nil, nil, nil, nil, langeName)
 	else
-		SettingsVoicePackageModel.instance:clearNeedDownloadSize(arg_44_1)
+		SettingsVoicePackageModel.instance:clearNeedDownloadSize(packName)
 		GameFacade.showMessageBox(MessageBoxIdDefine.VoiceDownloadCurFailed_2, MsgBoxEnum.BoxType.Yes, function()
-			arg_44_0:_cancelDownload()
-		end, nil, nil, nil, nil, nil, var_44_0)
+			self:_cancelDownload()
+		end, nil, nil, nil, nil, nil, langeName)
 	end
 end
 
-function var_0_0._onUnzipProgress(arg_48_0, arg_48_1)
-	logNormal("正在解压资源包，请稍后... progress = " .. arg_48_1)
+function SettingsVoicePackageController:_onUnzipProgress(progress)
+	logNormal("正在解压资源包，请稍后... progress = " .. progress)
 
-	if tostring(arg_48_1) == "nan" then
+	if tostring(progress) == "nan" then
 		return
 	end
 
-	GameSceneMgr.instance:dispatchEvent(SceneEventName.ShowDownloadInfo, arg_48_1, luaLang("voice_package_update_unzip"))
-	arg_48_0:dispatchEvent(SettingsEvent.OnUnzipProgressRefresh, arg_48_1)
+	GameSceneMgr.instance:dispatchEvent(SceneEventName.ShowDownloadInfo, progress, luaLang("voice_package_update_unzip"))
+	self:dispatchEvent(SettingsEvent.OnUnzipProgressRefresh, progress)
 end
 
-function var_0_0.cancelDownload(arg_49_0)
-	arg_49_0:_cancelDownload()
+function SettingsVoicePackageController:cancelDownload()
+	self:_cancelDownload()
 end
 
-function var_0_0._cancelDownload(arg_50_0)
-	arg_50_0._optionalUpdateInst:StopDownload()
-	arg_50_0._optionalUpdateInst:ClearThread()
+function SettingsVoicePackageController:_cancelDownload()
+	self._optionalUpdateInst:StopDownload()
+	self._optionalUpdateInst:ClearThread()
 	ViewMgr.instance:closeView(ViewName.SettingsVoiceDownloadView)
 
-	arg_50_0.errorCode = nil
+	self.errorCode = nil
 end
 
-var_0_0.instance = var_0_0.New()
+SettingsVoicePackageController.instance = SettingsVoicePackageController.New()
 
-return var_0_0
+return SettingsVoicePackageController

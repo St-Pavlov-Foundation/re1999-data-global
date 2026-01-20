@@ -1,67 +1,73 @@
-﻿module("modules.logic.versionactivity1_6.decalogpresent.controller.DecalogPresentController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/decalogpresent/controller/DecalogPresentController.lua
 
-local var_0_0 = class("DecalogPresentController", BaseController)
+module("modules.logic.versionactivity1_6.decalogpresent.controller.DecalogPresentController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._checkActivityInfo, arg_1_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_1_0._checkActivityInfo, arg_1_0)
+local DecalogPresentController = class("DecalogPresentController", BaseController)
+
+function DecalogPresentController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._checkActivityInfo, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._checkActivityInfo, self)
 end
 
-function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayGetInfo, arg_2_0)
+function DecalogPresentController:reInit()
+	TaskDispatcher.cancelTask(self._delayGetInfo, self)
 end
 
-function var_0_0._checkActivityInfo(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayGetInfo, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._delayGetInfo, arg_3_0, 0.2)
+function DecalogPresentController:_checkActivityInfo()
+	TaskDispatcher.cancelTask(self._delayGetInfo, self)
+	TaskDispatcher.runDelay(self._delayGetInfo, self, 0.2)
 end
 
-function var_0_0._delayGetInfo(arg_4_0)
-	arg_4_0:getDecalogActivityInfo()
+function DecalogPresentController:_delayGetInfo()
+	self:getDecalogActivityInfo()
 end
 
-function var_0_0.getDecalogActivityInfo(arg_5_0, arg_5_1, arg_5_2)
-	if not DecalogPresentModel.instance:isDecalogPresentOpen() then
+function DecalogPresentController:getDecalogActivityInfo(cb, cbObj)
+	local isOpen = DecalogPresentModel.instance:isDecalogPresentOpen()
+
+	if not isOpen then
 		return
 	end
 
-	local var_5_0 = DecalogPresentModel.instance:getDecalogPresentActId()
+	local actId = DecalogPresentModel.instance:getDecalogPresentActId()
 
-	Activity101Rpc.instance:sendGet101InfosRequest(var_5_0, arg_5_1, arg_5_2)
+	Activity101Rpc.instance:sendGet101InfosRequest(actId, cb, cbObj)
 end
 
-function var_0_0.openDecalogPresentView(arg_6_0, arg_6_1)
-	arg_6_0._viewName = arg_6_1
+function DecalogPresentController:openDecalogPresentView(viewName)
+	self._viewName = viewName
 
-	arg_6_0:getDecalogActivityInfo(arg_6_0._realOpenDecalogPresentView, arg_6_0)
+	self:getDecalogActivityInfo(self._realOpenDecalogPresentView, self)
 end
 
-function var_0_0._realOpenDecalogPresentView(arg_7_0)
-	local var_7_0 = arg_7_0._viewName or ViewName.DecalogPresentView
+function DecalogPresentController:_realOpenDecalogPresentView()
+	local viewName = self._viewName or ViewName.DecalogPresentView
 
-	ViewMgr.instance:openView(var_7_0)
+	ViewMgr.instance:openView(viewName)
 end
 
-function var_0_0.receiveDecalogPresent(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = DecalogPresentModel.instance:getDecalogPresentActId()
+function DecalogPresentController:receiveDecalogPresent(cb, cbObj)
+	local actId = DecalogPresentModel.instance:getDecalogPresentActId()
+	local isOpen = ActivityType101Model.instance:isOpen(actId)
 
-	if not ActivityType101Model.instance:isOpen(var_8_0) then
+	if not isOpen then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	local var_8_1 = DecalogPresentModel.REWARD_INDEX
+	local index = DecalogPresentModel.REWARD_INDEX
+	local canReceive = ActivityType101Model.instance:isType101RewardCouldGet(actId, index)
 
-	if not ActivityType101Model.instance:isType101RewardCouldGet(var_8_0, var_8_1) then
+	if not canReceive then
 		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 
 		return
 	end
 
-	Activity101Rpc.instance:sendGet101BonusRequest(var_8_0, var_8_1, arg_8_1, arg_8_2)
+	Activity101Rpc.instance:sendGet101BonusRequest(actId, index, cb, cbObj)
 end
 
-var_0_0.instance = var_0_0.New()
+DecalogPresentController.instance = DecalogPresentController.New()
 
-return var_0_0
+return DecalogPresentController

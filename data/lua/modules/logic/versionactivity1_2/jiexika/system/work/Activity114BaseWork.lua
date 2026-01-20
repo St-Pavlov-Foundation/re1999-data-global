@@ -1,42 +1,44 @@
-﻿module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114BaseWork", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/jiexika/system/work/Activity114BaseWork.lua
 
-local var_0_0 = class("Activity114BaseWork", BaseWork)
+module("modules.logic.versionactivity1_2.jiexika.system.work.Activity114BaseWork", package.seeall)
 
-function var_0_0.forceEndStory(arg_1_0)
-	if arg_1_0._flow then
-		local var_1_0 = arg_1_0._flow._workList[arg_1_0._flow._curIndex]
+local Activity114BaseWork = class("Activity114BaseWork", BaseWork)
 
-		if not var_1_0 then
+function Activity114BaseWork:forceEndStory()
+	if self._flow then
+		local curWork = self._flow._workList[self._flow._curIndex]
+
+		if not curWork then
 			return
 		end
 
-		var_1_0:forceEndStory()
+		curWork:forceEndStory()
 	end
 end
 
-function var_0_0.getFlow(arg_2_0)
-	if not arg_2_0._flow then
-		arg_2_0._flow = FlowSequence.New()
+function Activity114BaseWork:getFlow()
+	if not self._flow then
+		self._flow = FlowSequence.New()
 	end
 
-	return arg_2_0._flow
+	return self._flow
 end
 
-function var_0_0.startFlow(arg_3_0)
-	if arg_3_0._flow then
-		arg_3_0._flow:registerDoneListener(arg_3_0.onDone, arg_3_0)
-		arg_3_0._flow:start(arg_3_0.context)
+function Activity114BaseWork:startFlow()
+	if self._flow then
+		self._flow:registerDoneListener(self.onDone, self)
+		self._flow:start(self.context)
 	else
-		arg_3_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flow then
-		arg_4_0._flow:onDestroy()
+function Activity114BaseWork:clearWork()
+	if self._flow then
+		self._flow:onDestroy()
 
-		arg_4_0._flow = nil
+		self._flow = nil
 	end
 end
 
-return var_0_0
+return Activity114BaseWork

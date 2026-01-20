@@ -1,10 +1,13 @@
-﻿module("modules.logic.mail.controller.MailEvent", package.seeall)
+﻿-- chunkname: @modules/logic/mail/controller/MailEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.mail.controller.MailEvent", package.seeall)
 
-var_0_0.OnMailCountChange = 1
-var_0_0.UpdateSelectMail = 2
-var_0_0.OnMailRead = 3
-var_0_0.OnMailDel = 4
+local MailEvent = _M
 
-return var_0_0
+MailEvent.OnMailCountChange = 1
+MailEvent.UpdateSelectMail = 2
+MailEvent.OnMailRead = 3
+MailEvent.OnMailDel = 4
+MailEvent.OnMailLockReply = 1001
+
+return MailEvent

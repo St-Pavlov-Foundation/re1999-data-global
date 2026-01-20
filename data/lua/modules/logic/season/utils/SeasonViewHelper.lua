@@ -1,57 +1,59 @@
-﻿module("modules.logic.season.utils.SeasonViewHelper", package.seeall)
+﻿-- chunkname: @modules/logic/season/utils/SeasonViewHelper.lua
 
-local var_0_0 = class("SeasonViewHelper")
+module("modules.logic.season.utils.SeasonViewHelper", package.seeall)
 
-function var_0_0.openView(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = var_0_0.getViewName(arg_1_0, arg_1_1)
+local SeasonViewHelper = class("SeasonViewHelper")
 
-	if var_1_0 then
-		ViewMgr.instance:openView(var_1_0, arg_1_2)
+function SeasonViewHelper.openView(seasonId, viewName, param)
+	local realView = SeasonViewHelper.getViewName(seasonId, viewName)
+
+	if realView then
+		ViewMgr.instance:openView(realView, param)
 	end
 end
 
-function var_0_0.getViewName(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0 = arg_2_0 or Activity104Model.instance:getCurSeasonId()
+function SeasonViewHelper.getViewName(seasonId, viewName, noError)
+	seasonId = seasonId or Activity104Model.instance:getCurSeasonId()
 
-	local var_2_0 = Activity104Enum.SeasonViewPrefix[arg_2_0] or ""
-	local var_2_1 = string.format("Season%s%s", var_2_0, arg_2_1)
-	local var_2_2 = ViewName[var_2_1]
+	local prefix = Activity104Enum.SeasonViewPrefix[seasonId] or ""
+	local seasonViewName = string.format("Season%s%s", prefix, viewName)
+	local realViewName = ViewName[seasonViewName]
 
-	if not var_2_2 and not arg_2_2 then
-		logError(string.format("cant find season view [%s] [%s]", arg_2_0, arg_2_1))
+	if not realViewName and not noError then
+		logError(string.format("cant find season view [%s] [%s]", seasonId, viewName))
 	end
 
-	return var_2_2
+	return realViewName
 end
 
-function var_0_0.getSeasonIcon(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_1 or Activity104Model.instance:getCurSeasonId()
+function SeasonViewHelper.getSeasonIcon(resName, seasonId)
+	seasonId = seasonId or Activity104Model.instance:getCurSeasonId()
 
-	local var_3_0 = Activity104Enum.SeasonIconFolder[arg_3_1]
+	local folder = Activity104Enum.SeasonIconFolder[seasonId]
 
-	return string.format("singlebg/%s/%s", var_3_0, arg_3_0)
+	return string.format("singlebg/%s/%s", folder, resName)
 end
 
-function var_0_0.getAllSeasonViewList(arg_4_0)
-	local var_4_0 = {}
+function SeasonViewHelper.getAllSeasonViewList(seasonId)
+	local list = {}
 
-	for iter_4_0, iter_4_1 in pairs(Activity104Enum.ViewName) do
-		local var_4_1 = var_0_0.getViewName(arg_4_0, iter_4_1, true)
+	for k, viewName in pairs(Activity104Enum.ViewName) do
+		local realViewName = SeasonViewHelper.getViewName(seasonId, viewName, true)
 
-		if var_4_1 then
-			table.insert(var_4_0, var_4_1)
+		if realViewName then
+			table.insert(list, realViewName)
 		end
 	end
 
-	return var_4_0
+	return list
 end
 
-function var_0_0.getIconUrl(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_2 = arg_5_2 or Activity104Model.instance:getCurSeasonId()
+function SeasonViewHelper.getIconUrl(url, param, actId)
+	actId = actId or Activity104Model.instance:getCurSeasonId()
 
-	local var_5_0 = Activity104Enum.SeasonIconFolder[arg_5_2]
+	local version = Activity104Enum.SeasonIconFolder[actId]
 
-	return string.format(arg_5_0, var_5_0, arg_5_1)
+	return string.format(url, version, param)
 end
 
-return var_0_0
+return SeasonViewHelper

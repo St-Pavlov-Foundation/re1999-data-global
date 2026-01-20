@@ -1,12 +1,14 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.config.FairyLandConfig", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/config/FairyLandConfig.lua
 
-local var_0_0 = class("FairyLandConfig", BaseConfig)
+module("modules.logic.versionactivity1_9.fairyland.config.FairyLandConfig", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FairyLandConfig = class("FairyLandConfig", BaseConfig)
+
+function FairyLandConfig:ctor()
 	return
 end
 
-function var_0_0.reqConfigNames(arg_2_0)
+function FairyLandConfig:reqConfigNames()
 	return {
 		"fairyland_puzzle",
 		"fairyland_puzzle_talk",
@@ -15,79 +17,79 @@ function var_0_0.reqConfigNames(arg_2_0)
 	}
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "fairyland_puzzle" then
-		arg_3_0._fairlyLandPuzzleConfig = arg_3_2
-	elseif arg_3_1 == "fairyland_puzzle_talk" then
-		arg_3_0:_initDialog()
-	elseif arg_3_1 == "fairy_land_element" then
-		arg_3_0._fairlyLandElementConfig = arg_3_2
+function FairyLandConfig:onConfigLoaded(configName, configTable)
+	if configName == "fairyland_puzzle" then
+		self._fairlyLandPuzzleConfig = configTable
+	elseif configName == "fairyland_puzzle_talk" then
+		self:_initDialog()
+	elseif configName == "fairy_land_element" then
+		self._fairlyLandElementConfig = configTable
 	end
 end
 
-function var_0_0.getFairlyLandPuzzleConfig(arg_4_0, arg_4_1)
-	return arg_4_0._fairlyLandPuzzleConfig.configDict[arg_4_1]
+function FairyLandConfig:getFairlyLandPuzzleConfig(id)
+	return self._fairlyLandPuzzleConfig.configDict[id]
 end
 
-function var_0_0.getTalkStepConfig(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getTalkConfig(arg_5_1)
+function FairyLandConfig:getTalkStepConfig(id, step)
+	local config = self:getTalkConfig(id)
 
-	return var_5_0 and var_5_0[arg_5_2]
+	return config and config[step]
 end
 
-function var_0_0.getElements(arg_6_0)
-	return arg_6_0._fairlyLandElementConfig.configList
+function FairyLandConfig:getElements()
+	return self._fairlyLandElementConfig.configList
 end
 
-function var_0_0.getElementConfig(arg_7_0, arg_7_1)
-	return arg_7_0._fairlyLandElementConfig.configDict[arg_7_1]
+function FairyLandConfig:getElementConfig(elementId)
+	return self._fairlyLandElementConfig.configDict[elementId]
 end
 
-function var_0_0._initDialog(arg_8_0)
-	arg_8_0._dialogList = {}
+function FairyLandConfig:_initDialog()
+	self._dialogList = {}
 
-	local var_8_0
-	local var_8_1 = 0
+	local sectionId
+	local defaultId = 0
 
-	for iter_8_0, iter_8_1 in ipairs(lua_fairyland_puzzle_talk.configList) do
-		local var_8_2 = arg_8_0._dialogList[iter_8_1.id]
+	for i, v in ipairs(lua_fairyland_puzzle_talk.configList) do
+		local group = self._dialogList[v.id]
 
-		if not var_8_2 then
-			var_8_2 = {}
-			var_8_0 = var_8_1
-			arg_8_0._dialogList[iter_8_1.id] = var_8_2
+		if not group then
+			group = {}
+			sectionId = defaultId
+			self._dialogList[v.id] = group
 		end
 
-		if iter_8_1.type == "selector" then
-			var_8_0 = tonumber(iter_8_1.param)
-			var_8_2[var_8_0] = var_8_2[var_8_0] or {}
-		elseif iter_8_1.type == "selectorend" then
-			var_8_0 = var_8_1
+		if v.type == "selector" then
+			sectionId = tonumber(v.param)
+			group[sectionId] = group[sectionId] or {}
+		elseif v.type == "selectorend" then
+			sectionId = defaultId
 		else
-			var_8_2[var_8_0] = var_8_2[var_8_0] or {}
+			group[sectionId] = group[sectionId] or {}
 
-			table.insert(var_8_2[var_8_0], iter_8_1)
+			table.insert(group[sectionId], v)
 		end
 	end
 end
 
-function var_0_0.getDialogConfig(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0._dialogList[arg_9_1]
+function FairyLandConfig:getDialogConfig(dialogId, sectionId)
+	local group = self._dialogList[dialogId]
 
-	return var_9_0 and var_9_0[arg_9_2]
+	return group and group[sectionId]
 end
 
-function var_0_0.addTextDict(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_3[arg_10_2]
+function FairyLandConfig:addTextDict(text, node, dict)
+	local group = dict[node]
 
-	if not var_10_0 then
-		var_10_0 = {}
-		arg_10_3[arg_10_2] = var_10_0
+	if not group then
+		group = {}
+		dict[node] = group
 	end
 
-	table.insert(var_10_0, arg_10_1)
+	table.insert(group, text)
 end
 
-var_0_0.instance = var_0_0.New()
+FairyLandConfig.instance = FairyLandConfig.New()
 
-return var_0_0
+return FairyLandConfig

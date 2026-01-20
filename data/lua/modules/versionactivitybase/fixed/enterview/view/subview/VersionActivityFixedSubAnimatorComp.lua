@@ -1,46 +1,48 @@
-﻿module("modules.versionactivitybase.fixed.enterview.view.subview.VersionActivityFixedSubAnimatorComp", package.seeall)
+﻿-- chunkname: @modules/versionactivitybase/fixed/enterview/view/subview/VersionActivityFixedSubAnimatorComp.lua
 
-local var_0_0 = class("VersionActivityFixedSubAnimatorComp", VersionActivitySubAnimatorComp)
+module("modules.versionactivitybase.fixed.enterview.view.subview.VersionActivityFixedSubAnimatorComp", package.seeall)
 
-function var_0_0.get(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0.New()
+local VersionActivityFixedSubAnimatorComp = class("VersionActivityFixedSubAnimatorComp", VersionActivitySubAnimatorComp)
 
-	var_1_0:init(arg_1_0, arg_1_1)
+function VersionActivityFixedSubAnimatorComp.get(animatorGo, view)
+	local instance = VersionActivityFixedSubAnimatorComp.New()
 
-	return var_1_0
+	instance:init(animatorGo, view)
+
+	return instance
 end
 
-function var_0_0.playOpenAnim(arg_2_0)
-	if arg_2_0.view.viewParam.skipOpenAnim then
-		arg_2_0.animator:Play(UIAnimationName.Open, 0, 1)
+function VersionActivityFixedSubAnimatorComp:playOpenAnim()
+	if self.view.viewParam.skipOpenAnim then
+		self.animator:Play(UIAnimationName.Open, 0, 1)
 
-		arg_2_0.view.viewParam.skipOpenAnim = false
+		self.view.viewParam.skipOpenAnim = false
 
-		arg_2_0.viewContainer:markPlayedSubViewAnim()
+		self.viewContainer:markPlayedSubViewAnim()
 
 		return
 	end
 
-	if arg_2_0.viewContainer:getIsFirstPlaySubViewAnim() then
-		if arg_2_0.view.viewParam.playVideo then
-			arg_2_0.viewContainer:markPlayedSubViewAnim()
-			arg_2_0.animator:Play("open1", 0, 0)
+	if self.viewContainer:getIsFirstPlaySubViewAnim() then
+		if self.view.viewParam.playVideo then
+			self.viewContainer:markPlayedSubViewAnim()
+			self.animator:Play("open1", 0, 0)
 
-			arg_2_0.animator.speed = 0
+			self.animator.speed = 0
 
-			arg_2_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, arg_2_0.onPlayVideoDone, arg_2_0)
-			arg_2_0:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, arg_2_0.onPlayVideoDone, arg_2_0)
+			self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
+			self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)
 		else
-			arg_2_0.viewContainer:markPlayedSubViewAnim()
-			arg_2_0.animator:Play("open1", 0, 0)
+			self.viewContainer:markPlayedSubViewAnim()
+			self.animator:Play("open1", 0, 0)
 
-			arg_2_0.animator.speed = 1
+			self.animator.speed = 1
 		end
 	else
-		arg_2_0.animator:Play(UIAnimationName.Open, 0, 0)
+		self.animator:Play(UIAnimationName.Open, 0, 0)
 
-		arg_2_0.animator.speed = 1
+		self.animator.speed = 1
 	end
 end
 
-return var_0_0
+return VersionActivityFixedSubAnimatorComp

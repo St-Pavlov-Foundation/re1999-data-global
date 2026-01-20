@@ -1,15 +1,17 @@
-﻿module("modules.logic.battlepass.view.BpRuleTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpRuleTipsViewContainer.lua
 
-local var_0_0 = class("BpRuleTipsViewContainer", BaseViewContainer)
+module("modules.logic.battlepass.view.BpRuleTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local BpRuleTipsViewContainer = class("BpRuleTipsViewContainer", BaseViewContainer)
+
+function BpRuleTipsViewContainer:buildViews()
 	return {
 		BpRuleTipsView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function BpRuleTipsViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return BpRuleTipsViewContainer

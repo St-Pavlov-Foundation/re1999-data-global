@@ -1,65 +1,67 @@
-﻿module("modules.logic.fight.view.cardeffect.FightCardResetEffect", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/cardeffect/FightCardResetEffect.lua
 
-local var_0_0 = class("FightCardResetEffect", BaseWork)
-local var_0_1 = 1
-local var_0_2 = var_0_1 * 0.033
+module("modules.logic.fight.view.cardeffect.FightCardResetEffect", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	TaskDispatcher.runDelay(arg_1_0.onDelayDone, arg_1_0, 1)
+local FightCardResetEffect = class("FightCardResetEffect", BaseWork)
+local TimeFactor = 1
+local dt = TimeFactor * 0.033
 
-	arg_1_0._dt = var_0_2 / FightModel.instance:getUISpeed()
-	arg_1_0.flow = FightWorkFlowSequence.New()
+function FightCardResetEffect:onStart(context)
+	TaskDispatcher.runDelay(self.onDelayDone, self, 1)
 
-	local var_1_0 = arg_1_0.flow
+	self._dt = dt / FightModel.instance:getUISpeed()
+	self.flow = FightWorkFlowSequence.New()
 
-	var_1_0:registWork(FightWorkSendEvent, FightEvent.CorrectHandCardScale)
+	local flow = self.flow
 
-	local var_1_1 = arg_1_0.context.view.viewContainer.fightViewHandCard._handCardItemList
+	flow:registWork(FightWorkSendEvent, FightEvent.CorrectHandCardScale)
 
-	if arg_1_1.curIndex2OriginHandCardIndex then
-		local var_1_2 = var_1_0:registWork(FightWorkFlowParallel)
+	local handCardItemList = self.context.view.viewContainer.fightViewHandCard._handCardItemList
 
-		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = iter_1_1.go
-			local var_1_4 = iter_1_1.cardInfoMO
-			local var_1_5 = arg_1_1.curIndex2OriginHandCardIndex[iter_1_0]
+	if context.curIndex2OriginHandCardIndex then
+		local moveParallel = flow:registWork(FightWorkFlowParallel)
 
-			if var_1_5 then
-				local var_1_6 = FightViewHandCard.calcCardPosX(var_1_5)
+		for i, playCardItem in ipairs(handCardItemList) do
+			local cardItemGO = playCardItem.go
+			local cardData = playCardItem.cardInfoMO
+			local originCardIndex = context.curIndex2OriginHandCardIndex[i]
 
-				var_1_2:registWork(FightTweenWork, {
+			if originCardIndex then
+				local targetPosX = FightViewHandCard.calcCardPosX(originCardIndex)
+
+				moveParallel:registWork(FightTweenWork, {
 					type = "DOAnchorPos",
 					toy = 0,
-					tr = var_1_3.transform,
-					tox = var_1_6,
-					t = arg_1_0._dt * 4
+					tr = cardItemGO.transform,
+					tox = targetPosX,
+					t = self._dt * 4
 				})
 			end
 		end
 	end
 
-	var_1_0:registWork(FightWorkSendEvent, FightEvent.UpdateHandCards)
-	var_1_0:registFinishCallback(arg_1_0._onWorkDone, arg_1_0)
-	var_1_0:start()
+	flow:registWork(FightWorkSendEvent, FightEvent.UpdateHandCards)
+	flow:registFinishCallback(self._onWorkDone, self)
+	flow:start()
 end
 
-function var_0_0.onDelayDone(arg_2_0)
+function FightCardResetEffect:onDelayDone()
 	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards)
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0.onDelayDone, arg_3_0)
+function FightCardResetEffect:clearWork()
+	TaskDispatcher.cancelTask(self.onDelayDone, self)
 
-	if arg_3_0.flow then
-		arg_3_0.flow:disposeSelf()
+	if self.flow then
+		self.flow:disposeSelf()
 
-		arg_3_0.flow = nil
+		self.flow = nil
 	end
 end
 
-function var_0_0._onWorkDone(arg_4_0)
-	arg_4_0:onDone(true)
+function FightCardResetEffect:_onWorkDone()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightCardResetEffect

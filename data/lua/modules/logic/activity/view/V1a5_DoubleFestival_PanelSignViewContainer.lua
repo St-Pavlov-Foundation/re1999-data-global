@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V1a5_DoubleFestival_PanelSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a5_DoubleFestival_PanelSignViewContainer.lua
 
-local var_0_0 = class("V1a5_DoubleFestival_PanelSignViewContainer", V1a5_DoubleFestival_SignItem_SignViewContainer)
+module("modules.logic.activity.view.V1a5_DoubleFestival_PanelSignViewContainer", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V1a5_DoubleFestival_PanelSignViewContainer = class("V1a5_DoubleFestival_PanelSignViewContainer", V1a5_DoubleFestival_SignItem_SignViewContainer)
+
+function V1a5_DoubleFestival_PanelSignViewContainer:onGetMainViewClassType()
 	return V1a5_DoubleFestival_PanelSignView
 end
 
-return var_0_0
+return V1a5_DoubleFestival_PanelSignViewContainer

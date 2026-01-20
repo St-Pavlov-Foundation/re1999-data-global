@@ -1,19 +1,21 @@
-﻿module("modules.logic.activity.view.LinkageActivity_FullViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/LinkageActivity_FullViewContainer.lua
 
-local var_0_0 = class("LinkageActivity_FullViewContainer", LinkageActivity_BaseViewContainer)
+module("modules.logic.activity.view.LinkageActivity_FullViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local LinkageActivity_FullViewContainer = class("LinkageActivity_FullViewContainer", LinkageActivity_BaseViewContainer)
 
-	arg_1_0._view = LinkageActivity_FullView.New()
+function LinkageActivity_FullViewContainer:buildViews()
+	local views = {}
 
-	table.insert(var_1_0, arg_1_0._view)
+	self._view = LinkageActivity_FullView.New()
 
-	return var_1_0
+	table.insert(views, self._view)
+
+	return views
 end
 
-function var_0_0.view(arg_2_0)
-	return arg_2_0._view
+function LinkageActivity_FullViewContainer:view()
+	return self._view
 end
 
-return var_0_0
+return LinkageActivity_FullViewContainer

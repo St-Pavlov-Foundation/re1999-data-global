@@ -1,17 +1,19 @@
-﻿local var_0_0 = pureTable("Season123EquipBookMO")
+﻿-- chunkname: @modules/logic/seasonver/act123/model/Season123EquipBookMO.lua
 
-function var_0_0.ctor(arg_1_0)
+local Season123EquipBookMO = pureTable("Season123EquipBookMO")
+
+function Season123EquipBookMO:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1
-	arg_2_0.count = 0
-	arg_2_0.isNew = false
+function Season123EquipBookMO:init(itemId)
+	self.id = itemId
+	self.count = 0
+	self.isNew = false
 end
 
-function var_0_0.setIsNew(arg_3_0, arg_3_1)
-	arg_3_0.isNew = arg_3_1
+function Season123EquipBookMO:setIsNew(isNew)
+	self.isNew = isNew
 end
 
-return var_0_0
+return Season123EquipBookMO

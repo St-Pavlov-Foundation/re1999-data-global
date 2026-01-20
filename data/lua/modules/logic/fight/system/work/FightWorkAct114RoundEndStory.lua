@@ -1,44 +1,46 @@
-﻿module("modules.logic.fight.system.work.FightWorkAct114RoundEndStory", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkAct114RoundEndStory.lua
 
-local var_0_0 = class("FightWorkAct114RoundEndStory", BaseWork)
+module("modules.logic.fight.system.work.FightWorkAct114RoundEndStory", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightModel.instance:getFightParam()
+local FightWorkAct114RoundEndStory = class("FightWorkAct114RoundEndStory", BaseWork)
 
-	if not var_1_0 or var_1_0.episodeId ~= Activity114Enum.episodeId then
-		arg_1_0:onDone(true)
+function FightWorkAct114RoundEndStory:onStart()
+	local fightParam = FightModel.instance:getFightParam()
+
+	if not fightParam or fightParam.episodeId ~= Activity114Enum.episodeId then
+		self:onDone(true)
 
 		return
 	end
 
 	if Activity114Model.instance:isEnd() then
-		Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, arg_1_0.onProcessEnd, arg_1_0)
+		Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, self.onProcessEnd, self)
 		Activity114Controller.instance:alertActivityEndMsgBox()
 
 		return
 	end
 
-	local var_1_1 = FightModel.instance:getRecordMO()
+	local recordMO = FightModel.instance:getRecordMO()
 
-	if not var_1_1 then
-		arg_1_0:onDone(true)
+	if not recordMO then
+		self:onDone(true)
 
 		return
 	end
 
-	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, arg_1_0.onProcessEnd, arg_1_0)
+	Activity114Controller.instance:registerCallback(Activity114Event.OnEventProcessEnd, self.onProcessEnd, self)
 
-	local var_1_2 = var_1_1.fightResult == FightEnum.FightResult.Succ and Activity114Enum.Result.FightSucess or Activity114Enum.Result.Fail
+	local result = recordMO.fightResult == FightEnum.FightResult.Succ and Activity114Enum.Result.FightSucess or Activity114Enum.Result.Fail
 
-	Activity114Controller.instance:dispatchEvent(Activity114Event.OnFightResult, var_1_2)
+	Activity114Controller.instance:dispatchEvent(Activity114Event.OnFightResult, result)
 end
 
-function var_0_0.onProcessEnd(arg_2_0)
-	arg_2_0:onDone(true)
+function FightWorkAct114RoundEndStory:onProcessEnd()
+	self:onDone(true)
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessEnd, arg_3_0.onProcessEnd, arg_3_0)
+function FightWorkAct114RoundEndStory:onDestroy()
+	Activity114Controller.instance:unregisterCallback(Activity114Event.OnEventProcessEnd, self.onProcessEnd, self)
 end
 
-return var_0_0
+return FightWorkAct114RoundEndStory

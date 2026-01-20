@@ -1,9 +1,11 @@
-﻿module("modules.logic.activity.view.V1a5_HarvestSeason_FullSignViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/V1a5_HarvestSeason_FullSignViewContainer.lua
 
-local var_0_0 = class("V1a5_HarvestSeason_FullSignViewContainer", V1a5_HarvestSeason_SignItem_SignViewContainer)
+module("modules.logic.activity.view.V1a5_HarvestSeason_FullSignViewContainer", package.seeall)
 
-function var_0_0.onGetMainViewClassType(arg_1_0)
+local V1a5_HarvestSeason_FullSignViewContainer = class("V1a5_HarvestSeason_FullSignViewContainer", V1a5_HarvestSeason_SignItem_SignViewContainer)
+
+function V1a5_HarvestSeason_FullSignViewContainer:onGetMainViewClassType()
 	return V1a5_HarvestSeason_FullSignView
 end
 
-return var_0_0
+return V1a5_HarvestSeason_FullSignViewContainer

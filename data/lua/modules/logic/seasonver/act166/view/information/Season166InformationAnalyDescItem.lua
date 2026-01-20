@@ -1,37 +1,39 @@
-﻿module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyDescItem", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act166/view/information/Season166InformationAnalyDescItem.lua
 
-local var_0_0 = class("Season166InformationAnalyDescItem", Season166InformationAnalyDetailItemBase)
+module("modules.logic.seasonver.act166.view.information.Season166InformationAnalyDescItem", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0.txtDesc = gohelper.findChildTextMesh(arg_1_0.go, "#txt_Descr")
-	arg_1_0.goLine = gohelper.findChild(arg_1_0.go, "#txt_Descr/image_Line")
+local Season166InformationAnalyDescItem = class("Season166InformationAnalyDescItem", Season166InformationAnalyDetailItemBase)
+
+function Season166InformationAnalyDescItem:onInit()
+	self.txtDesc = gohelper.findChildTextMesh(self.go, "#txt_Descr")
+	self.goLine = gohelper.findChild(self.go, "#txt_Descr/image_Line")
 end
 
-function var_0_0.onUpdate(arg_2_0)
-	if arg_2_0.txtFadeIn and arg_2_0.txtFadeIn:isPlaying() then
-		arg_2_0.txtFadeIn:conFinished()
-		arg_2_0.txtFadeIn:onDestroy()
+function Season166InformationAnalyDescItem:onUpdate()
+	if self.txtFadeIn and self.txtFadeIn:isPlaying() then
+		self.txtFadeIn:conFinished()
+		self.txtFadeIn:onDestroy()
 	end
 
-	arg_2_0.txtDesc.text = arg_2_0.data.config.content
+	self.txtDesc.text = self.data.config.content
 end
 
-function var_0_0.playFadeIn(arg_3_0)
-	if not arg_3_0.txtFadeIn then
-		arg_3_0.txtFadeIn = MonoHelper.addNoUpdateLuaComOnceToGo(arg_3_0.txtDesc.gameObject, TMPFadeInWithScroll)
+function Season166InformationAnalyDescItem:playFadeIn()
+	if not self.txtFadeIn then
+		self.txtFadeIn = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtDesc.gameObject, TMPFadeInWithScroll)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_feichi_yure_caption)
-	arg_3_0.txtFadeIn:playNormalText(arg_3_0.data.config.content, arg_3_0.onTextFinish, arg_3_0)
+	self.txtFadeIn:playNormalText(self.data.config.content, self.onTextFinish, self)
 end
 
-function var_0_0.onTextFinish(arg_4_0)
+function Season166InformationAnalyDescItem:onTextFinish()
 	AudioMgr.instance:trigger(AudioEnum.Season166.stop_ui_feichi_yure_caption)
 end
 
-function var_0_0.onDestroy(arg_5_0)
+function Season166InformationAnalyDescItem:onDestroy()
 	AudioMgr.instance:trigger(AudioEnum.Season166.stop_ui_feichi_yure_caption)
-	var_0_0.super.onDestroy(arg_5_0)
+	Season166InformationAnalyDescItem.super.onDestroy(self)
 end
 
-return var_0_0
+return Season166InformationAnalyDescItem

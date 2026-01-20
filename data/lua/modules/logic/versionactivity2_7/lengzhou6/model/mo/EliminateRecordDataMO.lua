@@ -1,31 +1,33 @@
-﻿module("modules.logic.versionactivity2_7.lengzhou6.model.mo.EliminateRecordDataMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/lengzhou6/model/mo/EliminateRecordDataMO.lua
 
-local var_0_0 = class("EliminateRecordDataMO")
+module("modules.logic.versionactivity2_7.lengzhou6.model.mo.EliminateRecordDataMO", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._eliminateTypeMap = {}
+local EliminateRecordDataMO = class("EliminateRecordDataMO")
+
+function EliminateRecordDataMO:ctor()
+	self._eliminateTypeMap = {}
 end
 
-function var_0_0.setEliminateType(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_0._eliminateTypeMap[arg_2_1] == nil then
-		arg_2_0._eliminateTypeMap[arg_2_1] = {}
+function EliminateRecordDataMO:setEliminateType(eliminateId, eliminateType, eliminateCount, spEliminateCount)
+	if self._eliminateTypeMap[eliminateId] == nil then
+		self._eliminateTypeMap[eliminateId] = {}
 	end
 
-	local var_2_0 = {
-		eliminateType = arg_2_2,
-		eliminateCount = arg_2_3,
-		spEliminateCount = arg_2_4
+	local data = {
+		eliminateType = eliminateType,
+		eliminateCount = eliminateCount,
+		spEliminateCount = spEliminateCount
 	}
 
-	table.insert(arg_2_0._eliminateTypeMap[arg_2_1], var_2_0)
+	table.insert(self._eliminateTypeMap[eliminateId], data)
 end
 
-function var_0_0.getEliminateTypeMap(arg_3_0)
-	return arg_3_0._eliminateTypeMap
+function EliminateRecordDataMO:getEliminateTypeMap()
+	return self._eliminateTypeMap
 end
 
-function var_0_0.clearRecord(arg_4_0)
-	tabletool.clear(arg_4_0._eliminateTypeMap)
+function EliminateRecordDataMO:clearRecord()
+	tabletool.clear(self._eliminateTypeMap)
 end
 
-return var_0_0
+return EliminateRecordDataMO

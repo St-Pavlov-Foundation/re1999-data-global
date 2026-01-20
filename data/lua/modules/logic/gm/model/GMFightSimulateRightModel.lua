@@ -1,19 +1,21 @@
-﻿module("modules.logic.gm.model.GMFightSimulateRightModel", package.seeall)
+﻿-- chunkname: @modules/logic/gm/model/GMFightSimulateRightModel.lua
 
-local var_0_0 = class("GMFightSimulateRightModel", ListScrollModel)
+module("modules.logic.gm.model.GMFightSimulateRightModel", package.seeall)
 
-function var_0_0.setChapterId(arg_1_0, arg_1_1)
-	local var_1_0 = {}
+local GMFightSimulateRightModel = class("GMFightSimulateRightModel", ListScrollModel)
 
-	for iter_1_0, iter_1_1 in ipairs(lua_episode.configList) do
-		if iter_1_1.chapterId == arg_1_1 then
-			table.insert(var_1_0, iter_1_1)
+function GMFightSimulateRightModel:setChapterId(chapterId)
+	local list = {}
+
+	for _, episodeCO in ipairs(lua_episode.configList) do
+		if episodeCO.chapterId == chapterId then
+			table.insert(list, episodeCO)
 		end
 	end
 
-	arg_1_0:setList(var_1_0)
+	self:setList(list)
 end
 
-var_0_0.instance = var_0_0.New()
+GMFightSimulateRightModel.instance = GMFightSimulateRightModel.New()
 
-return var_0_0
+return GMFightSimulateRightModel

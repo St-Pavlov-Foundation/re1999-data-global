@@ -1,18 +1,20 @@
-﻿module("modules.logic.sp01.assassin2.outside.view.AssassinMapViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/assassin2/outside/view/AssassinMapViewContainer.lua
 
-local var_0_0 = class("AssassinMapViewContainer", BaseViewContainer)
+module("modules.logic.sp01.assassin2.outside.view.AssassinMapViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local AssassinMapViewContainer = class("AssassinMapViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, TabViewGroup.New(1, "root/#go_topleft"))
-	table.insert(var_1_0, AssassinMapView.New())
+function AssassinMapViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, TabViewGroup.New(1, "root/#go_topleft"))
+	table.insert(views, AssassinMapView.New())
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
+function AssassinMapViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -23,4 +25,4 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-return var_0_0
+return AssassinMapViewContainer

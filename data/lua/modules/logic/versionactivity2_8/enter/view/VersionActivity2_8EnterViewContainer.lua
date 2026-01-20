@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_8.enter.view.VersionActivity2_8EnterViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_8/enter/view/VersionActivity2_8EnterViewContainer.lua
 
-local var_0_0 = class("VersionActivity2_8EnterViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_8.enter.view.VersionActivity2_8EnterViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local VersionActivity2_8EnterViewContainer = class("VersionActivity2_8EnterViewContainer", BaseViewContainer)
+
+function VersionActivity2_8EnterViewContainer:buildViews()
 	return {
 		VersionActivity2_8EnterView.New(),
 		VersionActivity2_8EnterBgmView.New(),
@@ -11,83 +13,83 @@ function var_0_0.buildViews(arg_1_0)
 	}
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+function VersionActivity2_8EnterViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
-	elseif arg_2_1 == 2 then
-		local var_2_0 = {}
+	elseif tabContainerId == 2 then
+		local multiView = {}
 
-		var_2_0[#var_2_0 + 1] = VersionActivity2_8DungeonEnterView.New()
-		var_2_0[#var_2_0 + 1] = SurvivalEnterView.New()
-		var_2_0[#var_2_0 + 1] = RoleStoryEnterView.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_8MoLiDeErEnterView.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_8NuoDiKaEnterView.New()
-		var_2_0[#var_2_0 + 1] = VersionActivity2_8AutoChessEnterView.New()
-		var_2_0[#var_2_0 + 1] = Act183VersionActivityEnterView.New()
-		var_2_0[#var_2_0 + 1] = ActivityWeekWalkDeepShowView.New()
-		var_2_0[#var_2_0 + 1] = TowerMainEntryView.New()
-		var_2_0[#var_2_0 + 1] = ActivityWeekWalkHeartShowView.New()
+		multiView[#multiView + 1] = VersionActivity2_8DungeonEnterView.New()
+		multiView[#multiView + 1] = SurvivalEnterView.New()
+		multiView[#multiView + 1] = RoleStoryEnterView.New()
+		multiView[#multiView + 1] = VersionActivity2_8MoLiDeErEnterView.New()
+		multiView[#multiView + 1] = VersionActivity2_8NuoDiKaEnterView.New()
+		multiView[#multiView + 1] = VersionActivity2_8AutoChessEnterView.New()
+		multiView[#multiView + 1] = Act183VersionActivityEnterView.New()
+		multiView[#multiView + 1] = ActivityWeekWalkDeepShowView.New()
+		multiView[#multiView + 1] = TowerMainEntryView.New()
+		multiView[#multiView + 1] = ActivityWeekWalkHeartShowView.New()
 
-		return var_2_0
+		return multiView
 	end
 end
 
-function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0.activityId = arg_3_2
+function VersionActivity2_8EnterViewContainer:selectActTab(jumpTabId, actId)
+	self.activityId = actId
 
-	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, jumpTabId)
 end
 
-function var_0_0.onContainerInit(arg_4_0)
-	if not arg_4_0.viewParam then
+function VersionActivity2_8EnterViewContainer:onContainerInit()
+	if not self.viewParam then
 		return
 	end
 
-	arg_4_0.isFirstPlaySubViewAnim = true
+	self.isFirstPlaySubViewAnim = true
 
-	local var_4_0 = arg_4_0.viewParam.activityIdList or {}
+	local activityIdList = self.viewParam.activityIdList or {}
 
-	ActivityStageHelper.recordActivityStage(var_4_0)
+	ActivityStageHelper.recordActivityStage(activityIdList)
 
-	arg_4_0.activityId = arg_4_0.viewParam.jumpActId
+	self.activityId = self.viewParam.jumpActId
 
-	local var_4_1 = arg_4_0.viewParam.activitySettingList or {}
-	local var_4_2 = VersionActivityEnterHelper.getTabIndex(var_4_1, arg_4_0.activityId)
+	local activitySettingList = self.viewParam.activitySettingList or {}
+	local defaultIndex = VersionActivityEnterHelper.getTabIndex(activitySettingList, self.activityId)
 
-	if var_4_2 ~= 1 then
-		arg_4_0.viewParam.defaultTabIds = {}
-		arg_4_0.viewParam.defaultTabIds[2] = var_4_2
+	if defaultIndex ~= 1 then
+		self.viewParam.defaultTabIds = {}
+		self.viewParam.defaultTabIds[2] = defaultIndex
 	end
 
-	local var_4_3 = var_4_1[var_4_2]
-	local var_4_4 = VersionActivityEnterHelper.getActId(var_4_3)
+	local actSetting = activitySettingList[defaultIndex]
+	local actId = VersionActivityEnterHelper.getActId(actSetting)
 
-	ActivityEnterMgr.instance:enterActivity(var_4_4)
+	ActivityEnterMgr.instance:enterActivity(actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		var_4_4
+		actId
 	})
 end
 
-function var_0_0.onContainerClose(arg_5_0)
-	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function VersionActivity2_8EnterViewContainer:onContainerClose()
+	if self:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		MainController.instance:dispatchEvent(MainEvent.ManuallyOpenMainView)
 	end
 end
 
-function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
-	return arg_6_0.isFirstPlaySubViewAnim
+function VersionActivity2_8EnterViewContainer:getIsFirstPlaySubViewAnim()
+	return self.isFirstPlaySubViewAnim
 end
 
-function var_0_0.markPlayedSubViewAnim(arg_7_0)
-	arg_7_0.isFirstPlaySubViewAnim = false
+function VersionActivity2_8EnterViewContainer:markPlayedSubViewAnim()
+	self.isFirstPlaySubViewAnim = false
 end
 
-return var_0_0
+return VersionActivity2_8EnterViewContainer

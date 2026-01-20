@@ -1,28 +1,30 @@
-﻿module("modules.logic.versionactivity1_3.act119.controller.Activity1_3_119Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/act119/controller/Activity1_3_119Controller.lua
 
-local var_0_0 = class("Activity1_3_119Controller", BaseController)
+module("modules.logic.versionactivity1_3.act119.controller.Activity1_3_119Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity1_3_119Controller = class("Activity1_3_119Controller", BaseController)
+
+function Activity1_3_119Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity1_3_119Controller:onInitFinish()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function Activity1_3_119Controller:reInit()
 	return
 end
 
-function var_0_0.addConstEvents(arg_4_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_4_0._get119TaskInfo, arg_4_0)
+function Activity1_3_119Controller:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._get119TaskInfo, self)
 end
 
-function var_0_0._get119TaskInfo(arg_5_0, arg_5_1)
-	if arg_5_1 then
-		local var_5_0 = ActivityConfig.instance:getActivityCo(arg_5_1)
+function Activity1_3_119Controller:_get119TaskInfo(activityId)
+	if activityId then
+		local activityCO = ActivityConfig.instance:getActivityCo(activityId)
 
-		if var_5_0 and var_5_0.typeId ~= VersionActivity1_3Enum.ActivityId.Act307 then
+		if activityCO and activityCO.typeId ~= VersionActivity1_3Enum.ActivityId.Act307 then
 			return
 		end
 	end
@@ -32,10 +34,10 @@ function var_0_0._get119TaskInfo(arg_5_0, arg_5_1)
 	})
 end
 
-function var_0_0.openView(arg_6_0)
+function Activity1_3_119Controller:openView()
 	ViewMgr.instance:openView(ViewName.Activity1_3_119View)
 end
 
-var_0_0.instance = var_0_0.New()
+Activity1_3_119Controller.instance = Activity1_3_119Controller.New()
 
-return var_0_0
+return Activity1_3_119Controller

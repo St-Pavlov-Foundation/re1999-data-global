@@ -1,7 +1,9 @@
-﻿module("modules.configs.excel2json.lua_activity163_dialog", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_activity163_dialog.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_activity163_dialog", package.seeall)
+
+local lua_activity163_dialog = {}
+local fields = {
 	expression = 9,
 	content = 7,
 	nextStep = 3,
@@ -12,17 +14,17 @@ local var_0_1 = {
 	speakerIcon = 6,
 	id = 1
 }
-local var_0_2 = {
+local primaryKey = {
 	"id",
 	"stepId"
 }
-local var_0_3 = {
+local mlStringKey = {
 	speaker = 1,
 	content = 2
 }
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_activity163_dialog.onLoad(json)
+	lua_activity163_dialog.configList, lua_activity163_dialog.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_activity163_dialog

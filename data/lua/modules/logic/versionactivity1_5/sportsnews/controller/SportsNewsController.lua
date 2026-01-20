@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity1_5.sportsnews.controller.SportsNewsController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/sportsnews/controller/SportsNewsController.lua
 
-local var_0_0 = class("SportsNewsController", BaseController)
+module("modules.logic.versionactivity1_5.sportsnews.controller.SportsNewsController", package.seeall)
 
-function var_0_0.openSportsNewsMainView(arg_1_0, arg_1_1)
+local SportsNewsController = class("SportsNewsController", BaseController)
+
+function SportsNewsController:openSportsNewsMainView(actId)
 	SportsNewsModel.instance:setJumpToOrderId(nil)
 
-	arg_1_1 = arg_1_1 or VersionActivity1_5Enum.ActivityId.SportsNews
+	actId = actId or VersionActivity1_5Enum.ActivityId.SportsNews
 
 	ViewMgr.instance:openView(ViewName.SportsNewsView, {
 		formToMain = true,
-		actId = arg_1_1
+		actId = actId
 	})
 end
 
-var_0_0.UI_CLICK_BLOCK_KEY = "SportsNewsBlock"
+SportsNewsController.UI_CLICK_BLOCK_KEY = "SportsNewsBlock"
 
-function var_0_0.startBlock(arg_2_0)
+function SportsNewsController:startBlock()
 	UIBlockMgrExtend.setNeedCircleMv(false)
-	UIBlockMgr.instance:startBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+	UIBlockMgr.instance:startBlock(SportsNewsController.UI_CLICK_BLOCK_KEY)
 end
 
-function var_0_0.endBlock(arg_3_0)
-	UIBlockMgr.instance:endBlock(var_0_0.UI_CLICK_BLOCK_KEY)
+function SportsNewsController:endBlock()
+	UIBlockMgr.instance:endBlock(SportsNewsController.UI_CLICK_BLOCK_KEY)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
-function var_0_0.cantJumpDungeonGetName(arg_4_0, arg_4_1)
-	local var_4_0 = JumpConfig.instance:getJumpConfig(arg_4_1)
+function SportsNewsController:cantJumpDungeonGetName(jumpId)
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
 
-	if not var_4_0 then
+	if not jumpConfig then
 		return false
 	end
 
-	local var_4_1 = var_4_0.param
-	local var_4_2, var_4_3 = JumpController.instance:canJumpNew(var_4_1)
+	local jumpParam = jumpConfig.param
+	local canJump, toastId = JumpController.instance:canJumpNew(jumpParam)
 
-	if var_4_2 then
+	if canJump then
 		return true
 	end
 
-	local var_4_4 = string.split(var_4_1, "#")
-	local var_4_5 = tonumber(var_4_4[#var_4_4])
-	local var_4_6 = DungeonConfig.instance:getEpisodeCO(var_4_5)
+	local jumps = string.split(jumpParam, "#")
+	local episodeId = tonumber(jumps[#jumps])
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-	if var_4_6 then
-		local var_4_7 = DungeonController.getEpisodeName(var_4_6)
+	if episodeConfig then
+		local cantJumpName = DungeonController.getEpisodeName(episodeConfig)
 
-		return false, ToastEnum.V1a5SportNewsOrderJumpTo, var_4_7, var_4_6.name
+		return false, ToastEnum.V1a5SportNewsOrderJumpTo, cantJumpName, episodeConfig.name
 	end
 
-	return false, var_4_3
+	return false, toastId
 end
 
-function var_0_0.jumpToFinishTask(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0, var_5_1, var_5_2, var_5_3 = arg_5_0:cantJumpDungeonGetName(arg_5_1.cfg.jumpId)
+function SportsNewsController:jumpToFinishTask(order, callback, callbackObj)
+	local canJump, toastId, cantJumpName, jumpName = self:cantJumpDungeonGetName(order.cfg.jumpId)
 
-	if not var_5_0 then
-		GameFacade.showToast(var_5_1, var_5_2, var_5_3)
+	if not canJump then
+		GameFacade.showToast(toastId, cantJumpName, jumpName)
 	else
-		local var_5_4 = {
+		local tag = {
 			luaLang("p_versionactivity_1_5_enterview_txt_Activity2"),
-			arg_5_1.cfg.name
+			order.cfg.name
 		}
-		local var_5_5 = {
+		local recordFarmItem = {
 			special = true,
-			desc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_news_order_return_view"), var_5_4),
-			checkFunc = arg_5_1.canFinish,
-			checkFuncObj = arg_5_1,
+			desc = GameUtil.getSubPlaceholderLuaLang(luaLang("v1a5_news_order_return_view"), tag),
+			checkFunc = order.canFinish,
+			checkFuncObj = order,
 			openedViewNameList = JumpController.instance:getCurrentOpenedView()
 		}
 
-		SportsNewsModel.instance:setJumpToOrderId(arg_5_1.cfg.id)
-		JumpController.instance:jump(arg_5_1.cfg.jumpId, arg_5_2, arg_5_3, var_5_5)
+		SportsNewsModel.instance:setJumpToOrderId(order.cfg.id)
+		JumpController.instance:jump(order.cfg.jumpId, callback, callbackObj, recordFarmItem)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+SportsNewsController.instance = SportsNewsController.New()
 
-return var_0_0
+return SportsNewsController

@@ -1,342 +1,356 @@
-﻿module("modules.logic.character.model.recommed.CharacterRecommedModel", package.seeall)
+﻿-- chunkname: @modules/logic/character/model/recommed/CharacterRecommedModel.lua
 
-local var_0_0 = class("CharacterRecommedModel", BaseModel)
+module("modules.logic.character.model.recommed.CharacterRecommedModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local CharacterRecommedModel = class("CharacterRecommedModel", BaseModel)
+
+function CharacterRecommedModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
+function CharacterRecommedModel:reInit()
 	return
 end
 
-function var_0_0.initMO(arg_3_0, arg_3_1)
-	arg_3_0._heroRecommendMos = {}
+function CharacterRecommedModel:initMO(configDict)
+	self._heroRecommendMos = {}
 
-	if not arg_3_1 then
+	if not configDict then
 		return
 	end
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		local var_3_0 = CharacterRecommedMO.New()
+	for heroId, config in pairs(configDict) do
+		local heroRecommendMO = CharacterRecommedMO.New()
 
-		var_3_0:init(iter_3_1)
+		heroRecommendMO:init(config)
 
-		arg_3_0._heroRecommendMos[iter_3_0] = var_3_0
+		self._heroRecommendMos[heroId] = heroRecommendMO
 	end
 end
 
-function var_0_0.getAllHeroRecommendMos(arg_4_0)
-	return arg_4_0._heroRecommendMos
+function CharacterRecommedModel:getAllHeroRecommendMos()
+	return self._heroRecommendMos
 end
 
-function var_0_0.isShowRecommedView(arg_5_0, arg_5_1)
-	return arg_5_0:getHeroRecommendMo(arg_5_1) ~= nil
+function CharacterRecommedModel:isShowRecommedView(heroId)
+	local mo = self:getHeroRecommendMo(heroId)
+
+	return mo ~= nil
 end
 
-function var_0_0.getHeroRecommendMo(arg_6_0, arg_6_1)
-	if not arg_6_0._heroRecommendMos then
+function CharacterRecommedModel:getHeroRecommendMo(heroId)
+	if not self._heroRecommendMos then
 		return
 	end
 
-	return arg_6_0._heroRecommendMos[arg_6_1]
+	return self._heroRecommendMos[heroId]
 end
 
-function var_0_0.initTracedHeroDevelopGoalsMO(arg_7_0)
-	local var_7_0 = GameUtil.playerPrefsGetStringByUserId(CharacterRecommedEnum.TraceHeroPref, "")
+function CharacterRecommedModel:initTracedHeroDevelopGoalsMO()
+	local value = GameUtil.playerPrefsGetStringByUserId(CharacterRecommedEnum.TraceHeroPref, "")
 
-	if string.nilorempty(var_7_0) then
-		arg_7_0._heroDevelopGoalsMO = nil
+	if string.nilorempty(value) then
+		self._heroDevelopGoalsMO = nil
 	else
-		local var_7_1 = string.splitToNumber(var_7_0, "_")
-		local var_7_2 = var_7_1[1]
-		local var_7_3 = var_7_1[2]
-		local var_7_4 = arg_7_0:getHeroRecommendMo(var_7_2)
-		local var_7_5 = var_7_4 and var_7_4:getDevelopGoalsMO(var_7_3)
+		local split = string.splitToNumber(value, "_")
+		local heroId = split[1]
+		local type = split[2]
+		local mo = self:getHeroRecommendMo(heroId)
+		local heroDevelopGoalsMO = mo and mo:getDevelopGoalsMO(type)
 
-		if var_7_5 then
-			var_7_5:setTraced(true)
+		if heroDevelopGoalsMO then
+			heroDevelopGoalsMO:setTraced(true)
 		end
 
-		arg_7_0._heroDevelopGoalsMO = var_7_5
+		self._heroDevelopGoalsMO = heroDevelopGoalsMO
 	end
 end
 
-function var_0_0.getTracedHeroDevelopGoalsMO(arg_8_0)
-	return arg_8_0._heroDevelopGoalsMO
+function CharacterRecommedModel:getTracedHeroDevelopGoalsMO()
+	return self._heroDevelopGoalsMO
 end
 
-function var_0_0.setTracedHeroDevelopGoalsMO(arg_9_0, arg_9_1)
-	if arg_9_0._heroDevelopGoalsMO == arg_9_1 then
+function CharacterRecommedModel:setTracedHeroDevelopGoalsMO(mo)
+	if self._heroDevelopGoalsMO == mo then
 		return
 	end
 
-	if arg_9_0._heroDevelopGoalsMO then
-		arg_9_0._heroDevelopGoalsMO:setTraced(false)
+	if self._heroDevelopGoalsMO then
+		self._heroDevelopGoalsMO:setTraced(false)
 	end
 
-	arg_9_0._heroDevelopGoalsMO = arg_9_1
+	self._heroDevelopGoalsMO = mo
 
-	local var_9_0 = arg_9_1 and string.format("%s_%s", arg_9_1._heroId, arg_9_1._developGoalsType) or ""
+	local preValue = mo and string.format("%s_%s", mo._heroId, mo._developGoalsType) or ""
 
-	GameUtil.playerPrefsSetStringByUserId(CharacterRecommedEnum.TraceHeroPref, var_9_0)
+	GameUtil.playerPrefsSetStringByUserId(CharacterRecommedEnum.TraceHeroPref, preValue)
 	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
 end
 
-function var_0_0.isTradeChapter(arg_10_0, arg_10_1)
-	if arg_10_0:getChapterTracedItem(arg_10_1) then
+function CharacterRecommedModel:isTradeChapter(chapterId)
+	local item = self:getChapterTracedItem(chapterId)
+
+	if item then
 		return true
 	end
 
-	return arg_10_0:getChapterTradeEpisodeId(arg_10_1) ~= nil
+	return self:getChapterTradeEpisodeId(chapterId) ~= nil
 end
 
-function var_0_0.isTradeEpisode(arg_11_0, arg_11_1)
-	if arg_11_0:getEpisodeTracedItem(arg_11_1) then
+function CharacterRecommedModel:isTradeEpisode(episodeId)
+	local item = self:getEpisodeTracedItem(episodeId)
+
+	if item then
 		return true
 	end
 
-	local var_11_0 = DungeonConfig.instance:getHardEpisode(arg_11_1)
+	local hardEpisode = DungeonConfig.instance:getHardEpisode(episodeId)
 
-	if var_11_0 and arg_11_0:getEpisodeTracedItem(var_11_0.id) then
-		return true
+	if hardEpisode then
+		local hardItem = self:getEpisodeTracedItem(hardEpisode.id)
+
+		if hardItem then
+			return true
+		end
 	end
 
 	return false
 end
 
-function var_0_0.getEpisodeOrChapterTracedItem(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getEpisodeTracedItem(arg_12_1)
+function CharacterRecommedModel:getEpisodeOrChapterTracedItem(episodeId)
+	local item = self:getEpisodeTracedItem(episodeId)
 
-	if not var_12_0 then
-		local var_12_1 = DungeonConfig.instance:getEpisodeCO(arg_12_1)
+	if not item then
+		local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
-		var_12_0 = arg_12_0:getChapterTracedItem(var_12_1.chapterId)
+		item = self:getChapterTracedItem(episodeCO.chapterId)
 	end
 
-	return var_12_0
+	return item
 end
 
-function var_0_0.getChapterTracedItem(arg_13_0, arg_13_1)
-	if not arg_13_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:getChapterTracedItem(chapterId)
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	local var_13_0 = arg_13_0._heroDevelopGoalsMO:getTracedItems()
+	local tracedItems = self._heroDevelopGoalsMO:getTracedItems()
 
-	if not var_13_0 or #var_13_0 == 0 then
+	if not tracedItems or #tracedItems == 0 then
 		return
 	end
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0:getBestSource(iter_13_1.materilType, iter_13_1.materilId)
+	for _, item in ipairs(tracedItems) do
+		local bestSource = self:getBestSource(item.materilType, item.materilId)
 
-		if var_13_1 and var_13_1.chapterId == arg_13_1 then
-			return iter_13_1
+		if bestSource and bestSource.chapterId == chapterId then
+			return item
 		end
 	end
 end
 
-function var_0_0.getEpisodeTracedItem(arg_14_0, arg_14_1)
-	if not arg_14_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:getEpisodeTracedItem(episodeId)
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	local var_14_0 = arg_14_0._heroDevelopGoalsMO:getTracedItems()
+	local tracedItems = self._heroDevelopGoalsMO:getTracedItems()
 
-	if not var_14_0 or #var_14_0 == 0 then
+	if not tracedItems or #tracedItems == 0 then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		local var_14_1 = arg_14_0:getBestSource(iter_14_1.materilType, iter_14_1.materilId)
+	for _, item in ipairs(tracedItems) do
+		local bestSource = self:getBestSource(item.materilType, item.materilId)
 
-		if var_14_1 and var_14_1.episodeId == arg_14_1 then
-			return iter_14_1
+		if bestSource and bestSource.episodeId == episodeId then
+			return item
 		end
 	end
 end
 
-function var_0_0.getChapterTradeEpisodeId(arg_15_0, arg_15_1)
-	local var_15_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_15_1)
+function CharacterRecommedModel:getChapterTradeEpisodeId(chapterId)
+	local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(chapterId)
 
-	if var_15_0 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			if arg_15_0:isTradeEpisode(iter_15_1.id) then
-				return iter_15_1.id
+	if episodeList then
+		for _, episodeCo in ipairs(episodeList) do
+			if self:isTradeEpisode(episodeCo.id) then
+				return episodeCo.id
 			end
 		end
 	end
 end
 
-function var_0_0._getItemSourceList(arg_16_0, arg_16_1, arg_16_2)
-	if not arg_16_0._itemSourceDict then
-		arg_16_0._itemSourceDict = {}
+function CharacterRecommedModel:_getItemSourceList(materilType, materilId)
+	if not self._itemSourceDict then
+		self._itemSourceDict = {}
 	end
 
-	if not arg_16_0._itemSourceDict[arg_16_1] then
-		arg_16_0._itemSourceDict[arg_16_1] = {}
+	if not self._itemSourceDict[materilType] then
+		self._itemSourceDict[materilType] = {}
 	end
 
-	local var_16_0 = arg_16_0._itemSourceDict[arg_16_1][arg_16_2]
+	local list = self._itemSourceDict[materilType][materilId]
 
-	if not var_16_0 then
-		var_16_0 = DungeonConfig.instance:getMaterialSource(arg_16_1, arg_16_2) or {}
+	if not list then
+		list = DungeonConfig.instance:getMaterialSource(materilType, materilId) or {}
 
-		local var_16_1 = ItemConfig.instance:getItemConfig(arg_16_1, arg_16_2)
+		local itemCo = ItemConfig.instance:getItemConfig(materilType, materilId)
 
-		if not string.nilorempty(var_16_1.sources) then
-			local var_16_2 = string.split(var_16_1.sources, "|")
+		if not string.nilorempty(itemCo.sources) then
+			local sources = string.split(itemCo.sources, "|")
 
-			for iter_16_0, iter_16_1 in ipairs(var_16_2) do
-				local var_16_3 = string.splitToNumber(iter_16_1, "#")
-				local var_16_4 = {}
-				local var_16_5 = var_16_3[1]
+			for i, source in ipairs(sources) do
+				local sourceParam = string.splitToNumber(source, "#")
+				local sourceTable = {}
+				local sourceId = sourceParam[1]
 
-				if var_16_5 then
-					local var_16_6 = JumpConfig.instance:getJumpConfig(var_16_5)
-					local var_16_7 = string.splitToNumber(var_16_6.param, "#")
+				if sourceId then
+					local jumpCo = JumpConfig.instance:getJumpConfig(sourceId)
+					local jumpParam = string.splitToNumber(jumpCo.param, "#")
 
-					if var_16_7[1] == JumpEnum.JumpView.DungeonViewWithChapter then
-						var_16_4.chapterId = var_16_7[2]
-						var_16_4.probability = var_16_3[2] or 0
-					elseif var_16_7[1] == JumpEnum.JumpView.DungeonViewWithEpisode then
-						var_16_4.episodeId = var_16_7[2]
-						var_16_4.probability = var_16_3[2] or 0
+					if jumpParam[1] == JumpEnum.JumpView.DungeonViewWithChapter then
+						sourceTable.chapterId = jumpParam[2]
+						sourceTable.probability = sourceParam[2] or 0
+					elseif jumpParam[1] == JumpEnum.JumpView.DungeonViewWithEpisode then
+						sourceTable.episodeId = jumpParam[2]
+						sourceTable.probability = sourceParam[2] or 0
 					end
 
-					table.insert(var_16_0, var_16_4)
+					table.insert(list, sourceTable)
 				end
 			end
 		end
 
-		arg_16_0._itemSourceDict[arg_16_1][arg_16_2] = var_16_0
+		self._itemSourceDict[materilType][materilId] = list
 	end
 
-	return var_16_0
+	return list
 end
 
-function var_0_0.getBestSource(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:_getItemSourceList(arg_17_1, arg_17_2)
-	local var_17_1
+function CharacterRecommedModel:getBestSource(materilType, materilId)
+	local sourceList = self:_getItemSourceList(materilType, materilId)
+	local bestSource
 
-	if var_17_0 then
-		for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-			if iter_17_1.chapterId and DungeonController.instance:canJumpDungeonChapter(iter_17_1.chapterId) then
-				if var_17_1 then
-					if var_17_1.probability > iter_17_1.probability then
-						var_17_1 = iter_17_1
-					elseif var_17_1.probability == iter_17_1.probability and var_17_1.chapterId < iter_17_1.chapterId then
-						var_17_1 = iter_17_1
-					end
-				else
-					var_17_1 = iter_17_1
-				end
-			end
-
-			if iter_17_1.episodeId and DungeonModel.instance:hasPassLevel(iter_17_1.episodeId) then
-				if var_17_1 then
-					if var_17_1.probability > iter_17_1.probability then
-						var_17_1 = iter_17_1
-					elseif var_17_1.probability == iter_17_1.probability and var_17_1.episodeId < iter_17_1.episodeId then
-						var_17_1 = iter_17_1
+	if sourceList then
+		for _, source in ipairs(sourceList) do
+			if source.chapterId and DungeonController.instance:canJumpDungeonChapter(source.chapterId) then
+				if bestSource then
+					if bestSource.probability > source.probability then
+						bestSource = source
+					elseif bestSource.probability == source.probability and bestSource.chapterId < source.chapterId then
+						bestSource = source
 					end
 				else
-					var_17_1 = iter_17_1
+					bestSource = source
+				end
+			end
+
+			if source.episodeId and DungeonModel.instance:hasPassLevel(source.episodeId) then
+				if bestSource then
+					if bestSource.probability > source.probability then
+						bestSource = source
+					elseif bestSource.probability == source.probability and bestSource.episodeId < source.episodeId then
+						bestSource = source
+					end
+				else
+					bestSource = source
 				end
 			end
 		end
 	end
 
-	return var_17_1
+	return bestSource
 end
 
-function var_0_0.isTradeStory(arg_18_0)
-	if not arg_18_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:isTradeStory()
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(lua_chapter_divide.configList) do
-		if var_0_0.instance:isTradeSection(iter_18_1.sectionId) then
+	for i, v in ipairs(lua_chapter_divide.configList) do
+		local isTrade = CharacterRecommedModel.instance:isTradeSection(v.sectionId)
+
+		if isTrade then
 			return true
 		end
 	end
 end
 
-function var_0_0.isTradeSection(arg_19_0, arg_19_1)
-	if not arg_19_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:isTradeSection(sectionId)
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	local var_19_0 = DungeonMainStoryModel.instance:getChapterList(arg_19_1)
+	local chapterList = DungeonMainStoryModel.instance:getChapterList(sectionId)
 
-	if var_19_0 then
-		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-			if arg_19_0:isTradeChapter(iter_19_1.id) then
+	if chapterList then
+		for _, characterCo in ipairs(chapterList) do
+			if self:isTradeChapter(characterCo.id) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isTradeResDungeon(arg_20_0)
-	if not arg_20_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:isTradeResDungeon()
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	for iter_20_0, iter_20_1 in pairs(CharacterRecommedEnum.ResDungeon) do
-		if OpenModel.instance:isFuncBtnShow(iter_20_1.UnlockFunc) then
-			local var_20_0 = DungeonConfig.instance:getChapterCO(iter_20_0)
+	for type, params in pairs(CharacterRecommedEnum.ResDungeon) do
+		if OpenModel.instance:isFuncBtnShow(params.UnlockFunc) then
+			local config = DungeonConfig.instance:getChapterCO(type)
 
-			if arg_20_0:isTradeChapter(var_20_0.id) then
+			if self:isTradeChapter(config.id) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.isTradeRankResDungeon(arg_21_0)
-	if not arg_21_0._heroDevelopGoalsMO then
+function CharacterRecommedModel:isTradeRankResDungeon()
+	if not self._heroDevelopGoalsMO then
 		return
 	end
 
-	for iter_21_0, iter_21_1 in pairs(CharacterRecommedEnum.RankResDungeon) do
+	for _, type in pairs(CharacterRecommedEnum.RankResDungeon) do
 		if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.ResDungeon) then
-			local var_21_0 = DungeonConfig.instance:getChapterCO(iter_21_1)
+			local config = DungeonConfig.instance:getChapterCO(type)
 
-			if arg_21_0:isTradeChapter(var_21_0.id) then
+			if self:isTradeChapter(config.id) then
 				return true
 			end
 		end
 	end
 end
 
-function var_0_0.getHeroName(arg_22_0, arg_22_1, arg_22_2)
-	if not arg_22_0._heroName then
-		arg_22_0._heroName = {}
+function CharacterRecommedModel:getHeroName(name, size)
+	if not self._heroName then
+		self._heroName = {}
 	end
 
-	local var_22_0 = arg_22_0._heroName[arg_22_1]
+	local heroName = self._heroName[name]
 
-	if not var_22_0 and not string.nilorempty(arg_22_1) then
-		local var_22_1 = LuaUtil.getUCharArr(arg_22_1)
+	if not heroName and not string.nilorempty(name) then
+		local ucharArr = LuaUtil.getUCharArr(name)
 
-		if var_22_1 then
-			var_22_0 = ""
+		if ucharArr then
+			heroName = ""
 
-			for iter_22_0 = 2, #var_22_1 do
-				var_22_0 = var_22_0 .. var_22_1[iter_22_0]
+			for i = 2, #ucharArr do
+				heroName = heroName .. ucharArr[i]
 			end
 
-			arg_22_2 = arg_22_2 or 52
-			var_22_0 = var_22_1[1] .. string.format("<size=%s>%s</size>", arg_22_2, var_22_0)
-			arg_22_0._heroName[arg_22_1] = var_22_0
+			size = size or 52
+			heroName = ucharArr[1] .. string.format("<size=%s>%s</size>", size, heroName)
+			self._heroName[name] = heroName
 		end
 	end
 
-	return var_22_0
+	return heroName
 end
 
-var_0_0.instance = var_0_0.New()
+CharacterRecommedModel.instance = CharacterRecommedModel.New()
 
-return var_0_0
+return CharacterRecommedModel

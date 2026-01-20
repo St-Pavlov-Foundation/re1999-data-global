@@ -1,39 +1,41 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEvent500MMonsterRefreshHeadIcon", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEvent500MMonsterRefreshHeadIcon.lua
 
-local var_0_0 = class("FightTLEvent500MMonsterRefreshHeadIcon", FightTimelineTrackItem)
+module("modules.logic.fight.entity.comp.skill.FightTLEvent500MMonsterRefreshHeadIcon", package.seeall)
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_1.actEffect
+local FightTLEvent500MMonsterRefreshHeadIcon = class("FightTLEvent500MMonsterRefreshHeadIcon", FightTimelineTrackItem)
 
-	if not var_1_0 then
+function FightTLEvent500MMonsterRefreshHeadIcon:onTrackStart(fightStepData, duration, paramsArr)
+	local effectList = fightStepData.actEffect
+
+	if not effectList then
 		logError("FightTLEvent500MMonsterRefreshHeadIcon:onTrackStart effectList is nil")
 
 		return
 	end
 
-	local var_1_1
+	local modelId
 
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if iter_1_1.effectType == FightEnum.EffectType.MONSTERCHANGE then
-			local var_1_2 = iter_1_1.entity
+	for _, effect in ipairs(effectList) do
+		if effect.effectType == FightEnum.EffectType.MONSTERCHANGE then
+			local entity = effect.entity
 
-			var_1_1 = var_1_2 and var_1_2.modelId
+			modelId = entity and entity.modelId
 
 			break
 		end
 	end
 
-	if not var_1_1 then
+	if not modelId then
 		logError("FightTLEvent500MMonsterRefreshHeadIcon:onTrackStart modelId is nil")
 
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.RefreshSpineHeadIcon, var_1_1)
+	FightController.instance:dispatchEvent(FightEvent.RefreshSpineHeadIcon, modelId)
 end
 
-function var_0_0.onTrackEnd(arg_2_0)
+function FightTLEvent500MMonsterRefreshHeadIcon:onTrackEnd()
 	return
 end
 
-return var_0_0
+return FightTLEvent500MMonsterRefreshHeadIcon

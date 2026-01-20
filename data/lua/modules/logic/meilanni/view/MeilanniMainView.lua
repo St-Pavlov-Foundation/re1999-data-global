@@ -1,121 +1,127 @@
-﻿module("modules.logic.meilanni.view.MeilanniMainView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniMainView.lua
 
-local var_0_0 = class("MeilanniMainView", BaseView)
+module("modules.logic.meilanni.view.MeilanniMainView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
-	arg_1_0._simageheroup1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_hero_up1")
-	arg_1_0._simagehero = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_hero")
-	arg_1_0._goday = gohelper.findChild(arg_1_0.viewGO, "remaintime/#go_day")
-	arg_1_0._txtremainday = gohelper.findChildText(arg_1_0.viewGO, "remaintime/#go_day/#txt_remainday")
-	arg_1_0._gohour = gohelper.findChild(arg_1_0.viewGO, "remaintime/#go_hour")
-	arg_1_0._txtremainhour = gohelper.findChildText(arg_1_0.viewGO, "remaintime/#go_hour/#txt_remainhour")
-	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
-	arg_1_0._gomaplist = gohelper.findChild(arg_1_0.viewGO, "#go_maplist")
-	arg_1_0._btnend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_maplist/#btn_end")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
-	arg_1_0._imageremainday = gohelper.findChildImage(arg_1_0.viewGO, "#go_lock/horizontal/part2/#image_remainday")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._gotaskredpoint = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_taskredpoint")
+local MeilanniMainView = class("MeilanniMainView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniMainView:onInitView()
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "#simage_bg1")
+	self._simageheroup1 = gohelper.findChildSingleImage(self.viewGO, "#simage_hero_up1")
+	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "#simage_hero")
+	self._goday = gohelper.findChild(self.viewGO, "remaintime/#go_day")
+	self._txtremainday = gohelper.findChildText(self.viewGO, "remaintime/#go_day/#txt_remainday")
+	self._gohour = gohelper.findChild(self.viewGO, "remaintime/#go_hour")
+	self._txtremainhour = gohelper.findChildText(self.viewGO, "remaintime/#go_hour/#txt_remainhour")
+	self._gofullscreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self._gomaplist = gohelper.findChild(self.viewGO, "#go_maplist")
+	self._btnend = gohelper.findChildButtonWithAudio(self.viewGO, "#go_maplist/#btn_end")
+	self._golock = gohelper.findChild(self.viewGO, "#go_lock")
+	self._imageremainday = gohelper.findChildImage(self.viewGO, "#go_lock/horizontal/part2/#image_remainday")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._gotaskredpoint = gohelper.findChild(self.viewGO, "#btn_task/#go_taskredpoint")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnend:AddClickListener(arg_2_0._btnendOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+function MeilanniMainView:addEvents()
+	self._btnend:AddClickListener(self._btnendOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnend:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
+function MeilanniMainView:removeEvents()
+	self._btnend:RemoveClickListener()
+	self._btntask:RemoveClickListener()
 end
 
-function var_0_0._btnendOnClick(arg_4_0)
+function MeilanniMainView:_btnendOnClick()
 	MeilanniMapItem.playStoryList(MeilanniEnum.endStoryBindIndex)
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function MeilanniMainView:_btntaskOnClick()
 	MeilanniController.instance:openMeilanniTaskView()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagebg1:LoadImage(ResUrl.getMeilanniIcon("full/bg_beijing"))
-	arg_6_0._simagehero:LoadImage(ResUrl.getMeilanniIcon("bg_renwu"))
-	gohelper.addUIClickAudio(arg_6_0._btntask.gameObject, AudioEnum.UI.play_ui_common_pause)
-	RedDotController.instance:addRedDot(arg_6_0._gotaskredpoint, RedDotEnum.DotNode.MeilanniTaskBtn)
+function MeilanniMainView:_editableInitView()
+	self._simagebg1:LoadImage(ResUrl.getMeilanniIcon("full/bg_beijing"))
+	self._simagehero:LoadImage(ResUrl.getMeilanniIcon("bg_renwu"))
+	gohelper.addUIClickAudio(self._btntask.gameObject, AudioEnum.UI.play_ui_common_pause)
+	RedDotController.instance:addRedDot(self._gotaskredpoint, RedDotEnum.DotNode.MeilanniTaskBtn)
 	UIBlockMgr.instance:endAll()
 end
 
-function var_0_0._checkFinishAllMapStory(arg_7_0)
-	for iter_7_0, iter_7_1 in ipairs(lua_activity108_map.configList) do
-		local var_7_0 = iter_7_1.id
+function MeilanniMainView:_checkFinishAllMapStory()
+	for i, v in ipairs(lua_activity108_map.configList) do
+		local mapId = v.id
 
-		if MeilanniModel.instance:getMapHighestScore(var_7_0) <= 0 then
-			arg_7_0:_forceUpdateTime()
-
-			return
-		end
-	end
-
-	local var_7_1 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishAllMap)
-
-	for iter_7_2, iter_7_3 in ipairs(var_7_1) do
-		local var_7_2 = iter_7_3[1].story
-
-		if not StoryModel.instance:isStoryFinished(var_7_2) then
-			StoryController.instance:playStory(var_7_2, nil, arg_7_0._finishAllMapCallback, arg_7_0)
+		if MeilanniModel.instance:getMapHighestScore(mapId) <= 0 then
+			self:_forceUpdateTime()
 
 			return
 		end
 	end
 
-	arg_7_0:_forceUpdateTime()
-end
+	local storyList = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.finishAllMap)
 
-function var_0_0._finishAllMapCallback(arg_8_0)
-	arg_8_0:_forceUpdateTime()
-end
+	for i, v in ipairs(storyList) do
+		local config = v[1]
+		local storyId = config.story
 
-function var_0_0._forceUpdateTime(arg_9_0)
-	if arg_9_0:_getLockTime() > 0 then
-		arg_9_0:_showMapList()
+		if not StoryModel.instance:isStoryFinished(storyId) then
+			StoryController.instance:playStory(storyId, nil, self._finishAllMapCallback, self)
+
+			return
+		end
 	end
 
-	arg_9_0._openMeilanniView = false
-
-	arg_9_0:_updateTime()
+	self:_forceUpdateTime()
 end
 
-function var_0_0._checkOpenDayAndFinishMapStory(arg_10_0)
-	local var_10_0 = var_0_0.getOpenDayAndFinishMapStory()
+function MeilanniMainView:_finishAllMapCallback()
+	self:_forceUpdateTime()
+end
 
-	if var_10_0 then
-		StoryController.instance:playStory(var_10_0)
+function MeilanniMainView:_forceUpdateTime()
+	local seconds = self:_getLockTime()
+
+	if seconds > 0 then
+		self:_showMapList()
+	end
+
+	self._openMeilanniView = false
+
+	self:_updateTime()
+end
+
+function MeilanniMainView:_checkOpenDayAndFinishMapStory()
+	local storyId = MeilanniMainView.getOpenDayAndFinishMapStory()
+
+	if storyId then
+		StoryController.instance:playStory(storyId)
 	end
 end
 
-function var_0_0.getOpenDayAndFinishMapStory()
-	local var_11_0 = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
-	local var_11_1 = ServerTime.now() - var_11_0:getRealStartTimeStamp()
+function MeilanniMainView.getOpenDayAndFinishMapStory()
+	local actMO = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
+	local seconds = ServerTime.now() - actMO:getRealStartTimeStamp()
 
-	if var_11_1 <= 0 then
+	if seconds <= 0 then
 		return
 	end
 
-	local var_11_2 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDayAndFinishMap)
-	local var_11_3 = math.ceil(var_11_1 / 86400)
+	local storyList = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDayAndFinishMap)
+	local day = math.ceil(seconds / 86400)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
-		local var_11_4 = MeilanniModel.instance:getMapInfo(iter_11_1[3])
+	for i, v in ipairs(storyList) do
+		local mapInfo = MeilanniModel.instance:getMapInfo(v[3])
 
-		if var_11_3 >= iter_11_1[2] and var_11_4 and (var_11_4:checkFinish() or var_11_4.highestScore > 0) then
-			local var_11_5 = iter_11_1[1].story
+		if day >= v[2] and mapInfo and (mapInfo:checkFinish() or mapInfo.highestScore > 0) then
+			local config = v[1]
+			local storyId = config.story
 
-			if not StoryModel.instance:isStoryFinished(var_11_5) then
-				return var_11_5
+			if not StoryModel.instance:isStoryFinished(storyId) then
+				return storyId
 			end
 
 			break
@@ -123,22 +129,23 @@ function var_0_0.getOpenDayAndFinishMapStory()
 	end
 end
 
-function var_0_0._checkOpenDayStory(arg_12_0)
-	local var_12_0 = ServerTime.now() - arg_12_0._actMO:getRealStartTimeStamp()
+function MeilanniMainView:_checkOpenDayStory()
+	local seconds = ServerTime.now() - self._actMO:getRealStartTimeStamp()
 
-	if var_12_0 <= 0 then
+	if seconds <= 0 then
 		return
 	end
 
-	local var_12_1 = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDay)
-	local var_12_2 = math.ceil(var_12_0 / 86400)
+	local storyList = MeilanniConfig.instance:getStoryList(MeilanniEnum.StoryType.openDay)
+	local day = math.ceil(seconds / 86400)
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_1) do
-		if var_12_2 >= iter_12_1[2] then
-			local var_12_3 = iter_12_1[1].story
+	for i, v in ipairs(storyList) do
+		if day >= v[2] then
+			local config = v[1]
+			local storyId = config.story
 
-			if not StoryModel.instance:isStoryFinished(var_12_3) then
-				StoryController.instance:playStory(var_12_3)
+			if not StoryModel.instance:isStoryFinished(storyId) then
+				StoryController.instance:playStory(storyId)
 			end
 
 			break
@@ -146,56 +153,60 @@ function var_0_0._checkOpenDayStory(arg_12_0)
 	end
 end
 
-function var_0_0._checkStory(arg_13_0)
-	if not (arg_13_0.viewParam and arg_13_0.viewParam.checkStory) then
+function MeilanniMainView:_checkStory()
+	local checkStory = self.viewParam and self.viewParam.checkStory
+
+	if not checkStory then
 		return
 	end
 
-	arg_13_0:_checkOpenDayStory()
-	arg_13_0:_checkOpenDayAndFinishMapStory()
-	arg_13_0:_checkFinishAllMapStory()
+	self:_checkOpenDayStory()
+	self:_checkOpenDayAndFinishMapStory()
+	self:_checkFinishAllMapStory()
 end
 
-function var_0_0._onCloseViewFinish(arg_14_0, arg_14_1)
-	if arg_14_1 == ViewName.MeilanniView then
-		TaskDispatcher.runDelay(arg_14_0._checkFinishAllMapStory, arg_14_0, 0)
+function MeilanniMainView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.MeilanniView then
+		TaskDispatcher.runDelay(self._checkFinishAllMapStory, self, 0)
 	end
 
-	if arg_14_1 == ViewName.StoryView and not arg_14_0._hasOpenMeilanniView then
-		arg_14_0.viewGO:GetComponent(typeof(UnityEngine.Animator)):Play(UIAnimationName.Open, 0, 0)
-	end
-end
+	if viewName == ViewName.StoryView and not self._hasOpenMeilanniView then
+		local animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-function var_0_0._onOpenViewFinish(arg_15_0, arg_15_1)
-	if arg_15_1 == ViewName.MeilanniView then
-		arg_15_0._openMeilanniView = true
-		arg_15_0._hasOpenMeilanniView = true
+		animator:Play(UIAnimationName.Open, 0, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_16_0._onCloseViewFinish, arg_16_0)
-	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_16_0._onOpenViewFinish, arg_16_0)
+function MeilanniMainView:_onOpenViewFinish(viewName)
+	if viewName == ViewName.MeilanniView then
+		self._openMeilanniView = true
+		self._hasOpenMeilanniView = true
+	end
+end
 
-	arg_16_0._actMO = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
-	arg_16_0._endTime = arg_16_0._actMO:getRealEndTimeStamp()
-	arg_16_0._mapItemList = arg_16_0:getUserDataTb_()
+function MeilanniMainView:onOpen()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._onOpenViewFinish, self)
 
-	arg_16_0:_showMapList()
+	self._actMO = ActivityModel.instance:getActMO(MeilanniEnum.activityId)
+	self._endTime = self._actMO:getRealEndTimeStamp()
+	self._mapItemList = self:getUserDataTb_()
 
-	arg_16_0._unlockMapConfig = lua_activity108_map.configDict[MeilanniEnum.unlockMapId]
-	arg_16_0._unlockStartTime = arg_16_0._actMO:getRealStartTimeStamp() + (arg_16_0._unlockMapConfig.onlineDay - 1) * 86400
+	self:_showMapList()
 
-	arg_16_0:_updateTime()
-	TaskDispatcher.runRepeat(arg_16_0._updateTime, arg_16_0, 1)
-	arg_16_0:_checkStory()
+	self._unlockMapConfig = lua_activity108_map.configDict[MeilanniEnum.unlockMapId]
+	self._unlockStartTime = self._actMO:getRealStartTimeStamp() + (self._unlockMapConfig.onlineDay - 1) * 86400
+
+	self:_updateTime()
+	TaskDispatcher.runRepeat(self._updateTime, self, 1)
+	self:_checkStory()
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_cardappear)
 end
 
-function var_0_0._updateTime(arg_17_0)
-	local var_17_0 = arg_17_0._endTime - ServerTime.now()
+function MeilanniMainView:_updateTime()
+	local remainTimeSec = self._endTime - ServerTime.now()
 
-	if var_17_0 <= 0 then
+	if remainTimeSec <= 0 then
 		ViewMgr.instance:closeView(ViewName.MeilanniTaskView)
 		ViewMgr.instance:closeView(ViewName.MeilanniEntrustView)
 		ViewMgr.instance:closeView(ViewName.MeilanniView)
@@ -205,74 +216,76 @@ function var_0_0._updateTime(arg_17_0)
 		return
 	end
 
-	if arg_17_0._openMeilanniView then
+	if self._openMeilanniView then
 		return
 	end
 
-	local var_17_1, var_17_2 = TimeUtil.secondsToDDHHMMSS(var_17_0)
-	local var_17_3 = var_17_1 > 0
+	local day, hour = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
+	local showDay = day > 0
 
-	if var_17_3 then
-		arg_17_0._txtremainday.text = var_17_1
+	if showDay then
+		self._txtremainday.text = day
 	else
-		arg_17_0._txtremainhour.text = var_17_2
+		self._txtremainhour.text = hour
 	end
 
-	gohelper.setActive(arg_17_0._goday, var_17_3)
-	gohelper.setActive(arg_17_0._gohour, not var_17_3)
+	gohelper.setActive(self._goday, showDay)
+	gohelper.setActive(self._gohour, not showDay)
 
-	local var_17_4 = arg_17_0:_getLockTime()
+	local seconds = self:_getLockTime()
 
-	if var_17_4 > 0 then
-		local var_17_5 = math.ceil(var_17_4 / 86400)
-		local var_17_6 = math.max(math.min(var_17_5, 6), 1)
+	if seconds > 0 then
+		local day = math.ceil(seconds / 86400)
 
-		UISpriteSetMgr.instance:setMeilanniSprite(arg_17_0._imageremainday, "bg_daojishi_" .. var_17_6)
-		arg_17_0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_2"))
+		day = math.max(math.min(day, 6), 1)
+
+		UISpriteSetMgr.instance:setMeilanniSprite(self._imageremainday, "bg_daojishi_" .. day)
+		self._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_2"))
 	else
-		gohelper.setActive(arg_17_0._golock, false)
-		arg_17_0._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_1"))
-		arg_17_0:_showMapList()
+		gohelper.setActive(self._golock, false)
+		self._simageheroup1:LoadImage(ResUrl.getMeilanniIcon("bg_renwu_1"))
+		self:_showMapList()
 	end
 end
 
-function var_0_0._getLockTime(arg_18_0)
-	return arg_18_0._unlockStartTime - ServerTime.now()
+function MeilanniMainView:_getLockTime()
+	return self._unlockStartTime - ServerTime.now()
 end
 
-function var_0_0._showMapList(arg_19_0)
-	for iter_19_0, iter_19_1 in ipairs(lua_activity108_map.configList) do
-		local var_19_0 = gohelper.findChild(arg_19_0._gomaplist, "pos" .. iter_19_0)
-		local var_19_1 = arg_19_0._mapItemList[iter_19_1.id] or arg_19_0:_getMapItem(var_19_0, iter_19_1)
+function MeilanniMainView:_showMapList()
+	for i, v in ipairs(lua_activity108_map.configList) do
+		local go = gohelper.findChild(self._gomaplist, "pos" .. i)
+		local mapItem = self._mapItemList[v.id] or self:_getMapItem(go, v)
 
-		arg_19_0._mapItemList[iter_19_1.id] = var_19_1
+		self._mapItemList[v.id] = mapItem
 
-		var_19_1:updateLockStatus()
+		mapItem:updateLockStatus()
 
-		if iter_19_1.id == 104 then
-			local var_19_2 = MeilanniModel.instance:getMapInfo(iter_19_1.id)
+		if v.id == 104 then
+			local mapInfo = MeilanniModel.instance:getMapInfo(v.id)
 
-			gohelper.setActive(arg_19_0._btnend, var_19_2 and var_19_2.highestScore > 0)
+			gohelper.setActive(self._btnend, mapInfo and mapInfo.highestScore > 0)
 		end
 	end
 end
 
-function var_0_0._getMapItem(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = gohelper.findChild(arg_20_1, "item")
+function MeilanniMainView:_getMapItem(go, mapConfig)
+	local itemGo = gohelper.findChild(go, "item")
+	local mapItem = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, MeilanniMapItem, mapConfig)
 
-	return (MonoHelper.addNoUpdateLuaComOnceToGo(var_20_0, MeilanniMapItem, arg_20_2))
+	return mapItem
 end
 
-function var_0_0.onClose(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._updateTime, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._checkFinishAllMapStory, arg_21_0)
-	arg_21_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_21_0._onCloseViewFinish, arg_21_0)
+function MeilanniMainView:onClose()
+	TaskDispatcher.cancelTask(self._updateTime, self)
+	TaskDispatcher.cancelTask(self._checkFinishAllMapStory, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	arg_22_0._simagebg1:UnLoadImage()
-	arg_22_0._simageheroup1:UnLoadImage()
-	arg_22_0._simagehero:UnLoadImage()
+function MeilanniMainView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simageheroup1:UnLoadImage()
+	self._simagehero:UnLoadImage()
 end
 
-return var_0_0
+return MeilanniMainView

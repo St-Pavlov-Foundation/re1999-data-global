@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.controller.trigger.ExploreTriggerRotate", package.seeall)
+﻿-- chunkname: @modules/logic/explore/controller/trigger/ExploreTriggerRotate.lua
 
-local var_0_0 = class("ExploreTriggerRotate", ExploreTriggerBase)
+module("modules.logic.explore.controller.trigger.ExploreTriggerRotate", package.seeall)
 
-function var_0_0.handle(arg_1_0, arg_1_1, arg_1_2)
-	ExploreController.instance:dispatchEvent(ExploreEvent.SetRotateUnit, arg_1_2)
-	arg_1_0:onDone(false)
+local ExploreTriggerRotate = class("ExploreTriggerRotate", ExploreTriggerBase)
+
+function ExploreTriggerRotate:handle(dir, unit)
+	ExploreController.instance:dispatchEvent(ExploreEvent.SetRotateUnit, unit)
+	self:onDone(false)
 end
 
-return var_0_0
+return ExploreTriggerRotate

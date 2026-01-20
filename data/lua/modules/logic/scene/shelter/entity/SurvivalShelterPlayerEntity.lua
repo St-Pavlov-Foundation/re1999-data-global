@@ -1,297 +1,303 @@
-﻿module("modules.logic.scene.shelter.entity.SurvivalShelterPlayerEntity", package.seeall)
+﻿-- chunkname: @modules/logic/scene/shelter/entity/SurvivalShelterPlayerEntity.lua
 
-local var_0_0 = class("SurvivalShelterPlayerEntity", SurvivalShelterUnitEntity)
+module("modules.logic.scene.shelter.entity.SurvivalShelterPlayerEntity", package.seeall)
 
-function var_0_0.Create(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = SurvivalShelterModel.instance:getPlayerMo()
-	local var_1_1 = gohelper.create3d(arg_1_2, tostring(var_1_0.pos))
-	local var_1_2 = {
-		unitType = arg_1_0,
-		unitId = arg_1_1,
-		playerMo = var_1_0
+local SurvivalShelterPlayerEntity = class("SurvivalShelterPlayerEntity", SurvivalShelterUnitEntity)
+
+function SurvivalShelterPlayerEntity.Create(unitType, unitId, root)
+	local playerMo = SurvivalShelterModel.instance:getPlayerMo()
+	local go = gohelper.create3d(root, tostring(playerMo.pos))
+	local param = {
+		unitType = unitType,
+		unitId = unitId,
+		playerMo = playerMo
 	}
 
-	return MonoHelper.addNoUpdateLuaComOnceToGo(var_1_1, var_0_0, var_1_2)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalShelterPlayerEntity, param)
 end
 
-function var_0_0.onCtor(arg_2_0, arg_2_1)
-	arg_2_0._unitMo = arg_2_1.playerMo
+function SurvivalShelterPlayerEntity:onCtor(param)
+	self._unitMo = param.playerMo
 end
 
-function var_0_0.onInit(arg_3_0)
-	arg_3_0:setPosAndDir(arg_3_0._unitMo.pos, arg_3_0._unitMo.dir)
+function SurvivalShelterPlayerEntity:onInit()
+	self:setPosAndDir(self._unitMo.pos, self._unitMo.dir)
 
-	arg_3_0._loader = PrefabInstantiate.Create(arg_3_0.go)
+	self._loader = PrefabInstantiate.Create(self.go)
 
-	local var_3_0 = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
+	local path = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
 
-	arg_3_0._loader:startLoad(var_3_0, arg_3_0._onResLoadEnd, arg_3_0)
-	arg_3_0:playAnim("idle")
+	self._loader:startLoad(path, self._onResLoadEnd, self)
+	self:playAnim("idle")
 end
 
-function var_0_0.addEventListeners(arg_4_0)
-	arg_4_0:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterMapPlayerPosChange, arg_4_0._onPlayerPosChange, arg_4_0)
+function SurvivalShelterPlayerEntity:addEventListeners()
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterMapPlayerPosChange, self._onPlayerPosChange, self)
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
-	arg_5_0:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterMapPlayerPosChange, arg_5_0._onPlayerPosChange, arg_5_0)
+function SurvivalShelterPlayerEntity:removeEventListeners()
+	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterMapPlayerPosChange, self._onPlayerPosChange, self)
 end
 
-function var_0_0._onPlayerPosChange(arg_6_0)
-	arg_6_0:updateEntity()
+function SurvivalShelterPlayerEntity:_onPlayerPosChange()
+	self:updateEntity()
 end
 
-function var_0_0.onPosChange(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._unitMo:setPosAndDir(arg_7_1, arg_7_2)
+function SurvivalShelterPlayerEntity:onPosChange(newPos, newDir)
+	self._unitMo:setPosAndDir(newPos, newDir)
 end
 
-function var_0_0.setPosAndDir(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:onPosChange(arg_8_1, arg_8_2)
+function SurvivalShelterPlayerEntity:setPosAndDir(pos, dir)
+	self:onPosChange(pos, dir)
 
-	local var_8_0, var_8_1, var_8_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_8_1.q, arg_8_1.r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(pos.q, pos.r)
 
-	transformhelper.setLocalPos(arg_8_0.trans, var_8_0, var_8_1, var_8_2)
-	transformhelper.setLocalRotation(arg_8_0.trans, 0, arg_8_2 * 60, 0)
+	transformhelper.setLocalPos(self.trans, x, y, z)
+	transformhelper.setLocalRotation(self.trans, 0, dir * 60, 0)
 end
 
-function var_0_0.getWorldPos(arg_9_0)
-	return transformhelper.getLocalPos(arg_9_0.trans)
+function SurvivalShelterPlayerEntity:getWorldPos()
+	return transformhelper.getLocalPos(self.trans)
 end
 
-function var_0_0.getPos(arg_10_0)
-	local var_10_0, var_10_1, var_10_2 = arg_10_0:getWorldPos()
-	local var_10_3, var_10_4, var_10_5 = SurvivalHelper.instance:worldPointToHex(var_10_0, var_10_1, var_10_2)
+function SurvivalShelterPlayerEntity:getPos()
+	local x, y, z = self:getWorldPos()
+	local q, r, s = SurvivalHelper.instance:worldPointToHex(x, y, z)
 
-	if not arg_10_0._playerPos then
-		arg_10_0._playerPos = SurvivalHexNode.New(var_10_3, var_10_4, var_10_5)
+	if not self._playerPos then
+		self._playerPos = SurvivalHexNode.New(q, r, s)
 	end
 
-	arg_10_0._playerPos:set(var_10_3, var_10_4, var_10_5)
+	self._playerPos:set(q, r, s)
 
-	return arg_10_0._playerPos
+	return self._playerPos
 end
 
-function var_0_0.moveToByPosList(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
-	if not arg_11_1 or not next(arg_11_1) then
-		arg_11_0:stopMove()
+function SurvivalShelterPlayerEntity:moveToByPosList(posList, callback, callObj, callParam, followerPlayer)
+	if not posList or not next(posList) then
+		self:stopMove()
 
-		if arg_11_2 then
-			arg_11_2(arg_11_3, arg_11_4)
+		if callback then
+			callback(callObj, callParam)
 		end
 
 		return
 	end
 
-	local var_11_0 = arg_11_0:getPos()
+	local playerPos = self:getPos()
 
-	if tabletool.indexOf(arg_11_1, var_11_0) then
-		arg_11_0:stopMove()
+	if tabletool.indexOf(posList, playerPos) then
+		self:stopMove()
 
-		if arg_11_2 then
-			arg_11_2(arg_11_3, arg_11_4)
+		if callback then
+			callback(callObj, callParam)
 		end
 
 		return
 	end
 
-	local var_11_1 = SurvivalConfig.instance:getShelterMapCo().walkables
-	local var_11_2 = SurvivalAStarFindPath.instance:findNearestPath(var_11_0, arg_11_1, var_11_1, true)
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
+	local walkables = mapCo.walkables
+	local path = SurvivalAStarFindPath.instance:findNearestPath(playerPos, posList, walkables, true)
 
-	if var_11_2 then
-		arg_11_0:moveToByPath(var_11_2, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	if path then
+		self:moveToByPath(path, callback, callObj, callParam, followerPlayer)
 	else
-		arg_11_0:stopMove()
+		self:stopMove()
 
-		if arg_11_2 then
-			arg_11_2(arg_11_3, arg_11_4)
+		if callback then
+			callback(callObj, callParam)
 		end
 	end
 end
 
-function var_0_0.moveToByPos(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
-	local var_12_0 = arg_12_0:getPos()
+function SurvivalShelterPlayerEntity:moveToByPos(hexPos, callback, callObj, callParam, followerPlayer)
+	local playerPos = self:getPos()
 
-	if var_12_0 == arg_12_1 then
-		arg_12_0:stopMove()
+	if playerPos == hexPos then
+		self:stopMove()
 
-		if arg_12_2 then
-			arg_12_2(arg_12_3, arg_12_4)
+		if callback then
+			callback(callObj, callParam)
 		end
 
 		return
 	end
 
-	local var_12_1 = SurvivalConfig.instance:getShelterMapCo().walkables
-	local var_12_2 = SurvivalAStarFindPath.instance:findPath(var_12_0, arg_12_1, var_12_1, true)
+	local mapCo = SurvivalConfig.instance:getShelterMapCo()
+	local walkables = mapCo.walkables
+	local path = SurvivalAStarFindPath.instance:findPath(playerPos, hexPos, walkables, true)
 
-	if var_12_2 then
-		arg_12_0:moveToByPath(var_12_2, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	if path then
+		self:moveToByPath(path, callback, callObj, callParam, followerPlayer)
 	else
-		arg_12_0:stopMove()
+		self:stopMove()
 
-		if arg_12_2 then
-			arg_12_2(arg_12_3, arg_12_4)
+		if callback then
+			callback(callObj, callParam)
 		end
 	end
 end
 
-function var_0_0.moveToByPath(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
-	arg_13_0:stopMove()
+function SurvivalShelterPlayerEntity:moveToByPath(path, callback, callObj, callParam, followerPlayer)
+	self:stopMove()
 
-	arg_13_0._path = arg_13_1
-	arg_13_0._pathcallback = arg_13_2
-	arg_13_0._pathcallObj = arg_13_3
-	arg_13_0._pathcallParam = arg_13_4
+	self._path = path
+	self._pathcallback = callback
+	self._pathcallObj = callObj
+	self._pathcallParam = callParam
 
-	SurvivalMapHelper.instance:getScene().path:showPath(arg_13_0._path)
+	SurvivalMapHelper.instance:getScene().path:showPath(self._path)
 
-	if arg_13_5 then
-		SurvivalController.instance:dispatchEvent(SurvivalEvent.CameraFollowerTarget, arg_13_0.go)
+	if followerPlayer then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.CameraFollowerTarget, self.go)
 	end
 
-	arg_13_0:_moveToNext()
+	self:_moveToNext()
 end
 
-function var_0_0._moveToNext(arg_14_0)
-	if not arg_14_0._path or #arg_14_0._path == 0 then
-		arg_14_0._callback = arg_14_0._pathcallback
-		arg_14_0._callObj = arg_14_0._pathcallObj
-		arg_14_0._callParam = arg_14_0._pathcallParam
-		arg_14_0._pathcallback = nil
-		arg_14_0._pathcallObj = nil
-		arg_14_0._pathcallParam = nil
+function SurvivalShelterPlayerEntity:_moveToNext()
+	if not self._path or #self._path == 0 then
+		self._callback = self._pathcallback
+		self._callObj = self._pathcallObj
+		self._callParam = self._pathcallParam
+		self._pathcallback = nil
+		self._pathcallObj = nil
+		self._pathcallParam = nil
 
-		arg_14_0:_endMove(true)
+		self:_endMove(true)
 
 		return
 	end
 
-	local var_14_0 = table.remove(arg_14_0._path, 1)
-	local var_14_1 = SurvivalHelper.instance:getDir(arg_14_0:getPos(), var_14_0)
+	local nextPos = table.remove(self._path, 1)
+	local dir = SurvivalHelper.instance:getDir(self:getPos(), nextPos)
 
-	arg_14_0:moveTo(var_14_0, var_14_1, arg_14_0._moveToNext, arg_14_0)
+	self:moveTo(nextPos, dir, self._moveToNext, self)
 end
 
-function var_0_0.moveTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
-	arg_15_0._targetPos = arg_15_1
-	arg_15_0._callback = arg_15_3
-	arg_15_0._callObj = arg_15_4
+function SurvivalShelterPlayerEntity:moveTo(pos, dir, callback, callObj)
+	self._targetPos = pos
+	self._callback = callback
+	self._callObj = callObj
 
-	if arg_15_0._unitMo.dir ~= arg_15_2 then
-		arg_15_0._tweenId = ZProj.TweenHelper.DOLocalRotate(arg_15_0.trans, 0, arg_15_2 * 60, 0, 0.05, arg_15_0._beginMove, arg_15_0)
+	if self._unitMo.dir ~= dir then
+		self._tweenId = ZProj.TweenHelper.DOLocalRotate(self.trans, 0, dir * 60, 0, 0.05, self._beginMove, self)
 	else
-		arg_15_0:_beginMove()
+		self:_beginMove()
 	end
 
-	arg_15_0:onPosChange(arg_15_0._targetPos, arg_15_2)
+	self:onPosChange(self._targetPos, dir)
 end
 
-function var_0_0._beginMove(arg_16_0)
+function SurvivalShelterPlayerEntity:_beginMove()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_move)
-	arg_16_0:playAnim("run")
+	self:playAnim("run")
 
-	local var_16_0, var_16_1, var_16_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_16_0._targetPos.q, arg_16_0._targetPos.r)
-	local var_16_3, var_16_4, var_16_5 = arg_16_0:getWorldPos()
-	local var_16_6 = math.sqrt((var_16_3 - var_16_0)^2 + (var_16_5 - var_16_2)^2) / 2.3
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(self._targetPos.q, self._targetPos.r)
+	local curX, curY, curZ = self:getWorldPos()
+	local distance = math.sqrt((curX - x)^2 + (curZ - z)^2)
+	local speed = 2.3
+	local time = distance / speed
 
-	arg_16_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_16_0.trans, var_16_0, var_16_1, var_16_2, var_16_6, arg_16_0._endMove, arg_16_0, nil, EaseType.Linear)
+	self._tweenId = ZProj.TweenHelper.DOLocalMove(self.trans, x, y, z, time, self._endMove, self, nil, EaseType.Linear)
 end
 
-function var_0_0._endMove(arg_17_0, arg_17_1)
-	arg_17_0:playAnim("idle")
+function SurvivalShelterPlayerEntity:_endMove(isEnd)
+	self:playAnim("idle")
 
-	arg_17_0._targetPos = nil
+	self._targetPos = nil
 
-	if arg_17_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_17_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_17_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	local var_17_0 = arg_17_0._callback
-	local var_17_1 = arg_17_0._callObj
-	local var_17_2 = arg_17_0._callParam
+	local callback = self._callback
+	local callObj = self._callObj
+	local callParam = self._callParam
 
-	arg_17_0._callback = nil
-	arg_17_0._callObj = nil
-	arg_17_0._callParam = nil
+	self._callback = nil
+	self._callObj = nil
+	self._callParam = nil
 
-	if var_17_0 then
-		var_17_0(var_17_1, var_17_2)
+	if callback then
+		callback(callObj, callParam)
 	end
 
-	if arg_17_1 then
+	if isEnd then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.CameraFollowerTarget)
 		SurvivalMapHelper.instance:getScene().path:hidePath()
 	end
 
-	arg_17_0:updateEntity()
+	self:updateEntity()
 end
 
-function var_0_0.stopMove(arg_18_0)
-	arg_18_0:playAnim("idle")
+function SurvivalShelterPlayerEntity:stopMove()
+	self:playAnim("idle")
 
-	arg_18_0._targetPos = nil
+	self._targetPos = nil
 
-	if arg_18_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_18_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 
-		arg_18_0._tweenId = nil
+		self._tweenId = nil
 	end
 
-	arg_18_0._callback = nil
-	arg_18_0._callObj = nil
-	arg_18_0._callParam = nil
-	arg_18_0._pathcallback = nil
-	arg_18_0._pathcallObj = nil
-	arg_18_0._pathcallParam = nil
+	self._callback = nil
+	self._callObj = nil
+	self._callParam = nil
+	self._pathcallback = nil
+	self._pathcallObj = nil
+	self._pathcallParam = nil
 
 	SurvivalMapHelper.instance:getScene().path:hidePath()
 end
 
-function var_0_0.playAnim(arg_19_0, arg_19_1)
-	arg_19_0._curAnimName = arg_19_1
+function SurvivalShelterPlayerEntity:playAnim(animName)
+	self._curAnimName = animName
 
-	if arg_19_0._anim and arg_19_0._anim.isActiveAndEnabled then
-		arg_19_0._anim:Play(arg_19_1, 0, 0)
+	if self._anim and self._anim.isActiveAndEnabled then
+		self._anim:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0._onResLoadEnd(arg_20_0)
-	local var_20_0 = arg_20_0._loader:getInstGO()
-	local var_20_1 = var_20_0.transform
+function SurvivalShelterPlayerEntity:_onResLoadEnd()
+	local go = self._loader:getInstGO()
+	local trans = go.transform
 
-	arg_20_0.goModel = var_20_0
+	self.goModel = go
 
-	transformhelper.setLocalPos(var_20_1, 0, 0, 0)
-	transformhelper.setLocalRotation(var_20_1, 0, 0, 0)
-	transformhelper.setLocalScale(var_20_1, 1, 1, 1)
+	transformhelper.setLocalPos(trans, 0, 0, 0)
+	transformhelper.setLocalRotation(trans, 0, 0, 0)
+	transformhelper.setLocalScale(trans, 1, 1, 1)
 
-	arg_20_0._anim = gohelper.findChildAnim(var_20_0, "")
+	self._anim = gohelper.findChildAnim(go, "")
 
-	if arg_20_0._curAnimName then
-		arg_20_0:playAnim(arg_20_0._curAnimName)
+	if self._curAnimName then
+		self:playAnim(self._curAnimName)
 	end
 
-	arg_20_0:onLoadedEnd()
+	self:onLoadedEnd()
 end
 
-function var_0_0.isIdle(arg_21_0)
-	return arg_21_0._curAnimName == "idle" and not arg_21_0._targetPos and (not arg_21_0._path or #arg_21_0._path == 0)
+function SurvivalShelterPlayerEntity:isIdle()
+	return self._curAnimName == "idle" and not self._targetPos and (not self._path or #self._path == 0)
 end
 
-function var_0_0.canShow(arg_22_0)
-	if not arg_22_0:isIdle() then
+function SurvivalShelterPlayerEntity:canShow()
+	if not self:isIdle() then
 		return true
 	end
 
-	local var_22_0 = SurvivalMapHelper.instance:getAllShelterEntity()
+	local allEntity = SurvivalMapHelper.instance:getAllShelterEntity()
 
-	if var_22_0 then
-		for iter_22_0, iter_22_1 in pairs(var_22_0) do
-			if iter_22_0 ~= SurvivalEnum.ShelterUnitType.Player then
-				for iter_22_2, iter_22_3 in pairs(iter_22_1) do
-					if iter_22_3:isVisible() and iter_22_3:isInPlayerPos() then
+	if allEntity then
+		for unitType, unitDict in pairs(allEntity) do
+			if unitType ~= SurvivalEnum.ShelterUnitType.Player then
+				for _, unit in pairs(unitDict) do
+					if unit:isVisible() and unit:isInPlayerPos() then
 						return false
 					end
 				end
@@ -302,51 +308,51 @@ function var_0_0.canShow(arg_22_0)
 	return true
 end
 
-function var_0_0.isInPos(arg_23_0, arg_23_1)
-	if not arg_23_0:isIdle() then
+function SurvivalShelterPlayerEntity:isInPos(pos)
+	if not self:isIdle() then
 		return false
 	end
 
-	return arg_23_1 == arg_23_0:getPos()
+	return pos == self:getPos()
 end
 
-function var_0_0.isInPosList(arg_24_0, arg_24_1)
-	if not arg_24_1 then
+function SurvivalShelterPlayerEntity:isInPosList(posDict)
+	if not posDict then
 		return false
 	end
 
-	if not arg_24_0:isIdle() then
+	if not self:isIdle() then
 		return false
 	end
 
-	local var_24_0 = arg_24_0:getPos()
+	local curPos = self:getPos()
 
-	return SurvivalHelper.instance:getValueFromDict(arg_24_1, var_24_0)
+	return SurvivalHelper.instance:getValueFromDict(posDict, curPos)
 end
 
-function var_0_0.onUpdateEntity(arg_25_0)
+function SurvivalShelterPlayerEntity:onUpdateEntity()
 	return
 end
 
-function var_0_0.needUI(arg_26_0)
+function SurvivalShelterPlayerEntity:needUI()
 	return true
 end
 
-function var_0_0.onClickPlayer(arg_27_0)
-	if not arg_27_0:isIdle() then
-		arg_27_0:focusEntity()
+function SurvivalShelterPlayerEntity:onClickPlayer()
+	if not self:isIdle() then
+		self:focusEntity()
 
 		return
 	end
 
-	local var_27_0 = SurvivalMapHelper.instance:getAllShelterEntity()
+	local allEntity = SurvivalMapHelper.instance:getAllShelterEntity()
 
-	if var_27_0 then
-		for iter_27_0, iter_27_1 in pairs(var_27_0) do
-			if iter_27_0 ~= SurvivalEnum.ShelterUnitType.Player then
-				for iter_27_2, iter_27_3 in pairs(iter_27_1) do
-					if iter_27_3:isInPlayerPos() then
-						SurvivalMapHelper.instance:gotoUnit(iter_27_0, iter_27_2)
+	if allEntity then
+		for unitType, unitDict in pairs(allEntity) do
+			if unitType ~= SurvivalEnum.ShelterUnitType.Player then
+				for unitId, unit in pairs(unitDict) do
+					if unit:isInPlayerPos() then
+						SurvivalMapHelper.instance:gotoUnit(unitType, unitId)
 
 						return
 					end
@@ -355,7 +361,7 @@ function var_0_0.onClickPlayer(arg_27_0)
 		end
 	end
 
-	arg_27_0:focusEntity()
+	self:focusEntity()
 end
 
-return var_0_0
+return SurvivalShelterPlayerEntity

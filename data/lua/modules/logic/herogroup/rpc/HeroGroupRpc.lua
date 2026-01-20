@@ -1,286 +1,288 @@
-﻿module("modules.logic.herogroup.rpc.HeroGroupRpc", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/rpc/HeroGroupRpc.lua
 
-local var_0_0 = class("HeroGroupRpc", BaseRpc)
+module("modules.logic.herogroup.rpc.HeroGroupRpc", package.seeall)
 
-function var_0_0.sendGetHeroGroupListRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = HeroGroupModule_pb.GetHeroGroupListRequest()
+local HeroGroupRpc = class("HeroGroupRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function HeroGroupRpc:sendGetHeroGroupListRequest(callback, callbackObj)
+	local req = HeroGroupModule_pb.GetHeroGroupListRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetHeroGroupListReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		HeroGroupModel.instance:onGetHeroGroupList(arg_2_2.groupInfoList)
+function HeroGroupRpc:onReceiveGetHeroGroupListReply(resultCode, msg)
+	if resultCode == 0 then
+		HeroGroupModel.instance:onGetHeroGroupList(msg.groupInfoList)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnGetHeroGroupList)
 	end
 end
 
-function var_0_0.sendUpdateHeroGroupRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7, arg_3_8)
-	local var_3_0 = HeroGroupModule_pb.UpdateHeroGroupRequest()
+function HeroGroupRpc:sendUpdateHeroGroupRequest(groupId, heroUidList, groupName, clothId, equips, activity104Equips, callback, callbackObj)
+	local req = HeroGroupModule_pb.UpdateHeroGroupRequest()
 
-	var_3_0.groupInfo.groupId = arg_3_1
-	var_3_0.groupInfo.name = arg_3_3 or ""
+	req.groupInfo.groupId = groupId
+	req.groupInfo.name = groupName or ""
 
-	if arg_3_4 then
-		var_3_0.groupInfo.clothId = arg_3_4
+	if clothId then
+		req.groupInfo.clothId = clothId
 	end
 
-	if arg_3_2 then
-		for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
-			table.insert(var_3_0.groupInfo.heroList, iter_3_1)
+	if heroUidList then
+		for _, heroUid in ipairs(heroUidList) do
+			table.insert(req.groupInfo.heroList, heroUid)
 		end
 	end
 
-	if arg_3_5 then
-		for iter_3_2 = 0, 3 do
-			local var_3_1 = arg_3_5[iter_3_2]
+	if equips then
+		for i = 0, 3 do
+			local equip = equips[i]
 
-			if var_3_1 then
-				local var_3_2 = HeroDef_pb.HeroGroupEquip()
+			if equip then
+				local reqEquip = HeroDef_pb.HeroGroupEquip()
 
-				var_3_2.index = var_3_1.index
+				reqEquip.index = equip.index
 
-				for iter_3_3, iter_3_4 in ipairs(var_3_1.equipUid) do
-					table.insert(var_3_2.equipUid, iter_3_4)
+				for _, v in ipairs(equip.equipUid) do
+					table.insert(reqEquip.equipUid, v)
 				end
 
-				table.insert(var_3_0.groupInfo.equips, var_3_2)
+				table.insert(req.groupInfo.equips, reqEquip)
 			end
 		end
 	end
 
-	arg_3_0:sendMsg(var_3_0, arg_3_7, arg_3_8)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveUpdateHeroGroupReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		HeroGroupModel.instance:onModifyHeroGroup(arg_4_2.groupInfo)
+function HeroGroupRpc:onReceiveUpdateHeroGroupReply(resultCode, msg)
+	if resultCode == 0 then
+		HeroGroupModel.instance:onModifyHeroGroup(msg.groupInfo)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	end
 end
 
-function var_0_0.sendSetHeroGroupEquipRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	local var_5_0 = HeroGroupModule_pb.SetHeroGroupEquipRequest()
+function HeroGroupRpc:sendSetHeroGroupEquipRequest(groupId, index, equipUid)
+	local req = HeroGroupModule_pb.SetHeroGroupEquipRequest()
 
-	var_5_0.groupId = arg_5_1
-	var_5_0.equip.index = arg_5_2
+	req.groupId = groupId
+	req.equip.index = index
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_3) do
-		table.insert(var_5_0.equip.equipUid, iter_5_1)
+	for i, v in ipairs(equipUid) do
+		table.insert(req.equip.equipUid, v)
 	end
 
 	if Activity104Model.instance:isSeasonChapter() then
-		local var_5_1 = HeroGroupModel.instance:getCurGroupMO()
+		local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
-		var_5_1.equips[arg_5_2].equipUid = arg_5_3
+		heroGroupMO.equips[index].equipUid = equipUid
 
-		var_5_1:updatePosEquips(var_5_0.equip)
+		heroGroupMO:updatePosEquips(req.equip)
 		HeroGroupModel.instance:saveCurGroupData()
 
 		return
 	end
 
-	arg_5_0:sendMsg(var_5_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveSetHeroGroupEquipReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 ~= 0 then
+function HeroGroupRpc:onReceiveSetHeroGroupEquipReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_6_0 = arg_6_2.groupId
-	local var_6_1 = arg_6_2.equip
-	local var_6_2 = HeroGroupModel.instance:getById(var_6_0)
+	local groupId = msg.groupId
+	local equip = msg.equip
+	local groupMO = HeroGroupModel.instance:getById(groupId)
 
-	if var_6_2 then
-		var_6_2:updatePosEquips(var_6_1)
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, var_6_1.index)
+	if groupMO then
+		groupMO:updatePosEquips(equip)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, equip.index)
 
-		if arg_6_0._showSetHeroGroupEquipTip then
-			arg_6_0._showSetHeroGroupEquipTip()
+		if self._showSetHeroGroupEquipTip then
+			self._showSetHeroGroupEquipTip()
 
-			arg_6_0._showSetHeroGroupEquipTip = nil
+			self._showSetHeroGroupEquipTip = nil
 		end
 	end
 end
 
-function var_0_0.sendSetHeroGroupSnapshotRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
-	if arg_7_1 == ModuleEnum.HeroGroupSnapshotType.Resources and arg_7_2 ~= VersionActivity2_8BossEnum.HeroGroupId.First and arg_7_2 ~= VersionActivity2_8BossEnum.HeroGroupId.Second then
-		logError(string.format("HeroGroupRpc:sendSetHeroGroupSnapshotRequest snapshotId:%s snapshotSubId:%s 使用错误", arg_7_1, arg_7_2))
+function HeroGroupRpc:sendSetHeroGroupSnapshotRequest(snapshotId, snapshotSubId, req, callback, callbackObj)
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.Resources and snapshotSubId ~= VersionActivity2_8BossEnum.HeroGroupId.First and snapshotSubId ~= VersionActivity2_8BossEnum.HeroGroupId.Second then
+		logError(string.format("HeroGroupRpc:sendSetHeroGroupSnapshotRequest snapshotId:%s snapshotSubId:%s 使用错误", snapshotId, snapshotSubId))
 	end
 
-	arg_7_3.snapshotId = arg_7_1
-	arg_7_3.snapshotSubId = arg_7_2
+	req.snapshotId = snapshotId
+	req.snapshotSubId = snapshotSubId
 
-	arg_7_0:sendMsg(arg_7_3, arg_7_4, arg_7_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveSetHeroGroupSnapshotReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 ~= 0 then
+function HeroGroupRpc:onReceiveSetHeroGroupSnapshotReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
 	logNormal("编队快照保存成功")
-	HeroGroupController.instance:onReceiveHeroGroupSnapshot(arg_8_2)
+	HeroGroupController.instance:onReceiveHeroGroupSnapshot(msg)
 
-	if arg_8_0._showSetHeroGroupEquipTip then
-		arg_8_0._showSetHeroGroupEquipTip()
+	if self._showSetHeroGroupEquipTip then
+		self._showSetHeroGroupEquipTip()
 
-		arg_8_0._showSetHeroGroupEquipTip = nil
+		self._showSetHeroGroupEquipTip = nil
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, arg_8_2.snapshotId, arg_8_2.snapshotSubId)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnSnapshotSaveSucc, msg.snapshotId, msg.snapshotSubId)
 end
 
-function var_0_0.onReceiveUpdateHeroGroupPush(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		HeroGroupModel.instance:onModifyHeroGroup(arg_9_2.groupInfo)
+function HeroGroupRpc:onReceiveUpdateHeroGroupPush(resultCode, msg)
+	if resultCode == 0 then
+		HeroGroupModel.instance:onModifyHeroGroup(msg.groupInfo)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	end
 end
 
-function var_0_0.onReceiveUpdateHeroGroupSnapshotPush(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 == 0 then
-		local var_10_0 = arg_10_2.snapshotId
-		local var_10_1 = arg_10_2.snapshotSubId
-		local var_10_2 = arg_10_2.groupInfo
+function HeroGroupRpc:onReceiveUpdateHeroGroupSnapshotPush(resultCode, msg)
+	if resultCode == 0 then
+		local snapshotId = msg.snapshotId
+		local snapshotSubId = msg.snapshotSubId
+		local groupInfo = msg.groupInfo
 
-		if var_10_0 ~= ModuleEnum.HeroGroupSnapshotType.Common or var_10_1 ~= 1 then
-			logError(string.format("HeroGroupRpc:onReceiveUpdateHeroGroupSnapshotPush snapshotId:%s snapshotSubId:%s is error", var_10_0, var_10_1))
+		if snapshotId ~= ModuleEnum.HeroGroupSnapshotType.Common or snapshotSubId ~= 1 then
+			logError(string.format("HeroGroupRpc:onReceiveUpdateHeroGroupSnapshotPush snapshotId:%s snapshotSubId:%s is error", snapshotId, snapshotSubId))
 
 			return
 		end
 
-		local var_10_3 = HeroGroupModel.instance:getCommonGroupList(var_10_1) or HeroGroupMO.New()
+		local heroGroupMO = HeroGroupModel.instance:getCommonGroupList(snapshotSubId) or HeroGroupMO.New()
 
-		var_10_3:init(var_10_2)
-		HeroGroupModel.instance:addCommonGroupList(var_10_1, var_10_3)
+		heroGroupMO:init(groupInfo)
+		HeroGroupModel.instance:addCommonGroupList(snapshotSubId, heroGroupMO)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	end
 end
 
-function var_0_0.sendGetHeroGroupCommonListRequest(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = HeroGroupModule_pb.GetHeroGroupCommonListRequest()
+function HeroGroupRpc:sendGetHeroGroupCommonListRequest(callback, callbackObj)
+	local req = HeroGroupModule_pb.GetHeroGroupCommonListRequest()
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_1, arg_11_2)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetHeroGroupCommonListReply(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == 0 then
-		HeroGroupModel.instance:onGetCommonGroupList(arg_12_2)
+function HeroGroupRpc:onReceiveGetHeroGroupCommonListReply(resultCode, msg)
+	if resultCode == 0 then
+		HeroGroupModel.instance:onGetCommonGroupList(msg)
 	end
 end
 
-function var_0_0.sendChangeHeroGroupSelectRequest(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = HeroGroupModule_pb.ChangeHeroGroupSelectRequest()
+function HeroGroupRpc:sendChangeHeroGroupSelectRequest(id, select)
+	local req = HeroGroupModule_pb.ChangeHeroGroupSelectRequest()
 
-	var_13_0.id = arg_13_1
-	var_13_0.currentSelect = arg_13_2
+	req.id = id
+	req.currentSelect = select
 
-	arg_13_0:sendMsg(var_13_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveChangeHeroGroupSelectReply(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_1 == 0 then
+function HeroGroupRpc:onReceiveChangeHeroGroupSelectReply(resultCode, msg)
+	if resultCode == 0 then
 		-- block empty
 	end
 end
 
-function var_0_0.sendUpdateHeroGroupNameRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	local var_15_0 = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
+function HeroGroupRpc:sendUpdateHeroGroupNameRequest(id, index, name, callback, callbackObj)
+	local req = HeroGroupModule_pb.UpdateHeroGroupNameRequest()
 
-	var_15_0.id = arg_15_1
-	var_15_0.currentSelect = arg_15_2
-	var_15_0.name = arg_15_3
+	req.id = id
+	req.currentSelect = index
+	req.name = name
 
-	arg_15_0:sendMsg(var_15_0, arg_15_4, arg_15_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveUpdateHeroGroupNameReply(arg_16_0, arg_16_1, arg_16_2)
+function HeroGroupRpc:onReceiveUpdateHeroGroupNameReply(resultCode, msg)
 	return
 end
 
-function var_0_0.sendGetAllHeroGroupSnapshotListRequest(arg_17_0, arg_17_1, arg_17_2)
-	return arg_17_0:sendGetHeroGroupSnapshotListRequest(0, arg_17_1, arg_17_2)
+function HeroGroupRpc:sendGetAllHeroGroupSnapshotListRequest(callback, callbackObj)
+	return self:sendGetHeroGroupSnapshotListRequest(0, callback, callbackObj)
 end
 
-function var_0_0.sendGetHeroGroupSnapshotListRequest(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = HeroGroupModule_pb.GetHeroGroupSnapshotListRequest()
+function HeroGroupRpc:sendGetHeroGroupSnapshotListRequest(snapshotId, callback, callbackObj)
+	local req = HeroGroupModule_pb.GetHeroGroupSnapshotListRequest()
 
-	var_18_0.snapshotId = arg_18_1
+	req.snapshotId = snapshotId
 
-	return arg_18_0:sendMsg(var_18_0, arg_18_2, arg_18_3)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetHeroGroupSnapshotListReply(arg_19_0, arg_19_1, arg_19_2)
-	if arg_19_1 == 0 then
-		HeroGroupSnapshotModel.instance:onReceiveGetHeroGroupSnapshotListReply(arg_19_2)
+function HeroGroupRpc:onReceiveGetHeroGroupSnapshotListReply(resultCode, msg)
+	if resultCode == 0 then
+		HeroGroupSnapshotModel.instance:onReceiveGetHeroGroupSnapshotListReply(msg)
 	end
 end
 
-function var_0_0.sendDeleteHeroGroupRequest(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = HeroGroupModule_pb.DeleteHeroGroupRequest()
+function HeroGroupRpc:sendDeleteHeroGroupRequest(snapshotId, snapshotSubId)
+	local req = HeroGroupModule_pb.DeleteHeroGroupRequest()
 
-	var_20_0.snapshotId = arg_20_1
-	var_20_0.snapshotSubId = arg_20_2
+	req.snapshotId = snapshotId
+	req.snapshotSubId = snapshotSubId
 
-	arg_20_0:sendMsg(var_20_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveDeleteHeroGroupReply(arg_21_0, arg_21_1, arg_21_2)
-	if arg_21_1 ~= 0 then
+function HeroGroupRpc:onReceiveDeleteHeroGroupReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_21_0 = arg_21_2.snapshotId
-	local var_21_1 = arg_21_2.snapshotSubId
-	local var_21_2 = arg_21_2.sortSubIds
+	local snapshotId = msg.snapshotId
+	local snapshotSubId = msg.snapshotSubId
+	local sortSubIds = msg.sortSubIds
 
-	HeroGroupPresetController.instance:deleteHeroGroupCopy(var_21_0, var_21_1)
-	HeroGroupPresetHeroGroupChangeController.instance:removeHeroGroup(var_21_0, var_21_1)
-	HeroGroupSnapshotModel.instance:updateSortSubIds(var_21_0, var_21_2)
+	HeroGroupPresetController.instance:deleteHeroGroupCopy(snapshotId, snapshotSubId)
+	HeroGroupPresetHeroGroupChangeController.instance:removeHeroGroup(snapshotId, snapshotSubId)
+	HeroGroupSnapshotModel.instance:updateSortSubIds(snapshotId, sortSubIds)
 	HeroGroupPresetItemListModel.instance:updateList()
 end
 
-function var_0_0.sendUpdateHeroGroupSortRequest(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = HeroGroupModule_pb.UpdateHeroGroupSortRequest()
+function HeroGroupRpc:sendUpdateHeroGroupSortRequest(snapshotId, sortSubIds)
+	local req = HeroGroupModule_pb.UpdateHeroGroupSortRequest()
 
-	var_22_0.snapshotId = arg_22_1
+	req.snapshotId = snapshotId
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
-		table.insert(var_22_0.sortSubIds, iter_22_1)
+	for i, v in ipairs(sortSubIds) do
+		table.insert(req.sortSubIds, v)
 	end
 
-	arg_22_0:sendMsg(var_22_0)
+	self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUpdateHeroGroupSortReply(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 ~= 0 then
+function HeroGroupRpc:onReceiveUpdateHeroGroupSortReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	local var_23_0 = arg_23_2.snapshotId
-	local var_23_1 = arg_23_2.sortSubIds
+	local snapshotId = msg.snapshotId
+	local sortSubIds = msg.sortSubIds
 
-	HeroGroupSnapshotModel.instance:updateSortSubIds(var_23_0, var_23_1)
+	HeroGroupSnapshotModel.instance:updateSortSubIds(snapshotId, sortSubIds)
 	HeroGroupPresetItemListModel.instance:updateList()
 	HeroGroupPresetController.instance:dispatchEvent(HeroGroupPresetEvent.UpdateHeroGroupSort)
 end
 
-function var_0_0.sendCheckHeroGroupNameRequest(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = HeroGroupModule_pb.CheckHeroGroupNameRequest()
+function HeroGroupRpc:sendCheckHeroGroupNameRequest(name, callback, callbackObj)
+	local req = HeroGroupModule_pb.CheckHeroGroupNameRequest()
 
-	var_24_0.name = arg_24_1
+	req.name = name
 
-	arg_24_0:sendMsg(var_24_0, arg_24_2, arg_24_3)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveCheckHeroGroupNameReply(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1 ~= 0 then
+function HeroGroupRpc:onReceiveCheckHeroGroupNameReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+HeroGroupRpc.instance = HeroGroupRpc.New()
 
-return var_0_0
+return HeroGroupRpc

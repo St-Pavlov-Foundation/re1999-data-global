@@ -1,27 +1,29 @@
-﻿module("modules.logic.player.view.IconTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/player/view/IconTipViewContainer.lua
 
-local var_0_0 = class("IconTipViewContainer", BaseViewContainer)
+module("modules.logic.player.view.IconTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
-	local var_1_1 = ListScrollParam.New()
+local IconTipViewContainer = class("IconTipViewContainer", BaseViewContainer)
 
-	var_1_1.scrollGOPath = "window/left/scrollview"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
-	var_1_1.cellClass = IconListItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 6
-	var_1_1.cellWidth = 160
-	var_1_1.cellHeight = 160
-	var_1_1.cellSpaceH = 5
-	var_1_1.cellSpaceV = 5
-	var_1_1.startSpace = 0
+function IconTipViewContainer:buildViews()
+	local views = {}
+	local scrollParam = ListScrollParam.New()
 
-	table.insert(var_1_0, LuaListScrollView.New(IconListModel.instance, var_1_1))
-	table.insert(var_1_0, IconTipView.New())
+	scrollParam.scrollGOPath = "window/left/scrollview"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollParam.prefabUrl = self._viewSetting.otherRes[1]
+	scrollParam.cellClass = IconListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollParam.lineCount = 6
+	scrollParam.cellWidth = 160
+	scrollParam.cellHeight = 160
+	scrollParam.cellSpaceH = 5
+	scrollParam.cellSpaceV = 5
+	scrollParam.startSpace = 0
 
-	return var_1_0
+	table.insert(views, LuaListScrollView.New(IconListModel.instance, scrollParam))
+	table.insert(views, IconTipView.New())
+
+	return views
 end
 
-return var_0_0
+return IconTipViewContainer

@@ -1,77 +1,79 @@
-﻿module("modules.logic.mainuiswitch.view.SwitchMainUIReddotIcon", package.seeall)
+﻿-- chunkname: @modules/logic/mainuiswitch/view/SwitchMainUIReddotIcon.lua
 
-local var_0_0 = class("SwitchMainUIReddotIcon", ListScrollCell)
+module("modules.logic.mainuiswitch.view.SwitchMainUIReddotIcon", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, arg_1_1)
-	arg_1_0._txtCount = gohelper.findChildText(arg_1_0.go, "type2/#txt_count")
-	arg_1_0.typeGoDict = arg_1_0:getUserDataTb_()
+local SwitchMainUIReddotIcon = class("SwitchMainUIReddotIcon", ListScrollCell)
 
-	for iter_1_0, iter_1_1 in pairs(RedDotEnum.Style) do
-		arg_1_0.typeGoDict[iter_1_1] = gohelper.findChild(arg_1_0.go, "type" .. iter_1_1)
+function SwitchMainUIReddotIcon:init(go)
+	self.go = IconMgr.instance:_getIconInstance(IconMgrConfig.UrlRedDotIcon, go)
+	self._txtCount = gohelper.findChildText(self.go, "type2/#txt_count")
+	self.typeGoDict = self:getUserDataTb_()
 
-		gohelper.setActive(arg_1_0.typeGoDict[iter_1_1], false)
+	for _, v in pairs(RedDotEnum.Style) do
+		self.typeGoDict[v] = gohelper.findChild(self.go, "type" .. v)
+
+		gohelper.setActive(self.typeGoDict[v], false)
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	MainUISwitchController.instance:registerCallback(MainUISwitchEvent.SwitchMainUI, arg_2_0._onSwitchMainUI, arg_2_0)
+function SwitchMainUIReddotIcon:addEventListeners()
+	MainUISwitchController.instance:registerCallback(MainUISwitchEvent.SwitchMainUI, self._onSwitchMainUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	MainUISwitchController.instance:unregisterCallback(MainUISwitchEvent.SwitchMainUI, arg_3_0._onSwitchMainUI, arg_3_0)
+function SwitchMainUIReddotIcon:removeEventListeners()
+	MainUISwitchController.instance:unregisterCallback(MainUISwitchEvent.SwitchMainUI, self._onSwitchMainUI, self)
 end
 
-function var_0_0._onSwitchMainUI(arg_4_0, arg_4_1)
-	arg_4_0._curMainUIId = arg_4_1
+function SwitchMainUIReddotIcon:_onSwitchMainUI(id)
+	self._curMainUIId = id
 
-	arg_4_0:defaultRefreshDot()
+	self:defaultRefreshDot()
 end
 
-function var_0_0.setId(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0:setMultiId({
+function SwitchMainUIReddotIcon:setId(id, uid, skinId)
+	self:setMultiId({
 		{
-			id = arg_5_1,
-			uid = arg_5_2
+			id = id,
+			uid = uid
 		}
 	})
 
-	arg_5_0._curMainUIId = arg_5_3
+	self._curMainUIId = skinId
 end
 
-function var_0_0.setMultiId(arg_6_0, arg_6_1)
-	arg_6_0.infoDict = {}
+function SwitchMainUIReddotIcon:setMultiId(infoList)
+	self.infoDict = {}
 
-	if arg_6_1 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
-			iter_6_1.uid = iter_6_1.uid or 0
-			arg_6_0.infoDict[iter_6_1.id] = iter_6_1.uid
+	if infoList then
+		for i, info in ipairs(infoList) do
+			info.uid = info.uid or 0
+			self.infoDict[info.id] = info.uid
 		end
 	end
 
-	arg_6_0.infoList = arg_6_1
+	self.infoList = infoList
 end
 
-function var_0_0.defaultRefreshDot(arg_7_0)
-	arg_7_0.show = false
+function SwitchMainUIReddotIcon:defaultRefreshDot()
+	self.show = false
 
-	if arg_7_0.infoList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0.infoList) do
-			arg_7_0.show = RedDotModel.instance:isDotShow(iter_7_1.id, iter_7_1.uid)
+	if self.infoList then
+		for i, info in ipairs(self.infoList) do
+			self.show = RedDotModel.instance:isDotShow(info.id, info.uid)
 
-			if arg_7_0.show then
-				local var_7_0 = RedDotModel.instance:getDotInfoCount(iter_7_1.id, iter_7_1.uid)
+			if self.show then
+				local count = RedDotModel.instance:getDotInfoCount(info.id, info.uid)
 
-				arg_7_0._txtCount.text = var_7_0
+				self._txtCount.text = count
 
-				local var_7_1 = RedDotConfig.instance:getRedDotCO(iter_7_1.id).style
-				local var_7_2 = MainUISwitchConfig.instance:getUIReddotStyle(arg_7_0._curMainUIId, iter_7_1.id)
+				local type = RedDotConfig.instance:getRedDotCO(info.id).style
+				local switchReddotCo = MainUISwitchConfig.instance:getUIReddotStyle(self._curMainUIId, info.id)
 
-				if var_7_2 then
-					var_7_1 = var_7_2.style
+				if switchReddotCo then
+					type = switchReddotCo.style
 				end
 
-				arg_7_0:showRedDot(var_7_1)
+				self:showRedDot(type)
 
 				return
 			end
@@ -79,14 +81,14 @@ function var_0_0.defaultRefreshDot(arg_7_0)
 	end
 end
 
-function var_0_0.showRedDot(arg_8_0, arg_8_1)
-	gohelper.setActive(arg_8_0.go, arg_8_0.show)
+function SwitchMainUIReddotIcon:showRedDot(type)
+	gohelper.setActive(self.go, self.show)
 
-	if arg_8_0.show then
-		for iter_8_0, iter_8_1 in pairs(RedDotEnum.Style) do
-			gohelper.setActive(arg_8_0.typeGoDict[iter_8_1], arg_8_1 == iter_8_1)
+	if self.show then
+		for _, v in pairs(RedDotEnum.Style) do
+			gohelper.setActive(self.typeGoDict[v], type == v)
 		end
 	end
 end
 
-return var_0_0
+return SwitchMainUIReddotIcon

@@ -1,38 +1,40 @@
-﻿module("modules.logic.character.view.CharacterRankUpViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/character/view/CharacterRankUpViewContainer.lua
 
-local var_0_0 = class("CharacterRankUpViewContainer", BaseViewContainer)
+module("modules.logic.character.view.CharacterRankUpViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {
+local CharacterRankUpViewContainer = class("CharacterRankUpViewContainer", BaseViewContainer)
+
+function CharacterRankUpViewContainer:buildViews()
+	local views = {
 		CharacterRankUpView.New(),
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_righttop")
 	}
-	local var_1_1 = HelpShowView.New()
+	local helpShowView = HelpShowView.New()
 
-	var_1_1:setHelpId(HelpEnum.HelpId.CharacterRankUp)
-	var_1_1:setDelayTime(0.5)
-	table.insert(var_1_0, var_1_1)
+	helpShowView:setHelpId(HelpEnum.HelpId.CharacterRankUp)
+	helpShowView:setDelayTime(0.5)
+	table.insert(views, helpShowView)
 
-	return var_1_0
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+function CharacterRankUpViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local showHelp = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
 
-		arg_2_0._navigateButtonView = NavigateButtonsView.New({
+		self._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
-			var_2_0
+			showHelp
 		}, HelpEnum.HelpId.CharacterRankUp)
 
 		return {
-			arg_2_0._navigateButtonView
+			self._navigateButtonView
 		}
 	end
 
-	if arg_2_1 == 2 then
+	if tabContainerId == 2 then
 		return {
 			CurrencyView.New({
 				CurrencyEnum.CurrencyType.Gold
@@ -41,16 +43,16 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	end
 end
 
-function var_0_0.refreshHelp(arg_3_0)
-	if arg_3_0._navigateButtonView then
-		local var_3_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
+function CharacterRankUpViewContainer:refreshHelp()
+	if self._navigateButtonView then
+		local showHelp = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.CharacterRankUp)
 
-		arg_3_0._navigateButtonView:setParam({
+		self._navigateButtonView:setParam({
 			true,
 			true,
-			var_3_0
+			showHelp
 		})
 	end
 end
 
-return var_0_0
+return CharacterRankUpViewContainer

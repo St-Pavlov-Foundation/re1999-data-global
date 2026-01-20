@@ -1,98 +1,102 @@
-﻿module("modules.logic.bossrush.model.V1a4_BossRush_ScheduleViewListModel", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/model/V1a4_BossRush_ScheduleViewListModel.lua
 
-local var_0_0 = class("V1a4_BossRush_ScheduleViewListModel", ListScrollModel)
+module("modules.logic.bossrush.model.V1a4_BossRush_ScheduleViewListModel", package.seeall)
 
-function var_0_0.setStaticData(arg_1_0, arg_1_1)
-	arg_1_0._staticData = arg_1_1
+local V1a4_BossRush_ScheduleViewListModel = class("V1a4_BossRush_ScheduleViewListModel", ListScrollModel)
+
+function V1a4_BossRush_ScheduleViewListModel:setStaticData(staticData)
+	self._staticData = staticData
 end
 
-function var_0_0.getStaticData(arg_2_0)
-	return arg_2_0._staticData
+function V1a4_BossRush_ScheduleViewListModel:getStaticData()
+	return self._staticData
 end
 
-function var_0_0.getFinishCount(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = 0
+function V1a4_BossRush_ScheduleViewListModel:getFinishCount(moList, stage)
+	local count = 0
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
-		if not iter_3_1.isGot and iter_3_1.isAlready then
-			var_3_0 = var_3_0 + 1
+	for _, mo in pairs(moList) do
+		if not mo.isGot and mo.isAlready then
+			count = count + 1
 		end
 	end
 
-	return var_3_0
+	return count
 end
 
-function var_0_0.setScheduleMoList(arg_4_0, arg_4_1)
-	local var_4_0 = BossRushModel.instance:getScheduleViewRewardList(arg_4_1)
-	local var_4_1 = BossRushModel.instance:getLastPointInfo(arg_4_1)
-	local var_4_2 = var_4_1 and var_4_1.cur or 0
+function V1a4_BossRush_ScheduleViewListModel:setScheduleMoList(stage)
+	local moList = BossRushModel.instance:getScheduleViewRewardList(stage)
+	local info = BossRushModel.instance:getLastPointInfo(stage)
+	local cur = info and info.cur or 0
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0) do
-		iter_4_1.isAlready = var_4_2 >= iter_4_1.stageRewardCO.rewardPointNum
-		iter_4_1.stage = arg_4_1
+	for _, v in pairs(moList) do
+		v.isAlready = cur >= v.stageRewardCO.rewardPointNum
+		v.stage = stage
 	end
 
-	if arg_4_0:getFinishCount(var_4_0, arg_4_1) > 1 then
-		table.insert(var_4_0, 1, {
+	local finishTaskCount = self:getFinishCount(moList, stage)
+
+	if finishTaskCount > 1 then
+		table.insert(moList, 1, {
 			getAll = true,
-			stage = arg_4_1
+			stage = stage
 		})
 	end
 
-	table.sort(var_4_0, arg_4_0._sort)
-	arg_4_0:setList(var_4_0)
+	table.sort(moList, self._sort)
+	self:setList(moList)
 end
 
-function var_0_0._sort(arg_5_0, arg_5_1)
-	if arg_5_0.getAll then
+function V1a4_BossRush_ScheduleViewListModel._sort(a, b)
+	if a.getAll then
 		return true
 	end
 
-	if arg_5_1.getAll then
+	if b.getAll then
 		return false
 	end
 
-	local var_5_0 = arg_5_0.stageRewardCO
-	local var_5_1 = arg_5_1.stageRewardCO
-	local var_5_2 = var_5_0.id
-	local var_5_3 = var_5_0.id
-	local var_5_4 = arg_5_0.isGot and 1 or 0
-	local var_5_5 = arg_5_1.isGot and 1 or 0
-	local var_5_6 = arg_5_0.isAlready and 1 or 0
-	local var_5_7 = arg_5_1.isAlready and 1 or 0
-	local var_5_8 = var_5_0.rewardPointNum
-	local var_5_9 = var_5_1.rewardPointNum
+	local a_config = a.stageRewardCO
+	local b_config = b.stageRewardCO
+	local a_id = a_config.id
+	local b_id = a_config.id
+	local a_isGot = a.isGot and 1 or 0
+	local b_isGot = b.isGot and 1 or 0
+	local a_isAvaliable = a.isAlready and 1 or 0
+	local b_isAvaliable = b.isAlready and 1 or 0
+	local a_maxProgress = a_config.rewardPointNum
+	local b_maxProgress = b_config.rewardPointNum
 
-	if var_5_4 ~= var_5_5 then
-		return var_5_4 < var_5_5
+	if a_isGot ~= b_isGot then
+		return a_isGot < b_isGot
 	end
 
-	if var_5_6 ~= var_5_7 then
-		return var_5_7 < var_5_6
+	if a_isAvaliable ~= b_isAvaliable then
+		return b_isAvaliable < a_isAvaliable
 	end
 
-	if var_5_8 ~= var_5_9 then
-		return var_5_8 < var_5_9
+	if a_maxProgress ~= b_maxProgress then
+		return a_maxProgress < b_maxProgress
 	end
 
-	return var_5_2 < var_5_3
+	return a_id < b_id
 end
 
-function var_0_0.isReddot(arg_6_0, arg_6_1)
-	local var_6_0 = BossRushModel.instance:getScheduleViewRewardList(arg_6_1)
-	local var_6_1 = BossRushModel.instance:getLastPointInfo(arg_6_1)
-	local var_6_2 = var_6_1 and var_6_1.cur or 0
+function V1a4_BossRush_ScheduleViewListModel:isReddot(stage)
+	local moList = BossRushModel.instance:getScheduleViewRewardList(stage)
+	local info = BossRushModel.instance:getLastPointInfo(stage)
+	local cur = info and info.cur or 0
 
-	for iter_6_0, iter_6_1 in pairs(var_6_0) do
-		local var_6_3 = var_6_2 >= iter_6_1.stageRewardCO.rewardPointNum
-		local var_6_4 = BossRushModel.instance:hasGetBonusIds(arg_6_1, iter_6_1.id)
+	for _, mo in pairs(moList) do
+		local isAlready = cur >= mo.stageRewardCO.rewardPointNum
+		local isGot = BossRushModel.instance:hasGetBonusIds(stage, mo.id)
 
-		if not iter_6_1.isGot and var_6_3 then
+		if not mo.isGot and isAlready then
 			return true
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+V1a4_BossRush_ScheduleViewListModel.instance = V1a4_BossRush_ScheduleViewListModel.New()
 
-return var_0_0
+return V1a4_BossRush_ScheduleViewListModel

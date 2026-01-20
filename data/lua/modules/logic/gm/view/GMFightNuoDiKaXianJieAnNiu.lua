@@ -1,33 +1,35 @@
-﻿module("modules.logic.gm.view.GMFightNuoDiKaXianJieAnNiu", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightNuoDiKaXianJieAnNiu.lua
 
-local var_0_0 = class("GMFightNuoDiKaXianJieAnNiu", FightBaseView)
+module("modules.logic.gm.view.GMFightNuoDiKaXianJieAnNiu", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnStart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btnStart")
+local GMFightNuoDiKaXianJieAnNiu = class("GMFightNuoDiKaXianJieAnNiu", FightBaseView)
+
+function GMFightNuoDiKaXianJieAnNiu:onInitView()
+	self.btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "root/btnStart")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:com_registClick(arg_2_0.btnStart, arg_2_0.onClickStart)
+function GMFightNuoDiKaXianJieAnNiu:addEvents()
+	self:com_registClick(self.btnStart, self.onClickStart)
 end
 
-function var_0_0.onClickStart(arg_3_0)
-	arg_3_0.time = arg_3_0.time or Time.time
+function GMFightNuoDiKaXianJieAnNiu:onClickStart()
+	self.time = self.time or Time.time
 
-	if Time.time - arg_3_0.time > arg_3_0.timeLimit then
-		arg_3_0.time = Time.time
+	if Time.time - self.time > self.timeLimit then
+		self.time = Time.time
 
-		arg_3_0:com_sendMsg(FightMsgId.OperationForPlayEffect, arg_3_0.effectType)
+		self:com_sendMsg(FightMsgId.OperationForPlayEffect, self.effectType)
 	end
 end
 
-function var_0_0.onOpen(arg_4_0)
-	arg_4_0.effectType = arg_4_0.viewParam.effectType
-	arg_4_0.timeLimit = arg_4_0.viewParam.timeLimit
-	arg_4_0.time = 0
+function GMFightNuoDiKaXianJieAnNiu:onOpen()
+	self.effectType = self.viewParam.effectType
+	self.timeLimit = self.viewParam.timeLimit
+	self.time = 0
 end
 
-function var_0_0.onDestructor(arg_5_0)
+function GMFightNuoDiKaXianJieAnNiu:onDestructor()
 	return
 end
 
-return var_0_0
+return GMFightNuoDiKaXianJieAnNiu

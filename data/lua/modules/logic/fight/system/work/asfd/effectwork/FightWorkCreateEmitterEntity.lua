@@ -1,17 +1,19 @@
-﻿module("modules.logic.fight.system.work.asfd.effectwork.FightWorkCreateEmitterEntity", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/asfd/effectwork/FightWorkCreateEmitterEntity.lua
 
-local var_0_0 = class("FightWorkCreateEmitterEntity", FightEffectBase)
+module("modules.logic.fight.system.work.asfd.effectwork.FightWorkCreateEmitterEntity", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = GameSceneMgr.instance:getCurScene()
-	local var_1_1 = var_1_0 and var_1_0.entityMgr
+local FightWorkCreateEmitterEntity = class("FightWorkCreateEmitterEntity", FightEffectBase)
 
-	if not var_1_1 then
-		return arg_1_0:onDone(true)
+function FightWorkCreateEmitterEntity:onStart()
+	local curScene = GameSceneMgr.instance:getCurScene()
+	local sceneMgr = curScene and curScene.entityMgr
+
+	if not sceneMgr then
+		return self:onDone(true)
 	end
 
-	var_1_1:addASFDUnit()
-	arg_1_0:onDone(true)
+	sceneMgr:addASFDUnit()
+	self:onDone(true)
 end
 
-return var_0_0
+return FightWorkCreateEmitterEntity

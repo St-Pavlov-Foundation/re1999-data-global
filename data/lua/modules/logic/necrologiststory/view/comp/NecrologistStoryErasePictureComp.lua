@@ -1,106 +1,108 @@
-﻿module("modules.logic.necrologiststory.view.comp.NecrologistStoryErasePictureComp", package.seeall)
+﻿-- chunkname: @modules/logic/necrologiststory/view/comp/NecrologistStoryErasePictureComp.lua
 
-local var_0_0 = class("NecrologistStoryErasePictureComp", LuaCompBase)
+module("modules.logic.necrologiststory.view.comp.NecrologistStoryErasePictureComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0.imgNormal = gohelper.findChildImage(arg_1_1, "normal")
-	arg_1_0.imgMask = gohelper.findChildImage(arg_1_1, "mask")
-	arg_1_0.simageNormal = gohelper.findChildSingleImage(arg_1_1, "normal")
-	arg_1_0.simageMask = gohelper.findChildSingleImage(arg_1_1, "mask")
-	arg_1_0.lockMaterialId = 10
-	arg_1_0.normalMatId = 11
+local NecrologistStoryErasePictureComp = class("NecrologistStoryErasePictureComp", LuaCompBase)
 
-	local var_1_0 = IconMaterialMgr.instance:getMaterialPath(arg_1_0.lockMaterialId)
+function NecrologistStoryErasePictureComp:init(go)
+	self.go = go
+	self.transform = go.transform
+	self.imgNormal = gohelper.findChildImage(go, "normal")
+	self.imgMask = gohelper.findChildImage(go, "mask")
+	self.simageNormal = gohelper.findChildSingleImage(go, "normal")
+	self.simageMask = gohelper.findChildSingleImage(go, "mask")
+	self.lockMaterialId = 10
+	self.normalMatId = 11
 
-	IconMaterialMgr.instance:loadMaterialAddSet(var_1_0, arg_1_0.imgMask)
+	local lockMaterialPath = IconMaterialMgr.instance:getMaterialPath(self.lockMaterialId)
+
+	IconMaterialMgr.instance:loadMaterialAddSet(lockMaterialPath, self.imgMask)
 end
 
-function var_0_0.setEraseData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._isFinish = false
-	arg_2_0.brushSize = arg_2_2
-	arg_2_0.finishRate = arg_2_3
+function NecrologistStoryErasePictureComp:setEraseData(picPath, brushSize, finishRate)
+	self._isFinish = false
+	self.brushSize = brushSize
+	self.finishRate = finishRate
 
-	gohelper.setActive(arg_2_0.imgMask, true)
-	arg_2_0.simageNormal:LoadImage(arg_2_1, arg_2_0.onNormalLoaded, arg_2_0)
-	arg_2_0.simageMask:LoadImage(arg_2_1, arg_2_0.onMaskLoaded, arg_2_0)
+	gohelper.setActive(self.imgMask, true)
+	self.simageNormal:LoadImage(picPath, self.onNormalLoaded, self)
+	self.simageMask:LoadImage(picPath, self.onMaskLoaded, self)
 end
 
-function var_0_0.onNormalLoaded(arg_3_0)
-	ZProj.UGUIHelper.SetImageSize(arg_3_0.simageNormal.gameObject)
+function NecrologistStoryErasePictureComp:onNormalLoaded()
+	ZProj.UGUIHelper.SetImageSize(self.simageNormal.gameObject)
 end
 
-function var_0_0.onMaskLoaded(arg_4_0)
-	ZProj.UGUIHelper.SetImageSize(arg_4_0.simageMask.gameObject)
-	arg_4_0:addComp()
+function NecrologistStoryErasePictureComp:onMaskLoaded()
+	ZProj.UGUIHelper.SetImageSize(self.simageMask.gameObject)
+	self:addComp()
 end
 
-function var_0_0.addComp(arg_5_0)
-	arg_5_0.erasePicture = ZProj.ErasePicture.AddComp(arg_5_0.imgMask.gameObject)
+function NecrologistStoryErasePictureComp:addComp()
+	self.erasePicture = ZProj.ErasePicture.AddComp(self.imgMask.gameObject)
 
-	arg_5_0.erasePicture:setCallBack(arg_5_0.startDraw, arg_5_0, arg_5_0.showRate, arg_5_0, arg_5_0.endDraw, arg_5_0, arg_5_0.finishDraw, arg_5_0)
-	arg_5_0.erasePicture:InitData(arg_5_0.brushSize, arg_5_0.finishRate, arg_5_0.imgMask, CameraMgr.instance:getUICamera())
+	self.erasePicture:setCallBack(self.startDraw, self, self.showRate, self, self.endDraw, self, self.finishDraw, self)
+	self.erasePicture:InitData(self.brushSize, self.finishRate, self.imgMask, CameraMgr.instance:getUICamera())
 end
 
-function var_0_0.setCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	arg_6_0.startCallback = arg_6_1
-	arg_6_0.drawCallback = arg_6_2
-	arg_6_0.endCallback = arg_6_3
-	arg_6_0.finishCallback = arg_6_4
-	arg_6_0.callbackObj = arg_6_5
+function NecrologistStoryErasePictureComp:setCallback(startCallback, drawCallback, endCallback, finishCallback, callbackObj)
+	self.startCallback = startCallback
+	self.drawCallback = drawCallback
+	self.endCallback = endCallback
+	self.finishCallback = finishCallback
+	self.callbackObj = callbackObj
 end
 
-function var_0_0.startDraw(arg_7_0)
-	if arg_7_0:isFinish() then
+function NecrologistStoryErasePictureComp:startDraw()
+	if self:isFinish() then
 		return
 	end
 
-	if arg_7_0.startCallback then
-		arg_7_0.startCallback(arg_7_0.callbackObj)
+	if self.startCallback then
+		self.startCallback(self.callbackObj)
 	end
 end
 
-function var_0_0.showRate(arg_8_0, arg_8_1)
-	if arg_8_0:isFinish() then
+function NecrologistStoryErasePictureComp:showRate(rate)
+	if self:isFinish() then
 		return
 	end
 
-	if arg_8_0.drawCallback then
-		arg_8_0.drawCallback(arg_8_0.callbackObj, arg_8_1)
+	if self.drawCallback then
+		self.drawCallback(self.callbackObj, rate)
 	end
 end
 
-function var_0_0.endDraw(arg_9_0)
-	if arg_9_0:isFinish() then
+function NecrologistStoryErasePictureComp:endDraw()
+	if self:isFinish() then
 		return
 	end
 
-	if arg_9_0.endCallback then
-		arg_9_0.endCallback(arg_9_0.callbackObj)
+	if self.endCallback then
+		self.endCallback(self.callbackObj)
 	end
 end
 
-function var_0_0.finishDraw(arg_10_0)
-	if arg_10_0:isFinish() then
+function NecrologistStoryErasePictureComp:finishDraw()
+	if self:isFinish() then
 		return
 	end
 
-	gohelper.setActive(arg_10_0.imgMask, false)
+	gohelper.setActive(self.imgMask, false)
 
-	arg_10_0._isFinish = true
+	self._isFinish = true
 
-	if arg_10_0.finishCallback then
-		arg_10_0.finishCallback(arg_10_0.callbackObj)
+	if self.finishCallback then
+		self.finishCallback(self.callbackObj)
 	end
 end
 
-function var_0_0.isFinish(arg_11_0)
-	return arg_11_0._isFinish
+function NecrologistStoryErasePictureComp:isFinish()
+	return self._isFinish
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function NecrologistStoryErasePictureComp:onDestroy()
 	return
 end
 
-return var_0_0
+return NecrologistStoryErasePictureComp

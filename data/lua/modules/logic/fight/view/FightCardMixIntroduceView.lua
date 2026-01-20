@@ -1,53 +1,55 @@
-﻿module("modules.logic.fight.view.FightCardMixIntroduceView", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightCardMixIntroduceView.lua
 
-local var_0_0 = class("FightCardMixIntroduceView", BaseView)
+module("modules.logic.fight.view.FightCardMixIntroduceView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._gocardcontent1 = gohelper.findChild(arg_1_0.viewGO, "#go_cardcontent1")
-	arg_1_0._gocardcontent2 = gohelper.findChild(arg_1_0.viewGO, "#go_cardcontent2")
+local FightCardMixIntroduceView = class("FightCardMixIntroduceView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FightCardMixIntroduceView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gocardcontent1 = gohelper.findChild(self.viewGO, "#go_cardcontent1")
+	self._gocardcontent2 = gohelper.findChild(self.viewGO, "#go_cardcontent2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function FightCardMixIntroduceView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function FightCardMixIntroduceView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function FightCardMixIntroduceView:_btncloseOnClick()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._gocardcontent1, false)
-	gohelper.setActive(arg_5_0._gocardcontent2, false)
+function FightCardMixIntroduceView:_editableInitView()
+	gohelper.setActive(self._gocardcontent1, false)
+	gohelper.setActive(self._gocardcontent2, false)
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function FightCardMixIntroduceView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.viewParam
-	local var_7_1 = arg_7_0["_gocardcontent" .. tostring(var_7_0)]
+function FightCardMixIntroduceView:onOpen()
+	local index = self.viewParam.viewParam
+	local go = self["_gocardcontent" .. tostring(index)]
 
-	if var_7_1 then
-		gohelper.setActive(var_7_1, true)
+	if go then
+		gohelper.setActive(go, true)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
+function FightCardMixIntroduceView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function FightCardMixIntroduceView:onDestroyView()
 	return
 end
 
-return var_0_0
+return FightCardMixIntroduceView

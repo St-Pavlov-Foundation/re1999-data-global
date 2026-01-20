@@ -1,123 +1,126 @@
-﻿module("modules.logic.versionactivity2_4.pinball.view.PinballResultView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/view/PinballResultView.lua
 
-local var_0_0 = class("PinballResultView", BaseView)
+module("modules.logic.versionactivity2_4.pinball.view.PinballResultView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goFinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
-	arg_1_0._gonoFinish = gohelper.findChild(arg_1_0.viewGO, "#go_noFinish")
-	arg_1_0._txttask = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_finish/#txt_taskdes")
-	arg_1_0._txttask2 = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_noFinish/#txt_taskdes")
-	arg_1_0._resexitem = gohelper.findChild(arg_1_0.viewGO, "#go_finish/items_ex/item")
-	arg_1_0._resitem = gohelper.findChild(arg_1_0.viewGO, "items/item")
+local PinballResultView = class("PinballResultView", BaseView)
+
+function PinballResultView:onInitView()
+	self._goFinish = gohelper.findChild(self.viewGO, "#go_finish")
+	self._gonoFinish = gohelper.findChild(self.viewGO, "#go_noFinish")
+	self._txttask = gohelper.findChildTextMesh(self.viewGO, "#go_finish/#txt_taskdes")
+	self._txttask2 = gohelper.findChildTextMesh(self.viewGO, "#go_noFinish/#txt_taskdes")
+	self._resexitem = gohelper.findChild(self.viewGO, "#go_finish/items_ex/item")
+	self._resitem = gohelper.findChild(self.viewGO, "items/item")
 end
 
-function var_0_0.onOpen(arg_2_0)
+function PinballResultView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio20)
 
-	local var_2_0 = lua_activity178_episode.configDict[VersionActivity2_4Enum.ActivityId.Pinball][PinballModel.instance.leftEpisodeId]
+	local episodeCo = lua_activity178_episode.configDict[VersionActivity2_4Enum.ActivityId.Pinball][PinballModel.instance.leftEpisodeId]
 
-	if not var_2_0 then
+	if not episodeCo then
 		return
 	end
 
-	arg_2_0:updateTask(var_2_0)
+	self:updateTask(episodeCo)
 
-	local var_2_1 = PinballModel.instance.gameAddResDict
-	local var_2_2 = {
+	local totalRes = PinballModel.instance.gameAddResDict
+	local currencyTypes = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone,
 		PinballEnum.ResType.Food
 	}
-	local var_2_3 = {}
-	local var_2_4 = {}
+	local data1 = {}
+	local data2 = {}
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_2) do
-		local var_2_5 = PinballModel.instance:getResAdd(iter_2_1)
+	for index, resType in ipairs(currencyTypes) do
+		local talentAdd = PinballModel.instance:getResAdd(resType)
 
-		var_2_3[iter_2_0] = {
-			resType = iter_2_1,
-			value = (var_2_1[iter_2_1] or 0) * (1 + var_2_5)
+		data1[index] = {
+			resType = resType,
+			value = (totalRes[resType] or 0) * (1 + talentAdd)
 		}
 
-		if arg_2_0._isFinish and arg_2_0._taskRewardDict[iter_2_1] then
-			table.insert(var_2_4, {
-				resType = iter_2_1,
-				value = arg_2_0._taskRewardDict[iter_2_1]
+		if self._isFinish and self._taskRewardDict[resType] then
+			table.insert(data2, {
+				resType = resType,
+				value = self._taskRewardDict[resType]
 			})
 		end
 	end
 
-	gohelper.CreateObjList(arg_2_0, arg_2_0.createItem, var_2_3, nil, arg_2_0._resitem)
+	gohelper.CreateObjList(self, self.createItem, data1, nil, self._resitem)
 
-	if arg_2_0._isFinish then
-		gohelper.CreateObjList(arg_2_0, arg_2_0.createItem, var_2_4, nil, arg_2_0._resexitem)
+	if self._isFinish then
+		gohelper.CreateObjList(self, self.createItem, data2, nil, self._resexitem)
 	end
 end
 
-function var_0_0.updateTask(arg_3_0, arg_3_1)
-	local var_3_0 = string.splitToNumber(arg_3_1.target, "#")
+function PinballResultView:updateTask(episodeCo)
+	local arr = string.splitToNumber(episodeCo.target, "#")
 
-	if not var_3_0 or #var_3_0 ~= 2 then
-		logError("任务配置错误" .. arg_3_1.id)
+	if not arr or #arr ~= 2 then
+		logError("任务配置错误" .. episodeCo.id)
 
 		return
 	end
 
-	local var_3_1 = var_3_0[1]
-	local var_3_2 = PinballModel.instance:getGameRes(var_3_1)
-	local var_3_3 = var_3_0[2]
+	local type = arr[1]
+	local curVal = PinballModel.instance:getGameRes(type)
+	local totalVal = arr[2]
 
-	arg_3_0._isFinish = var_3_3 <= var_3_2
+	self._isFinish = totalVal <= curVal
 
-	gohelper.setActive(arg_3_0._goFinish, arg_3_0._isFinish)
-	gohelper.setActive(arg_3_0._gonoFinish, not arg_3_0._isFinish)
+	gohelper.setActive(self._goFinish, self._isFinish)
+	gohelper.setActive(self._gonoFinish, not self._isFinish)
 
-	local var_3_4 = ""
+	local resName = ""
 
-	if var_3_1 == 0 then
-		var_3_4 = luaLang("pinball_any_res")
+	if type == 0 then
+		resName = luaLang("pinball_any_res")
 	else
-		local var_3_5 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_3_1]
+		local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][type]
 
-		if var_3_5 then
-			var_3_4 = var_3_5.name
+		if resCo then
+			resName = resCo.name
 		end
 	end
 
-	arg_3_0._txttask.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_game_target2"), var_3_3, var_3_4)
-	arg_3_0._txttask2.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_game_target2"), var_3_3, var_3_4)
+	self._txttask.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_game_target2"), totalVal, resName)
+	self._txttask2.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("pinball_game_target2"), totalVal, resName)
 
-	if not arg_3_0._isFinish then
+	if not self._isFinish then
 		return
 	end
 
-	local var_3_6 = GameUtil.splitString2(arg_3_1.reward, true) or {}
+	local taskReward = GameUtil.splitString2(episodeCo.reward, true) or {}
 
-	arg_3_0._taskRewardDict = {}
+	self._taskRewardDict = {}
 
-	for iter_3_0, iter_3_1 in pairs(var_3_6) do
-		arg_3_0._taskRewardDict[iter_3_1[1]] = iter_3_1[2]
+	for _, reward in pairs(taskReward) do
+		self._taskRewardDict[reward[1]] = reward[2]
 	end
 end
 
-function var_0_0.createItem(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = gohelper.findChildImage(arg_4_1, "#image_icon")
+function PinballResultView:createItem(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "#image_icon")
+	local num = gohelper.findChildTextMesh(obj, "#txt_num")
 
-	gohelper.findChildTextMesh(arg_4_1, "#txt_num").text = Mathf.Round(arg_4_2.value)
+	num.text = Mathf.Round(data.value)
 
-	local var_4_1 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_4_2.resType]
+	local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][data.resType]
 
-	if not var_4_1 then
+	if not resCo then
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(var_4_0, var_4_1.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(icon, resCo.icon)
 end
 
-function var_0_0.onClickModalMask(arg_5_0)
+function PinballResultView:onClickModalMask()
 	ViewMgr.instance:closeView(ViewName.PinballGameView)
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-return var_0_0
+return PinballResultView

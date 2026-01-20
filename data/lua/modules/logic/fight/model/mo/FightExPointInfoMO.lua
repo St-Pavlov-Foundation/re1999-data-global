@@ -1,19 +1,21 @@
-﻿module("modules.logic.fight.model.mo.FightExPointInfoMO", package.seeall)
+﻿-- chunkname: @modules/logic/fight/model/mo/FightExPointInfoMO.lua
 
-local var_0_0 = pureTable("FightExPointInfoMO")
+module("modules.logic.fight.model.mo.FightExPointInfoMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.uid = arg_1_1.uid
-	arg_1_0.exPoint = arg_1_1.exPoint
-	arg_1_0.powerInfos = arg_1_1.powerInfos
+local FightExPointInfoMO = pureTable("FightExPointInfoMO")
 
-	if arg_1_1.HasField then
-		if arg_1_1:HasField("currentHp") then
-			arg_1_0.currentHp = arg_1_1.currentHp
+function FightExPointInfoMO:init(info)
+	self.uid = info.uid
+	self.exPoint = info.exPoint
+	self.powerInfos = info.powerInfos
+
+	if info.HasField then
+		if info:HasField("currentHp") then
+			self.currentHp = info.currentHp
 		end
 	else
-		arg_1_0.currentHp = arg_1_1.currentHp
+		self.currentHp = info.currentHp
 	end
 end
 
-return var_0_0
+return FightExPointInfoMO

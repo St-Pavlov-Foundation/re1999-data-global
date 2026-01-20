@@ -1,457 +1,468 @@
-﻿module("modules.logic.meilanni.view.MeilanniSettlementView", package.seeall)
+﻿-- chunkname: @modules/logic/meilanni/view/MeilanniSettlementView.lua
 
-local var_0_0 = class("MeilanniSettlementView", BaseView)
+module("modules.logic.meilanni.view.MeilanniSettlementView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._imagecurscore = gohelper.findChildImage(arg_1_0.viewGO, "left/score/bg/#image_curscore")
-	arg_1_0._goscorestep = gohelper.findChild(arg_1_0.viewGO, "left/score/scorerange/#go_scorestep")
-	arg_1_0._txtcurscore = gohelper.findChildText(arg_1_0.viewGO, "left/score/#txt_curscore")
-	arg_1_0._simagerating = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_rating")
-	arg_1_0._simageratingfail = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_rating_fail")
-	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_icon")
-	arg_1_0._scrolldays = gohelper.findChildScrollRect(arg_1_0.viewGO, "right/#scroll_days")
-	arg_1_0._godayitem = gohelper.findChild(arg_1_0.viewGO, "right/#scroll_days/Viewport/Content/#go_dayitem")
-	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_next")
-	arg_1_0._btnfront = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_front")
-	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+local MeilanniSettlementView = class("MeilanniSettlementView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function MeilanniSettlementView:onInitView()
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._imagecurscore = gohelper.findChildImage(self.viewGO, "left/score/bg/#image_curscore")
+	self._goscorestep = gohelper.findChild(self.viewGO, "left/score/scorerange/#go_scorestep")
+	self._txtcurscore = gohelper.findChildText(self.viewGO, "left/score/#txt_curscore")
+	self._simagerating = gohelper.findChildSingleImage(self.viewGO, "left/#simage_rating")
+	self._simageratingfail = gohelper.findChildSingleImage(self.viewGO, "left/#simage_rating_fail")
+	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "left/#simage_icon")
+	self._scrolldays = gohelper.findChildScrollRect(self.viewGO, "right/#scroll_days")
+	self._godayitem = gohelper.findChild(self.viewGO, "right/#scroll_days/Viewport/Content/#go_dayitem")
+	self._btnnext = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_next")
+	self._btnfront = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_front")
+	self._btnclose1 = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close1")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
-	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
-	arg_2_0._btnfront:AddClickListener(arg_2_0._btnfrontOnClick, arg_2_0)
-	arg_2_0._btnclose1:AddClickListener(arg_2_0._btnclose1OnClick, arg_2_0)
+function MeilanniSettlementView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self._btnnext:AddClickListener(self._btnnextOnClick, self)
+	self._btnfront:AddClickListener(self._btnfrontOnClick, self)
+	self._btnclose1:AddClickListener(self._btnclose1OnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
-	arg_3_0._btnnext:RemoveClickListener()
-	arg_3_0._btnfront:RemoveClickListener()
-	arg_3_0._btnclose1:RemoveClickListener()
+function MeilanniSettlementView:removeEvents()
+	self._btnclose:RemoveClickListener()
+	self._btnnext:RemoveClickListener()
+	self._btnfront:RemoveClickListener()
+	self._btnclose1:RemoveClickListener()
 end
 
-function var_0_0._btnclose1OnClick(arg_4_0)
-	arg_4_0:closeThis()
+function MeilanniSettlementView:_btnclose1OnClick()
+	self:closeThis()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_screenplay_photo_close)
 end
 
-function var_0_0._btncloseOnClick(arg_5_0)
+function MeilanniSettlementView:_btncloseOnClick()
 	return
 end
 
-function var_0_0._btnnextOnClick(arg_6_0)
+function MeilanniSettlementView:_btnnextOnClick()
 	UIBlockMgr.instance:startBlock("MeilanniSettlementView fanye")
-	TaskDispatcher.runDelay(arg_6_0._aniDone, arg_6_0, 0.5)
+	TaskDispatcher.runDelay(self._aniDone, self, 0.5)
 
-	arg_6_0._episodeIndex = arg_6_0._episodeIndex + 1
+	self._episodeIndex = self._episodeIndex + 1
 
-	arg_6_0._animator:Play("fanye_left", 0, 0)
-	arg_6_0:_updateBtns(true)
+	self._animator:Play("fanye_left", 0, 0)
+	self:_updateBtns(true)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 end
 
-function var_0_0._btnfrontOnClick(arg_7_0)
+function MeilanniSettlementView:_btnfrontOnClick()
 	UIBlockMgr.instance:startBlock("MeilanniSettlementView fanye")
-	TaskDispatcher.runDelay(arg_7_0._aniDone, arg_7_0, 0.5)
+	TaskDispatcher.runDelay(self._aniDone, self, 0.5)
 
-	arg_7_0._episodeIndex = arg_7_0._episodeIndex - 1
+	self._episodeIndex = self._episodeIndex - 1
 
-	arg_7_0._animator:Play("fanye_right", 0, 0)
-	arg_7_0:_updateBtns(true)
+	self._animator:Play("fanye_right", 0, 0)
+	self:_updateBtns(true)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 end
 
-function var_0_0._aniDone(arg_8_0)
+function MeilanniSettlementView:_aniDone()
 	UIBlockMgr.instance:endBlock("MeilanniSettlementView fanye")
 end
 
-function var_0_0._editableInitView(arg_9_0)
-	gohelper.setActive(arg_9_0._godayitem, false)
+function MeilanniSettlementView:_editableInitView()
+	gohelper.setActive(self._godayitem, false)
 
-	local var_9_0 = gohelper.findChild(arg_9_0.viewGO, "right")
+	local rightGo = gohelper.findChild(self.viewGO, "right")
 
-	arg_9_0._animator = var_9_0:GetComponent(typeof(UnityEngine.Animator))
+	self._animator = rightGo:GetComponent(typeof(UnityEngine.Animator))
 
-	local var_9_1 = var_9_0:GetComponent(typeof(ZProj.AnimationEventWrap))
+	local animationEventWrap = rightGo:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	var_9_1:AddEventListener("right", arg_9_0._onFlipOver, arg_9_0)
-	var_9_1:AddEventListener("left", arg_9_0._onFlipOver, arg_9_0)
+	animationEventWrap:AddEventListener("right", self._onFlipOver, self)
+	animationEventWrap:AddEventListener("left", self._onFlipOver, self)
 end
 
-function var_0_0._onFlipOver(arg_10_0)
-	arg_10_0:_updateBtns()
+function MeilanniSettlementView:_onFlipOver()
+	self:_updateBtns()
 end
 
-function var_0_0._updateBtns(arg_11_0, arg_11_1)
-	gohelper.setActive(arg_11_0._btnnext.gameObject, arg_11_0._episodeIndex < arg_11_0._episodeNum)
-	gohelper.setActive(arg_11_0._btnfront.gameObject, arg_11_0._episodeIndex > 1)
+function MeilanniSettlementView:_updateBtns(skipShowHistory)
+	gohelper.setActive(self._btnnext.gameObject, self._episodeIndex < self._episodeNum)
+	gohelper.setActive(self._btnfront.gameObject, self._episodeIndex > 1)
 
-	if arg_11_1 then
+	if skipShowHistory then
 		return
 	end
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._episodeHistory) do
-		gohelper.setActive(iter_11_1, iter_11_0 == arg_11_0._episodeIndex)
+	for i, v in ipairs(self._episodeHistory) do
+		gohelper.setActive(v, i == self._episodeIndex)
 	end
 
-	arg_11_0:_showEpisodeHistory(arg_11_0._episodeIndex)
+	self:_showEpisodeHistory(self._episodeIndex)
 end
 
-function var_0_0.onOpen(arg_12_0)
-	arg_12_0._mapId = arg_12_0.viewParam
-	arg_12_0._mapInfo = MeilanniModel.instance:getMapInfo(arg_12_0._mapId)
-	arg_12_0._mapConfig = arg_12_0._mapInfo.mapConfig
-	arg_12_0._episodeHistory = arg_12_0:getUserDataTb_()
-	arg_12_0._eventItemList = arg_12_0:getUserDataTb_()
-	arg_12_0._episodeNum = #arg_12_0._mapInfo.episodeInfos
-	arg_12_0._episodeIndex = 1
+function MeilanniSettlementView:onOpen()
+	self._mapId = self.viewParam
+	self._mapInfo = MeilanniModel.instance:getMapInfo(self._mapId)
+	self._mapConfig = self._mapInfo.mapConfig
+	self._episodeHistory = self:getUserDataTb_()
+	self._eventItemList = self:getUserDataTb_()
+	self._episodeNum = #self._mapInfo.episodeInfos
+	self._episodeIndex = 1
 
-	local var_12_0 = 100
-	local var_12_1 = math.max(0, arg_12_0._mapInfo.score)
-	local var_12_2 = math.min(var_12_1, var_12_0)
+	local maxScore = 100
+	local curScore = math.max(0, self._mapInfo.score)
 
-	arg_12_0._txtcurscore.text = string.format("<#8d3032><size=43>%s</size></color>/%s", var_12_2, var_12_0)
+	curScore = math.min(curScore, maxScore)
+	self._txtcurscore.text = string.format("<#8d3032><size=43>%s</size></color>/%s", curScore, maxScore)
 
-	local var_12_3 = MeilanniConfig.instance:getScoreIndex(var_12_2)
+	local scoreIndex = MeilanniConfig.instance:getScoreIndex(curScore)
 
-	if var_12_2 <= 0 then
-		arg_12_0._simageratingfail:LoadImage(ResUrl.getMeilanniLangIcon("bg_pinfen_shibai_4"))
-		gohelper.setActive(arg_12_0._simageratingfail, true)
-		gohelper.setActive(arg_12_0._simagerating, false)
+	if curScore <= 0 then
+		self._simageratingfail:LoadImage(ResUrl.getMeilanniLangIcon("bg_pinfen_shibai_4"))
+		gohelper.setActive(self._simageratingfail, true)
+		gohelper.setActive(self._simagerating, false)
 	else
-		arg_12_0._simagerating:LoadImage(ResUrl.getMeilanniLangIcon("bg_pinfen_chenggong_" .. tostring(var_12_3)))
+		self._simagerating:LoadImage(ResUrl.getMeilanniLangIcon("bg_pinfen_chenggong_" .. tostring(scoreIndex)))
 	end
 
-	arg_12_0._simageicon:LoadImage(ResUrl.getMeilanniIcon(arg_12_0._mapConfig.exhibits))
-	arg_12_0:_initScores(var_12_2)
+	self._simageicon:LoadImage(ResUrl.getMeilanniIcon(self._mapConfig.exhibits))
+	self:_initScores(curScore)
 
-	arg_12_0._curScore = var_12_2
-	arg_12_0._imagecurscore.fillAmount = 0
+	self._curScore = curScore
+	self._imagecurscore.fillAmount = 0
 
-	arg_12_0:_updateBtns()
+	self:_updateBtns()
 
-	if var_12_2 == 0 then
+	if curScore == 0 then
 		AudioMgr.instance:trigger(AudioEnum.ChessGame.ChallengeFailed)
 
 		return
 	end
 
-	TaskDispatcher.runDelay(arg_12_0._delayStartShowProgress, arg_12_0, 0.3)
+	TaskDispatcher.runDelay(self._delayStartShowProgress, self, 0.3)
 end
 
-function var_0_0._delayStartShowProgress(arg_13_0)
-	arg_13_0._audioId = AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_progress_grow)
-	arg_13_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.7, arg_13_0._onFrame, arg_13_0._showFinish, arg_13_0, nil, EaseType.Linear)
+function MeilanniSettlementView:_delayStartShowProgress()
+	self._audioId = AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_progress_grow)
+	self.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.7, self._onFrame, self._showFinish, self, nil, EaseType.Linear)
 end
 
-function var_0_0._showFinish(arg_14_0)
-	AudioMgr.instance:stopPlayingID(arg_14_0._audioId)
+function MeilanniSettlementView:_showFinish()
+	AudioMgr.instance:stopPlayingID(self._audioId)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_stamp)
 end
 
-function var_0_0._onFrame(arg_15_0, arg_15_1)
-	arg_15_0._imagecurscore.fillAmount = arg_15_1 * arg_15_0._targetFillAmount
+function MeilanniSettlementView:_onFrame(value)
+	self._imagecurscore.fillAmount = value * self._targetFillAmount
 
-	local var_15_0 = arg_15_1 * arg_15_0._curScore
+	local curScore = value * self._curScore
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0._gradleList) do
-		local var_15_1 = arg_15_0._ratingTxtList[iter_15_0]
-		local var_15_2 = var_15_1 and var_15_1[1]
+	for i, v in ipairs(self._gradleList) do
+		local t = self._ratingTxtList[i]
+		local ratingTxt = t and t[1]
 
-		if var_15_2 and var_15_0 >= iter_15_1.score then
-			var_15_2.color = GameUtil.parseColor("#903C3C")
+		if ratingTxt and curScore >= v.score then
+			ratingTxt.color = GameUtil.parseColor("#903C3C")
 
-			gohelper.setActive(var_15_1[2], true)
+			gohelper.setActive(t[2], true)
 
-			arg_15_0._ratingTxtList[iter_15_0] = nil
+			self._ratingTxtList[i] = nil
 		end
 	end
 end
 
-function var_0_0._initScores(arg_16_0, arg_16_1)
-	local var_16_0 = {
+function MeilanniSettlementView:_initScores(curScore)
+	local ratingList = {
 		"",
 		"A",
 		"B",
 		"C"
 	}
-	local var_16_1 = {
+	local posXList = {
 		442,
 		442,
 		272,
 		115
 	}
-	local var_16_2 = {
+	local progressList = {
 		1,
 		0.844,
 		0.54,
 		0.26
 	}
-	local var_16_3
-	local var_16_4 = MeilanniConfig.instance:getGradleList(arg_16_0._mapId)
-	local var_16_5 = {
+	local matchRatingIndex
+	local rawGradleList = MeilanniConfig.instance:getGradleList(self._mapId)
+	local gradleList = {
 		{
 			score = 100
 		}
 	}
 
-	tabletool.addValues(var_16_5, var_16_4)
+	tabletool.addValues(gradleList, rawGradleList)
 
-	arg_16_0._gradleList = var_16_5
-	arg_16_0._ratingTxtList = arg_16_0:getUserDataTb_()
+	self._gradleList = gradleList
+	self._ratingTxtList = self:getUserDataTb_()
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._gradleList) do
-		local var_16_6 = var_16_0[iter_16_0]
+	for i, v in ipairs(self._gradleList) do
+		local rating = ratingList[i]
 
-		if not string.nilorempty(var_16_6) then
-			local var_16_7 = gohelper.cloneInPlace(arg_16_0._goscorestep)
+		if not string.nilorempty(rating) then
+			local go = gohelper.cloneInPlace(self._goscorestep)
 
-			gohelper.setActive(var_16_7, true)
+			gohelper.setActive(go, true)
 
-			local var_16_8 = gohelper.findChildText(var_16_7, "txt_value")
-			local var_16_9 = gohelper.findChildText(var_16_7, "txt_rating")
-			local var_16_10 = gohelper.findChild(var_16_7, "go_achive")
+			local valueTxt = gohelper.findChildText(go, "txt_value")
+			local ratingTxt = gohelper.findChildText(go, "txt_rating")
+			local goachive = gohelper.findChild(go, "go_achive")
 
-			gohelper.setActive(var_16_10, false)
+			gohelper.setActive(goachive, false)
 
-			var_16_8.text = iter_16_1.score
-			var_16_9.text = var_16_0[iter_16_0]
+			valueTxt.text = v.score
+			ratingTxt.text = ratingList[i]
 
-			recthelper.setAnchorX(var_16_7.transform, var_16_1[iter_16_0])
+			recthelper.setAnchorX(go.transform, posXList[i])
 
-			arg_16_0._ratingTxtList[iter_16_0] = {
-				var_16_9,
-				var_16_10
+			self._ratingTxtList[i] = {
+				ratingTxt,
+				goachive
 			}
 		end
 
-		if arg_16_1 >= iter_16_1.score then
-			var_16_3 = var_16_3 or iter_16_0
+		if curScore >= v.score then
+			matchRatingIndex = matchRatingIndex or i
 		end
 	end
 
-	if var_16_3 == 1 then
-		arg_16_0._targetFillAmount = var_16_2[var_16_3]
-		arg_16_0._imagecurscore.fillAmount = arg_16_0._targetFillAmount
+	if matchRatingIndex == 1 then
+		self._targetFillAmount = progressList[matchRatingIndex]
+		self._imagecurscore.fillAmount = self._targetFillAmount
 
 		return
 	end
 
-	local var_16_11
-	local var_16_12
-	local var_16_13
-	local var_16_14
+	local startProgress, endProgress, startScore, endScore
 
-	if not var_16_3 then
-		var_16_11 = 0
-		var_16_12 = var_16_2[#var_16_2]
-		var_16_13 = 0
-		var_16_14 = var_16_5[#var_16_5].score
+	if not matchRatingIndex then
+		startProgress = 0
+		endProgress = progressList[#progressList]
+		startScore = 0
+		endScore = gradleList[#gradleList].score
 	else
-		var_16_11 = var_16_2[var_16_3]
-		var_16_12 = var_16_2[var_16_3 - 1]
-		var_16_13 = var_16_5[var_16_3].score
-		var_16_14 = var_16_5[var_16_3 - 1].score
+		startProgress = progressList[matchRatingIndex]
+		endProgress = progressList[matchRatingIndex - 1]
+		startScore = gradleList[matchRatingIndex].score
+		endScore = gradleList[matchRatingIndex - 1].score
 	end
 
-	local var_16_15 = (arg_16_1 - var_16_13) / (var_16_14 - var_16_13)
+	local progress = (curScore - startScore) / (endScore - startScore)
+	local value = (endProgress - startProgress) * progress + startProgress
 
-	arg_16_0._targetFillAmount = (var_16_12 - var_16_11) * var_16_15 + var_16_11
-	arg_16_0._imagecurscore.fillAmount = arg_16_0._targetFillAmount
+	self._targetFillAmount = value
+	self._imagecurscore.fillAmount = self._targetFillAmount
 end
 
-function var_0_0._showCookieContent(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = gohelper.cloneInPlace(arg_17_2)
+function MeilanniSettlementView:_showCookieContent(content, eventItem)
+	local eventItem = gohelper.cloneInPlace(eventItem)
 
-	gohelper.setActive(var_17_0, true)
+	gohelper.setActive(eventItem, true)
 
-	gohelper.findChildText(var_17_0, "txt_desc").text = arg_17_1
+	local descTxt = gohelper.findChildText(eventItem, "txt_desc")
+
+	descTxt.text = content
 end
 
-function var_0_0._showEpisodeHistory(arg_18_0, arg_18_1)
-	if arg_18_0._episodeHistory[arg_18_1] then
+function MeilanniSettlementView:_showEpisodeHistory(episodeIndex)
+	local dialogItem = self._episodeHistory[episodeIndex]
+
+	if dialogItem then
 		return
 	end
 
-	local var_18_0 = arg_18_0:_getDialogItem()
+	dialogItem = self:_getDialogItem()
+	self._episodeHistory[episodeIndex] = dialogItem
 
-	arg_18_0._episodeHistory[arg_18_1] = var_18_0
+	local episodeInfo = self._mapInfo.episodeInfos[episodeIndex]
 
-	local var_18_1 = arg_18_0._mapInfo.episodeInfos[arg_18_1]
+	self:_showTitle(episodeInfo, dialogItem)
 
-	arg_18_0:_showTitle(var_18_1, var_18_0)
+	local eventItem = gohelper.findChild(dialogItem, "events/go_eventitem")
 
-	local var_18_2 = gohelper.findChild(var_18_0, "events/go_eventitem")
+	gohelper.setActive(eventItem, false)
 
-	gohelper.setActive(var_18_2, false)
-
-	if arg_18_1 == 1 and arg_18_0._curScore >= arg_18_0._mapConfig.cookie then
-		arg_18_0:_showCookieContent(arg_18_0._mapConfig.cookieContent, var_18_2)
+	if episodeIndex == 1 and self._curScore >= self._mapConfig.cookie then
+		self:_showCookieContent(self._mapConfig.cookieContent, eventItem)
 	end
 
-	local var_18_3 = 1
-	local var_18_4 = #var_18_1.historylist
+	local eventIndex = 1
+	local len = #episodeInfo.historylist
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1.historylist) do
-		local var_18_5 = iter_18_1.eventId
-		local var_18_6 = iter_18_1.index
-		local var_18_7 = var_18_1:getEventInfo(var_18_5)
+	for i, episodeHistory in ipairs(episodeInfo.historylist) do
+		local eventId = episodeHistory.eventId
+		local index = episodeHistory.index
+		local eventInfo = episodeInfo:getEventInfo(eventId)
+		local interactParam = eventInfo.interactParam[index + 1]
+		local interactType = interactParam[1]
 
-		if var_18_7.interactParam[var_18_6 + 1][1] == MeilanniEnum.ElementType.Dialog then
-			arg_18_0:_showEvent(var_18_7, var_18_2, var_18_6, var_18_3, iter_18_0 == var_18_4)
+		if interactType == MeilanniEnum.ElementType.Dialog then
+			self:_showEvent(eventInfo, eventItem, index, eventIndex, i == len)
 
-			var_18_3 = var_18_3 + 1
+			eventIndex = eventIndex + 1
 		end
 	end
 
-	for iter_18_2, iter_18_3 in ipairs(var_18_1.events) do
-		if not iter_18_3.isFinish and iter_18_3:getSkipDialog() then
-			arg_18_0:_showSkipDialog(iter_18_3, var_18_2, nil, var_18_3)
+	for i, eventInfo in ipairs(episodeInfo.events) do
+		if not eventInfo.isFinish and eventInfo:getSkipDialog() then
+			self:_showSkipDialog(eventInfo, eventItem, nil, eventIndex)
 
-			var_18_3 = var_18_3 + 1
+			eventIndex = eventIndex + 1
 		end
 	end
 end
 
-function var_0_0._showTitle(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_1.episodeConfig
-	local var_19_1 = gohelper.findChildText(arg_19_2, "title/txt_countdown")
+function MeilanniSettlementView:_showTitle(episodeInfo, dialogItem)
+	local episodeConfig = episodeInfo.episodeConfig
+	local txt = gohelper.findChildText(dialogItem, "title/txt_countdown")
 
-	if var_19_0.mapId <= 102 then
-		var_19_1.text = formatLuaLang("meilannisettlementview_countdown", var_19_0.day)
+	if episodeConfig.mapId <= 102 then
+		txt.text = formatLuaLang("meilannisettlementview_countdown", episodeConfig.day)
 	else
-		var_19_1.text = formatLuaLang("meilannisettlementview_countdown2", var_19_0.day)
+		txt.text = formatLuaLang("meilannisettlementview_countdown2", episodeConfig.day)
 	end
 
-	local var_19_2 = gohelper.findChildImage(arg_19_2, "title/txt_countdown/image_weather")
+	local weather = gohelper.findChildImage(dialogItem, "title/txt_countdown/image_weather")
 
-	if var_19_0.period == 1 then
-		UISpriteSetMgr.instance:setMeilanniSprite(var_19_2, "bg_tianqi_settlement_2")
+	if episodeConfig.period == 1 then
+		UISpriteSetMgr.instance:setMeilanniSprite(weather, "bg_tianqi_settlement_2")
 	else
-		UISpriteSetMgr.instance:setMeilanniSprite(var_19_2, "bg_tianqi_settlement_1")
+		UISpriteSetMgr.instance:setMeilanniSprite(weather, "bg_tianqi_settlement_1")
 	end
 end
 
-function var_0_0._getEventItem(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0._eventItemList[arg_20_1]
+function MeilanniSettlementView:_getEventItem(eventId, eventItemGo)
+	local eventItem = self._eventItemList[eventId]
 
-	if not var_20_0 then
-		var_20_0 = gohelper.cloneInPlace(arg_20_2)
+	if not eventItem then
+		eventItem = gohelper.cloneInPlace(eventItemGo)
 
-		gohelper.setActive(var_20_0, true)
+		gohelper.setActive(eventItem, true)
 
-		arg_20_0._eventItemList[arg_20_1] = var_20_0
-		gohelper.findChildText(var_20_0, "txt_desc").text = ""
+		self._eventItemList[eventId] = eventItem
+
+		local descTxt = gohelper.findChildText(eventItem, "txt_desc")
+
+		descTxt.text = ""
 	end
 
-	return var_20_0
+	return eventItem
 end
 
-var_0_0.DialogExteralParams = {
+MeilanniSettlementView.DialogExteralParams = {
 	featureTxtColor = "#27682E"
 }
 
-function var_0_0._showSkipDialog(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
-	local var_21_0 = arg_21_0:_getEventItem(arg_21_1.eventId, arg_21_2)
-	local var_21_1 = gohelper.findChildText(var_21_0, "txt_desc")
-	local var_21_2 = arg_21_1:getSkipDialog()
-	local var_21_3 = var_21_2.content
-	local var_21_4 = string.splitToNumber(var_21_2.result, "#")
-	local var_21_5 = MeilanniDialogItem.getResult(nil, var_21_2, "", nil, var_0_0.DialogExteralParams)
+function MeilanniSettlementView:_showSkipDialog(eventInfo, eventItem, index, eventIndex, lastOne)
+	local eventItem = self:_getEventItem(eventInfo.eventId, eventItem)
+	local descTxt = gohelper.findChildText(eventItem, "txt_desc")
+	local stepConfig = eventInfo:getSkipDialog()
+	local content = stepConfig.content
+	local resultList = string.splitToNumber(stepConfig.result, "#")
+	local result = MeilanniDialogItem.getResult(nil, stepConfig, "", nil, MeilanniSettlementView.DialogExteralParams)
 
-	if not string.nilorempty(var_21_5) then
-		var_21_3 = string.format("%s%s", var_21_3, var_21_5)
+	if not string.nilorempty(result) then
+		content = string.format("%s%s", content, result)
 	end
 
-	var_21_1.text = var_21_3
+	descTxt.text = content
 end
 
-function var_0_0._showEvent(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5)
-	local var_22_0 = arg_22_0:_getEventItem(arg_22_1.eventId, arg_22_2)
-	local var_22_1 = gohelper.findChildText(var_22_0, "txt_desc")
-	local var_22_2 = 0
-	local var_22_3 = var_22_1.text
-	local var_22_4 = arg_22_3 + 1
-	local var_22_5 = arg_22_1.interactParam[var_22_4][2]
-	local var_22_6 = arg_22_1.historylist[arg_22_3].history
-	local var_22_7 = arg_22_1._historyResult or ""
+function MeilanniSettlementView:_showEvent(eventInfo, eventItem, index, eventIndex, lastOne)
+	local eventItem = self:_getEventItem(eventInfo.eventId, eventItem)
+	local descTxt = gohelper.findChildText(eventItem, "txt_desc")
+	local score = 0
+	local content = descTxt.text
+	local interactIndex = index + 1
+	local interactParam = eventInfo.interactParam[interactIndex]
+	local dialogId = interactParam[2]
+	local eventHistory = eventInfo.historylist[index]
+	local historylist = eventHistory.history
+	local result = eventInfo._historyResult or ""
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_6) do
-		local var_22_8 = string.splitToNumber(iter_22_1, "#")
-		local var_22_9 = var_22_8[1]
-		local var_22_10 = var_22_8[2]
-		local var_22_11 = lua_activity108_dialog.configDict[var_22_5][var_22_9]
+	for i, v in ipairs(historylist) do
+		local paramList = string.splitToNumber(v, "#")
+		local stepId = paramList[1]
+		local optionIndex = paramList[2]
+		local stepConfig = lua_activity108_dialog.configDict[dialogId][stepId]
 
-		if var_22_11.type == "dialog" and not string.nilorempty(var_22_11.content) then
-			if string.nilorempty(var_22_3) then
-				var_22_3 = var_22_11.content
+		if stepConfig.type == "dialog" and not string.nilorempty(stepConfig.content) then
+			if string.nilorempty(content) then
+				content = stepConfig.content
 			else
-				var_22_3 = string.format("%s\n%s", var_22_3, var_22_11.content)
+				content = string.format("%s\n%s", content, stepConfig.content)
 			end
-		elseif var_22_11.type == "options" then
-			local var_22_12 = string.split(var_22_11.content, "#")
-			local var_22_13 = string.split(var_22_11.param, "#")[var_22_10]
-			local var_22_14 = var_22_12[var_22_10]
-			local var_22_15 = MeilanniConfig.instance:getDialog(var_22_5, var_22_13)
-			local var_22_16 = string.splitToNumber(var_22_15.result, "#")
+		elseif stepConfig.type == "options" then
+			local optionList = string.split(stepConfig.content, "#")
+			local sectionIdList = string.split(stepConfig.param, "#")
+			local sectionId = sectionIdList[optionIndex]
+			local option = optionList[optionIndex]
+			local sectionDialog = MeilanniConfig.instance:getDialog(dialogId, sectionId)
+			local resultList = string.splitToNumber(sectionDialog.result, "#")
 
-			if var_22_14 then
-				local var_22_17 = string.format("<size=26><color=#834d30>\"%s\"</color></size>", var_22_14)
+			if option then
+				local text = string.format("<size=26><color=#834d30>\"%s\"</color></size>", option)
 
-				var_22_3 = string.format("%s\n%s", var_22_3, var_22_17)
+				content = string.format("%s\n%s", content, text)
 
-				if string.len(var_22_7) <= 0 then
-					local var_22_18 = MeilanniConfig.instance:getDialog(var_22_5, var_22_13)
+				if string.len(result) <= 0 then
+					local sectionDialog = MeilanniConfig.instance:getDialog(dialogId, sectionId)
 
-					var_22_7 = MeilanniDialogItem.getResult(arg_22_1, var_22_18, var_22_7, true, var_0_0.DialogExteralParams)
+					result = MeilanniDialogItem.getResult(eventInfo, sectionDialog, result, true, MeilanniSettlementView.DialogExteralParams)
 				end
 			end
 
-			if var_22_16[1] == MeilanniEnum.ResultType.score then
-				local var_22_19 = var_22_16[2]
+			if resultList[1] == MeilanniEnum.ResultType.score then
+				score = resultList[2]
 			end
 		end
 	end
 
-	if string.len(var_22_7) > 0 then
-		arg_22_1._historyResult = var_22_7
+	if string.len(result) > 0 then
+		eventInfo._historyResult = result
 
-		if var_22_4 == #arg_22_1.interactParam then
-			var_22_3 = string.format("%s%s", var_22_3, var_22_7)
+		if interactIndex == #eventInfo.interactParam then
+			content = string.format("%s%s", content, result)
 		end
 	end
 
-	var_22_1.text = var_22_3
+	descTxt.text = content
 end
 
-function var_0_0._getDialogItem(arg_23_0)
-	local var_23_0 = gohelper.cloneInPlace(arg_23_0._godayitem)
+function MeilanniSettlementView:_getDialogItem()
+	local dayItem = gohelper.cloneInPlace(self._godayitem)
 
-	gohelper.setActive(var_23_0, true)
+	gohelper.setActive(dayItem, true)
 
-	return var_23_0
+	return dayItem
 end
 
-function var_0_0.onClose(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._delayStartShowProgress, arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._aniDone, arg_24_0)
+function MeilanniSettlementView:onClose()
+	TaskDispatcher.cancelTask(self._delayStartShowProgress, self)
+	TaskDispatcher.cancelTask(self._aniDone, self)
 	UIBlockMgr.instance:endBlock("MeilanniSettlementView fanye")
 end
 
-function var_0_0.onDestroyView(arg_25_0)
-	if arg_25_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_25_0.tweenId)
+function MeilanniSettlementView:onDestroyView()
+	if self.tweenId then
+		ZProj.TweenHelper.KillById(self.tweenId)
 
-		arg_25_0.tweenId = nil
+		self.tweenId = nil
 	end
 
-	arg_25_0._simagerating:UnLoadImage()
-	arg_25_0._simageicon:UnLoadImage()
+	self._simagerating:UnLoadImage()
+	self._simageicon:UnLoadImage()
 end
 
-return var_0_0
+return MeilanniSettlementView

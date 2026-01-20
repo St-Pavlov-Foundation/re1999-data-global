@@ -1,21 +1,23 @@
-﻿module("modules.logic.fight.view.work.TimerWork", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/work/TimerWork.lua
 
-local var_0_0 = class("TimerWork", BaseWork)
+module("modules.logic.fight.view.work.TimerWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._time = arg_1_1
+local TimerWork = class("TimerWork", BaseWork)
+
+function TimerWork:ctor(time)
+	self._time = time
 end
 
-function var_0_0.onStart(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0._onTimeout, arg_2_0, arg_2_0._time)
+function TimerWork:onStart()
+	TaskDispatcher.runDelay(self._onTimeout, self, self._time)
 end
 
-function var_0_0._onTimeout(arg_3_0)
-	arg_3_0:onDone(true)
+function TimerWork:_onTimeout()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0._onTimeout, arg_4_0)
+function TimerWork:clearWork()
+	TaskDispatcher.cancelTask(self._onTimeout, self)
 end
 
-return var_0_0
+return TimerWork

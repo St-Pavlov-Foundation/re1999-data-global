@@ -1,54 +1,56 @@
-﻿module("modules.logic.weekwalk.view.WeekWalkDegradeView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk/view/WeekWalkDegradeView.lua
 
-local var_0_0 = class("WeekWalkDegradeView", BaseView)
+module("modules.logic.weekwalk.view.WeekWalkDegradeView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
-	arg_1_0._btnno = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_no")
-	arg_1_0._btnsure = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_sure")
+local WeekWalkDegradeView = class("WeekWalkDegradeView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function WeekWalkDegradeView:onInitView()
+	self._simagetipbg = gohelper.findChildSingleImage(self.viewGO, "#simage_tipbg")
+	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_no")
+	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_sure")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
-	arg_2_0._btnsure:AddClickListener(arg_2_0._btnsureOnClick, arg_2_0)
+function WeekWalkDegradeView:addEvents()
+	self._btnno:AddClickListener(self._btnnoOnClick, self)
+	self._btnsure:AddClickListener(self._btnsureOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnno:RemoveClickListener()
-	arg_3_0._btnsure:RemoveClickListener()
+function WeekWalkDegradeView:removeEvents()
+	self._btnno:RemoveClickListener()
+	self._btnsure:RemoveClickListener()
 end
 
-function var_0_0._btnnoOnClick(arg_4_0)
-	arg_4_0:closeThis()
+function WeekWalkDegradeView:_btnnoOnClick()
+	self:closeThis()
 end
 
-function var_0_0._btnsureOnClick(arg_5_0)
-	WeekwalkRpc.instance:sendSelectWeekwalkLevelRequest(arg_5_0._level - 1)
-	arg_5_0:closeThis()
+function WeekWalkDegradeView:_btnsureOnClick()
+	WeekwalkRpc.instance:sendSelectWeekwalkLevelRequest(self._level - 1)
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+function WeekWalkDegradeView:_editableInitView()
+	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function WeekWalkDegradeView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	arg_8_0._level = WeekWalkModel.instance:getLevel()
+function WeekWalkDegradeView:onOpen()
+	self._level = WeekWalkModel.instance:getLevel()
 end
 
-function var_0_0.onClose(arg_9_0)
+function WeekWalkDegradeView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function WeekWalkDegradeView:onDestroyView()
 	return
 end
 
-return var_0_0
+return WeekWalkDegradeView

@@ -1,19 +1,21 @@
-﻿module("modules.logic.story.model.StoryBgZoneMo", package.seeall)
+﻿-- chunkname: @modules/logic/story/model/StoryBgZoneMo.lua
 
-local var_0_0 = pureTable("StoryBgZoneMo")
+module("modules.logic.story.model.StoryBgZoneMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.path = ""
-	arg_1_0.sourcePath = ""
-	arg_1_0.offsetX = 0
-	arg_1_0.offsetY = 0
+local StoryBgZoneMo = pureTable("StoryBgZoneMo")
+
+function StoryBgZoneMo:ctor()
+	self.path = ""
+	self.sourcePath = ""
+	self.offsetX = 0
+	self.offsetY = 0
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.path = arg_2_1[1]
-	arg_2_0.sourcePath = arg_2_1[2]
-	arg_2_0.offsetX = arg_2_1[3]
-	arg_2_0.offsetY = arg_2_1[4]
+function StoryBgZoneMo:init(info)
+	self.path = info[1]
+	self.sourcePath = info[2]
+	self.offsetX = info[3]
+	self.offsetY = info[4]
 end
 
-return var_0_0
+return StoryBgZoneMo

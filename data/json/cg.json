@@ -3394,5 +3394,17 @@
     "image": "story_atcg/3_1/3_1_at_ys_fugaoren.jpg",
     "preCgId": 0,
     "herostoryId": 26
+  },
+  {
+    "id": 102701,
+    "order": 0,
+    "storyChapterId": 1027,
+    "name": "language_10103712",
+    "nameEn": "An Ideal World in Miniature",
+    "desc": "language_10103713",
+    "episodeId": 0,
+    "image": "story_atcg/3_2/3_2_at_ys_madierda.jpg",
+    "preCgId": 0,
+    "herostoryId": 27
   }
 ]

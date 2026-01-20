@@ -1,50 +1,56 @@
-﻿module("modules.logic.versionactivity1_4.act133.controller.Activity133Controller", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act133/controller/Activity133Controller.lua
 
-local var_0_0 = class("Activity133Controller", BaseController)
+module("modules.logic.versionactivity1_4.act133.controller.Activity133Controller", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local Activity133Controller = class("Activity133Controller", BaseController)
+
+function Activity133Controller:onInit()
 	return
 end
 
-function var_0_0.onInitFinish(arg_2_0)
+function Activity133Controller:onInitFinish()
 	return
 end
 
-function var_0_0.addConstEvents(arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
-	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, arg_3_0._onDeleteTaskList, arg_3_0)
+function Activity133Controller:addConstEvents()
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, self._onDeleteTaskList, self)
 end
 
-function var_0_0._onUpdateTaskList(arg_4_0, arg_4_1)
-	if Activity133Model.instance:setTasksInfo(arg_4_1.taskInfo) then
-		var_0_0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
+function Activity133Controller:_onUpdateTaskList(msg)
+	local hasChange = Activity133Model.instance:setTasksInfo(msg.taskInfo)
+
+	if hasChange then
+		Activity133Controller.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
 	end
 end
 
-function var_0_0._onDeleteTaskList(arg_5_0, arg_5_1)
-	if Activity133Model.instance:deleteInfo(arg_5_1.taskIds) then
-		var_0_0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
+function Activity133Controller:_onDeleteTaskList(msg)
+	local hasChange = Activity133Model.instance:deleteInfo(msg.taskIds)
+
+	if hasChange then
+		Activity133Controller.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
 	end
 end
 
-function var_0_0.openActivity133MainView(arg_6_0, arg_6_1)
-	Activity133Rpc.instance:sendGet133InfosRequest(arg_6_1, function()
+function Activity133Controller:openActivity133MainView(actId)
+	Activity133Rpc.instance:sendGet133InfosRequest(actId, function()
 		ViewMgr.instance:openView(ViewName.Activity133View, {
-			actId = arg_6_1
+			actId = actId
 		})
 	end)
 end
 
-function var_0_0.openActivity133TaskView(arg_8_0, arg_8_1)
+function Activity133Controller:openActivity133TaskView(actId)
 	ViewMgr.instance:openView(ViewName.Activity133TaskView, {
-		actId = arg_8_1
+		actId = actId
 	})
 end
 
-function var_0_0.reInit(arg_9_0)
+function Activity133Controller:reInit()
 	return
 end
 
-var_0_0.instance = var_0_0.New()
+Activity133Controller.instance = Activity133Controller.New()
 
-return var_0_0
+return Activity133Controller

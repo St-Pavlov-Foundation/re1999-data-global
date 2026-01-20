@@ -1,159 +1,162 @@
-﻿module("modules.logic.weather.model.WeatherModel", package.seeall)
+﻿-- chunkname: @modules/logic/weather/model/WeatherModel.lua
 
-local var_0_0 = class("WeatherModel", BaseModel)
+module("modules.logic.weather.model.WeatherModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local WeatherModel = class("WeatherModel", BaseModel)
+
+function WeatherModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._curDayCo = nil
+function WeatherModel:reInit()
+	self._curDayCo = nil
 end
 
-function var_0_0.getZeroTime(arg_3_0)
-	local var_3_0 = arg_3_0:getNowDate()
+function WeatherModel:getZeroTime()
+	local nowDate = self:getNowDate()
 
-	var_3_0.hour = 0
-	var_3_0.min = 0
-	var_3_0.sec = 0
+	nowDate.hour = 0
+	nowDate.min = 0
+	nowDate.sec = 0
 
-	return (os.time(var_3_0))
+	local zeroTime = os.time(nowDate)
+
+	return zeroTime
 end
 
-function var_0_0.getWeekYday(arg_4_0, arg_4_1)
-	local var_4_0 = TimeUtil.convertWday(arg_4_1.wday)
+function WeatherModel:getWeekYday(nowDate)
+	local wday = TimeUtil.convertWday(nowDate.wday)
 
-	return arg_4_1.yday - var_4_0
+	return nowDate.yday - wday
 end
 
-function var_0_0._initDay(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0:getZeroTime()
-	local var_5_1
-	local var_5_2
-	local var_5_3 = PlayerEnum.SimpleProperty.Weather
-	local var_5_4 = PlayerModel.instance:getSimpleProperty(var_5_3)
+function WeatherModel:_initDay(sceneId)
+	local zeroTime = self:getZeroTime()
+	local weekId, dayId
+	local weatherId = PlayerEnum.SimpleProperty.Weather
+	local property = PlayerModel.instance:getSimpleProperty(weatherId)
 
-	if LuaUtil.isEmptyStr(var_5_4) == false then
-		local var_5_5 = string.split(var_5_4, "#")
-		local var_5_6 = tonumber(var_5_5[1])
+	if LuaUtil.isEmptyStr(property) == false then
+		local param = string.split(property, "#")
+		local saveTime = tonumber(param[1])
 
-		var_5_1 = tonumber(var_5_5[2])
-		var_5_2 = tonumber(var_5_5[3])
+		weekId = tonumber(param[2])
+		dayId = tonumber(param[3])
 
-		if var_5_0 ~= var_5_6 then
-			local var_5_7 = arg_5_0:getNowDate()
-			local var_5_8 = os.date("*t", var_5_6)
+		if zeroTime ~= saveTime then
+			local nowDate = self:getNowDate()
+			local saveDate = os.date("*t", saveTime)
 
-			if arg_5_0:getWeekYday(var_5_7) ~= arg_5_0:getWeekYday(var_5_8) then
-				var_5_1 = nil
+			if self:getWeekYday(nowDate) ~= self:getWeekYday(saveDate) then
+				weekId = nil
 			end
 
-			var_5_2 = nil
+			dayId = nil
 		end
 	end
 
-	arg_5_0._curDayCo, arg_5_0._newWeekId, arg_5_0._newDayId = WeatherConfig.instance:getDay(var_5_1, var_5_2, arg_5_1)
+	self._curDayCo, self._newWeekId, self._newDayId = WeatherConfig.instance:getDay(weekId, dayId, sceneId)
 
-	if arg_5_0._curDayCo.sceneId ~= arg_5_1 then
-		logError(string.format("WeatherModel:_initDay sceneId error result:%s param:%s", arg_5_0._curDayCo.sceneId, arg_5_1))
+	if self._curDayCo.sceneId ~= sceneId then
+		logError(string.format("WeatherModel:_initDay sceneId error result:%s param:%s", self._curDayCo.sceneId, sceneId))
 	end
 
-	if arg_5_0._newDayId ~= var_5_2 then
-		local var_5_9 = string.format("%s#%s#%s", var_5_0, arg_5_0._newWeekId, arg_5_0._newDayId)
+	if self._newDayId ~= dayId then
+		local weatherStr = string.format("%s#%s#%s", zeroTime, self._newWeekId, self._newDayId)
 
-		PlayerRpc.instance:sendSetSimplePropertyRequest(var_5_3, var_5_9)
+		PlayerRpc.instance:sendSetSimplePropertyRequest(weatherId, weatherStr)
 	end
 end
 
-function var_0_0.debug(arg_6_0, arg_6_1, arg_6_2)
-	return string.format("WeatherModel weekId:%s,dayId:%s,reportId:%s,sceneId:%s", arg_6_0._newWeekId, arg_6_0._newDayId, arg_6_1, arg_6_2)
+function WeatherModel:debug(reportId, sceneId)
+	return string.format("WeatherModel weekId:%s,dayId:%s,reportId:%s,sceneId:%s", self._newWeekId, self._newDayId, reportId, sceneId)
 end
 
-function var_0_0.initDay(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function WeatherModel:initDay(sceneId)
+	if not sceneId then
 		logError("WeatherModel:initDay sceneId nil")
 
-		arg_7_1 = MainSceneSwitchEnum.DefaultScene
+		sceneId = MainSceneSwitchEnum.DefaultScene
 	end
 
-	if arg_7_0._curDayCo and arg_7_0._curDayCo.sceneId == arg_7_1 then
+	if self._curDayCo and self._curDayCo.sceneId == sceneId then
 		return
 	end
 
-	arg_7_0:_initDay(arg_7_1)
+	self:_initDay(sceneId)
 
-	local var_7_0 = arg_7_0._curDayCo.reportList
-	local var_7_1 = string.split(var_7_0, "|")
-	local var_7_2 = #var_7_1
+	local reportListStr = self._curDayCo.reportList
+	local reportList = string.split(reportListStr, "|")
+	local reportCount = #reportList
 
-	arg_7_0._reportList = {}
+	self._reportList = {}
 
-	local var_7_3 = arg_7_0:getZeroTime()
+	local zeroTime = self:getZeroTime()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_4 = string.split(iter_7_1, "#")
-		local var_7_5 = string.split(var_7_4[1], ":")
-		local var_7_6 = tonumber(var_7_5[1])
-		local var_7_7 = tonumber(var_7_5[2])
+	for i, v in ipairs(reportList) do
+		local param = string.split(v, "#")
+		local timeList = string.split(param[1], ":")
+		local h = tonumber(timeList[1])
+		local m = tonumber(timeList[2])
 
-		if var_7_6 and var_7_7 then
-			local var_7_8 = var_7_3 + (var_7_6 * 60 + var_7_7) * 60
+		if h and m then
+			local endTime = zeroTime + (h * 60 + m) * 60
 
-			if iter_7_0 == var_7_2 then
-				var_7_8 = var_7_8 + math.random(21600)
+			if i == reportCount then
+				endTime = endTime + math.random(21600)
 			end
 
-			local var_7_9 = tonumber(var_7_4[2])
-			local var_7_10 = WeatherConfig.instance:getReport(var_7_9)
+			local reportId = tonumber(param[2])
+			local reportCo = WeatherConfig.instance:getReport(reportId)
 
-			if var_7_10 then
-				table.insert(arg_7_0._reportList, {
-					var_7_8,
-					var_7_10
+			if reportCo then
+				table.insert(self._reportList, {
+					endTime,
+					reportCo
 				})
 			end
 		end
 	end
 end
 
-function var_0_0.getReport(arg_8_0)
-	local var_8_0, var_8_1 = arg_8_0:_getReport()
+function WeatherModel:getReport()
+	local curReport, deltaTime = self:_getReport()
 
-	if not var_8_0 then
-		local var_8_2 = arg_8_0._curDayCo and arg_8_0._curDayCo.sceneId or MainSceneSwitchEnum.DefaultScene
+	if not curReport then
+		local sceneId = self._curDayCo and self._curDayCo.sceneId or MainSceneSwitchEnum.DefaultScene
 
-		arg_8_0._curDayCo = nil
+		self._curDayCo = nil
 
-		arg_8_0:initDay(var_8_2)
+		self:initDay(sceneId)
 
-		var_8_0, var_8_1 = var_0_0.instance:getReport()
+		curReport, deltaTime = WeatherModel.instance:getReport()
 	end
 
-	if not var_8_0 then
+	if not curReport then
 		logError("WeatherModel:getReport error no report")
 
 		return lua_weather_report.configDict[1], 3600
 	end
 
-	return var_8_0, var_8_1
+	return curReport, deltaTime
 end
 
-function var_0_0._getReport(arg_9_0)
-	local var_9_0 = os.time()
+function WeatherModel:_getReport()
+	local curTime = os.time()
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._reportList) do
-		local var_9_1 = iter_9_1[1]
+	for i, v in ipairs(self._reportList) do
+		local endTime = v[1]
 
-		if var_9_0 < var_9_1 then
-			return iter_9_1[2], var_9_1 - var_9_0
+		if curTime < endTime then
+			return v[2], endTime - curTime
 		end
 	end
 end
 
-function var_0_0.getNowDate(arg_10_0)
+function WeatherModel:getNowDate()
 	return WeatherConfig.instance:getNowDate()
 end
 
-var_0_0.instance = var_0_0.New()
+WeatherModel.instance = WeatherModel.New()
 
-return var_0_0
+return WeatherModel

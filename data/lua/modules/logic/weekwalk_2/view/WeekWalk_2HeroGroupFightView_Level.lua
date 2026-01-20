@@ -1,188 +1,192 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupFightView_Level", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2HeroGroupFightView_Level.lua
 
-local var_0_0 = class("WeekWalk_2HeroGroupFightView_Level", HeroGroupFightViewLevel)
+module("modules.logic.weekwalk_2.view.WeekWalk_2HeroGroupFightView_Level", package.seeall)
 
-function var_0_0._refreshTarget(arg_1_0)
-	local var_1_0 = DungeonConfig.instance:getEpisodeCO(arg_1_0._episodeId)
-	local var_1_1 = DungeonConfig.instance:getChapterCO(var_1_0.chapterId)
+local WeekWalk_2HeroGroupFightView_Level = class("WeekWalk_2HeroGroupFightView_Level", HeroGroupFightViewLevel)
 
-	gohelper.setActive(arg_1_0._gotargetlist, true)
+function WeekWalk_2HeroGroupFightView_Level:_refreshTarget()
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(self._episodeId)
+	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
 
-	local var_1_2 = var_1_1.type == DungeonEnum.ChapterType.Hard
+	gohelper.setActive(self._gotargetlist, true)
 
-	gohelper.setActive(arg_1_0._gohardEffect, var_1_2)
-	gohelper.setActive(arg_1_0._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
+	local isHardMode = chapterConfig.type == DungeonEnum.ChapterType.Hard
 
-	arg_1_0._isHardMode = var_1_2
+	gohelper.setActive(self._gohardEffect, isHardMode)
+	gohelper.setActive(self._gobalanceEffect, HeroGroupBalanceHelper.getIsBalanceMode())
 
-	local var_1_3
-	local var_1_4
+	self._isHardMode = isHardMode
 
-	if var_1_2 then
-		var_1_4 = arg_1_0._episodeId
-		var_1_3 = var_1_0.preEpisode
+	local normalEpisodeId, hardEpisodeId
+
+	if isHardMode then
+		hardEpisodeId = self._episodeId
+		normalEpisodeId = episodeConfig.preEpisode
 	else
-		var_1_3 = arg_1_0._episodeId
+		normalEpisodeId = self._episodeId
 
-		local var_1_5 = var_1_3 and DungeonConfig.instance:getHardEpisode(var_1_3)
+		local hardEpisodeConfig = normalEpisodeId and DungeonConfig.instance:getHardEpisode(normalEpisodeId)
 
-		var_1_4 = var_1_5 and var_1_5.id
+		hardEpisodeId = hardEpisodeConfig and hardEpisodeConfig.id
 	end
 
-	local var_1_6 = var_1_3 and DungeonModel.instance:getEpisodeInfo(var_1_3)
-	local var_1_7 = var_1_4 and DungeonModel.instance:getEpisodeInfo(var_1_4)
-	local var_1_8 = var_1_3 and DungeonModel.instance:hasPassLevelAndStory(var_1_3)
-	local var_1_9 = var_1_3 and DungeonConfig.instance:getEpisodeAdvancedConditionText(var_1_3)
-	local var_1_10 = var_1_4 and DungeonConfig.instance:getEpisodeAdvancedConditionText(var_1_4)
-	local var_1_11 = DungeonModel.instance:isOpenHardDungeon(var_1_0.chapterId)
-	local var_1_12 = true
+	local normalEpisodeInfo = normalEpisodeId and DungeonModel.instance:getEpisodeInfo(normalEpisodeId)
+	local hardEpisodeInfo = hardEpisodeId and DungeonModel.instance:getEpisodeInfo(hardEpisodeId)
+	local passStory = normalEpisodeId and DungeonModel.instance:hasPassLevelAndStory(normalEpisodeId)
+	local advancedConditionText = normalEpisodeId and DungeonConfig.instance:getEpisodeAdvancedConditionText(normalEpisodeId)
+	local advancedConditionTextHard = hardEpisodeId and DungeonConfig.instance:getEpisodeAdvancedConditionText(hardEpisodeId)
+	local hardOpen = DungeonModel.instance:isOpenHardDungeon(episodeConfig.chapterId)
+	local isOnlyShowOneTarget = true
 
-	if var_1_2 then
-		gohelper.setActive(arg_1_0._gohardcondition, true)
+	if isHardMode then
+		gohelper.setActive(self._gohardcondition, true)
 
-		arg_1_0._txthardcondition.text = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_1_4)
+		self._txthardcondition.text = DungeonConfig.instance:getFirstEpisodeWinConditionText(hardEpisodeId)
 
-		local var_1_13 = var_1_7.star >= DungeonEnum.StarType.Normal and var_1_8
+		local passHard = hardEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
 
-		gohelper.setActive(arg_1_0._gohardfinish, var_1_13)
-		gohelper.setActive(arg_1_0._gohardunfinish, not var_1_13)
-		ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txthardcondition, var_1_13 and 1 or 0.63)
-		gohelper.setActive(arg_1_0._gohardplatinumcondition, not string.nilorempty(var_1_10))
+		gohelper.setActive(self._gohardfinish, passHard)
+		gohelper.setActive(self._gohardunfinish, not passHard)
+		ZProj.UGUIHelper.SetColorAlpha(self._txthardcondition, passHard and 1 or 0.63)
+		gohelper.setActive(self._gohardplatinumcondition, not string.nilorempty(advancedConditionTextHard))
 
-		local var_1_14 = var_1_7.star >= DungeonEnum.StarType.Advanced and var_1_8
+		local passAdvanced = hardEpisodeInfo.star >= DungeonEnum.StarType.Advanced and passStory
 
-		if not string.nilorempty(var_1_10) then
-			arg_1_0._txthardplatinumcondition.text = var_1_10
+		if not string.nilorempty(advancedConditionTextHard) then
+			self._txthardplatinumcondition.text = advancedConditionTextHard
 
-			gohelper.setActive(arg_1_0._gohardplatinumfinish, var_1_14)
-			gohelper.setActive(arg_1_0._gohardplatinumunfinish, not var_1_14)
-			ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txthardplatinumcondition, var_1_14 and 1 or 0.63)
+			gohelper.setActive(self._gohardplatinumfinish, passAdvanced)
+			gohelper.setActive(self._gohardplatinumunfinish, not passAdvanced)
+			ZProj.UGUIHelper.SetColorAlpha(self._txthardplatinumcondition, passAdvanced and 1 or 0.63)
 
-			var_1_12 = false
+			isOnlyShowOneTarget = false
 		end
 
-		arg_1_0:_showStar(var_1_7, var_1_10, var_1_13, var_1_14)
-	elseif arg_1_0._isSimple then
-		local var_1_15 = DungeonModel.instance:getEpisodeInfo(arg_1_0._episodeId)
-		local var_1_16 = var_1_15 and var_1_15.star >= DungeonEnum.StarType.Normal and var_1_8
+		self:_showStar(hardEpisodeInfo, advancedConditionTextHard, passHard, passAdvanced)
+	elseif self._isSimple then
+		local simpleEpisodeInfo = DungeonModel.instance:getEpisodeInfo(self._episodeId)
+		local passSimple = simpleEpisodeInfo and simpleEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
 
-		gohelper.setActive(arg_1_0._gonormalcondition, true)
+		gohelper.setActive(self._gonormalcondition, true)
 
-		local var_1_17 = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_1_3)
+		local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(normalEpisodeId)
 
-		arg_1_0._txtnormalcondition.text = var_1_17
+		self._txtnormalcondition.text = condition
 
-		gohelper.setActive(arg_1_0._gonormalfinish, var_1_16)
-		gohelper.setActive(arg_1_0._gonormalunfinish, not var_1_16)
-		ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txtnormalcondition, var_1_16 and 1 or 0.63)
-		arg_1_0:_showStar(var_1_15, nil, var_1_16)
+		gohelper.setActive(self._gonormalfinish, passSimple)
+		gohelper.setActive(self._gonormalunfinish, not passSimple)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormalcondition, passSimple and 1 or 0.63)
+		self:_showStar(simpleEpisodeInfo, nil, passSimple)
 	else
-		local var_1_18 = DungeonConfig.instance:getFirstEpisodeWinConditionText(var_1_3)
+		local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(normalEpisodeId)
 
 		if BossRushController.instance:isInBossRushInfiniteFight() then
-			var_1_18 = luaLang("v1a4_bossrushleveldetail_txt_target")
+			condition = luaLang("v1a4_bossrushleveldetail_txt_target")
 		end
 
-		arg_1_0._txtnormalcondition.text = var_1_18
+		self._txtnormalcondition.text = condition
 
-		local var_1_19 = var_1_6 and var_1_6.star >= DungeonEnum.StarType.Normal and var_1_8
-		local var_1_20 = var_1_6 and var_1_6.star >= DungeonEnum.StarType.Advanced and var_1_8
-		local var_1_21 = false
+		local passNormal = normalEpisodeInfo and normalEpisodeInfo.star >= DungeonEnum.StarType.Normal and passStory
+		local passAdvanced = normalEpisodeInfo and normalEpisodeInfo.star >= DungeonEnum.StarType.Advanced and passStory
+		local passUltra = false
 
-		if var_1_0.type == DungeonEnum.EpisodeType.WeekWalk then
-			local var_1_22 = WeekWalkModel.instance:getCurMapInfo():getBattleInfo(arg_1_0._battleId)
+		if episodeConfig.type == DungeonEnum.EpisodeType.WeekWalk then
+			local mapInfo = WeekWalkModel.instance:getCurMapInfo()
+			local battleInfo = mapInfo:getBattleInfo(self._battleId)
 
-			if var_1_22 then
-				var_1_19 = var_1_22.star >= DungeonEnum.StarType.Normal
-				var_1_20 = var_1_22.star >= DungeonEnum.StarType.Advanced
-				var_1_21 = var_1_22.star >= DungeonEnum.StarType.Ultra
+			if battleInfo then
+				passNormal = battleInfo.star >= DungeonEnum.StarType.Normal
+				passAdvanced = battleInfo.star >= DungeonEnum.StarType.Advanced
+				passUltra = battleInfo.star >= DungeonEnum.StarType.Ultra
 			end
 
-			local var_1_23 = var_1_3 and DungeonConfig.instance:getEpisodeAdvancedCondition2Text(var_1_3)
+			local advancedCondition2Text = normalEpisodeId and DungeonConfig.instance:getEpisodeAdvancedCondition2Text(normalEpisodeId)
 
-			gohelper.setActive(arg_1_0._goplatinumcondition2, not string.nilorempty(var_1_23))
+			gohelper.setActive(self._goplatinumcondition2, not string.nilorempty(advancedCondition2Text))
 
-			if not string.nilorempty(var_1_23) then
-				arg_1_0._txtplatinumcondition2.text = var_1_23
+			if not string.nilorempty(advancedCondition2Text) then
+				self._txtplatinumcondition2.text = advancedCondition2Text
 
-				gohelper.setActive(arg_1_0._goplatinumfinish2, var_1_21)
-				gohelper.setActive(arg_1_0._goplatinumunfinish2, not var_1_21)
-				ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txtplatinumcondition2, var_1_21 and 1 or 0.63)
+				gohelper.setActive(self._goplatinumfinish2, passUltra)
+				gohelper.setActive(self._goplatinumunfinish2, not passUltra)
+				ZProj.UGUIHelper.SetColorAlpha(self._txtplatinumcondition2, passUltra and 1 or 0.63)
 			end
 		end
 
-		if var_1_0.type == DungeonEnum.EpisodeType.Jiexika then
-			var_1_19 = false
+		if episodeConfig.type == DungeonEnum.EpisodeType.Jiexika then
+			passNormal = false
 		end
 
-		gohelper.setActive(arg_1_0._gonormalfinish, var_1_19)
-		gohelper.setActive(arg_1_0._gonormalunfinish, not var_1_19)
-		ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txtnormalcondition, var_1_19 and 1 or 0.63)
-		gohelper.setActive(arg_1_0._goplatinumcondition, not arg_1_0._isSimple and not string.nilorempty(var_1_9))
+		gohelper.setActive(self._gonormalfinish, passNormal)
+		gohelper.setActive(self._gonormalunfinish, not passNormal)
+		ZProj.UGUIHelper.SetColorAlpha(self._txtnormalcondition, passNormal and 1 or 0.63)
+		gohelper.setActive(self._goplatinumcondition, not self._isSimple and not string.nilorempty(advancedConditionText))
 
-		if not string.nilorempty(var_1_9) then
-			arg_1_0._txtplatinumcondition.text = var_1_9
+		if not string.nilorempty(advancedConditionText) then
+			self._txtplatinumcondition.text = advancedConditionText
 
-			gohelper.setActive(arg_1_0._goplatinumfinish, var_1_20)
-			gohelper.setActive(arg_1_0._goplatinumunfinish, not var_1_20)
-			ZProj.UGUIHelper.SetColorAlpha(arg_1_0._txtplatinumcondition, var_1_20 and 1 or 0.63)
+			gohelper.setActive(self._goplatinumfinish, passAdvanced)
+			gohelper.setActive(self._goplatinumunfinish, not passAdvanced)
+			ZProj.UGUIHelper.SetColorAlpha(self._txtplatinumcondition, passAdvanced and 1 or 0.63)
 
-			var_1_12 = false
+			isOnlyShowOneTarget = false
 		end
 
-		gohelper.setActive(arg_1_0._goplace, var_1_12)
-		arg_1_0:_refreshWeekWalkTarget()
+		gohelper.setActive(self._goplace, isOnlyShowOneTarget)
+		self:_refreshWeekWalkTarget()
 	end
 end
 
-function var_0_0._refreshWeekWalkTarget(arg_2_0)
-	if arg_2_0._goWeekWalkHeart then
+function WeekWalk_2HeroGroupFightView_Level:_refreshWeekWalkTarget()
+	if self._goWeekWalkHeart then
 		return
 	end
 
-	arg_2_0._goWeekWalkHeart = gohelper.findChild(arg_2_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_weekwalkheart")
+	self._goWeekWalkHeart = gohelper.findChild(self.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList/#go_weekwalkheart")
 
-	gohelper.setActive(arg_2_0._goWeekWalkHeart, false)
+	gohelper.setActive(self._goWeekWalkHeart, false)
 
-	local var_2_0 = WeekWalk_2Model.instance:getCurMapInfo()
-	local var_2_1 = HeroGroupModel.instance.battleId
-	local var_2_2 = var_2_0:getBattleInfoByBattleId(var_2_1)
-	local var_2_3 = WeekWalk_2Config.instance:getCupTask(var_2_0.id, var_2_2.index)
+	local mapInfo = WeekWalk_2Model.instance:getCurMapInfo()
+	local battleId = HeroGroupModel.instance.battleId
+	local battleInfo = mapInfo:getBattleInfoByBattleId(battleId)
+	local cupTaskList = WeekWalk_2Config.instance:getCupTask(mapInfo.id, battleInfo.index)
 
-	if not var_2_3 then
+	if not cupTaskList then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_3) do
-		arg_2_0:_showCupTask(iter_2_1)
+	for i, v in ipairs(cupTaskList) do
+		self:_showCupTask(v)
 	end
 end
 
-function var_0_0._showCupTask(arg_3_0, arg_3_1)
-	local var_3_0 = GameUtil.splitString2(arg_3_1.cupTask, true, "|", "#")
-	local var_3_1 = gohelper.cloneInPlace(arg_3_0._goWeekWalkHeart)
+function WeekWalk_2HeroGroupFightView_Level:_showCupTask(config)
+	local list = GameUtil.splitString2(config.cupTask, true, "|", "#")
+	local go = gohelper.cloneInPlace(self._goWeekWalkHeart)
 
-	gohelper.setSiblingBefore(var_3_1, arg_3_0._goplace)
-	gohelper.setActive(var_3_1, true)
+	gohelper.setSiblingBefore(go, self._goplace)
+	gohelper.setActive(go, true)
 
-	gohelper.findChildText(var_3_1, "txt_desc").text = arg_3_1.desc
+	local txt = gohelper.findChildText(go, "txt_desc")
 
-	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
-		local var_3_2 = gohelper.findChild(var_3_1, "badgelayout/" .. iter_3_0)
+	txt.text = config.desc
 
-		gohelper.setActive(var_3_2, true)
+	for i, v in ipairs(list) do
+		local iconRoot = gohelper.findChild(go, "badgelayout/" .. i)
 
-		local var_3_3 = gohelper.findChildImage(var_3_2, "1")
-		local var_3_4 = iter_3_1[1]
+		gohelper.setActive(iconRoot, true)
 
-		var_3_3.enabled = false
+		local icon = gohelper.findChildImage(iconRoot, "1")
+		local result = v[1]
 
-		local var_3_5 = arg_3_0.viewContainer:getResInst(arg_3_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_3_3.gameObject)
+		icon.enabled = false
 
-		WeekWalk_2Helper.setCupEffectByResult(var_3_5, var_3_4)
+		local iconEffect = self.viewContainer:getResInst(self.viewContainer._viewSetting.otherRes.weekwalkheart_star, icon.gameObject)
+
+		WeekWalk_2Helper.setCupEffectByResult(iconEffect, result)
 	end
 
-	gohelper.setActive(arg_3_0._gostar3, false)
+	gohelper.setActive(self._gostar3, false)
 end
 
-return var_0_0
+return WeekWalk_2HeroGroupFightView_Level

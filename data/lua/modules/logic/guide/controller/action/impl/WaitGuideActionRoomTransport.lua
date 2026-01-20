@@ -1,50 +1,54 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomTransport", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionRoomTransport.lua
 
-local var_0_0 = class("WaitGuideActionRoomTransport", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionRoomTransport", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
+local WaitGuideActionRoomTransport = class("WaitGuideActionRoomTransport", BaseGuideAction)
 
-	arg_1_0._modeRequire = 2
+function WaitGuideActionRoomTransport:onStart(context)
+	WaitGuideActionRoomTransport.super.onStart(self, context)
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_1_0._checkDone, arg_1_0)
-	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, arg_1_0._checkDone, arg_1_0)
+	self._modeRequire = 2
 
-	arg_1_0._goStepId = tonumber(arg_1_0.actionParam)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, self._checkDone, self)
+	RoomController.instance:registerCallback(RoomEvent.OnSwitchModeDone, self._checkDone, self)
+
+	self._goStepId = tonumber(self.actionParam)
 end
 
-function var_0_0.clearWork(arg_2_0)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, arg_2_0._checkDone, arg_2_0)
-	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, arg_2_0._checkDone, arg_2_0)
+function WaitGuideActionRoomTransport:clearWork()
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._checkDone, self)
+	RoomController.instance:unregisterCallback(RoomEvent.OnSwitchModeDone, self._checkDone, self)
 end
 
-function var_0_0._checkDone(arg_3_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		local var_3_0 = RoomModel.instance:getGameMode()
-		local var_3_1 = false
+function WaitGuideActionRoomTransport:_checkDone()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
 
-		if arg_3_0._modeRequire then
-			var_3_1 = var_3_0 == arg_3_0._modeRequire
+	if sceneType == SceneType.Room then
+		local curMode = RoomModel.instance:getGameMode()
+		local isRightMode = false
+
+		if self._modeRequire then
+			isRightMode = curMode == self._modeRequire
 		else
-			var_3_1 = RoomController.instance:isEditMode()
+			isRightMode = RoomController.instance:isEditMode()
 		end
 
-		if var_3_1 then
-			arg_3_0:checkCondition()
+		if isRightMode then
+			self:checkCondition()
 		end
 	end
 end
 
-function var_0_0.checkCondition(arg_4_0)
+function WaitGuideActionRoomTransport:checkCondition()
 	if GuideActionCondition.checkRoomTransport() then
-		local var_4_0 = GuideModel.instance:getById(arg_4_0.guideId)
+		local guideMO = GuideModel.instance:getById(self.guideId)
 
-		if var_4_0 then
-			var_4_0.currStepId = arg_4_0._goStepId - 1
+		if guideMO then
+			guideMO.currStepId = self._goStepId - 1
 		end
 
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return WaitGuideActionRoomTransport

@@ -1,21 +1,23 @@
-﻿module("modules.logic.battlepass.view.BpUpdatePopupView", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/view/BpUpdatePopupView.lua
 
-local var_0_0 = class("BpUpdatePopupView", BaseView)
+module("modules.logic.battlepass.view.BpUpdatePopupView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
+local BpUpdatePopupView = class("BpUpdatePopupView", BaseView)
+
+function BpUpdatePopupView:onInitView()
 	return
 end
 
-function var_0_0.onOpen(arg_2_0)
-	arg_2_0.cfg = arg_2_0.viewParam.cfg
+function BpUpdatePopupView:onOpen()
+	self.cfg = self.viewParam.cfg
 end
 
-function var_0_0.onClose(arg_3_0)
+function BpUpdatePopupView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_4_0)
+function BpUpdatePopupView:onDestroyView()
 	return
 end
 
-return var_0_0
+return BpUpdatePopupView

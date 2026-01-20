@@ -1,76 +1,76 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewShowRewardView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewShowRewardView.lua
 
-local var_0_0 = class("TurnbackNewShowRewardView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewShowRewardView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/#scroll_reward")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
-	arg_1_0._btnclose = gohelper.findChildButton(arg_1_0.viewGO, "#btn_close")
+local TurnbackNewShowRewardView = class("TurnbackNewShowRewardView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewShowRewardView:onInitView()
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "reward/#scroll_reward")
+	self._gocontent = gohelper.findChild(self.viewGO, "reward/#scroll_reward/Viewport/#go_content")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "reward/#scroll_reward/Viewport/#go_content/#go_rewarditem")
+	self._btnclose = gohelper.findChildButton(self.viewGO, "#btn_close")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+function TurnbackNewShowRewardView:addEvents()
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnclose:RemoveClickListener()
+function TurnbackNewShowRewardView:removeEvents()
+	self._btnclose:RemoveClickListener()
 end
 
-function var_0_0._btncloseOnClick(arg_4_0)
+function TurnbackNewShowRewardView:_btncloseOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_common_click_20190324)
-	arg_4_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0._rewardItemList = {}
+function TurnbackNewShowRewardView:_editableInitView()
+	self._rewardItemList = {}
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function TurnbackNewShowRewardView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	arg_7_0.bonus = arg_7_0.viewParam.bonus
+function TurnbackNewShowRewardView:onOpen()
+	self.bonus = self.viewParam.bonus
 
-	arg_7_0:_refreshReward()
+	self:_refreshReward()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 end
 
-function var_0_0._refreshReward(arg_8_0)
-	local var_8_0 = GameUtil.splitString2(arg_8_0.bonus, true)
+function TurnbackNewShowRewardView:_refreshReward()
+	local bounscoList = GameUtil.splitString2(self.bonus, true)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		local var_8_1 = arg_8_0:getUserDataTb_()
+	for index, co in ipairs(bounscoList) do
+		local item = self:getUserDataTb_()
 
-		var_8_1.go = gohelper.cloneInPlace(arg_8_0._gorewarditem, "item" .. iter_8_0)
+		item.go = gohelper.cloneInPlace(self._gorewarditem, "item" .. index)
 
-		gohelper.setActive(var_8_1.go, true)
+		gohelper.setActive(item.go, true)
 
-		local var_8_2 = iter_8_1[1]
-		local var_8_3 = iter_8_1[2]
-		local var_8_4 = iter_8_1[3]
+		local type, id, num = co[1], co[2], co[3]
 
-		if not var_8_1.itemIcon then
-			var_8_1.itemIcon = IconMgr.instance:getCommonPropItemIcon(var_8_1.go)
+		if not item.itemIcon then
+			item.itemIcon = IconMgr.instance:getCommonPropItemIcon(item.go)
 		end
 
-		var_8_1.itemIcon:setMOValue(var_8_2, var_8_3, var_8_4, nil, true)
-		var_8_1.itemIcon:isShowQuality(true)
-		var_8_1.itemIcon:isShowCount(true)
+		item.itemIcon:setMOValue(type, id, num, nil, true)
+		item.itemIcon:isShowQuality(true)
+		item.itemIcon:isShowCount(true)
 	end
 end
 
-function var_0_0.onClose(arg_9_0)
+function TurnbackNewShowRewardView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_10_0)
+function TurnbackNewShowRewardView:onDestroyView()
 	return
 end
 
-return var_0_0
+return TurnbackNewShowRewardView

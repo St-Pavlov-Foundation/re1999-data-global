@@ -1,95 +1,99 @@
-﻿module("modules.logic.versionactivity1_3.armpipe.model.Activity124Model", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_3/armpipe/model/Activity124Model.lua
 
-local var_0_0 = class("Activity124Model", BaseModel)
+module("modules.logic.versionactivity1_3.armpipe.model.Activity124Model", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._episodeInfoDict = {}
+local Activity124Model = class("Activity124Model", BaseModel)
+
+function Activity124Model:onInit()
+	self._episodeInfoDict = {}
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._episodeInfoDict = {}
+function Activity124Model:reInit()
+	self._episodeInfoDict = {}
 end
 
-function var_0_0.getCurActivityID(arg_3_0)
-	return arg_3_0._curActivityId
+function Activity124Model:getCurActivityID()
+	return self._curActivityId
 end
 
-function var_0_0.onReceiveGetAct120InfoReply(arg_4_0, arg_4_1)
-	arg_4_0._curActivityId = arg_4_1.activityId
-	arg_4_0._episodeInfoDict[arg_4_1.activityId] = {}
+function Activity124Model:onReceiveGetAct120InfoReply(proto)
+	self._curActivityId = proto.activityId
+	self._episodeInfoDict[proto.activityId] = {}
 
-	arg_4_0:_updateEpisodeInfo(arg_4_0._curActivityId, arg_4_1.act124Episodes)
+	self:_updateEpisodeInfo(self._curActivityId, proto.act124Episodes)
 end
 
-function var_0_0.onReceiveFinishAct124EpisodeReply(arg_5_0, arg_5_1)
-	arg_5_0:_updateEpisodeInfo(arg_5_1.activityId, arg_5_1.updateAct124Episodes)
+function Activity124Model:onReceiveFinishAct124EpisodeReply(proto)
+	self:_updateEpisodeInfo(proto.activityId, proto.updateAct124Episodes)
 end
 
-function var_0_0.onReceiveReceiveAct124RewardReply(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_1.activityId
-	local var_6_1 = arg_6_1.episodeId
-	local var_6_2 = arg_6_0:getEpisodeData(var_6_0, var_6_1)
+function Activity124Model:onReceiveReceiveAct124RewardReply(proto)
+	local actId = proto.activityId
+	local episodeId = proto.episodeId
+	local data = self:getEpisodeData(actId, episodeId)
 
-	if var_6_2 then
-		var_6_2.state = ArmPuzzlePipeEnum.EpisodeState.Received
+	if data then
+		data.state = ArmPuzzlePipeEnum.EpisodeState.Received
 	end
 end
 
-function var_0_0._updateEpisodeInfo(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._episodeInfoDict[arg_7_1]
+function Activity124Model:_updateEpisodeInfo(actId, episodeList)
+	local episodeInfoData = self._episodeInfoDict[actId]
 
-	if not var_7_0 then
-		var_7_0 = {}
-		arg_7_0._episodeInfoDict[arg_7_1] = var_7_0
+	if not episodeInfoData then
+		episodeInfoData = {}
+		self._episodeInfoDict[actId] = episodeInfoData
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_1 = iter_7_1.id
+	for i, v in ipairs(episodeList) do
+		local id = v.id
 
-		var_7_0[var_7_1] = var_7_0[var_7_1] or {}
-		var_7_0[var_7_1].id = iter_7_1.id
-		var_7_0[var_7_1].state = iter_7_1.state
+		episodeInfoData[id] = episodeInfoData[id] or {}
+		episodeInfoData[id].id = v.id
+		episodeInfoData[id].state = v.state
 	end
 end
 
-function var_0_0.getEpisodeData(arg_8_0, arg_8_1, arg_8_2)
-	return arg_8_0._episodeInfoDict[arg_8_1] and arg_8_0._episodeInfoDict[arg_8_1][arg_8_2]
+function Activity124Model:getEpisodeData(actId, id)
+	return self._episodeInfoDict[actId] and self._episodeInfoDict[actId][id]
 end
 
-function var_0_0.isEpisodeOpenById(arg_9_0, arg_9_1, arg_9_2)
-	return (ArmPuzzleHelper.isOpenDay(arg_9_2))
+function Activity124Model:isEpisodeOpenById(actId, episodeId)
+	local open = ArmPuzzleHelper.isOpenDay(episodeId)
+
+	return open
 end
 
-function var_0_0.isEpisodeClear(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_0:getEpisodeData(arg_10_1, arg_10_2)
+function Activity124Model:isEpisodeClear(actId, episodeId)
+	local episodeData = self:getEpisodeData(actId, episodeId)
 
-	if var_10_0 then
-		return var_10_0.state == ArmPuzzlePipeEnum.EpisodeState.Finish or var_10_0.state == ArmPuzzlePipeEnum.EpisodeState.Received
-	end
-
-	return false
-end
-
-function var_0_0.isHasReard(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_0:getEpisodeData(arg_11_1, arg_11_2)
-
-	if var_11_0 then
-		return var_11_0.state == ArmPuzzlePipeEnum.EpisodeState.Finish
+	if episodeData then
+		return episodeData.state == ArmPuzzlePipeEnum.EpisodeState.Finish or episodeData.state == ArmPuzzlePipeEnum.EpisodeState.Received
 	end
 
 	return false
 end
 
-function var_0_0.isReceived(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0:getEpisodeData(arg_12_1, arg_12_2)
+function Activity124Model:isHasReard(actId, episodeId)
+	local episodeData = self:getEpisodeData(actId, episodeId)
 
-	if var_12_0 then
-		return var_12_0.state == ArmPuzzlePipeEnum.EpisodeState.Received
+	if episodeData then
+		return episodeData.state == ArmPuzzlePipeEnum.EpisodeState.Finish
 	end
 
 	return false
 end
 
-var_0_0.instance = var_0_0.New()
+function Activity124Model:isReceived(actId, episodeId)
+	local episodeData = self:getEpisodeData(actId, episodeId)
 
-return var_0_0
+	if episodeData then
+		return episodeData.state == ArmPuzzlePipeEnum.EpisodeState.Received
+	end
+
+	return false
+end
+
+Activity124Model.instance = Activity124Model.New()
+
+return Activity124Model

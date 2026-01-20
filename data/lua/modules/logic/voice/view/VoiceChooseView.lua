@@ -1,50 +1,52 @@
-﻿module("modules.logic.voice.view.VoiceChooseView", package.seeall)
+﻿-- chunkname: @modules/logic/voice/view/VoiceChooseView.lua
 
-local var_0_0 = class("VoiceChooseView", BaseView)
-local var_0_1 = "BootVoiceDownload"
+module("modules.logic.voice.view.VoiceChooseView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnConfirm = gohelper.findChildButton(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_leftbg")
-	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bg/#simage_rightbg")
+local VoiceChooseView = class("VoiceChooseView", BaseView)
+local CacheKey = "BootVoiceDownload"
 
-	arg_1_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_1_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function VoiceChooseView:onInitView()
+	self._btnConfirm = gohelper.findChildButton(self.viewGO, "#btn_confirm")
+	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_leftbg")
+	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_rightbg")
+
+	self._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	self._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnConfirm:AddClickListener(arg_2_0._onClickConfirm, arg_2_0)
+function VoiceChooseView:addEvents()
+	self._btnConfirm:AddClickListener(self._onClickConfirm, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnConfirm:RemoveClickListener()
+function VoiceChooseView:removeEvents()
+	self._btnConfirm:RemoveClickListener()
 end
 
-function var_0_0._onClickConfirm(arg_4_0)
-	local var_4_0 = VoiceChooseModel.instance:getChoose()
+function VoiceChooseView:_onClickConfirm()
+	local chooseLang = VoiceChooseModel.instance:getChoose()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.SettingsVoiceShortcut, var_4_0)
-	logNormal("selectLang = " .. var_4_0)
-	SettingsVoicePackageController.instance:switchVoiceType(var_4_0, "after_download")
-	arg_4_0:closeThis()
+	PlayerPrefsHelper.setString(PlayerPrefsKey.SettingsVoiceShortcut, chooseLang)
+	logNormal("selectLang = " .. chooseLang)
+	SettingsVoicePackageController.instance:switchVoiceType(chooseLang, "after_download")
+	self:closeThis()
 
-	if arg_4_0._callback then
-		arg_4_0._callback(arg_4_0._callbackObj)
+	if self._callback then
+		self._callback(self._callbackObj)
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._callback = arg_5_0.viewParam.callback
-	arg_5_0._callbackObj = arg_5_0.viewParam.callbackObj
+function VoiceChooseView:onOpen()
+	self._callback = self.viewParam.callback
+	self._callbackObj = self.viewParam.callbackObj
 
-	UpdateBeat:Add(arg_5_0._onFrame, arg_5_0)
+	UpdateBeat:Add(self._onFrame, self)
 end
 
-function var_0_0.onClose(arg_6_0)
-	UpdateBeat:Remove(arg_6_0._onFrame, arg_6_0)
+function VoiceChooseView:onClose()
+	UpdateBeat:Remove(self._onFrame, self)
 end
 
-function var_0_0._onFrame(arg_7_0)
+function VoiceChooseView:_onFrame()
 	if UnityEngine.Input.GetKeyUp(UnityEngine.KeyCode.Escape) then
 		SDKMgr.instance:exitSdk()
 
@@ -52,9 +54,9 @@ function var_0_0._onFrame(arg_7_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._simagebg1:UnLoadImage()
-	arg_8_0._simagebg2:UnLoadImage()
+function VoiceChooseView:onDestroyView()
+	self._simagebg1:UnLoadImage()
+	self._simagebg2:UnLoadImage()
 end
 
-return var_0_0
+return VoiceChooseView

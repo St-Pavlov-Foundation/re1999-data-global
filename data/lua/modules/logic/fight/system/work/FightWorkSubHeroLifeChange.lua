@@ -1,16 +1,18 @@
-﻿module("modules.logic.fight.system.work.FightWorkSubHeroLifeChange", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkSubHeroLifeChange.lua
 
-local var_0_0 = class("FightWorkSubHeroLifeChange", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkSubHeroLifeChange", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0._entityId = arg_1_0.actEffectData.targetId
+local FightWorkSubHeroLifeChange = class("FightWorkSubHeroLifeChange", FightEffectBase)
 
-	FightController.instance:dispatchEvent(FightEvent.ChangeSubEntityHp, arg_1_0._entityId, arg_1_0.actEffectData.effectNum)
-	arg_1_0:onDone(true)
+function FightWorkSubHeroLifeChange:onStart()
+	self._entityId = self.actEffectData.targetId
+
+	FightController.instance:dispatchEvent(FightEvent.ChangeSubEntityHp, self._entityId, self.actEffectData.effectNum)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function FightWorkSubHeroLifeChange:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkSubHeroLifeChange

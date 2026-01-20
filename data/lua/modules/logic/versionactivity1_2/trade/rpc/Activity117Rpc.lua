@@ -1,83 +1,85 @@
-﻿module("modules.logic.versionactivity1_2.trade.rpc.Activity117Rpc", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/trade/rpc/Activity117Rpc.lua
 
-local var_0_0 = class("Activity117Rpc", BaseRpc)
+module("modules.logic.versionactivity1_2.trade.rpc.Activity117Rpc", package.seeall)
 
-function var_0_0.sendAct117InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = Activity117Module_pb.Act117InfoRequest()
+local Activity117Rpc = class("Activity117Rpc", BaseRpc)
 
-	var_1_0.activityId = arg_1_1
+function Activity117Rpc:sendAct117InfoRequest(actId, callback, callbackObj)
+	local req = Activity117Module_pb.Act117InfoRequest()
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	req.activityId = actId
+
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct117InfoReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == 0 then
-		Activity117Model.instance:onReceiveInfos(arg_2_2)
-		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveInfos, arg_2_2.activityId)
+function Activity117Rpc:onReceiveAct117InfoReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity117Model.instance:onReceiveInfos(msg)
+		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveInfos, msg.activityId)
 	end
 end
 
-function var_0_0.sendAct117NegotiateRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0 = Activity117Module_pb.Act117NegotiateRequest()
+function Activity117Rpc:sendAct117NegotiateRequest(actId, orderId, price, callback, callbackObj)
+	local req = Activity117Module_pb.Act117NegotiateRequest()
 
-	var_3_0.activityId = arg_3_1
-	var_3_0.orderId = arg_3_2
-	var_3_0.userDealScore = arg_3_3
+	req.activityId = actId
+	req.orderId = orderId
+	req.userDealScore = price
 
-	arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct117NegotiateReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 0 then
-		Activity117Model.instance:onNegotiateResult(arg_4_2)
-		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveNegotiate, arg_4_2.activityId)
+function Activity117Rpc:onReceiveAct117NegotiateReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity117Model.instance:onNegotiateResult(msg)
+		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveNegotiate, msg.activityId)
 	end
 end
 
-function var_0_0.sendAct117DealRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = Activity117Module_pb.Act117DealRequest()
+function Activity117Rpc:sendAct117DealRequest(activityId, orderId, callback, callbackObj)
+	local req = Activity117Module_pb.Act117DealRequest()
 
-	var_5_0.activityId = arg_5_1
-	var_5_0.orderId = arg_5_2
+	req.activityId = activityId
+	req.orderId = orderId
 
-	arg_5_0:sendMsg(var_5_0, arg_5_3, arg_5_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct117DealReply(arg_6_0, arg_6_1, arg_6_2)
-	if arg_6_1 == 0 then
-		Activity117Model.instance:onDealSuccess(arg_6_2)
-		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveDeal, arg_6_2.activityId)
+function Activity117Rpc:onReceiveAct117DealReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity117Model.instance:onDealSuccess(msg)
+		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveDeal, msg.activityId)
 	end
 end
 
-function var_0_0.sendAct117GetBonusRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	local var_7_0 = Activity117Module_pb.Act117GetBonusRequest()
+function Activity117Rpc:sendAct117GetBonusRequest(activityId, bonusIds, callback, callbackObj)
+	local req = Activity117Module_pb.Act117GetBonusRequest()
 
-	var_7_0.activityId = arg_7_1
+	req.activityId = activityId
 
-	if arg_7_2 then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-			table.insert(var_7_0.bonusIds, iter_7_1)
+	if bonusIds then
+		for _, bonusId in ipairs(bonusIds) do
+			table.insert(req.bonusIds, bonusId)
 		end
 	end
 
-	arg_7_0:sendMsg(var_7_0, arg_7_3, arg_7_4)
+	self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveAct117GetBonusReply(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == 0 then
-		Activity117Model.instance:updateRewardDatas(arg_8_2)
-		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveGetBonus, arg_8_2.activityId, arg_8_2.bonusIds)
+function Activity117Rpc:onReceiveAct117GetBonusReply(resultCode, msg)
+	if resultCode == 0 then
+		Activity117Model.instance:updateRewardDatas(msg)
+		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveGetBonus, msg.activityId, msg.bonusIds)
 	end
 end
 
-function var_0_0.onReceiveAct117OrderPush(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1 == 0 then
-		Activity117Model.instance:onOrderPush(arg_9_2)
-		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveOrderPush, arg_9_2.activityId)
+function Activity117Rpc:onReceiveAct117OrderPush(resultCode, msg)
+	if resultCode == 0 then
+		Activity117Model.instance:onOrderPush(msg)
+		Activity117Controller.instance:dispatchEvent(Activity117Event.ReceiveOrderPush, msg.activityId)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity117Rpc.instance = Activity117Rpc.New()
 
-return var_0_0
+return Activity117Rpc

@@ -1,88 +1,90 @@
-﻿module("modules.logic.explore.map.scene.ExploreMapShadowObj", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/scene/ExploreMapShadowObj.lua
 
-local var_0_0 = class("ExploreMapShadowObj", UserDataDispose)
-local var_0_1 = typeof(UnityEngine.MeshRenderer)
+module("modules.logic.explore.map.scene.ExploreMapShadowObj", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+local ExploreMapShadowObj = class("ExploreMapShadowObj", UserDataDispose)
+local MeshRenderer = typeof(UnityEngine.MeshRenderer)
 
-	arg_1_0._container = arg_1_1
-	arg_1_0.isActive = false
-	arg_1_0._go = nil
-	arg_1_0.ishide = true
+function ExploreMapShadowObj:ctor(container)
+	self:__onInit()
+
+	self._container = container
+	self.isActive = false
+	self._go = nil
+	self.ishide = true
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1)
-	arg_2_0.id = arg_2_1.id
-	arg_2_0.path = arg_2_1.path
-	arg_2_0.areaId = arg_2_1.areaId
-	arg_2_0.pos = arg_2_1.pos
-	arg_2_0.scale = arg_2_1.scale
-	arg_2_0.rotation = arg_2_1.rotation
-	arg_2_0.bounds = Bounds.New(Vector3.New(arg_2_1.bounds.center[1], arg_2_1.bounds.center[2], arg_2_1.bounds.center[3]), Vector3.New(arg_2_1.bounds.size[1], arg_2_1.bounds.size[2], arg_2_1.bounds.size[3]))
+function ExploreMapShadowObj:setData(config)
+	self.id = config.id
+	self.path = config.path
+	self.areaId = config.areaId
+	self.pos = config.pos
+	self.scale = config.scale
+	self.rotation = config.rotation
+	self.bounds = Bounds.New(Vector3.New(config.bounds.center[1], config.bounds.center[2], config.bounds.center[3]), Vector3.New(config.bounds.size[1], config.bounds.size[2], config.bounds.size[3]))
 end
 
-function var_0_0.show(arg_3_0)
-	arg_3_0.isActive = true
-	arg_3_0.ishide = false
+function ExploreMapShadowObj:show()
+	self.isActive = true
+	self.ishide = false
 
-	if arg_3_0._go then
+	if self._go then
 		-- block empty
 	else
-		arg_3_0._assetId = ResMgr.getAbAsset(arg_3_0.path, arg_3_0._loadedCb, arg_3_0, arg_3_0._assetId)
+		self._assetId = ResMgr.getAbAsset(self.path, self._loadedCb, self, self._assetId)
 	end
 
-	TaskDispatcher.cancelTask(arg_3_0.release, arg_3_0)
+	TaskDispatcher.cancelTask(self.release, self)
 end
 
-function var_0_0.markShow(arg_4_0)
-	arg_4_0.ishide = false
+function ExploreMapShadowObj:markShow()
+	self.ishide = false
 end
 
-function var_0_0.hide(arg_5_0)
-	if arg_5_0._go and arg_5_0.isActive == true then
-		TaskDispatcher.runDelay(arg_5_0.release, arg_5_0, ExploreConstValue.CHECK_INTERVAL.MapShadowObjDestory)
+function ExploreMapShadowObj:hide()
+	if self._go and self.isActive == true then
+		TaskDispatcher.runDelay(self.release, self, ExploreConstValue.CHECK_INTERVAL.MapShadowObjDestory)
 	end
 
-	ResMgr.removeCallBack(arg_5_0._assetId)
+	ResMgr.removeCallBack(self._assetId)
 
-	local var_5_0 = arg_5_0.ishide ~= true
+	local changed = self.ishide ~= true
 
-	arg_5_0.isActive = false
-	arg_5_0.ishide = true
+	self.isActive = false
+	self.ishide = true
 
-	return var_5_0
+	return changed
 end
 
-function var_0_0._loadedCb(arg_6_0, arg_6_1)
-	if arg_6_0._go == nil and arg_6_0.isActive then
-		arg_6_0._go = arg_6_1:getInstance(nil, nil, arg_6_0._container)
+function ExploreMapShadowObj:_loadedCb(assetMO)
+	if self._go == nil and self.isActive then
+		self._go = assetMO:getInstance(nil, nil, self._container)
 
-		local var_6_0 = arg_6_0._go.transform
+		local trans = self._go.transform
 
-		transformhelper.setPos(var_6_0, arg_6_0.pos[1], arg_6_0.pos[2], arg_6_0.pos[3])
-		transformhelper.setLocalScale(var_6_0, arg_6_0.scale[1], arg_6_0.scale[2], arg_6_0.scale[3])
-		transformhelper.setLocalRotation(var_6_0, arg_6_0.rotation[1], arg_6_0.rotation[2], arg_6_0.rotation[3])
+		transformhelper.setPos(trans, self.pos[1], self.pos[2], self.pos[3])
+		transformhelper.setLocalScale(trans, self.scale[1], self.scale[2], self.scale[3])
+		transformhelper.setLocalRotation(trans, self.rotation[1], self.rotation[2], self.rotation[3])
 	end
 
-	gohelper.setActive(arg_6_0._go, arg_6_0.isActive)
+	gohelper.setActive(self._go, self.isActive)
 end
 
-function var_0_0.release(arg_7_0)
-	arg_7_0:_clear()
+function ExploreMapShadowObj:release()
+	self:_clear()
 end
 
-function var_0_0.dispose(arg_8_0)
-	arg_8_0:_clear()
-	arg_8_0:__onDispose()
+function ExploreMapShadowObj:dispose()
+	self:_clear()
+	self:__onDispose()
 end
 
-function var_0_0._clear(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0.release, arg_9_0)
-	ResMgr.removeCallBack(arg_9_0._assetId)
-	ResMgr.ReleaseObj(arg_9_0._go)
+function ExploreMapShadowObj:_clear()
+	TaskDispatcher.cancelTask(self.release, self)
+	ResMgr.removeCallBack(self._assetId)
+	ResMgr.ReleaseObj(self._go)
 
-	arg_9_0._go = nil
+	self._go = nil
 end
 
-return var_0_0
+return ExploreMapShadowObj

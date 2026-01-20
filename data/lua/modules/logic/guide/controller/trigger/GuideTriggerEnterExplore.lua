@@ -1,18 +1,20 @@
-﻿module("modules.logic.guide.controller.trigger.GuideTriggerEnterExplore", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/trigger/GuideTriggerEnterExplore.lua
 
-local var_0_0 = class("GuideTriggerEnterExplore", BaseGuideTrigger)
+module("modules.logic.guide.controller.trigger.GuideTriggerEnterExplore", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
-	ExploreController.instance:registerCallback(ExploreEvent.EnterExplore, arg_1_0._onEnterExplore, arg_1_0)
+local GuideTriggerEnterExplore = class("GuideTriggerEnterExplore", BaseGuideTrigger)
+
+function GuideTriggerEnterExplore:ctor(triggerKey)
+	GuideTriggerEnterExplore.super.ctor(self, triggerKey)
+	ExploreController.instance:registerCallback(ExploreEvent.EnterExplore, self._onEnterExplore, self)
 end
 
-function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
-	return arg_2_1 == tonumber(arg_2_2)
+function GuideTriggerEnterExplore:assertGuideSatisfy(param, mapId)
+	return param == tonumber(mapId)
 end
 
-function var_0_0._onEnterExplore(arg_3_0, arg_3_1)
-	arg_3_0:checkStartGuide(arg_3_1)
+function GuideTriggerEnterExplore:_onEnterExplore(mapId)
+	self:checkStartGuide(mapId)
 end
 
-return var_0_0
+return GuideTriggerEnterExplore

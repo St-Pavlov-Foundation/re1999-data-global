@@ -1,194 +1,196 @@
-﻿module("modules.logic.achievement.view.AchievementSelectCommonItem", package.seeall)
+﻿-- chunkname: @modules/logic/achievement/view/AchievementSelectCommonItem.lua
 
-local var_0_0 = class("AchievementSelectCommonItem", ListScrollCellExtend)
+module("modules.logic.achievement.view.AchievementSelectCommonItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local AchievementSelectCommonItem = class("AchievementSelectCommonItem", ListScrollCellExtend)
+
+function AchievementSelectCommonItem:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
+function AchievementSelectCommonItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
+function AchievementSelectCommonItem:removeEventListeners()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._animator = gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.Animator))
-	arg_4_0._isFirstEnter = true
+function AchievementSelectCommonItem:_editableInitView()
+	self._animator = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.Animator))
+	self._isFirstEnter = true
 end
 
-function var_0_0.onDestroy(arg_5_0)
-	arg_5_0:releaseAchievementMainIcons()
-	TaskDispatcher.cancelTask(arg_5_0.playItemOpenAim, arg_5_0)
+function AchievementSelectCommonItem:onDestroy()
+	self:releaseAchievementMainIcons()
+	TaskDispatcher.cancelTask(self.playItemOpenAim, self)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function AchievementSelectCommonItem:onUpdateMO(mo)
+	self._mo = mo
 
-	arg_6_0:buildAchievementCfgs()
-	arg_6_0:refreshUI()
+	self:buildAchievementCfgs()
+	self:refreshUI()
 end
 
-function var_0_0.onSelect(arg_7_0, arg_7_1)
+function AchievementSelectCommonItem:onSelect(isSelect)
 	return
 end
 
-function var_0_0.refreshUI(arg_8_0)
-	arg_8_0:refreshAchievements()
-	arg_8_0:playAchievementOpenAnim()
+function AchievementSelectCommonItem:refreshUI()
+	self:refreshAchievements()
+	self:playAchievementOpenAnim()
 end
 
-var_0_0.LockedIconColor = "#808080"
-var_0_0.UnLockedIconColor = "#FFFFFF"
-var_0_0.LockedNameAlpha = 0.5
-var_0_0.UnLockedNameAlpha = 1
+AchievementSelectCommonItem.LockedIconColor = "#808080"
+AchievementSelectCommonItem.UnLockedIconColor = "#FFFFFF"
+AchievementSelectCommonItem.LockedNameAlpha = 0.5
+AchievementSelectCommonItem.UnLockedNameAlpha = 1
 
-function var_0_0.refreshAchievements(arg_9_0)
-	local var_9_0 = arg_9_0:getAchievementCfgs()
-	local var_9_1 = var_9_0 and #var_9_0
-	local var_9_2 = {}
+function AchievementSelectCommonItem:refreshAchievements()
+	local achievementCfgs = self:getAchievementCfgs()
+	local achievementCount = achievementCfgs and #achievementCfgs
+	local useMap = {}
 
-	for iter_9_0 = 1, var_9_1 do
-		local var_9_3 = var_9_0[iter_9_0]
-		local var_9_4 = arg_9_0:getOrCreateAchievementIcon(iter_9_0)
+	for index = 1, achievementCount do
+		local achievementCfg = achievementCfgs[index]
+		local achievementIcon = self:getOrCreateAchievementIcon(index)
 
-		gohelper.setActive(var_9_4.viewGO, true)
+		gohelper.setActive(achievementIcon.viewGO, true)
 
-		var_9_2[var_9_4] = true
+		useMap[achievementIcon] = true
 
-		arg_9_0:refreshAchievement(var_9_4, var_9_3, iter_9_0)
-		arg_9_0:refreshAchievementIconPositionAndScale(var_9_4, var_9_3, iter_9_0)
+		self:refreshAchievement(achievementIcon, achievementCfg, index)
+		self:refreshAchievementIconPositionAndScale(achievementIcon, achievementCfg, index)
 	end
 
-	arg_9_0:recycleUnuseAchievementIcon(var_9_2)
+	self:recycleUnuseAchievementIcon(useMap)
 end
 
-function var_0_0.buildAchievementCfgs(arg_10_0)
-	arg_10_0._achievementCfgs = arg_10_0._mo.achievementCfgs
+function AchievementSelectCommonItem:buildAchievementCfgs()
+	self._achievementCfgs = self._mo.achievementCfgs
 end
 
-function var_0_0.getAchievementCfgs(arg_11_0)
-	return arg_11_0._achievementCfgs
+function AchievementSelectCommonItem:getAchievementCfgs()
+	return self._achievementCfgs
 end
 
-function var_0_0.refreshAchievement(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if not arg_12_1 then
+function AchievementSelectCommonItem:refreshAchievement(achievementIcon, achievementCfg, index)
+	if not achievementIcon then
 		return
 	end
 
-	local var_12_0 = arg_12_2.id
-	local var_12_1 = AchievementController.instance:getMaxLevelFinishTask(var_12_0)
+	local achievementId = achievementCfg.id
+	local taskCfg = AchievementController.instance:getMaxLevelFinishTask(achievementId)
 
-	if var_12_1 then
-		arg_12_1:setData(var_12_1)
-		arg_12_1:setNameTxtVisible(false)
-		arg_12_1:setBgVisible(false)
+	if taskCfg then
+		achievementIcon:setData(taskCfg)
+		achievementIcon:setNameTxtVisible(false)
+		achievementIcon:setBgVisible(false)
 
-		local var_12_2 = AchievementModel.instance:achievementHasLocked(var_12_0)
+		local isLocked = AchievementModel.instance:achievementHasLocked(achievementId)
 
-		gohelper.setActive(arg_12_1.viewGO, not var_12_2)
+		gohelper.setActive(achievementIcon.viewGO, not isLocked)
 	else
-		gohelper.setActive(arg_12_1.viewGO, false)
+		gohelper.setActive(achievementIcon.viewGO, false)
 	end
 end
 
-function var_0_0.refreshAchievementIconPositionAndScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+function AchievementSelectCommonItem:refreshAchievementIconPositionAndScale(achievementIcon, achievementCfg, index)
 	return
 end
 
-function var_0_0.getOrCreateAchievementIcon(arg_14_0, arg_14_1)
-	arg_14_0._achievementIconTab = arg_14_0._achievementIconTab or arg_14_0:getUserDataTb_()
+function AchievementSelectCommonItem:getOrCreateAchievementIcon(index)
+	self._achievementIconTab = self._achievementIconTab or self:getUserDataTb_()
 
-	local var_14_0 = arg_14_0._achievementIconTab[arg_14_1]
+	local achievementIcon = self._achievementIconTab[index]
 
-	if not var_14_0 then
-		var_14_0 = arg_14_0:createAchievementIcon(arg_14_1)
-		arg_14_0._achievementIconTab[arg_14_1] = var_14_0
+	if not achievementIcon then
+		achievementIcon = self:createAchievementIcon(index)
+		self._achievementIconTab[index] = achievementIcon
 	end
 
-	return var_14_0
+	return achievementIcon
 end
 
-function var_0_0.createAchievementIcon(arg_15_0, arg_15_1)
-	local var_15_0 = AchievementMainIcon.New()
-	local var_15_1 = arg_15_0:getAchievementIconParentGO()
-	local var_15_2 = arg_15_0:getAchievementIconResUrl()
-	local var_15_3 = arg_15_0._view:getResInst(var_15_2, var_15_1, "icon" .. tostring(arg_15_1))
+function AchievementSelectCommonItem:createAchievementIcon(index)
+	local achievementIcon = AchievementMainIcon.New()
+	local parentGO = self:getAchievementIconParentGO()
+	local achievementIconUrl = self:getAchievementIconResUrl()
+	local achievementGO = self._view:getResInst(achievementIconUrl, parentGO, "icon" .. tostring(index))
 
-	var_15_0:init(var_15_3)
-	var_15_0:setClickCall(arg_15_0.onClickSingleAchievementIcon, arg_15_0, arg_15_1)
+	achievementIcon:init(achievementGO)
+	achievementIcon:setClickCall(self.onClickSingleAchievementIcon, self, index)
 
-	return var_15_0
+	return achievementIcon
 end
 
-function var_0_0.getAchievementIconParentGO(arg_16_0)
-	return arg_16_0.viewGO
+function AchievementSelectCommonItem:getAchievementIconParentGO()
+	return self.viewGO
 end
 
-function var_0_0.getAchievementIconResUrl(arg_17_0)
+function AchievementSelectCommonItem:getAchievementIconResUrl()
 	return AchievementEnum.MainIconPath
 end
 
-function var_0_0.recycleUnuseAchievementIcon(arg_18_0, arg_18_1)
-	if arg_18_1 and arg_18_0._achievementIconTab then
-		for iter_18_0, iter_18_1 in pairs(arg_18_0._achievementIconTab) do
-			if not arg_18_1[iter_18_1] then
-				gohelper.setActive(iter_18_1.viewGO, false)
+function AchievementSelectCommonItem:recycleUnuseAchievementIcon(useMap)
+	if useMap and self._achievementIconTab then
+		for _, achievementIcon in pairs(self._achievementIconTab) do
+			if not useMap[achievementIcon] then
+				gohelper.setActive(achievementIcon.viewGO, false)
 			end
 		end
 	end
 end
 
-function var_0_0.releaseAchievementMainIcons(arg_19_0)
-	if arg_19_0._achievementIconTab then
-		for iter_19_0, iter_19_1 in pairs(arg_19_0._achievementIconTab) do
-			if iter_19_1 and iter_19_1.dispose then
-				iter_19_1:dispose()
+function AchievementSelectCommonItem:releaseAchievementMainIcons()
+	if self._achievementIconTab then
+		for _, achievementIcon in pairs(self._achievementIconTab) do
+			if achievementIcon and achievementIcon.dispose then
+				achievementIcon:dispose()
 			end
 		end
 	end
 
-	arg_19_0._achievementIconTab = nil
+	self._achievementIconTab = nil
 end
 
-var_0_0.AnimDelayDelta = 0.06
+AchievementSelectCommonItem.AnimDelayDelta = 0.06
 
-function var_0_0.playAchievementAnim(arg_20_0, arg_20_1)
-	arg_20_0:playAchievementOpenAnim(arg_20_1)
+function AchievementSelectCommonItem:playAchievementAnim(viewTopIndex)
+	self:playAchievementOpenAnim(viewTopIndex)
 end
 
-function var_0_0.playAchievementOpenAnim(arg_21_0, arg_21_1)
-	TaskDispatcher.cancelTask(arg_21_0.playItemOpenAim, arg_21_0)
+function AchievementSelectCommonItem:playAchievementOpenAnim(viewTopIndex)
+	TaskDispatcher.cancelTask(self.playItemOpenAim, self)
 
-	if arg_21_0._isNeedPlayOpenAnim then
-		arg_21_0._animator:Play("close", 0, 0)
+	if self._isNeedPlayOpenAnim then
+		self._animator:Play("close", 0, 0)
 
-		arg_21_1 = arg_21_1 or 1
+		viewTopIndex = viewTopIndex or 1
 
-		local var_21_0 = var_0_0.AnimDelayDelta * Mathf.Clamp(arg_21_0._index - arg_21_1, 0, arg_21_0._index)
+		local delayPlayAnimTime = AchievementSelectCommonItem.AnimDelayDelta * Mathf.Clamp(self._index - viewTopIndex, 0, self._index)
 
-		TaskDispatcher.runDelay(arg_21_0.playItemOpenAim, arg_21_0, var_21_0)
+		TaskDispatcher.runDelay(self.playItemOpenAim, self, delayPlayAnimTime)
 
-		arg_21_0._isNeedPlayOpenAnim = false
+		self._isNeedPlayOpenAnim = false
 	else
-		arg_21_0._animator:Play("idle", 0, 0)
+		self._animator:Play("idle", 0, 0)
 	end
 end
 
-function var_0_0.playItemOpenAim(arg_22_0)
-	arg_22_0._animator:Play("open", 0, 0)
+function AchievementSelectCommonItem:playItemOpenAim()
+	self._animator:Play("open", 0, 0)
 
-	arg_22_0._isFirstEnter = false
+	self._isFirstEnter = false
 end
 
-function var_0_0.resetFistEnter(arg_23_0, arg_23_1)
-	arg_23_0._isNeedPlayOpenAnim = true
+function AchievementSelectCommonItem:resetFistEnter(viewTopIndex)
+	self._isNeedPlayOpenAnim = true
 
-	arg_23_0:playAchievementAnim(arg_23_1)
+	self:playAchievementAnim(viewTopIndex)
 end
 
-return var_0_0
+return AchievementSelectCommonItem

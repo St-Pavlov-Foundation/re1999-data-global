@@ -1,23 +1,25 @@
-﻿module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianViewContainer_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityDoubleFestivalSignPaiLianViewContainer_1_3.lua
 
-local var_0_0 = class("ActivityDoubleFestivalSignPaiLianViewContainer_1_3", Activity101SignViewBaseContainer)
+module("modules.logic.activity.view.ActivityDoubleFestivalSignPaiLianViewContainer_1_3", package.seeall)
 
-function var_0_0.onModifyListScrollParam(arg_1_0, arg_1_1)
-	arg_1_1.cellClass = ActivityDoubleFestivalSignItem_1_3
-	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
-	arg_1_1.cellWidth = 220
-	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+local ActivityDoubleFestivalSignPaiLianViewContainer_1_3 = class("ActivityDoubleFestivalSignPaiLianViewContainer_1_3", Activity101SignViewBaseContainer)
+
+function ActivityDoubleFestivalSignPaiLianViewContainer_1_3:onModifyListScrollParam(refListScrollParam)
+	refListScrollParam.cellClass = ActivityDoubleFestivalSignItem_1_3
+	refListScrollParam.scrollGOPath = "Root/#scroll_ItemList"
+	refListScrollParam.cellWidth = 220
+	refListScrollParam.cellHeight = 600
+	refListScrollParam.cellSpaceH = -16
 end
 
-function var_0_0.onGetMainViewClassType(arg_2_0)
+function ActivityDoubleFestivalSignPaiLianViewContainer_1_3:onGetMainViewClassType()
 	return ActivityDoubleFestivalSignPaiLianView_1_3
 end
 
-function var_0_0.onBuildViews(arg_3_0)
+function ActivityDoubleFestivalSignPaiLianViewContainer_1_3:onBuildViews()
 	return {
-		arg_3_0.__mainView
+		self.__mainView
 	}
 end
 
-return var_0_0
+return ActivityDoubleFestivalSignPaiLianViewContainer_1_3

@@ -1,523 +1,532 @@
-﻿module("modules.logic.fight.view.assistboss.FightAssistBoss6", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/assistboss/FightAssistBoss6.lua
 
-local var_0_0 = class("FightAssistBoss6", FightAssistBossBase)
+module("modules.logic.fight.view.assistboss.FightAssistBoss6", package.seeall)
 
-function var_0_0.setPrefabPath(arg_1_0)
-	arg_1_0.prefabPath = "ui/viewres/assistboss/boss6.prefab"
+local FightAssistBoss6 = class("FightAssistBoss6", FightAssistBossBase)
+
+function FightAssistBoss6:setPrefabPath()
+	self.prefabPath = "ui/viewres/assistboss/boss6.prefab"
 end
 
-var_0_0.PowerType = {
+FightAssistBoss6.PowerType = {
 	Blue = 2,
 	Red = 1
 }
-var_0_0.BuffTypeId2PowerType = {
-	[130100111] = var_0_0.PowerType.Red,
-	[130100112] = var_0_0.PowerType.Red,
-	[130100113] = var_0_0.PowerType.Red,
-	[130100121] = var_0_0.PowerType.Blue,
-	[130100122] = var_0_0.PowerType.Blue,
-	[130100123] = var_0_0.PowerType.Blue
+FightAssistBoss6.BuffTypeId2PowerType = {
+	[130100111] = FightAssistBoss6.PowerType.Red,
+	[130100112] = FightAssistBoss6.PowerType.Red,
+	[130100113] = FightAssistBoss6.PowerType.Red,
+	[130100121] = FightAssistBoss6.PowerType.Blue,
+	[130100122] = FightAssistBoss6.PowerType.Blue,
+	[130100123] = FightAssistBoss6.PowerType.Blue
 }
-var_0_0.Anim = {
+FightAssistBoss6.Anim = {
 	Open = "open",
 	Close = "close",
 	Idle = "idle",
 	Loop = "loop"
 }
-var_0_0.MaxPower = 5
-var_0_0.Radius = 58
-var_0_0.AngleInterval = 45
-var_0_0.InitAngle = -135
-var_0_0.Radian = math.pi / 180
-var_0_0.TweenAnimDuration = 0.5
+FightAssistBoss6.MaxPower = 5
+FightAssistBoss6.Radius = 58
+FightAssistBoss6.AngleInterval = 45
+FightAssistBoss6.InitAngle = -135
+FightAssistBoss6.Radian = math.pi / 180
+FightAssistBoss6.TweenAnimDuration = 0.5
 
-function var_0_0.initView(arg_2_0)
-	var_0_0.super.initView(arg_2_0)
-	gohelper.setActive(arg_2_0.goCD, false)
+function FightAssistBoss6:initView()
+	FightAssistBoss6.super.initView(self)
+	gohelper.setActive(self.goCD, false)
 
-	arg_2_0.goUnLight = gohelper.findChild(arg_2_0.viewGo, "head/unlight")
-	arg_2_0.unLightHeadImage = gohelper.findChildImage(arg_2_0.viewGo, "head/unlight/boss")
-	arg_2_0.unLightHeadSImage = gohelper.findChildSingleImage(arg_2_0.viewGo, "head/unlight/boss")
-	arg_2_0.goLight = gohelper.findChild(arg_2_0.viewGo, "head/light")
-	arg_2_0.goRedLightVx = gohelper.findChild(arg_2_0.goLight, "light_red")
-	arg_2_0.goBlueLightVx = gohelper.findChild(arg_2_0.goLight, "light_blue")
-	arg_2_0.lightHeadImage = gohelper.findChildImage(arg_2_0.viewGo, "head/light/boss")
-	arg_2_0.lightHeadSImage = gohelper.findChildSingleImage(arg_2_0.viewGo, "head/light/boss")
-	arg_2_0.goPointItem = gohelper.findChild(arg_2_0.viewGo, "go_energy/go_point_item")
+	self.goUnLight = gohelper.findChild(self.viewGo, "head/unlight")
+	self.unLightHeadImage = gohelper.findChildImage(self.viewGo, "head/unlight/boss")
+	self.unLightHeadSImage = gohelper.findChildSingleImage(self.viewGo, "head/unlight/boss")
+	self.goLight = gohelper.findChild(self.viewGo, "head/light")
+	self.goRedLightVx = gohelper.findChild(self.goLight, "light_red")
+	self.goBlueLightVx = gohelper.findChild(self.goLight, "light_blue")
+	self.lightHeadImage = gohelper.findChildImage(self.viewGo, "head/light/boss")
+	self.lightHeadSImage = gohelper.findChildSingleImage(self.viewGo, "head/light/boss")
+	self.goPointItem = gohelper.findChild(self.viewGo, "go_energy/go_point_item")
 
-	gohelper.setActive(arg_2_0.goPointItem, false)
+	gohelper.setActive(self.goPointItem, false)
 
-	arg_2_0.tempBuffList = {}
-	arg_2_0.powerItemPool = {}
-	arg_2_0.waitAddPowerBuffUidList = {}
-	arg_2_0.overFlowBuffDict = {}
-	arg_2_0.playRecycleAnimItemList = {}
-	arg_2_0.tweenAnimIng = false
-	arg_2_0.assistBoss = FightDataHelper.entityMgr:getAssistBoss()
-	arg_2_0.assistBossUid = arg_2_0.assistBoss.uid
+	self.tempBuffList = {}
+	self.powerItemPool = {}
+	self.waitAddPowerBuffUidList = {}
+	self.overFlowBuffDict = {}
+	self.playRecycleAnimItemList = {}
+	self.tweenAnimIng = false
+	self.assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+	self.assistBossUid = self.assistBoss.uid
 
-	arg_2_0:refreshEmptyPower()
-	arg_2_0:refreshPowerCount()
+	self:refreshEmptyPower()
+	self:refreshPowerCount()
 end
 
-function var_0_0.refreshEmptyPower(arg_3_0)
-	arg_3_0.emptyPowerItemList = arg_3_0.emptyPowerItemList or {}
+function FightAssistBoss6:refreshEmptyPower()
+	self.emptyPowerItemList = self.emptyPowerItemList or {}
 
-	local var_3_0, var_3_1 = FightDataHelper.paTaMgr:getAssistBossServerPower()
+	local _, maxPower = FightDataHelper.paTaMgr:getAssistBossServerPower()
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_2 = arg_3_0.emptyPowerItemList[iter_3_0]
+	for i = 1, maxPower do
+		local powerItem = self.emptyPowerItemList[i]
 
-		if not var_3_2 then
-			var_3_2 = arg_3_0:createPowerItem(iter_3_0)
+		if not powerItem then
+			powerItem = self:createPowerItem(i)
 
-			table.insert(arg_3_0.emptyPowerItemList, var_3_2)
-			gohelper.setAsFirstSibling(var_3_2.go)
+			table.insert(self.emptyPowerItemList, powerItem)
+			gohelper.setAsFirstSibling(powerItem.go)
 		end
 
-		local var_3_3 = arg_3_0:getAngle(iter_3_0)
+		local curAngle = self:getAngle(i)
 
-		var_3_2.initAngle = var_3_3
-		var_3_2.curAngle = var_3_3
-		var_3_2.targetAngle = var_3_3
+		powerItem.initAngle = curAngle
+		powerItem.curAngle = curAngle
+		powerItem.targetAngle = curAngle
 
-		gohelper.setActive(var_3_2.go, true)
+		gohelper.setActive(powerItem.go, true)
 
-		local var_3_4, var_3_5 = arg_3_0:getAnchorPos(var_3_3)
+		local x, y = self:getAnchorPos(curAngle)
 
-		recthelper.setAnchor(var_3_2.rect, var_3_4, var_3_5)
+		recthelper.setAnchor(powerItem.rect, x, y)
 	end
 
-	for iter_3_1 = var_3_1 + 1, #arg_3_0.emptyPowerItemList do
-		local var_3_6 = table.remove(arg_3_0.emptyPowerItemList)
+	for i = maxPower + 1, #self.emptyPowerItemList do
+		local powerItem = table.remove(self.emptyPowerItemList)
 
-		if var_3_6 then
-			gohelper.destroy(var_3_6.go, false)
+		if powerItem then
+			gohelper.destroy(powerItem.go, false)
 		end
 	end
 end
 
-function var_0_0.refreshPowerCount(arg_4_0)
-	arg_4_0.powerItemList = arg_4_0.powerItemList or {}
+function FightAssistBoss6:refreshPowerCount()
+	self.powerItemList = self.powerItemList or {}
 
-	tabletool.clear(arg_4_0.tempBuffList)
+	tabletool.clear(self.tempBuffList)
 
-	local var_4_0 = arg_4_0.assistBoss:getOrderedBuffList_ByTime(arg_4_0.tempBuffList)
-	local var_4_1 = #var_4_0
-	local var_4_2
-	local var_4_3
-	local var_4_4, var_4_5 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local buffList = self.assistBoss:getOrderedBuffList_ByTime(self.tempBuffList)
+	local buffIndex = #buffList
+	local powerType, buffUid
+	local curPower, _ = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	for iter_4_0 = 1, var_4_4 do
-		local var_4_6, var_4_7
+	for i = 1, curPower do
+		powerType, buffIndex, buffUid = self:getNextPowerType(buffList, buffIndex)
 
-		var_4_6, var_4_1, var_4_7 = arg_4_0:getNextPowerType(var_4_0, var_4_1)
+		if powerType then
+			local powerItem = self.powerItemList[i]
 
-		if var_4_6 then
-			local var_4_8 = arg_4_0.powerItemList[iter_4_0]
+			if not powerItem then
+				powerItem = self:createPowerItem(i, buffUid)
 
-			if not var_4_8 then
-				var_4_8 = arg_4_0:createPowerItem(iter_4_0, var_4_7)
-
-				table.insert(arg_4_0.powerItemList, var_4_8)
+				table.insert(self.powerItemList, powerItem)
 			end
 
-			gohelper.setActive(var_4_8.go, true)
-			gohelper.setActive(var_4_8.goRed, var_4_6 == var_0_0.PowerType.Red)
-			gohelper.setActive(var_4_8.goBlue, var_4_6 == var_0_0.PowerType.Blue)
+			gohelper.setActive(powerItem.go, true)
+			gohelper.setActive(powerItem.goRed, powerType == FightAssistBoss6.PowerType.Red)
+			gohelper.setActive(powerItem.goBlue, powerType == FightAssistBoss6.PowerType.Blue)
 
-			local var_4_9 = arg_4_0:getAngle(iter_4_0)
+			local curAngle = self:getAngle(i)
 
-			var_4_8.curAngle = var_4_9
-			var_4_8.targetAngle = var_4_9
-			var_4_8.initAngle = var_4_9
+			powerItem.curAngle = curAngle
+			powerItem.targetAngle = curAngle
+			powerItem.initAngle = curAngle
 
-			local var_4_10, var_4_11 = arg_4_0:getAnchorPos(var_4_9)
+			local x, y = self:getAnchorPos(curAngle)
 
-			recthelper.setAnchor(var_4_8.rect, var_4_10, var_4_11)
-			var_4_8.animatorPlayer:Play(var_0_0.Anim.Open)
+			recthelper.setAnchor(powerItem.rect, x, y)
+			powerItem.animatorPlayer:Play(FightAssistBoss6.Anim.Open)
 		else
-			logError(string.format("能量和buff个数不对应 .. %s / %s", iter_4_0, var_4_4))
+			logError(string.format("能量和buff个数不对应 .. %s / %s", i, curPower))
 
-			var_4_1 = 0
+			buffIndex = 0
 		end
 	end
 
-	arg_4_0:refreshHeadImageColor()
+	self:refreshHeadImageColor()
 end
 
-function var_0_0.createPowerItem(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0
+function FightAssistBoss6:createPowerItem(index, buffUid)
+	local powerItem
 
-	if #arg_5_0.powerItemPool > 0 then
-		var_5_0 = table.remove(arg_5_0.powerItemPool)
+	if #self.powerItemPool > 0 then
+		powerItem = table.remove(self.powerItemPool)
 	else
-		var_5_0 = arg_5_0:getUserDataTb_()
-		var_5_0.go = gohelper.cloneInPlace(arg_5_0.goPointItem)
-		var_5_0.rect = var_5_0.go:GetComponent(gohelper.Type_RectTransform)
-		var_5_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(var_5_0.go)
-		var_5_0.goRed = gohelper.findChild(var_5_0.go, "red")
-		var_5_0.goBlue = gohelper.findChild(var_5_0.go, "blue")
+		powerItem = self:getUserDataTb_()
+		powerItem.go = gohelper.cloneInPlace(self.goPointItem)
+		powerItem.rect = powerItem.go:GetComponent(gohelper.Type_RectTransform)
+		powerItem.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(powerItem.go)
+		powerItem.goRed = gohelper.findChild(powerItem.go, "red")
+		powerItem.goBlue = gohelper.findChild(powerItem.go, "blue")
 	end
 
-	gohelper.setActive(var_5_0.goRed, false)
-	gohelper.setActive(var_5_0.goBlue, false)
+	gohelper.setActive(powerItem.goRed, false)
+	gohelper.setActive(powerItem.goBlue, false)
 
-	var_5_0.initAngle = arg_5_0:getAngle(arg_5_1)
-	var_5_0.targetAngle = var_5_0.initAngle
-	var_5_0.curAngle = var_5_0.initAngle
-	var_5_0.buffUid = arg_5_2
+	powerItem.initAngle = self:getAngle(index)
+	powerItem.targetAngle = powerItem.initAngle
+	powerItem.curAngle = powerItem.initAngle
+	powerItem.buffUid = buffUid
 
-	return var_5_0
+	return powerItem
 end
 
-function var_0_0.recyclePowerItem(arg_6_0, arg_6_1)
-	gohelper.setActive(arg_6_1.go, false)
-	table.insert(arg_6_0.powerItemPool, arg_6_1)
+function FightAssistBoss6:recyclePowerItem(powerItem)
+	gohelper.setActive(powerItem.go, false)
+	table.insert(self.powerItemPool, powerItem)
 end
 
-function var_0_0.getAngle(arg_7_0, arg_7_1)
-	return var_0_0.InitAngle + (arg_7_1 - 1) * var_0_0.AngleInterval
+function FightAssistBoss6:getAngle(index)
+	return FightAssistBoss6.InitAngle + (index - 1) * FightAssistBoss6.AngleInterval
 end
 
-function var_0_0.getAnchorPos(arg_8_0, arg_8_1)
-	local var_8_0 = var_0_0.Radius * math.cos(arg_8_1 * var_0_0.Radian)
-	local var_8_1 = var_0_0.Radius * math.sin(arg_8_1 * var_0_0.Radian)
+function FightAssistBoss6:getAnchorPos(angle)
+	local x = FightAssistBoss6.Radius * math.cos(angle * FightAssistBoss6.Radian)
+	local y = FightAssistBoss6.Radius * math.sin(angle * FightAssistBoss6.Radian)
 
-	return var_8_0, var_8_1
+	return x, y
 end
 
-function var_0_0.addEvents(arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, arg_9_0.onAssistBossPowerChange, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, arg_9_0.onAssistBossCDChange, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnResetCard, arg_9_0.onResetCard, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_9_0.onBuffUpdate, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnPushBuffDeleteReason, arg_9_0.onPushBuffDeleteReason, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.StageChanged, arg_9_0._onStageChange, arg_9_0)
-	arg_9_0:addEventCb(FightController.instance, FightEvent.OnStartSwitchAssistBoss, arg_9_0.onStartSwitchAssistBoss, arg_9_0)
+function FightAssistBoss6:addEvents()
+	self:addEventCb(FightController.instance, FightEvent.OnAssistBossPowerChange, self.onAssistBossPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnAssistBossCDChange, self.onAssistBossCDChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self.onResetCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPushBuffDeleteReason, self.onPushBuffDeleteReason, self)
+	self:addEventCb(FightController.instance, FightEvent.StageChanged, self._onStageChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnStartSwitchAssistBoss, self.onStartSwitchAssistBoss, self)
 end
 
-function var_0_0.onStartSwitchAssistBoss(arg_10_0, arg_10_1)
-	if arg_10_1 ~= arg_10_0.assistBossUid then
+function FightAssistBoss6:onStartSwitchAssistBoss(entityId)
+	if entityId ~= self.assistBossUid then
 		return
 	end
 
-	if arg_10_0.tweenAnimIng then
-		arg_10_0:clearAddPowerTween()
+	if self.tweenAnimIng then
+		self:clearAddPowerTween()
 
-		arg_10_0.tweenAnimIng = false
+		self.tweenAnimIng = false
 	end
 
-	arg_10_0.assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+	self.assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	arg_10_0:refreshEmptyPower()
-	arg_10_0:refreshPowerCount()
+	self:refreshEmptyPower()
+	self:refreshPowerCount()
 end
 
-function var_0_0._onStageChange(arg_11_0)
-	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
-		tabletool.clear(arg_11_0.overFlowBuffDict)
-		arg_11_0:refreshPower()
-	end
-end
+function FightAssistBoss6:_onStageChange()
+	local curStage = FightDataHelper.stageMgr:getCurStage()
 
-function var_0_0.onPushBuffDeleteReason(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	if arg_12_3 ~= FightEnum.BuffDeleteReason.Overflow then
-		return
-	end
-
-	if arg_12_0.assistBossUid ~= arg_12_1 then
-		return
-	end
-
-	if not arg_12_0:getPowerTypeByBuffUid(arg_12_2) then
-		return
-	end
-
-	arg_12_0.overFlowBuffDict[arg_12_2] = true
-end
-
-function var_0_0.onResetCard(arg_13_0)
-	if arg_13_0.tweenAnimIng then
-		return
-	end
-
-	arg_13_0:refreshPower()
-end
-
-function var_0_0.onBuffUpdate(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
-	if arg_14_0.assistBossUid ~= arg_14_1 then
-		return
-	end
-
-	if arg_14_2 == FightEnum.EffectType.BUFFADD then
-		arg_14_0:doAddPower(arg_14_3, arg_14_4)
-
-		return
-	elseif arg_14_2 == FightEnum.EffectType.BUFFDEL or arg_14_2 == FightEnum.EffectType.BUFFDELNOEFFECT then
-		arg_14_0:doRemovePower(arg_14_3, arg_14_4)
-
-		return
+	if curStage == FightStageMgr.StageType.Operate then
+		tabletool.clear(self.overFlowBuffDict)
+		self:refreshPower()
 	end
 end
 
-function var_0_0.doRemovePower(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_0:getPowerType(arg_15_1) then
+function FightAssistBoss6:onPushBuffDeleteReason(entityId, buffUid, deleteType)
+	if deleteType ~= FightEnum.BuffDeleteReason.Overflow then
 		return
 	end
 
-	local var_15_0 = arg_15_0.overFlowBuffDict[arg_15_2]
+	if self.assistBossUid ~= entityId then
+		return
+	end
 
-	arg_15_0.overFlowBuffDict[arg_15_2] = nil
+	if not self:getPowerTypeByBuffUid(buffUid) then
+		return
+	end
 
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.powerItemList) do
-		if iter_15_1.buffUid == arg_15_2 then
-			table.remove(arg_15_0.powerItemList, iter_15_0)
-			table.insert(arg_15_0.playRecycleAnimItemList, iter_15_1)
+	self.overFlowBuffDict[buffUid] = true
+end
 
-			local var_15_1
-			local var_15_2 = var_15_0 and "boom" or "close"
+function FightAssistBoss6:onResetCard()
+	if self.tweenAnimIng then
+		return
+	end
 
-			iter_15_1.animatorPlayer:Play(var_15_2, arg_15_0.onRecycleAnimComplete, arg_15_0)
+	self:refreshPower()
+end
+
+function FightAssistBoss6:onBuffUpdate(entityId, effectType, buffId, buffUid, effectConfig, buff)
+	if self.assistBossUid ~= entityId then
+		return
+	end
+
+	if effectType == FightEnum.EffectType.BUFFADD then
+		self:doAddPower(buffId, buffUid)
+
+		return
+	elseif effectType == FightEnum.EffectType.BUFFDEL or effectType == FightEnum.EffectType.BUFFDELNOEFFECT then
+		self:doRemovePower(buffId, buffUid)
+
+		return
+	end
+end
+
+function FightAssistBoss6:doRemovePower(buffId, buffUid)
+	local powerType = self:getPowerType(buffId)
+
+	if not powerType then
+		return
+	end
+
+	local isOverFlow = self.overFlowBuffDict[buffUid]
+
+	self.overFlowBuffDict[buffUid] = nil
+
+	for index, powerItem in ipairs(self.powerItemList) do
+		if powerItem.buffUid == buffUid then
+			table.remove(self.powerItemList, index)
+			table.insert(self.playRecycleAnimItemList, powerItem)
+
+			local animName
+
+			animName = isOverFlow and "boom" or "close"
+
+			powerItem.animatorPlayer:Play(animName, self.onRecycleAnimComplete, self)
 		end
 	end
 end
 
-function var_0_0.onRecycleAnimComplete(arg_16_0)
-	local var_16_0 = table.remove(arg_16_0.playRecycleAnimItemList, 1)
+function FightAssistBoss6:onRecycleAnimComplete()
+	local powerItem = table.remove(self.playRecycleAnimItemList, 1)
 
-	if var_16_0 then
-		arg_16_0:recyclePowerItem(var_16_0)
+	if powerItem then
+		self:recyclePowerItem(powerItem)
 	end
 end
 
-function var_0_0.doAddPower(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getPowerType(arg_17_1)
+function FightAssistBoss6:doAddPower(buffId, buffUid)
+	local powerType = self:getPowerType(buffId)
 
-	if not var_17_0 then
+	if not powerType then
 		return
 	end
 
-	local var_17_1 = arg_17_0:createPowerItem(1, arg_17_2)
+	local firstPowerItem = self:createPowerItem(1, buffUid)
 
-	gohelper.setActive(var_17_1.go, true)
-	gohelper.setActive(var_17_1.goRed, var_17_0 == var_0_0.PowerType.Red)
-	gohelper.setActive(var_17_1.goBlue, var_17_0 == var_0_0.PowerType.Blue)
+	gohelper.setActive(firstPowerItem.go, true)
+	gohelper.setActive(firstPowerItem.goRed, powerType == FightAssistBoss6.PowerType.Red)
+	gohelper.setActive(firstPowerItem.goBlue, powerType == FightAssistBoss6.PowerType.Blue)
 
-	local var_17_2, var_17_3 = arg_17_0:getAnchorPos(var_17_1.initAngle)
+	local x, y = self:getAnchorPos(firstPowerItem.initAngle)
 
-	recthelper.setAnchor(var_17_1.rect, var_17_2, var_17_3)
-	var_17_1.animatorPlayer:Play(var_0_0.Anim.Open)
+	recthelper.setAnchor(firstPowerItem.rect, x, y)
+	firstPowerItem.animatorPlayer:Play(FightAssistBoss6.Anim.Open)
 
-	if #arg_17_0.powerItemList < 1 then
-		table.insert(arg_17_0.powerItemList, 1, var_17_1)
+	if #self.powerItemList < 1 then
+		table.insert(self.powerItemList, 1, firstPowerItem)
 
 		return
 	end
 
-	if arg_17_0.tweenAnimIng then
-		ZProj.TweenHelper.KillById(arg_17_0.addPowerTweenId)
+	if self.tweenAnimIng then
+		ZProj.TweenHelper.KillById(self.addPowerTweenId)
 
-		arg_17_0.addPowerTweenId = nil
+		self.addPowerTweenId = nil
 	end
 
-	local var_17_4, var_17_5 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local _, maxPower = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0.powerItemList) do
-		iter_17_1.targetAngle = arg_17_0:getAngle(math.min(var_17_5, iter_17_0 + 1))
-		iter_17_1.initAngle = iter_17_1.curAngle
+	for index, powerItem in ipairs(self.powerItemList) do
+		powerItem.targetAngle = self:getAngle(math.min(maxPower, index + 1))
+		powerItem.initAngle = powerItem.curAngle
 	end
 
-	table.insert(arg_17_0.powerItemList, 1, var_17_1)
+	table.insert(self.powerItemList, 1, firstPowerItem)
 
-	arg_17_0.tweenAnimIng = true
-	arg_17_0.addPowerTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, var_0_0.TweenAnimDuration, arg_17_0.onAddPowerTweenFrameCallback, arg_17_0.onAddPowerTweenDone, arg_17_0)
+	self.tweenAnimIng = true
+	self.addPowerTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, FightAssistBoss6.TweenAnimDuration, self.onAddPowerTweenFrameCallback, self.onAddPowerTweenDone, self)
 end
 
-function var_0_0.onAddPowerTweenFrameCallback(arg_18_0, arg_18_1)
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.powerItemList) do
-		local var_18_0 = iter_18_1.targetAngle - iter_18_1.initAngle
-		local var_18_1 = iter_18_1.initAngle + var_18_0 * arg_18_1
-		local var_18_2, var_18_3 = arg_18_0:getAnchorPos(var_18_1)
+function FightAssistBoss6:onAddPowerTweenFrameCallback(rate)
+	for _, powerItem in ipairs(self.powerItemList) do
+		local len = powerItem.targetAngle - powerItem.initAngle
+		local curAngle = powerItem.initAngle + len * rate
+		local x, y = self:getAnchorPos(curAngle)
 
-		recthelper.setAnchor(iter_18_1.rect, var_18_2, var_18_3)
+		recthelper.setAnchor(powerItem.rect, x, y)
 
-		iter_18_1.curAngle = var_18_1
+		powerItem.curAngle = curAngle
 	end
 end
 
-function var_0_0.onAddPowerTweenDone(arg_19_0)
-	arg_19_0.tweenAnimIng = false
+function FightAssistBoss6:onAddPowerTweenDone()
+	self.tweenAnimIng = false
 
-	arg_19_0:refreshPower()
+	self:refreshPower()
 end
 
-function var_0_0.refreshHeadImage(arg_20_0)
-	local var_20_0 = arg_20_0.assistBoss.originSkin
-	local var_20_1 = FightConfig.instance:getSkinCO(var_20_0)
-	local var_20_2 = ResUrl.monsterHeadIcon(var_20_1.headIcon)
+function FightAssistBoss6:refreshHeadImage()
+	local skin = self.assistBoss.originSkin
+	local skinCo = FightConfig.instance:getSkinCO(skin)
+	local icon = ResUrl.monsterHeadIcon(skinCo.headIcon)
 
-	arg_20_0.unLightHeadSImage:LoadImage(var_20_2)
-	arg_20_0.lightHeadSImage:LoadImage(var_20_2)
+	self.unLightHeadSImage:LoadImage(icon)
+	self.lightHeadSImage:LoadImage(icon)
 end
 
-function var_0_0.refreshCD(arg_21_0)
-	gohelper.setActive(arg_21_0.goCD, false)
+function FightAssistBoss6:refreshCD()
+	gohelper.setActive(self.goCD, false)
 end
 
-function var_0_0.refreshPower(arg_22_0, arg_22_1)
-	if arg_22_0.tweenAnimIng then
+function FightAssistBoss6:refreshPower(animName)
+	if self.tweenAnimIng then
 		return
 	end
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0.powerItemList) do
-		local var_22_0 = arg_22_0:getPowerTypeByBuffUid(iter_22_1.buffUid)
+	for index, powerItem in ipairs(self.powerItemList) do
+		local powerType = self:getPowerTypeByBuffUid(powerItem.buffUid)
 
-		gohelper.setActive(iter_22_1.go, true)
-		gohelper.setActive(iter_22_1.goRed, var_22_0 == var_0_0.PowerType.Red)
-		gohelper.setActive(iter_22_1.goBlue, var_22_0 == var_0_0.PowerType.Blue)
+		gohelper.setActive(powerItem.go, true)
+		gohelper.setActive(powerItem.goRed, powerType == FightAssistBoss6.PowerType.Red)
+		gohelper.setActive(powerItem.goBlue, powerType == FightAssistBoss6.PowerType.Blue)
 
-		local var_22_1 = arg_22_0:getAngle(iter_22_0)
+		local angle = self:getAngle(index)
 
-		iter_22_1.initAngle = var_22_1
-		iter_22_1.curAngle = var_22_1
-		iter_22_1.targetAngle = var_22_1
+		powerItem.initAngle = angle
+		powerItem.curAngle = angle
+		powerItem.targetAngle = angle
 
-		local var_22_2, var_22_3 = arg_22_0:getAnchorPos(var_22_1)
+		local x, y = self:getAnchorPos(angle)
 
-		recthelper.setAnchor(iter_22_1.rect, var_22_2, var_22_3)
+		recthelper.setAnchor(powerItem.rect, x, y)
 
-		if arg_22_1 == var_0_0.Anim.Loop then
-			iter_22_1.animatorPlayer:Play(var_22_0 == var_0_0.PowerType.Red and "redloop" or "blueloop")
+		if animName == FightAssistBoss6.Anim.Loop then
+			powerItem.animatorPlayer:Play(powerType == FightAssistBoss6.PowerType.Red and "redloop" or "blueloop")
 		else
-			iter_22_1.animatorPlayer:Play(arg_22_1 or var_0_0.Anim.Idle)
+			powerItem.animatorPlayer:Play(animName or FightAssistBoss6.Anim.Idle)
 		end
 	end
 
-	arg_22_0:refreshHeadImageColor()
+	self:refreshHeadImageColor()
 end
 
-function var_0_0.getNextPowerType(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_2 = arg_23_2 or #arg_23_1
+function FightAssistBoss6:getNextPowerType(buffList, startIndex)
+	startIndex = startIndex or #buffList
 
-	for iter_23_0 = arg_23_2, 1, -1 do
-		local var_23_0 = arg_23_1[iter_23_0]
-		local var_23_1 = var_23_0 and var_23_0:getCO()
-		local var_23_2 = var_23_1 and var_0_0.BuffTypeId2PowerType[var_23_1.typeId]
+	for i = startIndex, 1, -1 do
+		local buffMo = buffList[i]
+		local co = buffMo and buffMo:getCO()
+		local powerType = co and FightAssistBoss6.BuffTypeId2PowerType[co.typeId]
 
-		if var_23_2 then
-			return var_23_2, iter_23_0 - 1, var_23_0.uid
+		if powerType then
+			return powerType, i - 1, buffMo.uid
 		end
 	end
 end
 
-function var_0_0.refreshHeadImageColor(arg_24_0)
-	if not FightDataHelper.paTaMgr:getCurUseSkillInfo() then
-		return arg_24_0:refreshCanUse(false)
+function FightAssistBoss6:refreshHeadImageColor()
+	local useSkill = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+
+	if not useSkill then
+		return self:refreshCanUse(false)
 	end
 
-	if arg_24_0.assistBoss:hasBuffFeature(FightEnum.BuffType_Seal) then
-		return arg_24_0:refreshCanUse(false)
+	if self.assistBoss:hasBuffFeature(FightEnum.BuffType_Seal) then
+		return self:refreshCanUse(false)
 	end
 
-	if arg_24_0:checkInCd() then
-		return arg_24_0:refreshCanUse(false)
+	local inCd = self:checkInCd()
+
+	if inCd then
+		return self:refreshCanUse(false)
 	end
 
-	arg_24_0:refreshCanUse(true)
+	self:refreshCanUse(true)
 end
 
-function var_0_0.refreshCanUse(arg_25_0, arg_25_1)
-	gohelper.setActive(arg_25_0.goUnLight, not arg_25_1)
-	gohelper.setActive(arg_25_0.goLight, arg_25_1)
+function FightAssistBoss6:refreshCanUse(canUse)
+	gohelper.setActive(self.goUnLight, not canUse)
+	gohelper.setActive(self.goLight, canUse)
 
-	if arg_25_1 then
-		local var_25_0, var_25_1 = arg_25_0:getPowerCount()
+	if canUse then
+		local redPowerCount, bluePowerCount = self:getPowerCount()
 
-		gohelper.setActive(arg_25_0.goRedLightVx, var_25_1 < var_25_0)
-		gohelper.setActive(arg_25_0.goBlueLightVx, var_25_0 <= var_25_1)
+		gohelper.setActive(self.goRedLightVx, bluePowerCount < redPowerCount)
+		gohelper.setActive(self.goBlueLightVx, redPowerCount <= bluePowerCount)
 	end
 end
 
-function var_0_0.getPowerCount(arg_26_0)
-	if not arg_26_0.assistBoss then
+function FightAssistBoss6:getPowerCount()
+	if not self.assistBoss then
 		return 0, 0
 	end
 
-	local var_26_0 = 0
-	local var_26_1 = 0
+	local redPowerCount, bluePowerCount = 0, 0
 
-	tabletool.clear(arg_26_0.tempBuffList)
+	tabletool.clear(self.tempBuffList)
 
-	local var_26_2 = arg_26_0.assistBoss:getOrderedBuffList_ByTime(arg_26_0.tempBuffList)
+	local buffList = self.assistBoss:getOrderedBuffList_ByTime(self.tempBuffList)
 
-	for iter_26_0 = #var_26_2, 1, -1 do
-		local var_26_3 = var_26_2[iter_26_0]
-		local var_26_4 = var_26_3 and var_26_3:getCO()
-		local var_26_5 = var_26_4 and var_0_0.BuffTypeId2PowerType[var_26_4.typeId]
+	for i = #buffList, 1, -1 do
+		local buffMo = buffList[i]
+		local co = buffMo and buffMo:getCO()
+		local powerType = co and FightAssistBoss6.BuffTypeId2PowerType[co.typeId]
 
-		if var_26_5 == var_0_0.PowerType.Red then
-			var_26_0 = var_26_0 + 1
-		elseif var_26_5 == var_0_0.PowerType.Blue then
-			var_26_1 = var_26_1 + 1
+		if powerType == FightAssistBoss6.PowerType.Red then
+			redPowerCount = redPowerCount + 1
+		elseif powerType == FightAssistBoss6.PowerType.Blue then
+			bluePowerCount = bluePowerCount + 1
 		end
 	end
 
-	return var_26_0, var_26_1
+	return redPowerCount, bluePowerCount
 end
 
-function var_0_0.playAssistBossCard(arg_27_0)
-	if arg_27_0.tweenAnimIng then
+function FightAssistBoss6:playAssistBossCard()
+	if self.tweenAnimIng then
 		return
 	end
 
-	if var_0_0.super.playAssistBossCard(arg_27_0) then
-		arg_27_0:refreshPower(var_0_0.Anim.Loop)
+	local playSuccess = FightAssistBoss6.super.playAssistBossCard(self)
+
+	if playSuccess then
+		self:refreshPower(FightAssistBoss6.Anim.Loop)
 	end
 end
 
-function var_0_0.onLongPress(arg_28_0)
-	if arg_28_0.tweenAnimIng then
+function FightAssistBoss6:onLongPress()
+	if self.tweenAnimIng then
 		return
 	end
 
-	var_0_0.super.onLongPress(arg_28_0)
+	FightAssistBoss6.super.onLongPress(self)
 end
 
-function var_0_0.clearAddPowerTween(arg_29_0)
-	if arg_29_0.addPowerTweenId then
-		ZProj.TweenHelper.KillById(arg_29_0.addPowerTweenId)
+function FightAssistBoss6:clearAddPowerTween()
+	if self.addPowerTweenId then
+		ZProj.TweenHelper.KillById(self.addPowerTweenId)
 
-		arg_29_0.addPowerTweenId = nil
+		self.addPowerTweenId = nil
 	end
 end
 
-function var_0_0.destroy(arg_30_0)
-	arg_30_0:clearAddPowerTween()
+function FightAssistBoss6:destroy()
+	self:clearAddPowerTween()
 
-	arg_30_0.tweenAnimIng = false
+	self.tweenAnimIng = false
 
-	var_0_0.super.destroy(arg_30_0)
+	FightAssistBoss6.super.destroy(self)
 end
 
-function var_0_0.getPowerType(arg_31_0, arg_31_1)
-	local var_31_0 = lua_skill_buff.configDict[arg_31_1]
+function FightAssistBoss6:getPowerType(buffId)
+	local buffCo = lua_skill_buff.configDict[buffId]
 
-	if not var_31_0 then
+	if not buffCo then
 		return false
 	end
 
-	return var_0_0.BuffTypeId2PowerType[var_31_0.typeId]
+	return FightAssistBoss6.BuffTypeId2PowerType[buffCo.typeId]
 end
 
-function var_0_0.getPowerTypeByBuffUid(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_0.assistBoss:getBuffMO(arg_32_1)
+function FightAssistBoss6:getPowerTypeByBuffUid(buffUid)
+	local buffMo = self.assistBoss:getBuffMO(buffUid)
 
-	if not var_32_0 then
+	if not buffMo then
 		return false
 	end
 
-	return arg_32_0:getPowerType(var_32_0.buffId)
+	return self:getPowerType(buffMo.buffId)
 end
 
-return var_0_0
+return FightAssistBoss6

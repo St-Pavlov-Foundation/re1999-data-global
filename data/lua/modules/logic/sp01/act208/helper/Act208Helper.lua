@@ -1,21 +1,25 @@
-﻿module("modules.logic.sp01.act208.helper.Act208Helper", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/act208/helper/Act208Helper.lua
 
-return {
-	getCurPlatformType = function()
-		if SettingsModel.instance:isOverseas() then
-			if SDKModel.instance:isPC() then
-				return Act208Enum.ChannelId.PC
-			else
-				return Act208Enum.ChannelId.Mobile
-			end
-		end
+module("modules.logic.sp01.act208.helper.Act208Helper", package.seeall)
 
-		local var_1_0 = SDKMgr.instance:getSubChannelId()
+local Act208Helper = {}
 
-		if var_1_0 == "1005" or var_1_0 == "1025" then
+function Act208Helper.getCurPlatformType()
+	if SettingsModel.instance:isOverseas() then
+		if SDKModel.instance:isPC() then
 			return Act208Enum.ChannelId.PC
 		else
 			return Act208Enum.ChannelId.Mobile
 		end
 	end
-}
+
+	local subChannelId = SDKMgr.instance:getSubChannelId()
+
+	if subChannelId == "1005" or subChannelId == "1025" then
+		return Act208Enum.ChannelId.PC
+	else
+		return Act208Enum.ChannelId.Mobile
+	end
+end
+
+return Act208Helper

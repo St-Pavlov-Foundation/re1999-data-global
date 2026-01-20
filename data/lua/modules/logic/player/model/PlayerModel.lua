@@ -1,454 +1,481 @@
-﻿module("modules.logic.player.model.PlayerModel", package.seeall)
+﻿-- chunkname: @modules/logic/player/model/PlayerModel.lua
 
-local var_0_0 = class("PlayerModel", BaseModel)
+module("modules.logic.player.model.PlayerModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._userId = 0
-	arg_1_0._name = ""
-	arg_1_0._portrait = 0
-	arg_1_0._level = 0
-	arg_1_0._exp = 0
-	arg_1_0._signature = ""
-	arg_1_0._birthday = ""
-	arg_1_0._showHeros = {}
-	arg_1_0._simpleProperties = {}
-	arg_1_0._registerTime = 0
-	arg_1_0._lastLoginTime = 0
-	arg_1_0._lastLogoutTime = 0
-	arg_1_0._heroRareNNCount = 0
-	arg_1_0._heroRareNCount = 0
-	arg_1_0._heroRareRCount = 0
-	arg_1_0._heroRareSRCount = 0
-	arg_1_0._heroRareSSRCount = 0
-	arg_1_0._lastEpisodeId = 0
-	arg_1_0._levelup = 0
-	arg_1_0._preCommitFeedBackTime = -1
-	arg_1_0._bg = 0
-	arg_1_0._canRename = false
-	arg_1_0._canRenameFlagMonth = nil
-	arg_1_0._playerInfo = nil
-	arg_1_0._showAchievement = nil
-	arg_1_0._totalLoginDays = 0
+local PlayerModel = class("PlayerModel", BaseModel)
 
-	arg_1_0:updateAssistRewardCountData(0, 0, true)
+function PlayerModel:onInit()
+	self._userId = 0
+	self._name = ""
+	self._portrait = 0
+	self._level = 0
+	self._exp = 0
+	self._signature = ""
+	self._birthday = ""
+	self._showHeros = {}
+	self._simpleProperties = {}
+	self._registerTime = 0
+	self._lastLoginTime = 0
+	self._lastLogoutTime = 0
+	self._heroRareNNCount = 0
+	self._heroRareNCount = 0
+	self._heroRareRCount = 0
+	self._heroRareSRCount = 0
+	self._heroRareSSRCount = 0
+	self._lastEpisodeId = 0
+	self._levelup = 0
+	self._preCommitFeedBackTime = -1
+	self._bg = 0
+	self._canRename = false
+	self._canRenameFlagMonth = nil
+	self._playerInfo = nil
+	self._showAchievement = nil
+	self._totalLoginDays = 0
+
+	self:updateAssistRewardCountData(0, 0, true)
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._simpleProperties = {}
-	arg_2_0._playerInfo = nil
+function PlayerModel:reInit()
+	self._simpleProperties = {}
+	self._playerInfo = nil
 
-	arg_2_0:updateAssistRewardCountData(0, 0, true)
+	self:updateAssistRewardCountData(0, 0, true)
 end
 
-function var_0_0.setPlayerinfo(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._level
-	local var_3_1 = arg_3_0._lastEpisodeId
+function PlayerModel:setPlayerinfo(info)
+	local oldLevel = self._level
+	local oldLastEpisodeId = self._lastEpisodeId
 
-	arg_3_0._userId = arg_3_1.userId
-	arg_3_0._name = arg_3_1.name
-	arg_3_0._portrait = arg_3_1.portrait
-	arg_3_0._level = arg_3_1.level
-	arg_3_0._exp = arg_3_1.exp
-	arg_3_0._signature = arg_3_1.signature
-	arg_3_0._birthday = arg_3_1.birthday
-	arg_3_0._registerTime = arg_3_1.registerTime
-	arg_3_0._lastLoginTime = arg_3_1.lastLoginTime
-	arg_3_0._lastLogoutTime = arg_3_1.lastLogoutTime
-	arg_3_0._heroRareNNCount = arg_3_1.heroRareNNCount
-	arg_3_0._heroRareNCount = arg_3_1.heroRareNCount
-	arg_3_0._heroRareRCount = arg_3_1.heroRareRCount
-	arg_3_0._heroRareSRCount = arg_3_1.heroRareSRCount
-	arg_3_0._heroRareSSRCount = arg_3_1.heroRareSSRCount
-	arg_3_0._lastEpisodeId = arg_3_1.lastEpisodeId
-	arg_3_0._showAchievement = arg_3_1.showAchievement
-	arg_3_0._bg = arg_3_1.bg
-	arg_3_0._totalLoginDays = arg_3_1.totalLoginDays
+	self._userId = info.userId
+	self._name = info.name
+	self._portrait = info.portrait
+	self._level = info.level
+	self._exp = info.exp
+	self._signature = info.signature
+	self._birthday = info.birthday
+	self._registerTime = info.registerTime
+	self._lastLoginTime = info.lastLoginTime
+	self._lastLogoutTime = info.lastLogoutTime
+	self._heroRareNNCount = info.heroRareNNCount
+	self._heroRareNCount = info.heroRareNCount
+	self._heroRareRCount = info.heroRareRCount
+	self._heroRareSRCount = info.heroRareSRCount
+	self._heroRareSSRCount = info.heroRareSSRCount
+	self._lastEpisodeId = info.lastEpisodeId
+	self._showAchievement = info.showAchievement
+	self._bg = info.bg
+	self._totalLoginDays = info.totalLoginDays
 
-	arg_3_0:_checkHeroinfo(arg_3_1.showHeros)
-	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerinfo, arg_3_1)
+	self:_checkHeroinfo(info.showHeros)
+	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerinfo, info)
 
-	if var_3_0 < arg_3_0._level and var_3_0 ~= 0 then
+	if oldLevel < self._level and oldLevel ~= 0 then
 		SDKMgr.instance:upgradeRole(StatModel.instance:generateRoleInfo())
-		PlayerController.instance:dispatchEvent(PlayerEvent.PlayerLevelUp, var_3_0, arg_3_0._level)
+		PlayerController.instance:dispatchEvent(PlayerEvent.PlayerLevelUp, oldLevel, self._level)
 
-		arg_3_0._levelup = arg_3_0._level - var_3_0
+		self._levelup = self._level - oldLevel
 	end
 
-	if var_3_1 ~= 0 and arg_3_0._lastEpisodeId ~= var_3_1 then
+	if oldLastEpisodeId ~= 0 and self._lastEpisodeId ~= oldLastEpisodeId then
 		SDKMgr.instance:updateRole(StatModel.instance:generateRoleInfo())
 	end
 
 	if OpenConfig.instance:isShowWaterMarkConfig() then
-		arg_3_0:showWaterMark()
+		self:showWaterMark()
 	end
 
 	ActivityEnterMgr.instance:init()
 end
 
-function var_0_0.getAndResetPlayerLevelUp(arg_4_0)
-	local var_4_0 = arg_4_0._levelup
+function PlayerModel:getAndResetPlayerLevelUp()
+	local levelup = self._levelup
 
-	arg_4_0._levelup = 0
+	self._levelup = 0
 
-	return var_4_0
+	return levelup
 end
 
-function var_0_0._checkHeroinfo(arg_5_0, arg_5_1)
-	arg_5_0._showHeros = {}
+function PlayerModel:_checkHeroinfo(showHeros)
+	self._showHeros = {}
 
-	for iter_5_0 = 1, #arg_5_1 do
-		if arg_5_1[iter_5_0].heroId == 0 then
-			arg_5_1[iter_5_0] = 0
+	for i = 1, #showHeros do
+		if showHeros[i].heroId == 0 then
+			showHeros[i] = 0
 		end
 
-		table.insert(arg_5_0._showHeros, arg_5_1[iter_5_0])
+		table.insert(self._showHeros, showHeros[i])
 	end
 
-	for iter_5_1 = 1, 3 do
-		if iter_5_1 > #arg_5_0._showHeros then
-			arg_5_0._showHeros[iter_5_1] = 0
+	for i = 1, 3 do
+		if i > #self._showHeros then
+			self._showHeros[i] = 0
 		end
 	end
 end
 
-function var_0_0.getPlayinfo(arg_6_0)
-	arg_6_0._playerInfo = arg_6_0._playerInfo or {}
+function PlayerModel:getPlayinfo()
+	self._playerInfo = self._playerInfo or {}
 
-	local var_6_0 = arg_6_0._playerInfo
+	local playerinfo = self._playerInfo
 
-	var_6_0.userId = arg_6_0._userId
-	var_6_0.name = arg_6_0._name
-	var_6_0.portrait = arg_6_0._portrait
-	var_6_0.level = arg_6_0._level
-	var_6_0.exp = arg_6_0._exp
-	var_6_0.signature = arg_6_0._signature
-	var_6_0.birthday = arg_6_0._birthday
-	var_6_0.showHeros = arg_6_0._showHeros
-	var_6_0.registerTime = arg_6_0._registerTime
-	var_6_0.lastLoginTime = arg_6_0._lastLoginTime
-	var_6_0.lastLogoutTime = arg_6_0._lastLogoutTime
-	var_6_0.heroRareNNCount = arg_6_0._heroRareNNCount
-	var_6_0.heroRareNCount = arg_6_0._heroRareNCount
-	var_6_0.heroRareRCount = arg_6_0._heroRareRCount
-	var_6_0.heroRareSRCount = arg_6_0._heroRareSRCount
-	var_6_0.heroRareSSRCount = arg_6_0._heroRareSSRCount
-	var_6_0.lastEpisodeId = arg_6_0._lastEpisodeId
-	var_6_0.showAchievement = arg_6_0._showAchievement
-	var_6_0.bg = arg_6_0._bg
-	var_6_0.totalLoginDays = arg_6_0._totalLoginDays
+	playerinfo.userId = self._userId
+	playerinfo.name = self._name
+	playerinfo.portrait = self._portrait
+	playerinfo.level = self._level
+	playerinfo.exp = self._exp
+	playerinfo.signature = self._signature
+	playerinfo.birthday = self._birthday
+	playerinfo.showHeros = self._showHeros
+	playerinfo.registerTime = self._registerTime
+	playerinfo.lastLoginTime = self._lastLoginTime
+	playerinfo.lastLogoutTime = self._lastLogoutTime
+	playerinfo.heroRareNNCount = self._heroRareNNCount
+	playerinfo.heroRareNCount = self._heroRareNCount
+	playerinfo.heroRareRCount = self._heroRareRCount
+	playerinfo.heroRareSRCount = self._heroRareSRCount
+	playerinfo.heroRareSSRCount = self._heroRareSSRCount
+	playerinfo.lastEpisodeId = self._lastEpisodeId
+	playerinfo.showAchievement = self._showAchievement
+	playerinfo.bg = self._bg
+	playerinfo.totalLoginDays = self._totalLoginDays
 
-	return arg_6_0._playerInfo
+	return self._playerInfo
 end
 
-function var_0_0.getExpNowAndMax(arg_7_0)
-	local var_7_0 = arg_7_0._exp
-	local var_7_1 = 0
+function PlayerModel:getExpNowAndMax()
+	local exp_now = self._exp
+	local exp_max = 0
 
-	if arg_7_0._level < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
-		var_7_1 = PlayerConfig.instance:getPlayerLevelCO(arg_7_0._level + 1).exp
+	if self._level < CommonConfig.instance:getConstNum(ConstEnum.PlayerMaxLev) then
+		exp_max = PlayerConfig.instance:getPlayerLevelCO(self._level + 1).exp
 	else
-		var_7_1 = PlayerConfig.instance:getPlayerLevelCO(arg_7_0._level).exp
-		var_7_0 = var_7_1
+		exp_max = PlayerConfig.instance:getPlayerLevelCO(self._level).exp
+		exp_now = exp_max
 	end
 
 	return {
-		var_7_0,
-		var_7_1
+		exp_now,
+		exp_max
 	}
 end
 
-function var_0_0.getPlayerLevel(arg_8_0)
-	return arg_8_0._level
+function PlayerModel:getPlayerLevel()
+	return self._level
 end
 
-function var_0_0.setPlayerName(arg_9_0, arg_9_1)
-	arg_9_0._name = arg_9_1
+function PlayerModel:setPlayerName(name)
+	self._name = name
 
-	arg_9_0:_changePlayerbassinfo()
+	self:_changePlayerbassinfo()
 	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerName)
 end
 
-function var_0_0.setPlayerSignature(arg_10_0, arg_10_1)
-	arg_10_0._signature = arg_10_1
+function PlayerModel:setPlayerSignature(signature)
+	self._signature = signature
 
-	arg_10_0:_changePlayerbassinfo()
+	self:_changePlayerbassinfo()
 end
 
-function var_0_0.setPlayerBirthday(arg_11_0, arg_11_1)
-	arg_11_0._birthday = arg_11_1
+function PlayerModel:setPlayerBirthday(birthday)
+	self._birthday = birthday
 
-	arg_11_0:_changePlayerbassinfo()
+	self:_changePlayerbassinfo()
 end
 
-function var_0_0.getPlayerBirthday(arg_12_0)
-	return arg_12_0._birthday or ""
+function PlayerModel:getPlayerBirthday()
+	return self._birthday or ""
 end
 
-function var_0_0.setPlayerPortrait(arg_13_0, arg_13_1)
-	PlayerController.instance:dispatchEvent(PlayerEvent.SetPortrait, arg_13_1)
+function PlayerModel:setPlayerPortrait(portrait)
+	PlayerController.instance:dispatchEvent(PlayerEvent.SetPortrait, portrait)
 
-	arg_13_0._portrait = arg_13_1
+	self._portrait = portrait
 
-	arg_13_0:_changePlayerbassinfo()
+	self:_changePlayerbassinfo()
 end
 
-function var_0_0.setShowHeroUniqueIds(arg_14_0)
-	PlayerController.instance:dispatchEvent(PlayerEvent.SetShowHero, arg_14_0._showHeros)
+function PlayerModel:setShowHeroUniqueIds()
+	PlayerController.instance:dispatchEvent(PlayerEvent.SetShowHero, self._showHeros)
 end
 
-function var_0_0._changePlayerbassinfo(arg_15_0)
-	local var_15_0 = arg_15_0:getPlayinfo()
+function PlayerModel:_changePlayerbassinfo()
+	local info = self:getPlayinfo()
 
-	PlayerController.instance:dispatchEvent(PlayerEvent.PlayerbassinfoChange, var_15_0)
+	PlayerController.instance:dispatchEvent(PlayerEvent.PlayerbassinfoChange, info)
 end
 
-function var_0_0.getShowHeros(arg_16_0)
-	return arg_16_0._showHeros
+function PlayerModel:getShowHeros()
+	local heros = self._showHeros
+
+	return heros
 end
 
-function var_0_0.getShowHeroUid(arg_17_0)
-	local var_17_0 = {}
+function PlayerModel:getShowHeroUid()
+	local showids = {}
 
-	for iter_17_0 = 1, #arg_17_0._showHeros do
-		if arg_17_0._showHeros[iter_17_0] ~= 0 then
-			local var_17_1 = HeroModel.instance:getByHeroId(arg_17_0._showHeros[iter_17_0].heroId).uid
+	for i = 1, #self._showHeros do
+		if self._showHeros[i] ~= 0 then
+			local uid = HeroModel.instance:getByHeroId(self._showHeros[i].heroId).uid
 
-			table.insert(var_17_0, var_17_1)
+			table.insert(showids, uid)
 		else
-			table.insert(var_17_0, 0)
+			table.insert(showids, 0)
 		end
 	end
 
-	return var_17_0
+	return showids
 end
 
-function var_0_0.setShowHero(arg_18_0, arg_18_1, arg_18_2)
-	if arg_18_2 ~= 0 then
-		arg_18_0._showHeros[arg_18_1] = arg_18_0:_setSimpleinfo(arg_18_2)
+function PlayerModel:setShowHero(num, id)
+	if id ~= 0 then
+		self._showHeros[num] = self:_setSimpleinfo(id)
 	else
-		arg_18_0._showHeros[arg_18_1] = 0
+		self._showHeros[num] = 0
 	end
 end
 
-function var_0_0._setSimpleinfo(arg_19_0, arg_19_1)
-	local var_19_0 = HeroModel.instance:getByHeroId(arg_19_1)
+function PlayerModel:_setSimpleinfo(id)
+	local hero = HeroModel.instance:getByHeroId(id)
+	local Simpleinfo = {}
 
-	return {
-		uid = var_19_0.uid,
-		heroId = var_19_0.heroId,
-		level = var_19_0.level,
-		rank = var_19_0.rank,
-		exSkillLevel = var_19_0.exSkillLevel,
-		skin = var_19_0.skin
-	}
+	Simpleinfo.uid = hero.uid
+	Simpleinfo.heroId = hero.heroId
+	Simpleinfo.level = hero.level
+	Simpleinfo.rank = hero.rank
+	Simpleinfo.exSkillLevel = hero.exSkillLevel
+	Simpleinfo.skin = hero.skin
+
+	return Simpleinfo
 end
 
-function var_0_0.updateAssistRewardCountData(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	arg_20_0._assistRewardCount = arg_20_1 or 0
-	arg_20_0._hasReceiveAssistBonus = arg_20_2 or 0
+function PlayerModel:updateAssistRewardCountData(rewardCount, hasReceiveAssistBonus, notDispatchEvent)
+	self._assistRewardCount = rewardCount or 0
+	self._hasReceiveAssistBonus = hasReceiveAssistBonus or 0
 
-	if arg_20_3 then
+	if notDispatchEvent then
 		return
 	end
 
 	PlayerController.instance:dispatchEvent(PlayerEvent.UpdateAssistRewardCount)
 end
 
-function var_0_0.getAssistRewardCount(arg_21_0)
-	return arg_21_0._assistRewardCount or 0
+function PlayerModel:getAssistRewardCount()
+	return self._assistRewardCount or 0
 end
 
-function var_0_0.isHasAssistReward(arg_22_0)
-	local var_22_0 = false
+function PlayerModel:isHasAssistReward()
+	local result = false
+	local isReachingLimit = self:isGetAssistRewardReachingLimit()
 
-	if arg_22_0:isGetAssistRewardReachingLimit() then
-		return var_22_0
+	if isReachingLimit then
+		return result
 	end
 
-	local var_22_1 = arg_22_0:getAssistRewardCount()
+	local assistRewardCount = self:getAssistRewardCount()
 
-	return var_22_1 and var_22_1 > 0
+	result = assistRewardCount and assistRewardCount > 0
+
+	return result
 end
 
-function var_0_0.getMaxAssistRewardCount(arg_23_0)
-	return CommonConfig.instance:getConstNum(ConstEnum.AssistRewardMaxNum) or 0
+function PlayerModel:getMaxAssistRewardCount()
+	local result = CommonConfig.instance:getConstNum(ConstEnum.AssistRewardMaxNum)
+
+	return result or 0
 end
 
-function var_0_0.getHasReceiveAssistBonus(arg_24_0)
-	return arg_24_0._hasReceiveAssistBonus or 0
+function PlayerModel:getHasReceiveAssistBonus()
+	return self._hasReceiveAssistBonus or 0
 end
 
-function var_0_0.isGetAssistRewardReachingLimit(arg_25_0)
-	return arg_25_0:getMaxAssistRewardCount() <= arg_25_0:getHasReceiveAssistBonus()
+function PlayerModel:isGetAssistRewardReachingLimit()
+	local maxAssistRewardCount = self:getMaxAssistRewardCount()
+	local hasReceiveAssistBonus = self:getHasReceiveAssistBonus()
+
+	return maxAssistRewardCount <= hasReceiveAssistBonus
 end
 
-function var_0_0.updateSimpleProperties(arg_26_0, arg_26_1)
-	for iter_26_0, iter_26_1 in ipairs(arg_26_1) do
-		arg_26_0:updateSimpleProperty(iter_26_1)
+function PlayerModel:updateSimpleProperties(simpleProperties)
+	for i, v in ipairs(simpleProperties) do
+		self:updateSimpleProperty(v)
 	end
 end
 
-local var_0_1 = {
+local simplePropertyMoFactory = {
 	[PlayerEnum.SimpleProperty.SkinState] = KeyValueSimplePropertyMO,
 	[PlayerEnum.SimpleProperty.MainSceneSkinRedDot] = KeyValueSimplePropertyMO,
 	[PlayerEnum.SimpleProperty.NuoDiKaNewSkill] = KeyValueSimplePropertyMO
 }
 
-function var_0_0._getSimplePropMo(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._simpleProperties[arg_27_1]
+function PlayerModel:_getSimplePropMo(id)
+	local mo = self._simpleProperties[id]
 
-	if not var_27_0 then
-		var_27_0 = (var_0_1[arg_27_1] or SimplePropertyMO).New()
-		arg_27_0._simpleProperties[arg_27_1] = var_27_0
+	if not mo then
+		local cls = simplePropertyMoFactory[id] or SimplePropertyMO
+
+		mo = cls.New()
+		self._simpleProperties[id] = mo
 	end
 
-	return var_27_0
+	return mo
 end
 
-function var_0_0.updateSimpleProperty(arg_28_0, arg_28_1)
-	arg_28_0._simpleProperties = arg_28_0._simpleProperties or {}
+function PlayerModel:updateSimpleProperty(simpleProperty)
+	self._simpleProperties = self._simpleProperties or {}
 
-	arg_28_0:_getSimplePropMo(arg_28_1.id):init(arg_28_1)
+	local mo = self:_getSimplePropMo(simpleProperty.id)
+
+	mo:init(simpleProperty)
 end
 
-function var_0_0.forceSetSimpleProperty(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = arg_29_0._simpleProperties[arg_29_1]
+function PlayerModel:forceSetSimpleProperty(id, value)
+	local mo = self._simpleProperties[id]
 
-	if var_29_0 then
-		var_29_0.property = arg_29_2
+	if mo then
+		mo.property = value
 	end
 end
 
-function var_0_0.getSimpleProperty(arg_30_0, arg_30_1)
-	if arg_30_0._simpleProperties then
-		local var_30_0 = arg_30_0._simpleProperties[arg_30_1]
+function PlayerModel:getSimpleProperty(id)
+	if self._simpleProperties then
+		local mo = self._simpleProperties[id]
 
-		return var_30_0 and var_30_0.property
+		return mo and mo.property
 	end
 
 	return nil
 end
 
-function var_0_0.getPropKeyValue(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	return arg_31_0:_getSimplePropMo(arg_31_1):getValue(arg_31_2, arg_31_3)
+function PlayerModel:getPropKeyValue(propertyId, id, defaultValue)
+	local mo = self:_getSimplePropMo(propertyId)
+
+	return mo:getValue(id, defaultValue)
 end
 
-function var_0_0.setPropKeyValue(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	arg_32_0:_getSimplePropMo(arg_32_1):setValue(arg_32_2, arg_32_3)
+function PlayerModel:setPropKeyValue(propertyId, id, value)
+	local mo = self:_getSimplePropMo(propertyId)
+
+	mo:setValue(id, value)
 end
 
-function var_0_0.getPropKeyValueString(arg_33_0, arg_33_1)
-	return arg_33_0:_getSimplePropMo(arg_33_1):getString()
+function PlayerModel:getPropKeyValueString(propertyId)
+	local mo = self:_getSimplePropMo(propertyId)
+
+	return mo:getString()
 end
 
-function var_0_0.getMyUserId(arg_34_0)
-	return arg_34_0._userId
+function PlayerModel:getMyUserId()
+	return self._userId
 end
 
-function var_0_0.isPlayerSelf(arg_35_0, arg_35_1)
-	local var_35_0 = true
-	local var_35_1 = arg_35_0:getMyUserId()
+function PlayerModel:isPlayerSelf(uid)
+	local result = true
+	local myUserId = self:getMyUserId()
 
-	if var_35_1 and arg_35_1 then
-		var_35_0 = arg_35_1 == var_35_1
+	if myUserId and uid then
+		result = uid == myUserId
 	end
 
-	return var_35_0
+	return result
 end
 
-function var_0_0.logout(arg_36_0)
+function PlayerModel:logout()
 	return
 end
 
-function var_0_0.showWaterMark(arg_37_0)
+function PlayerModel:showWaterMark()
 	ViewMgr.instance:openView(ViewName.WaterMarkView, {
-		userId = arg_37_0._userId
+		userId = self._userId
 	})
 end
 
-function var_0_0.changeWaterMarkStatus(arg_38_0, arg_38_1)
-	if not arg_38_0.waterMarkView then
-		arg_38_0:showWaterMark()
+function PlayerModel:changeWaterMarkStatus(isShow)
+	if not self.waterMarkView then
+		self:showWaterMark()
 	end
 
-	if arg_38_1 then
-		arg_38_0.waterMarkView:showWaterMark()
+	if isShow then
+		self.waterMarkView:showWaterMark()
 	else
-		arg_38_0.waterMarkView:hideWaterMark()
+		self.waterMarkView:hideWaterMark()
 	end
 end
 
-function var_0_0.getPreFeedBackTime(arg_39_0)
-	return arg_39_0._preCommitFeedBackTime
+function PlayerModel:getPreFeedBackTime()
+	return self._preCommitFeedBackTime
 end
 
-function var_0_0.setPreFeedBackTime(arg_40_0)
-	arg_40_0._preCommitFeedBackTime = Time.time
+function PlayerModel:setPreFeedBackTime()
+	self._preCommitFeedBackTime = Time.time
 end
 
-function var_0_0.setMainThumbnail(arg_41_0, arg_41_1)
-	arg_41_0._mainThumbnail = arg_41_1
+function PlayerModel:setMainThumbnail(value)
+	self._mainThumbnail = value
 end
 
-function var_0_0.GMSetMainThumbnail(arg_42_0)
-	if isDebugBuild and PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, 0) == 1 then
-		arg_42_0._mainThumbnail = false
+function PlayerModel:GMSetMainThumbnail()
+	if isDebugBuild then
+		local gmOpenMainThumbnail = PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, 0) == 1
 
-		logError("GM设置了登录开启缩略页，请知悉！")
+		if gmOpenMainThumbnail then
+			self._mainThumbnail = false
+
+			logError("GM设置了登录开启缩略页，请知悉！")
+		end
 	end
 end
 
-function var_0_0.getMainThumbnail(arg_43_0)
-	return arg_43_0._mainThumbnail
+function PlayerModel:getMainThumbnail()
+	return self._mainThumbnail
 end
 
-local var_0_2 = 18000
+local fineHours = 18000
 
-function var_0_0.setCanRename(arg_44_0, arg_44_1)
-	arg_44_0._canRename = arg_44_1 == true
+function PlayerModel:setCanRename(val)
+	self._canRename = val == true
 
-	local var_44_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+	local dt = os.date("*t", ServerTime.nowInLocal() - fineHours)
 
-	if var_44_0 then
-		arg_44_0._canRenameFlagMonth = var_44_0.month
+	if dt then
+		self._canRenameFlagMonth = dt.month
 	end
 
 	PlayerController.instance:dispatchEvent(PlayerEvent.RenameFlagUpdate)
 end
 
-function var_0_0.setExtraRename(arg_45_0, arg_45_1)
-	arg_45_0.extraRenameCount = arg_45_1
+function PlayerModel:setExtraRename(extraRename)
+	self.extraRenameCount = extraRename
 end
 
-function var_0_0.getExtraRename(arg_46_0)
-	return arg_46_0.extraRenameCount or 0
+function PlayerModel:getExtraRename()
+	return self.extraRenameCount or 0
 end
 
-function var_0_0.checkCanRenameReset(arg_47_0)
-	local var_47_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+function PlayerModel:checkCanRenameReset()
+	local dt = os.date("*t", ServerTime.nowInLocal() - fineHours)
 
-	if var_47_0 and arg_47_0._canRenameFlagMonth ~= nil and arg_47_0._canRenameFlagMonth ~= var_47_0.month then
+	if dt and self._canRenameFlagMonth ~= nil and self._canRenameFlagMonth ~= dt.month then
 		logNormal("CanRenameFlag Reset")
-		arg_47_0:setCanRename(true)
+		self:setCanRename(true)
 	end
 end
 
-function var_0_0.getCanRename(arg_48_0)
-	return arg_48_0._canRename
+function PlayerModel:getCanRename()
+	return self._canRename
 end
 
-function var_0_0.getShowAchievement(arg_49_0)
-	return arg_49_0._showAchievement
+function PlayerModel:getShowAchievement()
+	return self._showAchievement
 end
 
-function var_0_0.getPlayerPrefsKey(arg_50_0, arg_50_1)
-	return arg_50_1 .. arg_50_0._userId
+function PlayerModel:getPlayerPrefsKey(key)
+	return key .. self._userId
 end
 
-function var_0_0.getPlayerRegisterTime(arg_51_0)
-	return arg_51_0._registerTime
+function PlayerModel:getPlayerRegisterTime()
+	return self._registerTime
 end
 
-var_0_0.instance = var_0_0.New()
+PlayerModel.instance = PlayerModel.New()
 
-return var_0_0
+return PlayerModel

@@ -1,10 +1,12 @@
-﻿module("modules.logic.versionactivity1_4.act134.define.Activity134Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act134/define/Activity134Event.lua
 
-local var_0_0 = {}
+module("modules.logic.versionactivity1_4.act134.define.Activity134Event", package.seeall)
 
-var_0_0.OnUpdateInfo = 1
-var_0_0.OnGetBonus = 2
-var_0_0.OnTaskUpdate = 6
-var_0_0.OnRedDotUpdate = 7
+local Activity134Event = {}
 
-return var_0_0
+Activity134Event.OnUpdateInfo = 1
+Activity134Event.OnGetBonus = 2
+Activity134Event.OnTaskUpdate = 6
+Activity134Event.OnRedDotUpdate = 7
+
+return Activity134Event

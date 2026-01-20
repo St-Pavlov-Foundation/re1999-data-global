@@ -1,65 +1,68 @@
-﻿module("modules.logic.survival.model.map.Survival3DModelMO", package.seeall)
+﻿-- chunkname: @modules/logic/survival/model/map/Survival3DModelMO.lua
 
-local var_0_0 = pureTable("Survival3DModelMO")
+module("modules.logic.survival.model.map.Survival3DModelMO", package.seeall)
 
-function var_0_0.setDataByUnitMo(arg_1_0, arg_1_1)
-	arg_1_0.isSearch = arg_1_1.unitType == SurvivalEnum.UnitType.Search
-	arg_1_0.curHeroPath = nil
-	arg_1_0.curUnitPath = nil
-	arg_1_0.isHandleHeroPath = true
+local Survival3DModelMO = pureTable("Survival3DModelMO")
 
-	local var_1_0 = arg_1_1:getResPath()
-	local var_1_1 = arg_1_1.co.camera
-	local var_1_2 = next(arg_1_1.exPoints)
+function Survival3DModelMO:setDataByUnitMo(unitMo)
+	self.isSearch = unitMo.unitType == SurvivalEnum.UnitType.Search
+	self.curHeroPath = nil
+	self.curUnitPath = nil
+	self.isHandleHeroPath = true
 
-	arg_1_0:setData(var_1_0, var_1_1, var_1_2)
+	local resource = unitMo:getResPath()
+	local cameraType = unitMo.co.camera
+	local isExPointUnit = next(unitMo.exPoints)
+
+	self:setData(resource, cameraType, isExPointUnit)
 end
 
-function var_0_0.setDataByEventID(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0.curHeroPath = nil
-	arg_2_0.curUnitPath = nil
-	arg_2_0.isHandleHeroPath = false
+function Survival3DModelMO:setDataByEventID(eventID, unitResPath)
+	self.curHeroPath = nil
+	self.curUnitPath = nil
+	self.isHandleHeroPath = false
 
-	local var_2_0 = arg_2_2
-	local var_2_1
-	local var_2_2 = false
+	local resource = unitResPath
+	local cameraType
+	local isExPointUnit = false
 
-	if arg_2_1 then
-		local var_2_3 = lua_survival_fight.configDict[arg_2_1] or SurvivalConfig.instance:getNpcConfig(arg_2_1, true)
+	if eventID then
+		local co = lua_survival_fight.configDict[eventID]
 
-		var_2_3 = var_2_3 or lua_survival_search.configDict[arg_2_1]
-		var_2_3 = var_2_3 or lua_survival_mission.configDict[arg_2_1]
+		co = co or SurvivalConfig.instance:getNpcConfig(eventID, true)
+		co = co or lua_survival_search.configDict[eventID]
+		co = co or lua_survival_mission.configDict[eventID]
 
-		if var_2_3 then
-			var_2_0 = var_2_3.resource
-			var_2_1 = var_2_3.camera
-			var_2_2 = not string.nilorempty(var_2_3.grid)
+		if co then
+			resource = co.resource
+			cameraType = co.camera
+			isExPointUnit = not string.nilorempty(co.grid)
 		end
 	end
 
-	arg_2_0:setData(var_2_0, var_2_1, var_2_2)
+	self:setData(resource, cameraType, isExPointUnit)
 end
 
-function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0.unitPath = arg_3_1
+function Survival3DModelMO:setData(resource, cameraType, isExPointUnit)
+	self.unitPath = resource
 
-	if arg_3_2 == 4 then
-		arg_3_0.curHeroPath = "node6/role"
-	elseif arg_3_0.unitPath and string.find(arg_3_0.unitPath, "^survival/buiding") then
-		if arg_3_2 == 2 then
-			arg_3_0.curUnitPath = "node4/buiding3"
-		elseif arg_3_2 == 3 then
-			arg_3_0.curUnitPath = "node5/buiding4"
-		elseif arg_3_3 or arg_3_2 == 1 then
-			arg_3_0.curUnitPath = "node3/buiding2"
+	if cameraType == 4 then
+		self.curHeroPath = "node6/role"
+	elseif self.unitPath and string.find(self.unitPath, "^survival/buiding") then
+		if cameraType == 2 then
+			self.curUnitPath = "node4/buiding3"
+		elseif cameraType == 3 then
+			self.curUnitPath = "node5/buiding4"
+		elseif isExPointUnit or cameraType == 1 then
+			self.curUnitPath = "node3/buiding2"
 		else
-			arg_3_0.curUnitPath = "node2/buiding1"
-			arg_3_0.curHeroPath = "node2/role"
+			self.curUnitPath = "node2/buiding1"
+			self.curHeroPath = "node2/role"
 		end
 	else
-		arg_3_0.curHeroPath = "node1/role"
-		arg_3_0.curUnitPath = "node1/npc"
+		self.curHeroPath = "node1/role"
+		self.curUnitPath = "node1/npc"
 	end
 end
 
-return var_0_0
+return Survival3DModelMO

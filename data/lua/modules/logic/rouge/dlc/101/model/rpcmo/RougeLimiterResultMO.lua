@@ -1,28 +1,30 @@
-﻿module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterResultMO", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/dlc/101/model/rpcmo/RougeLimiterResultMO.lua
 
-local var_0_0 = pureTable("RougeLimiterResultMO")
+module("modules.logic.rouge.dlc.101.model.rpcmo.RougeLimiterResultMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.addEmblem = tonumber(arg_1_1.addEmblem)
-	arg_1_0.useLimitBuffIds = {}
+local RougeLimiterResultMO = pureTable("RougeLimiterResultMO")
 
-	tabletool.addValues(arg_1_0.useLimitBuffIds, arg_1_1.useLimitBuffIds)
+function RougeLimiterResultMO:init(info)
+	self.addEmblem = tonumber(info.addEmblem)
+	self.useLimitBuffIds = {}
+
+	tabletool.addValues(self.useLimitBuffIds, info.useLimitBuffIds)
 end
 
-function var_0_0.getLimiterAddEmblem(arg_2_0)
-	return arg_2_0.addEmblem or 0
+function RougeLimiterResultMO:getLimiterAddEmblem()
+	return self.addEmblem or 0
 end
 
-function var_0_0.getLimiterUseBuffIds(arg_3_0)
-	return arg_3_0.useLimitBuffIds
+function RougeLimiterResultMO:getLimiterUseBuffIds()
+	return self.useLimitBuffIds
 end
 
-function var_0_0.setPreEmbleCount(arg_4_0, arg_4_1)
-	arg_4_0.preEmbleCount = arg_4_1 or 0
+function RougeLimiterResultMO:setPreEmbleCount(embleCount)
+	self.preEmbleCount = embleCount or 0
 end
 
-function var_0_0.getPreEmbleCount(arg_5_0)
-	return arg_5_0.preEmbleCount or 0
+function RougeLimiterResultMO:getPreEmbleCount()
+	return self.preEmbleCount or 0
 end
 
-return var_0_0
+return RougeLimiterResultMO

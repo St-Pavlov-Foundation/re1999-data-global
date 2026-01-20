@@ -1,156 +1,158 @@
-﻿module("modules.logic.story.view.StoryTyperView", package.seeall)
+﻿-- chunkname: @modules/logic/story/view/StoryTyperView.lua
 
-local var_0_0 = class("StoryTyperView", BaseView)
+module("modules.logic.story.view.StoryTyperView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "#go_bg")
-	arg_1_0._gotyper1 = gohelper.findChild(arg_1_0.viewGO, "#go_typer1")
-	arg_1_0._gologo = gohelper.findChild(arg_1_0.viewGO, "#go_typer1/#go_logo")
-	arg_1_0._txttyper1 = gohelper.findChildText(arg_1_0.viewGO, "#go_typer1/#txt_typer1")
-	arg_1_0._gotyper2 = gohelper.findChild(arg_1_0.viewGO, "#go_typer2")
-	arg_1_0._txttyper2 = gohelper.findChildText(arg_1_0.viewGO, "#go_typer2/#txt_typer2")
+local StoryTyperView = class("StoryTyperView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function StoryTyperView:onInitView()
+	self._gobg = gohelper.findChild(self.viewGO, "#go_bg")
+	self._gotyper1 = gohelper.findChild(self.viewGO, "#go_typer1")
+	self._gologo = gohelper.findChild(self.viewGO, "#go_typer1/#go_logo")
+	self._txttyper1 = gohelper.findChildText(self.viewGO, "#go_typer1/#txt_typer1")
+	self._gotyper2 = gohelper.findChild(self.viewGO, "#go_typer2")
+	self._txttyper2 = gohelper.findChildText(self.viewGO, "#go_typer2/#txt_typer2")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function StoryTyperView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function StoryTyperView:removeEvents()
 	return
 end
 
-local var_0_1 = 0.05
-local var_0_2 = 0.2
-local var_0_3 = 0.3
-local var_0_4 = 0.1
-local var_0_5 = 0.8
-local var_0_6 = 0
+local LetterInterval = 0.05
+local LetterRandom = 0.2
+local WordInterval = 0.3
+local WordRandom = 0.1
+local SentenceInterval = 0.8
+local SentenceRandom = 0
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_4_0.viewGO)
-	arg_4_0._singleBg = gohelper.getSingleImage(arg_4_0._gobg)
+function StoryTyperView:_editableInitView()
+	self._animatorPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._singleBg = gohelper.getSingleImage(self._gobg)
 
-	arg_4_0._singleBg:LoadImage(ResUrl.getStoryBg("typerbg.png"))
+	self._singleBg:LoadImage(ResUrl.getStoryBg("typerbg.png"))
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0._type = arg_5_0.viewParam.type
+function StoryTyperView:onOpen()
+	self._type = self.viewParam.type
 
-	local var_5_0 = arg_5_0._type == 1 and arg_5_0._txttyper1.text or arg_5_0._txttyper2.text
+	local content = self._type == 1 and self._txttyper1.text or self._txttyper2.text
 
-	var_5_0 = arg_5_0.viewParam.content and arg_5_0.viewParam.content or var_5_0
-	arg_5_0._txttyper1.text = ""
-	arg_5_0._txttyper2.text = ""
+	content = self.viewParam.content and self.viewParam.content or content
+	self._txttyper1.text = ""
+	self._txttyper2.text = ""
 
-	if arg_5_0._type == 1 then
-		local var_5_1 = "start1"
-		local var_5_2 = 1
-		local var_5_3 = arg_5_0._txttyper1
-		local var_5_4 = "end1"
-		local var_5_5 = arg_5_0._type1End
+	if self._type == 1 then
+		local typerStartAnim = "start1"
+		local delayStart = 1
+		local text = self._txttyper1
+		local typerEndAnim = "end1"
+		local callback = self._type1End
 
-		arg_5_0:_playTyper(var_5_1, var_5_4, var_5_3, var_5_0, var_5_5)
-	elseif arg_5_0._type == 2 then
-		local var_5_6 = "start2"
-		local var_5_7 = 1
-		local var_5_8 = arg_5_0._txttyper2
-		local var_5_9 = "end2"
-		local var_5_10 = arg_5_0._type2End
+		self:_playTyper(typerStartAnim, typerEndAnim, text, content, callback)
+	elseif self._type == 2 then
+		local typerStartAnim = "start2"
+		local delayStart = 1
+		local text = self._txttyper2
+		local typerEndAnim = "end2"
+		local callback = self._type2End
 
-		arg_5_0:_playTyper(var_5_6, var_5_9, var_5_8, var_5_0, var_5_10)
+		self:_playTyper(typerStartAnim, typerEndAnim, text, content, callback)
 	end
 end
 
-function var_0_0._playTyper(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	arg_6_0._typerStartAnim = arg_6_1
-	arg_6_0._typerEndAnim = arg_6_2
-	arg_6_0._text = arg_6_3
-	arg_6_0._content = arg_6_4
-	arg_6_0._callback = arg_6_5
+function StoryTyperView:_playTyper(typerStartAnim, typerEndAnim, text, content, callback)
+	self._typerStartAnim = typerStartAnim
+	self._typerEndAnim = typerEndAnim
+	self._text = text
+	self._content = content
+	self._callback = callback
 
-	if not string.nilorempty(arg_6_0._typerStartAnim) then
-		arg_6_0._animatorPlayer:Play(arg_6_0._typerStartAnim, arg_6_0._delayStart, arg_6_0)
+	if not string.nilorempty(self._typerStartAnim) then
+		self._animatorPlayer:Play(self._typerStartAnim, self._delayStart, self)
 	else
-		arg_6_0:_delayStart()
+		self:_delayStart()
 	end
 end
 
-function var_0_0._delayStart(arg_7_0)
-	arg_7_0._delayList = {}
+function StoryTyperView:_delayStart()
+	self._delayList = {}
 
-	local var_7_0 = string.len(arg_7_0._content)
+	local len = string.len(self._content)
 
-	for iter_7_0 = 1, var_7_0 do
-		local var_7_1 = string.sub(arg_7_0._content, iter_7_0, iter_7_0)
+	for i = 1, len do
+		local char = string.sub(self._content, i, i)
 
-		if var_7_1 == "\n" then
-			local var_7_2 = var_0_5 + math.random() * var_0_6
+		if char == "\n" then
+			local delay = SentenceInterval + math.random() * SentenceRandom
 
-			table.insert(arg_7_0._delayList, var_7_2)
-		elseif var_7_1 == " " then
-			local var_7_3 = var_0_3 + math.random() * var_0_4
+			table.insert(self._delayList, delay)
+		elseif char == " " then
+			local delay = WordInterval + math.random() * WordRandom
 
-			table.insert(arg_7_0._delayList, var_7_3)
+			table.insert(self._delayList, delay)
 		else
-			local var_7_4 = var_0_1 + math.random() * var_0_2
+			local delay = LetterInterval + math.random() * LetterRandom
 
-			table.insert(arg_7_0._delayList, var_7_4)
+			table.insert(self._delayList, delay)
 		end
 	end
 
-	arg_7_0._LetterIndex = 0
+	self._LetterIndex = 0
 
-	arg_7_0:_printLetter()
+	self:_printLetter()
 end
 
-function var_0_0._printLetter(arg_8_0)
-	arg_8_0._LetterIndex = arg_8_0._LetterIndex + 1
+function StoryTyperView:_printLetter()
+	self._LetterIndex = self._LetterIndex + 1
 
-	local var_8_0 = string.sub(arg_8_0._content, 1, arg_8_0._LetterIndex)
+	local content = string.sub(self._content, 1, self._LetterIndex)
 
-	arg_8_0._text.text = var_8_0
+	self._text.text = content
 
-	if arg_8_0._LetterIndex < string.len(arg_8_0._content) then
-		local var_8_1 = arg_8_0._delayList[arg_8_0._LetterIndex]
+	if self._LetterIndex < string.len(self._content) then
+		local delay = self._delayList[self._LetterIndex]
 
-		if var_8_1 > 0 then
-			TaskDispatcher.runDelay(arg_8_0._printLetter, arg_8_0, var_8_1)
+		if delay > 0 then
+			TaskDispatcher.runDelay(self._printLetter, self, delay)
 		else
-			arg_8_0:_printLetter()
+			self:_printLetter()
 		end
-	elseif not string.nilorempty(arg_8_0._typerEndAnim) then
-		arg_8_0._animatorPlayer:Play(arg_8_0._typerEndAnim, arg_8_0._delayEnd, arg_8_0)
+	elseif not string.nilorempty(self._typerEndAnim) then
+		self._animatorPlayer:Play(self._typerEndAnim, self._delayEnd, self)
 	else
-		arg_8_0:_delayEnd()
+		self:_delayEnd()
 	end
 end
 
-function var_0_0._delayEnd(arg_9_0)
-	if arg_9_0._callback then
-		arg_9_0._callback(arg_9_0)
+function StoryTyperView:_delayEnd()
+	if self._callback then
+		self._callback(self)
 	else
-		arg_9_0:closeThis()
+		self:closeThis()
 	end
 end
 
-function var_0_0._type1End(arg_10_0)
-	arg_10_0:closeThis()
+function StoryTyperView:_type1End()
+	self:closeThis()
 end
 
-function var_0_0._type2End(arg_11_0)
-	arg_11_0:closeThis()
+function StoryTyperView:_type2End()
+	self:closeThis()
 end
 
-function var_0_0.onClose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._printLetter, arg_12_0)
+function StoryTyperView:onClose()
+	TaskDispatcher.cancelTask(self._printLetter, self)
 end
 
-function var_0_0.onDestroyView(arg_13_0)
-	arg_13_0._singleBg:UnLoadImage()
+function StoryTyperView:onDestroyView()
+	self._singleBg:UnLoadImage()
 end
 
-return var_0_0
+return StoryTyperView

@@ -1,201 +1,207 @@
-﻿module("modules.logic.versionactivity2_5.challenge.view.dungeon.episode.Act183BaseEpisodeItem", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/view/dungeon/episode/Act183BaseEpisodeItem.lua
 
-local var_0_0 = class("Act183BaseEpisodeItem", LuaCompBase)
+module("modules.logic.versionactivity2_5.challenge.view.dungeon.episode.Act183BaseEpisodeItem", package.seeall)
 
-function var_0_0.Get(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1:getEpisodeId()
-	local var_1_1 = arg_1_1:getEpisodeType()
-	local var_1_2 = arg_1_1:getGroupType()
-	local var_1_3 = arg_1_1:getConfigOrder()
-	local var_1_4 = Act183Helper.getEpisodeClsKey(var_1_2, var_1_1)
-	local var_1_5 = Act183Enum.EpisodeClsType[var_1_4]
-	local var_1_6 = var_1_5.getItemParentPath(var_1_3)
-	local var_1_7 = gohelper.findChild(arg_1_0, var_1_6)
+local Act183BaseEpisodeItem = class("Act183BaseEpisodeItem", LuaCompBase)
 
-	if gohelper.isNil(var_1_7) then
-		logError(string.format("挑战玩法关卡挂点不存在 episodeId = %s, parentPath = %s", var_1_0, var_1_6))
+function Act183BaseEpisodeItem.Get(rootGo, episodeMo)
+	local episodeId = episodeMo:getEpisodeId()
+	local episodeType = episodeMo:getEpisodeType()
+	local groupType = episodeMo:getGroupType()
+	local order = episodeMo:getConfigOrder()
+	local clsDefineKey = Act183Helper.getEpisodeClsKey(groupType, episodeType)
+	local clsDefine = Act183Enum.EpisodeClsType[clsDefineKey]
+	local parentPath = clsDefine.getItemParentPath(order)
+	local parentGo = gohelper.findChild(rootGo, parentPath)
+
+	if gohelper.isNil(parentGo) then
+		logError(string.format("挑战玩法关卡挂点不存在 episodeId = %s, parentPath = %s", episodeId, parentPath))
 	end
 
-	local var_1_8 = var_1_5.getItemTemplatePath()
-	local var_1_9 = var_1_5.getItemTemplateGo(arg_1_0, var_1_8)
-	local var_1_10 = "item_" .. var_1_3
-	local var_1_11 = gohelper.clone(var_1_9, var_1_7, var_1_10)
-	local var_1_12 = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_11, var_1_5)
+	local tempatePath = clsDefine.getItemTemplatePath()
+	local templateGo = clsDefine.getItemTemplateGo(rootGo, tempatePath)
+	local itemName = "item_" .. order
+	local itemGo = gohelper.clone(templateGo, parentGo, itemName)
+	local episodeInst = MonoHelper.addNoUpdateLuaComOnceToGo(itemGo, clsDefine)
 
-	var_1_12.parentGo = var_1_7
+	episodeInst.parentGo = parentGo
 
-	var_1_12:initPosAndRotation()
+	episodeInst:initPosAndRotation()
 
-	return var_1_12
+	return episodeInst
 end
 
-function var_0_0.getItemParentPath(arg_2_0)
+function Act183BaseEpisodeItem.getItemParentPath(order)
 	return ""
 end
 
-function var_0_0.getItemTemplateGo(arg_3_0, arg_3_1)
-	return (gohelper.findChild(arg_3_0, arg_3_1))
+function Act183BaseEpisodeItem.getItemTemplateGo(rootGo, templatePath)
+	local templateGo = gohelper.findChild(rootGo, templatePath)
+
+	return templateGo
 end
 
-function var_0_0.getItemTemplatePath(arg_4_0)
+function Act183BaseEpisodeItem.getItemTemplatePath(order)
 	return ""
 end
 
-function var_0_0.init(arg_5_0, arg_5_1)
-	arg_5_0.go = arg_5_1
-	arg_5_0._golock = gohelper.findChild(arg_5_0.go, "go_lock")
-	arg_5_0._gounlock = gohelper.findChild(arg_5_0.go, "go_unlock")
-	arg_5_0._gofinish = gohelper.findChild(arg_5_0.go, "go_finish")
-	arg_5_0._gocheck = gohelper.findChild(arg_5_0.go, "go_finish/image")
-	arg_5_0._btnclick = gohelper.findChildButton(arg_5_0.go, "btn_click")
-	arg_5_0._goselect = gohelper.findChild(arg_5_0.go, "go_select")
-	arg_5_0._simageicon = gohelper.findChildSingleImage(arg_5_0.go, "image_icon")
-	arg_5_0._animfinish = gohelper.onceAddComponent(arg_5_0._gofinish, gohelper.Type_Animator)
+function Act183BaseEpisodeItem:init(go)
+	self.go = go
+	self._golock = gohelper.findChild(self.go, "go_lock")
+	self._gounlock = gohelper.findChild(self.go, "go_unlock")
+	self._gofinish = gohelper.findChild(self.go, "go_finish")
+	self._gocheck = gohelper.findChild(self.go, "go_finish/image")
+	self._btnclick = gohelper.findChildButton(self.go, "btn_click")
+	self._goselect = gohelper.findChild(self.go, "go_select")
+	self._simageicon = gohelper.findChildSingleImage(self.go, "image_icon")
+	self._animfinish = gohelper.onceAddComponent(self._gofinish, gohelper.Type_Animator)
 end
 
-function var_0_0.initPosAndRotation(arg_6_0)
-	local var_6_0 = gohelper.findChild(arg_6_0.parentGo, "positions")
+function Act183BaseEpisodeItem:initPosAndRotation()
+	local positionRootGo = gohelper.findChild(self.parentGo, "positions")
 
-	if gohelper.isNil(var_6_0) then
+	if gohelper.isNil(positionRootGo) then
 		return
 	end
 
-	local var_6_1 = var_6_0.transform
-	local var_6_2 = var_6_1.childCount
+	local positionRootTran = positionRootGo.transform
+	local childCount = positionRootTran.childCount
 
-	for iter_6_0 = 1, var_6_2 do
-		local var_6_3 = var_6_1:GetChild(iter_6_0 - 1)
+	for i = 1, childCount do
+		local templateTran = positionRootTran:GetChild(i - 1)
 
-		arg_6_0:setTranPosition(var_6_3)
+		self:setTranPosition(templateTran)
 	end
 end
 
-function var_0_0.setTranPosition(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1.gameObject.name
-	local var_7_1 = gohelper.findChild(arg_7_0.go, var_7_0)
+function Act183BaseEpisodeItem:setTranPosition(templateTran)
+	local goPath = templateTran.gameObject.name
+	local go = gohelper.findChild(self.go, goPath)
 
-	if gohelper.isNil(var_7_1) then
-		logError(string.format("设置关卡ui坐标失败 节点不存在 rootName = %s, goPath = %s", arg_7_0.parentGo.name, var_7_0))
+	if gohelper.isNil(go) then
+		logError(string.format("设置关卡ui坐标失败 节点不存在 rootName = %s, goPath = %s", self.parentGo.name, goPath))
 
 		return
 	end
 
-	local var_7_2, var_7_3 = recthelper.getAnchor(arg_7_1)
-	local var_7_4, var_7_5, var_7_6 = transformhelper.getLocalRotation(arg_7_1)
+	local positionX, positionY = recthelper.getAnchor(templateTran)
+	local rotationX, rotationY, rotationZ = transformhelper.getLocalRotation(templateTran)
 
-	recthelper.setAnchor(var_7_1.transform, var_7_2 or 0, var_7_3 or 0)
-	transformhelper.setLocalRotation(var_7_1.transform, var_7_4, var_7_5, var_7_6)
+	recthelper.setAnchor(go.transform, positionX or 0, positionY or 0)
+	transformhelper.setLocalRotation(go.transform, rotationX, rotationY, rotationZ)
 end
 
-function var_0_0.addEventListeners(arg_8_0)
-	arg_8_0._btnclick:AddClickListener(arg_8_0._btnclickOnClick, arg_8_0)
-	arg_8_0:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, arg_8_0._onSelectEpisode, arg_8_0)
-	arg_8_0:addEventCb(Act183Controller.instance, Act183Event.EpisodeStartPlayFinishAnim, arg_8_0._checkPlayFinishAnim, arg_8_0)
+function Act183BaseEpisodeItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.OnClickEpisode, self._onSelectEpisode, self)
+	self:addEventCb(Act183Controller.instance, Act183Event.EpisodeStartPlayFinishAnim, self._checkPlayFinishAnim, self)
 end
 
-function var_0_0.removeEventListeners(arg_9_0)
-	arg_9_0._btnclick:RemoveClickListener()
+function Act183BaseEpisodeItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_10_0)
+function Act183BaseEpisodeItem:_btnclickOnClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_ClickEpisode)
-	Act183Controller.instance:dispatchEvent(Act183Event.OnClickEpisode, arg_10_0._episodeId)
+	Act183Controller.instance:dispatchEvent(Act183Event.OnClickEpisode, self._episodeId)
 end
 
-function var_0_0._onSelectEpisode(arg_11_0, arg_11_1)
-	arg_11_0:onSelect(arg_11_1 == arg_11_0._episodeId)
+function Act183BaseEpisodeItem:_onSelectEpisode(episodeId)
+	self:onSelect(episodeId == self._episodeId)
 end
 
-function var_0_0.onSelect(arg_12_0, arg_12_1)
-	gohelper.setActive(arg_12_0._goselect, arg_12_1)
+function Act183BaseEpisodeItem:onSelect(isSelect)
+	gohelper.setActive(self._goselect, isSelect)
 end
 
-function var_0_0.onUpdateMo(arg_13_0, arg_13_1)
-	arg_13_0._episodeMo = arg_13_1
-	arg_13_0._status = arg_13_1:getStatus()
-	arg_13_0._episodeId = arg_13_1:getEpisodeId()
+function Act183BaseEpisodeItem:onUpdateMo(episodeMo)
+	self._episodeMo = episodeMo
+	self._status = episodeMo:getStatus()
+	self._episodeId = episodeMo:getEpisodeId()
 
-	local var_13_0 = Act183Model.instance:getNewFinishEpisodeId()
+	local episodeId = Act183Model.instance:getNewFinishEpisodeId()
 
-	arg_13_0._isFinishedButNotNew = arg_13_0._status == Act183Enum.EpisodeStatus.Finished and var_13_0 ~= arg_13_0._episodeId
+	self._isFinishedButNotNew = self._status == Act183Enum.EpisodeStatus.Finished and episodeId ~= self._episodeId
 
-	gohelper.setActive(arg_13_0._goselect, false)
-	gohelper.setActive(arg_13_0._golock, arg_13_0._status == Act183Enum.EpisodeStatus.Locked)
-	gohelper.setActive(arg_13_0._gounlock, arg_13_0._status ~= Act183Enum.EpisodeStatus.Locked)
-	gohelper.setActive(arg_13_0._gofinish, arg_13_0._isFinishedButNotNew)
-	Act183Helper.setEpisodeIcon(arg_13_0._episodeId, arg_13_0._status, arg_13_0._simageicon)
-	arg_13_0:setVisible(true)
+	gohelper.setActive(self._goselect, false)
+	gohelper.setActive(self._golock, self._status == Act183Enum.EpisodeStatus.Locked)
+	gohelper.setActive(self._gounlock, self._status ~= Act183Enum.EpisodeStatus.Locked)
+	gohelper.setActive(self._gofinish, self._isFinishedButNotNew)
+	Act183Helper.setEpisodeIcon(self._episodeId, self._status, self._simageicon)
+	self:setVisible(true)
 end
 
-function var_0_0.getConfigOrder(arg_14_0)
-	local var_14_0 = arg_14_0._episodeMo and arg_14_0._episodeMo:getConfig()
+function Act183BaseEpisodeItem:getConfigOrder()
+	local config = self._episodeMo and self._episodeMo:getConfig()
+	local order = config and config.order
 
-	return var_14_0 and var_14_0.order
+	return order
 end
 
-function var_0_0.setVisible(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0.go, arg_15_1)
+function Act183BaseEpisodeItem:setVisible(isVisible)
+	gohelper.setActive(self.go, isVisible)
 end
 
-function var_0_0.getIconTran(arg_16_0)
-	return arg_16_0._simageicon.transform
+function Act183BaseEpisodeItem:getIconTran()
+	return self._simageicon.transform
 end
 
-function var_0_0.playFinishAnim(arg_17_0)
-	gohelper.setActive(arg_17_0._gofinish, true)
-	arg_17_0._animfinish:Play("in", 0, 0)
+function Act183BaseEpisodeItem:playFinishAnim()
+	gohelper.setActive(self._gofinish, true)
+	self._animfinish:Play("in", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act183_EpisodeFinished)
 end
 
-function var_0_0._checkPlayFinishAnim(arg_18_0, arg_18_1)
-	if arg_18_0._episodeId ~= arg_18_1 then
+function Act183BaseEpisodeItem:_checkPlayFinishAnim(episodeId)
+	if self._episodeId ~= episodeId then
 		return
 	end
 
-	arg_18_0:playFinishAnim()
+	self:playFinishAnim()
 end
 
-function var_0_0.refreshPassStarList(arg_19_0, arg_19_1)
-	if arg_19_0._status ~= Act183Enum.EpisodeStatus.Finished then
+function Act183BaseEpisodeItem:refreshPassStarList(gostartemplate)
+	if self._status ~= Act183Enum.EpisodeStatus.Finished then
 		return
 	end
 
-	local var_19_0 = arg_19_0._episodeMo and arg_19_0._episodeMo:getTotalStarCount() or 0
-	local var_19_1 = arg_19_0._episodeMo and arg_19_0._episodeMo:getFinishStarCount() or 0
-	local var_19_2 = {}
+	local allConditionCount = self._episodeMo and self._episodeMo:getTotalStarCount() or 0
+	local passConditionCount = self._episodeMo and self._episodeMo:getFinishStarCount() or 0
+	local useMap = {}
 
-	for iter_19_0 = 1, var_19_0 do
-		local var_19_3 = arg_19_0._starItemTab[iter_19_0]
+	for i = 1, allConditionCount do
+		local starItem = self._starItemTab[i]
 
-		if not var_19_3 then
-			var_19_3 = arg_19_0:getUserDataTb_()
-			var_19_3.go = gohelper.cloneInPlace(arg_19_1, "star_" .. iter_19_0)
-			var_19_3.imagestar = var_19_3.go:GetComponent(gohelper.Type_Image)
-			arg_19_0._starItemTab[iter_19_0] = var_19_3
+		if not starItem then
+			starItem = self:getUserDataTb_()
+			starItem.go = gohelper.cloneInPlace(gostartemplate, "star_" .. i)
+			starItem.imagestar = starItem.go:GetComponent(gohelper.Type_Image)
+			self._starItemTab[i] = starItem
 		end
 
-		local var_19_4 = iter_19_0 <= var_19_1 and "#F77040" or "#87898C"
+		local isFinish = i <= passConditionCount
+		local color = isFinish and "#F77040" or "#87898C"
 
-		UISpriteSetMgr.instance:setCommonSprite(var_19_3.imagestar, "zhuxianditu_pt_xingxing_001", true)
-		SLFramework.UGUI.GuiHelper.SetColor(var_19_3.imagestar, var_19_4)
-		gohelper.setActive(var_19_3.go, true)
+		UISpriteSetMgr.instance:setCommonSprite(starItem.imagestar, "zhuxianditu_pt_xingxing_001", true)
+		SLFramework.UGUI.GuiHelper.SetColor(starItem.imagestar, color)
+		gohelper.setActive(starItem.go, true)
 
-		var_19_2[var_19_3] = true
+		useMap[starItem] = true
 	end
 
-	for iter_19_1, iter_19_2 in pairs(arg_19_0._starItemTab) do
-		if not var_19_2[iter_19_2] then
-			gohelper.setActive(iter_19_2.go, false)
+	for _, starItem in pairs(self._starItemTab) do
+		if not useMap[starItem] then
+			gohelper.setActive(starItem.go, false)
 		end
 	end
 end
 
-function var_0_0.destroySelf(arg_20_0)
-	gohelper.destroy(arg_20_0.go)
+function Act183BaseEpisodeItem:destroySelf()
+	gohelper.destroy(self.go)
 end
 
-function var_0_0.onDestroy(arg_21_0)
+function Act183BaseEpisodeItem:onDestroy()
 	return
 end
 
-return var_0_0
+return Act183BaseEpisodeItem

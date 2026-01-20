@@ -1,56 +1,58 @@
-﻿module("modules.logic.explore.map.ExploreMapBaseComp", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/ExploreMapBaseComp.lua
 
-local var_0_0 = class("ExploreMapBaseComp", LuaCompBase)
+module("modules.logic.explore.map.ExploreMapBaseComp", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._mapGo = arg_1_1
-	arg_1_0._mapStatus = ExploreEnum.MapStatus.Normal
+local ExploreMapBaseComp = class("ExploreMapBaseComp", LuaCompBase)
 
-	arg_1_0:onInit()
+function ExploreMapBaseComp:init(go)
+	self._mapGo = go
+	self._mapStatus = ExploreEnum.MapStatus.Normal
+
+	self:onInit()
 end
 
-function var_0_0.onInit(arg_2_0)
+function ExploreMapBaseComp:onInit()
 	return
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function ExploreMapBaseComp:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function ExploreMapBaseComp:removeEventListeners()
 	return
 end
 
-function var_0_0.setMap(arg_5_0, arg_5_1)
-	arg_5_0._map = arg_5_1
+function ExploreMapBaseComp:setMap(map)
+	self._map = map
 end
 
-function var_0_0.setMapStatus(arg_6_0, arg_6_1)
-	arg_6_0._mapStatus = arg_6_1
+function ExploreMapBaseComp:setMapStatus(status)
+	self._mapStatus = status
 end
 
-function var_0_0.beginStatus(arg_7_0, arg_7_1)
-	return arg_7_0._map:setMapStatus(arg_7_0._mapStatus, arg_7_1)
+function ExploreMapBaseComp:beginStatus(data)
+	return self._map:setMapStatus(self._mapStatus, data)
 end
 
-function var_0_0.onStatusStart(arg_8_0)
+function ExploreMapBaseComp:onStatusStart()
 	return
 end
 
-function var_0_0.onStatusEnd(arg_9_0)
+function ExploreMapBaseComp:onStatusEnd()
 	return
 end
 
-function var_0_0.onMapClick(arg_10_0, arg_10_1)
-	arg_10_0._map:setMapStatus(ExploreEnum.MapStatus.Normal)
+function ExploreMapBaseComp:onMapClick(mousePosition)
+	self._map:setMapStatus(ExploreEnum.MapStatus.Normal)
 end
 
-function var_0_0.canSwitchStatus(arg_11_0, arg_11_1)
+function ExploreMapBaseComp:canSwitchStatus(toStatus)
 	return true
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	arg_12_0._mapGo = nil
+function ExploreMapBaseComp:onDestroy()
+	self._mapGo = nil
 end
 
-return var_0_0
+return ExploreMapBaseComp

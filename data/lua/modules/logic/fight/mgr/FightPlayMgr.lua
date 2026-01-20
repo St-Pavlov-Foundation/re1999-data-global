@@ -1,57 +1,59 @@
-﻿module("modules.logic.fight.mgr.FightPlayMgr", package.seeall)
+﻿-- chunkname: @modules/logic/fight/mgr/FightPlayMgr.lua
 
-local var_0_0 = class("FightPlayMgr", FightBaseClass)
+module("modules.logic.fight.mgr.FightPlayMgr", package.seeall)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.workComp = arg_1_0:addComponent(FightWorkComponent)
+local FightPlayMgr = class("FightPlayMgr", FightBaseClass)
 
-	arg_1_0:com_registMsg(FightMsgId.ForceReleasePlayFlow, arg_1_0.onForceReleasePlayFlow)
-	arg_1_0:com_registFightEvent(FightEvent.StageChanged, arg_1_0.onStageChanged)
+function FightPlayMgr:onConstructor()
+	self.workComp = self:addComponent(FightWorkComponent)
+
+	self:com_registMsg(FightMsgId.ForceReleasePlayFlow, self.onForceReleasePlayFlow)
+	self:com_registFightEvent(FightEvent.StageChanged, self.onStageChanged)
 end
 
-function var_0_0.onForceReleasePlayFlow(arg_2_0)
-	arg_2_0.workComp:disposeAllWork()
+function FightPlayMgr:onForceReleasePlayFlow()
+	self.workComp:disposeAllWork()
 end
 
-function var_0_0.onStageChanged(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == FightStageMgr.StageType.Play then
-		arg_3_0.workComp:disposeAllWork()
+function FightPlayMgr:onStageChanged(curStage, preStage)
+	if curStage == FightStageMgr.StageType.Play then
+		self.workComp:disposeAllWork()
 	end
 end
 
-function var_0_0.playStart(arg_4_0)
+function FightPlayMgr:playStart()
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
-	local var_4_0 = arg_4_0.workComp:registWork(FightWorkFlowSequence)
+	local flow = self.workComp:registWork(FightWorkFlowSequence)
 
-	var_4_0:registWork(FightWorkPlayStart)
-	var_4_0:registWork(FightWorkPlay2Operate, true)
-	var_4_0:start()
+	flow:registWork(FightWorkPlayStart)
+	flow:registWork(FightWorkPlay2Operate, true)
+	flow:start()
 end
 
-function var_0_0.playShow(arg_5_0)
+function FightPlayMgr:playShow()
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
-	local var_5_0 = arg_5_0.workComp:registWork(FightWorkFlowSequence)
+	local flow = self.workComp:registWork(FightWorkFlowSequence)
 
-	var_5_0:registWork(FightWorkPlayShow)
-	var_5_0:registWork(FightWorkPlay2Operate)
-	var_5_0:start()
+	flow:registWork(FightWorkPlayShow)
+	flow:registWork(FightWorkPlay2Operate)
+	flow:start()
 end
 
-function var_0_0.playCloth(arg_6_0)
+function FightPlayMgr:playCloth()
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.ClothSkill)
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
-	local var_6_0 = arg_6_0.workComp:registWork(FightWorkFlowSequence)
+	local flow = self.workComp:registWork(FightWorkFlowSequence)
 
-	var_6_0:registWork(FightWorkPlayCloth)
-	var_6_0:registWork(FightWorkPlay2Operate, false, true)
-	var_6_0:start()
+	flow:registWork(FightWorkPlayCloth)
+	flow:registWork(FightWorkPlay2Operate, false, true)
+	flow:start()
 end
 
-function var_0_0.playEnd(arg_7_0)
-	arg_7_0.workComp:disposeAllWork()
+function FightPlayMgr:playEnd()
+	self.workComp:disposeAllWork()
 
 	FightDataHelper.stateMgr.isFinish = true
 
@@ -67,37 +69,37 @@ function var_0_0.playEnd(arg_7_0)
 	ViewMgr.instance:closeView(ViewName.MessageBoxView)
 	FightGameMgr.restartMgr:killComponent(FightFlowComponent)
 	FightDataMgr.instance.stateMgr:setPlayingEnd(true)
-	arg_7_0:_PlayEnd()
+	self:_PlayEnd()
 end
 
-function var_0_0._PlayEnd(arg_8_0)
-	local var_8_0 = arg_8_0.workComp:registWork(FightWorkFlowSequence)
+function FightPlayMgr:_PlayEnd()
+	local flow = self.workComp:registWork(FightWorkFlowSequence)
 
-	var_8_0:registWork(FightWorkPlayEnd)
-	var_8_0:registFinishCallback(arg_8_0.onEndFinish, arg_8_0)
-	var_8_0:start()
+	flow:registWork(FightWorkPlayEnd)
+	flow:registFinishCallback(self.onEndFinish, self)
+	flow:start()
 end
 
-function var_0_0.onEndFinish(arg_9_0)
+function FightPlayMgr:onEndFinish()
 	FightController.instance:dispatchEvent(FightEvent.OnEndSequenceFinish)
 end
 
-function var_0_0.playReconnect(arg_10_0)
+function FightPlayMgr:playReconnect()
 	FightController.instance:dispatchEvent(FightEvent.OnFightReconnect)
 
 	if FightModel.instance:isFinish() then
 		FightRpc.instance:sendEndFightRequest(false)
 	else
-		local var_10_0 = arg_10_0.workComp:registWork(FightWorkFlowSequence)
+		local flow = self.workComp:registWork(FightWorkFlowSequence)
 
-		var_10_0:registWork(FightWorkPlayReconnect)
-		var_10_0:registWork(FightWorkPlay2Operate, true)
-		var_10_0:start()
+		flow:registWork(FightWorkPlayReconnect)
+		flow:registWork(FightWorkPlay2Operate, true)
+		flow:start()
 	end
 end
 
-function var_0_0.onDestructor(arg_11_0)
+function FightPlayMgr:onDestructor()
 	return
 end
 
-return var_0_0
+return FightPlayMgr

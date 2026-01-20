@@ -1,139 +1,143 @@
-﻿module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardViewMenuView", package.seeall)
+﻿-- chunkname: @modules/logic/weekwalk_2/view/WeekWalk_2LayerRewardViewMenuView.lua
 
-local var_0_0 = class("WeekWalk_2LayerRewardViewMenuView", BaseView)
+module("modules.logic.weekwalk_2.view.WeekWalk_2LayerRewardViewMenuView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+local WeekWalk_2LayerRewardViewMenuView = class("WeekWalk_2LayerRewardViewMenuView", BaseView)
+
+function WeekWalk_2LayerRewardViewMenuView:onInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function WeekWalk_2LayerRewardViewMenuView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function WeekWalk_2LayerRewardViewMenuView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._goTabContent = gohelper.findChild(arg_4_0.viewGO, "top/#scroll_TabList/Viewport/Content")
-	arg_4_0._goTabItem = gohelper.findChild(arg_4_0.viewGO, "top/#scroll_TabList/Viewport/Content/#go_tabitem")
-	arg_4_0._scrollreward = gohelper.findChildScrollRect(arg_4_0.viewGO, "right/#scroll_reward")
+function WeekWalk_2LayerRewardViewMenuView:_editableInitView()
+	self._goTabContent = gohelper.findChild(self.viewGO, "top/#scroll_TabList/Viewport/Content")
+	self._goTabItem = gohelper.findChild(self.viewGO, "top/#scroll_TabList/Viewport/Content/#go_tabitem")
+	self._scrollreward = gohelper.findChildScrollRect(self.viewGO, "right/#scroll_reward")
 
-	gohelper.setActive(arg_4_0._goTabItem, false)
+	gohelper.setActive(self._goTabItem, false)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function WeekWalk_2LayerRewardViewMenuView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	local var_6_0 = arg_6_0.viewParam.mapId
+function WeekWalk_2LayerRewardViewMenuView:onOpen()
+	local mapId = self.viewParam.mapId
 
-	arg_6_0:_initPageList()
-	arg_6_0:_initTabList()
+	self:_initPageList()
+	self:_initTabList()
 
-	arg_6_0._selectedId = var_6_0
+	self._selectedId = mapId
 
-	arg_6_0:_updateTabItems()
-	arg_6_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, arg_6_0._onWeekwalkTaskUpdate, arg_6_0)
+	self:_updateTabItems()
+	self:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkTaskUpdate, self._onWeekwalkTaskUpdate, self)
 end
 
-function var_0_0._onWeekwalkTaskUpdate(arg_7_0)
-	arg_7_0:_updateTabItems()
+function WeekWalk_2LayerRewardViewMenuView:_onWeekwalkTaskUpdate()
+	self:_updateTabItems()
 end
 
-function var_0_0._initPageList(arg_8_0)
-	local var_8_0 = {}
+function WeekWalk_2LayerRewardViewMenuView:_initPageList()
+	local pageList = {}
 
-	arg_8_0._info = WeekWalk_2Model.instance:getInfo()
+	self._info = WeekWalk_2Model.instance:getInfo()
 
-	for iter_8_0 = 1, WeekWalk_2Enum.MaxLayer do
-		var_8_0[iter_8_0] = arg_8_0._info:getLayerInfoByLayerIndex(iter_8_0)
+	for i = 1, WeekWalk_2Enum.MaxLayer do
+		local layerInfo = self._info:getLayerInfoByLayerIndex(i)
+
+		pageList[i] = layerInfo
 	end
 
-	arg_8_0._pageList = var_8_0
+	self._pageList = pageList
 end
 
-function var_0_0._initTabList(arg_9_0)
-	arg_9_0._tabItemList = arg_9_0:getUserDataTb_()
+function WeekWalk_2LayerRewardViewMenuView:_initTabList()
+	self._tabItemList = self:getUserDataTb_()
 
-	gohelper.CreateObjList(arg_9_0, arg_9_0._onTabItemShow, arg_9_0._pageList, arg_9_0._goTabContent, arg_9_0._goTabItem)
+	gohelper.CreateObjList(self, self._onTabItemShow, self._pageList, self._goTabContent, self._goTabItem)
 end
 
-function var_0_0._onTabItemShow(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	gohelper.setActive(arg_10_1, true)
+function WeekWalk_2LayerRewardViewMenuView:_onTabItemShow(obj, data, index)
+	gohelper.setActive(obj, true)
 
-	local var_10_0 = gohelper.findChild(arg_10_1, "Select")
-	local var_10_1 = gohelper.findChildText(arg_10_1, "Select/#txt_SelectLevel")
-	local var_10_2 = gohelper.findChild(arg_10_1, "Select/hasget")
-	local var_10_3 = gohelper.findChild(arg_10_1, "Select/canget")
-	local var_10_4 = gohelper.findChild(arg_10_1, "UnSelect")
-	local var_10_5 = gohelper.findChildText(arg_10_1, "UnSelect/#txt_UnSelectLevel")
-	local var_10_6 = gohelper.findChild(arg_10_1, "UnSelect/hasget")
-	local var_10_7 = gohelper.findChild(arg_10_1, "UnSelect/canget")
-	local var_10_8 = gohelper.findChildButtonWithAudio(arg_10_1, "btn_click")
+	local select = gohelper.findChild(obj, "Select")
+	local selectName = gohelper.findChildText(obj, "Select/#txt_SelectLevel")
+	local selectHasGet = gohelper.findChild(obj, "Select/hasget")
+	local selectCanGet = gohelper.findChild(obj, "Select/canget")
+	local unselect = gohelper.findChild(obj, "UnSelect")
+	local unselectName = gohelper.findChildText(obj, "UnSelect/#txt_UnSelectLevel")
+	local unselectHasGet = gohelper.findChild(obj, "UnSelect/hasget")
+	local unselectCanGet = gohelper.findChild(obj, "UnSelect/canget")
+	local btnClick = gohelper.findChildButtonWithAudio(obj, "btn_click")
 
-	var_10_8:AddClickListener(arg_10_0._btnClick, arg_10_0, arg_10_2.id)
+	btnClick:AddClickListener(self._btnClick, self, data.id)
 
-	local var_10_9 = GameUtil.getRomanNums(arg_10_3)
+	local name = GameUtil.getRomanNums(index)
 
-	var_10_1.text = var_10_9
-	var_10_5.text = var_10_9
-	arg_10_0._tabItemList[arg_10_3] = {
-		data = arg_10_2,
-		select = var_10_0,
-		selectHasGet = var_10_2,
-		selectCanGet = var_10_3,
-		unselect = var_10_4,
-		unselectHasGet = var_10_6,
-		unselectCanGet = var_10_7,
-		btnClick = var_10_8
+	selectName.text = name
+	unselectName.text = name
+	self._tabItemList[index] = {
+		data = data,
+		select = select,
+		selectHasGet = selectHasGet,
+		selectCanGet = selectCanGet,
+		unselect = unselect,
+		unselectHasGet = unselectHasGet,
+		unselectCanGet = unselectCanGet,
+		btnClick = btnClick
 	}
 end
 
-function var_0_0._btnClick(arg_11_0, arg_11_1)
-	arg_11_0._selectedId = arg_11_1
+function WeekWalk_2LayerRewardViewMenuView:_btnClick(id)
+	self._selectedId = id
 
-	arg_11_0:_updateTabItems()
-	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeLayerRewardMapId, arg_11_1)
+	self:_updateTabItems()
+	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeLayerRewardMapId, id)
 
-	arg_11_0._scrollreward.verticalNormalizedPosition = 1
+	self._scrollreward.verticalNormalizedPosition = 1
 end
 
-function var_0_0._updateTabItems(arg_12_0)
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._tabItemList) do
-		local var_12_0 = iter_12_1.data.id
-		local var_12_1 = var_12_0 == arg_12_0._selectedId
+function WeekWalk_2LayerRewardViewMenuView:_updateTabItems()
+	for k, v in pairs(self._tabItemList) do
+		local mapId = v.data.id
+		local isSelected = mapId == self._selectedId
 
-		gohelper.setActive(iter_12_1.select, var_12_1)
-		gohelper.setActive(iter_12_1.unselect, not var_12_1)
+		gohelper.setActive(v.select, isSelected)
+		gohelper.setActive(v.unselect, not isSelected)
 
-		local var_12_2 = WeekWalk_2Enum.TaskType.Season
-		local var_12_3, var_12_4 = WeekWalk_2TaskListModel.instance:canGetRewardNum(var_12_2, var_12_0)
-		local var_12_5 = var_12_3 > 0
+		local taskType = WeekWalk_2Enum.TaskType.Season
+		local canGetNum, unFinishNum = WeekWalk_2TaskListModel.instance:canGetRewardNum(taskType, mapId)
+		local canGetReward = canGetNum > 0
 
-		if var_12_1 then
-			gohelper.setActive(iter_12_1.selectHasGet, not var_12_5 and var_12_4 <= 0)
-			gohelper.setActive(iter_12_1.selectCanGet, var_12_5)
+		if isSelected then
+			gohelper.setActive(v.selectHasGet, not canGetReward and unFinishNum <= 0)
+			gohelper.setActive(v.selectCanGet, canGetReward)
 		else
-			gohelper.setActive(iter_12_1.unselectHasGet, not var_12_5 and var_12_4 <= 0)
-			gohelper.setActive(iter_12_1.unselectCanGet, var_12_5)
+			gohelper.setActive(v.unselectHasGet, not canGetReward and unFinishNum <= 0)
+			gohelper.setActive(v.unselectCanGet, canGetReward)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_13_0)
-	if arg_13_0._tabItemList then
-		for iter_13_0, iter_13_1 in pairs(arg_13_0._tabItemList) do
-			iter_13_1.btnClick:RemoveClickListener()
+function WeekWalk_2LayerRewardViewMenuView:onClose()
+	if self._tabItemList then
+		for k, v in pairs(self._tabItemList) do
+			v.btnClick:RemoveClickListener()
 		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_14_0)
+function WeekWalk_2LayerRewardViewMenuView:onDestroyView()
 	return
 end
 
-return var_0_0
+return WeekWalk_2LayerRewardViewMenuView

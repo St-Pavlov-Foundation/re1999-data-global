@@ -1,72 +1,75 @@
-﻿module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftFullView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/semmelweisgift/view/SemmelWeisGiftFullView.lua
 
-local var_0_0 = class("SemmelWeisGiftFullView", BaseView)
+module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftFullView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_TimeBG/#txt_remainTime")
-	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Claim")
-	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Normal")
-	arg_1_0._goReceived = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Received")
+local SemmelWeisGiftFullView = class("SemmelWeisGiftFullView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function SemmelWeisGiftFullView:onInitView()
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "Root/image_TimeBG/#txt_remainTime")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Claim")
+	self._goNormal = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Normal")
+	self._goReceived = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Received")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
+function SemmelWeisGiftFullView:addEvents()
+	self._btnClaim:AddClickListener(self._btnClaimOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClaim:RemoveClickListener()
+function SemmelWeisGiftFullView:removeEvents()
+	self._btnClaim:RemoveClickListener()
 end
 
-function var_0_0._btnClaimOnClick(arg_4_0)
-	SemmelWeisGiftController.instance:receiveSemmelWeisGift(arg_4_0.refreshCanGet, arg_4_0)
+function SemmelWeisGiftFullView:_btnClaimOnClick()
+	SemmelWeisGiftController.instance:receiveSemmelWeisGift(self.refreshCanGet, self)
 end
 
-function var_0_0._editableInitView(arg_5_0)
+function SemmelWeisGiftFullView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_6_0)
+function SemmelWeisGiftFullView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_7_0)
-	local var_7_0 = arg_7_0.viewParam.parent
+function SemmelWeisGiftFullView:onOpen()
+	local parentGO = self.viewParam.parent
 
-	gohelper.addChild(var_7_0, arg_7_0.viewGO)
-	arg_7_0:refresh()
+	gohelper.addChild(parentGO, self.viewGO)
+	self:refresh()
 end
 
-function var_0_0.refresh(arg_8_0)
-	arg_8_0:refreshCanGet()
-	arg_8_0:refreshRemainTime()
-	TaskDispatcher.cancelTask(arg_8_0.refreshRemainTime, arg_8_0)
-	TaskDispatcher.runRepeat(arg_8_0.refreshRemainTime, arg_8_0, TimeUtil.OneMinuteSecond)
+function SemmelWeisGiftFullView:refresh()
+	self:refreshCanGet()
+	self:refreshRemainTime()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+	TaskDispatcher.runRepeat(self.refreshRemainTime, self, TimeUtil.OneMinuteSecond)
 end
 
-function var_0_0.refreshCanGet(arg_9_0)
-	local var_9_0 = SemmelWeisGiftModel.instance:isShowRedDot()
+function SemmelWeisGiftFullView:refreshCanGet()
+	local canReceive = SemmelWeisGiftModel.instance:isShowRedDot()
 
-	gohelper.setActive(arg_9_0._goNormal, var_9_0)
-	gohelper.setActive(arg_9_0._goReceived, not var_9_0)
+	gohelper.setActive(self._goNormal, canReceive)
+	gohelper.setActive(self._goReceived, not canReceive)
 end
 
-function var_0_0.refreshRemainTime(arg_10_0)
-	local var_10_0 = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
-	local var_10_1 = ActivityModel.instance:getActMO(var_10_0):getRemainTimeStr3(false, true)
+function SemmelWeisGiftFullView:refreshRemainTime()
+	local actId = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
+	local actInfoMo = ActivityModel.instance:getActMO(actId)
+	local timeStr = actInfoMo:getRemainTimeStr3(false, true)
 
-	arg_10_0._txtremainTime.text = string.format(luaLang("remain"), var_10_1)
+	self._txtremainTime.text = string.format(luaLang("remain"), timeStr)
 end
 
-function var_0_0.onClose(arg_11_0)
+function SemmelWeisGiftFullView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0.refreshRemainTime, arg_12_0)
+function SemmelWeisGiftFullView:onDestroyView()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 end
 
-return var_0_0
+return SemmelWeisGiftFullView

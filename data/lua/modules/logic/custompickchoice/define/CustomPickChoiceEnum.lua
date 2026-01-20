@@ -1,22 +1,24 @@
-﻿module("modules.logic.custompickchoice.define.CustomPickChoiceEnum", package.seeall)
+﻿-- chunkname: @modules/logic/custompickchoice/define/CustomPickChoiceEnum.lua
 
-local var_0_0 = _M
+module("modules.logic.custompickchoice.define.CustomPickChoiceEnum", package.seeall)
 
-var_0_0.style = {
+local CustomPickChoiceEnum = _M
+
+CustomPickChoiceEnum.style = {
 	SummonCustomPick = 2,
 	OptionalHeroGift = 1
 }
-var_0_0.FixedText = {
-	[var_0_0.style.OptionalHeroGift] = {
+CustomPickChoiceEnum.FixedText = {
+	[CustomPickChoiceEnum.style.OptionalHeroGift] = {
 		_txttitle = "herogift_custom_pick_title"
 	}
 }
-var_0_0.ComponentVisible = {
-	[var_0_0.style.OptionalHeroGift] = {
+CustomPickChoiceEnum.ComponentVisible = {
+	[CustomPickChoiceEnum.style.OptionalHeroGift] = {
 		_gomask = true,
 		_gobg = true,
 		_goTips = false
 	}
 }
 
-return var_0_0
+return CustomPickChoiceEnum

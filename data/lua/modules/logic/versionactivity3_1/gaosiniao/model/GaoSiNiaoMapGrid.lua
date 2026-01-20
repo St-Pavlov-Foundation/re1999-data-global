@@ -1,352 +1,361 @@
-﻿module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapGrid", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/gaosiniao/model/GaoSiNiaoMapGrid.lua
 
-local var_0_0 = class("GaoSiNiaoMapGrid")
-local var_0_1 = 99999
+module("modules.logic.versionactivity3_1.gaosiniao.model.GaoSiNiaoMapGrid", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._mapMO = arg_1_1
-	arg_1_0.index = {
-		x = arg_1_2[1],
-		y = arg_1_2[2]
+local GaoSiNiaoMapGrid = class("GaoSiNiaoMapGrid")
+local kInvalidDistance = 99999
+
+function GaoSiNiaoMapGrid:ctor(mapMO, index, gridInfo)
+	self._mapMO = mapMO
+	self.index = {
+		x = index[1],
+		y = index[2]
 	}
-	arg_1_0.type = arg_1_3.gtype or GaoSiNiaoEnum.GridType.Empty
-	arg_1_0.ePathType = arg_1_3.ptype or GaoSiNiaoEnum.PathType.None
-	arg_1_0.zRot = arg_1_3.zRot or 0
-	arg_1_0.bMovable = arg_1_3.bMovable or false
-	arg_1_0._distanceToStart = var_0_1
-	arg_1_0._forceInZoneMask = false
-	arg_1_0._forceOutZoneMask = false
+	self.type = gridInfo.gtype or GaoSiNiaoEnum.GridType.Empty
+	self.ePathType = gridInfo.ptype or GaoSiNiaoEnum.PathType.None
+	self.zRot = gridInfo.zRot or 0
+	self.bMovable = gridInfo.bMovable or false
+	self._distanceToStart = kInvalidDistance
+	self._forceInZoneMask = false
+	self._forceOutZoneMask = false
 end
 
-function var_0_0.distanceToStart(arg_2_0)
-	return arg_2_0:_isConnedStart() and arg_2_0._distanceToStart or var_0_1
+function GaoSiNiaoMapGrid:distanceToStart()
+	return self:_isConnedStart() and self._distanceToStart or kInvalidDistance
 end
 
-function var_0_0.setDistanceToStartByStartGrid(arg_3_0, arg_3_1)
-	arg_3_0._distanceToStart = 0 + math.abs(arg_3_0:x() - arg_3_1:x()) + math.abs(arg_3_0:y() - arg_3_1:y())
+function GaoSiNiaoMapGrid:setDistanceToStartByStartGrid(startGridItem)
+	local newDist = 0
+
+	newDist = newDist + math.abs(self:x() - startGridItem:x())
+	newDist = newDist + math.abs(self:y() - startGridItem:y())
+	self._distanceToStart = newDist
 end
 
-function var_0_0.setId(arg_4_0, arg_4_1)
-	arg_4_0._id = arg_4_1
+function GaoSiNiaoMapGrid:setId(id)
+	self._id = id
 end
 
-function var_0_0.id(arg_5_0)
-	return arg_5_0._id
+function GaoSiNiaoMapGrid:id()
+	return self._id
 end
 
-function var_0_0.x(arg_6_0)
-	return arg_6_0.index.x
+function GaoSiNiaoMapGrid:x()
+	return self.index.x
 end
 
-function var_0_0.y(arg_7_0)
-	return arg_7_0.index.y
+function GaoSiNiaoMapGrid:y()
+	return self.index.y
 end
 
-function var_0_0.indexStr(arg_8_0)
-	return string.format("(%s,%s)", arg_8_0.index.x, arg_8_0.index.y)
+function GaoSiNiaoMapGrid:indexStr()
+	return string.format("(%s,%s)", self.index.x, self.index.y)
 end
 
-function var_0_0.isIndex(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0.index.x == arg_9_1 and arg_9_2 == arg_9_0.index.y
+function GaoSiNiaoMapGrid:isIndex(expectX, expectY)
+	return self.index.x == expectX and expectY == self.index.y
 end
 
-function var_0_0.isEmpty(arg_10_0)
-	return arg_10_0.type == GaoSiNiaoEnum.GridType.Empty
+function GaoSiNiaoMapGrid:isEmpty()
+	return self.type == GaoSiNiaoEnum.GridType.Empty
 end
 
-function var_0_0.isStart(arg_11_0)
-	return arg_11_0.type == GaoSiNiaoEnum.GridType.Start
+function GaoSiNiaoMapGrid:isStart()
+	return self.type == GaoSiNiaoEnum.GridType.Start
 end
 
-function var_0_0.isEnd(arg_12_0)
-	return arg_12_0.type == GaoSiNiaoEnum.GridType.End
+function GaoSiNiaoMapGrid:isEnd()
+	return self.type == GaoSiNiaoEnum.GridType.End
 end
 
-function var_0_0.isWall(arg_13_0)
-	return arg_13_0.type == GaoSiNiaoEnum.GridType.Wall
+function GaoSiNiaoMapGrid:isWall()
+	return self.type == GaoSiNiaoEnum.GridType.Wall
 end
 
-function var_0_0.isPortal(arg_14_0)
-	return arg_14_0.type == GaoSiNiaoEnum.GridType.Portal
+function GaoSiNiaoMapGrid:isPortal()
+	return self.type == GaoSiNiaoEnum.GridType.Portal
 end
 
-function var_0_0.isPath(arg_15_0)
-	return arg_15_0.type == GaoSiNiaoEnum.GridType.Path
+function GaoSiNiaoMapGrid:isPath()
+	return self.type == GaoSiNiaoEnum.GridType.Path
 end
 
-function var_0_0.isFixedPath(arg_16_0)
-	return arg_16_0:isPath() and not arg_16_0.bMovable
+function GaoSiNiaoMapGrid:isFixedPath()
+	return self:isPath() and not self.bMovable
 end
 
-function var_0_0.rootId(arg_17_0)
-	if not arg_17_0._mapMO then
-		return arg_17_0:id()
+function GaoSiNiaoMapGrid:rootId()
+	if not self._mapMO then
+		return self:id()
 	end
 
-	return arg_17_0._mapMO:rootId(arg_17_0)
+	return self._mapMO:rootId(self)
 end
 
-function var_0_0.isRoot(arg_18_0)
-	return arg_18_0:rootId() == arg_18_0:id()
+function GaoSiNiaoMapGrid:isRoot()
+	return self:rootId() == self:id()
 end
 
-function var_0_0._getGrid(arg_19_0, arg_19_1, arg_19_2)
-	if not arg_19_0._mapMO then
+function GaoSiNiaoMapGrid:_getGrid(x, y)
+	if not self._mapMO then
 		return
 	end
 
-	return arg_19_0._mapMO:getGrid(arg_19_1, arg_19_2)
+	return self._mapMO:getGrid(x, y)
 end
 
-function var_0_0._merge(arg_20_0, arg_20_1)
-	if not arg_20_0._mapMO then
+function GaoSiNiaoMapGrid:_merge(rhs)
+	if not self._mapMO then
 		return
 	end
 
-	return arg_20_0._mapMO:merge(arg_20_0, arg_20_1)
+	return self._mapMO:merge(self, rhs)
 end
 
-function var_0_0._isConned(arg_21_0, arg_21_1)
-	if not arg_21_0._mapMO then
+function GaoSiNiaoMapGrid:_isConned(rhs)
+	if not self._mapMO then
 		return
 	end
 
-	return arg_21_0._mapMO:isConned(arg_21_0, arg_21_1)
+	return self._mapMO:isConned(self, rhs)
 end
 
-function var_0_0._isConnedStart(arg_22_0)
-	if not arg_22_0._mapMO then
+function GaoSiNiaoMapGrid:_isConnedStart()
+	if not self._mapMO then
 		return
 	end
 
-	return arg_22_0._mapMO:isConnedStart(arg_22_0)
+	return self._mapMO:isConnedStart(self)
 end
 
-function var_0_0._isPlacedBagItem(arg_23_0)
-	if not arg_23_0._mapMO then
+function GaoSiNiaoMapGrid:_isPlacedBagItem()
+	if not self._mapMO then
 		return
 	end
 
-	return arg_23_0._mapMO:isPlacedBagItem(arg_23_0)
+	return self._mapMO:isPlacedBagItem(self)
 end
 
-function var_0_0._getPlacedBagItem(arg_24_0)
-	if not arg_24_0._mapMO then
+function GaoSiNiaoMapGrid:_getPlacedBagItem()
+	if not self._mapMO then
 		return
 	end
 
-	return arg_24_0._mapMO:getPlacedBagItem(arg_24_0)
+	return self._mapMO:getPlacedBagItem(self)
 end
 
-function var_0_0._whoActivedPortalGrid(arg_25_0)
-	if not arg_25_0._mapMO then
+function GaoSiNiaoMapGrid:_whoActivedPortalGrid()
+	if not self._mapMO then
 		return
 	end
 
-	return arg_25_0._mapMO:whoActivedPortalGrid()
+	return self._mapMO:whoActivedPortalGrid()
 end
 
-function var_0_0.T(arg_26_0)
-	arg_26_0:_getGrid(arg_26_0:x(), arg_26_0:y() - 1)
+function GaoSiNiaoMapGrid:T()
+	self:_getGrid(self:x(), self:y() - 1)
 end
 
-function var_0_0.R(arg_27_0)
-	arg_27_0:_getGrid(arg_27_0:x() + 1, arg_27_0:y())
+function GaoSiNiaoMapGrid:R()
+	self:_getGrid(self:x() + 1, self:y())
 end
 
-function var_0_0.B(arg_28_0)
-	arg_28_0:_getGrid(arg_28_0:x(), arg_28_0:y() + 1)
+function GaoSiNiaoMapGrid:B()
+	self:_getGrid(self:x(), self:y() + 1)
 end
 
-function var_0_0.L(arg_29_0)
-	arg_29_0:_getGrid(arg_29_0:x() - 1, arg_29_0:y())
+function GaoSiNiaoMapGrid:L()
+	self:_getGrid(self:x() - 1, self:y())
 end
 
-function var_0_0.isConnedT(arg_30_0)
-	local var_30_0 = arg_30_0:T()
+function GaoSiNiaoMapGrid:isConnedT()
+	local rhs = self:T()
 
-	if not var_30_0 then
+	if not rhs then
 		return false
 	end
 
-	return arg_30_0:_isConned(var_30_0)
+	return self:_isConned(rhs)
 end
 
-function var_0_0.isConnedR(arg_31_0)
-	local var_31_0 = arg_31_0:R()
+function GaoSiNiaoMapGrid:isConnedR()
+	local rhs = self:R()
 
-	if not var_31_0 then
+	if not rhs then
 		return false
 	end
 
-	return arg_31_0:_isConned(var_31_0)
+	return self:_isConned(rhs)
 end
 
-function var_0_0.isConnedB(arg_32_0)
-	local var_32_0 = arg_32_0:B()
+function GaoSiNiaoMapGrid:isConnedB()
+	local rhs = self:B()
 
-	if not var_32_0 then
+	if not rhs then
 		return false
 	end
 
-	return arg_32_0:_isConned(var_32_0)
+	return self:_isConned(rhs)
 end
 
-function var_0_0.isConnedL(arg_33_0)
-	local var_33_0 = arg_33_0:L()
+function GaoSiNiaoMapGrid:isConnedL()
+	local rhs = self:L()
 
-	if not var_33_0 then
+	if not rhs then
 		return false
 	end
 
-	return arg_33_0:_isConned(var_33_0)
+	return self:_isConned(rhs)
 end
 
-function var_0_0.getNeighborGridList(arg_34_0)
-	local var_34_0 = {
+function GaoSiNiaoMapGrid:getNeighborGridList()
+	local list = {
 		false,
 		false,
 		false,
 		false
 	}
 
-	for iter_34_0 = 1, 4 do
-		local var_34_1 = arg_34_0:x() + GaoSiNiaoEnum.dX[iter_34_0]
-		local var_34_2 = arg_34_0:y() + GaoSiNiaoEnum.dY[iter_34_0]
+	for i = 1, 4 do
+		local x = self:x() + GaoSiNiaoEnum.dX[i]
+		local y = self:y() + GaoSiNiaoEnum.dY[i]
+		local grid = self:_getGrid(x, y)
 
-		var_34_0[iter_34_0] = arg_34_0:_getGrid(var_34_1, var_34_2) or false
+		list[i] = grid or false
 	end
 
-	return var_34_0
+	return list
 end
 
-function var_0_0.getNeighborWalkableGridList(arg_35_0)
-	local var_35_0 = {
+function GaoSiNiaoMapGrid:getNeighborWalkableGridList()
+	local list = {
 		false,
 		false,
 		false,
 		false
 	}
-	local var_35_1 = arg_35_0:out_ZoneMask()
+	local outZM = self:out_ZoneMask()
 
-	for iter_35_0 = 1, 4 do
-		local var_35_2 = GaoSiNiaoEnum.bitPos2Dir(iter_35_0 - 1)
+	for i = 1, 4 do
+		local relativeZoneMask = GaoSiNiaoEnum.bitPos2Dir(i - 1)
 
-		if Bitwise.has(var_35_1, var_35_2) then
-			local var_35_3 = arg_35_0:x() + GaoSiNiaoEnum.dX[iter_35_0]
-			local var_35_4 = arg_35_0:y() + GaoSiNiaoEnum.dY[iter_35_0]
+		if Bitwise.has(outZM, relativeZoneMask) then
+			local x = self:x() + GaoSiNiaoEnum.dX[i]
+			local y = self:y() + GaoSiNiaoEnum.dY[i]
+			local grid = self:_getGrid(x, y)
 
-			var_35_0[iter_35_0] = arg_35_0:_getGrid(var_35_3, var_35_4) or false
+			list[i] = grid or false
 		end
 	end
 
-	return var_35_0
+	return list
 end
 
-function var_0_0.getRelativeZoneMask(arg_36_0, arg_36_1)
-	for iter_36_0 = 1, 4 do
-		local var_36_0 = GaoSiNiaoEnum.bitPos2Dir(iter_36_0 - 1)
-		local var_36_1 = arg_36_0:x() + GaoSiNiaoEnum.dX[iter_36_0]
-		local var_36_2 = arg_36_0:y() + GaoSiNiaoEnum.dY[iter_36_0]
+function GaoSiNiaoMapGrid:getRelativeZoneMask(neighborGrid)
+	for i = 1, 4 do
+		local relativeZoneMask = GaoSiNiaoEnum.bitPos2Dir(i - 1)
+		local x = self:x() + GaoSiNiaoEnum.dX[i]
+		local y = self:y() + GaoSiNiaoEnum.dY[i]
 
-		if arg_36_0:_getGrid(var_36_1, var_36_2) == arg_36_1 then
-			return var_36_0
+		if self:_getGrid(x, y) == neighborGrid then
+			return relativeZoneMask
 		end
 	end
 
 	return GaoSiNiaoEnum.ZoneMask.None
 end
 
-function var_0_0.set_forceInZoneMask(arg_37_0, arg_37_1)
-	arg_37_0._forceInZoneMask = arg_37_1
+function GaoSiNiaoMapGrid:set_forceInZoneMask(zm)
+	self._forceInZoneMask = zm
 end
 
-function var_0_0.set_forceOutZoneMask(arg_38_0, arg_38_1)
-	arg_38_0._forceOutZoneMask = arg_38_1
+function GaoSiNiaoMapGrid:set_forceOutZoneMask(zm)
+	self._forceOutZoneMask = zm
 end
 
-function var_0_0._internal_tryConnNeighbor(arg_39_0, arg_39_1, arg_39_2)
-	if not arg_39_1 then
+function GaoSiNiaoMapGrid:_internal_tryConnNeighbor(rhs, relativeZoneMask)
+	if not rhs then
 		return false
 	end
 
-	assert(arg_39_2 > 0)
+	assert(relativeZoneMask > 0)
 
-	local var_39_0 = Bitwise["&"](arg_39_0:in_ZoneMask(), arg_39_1:out_ZoneMask())
+	local mask = Bitwise["&"](self:in_ZoneMask(), rhs:out_ZoneMask())
+	local ok = Bitwise.has(mask, GaoSiNiaoEnum.flipDir(relativeZoneMask))
 
-	return (Bitwise.has(var_39_0, GaoSiNiaoEnum.flipDir(arg_39_2)))
+	return ok
 end
 
-function var_0_0._protal_ZoneMask_default(arg_40_0)
-	assert(arg_40_0:isPortal())
+function GaoSiNiaoMapGrid:_protal_ZoneMask_default()
+	assert(self:isPortal())
 
-	if arg_40_0:isConnedT() then
+	if self:isConnedT() then
 		return GaoSiNiaoEnum.ZoneMask.South
-	elseif arg_40_0:isConnedR() then
+	elseif self:isConnedR() then
 		return GaoSiNiaoEnum.ZoneMask.West
-	elseif arg_40_0:isConnedB() then
+	elseif self:isConnedB() then
 		return GaoSiNiaoEnum.ZoneMask.North
-	elseif arg_40_0:isConnedL() then
+	elseif self:isConnedL() then
 		return GaoSiNiaoEnum.ZoneMask.East
 	else
 		return GaoSiNiaoEnum.ZoneMask.All
 	end
 end
 
-function var_0_0.in_ZoneMask(arg_41_0)
-	if arg_41_0._forceInZoneMask then
-		return arg_41_0._forceInZoneMask
+function GaoSiNiaoMapGrid:in_ZoneMask()
+	if self._forceInZoneMask then
+		return self._forceInZoneMask
 	end
 
-	local var_41_0 = arg_41_0:_getPlacedBagItem()
+	local bagItem = self:_getPlacedBagItem()
 
-	if var_41_0 then
-		return var_41_0:in_ZoneMask()
-	elseif arg_41_0:isPortal() then
-		return arg_41_0:_protal_ZoneMask_default()
+	if bagItem then
+		return bagItem:in_ZoneMask()
+	elseif self:isPortal() then
+		return self:_protal_ZoneMask_default()
 	end
 
-	return arg_41_0:_in_ZoneMask_default()
+	return self:_in_ZoneMask_default()
 end
 
-function var_0_0.out_ZoneMask(arg_42_0)
-	if arg_42_0._forceOutZoneMask then
-		return arg_42_0._forceOutZoneMask
+function GaoSiNiaoMapGrid:out_ZoneMask()
+	if self._forceOutZoneMask then
+		return self._forceOutZoneMask
 	end
 
-	local var_42_0 = arg_42_0:_getPlacedBagItem()
+	local bagItem = self:_getPlacedBagItem()
 
-	if var_42_0 then
-		return var_42_0:out_ZoneMask()
-	elseif arg_42_0:isPortal() then
-		return arg_42_0:_protal_ZoneMask_default()
+	if bagItem then
+		return bagItem:out_ZoneMask()
+	elseif self:isPortal() then
+		return self:_protal_ZoneMask_default()
 	end
 
-	return arg_42_0:_out_ZoneMask_default()
+	return self:_out_ZoneMask_default()
 end
 
-function var_0_0._in_ZoneMask_default(arg_43_0)
-	if arg_43_0:isStart() or arg_43_0:isEnd() then
+function GaoSiNiaoMapGrid:_in_ZoneMask_default()
+	if self:isStart() or self:isEnd() then
 		return GaoSiNiaoEnum.ZoneMask.All
-	elseif arg_43_0:isWall() or arg_43_0:isEmpty() then
+	elseif self:isWall() or self:isEmpty() then
 		return GaoSiNiaoEnum.ZoneMask.None
-	elseif arg_43_0:isFixedPath() then
-		return GaoSiNiaoEnum.PathInfo[arg_43_0.ePathType].inZM
+	elseif self:isFixedPath() then
+		return GaoSiNiaoEnum.PathInfo[self.ePathType].inZM
 	else
-		assert(false, "[in_ZoneMask] unsupported type: " .. tostring(arg_43_0.type))
+		assert(false, "[in_ZoneMask] unsupported type: " .. tostring(self.type))
 	end
 end
 
-function var_0_0._out_ZoneMask_default(arg_44_0)
-	if arg_44_0:isStart() or arg_44_0:isEnd() then
+function GaoSiNiaoMapGrid:_out_ZoneMask_default()
+	if self:isStart() or self:isEnd() then
 		return GaoSiNiaoEnum.ZoneMask.All
-	elseif arg_44_0:isWall() or arg_44_0:isEmpty() then
+	elseif self:isWall() or self:isEmpty() then
 		return GaoSiNiaoEnum.ZoneMask.None
-	elseif arg_44_0:isFixedPath() then
-		return GaoSiNiaoEnum.PathInfo[arg_44_0.ePathType].outZM
+	elseif self:isFixedPath() then
+		return GaoSiNiaoEnum.PathInfo[self.ePathType].outZM
 	else
-		assert(false, "[out_ZoneMask] unsupported type: " .. tostring(arg_44_0.type))
+		assert(false, "[out_ZoneMask] unsupported type: " .. tostring(self.type))
 	end
 end
 
-return var_0_0
+return GaoSiNiaoMapGrid

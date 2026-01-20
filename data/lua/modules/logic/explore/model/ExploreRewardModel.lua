@@ -1,9 +1,11 @@
-﻿module("modules.logic.explore.model.ExploreRewardModel", package.seeall)
+﻿-- chunkname: @modules/logic/explore/model/ExploreRewardModel.lua
 
-local var_0_0 = class("ExploreRewardModel", ListScrollModel)
+module("modules.logic.explore.model.ExploreRewardModel", package.seeall)
 
-function var_0_0.test(arg_1_0)
-	arg_1_0:setList({
+local ExploreRewardModel = class("ExploreRewardModel", ListScrollModel)
+
+function ExploreRewardModel:test()
+	self:setList({
 		{},
 		{},
 		{},
@@ -14,6 +16,6 @@ function var_0_0.test(arg_1_0)
 	})
 end
 
-var_0_0.instance = var_0_0.New()
+ExploreRewardModel.instance = ExploreRewardModel.New()
 
-return var_0_0
+return ExploreRewardModel

@@ -1,390 +1,392 @@
-﻿module("modules.logic.room.view.record.RoomCritterHandBookView", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/record/RoomCritterHandBookView.lua
 
-local var_0_0 = class("RoomCritterHandBookView", BaseView)
+module("modules.logic.room.view.record.RoomCritterHandBookView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_view")
-	arg_1_0._btnleftreverse = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_reverse")
-	arg_1_0._goleftbtnback = gohelper.findChild(arg_1_0.viewGO, "left/#btn_reverse/back")
-	arg_1_0._goleftbtnfront = gohelper.findChild(arg_1_0.viewGO, "left/#btn_reverse/front")
-	arg_1_0._txtcollectionnum = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_collectionnum")
-	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
-	arg_1_0._goshow = gohelper.findChild(arg_1_0.viewGO, "right/show")
-	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "right/empty")
-	arg_1_0._gobtnmutate = gohelper.findChild(arg_1_0.viewGO, "right/show/btnbg")
-	arg_1_0._btnmutate = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/show/btnbg/#btn_mutate")
-	arg_1_0._goshowmutate = gohelper.findChild(arg_1_0.viewGO, "right/show/btnbg/#btn_mutate/selected")
-	arg_1_0._gohidemutate = gohelper.findChild(arg_1_0.viewGO, "right/show/btnbg/#btn_mutate/unselet")
-	arg_1_0._btnyoung = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/show/btnbg/#btn_young")
-	arg_1_0._goshowyoung = gohelper.findChild(arg_1_0.viewGO, "right/show/btnbg/#btn_young/selected")
-	arg_1_0._gohideyoung = gohelper.findChild(arg_1_0.viewGO, "right/show/btnbg/#btn_young/unselect")
-	arg_1_0._btnrightbtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/show/#btn_reverse")
-	arg_1_0._goreversereddot = gohelper.findChild(arg_1_0.viewGO, "right/show/#btn_reverse/#go_reversereddot")
-	arg_1_0._gofront = gohelper.findChild(arg_1_0.viewGO, "right/show/front")
-	arg_1_0._goback = gohelper.findChild(arg_1_0.viewGO, "right/show/back")
-	arg_1_0._imagecardbg = gohelper.findChildImage(arg_1_0.viewGO, "right/show/front/#image_cardbg")
-	arg_1_0._simagecritter = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/show/front/#simage_critter")
-	arg_1_0._gobackbgicon = gohelper.findChild(arg_1_0.viewGO, "right/show/back/#simage_back/icon")
-	arg_1_0._simageutm = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/show/back/#simage_utm")
-	arg_1_0._txtcrittername = gohelper.findChildText(arg_1_0.viewGO, "right/show/#txt_crittername")
-	arg_1_0._txtcrittertype = gohelper.findChildText(arg_1_0.viewGO, "right/show/#txt_crittername/#txt_crittertype")
-	arg_1_0._imagerelationship = gohelper.findChildImage(arg_1_0.viewGO, "right/legend/layout/scroll/#simage_critter")
-	arg_1_0._txtreleationship = gohelper.findChildText(arg_1_0.viewGO, "right/legend/layout/scroll/Viewport/Content/relationship/#txt_releationship")
-	arg_1_0._txtlegend = gohelper.findChildText(arg_1_0.viewGO, "right/legend/layout/scroll2/Viewport/Content/#txt_legend")
-	arg_1_0._golengendempty = gohelper.findChild(arg_1_0.viewGO, "right/legend/#go_legendempty")
-	arg_1_0._goscrolllegend = gohelper.findChild(arg_1_0.viewGO, "right/legend/layout")
-	arg_1_0._goscrollrelationship = gohelper.findChild(arg_1_0.viewGO, "right/legend/layout/scroll")
-	arg_1_0._goscroll2 = gohelper.findChild(arg_1_0.viewGO, "right/legend/layout/scroll2")
-	arg_1_0._btnlog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_log")
-	arg_1_0._gologreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_log/reddot")
-	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
-	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_taskreddot")
-	arg_1_0._rightanimator = arg_1_0._goright:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._btnanimator = arg_1_0._btnleftreverse.gameObject:GetComponent(typeof(UnityEngine.Animator))
-	arg_1_0._gofoods = {}
-	arg_1_0._mo = nil
-	arg_1_0._scrollview = arg_1_0.viewContainer:getHandBookScrollView()
+local RoomCritterHandBookView = class("RoomCritterHandBookView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RoomCritterHandBookView:onInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._scrollview = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_view")
+	self._btnleftreverse = gohelper.findChildButtonWithAudio(self.viewGO, "left/#btn_reverse")
+	self._goleftbtnback = gohelper.findChild(self.viewGO, "left/#btn_reverse/back")
+	self._goleftbtnfront = gohelper.findChild(self.viewGO, "left/#btn_reverse/front")
+	self._txtcollectionnum = gohelper.findChildText(self.viewGO, "left/#txt_collectionnum")
+	self._goright = gohelper.findChild(self.viewGO, "right")
+	self._goshow = gohelper.findChild(self.viewGO, "right/show")
+	self._goempty = gohelper.findChild(self.viewGO, "right/empty")
+	self._gobtnmutate = gohelper.findChild(self.viewGO, "right/show/btnbg")
+	self._btnmutate = gohelper.findChildButtonWithAudio(self.viewGO, "right/show/btnbg/#btn_mutate")
+	self._goshowmutate = gohelper.findChild(self.viewGO, "right/show/btnbg/#btn_mutate/selected")
+	self._gohidemutate = gohelper.findChild(self.viewGO, "right/show/btnbg/#btn_mutate/unselet")
+	self._btnyoung = gohelper.findChildButtonWithAudio(self.viewGO, "right/show/btnbg/#btn_young")
+	self._goshowyoung = gohelper.findChild(self.viewGO, "right/show/btnbg/#btn_young/selected")
+	self._gohideyoung = gohelper.findChild(self.viewGO, "right/show/btnbg/#btn_young/unselect")
+	self._btnrightbtn = gohelper.findChildButtonWithAudio(self.viewGO, "right/show/#btn_reverse")
+	self._goreversereddot = gohelper.findChild(self.viewGO, "right/show/#btn_reverse/#go_reversereddot")
+	self._gofront = gohelper.findChild(self.viewGO, "right/show/front")
+	self._goback = gohelper.findChild(self.viewGO, "right/show/back")
+	self._imagecardbg = gohelper.findChildImage(self.viewGO, "right/show/front/#image_cardbg")
+	self._simagecritter = gohelper.findChildSingleImage(self.viewGO, "right/show/front/#simage_critter")
+	self._gobackbgicon = gohelper.findChild(self.viewGO, "right/show/back/#simage_back/icon")
+	self._simageutm = gohelper.findChildSingleImage(self.viewGO, "right/show/back/#simage_utm")
+	self._txtcrittername = gohelper.findChildText(self.viewGO, "right/show/#txt_crittername")
+	self._txtcrittertype = gohelper.findChildText(self.viewGO, "right/show/#txt_crittername/#txt_crittertype")
+	self._imagerelationship = gohelper.findChildImage(self.viewGO, "right/legend/layout/scroll/#simage_critter")
+	self._txtreleationship = gohelper.findChildText(self.viewGO, "right/legend/layout/scroll/Viewport/Content/relationship/#txt_releationship")
+	self._txtlegend = gohelper.findChildText(self.viewGO, "right/legend/layout/scroll2/Viewport/Content/#txt_legend")
+	self._golengendempty = gohelper.findChild(self.viewGO, "right/legend/#go_legendempty")
+	self._goscrolllegend = gohelper.findChild(self.viewGO, "right/legend/layout")
+	self._goscrollrelationship = gohelper.findChild(self.viewGO, "right/legend/layout/scroll")
+	self._goscroll2 = gohelper.findChild(self.viewGO, "right/legend/layout/scroll2")
+	self._btnlog = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_log")
+	self._gologreddot = gohelper.findChild(self.viewGO, "#btn_log/reddot")
+	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
+	self._gotaskreddot = gohelper.findChild(self.viewGO, "#btn_task/#go_taskreddot")
+	self._rightanimator = self._goright:GetComponent(typeof(UnityEngine.Animator))
+	self._btnanimator = self._btnleftreverse.gameObject:GetComponent(typeof(UnityEngine.Animator))
+	self._gofoods = {}
+	self._mo = nil
+	self._scrollview = self.viewContainer:getHandBookScrollView()
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnleftreverse:AddClickListener(arg_2_0._btnleftreverseOnClick, arg_2_0)
-	arg_2_0._btnrightbtn:AddClickListener(arg_2_0._btnrightbtnOnClick, arg_2_0)
-	arg_2_0._btnmutate:AddClickListener(arg_2_0._btnmutateOnClick, arg_2_0)
-	arg_2_0._btnyoung:AddClickListener(arg_2_0._btnyoungOnClick, arg_2_0)
-	arg_2_0._btnlog:AddClickListener(arg_2_0._btnlogOnClick, arg_2_0)
-	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
-	arg_2_0:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.onClickHandBookItem, arg_2_0.updateView, arg_2_0)
-	arg_2_0:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, arg_2_0.refreshBack, arg_2_0)
-	arg_2_0:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.showMutate, arg_2_0.refreshMutate, arg_2_0)
+function RoomCritterHandBookView:addEvents()
+	self._btnleftreverse:AddClickListener(self._btnleftreverseOnClick, self)
+	self._btnrightbtn:AddClickListener(self._btnrightbtnOnClick, self)
+	self._btnmutate:AddClickListener(self._btnmutateOnClick, self)
+	self._btnyoung:AddClickListener(self._btnyoungOnClick, self)
+	self._btnlog:AddClickListener(self._btnlogOnClick, self)
+	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.onClickHandBookItem, self.updateView, self)
+	self:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, self.refreshBack, self)
+	self:addEventCb(RoomHandBookController.instance, RoomHandBookEvent.showMutate, self.refreshMutate, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnleftreverse:RemoveClickListener()
-	arg_3_0._btnrightbtn:RemoveClickListener()
-	arg_3_0._btnmutate:RemoveClickListener()
-	arg_3_0._btnyoung:RemoveClickListener()
-	arg_3_0._btnlog:RemoveClickListener()
-	arg_3_0._btntask:RemoveClickListener()
-	arg_3_0:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.onClickHandBookItem, arg_3_0.updateView, arg_3_0)
-	arg_3_0:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, arg_3_0.refreshBack, arg_3_0)
-	arg_3_0:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.showMutate, arg_3_0.refreshMutate, arg_3_0)
+function RoomCritterHandBookView:removeEvents()
+	self._btnleftreverse:RemoveClickListener()
+	self._btnrightbtn:RemoveClickListener()
+	self._btnmutate:RemoveClickListener()
+	self._btnyoung:RemoveClickListener()
+	self._btnlog:RemoveClickListener()
+	self._btntask:RemoveClickListener()
+	self:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.onClickHandBookItem, self.updateView, self)
+	self:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.refreshBack, self.refreshBack, self)
+	self:removeEventCb(RoomHandBookController.instance, RoomHandBookEvent.showMutate, self.refreshMutate, self)
 end
 
-function var_0_0._btnlogOnClick(arg_4_0)
+function RoomCritterHandBookView:_btnlogOnClick()
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.HandBook2Log,
 		view = RoomRecordEnum.View.Log
 	})
 end
 
-function var_0_0._btntaskOnClick(arg_5_0)
+function RoomCritterHandBookView:_btntaskOnClick()
 	RoomController.instance:dispatchEvent(RoomEvent.SwitchRecordView, {
 		animName = RoomRecordEnum.AnimName.HandBook2Task,
 		view = RoomRecordEnum.View.Task
 	})
 end
 
-function var_0_0._btnleftreverseOnClick(arg_6_0)
+function RoomCritterHandBookView:_btnleftreverseOnClick()
 	RoomHandBookModel.instance:setScrollReverse()
-	arg_6_0:reverseIcon()
+	self:reverseIcon()
 
-	arg_6_0._isreverse = RoomHandBookModel.instance:getReverse()
+	self._isreverse = RoomHandBookModel.instance:getReverse()
 
-	gohelper.setActive(arg_6_0._goleftbtnback, arg_6_0._isreverse)
-	gohelper.setActive(arg_6_0._goleftbtnfront, not arg_6_0._isreverse)
+	gohelper.setActive(self._goleftbtnback, self._isreverse)
+	gohelper.setActive(self._goleftbtnfront, not self._isreverse)
 
-	if arg_6_0._isreverse then
-		arg_6_0._btnanimator:Play("to_front", 0, 0)
-		TaskDispatcher.runDelay(arg_6_0.reverseAnim, arg_6_0, RoomRecordEnum.AnimTime)
+	if self._isreverse then
+		self._btnanimator:Play("to_front", 0, 0)
+		TaskDispatcher.runDelay(self.reverseAnim, self, RoomRecordEnum.AnimTime)
 	else
-		arg_6_0._btnanimator:Play("to_back", 0, 0)
-		TaskDispatcher.runDelay(arg_6_0.reverseAnim, arg_6_0, RoomRecordEnum.AnimTime)
+		self._btnanimator:Play("to_back", 0, 0)
+		TaskDispatcher.runDelay(self.reverseAnim, self, RoomRecordEnum.AnimTime)
 	end
 end
 
-function var_0_0.reverseAnim(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.reverseAnim, arg_7_0)
+function RoomCritterHandBookView:reverseAnim()
+	TaskDispatcher.cancelTask(self.reverseAnim, self)
 
-	if arg_7_0._isreverse then
-		arg_7_0._btnanimator:Play("to_back", 0, 0)
+	if self._isreverse then
+		self._btnanimator:Play("to_back", 0, 0)
 	else
-		arg_7_0._btnanimator:Play("to_front", 0, 0)
+		self._btnanimator:Play("to_front", 0, 0)
 	end
 end
 
-function var_0_0._btnrightbtnOnClick(arg_8_0)
+function RoomCritterHandBookView:_btnrightbtnOnClick()
 	ViewMgr.instance:openView(ViewName.RoomCritterHandBookBackView)
 	RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.Newstriker, false)
 end
 
-function var_0_0._btnmutateOnClick(arg_9_0)
-	local var_9_0 = RoomHandBookModel.instance:getSelectMo()
+function RoomCritterHandBookView:_btnmutateOnClick()
+	local mo = RoomHandBookModel.instance:getSelectMo()
 
-	CritterRpc.instance:sendSetCritterBookUseSpecialSkinRequest(var_9_0.id, true)
+	CritterRpc.instance:sendSetCritterBookUseSpecialSkinRequest(mo.id, true)
 end
 
-function var_0_0._btnyoungOnClick(arg_10_0)
-	local var_10_0 = RoomHandBookModel.instance:getSelectMo()
+function RoomCritterHandBookView:_btnyoungOnClick()
+	local mo = RoomHandBookModel.instance:getSelectMo()
 
-	CritterRpc.instance:sendSetCritterBookUseSpecialSkinRequest(var_10_0.id, false)
+	CritterRpc.instance:sendSetCritterBookUseSpecialSkinRequest(mo.id, false)
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0._goscroll2ArrowGo = gohelper.findChild(arg_11_0._goscroll2, "gameobject")
-	arg_11_0._goscroll2ArrowTrans = arg_11_0._goscroll2ArrowGo.transform
-	arg_11_0._goscroll2ArrowDefaultY = recthelper.getAnchorY(arg_11_0._goscroll2ArrowTrans)
+function RoomCritterHandBookView:_editableInitView()
+	self._goscroll2ArrowGo = gohelper.findChild(self._goscroll2, "gameobject")
+	self._goscroll2ArrowTrans = self._goscroll2ArrowGo.transform
+	self._goscroll2ArrowDefaultY = recthelper.getAnchorY(self._goscroll2ArrowTrans)
 
-	for iter_11_0 = 1, 3 do
-		local var_11_0 = arg_11_0:getUserDataTb_()
+	for i = 1, 3 do
+		local item = self:getUserDataTb_()
 
-		var_11_0.go = gohelper.findChild(arg_11_0.viewGO, "right/show/food/item" .. iter_11_0)
-		var_11_0.simage = gohelper.findChildSingleImage(var_11_0.go, "#simage_icon")
+		item.go = gohelper.findChild(self.viewGO, "right/show/food/item" .. i)
+		item.simage = gohelper.findChildSingleImage(item.go, "#simage_icon")
 
-		gohelper.setActive(var_11_0.go, false)
-		table.insert(arg_11_0._gofoods, var_11_0)
+		gohelper.setActive(item.go, false)
+		table.insert(self._gofoods, item)
 	end
 end
 
-function var_0_0.updateView(arg_12_0, arg_12_1)
-	if arg_12_0._mo ~= arg_12_1 then
-		arg_12_0._rightanimator:Play("switch", 0, 0)
+function RoomCritterHandBookView:updateView(itemMo)
+	if self._mo ~= itemMo then
+		self._rightanimator:Play("switch", 0, 0)
 	end
 
-	arg_12_0._mo = arg_12_1 and arg_12_1 or RoomHandBookModel.instance:getSelectMo()
-	arg_12_0._isSpecial = arg_12_0._mo.UseSpecialSkin
+	self._mo = itemMo and itemMo or RoomHandBookModel.instance:getSelectMo()
+	self._isSpecial = self._mo.UseSpecialSkin
 
-	local var_12_0 = arg_12_0._mo:checkGotCritter()
-	local var_12_1 = arg_12_0._mo:getConfig()
+	local isget = self._mo:checkGotCritter()
+	local config = self._mo:getConfig()
 
-	gohelper.setActive(arg_12_0._goshow, var_12_0)
-	gohelper.setActive(arg_12_0._goempty, not var_12_0)
+	gohelper.setActive(self._goshow, isget)
+	gohelper.setActive(self._goempty, not isget)
 
-	if var_12_0 then
-		arg_12_0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(var_12_1.id), function()
-			arg_12_0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-		end, arg_12_0)
+	if isget then
+		self._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(config.id), function()
+			self._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end, self)
 	end
 
-	arg_12_0._txtcrittername.text = var_12_0 and var_12_1.name or ""
+	self._txtcrittername.text = isget and config.name or ""
 
-	local var_12_2 = var_12_1.catalogue
-	local var_12_3 = lua_critter_catalogue.configDict[var_12_2].name
-	local var_12_4 = lua_critter_catalogue.configDict[var_12_2].baseCard
+	local typeid = config.catalogue
+	local typename = lua_critter_catalogue.configDict[typeid].name
+	local cardbg = lua_critter_catalogue.configDict[typeid].baseCard
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_12_0._imagecardbg, var_12_4)
+	UISpriteSetMgr.instance:setCritterSprite(self._imagecardbg, cardbg)
 
-	arg_12_0._txtcrittertype.text = var_12_0 and var_12_3 or ""
+	self._txtcrittertype.text = isget and typename or ""
 
-	local var_12_5 = arg_12_0._mo:checkShowMutate()
+	local showMutateBtn = self._mo:checkShowMutate()
 
-	gohelper.setActive(arg_12_0._gobtnmutate, var_12_5)
+	gohelper.setActive(self._gobtnmutate, showMutateBtn)
 
-	if var_12_5 then
-		gohelper.setActive(arg_12_0._btnmutate.gameObject, not arg_12_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_12_0._btnyoung.gameObject, arg_12_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_12_0._goshowmutate, not arg_12_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_12_0._gohidemutate, arg_12_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_12_0._goshowyoung, arg_12_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_12_0._gohideyoung, not arg_12_0._mo:checkShowSpeicalSkin())
+	if showMutateBtn then
+		gohelper.setActive(self._btnmutate.gameObject, not self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._btnyoung.gameObject, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._goshowmutate, not self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._gohidemutate, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._goshowyoung, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._gohideyoung, not self._mo:checkShowSpeicalSkin())
 	end
 
-	if arg_12_0._mo:checkShowSpeicalSkin() then
-		local var_12_6 = lua_critter_skin.configDict[var_12_1.mutateSkin]
+	if self._mo:checkShowSpeicalSkin() then
+		local co = lua_critter_skin.configDict[config.mutateSkin]
 
-		if var_12_6 then
-			arg_12_0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(var_12_6.largeIcon), function()
-				arg_12_0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-			end, arg_12_0)
+		if co then
+			self._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(co.largeIcon), function()
+				self._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+			end, self)
 		end
 	else
-		arg_12_0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(var_12_1.id), function()
-			arg_12_0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-		end, arg_12_0)
+		self._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(config.id), function()
+			self._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end, self)
 	end
 
-	arg_12_0:refreshLikeFood(arg_12_0._mo)
-	arg_12_0:refreshLegend(arg_12_0._mo)
+	self:refreshLikeFood(self._mo)
+	self:refreshLegend(self._mo)
 
-	local var_12_7 = arg_12_0._mo:getBackGroundId()
-	local var_12_8 = var_12_7 and var_12_7 ~= 0
+	local utmbg = self._mo:getBackGroundId()
+	local havebg = utmbg and utmbg ~= 0
 
-	gohelper.setActive(arg_12_0._simageutm.gameObject, var_12_8)
-	gohelper.setActive(arg_12_0._gobackbgicon, not var_12_8)
+	gohelper.setActive(self._simageutm.gameObject, havebg)
+	gohelper.setActive(self._gobackbgicon, not havebg)
 
-	if var_12_7 and var_12_7 ~= 0 then
-		arg_12_0._simageutm:LoadImage(ResUrl.getPropItemIcon(arg_12_0._mo:getBackGroundId()), function()
-			arg_12_0._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
+	if utmbg and utmbg ~= 0 then
+		self._simageutm:LoadImage(ResUrl.getPropItemIcon(self._mo:getBackGroundId()), function()
+			self._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
 		end)
 	end
 
-	local var_12_9 = RoomHandBookModel.instance:getCount()
-	local var_12_10 = CritterConfig.instance:getCritterCount()
+	local haveNum = RoomHandBookModel.instance:getCount()
+	local allNum = CritterConfig.instance:getCritterCount()
 
-	arg_12_0._txtcollectionnum.text = string.format("<color=#cd5200>%s</color>/%s", var_12_9, var_12_10)
+	self._txtcollectionnum.text = string.format("<color=#cd5200>%s</color>/%s", haveNum, allNum)
 end
 
-function var_0_0.refreshLikeFood(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1:getConfig()
+function RoomCritterHandBookView:refreshLikeFood(mo)
+	local config = mo:getConfig()
 
-	if not var_17_0 or string.nilorempty(var_17_0.foodLike) or not arg_17_1:checkGotCritter() then
-		for iter_17_0 = 1, #arg_17_0._gofoods do
-			gohelper.setActive(arg_17_0._gofoods[iter_17_0].go, false)
+	if not config or string.nilorempty(config.foodLike) or not mo:checkGotCritter() then
+		for i = 1, #self._gofoods do
+			gohelper.setActive(self._gofoods[i].go, false)
 		end
 
 		return
 	end
 
-	local var_17_1 = GameUtil.splitString2(var_17_0.foodLike)
-	local var_17_2 = {}
+	local tempList = GameUtil.splitString2(config.foodLike)
+	local likefood = {}
 
-	for iter_17_1, iter_17_2 in ipairs(var_17_1) do
-		local var_17_3 = iter_17_2[1]
+	for _, food in ipairs(tempList) do
+		local foodId = food[1]
 
-		table.insert(var_17_2, var_17_3)
+		table.insert(likefood, foodId)
 	end
 
-	for iter_17_3 = 1, #var_17_2 do
-		local var_17_4 = arg_17_0._gofoods[iter_17_3]
-		local var_17_5 = ItemConfig.instance:getItemCo(tonumber(var_17_2[iter_17_3])).icon
+	for i = 1, #likefood do
+		local item = self._gofoods[i]
+		local path = ItemConfig.instance:getItemCo(tonumber(likefood[i])).icon
 
-		var_17_4.simage:LoadImage(ResUrl.getPropItemIcon(var_17_5))
-		gohelper.setActive(var_17_4.go, true)
+		item.simage:LoadImage(ResUrl.getPropItemIcon(path))
+		gohelper.setActive(item.go, true)
 	end
 
-	for iter_17_4 = #arg_17_0._gofoods, #var_17_2 + 1, -1 do
-		gohelper.setActive(arg_17_0._gofoods[iter_17_4].go, false)
+	for i = #self._gofoods, #likefood + 1, -1 do
+		gohelper.setActive(self._gofoods[i].go, false)
 	end
 end
 
-function var_0_0.refreshLegend(arg_18_0, arg_18_1)
-	local var_18_0 = 446
-	local var_18_1 = 264
-	local var_18_2 = arg_18_1:getConfig()
-	local var_18_3 = true
+function RoomCritterHandBookView:refreshLegend(mo)
+	local hideHeight = 446
+	local showHeight = 264
+	local config = mo:getConfig()
+	local show = true
 
-	if not var_18_2 or not arg_18_1:checkGotCritter() then
-		var_18_3 = false
+	if not config or not mo:checkGotCritter() then
+		show = false
 	end
 
-	gohelper.setActive(arg_18_0._golengendempty, not var_18_3)
-	gohelper.setActive(arg_18_0._goscrolllegend, var_18_3)
+	gohelper.setActive(self._golengendempty, not show)
+	gohelper.setActive(self._goscrolllegend, show)
 
-	if string.nilorempty(var_18_2.line) then
-		gohelper.setActive(arg_18_0._goscrollrelationship.gameObject, false)
-		recthelper.setHeight(arg_18_0._goscroll2.transform, var_18_0)
-		recthelper.setAnchorY(arg_18_0._goscroll2ArrowTrans, -137)
+	if string.nilorempty(config.line) then
+		gohelper.setActive(self._goscrollrelationship.gameObject, false)
+		recthelper.setHeight(self._goscroll2.transform, hideHeight)
+		recthelper.setAnchorY(self._goscroll2ArrowTrans, -137)
 	else
-		gohelper.setActive(arg_18_0._goscrollrelationship.gameObject, true)
+		gohelper.setActive(self._goscrollrelationship.gameObject, true)
 
-		arg_18_0._txtreleationship.text = var_18_2.line
+		self._txtreleationship.text = config.line
 
-		recthelper.setHeight(arg_18_0._goscroll2.transform, var_18_1)
-		recthelper.setAnchorY(arg_18_0._goscroll2ArrowTrans, arg_18_0._goscroll2ArrowDefaultY)
+		recthelper.setHeight(self._goscroll2.transform, showHeight)
+		recthelper.setAnchorY(self._goscroll2ArrowTrans, self._goscroll2ArrowDefaultY)
 	end
 
-	arg_18_0._txtlegend.text = var_18_2.story
+	self._txtlegend.text = config.story
 
-	if not string.nilorempty(var_18_2.relation) then
-		local var_18_4 = "room_handbook_relationship" .. var_18_2.relation
+	if not string.nilorempty(config.relation) then
+		local str = "room_handbook_relationship" .. config.relation
 
-		UISpriteSetMgr.instance:setCritterSprite(arg_18_0._imagerelationship, var_18_4)
+		UISpriteSetMgr.instance:setCritterSprite(self._imagerelationship, str)
 	end
 end
 
-function var_0_0.reverseIcon(arg_19_0)
-	local var_19_0 = RoomHandBookModel.instance:getReverse()
-	local var_19_1 = RoomHandBookModel.instance:getSelectMo()
+function RoomCritterHandBookView:reverseIcon()
+	local isreverse = RoomHandBookModel.instance:getReverse()
+	local mo = RoomHandBookModel.instance:getSelectMo()
 
-	gohelper.setActive(arg_19_0._gofront, not var_19_0)
-	gohelper.setActive(arg_19_0._goback, var_19_0)
-	gohelper.setActive(arg_19_0._goleftbtnback, not var_19_0)
-	gohelper.setActive(arg_19_0._goleftbtnfront, var_19_0)
+	gohelper.setActive(self._gofront, not isreverse)
+	gohelper.setActive(self._goback, isreverse)
+	gohelper.setActive(self._goleftbtnback, not isreverse)
+	gohelper.setActive(self._goleftbtnfront, isreverse)
 
-	if var_19_0 then
-		local var_19_2 = var_19_1:getBackGroundId() and true or false
+	if isreverse then
+		local haveUtm = mo:getBackGroundId() and true or false
 
-		gohelper.setActive(arg_19_0._simageutm.gameObject, var_19_2)
+		gohelper.setActive(self._simageutm.gameObject, haveUtm)
 
-		if var_19_2 then
-			arg_19_0._simageutm:LoadImage(ResUrl.getPropItemIcon(var_19_1:getBackGroundId()), function()
-				arg_19_0._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
-			end, arg_19_0)
+		if haveUtm then
+			self._simageutm:LoadImage(ResUrl.getPropItemIcon(mo:getBackGroundId()), function()
+				self._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
+			end, self)
 		end
 
-		gohelper.setActive(arg_19_0._gobackbgicon, not var_19_2)
+		gohelper.setActive(self._gobackbgicon, not haveUtm)
 	end
 end
 
-function var_0_0.refreshBack(arg_21_0)
-	local var_21_0 = RoomHandBookModel.instance:getReverse()
-	local var_21_1 = RoomHandBookModel.instance:getSelectMo()
+function RoomCritterHandBookView:refreshBack()
+	local isreverse = RoomHandBookModel.instance:getReverse()
+	local mo = RoomHandBookModel.instance:getSelectMo()
 
-	if var_21_0 then
-		local var_21_2 = var_21_1:getBackGroundId() and true or false
+	if isreverse then
+		local haveUtm = mo:getBackGroundId() and true or false
 
-		gohelper.setActive(arg_21_0._simageutm.gameObject, var_21_2)
+		gohelper.setActive(self._simageutm.gameObject, haveUtm)
 
-		if var_21_2 then
-			arg_21_0._simageutm:LoadImage(ResUrl.getPropItemIcon(var_21_1:getBackGroundId()), function()
-				arg_21_0._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
-			end, arg_21_0)
+		if haveUtm then
+			self._simageutm:LoadImage(ResUrl.getPropItemIcon(mo:getBackGroundId()), function()
+				self._simageutm:GetComponent(gohelper.Type_Image):SetNativeSize()
+			end, self)
 		end
 
-		gohelper.setActive(arg_21_0._gobackbgicon, not var_21_2)
+		gohelper.setActive(self._gobackbgicon, not haveUtm)
 	end
 end
 
-function var_0_0.refreshMutate(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_1.UseSpecialSkin
-	local var_23_1 = arg_23_0._mo:checkShowMutate()
-	local var_23_2 = arg_23_0._mo:getConfig()
+function RoomCritterHandBookView:refreshMutate(info)
+	local UseSpecialSkin = info.UseSpecialSkin
+	local showMutateBtn = self._mo:checkShowMutate()
+	local config = self._mo:getConfig()
 
-	if var_23_1 then
-		gohelper.setActive(arg_23_0._btnmutate.gameObject, not arg_23_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_23_0._btnyoung.gameObject, arg_23_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_23_0._goshowmutate, not arg_23_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_23_0._gohidemutate, arg_23_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_23_0._goshowyoung, arg_23_0._mo:checkShowSpeicalSkin())
-		gohelper.setActive(arg_23_0._gohideyoung, not arg_23_0._mo:checkShowSpeicalSkin())
+	if showMutateBtn then
+		gohelper.setActive(self._btnmutate.gameObject, not self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._btnyoung.gameObject, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._goshowmutate, not self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._gohidemutate, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._goshowyoung, self._mo:checkShowSpeicalSkin())
+		gohelper.setActive(self._gohideyoung, not self._mo:checkShowSpeicalSkin())
 	end
 
-	if var_23_0 then
-		local var_23_3 = lua_critter_skin.configDict[var_23_2.mutateSkin]
+	if UseSpecialSkin then
+		local co = lua_critter_skin.configDict[config.mutateSkin]
 
-		if var_23_3 then
-			arg_23_0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(var_23_3.largeIcon), function()
-				arg_23_0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-			end, arg_23_0)
+		if co then
+			self._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(co.largeIcon), function()
+				self._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+			end, self)
 		end
 	else
-		arg_23_0._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(var_23_2.id), function()
-			arg_23_0._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
-		end, arg_23_0)
+		self._simagecritter:LoadImage(ResUrl.getCritterLargeIcon(config.id), function()
+			self._simagecritter:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end, self)
 	end
 end
 
-function var_0_0.onOpen(arg_26_0)
+function RoomCritterHandBookView:onOpen()
 	RoomHandBookListModel.instance:init()
-	arg_26_0._scrollview:selectCell(1, true)
-	gohelper.setActive(arg_26_0._gofront, true)
-	gohelper.setActive(arg_26_0._goback, false)
-	arg_26_0:updateView()
-	RedDotController.instance:addRedDot(arg_26_0._gotaskreddot, RedDotEnum.DotNode.TradeTask)
-	RedDotController.instance:addRedDot(arg_26_0._gologreddot, RedDotEnum.DotNode.CritterLog)
-	RedDotController.instance:addRedDot(arg_26_0._goreversereddot, RedDotEnum.DotNode.Newstriker)
+	self._scrollview:selectCell(1, true)
+	gohelper.setActive(self._gofront, true)
+	gohelper.setActive(self._goback, false)
+	self:updateView()
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.TradeTask)
+	RedDotController.instance:addRedDot(self._gologreddot, RedDotEnum.DotNode.CritterLog)
+	RedDotController.instance:addRedDot(self._goreversereddot, RedDotEnum.DotNode.Newstriker)
 end
 
-function var_0_0.onClose(arg_27_0)
-	TaskDispatcher.cancelTask(arg_27_0.reverseAnim, arg_27_0)
+function RoomCritterHandBookView:onClose()
+	TaskDispatcher.cancelTask(self.reverseAnim, self)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
+function RoomCritterHandBookView:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomCritterHandBookView

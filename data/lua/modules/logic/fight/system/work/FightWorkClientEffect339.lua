@@ -1,52 +1,60 @@
-﻿module("modules.logic.fight.system.work.FightWorkClientEffect339", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkClientEffect339.lua
 
-local var_0_0 = class("FightWorkClientEffect339", FightEffectBase)
+module("modules.logic.fight.system.work.FightWorkClientEffect339", package.seeall)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0.actEffectData.effectNum
-	local var_1_1 = arg_1_0["clientEffect" .. var_1_0]
+local FightWorkClientEffect339 = class("FightWorkClientEffect339", FightEffectBase)
 
-	if not var_1_1 then
+function FightWorkClientEffect339:onStart()
+	local clientEffect = self.actEffectData.effectNum
+	local func = self["clientEffect" .. clientEffect]
+
+	if not func then
 		if isDebugBuild then
-			logError("客户端未处理表现 ： " .. tostring(var_1_0))
+			logError("客户端未处理表现 ： " .. tostring(clientEffect))
 		end
 
-		return arg_1_0:onDone(true)
+		return self:onDone(true)
 	end
 
-	local var_1_2 = arg_1_0:com_registWorkDoneFlowSequence()
+	local flow = self:com_registWorkDoneFlowSequence()
 
-	var_1_2:registWork(Work2FightWork, FunctionWork, var_1_1, arg_1_0)
+	flow:registWork(Work2FightWork, FunctionWork, func, self)
 
-	local var_1_3 = var_0_0.ClientEffectWaitTime[var_1_0]
+	local waitTime = FightWorkClientEffect339.ClientEffectWaitTime[clientEffect]
 
-	if var_1_3 and var_1_3 > 0 then
-		var_1_2:registWork(Work2FightWork, TimerWork, var_1_3)
+	if waitTime and waitTime > 0 then
+		flow:registWork(Work2FightWork, TimerWork, waitTime)
 	end
 
-	var_1_2:start()
+	flow:start()
 end
 
-function var_0_0.clientEffect1(arg_2_0)
+function FightWorkClientEffect339:clientEffect1()
 	FightController.instance:dispatchEvent(FightEvent.DoomsdayClock_OnBroken)
 end
 
-function var_0_0.clientEffect2(arg_3_0)
+function FightWorkClientEffect339:clientEffect2()
 	FightController.instance:dispatchEvent(FightEvent.DoomsdayClock_OnClear)
 end
 
-function var_0_0.clientEffect3(arg_4_0)
+function FightWorkClientEffect339:clientEffect3()
 	FightController.instance:dispatchEvent(FightEvent.TriggerVorpalithSkill)
 end
 
-var_0_0.ClientEffectEnum = {
+function FightWorkClientEffect339:clientEffect4()
+	FightController.instance:dispatchEvent(FightEvent.Rouge2_ScanMusic)
+end
+
+FightWorkClientEffect339.ClientEffectEnum = {
 	DoomsdayClock = 1,
 	TriggerVorpalithSkill = 3,
+	TriggerRouge2ScanMusic = 4,
 	DoomsdayClockClear = 2
 }
-var_0_0.ClientEffectWaitTime = {
-	[var_0_0.ClientEffectEnum.DoomsdayClock] = 0.5,
-	[var_0_0.ClientEffectEnum.DoomsdayClockClear] = 0.2
+FightWorkClientEffect339.ClientEffectWaitTime = {
+	[FightWorkClientEffect339.ClientEffectEnum.DoomsdayClock] = 0.5,
+	[FightWorkClientEffect339.ClientEffectEnum.DoomsdayClockClear] = 0.2,
+	[FightWorkClientEffect339.ClientEffectEnum.TriggerRouge2ScanMusic] = 0.5
 }
 
-return var_0_0
+return FightWorkClientEffect339

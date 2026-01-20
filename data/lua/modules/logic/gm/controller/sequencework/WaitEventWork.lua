@@ -1,64 +1,66 @@
-﻿module("modules.logic.gm.controller.sequencework.WaitEventWork", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/sequencework/WaitEventWork.lua
 
-local var_0_0 = class("WaitEventWork", BaseWork)
+module("modules.logic.gm.controller.sequencework.WaitEventWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	local var_1_0 = string.split(arg_1_1, ";")
-	local var_1_1 = var_1_0[1]
-	local var_1_2 = var_1_0[2]
-	local var_1_3 = var_1_0[3]
+local WaitEventWork = class("WaitEventWork", BaseWork)
 
-	arg_1_0._param = var_1_0[4]
-	arg_1_0._controller = _G[var_1_1]
+function WaitEventWork:ctor(param)
+	local temp = string.split(param, ";")
+	local controllerName = temp[1]
+	local eventModuleName = temp[2]
+	local eventName = temp[3]
 
-	if not arg_1_0._controller then
-		logError("WaitEventWork controllerName error:" .. tostring(var_1_1))
+	self._param = temp[4]
+	self._controller = _G[controllerName]
 
-		return
-	end
-
-	arg_1_0._eventModule = _G[var_1_2]
-
-	if not arg_1_0._eventModule then
-		logError("WaitEventWork eventModuleName error:" .. tostring(var_1_2))
+	if not self._controller then
+		logError("WaitEventWork controllerName error:" .. tostring(controllerName))
 
 		return
 	end
 
-	arg_1_0._eventName = arg_1_0._eventModule[var_1_3]
+	self._eventModule = _G[eventModuleName]
 
-	if not arg_1_0._eventName then
-		logError("WaitEventWork eventName error:" .. tostring(var_1_3))
+	if not self._eventModule then
+		logError("WaitEventWork eventModuleName error:" .. tostring(eventModuleName))
+
+		return
+	end
+
+	self._eventName = self._eventModule[eventName]
+
+	if not self._eventName then
+		logError("WaitEventWork eventName error:" .. tostring(eventName))
 
 		return
 	end
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._controller.instance:registerCallback(arg_2_0._eventName, arg_2_0._onReceiveEvent, arg_2_0)
+function WaitEventWork:onStart()
+	self._controller.instance:registerCallback(self._eventName, self._onReceiveEvent, self)
 end
 
-function var_0_0._onReceiveEvent(arg_3_0, arg_3_1)
-	local var_3_0 = type(arg_3_1)
+function WaitEventWork:_onReceiveEvent(param)
+	local paramType = type(param)
 
-	if var_3_0 == "number" then
-		arg_3_1 = tostring(arg_3_1)
-	elseif var_3_0 == "boolean" then
-		arg_3_1 = tostring(arg_3_1)
+	if paramType == "number" then
+		param = tostring(param)
+	elseif paramType == "boolean" then
+		param = tostring(param)
 	end
 
-	if arg_3_0._param and arg_3_0._param ~= arg_3_1 then
+	if self._param and self._param ~= param then
 		return
 	end
 
-	arg_3_0._controller.instance:unregisterCallback(arg_3_0._eventName, arg_3_0._onReceiveEvent, arg_3_0)
-	arg_3_0:onDone(true)
+	self._controller.instance:unregisterCallback(self._eventName, self._onReceiveEvent, self)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._controller then
-		arg_4_0._controller.instance:unregisterCallback(arg_4_0._eventName, arg_4_0._onReceiveEvent, arg_4_0)
+function WaitEventWork:clearWork()
+	if self._controller then
+		self._controller.instance:unregisterCallback(self._eventName, self._onReceiveEvent, self)
 	end
 end
 
-return var_0_0
+return WaitEventWork

@@ -1,7 +1,9 @@
-﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraTrace", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/comp/skill/FightTLEventCameraTrace.lua
 
-local var_0_0 = class("FightTLEventCameraTrace", FightTimelineTrackItem)
-local var_0_1 = {
+module("modules.logic.fight.entity.comp.skill.FightTLEventCameraTrace", package.seeall)
+
+local FightTLEventCameraTrace = class("FightTLEventCameraTrace", FightTimelineTrackItem)
+local TraceType = {
 	Attacker = 1,
 	Defender = 2,
 	Reset = 0,
@@ -9,69 +11,69 @@ local var_0_1 = {
 	PosAbs = 3
 }
 
-function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = GameSceneMgr.instance:getCurScene().camera
+function FightTLEventCameraTrace:onTrackStart(fightStepData, duration, paramsArr)
+	local sceneCameraComp = GameSceneMgr.instance:getCurScene().camera
 
-	var_1_0:setEaseTime(arg_1_2)
-	var_1_0:setEaseType(EaseType.Str2Type(arg_1_3[5]))
+	sceneCameraComp:setEaseTime(duration)
+	sceneCameraComp:setEaseType(EaseType.Str2Type(paramsArr[5]))
 
-	local var_1_1 = tonumber(arg_1_3[1]) or 0
+	local traceType = tonumber(paramsArr[1]) or 0
 
-	if var_1_1 == var_0_1.Reset then
-		var_1_0:resetParam()
+	if traceType == TraceType.Reset then
+		sceneCameraComp:resetParam()
 	else
-		local var_1_2 = tonumber(arg_1_3[2]) or 0
+		local distance = tonumber(paramsArr[2]) or 0
 
-		if var_1_2 > 0 then
-			local var_1_3 = var_1_0:getCurCO()
+		if distance > 0 then
+			local cameraCO = sceneCameraComp:getCurCO()
 
-			if var_1_1 == var_0_1.PosAbsDistRelateAtk then
-				local var_1_4 = FightHelper.getEntity(arg_1_1.fromId)
-				local var_1_5, var_1_6, var_1_7 = transformhelper.getPos(var_1_4.go.transform)
+			if traceType == TraceType.PosAbsDistRelateAtk then
+				local entity = FightHelper.getEntity(fightStepData.fromId)
+				local _, _, entityZ = transformhelper.getPos(entity.go.transform)
 
-				var_1_0:setDistance(var_1_2 - var_1_7)
+				sceneCameraComp:setDistance(distance - entityZ)
 			else
-				var_1_0:setDistance(var_1_2)
+				sceneCameraComp:setDistance(distance)
 			end
 		else
-			var_1_0:resetDistance(var_1_2)
+			sceneCameraComp:resetDistance(distance)
 		end
 
-		if arg_1_3[3] == "1" then
-			local var_1_8 = string.split(arg_1_3[4], ",")
-			local var_1_9 = tonumber(var_1_8[1]) or 0
-			local var_1_10 = tonumber(var_1_8[2]) or 0
-			local var_1_11 = tonumber(var_1_8[3]) or 0
-			local var_1_12 = 0
-			local var_1_13 = 0
-			local var_1_14 = 0
+		local isFocus = paramsArr[3] == "1"
 
-			if var_1_1 == var_0_1.Attacker or var_1_1 == var_0_1.Defender then
-				local var_1_15 = var_1_1 == var_0_1.Attacker and arg_1_1.fromId or arg_1_1.toId
-				local var_1_16 = FightHelper.getEntity(var_1_15)
+		if isFocus then
+			local focusOffset = string.split(paramsArr[4], ",")
+			local focusOffsetX = tonumber(focusOffset[1]) or 0
+			local focusOffsetY = tonumber(focusOffset[2]) or 0
+			local focusOffsetZ = tonumber(focusOffset[3]) or 0
+			local x, y, z = 0, 0, 0
 
-				if var_1_16 then
-					var_1_12, var_1_13, var_1_14 = FightHelper.getEntityWorldCenterPos(var_1_16)
+			if traceType == TraceType.Attacker or traceType == TraceType.Defender then
+				local entityId = traceType == TraceType.Attacker and fightStepData.fromId or fightStepData.toId
+				local entity = FightHelper.getEntity(entityId)
 
-					if not var_1_16:isMySide() then
-						var_1_9 = -var_1_9
+				if entity then
+					x, y, z = FightHelper.getEntityWorldCenterPos(entity)
+
+					if not entity:isMySide() then
+						focusOffsetX = -focusOffsetX
 					end
 				end
-			elseif var_1_1 == var_0_1.PosAbs or var_1_1 == var_0_1.PosAbsDistRelateAtk then
-				local var_1_17 = FightHelper.getEntity(arg_1_1.fromId)
+			elseif traceType == TraceType.PosAbs or traceType == TraceType.PosAbsDistRelateAtk then
+				local entity = FightHelper.getEntity(fightStepData.fromId)
 
-				if var_1_17 and not var_1_17:isMySide() then
-					var_1_9 = -var_1_9
+				if entity and not entity:isMySide() then
+					focusOffsetX = -focusOffsetX
 				end
 			end
 
-			var_1_0:setFocus(var_1_12 + var_1_9, var_1_13 + var_1_10, var_1_14 + var_1_11)
+			sceneCameraComp:setFocus(x + focusOffsetX, y + focusOffsetY, z + focusOffsetZ)
 		else
-			local var_1_18 = var_1_0:getCurCO()
+			local cameraCO = sceneCameraComp:getCurCO()
 
-			var_1_0:setFocus(0, var_1_18.yOffset, var_1_18.focusZ)
+			sceneCameraComp:setFocus(0, cameraCO.yOffset, cameraCO.focusZ)
 		end
 	end
 end
 
-return var_0_0
+return FightTLEventCameraTrace

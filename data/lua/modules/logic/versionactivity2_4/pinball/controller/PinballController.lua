@@ -1,96 +1,96 @@
-﻿module("modules.logic.versionactivity2_4.pinball.controller.PinballController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/controller/PinballController.lua
 
-local var_0_0 = class("PinballController", BaseController)
+module("modules.logic.versionactivity2_4.pinball.controller.PinballController", package.seeall)
 
-function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._getInfo, arg_1_0)
-	arg_1_0:registerCallback(PinballEvent.GuideAddRes, arg_1_0._guideAddRes, arg_1_0)
+local PinballController = class("PinballController", BaseController)
+
+function PinballController:addConstEvents()
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._getInfo, self)
+	self:registerCallback(PinballEvent.GuideAddRes, self._guideAddRes, self)
 end
 
-function var_0_0._getInfo(arg_2_0, arg_2_1)
-	if arg_2_1 and arg_2_1 ~= VersionActivity2_4Enum.ActivityId.Pinball then
+function PinballController:_getInfo(activityId)
+	if activityId and activityId ~= VersionActivity2_4Enum.ActivityId.Pinball then
 		return
 	end
-
-	if PinballModel.instance:isOpen() then
-		Activity178Rpc.instance:sendGetAct178Info(VersionActivity2_4Enum.ActivityId.Pinball)
-	end
 end
 
-function var_0_0.openMainView(arg_3_0)
+function PinballController:openMainView()
 	ViewMgr.instance:openView(ViewName.PinballCityView)
 end
 
-function var_0_0.sendGuideMainLv(arg_4_0)
-	arg_4_0:dispatchEvent(PinballEvent.GuideMainLv, var_0_0._checkMainLv)
+function PinballController:sendGuideMainLv()
+	self:dispatchEvent(PinballEvent.GuideMainLv, PinballController._checkMainLv)
 end
 
-function var_0_0._checkMainLv(arg_5_0)
-	local var_5_0 = tonumber(arg_5_0)
+function PinballController._checkMainLv(param)
+	local needLv = tonumber(param)
 
-	if not var_5_0 then
+	if not needLv then
 		return
 	end
 
-	return var_5_0 <= PinballModel.instance:getScoreLevel()
+	local lv = PinballModel.instance:getScoreLevel()
+
+	return needLv <= lv
 end
 
-function var_0_0._guideAddRes(arg_6_0)
+function PinballController:_guideAddRes()
 	Activity178Rpc.instance:sendAct178GuideAddGrain(VersionActivity2_4Enum.ActivityId.Pinball)
 end
 
-function var_0_0.removeBuilding(arg_7_0, arg_7_1)
-	local var_7_0 = PinballModel.instance:getBuildingInfo(arg_7_1)
+function PinballController:removeBuilding(index)
+	local buildingInfo = PinballModel.instance:getBuildingInfo(index)
 
-	if not var_7_0 then
+	if not buildingInfo then
 		return
 	end
 
-	local var_7_1 = {}
+	local costDict = {}
 
-	GameUtil.setDefaultValue(var_7_1, 0)
+	GameUtil.setDefaultValue(costDict, 0)
 
-	for iter_7_0 = 1, var_7_0.level do
-		local var_7_2 = lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_7_0.configId][iter_7_0]
+	for i = 1, buildingInfo.level do
+		local buildCo = lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][buildingInfo.configId][i]
 
-		if var_7_2 and not string.nilorempty(var_7_2.cost) then
-			local var_7_3 = GameUtil.splitString2(var_7_2.cost, true)
+		if buildCo and not string.nilorempty(buildCo.cost) then
+			local dict = GameUtil.splitString2(buildCo.cost, true)
 
-			for iter_7_1, iter_7_2 in pairs(var_7_3) do
-				var_7_1[iter_7_2[1]] = var_7_1[iter_7_2[1]] + iter_7_2[2]
+			for _, arr in pairs(dict) do
+				costDict[arr[1]] = costDict[arr[1]] + arr[2]
 			end
 		end
 	end
 
-	local var_7_4 = {}
+	local costArr = {}
 
-	for iter_7_3, iter_7_4 in pairs(var_7_1) do
-		local var_7_5 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][iter_7_3]
+	for type, num in pairs(costDict) do
+		local resCo = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][type]
 
-		if var_7_5 then
-			table.insert(var_7_4, GameUtil.getSubPlaceholderLuaLang(luaLang("PinballController_removeBuilding"), {
-				var_7_5.name,
-				iter_7_4
+		if resCo then
+			table.insert(costArr, GameUtil.getSubPlaceholderLuaLang(luaLang("PinballController_removeBuilding"), {
+				resCo.name,
+				num
 			}))
 		end
 	end
 
-	arg_7_0._tempIndex = arg_7_1
+	self._tempIndex = index
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PinballRemoveBuilding, MsgBoxEnum.BoxType.Yes_No, arg_7_0._realRemoveBuilding, nil, nil, arg_7_0, nil, nil, table.concat(var_7_4, luaLang("PinballController_sep")))
+	GameFacade.showMessageBox(MessageBoxIdDefine.PinballRemoveBuilding, MsgBoxEnum.BoxType.Yes_No, self._realRemoveBuilding, nil, nil, self, nil, nil, table.concat(costArr, luaLang("PinballController_sep")))
 end
 
-function var_0_0._realRemoveBuilding(arg_8_0)
-	local var_8_0 = PinballModel.instance:getBuildingInfo(arg_8_0._tempIndex)
+function PinballController:_realRemoveBuilding()
+	local buildingInfo = PinballModel.instance:getBuildingInfo(self._tempIndex)
 
-	if not var_8_0 then
+	if not buildingInfo then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio5)
-	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, var_8_0.configId, PinballEnum.BuildingOperType.Remove, arg_8_0._tempIndex)
+	Activity178Rpc.instance:sendAct178Build(VersionActivity2_4Enum.ActivityId.Pinball, buildingInfo.configId, PinballEnum.BuildingOperType.Remove, self._tempIndex)
 end
 
-var_0_0.instance = var_0_0.New()
+PinballController.instance = PinballController.New()
 
-return var_0_0
+return PinballController

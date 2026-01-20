@@ -1,11 +1,13 @@
-﻿module("modules.logic.versionactivity2_4.pinball.model.PinballCurrencyMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_4/pinball/model/PinballCurrencyMo.lua
 
-local var_0_0 = pureTable("PinballCurrencyMo")
+module("modules.logic.versionactivity2_4.pinball.model.PinballCurrencyMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.type = arg_1_1.type
-	arg_1_0.num = arg_1_1.num
-	arg_1_0.changeNum = arg_1_1.changeNum
+local PinballCurrencyMo = pureTable("PinballCurrencyMo")
+
+function PinballCurrencyMo:init(data)
+	self.type = data.type
+	self.num = data.num
+	self.changeNum = data.changeNum
 end
 
-return var_0_0
+return PinballCurrencyMo

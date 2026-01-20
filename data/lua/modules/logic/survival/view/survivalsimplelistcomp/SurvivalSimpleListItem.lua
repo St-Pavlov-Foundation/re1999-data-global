@@ -1,51 +1,71 @@
-﻿module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListItem", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/survivalsimplelistcomp/SurvivalSimpleListItem.lua
 
-local var_0_0 = class("SurvivalSimpleListItem", LuaCompBase)
+module("modules.logic.survival.view.survivalsimplelistcomp.SurvivalSimpleListItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.viewContainer = arg_1_1
+local SurvivalSimpleListItem = class("SurvivalSimpleListItem", LuaCompBase)
+
+function SurvivalSimpleListItem:ctor(viewContainer)
+	self.viewContainer = viewContainer
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0.viewGO = arg_2_1
+function SurvivalSimpleListItem:init(viewGO)
+	self.viewGO = viewGO
+
+	self:onInit(viewGO)
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function SurvivalSimpleListItem:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function SurvivalSimpleListItem:removeEventListeners()
 	return
 end
 
-function var_0_0.showItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.data = arg_5_1
-	arg_5_0.index = arg_5_2
-	arg_5_0.isSelect = arg_5_3
+function SurvivalSimpleListItem:showItem(data, index, isSelect)
+	self.data = data
+	self.index = index
+	self.isSelect = isSelect
 
-	arg_5_0:onItemShow(arg_5_1)
+	self:onItemShow(data)
 end
 
-function var_0_0.hideItem(arg_6_0)
-	arg_6_0:onItemHide()
+function SurvivalSimpleListItem:hideItem()
+	self:onItemHide()
 end
 
-function var_0_0.setSelect(arg_7_0, arg_7_1)
-	arg_7_0.isSelect = arg_7_1
+function SurvivalSimpleListItem:setSelect(isSelect)
+	self.isSelect = isSelect
 
-	arg_7_0:onSelectChange(arg_7_1)
+	self:onSelectChange(isSelect)
 end
 
-function var_0_0.onItemShow(arg_8_0, arg_8_1)
+function SurvivalSimpleListItem:getItemAnimators()
+	if self._animators == nil then
+		local animator = gohelper.findComponentAnim(self.viewGO)
+
+		self._animators = {
+			animator
+		}
+	end
+
+	return self._animators
+end
+
+function SurvivalSimpleListItem:onInit(viewGO)
 	return
 end
 
-function var_0_0.onItemHide(arg_9_0)
+function SurvivalSimpleListItem:onItemShow(data)
 	return
 end
 
-function var_0_0.onSelectChange(arg_10_0, arg_10_1)
+function SurvivalSimpleListItem:onItemHide()
 	return
 end
 
-return var_0_0
+function SurvivalSimpleListItem:onSelectChange(isSelect)
+	return
+end
+
+return SurvivalSimpleListItem

@@ -1,14 +1,16 @@
-﻿module("modules.logic.main.controller.work.MainMailWork", package.seeall)
+﻿-- chunkname: @modules/logic/main/controller/work/MainMailWork.lua
 
-local var_0_0 = class("MainMailWork", BaseWork)
+module("modules.logic.main.controller.work.MainMailWork", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local MainMailWork = class("MainMailWork", BaseWork)
+
+function MainMailWork:onStart(context)
 	MailController.instance:tryShowMailToast()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_2_0)
+function MainMailWork:clearWork()
 	return
 end
 
-return var_0_0
+return MainMailWork

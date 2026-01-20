@@ -1,40 +1,42 @@
-﻿module("modules.logic.fight.view.FightViewMultiBossHp", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewMultiBossHp.lua
 
-local var_0_0 = class("FightViewMultiBossHp", FightViewBossHp)
+module("modules.logic.fight.view.FightViewMultiBossHp", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local FightViewMultiBossHp = class("FightViewMultiBossHp", FightViewBossHp)
 
-	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+function FightViewMultiBossHp:onInitView()
+	FightViewMultiBossHp.super.onInitView(self)
 
-	arg_1_0._ani:Play("idle", nil, nil)
+	self._ani = SLFramework.AnimatorPlayer.Get(self.viewGO)
+
+	self._ani:Play("idle", nil, nil)
 end
 
-function var_0_0.onConstructor(arg_2_0, arg_2_1)
-	arg_2_0._entityId = arg_2_1
+function FightViewMultiBossHp:onConstructor(entityId)
+	self._entityId = entityId
 end
 
-function var_0_0._checkBossAndUpdate(arg_3_0)
-	arg_3_0._bossEntityMO = arg_3_0:_getBossEntityMO()
+function FightViewMultiBossHp:_checkBossAndUpdate()
+	self._bossEntityMO = self:_getBossEntityMO()
 
-	if arg_3_0._bossEntityMO then
-		gohelper.setActive(arg_3_0.viewGO, true)
-		gohelper.setActive(arg_3_0._bossHpGO, true)
-		arg_3_0:_refreshBossHpUI()
+	if self._bossEntityMO then
+		gohelper.setActive(self.viewGO, true)
+		gohelper.setActive(self._bossHpGO, true)
+		self:_refreshBossHpUI()
 	end
 end
 
-function var_0_0._onEntityDead(arg_4_0, arg_4_1)
-	if arg_4_0._bossEntityMO and arg_4_0._bossEntityMO.id == arg_4_1 then
-		arg_4_0._bossEntityMO = nil
+function FightViewMultiBossHp:_onEntityDead(entityId)
+	if self._bossEntityMO and self._bossEntityMO.id == entityId then
+		self._bossEntityMO = nil
 
-		arg_4_0:_tweenFillAmount()
-		arg_4_0._ani:Play("die", nil, nil)
+		self:_tweenFillAmount()
+		self._ani:Play("die", nil, nil)
 	end
 end
 
-function var_0_0._getBossEntityMO(arg_5_0)
-	return FightDataHelper.entityMgr:getById(arg_5_0._entityId)
+function FightViewMultiBossHp:_getBossEntityMO()
+	return FightDataHelper.entityMgr:getById(self._entityId)
 end
 
-return var_0_0
+return FightViewMultiBossHp

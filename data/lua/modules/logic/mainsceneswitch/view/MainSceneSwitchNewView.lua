@@ -1,47 +1,49 @@
-﻿module("modules.logic.mainsceneswitch.view.MainSceneSwitchNewView", package.seeall)
+﻿-- chunkname: @modules/logic/mainsceneswitch/view/MainSceneSwitchNewView.lua
 
-local var_0_0 = class("MainSceneSwitchNewView", MainSceneSwitchView)
+module("modules.logic.mainsceneswitch.view.MainSceneSwitchNewView", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	var_0_0.super._editableInitView(arg_1_0)
+local MainSceneSwitchNewView = class("MainSceneSwitchNewView", MainSceneSwitchView)
+
+function MainSceneSwitchNewView:_editableInitView()
+	MainSceneSwitchNewView.super._editableInitView(self)
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
-	arg_2_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
+function MainSceneSwitchNewView:addEvents()
+	MainSceneSwitchNewView.super.addEvents(self)
+	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
-	arg_3_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
+function MainSceneSwitchNewView:removeEvents()
+	MainSceneSwitchNewView.super.removeEvents(self)
+	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
-function var_0_0._toSwitchTab(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 == 1 and arg_4_0.viewContainer:getClassify() == MainSwitchClassifyEnum.Classify.Scene then
-		if arg_4_2 == MainEnum.SwitchType.Scene then
-			arg_4_0:onTabSwitchOpen()
+function MainSceneSwitchNewView:_toSwitchTab(tabContainerId, tabId)
+	if tabContainerId == 1 and self.viewContainer:getClassify() == MainSwitchClassifyEnum.Classify.Scene then
+		if tabId == MainEnum.SwitchType.Scene then
+			self:onTabSwitchOpen()
 		else
-			arg_4_0:onTabSwitchClose()
+			self:onTabSwitchClose()
 		end
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
-	var_0_0.super.onOpen(arg_5_0)
-	arg_5_0:_updateSceneInfo()
-	arg_5_0._rootAnimator:Play("open", 0, 0)
+function MainSceneSwitchNewView:onOpen()
+	MainSceneSwitchNewView.super.onOpen(self)
+	self:_updateSceneInfo()
+	self._rootAnimator:Play("open", 0, 0)
 end
 
-function var_0_0.onTabSwitchOpen(arg_6_0)
+function MainSceneSwitchNewView:onTabSwitchOpen()
 	MainHeroView.resetPostProcessBlur()
 
-	if arg_6_0._rootAnimator then
-		arg_6_0._rootAnimator:Play("open", 0, 0)
+	if self._rootAnimator then
+		self._rootAnimator:Play("open", 0, 0)
 	end
 end
 
-function var_0_0.onTabSwitchClose(arg_7_0)
+function MainSceneSwitchNewView:onTabSwitchClose()
 	return
 end
 
-return var_0_0
+return MainSceneSwitchNewView

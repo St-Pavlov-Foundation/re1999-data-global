@@ -1,142 +1,92 @@
-﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStrongholdMO", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_2/eliminate/model/mo/WarChessStrongholdMO.lua
 
-local var_0_0 = class("WarChessStrongholdMO")
+module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessStrongholdMO", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.id = arg_1_1.id
-	arg_1_0.mySidePiece = {}
-	arg_1_0.enemySidePiece = {}
+local WarChessStrongholdMO = class("WarChessStrongholdMO")
 
-	arg_1_0:updateInfo(arg_1_1)
+function WarChessStrongholdMO:init(data)
+	self.id = data.id
+	self.mySidePiece = {}
+	self.enemySidePiece = {}
+
+	self:updateInfo(data)
 end
 
-function var_0_0.updateInfo(arg_2_0, arg_2_1)
-	arg_2_0.myScore = arg_2_1.myScore or 0
-	arg_2_0.enemyScore = arg_2_1.enemyScore or 0
-	arg_2_0.status = arg_2_1.status
+function WarChessStrongholdMO:updateInfo(data)
+	self.myScore = data.myScore or 0
+	self.enemyScore = data.enemyScore or 0
+	self.status = data.status
 
-	if arg_2_1.mySidePiece then
-		arg_2_0.mySidePiece = GameUtil.rpcInfosToList(arg_2_1.mySidePiece, WarChessPieceMO)
+	if data.mySidePiece then
+		self.mySidePiece = GameUtil.rpcInfosToList(data.mySidePiece, WarChessPieceMO)
 	end
 
-	if arg_2_1.enemySidePiece then
-		arg_2_0.enemySidePiece = GameUtil.rpcInfosToList(arg_2_1.enemySidePiece, WarChessPieceMO)
-	end
-end
-
-function var_0_0.updatePiece(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		local var_3_0 = WarChessPieceMO.New()
-
-		var_3_0:init(arg_3_2)
-		table.insert(arg_3_0.enemySidePiece, var_3_0)
-
-		return #arg_3_0.enemySidePiece
-	end
-
-	if arg_3_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		local var_3_1 = WarChessPieceMO.New()
-
-		var_3_1:init(arg_3_2)
-		table.insert(arg_3_0.mySidePiece, var_3_1)
-
-		return #arg_3_0.mySidePiece
+	if data.enemySidePiece then
+		self.enemySidePiece = GameUtil.rpcInfosToList(data.enemySidePiece, WarChessPieceMO)
 	end
 end
 
-function var_0_0.addTempPiece(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = EliminateConfig.instance:getSoldierChessConfig(arg_4_2)
-	local var_4_1 = WarChessPieceMO.New()
+function WarChessStrongholdMO:updatePiece(teamType, pieceInfo)
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		local piece = WarChessPieceMO.New()
 
-	var_4_1.id = arg_4_2
-	var_4_1.teamType = arg_4_1
-	var_4_1.battle = var_4_0.defaultPower
-	var_4_1.uid = EliminateTeamChessEnum.tempPieceUid
+		piece:init(pieceInfo)
+		table.insert(self.enemySidePiece, piece)
 
-	if arg_4_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		table.insert(arg_4_0.enemySidePiece, var_4_1)
-
-		return var_4_1, #arg_4_0.enemySidePiece
+		return #self.enemySidePiece
 	end
 
-	if arg_4_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		table.insert(arg_4_0.mySidePiece, var_4_1)
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		local piece = WarChessPieceMO.New()
 
-		return var_4_1, #arg_4_0.mySidePiece
+		piece:init(pieceInfo)
+		table.insert(self.mySidePiece, piece)
+
+		return #self.mySidePiece
 	end
 end
 
-function var_0_0.updateChessPower(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0.mySidePiece then
-		for iter_5_0 = 1, #arg_5_0.mySidePiece do
-			local var_5_0 = arg_5_0.mySidePiece[iter_5_0]
+function WarChessStrongholdMO:addTempPiece(teamType, soliderId)
+	local config = EliminateConfig.instance:getSoldierChessConfig(soliderId)
+	local piece = WarChessPieceMO.New()
 
-			if var_5_0.uid == arg_5_1 then
-				var_5_0:updatePower(arg_5_2)
+	piece.id = soliderId
+	piece.teamType = teamType
+	piece.battle = config.defaultPower
+	piece.uid = EliminateTeamChessEnum.tempPieceUid
+
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		table.insert(self.enemySidePiece, piece)
+
+		return piece, #self.enemySidePiece
+	end
+
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		table.insert(self.mySidePiece, piece)
+
+		return piece, #self.mySidePiece
+	end
+end
+
+function WarChessStrongholdMO:updateChessPower(uid, diffValue)
+	if self.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
+
+			if piece.uid == uid then
+				piece:updatePower(diffValue)
 
 				return true
 			end
 		end
 	end
 
-	if arg_5_0.enemySidePiece then
-		for iter_5_1 = 1, #arg_5_0.enemySidePiece do
-			local var_5_1 = arg_5_0.enemySidePiece[iter_5_1]
+	if self.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
 
-			if var_5_1.uid == arg_5_1 then
-				var_5_1:updatePower(arg_5_2)
-
-				return true
-			end
-		end
-	end
-
-	return false
-end
-
-function var_0_0.updateSkillGrowUp(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0.mySidePiece then
-		for iter_6_0 = 1, #arg_6_0.mySidePiece do
-			local var_6_0 = arg_6_0.mySidePiece[iter_6_0]
-
-			if var_6_0.uid == arg_6_1 and var_6_0:updateSkillGrowUp(arg_6_2, arg_6_3) then
-				return true
-			end
-		end
-	end
-
-	if arg_6_0.enemySidePiece then
-		for iter_6_1 = 1, #arg_6_0.enemySidePiece do
-			local var_6_1 = arg_6_0.enemySidePiece[iter_6_1]
-
-			if var_6_1.uid == arg_6_1 and var_6_1:updateSkillGrowUp(arg_6_2, arg_6_3) then
-				return true
-			end
-		end
-	end
-
-	return false
-end
-
-function var_0_0.updateDisplacementState(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_0.mySidePiece then
-		for iter_7_0 = 1, #arg_7_0.mySidePiece do
-			local var_7_0 = arg_7_0.mySidePiece[iter_7_0]
-
-			if var_7_0.uid == arg_7_1 then
-				var_7_0:updateDisplacementState(arg_7_2)
-
-				return true
-			end
-		end
-	end
-
-	if arg_7_0.enemySidePiece then
-		for iter_7_1 = 1, #arg_7_0.enemySidePiece do
-			local var_7_1 = arg_7_0.enemySidePiece[iter_7_1]
-
-			if var_7_1.uid == arg_7_1 then
-				var_7_1:updateDisplacementState(arg_7_2)
+			if piece.uid == uid then
+				piece:updatePower(diffValue)
 
 				return true
 			end
@@ -146,129 +96,191 @@ function var_0_0.updateDisplacementState(arg_7_0, arg_7_1, arg_7_2)
 	return false
 end
 
-function var_0_0.updateScore(arg_8_0, arg_8_1, arg_8_2)
-	if arg_8_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		arg_8_0.myScore = math.max(arg_8_0.myScore + arg_8_2, 0)
-	end
+function WarChessStrongholdMO:updateSkillGrowUp(uid, skillId, upValue)
+	if self.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
 
-	if arg_8_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		arg_8_0.enemyScore = math.max(arg_8_0.enemyScore + arg_8_2, 0)
-	end
-end
-
-function var_0_0.updateStatus(arg_9_0, arg_9_1)
-	arg_9_0.status = arg_9_1
-end
-
-function var_0_0.getChess(arg_10_0, arg_10_1)
-	for iter_10_0 = 1, #arg_10_0.mySidePiece do
-		local var_10_0 = arg_10_0.mySidePiece[iter_10_0]
-
-		if var_10_0.uid == arg_10_1 then
-			return var_10_0
+			if piece.uid == uid and piece:updateSkillGrowUp(skillId, upValue) then
+				return true
+			end
 		end
 	end
 
-	for iter_10_1 = 1, #arg_10_0.enemySidePiece do
-		local var_10_1 = arg_10_0.enemySidePiece[iter_10_1]
+	if self.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
 
-		if var_10_1.uid == arg_10_1 then
-			return var_10_1
+			if piece.uid == uid and piece:updateSkillGrowUp(skillId, upValue) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function WarChessStrongholdMO:updateDisplacementState(uid, displacementState)
+	if self.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
+
+			if piece.uid == uid then
+				piece:updateDisplacementState(displacementState)
+
+				return true
+			end
+		end
+	end
+
+	if self.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
+
+			if piece.uid == uid then
+				piece:updateDisplacementState(displacementState)
+
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function WarChessStrongholdMO:updateScore(teamType, diffValue)
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		self.myScore = math.max(self.myScore + diffValue, 0)
+	end
+
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		self.enemyScore = math.max(self.enemyScore + diffValue, 0)
+	end
+end
+
+function WarChessStrongholdMO:updateStatus(state)
+	self.status = state
+end
+
+function WarChessStrongholdMO:getChess(uid)
+	for i = 1, #self.mySidePiece do
+		local piece = self.mySidePiece[i]
+
+		if piece.uid == uid then
+			return piece
+		end
+	end
+
+	for i = 1, #self.enemySidePiece do
+		local piece = self.enemySidePiece[i]
+
+		if piece.uid == uid then
+			return piece
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.removeChess(arg_11_0, arg_11_1)
-	for iter_11_0 = 1, #arg_11_0.mySidePiece do
-		if arg_11_0.mySidePiece[iter_11_0].uid == arg_11_1 then
-			table.remove(arg_11_0.mySidePiece, iter_11_0)
+function WarChessStrongholdMO:removeChess(uid)
+	for i = 1, #self.mySidePiece do
+		local piece = self.mySidePiece[i]
+
+		if piece.uid == uid then
+			table.remove(self.mySidePiece, i)
 
 			return
 		end
 	end
 
-	for iter_11_1 = 1, #arg_11_0.enemySidePiece do
-		if arg_11_0.enemySidePiece[iter_11_1].uid == arg_11_1 then
-			table.remove(arg_11_0.enemySidePiece, iter_11_1)
+	for i = 1, #self.enemySidePiece do
+		local piece = self.enemySidePiece[i]
+
+		if piece.uid == uid then
+			table.remove(self.enemySidePiece, i)
 
 			return
 		end
 	end
 end
 
-function var_0_0.getPlayerSoliderCount(arg_12_0)
-	return arg_12_0.mySidePiece and #arg_12_0.mySidePiece or 0
+function WarChessStrongholdMO:getPlayerSoliderCount()
+	return self.mySidePiece and #self.mySidePiece or 0
 end
 
-function var_0_0.getEnemySoliderCount(arg_13_0)
-	return arg_13_0.enemySidePiece and #arg_13_0.enemySidePiece or 0
+function WarChessStrongholdMO:getEnemySoliderCount()
+	return self.enemySidePiece and #self.enemySidePiece or 0
 end
 
-function var_0_0.isFull(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:getStrongholdConfig()
+function WarChessStrongholdMO:isFull(teamType)
+	local config = self:getStrongholdConfig()
 
-	if arg_14_1 == EliminateTeamChessEnum.TeamChessTeamType.player then
-		return var_14_0.friendCapacity == #arg_14_0.mySidePiece
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.player then
+		return config.friendCapacity == #self.mySidePiece
 	end
 
-	if arg_14_1 == EliminateTeamChessEnum.TeamChessTeamType.enemy then
-		return var_14_0.enemyCapacity == #arg_14_0.enemySidePiece
+	if teamType == EliminateTeamChessEnum.TeamChessTeamType.enemy then
+		return config.enemyCapacity == #self.enemySidePiece
 	end
 end
 
-function var_0_0.diffData(arg_15_0, arg_15_1)
-	local var_15_0 = true
+function WarChessStrongholdMO:diffData(data)
+	local isSame = true
 
-	if arg_15_0.id ~= arg_15_1.id then
-		var_15_0 = false
+	if self.id ~= data.id then
+		isSame = false
 	end
 
-	if arg_15_0.myScore ~= arg_15_1.myScore then
-		var_15_0 = false
+	if self.myScore ~= data.myScore then
+		isSame = false
 	end
 
-	if arg_15_0.enemyScore ~= arg_15_1.enemyScore then
-		var_15_0 = false
+	if self.enemyScore ~= data.enemyScore then
+		isSame = false
 	end
 
-	if arg_15_0.status ~= arg_15_1.status then
-		var_15_0 = false
+	if self.status ~= data.status then
+		isSame = false
 	end
 
-	if arg_15_0.mySidePiece and arg_15_1.mySidePiece then
-		for iter_15_0 = 1, #arg_15_0.mySidePiece do
-			if not arg_15_0.mySidePiece[iter_15_0]:diffData(arg_15_1.mySidePiece[iter_15_0]) then
-				var_15_0 = false
+	if self.mySidePiece and data.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
+
+			if not piece:diffData(data.mySidePiece[i]) then
+				isSame = false
 			end
 		end
 	end
 
-	if arg_15_0.enemySidePiece and arg_15_1.enemySidePiece then
-		for iter_15_1 = 1, #arg_15_0.enemySidePiece do
-			if not arg_15_0.enemySidePiece[iter_15_1]:diffData(arg_15_1.enemySidePiece[iter_15_1]) then
-				var_15_0 = false
+	if self.enemySidePiece and data.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
+
+			if not piece:diffData(data.enemySidePiece[i]) then
+				isSame = false
 			end
 		end
 	end
 
-	return var_15_0
+	return isSame
 end
 
-function var_0_0.getStrongholdConfig(arg_16_0)
-	if arg_16_0.config == nil then
-		arg_16_0.config = EliminateConfig.instance:getStrongHoldConfig(arg_16_0.id)
+function WarChessStrongholdMO:getStrongholdConfig()
+	if self.config == nil then
+		self.config = EliminateConfig.instance:getStrongHoldConfig(self.id)
 	end
 
-	return arg_16_0.config
+	return self.config
 end
 
-function var_0_0.getMySideIndexByUid(arg_17_0, arg_17_1)
-	if arg_17_0.mySidePiece then
-		for iter_17_0 = 1, #arg_17_0.mySidePiece do
-			if arg_17_0.mySidePiece[iter_17_0].uid == arg_17_1 then
-				return iter_17_0
+function WarChessStrongholdMO:getMySideIndexByUid(uid)
+	if self.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
+
+			if piece.uid == uid then
+				return i
 			end
 		end
 	end
@@ -276,11 +288,13 @@ function var_0_0.getMySideIndexByUid(arg_17_0, arg_17_1)
 	return -1
 end
 
-function var_0_0.getEnemySideIndexByUid(arg_18_0, arg_18_1)
-	if arg_18_0.enemySidePiece then
-		for iter_18_0 = 1, #arg_18_0.enemySidePiece do
-			if arg_18_0.enemySidePiece[iter_18_0].uid == arg_18_1 then
-				return iter_18_0
+function WarChessStrongholdMO:getEnemySideIndexByUid(uid)
+	if self.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
+
+			if piece.uid == uid then
+				return i
 			end
 		end
 	end
@@ -288,13 +302,13 @@ function var_0_0.getEnemySideIndexByUid(arg_18_0, arg_18_1)
 	return -1
 end
 
-function var_0_0.getEnemySideByUid(arg_19_0, arg_19_1)
-	if arg_19_0.enemySidePiece then
-		for iter_19_0 = 1, #arg_19_0.enemySidePiece do
-			local var_19_0 = arg_19_0.enemySidePiece[iter_19_0]
+function WarChessStrongholdMO:getEnemySideByUid(uid)
+	if self.enemySidePiece then
+		for i = 1, #self.enemySidePiece do
+			local piece = self.enemySidePiece[i]
 
-			if var_19_0.uid == arg_19_1 then
-				return var_19_0
+			if piece.uid == uid then
+				return piece
 			end
 		end
 	end
@@ -302,13 +316,13 @@ function var_0_0.getEnemySideByUid(arg_19_0, arg_19_1)
 	return nil
 end
 
-function var_0_0.getMySideByUid(arg_20_0, arg_20_1)
-	if arg_20_0.mySidePiece then
-		for iter_20_0 = 1, #arg_20_0.mySidePiece do
-			local var_20_0 = arg_20_0.mySidePiece[iter_20_0]
+function WarChessStrongholdMO:getMySideByUid(uid)
+	if self.mySidePiece then
+		for i = 1, #self.mySidePiece do
+			local piece = self.mySidePiece[i]
 
-			if var_20_0.uid == arg_20_1 then
-				return var_20_0
+			if piece.uid == uid then
+				return piece
 			end
 		end
 	end
@@ -316,4 +330,4 @@ function var_0_0.getMySideByUid(arg_20_0, arg_20_1)
 	return nil
 end
 
-return var_0_0
+return WarChessStrongholdMO

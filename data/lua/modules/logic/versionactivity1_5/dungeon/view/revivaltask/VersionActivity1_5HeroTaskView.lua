@@ -1,243 +1,246 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5HeroTaskView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/revivaltask/VersionActivity1_5HeroTaskView.lua
 
-local var_0_0 = class("VersionActivity1_5HeroTaskView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.revivaltask.VersionActivity1_5HeroTaskView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goherotask = gohelper.findChild(arg_1_0.viewGO, "#go_herotask")
-	arg_1_0._simagebookbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_herotask/#simage_bookbg")
-	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_herotask/Title/#txt_title")
-	arg_1_0._imageheroPhoto = gohelper.findChildImage(arg_1_0.viewGO, "#go_herotask/#image_heroPhoto")
-	arg_1_0._txtheroDetail = gohelper.findChildText(arg_1_0.viewGO, "#go_herotask/#image_heroPhoto/#scroll_heroDetail/viewprot/#txt_heroDetail")
-	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_herotask/LeftDown/#txt_total")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_herotask/LeftDown/#txt_total/#txt_num")
-	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "#go_herotask/LeftDown/#go_rewarditem")
-	arg_1_0._gohasget = gohelper.findChild(arg_1_0.viewGO, "#go_herotask/LeftDown/#go_rewarditem/#go_hasget")
-	arg_1_0._gogainedreward = gohelper.findChild(arg_1_0.viewGO, "#go_herotask/LeftDown/#go_rewarditem/#go_gainReward")
-	arg_1_0._gopointitem = gohelper.findChild(arg_1_0.viewGO, "#go_herotask/LeftDown/progresspoint/#go_pointitem")
-	arg_1_0._goTaskList = gohelper.findChild(arg_1_0.viewGO, "#go_herotask/#scroll_task/Viewport/#go_TaskList")
-	arg_1_0._scrollTask = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_herotask/#scroll_task")
-	arg_1_0.goNextIcon = gohelper.findChild(arg_1_0.viewGO, "nexticon")
+local VersionActivity1_5HeroTaskView = class("VersionActivity1_5HeroTaskView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_5HeroTaskView:onInitView()
+	self._goherotask = gohelper.findChild(self.viewGO, "#go_herotask")
+	self._simagebookbg = gohelper.findChildSingleImage(self.viewGO, "#go_herotask/#simage_bookbg")
+	self._txttitle = gohelper.findChildText(self.viewGO, "#go_herotask/Title/#txt_title")
+	self._imageheroPhoto = gohelper.findChildImage(self.viewGO, "#go_herotask/#image_heroPhoto")
+	self._txtheroDetail = gohelper.findChildText(self.viewGO, "#go_herotask/#image_heroPhoto/#scroll_heroDetail/viewprot/#txt_heroDetail")
+	self._txttotal = gohelper.findChildText(self.viewGO, "#go_herotask/LeftDown/#txt_total")
+	self._txtnum = gohelper.findChildText(self.viewGO, "#go_herotask/LeftDown/#txt_total/#txt_num")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "#go_herotask/LeftDown/#go_rewarditem")
+	self._gohasget = gohelper.findChild(self.viewGO, "#go_herotask/LeftDown/#go_rewarditem/#go_hasget")
+	self._gogainedreward = gohelper.findChild(self.viewGO, "#go_herotask/LeftDown/#go_rewarditem/#go_gainReward")
+	self._gopointitem = gohelper.findChild(self.viewGO, "#go_herotask/LeftDown/progresspoint/#go_pointitem")
+	self._goTaskList = gohelper.findChild(self.viewGO, "#go_herotask/#scroll_task/Viewport/#go_TaskList")
+	self._scrollTask = gohelper.findChildScrollRect(self.viewGO, "#go_herotask/#scroll_task")
+	self.goNextIcon = gohelper.findChild(self.viewGO, "nexticon")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function VersionActivity1_5HeroTaskView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function VersionActivity1_5HeroTaskView:removeEvents()
 	return
 end
 
-function var_0_0.onValueChanged(arg_4_0, arg_4_1)
-	gohelper.setActive(arg_4_0.goNextIcon, arg_4_0._scrollTask.verticalNormalizedPosition >= 0.01)
+function VersionActivity1_5HeroTaskView:onValueChanged(value)
+	gohelper.setActive(self.goNextIcon, self._scrollTask.verticalNormalizedPosition >= 0.01)
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	arg_5_0.animator = arg_5_0._goherotask:GetComponent(gohelper.Type_Animator)
-	arg_5_0.goSubHeroTaskItem = arg_5_0.viewContainer:getRes(arg_5_0.viewContainer:getSetting().otherRes[1])
+function VersionActivity1_5HeroTaskView:_editableInitView()
+	self.animator = self._goherotask:GetComponent(gohelper.Type_Animator)
+	self.goSubHeroTaskItem = self.viewContainer:getRes(self.viewContainer:getSetting().otherRes[1])
 
-	gohelper.setActive(arg_5_0._gopointitem, false)
+	gohelper.setActive(self._gopointitem, false)
 
-	arg_5_0.gainRewardClick = gohelper.getClickWithAudio(arg_5_0._gogainedreward, AudioEnum.UI.UI_Common_Click)
+	self.gainRewardClick = gohelper.getClickWithAudio(self._gogainedreward, AudioEnum.UI.UI_Common_Click)
 
-	arg_5_0.gainRewardClick:AddClickListener(arg_5_0.onClickGainReward, arg_5_0)
-	arg_5_0._scrollTask:AddOnValueChanged(arg_5_0.onValueChanged, arg_5_0)
+	self.gainRewardClick:AddClickListener(self.onClickGainReward, self)
+	self._scrollTask:AddOnValueChanged(self.onValueChanged, self)
 
-	arg_5_0.progressPointList = {}
-	arg_5_0.subHeroTaskItemList = {}
+	self.progressPointList = {}
+	self.subHeroTaskItemList = {}
 
-	arg_5_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.SelectHeroTaskTabChange, arg_5_0.onSelectHeroTabChange, arg_5_0)
-	arg_5_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedHeroTaskReward, arg_5_0.onGainedHeroTaskReward, arg_5_0)
-	arg_5_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, arg_5_0.onGainedSubHeroTaskReward, arg_5_0)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.SelectHeroTaskTabChange, self.onSelectHeroTabChange, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedHeroTaskReward, self.onGainedHeroTaskReward, self)
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnGainedSubHeroTaskReward, self.onGainedSubHeroTaskReward, self)
 end
 
-function var_0_0.onClickGainReward(arg_6_0)
-	if arg_6_0.taskMo.gainedReward then
+function VersionActivity1_5HeroTaskView:onClickGainReward()
+	if self.taskMo.gainedReward then
 		return
 	end
 
-	if arg_6_0.taskMo:isFinish() then
-		VersionActivity1_5DungeonRpc.instance:sendAct139GainHeroTaskRewardRequest(arg_6_0.taskId)
+	if self.taskMo:isFinish() then
+		VersionActivity1_5DungeonRpc.instance:sendAct139GainHeroTaskRewardRequest(self.taskId)
 	end
 end
 
-function var_0_0.onSelectHeroTabChange(arg_7_0)
-	local var_7_0 = VersionActivity1_5RevivalTaskModel.instance:getSelectHeroTaskId() ~= VersionActivity1_5DungeonEnum.ExploreTaskId
+function VersionActivity1_5HeroTaskView:onSelectHeroTabChange()
+	local isShow = VersionActivity1_5RevivalTaskModel.instance:getSelectHeroTaskId() ~= VersionActivity1_5DungeonEnum.ExploreTaskId
 
-	gohelper.setActive(arg_7_0._goherotask, var_7_0)
-	gohelper.setActive(arg_7_0.goNextIcon, var_7_0)
+	gohelper.setActive(self._goherotask, isShow)
+	gohelper.setActive(self.goNextIcon, isShow)
 
-	if not var_7_0 then
-		arg_7_0.taskId = 0
+	if not isShow then
+		self.taskId = 0
 
 		return
 	end
 
 	VersionActivity1_5RevivalTaskModel.instance:setIsPlayingOpenAnim(true)
-	arg_7_0.animator:Play("open", 0, 0)
+	self.animator:Play("open", 0, 0)
 
-	arg_7_0._scrollTask.verticalNormalizedPosition = 1
+	self._scrollTask.verticalNormalizedPosition = 1
 
-	arg_7_0:refreshUI()
-	TaskDispatcher.runDelay(arg_7_0.onOpenAnimDone, arg_7_0, 0.667)
+	self:refreshUI()
+	TaskDispatcher.runDelay(self.onOpenAnimDone, self, 0.667)
 end
 
-function var_0_0.onOpenAnimDone(arg_8_0)
+function VersionActivity1_5HeroTaskView:onOpenAnimDone()
 	VersionActivity1_5RevivalTaskModel.instance:setIsPlayingOpenAnim(false)
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	local var_9_0 = VersionActivity1_5RevivalTaskModel.instance:getSelectHeroTaskId()
+function VersionActivity1_5HeroTaskView:refreshUI()
+	local selectTaskId = VersionActivity1_5RevivalTaskModel.instance:getSelectHeroTaskId()
 
-	if arg_9_0.taskId == var_9_0 then
+	if self.taskId == selectTaskId then
 		return
 	end
 
-	arg_9_0.taskId = var_9_0
-	arg_9_0.taskMo = VersionActivity1_5RevivalTaskModel.instance:getTaskMo(arg_9_0.taskId)
-	arg_9_0.taskCo = arg_9_0.taskMo.config
+	self.taskId = selectTaskId
+	self.taskMo = VersionActivity1_5RevivalTaskModel.instance:getTaskMo(self.taskId)
+	self.taskCo = self.taskMo.config
 
-	local var_9_1 = string.splitToNumber(arg_9_0.taskCo.reward, "#")
+	local rewardList = string.splitToNumber(self.taskCo.reward, "#")
 
-	arg_9_0.rewardType = var_9_1[1]
-	arg_9_0.rewardId = var_9_1[2]
-	arg_9_0.rewardQuantity = var_9_1[3]
+	self.rewardType = rewardList[1]
+	self.rewardId = rewardList[2]
+	self.rewardQuantity = rewardList[3]
 
-	arg_9_0:refreshTitle()
+	self:refreshTitle()
 
-	arg_9_0._txtheroDetail.text = arg_9_0.taskCo.desc
+	self._txtheroDetail.text = self.taskCo.desc
 
-	UISpriteSetMgr.instance:setV1a5RevivalTaskSprite(arg_9_0._imageheroPhoto, arg_9_0.taskCo.heroIcon)
-	arg_9_0:refreshProgress()
-	arg_9_0:refreshReward()
-	arg_9_0:refreshGainedReward()
-	arg_9_0:refreshSubTask()
+	UISpriteSetMgr.instance:setV1a5RevivalTaskSprite(self._imageheroPhoto, self.taskCo.heroIcon)
+	self:refreshProgress()
+	self:refreshReward()
+	self:refreshGainedReward()
+	self:refreshSubTask()
 end
 
-function var_0_0.refreshTitle(arg_10_0)
-	local var_10_0 = string.split(arg_10_0.taskCo.title, "-")
-	local var_10_1 = var_10_0[1]
-	local var_10_2 = var_10_0[2]
+function VersionActivity1_5HeroTaskView:refreshTitle()
+	local titleList = string.split(self.taskCo.title, "-")
+	local prefix, suffix = titleList[1], titleList[2]
 
-	arg_10_0._txttitle.text = string.format("%s——<color=#C66030>%s</color>", var_10_1, var_10_2)
+	self._txttitle.text = string.format("%s——<color=#C66030>%s</color>", prefix, suffix)
 end
 
-function var_0_0.refreshProgress(arg_11_0)
-	local var_11_0 = arg_11_0.taskMo:getSubTaskCount()
-	local var_11_1 = arg_11_0.taskMo:getSubTaskFinishCount()
+function VersionActivity1_5HeroTaskView:refreshProgress()
+	local totalCount = self.taskMo:getSubTaskCount()
+	local finishCount = self.taskMo:getSubTaskFinishCount()
 
-	arg_11_0._txttotal.text = var_11_0
-	arg_11_0._txtnum.text = var_11_1
+	self._txttotal.text = totalCount
+	self._txtnum.text = finishCount
 
-	for iter_11_0 = 1, var_11_0 do
-		local var_11_2 = arg_11_0:getPointItem(iter_11_0)
+	for index = 1, totalCount do
+		local pointItem = self:getPointItem(index)
 
-		UISpriteSetMgr.instance:setV1a5RevivalTaskSprite(var_11_2.image, iter_11_0 <= var_11_1 and "v1a5_revival_img_point1_2" or "v1a5_revival_img_point1_1")
+		UISpriteSetMgr.instance:setV1a5RevivalTaskSprite(pointItem.image, index <= finishCount and "v1a5_revival_img_point1_2" or "v1a5_revival_img_point1_1")
 	end
 
-	for iter_11_1 = var_11_0 + 1, #arg_11_0.progressPointList do
-		gohelper.setActive(arg_11_0.progressPointList[iter_11_1].go, false)
+	for i = totalCount + 1, #self.progressPointList do
+		gohelper.setActive(self.progressPointList[i].go, false)
 	end
 end
 
-function var_0_0.refreshReward(arg_12_0)
-	if not arg_12_0.icon then
-		arg_12_0.icon = IconMgr.instance:getCommonItemIcon(arg_12_0._gorewarditem)
+function VersionActivity1_5HeroTaskView:refreshReward()
+	if not self.icon then
+		self.icon = IconMgr.instance:getCommonItemIcon(self._gorewarditem)
 	end
 
-	arg_12_0.icon:setMOValue(arg_12_0.rewardType, arg_12_0.rewardId, arg_12_0.rewardQuantity)
-	arg_12_0.icon:setScale(0.6, 0.6, 0.6)
-	gohelper.setAsLastSibling(arg_12_0._gogainedreward)
-	gohelper.setAsLastSibling(arg_12_0._gohasget)
+	self.icon:setMOValue(self.rewardType, self.rewardId, self.rewardQuantity)
+	self.icon:setScale(0.6, 0.6, 0.6)
+	gohelper.setAsLastSibling(self._gogainedreward)
+	gohelper.setAsLastSibling(self._gohasget)
 end
 
-function var_0_0.refreshGainedReward(arg_13_0)
-	gohelper.setActive(arg_13_0._gohasget, arg_13_0.taskMo.gainedReward)
+function VersionActivity1_5HeroTaskView:refreshGainedReward()
+	gohelper.setActive(self._gohasget, self.taskMo.gainedReward)
 
-	if not arg_13_0.taskMo:isFinish() then
-		gohelper.setActive(arg_13_0._gogainedreward, false)
+	if not self.taskMo:isFinish() then
+		gohelper.setActive(self._gogainedreward, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_13_0._gogainedreward, not arg_13_0.taskMo.gainedReward)
+	gohelper.setActive(self._gogainedreward, not self.taskMo.gainedReward)
 end
 
-function var_0_0.refreshSubTask(arg_14_0)
-	local var_14_0 = arg_14_0.taskMo:getSubTaskCoList()
+function VersionActivity1_5HeroTaskView:refreshSubTask()
+	local heroTaskCoList = self.taskMo:getSubTaskCoList()
 
-	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		arg_14_0:getSubHeroTaskItem(iter_14_0):updateData(iter_14_1)
+	for index, taskCo in ipairs(heroTaskCoList) do
+		local taskItem = self:getSubHeroTaskItem(index)
+
+		taskItem:updateData(taskCo)
 	end
 
-	for iter_14_2 = #var_14_0 + 1, #arg_14_0.subHeroTaskItemList do
-		arg_14_0.subHeroTaskItemList[iter_14_2]:hide()
+	for i = #heroTaskCoList + 1, #self.subHeroTaskItemList do
+		self.subHeroTaskItemList[i]:hide()
 	end
 end
 
-function var_0_0.getPointItem(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0.progressPointList[arg_15_1]
+function VersionActivity1_5HeroTaskView:getPointItem(index)
+	local pointItem = self.progressPointList[index]
 
-	if not var_15_0 then
-		var_15_0 = arg_15_0:getUserDataTb_()
-		var_15_0.go = gohelper.cloneInPlace(arg_15_0._gopointitem)
-		var_15_0.image = var_15_0.go:GetComponent(gohelper.Type_Image)
+	if not pointItem then
+		pointItem = self:getUserDataTb_()
+		pointItem.go = gohelper.cloneInPlace(self._gopointitem)
+		pointItem.image = pointItem.go:GetComponent(gohelper.Type_Image)
 
-		table.insert(arg_15_0.progressPointList, var_15_0)
+		table.insert(self.progressPointList, pointItem)
 	end
 
-	gohelper.setActive(var_15_0.go, true)
+	gohelper.setActive(pointItem.go, true)
 
-	return var_15_0
+	return pointItem
 end
 
-function var_0_0.getSubHeroTaskItem(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.subHeroTaskItemList[arg_16_1]
+function VersionActivity1_5HeroTaskView:getSubHeroTaskItem(index)
+	local subHeroItem = self.subHeroTaskItemList[index]
 
-	if not var_16_0 then
-		local var_16_1 = gohelper.clone(arg_16_0.goSubHeroTaskItem, arg_16_0._goTaskList)
+	if not subHeroItem then
+		local go = gohelper.clone(self.goSubHeroTaskItem, self._goTaskList)
 
-		var_16_0 = VersionActivity1_5SubHeroTaskItem.createItem(var_16_1)
+		subHeroItem = VersionActivity1_5SubHeroTaskItem.createItem(go)
 
-		table.insert(arg_16_0.subHeroTaskItemList, var_16_0)
+		table.insert(self.subHeroTaskItemList, subHeroItem)
 	end
 
-	var_16_0:show()
+	subHeroItem:show()
 
-	return var_16_0
+	return subHeroItem
 end
 
-function var_0_0.onGainedHeroTaskReward(arg_17_0, arg_17_1)
-	if arg_17_0.taskId ~= arg_17_1 then
+function VersionActivity1_5HeroTaskView:onGainedHeroTaskReward(heroTaskId)
+	if self.taskId ~= heroTaskId then
 		return
 	end
 
-	arg_17_0:refreshProgress()
-	arg_17_0:refreshGainedReward()
+	self:refreshProgress()
+	self:refreshGainedReward()
 end
 
-function var_0_0.onGainedSubHeroTaskReward(arg_18_0, arg_18_1)
-	arg_18_0:refreshProgress()
+function VersionActivity1_5HeroTaskView:onGainedSubHeroTaskReward(subTaskId)
+	self:refreshProgress()
 end
 
-function var_0_0.onClose(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0.onOpenAnimDone, arg_19_0)
+function VersionActivity1_5HeroTaskView:onClose()
+	TaskDispatcher.cancelTask(self.onOpenAnimDone, self)
 end
 
-function var_0_0.onDestroyView(arg_20_0)
-	arg_20_0.progressPointList = nil
+function VersionActivity1_5HeroTaskView:onDestroyView()
+	self.progressPointList = nil
 
-	for iter_20_0, iter_20_1 in ipairs(arg_20_0.subHeroTaskItemList) do
-		iter_20_1:destroy()
+	for _, subHeroTaskItem in ipairs(self.subHeroTaskItemList) do
+		subHeroTaskItem:destroy()
 	end
 
-	arg_20_0.gainRewardClick:RemoveClickListener()
-	arg_20_0._scrollTask:RemoveOnValueChanged()
+	self.gainRewardClick:RemoveClickListener()
+	self._scrollTask:RemoveOnValueChanged()
 
-	arg_20_0.subHeroTaskItemList = nil
+	self.subHeroTaskItemList = nil
 end
 
-return var_0_0
+return VersionActivity1_5HeroTaskView

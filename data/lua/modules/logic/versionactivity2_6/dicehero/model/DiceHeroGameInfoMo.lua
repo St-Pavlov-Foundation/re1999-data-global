@@ -1,32 +1,34 @@
-﻿module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroGameInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_6/dicehero/model/DiceHeroGameInfoMo.lua
 
-local var_0_0 = pureTable("DiceHeroGameInfoMo")
+module("modules.logic.versionactivity2_6.dicehero.model.DiceHeroGameInfoMo", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.chapter = arg_1_1.chapter
-	arg_1_0.heroBaseInfo = DiceHeroHeroBaseInfoMo.New()
+local DiceHeroGameInfoMo = pureTable("DiceHeroGameInfoMo")
 
-	arg_1_0.heroBaseInfo:init(arg_1_1.heroBaseInfo)
+function DiceHeroGameInfoMo:init(data)
+	self.chapter = data.chapter
+	self.heroBaseInfo = DiceHeroHeroBaseInfoMo.New()
 
-	arg_1_0.rewardItems = {}
+	self.heroBaseInfo:init(data.heroBaseInfo)
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_1.panel.rewardItems) do
-		arg_1_0.rewardItems[iter_1_0] = DiceHeroRewardMo.New()
+	self.rewardItems = {}
 
-		arg_1_0.rewardItems[iter_1_0]:init(iter_1_1)
+	for k, v in pairs(data.panel.rewardItems) do
+		self.rewardItems[k] = DiceHeroRewardMo.New()
+
+		self.rewardItems[k]:init(v)
 	end
 
-	arg_1_0.allLevelCos = DiceHeroConfig.instance:getLevelCos(arg_1_0.chapter)
+	self.allLevelCos = DiceHeroConfig.instance:getLevelCos(self.chapter)
 
-	local var_1_0 = #arg_1_1.passLevelIds
+	local passLen = #data.passLevelIds
 
-	arg_1_0.co = arg_1_0.allLevelCos[var_1_0 + 1] or arg_1_0.allLevelCos[var_1_0] or arg_1_0.allLevelCos[1]
-	arg_1_0.currLevel = arg_1_0.co and arg_1_0.co.id or 0
-	arg_1_0.allPass = var_1_0 == #arg_1_0.allLevelCos
+	self.co = self.allLevelCos[passLen + 1] or self.allLevelCos[passLen] or self.allLevelCos[1]
+	self.currLevel = self.co and self.co.id or 0
+	self.allPass = passLen == #self.allLevelCos
 end
 
-function var_0_0.hasReward(arg_2_0)
-	return #arg_2_0.rewardItems > 0
+function DiceHeroGameInfoMo:hasReward()
+	return #self.rewardItems > 0
 end
 
-return var_0_0
+return DiceHeroGameInfoMo

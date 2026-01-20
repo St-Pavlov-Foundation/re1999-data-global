@@ -1,69 +1,71 @@
-﻿module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupSkillCompItem", package.seeall)
+﻿-- chunkname: @modules/logic/bossrush/view/v2a9/V2a9_BossRushHeroGroupSkillCompItem.lua
 
-local var_0_0 = class("V2a9_BossRushHeroGroupSkillCompItem", LuaCompBase)
+module("modules.logic.bossrush.view.v2a9.V2a9_BossRushHeroGroupSkillCompItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "#image_icon")
-	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
-	arg_1_0._goadd = gohelper.findChild(arg_1_0.viewGO, "#go_add")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "num/#txt_num")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+local V2a9_BossRushHeroGroupSkillCompItem = class("V2a9_BossRushHeroGroupSkillCompItem", LuaCompBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V2a9_BossRushHeroGroupSkillCompItem:init(go)
+	self.viewGO = go
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#image_icon")
+	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
+	self._golock = gohelper.findChild(self.viewGO, "#go_lock")
+	self._goadd = gohelper.findChild(self.viewGO, "#go_add")
+	self._txtnum = gohelper.findChildText(self.viewGO, "num/#txt_num")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+function V2a9_BossRushHeroGroupSkillCompItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
+function V2a9_BossRushHeroGroupSkillCompItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
 end
 
-function var_0_0._btnclickOnClick(arg_4_0)
-	if arg_4_0._mo:isLock() then
+function V2a9_BossRushHeroGroupSkillCompItem:_btnclickOnClick()
+	if self._mo:isLock() then
 		return
 	end
 
-	BossRushController.instance:openV2a9BossRushSkillBackpackView(arg_4_0._mo:getItemType())
+	BossRushController.instance:openV2a9BossRushSkillBackpackView(self._mo:getItemType())
 end
 
-function var_0_0._editableInitView(arg_5_0)
-	gohelper.setActive(arg_5_0._goselect, false)
+function V2a9_BossRushHeroGroupSkillCompItem:_editableInitView()
+	gohelper.setActive(self._goselect, false)
 
-	arg_5_0._gonum = gohelper.findChild(arg_5_0.viewGO, "num")
-	arg_5_0._anim = arg_5_0.viewGO:GetComponent(gohelper.Type_Animator)
+	self._gonum = gohelper.findChild(self.viewGO, "num")
+	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
-	arg_6_0._mo = arg_6_1
+function V2a9_BossRushHeroGroupSkillCompItem:onUpdateMO(mo)
+	self._mo = mo
 
-	local var_6_0 = arg_6_1:getItemType()
-	local var_6_1 = arg_6_1:isLock()
-	local var_6_2 = arg_6_1:isEquip()
+	local itemType = mo:getItemType()
+	local isLock = mo:isLock()
+	local isEquip = mo:isEquip()
 
-	if var_6_2 then
-		local var_6_3 = V2a9BossRushSkillBackpackListModel.instance:getMObyItemType(var_6_0)
+	if isEquip then
+		local assassinMo = V2a9BossRushSkillBackpackListModel.instance:getMObyItemType(itemType)
 
-		if var_6_3 then
-			arg_6_0._txtnum.text = var_6_3:getCount() or 0
+		if assassinMo then
+			self._txtnum.text = assassinMo:getCount() or 0
 
-			AssassinHelper.setAssassinItemIcon(var_6_3:getId(), arg_6_0._imageicon)
+			AssassinHelper.setAssassinItemIcon(assassinMo:getId(), self._imageicon)
 		end
 	end
 
-	gohelper.setActive(arg_6_0._golock, var_6_1)
-	gohelper.setActive(arg_6_0._goadd, not var_6_1 and not var_6_2)
-	gohelper.setActive(arg_6_0._gonum, not var_6_1 and var_6_2)
-	gohelper.setActive(arg_6_0._imageicon.gameObject, not var_6_1 and var_6_2)
+	gohelper.setActive(self._golock, isLock)
+	gohelper.setActive(self._goadd, not isLock and not isEquip)
+	gohelper.setActive(self._gonum, not isLock and isEquip)
+	gohelper.setActive(self._imageicon.gameObject, not isLock and isEquip)
 end
 
-function var_0_0.playAnim(arg_7_0, arg_7_1)
-	arg_7_0._anim:Play(arg_7_1, 0, 0)
+function V2a9_BossRushHeroGroupSkillCompItem:playAnim(aniName)
+	self._anim:Play(aniName, 0, 0)
 end
 
-return var_0_0
+return V2a9_BossRushHeroGroupSkillCompItem

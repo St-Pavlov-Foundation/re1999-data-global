@@ -1,13 +1,15 @@
-﻿module("modules.logic.versionactivity3_1.survivaloperact.view.SurvivalOperActPanelViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_1/survivaloperact/view/SurvivalOperActPanelViewContainer.lua
 
-local var_0_0 = class("SurvivalOperActPanelViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_1.survivaloperact.view.SurvivalOperActPanelViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local SurvivalOperActPanelViewContainer = class("SurvivalOperActPanelViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, SurvivalOperActPanelView.New())
+function SurvivalOperActPanelViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, SurvivalOperActPanelView.New())
+
+	return views
 end
 
-return var_0_0
+return SurvivalOperActPanelViewContainer

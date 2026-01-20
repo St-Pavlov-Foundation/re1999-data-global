@@ -1,39 +1,41 @@
-﻿module("modules.logic.teach.model.TeachNoteInfoMo", package.seeall)
+﻿-- chunkname: @modules/logic/teach/model/TeachNoteInfoMo.lua
 
-local var_0_0 = pureTable("TeachNoteInfoMo")
+module("modules.logic.teach.model.TeachNoteInfoMo", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.unlockIds = {}
-	arg_1_0.getRewardIds = {}
-	arg_1_0.getFinalReward = false
-	arg_1_0.openIds = {}
+local TeachNoteInfoMo = pureTable("TeachNoteInfoMo")
+
+function TeachNoteInfoMo:ctor()
+	self.unlockIds = {}
+	self.getRewardIds = {}
+	self.getFinalReward = false
+	self.openIds = {}
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0:update(arg_2_1)
+function TeachNoteInfoMo:init(info)
+	self:update(info)
 end
 
-function var_0_0.update(arg_3_0, arg_3_1)
-	arg_3_0.unlockIds = arg_3_0:_getUnlockTopicIds(arg_3_1.unlockIds)
-	arg_3_0.getRewardIds = arg_3_1.getRewardIds
-	arg_3_0.getFinalReward = arg_3_1.getFinalReward
-	arg_3_0.openIds = arg_3_0:_getUnlockTopicIds(arg_3_1.openIds)
+function TeachNoteInfoMo:update(info)
+	self.unlockIds = self:_getUnlockTopicIds(info.unlockIds)
+	self.getRewardIds = info.getRewardIds
+	self.getFinalReward = info.getFinalReward
+	self.openIds = self:_getUnlockTopicIds(info.openIds)
 end
 
-function var_0_0._getUnlockTopicIds(arg_4_0, arg_4_1)
-	local var_4_0 = {}
+function TeachNoteInfoMo:_getUnlockTopicIds(infos)
+	local ids = {}
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
-		local var_4_1 = TeachNoteConfig.instance:getInstructionLevelCos()
+	for _, info in pairs(infos) do
+		local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-		for iter_4_2, iter_4_3 in pairs(var_4_1) do
-			if iter_4_1 == iter_4_3.episodeId then
-				table.insert(var_4_0, iter_4_3.id)
+		for _, lv in pairs(lvCos) do
+			if info == lv.episodeId then
+				table.insert(ids, lv.id)
 			end
 		end
 	end
 
-	return var_4_0
+	return ids
 end
 
-return var_0_0
+return TeachNoteInfoMo

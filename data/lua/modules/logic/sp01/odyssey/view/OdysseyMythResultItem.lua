@@ -1,168 +1,170 @@
-﻿module("modules.logic.sp01.odyssey.view.OdysseyMythResultItem", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/odyssey/view/OdysseyMythResultItem.lua
 
-local var_0_0 = class("OdysseyMythResultItem", LuaCompBase)
+module("modules.logic.sp01.odyssey.view.OdysseyMythResultItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0._gohero = gohelper.findChild(arg_1_1, "heroitemani")
-	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_1, "heroitemani/hero/charactericon")
-	arg_1_0._imagecareer = gohelper.findChildImage(arg_1_1, "heroitemani/hero/career")
-	arg_1_0._gorank1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank1")
-	arg_1_0._gorank2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank2")
-	arg_1_0._gorank3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/layout/rankobj/rank3")
-	arg_1_0._txtlv = gohelper.findChildText(arg_1_1, "heroitemani/hero/vertical/layout/lv/lvnum")
-	arg_1_0._gostar1 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star1")
-	arg_1_0._gostar2 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star2")
-	arg_1_0._gostar3 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star3")
-	arg_1_0._gostar4 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star4")
-	arg_1_0._gostar5 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star5")
-	arg_1_0._gostar6 = gohelper.findChild(arg_1_1, "heroitemani/hero/vertical/#go_starList/star6")
-	arg_1_0._goequip = gohelper.findChild(arg_1_1, "heroitemani/equip")
-	arg_1_0._imageequiprare = gohelper.findChildImage(arg_1_1, "heroitemani/equip/moveContainer/equiprare")
-	arg_1_0._imageequipicon = gohelper.findChildImage(arg_1_1, "heroitemani/equip/moveContainer/equipIcon")
-	arg_1_0._txtequiplvl = gohelper.findChildText(arg_1_1, "heroitemani/equip/moveContainer/equiplv/txtequiplv")
-	arg_1_0._gotag = gohelper.findChild(arg_1_1, "heroitemani/tags")
-	arg_1_0._goEmpty = gohelper.findChild(arg_1_1, "empty")
-	arg_1_0._goBottomEquip = gohelper.findChild(arg_1_1, "go_Equip")
+local OdysseyMythResultItem = class("OdysseyMythResultItem", LuaCompBase)
+
+function OdysseyMythResultItem:init(go)
+	self.go = go
+	self._gohero = gohelper.findChild(go, "heroitemani")
+	self._simageheroicon = gohelper.findChildSingleImage(go, "heroitemani/hero/charactericon")
+	self._imagecareer = gohelper.findChildImage(go, "heroitemani/hero/career")
+	self._gorank1 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank1")
+	self._gorank2 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank2")
+	self._gorank3 = gohelper.findChild(go, "heroitemani/hero/vertical/layout/rankobj/rank3")
+	self._txtlv = gohelper.findChildText(go, "heroitemani/hero/vertical/layout/lv/lvnum")
+	self._gostar1 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star1")
+	self._gostar2 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star2")
+	self._gostar3 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star3")
+	self._gostar4 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star4")
+	self._gostar5 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star5")
+	self._gostar6 = gohelper.findChild(go, "heroitemani/hero/vertical/#go_starList/star6")
+	self._goequip = gohelper.findChild(go, "heroitemani/equip")
+	self._imageequiprare = gohelper.findChildImage(go, "heroitemani/equip/moveContainer/equiprare")
+	self._imageequipicon = gohelper.findChildImage(go, "heroitemani/equip/moveContainer/equipIcon")
+	self._txtequiplvl = gohelper.findChildText(go, "heroitemani/equip/moveContainer/equiplv/txtequiplv")
+	self._gotag = gohelper.findChild(go, "heroitemani/tags")
+	self._goEmpty = gohelper.findChild(go, "empty")
+	self._goBottomEquip = gohelper.findChild(go, "go_Equip")
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0.heroMo = arg_2_1
-	arg_2_0.equipMo = arg_2_2
-	arg_2_0._index = arg_2_3
+function OdysseyMythResultItem:setData(heroMo, equipMo, index)
+	self.heroMo = heroMo
+	self.equipMo = equipMo
+	self._index = index
 
-	arg_2_0:_refreshHero()
-	arg_2_0:_refreshEquip()
-	arg_2_0:_refreshBottomEquip()
-	gohelper.setActive(arg_2_0._gohero, true)
-	gohelper.setActive(arg_2_0._goEmpty, false)
+	self:_refreshHero()
+	self:_refreshEquip()
+	self:_refreshBottomEquip()
+	gohelper.setActive(self._gohero, true)
+	gohelper.setActive(self._goEmpty, false)
 end
 
-function var_0_0._refreshHero(arg_3_0)
-	local var_3_0 = arg_3_0.heroMo
+function OdysseyMythResultItem:_refreshHero()
+	local heroMo = self.heroMo
 
-	if not var_3_0 then
+	if not heroMo then
 		logError("heroMo is nil")
 
 		return
 	end
 
-	local var_3_1 = FightConfig.instance:getSkinCO(var_3_0.skin)
-	local var_3_2 = ResUrl.getHeadIconMiddle(var_3_1.retangleIcon)
+	local skinCO = FightConfig.instance:getSkinCO(heroMo.skin)
+	local headIconMiddleResUrl = ResUrl.getHeadIconMiddle(skinCO.retangleIcon)
 
-	arg_3_0._simageheroicon:LoadImage(var_3_2)
+	self._simageheroicon:LoadImage(headIconMiddleResUrl)
 
-	local var_3_3 = "lssx_" .. tostring(var_3_0.config.career)
+	local careerSpriteName = "lssx_" .. tostring(heroMo.config.career)
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_3_0._imagecareer, var_3_3)
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, careerSpriteName)
 
-	local var_3_4 = var_3_0.level or 0
-	local var_3_5, var_3_6 = HeroConfig.instance:getShowLevel(var_3_4)
+	local level = heroMo.level or 0
+	local showLevel, _ = HeroConfig.instance:getShowLevel(level)
 
-	arg_3_0._txtlv.text = var_3_5
+	self._txtlv.text = showLevel
 
-	arg_3_0:_refreshLevelList()
-	arg_3_0:_refreshStarList()
+	self:_refreshLevelList()
+	self:_refreshStarList()
 end
 
-function var_0_0._refreshEquip(arg_4_0)
-	local var_4_0 = arg_4_0.equipMo
+function OdysseyMythResultItem:_refreshEquip()
+	local equipMo = self.equipMo
 
-	if not var_4_0 then
-		gohelper.setActive(arg_4_0._goequip, false)
+	if not equipMo then
+		gohelper.setActive(self._goequip, false)
 
 		return
 	end
 
-	local var_4_1 = var_4_0.config
-	local var_4_2 = var_4_1.icon
+	local config = equipMo.config
+	local equipIconSpriteName = config.icon
 
-	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(arg_4_0._imageequipicon, var_4_2)
+	UISpriteSetMgr.instance:setHerogroupEquipIconSprite(self._imageequipicon, equipIconSpriteName)
 
-	local var_4_3 = "bianduixingxian_" .. tostring(var_4_1.rare)
+	local equipRareSprite = "bianduixingxian_" .. tostring(config.rare)
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(arg_4_0._imageequiprare, var_4_3)
+	UISpriteSetMgr.instance:setHeroGroupSprite(self._imageequiprare, equipRareSprite)
 
-	local var_4_4 = var_4_0.level
+	local level = equipMo.level
 
-	arg_4_0._txtequiplvl.text = "LV." .. var_4_4
+	self._txtequiplvl.text = "LV." .. level
 end
 
-function var_0_0._refreshLevelList(arg_5_0)
-	local var_5_0 = arg_5_0.heroMo
-	local var_5_1 = var_5_0 and var_5_0.level or 0
-	local var_5_2, var_5_3 = HeroConfig.instance:getShowLevel(var_5_1)
+function OdysseyMythResultItem:_refreshLevelList()
+	local heroMo = self.heroMo
+	local level = heroMo and heroMo.level or 0
+	local _, rank = HeroConfig.instance:getShowLevel(level)
 
-	for iter_5_0 = 1, 3 do
-		local var_5_4 = "_gorank" .. iter_5_0
+	for i = 1, 3 do
+		local key = "_gorank" .. i
 
-		gohelper.setActive(arg_5_0[var_5_4], iter_5_0 == var_5_3 - 1)
+		gohelper.setActive(self[key], i == rank - 1)
 	end
 end
 
-function var_0_0._refreshStarList(arg_6_0)
-	local var_6_0 = arg_6_0.heroMo
-	local var_6_1 = var_6_0.config and var_6_0.config.rare or -1
+function OdysseyMythResultItem:_refreshStarList()
+	local heroMo = self.heroMo
+	local rare = heroMo.config and heroMo.config.rare or -1
 
-	for iter_6_0 = 1, 6 do
-		local var_6_2 = "_gostar" .. iter_6_0
+	for i = 1, 6 do
+		local key = "_gostar" .. i
 
-		gohelper.setActive(arg_6_0[var_6_2], iter_6_0 <= var_6_1 + 1)
+		gohelper.setActive(self[key], i <= rare + 1)
 	end
 end
 
-function var_0_0.setResFunc(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0._getResFunc = arg_7_1
-	arg_7_0._getResObj = arg_7_2
+function OdysseyMythResultItem:setResFunc(cb, obj)
+	self._getResFunc = cb
+	self._getResObj = obj
 end
 
-function var_0_0._refreshBottomEquip(arg_8_0)
-	arg_8_0._gobottomequipList = {}
+function OdysseyMythResultItem:_refreshBottomEquip()
+	self._gobottomequipList = {}
 
-	local var_8_0 = arg_8_0._goBottomEquip.transform
-	local var_8_1 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
-	local var_8_2 = tonumber(var_8_1.value)
+	local parent = self._goBottomEquip.transform
+	local mainCountConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MainHeroEquipCount)
+	local childCount = tonumber(mainCountConstCo.value)
 
-	for iter_8_0 = 1, var_8_2 do
-		local var_8_3 = arg_8_0._getResFunc(arg_8_0._getResObj, var_8_0.gameObject)
-		local var_8_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_3.gameObject, OdysseyHeroGroupEquipItem)
+	for i = 1, childCount do
+		local child = self._getResFunc(self._getResObj, parent.gameObject)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(child.gameObject, OdysseyHeroGroupEquipItem)
 
-		table.insert(arg_8_0._gobottomequipList, var_8_4)
+		table.insert(self._gobottomequipList, item)
 	end
 
-	local var_8_5 = HeroGroupModel.instance:getCurGroupMO()
-	local var_8_6 = arg_8_0._index
-	local var_8_7 = var_8_5:getOdysseyEquips(var_8_6 - 1)
+	local curGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local heroIndex = self._index
+	local equipMo = curGroupMO:getOdysseyEquips(heroIndex - 1)
 
-	for iter_8_1, iter_8_2 in ipairs(var_8_7.equipUid) do
-		local var_8_8 = arg_8_0._gobottomequipList[iter_8_1]
+	for index, equipIdParam in ipairs(equipMo.equipUid) do
+		local item = self._gobottomequipList[index]
 
-		if not var_8_8 then
-			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(iter_8_1))
+		if not item then
+			logError("奥德赛编队界面 装备索引超过上限 index: " .. tostring(index))
 		else
-			local var_8_9 = tonumber(iter_8_2)
+			local equipId = tonumber(equipIdParam)
 
-			var_8_8:setActive(true)
-			var_8_8:setInfo(var_8_6, iter_8_1, var_8_9, OdysseyEnum.BagType.OnlyDisplay)
-			var_8_8:refreshUI()
+			item:setActive(true)
+			item:setInfo(heroIndex, index, equipId, OdysseyEnum.BagType.OnlyDisplay)
+			item:refreshUI()
 		end
 	end
 
-	local var_8_10 = #arg_8_0._gobottomequipList
-	local var_8_11 = #var_8_7.equipUid
+	local itemCount = #self._gobottomequipList
+	local equipCount = #equipMo.equipUid
 
-	if var_8_11 < var_8_10 then
-		for iter_8_3 = var_8_11 + 1, var_8_10 do
-			local var_8_12 = arg_8_0._gobottomequipList[iter_8_3]
+	if equipCount < itemCount then
+		for i = equipCount + 1, itemCount do
+			local item = self._gobottomequipList[i]
 
-			var_8_12:clear()
-			var_8_12:setActive(false)
+			item:clear()
+			item:setActive(false)
 		end
 	end
 end
 
-function var_0_0.onDestroy(arg_9_0)
-	arg_9_0._simageheroicon:UnLoadImage()
+function OdysseyMythResultItem:onDestroy()
+	self._simageheroicon:UnLoadImage()
 end
 
-return var_0_0
+return OdysseyMythResultItem

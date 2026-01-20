@@ -1,140 +1,142 @@
-﻿module("modules.logic.fight.view.FightViewClothSkill", package.seeall)
+﻿-- chunkname: @modules/logic/fight/view/FightViewClothSkill.lua
 
-local var_0_0 = class("FightViewClothSkill", BaseView)
-local var_0_1 = {
+module("modules.logic.fight.view.FightViewClothSkill", package.seeall)
+
+local FightViewClothSkill = class("FightViewClothSkill", BaseView)
+local State = {
 	Expanding = 3,
 	Simple = 1,
 	Shrinking = 4,
 	Detail = 2
 }
-local var_0_2 = 60004
-local var_0_3 = {
-	[var_0_2] = true
+local Behavior_ChangeSub = 60004
+local NeedSelectTargetDict = {
+	[Behavior_ChangeSub] = true
 }
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtNum = gohelper.findChildText(arg_1_0.viewGO, "root/heroSkill/#go_simple/skillicon/#txt_simpleCurCount")
-	arg_1_0._txtNum1 = gohelper.findChildText(arg_1_0.viewGO, "root/heroSkill/#go_detail/#txt_detailCurCount")
-	arg_1_0._txtmax = gohelper.findChildText(arg_1_0.viewGO, "root/heroSkill/#go_simple/skillicon/max/txtmax")
-	arg_1_0._heroSkillGO = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill")
-	arg_1_0._pcSkillGO = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill/#go_pcbtn")
-	arg_1_0._pcSkill1 = gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/#go_pcbtn1")
-	arg_1_0._pcSkill2 = gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/#go_pcbtn2")
-	arg_1_0._pcSkillDetail = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill/#go_detail/#go_pcbtn3")
-	arg_1_0._simpleNotCost = arg_1_0:getUserDataTb_()
-	arg_1_0._simpleCanCost = arg_1_0:getUserDataTb_()
-	arg_1_0._detailNotCost = arg_1_0:getUserDataTb_()
-	arg_1_0._detailCanCost = arg_1_0:getUserDataTb_()
-	arg_1_0._detailTxtDesc = arg_1_0:getUserDataTb_()
+function FightViewClothSkill:onInitView()
+	self._txtNum = gohelper.findChildText(self.viewGO, "root/heroSkill/#go_simple/skillicon/#txt_simpleCurCount")
+	self._txtNum1 = gohelper.findChildText(self.viewGO, "root/heroSkill/#go_detail/#txt_detailCurCount")
+	self._txtmax = gohelper.findChildText(self.viewGO, "root/heroSkill/#go_simple/skillicon/max/txtmax")
+	self._heroSkillGO = gohelper.findChild(self.viewGO, "root/heroSkill")
+	self._pcSkillGO = gohelper.findChild(self.viewGO, "root/heroSkill/#go_pcbtn")
+	self._pcSkill1 = gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/#go_pcbtn1")
+	self._pcSkill2 = gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/#go_pcbtn2")
+	self._pcSkillDetail = gohelper.findChild(self.viewGO, "root/heroSkill/#go_detail/#go_pcbtn3")
+	self._simpleNotCost = self:getUserDataTb_()
+	self._simpleCanCost = self:getUserDataTb_()
+	self._detailNotCost = self:getUserDataTb_()
+	self._detailCanCost = self:getUserDataTb_()
+	self._detailTxtDesc = self:getUserDataTb_()
 
-	table.insert(arg_1_0._simpleNotCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple/skillContent/skill1/notcost1"))
-	table.insert(arg_1_0._simpleNotCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple/skillContent/skill2/notcost2"))
-	table.insert(arg_1_0._simpleCanCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple/skillContent/skill1/cancost1"))
-	table.insert(arg_1_0._simpleCanCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple/skillContent/skill2/cancost2"))
-	table.insert(arg_1_0._detailNotCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/skill1/notcost1"))
-	table.insert(arg_1_0._detailNotCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/skill2/notcost2"))
-	table.insert(arg_1_0._detailCanCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/skill1/cancost1"))
-	table.insert(arg_1_0._detailCanCost, gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/skill2/cancost2"))
-	table.insert(arg_1_0._detailTxtDesc, gohelper.findChildText(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/desc1"))
-	table.insert(arg_1_0._detailTxtDesc, gohelper.findChildText(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/desc2"))
+	table.insert(self._simpleNotCost, gohelper.findChild(self._heroSkillGO, "#go_simple/skillContent/skill1/notcost1"))
+	table.insert(self._simpleNotCost, gohelper.findChild(self._heroSkillGO, "#go_simple/skillContent/skill2/notcost2"))
+	table.insert(self._simpleCanCost, gohelper.findChild(self._heroSkillGO, "#go_simple/skillContent/skill1/cancost1"))
+	table.insert(self._simpleCanCost, gohelper.findChild(self._heroSkillGO, "#go_simple/skillContent/skill2/cancost2"))
+	table.insert(self._detailNotCost, gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/skill1/notcost1"))
+	table.insert(self._detailNotCost, gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/skill2/notcost2"))
+	table.insert(self._detailCanCost, gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/skill1/cancost1"))
+	table.insert(self._detailCanCost, gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/skill2/cancost2"))
+	table.insert(self._detailTxtDesc, gohelper.findChildText(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1/desc1"))
+	table.insert(self._detailTxtDesc, gohelper.findChildText(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2/desc2"))
 
-	arg_1_0._state = var_0_1.Simple
+	self._state = State.Simple
 
-	local var_1_0 = gohelper.findChild(arg_1_0._heroSkillGO, "#go_simple")
+	local clickGO = gohelper.findChild(self._heroSkillGO, "#go_simple")
 
-	arg_1_0._click = gohelper.getClick(var_1_0)
-	arg_1_0._animator = arg_1_0._heroSkillGO:GetComponent(typeof(UnityEngine.Animator))
+	self._click = gohelper.getClick(clickGO)
+	self._animator = self._heroSkillGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0:_onUpdateSpeed()
+	self:_onUpdateSpeed()
 
-	arg_1_0._detailClick = {}
+	self._detailClick = {}
 
-	table.insert(arg_1_0._detailClick, gohelper.getClick(gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1")))
-	table.insert(arg_1_0._detailClick, gohelper.getClick(gohelper.findChild(arg_1_0._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2")))
+	table.insert(self._detailClick, gohelper.getClick(gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem1")))
+	table.insert(self._detailClick, gohelper.getClick(gohelper.findChild(self._heroSkillGO, "#go_detail/skillDescContent/#go_skillDescItem2")))
 
-	arg_1_0._cardOpAddPower = 0
+	self._cardOpAddPower = 0
 
-	local var_1_1 = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill/#go_simple/skilliconnew")
-	local var_1_2 = arg_1_0:getResInst(arg_1_0.viewContainer:getSetting().otherRes[2], var_1_1)
+	local iconContainer = gohelper.findChild(self.viewGO, "root/heroSkill/#go_simple/skilliconnew")
+	local iconGO = self:getResInst(self.viewContainer:getSetting().otherRes[2], iconContainer)
 
-	for iter_1_0, iter_1_1 in ipairs(lua_cloth.configList) do
-		local var_1_3 = gohelper.findChild(var_1_2, tostring(iter_1_1.id))
+	for _, clothCO in ipairs(lua_cloth.configList) do
+		local icon = gohelper.findChild(iconGO, tostring(clothCO.id))
 
-		if not gohelper.isNil(var_1_3) then
-			gohelper.setActive(var_1_3, iter_1_1.id == FightModel.instance.clothId)
+		if not gohelper.isNil(icon) then
+			gohelper.setActive(icon, clothCO.id == FightModel.instance.clothId)
 
-			if iter_1_1.id == FightModel.instance.clothId then
-				arg_1_0._dnaAnim = var_1_3:GetComponent(typeof(UnityEngine.Animator))
+			if clothCO.id == FightModel.instance.clothId then
+				self._dnaAnim = icon:GetComponent(typeof(UnityEngine.Animator))
 			end
 		end
 	end
 
-	arg_1_0._maxGO = gohelper.findChild(arg_1_0.viewGO, "root/heroSkill/#go_simple/skillicon/max")
+	self._maxGO = gohelper.findChild(self.viewGO, "root/heroSkill/#go_simple/skillicon/max")
 
-	arg_1_0:showKeyTips()
+	self:showKeyTips()
 end
 
-function var_0_0.addEvents(arg_2_0)
+function FightViewClothSkill:addEvents()
 	if not FightDataHelper.stateMgr.isReplay then
-		arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
+		self._click:AddClickListener(self._onClick, self)
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._detailClick) do
-			iter_2_1:AddClickListener(arg_2_0._onClickSkillIcon, arg_2_0, iter_2_0)
+		for i, detailIconClick in ipairs(self._detailClick) do
+			detailIconClick:AddClickListener(self._onClickSkillIcon, self, i)
 		end
 
-		arg_2_0:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_2_0._onTouch, arg_2_0)
+		self:addEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, self._onTouch, self)
 	end
 
-	arg_2_0:addEventCb(FightController.instance, FightEvent.DistributeCards, arg_2_0._updateUI, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_2_0._onPlayHandCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMoveHandCard, arg_2_0._onMoveHandCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_2_0._onCombineOneCard, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, arg_2_0._onStartPlayClothSkill, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, arg_2_0._onAfterPlayClothSkill, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_2_0._onCancelOperation, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, arg_2_0._simulateClickClothSkillIcon, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.StartReplay, arg_2_0._checkStartReplay, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnUpdateSpeed, arg_2_0._onUpdateSpeed, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.MasterPowerChange, arg_2_0._onMasterPowerChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._onStartSequenceFinish, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, arg_2_0._onSkillKeyClick, arg_2_0)
-	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, arg_2_0._onSkillSelect, arg_2_0)
+	self:addEventCb(FightController.instance, FightEvent.DistributeCards, self._updateUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnMoveHandCard, self._onMoveHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:addEventCb(FightController.instance, FightEvent.StartPlayClothSkill, self._onStartPlayClothSkill, self)
+	self:addEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, self._onAfterPlayClothSkill, self)
+	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, self._simulateClickClothSkillIcon, self)
+	self:addEventCb(FightController.instance, FightEvent.StartReplay, self._checkStartReplay, self)
+	self:addEventCb(FightController.instance, FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
+	self:addEventCb(FightController.instance, FightEvent.MasterPowerChange, self._onMasterPowerChange, self)
+	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, self._onSkillKeyClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, self._onSkillSelect, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._delayDealTouch, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._sendChangeSubRequest, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._sendUseClothSkillRequest, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._setState, arg_3_0)
-	TaskDispatcher.cancelTask(arg_3_0._checkAnyKey, arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function FightViewClothSkill:removeEvents()
+	TaskDispatcher.cancelTask(self._delayDealTouch, self)
+	TaskDispatcher.cancelTask(self._sendChangeSubRequest, self)
+	TaskDispatcher.cancelTask(self._sendUseClothSkillRequest, self)
+	TaskDispatcher.cancelTask(self._setState, self)
+	TaskDispatcher.cancelTask(self._checkAnyKey, self)
+	self._click:RemoveClickListener()
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._detailClick) do
-		iter_3_1:RemoveClickListener()
+	for i, detailIconClick in ipairs(self._detailClick) do
+		detailIconClick:RemoveClickListener()
 	end
 
-	arg_3_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, arg_3_0._onTouch, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.DistributeCards, arg_3_0._updateUI, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, arg_3_0._onPlayHandCard, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnMoveHandCard, arg_3_0._onMoveHandCard, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, arg_3_0._onCombineOneCard, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.StartPlayClothSkill, arg_3_0._onStartPlayClothSkill, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, arg_3_0._onAfterPlayClothSkill, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.CancelOperation, arg_3_0._onCancelOperation, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_3_0._onRoundSequenceFinish, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, arg_3_0._simulateClickClothSkillIcon, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.StartReplay, arg_3_0._checkStartReplay, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnUpdateSpeed, arg_3_0._onUpdateSpeed, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.MasterPowerChange, arg_3_0._onMasterPowerChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_3_0._onStartSequenceFinish, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, arg_3_0._cancelBlock, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0._cancelBlock, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, arg_3_0._onSkillKeyClick, arg_3_0)
-	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, arg_3_0._onSkillSelect, arg_3_0)
+	self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreenUp, self._onTouch, self)
+	self:removeEventCb(FightController.instance, FightEvent.DistributeCards, self._updateUI, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnMoveHandCard, self._onMoveHandCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
+	self:removeEventCb(FightController.instance, FightEvent.StartPlayClothSkill, self._onStartPlayClothSkill, self)
+	self:removeEventCb(FightController.instance, FightEvent.AfterPlayClothSkill, self._onAfterPlayClothSkill, self)
+	self:removeEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.SimulateClickClothSkillIcon, self._simulateClickClothSkillIcon, self)
+	self:removeEventCb(FightController.instance, FightEvent.StartReplay, self._checkStartReplay, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
+	self:removeEventCb(FightController.instance, FightEvent.MasterPowerChange, self._onMasterPowerChange, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:removeEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, self._cancelBlock, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, self._cancelBlock, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, self._onSkillKeyClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, self._onSkillSelect, self)
 end
 
-function var_0_0._onClick(arg_4_0)
+function FightViewClothSkill:_onClick()
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
@@ -143,27 +145,27 @@ function var_0_0._onClick(arg_4_0)
 		return
 	end
 
-	if arg_4_0._state == var_0_1.Simple then
-		arg_4_0._animator:Play("fight_heroskill_tips", 0, 0)
-		arg_4_0._animator:Update(0)
+	if self._state == State.Simple then
+		self._animator:Play("fight_heroskill_tips", 0, 0)
+		self._animator:Update(0)
 
-		arg_4_0._state = var_0_1.Expanding
+		self._state = State.Expanding
 
-		TaskDispatcher.runDelay(arg_4_0._setState, arg_4_0, 0.533)
+		TaskDispatcher.runDelay(self._setState, self, 0.533)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_shuffle_unfold)
 		FightController.instance:dispatchEvent(FightEvent.OnClothSkillExpand)
-		arg_4_0._pcSkillGO:SetActive(false)
-		arg_4_0._pcSkillDetail:SetActive(true)
+		self._pcSkillGO:SetActive(false)
+		self._pcSkillDetail:SetActive(true)
 
 		if PCInputController.instance:getIsUse() then
-			TaskDispatcher.runRepeat(arg_4_0._checkAnyKey, arg_4_0, 0.01)
+			TaskDispatcher.runRepeat(self._checkAnyKey, self, 0.01)
 		end
 	end
 end
 
-function var_0_0.checkSkillKey(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(BattleActivityAdapter.skillSelectKey) do
-		if PCInputController.instance:getActivityFunPress(PCInputModel.Activity.battle, iter_5_1) then
+function FightViewClothSkill:checkSkillKey()
+	for i, v in ipairs(BattleActivityAdapter.skillSelectKey) do
+		if PCInputController.instance:getActivityFunPress(PCInputModel.Activity.battle, v) then
 			return true
 		end
 	end
@@ -171,55 +173,55 @@ function var_0_0.checkSkillKey(arg_5_0)
 	return false
 end
 
-function var_0_0._checkAnyKey(arg_6_0)
-	if UnityEngine.Input.anyKeyDown and not UnityEngine.Input.GetMouseButton(0) and not arg_6_0:checkSkillKey() and arg_6_0._state == var_0_1.Detail then
+function FightViewClothSkill:_checkAnyKey()
+	if UnityEngine.Input.anyKeyDown and not UnityEngine.Input.GetMouseButton(0) and not self:checkSkillKey() and self._state == State.Detail then
 		logNormal("FightViewClothSkill:_checkAnyKey()" .. tostring(UnityEngine.Input.anyKeyDown))
-		TaskDispatcher.cancelTask(arg_6_0._checkAnyKey, arg_6_0)
+		TaskDispatcher.cancelTask(self._checkAnyKey, self)
 
-		arg_6_0._hasClickDetailIcon = nil
+		self._hasClickDetailIcon = nil
 
-		arg_6_0:_onSkillKeyClick()
+		self:_onSkillKeyClick()
 	end
 end
 
-function var_0_0._onSkillKeyClick(arg_7_0)
+function FightViewClothSkill:_onSkillKeyClick()
 	if not FightDataHelper.stateMgr.isReplay then
-		if arg_7_0._state == var_0_1.Detail then
-			arg_7_0:_onTouch()
-		elseif arg_7_0._state == var_0_1.Simple then
-			arg_7_0:_onClick()
+		if self._state == State.Detail then
+			self:_onTouch()
+		elseif self._state == State.Simple then
+			self:_onClick()
 		end
 	end
 end
 
-function var_0_0._onSkillSelect(arg_8_0, arg_8_1)
+function FightViewClothSkill:_onSkillSelect(index)
 	if not FightDataHelper.stateMgr.isReplay then
-		local var_8_0 = arg_8_0._detailClick[arg_8_1]
+		local skillClick = self._detailClick[index]
 
-		if var_8_0 and var_8_0.gameObject.activeInHierarchy then
-			arg_8_0:_onClickSkillIcon(arg_8_1)
+		if skillClick and skillClick.gameObject.activeInHierarchy then
+			self:_onClickSkillIcon(index)
 		end
 	end
 end
 
-function var_0_0._setState(arg_9_0)
-	if arg_9_0._state == var_0_1.Expanding then
-		arg_9_0._state = var_0_1.Detail
-	elseif arg_9_0._state == var_0_1.Shrinking then
-		arg_9_0._state = var_0_1.Simple
+function FightViewClothSkill:_setState()
+	if self._state == State.Expanding then
+		self._state = State.Detail
+	elseif self._state == State.Shrinking then
+		self._state = State.Simple
 	end
 end
 
-function var_0_0._onTouch(arg_10_0)
+function FightViewClothSkill:_onTouch()
 	if ViewMgr.instance:isOpen(ViewName.GuideView) then
-		local var_10_0 = GuideViewMgr.instance.viewParam
-		local var_10_1 = var_10_0 and var_10_0.goPath
-		local var_10_2 = gohelper.find(var_10_1)
+		local viewParam = GuideViewMgr.instance.viewParam
+		local guideGOPath = viewParam and viewParam.goPath
+		local go = gohelper.find(guideGOPath)
 
-		if var_10_2 then
-			for iter_10_0, iter_10_1 in ipairs(arg_10_0._detailClick) do
-				if iter_10_1.gameObject == var_10_2 then
-					arg_10_0._hasClickDetailIcon = nil
+		if go then
+			for _, detailClick in ipairs(self._detailClick) do
+				if detailClick.gameObject == go then
+					self._hasClickDetailIcon = nil
 
 					return
 				end
@@ -227,298 +229,310 @@ function var_0_0._onTouch(arg_10_0)
 		end
 	end
 
-	if arg_10_0._state == var_0_1.Detail then
-		local var_10_3 = Time.timeScale
+	if self._state == State.Detail then
+		local timeScale = Time.timeScale
 
-		TaskDispatcher.runDelay(arg_10_0._delayDealTouch, arg_10_0, 0.01)
+		TaskDispatcher.runDelay(self._delayDealTouch, self, 0.01)
 	end
 end
 
-function var_0_0._delayDealTouch(arg_11_0)
-	if not arg_11_0._hasClickDetailIcon then
-		arg_11_0:_shrinkDetailUI()
+function FightViewClothSkill:_delayDealTouch()
+	if not self._hasClickDetailIcon then
+		self:_shrinkDetailUI()
 	end
 
-	arg_11_0._hasClickDetailIcon = nil
+	self._hasClickDetailIcon = nil
 end
 
-function var_0_0.showKeyTips(arg_12_0)
-	PCInputController.instance:showkeyTips(arg_12_0._pcSkillGO, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.showSkill)
-	PCInputController.instance:showkeyTips(arg_12_0._pcSkillDetail, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.showSkill)
-	PCInputController.instance:showkeyTips(arg_12_0._pcSkill1, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.skillUp)
-	PCInputController.instance:showkeyTips(arg_12_0._pcSkill2, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.skillDown)
+function FightViewClothSkill:showKeyTips()
+	PCInputController.instance:showkeyTips(self._pcSkillGO, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.showSkill)
+	PCInputController.instance:showkeyTips(self._pcSkillDetail, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.showSkill)
+	PCInputController.instance:showkeyTips(self._pcSkill1, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.skillUp)
+	PCInputController.instance:showkeyTips(self._pcSkill2, PCInputModel.Activity.battle, PCInputModel.battleActivityFun.skillDown)
 end
 
-function var_0_0._shrinkDetailUI(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._checkAnyKey, arg_13_0)
-	arg_13_0._animator:Play("fight_heroskill_out", 0, 0)
-	arg_13_0._animator:Update(0)
+function FightViewClothSkill:_shrinkDetailUI()
+	TaskDispatcher.cancelTask(self._checkAnyKey, self)
+	self._animator:Play("fight_heroskill_out", 0, 0)
+	self._animator:Update(0)
 
-	arg_13_0._state = var_0_1.Shrinking
+	self._state = State.Shrinking
 
-	TaskDispatcher.runDelay(arg_13_0._setState, arg_13_0, 0.533)
+	TaskDispatcher.runDelay(self._setState, self, 0.533)
 	FightController.instance:dispatchEvent(FightEvent.OnClothSkillShrink)
-	arg_13_0._pcSkillGO:SetActive(true)
-	arg_13_0._pcSkillDetail:SetActive(false)
+	self._pcSkillGO:SetActive(true)
+	self._pcSkillDetail:SetActive(false)
 end
 
-function var_0_0.onOpen(arg_14_0)
-	arg_14_0:_updateUI()
-	arg_14_0:_checkStartReplay()
+function FightViewClothSkill:onOpen()
+	self:_updateUI()
+	self:_checkStartReplay()
 end
 
-function var_0_0._onUpdateSpeed(arg_15_0)
-	arg_15_0._animator.speed = FightModel.instance:getUISpeed()
+function FightViewClothSkill:_onUpdateSpeed()
+	self._animator.speed = FightModel.instance:getUISpeed()
 end
 
-function var_0_0._checkStartReplay(arg_16_0)
+function FightViewClothSkill:_checkStartReplay()
 	if FightDataHelper.stateMgr.isReplay then
-		arg_16_0._click:RemoveClickListener()
+		self._click:RemoveClickListener()
 
-		for iter_16_0, iter_16_1 in ipairs(arg_16_0._detailClick) do
-			iter_16_1:RemoveClickListener()
+		for i, detailIconClick in ipairs(self._detailClick) do
+			detailIconClick:RemoveClickListener()
 		end
 
-		arg_16_0:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, arg_16_0._onTouch, arg_16_0)
+		self:removeEventCb(GameStateMgr.instance, GameStateEvent.OnTouchScreen, self._onTouch, self)
 	end
 end
 
-function var_0_0._getClothLevelCO(arg_17_0)
-	local var_17_0 = FightModel.instance.clothId
+function FightViewClothSkill:_getClothLevelCO()
+	local clothId = FightModel.instance.clothId
 
-	if not var_17_0 then
+	if not clothId then
 		return
 	end
 
-	local var_17_1 = PlayerClothModel.instance:getById(var_17_0)
+	local clothMO = PlayerClothModel.instance:getById(clothId)
 
-	if not var_17_1 then
+	if not clothMO then
 		return
 	end
 
-	local var_17_2 = lua_cloth_level.configDict[var_17_0]
+	local levelCOList = lua_cloth_level.configDict[clothId]
 
-	if not var_17_2 then
+	if not levelCOList then
 		return
 	end
 
-	return var_17_2[var_17_1.level]
+	local clothLevelCO = levelCOList[clothMO.level]
+
+	return clothLevelCO
 end
 
-function var_0_0._onPlayHandCard(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0:_getClothLevelCO()
+function FightViewClothSkill:_onPlayHandCard(cardInfoMO)
+	local clothLevelCO = self:_getClothLevelCO()
 
-	if var_18_0 then
-		arg_18_0._cardOpAddPower = arg_18_0._cardOpAddPower + var_18_0.use
+	if clothLevelCO then
+		self._cardOpAddPower = self._cardOpAddPower + clothLevelCO.use
 
-		arg_18_0:_updateUI()
-		arg_18_0:_checkPlayPowerMaxAudio(arg_18_0._cardOpAddPower)
+		self:_updateUI()
+		self:_checkPlayPowerMaxAudio(self._cardOpAddPower)
 	end
 end
 
-function var_0_0._onMoveHandCard(arg_19_0, arg_19_1, arg_19_2)
-	if FightEnum.UniversalCard[arg_19_2.skillId] then
+function FightViewClothSkill:_onMoveHandCard(operation, cardInfoMO)
+	if FightEnum.UniversalCard[cardInfoMO.skillId] then
 		return
 	end
 
-	if arg_19_1.isUnlimitMoveOrExtraMove then
+	if operation.isUnlimitMoveOrExtraMove then
 		return
 	end
 
-	local var_19_0 = arg_19_0:_getClothLevelCO()
+	local clothLevelCO = self:_getClothLevelCO()
 
-	if var_19_0 then
-		arg_19_0._cardOpAddPower = arg_19_0._cardOpAddPower + var_19_0.move
+	if clothLevelCO then
+		self._cardOpAddPower = self._cardOpAddPower + clothLevelCO.move
 
-		arg_19_0:_updateUI()
-		arg_19_0:_checkPlayPowerMaxAudio(arg_19_0._cardOpAddPower)
+		self:_updateUI()
+		self:_checkPlayPowerMaxAudio(self._cardOpAddPower)
 	end
 end
 
-function var_0_0._onCombineOneCard(arg_20_0, arg_20_1, arg_20_2)
-	if not arg_20_1.combineCanAddExpoint then
+function FightViewClothSkill:_onCombineOneCard(cardInfoMO, isUniversalCombine)
+	if not cardInfoMO.combineCanAddExpoint then
 		return
 	end
 
-	if arg_20_2 then
+	if isUniversalCombine then
 		return
 	end
 
-	local var_20_0 = arg_20_0:_getClothLevelCO()
+	local clothLevelCO = self:_getClothLevelCO()
 
-	if var_20_0 then
-		arg_20_0._cardOpAddPower = arg_20_0._cardOpAddPower + var_20_0.compose
+	if clothLevelCO then
+		self._cardOpAddPower = self._cardOpAddPower + clothLevelCO.compose
 
-		arg_20_0:_updateUI()
-		arg_20_0:_checkPlayPowerMaxAudio(arg_20_0._cardOpAddPower)
+		self:_updateUI()
+		self:_checkPlayPowerMaxAudio(self._cardOpAddPower)
 	end
 end
 
-function var_0_0._onMasterPowerChange(arg_21_0)
-	if arg_21_0:_getClothLevelCO() then
-		arg_21_0:_updateUI()
-		arg_21_0:_checkPlayPowerMaxAudio(arg_21_0._cardOpAddPower)
+function FightViewClothSkill:_onMasterPowerChange()
+	local clothLevelCO = self:_getClothLevelCO()
+
+	if clothLevelCO then
+		self:_updateUI()
+		self:_checkPlayPowerMaxAudio(self._cardOpAddPower)
 	end
 end
 
-function var_0_0._onStartPlayClothSkill(arg_22_0)
-	arg_22_0._lockSimulation = true
-	arg_22_0._cardOpAddPower = 0
+function FightViewClothSkill:_onStartPlayClothSkill()
+	self._lockSimulation = true
+	self._cardOpAddPower = 0
 
-	arg_22_0:_updateUI()
-	arg_22_0:_checkPlayPowerMaxAudio()
-	arg_22_0:_shrinkDetailUI()
+	self:_updateUI()
+	self:_checkPlayPowerMaxAudio()
+	self:_shrinkDetailUI()
 end
 
-function var_0_0._onAfterPlayClothSkill(arg_23_0)
-	arg_23_0._lockSimulation = false
-	arg_23_0._cardOpAddPower = 0
+function FightViewClothSkill:_onAfterPlayClothSkill()
+	self._lockSimulation = false
+	self._cardOpAddPower = 0
 end
 
-function var_0_0._onCancelOperation(arg_24_0)
-	arg_24_0._cardOpAddPower = 0
+function FightViewClothSkill:_onCancelOperation()
+	self._cardOpAddPower = 0
 
-	arg_24_0:_updateUI()
-	arg_24_0:_checkPlayPowerMaxAudio()
+	self:_updateUI()
+	self:_checkPlayPowerMaxAudio()
 end
 
-function var_0_0._onRoundSequenceFinish(arg_25_0)
-	arg_25_0._cardOpAddPower = 0
+function FightViewClothSkill:_onRoundSequenceFinish()
+	self._cardOpAddPower = 0
 
-	arg_25_0:_updateUI()
-	arg_25_0:_checkPlayPowerMaxAudio()
+	self:_updateUI()
+	self:_checkPlayPowerMaxAudio()
 end
 
-function var_0_0._getClothSkillList(arg_26_0)
-	local var_26_0 = tabletool.copy(FightModel.instance:getClothSkillList() or {})
+function FightViewClothSkill:_getClothSkillList()
+	local skillList = tabletool.copy(FightModel.instance:getClothSkillList() or {})
 
-	for iter_26_0 = #var_26_0, 1, -1 do
-		if var_26_0[iter_26_0].type ~= FightEnum.ClothSkillPerformanceType.Normal then
-			table.remove(var_26_0, iter_26_0)
+	for i = #skillList, 1, -1 do
+		if skillList[i].type ~= FightEnum.ClothSkillPerformanceType.Normal then
+			table.remove(skillList, i)
 		end
 	end
 
-	return var_26_0
+	return skillList
 end
 
-function var_0_0._canUseAnySkill(arg_27_0)
-	local var_27_0 = FightModel.instance.power
-	local var_27_1 = arg_27_0:_getClothSkillList()
+function FightViewClothSkill:_canUseAnySkill()
+	local power = FightModel.instance.power
+	local skillList = self:_getClothSkillList()
 
-	for iter_27_0 = 1, 2 do
-		local var_27_2 = var_27_1 and var_27_1[iter_27_0]
+	for i = 1, 2 do
+		local skillInfo = skillList and skillList[i]
 
-		if var_27_2 and lua_skill.configDict[var_27_2.skillId] and var_27_2.cd <= 0 and var_27_0 >= var_27_2.needPower then
-			return true
+		if skillInfo then
+			local skillCO = lua_skill.configDict[skillInfo.skillId]
+
+			if skillCO then
+				local canUse = skillInfo.cd <= 0 and power >= skillInfo.needPower
+
+				if canUse then
+					return true
+				end
+			end
 		end
 	end
 end
 
-function var_0_0._updateUI(arg_28_0)
-	local var_28_0 = arg_28_0:_getClothSkillList()
-	local var_28_1 = FightModel.instance.power
-	local var_28_2 = {
-		arg_28_0._pcSkill1,
-		arg_28_0._pcSkill2
+function FightViewClothSkill:_updateUI()
+	local skillList = self:_getClothSkillList()
+	local power = FightModel.instance.power
+	local pcskill = {
+		self._pcSkill1,
+		self._pcSkill2
 	}
 
-	for iter_28_0 = 1, 2 do
-		local var_28_3 = var_28_0 and var_28_0[iter_28_0]
+	for i = 1, 2 do
+		local skillInfo = skillList and skillList[i]
 
-		if var_28_3 then
-			local var_28_4 = lua_skill.configDict[var_28_3.skillId]
+		if skillInfo then
+			local skillCO = lua_skill.configDict[skillInfo.skillId]
 
-			if var_28_4 then
-				local var_28_5 = var_28_3.cd <= 0 and var_28_1 >= var_28_3.needPower
+			if skillCO then
+				local canUse = skillInfo.cd <= 0 and power >= skillInfo.needPower
 
-				gohelper.setActive(arg_28_0._simpleNotCost[iter_28_0], not var_28_5)
-				gohelper.setActive(arg_28_0._simpleCanCost[iter_28_0], var_28_5)
-				gohelper.setActive(arg_28_0._detailNotCost[iter_28_0], not var_28_5)
-				gohelper.setActive(arg_28_0._detailCanCost[iter_28_0], var_28_5)
-				gohelper.setActive(var_28_2[iter_28_0], var_28_5)
+				gohelper.setActive(self._simpleNotCost[i], not canUse)
+				gohelper.setActive(self._simpleCanCost[i], canUse)
+				gohelper.setActive(self._detailNotCost[i], not canUse)
+				gohelper.setActive(self._detailCanCost[i], canUse)
+				gohelper.setActive(pcskill[i], canUse)
 
-				local var_28_6 = FightConfig.instance:getSkillEffectDesc(nil, var_28_4)
+				local desc = FightConfig.instance:getSkillEffectDesc(nil, skillCO)
 
-				arg_28_0._detailTxtDesc[iter_28_0].text = var_28_6 .. "\nCOST<color=#FFA500>-" .. var_28_3.needPower .. "</color>"
+				self._detailTxtDesc[i].text = desc .. "\nCOST<color=#FFA500>-" .. skillInfo.needPower .. "</color>"
 			else
-				logError("主角技能配置不存在，技能id = " .. var_28_3.skillId)
+				logError("主角技能配置不存在，技能id = " .. skillInfo.skillId)
 			end
 		end
 	end
 
-	local var_28_7 = arg_28_0:_getClothLevelCO()
+	local clothLevelCO = self:_getClothLevelCO()
 
-	if var_28_7 then
-		local var_28_8 = var_28_1
+	if clothLevelCO then
+		local curPower = power
 
-		if not arg_28_0._lockSimulation then
-			var_28_8 = var_28_8 + arg_28_0._cardOpAddPower
+		if not self._lockSimulation then
+			curPower = curPower + self._cardOpAddPower
 		end
 
-		local var_28_9 = var_28_7.maxPower
-		local var_28_10 = Mathf.Clamp(var_28_8, 0, var_28_9)
+		local maxPower = clothLevelCO.maxPower
 
-		if not tonumber(arg_28_0._txtNum.text) then
-			local var_28_11 = 0
-		end
+		curPower = Mathf.Clamp(curPower, 0, maxPower)
 
-		arg_28_0._txtNum.text = var_28_10
-		arg_28_0._txtNum1.text = var_28_10
-		arg_28_0._txtmax.text = var_28_9
+		local prevPower = tonumber(self._txtNum.text) or 0
 
-		gohelper.setActive(arg_28_0._maxGO, var_28_10 > 0 and var_28_10 == var_28_9)
+		self._txtNum.text = curPower
+		self._txtNum1.text = curPower
+		self._txtmax.text = maxPower
+
+		gohelper.setActive(self._maxGO, curPower > 0 and curPower == maxPower)
 	else
-		arg_28_0._txtNum.text = var_28_1
-		arg_28_0._txtNum1.text = var_28_1
-		arg_28_0._txtmax.text = ""
+		self._txtNum.text = power
+		self._txtNum1.text = power
+		self._txtmax.text = ""
 
-		gohelper.setActive(arg_28_0._maxGO, false)
+		gohelper.setActive(self._maxGO, false)
 	end
 end
 
-function var_0_0._onStartSequenceFinish(arg_29_0)
-	local var_29_0 = arg_29_0:_getClothLevelCO()
+function FightViewClothSkill:_onStartSequenceFinish()
+	local clothLevelCO = self:_getClothLevelCO()
 
-	if var_29_0 then
-		local var_29_1 = FightModel.instance.power
+	if clothLevelCO then
+		local curPower = FightModel.instance.power
 
-		if not arg_29_0._lockSimulation then
-			var_29_1 = var_29_1 + arg_29_0._cardOpAddPower
+		if not self._lockSimulation then
+			curPower = curPower + self._cardOpAddPower
 		end
 
-		local var_29_2 = var_29_0.maxPower
-		local var_29_3 = Mathf.Clamp(var_29_1, 0, var_29_2)
+		local maxPower = clothLevelCO.maxPower
 
-		arg_29_0._cardOpAddPower = 0
-		FightModel.instance.power = var_29_3
+		curPower = Mathf.Clamp(curPower, 0, maxPower)
+		self._cardOpAddPower = 0
+		FightModel.instance.power = curPower
 
-		arg_29_0:_updateUI()
+		self:_updateUI()
 	end
 end
 
-function var_0_0._checkPlayPowerMaxAudio(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0._prevPower or 0
-	local var_30_1 = arg_30_0:_getClothLevelCO()
-	local var_30_2 = FightModel.instance.power + (arg_30_1 or 0)
-	local var_30_3 = var_30_1 and var_30_1.maxPower or 0
-	local var_30_4 = Mathf.Clamp(var_30_2, 0, var_30_3)
+function FightViewClothSkill:_checkPlayPowerMaxAudio(cardOpAddPower)
+	local prevPower = self._prevPower or 0
+	local clothLevelCO = self:_getClothLevelCO()
+	local curPower = FightModel.instance.power + (cardOpAddPower or 0)
+	local maxPower = clothLevelCO and clothLevelCO.maxPower or 0
 
-	if var_30_0 < var_30_3 and var_30_4 > 0 and var_30_4 == var_30_3 then
+	curPower = Mathf.Clamp(curPower, 0, maxPower)
+
+	if prevPower < maxPower and curPower > 0 and curPower == maxPower then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_clothskill_power_max)
 	end
 
-	arg_30_0._prevPower = var_30_4
+	self._prevPower = curPower
 end
 
-function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1, arg_31_2)
-	if FightDataHelper.lockOperateMgr:isLock() and not arg_31_2 then
+function FightViewClothSkill:_onClickSkillIcon(index, isReplay)
+	if FightDataHelper.lockOperateMgr:isLock() and not isReplay then
 		return
 	end
 
-	local var_31_0 = arg_31_0._clothSkillOp
+	local clothSkillOp = self._clothSkillOp
 
-	arg_31_0._clothSkillOp = nil
-	arg_31_0._hasClickDetailIcon = true
+	self._clothSkillOp = nil
+	self._hasClickDetailIcon = true
 
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
@@ -532,217 +546,219 @@ function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1, arg_31_2)
 		return
 	end
 
-	if #FightDataHelper.operationDataMgr:getOpList() > 0 then
+	local ops = FightDataHelper.operationDataMgr:getOpList()
+
+	if #ops > 0 then
 		GameFacade.showToast(ToastEnum.FightCardOps)
 
 		return
 	end
 
-	local var_31_1 = arg_31_0:_getClothSkillList()
-	local var_31_2 = FightModel.instance.power
-	local var_31_3 = var_31_1 and var_31_1[arg_31_1]
+	local skillList = self:_getClothSkillList()
+	local curPower = FightModel.instance.power
+	local toUseSkillInfo = skillList and skillList[index]
 
-	arg_31_0._toUseSkillId = var_31_3 and var_31_3.skillId
+	self._toUseSkillId = toUseSkillInfo and toUseSkillInfo.skillId
 
-	if var_31_3.cd > 0 then
+	if toUseSkillInfo.cd > 0 then
 		GameFacade.showToast(ToastEnum.UseSkill2)
 
 		return
 	end
 
-	if not arg_31_0._toUseSkillId or var_31_2 < var_31_3.needPower then
+	if not self._toUseSkillId or curPower < toUseSkillInfo.needPower then
 		GameFacade.showToast(ToastEnum.UseSkill1)
 
 		return
 	end
 
-	local var_31_4 = lua_skill.configDict[arg_31_0._toUseSkillId]
-	local var_31_5 = arg_31_0:_checkSelectSkillTarget()
+	local skillConfig = lua_skill.configDict[self._toUseSkillId]
+	local behaviorId = self:_checkSelectSkillTarget()
 
-	if var_31_5 and var_31_5 == var_0_2 then
-		if var_31_0 then
-			arg_31_0._fromId = var_31_0.fromId
-			arg_31_0._toId = var_31_0.toId
+	if behaviorId and behaviorId == Behavior_ChangeSub then
+		if clothSkillOp then
+			self._fromId = clothSkillOp.fromId
+			self._toId = clothSkillOp.toId
 
-			arg_31_0:_sendChangeSubRequest()
+			self:_sendChangeSubRequest()
 		else
-			arg_31_0:_selectChangeSub()
+			self:_selectChangeSub()
 		end
-	elseif var_31_4 and FightEnum.ShowLogicTargetView[var_31_4.logicTarget] and var_31_4.targetLimit == FightEnum.TargetLimit.MySide then
-		if var_31_0 then
-			arg_31_0:_selectCallback(var_31_0.toId)
+	elseif skillConfig and FightEnum.ShowLogicTargetView[skillConfig.logicTarget] and skillConfig.targetLimit == FightEnum.TargetLimit.MySide then
+		if clothSkillOp then
+			self:_selectCallback(clothSkillOp.toId)
 		else
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-				skillId = arg_31_0._toUseSkillId,
-				callback = arg_31_0._selectCallback,
-				callbackObj = arg_31_0
+				skillId = self._toUseSkillId,
+				callback = self._selectCallback,
+				callbackObj = self
 			})
 		end
 	else
-		arg_31_0:_sendUseClothSkill()
+		self:_sendUseClothSkill()
 	end
 end
 
-function var_0_0._selectCallback(arg_32_0, arg_32_1)
-	arg_32_0._fromId = nil
-	arg_32_0._toId = arg_32_1
+function FightViewClothSkill:_selectCallback(entityId)
+	self._fromId = nil
+	self._toId = entityId
 
-	arg_32_0:_useSkillAfterSelect()
+	self:_useSkillAfterSelect()
 end
 
-function var_0_0._useSkillAfterSelect(arg_33_0)
-	if arg_33_0._dnaAnim then
-		arg_33_0._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
-		arg_33_0._dnaAnim:Update(0)
+function FightViewClothSkill:_useSkillAfterSelect()
+	if self._dnaAnim then
+		self._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
+		self._dnaAnim:Update(0)
 	end
 
-	TaskDispatcher.runDelay(arg_33_0._useSkillAfterPerformance, arg_33_0, 0.33)
-	arg_33_0:_blockClick()
+	TaskDispatcher.runDelay(self._useSkillAfterPerformance, self, 0.33)
+	self:_blockClick()
 end
 
-function var_0_0._useSkillAfterPerformance(arg_34_0)
-	FightRpc.instance:sendUseClothSkillRequest(arg_34_0._toUseSkillId, arg_34_0._fromId, arg_34_0._toId)
+function FightViewClothSkill:_useSkillAfterPerformance()
+	FightRpc.instance:sendUseClothSkillRequest(self._toUseSkillId, self._fromId, self._toId)
 end
 
-function var_0_0._checkSelectSkillTarget(arg_35_0)
-	local var_35_0 = lua_skill.configDict[arg_35_0._toUseSkillId]
-	local var_35_1 = lua_skill_effect.configDict[var_35_0.skillEffect]
+function FightViewClothSkill:_checkSelectSkillTarget()
+	local skillCO = lua_skill.configDict[self._toUseSkillId]
+	local skillEffectCO = lua_skill_effect.configDict[skillCO.skillEffect]
 
-	if var_35_1 then
-		for iter_35_0 = 1, FightEnum.MaxBehavior do
-			local var_35_2 = tonumber(var_35_1["behavior" .. iter_35_0])
+	if skillEffectCO then
+		for i = 1, FightEnum.MaxBehavior do
+			local behaviorId = tonumber(skillEffectCO["behavior" .. i])
 
-			if var_35_2 and var_0_3[var_35_2] then
-				return var_35_2
+			if behaviorId and NeedSelectTargetDict[behaviorId] then
+				return behaviorId
 			end
 		end
 	end
 end
 
-function var_0_0._selectChangeSub(arg_36_0)
-	local var_36_0 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_36_1 = FightDataHelper.entityMgr:getMySubList()
-	local var_36_2 = {}
-	local var_36_3 = {}
+function FightViewClothSkill:_selectChangeSub()
+	local list = FightDataHelper.entityMgr:getMyNormalList()
+	local subList = FightDataHelper.entityMgr:getMySubList()
+	local entityIds = {}
+	local subEntityIds = {}
 
-	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
-		table.insert(var_36_2, iter_36_1.id)
+	for _, entityMO in ipairs(list) do
+		table.insert(entityIds, entityMO.id)
 	end
 
-	for iter_36_2, iter_36_3 in ipairs(var_36_1) do
-		table.insert(var_36_3, iter_36_3.id)
+	for _, entityMO in ipairs(subList) do
+		table.insert(subEntityIds, entityMO.id)
 	end
 
-	if #var_36_3 == 0 then
+	if #subEntityIds == 0 then
 		GameFacade.showToast(ToastEnum.ChangeSubIsNull)
 
 		return
 	end
 
-	arg_36_0:_changeSubSelect1(var_36_2, var_36_3)
+	self:_changeSubSelect1(entityIds, subEntityIds)
 end
 
-function var_0_0._changeSubSelect1(arg_37_0, arg_37_1, arg_37_2)
-	if #arg_37_1 <= 1 then
-		arg_37_0._fromId = arg_37_1[1]
+function FightViewClothSkill:_changeSubSelect1(entityIds, subEntityIds)
+	if #entityIds <= 1 then
+		self._fromId = entityIds[1]
 
-		arg_37_0:_changeSubSelect2(arg_37_2)
+		self:_changeSubSelect2(subEntityIds)
 	else
 		ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-			callback = function(arg_38_0)
-				arg_37_0._fromId = arg_38_0
+			callback = function(entityId)
+				self._fromId = entityId
 
-				arg_37_0:_changeSubSelect2(arg_37_2)
+				self:_changeSubSelect2(subEntityIds)
 			end,
-			targetLimit = arg_37_1,
+			targetLimit = entityIds,
 			desc = luaLang("fight_select_change")
 		})
 	end
 end
 
-function var_0_0._changeSubSelect2(arg_39_0, arg_39_1)
-	if #arg_39_1 == 1 then
-		arg_39_0._toId = arg_39_1[1]
+function FightViewClothSkill:_changeSubSelect2(subEntityIds)
+	if #subEntityIds == 1 then
+		self._toId = subEntityIds[1]
 
-		arg_39_0:_sendChangeSubEntity()
+		self:_sendChangeSubEntity()
 	else
 		ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
-			callback = function(arg_40_0)
-				arg_39_0._toId = arg_40_0
+			callback = function(entityId)
+				self._toId = entityId
 
-				arg_39_0:_sendChangeSubEntity()
+				self:_sendChangeSubEntity()
 			end,
-			targetLimit = arg_39_1,
+			targetLimit = subEntityIds,
 			desc = luaLang("fight_select_change_sub")
 		})
 	end
 end
 
-function var_0_0._sendUseClothSkill(arg_41_0)
-	if arg_41_0._dnaAnim then
-		arg_41_0._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
-		arg_41_0._dnaAnim:Update(0)
+function FightViewClothSkill:_sendUseClothSkill()
+	if self._dnaAnim then
+		self._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
+		self._dnaAnim:Update(0)
 	end
 
-	TaskDispatcher.runDelay(arg_41_0._sendUseClothSkillRequest, arg_41_0, 0.33)
-	arg_41_0:_blockClick()
+	TaskDispatcher.runDelay(self._sendUseClothSkillRequest, self, 0.33)
+	self:_blockClick()
 end
 
-function var_0_0._sendUseClothSkillRequest(arg_42_0)
-	FightRpc.instance:sendUseClothSkillRequest(arg_42_0._toUseSkillId, nil, FightDataHelper.operationDataMgr.curSelectEntityId)
+function FightViewClothSkill:_sendUseClothSkillRequest()
+	FightRpc.instance:sendUseClothSkillRequest(self._toUseSkillId, nil, FightDataHelper.operationDataMgr.curSelectEntityId)
 end
 
-function var_0_0._sendChangeSubEntity(arg_43_0)
-	if arg_43_0._dnaAnim then
-		arg_43_0._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
-		arg_43_0._dnaAnim:Update(0)
+function FightViewClothSkill:_sendChangeSubEntity()
+	if self._dnaAnim then
+		self._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
+		self._dnaAnim:Update(0)
 	end
 
-	TaskDispatcher.runDelay(arg_43_0._sendChangeSubRequest, arg_43_0, 0.33)
-	arg_43_0:_blockClick()
+	TaskDispatcher.runDelay(self._sendChangeSubRequest, self, 0.33)
+	self:_blockClick()
 end
 
-function var_0_0._sendChangeSubRequest(arg_44_0)
-	FightRpc.instance:sendUseClothSkillRequest(arg_44_0._toUseSkillId, arg_44_0._fromId, arg_44_0._toId)
+function FightViewClothSkill:_sendChangeSubRequest()
+	FightRpc.instance:sendUseClothSkillRequest(self._toUseSkillId, self._fromId, self._toId)
 end
 
-function var_0_0._blockClick(arg_45_0)
+function FightViewClothSkill:_blockClick()
 	UIBlockMgr.instance:endAll()
 
 	UIBlockMgrExtend.CircleMvDelay = 10
 
 	UIBlockMgr.instance:startBlock(UIBlockKey.PlayClothSkill)
-	arg_45_0:addEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, arg_45_0._cancelBlock, arg_45_0)
-	arg_45_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_45_0._cancelBlock, arg_45_0)
+	self:addEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, self._cancelBlock, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, self._cancelBlock, self)
 end
 
-function var_0_0._cancelBlock(arg_46_0)
-	arg_46_0:removeEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, arg_46_0._cancelBlock, arg_46_0)
-	arg_46_0:removeEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_46_0._cancelBlock, arg_46_0)
+function FightViewClothSkill:_cancelBlock()
+	self:removeEventCb(FightController.instance, FightEvent.RespUseClothSkillFail, self._cancelBlock, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, self._cancelBlock, self)
 
 	UIBlockMgrExtend.CircleMvDelay = nil
 
 	UIBlockMgr.instance:endBlock(UIBlockKey.PlayClothSkill)
 end
 
-function var_0_0._simulateClickClothSkillIcon(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_1 and arg_47_1.skillId
+function FightViewClothSkill:_simulateClickClothSkillIcon(clothSkillOp)
+	local targetSkillId = clothSkillOp and clothSkillOp.skillId
 
-	if var_47_0 then
-		local var_47_1 = arg_47_0:_getClothSkillList()
+	if targetSkillId then
+		local skillList = self:_getClothSkillList()
 
-		for iter_47_0, iter_47_1 in ipairs(var_47_1) do
-			if iter_47_1.skillId == var_47_0 then
-				arg_47_0._clothSkillOp = arg_47_1
+		for i, skillInfo in ipairs(skillList) do
+			if skillInfo.skillId == targetSkillId then
+				self._clothSkillOp = clothSkillOp
 
-				arg_47_0:_onClickSkillIcon(iter_47_0, true)
+				self:_onClickSkillIcon(i, true)
 
 				return
 			end
 		end
 
-		logError("主角技能不存在：" .. var_47_0 .. ", " .. cjson.encode(var_47_1))
+		logError("主角技能不存在：" .. targetSkillId .. ", " .. cjson.encode(skillList))
 	end
 end
 
-return var_0_0
+return FightViewClothSkill

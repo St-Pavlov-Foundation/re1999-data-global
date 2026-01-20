@@ -1,330 +1,335 @@
-﻿module("modules.logic.rouge.map.view.collectiondrop.RougeCollectionDropView", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/collectiondrop/RougeCollectionDropView.lua
 
-local var_0_0 = class("RougeCollectionDropView", BaseView)
+module("modules.logic.rouge.map.view.collectiondrop.RougeCollectionDropView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simagemaskbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_maskbg")
-	arg_1_0._gotitletip = gohelper.findChild(arg_1_0.viewGO, "Title/txt_Tips")
-	arg_1_0._scrollView = gohelper.findChildScrollRect(arg_1_0.viewGO, "scroll_view")
-	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
-	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
-	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_refresh")
-	arg_1_0._gorefreshactivebg = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_refresh/#go_activebg")
-	arg_1_0._gorefreshdisablebg = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_refresh/#go_disablebg")
-	arg_1_0._gorougefunctionitem2 = gohelper.findChild(arg_1_0.viewGO, "#go_rougefunctionitem2")
-	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "#go_tips")
-	arg_1_0._txtselectnum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#txt_num")
-	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+local RougeCollectionDropView = class("RougeCollectionDropView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function RougeCollectionDropView:onInitView()
+	self._simagemaskbg = gohelper.findChildSingleImage(self.viewGO, "#simage_maskbg")
+	self._gotitletip = gohelper.findChild(self.viewGO, "Title/txt_Tips")
+	self._scrollView = gohelper.findChildScrollRect(self.viewGO, "scroll_view")
+	self._gocollectionitem = gohelper.findChild(self.viewGO, "scroll_view/Viewport/Content/#go_collectionitem")
+	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_confirm")
+	self._btnrefresh = gohelper.findChildButtonWithAudio(self.viewGO, "layout/#btn_refresh")
+	self._gorefreshactivebg = gohelper.findChild(self.viewGO, "layout/#btn_refresh/#go_activebg")
+	self._gorefreshdisablebg = gohelper.findChild(self.viewGO, "layout/#btn_refresh/#go_disablebg")
+	self._gorougefunctionitem2 = gohelper.findChild(self.viewGO, "#go_rougefunctionitem2")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txtselectnum = gohelper.findChildText(self.viewGO, "#go_topright/#txt_num")
+	self._gotopright = gohelper.findChild(self.viewGO, "#go_topright")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
-	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
+function RougeCollectionDropView:addEvents()
+	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
+	self._btnrefresh:AddClickListener(self._btnrefreshOnClick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnconfirm:RemoveClickListener()
-	arg_3_0._btnrefresh:RemoveClickListener()
+function RougeCollectionDropView:removeEvents()
+	self._btnconfirm:RemoveClickListener()
+	self._btnrefresh:RemoveClickListener()
 end
 
-function var_0_0._btnconfirmOnClick(arg_4_0)
-	if arg_4_0.viewEnum == RougeMapEnum.CollectionDropViewEnum.OnlyShow then
-		arg_4_0:closeThis()
+function RougeCollectionDropView:_btnconfirmOnClick()
+	if self.viewEnum == RougeMapEnum.CollectionDropViewEnum.OnlyShow then
+		self:closeThis()
 
 		return
 	end
 
-	if #arg_4_0.selectPosList < 1 then
+	if #self.selectPosList < 1 then
 		return
 	end
 
-	arg_4_0:clearSelectCallback()
+	self:clearSelectCallback()
 
-	arg_4_0.selectCallbackId = RougeRpc.instance:sendRougeSelectDropRequest(arg_4_0.selectPosList, arg_4_0.onReceiveSelect, arg_4_0)
+	self.selectCallbackId = RougeRpc.instance:sendRougeSelectDropRequest(self.selectPosList, self.onReceiveSelect, self)
 end
 
-function var_0_0.onReceiveSelect(arg_5_0)
-	arg_5_0.refreshCallbackId = nil
+function RougeCollectionDropView:onReceiveSelect()
+	self.refreshCallbackId = nil
 
-	arg_5_0:delayCloseView()
+	self:delayCloseView()
 end
 
-function var_0_0.delayCloseView(arg_6_0)
-	UIBlockMgr.instance:startBlock(arg_6_0.viewName)
-	TaskDispatcher.cancelTask(arg_6_0._closeView, arg_6_0)
-	TaskDispatcher.runDelay(arg_6_0._closeView, arg_6_0, RougeMapEnum.CollectionChangeAnimDuration)
+function RougeCollectionDropView:delayCloseView()
+	UIBlockMgr.instance:startBlock(self.viewName)
+	TaskDispatcher.cancelTask(self._closeView, self)
+	TaskDispatcher.runDelay(self._closeView, self, RougeMapEnum.CollectionChangeAnimDuration)
 end
 
-function var_0_0._closeView(arg_7_0)
-	UIBlockMgr.instance:endBlock(arg_7_0.viewName)
-	arg_7_0:closeThis()
+function RougeCollectionDropView:_closeView()
+	UIBlockMgr.instance:endBlock(self.viewName)
+	self:closeThis()
 end
 
-function var_0_0._btnrefreshOnClick(arg_8_0)
-	if not arg_8_0.canClickRefresh then
+function RougeCollectionDropView:_btnrefreshOnClick()
+	if not self.canClickRefresh then
 		GameFacade.showToast(ToastEnum.RougeNotRefreshCollection)
 
 		return
 	end
 
-	arg_8_0:clearRefreshCallback()
+	self:clearRefreshCallback()
 
-	arg_8_0.refreshCallbackId = RougeRpc.instance:sendRougeRandomDropRequest(arg_8_0.onReceiveRefresh, arg_8_0)
+	self.refreshCallbackId = RougeRpc.instance:sendRougeRandomDropRequest(self.onReceiveRefresh, self)
 end
 
-function var_0_0.onReceiveRefresh(arg_9_0)
+function RougeCollectionDropView:onReceiveRefresh()
 	AudioMgr.instance:trigger(AudioEnum.UI.DropRefresh)
 
-	arg_9_0.refreshCallbackId = nil
+	self.refreshCallbackId = nil
 
-	local var_9_0 = RougeMapModel.instance:getCurInteractiveJson()
+	local curInteractive = RougeMapModel.instance:getCurInteractiveJson()
 
-	arg_9_0.collectionList = var_9_0.dropCollectList
-	arg_9_0.canSelectCount = var_9_0.dropSelectNum
-	arg_9_0.dropRandomNum = var_9_0.dropRandomNum
+	self.collectionList = curInteractive.dropCollectList
+	self.canSelectCount = curInteractive.dropSelectNum
+	self.dropRandomNum = curInteractive.dropRandomNum
 
-	arg_9_0:refreshUI()
-	tabletool.clear(arg_9_0.selectPosList)
+	self:refreshUI()
+	tabletool.clear(self.selectPosList)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectDropChange)
 end
 
-function var_0_0.onClickBg(arg_10_0)
-	if arg_10_0.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
+function RougeCollectionDropView:onClickBg()
+	if self.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
 		return
 	end
 
-	arg_10_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0._editableInitView(arg_11_0)
-	arg_11_0.bgClick = gohelper.findChildClickWithDefaultAudio(arg_11_0.viewGO, "#simage_maskbg")
+function RougeCollectionDropView:_editableInitView()
+	self.bgClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#simage_maskbg")
 
-	arg_11_0.bgClick:AddClickListener(arg_11_0.onClickBg, arg_11_0)
+	self.bgClick:AddClickListener(self.onClickBg, self)
 
-	arg_11_0.viewPortClick = gohelper.findChildClickWithDefaultAudio(arg_11_0.viewGO, "scroll_view/Viewport")
+	self.viewPortClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "scroll_view/Viewport")
 
-	arg_11_0.viewPortClick:AddClickListener(arg_11_0.onClickBg, arg_11_0)
-	arg_11_0._simagemaskbg:LoadImage("singlebg/rouge/rouge_talent_bg.png")
+	self.viewPortClick:AddClickListener(self.onClickBg, self)
+	self._simagemaskbg:LoadImage("singlebg/rouge/rouge_talent_bg.png")
 
-	arg_11_0.txtTips = gohelper.findChildText(arg_11_0.viewGO, "Title/txt_Tips")
-	arg_11_0.txtTitle = gohelper.findChildText(arg_11_0.viewGO, "Title/txt_Title")
-	arg_11_0.goRefreshBtn = arg_11_0._btnrefresh.gameObject
-	arg_11_0.goConfirmBtn = arg_11_0._btnconfirm.gameObject
+	self.txtTips = gohelper.findChildText(self.viewGO, "Title/txt_Tips")
+	self.txtTitle = gohelper.findChildText(self.viewGO, "Title/txt_Title")
+	self.goRefreshBtn = self._btnrefresh.gameObject
+	self.goConfirmBtn = self._btnconfirm.gameObject
 
-	gohelper.setActive(arg_11_0._gocollectionitem, false)
+	gohelper.setActive(self._gocollectionitem, false)
 
-	arg_11_0.selectPosList = {}
-	arg_11_0.collectionItemList = {}
+	self.selectPosList = {}
+	self.collectionItemList = {}
 
-	arg_11_0:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectDropChange, arg_11_0.onSelectDropChange, arg_11_0)
+	self:addEventCb(RougeMapController.instance, RougeMapEvent.onSelectDropChange, self.onSelectDropChange, self)
 
-	arg_11_0.goCollection = arg_11_0.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, arg_11_0._gorougefunctionitem2)
-	arg_11_0.collectionComp = RougeCollectionComp.Get(arg_11_0.goCollection)
+	self.goCollection = self.viewContainer:getResInst(RougeEnum.ResPath.CommonCollectionItem, self._gorougefunctionitem2)
+	self.collectionComp = RougeCollectionComp.Get(self.goCollection)
 
-	NavigateMgr.instance:addEscape(arg_11_0.viewName, RougeMapHelper.blockEsc)
+	NavigateMgr.instance:addEscape(self.viewName, RougeMapHelper.blockEsc)
 end
 
-function var_0_0.onSelectDropChange(arg_12_0)
-	arg_12_0:refreshConfirmBtn()
-	arg_12_0:refreshTopRight()
+function RougeCollectionDropView:onSelectDropChange()
+	self:refreshConfirmBtn()
+	self:refreshTopRight()
 end
 
-function var_0_0.onUpdateParam(arg_13_0)
-	arg_13_0:onOpen()
+function RougeCollectionDropView:onUpdateParam()
+	self:onOpen()
 end
 
-function var_0_0.initData(arg_14_0)
-	arg_14_0.viewEnum = arg_14_0.viewParam.viewEnum
-	arg_14_0.collectionList = arg_14_0.viewParam.collectionList
+function RougeCollectionDropView:initData()
+	self.viewEnum = self.viewParam.viewEnum
+	self.collectionList = self.viewParam.collectionList
 
-	if arg_14_0.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
-		arg_14_0.canSelectCount = arg_14_0.viewParam.canSelectCount
-		arg_14_0.dropRandomNum = arg_14_0.viewParam.dropRandomNum
+	if self.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
+		self.canSelectCount = self.viewParam.canSelectCount
+		self.dropRandomNum = self.viewParam.dropRandomNum
 	end
 end
 
-function var_0_0.onOpen(arg_15_0)
+function RougeCollectionDropView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.DropRefresh)
-	arg_15_0:initData()
-	arg_15_0:refreshUI()
-	arg_15_0.collectionComp:onOpen()
+	self:initData()
+	self:refreshUI()
+	self.collectionComp:onOpen()
 end
 
-function var_0_0.refreshUI(arg_16_0)
-	arg_16_0:refreshTitle()
-	arg_16_0:refreshCollection()
-	arg_16_0:refreshConfirmBtn()
-	arg_16_0:refreshRefreshBtn()
-	arg_16_0:refreshTopRight()
+function RougeCollectionDropView:refreshUI()
+	self:refreshTitle()
+	self:refreshCollection()
+	self:refreshConfirmBtn()
+	self:refreshRefreshBtn()
+	self:refreshTopRight()
 end
 
-function var_0_0.refreshTitle(arg_17_0)
-	if arg_17_0.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
-		arg_17_0.txtTitle.text = luaLang("rougecollectionselectview_txt_Title")
-		arg_17_0.txtTips.text = string.gsub(luaLang("rougecollectionselectview_txt_Tips"), "▩1%%s", arg_17_0.canSelectCount)
+function RougeCollectionDropView:refreshTitle()
+	if self.viewEnum == RougeMapEnum.CollectionDropViewEnum.Select then
+		self.txtTitle.text = luaLang("rougecollectionselectview_txt_Title")
+		self.txtTips.text = string.gsub(luaLang("rougecollectionselectview_txt_Tips"), "▩1%%s", self.canSelectCount)
 
-		gohelper.setActive(arg_17_0._gotitletip, true)
+		gohelper.setActive(self._gotitletip, true)
 	else
-		arg_17_0.txtTips.text = luaLang("rougecollectionselectview_txt_get_Tips")
-		arg_17_0.txtTitle.text = luaLang("rougecollectionselectview_txt_get_Title")
+		self.txtTips.text = luaLang("rougecollectionselectview_txt_get_Tips")
+		self.txtTitle.text = luaLang("rougecollectionselectview_txt_get_Title")
 
-		gohelper.setActive(arg_17_0._gotitletip, false)
+		gohelper.setActive(self._gotitletip, false)
 	end
 end
 
-function var_0_0.refreshCollection(arg_18_0)
-	local var_18_0 = arg_18_0.collectionList or {}
+function RougeCollectionDropView:refreshCollection()
+	local collectionIdList = self.collectionList or {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
-		local var_18_1 = arg_18_0.collectionItemList[iter_18_0]
+	for index, collectionId in ipairs(collectionIdList) do
+		local collectionItem = self.collectionItemList[index]
 
-		if not var_18_1 then
-			var_18_1 = RougeCollectionDropItem.New()
+		if not collectionItem then
+			collectionItem = RougeCollectionDropItem.New()
 
-			local var_18_2 = gohelper.cloneInPlace(arg_18_0._gocollectionitem)
+			local go = gohelper.cloneInPlace(self._gocollectionitem)
 
-			var_18_1:init(var_18_2, arg_18_0)
-			var_18_1:setParentScroll(arg_18_0._scrollView.gameObject)
-			table.insert(arg_18_0.collectionItemList, var_18_1)
+			collectionItem:init(go, self)
+			collectionItem:setParentScroll(self._scrollView.gameObject)
+			table.insert(self.collectionItemList, collectionItem)
 		end
 
-		var_18_1:show()
-		var_18_1:update(iter_18_0, iter_18_1)
+		collectionItem:show()
+		collectionItem:update(index, collectionId)
 	end
 
-	for iter_18_2 = #var_18_0 + 1, #arg_18_0.collectionItemList do
-		arg_18_0.collectionItemList[iter_18_2]:hide()
+	for i = #collectionIdList + 1, #self.collectionItemList do
+		self.collectionItemList[i]:hide()
 	end
 
-	arg_18_0._scrollView.horizontalNormalizedPosition = 0
+	self._scrollView.horizontalNormalizedPosition = 0
 end
 
-function var_0_0.refreshConfirmBtn(arg_19_0)
-	if arg_19_0.viewEnum == RougeMapEnum.CollectionDropViewEnum.OnlyShow then
-		gohelper.setActive(arg_19_0.goConfirmBtn, false)
-		gohelper.setActive(arg_19_0._gotips, true)
+function RougeCollectionDropView:refreshConfirmBtn()
+	if self.viewEnum == RougeMapEnum.CollectionDropViewEnum.OnlyShow then
+		gohelper.setActive(self.goConfirmBtn, false)
+		gohelper.setActive(self._gotips, true)
 
 		return
 	end
 
-	gohelper.setActive(arg_19_0._gotips, false)
-	gohelper.setActive(arg_19_0.goConfirmBtn, #arg_19_0.selectPosList >= arg_19_0.canSelectCount)
+	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self.goConfirmBtn, #self.selectPosList >= self.canSelectCount)
 end
 
-function var_0_0.refreshRefreshBtn(arg_20_0)
-	arg_20_0.canClickRefresh = false
+function RougeCollectionDropView:refreshRefreshBtn()
+	self.canClickRefresh = false
 
-	if arg_20_0.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
-		gohelper.setActive(arg_20_0.goRefreshBtn, false)
+	if self.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
+		gohelper.setActive(self.goRefreshBtn, false)
 
 		return
 	end
 
-	local var_20_0 = RougeMapModel.instance:getCurNode()
-	local var_20_1 = var_20_0 and var_20_0:getEventCo()
-	local var_20_2 = var_20_1 and var_20_1.type
+	local curNode = RougeMapModel.instance:getCurNode()
+	local eventCo = curNode and curNode:getEventCo()
+	local eventType = eventCo and eventCo.type
 
-	if not RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockFightDropRefresh, var_20_2) then
-		gohelper.setActive(arg_20_0.goRefreshBtn, false)
-
-		return
-	end
-
-	arg_20_0.canClickRefresh = RougeMapConfig.instance:getFightDropMaxRefreshNum(var_20_2) - arg_20_0.dropRandomNum > 0
-
-	gohelper.setActive(arg_20_0.goRefreshBtn, true)
-	gohelper.setActive(arg_20_0._gorefreshactivebg, arg_20_0.canClickRefresh)
-	gohelper.setActive(arg_20_0._gorefreshdisablebg, not arg_20_0.canClickRefresh)
-end
-
-function var_0_0.refreshTopRight(arg_21_0)
-	if arg_21_0.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
-		gohelper.setActive(arg_21_0._gotopright, false)
+	if not RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockFightDropRefresh, eventType) then
+		gohelper.setActive(self.goRefreshBtn, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_21_0._gotopright, true)
+	local maxRefreshCount = RougeMapConfig.instance:getFightDropMaxRefreshNum(eventType)
+	local remainRefreshCount = maxRefreshCount - self.dropRandomNum
 
-	arg_21_0._txtselectnum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("rouge_drop_select"), #arg_21_0.selectPosList, arg_21_0.canSelectCount)
+	self.canClickRefresh = remainRefreshCount > 0
+
+	gohelper.setActive(self.goRefreshBtn, true)
+	gohelper.setActive(self._gorefreshactivebg, self.canClickRefresh)
+	gohelper.setActive(self._gorefreshdisablebg, not self.canClickRefresh)
 end
 
-function var_0_0.selectPos(arg_22_0, arg_22_1)
-	if arg_22_0.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
+function RougeCollectionDropView:refreshTopRight()
+	if self.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
+		gohelper.setActive(self._gotopright, false)
+
+		return
+	end
+
+	gohelper.setActive(self._gotopright, true)
+
+	self._txtselectnum.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("rouge_drop_select"), #self.selectPosList, self.canSelectCount)
+end
+
+function RougeCollectionDropView:selectPos(pos)
+	if self.viewEnum ~= RougeMapEnum.CollectionDropViewEnum.Select then
 		return false
 	end
 
-	local var_22_0 = tabletool.indexOf(arg_22_0.selectPosList, arg_22_1)
+	local index = tabletool.indexOf(self.selectPosList, pos)
 
-	if var_22_0 then
-		table.remove(arg_22_0.selectPosList, var_22_0)
+	if index then
+		table.remove(self.selectPosList, index)
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectDropChange)
 
 		return
 	end
 
-	if arg_22_0.canSelectCount > 1 then
-		if #arg_22_0.selectPosList >= arg_22_0.canSelectCount then
+	if self.canSelectCount > 1 then
+		if #self.selectPosList >= self.canSelectCount then
 			return
 		end
 
-		table.insert(arg_22_0.selectPosList, arg_22_1)
+		table.insert(self.selectPosList, pos)
 		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectDropChange)
 	end
 
-	table.remove(arg_22_0.selectPosList)
-	table.insert(arg_22_0.selectPosList, arg_22_1)
+	table.remove(self.selectPosList)
+	table.insert(self.selectPosList, pos)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectDropChange)
 end
 
-function var_0_0.isSelect(arg_23_0, arg_23_1)
-	return tabletool.indexOf(arg_23_0.selectPosList, arg_23_1)
+function RougeCollectionDropView:isSelect(pos)
+	return tabletool.indexOf(self.selectPosList, pos)
 end
 
-function var_0_0.clearSelectCallback(arg_24_0)
-	if arg_24_0.selectCallbackId then
-		RougeRpc.instance:removeCallbackById(arg_24_0.selectCallbackId)
+function RougeCollectionDropView:clearSelectCallback()
+	if self.selectCallbackId then
+		RougeRpc.instance:removeCallbackById(self.selectCallbackId)
 
-		arg_24_0.selectCallbackId = nil
+		self.selectCallbackId = nil
 	end
 end
 
-function var_0_0.clearRefreshCallback(arg_25_0)
-	if arg_25_0.refreshCallbackId then
-		RougeRpc.instance:removeCallbackById(arg_25_0.refreshCallbackId)
+function RougeCollectionDropView:clearRefreshCallback()
+	if self.refreshCallbackId then
+		RougeRpc.instance:removeCallbackById(self.refreshCallbackId)
 
-		arg_25_0.refreshCallbackId = nil
+		self.refreshCallbackId = nil
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
-	arg_26_0:clearSelectCallback()
-	arg_26_0:clearRefreshCallback()
-	arg_26_0.collectionComp:onClose()
+function RougeCollectionDropView:onClose()
+	self:clearSelectCallback()
+	self:clearRefreshCallback()
+	self.collectionComp:onClose()
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0.collectionItemList) do
-		iter_26_1:onClose()
+	for _, collectionItem in ipairs(self.collectionItemList) do
+		collectionItem:onClose()
 	end
 
-	tabletool.clear(arg_26_0.selectPosList)
+	tabletool.clear(self.selectPosList)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	for iter_27_0, iter_27_1 in ipairs(arg_27_0.collectionItemList) do
-		iter_27_1:destroy()
+function RougeCollectionDropView:onDestroyView()
+	for _, collectionItem in ipairs(self.collectionItemList) do
+		collectionItem:destroy()
 	end
 
-	arg_27_0.collectionItemList = nil
+	self.collectionItemList = nil
 
-	arg_27_0._simagemaskbg:UnLoadImage()
-	arg_27_0.collectionComp:destroy()
-	arg_27_0.bgClick:RemoveClickListener()
-	arg_27_0.viewPortClick:RemoveClickListener()
-	TaskDispatcher.cancelTask(arg_27_0.closeThis, arg_27_0)
+	self._simagemaskbg:UnLoadImage()
+	self.collectionComp:destroy()
+	self.bgClick:RemoveClickListener()
+	self.viewPortClick:RemoveClickListener()
+	TaskDispatcher.cancelTask(self.closeThis, self)
 end
 
-return var_0_0
+return RougeCollectionDropView

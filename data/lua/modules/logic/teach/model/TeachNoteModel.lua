@@ -1,98 +1,100 @@
-﻿module("modules.logic.teach.model.TeachNoteModel", package.seeall)
+﻿-- chunkname: @modules/logic/teach/model/TeachNoteModel.lua
 
-local var_0_0 = class("TeachNoteModel", BaseModel)
+module("modules.logic.teach.model.TeachNoteModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._topicId = 0
-	arg_1_0._topicIndex = 0
-	arg_1_0._teachNoteInfos = {}
-	arg_1_0._isJumpEnter = false
+local TeachNoteModel = class("TeachNoteModel", BaseModel)
+
+function TeachNoteModel:onInit()
+	self._topicId = 0
+	self._topicIndex = 0
+	self._teachNoteInfos = {}
+	self._isJumpEnter = false
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._topicId = 0
-	arg_2_0._topicIndex = 0
-	arg_2_0._teachNoteInfos = {}
-	arg_2_0._isJumpEnter = false
+function TeachNoteModel:reInit()
+	self._topicId = 0
+	self._topicIndex = 0
+	self._teachNoteInfos = {}
+	self._isJumpEnter = false
 end
 
-function var_0_0.setTeachNoticeTopicId(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._topicId = arg_3_1
-	arg_3_0._topicIndex = arg_3_2
+function TeachNoteModel:setTeachNoticeTopicId(id, index)
+	self._topicId = id
+	self._topicIndex = index
 end
 
-function var_0_0.getTeachNoticeTopicId(arg_4_0)
-	return arg_4_0._topicId, arg_4_0._topicIndex
+function TeachNoteModel:getTeachNoticeTopicId()
+	return self._topicId, self._topicIndex
 end
 
-function var_0_0.getTopicLevelCos(arg_5_0, arg_5_1)
-	local var_5_0 = {}
-	local var_5_1 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:getTopicLevelCos(topicId)
+	local cos = {}
+	local levelConfig = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		if iter_5_1.topicId == arg_5_1 then
-			table.insert(var_5_0, iter_5_1)
+	for _, v in pairs(levelConfig) do
+		if v.topicId == topicId then
+			table.insert(cos, v)
 		end
 	end
 
-	table.sort(var_5_0, function(arg_6_0, arg_6_1)
-		local var_6_0 = var_0_0.instance:isLevelUnlock(arg_6_0.id)
-		local var_6_1 = var_0_0.instance:isLevelUnlock(arg_6_1.id)
+	table.sort(cos, function(a, b)
+		local aUnlock = TeachNoteModel.instance:isLevelUnlock(a.id)
+		local bUnlock = TeachNoteModel.instance:isLevelUnlock(b.id)
 
-		if var_6_0 and not var_6_1 then
+		if aUnlock and not bUnlock then
 			return true
-		elseif not var_6_0 and var_6_1 then
+		elseif not aUnlock and bUnlock then
 			return false
 		end
 
-		return arg_6_0.id < arg_6_1.id
+		return a.id < b.id
 	end)
 
-	return var_5_0
+	return cos
 end
 
-function var_0_0.setTeachNoteInfo(arg_7_0, arg_7_1)
-	arg_7_0._teachNoteInfos = TeachNoteInfoMo.New()
+function TeachNoteModel:setTeachNoteInfo(info)
+	self._teachNoteInfos = TeachNoteInfoMo.New()
 
-	arg_7_0._teachNoteInfos:init(arg_7_1)
+	self._teachNoteInfos:init(info)
 end
 
-function var_0_0.isFinalRewardGet(arg_8_0)
-	return arg_8_0._teachNoteInfos.getFinalReward
+function TeachNoteModel:isFinalRewardGet()
+	return self._teachNoteInfos.getFinalReward
 end
 
-function var_0_0.getNewOpenIndex(arg_9_0)
-	local var_9_0 = 0
-	local var_9_1 = arg_9_0:getNewOpenTopics()
+function TeachNoteModel:getNewOpenIndex()
+	local topicIndex = 0
+	local newTopics = self:getNewOpenTopics()
 
-	if #var_9_1 > 0 then
-		var_9_0 = var_9_1[#var_9_1]
+	if #newTopics > 0 then
+		topicIndex = newTopics[#newTopics]
 	end
 
-	local var_9_2 = 0
-	local var_9_3 = arg_9_0:getNewOpenTopicLevels(var_9_0)
+	local levelIndex = 0
+	local newLvs = self:getNewOpenTopicLevels(topicIndex)
 
-	if #var_9_3 > 0 then
-		local var_9_4 = var_9_3[#var_9_3]
-		local var_9_5 = arg_9_0:getTopicLevelCos(var_9_0)
+	if #newLvs > 0 then
+		local id = newLvs[#newLvs]
+		local lvIds = self:getTopicLevelCos(topicIndex)
 
-		for iter_9_0, iter_9_1 in ipairs(var_9_5) do
-			if iter_9_1.id == var_9_4 then
-				var_9_2 = math.floor(0.5 * (iter_9_0 - 1))
+		for k, v in ipairs(lvIds) do
+			if v.id == id then
+				levelIndex = math.floor(0.5 * (k - 1))
 			end
 		end
 	end
 
-	return var_9_0, var_9_2
+	return topicIndex, levelIndex
 end
 
-function var_0_0.isEpisodeOpen(arg_10_0, arg_10_1)
-	local var_10_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:isEpisodeOpen(episodeId)
+	local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_10_0, iter_10_1 in pairs(var_10_0) do
-		if iter_10_1.episodeId == arg_10_1 then
-			for iter_10_2, iter_10_3 in pairs(arg_10_0._teachNoteInfos.openIds) do
-				if iter_10_1.id == iter_10_3 then
+	for _, v in pairs(lvCos) do
+		if v.episodeId == episodeId then
+			for _, id in pairs(self._teachNoteInfos.openIds) do
+				if v.id == id then
 					return true
 				end
 			end
@@ -102,82 +104,86 @@ function var_0_0.isEpisodeOpen(arg_10_0, arg_10_1)
 	return false
 end
 
-function var_0_0.isTopicNew(arg_11_0, arg_11_1)
-	if not arg_11_0:isTopicUnlock(arg_11_1) then
+function TeachNoteModel:isTopicNew(topicId)
+	if not self:isTopicUnlock(topicId) then
 		return false
 	end
 
-	local var_11_0 = {}
+	local openIds = {}
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_0._teachNoteInfos.openIds) do
-		if TeachNoteConfig.instance:getInstructionLevelCO(iter_11_1).topicId == arg_11_1 then
-			table.insert(var_11_0, iter_11_1)
+	for _, id in pairs(self._teachNoteInfos.openIds) do
+		local openTopic = TeachNoteConfig.instance:getInstructionLevelCO(id).topicId
+
+		if openTopic == topicId then
+			table.insert(openIds, id)
 		end
 	end
 
-	return #var_11_0 < 1
+	return #openIds < 1
 end
 
-function var_0_0.getNewOpenTopics(arg_12_0)
-	local var_12_0 = {}
-	local var_12_1 = TeachNoteConfig.instance:getInstructionTopicCos()
+function TeachNoteModel:getNewOpenTopics()
+	local topicIds = {}
+	local cos = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for iter_12_0, iter_12_1 in pairs(var_12_1) do
-		if arg_12_0:isTopicNew(iter_12_1.id) then
-			table.insert(var_12_0, iter_12_1.id)
+	for _, v in pairs(cos) do
+		if self:isTopicNew(v.id) then
+			table.insert(topicIds, v.id)
 		end
 	end
 
-	table.sort(var_12_0)
+	table.sort(topicIds)
 
-	return var_12_0
+	return topicIds
 end
 
-function var_0_0.getNewOpenTopicLevels(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:getNewOpenLevels()
-	local var_13_1 = {}
+function TeachNoteModel:getNewOpenTopicLevels(topicId)
+	local newLvs = self:getNewOpenLevels()
+	local lvs = {}
 
-	for iter_13_0, iter_13_1 in pairs(var_13_0) do
-		if TeachNoteConfig.instance:getInstructionLevelCO(iter_13_1).topicId == arg_13_1 then
-			table.insert(var_13_1, iter_13_1)
+	for _, v in pairs(newLvs) do
+		local co = TeachNoteConfig.instance:getInstructionLevelCO(v)
+
+		if co.topicId == topicId then
+			table.insert(lvs, v)
 		end
 	end
 
-	table.sort(var_13_1)
+	table.sort(lvs)
 
-	return var_13_1
+	return lvs
 end
 
-function var_0_0.getNewOpenLevels(arg_14_0)
-	local var_14_0 = {}
-	local var_14_1 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:getNewOpenLevels()
+	local levels = {}
+	local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	if #arg_14_0._teachNoteInfos.openIds == 0 then
-		return arg_14_0._teachNoteInfos.unlockIds
+	if #self._teachNoteInfos.openIds == 0 then
+		return self._teachNoteInfos.unlockIds
 	else
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._teachNoteInfos.unlockIds) do
-			local var_14_2 = false
+		for _, id in pairs(self._teachNoteInfos.unlockIds) do
+			local exist = false
 
-			for iter_14_2, iter_14_3 in pairs(arg_14_0._teachNoteInfos.openIds) do
-				if iter_14_1 == iter_14_3 then
-					var_14_2 = true
+			for _, co in pairs(self._teachNoteInfos.openIds) do
+				if id == co then
+					exist = true
 				end
 			end
 
-			if not var_14_2 then
-				table.insert(var_14_0, iter_14_1)
+			if not exist then
+				table.insert(levels, id)
 			end
 		end
 	end
 
-	return var_14_0
+	return levels
 end
 
-function var_0_0.isLevelNewUnlock(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getNewOpenLevels()
+function TeachNoteModel:isLevelNewUnlock(levelId)
+	local newLvs = self:getNewOpenLevels()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if iter_15_1 == arg_15_1 then
+	for _, v in pairs(newLvs) do
+		if v == levelId then
 			return true
 		end
 	end
@@ -185,22 +191,22 @@ function var_0_0.isLevelNewUnlock(arg_15_0, arg_15_1)
 	return false
 end
 
-function var_0_0._getUnlockLevelsByTopicId(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = arg_16_0:getTopicLevelCos(arg_16_1)
+function TeachNoteModel:_getUnlockLevelsByTopicId(topicId)
+	local ids = {}
+	local lvCos = self:getTopicLevelCos(topicId)
 
-	for iter_16_0, iter_16_1 in pairs(var_16_1) do
-		if arg_16_0:isLevelUnlock(iter_16_1.id) then
-			table.insert(var_16_0, iter_16_1.id)
+	for _, co in pairs(lvCos) do
+		if self:isLevelUnlock(co.id) then
+			table.insert(ids, co.id)
 		end
 	end
 
-	return var_16_0
+	return ids
 end
 
-function var_0_0.isTopicRewardGet(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0._teachNoteInfos.getRewardIds) do
-		if iter_17_1 == arg_17_1 then
+function TeachNoteModel:isTopicRewardGet(topicId)
+	for _, v in pairs(self._teachNoteInfos.getRewardIds) do
+		if v == topicId then
 			return true
 		end
 	end
@@ -208,11 +214,11 @@ function var_0_0.isTopicRewardGet(arg_17_0, arg_17_1)
 	return false
 end
 
-function var_0_0.isTopicUnlock(arg_18_0, arg_18_1)
-	local var_18_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:isTopicUnlock(topicId)
+	local lvCo = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		if iter_18_1.topicId == arg_18_1 and arg_18_0:isLevelUnlock(iter_18_1.id) then
+	for _, v in pairs(lvCo) do
+		if v.topicId == topicId and self:isLevelUnlock(v.id) then
 			return true
 		end
 	end
@@ -220,39 +226,40 @@ function var_0_0.isTopicUnlock(arg_18_0, arg_18_1)
 	return false
 end
 
-function var_0_0.isRewardCouldGet(arg_19_0, arg_19_1)
-	if not arg_19_0:isTopicUnlock(arg_19_1) then
+function TeachNoteModel:isRewardCouldGet(topicId)
+	if not self:isTopicUnlock(topicId) then
 		return false
 	end
 
-	local var_19_0 = var_0_0.instance:getTeachNoteTopicLevelCount(arg_19_1)
+	local total = TeachNoteModel.instance:getTeachNoteTopicLevelCount(topicId)
+	local finishCount = TeachNoteModel.instance:getTeachNoteTopicFinishedLevelCount(topicId)
 
-	if var_0_0.instance:getTeachNoteTopicFinishedLevelCount(arg_19_1) == var_19_0 and not var_0_0.instance:isTopicRewardGet(arg_19_1) then
+	if finishCount == total and not TeachNoteModel.instance:isTopicRewardGet(topicId) then
 		return true
 	else
 		return false
 	end
 end
 
-function var_0_0.hasRewardCouldGet(arg_20_0)
-	local var_20_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+function TeachNoteModel:hasRewardCouldGet()
+	local lvCo = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for iter_20_0, iter_20_1 in pairs(var_20_0) do
-		if arg_20_0:isTopicUnlock(iter_20_1.id) and arg_20_0:isRewardCouldGet(iter_20_1.id) then
+	for _, v in pairs(lvCo) do
+		if self:isTopicUnlock(v.id) and self:isRewardCouldGet(v.id) then
 			return true
 		end
 	end
 
-	if arg_20_0:isTeachNoteFinalRewardCouldGet() then
+	if self:isTeachNoteFinalRewardCouldGet() then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.isLevelUnlock(arg_21_0, arg_21_1)
-	for iter_21_0, iter_21_1 in pairs(arg_21_0._teachNoteInfos.unlockIds) do
-		if iter_21_1 == arg_21_1 then
+function TeachNoteModel:isLevelUnlock(levelId)
+	for _, v in pairs(self._teachNoteInfos.unlockIds) do
+		if v == levelId then
 			return true
 		end
 	end
@@ -260,51 +267,54 @@ function var_0_0.isLevelUnlock(arg_21_0, arg_21_1)
 	return false
 end
 
-function var_0_0.isTeachNoteUnlock(arg_22_0)
-	return arg_22_0._teachNoteInfos and arg_22_0._teachNoteInfos.unlockIds and #arg_22_0._teachNoteInfos.unlockIds > 0 and not arg_22_0:isFinalRewardGet()
+function TeachNoteModel:isTeachNoteUnlock()
+	return self._teachNoteInfos and self._teachNoteInfos.unlockIds and #self._teachNoteInfos.unlockIds > 0 and not self:isFinalRewardGet()
 end
 
-function var_0_0.isTeachNoteLevelPass(arg_23_0, arg_23_1)
-	local var_23_0 = TeachNoteConfig.instance:getInstructionLevelCO(arg_23_1).episodeId
+function TeachNoteModel:isTeachNoteLevelPass(levelId)
+	local episodeId = TeachNoteConfig.instance:getInstructionLevelCO(levelId).episodeId
+	local pass = DungeonModel.instance:hasPassLevel(episodeId)
 
-	return (DungeonModel.instance:hasPassLevel(var_23_0))
+	return pass
 end
 
-function var_0_0.getTeachNoteTopicUnlockLevelCount(arg_24_0, arg_24_1)
-	local var_24_0 = 0
-	local var_24_1 = arg_24_0:getTopicLevelCos(arg_24_1)
+function TeachNoteModel:getTeachNoteTopicUnlockLevelCount(topicId)
+	local unlock = 0
+	local lvCos = self:getTopicLevelCos(topicId)
 
-	for iter_24_0, iter_24_1 in pairs(var_24_1) do
-		if arg_24_0:isLevelUnlock(iter_24_1.id) then
-			var_24_0 = var_24_0 + 1
+	for _, v in pairs(lvCos) do
+		if self:isLevelUnlock(v.id) then
+			unlock = unlock + 1
 		end
 	end
 
-	return var_24_0
+	return unlock
 end
 
-function var_0_0.getTeachNoteTopicFinishedLevelCount(arg_25_0, arg_25_1)
-	local var_25_0 = 0
-	local var_25_1 = arg_25_0:getTopicLevelCos(arg_25_1)
+function TeachNoteModel:getTeachNoteTopicFinishedLevelCount(topicId)
+	local count = 0
+	local lvCos = self:getTopicLevelCos(topicId)
 
-	for iter_25_0, iter_25_1 in pairs(var_25_1) do
-		if arg_25_0:isTeachNoteLevelPass(iter_25_1.id) then
-			var_25_0 = var_25_0 + 1
+	for _, v in pairs(lvCos) do
+		if self:isTeachNoteLevelPass(v.id) then
+			count = count + 1
 		end
 	end
 
-	return var_25_0
+	return count
 end
 
-function var_0_0.getTeachNoteTopicLevelCount(arg_26_0, arg_26_1)
-	return #arg_26_0:getTopicLevelCos(arg_26_1)
+function TeachNoteModel:getTeachNoteTopicLevelCount(topicId)
+	local lvCos = self:getTopicLevelCos(topicId)
+
+	return #lvCos
 end
 
-function var_0_0.isTeachNoteChapter(arg_27_0, arg_27_1)
-	local var_27_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+function TeachNoteModel:isTeachNoteChapter(chapterId)
+	local topicCos = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for iter_27_0, iter_27_1 in pairs(var_27_0) do
-		if iter_27_1.chapterId == arg_27_1 then
+	for _, v in pairs(topicCos) do
+		if v.chapterId == chapterId then
 			return true
 		end
 	end
@@ -312,11 +322,11 @@ function var_0_0.isTeachNoteChapter(arg_27_0, arg_27_1)
 	return false
 end
 
-function var_0_0.isTeachNoteEpisode(arg_28_0, arg_28_1)
-	local var_28_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:isTeachNoteEpisode(episodeId)
+	local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_28_0, iter_28_1 in pairs(var_28_0) do
-		if iter_28_1.episodeId == arg_28_1 then
+	for _, v in pairs(lvCos) do
+		if v.episodeId == episodeId then
 			return true
 		end
 	end
@@ -324,79 +334,79 @@ function var_0_0.isTeachNoteEpisode(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0.getTeachNoteInstructionLevelCo(arg_29_0, arg_29_1)
-	local var_29_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:getTeachNoteInstructionLevelCo(episodeId)
+	local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_29_0, iter_29_1 in pairs(var_29_0) do
-		if iter_29_1.episodeId == arg_29_1 then
-			return iter_29_1
+	for _, v in pairs(lvCos) do
+		if v.episodeId == episodeId then
+			return v
 		end
 	end
 
-	return var_29_0[101]
+	return lvCos[101]
 end
 
-function var_0_0.getTeachNoteEpisodeTopicId(arg_30_0, arg_30_1)
-	local var_30_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+function TeachNoteModel:getTeachNoteEpisodeTopicId(episodeId)
+	local lvCos = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for iter_30_0, iter_30_1 in pairs(var_30_0) do
-		if iter_30_1.episodeId == arg_30_1 then
-			return iter_30_1.topicId
+	for _, v in pairs(lvCos) do
+		if v.episodeId == episodeId then
+			return v.topicId
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.isTeachNoteFinalRewardCouldGet(arg_31_0)
-	local var_31_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+function TeachNoteModel:isTeachNoteFinalRewardCouldGet()
+	local topicCos = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for iter_31_0, iter_31_1 in pairs(var_31_0) do
-		if not arg_31_0:isTopicRewardGet(iter_31_1.id) then
+	for _, v in pairs(topicCos) do
+		if not self:isTopicRewardGet(v.id) then
 			return false
 		end
 	end
 
-	return not arg_31_0:isFinalRewardGet()
+	return not self:isFinalRewardGet()
 end
 
-function var_0_0.isTeachNoteEnterFight(arg_32_0)
-	return arg_32_0._isTeachEnter
+function TeachNoteModel:isTeachNoteEnterFight()
+	return self._isTeachEnter
 end
 
-function var_0_0.setTeachNoteEnterFight(arg_33_0, arg_33_1, arg_33_2)
-	arg_33_0._isTeachEnter = arg_33_1
-	arg_33_0._isDetailEnter = arg_33_2
+function TeachNoteModel:setTeachNoteEnterFight(teachenter, isdetail)
+	self._isTeachEnter = teachenter
+	self._isDetailEnter = isdetail
 end
 
-function var_0_0.isFinishLevelEnterFight(arg_34_0)
-	return arg_34_0._isFinishedEnter
+function TeachNoteModel:isFinishLevelEnterFight()
+	return self._isFinishedEnter
 end
 
-function var_0_0.isDetailEnter(arg_35_0)
-	return arg_35_0._isDetailEnter
+function TeachNoteModel:isDetailEnter()
+	return self._isDetailEnter
 end
 
-function var_0_0.setLevelEnterFightState(arg_36_0, arg_36_1)
-	arg_36_0._isFinishedEnter = arg_36_1
+function TeachNoteModel:setLevelEnterFightState(state)
+	self._isFinishedEnter = state
 end
 
-function var_0_0.isJumpEnter(arg_37_0)
-	return arg_37_0._isJumpEnter
+function TeachNoteModel:isJumpEnter()
+	return self._isJumpEnter
 end
 
-function var_0_0.setJumpEnter(arg_38_0, arg_38_1)
-	arg_38_0._isJumpEnter = arg_38_1
+function TeachNoteModel:setJumpEnter(jump)
+	self._isJumpEnter = jump
 end
 
-function var_0_0.setJumpEpisodeId(arg_39_0, arg_39_1)
-	arg_39_0._jumpEpisodeId = arg_39_1
+function TeachNoteModel:setJumpEpisodeId(id)
+	self._jumpEpisodeId = id
 end
 
-function var_0_0.getJumpEpisodeId(arg_40_0)
-	return arg_40_0._jumpEpisodeId
+function TeachNoteModel:getJumpEpisodeId()
+	return self._jumpEpisodeId
 end
 
-var_0_0.instance = var_0_0.New()
+TeachNoteModel.instance = TeachNoteModel.New()
 
-return var_0_0
+return TeachNoteModel

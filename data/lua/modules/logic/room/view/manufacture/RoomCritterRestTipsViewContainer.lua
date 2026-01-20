@@ -1,30 +1,32 @@
-﻿module("modules.logic.room.view.manufacture.RoomCritterRestTipsViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/manufacture/RoomCritterRestTipsViewContainer.lua
 
-local var_0_0 = class("RoomCritterRestTipsViewContainer", BaseViewContainer)
+module("modules.logic.room.view.manufacture.RoomCritterRestTipsViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RoomCritterRestTipsViewContainer = class("RoomCritterRestTipsViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RoomCritterRestTipsView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_righttop"))
+function RoomCritterRestTipsViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RoomCritterRestTipsView.New())
+	table.insert(views, TabViewGroup.New(1, "#go_righttop"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		local var_2_0 = {
+function RoomCritterRestTipsViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		local currencyParam = {
 			CurrencyEnum.CurrencyType.RoomTrade
 		}
 
 		return {
-			CurrencyView.New(var_2_0)
+			CurrencyView.New(currencyParam)
 		}
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_3_0)
+function RoomCritterRestTipsViewContainer:onContainerClickModalMask()
 	ViewMgr.instance:closeView(ViewName.RoomCritterRestTipsView, nil, true)
 end
 
-return var_0_0
+return RoomCritterRestTipsViewContainer

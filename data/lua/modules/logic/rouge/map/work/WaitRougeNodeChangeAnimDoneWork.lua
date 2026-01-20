@@ -1,22 +1,24 @@
-﻿module("modules.logic.rouge.map.work.WaitRougeNodeChangeAnimDoneWork", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/work/WaitRougeNodeChangeAnimDoneWork.lua
 
-local var_0_0 = class("WaitRougeNodeChangeAnimDoneWork", BaseWork)
+module("modules.logic.rouge.map.work.WaitRougeNodeChangeAnimDoneWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local WaitRougeNodeChangeAnimDoneWork = class("WaitRougeNodeChangeAnimDoneWork", BaseWork)
+
+function WaitRougeNodeChangeAnimDoneWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	local var_2_0 = RougeMapModel.instance:getFinalMapInfo()
+function WaitRougeNodeChangeAnimDoneWork:onStart()
+	local mapInfo = RougeMapModel.instance:getFinalMapInfo()
 
-	if not var_2_0 then
-		return arg_2_0:onDone(true)
+	if not mapInfo then
+		return self:onDone(true)
 	end
 
-	RougeMapModel.instance:updateMapInfo(var_2_0)
+	RougeMapModel.instance:updateMapInfo(mapInfo)
 	RougeMapModel.instance:setFinalMapInfo(nil)
 
-	return arg_2_0:onDone(true)
+	return self:onDone(true)
 end
 
-return var_0_0
+return WaitRougeNodeChangeAnimDoneWork

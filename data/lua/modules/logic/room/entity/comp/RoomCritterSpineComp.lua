@@ -1,436 +1,454 @@
-﻿module("modules.logic.room.entity.comp.RoomCritterSpineComp", package.seeall)
+﻿-- chunkname: @modules/logic/room/entity/comp/RoomCritterSpineComp.lua
 
-local var_0_0 = class("RoomCritterSpineComp", RoomBaseSpineComp)
+module("modules.logic.room.entity.comp.RoomCritterSpineComp", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	local var_1_0 = arg_1_0.entity:getMO()
+local RoomCritterSpineComp = class("RoomCritterSpineComp", RoomBaseSpineComp)
 
-	arg_1_0._critterId = var_1_0.critterId
-	arg_1_0._skinId = var_1_0:getSkinId()
-	arg_1_0._spinePrefabRes = RoomResHelper.getCritterPath(arg_1_0._skinId)
-	arg_1_0._materialRes = RoomCharacterEnum.MaterialPath
-	arg_1_0._shouldShowSpine = false
-	arg_1_0._isInDistance = false
-	arg_1_0._isShow = false
-	arg_1_0._isHide = false
-	arg_1_0._touchTamingRate = 0.6
+function RoomCritterSpineComp:onInit()
+	local roomCritterMO = self.entity:getMO()
 
-	arg_1_0:_cameraTransformUpdate()
-	arg_1_0:_refreshSpineShow()
+	self._critterId = roomCritterMO.critterId
+	self._skinId = roomCritterMO:getSkinId()
+	self._spinePrefabRes = RoomResHelper.getCritterPath(self._skinId)
+	self._materialRes = RoomCharacterEnum.MaterialPath
+	self._shouldShowSpine = false
+	self._isInDistance = false
+	self._isShow = false
+	self._isHide = false
+	self._touchTamingRate = 0.6
+
+	self:_cameraTransformUpdate()
+	self:_refreshSpineShow()
 end
 
-function var_0_0.resetInit(arg_2_0)
-	local var_2_0 = arg_2_0.entity:getMO()
+function RoomCritterSpineComp:resetInit()
+	local roomCritterMO = self.entity:getMO()
 
-	if not var_2_0 then
+	if not roomCritterMO then
 		return
 	end
 
-	if arg_2_0._skinId ~= var_2_0:getSkinId() then
-		arg_2_0._critterId = var_2_0.critterId
-		arg_2_0._skinId = var_2_0:getSkinId()
+	if self._skinId ~= roomCritterMO:getSkinId() then
+		self._critterId = roomCritterMO.critterId
+		self._skinId = roomCritterMO:getSkinId()
 
-		arg_2_0:clearSpine()
-		arg_2_0:_refreshSpineShow()
+		self:clearSpine()
+		self:_refreshSpineShow()
 	end
 end
 
-function var_0_0.addResToLoader(arg_3_0, arg_3_1)
-	arg_3_1:addPath(arg_3_0._spinePrefabRes)
-	arg_3_1:addPath(arg_3_0._materialRes)
-	arg_3_0.entity.critterspineeffect:addResToLoader(arg_3_1)
+function RoomCritterSpineComp:addResToLoader(loader)
+	loader:addPath(self._spinePrefabRes)
+	loader:addPath(self._materialRes)
+	self.entity.critterspineeffect:addResToLoader(loader)
 end
 
-function var_0_0._onLoadOneFail(arg_4_0, arg_4_1, arg_4_2)
-	logError("RoomCritterSpineComp: 加载失败, url: " .. arg_4_2.ResPath)
+function RoomCritterSpineComp:_onLoadOneFail(loader, assetItem)
+	logError("RoomCritterSpineComp: 加载失败, url: " .. assetItem.ResPath)
 end
 
-function var_0_0._onLoadFinish(arg_5_0, arg_5_1)
-	var_0_0.super._onLoadFinish(arg_5_0, arg_5_1)
+function RoomCritterSpineComp:_onLoadFinish(loader)
+	RoomCritterSpineComp.super._onLoadFinish(self, loader)
 
-	arg_5_0._mountheadGO = gohelper.findChild(arg_5_0._spineGO, "mountroot/mounthead")
+	self._mountheadGO = gohelper.findChild(self._spineGO, "mountroot/mounthead")
 
-	if arg_5_0._mountheadGO then
-		arg_5_0._mountheadGOTrs = arg_5_0._mountheadGO.transform
+	if self._mountheadGO then
+		self._mountheadGOTrs = self._mountheadGO.transform
 	end
 
-	arg_5_0:_spawnShadowGO(arg_5_1)
-	arg_5_0:_updateShadowOffset()
-	arg_5_0:_cameraTransformUpdate()
-	arg_5_0:setScale(arg_5_0._initScale)
-	arg_5_0.entity.critterspineeffect:spawnEffect(arg_5_1)
-	arg_5_0:refreshAnimState()
+	self:_spawnShadowGO(loader)
+	self:_updateShadowOffset()
+	self:_cameraTransformUpdate()
+	self:setScale(self._initScale)
+	self.entity.critterspineeffect:spawnEffect(loader)
+	self:refreshAnimState()
 end
 
-function var_0_0._spawnShadowGO(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow)
+function RoomCritterSpineComp:_spawnShadowGO(loader)
+	local shadowPrefab = self._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow)
 
-	arg_6_0._shadowGO = gohelper.clone(var_6_0, arg_6_0.entity.containerGO, "shadow")
-	arg_6_0._shadowGOTrs = arg_6_0._shadowGO.transform
-	arg_6_0._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingLayerName = "Default"
+	self._shadowGO = gohelper.clone(shadowPrefab, self.entity.containerGO, "shadow")
+	self._shadowGOTrs = self._shadowGO.transform
 
-	transformhelper.setLocalPos(arg_6_0._shadowGOTrs, 0, 0.01, 0)
+	local shadowMeshRenderer = self._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+
+	shadowMeshRenderer.sortingLayerName = "Default"
+
+	transformhelper.setLocalPos(self._shadowGOTrs, 0, 0.01, 0)
 end
 
-function var_0_0.setScale(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function RoomCritterSpineComp:setScale(scale)
+	if not scale then
 		return
 	end
 
-	if gohelper.isNil(arg_7_0._spineGOTrs) then
-		arg_7_0._initScale = arg_7_1
+	if gohelper.isNil(self._spineGOTrs) then
+		self._initScale = scale
 	else
-		transformhelper.setLocalScale(arg_7_0._spineGOTrs, arg_7_1, arg_7_1, arg_7_1)
+		transformhelper.setLocalScale(self._spineGOTrs, scale, scale, scale)
 	end
 end
 
-function var_0_0.addEventListeners(arg_8_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_8_0._cameraTransformUpdate, arg_8_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, arg_8_0._refreshSpineShow, arg_8_0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_8_0._updateShadowOffset, arg_8_0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_8_0._onUpdate, arg_8_0)
-	arg_8_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_8_0._onManufactureInfoUpdate, arg_8_0)
-	arg_8_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_8_0._onManufactureInfoUpdate, arg_8_0)
-	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_8_0._onFeedFood, arg_8_0)
-	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_8_0._onCritterInfoUpdate, arg_8_0)
+function RoomCritterSpineComp:addEventListeners()
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, self._refreshSpineShow, self)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, self._updateShadowOffset, self)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, self._onUpdate, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._onManufactureInfoUpdate, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._onManufactureInfoUpdate, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, self._onFeedFood, self)
+	self:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._onCritterInfoUpdate, self)
 end
 
-function var_0_0.removeEventListeners(arg_9_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_9_0._cameraTransformUpdate, arg_9_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, arg_9_0._refreshSpineShow, arg_9_0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_9_0._updateShadowOffset, arg_9_0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_9_0._onUpdate, arg_9_0)
-	arg_9_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_9_0._onManufactureInfoUpdate, arg_9_0)
-	arg_9_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_9_0._onManufactureInfoUpdate, arg_9_0)
-	arg_9_0:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_9_0._onFeedFood, arg_9_0)
-	arg_9_0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_9_0._onCritterInfoUpdate, arg_9_0)
+function RoomCritterSpineComp:removeEventListeners()
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._cameraTransformUpdate, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, self._refreshSpineShow, self)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, self._updateShadowOffset, self)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, self._onUpdate, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, self._onManufactureInfoUpdate, self)
+	self:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, self._onManufactureInfoUpdate, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, self._onFeedFood, self)
+	self:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, self._onCritterInfoUpdate, self)
 end
 
-function var_0_0._onUpdate(arg_10_0)
-	if arg_10_0._shadowPointGOTrs and arg_10_0._shadowGOTrs then
-		local var_10_0, var_10_1, var_10_2 = transformhelper.getPos(arg_10_0._shadowPointGOTrs)
+function RoomCritterSpineComp:_onUpdate()
+	if self._shadowPointGOTrs and self._shadowGOTrs then
+		local px, py, pz = transformhelper.getPos(self._shadowPointGOTrs)
 
-		transformhelper.setPos(arg_10_0._shadowGOTrs, var_10_0, var_10_1, var_10_2)
+		transformhelper.setPos(self._shadowGOTrs, px, py, pz)
 	end
 end
 
-function var_0_0.touch(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.entity:getMO()
+function RoomCritterSpineComp:touch(isTouch)
+	local mo = self.entity:getMO()
 
-	if math.random() >= arg_11_0._touchTamingRate then
+	if math.random() >= self._touchTamingRate then
 		return
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0._touchAfter, arg_11_0)
+	TaskDispatcher.cancelTask(self._touchAfter, self)
 
-	if arg_11_1 and var_11_0 then
-		local var_11_1 = 10
+	if isTouch and mo then
+		local deltaTime = 10
 
-		var_11_0.isTouch = true
-		arg_11_0._touchAction = true
+		mo.isTouch = true
+		self._touchAction = true
 
-		TaskDispatcher.runDelay(arg_11_0._touchAfter, arg_11_0, var_11_1)
-		arg_11_0:play(arg_11_0:_getTouchStateName(), false, true)
+		TaskDispatcher.runDelay(self._touchAfter, self, deltaTime)
+		self:play(self:_getTouchStateName(), false, true)
 	else
-		arg_11_0:refreshAnimState()
+		self:refreshAnimState()
 	end
 end
 
-function var_0_0._touchAfter(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._touchAfter, arg_12_0)
+function RoomCritterSpineComp:_touchAfter()
+	TaskDispatcher.cancelTask(self._touchAfter, self)
 
-	local var_12_0 = arg_12_0.entity:getMO()
+	local mo = self.entity:getMO()
 
-	if var_12_0 then
-		var_12_0.isTouch = false
+	if mo then
+		mo.isTouch = false
 	end
 
-	arg_12_0._touchAction = false
+	self._touchAction = false
 end
 
-function var_0_0._getTouchStateName(arg_13_0)
-	local var_13_0 = RoomCharacterEnum.CharacterTamingAnimList
+function RoomCritterSpineComp:_getTouchStateName()
+	local names = RoomCharacterEnum.CharacterTamingAnimList
 
-	return var_13_0[math.random(1, #var_13_0)] or var_13_0[1]
+	return names[math.random(1, #names)] or names[1]
 end
 
-function var_0_0._onManufactureInfoUpdate(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0.entity:getMO()
-	local var_14_1 = var_14_0 and var_14_0:getStayBuilding()
+function RoomCritterSpineComp:_onManufactureInfoUpdate(updateBuildingDict)
+	local mo = self.entity:getMO()
+	local stayBuildingUid = mo and mo:getStayBuilding()
 
-	if not var_14_1 then
+	if not stayBuildingUid then
 		return
 	end
 
-	if arg_14_1 and not arg_14_1[var_14_1] then
+	if updateBuildingDict and not updateBuildingDict[stayBuildingUid] then
 		return
 	end
 
-	arg_14_0:refreshAnimState()
+	self:refreshAnimState()
 end
 
-function var_0_0._onFeedFood(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0.entity:getMO()
-	local var_15_1 = var_15_0 and var_15_0:getId()
+function RoomCritterSpineComp:_onFeedFood(critterUidDict)
+	local mo = self.entity:getMO()
+	local critterUid = mo and mo:getId()
 
-	if not var_15_1 or arg_15_1 and not arg_15_1[var_15_1] then
+	if not critterUid or critterUidDict and not critterUidDict[critterUid] then
 		return
 	end
 
-	local var_15_2 = CritterModel.instance:getCritterMOByUid(var_15_1):getMoodValue()
-	local var_15_3 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
-	local var_15_4 = tonumber(var_15_3) or 0
-	local var_15_5 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
+	local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
+	local mood = critterMO:getMoodValue()
+	local cfgMaxMood = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
+	local maxMood = tonumber(cfgMaxMood) or 0
+	local animName = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
 
-	if arg_15_0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.Idle or arg_15_0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
-		var_15_5 = RoomCharacterEnum.CharacterAnimStateName.Eat
+	if self._curAnimState == RoomCharacterEnum.CharacterAnimStateName.Idle or self._curAnimState == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+		animName = RoomCharacterEnum.CharacterAnimStateName.Eat
 	end
 
-	if var_15_4 <= var_15_2 then
-		arg_15_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.MaxMoodEating)
+	if maxMood <= mood then
+		self:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.MaxMoodEating)
 	end
 
-	arg_15_0:play(var_15_5, false)
+	self:play(animName, false)
 end
 
-function var_0_0._onCritterInfoUpdate(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.entity:getMO()
-	local var_16_1 = var_16_0 and var_16_0:getId()
+function RoomCritterSpineComp:_onCritterInfoUpdate(critterUidDict)
+	local mo = self.entity:getMO()
+	local critterUid = mo and mo:getId()
 
-	if not var_16_1 or arg_16_1 and not arg_16_1[var_16_1] then
+	if not critterUid or critterUidDict and not critterUidDict[critterUid] then
 		return
 	end
 
-	arg_16_0:refreshAnimState()
+	self:refreshAnimState()
 end
 
-function var_0_0._refreshSpineShow(arg_17_0)
-	local var_17_0 = arg_17_0._scene.camera:getCameraState()
+function RoomCritterSpineComp:_refreshSpineShow()
+	local cameraState = self._scene.camera:getCameraState()
 
-	arg_17_0._shouldShowSpine = RoomCharacterController.instance:checkCanSpineShow(var_17_0)
+	self._shouldShowSpine = RoomCharacterController.instance:checkCanSpineShow(cameraState)
 
-	arg_17_0:_refreshShowSpine()
+	self:_refreshShowSpine()
 end
 
-function var_0_0._refreshShowSpine(arg_18_0, arg_18_1)
-	if arg_18_0._isInDistance and arg_18_0._shouldShowSpine then
-		if not arg_18_0._isShow or arg_18_1 then
-			arg_18_0._isShow = true
-			arg_18_0._isHide = false
+function RoomCritterSpineComp:_refreshShowSpine(force)
+	if self._isInDistance and self._shouldShowSpine then
+		if not self._isShow or force then
+			self._isShow = true
+			self._isHide = false
 
-			arg_18_0:showSpine()
+			self:showSpine()
 		end
-	elseif not arg_18_0._isHide or arg_18_1 then
-		arg_18_0._isShow = false
-		arg_18_0._isHide = true
+	elseif not self._isHide or force then
+		self._isShow = false
+		self._isHide = true
 
-		arg_18_0:hideSpine()
+		self:hideSpine()
 	end
 end
 
-function var_0_0.refreshAnimState(arg_19_0)
-	local var_19_0 = arg_19_0.entity:getMO()
+function RoomCritterSpineComp:refreshAnimState()
+	local mo = self.entity:getMO()
 
-	if not var_19_0 then
+	if not mo then
 		return
 	end
 
-	arg_19_0.entity:stopCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
+	self.entity:stopCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
 
-	local var_19_1 = var_19_0:getStayBuilding()
-	local var_19_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_19_1)
-	local var_19_3 = var_19_2 and var_19_2.buildingId
+	local stayBuildingUid = mo:getStayBuilding()
+	local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(stayBuildingUid)
+	local buildingId = buildingMO and buildingMO.buildingId
 
-	if var_19_3 then
-		local var_19_4 = RoomConfig.instance:getBuildingType(var_19_3)
+	if buildingId then
+		local buildingType = RoomConfig.instance:getBuildingType(buildingId)
+		local isManufacture = ManufactureConfig.instance:isManufactureBuilding(buildingId)
 
-		if ManufactureConfig.instance:isManufactureBuilding(var_19_3) then
-			arg_19_0:playManufactureAnim(var_19_2)
-		elseif var_19_4 == RoomBuildingEnum.BuildingType.Rest then
-			arg_19_0:playRestingAnim()
+		if isManufacture then
+			self:playManufactureAnim(buildingMO)
+		elseif buildingType == RoomBuildingEnum.BuildingType.Rest then
+			self:playRestingAnim()
 		end
-	elseif var_19_0.isTouch then
-		if arg_19_0._touchAction then
-			arg_19_0:play(arg_19_0:_getTouchStateName(), false, false)
+	elseif mo.isTouch then
+		if self._touchAction then
+			self:play(self:_getTouchStateName(), false, false)
 		else
-			local var_19_5, var_19_6 = arg_19_0:getIdleAnim()
+			local idleAnim, isLoop = self:getIdleAnim()
 
-			arg_19_0:play(var_19_5, var_19_6, false)
+			self:play(idleAnim, isLoop, false)
 		end
 	else
-		local var_19_7 = var_19_0.critterId
-		local var_19_8 = arg_19_0:getAnimState()
-		local var_19_9 = RoomCritterModel.instance:getTempCritterMO()
+		local critterId = mo.critterId
+		local curAnimState = self:getAnimState()
+		local tempCritterMO = RoomCritterModel.instance:getTempCritterMO()
 
-		if var_19_8 ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(arg_19_0._moveState, var_19_7) ~= RoomCharacterHelper.getIdleAnimStateName(var_19_7) or var_19_9 and var_19_9.id == arg_19_0.entity.id then
-			local var_19_10
+		if curAnimState ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(self._moveState, critterId) ~= RoomCharacterHelper.getIdleAnimStateName(critterId) or tempCritterMO and tempCritterMO.id == self.entity.id then
+			local newAnimStateName
 
-			if arg_19_0._moveState == RoomCharacterEnum.CharacterMoveState.Idle then
-				var_19_10 = arg_19_0:getIdleAnim()
+			if self._moveState == RoomCharacterEnum.CharacterMoveState.Idle then
+				newAnimStateName = self:getIdleAnim()
 			else
-				var_19_10 = RoomCharacterHelper.getAnimStateName(arg_19_0._moveState, var_19_7)
+				newAnimStateName = RoomCharacterHelper.getAnimStateName(self._moveState, critterId)
 			end
 
-			arg_19_0:play(var_19_10, RoomCharacterEnum.CharacterLoopAnimState[arg_19_0._moveState] or false, false)
+			self:play(newAnimStateName, RoomCharacterEnum.CharacterLoopAnimState[self._moveState] or false, false)
 		end
 	end
 end
 
-function var_0_0.play(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if not arg_20_1 then
+function RoomCritterSpineComp:play(animState, isLoop, reStart)
+	if not animState then
 		return
 	end
 
-	if not arg_20_0._skeletonAnim then
+	if not self._skeletonAnim then
 		return
 	end
 
-	arg_20_2 = arg_20_2 or false
-	arg_20_3 = arg_20_3 or false
+	isLoop = isLoop or false
+	reStart = reStart or false
 
-	if not (arg_20_3 or arg_20_1 ~= arg_20_0._curAnimState or arg_20_2 ~= arg_20_0._isLoop) then
+	local needPlay = reStart or animState ~= self._curAnimState or isLoop ~= self._isLoop
+
+	if not needPlay then
 		return
 	end
 
-	arg_20_0._curAnimState = arg_20_1
-	arg_20_0._isLoop = arg_20_2
+	self._curAnimState = animState
+	self._isLoop = isLoop
 
-	if arg_20_0._skeletonAnim:HasAnimation(arg_20_1) then
-		arg_20_0._skeletonAnim:SetAnimation(0, arg_20_1, arg_20_0._isLoop, 0)
-		arg_20_0.entity.critterspineeffect:play(arg_20_1)
+	if self._skeletonAnim:HasAnimation(animState) then
+		self._skeletonAnim:SetAnimation(0, animState, self._isLoop, 0)
+		self.entity.critterspineeffect:play(animState)
 	else
-		local var_20_0 = gohelper.isNil(arg_20_0._spineGO) and "nil" or arg_20_0._spineGO.name
+		local spineName = gohelper.isNil(self._spineGO) and "nil" or self._spineGO.name
 
-		logError(string.format("critterId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", arg_20_0._critterId, arg_20_0._skinId, arg_20_1, var_20_0))
+		logError(string.format("critterId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", self._critterId, self._skinId, animState, spineName))
 	end
 end
 
-function var_0_0.playManufactureAnim(arg_21_0, arg_21_1)
-	local var_21_0 = arg_21_0.entity:getMO():getId()
-	local var_21_1 = CritterModel.instance:getCritterMOByUid(var_21_0):getMoodValue()
-	local var_21_2, var_21_3 = arg_21_0:getIdleAnim()
-	local var_21_4 = arg_21_1:getManufactureState()
+function RoomCritterSpineComp:playManufactureAnim(buildingMO)
+	local mo = self.entity:getMO()
+	local critterUid = mo:getId()
+	local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
+	local mood = critterMO:getMoodValue()
+	local animName, isLoop = self:getIdleAnim()
+	local manufactureState = buildingMO:getManufactureState()
 
-	if var_21_1 > 0 then
-		if var_21_4 == RoomManufactureEnum.ManufactureState.Running then
-			var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Produce
+	if mood > 0 then
+		if manufactureState == RoomManufactureEnum.ManufactureState.Running then
+			animName = RoomCharacterEnum.CharacterAnimStateName.Produce
 
-			if RoomConfig.instance:getBuildingType(arg_21_1.buildingId) == RoomBuildingEnum.BuildingType.Collect then
-				var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Collect
+			local buildingType = RoomConfig.instance:getBuildingType(buildingMO.buildingId)
+
+			if buildingType == RoomBuildingEnum.BuildingType.Collect then
+				animName = RoomCharacterEnum.CharacterAnimStateName.Collect
 			end
 
-			var_21_3 = true
-		elseif var_21_4 == RoomManufactureEnum.ManufactureState.Stop then
-			var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Sleep
-			var_21_3 = true
+			isLoop = true
+		elseif manufactureState == RoomManufactureEnum.ManufactureState.Stop then
+			animName = RoomCharacterEnum.CharacterAnimStateName.Sleep
+			isLoop = true
 		end
 	else
-		arg_21_0.entity:playCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
+		self.entity:playCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
 	end
 
-	arg_21_0:play(var_21_2, var_21_3)
+	self:play(animName, isLoop)
 end
 
-function var_0_0.playRestingAnim(arg_22_0)
-	local var_22_0 = arg_22_0.entity:getMO():getId()
-	local var_22_1 = CritterModel.instance:getCritterMOByUid(var_22_0):getMoodValue()
-	local var_22_2 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
-	local var_22_3 = tonumber(var_22_2) or 0
-	local var_22_4, var_22_5 = arg_22_0:getIdleAnim()
-	local var_22_6 = arg_22_0._moveState == RoomCharacterEnum.CharacterMoveState.Sleep
-	local var_22_7 = var_22_0 == ManufactureModel.instance:getNewRestCritter()
+function RoomCritterSpineComp:playRestingAnim()
+	local mo = self.entity:getMO()
+	local critterUid = mo:getId()
+	local critterMO = CritterModel.instance:getCritterMOByUid(critterUid)
+	local mood = critterMO:getMoodValue()
+	local cfgMaxMood = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
+	local maxMood = tonumber(cfgMaxMood) or 0
+	local animName, isLoop = self:getIdleAnim()
+	local isInSleep = self._moveState == RoomCharacterEnum.CharacterMoveState.Sleep
+	local newRestCritterUid = ManufactureModel.instance:getNewRestCritter()
+	local isNewRest = critterUid == newRestCritterUid
 
-	if var_22_1 < var_22_3 then
-		if arg_22_0._curAnimState and var_22_6 then
+	if mood < maxMood then
+		if self._curAnimState and isInSleep then
 			return
 		end
 
-		if var_22_7 then
-			var_22_5 = false
+		if isNewRest then
+			isLoop = false
 
 			ManufactureModel.instance:setNewRestCritter()
 
-			var_22_4 = RoomCharacterEnum.CharacterAnimStateName.SleepStart
+			animName = RoomCharacterEnum.CharacterAnimStateName.SleepStart
 		else
-			var_22_4 = RoomCharacterEnum.CharacterAnimStateName.Sleep
+			animName = RoomCharacterEnum.CharacterAnimStateName.Sleep
 		end
 
-		arg_22_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Sleep)
-	elseif not var_22_7 and arg_22_0._curAnimState then
-		if not var_22_6 then
+		self:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Sleep)
+	elseif not isNewRest and self._curAnimState then
+		if not isInSleep then
 			return
 		end
 
-		var_22_5 = false
-		var_22_4 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
+		isLoop = false
+		animName = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
 
-		arg_22_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+		self:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 	end
 
-	arg_22_0:play(var_22_4, var_22_5)
+	self:play(animName, isLoop)
 end
 
-function var_0_0._onAnimCallback(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if not (arg_23_2 == SpineAnimEvent.ActionComplete) then
+function RoomCritterSpineComp:_onAnimCallback(actionName, eventName, eventArgs)
+	local isComplete = eventName == SpineAnimEvent.ActionComplete
+
+	if not isComplete then
 		return
 	end
 
-	local var_23_0
-	local var_23_1 = true
+	local nextAnim
+	local isLoop = true
 
-	if arg_23_1 == RoomCharacterEnum.CharacterAnimStateName.Idle then
-		var_23_0, var_23_1 = arg_23_0:getIdleAnim()
+	if actionName == RoomCharacterEnum.CharacterAnimStateName.Idle then
+		nextAnim, isLoop = self:getIdleAnim()
 	else
-		if arg_23_0._curAnimState ~= arg_23_1 or arg_23_0._isLoop then
+		if self._curAnimState ~= actionName or self._isLoop then
 			return
 		end
 
-		var_23_0 = RoomCharacterHelper.getNextAnimStateName(arg_23_0._moveState, arg_23_1)
+		nextAnim = RoomCharacterHelper.getNextAnimStateName(self._moveState, actionName)
 
-		if var_23_0 then
-			var_23_1 = var_23_0 == arg_23_1
+		if nextAnim then
+			isLoop = nextAnim == actionName
 		else
-			var_23_0 = RoomCharacterHelper.getIdleAnimStateName(arg_23_0._critterId)
+			nextAnim = RoomCharacterHelper.getIdleAnimStateName(self._critterId)
 		end
 
-		if arg_23_0._moveState == RoomCharacterEnum.CharacterMoveState.MaxMoodEating and var_23_0 == RoomCharacterEnum.CharacterAnimStateName.Idle then
-			arg_23_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+		if self._moveState == RoomCharacterEnum.CharacterMoveState.MaxMoodEating and nextAnim == RoomCharacterEnum.CharacterAnimStateName.Idle then
+			self:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 		end
 	end
 
-	arg_23_0:play(var_23_0, var_23_1, false)
+	self:play(nextAnim, isLoop, false)
 end
 
-function var_0_0.playAnim(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	local var_24_0 = arg_24_0:_checkAnimator(arg_24_1)
+function RoomCritterSpineComp:playAnim(animRes, animName, normalizedTime, callback, callbackObj)
+	local isSuccess = self:_checkAnimator(animRes)
 
-	arg_24_0._callback = arg_24_4
-	arg_24_0._callbackObj = arg_24_5
+	self._callback = callback
+	self._callbackObj = callbackObj
 
-	if not arg_24_4 then
-		if var_24_0 then
-			arg_24_0._animator.enabled = true
+	if not callback then
+		if isSuccess then
+			self._animator.enabled = true
 
-			arg_24_0._animator:Play(arg_24_2, 0, arg_24_3 or 0)
+			self._animator:Play(animName, 0, normalizedTime or 0)
 		end
 	else
-		TaskDispatcher.cancelTask(arg_24_0._animDone, arg_24_0)
+		TaskDispatcher.cancelTask(self._animDone, self)
 
-		if var_24_0 then
-			arg_24_0._animatorPlayer:Play(arg_24_2, arg_24_0._animDone, arg_24_0)
+		if isSuccess then
+			self._animatorPlayer:Play(animName, self._animDone, self)
 		else
-			TaskDispatcher.runDelay(arg_24_0._animDone, arg_24_0, 0.1)
+			TaskDispatcher.runDelay(self._animDone, self, 0.1)
 		end
 	end
 end
 
-function var_0_0._checkAnimator(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0._scene.preloader:getResource(arg_25_1)
+function RoomCritterSpineComp:_checkAnimator(animRes)
+	local animController = self._scene.preloader:getResource(animRes)
 
-	if var_25_0 then
-		arg_25_0._animator = gohelper.onceAddComponent(arg_25_0.entity.containerGO, typeof(UnityEngine.Animator))
-		arg_25_0._animatorPlayer = gohelper.onceAddComponent(arg_25_0.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
-		arg_25_0._animator.runtimeAnimatorController = var_25_0
+	if animController then
+		self._animator = gohelper.onceAddComponent(self.entity.containerGO, typeof(UnityEngine.Animator))
+		self._animatorPlayer = gohelper.onceAddComponent(self.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
+		self._animator.runtimeAnimatorController = animController
 
 		return true
 	end
@@ -438,147 +456,150 @@ function var_0_0._checkAnimator(arg_25_0, arg_25_1)
 	return false
 end
 
-function var_0_0.clearAnim(arg_26_0)
-	arg_26_0._callback = nil
-	arg_26_0._callbackObj = nil
+function RoomCritterSpineComp:clearAnim()
+	self._callback = nil
+	self._callbackObj = nil
 
-	if arg_26_0._animatorPlayer then
-		UnityEngine.Component.DestroyImmediate(arg_26_0._animatorPlayer)
+	if self._animatorPlayer then
+		UnityEngine.Component.DestroyImmediate(self._animatorPlayer)
 
-		arg_26_0._animatorPlayer = nil
+		self._animatorPlayer = nil
 	end
 
-	if arg_26_0._animator then
-		UnityEngine.Component.DestroyImmediate(arg_26_0._animator)
+	if self._animator then
+		UnityEngine.Component.DestroyImmediate(self._animator)
 
-		arg_26_0._animator = nil
-	end
-end
-
-function var_0_0._animDone(arg_27_0)
-	if arg_27_0._callback then
-		arg_27_0._callback(arg_27_0._callbackObj)
+		self._animator = nil
 	end
 end
 
-function var_0_0.changeMoveState(arg_28_0, arg_28_1)
-	if arg_28_0._moveState == arg_28_1 then
+function RoomCritterSpineComp:_animDone()
+	if self._callback then
+		self._callback(self._callbackObj)
+	end
+end
+
+function RoomCritterSpineComp:changeMoveState(moveState)
+	if self._moveState == moveState then
 		return
 	end
 
-	arg_28_0:_realSetMoveState(arg_28_1)
-	arg_28_0:refreshAnimState()
+	self:_realSetMoveState(moveState)
+	self:refreshAnimState()
 end
 
-function var_0_0._realSetMoveState(arg_29_0, arg_29_1)
-	arg_29_0._moveState = arg_29_1
+function RoomCritterSpineComp:_realSetMoveState(moveState)
+	self._moveState = moveState
 end
 
-function var_0_0.characterPosChanged(arg_30_0)
-	arg_30_0:_cameraTransformUpdate()
+function RoomCritterSpineComp:characterPosChanged()
+	self:_cameraTransformUpdate()
 end
 
-function var_0_0._cameraTransformUpdate(arg_31_0)
-	local var_31_0 = arg_31_0._scene.camera:getCameraFocus()
-	local var_31_1, var_31_2, var_31_3 = transformhelper.getPos(arg_31_0.goTrs)
-	local var_31_4 = Vector2(var_31_1, var_31_3)
-	local var_31_5 = Vector2.Distance(var_31_0, var_31_4)
+function RoomCritterSpineComp:_cameraTransformUpdate()
+	local focus = self._scene.camera:getCameraFocus()
+	local x, y, z = transformhelper.getPos(self.goTrs)
+	local spinePos = Vector2(x, z)
+	local distance = Vector2.Distance(focus, spinePos)
 
-	if var_31_5 < 3.5 then
-		arg_31_0._isInDistance = true
-	elseif var_31_5 > 4.5 then
-		arg_31_0._isInDistance = false
+	if distance < 3.5 then
+		self._isInDistance = true
+	elseif distance > 4.5 then
+		self._isInDistance = false
 	end
 
-	arg_31_0:_refreshShowSpine()
+	self:_refreshShowSpine()
 
-	if arg_31_0._spineGO and arg_31_0._spineGO.activeInHierarchy then
-		arg_31_0:refreshRotation()
+	if self._spineGO and self._spineGO.activeInHierarchy then
+		self:refreshRotation()
 	end
 end
 
-function var_0_0._updateShadowOffset(arg_32_0)
-	if not arg_32_0._material then
+function RoomCritterSpineComp:_updateShadowOffset()
+	if not self._material then
 		return
 	end
 
-	local var_32_0 = arg_32_0._scene.character:getShadowOffset()
+	local shadowOffset = self._scene.character:getShadowOffset()
 
-	arg_32_0._material:SetVector("_ShadowOffset", var_32_0)
+	self._material:SetVector("_ShadowOffset", shadowOffset)
 end
 
-function var_0_0.getIdleAnim(arg_33_0)
-	local var_33_0 = true
-	local var_33_1 = RoomCharacterHelper.getIdleAnimStateName(arg_33_0._critterId)
+function RoomCritterSpineComp:getIdleAnim()
+	local isLoop = true
+	local result = RoomCharacterHelper.getIdleAnimStateName(self._critterId)
+	local isSpecialIdle = self:isRandomSpecialRate()
 
-	if arg_33_0:isRandomSpecialRate() then
-		var_33_0 = false
-		var_33_1 = RoomCharacterEnum.CharacterAnimStateName.SpecialIdle
+	if isSpecialIdle then
+		isLoop = false
+		result = RoomCharacterEnum.CharacterAnimStateName.SpecialIdle
 	end
 
-	return var_33_1, var_33_0
+	return result, isLoop
 end
 
-function var_0_0.isRandomSpecialRate(arg_34_0)
-	local var_34_0 = false
+function RoomCritterSpineComp:isRandomSpecialRate()
+	local result = false
+	local roomCritterMO = self.entity:getMO()
+	local specialRate = roomCritterMO:getSpecialRate()
 
-	if arg_34_0.entity:getMO():getSpecialRate() > math.random() then
-		var_34_0 = true
+	if specialRate > math.random() then
+		result = true
 	end
 
-	return var_34_0
+	return result
 end
 
-function var_0_0.isShowAnimShadow(arg_35_0)
+function RoomCritterSpineComp:isShowAnimShadow()
 	return true
 end
 
-function var_0_0.getShadowGO(arg_36_0)
-	return arg_36_0._shadowGO
+function RoomCritterSpineComp:getShadowGO()
+	return self._shadowGO
 end
 
-function var_0_0.getMountheadGO(arg_37_0)
-	return arg_37_0._mountheadGO
+function RoomCritterSpineComp:getMountheadGO()
+	return self._mountheadGO
 end
 
-function var_0_0.getMountheadGOTrs(arg_38_0)
-	return arg_38_0._mountheadGOTrs
+function RoomCritterSpineComp:getMountheadGOTrs()
+	return self._mountheadGOTrs
 end
 
-function var_0_0.clearSpine(arg_39_0)
-	if arg_39_0.entity and arg_39_0.entity.critterspineeffect then
-		arg_39_0.entity.critterspineeffect:clearEffect()
+function RoomCritterSpineComp:clearSpine()
+	if self.entity and self.entity.critterspineeffect then
+		self.entity.critterspineeffect:clearEffect()
 	end
 
-	var_0_0.super.clearSpine(arg_39_0)
+	RoomCritterSpineComp.super.clearSpine(self)
 
-	if arg_39_0._loader then
-		arg_39_0._loader:dispose()
+	if self._loader then
+		self._loader:dispose()
 
-		arg_39_0._loader = nil
+		self._loader = nil
 	end
 
-	if arg_39_0._shadowGO then
-		gohelper.destroy(arg_39_0._shadowGO)
+	if self._shadowGO then
+		gohelper.destroy(self._shadowGO)
 
-		arg_39_0._shadowGO = nil
-		arg_39_0._shadowGOTrs = nil
+		self._shadowGO = nil
+		self._shadowGOTrs = nil
 	end
 
-	arg_39_0._skeletonAnim = nil
-	arg_39_0._curAnimState = nil
-	arg_39_0._isLoop = nil
-	arg_39_0._mountheadGO = nil
-	arg_39_0._mountheadGOTrs = nil
-	arg_39_0._shadowPointGOTrs = nil
+	self._skeletonAnim = nil
+	self._curAnimState = nil
+	self._isLoop = nil
+	self._mountheadGO = nil
+	self._mountheadGOTrs = nil
+	self._shadowPointGOTrs = nil
 
-	arg_39_0.entity:stopAllCommonInteractionEff()
-	TaskDispatcher.cancelTask(arg_39_0._animDone, arg_39_0)
+	self.entity:stopAllCommonInteractionEff()
+	TaskDispatcher.cancelTask(self._animDone, self)
 end
 
-function var_0_0.beforeDestroy(arg_40_0)
-	arg_40_0:removeEventListeners()
-	arg_40_0:clearSpine()
+function RoomCritterSpineComp:beforeDestroy()
+	self:removeEventListeners()
+	self:clearSpine()
 end
 
-return var_0_0
+return RoomCritterSpineComp

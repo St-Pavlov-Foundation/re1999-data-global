@@ -1,80 +1,82 @@
-﻿module("modules.logic.versionactivity2_5.challenge.controller.Act183HeroGroupController", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/challenge/controller/Act183HeroGroupController.lua
 
-local var_0_0 = class("Act183HeroGroupController", BaseController)
+module("modules.logic.versionactivity2_5.challenge.controller.Act183HeroGroupController", package.seeall)
 
-function var_0_0.enterFight(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._episodeId = arg_1_1
-	arg_1_0._readyUseBadgeNum = arg_1_2
+local Act183HeroGroupController = class("Act183HeroGroupController", BaseController)
 
-	local var_1_0 = Act183Helper.getEpisodeSnapShotType(arg_1_1)
+function Act183HeroGroupController:enterFight(episodeId, readyUseBadgeNum, conditionstatusMap)
+	self._episodeId = episodeId
+	self._readyUseBadgeNum = readyUseBadgeNum
 
-	if not var_1_0 then
-		logError(string.format("编队快照类型不存在 episodeId = %s", arg_1_1))
+	local snapshotId = Act183Helper.getEpisodeSnapShotType(episodeId)
 
-		return
-	end
-
-	Act183Model.instance:recordEpisodeSelectConditions(arg_1_3)
-	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(var_1_0, arg_1_0._enterFight, arg_1_0)
-end
-
-function var_0_0._enterFight(arg_2_0)
-	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_0._episodeId)
-
-	if not var_2_0 then
-		logError(string.format("关卡配置不存在 episodeId = %s", arg_2_0._episodeId))
+	if not snapshotId then
+		logError(string.format("编队快照类型不存在 episodeId = %s", episodeId))
 
 		return
 	end
 
-	Act183Model.instance:recordEpisodeReadyUseBadgeNum(arg_2_0._readyUseBadgeNum)
-	DungeonFightController.instance:enterFight(var_2_0.chapterId, arg_2_0._episodeId)
+	Act183Model.instance:recordEpisodeSelectConditions(conditionstatusMap)
+	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(snapshotId, self._enterFight, self)
 end
 
-function var_0_0.saveGroupData(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
-	local var_3_0 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+function Act183HeroGroupController:_enterFight()
+	local config = DungeonConfig.instance:getEpisodeCO(self._episodeId)
 
-	FightParam.initFightGroup(var_3_0.fightGroup, arg_3_1.clothId, arg_3_0:getMainList(arg_3_1), arg_3_1:getSubList(), arg_3_1:getAllHeroEquips(), arg_3_1:getAllHeroActivity104Equips(), arg_3_1:getAssistBossId())
+	if not config then
+		logError(string.format("关卡配置不存在 episodeId = %s", self._episodeId))
 
-	local var_3_1 = ModuleEnum.HeroGroupSnapshotType.Common
-	local var_3_2 = 1
-
-	if arg_3_2 == ModuleEnum.HeroGroupType.General then
-		var_3_1 = HeroGroupSnapshotModel.instance:getCurSnapshotId()
-		var_3_2 = HeroGroupSnapshotModel.instance:getCurGroupId()
+		return
 	end
 
-	if var_3_1 and var_3_2 then
-		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(var_3_1, var_3_2, var_3_0, arg_3_4, arg_3_5)
+	Act183Model.instance:recordEpisodeReadyUseBadgeNum(self._readyUseBadgeNum)
+	DungeonFightController.instance:enterFight(config.chapterId, self._episodeId)
+end
+
+function Act183HeroGroupController:saveGroupData(heroGroupMO, heroGroupType, episodeId, callback, callbackObj)
+	local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
+
+	FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, self:getMainList(heroGroupMO), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId())
+
+	local snapshotId = ModuleEnum.HeroGroupSnapshotType.Common
+	local snapshotSubId = 1
+
+	if heroGroupType == ModuleEnum.HeroGroupType.General then
+		snapshotId = HeroGroupSnapshotModel.instance:getCurSnapshotId()
+		snapshotSubId = HeroGroupSnapshotModel.instance:getCurGroupId()
+	end
+
+	if snapshotId and snapshotSubId then
+		HeroGroupRpc.instance:sendSetHeroGroupSnapshotRequest(snapshotId, snapshotSubId, req, callback, callbackObj)
 	else
-		logError(string.format("未设置快照id, 无法保存, snapshotId:%s, snapshotSubId:%s", var_3_1, var_3_2))
+		logError(string.format("未设置快照id, 无法保存, snapshotId:%s, snapshotSubId:%s", snapshotId, snapshotSubId))
 	end
 end
 
-function var_0_0.getMainList(arg_4_0, arg_4_1)
-	local var_4_0 = {}
-	local var_4_1 = 0
-	local var_4_2 = HeroGroupModel.instance.battleId
-	local var_4_3 = var_4_2 and lua_battle.configDict[var_4_2]
-	local var_4_4 = var_4_3 and var_4_3.playerMax or ModuleEnum.HeroCountInGroup
+function Act183HeroGroupController:getMainList(heroGroupMO)
+	local mainUids = {}
+	local count = 0
+	local battleId = HeroGroupModel.instance.battleId
+	local battleCO = battleId and lua_battle.configDict[battleId]
+	local playerMax = battleCO and battleCO.playerMax or ModuleEnum.HeroCountInGroup
 
-	for iter_4_0 = 1, var_4_4 do
-		local var_4_5 = arg_4_1.heroList[iter_4_0] or "0"
+	for i = 1, playerMax do
+		local uid = heroGroupMO.heroList[i] or "0"
 
-		if tonumber(var_4_5) < 0 then
-			var_4_5 = "0"
+		if tonumber(uid) < 0 then
+			uid = "0"
 		end
 
-		var_4_0[iter_4_0] = var_4_5
+		mainUids[i] = uid
 
-		if var_4_5 ~= "0" and var_4_5 ~= 0 then
-			var_4_1 = var_4_1 + 1
+		if uid ~= "0" and uid ~= 0 then
+			count = count + 1
 		end
 	end
 
-	return var_4_0, var_4_1
+	return mainUids, count
 end
 
-var_0_0.instance = var_0_0.New()
+Act183HeroGroupController.instance = Act183HeroGroupController.New()
 
-return var_0_0
+return Act183HeroGroupController

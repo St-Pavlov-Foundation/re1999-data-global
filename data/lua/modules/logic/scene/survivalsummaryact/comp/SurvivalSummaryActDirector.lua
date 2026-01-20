@@ -1,60 +1,62 @@
-﻿module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActDirector", package.seeall)
+﻿-- chunkname: @modules/logic/scene/survivalsummaryact/comp/SurvivalSummaryActDirector.lua
 
-local var_0_0 = class("SurvivalSummaryActDirector", BaseSceneComp)
+module("modules.logic.scene.survivalsummaryact.comp.SurvivalSummaryActDirector", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0._scene = arg_1_0:getCurScene()
+local SurvivalSummaryActDirector = class("SurvivalSummaryActDirector", BaseSceneComp)
+
+function SurvivalSummaryActDirector:onInit()
+	self._scene = self:getCurScene()
 end
 
-function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._compInitSequence = FlowSequence.New()
+function SurvivalSummaryActDirector:onSceneStart(sceneId, levelId)
+	self._compInitSequence = FlowSequence.New()
 
-	local var_2_0 = FlowParallel.New()
+	local levelAndPreloadWork = FlowParallel.New()
 
-	arg_2_0._compInitSequence:addWork(var_2_0)
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.level, CommonSceneLevelComp.OnLevelLoaded))
+	self._compInitSequence:addWork(levelAndPreloadWork)
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.level, CommonSceneLevelComp.OnLevelLoaded))
 
-	if arg_2_0._scene.fog then
-		var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.fog, SurvivalEvent.OnSurvivalFogLoaded))
+	if self._scene.fog then
+		levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.fog, SurvivalEvent.OnSurvivalFogLoaded))
 	end
 
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.block, SurvivalEvent.OnSurvivalBlockLoadFinish))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.block, SurvivalEvent.OnSurvivalBlockLoadFinish))
 
-	if arg_2_0._scene.spBlock then
-		var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.spBlock, SurvivalEvent.OnSurvivalBlockLoadFinish))
+	if self._scene.spBlock then
+		levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.spBlock, SurvivalEvent.OnSurvivalBlockLoadFinish))
 	end
 
-	var_2_0:addWork(RoomSceneWaitEventCompWork.New(arg_2_0._scene.preloader, SurvivalEvent.OnSurvivalPreloadFinish))
+	levelAndPreloadWork:addWork(RoomSceneWaitEventCompWork.New(self._scene.preloader, SurvivalEvent.OnSurvivalPreloadFinish))
 
-	if arg_2_0._scene.cloud then
-		arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.cloud))
+	if self._scene.cloud then
+		self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.cloud))
 	end
 
-	arg_2_0._compInitSequence:addWork(BpWaitSecWork.New(0.3))
-	arg_2_0._compInitSequence:addWork(RoomSceneCommonCompWork.New(arg_2_0._scene.graphics))
-	arg_2_0._compInitSequence:addWork(BpWaitSecWork.New(0.3))
-	arg_2_0._compInitSequence:registerDoneListener(arg_2_0._compInitDone, arg_2_0)
-	arg_2_0._compInitSequence:start({
-		sceneId = arg_2_1,
-		levelId = arg_2_2
+	self._compInitSequence:addWork(BpWaitSecWork.New(0.3))
+	self._compInitSequence:addWork(RoomSceneCommonCompWork.New(self._scene.graphics))
+	self._compInitSequence:addWork(BpWaitSecWork.New(0.3))
+	self._compInitSequence:registerDoneListener(self._compInitDone, self)
+	self._compInitSequence:start({
+		sceneId = sceneId,
+		levelId = levelId
 	})
 end
 
-function var_0_0._compInitDone(arg_3_0)
-	arg_3_0._scene:onPrepared()
+function SurvivalSummaryActDirector:_compInitDone()
+	self._scene:onPrepared()
 
-	arg_3_0._compInitSequence = nil
+	self._compInitSequence = nil
 
 	ViewMgr.instance:closeView(ViewName.SurvivalLoadingView)
 	SurvivalController.instance:playSummaryAct()
 end
 
-function var_0_0.onSceneClose(arg_4_0)
-	if arg_4_0._compInitSequence then
-		arg_4_0._compInitSequence:destroy()
+function SurvivalSummaryActDirector:onSceneClose()
+	if self._compInitSequence then
+		self._compInitSequence:destroy()
 
-		arg_4_0._compInitSequence = nil
+		self._compInitSequence = nil
 	end
 end
 
-return var_0_0
+return SurvivalSummaryActDirector

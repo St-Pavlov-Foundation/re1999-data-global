@@ -1,36 +1,38 @@
-﻿module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0_v2a1_ReactivityEnterviewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity3_0/enter/view/subview/VersionActivity3_0_v2a1_ReactivityEnterviewContainer.lua
 
-local var_0_0 = class("VersionActivity3_0_v2a1_ReactivityEnterviewContainer", BaseViewContainer)
+module("modules.logic.versionactivity3_0.enter.view.subview.VersionActivity3_0_v2a1_ReactivityEnterviewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local VersionActivity3_0_v2a1_ReactivityEnterviewContainer = class("VersionActivity3_0_v2a1_ReactivityEnterviewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, VersionActivity3_0_v2a1_ReactivityEnterview.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+function VersionActivity3_0_v2a1_ReactivityEnterviewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, VersionActivity3_0_v2a1_ReactivityEnterview.New())
+	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
+
+	return views
 end
 
-function var_0_0.buildTabViews(arg_2_0, arg_2_1)
-	if arg_2_1 == 1 then
-		arg_2_0.navigateView = NavigateButtonsView.New({
+function VersionActivity3_0_v2a1_ReactivityEnterviewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			arg_2_0.navigateView
+			self.navigateView
 		}
 	end
 end
 
-function var_0_0.getIsFirstPlaySubViewAnim(arg_3_0)
-	return arg_3_0.isFirstPlaySubViewAnim
+function VersionActivity3_0_v2a1_ReactivityEnterviewContainer:getIsFirstPlaySubViewAnim()
+	return self.isFirstPlaySubViewAnim
 end
 
-function var_0_0.markPlayedSubViewAnim(arg_4_0)
-	arg_4_0.isFirstPlaySubViewAnim = false
+function VersionActivity3_0_v2a1_ReactivityEnterviewContainer:markPlayedSubViewAnim()
+	self.isFirstPlaySubViewAnim = false
 end
 
-return var_0_0
+return VersionActivity3_0_v2a1_ReactivityEnterviewContainer

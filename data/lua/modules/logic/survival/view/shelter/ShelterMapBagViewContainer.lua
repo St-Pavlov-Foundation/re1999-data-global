@@ -1,12 +1,14 @@
-﻿module("modules.logic.survival.view.shelter.ShelterMapBagViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/shelter/ShelterMapBagViewContainer.lua
 
-local var_0_0 = class("ShelterMapBagViewContainer", BaseViewContainer)
+module("modules.logic.survival.view.shelter.ShelterMapBagViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local ShelterMapBagViewContainer = class("ShelterMapBagViewContainer", BaseViewContainer)
+
+function ShelterMapBagViewContainer:buildViews()
 	return {
 		ShelterMapBagView.New(),
 		ToggleListView.New(1, "root/toggleGroup")
 	}
 end
 
-return var_0_0
+return ShelterMapBagViewContainer

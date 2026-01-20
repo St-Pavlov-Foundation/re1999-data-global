@@ -1,19 +1,21 @@
-﻿module("modules.logic.critter.controller.CritterSummonEvent", package.seeall)
+﻿-- chunkname: @modules/logic/critter/controller/CritterSummonEvent.lua
 
-local var_0_0 = _M
+module("modules.logic.critter.controller.CritterSummonEvent", package.seeall)
 
-var_0_0.onSummonSkip = 101
-var_0_0.onStartSummon = 102
-var_0_0.onDragEnd = 103
-var_0_0.onResetSummon = 104
-var_0_0.onEndSummon = 105
-var_0_0.onCloseGetCritter = 106
-var_0_0.onStartSummonAnim = 107
-var_0_0.onCanDrag = 108
-var_0_0.onOpenEgg = 109
-var_0_0.onCloseRoomCriiterDetailSimpleView = 110
-var_0_0.onSelectParentCritter = 201
-var_0_0.onRemoveParentCritter = 202
-var_0_0.onIncubateCritterPreviewReply = 203
+local CritterSummonEvent = _M
 
-return var_0_0
+CritterSummonEvent.onSummonSkip = 101
+CritterSummonEvent.onStartSummon = 102
+CritterSummonEvent.onDragEnd = 103
+CritterSummonEvent.onResetSummon = 104
+CritterSummonEvent.onEndSummon = 105
+CritterSummonEvent.onCloseGetCritter = 106
+CritterSummonEvent.onStartSummonAnim = 107
+CritterSummonEvent.onCanDrag = 108
+CritterSummonEvent.onOpenEgg = 109
+CritterSummonEvent.onCloseRoomCriiterDetailSimpleView = 110
+CritterSummonEvent.onSelectParentCritter = 201
+CritterSummonEvent.onRemoveParentCritter = 202
+CritterSummonEvent.onIncubateCritterPreviewReply = 203
+
+return CritterSummonEvent

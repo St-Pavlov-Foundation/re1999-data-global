@@ -1,33 +1,35 @@
-﻿module("modules.logic.fight.entity.FightEntityScene", package.seeall)
+﻿-- chunkname: @modules/logic/fight/entity/FightEntityScene.lua
 
-local var_0_0 = class("FightEntityScene", BaseFightEntity)
+module("modules.logic.fight.entity.FightEntityScene", package.seeall)
 
-var_0_0.MySideId = "0"
-var_0_0.EnemySideId = "-99999"
+local FightEntityScene = class("FightEntityScene", BaseFightEntity)
 
-function var_0_0.getTag(arg_1_0)
+FightEntityScene.MySideId = "0"
+FightEntityScene.EnemySideId = "-99999"
+
+function FightEntityScene:getTag()
 	return SceneTag.UnitNpc
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	var_0_0.super.init(arg_2_0, arg_2_1)
-	FightRenderOrderMgr.instance:unregister(arg_2_0.id)
+function FightEntityScene:init(go)
+	FightEntityScene.super.init(self, go)
+	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
-function var_0_0.initComponents(arg_3_0)
-	arg_3_0:addComp("skill", FightSkillComp)
-	arg_3_0:addComp("effect", FightEffectComp)
-	arg_3_0:addComp("buff", FightBuffComp)
+function FightEntityScene:initComponents()
+	self:addComp("skill", FightSkillComp)
+	self:addComp("effect", FightEffectComp)
+	self:addComp("buff", FightBuffComp)
 end
 
-function var_0_0.getSide(arg_4_0)
-	if arg_4_0.id == var_0_0.MySideId then
+function FightEntityScene:getSide()
+	if self.id == FightEntityScene.MySideId then
 		return FightEnum.EntitySide.MySide
-	elseif arg_4_0.id == var_0_0.EnemySideId then
+	elseif self.id == FightEntityScene.EnemySideId then
 		return FightEnum.EntitySide.EnemySide
 	else
 		return FightEnum.EntitySide.BothSide
 	end
 end
 
-return var_0_0
+return FightEntityScene

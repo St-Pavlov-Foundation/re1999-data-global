@@ -1,19 +1,21 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonSkillModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/model/VersionActivity1_6DungeonSkillModel.lua
 
-local var_0_0 = class("VersionActivity1_6DungeonSkillModel", Activity148Model)
+module("modules.logic.versionactivity1_6.dungeon.model.VersionActivity1_6DungeonSkillModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	var_0_0.super.onInit(arg_1_0)
+local VersionActivity1_6DungeonSkillModel = class("VersionActivity1_6DungeonSkillModel", Activity148Model)
+
+function VersionActivity1_6DungeonSkillModel:onInit()
+	VersionActivity1_6DungeonSkillModel.super.onInit(self)
 end
 
-function var_0_0.reInit(arg_2_0)
-	var_0_0.super.reInit(arg_2_0)
+function VersionActivity1_6DungeonSkillModel:reInit()
+	VersionActivity1_6DungeonSkillModel.super.reInit(self)
 end
 
-function var_0_0.init(arg_3_0)
-	var_0_0.super.init(arg_3_0)
+function VersionActivity1_6DungeonSkillModel:init()
+	VersionActivity1_6DungeonSkillModel.super.init(self)
 end
 
-var_0_0.instance = var_0_0.New()
+VersionActivity1_6DungeonSkillModel.instance = VersionActivity1_6DungeonSkillModel.New()
 
-return var_0_0
+return VersionActivity1_6DungeonSkillModel

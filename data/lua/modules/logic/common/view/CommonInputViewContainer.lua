@@ -1,15 +1,17 @@
-﻿module("modules.logic.common.view.CommonInputViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/common/view/CommonInputViewContainer.lua
 
-local var_0_0 = class("CommonInputViewContainer", BaseViewContainer)
+module("modules.logic.common.view.CommonInputViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CommonInputViewContainer = class("CommonInputViewContainer", BaseViewContainer)
+
+function CommonInputViewContainer:buildViews()
 	return {
 		CommonInputView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function CommonInputViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return CommonInputViewContainer

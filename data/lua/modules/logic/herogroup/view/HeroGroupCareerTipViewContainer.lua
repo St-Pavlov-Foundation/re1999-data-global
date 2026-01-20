@@ -1,15 +1,17 @@
-﻿module("modules.logic.herogroup.view.HeroGroupCareerTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/herogroup/view/HeroGroupCareerTipViewContainer.lua
 
-local var_0_0 = class("HeroGroupCareerTipViewContainer", BaseViewContainer)
+module("modules.logic.herogroup.view.HeroGroupCareerTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local HeroGroupCareerTipViewContainer = class("HeroGroupCareerTipViewContainer", BaseViewContainer)
+
+function HeroGroupCareerTipViewContainer:buildViews()
 	return {
 		HeroGroupCareerTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function HeroGroupCareerTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return HeroGroupCareerTipViewContainer

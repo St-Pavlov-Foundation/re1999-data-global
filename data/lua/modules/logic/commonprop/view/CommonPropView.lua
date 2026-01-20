@@ -1,77 +1,83 @@
-﻿module("modules.logic.commonprop.view.CommonPropView", package.seeall)
+﻿-- chunkname: @modules/logic/commonprop/view/CommonPropView.lua
 
-local var_0_0 = class("CommonPropView", BaseView)
+module("modules.logic.commonprop.view.CommonPropView", package.seeall)
+
+local CommonPropView = class("CommonPropView", BaseView)
 
 if BootNativeUtil.isWindows() then
 	module_views.CommonPropView.destroy = 1
 end
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._bgClick = gohelper.getClick(arg_1_0.viewGO)
-	arg_1_0._scrollitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_item")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_item/itemcontent")
-	arg_1_0._goeff = gohelper.findChild(arg_1_0.viewGO, "#go_eff")
+function CommonPropView:onInitView()
+	self._bgClick = gohelper.getClick(self.viewGO)
+	self._scrollitem = gohelper.findChild(self.viewGO, "#scroll_item")
+	self._gocontent = gohelper.findChild(self.viewGO, "#scroll_item/itemcontent")
+	self._goeff = gohelper.findChild(self.viewGO, "#go_eff")
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._bgClick:AddClickListener(arg_2_0._onClickBG, arg_2_0)
+function CommonPropView:addEvents()
+	self._bgClick:AddClickListener(self._onClickBG, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._bgClick:RemoveClickListener()
+function CommonPropView:removeEvents()
+	self._bgClick:RemoveClickListener()
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._contentGrid = arg_4_0._gocontent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
-	arg_4_0._titleAni = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation))
+function CommonPropView:_editableInitView()
+	self._contentGrid = self._gocontent:GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
+	self._titleAni = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
 
-	local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "#go_video")
+	local parentGO = gohelper.findChild(self.viewGO, "#go_video")
 
-	arg_4_0._videoPlayer, arg_4_0._displauUGUI = AvProMgr.instance:getVideoPlayer(var_4_0)
+	self._videoPlayer = VideoPlayerMgr.instance:createGoAndVideoPlayer(parentGO)
 
-	arg_4_0._videoPlayer:Play(arg_4_0._displauUGUI, langVideoUrl("commonprop"), true, nil, nil)
+	self._videoPlayer:play("commonprop", true, nil, nil)
 end
 
-function var_0_0._onClickBG(arg_5_0)
-	if arg_5_0._cantClose then
+function CommonPropView:_onClickBG()
+	if self._cantClose then
 		return
 	end
 
-	arg_5_0:closeThis()
+	self:closeThis()
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0._titleAni:Play()
+function CommonPropView:onOpen()
+	self._titleAni:Play()
 
 	CommonPropListItem.hasOpen = false
-	arg_6_0._contentGrid.enabled = false
+	self._contentGrid.enabled = false
 
-	arg_6_0:_setPropItems()
-	NavigateMgr.instance:addEscape(ViewName.CommonPropView, arg_6_0._onClickBG, arg_6_0)
+	self:_setPropItems()
+	NavigateMgr.instance:addEscape(ViewName.CommonPropView, self._onClickBG, self)
 
-	arg_6_0._cantClose = true
-	arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, nil, nil, nil, EaseType.Linear)
+	self._cantClose = true
+	self._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, nil, nil, nil, nil, EaseType.Linear)
 
-	TaskDispatcher.runDelay(arg_6_0._setCanClose, arg_6_0, 0.8)
+	TaskDispatcher.runDelay(self._setCanClose, self, 0.8)
 
 	if CommonPropListModel.instance:isHadHighRareProp() then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards_High_1)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 	end
+
+	if self._videoPlayer and not BootNativeUtil.isIOS() then
+		self._videoPlayer:play("commonprop", true, nil, nil)
+	end
 end
 
-function var_0_0._setCanClose(arg_7_0)
-	arg_7_0._cantClose = false
+function CommonPropView:_setCanClose()
+	self._cantClose = false
 end
 
-function var_0_0.onClose(arg_8_0)
+function CommonPropView:onClose()
 	if BootNativeUtil.isWindows() then
-		arg_8_0._videoPlayer:Stop()
+		self._videoPlayer:stop()
 	end
 
 	CommonPropListModel.instance:clear()
@@ -79,50 +85,46 @@ function var_0_0.onClose(arg_8_0)
 
 	CommonPropListItem.hasOpen = false
 
-	if arg_8_0._videoPlayer and not BootNativeUtil.isIOS() then
-		arg_8_0._videoPlayer:Stop()
+	if self._videoPlayer and not BootNativeUtil.isIOS() then
+		self._videoPlayer:stop()
 	end
 end
 
-function var_0_0.onClickModalMask(arg_9_0)
-	arg_9_0:closeThis()
+function CommonPropView:onClickModalMask()
+	self:closeThis()
 end
 
-function var_0_0._setPropItems(arg_10_0)
-	CommonPropListModel.instance:setPropList(arg_10_0.viewParam)
+function CommonPropView:_setPropItems()
+	CommonPropListModel.instance:setPropList(self.viewParam)
 
-	if #CommonPropListModel.instance:getList() < 6 then
-		transformhelper.setLocalPosXY(arg_10_0._scrollitem.transform, 0, -185)
+	local list = CommonPropListModel.instance:getList()
 
-		arg_10_0._contentGrid.enabled = true
+	if #list < 6 then
+		transformhelper.setLocalPosXY(self._scrollitem.transform, 0, -185)
+
+		self._contentGrid.enabled = true
 	else
-		arg_10_0._contentGrid.enabled = false
+		self._contentGrid.enabled = false
 
-		transformhelper.setLocalPosXY(arg_10_0._scrollitem.transform, 0, -47)
+		transformhelper.setLocalPosXY(self._scrollitem.transform, 0, -47)
 	end
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function CommonPropView:onDestroyView()
 	if BootNativeUtil.isWindows() then
-		arg_11_0._videoPlayer = nil
-		arg_11_0._displauUGUI = nil
+		self._videoPlayer = nil
+		self._displauUGUI = nil
 	end
 
-	if arg_11_0._videoPlayer then
-		if not BootNativeUtil.isIOS() and not BootNativeUtil.isWindows() then
-			arg_11_0._videoPlayer:Stop()
-		end
-
-		arg_11_0._videoPlayer:Clear()
-
-		arg_11_0._videoPlayer = nil
+	if self._videoPlayer then
+		self._videoPlayer = nil
 	end
 
-	if arg_11_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_11_0._tweenId)
+	if self._tweenId then
+		ZProj.TweenHelper.KillById(self._tweenId)
 	end
 
-	TaskDispatcher.cancelTask(arg_11_0._setCanClose, arg_11_0)
+	TaskDispatcher.cancelTask(self._setCanClose, self)
 end
 
-return var_0_0
+return CommonPropView

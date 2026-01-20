@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity1_4.act131.define.Activity131Event", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act131/define/Activity131Event.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_4.act131.define.Activity131Event", package.seeall)
 
-var_0_0.OneClickClaimReward = 1
-var_0_0.OnGetInfoSuccess = 1001
-var_0_0.OnStoryFinishedSuccess = 1002
-var_0_0.OnGeneralGameSuccess = 1004
-var_0_0.OnDialogMarkSuccess = 1005
-var_0_0.OnDialogHistorySuccess = 1006
-var_0_0.OnElementUpdate = 1007
-var_0_0.OnRestartEpisodeSuccess = 1008
-var_0_0.OnBattleBeforeSucess = 1009
-var_0_0.OnClickElement = 40002
-var_0_0.RefreshTaskTip = 40003
-var_0_0.AutoStartElement = 40006
-var_0_0.UnlockCollect = 40007
-var_0_0.TriggerLogElement = 40008
-var_0_0.TriggerBattleElement = 40009
-var_0_0.EpisodeClick = 400010
-var_0_0.ShowLevelScene = 50001
-var_0_0.OnSetEpisodeListVisible = 50002
-var_0_0.playNewFinishEpisode = 50003
-var_0_0.playNewUnlockEpisode = 50004
-var_0_0.BackToLevelView = 50005
-var_0_0.PlayChessAutoToNewEpisode = 50006
-var_0_0.StartEnterGameView = 50007
-var_0_0.PlayLeaveLevelView = 50008
-var_0_0.EnterEpisode = 50009
-var_0_0.SelectCategory = 60001
-var_0_0.LogSelected = 60002
-var_0_0.LogAudioFinished = 60003
-var_0_0.ShowFinish = 70001
-var_0_0.SetScenePos = 70002
-var_0_0.FirstFinish = 70003
+local Activity131Event = _M
 
-return var_0_0
+Activity131Event.OneClickClaimReward = 1
+Activity131Event.OnGetInfoSuccess = 1001
+Activity131Event.OnStoryFinishedSuccess = 1002
+Activity131Event.OnGeneralGameSuccess = 1004
+Activity131Event.OnDialogMarkSuccess = 1005
+Activity131Event.OnDialogHistorySuccess = 1006
+Activity131Event.OnElementUpdate = 1007
+Activity131Event.OnRestartEpisodeSuccess = 1008
+Activity131Event.OnBattleBeforeSucess = 1009
+Activity131Event.OnClickElement = 40002
+Activity131Event.RefreshTaskTip = 40003
+Activity131Event.AutoStartElement = 40006
+Activity131Event.UnlockCollect = 40007
+Activity131Event.TriggerLogElement = 40008
+Activity131Event.TriggerBattleElement = 40009
+Activity131Event.EpisodeClick = 400010
+Activity131Event.ShowLevelScene = 50001
+Activity131Event.OnSetEpisodeListVisible = 50002
+Activity131Event.playNewFinishEpisode = 50003
+Activity131Event.playNewUnlockEpisode = 50004
+Activity131Event.BackToLevelView = 50005
+Activity131Event.PlayChessAutoToNewEpisode = 50006
+Activity131Event.StartEnterGameView = 50007
+Activity131Event.PlayLeaveLevelView = 50008
+Activity131Event.EnterEpisode = 50009
+Activity131Event.SelectCategory = 60001
+Activity131Event.LogSelected = 60002
+Activity131Event.LogAudioFinished = 60003
+Activity131Event.ShowFinish = 70001
+Activity131Event.SetScenePos = 70002
+Activity131Event.FirstFinish = 70003
+
+return Activity131Event

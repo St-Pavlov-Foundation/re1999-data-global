@@ -1,8 +1,10 @@
-﻿module("modules.logic.versionactivity2_7.act191.config.Activity191Config", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_7/act191/config/Activity191Config.lua
 
-local var_0_0 = class("Activity191Config", BaseConfig)
+module("modules.logic.versionactivity2_7.act191.config.Activity191Config", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local Activity191Config = class("Activity191Config", BaseConfig)
+
+function Activity191Config:reqConfigNames()
 	return {
 		"activity191_const",
 		"activity191_init_build",
@@ -30,314 +32,317 @@ function var_0_0.reqConfigNames(arg_1_0)
 	}
 end
 
-function var_0_0.onInit(arg_2_0)
+function Activity191Config:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == "activity191_role" then
-		arg_3_0._roleConfig = arg_3_2
+function Activity191Config:onConfigLoaded(configName, configTable)
+	if configName == "activity191_role" then
+		self._roleConfig = configTable
 	end
 end
 
-function var_0_0.getRoleCoByNativeId(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	local var_4_0 = Activity191Model.instance:getCurActId()
+function Activity191Config:getRoleCoByNativeId(roleId, star, tryGet)
+	local actId = Activity191Model.instance:getCurActId()
 
-	for iter_4_0, iter_4_1 in ipairs(lua_activity191_role.configList) do
-		if iter_4_1.activityId == var_4_0 and iter_4_1.roleId == arg_4_1 and iter_4_1.star == arg_4_2 then
-			return iter_4_1
+	for _, v in ipairs(lua_activity191_role.configList) do
+		if v.activityId == actId and v.roleId == roleId and v.star == star then
+			return v
 		end
 	end
 
-	if not arg_4_3 then
-		logError(string.format("找不到角色配置 : 活动ID %s 角色ID %s 角色星级 %s", var_4_0, arg_4_1, arg_4_2))
+	if not tryGet then
+		logError(string.format("找不到角色配置 : 活动ID %s 角色ID %s 角色星级 %s", actId, roleId, star))
 	end
 end
 
-function var_0_0.getRoleCo(arg_5_0, arg_5_1)
-	arg_5_1 = tonumber(arg_5_1)
+function Activity191Config:getRoleCo(id)
+	id = tonumber(id)
 
-	local var_5_0 = arg_5_0._roleConfig.configDict[arg_5_1]
+	local co = self._roleConfig.configDict[id]
 
-	if not var_5_0 then
-		logError(string.format("找不到角色配置 ： 玩法角色ID %s", arg_5_1))
+	if not co then
+		logError(string.format("找不到角色配置 ： 玩法角色ID %s", id))
 	end
 
-	return var_5_0
+	return co
 end
 
-function var_0_0.getShowRoleCoList(arg_6_0, arg_6_1)
-	local var_6_0 = {}
+function Activity191Config:getShowRoleCoList(actId)
+	local list = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._roleConfig.configList) do
-		if iter_6_1.activityId == arg_6_1 and iter_6_1.star == 1 then
-			var_6_0[#var_6_0 + 1] = iter_6_1
+	for _, co in ipairs(self._roleConfig.configList) do
+		if co.activityId == actId and co.star == 1 then
+			list[#list + 1] = co
 		end
 	end
 
-	table.sort(var_6_0, Activity191Helper.sortRoleCo)
+	table.sort(list, Activity191Helper.sortRoleCo)
 
-	return var_6_0
+	return list
 end
 
-function var_0_0.getCollectionCo(arg_7_0, arg_7_1)
-	local var_7_0 = lua_activity191_collection.configDict[arg_7_1]
+function Activity191Config:getCollectionCo(itemId)
+	local co = lua_activity191_collection.configDict[itemId]
 
-	if not var_7_0 then
-		logError(string.format("找不到造物配置 ： 造物ID %s", arg_7_1))
+	if not co then
+		logError(string.format("找不到造物配置 ： 造物ID %s", itemId))
 	end
 
-	return var_7_0
+	return co
 end
 
-function var_0_0.getEnhanceCo(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0
+function Activity191Config:getEnhanceCo(actId, enhanceId)
+	local co
 
-	for iter_8_0, iter_8_1 in ipairs(lua_activity191_enhance.configList) do
-		if iter_8_1.activityId == arg_8_1 and iter_8_1.id == arg_8_2 then
-			var_8_0 = iter_8_1
+	for _, v in ipairs(lua_activity191_enhance.configList) do
+		if v.activityId == actId and v.id == enhanceId then
+			co = v
 
 			break
 		end
 	end
 
-	if not var_8_0 then
-		logError(string.format("找不到强化配置 ： 强化ID %s", arg_8_2))
+	if not co then
+		logError(string.format("找不到强化配置 ： 强化ID %s", enhanceId))
 	end
 
-	return var_8_0
+	return co
 end
 
-function var_0_0.getRelationCoList(arg_9_0, arg_9_1)
-	local var_9_0 = {}
-	local var_9_1 = Activity191Model.instance:getCurActId()
+function Activity191Config:getRelationCoList(tag)
+	local coList = {}
+	local actId = Activity191Model.instance:getCurActId()
 
-	for iter_9_0, iter_9_1 in ipairs(lua_activity191_relation.configList) do
-		if iter_9_1.activityId == var_9_1 and iter_9_1.tag == arg_9_1 then
-			var_9_0[iter_9_1.level] = iter_9_1
+	for _, co in ipairs(lua_activity191_relation.configList) do
+		if co.activityId == actId and co.tag == tag then
+			coList[co.level] = co
 		end
 	end
 
-	if next(var_9_0) then
-		return var_9_0
+	if next(coList) then
+		return coList
 	else
-		logError(string.format("找不到羁绊配置 ： 羁绊ID %s", arg_9_1))
+		logError(string.format("找不到羁绊配置 ： 羁绊ID %s", tag))
 	end
 end
 
-function var_0_0.getRelationCo(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_2 = arg_10_2 or 0
+function Activity191Config:getRelationCo(tag, level)
+	level = level or 0
 
-	local var_10_0 = arg_10_0:getRelationCoList(arg_10_1)
+	local coList = self:getRelationCoList(tag)
 
-	if var_10_0 and var_10_0[arg_10_2] then
-		return var_10_0[arg_10_2]
+	if coList and coList[level] then
+		return coList[level]
 	else
-		logError(string.format("找不到羁绊配置 ： 羁绊ID %s   羁绊等级 %s", arg_10_1, arg_10_2))
+		logError(string.format("找不到羁绊配置 ： 羁绊ID %s   羁绊等级 %s", tag, level))
 	end
 end
 
-function var_0_0.getRelationMaxCo(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0:getRelationCoList(arg_11_1)
+function Activity191Config:getRelationMaxCo(tag)
+	local coList = self:getRelationCoList(tag)
 
-	return var_11_0[#var_11_0]
+	return coList[#coList]
 end
 
-function var_0_0.getHeroPassiveSkillIdList(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:getRoleCo(arg_12_1)
+function Activity191Config:getHeroPassiveSkillIdList(id)
+	local roleCo = self:getRoleCo(id)
 
-	if string.nilorempty(var_12_0.passiveSkill) then
-		local var_12_1 = {}
-		local var_12_2 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(var_12_0.roleId, var_12_0.exLevel)
+	if string.nilorempty(roleCo.passiveSkill) then
+		local skillIdList = {}
+		local passiveSkillCoDict = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(roleCo.roleId, roleCo.exLevel)
 
-		for iter_12_0, iter_12_1 in pairs(var_12_2) do
-			var_12_1[iter_12_0] = iter_12_1.skillPassive
+		for k, co in pairs(passiveSkillCoDict) do
+			skillIdList[k] = co.skillPassive
 		end
 
-		return var_12_1
+		return skillIdList
 	else
-		return string.splitToNumber(var_12_0.passiveSkill, "|")
+		return string.splitToNumber(roleCo.passiveSkill, "|")
 	end
 end
 
-function var_0_0.getHeroSkillIdDic(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_0:getRoleCo(arg_13_1)
+function Activity191Config:getHeroSkillIdDic(id, single)
+	local heroCo = self:getRoleCo(id)
 
-	if string.nilorempty(var_13_0.activeSkill1) then
-		local var_13_1 = var_13_0.roleId
-		local var_13_2 = math.min(var_13_0.exLevel, CharacterEnum.MaxSkillExLevel)
+	if string.nilorempty(heroCo.activeSkill1) then
+		local heroId = heroCo.roleId
+		local exSkillLevel = math.min(heroCo.exLevel, CharacterEnum.MaxSkillExLevel)
 
-		if arg_13_2 then
-			local var_13_3 = SkillConfig.instance:getHeroBaseSkillIdDict(var_13_1)
+		if single then
+			local baseSkillIdDict = SkillConfig.instance:getHeroBaseSkillIdDict(heroId)
 
-			if var_13_2 < 1 then
-				return var_13_3
+			if exSkillLevel < 1 then
+				return baseSkillIdDict
 			end
 
-			local var_13_4
+			local skillExLevelCo
 
-			for iter_13_0 = 1, var_13_2 do
-				local var_13_5 = arg_13_0:getHeroLevelExSkillCo(arg_13_1, iter_13_0)
+			for i = 1, exSkillLevel do
+				skillExLevelCo = self:getHeroLevelExSkillCo(id, i)
 
-				if not string.nilorempty(var_13_5.skillGroup1) then
-					var_13_3[1] = string.splitToNumber(var_13_5.skillGroup1, "|")[1]
+				if not string.nilorempty(skillExLevelCo.skillGroup1) then
+					baseSkillIdDict[1] = string.splitToNumber(skillExLevelCo.skillGroup1, "|")[1]
 				end
 
-				if not string.nilorempty(var_13_5.skillGroup2) then
-					var_13_3[2] = string.splitToNumber(var_13_5.skillGroup2, "|")[1]
+				if not string.nilorempty(skillExLevelCo.skillGroup2) then
+					baseSkillIdDict[2] = string.splitToNumber(skillExLevelCo.skillGroup2, "|")[1]
 				end
 
-				if var_13_5.skillEx ~= 0 then
-					var_13_3[3] = var_13_5.skillEx
+				if skillExLevelCo.skillEx ~= 0 then
+					baseSkillIdDict[3] = skillExLevelCo.skillEx
 				end
 			end
 
-			return var_13_3
+			return baseSkillIdDict
 		else
-			local var_13_6 = SkillConfig.instance:getHeroAllSkillIdDict(var_13_1)
+			local allSkillIdDict = SkillConfig.instance:getHeroAllSkillIdDict(heroId)
 
-			if var_13_2 < 1 then
-				return var_13_6
+			if exSkillLevel < 1 then
+				return allSkillIdDict
 			end
 
-			local var_13_7
+			local skillExLevelCo
 
-			for iter_13_1 = 1, var_13_2 do
-				local var_13_8 = arg_13_0:getHeroLevelExSkillCo(arg_13_1, iter_13_1)
+			for i = 1, exSkillLevel do
+				skillExLevelCo = self:getHeroLevelExSkillCo(id, i)
 
-				if not string.nilorempty(var_13_8.skillGroup1) then
-					var_13_6[1] = string.splitToNumber(var_13_8.skillGroup1, "|")
+				if not string.nilorempty(skillExLevelCo.skillGroup1) then
+					allSkillIdDict[1] = string.splitToNumber(skillExLevelCo.skillGroup1, "|")
 				end
 
-				if not string.nilorempty(var_13_8.skillGroup2) then
-					var_13_6[2] = string.splitToNumber(var_13_8.skillGroup2, "|")
+				if not string.nilorempty(skillExLevelCo.skillGroup2) then
+					allSkillIdDict[2] = string.splitToNumber(skillExLevelCo.skillGroup2, "|")
 				end
 
-				if var_13_8.skillEx ~= 0 then
-					var_13_6[3] = {
-						var_13_8.skillEx
+				if skillExLevelCo.skillEx ~= 0 then
+					allSkillIdDict[3] = {
+						skillExLevelCo.skillEx
 					}
 				end
 			end
 
-			return var_13_6
+			return allSkillIdDict
 		end
 	else
-		local var_13_9 = {}
-		local var_13_10 = string.splitToNumber(var_13_0.activeSkill1, "#")
-		local var_13_11 = GameUtil.splitString2(var_13_0.activeSkill2, true, ",", "#")[1]
+		local skillIdDic = {}
+		local skillList1 = string.splitToNumber(heroCo.activeSkill1, "#")
+		local skillList2 = GameUtil.splitString2(heroCo.activeSkill2, true, ",", "#")[1]
 
-		if arg_13_2 then
-			var_13_9[1] = var_13_10[1]
-			var_13_9[2] = var_13_11[1]
-			var_13_9[3] = var_13_0.uniqueSkill
+		if single then
+			skillIdDic[1] = skillList1[1]
+			skillIdDic[2] = skillList2[1]
+			skillIdDic[3] = heroCo.uniqueSkill
 		else
-			var_13_9[1] = var_13_10
-			var_13_9[2] = var_13_11
-			var_13_9[3] = {
-				var_13_0.uniqueSkill
+			skillIdDic[1] = skillList1
+			skillIdDic[2] = skillList2
+			skillIdDic[3] = {
+				heroCo.uniqueSkill
 			}
 		end
 
-		return var_13_9
+		return skillIdDic
 	end
 end
 
-function var_0_0.getHeroLevelExSkillCo(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0:getRoleCo(arg_14_1)
+function Activity191Config:getHeroLevelExSkillCo(id, skillIndex)
+	local heroCo = self:getRoleCo(id)
 
-	if var_14_0.type == Activity191Enum.CharacterType.Hero then
-		return SkillConfig.instance:getherolevelexskillCO(var_14_0.roleId, arg_14_2)
+	if heroCo.type == Activity191Enum.CharacterType.Hero then
+		return SkillConfig.instance:getherolevelexskillCO(heroCo.roleId, skillIndex)
 	else
-		local var_14_1 = lua_activity191_ex_level.configDict[var_14_0.roleId]
+		local exSkillCoDict = lua_activity191_ex_level.configDict[heroCo.roleId]
 
-		if not var_14_1 then
-			logError(string.format("ex skill not found heroid : %s `s config ", var_14_0.roleId))
+		if not exSkillCoDict then
+			logError(string.format("ex skill not found heroid : %s `s config ", heroCo.roleId))
 
 			return nil
 		end
 
-		if var_14_1[arg_14_2] == nil then
-			logError(string.format("ex skill config gei nil, heroid : %s, skillLevel : %s", var_14_0.roleId, arg_14_2))
+		local exSkillCo = exSkillCoDict[skillIndex]
+
+		if exSkillCo == nil then
+			logError(string.format("ex skill config gei nil, heroid : %s, skillLevel : %s", heroCo.roleId, skillIndex))
 		end
 
-		return var_14_1[arg_14_2]
+		return exSkillCoDict[skillIndex]
 	end
 end
 
-function var_0_0.getExSkillDesc(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_1 == nil then
+function Activity191Config:getExSkillDesc(skillExCo, id)
+	if skillExCo == nil then
 		return ""
 	end
 
-	local var_15_0 = arg_15_1.desc
+	local desc = skillExCo.desc
 
 	if LangSettings.instance:isEn() then
-		var_15_0 = SkillConfig.replaceHeroName(var_15_0, arg_15_2)
+		desc = SkillConfig.replaceHeroName(desc, id)
 	end
 
-	local var_15_1, var_15_2, var_15_3 = string.find(var_15_0, "▩(%d)%%s")
+	local _, _, skillIndex = string.find(desc, "▩(%d)%%s")
 
-	if not var_15_3 then
-		logError("not fount skillIndex in desc : " .. var_15_0)
+	if not skillIndex then
+		logError("not fount skillIndex in desc : " .. desc)
 
-		return var_15_0
+		return desc
 	end
 
-	local var_15_4 = tonumber(var_15_3)
-	local var_15_5
+	skillIndex = tonumber(skillIndex)
 
-	if var_15_4 == 0 then
-		var_15_5 = arg_15_0:getHeroPassiveSkillIdList(arg_15_2)[1]
+	local skillId
+
+	if skillIndex == 0 then
+		skillId = self:getHeroPassiveSkillIdList(id)[1]
 	else
-		var_15_5 = arg_15_0:getHeroSkillIdDic(arg_15_2, true)[var_15_4]
+		skillId = self:getHeroSkillIdDic(id, true)[skillIndex]
 	end
 
-	if not var_15_5 then
-		logError("not fount skillId, skillIndex : " .. var_15_4)
+	if not skillId then
+		logError("not fount skillId, skillIndex : " .. skillIndex)
 
-		return var_15_0
+		return desc
 	end
 
-	return var_15_0, lua_skill.configDict[var_15_5].name, var_15_4
+	return desc, lua_skill.configDict[skillId].name, skillIndex
 end
 
-function var_0_0.getFetterHeroList(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = {}
-	local var_16_1 = lua_activity191_role.configList
+function Activity191Config:getFetterHeroList(tag, actId)
+	local list = {}
+	local roleCoList = lua_activity191_role.configList
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1) do
-		if iter_16_1.activityId == arg_16_2 and iter_16_1.star == 1 then
-			local var_16_2 = string.split(iter_16_1.tag, "#")
+	for _, roleCo in ipairs(roleCoList) do
+		if roleCo.activityId == actId and roleCo.star == 1 then
+			local fetterArr = string.split(roleCo.tag, "#")
 
-			if tabletool.indexOf(var_16_2, arg_16_1) then
-				local var_16_3 = {
+			if tabletool.indexOf(fetterArr, tag) then
+				local data = {
 					inBag = 1,
 					transfer = 0,
-					config = iter_16_1
+					config = roleCo
 				}
 
-				var_16_0[#var_16_0 + 1] = var_16_3
+				list[#list + 1] = data
 			end
 		end
 	end
 
-	table.sort(var_16_0, Activity191Helper.sortFetterHeroList)
+	table.sort(list, Activity191Helper.sortFetterHeroList)
 
-	return var_16_0
+	return list
 end
 
-function var_0_0.getEffDescCoByName(arg_17_0, arg_17_1)
-	for iter_17_0, iter_17_1 in ipairs(lua_activity191_eff_desc.configList) do
-		if iter_17_1.name == arg_17_1 then
-			return iter_17_1
+function Activity191Config:getEffDescCoByName(name)
+	for _, v in ipairs(lua_activity191_eff_desc.configList) do
+		if v.name == name then
+			return v
 		end
 	end
 
-	logError("not fount skillId, skillIndex : " .. arg_17_1)
+	logError("not fount skillId, skillIndex : " .. name)
 end
 
-var_0_0.AttrIdToFieldName = {
+Activity191Config.AttrIdToFieldName = {
 	[CharacterEnum.AttrId.Attack] = "attack",
 	[CharacterEnum.AttrId.Defense] = "defense",
 	[CharacterEnum.AttrId.Technic] = "technic",
@@ -345,32 +350,32 @@ var_0_0.AttrIdToFieldName = {
 	[CharacterEnum.AttrId.Mdefense] = "mdefense"
 }
 
-function var_0_0.getBossCfgListByTag(arg_18_0, arg_18_1)
-	local var_18_0 = {}
+function Activity191Config:getBossCfgListByTag(tag)
+	local bossCfgList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(lua_activity191_assist_boss.configList) do
-		if iter_18_1.relation == arg_18_1 then
-			var_18_0[#var_18_0 + 1] = iter_18_1
+	for _, v in ipairs(lua_activity191_assist_boss.configList) do
+		if v.relation == tag then
+			bossCfgList[#bossCfgList + 1] = v
 		end
 	end
 
-	table.sort(var_18_0, function(arg_19_0, arg_19_1)
-		return arg_19_0.bossId > arg_19_1.bossId
+	table.sort(bossCfgList, function(a, b)
+		return a.bossId > b.bossId
 	end)
 
-	return var_18_0
+	return bossCfgList
 end
 
-function var_0_0.getSummonCfg(arg_20_0, arg_20_1)
-	local var_20_0 = lua_activity191_summon.configDict[arg_20_1]
+function Activity191Config:getSummonCfg(bossId)
+	local summonCfg = lua_activity191_summon.configDict[bossId]
 
-	if var_20_0 then
-		return var_20_0
+	if summonCfg then
+		return summonCfg
 	else
-		logError(string.format("斗蛐蛐召唤物表 id : %s 找不到对应配置", arg_20_1))
+		logError(string.format("斗蛐蛐召唤物表 id : %s 找不到对应配置", bossId))
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+Activity191Config.instance = Activity191Config.New()
 
-return var_0_0
+return Activity191Config

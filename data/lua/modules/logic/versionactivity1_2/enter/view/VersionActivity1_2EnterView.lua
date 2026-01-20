@@ -1,184 +1,187 @@
-﻿module("modules.logic.versionactivity1_2.enter.view.VersionActivity1_2EnterView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_2/enter/view/VersionActivity1_2EnterView.lua
 
-local var_0_0 = class("VersionActivity1_2EnterView", VersionActivityEnterBaseView1_2)
+module("modules.logic.versionactivity1_2.enter.view.VersionActivity1_2EnterView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local VersionActivity1_2EnterView = class("VersionActivity1_2EnterView", VersionActivityEnterBaseView1_2)
 
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "img_bg")
+function VersionActivity1_2EnterView:onInitView()
+	VersionActivity1_2EnterView.super.onInitView(self)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "img_bg")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	var_0_0.super.addEvents(arg_2_0)
+function VersionActivity1_2EnterView:addEvents()
+	VersionActivity1_2EnterView.super.addEvents(self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	var_0_0.super.removeEvents(arg_3_0)
+function VersionActivity1_2EnterView:removeEvents()
+	VersionActivity1_2EnterView.super.removeEvents(self)
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
-	arg_4_0._simagebg:LoadImage(ResUrl.getVersionActivityEnter1_2Icon("bg_main"))
+function VersionActivity1_2EnterView:_editableInitView()
+	VersionActivity1_2EnterView.super._editableInitView(self)
+	self._simagebg:LoadImage(ResUrl.getVersionActivityEnter1_2Icon("bg_main"))
 end
 
-function var_0_0.initActivityName(arg_5_0)
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.activityItemList) do
-		if iter_5_1.actId == VersionActivity1_2Enum.ActivityId.Season or iter_5_1.actId == VersionActivity1_2Enum.ActivityId.Dungeon then
-			local var_5_0 = iter_5_1.activityCo.name
-			local var_5_1 = utf8.next_raw(var_5_0, 1)
-			local var_5_2 = var_5_0:sub(1, var_5_1 - 1)
-			local var_5_3 = var_5_0:sub(var_5_1)
+function VersionActivity1_2EnterView:initActivityName()
+	for _, activityItem in ipairs(self.activityItemList) do
+		if activityItem.actId == VersionActivity1_2Enum.ActivityId.Season or activityItem.actId == VersionActivity1_2Enum.ActivityId.Dungeon then
+			local name = activityItem.activityCo.name
+			local secondCharIndex = utf8.next_raw(name, 1)
+			local firstName = name:sub(1, secondCharIndex - 1)
+			local subName = name:sub(secondCharIndex)
 
-			iter_5_1.txtActivityName.text = string.format("<size=65>%s</size>%s", var_5_2, var_5_3)
+			activityItem.txtActivityName.text = string.format("<size=65>%s</size>%s", firstName, subName)
 		else
-			iter_5_1.txtActivityName.text = iter_5_1.activityCo.name
+			activityItem.txtActivityName.text = activityItem.activityCo.name
 		end
 	end
 end
 
-function var_0_0.refreshTimeContainer(arg_6_0, arg_6_1, arg_6_2)
-	var_0_0.super.refreshTimeContainer(arg_6_0, arg_6_1, arg_6_2)
-	gohelper.setActive(arg_6_1.txtTime, not arg_6_2)
-	gohelper.setActive(arg_6_1.txtRemainTime, arg_6_2)
+function VersionActivity1_2EnterView:refreshTimeContainer(activityItem, isNormalStatus)
+	VersionActivity1_2EnterView.super.refreshTimeContainer(self, activityItem, isNormalStatus)
+	gohelper.setActive(activityItem.txtTime, not isNormalStatus)
+	gohelper.setActive(activityItem.txtRemainTime, isNormalStatus)
 end
 
-function var_0_0.onClickActivity1(arg_7_0)
+function VersionActivity1_2EnterView:onClickActivity1()
 	Activity117Controller.instance:openView(VersionActivity1_2Enum.ActivityId.Trade)
 end
 
-function var_0_0.onClickActivity2(arg_8_0)
+function VersionActivity1_2EnterView:onClickActivity2()
 	Activity114Controller.instance:openAct114View()
 end
 
-function var_0_0.onClickActivity3(arg_9_0)
+function VersionActivity1_2EnterView:onClickActivity3()
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function var_0_0.onClickActivity4(arg_10_0)
+function VersionActivity1_2EnterView:onClickActivity4()
 	VersionActivity1_2DungeonController.instance:openDungeonView()
 end
 
-function var_0_0.onClickActivity5(arg_11_0)
+function VersionActivity1_2EnterView:onClickActivity5()
 	YaXianController.instance:openYaXianMapView()
 end
 
-function var_0_0.onClickActivity6(arg_12_0)
+function VersionActivity1_2EnterView:onClickActivity6()
 	Activity119Controller.instance:openAct119View()
 end
 
-function var_0_0.onRefreshActivity3(arg_13_0, arg_13_1)
-	local var_13_0 = ActivityHelper.getActivityStatus(arg_13_1.actId) == ActivityEnum.ActivityStatus.Normal
-	local var_13_1 = gohelper.findChild(arg_13_1.goNormal, "#go_week")
+function VersionActivity1_2EnterView:onRefreshActivity3(activityItem)
+	local status = ActivityHelper.getActivityStatus(activityItem.actId)
+	local isNormal = status == ActivityEnum.ActivityStatus.Normal
+	local goWeek = gohelper.findChild(activityItem.goNormal, "#go_week")
 
-	gohelper.setActive(var_13_1, var_13_0 and Activity104Model.instance:isEnterSpecial(arg_13_1.actId) or false)
+	gohelper.setActive(goWeek, isNormal and Activity104Model.instance:isEnterSpecial(activityItem.actId) or false)
 
-	local var_13_2 = gohelper.findChild(arg_13_1.goNormal, "stages/#go_stageitem")
+	local stageGo = gohelper.findChild(activityItem.goNormal, "stages/#go_stageitem")
 
-	for iter_13_0 = 1, 7 do
-		local var_13_3 = "stageitem" .. iter_13_0
-		local var_13_4 = gohelper.findChild(arg_13_1.goNormal, string.format("stages/%s", var_13_3))
+	for i = 1, 7 do
+		local stageName = "stageitem" .. i
+		local curGo = gohelper.findChild(activityItem.goNormal, string.format("stages/%s", stageName))
 
-		if var_13_0 then
-			local var_13_5 = Activity104Model.instance:getAct104CurStage(arg_13_1.actId)
+		if isNormal then
+			local stage = Activity104Model.instance:getAct104CurStage(activityItem.actId)
 
-			var_13_4 = var_13_4 or gohelper.cloneInPlace(var_13_2, var_13_3)
+			curGo = curGo or gohelper.cloneInPlace(stageGo, stageName)
 
-			if iter_13_0 == 7 then
-				gohelper.setActive(var_13_4, var_13_5 == 7)
+			if i == 7 then
+				gohelper.setActive(curGo, stage == 7)
 			else
-				gohelper.setActive(var_13_4, true)
+				gohelper.setActive(curGo, true)
 			end
 
-			local var_13_6 = gohelper.findChild(var_13_4, "full")
+			local gofull = gohelper.findChild(curGo, "full")
 
-			gohelper.setActive(var_13_6, iter_13_0 <= var_13_5)
+			gohelper.setActive(gofull, i <= stage)
 		else
-			gohelper.setActive(var_13_4, false)
+			gohelper.setActive(curGo, false)
 		end
 	end
 end
 
-function var_0_0.onRefreshActivity4(arg_14_0, arg_14_1)
-	arg_14_0:initActivityDungeonNode(arg_14_1)
+function VersionActivity1_2EnterView:onRefreshActivity4(activityItem)
+	self:initActivityDungeonNode(activityItem)
 
-	local var_14_0 = ActivityHelper.getActivityStatus(VersionActivity1_2Enum.ActivityId.DungeonStore)
+	local status = ActivityHelper.getActivityStatus(VersionActivity1_2Enum.ActivityId.DungeonStore)
 
-	if var_14_0 == ActivityEnum.ActivityStatus.NotOnLine or var_14_0 == ActivityEnum.ActivityStatus.Expired then
-		gohelper.setActive(arg_14_0.activityDungeonNodeItem.store_tr.gameObject, false)
+	if status == ActivityEnum.ActivityStatus.NotOnLine or status == ActivityEnum.ActivityStatus.Expired then
+		gohelper.setActive(self.activityDungeonNodeItem.store_tr.gameObject, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_14_0.activityDungeonNodeItem.store_tr.gameObject, true)
+	gohelper.setActive(self.activityDungeonNodeItem.store_tr.gameObject, true)
 
-	local var_14_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen)
-	local var_14_2 = var_14_1 and var_14_1.quantity or 0
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.LvHuEMen)
+	local quantity = currencyMO and currencyMO.quantity or 0
 
-	arg_14_0.activityDungeonNodeItem.store_txtCurrencyCount.text = GameUtil.numberDisplay(var_14_2)
+	self.activityDungeonNodeItem.store_txtCurrencyCount.text = GameUtil.numberDisplay(quantity)
 
-	local var_14_3 = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.DungeonStore)
+	local activityCo = ActivityConfig.instance:getActivityCo(VersionActivity1_2Enum.ActivityId.DungeonStore)
 
-	arg_14_0.activityDungeonNodeItem.store_txtName.text = var_14_3.name
+	self.activityDungeonNodeItem.store_txtName.text = activityCo.name
 
-	local var_14_4 = var_14_0 == ActivityEnum.ActivityStatus.Normal
+	local isNormalStatus = status == ActivityEnum.ActivityStatus.Normal
 
-	gohelper.setActive(arg_14_0.activityDungeonNodeItem.store_goRemainTime, var_14_4)
+	gohelper.setActive(self.activityDungeonNodeItem.store_goRemainTime, isNormalStatus)
 
-	if var_14_4 then
-		local var_14_5 = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.DungeonStore]
+	if isNormalStatus then
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity1_2Enum.ActivityId.DungeonStore]
 
-		arg_14_0.activityDungeonNodeItem.store_txtRemainTime.text = var_14_5 and var_14_5:getRemainTimeStr2ByEndTime(true) or ""
-		arg_14_0.activityDungeonNodeItem.store_image.color = arg_14_0.activityDungeonNodeItem.store_imageOriginColor
-		arg_14_0.activityDungeonNodeItem.store_txtCurrencyCount.color = arg_14_0.activityDungeonNodeItem.store_txtCurrencyCountOriginColor
-		arg_14_0.activityDungeonNodeItem.store_txtName.color = arg_14_0.activityDungeonNodeItem.store_txtNameOriginColor
+		self.activityDungeonNodeItem.store_txtRemainTime.text = actInfoMo and actInfoMo:getRemainTimeStr2ByEndTime(true) or ""
+		self.activityDungeonNodeItem.store_image.color = self.activityDungeonNodeItem.store_imageOriginColor
+		self.activityDungeonNodeItem.store_txtCurrencyCount.color = self.activityDungeonNodeItem.store_txtCurrencyCountOriginColor
+		self.activityDungeonNodeItem.store_txtName.color = self.activityDungeonNodeItem.store_txtNameOriginColor
 	else
-		arg_14_0.activityDungeonNodeItem.store_image.color = arg_14_0.activityDungeonNodeItem.lockColor
-		arg_14_0.activityDungeonNodeItem.store_txtCurrencyCount.color = arg_14_0.activityDungeonNodeItem.lockColor
-		arg_14_0.activityDungeonNodeItem.store_txtName.color = arg_14_0.activityDungeonNodeItem.lockColor
+		self.activityDungeonNodeItem.store_image.color = self.activityDungeonNodeItem.lockColor
+		self.activityDungeonNodeItem.store_txtCurrencyCount.color = self.activityDungeonNodeItem.lockColor
+		self.activityDungeonNodeItem.store_txtName.color = self.activityDungeonNodeItem.lockColor
 	end
 
-	recthelper.setAnchorY(arg_14_0.activityDungeonNodeItem.store_tr, arg_14_1.showTag and 110 or 90)
+	recthelper.setAnchorY(self.activityDungeonNodeItem.store_tr, activityItem.showTag and 110 or 90)
 end
 
-function var_0_0.initActivityDungeonNode(arg_15_0, arg_15_1)
-	if arg_15_0.activityDungeonNodeItem then
+function VersionActivity1_2EnterView:initActivityDungeonNode(activityItem)
+	if self.activityDungeonNodeItem then
 		return
 	end
 
-	arg_15_0.activityDungeonNodeItem = arg_15_1
-	arg_15_0.activityDungeonNodeItem.store_tr = gohelper.findChild(arg_15_1.rootGo, "#go_store").transform
-	arg_15_0.activityDungeonNodeItem.store_txtCurrencyCount = gohelper.findChildText(arg_15_1.rootGo, "#go_store/#txt_currencycount")
-	arg_15_0.activityDungeonNodeItem.store_goRemainTime = gohelper.findChild(arg_15_1.rootGo, "#go_store/#go_remaintime")
-	arg_15_0.activityDungeonNodeItem.store_txtRemainTime = gohelper.findChildText(arg_15_1.rootGo, "#go_store/#go_remaintime/#txt_remaintime")
-	arg_15_0.activityDungeonNodeItem.store_click = gohelper.findChildClick(arg_15_1.rootGo, "#go_store/clickarea/")
+	self.activityDungeonNodeItem = activityItem
+	self.activityDungeonNodeItem.store_tr = gohelper.findChild(activityItem.rootGo, "#go_store").transform
+	self.activityDungeonNodeItem.store_txtCurrencyCount = gohelper.findChildText(activityItem.rootGo, "#go_store/#txt_currencycount")
+	self.activityDungeonNodeItem.store_goRemainTime = gohelper.findChild(activityItem.rootGo, "#go_store/#go_remaintime")
+	self.activityDungeonNodeItem.store_txtRemainTime = gohelper.findChildText(activityItem.rootGo, "#go_store/#go_remaintime/#txt_remaintime")
+	self.activityDungeonNodeItem.store_click = gohelper.findChildClick(activityItem.rootGo, "#go_store/clickarea/")
 
-	arg_15_0.activityDungeonNodeItem.store_click:AddClickListener(arg_15_0.onClickStore, arg_15_0)
+	self.activityDungeonNodeItem.store_click:AddClickListener(self.onClickStore, self)
 
-	arg_15_0.activityDungeonNodeItem.store_image = gohelper.findChildImage(arg_15_1.rootGo, "#go_store/#simage_storebg")
-	arg_15_0.activityDungeonNodeItem.store_txtName = gohelper.findChildText(arg_15_1.rootGo, "#go_store/storename")
-	arg_15_0.activityDungeonNodeItem.store_imageOriginColor = arg_15_0.activityDungeonNodeItem.store_image.color
-	arg_15_0.activityDungeonNodeItem.store_txtCurrencyCountOriginColor = arg_15_0.activityDungeonNodeItem.store_txtCurrencyCount.color
-	arg_15_0.activityDungeonNodeItem.store_txtNameOriginColor = arg_15_0.activityDungeonNodeItem.store_txtName.color
-	arg_15_0.activityDungeonNodeItem.lockColor = GameUtil.parseColor("#3D4B2F")
+	self.activityDungeonNodeItem.store_image = gohelper.findChildImage(activityItem.rootGo, "#go_store/#simage_storebg")
+	self.activityDungeonNodeItem.store_txtName = gohelper.findChildText(activityItem.rootGo, "#go_store/storename")
+	self.activityDungeonNodeItem.store_imageOriginColor = self.activityDungeonNodeItem.store_image.color
+	self.activityDungeonNodeItem.store_txtCurrencyCountOriginColor = self.activityDungeonNodeItem.store_txtCurrencyCount.color
+	self.activityDungeonNodeItem.store_txtNameOriginColor = self.activityDungeonNodeItem.store_txtName.color
+	self.activityDungeonNodeItem.lockColor = GameUtil.parseColor("#3D4B2F")
 end
 
-function var_0_0.onClickStore(arg_16_0)
+function VersionActivity1_2EnterView:onClickStore()
 	VersionActivity1_2EnterController.instance:openActivityStoreView()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	var_0_0.super.onDestroyView(arg_17_0)
-	arg_17_0._simagebg:UnLoadImage()
+function VersionActivity1_2EnterView:onDestroyView()
+	VersionActivity1_2EnterView.super.onDestroyView(self)
+	self._simagebg:UnLoadImage()
 
-	if arg_17_0.activityDungeonNodeItem then
-		arg_17_0.activityDungeonNodeItem.store_click:RemoveClickListener()
+	if self.activityDungeonNodeItem then
+		self.activityDungeonNodeItem.store_click:RemoveClickListener()
 
-		arg_17_0.activityDungeonNodeItem = nil
+		self.activityDungeonNodeItem = nil
 	end
 end
 
-return var_0_0
+return VersionActivity1_2EnterView

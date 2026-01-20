@@ -1,39 +1,41 @@
-﻿module("modules.logic.activity.controller.chessmap.event.ActivityChessStateFinishEvent", package.seeall)
+﻿-- chunkname: @modules/logic/activity/controller/chessmap/event/ActivityChessStateFinishEvent.lua
 
-local var_0_0 = class("ActivityChessStateFinishEvent", ActivityChessStateBase)
+module("modules.logic.activity.controller.chessmap.event.ActivityChessStateFinishEvent", package.seeall)
 
-function var_0_0.start(arg_1_0)
+local ActivityChessStateFinishEvent = class("ActivityChessStateFinishEvent", ActivityChessStateBase)
+
+function ActivityChessStateFinishEvent:start()
 	logNormal("ActivityChessStateFinishEvent start")
 
 	if ViewMgr.instance:isOpenFinish(ViewName.ActivityChessGame) then
-		arg_1_0:sendRequest()
+		self:sendRequest()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0.onOpenViewFinish, arg_1_0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
 	end
 end
 
-function var_0_0.onOpenViewFinish(arg_2_0, arg_2_1)
-	if arg_2_1 == ViewName.ActivityChessGame then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onOpenViewFinish, arg_2_0)
-		arg_2_0:sendRequest()
+function ActivityChessStateFinishEvent:onOpenViewFinish(viewName)
+	if viewName == ViewName.ActivityChessGame then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
+		self:sendRequest()
 	end
 end
 
-function var_0_0.sendRequest(arg_3_0)
-	local var_3_0 = ActivityChessGameModel.instance:getActId()
+function ActivityChessStateFinishEvent:sendRequest()
+	local actId = ActivityChessGameModel.instance:getActId()
 
-	Activity109Rpc.instance:sendAct109EventEndRequest(var_3_0, arg_3_0.onReceiveReply, arg_3_0)
+	Activity109Rpc.instance:sendAct109EventEndRequest(actId, self.onReceiveReply, self)
 end
 
-function var_0_0.onReceiveReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_2 == 0 then
-		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.EventFinishPlay, arg_4_0)
+function ActivityChessStateFinishEvent:onReceiveReply(cmd, resultCode)
+	if resultCode == 0 then
+		ActivityChessGameController.instance:dispatchEvent(ActivityChessEvent.EventFinishPlay, self)
 	end
 end
 
-function var_0_0.dispose(arg_5_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0.onOpenViewFinish, arg_5_0)
-	var_0_0.super.dispose(arg_5_0)
+function ActivityChessStateFinishEvent:dispose()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, self.onOpenViewFinish, self)
+	ActivityChessStateFinishEvent.super.dispose(self)
 end
 
-return var_0_0
+return ActivityChessStateFinishEvent

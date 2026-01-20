@@ -1,14 +1,16 @@
-﻿module("modules.logic.battlepass.flow.BpCloseViewWork", package.seeall)
+﻿-- chunkname: @modules/logic/battlepass/flow/BpCloseViewWork.lua
 
-local var_0_0 = class("BpCloseViewWork", BaseWork)
+module("modules.logic.battlepass.flow.BpCloseViewWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._viewName = arg_1_1
+local BpCloseViewWork = class("BpCloseViewWork", BaseWork)
+
+function BpCloseViewWork:ctor(viewName)
+	self._viewName = viewName
 end
 
-function var_0_0.onStart(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0._viewName)
-	arg_2_0:onDone(true)
+function BpCloseViewWork:onStart()
+	ViewMgr.instance:closeView(self._viewName)
+	self:onDone(true)
 end
 
-return var_0_0
+return BpCloseViewWork

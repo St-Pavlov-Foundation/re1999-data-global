@@ -1,42 +1,44 @@
-﻿module("modules.logic.survival.view.SurvivalCurrencyTipView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/SurvivalCurrencyTipView.lua
 
-local var_0_0 = class("SurvivalCurrencyTipView", BaseView)
+module("modules.logic.survival.view.SurvivalCurrencyTipView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
-	arg_1_0._rootTrans = gohelper.findChild(arg_1_0.viewGO, "root").transform
-	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#txt_dec")
+local SurvivalCurrencyTipView = class("SurvivalCurrencyTipView", BaseView)
+
+function SurvivalCurrencyTipView:onInitView()
+	self._click = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._rootTrans = gohelper.findChild(self.viewGO, "root").transform
+	self._txtdesc = gohelper.findChildTextMesh(self.viewGO, "root/#txt_dec")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._click:AddClickListener(arg_2_0.closeThis, arg_2_0)
+function SurvivalCurrencyTipView:addEvents()
+	self._click:AddClickListener(self.closeThis, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._click:RemoveClickListener()
+function SurvivalCurrencyTipView:removeEvents()
+	self._click:RemoveClickListener()
 end
 
-function var_0_0.onOpen(arg_4_0)
-	if arg_4_0.viewParam.arrow == "BL" then
-		arg_4_0._rootTrans.pivot = Vector2(1, 1)
-	elseif arg_4_0.viewParam.arrow == "BR" then
-		arg_4_0._rootTrans.pivot = Vector2(0, 1)
+function SurvivalCurrencyTipView:onOpen()
+	if self.viewParam.arrow == "BL" then
+		self._rootTrans.pivot = Vector2(1, 1)
+	elseif self.viewParam.arrow == "BR" then
+		self._rootTrans.pivot = Vector2(0, 1)
 	else
-		arg_4_0._rootTrans.pivot = Vector2(0, 0)
+		self._rootTrans.pivot = Vector2(0, 0)
 	end
 
-	local var_4_0 = recthelper.rectToRelativeAnchorPos(arg_4_0.viewParam.pos, arg_4_0.viewGO.transform.parent)
+	local anchorPos = recthelper.rectToRelativeAnchorPos(self.viewParam.pos, self.viewGO.transform.parent)
 
-	recthelper.setAnchor(arg_4_0._rootTrans, var_4_0.x, var_4_0.y)
+	recthelper.setAnchor(self._rootTrans, anchorPos.x, anchorPos.y)
 
-	if arg_4_0.viewParam.txt then
-		arg_4_0._txtdesc.text = arg_4_0.viewParam.txt
+	if self.viewParam.txt then
+		self._txtdesc.text = self.viewParam.txt
 	else
-		local var_4_1 = arg_4_0.viewParam.id
-		local var_4_2 = lua_survival_item.configDict[var_4_1]
+		local id = self.viewParam.id
+		local itemCo = lua_survival_item.configDict[id]
 
-		arg_4_0._txtdesc.text = var_4_2 and var_4_2.desc1 or ""
+		self._txtdesc.text = itemCo and itemCo.desc1 or ""
 	end
 end
 
-return var_0_0
+return SurvivalCurrencyTipView

@@ -1,28 +1,30 @@
-﻿module("modules.logic.fight.system.work.FightWorkCardEffectChangeDone", package.seeall)
+﻿-- chunkname: @modules/logic/fight/system/work/FightWorkCardEffectChangeDone.lua
 
-local var_0_0 = class("FightWorkCardEffectChangeDone", BaseWork)
+module("modules.logic.fight.system.work.FightWorkCardEffectChangeDone", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local FightWorkCardEffectChangeDone = class("FightWorkCardEffectChangeDone", BaseWork)
+
+function FightWorkCardEffectChangeDone:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0)
-	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_2_0._onCardMagicEffectChangeDone, arg_2_0)
+function FightWorkCardEffectChangeDone:onStart()
+	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onCardMagicEffectChangeDone, self)
 	FightController.instance:dispatchEvent(FightEvent.PlayCardMagicEffectChange)
 end
 
-function var_0_0._onCardMagicEffectChangeDone(arg_3_0)
-	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCardMagicEffectChangeDone, arg_3_0)
-	arg_3_0:_onDone()
+function FightWorkCardEffectChangeDone:_onCardMagicEffectChangeDone()
+	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCardMagicEffectChangeDone, self)
+	self:_onDone()
 end
 
-function var_0_0._onDone(arg_4_0)
-	arg_4_0:clearWork()
-	arg_4_0:onDone(true)
+function FightWorkCardEffectChangeDone:_onDone()
+	self:clearWork()
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_5_0)
+function FightWorkCardEffectChangeDone:clearWork()
 	return
 end
 
-return var_0_0
+return FightWorkCardEffectChangeDone

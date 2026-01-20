@@ -1,110 +1,112 @@
-﻿module("modules.logic.gm.view.GMFightEntityViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GMFightEntityViewContainer.lua
 
-local var_0_0 = class("GMFightEntityViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GMFightEntityViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = ListScrollParam.New()
+local GMFightEntityViewContainer = class("GMFightEntityViewContainer", BaseViewContainer)
 
-	var_1_0.scrollGOPath = "entitys"
-	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_0.prefabUrl = "entitys/item"
-	var_1_0.cellClass = GMFightEntityItem
-	var_1_0.scrollDir = ScrollEnum.ScrollDirV
-	var_1_0.lineCount = 1
-	var_1_0.cellWidth = 430
-	var_1_0.cellHeight = 142
+function GMFightEntityViewContainer:buildViews()
+	local entityScrollParam = ListScrollParam.New()
 
-	local var_1_1 = ListScrollParam.New()
+	entityScrollParam.scrollGOPath = "entitys"
+	entityScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	entityScrollParam.prefabUrl = "entitys/item"
+	entityScrollParam.cellClass = GMFightEntityItem
+	entityScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	entityScrollParam.lineCount = 1
+	entityScrollParam.cellWidth = 430
+	entityScrollParam.cellHeight = 142
 
-	var_1_1.scrollGOPath = "buff/buffs"
-	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_1.prefabUrl = "buff/buffs/item"
-	var_1_1.cellClass = GMFightEntityBuffItem
-	var_1_1.scrollDir = ScrollEnum.ScrollDirV
-	var_1_1.lineCount = 1
-	var_1_1.cellWidth = 746
-	var_1_1.cellHeight = 43
+	local buffScrollParam = ListScrollParam.New()
 
-	local var_1_2 = ListScrollParam.New()
+	buffScrollParam.scrollGOPath = "buff/buffs"
+	buffScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	buffScrollParam.prefabUrl = "buff/buffs/item"
+	buffScrollParam.cellClass = GMFightEntityBuffItem
+	buffScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	buffScrollParam.lineCount = 1
+	buffScrollParam.cellWidth = 746
+	buffScrollParam.cellHeight = 43
 
-	var_1_2.scrollGOPath = "skill/skills"
-	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_2.prefabUrl = "skill/skills/item"
-	var_1_2.cellClass = GMFightEntitySkillItem
-	var_1_2.scrollDir = ScrollEnum.ScrollDirV
-	var_1_2.lineCount = 1
-	var_1_2.cellWidth = 746
-	var_1_2.cellHeight = 43
+	local skillScrollParam = ListScrollParam.New()
 
-	local var_1_3 = ListScrollParam.New()
+	skillScrollParam.scrollGOPath = "skill/skills"
+	skillScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	skillScrollParam.prefabUrl = "skill/skills/item"
+	skillScrollParam.cellClass = GMFightEntitySkillItem
+	skillScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	skillScrollParam.lineCount = 1
+	skillScrollParam.cellWidth = 746
+	skillScrollParam.cellHeight = 43
 
-	var_1_3.scrollGOPath = "attr"
-	var_1_3.prefabType = ScrollEnum.ScrollPrefabFromView
-	var_1_3.prefabUrl = "attr/item"
-	var_1_3.cellClass = GMFightEntityAttrItem
-	var_1_3.scrollDir = ScrollEnum.ScrollDirV
-	var_1_3.lineCount = 2
-	var_1_3.cellWidth = 299
-	var_1_3.cellHeight = 258
+	local attrScrollParam = ListScrollParam.New()
 
-	local var_1_4 = {}
+	attrScrollParam.scrollGOPath = "attr"
+	attrScrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	attrScrollParam.prefabUrl = "attr/item"
+	attrScrollParam.cellClass = GMFightEntityAttrItem
+	attrScrollParam.scrollDir = ScrollEnum.ScrollDirV
+	attrScrollParam.lineCount = 2
+	attrScrollParam.cellWidth = 299
+	attrScrollParam.cellHeight = 258
 
-	arg_1_0.entityListView = LuaListScrollView.New(GMFightEntityModel.instance, var_1_0)
+	local views = {}
 
-	table.insert(var_1_4, arg_1_0.entityListView)
+	self.entityListView = LuaListScrollView.New(GMFightEntityModel.instance, entityScrollParam)
 
-	arg_1_0.buffListView = LuaListScrollView.New(GMFightEntityModel.instance.buffModel, var_1_1)
+	table.insert(views, self.entityListView)
 
-	table.insert(var_1_4, arg_1_0.buffListView)
+	self.buffListView = LuaListScrollView.New(GMFightEntityModel.instance.buffModel, buffScrollParam)
 
-	arg_1_0.skillListView = LuaListScrollView.New(GMFightEntityModel.instance.skillModel, var_1_2)
+	table.insert(views, self.buffListView)
 
-	table.insert(var_1_4, arg_1_0.skillListView)
+	self.skillListView = LuaListScrollView.New(GMFightEntityModel.instance.skillModel, skillScrollParam)
 
-	arg_1_0.attrListView = LuaListScrollView.New(GMFightEntityModel.instance.attrModel, var_1_3)
+	table.insert(views, self.skillListView)
 
-	table.insert(var_1_4, arg_1_0.attrListView)
-	table.insert(var_1_4, GMFightEntityView.New())
-	table.insert(var_1_4, GMFightEntityInfoView.New())
-	table.insert(var_1_4, GMFightEntityBuffView.New())
-	table.insert(var_1_4, GMFightEntitySkillView.New())
+	self.attrListView = LuaListScrollView.New(GMFightEntityModel.instance.attrModel, attrScrollParam)
 
-	return var_1_4
+	table.insert(views, self.attrListView)
+	table.insert(views, GMFightEntityView.New())
+	table.insert(views, GMFightEntityInfoView.New())
+	table.insert(views, GMFightEntityBuffView.New())
+	table.insert(views, GMFightEntitySkillView.New())
+
+	return views
 end
 
-function var_0_0.onContainerOpen(arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, arg_2_0._onGetEntityInfo, arg_2_0)
+function GMFightEntityViewContainer:onContainerOpen()
+	self:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onGetEntityInfo, self)
 end
 
-function var_0_0.onContainerClose(arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, arg_3_0._onGetEntityInfo, arg_3_0)
+function GMFightEntityViewContainer:onContainerClose()
+	self:removeEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onGetEntityInfo, self)
 end
 
-function var_0_0._onGetEntityInfo(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.entityInfo
-	local var_4_1 = var_4_0.uid
-	local var_4_2 = var_4_0 and FightDataHelper.entityMgr:getById(var_4_1)
+function GMFightEntityViewContainer:_onGetEntityInfo(msg)
+	local entityInfo = msg.entityInfo
+	local entityId = entityInfo.uid
+	local entityData = entityInfo and FightDataHelper.entityMgr:getById(entityId)
 
-	if var_4_2 then
-		FightDataHelper.entityMgr:addEntityMOByProto(var_4_0)
+	if entityData then
+		FightDataHelper.entityMgr:addEntityMOByProto(entityInfo)
 	end
 
-	local var_4_3 = FightLocalDataMgr.instance.entityMgr:getById(var_4_1)
+	local localEntityMO = FightLocalDataMgr.instance.entityMgr:getById(entityId)
 
-	if var_4_3 then
-		FightEntityDataHelper.copyEntityMO(var_4_2, var_4_3)
+	if localEntityMO then
+		FightEntityDataHelper.copyEntityMO(entityData, localEntityMO)
 	end
 
-	GMFightEntityModel.instance:onGetSingleEntityInfo(arg_4_1)
-	FightController.instance:dispatchEvent(FightEvent.CoverPerformanceEntityData, var_4_1)
+	GMFightEntityModel.instance:onGetSingleEntityInfo(msg)
+	FightController.instance:dispatchEvent(FightEvent.CoverPerformanceEntityData, entityId)
 end
 
-function var_0_0.onContainerInit(arg_5_0)
+function GMFightEntityViewContainer:onContainerInit()
 	FightRpc.instance:sendGetEntityDetailInfosRequest()
 end
 
-function var_0_0.onContainerClickModalMask(arg_6_0)
-	arg_6_0:closeThis()
+function GMFightEntityViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return GMFightEntityViewContainer

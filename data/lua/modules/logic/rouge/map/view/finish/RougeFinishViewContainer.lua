@@ -1,29 +1,31 @@
-﻿module("modules.logic.rouge.map.view.finish.RougeFinishViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/map/view/finish/RougeFinishViewContainer.lua
 
-local var_0_0 = class("RougeFinishViewContainer", BaseViewContainer)
+module("modules.logic.rouge.map.view.finish.RougeFinishViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local RougeFinishViewContainer = class("RougeFinishViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, RougeFinishView.New())
+function RougeFinishViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, RougeFinishView.New())
+
+	return views
 end
 
-function var_0_0.playCloseTransition(arg_2_0)
-	TaskDispatcher.runDelay(arg_2_0.onCloseAnimDone, arg_2_0, 0.5)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
+function RougeFinishViewContainer:playCloseTransition()
+	TaskDispatcher.runDelay(self.onCloseAnimDone, self, 0.5)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 end
 
-function var_0_0.onCloseAnimDone(arg_3_0)
+function RougeFinishViewContainer:onCloseAnimDone()
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onFinishViewDone)
 end
 
-function var_0_0.onOpenView(arg_4_0, arg_4_1)
-	if arg_4_1 == ViewName.RougeResultView then
-		arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0.onOpenView, arg_4_0)
-		arg_4_0:onPlayCloseTransitionFinish()
+function RougeFinishViewContainer:onOpenView(viewName)
+	if viewName == ViewName.RougeResultView then
+		self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
+		self:onPlayCloseTransitionFinish()
 	end
 end
 
-return var_0_0
+return RougeFinishViewContainer

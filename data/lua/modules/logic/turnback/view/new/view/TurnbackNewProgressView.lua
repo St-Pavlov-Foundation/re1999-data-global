@@ -1,133 +1,138 @@
-﻿module("modules.logic.turnback.view.new.view.TurnbackNewProgressView", package.seeall)
+﻿-- chunkname: @modules/logic/turnback/view/new/view/TurnbackNewProgressView.lua
 
-local var_0_0 = class("TurnbackNewProgressView", BaseView)
+module("modules.logic.turnback.view.new.view.TurnbackNewProgressView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._btnrefresh = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bg/content/#btn_refresh")
-	arg_1_0._txtrefresh = gohelper.findChildText(arg_1_0.viewGO, "bg/content/#btn_refresh/txt_refresh")
-	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "bg/content")
-	arg_1_0._simagepic = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/content/item1/#simage_pic")
-	arg_1_0._canRefresh = true
-	arg_1_0._refreshCd = TurnbackEnum.RefreshCd
-	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+local TurnbackNewProgressView = class("TurnbackNewProgressView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function TurnbackNewProgressView:onInitView()
+	self._btnrefresh = gohelper.findChildButtonWithAudio(self.viewGO, "bg/content/#btn_refresh")
+	self._txtrefresh = gohelper.findChildText(self.viewGO, "bg/content/#btn_refresh/txt_refresh")
+	self._gocontent = gohelper.findChild(self.viewGO, "bg/content")
+	self._simagepic = gohelper.findChildSingleImage(self.viewGO, "bg/content/item1/#simage_pic")
+	self._canRefresh = true
+	self._refreshCd = TurnbackEnum.RefreshCd
+	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnrefresh:AddClickListener(arg_2_0._btnrefreshOnClick, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0.onCurrencyChange, arg_2_0)
-	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0.refreshItemBySelf, arg_2_0)
+function TurnbackNewProgressView:addEvents()
+	self._btnrefresh:AddClickListener(self._btnrefreshOnClick, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onCurrencyChange, self)
+	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.refreshItemBySelf, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnrefresh:RemoveClickListener()
+function TurnbackNewProgressView:removeEvents()
+	self._btnrefresh:RemoveClickListener()
 end
 
-function var_0_0._btnrefreshOnClick(arg_4_0)
-	if not arg_4_0._taskcd and arg_4_0._canRefresh then
-		arg_4_0._animator:Update(0)
-		arg_4_0._animator:Play("update")
-		TaskDispatcher.runDelay(arg_4_0._afteranim, arg_4_0, 0.16)
+function TurnbackNewProgressView:_btnrefreshOnClick()
+	if not self._taskcd and self._canRefresh then
+		self._animator:Update(0)
+		self._animator:Play("update")
+		TaskDispatcher.runDelay(self._afteranim, self, 0.16)
 	else
 		GameFacade.showToast(ToastEnum.TurnbackNewProgressViewRefresh)
 	end
 end
 
-function var_0_0._afteranim(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._afteranim, arg_5_0)
+function TurnbackNewProgressView:_afteranim()
+	TaskDispatcher.cancelTask(self._afteranim, self)
 
-	arg_5_0._canRefresh = false
+	self._canRefresh = false
 
-	arg_5_0:refreshProgressItem()
+	self:refreshProgressItem()
 
-	arg_5_0._txtrefresh.text = arg_5_0._refreshCd .. "s"
-	arg_5_0._taskcd = TaskDispatcher.runRepeat(arg_5_0._ontimeout, arg_5_0, 1)
+	self._txtrefresh.text = self._refreshCd .. "s"
+	self._taskcd = TaskDispatcher.runRepeat(self._ontimeout, self, 1)
 end
 
-function var_0_0._ontimeout(arg_6_0)
-	arg_6_0._refreshCd = arg_6_0._refreshCd - 1
+function TurnbackNewProgressView:_ontimeout()
+	self._refreshCd = self._refreshCd - 1
 
-	if arg_6_0._refreshCd > 0 then
-		arg_6_0._txtrefresh.text = arg_6_0._refreshCd .. "s"
+	if self._refreshCd > 0 then
+		self._txtrefresh.text = self._refreshCd .. "s"
 	else
-		TaskDispatcher.cancelTask(arg_6_0._ontimeout, arg_6_0)
+		TaskDispatcher.cancelTask(self._ontimeout, self)
 
-		arg_6_0._txtrefresh.text = luaLang("p_turnbacknewprogressview_txt_refresh")
-		arg_6_0._canRefresh = true
-		arg_6_0._taskcd = nil
-		arg_6_0._refreshCd = TurnbackEnum.RefreshCd
+		self._txtrefresh.text = luaLang("p_turnbacknewprogressview_txt_refresh")
+		self._canRefresh = true
+		self._taskcd = nil
+		self._refreshCd = TurnbackEnum.RefreshCd
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._txtrefresh.text = luaLang("p_turnbacknewprogressview_txt_refresh")
+function TurnbackNewProgressView:_editableInitView()
+	self._txtrefresh.text = luaLang("p_turnbacknewprogressview_txt_refresh")
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function TurnbackNewProgressView:onUpdateParam()
 	return
 end
 
-function var_0_0.onCurrencyChange(arg_9_0)
+function TurnbackNewProgressView:onCurrencyChange()
 	TurnbackRpc.instance:sendGetTurnbackInfoRequest()
-	arg_9_0:refreshItemBySelf()
+	self:refreshItemBySelf()
 end
 
-function var_0_0.refreshItemBySelf(arg_10_0)
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._progressItems) do
-		iter_10_1.cls:refreshItemBySelf()
+function TurnbackNewProgressView:refreshItemBySelf()
+	for _, item in ipairs(self._progressItems) do
+		item.cls:refreshItemBySelf()
 	end
 end
 
-function var_0_0.refreshProgressItem(arg_11_0)
-	local var_11_0, var_11_1 = TurnbackModel.instance:getDropInfoList()
-	local var_11_2 = TurnbackModel.instance:getDropInfoByType(TurnbackEnum.DropInfoEnum.MainEpisode)
+function TurnbackNewProgressView:refreshProgressItem()
+	local level2list, level3list = TurnbackModel.instance:getDropInfoList()
+	local mainepisodemo = TurnbackModel.instance:getDropInfoByType(TurnbackEnum.DropInfoEnum.MainEpisode)
+	local mainepisodeitem = self._progressItems[TurnbackEnum.DropInfoEnum.MainEpisode]
 
-	arg_11_0._progressItems[TurnbackEnum.DropInfoEnum.MainEpisode].cls:refreshItem(var_11_2)
+	mainepisodeitem.cls:refreshItem(mainepisodemo)
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_3 = iter_11_0 + 2
-		local var_11_4 = arg_11_0._progressItems[var_11_3]
+	for index, mo in ipairs(level2list) do
+		local itemIndex = index + 2
+		local item = self._progressItems[itemIndex]
 
-		if var_11_4 then
-			var_11_4.cls:refreshItem(iter_11_1)
+		if item then
+			item.cls:refreshItem(mo)
 		end
 	end
 
-	arg_11_0._progressItems[6].cls:refreshItem(var_11_1[1])
+	local lastitem = self._progressItems[6]
+
+	lastitem.cls:refreshItem(level3list[1])
 end
 
-function var_0_0.onOpen(arg_12_0)
-	local var_12_0 = arg_12_0.viewParam.parent
+function TurnbackNewProgressView:onOpen()
+	local parentGO = self.viewParam.parent
 
 	TurnbackRpc.instance:sendGetTurnbackInfoRequest()
-	gohelper.addChild(var_12_0, arg_12_0.viewGO)
+	gohelper.addChild(parentGO, self.viewGO)
 
-	arg_12_0._progressItems = {}
+	self._progressItems = {}
 
-	for iter_12_0 = 1, 6 do
-		local var_12_1 = arg_12_0:getUserDataTb_()
+	for index = 1, 6 do
+		local item = self:getUserDataTb_()
 
-		var_12_1.go = gohelper.findChild(arg_12_0._gocontent, "item" .. iter_12_0)
-		var_12_1.cls = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_1.go, TurnbackNewProgressItem)
+		item.go = gohelper.findChild(self._gocontent, "item" .. index)
+		item.cls = MonoHelper.addNoUpdateLuaComOnceToGo(item.go, TurnbackNewProgressItem)
 
-		table.insert(arg_12_0._progressItems, var_12_1)
-		var_12_1.cls:initItem(iter_12_0)
+		table.insert(self._progressItems, item)
+		item.cls:initItem(index)
 	end
 
-	arg_12_0:refreshProgressItem()
+	self:refreshProgressItem()
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_03)
 end
 
-function var_0_0.onClose(arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._afteranim, arg_13_0)
-	TaskDispatcher.cancelTask(arg_13_0._ontimeout, arg_13_0)
+function TurnbackNewProgressView:onClose()
+	TaskDispatcher.cancelTask(self._afteranim, self)
+	TaskDispatcher.cancelTask(self._ontimeout, self)
 end
 
-function var_0_0.onDestroyView(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._ontimeout, arg_14_0)
+function TurnbackNewProgressView:onDestroyView()
+	TaskDispatcher.cancelTask(self._ontimeout, self)
 end
 
-return var_0_0
+return TurnbackNewProgressView

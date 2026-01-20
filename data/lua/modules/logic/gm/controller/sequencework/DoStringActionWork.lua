@@ -1,19 +1,21 @@
-﻿module("modules.logic.gm.controller.sequencework.DoStringActionWork", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/sequencework/DoStringActionWork.lua
 
-local var_0_0 = class("DoStringActionWork", BaseWork)
+module("modules.logic.gm.controller.sequencework.DoStringActionWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._actionStr = arg_1_1
+local DoStringActionWork = class("DoStringActionWork", BaseWork)
+
+function DoStringActionWork:ctor(actionStr)
+	self._actionStr = actionStr
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	local var_2_0 = loadstring(arg_2_0._actionStr)
+function DoStringActionWork:onStart(context)
+	local func = loadstring(self._actionStr)
 
-	if var_2_0 then
-		var_2_0()
+	if func then
+		func()
 	end
 
-	arg_2_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return DoStringActionWork

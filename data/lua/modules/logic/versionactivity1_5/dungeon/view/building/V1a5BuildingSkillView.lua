@@ -1,312 +1,318 @@
-﻿module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingSkillView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/dungeon/view/building/V1a5BuildingSkillView.lua
 
-local var_0_0 = class("V1a5BuildingSkillView", BaseView)
+module("modules.logic.versionactivity1_5.dungeon.view.building.V1a5BuildingSkillView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._scrolldesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "left/#scroll_desc")
-	arg_1_0._gobuildskillitem = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem")
-	arg_1_0.goBuildItem = gohelper.findChild(arg_1_0.viewGO, "right/#go_builditem")
-	arg_1_0._goArrow = gohelper.findChild(arg_1_0.viewGO, "left/#go_Arrow")
-	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+local V1a5BuildingSkillView = class("V1a5BuildingSkillView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function V1a5BuildingSkillView:onInitView()
+	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "left/#scroll_desc")
+	self._gobuildskillitem = gohelper.findChild(self.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem")
+	self.goBuildItem = gohelper.findChild(self.viewGO, "right/#go_builditem")
+	self._goArrow = gohelper.findChild(self.viewGO, "left/#go_Arrow")
+	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function V1a5BuildingSkillView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function V1a5BuildingSkillView:removeEvents()
 	return
 end
 
-var_0_0.BuildItemAnchorList = {
+V1a5BuildingSkillView.BuildItemAnchorList = {
 	220,
 	-60,
 	-340
 }
 
-function var_0_0.onScrollValueChanged(arg_4_0)
-	gohelper.setActive(arg_4_0._goArrow, arg_4_0._scrolldesc.verticalNormalizedPosition >= 0.01)
+function V1a5BuildingSkillView:onScrollValueChanged()
+	gohelper.setActive(self._goArrow, self._scrolldesc.verticalNormalizedPosition >= 0.01)
 end
 
-function var_0_0.initPointItem(arg_5_0)
-	arg_5_0.pointItemList = {}
+function V1a5BuildingSkillView:initPointItem()
+	self.pointItemList = {}
 
-	table.insert(arg_5_0.pointItemList, arg_5_0:createPointItem(gohelper.findChild(arg_5_0.viewGO, "left/point_container/#go_pointitem1")))
-	table.insert(arg_5_0.pointItemList, arg_5_0:createPointItem(gohelper.findChild(arg_5_0.viewGO, "left/point_container/#go_pointitem2")))
-	table.insert(arg_5_0.pointItemList, arg_5_0:createPointItem(gohelper.findChild(arg_5_0.viewGO, "left/point_container/#go_pointitem3")))
+	table.insert(self.pointItemList, self:createPointItem(gohelper.findChild(self.viewGO, "left/point_container/#go_pointitem1")))
+	table.insert(self.pointItemList, self:createPointItem(gohelper.findChild(self.viewGO, "left/point_container/#go_pointitem2")))
+	table.insert(self.pointItemList, self:createPointItem(gohelper.findChild(self.viewGO, "left/point_container/#go_pointitem3")))
 end
 
-function var_0_0.createPointItem(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getUserDataTb_()
+function V1a5BuildingSkillView:createPointItem(pointGo)
+	local pointItem = self:getUserDataTb_()
 
-	var_6_0.image = arg_6_1:GetComponent(gohelper.Type_Image)
-	var_6_0.effectGo1 = gohelper.findChild(arg_6_1, "#effect_green")
-	var_6_0.effectGo2 = gohelper.findChild(arg_6_1, "#effect_yellow")
+	pointItem.image = pointGo:GetComponent(gohelper.Type_Image)
+	pointItem.effectGo1 = gohelper.findChild(pointGo, "#effect_green")
+	pointItem.effectGo2 = gohelper.findChild(pointGo, "#effect_yellow")
 
-	return var_6_0
+	return pointItem
 end
 
-function var_0_0.initBuildItem(arg_7_0)
-	arg_7_0.buildItemList = {}
+function V1a5BuildingSkillView:initBuildItem()
+	self.buildItemList = {}
 
-	for iter_7_0 = 1, VersionActivity1_5DungeonEnum.BuildCount do
-		table.insert(arg_7_0.buildItemList, arg_7_0:createBuildItem(iter_7_0))
+	for i = 1, VersionActivity1_5DungeonEnum.BuildCount do
+		table.insert(self.buildItemList, self:createBuildItem(i))
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	arg_8_0.skillContentRectTr = gohelper.findChildComponent(arg_8_0.viewGO, "left/#scroll_desc/Viewport/Content", gohelper.Type_RectTransform)
+function V1a5BuildingSkillView:_editableInitView()
+	self.skillContentRectTr = gohelper.findChildComponent(self.viewGO, "left/#scroll_desc/Viewport/Content", gohelper.Type_RectTransform)
 
-	local var_8_0 = gohelper.findChildComponent(arg_8_0.viewGO, "left/#scroll_desc/Viewport", gohelper.Type_RectTransform)
+	local viewPortTr = gohelper.findChildComponent(self.viewGO, "left/#scroll_desc/Viewport", gohelper.Type_RectTransform)
 
-	arg_8_0.viewPortHeight = recthelper.getHeight(var_8_0)
+	self.viewPortHeight = recthelper.getHeight(viewPortTr)
 
-	gohelper.setActive(arg_8_0.goBuildItem, false)
+	gohelper.setActive(self.goBuildItem, false)
 
-	arg_8_0.singleImageBg = gohelper.findChildSingleImage(arg_8_0.viewGO, "bg")
+	self.singleImageBg = gohelper.findChildSingleImage(self.viewGO, "bg")
 
-	local var_8_1 = gohelper.findChildText(arg_8_0.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem/ani/image_EffectBG/#txt_buildname")
-	local var_8_2 = gohelper.findChildText(arg_8_0.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem/ani/#txt_buildskilldesc")
+	local txtbuildbasename = gohelper.findChildText(self.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem/ani/image_EffectBG/#txt_buildname")
+	local txtbuildbaseskilldesc = gohelper.findChildText(self.viewGO, "left/#scroll_desc/Viewport/Content/#go_buildskillitem/ani/#txt_buildskilldesc")
 
-	var_8_1.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_name")
-	var_8_2.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_desc")
+	txtbuildbasename.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_name")
+	txtbuildbaseskilldesc.text = luaLang("p_versionactivity_1_5_build_base_skill_effect_desc")
 
-	arg_8_0._scrolldesc:AddOnValueChanged(arg_8_0.onScrollValueChanged, arg_8_0)
+	self._scrolldesc:AddOnValueChanged(self.onScrollValueChanged, self)
 
-	arg_8_0.labelList = {
+	self.labelList = {
 		luaLang("p_versionactivity_1_5_build1_label"),
 		luaLang("p_versionactivity_1_5_build2_label"),
 		luaLang("p_versionactivity_1_5_build3_label")
 	}
-	arg_8_0.skillItemDict = {}
+	self.skillItemDict = {}
 
-	arg_8_0:initPointItem()
-	arg_8_0:initBuildItem()
-	arg_8_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, arg_8_0.onUpdateSelectBuild, arg_8_0)
+	self:initPointItem()
+	self:initBuildItem()
+	self:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnUpdateSelectBuild, self.onUpdateSelectBuild, self)
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function V1a5BuildingSkillView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_10_0)
-	arg_10_0:refreshUI()
+function V1a5BuildingSkillView:onOpen()
+	self:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_11_0)
-	arg_11_0:refreshPointImage()
-	arg_11_0:refreshBuildSkill()
-	arg_11_0:refreshBuildIcon()
-	arg_11_0:onScrollValueChanged()
+function V1a5BuildingSkillView:refreshUI()
+	self:refreshPointImage()
+	self:refreshBuildSkill()
+	self:refreshBuildIcon()
+	self:onScrollValueChanged()
 end
 
-function var_0_0.refreshPointImage(arg_12_0)
-	for iter_12_0 = 1, VersionActivity1_5DungeonEnum.BuildCount do
-		local var_12_0 = VersionActivity1_5BuildModel.instance:getSelectType(iter_12_0)
+function V1a5BuildingSkillView:refreshPointImage()
+	for i = 1, VersionActivity1_5DungeonEnum.BuildCount do
+		local type = VersionActivity1_5BuildModel.instance:getSelectType(i)
 
-		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(arg_12_0.pointItemList[iter_12_0].image, VersionActivity1_5DungeonEnum.BuildType2SmallImage[var_12_0])
+		UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(self.pointItemList[i].image, VersionActivity1_5DungeonEnum.BuildType2SmallImage[type])
 	end
 end
 
-function var_0_0.refreshBuildSkill(arg_13_0)
-	local var_13_0 = VersionActivity1_5BuildModel.instance:getSelectTypeList()
+function V1a5BuildingSkillView:refreshBuildSkill()
+	local typeList = VersionActivity1_5BuildModel.instance:getSelectTypeList()
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		if iter_13_1 ~= VersionActivity1_5DungeonEnum.BuildType.None then
-			local var_13_1 = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(iter_13_0, iter_13_1)
-			local var_13_2 = arg_13_0.skillItemDict[iter_13_0] or arg_13_0:createSkillItem(iter_13_0)
+	for groupId, type in ipairs(typeList) do
+		if type ~= VersionActivity1_5DungeonEnum.BuildType.None then
+			local co = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(groupId, type)
+			local skillItem = self.skillItemDict[groupId]
 
-			var_13_2.txtbuildname.text = VersionActivity1_5BuildModel.getTextByType(iter_13_1, var_13_1.name)
-			var_13_2.txtbuildnameEn.text = var_13_1.nameEn
-			var_13_2.txtbuildskilldesc.text = VersionActivity1_5BuildModel.getTextByType(iter_13_1, var_13_1.skilldesc)
+			skillItem = skillItem or self:createSkillItem(groupId)
+			skillItem.txtbuildname.text = VersionActivity1_5BuildModel.getTextByType(type, co.name)
+			skillItem.txtbuildnameEn.text = co.nameEn
+			skillItem.txtbuildskilldesc.text = VersionActivity1_5BuildModel.getTextByType(type, co.skilldesc)
 
-			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(var_13_2.imagebuildnamebg, VersionActivity1_5DungeonEnum.BuildType2TitleBgImage[iter_13_1])
+			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(skillItem.imagebuildnamebg, VersionActivity1_5DungeonEnum.BuildType2TitleBgImage[type])
 		end
 	end
 end
 
-function var_0_0.refreshBuildIcon(arg_14_0)
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0.buildItemList) do
-		iter_14_1.txtLabel.text = arg_14_0.labelList[iter_14_0]
+function V1a5BuildingSkillView:refreshBuildIcon()
+	for index, buildItem in ipairs(self.buildItemList) do
+		buildItem.txtLabel.text = self.labelList[index]
 
-		for iter_14_2, iter_14_3 in ipairs(iter_14_1.subBuildList) do
-			local var_14_0 = iter_14_3.buildCo
-			local var_14_1 = var_14_0.id
+		for _, subBuildItem in ipairs(buildItem.subBuildList) do
+			local buildCo = subBuildItem.buildCo
+			local buildId = buildCo.id
 
-			iter_14_3.txtBuildName.text = var_14_0.name
+			subBuildItem.txtBuildName.text = buildCo.name
 
-			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_14_3.icon, var_14_0.icon)
+			UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(subBuildItem.icon, buildCo.icon)
 
-			local var_14_2 = VersionActivity1_5BuildModel.instance:checkBuildIsHad(var_14_1)
+			local isHad = VersionActivity1_5BuildModel.instance:checkBuildIsHad(buildId)
 
-			if var_14_2 then
-				UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_14_3.iconBg, VersionActivity1_5DungeonEnum.BuildType2Image[var_14_0.type])
+			if isHad then
+				UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(subBuildItem.iconBg, VersionActivity1_5DungeonEnum.BuildType2Image[buildCo.type])
 			else
-				UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(iter_14_3.iconBg, VersionActivity1_5DungeonEnum.BuildType2Image[VersionActivity1_5DungeonEnum.BuildType.None])
+				UISpriteSetMgr.instance:setV1a5DungeonBuildSprite(subBuildItem.iconBg, VersionActivity1_5DungeonEnum.BuildType2Image[VersionActivity1_5DungeonEnum.BuildType.None])
 			end
 
-			local var_14_3 = VersionActivity1_5BuildModel.instance:checkBuildIdIsSelect(var_14_1)
+			local isSelect = VersionActivity1_5BuildModel.instance:checkBuildIdIsSelect(buildId)
 
-			gohelper.setActive(iter_14_3.goSelect, var_14_3)
+			gohelper.setActive(subBuildItem.goSelect, isSelect)
 
-			if var_14_3 and var_14_2 then
-				iter_14_3.canvasGroup.alpha = 1
+			if isSelect and isHad then
+				subBuildItem.canvasGroup.alpha = 1
 			else
-				iter_14_3.canvasGroup.alpha = 0.5
+				subBuildItem.canvasGroup.alpha = 0.5
 			end
 		end
 	end
 end
 
-function var_0_0.createSkillItem(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_0:getUserDataTb_()
+function V1a5BuildingSkillView:createSkillItem(groupIndex)
+	local skillItem = self:getUserDataTb_()
 
-	var_15_0.go = gohelper.cloneInPlace(arg_15_0._gobuildskillitem)
-	var_15_0.aniGo = gohelper.findChild(var_15_0.go, "ani")
-	var_15_0.rectTr = var_15_0.go:GetComponent(gohelper.Type_RectTransform)
-	var_15_0.imagebuildnamebg = gohelper.findChildImage(var_15_0.aniGo, "image_EffectBG")
-	var_15_0.txtbuildname = gohelper.findChildText(var_15_0.aniGo, "image_EffectBG/#txt_buildname")
-	var_15_0.txtbuildnameEn = gohelper.findChildText(var_15_0.aniGo, "Line/#txt_En")
-	var_15_0.txtbuildskilldesc = gohelper.findChildText(var_15_0.aniGo, "#txt_buildskilldesc")
-	var_15_0.animator = var_15_0.go:GetComponent(gohelper.Type_Animator)
-	arg_15_0.skillItemDict[arg_15_1] = var_15_0
+	skillItem.go = gohelper.cloneInPlace(self._gobuildskillitem)
+	skillItem.aniGo = gohelper.findChild(skillItem.go, "ani")
+	skillItem.rectTr = skillItem.go:GetComponent(gohelper.Type_RectTransform)
+	skillItem.imagebuildnamebg = gohelper.findChildImage(skillItem.aniGo, "image_EffectBG")
+	skillItem.txtbuildname = gohelper.findChildText(skillItem.aniGo, "image_EffectBG/#txt_buildname")
+	skillItem.txtbuildnameEn = gohelper.findChildText(skillItem.aniGo, "Line/#txt_En")
+	skillItem.txtbuildskilldesc = gohelper.findChildText(skillItem.aniGo, "#txt_buildskilldesc")
+	skillItem.animator = skillItem.go:GetComponent(gohelper.Type_Animator)
+	self.skillItemDict[groupIndex] = skillItem
 
-	return var_15_0
+	return skillItem
 end
 
-function var_0_0.createBuildItem(arg_16_0, arg_16_1)
-	local var_16_0 = gohelper.cloneInPlace(arg_16_0.goBuildItem)
+function V1a5BuildingSkillView:createBuildItem(index)
+	local go = gohelper.cloneInPlace(self.goBuildItem)
 
-	gohelper.setActive(var_16_0, true)
+	gohelper.setActive(go, true)
 
-	local var_16_1 = arg_16_0:getUserDataTb_()
+	local buildItem = self:getUserDataTb_()
 
-	var_16_1.go = var_16_0
-	var_16_1.rectTr = var_16_1.go:GetComponent(gohelper.Type_RectTransform)
+	buildItem.go = go
+	buildItem.rectTr = buildItem.go:GetComponent(gohelper.Type_RectTransform)
 
-	recthelper.setAnchorY(var_16_1.rectTr, var_0_0.BuildItemAnchorList[arg_16_1])
+	recthelper.setAnchorY(buildItem.rectTr, V1a5BuildingSkillView.BuildItemAnchorList[index])
 
-	var_16_1.txtLabel = gohelper.findChildText(var_16_1.go, "header/#txt_buildlabel")
-	var_16_1.subBuildList = {}
+	buildItem.txtLabel = gohelper.findChildText(buildItem.go, "header/#txt_buildlabel")
+	buildItem.subBuildList = {}
 
-	local var_16_2 = gohelper.findChild(var_16_1.go, "content/build1")
-	local var_16_3 = gohelper.findChild(var_16_1.go, "content/build2")
+	local goSubBuild1 = gohelper.findChild(buildItem.go, "content/build1")
+	local goSubBuild2 = gohelper.findChild(buildItem.go, "content/build2")
 
-	table.insert(var_16_1.subBuildList, arg_16_0:createBuildSubItem(var_16_2, arg_16_1, 1))
-	table.insert(var_16_1.subBuildList, arg_16_0:createBuildSubItem(var_16_3, arg_16_1, 2))
+	table.insert(buildItem.subBuildList, self:createBuildSubItem(goSubBuild1, index, 1))
+	table.insert(buildItem.subBuildList, self:createBuildSubItem(goSubBuild2, index, 2))
 
-	return var_16_1
+	return buildItem
 end
 
-function var_0_0.createBuildSubItem(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_0:getUserDataTb_()
+function V1a5BuildingSkillView:createBuildSubItem(go, groupIndex, index)
+	local buildSubItem = self:getUserDataTb_()
 
-	var_17_0.go = arg_17_1
-	var_17_0.canvasGroup = var_17_0.go:GetComponent(gohelper.Type_CanvasGroup)
-	var_17_0.iconBg = gohelper.findChildImage(var_17_0.go, "#image_BuildBG")
-	var_17_0.goSelect = gohelper.findChild(var_17_0.go, "#image_BuildBG/#go_select")
-	var_17_0.icon = gohelper.findChildImage(var_17_0.go, "#image_BuildBG/#image_TotemIcon")
-	var_17_0.txtBuildName = gohelper.findChildText(var_17_0.go, "txt_buildname")
-	var_17_0.click = gohelper.findChildClickWithDefaultAudio(var_17_0.go, "clickarea")
-	var_17_0.buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(arg_17_2, arg_17_3)
+	buildSubItem.go = go
+	buildSubItem.canvasGroup = buildSubItem.go:GetComponent(gohelper.Type_CanvasGroup)
+	buildSubItem.iconBg = gohelper.findChildImage(buildSubItem.go, "#image_BuildBG")
+	buildSubItem.goSelect = gohelper.findChild(buildSubItem.go, "#image_BuildBG/#go_select")
+	buildSubItem.icon = gohelper.findChildImage(buildSubItem.go, "#image_BuildBG/#image_TotemIcon")
+	buildSubItem.txtBuildName = gohelper.findChildText(buildSubItem.go, "txt_buildname")
+	buildSubItem.click = gohelper.findChildClickWithDefaultAudio(buildSubItem.go, "clickarea")
+	buildSubItem.buildCo = VersionActivity1_5DungeonConfig.instance:getBuildCoByGroupAndType(groupIndex, index)
 
-	var_17_0.click:AddClickListener(arg_17_0.onClickBuildSubItem, arg_17_0, var_17_0)
+	buildSubItem.click:AddClickListener(self.onClickBuildSubItem, self, buildSubItem)
 
-	return var_17_0
+	return buildSubItem
 end
 
-function var_0_0.onClickBuildSubItem(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_1.buildCo
-	local var_18_1 = var_18_0.id
+function V1a5BuildingSkillView:onClickBuildSubItem(buildSubItem)
+	local buildCo = buildSubItem.buildCo
+	local buildId = buildCo.id
 
-	if not VersionActivity1_5BuildModel.instance:checkBuildIsHad(var_18_1) then
+	if not VersionActivity1_5BuildModel.instance:checkBuildIsHad(buildId) then
 		GameFacade.showToast(ToastEnum.SeasonEquipUnlock)
 
 		return
 	end
 
-	if VersionActivity1_5BuildModel.instance:checkBuildIdIsSelect(var_18_1) then
+	if VersionActivity1_5BuildModel.instance:checkBuildIdIsSelect(buildId) then
 		return
 	end
 
-	arg_18_0.changeGroupIndex = var_18_0.group
+	self.changeGroupIndex = buildCo.group
 
-	VersionActivity1_5BuildModel.instance:setSelectBuildId(var_18_0)
+	VersionActivity1_5BuildModel.instance:setSelectBuildId(buildCo)
 	VersionActivity1_5DungeonRpc.instance:sendAct140SelectBuildRequest(VersionActivity1_5BuildModel.instance.selectBuildList)
 end
 
-function var_0_0.onUpdateSelectBuild(arg_19_0)
-	arg_19_0:setSkillContainerAnchorY()
-	arg_19_0:refreshPointImage()
-	arg_19_0:playPointAnimation()
-	arg_19_0:refreshBuildSkill()
-	arg_19_0:playBuildSkillAnimation()
-	arg_19_0:refreshBuildIcon()
+function V1a5BuildingSkillView:onUpdateSelectBuild()
+	self:setSkillContainerAnchorY()
+	self:refreshPointImage()
+	self:playPointAnimation()
+	self:refreshBuildSkill()
+	self:playBuildSkillAnimation()
+	self:refreshBuildIcon()
 
-	arg_19_0.changeGroupIndex = nil
+	self.changeGroupIndex = nil
 end
 
-function var_0_0.setSkillContainerAnchorY(arg_20_0)
-	local var_20_0 = arg_20_0.skillItemDict[arg_20_0.changeGroupIndex]
+function V1a5BuildingSkillView:setSkillContainerAnchorY()
+	local skillItem = self.skillItemDict[self.changeGroupIndex]
 
-	if not var_20_0 then
+	if not skillItem then
 		return
 	end
 
-	if not arg_20_0.maxAnchorY then
-		arg_20_0.maxAnchorY = recthelper.getHeight(arg_20_0.skillContentRectTr) - arg_20_0.viewPortHeight
+	if not self.maxAnchorY then
+		local contentHeight = recthelper.getHeight(self.skillContentRectTr)
+
+		self.maxAnchorY = contentHeight - self.viewPortHeight
 	end
 
-	local var_20_1 = recthelper.getAnchorY(var_20_0.rectTr)
+	local anchorY = recthelper.getAnchorY(skillItem.rectTr)
 
-	recthelper.setAnchorY(arg_20_0.skillContentRectTr, Mathf.Min(-var_20_1, arg_20_0.maxAnchorY))
+	recthelper.setAnchorY(self.skillContentRectTr, Mathf.Min(-anchorY, self.maxAnchorY))
 end
 
-function var_0_0.playPointAnimation(arg_21_0)
-	if not arg_21_0.changeGroupIndex then
+function V1a5BuildingSkillView:playPointAnimation()
+	if not self.changeGroupIndex then
 		return
 	end
 
-	local var_21_0 = VersionActivity1_5BuildModel.instance:getSelectType(arg_21_0.changeGroupIndex)
-	local var_21_1 = arg_21_0.pointItemList[arg_21_0.changeGroupIndex]
+	local selectType = VersionActivity1_5BuildModel.instance:getSelectType(self.changeGroupIndex)
+	local pointItem = self.pointItemList[self.changeGroupIndex]
 
-	gohelper.setActive(var_21_1.effectGo1, false)
-	gohelper.setActive(var_21_1.effectGo2, false)
+	gohelper.setActive(pointItem.effectGo1, false)
+	gohelper.setActive(pointItem.effectGo2, false)
 
-	if var_21_0 == VersionActivity1_5DungeonEnum.BuildType.First then
-		gohelper.setActive(var_21_1.effectGo1, true)
+	if selectType == VersionActivity1_5DungeonEnum.BuildType.First then
+		gohelper.setActive(pointItem.effectGo1, true)
 	else
-		gohelper.setActive(var_21_1.effectGo2, true)
+		gohelper.setActive(pointItem.effectGo2, true)
 	end
 end
 
-function var_0_0.playBuildSkillAnimation(arg_22_0)
-	if not arg_22_0.changeGroupIndex then
+function V1a5BuildingSkillView:playBuildSkillAnimation()
+	if not self.changeGroupIndex then
 		return
 	end
 
-	local var_22_0 = VersionActivity1_5BuildModel.instance:getSelectType(arg_22_0.changeGroupIndex)
+	local selectType = VersionActivity1_5BuildModel.instance:getSelectType(self.changeGroupIndex)
+	local skillItem = self.skillItemDict[self.changeGroupIndex]
 
-	arg_22_0.skillItemDict[arg_22_0.changeGroupIndex].animator:Play(var_22_0 == VersionActivity1_5DungeonEnum.BuildType.First and "switch_green" or "switch_orange", 0, 0)
+	skillItem.animator:Play(selectType == VersionActivity1_5DungeonEnum.BuildType.First and "switch_green" or "switch_orange", 0, 0)
 end
 
-function var_0_0.onClose(arg_23_0)
+function V1a5BuildingSkillView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_24_0)
-	arg_24_0.singleImageBg:UnLoadImage()
-	arg_24_0._scrolldesc:RemoveOnValueChanged()
+function V1a5BuildingSkillView:onDestroyView()
+	self.singleImageBg:UnLoadImage()
+	self._scrolldesc:RemoveOnValueChanged()
 
-	for iter_24_0, iter_24_1 in ipairs(arg_24_0.buildItemList) do
-		for iter_24_2, iter_24_3 in ipairs(iter_24_1.subBuildList) do
-			iter_24_3.click:RemoveClickListener()
+	for _, buildItem in ipairs(self.buildItemList) do
+		for _, subBuildItem in ipairs(buildItem.subBuildList) do
+			subBuildItem.click:RemoveClickListener()
 		end
 	end
 end
 
-return var_0_0
+return V1a5BuildingSkillView

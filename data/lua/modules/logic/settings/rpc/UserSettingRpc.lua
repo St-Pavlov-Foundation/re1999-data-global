@@ -1,39 +1,41 @@
-﻿module("modules.logic.settings.rpc.UserSettingRpc", package.seeall)
+﻿-- chunkname: @modules/logic/settings/rpc/UserSettingRpc.lua
 
-local var_0_0 = class("UserSettingRpc", BaseRpc)
+module("modules.logic.settings.rpc.UserSettingRpc", package.seeall)
 
-function var_0_0.sendGetSettingInfosRequest(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = UserSettingModule_pb.GetSettingInfosRequest()
+local UserSettingRpc = class("UserSettingRpc", BaseRpc)
 
-	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
+function UserSettingRpc:sendGetSettingInfosRequest(callback, callbackObj)
+	local req = UserSettingModule_pb.GetSettingInfosRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
 end
 
-function var_0_0.onReceiveGetSettingInfosReply(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 ~= 0 then
+function UserSettingRpc:onReceiveGetSettingInfosReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	SettingsModel.instance:setPushState(arg_2_2.infos)
+	SettingsModel.instance:setPushState(msg.infos)
 end
 
-function var_0_0.sendUpdateSettingInfoRequest(arg_3_0, arg_3_1, arg_3_2)
-	local var_3_0 = UserSettingModule_pb.UpdateSettingInfoRequest()
+function UserSettingRpc:sendUpdateSettingInfoRequest(type, state)
+	local req = UserSettingModule_pb.UpdateSettingInfoRequest()
 
-	var_3_0.type = arg_3_1
-	var_3_0.param = arg_3_2
+	req.type = type
+	req.param = state
 
-	return arg_3_0:sendMsg(var_3_0)
+	return self:sendMsg(req)
 end
 
-function var_0_0.onReceiveUpdateSettingInfoReply(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_1 ~= 0 then
+function UserSettingRpc:onReceiveUpdateSettingInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
 		return
 	end
 
-	SettingsModel.instance:updatePushState(arg_4_2.type, arg_4_2.param)
+	SettingsModel.instance:updatePushState(msg.type, msg.param)
 	SettingsController.instance:dispatchEvent(SettingsEvent.OnChangePushType)
 end
 
-var_0_0.instance = var_0_0.New()
+UserSettingRpc.instance = UserSettingRpc.New()
 
-return var_0_0
+return UserSettingRpc

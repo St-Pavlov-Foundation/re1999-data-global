@@ -1,95 +1,99 @@
-﻿module("modules.logic.activity.model.ActivityModel", package.seeall)
+﻿-- chunkname: @modules/logic/activity/model/ActivityModel.lua
 
-local var_0_0 = class("ActivityModel", BaseModel)
+module("modules.logic.activity.model.ActivityModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local ActivityModel = class("ActivityModel", BaseModel)
+
+function ActivityModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._actInfo = {}
-	arg_2_0._finishActTab = {}
-	arg_2_0._actMoTab = {}
-	arg_2_0._isNoviceTaskUnlock = false
-	arg_2_0._targetActivityCategoryId = 0
+function ActivityModel:reInit()
+	self._actInfo = {}
+	self._finishActTab = {}
+	self._actMoTab = {}
+	self._isNoviceTaskUnlock = false
+	self._targetActivityCategoryId = 0
 end
 
-function var_0_0.setActivityInfo(arg_3_0, arg_3_1)
-	arg_3_0._actInfo = {}
+function ActivityModel:setActivityInfo(info)
+	self._actInfo = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.activityInfos) do
-		if ActivityConfig.instance:getActivityCo(iter_3_1.id) then
-			local var_3_0 = ActivityInfoMo.New()
+	for _, v in ipairs(info.activityInfos) do
+		local actCo = ActivityConfig.instance:getActivityCo(v.id)
 
-			var_3_0:init(iter_3_1)
+		if actCo then
+			local actMo = ActivityInfoMo.New()
 
-			arg_3_0._actInfo[iter_3_1.id] = var_3_0
+			actMo:init(v)
+
+			self._actInfo[v.id] = actMo
 		end
 	end
 end
 
-function var_0_0.updateActivityInfo(arg_4_0, arg_4_1)
-	local var_4_0 = ActivityInfoMo.New()
+function ActivityModel:updateActivityInfo(info)
+	local actMo = ActivityInfoMo.New()
 
-	var_4_0:init(arg_4_1)
+	actMo:init(info)
 
-	arg_4_0._actInfo[arg_4_1.id] = var_4_0
+	self._actInfo[info.id] = actMo
 end
 
-function var_0_0.updateInfoNoRepleace(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_0._actInfo[arg_5_1.id]
+function ActivityModel:updateInfoNoRepleace(info)
+	local actMo = self._actInfo[info.id]
 
-	if not var_5_0 then
-		var_5_0 = ActivityInfoMo.New()
-		arg_5_0._actInfo[arg_5_1.id] = var_5_0
+	if not actMo then
+		actMo = ActivityInfoMo.New()
+		self._actInfo[info.id] = actMo
 	end
 
-	var_5_0:init(arg_5_1)
+	actMo:init(info)
 end
 
-function var_0_0.endActivity(arg_6_0, arg_6_1)
-	if arg_6_0._actInfo[arg_6_1] then
-		arg_6_0._actInfo[arg_6_1].online = false
+function ActivityModel:endActivity(actId)
+	if self._actInfo[actId] then
+		self._actInfo[actId].online = false
 	end
 end
 
-function var_0_0.getActivityInfo(arg_7_0)
-	return arg_7_0._actInfo
+function ActivityModel:getActivityInfo()
+	return self._actInfo
 end
 
-function var_0_0.getActMO(arg_8_0, arg_8_1)
-	return arg_8_0._actInfo[arg_8_1]
+function ActivityModel:getActMO(actId)
+	return self._actInfo[actId]
 end
 
-function var_0_0.isActOnLine(arg_9_0, arg_9_1)
-	return arg_9_0._actInfo[arg_9_1] and arg_9_0._actInfo[arg_9_1].online
+function ActivityModel:isActOnLine(actId)
+	return self._actInfo[actId] and self._actInfo[actId].online
 end
 
-function var_0_0.getOnlineActIdByType(arg_10_0, arg_10_1)
-	local var_10_0
+function ActivityModel:getOnlineActIdByType(actType)
+	local result
 
-	for iter_10_0, iter_10_1 in pairs(arg_10_0._actInfo) do
-		if iter_10_1.actType == arg_10_1 and iter_10_1.online then
-			var_10_0 = var_10_0 or {}
+	for actId, actInfo in pairs(self._actInfo) do
+		if actInfo.actType == actType and actInfo.online then
+			result = result or {}
 
-			table.insert(var_10_0, iter_10_0)
+			table.insert(result, actId)
 		end
 	end
 
-	return var_10_0
+	return result
 end
 
-function var_0_0.getActStartTime(arg_11_0, arg_11_1)
-	return arg_11_0._actInfo[arg_11_1].startTime
+function ActivityModel:getActStartTime(actId)
+	return self._actInfo[actId].startTime
 end
 
-function var_0_0.getActEndTime(arg_12_0, arg_12_1)
-	return arg_12_0._actInfo[arg_12_1].endTime
+function ActivityModel:getActEndTime(actId)
+	return self._actInfo[actId].endTime
 end
 
-function var_0_0.hasActivityUnlock(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0._actInfo) do
-		if iter_13_1.online then
+function ActivityModel:hasActivityUnlock(centerId)
+	for _, v in pairs(self._actInfo) do
+		if v.online then
 			return true
 		end
 	end
@@ -97,98 +101,101 @@ function var_0_0.hasActivityUnlock(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0.getTargetActivityCategoryId(arg_14_0, arg_14_1)
-	if not next(arg_14_0._actInfo) then
-		arg_14_0._targetActivityCategoryId = 0
+function ActivityModel:getTargetActivityCategoryId(centerId)
+	if not next(self._actInfo) then
+		self._targetActivityCategoryId = 0
 
 		return 0
 	end
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0._actInfo) do
-		if iter_14_1.id == arg_14_0._targetActivityCategoryId and iter_14_1.centerId == arg_14_1 and iter_14_1.online then
-			return arg_14_0._targetActivityCategoryId
+	for _, v in pairs(self._actInfo) do
+		if v.id == self._targetActivityCategoryId and v.centerId == centerId and v.online then
+			return self._targetActivityCategoryId
 		end
 	end
 
-	local var_14_0 = {}
+	local centerIds = {}
 
-	for iter_14_2, iter_14_3 in pairs(arg_14_0._actInfo) do
-		if iter_14_3.centerId == arg_14_1 and iter_14_3.online then
-			table.insert(var_14_0, iter_14_3.id)
+	for _, v in pairs(self._actInfo) do
+		if v.centerId == centerId and v.online then
+			table.insert(centerIds, v.id)
 
-			arg_14_0._actMoTab[iter_14_3.id] = iter_14_3
+			self._actMoTab[v.id] = v
 		end
 	end
 
-	local var_14_1 = arg_14_0:removeUnExitAct(var_14_0)
+	centerIds = self:removeUnExitAct(centerIds)
 
-	table.sort(var_14_1, function(arg_15_0, arg_15_1)
-		return ActivityConfig.instance:getActivityCo(arg_15_0).displayPriority < ActivityConfig.instance:getActivityCo(arg_15_1).displayPriority
+	table.sort(centerIds, function(a, b)
+		local aPri = ActivityConfig.instance:getActivityCo(a).displayPriority
+		local bPri = ActivityConfig.instance:getActivityCo(b).displayPriority
+
+		return aPri < bPri
 	end)
 
-	arg_14_0._targetActivityCategoryId = #var_14_1 > 0 and var_14_1[1] or 0
+	self._targetActivityCategoryId = #centerIds > 0 and centerIds[1] or 0
 
-	return arg_14_0._targetActivityCategoryId
+	return self._targetActivityCategoryId
 end
 
-function var_0_0.setTargetActivityCategoryId(arg_16_0, arg_16_1)
-	arg_16_0._targetActivityCategoryId = arg_16_1
+function ActivityModel:setTargetActivityCategoryId(id)
+	self._targetActivityCategoryId = id
 end
 
-function var_0_0.getCurTargetActivityCategoryId(arg_17_0)
-	return arg_17_0._targetActivityCategoryId
+function ActivityModel:getCurTargetActivityCategoryId()
+	return self._targetActivityCategoryId
 end
 
-function var_0_0.addFinishActivity(arg_18_0, arg_18_1)
-	arg_18_0._finishActTab[arg_18_1] = arg_18_1
+function ActivityModel:addFinishActivity(finishActId)
+	self._finishActTab[finishActId] = finishActId
 end
 
-function var_0_0.removeUnExitAct(arg_19_0, arg_19_1)
-	if GameUtil.getTabLen(arg_19_1) == 0 then
+function ActivityModel:removeUnExitAct(actIds)
+	if GameUtil.getTabLen(actIds) == 0 then
 		return
 	end
 
-	for iter_19_0, iter_19_1 in pairs(arg_19_0._finishActTab) do
-		tabletool.removeValue(arg_19_1, iter_19_1)
+	for k, v in pairs(self._finishActTab) do
+		tabletool.removeValue(actIds, v)
 	end
 
-	return arg_19_1
+	return actIds
 end
 
-function var_0_0.getActivityCenter(arg_20_0)
-	local var_20_0 = {}
+function ActivityModel:getActivityCenter()
+	local centers = {}
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0._actInfo) do
-		if iter_20_1.centerId ~= 0 and iter_20_1.online then
-			if not var_20_0[iter_20_1.centerId] then
-				var_20_0[iter_20_1.centerId] = {}
+	for _, v in pairs(self._actInfo) do
+		if v.centerId ~= 0 and v.online then
+			if not centers[v.centerId] then
+				centers[v.centerId] = {}
 			end
 
-			table.insert(var_20_0[iter_20_1.centerId], iter_20_1.id)
+			table.insert(centers[v.centerId], v.id)
 		end
 	end
 
-	return var_20_0
+	return centers
 end
 
-function var_0_0.getCenterActivities(arg_21_0, arg_21_1)
-	local var_21_0 = {}
+function ActivityModel:getCenterActivities(centerId)
+	local acts = {}
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0._actInfo) do
-		if iter_21_1.centerId == arg_21_1 and iter_21_1.online then
-			table.insert(var_21_0, iter_21_1.id)
+	for _, v in pairs(self._actInfo) do
+		if v.centerId == centerId and v.online then
+			table.insert(acts, v.id)
 		end
 	end
 
-	return var_21_0
+	return acts
 end
 
-function var_0_0.hasNorSignRewardUnReceived(arg_22_0)
-	local var_22_0 = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NorSign)
+function ActivityModel:hasNorSignRewardUnReceived()
+	local infos = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NorSign)
 
-	if var_22_0 then
-		for iter_22_0, iter_22_1 in pairs(var_22_0) do
-			if iter_22_1.state == 1 then
+	if infos then
+		for _, v in pairs(infos) do
+			if v.state == 1 then
 				return true
 			end
 		end
@@ -197,12 +204,12 @@ function var_0_0.hasNorSignRewardUnReceived(arg_22_0)
 	return false
 end
 
-function var_0_0.hasNoviceSignRewardUnReceived(arg_23_0)
-	local var_23_0 = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NoviceSign)
+function ActivityModel:hasNoviceSignRewardUnReceived()
+	local infos = ActivityType101Model.instance:getType101Info(ActivityEnum.Activity.NoviceSign)
 
-	if var_23_0 then
-		for iter_23_0, iter_23_1 in pairs(var_23_0) do
-			if iter_23_1.state == 1 then
+	if infos then
+		for _, v in pairs(infos) do
+			if v.state == 1 then
 				return true
 			end
 		end
@@ -211,144 +218,145 @@ function var_0_0.hasNoviceSignRewardUnReceived(arg_23_0)
 	return false
 end
 
-function var_0_0.getRemainTime(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0:getActMO(arg_24_1)
+function ActivityModel:getRemainTime(actId)
+	local actMO = self:getActMO(actId)
 
-	if var_24_0 then
-		local var_24_1 = var_24_0.endTime / 1000 - ServerTime.now()
-		local var_24_2 = Mathf.Floor(var_24_1 / TimeUtil.OneDaySecond)
-		local var_24_3 = var_24_1 % TimeUtil.OneDaySecond
-		local var_24_4 = Mathf.Floor(var_24_3 / TimeUtil.OneHourSecond)
-		local var_24_5 = var_24_3 % TimeUtil.OneHourSecond
-		local var_24_6 = Mathf.Ceil(var_24_5 / TimeUtil.OneMinuteSecond)
+	if actMO then
+		local remainTimeSec = actMO.endTime / 1000 - ServerTime.now()
+		local day = Mathf.Floor(remainTimeSec / TimeUtil.OneDaySecond)
+		local hourSecond = remainTimeSec % TimeUtil.OneDaySecond
+		local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)
+		local minuteSecond = hourSecond % TimeUtil.OneHourSecond
+		local minute = Mathf.Ceil(minuteSecond / TimeUtil.OneMinuteSecond)
 
-		return var_24_2, var_24_4, var_24_6
+		return day, hour, minute
 	end
 end
 
-function var_0_0.removeFinishedCategory(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in pairs(arg_25_1) do
-		if iter_25_1 == ActivityEnum.Activity.DreamShow then
-			local var_25_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.ActivityShow)
+function ActivityModel:removeFinishedCategory(actCo)
+	for index, id in pairs(actCo) do
+		if id == ActivityEnum.Activity.DreamShow then
+			local taskMos = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.ActivityShow)
 
-			if var_25_0 and next(var_25_0) then
-				local var_25_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+			if taskMos and next(taskMos) then
+				local taskMoList = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
 
-				if var_25_1 and var_25_1[1].finishCount >= var_25_1[1].config.maxFinishCount then
-					arg_25_1[iter_25_0] = nil
+				if taskMoList and taskMoList[1].finishCount >= taskMoList[1].config.maxFinishCount then
+					actCo[index] = nil
 
-					arg_25_0:addFinishActivity(iter_25_1)
+					self:addFinishActivity(id)
 				end
 			end
-		elseif iter_25_1 == ActivityEnum.Activity.V2a7_SelfSelectSix1 and ActivityType101Model.instance:isType101RewardGet(iter_25_1, 1) then
-			arg_25_1[iter_25_0] = nil
+		elseif id == ActivityEnum.Activity.V2a7_SelfSelectSix1 and ActivityType101Model.instance:isType101RewardGet(id, 1) then
+			actCo[index] = nil
 
-			arg_25_0:addFinishActivity(iter_25_1)
+			self:addFinishActivity(id)
 		end
 	end
 end
 
-function var_0_0.removeFinishedWelfare(arg_26_0, arg_26_1)
-	local var_26_0 = false
-	local var_26_1 = ActivityType101Model.instance:hasReceiveAllReward(ActivityEnum.Activity.NoviceSign)
-	local var_26_2 = TeachNoteModel.instance:isFinalRewardGet()
-	local var_26_3 = Activity160Model.instance:allRewardReceive(ActivityEnum.Activity.NewWelfare)
+function ActivityModel:removeFinishedWelfare(actCo)
+	local storyShowFinish = false
+	local noviceSignFinish = ActivityType101Model.instance:hasReceiveAllReward(ActivityEnum.Activity.NoviceSign)
+	local classShowFinish = TeachNoteModel.instance:isFinalRewardGet()
+	local newWelfareFinish = Activity160Model.instance:allRewardReceive(ActivityEnum.Activity.NewWelfare)
 
-	for iter_26_0, iter_26_1 in pairs(arg_26_1) do
-		if iter_26_1 == ActivityEnum.Activity.StoryShow and TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
-			local var_26_4 = true
+	for index, id in pairs(actCo) do
+		if id == ActivityEnum.Activity.StoryShow and TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
+			storyShowFinish = true
+			actCo[index] = nil
 
-			arg_26_1[iter_26_0] = nil
-
-			arg_26_0:addFinishActivity(iter_26_1)
+			self:addFinishActivity(id)
 		end
 
-		if iter_26_1 == ActivityEnum.Activity.ClassShow and var_26_2 then
-			arg_26_1[iter_26_0] = nil
+		if id == ActivityEnum.Activity.ClassShow and classShowFinish then
+			actCo[index] = nil
 
-			arg_26_0:addFinishActivity(iter_26_1)
+			self:addFinishActivity(id)
 		end
 
-		if iter_26_1 == ActivityEnum.Activity.NoviceSign and var_26_1 then
-			arg_26_1[iter_26_0] = nil
+		if id == ActivityEnum.Activity.NoviceSign and noviceSignFinish then
+			actCo[index] = nil
 
-			arg_26_0:addFinishActivity(iter_26_1)
+			self:addFinishActivity(id)
 		end
 
-		if iter_26_1 == ActivityEnum.Activity.NewWelfare and var_26_3 then
-			arg_26_1[iter_26_0] = nil
+		if id == ActivityEnum.Activity.NewWelfare and newWelfareFinish then
+			actCo[index] = nil
 
-			arg_26_0:addFinishActivity(ActivityEnum.Activity.NewWelfare)
-		end
-	end
-end
-
-function var_0_0.removeSelectSixAfterRemoveFinished(arg_27_0, arg_27_1)
-	for iter_27_0, iter_27_1 in pairs(arg_27_1) do
-		if iter_27_1 == ActivityEnum.Activity.V2a7_SelfSelectSix2 and ActivityType101Model.instance:isType101RewardGet(iter_27_1, 1) then
-			arg_27_1[iter_27_0] = nil
+			self:addFinishActivity(ActivityEnum.Activity.NewWelfare)
 		end
 	end
 end
 
-function var_0_0.getRemainTimeSec(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:getActMO(arg_28_1)
-
-	if var_28_0 then
-		return var_28_0.endTime / 1000 - ServerTime.now()
+function ActivityModel:removeSelectSixAfterRemoveFinished(actCo)
+	for index, id in pairs(actCo) do
+		if id == ActivityEnum.Activity.V2a7_SelfSelectSix2 and ActivityType101Model.instance:isType101RewardGet(id, 1) then
+			actCo[index] = nil
+		end
 	end
 end
 
-function var_0_0.setPermanentUnlock(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0:getActMO(arg_29_1)
+function ActivityModel:getRemainTimeSec(actId)
+	local actMO = self:getActMO(actId)
 
-	if var_29_0 then
-		var_29_0:setPermanentUnlock()
+	if actMO then
+		return actMO.endTime / 1000 - ServerTime.now()
 	end
 end
 
-function var_0_0.isReceiveAllBonus(arg_30_0, arg_30_1)
-	local var_30_0 = arg_30_0:getActMO(arg_30_1)
+function ActivityModel:setPermanentUnlock(actId)
+	local actMO = self:getActMO(actId)
 
-	if var_30_0 then
-		return var_30_0.isReceiveAllBonus
+	if actMO then
+		actMO:setPermanentUnlock()
+	end
+end
+
+function ActivityModel:isReceiveAllBonus(actId)
+	local actMO = self:getActMO(actId)
+
+	if actMO then
+		return actMO.isReceiveAllBonus
 	end
 
 	return false
 end
 
-function var_0_0.checkIsShowLogoVisible()
-	local var_31_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+function ActivityModel.checkIsShowLogoVisible()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_31_0 then
+	if not config then
 		return false
 	end
 
-	return var_31_0.isShowLogo or false
+	return config.isShowLogo or false
 end
 
-function var_0_0.checkIsShowActBgVisible()
-	local var_32_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+function ActivityModel.checkIsShowActBgVisible()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_32_0 then
+	if not config then
 		return false
 	end
 
-	return var_32_0.isShowActBg or false
+	return config.isShowActBg or false
 end
 
-function var_0_0.checkIsShowFxVisible()
-	local var_33_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+function ActivityModel.checkIsShowFxVisible()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_33_0 then
+	if not config then
 		return false
 	end
 
-	return var_33_0.isShowFx or false
+	return config.isShowFx or false
 end
 
-function var_0_0.showActivityEffect()
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
+function ActivityModel.showActivityEffect()
+	local isOpenFastDungeonBtn = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon)
+
+	if not isOpenFastDungeonBtn then
 		return false
 	end
 
@@ -356,34 +364,68 @@ function var_0_0.showActivityEffect()
 		return false
 	end
 
-	local var_34_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_34_0 then
+	if not config then
 		return false
 	end
 
-	local var_34_1 = var_34_0.id
-	local var_34_2 = ActivityHelper.getActivityStatus(var_34_1)
+	local activityId = config.id
+	local status = ActivityHelper.getActivityStatus(activityId)
 
-	if var_34_2 == ActivityEnum.ActivityStatus.Normal or var_34_2 == ActivityEnum.ActivityStatus.NotUnlock then
+	if status == ActivityEnum.ActivityStatus.Normal or status == ActivityEnum.ActivityStatus.NotUnlock then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.tryGetFirstOpenedActCOByTypeId(arg_35_0, arg_35_1)
-	local var_35_0 = ActivityConfig.instance:typeId2ActivityCOList(arg_35_1)
+function ActivityModel:tryGetFirstOpenedActCOByTypeId(typeId)
+	local COList = ActivityConfig.instance:typeId2ActivityCOList(typeId)
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_0) do
-		local var_35_1 = iter_35_1.id
+	for _, CO in ipairs(COList) do
+		local actId = CO.id
 
-		if ActivityHelper.getActivityStatus(var_35_1, true) == ActivityEnum.ActivityStatus.Normal then
-			return iter_35_1
+		if ActivityHelper.getActivityStatus(actId, true) == ActivityEnum.ActivityStatus.Normal then
+			return CO
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+function ActivityModel.getRemainTimeStr(actId)
+	local remainTimeSec = ActivityModel.instance:getRemainTimeSec(actId) or 0
 
-return var_0_0
+	if remainTimeSec <= 0 then
+		return luaLang("turnback_end")
+	end
+
+	local day, hour, min, sec = TimeUtil.secondsToDDHHMMSS(remainTimeSec)
+
+	if day > 0 then
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("time_day_hour2"), {
+			day,
+			hour
+		})
+	elseif hour > 0 then
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
+			hour,
+			min
+		})
+	elseif min > 0 then
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
+			0,
+			min
+		})
+	elseif sec > 0 then
+		return GameUtil.getSubPlaceholderLuaLang(luaLang("summonmain_deadline_time"), {
+			0,
+			1
+		})
+	end
+
+	return luaLang("turnback_end")
+end
+
+ActivityModel.instance = ActivityModel.New()
+
+return ActivityModel

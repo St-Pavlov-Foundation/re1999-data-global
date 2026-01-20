@@ -1,38 +1,40 @@
-﻿module("modules.logic.gm.controller.sequencework.DelayDoFuncWork", package.seeall)
+﻿-- chunkname: @modules/logic/gm/controller/sequencework/DelayDoFuncWork.lua
 
-local var_0_0 = class("DelayDoFuncWork", BaseWork)
+module("modules.logic.gm.controller.sequencework.DelayDoFuncWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._func = arg_1_1
-	arg_1_0._target = arg_1_2
-	arg_1_0._delayTime = arg_1_3
-	arg_1_0._param = arg_1_4
+local DelayDoFuncWork = class("DelayDoFuncWork", BaseWork)
+
+function DelayDoFuncWork:ctor(func, target, delayTime, param)
+	self._func = func
+	self._target = target
+	self._delayTime = delayTime
+	self._param = param
 end
 
-function var_0_0.onStart(arg_2_0)
-	if not arg_2_0._delayTime or arg_2_0._delayTime == 0 then
-		arg_2_0.hadDelayTask = false
+function DelayDoFuncWork:onStart()
+	if not self._delayTime or self._delayTime == 0 then
+		self.hadDelayTask = false
 
-		arg_2_0._func(arg_2_0._target, arg_2_0._param)
-		arg_2_0:onDone(true)
+		self._func(self._target, self._param)
+		self:onDone(true)
 	else
-		arg_2_0.hadDelayTask = true
+		self.hadDelayTask = true
 
-		TaskDispatcher.runDelay(arg_2_0._delayDoFunc, arg_2_0, arg_2_0._delayTime)
+		TaskDispatcher.runDelay(self._delayDoFunc, self, self._delayTime)
 	end
 end
 
-function var_0_0._delayDoFunc(arg_3_0)
-	arg_3_0._func(arg_3_0._target, arg_3_0._param)
-	arg_3_0:onDone(true)
+function DelayDoFuncWork:_delayDoFunc()
+	self._func(self._target, self._param)
+	self:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	var_0_0.super.clearWork(arg_4_0)
+function DelayDoFuncWork:clearWork()
+	DelayDoFuncWork.super.clearWork(self)
 
-	if arg_4_0.hadDelayTask then
-		TaskDispatcher.cancelTask(arg_4_0._delayDoFunc, arg_4_0)
+	if self.hadDelayTask then
+		TaskDispatcher.cancelTask(self._delayDoFunc, self)
 	end
 end
 
-return var_0_0
+return DelayDoFuncWork

@@ -1,44 +1,46 @@
-﻿module("modules.logic.room.view.backpack.RoomBackpackPropItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/backpack/RoomBackpackPropItem.lua
 
-local var_0_0 = class("RoomBackpackPropItem", ListScrollCellExtend)
+module("modules.logic.room.view.backpack.RoomBackpackPropItem", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._imgquality = gohelper.findChildImage(arg_1_0.viewGO, "#image_quality")
-	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "#go_icon")
-	arg_1_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_1_0._goicon)
+local RoomBackpackPropItem = class("RoomBackpackPropItem", ListScrollCellExtend)
 
-	local var_1_0 = arg_1_0._itemIcon:getCountBg()
-	local var_1_1 = arg_1_0._itemIcon:getCount()
-	local var_1_2 = var_1_0.transform
-	local var_1_3 = var_1_1.transform
+function RoomBackpackPropItem:onInitView()
+	self._imgquality = gohelper.findChildImage(self.viewGO, "#image_quality")
+	self._goicon = gohelper.findChild(self.viewGO, "#go_icon")
+	self._itemIcon = IconMgr.instance:getCommonItemIcon(self._goicon)
 
-	recthelper.setAnchorY(var_1_2, RoomManufactureEnum.ItemCountBgY)
-	recthelper.setAnchorY(var_1_3, RoomManufactureEnum.ItemCountY)
+	local countBg = self._itemIcon:getCountBg()
+	local count = self._itemIcon:getCount()
+	local transCountBg = countBg.transform
+	local transCount = count.transform
+
+	recthelper.setAnchorY(transCountBg, RoomManufactureEnum.ItemCountBgY)
+	recthelper.setAnchorY(transCount, RoomManufactureEnum.ItemCountY)
 end
 
-function var_0_0.addEvents(arg_2_0)
+function RoomBackpackPropItem:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function RoomBackpackPropItem:removeEvents()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
-	arg_4_0._mo = arg_4_1
+function RoomBackpackPropItem:onUpdateMO(propItem)
+	self._mo = propItem
 
-	arg_4_0._itemIcon:setMOValue(arg_4_0._mo.type, arg_4_0._mo.id, arg_4_0._mo.quantity)
-	arg_4_0._itemIcon:isShowQuality(false)
-	arg_4_0._itemIcon:isShowName(false)
+	self._itemIcon:setMOValue(self._mo.type, self._mo.id, self._mo.quantity)
+	self._itemIcon:isShowQuality(false)
+	self._itemIcon:isShowName(false)
 
-	local var_4_0 = arg_4_0._itemIcon:getRare()
-	local var_4_1 = RoomManufactureEnum.RareImageMap[var_4_0]
+	local rare = self._itemIcon:getRare()
+	local qualityImg = RoomManufactureEnum.RareImageMap[rare]
 
-	UISpriteSetMgr.instance:setCritterSprite(arg_4_0._imgquality, var_4_1)
+	UISpriteSetMgr.instance:setCritterSprite(self._imgquality, qualityImg)
 end
 
-function var_0_0.onDestroyView(arg_5_0)
+function RoomBackpackPropItem:onDestroyView()
 	return
 end
 
-return var_0_0
+return RoomBackpackPropItem

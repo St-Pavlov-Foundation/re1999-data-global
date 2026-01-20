@@ -1,108 +1,116 @@
-﻿module("modules.logic.scene.summon.comp.SummonSceneCameraComp", package.seeall)
+﻿-- chunkname: @modules/logic/scene/summon/comp/SummonSceneCameraComp.lua
 
-local var_0_0 = class("SummonSceneCameraComp", CommonSceneCameraComp)
+module("modules.logic.scene.summon.comp.SummonSceneCameraComp", package.seeall)
 
-function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0:recordCameraArguments()
+local SummonSceneCameraComp = class("SummonSceneCameraComp", CommonSceneCameraComp)
+
+function SummonSceneCameraComp:onSceneStart(sceneId, levelId)
+	SummonSceneCameraComp.super.onSceneStart(self, sceneId, levelId)
+	self:recordCameraArguments()
 end
 
-function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+function SummonSceneCameraComp:onScenePrepared(sceneId, levelId)
 	return
 end
 
-function var_0_0.switchToChar(arg_3_0)
-	arg_3_0._cameraTrace.enabled = true
+function SummonSceneCameraComp:switchToChar()
+	self._cameraTrace.enabled = true
 
-	arg_3_0:resetParam()
-	arg_3_0:applyDirectly()
+	self:resetParam()
+	self:applyDirectly()
 
-	local var_3_0 = CameraMgr.instance:getMainCameraTrs()
+	local cameraTf = CameraMgr.instance:getMainCameraTrs()
 
-	transformhelper.setLocalPos(var_3_0, 0, 0, 0)
+	transformhelper.setLocalPos(cameraTf, 0, 0, 0)
 end
 
-function var_0_0.switchToEquip(arg_4_0)
-	arg_4_0._cameraTrace.enabled = false
+function SummonSceneCameraComp:switchToEquip()
+	self._cameraTrace.enabled = false
 
-	arg_4_0:setEquipSceneArguments()
+	self:setEquipSceneArguments()
 end
 
-function var_0_0.recordCameraArguments(arg_5_0)
-	local var_5_0 = CameraMgr.instance:getMainCamera()
-	local var_5_1 = CameraMgr.instance:getMainCameraTrs()
+function SummonSceneCameraComp:recordCameraArguments()
+	local camera = CameraMgr.instance:getMainCamera()
+	local cameraTf = CameraMgr.instance:getMainCameraTrs()
 
-	arg_5_0._originPosX, arg_5_0._originPosY, arg_5_0._originPosZ = transformhelper.getLocalPos(var_5_1)
-	arg_5_0._originFOV = arg_5_0._cameraCO.fov
+	self._originPosX, self._originPosY, self._originPosZ = transformhelper.getLocalPos(cameraTf)
+	self._originFOV = self._cameraCO.fov
 
-	local var_5_2 = CameraMgr.instance:getCameraTraceGO().transform
+	local cameraTraceGo = CameraMgr.instance:getCameraTraceGO()
+	local cameraTraceTf = cameraTraceGo.transform
 
-	arg_5_0._originTracePosX, arg_5_0._originTracePosY, arg_5_0._originTracePosZ = transformhelper.getLocalPos(var_5_2)
-	arg_5_0._originTraceRotation = var_5_2.localEulerAngles
-	arg_5_0._isRecord = true
+	self._originTracePosX, self._originTracePosY, self._originTracePosZ = transformhelper.getLocalPos(cameraTraceTf)
+	self._originTraceRotation = cameraTraceTf.localEulerAngles
+	self._isRecord = true
 end
 
-function var_0_0.resetCameraArguments(arg_6_0)
-	if not arg_6_0._isRecord then
+function SummonSceneCameraComp:resetCameraArguments()
+	if not self._isRecord then
 		return
 	end
 
-	local var_6_0 = CameraMgr.instance:getMainCamera()
-	local var_6_1 = CameraMgr.instance:getMainCameraTrs()
-	local var_6_2 = CameraMgr.instance:getCameraTraceGO().transform
+	local camera = CameraMgr.instance:getMainCamera()
+	local cameraTf = CameraMgr.instance:getMainCameraTrs()
+	local cameraTraceGo = CameraMgr.instance:getCameraTraceGO()
+	local cameraTraceTf = cameraTraceGo.transform
 
-	var_6_0.fieldOfView = arg_6_0:calcFOV(arg_6_0._originFOV)
+	camera.fieldOfView = self:calcFOV(self._originFOV)
 
-	transformhelper.setLocalPos(var_6_1, arg_6_0._originPosX, arg_6_0._originPosY, arg_6_0._originPosZ)
-	transformhelper.setLocalPos(var_6_2, arg_6_0._originTracePosX, arg_6_0._originTracePosY, arg_6_0._originTracePosZ)
+	transformhelper.setLocalPos(cameraTf, self._originPosX, self._originPosY, self._originPosZ)
+	transformhelper.setLocalPos(cameraTraceTf, self._originTracePosX, self._originTracePosY, self._originTracePosZ)
 
-	var_6_2.localEulerAngles = arg_6_0._originTraceRotation
+	cameraTraceTf.localEulerAngles = self._originTraceRotation
 
-	local var_6_3 = CameraMgr.instance:getCameraRootGO()
+	local cameraGo = CameraMgr.instance:getCameraRootGO()
 
-	transformhelper.setLocalPos(var_6_3.transform, 0, 0, 0)
+	transformhelper.setLocalPos(cameraGo.transform, 0, 0, 0)
 end
 
-function var_0_0.setEquipSceneArguments(arg_7_0)
-	if not arg_7_0._isRecord then
+function SummonSceneCameraComp:setEquipSceneArguments()
+	if not self._isRecord then
 		return
 	end
 
-	local var_7_0 = CameraMgr.instance:getMainCamera()
-	local var_7_1 = CameraMgr.instance:getMainCameraTrs()
-	local var_7_2 = CameraMgr.instance:getCameraTraceGO().transform
+	local camera = CameraMgr.instance:getMainCamera()
+	local cameraTf = CameraMgr.instance:getMainCameraTrs()
+	local cameraTraceGo = CameraMgr.instance:getCameraTraceGO()
+	local cameraTraceTf = cameraTraceGo.transform
 
-	var_7_0.fieldOfView = arg_7_0:calcFOV(60)
+	camera.fieldOfView = self:calcFOV(60)
 
-	transformhelper.setLocalPos(var_7_1, 0, 2.13, -12.06)
-	transformhelper.setLocalPos(var_7_2, 0, 0, 0)
+	transformhelper.setLocalPos(cameraTf, 0, 2.13, -12.06)
+	transformhelper.setLocalPos(cameraTraceTf, 0, 0, 0)
 
-	var_7_2.localEulerAngles = Vector3.zero
+	cameraTraceTf.localEulerAngles = Vector3.zero
 end
 
-function var_0_0.calcFOV(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1 * (1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width))
-	local var_8_1, var_8_2 = arg_8_0:_getMinMaxFov()
+function SummonSceneCameraComp:calcFOV(curFOV)
+	local fovRatio = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
+	local fov = curFOV * fovRatio
+	local minFov, maxFov = self:_getMinMaxFov()
 
-	return (Mathf.Clamp(var_8_0, var_8_1, var_8_2))
+	fov = Mathf.Clamp(fov, minFov, maxFov)
+
+	return fov
 end
 
-function var_0_0._onScreenResize(arg_9_0, arg_9_1, arg_9_2)
+function SummonSceneCameraComp:_onScreenResize(width, height)
 	return
 end
 
-function var_0_0.onSceneClose(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._cameraTrace.EnableTrace = false
+function SummonSceneCameraComp:onSceneClose(sceneId, levelId)
+	self._cameraTrace.EnableTrace = false
 
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_10_0._onScreenResize, arg_10_0)
-	arg_10_0:resetCameraArguments()
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:resetCameraArguments()
 
-	arg_10_0._isRecord = false
-	arg_10_0._cameraTrace.enabled = true
+	self._isRecord = false
+	self._cameraTrace.enabled = true
 end
 
-function var_0_0.onSceneHide(arg_11_0)
-	arg_11_0:onSceneClose()
+function SummonSceneCameraComp:onSceneHide()
+	self:onSceneClose()
 end
 
-return var_0_0
+return SummonSceneCameraComp

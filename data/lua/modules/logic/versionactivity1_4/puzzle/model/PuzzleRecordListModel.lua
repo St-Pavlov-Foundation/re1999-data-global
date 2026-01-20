@@ -1,37 +1,39 @@
-﻿module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/puzzle/model/PuzzleRecordListModel.lua
 
-local var_0_0 = class("PuzzleRecordListModel", ListScrollModel)
+module("modules.logic.versionactivity1_4.puzzle.model.PuzzleRecordListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
-	local var_1_0 = {}
+local PuzzleRecordListModel = class("PuzzleRecordListModel", ListScrollModel)
 
-	arg_1_0:setList(var_1_0)
+function PuzzleRecordListModel:init()
+	local dataList = {}
+
+	self:setList(dataList)
 end
 
-function var_0_0.setRecordList(arg_2_0, arg_2_1)
-	arg_2_0:clear()
+function PuzzleRecordListModel:setRecordList(recordList)
+	self:clear()
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_0 = iter_2_0
+	for index, desc in ipairs(recordList) do
+		local num = index
 
-		if var_2_0 < 10 then
-			var_2_0 = "0" .. var_2_0
+		if num < 10 then
+			num = "0" .. num
 		end
 
-		local var_2_1 = PuzzleRecordMO.New()
+		local mo = PuzzleRecordMO.New()
 
-		var_2_1:init(var_2_0, iter_2_1)
-		arg_2_0:addAtLast(var_2_1)
+		mo:init(num, desc)
+		self:addAtLast(mo)
 	end
 
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RecordCntChange, arg_2_0:getCount())
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RecordCntChange, self:getCount())
 end
 
-function var_0_0.clearRecord(arg_3_0)
-	arg_3_0:clear()
-	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RecordCntChange, arg_3_0:getCount())
+function PuzzleRecordListModel:clearRecord()
+	self:clear()
+	Role37PuzzleController.instance:dispatchEvent(Role37PuzzleEvent.RecordCntChange, self:getCount())
 end
 
-var_0_0.instance = var_0_0.New()
+PuzzleRecordListModel.instance = PuzzleRecordListModel.New()
 
-return var_0_0
+return PuzzleRecordListModel

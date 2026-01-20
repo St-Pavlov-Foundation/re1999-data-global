@@ -1,24 +1,26 @@
-﻿module("modules.logic.room.view.topright.RoomViewTopRightBlockItem", package.seeall)
+﻿-- chunkname: @modules/logic/room/view/topright/RoomViewTopRightBlockItem.lua
 
-local var_0_0 = class("RoomViewTopRightBlockItem", RoomViewTopRightBaseItem)
+module("modules.logic.room.view.topright.RoomViewTopRightBlockItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	var_0_0.super.ctor(arg_1_0, arg_1_1)
+local RoomViewTopRightBlockItem = class("RoomViewTopRightBlockItem", RoomViewTopRightBaseItem)
+
+function RoomViewTopRightBlockItem:ctor(param)
+	RoomViewTopRightBlockItem.super.ctor(self, param)
 end
 
-function var_0_0._customOnInit(arg_2_0)
-	arg_2_0._resourceItem.imageicon = gohelper.findChildImage(arg_2_0._resourceItem.go, "icon")
+function RoomViewTopRightBlockItem:_customOnInit()
+	self._resourceItem.imageicon = gohelper.findChildImage(self._resourceItem.go, "icon")
 
-	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._resourceItem.imageicon, "icon_zongkuai_light")
-	recthelper.setSize(arg_2_0._resourceItem.imageicon.transform, 68, 52)
-	arg_2_0:_setShow(true)
+	UISpriteSetMgr.instance:setRoomSprite(self._resourceItem.imageicon, "icon_zongkuai_light")
+	recthelper.setSize(self._resourceItem.imageicon.transform, 68, 52)
+	self:_setShow(true)
 end
 
-function var_0_0._imageLoaded(arg_3_0)
-	arg_3_0._resourceItem.imageicon:SetNativeSize()
+function RoomViewTopRightBlockItem:_imageLoaded()
+	self._resourceItem.imageicon:SetNativeSize()
 end
 
-function var_0_0._onClick(arg_4_0)
+function RoomViewTopRightBlockItem:_onClick()
 	if RoomController.instance:isVisitMode() then
 		return
 	end
@@ -28,23 +30,23 @@ function var_0_0._onClick(arg_4_0)
 	})
 end
 
-function var_0_0.addEventListeners(arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateInventoryCount, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmSelectBlockPackage, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_5_0._refreshUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, arg_5_0._refreshAddNumUI, arg_5_0)
-	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, arg_5_0._refreshAddNumUI, arg_5_0)
+function RoomViewTopRightBlockItem:addEventListeners()
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, self._refreshUI, self)
+	self:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.UpdateInventoryCount, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ConfirmSelectBlockPackage, self._refreshUI, self)
+	self:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, self._refreshUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, self._refreshAddNumUI, self)
+	self:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, self._refreshAddNumUI, self)
 end
 
-function var_0_0.removeEventListeners(arg_6_0)
+function RoomViewTopRightBlockItem:removeEventListeners()
 	return
 end
 
-function var_0_0._getPlaceBlockNum(arg_7_0)
+function RoomViewTopRightBlockItem:_getPlaceBlockNum()
 	if RoomController.instance:isEditMode() and RoomMapBlockModel.instance:getTempBlockMO() then
 		return 1
 	end
@@ -52,32 +54,32 @@ function var_0_0._getPlaceBlockNum(arg_7_0)
 	return 0
 end
 
-function var_0_0._refreshAddNumUI(arg_8_0)
-	local var_8_0 = arg_8_0:_getPlaceBlockNum()
+function RoomViewTopRightBlockItem:_refreshAddNumUI()
+	local num = self:_getPlaceBlockNum()
 
-	if var_8_0 > 0 then
-		arg_8_0._resourceItem.txtaddNum.text = "+" .. var_8_0
+	if num > 0 then
+		self._resourceItem.txtaddNum.text = "+" .. num
 	end
 
-	gohelper.setActive(arg_8_0._resourceItem.txtaddNum, var_8_0 > 0)
+	gohelper.setActive(self._resourceItem.txtaddNum, num > 0)
 end
 
-function var_0_0._refreshUI(arg_9_0)
-	local var_9_0 = RoomMapBlockModel.instance:getConfirmBlockCount()
+function RoomViewTopRightBlockItem:_refreshUI()
+	local curNum = RoomMapBlockModel.instance:getConfirmBlockCount()
 
 	if RoomController.instance:isVisitMode() then
-		arg_9_0._resourceItem.txtquantity.text = var_9_0
+		self._resourceItem.txtquantity.text = curNum
 	else
-		local var_9_1 = RoomMapBlockModel.instance:getMaxBlockCount()
+		local maxNum = RoomMapBlockModel.instance:getMaxBlockCount()
 
-		arg_9_0._resourceItem.txtquantity.text = string.format("%s/%s", var_9_0, var_9_1)
+		self._resourceItem.txtquantity.text = string.format("%s/%s", curNum, maxNum)
 	end
 
-	arg_9_0:_refreshAddNumUI()
+	self:_refreshAddNumUI()
 end
 
-function var_0_0._customOnDestory(arg_10_0)
+function RoomViewTopRightBlockItem:_customOnDestory()
 	return
 end
 
-return var_0_0
+return RoomViewTopRightBlockItem

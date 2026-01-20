@@ -1,380 +1,391 @@
-﻿module("modules.common.others.BaseViewExtended", package.seeall)
+﻿-- chunkname: @modules/common/others/BaseViewExtended.lua
 
-local var_0_0 = class("BaseViewExtended", BaseView)
+module("modules.common.others.BaseViewExtended", package.seeall)
 
-var_0_0.ViewState = {
+local BaseViewExtended = class("BaseViewExtended", BaseView)
+
+BaseViewExtended.ViewState = {
 	Dead = 3,
 	Close = 2,
 	Open = 1
 }
 
-function var_0_0.ctor(arg_1_0, ...)
-	arg_1_0:__onInit()
-	var_0_0.super.ctor(arg_1_0, ...)
+function BaseViewExtended:ctor(...)
+	self:__onInit()
+	BaseViewExtended.super.ctor(self, ...)
 end
 
-function var_0_0.initViewGOInternal(arg_2_0, arg_2_1)
-	arg_2_0.viewGO_parent_obj = arg_2_1
-	arg_2_0.VIEW_STATE = var_0_0.ViewState.Open
+function BaseViewExtended:initViewGOInternal(parent_obj)
+	self.viewGO_parent_obj = parent_obj
+	self.VIEW_STATE = BaseViewExtended.ViewState.Open
 
-	arg_2_0:logicStartInternal()
+	self:logicStartInternal()
 end
 
-function var_0_0.logicStartInternal(arg_3_0)
-	if arg_3_0.viewGO then
-		arg_3_0:viewLogicBootInternal()
+function BaseViewExtended:logicStartInternal()
+	if self.viewGO then
+		self:viewLogicBootInternal()
 	else
-		arg_3_0:definePrefabUrl()
+		self:definePrefabUrl()
 
-		if arg_3_0.internal_pre_url then
-			arg_3_0:com_loadAsset(arg_3_0.internal_pre_url, arg_3_0.viewGOLoadFinishCallbackInternal)
+		if self.internal_pre_url then
+			self:com_loadAsset(self.internal_pre_url, self.viewGOLoadFinishCallbackInternal)
 		else
-			arg_3_0:viewLogicBootInternal()
+			self:viewLogicBootInternal()
 		end
 	end
 end
 
-function var_0_0.viewGOLoadFinishCallbackInternal(arg_4_0, arg_4_1)
-	if arg_4_0.VIEW_STATE == var_0_0.ViewState.Dead then
+function BaseViewExtended:viewGOLoadFinishCallbackInternal(loader)
+	if self.VIEW_STATE == BaseViewExtended.ViewState.Dead then
 		return
 	end
 
-	local var_4_0 = arg_4_1:GetResource()
+	local tarPrefab = loader:GetResource()
 
-	arg_4_0.viewGO = gohelper.clone(var_4_0, arg_4_0.viewGO_parent_obj)
+	self.viewGO = gohelper.clone(tarPrefab, self.viewGO_parent_obj)
 
-	arg_4_0:viewLogicBootInternal()
+	self:viewLogicBootInternal()
 end
 
-function var_0_0.viewLogicBootInternal(arg_5_0)
-	arg_5_0.INIT_FINISH_INTERNAL = true
+function BaseViewExtended:viewLogicBootInternal()
+	self.INIT_FINISH_INTERNAL = true
 
-	arg_5_0:onInitViewInternal()
-	arg_5_0:addEventsInternal()
+	self:onInitViewInternal()
+	self:addEventsInternal()
 
-	if arg_5_0.VIEW_STATE == var_0_0.ViewState.Open then
-		arg_5_0:bootOnOpenInternal()
+	if self.VIEW_STATE == BaseViewExtended.ViewState.Open then
+		self:bootOnOpenInternal()
 	else
-		arg_5_0:setViewVisibleInternal(false)
+		self:setViewVisibleInternal(false)
 	end
 end
 
-function var_0_0.openExclusiveView(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, ...)
-	if not arg_6_0.exclusive_tab then
-		arg_6_0.exclusive_tab = {}
-		arg_6_0.exclusive_opening = {}
+function BaseViewExtended:openExclusiveView(sign, exclusive_id, view, viewGO, parent_obj, ...)
+	if not self.exclusive_tab then
+		self.exclusive_tab = {}
+		self.exclusive_opening = {}
 	end
 
-	arg_6_1 = arg_6_1 or 1
-	arg_6_0.exclusive_tab[arg_6_1] = arg_6_0.exclusive_tab[arg_6_1] or {}
+	sign = sign or 1
+	self.exclusive_tab[sign] = self.exclusive_tab[sign] or {}
 
-	local var_6_0 = arg_6_0.exclusive_tab[arg_6_1][arg_6_0.exclusive_opening[arg_6_1]]
+	local cur_opening_view = self.exclusive_tab[sign][self.exclusive_opening[sign]]
 
-	if var_6_0 then
-		if arg_6_2 == arg_6_0.exclusive_opening[arg_6_1] then
-			return var_6_0
+	if cur_opening_view then
+		if exclusive_id == self.exclusive_opening[sign] then
+			return cur_opening_view
 		end
 
-		arg_6_0:hideExclusiveView(var_6_0, arg_6_1, arg_6_2)
+		self:hideExclusiveView(cur_opening_view, sign, exclusive_id)
 	end
 
-	if arg_6_0.exclusive_tab[arg_6_1][arg_6_2] then
-		arg_6_0:setExclusiveViewVisible(arg_6_0.exclusive_tab[arg_6_1][arg_6_2], true)
+	if self.exclusive_tab[sign][exclusive_id] then
+		self:setExclusiveViewVisible(self.exclusive_tab[sign][exclusive_id], true)
 
-		arg_6_0.exclusive_opening[arg_6_1] = arg_6_2
+		self.exclusive_opening[sign] = exclusive_id
 
-		return arg_6_0.exclusive_tab[arg_6_1][arg_6_2]
+		return self.exclusive_tab[sign][exclusive_id]
 	end
 
-	local var_6_1 = arg_6_0:openSubView(arg_6_3, arg_6_4, arg_6_5, ...)
+	cur_opening_view = self:openSubView(view, viewGO, parent_obj, ...)
+	cur_opening_view.internalExclusiveSign = sign
+	cur_opening_view.internalExclusiveID = exclusive_id
+	self.exclusive_tab[sign][exclusive_id] = cur_opening_view
+	self.exclusive_opening[sign] = exclusive_id
 
-	var_6_1.internalExclusiveSign = arg_6_1
-	var_6_1.internalExclusiveID = arg_6_2
-	arg_6_0.exclusive_tab[arg_6_1][arg_6_2] = var_6_1
-	arg_6_0.exclusive_opening[arg_6_1] = arg_6_2
-
-	return var_6_1
+	return cur_opening_view
 end
 
-function var_0_0.hideExclusiveGroup(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or 1
+function BaseViewExtended:hideExclusiveGroup(sign)
+	sign = sign or 1
 
-	if arg_7_0.exclusive_opening and arg_7_0.exclusive_opening[arg_7_1] then
-		arg_7_0:hideExclusiveView(arg_7_0.exclusive_tab[arg_7_1][arg_7_0.exclusive_opening[arg_7_1]])
+	if self.exclusive_opening and self.exclusive_opening[sign] then
+		self:hideExclusiveView(self.exclusive_tab[sign][self.exclusive_opening[sign]])
 	end
 end
 
-function var_0_0.hideExclusiveView(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	arg_8_2 = arg_8_2 or 1
-	arg_8_1 = arg_8_1 or arg_8_0.exclusive_tab[arg_8_2][arg_8_3]
+function BaseViewExtended:hideExclusiveView(handler, sign, exclusive_id)
+	sign = sign or 1
+	handler = handler or self.exclusive_tab[sign][exclusive_id]
 
-	if arg_8_0.exclusive_opening[arg_8_1.internalExclusiveSign] == arg_8_1.internalExclusiveID then
-		arg_8_0.exclusive_opening[arg_8_1.internalExclusiveSign] = nil
+	if self.exclusive_opening[handler.internalExclusiveSign] == handler.internalExclusiveID then
+		self.exclusive_opening[handler.internalExclusiveSign] = nil
 	end
 
-	arg_8_0:setExclusiveViewVisible(arg_8_1, false)
+	self:setExclusiveViewVisible(handler, false)
 end
 
-function var_0_0.setExclusiveViewVisible(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_1.onSetExclusiveViewVisible then
-		arg_9_1:onSetExclusiveViewVisible(arg_9_2)
+function BaseViewExtended:setExclusiveViewVisible(handler, state)
+	if handler.onSetExclusiveViewVisible then
+		handler:onSetExclusiveViewVisible(state)
 	else
-		arg_9_1:setViewVisibleInternal(arg_9_2)
+		handler:setViewVisibleInternal(state)
 	end
 end
 
-function var_0_0.openSubView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, ...)
-	if not arg_10_0._childViews then
-		arg_10_0._childViews = {}
+function BaseViewExtended:openSubView(view, viewGO, parent_obj, ...)
+	if not self._childViews then
+		self._childViews = {}
 	end
 
-	local var_10_0 = arg_10_1.New(...)
+	local target_view = view.New(...)
 
-	if var_10_0.onRefreshViewParam then
-		var_10_0:onRefreshViewParam(...)
+	if target_view.onRefreshViewParam then
+		target_view:onRefreshViewParam(...)
 	end
 
-	if type(arg_10_2) == "string" then
-		var_10_0.internal_pre_url = arg_10_2
-		arg_10_2 = nil
+	if type(viewGO) == "string" then
+		target_view.internal_pre_url = viewGO
+		viewGO = nil
 	end
 
-	var_10_0.viewName = arg_10_0.viewName
-	var_10_0.viewContainer = arg_10_0.viewContainer
-	var_10_0.PARENT_VIEW = arg_10_0
+	target_view.viewName = self.viewName
+	target_view.viewContainer = self.viewContainer
+	target_view.PARENT_VIEW = self
 
-	if var_10_0.initViewGOInternal then
-		var_10_0.viewGO = arg_10_2
+	if target_view.initViewGOInternal then
+		target_view.viewGO = viewGO
 
-		var_10_0:initViewGOInternal(arg_10_3 or arg_10_0.viewGO, arg_10_0)
+		target_view:initViewGOInternal(parent_obj or self.viewGO, self)
 	else
-		var_10_0:__onInit()
+		target_view:__onInit()
 
-		var_10_0.viewGO = arg_10_2
+		target_view.viewGO = viewGO
 
-		if arg_10_0._has_onInitView then
-			var_10_0:onInitViewInternal()
+		if self._has_onInitView then
+			target_view:onInitViewInternal()
 		end
 
-		if arg_10_0._has_addEvents then
-			var_10_0:addEventsInternal()
+		if self._has_addEvents then
+			target_view:addEventsInternal()
 		end
 
-		if arg_10_0._has_onOpen then
-			var_10_0:onOpenInternal()
+		if self._has_onOpen then
+			target_view:onOpenInternal()
 		end
 
-		if arg_10_0._has_onOpenFinish then
-			var_10_0:onOpenFinishInternal()
+		if self._has_onOpenFinish then
+			target_view:onOpenFinishInternal()
 		end
 	end
 
-	table.insert(arg_10_0._childViews, var_10_0)
+	table.insert(self._childViews, target_view)
 
-	return var_10_0
+	return target_view
 end
 
-function var_0_0.bootOnOpenInternal(arg_11_0)
-	if arg_11_0:viewIsReadyInternal() then
-		arg_11_0:onOpenInternal()
-		arg_11_0:onOpenFinishInternal()
+function BaseViewExtended:bootOnOpenInternal()
+	if self:viewIsReadyInternal() then
+		self:onOpenInternal()
+		self:onOpenFinishInternal()
 	end
 end
 
-function var_0_0.setViewVisible(arg_12_0, arg_12_1)
-	arg_12_0:setViewVisibleInternal(arg_12_1)
+function BaseViewExtended:setViewVisible(state)
+	self:setViewVisibleInternal(state)
 end
 
-function var_0_0.onCloseInternal(arg_13_0)
-	arg_13_0.VIEW_STATE = var_0_0.ViewState.Close
+function BaseViewExtended:onCloseInternal()
+	self.VIEW_STATE = BaseViewExtended.ViewState.Close
 
-	arg_13_0:invokeChildFunc("onCloseInternal")
-	arg_13_0:releaseComponentsInternal()
+	self:invokeChildFunc("onCloseInternal")
+	self:releaseComponentsInternal()
 
-	if arg_13_0.viewGO then
-		arg_13_0:onClose()
+	if self.viewGO then
+		self:onClose()
 	end
 end
 
-function var_0_0.onCloseFinishInternal(arg_14_0)
-	arg_14_0:invokeChildFunc("onCloseFinishInternal")
+function BaseViewExtended:onCloseFinishInternal()
+	self:invokeChildFunc("onCloseFinishInternal")
 
-	if arg_14_0.viewGO then
-		arg_14_0:onCloseFinish()
+	if self.viewGO then
+		self:onCloseFinish()
 	end
 end
 
-function var_0_0.removeEventsInternal(arg_15_0)
-	arg_15_0:invokeChildFunc("removeEventsInternal")
+function BaseViewExtended:removeEventsInternal()
+	self:invokeChildFunc("removeEventsInternal")
 
-	if arg_15_0.viewGO then
-		arg_15_0:removeEvents()
+	if self.viewGO then
+		self:removeEvents()
 	end
 end
 
-function var_0_0.onDestroyViewInternal(arg_16_0)
-	arg_16_0.VIEW_STATE = var_0_0.ViewState.Dead
+function BaseViewExtended:onDestroyViewInternal()
+	self.VIEW_STATE = BaseViewExtended.ViewState.Dead
 
-	arg_16_0:invokeChildFunc("onDestroyViewInternal")
+	self:invokeChildFunc("onDestroyViewInternal")
 
-	if arg_16_0.viewGO then
-		arg_16_0:onDestroyView()
-		gohelper.destroy(arg_16_0.viewGO)
+	if self.viewGO then
+		self:onDestroyView()
+		gohelper.destroy(self.viewGO)
 	end
 
-	arg_16_0:__onDispose()
+	self:__onDispose()
 end
 
-function var_0_0.invokeChildFunc(arg_17_0, arg_17_1)
-	if arg_17_0._childViews then
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._childViews) do
-			if iter_17_1[arg_17_1] then
-				iter_17_1[arg_17_1](iter_17_1)
+function BaseViewExtended:invokeChildFunc(funcName)
+	if self._childViews then
+		for k, v in ipairs(self._childViews) do
+			if v[funcName] then
+				v[funcName](v)
 			end
 		end
 	end
 end
 
-function var_0_0.destroySubView(arg_18_0, arg_18_1)
-	arg_18_0:removeChildViewIndex(arg_18_1)
-	arg_18_0:playDestroyBehaviour(arg_18_1)
+function BaseViewExtended:destroySubView(handler)
+	self:removeChildViewIndex(handler)
+	self:playDestroyBehaviour(handler)
 end
 
-function var_0_0.removeChildViewIndex(arg_19_0, arg_19_1)
-	for iter_19_0 = #arg_19_0._childViews, 1, -1 do
-		if arg_19_0._childViews[iter_19_0] == arg_19_1 then
-			table.remove(arg_19_0._childViews, iter_19_0)
+function BaseViewExtended:removeChildViewIndex(handler)
+	for i = #self._childViews, 1, -1 do
+		if self._childViews[i] == handler then
+			table.remove(self._childViews, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.playDestroyBehaviour(arg_20_0, arg_20_1)
-	if arg_20_1.viewGO then
-		arg_20_1:onCloseInternal()
-		arg_20_1:onCloseFinishInternal()
-		arg_20_1:removeEventsInternal()
-		arg_20_1:onDestroyViewInternal()
+function BaseViewExtended:playDestroyBehaviour(handler)
+	if handler.viewGO then
+		handler:onCloseInternal()
+		handler:onCloseFinishInternal()
+		handler:removeEventsInternal()
+		handler:onDestroyViewInternal()
 	else
-		arg_20_1.VIEW_STATE = var_0_0.ViewState.Dead
+		handler.VIEW_STATE = BaseViewExtended.ViewState.Dead
 
-		if arg_20_1.releaseComponentsInternal then
-			arg_20_1:releaseComponentsInternal()
+		if handler.releaseComponentsInternal then
+			handler:releaseComponentsInternal()
 		end
 
-		arg_20_1:__onDispose()
+		handler:__onDispose()
 	end
 end
 
-function var_0_0.DESTROYSELF(arg_21_0)
-	arg_21_0:getParentView():destroySubView(arg_21_0)
+function BaseViewExtended:DESTROYSELF()
+	self:getParentView():destroySubView(self)
 end
 
-function var_0_0.killAllChildView(arg_22_0)
-	if arg_22_0._childViews then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._childViews) do
-			arg_22_0:playDestroyBehaviour(iter_22_1)
+function BaseViewExtended:killAllChildView()
+	if self._childViews then
+		for i, v in ipairs(self._childViews) do
+			self:playDestroyBehaviour(v)
 		end
 	end
 
-	arg_22_0._childViews = {}
+	self._childViews = {}
 end
 
-function var_0_0.setViewVisibleInternal(arg_23_0, arg_23_1)
-	if arg_23_0.visible_internal == arg_23_1 then
+function BaseViewExtended:setViewVisibleInternal(state)
+	if self.visible_internal == state then
 		return
 	end
 
-	arg_23_0.visible_internal = arg_23_1
+	self.visible_internal = state
 
-	if not arg_23_0:viewIsReadyInternal() then
+	if not self:viewIsReadyInternal() then
 		return
 	end
 
-	if arg_23_0.viewGO then
-		arg_23_0.canvasGroup_internal = arg_23_0.canvasGroup_internal or gohelper.onceAddComponent(arg_23_0.viewGO, typeof(UnityEngine.CanvasGroup))
-		arg_23_0.canvasGroup_internal.alpha = arg_23_1 and 1 or 0
-		arg_23_0.canvasGroup_internal.interactable = arg_23_1
-		arg_23_0.canvasGroup_internal.blocksRaycasts = arg_23_1
+	if self.viewGO then
+		self.canvasGroup_internal = self.canvasGroup_internal or gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+		self.canvasGroup_internal.alpha = state and 1 or 0
+		self.canvasGroup_internal.interactable = state
+		self.canvasGroup_internal.blocksRaycasts = state
 	end
 end
 
-function var_0_0.registComponent(arg_24_0, arg_24_1)
-	if not arg_24_0.components_internal then
-		arg_24_0.components_internal = {}
+function BaseViewExtended:registComponent(clsDefine)
+	if not self.components_internal then
+		self.components_internal = {}
 	end
 
-	if arg_24_0.components_internal[arg_24_1.__cname] then
-		return arg_24_0.components_internal[arg_24_1.__cname]
+	if self.components_internal[clsDefine.__cname] then
+		return self.components_internal[clsDefine.__cname]
 	end
 
-	local var_24_0 = arg_24_1.New()
+	local comp = clsDefine.New()
 
-	var_24_0.parentClass = arg_24_0
-	arg_24_0.components_internal[arg_24_1.__cname] = var_24_0
+	comp.parentClass = self
+	self.components_internal[clsDefine.__cname] = comp
 
-	return arg_24_0.components_internal[arg_24_1.__cname]
+	return self.components_internal[clsDefine.__cname]
 end
 
-function var_0_0.releaseComponentsInternal(arg_25_0)
-	if arg_25_0.components_internal then
-		for iter_25_0, iter_25_1 in pairs(arg_25_0.components_internal) do
-			if iter_25_1.releaseSelf then
-				iter_25_1:releaseSelf()
+function BaseViewExtended:releaseComponentsInternal()
+	if self.components_internal then
+		for k, v in pairs(self.components_internal) do
+			if v.releaseSelf then
+				v:releaseSelf()
 			end
 		end
 	end
 
-	arg_25_0.components_internal = nil
+	self.components_internal = nil
 end
 
-function var_0_0.getParentView(arg_26_0)
-	return arg_26_0.PARENT_VIEW
+function BaseViewExtended:getParentView()
+	return self.PARENT_VIEW
 end
 
-function var_0_0.getParentObj(arg_27_0)
-	return arg_27_0.viewGO_parent_obj
+function BaseViewExtended:getParentObj()
+	return self.viewGO_parent_obj
 end
 
-function var_0_0.getChildViews(arg_28_0)
-	return arg_28_0._childViews
+function BaseViewExtended:getChildViews()
+	return self._childViews
 end
 
-function var_0_0.viewIsReadyInternal(arg_29_0)
-	return arg_29_0.INIT_FINISH_INTERNAL
+function BaseViewExtended:viewIsReadyInternal()
+	return self.INIT_FINISH_INTERNAL
 end
 
-function var_0_0.definePrefabUrl(arg_30_0)
+function BaseViewExtended:definePrefabUrl()
 	return
 end
 
-function var_0_0.setPrefabUrl(arg_31_0, arg_31_1)
-	arg_31_0.internal_pre_url = arg_31_1
+function BaseViewExtended:setPrefabUrl(url)
+	self.internal_pre_url = url
 end
 
-function var_0_0.onRefreshViewParam(arg_32_0, ...)
+function BaseViewExtended:onRefreshViewParam(...)
 	return
 end
 
-function var_0_0.com_loadAsset(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	arg_33_0:registComponent(LoaderComponent):loadAsset(arg_33_1, arg_33_2, arg_33_0, arg_33_3)
+function BaseViewExtended:com_loadAsset(url, call_back, failedCallback)
+	local comp = self:registComponent(LoaderComponent)
+
+	comp:loadAsset(url, call_back, self, failedCallback)
 end
 
-function var_0_0.com_loadListAsset(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
-	arg_34_0:registComponent(LoaderComponent):loadListAsset(arg_34_1, arg_34_2, arg_34_3, arg_34_0, arg_34_4, arg_34_5)
+function BaseViewExtended:com_loadListAsset(urlList, oneCallback, finishCallback, oneFailedCallback, listFailedCallback)
+	local comp = self:registComponent(LoaderComponent)
+
+	comp:loadListAsset(urlList, oneCallback, finishCallback, self, oneFailedCallback, listFailedCallback)
 end
 
-function var_0_0.com_createObjList(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4, arg_35_5, arg_35_6, arg_35_7)
-	arg_35_0:registComponent(UICloneComponent):createObjList(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4, arg_35_5, arg_35_6, arg_35_7)
+function BaseViewExtended:com_createObjList(callback, data, parent_obj, model_obj, component, delay_time, create_count)
+	local comp = self:registComponent(UICloneComponent)
+
+	comp:createObjList(self, callback, data, parent_obj, model_obj, component, delay_time, create_count)
 end
 
-function var_0_0.com_registScrollView(arg_36_0, arg_36_1, arg_36_2)
-	return arg_36_0:registComponent(UISimpleScrollViewComponent):registScrollView(arg_36_1, arg_36_2)
+function BaseViewExtended:com_registScrollView(obj_root, scroll_param)
+	local comp = self:registComponent(UISimpleScrollViewComponent)
+
+	return comp:registScrollView(obj_root, scroll_param)
 end
 
-function var_0_0.com_registSimpleScrollView(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	return arg_37_0:registComponent(UISimpleScrollViewComponent):registSimpleScrollView(arg_37_1, arg_37_2, arg_37_3)
+function BaseViewExtended:com_registSimpleScrollView(obj_root, scrollDir, lineCount)
+	local comp = self:registComponent(UISimpleScrollViewComponent)
+
+	return comp:registSimpleScrollView(obj_root, scrollDir, lineCount)
 end
 
-return var_0_0
+return BaseViewExtended

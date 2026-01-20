@@ -1,219 +1,222 @@
-﻿module("modules.logic.rouge.view.comp.RougeCapacityComp", package.seeall)
+﻿-- chunkname: @modules/logic/rouge/view/comp/RougeCapacityComp.lua
 
-local var_0_0 = class("RougeCapacityComp", LuaCompBase)
+module("modules.logic.rouge.view.comp.RougeCapacityComp", package.seeall)
 
-var_0_0.SpriteType1 = "rouge_team_volume_1"
-var_0_0.SpriteType2 = "rouge_team_volume_2"
-var_0_0.SpriteType3 = "rouge_team_volume_3"
+local RougeCapacityComp = class("RougeCapacityComp", LuaCompBase)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0._go = arg_1_1
+RougeCapacityComp.SpriteType1 = "rouge_team_volume_1"
+RougeCapacityComp.SpriteType2 = "rouge_team_volume_2"
+RougeCapacityComp.SpriteType3 = "rouge_team_volume_3"
+
+function RougeCapacityComp:init(go)
+	self._go = go
 end
 
-function var_0_0.Add(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	local var_2_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0, var_0_0)
+function RougeCapacityComp.Add(go, curNum, maxNum, autoFindNodes, notUsedType)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, RougeCapacityComp)
 
-	var_2_0:setCurNum(arg_2_1)
-	var_2_0:setMaxNum(arg_2_2)
+	comp:setCurNum(curNum)
+	comp:setMaxNum(maxNum)
 
-	if arg_2_3 then
-		var_2_0:autoFindNodes()
+	if autoFindNodes then
+		comp:autoFindNodes()
 	end
 
-	var_2_0:setSpriteType(nil, arg_2_4)
-	var_2_0:initCapacity()
+	comp:setSpriteType(nil, notUsedType)
+	comp:initCapacity()
 
-	return var_2_0
+	return comp
 end
 
-function var_0_0.getCurNum(arg_3_0)
-	return arg_3_0._curNum
+function RougeCapacityComp:getCurNum()
+	return self._curNum
 end
 
-function var_0_0.getMaxNum(arg_4_0)
-	return arg_4_0._maxNum
+function RougeCapacityComp:getMaxNum()
+	return self._maxNum
 end
 
-function var_0_0.updateCurAndMaxNum(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._curNum = arg_5_1
-	arg_5_0._maxNum = arg_5_2
+function RougeCapacityComp:updateCurAndMaxNum(curNum, maxNum)
+	self._curNum = curNum
+	self._maxNum = maxNum
 
-	arg_5_0:_refreshImageList()
+	self:_refreshImageList()
 end
 
-function var_0_0.updateCurNum(arg_6_0, arg_6_1)
-	arg_6_0._curNum = arg_6_1
+function RougeCapacityComp:updateCurNum(num)
+	self._curNum = num
 
-	arg_6_0:_refreshImageList()
+	self:_refreshImageList()
 end
 
-function var_0_0.updateMaxNum(arg_7_0, arg_7_1)
-	arg_7_0._maxNum = arg_7_1
+function RougeCapacityComp:updateMaxNum(num)
+	self._maxNum = num
 
-	arg_7_0:_refreshImageList()
+	self:_refreshImageList()
 end
 
-function var_0_0.updateMaxNumAndOpaqueNum(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0._opaqueNum = arg_8_2
+function RougeCapacityComp:updateMaxNumAndOpaqueNum(num, opaqueNum)
+	self._opaqueNum = opaqueNum
 
-	arg_8_0:updateMaxNum(arg_8_1)
+	self:updateMaxNum(num)
 end
 
-function var_0_0.showChangeEffect(arg_9_0, arg_9_1)
-	arg_9_0._showChangeEffect = arg_9_1
+function RougeCapacityComp:showChangeEffect(value)
+	self._showChangeEffect = value
 end
 
-function var_0_0.setPoint(arg_10_0, arg_10_1)
-	arg_10_0._pointGo = arg_10_1
+function RougeCapacityComp:setPoint(pointGo)
+	self._pointGo = pointGo
 end
 
-function var_0_0.setTxt(arg_11_0, arg_11_1)
-	arg_11_0._txt = arg_11_1
+function RougeCapacityComp:setTxt(txt)
+	self._txt = txt
 end
 
-function var_0_0.autoFindNodes(arg_12_0)
-	arg_12_0._pointGo = gohelper.findChild(arg_12_0._go, "point")
+function RougeCapacityComp:autoFindNodes()
+	self._pointGo = gohelper.findChild(self._go, "point")
 
-	gohelper.setActive(arg_12_0._pointGo, false)
+	gohelper.setActive(self._pointGo, false)
 
-	arg_12_0._txt = gohelper.findChildText(arg_12_0._go, "#txt_num")
+	self._txt = gohelper.findChildText(self._go, "#txt_num")
 
-	if not arg_12_0._pointGo then
+	if not self._pointGo then
 		logError("RougeCapacityComp autoFindNodes 请检查脚本是否attach在volume上，以及节点目录是否正确")
 	end
 end
 
-function var_0_0.setCurNum(arg_13_0, arg_13_1)
-	if arg_13_0._curNum then
+function RougeCapacityComp:setCurNum(num)
+	if self._curNum then
 		return
 	end
 
-	arg_13_0._curNum = arg_13_1
+	self._curNum = num
 end
 
-function var_0_0.setMaxNum(arg_14_0, arg_14_1)
-	if arg_14_0._maxNum then
+function RougeCapacityComp:setMaxNum(num)
+	if self._maxNum then
 		return
 	end
 
-	arg_14_0._maxNum = arg_14_1
+	self._maxNum = num
 end
 
-function var_0_0.setSpriteType(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0._usedSpriteType = arg_15_1
-	arg_15_0._notUsedSpriteType = arg_15_2
+function RougeCapacityComp:setSpriteType(usedType, notUsedType)
+	self._usedSpriteType = usedType
+	self._notUsedSpriteType = notUsedType
 end
 
-function var_0_0.getUsedSpriteType(arg_16_0)
-	arg_16_0._usedSpriteType = arg_16_0._usedSpriteType or var_0_0.SpriteType3
+function RougeCapacityComp:getUsedSpriteType()
+	self._usedSpriteType = self._usedSpriteType or RougeCapacityComp.SpriteType3
 
-	return arg_16_0._usedSpriteType
+	return self._usedSpriteType
 end
 
-function var_0_0.getNotUsedSpriteType(arg_17_0)
-	arg_17_0._notUsedSpriteType = arg_17_0._notUsedSpriteType or var_0_0.SpriteType1
+function RougeCapacityComp:getNotUsedSpriteType()
+	self._notUsedSpriteType = self._notUsedSpriteType or RougeCapacityComp.SpriteType1
 
-	return arg_17_0._notUsedSpriteType
+	return self._notUsedSpriteType
 end
 
-function var_0_0.setTxtFormat(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0._notFullFormat = arg_18_1
-	arg_18_0._fullFormat = arg_18_2
+function RougeCapacityComp:setTxtFormat(notFullFormat, fullFormat)
+	self._notFullFormat = notFullFormat
+	self._fullFormat = fullFormat
 end
 
-function var_0_0.getFullFormat(arg_19_0)
-	arg_19_0._fullFormat = arg_19_0._fullFormat or "<#D97373>%s</color>/%s"
+function RougeCapacityComp:getFullFormat()
+	self._fullFormat = self._fullFormat or "<#D97373>%s</color>/%s"
 
-	return arg_19_0._fullFormat
+	return self._fullFormat
 end
 
-function var_0_0.getNotFullFormat(arg_20_0)
-	arg_20_0._notFullFormat = arg_20_0._notFullFormat or "<#E99B56>%s</color>/%s"
+function RougeCapacityComp:getNotFullFormat()
+	self._notFullFormat = self._notFullFormat or "<#E99B56>%s</color>/%s"
 
-	return arg_20_0._notFullFormat
+	return self._notFullFormat
 end
 
-function var_0_0.initCapacity(arg_21_0)
-	if arg_21_0._imageList then
+function RougeCapacityComp:initCapacity()
+	if self._imageList then
 		return
 	end
 
-	arg_21_0._imageList = arg_21_0:getUserDataTb_()
+	self._imageList = self:getUserDataTb_()
 
-	arg_21_0:_refreshImageList()
+	self:_refreshImageList()
 end
 
-function var_0_0._getPointInfo(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._imageList[arg_22_1]
+function RougeCapacityComp:_getPointInfo(index)
+	local t = self._imageList[index]
 
-	if not var_22_0 then
-		local var_22_1 = gohelper.cloneInPlace(arg_22_0._pointGo)
+	if not t then
+		local pointGo = gohelper.cloneInPlace(self._pointGo)
 
-		gohelper.setActive(var_22_1, true)
+		gohelper.setActive(pointGo, true)
 
-		local var_22_2 = var_22_1:GetComponent(gohelper.Type_Image)
+		local image = pointGo:GetComponent(gohelper.Type_Image)
 
-		var_22_0 = arg_22_0:getUserDataTb_()
-		arg_22_0._imageList[arg_22_1] = var_22_0
-		var_22_0.image = var_22_2
-		var_22_0.yellow = gohelper.findChild(var_22_1, "yellow")
+		t = self:getUserDataTb_()
+		self._imageList[index] = t
+		t.image = image
+		t.yellow = gohelper.findChild(pointGo, "yellow")
 	end
 
-	return var_22_0
+	return t
 end
 
-function var_0_0._refreshImageList(arg_23_0)
-	if not arg_23_0._imageList or not arg_23_0._maxNum then
+function RougeCapacityComp:_refreshImageList()
+	if not self._imageList or not self._maxNum then
 		return
 	end
 
-	local var_23_0 = false
-	local var_23_1 = arg_23_0._curNum or 0
-	local var_23_2 = var_23_1 ~= arg_23_0._prevNum
+	local hasChanged = false
+	local curNum = self._curNum or 0
+	local isChangeNum = curNum ~= self._prevNum
 
-	arg_23_0._prevNum = var_23_1
+	self._prevNum = curNum
 
-	local var_23_3 = arg_23_0._maxNum
-	local var_23_4 = arg_23_0._opaqueNum or var_23_3
-	local var_23_5 = math.max(var_23_3, #arg_23_0._imageList)
+	local maxNum = self._maxNum
+	local opaqueNum = self._opaqueNum or maxNum
 
-	for iter_23_0 = 1, var_23_5 do
-		local var_23_6 = arg_23_0:_getPointInfo(iter_23_0)
-		local var_23_7 = var_23_6.image
-		local var_23_8 = iter_23_0 <= arg_23_0._maxNum
+	maxNum = math.max(maxNum, #self._imageList)
 
-		gohelper.setActive(var_23_7, var_23_8)
+	for i = 1, maxNum do
+		local pointInfo = self:_getPointInfo(i)
+		local image = pointInfo.image
+		local isShow = i <= self._maxNum
 
-		if var_23_8 then
-			local var_23_9 = iter_23_0 <= var_23_1
+		gohelper.setActive(image, isShow)
 
-			if var_23_9 and arg_23_0._showChangeEffect and var_23_2 then
-				gohelper.setActive(var_23_6.yellow, false)
-				gohelper.setActive(var_23_6.yellow, true)
+		if isShow then
+			local showUsed = i <= curNum
 
-				var_23_0 = true
+			if showUsed and self._showChangeEffect and isChangeNum then
+				gohelper.setActive(pointInfo.yellow, false)
+				gohelper.setActive(pointInfo.yellow, true)
+
+				hasChanged = true
 			end
 
-			UISpriteSetMgr.instance:setRougeSprite(var_23_7, var_23_9 and arg_23_0:getUsedSpriteType() or arg_23_0:getNotUsedSpriteType())
+			UISpriteSetMgr.instance:setRougeSprite(image, showUsed and self:getUsedSpriteType() or self:getNotUsedSpriteType())
 
-			if arg_23_0._opaqueNum ~= nil then
-				local var_23_10 = var_23_7.color
+			if self._opaqueNum ~= nil then
+				local color = image.color
 
-				var_23_10.a = iter_23_0 <= var_23_4 and 1 or 0.4
-				var_23_7.color = var_23_10
+				color.a = i <= opaqueNum and 1 or 0.4
+				image.color = color
 			end
 		end
 	end
 
-	if var_23_0 then
+	if hasChanged then
 		AudioMgr.instance:trigger(AudioEnum.UI.PointLight)
 	end
 
-	if arg_23_0._txt then
-		local var_23_11 = var_23_1 >= arg_23_0._maxNum and arg_23_0:getFullFormat() or arg_23_0:getNotFullFormat()
+	if self._txt then
+		local txtFormat = curNum >= self._maxNum and self:getFullFormat() or self:getNotFullFormat()
 
-		arg_23_0._txt.text = string.format(var_23_11, var_23_1, arg_23_0._maxNum)
+		self._txt.text = string.format(txtFormat, curNum, self._maxNum)
 	end
 end
 
-return var_0_0
+return RougeCapacityComp

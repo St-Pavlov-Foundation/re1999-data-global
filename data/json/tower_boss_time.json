@@ -194,7 +194,7 @@
     "round": 2,
     "isPermanent": 0,
     "startTime": "2025-12-15",
-    "endTime": "",
+    "endTime": "2026-01-26",
     "taskGroupId": 900602,
     "taskEndTime": "2026-01-26",
     "isOnline": 1
@@ -217,6 +217,16 @@
     "endTime": "",
     "taskGroupId": 900504,
     "taskEndTime": "2026-02-23",
+    "isOnline": 1
+  },
+  {
+    "towerId": 6,
+    "round": 3,
+    "isPermanent": 0,
+    "startTime": "2026-01-26",
+    "endTime": "",
+    "taskGroupId": 900603,
+    "taskEndTime": "2026-03-09",
     "isOnline": 1
   }
 ]

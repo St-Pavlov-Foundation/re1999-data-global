@@ -1,162 +1,166 @@
-﻿module("modules.logic.versionactivity1_4.act130.model.Activity130TaskListModel", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_4/act130/model/Activity130TaskListModel.lua
 
-local var_0_0 = class("Activity130TaskListModel", ListScrollModel)
+module("modules.logic.versionactivity1_4.act130.model.Activity130TaskListModel", package.seeall)
 
-function var_0_0.init(arg_1_0)
+local Activity130TaskListModel = class("Activity130TaskListModel", ListScrollModel)
+
+function Activity130TaskListModel:init()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Activity130
-	}, arg_1_0.refreshData, arg_1_0)
+	}, self.refreshData, self)
 end
 
-function var_0_0.refreshData(arg_2_0)
-	local var_2_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity130)
-	local var_2_1 = {}
-	local var_2_2 = 0
+function Activity130TaskListModel:refreshData()
+	local taskDict = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Activity130)
+	local dataList = {}
+	local rewardCount = 0
 
-	if var_2_0 ~= nil then
-		local var_2_3 = Activity130Config.instance:getTaskByActId(Activity130Enum.ActivityId.Act130)
+	if taskDict ~= nil then
+		local taskCfgList = Activity130Config.instance:getTaskByActId(Activity130Enum.ActivityId.Act130)
 
-		for iter_2_0, iter_2_1 in ipairs(var_2_3) do
-			local var_2_4 = Activity130TaskMO.New()
+		for _, taskCfg in ipairs(taskCfgList) do
+			local mo = Activity130TaskMO.New()
 
-			var_2_4:init(iter_2_1, var_2_0[iter_2_1.id])
+			mo:init(taskCfg, taskDict[taskCfg.id])
 
-			if var_2_4:alreadyGotReward() then
-				var_2_2 = var_2_2 + 1
+			if mo:alreadyGotReward() then
+				rewardCount = rewardCount + 1
 			end
 
-			table.insert(var_2_1, var_2_4)
+			table.insert(dataList, mo)
 		end
 	end
 
-	if var_2_2 > 1 then
-		local var_2_5 = Activity130TaskMO.New()
+	if rewardCount > 1 then
+		local allMO = Activity130TaskMO.New()
 
-		var_2_5.id = Activity130Enum.TaskMOAllFinishId
-		var_2_5.activityId = Activity130Enum.ActivityId.Act130
+		allMO.id = Activity130Enum.TaskMOAllFinishId
+		allMO.activityId = Activity130Enum.ActivityId.Act130
 
-		table.insert(var_2_1, var_2_5)
+		table.insert(dataList, allMO)
 	end
 
-	table.sort(var_2_1, var_0_0.sortMO)
+	table.sort(dataList, Activity130TaskListModel.sortMO)
 
-	arg_2_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_2_0:setList(var_2_1)
+	self:setList(dataList)
 end
 
-function var_0_0.sortMO(arg_3_0, arg_3_1)
-	local var_3_0 = var_0_0.getSortIndex(arg_3_0)
-	local var_3_1 = var_0_0.getSortIndex(arg_3_1)
+function Activity130TaskListModel.sortMO(objA, objB)
+	local sidxA = Activity130TaskListModel.getSortIndex(objA)
+	local sidxB = Activity130TaskListModel.getSortIndex(objB)
 
-	if var_3_0 ~= var_3_1 then
-		return var_3_0 < var_3_1
-	elseif arg_3_0.id ~= arg_3_1.id then
-		return arg_3_0.id < arg_3_1.id
+	if sidxA ~= sidxB then
+		return sidxA < sidxB
+	elseif objA.id ~= objB.id then
+		return objA.id < objB.id
 	end
 end
 
-function var_0_0.getSortIndex(arg_4_0)
-	if arg_4_0.id == Activity130Enum.TaskMOAllFinishId then
+function Activity130TaskListModel.getSortIndex(objA)
+	if objA.id == Activity130Enum.TaskMOAllFinishId then
 		return 1
-	elseif arg_4_0:isFinished() then
+	elseif objA:isFinished() then
 		return 100
-	elseif arg_4_0:alreadyGotReward() then
+	elseif objA:alreadyGotReward() then
 		return 2
 	end
 
 	return 50
 end
 
-function var_0_0.createMO(arg_5_0, arg_5_1, arg_5_2)
-	return {
-		config = arg_5_2.config,
-		originTaskMO = arg_5_2
-	}
+function Activity130TaskListModel:createMO(co, taskMO)
+	local mo = {}
+
+	mo.config = taskMO.config
+	mo.originTaskMO = taskMO
+
+	return mo
 end
 
-function var_0_0.getRankDiff(arg_6_0, arg_6_1)
-	if arg_6_0._hasRankDiff and arg_6_1 then
-		local var_6_0 = tabletool.indexOf(arg_6_0._idIdxList, arg_6_1.id)
-		local var_6_1 = arg_6_0:getIndex(arg_6_1)
+function Activity130TaskListModel:getRankDiff(mo)
+	if self._hasRankDiff and mo then
+		local oldIdx = tabletool.indexOf(self._idIdxList, mo.id)
+		local curIdx = self:getIndex(mo)
 
-		if var_6_0 and var_6_1 then
-			arg_6_0._idIdxList[var_6_0] = -2
+		if oldIdx and curIdx then
+			self._idIdxList[oldIdx] = -2
 
-			return var_6_1 - var_6_0
+			return curIdx - oldIdx
 		end
 	end
 
 	return 0
 end
 
-function var_0_0.refreshRankDiff(arg_7_0)
-	arg_7_0._idIdxList = {}
+function Activity130TaskListModel:refreshRankDiff()
+	self._idIdxList = {}
 
-	local var_7_0 = arg_7_0:getList()
+	local dataList = self:getList()
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
-		table.insert(arg_7_0._idIdxList, iter_7_1.id)
+	for _, mo in ipairs(dataList) do
+		table.insert(self._idIdxList, mo.id)
 	end
 end
 
-function var_0_0.preFinish(arg_8_0, arg_8_1)
-	if not arg_8_1 then
+function Activity130TaskListModel:preFinish(taskMO)
+	if not taskMO then
 		return
 	end
 
-	local var_8_0 = false
+	local isCanSort = false
 
-	arg_8_0._hasRankDiff = false
+	self._hasRankDiff = false
 
-	arg_8_0:refreshRankDiff()
+	self:refreshRankDiff()
 
-	local var_8_1 = 0
-	local var_8_2 = arg_8_0:getList()
+	local preCount = 0
+	local taskMOList = self:getList()
 
-	if arg_8_1.id == Activity130Enum.TaskMOAllFinishId then
-		for iter_8_0, iter_8_1 in ipairs(var_8_2) do
-			if iter_8_1:alreadyGotReward() and iter_8_1.id ~= Activity130Enum.TaskMOAllFinishId then
-				iter_8_1.preFinish = true
-				var_8_0 = true
-				var_8_1 = var_8_1 + 1
+	if taskMO.id == Activity130Enum.TaskMOAllFinishId then
+		for _, tempMO in ipairs(taskMOList) do
+			if tempMO:alreadyGotReward() and tempMO.id ~= Activity130Enum.TaskMOAllFinishId then
+				tempMO.preFinish = true
+				isCanSort = true
+				preCount = preCount + 1
 			end
 		end
-	elseif arg_8_1:alreadyGotReward() then
-		arg_8_1.preFinish = true
-		var_8_0 = true
-		var_8_1 = var_8_1 + 1
+	elseif taskMO:alreadyGotReward() then
+		taskMO.preFinish = true
+		isCanSort = true
+		preCount = preCount + 1
 	end
 
-	if var_8_0 then
-		local var_8_3 = arg_8_0:getById(Activity130Enum.TaskMOAllFinishId)
+	if isCanSort then
+		local allMO = self:getById(Activity130Enum.TaskMOAllFinishId)
 
-		if var_8_3 and arg_8_0:getGotRewardCount() < var_8_1 + 1 then
-			tabletool.removeValue(var_8_2, var_8_3)
+		if allMO and self:getGotRewardCount() < preCount + 1 then
+			tabletool.removeValue(taskMOList, allMO)
 		end
 
-		arg_8_0._hasRankDiff = true
+		self._hasRankDiff = true
 
-		table.sort(var_8_2, var_0_0.sortMO)
-		arg_8_0:setList(var_8_2)
+		table.sort(taskMOList, Activity130TaskListModel.sortMO)
+		self:setList(taskMOList)
 
-		arg_8_0._hasRankDiff = false
+		self._hasRankDiff = false
 	end
 end
 
-function var_0_0.getGotRewardCount(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_1 or arg_9_0:getList()
-	local var_9_1 = 0
+function Activity130TaskListModel:getGotRewardCount(moList)
+	local taskMOList = moList or self:getList()
+	local count = 0
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		if iter_9_1:alreadyGotReward() and not iter_9_1.preFinish and iter_9_1.id ~= Activity130Enum.TaskMOAllFinishId then
-			var_9_1 = var_9_1 + 1
+	for _, tempMO in ipairs(taskMOList) do
+		if tempMO:alreadyGotReward() and not tempMO.preFinish and tempMO.id ~= Activity130Enum.TaskMOAllFinishId then
+			count = count + 1
 		end
 	end
 
-	return var_9_1
+	return count
 end
 
-var_0_0.instance = var_0_0.New()
+Activity130TaskListModel.instance = Activity130TaskListModel.New()
 
-return var_0_0
+return Activity130TaskListModel

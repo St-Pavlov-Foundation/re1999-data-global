@@ -1,54 +1,56 @@
-﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_9/fairyland/view/FairyLandCompleteView.lua
 
-local var_0_0 = class("FairyLandCompleteView", BaseView)
+module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
+local FairyLandCompleteView = class("FairyLandCompleteView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function FairyLandCompleteView:onInitView()
+	self.btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickClose, arg_2_0)
+function FairyLandCompleteView:addEvents()
+	self:addClickCb(self.btnClose, self.onClickClose, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function FairyLandCompleteView:removeEvents()
 	return
 end
 
-function var_0_0.onClickClose(arg_4_0)
-	if arg_4_0.canClose then
-		arg_4_0:closeThis()
+function FairyLandCompleteView:onClickClose()
+	if self.canClose then
+		self:closeThis()
 	end
 end
 
-function var_0_0.onOpen(arg_5_0)
+function FairyLandCompleteView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_decrypt_succeed)
-	TaskDispatcher.runDelay(arg_5_0.setCanClose, arg_5_0, 2)
+	TaskDispatcher.runDelay(self.setCanClose, self, 2)
 
-	local var_5_0 = arg_5_0.viewParam or {}
-	local var_5_1 = var_5_0.shapeType or 1
+	local param = self.viewParam or {}
+	local shapeType = param.shapeType or 1
 
-	arg_5_0.callback = var_5_0.callback
-	arg_5_0.callbackObj = var_5_0.callbackObj
+	self.callback = param.callback
+	self.callbackObj = param.callbackObj
 
-	local var_5_2 = gohelper.findChild(arg_5_0.viewGO, "#go_Complete/#go_Shape" .. tostring(var_5_1))
+	local go = gohelper.findChild(self.viewGO, "#go_Complete/#go_Shape" .. tostring(shapeType))
 
-	gohelper.setActive(var_5_2, true)
+	gohelper.setActive(go, true)
 end
 
-function var_0_0.setCanClose(arg_6_0)
-	arg_6_0.canClose = true
+function FairyLandCompleteView:setCanClose()
+	self.canClose = true
 end
 
-function var_0_0.onClose(arg_7_0)
-	TaskDispatcher.cancelTask(arg_7_0.setCanClose, arg_7_0)
+function FairyLandCompleteView:onClose()
+	TaskDispatcher.cancelTask(self.setCanClose, self)
 
-	if arg_7_0.callback then
-		arg_7_0.callback(arg_7_0.callbackObj)
+	if self.callback then
+		self.callback(self.callbackObj)
 	end
 end
 
-return var_0_0
+return FairyLandCompleteView

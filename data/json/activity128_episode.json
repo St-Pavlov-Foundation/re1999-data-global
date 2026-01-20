@@ -1738,5 +1738,41 @@
     "recommendLevelDesc": "language_10000908",
     "openDay": 15,
     "evaluate": "10101#10201#10301#10401"
+  },
+  {
+    "activityId": 13230,
+    "stage": 1,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500301,
+    "desc": "language_10104167",
+    "recommendLevelDesc": "",
+    "openDay": 1,
+    "evaluate": "10102#10201#10301#10401"
+  },
+  {
+    "activityId": 13230,
+    "stage": 2,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500302,
+    "desc": "language_10104168",
+    "recommendLevelDesc": "",
+    "openDay": 8,
+    "evaluate": "10102#10201#10301#10401"
+  },
+  {
+    "activityId": 13230,
+    "stage": 3,
+    "layer": 1,
+    "type": 0,
+    "enhanceRole": 0,
+    "episodeId": 13500303,
+    "desc": "language_10104169",
+    "recommendLevelDesc": "",
+    "openDay": 15,
+    "evaluate": "10102#10201#10301#10401"
   }
 ]

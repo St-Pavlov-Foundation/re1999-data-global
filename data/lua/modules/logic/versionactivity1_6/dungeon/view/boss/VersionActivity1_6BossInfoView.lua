@@ -1,62 +1,68 @@
-﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossInfoView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/dungeon/view/boss/VersionActivity1_6BossInfoView.lua
 
-local var_0_0 = class("VersionActivity1_6BossInfoView", EnemyInfoView)
+module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6BossInfoView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	var_0_0.super.onInitView(arg_1_0)
+local VersionActivity1_6BossInfoView = class("VersionActivity1_6BossInfoView", EnemyInfoView)
 
-	arg_1_0._txthp = gohelper.findChildText(arg_1_0.viewGO, "enemyinfo/txt_hp/#txt_hp")
-	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
-	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "enemyinfo/#txt_name/#image_dmgtype")
+function VersionActivity1_6BossInfoView:onInitView()
+	VersionActivity1_6BossInfoView.super.onInitView(self)
+
+	self._txthp = gohelper.findChildText(self.viewGO, "enemyinfo/txt_hp/#txt_hp")
+	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
+	self._imagedmgtype = gohelper.findChildImage(self.viewGO, "enemyinfo/#txt_name/#image_dmgtype")
 end
 
-function var_0_0._refreshUI(arg_2_0)
-	if not arg_2_0._battleId then
+function VersionActivity1_6BossInfoView:_refreshUI()
+	if not self._battleId then
 		logError("地方信息界面缺少战斗Id")
 
 		return
 	end
 
-	var_0_0.super._refreshUI(arg_2_0)
-	arg_2_0:_doUpdateSelectIcon(arg_2_0._battleId)
+	VersionActivity1_6BossInfoView.super._refreshUI(self)
+	self:_doUpdateSelectIcon(self._battleId)
 end
 
-function var_0_0._getBossId(arg_3_0, arg_3_1)
-	local var_3_0 = FightController.instance:setFightParamByBattleId(arg_3_0._battleId)
-	local var_3_1 = var_3_0 and var_3_0.monsterGroupIds and var_3_0.monsterGroupIds[arg_3_1]
-	local var_3_2 = var_3_1 and lua_monster_group.configDict[var_3_1]
+function VersionActivity1_6BossInfoView:_getBossId(groupIndex)
+	local fightParam = FightController.instance:setFightParamByBattleId(self._battleId)
+	local monsterGroupId = fightParam and fightParam.monsterGroupIds and fightParam.monsterGroupIds[groupIndex]
+	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]
+	local bossId = monsterGroupCO and not string.nilorempty(monsterGroupCO.bossId) and monsterGroupCO.bossId or nil
 
-	return var_3_2 and not string.nilorempty(var_3_2.bossId) and var_3_2.bossId or nil
+	return bossId
 end
 
-function var_0_0.onUpdateParam(arg_4_0)
-	local var_4_0 = arg_4_0.viewParam.bossEpisodeId
+function VersionActivity1_6BossInfoView:onUpdateParam()
+	local episodeId = self.viewParam.bossEpisodeId
+	local dungeonEpisodeCfg = Activity149Config.instance:getDungeonEpisodeCfg(episodeId)
 
-	arg_4_0._battleId = Activity149Config.instance:getDungeonEpisodeCfg(var_4_0).battleId
+	self._battleId = dungeonEpisodeCfg.battleId
 
-	arg_4_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0.onOpen(arg_5_0)
-	arg_5_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_5_0._refreshInfo, arg_5_0)
-	arg_5_0:onUpdateParam()
+function VersionActivity1_6BossInfoView:onOpen()
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
+	self:onUpdateParam()
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, arg_6_0._refreshInfo, arg_6_0)
+function VersionActivity1_6BossInfoView:onClose()
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickEnemyItem, self._refreshInfo, self)
 end
 
-function var_0_0._doUpdateSelectIcon(arg_7_0, arg_7_1)
-	arg_7_0.viewContainer:getBossRushViewRule():refreshUI(arg_7_1)
+function VersionActivity1_6BossInfoView:_doUpdateSelectIcon(battleId)
+	local ruleView = self.viewContainer:getBossRushViewRule()
+
+	ruleView:refreshUI(battleId)
 end
 
-function var_0_0._refreshInfo(arg_8_0, arg_8_1)
-	var_0_0.super._refreshInfo(arg_8_0, arg_8_1)
+function VersionActivity1_6BossInfoView:_refreshInfo(monsterConfig)
+	VersionActivity1_6BossInfoView.super._refreshInfo(self, monsterConfig)
 
-	local var_8_0 = arg_8_1.monsterId
-	local var_8_1 = lua_monster.configDict[var_8_0]
+	local monsterId = monsterConfig.monsterId
+	local monsterCo = lua_monster.configDict[monsterId]
 
-	UISpriteSetMgr.instance:setCommonSprite(arg_8_0._imagedmgtype, "dmgtype" .. tostring(var_8_1.dmgType))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(monsterCo.dmgType))
 end
 
-return var_0_0
+return VersionActivity1_6BossInfoView

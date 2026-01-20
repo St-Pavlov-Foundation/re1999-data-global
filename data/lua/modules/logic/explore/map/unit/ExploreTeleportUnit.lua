@@ -1,10 +1,12 @@
-﻿module("modules.logic.explore.map.unit.ExploreTeleportUnit", package.seeall)
+﻿-- chunkname: @modules/logic/explore/map/unit/ExploreTeleportUnit.lua
 
-local var_0_0 = class("ExploreTeleportUnit", ExploreBaseMoveUnit)
+module("modules.logic.explore.map.unit.ExploreTeleportUnit", package.seeall)
 
-function var_0_0.onTriggerDone(arg_1_0)
-	var_0_0.super.onTriggerDone(arg_1_0)
+local ExploreTeleportUnit = class("ExploreTeleportUnit", ExploreBaseMoveUnit)
+
+function ExploreTeleportUnit:onTriggerDone()
+	ExploreTeleportUnit.super.onTriggerDone(self)
 	ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.Teleport)
 end
 
-return var_0_0
+return ExploreTeleportUnit

@@ -1,14 +1,16 @@
-﻿module("modules.logic.login.controller.work.LogoutCleanWork", package.seeall)
+﻿-- chunkname: @modules/logic/login/controller/work/LogoutCleanWork.lua
 
-local var_0_0 = class("LogoutCleanWork", BaseWork)
+module("modules.logic.login.controller.work.LogoutCleanWork", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LogoutCleanWork = class("LogoutCleanWork", BaseWork)
+
+function LogoutCleanWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	if not var_0_0._tryFuncList_ then
-		var_0_0._tryFuncList_ = {
+function LogoutCleanWork:onStart(context)
+	if not LogoutCleanWork._tryFuncList_ then
+		LogoutCleanWork._tryFuncList_ = {
 			function()
 				Activity114Model.instance:clearFlow()
 			end,
@@ -56,28 +58,31 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 			end,
 			function()
 				RougeController.instance:clearAllData()
+			end,
+			function()
+				Rouge2_Controller.instance:clearAllData()
 			end
 		}
 	end
 
-	local var_2_0 = var_0_0._tryFuncList_
-	local var_2_1 = xpcall
-	local var_2_2 = __G__TRACKBACK__
+	local tryFuncList = LogoutCleanWork._tryFuncList_
+	local _xpcall = xpcall
+	local _TRACKBACK = __G__TRACKBACK__
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		var_2_1(iter_2_1, var_2_2, arg_2_0)
+	for _, func in ipairs(tryFuncList) do
+		_xpcall(func, _TRACKBACK, self)
 	end
 
-	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.1)
+	TaskDispatcher.runDelay(self._delayDone, self, 0.1)
 end
 
-function var_0_0.clearWork(arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._delayDone, arg_19_0)
+function LogoutCleanWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
-function var_0_0._delayDone(arg_20_0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_20_0)
-	arg_20_0:onDone(true)
+function LogoutCleanWork:_delayDone()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
+	self:onDone(true)
 end
 
-return var_0_0
+return LogoutCleanWork

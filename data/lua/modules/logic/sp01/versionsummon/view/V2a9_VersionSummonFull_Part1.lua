@@ -1,14 +1,16 @@
-﻿module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummonFull_Part1", package.seeall)
+﻿-- chunkname: @modules/logic/sp01/versionsummon/view/V2a9_VersionSummonFull_Part1.lua
 
-local var_0_0 = class("V2a9_VersionSummonFull_Part1", V2a9_VersionSummonFull)
+module("modules.logic.sp01.versionsummon.view.V2a9_VersionSummonFull_Part1", package.seeall)
 
-function var_0_0._editableInitView(arg_1_0)
-	arg_1_0._simageRole:LoadImage(ResUrl.getV2a9VersionSummonSingleBg("v2a9_versionsummon_fullrole1"))
-	arg_1_0._simageLogo:LoadImage(ResUrl.getV2a9VersionSummonSingleBgLang("v2a9_versionsummon_logo1"))
-	arg_1_0._simageTitle:LoadImage(ResUrl.getV2a9VersionSummonSingleBgLang("v2a9_versionsummon_title1"))
-	arg_1_0._simageProp:LoadImage(ResUrl.getV2a9VersionSummonSingleBg("v2a9_versionsummon_icon_1"))
+local V2a9_VersionSummonFull_Part1 = class("V2a9_VersionSummonFull_Part1", V2a9_VersionSummonFull)
 
-	arg_1_0._txtTips.text = luaLang("v2a9_versionsummon_txt_tips1")
+function V2a9_VersionSummonFull_Part1:_editableInitView()
+	self._simageRole:LoadImage(ResUrl.getV2a9VersionSummonSingleBg("v2a9_versionsummon_fullrole1"))
+	self._simageLogo:LoadImage(ResUrl.getV2a9VersionSummonSingleBgLang("v2a9_versionsummon_logo1"))
+	self._simageTitle:LoadImage(ResUrl.getV2a9VersionSummonSingleBgLang("v2a9_versionsummon_title1"))
+	self._simageProp:LoadImage(ResUrl.getV2a9VersionSummonSingleBg("v2a9_versionsummon_icon_1"))
+
+	self._txtTips.text = luaLang("v2a9_versionsummon_txt_tips1")
 end
 
-return var_0_0
+return V2a9_VersionSummonFull_Part1

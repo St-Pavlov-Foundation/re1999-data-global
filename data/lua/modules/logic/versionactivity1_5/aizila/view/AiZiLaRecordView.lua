@@ -1,130 +1,132 @@
-﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_5/aizila/view/AiZiLaRecordView.lua
 
-local var_0_0 = class("AiZiLaRecordView", BaseView)
+module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goLeftTabContent = gohelper.findChild(arg_1_0.viewGO, "scroll_Left/Viewport/#go_LeftTabContent")
-	arg_1_0._goLeftTabItem = gohelper.findChild(arg_1_0.viewGO, "#go_LeftTabItem")
-	arg_1_0._goRecordItem = gohelper.findChild(arg_1_0.viewGO, "#go_RecordItem")
-	arg_1_0._scrollRight = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_Right")
-	arg_1_0._goRightItemContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_Right/Viewport/#go_RightItemContent")
-	arg_1_0._goArrow = gohelper.findChild(arg_1_0.viewGO, "#go_Arrow")
+local AiZiLaRecordView = class("AiZiLaRecordView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function AiZiLaRecordView:onInitView()
+	self._goLeftTabContent = gohelper.findChild(self.viewGO, "scroll_Left/Viewport/#go_LeftTabContent")
+	self._goLeftTabItem = gohelper.findChild(self.viewGO, "#go_LeftTabItem")
+	self._goRecordItem = gohelper.findChild(self.viewGO, "#go_RecordItem")
+	self._scrollRight = gohelper.findChildScrollRect(self.viewGO, "#scroll_Right")
+	self._goRightItemContent = gohelper.findChild(self.viewGO, "#scroll_Right/Viewport/#go_RightItemContent")
+	self._goArrow = gohelper.findChild(self.viewGO, "#go_Arrow")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function AiZiLaRecordView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function AiZiLaRecordView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	gohelper.setActive(arg_4_0._goLeftTabItem, false)
-	gohelper.setActive(arg_4_0._goRecordItem, false)
-	arg_4_0._scrollRight:AddOnValueChanged(arg_4_0._onScrollValueChanged, arg_4_0)
+function AiZiLaRecordView:_editableInitView()
+	gohelper.setActive(self._goLeftTabItem, false)
+	gohelper.setActive(self._goRecordItem, false)
+	self._scrollRight:AddOnValueChanged(self._onScrollValueChanged, self)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function AiZiLaRecordView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0:addEventCb(AiZiLaController.instance, AiZiLaEvent.UISelectRecordTabItem, arg_6_0._onSelectRecordTabItem, arg_6_0)
+function AiZiLaRecordView:onOpen()
+	self:addEventCb(AiZiLaController.instance, AiZiLaEvent.UISelectRecordTabItem, self._onSelectRecordTabItem, self)
 
-	if arg_6_0.viewContainer then
-		NavigateMgr.instance:addEscape(arg_6_0.viewContainer.viewName, arg_6_0.closeThis, arg_6_0)
+	if self.viewContainer then
+		NavigateMgr.instance:addEscape(self.viewContainer.viewName, self.closeThis, self)
 	end
 
-	arg_6_0._recordMOList = {}
+	self._recordMOList = {}
 
-	tabletool.addValues(arg_6_0._recordMOList, AiZiLaModel.instance:getRecordMOList())
+	tabletool.addValues(self._recordMOList, AiZiLaModel.instance:getRecordMOList())
 
-	arg_6_0._selectRecordMO = arg_6_0._recordMOList[1]
+	self._selectRecordMO = self._recordMOList[1]
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._recordMOList) do
-		if iter_6_1:isUnLock() then
-			arg_6_0._selectRecordMO = iter_6_1
+	for i, recordMO in ipairs(self._recordMOList) do
+		if recordMO:isUnLock() then
+			self._selectRecordMO = recordMO
 
 			break
 		end
 	end
 
-	arg_6_0._initSelectRecordMO = arg_6_0._selectRecordMO
+	self._initSelectRecordMO = self._selectRecordMO
 
-	arg_6_0:refreshUI()
+	self:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.V1a5AiZiLa.play_ui_wulu_aizila_forward_paper4)
 end
 
-function var_0_0.onClose(arg_7_0)
-	arg_7_0:_finishRed(arg_7_0._initSelectRecordMO)
+function AiZiLaRecordView:onClose()
+	self:_finishRed(self._initSelectRecordMO)
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	arg_8_0._scrollRight:RemoveOnValueChanged()
+function AiZiLaRecordView:onDestroyView()
+	self._scrollRight:RemoveOnValueChanged()
 end
 
-function var_0_0._getSelectGroupMOList(arg_9_0)
-	return arg_9_0._selectRecordMO and arg_9_0._selectRecordMO:getRroupMOList()
+function AiZiLaRecordView:_getSelectGroupMOList()
+	return self._selectRecordMO and self._selectRecordMO:getRroupMOList()
 end
 
-function var_0_0._onSelectRecordTabItem(arg_10_0, arg_10_1)
-	if not arg_10_1 or arg_10_0._selectRecordMO and arg_10_0._selectRecordMO.id == arg_10_1 then
+function AiZiLaRecordView:_onSelectRecordTabItem(recordMOId)
+	if not recordMOId or self._selectRecordMO and self._selectRecordMO.id == recordMOId then
 		return
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._recordMOList) do
-		if iter_10_1.id == arg_10_1 then
-			arg_10_0._selectRecordMO = iter_10_1
+	for i, recordMO in ipairs(self._recordMOList) do
+		if recordMO.id == recordMOId then
+			self._selectRecordMO = recordMO
 
-			arg_10_0:refreshUI()
-			arg_10_0:_finishRed(iter_10_1)
+			self:refreshUI()
+			self:_finishRed(recordMO)
 
 			return
 		end
 	end
 end
 
-function var_0_0._onScrollValueChanged(arg_11_0, arg_11_1)
-	local var_11_0 = gohelper.getRemindFourNumberFloat(arg_11_0._scrollRight.verticalNormalizedPosition) > 0
+function AiZiLaRecordView:_onScrollValueChanged(value)
+	local isShow = gohelper.getRemindFourNumberFloat(self._scrollRight.verticalNormalizedPosition) > 0
 
-	gohelper.setActive(arg_11_0._goArrow, var_11_0)
+	gohelper.setActive(self._goArrow, isShow)
 
-	if not var_11_0 then
-		arg_11_0:_finishRed(arg_11_0._selectRecordMO)
+	if not isShow then
+		self:_finishRed(self._selectRecordMO)
 	end
 end
 
-function var_0_0.refreshUI(arg_12_0)
-	gohelper.CreateObjList(arg_12_0, arg_12_0._onRecordTabItem, arg_12_0._recordMOList, arg_12_0._goLeftTabContent, arg_12_0._goLeftTabItem, AiZiLaRecordTabItem)
-	arg_12_0:_refreshRecordUI()
+function AiZiLaRecordView:refreshUI()
+	gohelper.CreateObjList(self, self._onRecordTabItem, self._recordMOList, self._goLeftTabContent, self._goLeftTabItem, AiZiLaRecordTabItem)
+	self:_refreshRecordUI()
 end
 
-function var_0_0._refreshRecordUI(arg_13_0)
-	local var_13_0 = {}
+function AiZiLaRecordView:_refreshRecordUI()
+	local dataList = {}
 
-	tabletool.addValues(var_13_0, arg_13_0:_getSelectGroupMOList())
-	gohelper.CreateObjList(arg_13_0, arg_13_0._onRecordItem, var_13_0, arg_13_0._goRightItemContent, arg_13_0._goRecordItem, AiZiLaRecordItem)
+	tabletool.addValues(dataList, self:_getSelectGroupMOList())
+	gohelper.CreateObjList(self, self._onRecordItem, dataList, self._goRightItemContent, self._goRecordItem, AiZiLaRecordItem)
 end
 
-function var_0_0._onRecordTabItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_1:onUpdateMO(arg_14_2)
-	arg_14_1:onSelect(arg_14_0._selectRecordMO and arg_14_2 and arg_14_0._selectRecordMO.id == arg_14_2.id)
+function AiZiLaRecordView:_onRecordTabItem(cell_component, data, index)
+	cell_component:onUpdateMO(data)
+	cell_component:onSelect(self._selectRecordMO and data and self._selectRecordMO.id == data.id)
 end
 
-function var_0_0._onRecordItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	arg_15_1:onUpdateMO(arg_15_2)
+function AiZiLaRecordView:_onRecordItem(cell_component, data, index)
+	cell_component:onUpdateMO(data)
 end
 
-function var_0_0._finishRed(arg_16_0, arg_16_1)
-	if arg_16_1 and arg_16_1:isHasRed() then
-		arg_16_1:finishRed()
+function AiZiLaRecordView:_finishRed(recordMO)
+	if recordMO and recordMO:isHasRed() then
+		recordMO:finishRed()
 		AiZiLaModel.instance:checkRecordRed()
 	end
 end
 
-return var_0_0
+return AiZiLaRecordView

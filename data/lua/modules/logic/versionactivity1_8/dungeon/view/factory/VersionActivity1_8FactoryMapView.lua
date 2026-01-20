@@ -1,652 +1,683 @@
-﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapView", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_8/dungeon/view/factory/VersionActivity1_8FactoryMapView.lua
 
-local var_0_0 = class("VersionActivity1_8FactoryMapView", BaseView)
-local var_0_1 = 1
-local var_0_2 = 0.3
-local var_0_3 = 0.2
+module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "Line")
-	arg_1_0._gonodecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_nodecontainer")
-	arg_1_0._gonodeitem = gohelper.findChild(arg_1_0.viewGO, "#go_nodecontainer/#go_nodeitem")
-	arg_1_0._btnfactory = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "#btn_factory")
-	arg_1_0._btnfactoryAnimator = gohelper.findChildComponent(arg_1_0.viewGO, "#btn_factory", typeof(UnityEngine.Animator))
-	arg_1_0._goFactoryBlueprintReddot = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_reddot")
-	arg_1_0._golockedfactory = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_locked")
-	arg_1_0._imageprogress = gohelper.findChildImage(arg_1_0.viewGO, "#btn_factory/#go_progroess/circle")
-	arg_1_0._gocangetbubble = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget")
-	arg_1_0._btncanget = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_factory/#go_canget", AudioEnum.UI.Act157GetBubbleReward)
-	arg_1_0._simagecangeticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#btn_factory/#go_canget/icon")
-	arg_1_0._gocangetfull = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget/#go_full")
-	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget/finished")
-	arg_1_0._gocharging = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget/finishing")
-	arg_1_0._gochargetime = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget/finishing/time")
-	arg_1_0._txtnextchargetime = gohelper.findChildText(arg_1_0.viewGO, "#btn_factory/#go_canget/finishing/time/#txt_time")
-	arg_1_0._gocangetnum = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_canget/finishing/num")
-	arg_1_0._txtcangetnum = gohelper.findChildText(arg_1_0.viewGO, "#btn_factory/#go_canget/finishing/num/#txt_num")
-	arg_1_0._gounlocknum = gohelper.findChild(arg_1_0.viewGO, "#btn_factory/#go_num")
-	arg_1_0._imageunlockicon = gohelper.findChildImage(arg_1_0.viewGO, "#btn_factory/#go_num/icon")
-	arg_1_0._txtunlocknum = gohelper.findChildText(arg_1_0.viewGO, "#btn_factory/#go_num/#txt_num")
-	arg_1_0._imagefactory = gohelper.findChildImage(arg_1_0.viewGO, "#btn_factory/#image_factory")
-	arg_1_0._mapswitchanimator = gohelper.findChildComponent(arg_1_0.viewGO, "#go_mapswitch", typeof(UnityEngine.Animator))
-	arg_1_0._goswitchunlock = gohelper.findChild(arg_1_0.viewGO, "#go_mapswitch/#unlock")
-	arg_1_0._switchanimator = gohelper.findChildComponent(arg_1_0.viewGO, "#go_mapswitch/switch", typeof(UnityEngine.Animator))
-	arg_1_0._txtmapname = gohelper.findChildText(arg_1_0.viewGO, "#go_mapswitch/normal/#txt_mapname")
-	arg_1_0._txtsidemissionmapname = gohelper.findChildText(arg_1_0.viewGO, "#go_mapswitch/locked/layout/#txt_timelocked")
-	arg_1_0._golockedsidemissionicon = gohelper.findChild(arg_1_0.viewGO, "#go_mapswitch/locked/layout/icon")
-	arg_1_0._goswitch = gohelper.findChild(arg_1_0.viewGO, "#go_mapswitch/switch")
-	arg_1_0._btnleft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mapswitch/switch/#btn_left")
-	arg_1_0._btnright = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_mapswitch/switch/#btn_right")
-	arg_1_0._gopointparent = gohelper.findChild(arg_1_0.viewGO, "#go_mapswitch/switch/pointbg/pointcontainer")
-	arg_1_0._goswitchpoint = gohelper.findChild(arg_1_0.viewGO, "#go_mapswitch/switch/pointbg/pointcontainer/empty")
+local VersionActivity1_8FactoryMapView = class("VersionActivity1_8FactoryMapView", BaseView)
+local DEFAULT_INDEX = 1
+local VIEW_OPEN_TIME = 0.3
+local NODE_OPEN_DELAY_TIME = 0.2
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function VersionActivity1_8FactoryMapView:onInitView()
+	self._goline = gohelper.findChild(self.viewGO, "Line")
+	self._gonodecontainer = gohelper.findChild(self.viewGO, "#go_nodecontainer")
+	self._gonodeitem = gohelper.findChild(self.viewGO, "#go_nodecontainer/#go_nodeitem")
+	self._btnfactory = gohelper.findChildClickWithDefaultAudio(self.viewGO, "#btn_factory")
+	self._btnfactoryAnimator = gohelper.findChildComponent(self.viewGO, "#btn_factory", typeof(UnityEngine.Animator))
+	self._goFactoryBlueprintReddot = gohelper.findChild(self.viewGO, "#btn_factory/#go_reddot")
+	self._golockedfactory = gohelper.findChild(self.viewGO, "#btn_factory/#go_locked")
+	self._imageprogress = gohelper.findChildImage(self.viewGO, "#btn_factory/#go_progroess/circle")
+	self._gocangetbubble = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget")
+	self._btncanget = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_factory/#go_canget", AudioEnum.UI.Act157GetBubbleReward)
+	self._simagecangeticon = gohelper.findChildSingleImage(self.viewGO, "#btn_factory/#go_canget/icon")
+	self._gocangetfull = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget/#go_full")
+	self._gofinished = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget/finished")
+	self._gocharging = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget/finishing")
+	self._gochargetime = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget/finishing/time")
+	self._txtnextchargetime = gohelper.findChildText(self.viewGO, "#btn_factory/#go_canget/finishing/time/#txt_time")
+	self._gocangetnum = gohelper.findChild(self.viewGO, "#btn_factory/#go_canget/finishing/num")
+	self._txtcangetnum = gohelper.findChildText(self.viewGO, "#btn_factory/#go_canget/finishing/num/#txt_num")
+	self._gounlocknum = gohelper.findChild(self.viewGO, "#btn_factory/#go_num")
+	self._imageunlockicon = gohelper.findChildImage(self.viewGO, "#btn_factory/#go_num/icon")
+	self._txtunlocknum = gohelper.findChildText(self.viewGO, "#btn_factory/#go_num/#txt_num")
+	self._imagefactory = gohelper.findChildImage(self.viewGO, "#btn_factory/#image_factory")
+	self._mapswitchanimator = gohelper.findChildComponent(self.viewGO, "#go_mapswitch", typeof(UnityEngine.Animator))
+	self._goswitchunlock = gohelper.findChild(self.viewGO, "#go_mapswitch/#unlock")
+	self._switchanimator = gohelper.findChildComponent(self.viewGO, "#go_mapswitch/switch", typeof(UnityEngine.Animator))
+	self._txtmapname = gohelper.findChildText(self.viewGO, "#go_mapswitch/normal/#txt_mapname")
+	self._txtsidemissionmapname = gohelper.findChildText(self.viewGO, "#go_mapswitch/locked/layout/#txt_timelocked")
+	self._golockedsidemissionicon = gohelper.findChild(self.viewGO, "#go_mapswitch/locked/layout/icon")
+	self._goswitch = gohelper.findChild(self.viewGO, "#go_mapswitch/switch")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mapswitch/switch/#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "#go_mapswitch/switch/#btn_right")
+	self._gopointparent = gohelper.findChild(self.viewGO, "#go_mapswitch/switch/pointbg/pointcontainer")
+	self._goswitchpoint = gohelper.findChild(self.viewGO, "#go_mapswitch/switch/pointbg/pointcontainer/empty")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
-	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, arg_2_0.closeThis, arg_2_0)
-	arg_2_0:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, arg_2_0.closeThis, arg_2_0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.dailyRefresh, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, arg_2_0._onRepairComponent, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, arg_2_0.refreshFactoryCanGetBubble, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshSideMission, arg_2_0._onRefreshNode, arg_2_0)
-	arg_2_0:addEventCb(Activity157Controller.instance, Activity157Event.Act157FinishMission, arg_2_0._onRefreshNode, arg_2_0)
-	arg_2_0._btnfactory:AddClickListener(arg_2_0._btnfactoryOnClick, arg_2_0)
-	arg_2_0._btncanget:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
-	arg_2_0._btnleft:AddClickListener(arg_2_0._btnleftOnClick, arg_2_0)
-	arg_2_0._btnright:AddClickListener(arg_2_0._btnrightOnCLick, arg_2_0)
+function VersionActivity1_8FactoryMapView:addEvents()
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, self.closeThis, self)
+	self:addEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, self.closeThis, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, self._onRepairComponent, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, self.refreshFactoryCanGetBubble, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshSideMission, self._onRefreshNode, self)
+	self:addEventCb(Activity157Controller.instance, Activity157Event.Act157FinishMission, self._onRefreshNode, self)
+	self._btnfactory:AddClickListener(self._btnfactoryOnClick, self)
+	self._btncanget:AddClickListener(self._btncangetOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnCLick, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
-	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, arg_3_0.closeThis, arg_3_0)
-	arg_3_0:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, arg_3_0.closeThis, arg_3_0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.dailyRefresh, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, arg_3_0._onRepairComponent, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, arg_3_0.refreshFactoryCanGetBubble, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshSideMission, arg_3_0._onRefreshNode, arg_3_0)
-	arg_3_0:removeEventCb(Activity157Controller.instance, Activity157Event.Act157FinishMission, arg_3_0._onRefreshNode, arg_3_0)
-	arg_3_0._btnfactory:RemoveClickListener()
-	arg_3_0._btncanget:RemoveClickListener()
-	arg_3_0._btnleft:RemoveClickListener()
-	arg_3_0._btnright:RemoveClickListener()
+function VersionActivity1_8FactoryMapView:removeEvents()
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
+	self:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.FocusElement, self.closeThis, self)
+	self:removeEventCb(VersionActivity1_8DungeonController.instance, VersionActivity1_8DungeonEvent.ManualClickElement, self.closeThis, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RepairComponent, self._onRepairComponent, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshFactoryProduction, self.refreshFactoryCanGetBubble, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157RefreshSideMission, self._onRefreshNode, self)
+	self:removeEventCb(Activity157Controller.instance, Activity157Event.Act157FinishMission, self._onRefreshNode, self)
+	self._btnfactory:RemoveClickListener()
+	self._btncanget:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
 end
 
-function var_0_0._onCloseView(arg_4_0, arg_4_1)
-	if arg_4_1 ~= ViewName.VersionActivity1_8FactoryBlueprintView then
+function VersionActivity1_8FactoryMapView:_onCloseView(viewName)
+	if viewName ~= ViewName.VersionActivity1_8FactoryBlueprintView then
 		return
 	end
 
-	if arg_4_0._waitRefreshUnlockAnim then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0.missionId2NodeItemDict) do
-			iter_4_1:refreshUnlockAnim()
+	if self._waitRefreshUnlockAnim then
+		for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+			nodeItem:refreshUnlockAnim()
 		end
 
-		arg_4_0:refreshIsShowSwitchPoint()
+		self:refreshIsShowSwitchPoint()
 
-		arg_4_0._waitRefreshUnlockAnim = nil
+		self._waitRefreshUnlockAnim = nil
 	end
 end
 
-function var_0_0._onCurrencyChange(arg_5_0, arg_5_1)
-	if not arg_5_1[CurrencyEnum.CurrencyType.V1a8FactoryPart] then
+function VersionActivity1_8FactoryMapView:_onCurrencyChange(changeIds)
+	local rawMatId = CurrencyEnum.CurrencyType.V1a8FactoryPart
+
+	if not changeIds[rawMatId] then
 		return
 	end
 
-	arg_5_0:refreshFactoryEntrance()
+	self:refreshFactoryEntrance()
 end
 
-function var_0_0.dailyRefresh(arg_6_0)
+function VersionActivity1_8FactoryMapView:dailyRefresh()
 	Activity157Controller.instance:getAct157ActInfo()
 end
 
-function var_0_0._onRepairComponent(arg_7_0)
-	arg_7_0:refreshFactoryEntrance()
-	arg_7_0:refreshFactoryCanGetBubble()
+function VersionActivity1_8FactoryMapView:_onRepairComponent()
+	self:refreshFactoryEntrance()
+	self:refreshFactoryCanGetBubble()
 
-	if ViewMgr.instance:isOpen(ViewName.VersionActivity1_8FactoryBlueprintView) then
-		arg_7_0._waitRefreshUnlockAnim = true
+	local isOpenFactoryBlueprint = ViewMgr.instance:isOpen(ViewName.VersionActivity1_8FactoryBlueprintView)
+
+	if isOpenFactoryBlueprint then
+		self._waitRefreshUnlockAnim = true
 	else
-		for iter_7_0, iter_7_1 in pairs(arg_7_0.missionId2NodeItemDict) do
-			iter_7_1:refreshUnlockAnim()
+		for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+			nodeItem:refreshUnlockAnim()
 		end
 	end
 end
 
-function var_0_0._onRefreshNode(arg_8_0)
-	arg_8_0:refreshNode()
-	arg_8_0:refreshNodeLines()
+function VersionActivity1_8FactoryMapView:_onRefreshNode()
+	self:refreshNode()
+	self:refreshNodeLines()
 end
 
-function var_0_0._btnfactoryOnClick(arg_9_0)
+function VersionActivity1_8FactoryMapView:_btnfactoryOnClick()
 	Activity157Controller.instance:openFactoryBlueprintView()
 end
 
-function var_0_0._btncangetOnClick(arg_10_0)
+function VersionActivity1_8FactoryMapView:_btncangetOnClick()
 	Activity157Controller.instance:getFactoryProduction()
 end
 
-function var_0_0._btnleftOnClick(arg_11_0)
-	if not arg_11_0.curIndex then
+function VersionActivity1_8FactoryMapView:_btnleftOnClick()
+	if not self.curIndex then
 		return
 	end
 
-	arg_11_0:switchMap(arg_11_0.curIndex - 1)
+	self:switchMap(self.curIndex - 1)
 end
 
-function var_0_0._btnrightOnCLick(arg_12_0)
-	if not arg_12_0.curIndex then
+function VersionActivity1_8FactoryMapView:_btnrightOnCLick()
+	if not self.curIndex then
 		return
 	end
 
-	arg_12_0:switchMap(arg_12_0.curIndex + 1)
+	self:switchMap(self.curIndex + 1)
 end
 
-function var_0_0.switchMap(arg_13_0, arg_13_1, arg_13_2)
-	if not arg_13_1 then
-		if arg_13_2 then
-			local var_13_0 = Activity157Model.instance:getInProgressMissionGroup()
+function VersionActivity1_8FactoryMapView:switchMap(index, isOnOpen)
+	if not index then
+		if isOnOpen then
+			local inProgressMissionGroup = Activity157Model.instance:getInProgressMissionGroup()
 
-			for iter_13_0, iter_13_1 in ipairs(arg_13_0.switchPointItemList) do
-				if iter_13_1.missionGroupId == var_13_0 then
-					arg_13_1 = iter_13_0
+			for i, pointItem in ipairs(self.switchPointItemList) do
+				if pointItem.missionGroupId == inProgressMissionGroup then
+					index = i
 
 					break
 				end
 			end
 		else
-			arg_13_1 = arg_13_0.curIndex
+			index = self.curIndex
 		end
 	end
 
-	arg_13_1 = arg_13_1 or var_0_1
+	index = index or DEFAULT_INDEX
 
-	local var_13_1 = #arg_13_0.switchPointItemList
+	local totalIndex = #self.switchPointItemList
 
-	if var_13_1 < arg_13_1 then
-		arg_13_1 = var_0_1
-	elseif arg_13_1 < var_0_1 then
-		arg_13_1 = var_13_1
+	if totalIndex < index then
+		index = DEFAULT_INDEX
+	elseif index < DEFAULT_INDEX then
+		index = totalIndex
 	end
 
-	local var_13_2 = arg_13_1 and arg_13_0.switchPointItemList[arg_13_1]
+	local newPointItem = index and self.switchPointItemList[index]
 
-	if not var_13_2 then
+	if not newPointItem then
 		return
 	end
 
-	local var_13_3 = false
-	local var_13_4 = arg_13_0.curIndex and arg_13_0.switchPointItemList[arg_13_0.curIndex]
-	local var_13_5 = var_13_4 and var_13_4.missionGroupId
-	local var_13_6 = var_13_2.missionGroupId
-	local var_13_7 = Activity157Config.instance:isSideMissionGroup(arg_13_0.actId, var_13_6)
+	local isPlaySwitch = false
+	local lastPointItem = self.curIndex and self.switchPointItemList[self.curIndex]
+	local lastMissionGroupId = lastPointItem and lastPointItem.missionGroupId
+	local newMissionGroupId = newPointItem.missionGroupId
+	local isSideMissionGroup = Activity157Config.instance:isSideMissionGroup(self.actId, newMissionGroupId)
 
-	if var_13_5 and Activity157Config.instance:isSideMissionGroup(arg_13_0.actId, var_13_5) ~= var_13_7 then
-		var_13_3 = true
+	if lastMissionGroupId then
+		local lastIsSideMission = Activity157Config.instance:isSideMissionGroup(self.actId, lastMissionGroupId)
+
+		if lastIsSideMission ~= isSideMissionGroup then
+			isPlaySwitch = true
+		end
 	end
 
-	if var_13_3 then
-		arg_13_0._mapswitchanimator:Play(var_13_7 and "switch_locked" or "switch_nomal", 0, 0)
+	if isPlaySwitch then
+		self._mapswitchanimator:Play(isSideMissionGroup and "switch_locked" or "switch_nomal", 0, 0)
 	else
-		arg_13_0._mapswitchanimator:Play(var_13_7 and "locked" or "nomal", 0, 0)
+		self._mapswitchanimator:Play(isSideMissionGroup and "locked" or "nomal", 0, 0)
 	end
 
-	arg_13_0:recycleAllNodeItem()
+	self:recycleAllNodeItem()
 
-	arg_13_0.curIndex = arg_13_1
+	self.curIndex = index
 
-	arg_13_0:setNodeGroup(var_13_6, arg_13_2)
-	arg_13_0:refreshSwitchPoint()
-	arg_13_0:refreshMapName()
+	self:setNodeGroup(newMissionGroupId, isOnOpen)
+	self:refreshSwitchPoint()
+	self:refreshMapName()
 end
 
-function var_0_0._editableInitView(arg_14_0)
-	arg_14_0.actId = Activity157Model.instance:getActId()
-	arg_14_0.nodeItemPool = {}
-	arg_14_0.missionId2NodeItemDict = {}
-	arg_14_0.curIndex = nil
-	arg_14_0.lineTemplateDict = arg_14_0:getUserDataTb_()
-	arg_14_0.switchPointItemList = {}
-	arg_14_0._waitRefreshUnlockAnim = nil
+function VersionActivity1_8FactoryMapView:_editableInitView()
+	self.actId = Activity157Model.instance:getActId()
+	self.nodeItemPool = {}
+	self.missionId2NodeItemDict = {}
+	self.curIndex = nil
+	self.lineTemplateDict = self:getUserDataTb_()
+	self.switchPointItemList = {}
+	self._waitRefreshUnlockAnim = nil
 
-	gohelper.setActive(arg_14_0._gonodeitem, false)
-	gohelper.setActive(arg_14_0._goswitchpoint, false)
+	gohelper.setActive(self._gonodeitem, false)
+	gohelper.setActive(self._goswitchpoint, false)
 
-	arg_14_0.mapAreaAnimatorDict = arg_14_0:getUserDataTb_()
+	self.mapAreaAnimatorDict = self:getUserDataTb_()
 
-	local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "Map").transform
-	local var_14_1 = var_14_0.childCount
+	local mapAreaGo = gohelper.findChild(self.viewGO, "Map")
+	local mapAreaTrans = mapAreaGo.transform
+	local areaCount = mapAreaTrans.childCount
 
-	for iter_14_0 = 1, var_14_1 do
-		local var_14_2 = var_14_0:GetChild(iter_14_0 - 1)
-		local var_14_3 = var_14_2:GetComponent(typeof(UnityEngine.Animator))
+	for i = 1, areaCount do
+		local child = mapAreaTrans:GetChild(i - 1)
+		local animator = child:GetComponent(typeof(UnityEngine.Animator))
 
-		var_14_3:Play("lock_idle", 0, 0)
+		animator:Play("lock_idle", 0, 0)
 
-		arg_14_0.mapAreaAnimatorDict[tostring(var_14_2.name)] = var_14_3
+		self.mapAreaAnimatorDict[tostring(child.name)] = animator
 	end
 
-	local var_14_4 = Activity157Config.instance:getAct157Const(arg_14_0.actId, Activity157Enum.ConstId.FactoryCompositeCost)
-	local var_14_5 = var_14_4 and string.splitToNumber(var_14_4, "#")
+	local strProduction = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FactoryCompositeCost)
+	local productionParam = strProduction and string.splitToNumber(strProduction, "#")
 
-	if var_14_5 then
-		local var_14_6, var_14_7 = ItemModel.instance:getItemConfigAndIcon(var_14_5[1], var_14_5[2])
+	if productionParam then
+		local _, icon = ItemModel.instance:getItemConfigAndIcon(productionParam[1], productionParam[2])
 
-		if var_14_7 then
-			arg_14_0._simagecangeticon:LoadImage(var_14_7)
+		if icon then
+			self._simagecangeticon:LoadImage(icon)
 		end
 	end
 
-	local var_14_8 = Activity157Config.instance:getAct157Const(arg_14_0.actId, Activity157Enum.ConstId.FactoryRepairPartItem)
-	local var_14_9 = var_14_8 and string.splitToNumber(var_14_8, "#")
+	local strPartItem = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FactoryRepairPartItem)
+	local partItemParam = strPartItem and string.splitToNumber(strPartItem, "#")
 
-	if var_14_9 then
-		local var_14_10 = CurrencyConfig.instance:getCurrencyCo(var_14_9[2])
-		local var_14_11 = var_14_10 and var_14_10.icon
+	if partItemParam then
+		local currencyCfg = CurrencyConfig.instance:getCurrencyCo(partItemParam[2])
+		local currencyIcon = currencyCfg and currencyCfg.icon
 
-		if var_14_11 then
-			UISpriteSetMgr.instance:setCurrencyItemSprite(arg_14_0._imageunlockicon, var_14_11 .. "_1", true)
+		if currencyIcon then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageunlockicon, currencyIcon .. "_1", true)
 		end
 	end
 
-	local var_14_12 = arg_14_0.viewContainer:getSetting().otherRes[1]
+	local viewSetting = self.viewContainer:getSetting()
+	local lineTemplatePath = viewSetting.otherRes[1]
 
-	arg_14_0.goLineTemplate = arg_14_0.viewContainer:getResInst(var_14_12, arg_14_0._goline)
+	self.goLineTemplate = self.viewContainer:getResInst(lineTemplatePath, self._goline)
 
-	gohelper.setActive(arg_14_0.goLineTemplate, false)
-	RedDotController.instance:addRedDot(arg_14_0._goFactoryBlueprintReddot, RedDotEnum.DotNode.V1a8DungeonFactoryBlueprint)
+	gohelper.setActive(self.goLineTemplate, false)
+	RedDotController.instance:addRedDot(self._goFactoryBlueprintReddot, RedDotEnum.DotNode.V1a8DungeonFactoryBlueprint)
 end
 
-function var_0_0.onUpdateParam(arg_15_0)
+function VersionActivity1_8FactoryMapView:onUpdateParam()
 	Activity157Controller.instance:onFactoryMapViewOpen()
 end
 
-function var_0_0.onOpen(arg_16_0)
-	arg_16_0:refresh(true)
-	arg_16_0:everySecondCall()
-	TaskDispatcher.runRepeat(arg_16_0.everySecondCall, arg_16_0, 1)
+function VersionActivity1_8FactoryMapView:onOpen()
+	self:refresh(true)
+	self:everySecondCall()
+	TaskDispatcher.runRepeat(self.everySecondCall, self, 1)
 	Activity157Controller.instance:onFactoryMapViewOpen()
 end
 
-function var_0_0.everySecondCall(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.missionId2NodeItemDict) do
-		iter_17_1:everySecondCall()
+function VersionActivity1_8FactoryMapView:everySecondCall()
+	for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+		nodeItem:everySecondCall()
 	end
 
-	arg_17_0:refreshFactoryCanGetBubbleTime()
-	arg_17_0:refreshMapName()
+	self:refreshFactoryCanGetBubbleTime()
+	self:refreshMapName()
 end
 
-function var_0_0.refresh(arg_18_0, arg_18_1)
-	arg_18_0:refreshNode(arg_18_1)
-	arg_18_0:refreshNodeLines()
-	arg_18_0:refreshFactoryEntrance()
-	arg_18_0:refreshFactoryCanGetBubble()
+function VersionActivity1_8FactoryMapView:refresh(isOnOpen)
+	self:refreshNode(isOnOpen)
+	self:refreshNodeLines()
+	self:refreshFactoryEntrance()
+	self:refreshFactoryCanGetBubble()
 end
 
-function var_0_0.refreshNode(arg_19_0, arg_19_1)
-	arg_19_0:refreshIsShowSwitchPoint()
-	arg_19_0:switchMap(nil, arg_19_1)
-	arg_19_0:refreshSwitchPoint()
+function VersionActivity1_8FactoryMapView:refreshNode(isOnOpen)
+	self:refreshIsShowSwitchPoint()
+	self:switchMap(nil, isOnOpen)
+	self:refreshSwitchPoint()
 end
 
-function var_0_0.refreshIsShowSwitchPoint(arg_20_0)
-	local var_20_0 = Activity157Model.instance:getAllActiveNodeGroupList()
+function VersionActivity1_8FactoryMapView:refreshIsShowSwitchPoint()
+	local allActiveNodeGroupList = Activity157Model.instance:getAllActiveNodeGroupList()
 
-	gohelper.CreateObjList(arg_20_0, arg_20_0.onSwitchPointCreate, var_20_0, arg_20_0._gopointparent, arg_20_0._goswitchpoint)
-	gohelper.setActive(arg_20_0._goswitch, #var_20_0 > 1)
+	gohelper.CreateObjList(self, self.onSwitchPointCreate, allActiveNodeGroupList, self._gopointparent, self._goswitchpoint)
+	gohelper.setActive(self._goswitch, #allActiveNodeGroupList > 1)
 
-	if #var_20_0 > 1 then
-		local var_20_1 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedFactoryMapSwitchUnlockAnim
+	if #allActiveNodeGroupList > 1 then
+		local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedFactoryMapSwitchUnlockAnim
+		local hasPlayed = Activity157Model.instance:getHasPlayedAnim(prefsKey)
 
-		if not Activity157Model.instance:getHasPlayedAnim(var_20_1) then
-			arg_20_0._switchanimator:Play("unlock", 0, 0)
-			Activity157Model.instance:setHasPlayedAnim(var_20_1)
+		if not hasPlayed then
+			self._switchanimator:Play("unlock", 0, 0)
+			Activity157Model.instance:setHasPlayedAnim(prefsKey)
 		end
 	end
 
-	arg_20_0:refreshSwitchPoint()
+	self:refreshSwitchPoint()
 end
 
-function var_0_0.onSwitchPointCreate(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	local var_21_0 = arg_21_0:getUserDataTb_()
+function VersionActivity1_8FactoryMapView:onSwitchPointCreate(obj, data, index)
+	local pointItem = self:getUserDataTb_()
 
-	var_21_0.go = arg_21_1
-	var_21_0.missionGroupId = arg_21_2
-	var_21_0.goSelect = gohelper.findChild(arg_21_1, "select")
-	var_21_0.goRed = gohelper.findChild(arg_21_1, "#red")
-	var_21_0.click = gohelper.getClickWithDefaultAudio(arg_21_1)
+	pointItem.go = obj
+	pointItem.missionGroupId = data
+	pointItem.goSelect = gohelper.findChild(obj, "select")
+	pointItem.goRed = gohelper.findChild(obj, "#red")
+	pointItem.click = gohelper.getClickWithDefaultAudio(obj)
 
-	var_21_0.click:AddClickListener(arg_21_0.onSwitchPointClick, arg_21_0, arg_21_3)
-	gohelper.setActive(var_21_0.goSelect, false)
+	pointItem.click:AddClickListener(self.onSwitchPointClick, self, index)
+	gohelper.setActive(pointItem.goSelect, false)
 
-	arg_21_0.switchPointItemList[arg_21_3] = var_21_0
+	self.switchPointItemList[index] = pointItem
 end
 
-function var_0_0.onSwitchPointClick(arg_22_0, arg_22_1)
-	arg_22_0:switchMap(arg_22_1)
+function VersionActivity1_8FactoryMapView:onSwitchPointClick(index)
+	self:switchMap(index)
 end
 
-function var_0_0.setNodeGroup(arg_23_0, arg_23_1, arg_23_2)
-	if not arg_23_0.missionId2NodeItemDict then
-		arg_23_0.missionId2NodeItemDict = {}
+function VersionActivity1_8FactoryMapView:setNodeGroup(missionGroupId, isOnOpen)
+	if not self.missionId2NodeItemDict then
+		self.missionId2NodeItemDict = {}
 	end
 
-	local var_23_0 = Activity157Model.instance:getShowMissionIdList(arg_23_1)
+	local showMissionIdList = Activity157Model.instance:getShowMissionIdList(missionGroupId)
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		local var_23_1 = arg_23_0:getNodeItem()
+	for _, missionId in ipairs(showMissionIdList) do
+		local nodeItem = self:getNodeItem()
 
-		var_23_1:setMissionData(arg_23_1, iter_23_1, arg_23_2)
+		nodeItem:setMissionData(missionGroupId, missionId, isOnOpen)
 
-		if arg_23_0.missionId2NodeItemDict[iter_23_1] then
-			logError(string.format("VersionActivity1_8FactoryMapView:setNodeGroup error, missionId:%s repeat", iter_23_1))
+		if self.missionId2NodeItemDict[missionId] then
+			logError(string.format("VersionActivity1_8FactoryMapView:setNodeGroup error, missionId:%s repeat", missionId))
 		end
 
-		arg_23_0.missionId2NodeItemDict[iter_23_1] = var_23_1
+		self.missionId2NodeItemDict[missionId] = nodeItem
 	end
 
-	local var_23_2 = var_0_3
+	local delayTime = NODE_OPEN_DELAY_TIME
 
-	if arg_23_2 then
-		var_23_2 = var_0_2
+	if isOnOpen then
+		delayTime = VIEW_OPEN_TIME
 	end
 
-	TaskDispatcher.cancelTask(arg_23_0.playNodeShowAudio, arg_23_0)
-	TaskDispatcher.runDelay(arg_23_0.playNodeShowAudio, arg_23_0, var_23_2)
+	TaskDispatcher.cancelTask(self.playNodeShowAudio, self)
+	TaskDispatcher.runDelay(self.playNodeShowAudio, self, delayTime)
 end
 
-function var_0_0.playNodeShowAudio(arg_24_0)
+function VersionActivity1_8FactoryMapView:playNodeShowAudio()
 	AudioMgr.instance:trigger(AudioEnum.UI.Act157FactoryNodeShow)
 end
 
-function var_0_0.refreshNodeLines(arg_25_0)
-	for iter_25_0, iter_25_1 in pairs(arg_25_0.missionId2NodeItemDict) do
-		iter_25_1:refreshLine()
+function VersionActivity1_8FactoryMapView:refreshNodeLines()
+	for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+		nodeItem:refreshLine()
 	end
 end
 
-function var_0_0.refreshFactoryEntrance(arg_26_0)
-	local var_26_0 = Activity157Model.instance:getIsUnlockFactoryBlueprint()
+function VersionActivity1_8FactoryMapView:refreshFactoryEntrance()
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
 
-	gohelper.setActive(arg_26_0._golockedfactory, not var_26_0)
-	gohelper.setActive(arg_26_0._gounlocknum, not var_26_0)
+	gohelper.setActive(self._golockedfactory, not isUnlockFactoryBlueprint)
+	gohelper.setActive(self._gounlocknum, not isUnlockFactoryBlueprint)
 
-	if var_26_0 then
-		arg_26_0:checkFactoryBlueprintEntranceUnlockAnim()
+	if isUnlockFactoryBlueprint then
+		self:checkFactoryBlueprintEntranceUnlockAnim()
 	else
-		arg_26_0:refreshFactoryEntranceUnlockNum()
+		self:refreshFactoryEntranceUnlockNum()
 	end
 
-	arg_26_0:refreshFactoryEntranceRepairProgress()
+	self:refreshFactoryEntranceRepairProgress()
 end
 
-function var_0_0.refreshFactoryEntranceUnlockNum(arg_27_0)
-	local var_27_0 = Activity157Config.instance:getAct157Const(arg_27_0.actId, Activity157Enum.ConstId.FirstFactoryComponent)
-	local var_27_1, var_27_2, var_27_3 = Activity157Config.instance:getComponentUnlockCondition(arg_27_0.actId, var_27_0)
-	local var_27_4 = ItemModel.instance:getItemQuantity(var_27_1, var_27_2)
-	local var_27_5 = "#F5744D"
+function VersionActivity1_8FactoryMapView:refreshFactoryEntranceUnlockNum()
+	local firstComponentId = Activity157Config.instance:getAct157Const(self.actId, Activity157Enum.ConstId.FirstFactoryComponent)
+	local type, id, quantity = Activity157Config.instance:getComponentUnlockCondition(self.actId, firstComponentId)
+	local curQuantity = ItemModel.instance:getItemQuantity(type, id)
+	local color = "#F5744D"
 
-	if var_27_3 and var_27_3 <= var_27_4 then
-		var_27_5 = "#88CB7F"
+	if quantity and quantity <= curQuantity then
+		color = "#88CB7F"
 	end
 
-	arg_27_0._txtunlocknum.text = string.format("<color=%s>%s</color>/%s", var_27_5, var_27_4, var_27_3 or 0)
+	self._txtunlocknum.text = string.format("<color=%s>%s</color>/%s", color, curQuantity, quantity or 0)
 end
 
-function var_0_0.checkFactoryBlueprintEntranceUnlockAnim(arg_28_0)
-	local var_28_0 = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedBlueprintUnlockAnim
+function VersionActivity1_8FactoryMapView:checkFactoryBlueprintEntranceUnlockAnim()
+	local prefsKey = VersionActivity1_8DungeonEnum.PlayerPrefsKey.IsPlayedBlueprintUnlockAnim
+	local hasPlayed = Activity157Model.instance:getHasPlayedAnim(prefsKey)
 
-	if Activity157Model.instance:getHasPlayedAnim(var_28_0) then
+	if hasPlayed then
 		return
 	end
 
-	gohelper.setActive(arg_28_0._golockedfactory, true)
-	gohelper.setActive(arg_28_0._gounlocknum, true)
-	arg_28_0._btnfactoryAnimator:Play("unlock", 0, 0)
-	Activity157Model.instance:setHasPlayedAnim(var_28_0)
+	gohelper.setActive(self._golockedfactory, true)
+	gohelper.setActive(self._gounlocknum, true)
+	self._btnfactoryAnimator:Play("unlock", 0, 0)
+	Activity157Model.instance:setHasPlayedAnim(prefsKey)
 end
 
-function var_0_0.refreshFactoryEntranceRepairProgress(arg_29_0)
-	local var_29_0 = 0
+function VersionActivity1_8FactoryMapView:refreshFactoryEntranceRepairProgress()
+	local componentRepairProgress = 0
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
 
-	if Activity157Model.instance:getIsUnlockFactoryBlueprint() then
-		var_29_0 = Activity157Model.instance:getComponentRepairProgress()
+	if isUnlockFactoryBlueprint then
+		componentRepairProgress = Activity157Model.instance:getComponentRepairProgress()
 	end
 
-	arg_29_0._imageprogress.fillAmount = var_29_0
+	self._imageprogress.fillAmount = componentRepairProgress
 end
 
-function var_0_0.refreshFactoryCanGetBubble(arg_30_0)
-	local var_30_0 = Activity157Model.instance:getIsUnlockFactoryBlueprint()
-	local var_30_1 = Activity157Model.instance:getIsFirstComponentRepair()
-	local var_30_2 = var_30_0 and var_30_1
+function VersionActivity1_8FactoryMapView:refreshFactoryCanGetBubble()
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
+	local isRepairedFirstComponent = Activity157Model.instance:getIsFirstComponentRepair()
+	local isShowBubble = isUnlockFactoryBlueprint and isRepairedFirstComponent
 
-	gohelper.setActive(arg_30_0._gocangetbubble, var_30_2)
+	gohelper.setActive(self._gocangetbubble, isShowBubble)
 
-	if not var_30_2 then
+	if not isShowBubble then
 		return
 	end
 
-	local var_30_3 = Activity157Model.instance:getFactoryProductionNum()
-	local var_30_4 = Activity157Config.instance:getAct157FactoryProductCapacity(arg_30_0.actId, Activity157Enum.ConstId.FactoryProductCapacity)
+	local canGetNum = Activity157Model.instance:getFactoryProductionNum()
+	local fullCapacity = Activity157Config.instance:getAct157FactoryProductCapacity(self.actId, Activity157Enum.ConstId.FactoryProductCapacity)
+	local isFull = fullCapacity <= canGetNum
 
-	if var_30_4 <= var_30_3 then
-		gohelper.setActive(arg_30_0._gocangetfull, true)
-		gohelper.setActive(arg_30_0._gochargetime, false)
-		gohelper.setActive(arg_30_0._gocangetnum, false)
-		gohelper.setActive(arg_30_0._gofinished, false)
+	if isFull then
+		gohelper.setActive(self._gocangetfull, true)
+		gohelper.setActive(self._gochargetime, false)
+		gohelper.setActive(self._gocangetnum, false)
+		gohelper.setActive(self._gofinished, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_30_0._gocangetfull, false)
+	gohelper.setActive(self._gocangetfull, false)
 
-	local var_30_5 = Activity157Model.instance:getFactoryNextRecoverCountdown()
-	local var_30_6 = string.nilorempty(var_30_5)
+	local nextRecoverTime = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local isLastDay = string.nilorempty(nextRecoverTime)
 
-	gohelper.setActive(arg_30_0._gochargetime, not var_30_6)
-	arg_30_0:refreshFactoryCanGetBubbleTime()
+	gohelper.setActive(self._gochargetime, not isLastDay)
+	self:refreshFactoryCanGetBubbleTime()
 
-	local var_30_7 = var_30_3 > 0
+	local isCanGet = canGetNum > 0
+	local isFinished = not isCanGet and isLastDay
 
-	if not var_30_7 and var_30_6 then
-		gohelper.setActive(arg_30_0._gofinished, true)
-		gohelper.setActive(arg_30_0._gocangetnum, false)
+	if isFinished then
+		gohelper.setActive(self._gofinished, true)
+		gohelper.setActive(self._gocangetnum, false)
 	else
-		local var_30_8 = "#F5744D"
+		local color = "#F5744D"
 
-		if var_30_7 then
-			var_30_8 = "#88CB7F"
+		if isCanGet then
+			color = "#88CB7F"
 		end
 
-		arg_30_0._txtcangetnum.text = string.format("<color=%s>%s</color>/%s", var_30_8, var_30_3, var_30_4)
+		self._txtcangetnum.text = string.format("<color=%s>%s</color>/%s", color, canGetNum, fullCapacity)
 
-		gohelper.setActive(arg_30_0._gofinished, false)
-		gohelper.setActive(arg_30_0._gocangetnum, true)
+		gohelper.setActive(self._gofinished, false)
+		gohelper.setActive(self._gocangetnum, true)
 	end
 end
 
-function var_0_0.refreshFactoryCanGetBubbleTime(arg_31_0)
-	if not Activity157Model.instance:getIsUnlockFactoryBlueprint() then
+function VersionActivity1_8FactoryMapView:refreshFactoryCanGetBubbleTime()
+	local isUnlockFactoryBlueprint = Activity157Model.instance:getIsUnlockFactoryBlueprint()
+
+	if not isUnlockFactoryBlueprint then
 		return
 	end
 
-	if Activity157Model.instance:getFactoryProductionNum() >= Activity157Config.instance:getAct157FactoryProductCapacity(arg_31_0.actId, Activity157Enum.ConstId.FactoryProductCapacity) then
+	local canGetNum = Activity157Model.instance:getFactoryProductionNum()
+	local fullCapacity = Activity157Config.instance:getAct157FactoryProductCapacity(self.actId, Activity157Enum.ConstId.FactoryProductCapacity)
+	local isFull = fullCapacity <= canGetNum
+
+	if isFull then
 		return
 	end
 
-	local var_31_0 = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local nextRecoverTime = Activity157Model.instance:getFactoryNextRecoverCountdown()
+	local isLastDay = string.nilorempty(nextRecoverTime)
 
-	if not string.nilorempty(var_31_0) then
-		arg_31_0._txtnextchargetime.text = var_31_0
+	if not isLastDay then
+		self._txtnextchargetime.text = nextRecoverTime
 	end
 end
 
-function var_0_0.refreshMapName(arg_32_0)
-	local var_32_0 = arg_32_0:getCurSelectMissionGroupId()
+function VersionActivity1_8FactoryMapView:refreshMapName()
+	local curSelectMissionGroup = self:getCurSelectMissionGroupId()
 
-	if not var_32_0 then
-		arg_32_0._txtmapname.text = ""
-		arg_32_0._txtsidemissionmapname.text = ""
+	if not curSelectMissionGroup then
+		self._txtmapname.text = ""
+		self._txtsidemissionmapname.text = ""
 
 		return
 	end
 
-	local var_32_1 = Activity157Config.instance:getMapName(arg_32_0.actId, var_32_0)
+	local mapName = Activity157Config.instance:getMapName(self.actId, curSelectMissionGroup)
+	local isSideMissionGroup = Activity157Config.instance:isSideMissionGroup(self.actId, curSelectMissionGroup)
 
-	if Activity157Config.instance:isSideMissionGroup(arg_32_0.actId, var_32_0) then
-		if Activity157Model.instance:getIsSideMissionUnlocked() then
-			arg_32_0._txtsidemissionmapname.text = var_32_1
+	if isSideMissionGroup then
+		local isUnlockedSideMission = Activity157Model.instance:getIsSideMissionUnlocked()
 
-			gohelper.setActive(arg_32_0._golockedsidemissionicon, false)
+		if isUnlockedSideMission then
+			self._txtsidemissionmapname.text = mapName
+
+			gohelper.setActive(self._golockedsidemissionicon, false)
 		else
-			local var_32_2, var_32_3 = Activity157Model.instance:getSideMissionUnlockTime()
+			local time, isTimeEnd = Activity157Model.instance:getSideMissionUnlockTime()
 
-			arg_32_0._txtsidemissionmapname.text = formatLuaLang("test_task_unlock_time", var_32_2)
+			self._txtsidemissionmapname.text = formatLuaLang("test_task_unlock_time", time)
 
-			if var_32_3 then
-				gohelper.setActive(arg_32_0._goswitchunlock, true)
+			if isTimeEnd then
+				gohelper.setActive(self._goswitchunlock, true)
 			end
 
-			gohelper.setActive(arg_32_0._golockedsidemissionicon, not var_32_3)
+			gohelper.setActive(self._golockedsidemissionicon, not isTimeEnd)
 		end
 	else
-		arg_32_0._txtmapname.text = var_32_1
+		self._txtmapname.text = mapName
 	end
 end
 
-function var_0_0.refreshSwitchPoint(arg_33_0)
-	if not arg_33_0.switchPointItemList then
+function VersionActivity1_8FactoryMapView:refreshSwitchPoint()
+	if not self.switchPointItemList then
 		return
 	end
 
-	local var_33_0 = Activity157Model.instance:getIsSideMissionUnlocked()
+	local isUnlockedSideMission = Activity157Model.instance:getIsSideMissionUnlocked()
 
-	for iter_33_0, iter_33_1 in ipairs(arg_33_0.switchPointItemList) do
-		gohelper.setActive(iter_33_1.goSelect, iter_33_0 == arg_33_0.curIndex)
+	for index, pointItem in ipairs(self.switchPointItemList) do
+		gohelper.setActive(pointItem.goSelect, index == self.curIndex)
 
-		if var_33_0 then
-			local var_33_1 = iter_33_1.missionGroupId
+		if isUnlockedSideMission then
+			local missionGroupId = pointItem.missionGroupId
+			local isSideMissionGroup = Activity157Config.instance:isSideMissionGroup(self.actId, missionGroupId)
 
-			if Activity157Config.instance:isSideMissionGroup(arg_33_0.actId, var_33_1) then
-				local var_33_2 = Activity157Model.instance:isInProgressOtherMissionGroup(var_33_1)
-				local var_33_3 = Activity157Model.instance:isFinishAllMission(var_33_1)
-				local var_33_4 = arg_33_0:getCurSelectMissionGroupId() == var_33_1
+			if isSideMissionGroup then
+				local isProgressOther = Activity157Model.instance:isInProgressOtherMissionGroup(missionGroupId)
+				local isFinishedAll = Activity157Model.instance:isFinishAllMission(missionGroupId)
+				local curSelectMissionGroup = self:getCurSelectMissionGroupId()
+				local isCurSelect = curSelectMissionGroup == missionGroupId
 
-				gohelper.setActive(iter_33_1.goRed, not var_33_2 and not var_33_3 and not var_33_4)
+				gohelper.setActive(pointItem.goRed, not isProgressOther and not isFinishedAll and not isCurSelect)
 			else
-				gohelper.setActive(iter_33_1.goRed, false)
+				gohelper.setActive(pointItem.goRed, false)
 			end
 		end
 	end
 end
 
-function var_0_0.getNodeItem(arg_34_0)
-	if next(arg_34_0.nodeItemPool) then
-		return table.remove(arg_34_0.nodeItemPool)
+function VersionActivity1_8FactoryMapView:getNodeItem()
+	if next(self.nodeItemPool) then
+		return table.remove(self.nodeItemPool)
 	else
-		return arg_34_0:createNodeItem()
+		return self:createNodeItem()
 	end
 end
 
-function var_0_0.createNodeItem(arg_35_0)
-	local var_35_0 = gohelper.clone(arg_35_0._gonodeitem, arg_35_0._gonodecontainer, "nodeitem")
-	local var_35_1 = VersionActivity1_8FactoryMapNodeItem.New()
+function VersionActivity1_8FactoryMapView:createNodeItem()
+	local nodeItemGo = gohelper.clone(self._gonodeitem, self._gonodecontainer, "nodeitem")
+	local nodeItem = VersionActivity1_8FactoryMapNodeItem.New()
 
-	var_35_1:init(var_35_0, arg_35_0.getLineTemplate, arg_35_0._goline, arg_35_0)
+	nodeItem:init(nodeItemGo, self.getLineTemplate, self._goline, self)
 
-	return var_35_1
+	return nodeItem
 end
 
-function var_0_0.recycleAllNodeItem(arg_36_0)
-	if not arg_36_0.missionId2NodeItemDict then
+function VersionActivity1_8FactoryMapView:recycleAllNodeItem()
+	if not self.missionId2NodeItemDict then
 		return
 	end
 
-	for iter_36_0, iter_36_1 in pairs(arg_36_0.missionId2NodeItemDict) do
-		iter_36_1:reset(true)
-		table.insert(arg_36_0.nodeItemPool, iter_36_1)
+	for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+		nodeItem:reset(true)
+		table.insert(self.nodeItemPool, nodeItem)
 	end
 
-	arg_36_0.missionId2NodeItemDict = {}
+	self.missionId2NodeItemDict = {}
 end
 
-function var_0_0.getCurSelectMissionGroupId(arg_37_0)
-	local var_37_0
+function VersionActivity1_8FactoryMapView:getCurSelectMissionGroupId()
+	local result
 
-	if arg_37_0.switchPointItemList then
-		local var_37_1 = arg_37_0.curIndex and arg_37_0.switchPointItemList[arg_37_0.curIndex]
+	if self.switchPointItemList then
+		local curSelectPoint = self.curIndex and self.switchPointItemList[self.curIndex]
 
-		if var_37_1 then
-			var_37_0 = var_37_1.missionGroupId
+		if curSelectPoint then
+			result = curSelectPoint.missionGroupId
 		end
 	end
 
-	return var_37_0
+	return result
 end
 
-function var_0_0.getLineTemplate(arg_38_0, arg_38_1)
-	local var_38_0
+function VersionActivity1_8FactoryMapView:getLineTemplate(lineName)
+	local result
 
-	if string.nilorempty(arg_38_1) then
-		return var_38_0
+	if string.nilorempty(lineName) then
+		return result
 	end
 
-	arg_38_0.lineTemplateDict = arg_38_0.lineTemplateDict or arg_38_0:getUserDataTb_()
+	self.lineTemplateDict = self.lineTemplateDict or self:getUserDataTb_()
 
-	if not arg_38_0.lineTemplateDict[arg_38_1] and arg_38_0.goLineTemplate then
-		arg_38_0.lineTemplateDict[arg_38_1] = gohelper.findChild(arg_38_0.goLineTemplate, arg_38_1)
+	if not self.lineTemplateDict[lineName] and self.goLineTemplate then
+		self.lineTemplateDict[lineName] = gohelper.findChild(self.goLineTemplate, lineName)
 	end
 
-	return arg_38_0.lineTemplateDict[arg_38_1]
+	result = self.lineTemplateDict[lineName]
+
+	return result
 end
 
-function var_0_0.playAreaAnim(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0
+function VersionActivity1_8FactoryMapView:playAreaAnim(areaName, animName)
+	local animator
 
-	if arg_39_2 then
-		var_39_0 = arg_39_1 and arg_39_0.mapAreaAnimatorDict[arg_39_1]
+	if animName then
+		animator = areaName and self.mapAreaAnimatorDict[areaName]
 	end
 
-	if var_39_0 then
-		var_39_0:Play(arg_39_2, 0, 0)
+	if animator then
+		animator:Play(animName, 0, 0)
 	end
 end
 
-function var_0_0.onClose(arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.playNodeShowAudio, arg_40_0)
-	TaskDispatcher.cancelTask(arg_40_0.everySecondCall, arg_40_0)
+function VersionActivity1_8FactoryMapView:onClose()
+	TaskDispatcher.cancelTask(self.playNodeShowAudio, self)
+	TaskDispatcher.cancelTask(self.everySecondCall, self)
 end
 
-function var_0_0.onDestroyView(arg_41_0)
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0.nodeItemPool) do
-		iter_41_1:destroy()
+function VersionActivity1_8FactoryMapView:onDestroyView()
+	for _, nodeItem in ipairs(self.nodeItemPool) do
+		nodeItem:destroy()
 	end
 
-	arg_41_0.nodeItemPool = {}
+	self.nodeItemPool = {}
 
-	for iter_41_2, iter_41_3 in pairs(arg_41_0.missionId2NodeItemDict) do
-		iter_41_3:destroy()
+	for _, nodeItem in pairs(self.missionId2NodeItemDict) do
+		nodeItem:destroy()
 	end
 
-	arg_41_0.missionId2NodeItemDict = nil
+	self.missionId2NodeItemDict = nil
 
-	for iter_41_4, iter_41_5 in ipairs(arg_41_0.switchPointItemList) do
-		iter_41_5.click:RemoveClickListener()
+	for _, pointItem in ipairs(self.switchPointItemList) do
+		pointItem.click:RemoveClickListener()
 	end
 
-	arg_41_0.switchPointItemList = nil
+	self.switchPointItemList = nil
 
-	arg_41_0._simagecangeticon:UnLoadImage()
+	self._simagecangeticon:UnLoadImage()
 
-	arg_41_0.curIndex = nil
-	arg_41_0._waitRefreshUnlockAnim = nil
+	self.curIndex = nil
+	self._waitRefreshUnlockAnim = nil
 end
 
-return var_0_0
+return VersionActivity1_8FactoryMapView

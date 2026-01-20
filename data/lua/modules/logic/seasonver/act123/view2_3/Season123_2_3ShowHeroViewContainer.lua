@@ -1,12 +1,14 @@
-﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3ShowHeroViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/seasonver/act123/view2_3/Season123_2_3ShowHeroViewContainer.lua
 
-local var_0_0 = class("Season123_2_3ShowHeroViewContainer", BaseViewContainer)
+module("modules.logic.seasonver.act123.view2_3.Season123_2_3ShowHeroViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local Season123_2_3ShowHeroViewContainer = class("Season123_2_3ShowHeroViewContainer", BaseViewContainer)
+
+function Season123_2_3ShowHeroViewContainer:buildViews()
 	return {
 		Season123_2_3CheckCloseView.New(),
 		Season123_2_3ShowHeroView.New()
 	}
 end
 
-return var_0_0
+return Season123_2_3ShowHeroViewContainer

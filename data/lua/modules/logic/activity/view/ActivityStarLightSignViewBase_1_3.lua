@@ -1,59 +1,61 @@
-﻿module("modules.logic.activity.view.ActivityStarLightSignViewBase_1_3", package.seeall)
+﻿-- chunkname: @modules/logic/activity/view/ActivityStarLightSignViewBase_1_3.lua
 
-local var_0_0 = class("ActivityStarLightSignViewBase_1_3", Activity101SignViewBase)
+module("modules.logic.activity.view.ActivityStarLightSignViewBase_1_3", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
-	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
-	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_LimitTime")
-	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+local ActivityStarLightSignViewBase_1_3 = class("ActivityStarLightSignViewBase_1_3", Activity101SignViewBase)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function ActivityStarLightSignViewBase_1_3:onInitView()
+	self._simageFullBG = gohelper.findChildSingleImage(self.viewGO, "#simage_FullBG")
+	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Root/#simage_Title")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Root/#txt_LimitTime")
+	self._scrollItemList = gohelper.findChildScrollRect(self.viewGO, "Root/#scroll_ItemList")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0._editableInitView(arg_2_0)
+function ActivityStarLightSignViewBase_1_3:_editableInitView()
 	assert(false, "please override thid function")
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._txtLimitTime.text = ""
+function ActivityStarLightSignViewBase_1_3:onOpen()
+	self._txtLimitTime.text = ""
 
-	arg_3_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
-	arg_3_0:internal_onOpen()
-	TaskDispatcher.runRepeat(arg_3_0._refreshTimeTick, arg_3_0, 1)
+	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	self:internal_onOpen()
+	TaskDispatcher.runRepeat(self._refreshTimeTick, self, 1)
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	arg_4_0._simageTitle:UnLoadImage()
-	arg_4_0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_4_0._refreshTimeTick, arg_4_0)
+function ActivityStarLightSignViewBase_1_3:onDestroyView()
+	self._simageTitle:UnLoadImage()
+	self._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0._updateScrollViewPos(arg_5_0)
-	if arg_5_0._isFirst then
+function ActivityStarLightSignViewBase_1_3:_updateScrollViewPos()
+	if self._isFirst then
 		return
 	end
 
-	arg_5_0._isFirst = true
+	self._isFirst = true
 
-	arg_5_0:updateRewardCouldGetHorizontalScrollPixel()
+	self:updateRewardCouldGetHorizontalScrollPixel()
 end
 
-function var_0_0.onClose(arg_6_0)
-	arg_6_0._isFirst = nil
+function ActivityStarLightSignViewBase_1_3:onClose()
+	self._isFirst = nil
 
-	TaskDispatcher.cancelTask(arg_6_0._refreshTimeTick, arg_6_0)
+	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 end
 
-function var_0_0.onRefresh(arg_7_0)
-	arg_7_0:_refreshList()
-	arg_7_0:_refreshTimeTick()
+function ActivityStarLightSignViewBase_1_3:onRefresh()
+	self:_refreshList()
+	self:_refreshTimeTick()
 end
 
-function var_0_0._refreshTimeTick(arg_8_0)
-	arg_8_0._txtLimitTime.text = arg_8_0:getRemainTimeStr()
+function ActivityStarLightSignViewBase_1_3:_refreshTimeTick()
+	self._txtLimitTime.text = self:getRemainTimeStr()
 end
 
-return var_0_0
+return ActivityStarLightSignViewBase_1_3

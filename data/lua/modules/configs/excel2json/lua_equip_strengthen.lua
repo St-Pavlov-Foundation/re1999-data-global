@@ -1,20 +1,22 @@
-﻿module("modules.configs.excel2json.lua_equip_strengthen", package.seeall)
+﻿-- chunkname: @modules/configs/excel2json/lua_equip_strengthen.lua
 
-local var_0_0 = {}
-local var_0_1 = {
+module("modules.configs.excel2json.lua_equip_strengthen", package.seeall)
+
+local lua_equip_strengthen = {}
+local fields = {
 	strengthType = 1,
 	def = 4,
 	hp = 2,
 	atk = 3,
 	mdef = 5
 }
-local var_0_2 = {
+local primaryKey = {
 	"strengthType"
 }
-local var_0_3 = {}
+local mlStringKey = {}
 
-function var_0_0.onLoad(arg_1_0)
-	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+function lua_equip_strengthen.onLoad(json)
+	lua_equip_strengthen.configList, lua_equip_strengthen.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)
 end
 
-return var_0_0
+return lua_equip_strengthen

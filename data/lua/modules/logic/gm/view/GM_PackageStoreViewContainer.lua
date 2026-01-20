@@ -1,25 +1,27 @@
-﻿module("modules.logic.gm.view.GM_PackageStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/gm/view/GM_PackageStoreViewContainer.lua
 
-local var_0_0 = class("GM_PackageStoreViewContainer", BaseViewContainer)
+module("modules.logic.gm.view.GM_PackageStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local GM_PackageStoreViewContainer = class("GM_PackageStoreViewContainer", BaseViewContainer)
+
+function GM_PackageStoreViewContainer:buildViews()
 	return {
 		GM_PackageStoreView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	ViewMgr.instance:closeView(arg_2_0.viewName)
+function GM_PackageStoreViewContainer:onContainerClickModalMask()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
-function var_0_0.addEvents(arg_3_0)
-	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, arg_3_0._gm_showAllTabIdUpdate, arg_3_0)
-	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, arg_3_0._gm_showAllItemIdUpdate, arg_3_0)
+function GM_PackageStoreViewContainer.addEvents(viewObj)
+	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:registerCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, viewObj._gm_showAllItemIdUpdate, viewObj)
 end
 
-function var_0_0.removeEvents(arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, arg_4_0._gm_showAllTabIdUpdate, arg_4_0)
-	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, arg_4_0._gm_showAllItemIdUpdate, arg_4_0)
+function GM_PackageStoreViewContainer.removeEvents(viewObj)
+	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllTabIdUpdate, viewObj._gm_showAllTabIdUpdate, viewObj)
+	GMController.instance:unregisterCallback(GMEvent.PackageStoreView_ShowAllItemIdUpdate, viewObj._gm_showAllItemIdUpdate, viewObj)
 end
 
-return var_0_0
+return GM_PackageStoreViewContainer

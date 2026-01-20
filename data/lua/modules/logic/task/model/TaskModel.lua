@@ -1,391 +1,395 @@
-﻿module("modules.logic.task.model.TaskModel", package.seeall)
+﻿-- chunkname: @modules/logic/task/model/TaskModel.lua
 
-local var_0_0 = class("TaskModel", BaseModel)
+module("modules.logic.task.model.TaskModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:reInit()
+local TaskModel = class("TaskModel", BaseModel)
+
+function TaskModel:onInit()
+	self:reInit()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0._taskMODict = {}
-	arg_2_0._taskActivityMODict = {}
-	arg_2_0._newTaskIdDict = {}
-	arg_2_0._curStage = 0
-	arg_2_0._taskList = {}
-	arg_2_0._hasTaskNoviceStageReward = false
-	arg_2_0._noviceTaskHeroParam = nil
+function TaskModel:reInit()
+	self._taskMODict = {}
+	self._taskActivityMODict = {}
+	self._newTaskIdDict = {}
+	self._curStage = 0
+	self._taskList = {}
+	self._hasTaskNoviceStageReward = false
+	self._noviceTaskHeroParam = nil
 end
 
-function var_0_0.setHasTaskNoviceStageReward(arg_3_0, arg_3_1)
-	arg_3_0._hasTaskNoviceStageReward = arg_3_1
+function TaskModel:setHasTaskNoviceStageReward(has)
+	self._hasTaskNoviceStageReward = has
 end
 
-function var_0_0.couldGetTaskNoviceStageReward(arg_4_0)
-	return arg_4_0._hasTaskNoviceStageReward
+function TaskModel:couldGetTaskNoviceStageReward()
+	return self._hasTaskNoviceStageReward
 end
 
-function var_0_0.setTaskNoviceStageHeroParam(arg_5_0, arg_5_1)
-	arg_5_0._noviceTaskHeroParam = arg_5_1
+function TaskModel:setTaskNoviceStageHeroParam(param)
+	self._noviceTaskHeroParam = param
 end
 
-function var_0_0.getTaskNoviceStageParam(arg_6_0)
-	return arg_6_0._noviceTaskHeroParam
+function TaskModel:getTaskNoviceStageParam()
+	return self._noviceTaskHeroParam
 end
 
-function var_0_0.getTaskById(arg_7_0, arg_7_1)
-	return arg_7_0._taskList[arg_7_1]
+function TaskModel:getTaskById(taskId)
+	return self._taskList[taskId]
 end
 
-function var_0_0.getTaskMoList(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {}
-	local var_8_1 = arg_8_0:getAllUnlockTasks(arg_8_1)
+function TaskModel:getTaskMoList(typeId, actId)
+	local taskMoList = {}
+	local list = self:getAllUnlockTasks(typeId)
 
-	if not var_8_1 then
-		return var_8_0
+	if not list then
+		return taskMoList
 	end
 
-	for iter_8_0, iter_8_1 in pairs(var_8_1) do
-		if iter_8_1.config and iter_8_1.config.activityId == arg_8_2 then
-			table.insert(var_8_0, iter_8_1)
+	for _, taskMo in pairs(list) do
+		if taskMo.config and taskMo.config.activityId == actId then
+			table.insert(taskMoList, taskMo)
 		end
 	end
 
-	return var_8_0
+	return taskMoList
 end
 
-function var_0_0.getRefreshCount(arg_9_0)
-	return arg_9_0._selectCount
+function TaskModel:getRefreshCount()
+	return self._selectCount
 end
 
-function var_0_0.setRefreshCount(arg_10_0, arg_10_1)
-	arg_10_0._selectCount = arg_10_1
+function TaskModel:setRefreshCount(count)
+	self._selectCount = count
 end
 
-function var_0_0.setTaskMOList(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0, iter_11_1 in ipairs(arg_11_2) do
-		arg_11_0._taskMODict[iter_11_1] = {}
+function TaskModel:setTaskMOList(infos, typeIds)
+	for _, type in ipairs(typeIds) do
+		self._taskMODict[type] = {}
 	end
 
-	if arg_11_1 then
-		for iter_11_2, iter_11_3 in ipairs(arg_11_1) do
-			local var_11_0 = arg_11_0:getTaskConfig(iter_11_3.type, iter_11_3.id)
-			local var_11_1 = TaskMo.New()
+	if infos then
+		for _, v in ipairs(infos) do
+			local config = self:getTaskConfig(v.type, v.id)
+			local taskMo = TaskMo.New()
 
-			var_11_1:init(iter_11_3, var_11_0)
+			taskMo:init(v, config)
 
-			if not arg_11_0._taskMODict[iter_11_3.type] then
-				arg_11_0._taskMODict[iter_11_3.type] = {}
+			if not self._taskMODict[v.type] then
+				self._taskMODict[v.type] = {}
 			end
 
-			arg_11_0._taskMODict[iter_11_3.type][iter_11_3.id] = var_11_1
-			arg_11_0._taskList[iter_11_3.id] = var_11_1
+			self._taskMODict[v.type][v.id] = taskMo
+			self._taskList[v.id] = taskMo
 		end
 	end
 end
 
-function var_0_0.onTaskMOChange(arg_12_0, arg_12_1)
-	if arg_12_1 then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-			local var_12_0 = arg_12_0._taskMODict[iter_12_1.type] and arg_12_0._taskMODict[iter_12_1.type][iter_12_1.id] or nil
+function TaskModel:onTaskMOChange(infos)
+	if infos then
+		for _, v in ipairs(infos) do
+			local existMo = self._taskMODict[v.type] and self._taskMODict[v.type][v.id] or nil
 
-			if not var_12_0 then
-				local var_12_1 = arg_12_0:getTaskConfig(iter_12_1.type, iter_12_1.id)
-				local var_12_2 = TaskMo.New()
+			if not existMo then
+				local config = self:getTaskConfig(v.type, v.id)
+				local taskMo = TaskMo.New()
 
-				var_12_2:init(iter_12_1, var_12_1)
+				taskMo:init(v, config)
 
-				if not arg_12_0._taskMODict[iter_12_1.type] then
-					arg_12_0._taskMODict[iter_12_1.type] = {}
+				if not self._taskMODict[v.type] then
+					self._taskMODict[v.type] = {}
 				end
 
-				arg_12_0._taskMODict[iter_12_1.type][iter_12_1.id] = var_12_2
-				arg_12_0._taskList[iter_12_1.id] = var_12_2
-				arg_12_0._newTaskIdDict[iter_12_1.id] = true
+				self._taskMODict[v.type][v.id] = taskMo
+				self._taskList[v.id] = taskMo
+				self._newTaskIdDict[v.id] = true
 			else
-				var_12_0:update(iter_12_1)
+				existMo:update(v)
 			end
 		end
 	end
 end
 
-function var_0_0.getTaskConfig(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = TaskConfigGetDefine.instance:getTaskConfigFunc(arg_13_1)
+function TaskModel:getTaskConfig(typeId, id)
+	local taskFunc = TaskConfigGetDefine.instance:getTaskConfigFunc(typeId)
 
-	if var_13_0 then
-		return var_13_0(arg_13_2)
+	if taskFunc then
+		return taskFunc(id)
 	end
 end
 
-function var_0_0.isTaskFinish(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = arg_14_0._taskMODict[arg_14_1]
+function TaskModel:isTaskFinish(type, taskId)
+	local dict = self._taskMODict[type]
 
-	if not var_14_0 then
+	if not dict then
 		return false
 	end
 
-	local var_14_1 = var_14_0[arg_14_2]
+	local taskMO = dict[taskId]
 
-	if not var_14_1 then
+	if not taskMO then
 		return false
 	end
 
-	return var_14_1:isClaimed()
+	return taskMO:isClaimed()
 end
 
-function var_0_0.taskHasFinished(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0._taskMODict[arg_15_1]
+function TaskModel:taskHasFinished(type, taskId)
+	local dict = self._taskMODict[type]
 
-	if not var_15_0 then
+	if not dict then
 		return false
 	end
 
-	local var_15_1 = var_15_0[arg_15_2]
+	local taskMO = dict[taskId]
 
-	if not var_15_1 then
+	if not taskMO then
 		return false
 	end
 
-	return var_15_1:isFinished()
+	return taskMO:isFinished()
 end
 
-function var_0_0.isTaskUnlock(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0._taskMODict[arg_16_1]
+function TaskModel:isTaskUnlock(type, taskId)
+	local dict = self._taskMODict[type]
 
-	if not var_16_0 then
+	if not dict then
 		return false
 	end
 
-	local var_16_1 = var_16_0[arg_16_2]
+	local taskMO = dict[taskId]
 
-	if not var_16_1 then
+	if not taskMO then
 		return false
 	end
 
-	return var_16_1.id == arg_16_2
+	return taskMO.id == taskId
 end
 
-function var_0_0.getAllUnlockTasks(arg_17_0, arg_17_1)
-	return arg_17_0._taskMODict[arg_17_1] or {}
+function TaskModel:getAllUnlockTasks(type)
+	return self._taskMODict[type] or {}
 end
 
-function var_0_0.setTaskActivityMOList(arg_18_0, arg_18_1)
-	if arg_18_1 then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
-			local var_18_0 = arg_18_0._taskActivityMODict[iter_18_1.typeId]
+function TaskModel:setTaskActivityMOList(infos)
+	if infos then
+		for _, v in ipairs(infos) do
+			local taskActivityMo = self._taskActivityMODict[v.typeId]
 
-			if not var_18_0 then
-				local var_18_1
+			if not taskActivityMo then
+				local config
 
-				if iter_18_1.defineId + 1 <= 5 then
-					var_18_1 = TaskConfig.instance:gettaskactivitybonusCO(iter_18_1.typeId, iter_18_1.defineId + 1)
+				if v.defineId + 1 <= 5 then
+					config = TaskConfig.instance:gettaskactivitybonusCO(v.typeId, v.defineId + 1)
 				else
-					var_18_1 = TaskConfig.instance:gettaskactivitybonusCO(iter_18_1.typeId, iter_18_1.defineId)
+					config = TaskConfig.instance:gettaskactivitybonusCO(v.typeId, v.defineId)
 				end
 
-				var_18_0 = TaskActivityMo.New()
+				taskActivityMo = TaskActivityMo.New()
 
-				var_18_0:init(iter_18_1, var_18_1)
+				taskActivityMo:init(v, config)
 
-				arg_18_0._taskActivityMODict[iter_18_1.typeId] = var_18_0
+				self._taskActivityMODict[v.typeId] = taskActivityMo
 			else
-				var_18_0:update(iter_18_1)
+				taskActivityMo:update(v)
 			end
 		end
 	end
 end
 
-function var_0_0.onTaskActivityMOChange(arg_19_0, arg_19_1)
-	if arg_19_1 then
-		local var_19_0
+function TaskModel:onTaskActivityMOChange(infos)
+	if infos then
+		local moList
 
-		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
-			local var_19_1 = arg_19_0._taskActivityMODict[iter_19_1.typeId]
+		for _, v in ipairs(infos) do
+			local existMo = self._taskActivityMODict[v.typeId]
 
-			if not var_19_1 then
-				local var_19_2
+			if not existMo then
+				local config
 
-				if iter_19_1.defineId + 1 <= 5 then
-					var_19_2 = TaskConfig.instance:gettaskactivitybonusCO(iter_19_1.typeId, iter_19_1.defineId + 1)
+				if v.defineId + 1 <= 5 then
+					config = TaskConfig.instance:gettaskactivitybonusCO(v.typeId, v.defineId + 1)
 				else
-					var_19_2 = TaskConfig.instance:gettaskactivitybonusCO(iter_19_1.typeId, iter_19_1.defineId)
+					config = TaskConfig.instance:gettaskactivitybonusCO(v.typeId, v.defineId)
 				end
 
-				local var_19_3 = TaskActivityMo.New()
+				local taskActivityMo = TaskActivityMo.New()
 
-				if var_19_2 ~= nil then
-					var_19_3:init(iter_19_1, var_19_2)
+				if config ~= nil then
+					taskActivityMo:init(v, config)
 				end
 
-				var_19_0 = var_19_0 or {}
+				moList = moList or {}
 
-				table.insert(var_19_0, var_19_3)
+				table.insert(moList, taskActivityMo)
 
-				arg_19_0._taskActivityMODict[iter_19_1.typeId] = var_19_3
+				self._taskActivityMODict[v.typeId] = taskActivityMo
 			else
-				var_19_1:update(iter_19_1)
+				existMo:update(v)
 			end
 		end
 	end
 end
 
-function var_0_0.deleteTask(arg_20_0, arg_20_1)
-	for iter_20_0, iter_20_1 in pairs(arg_20_1) do
-		for iter_20_2, iter_20_3 in pairs(arg_20_0._taskMODict) do
-			arg_20_0._taskMODict[iter_20_2][iter_20_1] = nil
+function TaskModel:deleteTask(ids)
+	for _, id in pairs(ids) do
+		for type, _ in pairs(self._taskMODict) do
+			self._taskMODict[type][id] = nil
 		end
 	end
 end
 
-function var_0_0.clearNewTaskIds(arg_21_0)
-	arg_21_0._newTaskIdDict = {}
+function TaskModel:clearNewTaskIds()
+	self._newTaskIdDict = {}
 end
 
-function var_0_0.getNewTaskIds(arg_22_0)
-	return arg_22_0._newTaskIdDict
+function TaskModel:getNewTaskIds()
+	return self._newTaskIdDict
 end
 
-function var_0_0.getTaskActivityMO(arg_23_0, arg_23_1)
-	return arg_23_0._taskActivityMODict[arg_23_1]
+function TaskModel:getTaskActivityMO(typeId)
+	return self._taskActivityMODict[typeId]
 end
 
-function var_0_0.getNoviceTaskCurStage(arg_24_0)
-	if arg_24_0._curStage == 0 then
-		arg_24_0._curStage = arg_24_0:getNoviceTaskMaxUnlockStage()
+function TaskModel:getNoviceTaskCurStage()
+	if self._curStage == 0 then
+		self._curStage = self:getNoviceTaskMaxUnlockStage()
 	end
 
-	return arg_24_0._curStage
+	return self._curStage
 end
 
-function var_0_0.setNoviceTaskCurStage(arg_25_0, arg_25_1)
-	arg_25_0._curStage = arg_25_1
+function TaskModel:setNoviceTaskCurStage(stage)
+	self._curStage = stage
 end
 
-function var_0_0.setNoviceTaskCurSelectStage(arg_26_0, arg_26_1)
-	arg_26_0._curSelectStage = arg_26_1
+function TaskModel:setNoviceTaskCurSelectStage(stage)
+	self._curSelectStage = stage
 end
 
-function var_0_0.getNoviceTaskCurSelectStage(arg_27_0)
-	return arg_27_0._curSelectStage or arg_27_0:getNoviceTaskCurStage()
+function TaskModel:getNoviceTaskCurSelectStage()
+	return self._curSelectStage or self:getNoviceTaskCurStage()
 end
 
-function var_0_0.getStageRewardGetIndex(arg_28_0)
-	return arg_28_0._taskActivityMODict[TaskEnum.TaskType.Novice].defineId
+function TaskModel:getStageRewardGetIndex()
+	return self._taskActivityMODict[TaskEnum.TaskType.Novice].defineId
 end
 
-function var_0_0.getNoviceTaskMaxUnlockStage(arg_29_0)
-	local var_29_0 = 0
+function TaskModel:getNoviceTaskMaxUnlockStage()
+	local maxStage = 0
 
-	if arg_29_0._taskMODict[TaskEnum.TaskType.Novice] then
-		for iter_29_0, iter_29_1 in pairs(arg_29_0._taskMODict[TaskEnum.TaskType.Novice]) do
-			if iter_29_1.config.minTypeId == TaskEnum.TaskMinType.Novice then
-				local var_29_1 = TaskConfig.instance:gettaskNoviceConfig(iter_29_1.id).stage
+	if self._taskMODict[TaskEnum.TaskType.Novice] then
+		for _, v in pairs(self._taskMODict[TaskEnum.TaskType.Novice]) do
+			if v.config.minTypeId == TaskEnum.TaskMinType.Novice then
+				local stage = TaskConfig.instance:gettaskNoviceConfig(v.id).stage
 
-				if var_29_0 < var_29_1 and iter_29_1.config.chapter == 0 then
-					var_29_0 = var_29_1
+				if maxStage < stage and v.config.chapter == 0 then
+					maxStage = stage
 				end
 			end
 		end
 	end
 
-	return var_29_0
+	return maxStage
 end
 
-function var_0_0.getCurStageActDotGetNum(arg_30_0)
-	local var_30_0 = arg_30_0:getNoviceTaskCurStage()
-	local var_30_1 = arg_30_0:getMaxStage(TaskEnum.TaskType.Novice)
+function TaskModel:getCurStageActDotGetNum()
+	local curStage = self:getNoviceTaskCurStage()
+	local maxStage = self:getMaxStage(TaskEnum.TaskType.Novice)
 
-	if var_30_0 == var_30_1 and arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue == arg_30_0:getAllTaskTotalActDot() then
-		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, var_30_1).needActivity
+	if curStage == maxStage and self._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue == self:getAllTaskTotalActDot() then
+		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, maxStage).needActivity
 	end
 
-	if not arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice] then
+	if not self._taskActivityMODict[TaskEnum.TaskType.Novice] then
 		return 0
 	end
 
-	return arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].value - arg_30_0._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue
+	return self._taskActivityMODict[TaskEnum.TaskType.Novice].value - self._taskActivityMODict[TaskEnum.TaskType.Novice].gainValue
 end
 
-function var_0_0.getStageActDotGetNum(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0:getNoviceTaskCurStage()
+function TaskModel:getStageActDotGetNum(stage)
+	local curStage = self:getNoviceTaskCurStage()
 
-	if var_31_0 < arg_31_1 then
+	if curStage < stage then
 		return 0
 	end
 
-	if arg_31_1 < var_31_0 then
-		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_31_1).needActivity
+	if stage < curStage then
+		return TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, stage).needActivity
 	end
 
-	return arg_31_0:getCurStageActDotGetNum()
+	return self:getCurStageActDotGetNum()
 end
 
-function var_0_0.getAllTaskTotalActDot(arg_32_0)
-	local var_32_0 = 0
-	local var_32_1 = TaskConfig.instance:gettaskNoviceConfigs()
+function TaskModel:getAllTaskTotalActDot()
+	local value = 0
+	local taskCo = TaskConfig.instance:gettaskNoviceConfigs()
 
-	for iter_32_0, iter_32_1 in pairs(var_32_1) do
-		var_32_0 = var_32_0 + iter_32_1.activity
+	for _, v in pairs(taskCo) do
+		value = value + v.activity
 	end
 
-	return var_32_0
+	return value
 end
 
-function var_0_0.getCurStageMaxActDot(arg_33_0)
-	local var_33_0 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_33_0._curStage)
+function TaskModel:getCurStageMaxActDot()
+	local co = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, self._curStage)
+	local dotNum = co and co.needActivity or 0
 
-	return var_33_0 and var_33_0.needActivity or 0
+	return dotNum
 end
 
-function var_0_0.getStageMaxActDot(arg_34_0, arg_34_1)
-	local var_34_0 = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, arg_34_1)
+function TaskModel:getStageMaxActDot(stage)
+	local co = TaskConfig.instance:gettaskactivitybonusCO(TaskEnum.TaskType.Novice, stage)
+	local dotNum = co and co.needActivity or 0
 
-	return var_34_0 and var_34_0.needActivity or 0
+	return dotNum
 end
 
-function var_0_0.getMaxStage(arg_35_0, arg_35_1)
-	local var_35_0 = 1
-	local var_35_1 = TaskConfig.instance:getTaskActivityBonusConfig(arg_35_1)
-	local var_35_2 = VersionValidator.instance:isInReviewing()
+function TaskModel:getMaxStage(taskType)
+	local stage = 1
+	local co = TaskConfig.instance:getTaskActivityBonusConfig(taskType)
+	local isVerifing = VersionValidator.instance:isInReviewing()
 
-	for iter_35_0, iter_35_1 in pairs(var_35_1) do
-		if (var_35_2 and iter_35_1.hideInVerifing == true) == false and var_35_0 < iter_35_1.id then
-			var_35_0 = iter_35_1.id
+	for _, v in pairs(co) do
+		if (isVerifing and v.hideInVerifing == true) == false and stage < v.id then
+			stage = v.id
 		end
 	end
 
-	return var_35_0
+	return stage
 end
 
-function var_0_0.getCurStageAllLockTaskIds(arg_36_0)
-	local var_36_0 = {}
-	local var_36_1 = TaskConfig.instance:gettaskNoviceConfigs()
+function TaskModel:getCurStageAllLockTaskIds()
+	local ids = {}
+	local co = TaskConfig.instance:gettaskNoviceConfigs()
 
-	for iter_36_0, iter_36_1 in pairs(var_36_1) do
-		if iter_36_1.stage == arg_36_0._curStage and iter_36_1.minTypeId == 1 and iter_36_1.chapter == 0 and not arg_36_0:isTaskUnlock(TaskEnum.TaskType.Novice, iter_36_1.id) then
-			table.insert(var_36_0, iter_36_1.id)
+	for _, v in pairs(co) do
+		if v.stage == self._curStage and v.minTypeId == 1 and v.chapter == 0 and not self:isTaskUnlock(TaskEnum.TaskType.Novice, v.id) then
+			table.insert(ids, v.id)
 		end
 	end
 
-	return var_36_0
+	return ids
 end
 
-function var_0_0.getAllRewardUnreceivedTasks(arg_37_0, arg_37_1)
-	local var_37_0 = {}
+function TaskModel:getAllRewardUnreceivedTasks(typeId)
+	local tasks = {}
 
-	for iter_37_0, iter_37_1 in pairs(arg_37_0._taskMODict[arg_37_1]) do
-		if iter_37_1:isClaimable() then
-			table.insert(var_37_0, iter_37_1)
+	for taskId, taskMo in pairs(self._taskMODict[typeId]) do
+		if taskMo:isClaimable() then
+			table.insert(tasks, taskMo)
 		end
 	end
 
-	return var_37_0
+	return tasks
 end
 
-function var_0_0.isTypeAllTaskFinished(arg_38_0, arg_38_1)
-	local var_38_0 = arg_38_0:getAllUnlockTasks(arg_38_1)
+function TaskModel:isTypeAllTaskFinished(typeId)
+	local alltasks = self:getAllUnlockTasks(typeId)
 
-	for iter_38_0, iter_38_1 in pairs(var_38_0) do
-		if not arg_38_0:isTaskFinish(arg_38_1, iter_38_1.id) then
+	for _, task in pairs(alltasks) do
+		if not self:isTaskFinish(typeId, task.id) then
 			return false
 		end
 	end
@@ -393,44 +397,44 @@ function var_0_0.isTypeAllTaskFinished(arg_38_0, arg_38_1)
 	return true
 end
 
-function var_0_0.isAllRewardGet(arg_39_0, arg_39_1)
-	local var_39_0 = TaskConfig.instance:getTaskActivityBonusConfig(arg_39_1)
-	local var_39_1 = var_0_0.instance:getTaskActivityMO(arg_39_1)
-	local var_39_2 = 0
+function TaskModel:isAllRewardGet(typeId)
+	local actCo = TaskConfig.instance:getTaskActivityBonusConfig(typeId)
+	local actMo = TaskModel.instance:getTaskActivityMO(typeId)
+	local totalAct = 0
 
-	for iter_39_0 = 1, #var_39_0 do
-		var_39_2 = var_39_2 + var_39_0[iter_39_0].needActivity
+	for i = 1, #actCo do
+		totalAct = totalAct + actCo[i].needActivity
 	end
 
-	return var_39_2 <= var_39_1.value
+	return totalAct <= actMo.value
 end
 
-function var_0_0.isFinishAllNoviceTask(arg_40_0)
-	local var_40_0 = arg_40_0:getMaxStage(TaskEnum.TaskType.Novice)
-	local var_40_1 = arg_40_0:getNoviceTaskCurStage()
-	local var_40_2 = arg_40_0:getCurStageMaxActDot()
-	local var_40_3 = arg_40_0:getNoviceTaskMaxUnlockStage()
-	local var_40_4 = arg_40_0:getCurStageActDotGetNum()
-	local var_40_5 = var_40_1 < var_40_3 and true or var_40_2 <= var_40_4
+function TaskModel:isFinishAllNoviceTask()
+	local stageTotal = self:getMaxStage(TaskEnum.TaskType.Novice)
+	local stage = self:getNoviceTaskCurStage()
+	local total = self:getCurStageMaxActDot()
+	local maxUnlockStage = self:getNoviceTaskMaxUnlockStage()
+	local curProgress = self:getCurStageActDotGetNum()
+	local hasGetReward = stage < maxUnlockStage and true or total <= curProgress
 
-	return var_40_1 == var_40_0 and var_40_5 and arg_40_0:isTypeAllTaskFinished(TaskEnum.TaskType.Novice)
+	return stage == stageTotal and hasGetReward and self:isTypeAllTaskFinished(TaskEnum.TaskType.Novice)
 end
 
-function var_0_0.getTaskTypeExpireTime(arg_41_0, arg_41_1)
-	local var_41_0 = 0
-	local var_41_1 = arg_41_0:getAllUnlockTasks(arg_41_1)
+function TaskModel:getTaskTypeExpireTime(typeId)
+	local expireTime = 0
+	local tasks = self:getAllUnlockTasks(typeId)
 
-	for iter_41_0, iter_41_1 in pairs(var_41_1) do
-		if iter_41_1.expiryTime > 0 then
-			var_41_0 = iter_41_1.expiryTime
+	for _, v in pairs(tasks) do
+		if v.expiryTime > 0 then
+			expireTime = v.expiryTime
 
 			break
 		end
 	end
 
-	return var_41_0
+	return expireTime
 end
 
-var_0_0.instance = var_0_0.New()
+TaskModel.instance = TaskModel.New()
 
-return var_0_0
+return TaskModel

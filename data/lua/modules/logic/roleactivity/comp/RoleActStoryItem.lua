@@ -1,119 +1,121 @@
-﻿module("modules.logic.roleactivity.comp.RoleActStoryItem", package.seeall)
+﻿-- chunkname: @modules/logic/roleactivity/comp/RoleActStoryItem.lua
 
-local var_0_0 = class("RoleActStoryItem", LuaCompBase)
+module("modules.logic.roleactivity.comp.RoleActStoryItem", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.viewGO = arg_1_1
-	arg_1_0.transform = arg_1_1.transform
-	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagefinish")
-	arg_1_0._gounLock = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stagenormal")
-	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
-	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stagename")
-	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "unlock/info/#txt_stageNum")
-	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/info/star1/#go_star")
-	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/info/#btn_review")
-	arg_1_0._anim = arg_1_1:GetComponent(gohelper.Type_Animator)
-	arg_1_0._gostarAnim = gohelper.findChild(arg_1_0._gostar, "#image_Star")
-	arg_1_0._animStar = arg_1_0._gostarAnim:GetComponent(gohelper.Type_Animation)
-	arg_1_0._gostarNo = gohelper.findChild(arg_1_0.viewGO, "unlock/info/star1/no")
+local RoleActStoryItem = class("RoleActStoryItem", LuaCompBase)
+
+function RoleActStoryItem:init(go)
+	self.viewGO = go
+	self.transform = go.transform
+	self._golock = gohelper.findChild(self.viewGO, "unlock/#go_stagefinish")
+	self._gounLock = gohelper.findChild(self.viewGO, "unlock/#go_stagenormal")
+	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/#btn_click")
+	self._txtname = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stagename")
+	self._txtnum = gohelper.findChildText(self.viewGO, "unlock/info/#txt_stageNum")
+	self._gostar = gohelper.findChild(self.viewGO, "unlock/info/star1/#go_star")
+	self._btnreview = gohelper.findChildButtonWithAudio(self.viewGO, "unlock/info/#btn_review")
+	self._anim = go:GetComponent(gohelper.Type_Animator)
+	self._gostarAnim = gohelper.findChild(self._gostar, "#image_Star")
+	self._animStar = self._gostarAnim:GetComponent(gohelper.Type_Animation)
+	self._gostarNo = gohelper.findChild(self.viewGO, "unlock/info/star1/no")
 end
 
-function var_0_0.addEventListeners(arg_2_0)
-	arg_2_0._btnclick:AddClickListener(arg_2_0._btnOnClick, arg_2_0)
-	arg_2_0._btnreview:AddClickListener(arg_2_0._btnOnReview, arg_2_0)
+function RoleActStoryItem:addEventListeners()
+	self._btnclick:AddClickListener(self._btnOnClick, self)
+	self._btnreview:AddClickListener(self._btnOnReview, self)
 end
 
-function var_0_0.removeEventListeners(arg_3_0)
-	arg_3_0._btnclick:RemoveClickListener()
-	arg_3_0._btnreview:RemoveClickListener()
+function RoleActStoryItem:removeEventListeners()
+	self._btnclick:RemoveClickListener()
+	self._btnreview:RemoveClickListener()
 end
 
-function var_0_0._btnOnClick(arg_4_0)
-	if not arg_4_0.unlock then
+function RoleActStoryItem:_btnOnClick()
+	if not self.unlock then
 		GameFacade.showToast(ToastEnum.DungeonIsLockNormal)
 
 		return
 	end
 
-	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.StoryItemClick, arg_4_0.index)
+	RoleActivityController.instance:dispatchEvent(RoleActivityEvent.StoryItemClick, self.index)
 end
 
-function var_0_0._btnOnReview(arg_5_0)
-	arg_5_0:_btnOnClick()
+function RoleActStoryItem:_btnOnReview()
+	self:_btnOnClick()
 end
 
-function var_0_0.setParam(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	arg_6_0.config = arg_6_1
-	arg_6_0.id = arg_6_1.id
-	arg_6_0.actId = arg_6_3
-	arg_6_0.index = arg_6_2
+function RoleActStoryItem:setParam(co, _index, _actId)
+	self.config = co
+	self.id = co.id
+	self.actId = _actId
+	self.index = _index
 
-	arg_6_0:_refreshUI()
+	self:_refreshUI()
 end
 
-function var_0_0._refreshUI(arg_7_0)
-	arg_7_0:refreshStatus()
+function RoleActStoryItem:_refreshUI()
+	self:refreshStatus()
 
-	arg_7_0._txtname.text = arg_7_0.config.name
-	arg_7_0._txtnum.text = "0" .. arg_7_0.index
+	self._txtname.text = self.config.name
+	self._txtnum.text = "0" .. self.index
 end
 
-function var_0_0.refreshStatus(arg_8_0)
-	arg_8_0.unlock = RoleActivityModel.instance:isLevelUnlock(arg_8_0.actId, arg_8_0.id)
+function RoleActStoryItem:refreshStatus()
+	self.unlock = RoleActivityModel.instance:isLevelUnlock(self.actId, self.id)
 
-	gohelper.setActive(arg_8_0._golock, not arg_8_0.unlock)
+	gohelper.setActive(self._golock, not self.unlock)
 
-	arg_8_0.isPass = RoleActivityModel.instance:isLevelPass(arg_8_0.actId, arg_8_0.id)
+	self.isPass = RoleActivityModel.instance:isLevelPass(self.actId, self.id)
 
-	gohelper.setActive(arg_8_0._gostar, arg_8_0.isPass)
-	gohelper.setActive(arg_8_0._gostarNo, not arg_8_0.isPass)
+	gohelper.setActive(self._gostar, self.isPass)
+	gohelper.setActive(self._gostarNo, not self.isPass)
 end
 
-function var_0_0.lockStatus(arg_9_0)
-	gohelper.setActive(arg_9_0._golock, true)
-	gohelper.setActive(arg_9_0._gostar, false)
-	gohelper.setActive(arg_9_0._gostarNo, true)
+function RoleActStoryItem:lockStatus()
+	gohelper.setActive(self._golock, true)
+	gohelper.setActive(self._gostar, false)
+	gohelper.setActive(self._gostarNo, true)
 end
 
-function var_0_0.isUnlock(arg_10_0)
-	return arg_10_0.unlock
+function RoleActStoryItem:isUnlock()
+	return self.unlock
 end
 
-function var_0_0.playStory(arg_11_0)
-	if arg_11_0.isPass then
-		StoryController.instance:playStory(arg_11_0.config.beforeStory)
+function RoleActStoryItem:playStory()
+	if self.isPass then
+		StoryController.instance:playStory(self.config.beforeStory)
 	else
-		DungeonRpc.instance:sendStartDungeonRequest(arg_11_0.config.chapterId, arg_11_0.id)
+		DungeonRpc.instance:sendStartDungeonRequest(self.config.chapterId, self.id)
 
-		local var_11_0 = {}
+		local param = {}
 
-		var_11_0.mark = true
-		var_11_0.episodeId = arg_11_0.config.id
+		param.mark = true
+		param.episodeId = self.config.id
 
-		StoryController.instance:playStory(arg_11_0.config.beforeStory, var_11_0, arg_11_0.onStoryFinished, arg_11_0)
+		StoryController.instance:playStory(self.config.beforeStory, param, self.onStoryFinished, self)
 	end
 end
 
-function var_0_0.onStoryFinished(arg_12_0)
+function RoleActStoryItem:onStoryFinished()
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	DungeonModel.instance:setLastSendEpisodeId(arg_12_0.id)
+	DungeonModel.instance:setLastSendEpisodeId(self.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 end
 
-function var_0_0.playFinish(arg_13_0)
-	arg_13_0._anim:Play("finish")
+function RoleActStoryItem:playFinish()
+	self._anim:Play("finish")
 end
 
-function var_0_0.playUnlock(arg_14_0)
+function RoleActStoryItem:playUnlock()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_level_difficulty)
-	arg_14_0._anim:Play("unlock")
+	self._anim:Play("unlock")
 end
 
-function var_0_0.playStarAnim(arg_15_0)
-	arg_15_0:refreshStatus()
+function RoleActStoryItem:playStarAnim()
+	self:refreshStatus()
 	AudioMgr.instance:trigger(AudioEnum.RoleActivity.star_show)
-	arg_15_0._animStar:Play()
+	self._animStar:Play()
 end
 
-return var_0_0
+return RoleActStoryItem

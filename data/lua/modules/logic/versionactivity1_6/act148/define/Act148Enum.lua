@@ -1,7 +1,9 @@
-﻿module("modules.logic.versionactivity1_6.act148.define.Act148Enum", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity1_6/act148/define/Act148Enum.lua
 
-local var_0_0 = _M
+module("modules.logic.versionactivity1_6.act148.define.Act148Enum", package.seeall)
 
-var_0_0.SkillTypeNum = 4
+local Act148Enum = _M
 
-return var_0_0
+Act148Enum.SkillTypeNum = 4
+
+return Act148Enum

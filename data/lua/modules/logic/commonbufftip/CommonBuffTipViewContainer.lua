@@ -1,15 +1,17 @@
-﻿module("modules.logic.commonbufftip.CommonBuffTipViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/commonbufftip/CommonBuffTipViewContainer.lua
 
-local var_0_0 = class("CommonBuffTipViewContainer", BaseViewContainer)
+module("modules.logic.commonbufftip.CommonBuffTipViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
+local CommonBuffTipViewContainer = class("CommonBuffTipViewContainer", BaseViewContainer)
+
+function CommonBuffTipViewContainer:buildViews()
 	return {
 		CommonBuffTipView.New()
 	}
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function CommonBuffTipViewContainer:onContainerClickModalMask()
+	self:closeThis()
 end
 
-return var_0_0
+return CommonBuffTipViewContainer

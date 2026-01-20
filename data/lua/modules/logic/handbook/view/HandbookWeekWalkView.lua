@@ -1,41 +1,43 @@
-﻿module("modules.logic.handbook.view.HandbookWeekWalkView", package.seeall)
+﻿-- chunkname: @modules/logic/handbook/view/HandbookWeekWalkView.lua
 
-local var_0_0 = class("HandbookWeekWalkView", BaseView)
+module("modules.logic.handbook.view.HandbookWeekWalkView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+local HandbookWeekWalkView = class("HandbookWeekWalkView", BaseView)
 
-	if arg_1_0._editableInitView then
-		arg_1_0:_editableInitView()
+function HandbookWeekWalkView:onInitView()
+	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+
+	if self._editableInitView then
+		self:_editableInitView()
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function HandbookWeekWalkView:addEvents()
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
+function HandbookWeekWalkView:removeEvents()
 	return
 end
 
-function var_0_0._editableInitView(arg_4_0)
+function HandbookWeekWalkView:_editableInitView()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
+function HandbookWeekWalkView:onUpdateParam()
 	return
 end
 
-function var_0_0.onOpen(arg_6_0)
-	arg_6_0.mapId = arg_6_0.viewParam.id
+function HandbookWeekWalkView:onOpen()
+	self.mapId = self.viewParam.id
 end
 
-function var_0_0.onClose(arg_7_0)
+function HandbookWeekWalkView:onClose()
 	return
 end
 
-function var_0_0.onDestroyView(arg_8_0)
+function HandbookWeekWalkView:onDestroyView()
 	return
 end
 
-return var_0_0
+return HandbookWeekWalkView

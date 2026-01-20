@@ -1,11 +1,13 @@
-﻿module("modules.logic.fight.FightMsgItem", package.seeall)
+﻿-- chunkname: @modules/logic/fight/FightMsgItem.lua
 
-local var_0_0 = class("FightMsgItem")
+module("modules.logic.fight.FightMsgItem", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.msgId = arg_1_1
-	arg_1_0.callback = arg_1_2
-	arg_1_0.handle = arg_1_3
+local FightMsgItem = class("FightMsgItem")
+
+function FightMsgItem:ctor(msgId, callback, handle)
+	self.msgId = msgId
+	self.callback = callback
+	self.handle = handle
 end
 
-return var_0_0
+return FightMsgItem

@@ -1,18 +1,20 @@
-﻿module("modules.logic.versionactivity2_5.decoratestore.view.V2a5_DecorateStoreViewContainer", package.seeall)
+﻿-- chunkname: @modules/logic/versionactivity2_5/decoratestore/view/V2a5_DecorateStoreViewContainer.lua
 
-local var_0_0 = class("V2a5_DecorateStoreViewContainer", BaseViewContainer)
+module("modules.logic.versionactivity2_5.decoratestore.view.V2a5_DecorateStoreViewContainer", package.seeall)
 
-function var_0_0.buildViews(arg_1_0)
-	local var_1_0 = {}
+local V2a5_DecorateStoreViewContainer = class("V2a5_DecorateStoreViewContainer", BaseViewContainer)
 
-	table.insert(var_1_0, V2a5_DecorateStoreView.New())
+function V2a5_DecorateStoreViewContainer:buildViews()
+	local views = {}
 
-	return var_1_0
+	table.insert(views, V2a5_DecorateStoreView.New())
+
+	return views
 end
 
-function var_0_0.onContainerClickModalMask(arg_2_0)
-	arg_2_0:closeThis()
+function V2a5_DecorateStoreViewContainer:onContainerClickModalMask()
+	self:closeThis()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-return var_0_0
+return V2a5_DecorateStoreViewContainer

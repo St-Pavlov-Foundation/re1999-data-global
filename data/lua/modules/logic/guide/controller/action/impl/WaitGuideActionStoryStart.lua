@@ -1,23 +1,25 @@
-﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionStoryStart", package.seeall)
+﻿-- chunkname: @modules/logic/guide/controller/action/impl/WaitGuideActionStoryStart.lua
 
-local var_0_0 = class("WaitGuideActionStoryStart", BaseGuideAction)
+module("modules.logic.guide.controller.action.impl.WaitGuideActionStoryStart", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	var_0_0.super.onStart(arg_1_0, arg_1_1)
-	StoryController.instance:registerCallback(StoryEvent.Start, arg_1_0._onStoryStart, arg_1_0)
+local WaitGuideActionStoryStart = class("WaitGuideActionStoryStart", BaseGuideAction)
 
-	arg_1_0._storyId = tostring(arg_1_0.actionParam)
+function WaitGuideActionStoryStart:onStart(context)
+	WaitGuideActionStoryStart.super.onStart(self, context)
+	StoryController.instance:registerCallback(StoryEvent.Start, self._onStoryStart, self)
+
+	self._storyId = tostring(self.actionParam)
 end
 
-function var_0_0._onStoryStart(arg_2_0, arg_2_1)
-	if not arg_2_0._storyId or arg_2_0._storyId == arg_2_1 then
-		StoryController.instance:unregisterCallback(StoryEvent.Start, arg_2_0._onStoryStart, arg_2_0)
-		arg_2_0:onDone(true)
+function WaitGuideActionStoryStart:_onStoryStart(storyId)
+	if not self._storyId or self._storyId == storyId then
+		StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStoryStart, self)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.clearWork(arg_3_0)
-	StoryController.instance:unregisterCallback(StoryEvent.Start, arg_3_0._onStoryStart, arg_3_0)
+function WaitGuideActionStoryStart:clearWork()
+	StoryController.instance:unregisterCallback(StoryEvent.Start, self._onStoryStart, self)
 end
 
-return var_0_0
+return WaitGuideActionStoryStart

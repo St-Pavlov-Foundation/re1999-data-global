@@ -1,312 +1,321 @@
-﻿module("modules.logic.room.model.map.RoomMapModel", package.seeall)
+﻿-- chunkname: @modules/logic/room/model/map/RoomMapModel.lua
 
-local var_0_0 = class("RoomMapModel", BaseModel)
+module("modules.logic.room.model.map.RoomMapModel", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
-	arg_1_0:_clearData()
+local RoomMapModel = class("RoomMapModel", BaseModel)
+
+function RoomMapModel:onInit()
+	self:_clearData()
 end
 
-function var_0_0.reInit(arg_2_0)
-	arg_2_0:_clearData()
+function RoomMapModel:reInit()
+	self:_clearData()
 end
 
-function var_0_0.clear(arg_3_0)
-	var_0_0.super.clear(arg_3_0)
-	arg_3_0:_clearData()
+function RoomMapModel:clear()
+	RoomMapModel.super.clear(self)
+	self:_clearData()
 end
 
-function var_0_0._clearData(arg_4_0)
-	arg_4_0._revertCameraParam = nil
-	arg_4_0._buildingConfigParamDict = nil
-	arg_4_0._otherLineLevelDict = nil
-	arg_4_0._roomLevel = 1
-	arg_4_0._roomLeveling = false
+function RoomMapModel:_clearData()
+	self._revertCameraParam = nil
+	self._buildingConfigParamDict = nil
+	self._otherLineLevelDict = nil
+	self._roomLevel = 1
+	self._roomLeveling = false
 end
 
-function var_0_0.init(arg_5_0)
-	arg_5_0:clear()
+function RoomMapModel:init()
+	self:clear()
 end
 
-function var_0_0.updateRoomLevel(arg_6_0, arg_6_1)
-	arg_6_0._roomLevel = arg_6_1
+function RoomMapModel:updateRoomLevel(roomLevel)
+	self._roomLevel = roomLevel
 end
 
-function var_0_0.getRoomLevel(arg_7_0)
-	return arg_7_0._roomLevel
+function RoomMapModel:getRoomLevel()
+	return self._roomLevel
 end
 
-function var_0_0.saveCameraParam(arg_8_0, arg_8_1)
-	arg_8_0._revertCameraParam = LuaUtil.deepCopy(arg_8_1)
+function RoomMapModel:saveCameraParam(cameraParam)
+	self._revertCameraParam = LuaUtil.deepCopy(cameraParam)
 end
 
-function var_0_0.getCameraParam(arg_9_0)
-	return arg_9_0._revertCameraParam
+function RoomMapModel:getCameraParam()
+	return self._revertCameraParam
 end
 
-function var_0_0.clearCameraParam(arg_10_0)
-	arg_10_0._revertCameraParam = nil
+function RoomMapModel:clearCameraParam()
+	self._revertCameraParam = nil
 end
 
-function var_0_0.getBuildingConfigParam(arg_11_0, arg_11_1)
-	if not arg_11_1 then
+function RoomMapModel:getBuildingConfigParam(buildingId)
+	if not buildingId then
 		return nil
 	end
 
-	arg_11_0._buildingConfigParamDict = arg_11_0._buildingConfigParamDict or {}
+	self._buildingConfigParamDict = self._buildingConfigParamDict or {}
 
-	local var_11_0 = arg_11_0._buildingConfigParamDict[arg_11_1]
+	local buildingConfigParam = self._buildingConfigParamDict[buildingId]
 
-	if not var_11_0 then
-		local var_11_1 = RoomConfig.instance:getBuildingConfig(arg_11_1)
+	if not buildingConfigParam then
+		local buildingConfig = RoomConfig.instance:getBuildingConfig(buildingId)
 
-		if not var_11_1 then
+		if not buildingConfig then
 			return nil
 		end
 
-		var_11_0 = {}
+		buildingConfigParam = {}
 
-		local var_11_2 = var_11_1.center
+		local centerParam = buildingConfig.center
 
-		if not string.nilorempty(var_11_2) then
-			var_11_0.onlyDirection = string.splitToNumber(var_11_2, "#")[3]
+		if not string.nilorempty(centerParam) then
+			centerParam = string.splitToNumber(centerParam, "#")
+			buildingConfigParam.onlyDirection = centerParam[3]
 		end
 
-		local var_11_3 = var_11_1.costResource
+		local costResource = buildingConfig.costResource
 
-		if not string.nilorempty(var_11_3) then
-			var_11_0.costResource = string.splitToNumber(var_11_3, "#")
+		if not string.nilorempty(costResource) then
+			costResource = string.splitToNumber(costResource, "#")
+			buildingConfigParam.costResource = costResource
 		else
-			var_11_0.costResource = {}
+			buildingConfigParam.costResource = {}
 		end
 
-		local var_11_4 = var_11_1.center
+		local centerParam = buildingConfig.center
 
-		if string.nilorempty(var_11_4) then
-			var_11_0.centerPoint = HexPoint(0, 0)
+		if string.nilorempty(centerParam) then
+			buildingConfigParam.centerPoint = HexPoint(0, 0)
 		else
-			local var_11_5 = string.splitToNumber(var_11_4, "#")
-
-			var_11_0.centerPoint = HexPoint(var_11_5[1], var_11_5[2])
+			centerParam = string.splitToNumber(centerParam, "#")
+			buildingConfigParam.centerPoint = HexPoint(centerParam[1], centerParam[2])
 		end
 
-		var_11_0.pointList = {}
+		buildingConfigParam.pointList = {}
 
-		local var_11_6 = RoomConfig.instance:getBuildingAreaConfig(var_11_1.areaId)
+		local buildingAreaConfig = RoomConfig.instance:getBuildingAreaConfig(buildingConfig.areaId)
 
-		if not string.nilorempty(var_11_6.area) then
-			local var_11_7 = GameUtil.splitString2(var_11_6.area, true)
+		if not string.nilorempty(buildingAreaConfig.area) then
+			local pointParamList = GameUtil.splitString2(buildingAreaConfig.area, true)
 
-			for iter_11_0, iter_11_1 in ipairs(var_11_7) do
-				local var_11_8 = HexPoint(iter_11_1[1], iter_11_1[2])
+			for i, pointParam in ipairs(pointParamList) do
+				local hexPoint = HexPoint(pointParam[1], pointParam[2])
 
-				table.insert(var_11_0.pointList, var_11_8)
+				table.insert(buildingConfigParam.pointList, hexPoint)
 			end
 		end
 
-		local var_11_9 = {}
-		local var_11_10 = {}
+		local tempResIdList = {}
+		local tempPointDic = {}
 
-		var_11_0.crossloadResPointDic = var_11_10
-		var_11_0.crossloadResIdList = var_11_9
+		buildingConfigParam.crossloadResPointDic = tempPointDic
+		buildingConfigParam.crossloadResIdList = tempResIdList
 
-		if var_11_1.crossload and var_11_1.crossload ~= 0 and RoomBuildingEnum.Crossload[arg_11_1] then
-			local var_11_11 = RoomBuildingEnum.Crossload[arg_11_1]
+		if buildingConfig.crossload and buildingConfig.crossload ~= 0 and RoomBuildingEnum.Crossload[buildingId] then
+			local crossCfg = RoomBuildingEnum.Crossload[buildingId]
 
-			for iter_11_2, iter_11_3 in ipairs(var_11_11.AnimStatus) do
-				table.insert(var_11_9, iter_11_3.resId)
+			for i, coss in ipairs(crossCfg.AnimStatus) do
+				table.insert(tempResIdList, coss.resId)
 
-				for iter_11_4, iter_11_5 in ipairs(iter_11_3.replaceBlockRes) do
-					if not var_11_10[iter_11_5.x] then
-						var_11_10[iter_11_5.x] = {}
+				for _, replaceRes in ipairs(coss.replaceBlockRes) do
+					if not tempPointDic[replaceRes.x] then
+						tempPointDic[replaceRes.x] = {}
 					end
 
-					if not var_11_10[iter_11_5.x][iter_11_5.y] then
-						var_11_10[iter_11_5.x][iter_11_5.y] = {}
+					if not tempPointDic[replaceRes.x][replaceRes.y] then
+						tempPointDic[replaceRes.x][replaceRes.y] = {}
 					end
 
-					var_11_10[iter_11_5.x][iter_11_5.y][iter_11_3.resId] = iter_11_5.resPionts
+					tempPointDic[replaceRes.x][replaceRes.y][coss.resId] = replaceRes.resPionts
 				end
 			end
 		end
 
-		local var_11_12 = {}
+		local tempBlockDic = {}
 
-		var_11_0.replaceBlockDic = var_11_12
-		var_11_0.replaceBlockCount = 0
+		buildingConfigParam.replaceBlockDic = tempBlockDic
+		buildingConfigParam.replaceBlockCount = 0
 
-		if not string.nilorempty(var_11_1.replaceBlock) then
-			local var_11_13 = GameUtil.splitString2(var_11_1.replaceBlock, true)
+		if not string.nilorempty(buildingConfig.replaceBlock) then
+			local blockParamList = GameUtil.splitString2(buildingConfig.replaceBlock, true)
 
-			for iter_11_6, iter_11_7 in ipairs(var_11_13) do
-				if #iter_11_7 >= 3 then
-					if not var_11_12[iter_11_7[1]] then
-						var_11_12[iter_11_7[1]] = {}
+			for i, blockParam in ipairs(blockParamList) do
+				if #blockParam >= 3 then
+					if not tempBlockDic[blockParam[1]] then
+						tempBlockDic[blockParam[1]] = {}
 					end
 
-					var_11_12[iter_11_7[1]][iter_11_7[2]] = iter_11_7[3]
-					var_11_0.replaceBlockCount = var_11_0.replaceBlockCount + 1
+					tempBlockDic[blockParam[1]][blockParam[2]] = blockParam[3]
+					buildingConfigParam.replaceBlockCount = buildingConfigParam.replaceBlockCount + 1
 				else
-					logError(string.format("【小屋】建筑表中id:%s的[replaceBlack]字段配置有误", arg_11_1))
+					logError(string.format("【小屋】建筑表中id:%s的[replaceBlack]字段配置有误", buildingId))
 				end
 			end
 		end
 
-		local var_11_14 = {}
+		local tempCanPlaceBlockDic = {}
 
-		var_11_0.canPlaceBlockDic = var_11_14
+		buildingConfigParam.canPlaceBlockDic = tempCanPlaceBlockDic
 
-		if not string.nilorempty(var_11_1.canPlaceBlock) then
-			local var_11_15 = GameUtil.splitString2(var_11_1.canPlaceBlock, true)
+		if not string.nilorempty(buildingConfig.canPlaceBlock) then
+			local blockParamList = GameUtil.splitString2(buildingConfig.canPlaceBlock, true)
 
-			for iter_11_8, iter_11_9 in ipairs(var_11_15) do
-				if #iter_11_9 >= 2 then
-					if not var_11_14[iter_11_9[1]] then
-						var_11_14[iter_11_9[1]] = {}
+			for i, blockParam in ipairs(blockParamList) do
+				if #blockParam >= 2 then
+					if not tempCanPlaceBlockDic[blockParam[1]] then
+						tempCanPlaceBlockDic[blockParam[1]] = {}
 					end
 
-					var_11_14[iter_11_9[1]][iter_11_9[2]] = true
+					tempCanPlaceBlockDic[blockParam[1]][blockParam[2]] = true
 				else
-					logError(string.format("【小屋】建筑表中id:%s的[canPlaceBlock]字段配置有误", arg_11_1))
+					logError(string.format("【小屋】建筑表中id:%s的[canPlaceBlock]字段配置有误", buildingId))
 				end
 			end
 		end
 
-		local var_11_16 = var_11_1.levelGroups
+		local levelGroups = buildingConfig.levelGroups
 
-		if string.nilorempty(var_11_16) then
-			var_11_16 = {}
+		if string.nilorempty(levelGroups) then
+			levelGroups = {}
 		else
-			var_11_16 = string.splitToNumber(var_11_16, "#")
+			levelGroups = string.splitToNumber(levelGroups, "#")
 		end
 
-		var_11_0.levelGroups = var_11_16
+		buildingConfigParam.levelGroups = levelGroups
 
-		local var_11_17 = Vector3.zero
+		local offset = Vector3.zero
 
-		if not string.nilorempty(var_11_1.offset) then
-			local var_11_18 = string.splitToNumber(var_11_1.offset, "#")
+		if not string.nilorempty(buildingConfig.offset) then
+			local offsetParam = string.splitToNumber(buildingConfig.offset, "#")
 
-			var_11_17 = Vector3(var_11_18[1] or 0, var_11_18[2] or 0, var_11_18[3] or 0)
+			offset = Vector3(offsetParam[1] or 0, offsetParam[2] or 0, offsetParam[3] or 0)
 		end
 
-		var_11_0.offset = var_11_17
+		buildingConfigParam.offset = offset
 
-		if #var_11_0.pointList > 1 and var_11_0.onlyDirection then
+		if #buildingConfigParam.pointList > 1 and buildingConfigParam.onlyDirection then
 			logError("占多格的建筑配置了指定方向 约定没有这种情况")
 		end
 
-		arg_11_0._buildingConfigParamDict[arg_11_1] = var_11_0
+		self._buildingConfigParamDict[buildingId] = buildingConfigParam
 	end
 
-	return var_11_0
+	return buildingConfigParam
 end
 
-function var_0_0.getBuildingPointList(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._buildingRotatePointsDict = arg_12_0._buildingRotatePointsDict or {}
+function RoomMapModel:getBuildingPointList(buildingId, rotate)
+	self._buildingRotatePointsDict = self._buildingRotatePointsDict or {}
 
-	local var_12_0 = arg_12_0._buildingRotatePointsDict[arg_12_1]
+	local rotateParams = self._buildingRotatePointsDict[buildingId]
 
-	if not var_12_0 then
-		local var_12_1 = arg_12_0:getBuildingConfigParam(arg_12_1)
+	if not rotateParams then
+		local params = self:getBuildingConfigParam(buildingId)
 
-		if not var_12_1 then
+		if not params then
 			return nil
 		end
 
-		var_12_0 = {}
-		arg_12_0._buildingRotatePointsDict[arg_12_1] = var_12_0
+		rotateParams = {}
+		self._buildingRotatePointsDict[buildingId] = rotateParams
 
-		for iter_12_0 = 0, 5 do
-			var_12_0[iter_12_0] = arg_12_0:_rotatePointList(var_12_1.pointList, var_12_1.centerPoint, iter_12_0)
+		for ro = 0, 5 do
+			rotateParams[ro] = self:_rotatePointList(params.pointList, params.centerPoint, ro)
 		end
 	end
 
-	return var_12_0[RoomRotateHelper.getMod(arg_12_2, 6)]
+	local tempRotate = RoomRotateHelper.getMod(rotate, 6)
+
+	return rotateParams[tempRotate]
 end
 
-function var_0_0._rotatePointList(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = {}
+function RoomMapModel:_rotatePointList(hexPointList, centerPoint, rotate)
+	local list = {}
 
-	if arg_13_3 == 0 then
-		tabletool.addValues(var_13_0, arg_13_1)
+	if rotate == 0 then
+		tabletool.addValues(list, hexPointList)
 	else
-		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-			local var_13_1 = (iter_13_1 - arg_13_2):Rotate(HexPoint.Zero, arg_13_3, true)
+		for _, hexPoint in ipairs(hexPointList) do
+			local worldHexPoint = hexPoint - centerPoint
 
-			table.insert(var_13_0, var_13_1)
+			worldHexPoint = worldHexPoint:Rotate(HexPoint.Zero, rotate, true)
+
+			table.insert(list, worldHexPoint)
 		end
 	end
 
-	return var_13_0
+	return list
 end
 
-function var_0_0.setOtherLineLevelDict(arg_14_0, arg_14_1)
-	arg_14_0._otherLineLevelDict = {}
+function RoomMapModel:setOtherLineLevelDict(infos)
+	self._otherLineLevelDict = {}
 
-	if arg_14_1 then
-		for iter_14_0, iter_14_1 in ipairs(arg_14_1) do
-			arg_14_0._otherLineLevelDict[iter_14_1.id] = iter_14_1.level
+	if infos then
+		for _, info in ipairs(infos) do
+			self._otherLineLevelDict[info.id] = info.level
 		end
 	end
 end
 
-function var_0_0.getOtherLineLevelDict(arg_15_0)
-	return arg_15_0._otherLineLevelDict
+function RoomMapModel:getOtherLineLevelDict()
+	return self._otherLineLevelDict
 end
 
-function var_0_0.getAllBuildDegree(arg_16_0, arg_16_1)
-	local var_16_0 = {}
-	local var_16_1 = 0
-	local var_16_2 = {
+function RoomMapModel:getAllBuildDegree(temp)
+	local buildDegreeInfoDict = {}
+	local totalDegree = 0
+	local blockDegreeInfo = {
 		count = 0,
 		degree = 0
 	}
-	local var_16_3 = var_16_1 + RoomBlockEnum.InitBlockDegreeValue
-	local var_16_4 = 0
-	local var_16_5 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_5) do
-		if iter_16_1.blockState == RoomBlockEnum.BlockState.Map or iter_16_1.blockState == RoomBlockEnum.BlockState.Revert or arg_16_1 and iter_16_1.blockState == RoomBlockEnum.BlockState.Temp then
-			local var_16_6 = iter_16_1.blockId
-			local var_16_7 = RoomConfig.instance:getPackageConfigByBlockId(var_16_6)
-			local var_16_8 = var_16_7 and var_16_7.blockBuildDegree or 0
+	totalDegree = totalDegree + RoomBlockEnum.InitBlockDegreeValue
 
-			var_16_3 = var_16_3 + var_16_8
-			var_16_2.count = var_16_2.count + (var_16_7 and 1 or 0)
-			var_16_2.degree = var_16_2.degree + var_16_8
+	local blockDegree = 0
+	local blockMOList = RoomMapBlockModel.instance:getFullBlockMOList()
+
+	for i, blockMO in ipairs(blockMOList) do
+		if blockMO.blockState == RoomBlockEnum.BlockState.Map or blockMO.blockState == RoomBlockEnum.BlockState.Revert or temp and blockMO.blockState == RoomBlockEnum.BlockState.Temp then
+			local blockId = blockMO.blockId
+			local packageConfig = RoomConfig.instance:getPackageConfigByBlockId(blockId)
+			local degree = packageConfig and packageConfig.blockBuildDegree or 0
+
+			totalDegree = totalDegree + degree
+			blockDegreeInfo.count = blockDegreeInfo.count + (packageConfig and 1 or 0)
+			blockDegreeInfo.degree = blockDegreeInfo.degree + degree
 		end
 	end
 
-	local var_16_9 = RoomMapBuildingModel.instance:getList()
+	local buildingMOList = RoomMapBuildingModel.instance:getList()
 
-	for iter_16_2, iter_16_3 in ipairs(var_16_9) do
-		if iter_16_3.buildingState == RoomBuildingEnum.BuildingState.Map or iter_16_3.buildingState == RoomBuildingEnum.BuildingState.Revert or arg_16_1 and iter_16_3.buildingState == RoomBuildingEnum.BuildingState.Temp then
-			var_16_3 = var_16_3 + iter_16_3.config.buildDegree
-			var_16_0[iter_16_3.buildingId] = var_16_0[iter_16_3.buildingId] or {
+	for i, buildingMO in ipairs(buildingMOList) do
+		if buildingMO.buildingState == RoomBuildingEnum.BuildingState.Map or buildingMO.buildingState == RoomBuildingEnum.BuildingState.Revert or temp and buildingMO.buildingState == RoomBuildingEnum.BuildingState.Temp then
+			totalDegree = totalDegree + buildingMO.config.buildDegree
+			buildDegreeInfoDict[buildingMO.buildingId] = buildDegreeInfoDict[buildingMO.buildingId] or {
 				count = 0,
-				config = iter_16_3.config
+				config = buildingMO.config
 			}
-			var_16_0[iter_16_3.buildingId].count = var_16_0[iter_16_3.buildingId].count + 1
+			buildDegreeInfoDict[buildingMO.buildingId].count = buildDegreeInfoDict[buildingMO.buildingId].count + 1
 		end
 	end
 
-	local var_16_10 = {}
+	local buildDegreeInfoList = {}
 
-	for iter_16_4, iter_16_5 in pairs(var_16_0) do
-		table.insert(var_16_10, iter_16_5)
+	for buildingId, buildDegreeInfo in pairs(buildDegreeInfoDict) do
+		table.insert(buildDegreeInfoList, buildDegreeInfo)
 	end
 
-	return var_16_3, var_16_2, var_16_10
+	return totalDegree, blockDegreeInfo, buildDegreeInfoList
 end
 
-function var_0_0.setRoomLeveling(arg_17_0, arg_17_1)
-	arg_17_0._roomLeveling = arg_17_1
+function RoomMapModel:setRoomLeveling(roomLeveling)
+	self._roomLeveling = roomLeveling
 end
 
-function var_0_0.isRoomLeveling(arg_18_0)
-	return arg_18_0._roomLeveling
+function RoomMapModel:isRoomLeveling()
+	return self._roomLeveling
 end
 
-var_0_0.instance = var_0_0.New()
+RoomMapModel.instance = RoomMapModel.New()
 
-return var_0_0
+return RoomMapModel
