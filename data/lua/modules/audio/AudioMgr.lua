@@ -8,6 +8,21 @@ AudioMgr.GMOpenLog = nil
 AudioMgr.Evt_ChangeFinish = 1
 AudioMgr.Evt_Trigger = 2
 
+require("tolua.reflection")
+tolua.loadassembly("AK.Wwise.Unity.API")
+
+local type = tolua.findtype("AkSoundEngine")
+local _registerGameObj = tolua.getmethod(type, "RegisterGameObj", typeof("UnityEngine.GameObject"))
+local _unregisterGameObj = tolua.getmethod(type, "UnregisterGameObj", typeof("UnityEngine.GameObject"))
+
+function AudioMgr:RegisterGameObj(go)
+	_registerGameObj:Call(go)
+end
+
+function AudioMgr:UnregisterGameObj(go)
+	_unregisterGameObj:Call(go)
+end
+
 function AudioMgr:ctor()
 	return
 end
@@ -33,6 +48,15 @@ function AudioMgr:init(onInited, onInitedObj)
 	self.csharpInst:InitFromLua(self._onInitCS, self)
 
 	self.csharpInst.autoSwitchToDefault = false
+
+	require("tolua.reflection")
+	tolua.loadassembly("Assembly-CSharp")
+
+	local type = tolua.findtype("ZProj.AudioManager")
+	local baseType = type.BaseType
+
+	self._TriggerAudio_method_instance = tolua.getproperty(baseType, "Instance")
+	self._TriggerAudio_method = tolua.getmethod(type, "TriggerAudio", typeof("System.Int32"), typeof("UnityEngine.GameObject"), typeof("System.Boolean"))
 end
 
 function AudioMgr:_setAutoSwitchDefault(target)
@@ -85,7 +109,19 @@ function AudioMgr:changeEarMode()
 	self:setRTPCValue(AudioEnum.EarRTPC, isEarConnect and 0 or 1)
 end
 
-function AudioMgr:trigger(audioId, go)
+function AudioMgr:trigger(audioId, go, needRegister)
+	if needRegister == nil then
+		needRegister = true
+	end
+
+	if not needRegister then
+		local playingId = self._TriggerAudio_method:Call(self._TriggerAudio_method_instance:Get(nil, nil), audioId, go, needRegister)
+
+		self:dispatchEvent(AudioMgr.Evt_Trigger, audioId)
+
+		return playingId
+	end
+
 	local config = AudioConfig.instance:getAudioCOById(audioId)
 
 	if config == nil then

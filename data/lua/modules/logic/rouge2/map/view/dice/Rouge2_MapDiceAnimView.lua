@@ -332,7 +332,8 @@ function Rouge2_MapDiceAnimView:playFinishAnim()
 end
 
 function Rouge2_MapDiceAnimView:_onJumpFinishDice()
-	self:playDiceResultFlow(0)
+	self:destroyFlow()
+	self:playFinishAnim()
 end
 
 function Rouge2_MapDiceAnimView:destroyFlow()

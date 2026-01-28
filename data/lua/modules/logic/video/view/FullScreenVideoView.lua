@@ -56,7 +56,7 @@ function FullScreenVideoView:videoStatusUpdate(path, status, errorCode)
 		self:onPlayVideoDone()
 	elseif status == VideoEnum.PlayerStatus.Closing then
 		self:onPlayVideoDone()
-	elseif status == VideoEnum.PlayerStatus.Started then
+	elseif status == VideoEnum.PlayerStatus.Started or status == VideoEnum.PlayerStatus.FinishedSeeking then
 		TaskDispatcher.cancelTask(self.onVideoOverTime, self)
 		TaskDispatcher.runDelay(self.onVideoOverTime, self, self._time)
 		VideoController.instance:dispatchEvent(VideoEvent.OnVideoStarted, self._videoPath)
@@ -112,9 +112,6 @@ function FullScreenVideoView:onDestroyView()
 	end
 
 	if self._videoPlayer then
-		self._videoPlayer:stop()
-		self._videoPlayer:clear()
-
 		self._videoPlayer = nil
 	end
 

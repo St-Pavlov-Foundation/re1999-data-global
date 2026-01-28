@@ -66,7 +66,7 @@ function FightVideoMgr:play(videoPath, callback, callbackObj)
 		self._videoCopatible = SettingsModel.instance:getVideoCompatible()
 		self._unityplayer = SettingsModel.instance:getUseUnityVideo()
 
-		if self._unityplayer or not self._videoCopatible then
+		if not SettingsModel.instance:isAvproVideo() then
 			self:createVideoPlayer()
 
 			return

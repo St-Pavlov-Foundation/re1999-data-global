@@ -32,6 +32,7 @@ function LoginVideoView:onOpenFinish()
 	if self._isShowVideo and not self._videoPlayer then
 		self._videoPlayer, self._videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self.viewGO, "LoginVideoPlayer")
 
+		self._videoPlayer:SetRaycast(false)
 		gohelper.setSiblingAfter(self._videoGo, self._goBgRoot)
 		self:play()
 		self:addEventCb(self.viewContainer, LoginEvent.OnLoginVideoSwitch, self._playByPath, self)

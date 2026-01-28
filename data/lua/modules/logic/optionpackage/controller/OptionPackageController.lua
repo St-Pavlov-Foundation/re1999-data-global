@@ -179,7 +179,7 @@ function OptionPackageController:checkNeedDownload(packName)
 		if packageSetMO:isNeedDownload(curVoiceLangs) then
 			local allSize, localSize = packageSetMO:getDownloadSize(curVoiceLangs)
 			local needDownloadSize, size, units = OptionPackageHelper.getLeftSizeMBorGB(allSize, localSize)
-			local tipsStr = string.format("是否下载常驻活动资源？\n资源大小:%.2f%s", needDownloadSize, units)
+			local tipsStr = formatLuaLang("OptionPackageController_checkNeedDownload", needDownloadSize, units)
 
 			self:_showDownloadMsgBox(packName, tipsStr)
 
@@ -201,7 +201,7 @@ function OptionPackageController:_checkNeedDownloadNew(packName)
 
 	if allSize > 0 then
 		local needDownloadSize, size, units = OptionPackageHelper.getLeftSizeMBorGB(allSize)
-		local tipsStr = string.format("是否下载常驻活动资源？\n资源大小:%.2f%s", needDownloadSize, units)
+		local tipsStr = formatLuaLang("OptionPackageController_checkNeedDownload", needDownloadSize, units)
 
 		self:_showDownloadMsgBox(packName, tipsStr, diffList, dlcTypeList)
 

@@ -31,9 +31,14 @@ end
 
 function RoomBuildingEntity:playAudio(audioId)
 	if audioId and audioId ~= 0 then
+		if not self.__isHasAuidoTrigger then
+			gohelper.addAkGameObject(self.go)
+			AudioMgr.instance:RegisterGameObj(self.go)
+		end
+
 		self.__isHasAuidoTrigger = true
 
-		AudioMgr.instance:trigger(audioId, self.go)
+		AudioMgr.instance:trigger(audioId, self.go, false)
 	end
 end
 
@@ -437,7 +442,8 @@ function RoomBuildingEntity:beforeDestroy()
 	if self.__isHasAuidoTrigger then
 		self.__isHasAuidoTrigger = false
 
-		AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, self.go)
+		AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, self.go, false)
+		AudioMgr.instance:UnregisterGameObj(self.go)
 	end
 
 	self:removeEvent()

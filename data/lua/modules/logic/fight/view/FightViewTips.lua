@@ -325,7 +325,7 @@ function FightViewTips:_showCardSkillTips(skillId, entityId, cardInfoMO)
 
 	local skillTipTr = self._goskilltip.transform
 
-	if PCInputController.instance:getIsUse() and PlayerPrefsHelper.getNumber("keyTips", 0) ~= 0 then
+	if PCInputController.instance:getIsUse() and GameUtil.playerPrefsGetNumberByUserId("keyTips", 0) ~= 0 then
 		if FightCardDataHelper.isBigSkill(skillId) then
 			recthelper.setAnchor(skillTipTr, self._originSkillPosX, FightViewTips.OnKeyTipsUniquePosY)
 		else

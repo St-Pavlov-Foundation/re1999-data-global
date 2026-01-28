@@ -24,6 +24,10 @@ function VideoPlayer:play(url, loop, callback, callbackObj)
 	return
 end
 
+function VideoPlayer:SetRaycast(v)
+	return
+end
+
 function VideoPlayer:pause()
 	return
 end

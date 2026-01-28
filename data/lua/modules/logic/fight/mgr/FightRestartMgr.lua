@@ -9,20 +9,28 @@ function FightRestartMgr:onConstructor()
 end
 
 function FightRestartMgr:restart()
-	FightSystem.instance.restarting = true
+	self:_startRestart()
 
 	local flow = self:com_registFlowSequence()
 
 	flow:registWork(FightRestartSequence)
-	flow:registFinishCallback(self.onRestartFinish)
+	flow:registFinishCallback(self.onRestartFinish, self)
 	flow:start()
 end
 
+function FightRestartMgr:_startRestart()
+	FightSystem.instance.restarting = true
+end
+
 function FightRestartMgr:onRestartFinish()
-	FightSystem.instance.restarting = false
+	self:_endRestart()
 end
 
 function FightRestartMgr:cancelRestart()
+	self:_endRestart()
+end
+
+function FightRestartMgr:_endRestart()
 	FightSystem.instance.restarting = false
 end
 
@@ -39,17 +47,17 @@ function FightRestartMgr:directStartNewFight()
 end
 
 function FightRestartMgr:fastRestart()
-	FightSystem.instance.restarting = true
+	self:_startRestart()
 
 	local flow = self:com_registFlowSequence()
 
 	flow:registWork(FightFastRestartSequence)
-	flow:registFinishCallback(self.onRestartFinish)
+	flow:registFinishCallback(self.onRestartFinish, self)
 	flow:start()
 end
 
 function FightRestartMgr:onDestructor()
-	FightSystem.instance.restarting = false
+	self:_endRestart()
 end
 
 return FightRestartMgr

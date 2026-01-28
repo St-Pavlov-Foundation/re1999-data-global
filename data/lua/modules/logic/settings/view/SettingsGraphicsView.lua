@@ -423,10 +423,6 @@ function SettingsGraphicsView:_refreshVideoUI()
 
 	self._videoModeDropIndex = self._videoModeDrop:GetValue()
 
-	if self._videoModeDropIndex == 0 then
-		SettingsModel.instance:setModelTargetFrameRate(0)
-	end
-
 	local list = gohelper.findChild(self._videoModeDrop.gameObject, "Dropdown List")
 
 	if list then

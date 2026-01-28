@@ -401,6 +401,47 @@ function SummonThreeCustomPickView:refreshPickHeroes(pool)
 
 	if summonServerMO and summonServerMO.customPickMO then
 		local pickHeroIds = summonServerMO.customPickMO.pickHeroIds
+		local heroIdList = {}
+
+		for i, heroId in ipairs(pickHeroIds) do
+			table.insert(heroIdList, {
+				index = i,
+				heroId = heroId
+			})
+		end
+
+		local orderDict = {
+			[3116] = 1700,
+			[3105] = 10,
+			[3108] = 100,
+			[3104] = 1999,
+			[3109] = 150,
+			[3117] = 1800,
+			[3066] = 1000,
+			[3095] = 1999,
+			[3077] = 200
+		}
+
+		table.sort(heroIdList, function(a, b)
+			local aOrder = orderDict[a.heroId] or 19999
+			local bOrder = orderDict[b.heroId] or 19999
+
+			if aOrder ~= bOrder then
+				return aOrder < bOrder
+			end
+
+			return a.index < b.index
+		end)
+
+		for i, info in ipairs(heroIdList) do
+			if i <= self._charaterItemCount then
+				local heroId = info.heroId
+
+				self:refreshPickHero(pool.id, i, heroId)
+			end
+		end
+
+		do return end
 
 		for i = 1, self._charaterItemCount do
 			local heroId = pickHeroIds[i]

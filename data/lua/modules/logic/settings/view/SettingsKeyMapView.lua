@@ -9,6 +9,14 @@ function SettingsKeyMapView:_refreshLangTxt()
 	SettingsKeyListModel.instance:SetActivity(self._index or 1)
 end
 
+function SettingsKeyMapView:_onChangeLangTxt()
+	SettingsKeyTopListModel.instance:InitList()
+
+	self._index = 1
+
+	self._topScroll:selectCell(self._index, true)
+end
+
 function SettingsKeyMapView:onInitView()
 	self._txtdec = gohelper.findChildText(self.viewGO, "pcScroll/Viewport/Content/shortcutsitem/#txt_dec")
 	self._btnshortcuts = gohelper.findChildButtonWithAudio(self.viewGO, "pcScroll/Viewport/Content/shortcutsitem/#btn_shortcuts")
@@ -23,7 +31,7 @@ function SettingsKeyMapView:onInitView()
 	self._tipsBtn = gohelper.findChildButtonWithAudio(self.viewGO, "pcScroll/Viewport/Content/shortcutstips/switch/btn")
 	self._tipsOn = gohelper.findChild(self.viewGO, "pcScroll/Viewport/Content/shortcutstips/switch/btn/on")
 	self._tipsoff = gohelper.findChild(self.viewGO, "pcScroll/Viewport/Content/shortcutstips/switch/btn/off")
-	self._tipsStatue = PlayerPrefsHelper.getNumber("keyTips", 0)
+	self._tipsStatue = GameUtil.playerPrefsGetNumberByUserId("keyTips", 0)
 	self._exitgame = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_exit")
 
 	self:refreshTips()
@@ -53,14 +61,6 @@ function SettingsKeyMapView:removeEvents()
 	self:removeEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, self._onChangeLangTxt, self)
 end
 
-function SettingsKeyMapView:_onChangeLangTxt()
-	SettingsKeyTopListModel.instance:InitList()
-
-	self._index = 1
-
-	self._topScroll:selectCell(self._index, true)
-end
-
 function SettingsKeyMapView:_btnshortcutsOnClick()
 	return
 end
@@ -73,7 +73,7 @@ function SettingsKeyMapView:_tipsSwtich()
 	end
 
 	self:refreshTips()
-	PlayerPrefsHelper.setNumber("keyTips", self._tipsStatue)
+	GameUtil.playerPrefsSetNumberByUserId("keyTips", self._tipsStatue)
 	SettingsController.instance:dispatchEvent(SettingsEvent.OnKeyTipsChange)
 end
 

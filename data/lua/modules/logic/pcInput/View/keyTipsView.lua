@@ -26,7 +26,7 @@ end
 function keyTipsView:_onCallback()
 	self._instGO = self._loader:getInstGO()
 
-	local keyTips = PlayerPrefsHelper.getNumber("keyTips", 0)
+	local keyTips = GameUtil.playerPrefsGetNumberByUserId("keyTips", 0)
 
 	gohelper.setActive(self._instGO, not GuideController.instance:isAnyGuideRunningNoBlock() and keyTips == 1)
 
@@ -54,7 +54,7 @@ end
 
 function keyTipsView:Show(bshow)
 	if self._instGO then
-		self._instGO:SetActive(bshow and not GuideController.instance:isAnyGuideRunningNoBlock() and PlayerPrefsHelper.getNumber("keyTips", 0) == 1)
+		self._instGO:SetActive(bshow and not GuideController.instance:isAnyGuideRunningNoBlock() and GameUtil.playerPrefsGetNumberByUserId("keyTips", 0) == 1)
 	end
 
 	if self._go then

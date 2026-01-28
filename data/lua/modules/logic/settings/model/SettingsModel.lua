@@ -89,6 +89,11 @@ function SettingsModel:onInit()
 	end
 
 	self.limitedRoleMO = SettingsLimitedRoleMO.New()
+
+	if BootNativeUtil.isIOS() == false then
+		UnityEngine.PlayerPrefs.SetFloat("WWise_SL_RenderDuringFocusLoss", 1)
+	end
+
 	self._primaryCpuAbi = SLFramework.NativeUtil.GetAndroidtPrimaryCpuAbi()
 
 	if SDKMgr.instance:isEmulator() then
@@ -770,7 +775,7 @@ function SettingsModel:isAvproVideo()
 		return false
 	end
 
-	return SettingsModel.instance:getUseUnityVideo() == false
+	return self:getVideoCompatible() == false and self:getUseUnityVideo() == false
 end
 
 SettingsModel.instance = SettingsModel.New()

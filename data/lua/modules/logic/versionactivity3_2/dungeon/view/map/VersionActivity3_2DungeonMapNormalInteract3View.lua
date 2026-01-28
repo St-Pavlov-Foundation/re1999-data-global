@@ -370,8 +370,9 @@ function VersionActivity3_2DungeonMapNormalInteract3View:_showDialog(type, text,
 	local hasSpeaker = not string.nilorempty(speaker)
 
 	_txtchatname.text = hasSpeaker and speaker .. ":<alpha=#00>.<alpha=#ff>" or ""
-	_txtchatdesc.text = text
 
+	TMPMarkTopHelper.init(_txtchatdesc.gameObject)
+	TMPMarkTopHelper.SetTextWithMarksTop(_txtchatdesc, text)
 	TaskDispatcher.cancelTask(self._delayUpdateScroll, self)
 	TaskDispatcher.runDelay(self._delayUpdateScroll, self, 0)
 
