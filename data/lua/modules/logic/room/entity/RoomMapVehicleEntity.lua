@@ -26,6 +26,8 @@ function RoomMapVehicleEntity:init(go)
 
 	self._scene = GameSceneMgr.instance:getCurScene()
 
+	gohelper.addAkGameObject(self.go)
+	AudioMgr.instance:RegisterGameObj(self.go)
 	self:refreshVehicle()
 end
 
@@ -132,6 +134,7 @@ end
 function RoomMapVehicleEntity:beforeDestroy()
 	RoomMapVehicleEntity.super.beforeDestroy(self)
 	AudioMgr.instance:trigger(AudioEnum.Room.stop_amb_home, self.go)
+	AudioMgr.instance:UnregisterGameObj(self.go)
 end
 
 function RoomMapVehicleEntity:getMainEffectKey()

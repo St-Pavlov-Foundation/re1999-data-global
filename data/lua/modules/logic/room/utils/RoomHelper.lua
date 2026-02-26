@@ -268,7 +268,7 @@ function RoomHelper.audioExtendTrigger(audioExtendId, go)
 		end
 	end
 
-	AudioMgr.instance:trigger(cfg.audioId, go)
+	AudioMgr.instance:trigger(cfg.audioId, go, false)
 end
 
 function RoomHelper.randomArray(array)

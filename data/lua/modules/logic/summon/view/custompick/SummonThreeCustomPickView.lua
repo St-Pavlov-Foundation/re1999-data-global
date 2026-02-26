@@ -72,6 +72,8 @@ function SummonThreeCustomPickView:removeEvents()
 end
 
 function SummonThreeCustomPickView:_editableInitView()
+	self._cachePickHeroIds = {}
+
 	logNormal("SummonThreeCustomPickView:_editableInitView()")
 
 	self._animRoot = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
@@ -355,10 +357,54 @@ function SummonThreeCustomPickView:getPickHeroIds(pool)
 	local summonServerMO = SummonMainModel.instance:getPoolServerMO(pool.id)
 
 	if summonServerMO and summonServerMO.customPickMO then
-		return summonServerMO.customPickMO.pickHeroIds
+		if self._cachePickHeroIds[pool] then
+			return self._cachePickHeroIds[pool]
+		end
+
+		local kOrderDict = {
+			[3116] = 1700,
+			[3105] = 10,
+			[3108] = 100,
+			[3104] = 1999,
+			[3109] = 150,
+			[3117] = 1800,
+			[3066] = 1000,
+			[3095] = 1999,
+			[3077] = 200
+		}
+		local pickHeroIds = summonServerMO.customPickMO.pickHeroIds
+		local heroIdList = {}
+
+		for i, heroId in ipairs(pickHeroIds) do
+			table.insert(heroIdList, {
+				index = i,
+				heroId = heroId
+			})
+		end
+
+		table.sort(heroIdList, function(a, b)
+			local aOrder = kOrderDict[a.heroId] or 19999
+			local bOrder = kOrderDict[b.heroId] or 19999
+
+			if aOrder ~= bOrder then
+				return aOrder < bOrder
+			end
+
+			return a.index < b.index
+		end)
+
+		self._cachePickHeroIds[pool] = {}
+
+		for _, v in ipairs(heroIdList) do
+			local heroId = v.heroId
+
+			table.insert(self._cachePickHeroIds[pool], heroId)
+		end
+
+		return self._cachePickHeroIds[pool]
 	end
 
-	return nil
+	return {}
 end
 
 function SummonThreeCustomPickView:refreshPoolUI()
@@ -400,43 +446,10 @@ function SummonThreeCustomPickView:refreshPickHeroes(pool)
 	local summonServerMO = SummonMainModel.instance:getPoolServerMO(pool.id)
 
 	if summonServerMO and summonServerMO.customPickMO then
-		local pickHeroIds = summonServerMO.customPickMO.pickHeroIds
-		local heroIdList = {}
+		local pickHeroIds = self:getPickHeroIds(pool)
 
 		for i, heroId in ipairs(pickHeroIds) do
-			table.insert(heroIdList, {
-				index = i,
-				heroId = heroId
-			})
-		end
-
-		local orderDict = {
-			[3116] = 1700,
-			[3105] = 10,
-			[3108] = 100,
-			[3104] = 1999,
-			[3109] = 150,
-			[3117] = 1800,
-			[3066] = 1000,
-			[3095] = 1999,
-			[3077] = 200
-		}
-
-		table.sort(heroIdList, function(a, b)
-			local aOrder = orderDict[a.heroId] or 19999
-			local bOrder = orderDict[b.heroId] or 19999
-
-			if aOrder ~= bOrder then
-				return aOrder < bOrder
-			end
-
-			return a.index < b.index
-		end)
-
-		for i, info in ipairs(heroIdList) do
 			if i <= self._charaterItemCount then
-				local heroId = info.heroId
-
 				self:refreshPickHero(pool.id, i, heroId)
 			end
 		end
@@ -555,7 +568,8 @@ function SummonThreeCustomPickView:_onClickDetailByIndex(index)
 	local summonServerMO = SummonMainModel.instance:getPoolServerMO(pool.id)
 
 	if summonServerMO and summonServerMO.customPickMO then
-		local heroId = summonServerMO.customPickMO.pickHeroIds[index]
+		local pickHeroIds = self:getPickHeroIds(pool)
+		local heroId = pickHeroIds and pickHeroIds[index] or nil
 
 		if heroId then
 			ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
@@ -587,6 +601,8 @@ function SummonThreeCustomPickView:refreshCost()
 	local curPool = SummonMainModel.instance:getCurPool()
 
 	if curPool then
+		self._cachePickHeroIds[curPool] = nil
+
 		self:_refreshSingleCost(curPool.cost1, self._simagecurrency1, "_txtcurrency1")
 		self:refreshCost10(curPool.cost10)
 	end

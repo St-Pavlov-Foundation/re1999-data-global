@@ -175,7 +175,7 @@ function RoomProductionHelper.isFormulaUnlock(formulaId, level)
 		needRoomLevel = formulaConfig.needRoomLevel
 	end
 
-	if level < formulaConfig.needProductionLevel then
+	if not level or level < formulaConfig.needProductionLevel then
 		unlock = false
 		needProductionLevel = formulaConfig.needProductionLevel
 	end
@@ -1204,6 +1204,13 @@ end
 
 function RoomProductionHelper._canCombineQuantityTimeFormula(refTable, formulaId, combineCount, occupyItemDic)
 	occupyItemDic = occupyItemDic or {}
+
+	local lineMO = RoomProductionModel.instance:getLineMO(RoomProductLineEnum.Line.Spring)
+	local isUnlock = RoomProductionHelper.isFormulaUnlock(formulaId, lineMO and lineMO.level)
+
+	if not isUnlock then
+		return false
+	end
 
 	local costItemList = RoomProductionHelper.getCostItemListWithFormulaId(formulaId, true)
 
