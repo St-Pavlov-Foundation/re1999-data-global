@@ -2,24 +2,17 @@
 
 module("modules.logic.fight.entity.comp.FightSkinSpineAction", package.seeall)
 
-local FightSkinSpineAction = class("FightSkinSpineAction", LuaCompBase)
+local FightSkinSpineAction = class("FightSkinSpineAction", FightBaseClass)
 
-function FightSkinSpineAction:ctor(entity)
+function FightSkinSpineAction:onConstructor(entity)
 	self.entity = entity
+	self._spine = self.entity.spine
 	self._effectWraps = {}
 	self.lock = false
-end
 
-function FightSkinSpineAction:init(go)
-	self._spine = self.entity.spine
-end
-
-function FightSkinSpineAction:addEventListeners()
-	self._spine:addAnimEventCallback(self._onAnimEvent, self)
-end
-
-function FightSkinSpineAction:removeEventListeners()
-	self._spine:removeAnimEventCallback(self._onAnimEvent, self)
+	if self._spine then
+		self._spine:addAnimEventCallback(self._onAnimEvent, self)
+	end
 end
 
 function FightSkinSpineAction:_onAnimEvent(actionName, eventName, eventArgs)
@@ -64,8 +57,7 @@ function FightSkinSpineAction:_onAnimEvent(actionName, eventName, eventArgs)
 			end
 
 			if spineActionCO.effectRemoveTime > 0 then
-				TaskDispatcher.cancelTask(self._removeEffect, self)
-				TaskDispatcher.runDelay(self._removeEffect, self, spineActionCO.effectRemoveTime)
+				self:com_registSingleTimer(self._removeEffect, spineActionCO.effectRemoveTime)
 			end
 		end
 	elseif eventName == SpineAnimEvent.ActionComplete and spineActionCO and spineActionCO.effectRemoveTime == 0 then
@@ -74,8 +66,6 @@ function FightSkinSpineAction:_onAnimEvent(actionName, eventName, eventArgs)
 end
 
 function FightSkinSpineAction:_removeEffect()
-	TaskDispatcher.cancelTask(self._removeEffect, self)
-
 	for i, effectWrap in ipairs(self._effectWraps) do
 		self.entity.effect:removeEffect(effectWrap)
 	end
@@ -124,7 +114,11 @@ function FightSkinSpineAction:_playActionAudio(spineActionCO)
 	end
 end
 
-function FightSkinSpineAction:onDestroy()
+function FightSkinSpineAction:onDestructor()
+	if self._spine then
+		self._spine:removeAnimEventCallback(self._onAnimEvent, self)
+	end
+
 	self:_removeEffect()
 end
 

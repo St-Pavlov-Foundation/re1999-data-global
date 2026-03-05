@@ -171,7 +171,8 @@ function ActivityController:checkGetActivityInfo()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
 		TaskRpc.instance:sendGetTaskInfoRequest({
-			TaskEnum.TaskType.Tower
+			TaskEnum.TaskType.Tower,
+			TaskEnum.TaskType.TowerCompose
 		})
 	end
 
@@ -205,6 +206,7 @@ function ActivityController:updateAct101Infos(targetActId)
 	self:_initSpecialSign_kAct101RedList()
 	self:_initLinkageActivity_kAct101RedList()
 	self:_initVersionSummon_kAct101RedList()
+	self:_initDoubleDan_kAct101RedList()
 
 	if not targetActId then
 		for _, actId in ipairs(kAct101RedList) do

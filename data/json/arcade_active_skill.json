@@ -1,0 +1,211 @@
+[
+  {
+    "id": 101,
+    "skillName": "language_10104610",
+    "skillDesc": "language_10104611",
+    "damage": 2,
+    "target": 204,
+    "icon": "v3a3_eliminate_skillicon_3_1",
+    "spellEffect": 689010022,
+    "bulletEffect": 689010025,
+    "hitEffect": 689010026
+  },
+  {
+    "id": 102,
+    "skillName": "language_10104612",
+    "skillDesc": "language_10104613",
+    "damage": 5,
+    "target": 303,
+    "icon": "v3a3_eliminate_skillicon_4_1",
+    "spellEffect": 689010023,
+    "bulletEffect": 689010027,
+    "hitEffect": 689010048
+  },
+  {
+    "id": 103,
+    "skillName": "language_10104614",
+    "skillDesc": "language_10104615",
+    "damage": 3,
+    "target": 305,
+    "icon": "v3a3_eliminate_skillicon_5_1",
+    "spellEffect": 689010023,
+    "bulletEffect": 0,
+    "hitEffect": 689010019
+  },
+  {
+    "id": 104,
+    "skillName": "language_10104616",
+    "skillDesc": "language_10104617",
+    "damage": 1,
+    "target": 307,
+    "icon": "v3a3_eliminate_skillicon_2_1",
+    "spellEffect": 689010023,
+    "bulletEffect": 0,
+    "hitEffect": 689010019
+  },
+  {
+    "id": 105,
+    "skillName": "language_10104618",
+    "skillDesc": "language_10104619",
+    "damage": 0,
+    "target": 101,
+    "icon": "v3a3_eliminate_skillicon_1_1",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 106,
+    "skillName": "language_10104620",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 307,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010017
+  },
+  {
+    "id": 107,
+    "skillName": "language_10104621",
+    "skillDesc": "",
+    "damage": 2,
+    "target": 308,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100015,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 308,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100016,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 2,
+    "target": 705,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010018
+  },
+  {
+    "id": 100017,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 9999,
+    "target": 307,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100018,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 705,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010018
+  },
+  {
+    "id": 100019,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 708,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010018
+  },
+  {
+    "id": 100020,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 14,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100021,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 15,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100022,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 712,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100023,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 16,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 100024,
+    "skillName": "",
+    "skillDesc": "",
+    "damage": 3,
+    "target": 716,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 3309102,
+    "skillName": "language_10104622",
+    "skillDesc": "",
+    "damage": 2,
+    "target": 312,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010039
+  },
+  {
+    "id": 3309103,
+    "skillName": "language_10104623",
+    "skillDesc": "",
+    "damage": 1,
+    "target": 312,
+    "icon": "",
+    "spellEffect": 0,
+    "bulletEffect": 0,
+    "hitEffect": 689010040
+  }
+]

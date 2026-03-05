@@ -17,6 +17,7 @@ end
 function NecrologistStoryMO:initData()
 	self._isAuto = false
 	self.situationValueDict = {}
+	self.taskValueDict = {}
 
 	local storyGroup = NecrologistStoryConfig.instance:getStoryListByGroupId(self.id)
 
@@ -217,6 +218,26 @@ function NecrologistStoryMO:getStatParam(isReview)
 	}
 
 	return param
+end
+
+function NecrologistStoryMO:addTaskValue(key, value)
+	local oldValue = self:getTaskValue(key)
+
+	self.taskValueDict[key] = oldValue + value
+end
+
+function NecrologistStoryMO:getTaskValue(key)
+	local value = self.taskValueDict[key] or 0
+
+	return value
+end
+
+function NecrologistStoryMO:saveTaskValue()
+	for key, value in pairs(self.taskValueDict) do
+		if value > 0 then
+			HeroStoryRpc.instance:sendHeroStoryCommonTaskRequest(key, value)
+		end
+	end
 end
 
 return NecrologistStoryMO

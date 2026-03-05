@@ -40,14 +40,10 @@ function Rouge2_MapNodeChoiceItem:onClickSelf()
 	end
 end
 
-function Rouge2_MapNodeChoiceItem:dispatchAttrLightEvent()
-	local lightAttrList = string.splitToNumber(self.choiceCo.attribute, "#")
-
-	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.onLightAttr, lightAttrList)
-end
-
 function Rouge2_MapNodeChoiceItem:onSelectAnimDone()
-	Rouge2_MapModel.instance:recordCurChoiceEventSelectId(self.choiceId)
+	local checkRate = self.nodeMo.eventMo:getChoiceCheckRate(self.choiceId)
+
+	Rouge2_MapModel.instance:recordCurChoiceEventSelectId(self.choiceId, self._index, checkRate)
 
 	local layerId = Rouge2_MapModel.instance:getLayerId()
 
@@ -81,7 +77,7 @@ function Rouge2_MapNodeChoiceItem:onStatusChange(choiceId)
 	self:refreshUI()
 end
 
-function Rouge2_MapNodeChoiceItem:update(choiceId, nodeMo, index)
+function Rouge2_MapNodeChoiceItem:update(choiceId, nodeMo, index, checkRate)
 	Rouge2_MapNodeChoiceItem.super.update(self, index)
 
 	self.choiceId = choiceId
@@ -89,10 +85,12 @@ function Rouge2_MapNodeChoiceItem:update(choiceId, nodeMo, index)
 	self.selectType = self.choiceCo.selectType
 	self.nodeMo = nodeMo
 
-	self:updateCheckInfo()
+	self:updateCheckInfo(checkRate)
 
+	self.display = tonumber(self.choiceCo.display)
 	self.title = self.choiceCo.title
 	self.desc = Rouge2_MapHelper.buildChoiceDesc(self.choiceCo.desc)
+	self.attrList = string.splitToNumber(self.choiceCo.attribute, "#")
 
 	self:initStatus()
 
@@ -116,9 +114,9 @@ function Rouge2_MapNodeChoiceItem:refreshBg()
 	UISpriteSetMgr.instance:setRouge7Sprite(self._imageselectbg, selectBg)
 end
 
-function Rouge2_MapNodeChoiceItem:updateCheckInfo()
-	self._checkItem1:updateInfo(self.nodeMo.eventMo, self.choiceCo)
-	self._checkItem2:updateInfo(self.nodeMo.eventMo, self.choiceCo)
+function Rouge2_MapNodeChoiceItem:updateCheckInfo(checkRate)
+	self._checkItem1:updateInfo(self.nodeMo.eventMo, self.choiceCo, checkRate)
+	self._checkItem2:updateInfo(self.nodeMo.eventMo, self.choiceCo, checkRate)
 end
 
 function Rouge2_MapNodeChoiceItem:initStatus()

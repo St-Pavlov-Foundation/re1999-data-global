@@ -69,7 +69,6 @@ function FightSeasonSubHeroList:onOpen()
 		"season_scorebg_03",
 		"season_scorebg_04"
 	}
-	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
 	self:_refreshHeroList()
 
@@ -133,11 +132,11 @@ function FightSeasonSubHeroList:_refreshSubSpine(selectId)
 
 			if subEntity then
 				if subEntity.id ~= showId then
-					self.entityMgr:removeUnit(subEntity:getTag(), subEntity.id)
-					self.entityMgr:buildSubSpine(entityMO)
+					FightGameMgr.entityMgr:delEntity(subEntity.id)
+					FightGameMgr.entityMgr:newEntity(entityMO)
 				end
 			else
-				self.entityMgr:buildSubSpine(entityMO)
+				FightGameMgr.entityMgr:newEntity(entityMO)
 			end
 		end
 	end

@@ -8,7 +8,8 @@
     "desc": "language_10042532",
     "mainDesc": "",
     "eventParam": "1001",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 1011010,
@@ -19,7 +20,8 @@
     "desc": "language_10100166",
     "mainDesc": "101101001",
     "eventParam": "2",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 1011020,
@@ -30,7 +32,8 @@
     "desc": "language_10100166",
     "mainDesc": "101102001|25#101102002",
     "eventParam": "5",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 1011030,
@@ -41,7 +44,8 @@
     "desc": "language_10100166",
     "mainDesc": "101103001",
     "eventParam": "5",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 1032010,
@@ -52,7 +56,8 @@
     "desc": "language_10100166",
     "mainDesc": "103201001",
     "eventParam": "5",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 1
   },
   {
     "id": 1032020,
@@ -63,7 +68,8 @@
     "desc": "language_10100166",
     "mainDesc": "103202001",
     "eventParam": "5",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 1
   },
   {
     "id": 1032030,
@@ -74,7 +80,8 @@
     "desc": "language_10100166",
     "mainDesc": "103203001",
     "eventParam": "5",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 1
   },
   {
     "id": 1051010,
@@ -85,7 +92,8 @@
     "desc": "language_10100166",
     "mainDesc": "105101001",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1051020,
@@ -96,7 +104,8 @@
     "desc": "language_10100166",
     "mainDesc": "105102001",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1051030,
@@ -107,7 +116,8 @@
     "desc": "language_10100166",
     "mainDesc": "105103001|7#105103002|105103003",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 1
   },
   {
     "id": 1052010,
@@ -118,7 +128,8 @@
     "desc": "language_10100166",
     "mainDesc": "105201001",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052011,
@@ -129,7 +140,8 @@
     "desc": "language_10100166",
     "mainDesc": "105201101",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052012,
@@ -140,7 +152,8 @@
     "desc": "language_10100166",
     "mainDesc": "105201201",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052013,
@@ -151,7 +164,8 @@
     "desc": "language_10100166",
     "mainDesc": "105201301|26#105201302",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052020,
@@ -162,7 +176,8 @@
     "desc": "language_10100166",
     "mainDesc": "105202001|105202002",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052030,
@@ -173,7 +188,8 @@
     "desc": "language_10100166",
     "mainDesc": "105203001",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1052031,
@@ -184,7 +200,8 @@
     "desc": "language_10100166",
     "mainDesc": "105203101",
     "eventParam": "5",
-    "advantageAttribute": "105"
+    "advantageAttribute": "105",
+    "isHighQuality": 0
   },
   {
     "id": 1002010,
@@ -195,7 +212,8 @@
     "desc": "language_10100166",
     "mainDesc": "100201001|11#100201002|100201003",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002020,
@@ -206,7 +224,8 @@
     "desc": "language_10100166",
     "mainDesc": "100202001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002030,
@@ -217,7 +236,8 @@
     "desc": "language_10100166",
     "mainDesc": "100203001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002040,
@@ -228,7 +248,8 @@
     "desc": "language_10100166",
     "mainDesc": "100204001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002050,
@@ -239,7 +260,8 @@
     "desc": "language_10100166",
     "mainDesc": "100205001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002060,
@@ -250,7 +272,8 @@
     "desc": "language_10100166",
     "mainDesc": "100206001|4#100206002|4#100206003",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002070,
@@ -261,7 +284,8 @@
     "desc": "language_10100166",
     "mainDesc": "100207001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002080,
@@ -272,7 +296,8 @@
     "desc": "language_10100166",
     "mainDesc": "100208001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002090,
@@ -283,7 +308,8 @@
     "desc": "language_10100166",
     "mainDesc": "100209001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002100,
@@ -294,7 +320,8 @@
     "desc": "language_10100166",
     "mainDesc": "100210001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002110,
@@ -305,7 +332,8 @@
     "desc": "language_10100166",
     "mainDesc": "100211001|100211002",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002120,
@@ -316,7 +344,8 @@
     "desc": "language_10100166",
     "mainDesc": "100212001|10#100212002|9#100212003",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002130,
@@ -327,7 +356,8 @@
     "desc": "language_10100166",
     "mainDesc": "100213001|5#100213002|5#100213003|100213004|5#100213005",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002140,
@@ -338,7 +368,8 @@
     "desc": "language_10100166",
     "mainDesc": "16#100214001|100214002",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002150,
@@ -349,7 +380,8 @@
     "desc": "language_10100166",
     "mainDesc": "100215001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1002160,
@@ -360,7 +392,8 @@
     "desc": "language_10100166",
     "mainDesc": "100216001|9#100216002|9#100216003",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001010,
@@ -371,7 +404,8 @@
     "desc": "language_10100168",
     "mainDesc": "100101001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001030,
@@ -382,7 +416,8 @@
     "desc": "language_10100168",
     "mainDesc": "100103001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001040,
@@ -393,7 +428,8 @@
     "desc": "language_10100168",
     "mainDesc": "100104001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001050,
@@ -404,7 +440,8 @@
     "desc": "language_10100168",
     "mainDesc": "100105001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001060,
@@ -415,7 +452,8 @@
     "desc": "language_10100168",
     "mainDesc": "100106001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001061,
@@ -426,7 +464,8 @@
     "desc": "language_10100168",
     "mainDesc": "100106001",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111001,
@@ -437,7 +476,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452101",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111002,
@@ -448,7 +488,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452102",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111003,
@@ -459,7 +500,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452103",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111004,
@@ -470,7 +512,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452104",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111005,
@@ -481,7 +524,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452105",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111006,
@@ -492,7 +536,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452106",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111007,
@@ -503,7 +548,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452107",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111008,
@@ -514,7 +560,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452108",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111009,
@@ -525,7 +572,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452109",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111010,
@@ -536,7 +584,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452110",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111011,
@@ -547,7 +596,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452111",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111012,
@@ -558,7 +608,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452112",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111013,
@@ -569,7 +620,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452113",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111014,
@@ -580,7 +632,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452114",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111015,
@@ -591,7 +644,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452115",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111016,
@@ -602,7 +656,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452116",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111017,
@@ -613,7 +668,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452117",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111018,
@@ -624,7 +680,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452118",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111019,
@@ -635,7 +692,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452119",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111020,
@@ -646,7 +704,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452120",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111021,
@@ -657,7 +716,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452121",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111022,
@@ -668,7 +728,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452122",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111023,
@@ -679,7 +740,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452123",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111024,
@@ -690,7 +752,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452124",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111025,
@@ -701,7 +764,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452125",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111026,
@@ -712,7 +776,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452126",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111027,
@@ -723,7 +788,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452127",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111028,
@@ -734,7 +800,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452128",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111029,
@@ -745,7 +812,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452129",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111030,
@@ -756,7 +824,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452130",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111031,
@@ -767,7 +836,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452131",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111032,
@@ -778,7 +848,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452132",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111033,
@@ -789,7 +860,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452133",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111034,
@@ -800,7 +872,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452134",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9111035,
@@ -811,7 +884,8 @@
     "desc": "language_10100169",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452135",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9040001,
@@ -822,7 +896,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9050001,
@@ -833,7 +908,8 @@
     "desc": "language_10042534",
     "mainDesc": "905000101",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9060001,
@@ -844,7 +920,8 @@
     "desc": "language_10042536",
     "mainDesc": "906000101",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9040002,
@@ -855,7 +932,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040003,
@@ -866,7 +944,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040004,
@@ -877,7 +956,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040005,
@@ -888,7 +968,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040006,
@@ -899,7 +980,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040007,
@@ -910,7 +992,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040008,
@@ -921,7 +1004,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9040009,
@@ -932,7 +1016,8 @@
     "desc": "language_10051504",
     "mainDesc": "",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 1
   },
   {
     "id": 9030001,
@@ -943,7 +1028,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452301",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030005,
@@ -954,7 +1040,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452305",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030006,
@@ -965,7 +1052,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452306",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030002,
@@ -976,7 +1064,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452302",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030003,
@@ -987,7 +1076,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452303",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030004,
@@ -998,7 +1088,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452304",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030010,
@@ -1009,7 +1100,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452309",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030011,
@@ -1020,7 +1112,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452310",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030012,
@@ -1031,7 +1124,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452311",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9030013,
@@ -1042,7 +1136,8 @@
     "desc": "language_10042542",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452312",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020004,
@@ -1053,7 +1148,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452204",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020006,
@@ -1064,7 +1160,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452206",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020007,
@@ -1075,7 +1172,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452207",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020008,
@@ -1086,7 +1184,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452208",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020009,
@@ -1097,7 +1196,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452209",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020010,
@@ -1108,7 +1208,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452210",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020011,
@@ -1119,7 +1220,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452211",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020015,
@@ -1130,7 +1232,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452215",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020018,
@@ -1141,7 +1244,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452218",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020019,
@@ -1152,7 +1256,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452219",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020020,
@@ -1163,7 +1268,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452220",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020023,
@@ -1174,7 +1280,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452223",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020001,
@@ -1185,7 +1292,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452201",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020002,
@@ -1196,7 +1304,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452202",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020003,
@@ -1207,7 +1316,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452203",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020005,
@@ -1218,7 +1328,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452205",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020012,
@@ -1229,7 +1340,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452212",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020013,
@@ -1240,7 +1352,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452213",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020014,
@@ -1251,7 +1364,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452214",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020016,
@@ -1262,7 +1376,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452216",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020017,
@@ -1273,7 +1388,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452217",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020021,
@@ -1284,7 +1400,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452221",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020022,
@@ -1295,7 +1412,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452222",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020024,
@@ -1306,7 +1424,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452224",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9020025,
@@ -1317,7 +1436,8 @@
     "desc": "language_10042538",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32452225",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1012010,
@@ -1328,7 +1448,8 @@
     "desc": "language_10100166",
     "mainDesc": "101201001",
     "eventParam": "5",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 1012020,
@@ -1339,7 +1460,8 @@
     "desc": "language_10100166",
     "mainDesc": "101202001",
     "eventParam": "5",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 1012030,
@@ -1350,7 +1472,8 @@
     "desc": "language_10100166",
     "mainDesc": "101203001",
     "eventParam": "5",
-    "advantageAttribute": "101"
+    "advantageAttribute": "101",
+    "isHighQuality": 0
   },
   {
     "id": 2011010,
@@ -1361,7 +1484,8 @@
     "desc": "language_10100166",
     "mainDesc": "201101001",
     "eventParam": "5",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 2011020,
@@ -1372,7 +1496,8 @@
     "desc": "language_10100166",
     "mainDesc": "201102001",
     "eventParam": "5",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 2011030,
@@ -1383,7 +1508,8 @@
     "desc": "language_10100166",
     "mainDesc": "201103001",
     "eventParam": "5",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 4011010,
@@ -1394,7 +1520,8 @@
     "desc": "language_10100166",
     "mainDesc": "401101001|401101002",
     "eventParam": "5",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 4011020,
@@ -1405,7 +1532,8 @@
     "desc": "language_10100166",
     "mainDesc": "401102001",
     "eventParam": "5",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 4011030,
@@ -1416,7 +1544,8 @@
     "desc": "language_10100166",
     "mainDesc": "401103001",
     "eventParam": "5",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 10001,
@@ -1427,7 +1556,8 @@
     "desc": "language_10042534",
     "mainDesc": "10001",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 10002,
@@ -1438,7 +1568,8 @@
     "desc": "language_10042534",
     "mainDesc": "10001",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 10003,
@@ -1449,7 +1580,8 @@
     "desc": "language_10042534",
     "mainDesc": "10001",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 10004,
@@ -1460,7 +1592,8 @@
     "desc": "language_10042534",
     "mainDesc": "10001",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 10005,
@@ -1471,7 +1604,8 @@
     "desc": "language_10042534",
     "mainDesc": "10001",
     "eventParam": "3",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 170002,
@@ -1482,7 +1616,8 @@
     "desc": "language_10042532",
     "mainDesc": "",
     "eventParam": "1001",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 1001070,
@@ -1493,7 +1628,8 @@
     "desc": "language_10100168",
     "mainDesc": "1001070",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001080,
@@ -1504,7 +1640,8 @@
     "desc": "language_10100168",
     "mainDesc": "1001080|10010801|9#10010802|10010803",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001090,
@@ -1515,7 +1652,8 @@
     "desc": "language_10100168",
     "mainDesc": "1001090|9#10010901",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1001100,
@@ -1526,7 +1664,8 @@
     "desc": "language_10100168",
     "mainDesc": "1001100|5#10011001|9#10011002|5#10011003|9#10011004|5#10011005|9#10011006|5#10011007",
     "eventParam": "5",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011001,
@@ -1537,7 +1676,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454001",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011002,
@@ -1548,7 +1688,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454002",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011003,
@@ -1559,7 +1700,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454003",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011004,
@@ -1570,7 +1712,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454004",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011005,
@@ -1581,7 +1724,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454005",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011006,
@@ -1592,7 +1736,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454006",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011007,
@@ -1603,7 +1748,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454007",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011008,
@@ -1614,7 +1760,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454008",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011009,
@@ -1625,7 +1772,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454009",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011010,
@@ -1636,7 +1784,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454010",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011011,
@@ -1647,7 +1796,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454011",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011012,
@@ -1658,7 +1808,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454012",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011015,
@@ -1669,7 +1820,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454015",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011016,
@@ -1680,7 +1832,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454016",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011017,
@@ -1691,7 +1844,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454017",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 9011018,
@@ -1702,7 +1856,8 @@
     "desc": "language_10101021",
     "mainDesc": "0#2|0#4|0#4",
     "eventParam": "32454018",
-    "advantageAttribute": ""
+    "advantageAttribute": "",
+    "isHighQuality": 0
   },
   {
     "id": 1022010,
@@ -1713,7 +1868,8 @@
     "desc": "language_10100166",
     "mainDesc": "1022010|10220101",
     "eventParam": "5",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 1022020,
@@ -1724,7 +1880,8 @@
     "desc": "language_10100166",
     "mainDesc": "1022020",
     "eventParam": "3",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 1022030,
@@ -1735,7 +1892,8 @@
     "desc": "language_10100166",
     "mainDesc": "1022030",
     "eventParam": "2",
-    "advantageAttribute": "102"
+    "advantageAttribute": "102",
+    "isHighQuality": 0
   },
   {
     "id": 1031010,
@@ -1746,7 +1904,8 @@
     "desc": "language_10100166",
     "mainDesc": "1031010",
     "eventParam": "3",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 0
   },
   {
     "id": 1031020,
@@ -1757,7 +1916,8 @@
     "desc": "language_10100166",
     "mainDesc": "1031020",
     "eventParam": "4",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 0
   },
   {
     "id": 1031030,
@@ -1768,7 +1928,8 @@
     "desc": "language_10100166",
     "mainDesc": "1031030",
     "eventParam": "1",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 0
   },
   {
     "id": 1042010,
@@ -1779,7 +1940,8 @@
     "desc": "language_10100166",
     "mainDesc": "1042010",
     "eventParam": "2",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 1042020,
@@ -1790,7 +1952,8 @@
     "desc": "language_10100166",
     "mainDesc": "1042020|10420201",
     "eventParam": "3",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 1042030,
@@ -1801,7 +1964,8 @@
     "desc": "language_10100166",
     "mainDesc": "1042030",
     "eventParam": "2",
-    "advantageAttribute": "104"
+    "advantageAttribute": "104",
+    "isHighQuality": 0
   },
   {
     "id": 9080001,
@@ -1812,7 +1976,8 @@
     "desc": "language_10100164",
     "mainDesc": "908000101",
     "eventParam": "5",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 0
   },
   {
     "id": 9080002,
@@ -1823,6 +1988,7 @@
     "desc": "language_10100164",
     "mainDesc": "908000101",
     "eventParam": "5",
-    "advantageAttribute": "103"
+    "advantageAttribute": "103",
+    "isHighQuality": 0
   }
 ]

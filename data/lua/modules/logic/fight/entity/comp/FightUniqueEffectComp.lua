@@ -2,25 +2,17 @@
 
 module("modules.logic.fight.entity.comp.FightUniqueEffectComp", package.seeall)
 
-local FightUniqueEffectComp = class("FightUniqueEffectComp", LuaCompBase)
+local FightUniqueEffectComp = class("FightUniqueEffectComp", FightBaseClass)
 
-function FightUniqueEffectComp:ctor(entity)
+function FightUniqueEffectComp:onConstructor(entity)
 	self.entity = entity
 	self.entityId = self.entity.id
 	self.existEffectWrapDict = {}
-	self.releaseEffectDict = {}
-	self.updateHandle = UpdateBeat:CreateListener(self.update, self)
-
-	UpdateBeat:AddListener(self.updateHandle)
 end
 
-function FightUniqueEffectComp:onDestroy()
-	for effectName, _ in pairs(self.releaseEffectDict) do
+function FightUniqueEffectComp:onDestructor()
+	for effectName, _ in pairs(self.existEffectWrapDict) do
 		self:removeEffect(effectName)
-	end
-
-	if self.updateHandle then
-		UpdateBeat:RemoveListener(self.updateHandle)
 	end
 end
 
@@ -38,7 +30,7 @@ function FightUniqueEffectComp:addHangEffect(effectName, hangPoint, side, releas
 	self.existEffectWrapDict[effectName] = effectWrap
 
 	if releaseTime then
-		self:releaseEffectAfterTime(effectName, releaseTime)
+		self:com_registTimer(self.removeEffect, releaseTime, effectName)
 	end
 
 	return effectWrap
@@ -56,24 +48,10 @@ function FightUniqueEffectComp:addGlobalEffect(effectName, side, releaseTime)
 	self.existEffectWrapDict[effectName] = effectWrap
 
 	if releaseTime then
-		self:releaseEffectAfterTime(effectName, releaseTime)
+		self:com_registTimer(self.removeEffect, releaseTime, effectName)
 	end
 
 	return effectWrap
-end
-
-function FightUniqueEffectComp:releaseEffectAfterTime(effectName, releaseTime)
-	self.releaseEffectDict[effectName] = Time.realtimeSinceStartup + releaseTime
-end
-
-function FightUniqueEffectComp:update()
-	local curTime = Time.realtimeSinceStartup
-
-	for effectName, time in pairs(self.releaseEffectDict) do
-		if time <= curTime then
-			self:removeEffect(effectName)
-		end
-	end
 end
 
 function FightUniqueEffectComp:removeEffect(effectName)
@@ -84,7 +62,6 @@ function FightUniqueEffectComp:removeEffect(effectName)
 	end
 
 	self.existEffectWrapDict[effectName] = nil
-	self.releaseEffectDict[effectName] = nil
 
 	FightRenderOrderMgr.instance:onRemoveEffectWrap(self.entityId, effectWrap)
 	self.entity.effect:removeEffect(effectWrap)

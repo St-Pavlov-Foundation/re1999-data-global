@@ -1,0 +1,44 @@
+[
+  {
+    "ballType": 1,
+    "skillIds": "",
+    "action": "",
+    "image": ""
+  },
+  {
+    "ballType": 2,
+    "skillIds": "20001|20002",
+    "action": "leavePlayer#dis#-400|closePlayer#weight#1|ranToward#3",
+    "image": "icon_2"
+  },
+  {
+    "ballType": 3,
+    "skillIds": "30001|30002|30003|30004",
+    "action": "closePlayer#dis#-300|ranToward#5",
+    "image": "icon_4"
+  },
+  {
+    "ballType": 4,
+    "skillIds": "40001",
+    "action": "ranToward#3",
+    "image": "icon_3"
+  },
+  {
+    "ballType": 5,
+    "skillIds": "50001",
+    "action": "closePlayer#dis#900|leavePlayer#dis#-300|ranToward#5",
+    "image": "icon_1"
+  },
+  {
+    "ballType": 6,
+    "skillIds": "60001",
+    "action": "",
+    "image": "icon_8"
+  },
+  {
+    "ballType": 7,
+    "skillIds": "70001",
+    "action": "",
+    "image": ""
+  }
+]

@@ -31,7 +31,7 @@ function BackpackView:onOpenFinish()
 
 	local currentSelectCategoryId = BackpackModel.instance:getCurCategoryId()
 
-	if currentSelectCategoryId ~= ItemEnum.CategoryType.Material then
+	if currentSelectCategoryId ~= ItemEnum.CategoryType.Material and currentSelectCategoryId ~= ItemEnum.CategoryType.UseType then
 		self:_onSelectCategoryChange()
 	end
 end

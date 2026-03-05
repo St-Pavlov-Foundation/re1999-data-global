@@ -19,6 +19,10 @@ HandbookEvent.SkinBookDropListOpen = 4010
 HandbookEvent.SkinPointChanged = 50001
 HandbookEvent.OnClickTarotSkinSuit = 50002
 HandbookEvent.OnExitTarotSkinSuit = 50003
+HandbookEvent.OnClickFestivalSkinSuit = 50004
+HandbookEvent.OnExitFestivalSkinSuit = 50005
+HandbookEvent.OnExitToSuitGroup = 50006
+HandbookEvent.OnClickFestivalSkinCard = 50007
 HandbookEvent.MarkHandbookSkinSuitRedDot = 6001
 
 return HandbookEvent

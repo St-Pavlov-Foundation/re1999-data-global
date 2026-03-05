@@ -8,7 +8,9 @@
     "color": "#B6B6BB",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 2,
@@ -19,7 +21,9 @@
     "color": "#615CF7",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 3,
@@ -30,7 +34,9 @@
     "color": "#bb9938",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 4,
@@ -41,7 +47,9 @@
     "color": "#F8A425",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 5,
@@ -52,7 +60,9 @@
     "color": "#BE3435",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 6,
@@ -71,7 +81,9 @@
     "color": "",
     "effect": "sun#moon",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 7,
@@ -87,7 +99,9 @@
     "color": "",
     "effect": "cloud",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 8,
@@ -107,7 +121,9 @@
     "color": "",
     "effect": "cloud#sun#moon",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 9,
@@ -137,7 +153,9 @@
     "color": "",
     "effect": "rain",
     "audioId": 20320112,
-    "stopAudioId": 20320113
+    "stopAudioId": 20320113,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 10,
@@ -163,7 +181,9 @@
     "color": "",
     "effect": "rainstorm",
     "audioId": 20320114,
-    "stopAudioId": 20320115
+    "stopAudioId": 20320115,
+    "minTemperature": "",
+    "maxTemperature": ""
   },
   {
     "id": 11,
@@ -192,7 +212,9 @@
     "color": "",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": "0"
   },
   {
     "id": 12,
@@ -209,6 +231,8 @@
     "color": "",
     "effect": "",
     "audioId": 0,
-    "stopAudioId": 0
+    "stopAudioId": 0,
+    "minTemperature": "",
+    "maxTemperature": ""
   }
 ]

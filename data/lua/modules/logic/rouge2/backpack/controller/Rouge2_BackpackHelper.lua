@@ -28,12 +28,27 @@ function Rouge2_BackpackHelper.itemId2BagType(itemId)
 	if itemId >= 100000 and itemId <= 199999 then
 		return Rouge2_Enum.BagType.Relics
 	elseif itemId >= 200000 and itemId <= 299999 then
-		return Rouge2_Enum.BagType.Buff
+		local buffCo = Rouge2_CollectionConfig.instance:getBuffConfig(itemId)
+
+		if buffCo then
+			if buffCo.isAttrBuff == 1 then
+				return Rouge2_Enum.BagType.AttrBuff
+			else
+				return Rouge2_Enum.BagType.Buff
+			end
+		end
 	elseif itemId >= 300000 and itemId <= 399999 then
 		return Rouge2_Enum.BagType.ActiveSkill
 	else
 		logError(string.format("肉鸽未定义构筑物类型 itemId = %s", itemId))
 	end
+end
+
+function Rouge2_BackpackHelper.isBuff(dataType, dataId)
+	local itemId, itemUid = Rouge2_BackpackHelper.getItemIdAndUid(dataType, dataId)
+	local bagType = Rouge2_BackpackHelper.itemId2BagType(itemId)
+
+	return bagType == Rouge2_Enum.BagType.Buff or bagType == Rouge2_Enum.BagType.AttrBuff
 end
 
 function Rouge2_BackpackHelper.itemId2Tag(itemId)
@@ -67,6 +82,8 @@ function Rouge2_BackpackHelper.dropType2ItemDropViewName(dropType)
 		logNormal("肉鸽掉落金币")
 	elseif dropType == Rouge2_MapEnum.DropType.RevivalCoin then
 		logNormal("肉鸽掉落复活币")
+	elseif dropType == Rouge2_MapEnum.DropType.AttrBuff then
+		return ViewName.Rouge2_AttrBuffDropView
 	else
 		logError(string.format("肉鸽未定义掉落类型 dropType = " .. dropType))
 	end
@@ -83,6 +100,8 @@ function Rouge2_BackpackHelper.itemType2ShowViewName(itemType)
 		return ViewName.Rouge2_RelicsDropView
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
 		return ViewName.Rouge2_ActiveSkillDropView
+	elseif itemType == Rouge2_MapEnum.BagType.AttrBuff then
+		return ViewName.Rouge2_AttrBuffDropView
 	else
 		logError(string.format("肉鸽未定义构筑物显示类型 itemType = " .. itemType))
 	end
@@ -120,20 +139,29 @@ end
 
 function Rouge2_BackpackHelper.getItemConfig(itemId)
 	local bagType = Rouge2_BackpackHelper.itemId2BagType(itemId)
+	local config
 
 	if bagType == Rouge2_Enum.BagType.ActiveSkill then
-		return Rouge2_CollectionConfig.instance:getActiveSkillConfig(itemId)
+		config = Rouge2_CollectionConfig.instance:getActiveSkillConfig(itemId)
 	elseif bagType == Rouge2_Enum.BagType.Buff then
-		return Rouge2_CollectionConfig.instance:getBuffCofing(itemId)
+		config = Rouge2_CollectionConfig.instance:getBuffConfig(itemId)
 	elseif bagType == Rouge2_Enum.BagType.Relics then
-		return Rouge2_CollectionConfig.instance:getRelicsConfig(itemId)
+		config = Rouge2_CollectionConfig.instance:getRelicsConfig(itemId)
 	elseif bagType == Rouge2_Enum.BagType.InVisibleRelics then
 		logError(string.format("隐藏造物?? itemId = %s", itemId))
 
-		return Rouge2_CollectionConfig.instance:getRelicsConfig(itemId)
+		config = Rouge2_CollectionConfig.instance:getRelicsConfig(itemId)
+	elseif bagType == Rouge2_Enum.BagType.AttrBuff then
+		config = Rouge2_CollectionConfig.instance:getBuffConfig(itemId)
 	else
 		logError(string.format("Rouge2_BackpackHelper.getItemConfig 未定义背包类型, bagType = %s, itemId = %s", bagType, itemId))
 	end
+
+	if not config then
+		logError(string.format("肉鸽构筑物配置不存在 itemId = %s", itemId))
+	end
+
+	return config
 end
 
 function Rouge2_BackpackHelper.getItemNameList(dataType, itemList)
@@ -166,7 +194,7 @@ function Rouge2_BackpackHelper.getItemSplitTypeList()
 end
 
 function Rouge2_BackpackHelper.filterItemList(itemList, filterTypeMap)
-	local resultList = itemList
+	local resultList = itemList or {}
 
 	if filterTypeMap then
 		for filterType, filterParamList in pairs(filterTypeMap) do
@@ -220,6 +248,7 @@ function Rouge2_BackpackHelper.getFilterFunc(itemType, filterType)
 			[Rouge2_Enum.ItemFilterType.Unique] = Rouge2_BackpackHelper._itemFilterFunc_Unique,
 			[Rouge2_Enum.ItemFilterType.Remove] = Rouge2_BackpackHelper._itemFilterFunc_Remove
 		}
+		Rouge2_BackpackHelper._itemFilterFuncMap[Rouge2_Enum.BagType.AttrBuff] = Rouge2_BackpackHelper._itemFilterFuncMap[Rouge2_Enum.BagType.Buff]
 	end
 
 	local funcMap = Rouge2_BackpackHelper._itemFilterFuncMap[itemType]
@@ -253,7 +282,7 @@ function Rouge2_BackpackHelper._itemFilterFunc_EqualRare(itemMo, itemCo, param)
 end
 
 function Rouge2_BackpackHelper._itemFilterFunc_Attribute(itemMo, itemCo, param)
-	return itemCo.attribute == param
+	return itemCo.attributeTag == tostring(param)
 end
 
 function Rouge2_BackpackHelper._itemFilterFunc_Unique(itemMo, itemCo, isUnique)

@@ -206,5 +206,31 @@
     "sort": 16,
     "minNum": 4,
     "maxNum": 10
+  },
+  {
+    "id": 17,
+    "actType": 0,
+    "name": "language_10104821",
+    "unlockId": 0,
+    "batNum": 4,
+    "supNum": 0,
+    "isDisplay": 0,
+    "isChangeName": 0,
+    "sort": 17,
+    "minNum": 1,
+    "maxNum": 1
+  },
+  {
+    "id": 18,
+    "actType": 0,
+    "name": "language_10104822",
+    "unlockId": 0,
+    "batNum": 8,
+    "supNum": 0,
+    "isDisplay": 0,
+    "isChangeName": 0,
+    "sort": 18,
+    "minNum": 1,
+    "maxNum": 20
   }
 ]

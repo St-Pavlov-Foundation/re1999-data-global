@@ -8,29 +8,28 @@ function FightWorkTimelineItem:onConstructor(entity, timelineName, fightStepData
 	self.entity = entity
 	self.timelineName = timelineName
 	self.fightStepData = fightStepData
+	self.timelineUrl = ResUrl.getSkillTimeline(self.timelineName)
 	self.skillId = self.fightStepData.actId
 end
 
 function FightWorkTimelineItem:onStart()
-	local assetUrl = FightHelper.getRolesTimelinePath(self.timelineName)
+	local entityMo = self.entity and self.entity:getMO()
+	local skin = entityMo and entityMo.skin
+	local work = FightPreloadOneTimelineRefWork.New(self.timelineName, skin, self)
 
-	self.timelineUrl = ResUrl.getSkillTimeline(self.timelineName)
-
-	self:com_loadAsset(assetUrl, self.onTimelineLoaded, self)
+	work:registerDoneListener(self.onLoadTimelineDone, self)
+	work:onStart()
 	self:cancelFightWorkSafeTimer()
 end
 
-function FightWorkTimelineItem:onTimelineLoaded(success, loader)
-	if not success then
-		logError("timeline资源加载失败,路径:" .. self.timelineUrl)
-		self:onDone(true)
+function FightWorkTimelineItem:onLoadTimelineDone()
+	if gohelper.isNil(self.timelineAssetItem) then
+		logError("timeline 资源加载失败: " .. tostring(self.timelineName))
 
-		return
+		return self:onDone(true)
 	end
 
-	self.assetLoader = loader
-
-	FightHelper.logForPCSkillEditor("播放timeline:" .. self.timelineName)
+	FightHelper.logForPCSkillEditor("播放timeline:" .. tostring(self.timelineName))
 	self:startTimeline()
 end
 
@@ -38,6 +37,14 @@ function FightWorkTimelineItem:dealSpeed()
 	FightHelper.setBossSkillSpeed(self.entity.id)
 	FightHelper.setTimelineExclusiveSpeed(self.timelineName)
 	FightModel.instance:updateRTPCSpeed()
+end
+
+function FightWorkTimelineItem:setTimelineAssetItem(assetItem)
+	self.timelineAssetItem = assetItem
+end
+
+function FightWorkTimelineItem:getTimelineAssetItem()
+	return self.timelineAssetItem
 end
 
 function FightWorkTimelineItem:startTimeline()
@@ -92,8 +99,8 @@ function FightWorkTimelineItem:onTimelineFinish()
 	FightHelper.cancelBossSkillSpeed()
 	FightHelper.cancelExclusiveSpeed()
 	FightModel.instance:updateRTPCSpeed()
-	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, self.entity, self.skillId, self.fightStepData, self._timelineName)
-	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, self.entity, self.skillId, self.fightStepData, self._timelineName)
+	FightMsgMgr.sendMsg(FightMsgId.PlayTimelineSkillFinish, self.entity, self.skillId, self.fightStepData, self.timelineName)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillPlayFinish, self.entity, self.skillId, self.fightStepData, self.timelineName)
 
 	if not self.IS_DISPOSED then
 		self:onDone(true)
@@ -133,7 +140,7 @@ function FightWorkTimelineItem:afterPlayTimeline()
 			GameSceneMgr.instance:getCurScene().camera:resetParam()
 		end
 
-		GameSceneMgr.instance:getCurScene().entityMgr.enableSpineRotate = true
+		FightGameMgr.entityMgr.enableSpineRotate = true
 
 		local entity_mo = self.entity:getMO()
 

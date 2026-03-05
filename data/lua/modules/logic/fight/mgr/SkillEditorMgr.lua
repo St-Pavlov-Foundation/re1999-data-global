@@ -222,25 +222,24 @@ end
 
 function SkillEditorMgr:rebuildEntitys(side)
 	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local dict = entityMgr:getTagUnitDict(tag)
+	local entityMgr = FightGameMgr.entityMgr
+	local list = entityMgr:getTagList(tag)
 
-	if dict then
-		for _, entity in pairs(dict) do
+	if list then
+		for _, entity in ipairs(list) do
 			if entity.skill then
 				entity.skill:stopSkill()
 			end
 
 			FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, entity.id)
+			entityMgr:delEntity(entity.id)
 		end
 	end
-
-	entityMgr:removeUnits(tag)
 
 	local entityMOs = FightDataHelper.entityMgr:getNormalList(side)
 
 	for _, entityMO in ipairs(entityMOs) do
-		entityMgr:buildSpine(entityMO)
+		entityMgr:newEntity(entityMO)
 	end
 
 	if side == FightEnum.EntitySide.MySide and self.select_sub_hero_id then
@@ -271,7 +270,7 @@ function SkillEditorMgr:_buildSubHero()
 
 	if sub_entity then
 		for _, entityMO in ipairs(sub_entity) do
-			GameSceneMgr.instance:getCurScene().entityMgr:buildSubSpine(entityMO)
+			FightGameMgr.entityMgr:newEntity(entityMO)
 		end
 	end
 end

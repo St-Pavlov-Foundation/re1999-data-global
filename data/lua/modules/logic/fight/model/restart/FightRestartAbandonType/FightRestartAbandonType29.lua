@@ -55,7 +55,7 @@ end
 
 function FightRestartAbandonType29:startAbandon()
 	DungeonFightController.instance:registerCallback(DungeonEvent.OnEndDungeonReply, self._startRequestFight, self)
-	DungeonFightController.instance:sendEndFightRequest(true)
+	DungeonFightController.instance:sendEndFightRequest(true, DungeonEnum.EndType.Restart)
 end
 
 function FightRestartAbandonType29:_startRequestFight(resultCode)

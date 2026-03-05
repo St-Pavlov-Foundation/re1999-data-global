@@ -77,7 +77,7 @@ function SkillEditorHeroSelectModel:_getCOList()
 					if editorRoleConfig then
 						local skillArr = string.splitToNumber(editorRoleConfig.exSkill, "#")
 
-						for i, v in ipairs(skillArr) do
+						for _, v in ipairs(skillArr) do
 							local skillConfig = lua_skill.configDict[v]
 
 							if skillConfig then

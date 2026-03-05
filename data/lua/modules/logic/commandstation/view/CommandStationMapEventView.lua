@@ -49,7 +49,7 @@ function CommandStationMapEventView.filterEventList(targetCharacterId, list)
 	local result = {}
 
 	for i, chaEventId in ipairs(list) do
-		if CommandStationConfig.instance:getCharacterIdByEventId(chaEventId) == targetCharacterId then
+		if CommandStationConfig.instance:eventContainCharacterId(chaEventId, targetCharacterId) then
 			table.insert(result, chaEventId)
 		end
 	end
@@ -59,25 +59,29 @@ end
 
 function CommandStationMapEventView:_updateEventItems()
 	local timeId = CommandStationMapModel.instance:getTimeId()
-	local episodeId = CommandStationConfig.instance:getTimePointEpisodeId(timeId)
 
-	if not DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+	if not CommandStationMapModel.instance:checkTimeIdUnlock(timeId) then
 		self:_addEventItems()
 
 		return
 	end
 
-	local category = CommandStationMapModel.instance:getEventCategory()
-	local eventKey = category == CommandStationEnum.EventCategory.Normal and CommandStationEnum.EventCategoryKey.Normal or CommandStationEnum.EventCategoryKey.Character
-	local list = CommandStationConfig.instance:getEventList(timeId, nil, eventKey)
+	local list = {}
+	local targetCharacterId = CommandStationMapModel.instance:getCharacterId()
 
-	if category == CommandStationEnum.EventCategory.Character and CommandStationMapModel.instance:getCharacterId() then
-		local targetCharacterId = CommandStationMapModel.instance:getCharacterId()
-
+	if targetCharacterId then
+		list = CommandStationConfig.instance:getEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Character)
 		list = CommandStationMapEventView.filterEventList(targetCharacterId, list)
-	end
 
-	self:_addEventItems(list)
+		self:_addEventItems(list, 0)
+	else
+		local normalList = CommandStationConfig.instance:getEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Normal)
+		local characterList = CommandStationConfig.instance:getEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Character)
+
+		tabletool.addValues(list, normalList)
+		tabletool.addValues(list, characterList)
+		self:_addEventItems(list, #normalList)
+	end
 end
 
 function CommandStationMapEventView:FocuseLeftEvent()
@@ -105,40 +109,47 @@ function CommandStationMapEventView:checkEventsDir()
 	local leftEvent, rightEvent
 
 	for i, v in pairs(self._eventList) do
-		local posX = recthelper.getAnchorX(v.viewGO.transform)
+		if v:isActiveEvent() then
+			local posX = recthelper.getAnchorX(v.viewGO.transform)
 
-		if posX < minX then
-			leftEvent = v
-		elseif maxX < posX then
-			rightEvent = v
+			if posX < minX then
+				leftEvent = v
+			elseif maxX < posX then
+				rightEvent = v
+			end
 		end
 	end
 
 	return leftEvent, rightEvent
 end
 
-function CommandStationMapEventView:_addEventItems(list)
-	for i, v in pairs(self._eventList) do
-		v:playCloseAnim()
-	end
+function CommandStationMapEventView:_addEventItems(list, normalCatetoryMaxIndex)
+	local copyEventList = tabletool.copy(self._eventList)
 
 	tabletool.clear(self._eventList)
 	CommandStationMapModel.instance:clearSceneNodeList()
 
-	if not list then
-		return
-	end
-
 	local path = self.viewContainer:getSetting().otherRes[1]
-	local category = CommandStationMapModel.instance:getEventCategory()
+	local category
 	local isFocusEvent = false
 	local firstItem
 
 	for i, v in ipairs(list) do
-		local go = self:getResInst(path, self._goevents)
-		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CommandStationMapItem)
+		category = i <= normalCatetoryMaxIndex and CommandStationEnum.EventCategory.Normal or CommandStationEnum.EventCategory.Character
 
-		item:onUpdateMO(v, category)
+		local item = copyEventList[v]
+
+		if not item then
+			local go = self:getResInst(path, self._goevents)
+
+			item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CommandStationMapItem)
+
+			item:onUpdateMO(v, category)
+		else
+			copyEventList[v] = nil
+
+			item:reset()
+		end
 
 		self._eventList[v] = item
 
@@ -157,6 +168,10 @@ function CommandStationMapEventView:_addEventItems(list)
 
 			item:FirstFocusEvent()
 		end
+	end
+
+	for i, v in pairs(copyEventList) do
+		v:playCloseAnim()
 	end
 
 	if not isFocusEvent and firstItem then
@@ -195,12 +210,27 @@ function CommandStationMapEventView:_addDecoration(sceneGo)
 				table.insert(self._decorationList, go)
 
 				local pos = coordinateConfig.coordinates
+				local scale = coordinateConfig.scale
+				local rotate = coordinateConfig.rotate
 
 				transformhelper.setLocalPos(go.transform, pos[1] or 0, pos[2] or 0, pos[3] or 0)
+				transformhelper.setLocalScale(go.transform, scale[1] or 1, scale[2] or 1, scale[3] or 1)
+
+				if #rotate == 3 then
+					transformhelper.setLocalRotation(go.transform, rotate[1] or 0, rotate[2] or 0, rotate[3] or 0)
+				end
 
 				local loader = PrefabInstantiate.Create(go)
 
-				loader:startLoad(decorationConfig.decoration)
+				loader:startLoad(decorationConfig.decoration, function()
+					if #rotate == 3 then
+						local go = loader:getInstGO()
+						local render = go:GetComponent(typeof(UnityEngine.Renderer))
+						local mat = render.sharedMaterial
+
+						mat:DisableKeyword("_BILLBOARD")
+					end
+				end)
 			else
 				logError(string.format("can not find decoration config, id = %s", decorationId))
 			end

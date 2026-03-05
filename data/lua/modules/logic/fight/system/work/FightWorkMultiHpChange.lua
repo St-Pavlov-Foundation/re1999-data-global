@@ -39,14 +39,13 @@ function FightWorkMultiHpChange:_buildNewEntity()
 	local evolutionConfig = lua_fight_boss_evolution_client.configDict[self._oldEntityMO.skin]
 
 	if evolutionConfig then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 		local oldEntity = FightHelper.getEntity(self._newEntityMO.id)
 
 		if oldEntity then
-			entityMgr:removeUnit(oldEntity:getTag(), oldEntity.id)
+			FightGameMgr.entityMgr:delEntity(oldEntity.id)
 		end
 
-		local newEntity = entityMgr:buildSpine(self._newEntityMO)
+		local newEntity = FightGameMgr.entityMgr:newEntity(self._newEntityMO)
 		local buffComp = newEntity and newEntity.buff
 
 		if buffComp then

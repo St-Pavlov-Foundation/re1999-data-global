@@ -47,12 +47,12 @@ function TurnbackRpc:onReceiveTurnbackBonusPointReply(resultCold, msg)
 	end
 end
 
-function TurnbackRpc:sendTurnbackOnceBonusRequest(turnbackId)
+function TurnbackRpc:sendTurnbackOnceBonusRequest(turnbackId, callback, callbackObj)
 	local req = TurnbackModule_pb.TurnbackOnceBonusRequest()
 
 	req.id = turnbackId
 
-	return self:sendMsg(req)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
 function TurnbackRpc:onReceiveTurnbackOnceBonusReply(resultCold, msg)

@@ -163,7 +163,7 @@ function FightQuitTipView:_btnsureOnClick()
 
 	if not FightDataHelper.stateMgr.isFinish then
 		if not FightModel.instance:getFightParam().isTestFight then
-			DungeonFightController.instance:sendEndFightRequest(true)
+			DungeonFightController.instance:sendEndFightRequest(true, DungeonEnum.EndType.Exit)
 		else
 			FightRpc.instance:sendEndFightRequest(true)
 		end

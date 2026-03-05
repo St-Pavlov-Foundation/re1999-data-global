@@ -38,12 +38,50 @@ function Activity220Config:getConstConfigValue(activityId, id, isString)
 	end
 end
 
+function Activity220Config:getConstValue(activityId, id)
+	local config = self._constConfig.configDict[activityId] and self._constConfig.configDict[activityId][id]
+
+	return config.value
+end
+
+function Activity220Config:getConstValue2(activityId, id)
+	local config = self._constConfig.configDict[activityId] and self._constConfig.configDict[activityId][id]
+
+	return config.value2
+end
+
 function Activity220Config:getEpisodeConfig(activityId, episodeId)
 	return self._episodeConfig.configDict[activityId] and self._episodeConfig.configDict[activityId][episodeId]
 end
 
 function Activity220Config:getAllEpisodeConfigMap(activityId)
 	return self._episodeConfig.configDict[activityId]
+end
+
+function Activity220Config:getEpisodeConfigList(activityId)
+	if not self._episodesMap then
+		self._episodesMap = {}
+
+		for _, v in ipairs(lua_activity220_episode.configList) do
+			if not self._episodesMap[v.activityId] then
+				self._episodesMap[v.activityId] = {}
+			end
+
+			table.insert(self._episodesMap[v.activityId], v)
+		end
+	end
+
+	return self._episodesMap[activityId] or {}
+end
+
+function Activity220Config:getEpisodeIndex(activityId, episodeId)
+	local colist = self:getEpisodeConfigList(activityId)
+
+	for index, co in ipairs(colist) do
+		if co.episodeId == episodeId then
+			return index
+		end
+	end
 end
 
 function Activity220Config:buildTaskData()

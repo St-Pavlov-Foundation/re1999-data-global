@@ -17,6 +17,7 @@ function Activity220Rpc:onReceiveGetAct220InfoReply(resultCode, msg)
 		return
 	end
 
+	Activity220Model.instance:updateInfo(msg)
 	Activity220Controller.instance:dispatchEvent(Activity220Event.GetAct220InfoReply, msg)
 end
 
@@ -34,6 +35,8 @@ function Activity220Rpc:onReceiveAct220SaveEpisodeProgressReply(resultCode, msg)
 	if resultCode ~= 0 then
 		return
 	end
+
+	Activity220Model.instance:updateEpisodeInfo(msg)
 
 	local activityId = msg.activityId
 	local episodeId = msg.episodeId
@@ -57,6 +60,8 @@ function Activity220Rpc:onReceiveAct220FinishEpisodeReply(resultCode, msg)
 		return
 	end
 
+	Activity220Model.instance:finishEpisode(msg)
+
 	local activityId = msg.activityId
 	local episodeId = msg.episodeId
 	local progress = msg.progress
@@ -79,6 +84,8 @@ function Activity220Rpc:onReceiveAct220ChooseEpisodeBranchReply(resultCode, msg)
 		return
 	end
 
+	Activity220Model.instance:unlockEpisodeBranch(msg)
+
 	local activityId = msg.activityId
 	local episodeId = msg.episodeId
 	local branchId = msg.branchId
@@ -91,6 +98,7 @@ function Activity220Rpc:onReceiveAct220EpisodePush(resultCode, msg)
 		return
 	end
 
+	Activity220Model.instance:pushEpisodes(msg)
 	Activity220Controller.instance:dispatchEvent(Activity220Event.EpisodePush, msg)
 end
 

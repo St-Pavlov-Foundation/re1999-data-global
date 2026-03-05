@@ -440,6 +440,39 @@ end
 function DecorateStoreView:_refreshGood(isUnfold)
 	self:_refreshGoodDetail()
 	self:_refreshGoodItems(isUnfold)
+	self:_checkHideUI()
+end
+
+function DecorateStoreView:_checkHideUI()
+	local versionStr = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateVersionShowList), "")
+	local versionList = string.split(versionStr, "#")
+	local versionId = CommandStationConfig.instance:getCurVersionId()
+	local contain = LuaUtil.tableContains(versionList, tostring(versionId))
+
+	if contain then
+		return
+	end
+
+	table.insert(versionList, tostring(versionId))
+
+	local resultStr = table.concat(versionList, "#")
+
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.DecorateVersionShowList), resultStr)
+
+	local goods = DecorateStoreModel.instance:getDecorateGoodList(self._selectSecondTabId)
+
+	if not goods or #goods < 1 then
+		return
+	end
+
+	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
+	local isHideType = DecorateStoreModel.instance:isAutoHideUIType(curItemType)
+
+	if not isHideType then
+		return
+	end
+
+	self:_btnhideOnClick()
 end
 
 function DecorateStoreView:_refreshGoodItems(isUnfold)

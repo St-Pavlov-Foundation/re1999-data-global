@@ -227,7 +227,7 @@ function V3a2_BossRushModel:setScore(extra)
 end
 
 function V3a2_BossRushModel:getScore()
-	return self._score
+	return self._score or {}
 end
 
 V3a2_BossRushModel.instance = V3a2_BossRushModel.New()

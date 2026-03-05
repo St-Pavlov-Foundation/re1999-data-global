@@ -30,6 +30,7 @@ function FightFieldDataMgr:updateData(fightData)
 	self.progressMax = fightData.progressMax
 	self.param = FightDataUtil.coverData(fightData.param, self.param)
 	self.indicatorDict = self:buildIndicators(fightData)
+	self.enemyIndicatorDict = self:buildEnemyIndicators(fightData)
 	self.playerFinisherInfo = FightDataUtil.coverData(fightData.attacker.playerFinisherInfo, self.playerFinisherInfo)
 	self.customData = FightDataUtil.coverData(fightData.customData, self.customData)
 	self.fightTaskBox = FightDataUtil.coverData(fightData.fightTaskBox, self.fightTaskBox)
@@ -52,6 +53,24 @@ function FightFieldDataMgr:buildIndicators(fightData)
 	end
 
 	return FightDataUtil.coverData(dic, self.indicatorDict)
+end
+
+function FightFieldDataMgr:buildEnemyIndicators(fightData)
+	local dic = {}
+
+	if fightData.attacker then
+		for _, indicator in ipairs(fightData.defender.indicators) do
+			local id = tonumber(indicator.inticatorId)
+			local indicatorInfo = {
+				id = id,
+				num = indicator.num
+			}
+
+			dic[id] = indicatorInfo
+		end
+	end
+
+	return FightDataUtil.coverData(dic, self.enemyIndicatorDict)
 end
 
 function FightFieldDataMgr:getIndicatorNum(id)
@@ -80,6 +99,10 @@ function FightFieldDataMgr:isTowerLimited()
 	return self:isDungeonType(DungeonEnum.EpisodeType.TowerLimited)
 end
 
+function FightFieldDataMgr:is3_3PaTa()
+	return self:isDungeonType(DungeonEnum.EpisodeType.TowerCompose)
+end
+
 function FightFieldDataMgr:isAct183()
 	return self:isDungeonType(DungeonEnum.EpisodeType.Act183)
 end
@@ -106,6 +129,10 @@ end
 
 function FightFieldDataMgr:isSurvival()
 	return self:isDungeonType(DungeonEnum.EpisodeType.Survival)
+end
+
+function FightFieldDataMgr:clearData()
+	self.param = nil
 end
 
 return FightFieldDataMgr

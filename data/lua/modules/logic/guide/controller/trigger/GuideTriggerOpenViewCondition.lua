@@ -31,7 +31,7 @@ function GuideTriggerOpenViewCondition.checkInEliminateEpisode(id)
 end
 
 function GuideTriggerOpenViewCondition.checkInWindows(id)
-	return BootNativeUtil.isWindows()
+	return BootNativeUtil.isWindows() or BootNativeUtil.isMuMu()
 end
 
 function GuideTriggerOpenViewCondition.checkTowerMopUpOpen()
@@ -59,9 +59,10 @@ function GuideTriggerOpenViewCondition.checkTowerLimitOpen()
 		result = mo ~= nil
 	end
 
+	local curTimeLimitTowerOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 	local isBossGuideFinish = GuideModel.instance:isGuideFinish(TowerEnum.BossGuideId)
 
-	return result and isBossGuideFinish
+	return result and isBossGuideFinish and curTimeLimitTowerOpenMo
 end
 
 function GuideTriggerOpenViewCondition.checkTowerPermanentElite()
@@ -73,6 +74,40 @@ function GuideTriggerOpenViewCondition.checkMercenaryUnlock()
 	local isMercenaryUnlock = OdysseyDungeonModel.instance:checkConditionCanUnlock(mercenaryUnlockCo.value)
 
 	return isMercenaryUnlock
+end
+
+function GuideTriggerOpenViewCondition.checkTowerComposeMaxPlane()
+	local curThemeId, curLayerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(curThemeId, curLayerId)
+
+	return towerEpisodeConfig and towerEpisodeConfig.plane == 2
+end
+
+function GuideTriggerOpenViewCondition.checkTowerComposePlaneUnlockResearch()
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local layerId = recordFightParam.layerId
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(themeId, layerId)
+	local isPlaneLayerUnlock = TowerComposeModel.instance:checkHasPlaneLayerUnlock(themeId)
+
+	return towerEpisodeConfig.plane > 0 and isPlaneLayerUnlock
+end
+
+function GuideTriggerOpenViewCondition.checkTowerMaxPlaneUnlock()
+	local curThemeId, curLayerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	local passLayerId = TowerComposeModel.instance:getThemePassLayer(curThemeId)
+	local isMaxPlaneLayerUnlock = TowerComposeModel.instance:isMaxPlaneLayerUnlock(curThemeId, passLayerId)
+
+	return isMaxPlaneLayerUnlock
+end
+
+function GuideTriggerOpenViewCondition.checkTowerFirstPlaneUnlock()
+	local curThemeId, curLayerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	local passLayerId = TowerComposeModel.instance:getThemePassLayer(curThemeId)
+	local curUnlockPlaneLayerId, planeLayerIdList = TowerComposeModel.instance:getCurUnlockPlaneLayerId(curThemeId, passLayerId)
+	local isFirstPlaneUnlock = curUnlockPlaneLayerId > 0 and curUnlockPlaneLayerId == planeLayerIdList[1]
+
+	return isFirstPlaneUnlock
 end
 
 return GuideTriggerOpenViewCondition

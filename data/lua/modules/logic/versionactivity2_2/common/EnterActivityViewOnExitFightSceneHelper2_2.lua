@@ -4,6 +4,10 @@ module("modules.logic.versionactivity2_2.common.EnterActivityViewOnExitFightScen
 
 local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
 
+local function _openPermanent_EnterView(viewParam)
+	PermanentController.instance:jump2Activity(VersionActivity2_2Enum.ActivityId.EnterView, viewParam)
+end
+
 function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
@@ -18,8 +22,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12203(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_2EnterView)
-		VersionActivity2_2EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_2Enum.ActivityId.TianShiNaNa, true)
+		local actId = VersionActivity2_2Enum.ActivityId.TianShiNaNa
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		RoleActivityController.instance:enterActivity(actId)
 	end)
 end
 
@@ -110,17 +117,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12204(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_2EnterView)
+		local actId = VersionActivity2_2Enum.ActivityId.Lopera
 
-		local returnViewAction
-
-		if DungeonModel.instance.lastSendEpisodeId == Activity168Model.instance:getCurBattleEpisodeId() then
-			function returnViewAction()
-				LoperaController.instance:openLoperaMainView()
-			end
-		end
-
-		VersionActivity2_2EnterController.instance:openVersionActivityEnterViewIfNotOpened(returnViewAction, nil, VersionActivity2_2Enum.ActivityId.Lopera)
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		LoperaController.instance:openLoperaMainView()
 	end)
 end
 

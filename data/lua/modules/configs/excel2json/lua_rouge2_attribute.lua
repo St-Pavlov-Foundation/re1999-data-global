@@ -4,14 +4,15 @@ module("modules.configs.excel2json.lua_rouge2_attribute", package.seeall)
 
 local lua_rouge2_attribute = {}
 local fields = {
-	showMax = 8,
 	careerDesc = 3,
-	min = 7,
-	type = 5,
+	spriteIndex = 5,
+	name = 2,
+	type = 6,
+	showMax = 9,
+	min = 8,
 	id = 1,
 	icon = 4,
-	name = 2,
-	level = 6
+	level = 7
 }
 local primaryKey = {
 	"id"

@@ -248,5 +248,8 @@ SummonEnum.CharacterCoBrandingGiftView = {
 	SummonCharacterCoBranding291 = "V2a9_LinkGiftView2",
 	SummonCharacterCoBranding292 = "V2a9_LinkGiftView"
 }
+SummonEnum.ShowHighStoreById = {
+	[33171] = true
+}
 
 return SummonEnum

@@ -20,7 +20,14 @@ function FightWorkAddUseCard:onStart()
 
 	FightViewPartVisible.set(false, false, false, false, true)
 	FightPlayCardModel.instance:addUseCard(index, self.actEffectData.cardInfo, self.actEffectData.effectNum1)
-	FightController.instance:dispatchEvent(FightEvent.AddUseCard, index)
+
+	local behaviourId = tonumber(self.actEffectData.reserveId)
+
+	FightController.instance:dispatchEvent(FightEvent.AddUseCard, {
+		index
+	}, {
+		behaviourId
+	})
 
 	local waitTime = self:getWaitTime()
 
@@ -29,6 +36,12 @@ end
 
 function FightWorkAddUseCard:getWaitTime()
 	if FightHeroALFComp.ALFSkillDict[self.actEffectData.effectNum1] then
+		return 1.8
+	end
+
+	local behaviourId = tonumber(self.actEffectData.reserveId)
+
+	if behaviourId == FightEnum.SkillBehaviourId.UseCardCopy then
 		return 1.8
 	end
 

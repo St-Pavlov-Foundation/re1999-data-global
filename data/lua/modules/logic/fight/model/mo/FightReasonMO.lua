@@ -47,6 +47,13 @@ function FightReasonMO:_parseData()
 	elseif co.type == DungeonEnum.EpisodeType.TowerDeep then
 		TowerDeepRpc.instance:sendTowerDeepGetInfoRequest()
 		TowerModel.instance:setRecordFightParam(nil, nil, nil, nil, self.episodeId)
+	elseif co.type == DungeonEnum.EpisodeType.TowerCompose then
+		TowerComposeRpc.instance:sendTowerComposeGetInfoRequest()
+
+		local dataParams = cjson.decode(self.data)
+
+		TowerComposeModel.instance:setRecordFightParam(dataParams.themeId, dataParams.layerId, self.episodeId, true)
+		TowerComposeModel.instance:setCurFightPlaneId(self.data, true)
 	elseif co.type == DungeonEnum.EpisodeType.Season166Base or co.type == DungeonEnum.EpisodeType.Season166Train then
 		Season166Model.instance:unpackFightReconnectData(self.data)
 	elseif co.type == DungeonEnum.EpisodeType.Act183 then

@@ -2,9 +2,9 @@
 
 module("modules.logic.fight.entity.comp.FightEffectComp", package.seeall)
 
-local FightEffectComp = class("FightEffectComp", LuaCompBase)
+local FightEffectComp = class("FightEffectComp", FightBaseClass)
 
-function FightEffectComp:ctor(entity)
+function FightEffectComp:onConstructor(entity)
 	self.entity = entity
 	self.entityId = entity.id
 	self._playingEffectDict = {}
@@ -15,19 +15,13 @@ function FightEffectComp:ctor(entity)
 	self._roundRelease = {}
 	self._hangEffects = {}
 	self._followCameraRotation = {}
-	self._specialEffectClass = {}
-end
 
-function FightEffectComp:init(go)
-	self:addEventCb(FightController.instance, FightEvent.InvokeFightWorkEffectType, self._onInvokeFightWorkEffectType, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	self:addEventCb(FightController.instance, FightEvent.ChangeRound, self._onChangeRound, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-
-	self.go = go
-
+	self:com_registFightEvent(FightEvent.InvokeFightWorkEffectType, self._onInvokeFightWorkEffectType)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.ChangeRound, self._onChangeRound)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 	self:_initSpecialEffectClass()
 end
 
@@ -137,13 +131,24 @@ function FightEffectComp:_releaseEffectByTime(effectWrap, release_time)
 	self._release_by_time[effectWrap.uniqueId] = effectWrap
 
 	local entity_id = self.entity.id
+	local param = {
+		handle = self,
+		effectWrap = effectWrap
+	}
 
-	TaskDispatcher.runDelay(function()
-		self._release_by_time[effectWrap.uniqueId] = nil
+	FightTimer.registTimer(self.releaseByTime, self, release_time, param)
+end
 
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(entity_id, effectWrap)
-		self:removeEffect(effectWrap)
-	end, self, release_time)
+function FightEffectComp:releaseByTime(param)
+	local handle = param.handle
+	local effectWrap = param.effectWrap
+
+	if handle._release_by_time[effectWrap.uniqueId] then
+		handle._release_by_time[effectWrap.uniqueId] = nil
+	end
+
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(handle.entity.id, effectWrap)
+	handle:removeEffect(effectWrap)
 end
 
 function FightEffectComp:_onEffectLoaded(effectWrap, success)
@@ -358,7 +363,7 @@ function FightEffectComp:_initSpecialEffectClass()
 				local className = "FightEntitySpecialEffect" .. config.characterId
 
 				if _G[className] then
-					self:_registSpecialClass(_G[className])
+					self:newClass(_G[className], self.entity)
 				end
 			end
 		end
@@ -366,10 +371,10 @@ function FightEffectComp:_initSpecialEffectClass()
 		local specialClassName = "FightEntitySpecialEffect" .. self.entity:getMO().modelId
 
 		if _G[specialClassName] then
-			self:_registSpecialClass(_G[specialClassName])
+			self:newClass(_G[specialClassName], self.entity)
 		end
 
-		self:_registSpecialClass(FightEntityCustomSpecialEffect)
+		self:newClass(FightEntityCustomSpecialEffect, self.entity)
 
 		if BossRushController.instance:isInBossRushFight() then
 			local monsterGroupId = FightModel.instance:getCurMonsterGroupId()
@@ -378,7 +383,7 @@ function FightEffectComp:_initSpecialEffectClass()
 			local isBoss = bossIds and FightHelper.isBossId(bossIds, self.entity:getMO().modelId)
 
 			if isBoss then
-				self:_registSpecialClass(FightEntitySpecialEffectBossRush)
+				self:newClass(FightEntitySpecialEffectBossRush, self.entity)
 			end
 		end
 
@@ -388,55 +393,18 @@ function FightEffectComp:_initSpecialEffectClass()
 	local sceneSpecialEffect = "FightSceneSpecialEffect" .. self.entity.id
 
 	if _G[sceneSpecialEffect] then
-		self:_registSpecialClass(_G[sceneSpecialEffect])
+		self:newClass(_G[sceneSpecialEffect], self.entity)
 	end
 end
 
-function FightEffectComp:_registSpecialClass(class)
-	table.insert(self._specialEffectClass, class.New(self.entity))
-end
-
-function FightEffectComp:showSpecialEffects()
-	if self._specialEffectClass then
-		for _, special in ipairs(self._specialEffectClass) do
-			if special.showSpecialEffects then
-				special:showSpecialEffects()
-			end
-
-			if special.setEffectActive then
-				special:setEffectActive(true)
-			end
-		end
-	end
-end
-
-function FightEffectComp:hideSpecialEffects()
-	for _, special in ipairs(self._specialEffectClass) do
-		if special.hideSpecialEffects then
-			special:hideSpecialEffects()
-		end
-
-		if special.setEffectActive then
-			special:setEffectActive(false)
-		end
-	end
-end
-
-function FightEffectComp:beforeDestroy()
-	for i, v in ipairs(self._specialEffectClass) do
-		if v.disposeSelf then
-			v:disposeSelf()
-		end
-	end
-
-	self._specialEffectClass = nil
-
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
+function FightEffectComp:onDestructor()
 	self:_dealTimeEffect()
 
 	for _, effectWrap in pairs(self._playingEffectDict) do
 		self:removeEffect(effectWrap)
 	end
+
+	self.destroyed = true
 end
 
 function FightEffectComp:_dealTimeEffect()
@@ -457,12 +425,6 @@ function FightEffectComp:getHangEffect()
 	return self._hangEffects
 end
 
-function FightEffectComp:onDestroy()
-	self._playingEffectDict = nil
-	self.cache_effect = nil
-	self.destroyed = true
-end
-
 function FightEffectComp:isDestroyed()
 	return self.destroyed
 end
@@ -477,7 +439,7 @@ function FightEffectComp:_registSkinEffect()
 	local skinClass = _G["FightEntitySpecialSkinEffect" .. skinId]
 
 	if skinClass then
-		self:_registSpecialClass(skinClass)
+		self:newClass(skinClass, self.entity)
 	end
 end
 

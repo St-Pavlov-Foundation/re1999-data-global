@@ -12,6 +12,34 @@ function Rouge2_BackpackModel:reInit()
 	self:onInit()
 end
 
+function Rouge2_BackpackModel:getActiveSkillHoleStatus(index)
+	local status = Rouge2_Enum.ActiveSkillHoleStatus.Lock
+	local isUseYBX = Rouge2_Model.instance:isUseYBXCareer()
+
+	if isUseYBX then
+		local talentCo = Rouge2_CareerConfig.instance:getTalentConfigByHoleIndex(index)
+		local talentId = talentCo and talentCo.talentId
+
+		status = self:getTalentStatus(talentId)
+	else
+		status = Rouge2_Enum.ActiveSkillHoleStatus.Empty
+	end
+
+	if status >= Rouge2_Enum.ActiveSkillHoleStatus.Empty then
+		local isUse = self:isActiveSkillIndexInUse(index)
+
+		status = isUse and Rouge2_Enum.ActiveSkillHoleStatus.Equip or Rouge2_Enum.ActiveSkillHoleStatus.Empty
+	end
+
+	return status
+end
+
+function Rouge2_BackpackModel:isActiveSkillHoleUnlock(index)
+	local status = self:getActiveSkillHoleStatus(index)
+
+	return status >= Rouge2_Enum.ActiveSkillHoleStatus.Empty
+end
+
 function Rouge2_BackpackModel:isActiveSkillInUse(skillUid)
 	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
 
@@ -172,6 +200,30 @@ function Rouge2_BackpackModel:getNotUniqueCollectionNum()
 	return num
 end
 
+function Rouge2_BackpackModel:getAttrUpdateActiveRelicsList(attrId, attrValue)
+	attrValue = attrValue or Rouge2_Model.instance:getAttrValue(attrId)
+
+	local relicsList = Rouge2_CollectionConfig.instance:getAttrUpdateRelicsList(attrId, attrValue)
+
+	if relicsList then
+		local hasRelcisList = {}
+		local hasRelicsIdList = {}
+
+		for _, relicsInfo in ipairs(relicsList) do
+			local relicsCo = relicsInfo.config
+			local relicsId = relicsCo and relicsCo.id
+			local itemList = Rouge2_BackpackModel.instance:getItemListByItemId(relicsId)
+
+			if itemList and #itemList > 0 then
+				table.insert(hasRelcisList, relicsInfo)
+				table.insert(hasRelicsIdList, relicsId)
+			end
+		end
+
+		return hasRelcisList, hasRelicsIdList
+	end
+end
+
 function Rouge2_BackpackModel:getCurBoxPoint()
 	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
 	local consumeAttrNum = leaderInfo and leaderInfo.consumeAttrNum or 0
@@ -179,6 +231,66 @@ function Rouge2_BackpackModel:getCurBoxPoint()
 	local attrValue = Rouge2_Model.instance:getAttrValue(boxAttrId)
 
 	return attrValue - consumeAttrNum
+end
+
+function Rouge2_BackpackModel:getTalentStatus(talentId)
+	local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
+
+	if not talentCo then
+		return
+	end
+
+	if self:isTalentActive(talentId) then
+		return Rouge2_Enum.BagTalentStatus.Active, Rouge2_Enum.BagTalentNotActiveReason.HasActive
+	end
+
+	if not Rouge2_BackpackController.instance:isPreTalentActive(talentId) then
+		return Rouge2_Enum.BagTalentStatus.Lock, Rouge2_Enum.BagTalentNotActiveReason.NotActivePreTalent
+	end
+
+	if not Rouge2_MapUnlockHelper.checkIsUnlock(talentCo.unlock) then
+		return Rouge2_Enum.BagTalentStatus.Lock, Rouge2_Enum.BagTalentNotActiveReason.NotPassCondition
+	end
+
+	local canUsePointNum = self:getCanUseTalentPoint()
+
+	if canUsePointNum < talentCo.unlockCost then
+		return Rouge2_Enum.BagTalentStatus.UnlockNotActive, Rouge2_Enum.BagTalentNotActiveReason.LackTalentPoint
+	end
+
+	return Rouge2_Enum.BagTalentStatus.UnlockCanActive
+end
+
+function Rouge2_BackpackModel:isTalentActive(talentId)
+	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
+	local isActive = leaderInfo and leaderInfo:isTalentActive(talentId)
+
+	return isActive
+end
+
+function Rouge2_BackpackModel:getActiveTalentIds()
+	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getActiveTalentIds()
+end
+
+function Rouge2_BackpackModel:getLastTransformTalentId()
+	local transformIdList = Rouge2_CareerConfig.instance:getTalentTransformIdList()
+	local transformIdNum = transformIdList and #transformIdList or 0
+
+	for i = transformIdNum, 1, -1 do
+		local transformId = transformIdList[i]
+
+		if self:isTalentActive(transformId) then
+			return transformId, i
+		end
+	end
+end
+
+function Rouge2_BackpackModel:getCanUseTalentPoint()
+	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getTalentPoint() or 0
 end
 
 Rouge2_BackpackModel.instance = Rouge2_BackpackModel.New()

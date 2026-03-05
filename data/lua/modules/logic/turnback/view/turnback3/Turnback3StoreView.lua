@@ -255,13 +255,13 @@ function Turnback3StoreView:_getGoodMoList()
 	local list = {}
 
 	if tabConfig and #tabConfig > 0 then
-		for index, config in ipairs(tabConfig) do
+		for _, config in ipairs(tabConfig) do
 			local tempList = StoreModel.instance:getPackageGoodValidList(config.id)
 
-			for index, mo in ipairs(tempList) do
-				local config = mo and mo.config
+			for _, mo in ipairs(tempList) do
+				local co = mo and mo.config
 
-				if config and config.isShowTurnback and not tabletool.indexOf(list, mo) then
+				if co and co.isShowTurnback and not tabletool.indexOf(list, mo) then
 					table.insert(list, mo)
 				end
 			end

@@ -114,6 +114,9 @@ end
 
 function FightObjItemListItem:newItem()
 	local gameObject = gohelper.clone(self.modelGameObject, self.parentObject)
+
+	gohelper.setActive(gameObject, true)
+
 	local item = self:newClass(self.objClass, gameObject)
 
 	item.GAMEOBJECT = gameObject

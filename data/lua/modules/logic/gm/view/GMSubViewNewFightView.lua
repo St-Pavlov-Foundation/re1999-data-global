@@ -101,6 +101,7 @@ function GMSubViewNewFightView:initViewContent()
 
 	self.btnChangeCard = self:addButton(self:getLineGroup(), "修改手牌", self.onClickChangeCard, self)
 	self.btnFightGm = self:addButton(self:getLineGroup(), "战中外挂", self.onClickFightGm, self)
+	self.btnEnterFightRule = self:addButton(self:getLineGroup(), "战场信息", self.onClickEnterFightRule, self)
 
 	self:addButton(self:getLineGroup(), "我方牌库", self.onClickMyCardDeck, self)
 	self:addButton(self:getLineGroup(), "敌方牌库", self.onClickEnemyCardDeck, self)
@@ -141,7 +142,7 @@ function GMSubViewNewFightView:initViewContent()
 		w = 100
 	})
 
-	self.skillIdInput = self:addInputText(self:getLineGroup(), "", "技能id")
+	self.timelineInput = self:addInputText(self:getLineGroup(), "", "timeline名称")
 	self.playTimelineEntityDrop = self:addDropDown(self:getLineGroup(), "技能释放者:", self.entityNameList, nil, nil, {
 		total_w = 400,
 		fsize = 25,
@@ -512,6 +513,14 @@ function GMSubViewNewFightView:onClickFightGm()
 	ViewMgr.instance:openView(ViewName.GMFightEntityView)
 end
 
+function GMSubViewNewFightView:onClickEnterFightRule()
+	FightRpc.instance:sendGetGMFightTeamDetailInfosRequest(self.onReceiveFightTeamDetailInfoMsg, self)
+end
+
+function GMSubViewNewFightView:onReceiveFightTeamDetailInfoMsg()
+	ViewMgr.instance:openView(ViewName.GMFightRuleView)
+end
+
 function GMSubViewNewFightView:onClickEnableFightLog()
 	GMRpc.instance:sendGMRequest("fight log 2")
 end
@@ -595,19 +604,7 @@ function GMSubViewNewFightView:onClickBtnMount()
 end
 
 function GMSubViewNewFightView:onClickBtnPlayTimeline()
-	local skillId = self.skillIdInput:GetText()
-
-	skillId = tonumber(skillId) or 0
-
-	local skillCo = lua_skill.configDict[skillId]
-
-	if not skillCo then
-		ToastController.instance:showToastWithString("技能不存在 ！")
-
-		return
-	end
-
-	local skillTimeline = skillCo.timeline
+	local skillTimeline = self.timelineInput:GetText()
 
 	if string.nilorempty(skillTimeline) then
 		ToastController.instance:showToastWithString("技能不存在timeline ！")
@@ -639,7 +636,7 @@ function GMSubViewNewFightView:onClickBtnPlayTimeline()
 	fightStepData.actEffect = {}
 
 	self:buildDamageEffect(isSingle, enemyList, fightStepData.actEffect)
-	entity.skill:playSkill(skillId, fightStepData)
+	entity.skill:playTimeline(skillTimeline, fightStepData)
 	self:closeThis()
 end
 

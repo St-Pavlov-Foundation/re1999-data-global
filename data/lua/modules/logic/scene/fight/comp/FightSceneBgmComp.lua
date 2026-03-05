@@ -34,6 +34,7 @@ function FightSceneBgmComp:onSceneStart(sceneId, levelId)
 	FightController.instance:registerCallback(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore, self)
 	FightController.instance:registerCallback(FightEvent.EntityDeadFinish, self._onEntityDeadFinish, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone, self)
 	FightController.instance:registerCallback(FightEvent.AddMagicCircile, self._onAddMagicCircile, self)
 	FightController.instance:registerCallback(FightEvent.SwitchFightendBgm, self._onSwitchFightendBgm, self)
 	FightController.instance:registerCallback(FightEvent.PlayDialog, self._onPlayDialog, self)
@@ -439,6 +440,18 @@ function FightSceneBgmComp:_onRestartFightDisposeDone()
 	end
 end
 
+function FightSceneBgmComp:_onSwitchPlaneClearAssetDone()
+	self._cur_switch = nil
+
+	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Comeshow)
+
+	local fightParam = FightModel.instance:getFightParam()
+
+	if self._bgAudioId then
+		self:_detectDefaultSwitch(fightParam.episodeId)
+	end
+end
+
 function FightSceneBgmComp:_onPlayDialog(id)
 	local config = self:_getConfig(nil, 0, 13, id)
 
@@ -493,6 +506,7 @@ function FightSceneBgmComp:onSceneClose()
 	FightController.instance:unregisterCallback(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore, self)
 	FightController.instance:unregisterCallback(FightEvent.EntityDeadFinish, self._onEntityDeadFinish, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone, self)
 	FightController.instance:unregisterCallback(FightEvent.AddMagicCircile, self._onAddMagicCircile, self)
 	FightController.instance:unregisterCallback(FightEvent.SwitchFightendBgm, self._onSwitchFightendBgm, self)
 	FightController.instance:unregisterCallback(FightEvent.PlayDialog, self._onPlayDialog, self)

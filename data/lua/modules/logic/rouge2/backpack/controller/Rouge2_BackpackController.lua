@@ -89,6 +89,8 @@ function Rouge2_BackpackController:checkCanReplaceActiveSkill(index, newSkillUid
 	elseif not self:checkIfBXSAttrFit(index, newSkillMo) then
 		isCan = false
 		toastId = nil
+	elseif not Rouge2_BackpackModel.instance:isActiveSkillHoleUnlock(index) then
+		isCan = false
 	end
 
 	return isCan, toastId
@@ -164,10 +166,12 @@ end
 function Rouge2_BackpackController:buildItemReddot()
 	local redDotInfo = {}
 	local hasNewItem = false
+	local isAnyHoleUnlock = self:isAnyActiveSkillHoleUnlock()
 
 	for _, bagType in pairs(Rouge2_Enum.BagType) do
 		local itemList = Rouge2_BackpackModel.instance:getItemList(bagType)
 		local reddotId = Rouge2_Enum.ItemType2Reddot[bagType]
+		local isActiveSkill = bagType == Rouge2_Enum.BagType.ActiveSkill
 		local isBagHasNew = false
 
 		if reddotId then
@@ -184,10 +188,23 @@ function Rouge2_BackpackController:buildItemReddot()
 					table.insert(redDotInfo, info)
 
 					if value == Rouge2_Enum.ItemStatus.New then
-						hasNewItem = true
-						isBagHasNew = true
+						if isActiveSkill then
+							if isAnyHoleUnlock then
+								hasNewItem = true
+								isBagHasNew = true
+							end
+						else
+							hasNewItem = true
+							isBagHasNew = true
+						end
 					end
 				end
+			end
+
+			if bagType == Rouge2_Enum.BagType.ActiveSkill and not isBagHasNew then
+				local hasAnyCanActiveTalen = self:hasAnyCanActiveTalent()
+
+				isBagHasNew = hasAnyCanActiveTalen
 			end
 
 			local info = {
@@ -237,7 +254,7 @@ function Rouge2_BackpackController:switchItemDescMode(dataFlag, targetMode)
 end
 
 function Rouge2_BackpackController:getItemDescMode(dataFlag, defaultMode)
-	defaultMode = defaultMode or Rouge2_Enum.ItemDescMode.Full
+	defaultMode = defaultMode or Rouge2_Enum.ItemDescMode.Simply
 
 	local key = self:_getItemDescModeKey(dataFlag)
 	local descMode = GameUtil.playerPrefsGetNumberByUserId(key, defaultMode)
@@ -357,6 +374,152 @@ end
 
 function Rouge2_BackpackController:checkCanGuideAssembleCost()
 	return not Rouge2_Model.instance:isUseBXSCareer()
+end
+
+function Rouge2_BackpackController:isCanResetTalentStage()
+	local activeTalentIdList = Rouge2_BackpackModel.instance:getActiveTalentIds()
+
+	for _, talentId in ipairs(activeTalentIdList) do
+		local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
+		local isNotInitStage = talentCo and talentCo.stage > -1
+		local isNotTransform = talentCo and talentCo.type ~= Rouge2_Enum.BagTalentType.Transform
+
+		if isNotInitStage and isNotTransform then
+			local isActive = Rouge2_BackpackModel.instance:isTalentActive(talentCo.talentId)
+
+			if isActive then
+				return true
+			end
+		end
+	end
+end
+
+function Rouge2_BackpackController:isAnyStageTalentActive(stage)
+	local talentList = Rouge2_CareerConfig.instance:getTalentConfigsByStage(stage)
+
+	if talentList then
+		for _, talentCo in ipairs(talentList) do
+			if Rouge2_BackpackModel.instance:isTalentActive(talentCo.talentId) then
+				return true
+			end
+		end
+	end
+end
+
+function Rouge2_BackpackController:isAnyNextTalentActive(talentId)
+	local nextTalentList = Rouge2_CareerConfig.instance:getNextTalentList(talentId)
+	local isAnyNextTalentActive = false
+
+	if nextTalentList then
+		for _, nextTalentCo in ipairs(nextTalentList) do
+			local isActive = Rouge2_BackpackModel.instance:isTalentActive(nextTalentCo.talentId)
+
+			if isActive then
+				isAnyNextTalentActive = true
+
+				break
+			end
+		end
+	end
+
+	return isAnyNextTalentActive
+end
+
+function Rouge2_BackpackController:isPreTalentActive(talentId)
+	local preTalentList = Rouge2_CareerConfig.instance:getPreTalentList(talentId)
+
+	if preTalentList then
+		for _, preTalentCo in ipairs(preTalentList) do
+			if Rouge2_BackpackModel.instance:isTalentActive(preTalentCo.talentId) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function Rouge2_BackpackController:getTalentResetRecycleTalentNum(stage)
+	local recycleNum = 0
+	local activeTalentIdList = Rouge2_BackpackModel.instance:getActiveTalentIds()
+
+	if activeTalentIdList then
+		for _, talentId in ipairs(activeTalentIdList) do
+			local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
+
+			if talentCo and stage <= talentCo.stage then
+				recycleNum = recycleNum + talentCo.unlockCost
+			end
+		end
+	end
+
+	return recycleNum
+end
+
+function Rouge2_BackpackController:hasAnyCanActiveTalent()
+	if not Rouge2_Model.instance:isUseYBXCareer() then
+		return
+	end
+
+	for _, talentCo in ipairs(lua_fight_rouge2_summoner.configList) do
+		local status = Rouge2_BackpackModel.instance:getTalentStatus(talentCo.talentId)
+
+		if status == Rouge2_Enum.BagTalentStatus.UnlockCanActive then
+			return true
+		end
+	end
+end
+
+function Rouge2_BackpackController:getNewUnlockTalentId()
+	local activeTalentIdList = Rouge2_BackpackModel.instance:getActiveTalentIds()
+
+	if activeTalentIdList then
+		for _, talentId in ipairs(activeTalentIdList) do
+			local nextTalentList = Rouge2_CareerConfig.instance:getNextTalentList(talentId)
+
+			if nextTalentList then
+				for _, nextTalentCo in ipairs(nextTalentList) do
+					local nextTalentId = nextTalentCo.talentId
+					local status = Rouge2_BackpackModel.instance:getTalentStatus(nextTalentId)
+
+					if status == Rouge2_Enum.BagTalentStatus.UnlockNotActive or status == Rouge2_Enum.BagTalentStatus.UnlockCanActive then
+						return nextTalentId
+					end
+				end
+			end
+		end
+	end
+end
+
+function Rouge2_BackpackController:isAnyActiveSkillHoleUnlock()
+	for i = 1, Rouge2_Enum.MaxActiveSkillNum do
+		local isUnlock = Rouge2_BackpackModel.instance:isActiveSkillHoleUnlock(i)
+
+		if isUnlock then
+			return true
+		end
+	end
+
+	return false
+end
+
+function Rouge2_BackpackController:checkCurTeamSystemId()
+	local curTeamSystemId = Rouge2_Model.instance:getCurTeamSystemId()
+
+	if not curTeamSystemId or curTeamSystemId == Rouge2_Enum.UnselectTeamSystemId then
+		return
+	end
+
+	local careerId = Rouge2_Model.instance:getCareerId()
+	local recommendSystemIdList = Rouge2_CareerConfig.instance:getCareerRecommendTeamList(careerId) or {}
+
+	for _, recommendSystemId in ipairs(recommendSystemIdList) do
+		if curTeamSystemId == recommendSystemId then
+			return
+		end
+	end
+
+	Rouge2_Rpc.instance:sendRouge2SetSystemIdRequest(Rouge2_Enum.UnselectTeamSystemId)
 end
 
 Rouge2_BackpackController.instance = Rouge2_BackpackController.New()

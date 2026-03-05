@@ -11,6 +11,7 @@ FightCustomData.CustomDataType = {
 	Odyssey = 5,
 	Survival = 4,
 	Rouge2 = 7,
+	TowerCompose = 8,
 	Act128Sp = 6
 }
 
@@ -20,7 +21,8 @@ local data2Json = {
 	[FightCustomData.CustomDataType.Survival] = true,
 	[FightCustomData.CustomDataType.Odyssey] = true,
 	[FightCustomData.CustomDataType.Act128Sp] = true,
-	[FightCustomData.CustomDataType.Rouge2] = true
+	[FightCustomData.CustomDataType.Rouge2] = true,
+	[FightCustomData.CustomDataType.TowerCompose] = true
 }
 
 function FightCustomData:onConstructor(proto)

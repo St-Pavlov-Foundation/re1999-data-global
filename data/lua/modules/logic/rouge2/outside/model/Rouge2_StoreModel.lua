@@ -57,6 +57,7 @@ function Rouge2_StoreModel:onBuyGoodsSuccess(goodsInfo, num)
 	end
 
 	self:checkRedPoint()
+	self:refreshAllBuyState()
 	Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnBuyStoreGoodsSuccess, goodsInfo.id)
 end
 
@@ -113,20 +114,22 @@ function Rouge2_StoreModel:refreshAllBuyState()
 			self.storeSaleOutDic[config.id] = true
 		else
 			local storeGroupDict = Rouge2_OutSideConfig.instance:getAllRewardConfigListByStage(config.id)
+			local notSoldOut = false
 
 			if storeGroupDict then
 				for _, goodConfig in ipairs(storeGroupDict) do
 					local buyCount = self:getGoodsBuyCount(goodConfig.id)
 
 					if buyCount < goodConfig.maxBuyCount then
-						self.storeSaleOutDic[config.id] = true
+						self.storeSaleOutDic[config.id] = false
+						notSoldOut = true
 
 						break
 					end
 				end
 
-				if self.storeSaleOutDic[config.id] then
-					self.storeSaleOutDic[config.id] = false
+				if not notSoldOut then
+					self.storeSaleOutDic[config.id] = true
 				end
 			else
 				logError("肉鸽2 商店不存在 期数:" .. config.id)

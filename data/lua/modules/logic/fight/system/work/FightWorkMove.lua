@@ -33,7 +33,7 @@ function FightWorkMove:onStart()
 			if entityMO then
 				local entity = FightHelper.getEntity(entityId)
 
-				if entity and entity.mover then
+				if entity and entity.moveComp and entity.moveComp.mover then
 					local endX, endY, endZ, targetScale = FightHelper.getEntityStandPos(entityMO)
 					local parallelFlow = FlowParallel.New()
 

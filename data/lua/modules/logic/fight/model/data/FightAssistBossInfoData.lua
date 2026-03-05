@@ -17,6 +17,7 @@ function FightAssistBossInfoData:onConstructor(proto)
 	self.roundUseLimit = proto.roundUseLimit
 	self.exceedUseFree = proto.exceedUseFree
 	self.params = proto.params
+	self.type = proto.type
 end
 
 return FightAssistBossInfoData

@@ -13,7 +13,7 @@ function NationalGiftModel:reInit()
 end
 
 function NationalGiftModel:setActInfo(info)
-	local actId = info and info.activityId or VersionActivity3_1Enum.ActivityId.NationalGift
+	local actId = info and info.activityId or self:getCurVersionActId()
 
 	if not self._actInfoDict[actId] then
 		self._actInfoDict[actId] = NationalGiftMO.New()
@@ -27,7 +27,7 @@ function NationalGiftModel:setActInfo(info)
 end
 
 function NationalGiftModel:setActActive(active, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	if self._actInfoDict[actId] then
 		self._actInfoDict[actId]:updateActActive(active)
@@ -35,7 +35,7 @@ function NationalGiftModel:setActActive(active, actId)
 end
 
 function NationalGiftModel:updateBonusStatus(bonusId, status, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	if self._actInfoDict[actId] then
 		self._actInfoDict[actId]:updateBonusStatus(bonusId, status)
@@ -43,7 +43,7 @@ function NationalGiftModel:updateBonusStatus(bonusId, status, actId)
 end
 
 function NationalGiftModel:updateBonuses(bonuses, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	if self._actInfoDict[actId] then
 		self._actInfoDict[actId]:updateBonuses(bonuses)
@@ -51,19 +51,19 @@ function NationalGiftModel:updateBonuses(bonuses, actId)
 end
 
 function NationalGiftModel:isBonusActive(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	return self._actInfoDict[actId] and self._actInfoDict[actId].isActive
 end
 
 function NationalGiftModel:getBonusList(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	return self._actInfoDict[actId] and self._actInfoDict[actId].bonuses
 end
 
 function NationalGiftModel:getBonusEndTime(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	if not self._actInfoDict[actId] then
 		return 0
@@ -98,19 +98,19 @@ function NationalGiftModel:getBuyEndTime()
 end
 
 function NationalGiftModel:isBonusGet(bonusId, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	return self._actInfoDict[actId] and self._actInfoDict[actId]:isBonusGet(bonusId)
 end
 
 function NationalGiftModel:isBonusCouldGet(bonusId, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	return self._actInfoDict[actId] and self._actInfoDict[actId]:isBonusCouldGet(bonusId)
 end
 
 function NationalGiftModel:isGiftHasBuy(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	return self._actInfoDict[actId] and self._actInfoDict[actId].isActive
 end
@@ -135,7 +135,7 @@ function NationalGiftModel:isNeedShowReddot()
 end
 
 function NationalGiftModel:getNationalGiftStoreId(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or self:getCurVersionActId()
 
 	local bonusCo = NationalGiftConfig.instance:getBonusCo(1, actId)
 
@@ -143,7 +143,7 @@ function NationalGiftModel:getNationalGiftStoreId(actId)
 end
 
 function NationalGiftModel:getCurVersionActId()
-	return ActivityConfig.instance:getConstAsNum(9, VersionActivity3_1Enum.ActivityId.NationalGift)
+	return ActivityConfig.instance:getConstAsNum(9, VersionActivity3_3Enum.ActivityId.NationalGift)
 end
 
 NationalGiftModel.instance = NationalGiftModel.New()

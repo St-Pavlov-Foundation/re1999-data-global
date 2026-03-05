@@ -1,0 +1,464 @@
+[
+  {
+    "id": 101,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 102
+  },
+  {
+    "id": 102,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 101
+  },
+  {
+    "id": 103,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 103
+  },
+  {
+    "id": 104,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 104
+  },
+  {
+    "id": 105,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 105
+  },
+  {
+    "id": 1000001,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#1,2,3",
+    "characterunlock": 0
+  },
+  {
+    "id": 32000001,
+    "resourcedrop": "1000:201#10",
+    "collectiondrop": "",
+    "characterunlock": 0
+  },
+  {
+    "id": 200001,
+    "resourcedrop": "1000:201#1",
+    "collectiondrop": "",
+    "characterunlock": 0
+  },
+  {
+    "id": 200002,
+    "resourcedrop": "1000:201#10",
+    "collectiondrop": "",
+    "characterunlock": 0
+  },
+  {
+    "id": 200003,
+    "resourcedrop": "1000:201#100",
+    "collectiondrop": "",
+    "characterunlock": 0
+  },
+  {
+    "id": 200004,
+    "resourcedrop": "1000:201#1000",
+    "collectiondrop": "",
+    "characterunlock": 0
+  },
+  {
+    "id": 100001,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#1",
+    "characterunlock": 0
+  },
+  {
+    "id": 100002,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#1,2",
+    "characterunlock": 0
+  },
+  {
+    "id": 100003,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#1,2,3",
+    "characterunlock": 0
+  },
+  {
+    "id": 100004,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#2",
+    "characterunlock": 0
+  },
+  {
+    "id": 100005,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#3",
+    "characterunlock": 0
+  },
+  {
+    "id": 100006,
+    "resourcedrop": "",
+    "collectiondrop": "random:jewelry#2,3",
+    "characterunlock": 0
+  },
+  {
+    "id": 100010,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#1,2,3",
+    "characterunlock": 0
+  },
+  {
+    "id": 100011,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#1",
+    "characterunlock": 0
+  },
+  {
+    "id": 100012,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#2",
+    "characterunlock": 0
+  },
+  {
+    "id": 100013,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#3",
+    "characterunlock": 0
+  },
+  {
+    "id": 100014,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#1,2",
+    "characterunlock": 0
+  },
+  {
+    "id": 100015,
+    "resourcedrop": "",
+    "collectiondrop": "random:weapon#2,3",
+    "characterunlock": 0
+  },
+  {
+    "id": 21001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21001",
+    "characterunlock": 0
+  },
+  {
+    "id": 21002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21002",
+    "characterunlock": 0
+  },
+  {
+    "id": 21003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21003",
+    "characterunlock": 0
+  },
+  {
+    "id": 21004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21004",
+    "characterunlock": 0
+  },
+  {
+    "id": 21005,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21005",
+    "characterunlock": 0
+  },
+  {
+    "id": 21006,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21006",
+    "characterunlock": 0
+  },
+  {
+    "id": 21007,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21007",
+    "characterunlock": 0
+  },
+  {
+    "id": 21008,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21008",
+    "characterunlock": 0
+  },
+  {
+    "id": 21009,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21009",
+    "characterunlock": 0
+  },
+  {
+    "id": 21010,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21010",
+    "characterunlock": 0
+  },
+  {
+    "id": 21011,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21011",
+    "characterunlock": 0
+  },
+  {
+    "id": 21012,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21012",
+    "characterunlock": 0
+  },
+  {
+    "id": 12001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:12001",
+    "characterunlock": 0
+  },
+  {
+    "id": 12002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:12002",
+    "characterunlock": 0
+  },
+  {
+    "id": 12003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:12003",
+    "characterunlock": 0
+  },
+  {
+    "id": 12004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:12004",
+    "characterunlock": 0
+  },
+  {
+    "id": 11001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11001",
+    "characterunlock": 0
+  },
+  {
+    "id": 11002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11002",
+    "characterunlock": 0
+  },
+  {
+    "id": 11003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11003",
+    "characterunlock": 0
+  },
+  {
+    "id": 11004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11004",
+    "characterunlock": 0
+  },
+  {
+    "id": 11005,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11005",
+    "characterunlock": 0
+  },
+  {
+    "id": 11006,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11006",
+    "characterunlock": 0
+  },
+  {
+    "id": 11007,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11007",
+    "characterunlock": 0
+  },
+  {
+    "id": 11008,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11008",
+    "characterunlock": 0
+  },
+  {
+    "id": 11009,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11009",
+    "characterunlock": 0
+  },
+  {
+    "id": 11010,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11010",
+    "characterunlock": 0
+  },
+  {
+    "id": 11011,
+    "resourcedrop": "",
+    "collectiondrop": "1000:11011",
+    "characterunlock": 0
+  },
+  {
+    "id": 16001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16001",
+    "characterunlock": 0
+  },
+  {
+    "id": 16002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16002",
+    "characterunlock": 0
+  },
+  {
+    "id": 16003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16003",
+    "characterunlock": 0
+  },
+  {
+    "id": 16004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16004",
+    "characterunlock": 0
+  },
+  {
+    "id": 160041,
+    "resourcedrop": "",
+    "collectiondrop": "1000:160041",
+    "characterunlock": 0
+  },
+  {
+    "id": 160042,
+    "resourcedrop": "",
+    "collectiondrop": "1000:160042",
+    "characterunlock": 0
+  },
+  {
+    "id": 160043,
+    "resourcedrop": "",
+    "collectiondrop": "1000:160043",
+    "characterunlock": 0
+  },
+  {
+    "id": 16005,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16005",
+    "characterunlock": 0
+  },
+  {
+    "id": 16006,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16006",
+    "characterunlock": 0
+  },
+  {
+    "id": 15001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15001",
+    "characterunlock": 0
+  },
+  {
+    "id": 15002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15002",
+    "characterunlock": 0
+  },
+  {
+    "id": 15003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15003",
+    "characterunlock": 0
+  },
+  {
+    "id": 15004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15004",
+    "characterunlock": 0
+  },
+  {
+    "id": 15005,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15005",
+    "characterunlock": 0
+  },
+  {
+    "id": 15006,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15006",
+    "characterunlock": 0
+  },
+  {
+    "id": 15007,
+    "resourcedrop": "",
+    "collectiondrop": "1000:15007",
+    "characterunlock": 0
+  },
+  {
+    "id": 13001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:13001",
+    "characterunlock": 0
+  },
+  {
+    "id": 13002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:13002",
+    "characterunlock": 0
+  },
+  {
+    "id": 13003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:13003",
+    "characterunlock": 0
+  },
+  {
+    "id": 13004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:13004",
+    "characterunlock": 0
+  },
+  {
+    "id": 14001,
+    "resourcedrop": "",
+    "collectiondrop": "1000:14001",
+    "characterunlock": 0
+  },
+  {
+    "id": 14002,
+    "resourcedrop": "",
+    "collectiondrop": "1000:14002",
+    "characterunlock": 0
+  },
+  {
+    "id": 14003,
+    "resourcedrop": "",
+    "collectiondrop": "1000:14003",
+    "characterunlock": 0
+  },
+  {
+    "id": 14004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:14004",
+    "characterunlock": 0
+  },
+  {
+    "id": 16007,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16007",
+    "characterunlock": 0
+  },
+  {
+    "id": 16008,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16008",
+    "characterunlock": 0
+  },
+  {
+    "id": 13005,
+    "resourcedrop": "",
+    "collectiondrop": "1000:16005",
+    "characterunlock": 0
+  }
+]

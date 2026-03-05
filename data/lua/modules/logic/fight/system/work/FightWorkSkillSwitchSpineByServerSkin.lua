@@ -48,9 +48,9 @@ function FightWorkSkillSwitchSpineByServerSkin:onStart()
 			return
 		end
 
-		local url = skinConfig and entity:getSpineUrl(skinConfig)
+		local url = skinConfig and entity.spine and entity.spine:getSpineUrl(skinConfig)
 
-		if not url then
+		if string.nilorempty(url) then
 			self:onDone(true)
 
 			return

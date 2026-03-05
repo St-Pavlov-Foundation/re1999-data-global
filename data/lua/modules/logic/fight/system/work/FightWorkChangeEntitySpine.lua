@@ -12,14 +12,28 @@ end
 function FightWorkChangeEntitySpine:onStart()
 	TaskDispatcher.runDelay(self._delayDone, self, 10)
 
+	if not self._entity.spine then
+		self:onDone(true)
+
+		return
+	end
+
 	self._lastSpineObj = self._entity.spine:getSpineGO()
 
-	self._entity:loadSpine(self._onLoaded, self, self._url)
+	local work = self._entity:registLoadSpineWork(self._url)
+
+	work:registFinishCallback(self._onLoaded, self)
+	work:start()
 end
 
 function FightWorkChangeEntitySpine:_onLoaded()
 	if self._entity then
 		self._entity:initHangPointDict()
+
+		if self._entity.spineRenderer then
+			self._entity.spineRenderer:setSpine(self._entity.spine)
+		end
+
 		FightRenderOrderMgr.instance:_resetRenderOrder(self._entity.id)
 
 		local effects = self._entity.effect:getHangEffect()
@@ -37,7 +51,6 @@ function FightWorkChangeEntitySpine:_onLoaded()
 		end
 
 		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, self._entity.spine)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, self._entity.spine)
 	end
 
 	gohelper.destroy(self._lastSpineObj)

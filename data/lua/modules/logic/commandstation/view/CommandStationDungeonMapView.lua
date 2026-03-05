@@ -14,6 +14,7 @@ function CommandStationDungeonMapView:addEvents()
 	self:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, self.setEpisodeListVisible, self)
 	self:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, self._onUpdateDungeonInfo, self)
 	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnLoadSceneFinish, self._loadSceneFinish, self)
+	self:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, self._updateReddot, self)
 end
 
 function CommandStationDungeonMapView:_loadSceneFinish(param)
@@ -30,6 +31,8 @@ function CommandStationDungeonMapView:removeEvents()
 end
 
 function CommandStationDungeonMapView:_initBtn()
+	self:_checkBtnVisible()
+
 	if self._loader then
 		return
 	end
@@ -41,8 +44,31 @@ function CommandStationDungeonMapView:_initBtn()
 	self._loader:startLoad(path, self._onResLoaded, self)
 end
 
+function CommandStationDungeonMapView:_checkBtnVisible()
+	if self._btnRelationShip then
+		gohelper.setActive(self._btnRelationShip, self.chapterId ~= CommandStationEnum.NoRelationShipChapterId and CommandStationEnterView.isUnlockRelationShipBoard())
+	end
+end
+
+function CommandStationDungeonMapView:_updateReddot()
+	local isShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.CommandStationRelationShipBoard)
+
+	gohelper.setActive(self._txt_relationshipGo, not isShow)
+	gohelper.setActive(self._goRelationShipBoardRedDot, isShow)
+end
+
 function CommandStationDungeonMapView:_onResLoaded()
 	self._btnGo = self._loader:getInstGO()
+	self._txt_relationshipGo = gohelper.findChild(self._btnGo, "#btn_relationship/txt_relationship")
+	self._goRelationShipBoardRedDot = gohelper.findChild(self._btnGo, "#btn_relationship/#go_Update")
+
+	self:_updateReddot()
+
+	self._btnRelationShip = gohelper.findChildButtonWithAudio(self._btnGo, "#btn_relationship")
+
+	self._btnRelationShip:AddClickListener(self.onClickRelationShip, self)
+	self:_checkBtnVisible()
+
 	self._btnEnter = gohelper.findChildButtonWithAudio(self._btnGo, "#btn_enter")
 
 	self._btnEnter:AddClickListener(self.onClickEnter, self)
@@ -228,6 +254,12 @@ function CommandStationDungeonMapView:onActStateChange()
 	self:_checkShowRoot()
 end
 
+function CommandStationDungeonMapView:onClickRelationShip()
+	CommandStationController.instance:openCommandStationRelationShipBoard({
+		fromMapView = true
+	})
+end
+
 function CommandStationDungeonMapView:onClickEnter()
 	if self._versionId and self._timeId then
 		CommandStationMapModel.instance:setVersionId(self._versionId)
@@ -264,10 +296,15 @@ function CommandStationDungeonMapView:onClose()
 	if self._btnEnter then
 		self._btnEnter:RemoveClickListener()
 	end
+
+	if self._btnRelationShip then
+		self._btnRelationShip:RemoveClickListener()
+	end
 end
 
 function CommandStationDungeonMapView:_onUpdateDungeonInfo()
 	self:_updateInfo(true)
+	self:_updateReddot()
 end
 
 return CommandStationDungeonMapView

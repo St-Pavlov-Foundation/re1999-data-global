@@ -37,8 +37,6 @@ function FightFloatMgr:init()
 
 	self._loader:addPath(self:getFloatPrefab())
 	self._loader:startLoad(self._onLoadCallback, self)
-
-	self._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
 end
 
 function FightFloatMgr:getFloatPrefab()
@@ -191,6 +189,10 @@ function FightFloatMgr:floatEnd(fightFloatItem)
 end
 
 function FightFloatMgr:nameUIBeforeDestroy(nameUIGO)
+	if not nameUIGO then
+		return
+	end
+
 	local nameUITr = nameUIGO.transform
 
 	for i = nameUITr.childCount, 1, -1 do

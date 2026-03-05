@@ -6,9 +6,8 @@ local FightTLEventObjFly = class("FightTLEventObjFly", FightTimelineTrackItem)
 
 function FightTLEventObjFly:onTrackStart(fightStepData, duration, paramsArr)
 	self.fly_obj = nil
-	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	self.from_entity = self.entityMgr:getEntity(fightStepData.fromId)
-	self.to_entity = self.entityMgr:getEntity(fightStepData.toId)
+	self.from_entity = FightGameMgr.entityMgr:getEntity(fightStepData.fromId)
+	self.to_entity = FightGameMgr.entityMgr:getEntity(fightStepData.toId)
 	self.params_arr = paramsArr
 	self._duration = duration
 
@@ -17,7 +16,7 @@ function FightTLEventObjFly:onTrackStart(fightStepData, duration, paramsArr)
 	if _type == 1 then
 		-- block empty
 	elseif _type == 2 and self.from_entity and self.from_entity:isMySide() then
-		self.fly_obj = self.entityMgr:getEntity(fightStepData.fromId).spine:getSpineGO()
+		self.fly_obj = FightGameMgr.entityMgr:getEntity(fightStepData.fromId).spine:getSpineGO()
 		self._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
 
 		self.timelineItem.workTimelineItem:_cancelSideRenderOrder()

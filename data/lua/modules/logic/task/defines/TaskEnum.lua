@@ -38,6 +38,7 @@ TaskEnum.TaskType = {
 	TestTask = 13,
 	TowerPermanentDeep = 69,
 	Activity172 = 37,
+	TowerCompose = 72,
 	Activity131 = 20,
 	TowerDeep = 66,
 	Activity125 = 45,

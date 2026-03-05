@@ -6,16 +6,6 @@ local GMLangController = class("GMLangController", BaseController)
 
 GameUtil.getEventId()
 
-local function ensure_percent_end(str)
-	local last_char = string.sub(str, -1, -1)
-
-	if last_char ~= "%" then
-		return str
-	else
-		return str .. "%"
-	end
-end
-
 local _getSubPlaceholderLuaLang = GameUtil.getSubPlaceholderLuaLang
 
 function GMLangController.getSubPlaceholderLuaLang(text, fillParams)

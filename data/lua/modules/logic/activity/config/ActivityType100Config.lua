@@ -19,8 +19,8 @@ function ActivityType100Config:onConfigLoaded(configName, configTable)
 	return
 end
 
-function ActivityType100Config:getWarmUpH5ActivityId(fallback)
-	return ActivityConfig.instance:getConstAsNum(3, fallback or 13119)
+function ActivityType100Config:getWarmUpH5ActIdList(fallback)
+	return ActivityConfig.instance:getConstAsNumList(3, "#", fallback or {})
 end
 
 function ActivityType100Config:getWarmUpH5Link(actId)
@@ -31,6 +31,16 @@ function ActivityType100Config:getWarmUpH5Link(actId)
 	end
 
 	return SettingsModel.instance:extractByRegion(CO.link)
+end
+
+function ActivityType100Config:getWarmUpH5BgResUrl(actId, fallback)
+	local CO = _getWarmUpH5CO(actId)
+
+	if not CO then
+		return fallback
+	end
+
+	return string.nilorempty(CO.bgResUrl) and fallback or CO.bgResUrl
 end
 
 ActivityType100Config.instance = ActivityType100Config.New()

@@ -13,8 +13,6 @@ function Turnback3BpView:onInitView()
 	self._txtnum = gohelper.findChildText(self.viewGO, "root/bottom/#go_bottomleft/#txt_num")
 	self._gobottomright = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright")
 	self._btnbottomright = gohelper.findChildButton(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/#btn_bottomright")
-	self._goextrareward = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_extrareward")
-	self._goextrarewardhasget = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_extrarewardhasget")
 	self._gounlockbtn = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn")
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/#simage_icon")
 	self._txtprice = gohelper.findChildText(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/#txt_price")
@@ -23,7 +21,13 @@ function Turnback3BpView:onInitView()
 	self._gorewardred = gohelper.findChild(self.viewGO, "root/top/redDot/redDot1")
 	self._gotaskred = gohelper.findChild(self.viewGO, "root/top/redDot/redDot2")
 	self._gohasbuy = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/go_hasbuy")
+	self._govxreward = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/Reward/#reddot")
+	self._gorewardClaimed = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/Reward/#go_Claimed")
+	self._gorewardhasget = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/Reward/#go_Claimed/go_hasget")
+	self._goTips = gohelper.findChild(self.viewGO, "root/bottom/#go_bottomright/#go_unlockbtn/Reward/#go_Tips")
+	self._animrewardhasget = self._gorewardhasget:GetComponent(typeof(UnityEngine.Animator))
 	self._btnList = {}
+	self._needAnim = false
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -37,6 +41,7 @@ function Turnback3BpView:addEvents()
 	self._btnbottomright:AddClickListener(self._onClickBottomRight, self)
 	self._btnhelp:AddClickListener(self._onClickHelpBtn, self)
 	self:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, self.succbuydoublereward, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewFinish, self)
 end
 
 function Turnback3BpView:removeEvents()
@@ -128,13 +133,32 @@ end
 function Turnback3BpView:_refreshBottomRight()
 	local hasDouble = TurnbackModel.instance:getBuyDoubleBonus()
 
-	gohelper.setActive(self._goextrareward, not hasDouble)
 	gohelper.setActive(self._gohasbuy, hasDouble)
-	gohelper.setActive(self._goextrarewardhasget, hasDouble)
+	gohelper.setActive(self._gorewardClaimed, hasDouble)
+	gohelper.setActive(self._gorewardhasget, hasDouble)
+	gohelper.setActive(self._govxreward, not hasDouble)
+	gohelper.setActive(self._goTips, not hasDouble)
 end
 
 function Turnback3BpView:succbuydoublereward()
-	self:_refreshBottomRight()
+	local hasDouble = TurnbackModel.instance:getBuyDoubleBonus()
+
+	gohelper.setActive(self._gohasbuy, hasDouble)
+	gohelper.setActive(self._gorewardClaimed, false)
+	gohelper.setActive(self._gorewardhasget, false)
+	gohelper.setActive(self._govxreward, true)
+	gohelper.setActive(self._goTips, not hasDouble)
+
+	self._needAnim = true
+end
+
+function Turnback3BpView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.CommonPropView and self._needAnim then
+		gohelper.setActive(self._gorewardClaimed, true)
+		gohelper.setActive(self._gorewardhasget, true)
+		gohelper.setActive(self._govxreward, false)
+		self._animrewardhasget:Play("go_hasget_in", 0, 0)
+	end
 end
 
 function Turnback3BpView:onClose()

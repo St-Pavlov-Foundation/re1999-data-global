@@ -26,6 +26,7 @@ function Rouge2_MapExploreChoiceViewExtend:_editableInitView()
 	SkillHelper.addHyperLinkClick(self._txtChoiceDesc, self._hyperLinkClickCallback, self)
 
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._choiceDescAnimator = gohelper.onceAddComponent(self._goChoiceDesc, gohelper.Type_Animator)
 end
 
 function Rouge2_MapExploreChoiceViewExtend:onOpenView(viewName)
@@ -62,6 +63,8 @@ function Rouge2_MapExploreChoiceViewExtend:onStatusChange(choiceId)
 	end
 
 	self._txtChoiceDesc.text = choiceCo.desc
+
+	self._choiceDescAnimator:Play("open", 0, 0)
 end
 
 function Rouge2_MapExploreChoiceViewExtend:_hyperLinkClickCallback(itemId)

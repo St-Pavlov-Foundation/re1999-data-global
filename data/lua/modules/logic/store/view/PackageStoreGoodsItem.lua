@@ -22,6 +22,7 @@ function PackageStoreGoodsItem:onInitView()
 	self._gosoldoutbg = gohelper.findChild(self._gosoldout, "bg")
 	self._gosoldouttagbg = gohelper.findChild(self._gosoldout, "bg_tag")
 	self._gooptionalgift = gohelper.findChild(self.viewGO, "#go_optionalgift")
+	self._goskindiscount = gohelper.findChild(self.viewGO, "#go_skindiscount")
 	self._gooptionalvx = gohelper.findChild(self.viewGO, "#packs_vx")
 	self._gosummonSimulationPickFX = gohelper.findChild(self.viewGO, "#go_summonSimulationPickFX")
 	self._txtpickdesc = gohelper.findChildText(self.viewGO, "#txt_pickdesc")
@@ -355,6 +356,7 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 	self:_onUpdateMO_gosummonSimulationPickFX(mo)
 	self:_onUpdateMO_linkPackage(mo)
 	self:_onUpdateMO_gosummonSimulationPickTag(mo)
+	self:_onUpdateMO_goskinDiscountTag(mo)
 	self:refreshSkinTips(mo)
 	gohelper.setActive(self._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[mo.goodsId])
 end
@@ -464,6 +466,12 @@ function PackageStoreGoodsItem:_onUpdateMO_gosummonSimulationPickTag(mo)
 	local isActive = mo.config.bigImg == StoreEnum.SummonSimulationPick2
 
 	gohelper.setActive(self._gojinfanglun, isActive)
+end
+
+function PackageStoreGoodsItem:_onUpdateMO_goskinDiscountTag(mo)
+	local isActive = mo.config.id == StoreEnum.V3a3_SkinDiscountItemId
+
+	gohelper.setActive(self._goskindiscount, isActive)
 end
 
 function PackageStoreGoodsItem:setClickCallback(callback, callbackObj)

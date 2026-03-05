@@ -12,6 +12,7 @@ function FightMagicCircleMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.UpdateMagicCircile, self.onUpdateMagicCircile)
 	self:com_registFightEvent(FightEvent.UpgradeMagicCircile, self.onUpgradeMagicCircile)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self.onRestartStageBefore)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self.onSwitchPlaneClearAsset)
 	self:com_registFightEvent(FightEvent.ChangeSceneVisible, self.onChangeSceneVisible)
 	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self.onBeforeEnterStepBehaviour)
 	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self.onSkillPlayStart)
@@ -47,6 +48,10 @@ function FightMagicCircleMgr:createEffect(name, releaseTime)
 end
 
 function FightMagicCircleMgr:onBeforeEnterStepBehaviour()
+	if FightDataHelper.stateMgr.dealingCrash then
+		self:releaseAllEffect()
+	end
+
 	self.entity = FightHelper.getEntity(FightEntityScene.MySideId)
 
 	local data = FightModel.instance:getMagicCircleInfo()
@@ -205,6 +210,10 @@ function FightMagicCircleMgr:onUpgradeMagicCircile(magicMo)
 end
 
 function FightMagicCircleMgr:onRestartStageBefore()
+	self:releaseAllEffect()
+end
+
+function FightMagicCircleMgr:onSwitchPlaneClearAsset()
 	self:releaseAllEffect()
 end
 

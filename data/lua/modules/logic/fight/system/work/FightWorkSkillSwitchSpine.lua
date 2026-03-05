@@ -42,9 +42,9 @@ function FightWorkSkillSwitchSpine:onStart()
 
 		local skinId = FightHelper.processSkinByStepData(self.fightStepData)
 		local skinConfig = FightConfig.instance:getSkinCO(skinId)
-		local url = skinConfig and entity:getSpineUrl(skinConfig)
+		local url = skinConfig and entity.spine and entity.spine:getSpineUrl(skinConfig)
 
-		if not url then
+		if string.nilorempty(url) then
 			logError("释放支援角色技能,但是找不到替换spine的url, heroId:" .. entityMO.modelId)
 			self:onDone(true)
 

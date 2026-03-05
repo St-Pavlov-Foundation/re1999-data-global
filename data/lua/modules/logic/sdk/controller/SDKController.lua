@@ -17,7 +17,7 @@ end
 function SDKController:addConstEvents()
 	SDKMgr.instance:setDataPropertiesChangeCallBack(self._onDataPropertiesChangeCallBack, self)
 
-	if (GameChannelConfig.isGpGlobal() or GameChannelConfig.isGpJapan()) and VersionValidator.instance:isInReviewing() == false and BootNativeUtil.isIOS() and SDKModel.instance:getNeedShowATTWithGetIDFA() then
+	if VersionUtil.isVersionLessEqual("3.3.0") and GameChannelConfig.isGpJapan() and BootNativeUtil.isIOS() and SDKModel.instance:getNeedShowATTWithGetIDFA() then
 		MainController.instance:registerCallback(MainEvent.ShowMainView, self._checkShowATTWithGetIDFA, self)
 		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	end

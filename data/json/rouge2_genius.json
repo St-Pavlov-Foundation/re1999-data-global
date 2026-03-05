@@ -172,72 +172,72 @@
     "name": "language_10102629",
     "effects": "191015",
     "replaceId": "",
-    "desc": "language_10102630",
+    "desc": "language_10107731",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 1,
     "typeName": "language_10102631",
-    "overviewText": "language_10102630"
+    "overviewText": "language_10107731"
   },
   {
     "id": 10016,
     "name": "language_10102632",
     "effects": "191016",
     "replaceId": "",
-    "desc": "language_10102633",
+    "desc": "language_10107732",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 2,
     "typeName": "language_10102631",
-    "overviewText": "language_10102634"
+    "overviewText": "language_10107733"
   },
   {
     "id": 10017,
     "name": "language_10102635",
     "effects": "191017",
     "replaceId": "",
-    "desc": "language_10102636",
+    "desc": "language_10107734",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 3,
     "typeName": "language_10102631",
-    "overviewText": "language_10102637"
+    "overviewText": "language_10107735"
   },
   {
     "id": 10018,
     "name": "language_10102638",
     "effects": "191018",
     "replaceId": "",
-    "desc": "language_10102639",
+    "desc": "language_10107736",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 4,
     "typeName": "language_10102631",
-    "overviewText": "language_10102640"
+    "overviewText": "language_10107737"
   },
   {
     "id": 10019,
     "name": "language_10102641",
     "effects": "191019",
     "replaceId": "",
-    "desc": "language_10102642",
+    "desc": "language_10107738",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 5,
     "typeName": "language_10102631",
-    "overviewText": "language_10102643"
+    "overviewText": "language_10107739"
   },
   {
     "id": 10020,
     "name": "language_10102644",
     "effects": "191020",
     "replaceId": "",
-    "desc": "language_10102645",
+    "desc": "language_10107740",
     "icon": "rouge2_alltalent_5",
     "talentType": 5,
     "talentOrder": 6,
     "typeName": "language_10102631",
-    "overviewText": "language_10102646"
+    "overviewText": "language_10107741"
   },
   {
     "id": 10021,

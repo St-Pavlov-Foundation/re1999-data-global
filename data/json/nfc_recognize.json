@@ -62,5 +62,53 @@
     "notMainTipsId": 260001,
     "unlockId": 260002,
     "unclaimedId": 260003
+  },
+  {
+    "id": 103201,
+    "type": 76,
+    "param": 1013301,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
+  },
+  {
+    "id": 103202,
+    "type": 76,
+    "param": 1013302,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
+  },
+  {
+    "id": 103203,
+    "type": 76,
+    "param": 1013303,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
+  },
+  {
+    "id": 103204,
+    "type": 76,
+    "param": 1013304,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
+  },
+  {
+    "id": 103205,
+    "type": 76,
+    "param": 1013305,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
+  },
+  {
+    "id": 103206,
+    "type": 76,
+    "param": 1013306,
+    "notMainTipsId": 260001,
+    "unlockId": 260002,
+    "unclaimedId": 260003
   }
 ]

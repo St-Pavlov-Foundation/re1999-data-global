@@ -21,6 +21,7 @@ function DungeonRewardView:onInitView()
 	self._goreward0 = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_reward0")
 	self._gocontent0 = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_reward0/#go_content0")
 	self._goactreward = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_actreward")
+	self._txtlimittitle = gohelper.findChildText(self.viewGO, "#scroll_reward/Viewport/reward/#go_actreward/title/#txt_timelimit")
 	self._goactcontent = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_actreward/#go_actcontent")
 	self._godoubledropreward = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_doubledropreward")
 	self._godoubledropcontent = gohelper.findChild(self.viewGO, "#scroll_reward/Viewport/reward/#go_doubledropreward/#go_content3")
@@ -258,6 +259,11 @@ function DungeonRewardView:onOpen()
 	self:showTurnBackAdditionReward(commonRewardList, isResourceType)
 	self:showDoubleDropReward(commonRewardList, isResourceType)
 	self:refreshActReward()
+	TaskDispatcher.runRepeat(self.everyMinuteCall, self, TimeUtil.OneMinuteSecond)
+end
+
+function DungeonRewardView:everyMinuteCall()
+	self:_refreshActLimitTime()
 end
 
 function DungeonRewardView:refreshActReward()
@@ -287,6 +293,10 @@ function DungeonRewardView:refreshActReward()
 			end
 		end
 	end
+
+	self._curActivityId = activityId
+
+	self:_refreshActLimitTime()
 
 	if not dropCo or episodeCo.type == DungeonEnum.EpisodeType.Story then
 		gohelper.setActive(self._goactreward, false)
@@ -342,6 +352,31 @@ function DungeonRewardView:refreshActReward()
 		self:showReward(self._goactcontent, {
 			reward
 		}, DungeonEnum.StarType.None, false, true, nil, nil, self.refreshToughBattleCallback, self)
+	end
+end
+
+function DungeonRewardView:_refreshActLimitTime()
+	if not self._curActivityId or self._curActivityId == 0 then
+		return
+	end
+
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self._curActivityId]
+
+	if not actInfoMo then
+		return
+	end
+
+	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+
+	if offsetSecond > 0 then
+		local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
+		local param = luaLang("dungeonreward_limittime_drop")
+
+		self._txtlimittitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(param, dateStr)
+
+		gohelper.setActive(self._txtlimittitle, true)
+	else
+		gohelper.setActive(self._txtlimittitle, false)
 	end
 end
 
@@ -473,6 +508,7 @@ function DungeonRewardView:onClose()
 	self._btnList = nil
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_General_OK)
+	TaskDispatcher.cancelTask(self.everyMinuteCall, self)
 end
 
 function DungeonRewardView:onDestroyView()

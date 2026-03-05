@@ -20,6 +20,8 @@ CommandPostModule_pb.COMMANDPOSTPAPERREPLY_MSG = protobuf.Descriptor()
 CommandPostModule_pb.COMMANDPOSTPAPERREPLYPAPERFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.COMMANDPOSTBONUSALLREPLY_MSG = protobuf.Descriptor()
 CommandPostModule_pb.COMMANDPOSTBONUSALLREPLYBONUSIDFIELD = protobuf.FieldDescriptor()
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG = protobuf.Descriptor()
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG = protobuf.Descriptor()
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYEVENTLISTFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYTASKSFIELD = protobuf.FieldDescriptor()
@@ -27,6 +29,9 @@ CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHTASKSFIELD = protobuf.FieldDesc
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYGAINBONUSFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYPAPERFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD = protobuf.FieldDescriptor()
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD = protobuf.FieldDescriptor()
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG = protobuf.Descriptor()
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.FINISHCOMMANDPOSTEVENTREPLY_MSG = protobuf.Descriptor()
 CommandPostModule_pb.FINISHCOMMANDPOSTEVENTREPLYIDFIELD = protobuf.FieldDescriptor()
 CommandPostModule_pb.COMMANDPOSTBONUSREQUEST_MSG = protobuf.Descriptor()
@@ -150,6 +155,24 @@ CommandPostModule_pb.COMMANDPOSTBONUSALLREPLY_MSG.fields = {
 }
 CommandPostModule_pb.COMMANDPOSTBONUSALLREPLY_MSG.is_extendable = false
 CommandPostModule_pb.COMMANDPOSTBONUSALLREPLY_MSG.extensions = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.name = "id"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.full_name = ".CommandPostCharacterReadRequest.id"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.number = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.index = 0
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.label = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.has_default_value = false
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.default_value = 0
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.type = 5
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD.cpp_type = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.name = "CommandPostCharacterReadRequest"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.full_name = ".CommandPostCharacterReadRequest"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.nested_types = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.enum_types = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.fields = {
+	CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUESTIDFIELD
+}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.is_extendable = false
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG.extensions = {}
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYEVENTLISTFIELD.name = "eventList"
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYEVENTLISTFIELD.full_name = ".GetCommandPostInfoReply.eventList"
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYEVENTLISTFIELD.number = 1
@@ -207,6 +230,15 @@ CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD.has_default_value = fa
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD.default_value = 0
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD.type = 5
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD.cpp_type = 1
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.name = "characterState"
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.full_name = ".GetCommandPostInfoReply.characterState"
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.number = 7
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.index = 6
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.label = 3
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.has_default_value = false
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.default_value = {}
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.type = 5
+CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD.cpp_type = 1
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.name = "GetCommandPostInfoReply"
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.full_name = ".GetCommandPostInfoReply"
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.nested_types = {}
@@ -217,10 +249,29 @@ CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.fields = {
 	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHTASKSFIELD,
 	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYGAINBONUSFIELD,
 	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYPAPERFIELD,
-	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD
+	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCATCHNUMFIELD,
+	CommandPostModule_pb.GETCOMMANDPOSTINFOREPLYCHARACTERSTATEFIELD
 }
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.is_extendable = false
 CommandPostModule_pb.GETCOMMANDPOSTINFOREPLY_MSG.extensions = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.name = "id"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.full_name = ".CommandPostCharacterReadReply.id"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.number = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.index = 0
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.label = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.has_default_value = false
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.default_value = 0
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.type = 5
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD.cpp_type = 1
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.name = "CommandPostCharacterReadReply"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.full_name = ".CommandPostCharacterReadReply"
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.nested_types = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.enum_types = {}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.fields = {
+	CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLYIDFIELD
+}
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.is_extendable = false
+CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG.extensions = {}
 CommandPostModule_pb.FINISHCOMMANDPOSTEVENTREPLYIDFIELD.name = "id"
 CommandPostModule_pb.FINISHCOMMANDPOSTEVENTREPLYIDFIELD.full_name = ".FinishCommandPostEventReply.id"
 CommandPostModule_pb.FINISHCOMMANDPOSTEVENTREPLYIDFIELD.number = 1
@@ -401,6 +452,8 @@ CommandPostModule_pb.CommandPostBonusAllReply = protobuf.Message(CommandPostModu
 CommandPostModule_pb.CommandPostBonusAllRequest = protobuf.Message(CommandPostModule_pb.COMMANDPOSTBONUSALLREQUEST_MSG)
 CommandPostModule_pb.CommandPostBonusReply = protobuf.Message(CommandPostModule_pb.COMMANDPOSTBONUSREPLY_MSG)
 CommandPostModule_pb.CommandPostBonusRequest = protobuf.Message(CommandPostModule_pb.COMMANDPOSTBONUSREQUEST_MSG)
+CommandPostModule_pb.CommandPostCharacterReadReply = protobuf.Message(CommandPostModule_pb.COMMANDPOSTCHARACTERREADREPLY_MSG)
+CommandPostModule_pb.CommandPostCharacterReadRequest = protobuf.Message(CommandPostModule_pb.COMMANDPOSTCHARACTERREADREQUEST_MSG)
 CommandPostModule_pb.CommandPostDispatchReply = protobuf.Message(CommandPostModule_pb.COMMANDPOSTDISPATCHREPLY_MSG)
 CommandPostModule_pb.CommandPostDispatchRequest = protobuf.Message(CommandPostModule_pb.COMMANDPOSTDISPATCHREQUEST_MSG)
 CommandPostModule_pb.CommandPostEventInfo = protobuf.Message(CommandPostModule_pb.COMMANDPOSTEVENTINFO_MSG)

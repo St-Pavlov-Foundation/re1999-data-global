@@ -25,5 +25,6 @@ RoleStoryEvent.ClickReviewItem = 1205
 RoleStoryEvent.StoryDispatchUnlock = 1206
 RoleStoryEvent.NormalDispatchRefresh = 1207
 RoleStoryEvent.StoryTabChange = 1208
+RoleStoryEvent.UnlockStory = 1209
 
 return RoleStoryEvent

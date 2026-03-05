@@ -101,6 +101,7 @@ function Rouge2_LayerMap:createMap()
 	self.actorComp = Rouge2_MapNormalLayerActorComp.New()
 
 	self.actorComp:init(self.goActor, self)
+	Rouge2_StatController.instance:statEnterLayerMap()
 	Rouge2_LayerMap.super.createMap(self)
 end
 

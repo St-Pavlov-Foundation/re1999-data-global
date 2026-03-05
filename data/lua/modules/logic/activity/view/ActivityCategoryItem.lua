@@ -159,6 +159,18 @@ function ActivityCategoryItem:_refreshItem()
 			local isRewardGet = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
 
 			gohelper.setActive(self._goreddot, isRewardGet)
+		elseif actId == ActivityEnum.Activity.V3a3_SkinDiscount then
+			if self._selected then
+				ActivityBeginnerController.instance:setFirstWeekEnter(self._mo.id)
+
+				local parentReddot = RedDotConfig.instance:getRedDotCO(dotId).parent
+
+				RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, {
+					[tonumber(parentReddot)] = true
+				})
+			end
+
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstWeekEnter, self)
 		elseif typeId == ActivityEnum.ActivityTypeID.Act125 then
 			if self._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(actId)
@@ -208,6 +220,16 @@ function ActivityCategoryItem:checkActivityShowFirstEnter(redDotIcon)
 		redDotIcon.show = ActivityBeginnerController.instance:checkFirstEnter(self._mo.id)
 
 		redDotIcon:showRedDot(RedDotEnum.Style.NewTag)
+	end
+end
+
+function ActivityCategoryItem:checkActivityShowFirstWeekEnter(redDotIcon)
+	redDotIcon:defaultRefreshDot()
+
+	if not redDotIcon.show then
+		redDotIcon.show = ActivityBeginnerController.instance:checkFirstWeekEnter(self._mo.id)
+
+		redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 	end
 end
 

@@ -96,6 +96,7 @@ function TowerGiftFullView:onOpen()
 
 	if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Tower) then
 		TowerRpc.instance:sendGetTowerInfoRequest()
+		TowerComposeRpc.instance:sendTowerComposeGetInfoRequest()
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Tower
 		})

@@ -19,7 +19,7 @@ function CommandStationMapLeftVersionView:_editableInitView()
 
 	self._itemList = self:getUserDataTb_()
 	self._recycleList = self:getUserDataTb_()
-	self._versionConfigList = lua_copost_version.configList
+	self._versionConfigList = CommandStationMapVersionView.getVersionConfigList()
 	self._versionConfigLen = #self._versionConfigList
 	self._itemHeight = 60
 	self._itemSpace = 0
@@ -104,7 +104,7 @@ function CommandStationMapLeftVersionView:onOpen()
 	local targetVersionId = CommandStationMapModel.instance:getVersionId()
 
 	if targetVersionId ~= versionId then
-		local targetIndex = CommandStationConfig.instance:getVersionIndex(targetVersionId) - 1
+		local targetIndex = CommandStationConfig.instance:getVersionIndex(targetVersionId, self._versionConfigList) - 1
 
 		self._focusVersionPosY = (targetIndex - dataIndex) * self._itemHeightWithSpace
 

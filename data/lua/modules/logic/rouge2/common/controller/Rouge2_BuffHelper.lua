@@ -5,7 +5,7 @@ module("modules.logic.rouge2.common.controller.Rouge2_BuffHelper", package.seeal
 local Rouge2_BuffHelper = class("Rouge2_BuffHelper")
 
 function Rouge2_BuffHelper.setBuffDesc(buffId, parent_obj, model_obj)
-	local buffCo = Rouge2_CollectionConfig.instance:getBuffCofing(buffId)
+	local buffCo = Rouge2_BackpackHelper.getItemConfig(buffId)
 	local descList = string.split(buffCo.desc, "|")
 
 	gohelper.CreateObjList(Rouge2_BuffHelper, Rouge2_BuffHelper._refreshBuffDesc, descList, parent_obj, model_obj)
@@ -14,9 +14,7 @@ end
 function Rouge2_BuffHelper:_refreshBuffDesc(obj, desc, index)
 	local txtDesc = gohelper.findChildText(obj, "txt_Desc")
 
-	txtDesc.text = SkillHelper.buildDesc(desc)
-
-	SkillHelper.addHyperLinkClick(txtDesc)
+	Rouge2_ItemDescHelper.buildAndSetDesc(txtDesc, desc)
 end
 
 function Rouge2_BuffHelper.listToMap(list)

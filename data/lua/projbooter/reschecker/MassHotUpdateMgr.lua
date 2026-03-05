@@ -45,7 +45,7 @@ function MassHotUpdateMgr:loadUnmatchRes(cb, cbObj, diffList, checkNet)
 
 		if string.find(branchName, "stable") then
 			url = url .. "/" .. gameId
-			backupUrl = backupUrl .. "/" .. gameId
+			backupUrl = backupUrl .. "/overseas"
 		else
 			url = url .. "/overseas"
 			backupUrl = backupUrl .. "/overseas"

@@ -870,6 +870,10 @@ function FightTLEventDefHit:_checkPlayAction(entity, action, actEffectData)
 end
 
 function FightTLEventDefHit:_playAction(entity, action)
+	if not entity then
+		return
+	end
+
 	if entity.buff:haveBuffId(2112031) then
 		return
 	end

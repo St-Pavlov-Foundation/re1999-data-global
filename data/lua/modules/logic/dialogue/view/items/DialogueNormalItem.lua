@@ -41,7 +41,7 @@ function DialogueNormalItem:initView()
 	self._conMark = gohelper.onceAddComponent(self.txtContent.gameObject, typeof(ZProj.TMPMark))
 
 	self._conMark:SetMarkTopGo(self._txtmarktop.gameObject)
-	self._conMark:SetTopOffset(8, -2.4)
+	self._conMark:SetTopOffset(-2, -2.4)
 
 	self._originalLineSpacing = self.txtContent.lineSpacing
 	self._lineSpacing = 26

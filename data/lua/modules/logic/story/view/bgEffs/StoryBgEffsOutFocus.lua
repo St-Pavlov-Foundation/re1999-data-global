@@ -150,7 +150,15 @@ function StoryBgEffsOutFocus:destroy()
 	if self._captureAnim then
 		self._capture.enabled = false
 
+		local player = SLFramework.AnimatorPlayer.Get(self._captureGo)
+
+		if player then
+			gohelper.removeComponent(self._captureGo, typeof(SLFramework.AnimatorPlayer))
+		end
+
 		gohelper.removeComponent(self._captureGo, typeof(UnityEngine.Animator))
+
+		self._captureAnim = false
 	end
 
 	self:_setViewTop(false)

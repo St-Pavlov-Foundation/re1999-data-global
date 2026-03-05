@@ -7,8 +7,8 @@ local Rouge2_MapDiceView = class("Rouge2_MapDiceView", BaseView)
 function Rouge2_MapDiceView:onInitView()
 	self._imageRateAttribute = gohelper.findChildImage(self.viewGO, "root/#go_Info/Rate/#image_Attribute")
 	self._txtRate = gohelper.findChildText(self.viewGO, "root/#go_Info/Rate/#txt_Rate")
-	self._goFixList = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#go_FixList")
-	self._goFixItem = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#go_FixList/#go_FixItem")
+	self._goFixList = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#scroll_FixList/Viewport/#go_FixList")
+	self._goFixItem = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#scroll_FixList/Viewport/#go_FixList/#go_FixItem")
 	self._txtTips = gohelper.findChildText(self.viewGO, "root/#go_Info/#txt_Tips")
 	self._txtTarget = gohelper.findChildText(self.viewGO, "root/#go_Info/#txt_Target")
 	self._goDice = gohelper.findChild(self.viewGO, "root/#go_Dice")
@@ -65,13 +65,14 @@ function Rouge2_MapDiceView:onOpen()
 end
 
 function Rouge2_MapDiceView:refreshInfo()
-	self._checkCo = self.viewParam and self.viewParam.checkCo
 	self._checkResInfo = self.viewParam and self.viewParam.checkResInfo
-	self._checkId = self._checkResInfo and self._checkResInfo.checkId
-	self._checkDiceRes = self._checkResInfo and GameUtil.splitString2(self._checkResInfo.checkDiceRes, true)
-	self._checkRes = self._checkResInfo and self._checkResInfo.checkRes
-	self._resRate = self._checkResInfo and self._checkResInfo.resRate or 0
-	self._fixValue = self._checkResInfo and self._checkResInfo.fixValue or 0
+	self._checkCo = self._checkResInfo and self._checkResInfo:getCheckConfig()
+	self._checkId = self._checkResInfo and self._checkResInfo:getCheckId()
+	self._checkDiceRes = self._checkResInfo and self._checkResInfo:getCheckDiceRes()
+	self._checkRes = self._checkResInfo and self._checkResInfo:getCheckRes()
+	self._resRate = self._checkResInfo and self._checkResInfo:getResRate() or 0
+	self._fixValue = self._checkResInfo and self._checkResInfo:getFixValue() or 0
+	self._itemCheckResList = self._checkResInfo and self._checkResInfo:getItemCheckResList() or {}
 	self._attributeId = self._checkCo and self._checkCo.attrType
 	self._attributeCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._attributeId)
 	self._isSucceed = self._checkRes ~= Rouge2_MapEnum.AttrCheckResult.Failure
@@ -96,18 +97,60 @@ function Rouge2_MapDiceView:refreshFixUI()
 
 	Rouge2_IconHelper.setAttributeIcon(self._attributeId, self._imageRateAttribute, Rouge2_Enum.AttrIconSuffix.Tag)
 
-	local fixInfoList = {
-		{
-			fixValue = self._fixValue,
-			fixAttrId = self._attributeId
-		}
-	}
+	self._fixInfoList, self._totalFixValue = self:_buildFixInfoList()
 
-	for index, fixInfo in ipairs(fixInfoList) do
+	for index, fixInfo in ipairs(self._fixInfoList) do
 		local fixItem = self:_getOrCreateFixItem(index)
 
-		self:_refreshFixItem(fixItem, fixInfo, index)
+		fixItem:onUpdateMO(fixInfo, index)
 	end
+end
+
+function Rouge2_MapDiceView:_buildFixInfoList()
+	local totalFixValue = self._fixValue
+	local fixInfoList = {}
+
+	table.insert(fixInfoList, {
+		fixType = Rouge2_MapEnum.DiceFixType.Attr,
+		fixValue = self._fixValue,
+		fixAttrId = self._attributeId
+	})
+
+	if self._itemCheckResList then
+		for _, itemInfo in ipairs(self._itemCheckResList) do
+			totalFixValue = totalFixValue + itemInfo[2]
+
+			local fixInfo = {
+				fixType = Rouge2_MapEnum.DiceFixType.Item,
+				fixValue = itemInfo[2],
+				fixAttrId = itemInfo[1]
+			}
+
+			table.insert(fixInfoList, fixInfo)
+		end
+	end
+
+	table.sort(fixInfoList, self._fixInfoSortFunc)
+
+	return fixInfoList, totalFixValue
+end
+
+function Rouge2_MapDiceView._fixInfoSortFunc(aFixInfo, bFixInfo)
+	local aFixType = aFixInfo.fixType
+	local bFixType = bFixInfo.fixType
+
+	if aFixType ~= bFixType then
+		return aFixType < bFixType
+	end
+
+	local aValue = aFixInfo.fixValue or 0
+	local bValue = bFixInfo.fixValue or 0
+
+	if aValue ~= bValue then
+		return bValue < aValue
+	end
+
+	return aFixInfo.fixAttrId < bFixInfo.fixAttrId
 end
 
 function Rouge2_MapDiceView:_getOrCreateFixItem(index)
@@ -115,13 +158,10 @@ function Rouge2_MapDiceView:_getOrCreateFixItem(index)
 
 	if not fixItem then
 		fixItem = self:getUserDataTb_()
-		fixItem.go = gohelper.cloneInPlace(self._goFixItem, index)
-		fixItem.txtFixValue = gohelper.findChildText(fixItem.go, "txt_FixValue")
-		fixItem.txtAttrName = gohelper.findChildText(fixItem.go, "txt_AttrName")
-		fixItem.imageAttrIcon = gohelper.findChildImage(fixItem.go, "image_AttrIcon")
-		fixItem.goFlyEffect = gohelper.findChild(fixItem.go, "txt_FixValue/#go_flyitem")
-		fixItem.fixValue = 0
-		fixItem.done = false
+
+		local go = gohelper.cloneInPlace(self._goFixItem, index)
+
+		fixItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, Rouge2_MapDiceFixItem)
 		self._fixItemTab[index] = fixItem
 	end
 
@@ -132,18 +172,8 @@ function Rouge2_MapDiceView:getFixItemList()
 	return self._fixItemTab
 end
 
-function Rouge2_MapDiceView:_refreshFixItem(obj, fixInfo, index)
-	local fixValue = fixInfo.fixValue
-	local fixAttrId = fixInfo.fixAttrId
-	local attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(fixAttrId)
-
-	obj.fixValue = fixValue
-	obj.txtFixValue.text = string.format("+%s", fixValue)
-	obj.txtAttrName.text = attrCo and attrCo.name
-
-	Rouge2_IconHelper.setAttributeIcon(fixAttrId, obj.imageAttrIcon, Rouge2_Enum.AttrIconSuffix.Tag)
-	gohelper.setActive(obj.goFlyEffect, false)
-	gohelper.setActive(obj.go, true)
+function Rouge2_MapDiceView:getTotalFixValue()
+	return self._totalFixValue
 end
 
 function Rouge2_MapDiceView:onClose()

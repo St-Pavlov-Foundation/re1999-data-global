@@ -79,7 +79,7 @@ function Rouge2_BackpackBoxTipsView:refreshProgress()
 	local curPoint = Rouge2_BackpackModel.instance:getCurBoxPoint()
 	local maxPoint = Rouge2_MapConfig.instance:BXSMaxBoxPoint()
 
-	self._txtprogress.text = string.format("%s/%s", curPoint, maxPoint)
+	self._txtprogress.text = string.format("%s/<size=52>%s</size>", curPoint, maxPoint)
 	self._imageprogress.fillAmount = maxPoint ~= 0 and curPoint / maxPoint or 0
 
 	local isLight = maxPoint <= curPoint

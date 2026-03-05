@@ -58,6 +58,7 @@ function ActivityWarmUpH5FullView:onOpen()
 	local parentGO = self.viewParam.parent
 
 	gohelper.addChild(parentGO, self.viewGO)
+	GameUtil.loadSImage(self._simagelangtxt, self.viewContainer:getBgResUrl())
 	ActivityWarmUpH5FullView.super.onOpen(self)
 	AudioMgr.instance:trigger(AudioEnum3_1.WarmUpH5.play_ui_mingdi_h5_open)
 	self:_refreshTimeTick()

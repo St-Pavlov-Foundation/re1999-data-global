@@ -80,6 +80,7 @@ MaterialEnum.SubTypePackages = {
 MaterialEnum.SubTypeInPack = {
 	[ItemEnum.SubType.RoomBlockGiftNew] = true,
 	[ItemEnum.SubType.RoomBlockGift] = true,
+	[ItemEnum.SubType.SkinSelelctGift] = true,
 	[ItemEnum.SubType.EquipSelectGift] = true
 }
 MaterialEnum.JumpProbabilityDisplay = {

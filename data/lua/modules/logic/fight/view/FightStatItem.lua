@@ -57,7 +57,9 @@ function FightStatItem:onUpdateMO(mo)
 	self._mo = mo
 	self.entityMO = mo.entityMO or FightDataHelper.entityMgr:getById(mo.entityId)
 
-	if mo.entityId == FightASFDDataMgr.EmitterId then
+	local isTowerCompose = self._mo and self._mo.isTowerCompose
+
+	if not isTowerCompose and mo.entityId == FightASFDDataMgr.EmitterId then
 		self.entityMO = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
 	end
 
@@ -71,7 +73,13 @@ function FightStatItem:onUpdateMO(mo)
 	gohelper.setActive(self.goCareer, true)
 
 	if self.entityMO:isAssistBoss() then
-		self:refreshAssistBossInfo()
+		if self._mo.isTowerCompose or FightDataHelper.paTaMgr:checkIsAssistRole() then
+			self:refreshAssistRole()
+		elseif FightDataHelper.paTaMgr:checkIsRouge3_3() then
+			self:refreshAssistRouge3_3()
+		else
+			self:refreshAssistBossInfo()
+		end
 	elseif self.entityMO:isVorpalith() then
 		self:refreshVorpalithInfo()
 	elseif self.entityMO:isASFDEmitter() then
@@ -386,6 +394,76 @@ function FightStatItem:refreshAssistBossInfo()
 	self._heroIcon:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 	UISpriteSetMgr.instance:setCommonSprite(self._career, "lssx_" .. tostring(assistBossConfig.career))
 	UISpriteSetMgr.instance:setCommonSprite(self._rare, "bgequip" .. 6)
+end
+
+function FightStatItem:refreshAssistRouge3_3()
+	local skin = self.entityMO.skin
+	local summonerCo = lua_fight_rouge2_summoner.configList[1]
+
+	for _, co in ipairs(lua_fight_rouge2_summoner.configList) do
+		if co.skinId == skin then
+			summonerCo = co
+
+			break
+		end
+	end
+
+	if not summonerCo then
+		logError(string.format("召唤师表未找到皮肤id : %s 的配置", skin))
+
+		return
+	end
+
+	self._txtName.text = summonerCo.name
+
+	local level = summonerCo.teamLevel
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+
+	self._txtLv.text = string.format("<size=20>LV.</size>%d", showLevel)
+
+	gohelper.setActive(self._gorankobj, rank > 1)
+
+	for i = 1, 3 do
+		gohelper.setActive(self._rankGOs[i], rank > 1 and i == rank - 1 or false)
+	end
+
+	self._heroIcon:LoadImage(ResUrl.monsterHeadIcon(summonerCo.monsterIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._career, "lssx_" .. tostring(summonerCo.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._rare, "bgequip" .. 6)
+end
+
+function FightStatItem:refreshAssistRole()
+	local assistBossConfig = TowerComposeConfig.instance:getSupportCo(self.entityMO.modelId)
+
+	if not assistBossConfig then
+		return
+	end
+
+	local heroCo = HeroConfig.instance:getHeroCO(assistBossConfig.heroId)
+
+	if not heroCo then
+		return
+	end
+
+	self._txtName.text = heroCo.name
+
+	local heroMo = HeroModel.instance:getByHeroId(heroCo.id)
+	local level = heroMo and heroMo.level or 1
+	local showLevel, rank = HeroConfig.instance:getShowLevel(level)
+
+	self._txtLv.text = string.format("<size=20>LV.</size>%d", showLevel)
+
+	gohelper.setActive(self._gorankobj, rank > 1)
+
+	for i = 1, 3 do
+		gohelper.setActive(self._rankGOs[i], rank > 1 and i == rank - 1 or false)
+	end
+
+	local skinConfig = FightConfig.instance:getSkinCO(self.entityMO.skin)
+
+	self._heroIcon:LoadImage(ResUrl.getHeadIconSmall(skinConfig.headIcon))
+	UISpriteSetMgr.instance:setCommonSprite(self._career, "lssx_" .. tostring(self.entityMO.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._rare, "bgequip" .. CharacterEnum.Star[heroCo.rare])
 end
 
 function FightStatItem:refreshASFDInfo()

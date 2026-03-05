@@ -113,7 +113,7 @@ function DungeonView:removeEvents()
 end
 
 function DungeonView:_btnTowerOnClick()
-	TowerController.instance:openMainView()
+	TowerComposeController.instance:openTowerMainSelectView()
 end
 
 function DungeonView:_btnpermanentOnClick()
@@ -513,8 +513,12 @@ function DungeonView:_showTowerEffect()
 	local canGetTaskNum = TowerTaskModel.instance:getTaskItemCanGetCount(towerTasks)
 	local isFullMopUp = TowerPermanentModel.instance:checkCanShowMopUpReddot()
 	local hasNewUpdateTower = TowerController.instance:checkReddotHasNewUpdateTower()
+	local isTowerCanShow = canGetTaskNum > 0 or isFullMopUp or hasNewUpdateTower
+	local towerComposeTasks = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.TowerCompose) or {}
+	local canGetComposeTaskNum = TowerTaskModel.instance:getTaskItemCanGetCount(towerComposeTasks)
+	local isTowerComposeCanShow = canGetComposeTaskNum > 0
 
-	gohelper.setActive(self._gotowerReddotEffect, canGetTaskNum > 0 or isFullMopUp or hasNewUpdateTower)
+	gohelper.setActive(self._gotowerReddotEffect, isTowerCanShow or isTowerComposeCanShow)
 end
 
 function DungeonView:onUpdateParam()
@@ -564,7 +568,7 @@ function DungeonView:_onCloseView(viewName)
 		self:_focusNormalChapter(chapterId)
 	end
 
-	if (viewName == ViewName.RougeMainView or viewName == ViewName.TowerMainView) and self._animator then
+	if (viewName == ViewName.RougeMainView or viewName == ViewName.TowerMainSelectView) and self._animator then
 		self._animator.enabled = true
 
 		self._animator:Play("open", 0, 0)

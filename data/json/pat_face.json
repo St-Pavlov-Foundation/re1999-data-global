@@ -602,6 +602,13 @@
     "patFaceOrder": 30300
   },
   {
+    "id": 30301,
+    "patFaceActivityId": 13319,
+    "patFaceViewName": "V3a3TowerGiftPanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 70000
+  },
+  {
     "id": 20206,
     "patFaceActivityId": 12244,
     "patFaceViewName": "V2a2_SpringFestival_PanelView",

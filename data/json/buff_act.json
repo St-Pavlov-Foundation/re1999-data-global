@@ -3205,7 +3205,7 @@
   },
   {
     "id": 1034,
-    "type": "AddBuffToEnterEnemy",
+    "type": "AddBuffToEnter",
     "effectTime": 0,
     "effectCondition": 0,
     "effect": "",
@@ -3648,6 +3648,87 @@
     "id": 214,
     "type": "Dot",
     "effectTime": 104,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1069,
+    "type": "ImmunityTimes",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1070,
+    "type": "HeatScaleAddFix",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1071,
+    "type": "CritRateAlter2",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1072,
+    "type": "ClientParam",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1073,
+    "type": "BattleSelection",
+    "effectTime": 1051,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1076,
+    "type": "PerElectricAddBuff",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10021,
+    "type": "Rouge2AttrToRole",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10022,
+    "type": "Rouge2AttrBuffRareToRole",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10023,
+    "type": "Rouge2AttrToExRole",
+    "effectTime": 0,
     "effectCondition": 0,
     "effect": "",
     "effectHangPoint": "",

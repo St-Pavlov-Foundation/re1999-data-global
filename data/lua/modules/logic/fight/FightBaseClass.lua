@@ -219,6 +219,24 @@ function FightBaseClass:com_sendEvent(ctrl, eventId, ...)
 	ctrl:dispatchEvent(eventId, ...)
 end
 
+function FightBaseClass:addEventCb(ctrlInstance, evtName, callback, cbObj, priority)
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:registEvent(ctrlInstance, evtName, callback, cbObj, priority)
+end
+
+function FightBaseClass:removeEventCb(ctrlInstance, evtName, callback, cbObj)
+	if not ctrlInstance or not evtName or not callback then
+		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
+
+		return
+	end
+
+	local comp = self:getComponent(FightEventComponent)
+
+	comp:cancelEvent(ctrlInstance, evtName, callback, cbObj)
+end
+
 function FightBaseClass:com_registMsg(msgId, callback)
 	local comp = self:getComponent(FightMsgComponent)
 

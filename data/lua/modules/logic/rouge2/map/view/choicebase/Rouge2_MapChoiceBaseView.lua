@@ -16,6 +16,7 @@ function Rouge2_MapChoiceBaseView:onInitView()
 	self._gochoicecontainer = gohelper.findChild(self.viewGO, "Right/#scroll_choiceList/Viewport/#go_choicecontainer")
 	self._godialogueblock = gohelper.findChild(self.viewGO, "#go_dialogueblock")
 	self._goAttribute = gohelper.findChild(self.viewGO, "Left/#go_Attribute")
+	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Skip")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ function Rouge2_MapChoiceBaseView:addEvents()
 	self.dialogueBlockClick = gohelper.getClickWithDefaultAudio(self._godialogueblock)
 
 	self.dialogueBlockClick:AddClickListener(self.onClickDialogueBlock, self)
+	self._btnSkip:AddClickListener(self._btnSkipOnClick, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChoiceDialogueDone, self.onChoiceDialogueDone, self, LuaEventSystem.High)
 end
@@ -37,10 +39,11 @@ end
 function Rouge2_MapChoiceBaseView:removeEvents()
 	self.scrollClick:RemoveClickListener()
 	self.dialogueBlockClick:RemoveClickListener()
+	self._btnSkip:RemoveClickListener()
 end
 
 function Rouge2_MapChoiceBaseView:_editableInitView()
-	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Enter_Attr)
+	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Enter_Attr_Detail)
 
 	self.goRight = gohelper.findChild(self.viewGO, "Right")
 	self.choiceItemList = {}
@@ -51,6 +54,8 @@ function Rouge2_MapChoiceBaseView:_editableInitView()
 	self.animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 	self.rightAnimator = gohelper.onceAddComponent(self.goRight, gohelper.Type_Animator)
 	self.showChoice = false
+
+	gohelper.setActive(self._btnSkip.gameObject, false)
 end
 
 function Rouge2_MapChoiceBaseView:initDialogueList()
@@ -58,7 +63,7 @@ function Rouge2_MapChoiceBaseView:initDialogueList()
 end
 
 function Rouge2_MapChoiceBaseView:initChoiceTemplate()
-	self.goChoiceItem = self.viewContainer:getResInst(Rouge2_Enum.ResPath.MapChoiceItem, self._gochoicecontainer)
+	self.goChoiceItem = self.viewContainer:getResInst(Rouge2_Enum.ResPath.MapChoiceItem, self._gochoicecontainer, "#go_ChoiceItem")
 
 	gohelper.setActive(self.goChoiceItem, false)
 end
@@ -118,7 +123,12 @@ end
 
 function Rouge2_MapChoiceBaseView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.UI.ChoiceViewOpen)
+	self:initViewData()
 	self:changeState(Rouge2_MapEnum.ChoiceViewState.PlayingDialogue)
+end
+
+function Rouge2_MapChoiceBaseView:initViewData()
+	return
 end
 
 function Rouge2_MapChoiceBaseView:startPlayDialogue(playInfoList, callback, callbackObj)
@@ -155,6 +165,10 @@ function Rouge2_MapChoiceBaseView:playChoiceHideAnim()
 	self.rightAnimator:Play("todialogue", 0, 0)
 
 	self.showChoice = false
+end
+
+function Rouge2_MapChoiceBaseView:_btnSkipOnClick()
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnJumpToChoiceState)
 end
 
 function Rouge2_MapChoiceBaseView:onClose()

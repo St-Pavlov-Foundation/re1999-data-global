@@ -171,6 +171,13 @@ function LoginGetInfoWork:_initInfo()
 			"sendGetTowerInfoRequest",
 			false
 		})
+		table.insert(self.GetInfoFuncList, {
+			TowerComposeRpc.sendTowerComposeGetInfoRequest,
+			TowerComposeRpc.instance,
+			"sendTowerComposeGetInfoRequest",
+			false,
+			false
+		})
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then

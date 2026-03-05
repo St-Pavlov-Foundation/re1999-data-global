@@ -26,6 +26,7 @@ function Rouge2_MapNodeIconItem:init(go)
 	self._goAttrList = gohelper.findChild(self.go, "#go_Root/Bubble/#go_attrlist")
 	self._goAttrItem = gohelper.findChild(self.go, "#go_Root/Bubble/#go_attrlist/#go_attr")
 	self._goLine = gohelper.findChild(self.go, "#go_Root/Bubble/line")
+	self._goRecommend = gohelper.findChild(self.go, "#go_Root/Bubble/#go_Recommand_light")
 	self._iconCanvasGroup = gohelper.onceAddComponent(self._imageIcon.gameObject, gohelper.Type_CanvasGroup)
 	self._iconBgCanvasGroup = gohelper.onceAddComponent(self._imageIconBg.gameObject, gohelper.Type_CanvasGroup)
 	self._lineCanvasGroup = gohelper.onceAddComponent(self._goLine, gohelper.Type_CanvasGroup)
@@ -61,6 +62,10 @@ function Rouge2_MapNodeIconItem:updatePos()
 	recthelper.setAnchor(self._goRoot.transform, uiPosX, uiPosY)
 end
 
+function Rouge2_MapNodeIconItem:getIconGO()
+	return self._goRoot
+end
+
 function Rouge2_MapNodeIconItem:refreshInfo(nodeMo, mapItem)
 	self._nodeMo = nodeMo
 	self._mapItem = mapItem
@@ -93,6 +98,7 @@ function Rouge2_MapNodeIconItem:refreshUI()
 	gohelper.setActive(self._goUnfinish, self._arriveStatus == Rouge2_MapEnum.Arrive.CanArrive or self._arriveStatus == Rouge2_MapEnum.Arrive.ArrivingNotFinish)
 	gohelper.setActive(self._goLock, self._isLock)
 	self:refreshIcon()
+	self:refreshRecommend()
 	self:refreshSelect()
 	self:refreshNodeName()
 	self:refreshNodeAttr()
@@ -139,6 +145,15 @@ function Rouge2_MapNodeIconItem:refreshIcon()
 	self._iconCanvasGroup.alpha = iconAlpha
 
 	SLFramework.UGUI.GuiHelper.SetColor(self._imageIcon, iconColor)
+end
+
+function Rouge2_MapNodeIconItem:refreshRecommend()
+	local isHighQuality = self._eventCo and self._eventCo.isHighQuality ~= 0
+	local isCanArrive = self._arriveStatus == Rouge2_MapEnum.Arrive.CanArrive or self._arriveStatus == Rouge2_MapEnum.Arrive.NotArrive or self._arriveStatus == Rouge2_MapEnum.NodeSelectArriveStatus
+	local curNode = Rouge2_MapModel.instance:getCurNode()
+	local isNotCurNode = not curNode or curNode.nodeId ~= self._nodeId
+
+	gohelper.setActive(self._goRecommend, isHighQuality and isCanArrive and isNotCurNode)
 end
 
 function Rouge2_MapNodeIconItem:refreshSelect()

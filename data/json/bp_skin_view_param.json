@@ -2,6 +2,15 @@
   {
     "skinId": 310003,
     "audioId": 320027,
-    "storePrefab": "bpfaceview2"
+    "storePrefab": "bpfaceview2",
+    "openAudioId": 0,
+    "closeAudioId": 0
+  },
+  {
+    "skinId": 309504,
+    "audioId": 330010,
+    "storePrefab": "bpface_skinfestivalview",
+    "openAudioId": 330009,
+    "closeAudioId": 330011
   }
 ]

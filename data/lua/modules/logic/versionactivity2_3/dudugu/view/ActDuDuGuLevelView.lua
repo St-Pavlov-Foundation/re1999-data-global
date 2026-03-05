@@ -35,12 +35,14 @@ function ActDuDuGuLevelView:addEvents()
 	self._btnPlayBtn:AddClickListener(self._btnPlayBtnOnClick, self)
 	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
 	self._animEvent:AddEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd, self._onStoryOpenEnd, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 end
 
 function ActDuDuGuLevelView:removeEvents()
 	self._btnPlayBtn:RemoveClickListener()
 	self._btnTask:RemoveClickListener()
 	self._animEvent:RemoveEventListener(RoleActivityEnum.AnimEvt.OnStoryOpenEnd)
+	self._btnTrial:RemoveClickListener()
 end
 
 function ActDuDuGuLevelView:_btnPlayBtnOnClick()
@@ -51,6 +53,32 @@ end
 
 function ActDuDuGuLevelView:_btnTaskOnClick()
 	ViewMgr.instance:openView(ViewName.ActDuDuGuTaskView)
+end
+
+function ActDuDuGuLevelView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function ActDuDuGuLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function ActDuDuGuLevelView:_addEvents()
@@ -73,6 +101,7 @@ function ActDuDuGuLevelView:_editableInitView()
 
 	self._audioScroll = MonoHelper.addLuaComOnceToGo(self._golvpath, DungeonMapEpisodeAudio, self._scrolllv)
 	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	ActDuDuGuModel.instance:initData(self.actId)
 	self:_initStageItems()
@@ -83,7 +112,7 @@ end
 function ActDuDuGuLevelView:onOpen()
 	local goreddot = gohelper.findChild(self._btnTask.gameObject, "#go_reddot")
 
-	RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
+	RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
 	self:_initPathStatus()
 	self:OnDotChange()
 	self:_showLeftTime()
@@ -100,7 +129,7 @@ function ActDuDuGuLevelView:_playStoryFinishAnim()
 	local newFinishStoryLvlId = ActDuDuGuModel.instance:getNewFinishStoryLvl()
 
 	if newFinishStoryLvlId then
-		for k, storyItem in ipairs(self.storyItemList) do
+		for k, storyItem in ipairs(self._lvItems) do
 			if storyItem.id == newFinishStoryLvlId then
 				self:_lockScreen(true)
 
@@ -108,7 +137,7 @@ function ActDuDuGuLevelView:_playStoryFinishAnim()
 
 				storyItem:playFinish()
 				storyItem:playStarAnim()
-				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1)
+				TaskDispatcher.runDelay(self._finishStoryEnd, self, 1.34)
 
 				break
 			end
@@ -191,7 +220,7 @@ function ActDuDuGuLevelView:OnEndDungeonPush()
 end
 
 function ActDuDuGuLevelView:OnDotChange()
-	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
 
 	if isDotShow then
 		self._animTask:Play("loop")

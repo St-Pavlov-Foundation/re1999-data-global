@@ -385,6 +385,10 @@ function FightViewHandCard:_checkCardOpEnd()
 		return
 	end
 
+	if FightDataHelper.stateMgr.forceUseCard then
+		return
+	end
+
 	if FightDataHelper.operationDataMgr:isCardOpEnd() and #FightDataHelper.operationDataMgr:getOpList() > 0 then
 		FightController.instance:dispatchEvent(FightEvent.CardOpEnd)
 
@@ -1300,6 +1304,8 @@ function FightViewHandCard:_onDragHandCardBegin(index, position)
 		return
 	end
 
+	self._draging = true
+
 	if self._cardLongPressFlow.status == WorkStatus.Running then
 		self._cardLongPressFlow:stop()
 		self._cardLongPressFlow:reset()
@@ -1332,6 +1338,8 @@ function FightViewHandCard:_onDragHandCardEnd(index, position)
 
 		return
 	end
+
+	self._draging = false
 
 	self._cardDragFlow:stop()
 	self._cardDragFlow:reset()
@@ -1587,7 +1595,7 @@ function FightViewHandCard:onControlRelease()
 
 	for i, cardItem in pairs(self._handCardItemList) do
 		if cardItem and cardItem.index == self._longPressIndex then
-			cardItem:_onClickThis()
+			cardItem:onKeyClickThis()
 		end
 	end
 end
@@ -1612,7 +1620,12 @@ function FightViewHandCard:getLongPressItemIndex()
 end
 
 function FightViewHandCard:_longPressHandCard(index)
-	self:_longPressHandCardEnd()
+	if self._draging then
+		return
+	end
+
+	logNormal("_longPressHandCard ", index)
+	self:_longPressHandCardEnd(self._longPressIndex)
 
 	if self._cardDragFlow.status == WorkStatus.Running then
 		return
@@ -1647,6 +1660,10 @@ function FightViewHandCard:_onLongPressFlowDone()
 end
 
 function FightViewHandCard:_longPressHandCardEnd(index)
+	if self._draging then
+		return
+	end
+
 	index = index or self._longPressIndex
 
 	if not index then

@@ -80,6 +80,19 @@ function NecrologistStoryController:_openCurView(_, resultCode, _)
 		return
 	end
 
+	local config = RoleStoryConfig.instance:getStoryById(self._curStoryId)
+	local preStoryId = config.preStoryId
+
+	if preStoryId > 0 then
+		local gameMo = NecrologistStoryModel.instance:getGameMO(self._curStoryId)
+
+		if not gameMo:isStoryFinish(preStoryId) then
+			self:openStoryView(preStoryId, self._curStoryId, self._openCurGameView, self)
+
+			return
+		end
+	end
+
 	local viewName = NecrologistStoryEnum.StoryId2GameView[self._curStoryId]
 
 	if not viewName then
@@ -91,11 +104,42 @@ function NecrologistStoryController:_openCurView(_, resultCode, _)
 	})
 end
 
-function NecrologistStoryController:openStoryView(storyGroupId, roleStoryId)
-	ViewMgr.instance:openView(ViewName.NecrologistStoryView, {
-		storyGroupId = storyGroupId,
-		roleStoryId = roleStoryId
+function NecrologistStoryController:_openCurGameView()
+	if not self._curStoryId then
+		return
+	end
+
+	local config = RoleStoryConfig.instance:getStoryById(self._curStoryId)
+	local preStoryId = config.preStoryId
+
+	if preStoryId > 0 then
+		local gameMo = NecrologistStoryModel.instance:getGameMO(self._curStoryId)
+
+		if not gameMo:isStoryFinish(preStoryId) then
+			return
+		end
+	end
+
+	local viewName = NecrologistStoryEnum.StoryId2GameView[self._curStoryId]
+
+	if not viewName then
+		return
+	end
+
+	ViewMgr.instance:openView(viewName, {
+		roleStoryId = self._curStoryId
 	})
+end
+
+function NecrologistStoryController:openStoryView(storyGroupId, roleStoryId, callback, callbackObj)
+	local param = {}
+
+	param.storyGroupId = storyGroupId
+	param.roleStoryId = roleStoryId
+	param.callback = callback
+	param.callbackObj = callbackObj
+
+	ViewMgr.instance:openView(ViewName.NecrologistStoryView, param)
 end
 
 function NecrologistStoryController:openTaskView(roleStoryId)

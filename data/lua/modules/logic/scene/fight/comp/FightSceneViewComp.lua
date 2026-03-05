@@ -5,8 +5,7 @@ module("modules.logic.scene.fight.comp.FightSceneViewComp", package.seeall)
 local FightSceneViewComp = class("FightSceneViewComp", BaseSceneComp)
 
 function FightSceneViewComp:onScenePrepared(sceneId, levelId)
-	ViewMgr.instance:openView(ViewName.FightSkillSelectView)
-	ViewMgr.instance:openView(ViewName.FightView)
+	return
 end
 
 function FightSceneViewComp:onSceneClose(sceneId, levelId)

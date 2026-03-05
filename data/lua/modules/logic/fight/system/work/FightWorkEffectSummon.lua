@@ -17,11 +17,9 @@ function FightWorkEffectSummon:onStart()
 		self:com_registTimer(self._delayDone, 10)
 		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
 
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-
 		self._entityId = self._entityMO.id
 
-		local entity = entityMgr:buildSpine(self._entityMO)
+		local entity = FightGameMgr.entityMgr:newEntity(self._entityMO)
 
 		if isTypeOf(entity, FightEntityAssembledMonsterSub) then
 			self:onDone(true)

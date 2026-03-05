@@ -98,7 +98,7 @@ end
 
 function RoomBuildingController:refreshBuildingOccupy()
 	local scene = GameSceneMgr.instance:getCurScene()
-	local count = RoomBuildingEnum.MaxBuildingOccupyNum
+	local count = RoomConfig.instance:getMaxBuildingOccupyNum()
 
 	for i = 1, count do
 		local entity = scene.buildingmgr:spawnMapBuildingOccupy(i)

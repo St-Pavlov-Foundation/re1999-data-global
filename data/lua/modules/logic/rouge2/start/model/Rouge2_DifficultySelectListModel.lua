@@ -124,10 +124,6 @@ function Rouge2_DifficultySelectListModel.getDifficultyList()
 
 			pageDiffList = {}
 		end
-
-		if i >= 4 then
-			break
-		end
 	end
 
 	if #pageDiffList > 0 then

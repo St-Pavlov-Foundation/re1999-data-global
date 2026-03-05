@@ -524,7 +524,7 @@ function Rouge2_AlchemyListView:refreshFormulaNeed(needMaterialParam)
 	local needCount = #needMaterialParam
 
 	if needCount < itemCount then
-		for i = maxCount + 1, itemCount do
+		for i = needCount + 1, itemCount do
 			local item = self._needMainMaterialItemList[i]
 
 			gohelper.setActive(item.go, false)

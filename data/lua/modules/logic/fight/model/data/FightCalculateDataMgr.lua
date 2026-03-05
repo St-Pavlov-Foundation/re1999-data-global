@@ -378,10 +378,12 @@ function FightCalculateDataMgr:playEffect58(actEffectData)
 		return
 	end
 
-	local cardData = FightCardInfoData.New({
-		uid = "0",
-		skillId = actEffectData.effectNum
-	})
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.uid = "0"
+	cardProto.skillId = actEffectData.effectNum
+
+	local cardData = FightCardInfoData.New(cardProto)
 	local handCard = self:getHandCard()
 
 	table.insert(handCard, cardData)
@@ -517,10 +519,12 @@ function FightCalculateDataMgr:playEffect78(actEffectData)
 		return
 	end
 
-	local cardData = FightCardInfoData.New({
-		uid = "0",
-		skillId = actEffectData.effectNum
-	})
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.uid = "0"
+	cardProto.skillId = actEffectData.effectNum
+
+	local cardData = FightCardInfoData.New(cardProto)
 	local handCard = self:getHandCard()
 
 	table.insert(handCard, cardData)
@@ -1397,10 +1401,12 @@ function FightCalculateDataMgr:playEffect191(actEffectData)
 		return
 	end
 
-	local cardData = FightCardInfoData.New({
-		uid = "0",
-		skillId = actEffectData.effectNum
-	})
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.uid = "0"
+	cardProto.skillId = actEffectData.effectNum
+
+	local cardData = FightCardInfoData.New(cardProto)
 	local handCard = self:getHandCard()
 
 	table.insert(handCard, cardData)
@@ -2115,7 +2121,11 @@ function FightCalculateDataMgr:playEffect330(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect337(actEffectData)
+	local curRound = self.dataMgr.fieldMgr.curRound
+
 	self.dataMgr:updateFightData(actEffectData.fight)
+
+	self.dataMgr.fieldMgr.curRound = curRound
 end
 
 function FightCalculateDataMgr:playEffect338(actEffectData)
@@ -2450,6 +2460,31 @@ function FightCalculateDataMgr:playEffect356(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect362(actEffectData)
+	return
+end
+
+function FightCalculateDataMgr:playEffect363(actEffectData)
+	local indicatorId = tonumber(actEffectData.targetId)
+	local indicatorDict = self.dataMgr.fieldMgr.indicatorDict
+	local offsetNum = actEffectData.effectNum
+	local indicatorInfo = indicatorDict[indicatorId]
+
+	if not indicatorInfo then
+		indicatorInfo = {
+			num = 0,
+			id = indicatorId
+		}
+		indicatorDict[indicatorId] = indicatorInfo
+	end
+
+	indicatorInfo.num = indicatorInfo.num + offsetNum
+end
+
+function FightCalculateDataMgr:playEffect364(actEffectData)
+	return
+end
+
+function FightCalculateDataMgr:playEffect366(actEffectData)
 	return
 end
 

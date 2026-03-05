@@ -138,7 +138,7 @@ function FightTLEventCreateSpine:_setupEntityLookAt(needLookAtCamera)
 end
 
 function FightTLEventCreateSpine:_onTickLookAtCamera()
-	local entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	for _, entity in ipairs(self._spineEntityList) do
 		entityMgr:adjustSpineLookRotation(entity)
@@ -146,7 +146,7 @@ function FightTLEventCreateSpine:_onTickLookAtCamera()
 end
 
 function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, scale, posX, posY, posZ, hangPointGO, specificOrder, actionName)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local specificSide = self._attacker:getSide()
 	local entityParam = {}
 
@@ -156,7 +156,7 @@ function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, sca
 		}
 	end
 
-	local spineEntity = entityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror == 1, nil, entityParam)
+	local spineEntity = entityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror == 1, nil, entityParam, self._paramsArr[18] == "1")
 
 	spineEntity.variantHeart:setEntity(self._attacker)
 	spineEntity:setScale(scale)
@@ -182,15 +182,17 @@ function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, sca
 	end
 
 	if self._paramsArr[14] == "1" then
+		entityMgr.entityDic[spineEntity.id] = nil
+
 		FightController.instance:dispatchEvent(FightEvent.EntrustTempEntity, spineEntity)
 	end
 
 	if not string.nilorempty(self._paramsArr[15]) then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 
-		entityMgr:removeUnitData(spineEntity:getTag(), spineEntity.id)
+		entityMgr.entityDic[spineEntity.id] = nil
+
 		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, spineEntity, tonumber(self._paramsArr[15]))
-		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, spineEntity, tonumber(self._paramsArr[15]))
 	end
 
 	table.insert(self._spineEntityList, spineEntity)
@@ -236,7 +238,7 @@ function FightTLEventCreateSpine:_clear()
 
 	if self._spineEntityList then
 		for i, spineEntity in ipairs(self._spineEntityList) do
-			local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+			local entityMgr = FightGameMgr.entityMgr
 			local canRemove = true
 
 			if self._paramsArr[14] == "1" then
@@ -248,7 +250,7 @@ function FightTLEventCreateSpine:_clear()
 			end
 
 			if canRemove then
-				entityMgr:removeUnit(spineEntity:getTag(), spineEntity.id)
+				entityMgr:delEntity(spineEntity.id)
 			end
 
 			spineEntity = nil

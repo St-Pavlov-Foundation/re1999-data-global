@@ -2,17 +2,17 @@
 
 module("modules.logic.fight.entity.comp.FightHeroCustomComp", package.seeall)
 
-local FightHeroCustomComp = class("FightHeroCustomComp", LuaCompBase)
+local FightHeroCustomComp = class("FightHeroCustomComp", FightBaseClass)
 
 FightHeroCustomComp.HeroId2CustomComp = {
 	[3113] = FightHeroALFComp
 }
 
-function FightHeroCustomComp:ctor(entity)
+function FightHeroCustomComp:onConstructor(entity)
 	self.entity = entity
-end
 
-function FightHeroCustomComp:init(go)
+	local go = entity.go
+
 	self.go = go
 
 	local entityMo = self.entity:getMO()
@@ -22,18 +22,7 @@ function FightHeroCustomComp:init(go)
 		self.customComp = compCls.New(self.entity)
 
 		self.customComp:init(go)
-	end
-end
-
-function FightHeroCustomComp:addEventListeners()
-	if self.customComp then
 		self.customComp:addEventListeners()
-	end
-end
-
-function FightHeroCustomComp:removeEventListeners()
-	if self.customComp then
-		self.customComp:removeEventListeners()
 	end
 end
 
@@ -41,8 +30,9 @@ function FightHeroCustomComp:getCustomComp()
 	return self.customComp
 end
 
-function FightHeroCustomComp:onDestroy()
+function FightHeroCustomComp:onDestructor()
 	if self.customComp then
+		self.customComp:removeEventListeners()
 		self.customComp:onDestroy()
 
 		self.customComp = nil

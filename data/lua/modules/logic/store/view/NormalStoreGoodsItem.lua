@@ -115,6 +115,12 @@ function NormalStoreGoodsItem:_onClick()
 	else
 		self:_onNormalGoodsClick()
 	end
+
+	if self._mo:needShowRead() then
+		StoreRpc.instance:sendReadStoreNewRequest({
+			self._mo.goodsId
+		}, self._onRefreshNew, self)
+	end
 end
 
 function NormalStoreGoodsItem:_onJumpGoodsClick()
@@ -416,13 +422,14 @@ function NormalStoreGoodsItem:refreshNormalGoods()
 	self._soldout = mo:isSoldOut()
 
 	self:refreshNextRefreshTime(goodsConfig)
+	gohelper.setActive(self._gonewtag, false)
 
-	if mo:needShowNew() then
+	if mo:needShowRead() then
 		local isRoomBlockPackage = self._itemType == MaterialEnum.MaterialType.BlockPackage
 		local isRoomBuilding = self._itemType == MaterialEnum.MaterialType.Building
 
 		if not isRoomBlockPackage and not isRoomBuilding then
-			gohelper.setActive(self._gonewtag, mo:needShowNew())
+			gohelper.setActive(self._gonewtag, mo:needShowRead())
 		end
 	end
 
@@ -745,6 +752,14 @@ function NormalStoreGoodsItem:checkShowTicket()
 	end
 
 	return false
+end
+
+function NormalStoreGoodsItem:_onRefreshNew(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	gohelper.setActive(self._gonewtag, false)
 end
 
 function NormalStoreGoodsItem:onDestroy()

@@ -34,12 +34,95 @@ function FightViewAssistBoss:onUpdateParam()
 end
 
 function FightViewAssistBoss:onOpen()
+	self:showPaTaUI()
+	self:show3_3PaTaUI()
+end
+
+function FightViewAssistBoss:showPaTaUI()
 	if not FightDataHelper.fieldMgr:isPaTa() then
 		return
 	end
 
 	self:createAssistBossBehaviour()
 	self:createAssistBossScore()
+end
+
+function FightViewAssistBoss:show3_3PaTaUI()
+	if not FightDataHelper.fieldMgr:is3_3PaTa() then
+		return
+	end
+
+	self:createAssistRoleComp()
+	self:createPaTaComposeScoreComp()
+	self:createPlaneComp()
+end
+
+function FightViewAssistBoss:createAssistRoleComp()
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not assistBoss then
+		return
+	end
+
+	if not FightDataHelper.paTaMgr:checkIsAssistRole() then
+		return
+	end
+
+	self.assistRoleComp = FightAssistRoleView.New()
+
+	local enum = FightRightElementEnum.Elements.AssistRole
+	local goAssistRole = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
+
+	self.assistRoleComp:init(goAssistRole)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, enum)
+end
+
+function FightViewAssistBoss:createPaTaComposeScoreComp()
+	if not self:checkInTowerComposeBoss() then
+		return
+	end
+
+	local enum = FightRightElementEnum.Elements.PaTaComposeScore
+	local goPaTaComposeScore = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
+
+	self.paTaComposeScoreComp = FightPaTaComposeScoreComp.New()
+
+	self.paTaComposeScoreComp:init(goPaTaComposeScore)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, enum)
+end
+
+function FightViewAssistBoss:checkInTowerComposeBoss()
+	local customData = FightDataHelper.getCustomData(FightCustomData.CustomDataType.TowerCompose)
+	local planeId = customData and customData.planeId
+
+	if not planeId then
+		return false
+	end
+
+	if planeId < 1 then
+		return false
+	end
+
+	return true
+end
+
+function FightViewAssistBoss:createPlaneComp()
+	local customData = FightDataHelper.getCustomData(FightCustomData.CustomDataType.TowerCompose)
+	local maxPlaneId = customData and customData.maxPlaneId
+
+	if not maxPlaneId then
+		return
+	end
+
+	if maxPlaneId < 2 then
+		return
+	end
+
+	local goContainer = gohelper.findChild(self.viewGO, "root/topLeftContent")
+
+	self.planeComp = FightPaTaComposePlaneComp.New()
+
+	self.planeComp:init(goContainer)
 end
 
 function FightViewAssistBoss:createAssistBossBehaviour()
@@ -66,10 +149,11 @@ function FightViewAssistBoss:createAssistBossBehaviour()
 
 	self.bossBehaviour = behaviourCls.New()
 
-	local goAssistBoss = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.AssistBoss)
+	local enum = FightRightElementEnum.Elements.AssistBoss
+	local goAssistBoss = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
 
 	self.bossBehaviour:init(goAssistBoss)
-	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.AssistBoss)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, enum)
 end
 
 function FightViewAssistBoss:createAssistBossScore()
@@ -102,6 +186,24 @@ function FightViewAssistBoss:onDestroyView()
 		self.scoreComp:destroy()
 
 		self.scoreComp = nil
+	end
+
+	if self.assistRoleComp then
+		self.assistRoleComp:destroy()
+
+		self.assistRoleComp = nil
+	end
+
+	if self.paTaComposeScoreComp then
+		self.paTaComposeScoreComp:destroy()
+
+		self.paTaComposeScoreComp = nil
+	end
+
+	if self.planeComp then
+		self.planeComp:destroy()
+
+		self.planeComp = nil
 	end
 end
 

@@ -12,6 +12,7 @@ function FightSceneEntityFootRing:onSceneStart(sceneId, levelId)
 	FightController.instance:registerCallback(FightEvent.AfterPlayUniqueSkill, self._onAfterPlayUniqueSkill, self)
 	FightController.instance:registerCallback(FightEvent.SetEntityFootEffectVisible, self._onSetEntityFootEffectVisible, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntityEffect, self)
 end
 
 function FightSceneEntityFootRing:onScenePrepared(sceneId, levelId)
@@ -26,6 +27,7 @@ function FightSceneEntityFootRing:onSceneClose()
 	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, self._onAfterPlayUniqueSkill, self)
 	FightController.instance:unregisterCallback(FightEvent.SetEntityFootEffectVisible, self._onSetEntityFootEffectVisible, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntityEffect, self)
 	self:_releaseFlyEffect()
 end
 

@@ -16,7 +16,7 @@ function FightWorkPlayNormalWork:onStart()
 end
 
 function FightWorkPlayNormalWork:finishWork()
-	if not self:isActive() then
+	if not self:__isActive() then
 		return
 	end
 

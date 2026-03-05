@@ -52,6 +52,47 @@ function FightBuffTypeId2EffectMgr:_onRemoveEntityBuff(entityId, buffMO)
 	end
 
 	self:deleteBuff(buffConfig.typeId)
+
+	local config = lua_fight_buff_type_id_2_scene_effect.configDict[buffConfig.typeId]
+
+	if config then
+		local counter = self.refCounter[buffConfig.typeId] or 0
+
+		if counter == 0 then
+			local effect = config.delEffect
+			local pos = config.pos
+			local posX = pos[1] or 0
+
+			if config.reverseX == 1 then
+				local entityMO = FightDataHelper.entityMgr:getById(entityId)
+
+				if entityMO and entityMO:isEnemySide() then
+					posX = -posX
+				end
+			end
+
+			local posY = pos[2] or 0
+			local posZ = pos[3] or 0
+			local vertin = FightHelper.getEntity(FightEntityScene.MySideId)
+
+			if vertin then
+				local effectWrap = vertin.effect:addGlobalEffect(effect)
+
+				effectWrap:setLocalPos(posX, posY, posZ)
+				self:com_registTimer(self.removeDelEffect, config.delTime, effectWrap)
+			end
+		end
+	end
+end
+
+function FightBuffTypeId2EffectMgr:removeDelEffect(effectWrap)
+	local vertin = FightHelper.getEntity(FightEntityScene.MySideId)
+
+	if not vertin then
+		return
+	end
+
+	vertin.effect:removeEffect(effectWrap)
 end
 
 function FightBuffTypeId2EffectMgr:addBuff(entityId, buffTypeId)

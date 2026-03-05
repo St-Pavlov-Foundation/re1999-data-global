@@ -7848,6 +7848,242 @@
     "lang": "language_10100430"
   },
   {
+    "id": "rouge2_backpacktalentresetview_recycle",
+    "lang": "language_10107169"
+  },
+  {
+    "id": "rouge2_getcointips",
+    "lang": "language_10107170"
+  },
+  {
+    "id": "rouge2_getrevivalcointips",
+    "lang": "language_10107171"
+  },
+  {
+    "id": "rouge2_attributedetailview_skilldesctype_career",
+    "lang": "language_10107172"
+  },
+  {
+    "id": "rouge2_attributedetailview_skilldesctype_fight",
+    "lang": "language_10077710"
+  },
+  {
+    "id": "rouge2_attributedetailview_skilldesctype_explore",
+    "lang": "language_10107173"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_tips",
+    "lang": "language_10107174"
+  },
+  {
+    "id": "rouge2_herogroupeditview_attrbuff",
+    "lang": "language_10107175"
+  },
+  {
+    "id": "rouge2_effecttips3",
+    "lang": "language_10100429"
+  },
+  {
+    "id": "rouge2_herogroupeditview_recommend",
+    "lang": "language_10107176"
+  },
+  {
+    "id": "rouge2_attributetoolbar_system",
+    "lang": "language_10107177"
+  },
+  {
+    "id": "rouge2_careerattributetipsview_lockdesc",
+    "lang": "language_10107178"
+  },
+  {
+    "id": "rouge2_careerattributetipsview_title",
+    "lang": "language_10107179"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_tips2",
+    "lang": "language_10107180"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_tips3",
+    "lang": "language_10107181"
+  },
+  {
+    "id": "rouge2_careerattributetipsview_attrbuff",
+    "lang": "language_10107182"
+  },
+  {
+    "id": "rouge2_attributedetailview_dropoverview",
+    "lang": "language_10107183"
+  },
+  {
+    "id": "rouge2_attributedetailview_attroverview",
+    "lang": "language_10107184"
+  },
+  {
+    "id": "rouge2_attributedetailview_attrtabitem",
+    "lang": "language_10020408"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_nonehero",
+    "lang": "language_10107185"
+  },
+  {
+    "id": "rouge2_teamrecommendtips_recommendteam",
+    "lang": "language_10107186"
+  },
+  {
+    "id": "rouge2_careerattributetipsview_title2",
+    "lang": "language_10107187"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_nextreward",
+    "lang": "language_10107188"
+  },
+  {
+    "id": "rouge2_attrbuffdropview_nextreward2",
+    "lang": "language_10107189"
+  },
+  {
+    "id": "towercomposetheme_progress",
+    "lang": "language_10107190"
+  },
+  {
+    "id": "v3a3_marsha_gameview_remaintime",
+    "lang": "language_10107191"
+  },
+  {
+    "id": "arcade_hankbook_detail_character",
+    "lang": "language_10107192"
+  },
+  {
+    "id": "arcade_hankbook_detail_monster",
+    "lang": "language_10107193"
+  },
+  {
+    "id": "arcade_hankbook_detail_item",
+    "lang": "language_10107194"
+  },
+  {
+    "id": "arcade_hankbook_detail_floor",
+    "lang": "language_10107195"
+  },
+  {
+    "id": "towercompose_pointlevel",
+    "lang": "language_10107196"
+  },
+  {
+    "id": "dungeonreward_limittime_drop",
+    "lang": "language_10107197"
+  },
+  {
+    "id": "summonluckybag_remain_count",
+    "lang": "language_10097142"
+  },
+  {
+    "id": "towercompose_notHave",
+    "lang": "language_10107198"
+  },
+  {
+    "id": "v3a3_skindiscount_buy_tip",
+    "lang": "language_10029765"
+  },
+  {
+    "id": "v3a3_skindiscount_price",
+    "lang": "language_10107199"
+  },
+  {
+    "id": "v3a3_skindiscount_compensate",
+    "lang": "language_10107200"
+  },
+  {
+    "id": "tower_fight_switch_tow_plane",
+    "lang": "language_10107201"
+  },
+  {
+    "id": "towercompose_inTeams",
+    "lang": "language_10107202"
+  },
+  {
+    "id": "towercompose_activeEffect",
+    "lang": "language_10107203"
+  },
+  {
+    "id": "towercompose_passiveEffect",
+    "lang": "language_10107204"
+  },
+  {
+    "id": "havefree10Count",
+    "lang": "language_10107205"
+  },
+  {
+    "id": "fight_dream_title_3_3",
+    "lang": "language_10106876"
+  },
+  {
+    "id": "fight_dream_desc_3_3",
+    "lang": "language_10107206"
+  },
+  {
+    "id": "commandstation_moredetail",
+    "lang": "language_10107207"
+  },
+  {
+    "id": "towercompose_episode_unlock",
+    "lang": "language_10107208"
+  },
+  {
+    "id": "marshagameview_cd",
+    "lang": "language_10107209"
+  },
+  {
+    "id": "towercompose_plane1",
+    "lang": "language_10107210"
+  },
+  {
+    "id": "towercompose_plane2",
+    "lang": "language_10107211"
+  },
+  {
+    "id": "towercompose_heroTag1",
+    "lang": "language_10107212"
+  },
+  {
+    "id": "towercompose_heroTag2",
+    "lang": "language_10107213"
+  },
+  {
+    "id": "towercompose_heroTag3",
+    "lang": "language_10107214"
+  },
+  {
+    "id": "towercompose_activeEffectDesc",
+    "lang": "language_10020408"
+  },
+  {
+    "id": "towercompose_inSupport",
+    "lang": "language_10030387"
+  },
+  {
+    "id": "handbookskin_festival_unknow",
+    "lang": "language_10107215"
+  },
+  {
+    "id": "handbookskin_festival_Christmas",
+    "lang": "language_10107216"
+  },
+  {
+    "id": "ArcadeTalentItem_getLevelValueBySkillId_fmt",
+    "lang": "language_10109436"
+  },
+  {
+    "id": "talent_itemtalentheroupview_tip_1",
+    "lang": "language_10109851"
+  },
+  {
+    "id": "talent_itemtalentheroupview_tip_6",
+    "lang": "language_10109852"
+  },
+  {
     "id": "SettingsGraphicsView_videoMode0",
     "lang": "language_10047747"
   },
@@ -7878,10 +8114,6 @@
   {
     "id": "SettingsGraphicsView_videoMode_tips",
     "lang": "language_10097066"
-  },
-  {
-    "id": "summonluckybag_remain_count",
-    "lang": "language_10097142"
   },
   {
     "id": "Season3_0FightRuleView_txtEffectDesc",

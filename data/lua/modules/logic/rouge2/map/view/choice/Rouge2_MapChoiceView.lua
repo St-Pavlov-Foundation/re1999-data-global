@@ -122,11 +122,11 @@ function Rouge2_MapChoiceView:initViewData()
 	self.nodeMo = self.viewParam
 	self.curEventId = self.nodeMo.eventId
 	self.eventCo = Rouge2_MapConfig.instance:getRougeEvent(self.curEventId)
+	self.isEventFinish = Rouge2_OutsideModel.instance:passedEventId(self.curEventId)
 end
 
 function Rouge2_MapChoiceView:onOpen()
 	Rouge2_MapChoiceView.super.onOpen(self)
-	self:initViewData()
 	self:refreshUI()
 	Rouge2_MapDialogueHelper.init(self._dialogueListComp, self.nodeMo, self.onEnterDialogueDone, self)
 end
@@ -159,6 +159,14 @@ function Rouge2_MapChoiceView:refreshChoice()
 	end
 
 	Rouge2_MapHelper.loadItemWithCustomUpdateFunc(self.goChoiceItem, Rouge2_MapNodeChoiceItem, choiceIdList, self.choiceItemList, self.updateItem, self)
+end
+
+function Rouge2_MapChoiceView:changeState(state)
+	Rouge2_MapChoiceView.super.changeState(self, state)
+
+	local isJumpChoice = self.isEventFinish and state == Rouge2_MapEnum.ChoiceViewState.PlayingDialogue
+
+	gohelper.setActive(self._btnSkip.gameObject, isJumpChoice)
 end
 
 function Rouge2_MapChoiceView:updateItem(item, index, choiceId)

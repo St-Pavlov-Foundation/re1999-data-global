@@ -16,7 +16,7 @@ end
 function Rouge2_MapAttributeUpViewContainer:playOpenTransition()
 	self:startViewOpenBlock()
 
-	local addAttrPoint = self.viewParam and self.viewParam.addAttrPoint
+	local addAttrPoint = Rouge2_MapAttrUpdateController.instance:getAddAttrPoint()
 	local animName = "open"
 
 	if not addAttrPoint or addAttrPoint <= 0 then

@@ -257,7 +257,9 @@ function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOLis
 	if list and #list > 0 then
 		for _, config in ipairs(list) do
 			if #materialDataMOList == 1 and config.id == materialDataMOList[1].materilId then
-				PlayerCardController.instance:ShowChangeBgSkin(config.id)
+				PlayerCardController.instance:ShowChangeBgSkin(config.id, materialDataMOList)
+
+				return
 			end
 		end
 	end

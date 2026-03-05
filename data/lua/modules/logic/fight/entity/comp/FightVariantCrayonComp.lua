@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightVariantCrayonComp", package.seeall)
 
-local FightVariantCrayonComp = class("FightVariantCrayonComp", LuaCompBase)
+local FightVariantCrayonComp = class("FightVariantCrayonComp", FightBaseClass)
 local SceneNames = {
 	m_s62_jzsylb = true
 }
@@ -12,22 +12,13 @@ local ShadowMapKey = "_ShadowMap"
 local NoiceMapName = "crayonmap1_manual"
 local ShadowMapName = "crayonmap2_manual"
 
-function FightVariantCrayonComp:ctor(entity)
+function FightVariantCrayonComp:onConstructor(entity)
 	self.entity = entity
-end
+	self.go = entity.go
 
-function FightVariantCrayonComp:init(go)
-	self.go = go
-
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self, LuaEventSystem.Low)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
-end
-
-function FightVariantCrayonComp:removeEventListeners()
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	self:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, self._onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSpineMaterialChange, self._onMatChange, LuaEventSystem.Low)
+	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 end
 
 function FightVariantCrayonComp:_onMatChange(entityId, mat)
@@ -121,7 +112,7 @@ function FightVariantCrayonComp:_onLoadCallback2(assetItem)
 	end
 end
 
-function FightVariantCrayonComp:onDestroy()
+function FightVariantCrayonComp:onDestructor()
 	if self._assetItem1 then
 		self._assetItem1:Release()
 

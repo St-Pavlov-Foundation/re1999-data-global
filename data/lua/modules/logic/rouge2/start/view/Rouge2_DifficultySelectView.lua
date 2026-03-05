@@ -116,6 +116,7 @@ function Rouge2_DifficultySelectView:_onDrag(param, pointerEventData)
 end
 
 function Rouge2_DifficultySelectView:_editableInitView()
+	Rouge2_MapLocalDataHelper.clear()
 	gohelper.setActive(self._goBlock, false)
 	gohelper.setActive(self._goPageItem, false)
 
@@ -213,12 +214,12 @@ function Rouge2_DifficultySelectView:refreshUI()
 
 	local desc = self._difficultyCo.desc
 
-	self._txtDescr.text = SkillHelper.buildDesc(desc, Rouge2_DifficultySelectView.PercentColor, Rouge2_DifficultySelectView.BracketColor)
+	self._txtDescr.text = Rouge2_ItemDescHelper.buildDesc(desc, Rouge2_DifficultySelectView.PercentColor, Rouge2_DifficultySelectView.BracketColor)
 
 	local scoreReward = self._difficultyCo.scoreReward
 	local scroreRewardStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_difficultyselectview_reward"), scoreReward)
 
-	self._txtDescr2.text = SkillHelper.buildDesc(scroreRewardStr, Rouge2_DifficultySelectView.PercentColor, Rouge2_DifficultySelectView.BracketColor)
+	self._txtDescr2.text = Rouge2_ItemDescHelper.buildDesc(scroreRewardStr, Rouge2_DifficultySelectView.PercentColor, Rouge2_DifficultySelectView.BracketColor)
 end
 
 function Rouge2_DifficultySelectView:refreshArrows()

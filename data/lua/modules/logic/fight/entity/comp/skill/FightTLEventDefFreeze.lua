@@ -78,10 +78,13 @@ function FightTLEventDefFreeze:_getDefenders(fightStepData, filter_type)
 				end
 			elseif _type == 4 then
 				local oneDefender = FightHelper.getEntity(fightStepData.toId)
-				local list = FightHelper.getSideEntitys(oneDefender:getSide())
 
-				for i, v in ipairs(list) do
-					target_dic[v.id] = v
+				if oneDefender then
+					local list = FightHelper.getSideEntitys(oneDefender:getSide())
+
+					for i, v in ipairs(list) do
+						target_dic[v.id] = v
+					end
 				end
 			elseif _type == 5 then
 				local list = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)

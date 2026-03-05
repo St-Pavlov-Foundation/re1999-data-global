@@ -274,5 +274,17 @@
     "collectionBonus": "11#13203#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3301,
+    "name": "language_10108559",
+    "nameEn": "Along the Don River",
+    "desc": "language_10108644",
+    "rewardIcon": "1702300",
+    "building": "13301|13302|13303",
+    "packages": "3301|3302|3303|3304",
+    "collectionBonus": "11#13303#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

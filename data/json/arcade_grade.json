@@ -1,0 +1,22 @@
+[
+  {
+    "needScore": 0,
+    "icon": "v3a3_eliminate_level_c",
+    "gainRateAdd": 0
+  },
+  {
+    "needScore": 20,
+    "icon": "v3a3_eliminate_level_b",
+    "gainRateAdd": 200
+  },
+  {
+    "needScore": 60,
+    "icon": "v3a3_eliminate_level_a",
+    "gainRateAdd": 500
+  },
+  {
+    "needScore": 120,
+    "icon": "v3a3_eliminate_level_s",
+    "gainRateAdd": 1000
+  }
+]

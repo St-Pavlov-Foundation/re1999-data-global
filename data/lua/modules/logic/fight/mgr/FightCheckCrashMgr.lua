@@ -5,97 +5,117 @@ module("modules.logic.fight.mgr.FightCheckCrashMgr", package.seeall)
 local FightCheckCrashMgr = class("FightCheckCrashMgr", FightBaseClass)
 
 function FightCheckCrashMgr:onConstructor()
-	self:com_registFightEvent(FightEvent.OnRoundSequenceStart, self._onRoundSequenceStart)
-	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish)
-	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStageBefore)
-	self:com_registFightEvent(FightEvent.FightDialogEnd, self._onFightDialogEnd)
-	self:com_registFightEvent(FightEvent.StartFightEnd, self.onStartFightEnd)
-	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView)
+	self.ingoreViewNameDic = {
+		[ViewName.StoryView] = true,
+		[ViewName.FightSpecialTipView] = true,
+		[ViewName.FightFocusView] = true,
+		[ViewName.GuideView] = true,
+		[ViewName.FightGuideView] = true,
+		[ViewName.FightTechniqueGuideView] = true,
+		[ViewName.HelpView] = true
+	}
 end
 
-function FightCheckCrashMgr:_onFightDialogEnd()
-	self:clearTab()
+function FightCheckCrashMgr:startCheck()
+	self.timer = self:com_registRepeatTimer(self.tick, 5, -1)
+
+	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView)
+	self:com_registFightEvent(FightEvent.FightDialogEnd, self.onFightDialogEnd)
+	self:com_registFightEvent(FightEvent.StageChanged, self.onStageChanged)
 end
 
-function FightCheckCrashMgr:_onCloseView(viewName)
-	if viewName == ViewName.StoryView then
-		self:clearTab()
+function FightCheckCrashMgr:onCloseView(viewName)
+	if self.ingoreViewNameDic[viewName] then
+		self.lastCounter = -1
 	end
 end
 
-function FightCheckCrashMgr:checkFunc()
+function FightCheckCrashMgr:onFightDialogEnd()
+	self.lastCounter = -1
+end
+
+function FightCheckCrashMgr:onStageChanged(stage)
+	if stage == FightStageMgr.StageType.Play then
+		self.play2Operating = false
+		self.lastCounter = -1
+	end
+end
+
+function FightCheckCrashMgr:tick()
+	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
+		return
+	end
+
+	if self.play2Operating then
+		return
+	end
+
+	if self.lastCounter ~= FightObject.Counter then
+		self.lastCounter = FightObject.Counter
+
+		return
+	end
+
 	if FightViewDialog.playingDialog then
 		return
 	end
 
-	if ViewMgr.instance:isOpen(ViewName.StoryView) then
+	for viewName, _ in pairs(self.ingoreViewNameDic) do
+		if ViewMgr.instance:isOpen(viewName) then
+			return
+		end
+	end
+
+	for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+		local workComp = entity.skill and entity.skill.workComp
+
+		if workComp then
+			local aliveWorkList = workComp:getAliveWorkList()
+
+			if #aliveWorkList > 0 then
+				for _, work in ipairs(aliveWorkList) do
+					work:registFinishCallback(self.onTimelineWorkFinish, self)
+				end
+
+				return
+			end
+		end
+	end
+
+	logError("战斗可能卡住了,强刷下战场")
+
+	if FightModel.instance:isFinish() then
+		self.timer.isDone = true
+
+		FightRpc.instance:sendEndFightRequest(false)
+
 		return
 	end
 
-	local same = true
+	local flow = self:com_registFlowSequence()
 
-	self.hpDic = self.hpDic or {}
-	self.exPointDic = self.exPointDic or {}
-	self.buffCount = self.buffCount or {}
-
-	local entityDataDic = FightDataHelper.entityMgr.entityDataDic
-
-	for entityId, entityData in pairs(entityDataDic) do
-		local curHp = entityData.currentHp
-
-		if self.hpDic[entityId] ~= curHp then
-			same = false
-			self.hpDic[entityId] = curHp
-		end
-
-		local curExpoint = entityData:getExPoint()
-
-		if self.exPointDic[entityId] ~= curExpoint then
-			same = false
-			self.exPointDic[entityId] = curExpoint
-		end
-
-		local buffList = entityData:getBuffList()
-		local curBuffCount = buffList and #buffList or 0
-
-		if self.buffCount[entityId] ~= curBuffCount then
-			same = false
-			self.buffCount[entityId] = curBuffCount
-		end
-	end
-
-	if same then
-		logError("场上角色数据一分钟没有变化了,可能卡住了")
-		FightMsgMgr.sendMsg(FightMsgId.MaybeCrashed)
-		self:releaseTimer()
-	end
+	flow:registWork(FightWorkRefreshFightAfterCrash)
+	flow:registWork(FightWorkPlay2Operate)
+	flow:registFinishCallback(self.onRefreshAfterCrash, self)
+	flow:start()
 end
 
-function FightCheckCrashMgr:_onRoundSequenceStart()
-	self:com_registSingleRepeatTimer(self.checkFunc, 60, -1)
+function FightCheckCrashMgr:onRefreshAfterCrash()
+	self.lastCounter = -1
 end
 
-function FightCheckCrashMgr:_onRoundSequenceFinish()
-	self:com_releaseSingleTimer(self.checkFunc)
+function FightCheckCrashMgr:onTimelineWorkFinish(work)
+	self.lastCounter = -1
 end
 
-function FightCheckCrashMgr:_onRestartStageBefore()
-	self:com_releaseSingleTimer(self.checkFunc)
+function FightCheckCrashMgr:play2Operate()
+	self.play2Operating = true
 end
 
-function FightCheckCrashMgr:releaseTimer()
-	self:com_releaseSingleTimer(self.checkFunc)
-	self:clearTab()
-end
-
-function FightCheckCrashMgr:onStartFightEnd()
-	self:releaseTimer()
-end
-
-function FightCheckCrashMgr:clearTab()
-	self.hpDic = nil
-	self.exPointDic = nil
-	self.buffCount = nil
+function FightCheckCrashMgr:playEndFight()
+	self:killComponent(FightTimerComponent)
+	self:killComponent(FightEventComponent)
+	self:killComponent(FightMsgComponent)
 end
 
 function FightCheckCrashMgr:onDestructor()

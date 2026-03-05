@@ -19,7 +19,7 @@ function SkillEditorPlayTimelineWork:onStart()
 	self.flow = FlowSequence.New()
 
 	local entityMOs = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	if entityMOs and #entityMOs > 0 then
 		for _, entityMO in ipairs(entityMOs) do

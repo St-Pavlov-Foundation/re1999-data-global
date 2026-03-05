@@ -68,7 +68,8 @@ function CommandStationViewDefine.init(module_views)
 		},
 		otherRes = {
 			"ui/viewres/commandstation/commandstation_taskitem.prefab"
-		}
+		},
+		preloader = module_views_preloader
 	}
 	module_views.CommandStationDispatchEventMainView = {
 		destroy = 0,
@@ -180,6 +181,48 @@ function CommandStationViewDefine.init(module_views)
 			[1] = "ui/animations/dynamic/commandstation_enter.controller",
 			[2] = "ui/spriteassets/sp_commandstation.asset"
 		}
+	}
+	module_views.CommandStationRelationShipBoard = {
+		destroy = 0,
+		container = "CommandStationRelationShipBoardContainer",
+		mainRes = "ui/viewres/commandstation/commandstation_relationshipboard.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		anim = ViewAnim.Internal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			[1] = "ui/animations/dynamic/commandstation_boardeff.controller"
+		}
+	}
+	module_views.CommandStationRelationShipDetail = {
+		destroy = 0,
+		container = "CommandStationRelationShipDetailContainer",
+		mainRes = "ui/viewres/commandstation/commandstation_relationshipdetail.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Internal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.CommandStationMapDisplayView = {
+		destroy = 0,
+		container = "CommandStationMapDisplayViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/commandstation/commandstation_mapdisplayview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		preloader = module_views_preloader
 	}
 end
 

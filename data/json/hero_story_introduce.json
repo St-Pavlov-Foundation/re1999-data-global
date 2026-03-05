@@ -82,5 +82,41 @@
     "name": "language_10098673",
     "resource": "",
     "desc": "language_10098674"
+  },
+  {
+    "id": 3051001,
+    "name": "language_10105868",
+    "resource": "",
+    "desc": "language_10105869"
+  },
+  {
+    "id": 3051002,
+    "name": "language_10105870",
+    "resource": "",
+    "desc": "language_10105871"
+  },
+  {
+    "id": 3051003,
+    "name": "language_10105872",
+    "resource": "",
+    "desc": "language_10105873"
+  },
+  {
+    "id": 3051004,
+    "name": "language_10105874",
+    "resource": "",
+    "desc": "language_10105875"
+  },
+  {
+    "id": 3051005,
+    "name": "language_10105876",
+    "resource": "",
+    "desc": "language_10105877"
+  },
+  {
+    "id": 3051006,
+    "name": "language_10105878",
+    "resource": "",
+    "desc": "language_10105879"
   }
 ]

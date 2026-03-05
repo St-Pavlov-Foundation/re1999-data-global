@@ -129,15 +129,15 @@ function SkillEditorView:_onBtnUseSub()
 		return
 	end
 
-	local dead_model = GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide]):getMO()
+	local dead_model = FightGameMgr.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide]):getMO()
 
 	if dead_model.uid == SkillEditorMgr.instance.select_sub_hero_model.uid then
 		dead_model = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)[1]
 	end
 
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
-	entityMgr:removeUnit(SceneTag.UnitPlayer, dead_model.id)
+	entityMgr:delEntity(dead_model.id)
 
 	local entityMO = FightDataHelper.entityMgr:getById(dead_model.id)
 

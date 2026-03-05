@@ -7,6 +7,7 @@ local FightWorkPlayEnd = class("FightWorkPlayEnd", FightWorkItem)
 function FightWorkPlayEnd:onStart()
 	local flow = self:com_registFlowSequence()
 
+	FightGameMgr.checkCrashMgr:playEndFight()
 	FightController.instance:dispatchEvent(FightEvent.StartFightEnd)
 	FightController.instance:dispatchEvent(FightEvent.SwitchFightendBgm)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_fightingsfx)

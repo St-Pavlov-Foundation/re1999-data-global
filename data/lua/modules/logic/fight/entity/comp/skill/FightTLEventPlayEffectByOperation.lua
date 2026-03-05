@@ -17,7 +17,7 @@ function FightTLEventPlayEffectByOperation:onTrackStart(fightStepData, duration,
 	self.effectType = tonumber(self.paramsArr[1])
 	self.sequenceFlow = FightWorkFlowSequence.New()
 
-	self.timelineItem:addWork2FinishWork(self.sequenceFlow)
+	self:addWork2TimelineFinishWork(self.sequenceFlow)
 	self:buildOperationWorkList()
 
 	fightStepData.maxPlayerOperationCountForPlayEffectTimeline = #self.operationWorkList

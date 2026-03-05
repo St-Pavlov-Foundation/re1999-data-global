@@ -1009,7 +1009,7 @@ end
 
 function HeroMo:getHeroBattleTag()
 	if self.destinyStoneMo then
-		local stoneMo = self.destinyStoneMo:isEquipReshape()
+		local stoneMo = self.destinyStoneMo:getCurUseStoneMo()
 
 		if stoneMo then
 			local _battleTag = stoneMo.conusmeCo.tag

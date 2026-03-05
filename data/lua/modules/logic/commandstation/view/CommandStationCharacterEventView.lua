@@ -8,15 +8,16 @@ function CommandStationCharacterEventView:onInitView()
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 	self._goCharacterEvent = gohelper.findChild(self.viewGO, "#go_CharacterEvent")
 	self._goCharacterEventPanel = gohelper.findChild(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel")
-	self._txtName = gohelper.findChildText(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#txt_Name")
-	self._txtTime = gohelper.findChildText(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#txt_Time")
+	self._goCharacter3 = gohelper.findChild(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#go_Character3")
+	self._goCharacter2 = gohelper.findChild(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#go_Character2")
+	self._goCharacter1 = gohelper.findChild(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#go_Character1")
 	self._btnopentimeline = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_opentimeline")
-	self._txtDescr = gohelper.findChildText(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/Scroll View/Viewport/#txt_Descr")
 	self._btnLeftDisable = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_LeftDisable")
 	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_Left")
 	self._btnRightDisable = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_RightDisable")
 	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_Right")
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
+	self._btnchangecharacter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/#btn_Change")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ function CommandStationCharacterEventView:addEvents()
 	self._btnLeft:AddClickListener(self._btnLeftOnClick, self)
 	self._btnRightDisable:AddClickListener(self._btnRightDisableOnClick, self)
 	self._btnRight:AddClickListener(self._btnRightOnClick, self)
+	self._btnchangecharacter:AddClickListener(self._btnchangecharacterOnClick, self)
 end
 
 function CommandStationCharacterEventView:removeEvents()
@@ -39,6 +41,35 @@ function CommandStationCharacterEventView:removeEvents()
 	self._btnLeft:RemoveClickListener()
 	self._btnRightDisable:RemoveClickListener()
 	self._btnRight:RemoveClickListener()
+	self._btnchangecharacter:RemoveClickListener()
+end
+
+function CommandStationCharacterEventView:_btnchangecharacterOnClick()
+	local eventId = self._eventList[self._curIndex]
+	local eventConfig = lua_copost_character_event.configDict[eventId]
+
+	self._chaIndex = self._chaIndex + 1
+
+	if self._chaIndex > #eventConfig.chasId then
+		self._chaIndex = 1
+	end
+
+	self._changeTimelineAfterChangeCharacter = self._isOpenTimeline
+
+	self:_showSwitchChaAnim(false)
+end
+
+function CommandStationCharacterEventView:_showSwitchChaAnim(isLeft)
+	self._animator.enabled = true
+
+	self._animator:Play("change_num" .. #self._eventConfig.chasId, 0, 0)
+	TaskDispatcher.cancelTask(self._afterSwitchUpdateEventInfo, self)
+
+	local time = 0.167
+
+	UIBlockHelper.instance:startBlock("CommandStationCharacterEventView_SwitchAnim", time)
+	TaskDispatcher.runDelay(self._afterSwitchUpdateEventInfo, self, time)
+	AudioMgr.instance:trigger(AudioEnum3_3.CommandStationMap.play_ui_yuanzheng_zhb_zhi)
 end
 
 function CommandStationCharacterEventView:_btnLeftDisableOnClick()
@@ -56,11 +87,15 @@ function CommandStationCharacterEventView:_btnopentimelineOnClick()
 
 	self._isOpenTimeline = not self._isOpenTimeline
 
+	self:_openTimeline()
+	CommandStationController.StatCommandStationButtonClick(self.viewName, string.format("btnopentimelineOnClick_%s", self._curCharacterId))
+end
+
+function CommandStationCharacterEventView:_openTimeline()
 	self:_moveTimeline(self._isOpenTimeline and {
 		node = self.viewGO,
 		leftopNode = self._golefttop
 	} or nil)
-	CommandStationController.StatCommandStationButtonClick(self.viewName, string.format("btnopentimelineOnClick_%s", self._curCharacterId))
 end
 
 function CommandStationCharacterEventView:_moveTimeline(param)
@@ -93,6 +128,8 @@ function CommandStationCharacterEventView:_btnLeftOnClick()
 		self._curIndex = #self._eventList
 	end
 
+	self:_updateEventData()
+	self:_changeEvent()
 	self:_updateBtnState()
 	self:_FocusEvent()
 	self:_showSwitchAnim(true)
@@ -105,9 +142,19 @@ function CommandStationCharacterEventView:_btnRightOnClick()
 		self._curIndex = 1
 	end
 
+	self:_updateEventData()
+	self:_changeEvent()
 	self:_updateBtnState()
 	self:_FocusEvent()
 	self:_showSwitchAnim(false)
+end
+
+function CommandStationCharacterEventView:_changeEvent()
+	self._chaIndex = 1
+end
+
+function CommandStationCharacterEventView:_updateSwitchCharacterBtn()
+	gohelper.setActive(self._btnchangecharacter, #self._eventConfig.chasId > 0)
 end
 
 function CommandStationCharacterEventView:_editableInitView()
@@ -115,6 +162,41 @@ function CommandStationCharacterEventView:_editableInitView()
 
 	self._isOpenTimeline = false
 	self._animator = self.viewGO:GetComponent("Animator")
+
+	self:_initCharacterGos()
+end
+
+function CommandStationCharacterEventView:_initCharacterGos()
+	self._characterGoList = self:getUserDataTb_()
+
+	for i = 1, 3 do
+		local go = self["_goCharacter" .. i]
+		local txt_Time = gohelper.findChildText(go, "txt_Time")
+		local txt_Name = gohelper.findChildText(go, "txt_Name")
+		local txt_Descr = gohelper.findChildText(go, "Scroll View/Viewport/txt_Descr")
+		local image_Icon = gohelper.findChildSingleImage(go, "Head/image_Icon")
+		local t = self:getUserDataTb_()
+
+		t.txt_Time = txt_Time
+		t.txt_Name = txt_Name
+		t.txt_Descr = txt_Descr
+		t.image_Icon = image_Icon
+		t.go = go
+
+		gohelper.setActive(t.go, false)
+
+		self._characterGoList[i] = t
+
+		if i == 2 then
+			self._clickRole = SLFramework.UGUI.UIClickListener.Get(t.image_Icon.gameObject)
+
+			self._clickRole:AddClickListener(self._clickRoleHandler, self)
+		end
+	end
+end
+
+function CommandStationCharacterEventView:_clickRoleHandler()
+	self:_btnchangecharacterOnClick()
 end
 
 function CommandStationCharacterEventView:_showSwitchAnim(isLeft)
@@ -122,11 +204,25 @@ function CommandStationCharacterEventView:_showSwitchAnim(isLeft)
 
 	self._animator:Play(isLeft and "switchleft" or "switchright", 0, 0)
 	TaskDispatcher.cancelTask(self._afterSwitchUpdateEventInfo, self)
-	TaskDispatcher.runDelay(self._afterSwitchUpdateEventInfo, self, 0.167)
+
+	local time = 0.167
+
+	UIBlockHelper.instance:startBlock("CommandStationCharacterEventView_SwitchAnim", time)
+	TaskDispatcher.runDelay(self._afterSwitchUpdateEventInfo, self, time)
+
+	if #self._eventConfig.chasId > 0 then
+		AudioMgr.instance:trigger(AudioEnum3_3.CommandStationMap.play_ui_yuanzheng_zhb_zhi)
+	end
 end
 
 function CommandStationCharacterEventView:_afterSwitchUpdateEventInfo()
 	self:_updateEventInfo()
+
+	if self._changeTimelineAfterChangeCharacter then
+		self._changeTimelineAfterChangeCharacter = false
+
+		self:_openTimeline()
+	end
 end
 
 function CommandStationCharacterEventView:onUpdateParam()
@@ -154,13 +250,17 @@ function CommandStationCharacterEventView:_onEventCreateFinish()
 end
 
 function CommandStationCharacterEventView:_onSelectTimePoint(timeId)
+	if self._timeId == timeId then
+		return
+	end
+
 	self._timeId = timeId
 	self._eventList = CommandStationConfig.instance:getCharacterEventList(self._timeId)
 
 	local isMatch = false
 
 	for i, v in ipairs(self._eventList) do
-		if CommandStationConfig.instance:getCharacterIdByEventId(v) == self._curCharacterId then
+		if CommandStationConfig.instance:eventContainCharacterId(v, self._curCharacterId) then
 			self._eventId = v
 			isMatch = true
 
@@ -172,25 +272,45 @@ function CommandStationCharacterEventView:_onSelectTimePoint(timeId)
 		logError(string.format("CommandStationCharacterEventView _onSelectTimePoint not match timeId:%d, characterId:%d, eventId:%d", self._timeId, self._curCharacterId, self._eventId))
 	end
 
-	self:_initEventData()
+	self:_initEventData(true)
 	self:_FocusEvent()
+
+	if #self._eventConfig.chasId > 0 then
+		self._chaIndex = tabletool.indexOf(self._eventConfig.chasId, self._curCharacterId)
+	end
+
+	self:_showSwitchAnim(false)
 end
 
 function CommandStationCharacterEventView:_showEvent()
 	self._timeId = self.viewParam.timeId
 	self._eventId = self.viewParam.eventId
+	self._chaIndex = self.viewParam.chaIndex or 1
 	self._eventList = CommandStationConfig.instance:getCharacterEventList(self._timeId)
 
 	self:_initEventData()
 end
 
-function CommandStationCharacterEventView:_initEventData()
+function CommandStationCharacterEventView:_initEventData(skipUpdateEventInfo)
 	self._minIndex = 1
 	self._maxIndex = #self._eventList
 	self._curIndex = tabletool.indexOf(self._eventList, self._eventId)
 
-	self:_updateEventInfo()
+	self:_updateEventData()
+
+	if not skipUpdateEventInfo then
+		self:_updateEventInfo()
+	end
+
 	self:_updateBtnState()
+end
+
+function CommandStationCharacterEventView:_updateEventData()
+	local eventId = self._eventList[self._curIndex]
+
+	self._eventConfig = lua_copost_character_event.configDict[eventId]
+
+	self:_updateSwitchCharacterBtn()
 end
 
 function CommandStationCharacterEventView:_updateBtnState()
@@ -208,48 +328,86 @@ function CommandStationCharacterEventView:_FocusEvent()
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventList[self._curIndex])
 end
 
-function CommandStationCharacterEventView:_updateEventInfo()
-	local eventId = self._eventList[self._curIndex]
-	local eventConfig = lua_copost_character_event.configDict[eventId]
-
-	if not eventConfig then
-		return
+function CommandStationCharacterEventView:_getCharacterId()
+	if #self._eventConfig.chasId > 0 then
+		return self._eventConfig.chasId[self._chaIndex] or self._eventConfig.chasId[1]
 	end
 
-	local eventTextId = tonumber(eventConfig.eventTextId)
+	return self._eventConfig.chaId
+end
+
+function CommandStationCharacterEventView:_getCharIdList()
+	self._charIdList = self._charIdList or {}
+
+	tabletool.clear(self._charIdList)
+
+	self._changeCharIdList = self._changeCharIdList or {}
+
+	tabletool.clear(self._changeCharIdList)
+
+	if #self._eventConfig.chasId > 0 then
+		local chaIndex = self._chaIndex or 1
+
+		for i = chaIndex, #self._eventConfig.chasId do
+			table.insert(self._charIdList, self._eventConfig.chasId[i])
+			table.insert(self._changeCharIdList, self._eventConfig.changeChasId[i])
+		end
+
+		for i = 1, chaIndex - 1 do
+			table.insert(self._charIdList, self._eventConfig.chasId[i])
+			table.insert(self._changeCharIdList, self._eventConfig.changeChasId[i])
+		end
+	else
+		table.insert(self._charIdList, self._eventConfig.chaId)
+		table.insert(self._changeCharIdList, self._eventConfig.changeChaId)
+	end
+
+	return self._charIdList, self._changeCharIdList
+end
+
+function CommandStationCharacterEventView:_updateEventInfo()
+	local charIdList, changeCharIdList = self:_getCharIdList()
+
+	for i, v in ipairs(self._characterGoList) do
+		local charId = charIdList[i]
+
+		gohelper.setActive(v.go, charId ~= nil)
+
+		if charId then
+			if i == 1 then
+				self._curCharacterId = charId
+			end
+
+			self:_updateOneCharInfo(v, charId, changeCharIdList[i])
+		end
+	end
+end
+
+function CommandStationCharacterEventView:_updateOneCharInfo(viewInfo, characterId, changeCharId)
+	local showCharId = changeCharId and changeCharId > 0 and changeCharId or characterId
+	local eventId = self._eventConfig.id
+	local eventTextId = tonumber(self._eventConfig.eventTextId)
 	local eventTxtConfig = eventTextId and lua_copost_event_text.configDict[eventTextId]
 
-	self._txtDescr.text = eventTxtConfig and eventTxtConfig.text
+	viewInfo.txt_Descr.text = eventTxtConfig and eventTxtConfig.text
 
-	local characterId = eventConfig.chaId
+	local characterConfig = lua_copost_character.configDict[showCharId]
 
-	self._curCharacterId = characterId
-
-	local characterConfig = lua_copost_character.configDict[characterId]
-
-	self._txtName.text = characterConfig.chaName
+	viewInfo.txt_Name.text = characterConfig.chaName
 
 	local timeGroup = CommandStationConfig.instance:getTimeGroupByCharacterEventId(eventId)
 
 	if timeGroup then
 		local timeConfig = lua_copost_time_point.configDict[timeGroup.id]
 
-		self._txtTime.text = timeConfig and timeConfig.time
+		viewInfo.txt_Time.text = timeConfig and timeConfig.time
 	end
 
-	local chaId = eventConfig.chaId
-
-	self._singleImage = self._singleImage or gohelper.findChildSingleImage(self.viewGO, "#go_CharacterEvent/#go_CharacterEventPanel/Head/image_Icon")
-
-	local chaConfig = lua_copost_character.configDict[chaId]
-
-	if chaConfig then
-		self._singleImage:LoadImage(ResUrl.getHeadIconSmall(chaConfig.chaPicture), self._singleImageLoadCallback, self)
+	if characterConfig then
+		viewInfo.image_Icon:LoadImage(ResUrl.getHeadIconSmall(characterConfig.chaPicture), function()
+			viewInfo.image_Icon:GetComponent(gohelper.Type_Image):SetNativeSize()
+		end)
 	end
-end
-
-function CommandStationCharacterEventView:_singleImageLoadCallback()
-	self._singleImage:GetComponent(gohelper.Type_Image):SetNativeSize()
 end
 
 function CommandStationCharacterEventView:onClose()
@@ -258,6 +416,10 @@ function CommandStationCharacterEventView:onClose()
 	self:_moveTimeline()
 	TaskDispatcher.cancelTask(self._afterSwitchUpdateEventInfo, self)
 	TaskDispatcher.cancelTask(self._showEvent, self)
+
+	if self._clickRole then
+		self._clickRole:RemoveClickListener()
+	end
 end
 
 function CommandStationCharacterEventView:onDestroyView()

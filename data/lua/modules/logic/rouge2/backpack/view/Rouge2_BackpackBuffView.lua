@@ -10,6 +10,8 @@ function Rouge2_BackpackBuffView:onInitView()
 	self._scrollProp = gohelper.findChildScrollRect(self.viewGO, "#go_Prop/#scroll_Prop")
 	self._goPropItem = gohelper.findChild(self.viewGO, "#go_Prop/#scroll_Prop/Viewport/Content/#go_PropItem")
 	self._goPropContent = gohelper.findChild(self.viewGO, "#go_Prop/#scroll_Prop/Viewport/Content")
+	self._goTeamTips = gohelper.findChild(self.viewGO, "#go_TeamTips")
+	self._goMode = gohelper.findChild(self.viewGO, "#go_Mode")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -42,6 +44,8 @@ function Rouge2_BackpackBuffView:_editableInitView()
 	local relicsList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.Buff)
 
 	Rouge2_BackpackBuffListModel.instance:initList(relicsList, 0)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BackpackBuff)
+	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Single)
 	self:initScrollView()
 	self:initToolbar()
 end

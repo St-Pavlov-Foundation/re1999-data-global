@@ -101,6 +101,14 @@ function StoryVideoPlayList:stop(targetName)
 	end
 
 	local curPlayIndex = self._mediaPlayList.PlaylistIndex
+
+	for index, name in pairs(self._currentPlayNameMap) do
+		if name == targetName then
+			self._currentPlayNameMap[index] = nil
+			self._currentPlayNameMap[curPlayIndex] = targetName
+		end
+	end
+
 	local playName = self._currentPlayNameMap[curPlayIndex]
 
 	if playName == targetName or SettingsModel.instance:getVideoEnabled() == false then

@@ -72,10 +72,10 @@ function FightTLEventAtkSpineLookDir._getEntitys(fightStepData, selectEntityType
 	elseif selectEntityType == "6" then
 		table.insert(entitys, defender)
 	else
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 		local entityId = fightStepData.stepUid .. "_" .. selectEntityType
 
-		table.insert(entitys, entityMgr:getUnit(SceneTag.UnitNpc, entityId))
+		table.insert(entitys, entityMgr:getEntity(entityId))
 	end
 
 	return entitys

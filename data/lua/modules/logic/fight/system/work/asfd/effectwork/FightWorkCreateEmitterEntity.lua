@@ -5,8 +5,7 @@ module("modules.logic.fight.system.work.asfd.effectwork.FightWorkCreateEmitterEn
 local FightWorkCreateEmitterEntity = class("FightWorkCreateEmitterEntity", FightEffectBase)
 
 function FightWorkCreateEmitterEntity:onStart()
-	local curScene = GameSceneMgr.instance:getCurScene()
-	local sceneMgr = curScene and curScene.entityMgr
+	local sceneMgr = FightGameMgr.entityMgr
 
 	if not sceneMgr then
 		return self:onDone(true)

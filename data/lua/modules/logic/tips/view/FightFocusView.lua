@@ -396,7 +396,7 @@ function FightFocusView:_getEntityList()
 
 	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
 
-	if assistBoss and self._curSelectSide == FightEnum.EntitySide.MySide then
+	if assistBoss and self._curSelectSide == FightEnum.EntitySide.MySide and FightDataHelper.paTaMgr:checkIsNormal() then
 		table.insert(entityList, assistBoss)
 	end
 
@@ -487,6 +487,20 @@ function FightFocusView:onOpen()
 
 	self._curSelectId = tarEntity and tarEntity.id or self._entityList[1].id
 
+	local find = false
+
+	for _, entity in ipairs(self._entityList) do
+		if self._curSelectId == entity.id then
+			find = true
+
+			break
+		end
+	end
+
+	if not find then
+		self._curSelectId = self._entityList[1].id
+	end
+
 	TaskDispatcher.runDelay(self._refreshUI, self, 0.3)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_fight_roledetails)
 	NavigateMgr.instance:addEscape(self.viewContainer.viewName, self._btncloseOnClick, self)
@@ -529,7 +543,7 @@ function FightFocusView:_refreshUI()
 				self.isCharacter = false
 			end
 
-			self:_refreshInfo(entityMO:getCO())
+			self:_refreshInfo(entityMO:getCO(), entityMO)
 		end
 
 		gohelper.setActive(self._goplayer, self.isCharacter)
@@ -571,8 +585,8 @@ end
 function FightFocusView:_refreshInfo(monsterConfig)
 	local levelStr = self.isSimple and "levelEasy" or "level"
 
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(self._entityMO.career))
 	gohelper.setActive(self._btnattribute.gameObject, false)
-	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(monsterConfig.career))
 
 	self._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(monsterConfig[levelStr])
 
@@ -764,7 +778,7 @@ function FightFocusView:_refreshCharacterInfo(entityMO)
 	local heroConfig = entityMO:getCO()
 
 	self:_refreshHeroEquipInfo(entityMO)
-	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(heroConfig.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(entityMO.career))
 
 	self._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(entityMO.level)
 	self._txtname.text = heroConfig.name
@@ -1557,7 +1571,7 @@ function FightFocusView:refreshScrollEnemy()
 		local config = entityMo:getCO()
 
 		if config then
-			UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItem.imageCareer, "sxy_" .. tostring(config.career))
+			UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItem.imageCareer, "sxy_" .. tostring(entityMo.career))
 		end
 
 		local headIcon = self:getHeadIcon(entityMo)
@@ -1844,9 +1858,9 @@ function FightFocusView:onClose()
 
 	if self.subEntityList then
 		for i, v in ipairs(self.subEntityList) do
-			local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+			local entityMgr = FightGameMgr.entityMgr
 
-			entityMgr:removeUnit(v:getTag(), v.id)
+			entityMgr:delEntity(v.id)
 		end
 	end
 

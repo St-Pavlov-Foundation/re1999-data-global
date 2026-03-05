@@ -43,6 +43,12 @@ function OpenModel:updateOpenInfo(info)
 end
 
 function OpenModel:isFunctionUnlock(id)
+	local co = OpenConfig.instance:getOpenCo(id)
+
+	if co and VersionValidator.instance:isInReviewing() and co.verifingHide == 1 then
+		return false
+	end
+
 	return self._unlocks[tonumber(id)]
 end
 

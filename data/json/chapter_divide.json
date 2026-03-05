@@ -38,7 +38,8 @@
     "resPage": "singlebg/dungeon/pic_section_3.png",
     "resPageClosed": "",
     "chapterId": [
-      111
+      111,
+      112
     ],
     "storyId": 0
   }

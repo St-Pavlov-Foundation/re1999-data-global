@@ -1,0 +1,123 @@
+[
+  {
+    "id": 101,
+    "effectParam": "StopMove",
+    "addPassiveSkillId": 0,
+    "entityType": "character#monster",
+    "round": 5,
+    "notSubInRoundBegin": false,
+    "showPriority": 2,
+    "gainEffect": 0,
+    "loopEffect": 689010055
+  },
+  {
+    "id": 102,
+    "effectParam": "StopMove",
+    "addPassiveSkillId": 0,
+    "entityType": "character#monster",
+    "round": 5,
+    "notSubInRoundBegin": false,
+    "showPriority": 2,
+    "gainEffect": 0,
+    "loopEffect": 689010056
+  },
+  {
+    "id": 103,
+    "effectParam": "NotBeCountered",
+    "addPassiveSkillId": 33500424,
+    "entityType": "monster",
+    "round": 5,
+    "notSubInRoundBegin": false,
+    "showPriority": 1,
+    "gainEffect": 689010002,
+    "loopEffect": 689010024
+  },
+  {
+    "id": 104,
+    "effectParam": "NotBeCountered",
+    "addPassiveSkillId": 40001,
+    "entityType": "character",
+    "round": 16,
+    "notSubInRoundBegin": false,
+    "showPriority": 1,
+    "gainEffect": 689010002,
+    "loopEffect": 689010024
+  },
+  {
+    "id": 201,
+    "effectParam": "",
+    "addPassiveSkillId": 0,
+    "entityType": "floor",
+    "round": 0,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 202,
+    "effectParam": "",
+    "addPassiveSkillId": 0,
+    "entityType": "floor",
+    "round": 0,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 203,
+    "effectParam": "",
+    "addPassiveSkillId": 0,
+    "entityType": "floor",
+    "round": 0,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 301,
+    "effectParam": "NotBeAttack_1",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 999999,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 689010033,
+    "loopEffect": 689010059
+  },
+  {
+    "id": 302,
+    "effectParam": "NotBeAttack_2",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 999999,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 689010033,
+    "loopEffect": 689010060
+  },
+  {
+    "id": 303,
+    "effectParam": "NotBeAttack_3",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 999999,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 689010033,
+    "loopEffect": 689010061
+  },
+  {
+    "id": 304,
+    "effectParam": "NotBeAttack_4",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 999999,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 689010033,
+    "loopEffect": 689010062
+  }
+]

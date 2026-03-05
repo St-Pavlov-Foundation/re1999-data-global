@@ -1,0 +1,278 @@
+[
+  {
+    "id": 1,
+    "clztype": "character",
+    "targets": "character",
+    "effect": ""
+  },
+  {
+    "id": 10,
+    "clztype": "rect",
+    "targets": "character#monster#baseInteractive",
+    "effect": "3#3"
+  },
+  {
+    "id": 11,
+    "clztype": "rect",
+    "targets": "character#monster#baseInteractive",
+    "effect": "5#5"
+  },
+  {
+    "id": 12,
+    "clztype": "cross",
+    "targets": "character#monster#baseInteractive",
+    "effect": "3#3"
+  },
+  {
+    "id": 13,
+    "clztype": "rect",
+    "targets": "character",
+    "effect": "3#3"
+  },
+  {
+    "id": 14,
+    "clztype": "outline",
+    "targets": "character#grid",
+    "effect": "1"
+  },
+  {
+    "id": 15,
+    "clztype": "outline",
+    "targets": "character#grid",
+    "effect": "2"
+  },
+  {
+    "id": 16,
+    "clztype": "outline",
+    "targets": "character#grid",
+    "effect": "3"
+  },
+  {
+    "id": 101,
+    "clztype": "owner",
+    "targets": "",
+    "effect": ""
+  },
+  {
+    "id": 201,
+    "clztype": "scope",
+    "targets": "monster",
+    "effect": "3"
+  },
+  {
+    "id": 202,
+    "clztype": "line",
+    "targets": "monster",
+    "effect": "2"
+  },
+  {
+    "id": 203,
+    "clztype": "line",
+    "targets": "monster",
+    "effect": "3"
+  },
+  {
+    "id": 204,
+    "clztype": "line",
+    "targets": "monster",
+    "effect": "100"
+  },
+  {
+    "id": 301,
+    "clztype": "attacker",
+    "targets": "",
+    "effect": ""
+  },
+  {
+    "id": 302,
+    "clztype": "floor",
+    "targets": "",
+    "effect": ""
+  },
+  {
+    "id": 303,
+    "clztype": "rect",
+    "targets": "monster",
+    "effect": "20#3"
+  },
+  {
+    "id": 304,
+    "clztype": "color",
+    "targets": "monster",
+    "effect": ""
+  },
+  {
+    "id": 305,
+    "clztype": "random",
+    "targets": "monster",
+    "effect": "3"
+  },
+  {
+    "id": 306,
+    "clztype": "shapeSize",
+    "targets": "character#monster",
+    "effect": ""
+  },
+  {
+    "id": 307,
+    "clztype": "rect",
+    "targets": "monster",
+    "effect": "100#100"
+  },
+  {
+    "id": 308,
+    "clztype": "rect",
+    "targets": "monster",
+    "effect": "3#3"
+  },
+  {
+    "id": 309,
+    "clztype": "line",
+    "targets": "character#monster",
+    "effect": "1"
+  },
+  {
+    "id": 310,
+    "clztype": "rect",
+    "targets": "character",
+    "effect": "3#3"
+  },
+  {
+    "id": 311,
+    "clztype": "cross",
+    "targets": "monster",
+    "effect": "3#3"
+  },
+  {
+    "id": 312,
+    "clztype": "rect",
+    "targets": "character#monster",
+    "effect": "1#1"
+  },
+  {
+    "id": 313,
+    "clztype": "rect",
+    "targets": "character",
+    "effect": "2#2"
+  },
+  {
+    "id": 314,
+    "clztype": "line",
+    "targets": "character#monster",
+    "effect": "99"
+  },
+  {
+    "id": 701,
+    "clztype": "rect",
+    "targets": "grid",
+    "effect": "3#3"
+  },
+  {
+    "id": 702,
+    "clztype": "rect",
+    "targets": "grid",
+    "effect": "2#2"
+  },
+  {
+    "id": 703,
+    "clztype": "cross",
+    "targets": "character#monster#baseInteractive",
+    "effect": "3#3"
+  },
+  {
+    "id": 704,
+    "clztype": "outline",
+    "targets": "grid",
+    "effect": "1"
+  },
+  {
+    "id": 705,
+    "clztype": "outline",
+    "targets": "character#monster",
+    "effect": "1"
+  },
+  {
+    "id": 706,
+    "clztype": "line",
+    "targets": "grid",
+    "effect": "99"
+  },
+  {
+    "id": 707,
+    "clztype": "outline",
+    "targets": "grid",
+    "effect": "2"
+  },
+  {
+    "id": 708,
+    "clztype": "outline",
+    "targets": "character#monster",
+    "effect": "2"
+  },
+  {
+    "id": 709,
+    "clztype": "cross",
+    "targets": "grid#character",
+    "effect": "100#100"
+  },
+  {
+    "id": 710,
+    "clztype": "rect",
+    "targets": "grid",
+    "effect": "4#4"
+  },
+  {
+    "id": 711,
+    "clztype": "rect",
+    "targets": "grid",
+    "effect": "6#6"
+  },
+  {
+    "id": 712,
+    "clztype": "cross",
+    "targets": "character#monster",
+    "effect": "100#100"
+  },
+  {
+    "id": 713,
+    "clztype": "cross",
+    "targets": "grid",
+    "effect": "100#100"
+  },
+  {
+    "id": 714,
+    "clztype": "outline",
+    "targets": "grid",
+    "effect": "1"
+  },
+  {
+    "id": 715,
+    "clztype": "outline",
+    "targets": "grid",
+    "effect": "2"
+  },
+  {
+    "id": 716,
+    "clztype": "cross",
+    "targets": "character",
+    "effect": "100#100"
+  },
+  {
+    "id": 717,
+    "clztype": "cross",
+    "targets": "",
+    "effect": "0#100"
+  },
+  {
+    "id": 718,
+    "clztype": "cross",
+    "targets": "",
+    "effect": "0#100"
+  },
+  {
+    "id": 999,
+    "clztype": "line",
+    "targets": "monster",
+    "effect": "0"
+  }
+]

@@ -437,6 +437,10 @@ function DungeonMapScene.getInteractiveItemPath(chapterId)
 		return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem_111.prefab"
 	end
 
+	if chapterId == DungeonEnum.ChapterId.Main1_12 then
+		return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem_112.prefab"
+	end
+
 	return "ui/viewres/dungeon/chaptermap/dungeonmapinteractiveitem.prefab"
 end
 

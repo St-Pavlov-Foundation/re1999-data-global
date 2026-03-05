@@ -14,10 +14,6 @@ function FightBuffCardAreaRedOrBlueBuff:onBuffStart(entity, buffMo)
 	self.entity = entity
 	self.entityMo = entity:getMO()
 	self.side = self.entityMo.side
-
-	local fightScene = GameSceneMgr.instance:getCurScene()
-
-	self.sceneEntityMgr = fightScene and fightScene.entityMgr
 	self.effectCo = FightHeroSpEffectConfig.instance:getLYEffectCo(self.entityMo.originSkin)
 	self.buffRes = self.effectCo.path
 	self.spine1EffectRes = self.effectCo.spine1EffectRes
@@ -82,8 +78,8 @@ function FightBuffCardAreaRedOrBlueBuff:onResLoaded(loader)
 	local side = self.entity:getSide()
 	local goContainerName = "LY_Spine_" .. (side == FightEnum.EntitySide.MySide and "R" or "L")
 
-	self.spine1 = self.sceneEntityMgr:buildTempSpine(self.spine1Res, self.entity.id .. "_1", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_1")
-	self.spine2 = self.sceneEntityMgr:buildTempSpine(self.spine2Res, self.entity.id .. "_2", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_2")
+	self.spine1 = FightGameMgr.entityMgr:buildTempSpine(self.spine1Res, self.entity.id .. "_1", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_1")
+	self.spine2 = FightGameMgr.entityMgr:buildTempSpine(self.spine2Res, self.entity.id .. "_2", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_2")
 
 	self.spine1.spine:changeLookDir(SpineLookDir.Left)
 	self.spine2.spine:changeLookDir(SpineLookDir.Left)
@@ -284,7 +280,7 @@ end
 function FightBuffCardAreaRedOrBlueBuff:clearSpine(spine, spineEffect)
 	if spine then
 		self:clearEffect(spine, spineEffect)
-		self.sceneEntityMgr:removeUnit(spine:getTag(), spine.id)
+		FightGameMgr.entityMgr:delEntity(spine.id)
 	end
 end
 

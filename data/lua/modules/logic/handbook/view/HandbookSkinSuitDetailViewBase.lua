@@ -3,7 +3,8 @@
 module("modules.logic.handbook.view.HandbookSkinSuitDetailViewBase", package.seeall)
 
 local HandbookSkinSuitDetailViewBase = class("HandbookSkinSuitDetailViewBase", BaseView)
-local scrollableDiff = 50
+
+HandbookSkinSuitDetailViewBase.scrollableDiff = 50
 
 function HandbookSkinSuitDetailViewBase:onInitView()
 	self._skinItemRoot = gohelper.findChild(self.viewGO, "#go_scroll/#go_storyStages")
@@ -27,7 +28,7 @@ function HandbookSkinSuitDetailViewBase:onInitView()
 	local uiRoot = ViewMgr.instance:getUIRoot()
 	local uiRootWidth = recthelper.getWidth(uiRoot.transform)
 
-	if bgWidth - uiRootWidth < scrollableDiff then
+	if bgWidth - uiRootWidth < HandbookSkinSuitDetailViewBase.scrollableDiff then
 		self._scroll.horizontal = false
 		self._scroll.vertical = false
 	end
@@ -71,9 +72,18 @@ function HandbookSkinSuitDetailViewBase:onOpen()
 
 	self:addSwitchSuitBtns()
 
-	if self._isSuitSwitch then
-		self._viewAnimator:Play(UIAnimationName.Open, 0, 1)
+	if self._isSuitSwitch and self._viewAnimator then
+		if self._viewAnimator:HasState(0, UnityEngine.Animator.StringToHash(UIAnimationName.Open)) then
+			self._viewAnimator:Play(UIAnimationName.Open, 0, 1)
+		elseif self._viewAnimator:HasState(0, UnityEngine.Animator.StringToHash("skinsuitdetailview_open")) then
+			self._viewAnimator:Play("skinsuitdetailview_open", 0, 1)
+		end
 	end
+
+	self:_getPhotoRootGo(#self._skinIdList)
+	self:_refreshSkinItems()
+	self:_refreshDesc()
+	self:_refreshBg()
 end
 
 function HandbookSkinSuitDetailViewBase:refreshUI()

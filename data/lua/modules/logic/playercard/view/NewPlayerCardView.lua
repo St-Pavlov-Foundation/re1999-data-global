@@ -87,14 +87,9 @@ end
 
 function NewPlayerCardView:_loadBgDone()
 	local bgAssetItem = self._bgLoder:getAssetItem(PlayerCardConfig.instance:getBgPath(self.themeId))
-	local effectAssetItem = self._bgLoder:getAssetItem(PlayerCardConfig.instance:getTopEffectPath())
 
-	if bgAssetItem then
+	if bgAssetItem and self._goBgEffect then
 		self._bgGo = gohelper.clone(bgAssetItem:GetResource(), self._goBgEffect, "bg")
-	end
-
-	if effectAssetItem then
-		self._effectGo = gohelper.clone(effectAssetItem:GetResource(), self._goTopEffect, "topeffect")
 	end
 end
 

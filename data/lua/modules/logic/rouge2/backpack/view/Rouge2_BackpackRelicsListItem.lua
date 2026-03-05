@@ -18,6 +18,7 @@ function Rouge2_BackpackRelicsListItem:initInternal(go, view)
 	self._comRelicsItem = Rouge2_CommonCollectionItem.Get(goCollection)
 
 	self._comRelicsItem:setParentScroll(goScroll)
+	self._comRelicsItem:initDescModeFlag(Rouge2_Enum.ItemDescModeDataKey.BackpackRelics)
 
 	local goReddot = self._comRelicsItem:getReddotGo()
 

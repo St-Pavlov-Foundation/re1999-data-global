@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.FightEntityPlayer", package.seeall)
 
-local FightEntityPlayer = class("FightEntityPlayer", BaseFightEntity)
+local FightEntityPlayer = class("FightEntityPlayer", FightEntityObject)
 
 function FightEntityPlayer:getTag()
 	return SceneTag.UnitPlayer
@@ -10,12 +10,13 @@ end
 
 function FightEntityPlayer:initComponents()
 	FightEntityPlayer.super.initComponents(self)
-	self:addComp("readyAttack", FightPlayerReadyAttackComp)
-	self:addComp("variantCrayon", FightVariantCrayonComp)
-	self:addComp("entityVisible", FightEntityVisibleComp)
-	self:addComp("nameUIVisible", FightNameUIVisibleComp)
-	self:addComp("variantHeart", FightVariantHeartComp)
-	self:addComp("heroCustomComp", FightHeroCustomComp)
+
+	self.readyAttack = self:addEntityComponent(FightPlayerReadyAttackComp)
+	self.variantCrayon = self:addEntityComponent(FightVariantCrayonComp)
+	self.entityVisible = self:addEntityComponent(FightEntityVisibleComp)
+	self.nameUIVisible = self:addEntityComponent(FightNameUIVisibleComp)
+	self.variantHeart = self:addEntityComponent(FightVariantHeartComp)
+	self.heroCustomComp = self:addEntityComponent(FightHeroCustomComp)
 end
 
 return FightEntityPlayer

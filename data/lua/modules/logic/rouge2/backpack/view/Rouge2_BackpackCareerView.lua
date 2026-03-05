@@ -9,13 +9,13 @@ function Rouge2_BackpackCareerView:onInitView()
 	self._simageRightPanelBG = gohelper.findChildSingleImage(self.viewGO, "Details/#simage_RightPanelBG")
 	self._txtName = gohelper.findChildText(self.viewGO, "Details/#txt_name")
 	self._simageCareerIcon = gohelper.findChildSingleImage(self.viewGO, "Details/#simage_CareerIcon")
-	self._txtTag = gohelper.findChildText(self.viewGO, "Details/Tag/#txt_Tag")
 	self._txtDescr = gohelper.findChildText(self.viewGO, "Details/#txt_Descr")
 	self._btnSearch = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Search")
 	self._goAttribute = gohelper.findChild(self.viewGO, "#go_Attribute")
 	self._goSkillList = gohelper.findChild(self.viewGO, "Skill/SkillList")
 	self._goSkillItem = gohelper.findChild(self.viewGO, "Skill/SkillList/#go_SkillItem")
 	self._imageSkillIcon = gohelper.findChildImage(self.viewGO, "Skill/SkillList/#go_SkillItem/#image_SkillIcon")
+	self._goTeamTips = gohelper.findChild(self.viewGO, "Details/Tag/#go_TeamTips")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -48,6 +48,8 @@ function Rouge2_BackpackCareerView:_editableInitView()
 	self._attributeMap:setCareerSelectVisible(true)
 
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+
+	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Default_Layout)
 end
 
 function Rouge2_BackpackCareerView:onUpdateParam()
@@ -70,7 +72,6 @@ function Rouge2_BackpackCareerView:refreshUI()
 end
 
 function Rouge2_BackpackCareerView:refreshCareerUI()
-	self._txtTag.text = self._careerCo and self._careerCo.recommendTeam
 	self._txtDescr.text = self._careerCo and self._careerCo.careerDesc
 	self._txtName.text = self._careerCo and self._careerCo.name
 

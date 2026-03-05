@@ -41,14 +41,17 @@ HandbookEnum.SkinSceneAsset = {
 	"scenes/v2a8_m_s17_pftj/prefab/sence_10001.prefab",
 	"scenes/v3a0_m_s17_pftj/prefab/sence_10010.prefab",
 	"scenes/v2a8_m_s17_pftj/prefab/sence_12001.prefab",
-	"scenes/v2a8_m_s17_pftj/prefab/sence_10008.prefab"
+	"scenes/v2a8_m_s17_pftj/prefab/sence_10008.prefab",
+	"scenes/v3a3_m_s17_pftj/prefab/sence_13001.prefab"
 }
 HandbookEnum.SkinSuitSceneType = {
+	Festival = 3,
 	Tarot = 2,
 	Normal = 1
 }
 HandbookEnum.SkinSuitId2SceneType = {
-	[11001] = HandbookEnum.SkinSuitSceneType.Tarot
+	[11001] = HandbookEnum.SkinSuitSceneType.Tarot,
+	[13001] = HandbookEnum.SkinSuitSceneType.Festival
 }
 HandbookEnum.SkinSuitGroupDefaultScene = "scenes/v2a8_m_s17_pftj/prefab/skin_sence_01.prefab"
 HandbookEnum.TarotSkinDefaultCardPath = "singlebg/skinhandbook_singlebg/tarot/card00.png"
@@ -57,26 +60,8 @@ HandbookEnum.TarotSkinCardDir = "singlebg/skinhandbook_singlebg/tarot"
 HandbookEnum.TarotDefaultFOV = 22
 HandbookEnum.HandbookSkinShowRedDotMap = {
 	[10001] = true,
+	[13001] = true,
 	[11001] = true
-}
-HandbookEnum.Live2DSkin = {
-	[302504] = {
-		spineAsset = "roles_bust/v3a1_302504_skinsuit/302504_skinsuit.prefab",
-		scale = "1.55",
-		pos = "0,-60"
-	},
-	[306604] = {
-		pos = "95,15",
-		scale = "1",
-		spineAsset = "roles_bust/v2a2_37xx_3_skinstore/37xx_3_skinstore.prefab",
-		spineAsset2 = "roles_bust/v2a2_37xx_3_skinstore_pokuang/37xx_3_skinstore_pokuang.prefab"
-	},
-	[308603] = {
-		pos = "-30,50",
-		scale = "1.25",
-		spineAsset = "roles_bust/v2a8_308603_lxxx_skinstore/308603_lxxx_skinstore.prefab",
-		spineAsset2 = "roles_bust/v2a8_308603_lxxx_skinstore_pokuang/308603_lxxx_skinstore_pokuang.prefab"
-	}
 }
 
 return HandbookEnum

@@ -26,9 +26,9 @@ function FightTLEventAtkEffect:onTrackStart(fightStepData, duration, paramsArr)
 	if entityParam == "1" then
 		self._targetEntity = self._attacker
 	elseif not string.nilorempty(entityParam) then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 		local entityId = fightStepData.stepUid .. "_" .. entityParam
-		local tempEntity = entityMgr:getUnit(SceneTag.UnitNpc, entityId)
+		local tempEntity = entityMgr:getEntity(entityId)
 
 		if tempEntity then
 			self._targetEntity = tempEntity

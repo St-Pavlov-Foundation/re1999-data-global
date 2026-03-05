@@ -7,28 +7,25 @@ local DefalutSelectIndex = 1
 local AddAttributeDuration = 1
 local SpecialAddAttrDuration = 3
 local DelayPlayAttrUpAnim = 0.1
-local PercentColor = "#B84E32"
-local BracketColor = "#5E7DD9"
+local PercentColor = "#FFA854"
+local BracketColor = "#8CA7FF"
 
 function Rouge2_MapAttributeUpView:onInitView()
 	self._goRoot = gohelper.findChild(self.viewGO, "#go_Root")
 	self._goAttributeMapPos = gohelper.findChild(self.viewGO, "#go_Root/#go_AttributeMapPos")
 	self._goContainer = gohelper.findChild(self.viewGO, "#go_Root/#go_Container")
+	self._goBase = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Base")
 	self._imageAttributeIcon = gohelper.findChildImage(self.viewGO, "#go_Root/#go_Container/Base/#image_AttributeIcon")
 	self._txtAttributeName = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#txt_AttributeName")
-	self._txtWorldDesc = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#txt_worldDesc")
 	self._txtCurAttribute = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#txt_CurAttribute")
+	self._goArrow = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Base/#go_Arrow")
 	self._txtNextAttribute = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#txt_NextAttribute")
 	self._goToast = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Base/#go_Toast")
 	self._txtCurAttribute2 = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#go_Toast/#txt_CurAttribute")
 	self._txtNextAttribute2 = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#go_Toast/#txt_NextAttribute")
-	self._goCurviewContent = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_CurviewList")
-	self._goCurviewItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_CurviewList/#go_CurviewItem")
-	self._scrollPreview = gohelper.findChildScrollRect(self.viewGO, "#go_Root/#go_Container/#scroll_Preview")
-	self._goPreview = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_Preview")
-	self._goPreviewContent = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_Preview/#go_PreviewList")
-	self._goPreviewItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_Preview/#go_PreviewList/#go_PreviewItem")
-	self._goMax = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_Max")
+	self._goSkillDescList = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_SkillDescList")
+	self._goSkillDescItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_SkillDescList/#go_SkillDescItem")
+	self._goEmptySkillDesc = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#go_EmptySkillDesc")
 	self._txtRemainAttribute = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Remain/#txt_RemainAttribute")
 	self._goRemain = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Remain")
 	self._btnAdd = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_Container/Remain/#btn_Add", AudioEnum.Rouge2.AddAttr)
@@ -45,12 +42,12 @@ function Rouge2_MapAttributeUpView:onInitView()
 	self._goBlock = gohelper.findChild(self.viewGO, "#go_Root/#go_Block")
 	self._goEffectTips = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Base/#go_effectTips")
 	self._txtEffect = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/Base/#go_effectTips/#txt_effect")
-	self._goHasRelics = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Collection/has")
-	self._goEmptyRelics = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Collection/empty")
-	self._goRelicsList = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Collection/has/layout")
-	self._btnRelicsTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_Container/Collection/has/#btn_RelicsTips")
-	self._goRelicsItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/Collection/has/layout/#go_collectionitem")
+	self._scrollRelics = gohelper.findChildScrollRect(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#scroll_Relics")
+	self._goRelicsList = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#scroll_Relics/Viewport/Content")
+	self._goRelicsItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#scroll_Relics/Viewport/Content/#go_RelicsItem")
+	self._btnRelicsTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#scroll_Relics/Viewport")
 	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_PassiveSkill/#btn_Skip")
+	self._txtSpLevel = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/txt_SpLevel")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -62,6 +59,7 @@ function Rouge2_MapAttributeUpView:addEvents()
 	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 	self._btnSkip:AddClickListener(self._btnSkipOnClick, self)
 	self._btnRelicsTips:AddClickListener(self._btnRelicsTipsOnClick, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateAttrInfo, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateAttrInfo, self._onUpdateAttrInfo, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSelectCareerAttribute, self._onSelectCareerAttribute, self)
 end
@@ -92,7 +90,6 @@ function Rouge2_MapAttributeUpView:_btnAddOnClick()
 
 	Rouge2_Rpc.instance:sendRouge2AddCareerAttrPointRequest(self._selectAttrId, Rouge2_MapEnum.AddAttrStep, function(__, resultCode)
 		if resultCode ~= 0 then
-			self:_debugErrorInfo()
 			self:closeThis()
 
 			return
@@ -100,26 +97,8 @@ function Rouge2_MapAttributeUpView:_btnAddOnClick()
 
 		self._waitRpc = false
 
-		local curInteractive = Rouge2_MapModel.instance:getCurInteractiveJson()
-		local addAttrPoint = curInteractive and curInteractive.addAttrPoint or 0
-
-		self._addAttrPoint = addAttrPoint or 0
-		self._costAddAttrPoint = self._costAddAttrPoint + 1
-
 		self:_onUpdateAttributeInfo()
 	end)
-end
-
-function Rouge2_MapAttributeUpView:_debugErrorInfo()
-	local attrValue = Rouge2_Model.instance:getAttrValue(self._selectAttrId)
-	local preAddAttrPoint = self._addAttrPoint
-	local curInteractive = Rouge2_MapModel.instance:getCurInteractiveJson()
-	local addAttrPoint = curInteractive and curInteractive.addAttrPoint or 0
-	local curAddAttrPoint = addAttrPoint or 0
-	local eventCo = Rouge2_MapModel.instance:getCurEvent()
-	local eventId = eventCo and eventCo.id or 0
-
-	logError(string.format("肉鸽属性加点参数错误: attrId = %s, attrValue = %s, preAddAttrPoint = %s, curAddAttrPoint = %s, initAttrPoint = %s, costAttrPoint = %s, eventId = %s", self._selectAttrId, attrValue, preAddAttrPoint, curAddAttrPoint, self._initAddAttrPoint, self._costAddAttrPoint, eventId))
 end
 
 function Rouge2_MapAttributeUpView:_onLightAnimDone()
@@ -142,13 +121,7 @@ function Rouge2_MapAttributeUpView:_btnRelicsTipsOnClick()
 		return
 	end
 
-	local showViewName = Rouge2_BackpackHelper.itemType2ShowViewName(Rouge2_Enum.BagType.Relics)
-
-	ViewMgr.instance:openView(showViewName, {
-		viewEnum = Rouge2_MapEnum.ItemDropViewEnum.Tips,
-		dataType = Rouge2_Enum.ItemDataType.Config,
-		itemList = self._hasRelicsIdList
-	})
+	Rouge2_ViewHelper.openItemTipsView(Rouge2_Enum.ItemDataType.Config, self._hasRelicsIdList)
 end
 
 function Rouge2_MapAttributeUpView:_onPassiveSkillCloseAnimDone()
@@ -171,12 +144,12 @@ function Rouge2_MapAttributeUpView:_editableInitView()
 
 	self._remainAnimator = SLFramework.AnimatorPlayer.Get(self._goRemain)
 	self._skillAnimator = SLFramework.AnimatorPlayer.Get(self._goPassiveSkill)
+	self._lvAnimator = gohelper.onceAddComponent(self._goBase, gohelper.Type_Animator)
 	self._addAttrPoint = 0
 	self._first = true
 	self._relicsIconTab = self:getUserDataTb_()
 
 	gohelper.setActive(self._goBlock, false)
-	gohelper.setActive(self._goToast, false)
 	gohelper.setActive(self._goPassiveSkill, false)
 	gohelper.setActive(self._goToastContainer, false)
 	gohelper.setActive(self._btnClose.gameObject, false)
@@ -194,27 +167,20 @@ function Rouge2_MapAttributeUpView:onOpen()
 
 	self:initInfo()
 	self:refreshUI()
-
-	self._isDealyPlay = self._addAttrPoint and self._addAttrPoint > 0
-
-	if not self._isDealyPlay then
-		self:buildAttrUpFlow()
-	end
 end
 
 function Rouge2_MapAttributeUpView:onOpenFinish()
-	if self._isDealyPlay then
-		self:buildAttrUpFlow()
-	end
+	self:buildAttrUpFlow()
 end
 
 function Rouge2_MapAttributeUpView:initInfo()
-	self._addAttrPoint = self.viewParam and self.viewParam.addAttrPoint or 0
-	self._initAddAttrPoint = self._addAttrPoint or 0
-	self._costAddAttrPoint = 0
-
+	self:initAddAttrPoint()
 	self:initCustomAttrValue()
 	self:initAttrMap()
+end
+
+function Rouge2_MapAttributeUpView:initAddAttrPoint()
+	self._addAttrPoint = Rouge2_MapAttrUpdateController.instance:getAddAttrPoint()
 end
 
 function Rouge2_MapAttributeUpView:initCustomAttrList()
@@ -234,7 +200,7 @@ function Rouge2_MapAttributeUpView:initCustomAttrList()
 end
 
 function Rouge2_MapAttributeUpView:initCustomAttrValue()
-	local updateAttrMap = Rouge2_Model.instance:getUpdateAttrMap() or {}
+	local updateAttrMap = Rouge2_MapAttrUpdateController.instance:getUpdateAttrMap() or {}
 
 	self._updateAttrMap = tabletool.copy(updateAttrMap)
 	self._show = self._addAttrPoint > 0
@@ -250,7 +216,7 @@ function Rouge2_MapAttributeUpView:initCustomAttrValue()
 		end
 	end
 
-	Rouge2_Model.instance:clearUpdateAttrMap()
+	Rouge2_MapAttrUpdateController.instance:clearUpdateAttrMap()
 end
 
 function Rouge2_MapAttributeUpView:initAttrMap()
@@ -261,9 +227,13 @@ function Rouge2_MapAttributeUpView:initAttrMap()
 	end
 
 	for _, attrMo in ipairs(self._customAttrList) do
-		self._comAttrMap:selectAttributeById(attrMo.attrId)
+		local update = self._updateAttrMap[attrMo.attrId] or 0
 
-		break
+		if update ~= 0 then
+			self._comAttrMap:selectAttributeById(attrMo.attrId)
+
+			break
+		end
 	end
 end
 
@@ -361,6 +331,7 @@ function Rouge2_MapAttributeUpView:_attrValueFrameCallback(value, attrId)
 end
 
 function Rouge2_MapAttributeUpView:_onAttrUpFlowDone()
+	self._hasUpdateAttr = false
 	self._updateAttrMap = {}
 
 	gohelper.setActive(self._btnClose.gameObject, self._addAttrPoint <= 0)
@@ -369,7 +340,6 @@ function Rouge2_MapAttributeUpView:_onAttrUpFlowDone()
 end
 
 function Rouge2_MapAttributeUpView:_hideAllToast()
-	gohelper.setActive(self._goToast, false)
 	gohelper.setActive(self._goToastContainer, false)
 end
 
@@ -405,16 +375,6 @@ function Rouge2_MapAttributeUpView:updateSelectInfo()
 	self._isMax = self._curAttrValue >= self._maxAttrValue
 	self._selectPassiveSkillCo = Rouge2_AttributeConfig.instance:getCareerPassiveSkill(self._careerId, self._selectAttrId, self._curAttrValue)
 	self._selectAttrName = self._selectAttrCo and self._selectAttrCo.name or ""
-
-	if not self._isMax then
-		self._nextSpSkillCo = Rouge2_AttributeConfig.instance:getNextSpPassiveSkill(self._careerId, self._selectAttrId, self._curAttrValue)
-		self._nextSpSkillId = self._nextSpSkillCo and self._nextSpSkillCo.id
-		self._nextSpSkillLevel = self._nextSpSkillCo and self._nextSpSkillCo.level
-		self._nextSpSkillDesc = self._nextSpSkillCo and Rouge2_AttributeConfig.instance:getPassiveSkillImLevelUpDesc(self._nextSpSkillId, self._nextSpSkillLevel) or ""
-		self._nextSpSkillDesc = SkillHelper.buildDesc(self._nextSpSkillDesc, PercentColor, BracketColor) or ""
-	else
-		self._nextSpSkillCo = nil
-	end
 end
 
 function Rouge2_MapAttributeUpView:refreshSelectUI()
@@ -425,49 +385,36 @@ function Rouge2_MapAttributeUpView:refreshSelectUI()
 	end
 
 	self._txtAttributeName.text = self._selectAttrName
-	self._txtWorldDesc.text = self._selectAttrCo and self._selectAttrCo.careerDesc
 	self._txtCurAttribute.text = self._curAttrValue
-	self._txtCurAttribute2.text = self._curAttrValue
+	self._txtCurAttribute2.text = self._curAttrValue - 1
 	self._txtNextAttribute.text = self._isMax and "MAX" or self._nextAttrValue
-	self._txtNextAttribute2.text = self._isMax and "MAX" or self._nextAttrValue
+	self._txtNextAttribute2.text = self._curAttrValue
 
-	if self._nextSpSkillCo then
-		self._txtEffect.text = GameUtil.getSubPlaceholderLuaLangThreeParam(luaLang("rouge2_effecttips"), self._nextSpSkillLevel, self._selectAttrName, self._nextSpSkillDesc)
-	else
-		self._txtEffect.text = luaLang("rouge2_attributeupview_maxpassiveskill")
+	local skillName = self._selectPassiveSkillCo and self._selectPassiveSkillCo.name
+	local skillNameResult = Rouge2_ItemExpressionHelper.getDescResult(nil, nil, skillName)
+
+	Rouge2_ItemDescHelper.buildAndSetDesc(self._txtEffect, skillNameResult, PercentColor, BracketColor)
+	gohelper.setActive(self._goArrow, not self._isMax and self._addAttrPoint > 0)
+	gohelper.setActive(self._txtNextAttribute.gameObject, self._isMax or self._addAttrPoint > 0)
+	Rouge2_AttrDropDescHelper.loadAttrDropLevelList(self._careerId, self._selectAttrId, self._txtSpLevel, false)
+
+	self._attrDropList = Rouge2_AttributeConfig.instance:getAttrDropList(self._careerId, self._selectAttrId) or {}
+	self._attrDropNum = self._attrDropList and #self._attrDropList or 0
+
+	gohelper.setActive(self._goEmptySkillDesc, self._attrDropNum <= 0)
+	gohelper.setActive(self._goSkillDescList, self._attrDropNum > 0)
+
+	if self._attrDropNum > 0 then
+		gohelper.CreateObjList(self, self._refreshAttrDropItem, self._attrDropList, self._goSkillDescList, self._goSkillDescItem)
 	end
 
-	gohelper.setActive(self._goMax, self._isMax)
-	gohelper.setActive(self._goPreview, not self._isMax)
-
-	if not self._isMax then
-		local effectDescList = Rouge2_AttributeConfig.instance:getPassiveSkillUpDescList(self._careerId, self._selectAttrId, self._nextAttrValue)
-
-		gohelper.CreateObjList(self, self._refreshNextAttrEffectDesc, effectDescList, self._goPreviewContent, self._goPreviewItem)
-	end
-
-	local curEffectDescList = Rouge2_AttributeConfig.instance:getPassiveSkillDescList(self._careerId, self._selectAttrId, self._curAttrValue)
-
-	gohelper.CreateObjList(self, self._refreshCurAttrEffectDesc, curEffectDescList, self._goCurviewContent, self._goCurviewItem)
 	Rouge2_IconHelper.setAttributeIcon(self._selectAttrId, self._imageAttributeIcon)
 	Rouge2_IconHelper.setAttributeIcon(self._selectAttrId, self._imageAttributeIcon2)
 	self:refreshRelicsList()
 end
 
-function Rouge2_MapAttributeUpView:_refreshNextAttrEffectDesc(obj, desc, index)
-	local txtEffect = gohelper.findChildText(obj, "txt_Effect")
-
-	txtEffect.text = SkillHelper.buildDesc(desc, PercentColor, BracketColor)
-
-	SkillHelper.addHyperLinkClick(txtEffect)
-end
-
-function Rouge2_MapAttributeUpView:_refreshCurAttrEffectDesc(obj, desc, index)
-	local txtEffect = gohelper.findChildText(obj, "txt_Effect")
-
-	txtEffect.text = SkillHelper.buildDesc(desc, PercentColor, BracketColor)
-
-	SkillHelper.addHyperLinkClick(txtEffect)
+function Rouge2_MapAttributeUpView:_refreshAttrDropItem(obj, attrDropCo, index)
+	Rouge2_AttrDropDescHelper.LoadAttrDropDesc(attrDropCo.id, obj, PercentColor, BracketColor)
 end
 
 function Rouge2_MapAttributeUpView:refreshFreeUI()
@@ -498,8 +445,7 @@ function Rouge2_MapAttributeUpView:refreshRelicsList()
 
 	local relicsNum = self._hasRelcisList and #self._hasRelcisList or 0
 
-	gohelper.setActive(self._goHasRelics, relicsNum > 0)
-	gohelper.setActive(self._goEmptyRelics, relicsNum <= 0)
+	gohelper.setActive(self._scrollRelics.gameObject, relicsNum > 0)
 
 	if relicsNum <= 0 then
 		return
@@ -564,7 +510,7 @@ end
 function Rouge2_MapAttributeUpView:checkPassiveSkill()
 	local isSpecial = self._selectPassiveSkillCo and self._selectPassiveSkillCo.isSpecial ~= 0
 
-	gohelper.setActive(self._goToast, true)
+	self._lvAnimator:Play("lvup", 0, 0)
 	gohelper.setActive(self._goPassiveSkill, isSpecial)
 
 	if not isSpecial then
@@ -577,7 +523,7 @@ function Rouge2_MapAttributeUpView:checkPassiveSkill()
 
 	local levelUpDesc = Rouge2_AttributeConfig.instance:getPassiveSkillImLevelUpDesc(self._selectPassiveSkillCo.id, self._selectPassiveSkillCo.level)
 
-	self._txtPassiveDesc.text = SkillHelper.buildDesc(levelUpDesc, PercentColor, BracketColor)
+	self._txtPassiveDesc.text = Rouge2_ItemDescHelper.buildDesc(levelUpDesc, PercentColor, BracketColor)
 end
 
 function Rouge2_MapAttributeUpView:_onPassiveSkillOpenAnimDone()
@@ -589,10 +535,11 @@ function Rouge2_MapAttributeUpView:_onUpdateAttrInfo()
 end
 
 function Rouge2_MapAttributeUpView:_onUpdateAttributeInfo()
-	if self._waitRpc or self._flow and self._flow.status == WorkStatus.Running then
+	if self._waitRpc or self._flow and self._flow.status == WorkStatus.Running or self._hasUpdateAttr then
 		return
 	end
 
+	self:initAddAttrPoint()
 	self:initCustomAttrList()
 	self:initCustomAttrValue()
 	self:buildAttrUpFlow()

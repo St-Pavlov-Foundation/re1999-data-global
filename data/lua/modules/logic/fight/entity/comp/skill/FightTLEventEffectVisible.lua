@@ -16,6 +16,22 @@ function FightTLEventEffectVisible:onTrackStart(fightStepData, duration, paramsA
 	local buffTypeIdSceneEffect = paramsArr[3]
 
 	self:com_sendFightEvent(FightEvent.SetBuffTypeIdSceneEffect, buffTypeIdSceneEffect == "1")
+
+	local buffLoopEffectVisible = paramsArr[4]
+
+	if not string.nilorempty(buffLoopEffectVisible) then
+		local entityDic = FightGameMgr.entityMgr.entityDic
+
+		for k, entity in pairs(entityDic) do
+			if entity.buff then
+				if buffLoopEffectVisible == "1" then
+					entity.buff:showBuffEffects("FightTLEventEffectVisible")
+				else
+					entity.buff:hideBuffEffects("FightTLEventEffectVisible")
+				end
+			end
+		end
+	end
 end
 
 function FightTLEventEffectVisible:onTrackEnd()

@@ -2,14 +2,14 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayerLZL", package.seeall)
 
-local FightEntitySpecialEffectBuffLayerLZL = class("FightEntitySpecialEffectBuffLayerLZL", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffectBuffLayerLZL = class("FightEntitySpecialEffectBuffLayerLZL", FightBaseClass)
 
-function FightEntitySpecialEffectBuffLayerLZL:initClass()
-	self.entity = self._entity
+function FightEntitySpecialEffectBuffLayerLZL:onConstructor(entity)
+	self.entity = entity
 	self.entityId = self.entity.id
 	self.curEffectWrap = nil
 
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self.onBuffUpdate)
 end
 
 function FightEntitySpecialEffectBuffLayerLZL:onBuffUpdate(entityId, effectType, buffId, buffUid)
@@ -90,13 +90,8 @@ function FightEntitySpecialEffectBuffLayerLZL:removeEffect()
 	end
 end
 
-function FightEntitySpecialEffectBuffLayerLZL:releaseSelf()
+function FightEntitySpecialEffectBuffLayerLZL:onDestructor()
 	self:removeEffect()
-	FightEntitySpecialEffectBuffLayerLZL.super.releaseSelf(self)
-end
-
-function FightEntitySpecialEffectBuffLayerLZL:disposeSelf()
-	FightEntitySpecialEffectBuffLayerLZL.super.disposeSelf(self)
 end
 
 return FightEntitySpecialEffectBuffLayerLZL

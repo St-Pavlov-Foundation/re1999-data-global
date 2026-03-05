@@ -18,6 +18,7 @@ FightParamData.ParamKey = {
 	ProgressSkill = 1,
 	ROUGE2_REVIVAL_COIN = 15,
 	DoomsdayClock_Value = 3,
+	SceneId = 16,
 	DoomsdayClock_Range2 = 5
 }
 

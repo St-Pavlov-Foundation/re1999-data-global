@@ -123,7 +123,7 @@ Rouge2_OutsideEnum.SceneOpenDelay = {
 	[Rouge2_OutsideEnum.SceneIndex.CareerScene] = 0.8,
 	[Rouge2_OutsideEnum.SceneIndex.LevelScene] = 0.7
 }
-Rouge2_OutsideEnum.DifficultyChangeTime = 0.667
+Rouge2_OutsideEnum.DifficultyChangeTime = 1.333
 Rouge2_OutsideEnum.CareerRefreshTime = 0.167
 Rouge2_OutsideEnum.CareerSwitchFinishTime = 1.833
 Rouge2_OutsideEnum.ForceCloseMaskTime = 5
@@ -201,6 +201,19 @@ Rouge2_OutsideEnum.AttributeCheckState = {
 	BigSuccess = 2,
 	Fail = 0,
 	Success = 1
+}
+Rouge2_OutsideEnum.DifficultySpineCount = {
+	2,
+	3,
+	5
+}
+Rouge2_OutsideEnum.MainRoleSpineScale = {
+	x = 0.12,
+	y = 0.12
+}
+Rouge2_OutsideEnum.NPCRoleSpineScale = {
+	x = 0.35,
+	y = 0.35
 }
 Rouge2_OutsideEnum.DescPercentColor = "#F0B75F"
 Rouge2_OutsideEnum.DescBracketColor = "#7195DF"

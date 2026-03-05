@@ -64,6 +64,7 @@ function SwitchMainActExtraDisplay:_initActs()
 	self:_addActHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self._getWeekWalkHeartStatus, self._getWeekWalkHeartStartTime)
 	self:_addActHandler(ActivityEnum.MainViewActivityState.Act191, self._getAct191Status, self._getAct191StartTime)
 	self:_addActHandler(ActivityEnum.MainViewActivityState.Rouge2, self._getRouge2Status, self._getRouge2StartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Arcade, self._getArcadeStatus, self._getArcadeStartTime)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, self.refreshRoleStoryBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Survival, self.refreshSurvivalBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, self.refreshSeasonBtn)
@@ -74,6 +75,7 @@ function SwitchMainActExtraDisplay:_initActs()
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self.refreshWeekWalkHeartBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, self.refreshAct191Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge2, self.refreshRouge2Btn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Arcade, self.refreshArcadeBtn)
 end
 
 function SwitchMainActExtraDisplay:_addRefreshBtnHandler(id, handler)
@@ -247,6 +249,20 @@ function SwitchMainActExtraDisplay:_getRouge2StartTime()
 	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
+function SwitchMainActExtraDisplay:_getArcadeStatus()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
+
+	return status == ActivityEnum.ActivityStatus.Normal
+end
+
+function SwitchMainActExtraDisplay:_getArcadeStartTime()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local actMo = ActivityModel.instance:getActMO(actId)
+
+	return actMo and actMo:getRealStartTimeStamp() * 1000
+end
+
 function SwitchMainActExtraDisplay:_onStoryChange()
 	self:onRefreshActivityState()
 end
@@ -348,6 +364,26 @@ function SwitchMainActExtraDisplay:refreshRouge2Btn()
 	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
 	self._txtrolestory.text = ""
+end
+
+function SwitchMainActExtraDisplay:refreshArcadeBtn()
+	gohelper.setActive(self._btnrolestory, true)
+
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
+
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
+
+	self._txtrolestory.text = ""
+
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+
+	RedDotController.instance:addRedDot(self._gorolestoryred, activityCo.redDotId)
+
+	local hasNew = ActivityStageHelper.checkOneActivityStageHasChange(actId)
+
+	gohelper.setActive(self._gorolestorynew, hasNew)
+	gohelper.setActive(self._gorolestoryred, not hasNew)
 end
 
 function SwitchMainActExtraDisplay:onLoadImage()

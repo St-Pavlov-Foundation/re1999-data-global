@@ -89,6 +89,17 @@ function FightDataHelper.getHeatScale(teamType)
 	return teamData and teamData.heatScale
 end
 
+function FightDataHelper.getCustomData(customType)
+	if not customType then
+		return
+	end
+
+	local customData = FightDataHelper.fieldMgr.customData
+	local data = customData and customData[customType]
+
+	return data
+end
+
 FightDataHelper.initDataMgr()
 
 return FightDataHelper

@@ -41,10 +41,10 @@ function FightHandCardDataMgr:updateHandCardByProto(proto)
 end
 
 function FightHandCardDataMgr:cacheDistributeCard(round)
-	self.beforeCards1 = FightCardDataHelper.newCardList(round.beforeCards1)
-	self.teamACards1 = FightCardDataHelper.newCardList(round.teamACards1)
-	self.beforeCards2 = FightCardDataHelper.newCardList(round.beforeCards2)
-	self.teamACards2 = FightCardDataHelper.newCardList(round.teamACards2)
+	self.beforeCards1 = round.beforeCards1
+	self.teamACards1 = round.teamACards1
+	self.beforeCards2 = round.beforeCards2
+	self.teamACards2 = round.teamACards2
 end
 
 function FightHandCardDataMgr:cacheRedealCard(proto)

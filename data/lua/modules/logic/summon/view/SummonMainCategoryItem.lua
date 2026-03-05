@@ -299,11 +299,16 @@ function SummonMainCategoryItem:_refreshFree(isSelect)
 
 	self._gofreetips = gohelper.findChild(freeTips, "#go_freetips")
 
+	local txttips = isSelect and gohelper.findChildText(self._gofreetips, "#txt_selecttips") or gohelper.findChildText(self._gofreetips, "#txt_normaltips")
 	local summonMO = SummonMainModel.instance:getPoolServerMO(poolCfg.id)
+	local haveFree = summonMO.haveFree
+	local havefree10Count = summonMO.havefree10Count > 0
 
-	if summonMO and summonMO.haveFree then
+	if summonMO and (haveFree or havefree10Count) then
 		table.insert(self.tipsList, self._gofreetips)
 		gohelper.setActive(self._gofreetips, true)
+
+		txttips.text = havefree10Count and luaLang("havefree10Count") or luaLang("p_summon_timelimit_flag_free")
 	else
 		gohelper.setActive(self._gofreetips, false)
 	end

@@ -19,11 +19,10 @@ function FightWorkBuildSubEntityAfterChangeHero:onStart()
 		local nextSubEntityMO = subList[1]
 
 		if nextSubEntityMO then
-			self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 			self._entityId = nextSubEntityMO.id
 
 			self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onNextSubSpineLoaded)
-			self._entityMgr:buildSubSpine(nextSubEntityMO)
+			FightGameMgr.entityMgr:newEntity(nextSubEntityMO)
 
 			return
 		end
@@ -36,7 +35,7 @@ function FightWorkBuildSubEntityAfterChangeHero:_onNextSubSpineLoaded(unitSpine)
 	if unitSpine.unitSpawn.id == self._entityId then
 		self:com_registTimer(self.finishWork, 5)
 
-		local sub_entity = self._entityMgr:getEntity(self._entityId)
+		local sub_entity = FightGameMgr.entityMgr:getEntity(self._entityId)
 		local work = self:com_registWork(Work2FightWork, FightWorkStartBornNormal, sub_entity, true)
 
 		work:registFinishCallback(self.finishWork, self)

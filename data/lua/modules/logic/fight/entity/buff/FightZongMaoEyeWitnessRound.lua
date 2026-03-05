@@ -70,7 +70,7 @@ end
 
 function FightZongMaoEyeWitnessRound:onDestructor()
 	if self.sceneEffect then
-		if FightGameMgr.playMgr:isActive() then
+		if FightGameMgr.playMgr:__isActive() then
 			FightGameMgr.playMgr:newClass(FightHideZongMaoSceneEffect, self.sceneEffect)
 		else
 			gohelper.destroy(self.sceneEffect)

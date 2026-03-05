@@ -965,6 +965,101 @@
     "packName": "opveract"
   },
   {
+    "id": 25,
+    "audio": [
+      3200168
+    ],
+    "chapter": [
+      22911
+    ],
+    "guide": [],
+    "story": [
+      310200,
+      310201,
+      310202,
+      310203,
+      310204,
+      310205,
+      310206,
+      310207,
+      310208,
+      310209,
+      310210,
+      310211,
+      310212,
+      310213,
+      310001,
+      310002,
+      310003,
+      310004,
+      310005,
+      310006,
+      310007,
+      310008,
+      310009,
+      310010
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_2_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_2/v2a2_lopera",
+      "ui/viewres/versionactivity_2_2/v2a2_tianshinana"
+    ],
+    "uiPath": [],
+    "packName": "opveract"
+  },
+  {
+    "id": 26,
+    "audio": [
+      20230001
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [
+      310401,
+      310402,
+      310403,
+      310404,
+      310405,
+      310406,
+      310407,
+      310408,
+      310409,
+      310410,
+      310411,
+      310501,
+      310502,
+      310503,
+      310504,
+      310505,
+      310506,
+      310507,
+      310508,
+      310509,
+      310510,
+      310511,
+      310512,
+      310513,
+      310514,
+      310515
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_3_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_3/v2a3_dungeon",
+      "ui/viewres/versionactivity_2_3/v2a3_roledudugu",
+      "ui/viewres/versionactivity_2_3/v2a3_zhixinquaner"
+    ],
+    "uiPath": [],
+    "packName": "opveract"
+  },
+  {
     "id": 23,
     "audio": [],
     "chapter": [],

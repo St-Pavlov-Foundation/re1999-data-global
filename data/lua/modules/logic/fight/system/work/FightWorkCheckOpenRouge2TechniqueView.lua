@@ -12,7 +12,7 @@ local Career2TechniqueIdDict = {
 	[FightEnum.Rouge2Career.Strings] = 18,
 	[FightEnum.Rouge2Career.TubularBell] = 19,
 	[FightEnum.Rouge2Career.Cymbal] = 18,
-	[FightEnum.Rouge2Career.Slapstick] = 18
+	[FightEnum.Rouge2Career.Slapstick] = 21
 }
 
 function FightWorkCheckOpenRouge2TechniqueView:onStart()
@@ -43,9 +43,7 @@ function FightWorkCheckOpenRouge2TechniqueView:onStart()
 
 	local id = Career2TechniqueIdDict[career]
 
-	ViewMgr.instance:openView(ViewName.FightRouge2TechniqueView, id and {
-		techniqueId = id
-	})
+	Rouge2_Controller.instance:openTechniqueView(id)
 end
 
 function FightWorkCheckOpenRouge2TechniqueView:checkRecordedCareer(career)

@@ -16,7 +16,6 @@ end
 
 function FightViewBossHpMgr:addEvents()
 	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
-	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStage)
 	self:com_registFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, self.onSetBossHpVisibleWhenHidingFightView)
 end
 
@@ -29,10 +28,6 @@ function FightViewBossHpMgr:_editableInitView()
 
 	SLFramework.AnimatorPlayer.Get(self._hpItem):Play("idle", nil, nil)
 	gohelper.setActive(gohelper.findChild(self.viewGO, "root/bossHpRoot/bossHp/Alpha/bossHp"), false)
-end
-
-function FightViewBossHpMgr:_onRestartStage()
-	self:killAllChildView()
 end
 
 FightViewBossHpMgr.BossHpType = {

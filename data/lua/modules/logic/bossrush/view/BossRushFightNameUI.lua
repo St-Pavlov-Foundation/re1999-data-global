@@ -49,8 +49,7 @@ function BossRushFightNameUI:_onLoaded()
 	BossRushController.instance:registerCallback(BossRushEvent.OnUnlimitedHp, self._onUnlimitedHp, self)
 end
 
-function BossRushFightNameUI:beforeDestroy()
-	BossRushFightNameUI.super.beforeDestroy(self)
+function BossRushFightNameUI:onDestructor()
 	BossRushController.instance:unregisterCallback(BossRushEvent.OnUnlimitedHp, self._onUnlimitedHp, self)
 end
 

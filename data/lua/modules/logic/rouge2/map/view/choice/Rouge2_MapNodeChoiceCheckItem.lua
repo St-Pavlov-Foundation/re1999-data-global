@@ -8,7 +8,7 @@ function Rouge2_MapNodeChoiceCheckItem.Get(go, itemType)
 	return MonoHelper.addNoUpdateLuaComOnceToGo(go, Rouge2_MapNodeChoiceCheckItem, itemType)
 end
 
-function Rouge2_MapNodeChoiceCheckItem:updateInfo(eventMo, choiceCo)
+function Rouge2_MapNodeChoiceCheckItem:updateInfo(eventMo, choiceCo, checkRate)
 	self._eventMo = eventMo
 	self._choiceCo = choiceCo
 	self._choiceId = self._choiceCo and self._choiceCo.id
@@ -17,7 +17,9 @@ function Rouge2_MapNodeChoiceCheckItem:updateInfo(eventMo, choiceCo)
 	self._checkCo = self._isCheck and Rouge2_CareerConfig.instance:getDiceCheckConfig(self._checkId, Rouge2_MapEnum.AttrCheckResult.Failure)
 
 	local attrType = self._checkCo and self._checkCo.attrType
-	local checkRate = self._eventMo:getChoiceCheckRate(self._choiceId) or 0
+
+	checkRate = checkRate or self._eventMo:getChoiceCheckRate(self._choiceId)
+	checkRate = checkRate or 0
 
 	Rouge2_MapNodeChoiceCheckItem.super.updateInfo(self, attrType, checkRate)
 end

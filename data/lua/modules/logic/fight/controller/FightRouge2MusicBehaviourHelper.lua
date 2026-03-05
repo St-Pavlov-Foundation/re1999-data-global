@@ -103,7 +103,7 @@ function FightRouge2MusicBehaviourHelper.runSkill(skillCo)
 			if func then
 				pass = func(skillCo, condition, conditionParam)
 			else
-				logError(string.format("FightRouge2MusicBehaviourHelper.runSkill: behaviour not found", behaviour))
+				logError(string.format("FightRouge2MusicBehaviourHelper.runSkill: behaviour not found"))
 			end
 		end
 

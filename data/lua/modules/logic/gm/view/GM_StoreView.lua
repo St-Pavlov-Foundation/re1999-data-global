@@ -383,9 +383,9 @@ function GM_StoreView.StoreSkinGoodsItem_register(T)
 		local heroCO = HeroConfig.instance:getHeroCO(heroId)
 		local idStr = gohelper.getRichColorText(tostring(config.id), kRed)
 		local skinIdStr = gohelper.getRichColorText(tostring(skinCO.id), kRed)
+		local desc = "id: " .. idStr .. "\n" .. "SkinId: " .. skinIdStr
 
-		selfObj._txtskinname.text = "id: " .. idStr .. "\n" .. "SkinId: " .. skinIdStr
-		selfObj._txtname.text = heroCO.name .. " (id: " .. tostring(heroId) .. ")"
+		selfObj._txtremaintime.text = gohelper.getRichColorText(desc, kRed)
 	end
 end
 

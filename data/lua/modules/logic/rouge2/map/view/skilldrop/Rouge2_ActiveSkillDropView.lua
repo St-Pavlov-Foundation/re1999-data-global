@@ -6,6 +6,9 @@ local Rouge2_ActiveSkillDropView = class("Rouge2_ActiveSkillDropView", BaseView)
 
 function Rouge2_ActiveSkillDropView:onInitView()
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._goSelectBG = gohelper.findChild(self.viewGO, "#go_SelectBG")
+	self._goDropBG = gohelper.findChild(self.viewGO, "#go_DropBG")
+	self._goLossBG = gohelper.findChild(self.viewGO, "#go_LossBG")
 	self._goSelect = gohelper.findChild(self.viewGO, "Title/#go_Select")
 	self._goDrop = gohelper.findChild(self.viewGO, "Title/#go_Drop")
 	self._goLoss = gohelper.findChild(self.viewGO, "Title/#go_Loss")
@@ -19,6 +22,7 @@ function Rouge2_ActiveSkillDropView:onInitView()
 	self._txtCapacity = gohelper.findChildText(self.viewGO, "Capacity/List/Capacity/#txt_Capacity")
 	self._goAssemblyList = gohelper.findChild(self.viewGO, "Capacity/List/#go_AssemblyList")
 	self._goAssemblyItem = gohelper.findChild(self.viewGO, "Capacity/List/#go_AssemblyList/#go_AssemblyItem")
+	self._goMode = gohelper.findChild(self.viewGO, "#go_Mode")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -80,7 +84,8 @@ end
 function Rouge2_ActiveSkillDropView:_editableInitView()
 	self._goScrollSkill = self._scrollSkill.gameObject
 
-	Rouge2_AttributeToolBar.Load(self._goToolbar, Rouge2_Enum.AttributeToolType.Default)
+	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goToolbar, Rouge2_Enum.TeamRecommendTipType.Default)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.SkillDrop)
 end
 
 function Rouge2_ActiveSkillDropView:onOpen()
@@ -115,6 +120,9 @@ function Rouge2_ActiveSkillDropView:refreshTitle()
 	gohelper.setActive(self._goSelect, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 	gohelper.setActive(self._goDrop, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Drop)
 	gohelper.setActive(self._goLoss, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Loss)
+	gohelper.setActive(self._goSelectBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
+	gohelper.setActive(self._goDropBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Drop)
+	gohelper.setActive(self._goLossBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Loss)
 end
 
 function Rouge2_ActiveSkillDropView:refreshButton()

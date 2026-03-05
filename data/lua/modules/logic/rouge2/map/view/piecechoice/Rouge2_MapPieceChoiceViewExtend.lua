@@ -7,6 +7,7 @@ local Rouge2_MapPieceChoiceViewExtend = class("Rouge2_MapPieceChoiceViewExtend",
 function Rouge2_MapPieceChoiceViewExtend:onInitView()
 	self._btnContinue = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_DialogueList/#btn_Continue")
 	self._txtContinue = gohelper.findChildText(self.viewGO, "Right/#go_DialogueList/#btn_Continue/#txt_Continue")
+	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Skip")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -24,7 +25,7 @@ function Rouge2_MapPieceChoiceViewExtend:removeEvents()
 end
 
 function Rouge2_MapPieceChoiceViewExtend:_editableInitView()
-	return
+	gohelper.setActive(self._btnSkip.gameObject, false)
 end
 
 function Rouge2_MapPieceChoiceViewExtend:onOpen()

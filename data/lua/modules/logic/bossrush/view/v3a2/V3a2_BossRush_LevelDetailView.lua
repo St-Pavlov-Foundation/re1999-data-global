@@ -209,7 +209,7 @@ function V3a2_BossRush_LevelDetailView:_refreshLurk()
 	local episodeId = self._layerCO.episodeId
 	local concealCo = BossRushConfig.instance:getConcealCo(episodeId)
 
-	self._txtresilienceValue.text = concealCo.maxConceal
+	self._txtresilienceValue.text = concealCo and concealCo.maxConceal or ""
 
 	local count = 0
 

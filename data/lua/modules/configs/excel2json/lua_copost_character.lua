@@ -6,6 +6,7 @@ local lua_copost_character = {}
 local fields = {
 	chaName = 3,
 	chaPicture = 2,
+	chaCamp = 4,
 	chaId = 1
 }
 local primaryKey = {

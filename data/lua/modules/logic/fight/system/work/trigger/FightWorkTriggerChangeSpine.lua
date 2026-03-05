@@ -18,7 +18,10 @@ function FightWorkTriggerChangeSpine:onStart()
 
 		self._lastSpineObj = self._tarEntity.spine:getSpineGO()
 
-		self._tarEntity:loadSpine(self._onLoaded, self, string.format("roles/%s.prefab", self._config.param2))
+		local work = self._tarEntity:registLoadSpineWork(string.format("roles/%s.prefab", self._config.param2))
+
+		work:registFinishCallback(self._onLoaded, self)
+		work:start()
 
 		return
 	end
@@ -28,8 +31,11 @@ end
 
 function FightWorkTriggerChangeSpine:_onLoaded()
 	if self._tarEntity then
+		if self._tarEntity.spineRenderer then
+			self._tarEntity.spineRenderer:setSpine(self._tarEntity.spine)
+		end
+
 		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, self._tarEntity.spine)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, self._tarEntity.spine)
 	end
 
 	self:_delayDone()

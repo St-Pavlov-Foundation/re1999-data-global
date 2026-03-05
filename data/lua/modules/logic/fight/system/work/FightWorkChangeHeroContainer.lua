@@ -24,7 +24,7 @@ function FightWorkChangeHeroContainer:onStart()
 end
 
 function FightWorkChangeHeroContainer:_showSubEntity()
-	GameSceneMgr.instance:getCurScene().entityMgr:showSubEntity()
+	FightGameMgr.entityMgr:showSubEntity()
 end
 
 function FightWorkChangeHeroContainer:clearWork()

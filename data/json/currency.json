@@ -2176,5 +2176,23 @@
     "maxLimit": 0,
     "sources": "",
     "headIconSign": ""
+  },
+  {
+    "id": 3301,
+    "name": "language_10105005",
+    "subType": 0,
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "3301",
+    "smallIcon": "",
+    "useDesc": "language_10105006",
+    "desc": "language_10105007",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": "",
+    "headIconSign": ""
   }
 ]

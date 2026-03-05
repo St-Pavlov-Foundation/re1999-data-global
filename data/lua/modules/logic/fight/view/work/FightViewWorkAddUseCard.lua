@@ -63,7 +63,12 @@ function FightViewWorkAddUseCard:onStart()
 				end
 
 				cardItem:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
-				cardItem:tryPlayAlfEffect()
+
+				if cardInfo.CUSTOM_BehaviourId == FightEnum.SkillBehaviourId.UseCardCopy then
+					cardItem:tryPlayUseCardCopyEffect()
+				else
+					cardItem:tryPlayAlfEffect()
+				end
 
 				local sequence = FlowSequence.New()
 

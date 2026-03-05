@@ -16,7 +16,6 @@ function UdimoSceneWeatherComp:init(sceneId, levelId)
 	self._curCfgWeatherId = nil
 
 	self:initWeatherEffectDict()
-	self:updateWeatherInRandom()
 	self:updateWeatherByInfo()
 	self:addEventListeners()
 end
@@ -43,33 +42,7 @@ function UdimoSceneWeatherComp:initWeatherEffectDict()
 	end
 end
 
-function UdimoSceneWeatherComp:updateWeatherInRandom()
-	local isOversea = SettingsModel.instance:isOverseas()
-
-	if not isOversea then
-		return
-	end
-
-	local cfgWeatherIdList = UdimoConfig.instance:getWeatherIdList(self._curCfgWeatherId)
-	local index = math.random(#cfgWeatherIdList)
-	local newCfgWeatherId = cfgWeatherIdList[index]
-
-	self:changeCfgWeatherId(newCfgWeatherId)
-
-	local timeArr = UdimoConfig.instance:getUdimoConst(UdimoEnum.ConstId.RandomWeatherIntervalTime, false, "#", true)
-	local nextChangeWeatherTime = math.random(timeArr[1], timeArr[2])
-
-	TaskDispatcher.cancelTask(self.updateWeatherInRandom, self)
-	TaskDispatcher.runDelay(self.updateWeatherInRandom, self, nextChangeWeatherTime)
-end
-
 function UdimoSceneWeatherComp:updateWeatherByInfo()
-	local isOversea = SettingsModel.instance:isOverseas()
-
-	if isOversea then
-		return
-	end
-
 	local weatherId = UdimoWeatherModel.instance:getWeatherId()
 	local winLevel = UdimoWeatherModel.instance:getWindLevel()
 	local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId, winLevel)
@@ -147,7 +120,6 @@ end
 
 function UdimoSceneWeatherComp:onSceneClose()
 	self:stopWeatherAudio()
-	TaskDispatcher.cancelTask(self.updateWeatherInRandom, self)
 
 	self._curCfgWeatherId = nil
 

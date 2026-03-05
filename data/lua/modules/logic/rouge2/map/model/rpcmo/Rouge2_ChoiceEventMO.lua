@@ -99,6 +99,10 @@ function Rouge2_ChoiceEventMO:getChoiceSelectNum(choiceId)
 	return selectNum
 end
 
+function Rouge2_ChoiceEventMO:getCurSelectChoiceId()
+	return self.curSelect
+end
+
 function Rouge2_ChoiceEventMO.sortChoice(a, b)
 	return a < b
 end

@@ -1,0 +1,470 @@
+[
+  {
+    "groupId": 1,
+    "step": "1",
+    "content": "language_10104563",
+    "block": 1
+  },
+  {
+    "groupId": 1,
+    "step": "2",
+    "content": "language_10104564",
+    "block": 1
+  },
+  {
+    "groupId": 2,
+    "step": "1",
+    "content": "language_10104565",
+    "block": 0
+  },
+  {
+    "groupId": 3,
+    "step": "1",
+    "content": "language_10104566",
+    "block": 0
+  },
+  {
+    "groupId": 4,
+    "step": "1",
+    "content": "language_10104567",
+    "block": 0
+  },
+  {
+    "groupId": 5,
+    "step": "1",
+    "content": "language_10104568",
+    "block": 0
+  },
+  {
+    "groupId": 6,
+    "step": "1",
+    "content": "language_10104569",
+    "block": 0
+  },
+  {
+    "groupId": 7,
+    "step": "1",
+    "content": "language_10104570",
+    "block": 0
+  },
+  {
+    "groupId": 8,
+    "step": "1",
+    "content": "language_10104571",
+    "block": 0
+  },
+  {
+    "groupId": 9,
+    "step": "1",
+    "content": "language_10104572",
+    "block": 0
+  },
+  {
+    "groupId": 10,
+    "step": "1",
+    "content": "language_10104573",
+    "block": 0
+  },
+  {
+    "groupId": 11,
+    "step": "1",
+    "content": "language_10104573",
+    "block": 0
+  },
+  {
+    "groupId": 12,
+    "step": "1",
+    "content": "language_10104574",
+    "block": 0
+  },
+  {
+    "groupId": 13,
+    "step": "1",
+    "content": "language_10104575",
+    "block": 1
+  },
+  {
+    "groupId": 14,
+    "step": "1",
+    "content": "language_10104576",
+    "block": 1
+  },
+  {
+    "groupId": 15,
+    "step": "1",
+    "content": "language_10104577",
+    "block": 0
+  },
+  {
+    "groupId": 16,
+    "step": "1",
+    "content": "language_10104577",
+    "block": 0
+  },
+  {
+    "groupId": 17,
+    "step": "1",
+    "content": "language_10104578",
+    "block": 0
+  },
+  {
+    "groupId": 18,
+    "step": "1",
+    "content": "language_10104579",
+    "block": 0
+  },
+  {
+    "groupId": 19,
+    "step": "1",
+    "content": "language_10104580",
+    "block": 1
+  },
+  {
+    "groupId": 320000301,
+    "step": "1",
+    "content": "language_10104581",
+    "block": 0
+  },
+  {
+    "groupId": 320000301,
+    "step": "2",
+    "content": "language_10104582",
+    "block": 0
+  },
+  {
+    "groupId": 320000301,
+    "step": "3",
+    "content": "language_10104583",
+    "block": 0
+  },
+  {
+    "groupId": 320000302,
+    "step": "1",
+    "content": "language_10104581",
+    "block": 0
+  },
+  {
+    "groupId": 320000302,
+    "step": "2",
+    "content": "language_10104582",
+    "block": 0
+  },
+  {
+    "groupId": 320000302,
+    "step": "3",
+    "content": "language_10104583",
+    "block": 0
+  },
+  {
+    "groupId": 320000401,
+    "step": "1",
+    "content": "language_10104584",
+    "block": 0
+  },
+  {
+    "groupId": 320000401,
+    "step": "2",
+    "content": "language_10104585",
+    "block": 0
+  },
+  {
+    "groupId": 320000401,
+    "step": "3",
+    "content": "language_10104586",
+    "block": 0
+  },
+  {
+    "groupId": 320000402,
+    "step": "1",
+    "content": "language_10104584",
+    "block": 0
+  },
+  {
+    "groupId": 320000402,
+    "step": "2",
+    "content": "language_10104585",
+    "block": 0
+  },
+  {
+    "groupId": 320000402,
+    "step": "3",
+    "content": "language_10104586",
+    "block": 0
+  },
+  {
+    "groupId": 320000501,
+    "step": "1",
+    "content": "language_10104587",
+    "block": 0
+  },
+  {
+    "groupId": 320000501,
+    "step": "2",
+    "content": "language_10104588",
+    "block": 0
+  },
+  {
+    "groupId": 320000501,
+    "step": "3",
+    "content": "language_10104589",
+    "block": 0
+  },
+  {
+    "groupId": 320000502,
+    "step": "1",
+    "content": "language_10104587",
+    "block": 0
+  },
+  {
+    "groupId": 320000502,
+    "step": "2",
+    "content": "language_10104588",
+    "block": 0
+  },
+  {
+    "groupId": 320000502,
+    "step": "3",
+    "content": "language_10104589",
+    "block": 0
+  },
+  {
+    "groupId": 320000601,
+    "step": "1",
+    "content": "language_10104590",
+    "block": 0
+  },
+  {
+    "groupId": 320000601,
+    "step": "2",
+    "content": "language_10104591",
+    "block": 0
+  },
+  {
+    "groupId": 320000602,
+    "step": "1",
+    "content": "language_10104590",
+    "block": 0
+  },
+  {
+    "groupId": 320000602,
+    "step": "2",
+    "content": "language_10104591",
+    "block": 0
+  },
+  {
+    "groupId": 320000901,
+    "step": "1",
+    "content": "language_10104592",
+    "block": 0
+  },
+  {
+    "groupId": 320000901,
+    "step": "2",
+    "content": "language_10104593",
+    "block": 0
+  },
+  {
+    "groupId": 320000902,
+    "step": "1",
+    "content": "language_10104592",
+    "block": 0
+  },
+  {
+    "groupId": 320000902,
+    "step": "2",
+    "content": "language_10104593",
+    "block": 0
+  },
+  {
+    "groupId": 320001001,
+    "step": "1",
+    "content": "language_10104594",
+    "block": 0
+  },
+  {
+    "groupId": 320001002,
+    "step": "1",
+    "content": "language_10104595",
+    "block": 0
+  },
+  {
+    "groupId": 320001002,
+    "step": "2",
+    "content": "language_10104596",
+    "block": 0
+  },
+  {
+    "groupId": 320001003,
+    "step": "1",
+    "content": "language_10104597",
+    "block": 0
+  },
+  {
+    "groupId": 320001003,
+    "step": "2",
+    "content": "language_10104598",
+    "block": 0
+  },
+  {
+    "groupId": 320001004,
+    "step": "1",
+    "content": "language_10104594",
+    "block": 0
+  },
+  {
+    "groupId": 320001005,
+    "step": "1",
+    "content": "language_10104595",
+    "block": 0
+  },
+  {
+    "groupId": 320001005,
+    "step": "2",
+    "content": "language_10104596",
+    "block": 0
+  },
+  {
+    "groupId": 320001006,
+    "step": "1",
+    "content": "language_10104597",
+    "block": 0
+  },
+  {
+    "groupId": 320001006,
+    "step": "2",
+    "content": "language_10104598",
+    "block": 0
+  },
+  {
+    "groupId": 320001101,
+    "step": "1",
+    "content": "language_10104599",
+    "block": 0
+  },
+  {
+    "groupId": 320001101,
+    "step": "2",
+    "content": "language_10104600",
+    "block": 0
+  },
+  {
+    "groupId": 320001102,
+    "step": "1",
+    "content": "language_10104599",
+    "block": 0
+  },
+  {
+    "groupId": 320001102,
+    "step": "2",
+    "content": "language_10104600",
+    "block": 0
+  },
+  {
+    "groupId": 320001201,
+    "step": "1",
+    "content": "language_10104601",
+    "block": 0
+  },
+  {
+    "groupId": 320001201,
+    "step": "2",
+    "content": "language_10104602",
+    "block": 0
+  },
+  {
+    "groupId": 320001202,
+    "step": "1",
+    "content": "language_10104601",
+    "block": 0
+  },
+  {
+    "groupId": 320001202,
+    "step": "2",
+    "content": "language_10104602",
+    "block": 0
+  },
+  {
+    "groupId": 320001301,
+    "step": "1",
+    "content": "language_10104603",
+    "block": 0
+  },
+  {
+    "groupId": 320001302,
+    "step": "1",
+    "content": "language_10104603",
+    "block": 0
+  },
+  {
+    "groupId": 320001401,
+    "step": "1",
+    "content": "language_10104604",
+    "block": 0
+  },
+  {
+    "groupId": 320001401,
+    "step": "2",
+    "content": "language_10104605",
+    "block": 0
+  },
+  {
+    "groupId": 320001401,
+    "step": "3",
+    "content": "language_10104606",
+    "block": 0
+  },
+  {
+    "groupId": 320001401,
+    "step": "4",
+    "content": "language_10104607",
+    "block": 0
+  },
+  {
+    "groupId": 320001401,
+    "step": "5",
+    "content": "language_10104608",
+    "block": 0
+  },
+  {
+    "groupId": 320001402,
+    "step": "1",
+    "content": "language_10104604",
+    "block": 0
+  },
+  {
+    "groupId": 320001402,
+    "step": "2",
+    "content": "language_10104605",
+    "block": 0
+  },
+  {
+    "groupId": 320001402,
+    "step": "3",
+    "content": "language_10104606",
+    "block": 0
+  },
+  {
+    "groupId": 320001402,
+    "step": "4",
+    "content": "language_10104607",
+    "block": 0
+  },
+  {
+    "groupId": 320001402,
+    "step": "5",
+    "content": "language_10104608",
+    "block": 0
+  },
+  {
+    "groupId": 320001501,
+    "step": "1",
+    "content": "language_10104609",
+    "block": 0
+  },
+  {
+    "groupId": 320001502,
+    "step": "1",
+    "content": "language_10104609",
+    "block": 0
+  }
+]

@@ -37,7 +37,11 @@ function VersionActivityFixedEnterViewTabItem2:childRefreshSelect(actId)
 	end
 
 	self.txtName.color = GameUtil.parseColor(tabSetting.cnColor)
-	self.txtNameEn.color = GameUtil.parseColor(tabSetting.enColor)
+
+	local enColor = GameUtil.parseColor(tabSetting.enColor)
+
+	enColor.a = tabSetting.enAlpha or 1
+	self.txtNameEn.color = enColor
 	self.txtName.fontSize = tabSetting.fontSize
 	self.txtNameEn.fontSize = tabSetting.enFontSize
 end

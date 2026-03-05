@@ -5,13 +5,14 @@ module("modules.logic.rouge2.backpack.view.Rouge2_BackpackSkillPanelView", packa
 local Rouge2_BackpackSkillPanelView = class("Rouge2_BackpackSkillPanelView", BaseView)
 
 function Rouge2_BackpackSkillPanelView:onInitView()
+	self._goSkillPanel = gohelper.findChild(self.viewGO, "SkillPanel")
 	self._txtCapacity = gohelper.findChildText(self.viewGO, "SkillPanel/Capacity/List/Capacity/#txt_Capacity")
 	self._goAssemblyList = gohelper.findChild(self.viewGO, "SkillPanel/Capacity/List/#go_ItemList")
 	self._goAssemblyItem = gohelper.findChild(self.viewGO, "SkillPanel/Capacity/List/#go_ItemList/#go_Item")
-	self._goSkillItem = gohelper.findChild(self.viewGO, "SkillPanel/#go_SkillItem")
 	self._goAttribute = gohelper.findChild(self.viewGO, "SkillPanel/#go_Attribute")
 	self._btnNew = gohelper.findChildButtonWithAudio(self.viewGO, "SkillPanel/#btn_New")
 	self._goReddot = gohelper.findChild(self.viewGO, "SkillPanel/#btn_New/#go_Reddot")
+	self._goMode = gohelper.findChild(self.viewGO, "SkillPanel/#go_Mode")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -44,9 +45,12 @@ function Rouge2_BackpackSkillPanelView:_btnNewOnClick()
 end
 
 function Rouge2_BackpackSkillPanelView:_editableInitView()
+	self._goSkillItem = self:getResInst(Rouge2_Enum.ResPath.BackpackSkillShowItem, self._goSkillPanel, "#go_SkillItem")
+
 	self:addChildView(Rouge2_BackpackSkillBoxView.New())
 	self:initSkillEditItems()
 	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Attr_Detail)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BackpackSkill)
 	RedDotController.instance:addRedDot(self._goReddot, Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.ActiveSkill])
 end
 

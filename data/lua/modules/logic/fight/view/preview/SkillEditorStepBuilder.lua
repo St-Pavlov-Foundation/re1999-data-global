@@ -8,14 +8,13 @@ local enableLog = false
 function SkillEditorStepBuilder.buildFightStepDataList(skillId, attackerId, targetId)
 	local side = FightHelper.getEntity(attackerId):getSide()
 	local oppositeSide = side == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
-	local fightStepData = FightStepData.New()
+	local fightStepData = FightStepData.New(FightDef_pb.FightStep())
 
 	fightStepData.editorPlaySkill = true
 	fightStepData.actType = 1
 	fightStepData.fromId = attackerId
 	fightStepData.toId = targetId
 	fightStepData.actId = skillId
-	fightStepData.actEffect = {}
 
 	local skillCO = lua_skill.configDict[skillId]
 
@@ -1282,6 +1281,21 @@ function SkillEditorStepBuilder._getBehaviorTargetIds(actEffect, skillCO, behavi
 		for _, entityMO in ipairs(atkMOList) do
 			insertTarget(targetIds, entityMO.id)
 		end
+	elseif targetType == "109" then
+		local atkMOList = FightDataHelper.entityMgr:getNormalList(side)
+		local rate = 100
+		local entityId = "0"
+
+		for _, entityMO in ipairs(atkMOList) do
+			local hpRate = entityMO.currentHp / entityMO.attrMO.hp
+
+			if hpRate <= rate then
+				rate = hpRate
+				entityId = entityMO.id
+			end
+		end
+
+		insertTarget(targetIds, entityId)
 	elseif FightEnum.LogicTargetClassify.Me[targetType] then
 		insertTarget(targetIds, attackerId)
 	elseif FightEnum.LogicTargetClassify.SecondaryTarget[targetType] then

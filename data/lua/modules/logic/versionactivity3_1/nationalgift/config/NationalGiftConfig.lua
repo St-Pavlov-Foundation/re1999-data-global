@@ -25,19 +25,19 @@ function NationalGiftConfig:onConfigLoaded(configName, configTable)
 end
 
 function NationalGiftConfig:getConstCO(id, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or NationalGiftModel.instance:getCurVersionActId()
 
 	return self._constConfig.configDict[actId][id]
 end
 
 function NationalGiftConfig:getBonusCo(bonusId, actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or NationalGiftModel.instance:getCurVersionActId()
 
 	return self._bonusConfig.configDict[actId][bonusId]
 end
 
 function NationalGiftConfig:getBonusCos(actId)
-	actId = actId or VersionActivity3_1Enum.ActivityId.NationalGift
+	actId = actId or NationalGiftModel.instance:getCurVersionActId()
 
 	return self._bonusConfig.configDict[actId]
 end

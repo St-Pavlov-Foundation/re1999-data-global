@@ -13,17 +13,24 @@ function GuideTriggerEpisodeAndGuideFinish:ctor(triggerKey)
 end
 
 function GuideTriggerEpisodeAndGuideFinish:assertGuideSatisfy(param, configParam)
-	local paramSp = string.splitToNumber(configParam, "_")
-	local configEpisodeId = paramSp[1]
-	local configGuideId = paramSp[2]
-	local episodeMO = DungeonModel.instance:getEpisodeInfo(configEpisodeId)
-	local episodeCO = DungeonConfig.instance:getEpisodeCO(configEpisodeId)
+	local paramSp = string.split(configParam, "_")
 	local episodeFinish = false
+	local episodeIdList = string.splitToNumber(paramSp[1], ",")
 
-	if episodeCO and episodeMO and episodeMO.star > DungeonEnum.StarType.None then
-		episodeFinish = episodeCO.afterStory <= 0 or episodeCO.afterStory > 0 and StoryModel.instance:isStoryFinished(episodeCO.afterStory)
+	for i, configEpisodeId in ipairs(episodeIdList) do
+		local episodeMO = DungeonModel.instance:getEpisodeInfo(configEpisodeId)
+		local episodeCO = DungeonConfig.instance:getEpisodeCO(configEpisodeId)
+
+		if episodeCO and episodeMO and episodeMO.star > DungeonEnum.StarType.None then
+			episodeFinish = episodeCO.afterStory <= 0 or episodeCO.afterStory > 0 and StoryModel.instance:isStoryFinished(episodeCO.afterStory)
+		end
 	end
 
+	if not episodeFinish then
+		return false
+	end
+
+	local configGuideId = tonumber(paramSp[2])
 	local guideFinish = GuideModel.instance:isGuideFinish(configGuideId)
 
 	return episodeFinish and guideFinish

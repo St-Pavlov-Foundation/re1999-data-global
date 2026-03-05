@@ -20,6 +20,7 @@ local fields = {
 	signature = 24,
 	activityId = 16,
 	queryVersion = 11,
+	preStoryId = 25,
 	challengeBonus = 15,
 	cgBg = 7,
 	cgScale = 21,

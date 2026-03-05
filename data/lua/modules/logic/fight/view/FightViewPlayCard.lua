@@ -38,6 +38,7 @@ function FightViewPlayCard:removeEvents()
 end
 
 function FightViewPlayCard:onOpen()
+	self:addEventCb(FightController.instance, FightEvent.ForceRefreshOperationArea, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.DistributeCards, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._refreshAllItemData, self)
@@ -49,6 +50,7 @@ function FightViewPlayCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.OnEffectExtraMoveAct, self.onAddExtraMoveAct, self)
 	self:addEventCb(FightController.instance, FightEvent.OnRestartFightDisposeDone, self._refreshAllItemData, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSwitchPlaneClearAssetDone, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshAllItemData, self)
 	self:addEventCb(FightController.instance, FightEvent.ShowPlayCardEffect, self._showPlayCardEffect, self)
 	self:addEventCb(FightController.instance, FightEvent.ShowPlayCardFlyEffect, self._onShowPlayCardFlyEffect, self)
@@ -543,9 +545,9 @@ function FightViewPlayCard:_createNewPlayItemObj(index)
 			playCardItem:hideExtMoveEffect()
 
 			playCardItem.PARENTVIEW = self
+			self._playCardItemList[i] = playCardItem
 
-			table.insert(self._playCardItemList, playCardItem)
-			self:_refreshItemData(index, nil)
+			self:_refreshItemData(i, nil)
 		end
 	end
 
@@ -782,8 +784,10 @@ function FightViewPlayCard:refreshAllItemPosIfEmptyCreate()
 	for i = showPlayItemCount + 1, #self._playCardItemList do
 		local playCardItem = self._playCardItemList[i]
 
-		playCardItem:updateItem(nil)
-		gohelper.setActive(playCardItem.go, false)
+		if playCardItem then
+			playCardItem:updateItem(nil)
+			gohelper.setActive(playCardItem.go, false)
+		end
 	end
 
 	self:refreshPlayCardTrPosAndWidth(totalCount)

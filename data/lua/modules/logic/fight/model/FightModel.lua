@@ -71,6 +71,10 @@ function FightModel:onRestart()
 	self:clear()
 end
 
+function FightModel:onSwitchPlane()
+	self:clear()
+end
+
 function FightModel:setFightParam(fightParam)
 	self._historyRoundMOList = nil
 	self._fightParam = fightParam
@@ -89,7 +93,7 @@ function FightModel:updateMySide(fightGroup)
 	local fightParam = self:getFightParam()
 
 	if fightParam then
-		fightParam:setMySide(fightGroup.clothId, fightGroup.heroList, fightGroup.subHeroList, fightGroup.equips, fightGroup.activity104Equips, fightGroup.trialHeroList, fightGroup.extraList, fightGroup.assistBossId)
+		fightParam:setMySide(fightGroup.clothId, fightGroup.heroList, fightGroup.subHeroList, fightGroup.equips, fightGroup.activity104Equips, fightGroup.trialHeroList, fightGroup.extraList, fightGroup.assistBossId, fightGroup.params)
 	end
 end
 
@@ -230,6 +234,17 @@ function FightModel:initSpeedConfig()
 			arrs[1][2],
 			arrs[2][2]
 		}
+		arrs = GameUtil.splitString2(lua_rouge2_const.configDict[100].value, true)
+		self._rouge2Speed = {
+			arrs[1][1],
+			arrs[2][1],
+			arrs[3][1]
+		}
+		self._rouge2UISpeed = {
+			arrs[1][2],
+			arrs[2][2],
+			arrs[2][2]
+		}
 	end
 end
 
@@ -239,6 +254,10 @@ function FightModel:getSpeed()
 	end
 
 	self:initSpeedConfig()
+
+	if FightDataHelper.fieldMgr:isRouge2() then
+		return self._rouge2Speed[self._userSpeed] or 1
+	end
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return self._douQuQuSpeed[self._userSpeed] or 1
@@ -263,6 +282,24 @@ function FightModel:getSpeed()
 	end
 end
 
+function FightModel:addSpeed()
+	if self._userSpeed >= self:getMaxSpeed() then
+		self._userSpeed = 1
+	else
+		self._userSpeed = self._userSpeed + 1
+	end
+
+	return self._userSpeed
+end
+
+function FightModel:getMaxSpeed()
+	if FightDataHelper.fieldMgr:isRouge2() then
+		return 3
+	end
+
+	return 2
+end
+
 function FightModel:getNormalSpeed()
 	self:initSpeedConfig()
 
@@ -277,6 +314,10 @@ end
 
 function FightModel:getUISpeed()
 	self:initSpeedConfig()
+
+	if FightDataHelper.fieldMgr:isRouge2() then
+		return self._rouge2UISpeed[self._userSpeed] or 1
+	end
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return self._douQuQuUISpeed[self._userSpeed] or 1

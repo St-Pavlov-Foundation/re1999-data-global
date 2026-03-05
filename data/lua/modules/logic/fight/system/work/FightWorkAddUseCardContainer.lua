@@ -5,6 +5,7 @@ module("modules.logic.fight.system.work.FightWorkAddUseCardContainer", package.s
 local FightWorkAddUseCardContainer = class("FightWorkAddUseCardContainer", FightStepEffectFlow)
 
 FightWorkAddUseCardContainer.IndexList = {}
+FightWorkAddUseCardContainer.BehaviourIdList = {}
 
 function FightWorkAddUseCardContainer:onStart()
 	local dataList = self:getAdjacentSameEffectList(nil, false)
@@ -12,10 +13,13 @@ function FightWorkAddUseCardContainer:onStart()
 	self:customPlayEffectData(dataList)
 
 	local indexList = FightWorkAddUseCardContainer.IndexList
+	local behaviourIdList = FightWorkAddUseCardContainer.BehaviourIdList
 
 	tabletool.clear(indexList)
+	tabletool.clear(behaviourIdList)
 
 	local waitTime = 0.5
+	local behaviourId = 0
 
 	for _, data in ipairs(dataList) do
 		local actEffectData = data.actEffectData
@@ -29,14 +33,32 @@ function FightWorkAddUseCardContainer:onStart()
 		table.insert(indexList, index)
 		FightPlayCardModel.instance:addUseCard(index, actEffectData.cardInfo, actEffectData.effectNum1)
 
-		if FightHeroALFComp.ALFSkillDict[actEffectData.effectNum1] then
-			waitTime = 1.8
+		local _waitTime = self:getWaitTime(actEffectData)
+
+		if waitTime < _waitTime then
+			waitTime = _waitTime
 		end
+
+		table.insert(behaviourIdList, tonumber(actEffectData.reserveId) or 0)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.AddUseCard, indexList)
+	FightController.instance:dispatchEvent(FightEvent.AddUseCard, indexList, behaviourIdList)
 	FightController.instance:dispatchEvent(FightEvent.AfterAddUseCardContainer, self.fightStepData)
 	self:com_registTimer(self._delayAfterPerformance, waitTime / FightModel.instance:getUISpeed())
+end
+
+function FightWorkAddUseCardContainer:getWaitTime(actEffectData)
+	if FightHeroALFComp.ALFSkillDict[actEffectData.effectNum1] then
+		return 1.8
+	end
+
+	local behaviourId = tonumber(actEffectData.reserveId)
+
+	if behaviourId == FightEnum.SkillBehaviourId.UseCardCopy then
+		return 1.8
+	end
+
+	return 0.5
 end
 
 function FightWorkAddUseCardContainer:customPlayEffectData(dataList)

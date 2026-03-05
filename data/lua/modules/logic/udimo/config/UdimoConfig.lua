@@ -524,18 +524,60 @@ function UdimoConfig:getWeatherCfg(id, nilError)
 	return cfg
 end
 
-function UdimoConfig:getWeatherIdList(excludeId)
+function UdimoConfig:getCfgWeatherIdList(excludeId, temp, noWinLevel)
 	local result = {}
 
 	for _, cfg in ipairs(lua_udimo_weather.configList) do
 		local id = cfg.id
+		local winLevel = cfg.windLevel
 
-		if not excludeId or id ~= excludeId then
-			result[#result + 1] = id
+		if (not excludeId or id ~= excludeId) and (not noWinLevel or winLevel == 0) then
+			if temp then
+				local minTemp = self:getWeatherMinTemperature(id)
+				local maxTemp = self:getWeatherMaxTemperature(id)
+
+				if not minTemp and not maxTemp then
+					result[#result + 1] = id
+				elseif minTemp and maxTemp then
+					if minTemp <= temp and temp <= maxTemp then
+						result[#result + 1] = id
+					end
+				elseif minTemp then
+					if minTemp <= temp then
+						result[#result + 1] = id
+					end
+				elseif maxTemp and temp <= maxTemp then
+					result[#result + 1] = id
+				end
+			else
+				result[#result + 1] = id
+			end
 		end
 	end
 
 	return result
+end
+
+function UdimoConfig:getWeatherIds(id)
+	local cfg = self:getWeatherCfg(id, true)
+
+	return cfg and cfg.weatherIds
+end
+
+function UdimoConfig:getWeatherMaxTemperature(id)
+	local cfg = self:getWeatherCfg(id, true)
+
+	if cfg and not string.nilorempty(cfg.maxTemperature) then
+		return tonumber(cfg.maxTemperature)
+	end
+end
+
+function UdimoConfig:getWeatherMinTemperature(id)
+	local cfg = self:getWeatherCfg(id, true)
+
+	if cfg and not string.nilorempty(cfg.minTemperature) then
+		return tonumber(cfg.minTemperature)
+	end
 end
 
 function UdimoConfig:findCfgWeatherId(weatherId, windLevel)

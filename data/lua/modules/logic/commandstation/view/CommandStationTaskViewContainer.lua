@@ -47,13 +47,19 @@ function CommandStationTaskViewContainer:buildTabViews(tabContainerId)
 	if tabContainerId == 1 then
 		self.navigateView = NavigateButtonsView.New({
 			true,
-			false,
+			true,
 			true
-		}, HelpEnum.HelpId.CommandStationTask)
+		}, HelpEnum.HelpId.CommandStationTask, self._closeCallback, nil, nil, self)
 
 		return {
 			self.navigateView
 		}
+	end
+end
+
+function CommandStationTaskViewContainer:_closeCallback()
+	if not ViewMgr.instance:isOpen(ViewName.CommandStationPaperView) then
+		CommandStationController.instance:openCommandStationPaperView()
 	end
 end
 

@@ -804,6 +804,10 @@ function ResUrl.getHandbookEquipImage(resName)
 	return string.format("singlebg/handbook/equip/%s.png", resName)
 end
 
+function ResUrl.getSkinHandbookFestivalSkinImage(resName)
+	return string.format("singlebg/skinhandbook_singlebg/festival/%s.png", resName)
+end
+
 function ResUrl.getCharacterTalentUpIcon(resName)
 	return string.format("singlebg/charactertalentup/%s.png", resName)
 end
@@ -826,6 +830,10 @@ end
 
 function ResUrl.getWeatherEffect(resName)
 	return string.format("effects/prefabs/roleeffects/%s.prefab", resName)
+end
+
+function ResUrl.getArcadeGameEffect(resName)
+	return string.format("effects/prefabs/v3a3_bfjwl/%s.prefab", resName)
 end
 
 function ResUrl.getPlayerViewTexture(resName)
@@ -1026,6 +1034,10 @@ end
 
 function ResUrl.getPushBoxPre(resName)
 	return string.format("scenes/m_s11_txz/prefab/%s.prefab", resName)
+end
+
+function ResUrl.getArcadeSceneRes(resName)
+	return string.format("scenes/v3a3_m_s12_bf/prefab/%s.prefab", resName)
 end
 
 function ResUrl.getPushBoxResultIcon(resName)
@@ -1763,6 +1775,10 @@ end
 
 function ResUrl.getBeilierIcon(resName)
 	return string.format("singlebg/v3a2_beilier_singlebg/puzzle/%s.png", resName)
+end
+
+function ResUrl.getEliminateIcon(resName)
+	return string.format("singlebg/v3a3_eliminate_singlebg/%s.png", resName)
 end
 
 return ResUrl

@@ -9,18 +9,20 @@ function Rouge2_CareerSelectView:onInitView()
 	self._btnRightArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_RightArrow", AudioEnum.UI.play_ui_achieve_weiqicard_switch)
 	self._btnLeftArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_LeftArrow", AudioEnum.UI.play_ui_achieve_weiqicard_switch)
 	self._goCareer = gohelper.findChild(self.viewGO, "Career/#go_Career")
-	self._txtDescr = gohelper.findChildText(self.viewGO, "Career/bg/#txt_Descr")
+	self._goTeamTips = gohelper.findChild(self.viewGO, "Career/#go_TeamTips")
 	self._imageSkillIcon = gohelper.findChildImage(self.viewGO, "Initial/Skill/#image_SkillIcon")
-	self._goRecommend = gohelper.findChild(self.viewGO, "#go_Recommand")
-	self._txtRecommend = gohelper.findChildText(self.viewGO, "#go_Recommand/image_TipsBG/#txt_Recommend")
 	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "Btn/#btn_Start", AudioEnum.Rouge2.NextStep)
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
 	self._scrollSkill = gohelper.findChildScrollRect(self.viewGO, "#scroll_Skill")
+	self._goSkillTitle = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_SkillTitle")
 	self._goSkillList = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_SkillList")
 	self._goSkillItem = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_SkillList/#go_SkillItem")
-	self._scrollRelics = gohelper.findChildScrollRect(self.viewGO, "#scroll_Relics")
-	self._goRelicsList = gohelper.findChild(self.viewGO, "#scroll_Relics/Viewport/Content/#go_RelicsList")
-	self._goRelicsItem = gohelper.findChild(self.viewGO, "#scroll_Relics/Viewport/Content/#go_RelicsList/#go_RelicsItem")
+	self._goRelicsTitle = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_RelicsTitle")
+	self._goRelicsList = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_RelicsList")
+	self._goRelicsItem = gohelper.findChild(self.viewGO, "#scroll_Skill/Viewport/Content/#go_RelicsList/#go_RelicsItem")
+	self._simageCareerIcon = gohelper.findChildSingleImage(self.viewGO, "Details/#simage_CareerIcon")
+	self._txtCareerName = gohelper.findChildText(self.viewGO, "Details/#txt_name")
+	self._txtCareerDesc = gohelper.findChildText(self.viewGO, "Details/#txt_Descr")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -101,8 +103,6 @@ function Rouge2_CareerSelectView:_editableInitView()
 
 	self._goLeftArrow = self._btnLeftArrow.gameObject
 	self._goRightArrow = self._btnRightArrow.gameObject
-	self._goScrollSkill = self._scrollSkill.gameObject
-	self._goScrollRelics = self._scrollRelics.gameObject
 
 	local goCareerMap = self:getResInst(Rouge2_Enum.ResPath.AttributeMap, self._goCareer)
 
@@ -112,11 +112,18 @@ function Rouge2_CareerSelectView:_editableInitView()
 	self._attributeMap:setBgVisible(false)
 
 	self.animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+	self._teamTipsParam = {
+		pivot = Rouge2_TeamRecommendTips.Pivot_MiddleCenter
+	}
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Default)
+
+	SkillHelper.addHyperLinkClick(self._txtCareerDesc)
 end
 
 function Rouge2_CareerSelectView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.EnterCareerView)
 	Rouge2_CareerSelectListModel.instance:init()
+	self:playAnim("open1", true)
 end
 
 function Rouge2_CareerSelectView:_onSelectCareer(careerId)
@@ -144,12 +151,10 @@ end
 
 function Rouge2_CareerSelectView:onCareerSwitchRefresh()
 	Rouge2_OutsideController.instance:unregisterCallback(Rouge2_OutsideEvent.CareerSwitchRefresh, self.onCareerSwitchRefresh, self)
-
-	self._txtDescr.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_careerselectview_careertips"), self._selectCareerCo.careerDesc)
-
 	self._attributeMap:onUpdateMO(self._selectCareerId, Rouge2_Enum.AttributeData.Config)
+	self._teamTipsLoader:initInfo(self._selectCareerId, self._teamTipsParam)
 	self:refreshBtn()
-	self:refreshTag()
+	self:refreshCareerIcon()
 	self:refreshAttributeMap()
 	self:refreshActiveSkillList()
 	self:refreshInitialRelicsList()
@@ -166,19 +171,6 @@ function Rouge2_CareerSelectView:playAnim(animName, withAttributeMap)
 	if self._attributeMap and withAttributeMap then
 		self._attributeMap:playAnim(animName)
 	end
-end
-
-function Rouge2_CareerSelectView:refreshTag()
-	local recommendTeamStr = Rouge2_CareerConfig.instance:getCareerRecommendTeamStr(self._selectCareerId)
-	local hasRecommendTeam = not string.nilorempty(recommendTeamStr)
-
-	gohelper.setActive(self._goRecommend, hasRecommendTeam)
-
-	if not hasRecommendTeam then
-		return
-	end
-
-	self._txtRecommend.text = recommendTeamStr
 end
 
 function Rouge2_CareerSelectView:refreshBtn()
@@ -207,8 +199,17 @@ function Rouge2_CareerSelectView:refreshActiveSkillList()
 	local skillIds = Rouge2_CareerConfig.instance:getCareerActiveSkillIds(self._selectCareerId) or {}
 	local skillNum = skillIds and #skillIds or 0
 
-	gohelper.setActive(self._goScrollSkill, skillNum > 0)
-	gohelper.CreateObjList(self, self._refreshActiveSkillItem, skillIds, self._goSkillList, self._goSkillItem, Rouge2_CareerActiveSkillItem)
+	gohelper.setActive(self._goSkillTitle, skillNum > 0)
+	gohelper.setActive(self._goSkillList, skillNum > 0)
+
+	if skillNum <= 0 then
+		return
+	end
+
+	local showSkillList = {}
+
+	table.insert(showSkillList, skillIds[1])
+	gohelper.CreateObjList(self, self._refreshActiveSkillItem, showSkillList, self._goSkillList, self._goSkillItem, Rouge2_CareerActiveSkillItem)
 end
 
 function Rouge2_CareerSelectView:_refreshActiveSkillItem(skillItem, skillId, index)
@@ -228,17 +229,32 @@ function Rouge2_CareerSelectView:refreshInitialRelicsList()
 
 		if relicsCo and relicsCo.invisible ~= 1 then
 			table.insert(visibleRelicsIdList, relicsId)
+
+			break
 		end
 	end
 
 	local relicsNum = visibleRelicsIdList and #visibleRelicsIdList or 0
 
-	gohelper.setActive(self._goScrollRelics, relicsNum > 0)
-	gohelper.CreateObjList(self, self._refreshRelicsItem, visibleRelicsIdList, self._goRelicsList, self._goRelicsItem, Rouge2_CareerCollectionItem)
+	gohelper.setActive(self._goRelicsTitle, relicsNum > 0)
+	gohelper.setActive(self._goRelicsList, relicsNum > 0)
+	gohelper.CreateObjList(self, self._refreshRelicsItem, visibleRelicsIdList, self._goRelicsList, self._goRelicsItem, Rouge2_CareerRelicsItem)
 end
 
 function Rouge2_CareerSelectView:_refreshRelicsItem(relicsItem, relicsId, index)
-	relicsItem:onUpdateMO(relicsId)
+	relicsItem:onUpdateMO(self._selectCareerId, relicsId)
+end
+
+function Rouge2_CareerSelectView:refreshCareerIcon()
+	local iconUrl = ResUrl.getRouge2Icon(string.format("backpack/%s%s", self._selectCareerCo.icon, Rouge2_Enum.CareerIconSuffix.Bag))
+
+	self._simageCareerIcon:LoadImage(iconUrl)
+
+	self._txtCareerName.text = self._selectCareerCo and self._selectCareerCo.name or ""
+
+	local careerDesc = self._selectCareerCo and self._selectCareerCo.careerDesc or ""
+
+	self._txtCareerDesc.text = Rouge2_ItemDescHelper.buildDesc(careerDesc)
 end
 
 function Rouge2_CareerSelectView:onClose()
@@ -247,7 +263,7 @@ function Rouge2_CareerSelectView:onClose()
 end
 
 function Rouge2_CareerSelectView:onDestroyView()
-	return
+	self._simageCareerIcon:UnLoadImage()
 end
 
 return Rouge2_CareerSelectView

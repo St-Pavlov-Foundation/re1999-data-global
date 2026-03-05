@@ -2,26 +2,16 @@
 
 module("modules.logic.fight.entity.comp.FightEntityVisibleComp", package.seeall)
 
-local FightEntityVisibleComp = class("FightEntityVisibleComp", LuaCompBase)
+local FightEntityVisibleComp = class("FightEntityVisibleComp", FightBaseClass)
 
-function FightEntityVisibleComp:ctor(entity)
+function FightEntityVisibleComp:onConstructor(entity)
 	self.entity = entity
 	self._hideByEntity = nil
 	self._hideBySkill = nil
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	FightController.instance:registerCallback(FightEvent.SetEntityVisibleByTimeline, self._setEntityVisibleByTimeline, self)
-end
-
-function FightEntityVisibleComp:addEventListeners()
-	return
-end
-
-function FightEntityVisibleComp:beforeDestroy()
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityVisibleByTimeline, self._setEntityVisibleByTimeline, self)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.SetEntityVisibleByTimeline, self._setEntityVisibleByTimeline)
 end
 
 function FightEntityVisibleComp:_onSkillPlayStart(entity, skillId, fightStepData)

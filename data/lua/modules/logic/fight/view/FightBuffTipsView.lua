@@ -7,6 +7,8 @@ local FightBuffTipsView = class("FightBuffTipsView", BaseView)
 function FightBuffTipsView:onInitView()
 	self._gobuffinfocontainer = gohelper.findChild(self.viewGO, "root/#go_buffinfocontainer/buff")
 	self._scrollbuff = gohelper.findChildScrollRect(self.viewGO, "root/#go_buffinfocontainer/buff/#scroll_buff")
+	self.content = gohelper.findChild(self.viewGO, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content")
+	self.content.transform.pivot = Vector2.up
 	self._gobuffitem = gohelper.findChild(self.viewGO, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content/#go_buffitem")
 	self._btnclosebuffinfocontainer = gohelper.findChildButton(self.viewGO, "root/#go_buffinfocontainer/#btn_click")
 
@@ -51,6 +53,8 @@ function FightBuffTipsView:onOpen()
 
 		recthelper.setAnchorX(self._gobuffinfocontainer.transform, x)
 	end
+
+	recthelper.setAnchorY(self.content.transform, 0)
 end
 
 function FightBuffTipsView:_setPos(entityMO)

@@ -1402,7 +1402,7 @@ function StoryView:_startDestroyPic(v, isSkip, name)
 	local videoList = self._stepCo.videoList
 
 	for _, video in pairs(videoList) do
-		if video.orderType == StoryEnum.VideoOrderType.Produce then
+		if video.orderType == StoryEnum.VideoOrderType.Produce or video.orderType == StoryEnum.VideoOrderType.ProduceSkip then
 			keepTime = 0.5
 		end
 	end
@@ -1422,7 +1422,7 @@ function StoryView:_updateVideoList(param)
 	local hasVideo = false
 
 	for _, v in pairs(self._videoCo) do
-		if v.orderType == StoryEnum.VideoOrderType.Produce then
+		if v.orderType == StoryEnum.VideoOrderType.Produce or v.orderType == StoryEnum.VideoOrderType.ProduceSkip then
 			self:_buildVideo(v.video, v)
 		elseif v.orderType == StoryEnum.VideoOrderType.Destroy then
 			self:_destroyVideo(v.video, v)
@@ -1434,7 +1434,7 @@ function StoryView:_updateVideoList(param)
 	end
 
 	for _, v in pairs(self._videoCo) do
-		if v.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 and (v.orderType == StoryEnum.VideoOrderType.Produce or v.orderType == StoryEnum.VideoOrderType.Pause or v.orderType == StoryEnum.VideoOrderType.Restart) then
+		if v.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 and (v.orderType == StoryEnum.VideoOrderType.Produce or v.orderType == StoryEnum.VideoOrderType.Pause or v.orderType == StoryEnum.VideoOrderType.Restart or v.orderType == StoryEnum.VideoOrderType.ProduceSkip) then
 			hasVideo = true
 		end
 	end

@@ -44,16 +44,6 @@ function Rouge2_MapPieceChoiceItem:handleNormalChoice()
 	end
 end
 
-function Rouge2_MapPieceChoiceItem:dispatchAttrLightEvent()
-	local lightAttrList = string.splitToNumber(self.choiceCo.attribute, "#")
-
-	if lightAttrList then
-		for _, attrId in ipairs(lightAttrList) do
-			Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.onLightAttr, attrId)
-		end
-	end
-end
-
 function Rouge2_MapPieceChoiceItem:onNormalChoiceSelectAnimDone()
 	UIBlockMgr.instance:endBlock(Rouge2_MapEnum.WaitChoiceItemAnimBlock)
 
@@ -113,7 +103,9 @@ function Rouge2_MapPieceChoiceItem:update(choiceId, pieceMo, index)
 	self.pieceMo = pieceMo
 	self.choiceCo = lua_rouge2_piece_select.configDict[choiceId]
 	self.desc = Rouge2_MapHelper.buildChoiceDesc(self.choiceCo.content)
+	self.display = tonumber(self.choiceCo.display)
 	self.title = self.choiceCo.title
+	self.attrList = string.splitToNumber(self.choiceCo.attribute, "#")
 	self.status = Rouge2_MapPieceTriggerHelper.getChoiceStatus(pieceMo, choiceId)
 	self.tip = Rouge2_MapPieceTriggerHelper.getTip(self.pieceMo, self.choiceId, self.status)
 

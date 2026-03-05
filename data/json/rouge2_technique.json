@@ -62,7 +62,7 @@
   {
     "id": 7,
     "mainTitleId": 3,
-    "subTitleId": 3,
+    "subTitleId": 4,
     "mainTitle": "language_10100931",
     "subTitle": "language_10100936",
     "picture": "rouge2_help_12",
@@ -72,7 +72,7 @@
   {
     "id": 8,
     "mainTitleId": 3,
-    "subTitleId": 4,
+    "subTitleId": 5,
     "mainTitle": "language_10100931",
     "subTitle": "language_10017336",
     "picture": "rouge2_help_13",
@@ -82,7 +82,7 @@
   {
     "id": 9,
     "mainTitleId": 3,
-    "subTitleId": 5,
+    "subTitleId": 6,
     "mainTitle": "language_10100931",
     "subTitle": "language_10100939",
     "picture": "rouge2_help_14",
@@ -92,7 +92,7 @@
   {
     "id": 10,
     "mainTitleId": 3,
-    "subTitleId": 6,
+    "subTitleId": 7,
     "mainTitle": "language_10100931",
     "subTitle": "language_10100941",
     "picture": "rouge2_help_5",
@@ -102,7 +102,7 @@
   {
     "id": 11,
     "mainTitleId": 4,
-    "subTitleId": 1,
+    "subTitleId": 2,
     "mainTitle": "language_10100943",
     "subTitle": "language_10100369",
     "picture": "rouge2_help_6",
@@ -122,7 +122,7 @@
   {
     "id": 13,
     "mainTitleId": 4,
-    "subTitleId": 3,
+    "subTitleId": 4,
     "mainTitle": "language_10100943",
     "subTitle": "language_10100368",
     "picture": "rouge2_help_15",
@@ -188,5 +188,55 @@
     "picture": "rouge2_help_2",
     "content": "language_10100959",
     "pos": "332#-106|959#-106"
+  },
+  {
+    "id": 21,
+    "mainTitleId": 8,
+    "subTitleId": 1,
+    "mainTitle": "language_10102918",
+    "subTitle": "language_10107644",
+    "picture": "rouge2_help_20",
+    "content": "language_10107645",
+    "pos": "498#160|397#58"
+  },
+  {
+    "id": 25,
+    "mainTitleId": 8,
+    "subTitleId": 2,
+    "mainTitle": "language_10102918",
+    "subTitle": "language_10107646",
+    "picture": "rouge2_help_21",
+    "content": "language_10107647",
+    "pos": "419#170|406#58"
+  },
+  {
+    "id": 22,
+    "mainTitleId": 9,
+    "subTitleId": 1,
+    "mainTitle": "language_10107648",
+    "subTitle": "language_10107649",
+    "picture": "v3a3_rouge2_help_1",
+    "content": "language_10107650",
+    "pos": "703#237"
+  },
+  {
+    "id": 23,
+    "mainTitleId": 3,
+    "subTitleId": 3,
+    "mainTitle": "language_10100931",
+    "subTitle": "language_10107651",
+    "picture": "rouge2_help_23",
+    "content": "language_10107652",
+    "pos": "527#176|768#0"
+  },
+  {
+    "id": 24,
+    "mainTitleId": 4,
+    "subTitleId": 1,
+    "mainTitle": "language_10100943",
+    "subTitle": "language_10107081",
+    "picture": "rouge2_help_22",
+    "content": "language_10107653",
+    "pos": "378#-204|1050#-126"
   }
 ]

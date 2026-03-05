@@ -45,8 +45,6 @@ function Rouge2_MapConfig:onConfigLoaded(configName, configTable)
 		self:initRougeMiddleLayerCo()
 	elseif configName == "rouge_short_voice" then
 		self:initMapVoiceCo()
-	elseif configName == "rouge_effect" then
-		self:initRougeEffect()
 	elseif configName == "rouge2_choice" then
 		self:initChoiceConfig()
 	elseif configName == "rouge2_layer" then
@@ -98,21 +96,6 @@ function Rouge2_MapConfig:initLayerCellConfig(layerCo)
 	cellMap[2] = GameUtil.splitString2(layerCo.gridPosType2, true)
 	cellMap[3] = GameUtil.splitString2(layerCo.gridPosType3, true)
 	self.mapCellPosMap[layerCo.id] = cellMap
-end
-
-function Rouge2_MapConfig:initRougeEffect()
-	self.dropMaxRefreshNumDict = {}
-
-	local configList = lua_rouge2_effect.configList
-
-	for _, co in ipairs(configList) do
-		if co.type == RougeMapEnum.EffectType.UnlockFightDropRefresh then
-			local paramList = string.splitToNumber(co.typeParam, "#")
-			local fightType, maxNum = paramList[1], paramList[2]
-
-			self.dropMaxRefreshNumDict[fightType] = maxNum
-		end
-	end
 end
 
 function Rouge2_MapConfig:initMapVoiceCo()
@@ -456,10 +439,6 @@ function Rouge2_MapConfig:getRougeEffect(effectId)
 	end
 
 	return effectCo
-end
-
-function Rouge2_MapConfig:getFightDropMaxRefreshNum(type)
-	return self.dropMaxRefreshNumDict[type] or 0
 end
 
 function Rouge2_MapConfig:getPieceCo(pieceId)

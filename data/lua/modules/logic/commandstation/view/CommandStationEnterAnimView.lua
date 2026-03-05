@@ -33,10 +33,6 @@ function CommandStationEnterAnimView:_editableInitView()
 end
 
 function CommandStationEnterAnimView:_initCamera()
-	if self._cameraPlayer then
-		return
-	end
-
 	local animator = CameraMgr.instance:getCameraRootAnimator()
 	local path = self.viewContainer:getSetting().otherRes[1]
 	local animatorInst = self.viewContainer._abLoader:getAssetItem(path):GetResource()

@@ -29,7 +29,7 @@ function FightWorkMoveFront:onStart()
 		if entity then
 			local entityMO = tarEntityMO
 
-			if entity.mover then
+			if entity.moveComp and entity.moveComp.mover then
 				AudioMgr.instance:trigger(410000088)
 
 				local tarTime = 0.5 / FightModel.instance:getSpeed()

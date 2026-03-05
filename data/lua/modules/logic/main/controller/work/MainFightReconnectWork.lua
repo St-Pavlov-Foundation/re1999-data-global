@@ -114,7 +114,7 @@ function MainFightReconnectWork:_onConfirm()
 		SurvivalController.instance:tryEnterSurvivalFight(self._enterFightScene, self)
 
 		return
-	elseif co.type == DungeonEnum.EpisodeType.TowerDeep then
+	elseif co.type == DungeonEnum.EpisodeType.TowerDeep or co.type == DungeonEnum.EpisodeType.TowerCompose then
 		FightController.instance:setFightParamByEpisodeId(episodeId, false, 1, fightReason.battleId)
 		HeroGroupModel.instance:setBattleAndEpisodeId(fightReason.battleId, episodeId)
 		HeroGroupTrialModel.instance:setTrialByBattleId()
@@ -146,6 +146,7 @@ end
 function MainFightReconnectWork:_onCancel()
 	DungeonFightController.instance:sendEndFightRequest(true)
 	FightModel.instance:clear()
+	FightDataHelper.initDataMgr()
 	self:onDone(true)
 end
 

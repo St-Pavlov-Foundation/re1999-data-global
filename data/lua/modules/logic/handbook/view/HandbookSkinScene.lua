@@ -35,7 +35,9 @@ HandbookSkinScene.SkinSuitId2SuitView = {
 	[20019] = ViewName.HandbookSkinSuitDetailView3_0,
 	[22003] = ViewName.HandbookSkinSuitDetailView2_9,
 	[20020] = ViewName.HandbookSkinSuitDetailView3_1,
-	[20021] = ViewName.HandbookSkinSuitDetailView3_2
+	[20021] = ViewName.HandbookSkinSuitDetailView3_2,
+	[21002] = ViewName.HandbookSkinSuitDetailView3_3,
+	[20022] = ViewName.HandbookSkinSuitDetailView3_3_1
 }
 
 function HandbookSkinScene:onInitView()
@@ -55,6 +57,7 @@ function HandbookSkinScene:addEvents()
 	self:addEventCb(HandbookController.instance, HandbookEvent.SkinBookSlideEnd, self.onDragEnd, self)
 	self:addEventCb(HandbookController.instance, HandbookEvent.SkinBookSlideByClick, self.onSlideByClick, self)
 	self:addEventCb(HandbookController.instance, HandbookEvent.SkinBookDropListOpen, self.onSkinSuitDropListShow, self)
+	self:addEventCb(HandbookController.instance, HandbookEvent.OnExitToSuitGroup, self._onReturnToSkinGroupScene, self)
 end
 
 function HandbookSkinScene:removeEvents()
@@ -289,6 +292,14 @@ function HandbookSkinScene:_onMoveToOtherSuitAniDone()
 	UIBlockMgr.instance:endBlock(UIBlockKey.WaitItemAnimeDone)
 end
 
+function HandbookSkinScene:_onReturnToSkinGroupScene()
+	local skinGroupId = self._skinSuitGroupCfgList[self._curSelectedIdx].id
+
+	if HandbookEnum.SkinSuitId2SceneType[skinGroupId] == HandbookEnum.SkinSuitSceneType.Festival then
+		self:_exitFestivalSkinScene()
+	end
+end
+
 function HandbookSkinScene:onOpen()
 	CameraMgr.instance:switchVirtualCamera(1)
 
@@ -432,6 +443,13 @@ function HandbookSkinScene:_createSuitItems()
 			gohelper.setLayer(iconGo, UnityLayer.Scene, true)
 			self:addBoxColliderListener(iconGo, skinSuitCfg.id, 0.5)
 		end
+	elseif HandbookEnum.SkinSuitId2SceneType[skinGroupId] == HandbookEnum.SkinSuitSceneType.Festival then
+		local skinSuitCfg = self._suitCfgList[1]
+		local iconGo = gohelper.findChild(self._curSceneGo, "sence/StandStill/Obj-Plant/near/shuqian/v3a3_m_s17_pftj_shuqian_03")
+
+		if iconGo then
+			self:addBoxColliderListener(iconGo, skinSuitCfg.id, 3)
+		end
 	else
 		self._suitItemLoaderList = {}
 		self._suitId2IdxMap = {}
@@ -479,13 +497,13 @@ function HandbookSkinScene:_createSuitItems()
 end
 
 function HandbookSkinScene:addBoxColliderListener(go, suitId, size)
-	local clickListener = HandbookSkinScene.addBoxCollider2D(go, size)
+	local clickListener = HandbookSkinScene.getOrAddBoxCollider2D(go, size)
 
 	clickListener:AddClickListener(self.onIconMouseDown, self, suitId)
 	clickListener:AddMouseUpListener(self.onIconMouseUp, self, suitId)
 end
 
-function HandbookSkinScene.addBoxCollider2D(go, size)
+function HandbookSkinScene.getOrAddBoxCollider2D(go, size)
 	local clickListener = ZProj.BoxColliderClickListener.Get(go)
 
 	size = size or 4
@@ -553,6 +571,8 @@ function HandbookSkinScene:onIconClick(suitId)
 
 	if HandbookEnum.SkinSuitId2SceneType[skinGroupId] == HandbookEnum.SkinSuitSceneType.Tarot then
 		self:enterTarotScene()
+	elseif HandbookEnum.SkinSuitId2SceneType[skinGroupId] == HandbookEnum.SkinSuitSceneType.Festival then
+		self:enterFestivalSkinScene()
 	else
 		local suitIdx = self._suitId2IdxMap[suitId]
 
@@ -813,7 +833,7 @@ function HandbookSkinScene:_onCardBackLoadDone(loader)
 end
 
 function HandbookSkinScene:addTarotCardBoxColliderListener(go, cardIdx)
-	local clickListener = HandbookSkinScene.addBoxCollider2D(go)
+	local clickListener = HandbookSkinScene.getOrAddBoxCollider2D(go)
 
 	clickListener:AddMouseUpListener(self.onTarotItemClickUp, self, cardIdx)
 end
@@ -986,6 +1006,33 @@ function HandbookSkinScene:_getMinMaxFov()
 	return 22, 40
 end
 
+function HandbookSkinScene:enterFestivalSkinScene()
+	self.viewContainer:dispatchEvent(HandbookEvent.OnClickFestivalSkinSuit)
+	self._sceneAnimatorPlayer:Play(UIAnimationName.Click, nil, nil)
+	HandbookController.instance:statSkinSuitDetail(self._suitId)
+	TaskDispatcher.runDelay(self.openFestivalSkinView, self, 2)
+end
+
+function HandbookSkinScene:_exitFestivalSkinScene()
+	self.viewContainer:dispatchEvent(HandbookEvent.OnExitFestivalSkinSuit)
+	self._sceneAnimatorPlayer:Play(UIAnimationName.Back, nil, nil)
+end
+
+function HandbookSkinScene:openFestivalSkinView()
+	local viewName = HandbookSkinScene.SkinSuitId2SuitView[self._suitId]
+
+	if viewName then
+		local viewParam = {
+			skinThemeGroupId = self._suitId
+		}
+
+		ViewMgr.instance:openView(viewName, viewParam)
+	end
+
+	AudioMgr.instance:trigger(AudioEnum.Handbook.play_ui_tujianskin_group_open)
+	HandbookController.instance:statSkinSuitDetail(self._suitId)
+end
+
 function HandbookSkinScene:playCloseAni()
 	local virtualCameraGo = CameraMgr.instance:getVirtualCameraGO()
 
@@ -999,6 +1046,15 @@ end
 
 function HandbookSkinScene:onClose()
 	TaskDispatcher.cancelTask(self.onTarotEnterAniDone, self)
+	TaskDispatcher.cancelTask(self.openFestivalSkinView, self)
+
+	if self._dragResetPosTweens and #self._dragResetPosTweens > 0 then
+		for i = 1, #self._dragResetPosTweens do
+			ZProj.TweenHelper.KillById(self._dragResetPosTweens[i])
+		end
+
+		self._dragResetPosTweens = {}
+	end
 
 	if self._cameraRootAnimator then
 		self._cameraRootAnimator:Rebind()

@@ -542,7 +542,7 @@ function SettingsModel:setVideoHDMode(isOn)
 end
 
 function SettingsModel:getVideoHDMode()
-	if not PlayerPrefsHelper.hasKey(PlayerPrefsKey.SettingsVideoHDMode) and BootNativeUtil.isWindows() then
+	if not PlayerPrefsHelper.hasKey(PlayerPrefsKey.SettingsVideoHDMode) and (BootNativeUtil.isWindows() or BootNativeUtil.isMuMu()) then
 		self:setVideoHDMode(true)
 	end
 

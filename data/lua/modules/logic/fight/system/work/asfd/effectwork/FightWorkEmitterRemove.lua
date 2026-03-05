@@ -15,8 +15,7 @@ function FightWorkEmitterRemove:onStart()
 		return self:onDone(true)
 	end
 
-	local curScene = GameSceneMgr.instance:getCurScene()
-	local sceneMgr = curScene and curScene.entityMgr
+	local sceneMgr = FightGameMgr.entityMgr
 
 	if not sceneMgr then
 		return self:onDone(true)
@@ -25,7 +24,7 @@ function FightWorkEmitterRemove:onStart()
 	local entity = FightHelper.getEntity(self.emitterMo.id)
 
 	if entity then
-		sceneMgr:removeUnit(entity:getTag(), entity.id)
+		sceneMgr:delEntity(entity.id)
 	end
 
 	self:onDone(true)

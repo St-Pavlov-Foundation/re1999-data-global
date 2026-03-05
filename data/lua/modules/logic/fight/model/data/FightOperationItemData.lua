@@ -72,10 +72,12 @@ function FightOperationItemData:playAssistBossHandCard(skillId, toId)
 
 	self.belongToEntityId = assistBoss.id
 	self.costActPoint = 0
-	self.cardInfoMO = FightCardInfoData.New({
-		skillId = skillId,
-		uid = self.belongToEntityId
-	})
+
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.skillId = skillId
+	cardProto.uid = self.belongToEntityId
+	self.cardInfoMO = FightCardInfoData.New(cardProto)
 end
 
 function FightOperationItemData:playPlayerFinisherSkill(skillId, toId)
@@ -85,10 +87,12 @@ function FightOperationItemData:playPlayerFinisherSkill(skillId, toId)
 	self.skillId = skillId
 	self.costActPoint = 0
 	self.belongToEntityId = FightEntityScene.MySideId
-	self.cardInfoMO = FightCardInfoData.New({
-		skillId = skillId,
-		uid = self.belongToEntityId
-	})
+
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.skillId = skillId
+	cardProto.uid = self.belongToEntityId
+	self.cardInfoMO = FightCardInfoData.New(cardProto)
 end
 
 function FightOperationItemData:playBloodPoolCard(skillId, toId)
@@ -98,10 +102,12 @@ function FightOperationItemData:playBloodPoolCard(skillId, toId)
 	self.skillId = skillId
 	self.belongToEntityId = FightEntityScene.MySideId
 	self.costActPoint = 0
-	self.cardInfoMO = FightCardInfoData.New({
-		skillId = skillId,
-		uid = self.belongToEntityId
-	})
+
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.skillId = skillId
+	cardProto.uid = self.belongToEntityId
+	self.cardInfoMO = FightCardInfoData.New(cardProto)
 end
 
 function FightOperationItemData:playRouge2MusicSkill(skillId, belongToEntityId)
@@ -109,10 +115,12 @@ function FightOperationItemData:playRouge2MusicSkill(skillId, belongToEntityId)
 	self.skillId = skillId
 	self.costActPoint = 0
 	self.belongToEntityId = belongToEntityId
-	self.cardInfoMO = FightCardInfoData.New({
-		skillId = skillId,
-		uid = belongToEntityId
-	})
+
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.skillId = skillId
+	cardProto.uid = belongToEntityId
+	self.cardInfoMO = FightCardInfoData.New(cardProto)
 end
 
 function FightOperationItemData:simulateDissolveCard(index)

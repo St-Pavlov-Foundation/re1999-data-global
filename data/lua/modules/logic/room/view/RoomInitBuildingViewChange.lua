@@ -184,7 +184,14 @@ function RoomInitBuildingViewChange:_btnproductOnClick()
 			local produceItemItem = RoomProductionHelper.getFormulaProduceItem(formulaId)
 
 			if produceItemItem then
-				local needQuantity = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+				local selectFormulaMo = RoomFormulaListModel.instance:getSelectFormulaMo()
+				local selectFormulaStrId = selectFormulaMo and selectFormulaMo:getId()
+				local needQuantity = RoomProductionHelper.getFormulaNeedQuantity(selectFormulaStrId)
+
+				if not needQuantity or needQuantity <= 0 then
+					needQuantity = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+				end
+
 				local recordFarmItem = {
 					type = produceItemItem.type,
 					id = produceItemItem.id,

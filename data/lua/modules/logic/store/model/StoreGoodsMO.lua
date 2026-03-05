@@ -529,4 +529,16 @@ function StoreGoodsMO:checkShowNewRedDot()
 	return true
 end
 
+function StoreGoodsMO:needShowRead()
+	if self:isSoldOut() then
+		return false
+	else
+		local serverTime = ServerTime.now()
+		local inTime = serverTime >= self.newStartTime and serverTime <= self.newEndTime
+		local isNew = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.StoreGoodsRead, self.goodsId)
+
+		return isNew and inTime
+	end
+end
+
 return StoreGoodsMO

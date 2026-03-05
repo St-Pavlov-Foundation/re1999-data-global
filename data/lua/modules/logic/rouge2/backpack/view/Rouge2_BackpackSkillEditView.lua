@@ -21,6 +21,7 @@ function Rouge2_BackpackSkillEditView:onInitView()
 	self._simageDrag = gohelper.findChildSingleImage(self.viewGO, "SkilleditPanel/#go_Drag/#go_DragItem/#image_Drag")
 	self._btnOrder = gohelper.findChildButtonWithAudio(self.viewGO, "SkilleditPanel/Tab/#btn_Order")
 	self._btnCost = gohelper.findChildButtonWithAudio(self.viewGO, "SkilleditPanel/Tab/#btn_Cost")
+	self._goMode = gohelper.findChild(self.viewGO, "SkilleditPanel/Tab/#go_Mode")
 	self._goEmpty = gohelper.findChild(self.viewGO, "SkilleditPanel/List/#go_Empty")
 	self._btnClose = gohelper.findChildClickWithDefaultAudio(self.viewGO, "SkilleditPanel/#btn_Close")
 
@@ -280,6 +281,7 @@ function Rouge2_BackpackSkillEditView:_editableInitView()
 	self:refreshDragItem()
 	self:initSkillEditItems()
 	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Attr_Detail)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BackpackSkill)
 end
 
 function Rouge2_BackpackSkillEditView:onOpen()

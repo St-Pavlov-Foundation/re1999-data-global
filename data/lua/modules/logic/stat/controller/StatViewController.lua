@@ -282,6 +282,10 @@ function StatViewController:track(viewName, startView, materialName)
 	})
 end
 
+function StatViewController:trackViewName(chineseViewNameStr)
+	self:track(chineseViewNameStr or "", StatViewNameEnum.ChineseViewName[self.startView] or self.startView, self.materialName)
+end
+
 StatViewController.instance = StatViewController.New()
 
 return StatViewController

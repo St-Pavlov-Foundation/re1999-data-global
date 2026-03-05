@@ -125,6 +125,14 @@ function HeroDestinyStoneMO:getCurUseStoneCo()
 	end
 end
 
+function HeroDestinyStoneMO:getCurUseStoneMo()
+	if self.curUseStoneId ~= 0 then
+		local stoneMo = self:getStoneMo(self.curUseStoneId)
+
+		return stoneMo
+	end
+end
+
 function HeroDestinyStoneMO:getAddAttrValues()
 	local curAddAttr = self:getAddAttrValueByLevel(self.rank, self.level)
 

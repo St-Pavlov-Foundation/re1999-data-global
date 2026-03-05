@@ -77,6 +77,10 @@ function SceneLuaCompSpineDynamicShadow:_onSpineMatChange(entityId, material)
 end
 
 function SceneLuaCompSpineDynamicShadow:_setSpineMat(material)
+	if not material then
+		return
+	end
+
 	local assetItem = self._loader and self._loader:getFirstAssetItem()
 
 	if assetItem then

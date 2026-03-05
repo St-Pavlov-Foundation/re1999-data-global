@@ -53,6 +53,7 @@ function MainView:onInitView()
 	self._btncopost = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_copost")
 	self._gocopostred = gohelper.findChild(self.viewGO, "right/#btn_copost/#go_reddot")
 	self._imagesummonfree = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free")
+	self._imagesummonfree2 = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free2")
 	self._imagesummonreddot = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_summonreddot")
 	self._txtpower = gohelper.findChildText(self.viewGO, "right/txtContainer/#txt_power")
 	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
@@ -193,6 +194,22 @@ function MainView:_setViewVisible(value)
 	if value then
 		gohelper.setActive(self._golimitedshow, false)
 	end
+end
+
+function MainView:_onPlayOpenAnim()
+	local zeroTime = WeatherModel.instance:getZeroTime()
+	local curTime = CommandStationController.getSaveNumber(CommandStationEnum.PrefsKey.MainViewEntryAnim)
+
+	if curTime == zeroTime then
+		return
+	end
+
+	CommandStationController.setSaveNumber(CommandStationEnum.PrefsKey.MainViewEntryAnim, zeroTime)
+
+	local animGo = gohelper.findChild(self._btncopost.gameObject, "ani")
+	local animator = animGo:GetComponent("Animator")
+
+	animator:Play("open", 0, 0)
 end
 
 function MainView:_setViewRootVisible(value)
@@ -408,6 +425,7 @@ function MainView:_editableInitView()
 	self:addEventCb(MainController.instance, MainEvent.OnChangeGMBtnStatus, self._refreshGMBtn, self)
 	self:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, self._setViewVisible, self)
 	self:addEventCb(MainController.instance, MainEvent.SetMainViewRootVisible, self._setViewRootVisible, self)
+	self:addEventCb(MainController.instance, MainEvent.PlayOpenAnim, self._onPlayOpenAnim, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self, LuaEventSystem.Low)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, self._onOpenFullView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
@@ -1020,15 +1038,22 @@ end
 
 function MainView:_refreshSummonNewFlag()
 	local isSummonUnlock = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
+	local needReddot = SummonMainModel.instance:entryNeedReddot()
+
+	gohelper.setActive(self._imagesummonreddot, isSummonUnlock and needReddot)
+
+	local hasFree10Count = SummonMainModel.instance:entryHasFree10Count()
 	local hasNew = SummonMainModel.instance:entryHasNew()
 
 	for _, new in ipairs(self._imagesummonnews) do
-		gohelper.setActive(new, isSummonUnlock and hasNew)
+		gohelper.setActive(new, isSummonUnlock and hasNew and not needReddot and not hasFree10Count)
 	end
 
 	local hasFree = SummonMainModel.instance:entryHasFree()
+	local hasFree10Count = SummonMainModel.instance:entryHasFree10Count()
 
-	gohelper.setActive(self._imagesummonfree, isSummonUnlock and hasFree)
+	gohelper.setActive(self._imagesummonfree.gameObject, isSummonUnlock and hasFree and not hasFree10Count)
+	gohelper.setActive(self._imagesummonfree2.gameObject, isSummonUnlock and hasFree10Count)
 end
 
 function MainView:_refreshBgm()

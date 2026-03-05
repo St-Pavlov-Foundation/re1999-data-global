@@ -195,7 +195,9 @@ FightStepBuilder.ActEffectWorkCls = {
 	[FightEnum.EffectType.ROUGE2MUSICCARDCHANGE] = FightWorkRouge2MusicCardChange360,
 	[FightEnum.EffectType.ROUGE2MUSICBALLCHANGE] = FightWorkRouge2MusicBallChange361,
 	[FightEnum.EffectType.ADDMAXROUND] = FightWorkAddMaxRound356,
-	[FightEnum.EffectType.ROUGE2CHECK] = FightWorkRouge2Check362
+	[FightEnum.EffectType.ROUGE2CHECK] = FightWorkRouge2Check362,
+	[FightEnum.EffectType.INDICATORDIFFCHANGE] = FightWorkIndicatorDiffChange363,
+	[FightEnum.EffectType.CHANGESCENE] = FightWorkChangeScene364
 }
 FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
@@ -374,6 +376,7 @@ function FightStepBuilder._buildEffectWorks(fightStepData)
 
 	local flow = FightWorkFlowSequence.New()
 
+	FightStepBuilder.addAnAnFocusBuffWork(flow, fightStepData)
 	FightStepBuilder.addEffectWork(flow, fightStepData)
 
 	FightStepBuilder.lastEffect = nil
@@ -385,6 +388,16 @@ function FightStepBuilder._buildEffectWorks(fightStepData)
 	return {
 		stepWork
 	}
+end
+
+function FightStepBuilder.addAnAnFocusBuffWork(flow, fightStepData)
+	local actEffect = FightHelper.getActEffectData(FightEnum.EffectType.ANANFOCUSBUFF, fightStepData)
+
+	if not actEffect then
+		return
+	end
+
+	flow:registWork(FightWorkAnAnFocusBuff366, fightStepData, actEffect)
 end
 
 function FightStepBuilder.addEffectWork(flow, fightStepData)

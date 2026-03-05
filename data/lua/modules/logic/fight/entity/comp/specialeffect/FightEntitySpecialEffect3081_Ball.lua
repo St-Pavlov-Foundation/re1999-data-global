@@ -2,16 +2,18 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3081_Ball", package.seeall)
 
-local FightEntitySpecialEffect3081_Ball = class("FightEntitySpecialEffect3081_Ball", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffect3081_Ball = class("FightEntitySpecialEffect3081_Ball", FightBaseClass)
 
-function FightEntitySpecialEffect3081_Ball:initClass()
-	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
-	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
-	self:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff, self)
+function FightEntitySpecialEffect3081_Ball:onConstructor(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, LuaEventSystem.High)
+	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
+	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect)
+	self:com_registFightEvent(FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff)
 
 	self._ballEffect = {}
 end
@@ -103,6 +105,10 @@ function FightEntitySpecialEffect3081_Ball:_onBuffUpdate(targetId, effectType, b
 end
 
 function FightEntitySpecialEffect3081_Ball:_onBeforeEnterStepBehaviour()
+	if FightDataHelper.stateMgr.dealingCrash then
+		self:releaseAllEffect()
+	end
+
 	local entityMO = self._entity:getMO()
 
 	if entityMO then
@@ -157,7 +163,7 @@ function FightEntitySpecialEffect3081_Ball:_onBeforeDeadEffect(entityId)
 	end
 end
 
-function FightEntitySpecialEffect3081_Ball:releaseSelf()
+function FightEntitySpecialEffect3081_Ball:onDestructor()
 	self:releaseAllEffect()
 end
 

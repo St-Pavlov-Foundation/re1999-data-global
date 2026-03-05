@@ -80,6 +80,23 @@ function module_views_preloader.WeekWalk_2HeartLayerViewPreload(callback)
 	module_views_preloader._startLoad(allResPath, callback)
 end
 
+function module_views_preloader.CommandStationTaskView(allResPath)
+	local list = module_views_preloader._getResPathList(ViewName.CommandStationPaperView)
+
+	tabletool.addValues(allResPath, list)
+end
+
+function module_views_preloader.CommandStationMapDisplayView(allResPath)
+	local param = CommandStationController.instance:getMapDisplayViewParam()
+	local scenePath = CommandStationMapDisplayView.getScenePath(param)
+
+	if not scenePath then
+		return
+	end
+
+	table.insert(allResPath, scenePath)
+end
+
 function module_views_preloader.StoreViewPreload(callback)
 	local allResPath = {}
 

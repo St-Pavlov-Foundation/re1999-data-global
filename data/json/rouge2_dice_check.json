@@ -5,7 +5,8 @@
     "checkPoint": "10#17",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 101,
@@ -13,7 +14,8 @@
     "checkPoint": "0#9",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 101,
@@ -21,7 +23,8 @@
     "checkPoint": "18#-1",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 201,
@@ -29,7 +32,8 @@
     "checkPoint": "10#17",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 201,
@@ -37,7 +41,8 @@
     "checkPoint": "0#9",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 201,
@@ -45,7 +50,8 @@
     "checkPoint": "18#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 301,
@@ -53,7 +59,8 @@
     "checkPoint": "10#17",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 301,
@@ -61,7 +68,8 @@
     "checkPoint": "0#9",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 301,
@@ -69,7 +77,8 @@
     "checkPoint": "18#-1",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 401,
@@ -77,7 +86,8 @@
     "checkPoint": "10#17",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 401,
@@ -85,7 +95,8 @@
     "checkPoint": "0#9",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 401,
@@ -93,7 +104,8 @@
     "checkPoint": "18#-1",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 501,
@@ -101,7 +113,8 @@
     "checkPoint": "10#17",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 501,
@@ -109,7 +122,8 @@
     "checkPoint": "0#9",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 501,
@@ -117,7 +131,8 @@
     "checkPoint": "18#-1",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 102,
@@ -125,7 +140,8 @@
     "checkPoint": "12#18",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 102,
@@ -133,7 +149,8 @@
     "checkPoint": "0#11",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 102,
@@ -141,7 +158,8 @@
     "checkPoint": "19#-1",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 202,
@@ -149,7 +167,8 @@
     "checkPoint": "12#18",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 202,
@@ -157,7 +176,8 @@
     "checkPoint": "0#11",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 202,
@@ -165,7 +185,8 @@
     "checkPoint": "19#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 302,
@@ -173,7 +194,8 @@
     "checkPoint": "12#18",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 302,
@@ -181,7 +203,8 @@
     "checkPoint": "0#11",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 302,
@@ -189,7 +212,8 @@
     "checkPoint": "19#-1",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 402,
@@ -197,7 +221,8 @@
     "checkPoint": "12#18",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 402,
@@ -205,7 +230,8 @@
     "checkPoint": "0#11",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 402,
@@ -213,7 +239,8 @@
     "checkPoint": "19#-1",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 502,
@@ -221,7 +248,8 @@
     "checkPoint": "12#18",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 502,
@@ -229,7 +257,8 @@
     "checkPoint": "0#11",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 502,
@@ -237,7 +266,8 @@
     "checkPoint": "19#-1",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 103,
@@ -245,7 +275,8 @@
     "checkPoint": "16#19",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 103,
@@ -253,7 +284,8 @@
     "checkPoint": "0#15",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 103,
@@ -261,7 +293,8 @@
     "checkPoint": "20#-1",
     "attrType": 101,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 203,
@@ -269,7 +302,8 @@
     "checkPoint": "16#19",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 203,
@@ -277,7 +311,8 @@
     "checkPoint": "0#15",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 203,
@@ -285,7 +320,8 @@
     "checkPoint": "20#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 303,
@@ -293,7 +329,8 @@
     "checkPoint": "16#19",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 303,
@@ -301,7 +338,8 @@
     "checkPoint": "0#15",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 303,
@@ -309,7 +347,8 @@
     "checkPoint": "20#-1",
     "attrType": 103,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 403,
@@ -317,7 +356,8 @@
     "checkPoint": "16#19",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 403,
@@ -325,7 +365,8 @@
     "checkPoint": "0#15",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 403,
@@ -333,7 +374,8 @@
     "checkPoint": "20#-1",
     "attrType": 104,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 503,
@@ -341,7 +383,8 @@
     "checkPoint": "16#19",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 503,
@@ -349,7 +392,8 @@
     "checkPoint": "0#15",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 503,
@@ -357,7 +401,8 @@
     "checkPoint": "20#-1",
     "attrType": 105,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 601,
@@ -365,7 +410,8 @@
     "checkPoint": "16#99",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 601,
@@ -373,7 +419,8 @@
     "checkPoint": "0#15",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 601,
@@ -381,7 +428,8 @@
     "checkPoint": "99#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 602,
@@ -389,7 +437,8 @@
     "checkPoint": "17#99",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 602,
@@ -397,7 +446,8 @@
     "checkPoint": "0#16",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 602,
@@ -405,7 +455,8 @@
     "checkPoint": "99#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 603,
@@ -413,7 +464,8 @@
     "checkPoint": "18#99",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 603,
@@ -421,7 +473,8 @@
     "checkPoint": "0#17",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 603,
@@ -429,7 +482,8 @@
     "checkPoint": "99#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 605,
@@ -437,7 +491,8 @@
     "checkPoint": "19#99",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 605,
@@ -445,7 +500,8 @@
     "checkPoint": "0#18",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 605,
@@ -453,7 +509,8 @@
     "checkPoint": "99#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 606,
@@ -461,7 +518,8 @@
     "checkPoint": "20#99",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 606,
@@ -469,7 +527,8 @@
     "checkPoint": "0#19",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 606,
@@ -477,7 +536,8 @@
     "checkPoint": "99#-1",
     "attrType": 102,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 604,
@@ -485,7 +545,8 @@
     "checkPoint": "16#19",
     "attrType": 301,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 604,
@@ -493,7 +554,8 @@
     "checkPoint": "0#15",
     "attrType": 301,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
   },
   {
     "id": 604,
@@ -501,6 +563,88 @@
     "checkPoint": "20#-1",
     "attrType": 301,
     "desc": "",
-    "dice": "105"
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 701,
+    "step": 0,
+    "checkPoint": "8#99",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 701,
+    "step": 1,
+    "checkPoint": "0#7",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 701,
+    "step": 2,
+    "checkPoint": "99#-1",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 702,
+    "step": 0,
+    "checkPoint": "10#99",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 702,
+    "step": 1,
+    "checkPoint": "0#9",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 702,
+    "step": 2,
+    "checkPoint": "99#-1",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 703,
+    "step": 0,
+    "checkPoint": "12#99",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 703,
+    "step": 1,
+    "checkPoint": "0#11",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
+  },
+  {
+    "id": 703,
+    "step": 2,
+    "checkPoint": "99#-1",
+    "attrType": 102,
+    "desc": "",
+    "dice": "105",
+    "retryCost": "2#1"
   }
 ]

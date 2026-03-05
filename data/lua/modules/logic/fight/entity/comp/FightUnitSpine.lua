@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightUnitSpine", package.seeall)
 
-local FightUnitSpine = class("FightUnitSpine", UnitSpine)
+local FightUnitSpine = class("FightUnitSpine", FightSpineComp)
 
 function FightUnitSpine:_onResLoaded(loader)
 	if gohelper.isNil(self._gameObj) then
@@ -12,11 +12,10 @@ function FightUnitSpine:_onResLoaded(loader)
 	FightUnitSpine.super._onResLoaded(self, loader)
 end
 
-function FightUnitSpine:init(go)
-	FightUnitSpine.super.init(self, go)
+function FightUnitSpine:onConstructor()
 	self:reInitDefaultAnimState()
-	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	FightController.instance:registerCallback(FightEvent.SkillEditorRefreshBuff, self.detectRefreshAct, self)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.SkillEditorRefreshBuff, self.detectRefreshAct)
 end
 
 function FightUnitSpine:reInitDefaultAnimState()
@@ -372,13 +371,8 @@ function FightUnitSpine:_clear()
 	FightUnitSpine.super._clear(self)
 end
 
-function FightUnitSpine:beforeDestroy()
-	if FightUnitSpine.super.beforeDestroy then
-		FightUnitSpine.super.beforeDestroy(self)
-	end
-
-	FightController.instance:unregisterCallback(FightEvent.SkillEditorRefreshBuff, self.detectRefreshAct, self)
-	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+function FightUnitSpine:onDestructor()
+	return
 end
 
 return FightUnitSpine

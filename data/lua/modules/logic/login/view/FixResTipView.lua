@@ -11,6 +11,8 @@ function FixResTipView:onInitView()
 	self._toggletip = gohelper.findChildToggle(self.viewGO, "centerTip/#toggle_tip")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 	self._btnfix = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_fix")
+	self._btnfixTips = gohelper.findChild(self.viewGO, "PcBtn/#go_pcbtn1")
+	self._btncancelTips = gohelper.findChild(self.viewGO, "PcBtn/#go_pcbtn2")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -78,6 +80,14 @@ function FixResTipView:_editableInitView()
 	self._toggletip.isOn = true
 
 	self._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	self:addKeyTips()
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btncloseOnClick, self)
+	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnfixOnClick, self)
+end
+
+function FixResTipView:addKeyTips()
+	PCInputController.instance:showkeyTips(self._btncancelTips, nil, nil, "Esc")
+	PCInputController.instance:showkeyTips(self._btnfixTips, nil, nil, "Return")
 end
 
 function FixResTipView:onUpdateParam()
@@ -90,7 +100,8 @@ function FixResTipView:onOpen()
 end
 
 function FixResTipView:onClose()
-	return
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btncloseOnClick, self)
+	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._btnfixOnClick, self)
 end
 
 function FixResTipView:onDestroyView()

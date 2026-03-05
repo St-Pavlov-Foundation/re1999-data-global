@@ -20,6 +20,12 @@ end
 
 function FightRestartMgr:_startRestart()
 	FightSystem.instance.restarting = true
+
+	local transitionMgr = FightHelper.getTransitionMgr()
+
+	if transitionMgr then
+		transitionMgr:setTransition(FightTransitionMgr.TransitionEnum.Restarting)
+	end
 end
 
 function FightRestartMgr:onRestartFinish()
@@ -32,6 +38,12 @@ end
 
 function FightRestartMgr:_endRestart()
 	FightSystem.instance.restarting = false
+
+	local transitionMgr = FightHelper.getTransitionMgr()
+
+	if transitionMgr then
+		transitionMgr:clearTransition(FightTransitionMgr.TransitionEnum.Restarting)
+	end
 end
 
 function FightRestartMgr:restartFightFail()

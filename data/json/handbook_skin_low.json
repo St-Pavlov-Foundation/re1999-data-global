@@ -9,7 +9,8 @@
     "skinContain": "301703|303203|302503|302803",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20002,
@@ -21,7 +22,8 @@
     "skinContain": "302003|301003|300903|300603",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20003,
@@ -33,7 +35,8 @@
     "skinContain": "304103|306303|304303|303502",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20004,
@@ -45,7 +48,8 @@
     "skinContain": "301103|300403|306403|303002",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20005,
@@ -57,7 +61,8 @@
     "skinContain": "302203|305303|301503|305002|307003",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20006,
@@ -69,7 +74,8 @@
     "skinContain": "302403|300703|300305|303903|301303",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20007,
@@ -81,7 +87,8 @@
     "skinContain": "303803|306603|306203|304403",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20008,
@@ -93,7 +100,8 @@
     "skinContain": "305103|304703|301603|301803",
     "backImg": "singlebg/act174/act174_ready_fullbg2.png",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20009,
@@ -105,7 +113,8 @@
     "skinContain": "304803|305603|302504|307503|305703",
     "backImg": "",
     "spineParams": "302504|roles_bust/v3a1_302504_xt_skinsuit/302504_xt_skinsuit.prefab|0,-60|1.55",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20010,
@@ -117,7 +126,8 @@
     "skinContain": "305502|307303|307903|307103",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20011,
@@ -129,7 +139,8 @@
     "skinContain": "303303|307403|308103|306003",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20012,
@@ -141,7 +152,8 @@
     "skinContain": "306503|306604|308703|308203|307203|304603",
     "backImg": "",
     "spineParams": "306604|roles_bust/v3a1_306604_37_skinsuit/306604_37_skinsuit.prefab|150,210|0.8",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20013,
@@ -153,7 +165,8 @@
     "skinContain": "304304|300404|308803|303602",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20014,
@@ -165,7 +178,8 @@
     "skinContain": "303703|309503|308003|305203|302603",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20015,
@@ -177,7 +191,8 @@
     "skinContain": "301202|300904|308303|309803|307703",
     "backImg": "",
     "spineParams": "308303|roles_bust/v3a2_308303_qn_skinsuit/308303_qn_skinsuit.prefab|0,0|1.4",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20016,
@@ -189,7 +204,8 @@
     "skinContain": "310203|310403|305803",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20017,
@@ -201,7 +217,8 @@
     "skinContain": "310803|309703|304203",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20018,
@@ -213,19 +230,21 @@
     "skinContain": "311703|308603|311403|304002",
     "backImg": "",
     "spineParams": "308603|roles_bust/v3a1_308603_lx_skinsuit/308603_lx_skinsuit.prefab|30,20|1",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 21001,
-    "name": "language_10096590",
+    "name": "language_10086104",
     "nameEn": "",
     "highId": 11001,
     "show": 1,
     "des": "language_10089256",
-    "skinContain": "305104|305604|310003|308004|304804|308804|300731|310703|306204|300306",
+    "skinContain": "305104|305604|304704|310003|308004|304804|308804|300731|310703|306204|300306",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": "card03|card06|card15|card16|card17|card18|card20|card21|card01|card02"
+    "tarotCardPath": "card03|card06|card12|card15|card16|card17|card18|card20|card21|card01|card02",
+    "festivalParams": ""
   },
   {
     "id": 22001,
@@ -237,7 +256,8 @@
     "skinContain": "304104|300604",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 22002,
@@ -249,7 +269,8 @@
     "skinContain": "305304|308404|310903|307904",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20019,
@@ -261,7 +282,8 @@
     "skinContain": "302303|310503|309403|302702",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 22003,
@@ -273,7 +295,8 @@
     "skinContain": "306504|308704|311603|302804",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20020,
@@ -285,7 +308,8 @@
     "skinContain": "307704|311303|303103",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
   },
   {
     "id": 20021,
@@ -297,6 +321,33 @@
     "skinContain": "307004|308104|309602",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": ""
+    "tarotCardPath": "",
+    "festivalParams": ""
+  },
+  {
+    "id": 21002,
+    "name": "language_10097135",
+    "nameEn": "",
+    "highId": 13001,
+    "show": 1,
+    "des": "",
+    "skinContain": "0|0|309504|0|0",
+    "backImg": "",
+    "spineParams": "",
+    "tarotCardPath": "",
+    "festivalParams": "handbookskin_festival_unknow,???|handbookskin_festival_unknow,???|handbookskin_festival_Christmas,12.25|handbookskin_festival_unknow,???|handbookskin_festival_unknow,???"
+  },
+  {
+    "id": 20022,
+    "name": "language_10108558",
+    "nameEn": "Ballad of the Iron Fortress",
+    "highId": 10003,
+    "show": 1,
+    "des": "language_10108594",
+    "skinContain": "301403|312603|312103",
+    "backImg": "",
+    "spineParams": "",
+    "tarotCardPath": "",
+    "festivalParams": ""
   }
 ]

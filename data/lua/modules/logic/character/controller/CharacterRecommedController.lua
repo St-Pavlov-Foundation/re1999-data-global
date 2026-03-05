@@ -49,7 +49,7 @@ function CharacterRecommedController:_respBeginFight()
 		recordFarmItem.quantity = item.quantity
 		recordFarmItem.sceneType = SceneType.Main
 
-		local jumpViewList = CharacterRecommedController.instance:getRecommedViewDict()
+		local jumpViewList = self:getRecommedViewDict()
 
 		recordFarmItem.openedViewNameList = jumpViewList
 		recordFarmItem.isFormHeroTraced = true
@@ -59,7 +59,7 @@ function CharacterRecommedController:_respBeginFight()
 end
 
 function CharacterRecommedController:_onCurrencyChange()
-	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
+	self:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
 end
 
 function CharacterRecommedController:openRecommedView(heroId, fromView, uiSpine)
@@ -104,12 +104,12 @@ function CharacterRecommedController:jumpLevelUp(mo)
 		end
 
 		if isCurRankMaxLv then
-			CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Rank)
+			self:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Rank)
 			CharacterController.instance:openCharacterRankUpView(heroMo)
 		else
 			CharacterController.instance:openCharacterView(heroMo)
 			CharacterController.instance:openCharacterLevelUpView(heroMo)
-			CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Level)
+			self:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Level)
 		end
 	else
 		local isMaxLv, heroMo = mo:isMaxTalentLv()
@@ -138,7 +138,7 @@ function CharacterRecommedController:jumpDungeonView()
 	self._recommedViewDict = JumpController.instance:getCurrentOpenedView()
 
 	DungeonController.instance:enterDungeonView(true)
-	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Dungeon)
+	self:dispatchEvent(CharacterRecommedEvent.OnJumpView, CharacterRecommedEnum.JumpView.Dungeon)
 end
 
 function CharacterRecommedController:onJumpReturnRecommedView()
@@ -167,6 +167,7 @@ function CharacterRecommedController:onJumpReturnRecommedView()
 			local tabId = CharacterRecommedEnum.TabSubType.DevelopGoals
 
 			openedViewTable.viewParam.defaultTabId = tabId
+			openedViewTable.viewParam.defaultTabIds = {}
 			openedViewTable.viewParam.defaultTabIds[2] = tabId
 
 			CharacterRecommedHeroListModel.instance:setMoList(heroId)
@@ -196,7 +197,7 @@ end
 function CharacterRecommedController:_onLoadFinish()
 	self._tradeIcon = self._loader:getFirstAssetItem():GetResource()
 
-	CharacterRecommedController.instance:dispatchEvent(CharacterRecommedEvent.OnLoadFinishTracedIcon)
+	self:dispatchEvent(CharacterRecommedEvent.OnLoadFinishTracedIcon)
 end
 
 function CharacterRecommedController:getTradeIcon()

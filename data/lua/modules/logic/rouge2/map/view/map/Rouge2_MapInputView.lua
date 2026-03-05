@@ -6,6 +6,7 @@ local Rouge2_MapInputView = class("Rouge2_MapInputView", BaseView)
 
 function Rouge2_MapInputView:onInitView()
 	self.goFullScreen = gohelper.findChild(self.viewGO, "#go_fullscreen")
+	self.goGuideClick = gohelper.findChild(self.viewGO, "#go_guide_click")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -24,6 +25,10 @@ function Rouge2_MapInputView:_editableInitView()
 	self.click = gohelper.getClickWithDefaultAudio(self.goFullScreen)
 
 	self.click:AddClickListener(self.onClickMap, self)
+
+	self.click2 = gohelper.getClickWithDefaultAudio(self.goGuideClick)
+
+	self.click2:AddClickListener(self.onClickMap, self)
 
 	self.trFullScreen = self.goFullScreen:GetComponent(gohelper.Type_RectTransform)
 	self.mapComp = Rouge2_MapController.instance:getMapComp()
@@ -67,8 +72,10 @@ end
 
 function Rouge2_MapInputView:onClose()
 	self.click:RemoveClickListener()
+	self.click2:RemoveClickListener()
 
 	self.click = nil
+	self.click2 = nil
 end
 
 return Rouge2_MapInputView

@@ -3,18 +3,59 @@
 module("modules.logic.fight.buffbehaviours.FightBuffBehaviour_ForceAuto", package.seeall)
 
 local FightBuffBehaviour_ForceAuto = class("FightBuffBehaviour_ForceAuto", FightBuffBehaviourBase)
-local autoBtnPath = "ui/viewres/fight/fighttower/fightautobtnlockview.prefab"
+local DefaultAutoBtnPath = "ui/viewres/fight/fighttower/fightautobtnlockview.prefab"
 local SiblingIndex = 3
 
 function FightBuffBehaviour_ForceAuto:onAddBuff(entityId, buffId, buffMo)
+	self.buffId = buffId
 	self.btnRoot = gohelper.findChild(self.viewGo, "root/btns")
 	self.srcAutoBtn = gohelper.findChild(self.viewGo, "root/btns/btnAuto")
+
+	self:initParam()
+
 	self.loader = PrefabInstantiate.Create(self.btnRoot)
 
-	self.loader:startLoad(autoBtnPath, self.onLoadFinish, self)
+	self.loader:startLoad(self.resUrl, self.onLoadFinish, self)
 	FightDataHelper.stateMgr:setBuffForceAuto(true)
 	FightGameMgr.operateMgr:requestAutoFight()
-	AudioMgr.instance:trigger(310004)
+	AudioMgr.instance:trigger(self.audioId)
+end
+
+function FightBuffBehaviour_ForceAuto:initParam()
+	local co = lua_fight_buff2special_behaviour.configDict[self.buffId]
+	local param = co and co.param
+
+	if string.nilorempty(param) then
+		self.resUrl = DefaultAutoBtnPath
+		self.audioId = 310004
+
+		return
+	end
+
+	local paramList = FightStrUtil.instance:getSplitCache(param, "#")
+
+	self.resUrl = paramList and paramList[1]
+
+	if not self.resUrl then
+		self.resUrl = DefaultAutoBtnPath
+	end
+
+	self.audioId = paramList and tonumber(paramList[2])
+
+	if not self.audioId then
+		self.audioId = 310004
+	end
+end
+
+function FightBuffBehaviour_ForceAuto:getBtnResUrl()
+	local co = lua_fight_buff2special_behaviour.configDict[self.buffId]
+	local url = co and co.param
+
+	if string.nilorempty(url) then
+		url = DefaultAutoBtnPath
+	end
+
+	return url
 end
 
 function FightBuffBehaviour_ForceAuto:onLoadFinish()

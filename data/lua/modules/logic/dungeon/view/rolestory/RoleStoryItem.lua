@@ -36,27 +36,45 @@ end
 function RoleStoryItem:addEvents()
 	self.btnReward:AddClickListener(self.onClickReward, self)
 	self.btnClick:AddClickListener(self.onClickItem, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.UnlockStory, self._onUnlockStory, self)
 end
 
 function RoleStoryItem:removeEvents()
 	self.btnReward:RemoveClickListener()
 	self.btnClick:RemoveClickListener()
+	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.UnlockStory, self._onUnlockStory, self)
 end
 
 function RoleStoryItem:_editableInitView()
 	return
 end
 
+function RoleStoryItem:_onUnlockStory(storyId)
+	if not self._mo or self._mo.id ~= storyId then
+		return
+	end
+
+	self:refreshItem()
+end
+
 function RoleStoryItem:onUpdateMO(mo)
 	self._mo = mo
 
-	gohelper.setActive(self.goNewTag, RoleStoryModel.instance:isNewStory(mo.id))
+	self:refreshItem()
+	RoleStoryModel.instance:setStoryNewTag(mo.id, false)
+end
+
+function RoleStoryItem:refreshItem()
+	if not self._mo then
+		return
+	end
+
+	gohelper.setActive(self.goNewTag, RoleStoryModel.instance:isNewStory(self._mo.id))
 	self:refreshPhoto()
 	self:refreshName()
 	self:refreshProgress()
 	self:refreshState()
 	self:refreshRedDot()
-	RoleStoryModel.instance:setStoryNewTag(mo.id, false)
 end
 
 function RoleStoryItem:refreshPhoto()

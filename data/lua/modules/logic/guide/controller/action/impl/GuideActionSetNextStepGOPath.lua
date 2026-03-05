@@ -401,4 +401,107 @@ function GuideActionSetNextStepGOPath:getNecrologistStoryLastMagicPath()
 	return SLFramework.GameObjectHelper.GetPath(go)
 end
 
+function GuideActionSetNextStepGOPath:getNecrologistStoryBranchPath()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.NecrologistStoryReviewView)
+
+	if not viewContainer then
+		return
+	end
+
+	local item = viewContainer:getBranchItem()
+
+	if not item then
+		return
+	end
+
+	local go = item.goBranch
+
+	if not go then
+		return
+	end
+
+	return SLFramework.GameObjectHelper.GetPath(go)
+end
+
+function GuideActionSetNextStepGOPath:getRouge2FirstNodePath()
+	local sceneType = GameSceneMgr.instance:getCurSceneType()
+	local sceneComp = GameSceneMgr.instance:getScene(SceneType.Rouge2)
+	local isNormalLayer = Rouge2_MapModel.instance:isNormalLayer()
+	local mapContainer = ViewMgr.instance:getContainer(ViewName.Rouge2_MapView)
+
+	if sceneType ~= SceneType.Rouge2 or not sceneComp or not isNormalLayer or not mapContainer then
+		return
+	end
+
+	local mapComp = sceneComp.map and sceneComp.map:getMapComp()
+	local nodeDict = Rouge2_MapModel.instance:getNodeDict()
+	local focusNode
+
+	for _, nodeMo in pairs(nodeDict or {}) do
+		local arriveStatus = nodeMo.arriveStatus
+		local isNormalNode = nodeMo:checkIsNormal()
+		local canArrive = arriveStatus == Rouge2_MapEnum.Arrive.CanArrive or arriveStatus == Rouge2_MapEnum.Arrive.ArrivingNotFinish
+
+		if isNormalNode and canArrive then
+			focusNode = nodeMo
+
+			break
+		end
+	end
+
+	if not focusNode then
+		logError("肉鸽路线层找不到可以到达的节点")
+
+		return
+	end
+
+	local nodeId = focusNode and focusNode.nodeId
+	local nodeItem = mapComp and mapComp:getMapItem(nodeId)
+	local iconGO = nodeItem and nodeItem:getIconGO()
+
+	if not iconGO then
+		return
+	end
+
+	local goFullScreen = gohelper.findChild(mapContainer.viewGO, "#go_guide_click")
+
+	if gohelper.isNil(goFullScreen) then
+		logError("肉鸽地图点击响应节点不存在")
+
+		return
+	end
+
+	local tempGuideGO = goFullScreen
+	local iconPosX, iconPosY = recthelper.worldPosToAnchorPos2(iconGO.transform.position, mapContainer.viewGO.transform)
+
+	recthelper.setAnchor(tempGuideGO.transform, iconPosX, iconPosY)
+
+	return SLFramework.GameObjectHelper.GetPath(tempGuideGO)
+end
+
+function GuideActionSetNextStepGOPath:getRouge2CanActiveTalent()
+	local viewContainer = ViewMgr.instance:getContainer(ViewName.Rouge2_BackpackTabView)
+	local skillTabView = viewContainer and viewContainer:getTabViewByTabType(Rouge2_Enum.BagTabType.ActiveSkill)
+	local talentView = skillTabView and skillTabView:getView(Rouge2_BackpackSkillView.ViewState.Panel)
+
+	if not talentView then
+		return
+	end
+
+	local newUnlockTalentId = Rouge2_BackpackController.instance:getNewUnlockTalentId()
+
+	if not newUnlockTalentId then
+		return
+	end
+
+	local talentItem = talentView:getTalentItemById(newUnlockTalentId)
+	local goClick = talentItem and talentItem:getClickGO()
+
+	if not goClick then
+		return
+	end
+
+	return SLFramework.GameObjectHelper.GetPath(goClick)
+end
+
 return GuideActionSetNextStepGOPath

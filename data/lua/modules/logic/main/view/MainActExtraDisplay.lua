@@ -148,6 +148,14 @@ function MainActExtraDisplay:_onActRouge2Click()
 	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, actId, true)
 end
 
+function MainActExtraDisplay:_onActArcadeClick()
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+
+	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
+end
+
 function MainActExtraDisplay:_getEnterController()
 	local enterView = self.viewContainer:getMainActivityEnterView()
 
@@ -185,6 +193,7 @@ function MainActExtraDisplay:_initActs()
 	self:_addActHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self._getWeekWalkHeartStatus, self._getWeekWalkHeartStartTime)
 	self:_addActHandler(ActivityEnum.MainViewActivityState.Act191, self._getAct191Status, self._getAct191StartTime)
 	self:_addActHandler(ActivityEnum.MainViewActivityState.Rouge2, self._getRouge2Status, self._getRouge2StartTime)
+	self:_addActHandler(ActivityEnum.MainViewActivityState.Arcade, self._getArcadeStatus, self._getArcadeStartTime)
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, self._onRoleStoryClick)
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.Survival, self._onSurvivalClick)
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.SeasonActivity, self._onSeasonClick)
@@ -195,6 +204,7 @@ function MainActExtraDisplay:_initActs()
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self._onWeekWalkHeartClick)
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.Act191, self._onAct191Click)
 	self:_addClickHandler(ActivityEnum.MainViewActivityState.Rouge2, self._onActRouge2Click)
+	self:_addClickHandler(ActivityEnum.MainViewActivityState.Arcade, self._onActArcadeClick)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.RoleStoryActivity, self.refreshRoleStoryBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Survival, self.refreshSurvivalBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.SeasonActivity, self.refreshSeasonBtn)
@@ -205,6 +215,7 @@ function MainActExtraDisplay:_initActs()
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.WeekWalkHeart, self.refreshWeekWalkHeartBtn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, self.refreshAct191Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge2, self.refreshRouge2Btn)
+	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Arcade, self.refreshArcadeBtn)
 end
 
 function MainActExtraDisplay:_addRefreshBtnHandler(id, handler)
@@ -378,6 +389,20 @@ function MainActExtraDisplay:_getRouge2StartTime()
 	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
+function MainActExtraDisplay:_getArcadeStatus()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
+
+	return status == ActivityEnum.ActivityStatus.Normal
+end
+
+function MainActExtraDisplay:_getArcadeStartTime()
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local actMo = ActivityModel.instance:getActMO(actId)
+
+	return actMo and actMo:getRealStartTimeStamp() * 1000
+end
+
 function MainActExtraDisplay:_onStoryChange()
 	self:onRefreshActivityState()
 end
@@ -475,6 +500,26 @@ function MainActExtraDisplay:refreshRouge2Btn()
 	gohelper.setActive(self._btnrolestory, true)
 
 	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Rouge2)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
+
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
+
+	self._txtrolestory.text = ""
+
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+
+	RedDotController.instance:addRedDot(self._gorolestoryred, activityCo.redDotId)
+
+	local hasNew = ActivityStageHelper.checkOneActivityStageHasChange(actId)
+
+	gohelper.setActive(self._gorolestorynew, hasNew)
+	gohelper.setActive(self._gorolestoryred, not hasNew)
+end
+
+function MainActExtraDisplay:refreshArcadeBtn()
+	gohelper.setActive(self._btnrolestory, true)
+
+	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
 	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
 
 	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)

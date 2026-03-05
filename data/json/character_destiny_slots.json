@@ -5073,5 +5073,180 @@
     "node": 10,
     "consume": "1#620101#135",
     "effect": "604#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 1,
+    "node": 1,
+    "consume": "1#620102#20|1#620101#80|1#111007#1|1#110304#1",
+    "effect": "601#120|602#20|603#8|604#10|203#150"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 1,
+    "node": 2,
+    "consume": "1#620101#45",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 1,
+    "node": 3,
+    "consume": "1#620101#47",
+    "effect": "601#30"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 1,
+    "node": 4,
+    "consume": "1#620101#50",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 1,
+    "node": 5,
+    "consume": "1#620101#53",
+    "effect": "603#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 2,
+    "node": 1,
+    "consume": "1#620102#30|1#620101#120|1#111008#1|1#110404#2",
+    "effect": "601#90|602#13|603#4|604#6|203#80"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 2,
+    "node": 2,
+    "consume": "1#620101#56",
+    "effect": "601#30"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 2,
+    "node": 3,
+    "consume": "1#620101#60",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 2,
+    "node": 4,
+    "consume": "1#620101#65",
+    "effect": "603#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 2,
+    "node": 5,
+    "consume": "1#620101#70",
+    "effect": "604#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 3,
+    "node": 1,
+    "consume": "1#620102#35|1#620101#140|1#111004#2|1#110504#2",
+    "effect": "601#90|602#13|603#4|604#6|203#80"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 3,
+    "node": 2,
+    "consume": "1#620101#75",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 3,
+    "node": 3,
+    "consume": "1#620101#80",
+    "effect": "601#30"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 3,
+    "node": 4,
+    "consume": "1#620101#85",
+    "effect": "603#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 3,
+    "node": 5,
+    "consume": "1#620101#90",
+    "effect": "604#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 1,
+    "consume": "1#620102#40|1#620101#160|1#111005#2|1#111003#2",
+    "effect": "601#140|602#25|603#10|604#12"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 2,
+    "consume": "1#620101#95",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 3,
+    "consume": "1#620101#100",
+    "effect": "601#30"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 4,
+    "consume": "1#620101#105",
+    "effect": "603#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 5,
+    "consume": "1#620101#110",
+    "effect": "604#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 6,
+    "consume": "1#620101#115",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 7,
+    "consume": "1#620101#120",
+    "effect": "603#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 8,
+    "consume": "1#620101#125",
+    "effect": "604#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 9,
+    "consume": "1#620101#130",
+    "effect": "602#5"
+  },
+  {
+    "slotsId": 3095,
+    "stage": 4,
+    "node": 10,
+    "consume": "1#620101#135",
+    "effect": "601#30"
   }
 ]

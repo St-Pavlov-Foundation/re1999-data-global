@@ -58,7 +58,7 @@ ModuleEnum.HeroGroupType = {
 }
 ModuleEnum.HeroGroupSnapshotType = {
 	Season166Base = 8,
-	Resources = 3,
+	TowerComposeNormal = 17,
 	Act183Normal = 12,
 	TowerBoss = 11,
 	Season = 5,
@@ -70,7 +70,9 @@ ModuleEnum.HeroGroupSnapshotType = {
 	Act183Boss = 13,
 	Survival = 15,
 	FiveHero = 16,
-	Shelter = 14
+	Shelter = 14,
+	Resources = 3,
+	TowerComposeBoss = 18
 }
 ModuleEnum.FiveHeroEnum = {
 	MaxHeroNum = 5,

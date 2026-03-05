@@ -10,6 +10,7 @@ function CommandStationEnterView:onInitView()
 	self._btnreward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reward")
 	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
 	self._btnactivity = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_activity")
+	self._btnrelationshipboard = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_relationshipboard")
 	self._btnplot = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_plot")
 	self._txtName = gohelper.findChildText(self.viewGO, "#btn_plot/#txt_Name")
 	self._txtNum = gohelper.findChildText(self.viewGO, "#btn_plot/#txt_Name/#txt_Num")
@@ -34,6 +35,7 @@ function CommandStationEnterView:addEvents()
 	self._btnreward:AddClickListener(self._btnrewardOnClick, self)
 	self._btntask:AddClickListener(self._btntaskOnClick, self)
 	self._btnactivity:AddClickListener(self._btnactivityOnClick, self)
+	self._btnrelationshipboard:AddClickListener(self._btnrelationshipboardOnClick, self)
 	self._btnplot:AddClickListener(self._btnplotOnClick, self)
 	self._btnwuxiandian:AddClickListener(self._btnwuxiandianOnClick, self)
 	self._btnbox:AddClickListener(self._btnboxOnClick, self)
@@ -44,24 +46,18 @@ function CommandStationEnterView:removeEvents()
 	self._btnreward:RemoveClickListener()
 	self._btntask:RemoveClickListener()
 	self._btnactivity:RemoveClickListener()
+	self._btnrelationshipboard:RemoveClickListener()
 	self._btnplot:RemoveClickListener()
 	self._btnwuxiandian:RemoveClickListener()
 	self._btnbox:RemoveClickListener()
 end
 
+function CommandStationEnterView:_btnrelationshipboardOnClick()
+	CommandStationController.instance:openCommandStationRelationShipBoard()
+end
+
 function CommandStationEnterView:_btnrewardOnClick()
-	local rewardList = CommandStationConfig.instance:getTotalTaskRewards()
-	local nowVersion = CommandStationConfig.instance:getCurVersionId()
-
-	for _, v in ipairs(rewardList) do
-		if v.versionId == nowVersion and v.isBig == 1 then
-			local dict = GameUtil.splitString2(v.bonus, true)
-
-			MaterialTipController.instance:showMaterialInfo(dict[1][1], dict[1][2])
-
-			break
-		end
-	end
+	CommandStationController.instance:openCommandStationTaskView()
 end
 
 function CommandStationEnterView:_btnboxOnClick()
@@ -246,11 +242,50 @@ function CommandStationEnterView:_btnactivityOnClick()
 	CommandStationController.StatCommandStationButtonClick(self.viewName, "_btnactivityOnClick")
 end
 
+function CommandStationEnterView.isUnlockRelationShipBoard()
+	local config = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockAct)
+	local actId = config.value
+	local status = actId > 0 and ActivityHelper.getActivityStatus(actId)
+	local showActivity = status == ActivityEnum.ActivityStatus.Normal
+
+	if showActivity then
+		return true
+	end
+
+	local dungeonUnlockConfig = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockDungeon)
+	local dungeonId = dungeonUnlockConfig.value
+
+	if DungeonModel.instance:hasPassLevelAndStory(dungeonId) then
+		return true
+	end
+
+	local chapterId = CommandStationEnum.UnlockRelationShipChapterId
+	local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterId)
+
+	for _, config in ipairs(chapterList) do
+		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
+
+		if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevelAndStory(episodeList[1].id) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function CommandStationEnterView:_updateRelationShipBoardBtnStatus()
+	gohelper.setActive(self._btnrelationshipboard, CommandStationEnterView.isUnlockRelationShipBoard())
+end
+
 function CommandStationEnterView:_editableInitView()
+	gohelper.setActive(self._btnmap, false)
+
 	self._viewOpenTime = Time.realtimeSinceStartup
 	self._goActivityRedDot = gohelper.findChild(self.viewGO, "#btn_activity/go_reddot")
+	self._goRelationShipBoardRedDot = gohelper.findChild(self.viewGO, "#btn_relationshipboard/go_reddot")
 
 	gohelper.setActive(self._goActivityRedDot, false)
+	gohelper.setActive(self._goRelationShipBoardRedDot, false)
 
 	self._goActivityBg = gohelper.findChild(self.viewGO, "simage_dec")
 	self._constChapterListConfig = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.ChapterList)
@@ -279,6 +314,8 @@ function CommandStationEnterView:_editableInitView()
 	self._boxAnimator = boxAnimGo:GetComponent(typeof(UnityEngine.Animator))
 	self._actImage = gohelper.findChildSingleImage(self.viewGO, "#btn_activity")
 	self._gotaskred = gohelper.findChild(self.viewGO, "#btn_task/go_reddot")
+
+	self:_updateRelationShipBoardBtnStatus()
 end
 
 function CommandStationEnterView:_addCacheVideo(name, path)
@@ -323,6 +360,23 @@ end
 
 function CommandStationEnterView:_boxCloseDone()
 	self._boxCloseDoneCallback()
+end
+
+function CommandStationEnterView:_canShowMapBtn()
+	local list = self._chapterList
+
+	for i = #list, 1, -1 do
+		local chapterId = list[i]
+		local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterId)
+
+		for _, config in ipairs(chapterList) do
+			local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
+
+			if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevelAndStory(episodeList[1].id) then
+				return true
+			end
+		end
+	end
 end
 
 function CommandStationEnterView:_getLastEpisodeConfig()
@@ -477,6 +531,7 @@ end
 function CommandStationEnterView:_checkRed()
 	gohelper.setActive(self._gotaskred, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.CommandStationPaper))
 	gohelper.setActive(self._goActivityRedDot, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.VersionActivityEnterRedDot))
+	gohelper.setActive(self._goRelationShipBoardRedDot, RedDotModel.instance:isDotShow(RedDotEnum.DotNode.CommandStationRelationShipBoard))
 end
 
 function CommandStationEnterView:_OnOpenView(viewName)
@@ -516,7 +571,7 @@ function CommandStationEnterView:_OnCloseViewFinish(viewName)
 		AudioMgr.instance:trigger(AudioEnum3_0.CommandStationPaper.play_ui_lushang_zhihuibu_fanhui)
 	end
 
-	if viewName == ViewName.CommandStationMapView or viewName == ViewName.DungeonMapView or viewName == ViewName.CommandStationPaperView or self._viewIsClose then
+	if viewName == ViewName.CommandStationMapView or viewName == ViewName.CommandStationRelationShipBoard or viewName == ViewName.DungeonMapView or viewName == ViewName.CommandStationPaperView or self._viewIsClose then
 		self.viewContainer:setVisibleInternal(true)
 		self._viewAnimatorPlayer:Play("open2", self._animDone, self)
 
@@ -544,6 +599,8 @@ end
 
 function CommandStationEnterView:_onUpdateDungeonInfo()
 	self:_showEpisodeInfo()
+	self:_updateRelationShipBoardBtnStatus()
+	self:_checkRed()
 end
 
 function CommandStationEnterView:_onRefreshActivity()
@@ -600,15 +657,17 @@ function CommandStationEnterView:_preloadVideos()
 end
 
 function CommandStationEnterView:_showEpisodeInfo()
-	gohelper.setActive(self._btnmap, DungeonModel.instance:hasPassLevelAndStory(CommandStationEnum.FirstEpisodeId))
-
 	if not self._chapterList then
+		logError("CommandStationEnterView:_showEpisodeInfo chapterList is nil")
+
 		return
 	end
 
 	local episodeConfig = self:_getLastEpisodeConfig()
 	local episodeIndex = DungeonConfig.instance:getEpisodeLevelIndex(episodeConfig)
 	local chapterCO = DungeonConfig.instance:getChapterCO(episodeConfig.chapterId)
+
+	gohelper.setActive(self._btnmap, self:_canShowMapBtn())
 
 	if LuaUtil.containChinese(episodeConfig.name) then
 		local num = LuaUtil.getCharNum(episodeConfig.name)

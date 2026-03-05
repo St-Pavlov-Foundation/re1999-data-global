@@ -50,8 +50,8 @@ function HandbookSkinView:onInitView()
 	self._imageSkinSuitGroupIcon = gohelper.findChildImage(self.viewGO, "Left/#image_Icon")
 	self._imageSkinSuitGroupEnIcon = gohelper.findChildImage(self.viewGO, "Left/#image_TitleEn")
 	self._textPlayerName = gohelper.findChildText(self.viewGO, "title/#title_name")
-	self._textName = gohelper.findChildText(self.viewGO, "title/#name")
 	self._txtFloorName = gohelper.findChildText(self.viewGO, "Left/#txt_Name")
+	self._goFestivalTitle = gohelper.findChild(self.viewGO, "festival_title")
 	self._txtFloorThemeDescr = gohelper.findChildText(self.viewGO, "Left/#txt_Descr")
 	self._goFloorItemRoot = gohelper.findChild(self.viewGO, "Right/Scroll View/Viewport/Content")
 	self._goFloorItem = gohelper.findChild(self.viewGO, "Right/Scroll View/Viewport/Content/Buttnitem")
@@ -62,6 +62,7 @@ function HandbookSkinView:onInitView()
 	self._itemScrollRect = gohelper.findChildScrollRect(self.viewGO, "Right/Scroll View")
 	self._goContent = gohelper.findChild(self.viewGO, "Right/Scroll View/Viewport/Content")
 	self._goScrollListArrow = gohelper.findChild(self.viewGO, "Right/arrow")
+	self._goArrowRedDot = gohelper.findChild(self.viewGO, "Right/arrow/#go_arrowreddot")
 	self._arrowAnimator = self._goScrollListArrow:GetComponent(typeof(UnityEngine.Animator))
 	self._scrollHeight = recthelper.getHeight(self._itemScrollRect.transform)
 	self._viewAnimator = self.viewGO:GetComponent(gohelper.Type_Animator)
@@ -76,6 +77,8 @@ function HandbookSkinView:addEvents()
 	self:addEventCb(self.viewContainer, HandbookEvent.SkinPointChanged, self._refresPoint, self)
 	self:addEventCb(self.viewContainer, HandbookEvent.OnClickTarotSkinSuit, self._onEnterTarotMode, self)
 	self:addEventCb(self.viewContainer, HandbookEvent.OnExitTarotSkinSuit, self._onExitTarotMode, self)
+	self:addEventCb(self.viewContainer, HandbookEvent.OnClickFestivalSkinSuit, self._onEnterFestivalSkinSuit, self)
+	self:addEventCb(self.viewContainer, HandbookEvent.OnExitFestivalSkinSuit, self._onExitFestivalSkinSuit, self)
 	self:addEventCb(HandbookController.instance, HandbookEvent.OnClickSkinSuitFloorItem, self.onClickFloorItem, self)
 
 	if HandbookController.instance:hasAnyHandBookSkinGroupRedDot() then
@@ -175,7 +178,6 @@ function HandbookSkinView:onOpen()
 	local playerNameContent = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("handbookskinview_playername"), playerName)
 
 	self._textPlayerName.text = playerNameContent
-	self._textName.text = ""
 
 	self:initFilterDrop()
 end
@@ -192,22 +194,23 @@ function HandbookSkinView:refreshTabListArrow()
 	if itemCount <= VisableItemCount then
 		gohelper.setActive(self._goScrollListArrow, false)
 	else
+		local hasRedDot = false
 		local bottomY = 0
 
 		for idx, skinFloorItem in ipairs(self._skinSuitFloorItems) do
-			local hasRedDot = skinFloorItem:hasRedDot()
-
-			if hasRedDot then
+			if skinFloorItem:hasRedDot() then
 				local tabTrans = skinFloorItem.viewGO.transform
 				local y = tabTrans.localPosition.y
 
 				bottomY = math.min(y, bottomY)
+				hasRedDot = true
 			end
 		end
 
 		local deepestRedDotHeight = math.abs(bottomY)
 		local contentTrans = self._goContent.transform
 		local y = contentTrans.localPosition.y
+		local hasUnShowItem = y - self._scrollHeight < ItemCellHeight
 		local showArrowEffect = deepestRedDotHeight - self._scrollHeight - y > ItemCellHeight / 2
 
 		if showArrowEffect then
@@ -216,17 +219,15 @@ function HandbookSkinView:refreshTabListArrow()
 			self._arrowAnimator:Play(UIAnimationName.Idle)
 		end
 
-		gohelper.setActive(self._goScrollListArrow, showArrowEffect)
+		gohelper.setActive(self._goScrollListArrow, hasUnShowItem)
+		gohelper.setActive(self._goArrowRedDot, hasRedDot and showArrowEffect)
 	end
 end
 
 function HandbookSkinView:_refreshDesc()
-	if HandbookEnum.SkinSuitId2SceneType[self._skinThemeCfg.id] == HandbookEnum.SkinSuitSceneType.Tarot then
-		gohelper.setActive(self._txtFloorThemeDescr.gameObject, false)
-		gohelper.setActive(self._txtFloorName.gameObject, false)
-		gohelper.setActive(self._imageSkinSuitGroupEnIcon.gameObject, false)
-		gohelper.setActive(self._imageSkinSuitGroupIcon.gameObject, false)
-	else
+	local suitSceneType = HandbookEnum.SkinSuitId2SceneType[self._skinThemeCfg.id]
+
+	if not suitSceneType then
 		gohelper.setActive(self._txtFloorThemeDescr.gameObject, true)
 		gohelper.setActive(self._txtFloorName.gameObject, true)
 		gohelper.setActive(self._imageSkinSuitGroupEnIcon.gameObject, not LangSettings.instance:isEn())
@@ -237,7 +238,14 @@ function HandbookSkinView:_refreshDesc()
 
 		UISpriteSetMgr.instance:setSkinHandbook(self._imageSkinSuitGroupEnIcon, self._skinThemeCfg.nameRes, true)
 		UISpriteSetMgr.instance:setSkinHandbook(self._imageSkinSuitGroupIcon, self._skinThemeCfg.iconRes, true)
+	else
+		gohelper.setActive(self._txtFloorThemeDescr.gameObject, false)
+		gohelper.setActive(self._txtFloorName.gameObject, false)
+		gohelper.setActive(self._imageSkinSuitGroupEnIcon.gameObject, false)
+		gohelper.setActive(self._imageSkinSuitGroupIcon.gameObject, false)
 	end
+
+	gohelper.setActive(self._goFestivalTitle, suitSceneType == HandbookEnum.SkinSuitSceneType.Festival)
 end
 
 function HandbookSkinView:_createFloorItems()
@@ -362,6 +370,14 @@ end
 function HandbookSkinView:_onExitTarotMode()
 	self._tarotMode = false
 
+	self._viewAnimatorPlayer:Play(UIAnimationName.Back)
+end
+
+function HandbookSkinView:_onEnterFestivalSkinSuit()
+	self._viewAnimatorPlayer:Play(UIAnimationName.Close)
+end
+
+function HandbookSkinView:_onExitFestivalSkinSuit()
 	self._viewAnimatorPlayer:Play(UIAnimationName.Back)
 end
 

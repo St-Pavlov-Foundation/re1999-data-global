@@ -43,6 +43,8 @@ function VersionActivity2_8StoreViewContainer:buildTabViews(tabContainerId)
 
 		self._currencyView:setOpenCallback(self._onCurrencyOpen, self)
 
+		self._currencyView.foreHideBtn = true
+
 		return {
 			self._currencyView
 		}

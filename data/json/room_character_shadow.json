@@ -370,7 +370,47 @@
     "shadow": 1
   },
   {
+    "skinId": 309201,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309202,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312701,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312702,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
     "skinId": 309504,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312603,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312103,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 304704,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 301403,
     "animName": "interact",
     "shadow": 1
   }

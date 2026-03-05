@@ -134,11 +134,12 @@ local activitySubViewDict = {
 	[VersionActivity3_1Enum.ActivityId.SurvivalOperAct] = ViewName.SurvivalOperActFullView,
 	[VersionActivity3_1Enum.ActivityId.TowerDeep] = ViewName.TowerDeepOperActFullView,
 	[BpModel.instance:getCurVersionOperActId()] = ViewName.V3a1_BpOperActShowView,
-	[VersionActivity3_1Enum.ActivityId.NationalGift] = ViewName.NationalGiftFullView,
 	[ActivityEnum.Activity.V3a1_AutumnSign] = ViewName.V3a1_AutumnSign_FullView,
 	[ActivityEnum.Activity.V3a1_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop] = ViewName.CruiseTripleDropFullView,
-	[VersionActivity3_2Enum.ActivityId.ActivityCollect] = ViewName.V3A2ActivityCollectView
+	[VersionActivity3_2Enum.ActivityId.ActivityCollect] = ViewName.V3A2ActivityCollectView,
+	[ActivityEnum.Activity.V3a3_TowerDeep] = ViewName.V3a3TowerGiftFullView,
+	[ActivityEnum.Activity.V3a3_SkinDiscount] = ViewName.SkinDiscountCompensateActivityView
 }
 local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -164,6 +165,8 @@ function ActivityBeginnerView:onOpen()
 	self:_initSelfSelectCharacter()
 	self:_initVersionSummon()
 	self:_initCultivationDestiny()
+	self:_initDoubleDan()
+	self:_initNationalGift()
 
 	self._needSetSortInfos = true
 
@@ -371,9 +374,11 @@ function ActivityBeginnerView:_initWarmUpH5()
 
 	s_WarmUpH5 = true
 
-	local actId = ActivityType100Config.instance:getWarmUpH5ActivityId()
+	local actIdList = ActivityType100Config.instance:getWarmUpH5ActIdList()
 
-	activitySubViewDict[actId] = ViewName.ActivityWarmUpH5FullView
+	for _, actId in ipairs(actIdList) do
+		activitySubViewDict[actId] = GameBranchMgr.instance:Vxax_ViewName("ActivityWarmUpH5FullView", ViewName.ActivityWarmUpH5FullView)
+	end
 end
 
 local s_SelfSelectCharacter = false
@@ -446,6 +451,24 @@ function ActivityBeginnerView:_initDoubleDan()
 
 	if actId then
 		local viewName = GameBranchMgr.instance:Vxax_ViewName("DoubleDanActivity_FullView", ViewName.V3a3_DoubleDanActivity_FullView)
+
+		activitySubViewDict[actId] = viewName
+	end
+end
+
+local s_NationalGift = false
+
+function ActivityBeginnerView:_initNationalGift()
+	if s_NationalGift then
+		return
+	end
+
+	s_NationalGift = true
+
+	local actId = NationalGiftModel.instance:getCurVersionActId()
+
+	if actId then
+		local viewName = GameBranchMgr.instance:Vxax_ViewName("NationalGiftFullView", ViewName.NationalGiftFullView)
 
 		activitySubViewDict[actId] = viewName
 	end

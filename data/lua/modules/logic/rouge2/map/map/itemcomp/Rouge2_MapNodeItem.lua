@@ -149,6 +149,10 @@ function Rouge2_MapNodeItem:updateNode()
 	self.iconItem:onUpdateMO(self.nodeMo, self)
 end
 
+function Rouge2_MapNodeItem:getIconGO()
+	return self.iconItem and self.iconItem:getIconGO()
+end
+
 function Rouge2_MapNodeItem:onCloseViewFinish(viewName)
 	if self.waitUpdate then
 		self:onUpdateMapInfo()

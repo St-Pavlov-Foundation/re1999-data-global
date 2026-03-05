@@ -104,10 +104,13 @@ StoryEnum.BgEffectType = {
 	MoveCurve = 7,
 	OutFocus = 16,
 	Starburst = 18,
+	BgDistress = 20,
 	SetLayer = 19,
 	Distress = 15,
 	BlindFilter = 10,
-	Shake = 3,
+	Penetration = 22,
+	HandCameraShake = 21,
+	BgShake = 3,
 	Interfere = 8,
 	RgbSplit = 12,
 	None = 0
@@ -187,9 +190,10 @@ StoryEnum.PictureEffectType = {
 }
 StoryEnum.VideoOrderType = {
 	Destroy = 1,
+	Produce = 0,
+	ProduceSkip = 4,
 	Restart = 3,
-	Pause = 2,
-	Produce = 0
+	Pause = 2
 }
 StoryEnum.OptionFeedbackType = {
 	HeroLead = 1,
@@ -208,9 +212,14 @@ StoryEnum.NavigateType = {
 	ActivityStart = 6,
 	Episode = 2,
 	StormDeadline = 9,
+	StrategyEnd = 11,
 	RoleStoryStart = 8,
+	StrategyStart = 10,
 	ActivityEnd = 7,
 	None = 0
+}
+StoryEnum.StrategyBtnType = {
+	CmdPost = 1
 }
 StoryEnum.SkipType = {
 	ChapterEnd = 4,

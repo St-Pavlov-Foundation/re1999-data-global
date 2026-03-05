@@ -29,12 +29,15 @@ function Rouge2_CommonCollectionItem:init(go)
 	gohelper.setActive(self._goReddot, false)
 	gohelper.setActive(self._goSelect, false)
 	self:initRareEffectTab()
+
+	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go)
+
+	self._listener:initCallback(self.refreshItemDesc, self)
 end
 
 function Rouge2_CommonCollectionItem:addEventListeners()
 	self._btnClick:AddClickListener(self._btnClickOnClick, self)
 	self._btnClick2:AddClickListener(self._btnClickOnClick, self)
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSwitchItemDescMode, self._onSwitchItemDescMode, self)
 end
 
 function Rouge2_CommonCollectionItem:removeEventListeners()
@@ -54,7 +57,7 @@ function Rouge2_CommonCollectionItem:initClickCallback(clickCallback, clickCallb
 end
 
 function Rouge2_CommonCollectionItem:initDescModeFlag(descModeFlag)
-	self._descModeFlag = descModeFlag
+	self._listener:setDataFlag(descModeFlag)
 end
 
 function Rouge2_CommonCollectionItem:initDescIncludeTypes(includeTypes)
@@ -113,9 +116,8 @@ function Rouge2_CommonCollectionItem:refreshUI()
 	local rareColor = rareCo and rareCo.relicsColor
 
 	self._txtRare.text = string.format("<#%s>%s</color>", rareColor, rareName)
-	self._descMode = self._descModeFlag and Rouge2_BackpackController.instance:getItemDescMode(self._descModeFlag)
 
-	Rouge2_ItemDescHelper.setItemDesc(self._dataType, self._dataId, self._goContent, self._descMode, self._descIncludeTypes)
+	self._listener:startListen()
 end
 
 function Rouge2_CommonCollectionItem:showRareEffect()
@@ -127,12 +129,8 @@ function Rouge2_CommonCollectionItem:showRareEffect()
 	end
 end
 
-function Rouge2_CommonCollectionItem:_onSwitchItemDescMode(descModeFlag)
-	if self._descModeFlag ~= descModeFlag then
-		return
-	end
-
-	self:refreshUI()
+function Rouge2_CommonCollectionItem:refreshItemDesc(descMode)
+	Rouge2_ItemDescHelper.setItemDesc(self._dataType, self._dataId, self._goContent, descMode, self._descIncludeTypes)
 end
 
 function Rouge2_CommonCollectionItem:onSelect(isSelect)

@@ -22,6 +22,7 @@ function TowerModel:clearTowerData()
 	self.towerInfoMap = {}
 	self.towerInfoList = {}
 	self.curTowerType = nil
+	self.towerTrialHeroDataMap = {}
 end
 
 function TowerModel:onReceiveTowerBattleFinishPush(info)
@@ -307,6 +308,8 @@ end
 
 function TowerModel:updateTrialHeroSeason(season)
 	self.trialHeroSeason = season
+
+	self:buildTrialHeroCoDataList()
 end
 
 function TowerModel:getTrialHeroSeason()
@@ -586,6 +589,36 @@ function TowerModel:isTowerDeepEpisode(episodeId)
 	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 
 	return episdoeConfig and episdoeConfig.type == DungeonEnum.EpisodeType.TowerDeep
+end
+
+function TowerModel:buildTrialHeroCoDataList()
+	local curSeason = self:getTrialHeroSeason()
+
+	if self.towerTrialHeroDataMap[curSeason] then
+		return
+	end
+
+	self.towerTrialHeroDataMap[curSeason] = {}
+
+	local towerTrialConfig = TowerConfig.instance:getHeroTrialConfig(curSeason)
+
+	if towerTrialConfig then
+		local heroIds = string.splitToNumber(towerTrialConfig.heroIds, "|")
+
+		for _, trialHeroId in ipairs(heroIds) do
+			local trialCoData = {}
+
+			trialCoData.trialConfig = lua_hero_trial.configDict[trialHeroId][0]
+			trialCoData.heroConfig = HeroConfig.instance:getHeroCO(trialCoData.trialConfig.heroId)
+			trialCoData.skinConfig = SkinConfig.instance:getSkinCo(trialCoData.trialConfig.skin)
+
+			table.insert(self.towerTrialHeroDataMap[curSeason], trialCoData)
+		end
+	end
+end
+
+function TowerModel:getTrialHeroCoDataList(seasonId)
+	return self.towerTrialHeroDataMap[seasonId]
 end
 
 TowerModel.instance = TowerModel.New()

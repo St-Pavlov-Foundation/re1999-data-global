@@ -22,7 +22,9 @@ RoleActivityEnum.LevelView = {
 	[VersionActivity2_3Enum.ActivityId.DuDuGu] = ViewName.ActDuDuGuLevelView,
 	[VersionActivity3_0Enum.ActivityId.KaRong] = ViewName.KaRongLevelView,
 	[VersionActivity2_4Enum.ActivityId.Pinball] = ViewName.PinballCityView,
-	[VersionActivity2_4Enum.ActivityId.MusicGame] = ViewName.VersionActivity2_4MusicChapterView
+	[VersionActivity2_4Enum.ActivityId.MusicGame] = ViewName.VersionActivity2_4MusicChapterView,
+	[VersionActivity2_2Enum.ActivityId.TianShiNaNa] = ViewName.TianShiNaNaMainView,
+	[VersionActivity2_2Enum.ActivityId.Lopera] = ViewName.LoperaMainView
 }
 
 return RoleActivityEnum

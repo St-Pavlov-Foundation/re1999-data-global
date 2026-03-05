@@ -18,8 +18,8 @@ function Rouge2_MapExploreChoiceItem:refreshBg()
 	UISpriteSetMgr.instance:setRouge7Sprite(self._imageselectbg, selectBg)
 end
 
-function Rouge2_MapExploreChoiceItem:update(choiceId, nodeMo, index)
-	Rouge2_MapExploreChoiceItem.super.update(self, choiceId, nodeMo, index)
+function Rouge2_MapExploreChoiceItem:update(choiceId, nodeMo, index, checkRate)
+	Rouge2_MapExploreChoiceItem.super.update(self, choiceId, nodeMo, index, checkRate)
 	self:updatePos()
 end
 

@@ -10,6 +10,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 0,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -23,6 +24,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303701,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -36,6 +38,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303702,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -49,6 +52,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303703,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -62,6 +66,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303704,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -75,6 +80,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303705,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -88,6 +94,7 @@
     "roleName": "language_10017913",
     "storyPic": "rolestory_pic_01",
     "preId": 303706,
+    "branch": 0,
     "isEnd": "1"
   },
   {
@@ -101,6 +108,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 0,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -114,6 +122,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304101,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -127,6 +136,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304102,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -140,6 +150,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304103,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -153,6 +164,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304104,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -166,6 +178,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304105,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -179,6 +192,7 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304106,
+    "branch": 0,
     "isEnd": ""
   },
   {
@@ -192,6 +206,105 @@
     "roleName": "language_10005368",
     "storyPic": "rolestory_pic_01",
     "preId": 304107,
+    "branch": 0,
+    "isEnd": "1"
+  },
+  {
+    "id": 305101,
+    "storyId": 28,
+    "storyName": "language_10105859",
+    "storyNameEn": "Horseback Riding",
+    "time": 17.0,
+    "place": "language_10105860",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 0,
+    "branch": 0,
+    "isEnd": ""
+  },
+  {
+    "id": 305102,
+    "storyId": 28,
+    "storyName": "language_10105861",
+    "storyNameEn": "Night in the East",
+    "time": 17.34,
+    "place": "language_10105862",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305101,
+    "branch": 1,
+    "isEnd": ""
+  },
+  {
+    "id": 305103,
+    "storyId": 28,
+    "storyName": "language_10105863",
+    "storyNameEn": "The Bullet and the Farewell",
+    "time": 19.5,
+    "place": "language_10105862",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305102,
+    "branch": 0,
+    "isEnd": ""
+  },
+  {
+    "id": 305104,
+    "storyId": 28,
+    "storyName": "language_10105864",
+    "storyNameEn": "Golden Peaches",
+    "time": 19.5,
+    "place": "language_10105862",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305103,
+    "branch": 0,
+    "isEnd": ""
+  },
+  {
+    "id": 305105,
+    "storyId": 28,
+    "storyName": "language_90001278",
+    "storyNameEn": "The Rain",
+    "time": 19.84,
+    "place": "language_10105862",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305104,
+    "branch": 1,
+    "isEnd": ""
+  },
+  {
+    "id": 305106,
+    "storyId": 28,
+    "storyName": "language_10105865",
+    "storyNameEn": "The Song",
+    "time": 20.34,
+    "place": "language_10105862",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305105,
+    "branch": 1,
+    "isEnd": ""
+  },
+  {
+    "id": 305107,
+    "storyId": 28,
+    "storyName": "language_10105866",
+    "storyNameEn": "Autumn",
+    "time": 8.0,
+    "place": "language_10105867",
+    "weather": 1,
+    "roleName": "language_10056607",
+    "storyPic": "rolestory_pic_01",
+    "preId": 305106,
+    "branch": 1,
     "isEnd": "1"
   }
 ]

@@ -31,9 +31,9 @@ function FightTLEventEntityVisible:onTrackStart(fightStepData, duration, paramsA
 	local transitionTime = tonumber(paramsArr[3]) or 0.2
 	local attacker = FightHelper.getEntity(fightStepData.fromId)
 	local defenders = FightHelper.getDefenders(fightStepData, false, filterEffectType)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local mySide = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
-	local enemySide = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+	local entityMgr = FightGameMgr.entityMgr
+	local mySide = entityMgr:getTagList(SceneTag.UnitPlayer)
+	local enemySide = entityMgr:getTagList(SceneTag.UnitMonster)
 	local attackerSide = attacker:isMySide() and mySide or enemySide
 	local defenderSide = attacker:isMySide() and enemySide or mySide
 	local showEntitys, hideEntitys = self:_getVisibleList(attacker, defenders, attackerSide, attackerVisibleType, defenderSide, defenderVisibleType, fightStepData)

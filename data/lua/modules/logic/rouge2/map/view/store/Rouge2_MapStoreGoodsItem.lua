@@ -22,7 +22,10 @@ function Rouge2_MapStoreGoodsItem:init(go)
 	self._goStealRate = gohelper.findChild(self.go, "go_StealRate")
 	self._txtStealRate = gohelper.findChildText(self.go, "go_StealRate/txt_StealRate")
 	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_Click")
+	self._goRecommend = gohelper.findChild(self.go, "go_Recommend")
 	self._stealAnimator = gohelper.onceAddComponent(self._goStealRate, gohelper.Type_Animator)
+	self._teamTipsParam = {}
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.MapStoreGoods)
 end
 
 function Rouge2_MapStoreGoodsItem:addEventListeners()
@@ -74,7 +77,9 @@ end
 
 function Rouge2_MapStoreGoodsItem:refreshGoods()
 	self._txtName.text = self._itemCo and self._itemCo.name
+	self._teamTipsParam.itemId = self._itemId
 
+	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
 	self:refreshIcon()
 end
 

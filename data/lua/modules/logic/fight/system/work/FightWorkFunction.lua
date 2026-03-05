@@ -4,7 +4,7 @@ module("modules.logic.fight.system.work.FightWorkFunction", package.seeall)
 
 local FightWorkFunction = class("FightWorkFunction", FightWorkItem)
 
-function FightWorkFunction:onLogicEnter(func, target, ...)
+function FightWorkFunction:onConstructor(func, target, ...)
 	self._func = func
 	self._target = target
 	self._param = {

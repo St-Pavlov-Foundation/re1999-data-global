@@ -209,7 +209,7 @@ function HeroGroupModel:setParam(battleId, episodeId, adventure, isReConnect, ep
 		configAids = string.splitToNumber(battleCO.aid, "#")
 	end
 
-	local isTowerEpisode = HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(self.episodeId)
+	local isTowerEpisode = HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(self.episodeId) or HeroGroupHandler.checkIsTowerComposeEpisodeByEpisodeId(self.episodeId)
 
 	if battleCO and (battleCO.trialLimit > 0 or not string.nilorempty(battleCO.trialEquips)) or ToughBattleModel.instance:getAddTrialHeros() or isTowerEpisode then
 		local isSeasonChapter = Activity104Model.instance:isSeasonChapter()
@@ -463,6 +463,12 @@ end
 function HeroGroupModel:getBattleRoleNum()
 	if self.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
 		return OdysseyEnum.MaxHeroGroupCount
+	end
+
+	local roleNum = HeroGroupHandler.getHeroRoleOpenNum(self.episodeId)
+
+	if roleNum then
+		return roleNum
 	end
 
 	local episodeId = self.episodeId
@@ -790,6 +796,11 @@ function HeroGroupModel:saveCurGroupData(callback, callbackObj, heroGroupMO)
 
 		if HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(self.episodeId) then
 			FightParam.initTowerFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId())
+		elseif HeroGroupHandler.checkIsTowerComposeEpisodeByEpisodeId(self.episodeId) then
+			local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+			local planeClothId = recordFightParam and TowerComposeHeroGroupModel.instance:getThemePlaneBuffId(recordFightParam.themeId, recordFightParam.plane, TowerComposeEnum.TeamBuffType.Cloth) or heroGroupMO.clothId
+
+			FightParam.initTowerFightGroup(req.fightGroup, planeClothId, heroGroupMO.heroList, heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId(), nil, heroGroupMO:getSaveParams())
 		else
 			FightParam.initFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId())
 		end
@@ -929,6 +940,12 @@ function HeroGroupModel:getCurGroupId()
 end
 
 function HeroGroupModel:isPositionOpen(posId)
+	local openNum = HeroGroupHandler.getHeroRoleOpenNum(self.episodeId)
+
+	if openNum then
+		return posId > 0 and posId <= openNum
+	end
+
 	if self.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
 		return OdysseyHeroGroupModel.instance:isPositionOpen(posId)
 	end

@@ -159,7 +159,7 @@ function DecorateStoreGoodsView:_btnbuyOnClick()
 	end
 
 	if self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGoods, self, self.closeThis, self) then
+		if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._exchangeFinished, self, self.closeThis, self) then
 			self:_buyGood(curIndex)
 		end
 	elseif self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.Diamond then
@@ -187,6 +187,12 @@ end
 
 function DecorateStoreGoodsView:_storeCurrencyNotEnoughCallback()
 	GameFacade.jump(JumpEnum.JumpId.GlowCharge)
+end
+
+function DecorateStoreGoodsView:_exchangeFinished()
+	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
+
+	self:_buyGood(curIndex)
 end
 
 function DecorateStoreGoodsView:_buyGood(index)

@@ -1,0 +1,660 @@
+﻿-- chunkname: @modules/proto/TowerComposeModule_pb.lua
+
+local require = require
+local protobuf = require("protobuf.protobuf")
+
+module("modules.proto.TowerComposeModule_pb", package.seeall)
+
+local TowerComposeModule_pb = {}
+
+TowerComposeModule_pb.FIGHTDEF_PB = require("modules.proto.FightDef_pb")
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.name = "planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.full_name = ".TowerComposePlane.planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.name = "level"
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.full_name = ".TowerComposePlane.level"
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.name = "mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.full_name = ".TowerComposePlane.mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.name = "fight"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.full_name = ".TowerComposePlane.fight"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.number = 4
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.index = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.type = 8
+TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD.cpp_type = 7
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.name = "TowerComposePlane"
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.full_name = ".TowerComposePlane"
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEPLANEPLANEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANELEVELFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANEFIGHTFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.name = "themeId"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.full_name = ".TowerComposeResearchProgressUpdatePush.themeId"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.name = "progress"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.full_name = ".TowerComposeResearchProgressUpdatePush.progress"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.name = "TowerComposeResearchProgressUpdatePush"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.full_name = ".TowerComposeResearchProgressUpdatePush"
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHTHEMEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSHPROGRESSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.name = "reset"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.full_name = ".TowerComposeGetInfoRequest.reset"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.type = 8
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD.cpp_type = 7
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.name = "TowerComposeGetInfoRequest"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.full_name = ".TowerComposeGetInfoRequest"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUESTRESETFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.name = "planes"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.full_name = ".TowerComposeBoss.planes"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.name = "highScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.full_name = ".TowerComposeBoss.highScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.name = "currScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.full_name = ".TowerComposeBoss.currScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.name = "TowerComposeBoss"
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.full_name = ".TowerComposeBoss"
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSPLANESFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSHIGHSCOREFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSCURRSCOREFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.name = "themeId"
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.full_name = ".TowerComposeTheme.themeId"
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.name = "researchProgress"
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.full_name = ".TowerComposeTheme.researchProgress"
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.name = "unlockModIds"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.full_name = ".TowerComposeTheme.unlockModIds"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.name = "boss"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.full_name = ".TowerComposeTheme.boss"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.number = 4
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.index = 3
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.name = "passMaxLayerId"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.full_name = ".TowerComposeTheme.passMaxLayerId"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.number = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.index = 4
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.name = "params"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.full_name = ".TowerComposeTheme.params"
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.number = 6
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.index = 5
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.default_value = ""
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.type = 9
+TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD.cpp_type = 9
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.name = "TowerComposeTheme"
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.full_name = ".TowerComposeTheme"
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSETHEMETHEMEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETHEMERESEARCHPROGRESSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETHEMEUNLOCKMODIDSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETHEMEBOSSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETHEMEPASSMAXLAYERIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETHEMEPARAMSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.name = "themeId"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.full_name = ".TowerComposeSetModsRequest.themeId"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.name = "planeMods"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.full_name = ".TowerComposeSetModsRequest.planeMods"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.name = "TowerComposeSetModsRequest"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.full_name = ".TowerComposeSetModsRequest"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTTHEMEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUESTPLANEMODSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.name = "theme"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.full_name = ".TowerComposeFightSettlePush.theme"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.name = "bossSettle"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.full_name = ".TowerComposeFightSettlePush.bossSettle"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.name = "result"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.full_name = ".TowerComposeFightSettlePush.result"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.name = "params"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.full_name = ".TowerComposeFightSettlePush.params"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.number = 4
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.index = 3
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.default_value = ""
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.type = 9
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD.cpp_type = 9
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.name = "TowerComposeFightSettlePush"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.full_name = ".TowerComposeFightSettlePush"
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHTHEMEFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHBOSSSETTLEFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHRESULTFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSHPARAMSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.name = "slot"
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.full_name = ".TowerComposeMod.slot"
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.name = "modId"
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.full_name = ".TowerComposeMod.modId"
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.name = "TowerComposeMod"
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.full_name = ".TowerComposeMod"
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEMODSLOTFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEMODMODIDFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.name = "planes"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.full_name = ".TowerComposeBossSettle.planes"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.name = "currScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.full_name = ".TowerComposeBossSettle.currScore"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.name = "newFlag"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.full_name = ".TowerComposeBossSettle.newFlag"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.type = 8
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD.cpp_type = 7
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.name = "TowerComposeBossSettle"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.full_name = ".TowerComposeBossSettle"
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLECURRSCOREFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.name = "themes"
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.full_name = ".TowerComposeInfo.themes"
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.name = "TowerComposeInfo"
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.full_name = ".TowerComposeInfo"
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEINFOTHEMESFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.name = "planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.full_name = ".TowerComposePlaneMods.planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.name = "mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.full_name = ".TowerComposePlaneMods.mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.name = "TowerComposePlaneMods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.full_name = ".TowerComposePlaneMods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSPLANEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANEMODSMODSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.name = "themeId"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.full_name = ".TowerComposeUnlockModsPush.themeId"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.name = "unlockModIds"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.full_name = ".TowerComposeUnlockModsPush.unlockModIds"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.name = "TowerComposeUnlockModsPush"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.full_name = ".TowerComposeUnlockModsPush"
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHTHEMEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSHUNLOCKMODIDSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.name = "themeId"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.full_name = ".TowerComposeSetModsReply.themeId"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.name = "planes"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.full_name = ".TowerComposeSetModsReply.planes"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.name = "TowerComposeSetModsReply"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.full_name = ".TowerComposeSetModsReply"
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYTHEMEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLYPLANESFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.name = "type"
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.full_name = ".TowerComposeMods.type"
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.name = "mods"
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.full_name = ".TowerComposeMods.mods"
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.name = "TowerComposeMods"
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.full_name = ".TowerComposeMods"
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEMODSTYPEFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEMODSMODSFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.name = "planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.full_name = ".TowerComposePlaneSettle.planeId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.name = "attackStatistics"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.full_name = ".TowerComposePlaneSettle.attackStatistics"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.message_type = TowerComposeModule_pb.FIGHTDEF_PB.FIGHTSTATISTICS_MSG
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.name = "fightGroupA"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.full_name = ".TowerComposePlaneSettle.fightGroupA"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.message_type = TowerComposeModule_pb.FIGHTDEF_PB.FIGHTGROUP_MSG
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.name = "mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.full_name = ".TowerComposePlaneSettle.mods"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.number = 4
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.index = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.label = 3
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.default_value = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.name = "supportId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.full_name = ".TowerComposePlaneSettle.supportId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.number = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.index = 4
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.name = "researchId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.full_name = ".TowerComposePlaneSettle.researchId"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.number = 6
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.index = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.name = "TowerComposePlaneSettle"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.full_name = ".TowerComposePlaneSettle"
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEPLANEIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEATTACKSTATISTICSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEFIGHTGROUPAFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLEMODSFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLESUPPORTIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLERESEARCHIDFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.name = "info"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.full_name = ".TowerComposeGetInfoReply.info"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD.cpp_type = 10
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.name = "TowerComposeGetInfoReply"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.full_name = ".TowerComposeGetInfoReply"
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLYINFOFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG.extensions = {}
+TowerComposeModule_pb.TowerComposeBoss = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG)
+TowerComposeModule_pb.TowerComposeBossSettle = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG)
+TowerComposeModule_pb.TowerComposeFightSettlePush = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEFIGHTSETTLEPUSH_MSG)
+TowerComposeModule_pb.TowerComposeGetInfoReply = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEGETINFOREPLY_MSG)
+TowerComposeModule_pb.TowerComposeGetInfoRequest = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEGETINFOREQUEST_MSG)
+TowerComposeModule_pb.TowerComposeInfo = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEINFO_MSG)
+TowerComposeModule_pb.TowerComposeMod = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEMOD_MSG)
+TowerComposeModule_pb.TowerComposeMods = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG)
+TowerComposeModule_pb.TowerComposePlane = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEPLANE_MSG)
+TowerComposeModule_pb.TowerComposePlaneMods = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEPLANEMODS_MSG)
+TowerComposeModule_pb.TowerComposePlaneSettle = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEPLANESETTLE_MSG)
+TowerComposeModule_pb.TowerComposeResearchProgressUpdatePush = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSERESEARCHPROGRESSUPDATEPUSH_MSG)
+TowerComposeModule_pb.TowerComposeSetModsReply = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSESETMODSREPLY_MSG)
+TowerComposeModule_pb.TowerComposeSetModsRequest = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSESETMODSREQUEST_MSG)
+TowerComposeModule_pb.TowerComposeTheme = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSETHEME_MSG)
+TowerComposeModule_pb.TowerComposeUnlockModsPush = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEUNLOCKMODSPUSH_MSG)
+
+return TowerComposeModule_pb

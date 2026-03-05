@@ -73,7 +73,7 @@ function FightRoundPreloadMonsterWork:_createSpineGO()
 
 	gohelper.setActive(spineGO, false)
 
-	local container = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+	local container = FightGameMgr.entityMgr:getEntityContainer()
 
 	gohelper.addChild(container, spineGO)
 	table.insert(self._hasCreateList, {

@@ -827,6 +827,12 @@ function DungeonController:showDungeonView()
 		return viewName
 	end
 
+	viewName = self:enterTowerComposeView(curSendEpisodeId)
+
+	if viewName then
+		return viewName
+	end
+
 	local elementEpisodeId = curSendEpisodeId and DungeonConfig.instance:getElementEpisode(curSendEpisodeId)
 	local isElementEpisode = false
 
@@ -1047,6 +1053,39 @@ function DungeonController:enterTowerView(episodeId)
 		TowerController.instance:openMainView(viewParam)
 
 		return ViewName.TowerMainView
+	end
+end
+
+function DungeonController:enterTowerComposeView(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if not episodeConfig then
+		return nil
+	end
+
+	local viewParam
+
+	if episodeConfig.type == DungeonEnum.EpisodeType.TowerCompose then
+		viewParam = {}
+
+		local fightParam = TowerComposeModel.instance:getRecordFightParam()
+		local fightFinishParam = TowerComposeModel.instance:getFightFinishParam()
+		local isWin = fightFinishParam and fightFinishParam.result == 1
+
+		viewParam.themeId = fightParam.themeId
+		viewParam.layerId = fightParam.layerId
+
+		local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(fightParam.themeId, fightParam.layerId)
+
+		viewParam.jumpId = towerEpisodeConfig.plane > 0 and not isWin and TowerComposeEnum.JumpId.TowerComposeModEquip or TowerComposeEnum.JumpId.TowerComposeTheme
+	end
+
+	if viewParam then
+		DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
+		self:enterDungeonView()
+		TowerComposeController.instance:openTowerComposeMainView(viewParam)
+
+		return ViewName.TowerComposeMainView
 	end
 end
 

@@ -28,10 +28,6 @@ function FightEntityAssembledMonsterSub:setAlpha(alpha, duration)
 	self.mainEntity:setAlphaData(self.id, alpha, duration)
 end
 
-function FightEntityAssembledMonsterSub:loadSpine()
-	return
-end
-
 function FightEntityAssembledMonsterSub:getMainEntityId()
 	if self.mainEntityId then
 		return self.mainEntityId
@@ -73,29 +69,19 @@ function FightEntityAssembledMonsterSub:initComponents()
 	end
 
 	self:getMainEntity()
-
-	self.filterComp = {
-		moveHandler = true,
-		curveMover = true,
-		spineRenderer = true,
-		spine = true,
-		parabolaMover = true,
-		mover = true,
-		bezierMover = true
-	}
+	FightEntityAssembledMonsterSub.super.initComponents(self)
 
 	local mainEntity = FightHelper.getEntity(self.mainEntityId)
 
 	self.mainSpine = mainEntity.spine
-	self.spine = FightAssembledMonsterSpineSub.New(self)
-	self.spineRenderer = mainEntity.spineRenderer
-	self.mover = mainEntity.mover
-	self.parabolaMover = mainEntity.parabolaMover
-	self.bezierMover = mainEntity.bezierMover
-	self.curveMover = mainEntity.curveMover
-	self.moveHandler = mainEntity.moveHandler
 
-	FightEntityAssembledMonsterSub.super.initComponents(self)
+	self.spine:disposeSelf()
+
+	self.spine = FightAssembledMonsterSpineSub.New(self)
+
+	self.spineRenderer:disposeSelf()
+
+	self.spineRenderer = mainEntity.spineRenderer
 end
 
 function FightEntityAssembledMonsterSub:getPartIndex()

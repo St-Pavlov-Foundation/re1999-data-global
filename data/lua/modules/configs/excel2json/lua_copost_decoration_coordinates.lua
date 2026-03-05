@@ -4,9 +4,11 @@ module("modules.configs.excel2json.lua_copost_decoration_coordinates", package.s
 
 local lua_copost_decoration_coordinates = {}
 local fields = {
+	rotate = 4,
+	coordinates = 2,
 	id = 1,
-	decorationId = 3,
-	coordinates = 2
+	scale = 3,
+	decorationId = 5
 }
 local primaryKey = {
 	"id"

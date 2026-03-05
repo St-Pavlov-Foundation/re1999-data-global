@@ -222,5 +222,26 @@
     "icon": "1035",
     "desc": "language_10098191",
     "rules": "1#106320134"
+  },
+  {
+    "id": 2035,
+    "name": "language_10108550",
+    "icon": "1036",
+    "desc": "language_10105273",
+    "rules": "1#117333511"
+  },
+  {
+    "id": 2036,
+    "name": "language_10108551",
+    "icon": "1037",
+    "desc": "language_10105274",
+    "rules": "1#117333512"
+  },
+  {
+    "id": 2037,
+    "name": "language_10108552",
+    "icon": "1038",
+    "desc": "language_10105275",
+    "rules": "1#117333513"
   }
 ]

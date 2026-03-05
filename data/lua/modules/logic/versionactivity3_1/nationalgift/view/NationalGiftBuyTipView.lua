@@ -130,7 +130,7 @@ function NationalGiftBuyTipView:_checkAutoGetReward()
 		return
 	end
 
-	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(VersionActivity3_1Enum.ActivityId.NationalGift, 1)
+	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(NationalGiftModel.instance:getCurVersionActId(), 1)
 end
 
 function NationalGiftBuyTipView:_refreshUI()

@@ -83,8 +83,8 @@ function V3a2_BossRush_ResultAssess:playAnim(fightScore)
 
 	local score = V3a2_BossRushModel.instance:getScore()
 
-	self._txtScore1.text = BossRushConfig.instance:getScoreStr(score.baseScore)
-	self._txtScore2.text = BossRushConfig.instance:getScoreStr(score.ruleScore)
+	self._txtScore1.text = BossRushConfig.instance:getScoreStr(score.baseScore or 0)
+	self._txtScore2.text = BossRushConfig.instance:getScoreStr(score.ruleScore or 0)
 
 	self:destroyFlow()
 

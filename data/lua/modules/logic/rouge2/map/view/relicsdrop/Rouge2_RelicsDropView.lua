@@ -8,6 +8,7 @@ function Rouge2_RelicsDropView:onInitView()
 	self._goSelectBg = gohelper.findChild(self.viewGO, "#go_SelectBG")
 	self._goDropBG = gohelper.findChild(self.viewGO, "#go_DropBG")
 	self._goLossBG = gohelper.findChild(self.viewGO, "#go_LossBG")
+	self._goTipsBG = gohelper.findChild(self.viewGO, "#go_TipsBG")
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
 	self._goSelect = gohelper.findChild(self.viewGO, "Title/#go_Select")
 	self._goDrop = gohelper.findChild(self.viewGO, "Title/#go_Drop")
@@ -42,7 +43,7 @@ end
 function Rouge2_RelicsDropView:_editableInitView()
 	self._goScroll = self._scrollView.gameObject
 
-	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Default)
+	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Attr_Detail)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goTopRight, Rouge2_Enum.ItemDescModeDataKey.RelicsDrop)
 end
 
@@ -100,8 +101,9 @@ function Rouge2_RelicsDropView:refreshTitle()
 	local showSelectBg = self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select or self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.LevelUp
 
 	gohelper.setActive(self._goSelectBg, showSelectBg)
-	gohelper.setActive(self._goDropBG, not showSelectBg and self._viewEnum ~= Rouge2_MapEnum.ItemDropViewEnum.Loss)
+	gohelper.setActive(self._goDropBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Drop)
 	gohelper.setActive(self._goLossBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Loss)
+	gohelper.setActive(self._goTipsBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Tips)
 end
 
 function Rouge2_RelicsDropView:refreshButton()

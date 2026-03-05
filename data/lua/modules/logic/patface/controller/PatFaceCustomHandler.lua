@@ -178,4 +178,22 @@ function PatFaceCustomHandler.PowerMakerPatFaceViewPat()
 	ViewMgr.instance:openView(ViewName.PowerMakerPatFaceView)
 end
 
+function PatFaceCustomHandler.V3a3TowerGiftPanelViewPatFaceViewCanPat()
+	local taskId = 530010
+	local taskMo = TaskModel.instance:getTaskById(taskId)
+
+	if not taskMo then
+		return false
+	end
+
+	local isActOpen = ActivityHelper.isOpen(ActivityEnum.Activity.V3a3_TowerDeep)
+	local hadRecieve = taskMo.finishCount > 0 and taskMo.progress >= taskMo.config.maxProgress
+
+	return isActOpen and not hadRecieve
+end
+
+function PatFaceCustomHandler.V3a3TowerGiftPanelViewPatFaceViewPat()
+	ViewMgr.instance:openView(ViewName.V3a3TowerGiftPanelView)
+end
+
 return PatFaceCustomHandler

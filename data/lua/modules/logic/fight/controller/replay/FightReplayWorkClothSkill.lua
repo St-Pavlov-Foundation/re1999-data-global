@@ -52,6 +52,12 @@ function FightReplayWorkClothSkill:onStart()
 		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.SelectCrystal)
 
 		return
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.BattleSelection then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, "0", "0", FightEnum.ClothSkillType.BattleSelection)
+
+		return
 	end
 
 	local skillCO = lua_skill.configDict[self.clothSkillOp.skillId]

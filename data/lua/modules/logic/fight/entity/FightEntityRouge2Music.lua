@@ -2,21 +2,20 @@
 
 module("modules.logic.fight.entity.FightEntityRouge2Music", package.seeall)
 
-local FightEntityRouge2Music = class("FightEntityRouge2Music", BaseFightEntity)
+local FightEntityRouge2Music = class("FightEntityRouge2Music", FightEntityObject)
 
 function FightEntityRouge2Music:getTag()
 	return SceneTag.UnitNpc
 end
 
-function FightEntityRouge2Music:init(go)
-	FightEntityRouge2Music.super.init(self, go)
+function FightEntityRouge2Music:onConstructor()
 	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
 function FightEntityRouge2Music:initComponents()
-	self:addComp("skill", FightSkillComp)
-	self:addComp("effect", FightEffectComp)
-	self:addComp("buff", FightBuffComp)
+	self.skill = self:addEntityComponent(FightSkillComp)
+	self.effect = self:addEntityComponent(FightEffectComp)
+	self.buff = self:addEntityComponent(FightBuffComp)
 end
 
 return FightEntityRouge2Music

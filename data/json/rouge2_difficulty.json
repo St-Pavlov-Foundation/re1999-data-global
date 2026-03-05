@@ -48,7 +48,7 @@
     "scoreReward": 160,
     "startView": "",
     "initCollections": "100022#100023#100024",
-    "desc": "language_10100863",
+    "desc": "language_10107641",
     "balanceLevel": "121#10#60"
   },
   {
@@ -60,8 +60,8 @@
     "monsterDesc": "language_10027330",
     "scoreReward": 180,
     "startView": "",
-    "initCollections": "",
-    "desc": "",
+    "initCollections": "100022#100023#100024#151001",
+    "desc": "language_10107642",
     "balanceLevel": "121#10#60"
   },
   {
@@ -73,8 +73,8 @@
     "monsterDesc": "language_10027330",
     "scoreReward": 200,
     "startView": "",
-    "initCollections": "",
-    "desc": "",
+    "initCollections": "100022#100023#100024#151001",
+    "desc": "language_10107643",
     "balanceLevel": "121#10#60"
   }
 ]

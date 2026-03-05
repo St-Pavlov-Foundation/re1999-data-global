@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.controller.FightASFDMgr", package.seeall)
 
-local FightASFDMgr = class("FightASFDMgr", FightUserDataBaseClass)
+local FightASFDMgr = class("FightASFDMgr", FightBaseClass)
 
 FightASFDMgr.LoadingStatus = {
 	NotLoad = 1,
@@ -10,9 +10,7 @@ FightASFDMgr.LoadingStatus = {
 	Loading = 2
 }
 
-function FightASFDMgr:init()
-	FightASFDMgr.super.init(self)
-
+function FightASFDMgr:onConstructor()
 	self.fightStepDataArrivedCount = {}
 	self.effectWrap2EntityIdDict = {}
 	self.sideEmitterWrap = nil
@@ -23,10 +21,10 @@ function FightASFDMgr:init()
 	self.startAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
 	self.endAnimLoadingStatus = FightASFDMgr.LoadingStatus.NotLoad
 
-	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self.onAddUseCard, self)
-	self:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self.onMySideRoundEnd, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforePlayUniqueSkill, self.onBeforePlayUniqueSkill, self)
-	self:addEventCb(FightController.instance, FightEvent.AfterPlayUniqueSkill, self.onAfterPlayUniqueSkill, self)
+	self:com_registFightEvent(FightEvent.AddUseCard, self.onAddUseCard)
+	self:com_registFightEvent(FightEvent.OnMySideRoundEnd, self.onMySideRoundEnd)
+	self:com_registFightEvent(FightEvent.BeforePlayUniqueSkill, self.onBeforePlayUniqueSkill)
+	self:com_registFightEvent(FightEvent.AfterPlayUniqueSkill, self.onAfterPlayUniqueSkill)
 end
 
 function FightASFDMgr:playAudio(audioId)
@@ -761,10 +759,9 @@ function FightASFDMgr:removeLoader()
 	end
 end
 
-function FightASFDMgr:dispose()
+function FightASFDMgr:onDestructor()
 	self:onASFDFlowDone()
 	self:removeLoader()
-	FightASFDMgr.super.dispose(self)
 end
 
 return FightASFDMgr

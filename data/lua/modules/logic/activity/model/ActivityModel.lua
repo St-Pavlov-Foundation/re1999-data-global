@@ -247,7 +247,13 @@ function ActivityModel:removeFinishedCategory(actCo)
 					self:addFinishActivity(id)
 				end
 			end
-		elseif id == ActivityEnum.Activity.V2a7_SelfSelectSix1 and ActivityType101Model.instance:isType101RewardGet(id, 1) then
+		elseif id == ActivityEnum.Activity.V2a7_SelfSelectSix1 then
+			if ActivityType101Model.instance:isType101RewardGet(id, 1) then
+				actCo[index] = nil
+
+				self:addFinishActivity(id)
+			end
+		elseif id == ActivityEnum.Activity.V3a3_SkinDiscount and not StoreModel.instance:isSkinDiscountNotSoldOut() then
 			actCo[index] = nil
 
 			self:addFinishActivity(id)

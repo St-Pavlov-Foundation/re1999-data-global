@@ -18,10 +18,14 @@ function StoreMO:_initstoreGoodsMOList()
 
 	if self.goodsInfos and #self.goodsInfos > 0 then
 		for i, goodInfo in ipairs(self.goodsInfos) do
-			local storeGoodsMO = StoreGoodsMO.New()
+			local goodCo = StoreConfig.instance:getGoodsConfig(goodInfo.goodsId)
 
-			storeGoodsMO:init(self.id, goodInfo)
-			table.insert(self._storeGoodsMOList, storeGoodsMO)
+			if goodCo then
+				local storeGoodsMO = StoreGoodsMO.New()
+
+				storeGoodsMO:init(self.id, goodInfo)
+				table.insert(self._storeGoodsMOList, storeGoodsMO)
+			end
 		end
 	end
 end

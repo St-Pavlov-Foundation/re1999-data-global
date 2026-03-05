@@ -85,6 +85,16 @@ function EnemyInfoController:openTowerDeepEnemyInfoView(battleId)
 	})
 end
 
+function EnemyInfoController:openTowerComposeEnemyInfoView(battleId, themeId, planeId, episodeId)
+	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
+		battleId = battleId,
+		themeId = themeId,
+		planeId = planeId,
+		episodeId = episodeId,
+		tabEnum = EnemyInfoEnum.TabEnum.TowerCompose
+	})
+end
+
 EnemyInfoController.instance = EnemyInfoController.New()
 
 LuaEventSystem.addEventMechanism(EnemyInfoController.instance)

@@ -45,7 +45,7 @@ function NationalGiftFullBonusItem:_btnClickOnClick()
 		return
 	end
 
-	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(VersionActivity3_1Enum.ActivityId.NationalGift, self._config.id)
+	Activity212Rpc.instance:sendAct212ReceiveBonusRequest(NationalGiftModel.instance:getCurVersionActId(), self._config.id)
 end
 
 function NationalGiftFullBonusItem:refresh()

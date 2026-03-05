@@ -30,7 +30,8 @@ function FightHeroSpEffectConfig:reqConfigNames()
 		"hero3124_buff_talent",
 		"fight_ble_crystal",
 		"fight_ble_crystal_desc",
-		"fight_ble_skill_2_crystal"
+		"fight_ble_skill_2_crystal",
+		"fight_anan_focus_timeline"
 	}
 end
 

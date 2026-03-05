@@ -9,6 +9,15 @@ function Rouge2_HeroGroupFightView:onInitView()
 	Rouge2_MapModel.instance:setManualCloseHeroGroupView(false)
 end
 
+function Rouge2_HeroGroupFightView:addEvents()
+	Rouge2_HeroGroupFightView.super.addEvents(self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.OnPopGuideView, self._onPopGuideView, self)
+end
+
+function Rouge2_HeroGroupFightView:_onPopGuideView(techniqueId)
+	Rouge2_Controller.instance:openTechniqueView(tonumber(techniqueId))
+end
+
 function Rouge2_HeroGroupFightView:_refreshCloth()
 	gohelper.setActive(self._btncloth.gameObject, false)
 end
@@ -20,6 +29,10 @@ end
 function Rouge2_HeroGroupFightView:_refreshPowerShow()
 	Rouge2_HeroGroupFightView.super._refreshPowerShow(self)
 	gohelper.setActive(self._gopowercontent, false)
+end
+
+function Rouge2_HeroGroupFightView:_setTrialNumTips()
+	gohelper.setActive(self._goTrialTips, false)
 end
 
 return Rouge2_HeroGroupFightView

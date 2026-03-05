@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1301,
+    "themeId": 1,
+    "name": "八灵震爆1兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条1效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1302,
+    "themeId": 1,
+    "name": "八灵震爆2兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条2效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1303,
+    "themeId": 1,
+    "name": "八灵震爆3兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条2效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1304,
+    "themeId": 1,
+    "name": "八灵震爆4兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条3效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1305,
+    "themeId": 1,
+    "name": "八灵震爆5兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条3效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1306,
+    "themeId": 1,
+    "name": "八灵震爆6兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条4效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1307,
+    "themeId": 1,
+    "name": "八灵震爆7兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条4效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1308,
+    "themeId": 1,
+    "name": "八灵震爆8兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条5效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 1309,
+    "themeId": 1,
+    "name": "八灵震爆9兽",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条5效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2301,
+    "themeId": 2,
+    "name": "七灵震爆1木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条6效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2302,
+    "themeId": 2,
+    "name": "七灵震爆2木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条6效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2303,
+    "themeId": 2,
+    "name": "七灵震爆3木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条7效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2304,
+    "themeId": 2,
+    "name": "七灵震爆4木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条7效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2305,
+    "themeId": 2,
+    "name": "七灵震爆5木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条8效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2306,
+    "themeId": 2,
+    "name": "七灵震爆6木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条8效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2307,
+    "themeId": 2,
+    "name": "七灵震爆7木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条9效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2308,
+    "themeId": 2,
+    "name": "七灵震爆8木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "词条1效果描述词条1效果描述词条1效果描述词条9效果描述",
+    "effects": "12001|12002|12003"
+  },
+  {
+    "id": 2309,
+    "themeId": 2,
+    "name": "七灵震爆9木",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "词条2效果描述词条2效果描述词条2效果描述词条10效果描述",
+    "effects": "12001|12002|12003"
+  }
+]

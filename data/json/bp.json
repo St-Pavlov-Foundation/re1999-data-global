@@ -526,5 +526,29 @@
     "promptDays": 7,
     "activityId": 13225,
     "specialBonus": "1#140109#1"
+  },
+  {
+    "bpId": 22,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#173401#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10107599",
+    "bpSkinNametxt": "language_10108709",
+    "bpSkinEnNametxt": "Forever<br>Is Too Short",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2026-03-26 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "promptDays": 7,
+    "activityId": 13312,
+    "specialBonus": ""
   }
 ]

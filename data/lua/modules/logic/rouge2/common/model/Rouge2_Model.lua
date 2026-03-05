@@ -31,6 +31,7 @@ function Rouge2_Model:updateRougeInfo(info)
 		self._mapModel:updateMapInfo(info.mapInfo)
 	end
 
+	Rouge2_BackpackController.instance:buildItemReddot()
 	Rouge2_BackpackController.instance:buildBXSBoxReddot()
 	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnUpdateRougeInfo)
 end
@@ -153,10 +154,6 @@ function Rouge2_Model:getFightResultInfo()
 	return self.fightResultMo
 end
 
-function Rouge2_Model:getEffectDict()
-	return {}
-end
-
 function Rouge2_Model:isAbortRouge()
 	return self._isAbort
 end
@@ -248,41 +245,62 @@ function Rouge2_Model:updateAttrInfoList(updates)
 	end
 end
 
-function Rouge2_Model:getUpdateAttrMap()
-	local rougeInfo = self:getRougeInfo()
-
-	return rougeInfo and rougeInfo:getUpdateAttrMap()
-end
-
-function Rouge2_Model:hasAnyCareerAttrUpdate()
-	local updateAttrMap = self:getUpdateAttrMap()
-	local curAttrList = self:getHeroAttrInfoList()
-
-	if not curAttrList then
-		return
-	end
-
-	for _, attrMo in ipairs(curAttrList) do
-		local updateValue = updateAttrMap and updateAttrMap[attrMo.attrId]
-
-		if updateValue and updateValue > 0 then
-			return true
-		end
-	end
-end
-
-function Rouge2_Model:clearUpdateAttrMap()
-	local rougeInfo = self:getRougeInfo()
-
-	if rougeInfo then
-		rougeInfo:clearUpdateAttrMap()
-	end
-end
-
 function Rouge2_Model:isUseBXSCareer()
 	local careerId = self:getCareerId()
 
 	return careerId == Rouge2_Enum.BXSCareerId
+end
+
+function Rouge2_Model:isUseYBXCareer()
+	local careerId = self:getCareerId()
+	local ybxCareerId = tonumber(lua_rouge2_const.configDict[Rouge2_MapEnum.ConstKey.YBXCareerId].value)
+
+	return careerId == ybxCareerId
+end
+
+function Rouge2_Model:getCurTeamSystemId()
+	local leaderInfo = self:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getSystemTeamId()
+end
+
+function Rouge2_Model:getCurBattleConfig()
+	local systemId = self:getCurTeamSystemId()
+
+	if systemId and systemId ~= 0 then
+		return Rouge2_CareerConfig.instance:getBattleTagConfigBySystemId(systemId)
+	end
+end
+
+function Rouge2_Model:updateCurTeamSystemId(systemId)
+	local leaderInfo = self:getLeaderInfo()
+
+	leaderInfo:updateSystemTeamId(systemId)
+	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnUpdateTeamSystem)
+end
+
+function Rouge2_Model:isGetAttrDrop(dropId)
+	local leaderInfo = self:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:isGetAttrDrop(dropId)
+end
+
+function Rouge2_Model:getAttrDropIdList(attrId)
+	local leaderInfo = self:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getAttrDropIdList(attrId)
+end
+
+function Rouge2_Model:getAttrDropItemList(dropId)
+	local leaderInfo = self:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getAttrDropItemList(dropId)
+end
+
+function Rouge2_Model:getItemDropIdMap(itemId)
+	local leaderInfo = self:getLeaderInfo()
+
+	return leaderInfo and leaderInfo:getItemDropIdMap(itemId)
 end
 
 Rouge2_Model.instance = Rouge2_Model.New()

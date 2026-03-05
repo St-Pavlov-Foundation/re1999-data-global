@@ -1,265 +1,265 @@
 [
   {
     "id": 50,
-    "tips": "language_10101664",
+    "tips": "+50金雀子儿",
     "type": 1,
     "typeParam": "50"
   },
   {
     "id": 101,
-    "tips": "language_10101665",
+    "tips": "通用谐波奖励",
     "type": 1,
     "typeParam": "101"
   },
   {
     "id": 102,
-    "tips": "language_10101666",
+    "tips": "通用造物奖励",
     "type": 1,
     "typeParam": "102"
   },
   {
     "id": 103,
-    "tips": "language_10101667",
+    "tips": "1稀有度谐波",
     "type": 1,
     "typeParam": "103"
   },
   {
     "id": 104,
-    "tips": "language_10101668",
+    "tips": "2稀有度谐波",
     "type": 1,
     "typeParam": "104"
   },
   {
     "id": 105,
-    "tips": "language_10101669",
+    "tips": "3稀有度谐波",
     "type": 1,
     "typeParam": "105"
   },
   {
     "id": 106,
-    "tips": "language_10101670",
+    "tips": "1稀有度造物",
     "type": 1,
     "typeParam": "106"
   },
   {
     "id": 107,
-    "tips": "language_10101671",
+    "tips": "2稀有度造物",
     "type": 1,
     "typeParam": "107"
   },
   {
     "id": 108,
-    "tips": "language_10101672",
+    "tips": "3稀有度造物",
     "type": 1,
     "typeParam": "108"
   },
   {
     "id": 109,
-    "tips": "language_10101673",
+    "tips": "4稀有度造物",
     "type": 1,
     "typeParam": "109"
   },
   {
     "id": 201,
-    "tips": "language_10101674",
+    "tips": "+1复活币",
     "type": 1,
     "typeParam": "201"
   },
   {
     "id": 202,
-    "tips": "language_10101675",
+    "tips": "+2复活币",
     "type": 1,
     "typeParam": "202"
   },
   {
     "id": 203,
-    "tips": "language_10101676",
+    "tips": "+3复活币",
     "type": 1,
     "typeParam": "203"
   },
   {
     "id": 10101,
-    "tips": "language_10101677",
+    "tips": "-50金雀子儿",
     "type": 5,
     "typeParam": "1#50"
   },
   {
     "id": 10102,
-    "tips": "language_10101678",
+    "tips": "-1力量",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 10103,
-    "tips": "language_10101679",
+    "tips": "-1重振",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 10104,
-    "tips": "language_10101680",
+    "tips": "-100金雀子儿",
     "type": 5,
     "typeParam": "1#100"
   },
   {
     "id": 10105,
-    "tips": "language_10101681",
+    "tips": "-2力量",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 10106,
-    "tips": "language_10101682",
+    "tips": "-2重振",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 101020203,
-    "tips": "language_10101683",
+    "tips": "获得3稀有度谐波",
     "type": 1,
     "typeParam": "105"
   },
   {
     "id": 101020208,
-    "tips": "language_10101684",
+    "tips": "+3力量",
     "type": 2,
     "typeParam": "101#3"
   },
   {
     "id": 101020213,
-    "tips": "language_10101685",
+    "tips": "+100金雀子儿",
     "type": 1,
     "typeParam": "100"
   },
   {
     "id": 101020204,
-    "tips": "language_10101686",
+    "tips": "获得2稀有度谐波",
     "type": 1,
     "typeParam": "104"
   },
   {
     "id": 101020209,
-    "tips": "language_10101687",
+    "tips": "+2力量",
     "type": 2,
     "typeParam": "101#2"
   },
   {
     "id": 101020214,
-    "tips": "language_10101664",
+    "tips": "+50金雀子儿",
     "type": 1,
     "typeParam": "50"
   },
   {
     "id": 101020205,
-    "tips": "language_10101688",
+    "tips": "获得1稀有度谐波",
     "type": 1,
     "typeParam": "103"
   },
   {
     "id": 101020210,
-    "tips": "language_10101689",
+    "tips": "+1力量",
     "type": 2,
     "typeParam": "101#1"
   },
   {
     "id": 101020215,
-    "tips": "language_10101690",
+    "tips": "+25金雀子儿",
     "type": 1,
     "typeParam": "25"
   },
   {
     "id": 201010221,
-    "tips": "language_10101691",
+    "tips": "获得下水道特殊造物",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 101020307,
-    "tips": "language_10101692",
+    "tips": "-10谐波",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 101020308,
-    "tips": "language_10101693",
+    "tips": "获得超强献祭造物",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 201010314,
-    "tips": "language_10101694",
+    "tips": "小巷造物X",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 401010102,
-    "tips": "language_10101695",
+    "tips": "获得进攻造物A，",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 401010104,
-    "tips": "language_10101696",
+    "tips": "获得发育造物B，",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 401010106,
-    "tips": "language_10101697",
+    "tips": "获得5枚重振，",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 4010101,
-    "tips": "language_10101698",
+    "tips": "获得诅咒造物：星云低语",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 401010201,
-    "tips": "language_10101699",
+    "tips": "清除所有诅咒造物",
     "type": 3,
     "typeParam": "-1#5"
   },
   {
     "id": 401010203,
-    "tips": "language_10101700",
+    "tips": "获得诅咒造物：拔苗助长",
     "type": 1,
     "typeParam": ""
   },
   {
     "id": 401010301,
-    "tips": "language_10101701",
+    "tips": "失去所有造物",
     "type": 3,
     "typeParam": "-1#0"
   },
   {
     "id": 2147483647,
-    "tips": "language_10101702",
+    "tips": "将其变更为稀有度相同的其他造物",
     "type": 0,
     "typeParam": ""
   },
   {
     "id": 401010303,
-    "tips": "language_10101703",
+    "tips": "获得8个谐波",
     "type": 1,
     "typeParam": "401010303"
   },
   {
     "id": 2147483647,
-    "tips": "language_10101704",
+    "tips": "获得诅咒造物：悬浮",
     "type": 1,
     "typeParam": "4010103031"
   },
   {
     "id": 401010305,
-    "tips": "language_10101705",
+    "tips": "获得诅咒造物：撕裂",
     "type": 1,
     "typeParam": "401010305"
   },
   {
     "id": 401010307,
-    "tips": "language_10101706",
+    "tips": "获得精巧谐波，结束事件",
     "type": 1,
     "typeParam": "104"
   }

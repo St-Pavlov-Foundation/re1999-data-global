@@ -68,6 +68,10 @@ function Rouge2_SceneMap:getMapSceneGo()
 	return self.mapGo
 end
 
+function Rouge2_SceneMap:getMapComp()
+	return self.mapComp
+end
+
 function Rouge2_SceneMap:switchMap()
 	self:loadMap()
 end

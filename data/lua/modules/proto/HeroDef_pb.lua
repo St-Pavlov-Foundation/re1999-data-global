@@ -151,6 +151,7 @@ HeroDef_pb.HEROGROUPINFOCLOTHIDFIELD = protobuf.FieldDescriptor()
 HeroDef_pb.HEROGROUPINFOEQUIPSFIELD = protobuf.FieldDescriptor()
 HeroDef_pb.HEROGROUPINFOACTIVITY104EQUIPSFIELD = protobuf.FieldDescriptor()
 HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD = protobuf.FieldDescriptor()
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD = protobuf.FieldDescriptor()
 HeroDef_pb.HEROEQUIPATTRIBUTE_MSG = protobuf.Descriptor()
 HeroDef_pb.HEROEQUIPATTRIBUTEIDFIELD = protobuf.FieldDescriptor()
 HeroDef_pb.HEROEQUIPATTRIBUTEEQUIPATTRFIELD = protobuf.FieldDescriptor()
@@ -1567,6 +1568,15 @@ HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD.has_default_value = false
 HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD.default_value = 0
 HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD.type = 5
 HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD.cpp_type = 1
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.name = "params"
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.full_name = ".HeroGroupInfo.params"
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.number = 8
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.index = 7
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.label = 1
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.has_default_value = false
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.default_value = ""
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.type = 9
+HeroDef_pb.HEROGROUPINFOPARAMSFIELD.cpp_type = 9
 HeroDef_pb.HEROGROUPINFO_MSG.name = "HeroGroupInfo"
 HeroDef_pb.HEROGROUPINFO_MSG.full_name = ".HeroGroupInfo"
 HeroDef_pb.HEROGROUPINFO_MSG.nested_types = {}
@@ -1578,7 +1588,8 @@ HeroDef_pb.HEROGROUPINFO_MSG.fields = {
 	HeroDef_pb.HEROGROUPINFOCLOTHIDFIELD,
 	HeroDef_pb.HEROGROUPINFOEQUIPSFIELD,
 	HeroDef_pb.HEROGROUPINFOACTIVITY104EQUIPSFIELD,
-	HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD
+	HeroDef_pb.HEROGROUPINFOASSISTBOSSIDFIELD,
+	HeroDef_pb.HEROGROUPINFOPARAMSFIELD
 }
 HeroDef_pb.HEROGROUPINFO_MSG.is_extendable = false
 HeroDef_pb.HEROGROUPINFO_MSG.extensions = {}

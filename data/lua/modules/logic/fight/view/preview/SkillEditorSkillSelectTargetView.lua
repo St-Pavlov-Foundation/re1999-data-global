@@ -255,7 +255,7 @@ function SkillEditorSkillSelectTargetView:_onClick(entityId)
 	SkillEditorView.setSelectPosId(self._side, entityMO.position)
 
 	SkillEditorMgr.instance.cur_select_entity_id = entityId
-	SkillEditorMgr.instance.cur_select_side = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id):getSide()
+	SkillEditorMgr.instance.cur_select_side = FightGameMgr.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id):getSide()
 
 	SkillEditorMgr.instance:dispatchEvent(SkillEditorMgr.OnSelectEntity, SkillEditorMgr.instance.cur_select_side, entityId)
 	self:_updateSelectUI()

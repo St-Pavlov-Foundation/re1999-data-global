@@ -117,7 +117,7 @@ function StoryBackgroundView:_loadRes()
 	self._handleBgEffsFuncDict = {
 		[StoryEnum.BgEffectType.BgBlur] = self._actBgEffBlur,
 		[StoryEnum.BgEffectType.FishEye] = self._actBgEffFishEye,
-		[StoryEnum.BgEffectType.Shake] = self._actBgEffShake,
+		[StoryEnum.BgEffectType.BgShake] = self._actBgEffBgShake,
 		[StoryEnum.BgEffectType.FullBlur] = self._actBgEffFullBlur,
 		[StoryEnum.BgEffectType.BgGray] = self._actBgEffGray,
 		[StoryEnum.BgEffectType.FullGray] = self._actBgEffFullGray,
@@ -132,12 +132,15 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.OutFocus] = self._actBgEffOutFocus,
 		[StoryEnum.BgEffectType.DiamondLight] = self._actBgEffDiamondLight,
 		[StoryEnum.BgEffectType.Starburst] = self._actBgEffStarburst,
-		[StoryEnum.BgEffectType.SetLayer] = self._actBgEffSetLayer
+		[StoryEnum.BgEffectType.SetLayer] = self._actBgEffSetLayer,
+		[StoryEnum.BgEffectType.BgDistress] = self._actBgEffBgDistress,
+		[StoryEnum.BgEffectType.HandCameraShake] = self._actBgEffHandCameraShake,
+		[StoryEnum.BgEffectType.Penetration] = self._actBgEffPenetration
 	}
 	self._handleResetBgEffs = {
 		[StoryEnum.BgEffectType.BgBlur] = self._resetBgEffBlur,
 		[StoryEnum.BgEffectType.FishEye] = self._resetBgEffFishEye,
-		[StoryEnum.BgEffectType.Shake] = self._resetBgEffShake,
+		[StoryEnum.BgEffectType.BgShake] = self._resetBgEffBgShake,
 		[StoryEnum.BgEffectType.FullBlur] = self._resetBgEffFullBlur,
 		[StoryEnum.BgEffectType.BgGray] = self._resetBgEffGray,
 		[StoryEnum.BgEffectType.FullGray] = self._resetBgEffFullGray,
@@ -152,7 +155,10 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.OutFocus] = self._resetBgEffOutFocus,
 		[StoryEnum.BgEffectType.DiamondLight] = self._resetBgEffDiamondLight,
 		[StoryEnum.BgEffectType.Starburst] = self._resetBgEffStarburst,
-		[StoryEnum.BgEffectType.SetLayer] = self._resetBgEffSetLayer
+		[StoryEnum.BgEffectType.SetLayer] = self._resetBgEffSetLayer,
+		[StoryEnum.BgEffectType.BgDistress] = self._resetBgEffBgDistress,
+		[StoryEnum.BgEffectType.HandCameraShake] = self._resetBgEffHandCameraShake,
+		[StoryEnum.BgEffectType.Penetration] = self._resetBgEffPenetration
 	}
 end
 
@@ -200,7 +206,6 @@ function StoryBackgroundView:_onUpdateUI(param)
 	self._bgParam = param
 
 	self:_checkPlayBgBlurFade()
-	TaskDispatcher.cancelTask(self._startShake, self)
 
 	local bgCo = StoryStepModel.instance:getStepListById(self._bgParam.stepId).bg
 
@@ -351,31 +356,6 @@ function StoryBackgroundView:_enterChange()
 		self._handleBgTransFuncDict[self._bgCo.transType](self)
 	else
 		self:_commonTrans(self._bgCo.transType)
-	end
-
-	self:_checkBgEffStack()
-end
-
-function StoryBackgroundView:_checkBgEffStack()
-	local stepId = StoryModel.instance:getCurStepId()
-	local preSteps = StoryModel.instance:getPreSteps(stepId)
-
-	if not preSteps or #preSteps < 1 then
-		return
-	end
-
-	local preStepCo = StoryStepModel.instance:getStepListById(preSteps[1])
-
-	if not preStepCo then
-		return
-	end
-
-	if preStepCo.conversation.type == StoryEnum.ConversationType.BgEffStack then
-		local effType = preStepCo.bg.effType
-
-		if self._handleBgEffsFuncDict[effType] then
-			self._handleBgEffsFuncDict[effType](self, preStepCo.bg)
-		end
 	end
 end
 
@@ -704,6 +684,31 @@ function StoryBackgroundView:_checkPlayEffect()
 	if self._handleBgEffsFuncDict[self._bgCo.effType] then
 		self._handleBgEffsFuncDict[self._bgCo.effType](self)
 	end
+
+	self:_checkBgEffStack()
+end
+
+function StoryBackgroundView:_checkBgEffStack()
+	local stepId = StoryModel.instance:getCurStepId()
+	local preSteps = StoryModel.instance:getPreSteps(stepId)
+
+	if not preSteps or #preSteps < 1 then
+		return
+	end
+
+	local preStepCo = StoryStepModel.instance:getStepListById(preSteps[1])
+
+	if not preStepCo then
+		return
+	end
+
+	if preStepCo.conversation.type == StoryEnum.ConversationType.BgEffStack then
+		local effType = preStepCo.bg.effType
+
+		if self._handleBgEffsFuncDict[effType] then
+			self._handleBgEffsFuncDict[effType](self, preStepCo.bg)
+		end
+	end
 end
 
 function StoryBackgroundView:_resetBgEffBlur()
@@ -723,33 +728,6 @@ end
 function StoryBackgroundView:_resetBgEffFishEye()
 	if self._bgCo.effType == StoryEnum.BgEffectType.FishEye then
 		return
-	end
-end
-
-function StoryBackgroundView:_resetBgEffShake()
-	if self._bgCo.effType == StoryEnum.BgEffectType.Shake then
-		return
-	end
-
-	local stepId = StoryModel.instance:getCurStepId()
-	local preSteps = StoryModel.instance:getPreSteps(stepId)
-
-	if not preSteps or #preSteps < 1 then
-		self:_shakeStop()
-
-		return
-	end
-
-	local preStepCo = StoryStepModel.instance:getStepListById(preSteps[1])
-
-	if not preStepCo then
-		self:_shakeStop()
-
-		return
-	end
-
-	if preStepCo.conversation.type ~= StoryEnum.ConversationType.BgEffStack then
-		self:_shakeStop()
 	end
 end
 
@@ -1306,51 +1284,32 @@ function StoryBackgroundView:_actBgEffFishEye()
 	self._imagebgtop.material = self._fisheyeMat
 end
 
-function StoryBackgroundView:_actBgEffShake(bgCo)
-	self._stackBgCo = bgCo
-	bgCo = bgCo or self._bgCo
+function StoryBackgroundView:_actBgEffBgShake(bgCo)
+	local targetBgCo = bgCo or self._bgCo
 
-	TaskDispatcher.cancelTask(self._startShake, self)
-	TaskDispatcher.cancelTask(self._shakeStop, self)
+	if not self._bgShakeCls then
+		if targetBgCo.effDegree == 0 then
+			return
+		end
 
-	if bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		return
-	end
+		if targetBgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+			return
+		end
 
-	if bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		self:_startShake()
+		self._bgShakeCls = StoryBgEffsBgShake.New()
+
+		self._bgShakeCls:init(targetBgCo)
+		self._bgShakeCls:start(self._resetBgEffBgShake, self)
 	else
-		TaskDispatcher.runDelay(self._startShake, self, bgCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+		self._bgShakeCls:reset(targetBgCo)
 	end
 end
 
-function StoryBackgroundView:_startShake()
-	local bgCo = self._stackBgCo or self._bgCo
+function StoryBackgroundView:_resetBgEffBgShake()
+	if self._bgShakeCls then
+		self._bgShakeCls:destroy()
 
-	self._bgAnimator.enabled = true
-
-	self._bgAnimator:SetBool("stoploop", false)
-
-	local aniName = {
-		"idle",
-		"low",
-		"middle",
-		"high"
-	}
-
-	self._bgAnimator:Play(aniName[bgCo.effDegree + 1])
-
-	self._bgAnimator.speed = bgCo.effRate
-
-	TaskDispatcher.runDelay(self._shakeStop, self, bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
-end
-
-function StoryBackgroundView:_shakeStop()
-	TaskDispatcher.cancelTask(self._startShake, self)
-	TaskDispatcher.cancelTask(self._shakeStop, self)
-
-	if self._bgAnimator then
-		self._bgAnimator:SetBool("stoploop", true)
+		self._bgShakeCls = nil
 	end
 end
 
@@ -1858,6 +1817,81 @@ function StoryBackgroundView:_resetBgEffSetLayer(force)
 	end
 end
 
+function StoryBackgroundView:_actBgEffBgDistress()
+	if not self._bgBgDistressCls then
+		self._bgBgDistressCls = StoryBgEffsBgDistress.New()
+
+		self._bgBgDistressCls:init(self._bgCo)
+		self._bgBgDistressCls:start()
+	else
+		self._bgBgDistressCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffBgDistress()
+	if self._bgCo.effType == StoryEnum.BgEffectType.BgDistress then
+		return
+	end
+
+	if self._bgBgDistressCls then
+		self._bgBgDistressCls:destroy()
+
+		self._bgBgDistressCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffHandCameraShake(bgCo)
+	local targetBgCo = bgCo or self._bgCo
+
+	if not self._bgHandCameraShakeCls then
+		if targetBgCo.effDegree == 0 then
+			return
+		end
+
+		if targetBgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+			return
+		end
+
+		self._bgHandCameraShakeCls = StoryBgEffsHandCameraShake.New()
+
+		self._bgHandCameraShakeCls:init(targetBgCo)
+		self._bgHandCameraShakeCls:start(self._resetBgEffHandCameraShake, self)
+	else
+		self._bgHandCameraShakeCls:reset(targetBgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffHandCameraShake()
+	if self._bgHandCameraShakeCls then
+		self._bgHandCameraShakeCls:destroy()
+
+		self._bgHandCameraShakeCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffPenetration()
+	if not self._bgPenetrationCls then
+		if self._bgCo.effDegree ~= 0 then
+			return
+		end
+
+		self._bgPenetrationCls = StoryBgEffsPenetration.New()
+
+		self._bgPenetrationCls:init(self._bgCo)
+		self._bgPenetrationCls:start(self._resetBgEffPenetration, self)
+	else
+		self._bgPenetrationCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffPenetration()
+	if self._bgPenetrationCls then
+		self._bgPenetrationCls:destroy()
+
+		self._bgPenetrationCls = nil
+	end
+end
+
 function StoryBackgroundView:_resetBgEffOpposition()
 	if self._bgOppositionId then
 		ZProj.TweenHelper.KillById(self._bgOppositionId)
@@ -2155,9 +2189,11 @@ end
 
 function StoryBackgroundView:_clearBg()
 	self:_resetBgEffOutFocus()
-	self:_resetBgEffDiamondLight(true)
+	self:_resetBgEffDiamondLight()
 	self:_resetBgEffStarburst(true)
 	self:_resetBgEffSetLayer(true)
+	self:_resetBgEffBgShake()
+	self:_resetBgEffHandCameraShake()
 
 	if self._blurId then
 		ZProj.TweenHelper.KillById(self._blurId)
@@ -2211,8 +2247,6 @@ function StoryBackgroundView:_clearBg()
 	TaskDispatcher.cancelTask(self._onTurnPageFinished, self)
 	TaskDispatcher.cancelTask(self._changeRightDark, self)
 	TaskDispatcher.cancelTask(self._enterChange, self)
-	TaskDispatcher.cancelTask(self._startShake, self)
-	TaskDispatcher.cancelTask(self._shakeStop, self)
 	TaskDispatcher.cancelTask(self._distortEnd, self)
 	TaskDispatcher.cancelTask(self._leftDarkTransFinished, self)
 	TaskDispatcher.cancelTask(self._commonTransFinished, self)

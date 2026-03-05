@@ -69,6 +69,18 @@ function FightWorkComponent:getWorkList()
 	return self.workList
 end
 
+function FightWorkComponent:getAliveWorkList()
+	local aliveWorkList = {}
+
+	for i, work in ipairs(self.workList) do
+		if work:isAlive() then
+			table.insert(aliveWorkList, work)
+		end
+	end
+
+	return aliveWorkList
+end
+
 function FightWorkComponent:hasAliveWork()
 	for i, work in ipairs(self.workList) do
 		if work:isAlive() then

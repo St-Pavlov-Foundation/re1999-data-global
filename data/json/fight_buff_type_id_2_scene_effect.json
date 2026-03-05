@@ -7,7 +7,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 6270517,
@@ -17,7 +19,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 6295019,
@@ -27,7 +31,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 6295020,
@@ -37,7 +43,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 6295058,
@@ -47,7 +55,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 6295059,
@@ -57,7 +67,9 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
   },
   {
     "id": 104321545,
@@ -67,6 +79,32 @@
       0,
       0
     ],
-    "reverseX": 0
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0
+  },
+  {
+    "id": 23390071,
+    "effect": "buff/shuzhen_meimeng",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0,
+    "delEffect": "buff/shuzhen_meimeng_xs",
+    "delTime": 1
+  },
+  {
+    "id": 23390072,
+    "effect": "buff/shuzhen_emeng",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0,
+    "delEffect": "buff/shuzhen_emeng_xs",
+    "delTime": 1
   }
 ]

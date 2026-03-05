@@ -66,7 +66,11 @@ end
 function Rouge2_AlchemySuccessView:_btnconfirmOnClick()
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.play_ui_dungeon3_2_click)
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.play_ui_dungeon3_2_ideadetails)
-	Rouge2_OutsideController.instance:openAlchemyView(true)
+
+	if self.state == Rouge2_OutsideEnum.AlchemySuccessViewState.Success then
+		Rouge2_OutsideController.instance:openAlchemyView(true)
+	end
+
 	self:closeThis()
 end
 

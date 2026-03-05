@@ -52,30 +52,24 @@ end
 
 function Rouge2_MapInteractHelper.handleGainAttribute()
 	logNormal("获得属性")
-
-	local curInteractive = Rouge2_MapModel.instance:getCurInteractiveJson()
-
-	Rouge2_MapInteractHelper.addPopMapAttrUpView(curInteractive.addAttrPoint)
+	Rouge2_MapInteractHelper.addPopMapAttrUpView()
 end
 
-function Rouge2_MapInteractHelper.addPopMapAttrUpView(addAttrPoint)
-	addAttrPoint = addAttrPoint or 0
+function Rouge2_MapInteractHelper.addPopMapAttrUpView()
+	local isInQueue = Rouge2_PopController.instance:isViewInQueue(ViewName.Rouge2_MapAttributeUpView)
 
-	local viewParams = {
-		addAttrPoint = addAttrPoint
-	}
-
-	Rouge2_PopController.instance:addPopViewWithOpenFunc(ViewName.Rouge2_MapAttributeUpView, Rouge2_MapInteractHelper._openMapAttrUpviewCallback, nil, addAttrPoint, viewParams)
-end
-
-function Rouge2_MapInteractHelper._openMapAttrUpviewCallback(_, addAttrPoint, viewParams)
-	local show = addAttrPoint > 0 or Rouge2_Model.instance:hasAnyCareerAttrUpdate()
-
-	if show then
-		ViewMgr.instance:openView(ViewName.Rouge2_MapAttributeUpView, viewParams)
-	else
-		Rouge2_PopController.instance:skip(ViewName.Rouge2_MapAttributeUpView)
+	if isInQueue then
+		return
 	end
+
+	local hasAnyUpdate = Rouge2_MapAttrUpdateController.instance:hasAnyCareerAttrUpdate()
+	local addAttrPoint = Rouge2_MapAttrUpdateController.instance:getAddAttrPoint()
+
+	if not hasAnyUpdate and addAttrPoint <= 0 then
+		return
+	end
+
+	Rouge2_PopController.instance:addPopViewWithViewName(ViewName.Rouge2_MapAttributeUpView)
 end
 
 function Rouge2_MapInteractHelper.handleLossRareRelics()
@@ -205,7 +199,8 @@ function Rouge2_MapInteractHelper.handleSelectDrop()
 		Rouge2_PopController.instance:addPopViewWithViewName(viewName, {
 			viewEnum = Rouge2_MapEnum.ItemDropViewEnum.Select,
 			dataType = Rouge2_Enum.ItemDataType.Config,
-			itemList = curInteractive.dropCollectList
+			itemList = curInteractive.dropCollectList,
+			interactive = curInteractive
 		})
 	end
 end

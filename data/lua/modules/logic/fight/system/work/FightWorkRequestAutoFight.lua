@@ -33,6 +33,7 @@ function FightWorkRequestAutoFight:onAutoRoundReply(msg)
 		flow:registWork(FightAutoBindContractWork)
 		flow:registWork(FightAutoDetectUpgradeWork)
 		flow:registWork(FightAutoSelectCrystalWork)
+		flow:registWork(FightWorkSelectBattleEvent)
 		flow:registWork(FightWorkWaitAllOperateDone)
 
 		local season2Index = 0

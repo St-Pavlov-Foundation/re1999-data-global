@@ -29,7 +29,7 @@ function FightWorkClearBeforeRestart:_onDestroyViewFinish(viewName)
 
 		local cur_scene = GameSceneMgr.instance:getCurScene()
 
-		cur_scene.entityMgr:removeAllUnits()
+		FightGameMgr.entityMgr:delAllEntity()
 		cur_scene.director:registRespBeginFight()
 		FightGameMgr.bgmMgr:resumeBgm()
 		FightSkillMgr.instance:dispose()

@@ -23,7 +23,11 @@ function CommandStationConfig:reqConfigNames()
 		"copost_const",
 		"copost_scene",
 		"copost_decoration",
-		"copost_decoration_coordinates"
+		"copost_decoration_coordinates",
+		"copost_character_chain",
+		"copost_character_state",
+		"copost_plot_map",
+		"copost_character_camp"
 	}
 end
 
@@ -58,6 +62,8 @@ function CommandStationConfig:onConfigLoaded(configName, configTable)
 		self:_initNpcText()
 	elseif configName == "copost_password_paper" then
 		self:_initPasswordPaper()
+	elseif configName == "copost_character_state" then
+		self:_initCharacterState()
 	end
 end
 
@@ -128,15 +134,40 @@ function CommandStationConfig:_initTimePoint()
 end
 
 function CommandStationConfig:_initTimePointEvent()
+	self._timeIdUnlockEventMap = {}
+	self._unlockEventToTimeIdMap = {}
 	self._episodeIdTimeIdMap = {}
 	self._characterEventTime = {}
 	self._characterTimeGroup = {}
+	self._normalEventTime = {}
 
 	local characterTimeGroup = {}
+
+	local function initTimeGroupByCharId(chaId, time_point_event)
+		if chaId ~= 0 then
+			characterTimeGroup[chaId] = characterTimeGroup[chaId] or {}
+
+			local timeGroup = self._timeGroup[time_point_event.id]
+
+			if timeGroup then
+				local list = characterTimeGroup[chaId]
+
+				if not tabletool.indexOf(list, timeGroup) then
+					table.insert(list, timeGroup)
+				end
+			else
+				logError(string.format("CommandStationConfig _initTimePointEvent timeId %d not exist in copost_time_axis", time_point_event.id))
+			end
+		end
+	end
 
 	for i, v in ipairs(lua_copost_time_point_event.configList) do
 		if not self._episodeIdTimeIdMap[v.fightId] then
 			self._episodeIdTimeIdMap[v.fightId] = v.id
+		end
+
+		for _, eventId in ipairs(v.eventId) do
+			self._normalEventTime[eventId] = v
 		end
 
 		for _, characterEventId in ipairs(v.chaEventId) do
@@ -145,21 +176,27 @@ function CommandStationConfig:_initTimePointEvent()
 			local characterEventConfig = lua_copost_character_event.configDict[characterEventId]
 
 			if characterEventConfig then
-				characterTimeGroup[characterEventConfig.chaId] = characterTimeGroup[characterEventConfig.chaId] or {}
+				initTimeGroupByCharId(characterEventConfig.chaId, v)
 
-				local timeGroup = self._timeGroup[v.id]
+				for _, chaId in ipairs(characterEventConfig.chasId) do
+					initTimeGroupByCharId(chaId, v)
+				end
 
-				if timeGroup then
-					local list = characterTimeGroup[characterEventConfig.chaId]
-
-					if not tabletool.indexOf(list, timeGroup) then
-						table.insert(list, timeGroup)
-					end
-				else
-					logError(string.format("CommandStationConfig _initTimePointEvent timeId %d not exist in copost_time_axis", characterEventConfig.id))
+				if characterEventConfig.chaId ~= 0 and #characterEventConfig.chasId > 0 then
+					logError(string.format("CommandStationConfig _initTimePointEvent error characterEventId %d chaId %d chasId %d", characterEventId, characterEventConfig.chaId, #characterEventConfig.chasId))
 				end
 			else
 				logError(string.format("CommandStationConfig _initTimePointEvent characterEventId %d not exist", characterEventId))
+			end
+		end
+
+		if #v.frontEventId > 0 then
+			local frontEventIdList = v.frontEventId
+
+			self._timeIdUnlockEventMap[v.id] = frontEventIdList
+
+			for _, eventId in ipairs(frontEventIdList) do
+				self._unlockEventToTimeIdMap[eventId] = v.id
 			end
 		end
 	end
@@ -180,7 +217,7 @@ function CommandStationConfig:_initTimePointEvent()
 				local characterEventList = self:getCharacterEventList(timeId)
 
 				for _, characterEventId in ipairs(characterEventList) do
-					if self._characterEventMap[characterEventId] == chaId then
+					if self:eventContainCharacterId(characterEventId, chaId) and not tabletool.indexOf(timeIdList, timeId) then
 						table.insert(timeIdList, timeId)
 					end
 				end
@@ -195,15 +232,67 @@ function CommandStationConfig:_initTimePointEvent()
 	end
 end
 
+function CommandStationConfig:_checkEventFrontDependency(t, configDict, id)
+	if t[id] then
+		logError("CommandStationConfig _checkEventFrontDependency 互相依赖了: ", tostring(id), tabletool.getDictJsonStr(t))
+
+		return
+	end
+
+	t[id] = true
+
+	local config = configDict[id]
+
+	if not config then
+		logError("CommandStationConfig _checkEventFrontDependency event config not found: ", tostring(id))
+
+		return
+	end
+
+	for _, eventId in ipairs(config.frontEventId) do
+		self:_checkEventFrontDependency(t, configDict, eventId)
+	end
+end
+
 function CommandStationConfig:_initEvent()
-	return
+	self._normalEventIdToUnlockEventMap = {}
+	self._unlockEventToNormalEventIdMap = {}
+
+	for i, v in ipairs(lua_copost_event.configList) do
+		if #v.frontEventId > 0 then
+			local frontEventIdList = v.frontEventId
+
+			self._normalEventIdToUnlockEventMap[v.id] = frontEventIdList
+
+			for _, eventId in ipairs(frontEventIdList) do
+				self._unlockEventToNormalEventIdMap[eventId] = v.id
+			end
+
+			if SLFramework.FrameworkSettings.IsEditor then
+				self:_checkEventFrontDependency({}, lua_copost_event.configDict, v.id)
+			end
+		end
+	end
 end
 
 function CommandStationConfig:_initCharacterEvent()
-	self._characterEventMap = {}
+	self._chaEventIdToUnlockEventMap = {}
+	self._unlockEventToChaEventIdMap = {}
 
 	for i, v in ipairs(lua_copost_character_event.configList) do
-		self._characterEventMap[v.id] = v.chaId
+		if #v.frontEventId > 0 then
+			local frontEventIdList = v.frontEventId
+
+			self._chaEventIdToUnlockEventMap[v.id] = frontEventIdList
+
+			for _, eventId in ipairs(frontEventIdList) do
+				self._unlockEventToChaEventIdMap[eventId] = v.id
+			end
+
+			if SLFramework.FrameworkSettings.IsEditor then
+				self:_checkEventFrontDependency({}, lua_copost_character_event.configDict, v.id)
+			end
+		end
 	end
 end
 
@@ -252,6 +341,78 @@ function CommandStationConfig:_initPasswordPaper()
 	end
 
 	table.sort(self._paperList, SortUtil.keyLower("versionId"))
+end
+
+function CommandStationConfig:_initCharacterState()
+	self._characterFirstStateList = {}
+	self._characterLastStateList = {}
+	self._characterPosMap = {}
+
+	for i, v in ipairs(lua_copost_character_state.configList) do
+		local chaId = tonumber(v.chaId)
+
+		if SLFramework.FrameworkSettings.IsEditor then
+			if self._characterPosMap[chaId] and self._characterPosMap[chaId] ~= v.positionId then
+				logError(string.format("CommandStationConfig _initCharacterState chaId:%s stateId:%s oldPos:%s newPos:%s", chaId, v.stateId, self._characterPosMap[chaId], v.positionId))
+			end
+
+			if #v.relationshipCha ~= #v.relationshipTxt then
+				logError(string.format("CommandStationConfig _initCharacterState stateId:%s relationshipCha:%s relationshipTxt:%s 长度不一致", v.stateId, #v.relationshipCha, #v.relationshipTxt))
+			end
+		end
+
+		self._characterPosMap[chaId] = v.positionId
+
+		if not self._characterFirstStateList[chaId] then
+			self._characterFirstStateList[chaId] = v.stateId
+		end
+
+		if not self._characterLastStateList[chaId] then
+			self._characterLastStateList[chaId] = v
+		elseif #v.chaTxt > #self._characterLastStateList[chaId].chaTxt then
+			self._characterLastStateList[chaId] = v
+		end
+	end
+end
+
+function CommandStationConfig:getTimeIdUnlockEvent(timeId)
+	return self._timeIdUnlockEventMap[timeId]
+end
+
+function CommandStationConfig:getActivatedTimeId(eventId)
+	return self._unlockEventToTimeIdMap[eventId]
+end
+
+function CommandStationConfig:getActivatedNormalEventId(eventId)
+	return self._unlockEventToNormalEventIdMap[eventId]
+end
+
+function CommandStationConfig:getActivatedCharEventId(eventId)
+	return self._unlockEventToChaEventIdMap[eventId]
+end
+
+function CommandStationConfig:getActivatedEventId(eventId)
+	return self:getActivatedNormalEventId(eventId) or self:getActivatedCharEventId(eventId)
+end
+
+function CommandStationConfig:isReadFinishEvent(eventId)
+	local event = lua_copost_event.configDict[eventId]
+
+	if event then
+		return event.eventType == CommandStationEnum.EventType.Main or event.eventType == CommandStationEnum.EventType.Normal
+	end
+
+	event = lua_copost_character_event.configDict[eventId]
+
+	if event then
+		return true
+	end
+
+	return nil
+end
+
+function CommandStationConfig:getUnlockEventList(eventId)
+	return self._normalEventIdToUnlockEventMap[eventId] or self._chaEventIdToUnlockEventMap[eventId]
 end
 
 function CommandStationConfig:getMaxVersionId()
@@ -316,16 +477,24 @@ function CommandStationConfig:getRandomDialogTextId(type)
 	end
 end
 
-function CommandStationConfig:getCharacterIdByEventId(eventId)
-	return self._characterEventMap[eventId]
+function CommandStationConfig:eventContainCharacterId(eventId, characterId)
+	local config = lua_copost_character_event.configDict[eventId]
+
+	if config.chaId == characterId then
+		return true
+	end
+
+	return tabletool.indexOf(config.chasId, characterId) ~= nil
 end
 
 function CommandStationConfig:getVersionList()
 	return lua_copost_version.configList
 end
 
-function CommandStationConfig:getVersionIndex(versionId)
-	for i, v in ipairs(lua_copost_version.configList) do
+function CommandStationConfig:getVersionIndex(versionId, configList)
+	configList = configList or lua_copost_version.configList
+
+	for i, v in ipairs(configList) do
 		if v.versionId == versionId then
 			return i
 		end
@@ -358,6 +527,12 @@ function CommandStationConfig:getTimeGroupByCharacterEventId(id)
 	local timeConfig = self._characterEventTime[id]
 
 	return timeConfig and self:getTimeGroupByTimeId(timeConfig.id)
+end
+
+function CommandStationConfig:getTimeIdByEventId(id)
+	local timeConfig = self._normalEventTime[id] or self._characterEventTime[id]
+
+	return timeConfig and timeConfig.id
 end
 
 function CommandStationConfig:getCharacterEventList(timeId)
@@ -428,6 +603,48 @@ function CommandStationConfig:getEventList(timeId, filteredEventId, eventKey)
 	return list
 end
 
+function CommandStationConfig:forEachGetEventList(timeId, filteredEventId, eventKey, callback, callbackObj)
+	local timePointConfig = lua_copost_time_point_event.configDict[timeId]
+
+	if not timePointConfig then
+		logError(string.format("CommandStationConfig getEventList not timePointConfig timeId:%s", timeId))
+
+		return
+	end
+
+	local list = timePointConfig[eventKey or CommandStationEnum.EventCategoryKey.Normal]
+
+	if filteredEventId then
+		local index = tabletool.indexOf(list, filteredEventId)
+
+		if index == -1 then
+			logError(string.format("CommandStationConfig getEventList not filteredEventId timeId:%s filteredEventId:%s", timeId, filteredEventId))
+
+			return
+		end
+
+		local filteredEventConfig = lua_copost_event.configDict[filteredEventId]
+
+		if not filteredEventConfig then
+			logError(string.format("CommandStationConfig getEventList not filteredEventConfig timeId:%s filteredEventId:%s", timeId, filteredEventId))
+
+			return
+		end
+
+		for i, v in ipairs(list) do
+			local config = lua_copost_event.configDict[v]
+
+			if config and config.eventType == filteredEventConfig.eventType then
+				callback(callbackObj, v)
+			end
+		end
+	else
+		for i, v in ipairs(list) do
+			callback(callbackObj, v)
+		end
+	end
+end
+
 function CommandStationConfig:getTimePointName(timeId)
 	local config = lua_copost_time_point.configDict[timeId]
 
@@ -446,6 +663,20 @@ function CommandStationConfig:getCurVersionId()
 	end
 
 	return self._curVersionId
+end
+
+function CommandStationConfig:getCharacterPos(chaId)
+	return self._characterPosMap[chaId]
+end
+
+function CommandStationConfig:getCharacterFirstShowState(chaId)
+	return self._characterFirstStateList[chaId]
+end
+
+function CommandStationConfig:getCharacterLastShowState(chaId)
+	local config = self._characterLastStateList[chaId]
+
+	return config and config.stateId or 0
 end
 
 function CommandStationConfig:getPaperItemId()

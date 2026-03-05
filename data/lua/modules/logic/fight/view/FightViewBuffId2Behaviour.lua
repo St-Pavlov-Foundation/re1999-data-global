@@ -22,7 +22,9 @@ FightViewBuffId2Behaviour.BehaviourId2Behaviour = {
 	FightBuffBehaviour_500M_RemoveActPoint,
 	FightBuffBehaviour_500M_BGMask,
 	FightBuffBehaviour_500M_DeepScore,
-	FightBuffBehaviour_BulletTime
+	FightBuffBehaviour_BulletTime,
+	FightBuffBehaviour_3_3Dream,
+	FightBuffBehaviour_3_3PaoPao
 }
 
 function FightViewBuffId2Behaviour:onOpen()

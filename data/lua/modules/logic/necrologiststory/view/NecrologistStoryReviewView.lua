@@ -14,7 +14,8 @@ function NecrologistStoryReviewView:onInitView()
 	self._goLockedBg = gohelper.findChild(self._goBgCg, "locked")
 	self._locksimagecgbg = gohelper.findChildSingleImage(self._goLockedBg, "bgmask/#simage_cgbg")
 	self._lockimagecgbg = gohelper.findChildImage(self._goLockedBg, "bgmask/#simage_cgbg")
-	self.goContent = gohelper.findChild(self.viewGO, "#scroll_content")
+	self.goScroll = gohelper.findChild(self.viewGO, "#scroll_content")
+	self.goContent = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content")
 	self.goItem = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/goItem")
 	self.goItem1 = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/go_item1")
 	self.goItem2 = gohelper.findChild(self.viewGO, "#scroll_content/Viewport/Content/go_item2")
@@ -75,12 +76,12 @@ end
 
 function NecrologistStoryReviewView:refreshStoryList()
 	if self.cgUnlock then
-		gohelper.setActive(self.goContent, false)
+		gohelper.setActive(self.goScroll, false)
 
 		return
 	end
 
-	gohelper.setActive(self.goContent, true)
+	gohelper.setActive(self.goScroll, true)
 
 	local plotList = NecrologistStoryConfig.instance:getPlotListByStoryId(self.storyId)
 
@@ -123,6 +124,7 @@ function NecrologistStoryReviewView:createItem(index)
 
 		item.btn:AddClickListener(self.onClickStoryItem, self, item)
 
+		item.goBranch = gohelper.findChild(item.go, "go_fencha")
 		self.itemList[index] = item
 	end
 
@@ -158,6 +160,12 @@ function NecrologistStoryReviewView:refreshItem(item, plotCo)
 	txtItem.txtIndex.text = string.format("%02d", item.index)
 	txtItem.txtTitle.text = plotCo.storyName
 	txtItem.txtTitleEn.text = plotCo.storyNameEn
+
+	gohelper.setActive(item.goBranch, plotCo.branch == 1)
+
+	if plotCo.branch == 1 then
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.ShowBranch)
+	end
 end
 
 function NecrologistStoryReviewView:refreshRoleStoryBg()
@@ -216,6 +224,43 @@ end
 
 function NecrologistStoryReviewView:_onLoadLockCgCallback()
 	self._lockimagecgbg:SetNativeSize()
+end
+
+function NecrologistStoryReviewView:getBranchItem()
+	local plotList = NecrologistStoryConfig.instance:getPlotListByStoryId(self.storyId)
+
+	for i, plotCo in ipairs(plotList) do
+		if plotCo.branch == 1 then
+			self:_focusItem(i, 0.1)
+
+			return self.itemList[i]
+		end
+	end
+end
+
+function NecrologistStoryReviewView:_focusItem(index, delayTime)
+	local item = self.itemList[index]
+
+	if not item then
+		return
+	end
+
+	ZProj.UGUIHelper.RebuildLayout(self.goContent.transform)
+
+	local pos = recthelper.getAnchorX(item.goParent.transform) - 308
+	local scrollWidth = recthelper.getWidth(self.goScroll.transform)
+	local contentWidth = recthelper.getWidth(self.goContent.transform)
+	local widthOffset = contentWidth - scrollWidth
+	local moveLimt = math.max(0, widthOffset)
+
+	pos = math.min(moveLimt, pos)
+	pos = -pos
+
+	if delayTime and delayTime > 0 then
+		ZProj.TweenHelper.DOAnchorPosX(self.goContent.transform, pos, delayTime)
+	else
+		recthelper.setAnchorX(self.goContent.transform, pos)
+	end
 end
 
 function NecrologistStoryReviewView:onClose()

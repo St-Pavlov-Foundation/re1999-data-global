@@ -3,7 +3,7 @@
 module("modules.logic.fight.controller.replay.FightReplayErrorFix", package.seeall)
 
 local FightReplayErrorFix = class("FightReplayErrorFix")
-local ErrorTime = 2
+local ErrorTime = 5
 
 function FightReplayErrorFix:ctor()
 	self._hasStartErrorCheck = false

@@ -26,7 +26,7 @@ function SettingsShowHelper.canShowRecordVideo()
 end
 
 function SettingsShowHelper.canShowKeySetting()
-	return BootNativeUtil.isWindows() and PCInputController.instance:getIsUse()
+	return PCInputController.instance:getIsUse()
 end
 
 function SettingsShowHelper.canShowPush()

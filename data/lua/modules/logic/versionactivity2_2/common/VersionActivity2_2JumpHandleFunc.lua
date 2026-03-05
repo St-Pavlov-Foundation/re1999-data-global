@@ -29,17 +29,39 @@ end
 function VersionActivity2_2JumpHandleFunc:jumpTo12203(paramsList)
 	local actId = paramsList[2]
 
-	VersionActivity2_2EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		TianShiNaNaController.instance:openMainView()
-	end, nil, actId)
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local actConfig = ActivityConfig.instance:getActivityCo(actId)
+		local episodeId = actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	end
 end
 
 function VersionActivity2_2JumpHandleFunc:jumpTo12204(paramsList)
 	local actId = paramsList[2]
 
-	VersionActivity2_2EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		LoperaController.instance:openLoperaMainView()
-	end, nil, actId)
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local actConfig = ActivityConfig.instance:getActivityCo(actId)
+		local episodeId = actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	end
 end
 
 return VersionActivity2_2JumpHandleFunc

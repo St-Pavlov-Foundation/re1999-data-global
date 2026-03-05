@@ -18,6 +18,7 @@ end
 
 function FightTopView:onOpen()
 	self:com_openSubView(FightCheckShowPower10View, self.viewGO)
+	self:com_openSubView(FightBossPassiveTipsView, self.viewGO)
 end
 
 function FightTopView:onClose()

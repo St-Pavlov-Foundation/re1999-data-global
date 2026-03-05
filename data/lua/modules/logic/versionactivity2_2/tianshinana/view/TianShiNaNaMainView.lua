@@ -22,12 +22,14 @@ function TianShiNaNaMainView:onInitView()
 		self._pathAnims[i].speed = 0
 	end
 
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
 function TianShiNaNaMainView:addEvents()
 	CommonDragHelper.instance:registerDragObj(self._gopath, nil, self._onDrag, nil, nil, self, nil, true)
 	self._btntask:AddClickListener(self._onClickTask, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EnterLevelScene, self._onEnterLevelScene, self)
 	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.EpisodeStarChange, self._onStarChange, self)
@@ -37,6 +39,7 @@ end
 function TianShiNaNaMainView:removeEvents()
 	CommonDragHelper.instance:unregisterDragObj(self._gopath)
 	self._btntask:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EnterLevelScene, self._onEnterLevelScene, self)
 	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.EpisodeStarChange, self._onStarChange, self)
@@ -50,6 +53,9 @@ function TianShiNaNaMainView:onOpen()
 
 	local stageCoList = TianShiNaNaConfig.instance:getEpisodeCoList(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
 	local actId = VersionActivity2_2Enum.ActivityId.TianShiNaNa
+
+	self.actCo = ActivityConfig.instance:getActivityCo(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
+
 	local selectIndex = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_2TianShiNaNaSelect .. actId, "1")
 
 	selectIndex = tonumber(selectIndex) or 1
@@ -122,6 +128,34 @@ end
 
 function TianShiNaNaMainView:_onClickTask()
 	ViewMgr.instance:openView(ViewName.TianShiNaNaTaskView)
+end
+
+function TianShiNaNaMainView:_btnTrialOnClick()
+	local actId = VersionActivity2_2Enum.ActivityId.TianShiNaNa
+
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function TianShiNaNaMainView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function TianShiNaNaMainView:refreshTime()

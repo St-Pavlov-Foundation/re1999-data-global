@@ -121,8 +121,6 @@ function StoryNavigateItem:showEpisode(episodeCo)
 end
 
 function StoryNavigateItem:_episodeOut()
-	gohelper.setActive(self._goepisode, false)
-
 	if self._episodeVideoPlayer then
 		self._episodeVideoPlayer:stop()
 		self._episodeVideoPlayer:clear()
@@ -130,6 +128,7 @@ function StoryNavigateItem:_episodeOut()
 		self._episodeVideoPlayer = nil
 	end
 
+	gohelper.setActive(self._goepisode, false)
 	TaskDispatcher.cancelTask(self._episodeOut, self)
 end
 
@@ -165,9 +164,6 @@ function StoryNavigateItem:showChapterStart(chapterCo)
 end
 
 function StoryNavigateItem:_chapterStartOut()
-	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_Start)
-	gohelper.setActive(self._goopen, false)
-
 	if self._chapterOpenVideoPlayer then
 		self._chapterOpenVideoPlayer:stop()
 		self._chapterOpenVideoPlayer:clear()
@@ -175,6 +171,8 @@ function StoryNavigateItem:_chapterStartOut()
 		self._chapterOpenVideoPlayer = nil
 	end
 
+	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_Start)
+	gohelper.setActive(self._goopen, false)
 	TaskDispatcher.cancelTask(self._chapterStartOut, self)
 end
 
@@ -211,8 +209,6 @@ function StoryNavigateItem:showChapterEnd(chapterCo)
 end
 
 function StoryNavigateItem:_chapterEndOut()
-	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_End)
-
 	if self._chapterCloseVideoPlayer then
 		self._chapterCloseVideoPlayer:stop()
 		self._chapterCloseVideoPlayer:clear()
@@ -220,6 +216,7 @@ function StoryNavigateItem:_chapterEndOut()
 		self._chapterCloseVideoPlayer = nil
 	end
 
+	AudioEffectMgr.instance:stopAudio(AudioEnum.Story.Play_Chapter_End)
 	TaskDispatcher.cancelTask(self._chapterEndOut, self)
 end
 

@@ -27,6 +27,9 @@ function Rouge2_BackpackSkillListItem:onInitView()
 
 	self._tran = self.viewGO.transform
 	self._canvasgroup = gohelper.onceAddComponent(self.viewGO, gohelper.Type_CanvasGroup)
+	self._listener = Rouge2_CommonItemDescModeListener.Get(self.viewGO, Rouge2_Enum.ItemDescModeDataKey.BackpackSkill)
+
+	self._listener:initCallback(self._refreshItemDesc, self)
 end
 
 function Rouge2_BackpackSkillListItem:addEvents()
@@ -84,7 +87,7 @@ end
 function Rouge2_BackpackSkillListItem:refreshUI()
 	self._txtName.text = self._skillCo and self._skillCo.name
 
-	Rouge2_ItemDescHelper.setItemDescStr(Rouge2_Enum.ItemDataType.Server, self._skillUid, self._txtDescr)
+	self._listener:startListen()
 
 	local assemblyNum = self._skillCo and self._skillCo.assembleCost or 0
 
@@ -97,6 +100,10 @@ function Rouge2_BackpackSkillListItem:refreshUI()
 	self._isBlock = Rouge2_BackpackSkillEditListModel.instance:isAttrBlockInBXS(self._skillCo.attributeTag)
 
 	gohelper.setActive(self._goBXSMask, self._isBlock)
+end
+
+function Rouge2_BackpackSkillListItem:_refreshItemDesc(descMode)
+	Rouge2_ItemDescHelper.setItemDescStr(Rouge2_Enum.ItemDataType.Server, self._skillUid, self._txtDescr, descMode)
 end
 
 function Rouge2_BackpackSkillListItem:onSelect(isSelect)

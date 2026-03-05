@@ -9,6 +9,7 @@ function FightSceneSpecialIdleMgr:onSceneStart(sceneId, levelId)
 	FightController.instance:registerCallback(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle, self)
 	FightController.instance:registerCallback(FightEvent.OnEntityDead, self._releaseEntity, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntity, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntity, self)
 
 	self._entity_dic = {}
 	self._play_dic = {}
@@ -19,6 +20,7 @@ function FightSceneSpecialIdleMgr:onSceneClose()
 	FightController.instance:unregisterCallback(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle, self)
 	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, self._releaseEntity, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntity, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntity, self)
 	self:_releaseAllEntity()
 
 	self._entity_dic = nil

@@ -13,6 +13,7 @@ function Rouge2_MapRelicsAbandonView:onInitView()
 	self._goDisactive = gohelper.findChild(self.viewGO, "Container/#btn_Confirm/#go_Disactive")
 	self._txtSelectNum2 = gohelper.findChildText(self.viewGO, "Container/#btn_Confirm/#go_Disactive/#txt_SelectNum2")
 	self._goTab = gohelper.findChild(self.viewGO, "#go_Tab")
+	self._goMode = gohelper.findChild(self.viewGO, "Container/#go_Mode")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -59,6 +60,7 @@ end
 
 function Rouge2_MapRelicsAbandonView:_editableInitView()
 	NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.RelicsAbandon)
 end
 
 function Rouge2_MapRelicsAbandonView:onOpen()

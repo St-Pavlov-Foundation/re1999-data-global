@@ -70,6 +70,10 @@ function BootNativeUtil.isMobilePlayer()
 	return BootNativeUtil.isAndroid() or BootNativeUtil.isIOS()
 end
 
+function BootNativeUtil.isMuMu()
+	return false
+end
+
 function BootNativeUtil.getDisplayResolution()
 	return SLFramework.NativeUtil.GetDisplayWidth(), SLFramework.NativeUtil.GetDisplayHeight()
 end

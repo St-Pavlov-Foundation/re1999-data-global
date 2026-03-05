@@ -3850,5 +3850,65 @@
     "triggerAudio": 0,
     "delAudio": 0,
     "audio": 0
+  },
+  {
+    "buffId": 31210121,
+    "orEnemy": 2,
+    "skinId": 312103,
+    "effectHang": "",
+    "effectPath": "v3a3_mlde/mlde_innate1_01",
+    "triggerEffect": "",
+    "delEffect": "v3a3_mlde/mlde_innate1_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431210341
+  },
+  {
+    "buffId": 31260131,
+    "orEnemy": 2,
+    "skinId": 312603,
+    "effectHang": "",
+    "effectPath": "v3a3_mlan/mlan_innate_2_01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 31260132,
+    "orEnemy": 2,
+    "skinId": 312603,
+    "effectHang": "",
+    "effectPath": "v3a3_mlan/mlan_innate_2_01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 31260133,
+    "orEnemy": 2,
+    "skinId": 312603,
+    "effectHang": "",
+    "effectPath": "v3a3_mlan/mlan_innate_2_01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
+  },
+  {
+    "buffId": 31260134,
+    "orEnemy": 2,
+    "skinId": 312603,
+    "effectHang": "",
+    "effectPath": "v3a3_mlan/mlan_innate_2_01",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 0
   }
 ]

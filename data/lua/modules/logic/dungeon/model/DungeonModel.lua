@@ -322,6 +322,16 @@ function DungeonModel:chapterIsLock(chapterId)
 	end
 
 	if self._dungeonChapterDic[chapterId] then
+		local chapterConfig = DungeonConfig.instance:getChapterCO(chapterId)
+
+		if chapterConfig and chapterConfig.eaActivityId > 0 then
+			if DungeonMainStoryModel.instance:isPreviewChapter(chapterId) then
+				return false
+			else
+				return true, -1, 114
+			end
+		end
+
 		return false
 	end
 
@@ -700,6 +710,7 @@ local BattleEpisodeTypes = {
 	[DungeonEnum.EpisodeType.TowerLimited] = true,
 	[DungeonEnum.EpisodeType.TowerBossTeach] = true,
 	[DungeonEnum.EpisodeType.TowerDeep] = true,
+	[DungeonEnum.EpisodeType.TowerCompose] = true,
 	[DungeonEnum.EpisodeType.Act183] = true,
 	[DungeonEnum.EpisodeType.Act191] = true,
 	[DungeonEnum.EpisodeType.Odyssey] = true,

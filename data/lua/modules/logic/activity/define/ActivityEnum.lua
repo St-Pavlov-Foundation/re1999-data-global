@@ -98,10 +98,13 @@ ActivityEnum.Activity = {
 	V2a8_ActiveActivity = 12864,
 	Jessica = 11202,
 	V2a0_SummerSign = 12020,
+	V3a3_TowerDeep = 13319,
 	V3a0_SummerSign = 13014,
+	V3a3_SkinDiscount = 13322,
 	SpringSign = 11618,
 	V2a8_SkinCuffActivity = 12867,
 	V2a9_Bubble = 130524,
+	V3a3_WarmUp = 13320,
 	GoldenMilletPresent = 11615,
 	V2a8_WarmUp = 12875,
 	RoleSignViewPart1_1_9 = 11913,
@@ -238,6 +241,7 @@ ActivityEnum.VersionActivityIdDict = {
 	Activity3_1 = 13102,
 	Activity1_2 = 11201,
 	Activity2_0 = 12002,
+	Activity3_3 = 13305,
 	Activity2_5 = 12501,
 	Activity1_8 = 11803,
 	Activity1_6 = 11601,
@@ -254,7 +258,7 @@ ActivityEnum.VersionActivityIdDict = {
 ActivityEnum.VersionActivityIdList = {
 	ActivityEnum.VersionActivityIdDict.Activity_Assassin_1,
 	ActivityEnum.VersionActivityIdDict.Activity_Assassin_2,
-	ActivityEnum.VersionActivityIdDict.Activity3_2
+	ActivityEnum.VersionActivityIdDict.Activity3_3
 }
 ActivityEnum.MainIcon = {
 	[ActivityEnum.VersionActivityIdDict.Activity1_1] = "rk1111",
@@ -281,7 +285,8 @@ ActivityEnum.MainIcon = {
 	[ActivityEnum.VersionActivityIdDict.Activity2_8] = "rk_2_8",
 	[ActivityEnum.VersionActivityIdDict.Activity3_0] = "rk_3_0",
 	[ActivityEnum.VersionActivityIdDict.Activity3_1] = "rk_3_1",
-	[ActivityEnum.VersionActivityIdDict.Activity3_2] = "rk_3_2"
+	[ActivityEnum.VersionActivityIdDict.Activity3_2] = "rk_3_2",
+	[ActivityEnum.VersionActivityIdDict.Activity3_3] = "rk_3_3"
 }
 ActivityEnum.ShowVersionActivityEpisode = 10103
 ActivityEnum.MainViewActivityState = {
@@ -297,6 +302,7 @@ ActivityEnum.MainViewActivityState = {
 	Rouge2 = 12,
 	Survival = 11,
 	DouQuQu = 6,
+	Arcade = 13,
 	None = 0
 }
 ActivityEnum.IOSHideActIdMap = {}

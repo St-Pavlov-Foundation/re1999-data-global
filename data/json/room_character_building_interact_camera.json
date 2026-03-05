@@ -1141,5 +1141,41 @@
     "focusXYZ": "1.720#0.3#-1.183",
     "nodesXYZ": "0.486#0.11#0.377",
     "nextCameraParams": ""
+  },
+  {
+    "id": 3301,
+    "angle": "10#10",
+    "distance": "3#3",
+    "rotate": "224.2",
+    "focusXYZ": "-0.691#0.2#-2.144",
+    "nodesXYZ": "1.378#0.11#0.708",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3302,
+    "angle": "10#10",
+    "distance": "3#3",
+    "rotate": "220.6",
+    "focusXYZ": "-0.642#0.2#-2.210",
+    "nodesXYZ": "2.104#0.11#-1.338",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3311,
+    "angle": "8#8",
+    "distance": "2.5#2.5",
+    "rotate": "161.8",
+    "focusXYZ": "1.139#0#-0.389",
+    "nodesXYZ": "1.953#0.11#0.450",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3312,
+    "angle": "8#8",
+    "distance": "2.5#2.5",
+    "rotate": "164.4",
+    "focusXYZ": "1.157#0#-0.361",
+    "nodesXYZ": "-0.000#0.11#0.579",
+    "nextCameraParams": ""
   }
 ]

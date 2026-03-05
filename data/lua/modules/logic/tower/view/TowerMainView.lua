@@ -51,6 +51,7 @@ function TowerMainView:onInitView()
 	self._goachievement = gohelper.findChild(self.viewGO, "achievement")
 	self._goachievementIcon = gohelper.findChild(self.viewGO, "achievement/go_icon")
 	self._btnachievement = gohelper.findChildButton(self.viewGO, "achievement/#btn_Click")
+	self._btntowerCompose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_towercompose")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -66,12 +67,14 @@ function TowerMainView:addEvents()
 	self._btnheroTrial:AddClickListener(self._btnheroTrialOnClick, self)
 	self._btnmopUp:AddClickListener(self._btnmopupOnClick, self)
 	self._btnachievement:AddClickListener(self._btnonachievementClick, self)
+	self._btntowerCompose:AddClickListener(self._btntowerComposeOnClick, self)
 	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.onDailyReresh, self)
 	self:addEventCb(TowerController.instance, TowerEvent.LocalKeyChange, self.onLocalKeyChange, self)
 	self:addEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshRewardTaskInfo, self)
 	self:addEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshPermanentInfo, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStore, self)
 	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStore, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshHeroTrialNew, self.refreshHeroTrialNew, self)
 end
 
 function TowerMainView:removeEvents()
@@ -83,12 +86,14 @@ function TowerMainView:removeEvents()
 	self._btnheroTrial:RemoveClickListener()
 	self._btnmopUp:RemoveClickListener()
 	self._btnachievement:RemoveClickListener()
+	self._btntowerCompose:RemoveClickListener()
 	self:removeEventCb(TowerController.instance, TowerEvent.DailyReresh, self.onDailyReresh, self)
 	self:removeEventCb(TowerController.instance, TowerEvent.LocalKeyChange, self.onLocalKeyChange, self)
 	self:removeEventCb(TowerController.instance, TowerEvent.TowerTaskUpdated, self.refreshRewardTaskInfo, self)
 	self:removeEventCb(TowerController.instance, TowerEvent.TowerMopUp, self.refreshPermanentInfo, self)
 	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshStore, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStore, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshHeroTrialNew, self.refreshHeroTrialNew, self)
 	TaskDispatcher.cancelTask(self.refreshTowerState, self)
 end
 
@@ -102,6 +107,8 @@ function TowerMainView:_btnlimitTimeOnClick()
 	local curTimeLimitTowerOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
 	if not curTimeLimitTowerOpenMo then
+		GameFacade.showToast(ToastEnum.TowerTimeLimitEnd)
+
 		return
 	end
 
@@ -156,11 +163,26 @@ function TowerMainView:_btnmopupOnClick()
 	TowerController.instance:openTowerMopUpView()
 end
 
+function TowerMainView:_btntowerComposeOnClick()
+	local param = {}
+
+	param.targetModeType = TowerComposeEnum.TowerMainType.NewTower
+	param.needCloseViewName = ViewName.TowerMainView
+
+	self.viewAnim:Play("change", 0, 0)
+	self.viewAnim:Update(0)
+	TowerComposeController.instance:openTowerModeChangeView(param)
+end
+
 function TowerMainView:_editableInitView()
 	self.bossItemTab = self:getUserDataTb_()
 
 	self:_initLevelItems()
 	gohelper.setActive(self._goheroTrialNewEffect, false)
+
+	self._goLimitTimeEpisode = gohelper.findChild(self.viewGO, "limitTimeEpisode")
+	self._goTask = gohelper.findChild(self.viewGO, "task")
+	self.viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
 function TowerMainView:_initLevelItems()
@@ -198,12 +220,15 @@ function TowerMainView:onUpdateParam()
 end
 
 function TowerMainView:onOpen()
-	AudioMgr.instance:trigger(AudioEnum.Tower.play_ui_leimi_theft_open)
 	TowerModel.instance:cleanTrialData()
 	self:checkJump()
 	self:refreshUI()
 	self:initReddot()
 	TaskDispatcher.runDelay(self.checkShowEffect, self, 0.6)
+
+	if ViewMgr.instance:isOpen(ViewName.TowerModeChangeView) then
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.CloseModeChangeView)
+	end
 end
 
 function TowerMainView:checkShowEffect()
@@ -223,6 +248,10 @@ function TowerMainView:initReddot()
 end
 
 function TowerMainView:refreshUI()
+	gohelper.setActive(self._golimitTimeHasNew, false)
+	gohelper.setActive(self._golimitTimeUpdateTime, false)
+	gohelper.setActive(self._gobossHasNew, false)
+	gohelper.setActive(self._gobossUpdateTime, false)
 	self:refreshPermanentInfo()
 	self:initTaskInfo()
 	self:refreshRewardTaskInfo()
@@ -458,7 +487,7 @@ function TowerMainView:refreshBossInfo()
 end
 
 function TowerMainView:refreshBossNewTag()
-	local hasNew = TowerModel.instance:hasNewBossOpen()
+	local hasNew = false
 
 	gohelper.setActive(self._gobossHasNew, hasNew)
 end
@@ -507,8 +536,8 @@ function TowerMainView:refreshTowerState()
 
 	local hasNewTimeLimitOpen = not localTimeNewState or localTimeNewState == TowerEnum.LockKey
 
-	gohelper.setActive(self._golimitTimeHasNew, hasNewTimeLimitOpen and isTimeLimitTowerOpenLayer and curTimeLimitTowerOpenMo)
-	gohelper.setActive(self._golimitTimeUpdateTime, not hasNewTimeLimitOpen and isTimeLimitTowerOpenLayer and curTimeLimitTowerOpenMo and timeLimitTimeStamp > 0)
+	gohelper.setActive(self._golimitTimeHasNew, false)
+	gohelper.setActive(self._golimitTimeUpdateTime, false)
 
 	local timeLimitLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TimeLimitOpenLayerNum)
 
@@ -526,6 +555,9 @@ function TowerMainView:refreshTowerState()
 		else
 			self._txtlimitTimeLockTips.text = luaLang("towermain_entrancelock")
 		end
+
+		gohelper.setActive(self._goLimitTimeEpisode, false)
+		gohelper.setActive(self._goTask, false)
 	elseif not isTimeLimitTowerOpenLayer then
 		self._txtlimitTimeLockTips.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towermain_entranceUnlock"), {
 			timeLimitLayerNum * 10
@@ -555,8 +587,8 @@ function TowerMainView:refreshTowerState()
 		bossDateformate
 	}) or ""
 
-	gohelper.setActive(self._gobossHasNew, hasNewBossOpen and isBossTowerOpenLayer and isBossTowerStateOpen)
-	gohelper.setActive(self._gobossUpdateTime, not hasNewBossOpen and isBossTowerOpenLayer and isBossTowerStateOpen and minRemainTimeStamp > 0)
+	gohelper.setActive(self._gobossHasNew, false)
+	gohelper.setActive(self._gobossUpdateTime, false)
 	gohelper.setActive(self._gobossContent, isBossTowerOpenLayer)
 
 	local bossLayerNum = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
@@ -619,6 +651,7 @@ function TowerMainView:saveHeroTrialNew()
 	local trialSeason = TowerModel.instance:getTrialHeroSeason()
 
 	TowerController.instance:setPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewHeroTrial, trialSeason)
+	TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshHeroTrialNew)
 end
 
 function TowerMainView:refreshHeroTrialNew()

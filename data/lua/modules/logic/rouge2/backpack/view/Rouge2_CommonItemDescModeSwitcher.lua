@@ -36,6 +36,7 @@ end
 
 function Rouge2_CommonItemDescModeSwitcher:addEventListeners()
 	self._btnDetail:AddClickListener(self._btnDetailOnClick, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSwitchItemDescMode, self._onSwitchItemDescMode, self)
 end
 
 function Rouge2_CommonItemDescModeSwitcher:removeEventListeners()
@@ -53,6 +54,14 @@ function Rouge2_CommonItemDescModeSwitcher:refresh()
 	self._curDescMode = Rouge2_BackpackController.instance:getItemDescMode(self._dataFlag)
 
 	gohelper.setActive(self._goSelect, self._curDescMode == Rouge2_Enum.ItemDescMode.Full)
+end
+
+function Rouge2_CommonItemDescModeSwitcher:_onSwitchItemDescMode(descModeFlag)
+	if self._dataFlag ~= descModeFlag then
+		return
+	end
+
+	self:refresh()
 end
 
 return Rouge2_CommonItemDescModeSwitcher

@@ -25,7 +25,6 @@ function FightRenderOrderMgr:init()
 	self._entityId2OrderFixed = {}
 	self._entityId2WrapList = {}
 	self._renderOrderType = FightEnum.RenderOrderType.StandPos
-	self._entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
 end
 
 function FightRenderOrderMgr:setSortType(renderOrderType)
@@ -127,7 +126,7 @@ end
 
 function FightRenderOrderMgr:_resetRenderOrder(entityId)
 	local order = self:getOrder(entityId)
-	local entity = self._entityMgr:getEntity(entityId)
+	local entity = FightGameMgr.entityMgr:getEntity(entityId)
 
 	if entity then
 		entity:setRenderOrder(order)

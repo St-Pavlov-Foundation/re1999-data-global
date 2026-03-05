@@ -221,7 +221,7 @@ function Activity101SignViewBase:_createList()
 	local rectMask2d = self:_rectMask2d()
 
 	if rectMask2d then
-		rectMask2d.enabled = #dataList > 7
+		rectMask2d.enabled = #dataList > 4
 	end
 
 	self.__itemList = {}

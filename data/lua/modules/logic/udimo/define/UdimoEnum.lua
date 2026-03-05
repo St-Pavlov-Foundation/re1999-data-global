@@ -19,6 +19,7 @@ UdimoEnum.ConstId = {
 	InteractWaitTime = 8,
 	RandomWeatherIntervalTime = 4,
 	MaxShowUdimoCount = 5,
+	OverseasRandomTemperatureRange = 18,
 	EmojiIntervalTime = 3
 }
 UdimoEnum.Const = {

@@ -247,12 +247,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101269",
-    "content": "language_10101748",
+    "content": "language_10101257",
     "descSuccess": "6#100105011|6#100105012|100105013",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#0:1|1#9321001",
+    "triggerParam": "null-1#9321001",
     "display": 0
   },
   {
@@ -263,12 +263,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101270",
-    "content": "language_10101748",
+    "content": "language_10101257",
     "descSuccess": "7#100105014|7#100105015|100105016",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#0:1|1#9321001",
+    "triggerParam": "null-1#9321001",
     "display": 0
   },
   {
@@ -279,12 +279,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101271",
-    "content": "language_10101748",
+    "content": "language_10101257",
     "descSuccess": "5#100105017|100105018",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#0:1|1#9321001",
+    "triggerParam": "null-1#9321001",
     "display": 0
   },
   {
@@ -295,12 +295,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101405",
-    "content": "language_10101748",
+    "content": "language_10101257",
     "descSuccess": "1001071",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#0:1|1#9321002",
+    "triggerParam": "null-1#9321002",
     "display": 0
   },
   {
@@ -311,12 +311,12 @@
     "afterSelect": "",
     "checkId": 501,
     "title": "language_10101406",
-    "content": "language_10101749",
+    "content": "language_10107726",
     "descSuccess": "10|1001072|1001074",
     "descLose": "10|1001073|1001074",
     "descBigSuccess": "10|1001072|1001074",
     "triggerType": 1,
-    "triggerParam": "null-2#106:1|2#0:1|1#9321002",
+    "triggerParam": "null-2#106:1|1#9321002",
     "display": 0
   },
   {
@@ -359,12 +359,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101418",
-    "content": "language_10101409",
+    "content": "language_10101748",
     "descSuccess": "9#1001093",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#105:1|1#9321003",
+    "triggerParam": "null-2#0:1|1#9321003",
     "display": 0
   },
   {
@@ -375,12 +375,12 @@
     "afterSelect": "",
     "checkId": 0,
     "title": "language_10101419",
-    "content": "language_10101750",
+    "content": "language_10107727",
     "descSuccess": "9#1001093",
     "descLose": "",
     "descBigSuccess": "",
     "triggerType": 1,
-    "triggerParam": "null-2#104:1|1#9321003",
+    "triggerParam": "null-1#200|1#9321003",
     "display": 0
   }
 ]

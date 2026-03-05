@@ -2,17 +2,14 @@
 
 module("modules.logic.rouge2.backpack.view.Rouge2_BackpackSkillShowItem", package.seeall)
 
-local Rouge2_BackpackSkillShowItem = class("Rouge2_BackpackSkillShowItem", LuaCompBase)
+local Rouge2_BackpackSkillShowItem = class("Rouge2_BackpackSkillShowItem", Rouge2_BackpackSkillShowItemBase)
 
 Rouge2_BackpackSkillShowItem.PercentColor = "#F3A055"
 Rouge2_BackpackSkillShowItem.BracketColor = "#60A0FE"
 
-function Rouge2_BackpackSkillShowItem:ctor(index)
-	self._index = index
-end
-
 function Rouge2_BackpackSkillShowItem:init(go)
-	self.go = go
+	Rouge2_BackpackSkillShowItem.super.init(self, go)
+
 	self._goEmpty = gohelper.findChild(self.go, "#go_Empty")
 	self._goEmptyEffect = gohelper.findChild(self.go, "#go_Empty/add_eff")
 	self._goTips1 = gohelper.findChild(self.go, "#go_Empty/#go_Tips1")
@@ -24,63 +21,49 @@ function Rouge2_BackpackSkillShowItem:init(go)
 	self._imageAttribute = gohelper.findChildImage(self.go, "#go_UnEmpty/#go_Skill/#txt_SkillName/#image_Icon")
 	self._goAssemblyList = gohelper.findChild(self.go, "#go_UnEmpty/Capacity/#go_AssemblyList")
 	self._goAssemblyItem = gohelper.findChild(self.go, "#go_UnEmpty/Capacity/#go_AssemblyList/#go_AssemblyItem")
+	self._scrollDesc = gohelper.findChild(self.go, "#go_UnEmpty/Scroll View"):GetComponent(gohelper.Type_LimitedScrollRect)
 	self._txtDescr = gohelper.findChildText(self.go, "#go_UnEmpty/Scroll View/Viewport/#txt_Descr")
-	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "#btn_Click")
-	self._animator = gohelper.onceAddComponent(self.go, gohelper.Type_Animator)
 	self._goBXSAttr = gohelper.findChild(self.go, "#go_BXSAttr")
 	self._imageBXSAttrIcon = gohelper.findChildImage(self.go, "#go_BXSAttr/#image_Icon")
 
 	SkillHelper.addHyperLinkClick(self._txtDescr)
+
+	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go, Rouge2_Enum.ItemDescModeDataKey.BackpackSkill)
+
+	self._listener:initCallback(self._refreshItemDesc, self)
 end
 
 function Rouge2_BackpackSkillShowItem:addEventListeners()
-	self._btnClick:AddClickListener(self._btnClickOnClick, self)
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateActiveSkillInfo, self._onUpdateActiveSkillInfo, self)
+	Rouge2_BackpackSkillShowItem.super.addEventListeners(self)
 end
 
 function Rouge2_BackpackSkillShowItem:removeEventListeners()
-	self._btnClick:RemoveClickListener()
+	Rouge2_BackpackSkillShowItem.super.removeEventListeners(self)
 end
 
-function Rouge2_BackpackSkillShowItem:_btnClickOnClick()
-	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnSwitchSkillViewType, Rouge2_BackpackSkillView.ViewState.Edit, self._index)
-end
-
-function Rouge2_BackpackSkillShowItem:onUpdateMO()
-	self:refreshInfo()
-	self:refreshUI()
-	self:playAnim()
-end
-
-function Rouge2_BackpackSkillShowItem:refreshInfo()
-	self._preIsEmpty = self._isEmpty
-	self._skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(self._index)
-	self._skillUid = self._skillMo and self._skillMo:getUid()
-	self._skillId = self._skillMo and self._skillMo:getItemId()
-	self._isEmpty = not self._skillUid or self._skillUid == 0
-end
-
-function Rouge2_BackpackSkillShowItem:refreshUI()
-	gohelper.setActive(self._goEmpty, self._isEmpty)
-	gohelper.setActive(self._goUnEmpty, not self._isEmpty)
+function Rouge2_BackpackSkillShowItem:refreshCommonUI()
 	self:refreshBXSAttrIcon()
+end
 
-	if self._isEmpty then
-		self:refreshEmptyTips()
+function Rouge2_BackpackSkillShowItem:refreshEmptyUI()
+	self:refreshEmptyTips()
+end
 
-		return
-	end
-
+function Rouge2_BackpackSkillShowItem:refreshEquipUI()
 	self._skillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(self._skillId)
 	self._txtSkillName.text = self._skillCo and self._skillCo.name
 
-	Rouge2_ItemDescHelper.setItemDescStr(Rouge2_Enum.ItemDataType.Server, self._skillUid, self._txtDescr, nil, nil, Rouge2_BackpackSkillShowItem.PercentColor, Rouge2_BackpackSkillShowItem.BracketColor)
+	self._listener:startListen()
 
 	local assemblyNum = self._skillCo and self._skillCo.assembleCost or 0
 
 	gohelper.CreateNumObjList(self._goAssemblyList, self._goAssemblyItem, assemblyNum, self._refreshAssemblyItem, self)
 	Rouge2_IconHelper.setActiveSkillIcon(self._skillId, self._simageSkillIcon)
 	self:refreshAttrIcon()
+end
+
+function Rouge2_BackpackSkillShowItem:_refreshItemDesc(descMode)
+	Rouge2_ItemDescHelper.setItemDescStr(Rouge2_Enum.ItemDataType.Server, self._skillUid, self._txtDescr, descMode, nil, Rouge2_BackpackSkillShowItem.PercentColor, Rouge2_BackpackSkillShowItem.BracketColor)
 end
 
 function Rouge2_BackpackSkillShowItem:refreshAttrIcon()
@@ -111,18 +94,6 @@ function Rouge2_BackpackSkillShowItem:refreshBXSAttrIcon()
 	Rouge2_IconHelper.setAttributeIcon(attrId, self._imageBXSAttrIcon)
 end
 
-function Rouge2_BackpackSkillShowItem:playAnim()
-	if self._preIsEmpty == nil or self._preIsEmpty == self._isEmpty then
-		return
-	end
-
-	if self._isEmpty then
-		self._animator:Play("empty", 0, 0)
-	else
-		self._animator:Play("unempty", 0, 0)
-	end
-end
-
 function Rouge2_BackpackSkillShowItem:refreshEmptyTips()
 	local hasAnySkillEquip = Rouge2_BackpackController.instance:isCanEquipAnySkill(self._index)
 
@@ -140,9 +111,8 @@ function Rouge2_BackpackSkillShowItem:_refreshAssemblyItem(obj, index)
 	gohelper.setActive(goType2, not useType1)
 end
 
-function Rouge2_BackpackSkillShowItem:_onUpdateActiveSkillInfo()
-	self:refreshInfo()
-	self:refreshUI()
+function Rouge2_BackpackSkillShowItem:setScrollParentGO(goParentScroll)
+	self._scrollDesc.parentGameObject = goParentScroll
 end
 
 function Rouge2_BackpackSkillShowItem:onDestroy()

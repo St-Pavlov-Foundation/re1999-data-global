@@ -13,7 +13,9 @@ end
 function FightSceneCameraComp:onSceneStart(sceneId, levelId)
 	FightController.instance:registerCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
 	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 
 	if CameraMgr.instance:hasCameraRootAnimatorPlayer() then
 		local animatorPlayer = CameraMgr.instance:getCameraRootAnimatorPlayer()
@@ -64,12 +66,18 @@ function FightSceneCameraComp:onSceneStart(sceneId, levelId)
 	self:_onScreenResize(UnityEngine.Screen.width, UnityEngine.Screen.height)
 end
 
+function FightSceneCameraComp:_onLevelLoaded()
+	self:setSceneCameraOffset()
+end
+
 function FightSceneCameraComp:onSceneClose()
 	self._myTurnOffset = nil
 
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
 	FightController.instance:unregisterCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
 	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	TaskDispatcher.cancelTask(self._delaySetUnitCameraFov, self)
 	TaskDispatcher.cancelTask(self._resetParam, self)
 	self:resetCameraOffset()
@@ -378,6 +386,10 @@ function FightSceneCameraComp:_onMySideRoundEnd()
 end
 
 function FightSceneCameraComp:_onRestartStageBefore()
+	self._myTurnOffset = nil
+end
+
+function FightSceneCameraComp:_onSwitchPlaneClearAsset()
 	self._myTurnOffset = nil
 end
 

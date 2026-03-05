@@ -65,14 +65,6 @@ function Rouge2_InfoMO:getAttrGroupInfo()
 	return self._attrGroupInfo
 end
 
-function Rouge2_InfoMO:getUpdateAttrMap()
-	return self._attrGroupInfo and self._attrGroupInfo:getUpdateAttrMap()
-end
-
-function Rouge2_InfoMO:clearUpdateAttrMap()
-	return self._attrGroupInfo and self._attrGroupInfo:clearUpdateAttrMap()
-end
-
 function Rouge2_InfoMO:getCurAlchemyInfo()
 	return self._alchemyInfo
 end

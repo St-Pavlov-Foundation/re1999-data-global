@@ -22,5 +22,15 @@ MainSceneSwitchEnum.ReddotStatus = {
 }
 MainSceneSwitchEnum.DefaultScene = 1
 MainSceneSwitchEnum.SpSceneId = 4
+MainSceneSwitchEnum.CustomScene = {
+	CommandStation = 33001
+}
+MainSceneSwitchEnum.getCustomSceneInfo = {
+	[MainSceneSwitchEnum.CustomScene.CommandStation] = {
+		"scenes/v3a0_m_s18_zhb/prefab/v3a0_m_s18_zhb_p.prefab",
+		"v3a0_m_s18_zhb_p",
+		"v3a0_m_s18_zhb_p"
+	}
+}
 
 return MainSceneSwitchEnum

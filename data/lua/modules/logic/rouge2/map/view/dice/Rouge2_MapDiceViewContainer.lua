@@ -9,18 +9,23 @@ function Rouge2_MapDiceViewContainer:buildViews()
 
 	table.insert(views, Rouge2_MapDiceView.New())
 	table.insert(views, Rouge2_MapDiceAnimView.New())
+	table.insert(views, Rouge2_MapDiceChoiceView.New())
 	table.insert(views, TabViewGroup.New(1, "root/#go_lefttop"))
 
 	return views
 end
 
 function Rouge2_MapDiceViewContainer:playOpenTransition()
+	self:startViewOpenBlock()
+
 	local animator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
 	animator:Play("open", self.onPlayOpenTransitionFinish, self)
 end
 
 function Rouge2_MapDiceViewContainer:playCloseTransition()
+	self:startViewCloseBlock()
+
 	local animator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 
 	animator:Play("close", self.onPlayCloseTransitionFinish, self)

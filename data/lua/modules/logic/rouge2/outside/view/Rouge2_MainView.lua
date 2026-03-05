@@ -21,6 +21,7 @@ function Rouge2_MainView:onInitView()
 	self._goalchemyRedDot = gohelper.findChild(self.viewGO, "Right/#btn_Alchemy/#go_alchemyRedDot")
 	self._btnProp = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Prop")
 	self._btnMedicine = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Medicine")
+	self._btnMedicineAdd = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_MedicineAdd")
 	self._btnTalent = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Talent")
 	self._btnReview = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Review")
 	self._goreviewRedDot = gohelper.findChild(self.viewGO, "Right/#btn_Review/#go_reviewRedDot")
@@ -40,6 +41,7 @@ function Rouge2_MainView:addEvents()
 	self._btnAlchemy:AddClickListener(self._btnAlchemyOnClick, self)
 	self._btnProp:AddClickListener(self._btnPropOnClick, self)
 	self._btnMedicine:AddClickListener(self._btnMedicineOnClick, self)
+	self._btnMedicineAdd:AddClickListener(self._btnMedicineAddOnClick, self)
 	self._btnTalent:AddClickListener(self._btnTalentOnClick, self)
 	self._btnReview:AddClickListener(self._btnReviewOnClick, self)
 	Rouge2_Controller.instance:registerCallback(Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
@@ -58,6 +60,7 @@ function Rouge2_MainView:removeEvents()
 	self._btnAlchemy:RemoveClickListener()
 	self._btnProp:RemoveClickListener()
 	self._btnMedicine:RemoveClickListener()
+	self._btnMedicineAdd:RemoveClickListener()
 	self._btnTalent:RemoveClickListener()
 	self._btnReview:RemoveClickListener()
 	Rouge2_Controller.instance:unregisterCallback(Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
@@ -125,7 +128,7 @@ function Rouge2_MainView:enterGame()
 end
 
 function Rouge2_MainView:checkFormula()
-	if not Rouge2_AlchemyModel.instance:haveAlchemyInfo() then
+	if GuideModel.instance:isGuideFinish(33511) and not Rouge2_AlchemyModel.instance:haveAlchemyInfo() and Rouge2_AlchemyModel.instance:canMakeFormula() then
 		GameFacade.showOptionMessageBox(MessageBoxIdDefine.Rouge2NoFormula, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.reallyEnterRouge, nil, nil, self)
 	else
 		self:reallyEnterRouge()
@@ -159,6 +162,23 @@ function Rouge2_MainView:_btnendOnClick()
 end
 
 function Rouge2_MainView:_btnAlchemyOnClick()
+	AudioMgr.instance:trigger(AudioEnum.Rouge2.play_ui_dungeon3_2_alchemy)
+
+	if not Rouge2_Controller.instance:checkIsOpen(true) then
+		return
+	end
+
+	if Rouge2_Model.instance:isFinishedDifficulty() or Rouge2_Model.instance:isStarted() then
+		GameFacade.showToast(ToastEnum.Rouge2GameStartFormulaTip)
+
+		return
+	end
+
+	logNormal("点击炼金台")
+	Rouge2_OutsideController.instance:openAlchemyView()
+end
+
+function Rouge2_MainView:_btnMedicineAddOnClick()
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.play_ui_dungeon3_2_alchemy)
 
 	if not Rouge2_Controller.instance:checkIsOpen(true) then
@@ -296,6 +316,10 @@ function Rouge2_MainView:refreshUI()
 	self:_refreshFormula()
 	self:_refreshCDLocked()
 	self:refreshUnlock()
+
+	if not GuideModel.instance:isGuideFinish(33511) and Rouge2_OutsideModel.instance:isFinishOneRouge() and not Rouge2_Model.instance:inRouge() and not Rouge2_Controller.instance:isEndFlowRunning() then
+		Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnFinishAndNotRouge)
+	end
 end
 
 function Rouge2_MainView:refreshUnlock()
@@ -306,8 +330,10 @@ end
 
 function Rouge2_MainView:_refreshFormula()
 	local haveFormula = Rouge2_AlchemyModel.instance:haveAlchemyInfo()
+	local isFinishOne = Rouge2_OutsideModel.instance:isFinishOneRouge()
 
 	gohelper.setActive(self._btnMedicine, haveFormula)
+	gohelper.setActive(self._btnMedicineAdd, not haveFormula and isFinishOne)
 
 	if not haveFormula then
 		return

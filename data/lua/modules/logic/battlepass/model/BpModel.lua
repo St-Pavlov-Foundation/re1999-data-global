@@ -294,7 +294,7 @@ function BpModel:getUpdatePopupValidCfg()
 end
 
 function BpModel:getCurVersionOperActId()
-	return VersionActivity3_2Enum.ActivityId.BpOperAct
+	return VersionActivity3_3Enum.ActivityId.BpOperAct
 end
 
 BpModel.instance = BpModel.New()

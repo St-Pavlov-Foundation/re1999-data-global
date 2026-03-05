@@ -101,10 +101,18 @@ function TowerMainEntryView:_btnbossOnClick()
 end
 
 function TowerMainEntryView:_btnStartOnClick()
-	TowerController.instance:openMainView()
+	TowerComposeController.instance:openTowerMainSelectView()
 end
 
 function TowerMainEntryView:_btnstoreOnClick()
+	if not self.isTowerOpen then
+		local notJumpTips = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.Tower)
+
+		GameFacade.showToast(notJumpTips)
+
+		return
+	end
+
 	TowerController.instance:openTowerStoreView()
 end
 
@@ -169,6 +177,9 @@ function TowerMainEntryView:refreshUI()
 
 	gohelper.setActive(self._btnStart.gameObject, self.isTowerOpen)
 	gohelper.setActive(self._btnLock.gameObject, not self.isTowerOpen)
+	gohelper.setActive(self._golimitTimeHasNew, false)
+	gohelper.setActive(self._golimitTimeUpdateTime, false)
+	gohelper.setActive(self._gobossHasNew, false)
 	self:refreshStore()
 
 	if self.isTowerOpen then
@@ -200,8 +211,9 @@ function TowerMainEntryView:refreshEntranceUI()
 	gohelper.setActive(self._gobossEpisode, isBossOpen)
 
 	local isTimeLimitOpen = TowerController.instance:isTimeLimitTowerOpen()
+	local curTimeLimitTowerOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
-	gohelper.setActive(self._gotimeLimitEpisode, isTimeLimitOpen)
+	gohelper.setActive(self._gotimeLimitEpisode, isTimeLimitOpen and curTimeLimitTowerOpenMo)
 end
 
 function TowerMainEntryView:refreshTaskInfo()
@@ -261,7 +273,7 @@ function TowerMainEntryView:refreshBossInfo()
 end
 
 function TowerMainEntryView:refreshBossNewTag()
-	local hasNew = TowerModel.instance:hasNewBossOpen()
+	local hasNew = false
 
 	gohelper.setActive(self._gobossHasNew, hasNew)
 end
@@ -334,8 +346,8 @@ function TowerMainEntryView:refreshTowerState()
 		local localTimeNewState = TowerModel.instance:getLocalPrefsState(TowerEnum.LocalPrefsKey.NewTimeLimitOpen, curTimeLimitTowerOpenMo.id, curTimeLimitTowerOpenMo, TowerEnum.LockKey)
 		local hasNewTimeLimitOpen = not localTimeNewState or localTimeNewState == TowerEnum.LockKey
 
-		gohelper.setActive(self._golimitTimeHasNew, hasNewTimeLimitOpen)
-		gohelper.setActive(self._golimitTimeUpdateTime, not hasNewTimeLimitOpen and timeLimitTimeStamp > 0)
+		gohelper.setActive(self._golimitTimeHasNew, false)
+		gohelper.setActive(self._golimitTimeUpdateTime, false)
 	else
 		local minTimeStampMo = TowerModel.instance:getFirstUnOpenTowerInfo(TowerEnum.TowerType.Limited)
 
@@ -351,6 +363,7 @@ function TowerMainEntryView:refreshTowerState()
 			self._txtlimitTimeUpdateTime.text = luaLang("towermain_entrancelock")
 		end
 
+		gohelper.setActive(self._gotimeLimitEpisode, false)
 		gohelper.setActive(self._golimitTimeHasNew, false)
 		gohelper.setActive(self._golimitTimeUpdateTime, true)
 	end
@@ -377,8 +390,8 @@ function TowerMainEntryView:refreshTowerState()
 			bossDateformate
 		}) or luaLang("towermain_entrancelock")
 
-		gohelper.setActive(self._gobossHasNew, hasNewBossOpen)
-		gohelper.setActive(self._gobossUpdateTime, not hasNewBossOpen and minRemainTimeStamp > 0)
+		gohelper.setActive(self._gobossHasNew, false)
+		gohelper.setActive(self._gobossUpdateTime, false)
 	else
 		local minTimeStampMo = TowerModel.instance:getFirstUnOpenTowerInfo(TowerEnum.TowerType.Boss)
 
@@ -425,7 +438,7 @@ function TowerMainEntryView:refreshStoreTime()
 		return
 	end
 
-	local time = TowerStoreModel.instance:getUpdateStoreRemainTime()
+	local time = TowerStoreModel.instance:getUpdateStoreRemainTime(false, true)
 
 	self._txtstoreTime.text = time
 end

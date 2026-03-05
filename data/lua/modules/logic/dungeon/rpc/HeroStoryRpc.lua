@@ -33,7 +33,7 @@ function HeroStoryRpc:onReceiveUnlocHeroStoryReply(resultCode, msg)
 	end
 
 	RoleStoryModel.instance:onUnlocHeroStoryReply(msg)
-	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UpdateInfo)
+	RoleStoryController.instance:dispatchEvent(RoleStoryEvent.UnlockStory, msg.info.storyId)
 end
 
 function HeroStoryRpc:sendGetHeroStoryBonusRequest(storyId, callback, callbackObj)

@@ -1563,5 +1563,34 @@
       0,
       0
     ]
+  },
+  {
+    "id": 20028,
+    "name": "language_10108573",
+    "desc": "language_10106340",
+    "uiType": 0,
+    "round": 2,
+    "consumeType": -1,
+    "consumeNum": "",
+    "selfAttrs": "",
+    "enemyAttrs": "",
+    "selfSkills": "116330010",
+    "enemySkills": "",
+    "selfBuff": "",
+    "enemyBuff": "",
+    "endSkills": "",
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 461041251,
+    "loopEffect": "buff/v3a1_bls_innate1_01",
+    "closeEffect": "buff/v3a1_bls_innate1_02",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      0,
+      1.11
+    ]
   }
 ]

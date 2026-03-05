@@ -2188,5 +2188,55 @@
     "id": 3320008,
     "eventName": "play_plot_music_livelyl",
     "bankName": "plot_music_livelyl"
+  },
+  {
+    "id": 3330001,
+    "eventName": "play_activitymusic_theme_3_3",
+    "bankName": "activity3_3_music"
+  },
+  {
+    "id": 3330002,
+    "eventName": "play_activitymusic_neixin_3_3",
+    "bankName": "activity3_3_music"
+  },
+  {
+    "id": 3330003,
+    "eventName": "play_8bit_music_explore",
+    "bankName": "activity3_3_8bit_explore"
+  },
+  {
+    "id": 3330004,
+    "eventName": "play_8bit_music_combat",
+    "bankName": "activity3_3_8bit_combat"
+  },
+  {
+    "id": 3330005,
+    "eventName": "play_ui_checkpoint_noise_frozen_boss",
+    "bankName": "activity_yuanzheng_combataudio_noise"
+  },
+  {
+    "id": 3330006,
+    "eventName": "play_ui_checkpoint_noise_meimeng_loop",
+    "bankName": "activity_yuanzheng_combataudio_noise"
+  },
+  {
+    "id": 3330007,
+    "eventName": "play_ui_checkpoint_noise_emeng_loop",
+    "bankName": "activity_yuanzheng_combataudio_noise"
+  },
+  {
+    "id": 3330008,
+    "eventName": "play_battle_yuanzheng_3_3_normalfight",
+    "bankName": "activity_yuanzheng_combataudio"
+  },
+  {
+    "id": 3330009,
+    "eventName": "play_battle_yuanzheng_3_3_bossfight",
+    "bankName": "activity_yuanzheng_combataudio"
+  },
+  {
+    "id": 3330010,
+    "eventName": "play_activitymusic_zuozhan_3_3",
+    "bankName": "activity3_3_music"
   }
 ]

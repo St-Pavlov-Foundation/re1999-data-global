@@ -35,12 +35,14 @@ function LoperaMainView:onInitView()
 	self._taskAnimator = gohelper.findChild(self.viewGO, "window/righttop/reward/ani"):GetComponent(gohelper.Type_Animator)
 	self._gored = gohelper.findChild(self.viewGO, "window/righttop/reward/reddot")
 	self._goEndlessRedDot = gohelper.findChild(self.viewGO, "#btn_Endless/#go_reddot")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 end
 
 function LoperaMainView:addEvents()
 	self._btntask:AddClickListener(self._btntaskOnClick, self)
 	self._btnEndless:AddClickListener(self._btnEndlessOnClick, self)
 	self._btnReplay:AddClickListener(self._btnReplayOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self:addEventCb(LoperaController.instance, LoperaEvent.BeforeEnterEpisode, self._beforeEneterEpisode, self)
 	self:addEventCb(LoperaController.instance, LoperaEvent.EpisodeUpdate, self._onEpisodeUpdate, self)
 	self:addEventCb(LoperaController.instance, LoperaEvent.EpisodeFinish, self._onEpisodeFinish, self)
@@ -52,6 +54,7 @@ function LoperaMainView:removeEvents()
 	self._btntask:RemoveClickListener()
 	self._btnEndless:RemoveClickListener()
 	self._btnReplay:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 end
 
@@ -75,6 +78,34 @@ function LoperaMainView:_btnReplayOnClick()
 	end
 
 	StoryController.instance:playStory(storyId)
+end
+
+function LoperaMainView:_btnTrialOnClick()
+	self.actConfig = ActivityConfig.instance:getActivityCo(actId)
+
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function LoperaMainView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function LoperaMainView:_editableInitView()

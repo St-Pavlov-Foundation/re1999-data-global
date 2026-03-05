@@ -1,0 +1,98 @@
+[
+  {
+    "skillID": 20001,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109391",
+    "effects": "CompareWeight#1",
+    "cd": 0
+  },
+  {
+    "skillID": 20002,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109392",
+    "effects": "AddSpeed#-50#5000",
+    "cd": 0
+  },
+  {
+    "skillID": 30001,
+    "skillType": 2,
+    "condition": "2#5",
+    "skilldesc": "language_10109393",
+    "effects": "Weightadd#20",
+    "cd": 0
+  },
+  {
+    "skillID": 30002,
+    "skillType": 2,
+    "condition": "7",
+    "skilldesc": "language_10109394",
+    "effects": "Weightadd#1",
+    "cd": 0
+  },
+  {
+    "skillID": 30003,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109395",
+    "effects": "CompareWeight#2",
+    "cd": 0
+  },
+  {
+    "skillID": 30004,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109396",
+    "effects": "AddBuff#1#5000",
+    "cd": 0
+  },
+  {
+    "skillID": 40001,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109397",
+    "effects": "UnControl#1500#500",
+    "cd": 0
+  },
+  {
+    "skillID": 50001,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109395",
+    "effects": "CompareWeight#2",
+    "cd": 0
+  },
+  {
+    "skillID": 60001,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109398",
+    "effects": "Kill",
+    "cd": 0
+  },
+  {
+    "skillID": 70001,
+    "skillType": 2,
+    "condition": "1",
+    "skilldesc": "language_10109399",
+    "effects": "AddWeight",
+    "cd": 0
+  },
+  {
+    "skillID": 10002,
+    "skillType": 1,
+    "condition": "1",
+    "skilldesc": "language_10109400",
+    "effects": "AddSpeed#100#3000",
+    "cd": 10
+  },
+  {
+    "skillID": 10001,
+    "skillType": 1,
+    "condition": "2#7",
+    "skilldesc": "language_10109401",
+    "effects": "Adsorb#200#1000",
+    "cd": 10
+  }
+]

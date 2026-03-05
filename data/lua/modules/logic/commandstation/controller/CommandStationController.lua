@@ -95,6 +95,41 @@ function CommandStationController:_initializeRedDotInfo(dotInfos, dotNode, prefs
 	end
 end
 
+function CommandStationController.getCommandStationRelationChain()
+	if CommandStationEnum.TestCharacterChainId then
+		return lua_copost_character_chain.configDict[CommandStationEnum.TestCharacterChainId]
+	end
+
+	local num = #lua_copost_character_chain.configList
+
+	for i = num, 1, -1 do
+		local config = lua_copost_character_chain.configList[i]
+
+		if config.fightId == 0 or DungeonModel.instance:hasPassLevelAndStory(config.fightId) then
+			return config
+		end
+	end
+end
+
+function CommandStationController.getCommandStationRelationShipBoardReddot()
+	local config = CommandStationController.getCommandStationRelationChain()
+	local stateList = config and config.stateId
+
+	if stateList then
+		for i, v in ipairs(stateList) do
+			if not CommandStationModel.instance:getCharacterState(v) then
+				local config = lua_copost_character_state.configDict[v]
+
+				if config and config.isClick ~= CommandStationEnum.CharacterClickState.NoClick then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
 function CommandStationController:openCommandStationTimelineEventView(param, isImmediate)
 	ViewMgr.instance:openView(ViewName.CommandStationTimelineEventView, param, isImmediate)
 end
@@ -117,6 +152,24 @@ end
 
 function CommandStationController:openCommandStationDetailView(param, isImmediate)
 	ViewMgr.instance:openView(ViewName.CommandStationDetailView, param, isImmediate)
+end
+
+function CommandStationController:openCommandStationRelationShipBoard(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.CommandStationRelationShipBoard, param, isImmediate)
+end
+
+function CommandStationController:openCommandStationRelationShipDetail(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.CommandStationRelationShipDetail, param, isImmediate)
+end
+
+function CommandStationController:getMapDisplayViewParam()
+	return self._mapDisplayViewParam
+end
+
+function CommandStationController:openCommandStationMapDisplayView(param, isImmediate)
+	self._mapDisplayViewParam = param
+
+	ViewMgr.instance:openView(ViewName.CommandStationMapDisplayView, param, isImmediate)
 end
 
 function CommandStationController:openCommandStationEnterView(param, isImmediate)

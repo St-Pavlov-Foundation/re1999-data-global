@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "modNum": "1#3|2#5|3#1",
+    "monsterGroupId": 9001002,
+    "spineOffset": "0#-250#1",
+    "modOffset": " 0#0#1|-200#0#1|200#0#1|0#300#1",
+    "orderLayer": "2|3|4|1",
+    "initEnv": 11601,
+    "name": "language_10107383",
+    "nameEn": "Tides of Thought",
+    "themeIcon": "singlebg/tower2_singlebg/difficulty/tower_environment_pic1.png",
+    "themeDesc": "language_10107384",
+    "pointIcon": "hj_1_1",
+    "isOnline": 1
+  },
+  {
+    "id": 2,
+    "modNum": "1#3|2#5|3#1",
+    "monsterGroupId": 9001002,
+    "spineOffset": "0#-250#1",
+    "modOffset": " 0#0#1|-200#0#1|200#0#1|0#300#1",
+    "orderLayer": "2|3|4|1",
+    "initEnv": 11601,
+    "name": "language_10107385",
+    "nameEn": "Tides of Thought",
+    "themeIcon": "singlebg/tower2_singlebg/difficulty/tower_environment_pic1.png",
+    "themeDesc": "language_10107384",
+    "pointIcon": "hj_1_1",
+    "isOnline": 0
+  }
+]

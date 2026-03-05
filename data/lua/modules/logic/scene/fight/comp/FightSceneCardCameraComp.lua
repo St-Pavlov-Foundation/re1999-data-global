@@ -8,22 +8,26 @@ function FightSceneCardCameraComp:onSceneStart(sceneId, levelId)
 	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:registerCallback(FightEvent.StageChanged, self._onStageChange, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._stopCameraAnim, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._stopCameraAnim, self)
 	FightController.instance:registerCallback(FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
 	FightController.instance:registerCallback(FightEvent.SkillEditorPlayCardCameraAni, self._onSkillEditorPlayCardCameraAni, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 	FightController.instance:registerCallback(FightEvent.StopCardCameraAnimator, self._stopCameraAnim, self)
+	FightController.instance:registerCallback(FightEvent.SwitchScene_Data, self.onSwitchSceneData, self)
 end
 
 function FightSceneCardCameraComp:onSceneClose(sceneId, levelId)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:unregisterCallback(FightEvent.StageChanged, self._onStageChange, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._stopCameraAnim, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._stopCameraAnim, self)
 	FightController.instance:unregisterCallback(FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
 	FightController.instance:unregisterCallback(FightEvent.SkillEditorPlayCardCameraAni, self._onSkillEditorPlayCardCameraAni, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 	FightController.instance:unregisterCallback(FightEvent.StopCardCameraAnimator, self._stopCameraAnim, self)
+	FightController.instance:unregisterCallback(FightEvent.SwitchScene_Data, self.onSwitchSceneData, self)
 
 	if self._multiLoader then
 		self._multiLoader:dispose()
@@ -52,9 +56,15 @@ function FightSceneCardCameraComp:onSceneClose(sceneId, levelId)
 	end
 end
 
-function FightSceneCardCameraComp:_onLevelLoaded(levelId)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+function FightSceneCardCameraComp:onSwitchSceneData(levelId)
+	self:resetCameraAnim(levelId)
+end
 
+function FightSceneCardCameraComp:_onLevelLoaded(levelId)
+	self:resetCameraAnim(levelId)
+end
+
+function FightSceneCardCameraComp:resetCameraAnim(levelId)
 	local waveId = FightModel.instance:getCurWaveId()
 	local cardCameraName = self:_getCameraName(levelId, waveId)
 
@@ -90,6 +100,10 @@ function FightSceneCardCameraComp:_onChangeWaveEnd()
 end
 
 function FightSceneCardCameraComp:_getCameraName(levelId, waveId)
+	if FightHelper.checkInPaTaAfterSwitchScene() then
+		return "1"
+	end
+
 	local fightParam = FightModel.instance:getFightParam()
 	local monsterGroupId = fightParam and fightParam.monsterGroupIds and fightParam.monsterGroupIds[waveId]
 	local monsterGroupCO = monsterGroupId and lua_monster_group.configDict[monsterGroupId]

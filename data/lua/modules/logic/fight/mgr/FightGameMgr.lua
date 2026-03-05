@@ -5,12 +5,15 @@ module("modules.logic.fight.mgr.FightGameMgr", package.seeall)
 local FightGameMgr = class("FightGameMgr", FightBaseClass)
 
 function FightGameMgr:onConstructor()
+	FightObject.Counter = 0
 	self.mgrList = {}
 
 	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnLostConnect, self.onLostConnect)
+	self:com_registEvent(FightController.instance, FightEvent.BeforeSwitchPlane, self.onSwitchPlane)
 	self:com_registMsg(FightMsgId.RestartGame, self.onRestartGame)
 
 	FightGameMgr.restartMgr = self:newClass(FightRestartMgr)
+	FightGameMgr.switchPlaneMgr = self:newClass(FightSwitchPlaneMgr)
 end
 
 function FightGameMgr:onLogicEnter()
@@ -20,6 +23,8 @@ end
 
 function FightGameMgr:registMgr()
 	self.loaderMgr = self:addMgr(FightLoaderMgr)
+	self.timelinePreLoaderMgr = self:addMgr(FightTimelinePreLoaderMgr)
+	self.entityMgr = self:addMgr(FightEntityMgr)
 	self.playMgr = self:addMgr(FightPlayMgr)
 	self.operateMgr = self:addMgr(FightOperateMgr)
 	self.checkCrashMgr = self:addMgr(FightCheckCrashMgr)
@@ -45,6 +50,8 @@ function FightGameMgr:registMgr()
 	self.spineColorBySceneMgr = self:addMgr(FightSpineColorBySceneMgr)
 	self.bgmMgr = self:addMgr(FightBgmMgr)
 	self.bloomMgr = self:addMgr(FightBloomMgr)
+	self.asfdMgr = self:addMgr(FightASFDMgr)
+	self.transitionMgr = self:addMgr(FightTransitionMgr)
 end
 
 function FightGameMgr:addMgr(class)
@@ -68,6 +75,14 @@ function FightGameMgr:defineMgrRef()
 end
 
 function FightGameMgr:onRestartGame()
+	self:clearAndReRegis()
+end
+
+function FightGameMgr:onSwitchPlane()
+	self:clearAndReRegis()
+end
+
+function FightGameMgr:clearAndReRegis()
 	for i = #self.mgrList, 1, -1 do
 		self.mgrList[i]:disposeSelf()
 		table.remove(self.mgrList, i)

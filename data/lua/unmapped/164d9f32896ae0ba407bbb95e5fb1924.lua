@@ -94,6 +94,13 @@ module_views.GM_StoreView = {
 	layer = "TOP",
 	viewType = ViewType.Modal
 }
+module_views.GM_ArcadeView = {
+	destroy = 0,
+	container = "GM_ArcadeViewContainer",
+	mainRes = "ui/viewres/gm/gm_arcadeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal
+}
 
 local GM_TaskListCommonItem = {
 	destroy = 0,

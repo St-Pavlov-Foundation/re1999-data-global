@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1100,
+    "themeId": 1,
+    "image": "singlebg/tower_singlebg/level/tower_level_fullbg.png",
+    "name": "第1期初始环境",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "这1是个什么环境",
+    "type": "1"
+  },
+  {
+    "id": 1101,
+    "themeId": 1,
+    "image": "singlebg/tower_singlebg/level/tower_level_fullbg.png",
+    "name": "船舱环境",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "这1是个什么环境",
+    "type": "2"
+  },
+  {
+    "id": 1102,
+    "themeId": 1,
+    "image": "singlebg/tower_singlebg/permanent/towermopup_panelbg",
+    "name": "电厂环境",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "这2是个什么环境",
+    "type": "2"
+  },
+  {
+    "id": 1103,
+    "themeId": 1,
+    "image": "singlebg/tower_singlebg/level/tower_level_fullbg.png",
+    "name": "电场环境",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "这3是个什么环境",
+    "type": "2"
+  },
+  {
+    "id": 2100,
+    "themeId": 2,
+    "image": "singlebg/tower_singlebg/permanent/towermopup_panelbg",
+    "name": "第2期初始环境",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "这2是个什么环境",
+    "type": "1"
+  },
+  {
+    "id": 2101,
+    "themeId": 2,
+    "image": "singlebg/tower_singlebg/level/tower_level_fullbg.png",
+    "name": "船舱环境2",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_1.png",
+    "desc": "这1是个什么环境",
+    "type": "2"
+  },
+  {
+    "id": 2102,
+    "themeId": 2,
+    "image": "singlebg/tower_singlebg/permanent/towermopup_panelbg",
+    "name": "电厂环境2",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_2.png",
+    "desc": "这2是个什么环境",
+    "type": "2"
+  },
+  {
+    "id": 2103,
+    "themeId": 2,
+    "image": "singlebg/tower_singlebg/level/tower_level_fullbg.png",
+    "name": "电场环境2",
+    "effects": "12001|12002|12003",
+    "icon": "singlebg/tower_singlebg/level/tower_level_stage_3.png",
+    "desc": "这3是个什么环境",
+    "type": "2"
+  }
+]

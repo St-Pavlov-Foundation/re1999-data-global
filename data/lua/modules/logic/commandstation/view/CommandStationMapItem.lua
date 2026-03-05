@@ -20,14 +20,23 @@ function CommandStationMapItem:onInitView()
 	self._goGet = gohelper.findChild(self.viewGO, "#go_Dispatch/#go_Get")
 	self._btnclickdispatch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Dispatch/#btn_click_dispatch")
 	self._goOutside = gohelper.findChild(self.viewGO, "#go_Outside")
-	self._goHighLight1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_HighLight1")
 	self._goIcon1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Icon1")
 	self._goIcon2 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Icon2")
+	self._goHighLight1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_HighLight1")
 	self._goExpand1 = gohelper.findChild(self.viewGO, "#go_Outside/#go_Expand1")
 	self._btnclickoutside = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Outside/#btn_click_outside")
 	self._goCharacter = gohelper.findChild(self.viewGO, "#go_Character")
+	self._gocharacter2 = gohelper.findChild(self.viewGO, "#go_Character/#go_character2")
+	self._btnclick21 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#go_character2/1/#btn_click_2_1")
+	self._btnclick22 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#go_character2/2/#btn_click_2_2")
+	self._gocharacter3 = gohelper.findChild(self.viewGO, "#go_Character/#go_character3")
+	self._btnclick31 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#go_character3/1/#btn_click_3_1")
+	self._btnclick32 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#go_character3/2/#btn_click_3_2")
+	self._btnclick33 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#go_character3/3/#btn_click_3_3")
 	self._goHighLight2 = gohelper.findChild(self.viewGO, "#go_Character/#go_HighLight2")
 	self._goExpand2 = gohelper.findChild(self.viewGO, "#go_Character/#go_Expand2")
+	self._goExpand2_1 = gohelper.findChild(self.viewGO, "#go_Character/#go_Expand2_1")
+	self._goExpand2_2 = gohelper.findChild(self.viewGO, "#go_Character/#go_Expand2_2")
 	self._btnclickcharacter = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Character/#btn_click_character")
 
 	if self._editableInitView then
@@ -39,6 +48,11 @@ function CommandStationMapItem:addEvents()
 	self._btnclicktime:AddClickListener(self._btnclicktimeOnClick, self)
 	self._btnclickdispatch:AddClickListener(self._btnclickdispatchOnClick, self)
 	self._btnclickoutside:AddClickListener(self._btnclickoutsideOnClick, self)
+	self._btnclick21:AddClickListener(self._btnclick21OnClick, self)
+	self._btnclick22:AddClickListener(self._btnclick22OnClick, self)
+	self._btnclick31:AddClickListener(self._btnclick31OnClick, self)
+	self._btnclick32:AddClickListener(self._btnclick32OnClick, self)
+	self._btnclick33:AddClickListener(self._btnclick33OnClick, self)
 	self._btnclickcharacter:AddClickListener(self._btnclickcharacterOnClick, self)
 end
 
@@ -46,7 +60,42 @@ function CommandStationMapItem:removeEvents()
 	self._btnclicktime:RemoveClickListener()
 	self._btnclickdispatch:RemoveClickListener()
 	self._btnclickoutside:RemoveClickListener()
+	self._btnclick21:RemoveClickListener()
+	self._btnclick22:RemoveClickListener()
+	self._btnclick31:RemoveClickListener()
+	self._btnclick32:RemoveClickListener()
+	self._btnclick33:RemoveClickListener()
 	self._btnclickcharacter:RemoveClickListener()
+end
+
+function CommandStationMapItem:_btnclick21OnClick()
+	self:_btnclickOnClick({
+		chaIndex = 1
+	})
+end
+
+function CommandStationMapItem:_btnclick22OnClick()
+	self:_btnclickOnClick({
+		chaIndex = 2
+	})
+end
+
+function CommandStationMapItem:_btnclick31OnClick()
+	self:_btnclickOnClick({
+		chaIndex = 1
+	})
+end
+
+function CommandStationMapItem:_btnclick32OnClick()
+	self:_btnclickOnClick({
+		chaIndex = 2
+	})
+end
+
+function CommandStationMapItem:_btnclick33OnClick()
+	self:_btnclickOnClick({
+		chaIndex = 3
+	})
 end
 
 function CommandStationMapItem:_btnclicktimeOnClick()
@@ -65,18 +114,24 @@ function CommandStationMapItem:_btnclickcharacterOnClick()
 	self:_btnclickOnClick()
 end
 
-function CommandStationMapItem:_btnclickOnClick()
+function CommandStationMapItem:_btnclickOnClick(param)
 	if not self._eventConfig or self._isClose then
+		return
+	end
+
+	local info = self._animator:GetCurrentAnimatorStateInfo(0)
+
+	if info and info:IsName("close") then
 		return
 	end
 
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectedEvent, self._eventId)
 
 	local timeId = CommandStationMapModel.instance:getTimeId()
-	local param = {
-		eventId = self._eventId,
-		timeId = timeId
-	}
+
+	param = param or {}
+	param.eventId = self._eventId
+	param.timeId = timeId
 
 	if self._category == CommandStationEnum.EventCategory.Normal then
 		if self._eventTypeIsTime or self._eventTypeIsNormal then
@@ -129,6 +184,14 @@ function CommandStationMapItem:playCloseAnim()
 
 	self._isClose = true
 
+	local info = self._animator:GetCurrentAnimatorStateInfo(0)
+
+	if info and info:IsName("close") then
+		self:_closeAnimDone()
+
+		return
+	end
+
 	TaskDispatcher.runDelay(self._ensureClose, self, 0.2)
 	self._animatorPlayer:Play("close", self._closeAnimDone, self)
 end
@@ -169,6 +232,11 @@ function CommandStationMapItem:_editableInitView()
 
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.SelectedEvent, self._onSelectedEvent, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.CancelSelectedEvent, self._onCancelSelectedEvent, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.AfterEventFinish, self._onAfterEventFinish, self)
+end
+
+function CommandStationMapItem:_onAfterEventFinish()
+	self:_updatePos()
 end
 
 function CommandStationMapItem:_onCancelSelectedEvent()
@@ -184,13 +252,7 @@ function CommandStationMapItem:_onCancelSelectedEvent()
 end
 
 function CommandStationMapItem:_onSelectedEvent(eventId)
-	local config
-
-	if self._category == CommandStationEnum.EventCategory.Normal then
-		config = lua_copost_event.configDict[eventId]
-	elseif self._category == CommandStationEnum.EventCategory.Character then
-		config = lua_copost_character_event.configDict[eventId]
-	end
+	local config = lua_copost_event.configDict[eventId] or lua_copost_character_event.configDict[eventId]
 
 	self._selectedSameType = config and config.eventType == self._eventConfig.eventType
 
@@ -236,10 +298,35 @@ function CommandStationMapItem:_setSelectedByIndex(index, isSelected)
 		end
 	end
 
-	gohelper.setActive(self["_goHighLight" .. index], not self._eventIsRead)
-	gohelper.setActive(self["_goExpand" .. index], isSelected)
-
 	self._isSelected = isSelected
+
+	self:_updateEffect()
+end
+
+function CommandStationMapItem:_updateEffect()
+	local eventIsRead = self._eventIsRead
+
+	if self._eventTypeIsDispatch then
+		local state = CommandStationModel.instance:getDispatchEventState(self._eventId)
+		local isGetReward = state == CommandStationEnum.DispatchState.GetReward
+
+		if not isGetReward then
+			eventIsRead = false
+		end
+	end
+
+	local index = self._characterCategory and self._characterStatus or self._statusInfo[self._eventConfig.eventType]
+
+	gohelper.setActive(self["_goHighLight" .. index], not eventIsRead and not self._isSelected)
+	gohelper.setActive(self["_goExpand" .. index], self._isSelected)
+
+	if self._characterCategory then
+		local num = #self._eventConfig.chasId
+
+		gohelper.setActive(self._goExpand2, self._isSelected and num == 0)
+		gohelper.setActive(self._goExpand2_1, self._isSelected and num == 2)
+		gohelper.setActive(self._goExpand2_2, self._isSelected and num == 3)
+	end
 end
 
 function CommandStationMapItem:_editableAddEvents()
@@ -256,6 +343,7 @@ function CommandStationMapItem:onUpdateMO(eventId, category)
 
 	self._category = category
 	self._eventId = eventId
+	self._characterCategory = false
 	self._eventIsRead = CommandStationModel.instance:isEventRead(self._eventId)
 
 	if self._category == CommandStationEnum.EventCategory.Normal then
@@ -271,16 +359,36 @@ function CommandStationMapItem:onUpdateMO(eventId, category)
 		return
 	end
 
-	self:_setSelected(false)
-	self:_setPos()
+	self:_updatePos()
 
 	if self._characterCategory then
 		self:_showCharacterEvent()
-
-		return
+	else
+		self:_showNormalEvent()
 	end
 
-	self:_showNormalEvent()
+	self:_setSelected(false)
+end
+
+function CommandStationMapItem:isActiveEvent()
+	return CommandStationModel.instance:eventIsActivated(self._eventId)
+end
+
+function CommandStationMapItem:_updatePos()
+	self:_setPos()
+
+	local isActive = CommandStationModel.instance:eventIsActivated(self._eventId)
+
+	if isActive then
+		self._uiFollower:SetEnable(true)
+	else
+		self._uiFollower:SetEnable(false)
+		transformhelper.setLocalPosXY(self.viewGO.transform, -2000, 0)
+	end
+end
+
+function CommandStationMapItem:reset()
+	self._uiFollower = nil
 end
 
 function CommandStationMapItem:_setPos()
@@ -313,17 +421,72 @@ function CommandStationMapItem:_setPos()
 end
 
 function CommandStationMapItem:_showCharacterEvent()
-	local chaId = self._eventConfig.chaId
+	gohelper.setActive(self._gocharacter2, false)
+	gohelper.setActive(self._gocharacter3, false)
 
+	local num = #self._eventConfig.chasId
+
+	if num == 0 then
+		self:_showOneCharacter()
+	elseif num == 2 then
+		self:_hideOneCharacter()
+		self:_showTwoCharacter()
+	elseif num == 3 then
+		self:_hideOneCharacter()
+		self:_showThreeCharacter()
+	else
+		logError("CommandStationMapItem error chasId num")
+	end
+
+	gohelper.setActive(self._goCharacter, true)
+end
+
+function CommandStationMapItem:_hideOneCharacter()
+	gohelper.setActive(gohelper.findChild(self._goCharacter, "image_BG"), false)
+	gohelper.setActive(gohelper.findChild(self._goCharacter, "image_Icon"), false)
+end
+
+function CommandStationMapItem:_showOneCharacter()
 	self._singleImage = gohelper.findChildSingleImage(self._goCharacter, "image_Icon")
 
+	local chaId = self._eventConfig.changeChaId > 0 and self._eventConfig.changeChaId or self._eventConfig.chaId
 	local chaConfig = lua_copost_character.configDict[chaId]
 
 	if chaConfig then
 		self._singleImage:LoadImage(ResUrl.getHeadIconSmall(chaConfig.chaPicture))
 	end
+end
 
-	gohelper.setActive(self._goCharacter, true)
+function CommandStationMapItem:_showTwoCharacter()
+	gohelper.setActive(self._btnclickcharacter, false)
+	gohelper.setActive(self._gocharacter2, true)
+
+	local charsId = #self._eventConfig.changeChasId > 0 and self._eventConfig.changeChasId or self._eventConfig.chasId
+
+	for i, chaId in ipairs(charsId) do
+		local image = gohelper.findChildSingleImage(self._gocharacter2, i .. "/image_Icon")
+		local chaConfig = lua_copost_character.configDict[chaId]
+
+		if chaConfig then
+			image:LoadImage(ResUrl.getHeadIconSmall(chaConfig.chaPicture))
+		end
+	end
+end
+
+function CommandStationMapItem:_showThreeCharacter()
+	gohelper.setActive(self._btnclickcharacter, false)
+	gohelper.setActive(self._gocharacter3, true)
+
+	local charsId = #self._eventConfig.changeChasId > 0 and self._eventConfig.changeChasId or self._eventConfig.chasId
+
+	for i, chaId in ipairs(charsId) do
+		local image = gohelper.findChildSingleImage(self._gocharacter3, i .. "/image_Icon")
+		local chaConfig = lua_copost_character.configDict[chaId]
+
+		if chaConfig then
+			image:LoadImage(ResUrl.getHeadIconSmall(chaConfig.chaPicture))
+		end
+	end
 end
 
 function CommandStationMapItem:isMainType()

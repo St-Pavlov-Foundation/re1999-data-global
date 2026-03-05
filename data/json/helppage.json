@@ -4674,8 +4674,8 @@
     "title": "",
     "type": 2,
     "text": "指挥所主界面指引图",
-    "icon": "v3a0_commandstation_help_1",
-    "iconText": "v3a0_commandstation_help_1",
+    "icon": "v3a3_commandstation_help_3",
+    "iconText": "v3a3_commandstation_help_3",
     "unlockGuideId": 31004,
     "isCn": 0
   },
@@ -4704,8 +4704,8 @@
     "title": "",
     "type": 2,
     "text": "指挥所沙盘指引图2",
-    "icon": "v3a0_commandstation_help_4",
-    "iconText": "v3a0_commandstation_help_4",
+    "icon": "v3a3_commandstation_help_2",
+    "iconText": "v3a3_commandstation_help_2",
     "unlockGuideId": 31003,
     "isCn": 0
   },
@@ -5107,6 +5107,106 @@
     "icon": "v3a2_bossrush_help_2",
     "iconText": "v3a2_bossrush_help_2",
     "unlockGuideId": 32029,
+    "isCn": 0
+  },
+  {
+    "id": 3310001,
+    "title": "",
+    "type": 2,
+    "text": "操作说明",
+    "icon": "v3a3_maersha_help_2",
+    "iconText": "v3a3_maersha_help_2",
+    "unlockGuideId": 33030,
+    "isCn": 0
+  },
+  {
+    "id": 3310002,
+    "title": "",
+    "type": 2,
+    "text": "情绪说明",
+    "icon": "v3a3_maersha_help_1",
+    "iconText": "v3a3_maersha_help_1",
+    "unlockGuideId": 33031,
+    "isCn": 0
+  },
+  {
+    "id": 3305101,
+    "title": "",
+    "type": 1,
+    "text": "选关引导",
+    "icon": "v3a3_tower2_help1",
+    "iconText": "v3a3_tower2_help1",
+    "unlockGuideId": 33051,
+    "isCn": 0
+  },
+  {
+    "id": 3305102,
+    "title": "",
+    "type": 1,
+    "text": "选关引导",
+    "icon": "v3a3_tower2_help2",
+    "iconText": "v3a3_tower2_help2",
+    "unlockGuideId": 33051,
+    "isCn": 0
+  },
+  {
+    "id": 3305103,
+    "title": "",
+    "type": 1,
+    "text": "选关引导",
+    "icon": "v3a3_tower2_help3",
+    "iconText": "v3a3_tower2_help3",
+    "unlockGuideId": 33051,
+    "isCn": 0
+  },
+  {
+    "id": 3305104,
+    "title": "",
+    "type": 1,
+    "text": "选关引导",
+    "icon": "v3a3_tower2_help4",
+    "iconText": "v3a3_tower2_help4",
+    "unlockGuideId": 33051,
+    "isCn": 0
+  },
+  {
+    "id": 3305201,
+    "title": "",
+    "type": 1,
+    "text": "表/里象引导",
+    "icon": "v3a3_tower2_help5",
+    "iconText": "v3a3_tower2_help5",
+    "unlockGuideId": 33052,
+    "isCn": 0
+  },
+  {
+    "id": 3305202,
+    "title": "",
+    "type": 1,
+    "text": "表/里象引导",
+    "icon": "v3a3_tower2_help6",
+    "iconText": "v3a3_tower2_help6",
+    "unlockGuideId": 33052,
+    "isCn": 0
+  },
+  {
+    "id": 3305301,
+    "title": "",
+    "type": 1,
+    "text": "梦境机制引导",
+    "icon": "v3a3_tower2_fight_help_1",
+    "iconText": "v3a3_tower2_fight_help_1",
+    "unlockGuideId": 33057,
+    "isCn": 0
+  },
+  {
+    "id": 3310003,
+    "title": "",
+    "type": 2,
+    "text": "指挥所沙盘指引图3",
+    "icon": "v3a3_commandstation_help_1",
+    "iconText": "v3a3_commandstation_help_1",
+    "unlockGuideId": 33041,
     "isCn": 0
   },
   {

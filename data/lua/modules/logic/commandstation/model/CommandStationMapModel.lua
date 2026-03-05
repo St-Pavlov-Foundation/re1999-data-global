@@ -53,7 +53,30 @@ function CommandStationMapModel:getVersionTimeline(versionId)
 	return self:checkTimeline(timeline)
 end
 
+function CommandStationMapModel:checkTimeIdUnlock(timeId)
+	local episodeId = CommandStationConfig.instance:getTimePointEpisodeId(timeId)
+
+	if episodeId ~= 0 and not DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+		return false
+	end
+
+	local eventList = CommandStationConfig.instance:getTimeIdUnlockEvent(timeId)
+
+	if not eventList or #eventList == 0 then
+		return true
+	end
+
+	for i, eventId in ipairs(eventList) do
+		if not CommandStationModel.instance:eventIsFinished(eventId) then
+			return false
+		end
+	end
+
+	return true
+end
+
 function CommandStationMapModel:checkTimeline(timeline)
+	local lockTimeIdList = {}
 	local result = {}
 	local firstTimeId
 
@@ -61,10 +84,10 @@ function CommandStationMapModel:checkTimeline(timeline)
 		local timeIdList = {}
 
 		for i, timeId in ipairs(v.timeId) do
-			local episodeId = CommandStationConfig.instance:getTimePointEpisodeId(timeId)
-
-			if DungeonModel.instance:hasPassLevelAndStory(episodeId) then
+			if self:checkTimeIdUnlock(timeId) then
 				table.insert(timeIdList, timeId)
+			else
+				table.insert(lockTimeIdList, timeId)
 			end
 
 			firstTimeId = firstTimeId or timeId
@@ -78,7 +101,47 @@ function CommandStationMapModel:checkTimeline(timeline)
 		end
 	end
 
-	return result, firstTimeId
+	return result, firstTimeId, lockTimeIdList
+end
+
+function CommandStationMapModel:checkTimelineByCharacterId(timeline, characterId, versionId)
+	local result = {}
+
+	for _, v in ipairs(timeline) do
+		local timeIdList = {}
+
+		for i, timeId in ipairs(v.timeId) do
+			if self:checkTimePointByCharacterId(timeId, characterId) and (versionId == CommandStationEnum.AllVersion or versionId == v.versionId) then
+				table.insert(timeIdList, timeId)
+			end
+		end
+
+		if #timeIdList > 0 then
+			table.insert(result, v)
+		end
+	end
+
+	return result
+end
+
+function CommandStationMapModel:checkTimePointByCharacterId(timeId, characterId)
+	local config = lua_copost_time_point_event.configDict[timeId]
+
+	if not config then
+		return false
+	end
+
+	local chaEventId = config.chaEventId
+
+	for i, id in ipairs(chaEventId) do
+		local chaEventConfig = lua_copost_character_event.configDict[id]
+
+		if chaEventConfig and CommandStationModel.instance:eventIsActivated(id) and (chaEventConfig.chaId == characterId or tabletool.indexOf(chaEventConfig.chasId, characterId)) then
+			return true
+		end
+	end
+
+	return false
 end
 
 function CommandStationMapModel:initTimeId()

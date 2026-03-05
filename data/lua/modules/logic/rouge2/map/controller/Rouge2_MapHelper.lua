@@ -197,7 +197,8 @@ end
 function Rouge2_MapHelper.backToMainScene()
 	Rouge2_MapModel.instance:clearInteractive()
 	Rouge2_MapModel.instance:setManualCloseHeroGroupView(false)
-	Rouge2_Model.instance:clearUpdateAttrMap()
+	Rouge2_MapAttrUpdateController.instance:clearUpdateAttrMap()
+	Rouge2_MapChoiceController.instance:clear()
 	Rouge2_PopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
 	Rouge2_StatController.instance:quitMap()
@@ -209,7 +210,7 @@ end
 
 function Rouge2_MapHelper._onEnterMainSceneDone()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Rouge2_MainView)
-	VersionActivity3_2EnterController.instance:openVersionActivityEnterView(Rouge2_MapHelper.onOpenVersionActivityView, nil, VersionActivity3_2Enum.ActivityId.Rouge2, true)
+	VersionActivity3_3EnterController.instance:openVersionActivityEnterView(Rouge2_MapHelper.onOpenVersionActivityView, nil, VersionActivity3_2Enum.ActivityId.Rouge2, true)
 end
 
 function Rouge2_MapHelper.onOpenVersionActivityView()

@@ -20,7 +20,12 @@ function Rouge2_ActiveSkillDropItem:init(go)
 	self._txtDesc = gohelper.findChildText(self.go, "scroll_Desc/Viewport/go_Container/txt_Desc")
 	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_Click", AudioEnum.Rouge2.SelectActiveSkill)
 	self._btnClick2 = gohelper.findChildClickWithDefaultAudio(self.go, "scroll_Desc/Viewport/go_Container/txt_Desc", AudioEnum.Rouge2.SelectActiveSkill)
+	self._goRecommend = gohelper.findChild(self.go, "go_Info/go_Recommend")
+	self._teamTipsParam = {}
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.AttrBuffDrop)
+	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go, Rouge2_Enum.ItemDescModeDataKey.SkillDrop)
 
+	self._listener:initCallback(self.refreshItemDesc, self)
 	self:onSelect(false)
 end
 
@@ -61,14 +66,23 @@ function Rouge2_ActiveSkillDropItem:onUpdateMO(index, viewType, dataType, dataId
 end
 
 function Rouge2_ActiveSkillDropItem:refreshUI()
+	self._listener:startListen()
+
+	self._teamTipsParam.itemId = self._skillId
+
+	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
+
 	self._txtName.text = self._skillCo and self._skillCo.name
 
 	Rouge2_IconHelper.setActiveSkillIcon(self._skillId, self._simageIcon)
 	Rouge2_IconHelper.setAttributeIcon(self._attributeId, self._imageAttribute)
 	gohelper.setActive(self._goCostList, self._assembleCost > 0)
 	gohelper.CreateNumObjList(self._goCostList, self._goCostItem, self._assembleCost)
-	Rouge2_ItemDescHelper.setItemDescStr(self._dataType, self._dataId, self._txtDesc, nil, nil, Rouge2_ActiveSkillDropItem.PercentColor, Rouge2_ActiveSkillDropItem.BracketColor)
 	gohelper.setActive(self._btnClick.gameObject, self._viewType == Rouge2_MapEnum.ItemDropViewEnum.Select)
+end
+
+function Rouge2_ActiveSkillDropItem:refreshItemDesc(descMode)
+	Rouge2_ItemDescHelper.setItemDescStr(self._dataType, self._dataId, self._txtDesc, descMode, nil, Rouge2_ActiveSkillDropItem.PercentColor, Rouge2_ActiveSkillDropItem.BracketColor)
 end
 
 function Rouge2_ActiveSkillDropItem:onSelect(isSelect)

@@ -18,6 +18,7 @@ function HeroGroupMO:ctor()
 	self.activity104Equips = {}
 	self.exInfos = {}
 	self.assistBossId = nil
+	self.params = nil
 end
 
 function HeroGroupMO:init(info)
@@ -26,6 +27,7 @@ function HeroGroupMO:init(info)
 	self.name = info.name
 	self.clothId = info.clothId
 	self.assistBossId = info.assistBossId
+	self.params = info.params
 	self.heroList = {}
 	self.trialDict = {}
 
@@ -77,6 +79,7 @@ function HeroGroupMO:initByFightGroup(fightGroup)
 	self.replayAssistHeroUid = fightGroup.assistHeroUid
 	self.replayAssistUserId = fightGroup.assistUserId
 	self.assistBossId = fightGroup.assistBossId
+	self.params = fightGroup.params
 
 	local battleId = HeroGroupModel.instance.battleId
 	local battleCO = battleId and lua_battle.configDict[battleId]
@@ -266,6 +269,7 @@ function HeroGroupMO:initByLocalData(saveData)
 	self.trialDict = {}
 	self.clothId = saveData.clothId
 	self.assistBossId = saveData.assistBossId
+	self.params = saveData.params
 	self.temp = true
 	self.isReplay = false
 	self.equips = {}
@@ -433,6 +437,7 @@ function HeroGroupMO:saveData()
 	info.equips = {}
 	info.activity104Equips = {}
 	info.assistBossId = self.assistBossId
+	info.params = self.params
 
 	for i = 1, ModuleEnum.MaxHeroCountInGroup do
 		info.heroList[i] = self.heroList[i]
@@ -1060,6 +1065,24 @@ function HeroGroupMO:checkAct183HeroList(maxHeroCount, groupEpisodeMo)
 	elseif maxHeroCount < curHeroCount then
 		logError("角色数量超过上限")
 	end
+end
+
+function HeroGroupMO:setTowerComposeHeroList(maxHeroCount)
+	local curHeroCount = self.heroList and #self.heroList or 0
+
+	if curHeroCount < maxHeroCount then
+		for i = curHeroCount + 1, maxHeroCount do
+			table.insert(self.heroList, "0")
+		end
+	end
+end
+
+function HeroGroupMO:getSaveParams()
+	return self.params
+end
+
+function HeroGroupMO:setSaveParams(params)
+	self.params = params or ""
 end
 
 return HeroGroupMO

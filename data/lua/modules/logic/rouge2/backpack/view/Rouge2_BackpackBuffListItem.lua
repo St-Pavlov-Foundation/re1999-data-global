@@ -18,6 +18,8 @@ function Rouge2_BackpackBuffListItem:initParent(view, goScroll)
 		local goBuff = view:getResInst(Rouge2_Enum.ResPath.ComBuffItem, self._goRoot)
 
 		self._comBuffItem = Rouge2_CommonBuffItem.Get(goBuff)
+
+		self._comBuffItem:initDescModeFlag(Rouge2_Enum.ItemDescModeDataKey.BackpackBuff)
 	end
 
 	if not self._reddotComp then

@@ -26,13 +26,17 @@ function VersionActivityFixedStoreViewContainer:buildTabViews(tabContainerId)
 	end
 
 	if tabContainerId == 2 then
-		local currencyType = VersionActivityFixedHelper.getVersionActivityCurrencyType(self._bigVersion, self._smallVersio)
+		local currencyType = VersionActivityFixedHelper.getVersionActivityCurrencyType(self._bigVersion, self._smallVersion)
 
 		self._currencyView = CurrencyView.New({
 			currencyType
 		})
 
 		self._currencyView:setOpenCallback(self._onCurrencyOpen, self)
+
+		local enum = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion)
+
+		self._currencyView.foreHideBtn = enum.isHideStoreCurrencyAddBtn
 
 		return {
 			self._currencyView

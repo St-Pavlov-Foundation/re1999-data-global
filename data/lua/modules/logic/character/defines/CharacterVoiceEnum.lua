@@ -37,11 +37,12 @@ CharacterVoiceEnum.RTShareType = {
 }
 CharacterVoiceEnum.BloomCameraSize = {
 	[3116] = 10,
-	[3107] = 10,
 	[3108] = 10,
 	[3122] = 10,
+	[3107] = 10,
 	[3134] = 10,
 	[3070] = 10,
+	[3047] = 10,
 	[3128] = 10,
 	[3120] = 10
 }

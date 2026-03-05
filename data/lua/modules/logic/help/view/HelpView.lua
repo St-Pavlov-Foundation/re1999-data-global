@@ -29,12 +29,24 @@ function HelpView:removeEvents()
 end
 
 function HelpView:_btnleftOnClick()
-	HelpModel.instance:setTargetPageIndex(HelpModel.instance:getTargetPageIndex() - 1)
+	local index = HelpModel.instance:getTargetPageIndex()
+
+	if index <= 1 then
+		return
+	end
+
+	HelpModel.instance:setTargetPageIndex(index - 1)
 	self:selectHelpItem()
 end
 
 function HelpView:_btnrightOnClick()
-	HelpModel.instance:setTargetPageIndex(HelpModel.instance:getTargetPageIndex() + 1)
+	local index = HelpModel.instance:getTargetPageIndex()
+
+	if index >= #self._pagesCo then
+		return
+	end
+
+	HelpModel.instance:setTargetPageIndex(index + 1)
 	self:selectHelpItem()
 end
 

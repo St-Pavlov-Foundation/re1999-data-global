@@ -6,7 +6,7 @@ local FightTLEventSetSpinePos = class("FightTLEventSetSpinePos", FightTimelineTr
 
 function FightTLEventSetSpinePos:onTrackStart(fightStepData, duration, paramsArr)
 	local targetType = paramsArr[1]
-	local targetEntitys
+	local targetEntitys = {}
 
 	if targetType == "1" then
 		targetEntitys = {}
@@ -37,21 +37,23 @@ function FightTLEventSetSpinePos:onTrackStart(fightStepData, duration, paramsArr
 	elseif targetType == "6" then
 		local from_entity = FightHelper.getEntity(fightStepData.toId)
 
-		targetEntitys = FightHelper.getAllSideEntitys(from_entity:getSide())
+		if from_entity then
+			targetEntitys = FightHelper.getAllSideEntitys(from_entity:getSide())
 
-		for i, v in ipairs(targetEntitys) do
-			if v.id == fightStepData.toId then
-				table.remove(targetEntitys, i)
+			for i, v in ipairs(targetEntitys) do
+				if v.id == fightStepData.toId then
+					table.remove(targetEntitys, i)
 
-				if FightHelper.isAssembledMonster(v) then
-					for index = #targetEntitys, 1, -1 do
-						if FightHelper.isAssembledMonster(targetEntitys[index]) then
-							table.remove(targetEntitys, index)
+					if FightHelper.isAssembledMonster(v) then
+						for index = #targetEntitys, 1, -1 do
+							if FightHelper.isAssembledMonster(targetEntitys[index]) then
+								table.remove(targetEntitys, index)
+							end
 						end
 					end
-				end
 
-				break
+					break
+				end
 			end
 		end
 	end

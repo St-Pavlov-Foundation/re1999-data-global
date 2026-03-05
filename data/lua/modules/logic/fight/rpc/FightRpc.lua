@@ -301,7 +301,7 @@ end
 
 function FightRpc:onReceiveTeamInfoPush(resultCode, msg)
 	local isFightScene = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight
-	local entityMgr = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local fightData = FightData.New(msg.fight)
 
 	FightLocalDataMgr.instance:updateFightData(fightData)
@@ -351,6 +351,7 @@ function FightRpc:onReceiveEndFightPush(resultCode, msg)
 	FightModel.instance:recordFightGroup(msg.fightGroupA)
 	FightModel.instance:onEndFight()
 	FightModel.instance:recordPassModel(msg)
+	FightDataHelper.fieldMgr:clearData()
 	FightController.instance:dispatchEvent(FightEvent.PushEndFight)
 end
 
@@ -491,6 +492,19 @@ function FightRpc:onReceiveGetEntityDetailInfosReply(resultCode, msg)
 	if resultCode == 0 then
 		GMFightEntityModel.instance:onGetEntityDetailInfos(msg)
 		GMController.instance:dispatchEvent(GMFightEntityView.Evt_OnGetEntityDetailInfos)
+	end
+end
+
+function FightRpc:sendGetGMFightTeamDetailInfosRequest(callback, callbackObj)
+	local req = FightModule_pb.GetGMFightTeamDetailInfosRequest()
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function FightRpc:onReceiveGetGMFightTeamDetailInfosReply(resultCode, msg)
+	if resultCode == 0 then
+		GMFightEntityModel.instance:onGetGMFightTeamDetailInfos(msg)
+		FightController.instance:dispatchEvent(FightEvent.OnReceiveGmFightTeamDetailInfo)
 	end
 end
 

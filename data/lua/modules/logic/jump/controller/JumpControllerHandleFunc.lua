@@ -708,7 +708,7 @@ function JumpController:jumpToActivityView(jumpParam)
 				VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
 			end
 		end, nil, actId)
-	elseif actId == ActivityEnum.Activity.Work_SignView_1_8 or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == VersionActivity3_1Enum.ActivityId.NationalGift or actId == ActivityEnum.Activity.V2a0_SummerSign or actId == ActivityEnum.Activity.V2a1_MoonFestival or actId == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or actId == VersionActivity2_2Enum.ActivityId.LimitDecorate or actId == ActivityEnum.Activity.V2a2_TurnBack_H5 or actId == ActivityEnum.Activity.V2a2_SummonCustomPickNew or actId == ActivityEnum.Activity.V2a3_NewCultivationGift or actId == ActivityEnum.Activity.V2a7_Labor_Sign or actId == ActivityEnum.Activity.V2a9_FreeMonthCard or actId == ActivityEnum.Activity.V2a8_DragonBoat or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == ActivityEnum.Activity.V3a1_AutumnSign or actId == BpModel.instance:getCurVersionOperActId() or actId == VersionActivity3_1Enum.ActivityId.NationalGift then
+	elseif actId == ActivityEnum.Activity.Work_SignView_1_8 or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == VersionActivity3_1Enum.ActivityId.NationalGift or actId == ActivityEnum.Activity.V2a0_SummerSign or actId == ActivityEnum.Activity.V2a1_MoonFestival or actId == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or actId == VersionActivity2_2Enum.ActivityId.LimitDecorate or actId == ActivityEnum.Activity.V2a2_TurnBack_H5 or actId == ActivityEnum.Activity.V2a2_SummonCustomPickNew or actId == ActivityEnum.Activity.V2a3_NewCultivationGift or actId == ActivityEnum.Activity.V2a7_Labor_Sign or actId == ActivityEnum.Activity.V2a9_FreeMonthCard or actId == ActivityEnum.Activity.V2a8_DragonBoat or actId == ActivityEnum.Activity.V3a0_SummerSign or actId == ActivityEnum.Activity.V3a1_AutumnSign or actId == BpModel.instance:getCurVersionOperActId() or actId == NationalGiftModel.instance:getCurVersionActId() then
 		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
@@ -739,6 +739,14 @@ function JumpController:jumpToActivityView(jumpParam)
 		end
 
 		GaoSiNiaoController.instance:enterLevelView()
+	elseif ActivityConfig.instance:isActIdInList(actId, ActivityType100Config.instance:getWarmUpH5ActIdList()) then
+		if ActivityHelper.getActivityStatus(actId, true) ~= ActivityEnum.ActivityStatus.Normal then
+			return JumpEnum.JumpResult.Fail
+		end
+
+		table.insert(self.waitOpenViewNames, ViewName.ActivityBeginnerView)
+		ActivityModel.instance:setTargetActivityCategoryId(actId)
+		ActivityController.instance:openActivityBeginnerView()
 	else
 		logWarn("not support actId : " .. jumpParam)
 	end
@@ -1730,6 +1738,23 @@ function JumpController:jumpToTowerView(jumpParam)
 	return JumpEnum.JumpResult.Success
 end
 
+function JumpController:jumpToTowerComposeView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpId = jumpArray[2]
+	local themeId = jumpArray[3]
+	local layerId = jumpArray[4]
+	local param = {
+		isJump = true,
+		jumpId = jumpId,
+		themeId = themeId,
+		layerId = layerId
+	}
+
+	TowerComposeController.instance:jumpView(param)
+
+	return JumpEnum.JumpResult.Success
+end
+
 function JumpController:jumpToOdyssey(jumpParam)
 	local jumpArray = string.splitToNumber(jumpParam, "#")
 	local jumpType = jumpArray[2]
@@ -1827,6 +1852,7 @@ JumpController.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.RoleStoryActivity] = JumpController.jumpToRoleStoryActivity,
 	[JumpEnum.JumpView.BossRush] = JumpController.jumpToBossRush,
 	[JumpEnum.JumpView.Tower] = JumpController.jumpToTowerView,
+	[JumpEnum.JumpView.TowerCompose] = JumpController.jumpToTowerComposeView,
 	[JumpEnum.JumpView.Odyssey] = JumpController.jumpToOdyssey,
 	[JumpEnum.JumpView.AssassinLibraryView] = JumpController.jumpToAssassinLibraryView,
 	[JumpEnum.JumpView.Challenge] = Act183JumpController.jumpToAct183,

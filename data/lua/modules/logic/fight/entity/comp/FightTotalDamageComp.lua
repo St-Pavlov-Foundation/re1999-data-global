@@ -2,22 +2,14 @@
 
 module("modules.logic.fight.entity.comp.FightTotalDamageComp", package.seeall)
 
-local FightTotalDamageComp = class("FightTotalDamageComp", LuaCompBase)
+local FightTotalDamageComp = class("FightTotalDamageComp", FightBaseClass)
 
-function FightTotalDamageComp:ctor(entity)
+function FightTotalDamageComp:onConstructor(entity)
 	self.entity = entity
 	self._damageDict = {}
-end
 
-function FightTotalDamageComp:init(go)
-	FightController.instance:registerCallback(FightEvent.OnDamageTotal, self._onDamageTotal, self)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-end
-
-function FightTotalDamageComp:removeEventListeners()
-	FightController.instance:unregisterCallback(FightEvent.OnDamageTotal, self._onDamageTotal, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	TaskDispatcher.cancelTask(self._showTotalFloat, self)
+	self:com_registFightEvent(FightEvent.OnDamageTotal, self._onDamageTotal)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 end
 
 function FightTotalDamageComp:_onDamageTotal(fightStepData, defender, damage, isLastHit)
@@ -29,15 +21,14 @@ function FightTotalDamageComp:_onDamageTotal(fightStepData, defender, damage, is
 		if isLastHit then
 			self._damageDict[fightStepData].showTotal = true
 			self._damageDict[fightStepData].fromId = fightStepData.fromId
-
-			TaskDispatcher.runDelay(self._showTotalFloat, self, 0.6)
+			self.timerItem = self:com_registTimer(self._showTotalFloat, 0.6)
 		end
 	end
 end
 
 function FightTotalDamageComp:_onSkillPlayFinish(entity, skillId, fightStepData)
 	if entity ~= self.entity and fightStepData.actType == FightEnum.ActType.SKILL then
-		TaskDispatcher.cancelTask(self._showTotalFloat, self)
+		FightTimer.cancelTimer(self.timerItem)
 
 		if self._damageDict[fightStepData] then
 			self._damageDict[fightStepData].showTotal = true

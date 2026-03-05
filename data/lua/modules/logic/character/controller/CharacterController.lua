@@ -482,7 +482,39 @@ function CharacterController:useSkinGiftItem(itemId)
 	local config = ItemConfig.instance:getItemCo(itemId)
 	local effect = config and config.effect or ""
 	local param = GameUtil.splitString2(effect, true)
+
+	if not param then
+		return
+	end
+
 	local skinList = param[1]
+
+	if not skinList or next(skinList) == nil then
+		return
+	end
+
+	if self:checkHaveCompensate(skinList) then
+		self:handleSkinGiftHasCompensate(itemId)
+	else
+		self:handleSkinGiftNoCompensate(itemId, skinList)
+	end
+end
+
+function CharacterController:checkHaveCompensate(skinList)
+	for i, v in ipairs(skinList) do
+		local skinConfig = SkinConfig.instance:getSkinCo(v)
+
+		if not skinConfig then
+			logError("皮肤折扣,不存在的皮肤id: " .. tostring(v))
+		elseif not string.nilorempty(skinConfig.compensate) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function CharacterController:handleSkinGiftNoCompensate(itemId, skinList)
 	local isAllHasSkin = true
 
 	for i, v in ipairs(skinList) do
@@ -502,6 +534,15 @@ function CharacterController:useSkinGiftItem(itemId)
 	ViewMgr.instance:openView(ViewName.DecorateSkinSelectView, {
 		itemId = itemId
 	})
+end
+
+function CharacterController:handleSkinGiftHasCompensate(itemId)
+	local param = {}
+
+	param.type = SkinDiscountCompensateEnum.SelectDisplayType.Select
+	param.itemId = itemId
+
+	ViewMgr.instance:openView(ViewName.SkinDiscountCompensateSelectView, param)
 end
 
 function CharacterController:_onUseSkinGiftItemCallback(cmd, resultCode, msg)

@@ -40,5 +40,19 @@
     "hitAnimName": "idle2",
     "freezeAnimName": "idle2",
     "sleepAnimName": "idle2"
+  },
+  {
+    "skinId": 630411,
+    "idleAnimName": "idle1",
+    "hitAnimName": "hit1",
+    "freezeAnimName": "freeze",
+    "sleepAnimName": "sleep"
+  },
+  {
+    "skinId": 6304111,
+    "idleAnimName": "idle2",
+    "hitAnimName": "hit2",
+    "freezeAnimName": "freeze2",
+    "sleepAnimName": "sleep2"
   }
 ]

@@ -22,11 +22,13 @@ function NationalGiftController:addConstEvents()
 end
 
 function NationalGiftController:checkActivity()
-	if not ActivityModel.instance:isActOnLine(VersionActivity3_1Enum.ActivityId.NationalGift) then
+	local actId = NationalGiftModel.instance:getCurVersionActId()
+
+	if not ActivityModel.instance:isActOnLine(actId) then
 		return
 	end
 
-	Activity212Rpc.instance:sendGetAct212InfoRequest(VersionActivity3_1Enum.ActivityId.NationalGift)
+	Activity212Rpc.instance:sendGetAct212InfoRequest(actId)
 end
 
 function NationalGiftController:openNationalGiftBuyTipView(param)

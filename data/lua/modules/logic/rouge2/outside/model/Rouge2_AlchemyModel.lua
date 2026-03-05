@@ -115,6 +115,42 @@ function Rouge2_AlchemyModel:getAllFormulaList()
 	return self._unlockFormulaList
 end
 
+function Rouge2_AlchemyModel:canMakeFormula()
+	local unlockFormulaList = self:getAllFormulaList()
+
+	if not unlockFormulaList or next(unlockFormulaList) == nil then
+		return false
+	end
+
+	for _, formulaId in ipairs(unlockFormulaList) do
+		local formulaConfig = Rouge2_OutSideConfig.instance:getFormulaConfig(formulaId)
+
+		if string.nilorempty(formulaConfig.mainIdNum) then
+			return true
+		else
+			local canMake = true
+			local materialParam = string.split(formulaConfig.mainIdNum, "|")
+
+			for _, param in ipairs(materialParam) do
+				local data = string.splitToNumber(param, "#")
+				local haveNum = self:getMaterialNum(data[1])
+
+				if not haveNum or haveNum < data[2] then
+					canMake = false
+
+					break
+				end
+			end
+
+			if canMake then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
 function Rouge2_AlchemyModel:isFormulaUnlock(formulaId)
 	local formulaConfig = Rouge2_OutSideConfig.instance:getFormulaConfig(formulaId)
 

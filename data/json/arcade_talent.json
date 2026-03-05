@@ -1,0 +1,178 @@
+[
+  {
+    "id": 100,
+    "level": 1,
+    "cost": 50,
+    "name": "language_10104555",
+    "displayType": "complicated",
+    "skill": "7001"
+  },
+  {
+    "id": 101,
+    "level": 1,
+    "cost": 50,
+    "name": "language_10104556",
+    "displayType": "simple",
+    "skill": "7011"
+  },
+  {
+    "id": 101,
+    "level": 2,
+    "cost": 150,
+    "name": "language_10104556",
+    "displayType": "simple",
+    "skill": "7012"
+  },
+  {
+    "id": 101,
+    "level": 3,
+    "cost": 250,
+    "name": "language_10104556",
+    "displayType": "simple",
+    "skill": "7013"
+  },
+  {
+    "id": 101,
+    "level": 4,
+    "cost": 350,
+    "name": "language_10104556",
+    "displayType": "simple",
+    "skill": "7014"
+  },
+  {
+    "id": 101,
+    "level": 5,
+    "cost": 450,
+    "name": "language_10104556",
+    "displayType": "simple",
+    "skill": "7015"
+  },
+  {
+    "id": 102,
+    "level": 1,
+    "cost": 50,
+    "name": "language_10104557",
+    "displayType": "simple",
+    "skill": "7021"
+  },
+  {
+    "id": 102,
+    "level": 2,
+    "cost": 150,
+    "name": "language_10104557",
+    "displayType": "simple",
+    "skill": "7022"
+  },
+  {
+    "id": 102,
+    "level": 3,
+    "cost": 250,
+    "name": "language_10104557",
+    "displayType": "simple",
+    "skill": "7023"
+  },
+  {
+    "id": 102,
+    "level": 4,
+    "cost": 350,
+    "name": "language_10104557",
+    "displayType": "simple",
+    "skill": "7024"
+  },
+  {
+    "id": 102,
+    "level": 5,
+    "cost": 450,
+    "name": "language_10104557",
+    "displayType": "simple",
+    "skill": "7025"
+  },
+  {
+    "id": 103,
+    "level": 1,
+    "cost": 150,
+    "name": "language_10104558",
+    "displayType": "simple",
+    "skill": "7031"
+  },
+  {
+    "id": 103,
+    "level": 2,
+    "cost": 250,
+    "name": "language_10104558",
+    "displayType": "simple",
+    "skill": "7032"
+  },
+  {
+    "id": 103,
+    "level": 3,
+    "cost": 350,
+    "name": "language_10104558",
+    "displayType": "simple",
+    "skill": "7033"
+  },
+  {
+    "id": 103,
+    "level": 4,
+    "cost": 450,
+    "name": "language_10104558",
+    "displayType": "simple",
+    "skill": "7034"
+  },
+  {
+    "id": 103,
+    "level": 5,
+    "cost": 550,
+    "name": "language_10104558",
+    "displayType": "simple",
+    "skill": "7035"
+  },
+  {
+    "id": 104,
+    "level": 1,
+    "cost": 300,
+    "name": "language_10104559",
+    "displayType": "simple",
+    "skill": "7041"
+  },
+  {
+    "id": 104,
+    "level": 2,
+    "cost": 400,
+    "name": "language_10104559",
+    "displayType": "simple",
+    "skill": "7042"
+  },
+  {
+    "id": 104,
+    "level": 3,
+    "cost": 500,
+    "name": "language_10104559",
+    "displayType": "simple",
+    "skill": "7043"
+  },
+  {
+    "id": 105,
+    "level": 1,
+    "cost": 300,
+    "name": "language_10104560",
+    "displayType": "complicated",
+    "skill": "7051"
+  },
+  {
+    "id": 106,
+    "level": 1,
+    "cost": 450,
+    "name": "language_10104561",
+    "displayType": "complicated",
+    "skill": "7061"
+  },
+  {
+    "id": 107,
+    "level": 1,
+    "cost": 750,
+    "name": "language_10104562",
+    "displayType": "complicated",
+    "skill": "7071"
+  }
+]

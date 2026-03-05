@@ -121,8 +121,6 @@ function FightBloomMgr:_checkEntityPPEffectMask(entity)
 	local replaceMat = entity.spineRenderer:getReplaceMat()
 
 	if gohelper.isNil(replaceMat) then
-		logError("FightBloomMgr.SetPassEnable mat=nil")
-
 		return
 	end
 

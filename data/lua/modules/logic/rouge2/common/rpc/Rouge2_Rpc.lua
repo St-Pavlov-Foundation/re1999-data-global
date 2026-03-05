@@ -18,7 +18,6 @@ function Rouge2_Rpc:onReceiveGetRouge2InfoReply(resultCode, msg)
 	local rouge2Info = msg.rouge2Info
 
 	Rouge2_Model.instance:updateRougeInfo(rouge2Info)
-	Rouge2_BackpackController.instance:buildItemReddot()
 end
 
 function Rouge2_Rpc:sendEnterRouge2SelectDifficultyRequest(difficulty, callback, callbackObj)
@@ -56,6 +55,7 @@ function Rouge2_Rpc:onReceiveEnterRouge2SelectCareerReply(resultCode, msg)
 	local rouge2Info = msg.rouge2Info
 
 	Rouge2_Model.instance:updateRougeInfo(rouge2Info)
+	Rouge2_BackpackController.instance:checkCurTeamSystemId()
 	Rouge2_BackpackController.instance:tryEquipSkillsAfterSelectCareer()
 	Rouge2_StatController.instance:statSelectCareer()
 end
@@ -538,6 +538,14 @@ function Rouge2_Rpc:onReceiveRouge2UpdateCoinPush(resultCode, msg)
 	end
 
 	local coin = msg.coin
+	local preCoin = Rouge2_Model.instance:getCoin()
+	local updateNum = coin - preCoin
+
+	if updateNum > 0 then
+		local tips = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_getcointips"), updateNum)
+
+		Rouge2_MapTipPopController.instance:addPopTip(tips)
+	end
 
 	Rouge2_Model.instance:getRougeInfo().coin = coin
 
@@ -550,6 +558,14 @@ function Rouge2_Rpc:onReceiveRouge2UpdateRevivalCoinPush(resultCode, msg)
 	end
 
 	local revivalCoin = msg.revivalCoin
+	local preRevivalCoin = Rouge2_Model.instance:getRevivalCoin()
+	local updateNum = revivalCoin - preRevivalCoin
+
+	if updateNum > 0 then
+		local tips = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_getrevivalcointips"), updateNum)
+
+		Rouge2_MapTipPopController.instance:addPopTip(tips)
+	end
 
 	Rouge2_Model.instance:updateRevivalCoin(revivalCoin)
 end
@@ -562,16 +578,6 @@ function Rouge2_Rpc:onReceiveRouge2EntrustInfoPush(resultCode, msg)
 	local entrustInfo = msg.entrustInfo
 
 	Rouge2_MapModel.instance:updateEntrustInfo(entrustInfo)
-end
-
-function Rouge2_Rpc:onReceiveRouge2TriggerEffectPush(resultCode, msg)
-	if resultCode ~= 0 then
-		return
-	end
-
-	local effect = msg.effect
-
-	Rouge2_MapTipPopController.instance:addPopTipByEffect(effect)
 end
 
 function Rouge2_Rpc:onReceiveRouge2InfoPush(resultCode, msg)
@@ -630,6 +636,72 @@ function Rouge2_Rpc:onReceiveRouge2CheckInfoPush(resultCode, msg)
 	end
 
 	Rouge2_MapChoiceController.instance:addPushToFlow("Rouge2CheckInfoPush", msg)
+end
+
+function Rouge2_Rpc:sendRouge2SummonerActiveTalentRequest(talentId, callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2SummonerActiveTalentRequest()
+
+	req.talentId = talentId
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2SummonerActiveTalentReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_Model.instance:updateRougeInfo(msg.rouge2Info)
+end
+
+function Rouge2_Rpc:sendRouge2SummonerResetTalentRequest(stage, callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2SummonerResetTalentRequest()
+
+	req.stage = stage
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2SummonerResetTalentReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_Model.instance:updateRougeInfo(msg.rouge2Info)
+end
+
+function Rouge2_Rpc:sendRouge2SetSystemIdRequest(systemId, callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2SetSystemIdRequest()
+
+	req.systemId = systemId
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2SetSystemIdReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_Model.instance:updateCurTeamSystemId(msg.systemId)
+end
+
+function Rouge2_Rpc:sendRouge2GainCareerAttrDropRequest(attrId, callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2GainCareerAttrDropRequest()
+
+	req.attrId = attrId
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2GainCareerAttrDropReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local rouge2Info = msg.rouge2Info
+
+	Rouge2_Model.instance:updateRougeInfo(rouge2Info)
 end
 
 Rouge2_Rpc.instance = Rouge2_Rpc.New()

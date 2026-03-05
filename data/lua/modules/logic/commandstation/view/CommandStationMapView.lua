@@ -11,6 +11,9 @@ function CommandStationMapView:onInitView()
 	self._goVersion = gohelper.findChild(self.viewGO, "#go_Version")
 	self._btnEvent = gohelper.findChildButtonWithAudio(self.viewGO, "Event/#btn_Event")
 	self._txtEvent = gohelper.findChildText(self.viewGO, "Event/#txt_Event")
+	self._goarrow = gohelper.findChild(self.viewGO, "#go_arrow")
+	self._btnleft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_arrow/#btn_left")
+	self._btnright = gohelper.findChildButtonWithAudio(self.viewGO, "#go_arrow/#btn_right")
 	self._goTimeAxis = gohelper.findChild(self.viewGO, "#go_TimeAxis")
 	self._scrolltimeline = gohelper.findChildScrollRect(self.viewGO, "#go_TimeAxis/go/timeline/#scroll_timeline")
 	self._goViewport = gohelper.findChild(self.viewGO, "#go_TimeAxis/go/timeline/#scroll_timeline/#go_Viewport")
@@ -45,6 +48,8 @@ end
 
 function CommandStationMapView:addEvents()
 	self._btnEvent:AddClickListener(self._btnEventOnClick, self)
+	self._btnleft:AddClickListener(self._btnleftOnClick, self)
+	self._btnright:AddClickListener(self._btnrightOnClick, self)
 	self._btnLocation:AddClickListener(self._btnLocationOnClick, self)
 	self._btnSort:AddClickListener(self._btnSortOnClick, self)
 	self._btnblockversion:AddClickListener(self._btnblockversionOnClick, self)
@@ -54,11 +59,52 @@ end
 
 function CommandStationMapView:removeEvents()
 	self._btnEvent:RemoveClickListener()
+	self._btnleft:RemoveClickListener()
+	self._btnright:RemoveClickListener()
 	self._btnLocation:RemoveClickListener()
 	self._btnSort:RemoveClickListener()
 	self._btnblockversion:RemoveClickListener()
 	self._btnLeftArrow:RemoveClickListener()
 	self._btnRightArrow:RemoveClickListener()
+end
+
+function CommandStationMapView:_btnleftOnClick()
+	local prevId, nextId = self:_getNavBtnInfo()
+
+	self:_selectedTimePoint(prevId)
+end
+
+function CommandStationMapView:_btnrightOnClick()
+	local prevId, nextId = self:_getNavBtnInfo()
+
+	self:_selectedTimePoint(nextId)
+end
+
+function CommandStationMapView:_updateNavBtnStatus()
+	local prevId, nextId = self:_getNavBtnInfo()
+
+	gohelper.setActive(self._btnleft, prevId ~= nil)
+	gohelper.setActive(self._btnright, nextId ~= nil)
+end
+
+function CommandStationMapView:_getNavBtnInfo()
+	local prevId, nextId
+
+	for i, v in ipairs(self._timeline) do
+		local index = tabletool.indexOf(v.timeId, self._timeId)
+
+		if index then
+			local prevConfig = self._timeline[i - 1]
+			local nextConfig = self._timeline[i + 1]
+
+			prevId = v.timeId[index - 1] or prevConfig and prevConfig.timeId[#prevConfig.timeId]
+			nextId = v.timeId[index + 1] or nextConfig and nextConfig.timeId[1]
+
+			break
+		end
+	end
+
+	return prevId, nextId
 end
 
 function CommandStationMapView:_btnLeftArrowOnClick()
@@ -150,6 +196,11 @@ function CommandStationMapView:_btnLocationOnClick()
 end
 
 function CommandStationMapView:_editableInitView()
+	self._initArrowY = recthelper.getAnchorY(self._goarrow.transform)
+
+	gohelper.setActive(self._goarrow, false)
+	gohelper.setActive(self._btnEvent.transform.parent, false)
+
 	self._viewOpenTime = Time.realtimeSinceStartup
 	self._goversion = gohelper.findChild(self.viewGO, "Version")
 	self._goevent = gohelper.findChild(self.viewGO, "Event")
@@ -275,17 +326,35 @@ function CommandStationMapView:onOpen()
 
 	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
 	self._drag:AddDragEndListener(self._onDragEndHandler, self)
+	TaskDispatcher.runRepeat(self._delayCheckLocationOverLap, self, 0)
 	self:_onScreenResize()
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.ChangeVersionId, self._onChangeVersionId, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.MoveTimeline, self._onMoveTimeline, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.TimelineAnimDone, self._onTimelineAnimDone, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.MoveScene, self._onMoveScene, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.EventReadChange, self._onEventReadChange, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._OnCloseFullView, self, LuaEventSystem.Low)
 	self:addEventCb(PostProcessingMgr.instance, PostProcessingEvent.onRefreshPopUpBlurNotBlur, self._OnRefreshPopUpBlurNotBlur, self, LuaEventSystem.Low)
 	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.AfterEventFinish, self._onAfterEventFinish, self)
+end
+
+function CommandStationMapView:_onAfterEventFinish()
+	if not self._lockTimeIdList or #self._lockTimeIdList == 0 then
+		return
+	end
+
+	for i, timeId in ipairs(self._lockTimeIdList) do
+		if CommandStationMapModel.instance:checkTimeIdUnlock(timeId) then
+			self:_initTimeline()
+			self:_updateNavBtnStatus()
+
+			return
+		end
+	end
 end
 
 function CommandStationMapView:_onScreenResize()
@@ -331,6 +400,27 @@ function CommandStationMapView:_checkShowArrow()
 
 	if rightEvent then
 		self:_faceToEvent(self._btnRightArrow, rightEvent)
+	end
+end
+
+function CommandStationMapView:_onEventReadChange(eventId)
+	self:_updateTimeIdRedPoint(self._timeId)
+
+	local unlockEventId = CommandStationConfig.instance:getActivatedEventId(eventId)
+	local timeId = unlockEventId and CommandStationConfig.instance:getTimeIdByEventId(unlockEventId)
+
+	if timeId and timeId ~= self._timeId then
+		self:_updateTimeIdRedPoint(timeId)
+	end
+end
+
+function CommandStationMapView:_updateTimeIdRedPoint(timeId)
+	local redPoint = self._timeIdRedPointMap[timeId]
+
+	if redPoint then
+		local canRead = CommandStationModel.instance:getTimeIdCanRead(timeId)
+
+		gohelper.setActive(redPoint, canRead)
 	end
 end
 
@@ -390,16 +480,45 @@ function CommandStationMapView:_setDungeonMapViewVisible(value)
 	end
 end
 
+function CommandStationMapView:_delayCheckLocationOverLap()
+	if self._locationDragMove then
+		gohelper.setActive(self._goarrow, false)
+
+		return
+	end
+
+	gohelper.setActive(self._goarrow, true)
+
+	if self._locationClickMove then
+		return
+	end
+
+	recthelper.setAnchorY(self._goarrow.transform, self._initArrowY + (self:_checkLocationOverLap() and 100 or 0))
+end
+
+function CommandStationMapView:_checkLocationOverLap()
+	local x, y = recthelper.rectToRelativeAnchorPos2(self._btnLocation.transform.position, self._goarrow.transform)
+	local leftX = recthelper.getAnchorX(self._btnleft.transform)
+	local rightX = recthelper.getAnchorX(self._btnright.transform)
+	local distance = 80
+
+	return distance > math.abs(x - leftX) or distance > math.abs(x - rightX)
+end
+
 function CommandStationMapView:_onDragBeginHandler()
 	if self._uiSpine then
 		self._uiSpine:play("gear_loop", true)
 	end
+
+	self._locationDragMove = true
 end
 
 function CommandStationMapView:_onDragEndHandler()
 	if self._uiSpine then
 		self._uiSpine:play("gear_stop")
 	end
+
+	self._locationDragMove = false
 end
 
 function CommandStationMapView:_onTimelineAnimDone(isOpenAnim)
@@ -435,6 +554,8 @@ function CommandStationMapView:_onMoveTimeline(param)
 	if gohelper.isNil(node) then
 		gohelper.addChild(self.viewGO, self._goTimeAxis)
 		gohelper.setSiblingAfter(self._golefttop, self._goTimeAxis)
+		gohelper.addChild(self.viewGO, self._goarrow)
+		gohelper.setSiblingBefore(self._goarrowcontainer, self._goarrow)
 
 		self._animator.enabled = true
 
@@ -442,7 +563,8 @@ function CommandStationMapView:_onMoveTimeline(param)
 		gohelper.setActive(self._btnSort, true)
 	else
 		gohelper.addChild(node, self._goTimeAxis)
-		gohelper.setSiblingAfter(param.leftopNode, self._goTimeAxis)
+		gohelper.addChild(node, self._goarrow)
+		gohelper.setAsLastSibling(param.leftopNode)
 
 		self._animator.enabled = true
 
@@ -573,7 +695,9 @@ function CommandStationMapView:_initTimeline()
 
 	self._itemPosX = 0
 	self._itemPosMap = self._itemPosMap or {}
+	self._timeIdRedPointMap = self._timeIdRedPointMap or self:getUserDataTb_()
 
+	tabletool.clear(self._timeIdRedPointMap)
 	self:_clearItemPosMap()
 	gohelper.CreateObjList(self, self._onTimeItemShow, self._timeline, self._gotimeGroup, self._gotimeItem)
 
@@ -598,17 +722,19 @@ function CommandStationMapView:_clearItemPosMap()
 end
 
 function CommandStationMapView:_initTimelineData()
-	if CommandStationMapModel.instance:getCharacterId() then
-		local list = CommandStationConfig.instance:getTimeGroupByCharacterId(CommandStationMapModel.instance:getCharacterId())
+	local versionId = CommandStationMapModel.instance:getVersionId()
+	local characterId = CommandStationMapModel.instance:getCharacterId()
 
-		self._timeline = CommandStationMapModel.instance:checkTimeline(list)
+	if characterId then
+		local list = CommandStationConfig.instance:getTimeGroupByCharacterId(characterId)
+
+		list = CommandStationMapModel.instance:checkTimelineByCharacterId(list, characterId, versionId)
+		self._timeline, self._firstTimeId, self._lockTimeIdList = CommandStationMapModel.instance:checkTimeline(list)
 
 		return
 	end
 
-	local versionId = CommandStationMapModel.instance:getVersionId()
-
-	self._timeline = CommandStationMapModel.instance:getVersionTimeline(versionId)
+	self._timeline, self._firstTimeId, self._lockTimeIdList = CommandStationMapModel.instance:getVersionTimeline(versionId)
 
 	CommandStationController.StatCommandStationButtonClick(self.viewName, string.format("getVersionTimeLine_%s", versionId))
 end
@@ -647,6 +773,22 @@ function CommandStationMapView:_onTimeItemShow(obj, data, index)
 	self._itemPosX = self._itemPosX + width + CommandStationEnum.TimeItemSpace
 
 	self:_addImageClick(image, data, index)
+
+	local point = gohelper.findChild(obj, "image/point")
+	local pointImage = gohelper.findChild(obj, "image/point/image")
+
+	gohelper.CreateObjList(self, self._onTimePointItemShow, data.timeId, point, pointImage)
+end
+
+function CommandStationMapView:_onTimePointItemShow(obj, data, index)
+	recthelper.setAnchorX(obj.transform, 120 + (index - 1) * CommandStationEnum.TimeItemWidth)
+
+	local redpoint = gohelper.findChild(obj, "redpoint")
+	local canRead = CommandStationModel.instance:getTimeIdCanRead(data)
+
+	gohelper.setActive(redpoint, canRead)
+
+	self._timeIdRedPointMap[data] = redpoint
 end
 
 function CommandStationMapView:_setItemGapWidth(index, width)
@@ -715,14 +857,31 @@ function CommandStationMapView:_selectedTimePoint(timeId, time)
 
 	self._timeId = timeId
 
+	self:_updateNavBtnStatus()
+
+	self._locationClickMove = true
+
 	AudioMgr.instance:trigger(AudioEnum3_0.CommandStationMap.play_ui_lushang_zhihuibu_zhizhen1)
 
 	local posX = self:_getTimePointPos(timeId)
 
 	self:_tweenMove(timeId, time or CommandStationEnum.BuoyMoveTime, posX, self._moveDone)
+
+	local viewportWidth = recthelper.getWidth(self._goViewport.transform)
+	local scrollPosX = recthelper.getAnchorX(self._gotimeGroup.transform)
+	local minX = math.abs(scrollPosX)
+	local max = minX + viewportWidth
+
+	if posX < minX then
+		recthelper.setAnchorX(self._gotimeGroup.transform, scrollPosX + minX - posX + CommandStationEnum.TimeItemWidth)
+	elseif max < posX then
+		recthelper.setAnchorX(self._gotimeGroup.transform, scrollPosX + max - posX - CommandStationEnum.TimeItemWidth)
+	end
 end
 
 function CommandStationMapView:_moveDone(timeId)
+	self._locationClickMove = false
+
 	CommandStationController.instance:dispatchEvent(CommandStationEvent.SelectTimePoint, timeId)
 	AudioMgr.instance:trigger(AudioEnum3_0.CommandStationMap.stop_ui_lushang_zhihuibu_zhizhen2)
 end
@@ -771,6 +930,7 @@ function CommandStationMapView:onClose()
 	TaskDispatcher.cancelTask(self._updateScene, self)
 	TaskDispatcher.cancelTask(self._checkShowArrow, self)
 	TaskDispatcher.cancelTask(self._hideRT, self)
+	TaskDispatcher.cancelTask(self._delayCheckLocationOverLap, self)
 
 	if self._clickImageParam then
 		for i, v in pairs(self._clickImageParam) do

@@ -4,26 +4,27 @@ module("modules.configs.excel2json.lua_rouge2_buff", package.seeall)
 
 local lua_rouge2_buff = {}
 local fields = {
-	unlock = 15,
+	battleTag = 10,
 	name = 2,
 	isOff = 3,
 	outUnlock = 5,
 	isHide = 7,
-	career = 14,
-	desc = 16,
-	updateId = 18,
-	descSimply = 17,
+	isAttrBuff = 11,
+	career = 15,
+	unlock = 16,
+	updateId = 19,
+	descSimply = 18,
+	desc = 17,
 	passiveSkillId = 8,
-	tag = 10,
-	icon = 11,
-	attributeTag = 13,
+	tag = 12,
+	icon = 13,
+	attributeTag = 14,
 	sortId = 4,
 	outUnlockDesc = 6,
-	system = 20,
-	descUpdate = 19,
+	system = 21,
+	descUpdate = 20,
 	rare = 9,
-	id = 1,
-	attribute = 12
+	id = 1
 }
 local primaryKey = {
 	"id"

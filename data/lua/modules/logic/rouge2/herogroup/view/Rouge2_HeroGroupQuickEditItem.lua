@@ -34,6 +34,7 @@ function Rouge2_HeroGroupQuickEditItem:onUpdateMO(mo)
 	self:updateLimitStatus()
 	self:updateTrialTag()
 	self:updateTrialRepeat()
+	self:updateRecommendTag()
 	self._heroItem:setRepeatAnimFinish()
 
 	local index = Rouge2_HeroGroupQuickEditListModel.instance:getHeroTeamPos(self._mo.uid)

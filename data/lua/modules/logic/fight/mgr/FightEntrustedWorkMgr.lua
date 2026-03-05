@@ -8,6 +8,7 @@ function FightEntrustedWorkMgr:onConstructor()
 	self.workList = {}
 
 	self:com_registMsg(FightMsgId.EntrustFightWork, self.onEntrustFightWork)
+	self:com_registMsg(FightMsgId.GetEmptyWorkFromEntrustedWorkMgr, self.onGetEmptyWorkFromEntrustedWorkMgr)
 end
 
 function FightEntrustedWorkMgr:onEntrustFightWork(fightWorkItem)
@@ -38,6 +39,10 @@ function FightEntrustedWorkMgr:onEntrustFightWork(fightWorkItem)
 
 	table.insert(self.workList, fightWorkItem)
 	FightMsgMgr.replyMsg(FightMsgId.EntrustFightWork, true)
+end
+
+function FightEntrustedWorkMgr:onGetEmptyWorkFromEntrustedWorkMgr()
+	FightMsgMgr.replyMsg(FightMsgId.GetEmptyWorkFromEntrustedWorkMgr, self:com_registWork(FightEmptyWork))
 end
 
 function FightEntrustedWorkMgr:onDestructor()

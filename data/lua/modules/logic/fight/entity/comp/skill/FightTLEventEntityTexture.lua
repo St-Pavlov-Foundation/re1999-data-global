@@ -16,9 +16,9 @@ function FightTLEventEntityTexture:onTrackStart(fightStepData, duration, paramsA
 	elseif targetType == "2" then
 		self._targetEntitys = FightHelper.getSkillTargetEntitys(fightStepData)
 	elseif not string.nilorempty(targetType) then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 		local entityId = fightStepData.stepUid .. "_" .. targetType
-		local tempEntity = entityMgr:getUnit(SceneTag.UnitNpc, entityId)
+		local tempEntity = entityMgr:getEntity(entityId)
 
 		if tempEntity then
 			self._targetEntitys = {}

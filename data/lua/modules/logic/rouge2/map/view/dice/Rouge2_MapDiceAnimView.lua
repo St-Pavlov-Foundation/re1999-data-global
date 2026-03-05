@@ -3,10 +3,8 @@
 module("modules.logic.rouge2.map.view.dice.Rouge2_MapDiceAnimView", package.seeall)
 
 local Rouge2_MapDiceAnimView = class("Rouge2_MapDiceAnimView", BaseView)
-local FixValueMoveDuration = 0.4
 local WaitSec2MoveOtherValue = 0.06
 local FixValueFadeOutWaitTime = 0.1
-local FixValueFadeOutDuration = 0.15
 local MiddleValueFadeInDuration = 0.3
 local DiceAnimDuration = 2
 local WaitSeconds2Close = 2
@@ -46,6 +44,11 @@ function Rouge2_MapDiceAnimView:onInitView()
 	self._goFailure = gohelper.findChild(self.viewGO, "root/#go_Result/#go_Failure")
 	self._goSucceed = gohelper.findChild(self.viewGO, "root/#go_Result/#go_Succeed")
 	self._goBigSucceed = gohelper.findChild(self.viewGO, "root/#go_Result/#go_BigSucceed")
+	self._scrollFixList = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#scroll_FixList")
+	self._goFixList = gohelper.findChild(self.viewGO, "root/#go_Info/Value/#scroll_FixList/Viewport/#go_FixList")
+	self._goFlyContent = gohelper.findChild(self.viewGO, "root/#go_Info/#go_flyItemContent")
+	self._goFlyMgr = gohelper.findChild(self.viewGO, "root/#go_Info/#go_flyItemContent/#fly")
+	self._goFlyEndPos = gohelper.findChild(self.viewGO, "root/#go_Info/#go_middleTarget")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -77,6 +80,10 @@ function Rouge2_MapDiceAnimView:_btnJumpOnClick()
 end
 
 function Rouge2_MapDiceAnimView:_editableInitView()
+	self._goFixViewport = self._scrollFixList.gameObject
+	self._tranFlyContent = self._goFlyContent.transform
+	self._uiFlying = self._goFlyMgr:GetComponent(typeof(UnityEngine.UI.UIFlying))
+	self._uiFlyingEndPos = recthelper.rectToRelativeAnchorPos(self._goFlyEndPos.transform.position, self._tranFlyContent)
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 	self._infoAnimWorkParam = self:getUserDataTb_()
 	self._infoAnimWorkParam.go = self._goInfo
@@ -117,11 +124,12 @@ function Rouge2_MapDiceAnimView:onOpen()
 end
 
 function Rouge2_MapDiceAnimView:initViewParams()
-	self._checkCo = self.viewParam and self.viewParam.checkCo
 	self._checkResInfo = self.viewParam and self.viewParam.checkResInfo
-	self._checkId = self._checkResInfo and self._checkResInfo.checkId
-	self._checkDiceRes = self._checkResInfo and GameUtil.splitString2(self._checkResInfo.checkDiceRes, true)
-	self._checkRes = self._checkResInfo and self._checkResInfo.checkRes
+	self._checkCo = self._checkResInfo and self._checkResInfo:getCheckConfig()
+	self._checkId = self._checkResInfo and self._checkResInfo:getCheckId()
+	self._checkDiceRes = self._checkResInfo and self._checkResInfo:getCheckDiceRes()
+	self._checkRes = self._checkResInfo and self._checkResInfo:getCheckRes()
+	self._isSucceed = self._checkRes ~= Rouge2_MapEnum.AttrCheckResult.Failure
 end
 
 function Rouge2_MapDiceAnimView:getOrCreateDiceItem(diceType, index)
@@ -129,7 +137,7 @@ function Rouge2_MapDiceAnimView:getOrCreateDiceItem(diceType, index)
 	local diceItem = diceList and diceList[index]
 
 	if not diceItem then
-		diceList = diceList or {}
+		diceList = diceList or self:getUserDataTb_()
 		self._diceType2ItemTab[diceType] = diceList
 
 		local cls = Rouge2_MapDiceAnimView.DiceType2Cls[diceType]
@@ -153,6 +161,7 @@ function Rouge2_MapDiceAnimView:initDiceList()
 	local diceType2Num = {}
 
 	self._totalDicePoint = 0
+	self._totalFixValue = self._mainView:getTotalFixValue()
 
 	for i, diceInfo in ipairs(self._checkDiceRes or {}) do
 		local diceId = diceInfo[1]
@@ -184,6 +193,7 @@ function Rouge2_MapDiceAnimView:initDiceList()
 		end
 	end
 
+	self._baseDicePoint = self._totalDicePoint
 	self._txtMiddle.text = self._totalDicePoint
 
 	gohelper.setActive(self._txtMiddle.gameObject, false)
@@ -250,35 +260,20 @@ end
 
 function Rouge2_MapDiceAnimView:buildOneFixValueMoveFlow(index, fixItem)
 	local moveFlow = FlowSequence.New()
-	local targetPosX, targetPosY = recthelper.rectToRelativeAnchorPos2(self._txtMiddle.transform.position, fixItem.go.transform)
-	local params = {
-		type = "DOAnchorPos",
-		ease = "easeOutQuint",
-		tr = fixItem.txtFixValue.transform,
-		tox = targetPosX,
-		toy = targetPosY,
-		t = FixValueMoveDuration
-	}
+
+	moveFlow:addWork(FunctionWork.New(self.fitScrollItemOffset, self, fixItem))
+
 	local waitSec = (index - 1) * WaitSec2MoveOtherValue
 
 	moveFlow:addWork(WorkWaitSeconds.New(waitSec))
 
 	local parallel = FlowParallel.New()
-	local moveWork = TweenWork.New(params)
 
-	parallel:addWork(moveWork)
 	parallel:addWork(FunctionWork.New(self._showFlyEffect, self, fixItem))
 
 	local fadeFlow = FlowSequence.New()
 
 	fadeFlow:addWork(WorkWaitSeconds.New(FixValueFadeOutWaitTime))
-	fadeFlow:addWork(TweenWork.New({
-		from = 1,
-		type = "DOFadeCanvasGroup",
-		to = 0,
-		t = FixValueFadeOutDuration,
-		go = fixItem.txtFixValue.gameObject
-	}))
 	parallel:addWork(fadeFlow)
 	moveFlow:addWork(parallel)
 	moveFlow:addWork(FunctionWork.New(self._updateFixValue, self, fixItem))
@@ -286,8 +281,15 @@ function Rouge2_MapDiceAnimView:buildOneFixValueMoveFlow(index, fixItem)
 	return moveFlow
 end
 
+function Rouge2_MapDiceAnimView:fitScrollItemOffset(fixItem)
+	local offset = gohelper.fitScrollItemOffset(self._goFixViewport, self._goFixList, fixItem:getGO(), ScrollEnum.ScrollDirV)
+
+	recthelper.setAnchorY(self._goFixList.transform, offset)
+end
+
 function Rouge2_MapDiceAnimView:_showFlyEffect(fixItem)
-	gohelper.setActive(fixItem.goFlyEffect, true)
+	gohelper.setActive(self._goFlyContent, true)
+	fixItem:startFlying(self._goFlyMgr, self._tranFlyContent, self._uiFlyingEndPos)
 end
 
 function Rouge2_MapDiceAnimView:_showMiddleValue()
@@ -296,11 +298,7 @@ end
 
 function Rouge2_MapDiceAnimView:_updateFixValue(fixItem)
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.AddFixValue)
-	gohelper.setActive(fixItem.goFlyEffect, false)
-
-	local goFixValue = fixItem.txtFixValue.gameObject
-
-	gohelper.setActive(goFixValue, false)
+	fixItem:onEndMoveFixValue()
 
 	local fixValue = fixItem.fixValue or 0
 
@@ -308,13 +306,17 @@ function Rouge2_MapDiceAnimView:_updateFixValue(fixItem)
 	self._txtMiddle.text = self._totalDicePoint
 
 	gohelper.setActive(self._txtMiddle.gameObject, true)
-
-	fixItem.done = true
 end
 
 function Rouge2_MapDiceAnimView:playFinishAnim()
+	self:onAllFixItemMoveDone()
 	gohelper.setActive(self._btnJump.gameObject, false)
-	gohelper.setActive(self._btnClose.gameObject, true)
+	gohelper.setActive(self._btnClose.gameObject, self._isSucceed)
+
+	self._totalDicePoint = self._baseDicePoint + self._totalFixValue
+	self._txtMiddle.text = self._totalDicePoint
+
+	gohelper.setActive(self._txtMiddle.gameObject, true)
 	self._animator:Play("result", 0, 0)
 	gohelper.setActive(self._goResult, true)
 	gohelper.setActive(self._goFailure, self._checkRes == Rouge2_MapEnum.AttrCheckResult.Failure)
@@ -334,6 +336,16 @@ end
 function Rouge2_MapDiceAnimView:_onJumpFinishDice()
 	self:destroyFlow()
 	self:playFinishAnim()
+end
+
+function Rouge2_MapDiceAnimView:onAllFixItemMoveDone()
+	local fixItemList = self._mainView:getFixItemList()
+
+	if fixItemList then
+		for i, fixItem in ipairs(fixItemList) do
+			fixItem:onEndMoveFixValue()
+		end
+	end
 end
 
 function Rouge2_MapDiceAnimView:destroyFlow()

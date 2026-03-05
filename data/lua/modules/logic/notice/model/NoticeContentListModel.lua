@@ -141,7 +141,7 @@ function NoticeContentListModel:getInfoList(scrollGO)
 
 			table.insert(mixCellInfos, mixCellInfo)
 		elseif mo.type == NoticeContentType.LangType then
-			-- block empty
+			logNormal("lang type : " .. tostring(mo.curLang))
 		else
 			logError("notice content type not implement: " .. mo.type)
 		end

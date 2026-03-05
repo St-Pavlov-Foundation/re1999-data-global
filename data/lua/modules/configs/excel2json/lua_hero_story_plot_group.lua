@@ -5,13 +5,14 @@ module("modules.configs.excel2json.lua_hero_story_plot_group", package.seeall)
 local lua_hero_story_plot_group = {}
 local fields = {
 	storyPic = 9,
-	time = 5,
+	branch = 11,
 	storyNameEn = 4,
 	storyId = 2,
 	preId = 10,
+	time = 5,
 	place = 6,
 	roleName = 8,
-	isEnd = 11,
+	isEnd = 12,
 	weather = 7,
 	storyName = 3,
 	id = 1

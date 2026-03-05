@@ -138,6 +138,7 @@ function CharacterRecommedView:_refreshHeroInfo()
 	local isShowRecommendTab = heroRecommendMO:isShowTeam() or heroRecommendMO:isShowEquip()
 
 	gohelper.setActive(self._gotab1, isShowRecommendTab)
+	self:_statEnterView(self._heroId)
 end
 
 function CharacterRecommedView:_initTab()
@@ -241,10 +242,28 @@ function CharacterRecommedView:onClose()
 	self._tabItems = nil
 
 	TaskDispatcher.cancelTask(self._cuthHeroCb, nil)
+
+	if ViewMgr.instance:isOpen(ViewName.SummonADView) then
+		ViewMgr.instance:closeView(ViewName.SummonADView)
+		VirtualSummonScene.instance:close(true)
+	end
 end
 
 function CharacterRecommedView:onDestroyView()
 	return
+end
+
+function CharacterRecommedView:_statEnterView(heroId)
+	if self._lastStatId == heroId then
+		return
+	end
+
+	self._lastStatId = heroId
+
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
+	local chineseViewNameStr = (StatViewNameEnum.ChineseViewName[self.viewName] or self.viewName) .. "-" .. (heroCfg and heroCfg.name or "")
+
+	StatViewController.instance:trackViewName(chineseViewNameStr)
 end
 
 return CharacterRecommedView

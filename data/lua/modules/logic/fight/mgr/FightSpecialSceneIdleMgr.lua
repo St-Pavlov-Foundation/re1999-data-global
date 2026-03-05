@@ -12,10 +12,12 @@ function FightSpecialSceneIdleMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle)
 	self:com_registFightEvent(FightEvent.OnEntityDead, self._releaseEntity)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._releaseAllEntity)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntity)
 	FightController.instance:registerCallback(FightEvent.StageChanged, self.onStageChange, self)
 	FightController.instance:registerCallback(FightEvent.PlaySpecialIdle, self._onPlaySpecialIdle, self)
 	FightController.instance:registerCallback(FightEvent.OnEntityDead, self._releaseEntity, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._releaseAllEntity, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntity, self)
 end
 
 function FightSpecialSceneIdleMgr:onStageChange(stageType)

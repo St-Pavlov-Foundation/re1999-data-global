@@ -38,11 +38,11 @@ DungeonMapActDropView.ActBtnPosY = {
 }
 
 function DungeonMapActDropView:onClickStore()
-	VersionActivity3_0DungeonController.instance:openStoreView()
+	VersionActivity3_3DungeonController.instance:openStoreView()
 end
 
 function DungeonMapActDropView:onClickTask()
-	VersionActivity3_0DungeonController.instance:openTaskView()
+	VersionActivity3_3DungeonController.instance:openTaskView()
 end
 
 function DungeonMapActDropView:_editableInitView()
@@ -71,7 +71,7 @@ function DungeonMapActDropView:onOpen()
 	self.chapterId = self.viewParam.chapterId
 	self.chapterCo = DungeonConfig.instance:getChapterCO(self.chapterId)
 
-	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.V3a0DungeonTask)
+	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.V3a3DungeonTask)
 	self:_showActNode(self:checkCanShowAct())
 end
 
@@ -112,14 +112,14 @@ function DungeonMapActDropView:refreshLayout()
 end
 
 function DungeonMapActDropView:refreshStoreCurrency()
-	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a0Dungeon)
+	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a3Dungeon)
 	local quantity = currencyMO and currencyMO.quantity or 0
 
 	self._txtnum.text = GameUtil.numberDisplay(quantity)
 end
 
 function DungeonMapActDropView:refreshRemainTime()
-	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_0Enum.ActivityId.DungeonStore]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_3Enum.ActivityId.DungeonStore]
 
 	if not actInfoMo then
 		gohelper.setActive(self._goStoreTime, false)

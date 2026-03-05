@@ -5,9 +5,9 @@ module("modules.logic.fight.entity.FightEntityLyTemp", package.seeall)
 local FightEntityLyTemp = class("FightEntityLyTemp", FightEntityTemp)
 
 function FightEntityLyTemp:initComponents()
-	self:addComp("spine", UnitSpine)
-	self:addComp("spineRenderer", UnitSpineRenderer)
-	self:addComp("effect", FightEffectComp)
+	self.spine = self:addEntityComponent(FightSpineComp)
+	self.spineRenderer = self:addEntityComponent(FightSpineRendererComp)
+	self.effect = self:addEntityComponent(FightEffectComp)
 end
 
 return FightEntityLyTemp

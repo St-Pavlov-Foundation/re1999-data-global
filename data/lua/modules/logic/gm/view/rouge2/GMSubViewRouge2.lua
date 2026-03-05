@@ -31,6 +31,21 @@ function GMSubViewRouge2:initViewContent()
 
 	self.lineIndex = 1
 
+	self:addTitleSplitLine("GM")
+	self:initChangeNextNodeEventGM()
+	self:initFinishCurEventGM()
+	self:initMoveMaxStageGM()
+	self:initAddCoinGM()
+	self:initAddRevivalCoinGM()
+	self:initFixCheckGM()
+	self:initAddAttrGM()
+	self:initPrintItemGM()
+	self:initPrintAttrGM()
+	self:initPrintAttrExprGM()
+	self:initAcceptEntrustGM()
+	self:initSetEndGM()
+	self:initDeleteMapGM()
+	self:addLineIndex()
 	self:addTitleSplitLine("地图编辑")
 	self:addButton(self:getLineGroup(), "肉鸽路线层地图编辑", self.onClickNormalMapEditor, self)
 	self:addButton(self:getLineGroup(), "肉鸽地图编辑", self.onClickRougeMapEditor, self)
@@ -148,12 +163,6 @@ function GMSubViewRouge2:checkAllEventExistInSubEvent()
 
 			if not subEventCo then
 				logError("肉鸽选项事件表不存在id : " .. tostring(eventId))
-			end
-		elseif Rouge2_MapHelper.isStoreEvent(eventType) then
-			subEventCo = lua_rouge2_shop_event.configDict[eventId]
-
-			if not subEventCo then
-				logError("肉鸽商店事件表不存在id : " .. tostring(eventId))
 			end
 		else
 			logError(string.format("事件表id : %s, 配置了未知事件类型 : %s", eventId, eventType))
@@ -327,6 +336,316 @@ function GMSubViewRouge2:_onClickAttrCheck()
 	}
 
 	ViewMgr.instance:openView(ViewName.Rouge2_MapDiceView, checkResInfo)
+end
+
+function GMSubViewRouge2:initChangeNextNodeEventGM()
+	self._eventNameList = {}
+	self._index2EventCoMap = {}
+
+	local index = 0
+
+	for _, eventCo in ipairs(lua_rouge2_event.configList) do
+		index = index + 1
+
+		local eventId = eventCo.id
+		local eventName = eventCo.name
+
+		table.insert(self._eventNameList, index, string.format("%s_%s", eventId, eventName))
+
+		self._index2EventCoMap[index] = eventCo
+	end
+
+	self._eventDrop = self:addDropDown(self:getLineGroup(), "事件列表", self._eventNameList, nil, nil, {
+		temp_w = 700,
+		total_w = 900,
+		drop_w = 700
+	})
+
+	self:addButton(self:getLineGroup(), "变化下个节点相邻事件", self._onClickChangeNextNodeEvent, self)
+end
+
+function GMSubViewRouge2:_onClickChangeNextNodeEvent()
+	local mathIndex = self._eventDrop:GetValue()
+	local eventCo = self._index2EventCoMap[mathIndex + 1]
+	local eventId = eventCo and eventCo.id
+
+	GMRpc.instance:sendGMRequest("rouge2ChangeNextNodeEvent " .. eventId)
+end
+
+function GMSubViewRouge2:initFinishCurEventGM()
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "完成当前普通层事件", self._onClickFinishCurEvent, self)
+end
+
+function GMSubViewRouge2:_onClickFinishCurEvent()
+	GMRpc.instance:sendGMRequest("rouge2FinishCurEvent")
+end
+
+function GMSubViewRouge2:initMoveMaxStageGM()
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "移动到当前地图最后一个节点", self._onClickMoveMaxStage, self)
+end
+
+function GMSubViewRouge2:_onClickMoveMaxStage()
+	GMRpc.instance:sendGMRequest("rouge2MoveMaxStage")
+end
+
+function GMSubViewRouge2:initAddCoinGM()
+	self:addLineIndex()
+
+	self._inputCoinValue = self:addInputText(self:getLineGroup(), 1, "金币变更数量", nil, nil, {
+		w = 300
+	})
+
+	self:addButton(self:getLineGroup(), "变更金币数量", self._onClickAddCoin, self)
+end
+
+function GMSubViewRouge2:_onClickAddCoin()
+	local coinNum = tonumber(self._inputCoinValue:GetText()) or 0
+
+	GMRpc.instance:sendGMRequest("addRouge2Coin " .. coinNum)
+end
+
+function GMSubViewRouge2:initAddRevivalCoinGM()
+	self:addLineIndex()
+
+	self._inputRevivalCoinValue = self:addInputText(self:getLineGroup(), 1, "复活币变更数量", nil, nil, {
+		w = 300
+	})
+
+	self:addButton(self:getLineGroup(), "变更复活币数量", self._onClickAddRevivalCoin, self)
+end
+
+function GMSubViewRouge2:_onClickAddRevivalCoin()
+	local coinNum = tonumber(self._inputRevivalCoinValue:GetText()) or 0
+
+	GMRpc.instance:sendGMRequest("addRouge2RevivalCoin " .. coinNum)
+end
+
+function GMSubViewRouge2:initFixCheckGM()
+	self:addLineIndex()
+	self:addLabel(self:getLineGroup(), "设置检定结果")
+	self:addButton(self:getLineGroup(), "关闭检定", self._onClickFixCheck_None, self)
+	self:addButton(self:getLineGroup(), "检定成功", self._onClickFixCheck_Succ, self)
+	self:addButton(self:getLineGroup(), "检定失败", self._onClickFixCheck_Fail, self)
+	self:addButton(self:getLineGroup(), "检定大成功", self._onClickFixCheck_BigSucc, self)
+end
+
+function GMSubViewRouge2:_onClickFixCheck_None()
+	GMRpc.instance:sendGMRequest("rouge2FixCheck -1")
+end
+
+function GMSubViewRouge2:_onClickFixCheck_Succ()
+	GMRpc.instance:sendGMRequest("rouge2FixCheck 0")
+end
+
+function GMSubViewRouge2:_onClickFixCheck_Fail()
+	GMRpc.instance:sendGMRequest("rouge2FixCheck 1")
+end
+
+function GMSubViewRouge2:_onClickFixCheck_BigSucc()
+	GMRpc.instance:sendGMRequest("rouge2FixCheck 2")
+end
+
+function GMSubViewRouge2:initAddAttrGM()
+	self._attrNameList = {}
+	self._index2AttrMap = {}
+
+	local index = 0
+
+	for _, attrCo in ipairs(lua_rouge2_attribute.configList) do
+		index = index + 1
+
+		local attrName = attrCo.name
+		local attrId = attrCo.id
+
+		table.insert(self._attrNameList, index, string.format("%s_%s", attrId, attrName))
+
+		self._index2AttrMap[index] = attrCo
+	end
+
+	self:addLineIndex()
+
+	self._attrDrop = self:addDropDown(self:getLineGroup(), "属性列表", self._attrNameList, nil, nil, {
+		tempH = 500,
+		total_w = 800,
+		drop_w = 600
+	})
+	self._inputAddAttrValue = self:addInputText(self:getLineGroup(), 1, "添加属性值", nil, nil, {
+		w = 300
+	})
+
+	self:addButton(self:getLineGroup(), "添加属性", self._onClickAddAttr, self)
+end
+
+function GMSubViewRouge2:_onClickAddAttr()
+	local mathIndex = tonumber(self._attrDrop:GetValue()) or 0
+	local attrCo = self._index2AttrMap[mathIndex + 1]
+	local attrId = attrCo and attrCo.id
+	local addAttrValue = tonumber(self._inputAddAttrValue:GetText()) or 0
+
+	GMRpc.instance:sendGMRequest(string.format("addRouge2Attr %s %s", attrId, addAttrValue))
+end
+
+function GMSubViewRouge2:initPrintItemGM()
+	self._bagTypeNameList = {}
+	self._index2BagTypeMap = {}
+
+	local index = 0
+
+	for bagKey, bagType in pairs(Rouge2_Enum.BagType) do
+		index = index + 1
+		self._index2BagTypeMap[index] = bagType
+
+		table.insert(self._bagTypeNameList, index, bagKey)
+	end
+
+	self:addLineIndex()
+
+	self._bagTypeDrop = self:addDropDown(self:getLineGroup(), "背包类型", self._bagTypeNameList, nil, nil, {
+		tempH = 500,
+		total_w = 800,
+		drop_w = 600
+	})
+
+	self:addButton(self:getLineGroup(), "打印背包", self._onClickBagType, self)
+end
+
+function GMSubViewRouge2:_onClickBagType()
+	local mathIndex = tonumber(self._bagTypeDrop:GetValue()) or 0
+	local bagType = self._index2BagTypeMap[mathIndex + 1]
+
+	if not bagType then
+		return
+	end
+
+	GMRpc.instance:sendGMRequest(string.format("printRouge2Item %s", bagType))
+end
+
+function GMSubViewRouge2:initPrintAttrGM()
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "打印队长属性", self._onClickPrintAttr, self)
+end
+
+function GMSubViewRouge2:_onClickPrintAttr()
+	GMRpc.instance:sendGMRequest("printRouge2Attr")
+end
+
+function GMSubViewRouge2:initPrintAttrExprGM()
+	self._attrExprNameList = {}
+	self._index2AttrExprMap = {}
+
+	local index = 0
+	local attrExprList = Rouge2_AttributeConfig.instance:getAttrConfigListByType(Rouge2_MapEnum.AttrType.EquationAttr)
+
+	for _, attrCo in ipairs(attrExprList) do
+		index = index + 1
+
+		local attrName = attrCo.name
+		local attrId = attrCo.id
+
+		table.insert(self._attrExprNameList, index, string.format("%s_%s", attrId, attrName))
+
+		self._index2AttrExprMap[index] = attrCo
+	end
+
+	self:addLineIndex()
+
+	self._attrExprDrop = self:addDropDown(self:getLineGroup(), "公式属性(类型:2)列表", self._attrExprNameList, nil, nil, {
+		tempH = 500,
+		total_w = 1000,
+		drop_w = 600
+	})
+
+	self:addButton(self:getLineGroup(), "打印公式属性", self._onClickPrintAttrExpr, self)
+end
+
+function GMSubViewRouge2:_onClickPrintAttrExpr()
+	local mathIndex = tonumber(self._attrExprDrop:GetValue()) or 0
+	local attrCo = self._index2AttrExprMap[mathIndex + 1]
+	local attrId = attrCo and attrCo.id
+
+	GMRpc.instance:sendGMRequest(string.format("printRouge2AttrExpr %s", attrId))
+end
+
+function GMSubViewRouge2:initAcceptEntrustGM()
+	self._entrustNameList = {}
+	self._index2EntrustMap = {}
+
+	local index = 0
+
+	for _, entrustCo in ipairs(lua_rouge2_entrust.configList) do
+		index = index + 1
+
+		local entrustId = entrustCo.id
+
+		table.insert(self._entrustNameList, index, tostring(entrustId))
+
+		self._index2EntrustMap[index] = entrustCo
+	end
+
+	self:addLineIndex()
+
+	self._entrustDrop = self:addDropDown(self:getLineGroup(), "委托列表", self._entrustNameList, nil, nil, {
+		tempH = 500,
+		total_w = 1000,
+		drop_w = 600
+	})
+
+	self:addButton(self:getLineGroup(), "接取委托", self._onClickAcceptEntrust, self)
+end
+
+function GMSubViewRouge2:_onClickAcceptEntrust()
+	local mathIndex = tonumber(self._entrustDrop:GetValue()) or 0
+	local entrustCo = self._index2EntrustMap[mathIndex + 1]
+	local entrustId = entrustCo and entrustCo.id
+
+	GMRpc.instance:sendGMRequest(string.format("rouge2AcceptEntrust %s", entrustId))
+end
+
+function GMSubViewRouge2:initSetEndGM()
+	self._endNameList = {}
+	self._index2EndMap = {}
+
+	local index = 0
+
+	for _, endingCo in ipairs(lua_rouge2_ending.configList) do
+		index = index + 1
+
+		local endingId = endingCo.id
+		local endingName = endingCo.desc
+
+		table.insert(self._endNameList, index, string.format("%s_%s", endingId, endingName))
+
+		self._index2EndMap[index] = endingCo
+	end
+
+	self:addLineIndex()
+
+	self._endingDrop = self:addDropDown(self:getLineGroup(), "结局列表", self._endNameList, nil, nil, {
+		tempH = 500,
+		total_w = 1000,
+		drop_w = 600
+	})
+
+	self:addButton(self:getLineGroup(), "设置结局", self._onClickSetEnd, self)
+end
+
+function GMSubViewRouge2:_onClickSetEnd()
+	local mathIndex = tonumber(self._endingDrop:GetValue()) or 0
+	local endingCo = self._index2EndMap[mathIndex + 1]
+	local endingId = endingCo and endingCo.id
+
+	GMRpc.instance:sendGMRequest(string.format("rouge2SetEnd %s", endingId))
+end
+
+function GMSubViewRouge2:initDeleteMapGM()
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "删除肉鸽数据", self._onClickDeleteMap, self)
+end
+
+function GMSubViewRouge2:_onClickDeleteMap()
+	GMRpc.instance:sendGMRequest("rouge2MapDelete")
 end
 
 return GMSubViewRouge2

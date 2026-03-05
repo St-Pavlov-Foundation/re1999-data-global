@@ -20,8 +20,10 @@ function UdimoWeatherModel:setWeatherInfo(info)
 	self.temp = info.temp
 	self.weatherId = info.weatherId
 	self.windLevel = info.windLevel
-	self.sunRise = info.sunRise
-	self.sunDown = info.sunDown
+end
+
+function UdimoWeatherModel:setOverseasNextChangeWeatherTime(time)
+	self._overseasNextChangeWeatherTime = time
 end
 
 function UdimoWeatherModel:getWeatherId()
@@ -34,6 +36,10 @@ end
 
 function UdimoWeatherModel:getTemperature()
 	return self.temp
+end
+
+function UdimoWeatherModel:getOverseasNextChangeWeatherTime()
+	return self._overseasNextChangeWeatherTime
 end
 
 UdimoWeatherModel.instance = UdimoWeatherModel.New()

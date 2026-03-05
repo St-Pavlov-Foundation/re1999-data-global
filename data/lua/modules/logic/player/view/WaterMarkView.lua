@@ -13,8 +13,10 @@ function WaterMarkView:onInitView()
 
 	local IdCanvasPopUp = ViewMgr.instance:getUILayer(UILayerName.IDCanvasPopUp)
 
-	self.maxWidth, self.maxHeight = recthelper.getWidth(IdCanvasPopUp.transform), recthelper.getHeight(IdCanvasPopUp.transform)
-	self.wInterval, self.hInterval = 200, 50
+	self.maxWidth = recthelper.getWidth(IdCanvasPopUp.transform)
+	self.maxHeight = recthelper.getHeight(IdCanvasPopUp.transform)
+	self.wInterval = 200
+	self.hInterval = 100
 end
 
 function WaterMarkView:onOpen()
@@ -32,34 +34,30 @@ function WaterMarkView:updateWaterMark(userId)
 
 	self.userId = userId
 
-	local width, height = self.wInterval, self.hInterval
-	local txtWaterMark, goWaterMark
+	local numRow = math.floor(self.maxHeight / self.hInterval) + 1
+	local numCol = math.floor(self.maxWidth / self.wInterval) + 1
 	local index = 0
 
-	while height <= self.maxHeight do
-		index = index + 1
-		txtWaterMark = self.goWaterMarkList[index]
+	for rowIndex = 0, numRow do
+		for colIndex = 0, numCol do
+			index = index + 1
 
-		if not txtWaterMark then
-			goWaterMark = gohelper.cloneInPlace(self.goWaterMarkTemplate)
-			txtWaterMark = goWaterMark:GetComponent(gohelper.Type_TextMesh)
+			local txtWaterMark = self.goWaterMarkList[index]
 
-			table.insert(self.goWaterMarkList, txtWaterMark)
-		end
+			if not txtWaterMark then
+				local goWaterMark = gohelper.cloneInPlace(self.goWaterMarkTemplate)
 
-		gohelper.setActive(txtWaterMark.gameObject, true)
+				txtWaterMark = goWaterMark:GetComponent(gohelper.Type_TextMesh)
 
-		txtWaterMark.text = self.userId
-		txtWaterMark.color = index % 2 == 0 and Color.New(1, 1, 1, 0.16) or Color.New(0, 0, 0, 0.16)
+				table.insert(self.goWaterMarkList, txtWaterMark)
+			end
 
-		recthelper.setAnchor(txtWaterMark.gameObject.transform, width, height)
-		transformhelper.setLocalRotation(txtWaterMark.gameObject.transform, 0, 0, -25)
+			gohelper.setActive(txtWaterMark.gameObject, true)
 
-		height = height + self.hInterval
-		width = width + self.wInterval
+			txtWaterMark.text = self.userId
+			txtWaterMark.color = (colIndex + rowIndex) % 2 == 0 and Color.New(1, 1, 1, 0.16) or Color.New(0, 0, 0, 0.16)
 
-		if width >= self.maxWidth then
-			width = width - self.maxWidth
+			recthelper.setAnchor(txtWaterMark.gameObject.transform, colIndex * self.wInterval, rowIndex * self.hInterval)
 		end
 	end
 

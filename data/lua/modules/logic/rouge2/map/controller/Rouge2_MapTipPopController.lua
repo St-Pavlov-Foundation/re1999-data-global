@@ -26,16 +26,13 @@ function Rouge2_MapTipPopController:addPopTip(text)
 	self:popNextTip()
 end
 
-function Rouge2_MapTipPopController:addPopTipByEffect(effectList)
-	for _, effectId in ipairs(effectList) do
-		local effectCo = lua_rouge2_effect.configDict[effectId]
-
-		if not effectCo then
-			logError("not found effect id .. " .. tostring(effectId))
-		else
-			self:addPopTip(effectCo.tips)
-		end
+function Rouge2_MapTipPopController:popTipImmediately(text)
+	if not self.waitTipsList or string.nilorempty(text) then
+		return
 	end
+
+	table.insert(self.waitTipsList, text)
+	self:_popNextTip()
 end
 
 function Rouge2_MapTipPopController:popNextTip()
@@ -49,6 +46,10 @@ function Rouge2_MapTipPopController:popNextTip()
 		return
 	end
 
+	self:_popNextTip()
+end
+
+function Rouge2_MapTipPopController:_popNextTip()
 	if self.showing then
 		return
 	end
@@ -62,10 +63,10 @@ function Rouge2_MapTipPopController:popNextTip()
 	self.showing = true
 
 	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onShowTip, tip)
-	TaskDispatcher.runDelay(self._onHideTip, self, Rouge2_MapEnum.TipShowDuration)
+	TaskDispatcher.runDelay(self.onHideTip, self, Rouge2_MapEnum.TipShowDuration)
 end
 
-function Rouge2_MapTipPopController:_onHideTip()
+function Rouge2_MapTipPopController:onHideTip()
 	self.showing = false
 
 	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onHideTip)
@@ -86,12 +87,6 @@ function Rouge2_MapTipPopController:clear()
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.popNextTip, self)
 
 	self.inited = nil
-end
-
-function Rouge2_MapTipPopController.getTipsByEffectId(effectId)
-	local effectCo = lua_rouge2_effect.configDict[effectId]
-
-	return effectCo.tips
 end
 
 Rouge2_MapTipPopController.instance = Rouge2_MapTipPopController.New()

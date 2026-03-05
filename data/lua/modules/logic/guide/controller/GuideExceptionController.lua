@@ -45,6 +45,7 @@ function GuideExceptionController:onInit()
 	self.handlerFuncDict = {}
 	self.handlerFuncDict.finishStep = GuideExceptionHandler.finishStep
 	self.handlerFuncDict.finishGuide = GuideExceptionHandler.finishGuide
+	self.handlerFuncDict.finishNextGuide = GuideExceptionHandler.finishNextGuide
 	self.handlerFuncDict.gotoStep = GuideExceptionHandler.gotoStep
 	self.handlerFuncDict.openView = GuideExceptionHandler.openView
 	self.handlerFuncDict.closeView = GuideExceptionHandler.closeView

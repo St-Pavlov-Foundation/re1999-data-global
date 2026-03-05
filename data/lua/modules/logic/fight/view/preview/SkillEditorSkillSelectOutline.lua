@@ -78,7 +78,7 @@ function SkillEditorSkillSelectOutline:_onSelectEntity(side, entityId)
 end
 
 function SkillEditorSkillSelectOutline:_updateOutline()
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local entityId = entityMgr:getEntityByPosId(SceneTag.UnitMonster, SkillEditorView.selectPosId[FightEnum.EntitySide.EnemySide]).id
 	local entity = FightHelper.getEntity(entityId)
 	local effectWrap = self._effectWrapDict[entityId]

@@ -493,14 +493,13 @@ function ClothesStoreView:refreshSkinPreview()
 	local product = config.product
 	local productInfo = string.splitToNumber(product, "#")
 	local skinId = productInfo[2]
-	local skinCo = SkinConfig.instance:getSkinCo(skinId)
 
 	self.skinId = skinId
 	self._goodsMo = goodsMo
 
-	local skinId = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
+	local bpsvpCo = BpConfig.instance:getBpSkinViewParamCO(skinId)
 
-	if VersionValidator.instance:isInReviewing() == false and self.skinId == skinId and BpController.instance:isEmptySkinFaceViewStr(skinId) and self:_isCheckCanPlayVideo() then
+	if VersionValidator.instance:isInReviewing() == false and bpsvpCo and not goodsMo:alreadyHas() and BpController.instance:isEmptySkinFaceViewStr(skinId) and self:_isCheckCanPlayVideo() then
 		ViewMgr.instance:openView(ViewName.BPSkinFaceView_Store, {
 			skinId = self.skinId,
 			openType = BPSkinFaceView.OPEN_TYPE.StoreSkin,

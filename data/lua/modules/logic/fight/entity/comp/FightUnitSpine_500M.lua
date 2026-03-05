@@ -2,27 +2,25 @@
 
 module("modules.logic.fight.entity.comp.FightUnitSpine_500M", package.seeall)
 
-local FightUnitSpine_500M = class("FightUnitSpine_500M", LuaCompBase)
+local FightUnitSpine_500M = class("FightUnitSpine_500M", FightBaseClass)
 
 function FightUnitSpine_500M:_onResLoaded(loader)
 	return
 end
 
-function FightUnitSpine_500M:ctor(unitSpawn)
-	self.entityId = unitSpawn.id
-	self.unitSpawn = unitSpawn
+function FightUnitSpine_500M:onConstructor(entity)
+	self.entityId = entity.id
+	self.unitSpawn = entity
 
-	LuaEventSystem.addEventMechanism(self)
-end
+	local go = entity.go
 
-function FightUnitSpine_500M:init(go)
 	self.go = go
 	self.behindGo = gohelper.create3d(go, "behind")
 	self.centerGo = gohelper.create3d(go, "center")
 	self.frontGo = gohelper.create3d(go, "front")
 
 	self:setCenterSpinePos()
-	FightController.instance:registerCallback(FightEvent.RefreshSpineHeadIcon, self.refreshSpineHeadIcon, self)
+	self:com_registFightEvent(FightEvent.RefreshSpineHeadIcon, self.refreshSpineHeadIcon)
 end
 
 function FightUnitSpine_500M:setCenterSpinePos()
@@ -195,15 +193,9 @@ function FightUnitSpine_500M:_clear()
 	self:callFunc("_clear")
 end
 
-function FightUnitSpine_500M:beforeDestroy()
+function FightUnitSpine_500M:onDestructor()
 	self:clearLoader()
 	self:removeAnimEventCallback(self.onAnimEvent, self)
-	FightController.instance:unregisterCallback(FightEvent.RefreshSpineHeadIcon, self.refreshSpineHeadIcon, self)
-	self:callFunc("beforeDestroy")
-end
-
-function FightUnitSpine_500M:onDestroy()
-	return
 end
 
 function FightUnitSpine_500M:getSpineGO()
@@ -270,7 +262,10 @@ function FightUnitSpine_500M:_onAnimCallback(actionName, eventName, eventArgs)
 	return
 end
 
-function FightUnitSpine_500M:setResPath(resPath, loadedCb, loadedCbObj)
+function FightUnitSpine_500M:registLoadSpineWork(resPath, loadedCallback, loadedCallbackHandle)
+	self.loadedCallback = loadedCallback
+	self.loadedCallbackHandle = loadedCallbackHandle
+
 	local entityMo = self.unitSpawn:getMO()
 	local modeId = entityMo.modelId
 
@@ -286,29 +281,42 @@ function FightUnitSpine_500M:setResPath(resPath, loadedCb, loadedCbObj)
 		return
 	end
 
-	self.loadedCb = loadedCb
-	self.loadedCbObj = loadedCbObj
 	self.headIcon = modelCo.headIcon
 	self.frontSpineLoaded = false
 	self.centerSpineLoaded = false
 	self.behindSpineLoaded = false
 
 	if not self.frontSpine then
-		self.frontSpine = MonoHelper.addLuaComOnceToGo(self.frontGo, FightUnitSpine, self.unitSpawn)
+		self.frontSpine = self:newClass(FightUnitSpine, self.unitSpawn)
 	end
 
 	if not self.centerSpine then
-		self.centerSpine = MonoHelper.addLuaComOnceToGo(self.centerGo, FightUnitSpine, self.unitSpawn)
+		self.centerSpine = self:newClass(FightUnitSpine, self.unitSpawn)
 	end
 
 	if not self.behindSpine then
-		self.behindSpine = MonoHelper.addLuaComOnceToGo(self.behindGo, FightUnitSpine, self.unitSpawn)
+		self.behindSpine = self:newClass(FightUnitSpine, self.unitSpawn)
 	end
 
 	self:loadCenterSpineTexture()
-	self.frontSpine:setResPath(self:getSpineRes(modelCo.front), self.onFrontResLoaded, self)
-	self.centerSpine:setResPath(self:getSpineRes(modelCo.center), self.onCenterResLoaded, self)
-	self.behindSpine:setResPath(self:getSpineRes(modelCo.behind), self.onBehindResLoaded, self)
+
+	local flow = self:com_registFlowParallel()
+	local frontFlow = flow:registWork(FightWorkFlowSequence)
+
+	frontFlow:addWork(self.frontSpine:registLoadSpineWork(self:getSpineRes(modelCo.front)))
+	frontFlow:registWork(FightWorkFunction, self.onFrontResLoaded, self)
+
+	local centerFlow = flow:registWork(FightWorkFlowSequence)
+
+	centerFlow:addWork(self.centerSpine:registLoadSpineWork(self:getSpineRes(modelCo.center)))
+	centerFlow:registWork(FightWorkFunction, self.onCenterResLoaded, self)
+
+	local behindFlow = flow:registWork(FightWorkFlowSequence)
+
+	behindFlow:addWork(self.behindSpine:registLoadSpineWork(self:getSpineRes(modelCo.behind)))
+	behindFlow:registWork(FightWorkFunction, self.onBehindResLoaded, self)
+
+	return flow
 end
 
 function FightUnitSpine_500M:getSpineRes(res)
@@ -394,19 +402,12 @@ function FightUnitSpine_500M:checkLoadResDone()
 		self:playAnim("born", false, true)
 	end
 
-	if self.loadedCb then
-		if self.loadedCbObj then
-			self.loadedCb(self.loadedCbObj, self)
-		else
-			self.loadedCb(self)
-		end
+	if self.loadedCallback then
+		self.loadedCallback(self.loadedCallbackHandle)
 	end
 
-	self.loadedCb = nil
-	self.loadedCbObj = nil
-
 	self:setHeadTexture()
-	self:dispatchEvent(UnitSpine.Evt_OnLoaded)
+	FightController.instance:dispatchEvent(FightEvent.AfterInitSpine, self)
 end
 
 function FightUnitSpine_500M:checkCanPlayBornAnim()

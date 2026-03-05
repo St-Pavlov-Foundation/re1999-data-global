@@ -583,7 +583,7 @@ function FightController:setFightHeroGroup()
 	local clothId = battleConfig and battleConfig.noClothSkill == 0 and curGroupMO.clothId or 0
 	local seasonEquips = SeasonFightHandler.getSeasonEquips(curGroupMO, fightParam)
 
-	fightParam:setMySide(clothId, main, curGroupMO:getSubList(), curGroupMO:getAllHeroEquips(), seasonEquips, nil, nil, curGroupMO:getAssistBossId())
+	fightParam:setMySide(clothId, main, curGroupMO:getSubList(), curGroupMO:getAllHeroEquips(), seasonEquips, nil, nil, curGroupMO:getAssistBossId(), curGroupMO:getSaveParams())
 
 	return true
 end
@@ -608,6 +608,7 @@ function FightController:setFightHeroSingleGroup()
 	local alreadyList = HeroSingleGroupModel.instance:getList()
 	local equips = curGroupMO:getAllHeroEquips()
 	local assistBossId = curGroupMO:getAssistBossId()
+	local params = curGroupMO:getSaveParams()
 
 	for i = 1, #main do
 		if main[i] ~= alreadyList[i].heroUid then
@@ -642,7 +643,7 @@ function FightController:setFightHeroSingleGroup()
 	local battleConfig = battleId and lua_battle.configDict[battleId]
 	local clothId = battleConfig and battleConfig.noClothSkill == 0 and curGroupMO.clothId or 0
 
-	fightParam:setMySide(clothId, main, sub, equips, seasonEquips, nil, nil, assistBossId)
+	fightParam:setMySide(clothId, main, sub, equips, seasonEquips, nil, nil, assistBossId, params)
 
 	return true
 end

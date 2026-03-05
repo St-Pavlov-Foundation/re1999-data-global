@@ -112,9 +112,7 @@ function FightFailTipsView:_requestRestart()
 end
 
 function FightFailTipsView:_removeEntity()
-	local cur_scene = GameSceneMgr.instance:getCurScene()
-
-	cur_scene.entityMgr:removeAllUnits()
+	FightGameMgr.entityMgr:delAllEntity()
 end
 
 function FightFailTipsView:_onFinish()

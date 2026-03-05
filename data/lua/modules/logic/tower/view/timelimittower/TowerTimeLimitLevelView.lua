@@ -180,7 +180,8 @@ function TowerTimeLimitLevelView:refreshUI()
 
 		TowerModel.instance:setLocalPrefsState(TowerEnum.LocalPrefsKey.NewTimeLimitOpen, curOpenMo.id, curOpenMo, TowerEnum.UnlockKey)
 	else
-		logError("数据异常，当前没有开启的限时塔")
+		GameFacade.showToast(ToastEnum.TowerTimeLimitEnd)
+		self:closeThis()
 
 		return
 	end

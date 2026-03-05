@@ -4,6 +4,13 @@
     "startTime": "2026-01-20 05:00:00",
     "endTime": "2026-05-28 05:00:00",
     "shopTitle": "language_10102660",
-    "currencyMax": 79200
+    "currencyMax": 158400
+  },
+  {
+    "id": 2,
+    "startTime": "2026-03-05 05:00:00",
+    "endTime": "2026-05-28 05:00:00",
+    "shopTitle": "language_10107742",
+    "currencyMax": 158400
   }
 ]

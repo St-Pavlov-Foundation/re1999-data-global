@@ -1,6 +1,7 @@
 [
   {
     "id": 10000,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       13.45,
@@ -18,6 +19,7 @@
   },
   {
     "id": 10001,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.85,
@@ -35,6 +37,7 @@
   },
   {
     "id": 10002,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.85,
@@ -52,6 +55,7 @@
   },
   {
     "id": 10003,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11.6,
@@ -69,6 +73,7 @@
   },
   {
     "id": 10004,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11,
@@ -86,6 +91,7 @@
   },
   {
     "id": 10005,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.85,
@@ -103,6 +109,7 @@
   },
   {
     "id": 10006,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       10.3,
@@ -120,6 +127,7 @@
   },
   {
     "id": 10007,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       13.58,
@@ -137,6 +145,7 @@
   },
   {
     "id": 10008,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11.51,
@@ -154,6 +163,7 @@
   },
   {
     "id": 10009,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.27,
@@ -171,6 +181,7 @@
   },
   {
     "id": 10010,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11.6,
@@ -188,6 +199,7 @@
   },
   {
     "id": 10011,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       8.61,
@@ -205,6 +217,7 @@
   },
   {
     "id": 10012,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.85,
@@ -222,6 +235,7 @@
   },
   {
     "id": 10013,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       10.3,
@@ -239,6 +253,7 @@
   },
   {
     "id": 10014,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11,
@@ -256,6 +271,7 @@
   },
   {
     "id": 10015,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       8.61,
@@ -273,6 +289,7 @@
   },
   {
     "id": 10016,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.27,
@@ -290,6 +307,7 @@
   },
   {
     "id": 10017,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       12.85,
@@ -307,6 +325,7 @@
   },
   {
     "id": 10018,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       10.3,
@@ -324,6 +343,7 @@
   },
   {
     "id": 10019,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       11.2,
@@ -341,6 +361,7 @@
   },
   {
     "id": 10020,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       10.3,
@@ -358,6 +379,7 @@
   },
   {
     "id": 10021,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       9.1,
@@ -375,6 +397,7 @@
   },
   {
     "id": 10022,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       8.61,
@@ -392,6 +415,7 @@
   },
   {
     "id": 10023,
+    "frontEventId": [],
     "eventType": 1,
     "eventCoordinate": [
       13.65,
@@ -409,6 +433,7 @@
   },
   {
     "id": 20000,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       12.4,
@@ -426,6 +451,7 @@
   },
   {
     "id": 20001,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       10.9,
@@ -443,6 +469,7 @@
   },
   {
     "id": 20002,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       13.93,
@@ -460,6 +487,7 @@
   },
   {
     "id": 20003,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       13.61,
@@ -477,6 +505,7 @@
   },
   {
     "id": 20004,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       8.65,
@@ -494,6 +523,7 @@
   },
   {
     "id": 20005,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       12.78,
@@ -511,6 +541,7 @@
   },
   {
     "id": 20006,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       9.37,
@@ -528,6 +559,7 @@
   },
   {
     "id": 20007,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       6.83,
@@ -545,6 +577,7 @@
   },
   {
     "id": 20008,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       11.55,
@@ -562,6 +595,7 @@
   },
   {
     "id": 20009,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       8.96,
@@ -579,6 +613,7 @@
   },
   {
     "id": 20010,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       10.95,
@@ -596,6 +631,7 @@
   },
   {
     "id": 20011,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       13.35,
@@ -613,6 +649,7 @@
   },
   {
     "id": 20012,
+    "frontEventId": [],
     "eventType": 2,
     "eventCoordinate": [
       13.9,
@@ -630,6 +667,7 @@
   },
   {
     "id": 30000,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       10.5,
@@ -647,6 +685,7 @@
   },
   {
     "id": 30001,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       13.61,
@@ -664,9 +703,10 @@
   },
   {
     "id": 30002,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
-      9.9,
+      9.5,
       -6.55
     ],
     "eventTitleId": "language_10089491",
@@ -681,6 +721,7 @@
   },
   {
     "id": 30003,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       8.26,
@@ -698,6 +739,7 @@
   },
   {
     "id": 30004,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       12.94,
@@ -715,6 +757,7 @@
   },
   {
     "id": 30005,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       6,
@@ -732,6 +775,7 @@
   },
   {
     "id": 30006,
+    "frontEventId": [],
     "eventType": 3,
     "eventCoordinate": [
       6.42,
@@ -749,6 +793,7 @@
   },
   {
     "id": 40000,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.25,
@@ -769,6 +814,7 @@
   },
   {
     "id": 40001,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.38,
@@ -788,6 +834,7 @@
   },
   {
     "id": 40002,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.7,
@@ -807,6 +854,7 @@
   },
   {
     "id": 40003,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.6,
@@ -828,6 +876,7 @@
   },
   {
     "id": 40004,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       9.28,
@@ -848,6 +897,7 @@
   },
   {
     "id": 40005,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.53,
@@ -869,6 +919,7 @@
   },
   {
     "id": 40006,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.01,
@@ -890,10 +941,11 @@
   },
   {
     "id": 40007,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       10,
-      -6.51
+      -5.87
     ],
     "eventTitleId": "language_10031829",
     "eventTextId": "40007#41007",
@@ -911,10 +963,11 @@
   },
   {
     "id": 40008,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
-      12.46,
-      -6.55
+      12.8,
+      -6.6
     ],
     "eventTitleId": "language_10031829",
     "eventTextId": "40008#41008",
@@ -930,6 +983,7 @@
   },
   {
     "id": 40009,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -950,6 +1004,7 @@
   },
   {
     "id": 40010,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.33,
@@ -970,6 +1025,7 @@
   },
   {
     "id": 40011,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -990,6 +1046,7 @@
   },
   {
     "id": 40012,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.36,
@@ -1009,6 +1066,7 @@
   },
   {
     "id": 40013,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.86,
@@ -1028,6 +1086,7 @@
   },
   {
     "id": 40014,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       8.95,
@@ -1049,6 +1108,7 @@
   },
   {
     "id": 40015,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.58,
@@ -1068,6 +1128,7 @@
   },
   {
     "id": 40016,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       10.93,
@@ -1088,6 +1149,7 @@
   },
   {
     "id": 40017,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -1107,6 +1169,7 @@
   },
   {
     "id": 40018,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -1128,6 +1191,7 @@
   },
   {
     "id": 40019,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.59,
@@ -1148,6 +1212,7 @@
   },
   {
     "id": 40020,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       10.93,
@@ -1168,6 +1233,7 @@
   },
   {
     "id": 40021,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       12.68,
@@ -1188,6 +1254,7 @@
   },
   {
     "id": 40022,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -1208,6 +1275,7 @@
   },
   {
     "id": 40023,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -1228,6 +1296,7 @@
   },
   {
     "id": 40024,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       7.2,
@@ -1248,6 +1317,7 @@
   },
   {
     "id": 40025,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       6.46,
@@ -1267,6 +1337,7 @@
   },
   {
     "id": 40026,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       10,
@@ -1286,6 +1357,7 @@
   },
   {
     "id": 40027,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.31,
@@ -1305,6 +1377,7 @@
   },
   {
     "id": 40028,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.6,
@@ -1325,6 +1398,7 @@
   },
   {
     "id": 40029,
+    "frontEventId": [],
     "eventType": 4,
     "eventCoordinate": [
       13.62,
@@ -1341,5 +1415,1333 @@
     ],
     "reduceTime": 5,
     "bonus": "2#3#10000"
+  },
+  {
+    "id": 11000,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      11.1,
+      -7.08
+    ],
+    "eventTitleId": "language_10108897",
+    "eventTextId": "61000",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11001,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9,
+      -4.36
+    ],
+    "eventTitleId": "language_10108898",
+    "eventTextId": "61001",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11002,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [],
+    "eventTitleId": "language_10089475",
+    "eventTextId": "61002",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11003,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      12.38,
+      -3.9
+    ],
+    "eventTitleId": "language_10108899",
+    "eventTextId": "61003",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11004,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      8.74,
+      -5.57
+    ],
+    "eventTitleId": "language_10108900",
+    "eventTextId": "61004",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11005,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9.3,
+      -6.1
+    ],
+    "eventTitleId": "language_10108901",
+    "eventTextId": "61005",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11006,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9.6,
+      -5.88
+    ],
+    "eventTitleId": "language_10108902",
+    "eventTextId": "61006",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11007,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.4,
+      -4.78
+    ],
+    "eventTitleId": "language_10108903",
+    "eventTextId": "61007",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11008,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.84,
+      -4.85
+    ],
+    "eventTitleId": "language_10108904",
+    "eventTextId": "61008",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11009,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      11.23,
+      -5.01
+    ],
+    "eventTitleId": "language_10108905",
+    "eventTextId": "61009",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11010,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.86,
+      -4.3
+    ],
+    "eventTitleId": "language_10108906",
+    "eventTextId": "61010",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11011,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.31,
+      -3.53
+    ],
+    "eventTitleId": "language_10108907",
+    "eventTextId": "61011",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11012,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      11.28,
+      -4.5
+    ],
+    "eventTitleId": "language_10108908",
+    "eventTextId": "61012",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11013,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      8.83,
+      -4.7
+    ],
+    "eventTitleId": "language_10108909",
+    "eventTextId": "61013",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11014,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9.6,
+      -5.28
+    ],
+    "eventTitleId": "language_10108910",
+    "eventTextId": "61014",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11015,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [],
+    "eventTitleId": "language_10089475",
+    "eventTextId": "61015",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11016,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.58,
+      -3.6
+    ],
+    "eventTitleId": "language_10108911",
+    "eventTextId": "61016",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11017,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      11.25,
+      -3.53
+    ],
+    "eventTitleId": "language_10108912",
+    "eventTextId": "61017",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11018,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      13.2,
+      -4
+    ],
+    "eventTitleId": "language_10108913",
+    "eventTextId": "61018",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11019,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [],
+    "eventTitleId": "language_10089475",
+    "eventTextId": "61019",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11020,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.75,
+      -6
+    ],
+    "eventTitleId": "language_10108914",
+    "eventTextId": "61020",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11021,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      11.82,
+      -6
+    ],
+    "eventTitleId": "language_10108915",
+    "eventTextId": "61021",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11022,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      8.9,
+      -4.33
+    ],
+    "eventTitleId": "language_10016132",
+    "eventTextId": "61022",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11023,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9.75,
+      -6
+    ],
+    "eventTitleId": "language_10108916",
+    "eventTextId": "61023",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11024,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      9.12,
+      -6.59
+    ],
+    "eventTitleId": "language_10108917",
+    "eventTextId": "61024",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11025,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [],
+    "eventTitleId": "language_10089475",
+    "eventTextId": "61025",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11026,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.47,
+      -4.08
+    ],
+    "eventTitleId": "language_10108918",
+    "eventTextId": "61026",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11027,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      10.36,
+      -3.39
+    ],
+    "eventTitleId": "language_10026675",
+    "eventTextId": "61027",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11028,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [
+      13.7,
+      -6.32
+    ],
+    "eventTitleId": "language_10108919",
+    "eventTextId": "61028",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 11029,
+    "frontEventId": [],
+    "eventType": 1,
+    "eventCoordinate": [],
+    "eventTitleId": "language_10089475",
+    "eventTextId": "61029",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20013,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      13.9,
+      -6.1
+    ],
+    "eventTitleId": "language_10108920",
+    "eventTextId": "20013",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20014,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      10.72,
+      -6.84
+    ],
+    "eventTitleId": "language_10108921",
+    "eventTextId": "20014",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20015,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      6.9,
+      -5.25
+    ],
+    "eventTitleId": "language_10108922",
+    "eventTextId": "20015",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20016,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      11.47,
+      -3.34
+    ],
+    "eventTitleId": "language_10108923",
+    "eventTextId": "20016",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20017,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      6.21,
+      -3.09
+    ],
+    "eventTitleId": "language_10108924",
+    "eventTextId": "20017",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20018,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      11.01,
+      -4.22
+    ],
+    "eventTitleId": "language_10108925",
+    "eventTextId": "20018",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20019,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      14.31,
+      -3.8
+    ],
+    "eventTitleId": "language_10108926",
+    "eventTextId": "20019",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20020,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      9,
+      -6.44
+    ],
+    "eventTitleId": "language_10108927",
+    "eventTextId": "20020",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20021,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      10.3,
+      -4.64
+    ],
+    "eventTitleId": "language_10108928",
+    "eventTextId": "20021",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20022,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      6.73,
+      -5.2
+    ],
+    "eventTitleId": "language_10108929",
+    "eventTextId": "20022",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20023,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10108930",
+    "eventTextId": "20023",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 20024,
+    "frontEventId": [],
+    "eventType": 2,
+    "eventCoordinate": [
+      13.4,
+      -6.2
+    ],
+    "eventTitleId": "language_10108931",
+    "eventTextId": "20024",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 30007,
+    "frontEventId": [],
+    "eventType": 3,
+    "eventCoordinate": [
+      13.6,
+      -6.6
+    ],
+    "eventTitleId": "language_10108932",
+    "eventTextId": "30043#30044#30045#30046",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 30008,
+    "frontEventId": [],
+    "eventType": 3,
+    "eventCoordinate": [
+      9.48,
+      -6.8
+    ],
+    "eventTitleId": "language_10108933",
+    "eventTextId": "30047#30048#30049#30050#30051#30052",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 30009,
+    "frontEventId": [],
+    "eventType": 3,
+    "eventCoordinate": [
+      6.21,
+      -3.09
+    ],
+    "eventTitleId": "language_10108934",
+    "eventTextId": "30053#30054#30055#30056#30057#30058",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 30010,
+    "frontEventId": [],
+    "eventType": 3,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10108935",
+    "eventTextId": "30059#30060#30061#30062#30063",
+    "chaNum": 0,
+    "allTime": 0,
+    "charaProfile": "",
+    "needchaText": "",
+    "chaId": [],
+    "reduceTime": 0,
+    "bonus": ""
+  },
+  {
+    "id": 40030,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40030#41030",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "312601",
+    "needchaText": "language_10108936",
+    "chaId": [
+      3126,
+      3044,
+      3061
+    ],
+    "reduceTime": 5,
+    "bonus": "1#111001#2"
+  },
+  {
+    "id": 40031,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40031#41031",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "304201",
+    "needchaText": "language_10108937",
+    "chaId": [
+      3042,
+      3030,
+      3005
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40032,
+    "frontEventId": [
+      40031
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      14,
+      -6.2
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40032#41032",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "303001",
+    "needchaText": "language_10108938",
+    "chaId": [
+      3030,
+      3042,
+      3101
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110202#2"
+  },
+  {
+    "id": 40033,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      14,
+      -6.6
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40033#41033",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "302301",
+    "needchaText": "language_10108939",
+    "chaId": [
+      3023,
+      3041,
+      3057
+    ],
+    "reduceTime": 5,
+    "bonus": "2#5#10000"
+  },
+  {
+    "id": 40034,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      7.14,
+      -6.6
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40034#41034",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "302001",
+    "needchaText": "language_10108940",
+    "chaId": [
+      3020,
+      3033,
+      3055
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110702#2"
+  },
+  {
+    "id": 40035,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40035#41035",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "304701",
+    "needchaText": "language_10108941",
+    "chaId": [
+      3047,
+      3057,
+      3036
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40036,
+    "frontEventId": [
+      40035
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      7.62,
+      -5.47
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40036#41036",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "311601",
+    "needchaText": "language_10108942",
+    "chaId": [
+      3116,
+      3010,
+      3006
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110102#2"
+  },
+  {
+    "id": 40037,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40037#41037",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "312101",
+    "needchaText": "language_10108943",
+    "chaId": [
+      3121,
+      3035,
+      3115
+    ],
+    "reduceTime": 5,
+    "bonus": "2#5#10000"
+  },
+  {
+    "id": 40038,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      10.15,
+      -4.54
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40038#41038",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "304901",
+    "needchaText": "language_10108944",
+    "chaId": [
+      3049,
+      3099,
+      3054
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110902#2"
+  },
+  {
+    "id": 40039,
+    "frontEventId": [
+      40038
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      10.29,
+      -4.54
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40039#41039",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "301701",
+    "needchaText": "language_10108945",
+    "chaId": [
+      3017,
+      3045,
+      3012
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40040,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40040#41040",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "301401",
+    "needchaText": "language_10108946",
+    "chaId": [
+      3014,
+      3038,
+      3075
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110302#2"
+  },
+  {
+    "id": 40041,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      14,
+      -6.2
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40041#41041",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "310301",
+    "needchaText": "language_10108947",
+    "chaId": [
+      3103,
+      3010,
+      3071
+    ],
+    "reduceTime": 5,
+    "bonus": "2#5#10000"
+  },
+  {
+    "id": 40042,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40042#41042",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "305301",
+    "needchaText": "language_10108948",
+    "chaId": [
+      3053,
+      3024,
+      3031
+    ],
+    "reduceTime": 5,
+    "bonus": "1#111102#2"
+  },
+  {
+    "id": 40043,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40043#41043",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "312601",
+    "needchaText": "language_10108949",
+    "chaId": [
+      3126,
+      3049,
+      3054
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40044,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      11.64,
+      -3.39
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40044#41044",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "309701",
+    "needchaText": "language_10108950",
+    "chaId": [
+      3097,
+      3026,
+      3015
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110402#2"
+  },
+  {
+    "id": 40045,
+    "frontEventId": [
+      40037
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40045#41045",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "312101",
+    "needchaText": "language_10108951",
+    "chaId": [
+      3121,
+      3107,
+      3027
+    ],
+    "reduceTime": 5,
+    "bonus": "2#5#10000"
+  },
+  {
+    "id": 40046,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      12.64,
+      -4.2
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40046#41046",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "303701",
+    "needchaText": "language_10108952",
+    "chaId": [
+      3037,
+      3101,
+      3013
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110502#2"
+  },
+  {
+    "id": 40047,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      6.6,
+      -5.4
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40047#41047",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "510401",
+    "needchaText": "language_10089496",
+    "chaId": [
+      3023
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40048,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40048#41048",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "300901",
+    "needchaText": "language_10108953",
+    "chaId": [
+      3009,
+      3103,
+      3040
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110602#2"
+  },
+  {
+    "id": 40049,
+    "frontEventId": [
+      40040
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      14,
+      -6.2
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40049#41049",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "301403",
+    "needchaText": "language_10108954",
+    "chaId": [
+      3014,
+      3055,
+      3043
+    ],
+    "reduceTime": 5,
+    "bonus": "2#5#10000"
+  },
+  {
+    "id": 40050,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40050#41050",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "305701",
+    "needchaText": "language_10108955",
+    "chaId": [
+      3057,
+      3023
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110802#2"
+  },
+  {
+    "id": 40051,
+    "frontEventId": [],
+    "eventType": 4,
+    "eventCoordinate": [
+      14,
+      -6.2
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40051#41051",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "313401",
+    "needchaText": "language_10108956",
+    "chaId": [
+      3134,
+      3041,
+      3028
+    ],
+    "reduceTime": 5,
+    "bonus": "2#3#10000"
+  },
+  {
+    "id": 40052,
+    "frontEventId": [
+      40051
+    ],
+    "eventType": 4,
+    "eventCoordinate": [
+      13.6,
+      -6.5
+    ],
+    "eventTitleId": "language_10031829",
+    "eventTextId": "40052#41052",
+    "chaNum": 4,
+    "allTime": 10,
+    "charaProfile": "300301",
+    "needchaText": "language_10108957",
+    "chaId": [
+      3003,
+      3027,
+      3028
+    ],
+    "reduceTime": 5,
+    "bonus": "1#110302#2"
   }
 ]

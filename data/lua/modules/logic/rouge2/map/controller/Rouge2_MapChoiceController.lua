@@ -2,9 +2,11 @@
 
 module("modules.logic.rouge2.map.controller.Rouge2_MapChoiceController", package.seeall)
 
-local Rouge2_MapChoiceController = class("Rouge2_MapChoiceController")
+local Rouge2_MapChoiceController = class("Rouge2_MapChoiceController", BaseController)
 
-Rouge2_MapChoiceController.MsgWork = {}
+function Rouge2_MapChoiceController:reInit()
+	self:clear()
+end
 
 function Rouge2_MapChoiceController:onSendChoiceRequest()
 	self._waitChoiceRpcReply = true
@@ -29,17 +31,18 @@ function Rouge2_MapChoiceController:onReceiveChoiceReply(resultCode, msg)
 	self:_addPushStepFlow(self._flow)
 	self._flow:addWork(FunctionWork.New(Rouge2_MapModel.blockTriggerInteractive, Rouge2_MapModel.instance, false))
 	self._flow:addWork(Rouge2_WaitRougeInteractDoneWork.New())
+	self._flow:addWork(Rouge2_WaitGetAttrDropRewardWork.New())
 	self._flow:addWork(Rouge2_WaitPopViewDoneWork.New())
 	self._flow:registerDoneListener(self._onChoiceFlowDone, self)
 	self._flow:start()
 end
 
 function Rouge2_MapChoiceController:addPushToFlow(msgName, msg)
-	local workCls = Rouge2_MapChoiceController.MsgWork[msgName] or Rouge2_MsgPushWork
+	local workCls = _G[string.format("%sWork", msgName)] or Rouge2_MsgPushWork
 	local work = workCls.New(msgName, msg)
 
 	if not self._waitChoiceRpcReply then
-		work:onStart()
+		self:_buildTempFlow(work)
 
 		return
 	end
@@ -53,6 +56,36 @@ function Rouge2_MapChoiceController:addPushToFlow(msgName, msg)
 	else
 		table.insert(self._steps, work)
 	end
+end
+
+function Rouge2_MapChoiceController:_buildTempFlow(work)
+	self._tempFlowMap = self._tempFlowMap or {}
+
+	local tempFlow = FlowSequence.New()
+
+	self._tempFlowMap[tempFlow] = true
+
+	tempFlow:addWork(work)
+	tempFlow:registerDoneListener(self._onTempFlowDone, tempFlow)
+	tempFlow:start()
+end
+
+function Rouge2_MapChoiceController._onTempFlowDone(tempFlow)
+	tempFlow:destroy()
+
+	Rouge2_MapChoiceController.instance._tempFlowMap[tempFlow] = nil
+end
+
+function Rouge2_MapChoiceController:destroyTempFlowMap()
+	if self._tempFlowMap then
+		for tempFlow in pairs(self._tempFlowMap) do
+			tempFlow:destroy()
+
+			self._tempFlowMap[tempFlow] = nil
+		end
+	end
+
+	Rouge2_AttrDropController.instance:recordWaitGetAttrReward(false)
 end
 
 function Rouge2_MapChoiceController:_destroyFlow()
@@ -126,16 +159,21 @@ function Rouge2_MapChoiceController:isFlowRunning()
 end
 
 function Rouge2_MapChoiceController:_onChoiceFlowDone()
-	self:clear()
+	self:clearChoiceFlow()
 	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onChoiceFlowDone)
 end
 
-function Rouge2_MapChoiceController:clear()
+function Rouge2_MapChoiceController:clearChoiceFlow()
 	self:_destroyFlow()
 
 	self._waitChoiceRpcReply = false
 
 	Rouge2_MapModel.instance:blockTriggerInteractive(false)
+end
+
+function Rouge2_MapChoiceController:clear()
+	self:clearChoiceFlow()
+	self:destroyTempFlowMap()
 end
 
 Rouge2_MapChoiceController.instance = Rouge2_MapChoiceController.New()

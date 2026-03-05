@@ -10,6 +10,7 @@ function FightSkillFlow:ctor(fightStepData)
 
 	self._sequence:addWork(FightWorkSkillSwitchSpine.New(fightStepData))
 	self._sequence:addWork(FightWorkSkillSwitchSpineByServerSkin.New(fightStepData))
+	self._sequence:addWork(FightWorkSkillSwitchSpineByAssistRole.New(fightStepData))
 
 	local skillReleaseFlow = FlowParallel.New()
 
@@ -88,6 +89,7 @@ end
 function FightSkillFlow:addAfterSkillEffects(works)
 	self._sequence:addWork(FightWorkSkillSwitchSpineEnd.New(self.fightStepData))
 	self._sequence:addWork(FightWorkSkillSwitchSpineByServerSkinEnd.New(self.fightStepData))
+	self._sequence:addWork(FightWorkSkillSwitchSpineByAssistRoleEnd.New(self.fightStepData))
 
 	for _, work in ipairs(works) do
 		self._sequence:addWork(work)

@@ -1,0 +1,72 @@
+[
+  {
+    "sceneId": 14501,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 11501,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 15001,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 29601,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 23001,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 11602,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 22801,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 30201,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 30401,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 18101,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 12301,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 27901,
+    "myStanceId": 101,
+    "enemyStanceId": 4
+  },
+  {
+    "sceneId": 34101,
+    "myStanceId": 339015,
+    "enemyStanceId": 26
+  },
+  {
+    "sceneId": 34201,
+    "myStanceId": 339015,
+    "enemyStanceId": 26
+  }
+]

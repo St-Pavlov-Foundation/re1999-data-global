@@ -9,20 +9,14 @@ function TowerStoreView:onInitView()
 	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "mask/#scroll_store")
 	self._goContent = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content")
 	self._gostoreItem = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem")
-	self._goTime = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time")
-	self._txtTime = gohelper.findChildText(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time")
-	self._btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#btn_Tips")
-	self._goTips = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips")
-	self._txtTimeTips = gohelper.findChildText(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/image_Tips/#txt_TimeTips")
-	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/tag1/#go_Time/image_TipsBG/#txt_Time/#go_Tips/#btn_closetip")
 	self._gostoregoodsitem = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
 	self._golimit = gohelper.findChild(self.viewGO, "mask/#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem/go_tag/#go_limit")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
-	self._gotag = gohelper.findChild(self.viewGO, "Tag2")
-	self._gotaglimit = gohelper.findChild(self.viewGO, "Tag2/#go_taglimit")
-	self._txtlimit = gohelper.findChildText(self.viewGO, "Tag2/#go_taglimit/#txt_limit")
-	self._txtTagName = gohelper.findChildText(self.viewGO, "Tag2/txt_tagName")
+	self._gotag = gohelper.findChild(self.viewGO, "Tag3")
+	self._gotaglimit = gohelper.findChild(self.viewGO, "Tag3/#go_taglimit")
+	self._txtlimit = gohelper.findChildText(self.viewGO, "Tag3/#go_taglimit/#txt_limit")
+	self._txtTagName = gohelper.findChildText(self.viewGO, "Tag3/txt_tagName")
 	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
 	self._gotaskReddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_taskReddot")
 
@@ -32,8 +26,6 @@ function TowerStoreView:onInitView()
 end
 
 function TowerStoreView:addEvents()
-	self._btnTips:AddClickListener(self._btnTipsOnClick, self)
-	self._btnclosetip:AddClickListener(self._btnclosetipOnClick, self)
 	self._btnTask:AddClickListener(self._btntaskOnClick, self)
 	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStoreContent, self)
 	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshStoreContent, self)
@@ -41,30 +33,17 @@ function TowerStoreView:addEvents()
 end
 
 function TowerStoreView:removeEvents()
-	self._btnTips:RemoveClickListener()
-	self._btnclosetip:RemoveClickListener()
 	self._btnTask:RemoveClickListener()
 	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self.refreshStoreContent, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self.refreshStoreContent, self)
 	self:removeEventCb(TowerController.instance, TowerEvent.OnHandleInStoreView, self._OnHandleInStoreView, self)
 end
 
-function TowerStoreView:_btnclosetipOnClick()
-	return
-end
-
-function TowerStoreView:_btnTipsOnClick()
-	return
-end
-
 function TowerStoreView:_btntaskOnClick()
 	local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 	local param = {}
 
-	param.towerType = TowerEnum.TowerType.Limited
-	param.towerId = curOpenTimeLimitTowerMo.towerId
-
-	TowerController.instance:openTowerTaskView(param)
+	TowerComposeController.instance:openTowerComposeTaskView(param)
 end
 
 function TowerStoreView:_btntagOnClick(index)
@@ -83,7 +62,7 @@ function TowerStoreView:_editableInitView()
 	self.storeItemList = self:getUserDataTb_()
 	self._tagList = self:getUserDataTb_()
 	self.showTagIndex = {
-		2
+		3
 	}
 
 	for i = 1, 3 do
@@ -155,8 +134,8 @@ function TowerStoreView:onOpen()
 	RedDotController.instance:addRedDot(self._gotaskReddot, RedDotEnum.DotNode.TowerTask)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
-	self:refreshTime()
 	self:refreshStoreContent()
+	self:refreshTime()
 	self:_onScrollValueChanged()
 
 	if not TowerStoreModel.instance:isUpdateStoreEmpty() then
@@ -261,21 +240,8 @@ function TowerStoreView:onDestroyView()
 end
 
 function TowerStoreView:refreshTime()
-	local actId = TowerStoreModel.instance:checkUpdateStoreActivity()
-	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
-
-	if actInfoMo then
-		local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
-
-		gohelper.setActive(self._txtTime.gameObject, offsetSecond > 0)
-
-		if offsetSecond > 0 then
-			local dateStr = TimeUtil.SecondToActivityTimeFormat(offsetSecond)
-
-			self._txtTime.text = string.format(luaLang("v1a4_bossrush_scoreview_txt_closetime"), dateStr)
-		end
-	else
-		gohelper.setActive(self._txtTime.gameObject, false)
+	for _, storeItem in pairs(self.storeItemList) do
+		storeItem:refreshTime()
 	end
 end
 

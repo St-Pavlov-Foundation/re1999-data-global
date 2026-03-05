@@ -5,7 +5,7 @@ module("modules.logic.versionactivity3_1.nationalgift.model.NationalGiftMO", pac
 local NationalGiftMO = pureTable("NationalGiftMO")
 
 function NationalGiftMO:ctor()
-	self.actId = VersionActivity3_1Enum.ActivityId.NationalGift
+	self.actId = 0
 	self.isActive = false
 	self.bonuses = {}
 	self.endTime = 0

@@ -173,7 +173,8 @@ function HeroGroupController:_getGroupFightViewName(episodeId)
 			[DungeonEnum.ChapterType.Survival] = ViewName.SurvivalHeroGroupFightView,
 			[DungeonEnum.ChapterType.Shelter] = ViewName.ShelterHeroGroupFightView,
 			[DungeonEnum.ChapterType.Act191] = ViewName.Act191HeroGroupView,
-			[DungeonEnum.ChapterType.Rouge2] = ViewName.Rouge2_HeroGroupFightView
+			[DungeonEnum.ChapterType.Rouge2] = ViewName.Rouge2_HeroGroupFightView,
+			[DungeonEnum.ChapterType.TowerCompose] = ViewName.TowerComposeHeroGroupView
 		}
 		self.ChapterIdToHeroGroupView = {
 			[DungeonEnum.ChapterId.BossStory] = ViewName.VersionActivity2_8HeroGroupBossView
@@ -214,7 +215,7 @@ function HeroGroupController:changeToDefaultEquip()
 		heroMo = HeroModel.instance:getById(heroUid)
 		equipIndex = index - 1
 
-		if heroMo and heroMo:hasDefaultEquip() and heroMo.defaultEquipUid ~= equipMoList[equipIndex].equipUid[1] then
+		if heroMo and heroMo:hasDefaultEquip() and equipMoList[equipIndex] and heroMo.defaultEquipUid ~= equipMoList[equipIndex].equipUid[1] then
 			local preFindIndex = self:_checkEquipInPreviousEquip(equipIndex - 1, heroMo.defaultEquipUid, equipMoList)
 
 			if equipIndex <= preFindIndex then

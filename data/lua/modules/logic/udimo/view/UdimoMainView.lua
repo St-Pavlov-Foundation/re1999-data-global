@@ -20,6 +20,7 @@ function UdimoMainView:onInitView()
 	self._goWifi = gohelper.findChild(self.viewGO, "#go_lockscreen/Top/Wifi")
 	self._goBattery = gohelper.findChild(self.viewGO, "#go_lockscreen/Top/Battery")
 	self._imageBatteryValue = gohelper.findChildImage(self.viewGO, "#go_lockscreen/Top/Battery/image_Battery/image_Inner")
+	self._goweathertitle = gohelper.findChild(self.viewGO, "#go_lockscreen/Left/image_SmallTitle")
 	self._txtTemperature = gohelper.findChildText(self.viewGO, "#go_lockscreen/Left/#txt_Temperature")
 	self._goweather = gohelper.findChild(self.viewGO, "#go_lockscreen/Left/#txt_Temperature/Weather")
 	self._imageWeatherColor = gohelper.findChildImage(self.viewGO, "#go_lockscreen/Left/#txt_Temperature/Weather/image_BG")
@@ -336,11 +337,6 @@ function UdimoMainView:refresh()
 end
 
 function UdimoMainView:refreshNetworkType()
-	gohelper.setActive(self._goPoint, false)
-	gohelper.setActive(self._goWifi, false)
-
-	do return end
-
 	if not self._isLockMode then
 		return
 	end
@@ -352,10 +348,6 @@ function UdimoMainView:refreshNetworkType()
 end
 
 function UdimoMainView:refreshBattery()
-	gohelper.setActive(self._goBattery, false)
-
-	do return end
-
 	if not self._isLockMode then
 		return
 	end
@@ -385,47 +377,49 @@ function UdimoMainView:refreshWeather()
 		return
 	end
 
-	local showWeather = false
-	local weatherInfo
-	local isOversea = SettingsModel.instance:isOverseas()
+	local weatherId = UdimoWeatherModel.instance:getWeatherId()
+	local winLevel = UdimoWeatherModel.instance:getWindLevel()
+	local strTemperature = UdimoWeatherModel.instance:getTemperature()
+	local numTemperature = not string.nilorempty(strTemperature) and tonumber(strTemperature)
 
-	if not isOversea then
-		local weatherId = UdimoWeatherModel.instance:getWeatherId()
-		local winLevel = UdimoWeatherModel.instance:getWindLevel()
-		local strTemperature = UdimoWeatherModel.instance:getTemperature()
-		local numTemperature = not string.nilorempty(strTemperature) and tonumber(strTemperature)
+	if numTemperature then
+		numTemperature = math.floor(numTemperature + 0.5)
+		self._txtTemperature.text = numTemperature
 
-		if numTemperature then
-			numTemperature = math.floor(numTemperature + 0.5)
-			self._txtTemperature.text = numTemperature
+		local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId, winLevel)
+		local tip = UdimoConfig.instance:getTemperatureTip(cfgWeatherId, numTemperature)
 
-			local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId, winLevel)
-			local tip = UdimoConfig.instance:getTemperatureTip(cfgWeatherId, numTemperature)
-
-			self._txtTips.text = tip
-		end
-
-		weatherInfo = UdimoConfig.instance:getWeatherInfo(weatherId, winLevel)
-
-		if weatherInfo then
-			self._txtWeather.text = weatherInfo.name
-
-			UISpriteSetMgr.instance:setUdimoSprite(self._imageWeatherIcon, weatherInfo.icon)
-
-			if string.nilorempty(weatherInfo.color) then
-				ZProj.UGUIHelper.SetColorAlpha(self._imageWeatherColor, 0)
-			else
-				SLFramework.UGUI.GuiHelper.SetColor(self._imageWeatherColor, weatherInfo.color)
-				ZProj.UGUIHelper.SetColorAlpha(self._imageWeatherColor, 1)
-			end
-		end
-
-		showWeather = numTemperature and weatherInfo
+		self._txtTips.text = tip
 	end
+
+	local weatherInfo = UdimoConfig.instance:getWeatherInfo(weatherId, winLevel)
+
+	if weatherInfo then
+		self._txtWeather.text = weatherInfo.name
+
+		UISpriteSetMgr.instance:setUdimoSprite(self._imageWeatherIcon, weatherInfo.icon)
+
+		if string.nilorempty(weatherInfo.color) then
+			ZProj.UGUIHelper.SetColorAlpha(self._imageWeatherColor, 0)
+		else
+			SLFramework.UGUI.GuiHelper.SetColor(self._imageWeatherColor, weatherInfo.color)
+			ZProj.UGUIHelper.SetColorAlpha(self._imageWeatherColor, 1)
+		end
+	end
+
+	local showWeather = numTemperature and weatherInfo
 
 	gohelper.setActive(self._txtTips, showWeather)
 	gohelper.setActive(self._txtTemperature, showWeather)
 	gohelper.setActive(self._goweather, showWeather)
+
+	local isShowWeatherTitle = false
+
+	if showWeather then
+		isShowWeatherTitle = SettingsModel.instance:isOverseas()
+	end
+
+	gohelper.setActive(self._goweathertitle, isShowWeatherTitle)
 end
 
 function UdimoMainView:refreshSlider(progress, pos)
@@ -461,6 +455,8 @@ function UdimoMainView:_everySecondCall(onOpen)
 
 		self._lastGetInfoTime = curTime
 	end
+
+	UdimoController.instance:onGetWeatherInfo()
 end
 
 function UdimoMainView:refreshTime(onOpen)

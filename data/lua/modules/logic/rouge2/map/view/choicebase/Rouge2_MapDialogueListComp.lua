@@ -28,13 +28,13 @@ function Rouge2_MapDialogueListComp:init(go)
 	self._doneInfoList = {}
 	self._freeItemList = self:getUserDataTb_()
 	self._useItemList = self:getUserDataTb_()
-	self._viewName2FlowFunc = {}
-	self._viewName2FlowFunc[ViewName.Rouge2_MapChoiceView] = self._buildFlow_Story
-	self._viewName2FlowFunc[ViewName.Rouge2_MapPieceChoiceView] = self._buildFlow_Story
-	self._viewName2FlowFunc[ViewName.Rouge2_MapExploreChoiceView] = self._buildFlow_Explore
-	self._buildFlowFunc = self._viewName2FlowFunc[self._viewName]
+	self._viewName2FlowCls = {}
+	self._viewName2FlowCls[ViewName.Rouge2_MapChoiceView] = Rouge2_MapStoryDialogueFlow
+	self._viewName2FlowCls[ViewName.Rouge2_MapPieceChoiceView] = Rouge2_MapStoryDialogueFlow
+	self._viewName2FlowCls[ViewName.Rouge2_MapExploreChoiceView] = Rouge2_MapDialogueBaseFlow
+	self._buildFlowCls = self._viewName2FlowCls[self._viewName]
 
-	if not self._buildFlowFunc then
+	if not self._buildFlowCls then
 		logError(string.format("肉鸽对话流构建方法不存在 viewName = %s", self._viewName))
 	end
 end
@@ -101,8 +101,10 @@ function Rouge2_MapDialogueListComp:_addDialogueFlow(dialogueList, playType, don
 	local flow = FlowSequence.New()
 	local dialogueNum = dialogueList and #dialogueList or 0
 
-	if dialogueNum > 0 and self._buildFlowFunc ~= nil then
-		self:_buildFlowFunc(flow, dialogueList, playType)
+	if dialogueNum > 0 and self._buildFlowCls ~= nil then
+		local work = self._buildFlowCls.New(dialogueList, playType)
+
+		flow:addWork(work)
 	end
 
 	if doneCallback and doneCallbackObj then

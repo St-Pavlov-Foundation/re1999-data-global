@@ -7,7 +7,9 @@ local NecrologistStoryReviewViewContainer = class("NecrologistStoryReviewViewCon
 function NecrologistStoryReviewViewContainer:buildViews()
 	local views = {}
 
-	table.insert(views, NecrologistStoryReviewView.New())
+	self.reviewView = NecrologistStoryReviewView.New()
+
+	table.insert(views, self.reviewView)
 	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
 
 	return views
@@ -25,6 +27,10 @@ function NecrologistStoryReviewViewContainer:buildTabViews(tabContainerId)
 			navView
 		}
 	end
+end
+
+function NecrologistStoryReviewViewContainer:getBranchItem()
+	return self.reviewView:getBranchItem()
 end
 
 return NecrologistStoryReviewViewContainer

@@ -11,6 +11,47 @@ function Rouge2_HeroGroupEditListModel:init(actId, episodeId)
 end
 
 function Rouge2_HeroGroupEditListModel:copyCharacterCardList(init)
+	self._inTeamHeroUids = {}
+
+	if self._attrBuffId and self._attrBuffId ~= 0 then
+		return self:_initRecommendTeamHeroList(init)
+	else
+		return self:_initNormalHeroList(init)
+	end
+end
+
+function Rouge2_HeroGroupEditListModel:_initRecommendTeamHeroList(init)
+	local moList = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	local newMOList = {}
+	local selectIndex = 1
+
+	self.sortIndexMap = {}
+
+	for i, heroMo in ipairs(moList) do
+		local hasBattleTag = Rouge2_SystemController.instance:checkHeroContainBattleTag(heroMo.heroId, self._battleTag)
+
+		if hasBattleTag then
+			table.insert(newMOList, heroMo)
+
+			self.sortIndexMap[heroMo] = i
+		end
+	end
+
+	table.sort(newMOList, Rouge2_HeroGroupEditListModel.indexMapSortFunc)
+	self:setList(newMOList)
+
+	if init and #newMOList > 0 and selectIndex > 0 and #self._scrollViews > 0 then
+		for _, view in ipairs(self._scrollViews) do
+			view:selectCell(selectIndex, true)
+		end
+
+		if newMOList[selectIndex] then
+			return newMOList[selectIndex]
+		end
+	end
+end
+
+function Rouge2_HeroGroupEditListModel:_initNormalHeroList(init)
 	local moList
 
 	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
@@ -21,9 +62,6 @@ function Rouge2_HeroGroupEditListModel:copyCharacterCardList(init)
 
 	local newMOList = {}
 	local repeatHero = {}
-
-	self._inTeamHeroUids = {}
-
 	local selectIndex = 1
 	local index = 1
 	local alreadyList = HeroSingleGroupModel.instance:getList()
@@ -90,6 +128,23 @@ end
 function Rouge2_HeroGroupEditListModel.indexMapSortFunc(a, b)
 	local aIndex = Rouge2_HeroGroupEditListModel.instance.sortIndexMap[a]
 	local bIndex = Rouge2_HeroGroupEditListModel.instance.sortIndexMap[b]
+	local isInTeam_A = Rouge2_HeroGroupEditListModel.instance:isInTeamHero(a.uid)
+	local isInTeam_B = Rouge2_HeroGroupEditListModel.instance:isInTeamHero(b.uid)
+
+	if isInTeam_A and isInTeam_B then
+		return aIndex < bIndex
+	end
+
+	if isInTeam_A ~= isInTeam_B then
+		return isInTeam_A
+	end
+
+	local isRecommend_A = Rouge2_SystemController.instance:isRecommendHero(a.heroId)
+	local isRecommend_B = Rouge2_SystemController.instance:isRecommendHero(b.heroId)
+
+	if isRecommend_A ~= isRecommend_B then
+		return isRecommend_A
+	end
 
 	return aIndex < bIndex
 end
@@ -147,6 +202,22 @@ end
 
 function Rouge2_HeroGroupEditListModel:setParam(heroUid)
 	self.specialHero = heroUid
+end
+
+function Rouge2_HeroGroupEditListModel:setAttrBuffId(attrBuffId)
+	self._attrBuffId = attrBuffId
+	self._attrBuffCo = self._attrBuffId and Rouge2_BackpackHelper.getItemConfig(self._attrBuffId)
+	self._battleTag = self._attrBuffCo and self._attrBuffCo.battleTag
+	self._hasBattleTag = not string.nilorempty(self._battleTag)
+	self._battleTagCo = self._hasBattleTag and HeroConfig.instance:getBattleTagConfigCO(self._battleTag)
+end
+
+function Rouge2_HeroGroupEditListModel:isAttrBuffTips()
+	return self._attrBuffId and self._attrBuffId ~= 0
+end
+
+function Rouge2_HeroGroupEditListModel:getBattleTagConfig()
+	return self._battleTagCo
 end
 
 Rouge2_HeroGroupEditListModel.instance = Rouge2_HeroGroupEditListModel.New()

@@ -62,7 +62,7 @@ function SkillEditorMulSkillView:_onSelectSkill(entityMO, skillId)
 	info.modelId = entityMO.modelId
 	info.skillId = skillId
 
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local oppositeTag = side == FightEnum.EntitySide.MySide and SceneTag.UnitMonster or SceneTag.UnitPlayer
 
 	info.targetId = entityMgr:getEntityByPosId(oppositeTag, SkillEditorView.selectPosId[oppoSide]).id
@@ -194,16 +194,13 @@ function SkillEditorMulSkillView:showAllUI()
 end
 
 function SkillEditorMulSkillView:setNameUIActive(active)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local entityDict = entityMgr._tagUnitDict
+	local entityMgr = FightGameMgr.entityMgr
 
-	for _, dict in pairs(entityDict) do
-		for _, entity in pairs(dict) do
-			local nameUi = entity.nameUI
+	for entityId, entity in pairs(entityMgr.entityDic) do
+		local nameUi = entity.nameUI
 
-			if nameUi then
-				gohelper.setActive(nameUi:getGO(), active)
-			end
+		if nameUi then
+			gohelper.setActive(nameUi:getGO(), active)
 		end
 	end
 end

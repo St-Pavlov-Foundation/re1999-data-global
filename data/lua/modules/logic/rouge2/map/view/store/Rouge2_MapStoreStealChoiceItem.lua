@@ -50,7 +50,7 @@ function Rouge2_MapStoreStealChoiceItem:refreshUI()
 	local descConstCo = lua_rouge2_const.configDict[descConstId]
 
 	self._txtTitle.text = titleConstCo and titleConstCo.value2 or ""
-	self._txtDesc.text = descConstCo and SkillHelper.buildDesc(descConstCo.value2) or ""
+	self._txtDesc.text = descConstCo and Rouge2_ItemDescHelper.buildDesc(descConstCo.value2) or ""
 
 	local iconName = Rouge2_MapEnum.StoreStealFialChoiceIcon[self._choiceId]
 

@@ -290,12 +290,6 @@ end
 
 function Rouge2_OutsideModel:isOpenedDifficulty(difficulty)
 	local difficultyCO = Rouge2_Config.instance:getDifficultyCoById(difficulty)
-	local difficultyConfigList = Rouge2_Config.instance:getDifficultyCoList()
-	local difficultyCount = #difficultyConfigList
-
-	if difficultyConfigList and difficulty == difficultyConfigList[difficultyCount].difficulty or difficulty == difficultyConfigList[math.max(1, difficultyCount - 1)].difficulty then
-		return false
-	end
 
 	return self:isPassedDifficulty(difficultyCO.preDifficulty)
 end
@@ -678,6 +672,33 @@ function Rouge2_OutsideModel:clearLocalData()
 	self:checkCollectionRedDot()
 	self:checkStoreRedDot()
 	logError("肉鸽2 清除本地红点数据成功")
+end
+
+function Rouge2_OutsideModel:isFinishOneRouge()
+	local constConfig = Rouge2_OutSideConfig.instance:getConstConfigById(Rouge2_Enum.OutSideConstId.RougeNewGuideStartTime)
+
+	if constConfig == nil then
+		return false
+	end
+
+	if constConfig.value == nil or string.nilorempty(constConfig.value) then
+		return false
+	end
+
+	local lastTime = TimeUtil.stringToTimestamp(constConfig.value) * TimeUtil.OneSecondMilliSecond
+	local reviewInfo = Rouge2_OutsideModel.instance:getReviewInfoList()
+
+	if not reviewInfo or next(reviewInfo) == nil then
+		return false
+	end
+
+	for _, info in ipairs(reviewInfo) do
+		if lastTime <= tonumber(info.finishTime) then
+			return true
+		end
+	end
+
+	return false
 end
 
 Rouge2_OutsideModel.instance = Rouge2_OutsideModel.New()

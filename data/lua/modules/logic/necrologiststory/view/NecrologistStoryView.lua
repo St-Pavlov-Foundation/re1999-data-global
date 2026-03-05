@@ -185,6 +185,8 @@ end
 
 function NecrologistStoryView:refreshViewParam()
 	self.roleStoryId = self.viewParam and self.viewParam.roleStoryId
+	self.callback = self.viewParam and self.viewParam.callback
+	self.callbackObj = self.viewParam and self.viewParam.callbackObj
 
 	local storyGroupId = self.viewParam and self.viewParam.storyGroupId
 
@@ -279,11 +281,14 @@ function NecrologistStoryView:playWeather()
 			local item = self:getUserDataTb_()
 
 			item.go = gohelper.findChild(self.goWeather, name)
-			item.anim = item.go:GetComponent(typeof(UnityEngine.Animator))
 
-			gohelper.setActive(item.go, false)
+			if not gohelper.isNil(item.go) then
+				item.anim = item.go:GetComponent(typeof(UnityEngine.Animator))
 
-			self.weatherList[type] = item
+				gohelper.setActive(item.go, false)
+
+				self.weatherList[type] = item
+			end
 		end
 	end
 
@@ -536,6 +541,7 @@ function NecrologistStoryView:onFinishStory()
 
 	self:setIsEnd(true, self._storyGroupMo.config.isEnd == "1")
 	self._storyGroupMo:saveSituation()
+	self._storyGroupMo:saveTaskValue()
 
 	if self.roleStoryId then
 		local storyMo = NecrologistStoryModel.instance:getGameMO(self.roleStoryId)
@@ -638,6 +644,18 @@ end
 
 function NecrologistStoryView:playStory_v3a2options(storyConfig, isSkip)
 	self:createStoryItem(V3A2NecrologistStoryOptionsItem, storyConfig, isSkip)
+end
+
+function NecrologistStoryView:playStory_commontask(storyConfig, isSkip)
+	local arr = GameUtil.splitString2(storyConfig.param, true, "|", "#")
+
+	if arr then
+		for i, v in ipairs(arr) do
+			self._storyGroupMo:addTaskValue(v[1], v[2])
+		end
+	end
+
+	self:runNextStep(isSkip)
 end
 
 function NecrologistStoryView:createStoryItem(cls, storyConfig, isSkip)
@@ -817,6 +835,20 @@ function NecrologistStoryView:onClose()
 	statParam.lastText = self:getLastText()
 
 	NecrologistStoryStatController.instance:statStoryInterrupt(statParam)
+
+	if self.callback then
+		local callback = self.callback
+
+		self.callback = nil
+
+		callback(self.callbackObj)
+
+		self.callbackObj = nil
+	end
+end
+
+function NecrologistStoryView:onCloseFinish()
+	return
 end
 
 function NecrologistStoryView:isInReview()

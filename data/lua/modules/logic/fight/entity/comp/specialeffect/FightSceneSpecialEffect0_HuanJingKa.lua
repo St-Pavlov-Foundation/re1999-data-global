@@ -2,19 +2,21 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightSceneSpecialEffect0_HuanJingKa", package.seeall)
 
-local FightSceneSpecialEffect0_HuanJingKa = class("FightSceneSpecialEffect0_HuanJingKa", FightEntitySpecialEffectBase)
+local FightSceneSpecialEffect0_HuanJingKa = class("FightSceneSpecialEffect0_HuanJingKa", FightBaseClass)
 local _EffectPath = "v1a3_huanjing/v1a3_scene_huanjing_effect_01"
 local _playAniName = "v1a3_scene_huanjing_effect_01"
 local _hideAniName = "v1a3_scene_huanjing_effect_03"
 local _reShowAniName = "v1a3_scene_huanjing_effect_04"
 
-function FightSceneSpecialEffect0_HuanJingKa:initClass()
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
-	self:addEventCb(FightController.instance, FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork, self)
-	self:addEventCb(FightController.instance, FightEvent.EntityEffectLoaded, self._onEntityEffectLoaded, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+function FightSceneSpecialEffect0_HuanJingKa:onConstructor(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish)
+	self:com_registFightEvent(FightEvent.OnFightReconnectLastWork, self._onFightReconnectLastWork)
+	self:com_registFightEvent(FightEvent.EntityEffectLoaded, self._onEntityEffectLoaded)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 end
 
 function FightSceneSpecialEffect0_HuanJingKa:_onBuffUpdate(targetId, effectType, buffId)
@@ -159,7 +161,7 @@ function FightSceneSpecialEffect0_HuanJingKa:_releaseEffect()
 	end
 end
 
-function FightSceneSpecialEffect0_HuanJingKa:releaseSelf()
+function FightSceneSpecialEffect0_HuanJingKa:onDestructor()
 	self:_releaseEffect()
 end
 

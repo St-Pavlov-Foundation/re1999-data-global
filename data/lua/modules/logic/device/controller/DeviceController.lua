@@ -29,6 +29,10 @@ function DeviceController:reInit()
 end
 
 function DeviceController:_onFirstEnterMain()
+	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
+		return
+	end
+
 	local isEmulator = SDKMgr.instance:isEmulator()
 
 	if isEmulator then

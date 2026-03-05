@@ -78,6 +78,7 @@ DungeonModule_pb.REFRESHASSISTREQUESTASSISTTYPEFIELD = protobuf.FieldDescriptor(
 DungeonModule_pb.REFRESHASSISTREQUESTEXTFIELD = protobuf.FieldDescriptor()
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG = protobuf.Descriptor()
 DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD = protobuf.FieldDescriptor()
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD = protobuf.FieldDescriptor()
 DungeonModule_pb.INSTRUCTIONDUNGEONINFOREQUEST_MSG = protobuf.Descriptor()
 DungeonModule_pb.PUZZLEFINISHREPLY_MSG = protobuf.Descriptor()
 DungeonModule_pb.PUZZLEFINISHREPLYELEMENTIDFIELD = protobuf.FieldDescriptor()
@@ -803,12 +804,22 @@ DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD.has_default_value = false
 DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD.default_value = false
 DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD.type = 8
 DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD.cpp_type = 7
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.name = "endType"
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.full_name = ".EndDungeonRequest.endType"
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.number = 2
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.index = 1
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.label = 1
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.has_default_value = false
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.default_value = 0
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.type = 5
+DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD.cpp_type = 1
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.name = "EndDungeonRequest"
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.full_name = ".EndDungeonRequest"
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.nested_types = {}
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.enum_types = {}
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.fields = {
-	DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD
+	DungeonModule_pb.ENDDUNGEONREQUESTISABORTFIELD,
+	DungeonModule_pb.ENDDUNGEONREQUESTENDTYPEFIELD
 }
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.is_extendable = false
 DungeonModule_pb.ENDDUNGEONREQUEST_MSG.extensions = {}

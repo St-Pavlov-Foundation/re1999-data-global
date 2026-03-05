@@ -40,5 +40,19 @@
     "effects": "buff/buff_rush_rank4",
     "hangpoints": "mounthead",
     "scales": "1,1,1"
+  },
+  {
+    "id": 610413,
+    "buffId": 109320109,
+    "effects": "buff/buff_rush_rank2",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
+  },
+  {
+    "id": 610413,
+    "buffId": 109320110,
+    "effects": "buff/buff_rush_rank4",
+    "hangpoints": "mountweapon",
+    "scales": "1,1,1"
   }
 ]

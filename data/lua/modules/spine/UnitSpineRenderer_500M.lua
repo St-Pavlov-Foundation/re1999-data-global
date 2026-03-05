@@ -2,31 +2,28 @@
 
 module("modules.spine.UnitSpineRenderer_500M", package.seeall)
 
-local UnitSpineRenderer_500M = class("UnitSpineRenderer_500M", LuaCompBase)
+local UnitSpineRenderer_500M = class("UnitSpineRenderer_500M", FightBaseClass)
 
-function UnitSpineRenderer_500M:ctor(entity)
+function UnitSpineRenderer_500M:onConstructor(entity)
 	self._entity = entity
-end
-
-function UnitSpineRenderer_500M:init(go)
-	self.go = go
+	self.go = entity.go
 end
 
 function UnitSpineRenderer_500M:setSpine(unitSpine)
 	if not self.centerSpineRender then
-		self.centerSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.centerSpine:getSpineGO(), UnitSpineRenderer, self._entity)
+		self.centerSpineRender = self:newClass(FightSpineRendererComp, self._entity)
 	end
 
 	self.centerSpineRender:setSpine(unitSpine.centerSpine)
 
 	if not self.frontSpineRender then
-		self.frontSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.frontSpine:getSpineGO(), UnitSpineRenderer, self._entity)
+		self.frontSpineRender = self:newClass(FightSpineRendererComp, self._entity)
 	end
 
 	self.frontSpineRender:setSpine(unitSpine.frontSpine)
 
 	if not self.behindSpineRender then
-		self.behindSpineRender = MonoHelper.addLuaComOnceToGo(unitSpine.behindSpine:getSpineGO(), UnitSpineRenderer, self._entity)
+		self.behindSpineRender = self:newClass(FightSpineRendererComp, self._entity)
 	end
 
 	self.behindSpineRender:setSpine(unitSpine.behindSpine)
@@ -90,7 +87,7 @@ function UnitSpineRenderer_500M:_setRendererEnabled(state)
 	return
 end
 
-function UnitSpineRenderer_500M:onDestroy()
+function UnitSpineRenderer_500M:onDestructor()
 	return
 end
 

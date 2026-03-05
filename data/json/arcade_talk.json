@@ -1,0 +1,331 @@
+[
+  {
+    "id": 103,
+    "groupId": 1,
+    "condition": "1",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 2,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 3,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 4,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 5,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 6,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 7,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 8,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 9,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200001,
+    "groupId": 10,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200001,
+    "groupId": 11,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200001,
+    "groupId": 12,
+    "condition": "4",
+    "param": "103",
+    "weight": 100
+  },
+  {
+    "id": 3200001,
+    "groupId": 13,
+    "condition": "5",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200001,
+    "groupId": 14,
+    "condition": "5",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200002,
+    "groupId": 15,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200002,
+    "groupId": 16,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200002,
+    "groupId": 17,
+    "condition": "4",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200002,
+    "groupId": 18,
+    "condition": "4",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200002,
+    "groupId": 19,
+    "condition": "5",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200003,
+    "groupId": 320000301,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200003,
+    "groupId": 320000302,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200004,
+    "groupId": 320000401,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200004,
+    "groupId": 320000402,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200005,
+    "groupId": 320000501,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200005,
+    "groupId": 320000502,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200006,
+    "groupId": 320000601,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200006,
+    "groupId": 320000602,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200008,
+    "groupId": 320000801,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200008,
+    "groupId": 320000802,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200009,
+    "groupId": 320000901,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200009,
+    "groupId": 320000902,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001001,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001002,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001003,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001004,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001005,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200010,
+    "groupId": 320001006,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200011,
+    "groupId": 320001101,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200011,
+    "groupId": 320001102,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200012,
+    "groupId": 320001201,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200012,
+    "groupId": 320001202,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200013,
+    "groupId": 320001301,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200013,
+    "groupId": 320001302,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200014,
+    "groupId": 320001401,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200014,
+    "groupId": 320001402,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200015,
+    "groupId": 320001501,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200015,
+    "groupId": 320001502,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  }
+]

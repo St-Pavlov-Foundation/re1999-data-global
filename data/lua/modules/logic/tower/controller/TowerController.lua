@@ -6,6 +6,7 @@ local TowerController = class("TowerController", BaseController)
 
 function TowerController:onInit()
 	self.jumpFlow = nil
+	self.enterFlow = nil
 end
 
 function TowerController:reInit()
@@ -14,6 +15,12 @@ function TowerController:reInit()
 	end
 
 	self.jumpFlow = nil
+
+	if self.enterFlow then
+		self.enterFlow:onDestroyInternal()
+	end
+
+	self.enterFlow = nil
 end
 
 function TowerController:addConstEvents()
@@ -28,7 +35,11 @@ function TowerController:jumpView(param)
 	if not ViewMgr.instance:isOpen(ViewName.TowerMainView) then
 		self.jumpFlow = FlowSequence.New()
 
-		local towerEnterWork = TowerEnterWork.New()
+		if not ViewMgr.instance:isOpen(ViewName.TowerMainSelectView) then
+			self.jumpFlow:addWork(TowerMainSelectEnterWork.New())
+		end
+
+		local towerEnterWork = TowerEnterWork.New(nil, ViewName.TowerMainView)
 
 		self.jumpFlow:addWork(towerEnterWork)
 		self.jumpFlow:addWork(FunctionWork.New(self.realJumpTowerView, self, param))
@@ -71,28 +82,15 @@ function TowerController:_openMainView(_, resultCode, _)
 		return
 	end
 
-	TaskRpc.instance:sendGetTaskInfoRequest({
-		TaskEnum.TaskType.Tower,
-		TaskEnum.TaskType.TowerPermanentDeep
-	}, function(_, taskCode, _)
-		if taskCode == 0 then
-			StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore, function(_, storeCode, _)
-				if storeCode == 0 then
-					local isDeepLayerUnlock = TowerPermanentDeepModel.instance:checkDeepLayerUnlock()
+	self.enterFlow = FlowSequence.New()
 
-					if isDeepLayerUnlock then
-						TowerDeepRpc.instance:sendTowerDeepGetInfoRequest(function(_, towerDeepCode, _)
-							if towerDeepCode == 0 then
-								ViewMgr.instance:openView(ViewName.TowerMainView, self._mainviewParam)
-							end
-						end)
-					else
-						ViewMgr.instance:openView(ViewName.TowerMainView, self._mainviewParam)
-					end
-				end
-			end)
-		end
-	end)
+	if not ViewMgr.instance:isOpen(ViewName.TowerMainSelectView) then
+		self.enterFlow:addWork(TowerMainSelectEnterWork.New())
+	end
+
+	self.enterFlow:addWork(TowerEnterWork.New(self._mainviewParam, ViewName.TowerMainView))
+	self.enterFlow:registerDoneListener(self.flowDone, self)
+	self.enterFlow:start()
 end
 
 function TowerController:openBossTowerEpisodeView(towerType, towerId, param)
@@ -330,6 +328,14 @@ function TowerController:onSetTaskList()
 end
 
 function TowerController:openTowerTimeLimitLevelView(param)
+	local curOpenTimeLimitTowerMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+
+	if not curOpenTimeLimitTowerMo then
+		GameFacade.showToast(ToastEnum.TowerTimeLimitEnd)
+
+		return
+	end
+
 	ViewMgr.instance:openView(ViewName.TowerTimeLimitLevelView, param)
 	TowerModel.instance:setCurTowerType(TowerEnum.TowerType.Limited)
 end
@@ -340,18 +346,6 @@ function TowerController:getRecommendList(battleId)
 
 	if battleConfig and not string.nilorempty(battleConfig.monsterGroupIds) then
 		local monsterGroupIds = string.splitToNumber(battleConfig.monsterGroupIds, "#")
-
-		for i, v in ipairs(monsterGroupIds) do
-			local ids = string.splitToNumber(lua_monster_group.configDict[v].monster, "#")
-
-			for index, id in ipairs(ids) do
-				local enemy_career = lua_monster.configDict[id].career
-
-				if not tabletool.indexOf(recommendedList, enemy_career) then
-					table.insert(recommendedList, enemy_career)
-				end
-			end
-		end
 
 		recommendedList = FightHelper.getAttributeCounter(monsterGroupIds, false)
 	end
@@ -463,7 +457,7 @@ function TowerController:checkReddotHasNewUpdateTower()
 		end
 	end
 
-	return hasNewTimeLimitOpen or hasNewBossOpen and isBossOpen
+	return false
 end
 
 function TowerController:checkNewUpdateTowerRddotShow()

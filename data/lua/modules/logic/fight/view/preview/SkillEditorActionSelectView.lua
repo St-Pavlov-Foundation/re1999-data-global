@@ -44,12 +44,10 @@ function SkillEditorActionSelectView:removeEvents()
 end
 
 function SkillEditorActionSelectView:_showThis(side)
-	local scene = GameSceneMgr.instance:getCurScene()
-
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		self._attacker = scene.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		self._attacker = FightGameMgr.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		self._attacker = scene.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		self._attacker = FightGameMgr.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
 	if not self._attacker then

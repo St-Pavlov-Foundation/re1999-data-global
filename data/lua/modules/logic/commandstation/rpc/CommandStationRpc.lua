@@ -21,7 +21,9 @@ function CommandStationRpc:onReceiveGetCommandPostInfoReply(resultCode, msg)
 	local gainBonus = msg.gainBonus
 	local paper = msg.paper
 	local catchNum = msg.catchNum
+	local characterState = msg.characterState
 
+	CommandStationModel.instance:updateCharacterStateList(characterState)
 	CommandStationModel.instance:updateEventList(eventList)
 
 	CommandStationModel.instance.paper = paper
@@ -49,7 +51,10 @@ function CommandStationRpc:onReceiveFinishCommandPostEventReply(resultCode, msg)
 
 	local id = msg.id
 
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.BeforeEventFinish, id)
 	CommandStationModel.instance:setEventFinish(id)
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.EventReadChange, id)
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.AfterEventFinish, id)
 end
 
 function CommandStationRpc:sendCommandPostDispatchRequest(eventId, heroIds, callback, callobj)
@@ -126,8 +131,43 @@ function CommandStationRpc:onReceiveCommandPostEventReadReply(resultCode, msg)
 	end
 
 	local id = msg.id
+	local isReadFinishEvent = CommandStationConfig.instance:isReadFinishEvent(id)
+
+	if isReadFinishEvent then
+		CommandStationController.instance:dispatchEvent(CommandStationEvent.BeforeEventFinish, id)
+	end
 
 	CommandStationModel.instance:setEventRead(id)
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.EventReadChange, id)
+
+	if isReadFinishEvent then
+		CommandStationController.instance:dispatchEvent(CommandStationEvent.AfterEventFinish, id)
+	end
+end
+
+function CommandStationRpc:sendCommandPostCharacterReadRequest(id)
+	local req = CommandPostModule_pb.CommandPostCharacterReadRequest()
+
+	req.id = id
+
+	self:sendMsg(req)
+end
+
+function CommandStationRpc:onReceiveCommandPostCharacterReadReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local id = msg.id
+
+	CommandStationModel.instance:updateCharacterState(id)
+	CommandStationController.instance:dispatchEvent(CommandStationEvent.UpdateCharacterState, id)
+
+	local refreshlist = {
+		[RedDotEnum.DotNode.CommandStationRelationShipBoard] = true
+	}
+
+	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, refreshlist)
 end
 
 CommandStationRpc.instance = CommandStationRpc.New()

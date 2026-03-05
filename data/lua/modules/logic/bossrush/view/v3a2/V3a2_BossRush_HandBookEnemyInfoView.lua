@@ -318,7 +318,6 @@ function V3a2_BossRush_HandBookEnemyInfoView:_playExpAddAnim()
 	local target = math.min(self._heightScore, self._needExp)
 
 	self:_doTweenExp(self._saveExp, target)
-	AudioMgr.instance:trigger(AudioEnum3_2.BossRush.play_ui_zongmao_jiafen_loop)
 end
 
 function V3a2_BossRush_HandBookEnemyInfoView:_doTweenExp(orgin, target)
@@ -329,16 +328,22 @@ function V3a2_BossRush_HandBookEnemyInfoView:_doTweenExp(orgin, target)
 	end
 
 	ZProj.TweenHelper.KillByObj(self._imageslider)
+	self:_showExpSlider()
+
+	if orgin == target then
+		return
+	end
 
 	local time = 1
-
-	self:_showExpSlider()
 
 	self.tweenId = ZProj.TweenHelper.DOTweenFloat(orgin, target, time, self.frameCallback, self.finishCallback, self, nil, EaseType.Linear)
 
 	local fillAmount = self._needExp == 0 and 0 or target / self._needExp * self._sliderScale
 
-	ZProj.TweenHelper.DOFillAmount(self._imageslider, fillAmount, time, nil, nil, nil, EaseType.Linear)
+	self:_onPlayExpLoopAudio()
+	TaskDispatcher.cancelTask(self._onfinishExpLoopAudio, self)
+	TaskDispatcher.runDelay(self._onfinishExpLoopAudio, self, time)
+	ZProj.TweenHelper.DOFillAmount(self._imageslider, fillAmount, time, self._onfinishExpLoopAudio, self, nil, EaseType.Linear)
 end
 
 function V3a2_BossRush_HandBookEnemyInfoView:frameCallback(value)
@@ -425,6 +430,10 @@ function V3a2_BossRush_HandBookEnemyInfoView:refreshExp()
 	end
 end
 
+function V3a2_BossRush_HandBookEnemyInfoView:_onPlayExpLoopAudio()
+	AudioMgr.instance:trigger(AudioEnum3_2.BossRush.play_ui_zongmao_jiafen_loop)
+end
+
 function V3a2_BossRush_HandBookEnemyInfoView:_onfinishExpLoopAudio()
 	AudioMgr.instance:trigger(AudioEnum3_2.BossRush.stop_ui_zongmao_jiafen_loop)
 end
@@ -476,6 +485,7 @@ end
 
 function V3a2_BossRush_HandBookEnemyInfoView:onClose()
 	self:_onfinishExpLoopAudio()
+	TaskDispatcher.cancelTask(self._onfinishExpLoopAudio, self)
 end
 
 function V3a2_BossRush_HandBookEnemyInfoView:onDestroyView()

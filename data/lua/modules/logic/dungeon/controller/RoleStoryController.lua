@@ -28,8 +28,7 @@ function RoleStoryController:_onFuncOpen(newIds)
 end
 
 function RoleStoryController:_onGetInfoFinish()
-	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(NecrologistStoryEnum.RoleStoryId.V3A1)
-	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest(NecrologistStoryEnum.RoleStoryId.V3A2)
+	NecrologistStoryRpc.instance:sendGetNecrologistStoryRequest()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.RoleStory) then
 		HeroStoryRpc.instance:sendGetHeroStoryRequest()

@@ -5,7 +5,7 @@ module("modules.logic.pcInput.activityAdapter.CommonActivityAdapter", package.se
 local CommonActivityAdapter = class("CommonActivityAdapter", BaseActivityAdapter)
 
 CommonActivityAdapter.keytoFunction = {
-	Esc = function()
+	Escape = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyCommonCancel)
 	end,
 	Return = function()

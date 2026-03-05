@@ -78,5 +78,35 @@
       -1
     ],
     "scale": "0.9"
+  },
+  {
+    "skinId": 690112,
+    "sceneId": 0,
+    "position": [
+      7.48,
+      1.22,
+      0
+    ],
+    "scale": "1"
+  },
+  {
+    "skinId": 610401,
+    "sceneId": 0,
+    "position": [
+      10,
+      0,
+      0.54
+    ],
+    "scale": "0.74"
+  },
+  {
+    "skinId": 610402,
+    "sceneId": 0,
+    "position": [
+      10,
+      0,
+      0.54
+    ],
+    "scale": "0.74"
   }
 ]

@@ -30,10 +30,6 @@ end
 function BpChargeViewContainer:playOpenTransition()
 	local anim = "open"
 
-	if self.viewParam and self.viewParam.first then
-		anim = "first"
-	end
-
 	BpChargeViewContainer.super.playOpenTransition(self, {
 		duration = 3,
 		anim = anim

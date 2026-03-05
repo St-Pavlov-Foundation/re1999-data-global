@@ -109,7 +109,7 @@ function Rouge2_CollectionConfig._relicsSortFunc(aInfo, bInfo)
 end
 
 function Rouge2_CollectionConfig:getRelicsConfig(relicsId)
-	local relicsCo = lua_rouge2_relics.configDict[relicsId]
+	local relicsCo = relicsId and lua_rouge2_relics.configDict[relicsId]
 
 	if not relicsCo then
 		logNormal(string.format("肉鸽造物配置不存在 relicsId = %s", relicsId))
@@ -126,7 +126,7 @@ function Rouge2_CollectionConfig:getRelicsTagIds(relicsId)
 end
 
 function Rouge2_CollectionConfig:getActiveSkillConfig(skillId)
-	local skillCo = lua_rouge2_active_skill.configDict[skillId]
+	local skillCo = skillId and lua_rouge2_active_skill.configDict[skillId]
 
 	if not skillCo then
 		logNormal(string.format("肉鸽主动技能配置不存在 skillId = %s", skillId))
@@ -149,7 +149,7 @@ function Rouge2_CollectionConfig:getTagConfig(tagId)
 	return tagCo
 end
 
-function Rouge2_CollectionConfig:getBuffCofing(buffId)
+function Rouge2_CollectionConfig:getBuffConfig(buffId)
 	local buffCo = lua_rouge2_buff.configDict[buffId]
 
 	if not buffCo then

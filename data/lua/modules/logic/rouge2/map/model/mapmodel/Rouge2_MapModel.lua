@@ -309,6 +309,10 @@ function Rouge2_MapModel:blockTriggerInteractive(block)
 	self.blockTrigger = block
 end
 
+function Rouge2_MapModel:isBlockTriggerInteractive()
+	return self.blockTrigger
+end
+
 function Rouge2_MapModel:setMapWeatherInfo(info)
 	if not info:HasField("weather") then
 		self.layerWeatherMo = nil
@@ -686,12 +690,14 @@ function Rouge2_MapModel:checkIsLoading()
 	return self.loading
 end
 
-function Rouge2_MapModel:recordCurChoiceEventSelectId(choiceId)
+function Rouge2_MapModel:recordCurChoiceEventSelectId(choiceId, choiceIndex, choiceRate)
 	self.curChoiceId = choiceId
+	self.curChoiceIndex = choiceIndex
+	self.curChoiceRate = choiceRate
 end
 
 function Rouge2_MapModel:getCurChoiceId()
-	return self.curChoiceId
+	return self.curChoiceId, self.curChoiceIndex, self.curChoiceRate
 end
 
 function Rouge2_MapModel:setPlayingDialogue(playing)

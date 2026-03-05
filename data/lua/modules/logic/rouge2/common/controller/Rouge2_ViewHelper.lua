@@ -111,4 +111,24 @@ function Rouge2_ViewHelper.openRouge2UnlockInfoView(param, isImmediate)
 	ViewMgr.instance:openView(ViewName.Rouge2_ResultUnlockInfoView, param, isImmediate)
 end
 
+function Rouge2_ViewHelper.openItemTipsView(dataType, dataIdList, extraParamMap)
+	local dataId = dataIdList and dataIdList[1]
+	local itemId = Rouge2_BackpackHelper.getItemIdAndUid(dataType, dataId)
+	local bagType = Rouge2_BackpackHelper.itemId2BagType(itemId)
+	local showViewName = Rouge2_BackpackHelper.itemType2ShowViewName(bagType)
+	local params = {
+		viewEnum = Rouge2_MapEnum.ItemDropViewEnum.Tips,
+		dataType = dataType,
+		itemList = dataIdList
+	}
+
+	if extraParamMap then
+		for key, paramValue in pairs(extraParamMap) do
+			params[key] = paramValue
+		end
+	end
+
+	ViewMgr.instance:openView(showViewName, params)
+end
+
 return Rouge2_ViewHelper

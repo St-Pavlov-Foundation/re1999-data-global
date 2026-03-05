@@ -11,19 +11,22 @@ function Rouge2_BuffDropItem:init(go)
 	self._imageNameBg = gohelper.findChildImage(self.go, "root/Info/image_namebg")
 	self._simageIcon = gohelper.findChildSingleImage(self.go, "root/Info/#image_Icon")
 	self._txtName = gohelper.findChildText(self.go, "root/Info/#txt_Name")
-	self._txtRareName = gohelper.findChildText(self.go, "root/Info/#txt_RareName")
 	self._goContainer = gohelper.findChild(self.go, "root/#go_Container")
 	self._txtDesc = gohelper.findChildText(self.go, "root/#go_Container/#txt_Desc")
 	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "root/#btn_Click", AudioEnum.Rouge2.SelectDropItem)
 	self._goSelect = gohelper.findChild(self.go, "root/#go_Select")
 	self._btnSelect = gohelper.findChildButtonWithAudio(self.go, "root/#go_Select/#btn_Select", AudioEnum.Rouge2.ConfirmSelectBuff)
 	self._animator = SLFramework.AnimatorPlayer.Get(self.go)
-	self._goTag = gohelper.findChild(self.go, "root/#go_Tag")
-	self._imageTagBg = gohelper.findChildImage(self.go, "root/#go_Tag")
-	self._txtTag = gohelper.findChildText(self.go, "root/#go_Tag/#txt_Tag")
+	self._goTeamTips = gohelper.findChild(self.go, "root/#go_TeamTips")
 
 	gohelper.setActive(self._goSelect, false)
 	self:initRareEffectTab()
+
+	self._teamTipsParams = {}
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Drop)
+	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go, Rouge2_Enum.ItemDescModeDataKey.BuffDrop)
+
+	self._listener:initCallback(self._refreshItemDesc, self)
 end
 
 function Rouge2_BuffDropItem:addEventListeners()
@@ -94,7 +97,9 @@ function Rouge2_BuffDropItem:onUpdateMO(index, viewType, dataType, dataId, paren
 	self._dataId = dataId
 	self._buffCo = Rouge2_BackpackHelper.getItemCofigAndMo(dataType, dataId)
 	self._buffId = self._buffCo and self._buffCo.id
+	self._teamTipsParams.itemId = self._buffId
 
+	self._teamTipsLoader:initInfo(nil, self._teamTipsParams)
 	self:onSelect(false)
 	self:refreshUI()
 end
@@ -104,22 +109,13 @@ function Rouge2_BuffDropItem:refreshUI()
 
 	self._txtName.text = self._buffCo and self._buffCo.name
 
+	self._listener:startListen()
 	Rouge2_IconHelper.setBuffIcon(self._buffId, self._simageIcon)
 	Rouge2_IconHelper.setBuffRareIcon(self._buffId, self._imageRare)
 	Rouge2_IconHelper.setBuffRareIcon(self._buffId, self._imageBg, Rouge2_Enum.ItemRareIconType.Bg)
 	Rouge2_IconHelper.setBuffRareIcon(self._buffId, self._imageNameBg, Rouge2_Enum.ItemRareIconType.NameBg)
-	Rouge2_IconHelper.setBuffRareIcon(self._buffId, self._imageTagBg, Rouge2_Enum.ItemRareIconType.TagBg)
-	Rouge2_ItemDescHelper.setItemDescStr(self._dataType, self._dataId, self._txtDesc)
-	Rouge2_ItemDescHelper.setBuffTag(self._dataType, self._dataId, self._goTag, self._txtTag.gameObject)
 	gohelper.setActive(self._btnClick.gameObject, self._viewType == Rouge2_MapEnum.ItemDropViewEnum.Select)
 	gohelper.setActive(self._btnSelect.gameObject, self._viewType == Rouge2_MapEnum.ItemDropViewEnum.Select)
-
-	local rareCo = Rouge2_CollectionConfig.instance:getRareConfig(self._buffCo.rare)
-	local rareName = rareCo and rareCo.name
-	local rareColor = rareCo and rareCo.buffColor
-
-	self._txtRareName.text = string.format("<#%s>%s</color>", rareColor, rareName)
-
 	self:playAnim("normal")
 end
 
@@ -206,6 +202,10 @@ function Rouge2_BuffDropItem:showRareEffect()
 	for effectName, goRare in pairs(self._rareEffectTab) do
 		gohelper.setActive(goRare, effectName == rareName)
 	end
+end
+
+function Rouge2_BuffDropItem:_refreshItemDesc(descMode)
+	Rouge2_ItemDescHelper.setItemDescStr(self._dataType, self._dataId, self._txtDesc, descMode)
 end
 
 return Rouge2_BuffDropItem

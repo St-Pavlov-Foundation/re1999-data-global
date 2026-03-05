@@ -490,7 +490,7 @@
     "isAlwaysShowBtn": 1,
     "showInEpisode": 0,
     "dec": 2001,
-    "verifingHide": 0,
+    "verifingHide": 1,
     "bindActivityId": 0,
     "roomLevel": 0
   },

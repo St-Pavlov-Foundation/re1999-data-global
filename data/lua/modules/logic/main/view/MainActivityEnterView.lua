@@ -16,9 +16,11 @@ function MainActivityEnterView:onInitView()
 	self.simageActivityIcon = gohelper.findChildSingleImage(self.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/icon")
 	self.imageActivityIcon = self.simageActivityIcon:GetComponent(gohelper.Type_Image)
 	self.goActivityRedDot = gohelper.findChild(self.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/#go_activityreddot")
-	self.pckeyNormalFight = gohelper.findChild(self.btnNormalFight.gameObject, "#go_pcbtn")
+	self.pckeyNormalFight1 = gohelper.findChild(self.btnNormalFight.gameObject, "1/#go_pcbtn")
+	self.pckeyNormalFight2 = gohelper.findChild(self.btnNormalFight.gameObject, "2/#go_pcbtn")
 	self.pckeyActivityFight = gohelper.findChild(self.btnEnterActivity.gameObject, "#go_pcbtn")
 	self.pckeyEnterFight = gohelper.findChild(self.btnActivityFight.gameObject, "#go_pcbtn")
+	self.pckeyJumpFight = gohelper.findChild(self.btnJumpFight.gameObject, "#go_pcbtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -279,6 +281,8 @@ function MainActivityEnterView:getEnterViewActIdList()
 			[ActivityEnum.VersionActivityIdDict.Activity2_8] = VersionActivity2_8Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity3_0] = VersionActivity3_0Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity3_1] = VersionActivity3_1Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity3_2] = VersionActivity3_2Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity3_3] = VersionActivity3_3Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1],
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2]
 		}
@@ -341,7 +345,8 @@ function MainActivityEnterView:getActivityEnterHandleFunc(activityId)
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_8] = VersionActivity2_8EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity3_0] = VersionActivity3_0EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity3_2] = VersionActivity3_2EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity3_2] = VersionActivity3_2EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity3_3] = VersionActivity3_3EnterController.instance
 		}
 	end
 
@@ -407,7 +412,8 @@ end
 function MainActivityEnterView:showKeyTips()
 	PCInputController.instance:showkeyTips(self.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
 	PCInputController.instance:showkeyTips(self.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
-	PCInputController.instance:showkeyTips(self.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+	PCInputController.instance:showkeyTips(self.pckeyNormalFight1, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+	PCInputController.instance:showkeyTips(self.pckeyNormalFight2, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
 end
 
 return MainActivityEnterView

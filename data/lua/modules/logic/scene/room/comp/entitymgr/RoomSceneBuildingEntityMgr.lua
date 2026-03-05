@@ -22,7 +22,9 @@ function RoomSceneBuildingEntityMgr:init(sceneId, levelId)
 		end
 	end
 
-	for i = 1, RoomBuildingEnum.MaxBuildingOccupyNum do
+	local count = RoomConfig.instance:getMaxBuildingOccupyNum()
+
+	for i = 1, count do
 		self:spawnMapBuildingOccupy(i)
 	end
 end

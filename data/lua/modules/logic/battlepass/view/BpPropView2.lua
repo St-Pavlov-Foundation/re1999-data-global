@@ -11,6 +11,7 @@ function BpPropView2:onInitView()
 	self._goeff = gohelper.findChild(self.viewGO, "#go_eff")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btnOK")
 	self._btnBuy = gohelper.findChildButtonWithAudio(self.viewGO, "#btnBuy")
+	self._goSpecial = gohelper.findChild(self.viewGO, "#btnBuy/#txt")
 	self._txtlv = gohelper.findChildText(self.viewGO, "title/level/#txt_lv")
 	self._scrollContent2 = gohelper.findChild(self.viewGO, "#scroll2/Viewport/#go_rewards")
 	self._item = gohelper.findChild(self.viewGO, "#scroll2/Viewport/#go_rewards/#go_Items")
@@ -76,13 +77,21 @@ function BpPropView2:onOpen()
 
 	self:_sortList(list)
 
-	local bonus = BpModel.instance:getSpecialBonus()[1]
+	local specialBonus = BpModel.instance:getSpecialBonus()
 
-	table.insert(list, 1, {
-		materilType = bonus[1],
-		materilId = bonus[2],
-		quantity = bonus[3]
-	})
+	if specialBonus then
+		local bonus = specialBonus[1]
+
+		table.insert(list, 1, {
+			materilType = bonus[1],
+			materilId = bonus[2],
+			quantity = bonus[3]
+		})
+	end
+
+	local haveSpecialBonus = BpModel.instance:haveSpecialBonus()
+
+	gohelper.setActive(self._goSpecial, haveSpecialBonus)
 	gohelper.CreateObjList(self, self._createItem, list, self._scrollContent2, self._item)
 end
 

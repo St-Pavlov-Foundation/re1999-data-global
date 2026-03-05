@@ -12,6 +12,10 @@ function FightAssembledMonsterSpineSub:ctor(unitSpawn)
 	self.unitSpawn = unitSpawn
 end
 
+function FightAssembledMonsterSpineSub:registLoadSpineWork(customUrl)
+	return FightMsgMgr.sendMsg(FightMsgId.GetEmptyWorkFromEntrustedWorkMgr)
+end
+
 function FightAssembledMonsterSpineSub.__index(t, key)
 	if FightAssembledMonsterSpineSub[key] then
 		return FightAssembledMonsterSpineSub[key]

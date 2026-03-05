@@ -215,12 +215,69 @@ function UdimoController:onUseDecoration(info)
 end
 
 function UdimoController:onGetWeatherInfo(info)
-	if not info then
+	local weatherInfo
+	local isOversea = SettingsModel.instance:isOverseas()
+
+	if isOversea then
+		local curTime = ServerTime.now()
+		local nextChangeWeatherTime = UdimoWeatherModel.instance:getOverseasNextChangeWeatherTime()
+
+		if nextChangeWeatherTime and curTime < nextChangeWeatherTime then
+			return
+		end
+
+		local randomTemp = self:_getRandomTemp()
+		local randomWeatherId = self:_getRandomWeatherId(randomTemp)
+
+		weatherInfo = {
+			windLevel = 0,
+			temp = randomTemp,
+			weatherId = randomWeatherId
+		}
+
+		local timeArr = UdimoConfig.instance:getUdimoConst(UdimoEnum.ConstId.RandomWeatherIntervalTime, false, "#", true)
+		local weatherInterval = math.random(timeArr[1], timeArr[2])
+
+		UdimoWeatherModel.instance:setOverseasNextChangeWeatherTime(curTime + weatherInterval)
+	else
+		weatherInfo = info and info.weather
+	end
+
+	if not weatherInfo then
 		return
 	end
 
-	UdimoWeatherModel.instance:setWeatherInfo(info.weather)
+	UdimoWeatherModel.instance:setWeatherInfo(weatherInfo)
 	self:dispatchEvent(UdimoEvent.OnGetWeatherInfo)
+end
+
+function UdimoController:_getRandomTemp()
+	local randomTemp = 0
+	local tempRang = UdimoConfig.instance:getUdimoConst(UdimoEnum.ConstId.OverseasRandomTemperatureRange, false, "#", true)
+
+	if tempRang and #tempRang >= 2 then
+		randomTemp = math.random(tempRang[1], tempRang[2])
+	end
+
+	return randomTemp
+end
+
+function UdimoController:_getRandomWeatherId(temp)
+	local weatherId = UdimoWeatherModel.instance:getWeatherId()
+	local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId, winLevel)
+	local cfgWeatherIdList = UdimoConfig.instance:getCfgWeatherIdList(cfgWeatherId, temp, true)
+	local index = math.random(#cfgWeatherIdList)
+	local randomCfgWeatherId = cfgWeatherIdList[index]
+	local weatherIds = UdimoConfig.instance:getWeatherIds(randomCfgWeatherId)
+	local randomWeatherId
+
+	if weatherIds then
+		local weatherIndex = math.random(#weatherIds)
+
+		randomWeatherId = weatherIds[weatherIndex]
+	end
+
+	return randomWeatherId
 end
 
 function UdimoController:openMainView()

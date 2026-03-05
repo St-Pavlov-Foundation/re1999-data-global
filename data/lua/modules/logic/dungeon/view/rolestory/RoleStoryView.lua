@@ -131,7 +131,7 @@ function RoleStoryView:buildScroll()
 	scrollParam.scrollDir = ScrollEnum.ScrollDirH
 	scrollParam.lineCount = 1
 	scrollParam.cellWidth = 474
-	scrollParam.cellHeight = 640
+	scrollParam.cellHeight = 760
 	scrollParam.cellSpaceH = 156
 	scrollParam.cellSpaceV = 0
 	scrollParam.startSpace = 145

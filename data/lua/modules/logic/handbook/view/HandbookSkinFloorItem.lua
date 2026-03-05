@@ -15,10 +15,8 @@ function HandbookSkinFloorItem:onInitView()
 	self._txtUnSelectedFloorNameEn = gohelper.findChildText(self._goUnSelectedState, "#name/#name_en")
 	self._txtSelectedCurSuitIdx = gohelper.findChildText(self._goSelectedState, "#num")
 	self._txtUnSelectedCurSuitIdx = gohelper.findChildText(self._goUnSelectedState, "#num")
-	self._txtSelectedCurFloorIdx = gohelper.findChildText(self._goSelectedState, "#xulie")
-	self._txtUnSelectedCurFloorIdx = gohelper.findChildText(self._goUnSelectedState, "#xulie")
-	self._selectTabRedDot = gohelper.findChild(self.viewGO, "#unclick/#goRedDot")
-	self._unSelectTabRedDot = gohelper.findChild(self.viewGO, "#select/#goRedDot")
+	self._selectTabRedDot = gohelper.findChild(self.viewGO, "#unclick/#name/#goRedDot")
+	self._unSelectTabRedDot = gohelper.findChild(self.viewGO, "#select/#name/#goRedDot")
 	self._click = gohelper.findChildClickWithAudio(self.viewGO, "#unclick/btn_click")
 
 	if self._editableInitView then
@@ -94,14 +92,21 @@ function HandbookSkinFloorItem:refreshFloorView()
 	self._txtUnSelectedFloorName.text = self._suitGroupCfg.name
 	self._txtSelectedFloorNameEn.text = self._suitGroupCfg.nameEn
 	self._txtUnSelectedFloorNameEn.text = self._suitGroupCfg.nameEn
-	self._txtSelectedCurFloorIdx.text = self._idx
-	self._txtUnSelectedCurFloorIdx.text = self._idx
 end
 
 function HandbookSkinFloorItem:refreshCurSuitIdx()
-	local skinNum = self._skinIdList and #self._skinIdList or 0
+	local skinCount = 0
+
+	if self._skinIdList then
+		for i = 1, #self._skinIdList do
+			if self._skinIdList[i] ~= 0 then
+				skinCount = skinCount + 1
+			end
+		end
+	end
+
 	local hasSkinCount = self:getHasSkinCount()
-	local str = hasSkinCount .. "/" .. skinNum
+	local str = hasSkinCount .. "/" .. skinCount
 
 	self._txtSelectedCurSuitIdx.text = str
 	self._txtUnSelectedCurSuitIdx.text = str

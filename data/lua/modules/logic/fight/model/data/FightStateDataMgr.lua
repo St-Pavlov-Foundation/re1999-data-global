@@ -4,6 +4,10 @@ module("modules.logic.fight.model.data.FightStateDataMgr", package.seeall)
 
 local FightStateDataMgr = FightDataClass("FightStateDataMgr", FightDataMgrBase)
 
+FightStateDataMgr.Mark = {
+	NewAllEntityWhenEnter = "NewAllEntityWhenEnter"
+}
+
 function FightStateDataMgr:onConstructor()
 	self.isAuto = false
 	self.forceAuto = false
@@ -11,6 +15,21 @@ function FightStateDataMgr:onConstructor()
 	self.isFinish = false
 	self.buffForceAuto = false
 	self.playingEnd = false
+	self.forceUseCard = false
+	self.dealingCrash = false
+	self.markDic = {}
+end
+
+function FightStateDataMgr:setMark(mark)
+	self.markDic[mark] = true
+end
+
+function FightStateDataMgr:hasMark(mark)
+	return self.markDic[mark] == true
+end
+
+function FightStateDataMgr:clearMark(mark)
+	self.markDic[mark] = nil
 end
 
 function FightStateDataMgr:initReplayState()

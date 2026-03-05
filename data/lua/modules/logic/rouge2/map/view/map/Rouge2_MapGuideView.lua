@@ -49,6 +49,12 @@ function Rouge2_MapGuideView:checkCanTriggerGuide()
 		return
 	end
 
+	local state = Rouge2_MapModel.instance:getMapState()
+
+	if state <= Rouge2_MapEnum.MapState.WaitFlow then
+		return
+	end
+
 	local isTop = Rouge2_MapHelper.checkMapViewOnTop()
 
 	if not isTop then
@@ -70,14 +76,31 @@ function Rouge2_MapGuideView:checkCanTriggerGuide()
 	return true
 end
 
-function Rouge2_MapGuideView:tryTriggerActiveSkillGuide()
-	local isGuideFinish = GuideModel.instance:isGuideFinish(32057)
+function Rouge2_MapGuideView:tryTriggerNodeGuide()
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.Node)
 
 	if isGuideFinish then
 		return
 	end
 
-	local hasAnyNotUseSkill = Rouge2_BackpackModel.instance:hasAnyNotUseActiveSkill()
+	local curNode = Rouge2_MapModel.instance:getCurNode()
+	local isStart = curNode and curNode:checkIsStart()
+
+	if isStart then
+		Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnGuideEventNode)
+
+		return true
+	end
+end
+
+function Rouge2_MapGuideView:tryTriggerActiveSkillGuide()
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.ActiveSkill)
+
+	if isGuideFinish then
+		return
+	end
+
+	local hasAnyNotUseSkill = Rouge2_BackpackController.instance:hasAnyActiveSkillCanEquip()
 
 	if not hasAnyNotUseSkill then
 		return
@@ -88,8 +111,26 @@ function Rouge2_MapGuideView:tryTriggerActiveSkillGuide()
 	return true
 end
 
+function Rouge2_MapGuideView:tryTriggerTalentTreeGuide()
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.TalentTree)
+
+	if isGuideFinish then
+		return
+	end
+
+	local hasAnyCanActiveTalent = Rouge2_BackpackController.instance:hasAnyCanActiveTalent()
+
+	if not hasAnyCanActiveTalent then
+		return
+	end
+
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnGuideTalentTree)
+
+	return true
+end
+
 function Rouge2_MapGuideView:tryTriggerBXSBoxGuide()
-	local isGuideFinish = GuideModel.instance:isGuideFinish(32059)
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.BXSBox)
 	local isUseBXS = Rouge2_Model.instance:isUseBXSCareer()
 	local isMiddle = Rouge2_MapModel.instance:isMiddle()
 
@@ -103,7 +144,7 @@ function Rouge2_MapGuideView:tryTriggerBXSBoxGuide()
 end
 
 function Rouge2_MapGuideView:tryTriggerMiddleLayerGuide()
-	local isGuideFinish = GuideModel.instance:isGuideFinish(32060)
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.MiddleLayer)
 	local isMiddleLayer = Rouge2_MapModel.instance:isMiddle()
 
 	if isGuideFinish or not isMiddleLayer then
@@ -116,7 +157,7 @@ function Rouge2_MapGuideView:tryTriggerMiddleLayerGuide()
 end
 
 function Rouge2_MapGuideView:tryTriggerPathSelectLayerGuide()
-	local isGuideFinish = GuideModel.instance:isGuideFinish(32055)
+	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.Weather)
 	local isPathSelect = Rouge2_MapModel.instance:isPathSelect()
 
 	if isGuideFinish or not isPathSelect then
@@ -133,7 +174,15 @@ function Rouge2_MapGuideView:tryTriggerMapGuides()
 		return
 	end
 
+	if self:tryTriggerTalentTreeGuide() then
+		return
+	end
+
 	if self:tryTriggerActiveSkillGuide() then
+		return
+	end
+
+	if self:tryTriggerNodeGuide() then
 		return
 	end
 

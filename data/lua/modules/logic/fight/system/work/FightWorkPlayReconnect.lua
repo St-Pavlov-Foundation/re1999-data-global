@@ -5,6 +5,8 @@ module("modules.logic.fight.system.work.FightWorkPlayReconnect", package.seeall)
 local FightWorkPlayReconnect = class("FightWorkPlayReconnect", FightWorkItem)
 
 function FightWorkPlayReconnect:onStart()
+	FightGameMgr.checkCrashMgr:startCheck()
+
 	if FightDataHelper.stateMgr.isReplay then
 		FightReplayController.instance._replayErrorFix:startReplayErrorFix()
 	end
@@ -12,6 +14,9 @@ function FightWorkPlayReconnect:onStart()
 	local roundData = FightDataHelper.roundMgr:getRoundData()
 	local flow = self:com_registFlowSequence()
 
+	flow:addWork(FightGameMgr.entityMgr:registNewAllEntityWork())
+	flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightSkillSelectView)
+	flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightView)
 	flow:addWork(FunctionWork.New(function()
 		FightRpc.instance:dealCardInfoPushData()
 	end))

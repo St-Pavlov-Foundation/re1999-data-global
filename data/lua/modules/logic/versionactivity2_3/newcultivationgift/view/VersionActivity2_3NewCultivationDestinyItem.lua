@@ -94,7 +94,7 @@ function VersionActivity2_3NewCultivationDestinyItem:setData(roleId, destinyId, 
 	self._destinyId = destinyId
 	self._roleId = roleId
 
-	self:_refreshUI(roleId, destinyId, isNew)
+	self:_refreshUI(isNew)
 end
 
 local s_TipPosV2 = Vector2(380, 100)
@@ -125,16 +125,9 @@ function VersionActivity2_3NewCultivationDestinyItem:_refresh_title(isSp, titleS
 	end
 end
 
-function VersionActivity2_3NewCultivationDestinyItem:_refresh_goNewTag(isActive, isSp)
-	if not isActive then
-		gohelper.setActive(self._goNewTag, false)
-		gohelper.setActive(self._goNewTag_sp, false)
-
-		return
-	end
-
-	gohelper.setActive(self._goNewTag, isSp)
-	gohelper.setActive(self._goNewTag_sp, not isSp)
+function VersionActivity2_3NewCultivationDestinyItem:_refresh_goNewTag(isNew, isSp)
+	gohelper.setActive(self._goNewTag, not isSp and isNew)
+	gohelper.setActive(self._goNewTag_sp, isSp and isNew)
 end
 
 function VersionActivity2_3NewCultivationDestinyItem:_isActive_decbg_spGo(isActive)

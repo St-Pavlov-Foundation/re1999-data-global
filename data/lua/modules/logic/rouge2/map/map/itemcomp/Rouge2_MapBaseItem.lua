@@ -15,6 +15,10 @@ function Rouge2_MapBaseItem:setId(id)
 	self.id = id
 end
 
+function Rouge2_MapBaseItem:getId()
+	return self.id
+end
+
 function Rouge2_MapBaseItem:getScenePos()
 	return self.scenePos
 end

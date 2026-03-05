@@ -4,8 +4,8 @@ module("modules.logic.rouge2.map.work.Rouge2_WaitRougeInteractDoneWork", package
 
 local Rouge2_WaitRougeInteractDoneWork = class("Rouge2_WaitRougeInteractDoneWork", BaseWork)
 
-function Rouge2_WaitRougeInteractDoneWork:ctor()
-	return
+function Rouge2_WaitRougeInteractDoneWork:ctor(notTrigger)
+	self._notTrigger = notTrigger
 end
 
 function Rouge2_WaitRougeInteractDoneWork:onStart()
@@ -16,6 +16,11 @@ function Rouge2_WaitRougeInteractDoneWork:onStart()
 	end
 
 	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.onClearInteract, self.onClearInteract, self)
+
+	if self._notTrigger then
+		return
+	end
+
 	Rouge2_MapInteractHelper.triggerInteractive()
 end
 

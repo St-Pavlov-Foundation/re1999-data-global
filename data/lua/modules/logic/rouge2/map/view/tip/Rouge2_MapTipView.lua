@@ -22,7 +22,6 @@ function Rouge2_MapTipView:_editableInitView()
 	self.goTip = gohelper.findChild(self.viewGO, "#go_tip")
 	self.txtTip = gohelper.findChildText(self.viewGO, "#go_tip/#txt_Tips")
 
-	gohelper.setActive(self.goTip, false)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onShowTip, self.onShowTip, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onHideTip, self.onHideTip, self)
 

@@ -156,6 +156,7 @@ end
 function TowerDeepHeroGroupInfoView:showAssistBossEmpty()
 	TaskDispatcher.cancelTask(self.showAssistBossEmpty, self)
 	gohelper.setActive(self._goassistBossEmpty, true)
+	gohelper.setActive(self._goassistBoss, false)
 	self._animAssistBossEmpty:Play()
 	TowerController.instance:dispatchEvent(TowerEvent.OnShowAssistBossEmpty)
 

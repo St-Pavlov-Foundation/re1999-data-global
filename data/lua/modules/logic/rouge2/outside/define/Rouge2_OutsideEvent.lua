@@ -57,5 +57,6 @@ E("OnAlchemySuccessOpenFinish")
 E("OnAlchemyFormulaItemClick")
 E("OnAlchemyMaterialItemClick")
 E("OnMainViewInTop")
+E("OnFinishAndNotRouge")
 
 return Rouge2_OutsideEvent

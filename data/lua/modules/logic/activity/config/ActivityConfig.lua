@@ -354,6 +354,20 @@ function ActivityConfig:getConstAsNumList(id, delimiter, fallback)
 	return numList or fallback
 end
 
+function ActivityConfig:isActIdInList(actId, actIdList)
+	if not actIdList then
+		return false
+	end
+
+	for _, id in ipairs(actIdList) do
+		if id == actId then
+			return true
+		end
+	end
+
+	return false
+end
+
 ActivityConfig.instance = ActivityConfig.New()
 
 return ActivityConfig

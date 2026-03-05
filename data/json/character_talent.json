@@ -12878,5 +12878,245 @@
     "exclusive": "61#10",
     "requirement": 4,
     "consume": "1#120001#1|1#120013#8|1#111008#3|1#110104#4"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 1,
+    "talentMould": 1,
+    "exclusive": "61#1",
+    "requirement": 2,
+    "consume": ""
+  },
+  {
+    "heroId": 3127,
+    "talentId": 2,
+    "talentMould": 1,
+    "exclusive": "61#2",
+    "requirement": 2,
+    "consume": "1#120011#5"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 3,
+    "talentMould": 1,
+    "exclusive": "61#2",
+    "requirement": 2,
+    "consume": "1#120011#5|1#110301#4"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 4,
+    "talentMould": 1,
+    "exclusive": "61#3",
+    "requirement": 2,
+    "consume": "1#120011#5|1#110101#4|1#111001#3"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 5,
+    "talentMould": 1,
+    "exclusive": "61#3",
+    "requirement": 2,
+    "consume": "1#120012#5|1#110902#3|1#110602#4"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 6,
+    "talentMould": 1,
+    "exclusive": "61#4",
+    "requirement": 3,
+    "consume": "2#3#30000|1#120012#5|1#111002#3"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 7,
+    "talentMould": 1,
+    "exclusive": "61#4",
+    "requirement": 3,
+    "consume": "1#120012#6|1#110303#5"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 8,
+    "talentMould": 1,
+    "exclusive": "61#5",
+    "requirement": 3,
+    "consume": "1#120012#6|1#110703#4|1#110502#6"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 9,
+    "talentMould": 1,
+    "exclusive": "61#5",
+    "requirement": 3,
+    "consume": "1#120012#8|1#110103#4|1#110402#8"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 10,
+    "talentMould": 1,
+    "exclusive": "61#6",
+    "requirement": 3,
+    "consume": "1#120001#1|1#120013#5|1#110603#6|1#110803#6"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 11,
+    "talentMould": 1,
+    "exclusive": "61#7",
+    "requirement": 4,
+    "consume": "1#120001#1|2#3#120000|1#120013#5|1#111003#4"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 12,
+    "talentMould": 1,
+    "exclusive": "61#7",
+    "requirement": 4,
+    "consume": "1#120001#1|1#120013#6|1#110704#4|1#110403#5"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 13,
+    "talentMould": 1,
+    "exclusive": "61#8",
+    "requirement": 4,
+    "consume": "1#120001#1|1#120013#6|1#110104#5|1#110503#8"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 14,
+    "talentMould": 1,
+    "exclusive": "61#9",
+    "requirement": 4,
+    "consume": "1#120001#1|1#120013#8|1#111007#2|1#110304#4"
+  },
+  {
+    "heroId": 3127,
+    "talentId": 15,
+    "talentMould": 1,
+    "exclusive": "61#10",
+    "requirement": 4,
+    "consume": "1#120001#1|1#120013#8|1#111006#3|1#110904#4"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 1,
+    "talentMould": 2,
+    "exclusive": "62#1",
+    "requirement": 2,
+    "consume": ""
+  },
+  {
+    "heroId": 3092,
+    "talentId": 2,
+    "talentMould": 2,
+    "exclusive": "62#2",
+    "requirement": 2,
+    "consume": "1#120011#5"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 3,
+    "talentMould": 2,
+    "exclusive": "62#2",
+    "requirement": 2,
+    "consume": "1#120011#5|1#110501#6"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 4,
+    "talentMould": 2,
+    "exclusive": "62#3",
+    "requirement": 2,
+    "consume": "1#120011#5|1#110201#4|1#111001#3"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 5,
+    "talentMould": 2,
+    "exclusive": "62#3",
+    "requirement": 2,
+    "consume": "1#120012#5|1#110402#4|1#110902#3"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 6,
+    "talentMould": 2,
+    "exclusive": "62#4",
+    "requirement": 3,
+    "consume": "2#3#30000|1#120012#5|1#111012#3"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 7,
+    "talentMould": 2,
+    "exclusive": "62#4",
+    "requirement": 3,
+    "consume": "1#120012#6|1#110603#5"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 8,
+    "talentMould": 2,
+    "exclusive": "62#5",
+    "requirement": 3,
+    "consume": "1#120012#6|1#110703#4|1#110802#4"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 9,
+    "talentMould": 2,
+    "exclusive": "62#5",
+    "requirement": 3,
+    "consume": "1#120012#8|1#110903#4|1#110102#5"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 10,
+    "talentMould": 2,
+    "exclusive": "62#6",
+    "requirement": 3,
+    "consume": "1#120002#1|1#120013#5|1#110303#8|1#110503#8"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 11,
+    "talentMould": 2,
+    "exclusive": "62#7",
+    "requirement": 4,
+    "consume": "1#120002#1|2#3#120000|1#120013#5|1#111013#4"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 12,
+    "talentMould": 2,
+    "exclusive": "62#7",
+    "requirement": 4,
+    "consume": "1#120002#1|1#120013#6|1#110904#4|1#110403#5"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 13,
+    "talentMould": 2,
+    "exclusive": "62#8",
+    "requirement": 4,
+    "consume": "1#120002#1|1#120013#6|1#110104#5|1#110803#5"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 14,
+    "talentMould": 2,
+    "exclusive": "62#9",
+    "requirement": 4,
+    "consume": "1#120002#1|1#120013#8|1#111005#2|1#110504#4"
+  },
+  {
+    "heroId": 3092,
+    "talentId": 15,
+    "talentMould": 2,
+    "exclusive": "62#10",
+    "requirement": 4,
+    "consume": "1#120002#1|1#120013#8|1#111004#3|1#110304#4"
   }
 ]

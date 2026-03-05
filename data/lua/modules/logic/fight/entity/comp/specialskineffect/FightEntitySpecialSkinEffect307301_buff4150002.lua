@@ -2,14 +2,16 @@
 
 module("modules.logic.fight.entity.comp.specialskineffect.FightEntitySpecialSkinEffect307301_buff4150002", package.seeall)
 
-local FightEntitySpecialSkinEffect307301_buff4150002 = class("FightEntitySpecialSkinEffect307301_buff4150002", FightEntitySpecialEffectBase)
+local FightEntitySpecialSkinEffect307301_buff4150002 = class("FightEntitySpecialSkinEffect307301_buff4150002", FightBaseClass)
 
-function FightEntitySpecialSkinEffect307301_buff4150002:initClass()
-	self:addEventCb(FightController.instance, FightEvent.SetEntityAlpha, self._onSetEntityAlpha, self)
-	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
+function FightEntitySpecialSkinEffect307301_buff4150002:onConstructor(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.SetEntityAlpha, self._onSetEntityAlpha)
+	self:com_registFightEvent(FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
+	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect)
 end
 
 function FightEntitySpecialSkinEffect307301_buff4150002:_releaseEffect()
@@ -47,6 +49,10 @@ function FightEntitySpecialSkinEffect307301_buff4150002:_onBuffUpdate(targetId, 
 end
 
 function FightEntitySpecialSkinEffect307301_buff4150002:_onBeforeEnterStepBehaviour()
+	if FightDataHelper.stateMgr.dealingCrash then
+		self:_releaseEffect()
+	end
+
 	local entityMO = self._entity:getMO()
 
 	if entityMO then
@@ -74,7 +80,7 @@ function FightEntitySpecialSkinEffect307301_buff4150002:_onBeforeDeadEffect(enti
 	end
 end
 
-function FightEntitySpecialSkinEffect307301_buff4150002:releaseSelf()
+function FightEntitySpecialSkinEffect307301_buff4150002:onDestructor()
 	self:_releaseEffect()
 end
 

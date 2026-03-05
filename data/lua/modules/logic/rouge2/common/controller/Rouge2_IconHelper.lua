@@ -4,9 +4,9 @@ module("modules.logic.rouge2.common.controller.Rouge2_IconHelper", package.seeal
 
 local Rouge2_IconHelper = class("Rouge2_IconHelper")
 
-function Rouge2_IconHelper.setItemIconAndRare(itemId, simageIcon, imageRare)
+function Rouge2_IconHelper.setItemIconAndRare(itemId, simageIcon, imageRare, rareIconType)
 	Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon)
-	Rouge2_IconHelper.setGameItemRare(itemId, imageRare)
+	Rouge2_IconHelper.setGameItemRare(itemId, imageRare, rareIconType)
 end
 
 function Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon)
@@ -18,20 +18,24 @@ function Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon)
 		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon)
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
 		Rouge2_IconHelper.setActiveSkillIcon(itemId, simageIcon)
+	elseif itemType == Rouge2_Enum.BagType.AttrBuff then
+		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon)
 	else
 		logError(string.format("肉鸽构筑物图标加载失败: 未定义的构筑物类型: itemId = %s, itemType = %s", itemId, itemType))
 	end
 end
 
-function Rouge2_IconHelper.setGameItemRare(itemId, imageRare)
+function Rouge2_IconHelper.setGameItemRare(itemId, imageRare, rareIconType)
 	local itemType = Rouge2_BackpackHelper.itemId2BagType(itemId)
 
 	if itemType == Rouge2_Enum.BagType.Relics then
-		Rouge2_IconHelper.setRelicsRareIcon(itemId, imageRare)
+		Rouge2_IconHelper.setRelicsRareIcon(itemId, imageRare, rareIconType)
 	elseif itemType == Rouge2_Enum.BagType.Buff then
-		Rouge2_IconHelper.setBuffRareIcon(itemId, imageRare)
+		Rouge2_IconHelper.setBuffRareIcon(itemId, imageRare, rareIconType)
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
 		gohelper.setActive(imageRare.gameObject, false)
+	elseif itemType == Rouge2_Enum.BagType.AttrBuff then
+		Rouge2_IconHelper.setAttrBuffRareIcon(itemId, imageRare, rareIconType)
 	else
 		logError(string.format("肉鸽构筑物图标加载失败: 未定义的构筑物类型: itemId = %s, itemType = %s", itemId, itemType))
 	end
@@ -62,11 +66,15 @@ function Rouge2_IconHelper.setAttributeIcon(attrId, imageIcon, suffix)
 
 	local iconFullName = string.format("%s%s", attrCo.icon, suffix)
 
-	UISpriteSetMgr.instance:setRouge6Sprite(imageIcon, iconFullName, true)
+	if suffix == Rouge2_Enum.AttrIconSuffix.Large then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, iconFullName, true)
+	else
+		UISpriteSetMgr.instance:setRouge6Sprite(imageIcon, iconFullName, true)
+	end
 end
 
 function Rouge2_IconHelper.setActiveSkillIcon(skillId, simageIcon)
-	local skillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(skillId)
+	local skillCo = Rouge2_BackpackHelper.getItemConfig(skillId)
 
 	if not skillCo then
 		return
@@ -81,22 +89,8 @@ function Rouge2_IconHelper.setActiveSkillIcon(skillId, simageIcon)
 	simageIcon:LoadImage(ResUrl.getRougeIcon("collection/" .. skillCo.icon))
 end
 
-function Rouge2_IconHelper.setPassiveSkillIcon(skillId, iconImageComp)
-	local skillCo = Rouge2_AttributeConfig.instance:getPassiveSkillConfig(skillId)
-
-	if not skillCo then
-		return
-	end
-
-	if not iconImageComp then
-		logError("Rouge2_IconHelper.setPassiveSkillIcon error iconImageComp is nil")
-
-		return
-	end
-end
-
 function Rouge2_IconHelper.setRelicsIcon(relicsId, simageIcon)
-	local relicsCo = Rouge2_CollectionConfig.instance:getRelicsConfig(relicsId)
+	local relicsCo = Rouge2_BackpackHelper.getItemConfig(relicsId)
 
 	if not relicsCo then
 		return
@@ -112,7 +106,7 @@ function Rouge2_IconHelper.setRelicsIcon(relicsId, simageIcon)
 end
 
 function Rouge2_IconHelper.setRelicsRareIcon(relicsId, imageIcon, iconType)
-	local relicsCo = Rouge2_CollectionConfig.instance:getRelicsConfig(relicsId)
+	local relicsCo = Rouge2_BackpackHelper.getItemConfig(relicsId)
 
 	if not relicsCo then
 		return
@@ -134,6 +128,36 @@ function Rouge2_IconHelper.setRelicsRareIcon(relicsId, imageIcon, iconType)
 		UISpriteSetMgr.instance:setRouge7Sprite(imageIcon, "rouge2_backpackrelics_itemnamebg_" .. relicsCo.rare)
 	else
 		logError(string.format("肉鸽未定义造物品质图标类型 buffId = %s, iconType = %s", relicsId, iconType))
+	end
+end
+
+function Rouge2_IconHelper.setAttrBuffRareIcon(attrBuffId, imageIcon, iconType)
+	local buffCo = Rouge2_BackpackHelper.getItemConfig(attrBuffId)
+
+	if not buffCo then
+		return
+	end
+
+	if not imageIcon then
+		logError("Rouge2_IconHelper.setBuffRareIcon error imageIcon is nil")
+
+		return
+	end
+
+	iconType = iconType or Rouge2_Enum.ItemRareIconType.Default
+
+	local rare = buffCo.rare
+
+	if iconType == Rouge2_Enum.ItemRareIconType.Default then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_2", rare), true)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.NameBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, "rouge2_new_rare_" .. rare)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.Bg then
+		imageIcon:LoadImage(ResUrl.getRouge2Icon("new/rouge2_new_rare_" .. rare))
+	elseif iconType == Rouge2_Enum.ItemRareIconType.TagBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_1", rare))
+	else
+		logError(string.format("肉鸽未定义属性谐波品质图标类型 buffId = %s, iconType = %s", attrBuffId, iconType))
 	end
 end
 
@@ -176,7 +200,7 @@ function Rouge2_IconHelper.setResultCareerIcon(careerId, imageIcon)
 end
 
 function Rouge2_IconHelper.setBuffIcon(buffId, simageIcon)
-	local buffCo = Rouge2_CollectionConfig.instance:getBuffCofing(buffId)
+	local buffCo = Rouge2_BackpackHelper.getItemConfig(buffId)
 
 	if not buffCo then
 		return
@@ -192,7 +216,7 @@ function Rouge2_IconHelper.setBuffIcon(buffId, simageIcon)
 end
 
 function Rouge2_IconHelper.setBuffRareIcon(buffId, imageIcon, iconType)
-	local buffCo = Rouge2_CollectionConfig.instance:getBuffCofing(buffId)
+	local buffCo = Rouge2_BackpackHelper.getItemConfig(buffId)
 
 	if not buffCo then
 		return
@@ -216,20 +240,6 @@ function Rouge2_IconHelper.setBuffRareIcon(buffId, imageIcon, iconType)
 		UISpriteSetMgr.instance:setRouge7Sprite(imageIcon, "rouge2_bufftag_" .. buffCo.rare)
 	else
 		logError(string.format("肉鸽未定义谐波品质图标类型 buffId = %s, iconType = %s", buffId, iconType))
-	end
-end
-
-function Rouge2_IconHelper.setTagIcon(tagId, iconImageComp)
-	local tagCo = Rouge2_CollectionConfig.instance:getTagCofing(tagId)
-
-	if not tagCo then
-		return
-	end
-
-	if not iconImageComp then
-		logError("Rouge2_IconHelper.setTagIcon error iconImageComp is nil")
-
-		return
 	end
 end
 
@@ -267,6 +277,57 @@ function Rouge2_IconHelper.setBandHeroIcon(bandId, simageIcon)
 	end
 
 	simageIcon:LoadImage(ResUrl.getHeadIconSmall(bandCo.icon))
+end
+
+function Rouge2_IconHelper.setSummonerTalentIcon(talentId, status, imageIcon)
+	local iconUrl = Rouge2_CareerConfig.instance:getTalentIcon(talentId, status)
+
+	if string.nilorempty(iconUrl) then
+		return
+	end
+
+	if not imageIcon then
+		logError("Rouge2_IconHelper.setSummonerTalentIcon error imageIcon is nil")
+
+		return
+	end
+
+	UISpriteSetMgr.instance:setRouge7Sprite(imageIcon, iconUrl, true)
+end
+
+function Rouge2_IconHelper.setSummonerTalentStageIcon(talentId, simageIcon)
+	local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
+	local skinId = talentCo and talentCo.skinId
+
+	if not skinId then
+		logError(string.format("Rouge2_IconHelper.setSummonerTalentStageIcon error skinId is nil, talentId = %s", talentId))
+
+		return
+	end
+
+	if not simageIcon then
+		logError("Rouge2_IconHelper.setSummonerTalentStageIcon error simageIcon is nil")
+
+		return
+	end
+
+	simageIcon:LoadImage(ResUrl.getRouge2Icon("talent/" .. talentCo.petIcon))
+end
+
+function Rouge2_IconHelper.setTeamSystemIcon(systemId, simageIcon)
+	local systemCo = Rouge2_CareerConfig.instance:getSystemConfig(systemId)
+
+	if not systemCo then
+		return
+	end
+
+	if not simageIcon then
+		logError("Rouge2_IconHelper.setTeamSystemIcon error simageIcon is nil")
+
+		return
+	end
+
+	simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. systemCo.icon))
 end
 
 function Rouge2_IconHelper.setTalentIcon(talentId, simageIcon)

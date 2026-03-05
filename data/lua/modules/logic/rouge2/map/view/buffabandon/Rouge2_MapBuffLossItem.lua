@@ -16,6 +16,8 @@ function Rouge2_MapBuffLossItem:initParent(view)
 		local goBuff = view:getResInst(Rouge2_Enum.ResPath.ComBuffItem, self._goRoot)
 
 		self._comBuffItem = Rouge2_CommonBuffItem.Get(goBuff)
+
+		self._comBuffItem:initDescModeFlag(Rouge2_Enum.ItemDescModeDataKey.BuffAbandon)
 	end
 end
 

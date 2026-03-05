@@ -25962,5 +25962,941 @@
   {
     "id": 512100,
     "type": "HasTypeBuffIdsLessThan"
+  },
+  {
+    "id": 1061,
+    "type": "None"
+  },
+  {
+    "id": 762,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762005,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762021,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762100,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762101,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762102,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762103,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762104,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762105,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762106,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762201,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762202,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762203,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762204,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762205,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762206,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762207,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762208,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762209,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762210,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762211,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762212,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762213,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762301,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762302,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762303,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762304,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762305,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762306,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762307,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762401,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 762402,
+    "type": "BattleTagNum"
+  },
+  {
+    "id": 516101,
+    "type": "HasTargetCareerNum"
+  },
+  {
+    "id": 516203,
+    "type": "HasTargetCareerNum"
+  },
+  {
+    "id": 516208,
+    "type": "HasTargetCareerNum"
+  },
+  {
+    "id": 516212,
+    "type": "HasTargetCareerNum"
+  },
+  {
+    "id": 751100,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751101,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751102,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751103,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751104,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751105,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751106,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751201,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751202,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751203,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751204,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751205,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751206,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751207,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751208,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751209,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751210,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751211,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751212,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751213,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751301,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751302,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751303,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751304,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751305,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751306,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751307,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751401,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 751402,
+    "type": "ExSkillLevel"
+  },
+  {
+    "id": 763100,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763101,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763102,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763103,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763104,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763105,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763106,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763201,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763202,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763203,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763204,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763205,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763206,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763207,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763208,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763209,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763210,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763211,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763212,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763213,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763301,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763302,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763303,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763304,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763305,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763306,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763307,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763401,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 763402,
+    "type": "BuffTypeMutualCompare"
+  },
+  {
+    "id": 511210,
+    "type": "HasTypeBuffIdsMoreThan"
+  },
+  {
+    "id": 764100,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764101,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764102,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764103,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764104,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764105,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764106,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764201,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764202,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764203,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764204,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764205,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764206,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764207,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764208,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764209,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764210,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764211,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764212,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764213,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764301,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764302,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764303,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764304,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764305,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764306,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764307,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764401,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 764402,
+    "type": "BuffTypeSum"
+  },
+  {
+    "id": 504301,
+    "type": "HasTypeIdBuffEqual"
+  },
+  {
+    "id": 517402,
+    "type": "PerHasTargetCareer"
+  },
+  {
+    "id": 11402,
+    "type": "SingleKillNum"
+  },
+  {
+    "id": 2011,
+    "type": "None"
+  },
+  {
+    "id": 1020002,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020004,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020005,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020100,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020101,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020102,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020103,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020104,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020105,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020106,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 10201061,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 10201062,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020201,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020202,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020203,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020204,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020205,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020206,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020207,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020208,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020209,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020210,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020211,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020212,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020213,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020301,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020302,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020303,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020304,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020305,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020306,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020307,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020401,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1020402,
+    "type": "Rouge2AttrRand"
+  },
+  {
+    "id": 1021002,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021004,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021005,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021100,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021101,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021102,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021103,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021104,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021105,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021106,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 10211061,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 10211062,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021201,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021202,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021203,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021204,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021205,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021206,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021207,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021208,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021209,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021210,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021211,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021212,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021213,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021301,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021302,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021303,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021304,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021305,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021306,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021307,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021401,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 1021402,
+    "type": "BattleTagCheck"
+  },
+  {
+    "id": 191061,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 191062,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 1022002,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022004,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022005,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022100,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022101,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022102,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022103,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022104,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022105,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022106,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 10221061,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 10221062,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022201,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022202,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022203,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022204,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022205,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022206,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022207,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022208,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022209,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022210,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022211,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022212,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022213,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022301,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022302,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022303,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022304,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022305,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022306,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022307,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022401,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 1022402,
+    "type": "Rouge2AttrExRand"
+  },
+  {
+    "id": 514201,
+    "type": "SelfTeamHasBuffTypeLayerLessThan"
   }
 ]

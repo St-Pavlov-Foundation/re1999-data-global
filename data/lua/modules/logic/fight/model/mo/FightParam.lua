@@ -22,6 +22,7 @@ function FightParam:ctor()
 	self.assistUserId = nil
 	self.assistHeroUid = nil
 	self.assistBossId = nil
+	self.params = nil
 	self.chapterId = nil
 	self.episodeId = nil
 	self.multiplication = nil
@@ -70,6 +71,10 @@ function FightParam:setReqFightGroup(req)
 			fightGroup.assistBossId = preGroup.assistBossId
 		end
 
+		if preGroup.params then
+			fightGroup.params = preGroup.params
+		end
+
 		return
 	end
 
@@ -78,7 +83,7 @@ function FightParam:setReqFightGroup(req)
 	elseif Season123Controller.sendEpisodeUseSeason123Equip() then
 		FightParam.initFightGroup(fightGroup, self.clothId, self.mySideUids, self.mySideSubUids, self.equips, self.activity104Equips)
 	else
-		FightParam.initFightGroup(fightGroup, self.clothId, self.mySideUids, self.mySideSubUids, self.equips, nil, self.assistBossId)
+		FightParam.initFightGroup(fightGroup, self.clothId, self.mySideUids, self.mySideSubUids, self.equips, nil, self.assistBossId, self.params)
 	end
 
 	tabletool.addValues(fightGroup.extraList, self.extraList)
@@ -94,13 +99,17 @@ function FightParam:setReqFightGroup(req)
 	self.trialHeroList = fightGroup.trialHeroList
 end
 
-function FightParam.initFightGroup(fightGroup, clothId, heroList, subHeroList, equips, activity104Equips, assistBossId)
+function FightParam.initFightGroup(fightGroup, clothId, heroList, subHeroList, equips, activity104Equips, assistBossId, params)
 	if clothId then
 		fightGroup.clothId = clothId
 	end
 
 	if assistBossId then
 		fightGroup.assistBossId = assistBossId
+	end
+
+	if params then
+		fightGroup.params = params
 	end
 
 	local trialDict = {}
@@ -192,7 +201,7 @@ function FightParam:setAssistHeroInfo(assistHeroUid, assistUserId)
 	self.assistUserId = assistUserId
 end
 
-function FightParam:setMySide(clothId, mainUids, subUids, equips, activity104Equips, trialHeroList, extraList, assistBossId)
+function FightParam:setMySide(clothId, mainUids, subUids, equips, activity104Equips, trialHeroList, extraList, assistBossId, params)
 	self.clothId = clothId
 	self.mySideUids = mainUids
 	self.mySideSubUids = subUids
@@ -201,6 +210,7 @@ function FightParam:setMySide(clothId, mainUids, subUids, equips, activity104Equ
 	self.trialHeroList = trialHeroList
 	self.extraList = extraList
 	self.assistBossId = assistBossId
+	self.params = params
 end
 
 function FightParam:setEpisodeAndBattle(episodeId, battleId)
@@ -502,13 +512,17 @@ function FightParam:getHeroEquipMoListWithTrial()
 	return heroEquipList, subHeroEquipList
 end
 
-function FightParam.initTowerFightGroup(fightGroup, clothId, heroList, subHeroList, equips, activity104Equips, assistBossId, skipCheckTrial)
+function FightParam.initTowerFightGroup(fightGroup, clothId, heroList, subHeroList, equips, activity104Equips, assistBossId, skipCheckTrial, params)
 	if clothId then
 		fightGroup.clothId = clothId
 	end
 
 	if assistBossId then
 		fightGroup.assistBossId = assistBossId
+	end
+
+	if params then
+		fightGroup.params = params
 	end
 
 	if heroList then

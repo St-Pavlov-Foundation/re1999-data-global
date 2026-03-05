@@ -478,6 +478,14 @@ function RoomConfig:getBuildingOccupyList()
 	return result
 end
 
+function RoomConfig:getMaxBuildingOccupyNum()
+	if not self._maxBuildingOccupyNum then
+		self._maxBuildingOccupyNum = lua_room_building_occupy and #lua_room_building_occupy.configList or 0
+	end
+
+	return self._maxBuildingOccupyNum
+end
+
 function RoomConfig:getBuildingOccupyIcon(occupyId)
 	local result
 	local cfg = GetOccupyCfg(occupyId, true)

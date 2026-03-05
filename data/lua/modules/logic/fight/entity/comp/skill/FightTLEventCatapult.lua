@@ -130,8 +130,7 @@ function FightTLEventCatapult:get217EffectEntity(index)
 	for _, actEffectData in ipairs(self.fightStepData.actEffect) do
 		if actEffectData.effectType == effectType and actEffectData.effectNum == index then
 			local id = actEffectData.targetId
-			local fightScene = GameSceneMgr.instance:getCurScene()
-			local entity = fightScene.entityMgr:getEntity(id)
+			local entity = FightGameMgr.entityMgr:getEntity(id)
 
 			return entity
 		end
@@ -139,10 +138,9 @@ function FightTLEventCatapult:get217EffectEntity(index)
 end
 
 function FightTLEventCatapult:getPosEntity(pos)
-	local fightScene = GameSceneMgr.instance:getCurScene()
-	local entity = fightScene.entityMgr:getEntityByPosId(SceneTag.UnitMonster, pos)
+	local entity = FightGameMgr.entityMgr:getEntityByPosId(SceneTag.UnitMonster, pos)
 
-	entity = entity or fightScene.entityMgr:getEntityByPosId(SceneTag.UnitMonster, 1)
+	entity = entity or FightGameMgr.entityMgr:getEntityByPosId(SceneTag.UnitMonster, 1)
 
 	return entity
 end

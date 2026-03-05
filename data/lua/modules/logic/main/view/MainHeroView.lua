@@ -123,6 +123,7 @@ function MainHeroView:_onLoadingCloseView(viewName)
 
 			if not isOpenMainThumbnailView then
 				self._animator:Play("mainview_in", 0, 0)
+				MainController.instance:dispatchEvent(MainEvent.PlayOpenAnim)
 			end
 		end
 

@@ -326,5 +326,21 @@
     "name": "language_10100277",
     "nameEn": "Handover Day",
     "year": ""
+  },
+  {
+    "id": 14,
+    "type": 1,
+    "order": 0,
+    "name": "language_10104840",
+    "nameEn": "Слово о полку",
+    "year": "1920"
+  },
+  {
+    "id": 1028,
+    "type": 2,
+    "order": 0,
+    "name": "language_10107114",
+    "nameEn": "In the Shadow of the Mountains",
+    "year": ""
   }
 ]

@@ -33,7 +33,7 @@ function CommandStationDispatchEventProcessViewContainer:buildTabViews(tabContai
 	if tabContainerId == 1 then
 		self.navigateView = NavigateButtonsView.New({
 			true,
-			false,
+			true,
 			false
 		})
 

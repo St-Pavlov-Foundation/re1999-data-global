@@ -10,7 +10,7 @@ function FightStatModel:onInit()
 	self._totalHeal = 0
 end
 
-function FightStatModel:setAtkStatInfo(atkStatInfos)
+function FightStatModel:setAtkStatInfo(atkStatInfos, isTowerCompose)
 	self._totalHarm = 0
 	self._totalHurt = 0
 	self._totalHeal = 0
@@ -25,12 +25,17 @@ function FightStatModel:setAtkStatInfo(atkStatInfos)
 				entityMO = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
 			end
 
+			if isTowerCompose then
+				entityMO = TowerComposeModel.instance:getEntityMO(statInfo.heroUid)
+			end
+
 			if entityMO then
 				local statMO = FightStatMO.New()
 
 				statMO:init(statInfo)
 
-				statMO.entityMO = statInfo.entityMO
+				statMO.isTowerCompose = isTowerCompose
+				statMO.entityMO = isTowerCompose and entityMO or statInfo.entityMO
 				statMO.fromOtherFight = statInfo.entityMO and true or false
 
 				table.insert(statMOList, statMO)

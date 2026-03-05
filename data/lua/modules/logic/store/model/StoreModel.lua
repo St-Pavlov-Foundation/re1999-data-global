@@ -535,6 +535,10 @@ function StoreModel:isTabFirstRedDotShow(tabid)
 				if isRecommandPackTab and self:isGoodInRecommendList(goodId) and not isPerWeekLimit and not isPerMonthLimit then
 					return true
 				else
+					if tabid == StoreEnum.StoreId.HighSummon and goodsMo.belongStoreId == tabid and v.value > 0 then
+						return true
+					end
+
 					local secondtab = StoreConfig.instance:getTabConfig(goodsMo.belongStoreId).belongSecondTab
 
 					if v.value > 0 and tabid == secondtab then
@@ -1029,6 +1033,16 @@ function StoreModel:IsMonthCardDaysEnough()
 	end
 
 	return result
+end
+
+function StoreModel:isSkinDiscountNotSoldOut()
+	local storeGoodsMo = StoreModel.instance:getGoodsMO(StoreEnum.V3a3_SkinDiscountItemId)
+
+	if storeGoodsMo and storeGoodsMo:isSoldOut() then
+		return false
+	end
+
+	return true
 end
 
 function StoreModel:getCostStr(num)

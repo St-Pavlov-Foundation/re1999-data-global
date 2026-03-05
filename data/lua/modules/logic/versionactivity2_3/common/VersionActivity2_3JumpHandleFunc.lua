@@ -46,9 +46,20 @@ function VersionActivity2_3JumpHandleFunc:jumpTo12305(paramsList)
 
 	local actId = paramsList[2]
 
-	VersionActivity2_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId, true)
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local actConfig = ActivityConfig.instance:getActivityCo(actId)
+		local episodeId = actConfig.tryoutEpisode
 
-	return JumpEnum.JumpResult.Success
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	end
 end
 
 function VersionActivity2_3JumpHandleFunc:jumpTo12306(paramsList)
@@ -57,9 +68,20 @@ function VersionActivity2_3JumpHandleFunc:jumpTo12306(paramsList)
 
 	local actId = paramsList[2]
 
-	VersionActivity2_3EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId, true)
+	if ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal then
+		local actConfig = ActivityConfig.instance:getActivityCo(actId)
+		local episodeId = actConfig.tryoutEpisode
 
-	return JumpEnum.JumpResult.Success
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	end
 end
 
 function VersionActivity2_3JumpHandleFunc:jumpTo12315(paramsList)

@@ -28,5 +28,90 @@
     "buffId": 108300102,
     "behaviour": 6,
     "param": ""
+  },
+  {
+    "buffId": 23390001,
+    "behaviour": 1,
+    "param": "ui/viewres/fight/fighttower/fightautobtnalfview.prefab#330076"
+  },
+  {
+    "buffId": 23390002,
+    "behaviour": 3,
+    "param": "ui/viewres/fight/fighttower/fightcardremoveview.prefab"
+  },
+  {
+    "buffId": 23390003,
+    "behaviour": 7,
+    "param": "7#23390011#23390012#23390021#23390022"
+  },
+  {
+    "buffId": 23390004,
+    "behaviour": 7,
+    "param": "5#23390013#23390014#23390021#23390022"
+  },
+  {
+    "buffId": 23390005,
+    "behaviour": 7,
+    "param": "3#23390015#23390016#23390021#23390022"
+  },
+  {
+    "buffId": 23390081,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_14501_zrj"
+  },
+  {
+    "buffId": 23390082,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_11501_zrj"
+  },
+  {
+    "buffId": 23390083,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_15001_zrj"
+  },
+  {
+    "buffId": 23390084,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_29601_zrj"
+  },
+  {
+    "buffId": 23390085,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_23001_zrj"
+  },
+  {
+    "buffId": 23390086,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_11602_zrj"
+  },
+  {
+    "buffId": 23390087,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_22801_zrj"
+  },
+  {
+    "buffId": 23390088,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_30201_zrj"
+  },
+  {
+    "buffId": 23390089,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_30401_zrj"
+  },
+  {
+    "buffId": 23390090,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_18101_zrj"
+  },
+  {
+    "buffId": 23390091,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_12301_zrj"
+  },
+  {
+    "buffId": 23390092,
+    "behaviour": 8,
+    "param": "buff/buff_pata_mengpao#mounttop#object_pata_27901_zrj"
   }
 ]

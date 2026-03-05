@@ -110,12 +110,12 @@ function FightEntityAssembledMonsterMain:getPartIndex()
 end
 
 function FightEntityAssembledMonsterMain:killAllSubMonster()
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
 
 	for i, v in ipairs(entityList) do
 		if FightHelper.isAssembledMonster(v) and v ~= self then
-			entityMgr:removeUnit(v:getTag(), v.id)
+			entityMgr:delEntity(v.id)
 
 			local entityMO = FightDataHelper.entityMgr:getById(v.id)
 
@@ -127,10 +127,6 @@ function FightEntityAssembledMonsterMain:killAllSubMonster()
 			end
 		end
 	end
-end
-
-function FightEntityAssembledMonsterMain:beforeDestroy()
-	FightEntityAssembledMonsterMain.super.beforeDestroy(self)
 end
 
 return FightEntityAssembledMonsterMain

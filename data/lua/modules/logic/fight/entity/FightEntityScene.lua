@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.FightEntityScene", package.seeall)
 
-local FightEntityScene = class("FightEntityScene", BaseFightEntity)
+local FightEntityScene = class("FightEntityScene", FightEntityObject)
 
 FightEntityScene.MySideId = "0"
 FightEntityScene.EnemySideId = "-99999"
@@ -11,15 +11,14 @@ function FightEntityScene:getTag()
 	return SceneTag.UnitNpc
 end
 
-function FightEntityScene:init(go)
-	FightEntityScene.super.init(self, go)
+function FightEntityScene:onConstructor()
 	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
 function FightEntityScene:initComponents()
-	self:addComp("skill", FightSkillComp)
-	self:addComp("effect", FightEffectComp)
-	self:addComp("buff", FightBuffComp)
+	self.skill = self:addEntityComponent(FightSkillComp)
+	self.effect = self:addEntityComponent(FightEffectComp)
+	self.buff = self:addEntityComponent(FightBuffComp)
 end
 
 function FightEntityScene:getSide()

@@ -48,6 +48,9 @@ function SummonMainPoolMO:update(info)
 	self.canGetGuaranteeSRCount = info.canGetGuaranteeSRCount or 0
 	self.guaranteeSRCountDown = info.guaranteeSRCountDown or 0
 	self.summonCount = info.summonCount or 0
+	self.havefree10Count = info.haveFree10Count or 0
+	self.notSSRcount = info.notSSRCount or 0
+	self.totalFree10UseCount = info.totalFree10UseCount or 0
 end
 
 function SummonMainPoolMO:isOpening()

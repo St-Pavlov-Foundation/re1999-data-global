@@ -188,5 +188,185 @@
     "group": 0,
     "rewardScore": 20000,
     "rewardImage": "rouge2_store_reward_1"
+  },
+  {
+    "id": 1011,
+    "stage": 2,
+    "value": "1#481010#1",
+    "maxBuyCount": 1,
+    "num": 10000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1012,
+    "stage": 2,
+    "value": "1#111007#1",
+    "maxBuyCount": 1,
+    "num": 3000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1013,
+    "stage": 2,
+    "value": "1#111008#1",
+    "maxBuyCount": 1,
+    "num": 3000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1014,
+    "stage": 2,
+    "value": "1#111009#1",
+    "maxBuyCount": 1,
+    "num": 3000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1015,
+    "stage": 2,
+    "value": "1#120013#1",
+    "maxBuyCount": 5,
+    "num": 1500,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1016,
+    "stage": 2,
+    "value": "1#180003#1",
+    "maxBuyCount": 2,
+    "num": 750,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1017,
+    "stage": 2,
+    "value": "1#110404#1",
+    "maxBuyCount": 2,
+    "num": 1000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1018,
+    "stage": 2,
+    "value": "1#110604#1",
+    "maxBuyCount": 2,
+    "num": 1000,
+    "group": 1,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1019,
+    "stage": 2,
+    "value": "1#110203#1",
+    "maxBuyCount": 10,
+    "num": 300,
+    "group": 2,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1020,
+    "stage": 2,
+    "value": "1#111002#1",
+    "maxBuyCount": 10,
+    "num": 300,
+    "group": 2,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 1021,
+    "stage": 2,
+    "value": "1#180002#1",
+    "maxBuyCount": 3,
+    "num": 400,
+    "group": 2,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2007,
+    "stage": 2,
+    "value": "1#120012#1",
+    "maxBuyCount": 10,
+    "num": 1000,
+    "group": 2,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2008,
+    "stage": 2,
+    "value": "1#110102#1",
+    "maxBuyCount": 20,
+    "num": 100,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2009,
+    "stage": 2,
+    "value": "1#110302#1",
+    "maxBuyCount": 20,
+    "num": 100,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2010,
+    "stage": 2,
+    "value": "9#1003#1",
+    "maxBuyCount": 20,
+    "num": 50,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2011,
+    "stage": 2,
+    "value": "1#120011#1",
+    "maxBuyCount": 20,
+    "num": 500,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2012,
+    "stage": 2,
+    "value": "2#5#5000",
+    "maxBuyCount": 30,
+    "num": 200,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
+  },
+  {
+    "id": 2013,
+    "stage": 2,
+    "value": "2#3#5000",
+    "maxBuyCount": 30,
+    "num": 300,
+    "group": 3,
+    "rewardScore": 0,
+    "rewardImage": ""
   }
 ]

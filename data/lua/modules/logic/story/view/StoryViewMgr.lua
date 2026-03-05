@@ -70,6 +70,16 @@ function StoryViewMgr:getStoryHeroView()
 	return viewContainer.viewGO
 end
 
+function StoryViewMgr:setStoryHeroViewLayer(layer)
+	local viewGo = self:getStoryHeroView()
+
+	if not viewGo then
+		return
+	end
+
+	gohelper.setLayer(viewGo, layer, true)
+end
+
 function StoryViewMgr:getStoryView()
 	local viewContainer = ViewMgr.instance:getContainer(ViewName.StoryView)
 

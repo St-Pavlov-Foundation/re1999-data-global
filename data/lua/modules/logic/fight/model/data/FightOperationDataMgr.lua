@@ -254,7 +254,10 @@ function FightOperationDataMgr:getSelectEnemyPosLOrR(LorR)
 
 	if #enemyList > 0 then
 		table.sort(enemyList, function(enemyMO1, enemyMO2)
-			return enemyMO1.position < enemyMO2.position
+			local posX1, _, _ = FightHelper.getEntityStandPos(enemyMO1)
+			local posX2, _, _ = FightHelper.getEntityStandPos(enemyMO2)
+
+			return posX2 < posX1
 		end)
 
 		for i = 1, #enemyList do

@@ -38,5 +38,65 @@
   {
     "id": 10,
     "decoration": "scenes/v3a0_m_s18_zhb/prefab/v3a0_m_s18_zhb_02_zhuangjiache_1.prefab"
+  },
+  {
+    "id": 11,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_direction_01.prefab"
+  },
+  {
+    "id": 12,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_direction_02.prefab"
+  },
+  {
+    "id": 13,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_direction_03.prefab"
+  },
+  {
+    "id": 14,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_direction_04.prefab"
+  },
+  {
+    "id": 15,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_tent.prefab"
+  },
+  {
+    "id": 16,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_cart.prefab"
+  },
+  {
+    "id": 17,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_transporter.prefab"
+  },
+  {
+    "id": 18,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_mortar.prefab"
+  },
+  {
+    "id": 19,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_box.prefab"
+  },
+  {
+    "id": 20,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_watchtower.prefab"
+  },
+  {
+    "id": 21,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_horse.prefab"
+  },
+  {
+    "id": 22,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_qz_flight.prefab"
+  },
+  {
+    "id": 23,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_sl_gelutuofu.prefab"
+  },
+  {
+    "id": 24,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_sl_yigeer.prefab"
+  },
+  {
+    "id": 25,
+    "decoration": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_03_sl_zhinuoqibing.prefab"
   }
 ]

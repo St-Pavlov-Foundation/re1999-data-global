@@ -31,7 +31,9 @@ function PCInputController:resumeListen()
 end
 
 function PCInputController:getIsUse()
-	if ZProj.PCInputManager and ZProj.PCInputManager.Instance:isWindows() then
+	local ismumu = BootNativeUtil.isMuMu and BootNativeUtil.isMuMu()
+
+	if ZProj.PCInputManager and (BootNativeUtil.isWindows() or ismumu) then
 		if UnityEngine.Application.isEditor then
 			return UnityEngine.PlayerPrefs.GetInt("PCInputSwitch", 1) == 1
 		else
@@ -39,6 +41,12 @@ function PCInputController:getIsUse()
 		end
 	end
 
+	return false
+end
+
+BootNativeUtil.getAppVersion()
+
+function BootNativeUtil.isMuMu()
 	return false
 end
 

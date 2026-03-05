@@ -74,7 +74,7 @@ function Rouge2_BackpackFormulaListItem:refreshDesc()
 
 	local effectDescStr = table.concat(effectDescList, "\n")
 
-	self._txtFormulaDesc.text = SkillHelper.buildDesc(effectDescStr)
+	Rouge2_ItemDescHelper.buildAndSetDesc(self._txtFormulaDesc, effectDescStr)
 end
 
 function Rouge2_BackpackFormulaListItem:showOpenAnim()

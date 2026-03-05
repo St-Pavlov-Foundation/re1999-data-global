@@ -33,12 +33,12 @@ function Rouge2_BackpackTabViewContainer:buildTabViews(tabContainerId)
 			self.navigateView
 		}
 	elseif tabContainerId == Rouge2_Enum.BackpackTabContainerId then
-		return {
-			Rouge2_BackpackCareerView.New(),
-			Rouge2_BackpackSkillView.New(),
-			Rouge2_BackpackRelicsView.New(),
-			Rouge2_BackpackBuffView.New()
-		}
+		self:_addTabViewToMap(Rouge2_Enum.BagTabType.Career, Rouge2_BackpackCareerView.New())
+		self:_addTabViewToMap(Rouge2_Enum.BagTabType.Buff, Rouge2_BackpackBuffView.New())
+		self:_addTabViewToMap(Rouge2_Enum.BagTabType.Relics, Rouge2_BackpackRelicsView.New())
+		self:_addTabViewToMap(Rouge2_Enum.BagTabType.ActiveSkill, Rouge2_BackpackSkillView.New())
+
+		return self._bagTabViewList or {}
 	elseif tabContainerId == 3 then
 		return {
 			NavigateButtonsView.New({
@@ -60,6 +60,14 @@ function Rouge2_BackpackTabViewContainer:buildTabViews(tabContainerId)
 			self.editBtnViews
 		}
 	end
+end
+
+function Rouge2_BackpackTabViewContainer:_addTabViewToMap(tabType, viewInst)
+	self._bagTabViewList = self._bagTabViewList or {}
+	self._bagTabViewMap = self._bagTabViewMap or {}
+	self._bagTabViewMap[tabType] = viewInst
+
+	table.insert(self._bagTabViewList, viewInst)
 end
 
 function Rouge2_BackpackTabViewContainer:getCurSelectType()
@@ -106,6 +114,10 @@ function Rouge2_BackpackTabViewContainer:overrideHelpBtn()
 	else
 		logError("肉鸽背包界面帮助按钮未定义页签")
 	end
+end
+
+function Rouge2_BackpackTabViewContainer:getTabViewByTabType(tabType)
+	return self._bagTabViewMap and self._bagTabViewMap[tabType]
 end
 
 return Rouge2_BackpackTabViewContainer

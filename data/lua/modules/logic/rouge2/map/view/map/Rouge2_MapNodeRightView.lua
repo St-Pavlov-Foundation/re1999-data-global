@@ -215,33 +215,30 @@ function Rouge2_MapNodeRightView:refreshRight(showContinueFight)
 		return
 	end
 
-	local eventTypeCo = lua_rouge2_event_type.configDict[self.eventCo.type]
-
-	self._txtChapterName.text = eventTypeCo and eventTypeCo.name
+	self._eventTypeCo = lua_rouge2_event_type.configDict[self.eventCo.type]
+	self._txtChapterName.text = self._eventTypeCo and self._eventTypeCo.name
 	self._txtDesc1.text = SkillHelper.buildDesc(self.eventCo.desc)
 
 	self:showDescContainer()
 	self:refreshBtn(showContinueFight)
-	self:refreshFightDesc()
+	self:refreshEventDesc()
 	self:refreshBossDesc()
 	self:refreshCareer()
 	self:refreshAttribute()
 	self:refreshBg()
 end
 
-function Rouge2_MapNodeRightView:refreshFightDesc()
-	local isFight = Rouge2_MapHelper.isFightEvent(self.eventType)
+function Rouge2_MapNodeRightView:refreshEventDesc()
+	local eventDesc = self._eventTypeCo and self._eventTypeCo.desc
+	local hasEventDesc = not string.nilorempty(eventDesc)
 
-	gohelper.setActive(self._txtDesc2.gameObject, isFight)
+	gohelper.setActive(self._txtDesc2.gameObject, hasEventDesc)
 
-	if not isFight then
+	if not hasEventDesc then
 		return
 	end
 
-	local fightEventCo = Rouge2_MapConfig.instance:eventId2FightEventCo(self.eventId)
-	local fightDesc = fightEventCo and fightEventCo.fightDesc or ""
-
-	self._txtDesc2.text = SkillHelper.buildDesc(fightDesc)
+	self._txtDesc2.text = SkillHelper.buildDesc(eventDesc)
 end
 
 function Rouge2_MapNodeRightView:refreshBossDesc()

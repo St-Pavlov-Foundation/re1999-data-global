@@ -311,6 +311,12 @@ function Rouge2_StoreView:getFirstNoSellOutGroup()
 end
 
 function Rouge2_StoreView:getFirstNoSellOutStage(stageList)
+	for _, stageId in ipairs(stageList) do
+		if not Rouge2_StoreModel.instance:isStoreAllClaimed(stageId) then
+			return stageId
+		end
+	end
+
 	return stageList[1]
 end
 

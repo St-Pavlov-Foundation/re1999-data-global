@@ -15,17 +15,16 @@ end
 function GMFightController:startStatBuffType(buffTypeId)
 	self.buffTypeId = buffTypeId
 
-	local fightScene = GameSceneMgr.instance:getCurScene()
-	local entityMgr = fightScene.entityMgr
-	local enemyDict = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+	local entityMgr = FightGameMgr.entityMgr
+	local enemyList = entityMgr:getTagList(SceneTag.UnitMonster)
 
-	for _, entity in pairs(enemyDict) do
+	for _, entity in ipairs(enemyList) do
 		self:addStatBuffTypeByEntity(entity)
 	end
 
-	local playerDict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+	local playerList = entityMgr:getTagList(SceneTag.UnitPlayer)
 
-	for _, entity in pairs(playerDict) do
+	for _, entity in ipairs(playerList) do
 		self:addStatBuffTypeByEntity(entity)
 	end
 end
@@ -44,17 +43,16 @@ end
 function GMFightController:stopStatBuffType()
 	self.buffTypeId = nil
 
-	local fightScene = GameSceneMgr.instance:getCurScene()
-	local entityMgr = fightScene.entityMgr
-	local enemyDict = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+	local entityMgr = FightGameMgr.entityMgr
+	local enemyList = entityMgr:getTagList(SceneTag.UnitMonster)
 
-	for _, entity in pairs(enemyDict) do
+	for _, entity in ipairs(enemyList) do
 		self:stopStatBuffTypeByEntity(entity)
 	end
 
-	local playerDict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+	local playerList = entityMgr:getTagList(SceneTag.UnitPlayer)
 
-	for _, entity in pairs(playerDict) do
+	for _, entity in ipairs(playerList) do
 		self:stopStatBuffTypeByEntity(entity)
 	end
 end

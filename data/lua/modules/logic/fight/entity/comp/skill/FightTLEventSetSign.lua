@@ -58,6 +58,14 @@ function FightTLEventSetSign:onTrackStart(fightStepData, duration, paramsArr)
 
 	if param6 == "aiJiAoQteStart" then
 		FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
+
+		local entityList = FightHelper.getAllEntitys()
+
+		for _, entity in ipairs(entityList) do
+			if entity.nameUI then
+				entity.nameUI:setActive(true)
+			end
+		end
 	elseif param6 == "aiJiAoQteEnd" then
 		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
 	end

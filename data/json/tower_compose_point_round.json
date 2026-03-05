@@ -1,0 +1,86 @@
+[
+  {
+    "round": 0,
+    "bossPointAdd": 0
+  },
+  {
+    "round": 1,
+    "bossPointAdd": 10
+  },
+  {
+    "round": 2,
+    "bossPointAdd": 40
+  },
+  {
+    "round": 3,
+    "bossPointAdd": 70
+  },
+  {
+    "round": 4,
+    "bossPointAdd": 100
+  },
+  {
+    "round": 5,
+    "bossPointAdd": 130
+  },
+  {
+    "round": 6,
+    "bossPointAdd": 160
+  },
+  {
+    "round": 7,
+    "bossPointAdd": 180
+  },
+  {
+    "round": 8,
+    "bossPointAdd": 200
+  },
+  {
+    "round": 9,
+    "bossPointAdd": 210
+  },
+  {
+    "round": 10,
+    "bossPointAdd": 220
+  },
+  {
+    "round": 11,
+    "bossPointAdd": 230
+  },
+  {
+    "round": 12,
+    "bossPointAdd": 240
+  },
+  {
+    "round": 13,
+    "bossPointAdd": 250
+  },
+  {
+    "round": 14,
+    "bossPointAdd": 260
+  },
+  {
+    "round": 15,
+    "bossPointAdd": 270
+  },
+  {
+    "round": 16,
+    "bossPointAdd": 280
+  },
+  {
+    "round": 17,
+    "bossPointAdd": 290
+  },
+  {
+    "round": 18,
+    "bossPointAdd": 300
+  },
+  {
+    "round": 19,
+    "bossPointAdd": 310
+  },
+  {
+    "round": 20,
+    "bossPointAdd": 310
+  }
+]

@@ -91,7 +91,7 @@ function FightWorkStepChangeWave:_changeEntity()
 	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 	local power = FightModel.instance.power
 
-	fightScene.entityMgr:changeWave(self.fightData)
+	FightGameMgr.entityMgr:changeWave(self.fightData)
 
 	FightModel.instance.power = power
 

@@ -172,6 +172,14 @@ function HeroGroupSnapshotModel:getSelectIndex(snapshotId)
 		end
 
 		return selectIndex
+	elseif snapshotId == ModuleEnum.HeroGroupSnapshotType.TowerComposeNormal then
+		return 1
+	elseif snapshotId == ModuleEnum.HeroGroupSnapshotType.TowerComposeBoss then
+		local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+
+		if recordFightParam then
+			return recordFightParam.themeId
+		end
 	end
 
 	local mo = self:getById(snapshotId)

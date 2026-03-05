@@ -49,14 +49,14 @@ function FightWorkAssistBossChange:onStart()
 end
 
 function FightWorkAssistBossChange:_removeOldEntity(oldEntity)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
-	entityMgr:removeUnit(oldEntity:getTag(), oldEntity.id)
+	entityMgr:delEntity(oldEntity.id)
 end
 
 function FightWorkAssistBossChange:_buildNewEntity()
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local newEntity = entityMgr:buildSpine(self._newEntityMO)
+	local entityMgr = FightGameMgr.entityMgr
+	local newEntity = entityMgr:newEntity(self._newEntityMO)
 	local buffComp = newEntity and newEntity.buff
 
 	if buffComp then

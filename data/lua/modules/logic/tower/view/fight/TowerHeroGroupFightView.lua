@@ -27,6 +27,7 @@ function TowerHeroGroupFightView:_editableInitView()
 	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUpdateRecommendLevel, self._refreshTips, self)
 	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, self._heroMoveForward, self)
 	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.refreshDropTips, self)
+	self:addEventCb(TowerController.instance, TowerEvent.DailyReresh, self.onDailyRereshCheck, self)
 
 	if BossRushController.instance:isInBossRushFight() then
 		gohelper.addUIClickAudio(self._btnstart.gameObject, AudioEnum.ui_formation.play_ui_formation_action)
@@ -144,6 +145,24 @@ end
 
 function TowerHeroGroupFightView:isShowDropHeroGroup()
 	return true
+end
+
+function TowerHeroGroupFightView:onDailyRereshCheck()
+	local param = TowerModel.instance:getRecordFightParam()
+	local towerType = param.towerType
+
+	if towerType == TowerEnum.TowerType.Limited then
+		local curOpenMo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
+
+		if not curOpenMo then
+			MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, TowerHeroGroupFightView.yesCallback)
+		end
+	end
+end
+
+function TowerHeroGroupFightView.yesCallback()
+	ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
+	NavigateButtonsView.homeClick()
 end
 
 return TowerHeroGroupFightView

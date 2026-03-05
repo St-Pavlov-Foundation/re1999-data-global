@@ -10,6 +10,7 @@ function FightSceneTriggerSceneAnimatorItem:onConstructor()
 
 	self:com_registFightEvent(FightEvent.TriggerSceneAnimator, self._onTriggerSceneAnimator)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStageBefore)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset)
 	self:_onLevelLoaded()
 end
 
@@ -89,6 +90,11 @@ function FightSceneTriggerSceneAnimatorItem:_onSceneStateChange(state)
 end
 
 function FightSceneTriggerSceneAnimatorItem:_onRestartStageBefore()
+	self.activeState = true
+	self.cacheAni = {}
+end
+
+function FightSceneTriggerSceneAnimatorItem:_onSwitchPlaneClearAsset()
 	self.activeState = true
 	self.cacheAni = {}
 end

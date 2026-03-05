@@ -14,6 +14,7 @@ function FightEntityFootRingMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.AfterPlayUniqueSkill, self._onAfterPlayUniqueSkill)
 	self:com_registFightEvent(FightEvent.SetEntityFootEffectVisible, self._onSetEntityFootEffectVisible)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntityEffect)
 end
 
 function FightEntityFootRingMgr:_onSpineLoaded(unitSpine)

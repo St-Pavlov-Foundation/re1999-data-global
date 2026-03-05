@@ -14,6 +14,8 @@ Rouge2_BackpackSkillView.ViewState2AnimName = {
 }
 
 function Rouge2_BackpackSkillView:onInitView()
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+
 	if self._editableInitView then
 		self:_editableInitView()
 	end
@@ -28,19 +30,26 @@ function Rouge2_BackpackSkillView:removeEvents()
 end
 
 function Rouge2_BackpackSkillView:_editableInitView()
-	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
-
 	self:initChildViews()
+	self._animator:Rebind()
 end
 
 function Rouge2_BackpackSkillView:onOpen()
-	self:switchState(Rouge2_BackpackSkillView.ViewState.Panel)
 	self._animator:Play("open", 0, 0)
+	self:switchState(Rouge2_BackpackSkillView.ViewState.Panel)
 end
 
 function Rouge2_BackpackSkillView:initChildViews()
 	self._childViewMap = {}
-	self._childViewMap[Rouge2_BackpackSkillView.ViewState.Panel] = Rouge2_BackpackSkillPanelView.New()
+
+	if Rouge2_Model.instance:isUseYBXCareer() then
+		self._goPanel = self:getResInst(Rouge2_Enum.ResPath.BackpackTalentView, self.viewGO, "SkillTalent")
+		self._childViewMap[Rouge2_BackpackSkillView.ViewState.Panel] = Rouge2_BackpackSkillTalentView.New()
+	else
+		self._goPanel = self:getResInst(Rouge2_Enum.ResPath.BackpackSkillPanelView, self.viewGO, "SkillPanel")
+		self._childViewMap[Rouge2_BackpackSkillView.ViewState.Panel] = Rouge2_BackpackSkillPanelView.New()
+	end
+
 	self._childViewMap[Rouge2_BackpackSkillView.ViewState.Edit] = Rouge2_BackpackSkillEditView.New()
 
 	for _, childView in pairs(self._childViewMap) do
@@ -53,15 +62,11 @@ function Rouge2_BackpackSkillView:switchState(state, params)
 		return
 	end
 
-	self._state = state
+	local animName = self._state and Rouge2_BackpackSkillView.ViewState2AnimName[state]
 
-	local animName = Rouge2_BackpackSkillView.ViewState2AnimName[self._state]
-
-	if string.nilorempty(animName) then
-		return
+	if not string.nilorempty(animName) then
+		self._animator:Play(animName, 0, 0)
 	end
-
-	self._animator:Play(animName, 0, 0)
 
 	local childView = self._childViewMap[state]
 
@@ -73,6 +78,7 @@ function Rouge2_BackpackSkillView:switchState(state, params)
 		self._curChildView:onCloseChildView()
 	end
 
+	self._state = state
 	self._curChildView = childView
 
 	self._curChildView:onOpenChildView(params)
@@ -80,6 +86,10 @@ end
 
 function Rouge2_BackpackSkillView:_onSwitchSkillViewType(state, params)
 	self:switchState(state, params)
+end
+
+function Rouge2_BackpackSkillView:getView(viewState)
+	return self._childViewMap and self._childViewMap[viewState]
 end
 
 return Rouge2_BackpackSkillView

@@ -621,6 +621,43 @@ function JumpController:canJumpToTower(jumpParam)
 	return self:defaultCanJump(jumpParam)
 end
 
+function JumpController:canJumpToTowerComposeView(jumpParam)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
+		local desc, param = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Tower)
+
+		return false, desc, param
+	end
+
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpId = jumpArray[2]
+	local themeId = jumpArray[3]
+	local layerId = jumpArray[4]
+
+	if themeId and themeId > 0 then
+		local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+
+		if not themeMo then
+			return false, ToastEnum.TowerComposeNotOpen
+		end
+
+		local passLayerId = TowerComposeModel.instance:getThemePassLayer(themeId)
+
+		if layerId and passLayerId and passLayerId < layerId and Mathf.Abs(passLayerId - layerId) > 1 then
+			return false, ToastEnum.TowerComposeNotOpen
+		end
+
+		if jumpId == TowerComposeEnum.JumpId.TowerComposePlane then
+			local isPlaneUnlock = TowerComposeModel.instance:checkHasPlaneLayerUnlock(themeId)
+
+			if not isPlaneUnlock then
+				return false, ToastEnum.TowerComposeNotOpen
+			end
+		end
+	end
+
+	return self:defaultCanJump(jumpParam)
+end
+
 function JumpController:canJumpToOdyssey(jumpParam)
 	local actId = VersionActivity2_9Enum.ActivityId.Dungeon2
 
@@ -707,6 +744,7 @@ JumpController.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.SeasonMainView] = JumpController.canJumpToSeasonMainView,
 	[JumpEnum.JumpView.RoomFishing] = JumpController.canJumpToRoomFishing,
 	[JumpEnum.JumpView.Tower] = JumpController.canJumpToTower,
+	[JumpEnum.JumpView.TowerCompose] = JumpController.canJumpToTowerComposeView,
 	[JumpEnum.JumpView.Odyssey] = JumpController.canJumpToOdyssey,
 	[JumpEnum.JumpView.AssassinLibraryView] = JumpController.canJumpToAssassinLibraryView,
 	[JumpEnum.JumpView.Challenge] = Act183JumpController.canJumpToAct183,

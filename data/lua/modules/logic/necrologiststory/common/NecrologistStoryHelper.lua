@@ -212,7 +212,7 @@ function NecrologistStoryHelper.calculateLinksRectData(tmpText)
 				height,
 				answerIndex
 			})
-		else
+		elseif linkInfo.linkTextLength > 1 then
 			local lastCharInfo = characterInfoList[linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength - 1]
 
 			if firstCharInfo.lineNumber == lastCharInfo.lineNumber then

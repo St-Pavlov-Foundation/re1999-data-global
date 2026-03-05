@@ -145,7 +145,7 @@ function GMFightEntityModel:setEntityDetailInfo(entityMO)
 	table.insert(list, self:getAttrMo(205, exAttr.addDmg, addExAttr.addDmg, testAddExAttr.addDmg, partExAttr.addDmg, testPartExAttr.addDmg, finalExAttr.addDmg))
 	table.insert(list, self:getAttrMo(206, exAttr.dropDmg, addExAttr.dropDmg, testAddExAttr.dropDmg, partExAttr.dropDmg, testPartExAttr.dropDmg, finalExAttr.dropDmg))
 	table.insert(list, self:getAttrMo(207, spAttr.finalAddDmg, addSpAttr.finalAddDmg, testAddSpAttr.finalAddDmg, partSpAttr.finalAddDmg, testPartSpAttr.finalAddDmg, finalSpAttr.finalAddDmg))
-	table.insert(list, self:getAttrMo(208, spAttr.finalDropDmg, addSpAttr.finalDropDmg, testAddSpAttr.finalDropDmg, partSpAttr.finalDropDmg, testPartSpAttr.finalDropDmg, finalSpAttr.dropDmg))
+	table.insert(list, self:getAttrMo(208, spAttr.finalDropDmg, addSpAttr.finalDropDmg, testAddSpAttr.finalDropDmg, partSpAttr.finalDropDmg, testPartSpAttr.finalDropDmg, finalSpAttr.finalDropDmg))
 	table.insert(list, self:getAttrMo(209, spAttr.revive, addSpAttr.revive, testAddSpAttr.revive, partSpAttr.revive, testPartSpAttr.revive, finalSpAttr.revive))
 	table.insert(list, self:getAttrMo(210, spAttr.absorb, addSpAttr.absorb, testAddSpAttr.absorb, partSpAttr.absorb, testPartSpAttr.absorb, finalSpAttr.absorb))
 	table.insert(list, self:getAttrMo(211, spAttr.clutch, addSpAttr.clutch, testAddSpAttr.clutch, partSpAttr.clutch, testPartSpAttr.clutch, finalSpAttr.clutch))
@@ -196,6 +196,20 @@ function GMFightEntityModel:getAttrMo(id, base, add, test, partAdd, partTest, fi
 	attrMo.final = final
 
 	return attrMo
+end
+
+function GMFightEntityModel:onGetGMFightTeamDetailInfos(msg)
+	self.myTeamRuleList = {}
+
+	for _, ruleId in ipairs(msg.teamAInfos.ruleSkill) do
+		table.insert(self.myTeamRuleList, ruleId)
+	end
+
+	self.enemyTeamRuleList = {}
+
+	for _, ruleId in ipairs(msg.teamBInfos.ruleSkill) do
+		table.insert(self.enemyTeamRuleList, ruleId)
+	end
 end
 
 GMFightEntityModel.instance = GMFightEntityModel.New()

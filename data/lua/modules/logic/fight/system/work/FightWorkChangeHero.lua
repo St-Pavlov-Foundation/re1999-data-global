@@ -21,7 +21,6 @@ function FightWorkChangeHero:onStart()
 
 	self:com_registTimer(self._delayDone, 5)
 
-	self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 	self._targetId = self.actEffectData.targetId
 
 	FightRenderOrderMgr.instance:unregister(self._targetId)
@@ -33,6 +32,7 @@ function FightWorkChangeHero:onStart()
 	end
 
 	self._changedId = self.actEffectData.entity.id
+	FightDataHelper.tempMgr.canNotSelectEntityIdDic[self.actEffectData.entity.id] = true
 	self._changedSubEntity = FightHelper.getEntity(self._changedId)
 	self._changedEntityMO = FightDataHelper.entityMgr:getById(self._changedId)
 
@@ -67,7 +67,7 @@ function FightWorkChangeHero:onStart()
 			self._toBuildSubId = self._changedEntityMO.id
 
 			if not self._changedSubEntity then
-				local subEntity = self._entityMgr:buildSubSpine(self._changedEntityMO)
+				local subEntity = FightGameMgr.entityMgr:newEntity(self._changedEntityMO)
 
 				if subEntity then
 					local stanceConfig = lua_stance.configDict[FightHelper.getEntityStanceId(self._changedEntityMO)]
@@ -123,7 +123,7 @@ end
 
 function FightWorkChangeHero:_targetEntityQuitFinish()
 	if self._targetEntity then
-		self._entityMgr:removeUnit(self._targetEntity:getTag(), self._targetEntity.id)
+		FightGameMgr.entityMgr:delEntity(self._targetEntity.id)
 	end
 
 	local is_my_side = self._changedEntityMO.side == FightEnum.EntitySide.MySide
@@ -162,7 +162,7 @@ function FightWorkChangeHero:_playJumpTimeline()
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 
-	self._subEntity = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSceneEntity("tibushangzhen" .. self._changedEntityMO.id)
+	self._subEntity = FightGameMgr.entityMgr:buildTempSceneEntity("tibushangzhen" .. self._changedEntityMO.id)
 	FightWorkChangeHero.playingChangeHero = true
 
 	self._subEntity.skill:playTimeline(time_line or "change_hero_common", temp_data)
@@ -170,7 +170,7 @@ end
 
 function FightWorkChangeHero:_removeSubEntity()
 	if self._changedSubEntity and self._changedSubEntity.go then
-		self._entityMgr:destroyUnit(self._changedSubEntity)
+		self._changedSubEntity:disposeSelf()
 
 		self._changedSubEntity = nil
 	end
@@ -191,6 +191,8 @@ function FightWorkChangeHero:_onSkillPlayStart(entity)
 end
 
 function FightWorkChangeHero:_entityEnter()
+	FightGameMgr.entityMgr.entityDic[self._changedId] = nil
+
 	if self._changedSubEntity then
 		if self._timeline_duration then
 			local _time = self._timeline_duration * 0.2 / FightModel.instance:getSpeed()
@@ -198,23 +200,21 @@ function FightWorkChangeHero:_entityEnter()
 			self._changedSubEntity:setAlpha(0, _time)
 
 			self._need_invoke_remove_sub_entity = true
-
-			self._entityMgr:removeUnitData(self._changedSubEntity:getTag(), self._changedSubEntity.id)
 		else
-			self._entityMgr:removeUnit(self._changedSubEntity:getTag(), self._changedSubEntity.id)
+			self._changedSubEntity:disposeSelf()
 		end
 	end
 
 	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onEnterEntitySpineLoadFinish, self)
 
-	self._newEntity = self._entityMgr:buildSpine(self._changedEntityMO)
+	self._newEntity = FightGameMgr.entityMgr:newEntity(self._changedEntityMO)
 end
 
 function FightWorkChangeHero:_onEnterEntitySpineLoadFinish(unitSpine)
 	if unitSpine.unitSpawn.id == self._changedEntityMO.id then
 		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onEnterEntitySpineLoadFinish, self)
 
-		local entity = self._entityMgr:getEntity(self._changedEntityMO.id)
+		local entity = FightGameMgr.entityMgr:getEntity(self._changedEntityMO.id)
 
 		if self._seasonUseChangeHero then
 			if entity then
@@ -266,7 +266,7 @@ function FightWorkChangeHero:_onEntityBornDone()
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnChangeEntity, self._newEntity)
-	GameSceneMgr.instance:getCurScene().entityMgr:showSubEntity()
+	FightGameMgr.entityMgr:showSubEntity()
 	self:onDone(true)
 end
 
@@ -289,17 +289,15 @@ function FightWorkChangeHero:clearWork()
 	FightWorkChangeHero.playingChangeHero = false
 
 	if self._subEntity then
-		local entity_mgr = GameSceneMgr.instance:getCurScene().entityMgr
-
-		if entity_mgr then
-			entity_mgr:removeUnit(self._subEntity:getTag(), self._subEntity.id)
-		end
+		FightGameMgr.entityMgr:delEntity(self._subEntity.id)
 
 		self._subEntity = nil
 	end
 
-	if self._need_invoke_remove_sub_entity then
-		self:_removeSubEntity()
+	if self._need_invoke_remove_sub_entity and self._changedSubEntity then
+		self._changedSubEntity:disposeSelf()
+
+		self._changedSubEntity = nil
 	end
 
 	TaskDispatcher.cancelTask(self._targetEntityQuitFinish, self)
@@ -322,14 +320,8 @@ function FightWorkChangeHero:clearWork()
 	self._timeline_duration = nil
 end
 
-function FightWorkChangeHero:onDestroy()
-	if self._nextSubBornFlow then
-		self._nextSubBornFlow:stop()
-
-		self._nextSubBornFlow = nil
-	end
-
-	FightWorkChangeHero.super.onDestroy(self)
+function FightWorkChangeHero:onDestructor()
+	FightDataHelper.tempMgr.canNotSelectEntityIdDic[self.actEffectData.entity.id] = nil
 end
 
 return FightWorkChangeHero

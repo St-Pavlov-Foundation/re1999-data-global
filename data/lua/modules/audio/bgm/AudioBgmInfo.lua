@@ -85,7 +85,7 @@ function AudioBgmInfo:_initBgmDatas()
 	self:_addBgmData(AudioBgmEnum.Layer.V2a1_WarmUp, AudioEnum.Bgm.play_ui_preheat_2_1_music_20211601, AudioEnum.Bgm.stop_ui_preheat_2_1_music_20211602)
 	self:_addBgmData(AudioBgmEnum.Layer.Act_Aergusi, AudioEnum.Bgm.Act2_1_Aergusi, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.Act_LanShouPa, AudioEnum.Bgm.Act2_1_LanShouPa, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
-	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_2Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_2Main, AudioEnum.Bgm.Act2_2DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.InvestigateRoleStory, AudioEnum.Bgm.play_activitymusic_sadness, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.NormalBattleV2_2, AudioEnum.Bgm.play_battle_youyui_2_2_normalfight, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.BossBattleV2_2, AudioEnum.Bgm.play_battle_youyui_2_2_bossfight, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
@@ -117,6 +117,10 @@ function AudioBgmInfo:_initBgmDatas()
 	self:_addBgmData(AudioBgmEnum.Layer.NecrologistStoryView, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_2Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.Udimo, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_3Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.ArcadeOutSide, AudioEnum3_3.bgm.play_8bit_music_explore, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.Igor, AudioEnum3_3.bgm.play_activitymusic_zuozhan_3_3, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.ArcadeInSide, AudioEnum3_3.bgm.play_8bit_music_combat, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function AudioBgmInfo:_initBgmUsage()
@@ -490,7 +494,8 @@ function AudioBgmInfo:_initBgmUsage()
 	self:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity2_2Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity2_2EnterView
+		ViewName.VersionActivity2_2EnterView,
+		ViewName.Permanent2_2EnterView
 	}, nil, nil, true)
 	self:_addBgmUsage({
 		AudioBgmEnum.Layer.InvestigateRoleStory
@@ -514,12 +519,13 @@ function AudioBgmInfo:_initBgmUsage()
 		AudioBgmEnum.Layer.VersionActivity2_3Main
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity2_3EnterView,
-		ViewName.V2a3_ReactivityEnterview
+		ViewName.V2a3_ReactivityEnterview,
+		ViewName.Permanent2_3EnterView
 	}, nil, nil, true)
 	self:_addBgmUsage({
 		AudioBgmEnum.Layer.Tower
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.TowerMainView,
+		ViewName.TowerMainSelectView,
 		ViewName.TowerMainEntryView
 	}, nil, nil, true)
 	self:_addBgmUsage({
@@ -661,6 +667,26 @@ function AudioBgmInfo:_initBgmUsage()
 	}, AudioBgmEnum.UsageType.Scene, {
 		SceneType.Rouge2
 	})
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity3_3Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity3_3EnterView
+	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.ArcadeOutSide
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.ArcadeHallView
+	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.Igor
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.IgorGameView
+	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.ArcadeInSide
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.ArcadeGameView
+	}, nil, nil, true)
 end
 
 function AudioBgmInfo:_initBgmBind()

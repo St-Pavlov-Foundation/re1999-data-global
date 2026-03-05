@@ -52,11 +52,10 @@ function Rouge2_HeroGroupEditView:onInitView()
 	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
 	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._goops = gohelper.findChild(self.viewGO, "#go_ops")
 	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_confirm")
 	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_cancel")
-	self._txtrecommendAttrDesc = gohelper.findChildText(self.viewGO, "#go_recommendAttr/bg/#txt_desc")
-	self._goattrlist = gohelper.findChild(self.viewGO, "#go_recommendAttr/bg/#go_attrlist")
-	self._goattritem = gohelper.findChild(self.viewGO, "#go_recommendAttr/bg/#go_attrlist/#go_attritem")
+	self._goTeamTips = gohelper.findChild(self.viewGO, "characterinfo/#go_TeamTips")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -620,11 +619,7 @@ function Rouge2_HeroGroupEditView:_refreshMainInfo()
 			end
 		end
 
-		local tags = {}
-
-		if not string.nilorempty(self._heroMO.config.battleTag) then
-			tags = string.split(self._heroMO.config.battleTag, "#")
-		end
+		local tags = Rouge2_SystemController.instance:getHeroBattleTagList(self._heroMO.heroId)
 
 		for i = 1, #tags do
 			local careerTable = self._careerGOs[i]
@@ -974,6 +969,24 @@ function Rouge2_HeroGroupEditView:_normalEditHasChange()
 	end
 end
 
+function Rouge2_HeroGroupEditView:_refreshOp()
+	gohelper.setActive(self._goops, not self._isAttrBuffTips)
+	gohelper.setActive(self._btnquickedit.gameObject, not self._isAttrBuffTips)
+end
+
+function Rouge2_HeroGroupEditView:_showAttrBuffToast()
+	if not self._isAttrBuffTips then
+		return
+	end
+
+	local battleTagCo = Rouge2_HeroGroupEditListModel.instance:getBattleTagConfig()
+	local tagName = battleTagCo and battleTagCo.tagName
+	local toast = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_herogroupeditview_attrbuff"), tagName)
+
+	Rouge2_MapTipPopController.instance:clear()
+	Rouge2_MapTipPopController.instance:popTipImmediately(toast)
+end
+
 function Rouge2_HeroGroupEditView:_refreshEditMode()
 	gohelper.setActive(self._scrollquickedit.gameObject, self._isShowQuickEdit)
 	gohelper.setActive(self._scrollcard.gameObject, not self._isShowQuickEdit)
@@ -1109,6 +1122,8 @@ function Rouge2_HeroGroupEditView:_editableInitView()
 	gohelper.setActive(self._gocharacterinfo, false)
 
 	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.HeroGroupEdit)
 end
 
 function Rouge2_HeroGroupEditView:_findPassiveskillitems(index)
@@ -1126,10 +1141,10 @@ function Rouge2_HeroGroupEditView:onOpen()
 	self._isShowQuickEdit = false
 	self._scrollcard.verticalNormalizedPosition = 1
 	self._scrollquickedit.verticalNormalizedPosition = 1
-	self._originalHeroUid = self.viewParam.originalHeroUid
-	self._singleGroupMOId = self.viewParam.singleGroupMOId
-	self._adventure = self.viewParam.adventure
-	self._equips = self.viewParam.equips
+	self._originalHeroUid = self.viewParam and self.viewParam.originalHeroUid
+	self._singleGroupMOId = self.viewParam and self.viewParam.singleGroupMOId
+	self._adventure = self.viewParam and self.viewParam.adventure
+	self._equips = self.viewParam and self.viewParam.equips
 	self._isTowerBattle = TowerModel.instance:isInTowerBattle()
 
 	for i = 1, 2 do
@@ -1153,12 +1168,18 @@ function Rouge2_HeroGroupEditView:onOpen()
 	Rouge2_HeroGroupQuickEditListModel.instance:init(self._activityId, self._episodeId)
 	Rouge2_HeroGroupQuickEditListModel.instance:setParam(self._adventure, self._isTowerBattle)
 
+	self._attrBuffId = self.viewParam and self.viewParam.attrBuffId
+
+	Rouge2_HeroGroupEditListModel.instance:setAttrBuffId(self._attrBuffId)
+
+	self._isAttrBuffTips = Rouge2_HeroGroupEditListModel.instance:isAttrBuffTips()
 	self._heroMO = Rouge2_HeroGroupEditListModel.instance:copyCharacterCardList(true)
 
+	self:_refreshOp()
+	self:_showAttrBuffToast()
 	self:_refreshEditMode()
 	self:_refreshBtnIcon()
 	self:_refreshCharacterInfo()
-	self:_showRecommendCareer()
 	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, self._updateHeroList, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, self._updateHeroList, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, self._updateHeroList, self)
@@ -1177,6 +1198,8 @@ function Rouge2_HeroGroupEditView:onOpen()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
 	self:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._updateHeroList, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._updateHeroList, self)
 	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
@@ -1204,6 +1227,7 @@ function Rouge2_HeroGroupEditView:onClose()
 	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onGroupModify, self)
 	self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
 	self:removeEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
+	self:removeEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._updateHeroList, self)
 	CharacterModel.instance:setFakeLevel()
 	Rouge2_HeroGroupEditListModel.instance:cancelAllSelected()
 	Rouge2_HeroGroupEditListModel.instance:clear()
@@ -1228,22 +1252,6 @@ end
 function Rouge2_HeroGroupEditView:_markFavorSuccess()
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
-end
-
-function Rouge2_HeroGroupEditView:_showRecommendCareer()
-	local recommended, counter = FightHelper.detectAttributeCounter()
-
-	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, self._goattrlist, self._goattritem)
-
-	self._txtrecommendAttrDesc.text = #recommended == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
-
-	gohelper.setActive(self._goattrlist, #recommended ~= 0)
-end
-
-function Rouge2_HeroGroupEditView:_onRecommendCareerItemShow(obj, data, index)
-	local icon = gohelper.findChildImage(obj, "icon")
-
-	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
 function Rouge2_HeroGroupEditView:_onCloseView(viewName)

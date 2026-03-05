@@ -3,19 +3,36 @@
 module("modules.logic.fight.model.mo.FightEntityMO", package.seeall)
 
 local FightEntityMO = pureTable("FightEntityMO")
+local srcIndex = FightEntityMO.__index
+local srcNewIndex = FightEntityMO.__newindex
+local attrProxyDict = {
+	position = true
+}
 
-if SLFramework.FrameworkSettings.IsEditor then
-	function FightEntityMO.__newindex(t, key, value)
-		if type(value) == "userdata" or type(value) == "function" then
-			error("pureTable instance object field not support userdata or function,key=" .. key)
-		else
-			if type(value) == "table" and value._cached_byte_size then
-				logError("entityMO不可以直接引用protobuf数据,请构建一个数据")
-			end
+function FightEntityMO.__index(t, key)
+	if attrProxyDict[key] then
+		local funcName = "get_" .. tostring(key)
+		local handle = FightEntityMO[funcName]
 
-			rawset(t, key, value)
+		if handle then
+			return handle(t, key)
 		end
 	end
+
+	return srcIndex[key]
+end
+
+function FightEntityMO.__newindex(t, key, value)
+	if attrProxyDict[key] then
+		local funcName = "set_" .. tostring(key)
+		local handle = FightEntityMO[funcName]
+
+		if handle then
+			return handle(t, key, value)
+		end
+	end
+
+	srcNewIndex(t, key, value)
 end
 
 function FightEntityMO:ctor()
@@ -1078,6 +1095,18 @@ function FightEntityMO:checkReplaceSkill(skillIdList)
 	end
 
 	return skillIdList
+end
+
+function FightEntityMO:set_position(key, position)
+	self._position = position
+end
+
+function FightEntityMO:get_position(key)
+	if self:isAssistBoss() and FightDataHelper.paTaMgr:checkIsAssistRole() then
+		return 3
+	end
+
+	return self._position
 end
 
 return FightEntityMO

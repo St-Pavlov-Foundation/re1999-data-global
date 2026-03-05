@@ -10,6 +10,7 @@ end
 
 function Rouge2_BackpackSkillEditItem:init(go)
 	self.go = go
+	self._goLock = gohelper.findChild(self.go, "#go_Lock")
 	self._goEmpty = gohelper.findChild(self.go, "#go_Empty")
 	self._goEmptyEffect = gohelper.findChild(self.go, "#go_Empty/add_eff")
 	self._goUnEmpty = gohelper.findChild(self.go, "#go_UnEmpty")
@@ -23,6 +24,11 @@ function Rouge2_BackpackSkillEditItem:init(go)
 	self._btnRemove = gohelper.findChildButtonWithAudio(self.go, "#go_UnEmpty/#btn_Remove", AudioEnum.Rouge2.RemoveActiveSkill)
 	self._goBXSIcon = gohelper.findChild(self.go, "#go_sp")
 	self._imageAttrIcon = gohelper.findChildImage(self.go, "#go_sp/#image_attricon")
+	self._goUnlockNotActive = gohelper.findChild(self.go, "#go_UnlockNotActive")
+	self._goUnlockCanActive = gohelper.findChild(self.go, "#go_UnlockCanActive")
+	self._btnLock = gohelper.findChildButtonWithAudio(self.go, "#go_Lock/#btn_Lock")
+	self._btnUnlockNotActive = gohelper.findChildButtonWithAudio(self.go, "#go_UnlockNotActive/#btn_UnlockNotActive")
+	self._btnUnlockCanActive = gohelper.findChildButtonWithAudio(self.go, "#go_UnlockCanActive/#btn_UnlockCanActive")
 	self._animator = gohelper.onceAddComponent(self.go, gohelper.Type_Animator)
 	self._canvasgroup = gohelper.onceAddComponent(self.go, gohelper.Type_CanvasGroup)
 	self._unemptyCanvasGroup = gohelper.onceAddComponent(self._goUnEmpty, gohelper.Type_CanvasGroup)
@@ -33,18 +39,25 @@ function Rouge2_BackpackSkillEditItem:init(go)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnEndDragSkill, self._onEndDragSkill, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSelectActiveSkillHole, self._onSelectActiveSkillHole, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateActiveSkillInfo, self._onUpdateActiveSkillInfo, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
 end
 
 function Rouge2_BackpackSkillEditItem:addEventListeners()
 	self._btnAdd:AddClickListener(self._btnAddOnClick, self)
 	self._btnSelect:AddClickListener(self._btnSelectOnClick, self)
 	self._btnRemove:AddClickListener(self._btnRemoveOnClick, self)
+	self._btnLock:AddClickListener(self._btnLockOnClick, self)
+	self._btnUnlockNotActive:AddClickListener(self._btnLockOnClick, self)
+	self._btnUnlockCanActive:AddClickListener(self._btnLockOnClick, self)
 end
 
 function Rouge2_BackpackSkillEditItem:removeEventListeners()
 	self._btnAdd:RemoveClickListener()
 	self._btnSelect:RemoveClickListener()
 	self._btnRemove:RemoveClickListener()
+	self._btnLock:RemoveClickListener()
+	self._btnUnlockNotActive:RemoveClickListener()
+	self._btnUnlockCanActive:RemoveClickListener()
 end
 
 function Rouge2_BackpackSkillEditItem:_btnAddOnClick()
@@ -83,6 +96,10 @@ function Rouge2_BackpackSkillEditItem:_btnRemoveOnClick()
 	self._isRemove = Rouge2_BackpackController.instance:tryRemoveActiveSkill(self._index)
 end
 
+function Rouge2_BackpackSkillEditItem:_btnLockOnClick()
+	GameFacade.showToast(ToastEnum.Rouge2SkillHoleLock)
+end
+
 function Rouge2_BackpackSkillEditItem:onUpdateMO()
 	self:refreshInfo()
 	self:refreshUI()
@@ -94,31 +111,33 @@ function Rouge2_BackpackSkillEditItem:refreshInfo()
 	self._isRemove = false
 	self._canvasgroup.blocksRaycasts = true
 	self._preIsEmpty = self._isEmpty
+	self._status = Rouge2_BackpackModel.instance:getActiveSkillHoleStatus(self._index)
 	self._skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(self._index)
 	self._skillUid = self._skillMo and self._skillMo:getUid()
 	self._skillId = self._skillMo and self._skillMo:getItemId()
-	self._isEmpty = not self._skillUid or self._skillUid == 0
+	self._isEmpty = self._status == Rouge2_Enum.ActiveSkillHoleStatus.Empty
 end
 
 function Rouge2_BackpackSkillEditItem:refreshUI()
-	gohelper.setActive(self._goEmpty, self._isEmpty)
-	gohelper.setActive(self._goUnEmpty, not self._isEmpty)
+	gohelper.setActive(self._goLock, self._status == Rouge2_Enum.ActiveSkillHoleStatus.Lock)
+	gohelper.setActive(self._goUnlockNotActive, self._status == Rouge2_Enum.ActiveSkillHoleStatus.UnlockNotActive)
+	gohelper.setActive(self._goUnlockCanActive, self._status == Rouge2_Enum.ActiveSkillHoleStatus.UnlockCanActive)
+	gohelper.setActive(self._goEmpty, self._status == Rouge2_Enum.ActiveSkillHoleStatus.Empty)
+	gohelper.setActive(self._goUnEmpty, self._status == Rouge2_Enum.ActiveSkillHoleStatus.Equip)
 
-	if self._isEmpty then
+	if self._status == Rouge2_Enum.ActiveSkillHoleStatus.Empty then
 		local hasAnySkillEquip = Rouge2_BackpackController.instance:isCanEquipAnySkill(self._index)
 
 		gohelper.setActive(self._goEmptyEffect, hasAnySkillEquip)
+	elseif self._status == Rouge2_Enum.ActiveSkillHoleStatus.Equip then
+		self._skillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(self._skillId)
 
-		return
+		local assemblyNum = self._skillCo and self._skillCo.assembleCost or 0
+
+		gohelper.setActive(self._goCapacity, assemblyNum > 0)
+		gohelper.CreateNumObjList(self._goAssemblyList, self._goAssemblyItem, assemblyNum, self._refreshAssemblyItem, self)
+		Rouge2_IconHelper.setActiveSkillIcon(self._skillId, self._simageSkillIcon)
 	end
-
-	self._skillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(self._skillId)
-
-	local assemblyNum = self._skillCo and self._skillCo.assembleCost or 0
-
-	gohelper.setActive(self._goCapacity, assemblyNum > 0)
-	gohelper.CreateNumObjList(self._goAssemblyList, self._goAssemblyItem, assemblyNum, self._refreshAssemblyItem, self)
-	Rouge2_IconHelper.setActiveSkillIcon(self._skillId, self._simageSkillIcon)
 end
 
 function Rouge2_BackpackSkillEditItem:_refreshAssemblyItem(obj, index)
@@ -209,6 +228,12 @@ function Rouge2_BackpackSkillEditItem:_onEndDragSkill(uid, isSuccess)
 	self._animator:Play("unempty", 0, 0)
 	gohelper.setActive(self._goEmpty, false)
 	gohelper.setActive(self._goUnEmpty, true)
+end
+
+function Rouge2_BackpackSkillEditItem:_onUpdateRougeInfo()
+	self:refreshInfo()
+	self:refreshUI()
+	self:playAnim()
 end
 
 function Rouge2_BackpackSkillEditItem:onDestroy()

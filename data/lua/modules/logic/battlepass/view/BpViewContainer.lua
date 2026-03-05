@@ -81,7 +81,7 @@ function BpViewContainer:playOpenAnim1()
 	AudioMgr.instance:trigger(AudioEnum2_6.BP.BpDayFirstAnim)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 
-	local anim = "tarotopen1"
+	local anim = "tarotopen2"
 	local sec = 3
 
 	TimeUtil.setWeekFirstLoginRed("BpViewOpenAnim")

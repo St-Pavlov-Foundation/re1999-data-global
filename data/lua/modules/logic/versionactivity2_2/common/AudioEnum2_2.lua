@@ -28,9 +28,10 @@ AudioEnum.Season166 = {
 }
 
 local bgm = {
+	play_battle_youyui_2_2_normalfight = 3220201,
 	play_activitymusic_sadness = 3200170,
 	play_battle_youyui_2_2_bossfight = 3220202,
-	play_battle_youyui_2_2_normalfight = 3220201
+	Act2_2DungeonBgm = 3200168
 }
 local UI = {
 	play_ui_youyu_yure_release_20220216 = 20220216,

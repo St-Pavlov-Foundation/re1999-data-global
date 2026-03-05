@@ -49,7 +49,6 @@ function RoleStoryModel:onGetHeroStoryReply(msg)
 	self._weekProgress = msg.weekProgress
 	self._weekHasGet = msg.weekHasGet
 
-	RoleStoryListModel.instance:refreshList()
 	TaskDispatcher.cancelTask(self.checkActivityTime, self)
 	TaskDispatcher.runRepeat(self.checkActivityTime, self, 1)
 end
@@ -58,12 +57,10 @@ function RoleStoryModel:onUnlocHeroStoryReply(msg)
 	self._unlockingStory[msg.info.storyId] = true
 
 	self:updateStoryInfo(msg.info)
-	RoleStoryListModel.instance:refreshList()
 end
 
 function RoleStoryModel:onGetHeroStoryBonusReply(msg)
 	self:updateStoryInfo(msg.info)
-	RoleStoryListModel.instance:refreshList()
 end
 
 function RoleStoryModel:onHeroStoryUpdatePush(msg)
@@ -72,8 +69,6 @@ function RoleStoryModel:onHeroStoryUpdatePush(msg)
 	for i = 1, count do
 		self:updateStoryInfo(msg.unlockInfos[i])
 	end
-
-	RoleStoryListModel.instance:refreshList()
 end
 
 function RoleStoryModel:updateStoryInfo(info)

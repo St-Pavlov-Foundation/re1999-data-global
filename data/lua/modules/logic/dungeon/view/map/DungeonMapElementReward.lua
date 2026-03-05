@@ -100,6 +100,10 @@ function DungeonMapElementReward:_OnRemoveElement(id)
 		self._lastViewName = ViewName.DialogueView
 	end
 
+	if config.type == DungeonEnum.ElementType.SpStory then
+		self._lastViewName = ViewName.StoryView
+	end
+
 	if self._lastViewName then
 		DungeonController.instance:dispatchEvent(DungeonEvent.BeginShowRewardView)
 	end

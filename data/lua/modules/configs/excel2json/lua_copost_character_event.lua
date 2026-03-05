@@ -4,10 +4,14 @@ module("modules.configs.excel2json.lua_copost_character_event", package.seeall)
 
 local lua_copost_character_event = {}
 local fields = {
+	frontEventId = 2,
+	eventTextId = 8,
+	changeChaId = 4,
+	chaId = 3,
 	id = 1,
-	eventCoordinate = 3,
-	eventTextId = 4,
-	chaId = 2
+	eventCoordinate = 7,
+	changeChasId = 6,
+	chasId = 5
 }
 local primaryKey = {
 	"id"

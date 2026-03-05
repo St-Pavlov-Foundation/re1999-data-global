@@ -63,7 +63,7 @@ function ItemTalentHeroUpView:onOpen()
 	TaskDispatcher.runDelay(self._playScrollTween, self, 1.2)
 	TaskDispatcher.runDelay(self._playAttrAni, self, 1.2)
 
-	self._txtleveluptip.text = self._heroMO.config.name .. " " .. luaLang("talent_charactertalentlevelupresult_tip" .. self._heroMO:getTalentTxtByHeroType())
+	self._txtleveluptip.text = formatLuaLang("talent_itemtalentheroupview_tip_" .. self._heroMO:getTalentTxtByHeroType(), self._heroMO.config.name)
 
 	gohelper.setActive(self._goeasoning, self._heroMO.config.heroType == CharacterEnum.HumanHeroType)
 	gohelper.setActive(self._goesonan, self._heroMO.config.heroType ~= CharacterEnum.HumanHeroType)

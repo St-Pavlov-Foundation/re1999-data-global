@@ -1,0 +1,1800 @@
+[
+  {
+    "stateId": 10000,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [],
+    "relationshipTxt": [],
+    "relationshipType": [],
+    "chaTxt": [
+      80000
+    ]
+  },
+  {
+    "stateId": 10001,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7
+    ],
+    "relationshipTxt": [
+      102
+    ],
+    "relationshipType": [
+      2
+    ],
+    "chaTxt": [
+      80000
+    ]
+  },
+  {
+    "stateId": 10002,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      6,
+      31,
+      10
+    ],
+    "relationshipTxt": [
+      102,
+      100,
+      100,
+      109
+    ],
+    "relationshipType": [
+      2,
+      1,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80000,
+      80001
+    ]
+  },
+  {
+    "stateId": 10003,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      6,
+      31,
+      10,
+      30
+    ],
+    "relationshipTxt": [
+      102,
+      100,
+      100,
+      109,
+      100
+    ],
+    "relationshipType": [
+      2,
+      1,
+      1,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80000,
+      80001,
+      80002
+    ]
+  },
+  {
+    "stateId": 10004,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      6,
+      31,
+      10,
+      30
+    ],
+    "relationshipTxt": [
+      102,
+      100,
+      100,
+      109,
+      100
+    ],
+    "relationshipType": [
+      2,
+      1,
+      1,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80000,
+      80001,
+      80002,
+      80003
+    ]
+  },
+  {
+    "stateId": 10005,
+    "chaId": 1,
+    "otherId": 29,
+    "positionId": 1,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      6,
+      31,
+      10,
+      30
+    ],
+    "relationshipTxt": [
+      102,
+      100,
+      100,
+      109,
+      100
+    ],
+    "relationshipType": [
+      2,
+      1,
+      1,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80000,
+      80001,
+      80002,
+      80003,
+      80004
+    ]
+  },
+  {
+    "stateId": 20000,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      100
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1
+    ],
+    "chaTxt": [
+      80005
+    ]
+  },
+  {
+    "stateId": 20001,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35,
+      40
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      100,
+      115
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      3
+    ],
+    "chaTxt": [
+      80005
+    ]
+  },
+  {
+    "stateId": 20002,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35,
+      40
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      116,
+      115
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      3
+    ],
+    "chaTxt": [
+      80005,
+      80006
+    ]
+  },
+  {
+    "stateId": 20003,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35,
+      40
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      116,
+      115
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      3
+    ],
+    "chaTxt": [
+      80005,
+      80006,
+      80007
+    ]
+  },
+  {
+    "stateId": 20004,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35,
+      40,
+      34
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      116,
+      115,
+      116
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      3,
+      1
+    ],
+    "chaTxt": [
+      80005,
+      80006,
+      80007
+    ]
+  },
+  {
+    "stateId": 20005,
+    "chaId": 30,
+    "otherId": 0,
+    "positionId": 12,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      1,
+      10,
+      31,
+      35,
+      40,
+      34
+    ],
+    "relationshipTxt": [
+      110,
+      100,
+      112,
+      116,
+      115,
+      116
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      3,
+      1
+    ],
+    "chaTxt": [
+      80005,
+      80006,
+      80007,
+      80008
+    ]
+  },
+  {
+    "stateId": 30000,
+    "chaId": 6,
+    "otherId": 0,
+    "positionId": 5,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      1,
+      31,
+      41
+    ],
+    "relationshipTxt": [
+      103,
+      100,
+      100,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80009
+    ]
+  },
+  {
+    "stateId": 30001,
+    "chaId": 6,
+    "otherId": 0,
+    "positionId": 5,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      1,
+      31,
+      41
+    ],
+    "relationshipTxt": [
+      103,
+      100,
+      100,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80009,
+      80010
+    ]
+  },
+  {
+    "stateId": 30002,
+    "chaId": 6,
+    "otherId": 0,
+    "positionId": 5,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      7,
+      1,
+      31,
+      41
+    ],
+    "relationshipTxt": [
+      103,
+      100,
+      100,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80009,
+      80010,
+      80011
+    ]
+  },
+  {
+    "stateId": 40000,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [],
+    "relationshipTxt": [],
+    "relationshipType": [],
+    "chaTxt": [
+      80012
+    ]
+  },
+  {
+    "stateId": 40001,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      31
+    ],
+    "relationshipTxt": [
+      100
+    ],
+    "relationshipType": [
+      2
+    ],
+    "chaTxt": [
+      80012,
+      80013
+    ]
+  },
+  {
+    "stateId": 40002,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      31,
+      1
+    ],
+    "relationshipTxt": [
+      100,
+      109
+    ],
+    "relationshipType": [
+      2,
+      1
+    ],
+    "chaTxt": [
+      80012,
+      80013,
+      80014
+    ]
+  },
+  {
+    "stateId": 40003,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [
+      2,
+      42
+    ],
+    "relationshipCha": [
+      31,
+      1
+    ],
+    "relationshipTxt": [
+      100,
+      109
+    ],
+    "relationshipType": [
+      2,
+      1
+    ],
+    "chaTxt": [
+      80012,
+      80013,
+      80014,
+      80015
+    ]
+  },
+  {
+    "stateId": 40004,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [
+      2,
+      42
+    ],
+    "relationshipCha": [
+      31,
+      1,
+      30
+    ],
+    "relationshipTxt": [
+      100,
+      109,
+      111
+    ],
+    "relationshipType": [
+      2,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80012,
+      80013,
+      80014,
+      80015
+    ]
+  },
+  {
+    "stateId": 40005,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [
+      2,
+      42
+    ],
+    "relationshipCha": [
+      31,
+      1,
+      30
+    ],
+    "relationshipTxt": [
+      100,
+      109,
+      111
+    ],
+    "relationshipType": [
+      2,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80012,
+      80013,
+      80014,
+      80015,
+      80016
+    ]
+  },
+  {
+    "stateId": 40006,
+    "chaId": 10,
+    "otherId": 0,
+    "positionId": 4,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [
+      2,
+      42
+    ],
+    "relationshipCha": [
+      31,
+      1,
+      30
+    ],
+    "relationshipTxt": [
+      100,
+      109,
+      111
+    ],
+    "relationshipType": [
+      2,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80012,
+      80013,
+      80014,
+      80015,
+      80016,
+      80017
+    ]
+  },
+  {
+    "stateId": 50000,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80018
+    ]
+  },
+  {
+    "stateId": 50001,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10,
+      1,
+      6
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100,
+      100,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80018,
+      80019
+    ]
+  },
+  {
+    "stateId": 50002,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10,
+      1,
+      6,
+      30
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100,
+      100,
+      100,
+      112
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80018,
+      80019,
+      80020
+    ]
+  },
+  {
+    "stateId": 50003,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10,
+      1,
+      6,
+      30,
+      40
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100,
+      100,
+      100,
+      112,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2,
+      3
+    ],
+    "chaTxt": [
+      80018,
+      80019,
+      80020
+    ]
+  },
+  {
+    "stateId": 50004,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10,
+      1,
+      6,
+      30,
+      40
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100,
+      100,
+      100,
+      112,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2,
+      3
+    ],
+    "chaTxt": [
+      80018,
+      80019,
+      80020,
+      80021
+    ]
+  },
+  {
+    "stateId": 50005,
+    "chaId": 31,
+    "otherId": 0,
+    "positionId": 9,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      33,
+      10,
+      1,
+      6,
+      30,
+      40
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      100,
+      100,
+      100,
+      112,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1,
+      1,
+      2,
+      3
+    ],
+    "chaTxt": [
+      80018,
+      80019,
+      80020,
+      80021,
+      80022
+    ]
+  },
+  {
+    "stateId": 60000,
+    "chaId": 32,
+    "otherId": 0,
+    "positionId": 10,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      31,
+      33
+    ],
+    "relationshipTxt": [
+      108,
+      108
+    ],
+    "relationshipType": [
+      1,
+      1
+    ],
+    "chaTxt": [
+      80023
+    ]
+  },
+  {
+    "stateId": 60001,
+    "chaId": 32,
+    "otherId": 0,
+    "positionId": 10,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      31,
+      33
+    ],
+    "relationshipTxt": [
+      108,
+      108
+    ],
+    "relationshipType": [
+      1,
+      1
+    ],
+    "chaTxt": [
+      80023,
+      80024
+    ]
+  },
+  {
+    "stateId": 70000,
+    "chaId": 33,
+    "otherId": 0,
+    "positionId": 11,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [],
+    "relationshipTxt": [],
+    "relationshipType": [],
+    "chaTxt": [
+      80025
+    ]
+  },
+  {
+    "stateId": 70001,
+    "chaId": 33,
+    "otherId": 0,
+    "positionId": 11,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      31
+    ],
+    "relationshipTxt": [
+      108,
+      108
+    ],
+    "relationshipType": [
+      1,
+      1
+    ],
+    "chaTxt": [
+      80025
+    ]
+  },
+  {
+    "stateId": 70002,
+    "chaId": 33,
+    "otherId": 0,
+    "positionId": 11,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      31,
+      41
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      107
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1
+    ],
+    "chaTxt": [
+      80025
+    ]
+  },
+  {
+    "stateId": 70003,
+    "chaId": 33,
+    "otherId": 0,
+    "positionId": 11,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      31,
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      107,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1,
+      3
+    ],
+    "chaTxt": [
+      80025,
+      80026
+    ]
+  },
+  {
+    "stateId": 70004,
+    "chaId": 33,
+    "otherId": 0,
+    "positionId": 11,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      32,
+      31,
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      108,
+      108,
+      107,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      1,
+      3
+    ],
+    "chaTxt": [
+      80025,
+      80026,
+      80027
+    ]
+  },
+  {
+    "stateId": 80000,
+    "chaId": 34,
+    "otherId": 0,
+    "positionId": 13,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      30,
+      35
+    ],
+    "relationshipTxt": [
+      116,
+      116
+    ],
+    "relationshipType": [
+      1,
+      1
+    ],
+    "chaTxt": [
+      80028
+    ]
+  },
+  {
+    "stateId": 90000,
+    "chaId": 35,
+    "otherId": 0,
+    "positionId": 14,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      30
+    ],
+    "relationshipTxt": [
+      100
+    ],
+    "relationshipType": [
+      1
+    ],
+    "chaTxt": [
+      80029
+    ]
+  },
+  {
+    "stateId": 90001,
+    "chaId": 35,
+    "otherId": 0,
+    "positionId": 14,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      30,
+      40
+    ],
+    "relationshipTxt": [
+      116,
+      117
+    ],
+    "relationshipType": [
+      1,
+      3
+    ],
+    "chaTxt": [
+      80029,
+      80030
+    ]
+  },
+  {
+    "stateId": 90002,
+    "chaId": 35,
+    "otherId": 0,
+    "positionId": 14,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      30,
+      40,
+      34
+    ],
+    "relationshipTxt": [
+      116,
+      117,
+      116
+    ],
+    "relationshipType": [
+      1,
+      3,
+      1
+    ],
+    "chaTxt": [
+      80029,
+      80030
+    ]
+  },
+  {
+    "stateId": 11000,
+    "chaId": 7,
+    "otherId": 0,
+    "positionId": 7,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      37,
+      39,
+      1
+    ],
+    "relationshipTxt": [
+      101,
+      101,
+      102
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2
+    ],
+    "chaTxt": [
+      80031
+    ]
+  },
+  {
+    "stateId": 11001,
+    "chaId": 7,
+    "otherId": 8,
+    "positionId": 7,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      37,
+      39,
+      1,
+      6,
+      41
+    ],
+    "relationshipTxt": [
+      101,
+      101,
+      102,
+      100,
+      100
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80031,
+      80032
+    ]
+  },
+  {
+    "stateId": 11002,
+    "chaId": 7,
+    "otherId": 8,
+    "positionId": 7,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      37,
+      39,
+      1,
+      6,
+      41
+    ],
+    "relationshipTxt": [
+      101,
+      101,
+      102,
+      100,
+      100
+    ],
+    "relationshipType": [
+      2,
+      2,
+      2,
+      1,
+      2
+    ],
+    "chaTxt": [
+      80031,
+      80032,
+      80033
+    ]
+  },
+  {
+    "stateId": 12000,
+    "chaId": 41,
+    "otherId": 0,
+    "positionId": 16,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3
+    ],
+    "relationshipTxt": [
+      105
+    ],
+    "relationshipType": [
+      1
+    ],
+    "chaTxt": [
+      80034
+    ]
+  },
+  {
+    "stateId": 12001,
+    "chaId": 41,
+    "otherId": 0,
+    "positionId": 16,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      33
+    ],
+    "relationshipTxt": [
+      105,
+      107
+    ],
+    "relationshipType": [
+      1,
+      1
+    ],
+    "chaTxt": [
+      80034,
+      80035
+    ]
+  },
+  {
+    "stateId": 12002,
+    "chaId": 41,
+    "otherId": 0,
+    "positionId": 16,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      33,
+      7,
+      6
+    ],
+    "relationshipTxt": [
+      105,
+      107,
+      104,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1
+    ],
+    "chaTxt": [
+      80034,
+      80035,
+      80036
+    ]
+  },
+  {
+    "stateId": 12003,
+    "chaId": 41,
+    "otherId": 0,
+    "positionId": 16,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      33,
+      7,
+      6
+    ],
+    "relationshipTxt": [
+      105,
+      107,
+      104,
+      100
+    ],
+    "relationshipType": [
+      1,
+      1,
+      2,
+      1
+    ],
+    "chaTxt": [
+      80034,
+      80035,
+      80036,
+      80037
+    ]
+  },
+  {
+    "stateId": 13000,
+    "chaId": 36,
+    "otherId": 0,
+    "positionId": 18,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      40
+    ],
+    "relationshipTxt": [
+      100,
+      114
+    ],
+    "relationshipType": [
+      3,
+      2
+    ],
+    "chaTxt": [
+      80038
+    ]
+  },
+  {
+    "stateId": 13001,
+    "chaId": 36,
+    "otherId": 0,
+    "positionId": 18,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      40
+    ],
+    "relationshipTxt": [
+      106,
+      114
+    ],
+    "relationshipType": [
+      3,
+      2
+    ],
+    "chaTxt": [
+      80038
+    ]
+  },
+  {
+    "stateId": 13002,
+    "chaId": 36,
+    "otherId": 0,
+    "positionId": 18,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      3,
+      40,
+      33
+    ],
+    "relationshipTxt": [
+      106,
+      114,
+      100
+    ],
+    "relationshipType": [
+      3,
+      2,
+      3
+    ],
+    "chaTxt": [
+      80038
+    ]
+  },
+  {
+    "stateId": 14000,
+    "chaId": 3,
+    "otherId": 0,
+    "positionId": 15,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      41
+    ],
+    "relationshipTxt": [
+      105
+    ],
+    "relationshipType": [
+      1
+    ],
+    "chaTxt": [
+      80039
+    ]
+  },
+  {
+    "stateId": 14001,
+    "chaId": 3,
+    "otherId": 0,
+    "positionId": 15,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      105,
+      100
+    ],
+    "relationshipType": [
+      1,
+      3
+    ],
+    "chaTxt": [
+      80039,
+      80040
+    ]
+  },
+  {
+    "stateId": 14002,
+    "chaId": 3,
+    "otherId": 0,
+    "positionId": 15,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      105,
+      100
+    ],
+    "relationshipType": [
+      1,
+      3
+    ],
+    "chaTxt": [
+      80039,
+      80040,
+      80041
+    ]
+  },
+  {
+    "stateId": 14003,
+    "chaId": 3,
+    "otherId": 0,
+    "positionId": 15,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      105,
+      100
+    ],
+    "relationshipType": [
+      1,
+      3
+    ],
+    "chaTxt": [
+      80039,
+      80040,
+      80041,
+      80042
+    ]
+  },
+  {
+    "stateId": 14004,
+    "chaId": 3,
+    "otherId": 0,
+    "positionId": 15,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      41,
+      36
+    ],
+    "relationshipTxt": [
+      105,
+      100
+    ],
+    "relationshipType": [
+      1,
+      3
+    ],
+    "chaTxt": [
+      80039,
+      80040,
+      80041,
+      80042,
+      80043
+    ]
+  },
+  {
+    "stateId": 15000,
+    "chaId": 37,
+    "otherId": 0,
+    "positionId": 6,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      39,
+      7
+    ],
+    "relationshipTxt": [
+      101,
+      101
+    ],
+    "relationshipType": [
+      2,
+      2
+    ],
+    "chaTxt": [
+      80044
+    ]
+  },
+  {
+    "stateId": 16000,
+    "chaId": 39,
+    "otherId": 0,
+    "positionId": 3,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      37,
+      7
+    ],
+    "relationshipTxt": [
+      101,
+      101
+    ],
+    "relationshipType": [
+      2,
+      2
+    ],
+    "chaTxt": [
+      80045
+    ]
+  },
+  {
+    "stateId": 17000,
+    "chaId": 40,
+    "otherId": 0,
+    "positionId": 17,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      36
+    ],
+    "relationshipTxt": [
+      114
+    ],
+    "relationshipType": [
+      2
+    ],
+    "chaTxt": [
+      80046
+    ]
+  },
+  {
+    "stateId": 17001,
+    "chaId": 40,
+    "otherId": 0,
+    "positionId": 17,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      36,
+      30
+    ],
+    "relationshipTxt": [
+      114,
+      115
+    ],
+    "relationshipType": [
+      2,
+      3
+    ],
+    "chaTxt": [
+      80046,
+      80047
+    ]
+  },
+  {
+    "stateId": 17002,
+    "chaId": 40,
+    "otherId": 0,
+    "positionId": 17,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      36,
+      30,
+      31
+    ],
+    "relationshipTxt": [
+      114,
+      115,
+      113
+    ],
+    "relationshipType": [
+      2,
+      3,
+      3
+    ],
+    "chaTxt": [
+      80046,
+      80047,
+      80048
+    ]
+  },
+  {
+    "stateId": 17003,
+    "chaId": 40,
+    "otherId": 0,
+    "positionId": 17,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      36,
+      30,
+      31,
+      35
+    ],
+    "relationshipTxt": [
+      114,
+      115,
+      113,
+      100
+    ],
+    "relationshipType": [
+      2,
+      3,
+      3,
+      3
+    ],
+    "chaTxt": [
+      80046,
+      80047,
+      80048,
+      80049
+    ]
+  },
+  {
+    "stateId": 17004,
+    "chaId": 40,
+    "otherId": 0,
+    "positionId": 17,
+    "state": 1,
+    "isClick": 0,
+    "chaChange": [],
+    "relationshipCha": [
+      36,
+      30,
+      31,
+      35
+    ],
+    "relationshipTxt": [
+      114,
+      115,
+      113,
+      100
+    ],
+    "relationshipType": [
+      2,
+      3,
+      3,
+      3
+    ],
+    "chaTxt": [
+      80046,
+      80047,
+      80048,
+      80049,
+      80050
+    ]
+  },
+  {
+    "stateId": 18000,
+    "chaId": 29,
+    "otherId": 0,
+    "positionId": 2,
+    "state": 1,
+    "isClick": 1,
+    "chaChange": [],
+    "relationshipCha": [],
+    "relationshipTxt": [],
+    "relationshipType": [],
+    "chaTxt": []
+  },
+  {
+    "stateId": 19000,
+    "chaId": 8,
+    "otherId": 0,
+    "positionId": 8,
+    "state": 1,
+    "isClick": 1,
+    "chaChange": [],
+    "relationshipCha": [],
+    "relationshipTxt": [],
+    "relationshipType": [],
+    "chaTxt": []
+  }
+]

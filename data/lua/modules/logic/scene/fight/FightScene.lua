@@ -9,10 +9,8 @@ function FightScene:_createAllComps()
 	self:_addComp("level", FightSceneLevelComp)
 	self:_addComp("camera", FightSceneCameraComp)
 	self:_addComp("view", FightSceneViewComp)
-	self:_addComp("entityMgr", FightSceneEntityMgr)
 	self:_addComp("preloader", FightScenePreloader)
 	self:_addComp("cardCamera", FightSceneCardCameraComp)
-	self:_addComp("mgr", FightSceneMgrComp)
 	self:addLowPhoneMemoryComp()
 end
 
@@ -33,9 +31,20 @@ function FightScene:addLowPhoneMemoryComp()
 	self:_addComp("lowPhoneMemoryMgr", FightSceneLowPhoneMemoryComp)
 end
 
+function FightScene:getCurLevelId()
+	local key = FightParamData.ParamKey.SceneId
+	local param = FightDataHelper.fieldMgr.param
+	local value = param and param:getKey(key)
+
+	if value then
+		return value
+	end
+
+	return FightScene.super.getCurLevelId(self)
+end
+
 function FightScene:onClose()
 	FightGameHelper.disposeGameMgr()
-	self.mgr:onSceneClose()
 	FightScene.super.onClose(self)
 	FightTLEventPool.dispose()
 	FightSkillBehaviorMgr.instance:dispose()

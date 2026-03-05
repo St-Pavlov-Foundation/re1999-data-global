@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightVorpalithEventMgrComp", package.seeall)
 
-local FightVorpalithEventMgrComp = class("FightVorpalithEventMgrComp", LuaCompBase)
+local FightVorpalithEventMgrComp = class("FightVorpalithEventMgrComp", FightBaseClass)
 
 FightVorpalithEventMgrComp.Anchor = Vector2(556, 250)
 FightVorpalithEventMgrComp.TweenTime = 2
@@ -14,18 +14,12 @@ FightVorpalithEventMgrComp.LoadStatus = {
 	Loading = 1
 }
 
-function FightVorpalithEventMgrComp:ctor(entity)
+function FightVorpalithEventMgrComp:onConstructor(entity)
 	self.entity = entity
 	self.preShowEffectTime = -(FightVorpalithEventMgrComp.FloatEffectCDTime + 0.1)
 	self.loadStatus = FightVorpalithEventMgrComp.LoadStatus.NotLoad
-end
 
-function FightVorpalithEventMgrComp:init(go)
-	self:addEventCb(FightController.instance, FightEvent.TriggerVorpalithSkill, self.onTriggerVorpalithSkill, self)
-end
-
-function FightVorpalithEventMgrComp:removeEventListeners()
-	self:removeEventCb(FightController.instance, FightEvent.TriggerVorpalithSkill, self.onTriggerVorpalithSkill, self)
+	self:com_registFightEvent(FightEvent.TriggerVorpalithSkill, self.onTriggerVorpalithSkill)
 end
 
 function FightVorpalithEventMgrComp:findClientEffect3(fightStepData)
@@ -144,7 +138,7 @@ function FightVorpalithEventMgrComp:clearStepWork()
 	end
 end
 
-function FightVorpalithEventMgrComp:onDestroy()
+function FightVorpalithEventMgrComp:onDestructor()
 	self:clearStepWork()
 
 	if not gohelper.isNil(self.simageIcon) then

@@ -64,6 +64,13 @@ end
 
 function BpMainBtnItem:_refreshDeadline()
 	local bpCo = BpConfig.instance:getBpCO(BpModel.instance.id)
+
+	if not bpCo then
+		gohelper.setActive(self._godeadline, false)
+
+		return
+	end
+
 	local showDay = bpCo.promptDays or 0
 	local endTime = BpModel.instance:getBpEndTime()
 	local limitSec = endTime - ServerTime.now()

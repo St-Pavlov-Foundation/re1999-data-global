@@ -34,9 +34,8 @@ local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	recommendTeam = 3,
-	name = 1,
-	careerDesc = 2
+	careerDesc = 2,
+	name = 1
 }
 
 function lua_rouge2_career.onLoad(json)

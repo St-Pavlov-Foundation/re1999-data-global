@@ -55,7 +55,7 @@ function DecorateStoreGoodsBuyView:_btninsightOnClick()
 	local costParam = self._currencyParam[curIndex]
 
 	if costParam[1] == MaterialEnum.MaterialType.Currency and costParam[2] == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(costParam[3], CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGood, self, self.closeThis, self) then
+		if CurrencyController.instance:checkFreeDiamondEnough(costParam[3], CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._exchangeFinished, self, self.closeThis, self) then
 			self:_buyGood(curIndex)
 		end
 	elseif costParam[1] == MaterialEnum.MaterialType.Currency and costParam[2] == CurrencyEnum.CurrencyType.Diamond then
@@ -83,6 +83,12 @@ end
 
 function DecorateStoreGoodsBuyView:_storeCurrencyNotEnoughCallback()
 	GameFacade.jump(JumpEnum.JumpId.GlowCharge)
+end
+
+function DecorateStoreGoodsBuyView:_exchangeFinished()
+	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
+
+	self:_buyGood(curIndex)
 end
 
 function DecorateStoreGoodsBuyView:_buyGood(index)

@@ -21,7 +21,7 @@ function FightTLEventDisableSpineRotate:_disable()
 end
 
 function FightTLEventDisableSpineRotate:_do(enable)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	entityMgr.enableSpineRotate = enable
 end

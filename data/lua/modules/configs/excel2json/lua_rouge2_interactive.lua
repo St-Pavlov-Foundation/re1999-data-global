@@ -12,9 +12,7 @@ local fields = {
 local primaryKey = {
 	"id"
 }
-local mlStringKey = {
-	tips = 1
-}
+local mlStringKey = {}
 
 function lua_rouge2_interactive.onLoad(json)
 	lua_rouge2_interactive.configList, lua_rouge2_interactive.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

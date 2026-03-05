@@ -183,6 +183,35 @@ function FightViewMgr:onOpen()
 	self:showRouge2CoinAndRevivalCoin()
 	self:showRouge2TreasureView()
 	self:showRouge2Task()
+	self:showRouge2Slapstick()
+end
+
+function FightViewMgr:showRouge2Slapstick()
+	if not FightDataHelper.fieldMgr:isRouge2() then
+		return
+	end
+
+	local assistBoss = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not assistBoss then
+		return
+	end
+
+	if not FightDataHelper.paTaMgr:checkIsRouge3_3() then
+		return
+	end
+
+	if self.rouge2SlapstickView then
+		return
+	end
+
+	local url = "ui/viewres/fight/fight_rouge2/fight_rouge2_yuebianshouview.prefab"
+	local enum = FightRightElementEnum.Elements.Rouge2Slapstick
+	local root = self.viewContainer.rightElementLayoutView:getElementContainer(enum)
+
+	self.rouge2SlapstickView = self:com_openSubView(FightRouge2SlapstickView, url, root)
+
+	self.viewContainer.rightElementLayoutView:showElement(enum)
 end
 
 function FightViewMgr:showRouge2Task()

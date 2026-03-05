@@ -227,7 +227,7 @@ function ExploreView:onDestroyView()
 end
 
 function ExploreView:checkMove()
-	if GuideController.instance:isGuiding() then
+	if GuideController.instance:isAnyGuideRunning() then
 		return
 	end
 
@@ -274,7 +274,7 @@ function ExploreView:onOpen()
 
 	self._isTop = true
 
-	if BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator() then
+	if BootNativeUtil.isWindows() or SDKMgr.instance:isEmulator() or BootNativeUtil.isMuMu() then
 		TaskDispatcher.runRepeat(self.checkMove, self, 0)
 	end
 

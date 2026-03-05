@@ -96,8 +96,8 @@ function DungeonFightController:onReceiveStartDungeonReply(resultCode, msg)
 	FightRpc.instance:onReceiveTestFightReply(resultCode, msg)
 end
 
-function DungeonFightController:sendEndFightRequest(isAbort)
-	DungeonRpc.instance:sendEndDungeonRequest(isAbort)
+function DungeonFightController:sendEndFightRequest(isAbort, endType)
+	DungeonRpc.instance:sendEndDungeonRequest(isAbort, endType)
 end
 
 function DungeonFightController:onReceiveEndDungeonReply(resultCode, msg)
@@ -116,7 +116,6 @@ end
 function DungeonFightController.restartSpStage()
 	local cur_scene = GameSceneMgr.instance:getCurScene()
 
-	cur_scene.entityMgr:removeAllUnits()
 	cur_scene.director:registRespBeginFight()
 	FightGameMgr.bgmMgr:resumeBgm()
 

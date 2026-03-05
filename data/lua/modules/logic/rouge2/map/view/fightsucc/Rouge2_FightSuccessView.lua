@@ -47,7 +47,7 @@ function Rouge2_FightSuccessView:_editableInitView()
 	self._txtsayCn.text = ""
 	self._txtsayEn.text = ""
 
-	Rouge2_AttributeToolBar.Load(self._goattribute, Rouge2_Enum.AttributeToolType.OnlyShowAttr)
+	Rouge2_AttributeToolBar.Load(self._goattribute, Rouge2_Enum.AttributeToolType.Attr_Detail)
 end
 
 function Rouge2_FightSuccessView:onClickBg()

@@ -337,11 +337,11 @@ function SkillEditorToolsAutoPlaySkillView:_stopFlow()
 		end
 
 		if self._count == #list then
-			local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-			local dict = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+			local entityMgr = FightGameMgr.entityMgr
+			local list = entityMgr:getTagList(SceneTag.UnitPlayer)
 
-			if dict then
-				for _, entity in pairs(dict) do
+			if list then
+				for _, entity in ipairs(list) do
 					if entity.skill then
 						entity.skill:stopSkill()
 					end

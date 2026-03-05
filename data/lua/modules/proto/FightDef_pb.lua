@@ -203,6 +203,7 @@ FightDef_pb.FIGHTGROUPASSISTUSERIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTGROUPASSISTHEROUIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTGROUPEXTRALISTFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD = protobuf.FieldDescriptor()
+FightDef_pb.FIGHTGROUPPARAMSFIELD = protobuf.FieldDescriptor()
 FightDef_pb.ASSISTBOSSINFO_MSG = protobuf.Descriptor()
 FightDef_pb.ASSISTBOSSINFOSKILLSFIELD = protobuf.FieldDescriptor()
 FightDef_pb.ASSISTBOSSINFOCURRCDFIELD = protobuf.FieldDescriptor()
@@ -211,6 +212,7 @@ FightDef_pb.ASSISTBOSSINFOFORMIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.ASSISTBOSSINFOROUNDUSELIMITFIELD = protobuf.FieldDescriptor()
 FightDef_pb.ASSISTBOSSINFOEXCEEDUSEFREEFIELD = protobuf.FieldDescriptor()
 FightDef_pb.ASSISTBOSSINFOPARAMSFIELD = protobuf.FieldDescriptor()
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD = protobuf.FieldDescriptor()
 FightDef_pb.TRIALHERORECORD_MSG = protobuf.Descriptor()
 FightDef_pb.TRIALHERORECORDTRIALIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.TRIALHERORECORDPOSFIELD = protobuf.FieldDescriptor()
@@ -276,6 +278,9 @@ FightDef_pb.FIGHTEXPOINTINFOEXPOINTFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTEXPOINTINFOPOWERINFOSFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTEXPOINTINFOCURRENTHPFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTEXPOINTINFOEXPOINTTYPEFIELD = protobuf.FieldDescriptor()
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG = protobuf.Descriptor()
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD = protobuf.FieldDescriptor()
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD = protobuf.FieldDescriptor()
 FightDef_pb.TRIALHERO_MSG = protobuf.Descriptor()
 FightDef_pb.TRIALHEROTRIALIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.TRIALHEROPOSFIELD = protobuf.FieldDescriptor()
@@ -351,6 +356,7 @@ FightDef_pb.CUSTOMDATACUSTOMDATATYPESURVIVALENUM = protobuf.EnumValueDescriptor(
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEODYSSEYENUM = protobuf.EnumValueDescriptor()
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEACT128SPENUM = protobuf.EnumValueDescriptor()
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM = protobuf.EnumValueDescriptor()
+FightDef_pb.CUSTOMDATACUSTOMDATATYPETOWERCOMPOSEENUM = protobuf.EnumValueDescriptor()
 FightDef_pb.CUSTOMDATATYPEFIELD = protobuf.FieldDescriptor()
 FightDef_pb.CUSTOMDATADATAFIELD = protobuf.FieldDescriptor()
 FightDef_pb.PLAYERFINISHERSKILLINFO_MSG = protobuf.Descriptor()
@@ -2344,6 +2350,15 @@ FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD.has_default_value = false
 FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD.default_value = 0
 FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD.type = 5
 FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD.cpp_type = 1
+FightDef_pb.FIGHTGROUPPARAMSFIELD.name = "params"
+FightDef_pb.FIGHTGROUPPARAMSFIELD.full_name = ".FightGroup.params"
+FightDef_pb.FIGHTGROUPPARAMSFIELD.number = 12
+FightDef_pb.FIGHTGROUPPARAMSFIELD.index = 11
+FightDef_pb.FIGHTGROUPPARAMSFIELD.label = 1
+FightDef_pb.FIGHTGROUPPARAMSFIELD.has_default_value = false
+FightDef_pb.FIGHTGROUPPARAMSFIELD.default_value = ""
+FightDef_pb.FIGHTGROUPPARAMSFIELD.type = 9
+FightDef_pb.FIGHTGROUPPARAMSFIELD.cpp_type = 9
 FightDef_pb.FIGHTGROUP_MSG.name = "FightGroup"
 FightDef_pb.FIGHTGROUP_MSG.full_name = ".FightGroup"
 FightDef_pb.FIGHTGROUP_MSG.nested_types = {}
@@ -2359,7 +2374,8 @@ FightDef_pb.FIGHTGROUP_MSG.fields = {
 	FightDef_pb.FIGHTGROUPASSISTUSERIDFIELD,
 	FightDef_pb.FIGHTGROUPASSISTHEROUIDFIELD,
 	FightDef_pb.FIGHTGROUPEXTRALISTFIELD,
-	FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD
+	FightDef_pb.FIGHTGROUPASSISTBOSSIDFIELD,
+	FightDef_pb.FIGHTGROUPPARAMSFIELD
 }
 FightDef_pb.FIGHTGROUP_MSG.is_extendable = false
 FightDef_pb.FIGHTGROUP_MSG.extensions = {}
@@ -2427,6 +2443,15 @@ FightDef_pb.ASSISTBOSSINFOPARAMSFIELD.has_default_value = false
 FightDef_pb.ASSISTBOSSINFOPARAMSFIELD.default_value = ""
 FightDef_pb.ASSISTBOSSINFOPARAMSFIELD.type = 9
 FightDef_pb.ASSISTBOSSINFOPARAMSFIELD.cpp_type = 9
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.name = "type"
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.full_name = ".AssistBossInfo.type"
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.number = 8
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.index = 7
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.label = 1
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.has_default_value = false
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.default_value = 0
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.type = 5
+FightDef_pb.ASSISTBOSSINFOTYPEFIELD.cpp_type = 1
 FightDef_pb.ASSISTBOSSINFO_MSG.name = "AssistBossInfo"
 FightDef_pb.ASSISTBOSSINFO_MSG.full_name = ".AssistBossInfo"
 FightDef_pb.ASSISTBOSSINFO_MSG.nested_types = {}
@@ -2438,7 +2463,8 @@ FightDef_pb.ASSISTBOSSINFO_MSG.fields = {
 	FightDef_pb.ASSISTBOSSINFOFORMIDFIELD,
 	FightDef_pb.ASSISTBOSSINFOROUNDUSELIMITFIELD,
 	FightDef_pb.ASSISTBOSSINFOEXCEEDUSEFREEFIELD,
-	FightDef_pb.ASSISTBOSSINFOPARAMSFIELD
+	FightDef_pb.ASSISTBOSSINFOPARAMSFIELD,
+	FightDef_pb.ASSISTBOSSINFOTYPEFIELD
 }
 FightDef_pb.ASSISTBOSSINFO_MSG.is_extendable = false
 FightDef_pb.ASSISTBOSSINFO_MSG.extensions = {}
@@ -3033,6 +3059,35 @@ FightDef_pb.FIGHTEXPOINTINFO_MSG.fields = {
 }
 FightDef_pb.FIGHTEXPOINTINFO_MSG.is_extendable = false
 FightDef_pb.FIGHTEXPOINTINFO_MSG.extensions = {}
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.name = "fightTeam"
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.full_name = ".FightTeamDetailInfo.fightTeam"
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.number = 1
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.index = 0
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.label = 1
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.has_default_value = false
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.default_value = nil
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.message_type = FightDef_pb.FIGHTTEAM_MSG
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.type = 11
+FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD.cpp_type = 10
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.name = "ruleSkill"
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.full_name = ".FightTeamDetailInfo.ruleSkill"
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.number = 2
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.index = 1
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.label = 3
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.has_default_value = false
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.default_value = {}
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.type = 5
+FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD.cpp_type = 1
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.name = "FightTeamDetailInfo"
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.full_name = ".FightTeamDetailInfo"
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.nested_types = {}
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.enum_types = {}
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.fields = {
+	FightDef_pb.FIGHTTEAMDETAILINFOFIGHTTEAMFIELD,
+	FightDef_pb.FIGHTTEAMDETAILINFORULESKILLFIELD
+}
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.is_extendable = false
+FightDef_pb.FIGHTTEAMDETAILINFO_MSG.extensions = {}
 FightDef_pb.TRIALHEROTRIALIDFIELD.name = "trialId"
 FightDef_pb.TRIALHEROTRIALIDFIELD.full_name = ".TrialHero.trialId"
 FightDef_pb.TRIALHEROTRIALIDFIELD.number = 1
@@ -3724,6 +3779,9 @@ FightDef_pb.CUSTOMDATACUSTOMDATATYPEACT128SPENUM.number = 6
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM.name = "Rouge2"
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM.index = 6
 FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM.number = 7
+FightDef_pb.CUSTOMDATACUSTOMDATATYPETOWERCOMPOSEENUM.name = "TowerCompose"
+FightDef_pb.CUSTOMDATACUSTOMDATATYPETOWERCOMPOSEENUM.index = 7
+FightDef_pb.CUSTOMDATACUSTOMDATATYPETOWERCOMPOSEENUM.number = 8
 FightDef_pb.CUSTOMDATACUSTOMDATATYPE.name = "CustomDataType"
 FightDef_pb.CUSTOMDATACUSTOMDATATYPE.full_name = ".CustomData.CustomDataType"
 FightDef_pb.CUSTOMDATACUSTOMDATATYPE.values = {
@@ -3733,7 +3791,8 @@ FightDef_pb.CUSTOMDATACUSTOMDATATYPE.values = {
 	FightDef_pb.CUSTOMDATACUSTOMDATATYPESURVIVALENUM,
 	FightDef_pb.CUSTOMDATACUSTOMDATATYPEODYSSEYENUM,
 	FightDef_pb.CUSTOMDATACUSTOMDATATYPEACT128SPENUM,
-	FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM
+	FightDef_pb.CUSTOMDATACUSTOMDATATYPEROUGE2ENUM,
+	FightDef_pb.CUSTOMDATACUSTOMDATATYPETOWERCOMPOSEENUM
 }
 FightDef_pb.CUSTOMDATATYPEFIELD.name = "type"
 FightDef_pb.CUSTOMDATATYPEFIELD.full_name = ".CustomData.type"
@@ -5017,6 +5076,7 @@ FightDef_pb.FightTask = protobuf.Message(FightDef_pb.FIGHTTASK_MSG)
 FightDef_pb.FightTaskBox = protobuf.Message(FightDef_pb.FIGHTTASKBOX_MSG)
 FightDef_pb.FightTaskValue = protobuf.Message(FightDef_pb.FIGHTTASKVALUE_MSG)
 FightDef_pb.FightTeam = protobuf.Message(FightDef_pb.FIGHTTEAM_MSG)
+FightDef_pb.FightTeamDetailInfo = protobuf.Message(FightDef_pb.FIGHTTEAMDETAILINFO_MSG)
 FightDef_pb.IndicatorInfo = protobuf.Message(FightDef_pb.INDICATORINFO_MSG)
 FightDef_pb.ItemPlayerSkillGroup = protobuf.Message(FightDef_pb.ITEMPLAYERSKILLGROUP_MSG)
 FightDef_pb.ItemPlayerSkillInfo = protobuf.Message(FightDef_pb.ITEMPLAYERSKILLINFO_MSG)

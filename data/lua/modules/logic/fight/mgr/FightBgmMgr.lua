@@ -37,6 +37,7 @@ function FightBgmMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore)
 	self:com_registFightEvent(FightEvent.EntityDeadFinish, self._onEntityDeadFinish)
 	self:com_registFightEvent(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone)
 	self:com_registFightEvent(FightEvent.AddMagicCircile, self._onAddMagicCircile)
 	self:com_registFightEvent(FightEvent.SwitchFightendBgm, self._onSwitchFightendBgm)
 	self:com_registFightEvent(FightEvent.PlayDialog, self._onPlayDialog)
@@ -438,6 +439,18 @@ function FightBgmMgr:resumeBgm()
 end
 
 function FightBgmMgr:_onRestartFightDisposeDone()
+	self._cur_switch = nil
+
+	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Comeshow)
+
+	local fightParam = FightModel.instance:getFightParam()
+
+	if self._bgAudioId then
+		self:_detectDefaultSwitch(fightParam.episodeId)
+	end
+end
+
+function FightBgmMgr:_onSwitchPlaneClearAssetDone()
 	self._cur_switch = nil
 
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Comeshow)

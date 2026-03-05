@@ -5,6 +5,8 @@ module("modules.logic.fight.system.work.FightWorkPlayStart", package.seeall)
 local FightWorkPlayStart = class("FightWorkPlayStart", FightWorkItem)
 
 function FightWorkPlayStart:onStart()
+	FightGameMgr.checkCrashMgr:startCheck()
+
 	if FightDataHelper.stateMgr.isReplay then
 		FightReplayController.instance._replayErrorFix:startReplayErrorFix()
 	end
@@ -13,10 +15,22 @@ function FightWorkPlayStart:onStart()
 
 	local flow = self:com_registFlowSequence()
 
+	flow:registWork(FightWorkFunction, FightDataHelper.stateMgr.setMark, FightDataHelper.stateMgr, FightStateDataMgr.Mark.NewAllEntityWhenEnter)
+	flow:addWork(FightGameMgr.entityMgr:registNewAllEntityWork())
+	flow:registWork(FightWorkFunction, FightDataHelper.stateMgr.clearMark, FightDataHelper.stateMgr, FightStateDataMgr.Mark.NewAllEntityWhenEnter)
+
+	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
+		-- block empty
+	else
+		flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightSkillSelectView)
+		flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightView)
+	end
+
 	flow:registWork(FightWorkSendEvent, FightEvent.OnStartSequenceStart)
 	flow:addWork(FightWorkDialogBeforeStartFight.New())
 	flow:addWork(FightWorkAppearPerformance.New())
 	flow:addWork(FightWorkDetectReplayEnterSceneActive.New())
+	flow:addWork(FightWorkShowTowerComposeSwitchPlane.New())
 
 	FightStartSequence.needStopMonsterWave = nil
 

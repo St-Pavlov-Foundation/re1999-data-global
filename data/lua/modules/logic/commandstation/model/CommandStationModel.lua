@@ -9,10 +9,25 @@ function CommandStationModel:onInit()
 	self.gainBonus = {}
 	self._eventList = {}
 	self.catchNum = 0
+	self._characterState = {}
 end
 
 function CommandStationModel:reInit()
 	self:onInit()
+end
+
+function CommandStationModel:updateCharacterStateList(list)
+	for i, v in ipairs(list) do
+		self:updateCharacterState(v)
+	end
+end
+
+function CommandStationModel:updateCharacterState(id)
+	self._characterState[id] = true
+end
+
+function CommandStationModel:getCharacterState(id)
+	return self._characterState[id]
 end
 
 function CommandStationModel:updateEventList(list)
@@ -57,6 +72,44 @@ function CommandStationModel:getDispatchEventState(eventId)
 	return CommandStationEnum.DispatchState.NotStart
 end
 
+function CommandStationModel:eventIsActivated(id)
+	local list = CommandStationConfig.instance:getUnlockEventList(id)
+
+	if not list then
+		return true
+	end
+
+	for i, eventId in ipairs(list) do
+		if not self:eventIsActivated(eventId) or not self:eventIsFinished(eventId) then
+			return false
+		end
+	end
+
+	return true
+end
+
+function CommandStationModel:eventIsFinished(eventId)
+	if CommandStationConfig.instance:isReadFinishEvent(eventId) then
+		if not self:isEventRead(eventId) then
+			return false
+		end
+	else
+		local config = lua_copost_event.configDict[eventId]
+
+		if config then
+			if config.eventType == CommandStationEnum.EventType.Dispatch then
+				if self:getDispatchEventState(eventId) ~= CommandStationEnum.DispatchState.GetReward then
+					return false
+				end
+			elseif self:getEventState(eventId) ~= CommandStationEnum.EventState.GetReward then
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
 function CommandStationModel:isEventRead(id)
 	local eventInfo = self._eventList[id]
 
@@ -99,6 +152,47 @@ function CommandStationModel:getAllEventHeroList()
 	end
 
 	return list
+end
+
+function CommandStationModel:getTimeIdCanRead(timeId)
+	self._timeIdCanRead = false
+
+	local targetCharacterId = CommandStationMapModel.instance:getCharacterId()
+
+	if targetCharacterId then
+		CommandStationConfig.instance:forEachGetEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Character, self._eventIsRead, self)
+	else
+		CommandStationConfig.instance:forEachGetEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Normal, self._eventIsRead, self)
+		CommandStationConfig.instance:forEachGetEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Character, self._eventIsRead, self)
+	end
+
+	return self._timeIdCanRead
+end
+
+function CommandStationModel:_eventIsRead(eventId)
+	if not self:eventIsActivated(eventId) then
+		return
+	end
+
+	local targetCharacterId = CommandStationMapModel.instance:getCharacterId()
+
+	if targetCharacterId then
+		if CommandStationConfig.instance:eventContainCharacterId(eventId, targetCharacterId) and not self:isEventRead(eventId) then
+			self._timeIdCanRead = true
+		end
+	elseif not self:isEventRead(eventId) then
+		self._timeIdCanRead = true
+	else
+		local config = lua_copost_event.configDict[eventId]
+
+		if config and config.eventType == CommandStationEnum.EventType.Dispatch then
+			local state = self:getDispatchEventState(eventId)
+
+			if state ~= CommandStationEnum.DispatchState.GetReward then
+				self._timeIdCanRead = true
+			end
+		end
+	end
 end
 
 CommandStationModel.instance = CommandStationModel.New()

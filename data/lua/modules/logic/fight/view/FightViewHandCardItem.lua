@@ -288,7 +288,7 @@ function FightViewHandCardItem:showKeytips()
 			return
 		end
 
-		if self._cardItem and self.cardInfoMO and FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId) then
+		if self._cardItem and self.cardInfoMO and FightConfig.instance:getSkillLv(self.cardInfoMO.skillId) == FightEnum.UniqueSkillCardLv then
 			recthelper.setAnchorY(self._pcTips._go.transform, 200)
 		else
 			recthelper.setAnchorY(self._pcTips._go.transform, 150)
@@ -342,6 +342,8 @@ function FightViewHandCardItem:_onDragHandCardBegin(index, position, cardInfoMO)
 		return
 	end
 
+	self._isHandCardDraging = true
+
 	if not FightEnum.UniversalCard[cardInfoMO.skillId] or cardInfoMO == self.cardInfoMO then
 		return
 	end
@@ -365,6 +367,8 @@ function FightViewHandCardItem:_onDragHandCardBegin(index, position, cardInfoMO)
 end
 
 function FightViewHandCardItem:_onDragHandCardEnd()
+	self._isHandCardDraging = false
+
 	local universalMaskGO = gohelper.findChild(self._forAnimGO, "universalMask")
 
 	gohelper.setActive(universalMaskGO, false)
@@ -960,7 +964,25 @@ function FightViewHandCardItem:stopLongPressEffect()
 	transformhelper.setLocalRotation(self._forAnimGO.transform, 0, 0, 0)
 end
 
+function FightViewHandCardItem:onKeyClickThis()
+	if self._isLongPress then
+		self._isLongPress = false
+
+		logNormal("key click card")
+	end
+
+	self:_onClickThis()
+end
+
 function FightViewHandCardItem:_onClickThis()
+	if self._isLongPress then
+		self._isLongPress = false
+
+		logNormal("has LongPress, can't click card")
+
+		return
+	end
+
 	if FightDataHelper.lockOperateMgr:isLock() then
 		return
 	end
@@ -1261,8 +1283,14 @@ function FightViewHandCardItem:_onHover()
 		return
 	end
 
-	if not self._isLongPress then
-		self:_onLongPress()
+	if self._cardItem then
+		self._cardItem:showHightLightEffect(true)
+	end
+end
+
+function FightViewHandCardItem:_OnExitHover()
+	if self._cardItem then
+		self._cardItem:showHightLightEffect(false)
 	end
 
 	if self._cardItem then

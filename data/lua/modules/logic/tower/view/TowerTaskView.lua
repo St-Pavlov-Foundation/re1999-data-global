@@ -227,6 +227,13 @@ function TowerTaskView:InitTowerItemData()
 		table.insert(towerItemDataList, actTowerData)
 	end
 
+	if #limitTimeTaskList == 0 then
+		GameFacade.showToast(ToastEnum.TowerTimeLimitEnd)
+		self:closeThis()
+
+		return
+	end
+
 	self:createOrRefreshTowerItem(towerItemDataList)
 end
 

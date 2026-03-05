@@ -6,7 +6,9 @@ local lua_bp_skin_view_param = {}
 local fields = {
 	audioId = 2,
 	storePrefab = 3,
-	skinId = 1
+	closeAudioId = 5,
+	skinId = 1,
+	openAudioId = 4
 }
 local primaryKey = {
 	"skinId"

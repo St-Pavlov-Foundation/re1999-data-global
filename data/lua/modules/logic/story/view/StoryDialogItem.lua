@@ -768,6 +768,13 @@ function StoryDialogItem:_playGradualIn()
 	local x, y, z = transformhelper.getLocalPos(self._txtcontentcn.transform)
 
 	transformhelper.setLocalPos(self._txtcontentcn.transform, x, y, 1)
+
+	if self._conTweenId then
+		ZProj.TweenHelper.KillById(self._conTweenId)
+
+		self._conTweenId = nil
+	end
+
 	TaskDispatcher.cancelTask(self._delayShow, self)
 	TaskDispatcher.runDelay(self._delayShow, self, 0.05)
 end
@@ -1151,6 +1158,13 @@ function StoryDialogItem:_conUpdate(value)
 			if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
 				self._conMat:SetFloat(self._LineMinYId, 0)
 				self._conMat:SetFloat(self._LineMaxYId, 0)
+
+				for _, mesh in pairs(self._subMeshs) do
+					if mesh.materialForRendering then
+						mesh.materialForRendering:SetFloat(self._LineMinYId, 0)
+						mesh.materialForRendering:SetFloat(self._LineMaxYId, 0)
+					end
+				end
 
 				if #self._lineInfoList > 1 then
 					if BootNativeUtil.isIOS() then

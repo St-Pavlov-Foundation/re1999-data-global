@@ -565,7 +565,22 @@ function BleSkinInteraction:_onDragSuccess()
 	gohelper.setActive(self._dragEffectGo, false)
 
 	self._dragSuccessTime = Time.time
-	self._tweenId = ZProj.TweenHelper.DOTweenFloat(fadeMinValue, fadeMaxValue, 1, self._onFadeOutUpdate, self._onFadeOutFinish, self, nil, EaseType.Linear)
+
+	TaskDispatcher.cancelTask(self._onFadeUpdate, self)
+	TaskDispatcher.runRepeat(self._onFadeUpdate, self, 0)
+end
+
+function BleSkinInteraction:_onFadeUpdate()
+	local deltaTime = Time.time - self._dragSuccessTime
+	local value = Mathf.Clamp(deltaTime, 0, 1)
+	local fadeValue = Mathf.Lerp(fadeMinValue, fadeMaxValue, value)
+
+	self:_onFadeOutUpdate(fadeValue)
+
+	if value >= 1 then
+		TaskDispatcher.cancelTask(self._onFadeUpdate, self)
+		self:_onFadeOutFinish()
+	end
 end
 
 function BleSkinInteraction:_onFadeOutUpdate(value)
@@ -613,7 +628,7 @@ end
 function BleSkinInteraction:_changeUV(from, to, isShowLight, time)
 	self._isShowLight = isShowLight
 
-	if isShowLight then
+	if isShowLight and not gohelper.isNil(self._mat) and not gohelper.isNil(self._mat2) then
 		self._mat:EnableKeyword("_USELOCALMASK_GOUV_ON")
 		self._mat2:EnableKeyword("_USELOCALMASK_GOUV_ON")
 	end
@@ -631,6 +646,10 @@ end
 function BleSkinInteraction:_onChangeUVUpdate(value)
 	self._matParam.w = value
 
+	if gohelper.isNil(self._mat) or gohelper.isNil(self._mat2) then
+		return
+	end
+
 	self._mat:SetVector("_GoUVOffset", self._matParam)
 	self._mat2:SetVector("_GoUVOffset", self._matParam)
 end
@@ -642,7 +661,7 @@ function BleSkinInteraction:_onChangeUVFinish()
 end
 
 function BleSkinInteraction:_disableLightKeyword()
-	if not self._mat or not self._mat2 then
+	if gohelper.isNil(self._mat) or gohelper.isNil(self._mat2) then
 		return
 	end
 
@@ -705,6 +724,8 @@ function BleSkinInteraction:_onDestroy()
 
 		self._tweenId = nil
 	end
+
+	TaskDispatcher.cancelTask(self._onFadeUpdate, self)
 
 	if self._cameraTweenId then
 		ZProj.TweenHelper.KillById(self._cameraTweenId)

@@ -57,6 +57,12 @@ function FightPlayMgr:playEnd()
 
 	FightDataHelper.stateMgr.isFinish = true
 
+	if self:checkTowerComposeHasNextPlane() then
+		FightGameMgr.switchPlaneMgr:switchPlane()
+
+		return
+	end
+
 	if FightSystem.instance.restarting then
 		return
 	end
@@ -70,6 +76,32 @@ function FightPlayMgr:playEnd()
 	FightGameMgr.restartMgr:killComponent(FightFlowComponent)
 	FightDataMgr.instance.stateMgr:setPlayingEnd(true)
 	self:_PlayEnd()
+end
+
+function FightPlayMgr:checkTowerComposeHasNextPlane()
+	local fightRecordMO = FightModel.instance:getRecordMO()
+
+	if not fightRecordMO then
+		return
+	end
+
+	if fightRecordMO.fightResult ~= FightEnum.FightResult.Succ then
+		return
+	end
+
+	local customData = FightDataHelper.getCustomData(FightCustomData.CustomDataType.TowerCompose)
+	local planeId = customData and customData.planeId
+	local maxPlane = customData and customData.maxPlaneId
+
+	if not planeId then
+		return
+	end
+
+	if not maxPlane then
+		return
+	end
+
+	return planeId < maxPlane
 end
 
 function FightPlayMgr:_PlayEnd()

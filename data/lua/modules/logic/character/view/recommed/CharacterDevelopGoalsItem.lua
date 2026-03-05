@@ -38,11 +38,7 @@ function CharacterDevelopGoalsItem:init(go)
 end
 
 function CharacterDevelopGoalsItem:_btnjumpOnClick()
-	local isSuccess = CharacterRecommedController.instance:jump(self._mo)
-
-	if isSuccess then
-		self._view:closeThis()
-	end
+	CharacterRecommedController.instance:jump(self._mo)
 end
 
 function CharacterDevelopGoalsItem:_btntracedOnClick()

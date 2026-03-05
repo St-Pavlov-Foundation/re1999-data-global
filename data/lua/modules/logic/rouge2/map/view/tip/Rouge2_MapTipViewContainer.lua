@@ -7,7 +7,7 @@ local Rouge2_MapTipViewContainer = class("Rouge2_MapTipViewContainer", BaseViewC
 function Rouge2_MapTipViewContainer:buildViews()
 	local views = {}
 
-	table.insert(views, RougeMapTipView.New())
+	table.insert(views, Rouge2_MapTipView.New())
 
 	return views
 end

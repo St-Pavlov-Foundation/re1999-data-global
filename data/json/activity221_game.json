@@ -1,0 +1,42 @@
+[
+  {
+    "mapId": 133101,
+    "time": 60,
+    "targets": "Weight#30",
+    "targetDesc": "language_10109402",
+    "type7Weight": "1#1",
+    "type7Num": "100#150",
+    "maxBuff": 5,
+    "useSkill": "0#0"
+  },
+  {
+    "mapId": 133102,
+    "time": 90,
+    "targets": "KillType#2",
+    "targetDesc": "language_10109403",
+    "type7Weight": "1#1",
+    "type7Num": "100#150",
+    "maxBuff": 5,
+    "useSkill": "0#10002"
+  },
+  {
+    "mapId": 133103,
+    "time": 120,
+    "targets": "KillType#5",
+    "targetDesc": "language_10109404",
+    "type7Weight": "1#1",
+    "type7Num": "100#150",
+    "maxBuff": 5,
+    "useSkill": "10001#10002"
+  },
+  {
+    "mapId": 133104,
+    "time": 180,
+    "targets": "KillType#2,3,5",
+    "targetDesc": "language_10109405",
+    "type7Weight": "1#1",
+    "type7Num": "100#150",
+    "maxBuff": 5,
+    "useSkill": "10001#10002"
+  }
+]

@@ -10,12 +10,12 @@ function FightSceneBossEntityEvolutionMgrComp:onSceneStart(sceneId, levelId)
 	self._skinId2Entity = {}
 	self._skinIds = {}
 	self._delayReleaseEntity = {}
-	self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 end
 
 function FightSceneBossEntityEvolutionMgrComp:onScenePrepared(sceneId, levelId)
 	FightController.instance:registerCallback(FightEvent.SetBossEvolution, self._onSetBossEvolution, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 	FightController.instance:registerCallback(FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)
@@ -111,7 +111,7 @@ function FightSceneBossEntityEvolutionMgrComp:_onSkillPlayFinish()
 
 		if self._entityVisible[v.id] == 0 then
 			v:setAlpha(1, 0.2)
-			self._entityMgr:adjustSpineLookRotation(v)
+			FightGameMgr.entityMgr:adjustSpineLookRotation(v)
 		end
 	end
 end
@@ -126,7 +126,7 @@ end
 
 function FightSceneBossEntityEvolutionMgrComp:_releaseEntity(entity)
 	if self._entityDic[entity.id] then
-		self._entityMgr:destroyUnit(entity)
+		self._entityDic[entity.id]:disposeSelf()
 
 		self._entityDic[entity.id] = nil
 		self._entityVisible[entity.id] = nil
@@ -147,10 +147,15 @@ function FightSceneBossEntityEvolutionMgrComp:_onRestartStageBefore()
 	self:_releaseAllEntity()
 end
 
+function FightSceneBossEntityEvolutionMgrComp:_onSwitchPlaneClearAsset()
+	self:_releaseAllEntity()
+end
+
 function FightSceneBossEntityEvolutionMgrComp:onSceneClose(sceneId, levelId)
 	TaskDispatcher.cancelTask(self._delayRelease, self)
 	FightController.instance:unregisterCallback(FightEvent.SetBossEvolution, self._onSetBossEvolution, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
 	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
 	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
 	FightController.instance:unregisterCallback(FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged, self)

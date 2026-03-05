@@ -31,6 +31,8 @@ end
 function HeroConfig:onConfigLoaded(configName, configTable)
 	if configName == "character" then
 		self.heroConfig = configTable
+
+		self:processHeroConfig()
 	elseif configName == "character_attribute" then
 		self.attributeConfig = configTable
 
@@ -379,6 +381,33 @@ end
 
 function HeroConfig:getHeroRankReplaceConfig(heroId)
 	return self.heroRankReplaceConfig[heroId]
+end
+
+function HeroConfig:processHeroConfig()
+	self._battleTag2HeroMap = {}
+	self._heroId2BattleTagList = {}
+
+	for _, heroCo in ipairs(self.heroConfig.configList) do
+		local battleTagList = string.split(heroCo.battleTag, "#")
+
+		self._heroId2BattleTagList[heroCo.id] = battleTagList
+
+		if battleTagList then
+			for _, tagId in ipairs(battleTagList) do
+				self._battleTag2HeroMap[tagId] = self._battleTag2HeroMap[tagId] or {}
+
+				table.insert(self._battleTag2HeroMap[tagId], heroCo)
+			end
+		end
+	end
+end
+
+function HeroConfig:getHeroListByBattleTag(battleTag)
+	return self._battleTag2HeroMap and self._battleTag2HeroMap[battleTag]
+end
+
+function HeroConfig:getHeroBattleTagList(heroId)
+	return self._heroId2BattleTagList and self._heroId2BattleTagList[heroId]
 end
 
 HeroConfig.instance = HeroConfig.New()

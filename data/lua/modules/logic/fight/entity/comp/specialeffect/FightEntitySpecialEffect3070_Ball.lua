@@ -2,16 +2,21 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3070_Ball", package.seeall)
 
-local FightEntitySpecialEffect3070_Ball = class("FightEntitySpecialEffect3070_Ball", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffect3070_Ball = class("FightEntitySpecialEffect3070_Ball", FightBaseClass)
 
-function FightEntitySpecialEffect3070_Ball:initClass()
-	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
-	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
+function FightEntitySpecialEffect3070_Ball:onConstructor(entity)
+	self._entity = entity
 
+	self:com_registFightEvent(FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
+	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect)
+	self:initVar()
+end
+
+function FightEntitySpecialEffect3070_Ball:initVar()
 	self._ballEffectList = {}
 	self._ballEffectUid = {}
 	self._buffUid2Effect = self:getUserDataTb_()
@@ -414,7 +419,7 @@ function FightEntitySpecialEffect3070_Ball:_onBuffUpdate(targetId, effectType, b
 
 				self._playingDestroyEffect = true
 
-				TaskDispatcher.runDelay(self._resetPlayingDestroyEffect, self, 0.3)
+				self:com_registTimer(self._resetPlayingDestroyEffect, 0.3)
 
 				local audio = entityMO and lua_fight_jia_la_bo_na_ball_audio.configDict[entityMO.skin].destroyBallAudio
 
@@ -448,6 +453,11 @@ function FightEntitySpecialEffect3070_Ball:_resetPlayingDestroyEffect()
 end
 
 function FightEntitySpecialEffect3070_Ball:_onBeforeEnterStepBehaviour()
+	if FightDataHelper.stateMgr.dealingCrash then
+		self:_releaseEffect()
+		self:initVar()
+	end
+
 	local entityMO = self._entity:getMO()
 
 	if entityMO then
@@ -542,8 +552,7 @@ function FightEntitySpecialEffect3070_Ball:_releaseEffect()
 	self:_releaseBallLineEffect()
 end
 
-function FightEntitySpecialEffect3070_Ball:releaseSelf()
-	TaskDispatcher.cancelTask(self._resetPlayingDestroyEffect, self)
+function FightEntitySpecialEffect3070_Ball:onDestructor()
 	self:_releaseEffect()
 end
 

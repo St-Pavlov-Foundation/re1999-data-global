@@ -105,14 +105,6 @@ function ResSplitSaveCharacterWork:_addSkinRes(config, exclude)
 
 	ResSplitModel.instance:setInclude(ResSplitEnum.Folder, path, exclude)
 
-	local live2dbg = config.live2dbg
-
-	if not string.nilorempty(live2dbg) then
-		path = ResUrl.getCharacterSkinLive2dBg(live2dbg)
-
-		ResSplitModel.instance:setInclude(ResSplitEnum.Path, path, exclude)
-	end
-
 	path = ResUrl.getRolesPrefabStoryFolder(config.verticalDrawing)
 	path = string.sub(path, 1, string.len(path) - 1)
 

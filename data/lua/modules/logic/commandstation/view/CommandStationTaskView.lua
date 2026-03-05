@@ -10,6 +10,8 @@ function CommandStationTaskView:onInitView()
 	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_arrowLeft")
 	self._btnRight = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_arrowRight")
 	self._txtRewardDesc = gohelper.findChildTextMesh(self.viewGO, "Left/Dec/txt_tips2")
+	self._goUnFinishTip = gohelper.findChild(self.viewGO, "Left/Dec/tips1/txt_tips1")
+	self._goFinishTip = gohelper.findChild(self.viewGO, "Left/Dec/tips1/txt_finished")
 	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "Left/Dec/txt_tips2/#btn_detail")
 	self._btnNormalTask = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Top/#btn_normalTask")
 	self._goNormalTaskRed = gohelper.findChild(self.viewGO, "Right/Top/#btn_normalTask/#go_reddot")
@@ -101,7 +103,6 @@ function CommandStationTaskView:onOpen()
 
 	self:refreshTask()
 	self:refreshBonus()
-	self:refreshBigBonus()
 
 	if self:haveCatchTask() then
 		local nextRefreshTime = ServerTime.getWeekEndTimeStamp(true) - ServerTime.now()
@@ -225,6 +226,7 @@ function CommandStationTaskView:refreshBonus()
 	self._slider.fillAmount = process / totalProcess
 
 	CommandStationBonusListModel.instance:setData(self._bonusCos, self._bonusCountList)
+	self:refreshBigBonus()
 end
 
 function CommandStationTaskView:_titleLoadCallback()
@@ -257,6 +259,11 @@ function CommandStationTaskView:refreshBigBonus()
 	end
 
 	self._txtRewardDesc.text = table.concat(itemNames, luaLang("commandstation_itemname_and"))
+
+	local isFinish = tabletool.indexOf(CommandStationModel.instance.gainBonus, co.id)
+
+	gohelper.setActive(self._goFinishTip, isFinish)
+	gohelper.setActive(self._goUnFinishTip, not isFinish)
 end
 
 function CommandStationTaskView:changeBigBonusIndex(num)

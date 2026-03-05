@@ -171,6 +171,12 @@ function MainSceneSwitchDisplayController:_loadSceneFinish(loader)
 
 	transformhelper.setLocalPosXY(sceneGo.transform, 10000, 0)
 
+	if MainSceneSwitchEnum.getCustomSceneInfo[sceneId] then
+		self:_showScene(instName)
+
+		return
+	end
+
 	local yearComp = WeatherYearAnimationComp.New()
 	local frameComp = WeatherFrameComp.New()
 	local weatherComp = WeatherComp.New()
@@ -238,11 +244,22 @@ end
 
 function MainSceneSwitchDisplayController:_getSceneConfig(sceneId)
 	local sceneConfig = lua_scene_switch.configDict[sceneId]
+
+	if not sceneConfig then
+		local customSceneInfo = MainSceneSwitchEnum.getCustomSceneInfo[sceneId]
+
+		return customSceneInfo[1], customSceneInfo[2], customSceneInfo[3]
+	end
+
 	local resName = sceneConfig.resName
 	local resPath = ResUrl.getSceneRes(resName)
 	local instName = resName .. "_p(Clone)"
 
 	return resPath, instName, resName
+end
+
+function MainSceneSwitchDisplayController:getSceneGo(name)
+	return self._sceneNameMap and self._sceneNameMap[name]
 end
 
 function MainSceneSwitchDisplayController:_showScene(name)

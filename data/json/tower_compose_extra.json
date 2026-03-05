@@ -1,0 +1,92 @@
+[
+  {
+    "id": 3127,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3092,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3077,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3086,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3114,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3080,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3041,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3112,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3037,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3115,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3106,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3118,
+    "themeId": 1,
+    "bossPointBase": 100
+  },
+  {
+    "id": 3034,
+    "themeId": 1,
+    "bossPointBase": 200
+  },
+  {
+    "id": 3035,
+    "themeId": 1,
+    "bossPointBase": 200
+  },
+  {
+    "id": 3040,
+    "themeId": 1,
+    "bossPointBase": 200
+  },
+  {
+    "id": 3013,
+    "themeId": 1,
+    "bossPointBase": 200
+  },
+  {
+    "id": 3046,
+    "themeId": 1,
+    "bossPointBase": 200
+  },
+  {
+    "id": 3096,
+    "themeId": 1,
+    "bossPointBase": 200
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 3303011,
+    "title": "language_10109279",
+    "desc": "language_10109280",
+    "icon": 300101,
+    "confirm": "language_10109281",
+    "nextSelect": "3303012",
+    "autoUse1": 10,
+    "autoUse2": 10
+  },
+  {
+    "id": 3303012,
+    "title": "language_10059375",
+    "desc": "language_10109282",
+    "icon": 560101,
+    "confirm": "language_10109281",
+    "nextSelect": "",
+    "autoUse1": 10,
+    "autoUse2": 10
+  },
+  {
+    "id": 3303013,
+    "title": "language_10109283",
+    "desc": "language_10109284",
+    "icon": 300101,
+    "confirm": "language_10109281",
+    "nextSelect": "",
+    "autoUse1": 10,
+    "autoUse2": 10
+  },
+  {
+    "id": 3303014,
+    "title": "language_10105981",
+    "desc": "language_10109285",
+    "icon": 516401,
+    "confirm": "language_10109281",
+    "nextSelect": "",
+    "autoUse1": 10,
+    "autoUse2": 10
+  },
+  {
+    "id": 3303015,
+    "title": "language_10105982",
+    "desc": "language_10109286",
+    "icon": 529613,
+    "confirm": "language_10109281",
+    "nextSelect": "",
+    "autoUse1": 10,
+    "autoUse2": 10
+  }
+]

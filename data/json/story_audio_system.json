@@ -4138,5 +4138,530 @@
     "id": 923200018,
     "eventName": "play_battle_plot32_hero3135_19",
     "bankName": "hero3135_level_shengyan3_2"
+  },
+  {
+    "id": 923300000,
+    "eventName": "play_guide507801_systemvoc_1520",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300001,
+    "eventName": "play_guide507801_systemvoc_1521",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300002,
+    "eventName": "play_guide507801_systemvoc_1522",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300003,
+    "eventName": "play_guide507801_systemvoc_1523",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300004,
+    "eventName": "play_guide507801_systemvoc_1525",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300005,
+    "eventName": "play_guide507801_systemvoc_1526",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300006,
+    "eventName": "play_guide507801_systemvoc_1527",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300007,
+    "eventName": "play_guide507801_systemvoc_1528",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300008,
+    "eventName": "play_guide507801_systemvoc_1530",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300009,
+    "eventName": "play_guide507801_systemvoc_1531",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300010,
+    "eventName": "play_guide507801_systemvoc_1532",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300011,
+    "eventName": "play_guide507801_systemvoc_1533",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300012,
+    "eventName": "play_guide507801_systemvoc_1534",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300013,
+    "eventName": "play_guide507801_systemvoc_1535",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300014,
+    "eventName": "play_guide507801_systemvoc_1537",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300015,
+    "eventName": "play_guide507801_systemvoc_1538",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300016,
+    "eventName": "play_guide507801_systemvoc_1539",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300017,
+    "eventName": "play_guide507801_systemvoc_1540",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300018,
+    "eventName": "play_guide507801_systemvoc_1541",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300019,
+    "eventName": "play_guide507801_systemvoc_1542",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300020,
+    "eventName": "play_guide507801_systemvoc_1543",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300021,
+    "eventName": "play_guide507801_systemvoc_1544",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300022,
+    "eventName": "play_guide507801_systemvoc_1545",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300023,
+    "eventName": "play_guide507801_systemvoc_1547",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300024,
+    "eventName": "play_guide507801_systemvoc_1548",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300025,
+    "eventName": "play_guide507801_systemvoc_1549",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300026,
+    "eventName": "play_guide507801_systemvoc_1551",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300027,
+    "eventName": "play_guide507801_systemvoc_1552",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300028,
+    "eventName": "play_guide507801_systemvoc_1553",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300029,
+    "eventName": "play_guide507801_systemvoc_1555",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300030,
+    "eventName": "play_guide507801_systemvoc_1556",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300031,
+    "eventName": "play_guide507801_systemvoc_1557",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300032,
+    "eventName": "play_guide507801_systemvoc_1558",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300033,
+    "eventName": "play_guide507801_systemvoc_1559",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300034,
+    "eventName": "play_guide507801_systemvoc_1560",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300035,
+    "eventName": "play_guide507801_systemvoc_1561",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300036,
+    "eventName": "play_guide507801_systemvoc_1562",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300037,
+    "eventName": "play_guide507801_systemvoc_1563",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300038,
+    "eventName": "play_guide507801_systemvoc_1564",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300039,
+    "eventName": "play_guide507801_systemvoc_1566",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300040,
+    "eventName": "play_guide507801_systemvoc_1567",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300041,
+    "eventName": "play_guide507801_systemvoc_1569",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300042,
+    "eventName": "play_guide507801_systemvoc_1570",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300043,
+    "eventName": "play_guide507801_systemvoc_1571",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300044,
+    "eventName": "play_guide507801_systemvoc_1572",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300045,
+    "eventName": "play_guide507801_systemvoc_1573",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300046,
+    "eventName": "play_guide507801_systemvoc_1574",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300047,
+    "eventName": "play_guide507801_systemvoc_1575",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300048,
+    "eventName": "play_guide507801_systemvoc_1576",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300049,
+    "eventName": "play_guide507801_systemvoc_1577",
+    "bankName": "guide507801_systemvoc_part30"
+  },
+  {
+    "id": 923300050,
+    "eventName": "play_battle_chap12_hero3092_1",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300051,
+    "eventName": "play_battle_chap12_hero3092_2",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300052,
+    "eventName": "play_battle_chap12_npc518001_3",
+    "bankName": "npc518001_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300053,
+    "eventName": "play_battle_chap12_hero3092_4",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300054,
+    "eventName": "play_battle_chap12_hero3092_5",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300055,
+    "eventName": "play_monster630411_special_voc",
+    "bankName": "monster630411"
+  },
+  {
+    "id": 923300056,
+    "eventName": "play_battle_chap12_npc518001_7",
+    "bankName": "npc518001_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300057,
+    "eventName": "play_battle_chap12_hero3004_8",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300058,
+    "eventName": "play_battle_chap12_hero3092_9",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300059,
+    "eventName": "play_battle_chap12_hero3092_10",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300060,
+    "eventName": "play_battle_chap12_hero3004_11",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300061,
+    "eventName": "play_battle_chap12_hero3004_12",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300062,
+    "eventName": "play_monster630411_special_voc",
+    "bankName": "monster630411"
+  },
+  {
+    "id": 923300063,
+    "eventName": "play_battle_chap12_npc529603_14",
+    "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300064,
+    "eventName": "play_battle_chap12_hero3092_15",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300065,
+    "eventName": "play_battle_chap12_npc529901_16",
+    "bankName": "npc529901_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300066,
+    "eventName": "play_battle_chap12_npc529901_17",
+    "bankName": "npc529901_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300067,
+    "eventName": "play_battle_chap12_npc529603_18",
+    "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300068,
+    "eventName": "play_battle_chap12_npc529603_19",
+    "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300069,
+    "eventName": "play_battle_chap12_npc529901_20",
+    "bankName": "npc529901_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300070,
+    "eventName": "play_battle_chap12_npc529901_21",
+    "bankName": "npc529901_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300071,
+    "eventName": "play_battle_chap12_hero3092_22",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300072,
+    "eventName": "play_battle_chap12_hero3092_23",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300073,
+    "eventName": "play_level_chap12_hero3004_1",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300074,
+    "eventName": "play_level_chap12_npc530501_2",
+    "bankName": "npc530501_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300075,
+    "eventName": "play_level_chap12_npc530501_3",
+    "bankName": "npc530501_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300076,
+    "eventName": "play_level_chap12_hero3004_4",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300077,
+    "eventName": "play_level_chap12_npc530501_5",
+    "bankName": "npc530501_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300078,
+    "eventName": "play_level_chap12_npc530501_6",
+    "bankName": "npc530501_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300079,
+    "eventName": "play_level_chap12_hero3127_7",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300080,
+    "eventName": "play_level_chap12_hero3127_8",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300081,
+    "eventName": "play_level_chap12_hero3004_9",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300082,
+    "eventName": "play_level_chap12_hero3004_10",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300083,
+    "eventName": "play_level_chap12_hero3004_11",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300084,
+    "eventName": "play_level_chap12_hero3004_12",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300085,
+    "eventName": "play_level_chap12_npc530601_13",
+    "bankName": "npc530601_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300086,
+    "eventName": "play_level_chap12_hero3004_14",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300087,
+    "eventName": "play_level_chap12_hero3004_15",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300088,
+    "eventName": "play_level_chap12_npc530501_16",
+    "bankName": "npc530501_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300089,
+    "eventName": "play_level_chap12_hero3004_17",
+    "bankName": "hero3004_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300090,
+    "eventName": "play_level_chap12_hero3023_18",
+    "bankName": "hero3023_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300091,
+    "eventName": "play_level_chap12_hero3127_19",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300092,
+    "eventName": "play_level_chap12_hero3127_20",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300093,
+    "eventName": "play_level_chap12_hero3127_21",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300094,
+    "eventName": "play_level_chap12_hero3127_22",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300095,
+    "eventName": "play_level_chap12_hero3127_23",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300096,
+    "eventName": "play_level_chap12_hero3127_24",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300097,
+    "eventName": "play_level_chap12_hero3127_25",
+    "bankName": "hero3127_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300098,
+    "eventName": "play_level_chap12_hero3092_26",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300099,
+    "eventName": "play_level_chap12_npc529603_27",
+    "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300100,
+    "eventName": "play_level_chap12_hero3092_28",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300101,
+    "eventName": "play_level_chap12_hero3092_29",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300102,
+    "eventName": "play_level_chap12_hero3092_30",
+    "bankName": "hero3092_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300103,
+    "eventName": "play_level_chap12_npc529603_31",
+    "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923300104,
+    "eventName": "play_level_chap12_npc529603_32",
+    "bankName": "npc529603_level_yuanzheng3_3"
   }
 ]

@@ -61,6 +61,7 @@ PatFaceEnum.patFace = {
 	V2a1_MoonFestival_PanelView = 20102,
 	VersionSummonPanel = 30200,
 	V1a8_Role_PanelSignView_Part2 = 14,
+	V3a3_TowerGiftPanelView = 30301,
 	V1a9_Role_PanelSignView_Part2 = 10901,
 	V3a0_SummerSign_PanelView = 30002,
 	V1a9_AnniversarySign_PanelSignView = 10905,
@@ -112,7 +113,8 @@ PatFaceEnum.CustomCheckCanPatFun = {
 	[PatFaceEnum.patFace.V2a8_WuErLiXiGift] = PatFaceCustomHandler.V2a8_WuErLiXiGiftCheckCanPat,
 	[PatFaceEnum.patFace.V2a8_SelfSelectCharacterView] = PatFaceCustomHandler.V2a8_SelfSelectCharacterViewCheckCanPat,
 	[PatFaceEnum.patFace.BPSkinFaceView] = PatFaceCustomHandler.V2a8_BPSkinFaceViewCanPat,
-	[PatFaceEnum.patFace.PowerMakerPatFaceView] = PatFaceCustomHandler.PowerMakerPatFaceViewCanPat
+	[PatFaceEnum.patFace.PowerMakerPatFaceView] = PatFaceCustomHandler.PowerMakerPatFaceViewCanPat,
+	[PatFaceEnum.patFace.V3a3_TowerGiftPanelView] = PatFaceCustomHandler.V3a3TowerGiftPanelViewPatFaceViewCanPat
 }
 PatFaceEnum.CustomPatFun = {
 	[PatFaceEnum.patFace.DecalogPresent] = PatFaceCustomHandler.decalogPresentPat,
@@ -122,7 +124,8 @@ PatFaceEnum.CustomPatFun = {
 	[PatFaceEnum.patFace.V2a8_WuErLiXiGift] = PatFaceCustomHandler.V2a8_WuErLiXiGiftPat,
 	[PatFaceEnum.patFace.V2a8_SelfSelectCharacterView] = PatFaceCustomHandler.V2a8_SelfSelectCharacterViewPat,
 	[PatFaceEnum.patFace.BPSkinFaceView] = PatFaceCustomHandler.V2a8_openBPSkinFaceViewPat,
-	[PatFaceEnum.patFace.PowerMakerPatFaceView] = PatFaceCustomHandler.PowerMakerPatFaceViewPat
+	[PatFaceEnum.patFace.PowerMakerPatFaceView] = PatFaceCustomHandler.PowerMakerPatFaceViewPat,
+	[PatFaceEnum.patFace.V3a3_TowerGiftPanelView] = PatFaceCustomHandler.V3a3TowerGiftPanelViewPatFaceViewPat
 }
 PatFaceEnum.patFaceCustomWork = {
 	[PatFaceEnum.patFace.V2a0_SummerSign_PanelView] = Activity101SignPatFaceWork,
@@ -204,7 +207,8 @@ PatFaceEnum.patFaceCustomWork = {
 	[PatFaceEnum.patFace.V3a1_NewCultivationDestiny] = NewCultivationGiftPatFaceWork,
 	[PatFaceEnum.patFace.v3a2_Role_SummonNewCustom] = SummonNewCustomPickPatFaceWork,
 	[PatFaceEnum.patFace.VersionSummonPanel] = ActivityVersionSummonPatWork,
-	[PatFaceEnum.patFace.CultivationDestiny] = CultivationDestinyPatWork
+	[PatFaceEnum.patFace.CultivationDestiny] = CultivationDestinyPatWork,
+	[PatFaceEnum.patFace.DoubleDanPanel] = ActivityDoubleDanPanelPatWork
 }
 
 return PatFaceEnum

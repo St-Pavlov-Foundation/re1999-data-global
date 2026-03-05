@@ -25,6 +25,7 @@ function FightPaTaDataMgr:updateData(fightData)
 	self.roundUseLimit = assistBossInfo.roundUseLimit
 	self.exceedUseFree = assistBossInfo.exceedUseFree
 	self.params = assistBossInfo.params
+	self.type = assistBossInfo.type
 	self.preUsePower = 0
 	self.preCostCd = 0
 	self.useCardCount = 0
@@ -158,12 +159,36 @@ function FightPaTaDataMgr:getCurUseSkillInfo()
 	end
 end
 
+function FightPaTaDataMgr:getCurAreaSkillInfo()
+	local power = self:getAssistBossPower()
+
+	for i = #self.bossInfoList, 1, -1 do
+		local skillInfo = self.bossInfoList[i]
+
+		if power >= skillInfo.powerLow and power <= self:getNeedPower(skillInfo) then
+			return skillInfo
+		end
+	end
+end
+
 function FightPaTaDataMgr:getUseCardCount()
 	return self.useCardCount
 end
 
 function FightPaTaDataMgr:getBossSkillInfoList()
 	return self.bossInfoList
+end
+
+function FightPaTaDataMgr:checkIsNormal()
+	return self.type == FightEnum.AssistBossType.Normal
+end
+
+function FightPaTaDataMgr:checkIsAssistRole()
+	return self.type == FightEnum.AssistBossType.CombineBoss3_3
+end
+
+function FightPaTaDataMgr:checkIsRouge3_3()
+	return self.type == FightEnum.AssistBossType.Rouge3_3
 end
 
 return FightPaTaDataMgr

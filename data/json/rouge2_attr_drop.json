@@ -1,0 +1,254 @@
+[
+  {
+    "id": 100111,
+    "career": 1,
+    "attr": 102,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100112,
+    "career": 1,
+    "attr": 102,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100113,
+    "career": 1,
+    "attr": 102,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100114,
+    "career": 1,
+    "attr": 102,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100121,
+    "career": 1,
+    "attr": 103,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100122,
+    "career": 1,
+    "attr": 103,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100123,
+    "career": 1,
+    "attr": 103,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100124,
+    "career": 1,
+    "attr": 103,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100131,
+    "career": 1,
+    "attr": 101,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100132,
+    "career": 1,
+    "attr": 101,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100133,
+    "career": 1,
+    "attr": 101,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100134,
+    "career": 1,
+    "attr": 101,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100211,
+    "career": 2,
+    "attr": 102,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100212,
+    "career": 2,
+    "attr": 102,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100213,
+    "career": 2,
+    "attr": 102,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100214,
+    "career": 2,
+    "attr": 102,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100221,
+    "career": 2,
+    "attr": 103,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100222,
+    "career": 2,
+    "attr": 103,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100223,
+    "career": 2,
+    "attr": 103,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100224,
+    "career": 2,
+    "attr": 103,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100231,
+    "career": 2,
+    "attr": 105,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100232,
+    "career": 2,
+    "attr": 105,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100233,
+    "career": 2,
+    "attr": 105,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100234,
+    "career": 2,
+    "attr": 105,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100311,
+    "career": 4,
+    "attr": 101,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100312,
+    "career": 4,
+    "attr": 101,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100313,
+    "career": 4,
+    "attr": 101,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100314,
+    "career": 4,
+    "attr": 101,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100321,
+    "career": 4,
+    "attr": 102,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100322,
+    "career": 4,
+    "attr": 102,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100323,
+    "career": 4,
+    "attr": 102,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100324,
+    "career": 4,
+    "attr": 102,
+    "level": 4,
+    "needNum": 16
+  },
+  {
+    "id": 100331,
+    "career": 4,
+    "attr": 105,
+    "level": 1,
+    "needNum": 4
+  },
+  {
+    "id": 100332,
+    "career": 4,
+    "attr": 105,
+    "level": 2,
+    "needNum": 8
+  },
+  {
+    "id": 100333,
+    "career": 4,
+    "attr": 105,
+    "level": 3,
+    "needNum": 12
+  },
+  {
+    "id": 100334,
+    "career": 4,
+    "attr": 105,
+    "level": 4,
+    "needNum": 16
+  }
+]

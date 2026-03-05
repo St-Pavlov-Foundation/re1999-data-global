@@ -44,6 +44,7 @@ function SwitchMainUIShowView:onInitView()
 	self._btnrole = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_role")
 	self._btnsummon = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_summon")
 	self._imagesummonfree = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free")
+	self._imagesummonfree2 = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free2")
 	self._imagesummonreddot = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_summonreddot")
 	self._txtpower = gohelper.findChildText(self.viewGO, "right/txtContainer/#txt_power")
 	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
@@ -257,15 +258,21 @@ end
 
 function SwitchMainUIShowView:_refreshSummonNewFlag()
 	local isSummonUnlock = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
+	local needReddot = SummonMainModel.instance:entryNeedReddot()
+
+	gohelper.setActive(self._imagesummonreddot, isSummonUnlock and needReddot)
+
+	local hasFree10Count = SummonMainModel.instance:entryHasFree10Count()
 	local hasNew = SummonMainModel.instance:entryHasNew()
 
 	for _, new in ipairs(self._imagesummonnews) do
-		gohelper.setActive(new, isSummonUnlock and hasNew)
+		gohelper.setActive(new, isSummonUnlock and hasNew and not needReddot and not hasFree10Count)
 	end
 
 	local hasFree = SummonMainModel.instance:entryHasFree()
 
 	gohelper.setActive(self._imagesummonfree, isSummonUnlock and hasFree)
+	gohelper.setActive(self._imagesummonfree2.gameObject, isSummonUnlock and hasFree10Count)
 end
 
 function SwitchMainUIShowView:_refreshRedDot()

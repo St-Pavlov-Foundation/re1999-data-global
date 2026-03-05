@@ -13,7 +13,13 @@ function ActivityWarmUpH5FullViewContainer:buildViews()
 end
 
 function ActivityWarmUpH5FullViewContainer:actId()
-	return self.viewParam and self.viewParam.actId or ActivityType100Config.instance:getWarmUpH5ActivityId()
+	return self.viewParam.actId
+end
+
+function ActivityWarmUpH5FullViewContainer:getBgResUrl(fallback)
+	fallback = fallback or "singlebg_lang/txt_activity/activity_h5_banner.png"
+
+	return ActivityType100Config.instance:getWarmUpH5BgResUrl(self:actId(), fallback)
 end
 
 function ActivityWarmUpH5FullViewContainer:getH5BaseUrl()

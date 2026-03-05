@@ -27,7 +27,7 @@ function CommandStationEnterViewContainer:buildTabViews(tabContainerId)
 	if tabContainerId == 1 then
 		self.navigateView = NavigateButtonsView.New({
 			true,
-			false,
+			true,
 			true
 		}, HelpEnum.HelpId.CommandStationEnter)
 

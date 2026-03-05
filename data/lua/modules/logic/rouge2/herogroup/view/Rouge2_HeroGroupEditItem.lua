@@ -10,10 +10,7 @@ function Rouge2_HeroGroupEditItem:init(go)
 
 	self._heroItem:addClickListener(self._onItemClick, self)
 
-	self._hptextwhite = gohelper.findChildText(go, "hpbg/hptextwhite")
-	self._hptextred = gohelper.findChildText(go, "hpbg/hptextred")
-	self._hpimage = gohelper.findChildImage(go, "hpbg/hp")
-	self._gohp = gohelper.findChild(go, "hpbg")
+	self._goRecommend = gohelper.findChild(go, "#go_Recommend")
 
 	self:_initObj(go)
 end
@@ -25,6 +22,9 @@ function Rouge2_HeroGroupEditItem:_initObj(go)
 
 	transformhelper.setLocalScale(go.transform, 0.8, 0.8, 1)
 	self._heroItem:setStyle_HeroGroupEdit()
+
+	self._teamTipsParam = {}
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.HeroCard)
 end
 
 function Rouge2_HeroGroupEditItem:addEventListeners()
@@ -45,8 +45,6 @@ function Rouge2_HeroGroupEditItem:setAdventureBuff(buffId)
 end
 
 function Rouge2_HeroGroupEditItem:updateLimitStatus()
-	gohelper.setActive(self._gohp, false)
-
 	if HeroGroupModel.instance:isRestrict(self._mo.uid) then
 		self._heroItem:setRestrict(true)
 	else
@@ -70,6 +68,7 @@ function Rouge2_HeroGroupEditItem:onUpdateMO(mo)
 	self:updateLimitStatus()
 	self:updateTrialTag()
 	self:updateTrialRepeat()
+	self:updateRecommendTag()
 
 	local inteam = Rouge2_HeroGroupEditListModel.instance:isInTeamHero(self._mo.uid)
 
@@ -87,8 +86,16 @@ function Rouge2_HeroGroupEditItem:updateTrialTag()
 	self._heroItem:setTrialTxt(txt)
 end
 
+function Rouge2_HeroGroupEditItem:updateRecommendTag()
+	self._teamTipsParam.heroId = self._mo.heroId
+
+	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
+end
+
 function Rouge2_HeroGroupEditItem:updateTrialRepeat()
-	local singleGroupMO = HeroSingleGroupModel.instance:getById(self._view.viewContainer.viewParam.singleGroupMOId)
+	local viewParam = self._view.viewContainer.viewParam
+	local singleGroupMOId = viewParam and viewParam.singleGroupMOId
+	local singleGroupMO = HeroSingleGroupModel.instance:getById(singleGroupMOId)
 
 	if singleGroupMO and not singleGroupMO:isEmpty() and (singleGroupMO.trial and singleGroupMO:getTrialCO().heroId == self._mo.heroId or not singleGroupMO.trial and (not singleGroupMO:getHeroCO() or singleGroupMO:getHeroCO().id == self._mo.heroId)) then
 		if not singleGroupMO.trial and not singleGroupMO.aid and not singleGroupMO:getHeroCO() then
@@ -124,7 +131,9 @@ function Rouge2_HeroGroupEditItem:_onItemClick()
 		return
 	end
 
-	local singleGroupMO = HeroSingleGroupModel.instance:getById(self._view.viewContainer.viewParam.singleGroupMOId)
+	local viewParam = self._view.viewContainer.viewParam
+	local singleGroupMOId = viewParam and viewParam.singleGroupMOId
+	local singleGroupMO = HeroSingleGroupModel.instance:getById(singleGroupMOId)
 
 	if self._mo:isTrial() and not HeroSingleGroupModel.instance:isInGroup(self._mo.uid) and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and Rouge2_HeroGroupEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
@@ -132,7 +141,7 @@ function Rouge2_HeroGroupEditItem:_onItemClick()
 		return
 	end
 
-	if self._mo.isPosLock or not singleGroupMO:isEmpty() and singleGroupMO.trialPos then
+	if singleGroupMO and (self._mo.isPosLock or not singleGroupMO:isEmpty() and singleGroupMO.trialPos) then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return

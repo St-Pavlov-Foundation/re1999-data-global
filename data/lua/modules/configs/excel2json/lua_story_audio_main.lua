@@ -4,9 +4,11 @@ module("modules.configs.excel2json.lua_story_audio_main", package.seeall)
 
 local lua_story_audio_main = {}
 local fields = {
-	id = 1,
 	bankName = 3,
-	eventName = 2
+	eventName_Overseas = 4,
+	bankName_Overseas = 5,
+	eventName = 2,
+	id = 1
 }
 local primaryKey = {
 	"id"

@@ -83,27 +83,57 @@ function Rouge2_EnterScene:initDifficultyItem()
 	local constConfig = Rouge2_Config.instance:getConstCoById(Rouge2_Enum.ConstId.DifficultyIndexCount)
 	local count = tonumber(constConfig.value)
 
+	self._difficultySpineDic = {}
+
 	for i = 1, count do
 		local itemGo = gohelper.findChild(itemParent, "nandu" .. tostring(i))
 
 		table.insert(self._difficultyItemList, itemGo)
 
 		local spinePath = self.viewContainer._viewSetting.otherRes[Rouge2_OutsideEnum.RoleSpineOffset + i]
-		local childGo = gohelper.findChild(itemGo.gameObject, "m_s16_nandu_yuedui" .. tostring(i)).gameObject
-		local spineGo = self:getResInst(spinePath, childGo, "spine" .. tostring(i))
+		local spineCount = Rouge2_OutsideEnum.DifficultySpineCount[i]
+		local spineList = self:getUserDataTb_()
 
-		transformhelper.setLocalScale(spineGo.transform, 0.35, 0.35, 1)
+		for j = 1, spineCount do
+			local subSpinePath = string.format("m_s16_nandu_yuedui%s%s", tostring(i), Rouge2_EnterScene.getIndexStr(1, j - 1, "_"))
+
+			logNormal(subSpinePath)
+
+			local childGo = gohelper.findChild(itemGo.gameObject, subSpinePath)
+			local spineGo = self:getResInst(spinePath, childGo, "spine" .. tostring(j))
+
+			transformhelper.setLocalScale(spineGo.transform, Rouge2_OutsideEnum.NPCRoleSpineScale.x, Rouge2_OutsideEnum.NPCRoleSpineScale.y, 1)
+
+			local spine = gohelper.findChildComponent(spineGo, "", typeof(Spine.Unity.SkeletonAnimation))
+
+			table.insert(spineList, spine)
+			spine:PlayAnim(string.format("nandu%s_idle%s", i, Rouge2_EnterScene.getIndexStr(2, j)), true, true)
+		end
+
+		self._difficultySpineDic[i] = spineList
 	end
 
 	local mainRoleParent = gohelper.findChild(itemParent, "juese")
 	local mainSpinePath = self.viewContainer._viewSetting.otherRes[11]
 	local mainRoleSpineGo = self:getResInst(mainSpinePath, mainRoleParent, "mainRole")
 
-	transformhelper.setLocalScale(mainRoleSpineGo.transform, 0.12, 0.12, 1)
+	transformhelper.setLocalScale(mainRoleSpineGo.transform, Rouge2_OutsideEnum.MainRoleSpineScale.x, Rouge2_OutsideEnum.MainRoleSpineScale.x, 1)
 
 	local spine = gohelper.findChildComponent(mainRoleSpineGo, "", typeof(Spine.Unity.SkeletonAnimation))
 
 	self._difficultyRoleSpine = spine
+end
+
+function Rouge2_EnterScene.getIndexStr(startIndex, index, suffix)
+	if index < startIndex then
+		return ""
+	end
+
+	if suffix then
+		return suffix .. tostring(index)
+	end
+
+	return tostring(index)
 end
 
 function Rouge2_EnterScene:initCareerItem()
@@ -178,7 +208,7 @@ function Rouge2_EnterScene:backEnterScene(sceneIndex)
 	self:stopMoveSceneNode(sceneIndex)
 
 	for index, sceneGo in ipairs(self._sceneGoList) do
-		local active = index == self._sceneIndex
+		local active = index <= self._sceneIndex
 
 		gohelper.setActive(sceneGo, active)
 	end

@@ -80,6 +80,10 @@ end
 function TowerAssistBossModel:getLimitedTrialBossSaveKey(bossMo)
 	local openTowerInfo = TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower()
 
+	if not openTowerInfo then
+		return ""
+	end
+
 	return "TowerLimitedTrialBoss" .. openTowerInfo.towerId .. "_" .. bossMo.id
 end
 

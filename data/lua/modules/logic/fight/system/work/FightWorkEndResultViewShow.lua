@@ -207,6 +207,16 @@ function FightWorkEndResultViewShow:_showSuccView()
 			end
 
 			return
+		elseif episode_config.type == DungeonEnum.EpisodeType.TowerCompose then
+			local needShowTowerCompose = TowerComposeModel.instance:checkCanShowResultView()
+
+			if needShowTowerCompose then
+				TowerComposeController.instance:openTowerComposeResultView()
+			else
+				TowerComposeController.instance:openTowerComposeNormalResultView()
+			end
+
+			return
 		end
 	end
 
@@ -264,11 +274,23 @@ function FightWorkEndResultViewShow:showFailView()
 
 				return
 			end
+		elseif episode_config.type == DungeonEnum.EpisodeType.TowerCompose then
+			local needShowTowerCompose = TowerComposeModel.instance:checkCanShowResultView()
+
+			if needShowTowerCompose then
+				TowerComposeController.instance:openTowerComposeResultView()
+
+				return
+			end
 		end
 	end
 
 	if BossRushController.instance:isInBossRushDungeon() then
-		BossRushController.instance:openResultPanel()
+		if ActivityHelper.isOpen(BossRushConfig.instance:getActivityId()) then
+			BossRushController.instance:openResultPanel()
+		else
+			FightController.onResultViewClose()
+		end
 
 		return
 	end

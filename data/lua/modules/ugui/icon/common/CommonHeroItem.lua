@@ -63,6 +63,7 @@ function CommonHeroItem:init(go)
 	self._goTrialTag = gohelper.findChild(go, "trialTag")
 	self._txtTrialTag = gohelper.findChildTextMesh(go, "trialTag/#txt_trialTag")
 	self._goTrialRepeat = gohelper.findChild(go, "trialRepeat")
+	self._txttrialRepeat = gohelper.findChildText(go, "trialRepeat/repeatcn")
 	self._animRepeat = self._goTrialRepeat:GetComponent(typeof(UnityEngine.Animator))
 
 	self:_initObj()
@@ -137,6 +138,7 @@ function CommonHeroItem:_initObj()
 	}
 
 	self:isShowSeasonMask(false)
+	self:setTrialRepeatCn(luaLang("p_commonheroitemnew_repeat"))
 end
 
 function CommonHeroItem:addClickListener(callback, callbackObj)
@@ -701,6 +703,12 @@ function CommonHeroItem:setStyle_SurvivalHeroGroupEdit()
 	self:_setTxtPos("_nameEnTxt", 0.55, 36.1)
 	self:_setTxtPos("_lvObj", 1.7, 75)
 	self:_setTxtPos("_rankObj", 1.7, -107.7)
+end
+
+function CommonHeroItem:setTrialRepeatCn(txt)
+	if not string.nilorempty(txt) then
+		self._txttrialRepeat.text = txt
+	end
 end
 
 return CommonHeroItem

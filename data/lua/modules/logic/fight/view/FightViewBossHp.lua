@@ -68,6 +68,7 @@ function FightViewBossHp:onOpen()
 	self:com_registFightEvent(FightEvent.OnShieldChange, self._onShieldChange)
 	self:com_registFightEvent(FightEvent.OnMonsterChange, self._onMonsterChange)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStage)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset)
 	self:com_registFightEvent(FightEvent.GMHideFightView, self._checkBossAndUpdate)
 	self:com_registFightEvent(FightEvent.OnMaxHpChange, self._onMaxHpChange)
 	self:com_registFightEvent(FightEvent.OnCurrentHpChange, self._onCurrentHpChange)
@@ -177,6 +178,12 @@ function FightViewBossHp:_refreshBossHpUI()
 end
 
 function FightViewBossHp:_onRestartStage()
+	gohelper.setActive(self._bossHpGO, false)
+
+	self._bossEntityMO = nil
+end
+
+function FightViewBossHp:_onSwitchPlaneClearAsset()
 	gohelper.setActive(self._bossHpGO, false)
 
 	self._bossEntityMO = nil

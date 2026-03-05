@@ -40,6 +40,18 @@ function HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(episodeId)
 	return episodeType == DungeonEnum.EpisodeType.TowerPermanent or episodeType == DungeonEnum.EpisodeType.TowerBoss or episodeType == DungeonEnum.EpisodeType.TowerLimited or episodeType == DungeonEnum.EpisodeType.TowerDeep
 end
 
+function HeroGroupHandler.checkIsTowerComposeEpisodeByEpisodeId(episodeId)
+	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if not episdoeConfig then
+		return false
+	end
+
+	local episodeType = episdoeConfig.type
+
+	return episodeType == DungeonEnum.EpisodeType.TowerCompose
+end
+
 function HeroGroupHandler.getTowerBossSnapShot(episodeId)
 	local heroGroupSnapshotType = ModuleEnum.HeroGroupSnapshotType.TowerBoss
 	local towerId = TowerConfig.instance:getBossTowerIdByEpisodeId(episodeId)
@@ -57,6 +69,36 @@ function HeroGroupHandler.getTowerPermanentSnapShot(episodeId)
 		2,
 		3,
 		4
+	}
+
+	return heroGroupSnapshotType, snapshotSubIds
+end
+
+function HeroGroupHandler.getTowerComposeSnapShot(episodeId)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local snapshotSubIds = {
+		1,
+		2,
+		3,
+		4
+	}
+
+	if not recordFightParam then
+		return ModuleEnum.HeroGroupSnapshotType.TowerComposeNormal, snapshotSubIds
+	end
+
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(recordFightParam.themeId, recordFightParam.layerId)
+	local heroGroupSnapshotType = towerEpisodeConfig.plane > 0 and ModuleEnum.HeroGroupSnapshotType.TowerComposeBoss or ModuleEnum.HeroGroupSnapshotType.TowerComposeNormal
+
+	snapshotSubIds = {
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8
 	}
 
 	return heroGroupSnapshotType, snapshotSubIds
@@ -102,6 +144,7 @@ HeroGroupHandler.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerBossSnapShot,
 	[DungeonEnum.EpisodeType.TowerLimited] = HeroGroupHandler.getTowerPermanentSnapShot,
 	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.getTowerPermanentSnapShot,
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeSnapShot,
 	[DungeonEnum.EpisodeType.Act183] = HeroGroupHandler.getAct183SnapShot,
 	[DungeonEnum.EpisodeType.Shelter] = HeroGroupHandler.getShelterSnapShot,
 	[DungeonEnum.EpisodeType.Survival] = HeroGroupHandler.getSurvivalSnapShot
@@ -128,11 +171,23 @@ function HeroGroupHandler.getTowerTrialHeros(episodeId)
 	return trialConfig and trialConfig.heroIds
 end
 
+function HeroGroupHandler.getTowerComposeTrialHeros(episodeId)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(recordFightParam.themeId, recordFightParam.layerId)
+
+	if towerEpisodeConfig then
+		return HeroGroupHandler.getTowerTrialHeros(episodeId)
+	end
+
+	return ""
+end
+
 HeroGroupHandler.getTrialHerosHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.getTowerTrialHeros,
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerTrialHeros,
 	[DungeonEnum.EpisodeType.TowerLimited] = HeroGroupHandler.getTowerTrialHeros,
-	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.getTowerTrialHeros
+	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.getTowerTrialHeros,
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeTrialHeros
 }
 
 function HeroGroupHandler.getTrialHeros(episodeId)
@@ -197,7 +252,8 @@ HeroGroupHandler.getHeroListDataHandlerFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerLimited] = HeroGroupHandler.setTowerHeroListData,
-	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.setTowerHeroListData
+	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.setTowerHeroListData,
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.setTowerHeroListData
 }
 
 function HeroGroupHandler.hanldeHeroListData(episodeId)
@@ -208,6 +264,39 @@ function HeroGroupHandler.hanldeHeroListData(episodeId)
 	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
 	local episodeType = episdoeConfig.type
 	local func = HeroGroupHandler.getHeroListDataHandlerFunc[episodeType]
+
+	if func then
+		return func(episodeId)
+	end
+end
+
+function HeroGroupHandler.getHeroTeamRoleNum(episodeId)
+	local isTowerComposeEpisode = TowerComposeHeroGroupModel.instance:isTowerComposeEpisode(episodeId)
+
+	if not isTowerComposeEpisode then
+		return
+	end
+
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(recordFightParam.themeId, recordFightParam.layerId)
+	local heroGroupId = towerEpisodeConfig.plane > 0 and ModuleEnum.HeroGroupSnapshotType.TowerComposeBoss or ModuleEnum.HeroGroupSnapshotType.TowerComposeNormal
+	local heroTeamConfig = lua_hero_team.configDict[heroGroupId]
+
+	return heroTeamConfig.batNum
+end
+
+HeroGroupHandler.getHeroRoleNumHandleFunc = {
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getHeroTeamRoleNum
+}
+
+function HeroGroupHandler.getHeroRoleOpenNum(episodeId)
+	if not episodeId then
+		return
+	end
+
+	local episdoeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+	local episodeType = episdoeConfig.type
+	local func = HeroGroupHandler.getHeroRoleNumHandleFunc[episodeType]
 
 	if func then
 		return func(episodeId)

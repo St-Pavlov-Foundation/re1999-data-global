@@ -8,6 +8,23 @@ local enemySideIdCounter = -1000001
 local Vector2Zero = Vector2.zero
 
 function FightHelper.getEntityStanceId(fightEntityMO, waveId)
+	if FightHelper.checkInPaTaAfterSwitchScene() then
+		local key = FightParamData.ParamKey.SceneId
+		local param = FightDataHelper.fieldMgr.param
+		local sceneId = param and param:getKey(key)
+		local co = sceneId and lua_stance_pata_switch_scene.configDict[sceneId]
+
+		if co then
+			if fightEntityMO and fightEntityMO.side == FightEnum.EntitySide.MySide then
+				return co.myStanceId
+			else
+				return co.enemyStanceId
+			end
+		else
+			logError("stance_pata_switch_scene config is not exist : " .. tostring(sceneId))
+		end
+	end
+
 	local stanceId = FightEnum.MySideDefaultStanceId
 
 	if fightEntityMO and fightEntityMO.side == FightEnum.EntitySide.MySide then
@@ -51,12 +68,16 @@ function FightHelper.getEntityStanceId(fightEntityMO, waveId)
 end
 
 function FightHelper.getEntityStandPos(fightEntityMO, waveId)
-	if fightEntityMO:isVorpalith() or fightEntityMO:isVorpalith() then
+	if fightEntityMO:isVorpalith() or fightEntityMO:isRouge2Music() or fightEntityMO:isASFDEmitter() then
 		return 0, 0, 0, 1
 	end
 
 	if fightEntityMO:isAssistBoss() then
-		return FightHelper.getAssistBossStandPos(fightEntityMO, waveId)
+		if FightDataHelper.paTaMgr:checkIsAssistRole() then
+			return FightHelper.getAssistRoleStandPos(fightEntityMO, waveId)
+		else
+			return FightHelper.getAssistBossStandPos(fightEntityMO, waveId)
+		end
 	end
 
 	if fightEntityMO:isAct191Boss() then
@@ -105,7 +126,7 @@ function FightHelper.getEntityStandPos(fightEntityMO, waveId)
 
 	if not pos or not pos[1] or not pos[2] or not pos[3] then
 		if isDebugBuild then
-			logError("stance pos nil: stance_" .. (stanceId or "nil") .. " posIndex_" .. (fightEntityMO.position or "nil"))
+			logError(string.format("stance pos nil:  stanceId : %s, posIndex : %s, uid : %s", stanceId, fightEntityMO.position, fightEntityMO.uid))
 		end
 
 		return 0, 0, 0, 1
@@ -179,6 +200,32 @@ function FightHelper.getAssistBossStandPos(fightEntityMo, waveId)
 	return pos[1], pos[2], pos[3], bossStanceCo.scale
 end
 
+function FightHelper.getAssistRoleStandPos(fightEntityMo, waveId)
+	local stanceId = FightHelper.getEntityStanceId(fightEntityMo, waveId)
+	local stanceCo = lua_stance.configDict[stanceId]
+
+	if not stanceCo then
+		local fightParam = FightModel.instance:getFightParam()
+		local battleId = fightParam and fightParam.battleId
+
+		logError("我方用了不存在的站位，战斗id=" .. tostring(battleId) .. "， 站位id=" .. tostring(stanceId))
+
+		return 0, 0, 0, 1
+	end
+
+	local pos = stanceCo.pos3
+
+	if not pos or not pos[1] or not pos[2] or not pos[3] then
+		if isDebugBuild then
+			logError(string.format("站位表id = %s，没有3号位置", stanceId))
+		end
+
+		pos = stanceCo.pos1
+	end
+
+	return pos[1], pos[2], pos[3], pos[4] or 1
+end
+
 function FightHelper.getSpineLookDir(entitySide)
 	return entitySide == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right
 end
@@ -210,7 +257,7 @@ end
 
 function FightHelper.getEntity(id)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 
 		return entityMgr:getEntity(id)
 	end
@@ -276,15 +323,13 @@ end
 
 function FightHelper.getSideEntitys(side, includeSub)
 	local list = {}
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local entitys = entityMgr:getTagUnitDict(tag)
+	local entityMgr = FightGameMgr.entityMgr
 
-	if entitys then
-		for _, entity in pairs(entitys) do
-			if not FightDataHelper.entityMgr:isAssistBoss(entity.id) and not FightDataHelper.entityMgr:isAct191Boss(entity.id) and (includeSub or not FightDataHelper.entityMgr:isSub(entity.id)) then
-				table.insert(list, entity)
-			end
+	for _, entity in pairs(entityMgr.entityDic) do
+		local entitySide = entity.entityData.side
+
+		if entitySide == side and entity:getTag() ~= SceneTag.UnitNpc and not FightDataHelper.entityMgr:isAssistBoss(entity.id) and not FightDataHelper.entityMgr:isAct191Boss(entity.id) and (includeSub or not FightDataHelper.entityMgr:isSub(entity.id)) then
+			table.insert(list, entity)
 		end
 	end
 
@@ -293,12 +338,12 @@ end
 
 function FightHelper.getAllSideEntitys(side)
 	local list = {}
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local entitys = entityMgr:getTagUnitDict(tag)
+	local entityMgr = FightGameMgr.entityMgr
 
-	if entitys then
-		for _, entity in pairs(entitys) do
+	for _, entity in pairs(entityMgr.entityDic) do
+		local entitySide = entity.entityData.side
+
+		if entitySide == side and entity:getTag() ~= SceneTag.UnitNpc then
 			table.insert(list, entity)
 		end
 	end
@@ -307,15 +352,11 @@ function FightHelper.getAllSideEntitys(side)
 end
 
 function FightHelper.getSubEntity(side)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local entitys = entityMgr:getTagUnitDict(tag)
+	local entityMgr = FightGameMgr.entityMgr
 
-	if entitys then
-		for _, entity in pairs(entitys) do
-			if not entity.isDead and FightDataHelper.entityMgr:isSub(entity.id) then
-				return entity
-			end
+	for entityId, entity in pairs(entityMgr.entityDic) do
+		if not entity.isDead and entity:getTag() ~= SceneTag.UnitNpc and FightDataHelper.entityMgr:isSub(entity.id) then
+			return entity
 		end
 	end
 end
@@ -324,18 +365,10 @@ function FightHelper.getAllEntitys()
 	local list = {}
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-		local mySide = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
-		local enemySide = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
+		local entityMgr = FightGameMgr.entityMgr
 
-		if mySide then
-			for _, entity in pairs(mySide) do
-				table.insert(list, entity)
-			end
-		end
-
-		if enemySide then
-			for _, entity in pairs(enemySide) do
+		for _, entity in pairs(entityMgr.entityDic) do
+			if entity:getTag() ~= SceneTag.UnitNpc then
 				table.insert(list, entity)
 			end
 		end
@@ -367,12 +400,11 @@ function FightHelper.getAllEntitysContainUnitNpc()
 	local list = {}
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-		local mySide = entityMgr:getTagUnitDict(SceneTag.UnitPlayer)
-		local enemySide = entityMgr:getTagUnitDict(SceneTag.UnitMonster)
-		local npcSide = entityMgr:getTagUnitDict(SceneTag.UnitNpc)
+		local entityMgr = FightGameMgr.entityMgr
 
-		LuaUtil.mergeTable(list, mySide, enemySide, npcSide)
+		for _, entity in pairs(entityMgr.entityDic) do
+			table.insert(list, entity)
+		end
 	end
 
 	return list
@@ -1475,7 +1507,6 @@ function FightHelper.detectXingTiSpecialUrl(entity)
 		local side = entity:getSide()
 
 		return FightHelper.isShowTogether(side, {
-			3025,
 			3028
 		})
 	end
@@ -1491,7 +1522,7 @@ function FightHelper.isShowTogether(side, hero_ids)
 		end
 	end
 
-	if count == #hero_ids then
+	if count > 0 then
 		return true
 	end
 end
@@ -1921,7 +1952,35 @@ function FightHelper.getAssembledEffectPosOfSpineHangPointRoot(entity, effectNam
 	return FightHelper.getProcessEntitySpineLocalPos(entity)
 end
 
-function FightHelper.processBuffEffectPath(path, entity, buffId, fieldName, audioId)
+function FightHelper.processBuffEffectPath(path, entity, buffId, fieldName, audioId, buffData)
+	if buffData then
+		local changeBySkinConfig = lua_fight_change_buff_effect_by_skin.configDict[path]
+
+		if changeBySkinConfig then
+			local entityData = FightDataHelper.entityMgr:getById(entity.id)
+
+			changeBySkinConfig = changeBySkinConfig[1]
+			changeBySkinConfig = changeBySkinConfig and changeBySkinConfig[entityData.skin]
+
+			if not changeBySkinConfig then
+				changeBySkinConfig = lua_fight_change_buff_effect_by_skin.configDict[path]
+				changeBySkinConfig = changeBySkinConfig[2]
+
+				local fromEntityData = FightDataHelper.entityMgr:getById(buffData.fromUid)
+
+				changeBySkinConfig = fromEntityData and changeBySkinConfig[fromEntityData.skin]
+			end
+
+			if changeBySkinConfig then
+				local path = changeBySkinConfig.changedPath
+				local audio = changeBySkinConfig.audio
+				local duration = changeBySkinConfig.duration
+
+				return path, audio ~= 0 and audio or audioId, changeBySkinConfig.effectHangPoint, duration ~= 0 and duration
+			end
+		end
+	end
+
 	local config = lua_fight_effect_buff_skin.configDict[buffId]
 
 	if config then
@@ -1950,7 +2009,7 @@ function FightHelper.processBuffEffectPath(path, entity, buffId, fieldName, audi
 				if config[skin] and not string.nilorempty(config[skin][fieldName]) then
 					local replaceAudio = config[skin][fieldName2Audio[fieldName]]
 
-					return config[skin][fieldName], replaceAudio ~= 0 and replaceAudio or audioId, config[skin]
+					return config[skin][fieldName], replaceAudio ~= 0 and replaceAudio or audioId, config[skin].effectHang
 				end
 			end
 		end
@@ -2561,24 +2620,13 @@ function FightHelper.buildMonsterA2B(entity, oldEntityMO, fightFlow, work)
 end
 
 function FightHelper.removeEntity(entityId)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local entity = FightHelper.getEntity(entityId)
-
-	if entity then
-		entityMgr:removeUnit(entity:getTag(), entity.id)
-	end
+	FightGameMgr.entityMgr:delEntity(entityId)
 end
 
 function FightHelper.setBossEvolution(fighthelper, entity, config)
-	FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, entity, config.nextSkinId)
+	FightGameMgr.entityMgr.entityDic[entity.id] = nil
+
 	FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, entity, config.nextSkinId)
-
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local tarEntity = FightHelper.getEntity(entity.id)
-
-	if tarEntity == entity then
-		entityMgr:removeUnitData(entity:getTag(), entity.id)
-	end
 end
 
 function FightHelper.buildDeadPerformanceWork(config, entity)
@@ -2965,6 +3013,10 @@ function FightHelper.calcRect(entity, transform)
 		return 10000, 10000, 10000, 10000
 	end
 
+	if gohelper.isNil(bodyStaticGO) then
+		return 10000, 10000, 10000, 10000
+	end
+
 	local bodyPosX, bodyPosY, bodyPosZ = transformhelper.getPos(bodyStaticGO.transform)
 	local entityMo = entity:getMO()
 	local skin = entityMo and entityMo.skin
@@ -3085,12 +3137,13 @@ function FightHelper.getNextRoundGetCardList()
 		local skillIds = string.splitToNumber(v.skillId, "#")
 
 		for index, id in ipairs(skillIds) do
-			local tab = {
-				uid = v.entityId,
-				skillId = id,
-				tempCard = v.tempCard
-			}
-			local cardInfoMO = FightCardInfoData.New(tab)
+			local cardProto = FightDef_pb.CardInfo()
+
+			cardProto.uid = v.entityId
+			cardProto.skillId = id
+			cardProto.tempCard = v.tempCard
+
+			local cardInfoMO = FightCardInfoData.New(cardProto)
 
 			table.insert(cardList, cardInfoMO)
 		end
@@ -3844,11 +3897,25 @@ function FightHelper.isPreDeleteSkill(skillId)
 end
 
 function FightHelper.getASFDMgr()
+	return FightGameMgr.asfdMgr
+end
+
+function FightHelper.getTransitionMgr()
 	local curScene = GameSceneMgr.instance:getCurScene()
 	local sceneMgr = curScene and curScene.mgr
-	local asfdMgr = sceneMgr and sceneMgr:getASFDMgr()
+	local transitionMgr = sceneMgr and sceneMgr.transitionMgr
 
-	return asfdMgr
+	return transitionMgr
+end
+
+function FightHelper.checkTransitionIsEmpty()
+	local transitionMgr = FightHelper.getTransitionMgr()
+
+	if not transitionMgr then
+		return true
+	end
+
+	return transitionMgr:checkTransitionIsEmpty()
 end
 
 function FightHelper.getEntityCareer(entityId)
@@ -4219,6 +4286,44 @@ function FightHelper.checkBuffMoHasBuffActId(buffMo, buffActId)
 	local buffCo = buffMo:getCO()
 
 	return FightHelper.checkBuffCoHasBuffActId(buffCo, buffActId)
+end
+
+function FightHelper.getActEffectData(targetEffectType, fightStep)
+	local actEffectList = fightStep and fightStep.actEffect
+
+	if not actEffectList then
+		return
+	end
+
+	local actEffect
+
+	for i, actEffectData in ipairs(actEffectList) do
+		local effectType = actEffectData.effectType
+
+		if effectType == FightEnum.EffectType.FIGHTSTEP then
+			actEffect = FightHelper.getActEffectData(targetEffectType, actEffectData.fightStep)
+		elseif effectType == targetEffectType then
+			actEffect = actEffectData
+		end
+
+		if actEffect then
+			return actEffect
+		end
+	end
+
+	return nil
+end
+
+function FightHelper.checkInPaTaAfterSwitchScene()
+	if not FightDataHelper.fieldMgr:is3_3PaTa() then
+		return false
+	end
+
+	local key = FightParamData.ParamKey.SceneId
+	local param = FightDataHelper.fieldMgr.param
+	local value = param and param:getKey(key)
+
+	return value ~= nil
 end
 
 return FightHelper

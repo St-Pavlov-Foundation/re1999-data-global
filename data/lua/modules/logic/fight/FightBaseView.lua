@@ -181,24 +181,6 @@ function FightBaseView:com_createObjList(callback, dataList, parentObj, opItem)
 	gohelper.CreateObjList(self, callback, dataList, parentObj, opItem)
 end
 
-function FightBaseView:addEventCb(ctrlInstance, evtName, callback, cbObj, priority)
-	local comp = self:getComponent(FightEventComponent)
-
-	comp:registEvent(ctrlInstance, evtName, callback, cbObj, priority)
-end
-
-function FightBaseView:removeEventCb(ctrlInstance, evtName, callback, cbObj)
-	if not ctrlInstance or not evtName or not callback then
-		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
-
-		return
-	end
-
-	local comp = self:getComponent(FightEventComponent)
-
-	comp:cancelEvent(ctrlInstance, evtName, callback, cbObj)
-end
-
 function FightBaseView:com_registViewItemList(gameObject, itemClass, parentObject)
 	local comp = self:getComponent(FightObjItemListComponent)
 

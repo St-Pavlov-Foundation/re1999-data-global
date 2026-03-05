@@ -43,6 +43,7 @@ function SettingsGraphicsView:onInitView()
 	self._goHdModeOff = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/strength/switch/btn/off")
 	self._golowfps = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_lowfps")
 	self._gohighfps = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/framerate/#btn_framerateswitch/#go_highfps")
+	self._framerate = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/framerate")
 	self._goscreen = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/screen")
 	self._btnfullscreenswitch = gohelper.findChildButtonWithAudio(self.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch")
 	self._gofullscreenon = gohelper.findChild(self.viewGO, "graphicsScroll/Viewport/Content/screen/fullscreen/text/#btn_fullscreenswitch/#go_fullscreenon")
@@ -188,7 +189,7 @@ end
 function SettingsGraphicsView:_btnvideoOnClick()
 	local compatible = SettingsModel.instance:getVideoCompatible()
 
-	if compatible == false then
+	if compatible == false and not BootNativeUtil.isMuMu() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.SettingVideoCompatible, MsgBoxEnum.BoxType.Yes_No, function()
 			self:_switchVideoCompatible()
 		end)
@@ -293,7 +294,10 @@ function SettingsGraphicsView:_editableInitView()
 	self._framerateDrop:SetValue(SettingsModel.instance:getCurrentFrameRateIndex() + 1)
 	self:_refreshVerticalUI()
 	gohelper.setActive(self.verticalmode, BootNativeUtil.isWindows())
-	gohelper.setActive(self._videoHD, not VersionValidator.instance:isInReviewing())
+
+	if BootNativeUtil.isMuMu() then
+		gohelper.setActive(self._framerate, false)
+	end
 end
 
 function SettingsGraphicsView:_onChangeLangTxt()

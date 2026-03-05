@@ -73,8 +73,8 @@ function Rouge2_MapLocalDataHelper.setItemReddotStatus(itemUid, status)
 
 	local itemStatusStrList = {}
 
-	for uid, status in pairs(readItemMap) do
-		table.insert(itemStatusStrList, string.format("%s#%s", uid, status))
+	for uid, itemStatus in pairs(readItemMap) do
+		table.insert(itemStatusStrList, string.format("%s#%s", uid, itemStatus))
 	end
 
 	local itemStatusStr = table.concat(itemStatusStrList, "|")

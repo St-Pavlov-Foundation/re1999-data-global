@@ -10,7 +10,6 @@ function FightEntityEvolutionMgr:onConstructor()
 	self._skinId2Entity = {}
 	self._skinIds = {}
 	self._delayReleaseEntity = {}
-	self._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
 	self:com_registMsg(FightMsgId.SetBossEvolution, self._onSetBossEvolution)
 	self:com_registMsg(FightMsgId.PlayTimelineSkill, self._onPlayTimelineSkill)
@@ -122,7 +121,7 @@ function FightEntityEvolutionMgr:_onPlayTimelineSkillFinish()
 
 		if self._entityVisible[v.id] == 0 then
 			v:setAlpha(1, 0.2)
-			self._entityMgr:adjustSpineLookRotation(v)
+			FightGameMgr.entityMgr:adjustSpineLookRotation(v)
 		end
 	end
 end
@@ -137,7 +136,7 @@ end
 
 function FightEntityEvolutionMgr:_releaseEntity(entity)
 	if self._entityDic[entity.id] then
-		self._entityMgr:destroyUnit(entity)
+		self._entityDic[entity.id]:disposeSelf()
 
 		self._entityDic[entity.id] = nil
 		self._entityVisible[entity.id] = nil

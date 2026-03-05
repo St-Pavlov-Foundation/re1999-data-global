@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1400,
+    "themeId": 1,
+    "req": 0,
+    "name": "language_10107480",
+    "desc": "language_10107481",
+    "icon": "language_10107482",
+    "additionRule": "",
+    "exLevel": ""
+  },
+  {
+    "id": 1401,
+    "themeId": 1,
+    "req": 50,
+    "name": "language_10107483",
+    "desc": "language_10106139",
+    "icon": "language_10107484",
+    "additionRule": "1#113330002",
+    "exLevel": ""
+  },
+  {
+    "id": 1402,
+    "themeId": 1,
+    "req": 100,
+    "name": "language_10107485",
+    "desc": "language_10106140",
+    "icon": "language_10107486",
+    "additionRule": "1#113330003",
+    "exLevel": ""
+  },
+  {
+    "id": 1403,
+    "themeId": 1,
+    "req": 200,
+    "name": "language_10107487",
+    "desc": "language_10106138",
+    "icon": "language_10107488",
+    "additionRule": "1#113330001|1#113330012",
+    "exLevel": "1#1|2#1"
+  },
+  {
+    "id": 1404,
+    "themeId": 1,
+    "req": 300,
+    "name": "language_10090331",
+    "desc": "language_10106141",
+    "icon": "language_10107489",
+    "additionRule": "1#113330004",
+    "exLevel": ""
+  },
+  {
+    "id": 1405,
+    "themeId": 1,
+    "req": 400,
+    "name": "language_10103386",
+    "desc": "language_10106142",
+    "icon": "language_10107490",
+    "additionRule": "1#113330005",
+    "exLevel": ""
+  },
+  {
+    "id": 1406,
+    "themeId": 1,
+    "req": 500,
+    "name": "language_10072832",
+    "desc": "language_10106143",
+    "icon": "language_10107491",
+    "additionRule": "1#113330006",
+    "exLevel": ""
+  },
+  {
+    "id": 2401,
+    "themeId": 2,
+    "req": 600,
+    "name": "language_10090339",
+    "desc": "language_10106144",
+    "icon": "language_10107488",
+    "additionRule": "1#113330007",
+    "exLevel": ""
+  },
+  {
+    "id": 2402,
+    "themeId": 2,
+    "req": 700,
+    "name": "language_10018041",
+    "desc": "language_10106145",
+    "icon": "language_10107484",
+    "additionRule": "1#113330008",
+    "exLevel": ""
+  },
+  {
+    "id": 3401,
+    "themeId": 3,
+    "req": 800,
+    "name": "language_10090260",
+    "desc": "language_10106146",
+    "icon": "language_10107486",
+    "additionRule": "2#113330009",
+    "exLevel": ""
+  },
+  {
+    "id": 3402,
+    "themeId": 3,
+    "req": 900,
+    "name": "language_10100054",
+    "desc": "language_10106147",
+    "icon": "language_10107489",
+    "additionRule": "1#113330010",
+    "exLevel": ""
+  }
+]

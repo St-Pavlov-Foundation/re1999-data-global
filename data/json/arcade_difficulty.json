@@ -1,0 +1,26 @@
+[
+  {
+    "level": 0,
+    "scope": "100",
+    "addSkill": 3308100,
+    "characterTurnTime": 2000
+  },
+  {
+    "level": 1,
+    "scope": "101#102",
+    "addSkill": 3308101,
+    "characterTurnTime": 2000
+  },
+  {
+    "level": 2,
+    "scope": "201#202#203",
+    "addSkill": 3308102,
+    "characterTurnTime": 2000
+  },
+  {
+    "level": 3,
+    "scope": "301#302#303#304",
+    "addSkill": 3308103,
+    "characterTurnTime": 2000
+  }
+]

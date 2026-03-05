@@ -84,15 +84,16 @@ function FightViewWaitingAreaVersion1:onDestroyView()
 	end
 end
 
-function FightViewWaitingAreaVersion1:_onAddUseCard(cardIndexList)
+function FightViewWaitingAreaVersion1:_onAddUseCard(cardIndexList, behaviourIdList)
 	local usedCards = FightPlayCardModel.instance:getUsedCards()
 	local find = false
 
-	for _, cardIndex in ipairs(cardIndexList) do
+	for i, cardIndex in ipairs(cardIndexList) do
 		local cardInfo = usedCards[cardIndex]
 
 		if cardInfo then
 			cardInfo.CUSTOMADDUSECARD = true
+			cardInfo.CUSTOM_BehaviourId = behaviourIdList[i]
 			find = true
 		end
 	end

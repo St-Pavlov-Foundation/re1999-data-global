@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBossRush", package.seeall)
 
-local FightEntitySpecialEffectBossRush = class("FightEntitySpecialEffectBossRush", UserDataDispose)
+local FightEntitySpecialEffectBossRush = class("FightEntitySpecialEffectBossRush", FightBaseClass)
 local VariantKey = "_STYLIZATIONMOSTER2_ON"
 local NoiceMapKey = "_NoiseMap3"
 local NoiseMapName = "noise_02_manual"
@@ -19,20 +19,18 @@ local BuffBreakId = {
 }
 local Break_w_Value = 1
 
-function FightEntitySpecialEffectBossRush:ctor(entity)
-	self:__onInit()
-
+function FightEntitySpecialEffectBossRush:onConstructor(entity)
 	self._entity = entity
 	self._textureAssetItem = nil
 	self._texture = nil
 	self._isLoadingTexture = false
 	self._stageEffectList = {}
 
-	TaskDispatcher.runDelay(self._delayCheckMat, self, 0.01)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:com_registSingleTimer(self._delayCheckMat, 0.01)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 end
 
 function FightEntitySpecialEffectBossRush:_onSkillPlayStart(entity, skillId, fightStepData, timelineName)
@@ -66,11 +64,9 @@ function FightEntitySpecialEffectBossRush:_onBuffUpdate(targetId, effectType, bu
 
 			self:_delayCheckMat()
 		else
-			TaskDispatcher.cancelTask(self._delayCheckMat, self)
-
 			local delay = 0.5 / FightModel.instance:getSpeed()
 
-			TaskDispatcher.runDelay(self._delayCheckMat, self, delay)
+			self:com_registSingleTimer(self._delayCheckMat, delay)
 		end
 	end
 end
@@ -282,7 +278,7 @@ function FightEntitySpecialEffectBossRush:_clearMissingEffect()
 	end
 end
 
-function FightEntitySpecialEffectBossRush:releaseSelf()
+function FightEntitySpecialEffectBossRush:onDestructor()
 	if self._stageEffectList then
 		for _, effectWrap in ipairs(self._stageEffectList) do
 			FightEffectPool.returnEffect(effectWrap)
@@ -293,12 +289,6 @@ function FightEntitySpecialEffectBossRush:releaseSelf()
 
 	self._stageEffectList = nil
 
-	TaskDispatcher.cancelTask(self._delayCheckMat, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-
 	if self._textureAssetItem then
 		self._textureAssetItem:Release()
 
@@ -306,12 +296,6 @@ function FightEntitySpecialEffectBossRush:releaseSelf()
 	end
 
 	self._texture = nil
-
-	self:__onDispose()
-end
-
-function FightEntitySpecialEffectBossRush:disposeSelf()
-	self:releaseSelf()
 end
 
 return FightEntitySpecialEffectBossRush

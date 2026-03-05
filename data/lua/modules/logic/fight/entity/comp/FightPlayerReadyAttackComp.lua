@@ -2,29 +2,19 @@
 
 module("modules.logic.fight.entity.comp.FightPlayerReadyAttackComp", package.seeall)
 
-local FightPlayerReadyAttackComp = class("FightPlayerReadyAttackComp", LuaCompBase)
+local FightPlayerReadyAttackComp = class("FightPlayerReadyAttackComp", FightBaseClass)
 
-function FightPlayerReadyAttackComp:ctor(entity)
+function FightPlayerReadyAttackComp:onConstructor(entity)
 	self.entity = entity
+
+	self:com_registFightEvent(FightEvent.OnPlayHandCard, self._onPlayHandCard)
+	self:com_registFightEvent(FightEvent.OnRevertCard, self._onRevertCard)
+	self:com_registFightEvent(FightEvent.OnResetCard, self._onResetCard)
+	self:com_registFightEvent(FightEvent.BeforePlaySkill, self._beforePlaySkill)
+	self:com_registFightEvent(FightEvent.StageChanged, self._onStageChange)
 end
 
-function FightPlayerReadyAttackComp:addEventListeners()
-	self:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
-	self:addEventCb(FightController.instance, FightEvent.OnRevertCard, self._onRevertCard, self)
-	self:addEventCb(FightController.instance, FightEvent.OnResetCard, self._onResetCard, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
-	self:addEventCb(FightController.instance, FightEvent.StageChanged, self._onStageChange, self)
-end
-
-function FightPlayerReadyAttackComp:removeEventListeners()
-	self:removeEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnRevertCard, self._onRevertCard, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnResetCard, self._onResetCard, self)
-	self:removeEventCb(FightController.instance, FightEvent.BeforePlaySkill, self._beforePlaySkill, self)
-	self:removeEventCb(FightController.instance, FightEvent.StageChanged, self._onStageChange, self)
-end
-
-function FightPlayerReadyAttackComp:onDestroy()
+function FightPlayerReadyAttackComp:onDestructor()
 	self:_clearReadyAttackWork()
 end
 

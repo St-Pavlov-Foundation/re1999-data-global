@@ -183,6 +183,10 @@ function EnemyInfoLeftView:refreshScrollEnemy()
 		self:addTowerDeepGroupItem()
 
 		return
+	elseif self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.TowerCompose then
+		self:addTowerComposeGroupItem()
+
+		return
 	end
 
 	local groupIdList = string.splitToNumber(groupIds, "#")
@@ -421,6 +425,50 @@ function EnemyInfoLeftView:addTowerDeepGroupItem()
 	self:addMonsterItem(monsterId, enemyGroupItem.trContent, {
 		monsterId
 	})
+end
+
+function EnemyInfoLeftView:addTowerComposeGroupItem()
+	local themeId = self.viewParam.themeId
+	local planeId = self.viewParam.planeId
+	local themeConfig = TowerComposeConfig.instance:getThemeConfig(themeId)
+	local bossMonsterGroupId = themeConfig.monsterGroupId
+	local bossGroupConfig = lua_monster_group.configDict[bossMonsterGroupId]
+	local bossIdList = string.splitToNumber(bossGroupConfig.bossId, "#")
+	local bossMonsterIdList = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[bossMonsterGroupId].monster, "#")
+	local curBossMonsterIdList, curBossIdList = TowerComposeModel.instance:getPlaneBossIdList(themeId, planeId, bossMonsterIdList, bossIdList)
+	local groupIds = self.battleCo.monsterGroupIds
+	local groupIdList = string.splitToNumber(groupIds, "#")
+
+	for index, groupId in ipairs(groupIdList) do
+		if groupId ~= bossMonsterGroupId then
+			local monsterGroupConfig = lua_monster_group.configDict[groupId]
+			local monsterIdList = self.tempMonsterIdList or {}
+
+			if not string.nilorempty(monsterGroupConfig.monster) then
+				tabletool.addValues(monsterIdList, string.splitToNumber(monsterGroupConfig.monster, "#"))
+			end
+
+			local enemyGroupItem = self:getEnemyGroupItem()
+
+			enemyGroupItem.tr:SetParent(self.trScrollContent)
+
+			enemyGroupItem.txtTitleNum.text = index
+
+			for _, monsterId in ipairs(monsterIdList) do
+				self:addMonsterItem(monsterId, enemyGroupItem.trContent, curBossIdList)
+			end
+		end
+	end
+
+	local enemyGroupItem = self:getEnemyGroupItem()
+
+	enemyGroupItem.tr:SetParent(self.trScrollContent)
+
+	enemyGroupItem.txtTitleNum.text = tabletool.indexOf(groupIdList, bossMonsterGroupId)
+
+	for _, monsterId in ipairs(curBossMonsterIdList) do
+		self:addMonsterItem(monsterId, enemyGroupItem.trContent, curBossIdList)
+	end
 end
 
 function EnemyInfoLeftView:onClose()

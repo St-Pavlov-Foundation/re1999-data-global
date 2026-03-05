@@ -9,9 +9,9 @@ function FightSkillTimelineItem:onConstructor(workTimelineItem)
 	self.entity = workTimelineItem.entity
 	self.fightStepData = workTimelineItem.fightStepData
 	self.timelineName = workTimelineItem.timelineName
-	self.timelineUrl = workTimelineItem.timelineUrl
-	self.assetLoader = workTimelineItem.assetLoader
-	self.timelineObj = gohelper.create3d(self.entity.go, "_skill_playable")
+	self.timelineUrl = ResUrl.getSkillTimeline(self.timelineName)
+	self.timelineAssetItem = workTimelineItem:getTimelineAssetItem()
+	self.timelineObj = gohelper.create3d(nil, "_skill_playable")
 	self.binder = ZProj.PlayableAssetBinder.Get(self.timelineObj)
 	self.trackDic = {}
 	self.timelineContext = {}
@@ -77,7 +77,7 @@ function FightSkillTimelineItem:play()
 		AudioEffectMgr.instance:seekMilliSeconds(self.audioId, self.audioStartTime * 1000)
 	end
 
-	self.binder:Play(self.assetLoader, self.timelineUrl)
+	self.binder:Play(self.timelineAssetItem, self.timelineUrl)
 	self:com_registUpdate(self.onUpdate)
 end
 
@@ -157,6 +157,8 @@ function FightSkillTimelineItem:addWork2FinishWork(work)
 	if not self.finishWork then
 		self.finishWork = self:com_registFlowSequence()
 	end
+
+	work.CALLBACK_EVEN_IF_UNFINISHED = true
 
 	self.finishWork:addWork(work)
 end

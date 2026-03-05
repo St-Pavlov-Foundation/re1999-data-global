@@ -59,7 +59,7 @@ function V3a2_BossRush_RankBonus:_refreshLine()
 	local progress = 0
 	local midRank = level - preRank
 
-	progress = level <= curRank and 1 or curRank - preRank <= 0 and 0 or 1 - (curRank - preRank) / midRank
+	progress = level <= curRank and 1 or curRank - preRank <= 0 and 0 or (curRank - preRank) / midRank
 	self._imageline.fillAmount = Mathf.Clamp(progress, 0, 1)
 
 	local status = progress < 1 and V3a2BossRushEnum.RankLv.Gray or V3a2BossRushEnum.RankLv.Light

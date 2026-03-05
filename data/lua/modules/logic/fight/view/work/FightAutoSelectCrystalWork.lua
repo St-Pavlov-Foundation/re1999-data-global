@@ -43,6 +43,17 @@ function FightAutoSelectCrystalWork:onStart()
 	end
 
 	local b, p, g = FightHelper.getCrystalNum(crystal)
+	local curTotal = b + p + g
+
+	if curTotal ~= totalSelect then
+		ViewMgr.instance:openView(ViewName.FightBLESelectCrystalView, {
+			totalSelectCount = totalSelect,
+			oneSelectCount = perSelect,
+			BLEUid = uid
+		})
+
+		return
+	end
 
 	if perSelect < b or perSelect < p or perSelect < g then
 		ViewMgr.instance:openView(ViewName.FightBLESelectCrystalView, {

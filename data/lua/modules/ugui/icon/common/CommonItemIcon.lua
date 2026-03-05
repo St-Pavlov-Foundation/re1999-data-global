@@ -503,7 +503,7 @@ function CommonItemIcon:setMOValue(materilType, materilId, quantity, materilUid,
 		end
 	elseif self._itemType == MaterialEnum.MaterialType.SpecialExpiredItem then
 		if self._itemUid then
-			local deadline = ItemExpiredModel.instance:getExpireItemDeadline(self._itemUid)
+			local deadline = ItemExpireModel.instance:getExpireItemDeadline(self._itemUid)
 
 			if deadline and deadline > 0 and ItemConfig.instance:getPowerItemCo(self._itemId).expireType ~= 0 then
 				self._expireTime = deadline

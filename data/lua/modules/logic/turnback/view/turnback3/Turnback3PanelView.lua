@@ -38,25 +38,19 @@ end
 
 function Turnback3PanelView:_btnclosefullAreaOnClick()
 	self:closeThis()
-
-	if not self.hasGet then
-		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(self._turnbackId)
-	end
 end
 
 function Turnback3PanelView:_btnclosebtnOnClick()
 	self:closeThis()
-
-	if not self.hasGet then
-		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(self._turnbackId)
-	end
 end
 
 function Turnback3PanelView:_btngobtnOnClick()
 	self:closeThis()
 
 	if not self.hasGet then
-		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(self._turnbackId)
+		TurnbackRpc.instance:sendTurnbackOnceBonusRequest(self._turnbackId, self._receiveCallBack, self)
+	else
+		self:_receiveCallBack()
 	end
 end
 
@@ -108,9 +102,9 @@ function Turnback3PanelView:_refreshTop()
 		elseif config.effect and not string.nilorempty(config.effect) then
 			local coList = GameUtil.splitString2(config.effect)
 
-			for i = 2, 4 do
-				local effectCo = coList[i]
-				local img = gohelper.findChildSingleImage(rewardItem.go, "#simage_defaulticon" .. i - 1)
+			for j = 2, 4 do
+				local effectCo = coList[j]
+				local img = gohelper.findChildSingleImage(rewardItem.go, "#simage_defaulticon" .. j - 1)
 
 				img:LoadImage(ResUrl.getHeroDefaultEquipIcon(effectCo[2]))
 			end
@@ -167,7 +161,9 @@ function Turnback3PanelView:_refreshOnceBonusGetState()
 		gohelper.setActive(rewardItem.goCanGet, not self.hasGet)
 		gohelper.setActive(rewardItem.goHasGet, self.hasGet)
 	end
+end
 
+function Turnback3PanelView:_receiveCallBack()
 	local turnbackId = TurnbackModel.instance:getCurTurnbackId()
 	local param = {
 		turnbackId = turnbackId

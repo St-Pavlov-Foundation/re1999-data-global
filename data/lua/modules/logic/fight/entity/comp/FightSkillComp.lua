@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightSkillComp", package.seeall)
 
-local FightSkillComp = class("FightSkillComp", LuaCompBase)
+local FightSkillComp = class("FightSkillComp", FightBaseClass)
 
 FightSkillComp.FrameEventHandlerCls = {
 	[0] = FightTLEventMove,
@@ -63,14 +63,16 @@ FightSkillComp.FrameEventHandlerCls = {
 	FightTLEventEffectVisible,
 	FightTLEvent500MMonsterRefreshHeadIcon,
 	FightTLEventAddEffectByBuffActId,
+	FightTLAnAnRecycleEffect,
+	FightTLEventChangeSceneByEffect,
 	[1001] = FightTLEventObjFly,
 	[1002] = FightTLEventSetSign
 }
 
-function FightSkillComp:ctor(entity)
+function FightSkillComp:onConstructor(entity)
 	self.entity = entity
 	self.timeScale = 1
-	self.workComp = FightWorkComponent.New()
+	self.workComp = self:addComponent(FightWorkComponent)
 	self.sameSkillParam = {}
 	self.sameSkillStartParam = {}
 end
@@ -211,17 +213,6 @@ function FightSkillComp:setTimeScale(timeScale)
 			work:setTimeScale(timeScale)
 		end
 	end
-end
-
-function FightSkillComp:beforeDestroy()
-	self:stopSkill()
-	self.workComp:disposeSelf()
-
-	self.workComp = nil
-end
-
-function FightSkillComp:onDestroy()
-	self.sameSkillParam = nil
 end
 
 function FightSkillComp:recordSameSkillStartParam(fightStepData, param)

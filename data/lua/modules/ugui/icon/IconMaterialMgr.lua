@@ -18,7 +18,10 @@ function IconMaterialMgr:init()
 		"ui/materials/dynamic/ui_headicon_stylization_7.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_shadow.mat",
 		"ui/materials/dynamic/ui_halfgray2.mat",
-		"ui/materials/dynamic/ui_halfgray.mat"
+		"ui/materials/dynamic/ui_halfgray.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_10.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_11.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_12.mat"
 	}
 	self.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",
@@ -30,7 +33,12 @@ function IconMaterialMgr:init()
 		"ui/materials/dynamic/ui_headicon_stylization_6_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_assist_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_7_round.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_shadow_round.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_shadow_round.mat",
+		nil,
+		nil,
+		"ui/materials/dynamic/ui_headicon_stylization_10_round.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_11_round.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_12_round.mat"
 	}
 	self.needSetMaterialIconImages = {}
 	self.loadedMaterials = {}

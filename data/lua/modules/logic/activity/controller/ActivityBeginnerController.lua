@@ -31,6 +31,9 @@ function ActivityBeginnerController:_initHandlers()
 		[VersionActivity3_2Enum.ActivityId.ActivityCollect] = true,
 		[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop] = true
 	}
+	self._actIdFirstWeekMap = {
+		[ActivityEnum.Activity.V3a3_SkinDiscount] = true
+	}
 	self._handlerList = {
 		[ActivityEnum.Activity.StoryShow] = {
 			self.checkRedDotWithActivityId,
@@ -74,6 +77,10 @@ function ActivityBeginnerController:showRedDot(activityId)
 	end
 
 	if (self._actIdFirstEndterMap[activityId] or activityId == DoubleDropModel.instance:getActId()) and self:checkFirstEnter(activityId) then
+		return true
+	end
+
+	if self._actIdFirstWeekMap[activityId] and self:checkFirstWeekEnter(activityId) then
 		return true
 	end
 
@@ -143,6 +150,21 @@ function ActivityBeginnerController:setFirstEnter(activityId)
 	local key = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
 	PlayerPrefsHelper.setString(key, "hasEnter")
+end
+
+function ActivityBeginnerController:checkFirstWeekEnter(activityId)
+	local weekEndTime = math.floor(ServerTime.getWeekEndTimeStamp(true) / 3600)
+	local key = PlayerPrefsKey.FirstEnterWeek .. "#" .. tostring(activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local cur_save = PlayerPrefsHelper.getNumber(key, 0)
+
+	return cur_save ~= weekEndTime
+end
+
+function ActivityBeginnerController:setFirstWeekEnter(activityId)
+	local weekEndTime = math.floor(ServerTime.getWeekEndTimeStamp(true) / 3600)
+	local key = PlayerPrefsKey.FirstEnterWeek .. "#" .. tostring(activityId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+
+	PlayerPrefsHelper.setNumber(key, weekEndTime)
 end
 
 function ActivityBeginnerController:checkActivityNewStage(activityId)

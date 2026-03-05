@@ -13318,5 +13318,455 @@
     "id": 20320664,
     "eventName": "stop_ui_dungeon3_2_diceroll",
     "bankName": "ui_dungeon3_2_infield"
+  },
+  {
+    "id": 330001,
+    "eventName": "play_replay_music_cantabile_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330002,
+    "eventName": "play_replay_music_discotonight_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330003,
+    "eventName": "play_replay_music_dusttodust_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330004,
+    "eventName": "play_replay_music_ginglebell_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330005,
+    "eventName": "play_replay_music_goodbye_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330006,
+    "eventName": "play_replay_music_together_3_3nfc",
+    "bankName": "ui_replay_mainmusic3_3nfc"
+  },
+  {
+    "id": 330007,
+    "eventName": "play_ui_yuanzheng_open_1",
+    "bankName": "ui_activity_3_3_yuanzheng"
+  },
+  {
+    "id": 330008,
+    "eventName": "play_ui_yuanzheng_open_2",
+    "bankName": "ui_activity_3_3_yuanzheng"
+  },
+  {
+    "id": 330009,
+    "eventName": "play_ui_pifupailian_tan",
+    "bankName": "ui_pifu_3_3"
+  },
+  {
+    "id": 330010,
+    "eventName": "play_ui_pifupailian_fanye",
+    "bankName": "ui_pifu_3_3"
+  },
+  {
+    "id": 330011,
+    "eventName": "stop_ui_pifupailian_fanye",
+    "bankName": "ui_pifu_3_3"
+  },
+  {
+    "id": 330012,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 330013,
+    "eventName": "play_ui_mln_details_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 330014,
+    "eventName": "stop_ui_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 330015,
+    "eventName": "play_ui_mln_unlock",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 330016,
+    "eventName": "play_ui_yuanzheng_bubble_popup",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330017,
+    "eventName": "play_ui_yuanzheng_transmit",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330018,
+    "eventName": "play_ui_yuanzheng_zhanji",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330019,
+    "eventName": "play_ui_yuanzheng_daji",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330020,
+    "eventName": "play_ui_yuanzheng_baoji",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330021,
+    "eventName": "play_ui_yuanzheng_leipi",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330022,
+    "eventName": "play_ui_yuanzheng_laser",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330023,
+    "eventName": "play_ui_yuanzheng_bomb",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330024,
+    "eventName": "play_ui_yuanzheng_dazhao",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330025,
+    "eventName": "play_ui_yuanzheng_dazhao_krd",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330026,
+    "eventName": "play_ui_yuanzheng_dazhao_ssr",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330027,
+    "eventName": "play_ui_yuanzheng_dazhao_kjl",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330028,
+    "eventName": "play_ui_yuanzheng_gain",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330029,
+    "eventName": "play_ui_yuanzheng_treat",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330030,
+    "eventName": "play_ui_yuanzheng_move",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330031,
+    "eventName": "play_ui_yuanzheng_debuff_fire",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330032,
+    "eventName": "play_ui_yuanzheng_debuff_poison",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330033,
+    "eventName": "play_ui_yuanzheng_game_start",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330034,
+    "eventName": "play_ui_yuanzheng_tips_open",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330035,
+    "eventName": "play_ui_yuanzheng_click",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330036,
+    "eventName": "play_ui_yuanzheng_interface_open",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330037,
+    "eventName": "play_ui_yuanzheng_game_open",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330038,
+    "eventName": "play_ui_yuanzheng_role_shangzhen",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330039,
+    "eventName": "play_ui_yuanzheng_attribute_upgrade",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330040,
+    "eventName": "play_ui_yuanzheng_transition",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330041,
+    "eventName": "play_ui_yuanzheng_interface_open",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330042,
+    "eventName": "play_ui_yuanzheng_rate",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330043,
+    "eventName": "play_ui_yuanzheng_item_get",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330044,
+    "eventName": "play_ui_yuanzheng_dazhao_kjl",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330045,
+    "eventName": "play_ui_yuanzheng_enemy_death",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330046,
+    "eventName": "play_ui_yuanzheng_coin",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330047,
+    "eventName": "play_ui_yuanzheng_win",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330048,
+    "eventName": "play_ui_yuanzheng_over",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 330049,
+    "eventName": "play_replay_music_theme_3_3",
+    "bankName": "ui_replay_mainmusic3_3"
+  },
+  {
+    "id": 330050,
+    "eventName": "play_replay_music_neixin_3_3",
+    "bankName": "ui_replay_mainmusic3_3"
+  },
+  {
+    "id": 330051,
+    "eventName": "play_replay_music_zuozhan_3_3",
+    "bankName": "ui_replay_mainmusic3_3"
+  },
+  {
+    "id": 330052,
+    "eventName": "play_ui_yuanzheng_igor_move",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330053,
+    "eventName": "play_ui_yuanzheng_igor_place",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330054,
+    "eventName": "play_ui_yuanzheng_igor_infantry",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330055,
+    "eventName": "play_ui_yuanzheng_igor_artillery",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330056,
+    "eventName": "play_ui_yuanzheng_igor_sword",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330057,
+    "eventName": "play_ui_yuanzheng_igor_upgrade",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330058,
+    "eventName": "play_ui_yuanzheng_igor_start",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330059,
+    "eventName": "play_ui_yuanzheng_igor_destroy",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330060,
+    "eventName": "play_ui_yuanzheng_mrs_level",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330061,
+    "eventName": "play_ui_yuanzheng_mrs_renwu",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330062,
+    "eventName": "play_ui_yuanzheng_mrs_321",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330063,
+    "eventName": "play_ui_yuanzheng_mrs_pause",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330064,
+    "eventName": "play_ui_yuanzheng_mrs_devour",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330065,
+    "eventName": "play_ui_yuanzheng_mrs_hit",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330066,
+    "eventName": "play_ui_yuanzheng_mrs_water",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330067,
+    "eventName": "play_ui_yuanzheng_mrs_jiasu",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330068,
+    "eventName": "play_ui_yuanzheng_mrs_win",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330069,
+    "eventName": "play_ui_yuanzheng_mrs_fail",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 330070,
+    "eventName": "play_ui_yuanzheng_bonfire_loop",
+    "bankName": "ui_activity_3_3_yuanzheng_molideer"
+  },
+  {
+    "id": 330071,
+    "eventName": "stop_ui_yuanzheng_bonfire_loop",
+    "bankName": "ui_activity_3_3_yuanzheng_molideer"
+  },
+  {
+    "id": 330072,
+    "eventName": "play_ui_yuanzheng_zhb_open",
+    "bankName": "ui_zhihuibu_3_3"
+  },
+  {
+    "id": 330073,
+    "eventName": "play_ui_yuanzheng_zhb_tan",
+    "bankName": "ui_zhihuibu_3_3"
+  },
+  {
+    "id": 330074,
+    "eventName": "play_ui_yuanzheng_zhb_zhi",
+    "bankName": "ui_zhihuibu_3_3"
+  },
+  {
+    "id": 330075,
+    "eventName": "stop_ui_yuanzheng_igor_move",
+    "bankName": "ui_activity_3_3_yuanzheng_igor"
+  },
+  {
+    "id": 330076,
+    "eventName": "play_ui_fight_alaifu_auto",
+    "bankName": "fight_ui_sfx_pataux_3_3"
+  },
+  {
+    "id": 330077,
+    "eventName": "play_ui_utim_open",
+    "bankName": "ui_utim_3_2"
+  },
+  {
+    "id": 330078,
+    "eventName": "play_ui_fight_open_black",
+    "bankName": "fight_ui_sfx_pata_3_3"
+  },
+  {
+    "id": 330079,
+    "eventName": "play_ui_fight_open_white",
+    "bankName": "fight_ui_sfx_pata_3_3"
+  },
+  {
+    "id": 330080,
+    "eventName": "play_ui_tujianskin_amb_loop",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 330081,
+    "eventName": "stop_ui_bus",
+    "bankName": "controlling_behavior"
+  },
+  {
+    "id": 330082,
+    "eventName": "play_ui_fight_bubbles",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 330083,
+    "eventName": "play_ui_fight_ripple_entry",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 330084,
+    "eventName": "play_ui_fight_level_up",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 330085,
+    "eventName": "play_ui_fight_tab_switch",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 330086,
+    "eventName": "play_ui_fight_full_lit",
+    "bankName": "fight_ui_sfx_saiji2_2"
+  },
+  {
+    "id": 330087,
+    "eventName": "play_ui_fight_ly_card_close2_5",
+    "bankName": "fight_ui_sfx_liangyueux2_5"
+  },
+  {
+    "id": 330088,
+    "eventName": "play_ui_fight_task_entry",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 330089,
+    "eventName": "play_ui_fight_talent_light",
+    "bankName": "fight_ui_sfx2_3"
+  },
+  {
+    "id": 335070,
+    "eventName": "play_ui_dungeon3_3_fightcast",
+    "bankName": "ui_dungeon3_3_fightux"
   }
 ]

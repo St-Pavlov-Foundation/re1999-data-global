@@ -13,6 +13,7 @@ function SummonMainView:onInitView()
 	self._goequipCategoryItem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_equipCategoryItem")
 	self._goRoleUpCategoryItem = gohelper.findChild(self.viewGO, "#go_ui/#go_category/#scroll_category/Viewport/Content/GameObject/#go_RoleUpCategoryItem")
 	self._btnconvertStore = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_convertStore")
+	self._btnconvertStore2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_convertStore2")
 	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_detail")
 	self._btnsummonrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_summonrecord")
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
@@ -24,12 +25,14 @@ end
 
 function SummonMainView:addEvents()
 	self._btnconvertStore:AddClickListener(self._btnconvertStoreOnClick, self)
+	self._btnconvertStore2:AddClickListener(self._btnconvert2StoreOnClick, self)
 	self._btndetail:AddClickListener(self._btndetailOnClick, self)
 	self._btnsummonrecord:AddClickListener(self._btnsummonrecordOnClick, self)
 end
 
 function SummonMainView:removeEvents()
 	self._btnconvertStore:RemoveClickListener()
+	self._btnconvertStore2:RemoveClickListener()
 	self._btndetail:RemoveClickListener()
 	self._btnsummonrecord:RemoveClickListener()
 end
@@ -41,6 +44,13 @@ function SummonMainView:_btnconvertStoreOnClick()
 	if pool and SummonMainModel.getResultType(pool) == SummonEnum.ResultType.Equip then
 		jumpTab = StoreEnum.StoreId.SummonEquipExchange
 	end
+
+	StoreController.instance:checkAndOpenStoreView(jumpTab)
+end
+
+function SummonMainView:_btnconvert2StoreOnClick()
+	local pool = SummonMainModel.instance:getCurPool()
+	local jumpTab = StoreEnum.StoreId.HighSummon
 
 	StoreController.instance:checkAndOpenStoreView(jumpTab)
 end
@@ -84,6 +94,15 @@ function SummonMainView:_handleTabSet()
 	else
 		self._txtrecord:SetText(luaLang("p_summonpool_record"))
 	end
+
+	local showHightStoreBtn = false
+	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
+
+	if poolMO:isOpening() and SummonEnum.ShowHighStoreById[curPool.id] then
+		showHightStoreBtn = true
+	end
+
+	gohelper.setActive(self._btnconvertStore2.gameObject, showHightStoreBtn)
 end
 
 function SummonMainView:onItemChanged()

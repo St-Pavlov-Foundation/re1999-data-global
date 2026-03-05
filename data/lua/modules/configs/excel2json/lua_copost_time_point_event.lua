@@ -4,12 +4,14 @@ module("modules.configs.excel2json.lua_copost_time_point_event", package.seeall)
 
 local lua_copost_time_point_event = {}
 local fields = {
-	allTextId = 6,
-	fightId = 2,
-	chaEventId = 4,
 	id = 1,
-	eventId = 3,
-	coordinatesId = 5
+	fightId = 2,
+	allTextId = 7,
+	chaEventId = 5,
+	frontEventId = 3,
+	eventId = 4,
+	chaId = 8,
+	coordinatesId = 6
 }
 local primaryKey = {
 	"id"

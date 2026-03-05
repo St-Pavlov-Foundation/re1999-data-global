@@ -200,6 +200,26 @@
     "bonus": "24#489095#1"
   },
   {
+    "id": 530010,
+    "activityId": 13319,
+    "isOnline": 1,
+    "loopType": 3,
+    "minType": "language_10109349",
+    "name": "language_10025497",
+    "desc": "language_10109350",
+    "bonusMail": 0,
+    "openLimit": "",
+    "listenerType": "ReadTask",
+    "listenerParam": "530010",
+    "clientlistenerParam": "",
+    "tag": "jump",
+    "openLimitActId": 13319,
+    "sorting": 1,
+    "maxProgress": 1,
+    "jumpId": 42351000,
+    "bonus": "1#620103#3|1#491010#1|2#3#10000|2#5#10000"
+  },
+  {
     "id": 530040,
     "activityId": 12781,
     "isOnline": 1,

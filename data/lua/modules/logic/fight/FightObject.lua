@@ -7,7 +7,10 @@ local __G__TRACKBACK__ = __G__TRACKBACK__
 local xpcall = xpcall
 local rawget = rawget
 
+FightObject.Counter = 0
+
 function FightObject:onConstructor(...)
+	FightObject.Counter = FightObject.Counter + 1
 	self.INSTANTIATE_CLASS_LIST = nil
 	self.COMPONENT_LIST = nil
 	self.IS_RELEASING = nil
@@ -44,7 +47,7 @@ function FightObject:onDestructorFinish()
 	return
 end
 
-function FightObject:isActive()
+function FightObject:__isActive()
 	return not self.IS_DISPOSED and not self.IS_RELEASING
 end
 
@@ -70,7 +73,7 @@ function FightObject:newClass(class, ...)
 	return obj
 end
 
-function FightObject:addComponent(clsDefine)
+function FightObject:addComponent(clsDefine, ...)
 	if self.IS_DISPOSED then
 		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. self.__cname)
 	end
@@ -87,7 +90,7 @@ function FightObject:addComponent(clsDefine)
 	self.COMP_COUNT = self.COMP_COUNT + 1
 	self.COMPONENT_LIST[self.COMP_COUNT] = comp
 
-	comp:ctor()
+	comp:ctor(...)
 
 	return comp
 end

@@ -1,0 +1,4744 @@
+[
+  {
+    "id": 331001,
+    "name": "language_10104744",
+    "desc": "language_10104745",
+    "shape": "1#1",
+    "race": "red",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_012",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_012",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331002,
+    "name": "language_10104746",
+    "desc": "language_10104745",
+    "shape": "2#2",
+    "race": "red",
+    "attack": 2,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_012",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw2x2_012",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13,
+      -32
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331003,
+    "name": "language_10058849",
+    "desc": "language_10104747",
+    "shape": "1#1",
+    "race": "red",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "33100301#15003",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_005",
+    "scale": [
+      0.81,
+      1.62
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331004,
+    "name": "language_10058847",
+    "desc": "language_10104748",
+    "shape": "2#2",
+    "race": "red",
+    "attack": 2,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "33100401#15003",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_004",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.65,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      10,
+      -34
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331005,
+    "name": "language_10058845",
+    "desc": "language_10104749",
+    "shape": "2#3",
+    "race": "red",
+    "attack": 3,
+    "hpCap": 8,
+    "defense": 0,
+    "skillIds": "33100501#15003",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x3_002",
+    "scale": [
+      2,
+      4
+    ],
+    "posOffset": [
+      0.4,
+      0.97
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x3_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -37,
+      -61
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331006,
+    "name": "language_10006247",
+    "desc": "language_10104750",
+    "shape": "3#3",
+    "race": "red",
+    "attack": 3,
+    "hpCap": 8,
+    "defense": 0,
+    "skillIds": "33100602",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw3x3_001",
+    "scale": [
+      3.6,
+      3.6
+    ],
+    "posOffset": [
+      1.08,
+      0.97
+    ],
+    "hpPos": [
+      1.02,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw3x3_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      85,
+      -80
+    ],
+    "iconScale2": [
+      0.95,
+      0.95
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331007,
+    "name": "language_10040078",
+    "desc": "language_10104751",
+    "shape": "2#3",
+    "race": "red",
+    "attack": 3,
+    "hpCap": 8,
+    "defense": 0,
+    "skillIds": "33100701#33100702#33100703#33100704",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x3_003",
+    "scale": [
+      2.26,
+      4.52
+    ],
+    "posOffset": [
+      0.72,
+      0.97
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x3_003",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      14,
+      -60
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331008,
+    "name": "language_10080877",
+    "desc": "language_10104752",
+    "shape": "1#1",
+    "race": "red",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "33100801",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_009",
+    "scale": [
+      0.87,
+      0.87
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 331009,
+    "name": "language_10006239",
+    "desc": "language_10104753",
+    "shape": "1#1",
+    "race": "red",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_003",
+    "scale": [
+      1.16,
+      1.16
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_003",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332001,
+    "name": "language_10104754",
+    "desc": "language_10104755",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332002,
+    "name": "language_10104756",
+    "desc": "language_10104755",
+    "shape": "2#2",
+    "race": "green",
+    "attack": 2,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_013",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13,
+      -32
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332003,
+    "name": "language_10005093",
+    "desc": "language_10104757",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_001",
+    "scale": [
+      0.89,
+      1.78
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332004,
+    "name": "language_10006311",
+    "desc": "language_10104757",
+    "shape": "2#2",
+    "race": "green",
+    "attack": 2,
+    "hpCap": 6,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_002",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13.9,
+      -20.2
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332005,
+    "name": "language_10005464",
+    "desc": "language_10104758",
+    "shape": "3#2",
+    "race": "green",
+    "attack": 3,
+    "hpCap": 8,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw3x2_002",
+    "scale": [
+      3.2,
+      1.6
+    ],
+    "posOffset": [
+      1.07,
+      0.45
+    ],
+    "hpPos": [
+      1.02,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw3x2_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      112,
+      43
+    ],
+    "iconScale2": [
+      0.85,
+      0.85
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332006,
+    "name": "language_10006253",
+    "desc": "language_10104759",
+    "shape": "2#2",
+    "race": "green",
+    "attack": 2,
+    "hpCap": 6,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_001",
+    "scale": [
+      1.74,
+      1.74
+    ],
+    "posOffset": [
+      0.53,
+      0.53
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      44,
+      21.7
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332007,
+    "name": "language_10058861",
+    "desc": "language_10104760",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_006",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_006",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 332008,
+    "name": "language_10058859",
+    "desc": "language_10104761",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 99,
+    "skillIds": "33200801",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_008",
+    "scale": [
+      1.09,
+      1.09
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_008",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 333001,
+    "name": "language_10104762",
+    "desc": "language_10104763",
+    "shape": "1#1",
+    "race": "blue",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_014",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_014",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333002,
+    "name": "language_10006356",
+    "desc": "language_10104764",
+    "shape": "1#1",
+    "race": "blue",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_011",
+    "scale": [
+      1.23,
+      1.23
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_011",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333003,
+    "name": "language_10006354",
+    "desc": "language_10104765",
+    "shape": "2#2",
+    "race": "blue",
+    "attack": 2,
+    "hpCap": 6,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_007",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_007",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13,
+      -32
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333004,
+    "name": "language_10006372",
+    "desc": "language_10104766",
+    "shape": "2#3",
+    "race": "blue",
+    "attack": 3,
+    "hpCap": 8,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x3_005",
+    "scale": [
+      2,
+      4
+    ],
+    "posOffset": [
+      0.4,
+      0.97
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x3_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -32.3,
+      -69.7
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333005,
+    "name": "language_10006350",
+    "desc": "language_10104767",
+    "shape": "3#2",
+    "race": "blue",
+    "attack": 3,
+    "hpCap": 12,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw3x2_001",
+    "scale": [
+      3.2,
+      1.6
+    ],
+    "posOffset": [
+      1.07,
+      0.45
+    ],
+    "hpPos": [
+      1.02,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw3x2_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      112,
+      43
+    ],
+    "iconScale2": [
+      0.85,
+      0.85
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333006,
+    "name": "language_10080873",
+    "desc": "language_10104768",
+    "shape": "3#3",
+    "race": "blue",
+    "attack": 3,
+    "hpCap": 18,
+    "defense": 0,
+    "skillIds": "33300601#33300604",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw3x3_002",
+    "scale": [
+      3.25,
+      3.25
+    ],
+    "posOffset": [
+      1.08,
+      1.21
+    ],
+    "hpPos": [
+      1.02,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw3x3_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      7.9,
+      0
+    ],
+    "iconScale2": [
+      0.95,
+      0.95
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 333007,
+    "name": "language_10048787",
+    "desc": "language_10104769",
+    "shape": "1#1",
+    "race": "blue",
+    "attack": 1,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "33300701",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_007",
+    "scale": [
+      0.94,
+      0.94
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_007",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 334001,
+    "name": "language_10104770",
+    "desc": "language_10104771",
+    "shape": "1#1",
+    "race": "purple",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "33400101#15002",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 334002,
+    "name": "language_10104772",
+    "desc": "language_10104773",
+    "shape": "2#2",
+    "race": "purple",
+    "attack": 2,
+    "hpCap": 5,
+    "defense": 0,
+    "skillIds": "33400201#15002",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x2_006",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.48,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x2_006",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      1.3,
+      -38.5
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 334003,
+    "name": "language_10104774",
+    "desc": "language_10104775",
+    "shape": "2#3",
+    "race": "purple",
+    "attack": 3,
+    "hpCap": 12,
+    "defense": 0,
+    "skillIds": "33400301#15002",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw2x3_004",
+    "scale": [
+      2,
+      4
+    ],
+    "posOffset": [
+      0.4,
+      0.97
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw2x3_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -36.3,
+      -74.7
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 334004,
+    "name": "language_10104776",
+    "desc": "language_10104777",
+    "shape": "1#1",
+    "race": "purple",
+    "attack": 1,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "33400401#15002",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_002",
+    "scale": [
+      0.68,
+      0.68
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw1x1_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      2.2,
+      -16.1
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 335001,
+    "name": "language_10104778",
+    "desc": "language_10104779",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 50,
+    "defense": 0,
+    "skillIds": "33500102#33500101#33500108#33000002#33500113",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_005",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -9.3,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350011,
+    "name": "language_10104463",
+    "desc": "language_10104780",
+    "shape": "1#1",
+    "race": "houzi",
+    "attack": 0,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "33500112",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_npc1x1_001",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_npc1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335002,
+    "name": "language_10104781",
+    "desc": "",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 12,
+    "defense": 0,
+    "skillIds": "33500202",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_001",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350021,
+    "name": "language_10104782",
+    "desc": "",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 5,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_npc1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_npc1x1_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335003,
+    "name": "language_10104783",
+    "desc": "language_10104784",
+    "shape": "2#2",
+    "race": "boss",
+    "attack": 2,
+    "hpCap": 45,
+    "defense": 1,
+    "skillIds": "33500301#33500302#33500312#33500314",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_004",
+    "scale": [
+      2.65,
+      2.65
+    ],
+    "posOffset": [
+      0.5,
+      0.5
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350031,
+    "name": "language_10104785",
+    "desc": "language_10104786",
+    "shape": "1#1",
+    "race": "baoxiang1",
+    "attack": 0,
+    "hpCap": 5,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "100015",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350032,
+    "name": "language_10104785",
+    "desc": "language_10104787",
+    "shape": "1#1",
+    "race": "zhadan1",
+    "attack": 0,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "33500321#33500323#33500325",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jz1x1_001",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jz1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335004,
+    "name": "language_10104788",
+    "desc": "language_10104789",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 2,
+    "hpCap": 12,
+    "defense": 0,
+    "skillIds": "33500402#33500401#33500403#33000002",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_003",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_role1x1_003",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350041,
+    "name": "language_10104790",
+    "desc": "",
+    "shape": "1#1",
+    "race": "jinbi1",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_jh1x1_008",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_008",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 3350042,
+    "name": "language_10104791",
+    "desc": "language_10104792",
+    "shape": "1#1",
+    "race": "maonv",
+    "attack": 1,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "33500421#33500423",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_003",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_003",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335005,
+    "name": "language_10005533",
+    "desc": "language_10104793",
+    "shape": "3#5",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 60,
+    "defense": 0,
+    "skillIds": "33500501",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw4x6_001",
+    "scale": [
+      2.76,
+      5.52
+    ],
+    "posOffset": [
+      1.06,
+      1.9
+    ],
+    "hpPos": [
+      1.54,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_gw4x6_001",
+    "iconScale": [
+      0.375,
+      0.375
+    ],
+    "iconOffset": [
+      -29.2,
+      -65.6
+    ],
+    "iconScale2": [
+      0.6,
+      0.6
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335006,
+    "name": "language_10017978",
+    "desc": "language_10104794",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 30,
+    "defense": 0,
+    "skillIds": "33500601#33500602#33000002",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 336001,
+    "name": "language_10104795",
+    "desc": "language_10104796",
+    "shape": "1#1",
+    "race": "shizuan",
+    "attack": 1,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_005",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_jh1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 336002,
+    "name": "language_10104454",
+    "desc": "language_10104796",
+    "shape": "1#1",
+    "race": "shizuan",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_007",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_007",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 337001,
+    "name": "language_10005760",
+    "desc": "language_10104797",
+    "shape": "1#1",
+    "race": "yiliaoxiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "33700101",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_001",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_jh1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 337002,
+    "name": "language_10005760",
+    "desc": "language_10104797",
+    "shape": "1#1",
+    "race": "yiliaoxiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "33700101",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_001",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 337003,
+    "name": "language_10066190",
+    "desc": "language_10104798",
+    "shape": "1#1",
+    "race": "wuzixiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "33700201",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_004",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_jh1x1_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 337004,
+    "name": "language_10066190",
+    "desc": "language_10104798",
+    "shape": "1#1",
+    "race": "wuzixiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "33700201",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_004",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338001,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100010",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338002,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "100011",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338003,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100012",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338004,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100013",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338005,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100014",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 338006,
+    "name": "language_10104799",
+    "desc": "language_10104800",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100015",
+    "resPath": "v3a3_m_s12_jh1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339001,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 1,
+    "drop": "100001",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339002,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100002",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339003,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100003",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339004,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100004",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339005,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100005",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 339006,
+    "name": "language_10104801",
+    "desc": "language_10104802",
+    "shape": "1#1",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "100006",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      -0.027,
+      -0.034
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 100001,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100001",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100002,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100002",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100003,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100003",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100004,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100004",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100005,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100005",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100006,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100006",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100007,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100007",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100008,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100008",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100009,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100009",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100010,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100010",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100011,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100011",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100012,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100012",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 100013,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100013",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100014,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100014",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100015,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100015",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100016,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100016",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100017,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100017",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100018,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100018",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100019,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100019",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100020,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100020",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100021,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100021",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100022,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100022",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100023,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100023",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100024,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "purple",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "334002",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100025,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "purple",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100025",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100026,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "NoneY",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "100027#100028",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_001",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 100030,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100030",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100031,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100031",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 100032,
+    "name": "",
+    "desc": "",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "100032",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      0.75,
+      0.75
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 200001,
+    "name": "language_10104754",
+    "desc": "language_10104755",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "20000101",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200002",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 200002,
+    "name": "language_10104754",
+    "desc": "language_10104755",
+    "shape": "1#1",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200002",
+    "resPath": "v3a3_m_s12_gw1x1_013",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200003,
+    "name": "language_10104762",
+    "desc": "language_10104803",
+    "shape": "1#1",
+    "race": "blue",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200004",
+    "resPath": "v3a3_m_s12_gw1x1_014",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_014",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200004,
+    "name": "language_10104756",
+    "desc": "language_10104755",
+    "shape": "2#2",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 4,
+    "defense": 0,
+    "skillIds": "20000401",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200002",
+    "resPath": "v3a3_m_s12_gw2x2_013",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw2x2_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13,
+      -32
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200005,
+    "name": "language_10104454",
+    "desc": "language_10104796",
+    "shape": "1#1",
+    "race": "None",
+    "attack": 0,
+    "hpCap": 99,
+    "defense": 99,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_007",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_007",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200006,
+    "name": "language_10104756",
+    "desc": "language_10104755",
+    "shape": "2#2",
+    "race": "green",
+    "attack": 1,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "20000601",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200002",
+    "resPath": "v3a3_m_s12_gw2x2_013",
+    "scale": [
+      2,
+      2
+    ],
+    "posOffset": [
+      0.37,
+      0.45
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw2x2_013",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -13,
+      -32
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200007,
+    "name": "language_10006247",
+    "desc": "language_10104804",
+    "shape": "3#3",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 6,
+    "defense": 0,
+    "skillIds": "33100601",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "200002",
+    "resPath": "v3a3_m_s12_gw3x3_001",
+    "scale": [
+      3.6,
+      3.6
+    ],
+    "posOffset": [
+      1.08,
+      0.97
+    ],
+    "hpPos": [
+      1.02,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw3x3_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      85,
+      -80
+    ],
+    "iconScale2": [
+      0.95,
+      0.95
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200008,
+    "name": "language_10005756",
+    "desc": "language_10104805",
+    "shape": "1#1",
+    "race": "NoneY",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "337001#20000801",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_jh1x1_001",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [
+      0,
+      -0.07
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_001",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200009,
+    "name": "language_10104806",
+    "desc": "language_10104807",
+    "shape": "1#1",
+    "race": "purple",
+    "attack": 1,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "20000901#100020",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200010,
+    "name": "language_10104808",
+    "desc": "language_10104809",
+    "shape": "2#2",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "15002",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [
+      0.46,
+      0.46
+    ],
+    "hpPos": [
+      0.53,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200011,
+    "name": "language_10104806",
+    "desc": "language_10104810",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "100020",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_010",
+    "scale": [
+      0.9,
+      0.9
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_010",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200012,
+    "name": "language_10104811",
+    "desc": "language_10104812",
+    "shape": "1#1",
+    "race": "red",
+    "attack": 1,
+    "hpCap": 3,
+    "defense": 0,
+    "skillIds": "20001201#100020",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_005",
+    "scale": [
+      0.81,
+      1.62
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200013,
+    "name": "language_10104808",
+    "desc": "language_10104813",
+    "shape": "2#2",
+    "race": "wuqixiang",
+    "attack": 0,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "15003",
+    "resPath": "v3a3_m_s12_jh1x1_009",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [
+      0.39,
+      0.38
+    ],
+    "hpPos": [
+      0.53,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_jh1x1_009",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200014,
+    "name": "language_10104811",
+    "desc": "language_10104814",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 1,
+    "defense": 0,
+    "skillIds": "100020",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_gw1x1_005",
+    "scale": [
+      0.81,
+      1.62
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 200015,
+    "name": "language_10104762",
+    "desc": "language_10104763",
+    "shape": "1#1",
+    "race": "blue",
+    "attack": 1,
+    "hpCap": 2,
+    "defense": 0,
+    "skillIds": "",
+    "moveType": "normalDrop",
+    "illustrationShow": 0,
+    "drop": "32000001",
+    "resPath": "v3a3_m_s12_gw1x1_014",
+    "scale": [
+      0.9,
+      1.8
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_gw1x1_014",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -0.33
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": true
+  },
+  {
+    "id": 335101,
+    "name": "language_10104778",
+    "desc": "language_10104815",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 30,
+    "defense": 0,
+    "skillIds": "33500102#33510101#33500108#33000002#33500113",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_005",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_role1x1_005",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      -9.3,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335103,
+    "name": "language_10104783",
+    "desc": "language_10104784",
+    "shape": "2#2",
+    "race": "boss",
+    "attack": 2,
+    "hpCap": 30,
+    "defense": 0,
+    "skillIds": "33500301#33500302#33510301#33500314#33500113",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_004",
+    "scale": [
+      2.65,
+      2.65
+    ],
+    "posOffset": [
+      0.5,
+      0.5
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335106,
+    "name": "language_10017978",
+    "desc": "language_10104816",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 24,
+    "defense": 0,
+    "skillIds": "33510601#33500602#33000002",
+    "moveType": "noDrop",
+    "illustrationShow": 0,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "",
+    "icon": "v3a3_m_s12_role1x1_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335203,
+    "name": "language_10104783",
+    "desc": "language_10104784",
+    "shape": "2#2",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 24,
+    "defense": 0,
+    "skillIds": "33500301#33500302#33520301#33500314#33500113",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_004",
+    "scale": [
+      2.65,
+      2.65
+    ],
+    "posOffset": [
+      0.5,
+      0.5
+    ],
+    "hpPos": [
+      0.52,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_role1x1_004",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  },
+  {
+    "id": 335206,
+    "name": "language_10017978",
+    "desc": "language_10104816",
+    "shape": "1#1",
+    "race": "boss",
+    "attack": 1,
+    "hpCap": 18,
+    "defense": 0,
+    "skillIds": "33520601#33500602#33000002",
+    "moveType": "noDrop",
+    "illustrationShow": 1,
+    "drop": "",
+    "resPath": "v3a3_m_s12_role1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "posOffset": [],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "monster",
+    "icon": "v3a3_m_s12_role1x1_002",
+    "iconScale": [
+      0.75,
+      0.75
+    ],
+    "iconOffset": [
+      0,
+      -11.8
+    ],
+    "iconScale2": [
+      1,
+      1
+    ],
+    "iconOffset2": [
+      0,
+      0
+    ],
+    "hasCorpse": false
+  }
+]

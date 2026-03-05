@@ -1,0 +1,52 @@
+[
+  {
+    "id": 101,
+    "name": "language_10104622",
+    "desc": "language_10104817",
+    "skill": 3309102,
+    "resPath": "v3a3_m_s12_dl1x1_001",
+    "category": "floor",
+    "icon": "v3a3_m_s12_dl1x1_001a",
+    "limitRound": 6
+  },
+  {
+    "id": 102,
+    "name": "language_10104818",
+    "desc": "language_10104819",
+    "skill": 3309101,
+    "resPath": "v3a3_m_s12_dl1x1_002",
+    "category": "floor",
+    "icon": "v3a3_m_s12_dl1x1_002",
+    "limitRound": -1
+  },
+  {
+    "id": 103,
+    "name": "language_10104623",
+    "desc": "language_10104820",
+    "skill": 3309103,
+    "resPath": "v3a3_m_s12_dl1x1_003",
+    "category": "floor",
+    "icon": "v3a3_m_s12_dl1x1_003a",
+    "limitRound": 12
+  },
+  {
+    "id": 104,
+    "name": "language_10104623",
+    "desc": "language_10104820",
+    "skill": 3309103,
+    "resPath": "v3a3_m_s12_dl1x1_003",
+    "category": "",
+    "icon": "v3a3_m_s12_dl1x1_003a",
+    "limitRound": -1
+  },
+  {
+    "id": 105,
+    "name": "language_10104622",
+    "desc": "language_10104817",
+    "skill": 3309102,
+    "resPath": "v3a3_m_s12_dl1x1_001",
+    "category": "",
+    "icon": "v3a3_m_s12_dl1x1_001a",
+    "limitRound": -1
+  }
+]

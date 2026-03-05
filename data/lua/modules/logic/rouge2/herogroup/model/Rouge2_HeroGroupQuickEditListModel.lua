@@ -113,6 +113,23 @@ end
 function Rouge2_HeroGroupQuickEditListModel.indexMapSortFunc(a, b)
 	local aIndex = Rouge2_HeroGroupQuickEditListModel.instance.sortIndexMap[a]
 	local bIndex = Rouge2_HeroGroupQuickEditListModel.instance.sortIndexMap[b]
+	local isInTeam_A = Rouge2_HeroGroupQuickEditListModel.instance:isInTeamHero(a.uid)
+	local isInTeam_B = Rouge2_HeroGroupQuickEditListModel.instance:isInTeamHero(b.uid)
+
+	if isInTeam_A and isInTeam_B then
+		return aIndex < bIndex
+	end
+
+	if isInTeam_A ~= isInTeam_B then
+		return isInTeam_A
+	end
+
+	local isRecommend_A = Rouge2_SystemController.instance:isRecommendHero(a.heroId)
+	local isRecommend_B = Rouge2_SystemController.instance:isRecommendHero(b.heroId)
+
+	if isRecommend_A ~= isRecommend_B then
+		return isRecommend_A
+	end
 
 	return aIndex < bIndex
 end

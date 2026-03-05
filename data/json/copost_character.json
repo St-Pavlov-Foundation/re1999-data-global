@@ -2,141 +2,313 @@
   {
     "chaId": 1,
     "chaPicture": "300101",
-    "chaName": "language_10000321"
+    "chaName": "language_10000321",
+    "chaCamp": 1
   },
   {
     "chaId": 2,
     "chaPicture": "312601",
-    "chaName": "language_10088983"
+    "chaName": "language_10088983",
+    "chaCamp": 0
   },
   {
     "chaId": 3,
     "chaPicture": "527902",
-    "chaName": "language_10088986"
+    "chaName": "language_10088986",
+    "chaCamp": 5
   },
   {
     "chaId": 4,
     "chaPicture": "527902",
-    "chaName": "language_10089756"
+    "chaName": "language_10089756",
+    "chaCamp": 0
   },
   {
     "chaId": 5,
     "chaPicture": "525901",
-    "chaName": "language_10089757"
+    "chaName": "language_10089757",
+    "chaCamp": 0
   },
   {
     "chaId": 6,
     "chaPicture": "526501",
-    "chaName": "language_10089758"
+    "chaName": "language_10089758",
+    "chaCamp": 1
   },
   {
     "chaId": 7,
     "chaPicture": "523701",
-    "chaName": "language_10080435"
+    "chaName": "language_10080435",
+    "chaCamp": 1
   },
   {
     "chaId": 8,
     "chaPicture": "529401",
-    "chaName": "language_10089759"
+    "chaName": "language_10089759",
+    "chaCamp": 1
   },
   {
     "chaId": 9,
     "chaPicture": "524101",
-    "chaName": "language_10089760"
+    "chaName": "language_10089760",
+    "chaCamp": 5
   },
   {
     "chaId": 10,
     "chaPicture": "300401",
-    "chaName": "language_10005333"
+    "chaName": "language_10005333",
+    "chaCamp": 1
   },
   {
     "chaId": 11,
     "chaPicture": "529501",
-    "chaName": "language_10072893"
+    "chaName": "language_10072893",
+    "chaCamp": 1
   },
   {
     "chaId": 12,
     "chaPicture": "527101",
-    "chaName": "language_10089761"
+    "chaName": "language_10089761",
+    "chaCamp": 0
   },
   {
     "chaId": 13,
     "chaPicture": "527001",
-    "chaName": "language_10089762"
+    "chaName": "language_10089762",
+    "chaCamp": 0
   },
   {
     "chaId": 14,
     "chaPicture": "",
-    "chaName": "language_10089763"
+    "chaName": "language_10089763",
+    "chaCamp": 0
   },
   {
     "chaId": 15,
     "chaPicture": "",
-    "chaName": "language_10089764"
+    "chaName": "language_10089764",
+    "chaCamp": 0
   },
   {
     "chaId": 16,
     "chaPicture": "",
-    "chaName": "language_10089765"
+    "chaName": "language_10089765",
+    "chaCamp": 0
   },
   {
     "chaId": 17,
     "chaPicture": "",
-    "chaName": "language_10089766"
+    "chaName": "language_10089766",
+    "chaCamp": 0
   },
   {
     "chaId": 18,
     "chaPicture": "",
-    "chaName": "language_10089767"
+    "chaName": "language_10089767",
+    "chaCamp": 0
   },
   {
     "chaId": 19,
     "chaPicture": "",
-    "chaName": "language_10089768"
+    "chaName": "language_10089768",
+    "chaCamp": 0
   },
   {
     "chaId": 20,
     "chaPicture": "",
-    "chaName": "language_10089769"
+    "chaName": "language_10089769",
+    "chaCamp": 0
   },
   {
     "chaId": 21,
     "chaPicture": "",
-    "chaName": "language_10089770"
+    "chaName": "language_10089770",
+    "chaCamp": 0
   },
   {
     "chaId": 22,
     "chaPicture": "",
-    "chaName": "language_10089771"
+    "chaName": "language_10089771",
+    "chaCamp": 0
   },
   {
     "chaId": 23,
     "chaPicture": "",
-    "chaName": "language_10089772"
+    "chaName": "language_10089772",
+    "chaCamp": 0
   },
   {
     "chaId": 24,
     "chaPicture": "",
-    "chaName": "language_10089773"
+    "chaName": "language_10089773",
+    "chaCamp": 0
   },
   {
     "chaId": 25,
     "chaPicture": "",
-    "chaName": "language_10089774"
+    "chaName": "language_10089774",
+    "chaCamp": 0
   },
   {
     "chaId": 26,
     "chaPicture": "",
-    "chaName": "language_10089775"
+    "chaName": "language_10089775",
+    "chaCamp": 0
   },
   {
     "chaId": 27,
     "chaPicture": "",
-    "chaName": "language_10089776"
+    "chaName": "language_10089776",
+    "chaCamp": 0
   },
   {
     "chaId": 28,
     "chaPicture": "",
-    "chaName": "language_10089772"
+    "chaName": "language_10089772",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 29,
+    "chaPicture": "302301",
+    "chaName": "language_10005348",
+    "chaCamp": 1
+  },
+  {
+    "chaId": 30,
+    "chaPicture": "309201",
+    "chaName": "language_10053619",
+    "chaCamp": 2
+  },
+  {
+    "chaId": 31,
+    "chaPicture": "529601",
+    "chaName": "language_10109235",
+    "chaCamp": 4
+  },
+  {
+    "chaId": 32,
+    "chaPicture": "529801",
+    "chaName": "language_10104895",
+    "chaCamp": 4
+  },
+  {
+    "chaId": 33,
+    "chaPicture": "529901",
+    "chaName": "language_10109236",
+    "chaCamp": 4
+  },
+  {
+    "chaId": 34,
+    "chaPicture": "312101",
+    "chaName": "language_10056607",
+    "chaCamp": 2
+  },
+  {
+    "chaId": 35,
+    "chaPicture": "518001",
+    "chaName": "language_10104913",
+    "chaCamp": 2
+  },
+  {
+    "chaId": 36,
+    "chaPicture": "530101",
+    "chaName": "language_10109237",
+    "chaCamp": 3
+  },
+  {
+    "chaId": 37,
+    "chaPicture": "527401",
+    "chaName": "language_10109238",
+    "chaCamp": 1
+  },
+  {
+    "chaId": 38,
+    "chaPicture": "312701",
+    "chaName": "language_10089758",
+    "chaCamp": 1
+  },
+  {
+    "chaId": 39,
+    "chaPicture": "501201",
+    "chaName": "language_10098269",
+    "chaCamp": 1
+  },
+  {
+    "chaId": 40,
+    "chaPicture": "529701",
+    "chaName": "language_10105257",
+    "chaCamp": 3
+  },
+  {
+    "chaId": 41,
+    "chaPicture": "531701",
+    "chaName": "language_10089760",
+    "chaCamp": 5
+  },
+  {
+    "chaId": 42,
+    "chaPicture": "530201",
+    "chaName": "language_10005333",
+    "chaCamp": 1
+  },
+  {
+    "chaId": 43,
+    "chaPicture": "527902",
+    "chaName": "language_10088986",
+    "chaCamp": 5
+  },
+  {
+    "chaId": 44,
+    "chaPicture": "527101",
+    "chaName": "language_10109239",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 45,
+    "chaPicture": "530620",
+    "chaName": "language_10107262",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 46,
+    "chaPicture": "531420",
+    "chaName": "language_10106055",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 47,
+    "chaPicture": "",
+    "chaName": "language_10109240",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 48,
+    "chaPicture": "",
+    "chaName": "language_10109241",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 49,
+    "chaPicture": "",
+    "chaName": "language_10109242",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 50,
+    "chaPicture": "",
+    "chaName": "language_10109243",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 51,
+    "chaPicture": "",
+    "chaName": "language_10109244",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 52,
+    "chaPicture": "",
+    "chaName": "language_10109245",
+    "chaCamp": 0
   }
 ]

@@ -54,6 +54,7 @@ CurrencyEnum.CurrencyType = {
 	OrangeSoul = 11,
 	V3a2Dungeon = 3203,
 	V3a2Rouge = 3201,
+	V3a3Dungeon = 3301,
 	Act145 = 1515,
 	Planet = 1301,
 	LeiMiTeBei = 111,

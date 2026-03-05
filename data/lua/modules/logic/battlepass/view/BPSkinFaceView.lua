@@ -21,11 +21,22 @@ function BPSkinFaceView:onInitView()
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "main/#simage_fullbg/icon/#btn_close")
 	self._btnCloseBg = gohelper.findChildButtonWithAudio(self.viewGO, "main/#btn_closeBg")
 	self._btnStart = gohelper.findChildButtonWithAudio(self.viewGO, "main/#btn_start")
-	self._simagesignature = gohelper.findChildSingleImage(self.viewGO, "main/desc/#simage_signature")
-	self._txtskinname = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname")
-	self._txtname = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname/#txt_name")
-	self._txtnameEn = gohelper.findChildTextMesh(self.viewGO, "main/desc/#txt_skinname/#txt_name/#txt_enname")
 	self._btnClickCard = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_fullclick")
+
+	local _namePaths = {
+		"main/desc",
+		"guochang/#go_step3/desc"
+	}
+
+	self._nameTbList = {}
+
+	for _, childPath in ipairs(_namePaths) do
+		local go = gohelper.findChild(self.viewGO, childPath)
+
+		if not gohelper.isNil(go) then
+			table.insert(self._nameTbList, self:_createNameItemTB(go))
+		end
+	end
 end
 
 function BPSkinFaceView:addEvents()
@@ -76,10 +87,8 @@ function BPSkinFaceView:_onClickCard()
 		TaskDispatcher.runDelay(self._delayPlayAudio, self, 1.5)
 		self._anim:Play("tarot_click", 0, 0)
 
-		local bpsvpCo = BpConfig.instance:getBpSkinViewParamCO(self._skinId)
-
-		if bpsvpCo and bpsvpCo.audioId ~= 0 then
-			AudioMgr.instance:trigger(bpsvpCo.audioId)
+		if self._bpsvpCfg and self._bpsvpCfg.audioId ~= 0 then
+			AudioMgr.instance:trigger(self._bpsvpCfg.audioId)
 		else
 			AudioMgr.instance:trigger(AudioEnum2_6.BP.FaceView)
 		end
@@ -87,7 +96,13 @@ function BPSkinFaceView:_onClickCard()
 		self._statu = Statu.TweenAnim
 
 		self._anim:Play("tarot_click1", 0, 0)
-		AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
+
+		if self._bpsvpCfg and self._bpsvpCfg.closeAudioId ~= 0 then
+			AudioMgr.instance:trigger(self._bpsvpCfg.closeAudioId)
+		else
+			AudioMgr.instance:trigger(AudioEnum.Act187.play_ui_yuanxiao_switch)
+		end
+
 		TaskDispatcher.runDelay(self._delayFinishAnim, self, 1)
 	elseif self._statu == Statu.CloseAnim then
 		self:closeThis()
@@ -136,16 +151,38 @@ function BPSkinFaceView:onOpen()
 
 	local skinCfg = lua_skin.configDict[self._skinId]
 
-	if skinCfg then
+	self._bpsvpCfg = BpConfig.instance:getBpSkinViewParamCO(self._skinId)
+
+	if skinCfg and self._nameTbList then
 		local heroCo = HeroConfig.instance:getHeroCO(skinCfg.characterId)
+		local nameTex = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("taluo_show_character_name"), heroCo and heroCo.name or skinCfg.name)
+		local signatureRes = ResUrl.getSignature(heroCo.signature)
 
-		self._txtskinname.text = skinCfg.name
-		self._txtname.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("taluo_show_character_name"), heroCo and heroCo.name or skinCfg.name)
-		self._txtnameEn.text = skinCfg.nameEng
+		for _, tb in ipairs(self._nameTbList) do
+			tb._txtskinname.text = skinCfg.name
+			tb._txtname.text = nameTex
+			tb._txtnameEn.text = skinCfg.nameEng
 
-		self._simagesignature:LoadImage(ResUrl.getSignature(heroCo.signature))
+			tb._simagesignature:LoadImage(signatureRes)
+		end
+
 		BpController.instance:setSkinFaceViewStr(self._skinId)
 	end
+
+	if self._bpsvpCfg and self._bpsvpCfg.openAudioId ~= 0 then
+		AudioMgr.instance:trigger(self._bpsvpCfg.openAudioId)
+	end
+end
+
+function BPSkinFaceView:_createNameItemTB(go)
+	local tb = self:getUserDataTb_()
+
+	tb._txtskinname = gohelper.findChildTextMesh(go, "#txt_skinname")
+	tb._txtname = gohelper.findChildTextMesh(go, "#txt_skinname/#txt_name")
+	tb._txtnameEn = gohelper.findChildTextMesh(go, "#txt_skinname/#txt_name/#txt_enname")
+	tb._simagesignature = gohelper.findChildSingleImage(go, "#simage_signature")
+
+	return tb
 end
 
 function BPSkinFaceView:statData(param)
@@ -155,6 +192,18 @@ end
 function BPSkinFaceView:onClose()
 	TaskDispatcher.cancelTask(self._delayFinishAnim, self)
 	TaskDispatcher.cancelTask(self._delayPlayAudio, self)
+
+	if self._bpsvpCfg and self._bpsvpCfg.closeAudioId ~= 0 then
+		AudioMgr.instance:trigger(self._bpsvpCfg.closeAudioId)
+	end
+
+	if self._nameTbList and #self._nameTbList > 0 then
+		for _, tb in ipairs(self._nameTbList) do
+			tb._simagesignature:UnLoadImage()
+		end
+
+		self._nameTbList = nil
+	end
 
 	if self._closeCallback then
 		if self._cbObj then

@@ -41,6 +41,7 @@ function Rouge2_MapStoreView:onInitView()
 	self._goStealSucc = gohelper.findChild(self.viewGO, "#go_Other/#go_Container/#go_GoodsBtns/#go_StealSucc")
 	self._goStealFail = gohelper.findChild(self.viewGO, "#go_Other/#go_Container/#go_GoodsBtns/#go_StealFail")
 	self._btnExitSteal = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Other/#go_Container/#go_StealBtns/#btn_ExitSteal")
+	self._btnExitStore = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Other/#btn_ExitStore")
 	self._goSelectGoods = gohelper.findChild(self.viewGO, "#go_Other/#go_Container/#go_SelectGoods")
 	self._goSelectGoodsRare = gohelper.findChildImage(self.viewGO, "#go_Other/#go_Container/#go_SelectGoods/#image_SelectGoodsRare")
 	self._goSelectGoodsIcon = gohelper.findChildSingleImage(self.viewGO, "#go_Other/#go_Container/#go_SelectGoods/#image_SelectGoodsIcon")
@@ -56,6 +57,7 @@ function Rouge2_MapStoreView:addEvents()
 	self._btnRefresh:AddClickListener(self._btnRefreshOnClick, self)
 	self._btnSteal:AddClickListener(self._btnStealOnClick, self)
 	self._btnExitSteal:AddClickListener(self._btnExitStealOnClick, self)
+	self._btnExitStore:AddClickListener(self._btnExitStoreOnClick, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onPopViewDone, self._onPopViewDone, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
@@ -70,6 +72,7 @@ function Rouge2_MapStoreView:removeEvents()
 	self._btnRefresh:RemoveClickListener()
 	self._btnSteal:RemoveClickListener()
 	self._btnExitSteal:RemoveClickListener()
+	self._btnExitStore:RemoveClickListener()
 end
 
 function Rouge2_MapStoreView:_btnRefreshOnClick()
@@ -135,6 +138,10 @@ end
 
 function Rouge2_MapStoreView:_btnExitStealOnClick()
 	Rouge2_MapStoreGoodsListModel.instance:changeState(Rouge2_MapEnum.StoreState.Normal)
+end
+
+function Rouge2_MapStoreView:_btnExitStoreOnClick()
+	self.viewContainer:overrideCloseCallback()
 end
 
 function Rouge2_MapStoreView:_editableInitView()

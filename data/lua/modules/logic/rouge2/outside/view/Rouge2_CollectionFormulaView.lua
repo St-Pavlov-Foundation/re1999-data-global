@@ -165,9 +165,10 @@ end
 
 function Rouge2_CollectionFormulaView:refrehsCollectionDesc()
 	local formulaConfig = self._formulaConfig
-	local desc = Rouge2_ItemDescHelper.buildDesc(formulaConfig.details, Rouge2_OutsideEnum.DescPercentColor, Rouge2_OutsideEnum.DescBracketColor)
 
-	self._txtFormulaDesc.text = Rouge2_ItemDescHelper.replaceColor(desc, Rouge2_OutsideEnum.DescReplaceColor, Rouge2_OutsideEnum.DescPercentColor)
+	Rouge2_ItemDescHelper.buildAndSetDesc(self._txtFormulaDesc, formulaConfig.details, Rouge2_OutsideEnum.DescPercentColor, Rouge2_OutsideEnum.DescBracketColor)
+
+	self._txtFormulaDesc.text = Rouge2_ItemDescHelper.replaceColor(self._txtFormulaDesc.text, Rouge2_OutsideEnum.DescReplaceColor, Rouge2_OutsideEnum.DescPercentColor)
 end
 
 function Rouge2_CollectionFormulaView:refreshCollectionTagIcon(tagObj, tagId, index)

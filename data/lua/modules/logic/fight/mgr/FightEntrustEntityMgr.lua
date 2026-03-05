@@ -7,10 +7,10 @@ local FightEntrustEntityMgr = class("FightEntrustEntityMgr", FightBaseClass)
 function FightEntrustEntityMgr:onConstructor()
 	self.entityDic = {}
 	self.entityVisible = {}
-	self.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 
 	self:com_registFightEvent(FightEvent.EntrustTempEntity, self._onEntrustTempEntity)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._onRestartStageBefore)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset)
 	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
 	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 	self:com_registFightEvent(FightEvent.OnCameraFocusChanged, self._onCameraFocusChanged)
@@ -50,7 +50,7 @@ function FightEntrustEntityMgr:_onSkillPlayFinish()
 
 		if self.entityVisible[v.id] == 0 then
 			v:setVisibleByPos(true)
-			self.entityMgr:adjustSpineLookRotation(v)
+			FightGameMgr.entityMgr:adjustSpineLookRotation(v)
 		end
 	end
 end
@@ -64,7 +64,7 @@ function FightEntrustEntityMgr:_onCameraFocusChanged(state)
 end
 
 function FightEntrustEntityMgr:_releaseEntity(entity)
-	self.entityMgr:removeUnit(entity:getTag(), entity.id)
+	self.entityDic[entity.id]:disposeSelf()
 
 	self.entityDic[entity.id] = nil
 	self.entityVisible[entity.id] = nil
@@ -77,6 +77,10 @@ function FightEntrustEntityMgr:_releaseAllEntity()
 end
 
 function FightEntrustEntityMgr:_onRestartStageBefore()
+	self:_releaseAllEntity()
+end
+
+function FightEntrustEntityMgr:_onSwitchPlaneClearAsset()
 	self:_releaseAllEntity()
 end
 

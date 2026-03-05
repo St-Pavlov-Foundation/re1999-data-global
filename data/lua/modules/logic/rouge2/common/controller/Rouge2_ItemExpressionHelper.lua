@@ -93,7 +93,7 @@ function Rouge2_ItemExpressionHelper.getAttrValue(flagName, params)
 	local flagCo = Rouge2_CollectionConfig.instance:getAttrFlagConfigByName(flagName)
 
 	if not flagCo then
-		logError(string.format("尝试解析造物描述失败!!! 失败原因: 无法匹配属性Flag:%s", flagName))
+		logError(string.format("尝试解析造物描述失败!!! 失败原因: 无法匹配属性关键字:%s", flagName))
 
 		return 0
 	end
@@ -114,6 +114,7 @@ function Rouge2_ItemExpressionHelper._getAttrValueFunc(flagType)
 		Rouge2_ItemExpressionHelper._getAttrValueFuncMap = {}
 		Rouge2_ItemExpressionHelper._getAttrValueFuncMap[Rouge2_Enum.ItemExpressionData.ItemAttr] = Rouge2_ItemExpressionHelper._getAttrValue_ItemAttr
 		Rouge2_ItemExpressionHelper._getAttrValueFuncMap[Rouge2_Enum.ItemExpressionData.LeaderAttr] = Rouge2_ItemExpressionHelper._getAttrValue_LeaderAttr
+		Rouge2_ItemExpressionHelper._getAttrValueFuncMap[Rouge2_Enum.ItemExpressionData.LeaderAttrSum] = Rouge2_ItemExpressionHelper._getAttrValue_LeaderAttrSum
 	end
 
 	local func = Rouge2_ItemExpressionHelper._getAttrValueFuncMap[flagType]
@@ -142,6 +143,25 @@ function Rouge2_ItemExpressionHelper._getAttrValue_LeaderAttr(flagCo, params)
 	local leaderAttrValue = Rouge2_Model.instance:getAttrValue(attrId)
 
 	return leaderAttrValue or 0
+end
+
+function Rouge2_ItemExpressionHelper._getAttrValue_LeaderAttrSum(flagCo, params)
+	local careerId = Rouge2_Model.instance:getCareerId()
+	local recommendAttrSum = 0
+
+	if careerId and careerId ~= 0 then
+		local recommendAttrList = Rouge2_CareerConfig.instance:getCareerRecommendAttributeIds(careerId)
+
+		if recommendAttrList then
+			for _, attrId in ipairs(recommendAttrList) do
+				local attrValue = Rouge2_Model.instance:getAttrValue(attrId)
+
+				recommendAttrSum = recommendAttrSum + attrValue
+			end
+		end
+	end
+
+	return recommendAttrSum
 end
 
 return Rouge2_ItemExpressionHelper

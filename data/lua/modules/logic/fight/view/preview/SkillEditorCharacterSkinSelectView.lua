@@ -35,12 +35,10 @@ end
 function SkillEditorCharacterSkinSelectView:_showThis()
 	gohelper.setActive(self._actionViewGO, true)
 
-	local scene = GameSceneMgr.instance:getCurScene()
-
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		self._attacker = scene.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		self._attacker = FightGameMgr.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		self._attacker = scene.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		self._attacker = FightGameMgr.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
 	if not self._attacker then
@@ -82,7 +80,7 @@ function SkillEditorCharacterSkinSelectView:OnItemClick(config)
 	SkillEditorMgr.instance:setTypeInfo(side, _type, info.ids, info.skinIds, info.groupId)
 
 	local tag = side == FightEnum.EntitySide.MySide and SceneTag.UnitPlayer or SceneTag.UnitMonster
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 	local tar_entity = entityMgr:getEntity(self._attacker.id)
 
 	if tar_entity.skill then
@@ -90,14 +88,14 @@ function SkillEditorCharacterSkinSelectView:OnItemClick(config)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.BeforeDeadEffect, tar_entity.id)
-	entityMgr:removeUnit(tag, self._attacker.id)
+	entityMgr:delEntity(self._attacker.id)
 
 	self.entity_mo.skin = config.id
 
 	if FightDataHelper.entityMgr:isSub(self.entity_mo.id) then
-		entityMgr:buildSubSpine(self.entity_mo)
+		entityMgr:newEntity(self.entity_mo)
 	else
-		entityMgr:buildSpine(self.entity_mo)
+		entityMgr:newEntity(self.entity_mo)
 	end
 end
 

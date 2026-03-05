@@ -141,6 +141,20 @@ function Rouge2_PopController:isPopping()
 	return self.showingViewName ~= nil
 end
 
+function Rouge2_PopController:isViewInQueue(viewName)
+	if self.showingViewName == viewName then
+		return true
+	end
+
+	if self.waitPopViewList then
+		for _, viewData in ipairs(self.waitPopViewList) do
+			if viewData.viewName == viewName then
+				return true
+			end
+		end
+	end
+end
+
 function Rouge2_PopController:clearAllPopView()
 	if self.waitPopViewList then
 		for _ = 1, #self.waitPopViewList do

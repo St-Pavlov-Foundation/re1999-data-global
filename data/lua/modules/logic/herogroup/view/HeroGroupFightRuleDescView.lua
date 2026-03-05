@@ -3,6 +3,13 @@
 module("modules.logic.herogroup.view.HeroGroupFightRuleDescView", package.seeall)
 
 local HeroGroupFightRuleDescView = class("HeroGroupFightRuleDescView", BaseView)
+local kSpacingY = 18
+local kDescItemMinHeight = 145
+
+function HeroGroupFightRuleDescView:_setContentHeight(newHeight)
+	recthelper.setHeight(self._goruleDescListTrans, newHeight)
+	recthelper.setHeight(self._scrollRuleTrans, math.min(newHeight, self._viewportHeight))
+end
 
 function HeroGroupFightRuleDescView:onInitView()
 	self._btncloserule = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closerule")
@@ -24,6 +31,10 @@ function HeroGroupFightRuleDescView:removeEvents()
 end
 
 function HeroGroupFightRuleDescView:_editableInitView()
+	self._scrollRuleGO = gohelper.findChild(self.viewGO, "#go_rule/#scroll_rule")
+	self._scrollRuleTrans = self._scrollRuleGO.transform
+	self._viewportHeight = recthelper.getHeight(self._scrollRuleTrans)
+	self._goruleDescListTrans = self._goruleDescList.transform
 	self._rulesimagelineList = self:getUserDataTb_()
 	self._cloneRuleGos = self:getUserDataTb_()
 
@@ -53,19 +64,31 @@ function HeroGroupFightRuleDescView:_refreshUI()
 		self._gorule.transform.pivot = self.viewParam.pivot
 	end
 
+	local newContentHeight = 0
+
 	for i, v in ipairs(ruleList) do
 		local targetId = v[1]
 		local ruleId = v[2]
 		local ruleCo = lua_rule.configDict[ruleId]
 
 		if ruleCo then
-			self:_setRuleDescItem(ruleCo, targetId)
+			local h = self:_setRuleDescItem(ruleCo, targetId)
+
+			newContentHeight = newContentHeight + h
 		end
 
 		if i == #ruleList then
 			gohelper.setActive(self._rulesimagelineList[i], false)
+		else
+			newContentHeight = newContentHeight + kSpacingY
 		end
 	end
+
+	recthelper.setAnchor(self._gorule.transform, 0, 0)
+
+	newContentHeight = newContentHeight + 25 + 3
+
+	self:_setContentHeight(newContentHeight)
 end
 
 function HeroGroupFightRuleDescView:_setRuleDescItem(ruleCo, targetId)
@@ -101,6 +124,10 @@ function HeroGroupFightRuleDescView:_setRuleDescItem(ruleCo, targetId)
 	local color = tagColor[targetId]
 
 	desc.text = formatLuaLang("fight_rule_desc", color, side, descContent)
+
+	local v2 = desc:GetPreferredValues()
+
+	return math.max(kDescItemMinHeight, v2.y)
 end
 
 function HeroGroupFightRuleDescView:onClose()

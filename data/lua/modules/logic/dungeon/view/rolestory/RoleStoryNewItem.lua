@@ -37,16 +37,26 @@ function RoleStoryNewItem:addEvents()
 	self.btnReward:AddClickListener(self.onClickReward, self)
 	self.btnClick:AddClickListener(self.onClickItem, self)
 	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.updateTask, self)
+	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.UnlockStory, self._onUnlockStory, self)
 end
 
 function RoleStoryNewItem:removeEvents()
 	self.btnReward:RemoveClickListener()
 	self.btnClick:RemoveClickListener()
 	self:removeEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, self.updateTask, self)
+	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.UnlockStory, self._onUnlockStory, self)
 end
 
 function RoleStoryNewItem:_editableInitView()
 	return
+end
+
+function RoleStoryNewItem:_onUnlockStory(storyId)
+	if not self._mo or self._mo.id ~= storyId then
+		return
+	end
+
+	self:refreshItem()
 end
 
 function RoleStoryNewItem:updateTask()

@@ -202,10 +202,6 @@ function EnterActivityViewOnExitFightSceneHelper._enterActivity130502(cls, param
 	EnterActivityViewOnExitFightSceneHelper.sequence = sequence
 end
 
-function EnterActivityViewOnExitFightSceneHelper.enterActivity12302(forceStarting, exitFightGroup)
-	EnterActivityViewOnExitFightSceneHelper.enterVersionActivityDungeonCommon(_enterActivity12302, forceStarting, exitFightGroup)
-end
-
 function EnterActivityViewOnExitFightSceneHelper.enterActivity130504(forceStarting, exitFightGroup)
 	EnterActivityViewOnExitFightSceneHelper.enterVersionActivityDungeonCommon(EnterActivityViewOnExitFightSceneHelper._enterActivity130504, forceStarting, exitFightGroup)
 end

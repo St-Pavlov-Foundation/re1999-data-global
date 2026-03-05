@@ -29,11 +29,12 @@ function Rouge2_MapDialogueItem:_editableInitView()
 
 	gohelper.setActive(self._goSpeaker, false)
 	gohelper.setActive(self._goNoneSpeaker, false)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.quickSetDialogueDone, self._quickSetDialogueDone, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onAddNewDialogue, self._onAddNewDialogue, self)
 end
 
 function Rouge2_MapDialogueItem:addEventListeners()
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.quickSetDialogueDone, self._quickSetDialogueDone, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onAddNewDialogue, self._onAddNewDialogue, self)
+	return
 end
 
 function Rouge2_MapDialogueItem:initInfo(info, playType, index, doneCallback, doneCallbackObj)

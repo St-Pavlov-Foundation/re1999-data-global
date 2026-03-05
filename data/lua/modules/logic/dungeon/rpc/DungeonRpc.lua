@@ -98,14 +98,7 @@ function DungeonRpc:packStartDungeonRequest(req, chapterId, episodeId, fightPara
 			end
 		end
 
-		if episode_config and episode_config.type == DungeonEnum.EpisodeType.Rouge then
-			req.params = tostring(RougeConfig1.instance:season())
-		elseif episode_config and episode_config.type == DungeonEnum.EpisodeType.WeekWalk_2 then
-			req.params = WeekWalk_2Model.instance:getFightParam()
-		elseif episode_config and episode_config.type == DungeonEnum.EpisodeType.Act183 then
-			req.params = Act183Helper.generateStartDungeonParams(episode_config.id)
-		end
-
+		DungeonPackStartDungeonRequestHelper.packRequestCustomParams(req, episode_config)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnStartDungeonExtraParams, req, episode_config)
 	end
 
@@ -138,10 +131,13 @@ function DungeonRpc:onReceiveStartDungeonReply(resultCode, msg)
 	end
 end
 
-function DungeonRpc:sendEndDungeonRequest(isAbort)
+function DungeonRpc:sendEndDungeonRequest(isAbort, endType)
+	endType = endType or DungeonEnum.EndType.None
+
 	local req = DungeonModule_pb.EndDungeonRequest()
 
 	req.isAbort = isAbort
+	req.endType = endType
 
 	self:sendMsg(req)
 end

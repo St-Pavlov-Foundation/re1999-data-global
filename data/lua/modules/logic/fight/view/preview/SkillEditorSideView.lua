@@ -30,7 +30,7 @@ function SkillEditorSideView:onInitView()
 
 	self._scene = GameSceneMgr.instance:getCurScene()
 
-	local attacker = self._scene.entityMgr:getEntityByPosId(self._attackerTag, 1)
+	local attacker = FightGameMgr.entityMgr:getEntityByPosId(self._attackerTag, 1)
 
 	if attacker then
 		self._skillSelectView:setAttacker(attacker.id)
@@ -134,12 +134,12 @@ function SkillEditorSideView:_onClickFight()
 
 	TaskDispatcher.runDelay(self._onPlayFinish, self, 60)
 
-	local attackerId = self._scene.entityMgr:getEntityByPosId(self._attackerTag, SkillEditorView.selectPosId[self._side]).id
-	local targetId = self._scene.entityMgr:getEntityByPosId(self._oppositeTag, SkillEditorView.selectPosId[self._oppositeSide]).id
+	local attackerId = FightGameMgr.entityMgr:getEntityByPosId(self._attackerTag, SkillEditorView.selectPosId[self._side]).id
+	local targetId = FightGameMgr.entityMgr:getEntityByPosId(self._oppositeTag, SkillEditorView.selectPosId[self._oppositeSide]).id
 	local targetLimit = FightHelper.getTargetLimits(self._side, skillId)
 
 	if targetLimit and #targetLimit > 0 and not tabletool.indexOf(targetLimit, targetId) then
-		targetId = self._scene.entityMgr:getEntityByPosId(self._attackerTag, SkillEditorView.prevSelectPosId[self._side]).id
+		targetId = FightGameMgr.entityMgr:getEntityByPosId(self._attackerTag, SkillEditorView.prevSelectPosId[self._side]).id
 	end
 
 	local attacker = FightHelper.getEntity(attackerId)

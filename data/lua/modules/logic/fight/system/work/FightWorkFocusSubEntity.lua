@@ -23,7 +23,6 @@ function FightWorkFocusSubEntity:onStart()
 			end
 		end
 
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 		local skinConfig = self._entityMO and self._entityMO:getSpineSkinCO()
 
 		if not skinConfig then
@@ -33,7 +32,7 @@ function FightWorkFocusSubEntity:onStart()
 		end
 
 		FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-		entityMgr:buildTempSpineByName(nil, self._entityId, self._entityMO.side, nil, skinConfig)
+		FightGameMgr.entityMgr:buildTempSpineByName(nil, self._entityId, self._entityMO.side, nil, skinConfig)
 	else
 		self:onDone(true)
 	end

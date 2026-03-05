@@ -6,6 +6,7 @@ local lua_rouge2_event_type = {}
 local fields = {
 	eventIcon = 3,
 	name = 2,
+	desc = 4,
 	type = 1
 }
 local primaryKey = {
@@ -13,7 +14,8 @@ local primaryKey = {
 }
 local mlStringKey = {
 	eventIcon = 2,
-	name = 1
+	name = 1,
+	desc = 3
 }
 
 function lua_rouge2_event_type.onLoad(json)

@@ -5,7 +5,8 @@ module("modules.logic.guide.controller.GuideJumpHandler", package.seeall)
 local GuideJumpHandler = class("GuideJumpHandler")
 local NeedFinishingAction = {
 	"113#OnGuideFightEndContinue",
-	"116#"
+	"116#",
+	"115#IgorController"
 }
 
 function GuideJumpHandler:ctor()

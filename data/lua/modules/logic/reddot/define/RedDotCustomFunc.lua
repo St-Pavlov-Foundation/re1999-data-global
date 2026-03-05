@@ -19,7 +19,8 @@ function RedDotCustomFunc.isShowNecrologistStory(id, uid)
 end
 
 RedDotCustomFunc.CustomRedHandleFunc = {
-	[RedDotEnum.DotNode.NecrologistStory] = RedDotCustomFunc.isShowNecrologistStory
+	[RedDotEnum.DotNode.NecrologistStory] = RedDotCustomFunc.isShowNecrologistStory,
+	[RedDotEnum.DotNode.CommandStationRelationShipBoard] = CommandStationController.getCommandStationRelationShipBoardReddot
 }
 
 return RedDotCustomFunc

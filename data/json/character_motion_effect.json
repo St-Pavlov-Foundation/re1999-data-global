@@ -964,5 +964,40 @@
     "motion": "b_mingxiang|b_ganzhi|b_shengdan|b_youling",
     "node": "Drawables/bone8/effect-Bone/roleeffect_hzsx_mx|Drawables/bone7/effect-Bone/roleeffect_hzsx_ganzhi|Drawables/bone4/effect-Bone/roleeffect_hzsx_shengdan|Drawables/bone4/effect-Bone/roleeffect_hzsx_youling1#Drawables/bone9/effect-Bone/roleeffect_hzsx_youling2",
     "everNode": ""
+  },
+  {
+    "heroResName": "304704_tmsd",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_shoujia",
+    "node": "Drawables/bone5/effect-Bone/roleeffect_tmsd_sj0#Drawables/bone2/effect-Bone/roleeffect_tmsd_sj2",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312603_mlan",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_chuihao|b_kanshou",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_mlan_ch2|Drawables/bone3/effect-Bone/roleeffect_mlan_ks3",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312103_mlde",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_jiaoban|b_shenmishu",
+    "node": "Drawables/bone4/effect-Bone/roleeffect_mlde_jb4|Drawables/bone2/effect-Bone/roleeffect_mlde_sms2#Drawables/bone3/effect-Bone/roleeffect_mlde_sms3",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312702_mes",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_shifang|b_shiyan",
+    "node": "Drawables/bone6/effect-Bone/roleeffect_mes_sf6#Drawables/bone7/effect-Bone/roleeffect_mes_sf7|Drawables/bone6/effect-Bone/roleeffect_mes_sy6",
+    "everNode": ""
+  },
+  {
+    "heroResName": "309202_yge",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_quxie",
+    "node": "Drawables/bone/effect-Bone/roleeffect_yge_qs0#Drawables/bone2/effect-Bone/roleeffect_yge_qs2#Drawables/bone3/effect-Bone/roleeffect_yge_qs3#Drawables/bone4/effect-Bone/roleeffect_yge_qs4#Drawables/bone5/effect-Bone/roleeffect_yge_qs5",
+    "everNode": ""
   }
 ]

@@ -13,6 +13,7 @@ EnemyInfoEnum.TabEnum = {
 	TowerDeep = 9,
 	WeekWalk = 2,
 	BossRush = 4,
+	TowerCompose = 10,
 	Normal = 1
 }
 EnemyInfoEnum.TabWidth = 252

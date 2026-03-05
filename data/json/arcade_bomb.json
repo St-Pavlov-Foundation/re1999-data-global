@@ -1,0 +1,116 @@
+[
+  {
+    "id": 101,
+    "name": "language_10104732",
+    "skillDesc": "language_10104733",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_002",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 5,
+    "target": 703,
+    "addFloor": 101,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_3_2"
+  },
+  {
+    "id": 102,
+    "name": "language_10104734",
+    "skillDesc": "language_10104735",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_003",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 5,
+    "target": 10,
+    "addFloor": 101,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_4_2"
+  },
+  {
+    "id": 103,
+    "name": "language_10104736",
+    "skillDesc": "language_10104737",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_004",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 7,
+    "target": 11,
+    "addFloor": 101,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_5_2"
+  },
+  {
+    "id": 104,
+    "name": "language_10104738",
+    "skillDesc": "language_10104739",
+    "shape": "",
+    "resPath": "v3a3_m_s12_jn1x1_001",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 0,
+    "countdown": 0,
+    "target": 101,
+    "addFloor": 0,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_1_2"
+  },
+  {
+    "id": 105,
+    "name": "language_10104740",
+    "skillDesc": "language_10104741",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_001",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 5,
+    "countdown": 5,
+    "target": 12,
+    "addFloor": 101,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_2_2"
+  },
+  {
+    "id": 106,
+    "name": "language_10104742",
+    "skillDesc": "language_10104743",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jz1x1_001",
+    "alertEffectId": 689010036,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 6,
+    "target": 13,
+    "addFloor": 0,
+    "skill": 0,
+    "icon": "v3a3_eliminate_skillicon_2_2"
+  }
+]

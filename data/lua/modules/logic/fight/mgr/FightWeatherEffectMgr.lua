@@ -11,6 +11,7 @@ function FightWeatherEffectMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.SetEntityWeatherEffectVisible, self._setEntityWeatherEffectVisible)
 	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect)
+	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAsset, self._releaseAllEntityEffect)
 	self:com_registFightEvent(FightEvent.SetEntityAlpha, self._onSetEntityAlpha)
 end
 

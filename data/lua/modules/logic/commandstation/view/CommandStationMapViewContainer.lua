@@ -45,7 +45,7 @@ function CommandStationMapViewContainer:buildTabViews(tabContainerId)
 		self._helpId = HelpEnum.HelpId.CommandStationMap
 		self.navigateView = NavigateButtonsView.New({
 			true,
-			false,
+			true,
 			true
 		}, self._helpId)
 

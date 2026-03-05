@@ -11,7 +11,8 @@ end
 function Rouge2_AttributeConfig:reqConfigNames()
 	return {
 		"rouge2_attribute",
-		"rouge2_passive_skill"
+		"rouge2_passive_skill",
+		"rouge2_attr_drop"
 	}
 end
 
@@ -20,6 +21,8 @@ function Rouge2_AttributeConfig:onConfigLoaded(configName, configTable)
 		self:_onLoadAttributeConfigs(configTable)
 	elseif configName == "rouge2_passive_skill" then
 		self:_onLoadPassiveSkillConfigs(configTable)
+	elseif configName == "rouge2_attr_drop" then
+		self:_onLoadAttrDropConfigs(configTable)
 	end
 end
 
@@ -92,6 +95,47 @@ function Rouge2_AttributeConfig._sortSkillByLevel(aSkill, bSkill)
 	return aSkill.id < bSkill.id
 end
 
+function Rouge2_AttributeConfig:_onLoadAttrDropConfigs(configTable)
+	self._attrId2DropList = {}
+
+	for _, dropCo in ipairs(configTable.configList) do
+		local careerId = dropCo.career
+		local attrDropList = self._attrId2DropList[careerId] or {}
+
+		self._attrId2DropList[careerId] = attrDropList
+
+		local attrId = dropCo.attr
+
+		attrDropList[attrId] = attrDropList[attrId] or {}
+
+		table.insert(attrDropList[attrId], dropCo)
+	end
+
+	for _, attrDropList in pairs(self._attrId2DropList) do
+		for _, dropList in pairs(attrDropList) do
+			table.sort(dropList, self._attrDropConfigSortFunc)
+		end
+	end
+end
+
+function Rouge2_AttributeConfig._attrDropConfigSortFunc(aDropCo, bDropCo)
+	local aLevel = aDropCo.level
+	local bLevel = bDropCo.level
+
+	if aLevel ~= bLevel then
+		return aLevel < bLevel
+	end
+
+	local aNeedNum = aDropCo.needNum
+	local bNeedNum = bDropCo.needNum
+
+	if aNeedNum ~= bNeedNum then
+		return aNeedNum < bNeedNum
+	end
+
+	return aDropCo.id < bDropCo.id
+end
+
 function Rouge2_AttributeConfig:getAttributeConfig(attrId)
 	attrId = tonumber(attrId)
 
@@ -104,6 +148,10 @@ function Rouge2_AttributeConfig:getAttributeConfig(attrId)
 	end
 
 	return attributeCo
+end
+
+function Rouge2_AttributeConfig:getAttrConfigListByType(attrType)
+	return self._type2AttributeList and self._type2AttributeList[attrType]
 end
 
 function Rouge2_AttributeConfig:getPassiveSkillConfig(skillId, level)
@@ -210,8 +258,8 @@ function Rouge2_AttributeConfig:getPassiveSkillEffectDescList(careerId, attrId, 
 	local effectDescList = string.split(effectDesc, "|")
 	local resultDescList = {}
 
-	for _, effectDesc in ipairs(effectDescList) do
-		local resultDesc = Rouge2_ItemExpressionHelper.getDescResult(nil, nil, effectDesc)
+	for _, desc in ipairs(effectDescList) do
+		local resultDesc = Rouge2_ItemExpressionHelper.getDescResult(nil, nil, desc)
 
 		table.insert(resultDescList, resultDesc)
 	end
@@ -228,6 +276,33 @@ function Rouge2_AttributeConfig:getPassiveSkillDescList(careerId, attrId, level)
 	tabletool.addValues(descList, effectDescList)
 
 	return descList
+end
+
+function Rouge2_AttributeConfig:getPassiveSkillDescListByType(careerId, attrId, level, descType)
+	local filedName = Rouge2_Enum.PassiveSkillDescType2FieldName[descType]
+	local skillCo = self:getCareerPassiveSkill(careerId, attrId, level)
+	local descStr = skillCo and skillCo[filedName]
+
+	if not descStr then
+		logError(string.format("肉鸽特性技能描述字段不存在 careerId = %s, attrId = %s, level = %s, descType = %s,", careerId, attrId, level, descType))
+
+		return
+	end
+
+	if string.nilorempty(descStr) then
+		return
+	end
+
+	local descList = string.split(descStr, "|")
+	local resultDescList = {}
+
+	for _, desc in ipairs(descList) do
+		local resultDesc = Rouge2_ItemExpressionHelper.getDescResult(nil, nil, desc)
+
+		table.insert(resultDescList, resultDesc)
+	end
+
+	return resultDescList
 end
 
 function Rouge2_AttributeConfig:getPassiveSkillUpDescList(careerId, attrId, level)
@@ -250,26 +325,6 @@ function Rouge2_AttributeConfig:getPassiveSkillUpDescList(careerId, attrId, leve
 	end
 
 	return descList
-end
-
-function Rouge2_AttributeConfig:getNextSpPassiveSkill(careerId, attrId, attrValue)
-	local skillList = self:getCareerPassiveSkillList(careerId, attrId)
-	local skillNum = skillList and #skillList or 0
-	local maxSkillLevel = skillNum - 1
-
-	for i = attrValue + 1, maxSkillLevel do
-		local skillCo = self:getCareerPassiveSkill(careerId, attrId, i)
-
-		if not skillCo then
-			return
-		end
-
-		local isSpecial = skillCo and skillCo.isSpecial
-
-		if isSpecial and isSpecial ~= 0 then
-			return skillCo
-		end
-	end
 end
 
 function Rouge2_AttributeConfig:getCareerPassiveSkillList(careerId, attrId)
@@ -298,6 +353,78 @@ function Rouge2_AttributeConfig:getAttrMaxValue(attrId)
 	local attrCo = self:getAttributeConfig(attrId)
 
 	return attrCo and attrCo.showMax or 0
+end
+
+function Rouge2_AttributeConfig:getAttrDropConfig(dropId)
+	local dropCo = lua_rouge2_attr_drop.configDict[dropId]
+
+	if not dropCo then
+		logError(string.format("肉鸽属性掉落配置不存在 dropId = %s", dropId))
+	end
+
+	return dropCo
+end
+
+function Rouge2_AttributeConfig:getAttrDropList(careerId, attrId)
+	local attrList = self._attrId2DropList and self._attrId2DropList[careerId]
+
+	return attrList and attrList[attrId]
+end
+
+function Rouge2_AttributeConfig:getAttrDropListByAttrValue(careerId, attrId, attrValue)
+	attrValue = attrValue or 0
+
+	local allDropList = self:getAttrDropList(careerId, attrId)
+
+	if allDropList then
+		local dropList = {}
+
+		for _, dropCo in ipairs(allDropList) do
+			if attrValue < dropCo.needNum then
+				break
+			end
+
+			table.insert(dropList, dropCo)
+		end
+
+		return dropList
+	end
+end
+
+function Rouge2_AttributeConfig:getAttrDropConfigByAttrValue(careerId, attrId, attrValue)
+	attrValue = attrValue or 0
+
+	local allDropList = self:getAttrDropList(careerId, attrId)
+
+	if allDropList then
+		for _, dropCo in ipairs(allDropList) do
+			if dropCo.needNum == attrValue then
+				return dropCo
+			end
+		end
+	end
+end
+
+function Rouge2_AttributeConfig:getNextAttrDropConfig(careerId, attrId, attrValue)
+	attrValue = attrValue or 0
+
+	local allDropList = self:getAttrDropList(careerId, attrId)
+
+	if allDropList then
+		for _, dropCo in ipairs(allDropList) do
+			if attrValue < dropCo.needNum then
+				return dropCo
+			end
+		end
+	end
+end
+
+function Rouge2_AttributeConfig:getIndexAttrDropConfig(careerId, attrId, index)
+	index = index or 1
+
+	local dropConfigList = self:getAttrDropList(careerId, attrId)
+
+	return dropConfigList and dropConfigList[index]
 end
 
 Rouge2_AttributeConfig.instance = Rouge2_AttributeConfig.New()

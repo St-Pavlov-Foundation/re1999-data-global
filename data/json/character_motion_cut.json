@@ -228,9 +228,21 @@
     "onlyStopCut": 1
   },
   {
+    "heroId": 3126,
+    "skinId": 312603,
+    "motion": "feihua|sikao",
+    "onlyStopCut": 1
+  },
+  {
     "heroId": 3095,
     "skinId": 309504,
     "motion": "ganzhi",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3121,
+    "skinId": 312103,
+    "motion": "juanzong",
     "onlyStopCut": 1
   }
 ]

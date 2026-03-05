@@ -2,13 +2,15 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectSeasonChangeHero", package.seeall)
 
-local FightEntitySpecialEffectSeasonChangeHero = class("FightEntitySpecialEffectSeasonChangeHero", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffectSeasonChangeHero = class("FightEntitySpecialEffectSeasonChangeHero", FightBaseClass)
 local KeyWord = "_OutlineWidth"
 
-function FightEntitySpecialEffectSeasonChangeHero:initClass()
-	self:addEventCb(FightController.instance, FightEvent.EnterOperateState, self._onEnterOperateState, self)
-	self:addEventCb(FightController.instance, FightEvent.ExitOperateState, self._onExitOperateState, self)
-	self:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, self._onSeasonSelectChangeHeroTarget, self)
+function FightEntitySpecialEffectSeasonChangeHero:onConstructor(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.EnterOperateState, self._onEnterOperateState)
+	self:com_registFightEvent(FightEvent.ExitOperateState, self._onExitOperateState)
+	self:com_registFightEvent(FightEvent.SeasonSelectChangeHeroTarget, self._onSeasonSelectChangeHeroTarget)
 
 	self._whiteLine = nil
 	self._orangeLine = nil
@@ -132,7 +134,7 @@ function FightEntitySpecialEffectSeasonChangeHero:_releaseOrangeEffect()
 	end
 end
 
-function FightEntitySpecialEffectSeasonChangeHero:releaseSelf()
+function FightEntitySpecialEffectSeasonChangeHero:onDestructor()
 	self:releaseAllEffect()
 end
 

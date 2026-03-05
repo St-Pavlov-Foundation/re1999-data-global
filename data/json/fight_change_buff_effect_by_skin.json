@@ -1,0 +1,20 @@
+[
+  {
+    "effectPath": "nimengdishi_innate_02",
+    "target": 1,
+    "skinId": 303903,
+    "changedPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "nimengdishi_innate_02",
+    "target": 2,
+    "skinId": 303903,
+    "changedPath": "v1a6_nmds_syzj/nmds_syzj_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  }
+]

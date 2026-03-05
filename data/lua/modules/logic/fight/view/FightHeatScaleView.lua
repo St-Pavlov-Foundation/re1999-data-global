@@ -223,6 +223,7 @@ function FightHeatScaleView:playAddAnim(offsetValue)
 	local posY = self:getAddItemPosY(5)
 	local tweenId = ZProj.TweenHelper.DOAnchorPosY(addItem.rectTr, posY, FightHeatScaleView.AddTweenDuration, self.onAddItemTweenDone, self, addItem)
 
+	gohelper.setActive(addItem.goArrow, FightDataHelper.entityMgr:checkSideHasBuffAct(FightEnum.EntitySide.MySide, FightEnum.BuffActId.HeatScaleAddFix))
 	table.insert(self.addItemTweenIdList, tweenId)
 end
 
@@ -244,6 +245,9 @@ function FightHeatScaleView:getAddItem()
 		addItem.rectTr = addItem.go:GetComponent(gohelper.Type_RectTransform)
 		addItem.animator = addItem.go:GetComponent(gohelper.Type_Animator)
 		addItem.txtNum = gohelper.findChildText(addItem.go, "#txt_num")
+		addItem.goArrow = gohelper.findChild(addItem.go, "#go_arrow")
+
+		gohelper.setActive(addItem.goArrow, false)
 	end
 
 	return addItem
@@ -251,6 +255,7 @@ end
 
 function FightHeatScaleView:recycleAddItem(addItem)
 	gohelper.setActive(addItem.go, false)
+	gohelper.setActive(addItem.goArrow, false)
 	table.insert(self.addItemPool, addItem)
 end
 

@@ -10,6 +10,7 @@ function FightWorkPlay2Operate:onConstructor(isStart, isClothSkill)
 end
 
 function FightWorkPlay2Operate:onStart()
+	FightGameMgr.checkCrashMgr:play2Operate()
 	FightViewPartVisible.set(true, true, true, false, false)
 
 	local flow = self:com_registFlowSequence()
@@ -68,6 +69,8 @@ function FightWorkPlay2Operate:onStart()
 		flow:registWork(FightWorkCheckNaNaBindContract)
 		flow:registWork(FightWorkCheckLuXiHeroUpgrade)
 		flow:registWork(FightWorkBLESelectCrystal)
+		flow:registWork(FightWorkSelectBattleEvent)
+		flow:registWork(FightWorkFunction, FightDataHelper.tempMgr.clearBattleSelectCount, FightDataHelper.tempMgr)
 	end
 
 	flow:addWork(FightMsgMgr.sendMsg(FightMsgId.PlayCameraAnimWhenOperateStage))

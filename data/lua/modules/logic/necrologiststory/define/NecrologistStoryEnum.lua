@@ -5,18 +5,23 @@ module("modules.logic.necrologiststory.define.NecrologistStoryEnum", package.see
 local NecrologistStoryEnum = _M
 
 NecrologistStoryEnum.RoleStoryId = {
-	V3A1 = 26,
-	V3A2 = 27
+	V3A3 = 28,
+	V3A2 = 27,
+	V3A1 = 26
 }
 NecrologistStoryEnum.RoleStoryId2MOCls = {
 	[NecrologistStoryEnum.RoleStoryId.V3A1] = "NecrologistV3A1MO",
-	[NecrologistStoryEnum.RoleStoryId.V3A2] = "NecrologistV3A2MO"
+	[NecrologistStoryEnum.RoleStoryId.V3A2] = "NecrologistV3A2MO",
+	[NecrologistStoryEnum.RoleStoryId.V3A3] = "NecrologistV3A3MO"
 }
 NecrologistStoryEnum.StoryId2GameView = {
 	[NecrologistStoryEnum.RoleStoryId.V3A1] = ViewName.V3A1_RoleStoryGameView,
-	[NecrologistStoryEnum.RoleStoryId.V3A2] = ViewName.V3A2_RoleStoryGameView
+	[NecrologistStoryEnum.RoleStoryId.V3A2] = ViewName.V3A2_RoleStoryGameView,
+	[NecrologistStoryEnum.RoleStoryId.V3A3] = ViewName.V3A3_RoleStoryGameView
 }
 NecrologistStoryEnum.TaskParam = {
+	V3A3End2 = 2802,
+	V3A3End1 = 2801,
 	V3A2ItemUnlockCount = 2701
 }
 NecrologistStoryEnum.Pivot = {
@@ -56,8 +61,9 @@ NecrologistStoryEnum.BaseType = {
 }
 NecrologistStoryEnum.WeatherType = {
 	Cloudy = 3,
-	Light = 7,
+	Fire = 8,
 	Snowy = 5,
+	Light = 7,
 	Flow = 6,
 	Fog = 2,
 	Rainy = 4,
@@ -70,7 +76,8 @@ NecrologistStoryEnum.WeatherType2Name = {
 	[NecrologistStoryEnum.WeatherType.Rainy] = "rain",
 	[NecrologistStoryEnum.WeatherType.Snowy] = "snow",
 	[NecrologistStoryEnum.WeatherType.Flow] = "flow",
-	[NecrologistStoryEnum.WeatherType.Light] = "light"
+	[NecrologistStoryEnum.WeatherType.Light] = "light",
+	[NecrologistStoryEnum.WeatherType.Fire] = "fire"
 }
 NecrologistStoryEnum.NeedDelayType = {
 	options = 4,
@@ -98,6 +105,11 @@ NecrologistStoryEnum.V3A2BaseState = {
 	Hide = 4,
 	Lock = 1,
 	Normal = 2
+}
+NecrologistStoryEnum.V3A3Story = {
+	Last = 305107,
+	Second = 305102,
+	Memory = 305106
 }
 
 return NecrologistStoryEnum

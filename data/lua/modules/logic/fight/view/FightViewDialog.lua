@@ -867,7 +867,7 @@ function FightViewDialog._checkHpLessThan(dialogCheck)
 
 		_hpEntityTemp = all
 	else
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 		local tag = side == 1 and SceneTag.UnitMonster or SceneTag.UnitPlayer
 		local entity = entityMgr:getEntityByPosId(tag, posId)
 

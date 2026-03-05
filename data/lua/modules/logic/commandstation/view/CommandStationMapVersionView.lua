@@ -15,12 +15,26 @@ function CommandStationMapVersionView:onInitView()
 	end
 end
 
+function CommandStationMapVersionView.getVersionConfigList()
+	local list = {}
+
+	for i, v in ipairs(lua_copost_version.configList) do
+		local timeline = CommandStationMapModel.instance:getVersionTimeline(v.versionId)
+
+		if timeline and #timeline > 0 then
+			table.insert(list, v)
+		end
+	end
+
+	return list
+end
+
 function CommandStationMapVersionView:_editableInitView()
 	gohelper.setActive(self._gonameItem, false)
 
 	self._itemList = self:getUserDataTb_()
 	self._recycleList = self:getUserDataTb_()
-	self._versionConfigList = lua_copost_version.configList
+	self._versionConfigList = CommandStationMapVersionView.getVersionConfigList()
 	self._versionConfigLen = #self._versionConfigList
 	self._itemHeight = 136
 	self._itemSpace = -45
@@ -240,7 +254,7 @@ function CommandStationMapVersionView:onOpen()
 	local targetVersionId = CommandStationMapModel.instance:getVersionId()
 
 	if targetVersionId ~= versionId then
-		local targetIndex = CommandStationConfig.instance:getVersionIndex(targetVersionId) - 1
+		local targetIndex = CommandStationConfig.instance:getVersionIndex(targetVersionId, self._versionConfigList) - 1
 
 		self._focusVersionPosY = (targetIndex - dataIndex) * self._itemHeightWithSpace
 

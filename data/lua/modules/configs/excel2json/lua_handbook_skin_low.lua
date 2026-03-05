@@ -10,6 +10,7 @@ local fields = {
 	show = 5,
 	spineParams = 9,
 	tarotCardPath = 10,
+	festivalParams = 11,
 	skinContain = 7,
 	highId = 4,
 	id = 1,

@@ -204,7 +204,6 @@ RoomBuildingEnum.VehicleInitOffestY = 0.11
 RoomBuildingEnum.VehicleTypeOffestY = {
 	RoomBuildingEnum.VehicleInitOffestY
 }
-RoomBuildingEnum.MaxBuildingOccupyNum = 7
 RoomBuildingEnum.NotPlaceBlockAnimDict = {
 	[11311] = true
 }

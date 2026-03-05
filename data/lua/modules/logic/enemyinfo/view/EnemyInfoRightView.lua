@@ -258,6 +258,8 @@ function EnemyInfoRightView:refreshHeader()
 		local hpNumber = tonumber(hp)
 
 		self._txthp.text = hpNumber and math.floor(hpNumber * (1 + hpFixRate)) or hp
+	elseif self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.TowerCompose then
+		self._txthp.text = self:getTowerComposeHp()
 	else
 		self._txthp.text = CharacterDataConfig.instance:getMonsterHp(monsterConfig.id, self.isSimple)
 	end
@@ -265,6 +267,19 @@ function EnemyInfoRightView:refreshHeader()
 	self:refreshMultiHp()
 	self:refreshMultiStage()
 	self:refreshStress()
+end
+
+function EnemyInfoRightView:getTowerComposeHp()
+	local themeId = self.viewParam.themeId
+	local episodeId = self.viewParam.episodeId
+	local themeConfig = TowerComposeConfig.instance:getThemeConfig(themeId)
+	local bossMonsterGroupId = themeConfig.monsterGroupId
+	local bossMonsterIdList = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[bossMonsterGroupId].monster, "#")
+	local monsterId = self.monsterConfig.id
+	local modLevel = TowerComposeModel.instance:getThemePlaneLevel(themeId)
+	local hp = TowerComposeModel.instance:getMonsterHp(bossMonsterIdList, episodeId, modLevel, monsterId)
+
+	return hp
 end
 
 function EnemyInfoRightView:refreshMultiHp()

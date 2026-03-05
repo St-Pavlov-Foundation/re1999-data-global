@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightVariantHeartComp", package.seeall)
 
-local FightVariantHeartComp = class("FightVariantHeartComp", LuaCompBase)
+local FightVariantHeartComp = class("FightVariantHeartComp", FightBaseClass)
 
 FightVariantHeartComp.VariantKey = {
 	"_STYLIZATIONMOSTER_ON",
@@ -13,7 +13,10 @@ FightVariantHeartComp.VariantKey = {
 	"_STYLE_RAIN_STORM_ON",
 	"_STYLE_ASSIST_ON",
 	"_STYLIZATIONMOSTER4_ON",
-	"_STYLE_SHADOW_ON"
+	"_STYLE_SHADOW_ON",
+	"_STYLIZATIONMOSTER5_ON",
+	"_STYLIZATIONMOSTER5_ON",
+	"_STYLIZATIONMOSTER5_ON"
 }
 
 local TextureKey = "_NoiseMap3"
@@ -26,7 +29,10 @@ local TextureName = {
 	"textures/style_rain_strom_manual",
 	"textures/style_assist_noise_manual",
 	"textures/noise_05_manual",
-	""
+	"",
+	"textures/noise_06_manual",
+	"textures/noise_06_manual",
+	"textures/noise_06_manual"
 }
 local PowKey = "_Pow"
 local Pow_w_Value = {
@@ -61,33 +67,32 @@ local StyOffset_x_Value = {
 	0,
 	0,
 	1,
-	0
+	0,
+	nil,
+	nil,
+	nil,
+	nil,
+	0,
+	1,
+	2
 }
 local effectPrefabDict = {
 	[8] = "roleeffects/roleeffect_glitch"
 }
 
-function FightVariantHeartComp:ctor(entity)
+function FightVariantHeartComp:onConstructor(entity)
 	self.entity = entity
 	self._hostEntity = entity
+	self.go = entity.go
+
+	self:com_registFightEvent(FightEvent.OnSpineMaterialChange, self._onMatChange, LuaEventSystem.Low)
+	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 end
 
 function FightVariantHeartComp:setEntity(entity)
 	self._hostEntity = entity
 
 	self:_change()
-end
-
-function FightVariantHeartComp:init(go)
-	self.go = go
-
-	FightController.instance:registerCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self, LuaEventSystem.Low)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
-end
-
-function FightVariantHeartComp:removeEventListeners()
-	FightController.instance:unregisterCallback(FightEvent.OnSpineMaterialChange, self._onMatChange, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, self._onSpineLoaded, self)
 end
 
 function FightVariantHeartComp:_onMatChange(entityId, mat)
@@ -247,7 +252,7 @@ function FightVariantHeartComp:clearLoader()
 	end
 end
 
-function FightVariantHeartComp:onDestroy()
+function FightVariantHeartComp:onDestructor()
 	self:clearLoader()
 	self:clearEffect()
 

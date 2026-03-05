@@ -24,7 +24,7 @@ function StoryBgEffsDistress:start(callback, callbackObj)
 	self._finishedCallback = callback
 	self._finishedCallbackObj = callbackObj
 
-	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
+	self:_setViewTop(true)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseView, self)
 	self:loadRes()
@@ -34,7 +34,7 @@ function StoryBgEffsDistress:_onOpenView(viewName)
 	local setting = ViewMgr.instance:getSetting(viewName)
 
 	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
-		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
+		self:_setViewTop(false)
 	end
 end
 
@@ -42,7 +42,7 @@ function StoryBgEffsDistress:_onCloseView(viewName)
 	local setting = ViewMgr.instance:getSetting(viewName)
 
 	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
-		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
+		self:_setViewTop(true)
 	end
 end
 
@@ -94,13 +94,23 @@ function StoryBgEffsDistress:reset(bgCo)
 		return
 	end
 
-	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
+	self:_setViewTop(true)
 
 	local startValue = self._img.material:GetFloat("_TotalFator")
 	local endValue = distressEffDegree[bgCo.effDegree + 1]
 	local transTime = self._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 
 	self._distressTweenId = ZProj.TweenHelper.DOTweenFloat(startValue, endValue, transTime, self._setDistressUpdate, self._onBgEffDistressFinished, self)
+end
+
+function StoryBgEffsDistress:_setViewTop(set)
+	if set then
+		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
+		StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
+	else
+		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
+		StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
+	end
 end
 
 function StoryBgEffsDistress:_setDistressUpdate(value)
@@ -143,7 +153,7 @@ function StoryBgEffsDistress:destroy()
 		self._distressGo = nil
 	end
 
-	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
+	self:_setViewTop(false)
 	self:_setDistressUpdate(0)
 	self:_killTween()
 

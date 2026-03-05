@@ -5008,6 +5008,54 @@
     "switch": "Fightboos_First"
   },
   {
+    "id": 11222,
+    "battleId": 104331110,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 11222,
+    "battleId": 104331110,
+    "monster": 104331111,
+    "invokeType": 4,
+    "param": "630411_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 21211,
+    "battleId": 104332110,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 21211,
+    "battleId": 104332110,
+    "monster": 104332111,
+    "invokeType": 4,
+    "param": "630411_change",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 1222,
+    "battleId": 104333110,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 1222,
+    "battleId": 104333110,
+    "monster": 104333111,
+    "invokeType": 4,
+    "param": "630411_change",
+    "switch": "Fightboos_Second"
+  },
+  {
     "id": 2710118,
     "battleId": 5270110,
     "monster": 527011004,

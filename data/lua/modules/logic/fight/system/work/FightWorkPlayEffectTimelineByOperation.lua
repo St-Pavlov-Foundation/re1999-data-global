@@ -96,6 +96,7 @@ function FightWorkPlayEffectTimelineByOperation:playTimeline()
 	local work = entity.skill:registTimelineWork(timelineName, fightStepData)
 
 	work.skipAfterTimelineFunc = true
+	work.CALLBACK_EVEN_IF_UNFINISHED = true
 
 	work:registFinishCallback(self.onTimelineFinish, self)
 	work:start()

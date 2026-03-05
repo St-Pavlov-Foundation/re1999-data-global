@@ -249,6 +249,14 @@ function MainSceneSwitchCameraController:setUnitCamera(cameraGO)
 	self._unitCameraTrs = cameraGO.transform
 end
 
+function MainSceneSwitchCameraController:getMainCamera()
+	return self._mainCamera
+end
+
+function MainSceneSwitchCameraController:getCameraTraceGO()
+	return self._cameraTraceGO
+end
+
 function MainSceneSwitchCameraController:_destoryActiveGos()
 	local sceneGO = gohelper.findChild(self._mainCameraGO, "scene")
 

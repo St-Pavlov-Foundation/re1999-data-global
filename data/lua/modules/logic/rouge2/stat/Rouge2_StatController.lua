@@ -153,8 +153,11 @@ function Rouge2_StatController:statExitLayer()
 		[StatEnum.EventProperties.DungeonGold] = self:getCoin(),
 		[StatEnum.EventProperties.ReviveNum] = self:getRevivalCoin(),
 		[StatEnum.EventProperties.OutsideTalentInfomation] = self:getOutsideTalentInfo(),
-		[StatEnum.EventProperties.Formula] = self:getFormulaName()
+		[StatEnum.EventProperties.Formula] = self:getFormulaName(),
+		[StatEnum.EventProperties.UseTime] = self:getNormalLayerUseTime()
 	})
+
+	self._enterLayerMapTime = nil
 end
 
 function Rouge2_StatController:statEnd(endResult)
@@ -284,8 +287,8 @@ function Rouge2_StatController:getCurAttrArray()
 			local attrValue = attrInfo:getValue()
 
 			table.insert(attrArray, {
-				name = attrCo.name,
-				num = attrValue
+				name = attrCo and attrCo.name or "",
+				num = attrValue or 0
 			})
 		end
 	end
@@ -324,7 +327,9 @@ function Rouge2_StatController:getRelicsNameList()
 		for _, relicsMo in ipairs(relicsList) do
 			local relicsCo = relicsMo:getConfig()
 
-			table.insert(relicsNameList, relicsCo.name)
+			if relicsCo then
+				table.insert(relicsNameList, relicsCo.name)
+			end
 		end
 	end
 
@@ -339,7 +344,21 @@ function Rouge2_StatController:getBuffNameList()
 		for _, buffMo in ipairs(buffList) do
 			local buffCo = buffMo:getConfig()
 
-			table.insert(buffNameList, buffCo.name)
+			if buffCo then
+				table.insert(buffNameList, buffCo.name)
+			end
+		end
+	end
+
+	local attrBuffList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.AttrBuff)
+
+	if attrBuffList then
+		for _, buffMo in ipairs(attrBuffList) do
+			local buffCo = buffMo:getConfig()
+
+			if buffCo then
+				table.insert(buffNameList, buffCo.name)
+			end
 		end
 	end
 
@@ -402,6 +421,12 @@ function Rouge2_StatController:getUseTime()
 	end
 
 	return time
+end
+
+function Rouge2_StatController:getNormalLayerUseTime()
+	local time = self._enterLayerMapTime and ServerTime.now() - self._enterLayerMapTime or 0
+
+	return time or 0
 end
 
 function Rouge2_StatController:_onPushEndFight()
@@ -635,8 +660,13 @@ function Rouge2_StatController:statStart()
 	self._failResult = nil
 end
 
+function Rouge2_StatController:statEnterLayerMap()
+	self._enterLayerMapTime = self._enterLayerMapTime or ServerTime.now()
+end
+
 function Rouge2_StatController:quitMap()
 	self._isStart = false
+	self._enterLayerMapTime = nil
 end
 
 function Rouge2_StatController:checkIsReset()

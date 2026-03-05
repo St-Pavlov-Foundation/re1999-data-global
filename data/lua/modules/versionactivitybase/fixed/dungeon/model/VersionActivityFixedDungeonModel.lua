@@ -143,8 +143,15 @@ local NOT_PLAYED = 0
 
 function VersionActivityFixedDungeonModel:isNeedPlayHardModeUnlockAnimation(dungeonActId)
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local prefsKey = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion).PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
-	local value = VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion).instance:getPlayerPrefs(prefsKey, NOT_PLAYED)
+	local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+
+	if not dungeonEnum or not dungeonEnum.PlayerPrefsKey then
+		return
+	end
+
+	local prefsKey = dungeonEnum.PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion)
+	local value = dungeonController.instance:getPlayerPrefs(prefsKey, NOT_PLAYED)
 
 	if value ~= HAVE_PLAYED then
 		local dungeonActId = dungeonActId or VersionActivityFixedHelper.getVersionActivityEnum(bigVersion, smallVersion).ActivityId.Dungeon
@@ -157,9 +164,15 @@ end
 function VersionActivityFixedDungeonModel:savePlayerPrefsPlayHardModeUnlockAnimation()
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+
+	if not dungeonEnum or not dungeonEnum.PlayerPrefsKey then
+		return
+	end
+
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion)
 	local prefsKey = dungeonEnum.PlayerPrefsKey.HasPlayedUnlockHardModeBtnAnim
 
-	VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion).instance:savePlayerPrefs(prefsKey, HAVE_PLAYED)
+	dungeonController.instance:savePlayerPrefs(prefsKey, HAVE_PLAYED)
 end
 
 function VersionActivityFixedDungeonModel:isTipHardModeUnlockOpen(dungeonActId)
@@ -170,8 +183,15 @@ function VersionActivityFixedDungeonModel:isTipHardModeUnlockOpen(dungeonActId)
 		return
 	end
 
-	local prefsKey = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion).PlayerPrefsKey.OpenHardModeUnlockTip
-	local value = VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion).instance:getPlayerPrefs(prefsKey, NOT_PLAYED)
+	local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+
+	if not dungeonEnum or not dungeonEnum.PlayerPrefsKey then
+		return
+	end
+
+	local prefsKey = dungeonEnum.PlayerPrefsKey.OpenHardModeUnlockTip
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion)
+	local value = dungeonController.instance:getPlayerPrefs(prefsKey, NOT_PLAYED)
 
 	if value ~= HAVE_PLAYED then
 		local isOpen = VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(dungeonActId)
@@ -183,6 +203,11 @@ end
 function VersionActivityFixedDungeonModel:setTipHardModeUnlockOpen()
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion)
+
+	if not dungeonEnum or not dungeonEnum.PlayerPrefsKey then
+		return
+	end
+
 	local prefsKey = dungeonEnum.PlayerPrefsKey.OpenHardModeUnlockTip
 
 	VersionActivityFixedHelper.getVersionActivityDungeonController(bigVersion, smallVersion).instance:savePlayerPrefs(prefsKey, HAVE_PLAYED)

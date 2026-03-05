@@ -77,4 +77,8 @@ function FightTeamDataMgr:getRouge2MusicInfo(side)
 	return sideData.rouge2MusicInfo
 end
 
+function FightTeamDataMgr:getAssistBossInfo()
+	return
+end
+
 return FightTeamDataMgr

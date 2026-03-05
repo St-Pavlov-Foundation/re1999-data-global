@@ -1,0 +1,30 @@
+[
+  {
+    "mapId": 133101,
+    "time": 90,
+    "targets": "Weight#200",
+    "targetDesc": "质量超过200",
+    "type7Weight": "1#5"
+  },
+  {
+    "mapId": 133102,
+    "time": 90,
+    "targets": "KillType#2",
+    "targetDesc": "杀掉所有压抑小球",
+    "type7Weight": "1#5"
+  },
+  {
+    "mapId": 133103,
+    "time": 90,
+    "targets": "KillType#3",
+    "targetDesc": "杀掉所有压抑小球",
+    "type7Weight": "1#5"
+  },
+  {
+    "mapId": 133104,
+    "time": 90,
+    "targets": "Weight#500",
+    "targetDesc": "质量超过200",
+    "type7Weight": "1#5"
+  }
+]

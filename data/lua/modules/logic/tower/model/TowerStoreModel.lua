@@ -59,9 +59,9 @@ function TowerStoreModel:getStoreGroupName(storeId)
 end
 
 function TowerStoreModel:getUpdateStoreRemainTime(useEn)
-	local actInfoMo = self:getUpdateStoreActivityMo()
+	local actInfoMo, actStatues = self:getUpdateStoreActivityMo()
 
-	if actInfoMo then
+	if actInfoMo and actStatues ~= ActivityEnum.ActivityStatus.Expired then
 		local remainTime = actInfoMo:getRemainTimeStr2ByEndTime(useEn)
 
 		return remainTime
@@ -71,21 +71,20 @@ function TowerStoreModel:getUpdateStoreRemainTime(useEn)
 end
 
 function TowerStoreModel:getUpdateStoreActivityMo()
-	local actId = self:checkUpdateStoreActivity()
+	local storeId = self:getMinRemainTimeStoreId()
+	local actId = self:checkUpdateStoreActivity(storeId)
 	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
-	local isNormal = actInfoMo and ActivityHelper.getActivityStatus(actId) == ActivityEnum.ActivityStatus.Normal
+	local actStatues = actInfoMo and ActivityHelper.getActivityStatus(actId)
 
-	if isNormal then
-		return actInfoMo
-	end
+	return actInfoMo, actStatues
 end
 
-function TowerStoreModel:checkUpdateStoreActivity()
+function TowerStoreModel:checkUpdateStoreActivity(storeId)
 	local storeMoList = self:getStoreGroupMO()
 	local actId
 
 	if storeMoList then
-		local updateStoreMo = storeMoList[StoreEnum.TowerStore.UpdateStore]
+		local updateStoreMo = storeMoList[storeId]
 
 		if updateStoreMo then
 			for _, mo in pairs(updateStoreMo:getGoodsList()) do
@@ -105,12 +104,35 @@ function TowerStoreModel:checkUpdateStoreActivity()
 	return actId
 end
 
+function TowerStoreModel:getMinRemainTimeStoreId()
+	local minRemainTimeStoreId = 0
+	local minOffsetSecond
+	local storeType = self:getStore()
+
+	for _, storeId in pairs(storeType) do
+		local actId = self:checkUpdateStoreActivity(storeId)
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+		if actInfoMo then
+			local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
+
+			if not minOffsetSecond or offsetSecond < minOffsetSecond then
+				minOffsetSecond = offsetSecond
+				minRemainTimeStoreId = storeId
+			end
+		end
+	end
+
+	return minRemainTimeStoreId
+end
+
 function TowerStoreModel:checkStoreNewGoods()
-	local actId = self:checkUpdateStoreActivity()
+	local storeId = self:getMinRemainTimeStoreId()
+	local actId = self:checkUpdateStoreActivity(storeId) or 0
 
 	if self:isHasNewGoods() then
 		self._isHasNewGoods = true
-	elseif actId then
+	elseif actId and actId > 0 then
 		local key = self:getStoreNewGoodsPrefKey()
 
 		self._isHasNewGoods = not ActivityEnterMgr.instance:isEnteredActivity(actId)
@@ -138,7 +160,8 @@ function TowerStoreModel:isHasNewGoodsInStore()
 end
 
 function TowerStoreModel:getStoreNewGoodsPrefKey()
-	local actId = self:checkUpdateStoreActivity() or 0
+	local storeId = self:getMinRemainTimeStoreId()
+	local actId = self:checkUpdateStoreActivity(storeId) or 0
 	local playerInfo = PlayerModel.instance:getPlayinfo()
 	local playerId = playerInfo and playerInfo.userId or 1999
 	local key = "TowerStoreModel_StoreNewGoods_" .. playerId .. "|" .. actId
@@ -148,6 +171,7 @@ end
 
 function TowerStoreModel:getStore()
 	return {
+		StoreEnum.TowerStore.ComposeUpdateStore,
 		StoreEnum.TowerStore.UpdateStore,
 		StoreEnum.TowerStore.NormalStore
 	}
@@ -293,7 +317,7 @@ end
 
 function TowerStoreModel:isUpdateStoreEmpty()
 	local storeMoList = self:getStoreGroupMO()
-	local updateStoreMo = storeMoList and storeMoList[StoreEnum.TowerStore.UpdateStore]
+	local updateStoreMo = storeMoList and storeMoList[StoreEnum.TowerStore.UpdateStore] or storeMoList[StoreEnum.TowerStore.ComposeUpdateStore]
 	local isUpdateStoreEmpty = not updateStoreMo or next(updateStoreMo:getGoodsList()) == nil
 
 	return isUpdateStoreEmpty

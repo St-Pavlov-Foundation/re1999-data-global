@@ -12,6 +12,9 @@ function FightWorkSendOperate2Server:onStart()
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.SendOperation2Server)
 
 	local flow = self:com_registFlowSequence()
+
+	flow:registWork(FightWorkForceUseCardByConfig)
+
 	local cardAniWork = FightMsgMgr.sendMsg(FightMsgId.RegistCardEndAniFlow)
 
 	if cardAniWork then

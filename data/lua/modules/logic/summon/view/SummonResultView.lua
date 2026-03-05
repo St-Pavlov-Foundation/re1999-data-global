@@ -127,6 +127,7 @@ end
 function SummonResultView:onOpen()
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._refreshCost, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_LuckDraw_TenHero_OpenAll)
 
 	local summonResultList = self.viewParam.summonResultList
@@ -152,6 +153,7 @@ end
 function SummonResultView:onClose()
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._refreshCost, self)
 
 	if not self._isReSummon and not self:_showCommonPropView() then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonResultClose)

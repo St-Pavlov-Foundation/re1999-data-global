@@ -14,6 +14,8 @@ function FightTempDataMgr:onConstructor()
 	self.playAiJiAoPreTimeline = nil
 	self.buffDurationDic = {}
 	self.douQuQuDice = nil
+	self.canNotSelectEntityIdDic = {}
+	self.battleSelectCount = 0
 end
 
 function FightTempDataMgr:onCancelOperation()
@@ -30,6 +32,10 @@ end
 
 function FightTempDataMgr:isAutoSelectedCrystal()
 	return self.autoSelectedCrystal
+end
+
+function FightTempDataMgr:clearBattleSelectCount()
+	self.battleSelectCount = 0
 end
 
 return FightTempDataMgr

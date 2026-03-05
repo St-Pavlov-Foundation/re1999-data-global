@@ -66,22 +66,24 @@ function FightTLEventMove:onTrackStart(fightStepData, duration, paramsArr)
 				tabletool.removeValue(self._combinative_entitys, self._follow_entity)
 			end
 
-			local endX, endY, endZ = FightHelper.getEntityStandPos(self._follow_entity:getMO())
-			local follow_entity_pos = Vector3.New(endX, endY, endZ)
+			if self._follow_entity then
+				local endX, endY, endZ = FightHelper.getEntityStandPos(self._follow_entity:getMO())
+				local follow_entity_pos = Vector3.New(endX, endY, endZ)
 
-			for i, v in ipairs(self._combinative_entitys) do
-				endX, endY, endZ = FightHelper.getEntityStandPos(v:getMO())
+				for i, v in ipairs(self._combinative_entitys) do
+					endX, endY, endZ = FightHelper.getEntityStandPos(v:getMO())
 
-				local temp_pos = Vector3.New(endX, endY, endZ)
+					local temp_pos = Vector3.New(endX, endY, endZ)
 
-				table.insert(self._combinative_pos_offsets, temp_pos - follow_entity_pos)
+					table.insert(self._combinative_pos_offsets, temp_pos - follow_entity_pos)
+				end
+
+				moveEntitys = {
+					self._follow_entity
+				}
+
+				TaskDispatcher.runRepeat(self._setCombinativeEntitysPos, self, 0.0001)
 			end
-
-			moveEntitys = {
-				self._follow_entity
-			}
-
-			TaskDispatcher.runRepeat(self._setCombinativeEntitysPos, self, 0.0001)
 		end
 	end
 
@@ -273,24 +275,28 @@ function FightTLEventMove._getMoveEntitys(fightStepData, selectEntityType)
 			table.insert(entitys, defender)
 		end
 	else
-		local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+		local entityMgr = FightGameMgr.entityMgr
 		local entityId = fightStepData.stepUid .. "_" .. selectEntityType
 
-		table.insert(entitys, entityMgr:getUnit(SceneTag.UnitNpc, entityId))
+		table.insert(entitys, entityMgr:getEntity(entityId))
 	end
 
 	return entitys
 end
 
 function FightTLEventMove._setupEntityMove(entity, startX, startY, startZ, endX, endY, endZ, duration, height, easeType)
+	if not entity.moveComp then
+		return
+	end
+
 	if height > 0 then
-		entity.parabolaMover:simpleMove(startX, startY, startZ, endX, endY, endZ, duration, height)
+		entity.moveComp.parabolaMover:simpleMove(startX, startY, startZ, endX, endY, endZ, duration, height)
 	else
-		if easeType and entity.mover.setEaseType then
-			entity.mover:setEaseType(EaseType.Str2Type(easeType))
+		if easeType and entity.moveComp.mover.setEaseType then
+			entity.moveComp.mover:setEaseType(EaseType.Str2Type(easeType))
 		end
 
-		entity.mover:simpleMove(startX, startY, startZ, endX, endY, endZ, duration)
+		entity.moveComp.mover:simpleMove(startX, startY, startZ, endX, endY, endZ, duration)
 	end
 end
 

@@ -7,6 +7,7 @@ local fields = {
 	dice = 6,
 	attrType = 4,
 	desc = 5,
+	retryCost = 7,
 	id = 1,
 	checkPoint = 3,
 	step = 2

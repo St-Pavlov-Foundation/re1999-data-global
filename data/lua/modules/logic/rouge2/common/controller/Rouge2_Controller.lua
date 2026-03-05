@@ -147,6 +147,10 @@ function Rouge2_Controller:onEndFlowDone()
 	Rouge2OutsideRpc.instance:sendGetRouge2OutsideInfoRequest()
 end
 
+function Rouge2_Controller:isEndFlowRunning()
+	return self.endFlow ~= nil
+end
+
 function Rouge2_Controller:clearAllData()
 	Rouge2_MapHelper.clearMapData()
 	Rouge2_Model.instance:clear()

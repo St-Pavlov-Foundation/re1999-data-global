@@ -8485,6 +8485,46 @@
     "bankName": "hero3047_skill"
   },
   {
+    "id": 1304743,
+    "eventName": "play_hero3047_mainvoc_02",
+    "bankName": "hero3047_mainvoc"
+  },
+  {
+    "id": 1304744,
+    "eventName": "play_hero3047_mainvoc_18",
+    "bankName": "hero3047_mainvoc"
+  },
+  {
+    "id": 1304745,
+    "eventName": "play_hero3047_fightingvoc_19",
+    "bankName": "hero3047_skill"
+  },
+  {
+    "id": 1304746,
+    "eventName": "play_hero3047_fightingvoc_32",
+    "bankName": "hero3047_skill"
+  },
+  {
+    "id": 1304747,
+    "eventName": "play_hero3047_mainvoc_11",
+    "bankName": "hero3047_mainvoc"
+  },
+  {
+    "id": 1304748,
+    "eventName": "play_hero3047_mainvoc_12",
+    "bankName": "hero3047_mainvoc"
+  },
+  {
+    "id": 1304749,
+    "eventName": "play_hero304704_mainsfx_gear",
+    "bankName": "hero304704_mainsfx"
+  },
+  {
+    "id": 1304750,
+    "eventName": "play_hero3047_mainvoc_05",
+    "bankName": "hero3047_mainvoc"
+  },
+  {
     "id": 1304801,
     "eventName": "play_mianvoc_hero3048_01",
     "bankName": "mianvoc_hero3048"

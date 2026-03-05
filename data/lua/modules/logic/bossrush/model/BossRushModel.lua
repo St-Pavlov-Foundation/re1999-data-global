@@ -256,26 +256,23 @@ function BossRushModel:_onReceiveAct128InfoUpdatePush(msg)
 end
 
 function BossRushModel:onEndDungeonExtraStr(extraStr)
-	local extra = cjson.decode(extraStr)
-	local evaluate = extra.evaluate
+	local extra = not string.nilorempty(extraStr) and cjson.decode(extraStr)
 
 	V3a2_BossRushModel.instance:setScore(extra)
 	self:checkFightScore(extra)
-	self:_setEvaluate(evaluate)
+	self:_setEvaluate(extra and extra.evaluate)
 end
 
 function BossRushModel:_setEvaluate(extraStr)
 	self._evaluateList = {}
 
-	if not string.nilorempty(extraStr) then
-		local param = string.split(extraStr, "#")
-
-		for _, v in pairs(param) do
-			table.insert(self._evaluateList, tonumber(v))
+	if extraStr then
+		if not string.nilorempty(extraStr) then
+			self._evaluateList = string.splitToNumber(extraStr, "#")
 		end
-	end
 
-	BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128EvaluateReply)
+		BossRushController.instance:dispatchEvent(BossRushEvent.OnReceiveGet128EvaluateReply)
+	end
 end
 
 function BossRushModel:_onReceiveAct128SingleRewardReply(msg)

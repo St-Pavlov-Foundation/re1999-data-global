@@ -34,8 +34,12 @@ function Rouge2_AttributeToolBar:init(go)
 	self._goBackpack = gohelper.findChild(self.go, "#go_Root/#go_Backpack")
 	self._btnBackpack = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Backpack/#btn_Backpack", AudioEnum.Rouge2.OpenBag)
 	self._imageBackpack = gohelper.findChildImage(self.go, "#go_Root/#go_Backpack/#btn_Backpack")
+	self._txtBackpack = gohelper.findChildText(self.go, "#go_Root/#go_Backpack/#btn_Backpack/#txt_name")
+	self._goRecommend = gohelper.findChild(self.go, "#go_Root/#go_Backpack/#btn_Backpack/#txt_name/#go_recommend")
 	self._goBackpackReddot = gohelper.findChild(self.go, "#go_Root/#go_Backpack/#go_Reddot")
 	self._goBackpackTips = gohelper.findChild(self.go, "#go_Root/#go_Backpack/tips")
+	self._goActiveSkillTips = gohelper.findChild(self.go, "#go_Root/#go_Backpack/tips/bubble/#go_ActiveSkillTips")
+	self._goTalentTips = gohelper.findChild(self.go, "#go_Root/#go_Backpack/tips/bubble/#go_TalentTips")
 	self._btnBackpackTips = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Backpack/tips/bubble/#btn_Tips")
 	self._goAttributeContainer = gohelper.findChild(self.go, "#go_Root/#go_AttributeContainer")
 	self._goAttributeList = gohelper.findChild(self.go, "#go_Root/#go_AttributeContainer/#go_AttributeList")
@@ -68,6 +72,9 @@ function Rouge2_AttributeToolBar:addEventListeners()
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateBagInfo, self._onUpdateBagInfo, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateActiveSkillInfo, self._onUpdateActiveSkillInfo, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateAttrInfo, self._onUpdateAttrInfo, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateRougeInfo, self._onUpdateAttrInfo, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateAttrInfo, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._onUpdateTeamSystem, self)
 end
 
 function Rouge2_AttributeToolBar:removeEventListeners()
@@ -154,6 +161,21 @@ function Rouge2_AttributeToolBar:refreshBagEntranceIcon()
 	local bagEntranceIcon = careerCo and careerCo.bagEntranceIcon
 
 	UISpriteSetMgr.instance:setRouge6Sprite(self._imageBackpack, bagEntranceIcon)
+	self:refreshBackpackName()
+end
+
+function Rouge2_AttributeToolBar:refreshBackpackName()
+	local battleTagCo = Rouge2_Model.instance:getCurBattleConfig()
+
+	if battleTagCo then
+		local tagName = battleTagCo and battleTagCo.tagName or ""
+
+		self._txtBackpack.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_attributetoolbar_system"), tagName)
+	else
+		self._txtBackpack.text = luaLang("p_rouge2_attributetoolbar_txt_name")
+	end
+
+	gohelper.setActive(self._goRecommend, battleTagCo ~= nil)
 end
 
 function Rouge2_AttributeToolBar:_onUpdateAttrInfo()
@@ -169,9 +191,28 @@ function Rouge2_AttributeToolBar:_onUpdateBagInfo()
 end
 
 function Rouge2_AttributeToolBar:refreshBackpackTips()
+	local hasAnyTalentCanActive = Rouge2_BackpackController.instance:hasAnyCanActiveTalent()
 	local hasAnyEquipSkill = Rouge2_BackpackController.instance:hasAnyActiveSkillCanEquip()
+	local show = hasAnyTalentCanActive or hasAnyEquipSkill
 
-	gohelper.setActive(self._goBackpackTips, hasAnyEquipSkill)
+	gohelper.setActive(self._goBackpackTips, hasAnyTalentCanActive or hasAnyEquipSkill)
+
+	if not show then
+		return
+	end
+
+	gohelper.setActive(self._goActiveSkillTips, false)
+	gohelper.setActive(self._goTalentTips, false)
+
+	if hasAnyTalentCanActive then
+		gohelper.setActive(self._goTalentTips, true)
+	elseif hasAnyEquipSkill then
+		gohelper.setActive(self._goActiveSkillTips, true)
+	end
+end
+
+function Rouge2_AttributeToolBar:_onUpdateTeamSystem()
+	self:refreshBagEntranceIcon()
 end
 
 function Rouge2_AttributeToolBar:onDestroy()

@@ -227,8 +227,12 @@ function PlayerClothView:_onClickUse()
 	self:_refreshView()
 	self._curGroupModel:saveCurGroupData()
 
+	local callBackParam = {}
+
+	callBackParam.clothId = self._clothId
+
 	if self._useCallback then
-		self._useCallback(self._useCallbackObj)
+		self._useCallback(self._useCallbackObj, callBackParam)
 	end
 end
 

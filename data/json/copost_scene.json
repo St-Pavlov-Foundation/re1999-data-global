@@ -12,5 +12,19 @@
     ],
     "scene_ui": "scenes/v3a0_m_s18_zhb/prefab/v3a0_m_s18_zhb_ui_300.prefab",
     "scene_node": "root/BackGround/v3a0_m_s18_zhb/v3a0_m_s18_zhb_ground"
+  },
+  {
+    "id": 2,
+    "scene": "scenes/v3a3_m_s18_zhb/prefab/v3a3_m_s18_zhb_p.prefab",
+    "leftUpRange": [
+      3.8,
+      -1.5
+    ],
+    "rightDownRange": [
+      15,
+      -8
+    ],
+    "scene_ui": "",
+    "scene_node": "root/BackGround/v3a3_m_s18_zhb/v3a3_m_s18_zhb_ground"
   }
 ]

@@ -17,7 +17,7 @@ function CommandStationDispatchEventNormalViewContainer:buildTabViews(tabContain
 	if tabContainerId == 1 then
 		self.navigateView = NavigateButtonsView.New({
 			true,
-			false,
+			true,
 			false
 		})
 

@@ -2,19 +2,18 @@
 
 module("modules.logic.fight.entity.FightEntityASFD", package.seeall)
 
-local FightEntityASFD = class("FightEntityASFD", BaseFightEntity)
+local FightEntityASFD = class("FightEntityASFD", FightEntityObject)
 
 function FightEntityASFD:getTag()
 	return SceneTag.UnitNpc
 end
 
-function FightEntityASFD:init(go)
-	FightEntityASFD.super.init(self, go)
+function FightEntityASFD:onConstructor()
 	FightRenderOrderMgr.instance:unregister(self.id)
 end
 
 function FightEntityASFD:initComponents()
-	self:addComp("effect", FightEffectComp)
+	self.effect = self:addEntityComponent(FightEffectComp)
 end
 
 return FightEntityASFD

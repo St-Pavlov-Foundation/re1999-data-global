@@ -127,6 +127,24 @@ function CommandStationDispatchEventMainView:_editableInitView()
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.ClickDispatch, self._onClickDispatch, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchFinish, self._onDispatchFinish, self)
 	self:addEventCb(CommandStationController.instance, CommandStationEvent.DispatchStart, self._onDispatchStart, self)
+	self:addEventCb(CommandStationController.instance, CommandStationEvent.AfterEventFinish, self._onAfterEventFinish, self)
+end
+
+function CommandStationDispatchEventMainView:_onAfterEventFinish()
+	if not self._unlockEventList or #self._unlockEventList == 0 then
+		return
+	end
+
+	for i, v in ipairs(self._unlockEventList) do
+		if CommandStationModel.instance:eventIsActivated(v) then
+			local eventId = self._eventList[self._curIndex]
+
+			self:_initEventList(eventId)
+			self:_updateBtnState()
+
+			return
+		end
+	end
 end
 
 function CommandStationDispatchEventMainView:_onClickDispatch()
@@ -158,12 +176,33 @@ function CommandStationDispatchEventMainView:onOpen()
 	local eventId = self.viewParam.eventId
 
 	self.viewParam.defaultTabIds = {}
-	self._eventList = CommandStationConfig.instance:getEventList(self._timeId, eventId)
+	self._paramEventId = eventId
+
+	self:_initEventList(eventId)
+	self:_updateEventInfo()
+end
+
+function CommandStationDispatchEventMainView:_initEventList(eventId)
+	self._eventList, self._unlockEventList = self:_getEventList()
 	self._minIndex = 1
 	self._maxIndex = #self._eventList
 	self._curIndex = tabletool.indexOf(self._eventList, eventId)
+end
 
-	self:_updateEventInfo()
+function CommandStationDispatchEventMainView:_getEventList()
+	local list = CommandStationConfig.instance:getEventList(self._timeId, self._paramEventId)
+	local result = {}
+	local unlockList = {}
+
+	for i, eventId in ipairs(list) do
+		if CommandStationModel.instance:eventIsActivated(eventId) then
+			table.insert(result, eventId)
+		else
+			table.insert(unlockList, eventId)
+		end
+	end
+
+	return result, unlockList
 end
 
 function CommandStationDispatchEventMainView:onClose()

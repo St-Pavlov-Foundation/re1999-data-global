@@ -1039,6 +1039,10 @@ function MaterialTipView:_refreshUI()
 			showDetail = false
 
 			recthelper.setAnchorY(self._btnuse.transform, -190)
+		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+			showDetail = false
+
+			recthelper.setAnchorY(self._btnuse.transform, -190)
 		elseif self:_isRoomBlockGift() then
 			showDetail = false
 
@@ -1426,6 +1430,20 @@ function MaterialTipView:_refreshInclude()
 					end
 				end
 			end
+		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+			local effectArr = string.splitToNumber(self._config.effect, "#")
+
+			includeItems = {}
+
+			for _, heroSkinId in ipairs(effectArr) do
+				local co = {}
+
+				co[1] = MaterialEnum.MaterialType.HeroSkin
+				co[2] = heroSkinId
+				co[3] = 1
+
+				table.insert(includeItems, co)
+			end
 		elseif self:_isRoomBlockGift() then
 			self._contentHorizontal.enabled = false
 
@@ -1571,6 +1589,16 @@ function MaterialTipView:_isUseBtnShow()
 	end
 
 	if self._config.subType == ItemEnum.SubType.DecorateDiscountTicket then
+		if ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
+
+		local itemQuantity = ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)
+
+		return itemQuantity > 0
+	end
+
+	if self._config.subType == ItemEnum.SubType.SkinSelelctGift then
 		if ViewMgr.instance:isOpen(ViewName.StoreView) then
 			return false
 		end

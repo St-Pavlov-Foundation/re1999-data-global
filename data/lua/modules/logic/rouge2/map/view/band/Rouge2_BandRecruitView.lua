@@ -19,6 +19,7 @@ function Rouge2_BandRecruitView:onInitView()
 	self._gomaxcost = gohelper.findChild(self.viewGO, "bottom/#go_maxcost")
 	self._gocostpoint = gohelper.findChild(self.viewGO, "bottom/#go_maxcost/#go_costpoint")
 	self._goFireEmpty = gohelper.findChild(self.viewGO, "layout/#go_FireEmpty")
+	self._btnExit = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Exit")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -28,6 +29,7 @@ end
 function Rouge2_BandRecruitView:addEvents()
 	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 	self._btnshouqi:AddClickListener(self._btnshouqiOnClick, self)
+	self._btnExit:AddClickListener(self._btnExitOnClick, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.OnSelectBandMember, self._onSelectBandMember, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
 end
@@ -35,6 +37,7 @@ end
 function Rouge2_BandRecruitView:removeEvents()
 	self._btnclick:RemoveClickListener()
 	self._btnshouqi:RemoveClickListener()
+	self._btnExit:RemoveClickListener()
 end
 
 function Rouge2_BandRecruitView:_btnclickOnClick()
@@ -44,6 +47,10 @@ end
 
 function Rouge2_BandRecruitView:_btnshouqiOnClick()
 	Rouge2_BandMemberListModel.instance:selectMember(nil)
+end
+
+function Rouge2_BandRecruitView:_btnExitOnClick()
+	self.viewContainer:overrideCloseCallback()
 end
 
 function Rouge2_BandRecruitView:_editableInitView()

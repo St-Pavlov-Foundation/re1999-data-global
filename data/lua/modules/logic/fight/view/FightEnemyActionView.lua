@@ -492,19 +492,19 @@ function FightEnemyActionView:drawMultiLine(targetLimit)
 	end
 
 	local side
-	local sceneEntityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	if targetLimit == FightEnum.TargetLimit.EnemySide then
-		side = sceneEntityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+		side = entityMgr:getTagList(SceneTag.UnitPlayer)
 	else
-		side = sceneEntityMgr:getTagUnitDict(SceneTag.UnitMonster)
+		side = entityMgr:getTagList(SceneTag.UnitMonster)
 	end
 
 	local lineColor = self:getLineColor()
 	local canUse = self:canUseSkill(self.selectCardMo)
 	local count = 0
 
-	for entityId, entity in pairs(side) do
+	for entityId, entity in ipairs(side) do
 		if not entity.isSub then
 			local lineDict = canUse and self.selectCardMo.targetUid == entityId and self.fullLineColor2LineList or self.dottedLineColor2LineList
 			local lineList = lineDict[lineColor]
@@ -530,19 +530,19 @@ function FightEnemyActionView:drawSideLine(targetLimit)
 	end
 
 	local side
-	local sceneEntityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	if targetLimit == FightEnum.TargetLimit.EnemySide then
-		side = sceneEntityMgr:getTagUnitDict(SceneTag.UnitPlayer)
+		side = entityMgr:getTagList(SceneTag.UnitPlayer)
 	else
-		side = sceneEntityMgr:getTagUnitDict(SceneTag.UnitMonster)
+		side = entityMgr:getTagList(SceneTag.UnitMonster)
 	end
 
 	local lineColor = self:getLineColor()
 	local canUse = self:canUseSkill(self.selectCardMo)
 	local count = 0
 
-	for entityId, entity in pairs(side) do
+	for entityId, entity in ipairs(side) do
 		if not entity.isSub then
 			local lineList = canUse and self.fullLineColor2LineList[lineColor] or self.dottedLineColor2LineList[lineColor]
 			local targetPos = self:getEntityTopScreenPos(entityId)

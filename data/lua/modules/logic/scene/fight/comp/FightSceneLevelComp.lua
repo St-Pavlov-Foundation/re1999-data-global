@@ -9,6 +9,7 @@ local SwitchTime = 2.5
 function FightSceneLevelComp:onSceneStart(sceneId, levelId)
 	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone, self)
+	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone, self)
 	FightSceneLevelComp.super.onSceneStart(self, sceneId, levelId, self._onLoadFailed)
 end
 
@@ -17,11 +18,24 @@ function FightSceneLevelComp:_onLoadFailed()
 	FightSceneLevelComp.super.onSceneStart(self, 10801, 10801)
 end
 
+function FightSceneLevelComp:getLevelId(levelId)
+	local key = FightParamData.ParamKey.SceneId
+	local param = FightDataHelper.fieldMgr.param
+	local value = param and param:getKey(key)
+
+	if not value then
+		return levelId
+	end
+
+	return value
+end
+
 function FightSceneLevelComp:onSceneClose()
 	FightSceneLevelComp.super.onSceneClose(self)
 	TaskDispatcher.cancelTask(self._tick, self)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone, self)
 
 	self._frontRendererList = nil
 	self._sceneFrontGO = nil
@@ -259,10 +273,12 @@ function FightSceneLevelComp:_frameCallback(value)
 	end
 
 	for _, renderer in ipairs(self._frontRendererList) do
-		local mat = renderer.material
+		if renderer then
+			local mat = renderer.material
 
-		if not gohelper.isNil(mat) then
-			mat:SetFloat(ShaderPropertyId.FrontSceneAlpha, value)
+			if not gohelper.isNil(mat) then
+				mat:SetFloat(ShaderPropertyId.FrontSceneAlpha, value)
+			end
 		end
 	end
 end
@@ -304,6 +320,14 @@ function FightSceneLevelComp:_gatherFrontRenderers()
 end
 
 function FightSceneLevelComp:_onRestartFightDisposeDone()
+	self:resetAnim()
+end
+
+function FightSceneLevelComp:_onSwitchPlaneClearAssetDone()
+	self:resetAnim()
+end
+
+function FightSceneLevelComp:resetAnim()
 	if self._sceneId == 17501 then
 		local sceneObj = self:getSceneGo()
 

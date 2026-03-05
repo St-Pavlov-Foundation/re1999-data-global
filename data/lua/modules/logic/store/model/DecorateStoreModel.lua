@@ -257,6 +257,26 @@ function DecorateStoreModel:isDecorateGoodItemHas(goodId)
 	return itemCount > 0
 end
 
+function DecorateStoreModel:isAutoHideUIType(type)
+	if type == DecorateStoreEnum.DecorateItemType.MainScene then
+		return true
+	end
+
+	if type == DecorateStoreEnum.DecorateItemType.SelfCard then
+		return true
+	end
+
+	if type == DecorateStoreEnum.DecorateItemType.Skin then
+		return true
+	end
+
+	if type == DecorateStoreEnum.DecorateItemType.SkinGift then
+		return true
+	end
+
+	return false
+end
+
 DecorateStoreModel.instance = DecorateStoreModel.New()
 
 return DecorateStoreModel

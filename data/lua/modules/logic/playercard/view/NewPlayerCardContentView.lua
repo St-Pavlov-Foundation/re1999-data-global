@@ -275,6 +275,8 @@ function NewPlayerCardContentView:onClose()
 
 		self._loader = nil
 	end
+
+	PlayerCardModel.instance:setIsOpenSkinView(false)
 end
 
 function NewPlayerCardContentView:onDestroyView()

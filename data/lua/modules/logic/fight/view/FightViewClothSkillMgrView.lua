@@ -17,6 +17,7 @@ end
 function FightViewClothSkillMgrView:addEvents()
 	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
 	self:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, self._onRestartStage, self)
+	self:addEventCb(FightController.instance, FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 end
@@ -38,6 +39,10 @@ function FightViewClothSkillMgrView:_editableInitView()
 end
 
 function FightViewClothSkillMgrView:_onRestartStage()
+	self:killAllChildView()
+end
+
+function FightViewClothSkillMgrView:_onSwitchPlaneClearAsset()
 	self:killAllChildView()
 end
 

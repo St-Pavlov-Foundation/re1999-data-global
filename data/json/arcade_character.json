@@ -1,0 +1,187 @@
+[
+  {
+    "id": 102,
+    "name": "language_10017978",
+    "attack": 1,
+    "hpCap": 8,
+    "defense": 0,
+    "skillCost": 500,
+    "skill": 101,
+    "bomb": 101,
+    "collection": 16004,
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_role1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a3_m_s12_role1x1_002",
+    "icon2": "v3a3_m_s12_xx4_5x6_002",
+    "icon2Scale": [
+      0.5,
+      0.5
+    ],
+    "icon2Offset": [
+      -26.4,
+      -31.1
+    ],
+    "icon2Offset2": [
+      -32,
+      0
+    ],
+    "desc": "language_10104727"
+  },
+  {
+    "id": 101,
+    "name": "language_10002582",
+    "attack": 1,
+    "hpCap": 10,
+    "defense": 0,
+    "skillCost": 1200,
+    "skill": 102,
+    "bomb": 102,
+    "collection": 16005,
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_role1x1_001",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a3_m_s12_role1x1_001",
+    "icon2": "v3a3_m_s12_xx4_5x6_001",
+    "icon2Scale": [
+      0.5,
+      0.5
+    ],
+    "icon2Offset": [
+      29,
+      -70
+    ],
+    "icon2Offset2": [
+      43,
+      0
+    ],
+    "desc": "language_10104728"
+  },
+  {
+    "id": 103,
+    "name": "language_10006125",
+    "attack": 1,
+    "hpCap": 8,
+    "defense": 0,
+    "skillCost": 700,
+    "skill": 103,
+    "bomb": 103,
+    "collection": 16002,
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_role1x1_005",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a3_m_s12_role1x1_005",
+    "icon2": "v3a3_m_s12_xx4_5x6_004",
+    "icon2Scale": [
+      0.35,
+      0.35
+    ],
+    "icon2Offset": [
+      -9,
+      -23
+    ],
+    "icon2Offset2": [
+      0,
+      0
+    ],
+    "desc": "language_10104729"
+  },
+  {
+    "id": 104,
+    "name": "language_10017975",
+    "attack": 1,
+    "hpCap": 12,
+    "defense": 0,
+    "skillCost": 1200,
+    "skill": 104,
+    "bomb": 104,
+    "collection": 16003,
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_role1x1_004",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a3_m_s12_role1x1_004",
+    "icon2": "v3a3_m_s12_xx4_5x6_005",
+    "icon2Scale": [
+      0.5,
+      0.5
+    ],
+    "icon2Offset": [
+      5,
+      -92
+    ],
+    "icon2Offset2": [
+      11,
+      -32
+    ],
+    "desc": "language_10104730"
+  },
+  {
+    "id": 105,
+    "name": "language_10017966",
+    "attack": 1,
+    "hpCap": 8,
+    "defense": 0,
+    "skillCost": 400,
+    "skill": 105,
+    "bomb": 105,
+    "collection": 16001,
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_role1x1_003",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a3_m_s12_role1x1_003",
+    "icon2": "v3a3_m_s12_xx4_5x6_003",
+    "icon2Scale": [
+      0.4,
+      0.4
+    ],
+    "icon2Offset": [
+      -15,
+      -33
+    ],
+    "icon2Offset2": [
+      7,
+      -18
+    ],
+    "desc": "language_10104731"
+  }
+]

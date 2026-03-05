@@ -25,5 +25,14 @@
     "desc": "language_10097904",
     "descParam": "1",
     "checkParam": "1"
+  },
+  {
+    "id": 713301,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 54,
+    "desc": "language_10097903",
+    "descParam": "1",
+    "checkParam": ""
   }
 ]

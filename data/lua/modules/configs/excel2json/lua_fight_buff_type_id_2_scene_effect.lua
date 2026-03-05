@@ -4,10 +4,12 @@ module("modules.configs.excel2json.lua_fight_buff_type_id_2_scene_effect", packa
 
 local lua_fight_buff_type_id_2_scene_effect = {}
 local fields = {
-	id = 1,
+	reverseX = 4,
 	effect = 2,
+	delEffect = 5,
+	id = 1,
 	pos = 3,
-	reverseX = 4
+	delTime = 6
 }
 local primaryKey = {
 	"id"

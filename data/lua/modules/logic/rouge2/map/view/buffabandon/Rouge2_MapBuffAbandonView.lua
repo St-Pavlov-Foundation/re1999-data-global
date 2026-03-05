@@ -19,6 +19,8 @@ function Rouge2_MapBuffAbandonView:onInitView()
 	self._goDisactive = gohelper.findChild(self.viewGO, "Container/#btn_Confirm/#go_Disactive")
 	self._txtSelectNum2 = gohelper.findChildText(self.viewGO, "Container/#btn_Confirm/#go_Disactive/#txt_SelectNum2")
 	self._goEmpty = gohelper.findChild(self.viewGO, "Container/#go_Empty")
+	self._goTeamTips = gohelper.findChild(self.viewGO, "#go_TeamTips")
+	self._goMode = gohelper.findChild(self.viewGO, "Container/#go_Mode")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -65,6 +67,8 @@ end
 
 function Rouge2_MapBuffAbandonView:_editableInitView()
 	gohelper.setActive(self._goBuffItem, false)
+	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BuffAbandon)
+	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Default)
 	NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 end
 

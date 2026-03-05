@@ -2,14 +2,14 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayerNaNa", package.seeall)
 
-local FightEntitySpecialEffectBuffLayerNaNa = class("FightEntitySpecialEffectBuffLayerNaNa", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffectBuffLayerNaNa = class("FightEntitySpecialEffectBuffLayerNaNa", FightBaseClass)
 
-function FightEntitySpecialEffectBuffLayerNaNa:initClass()
-	self.entity = self._entity
+function FightEntitySpecialEffectBuffLayerNaNa:onConstructor(entity)
+	self.entity = entity
 	self.entityId = self.entity.id
 	self.curEffectWrap = nil
 
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.onBuffUpdate, self)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self.onBuffUpdate)
 end
 
 function FightEntitySpecialEffectBuffLayerNaNa:onBuffUpdate(entityId, effectType, buffId, buffUid)
@@ -86,13 +86,8 @@ function FightEntitySpecialEffectBuffLayerNaNa:removeEffect()
 	end
 end
 
-function FightEntitySpecialEffectBuffLayerNaNa:releaseSelf()
+function FightEntitySpecialEffectBuffLayerNaNa:onDestructor()
 	self:removeEffect()
-	FightEntitySpecialEffectBuffLayerNaNa.super.releaseSelf(self)
-end
-
-function FightEntitySpecialEffectBuffLayerNaNa:disposeSelf()
-	FightEntitySpecialEffectBuffLayerNaNa.super.disposeSelf(self)
 end
 
 return FightEntitySpecialEffectBuffLayerNaNa

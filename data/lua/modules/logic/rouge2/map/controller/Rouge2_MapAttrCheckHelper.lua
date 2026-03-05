@@ -9,7 +9,10 @@ function Rouge2_MapAttrCheckHelper.onGetCheckResultMsg(msg)
 		return
 	end
 
-	Rouge2_MapAttrCheckHelper.triggerCheckResult(msg.checkInfo)
+	local checkResInfo = Rouge2_DiceCheckResInfoMO.New()
+
+	checkResInfo:init(msg.checkInfo)
+	Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
 end
 
 function Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
@@ -17,9 +20,6 @@ function Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
 		return
 	end
 
-	local checkId = checkResInfo.checkId
-	local checkRes = checkResInfo.checkRes
-	local checkCo = Rouge2_CareerConfig.instance:getDiceCheckConfig(checkId, checkRes)
 	local checkType = Rouge2_MapEnum.AttrCheckType.ActiveRandom
 
 	Rouge2_MapAttrCheckHelper._initInteractHandle()
@@ -32,7 +32,7 @@ function Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
 		return
 	end
 
-	handle(checkCo, checkResInfo)
+	handle(checkResInfo)
 end
 
 function Rouge2_MapAttrCheckHelper._initInteractHandle()
@@ -44,18 +44,17 @@ function Rouge2_MapAttrCheckHelper._initInteractHandle()
 	end
 end
 
-function Rouge2_MapAttrCheckHelper.handleActiveRandom(checkCo, checkResInfo)
+function Rouge2_MapAttrCheckHelper.handleActiveRandom(checkResInfo)
 	logNormal("主动属性检定")
 
 	local params = {
-		checkCo = checkCo,
 		checkResInfo = checkResInfo
 	}
 
 	Rouge2_PopController.instance:addPopViewWithViewName(ViewName.Rouge2_MapDiceView, params)
 end
 
-function Rouge2_MapAttrCheckHelper.handleMiniGame(checkCo, checkResInfo)
+function Rouge2_MapAttrCheckHelper.handleMiniGame(checkResInfo)
 	logNormal("属性小游戏")
 end
 

@@ -40,7 +40,7 @@ function UdimoEntity:_initPos()
 	local stateParam = stateParamDict[UdimoEnum.StateParamType.ChangeArea]
 
 	if stateParam then
-		self._walkY = UdimoHelper.getUdimoYLevel(targetUdimoId, stateParam[1])
+		self._walkY = UdimoHelper.getUdimoYLevel(self.id, stateParam[1])
 		self._toWalkYTime = stateParam[2]
 	end
 

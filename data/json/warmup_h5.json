@@ -1,10 +1,22 @@
 [
   {
     "activityId": 13119,
-    "link": "en#https://reverse1999.bluepoch.com/en/event/aflowingfeast/|jp#https://reverse1999.bluepoch.com/jp/event/aflowingfeast/|ko#https://reverse1999-h5.haoplay.com/event/aflowingfeast/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Faflowingfeast%2Findex.html"
+    "link": "en#https://reverse1999.bluepoch.com/en/event/aflowingfeast/|jp#https://reverse1999.bluepoch.com/jp/event/aflowingfeast/|ko#https://reverse1999-h5.haoplay.com/event/aflowingfeast/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Faflowingfeast%2Findex.html",
+    "bgResUrl": ""
   },
   {
     "activityId": 13237,
-    "link": "en#https://reverse1999.bluepoch.com/en/event/riversidescouting/|jp#https://reverse1999.bluepoch.com/jp/event/riversidescouting/|ko#https://reverse1999-h5.haoplay.com/event/riversidescouting/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Friversidescouting%2Findex.html"
+    "link": "en#https://reverse1999.bluepoch.com/en/event/riversidescouting/|jp#https://reverse1999.bluepoch.com/jp/event/riversidescouting/|ko#https://reverse1999-h5.haoplay.com/event/riversidescouting/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Friversidescouting%2Findex.html",
+    "bgResUrl": ""
+  },
+  {
+    "activityId": 13303,
+    "link": "en#https://reverse1999.bluepoch.com/en/event/2_half_anniversary_pre_registration/|jp#https://reverse1999.bluepoch.com/jp/event/2_half_anniversary_pre_registration/ |ko#https://reverse1999-h5.haoplay.com/event/2halfanniversarypreregistration/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2F2_half_anniversary_pre_registration%2Findex.html",
+    "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner.png"
+  },
+  {
+    "activityId": 13323,
+    "link": "https://re.bluepoch.com/event/uttu/",
+    "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner_zhoubian.png"
   }
 ]

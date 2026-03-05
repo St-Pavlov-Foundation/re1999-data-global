@@ -35,6 +35,8 @@ function FightEntityDataMgr:onConstructor()
 	self.heroId2SkinId = {}
 end
 
+local TempMoList = {}
+
 function FightEntityDataMgr:getAllEntityList(returnList, includeDead)
 	returnList = returnList or {}
 
@@ -471,6 +473,17 @@ end
 
 function FightEntityDataMgr:getHeroSkin(heroId)
 	return self.heroId2SkinId[heroId]
+end
+
+function FightEntityDataMgr:getEntityMoByPos(posId)
+	tabletool.clear(TempMoList)
+	self:getMyNormalList(TempMoList)
+
+	for _, entityMo in ipairs(TempMoList) do
+		if entityMo.position == posId then
+			return entityMo
+		end
+	end
 end
 
 function FightEntityDataMgr:checkSideHasBuffAct(side, buffActId)

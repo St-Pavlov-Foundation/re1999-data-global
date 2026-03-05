@@ -12,6 +12,16 @@ function GuideExceptionHandler.finishGuide(guideId, stepId, param)
 	GuideController.instance:oneKeyFinishGuide(guideId, true)
 end
 
+function GuideExceptionHandler.finishNextGuide(guideId, stepId, param)
+	local nextGuideId = tonumber(param)
+
+	if nextGuideId == nil then
+		return
+	end
+
+	GuideController.instance:oneKeyFinishGuide(nextGuideId, true)
+end
+
 function GuideExceptionHandler.gotoStep(guideId, stepId, param)
 	local guideMO = GuideModel.instance:getById(guideId)
 	local targetStepId = tonumber(param)

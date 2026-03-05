@@ -2,10 +2,12 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffect3079_Buff", package.seeall)
 
-local FightEntitySpecialEffect3079_Buff = class("FightEntitySpecialEffect3079_Buff", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffect3079_Buff = class("FightEntitySpecialEffect3079_Buff", FightBaseClass)
 
-function FightEntitySpecialEffect3079_Buff:initClass()
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+function FightEntitySpecialEffect3079_Buff:onConstructor(entity)
+	self._entity = entity
+
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
 
 	self._showBuffIdList = {}
 end
@@ -56,7 +58,7 @@ function FightEntitySpecialEffect3079_Buff:_showBuffEffect()
 
 		FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
 		effectWrap:setLocalPos(0, 0, 0)
-		TaskDispatcher.runDelay(self._showBuffEffect, self, _effectInterval)
+		self:com_registTimer(self._showBuffEffect, _effectInterval)
 
 		if config.audioId ~= 0 then
 			AudioMgr.instance:trigger(config.audioId)
@@ -64,10 +66,6 @@ function FightEntitySpecialEffect3079_Buff:_showBuffEffect()
 	else
 		self._playing = false
 	end
-end
-
-function FightEntitySpecialEffect3079_Buff:releaseSelf()
-	TaskDispatcher.cancelTask(self._showBuffEffect, self)
 end
 
 return FightEntitySpecialEffect3079_Buff

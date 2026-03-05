@@ -21,8 +21,9 @@ function FightWorkEffectMonsterChange:onStart()
 	local oldEntity = FightHelper.getEntity(self.actEffectData.targetId)
 
 	if not oldEntity then
-		self:_buildNewEntity()
-		self:onDone(true)
+		local work = self:registBuildNewEntityWork()
+
+		self:playWorkAndDone(work)
 
 		return
 	end
@@ -39,15 +40,15 @@ function FightWorkEffectMonsterChange:onStart()
 		oldEntity.beforeMonsterChangeSkin = self._oldEntityMO.skin
 
 		local flow = FightWorkFlowSequence.New()
+		local newEntityFlow = self:com_registFlowSequence()
 
-		work = FightWorkBuildSpine.New(self._newEntityMO)
-
-		FightHelper.buildMonsterA2B(oldEntity, self._oldEntityMO, flow, work)
+		newEntityFlow:registWork(FightWorkFunction, self.setNilBeforeNewEntity, self)
+		newEntityFlow:addWork(self:registBuildNewEntityWork())
+		FightHelper.buildMonsterA2B(oldEntity, self._oldEntityMO, flow, newEntityFlow)
 		flow:registWork(FightWorkDelayTimer, 0.01)
 		flowDone:addWork(flow)
 	else
-		flowDone:registWork(FightWorkFunction, self._removeOldEntity, self, oldEntity)
-		flowDone:registWork(FightWorkBuildSpine, self._newEntityMO)
+		flowDone:addWork(self:registBuildNewEntityWork())
 	end
 
 	flowDone:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.MonsterChangeAfter, self._newEntityMO.modelId))
@@ -55,22 +56,23 @@ function FightWorkEffectMonsterChange:onStart()
 	flowDone:start()
 end
 
-function FightWorkEffectMonsterChange:_removeOldEntity(oldEntity)
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+function FightWorkEffectMonsterChange:registBuildNewEntityWork()
+	local flow = self:com_registFlowSequence()
 
-	entityMgr:removeUnit(oldEntity:getTag(), oldEntity.id)
+	flow:registWork(FightWorkFunction, FightGameMgr.entityMgr.delEntity, FightGameMgr.entityMgr, self._newEntityMO.id)
+	flow:addWork(FightGameMgr.entityMgr:registNewEntityWork(self._newEntityMO))
+	flow:registWork(FightWorkFunction, self.dealBuffAfterNewEntity, self)
+
+	return flow
 end
 
-function FightWorkEffectMonsterChange:_buildNewEntity()
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	local oldEntity = FightHelper.getEntity(self._newEntityMO.id)
+function FightWorkEffectMonsterChange:setNilBeforeNewEntity()
+	FightGameMgr.entityMgr.entityDic[self._newEntityMO.id] = nil
+end
 
-	if oldEntity then
-		entityMgr:removeUnit(oldEntity:getTag(), oldEntity.id)
-	end
-
-	local newEntity = entityMgr:buildSpine(self._newEntityMO)
-	local buffComp = newEntity and newEntity.buff
+function FightWorkEffectMonsterChange:dealBuffAfterNewEntity()
+	local entity = FightGameMgr.entityMgr:getById(self._newEntityMO.id)
+	local buffComp = entity and entity.buff
 
 	if buffComp then
 		xpcall(buffComp.dealStartBuff, __G__TRACKBACK__, buffComp)

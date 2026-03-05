@@ -67,7 +67,7 @@ end
 
 function SkillEditorToolsChangeVariant:_onItemClick(data)
 	local tar_entity
-	local entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
+	local entityMgr = FightGameMgr.entityMgr
 
 	if SkillEditorMgr.instance.cur_select_entity_id then
 		tar_entity = entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)

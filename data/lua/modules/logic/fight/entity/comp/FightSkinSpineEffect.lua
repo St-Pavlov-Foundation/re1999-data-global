@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightSkinSpineEffect", package.seeall)
 
-local FightSkinSpineEffect = class("FightSkinSpineEffect", LuaCompBase)
+local FightSkinSpineEffect = class("FightSkinSpineEffect", FightBaseClass)
 local SetSpineAlphaBeforeAddEffect = {
 	buff_jjhhy = true
 }
@@ -10,28 +10,18 @@ local DontHideEffectOnSkillStart = {
 	buff_jjhhy = true
 }
 
-function FightSkinSpineEffect:ctor(entity)
+function FightSkinSpineEffect:onConstructor(entity)
 	self.entity = entity
 	self._effectWrapDict = nil
 	self._monsterEffect = {}
-end
-
-function FightSkinSpineEffect:init(go)
 	self._spine = self.entity.spine
 
-	self._spine:registerCallback(UnitSpine.Evt_OnLoaded, self._onLoaded, self)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
+	self:com_registFightEvent(FightEvent.AfterInitSpine, self._onAfterInitSpine)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 end
 
-function FightSkinSpineEffect:removeEventListeners()
-	self._spine:unregisterCallback(UnitSpine.Evt_OnLoaded, self._onLoaded, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	TaskDispatcher.cancelTask(self._delayShowSpine, self)
-end
-
-function FightSkinSpineEffect:onDestroy()
+function FightSkinSpineEffect:onDestructor()
 	self._effectWrapDict = nil
 end
 
@@ -55,7 +45,11 @@ function FightSkinSpineEffect:_setMonsterEffectActive(state, sign)
 	end
 end
 
-function FightSkinSpineEffect:_onLoaded()
+function FightSkinSpineEffect:_onAfterInitSpine(spine)
+	if spine ~= self._spine then
+		return
+	end
+
 	local entityMO = self.entity:getMO()
 	local skinCO = FightConfig.instance:getSkinCO(entityMO.skin)
 
@@ -88,7 +82,7 @@ function FightSkinSpineEffect:_setSpineAlphaForRoleEffect(effectArr)
 	for _, effect in ipairs(effectArr) do
 		if SetSpineAlphaBeforeAddEffect[effect] then
 			self.entity.spineRenderer:setAlpha(0, 0)
-			TaskDispatcher.runDelay(self._delayShowSpine, self, 0.1)
+			self:com_registTimer(self._delayShowSpine, 0.1)
 
 			break
 		end

@@ -57,14 +57,14 @@ function StoreRpc:onReceiveBuyGoodsReply(resultCode, msg)
 	ChargePushStatController.instance:statBuyFinished(resultCode, msg)
 end
 
-function StoreRpc:sendReadStoreNewRequest(goodsIds)
+function StoreRpc:sendReadStoreNewRequest(goodsIds, callback, callbackObj)
 	local req = StoreModule_pb.ReadStoreNewRequest()
 
 	for i, goodsId in ipairs(goodsIds) do
 		table.insert(req.goodsIds, goodsId)
 	end
 
-	return self:sendMsg(req)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
 function StoreRpc:onReceiveReadStoreNewReply(resultCode, msg)

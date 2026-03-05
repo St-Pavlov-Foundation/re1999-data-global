@@ -32,8 +32,8 @@ function GMSubViewBattle:initViewContent()
 		w = 600
 	})
 
-	self:addButton("L6", "复制最后一回合处理后的数据_前端用", self.onClickCopyLatRoundDataForClient, self)
-	self:addButton("L7", "复制最后一回合处理前的数据_前端用", self.onClickCopyLastOriginRoundDataForClient, self)
+	self:addButton("L6", "复制最后一回合处理后的数据", self.onClickCopyLatRoundDataForClient, self)
+	self:addButton("L7", "复制最后一回合处理前的数据", self.onClickCopyLastOriginRoundDataForClient, self)
 	self:addButton("L7", "复制最后一回合protobuff数据", self.onClickCopyLastSrcRoundProtoData, self)
 	self:addLabel("L8", "设定战斗版本号(本次登录有效)")
 	self:addInputText("L8", FightModel.GMForceVersion or "版本号", nil, self._onVersionChange, self)

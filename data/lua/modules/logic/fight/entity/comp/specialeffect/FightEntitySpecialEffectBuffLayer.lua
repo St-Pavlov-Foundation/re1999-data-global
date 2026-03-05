@@ -2,10 +2,11 @@
 
 module("modules.logic.fight.entity.comp.specialeffect.FightEntitySpecialEffectBuffLayer", package.seeall)
 
-local FightEntitySpecialEffectBuffLayer = class("FightEntitySpecialEffectBuffLayer", FightEntitySpecialEffectBase)
+local FightEntitySpecialEffectBuffLayer = class("FightEntitySpecialEffectBuffLayer", FightBaseClass)
 local defaultReleaseTime = 3000
 
-function FightEntitySpecialEffectBuffLayer:initClass()
+function FightEntitySpecialEffectBuffLayer:onConstructor(entity)
+	self._entity = entity
 	self._effectWraps = {}
 	self._buffId2Config = {}
 	self._oldLayer = {}
@@ -13,16 +14,20 @@ function FightEntitySpecialEffectBuffLayer:initClass()
 	self.hideEffectWhenPlaying = {}
 	self.hideEffectWhenBigSkill = {}
 
-	self:addEventCb(FightController.instance, FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour, self)
-	self:addEventCb(FightController.instance, FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayStart, self._onSkillPlayStart, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.High)
+	self:com_registFightEvent(FightEvent.SetBuffEffectVisible, self._onSetBuffEffectVisible)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
+	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onBeforeDeadEffect)
+	self:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, self._onBeforeEnterStepBehaviour)
+	self:com_registFightEvent(FightEvent.SkillEditorRefreshBuff, self._onSkillEditorRefreshBuff)
+	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, LuaEventSystem.High)
 end
 
 function FightEntitySpecialEffectBuffLayer:_onBeforeEnterStepBehaviour()
+	if FightDataHelper.stateMgr.dealingCrash then
+		self:_releaseAllEffect()
+	end
+
 	local entityMO = self._entity:getMO()
 
 	if entityMO then
@@ -358,7 +363,7 @@ function FightEntitySpecialEffectBuffLayer:_onBeforeDeadEffect(entityId)
 	end
 end
 
-function FightEntitySpecialEffectBuffLayer:releaseSelf()
+function FightEntitySpecialEffectBuffLayer:onDestructor()
 	self:_releaseAllEffect()
 end
 

@@ -2,9 +2,9 @@
 
 module("modules.logic.fight.entity.comp.FightNameUI", package.seeall)
 
-local FightNameUI = class("FightNameUI", LuaCompBase)
+local FightNameUI = class("FightNameUI", FightBaseClass)
 
-function FightNameUI:ctor(entity)
+function FightNameUI:onConstructor(entity)
 	self.entity = entity
 	self._entity = entity
 	self._nameUIActive = true
@@ -16,6 +16,8 @@ function FightNameUI:ctor(entity)
 	if FightDataHelper.fieldMgr:isRouge2() then
 		self.rouge2RevivalComp = FightRouge2RevivalComp.New()
 	end
+
+	self.hideKeyDict = {}
 end
 
 function FightNameUI:load(url)
@@ -44,14 +46,34 @@ function FightNameUI:checkLoadHealth()
 	self.healthComp = FightNameUIHealthComp.Create(self.entity, self._containerGO)
 end
 
-function FightNameUI:setActive(isActive)
-	if isActive and self._curHp and self._curHp <= 0 then
-		return
+function FightNameUI:setActive(isActive, key)
+	self:buildKey(isActive, key)
+
+	if self._curHp and self._curHp <= 0 then
+		self._nameUIActive = false
+	else
+		self._nameUIActive = true
+
+		for _, _ in pairs(self.hideKeyDict) do
+			self._nameUIActive = false
+
+			break
+		end
 	end
 
-	self._nameUIActive = isActive
-
 	self:_doSetActive()
+end
+
+function FightNameUI:buildKey(isActive, key)
+	key = key or FightNameActiveKey.DefaultKey
+
+	if isActive then
+		if self.hideKeyDict[key] then
+			self.hideKeyDict[key] = nil
+		end
+	else
+		self.hideKeyDict[key] = true
+	end
 end
 
 function FightNameUI:playDeadEffect()
@@ -221,30 +243,30 @@ function FightNameUI:_onLoaded()
 	gohelper.setActive(self._goBossFocusIcon, false)
 	self:updateUI()
 	self:_insteadSpecialHp()
-	self:addEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._updateFollow, self)
-	self:addEventCb(FightController.instance, FightEvent.BeforePlayTimeline, self._beforePlaySkill, self)
-	self:addEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._updateUIPos, self)
-	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
-	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self.updateUI, self)
-	self:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
-	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.updateActive, self)
-	self:addEventCb(FightController.instance, FightEvent.SetIsShowFloat, self._setIsShowFloat, self)
-	self:addEventCb(FightController.instance, FightEvent.SetIsShowNameUI, self._setIsShowNameUI, self)
-	self:addEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, self._onFloatEquipEffect, self)
-	self:addEventCb(FightController.instance, FightEvent.OnCameraFovChange, self._updateUIPos, self)
-	self:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, self._onMaxHpChange, self)
-	self:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, self._onCurrentHpChange, self)
-	self:addEventCb(FightController.instance, FightEvent.MultiHpChange, self._onMultiHpChange, self)
-	self:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
-	self:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, self.onCoverPerformanceEntityData, self)
-	self:addEventCb(FightController.instance, FightEvent.ChangeCareer, self._onChangeCareer, self)
-	self:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, self._onUpdateUIFollower, self)
-	self:addEventCb(FightController.instance, FightEvent.ChangeShield, self._onChangeShield, self)
-	self:addEventCb(FightController.instance, FightEvent.StageChanged, self._onStageChange, self)
-	self:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	self:addEventCb(FightController.instance, FightEvent.OnLockHpChange, self._onLockHpChange, self)
-	self:addEventCb(FightController.instance, FightEvent.AiJiAoFakeDecreaseHp, self.onAiJiAoFakeDecreaseHp, self)
+	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._updateFollow)
+	self:com_registFightEvent(FightEvent.BeforePlayTimeline, self._beforePlaySkill)
+	self:com_registFightEvent(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._updateUIPos)
+	self:com_registFightEvent(FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceStart, self.updateUI)
+	self:com_registFightEvent(FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish)
+	self:com_registFightEvent(FightEvent.OnBuffUpdate, self.updateActive)
+	self:com_registFightEvent(FightEvent.SetIsShowFloat, self._setIsShowFloat)
+	self:com_registFightEvent(FightEvent.SetIsShowNameUI, self._setIsShowNameUI)
+	self:com_registFightEvent(FightEvent.OnFloatEquipEffect, self._onFloatEquipEffect)
+	self:com_registFightEvent(FightEvent.OnCameraFovChange, self._updateUIPos)
+	self:com_registFightEvent(FightEvent.OnMaxHpChange, self._onMaxHpChange)
+	self:com_registFightEvent(FightEvent.OnCurrentHpChange, self._onCurrentHpChange)
+	self:com_registFightEvent(FightEvent.MultiHpChange, self._onMultiHpChange)
+	self:com_registFightEvent(FightEvent.ChangeWaveEnd, self._onChangeWaveEnd)
+	self:com_registFightEvent(FightEvent.CoverPerformanceEntityData, self.onCoverPerformanceEntityData)
+	self:com_registFightEvent(FightEvent.ChangeCareer, self._onChangeCareer)
+	self:com_registFightEvent(FightEvent.UpdateUIFollower, self._onUpdateUIFollower)
+	self:com_registFightEvent(FightEvent.ChangeShield, self._onChangeShield)
+	self:com_registFightEvent(FightEvent.StageChanged, self._onStageChange)
+	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
+	self:com_registFightEvent(FightEvent.OnLockHpChange, self._onLockHpChange)
+	self:com_registFightEvent(FightEvent.AiJiAoFakeDecreaseHp, self.onAiJiAoFakeDecreaseHp)
 	self._power:onOpen()
 	self:_setPosOffset()
 	self:updateInnerLayout()
@@ -337,7 +359,7 @@ function FightNameUI:initStressMgr()
 	self.stressMgr:initMgr(self.stressGo, self.entity)
 end
 
-function FightNameUI:beforeDestroy()
+function FightNameUI:onDestructor()
 	self._power:releaseSelf()
 
 	if self._seasonGuard then
@@ -380,26 +402,6 @@ function FightNameUI:beforeDestroy()
 	self._hpKillLineComp:beforeDestroy()
 	CameraMgr.instance:getCameraTrace():RemoveChangeActor(self._uiFollower)
 	FightFloatMgr.instance:nameUIBeforeDestroy(self._floatContainerGO)
-	self:removeEventCb(FightController.instance, FightEvent.OnSpineLoaded, self._updateFollow, self)
-	self:removeEventCb(FightController.instance, FightEvent.BeforePlayTimeline, self._beforePlaySkill, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, self._updateUIPos, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, self.updateUI, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, self._onRoundSequenceFinish, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self.updateActive, self)
-	self:removeEventCb(FightController.instance, FightEvent.SetIsShowFloat, self._setIsShowFloat, self)
-	self:removeEventCb(FightController.instance, FightEvent.SetIsShowNameUI, self._setIsShowNameUI, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnFloatEquipEffect, self._onFloatEquipEffect, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnCameraFovChange, self._updateUIPos, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, self._onMaxHpChange, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, self._onCurrentHpChange, self)
-	self:removeEventCb(FightController.instance, FightEvent.MultiHpChange, self._onMultiHpChange, self)
-	self:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, self._onChangeWaveEnd, self)
-	self:removeEventCb(FightController.instance, FightEvent.ChangeCareer, self._onChangeCareer, self)
-	self:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, self._onUpdateUIFollower, self)
-	self:removeEventCb(FightController.instance, FightEvent.ChangeShield, self._onChangeShield, self)
-	self:removeEventCb(FightController.instance, FightEvent.OnLockHpChange, self._onLockHpChange, self)
 	self:_killHpTween()
 	TaskDispatcher.cancelTask(self._onDelAniOver, self)
 	FightNameMgr.instance:unregister(self)
@@ -898,10 +900,6 @@ function FightNameUI:onAiJiAoFakeDecreaseHp(entityId)
 	end
 
 	self:_tweenFillAmount()
-end
-
-function FightNameUI:onDestroy()
-	return
 end
 
 return FightNameUI

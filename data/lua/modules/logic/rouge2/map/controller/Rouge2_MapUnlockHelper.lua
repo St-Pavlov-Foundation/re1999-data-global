@@ -9,6 +9,7 @@ Rouge2_MapUnlockHelper.UnlockType = {
 	LessThanAttr = 18,
 	PossessRelicsNum = 13,
 	PossessCoin = 8,
+	NotActiveTalent = 35,
 	SelectChoiceNum = 34,
 	NotPossessItemAnd = 15,
 	PossessItemAnd = 1,
@@ -131,7 +132,9 @@ function Rouge2_MapUnlockHelper._initHandle()
 		[Rouge2_MapUnlockHelper.UnlockType.UnselectChoice] = Rouge2_MapUnlockHelper._checkUnselectChoice,
 		[Rouge2_MapUnlockHelper.UnlockType.LessThanAttr] = Rouge2_MapUnlockHelper._checkLessThanAttr,
 		[Rouge2_MapUnlockHelper.UnlockType.LevelUpRelicsNum] = Rouge2_MapUnlockHelper._checkLevelUpRelicsNum,
-		[Rouge2_MapUnlockHelper.UnlockType.SelectPieceChoice] = Rouge2_MapUnlockHelper._checkSelectPieceChoice
+		[Rouge2_MapUnlockHelper.UnlockType.SelectChoiceNum] = Rouge2_MapUnlockHelper._checkSelectChoiceNum,
+		[Rouge2_MapUnlockHelper.UnlockType.SelectPieceChoice] = Rouge2_MapUnlockHelper._checkSelectPieceChoice,
+		[Rouge2_MapUnlockHelper.UnlockType.NotActiveTalent] = Rouge2_MapUnlockHelper._checkNotActiveTalent
 	}
 end
 
@@ -157,7 +160,8 @@ function Rouge2_MapUnlockHelper._initGetTipHandle()
 		[Rouge2_MapUnlockHelper.UnlockType.LessThanAttr] = Rouge2_MapUnlockHelper._getPossessAttrTip,
 		[Rouge2_MapUnlockHelper.UnlockType.LevelUpRelicsNum] = Rouge2_MapUnlockHelper._getDefaultTips,
 		[Rouge2_MapUnlockHelper.UnlockType.SelectChoiceNum] = Rouge2_MapUnlockHelper._noParamTips,
-		[Rouge2_MapUnlockHelper.UnlockType.SelectPieceChoice] = Rouge2_MapUnlockHelper._noParamTips
+		[Rouge2_MapUnlockHelper.UnlockType.SelectPieceChoice] = Rouge2_MapUnlockHelper._noParamTips,
+		[Rouge2_MapUnlockHelper.UnlockType.NotActiveTalent] = Rouge2_MapUnlockHelper._getNotActiveTalentTip
 	}
 end
 
@@ -366,6 +370,22 @@ function Rouge2_MapUnlockHelper._checkSelectPieceChoice(unlockParam)
 	end
 end
 
+function Rouge2_MapUnlockHelper._checkNotActiveTalent(unlockParam)
+	local talentIdList = unlockParam and string.splitToNumber(unlockParam, "#")
+
+	if talentIdList then
+		for _, talentId in ipairs(talentIdList) do
+			local isActive = Rouge2_BackpackModel.instance:isTalentActive(talentId)
+
+			if isActive then
+				return
+			end
+		end
+	end
+
+	return true
+end
+
 function Rouge2_MapUnlockHelper._noParamTips(desc, unlockParam)
 	return desc
 end
@@ -459,6 +479,26 @@ function Rouge2_MapUnlockHelper._getActiveOutGeniusTip(desc, unlockParam)
 	local co = Rouge2_OutSideConfig.instance:getTalentConfigById(geniusId)
 
 	return GameUtil.getSubPlaceholderLuaLangOneParam(desc, co.name)
+end
+
+function Rouge2_MapUnlockHelper._getNotActiveTalentTip(desc, unlockParam)
+	local talentIdList = string.splitToNumber(unlockParam, "#")
+	local fullTalentNameStr = ""
+
+	if talentIdList then
+		local talentNameList = {}
+
+		for _, talentId in ipairs(talentIdList) do
+			local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
+			local talentName = talentCo and talentCo.name or ""
+
+			table.insert(talentNameList, talentName)
+		end
+
+		fullTalentNameStr = table.concat(talentNameList, "/")
+	end
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(desc, fullTalentNameStr)
 end
 
 return Rouge2_MapUnlockHelper

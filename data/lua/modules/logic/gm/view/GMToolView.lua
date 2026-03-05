@@ -103,10 +103,12 @@ function GMToolView:onInitView()
 	self._inpExplore = gohelper.findChildInputField(self.viewGO, "viewport/content/item39/inpText")
 	self._btnshowHero = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/Button1")
 	self._btnshowUI = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/Button2")
+	self._btnshowHeroDia = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item40/Button3")
 	self._btnshowId = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item42/btn_userid")
 	self._btnwatermark = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item42/btn_watermark")
 	self._txtshowHero = gohelper.findChildText(self.viewGO, "viewport/content/item40/Button1/Text")
 	self._txtshowUI = gohelper.findChildText(self.viewGO, "viewport/content/item40/Button2/Text")
+	self._txtshowHeroDia = gohelper.findChildText(self.viewGO, "viewport/content/item40/Button3/Text")
 	self._txtshowId = gohelper.findChildText(self.viewGO, "viewport/content/item42/btn_userid/Text")
 	self._txtwatermark = gohelper.findChildText(self.viewGO, "viewport/content/item42/btn_watermark/Text")
 	self._btncopytalentdata = gohelper.findChildButtonWithAudio(self.viewGO, "viewport/content/item41/btn_copy_talent_data")
@@ -199,6 +201,7 @@ function GMToolView:addEvents()
 	self._inpSpeed2:AddOnEndEdit(self._onEndEdit2, self)
 	self._btnshowHero:AddClickListener(self._onClickShowHero, self)
 	self._btnshowUI:AddClickListener(self._onClickShowUI, self)
+	self._btnshowHeroDia:AddClickListener(self._onClickShowHeroDia, self)
 	self._btnshowId:AddClickListener(self._onClickShowID, self)
 	self._btnwatermark:AddClickListener(self._onClickWaterMark, self)
 	self._btnCurSpeed:AddClickListener(self._onClickCurSpeed, self)
@@ -292,6 +295,7 @@ function GMToolView:removeEvents()
 	self._inpSpeed2:RemoveOnEndEdit()
 	self._btnshowHero:RemoveClickListener()
 	self._btnshowUI:RemoveClickListener()
+	self._btnshowHeroDia:RemoveClickListener()
 	self._btnshowId:RemoveClickListener()
 	self._btnwatermark:RemoveClickListener()
 	self._btnCurSpeed:RemoveClickListener()
@@ -343,11 +347,13 @@ function GMToolView:onOpen()
 	self._prePlayingAudioId = 0
 	self.showHero = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowHeroKey, 1) == 1 and true or false
 	self.showUI = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowUIKey, 1) == 1 and true or false
+	self.showHeroDia = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowHeroDiaKey, 1) == 1 and true or false
 	self.showID = PlayerPrefsHelper.getNumber(PlayerPrefsKey.ShowIDKey, 1) == 1 and true or false
 	self.showWaterMark = OpenConfig.instance:isShowWaterMarkConfig()
 
 	self:_showHero()
 	self:_showUI()
+	self:_showHeroDia()
 	self:_showID()
 	self:_showWaterMark()
 
@@ -1611,6 +1617,47 @@ function GMToolView:_showUI()
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowUIKey, self.showUI and 1 or 0)
 
 	self.showID = self.showUI
+
+	self:_showID()
+end
+
+function GMToolView:_onClickShowHeroDia()
+	if not ViewMgr.instance:isOpen(ViewName.MainView) then
+		return
+	end
+
+	self.showHeroDia = not self.showHeroDia
+
+	self:_showHeroDia()
+end
+
+function GMToolView:_showHeroDia()
+	if not ViewMgr.instance:isOpen(ViewName.MainView) then
+		return
+	end
+
+	if not self.heroDiaNodes then
+		self.heroDiaNodes = {}
+
+		table.insert(self.heroDiaNodes, self:getIDCanvasNode())
+
+		local mainViewContainer = ViewMgr.instance:getContainer(ViewName.MainView)
+
+		table.insert(self.heroDiaNodes, gohelper.findChild(mainViewContainer.viewGO, "left"))
+		table.insert(self.heroDiaNodes, gohelper.findChild(mainViewContainer.viewGO, "left_top"))
+		table.insert(self.heroDiaNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_righttop"))
+		table.insert(self.heroDiaNodes, gohelper.findChild(mainViewContainer.viewGO, "right"))
+	end
+
+	for _, node in pairs(self.heroDiaNodes) do
+		gohelper.setActive(node, self.showHeroDia)
+	end
+
+	self._txtshowHeroDia.text = self.showHeroDia and "(不含字幕)隐藏UI" or "(不含字幕)还原UI"
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.ShowHeroDiaKey, self.showHeroDia and 1 or 0)
+
+	self.showID = self.showHeroDia
 
 	self:_showID()
 end

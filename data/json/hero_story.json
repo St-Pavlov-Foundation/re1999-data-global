@@ -23,7 +23,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 2,
@@ -49,7 +50,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 3,
@@ -75,7 +77,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 4,
@@ -101,7 +104,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 5,
@@ -127,7 +131,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 6,
@@ -153,7 +158,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 7,
@@ -179,7 +185,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 8,
@@ -205,7 +212,8 @@
     "cgScale": "",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 9,
@@ -231,7 +239,8 @@
     "cgScale": "0.8",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 10,
@@ -257,7 +266,8 @@
     "cgScale": "1.2",
     "mainviewName": "",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 11,
@@ -283,7 +293,8 @@
     "cgScale": "1.5",
     "mainviewName": "language_10041624",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 12,
@@ -309,7 +320,8 @@
     "cgScale": "1",
     "mainviewName": "language_10041623",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 13,
@@ -335,7 +347,8 @@
     "cgScale": "1",
     "mainviewName": "language_10045760",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 14,
@@ -361,7 +374,8 @@
     "cgScale": "1.2",
     "mainviewName": "language_10045761",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 15,
@@ -387,7 +401,8 @@
     "cgScale": "1.5",
     "mainviewName": "language_10050439",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 16,
@@ -413,7 +428,8 @@
     "cgScale": "1.5",
     "mainviewName": "language_10050441",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 17,
@@ -439,7 +455,8 @@
     "cgScale": "1.5",
     "mainviewName": "language_10055309",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 18,
@@ -465,7 +482,8 @@
     "cgScale": "1.5",
     "mainviewName": "language_10055310",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 19,
@@ -491,7 +509,8 @@
     "cgScale": "1",
     "mainviewName": "language_10060911",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 20,
@@ -517,7 +536,8 @@
     "cgScale": "1",
     "mainviewName": "language_10063894",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 21,
@@ -543,7 +563,8 @@
     "cgScale": "1",
     "mainviewName": "language_10068190",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 22,
@@ -569,7 +590,8 @@
     "cgScale": "1",
     "mainviewName": "language_10071478",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 23,
@@ -595,7 +617,8 @@
     "cgScale": "2",
     "mainviewName": "language_10073125",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 24,
@@ -621,7 +644,8 @@
     "cgScale": "1",
     "mainviewName": "language_10082395",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 25,
@@ -647,7 +671,8 @@
     "cgScale": "1.3",
     "mainviewName": "language_10088911",
     "permanentUnlock": "2#24#1",
-    "signature": ""
+    "signature": "",
+    "preStoryId": 0
   },
   {
     "id": 26,
@@ -673,7 +698,8 @@
     "cgScale": "1",
     "mainviewName": "language_10093577",
     "permanentUnlock": "2#24#1",
-    "signature": "3037"
+    "signature": "3037",
+    "preStoryId": 0
   },
   {
     "id": 27,
@@ -699,6 +725,34 @@
     "cgScale": "1",
     "mainviewName": "language_10100277",
     "permanentUnlock": "2#24#1",
-    "signature": "3041"
+    "signature": "3041",
+    "preStoryId": 0
+  },
+  {
+    "id": 28,
+    "chapterId": 0,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110403#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10056607",
+    "photo": "312102",
+    "cgBg": "312101",
+    "order": 28,
+    "name": "language_10107114",
+    "nameEn": "In the Shadow of the Mountains",
+    "queryVersion": "3.3",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_28",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 13314,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 0,
+    "cgUnlockStoryId": 305107,
+    "cgPos": "771.6#-18.4",
+    "cgScale": "1",
+    "mainviewName": "language_10107114",
+    "permanentUnlock": "2#24#1",
+    "signature": "3121",
+    "preStoryId": 305101
   }
 ]

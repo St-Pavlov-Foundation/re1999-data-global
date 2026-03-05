@@ -15,9 +15,8 @@ local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	desc = 3,
-	name = 1,
-	enName = 2
+	desc = 2,
+	name = 1
 }
 
 function lua_rouge_season.onLoad(json)

@@ -68,5 +68,12 @@
     "posZ": 999,
     "scale": 1.17,
     "posXOffset": 0.0
+  },
+  {
+    "id": 6201501,
+    "priority": 1,
+    "posZ": 999,
+    "scale": 2.0,
+    "posXOffset": 0.0
   }
 ]

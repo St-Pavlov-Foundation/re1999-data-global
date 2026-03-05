@@ -60,7 +60,8 @@ function GMToolViewContainer:buildViews()
 		GMSubViewRoom.New(),
 		GMSubViewEliminate.New(),
 		GMSubViewEditorFight.New(),
-		GMYeShuMeiBtnView.New()
+		GMYeShuMeiBtnView.New(),
+		GMSubViewArcade.New()
 	}
 end
 

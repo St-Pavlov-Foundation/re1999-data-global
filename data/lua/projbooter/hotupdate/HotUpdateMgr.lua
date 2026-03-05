@@ -325,6 +325,10 @@ function HotUpdateMgr:_onNeedInstallNewPackage(appUrl)
 
 	args.rightCbObj = self
 
+	if SDKMgr.instance:getSubChannelId() == "1025" then
+		args.rightMsg = nil
+	end
+
 	BootMsgBox.instance:show(args)
 end
 

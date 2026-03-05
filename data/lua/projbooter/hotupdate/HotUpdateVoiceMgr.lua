@@ -62,7 +62,7 @@ function HotUpdateVoiceMgr:init()
 		HotUpdateVoiceMgr.ForceSelect = {}
 	end
 
-	if BootNativeUtil.isWindows() then
+	if BootNativeUtil.isWindows() or BootNativeUtil.isMuMu() then
 		HotUpdateVoiceMgr.ForceSelect[HotUpdateVoiceMgr.HD] = true
 	end
 end

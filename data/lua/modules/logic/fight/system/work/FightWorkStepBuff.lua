@@ -91,6 +91,7 @@ function FightWorkStepBuff:onStart()
 end
 
 function FightWorkStepBuff:defaultLogic()
+	local effectType = self.actEffectData.effectType
 	local workList
 
 	if effectType == FightEnum.EffectType.BUFFADD then

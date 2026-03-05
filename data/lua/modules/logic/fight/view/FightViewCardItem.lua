@@ -164,9 +164,13 @@ function FightViewCardItem:init(go)
 
 	self._heatRoot = gohelper.findChild(go, "#go_heat")
 	self.goBloodPool = gohelper.findChild(go, "blood_pool")
+	self.goTowerAssistRole = gohelper.findChild(go, "#go_towerAssist")
+	self.goTowerAssistSmallSkillIcon = gohelper.findChild(self.goTowerAssistRole, "eff")
+	self.goTowerAssistBigSkillIcon = gohelper.findChild(self.goTowerAssistRole, "eff2")
 	self.xingtiTxt = gohelper.findChildText(go, "txt_xingti")
 	self.xingtiGo = self.xingtiTxt.gameObject
 	self.alfLoadStatus = FightViewCardItem.AlfLoadStatus.None
+	self.useCardCopyLoadStatus = FightViewCardItem.AlfLoadStatus.None
 	self.useSkin = false
 
 	if self.handCardType == FightEnum.CardShowType.HandCard or self.handCardType == FightEnum.CardShowType.Operation or self.handCardType == FightEnum.CardShowType.PlayCard then
@@ -474,6 +478,26 @@ function FightViewCardItem:updateItem(entityId, skillId, cardInfoMO)
 	self:showCardHeat()
 	self:refreshXiTiSpecialSkill(entityId, skillId, cardInfoMO)
 	self:refreshSuperimposeIcon()
+	self:refreshAssistRoleIcon()
+end
+
+function FightViewCardItem:refreshAssistRoleIcon()
+	local show = false
+
+	if self.handCardType == FightEnum.CardShowType.Operation or self.handCardType == FightEnum.CardShowType.PlayCard then
+		local entityMo = FightDataHelper.entityMgr:getById(self.entityId)
+
+		if entityMo and entityMo:isAssistBoss() and FightDataHelper.paTaMgr:checkIsAssistRole() then
+			show = true
+		end
+	end
+
+	gohelper.setActive(self.goTowerAssistRole, show)
+
+	local isBigSkill = FightCardDataHelper.isBigSkill(self.skillId)
+
+	gohelper.setActive(self.goTowerAssistSmallSkillIcon, not isBigSkill)
+	gohelper.setActive(self.goTowerAssistBigSkillIcon, isBigSkill)
 end
 
 function FightViewCardItem:refreshSuperimposeIcon()
@@ -1489,6 +1513,7 @@ function FightViewCardItem:onDestroy()
 
 	self._tag:UnLoadImage()
 	self:clearAlfEffect()
+	self:clearUseCardCopyEffect()
 end
 
 function FightViewCardItem:_hideAllEffect()
@@ -1602,6 +1627,71 @@ function FightViewCardItem:clearAlfEffect()
 		self.rouge2DoubleLoader:dispose()
 
 		self.rouge2DoubleLoader = nil
+	end
+
+	TaskDispatcher.cancelTask(self.showCardGo, self)
+end
+
+function FightViewCardItem:tryPlayUseCardCopyEffect()
+	self.showUseCardCopyEffectIng = true
+
+	if self.useCardCopyLoadStatus == FightViewCardItem.AlfLoadStatus.Loaded then
+		self:_tryPlayUseCardCopyEffect()
+	elseif self.useCardCopyLoadStatus == FightViewCardItem.AlfLoadStatus.Loading then
+		-- block empty
+	else
+		self.useCardCopyLoadStatus = FightViewCardItem.AlfLoadStatus.Loading
+		self.useCardCopyLoader = PrefabInstantiate.Create(self.tr.parent.gameObject)
+
+		local res = "ui/viewres/fight/card_alf.prefab"
+
+		self.useCardCopyLoader:startLoad(res, self.onLoadedUseCardCopyEffect, self)
+	end
+end
+
+function FightViewCardItem:onLoadedUseCardCopyEffect()
+	self.goUseCardCopyEffect = self.useCardCopyLoader:getInstGO()
+	self.goUseCardCopyAddCardAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.goUseCardCopyEffect)
+	self.useCardCopyLoadStatus = FightViewCardItem.AlfLoadStatus.Loaded
+
+	self:_tryPlayUseCardCopyEffect()
+end
+
+function FightViewCardItem:_tryPlayUseCardCopyEffect()
+	if not self.goUseCardCopyAddCardAnimatorPlayer then
+		return
+	end
+
+	gohelper.setActive(self.go, false)
+	gohelper.setActive(self.goUseCardCopyEffect, true)
+	self.goUseCardCopyAddCardAnimatorPlayer:Play("open", self.playUseCardCopyCloseAnim, self)
+end
+
+function FightViewCardItem:playUseCardCopyCloseAnim()
+	self.goUseCardCopyAddCardAnimatorPlayer:Play("close", self.playUseCardCopyCloseAnimDone, self)
+	TaskDispatcher.runDelay(self.showCardGo, self, 0.2 / FightModel.instance:getUISpeed())
+end
+
+function FightViewCardItem:playUseCardCopyCloseAnimDone()
+	gohelper.setActive(self.goUseCardCopyEffect, false)
+
+	self.showAlfEffectIng = false
+end
+
+function FightViewCardItem:clearUseCardCopyEffect()
+	if self.useCardCopyLoader then
+		self.useCardCopyLoader:dispose()
+
+		self.useCardCopyLoader = nil
+	end
+
+	self.useCardCopyLoadStatus = FightViewCardItem.AlfLoadStatus.None
+	self.goUseCardCopyEffect = nil
+
+	if self.goUseCardCopyAddCardAnimatorPlayer then
+		self.goUseCardCopyAddCardAnimatorPlayer:Stop()
+
+		self.goUseCardCopyAddCardAnimatorPlayer = nil
 	end
 
 	TaskDispatcher.cancelTask(self.showCardGo, self)

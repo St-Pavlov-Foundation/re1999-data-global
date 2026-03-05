@@ -15,7 +15,7 @@ function Rouge2_CareerSelectViewContainer:buildViews()
 	scrollParam.scrollDir = ScrollEnum.ScrollDirH
 	scrollParam.lineCount = 1
 	scrollParam.cellWidth = 240
-	scrollParam.cellHeight = 200
+	scrollParam.cellHeight = 123
 
 	table.insert(views, Rouge2_CareerSelectView.New())
 	table.insert(views, LuaListScrollView.New(Rouge2_CareerSelectListModel.instance, scrollParam))

@@ -141,6 +141,20 @@ function NecologistStoryViewDefine.init(module_views)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal
 	}
+	module_views.V3A3_RoleStoryGameView = {
+		destroy = 0,
+		container = "V3A3_RoleStoryGameViewContainer",
+		mainRes = "ui/viewres/dungeon/rolestory/v3a3/v3a3_molideer_gameview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
 end
 
 return NecologistStoryViewDefine

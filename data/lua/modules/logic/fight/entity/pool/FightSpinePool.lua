@@ -63,7 +63,7 @@ function FightSpinePool._resetFunc(spineGO)
 	if spineGO then
 		gohelper.setActive(spineGO, false)
 
-		local container = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:getEntityContainer()
+		local container = FightGameMgr.entityMgr:getEntityContainer()
 
 		gohelper.addChild(container, spineGO)
 		transformhelper.setLocalPos(spineGO.transform, 0, 0, 0)

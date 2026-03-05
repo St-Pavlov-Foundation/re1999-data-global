@@ -2,7 +2,7 @@
 
 module("modules.logic.fight.entity.comp.FightBuffComp", package.seeall)
 
-local FightBuffComp = class("FightBuffComp", LuaCompBase)
+local FightBuffComp = class("FightBuffComp", FightBaseClass)
 local OnceEffectTime = 2
 local BuffTypeHandlerCls = {
 	[FightEnum.BuffType_Petrified] = FightBuffFrozen,
@@ -31,28 +31,23 @@ local buffTypeIdHandCls = {
 	[900045418] = FightBuffWELXStarComp
 }
 
-function FightBuffComp:ctor(entity)
+function FightBuffComp:onConstructor(entity)
 	self._entity = entity
 	self._animPriorityQueue = PriorityQueue.New(FightBuffComp.buffCompareFuncAni)
 	self._matPriorityQueue = PriorityQueue.New(FightBuffComp.buffCompareFuncMat)
 	self._buffEffectDict = {}
 	self._loopBuffEffectWrapDict = {}
-	self._onceEffectDict = {}
 	self._buffHandlerDict = {}
 	self._buff_loop_effect_name = {}
 	self._curBuffIdDic = {}
-	self._delBuffEffectDic = {}
 	self._addBuffEffectPathDic = {}
 	self._curBuffTypeIdDic = {}
 	self._buffDic = {}
-	self.skinBuffEffectMgr = FightEntitySkinBuffEffectMgr.New()
-	self.buffMgr = FightEntityBuffMgr.New()
+	self.skinBuffEffectMgr = self:newClass(FightEntitySkinBuffEffectMgr)
+	self.buffMgr = self:newClass(FightEntityBuffMgr)
 
 	self:registSkinBuffEffect()
-end
-
-function FightBuffComp:init(go)
-	self:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData, self)
+	self:com_registFightEvent(FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData)
 end
 
 function FightBuffComp:dealStartBuff()
@@ -182,7 +177,7 @@ function FightBuffComp:addBuff(buff, dontPlayOnceEffect, stepUid)
 	local hasPlayBuffEffect = FightSkillBuffMgr.instance:hasPlayBuffEffect(self._entity.id, buff, stepUid)
 	local needPlayOnceEffect = buffCO.effectloop ~= 0 or not dontPlayOnceEffect
 	local buffEffectNamePath
-	local buffEffectPath, audioId, effectReplaceConfig = FightHelper.processBuffEffectPath(buffCO.effect, self._entity, buff.buffId, "effectPath", buffCO.audio)
+	local buffEffectPath, audioId, changedHangPoint, effectDuration = FightHelper.processBuffEffectPath(buffCO.effect, self._entity, buff.buffId, "effectPath", buffCO.audio, buff)
 
 	buffEffectPath, audioId = FightHelper.filterBuffEffectBySkin(buff.buffId, self._entity, buffEffectPath, audioId)
 
@@ -212,8 +207,8 @@ function FightBuffComp:addBuff(buff, dontPlayOnceEffect, stepUid)
 			local effectWrap
 			local hangPoint = buffCO.effectHangPoint
 
-			if effectReplaceConfig and not string.nilorempty(effectReplaceConfig.effectHang) then
-				hangPoint = effectReplaceConfig.effectHang
+			if not string.nilorempty(changedHangPoint) then
+				hangPoint = changedHangPoint
 			end
 
 			if not string.nilorempty(hangPoint) then
@@ -237,9 +232,12 @@ function FightBuffComp:addBuff(buff, dontPlayOnceEffect, stepUid)
 			self._buffEffectDict[buff.uid] = effectWrap
 
 			if buffCO.effectloop == 0 then
-				self._onceEffectDict[buff.uid] = Time.time + OnceEffectTime
+				local param = {
+					uid = buff.uid,
+					effectWrap = effectWrap
+				}
 
-				TaskDispatcher.runRepeat(self._onTickCheckRemoveEffect, self, 0.2)
+				self:com_registTimer(self.removeOnceEffect, effectDuration or 2, param)
 			end
 		elseif buffCO.effectloop ~= 0 then
 			for i, v in pairs(self._buffEffectDict) do
@@ -444,51 +442,14 @@ function FightBuffComp:_udpateBuffVariant()
 	end
 end
 
-function FightBuffComp:_onTickCheckRemoveEffect()
-	local toRemoveUidList
-	local nowTime = Time.time
+function FightBuffComp:removeOnceEffect(param)
+	local uid = param.uid
+	local effectWrap = param.effectWrap
 
-	for uid, endTime in pairs(self._onceEffectDict) do
-		if endTime < nowTime then
-			toRemoveUidList = toRemoveUidList or {}
+	self._entity.effect:removeEffect(effectWrap)
 
-			table.insert(toRemoveUidList, uid)
-		end
-	end
-
-	if toRemoveUidList then
-		for _, uid in ipairs(toRemoveUidList) do
-			local effectWrap = self._buffEffectDict[uid]
-
-			self._entity.effect:removeEffect(effectWrap)
-
-			self._buffEffectDict[uid] = nil
-			self._onceEffectDict[uid] = nil
-			self._addBuffEffectPathDic[effectWrap.path] = nil
-		end
-	end
-
-	if tabletool.len(self._onceEffectDict) == 0 then
-		TaskDispatcher.cancelTask(self._onTickCheckRemoveEffect, self)
-	end
-end
-
-function FightBuffComp:_onTickCheckRemoveDelBuffEffect()
-	local nowTime = Time.time
-
-	for uid, data in pairs(self._delBuffEffectDic) do
-		if nowTime > data.time then
-			local effectWrap = data.effectWrap
-
-			self._entity.effect:removeEffect(effectWrap)
-
-			self._delBuffEffectDic[uid] = nil
-		end
-	end
-
-	if tabletool.len(self._delBuffEffectDic) == 0 then
-		TaskDispatcher.cancelTask(self._onTickCheckRemoveDelBuffEffect, self)
-	end
+	self._buffEffectDict[uid] = nil
+	self._addBuffEffectPathDic[effectWrap.path] = nil
 end
 
 function FightBuffComp:showBuffEffects(nonActiveKey)
@@ -649,7 +610,6 @@ function FightBuffComp:delBuff(buffUid, isDead)
 
 			if effectWrap then
 				self._buffEffectDict[uid] = nil
-				self._onceEffectDict[uid] = nil
 
 				if self._buff_loop_effect_name[effectWrap.path] then
 					self._buff_loop_effect_name[effectWrap.path] = self._buff_loop_effect_name[effectWrap.path] - 1
@@ -667,9 +627,9 @@ function FightBuffComp:delBuff(buffUid, isDead)
 		end
 
 		local cur_scene = GameSceneMgr.instance:getCurScene()
-		local tar_entity = cur_scene.entityMgr:getEntity(self._entity.id)
+		local tar_entity = FightGameMgr.entityMgr:getEntity(self._entity.id)
 		local buffId = buffCO.id
-		local effectPath, audioId = FightHelper.processBuffEffectPath(buffCO.delEffect, self._entity, buffId, "delEffect", buffCO.delAudio)
+		local effectPath, audioId, changedHangPoint, effectDuration = FightHelper.processBuffEffectPath(buffCO.delEffect, self._entity, buffId, "delEffect", buffCO.delAudio, buffMO)
 
 		effectPath, audioId = FightHelper.filterBuffEffectBySkin(buffId, self._entity, effectPath, audioId)
 
@@ -684,6 +644,10 @@ function FightBuffComp:delBuff(buffUid, isDead)
 				canPlay = false
 			end
 
+			if not tar_entity:__isActive() then
+				canPlay = false
+			end
+
 			if canPlay then
 				local effectWrap
 				local isPath = string.find(effectPath, "/")
@@ -694,12 +658,18 @@ function FightBuffComp:delBuff(buffUid, isDead)
 					effectPath = "buff/" .. effectPath
 				end
 
-				if not string.nilorempty(buffCO.delEffectHangPoint) then
-					effectWrap = self._entity.effect:addHangEffect(effectPath, buffCO.delEffectHangPoint)
+				local hangPoint = changedHangPoint
+
+				if not string.nilorempty(hangPoint) then
+					hangPoint = buffCO.delEffectHangPoint
+				end
+
+				if not string.nilorempty(hangPoint) then
+					effectWrap = self._entity.effect:addHangEffect(effectPath, hangPoint)
 
 					effectWrap:setLocalPos(0, 0, 0)
 
-					if buffCO.delEffectHangPoint == ModuleEnum.SpineHangPointRoot then
+					if hangPoint == ModuleEnum.SpineHangPointRoot then
 						effectWrap:setLocalPos(FightHelper.getAssembledEffectPosOfSpineHangPointRoot(self._entity, effectPath))
 					end
 				else
@@ -711,13 +681,10 @@ function FightBuffComp:delBuff(buffUid, isDead)
 				end
 
 				FightRenderOrderMgr.instance:onAddEffectWrap(self._entity.id, effectWrap)
-
-				self._delBuffEffectDic[uid] = {
-					effectWrap = effectWrap,
-					time = Time.time + OnceEffectTime
-				}
-
-				TaskDispatcher.runRepeat(self._onTickCheckRemoveDelBuffEffect, self, 0.2)
+				self:com_registTimer(self.removeOnceEffect, effectDuration or 2, {
+					uid = uid,
+					effectWrap = effectWrap
+				})
 			end
 		end
 
@@ -772,12 +739,6 @@ function FightBuffComp.isEmptyMat(matName)
 	return matName == nil or matName == "" or matName == "0" or matName == "buff_immune"
 end
 
-function FightBuffComp:clear()
-	for _, handler in pairs(self._buffHandlerDict) do
-		FightBuffHandlerPool.putHandlerInst(handler)
-	end
-end
-
 function FightBuffComp:releaseAllBuff()
 	if self._buffDic then
 		for k, v in pairs(self._buffDic) do
@@ -786,9 +747,10 @@ function FightBuffComp:releaseAllBuff()
 	end
 end
 
-function FightBuffComp:beforeDestroy()
-	self.skinBuffEffectMgr:disposeSelf()
-	self.buffMgr:disposeSelf()
+function FightBuffComp:onDestructor()
+	for _, handler in pairs(self._buffHandlerDict) do
+		FightBuffHandlerPool.putHandlerInst(handler)
+	end
 
 	local entityMO = self._entity:getMO()
 
@@ -799,23 +761,6 @@ function FightBuffComp:beforeDestroy()
 	end
 
 	FightGameMgr.specialSceneEffectMgr:clearEffect(self._entity)
-end
-
-function FightBuffComp:onDestroy()
-	TaskDispatcher.cancelTask(self._onTickCheckRemoveEffect, self)
-	TaskDispatcher.cancelTask(self._onTickCheckRemoveDelBuffEffect, self)
-
-	for _, handler in pairs(self._buffHandlerDict) do
-		FightBuffHandlerPool.putHandlerInst(handler)
-	end
-
-	self._buffEffectDict = nil
-	self._loopBuffEffectWrapDict = nil
-	self._onceEffectDict = nil
-	self._buffHandlerDict = nil
-	self._buff_loop_effect_name = nil
-	self.lockFloat = nil
-	self._buffDic = nil
 end
 
 function FightBuffComp:registSkinBuffEffect()

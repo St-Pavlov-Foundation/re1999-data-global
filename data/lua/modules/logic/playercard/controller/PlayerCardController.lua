@@ -308,14 +308,29 @@ function PlayerCardController:getHeadName()
 	return config.name
 end
 
-function PlayerCardController:ShowChangeBgSkin(id)
-	local function yesFunc()
-		PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(id)
-	end
+function PlayerCardController:ShowChangeBgSkin(id, materialDataMOList)
+	ViewMgr.instance:openView(ViewName.PlayerCardGetView, {
+		id = id
+	})
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardChangeSkinTips, MsgBoxEnum.BoxType.Yes_No, yesFunc)
+	self._cacheMaterialDataMOList = materialDataMOList
+
 	self:setBgSkinRed(id, true)
 	PlayerCardModel.instance:setShowRed()
+end
+
+function PlayerCardController:openSimpleShowView()
+	if not self._cacheMaterialDataMOList or #self._cacheMaterialDataMOList < 1 then
+		return
+	end
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, self._cacheMaterialDataMOList)
+
+	self._cacheMaterialDataMOList = nil
+end
+
+function PlayerCardController:setPlayerCardSkin(id)
+	PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(id)
 end
 
 function PlayerCardController:getBgSkinRed(id)
