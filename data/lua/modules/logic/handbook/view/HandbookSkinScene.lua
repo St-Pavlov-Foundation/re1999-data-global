@@ -259,6 +259,10 @@ function HandbookSkinScene:slideToClosestSuit()
 	local targetIdx = 0
 	local targetProgress = 0
 
+	if self._suitCurveProgresss == nil then
+		self._suitCurveProgresss = 0
+	end
+
 	for idx = 0, self._suitCount - 1 do
 		local suitProgress = idx / (self._suitCount - 1)
 		local diff = math.abs(suitProgress - self._suitCurveProgresss)

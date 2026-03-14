@@ -1599,10 +1599,6 @@ function MaterialTipView:_isUseBtnShow()
 	end
 
 	if self._config.subType == ItemEnum.SubType.SkinSelelctGift then
-		if ViewMgr.instance:isOpen(ViewName.StoreView) then
-			return false
-		end
-
 		local itemQuantity = ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)
 
 		return itemQuantity > 0

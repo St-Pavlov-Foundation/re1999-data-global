@@ -212,7 +212,7 @@ function Rouge2_OutsideModel:checkStoreRedDot()
 		for _, storeId in pairs(storeIdList) do
 			local config = Rouge2_OutSideConfig.instance:getRewardStageConfigById(storeId)
 
-			if config and not haveShowItemDic[storeId] then
+			if config and not haveShowItemDic[storeId] and not Rouge2_StoreModel.instance:isStoreAllClaimed(storeId) then
 				local info = Rouge2_OutsideController.buildSingleInfo(storeId, true)
 
 				table.insert(redDotInfoList, info)

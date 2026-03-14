@@ -102,9 +102,7 @@ function Rouge2_StoreStageItem:refreshUI()
 	gohelper.setActive(self._goNormalClaimed, isClaimAll)
 	gohelper.setActive(self._goSelectClaimed, isClaimAll)
 
-	if not isClaimAll then
-		self._reddot = RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V3a2_Rouge_Store_Tab, self.config.id)
-	end
+	self._reddot = RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V3a2_Rouge_Store_Tab, self.config.id)
 
 	if isStart then
 		self._txtNormalTitle.text = self.config.shopTitle

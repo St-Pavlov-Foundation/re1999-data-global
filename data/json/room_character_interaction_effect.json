@@ -3965,21 +3965,21 @@
     "skinId": 303301,
     "id": 115303304,
     "point": "birthday",
-    "effectRes": "v1a9_birthday/juese_birthday_ttt",
+    "effectRes": "v1a9_birthday/juese_birthday",
     "animName": "idle_birthday_loop"
   },
   {
     "skinId": 303302,
     "id": 115303305,
     "point": "birthday",
-    "effectRes": "v1a9_birthday/juese_birthday_ttt",
+    "effectRes": "v1a9_birthday/juese_birthday",
     "animName": "idle_birthday_loop"
   },
   {
     "skinId": 303303,
     "id": 115303306,
     "point": "birthday",
-    "effectRes": "v1a9_birthday/juese_birthday_ttt",
+    "effectRes": "v1a9_birthday/juese_birthday",
     "animName": "idle_birthday_loop"
   },
   {
