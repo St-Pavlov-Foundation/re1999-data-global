@@ -145,7 +145,7 @@ function FightWorkFocusMonster.focusCamera(entityId)
 
 	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 
-	fightScene.level:setFrontVisible(false)
+	FightGameMgr.sceneLevelMgr:setFrontVisible(false)
 
 	local entity = FightHelper.getEntity(entityId)
 
@@ -271,10 +271,7 @@ end
 
 function FightWorkFocusMonster.cancelFocusCameraFinished()
 	FightWorkFocusMonster.setVirtualCameDamping(1, 1, 1)
-
-	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
-
-	fightScene.level:setFrontVisible(true)
+	FightGameMgr.sceneLevelMgr:setFrontVisible(true)
 end
 
 function FightWorkFocusMonster.killTween()

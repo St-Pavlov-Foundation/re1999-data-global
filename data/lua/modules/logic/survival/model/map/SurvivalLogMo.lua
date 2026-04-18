@@ -7,6 +7,7 @@ local LogType = {
 	TeamHealth = 4,
 	HeroHealth = 5,
 	Item = 1,
+	RoleLevelUp = 7,
 	TaskChange = 3
 }
 
@@ -89,6 +90,10 @@ function SurvivalLogMo:init(data, colorDict)
 		else
 			self.logStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_log_heaohealthsub"), heroName, -num)
 		end
+	elseif arr[1] == LogType.RoleLevelUp then
+		local change = arr[2]
+
+		self.logStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_log_rolelevelup"), change)
 	end
 end
 

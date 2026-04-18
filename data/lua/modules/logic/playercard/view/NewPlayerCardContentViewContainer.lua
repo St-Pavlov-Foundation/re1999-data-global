@@ -36,11 +36,19 @@ end
 
 function NewPlayerCardContentViewContainer:buildTabViews(tabContainerId)
 	if tabContainerId == 1 then
-		self.navigateView = NavigateButtonsView.New({
-			true,
-			true,
-			false
-		})
+		if self.viewParam and self.viewParam.hideHomeBtn then
+			self.navigateView = NavigateButtonsView.New({
+				true,
+				false,
+				false
+			})
+		else
+			self.navigateView = NavigateButtonsView.New({
+				true,
+				true,
+				false
+			})
+		end
 
 		self.navigateView:setOverrideClose(self._overrideClose, self)
 

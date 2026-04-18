@@ -5,8 +5,10 @@ module("modules.configs.excel2json.lua_camera", package.seeall)
 local lua_camera = {}
 local fields = {
 	focusZ = 6,
-	yaw = 2,
+	far = 9,
 	distance = 4,
+	foucsX = 8,
+	yaw = 2,
 	id = 1,
 	pitch = 3,
 	fov = 5,

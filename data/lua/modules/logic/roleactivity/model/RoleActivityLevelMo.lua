@@ -21,4 +21,20 @@ function RoleActivityLevelMo:update()
 	self.star = dungeonMO and dungeonMO.star or 0
 end
 
+function RoleActivityLevelMo:episodeId()
+	return self.config.id
+end
+
+function RoleActivityLevelMo:isEpisodeOpen()
+	return DungeonModel.instance:isUnlock(self.config)
+end
+
+function RoleActivityLevelMo:hasPassLevelAndStory()
+	return DungeonModel.instance:hasPassLevelAndStory(self:episodeId())
+end
+
+function RoleActivityLevelMo:hasPassLevel()
+	return DungeonModel.instance:hasPassLevel(self:episodeId())
+end
+
 return RoleActivityLevelMo

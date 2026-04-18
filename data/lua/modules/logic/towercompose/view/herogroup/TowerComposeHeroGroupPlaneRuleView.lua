@@ -29,10 +29,12 @@ function TowerComposeHeroGroupPlaneRuleView:onInitView()
 	self._imageenvIcon2 = gohelper.findChildImage(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/#go_plane2/targetList/#go_modPlane2/layout/#btn_environment2/#txt_env2/#image_envIcon2")
 	self._goempty2 = gohelper.findChild(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/#go_plane2/targetList/#go_empty2")
 	self._btnplaneEnemy = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/enemytitle/#btn_planeEnemy_overseas")
+	self._goenemyLock = gohelper.findChild(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/enemytitle/txten/#go_enemyLock")
 	self._imageplaneLevel = gohelper.findChildImage(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/enemyInfo/#image_planeLevel")
 	self._simageboss = gohelper.findChildSingleImage(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/enemyInfo/boss/#simage_boss")
 	self._txtplaneLevel = gohelper.findChildText(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/enemyInfo/#txt_planeLevel")
-	self._txtplaneScore = gohelper.findChildText(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/score/#txt_planeScore")
+	self._btnplaneExtraTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/towercomposeEnemy/#btn_planeExtraTips")
+	self._goextraTips = gohelper.findChild(self.viewGO, "#go_container/#go_extraTips")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -41,7 +43,9 @@ end
 
 function TowerComposeHeroGroupPlaneRuleView:addEvents()
 	self._btnplaneEnemy:AddClickListener(self._btnplaneEnemyOnClick, self)
+	self._btnplaneExtraTips:AddClickListener(self._btnplaneExtraTipsOnClick, self)
 	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshHeroGroupPointBase, self.refreshPlane, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshBossInfo, self)
 end
 
 function TowerComposeHeroGroupPlaneRuleView:removeEvents()
@@ -52,7 +56,9 @@ function TowerComposeHeroGroupPlaneRuleView:removeEvents()
 	self._btnenvironment1:RemoveClickListener()
 	self._btnenvironment2:RemoveClickListener()
 	self._btnplaneEnemy:RemoveClickListener()
+	self._btnplaneExtraTips:RemoveClickListener()
 	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshHeroGroupPointBase, self.refreshPlane, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshBossInfo, self)
 end
 
 function TowerComposeHeroGroupPlaneRuleView:_btnplaneEnemyOnClick()
@@ -103,8 +109,17 @@ function TowerComposeHeroGroupPlaneRuleView:_btnEnvironmentOnClick(planeMo)
 	TowerComposeController.instance:openTowerComposeModTipView(param)
 end
 
+function TowerComposeHeroGroupPlaneRuleView:_btnplaneExtraTipsOnClick()
+	local param = {}
+
+	param.posGO = self._goextraTips
+
+	TowerComposeController.instance:openTowerComposeExtraTips(param)
+end
+
 function TowerComposeHeroGroupPlaneRuleView:_editableInitView()
-	self.modItemList = self:getUserDataTb_()
+	self.bodyModItemList = self:getUserDataTb_()
+	self.wordModItemList = self:getUserDataTb_()
 	self._btnBodyModPlane1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/#go_plane1/targetList/#go_modPlane1/layout/#go_bodyMod1")
 	self._btnWordModPlane1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/#go_plane1/targetList/#go_modPlane1/layout/#go_wordMod1")
 	self._btnBodyModPlane2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/#scroll_planeInfo/planeInfocontain/#go_plane2/targetList/#go_modPlane2/layout/#go_bodyMod2")
@@ -168,8 +183,10 @@ function TowerComposeHeroGroupPlaneRuleView:refreshPlaneInfoUI(planeMo)
 	gohelper.setActive(planeGO, #bodyModInfoList > 0 or #wordModInfoList > 0 or #envModInfoList > 0)
 	gohelper.setActive(emptyGO, #bodyModInfoList == 0 and #wordModInfoList == 0 and #envModInfoList == 0)
 	gohelper.setActive(self["_btnenvironment" .. planeId], #envModInfoList > 0)
-	gohelper.CreateObjList(self, self.onBodyModItemShow, bodyModInfoList, self["_gobodyMod" .. planeId], self["_gobodyModItem" .. planeId])
-	gohelper.CreateObjList(self, self.onWordModItemShow, wordModInfoList, self["_gowordMod" .. planeId], self["_gowordModItem" .. planeId])
+	gohelper.setActive(self["_gobodyModItem" .. planeId], false)
+	gohelper.setActive(self["_gowordModItem" .. planeId], false)
+	self:createAndRefreshBodyModItem(bodyModInfoList, planeId, self["_gobodyMod" .. planeId], self["_gobodyModItem" .. planeId])
+	self:createAndRefreshWordModItem(wordModInfoList, planeId, self["_gowordMod" .. planeId], self["_gowordModItem" .. planeId])
 
 	if #envModInfoList > 0 then
 		local envModConfig = TowerComposeConfig.instance:getComposeModConfig(envModInfoList[1].modId)
@@ -193,26 +210,90 @@ function TowerComposeHeroGroupPlaneRuleView:refreshPlaneInfoUI(planeMo)
 		addExtraPointBase = addExtraPointBase + extraCo.bossPointBase
 	end
 
-	self["_txtplaneScore" .. planeId].text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towercompose_pointlevel"), totalPointBase + addExtraPointBase, Mathf.Floor((totalPointBase + addExtraPointBase) * (1 + maxRoundPointAdd / 1000)))
+	if planeMo.isLock then
+		self["_txtplaneScore" .. planeId].text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_recordScore"), planeMo.curScore)
+	else
+		self["_txtplaneScore" .. planeId].text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towercompose_pointlevel"), totalPointBase + addExtraPointBase, Mathf.Floor((totalPointBase + addExtraPointBase) * (1 + maxRoundPointAdd / 1000)))
+	end
 end
 
-function TowerComposeHeroGroupPlaneRuleView:onBodyModItemShow(obj, data, index)
-	local modBg = gohelper.findChildImage(obj, "image_modBg")
-	local modIcon = gohelper.findChildImage(obj, "image_modIcon")
-	local slotId = data.slot
-	local modId = data.modId
-	local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
+function TowerComposeHeroGroupPlaneRuleView:createAndRefreshBodyModItem(bodyModInfoList, planeId, contentGO, itemGO)
+	local bodyModList = self.bodyModItemList[planeId]
 
-	UISpriteSetMgr.instance:setTower2Sprite(modBg, string.format("tower_new_frame%d_3", slotId))
-	UISpriteSetMgr.instance:setTower2Sprite(modIcon, modConfig.icon)
+	if not bodyModList then
+		bodyModList = {}
+		self.bodyModItemList[planeId] = bodyModList
+	end
+
+	for index, modInfo in ipairs(bodyModInfoList) do
+		local modItem = bodyModList[index]
+
+		if not modItem then
+			modItem = {
+				go = gohelper.clone(itemGO, contentGO, "bodyModItem" .. index)
+			}
+			modItem.modBg = gohelper.findChildImage(modItem.go, "image_modBg")
+			modItem.modIcon = gohelper.findChildImage(modItem.go, "image_modIcon")
+			modItem.imageModColorIcon = gohelper.findChildImage(modItem.go, "image_modIcon_01")
+			modItem.materialModIcon = UnityEngine.Object.Instantiate(modItem.imageModColorIcon.material)
+			modItem.imageModLvColorIcon = gohelper.findChildImage(modItem.go, "image_modIcon_02")
+			modItem.materialModLvIcon = UnityEngine.Object.Instantiate(modItem.imageModLvColorIcon.material)
+			modItem.imageModColorIcon.material = modItem.materialModIcon
+			modItem.imageModLvColorIcon.material = modItem.materialModLvIcon
+			modItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(modItem.go, TowerComposeModIconComp)
+			bodyModList[index] = modItem
+		end
+
+		gohelper.setActive(modItem.go, true)
+
+		local slotId = modInfo.slot
+		local modId = modInfo.modId
+
+		UISpriteSetMgr.instance:setTower2Sprite(modItem.modBg, string.format("tower_new_frame%d_3", slotId))
+		modItem.modIconComp:refreshMod(modId, modItem.modIcon, modItem.imageModColorIcon, modItem.imageModLvColorIcon, modItem.materialModIcon, modItem.materialModLvIcon)
+	end
+
+	for index = #bodyModInfoList + 1, #bodyModList do
+		gohelper.setActive(bodyModList[index].go, false)
+	end
 end
 
-function TowerComposeHeroGroupPlaneRuleView:onWordModItemShow(obj, data, index)
-	local modIcon = gohelper.findChildImage(obj, "image_modIcon")
-	local modId = data.modId
-	local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
+function TowerComposeHeroGroupPlaneRuleView:createAndRefreshWordModItem(wordModInfoList, planeId, contentGO, itemGO)
+	local wordModList = self.wordModItemList[planeId]
 
-	UISpriteSetMgr.instance:setTower2Sprite(modIcon, modConfig.icon)
+	if not wordModList then
+		wordModList = {}
+		self.wordModItemList[planeId] = wordModList
+	end
+
+	for index, modInfo in ipairs(wordModInfoList) do
+		local modItem = wordModList[index]
+
+		if not modItem then
+			modItem = {
+				go = gohelper.clone(itemGO, contentGO, "wordModItem" .. index)
+			}
+			modItem.modIcon = gohelper.findChildImage(modItem.go, "image_modIcon")
+			modItem.imageModColorIcon = gohelper.findChildImage(modItem.go, "image_modIcon_01")
+			modItem.materialModIcon = UnityEngine.Object.Instantiate(modItem.imageModColorIcon.material)
+			modItem.imageModLvColorIcon = gohelper.findChildImage(modItem.go, "image_modIcon_02")
+			modItem.materialModLvIcon = UnityEngine.Object.Instantiate(modItem.imageModLvColorIcon.material)
+			modItem.imageModColorIcon.material = modItem.materialModIcon
+			modItem.imageModLvColorIcon.material = modItem.materialModLvIcon
+			modItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(modItem.go, TowerComposeModIconComp)
+			wordModList[index] = modItem
+		end
+
+		gohelper.setActive(modItem.go, true)
+
+		local modId = modInfo.modId
+
+		modItem.modIconComp:refreshMod(modId, modItem.modIcon, modItem.imageModColorIcon, modItem.imageModLvColorIcon, modItem.materialModIcon, modItem.materialModLvIcon)
+	end
+
+	for index = #wordModInfoList + 1, #wordModList do
+		gohelper.setActive(wordModList[index].go, false)
+	end
 end
 
 function TowerComposeHeroGroupPlaneRuleView:refreshBossInfo()
@@ -234,6 +315,10 @@ function TowerComposeHeroGroupPlaneRuleView:refreshBossInfo()
 	local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
 
 	self._simageboss:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
+
+	local curBossMo = self.themeMo:getCurBossMo()
+
+	gohelper.setActive(self._goenemyLock, curBossMo.lock)
 end
 
 function TowerComposeHeroGroupPlaneRuleView:onClose()

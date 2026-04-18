@@ -60,10 +60,10 @@ function GMToolFastAddHeroView:_btnfastaddOnClick()
 			return
 		end
 
-		local heroLv = tonumber(self._inputherolv:GetText()) or 1
-		local rankLv = tonumber(self._inputranklv:GetText()) or 1
-		local talentLv = tonumber(self._inputtalentlv:GetText()) or 1
-		local exskillLv = tonumber(self._inputexskilllv:GetText()) or 1
+		local heroLv = tonumber(self._inputherolv:GetText()) or 180
+		local rankLv = tonumber(self._inputranklv:GetText()) or 3
+		local talentLv = tonumber(self._inputtalentlv:GetText()) or 10
+		local exskillLv = tonumber(self._inputexskilllv:GetText()) or 0
 
 		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", heroLv, rankLv, talentLv, exskillLv))
 		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", heroId, heroLv, rankLv, talentLv, exskillLv))

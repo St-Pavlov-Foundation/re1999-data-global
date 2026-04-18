@@ -101,6 +101,16 @@ function FightPlayMgr:checkTowerComposeHasNextPlane()
 		return
 	end
 
+	local themeId = customData and customData.themeId
+
+	if planeId < maxPlane and themeId then
+		local bossSettleMo = TowerComposeModel.instance:getBossSettleInfo()
+
+		if bossSettleMo and bossSettleMo:getPlaneSettleData(maxPlane) then
+			return false
+		end
+	end
+
 	return planeId < maxPlane
 end
 

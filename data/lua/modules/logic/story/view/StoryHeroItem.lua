@@ -505,18 +505,36 @@ function StoryHeroItem:_waitHeroSpineLoaded()
 
 	local heroCo = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(self._heroCo.heroIndex)
 
-	if heroCo.hideNodes ~= "" then
-		if string.find(heroCo.hideNodes, StoryEnum.HeroEffect.SetSkin) then
-			local skinParams = string.split(heroCo.hideNodes, "#")
-			local sg = self._heroSpine:getSkeletonGraphic()
+	if not LuaUtil.isEmptyStr(heroCo.hideNodes) then
+		local hideNodePaths = string.split(heroCo.hideNodes, "|")
 
-			sg.Skeleton:SetSkin(skinParams[2])
-			sg.Skeleton:SetSlotsToSetupPose()
-		else
-			local hideNodePaths = string.split(heroCo.hideNodes, "|")
+		for _, hideNodePath in ipairs(hideNodePaths) do
+			if string.find(hideNodePath, StoryEnum.HeroEffect.SetSkin) then
+				local skinName = string.split(hideNodePath, "#")[2]
+				local sg = self._heroSpine:getSkeletonGraphic()
 
-			for _, path in pairs(hideNodePaths) do
-				local go = gohelper.findChild(self._heroSpineGo, path)
+				sg.Skeleton:SetSkin(skinName)
+				sg.Skeleton:SetSlotsToSetupPose()
+			elseif string.find(hideNodePath, StoryEnum.HeroEffect.SetParam) then
+				local params = string.split(hideNodePath, "#")
+				local paramName = params[2]
+				local paramValue = #params > 2 and params[3] or 0
+				local cubctrl = self._heroSpineGo:GetComponent(typeof(ZProj.CubismController))
+
+				if cubctrl then
+					local cubParamModifider = cubctrl:GetCubismParameterModifier()
+
+					if cubParamModifider then
+						cubParamModifider:AddParameter(paramName, 0, paramValue)
+					end
+				end
+			elseif string.find(hideNodePath, StoryEnum.HeroEffect.HideNode) then
+				local nodeName = string.split(hideNodePath, "#")[2]
+				local go = gohelper.findChild(self._heroSpineGo, nodeName)
+
+				gohelper.setActive(go, false)
+			else
+				local go = gohelper.findChild(self._heroSpineGo, hideNodePath)
 
 				gohelper.setActive(go, false)
 			end

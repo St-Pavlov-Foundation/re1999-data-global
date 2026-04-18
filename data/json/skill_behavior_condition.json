@@ -26898,5 +26898,401 @@
   {
     "id": 514201,
     "type": "SelfTeamHasBuffTypeLayerLessThan"
+  },
+  {
+    "id": 765,
+    "type": "PerAura"
+  },
+  {
+    "id": 765100,
+    "type": "PerAura"
+  },
+  {
+    "id": 765101,
+    "type": "PerAura"
+  },
+  {
+    "id": 765102,
+    "type": "PerAura"
+  },
+  {
+    "id": 765103,
+    "type": "PerAura"
+  },
+  {
+    "id": 765104,
+    "type": "PerAura"
+  },
+  {
+    "id": 765105,
+    "type": "PerAura"
+  },
+  {
+    "id": 765106,
+    "type": "PerAura"
+  },
+  {
+    "id": 765201,
+    "type": "PerAura"
+  },
+  {
+    "id": 765202,
+    "type": "PerAura"
+  },
+  {
+    "id": 765203,
+    "type": "PerAura"
+  },
+  {
+    "id": 765204,
+    "type": "PerAura"
+  },
+  {
+    "id": 765205,
+    "type": "PerAura"
+  },
+  {
+    "id": 765206,
+    "type": "PerAura"
+  },
+  {
+    "id": 765207,
+    "type": "PerAura"
+  },
+  {
+    "id": 765208,
+    "type": "PerAura"
+  },
+  {
+    "id": 765209,
+    "type": "PerAura"
+  },
+  {
+    "id": 765210,
+    "type": "PerAura"
+  },
+  {
+    "id": 765211,
+    "type": "PerAura"
+  },
+  {
+    "id": 765212,
+    "type": "PerAura"
+  },
+  {
+    "id": 765213,
+    "type": "PerAura"
+  },
+  {
+    "id": 765301,
+    "type": "PerAura"
+  },
+  {
+    "id": 765302,
+    "type": "PerAura"
+  },
+  {
+    "id": 765303,
+    "type": "PerAura"
+  },
+  {
+    "id": 765304,
+    "type": "PerAura"
+  },
+  {
+    "id": 765305,
+    "type": "PerAura"
+  },
+  {
+    "id": 765306,
+    "type": "PerAura"
+  },
+  {
+    "id": 765307,
+    "type": "PerAura"
+  },
+  {
+    "id": 765401,
+    "type": "PerAura"
+  },
+  {
+    "id": 765402,
+    "type": "PerAura"
+  },
+  {
+    "id": 548903,
+    "type": "EnemyNumIncludeSpEqual"
+  },
+  {
+    "id": 542903,
+    "type": "InMagicCircleId"
+  },
+  {
+    "id": 766000,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766100,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766101,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766102,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766103,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766104,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766105,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766106,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766201,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766202,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766203,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766204,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766205,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766206,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766207,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766208,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766209,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766210,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766211,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766212,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766213,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766301,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766302,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766303,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766304,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766305,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766306,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766307,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766401,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 766402,
+    "type": "PerBuffIdCount2"
+  },
+  {
+    "id": 513213,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 767000,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767100,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767101,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767102,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767103,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767104,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767105,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767106,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767201,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767202,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767203,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767204,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767205,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767206,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767207,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767208,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767209,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767210,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767211,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767212,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767213,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767301,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767302,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767303,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767304,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767305,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767306,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767307,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767401,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 767402,
+    "type": "ElectricMagicCircleProgress"
+  },
+  {
+    "id": 548901,
+    "type": "EnemyNumIncludeSpEqual"
+  },
+  {
+    "id": 537201,
+    "type": "HasTypeIdBuffTotalCountMoreThan"
+  },
+  {
+    "id": 537203,
+    "type": "HasTypeIdBuffTotalCountMoreThan"
+  },
+  {
+    "id": 61303,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 5991061,
+    "type": "TargetPosition"
+  },
+  {
+    "id": 5521061,
+    "type": "Random"
   }
 ]

@@ -43,7 +43,7 @@ function OptionalGroupChargeView:_btnBuyOnClick()
 
 	selectInfos[self.curSelectGiftId] = 1
 
-	PayController.instance:startPay(self.packageGoodsMO.id, selectInfos, true)
+	PayController.instance:startPay(self.packageGoodsMO.id, selectInfos)
 end
 
 function OptionalGroupChargeView:_btnCloseOnClick()

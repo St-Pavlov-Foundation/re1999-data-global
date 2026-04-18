@@ -2,11 +2,9 @@
 
 module("modules.logic.survival.view.reputation.SurvivalReputationSelectBagItem", package.seeall)
 
-local SurvivalReputationSelectBagItem = class("SurvivalReputationSelectBagItem", SurvivalSimpleListItem)
+local SurvivalReputationSelectBagItem = class("SurvivalReputationSelectBagItem", SimpleListItem)
 
-function SurvivalReputationSelectBagItem:init(viewGO)
-	self.viewGO = viewGO
-
+function SurvivalReputationSelectBagItem:onInit(viewGO)
 	local resPath = "ui/viewres/survival/map/survivalmapbagitem.prefab"
 	local item = self.viewContainer:getResInst(resPath, self.viewGO)
 

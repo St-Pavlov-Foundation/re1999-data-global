@@ -66,6 +66,33 @@ function CommonPropUseTipsHelper.checkShow(itemId)
 		return false
 	end
 
+	local jumpId = useTipsConfig.jumpId
+	local jumpConfig = JumpConfig.instance:getJumpConfig(jumpId)
+
+	if jumpConfig then
+		if not JumpController.instance:isJumpOpen(jumpId) then
+			return false
+		else
+			local canJump = JumpController.instance:canJumpNew(jumpConfig.param)
+
+			if not canJump then
+				return false
+			end
+
+			local jumps = string.splitToNumber(jumpParam, "#")
+			local jumpView = jumps[1]
+			local checkViewCanJump = JumpController.instance:checkCanJumpView(jumpView)
+
+			if not checkViewCanJump then
+				return false
+			end
+		end
+	else
+		logError("通用立刻使用道具弹窗, 不存在的跳转id itemId:" .. tostring(itemId) .. " jumpId: " .. tostring(jumpId))
+
+		return false
+	end
+
 	if string.nilorempty(useTipsConfig.checkParam) then
 		return true
 	end
@@ -99,6 +126,20 @@ end
 
 function CommonPropUseTipsHelper.checkParamHandler_1(itemId, param)
 	return SignInModel.instance:getCanSupplementMonthCardDays() > 0
+end
+
+function CommonPropUseTipsHelper.checkParamHandler_2(itemId, param)
+	local curBoxCount = HeroExpBoxModel.instance:getBoxCount()
+
+	if curBoxCount <= 0 then
+		return false
+	end
+
+	local boxEffect = HeroExpBoxModel.instance:getBoxEffect(HeroExpBoxEnum.BoxIds[1])
+	local needKeyCount = boxEffect.needKeyCount
+	local curKeyCount = HeroExpBoxModel.instance:getKeyCount()
+
+	return needKeyCount <= curKeyCount
 end
 
 return CommonPropUseTipsHelper

@@ -81,8 +81,10 @@ function MainUISwitchInfoBlurMaskView.adjustRt(rawImage, rt)
 	transformhelper.setLocalScale(rawImage.transform, scale, scale, 1)
 end
 
-function MainUISwitchInfoBlurMaskView:onDestroyView()
-	MainSceneSwitchCameraController.instance:clear()
+function MainUISwitchInfoBlurMaskView:onClose()
+	if not self.viewParam.isCloseMoHideScene then
+		MainSceneSwitchCameraController.instance:clear()
+	end
 end
 
 return MainUISwitchInfoBlurMaskView

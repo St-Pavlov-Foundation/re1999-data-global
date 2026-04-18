@@ -9,6 +9,7 @@ function SurvivalSettleWeekPushWork:ctor(msg)
 end
 
 function SurvivalSettleWeekPushWork:onStart(context)
+	SurvivalModel.instance:clearDebugSettleStr()
 	SurvivalModel.instance:setSurvivalSettleInfo(self._msg)
 
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
@@ -20,6 +21,7 @@ function SurvivalSettleWeekPushWork:onStart(context)
 		fight:setWin()
 
 		if isFight then
+			SurvivalModel.instance:addDebugSettleStr("setNeedShowFightSuccess - SurvivalSettleWeekPushWork")
 			SurvivalShelterModel.instance:setNeedShowFightSuccess(true, fight.fightId)
 		end
 	end
@@ -49,18 +51,45 @@ function SurvivalSettleWeekPushWork:_onEnterOneSceneFinish(sceneType)
 		return
 	end
 
-	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", true, false)
+	self:setActiveUIBlock("SurvivalSettleWeekPushWork", true, false)
+	TaskDispatcher.cancelTask(self.delayProtectFinish, self)
 
 	local needShowDestroy, _ = SurvivalShelterModel.instance:getNeedShowFightSuccess()
 
 	if needShowDestroy then
+		SurvivalModel.instance:addDebugSettleStr("registerCallback BossPerformFinish")
 		SurvivalController.instance:registerCallback(SurvivalEvent.BossPerformFinish, self._bossPerformFinish, self)
+		TaskDispatcher.runDelay(self.delayProtectFinish, self, 5)
 	else
 		self:_bossPerformFinish()
 	end
 end
 
+function SurvivalSettleWeekPushWork:delayProtectFinish()
+	SurvivalModel.instance:addDebugSettleStr("雨前结算打印 延迟强制结算")
+	logError(SurvivalModel.instance.debugSettleStr)
+	self:_bossPerformFinish()
+end
+
+function SurvivalSettleWeekPushWork:setActiveUIBlock(blockKey, isActiveBlock, isNeedCircleMv)
+	if type(blockKey) ~= "string" then
+		logError("blockKey can't be " .. type(blockKey))
+	end
+
+	isNeedCircleMv = isNeedCircleMv ~= false and true or false
+
+	UIBlockMgrExtend.setNeedCircleMv(isNeedCircleMv)
+
+	if isActiveBlock then
+		UIBlockHelper.instance:startBlock(blockKey, 6)
+	else
+		UIBlockHelper.instance:endBlock(blockKey)
+	end
+end
+
 function SurvivalSettleWeekPushWork:_bossPerformFinish()
+	SurvivalModel.instance:addDebugSettleStr("_bossPerformFinish")
+	TaskDispatcher.cancelTask(self.delayProtectFinish, self)
 	SurvivalMapHelper.instance:hideUnitVisible(SurvivalEnum.ShelterUnitType.Npc, false)
 	SurvivalMapHelper.instance:hideUnitVisible(SurvivalEnum.ShelterUnitType.Monster, false)
 	SurvivalMapHelper.instance:refreshPlayerEntity()
@@ -117,21 +146,6 @@ function SurvivalSettleWeekPushWork:onPlayerAnimFinish()
 		end
 	end
 
-	if self:isHideEnding() then
-		local storyId = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryHiddenEnding)
-
-		storyId = tonumber(storyId) or 0
-
-		if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
-			GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
-			StoryController.instance:playStory(storyId, nil, self._onStoryEnd, self)
-		else
-			self:showResultPanel(true)
-		end
-
-		return
-	end
-
 	self:showResultPanel(true)
 end
 
@@ -153,13 +167,13 @@ function SurvivalSettleWeekPushWork:isHideEnding()
 end
 
 function SurvivalSettleWeekPushWork:showSettle(isSuccess)
-	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
+	self:setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
 	SurvivalController.instance:enterSurvivalSettle()
 	self:onDone(isSuccess)
 end
 
 function SurvivalSettleWeekPushWork:showResultPanel(isSuccess)
-	GameUtil.setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
+	self:setActiveUIBlock("SurvivalSettleWeekPushWork", false, true)
 
 	local info = SurvivalModel.instance:getSurvivalSettleInfo()
 	local isWin = info and info.win
@@ -171,6 +185,7 @@ function SurvivalSettleWeekPushWork:showResultPanel(isSuccess)
 end
 
 function SurvivalSettleWeekPushWork:clearWork()
+	TaskDispatcher.cancelTask(self.delayProtectFinish, self)
 	TaskDispatcher.cancelTask(self._tweenToPlayerPos, self)
 	TaskDispatcher.cancelTask(self.onPlayerAnimFinish, self)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)

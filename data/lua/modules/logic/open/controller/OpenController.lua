@@ -24,6 +24,8 @@ function OpenController:_onCheckFuncUnlock()
 end
 
 function OpenController:_delayCheckFuncUnlock()
+	PartyMatchRpc.instance:sendPartyServerListRequest()
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		FriendRpc.instance:sendLoadFriendInfosRequest()
 	end

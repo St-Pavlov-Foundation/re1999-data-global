@@ -8,6 +8,7 @@ function SurvivalPlayerUIItem:init(go)
 	self._gohero = gohelper.findChild(go, "hero")
 	self._imageprogress = gohelper.findChildImage(go, "hero/#image_progress")
 	self._imageprogressbg = gohelper.findChildImage(go, "hero/image_progressbg")
+	self._simage_hero = gohelper.findChildImage(go, "hero/#simage_hero")
 
 	SurvivalPlayerUIItem.super.init(self, go)
 	self:setIconEnable()
@@ -29,6 +30,11 @@ function SurvivalPlayerUIItem:refreshInfo()
 	gohelper.setActive(self._imagebubble, false)
 	gohelper.setActive(self._imageprogressbg, false)
 	gohelper.setActive(self._imageprogress, false)
+
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local path = lua_survival_role.configDict[survivalShelterRoleMo.roleId].moveHead
+
+	UISpriteSetMgr.instance:setSurvivalSprite2(self._simage_hero, path)
 end
 
 function SurvivalPlayerUIItem:_showHeroTick(curVal, totalVal)

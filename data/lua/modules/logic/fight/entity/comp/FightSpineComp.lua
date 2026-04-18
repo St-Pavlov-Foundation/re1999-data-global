@@ -30,7 +30,12 @@ function FightSpineComp:onConstructor(entity)
 	self._bFreeze = false
 	self._layer = UnityLayer.Unit
 	self._actionCbList = {}
+	self._useGoScaleReplaceSpineScale = false
 	self._isActive = true
+end
+
+function FightSpineComp:setUseGoScaleReplaceSpineScale(active)
+	self._useGoScaleReplaceSpineScale = active
 end
 
 function FightSpineComp:registLoadSpineWork(resPath, loadedCallback, loadedCallbackHandle)
@@ -124,6 +129,8 @@ function FightSpineComp:_clear()
 		self._csSpineEvt:RemoveAnimEventCallback()
 	end
 
+	gohelper.destroy(self._spineGo)
+
 	self._skeletonAnim = nil
 	self._spineGo = nil
 	self._spineTr = nil
@@ -145,7 +152,11 @@ function FightSpineComp:_initSpine(spineGO)
 	self._skeletonAnim = self._spineGo:GetComponent(FightSpineComp.TypeSkeletonAnimtion)
 
 	if self._lookDir == SpineLookDir.Right then
-		self._skeletonAnim.initialFlipX = true
+		if self._useGoScaleReplaceSpineScale then
+			self:_changeLookDirByScale()
+		else
+			self._skeletonAnim.initialFlipX = true
+		end
 
 		self._skeletonAnim:Initialize(true)
 	else
@@ -239,8 +250,21 @@ function FightSpineComp:changeLookDir(dir)
 end
 
 function FightSpineComp:_changeLookDir()
-	if self._skeletonAnim then
+	if self._useGoScaleReplaceSpineScale then
+		self:_changeLookDirByScale()
+	elseif self._skeletonAnim then
 		self._skeletonAnim:SetScaleX(self._lookDir)
+	end
+end
+
+function FightSpineComp:_changeLookDirByScale()
+	if not gohelper.isNil(self._spineTr) then
+		local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(self._spineTr)
+
+		scaleX = math.abs(scaleX)
+		scaleX = self._lookDir * scaleX
+
+		transformhelper.setLocalScale(self._spineTr, scaleX, scaleY, scaleZ)
 	end
 end
 

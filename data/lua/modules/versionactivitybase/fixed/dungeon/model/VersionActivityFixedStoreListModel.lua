@@ -18,22 +18,33 @@ function VersionActivityFixedStoreListModel:initStoreGoodsConfig()
 	end
 
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local actEnum = VersionActivityFixedHelper.getVersionActivityEnum(bigVersion, smallVersion)
+	local actId = VersionActivityFixedHelper.getVersionActivityDungeonStore(bigVersion, smallVersion)
 
 	self.goodsConfigList = {}
+	self._speGoodsCoList = {}
 
-	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(actEnum.ActivityId.DungeonStore) or {}
+	local storeGroupDict = ActivityStoreConfig.instance:getActivityStoreGroupDict(actId) or {}
 
 	for _, coList in pairs(storeGroupDict) do
 		tabletool.addValues(self.goodsConfigList, coList)
+
+		for _, co in ipairs(coList) do
+			if co.specProduct == 1 then
+				table.insert(self._speGoodsCoList, co)
+			end
+		end
 	end
+
+	table.sort(self._speGoodsCoList, function(a, b)
+		return a.id < b.id
+	end)
 end
 
 function VersionActivityFixedStoreListModel._sortGoods(goodsCo1, goodsCo2)
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local actEnum = VersionActivityFixedHelper.getVersionActivityEnum(bigVersion, smallVersion)
-	local goods1SellOut = goodsCo1.maxBuyCount ~= 0 and goodsCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actEnum.ActivityId.DungeonStore, goodsCo1.id) <= 0
-	local goods2SellOut = goodsCo2.maxBuyCount ~= 0 and goodsCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actEnum.ActivityId.DungeonStore, goodsCo2.id) <= 0
+	local actId = VersionActivityFixedHelper.getVersionActivityDungeonStore(bigVersion, smallVersion)
+	local goods1SellOut = goodsCo1.maxBuyCount ~= 0 and goodsCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodsCo1.id) <= 0
+	local goods2SellOut = goodsCo2.maxBuyCount ~= 0 and goodsCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodsCo2.id) <= 0
 
 	if goods1SellOut ~= goods2SellOut then
 		if goods1SellOut then
@@ -50,6 +61,10 @@ function VersionActivityFixedStoreListModel:refreshStore()
 	self:initStoreGoodsConfig()
 	table.sort(self.goodsConfigList, VersionActivityFixedStoreListModel._sortGoods)
 	self:setList(self.goodsConfigList)
+end
+
+function VersionActivityFixedStoreListModel:getSpecialGoodsList()
+	return self._speGoodsCoList or {}
 end
 
 VersionActivityFixedStoreListModel.instance = VersionActivityFixedStoreListModel.New()

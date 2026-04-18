@@ -72,9 +72,13 @@ function CommonSceneLevelComp:loadLevel(levelId)
 
 	self:getCurScene():setCurLevelId(self._levelId)
 
-	self._resPath = ResUrl.getSceneLevelUrl(self._levelId)
+	self._resPath = self:getSceneLevelUrl()
 
 	loadAbAsset(self._resPath, false, self._onLoadCallback, self)
+end
+
+function CommonSceneLevelComp:getSceneLevelUrl()
+	return ResUrl.getSceneLevelUrl(self._levelId)
 end
 
 function CommonSceneLevelComp:getLevelId(levelId)

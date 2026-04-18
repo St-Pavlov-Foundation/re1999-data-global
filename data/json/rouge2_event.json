@@ -891,13 +891,13 @@
     "id": 9040001,
     "type": 4,
     "image": "rouge_function_2",
-    "name": "language_10101005",
+    "name": "language_10051503",
     "nameEn": "Treasure Hunt",
     "desc": "language_10051504",
     "mainDesc": "",
-    "eventParam": "5",
+    "eventParam": "3",
     "advantageAttribute": "",
-    "isHighQuality": 0
+    "isHighQuality": 1
   },
   {
     "id": 9050001,

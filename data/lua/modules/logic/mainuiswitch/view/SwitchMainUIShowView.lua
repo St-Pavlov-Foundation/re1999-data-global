@@ -90,9 +90,17 @@ function SwitchMainUIShowView:_editableInitView()
 	self._gorighttop = gohelper.findChild(self.viewGO, "#go_righttop")
 	self._goactbgGo = gohelper.findChild(self.viewGO, "#simage_actbg")
 	self._currencyObjs = {}
-	self._currencyView = self:getResInst(CurrencyView.prefabPath, self._gorighttop)
-	self._gocurrency = gohelper.findChild(self._currencyView, "#go_container/#go_currency")
 
+	if self._currencyLoader then
+		self._currencyLoader:dispose()
+
+		self._currencyLoader = nil
+	end
+
+	self._currencyLoader = MultiAbLoader.New()
+
+	self._currencyLoader:addPath(CurrencyView.prefabPath)
+	self._currencyLoader:startLoad(self._loadFinishCurrency, self)
 	self:_initOffsetGos()
 
 	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
@@ -107,8 +115,10 @@ function SwitchMainUIShowView:_editableInitView()
 	self._mailreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gomailreddot, SwitchMainUIReddotIcon)
 	self._taskreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gotaskreddot, SwitchMainUIReddotIcon)
 	self._bankreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobankreddot, SwitchMainUIReddotIcon)
+	self._goskinBg = gohelper.findChild(self.viewGO, "#go_skinBg")
 
 	gohelper.setActive(self._btnhide.gameObject, false)
+	gohelper.setActive(self._goskinBg.gameObject, false)
 	gohelper.setActive(self._goactivity.gameObject, false)
 
 	self._imagesummonnews = self:getUserDataTb_()
@@ -119,6 +129,17 @@ function SwitchMainUIShowView:_editableInitView()
 
 		table.insert(self._imagesummonnews, new)
 	end
+end
+
+function SwitchMainUIShowView:_loadFinishCurrency()
+	local assetItem = self._currencyLoader:getAssetItem(CurrencyView.prefabPath)
+	local viewPrefab = assetItem:GetResource(CurrencyView.prefabPath)
+
+	if not self._currencyView then
+		self._currencyView = gohelper.clone(viewPrefab, self._gorighttop)
+	end
+
+	self._gocurrency = gohelper.findChild(self._currencyView, "#go_container/#go_currency")
 end
 
 function SwitchMainUIShowView:_checkActivityImgVisible()
@@ -200,14 +221,14 @@ function SwitchMainUIShowView:_initOffsetGos()
 		v.anchorX = anchorX
 	end
 
-	local isFull = self.viewContainer:isInitMainFullView()
+	self._scale = MainUISwitchEnum.MainUIScale
 
-	self:_refreshOffest(isFull)
+	self:_refreshOffest()
 end
 
 function SwitchMainUIShowView:_refreshOffest(isFull)
 	local offsetType = MainUISwitchEnum.SwitchMainUIOffsetType
-	local scale = isFull and 1 or MainUISwitchEnum.MainUIScale
+	local scale = isFull and 1 or self._scale
 
 	transformhelper.setLocalScale(self.viewGO.transform, scale, scale, 1)
 
@@ -217,6 +238,12 @@ function SwitchMainUIShowView:_refreshOffest(isFull)
 
 		recthelper.setAnchorX(v.go.transform, anchorX)
 	end
+end
+
+function SwitchMainUIShowView:_refreshScale(scale)
+	self._scale = scale
+
+	transformhelper.setLocalScale(self.viewGO.transform, scale, scale, 1)
 end
 
 function SwitchMainUIShowView:_refreshView()
@@ -468,7 +495,11 @@ function SwitchMainUIShowView:_onSwitchUIVisible(visible)
 end
 
 function SwitchMainUIShowView:onClose()
-	return
+	if self._currencyLoader then
+		self._currencyLoader:dispose()
+
+		self._currencyLoader = nil
+	end
 end
 
 return SwitchMainUIShowView

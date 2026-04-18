@@ -33,6 +33,7 @@ function MainUISwitchView:addEvents()
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, self._onSwitchMainUI, self)
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self._onUIMainUI, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshView, self)
 	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
@@ -44,6 +45,7 @@ function MainUISwitchView:removeEvents()
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchMainUI, self._onSwitchMainUI, self)
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self._onUIMainUI, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshView, self)
 	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
@@ -94,10 +96,18 @@ function MainUISwitchView:_btnHideOnClick()
 end
 
 function MainUISwitchView:_btnshowOnClick()
-	if not self._showUI and MainUISwitchController.instance:isClickEagle() then
-		MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickEagle)
+	if not self._showUI then
+		if MainUISwitchController.instance:isClickEagle() then
+			MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickEagle)
 
-		return
+			return
+		end
+
+		if MainUISwitchController.instance:isClickObj("#btn_bird") then
+			MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickBird, self.viewName)
+
+			return
+		end
 	end
 
 	self:_btnHideOnClick()
@@ -148,6 +158,11 @@ function MainUISwitchView:onOpen()
 	MainSceneSwitchDisplayController.instance:hideScene()
 	WeatherController.instance:onSceneShow()
 	self._rootAnimator:Play("open", 0, 0)
+end
+
+function MainUISwitchView:_refreshView()
+	MainUISwitchListModel.instance:onModelUpdate()
+	self:_showUIInfo(self._selectSkinId)
 end
 
 function MainUISwitchView:_setrolesStoryMaskActive()

@@ -27,6 +27,12 @@ function SurvivalHandbookModel:onInit()
 		table.insert(self.npcTypes, v)
 	end
 
+	self.roleStoryTypes = {}
+
+	for i, v in pairs(SurvivalEnum.HandBookRoleSubType) do
+		table.insert(self.roleStoryTypes, v)
+	end
+
 	local HandBookAmplifierSubType = SurvivalEnum.HandBookAmplifierSubType
 	local HandBookNpcSubType = SurvivalEnum.HandBookNpcSubType
 
@@ -86,6 +92,30 @@ function SurvivalHandbookModel:onInit()
 		},
 		[SurvivalEnum.HandBookType.Result] = {
 			RedDot = RedDotEnum.DotNode.SurvivalHandbookResult
+		},
+		[SurvivalEnum.HandBookType.Story] = {
+			RedDot = RedDotEnum.DotNode.SurvivalHandbookStory
+		},
+		[SurvivalEnum.HandBookType.Collection] = {
+			RedDot = RedDotEnum.DotNode.SurvivalHandbookCollect
+		}
+	}
+	self.StoryTabRedDot = {
+		RedDotEnum.DotNode.SurvivalHandbookStory_1,
+		RedDotEnum.DotNode.SurvivalHandbookStory_2
+	}
+	self.StoryFragmentRedDot = {
+		RedDotEnum.DotNode.SurvivalHandbookStory_1_Fragment,
+		RedDotEnum.DotNode.SurvivalHandbookStory_2_Fragment
+	}
+	self.StoryFragmentSubType = {
+		{
+			SurvivalEnum.HandBookRoleSubType.Role_1_1,
+			SurvivalEnum.HandBookRoleSubType.Role_1_2
+		},
+		{
+			SurvivalEnum.HandBookRoleSubType.Role_2_1,
+			SurvivalEnum.HandBookRoleSubType.Role_2_2
 		}
 	}
 end
@@ -125,6 +155,7 @@ function SurvivalHandbookModel:setSurvivalHandbookBox(survivalHandbookBox)
 				if isValid then
 					mo:setCellCfgId(handbook.param)
 					mo:setIsNew(isNew)
+					mo:setStoryStatus(handbook.status)
 
 					unlock[id] = true
 
@@ -140,6 +171,10 @@ function SurvivalHandbookModel:setSurvivalHandbookBox(survivalHandbookBox)
 
 	for i, v in pairs(self.handbookMoDic) do
 		local have = unlock[v.id]
+
+		if v:getType() == SurvivalEnum.HandBookType.Story and not v:isCanFinishStory() then
+			have = true
+		end
 
 		v:setIsUnlock(have)
 	end
@@ -362,6 +397,28 @@ function SurvivalHandbookModel:refreshRedDot()
 		id = RedDotEnum.DotNode.SurvivalHandbookResult,
 		value = redDot
 	})
+
+	for i, redDot in ipairs(self.StoryFragmentRedDot) do
+		local subTypes = self.StoryFragmentSubType[i]
+
+		for j, subType in ipairs(subTypes) do
+			local redDotValue = self:getRedDot(SurvivalEnum.HandBookType.Story, subType)
+
+			table.insert(redDotInfoList, {
+				id = redDot,
+				uid = subType,
+				value = redDotValue
+			})
+		end
+	end
+
+	total = self:getRedDot(SurvivalEnum.HandBookType.Collection, 0)
+
+	table.insert(redDotInfoList, {
+		uid = -1,
+		id = RedDotEnum.DotNode.SurvivalHandbookCollect,
+		value = total
+	})
 	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
 end
 
@@ -481,6 +538,17 @@ function SurvivalHandbookModel.handBookSortFunc(a, b)
 
 	if rareA ~= 0 and rareB ~= 0 and rareA ~= rareB then
 		return rareB < rareA
+	end
+
+	return a.id < b.id
+end
+
+function SurvivalHandbookModel.handBookStorySortFunc(a, b)
+	local isStoryNotFinishA = not a:isStoryFinish()
+	local isStoryNotFinishB = not b:isStoryFinish()
+
+	if isStoryNotFinishA ~= isStoryNotFinishB then
+		return isStoryNotFinishA
 	end
 
 	return a.id < b.id

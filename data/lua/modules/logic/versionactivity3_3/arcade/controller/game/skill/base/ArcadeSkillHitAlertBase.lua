@@ -1,6 +1,6 @@
 ﻿-- chunkname: @modules/logic/versionactivity3_3/arcade/controller/game/skill/base/ArcadeSkillHitAlertBase.lua
 
-module("modules.logic.versionactivity3_3.arcade.controller.game.skill.hit.ArcadeSkillHitAlertBase", package.seeall)
+module("modules.logic.versionactivity3_3.arcade.controller.game.skill.base.ArcadeSkillHitAlertBase", package.seeall)
 
 local ArcadeSkillHitAlertBase = class("ArcadeSkillHitAlertBase", ArcadeSkillHitBase)
 

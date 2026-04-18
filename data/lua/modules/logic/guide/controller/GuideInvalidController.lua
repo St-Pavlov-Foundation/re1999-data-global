@@ -240,6 +240,15 @@ function GuideInvalidController:_onActivityEnd()
 	end
 end
 
+function GuideInvalidController:setGuideInvalid(guideId, force)
+	local guideMO = GuideModel.instance:getById(guideId)
+	local notFinish = guideMO == nil or not guideMO.isFinish
+
+	if notFinish and (force or self:isInvalid(guideId)) then
+		GuideController.instance:oneKeyFinishGuide(guideId, true)
+	end
+end
+
 GuideInvalidController.instance = GuideInvalidController.New()
 
 return GuideInvalidController

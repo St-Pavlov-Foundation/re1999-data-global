@@ -10,5 +10,8 @@ MainUISwitchEvent.SwitchUIVisible = GameUtil.getEventId()
 MainUISwitchEvent.PreviewSwitchUIVisible = GameUtil.getEventId()
 MainUISwitchEvent.ClickMainViewBtn = GameUtil.getEventId()
 MainUISwitchEvent.ClickEagle = GameUtil.getEventId()
+MainUISwitchEvent.ClickBird = GameUtil.getEventId()
+MainUISwitchEvent.TiggerMainUIFirstAnim = GameUtil.getEventId()
+MainUISwitchEvent.TiggerMainUICaiDanAnim = GameUtil.getEventId()
 
 return MainUISwitchEvent

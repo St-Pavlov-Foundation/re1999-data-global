@@ -77,16 +77,7 @@ function ReactivityEnterview:initRedDot()
 		return
 	end
 
-	local tabId = self.tabContainer:getCurTabId()
-	local actIdList = self.viewParam and self.viewParam.activityIdList or {}
-
-	self.actId = actIdList[tabId]
-
-	if not self.actId then
-		logError("ReactivityEnterview activity id is nil")
-
-		return
-	end
+	self.actId = VersionActivity3_4Enum.ActivityId.Reactivity
 
 	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
@@ -116,24 +107,26 @@ function ReactivityEnterview:refreshUI()
 
 	self._txtdesc.text = actCo.actDesc
 
-	local rewards = GameUtil.splitString2(actCo.activityBonus, true) or {}
+	if not string.nilorempty(actCo.activityBonus) then
+		local rewards = GameUtil.splitString2(actCo.activityBonus, true) or {}
 
-	for i = 1, math.max(#rewards, #self.rewardItems) do
-		local item = self.rewardItems[i]
-		local data = rewards[i]
+		for i = 1, math.max(#rewards, #self.rewardItems) do
+			local item = self.rewardItems[i]
+			local data = rewards[i]
 
-		if not item then
-			item = IconMgr.instance:getCommonItemIcon(self._gorewardcontent)
-			self.rewardItems[i] = item
-		end
+			if not item then
+				item = IconMgr.instance:getCommonItemIcon(self._gorewardcontent)
+				self.rewardItems[i] = item
+			end
 
-		if data then
-			gohelper.setActive(item.go, true)
-			item:setMOValue(data[1], data[2], data[3] or 1, nil, true)
-			item:hideEquipLvAndCount()
-			item:isShowCount(false)
-		else
-			gohelper.setActive(item.go, false)
+			if data then
+				gohelper.setActive(item.go, true)
+				item:setMOValue(data[1], data[2], data[3] or 1, nil, true)
+				item:hideEquipLvAndCount()
+				item:isShowCount(false)
+			else
+				gohelper.setActive(item.go, false)
+			end
 		end
 	end
 

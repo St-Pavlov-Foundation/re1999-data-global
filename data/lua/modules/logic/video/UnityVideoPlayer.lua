@@ -115,7 +115,7 @@ function UnityVideoPlayer:setDisplayUGUITexture(texture)
 end
 
 function UnityVideoPlayer:play(url, loop, callback, callbackObj)
-	self._videoPlayer.url = self:SwitchUrl(url)
+	self._videoPlayer.url = VideoPlayerMgr.instance:SwitchUrl(url)
 
 	logNormal("UnityVideoPlayer play : " .. self._videoPlayer.url)
 	self:setEventListener(callback, callbackObj)
@@ -317,10 +317,14 @@ function UnityVideoPlayer:setScaleMode(scaleMode)
 end
 
 function UnityVideoPlayer:loadMedia(url)
-	self._videoPlayer.url = self:SwitchUrl(url)
+	self._videoPlayer.url = VideoPlayerMgr.instance:SwitchUrl(url)
 
 	logNormal("UnityVideoPlayer loadMedia : " .. self._videoPlayer.url)
 	self._videoPlayer:Prepare()
+end
+
+function UnityVideoPlayer:continue()
+	self._videoPlayer:Play()
 end
 
 function UnityVideoPlayer:SwitchUrl(url)

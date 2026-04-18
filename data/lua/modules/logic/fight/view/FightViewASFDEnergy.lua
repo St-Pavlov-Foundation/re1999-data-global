@@ -8,6 +8,7 @@ function FightViewASFDEnergy:onInitView()
 	self.goASFD = gohelper.findChild(self.viewGO, "root/asfd_container")
 	self.txtASFDEnergy = gohelper.findChildText(self.viewGO, "root/asfd_container/asfd_icon/#txt_Num")
 	self.goClick = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#click")
+	self.flyContainerWrap = gohelper.findChild(self.viewGO, "asfd_fly_container")
 	self.goFlyContainer = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#go_fly_container")
 	self.goFlyItem = gohelper.findChild(self.viewGO, "root/asfd_container/asfd_icon/#go_fly_container/#go_fly_item")
 
@@ -28,6 +29,7 @@ function FightViewASFDEnergy:_editableInitView()
 	local goContainer = self.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.ASFD)
 
 	gohelper.addChild(goContainer, self.goASFD)
+	gohelper.addChild(self.flyContainerWrap, self.goFlyContainer)
 
 	local rectTr = self.goASFD:GetComponent(gohelper.Type_RectTransform)
 

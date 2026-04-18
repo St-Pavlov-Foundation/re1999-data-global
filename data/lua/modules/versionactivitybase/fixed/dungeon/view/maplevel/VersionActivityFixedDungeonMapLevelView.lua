@@ -802,7 +802,10 @@ function VersionActivityFixedDungeonMapLevelView:refreshCostPower()
 	self._txtusepowerhard.text = "-" .. cost
 
 	if cost <= CurrencyModel.instance:getPower() then
-		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowernormal, "#070706")
+		local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(self._bigVersion, self._smallVersion)
+		local color = dungeonEnum.MapLevelCostPowerNormalColor or "#070706"
+
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowernormal, color)
 		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowerhard, "#FFEAEA")
 	else
 		SLFramework.UGUI.GuiHelper.SetColor(self._txtusepowernormal, "#800015")

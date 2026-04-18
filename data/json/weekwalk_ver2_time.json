@@ -88,20 +88,12 @@
     "ruleRear": "1#117333506"
   },
   {
-    "timeId": 14,
-    "issueId": 11,
-    "optionalSkills": "2035#2002#2036#2037#2015#2006",
-    "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#117333505",
-    "ruleRear": "1#117333506"
-  },
-  {
     "timeId": 12,
-    "issueId": 9,
-    "optionalSkills": "2031#2032#2033#2022#2004#2010",
+    "issueId": 12,
+    "optionalSkills": "2038#2001#2016#2014#2033#2003",
     "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#106320119",
-    "ruleRear": "1#106320120"
+    "ruleFront": "1#117341005",
+    "ruleRear": "1#117341006"
   },
   {
     "timeId": 13,
@@ -110,5 +102,21 @@
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#106320121",
     "ruleRear": "1#106320122"
+  },
+  {
+    "timeId": 15,
+    "issueId": 12,
+    "optionalSkills": "2038#2001#2016#2014#2033#2003",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#117341005",
+    "ruleRear": "1#117341006"
+  },
+  {
+    "timeId": 14,
+    "issueId": 11,
+    "optionalSkills": "2035#2002#2036#2037#2015#2006",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#117333505",
+    "ruleRear": "1#117333506"
   }
 ]

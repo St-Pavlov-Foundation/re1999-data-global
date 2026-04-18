@@ -19,6 +19,9 @@ function FightUISwitchEquipView:onInitView()
 	self._txtSceneDescr = gohelper.findChildText(self.viewGO, "root/#go_bottom/#txt_SceneDescr")
 	self._btnequip = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_bottom/#btn_equip")
 	self._gouse = gohelper.findChild(self.viewGO, "root/#go_bottom/#go_use")
+	self._gocardTitle = gohelper.findChild(self.viewGO, "root/Title/simage_cardTitle")
+	self._gonumTitle = gohelper.findChild(self.viewGO, "root/Title/simage_numTitle")
+	self._gouiTitle = gohelper.findChild(self.viewGO, "root/Title/simage_uiTitle")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
 
 	if self._editableInitView then
@@ -82,6 +85,10 @@ function FightUISwitchEquipView:refreshStyle()
 	if co then
 		self._txtSceneName.text = co.name
 		self._txtSceneDescr.text = co.desc
+
+		gohelper.setActive(self._gonumTitle, co.subType == ItemEnum.SubType.FightFloatType)
+		gohelper.setActive(self._gocardTitle, co.subType == ItemEnum.SubType.FightCard)
+		gohelper.setActive(self._gouiTitle, co.subType == ItemEnum.SubType.MainUISkin)
 	end
 
 	self._txtTime.text = self._mo:getObtainTime() or ""

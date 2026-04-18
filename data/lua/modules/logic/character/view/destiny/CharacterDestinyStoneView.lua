@@ -148,7 +148,9 @@ function CharacterDestinyStoneView:_editableInitView()
 	self._goreshapeVX = gohelper.findChild(self.viewGO, "root/#go_stone/#reshape")
 	self._simagereshape = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#reshape/#simage_stone")
 	self._simagestoneName = gohelper.findChildSingleImage(self.viewGO, "root/#simage_reshapeTitle")
+	self._simagestoneName1 = gohelper.findChildSingleImage(self.viewGO, "root/#simage_reshapeTitle/#glow")
 	self._imagestoneName = gohelper.findChildImage(self.viewGO, "root/#simage_reshapeTitle")
+	self._imagestoneName1 = gohelper.findChildImage(self.viewGO, "root/#simage_reshapeTitle/#glow")
 
 	self:_initReshapeItem()
 end
@@ -342,6 +344,7 @@ function CharacterDestinyStoneView:_refreshStoneItem(curIndex)
 		gohelper.setActive(self._goEquip, self._curStoneMo.isUse)
 		gohelper.setActive(self._txtstonename.gameObject, not isReshapeStone)
 		gohelper.setActive(self._simagestoneName.gameObject, isReshapeStone)
+		gohelper.setActive(self._simagestoneName1.gameObject, isReshapeStone)
 		gohelper.setActive(self._goreshapeVX, isReshapeStone)
 
 		if conusmeCo then
@@ -360,6 +363,9 @@ function CharacterDestinyStoneView:_refreshStoneItem(curIndex)
 
 				self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
 					self._imagestoneName:SetNativeSize()
+				end)
+				self._simagestoneName1:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+					self._imagestoneName1:SetNativeSize()
 				end)
 			else
 				self._txtstonename.text = name
@@ -754,6 +760,7 @@ function CharacterDestinyStoneView:onDestroyView()
 	self._simagenext:UnLoadImage()
 	self._simagereshape:UnLoadImage()
 	self._simagestoneName:UnLoadImage()
+	self._simagestoneName1:UnLoadImage()
 	TaskDispatcher.cancelTask(self._cutPreStoneCB, self)
 	TaskDispatcher.cancelTask(self._cutNextStoneCB, self)
 	TaskDispatcher.cancelTask(self._showReshapeEffect, self)

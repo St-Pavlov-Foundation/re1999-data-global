@@ -126,6 +126,8 @@ function TowerComposeResearchView:createAndRefreshProgressItem()
 		progressItem.txtReqPointNum.text = researchCo.req
 		progressItem.txtDesc.text = researchCo.desc
 
+		SLFramework.UGUI.GuiHelper.SetColor(progressItem.txtDesc, isUnlock and "#E5E5E5" or "#A5A8AC")
+
 		local exLevelInfoList = GameUtil.splitString2(researchCo.exLevel, true) or {}
 
 		UISpriteSetMgr.instance:setTower2Sprite(progressItem.imageUnlockIcon, researchCo.icon)

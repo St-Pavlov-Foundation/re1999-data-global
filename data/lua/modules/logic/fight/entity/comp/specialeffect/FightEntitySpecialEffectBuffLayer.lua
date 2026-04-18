@@ -67,8 +67,10 @@ function FightEntitySpecialEffectBuffLayer:_onSkillPlayStart(entity, curSkillId,
 		end
 	end
 
-	for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
-		effectWrap:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
+	if FightCardDataHelper.isBigSkill(curSkillId) then
+		for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
+			effectWrap:setActive(false, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
+		end
 	end
 end
 
@@ -85,8 +87,10 @@ function FightEntitySpecialEffectBuffLayer:_onSkillPlayFinish(entity, curSkillId
 		end
 	end
 
-	for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
-		effectWrap:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
+	if FightCardDataHelper.isBigSkill(curSkillId) then
+		for uniqueId, effectWrap in pairs(self.hideEffectWhenBigSkill) do
+			effectWrap:setActive(true, "FightEntitySpecialEffectBuffLayerHideWhenBigSkill")
+		end
 	end
 end
 

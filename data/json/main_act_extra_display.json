@@ -82,5 +82,12 @@
     "icon": "singlebg_lang/txt_v3a3_eliminate_singlebg/v3a3_eliminate_img_entrance.png",
     "sortId": 4,
     "show": 0
+  },
+  {
+    "id": 14,
+    "name": "",
+    "icon": "singlebg_lang/txt_v3a4_party_singlebg/v3a4_partygame_enterbanner.png",
+    "sortId": 4,
+    "show": 1
   }
 ]

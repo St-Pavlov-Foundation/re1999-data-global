@@ -152,6 +152,86 @@ function SurvivalInteriorRpc:onReceiveSurvivalUseItemReply(resultCode, msg)
 	end
 end
 
+function SurvivalInteriorRpc:sendSurvivalAddMessageRequest(unitId, configIds, callback, callobj)
+	local req = SurvivalInteriorModule_pb.SurvivalAddMessageRequest()
+
+	req.unitId = unitId
+
+	for i, v in ipairs(configIds) do
+		table.insert(req.configId, v)
+	end
+
+	return self:sendMsg(req, callback, callobj)
+end
+
+function SurvivalInteriorRpc:onReceiveSurvivalAddMessageReply(resultCode, msg)
+	if resultCode == 0 then
+		GameFacade.showToastString(luaLang("SurvivalLeaveMsgView_1"))
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnReceiveSurvivalAddMessageReply, msg)
+	end
+end
+
+function SurvivalInteriorRpc:sendSurvivalEditMessageRequest(unitId, configIds, callback, callobj)
+	local req = SurvivalInteriorModule_pb.SurvivalEditMessageRequest()
+
+	req.unitId = unitId
+
+	for i, v in ipairs(configIds) do
+		table.insert(req.configId, v)
+	end
+
+	return self:sendMsg(req, callback, callobj)
+end
+
+function SurvivalInteriorRpc:onReceiveSurvivalEditMessageReply(resultCode, msg)
+	if resultCode == 0 then
+		GameFacade.showToastString(luaLang("SurvivalLeaveMsgView_1"))
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnReceiveSurvivalEditMessageReply, msg)
+	end
+end
+
+function SurvivalInteriorRpc:sendSurvivalMessageOperationRequest(unitId, msgId, operationType, callback, callobj)
+	local req = SurvivalInteriorModule_pb.SurvivalMessageOperationRequest()
+
+	req.unitId = unitId
+	req.msgId = msgId
+	req.operationType = operationType
+
+	SurvivalStatHelper.instance:statMsgOperation(operationType, tonumber(msgId))
+
+	return self:sendMsg(req, callback, callobj)
+end
+
+function SurvivalInteriorRpc:onReceiveSurvivalMessageOperationReply(resultCode, msg)
+	if resultCode == 0 then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnReceiveSurvivalMessageOperationReply, msg)
+	end
+end
+
+function SurvivalInteriorRpc:sendSurvivalUseRoleSkillRequest(param, callback, callobj)
+	local req = SurvivalInteriorModule_pb.SurvivalUseRoleSkillRequest()
+
+	table.insert(req.param, param)
+	SurvivalStatHelper.instance:statUseRoleSkill()
+
+	return self:sendMsg(req, callback, callobj)
+end
+
+function SurvivalInteriorRpc:onReceiveSurvivalUseRoleSkillReply(resultCode, msg)
+	if resultCode == 0 then
+		SurvivalMapModel.instance:onUseRoleSkill(msg)
+	end
+end
+
+function SurvivalInteriorRpc:onReceiveSurvivalMessagePush(resultCode, msg)
+	if resultCode == 0 then
+		SurvivalMapModel.instance.survivalLeaveMsgViewParam = {
+			message = msg.message,
+			unitId = msg.id
+		}
+	end
+end
+
 function SurvivalInteriorRpc:onReceiveMsg(resultCode, cmd, recvProtoName, msg, downTag, socketId)
 	SurvivalInteriorRpc.super.onReceiveMsg(self, resultCode, cmd, recvProtoName, msg, downTag, socketId)
 

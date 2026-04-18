@@ -83,6 +83,14 @@ function BpChargeView:_editableInitView()
 	self:createItems(self._gorightitemup, upLvCo, nil, noShowNum)
 end
 
+function BpChargeView:onOpenFinish()
+	local cfg = BpModel.instance:checkOpenBpUpdatePopup()
+
+	if cfg then
+		ViewMgr.instance:openView(ViewName.BpReceiveRewardView, cfg)
+	end
+end
+
 function BpChargeView:_btndetailOnClick()
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, BpConfig.instance:getCurSkinId(BpModel.instance.id), false, nil, false)
 end
@@ -103,10 +111,12 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 			gohelper.setActive(cloneGo, true)
 
 			local limit = gohelper.findChild(cloneGo, "#go_Limit")
+			local txtLimit = gohelper.findChildTextMesh(cloneGo, "#go_Limit/txt_Limit")
 			local itemGo = gohelper.findChild(cloneGo, "#go_item")
 			local isGet = gohelper.findChild(cloneGo, "#goHasGet")
 			local isNew = gohelper.findChild(cloneGo, "#go_new")
 			local go_cruise = gohelper.findChild(cloneGo, "#go_cruise")
+			local txtCruise = gohelper.findChildTextMesh(cloneGo, "#go_cruise/txt_Limit")
 			local itemIcon = IconMgr.instance:getCommonPropItemIcon(itemGo)
 
 			itemIcon:setMOValue(arr[1], arr[2], arr[3], nil, true)
@@ -124,17 +134,30 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 			end
 
 			itemIcon:setCountFontSize(43)
-			gohelper.setActive(limit, arr[4] == 1)
+
+			local isLimit = co.tagType == 1
+
+			gohelper.setActive(limit, isLimit)
+
+			if isLimit then
+				txtLimit.text = co.tagTxt
+			end
+
 			gohelper.setActive(isNew, arr[5] == 1)
 
 			if type then
 				table.insert(self._itemGetTags[type], isGet)
 			end
 
-			local isSpecialBonus = BpModel.instance:isSpecialBonus(arr[2])
+			local isCruise = co.tagType == 2
 
-			gohelper.setActive(go_cruise, isSpecialBonus)
-			itemIcon:setCanShowDeadLine(not isSpecialBonus)
+			gohelper.setActive(go_cruise, isCruise)
+
+			if isCruise then
+				txtCruise.text = co.tagTxt
+			end
+
+			itemIcon:setCanShowDeadLine(not isCruise)
 		end
 	end
 end

@@ -34,5 +34,41 @@
     "desc": "language_10097903",
     "descParam": "1",
     "checkParam": ""
+  },
+  {
+    "id": 143402,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 325,
+    "desc": "language_10110096",
+    "descParam": "1",
+    "checkParam": ""
+  },
+  {
+    "id": 793401,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 906,
+    "desc": "language_10110097",
+    "descParam": "",
+    "checkParam": "2"
+  },
+  {
+    "id": 770001,
+    "priority": 2,
+    "type": 1,
+    "jumpId": 906,
+    "desc": "language_10110097",
+    "descParam": "",
+    "checkParam": "2"
+  },
+  {
+    "id": 713401,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 10013447,
+    "desc": "language_10097903",
+    "descParam": "1",
+    "checkParam": ""
   }
 ]

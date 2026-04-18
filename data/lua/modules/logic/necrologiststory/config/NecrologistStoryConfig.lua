@@ -9,7 +9,8 @@ function NecrologistStoryConfig:ctor()
 	self._opengroupConfig = nil
 	self.versionConfigList = {
 		NecrologistStoryV3A1Config,
-		NecrologistStoryV3A2Config
+		NecrologistStoryV3A2Config,
+		NecrologistStoryV3A4Config
 	}
 end
 

@@ -14,7 +14,17 @@ function ToastController:onInitFinish()
 end
 
 function ToastController:addConstEvents()
-	return
+	self:registerCallback(ToastEvent.ClearCacheToastInfo, self._onClearCacheToastInfo, self)
+end
+
+function ToastController:_onClearCacheToastInfo(msg)
+	for k, v in pairs(self._notToastList) do
+		if v == msg then
+			self._notToastList[k] = nil
+
+			break
+		end
+	end
 end
 
 function ToastController:reInit()
@@ -117,13 +127,13 @@ function ToastController:PackToastObj(toastid, ...)
 		o.extra = extra
 		o.time = ServerTime.now()
 		self._notToastList[key] = o
-	elseif not self:isExpire(self._notToastList[key].time) then
+	elseif not self:_isExpire(toastid, self._notToastList[key].time) then
 		return
 	else
 		self._notToastList[key].time = ServerTime.now()
 	end
 
-	local o = {}
+	local o = self._notToastList[key] or {}
 
 	o.co = co
 	o.extra = extra
@@ -135,22 +145,19 @@ end
 ToastController.DefaultIconType = 11
 
 function ToastController:showToastWithString(msg, isTop)
-	if self._notToastList[msg] and not self:isExpire(self._notToastList[msg].time) then
+	if self._notToastList[msg] and not self:_isExpire(nil, self._notToastList[msg].time) then
 		return
 	end
-
-	local notToastObject = {
-		time = ServerTime.now()
-	}
-
-	self._notToastList[msg] = notToastObject
 
 	local msgObject = {
 		co = {
 			tips = msg,
 			icon = ToastController.DefaultIconType
-		}
+		},
+		time = ServerTime.now()
 	}
+
+	self._notToastList[msg] = msgObject
 
 	self:_showToast(msgObject, isTop)
 end
@@ -196,6 +203,14 @@ end
 
 function ToastController:isExpire(time)
 	return ServerTime.now() - time >= 4
+end
+
+function ToastController:_isExpire(toastId, time)
+	return ServerTime.now() - time >= self:getShowTime(toastId)
+end
+
+function ToastController:getShowTime(toastId)
+	return ToastParamEnum.LifeTime[toastId] or 4
 end
 
 ToastController.instance = ToastController.New()

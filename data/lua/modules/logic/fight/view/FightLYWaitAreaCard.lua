@@ -22,7 +22,16 @@ function FightLYWaitAreaCard:init(go)
 	self.goContainer = go
 	self.LYLoader = PrefabInstantiate.Create(self.goContainer)
 
-	self.LYLoader:startLoad(FightLYWaitAreaCard.LY_CardPath, self.onLoadLYCardDone, self)
+	self.LYLoader:startLoad(self.getResPath(), self.onLoadLYCardDone, self)
+end
+
+function FightLYWaitAreaCard.getResPath()
+	local skin = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.LY)
+	local co = skin and lua_fight_sp_card_ly.configDict[skin]
+
+	co = co or lua_fight_sp_card_ly.configList[1]
+
+	return string.format("ui/viewres/fight/%s.prefab", co.path)
 end
 
 function FightLYWaitAreaCard:onLoadLYCardDone(loader)

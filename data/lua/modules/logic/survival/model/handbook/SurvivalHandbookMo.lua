@@ -7,7 +7,7 @@ local SurvivalHandbookMo = pureTable("SurvivalHandbookMo")
 function SurvivalHandbookMo:setData(cfg)
 	self.cfg = cfg
 	self.id = cfg.id
-	self.links = string.splitToNumber(cfg.link, "|")
+	self.links = cfg.link
 	self.isUnlock = false
 end
 
@@ -37,6 +37,10 @@ function SurvivalHandbookMo:setIsNew(value)
 	self.isNew = value
 end
 
+function SurvivalHandbookMo:setStoryStatus(status)
+	self.storyStatus = status
+end
+
 function SurvivalHandbookMo:getType()
 	return self.cfg.type
 end
@@ -54,11 +58,7 @@ function SurvivalHandbookMo:getDesc()
 end
 
 function SurvivalHandbookMo:isLinkGroup(groupId)
-	for i, v in ipairs(self.links) do
-		if v == groupId then
-			return true
-		end
-	end
+	return self.links == groupId
 end
 
 function SurvivalHandbookMo:setIsUnlock(value)
@@ -117,6 +117,32 @@ function SurvivalHandbookMo:getResultImage()
 	local cfg = lua_survival_end.configDict[id]
 
 	return cfg.endImg
+end
+
+function SurvivalHandbookMo:getStoryTaskCfg()
+	local id = self.links
+
+	return lua_survival_storytask.configDict[id]
+end
+
+function SurvivalHandbookMo:isUnderway()
+	if not self:isCanFinishStory() then
+		return false
+	end
+
+	return self.storyStatus == 0
+end
+
+function SurvivalHandbookMo:isStoryFinish()
+	if not self:isCanFinishStory() then
+		return true
+	end
+
+	return self.storyStatus == 1
+end
+
+function SurvivalHandbookMo:isCanFinishStory()
+	return self.links > 0
 end
 
 return SurvivalHandbookMo

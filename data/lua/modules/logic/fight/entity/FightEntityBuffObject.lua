@@ -9,8 +9,11 @@ function FightEntityBuffObject:onConstructor(buffData)
 	self.uid = buffData.uid
 	self.entityId = buffData.entityId
 	self.buffId = buffData.buffId
-	self.buffDic = {}
 end
+
+local buffId2EffectClass = {
+	[104342520] = FightBuffIdEffect104342520
+}
 
 function FightEntityBuffObject:onAddBuff()
 	local buffId = self.buffId
@@ -19,17 +22,23 @@ function FightEntityBuffObject:onAddBuff()
 	self:showAddEffect()
 
 	if lua_fight_gao_si_niao_buffeffect_electric_level.configDict[buffId] then
-		self.buffDic[uid] = self:newClass(FightGaoSiNiaoBuffEffectWithElectricLevel, self.buffData)
+		self:newClass(FightGaoSiNiaoBuffEffectWithElectricLevel, self.buffData)
 	end
 
 	local dicActivity128Const = lua_activity128_const.configDict
 
 	if buffId == dicActivity128Const[7].value1 then
-		self.buffDic[uid] = self:newClass(FightZongMaoWillEnterEyeWitnessRound, self.buffData)
+		self:newClass(FightZongMaoWillEnterEyeWitnessRound, self.buffData)
 	elseif buffId == dicActivity128Const[8].value1 then
-		self.buffDic[uid] = self:newClass(FightZongMaoEyeWitnessRound, self.buffData)
+		self:newClass(FightZongMaoEyeWitnessRound, self.buffData)
 	elseif buffId == dicActivity128Const[9].value1 then
-		self.buffDic[uid] = self:newClass(FightZongMaoEyeWitnessEnd, self.buffData)
+		self:newClass(FightZongMaoEyeWitnessEnd, self.buffData)
+	end
+
+	local effectClass = buffId2EffectClass[buffId]
+
+	if effectClass then
+		self:newClass(effectClass, self.buffData)
 	end
 
 	FightMsgMgr.sendMsg(FightMsgId.OnAddBuff, self.buffData)
@@ -39,19 +48,8 @@ function FightEntityBuffObject:showAddEffect()
 	return
 end
 
-function FightEntityBuffObject:onRemoveBuff(uid)
-	if uid ~= self.uid then
-		return
-	end
-
+function FightEntityBuffObject:onRemoveBuff()
 	self:showRemoveEffect()
-
-	local buffObj = self.buffDic[uid]
-
-	if buffObj then
-		buffObj:disposeSelf()
-	end
-
 	FightMsgMgr.sendMsg(FightMsgId.OnRemoveBuff, self.buffData)
 end
 
@@ -59,11 +57,7 @@ function FightEntityBuffObject:showRemoveEffect()
 	return
 end
 
-function FightEntityBuffObject:onUpdateBuff(uid)
-	if uid ~= self.uid then
-		return
-	end
-
+function FightEntityBuffObject:onUpdateBuff()
 	FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self.buffData)
 end
 

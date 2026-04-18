@@ -25,7 +25,7 @@ function PayController:addConstEvents()
 	self:registerCallback(PayEvent.PayFailed, self._onPayFailed, self)
 end
 
-function PayController:startPay(goodsId, selectInfos, isDict)
+function PayController:startPay(goodsId, selectInfos)
 	if MinorsController.instance:isPayLimit() then
 		ViewMgr.instance:openView(ViewName.DateOfBirthSelectionView)
 
@@ -37,12 +37,8 @@ function PayController:startPay(goodsId, selectInfos, isDict)
 	end
 
 	UIBlockMgr.instance:startBlock("charging")
-
-	if isDict then
-		ChargeRpc.instance:sendDictNewOrderRequest(goodsId, selectInfos)
-	else
-		ChargeRpc.instance:sendNewOrderRequest(goodsId, selectInfos)
-	end
+	ChargeRpc.instance:sendNewOrderRequest(goodsId, selectInfos)
+	StoreController.instance:statStartPay(goodsId)
 end
 
 function PayController:_onGetSignSuccess()

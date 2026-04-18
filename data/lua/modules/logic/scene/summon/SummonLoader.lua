@@ -43,6 +43,20 @@ function SummonLoader:startLoad()
 	self._loader:startLoad(self.onLoadCompletedSwitch, self)
 end
 
+function SummonLoader:addSceneUrl(url)
+	table.insert(self._resList, url)
+end
+
+function SummonLoader:isResInList(targetPath)
+	for _, path in ipairs(self._resList) do
+		if targetPath == path then
+			return true
+		end
+	end
+
+	return false
+end
+
 function SummonLoader:onLoadCompletedSwitch()
 	logNormal("onLoadCompletedSwitch")
 

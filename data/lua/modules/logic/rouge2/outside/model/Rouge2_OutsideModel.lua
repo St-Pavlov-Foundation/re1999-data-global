@@ -647,7 +647,15 @@ end
 
 function Rouge2_OutsideModel:clearLocalData()
 	for _, type in pairs(Rouge2_OutsideEnum.LocalData) do
-		self:saveLocalDataList(type, {})
+		local key = Rouge2_OutsideEnum.LocalDataType2PlayerKey[type]
+
+		if not key then
+			logError("肉鸽2 不存在的本地红点 type:" .. type)
+
+			return
+		end
+
+		self:saveLocalDataList(key, {})
 
 		local list = self:getLocalDataList(type)
 		local dic = self:getLocalDataDic(type)
@@ -657,7 +665,15 @@ function Rouge2_OutsideModel:clearLocalData()
 	end
 
 	for _, type in pairs(Rouge2_OutsideEnum.LocalStatData) do
-		self:saveLocalDataList(type, {})
+		local key = Rouge2_OutsideEnum.LocalDataType2PlayerKey[type]
+
+		if not key then
+			logError("肉鸽2 不存在的本地红点 type:" .. type)
+
+			return
+		end
+
+		self:saveLocalDataList(key, {})
 
 		local list = self:getLocalDataList(type)
 		local dic = self:getLocalDataDic(type)

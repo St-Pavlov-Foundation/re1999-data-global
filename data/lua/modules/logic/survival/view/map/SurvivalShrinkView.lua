@@ -22,16 +22,23 @@ end
 
 function SurvivalShrinkView:addEvents()
 	self._btntips:AddClickListener(self._showHideTips, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnShrinkInfoUpdate, self._refreshGameTime, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapGameTimeUpdate, self._refreshGameTime, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapCostTimeUpdate, self._onCostTimeUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnDerivedUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnShrinkInfoUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapGameTimeUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapCostTimeUpdate, self._OnTimeChange, self)
 end
 
 function SurvivalShrinkView:removeEvents()
 	self._btntips:RemoveClickListener()
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShrinkInfoUpdate, self._refreshGameTime, self)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapGameTimeUpdate, self._refreshGameTime, self)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapCostTimeUpdate, self._onCostTimeUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnDerivedUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnShrinkInfoUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapGameTimeUpdate, self._OnTimeChange, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapCostTimeUpdate, self._OnTimeChange, self)
+end
+
+function SurvivalShrinkView:_OnTimeChange()
+	self:_refreshGameTime()
+	self:_onCostTimeUpdate()
 end
 
 function SurvivalShrinkView:onOpen()
@@ -321,7 +328,7 @@ function SurvivalShrinkView:setSlider(obj, totalWidth, data)
 	recthelper.setAnchorX(imageCost.transform, offset)
 end
 
-function SurvivalShrinkView:onClose()
+function SurvivalShrinkView:onDestroyView()
 	TaskDispatcher.cancelTask(self._delayPlayTipsOpen, self)
 end
 

@@ -244,6 +244,8 @@ function RoomDailyOrderItem:setPrice()
 	self._simagerewardicon:LoadImage(icon)
 
 	self._txtrewardcount.text = self._mo:getPriceCount()
+
+	self._txtrewardcount:SetLayoutDirty()
 end
 
 function RoomDailyOrderItem:getMaterialItem(index)

@@ -48,6 +48,7 @@ function SurvivalCeremonyClosingView:onInitView()
 	self._txtItemScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore/#txt_ItemScore")
 	self._goTotalScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore")
 	self._txtTotalScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/#txt_TotalScore")
+	self._gorewardTips = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_rewardTips")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 
 	if self._editableInitView then
@@ -65,6 +66,7 @@ end
 
 local addHeight = 50
 local showTime = {
+	0.5,
 	0.5,
 	0.5,
 	0.5,
@@ -102,6 +104,7 @@ function SurvivalCeremonyClosingView:_editableInitView()
 	self._canvasGroupCollection = self._goCollection:GetComponent(gohelper.Type_CanvasGroup)
 	self._canvasGroupItem = self._goItem:GetComponent(gohelper.Type_CanvasGroup)
 	self._canvasGroupTotalScore = self._goTotalScore:GetComponent(gohelper.Type_CanvasGroup)
+	self._canvasGroupTalentGain = self._gorewardTips:GetComponent(gohelper.Type_CanvasGroup)
 	self._animationEnding = self._goEnding:GetComponent(gohelper.Type_Animation)
 	self._animationNpc = self._goNpc:GetComponent(gohelper.Type_Animation)
 	self._animationBoss = self._goBoss:GetComponent(gohelper.Type_Animation)
@@ -110,6 +113,7 @@ function SurvivalCeremonyClosingView:_editableInitView()
 	self._animationCollection = self._goCollection:GetComponent(gohelper.Type_Animation)
 	self._animationExtraItem = self._goItem:GetComponent(gohelper.Type_Animation)
 	self._animationTotalScore = self._goTotalScore:GetComponent(gohelper.Type_Animation)
+	self._animationTalentGain = self._gorewardTips:GetComponent(gohelper.Type_Animation)
 
 	local content = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content")
 
@@ -125,6 +129,9 @@ function SurvivalCeremonyClosingView:_editableInitView()
 	gohelper.setActive(self._btnclose.gameObject, false)
 	gohelper.setActive(self._txtTips.gameObject, false)
 	gohelper.setActive(self._gonpcitem, false)
+
+	self._txtTalentGainTip = gohelper.findChildTextMesh(self._gorewardTips, "txt_title")
+	self._image_role = gohelper.findChildImage(self._gorewardTips, "image_role")
 end
 
 function SurvivalCeremonyClosingView:onUpdateParam()
@@ -133,6 +140,8 @@ end
 
 function SurvivalCeremonyClosingView:onOpen()
 	self._isWin = self.viewParam.isWin or false
+	self.commonTechPoint = self.viewParam.commonTechPoint
+	self.roleTechPoint = self.viewParam.roleTechPoint
 
 	local report = self.viewParam.report
 
@@ -186,6 +195,7 @@ function SurvivalCeremonyClosingView:_initView()
 	self._progress = 1
 
 	self:_refreshCurProgress()
+	self:_initTalentGain()
 end
 
 function SurvivalCeremonyClosingView:_initEnding()
@@ -570,6 +580,12 @@ function SurvivalCeremonyClosingView:getContentY()
 		end
 	end
 
+	if self._progress == self._maxStep then
+		local height = recthelper.getHeight(self._contentRect)
+
+		return height - self._scrollHeight
+	end
+
 	local allHeight = 0
 	local count = math.min(self._progress, #self._allContentY)
 
@@ -600,6 +616,42 @@ function SurvivalCeremonyClosingView:_refreshCurProgress()
 
 	if animation then
 		animation:Play()
+	end
+end
+
+function SurvivalCeremonyClosingView:_initTalentGain()
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local have = survivalShelterRoleMo:haveRole()
+
+	gohelper.setActive(self._gorewardTips, have)
+
+	if have then
+		local roleId = survivalShelterRoleMo.roleId
+		local outSideTechSpriteId = 0
+		local spriteStr2 = ""
+		local roleTechSpriteId = lua_survival_role.configDict[roleId].techSpriteId
+
+		if roleTechSpriteId ~= 0 then
+			spriteStr2 = string.format("<sprite=%s>%s%s", roleTechSpriteId, luaLang("multiple"), self.roleTechPoint)
+		end
+
+		local roleName = lua_survival_role.configDict[roleId].name
+		local spriteStr1 = string.format("<sprite=%s>%s%s", outSideTechSpriteId, luaLang("multiple"), self.commonTechPoint)
+		local str = GameUtil.getSubPlaceholderLuaLang(luaLang("SurvivalCeremonyClosingView_1"), {
+			roleName,
+			spriteStr1,
+			spriteStr2
+		})
+
+		self._txtTalentGainTip.text = str
+
+		self:addShowStep(self._animationTalentGain, showTime[9], self._canvasGroupTalentGain)
+
+		local path = SurvivalRoleConfig.instance:getRoleHeadImage(roleId)
+
+		if not string.nilorempty(path) then
+			UISpriteSetMgr.instance:setSurvivalSprite2(self._image_role, path)
+		end
 	end
 end
 

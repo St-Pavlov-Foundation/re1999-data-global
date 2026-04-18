@@ -622,7 +622,7 @@ function SignInModel:getShowMonthItemCo()
 end
 
 function SignInModel.checkFestivalDecorationUnlock()
-	local actId = GameBranchMgr.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
+	local actId = CommonConfig.instance:getConstNum(ConstEnum.SignInCalendarDecorationActId)
 	local unlock = ActivityModel.instance:isActOnLine(actId)
 
 	if unlock == nil or unlock == false then

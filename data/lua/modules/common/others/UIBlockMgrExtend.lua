@@ -61,12 +61,8 @@ function UIBlockMgrExtend:setGO(go)
 	self._endGoWrapper = gohelper.clone(self._loopGoWrapper, UIBlockMgrExtend.getEndUIBlockGo(), "endblockanimui")
 	self.isPlay = false
 
-	if GameResMgr.IsFromEditorDir then
-		loadAbAsset(WeakNetworkEffectLoopPath, false, self._onLoopLoadCallback, self)
-		loadAbAsset(WeakNetworkEffectEndPath, false, self._onEndLoadCallback, self)
-	else
-		loadAbAsset(WeakNetworkEffectAbPath, false, self._onAbLoadCallback, self)
-	end
+	loadAbAsset(WeakNetworkEffectLoopPath, false, self._onLoopLoadCallback, self)
+	loadAbAsset(WeakNetworkEffectEndPath, false, self._onEndLoadCallback, self)
 
 	self._txt = gohelper.findChildText(go, "Text")
 	self._clickCounter = 0

@@ -54,10 +54,18 @@ function MainUISwitchInfoView:_btnHideOnClick()
 end
 
 function MainUISwitchInfoView:_btnshowOnClick()
-	if not self._showUI and MainUISwitchController.instance:isClickEagle() then
-		MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickEagle)
+	if not self._showUI then
+		if MainUISwitchController.instance:isClickEagle() then
+			MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickEagle)
 
-		return
+			return
+		end
+
+		if MainUISwitchController.instance:isClickObj("#btn_bird") then
+			MainUISwitchController.instance:dispatchEvent(MainUISwitchEvent.ClickBird, self.viewName)
+
+			return
+		end
 	end
 
 	self:_btnHideOnClick()

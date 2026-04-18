@@ -8,6 +8,7 @@ function SurvivalMainView:onInitView()
 	SurvivalMainView.super.onInitView(self)
 
 	self.igoreViewList = {
+		ViewName.SurvivalRoleLevelTipPopView,
 		ViewName.SurvivalToastView,
 		ViewName.GuideView,
 		ViewName.GuideView2,

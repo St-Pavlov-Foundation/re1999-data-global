@@ -8,6 +8,7 @@ module("modules.proto.HeroModule_pb", package.seeall)
 local HeroModule_pb = {}
 
 HeroModule_pb.HERODEF_PB = require("modules.proto.HeroDef_pb")
+HeroModule_pb.MATERIALMODULE_PB = require("modules.proto.MaterialModule_pb")
 HeroModule_pb.CANCELHERO3124TALENTTREEREPLY_MSG = protobuf.Descriptor()
 HeroModule_pb.CANCELHERO3124TALENTTREEREPLYHEROIDFIELD = protobuf.FieldDescriptor()
 HeroModule_pb.CANCELHERO3124TALENTTREEREPLYEXTRASTRFIELD = protobuf.FieldDescriptor()
@@ -142,6 +143,7 @@ HeroModule_pb.HEROGAINPUSH_MSG = protobuf.Descriptor()
 HeroModule_pb.HEROGAINPUSHHEROIDFIELD = protobuf.FieldDescriptor()
 HeroModule_pb.HEROGAINPUSHISFIRSTFIELD = protobuf.FieldDescriptor()
 HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD = protobuf.FieldDescriptor()
+HeroModule_pb.HEROGAINPUSHITEMSFIELD = protobuf.FieldDescriptor()
 HeroModule_pb.USETALENTTEMPLATEREPLY_MSG = protobuf.Descriptor()
 HeroModule_pb.USETALENTTEMPLATEREPLYHEROIDFIELD = protobuf.FieldDescriptor()
 HeroModule_pb.USETALENTTEMPLATEREPLYTEMPLATEINFOFIELD = protobuf.FieldDescriptor()
@@ -1466,6 +1468,16 @@ HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD.has_default_value = false
 HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD.default_value = 0
 HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD.type = 5
 HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD.cpp_type = 1
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.name = "items"
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.full_name = ".HeroGainPush.items"
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.number = 4
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.index = 3
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.label = 3
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.has_default_value = false
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.default_value = {}
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.message_type = HeroModule_pb.MATERIALMODULE_PB.MATERIALDATA_MSG
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.type = 11
+HeroModule_pb.HEROGAINPUSHITEMSFIELD.cpp_type = 10
 HeroModule_pb.HEROGAINPUSH_MSG.name = "HeroGainPush"
 HeroModule_pb.HEROGAINPUSH_MSG.full_name = ".HeroGainPush"
 HeroModule_pb.HEROGAINPUSH_MSG.nested_types = {}
@@ -1473,7 +1485,8 @@ HeroModule_pb.HEROGAINPUSH_MSG.enum_types = {}
 HeroModule_pb.HEROGAINPUSH_MSG.fields = {
 	HeroModule_pb.HEROGAINPUSHHEROIDFIELD,
 	HeroModule_pb.HEROGAINPUSHISFIRSTFIELD,
-	HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD
+	HeroModule_pb.HEROGAINPUSHDUPLICATECOUNTFIELD,
+	HeroModule_pb.HEROGAINPUSHITEMSFIELD
 }
 HeroModule_pb.HEROGAINPUSH_MSG.is_extendable = false
 HeroModule_pb.HEROGAINPUSH_MSG.extensions = {}

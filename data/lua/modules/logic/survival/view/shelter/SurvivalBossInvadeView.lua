@@ -46,9 +46,7 @@ function SurvivalBossInvadeView:_destroyViewFinish(_viewName)
 end
 
 function SurvivalBossInvadeView:onClose()
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalMonsterEventView, {
-		showType = SurvivalEnum.SurvivalMonsterEventViewShowType.Watch
-	})
+	return
 end
 
 function SurvivalBossInvadeView:onDestroyView()

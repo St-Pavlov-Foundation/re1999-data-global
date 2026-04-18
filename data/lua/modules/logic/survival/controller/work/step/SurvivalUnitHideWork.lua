@@ -12,15 +12,17 @@ function SurvivalUnitHideWork:onStart(context)
 		if k == 1 then
 			reason = v
 		else
-			if reason == SurvivalEnum.UnitDeadReason.DieByQuickItem then
-				local unitMo = sceneMo.unitsById[v]
+			local unitMo = sceneMo.unitsById[v]
 
-				if unitMo then
+			if unitMo then
+				if reason == SurvivalEnum.UnitDeadReason.DieByQuickItem then
 					SurvivalMapHelper.instance:addPointEffect(unitMo.pos)
 
 					for _, exPos in ipairs(unitMo.exPoints) do
 						SurvivalMapHelper.instance:addPointEffect(exPos)
 					end
+				elseif reason == SurvivalEnum.UnitDeadReason.Transfer then
+					-- block empty
 				end
 			end
 

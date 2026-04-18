@@ -44,10 +44,10 @@ ExploreConstValue.UseCSharpTree = true
 ExploreConstValue.ClickEffect = "v1a4_dianjidimian"
 ExploreConstValue.PlaceEffect = "v1a4_fangzhiyuanjian"
 ExploreConstValue.MapLightEffect = "zj_03_jh_fglj_guangshu"
-ExploreConstValue.MapPrefab = "explore/prefabs/scene.prefab"
+ExploreConstValue.MapPrefab = "modules/explore/prefabs/scene.prefab"
 ExploreConstValue.MapConfigPath = "config/explore/lua_explore_map_%s.lua"
-ExploreConstValue.EntryCameraCtrlPath = "explore/camera_anim/msts_anim_entry_01.controller"
-ExploreConstValue.MapNavMeshPath = "explore/navigate/%s.mesh"
+ExploreConstValue.EntryCameraCtrlPath = "modules/explore/camera_anim/msts_anim_entry_01.controller"
+ExploreConstValue.MapNavMeshPath = "modules/explore/navigate/%s.mesh"
 ExploreConstValue.MapSceneObjAlwaysShowEffectType = {
 	[ExploreConstValue.MapSceneObjEffectType.OnlyEffect] = true
 }

@@ -204,7 +204,7 @@ function CharacterGetView:_resetVideo()
 	if BootNativeUtil.isAndroid() or BootNativeUtil.isWindows() then
 		self._videoPlayer:rewind(true)
 	else
-		self._videoPlayer:loadMedia(langVideoUrl("character_get_start"))
+		self._videoPlayer:loadMedia("character_get_start")
 	end
 end
 
@@ -284,8 +284,14 @@ function CharacterGetView:_openAnimFinish()
 	if self._isRank then
 		GameFacade.showToast(ToastEnum.CharacterGet, config.name)
 	else
-		CharacterController.instance:showCharacterGetToast(self._heroId, self._duplicateCount)
-		CharacterController.instance:showCharacterGetTicket(self._heroId, self._summonTicketId)
+		local items = self.viewParam and self.viewParam.items
+
+		if items and #items > 0 then
+			CharacterController.instance:showCharacterGetItemToast(items, self._heroId, self._duplicateCount)
+		else
+			CharacterController.instance:showCharacterGetToast(self._heroId, self._duplicateCount)
+			CharacterController.instance:showCharacterGetTicket(self._heroId, self._summonTicketId)
+		end
 	end
 end
 
@@ -421,6 +427,7 @@ function CharacterGetView:onOpen()
 	self._duplicateCount = self.viewParam.duplicateCount or 0
 	self._callback = self.viewParam.callback
 	self._callbackObj = self.viewParam.callbackObj
+	self._callbackParam = self.viewParam.callbackParam
 	self._isRank = self.viewParam.isRank
 	self._newRank = self.viewParam.newRank
 	self._startRank = self.viewParam.startRank
@@ -462,6 +469,7 @@ function CharacterGetView:onUpdateParam()
 	self._duplicateCount = self.viewParam.duplicateCount or 0
 	self._callback = self.viewParam.callback
 	self._callbackObj = self.viewParam.callbackObj
+	self._callbackParam = self.viewParam.callbackParam
 	self._isRank = self.viewParam.isRank
 	self._newRank = self.viewParam.newRank
 	self._isReplay = self.viewParam.isReplay
@@ -511,7 +519,11 @@ function CharacterGetView:onClose()
 	gohelper.setActive(self._gocontainer, false)
 
 	if self._callback then
-		self._callback(self._callbackObj)
+		if self._callbackParam then
+			self._callback(self._callbackObj, self._callbackParam)
+		else
+			self._callback(self._callbackObj)
+		end
 	end
 
 	self:stopDelayVideoOverTime()

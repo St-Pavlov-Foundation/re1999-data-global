@@ -14,6 +14,7 @@ function FightWorkPlayReconnect:onStart()
 	local roundData = FightDataHelper.roundMgr:getRoundData()
 	local flow = self:com_registFlowSequence()
 
+	flow:addWork(FightGameMgr.necessaryAssetLoaderMgr:registWorkLoadAsset())
 	flow:addWork(FightGameMgr.entityMgr:registNewAllEntityWork())
 	flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightSkillSelectView)
 	flow:registWork(FightWorkFunction, ViewMgr.instance.openView, ViewMgr.instance, ViewName.FightView)

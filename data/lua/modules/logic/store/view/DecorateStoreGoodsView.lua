@@ -77,6 +77,7 @@ function DecorateStoreGoodsView:addEvents()
 	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 	self._btnicon:AddClickListener(self._btniconOnClick, self)
 	self.btnSelfSelect:AddClickListener(self._btnSelfSelectOnClick, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshUI, self)
 end
 
 function DecorateStoreGoodsView:removeEvents()
@@ -86,6 +87,7 @@ function DecorateStoreGoodsView:removeEvents()
 	self._btnclose:RemoveClickListener()
 	self._btnicon:RemoveClickListener()
 	self.btnSelfSelect:RemoveClickListener()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshUI, self)
 end
 
 function DecorateStoreGoodsView:_btncloseOnClick()
@@ -129,6 +131,49 @@ function DecorateStoreGoodsView:_btncost2OnClick()
 end
 
 function DecorateStoreGoodsView:_btnbuyOnClick()
+	local has, items = DecorateStoreModel.instance:hasDiscountItem(self._mo.goodsId)
+
+	self._discountItems = items
+
+	local isCanBuySceneUIPackage = DecorateStoreModel.instance:isCanBuySceneUIPackage()
+
+	if has and items and isCanBuySceneUIPackage then
+		local co = ItemModel.instance:getItemConfig(items[1], items[2])
+
+		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateDiscountTip2, MsgBoxEnum.BoxType.Yes_No, self._checkDiscounnt, self.closeThis, nil, self, self, nil, co and co.name or "", self._mo.config.name)
+	else
+		self:_checkDiscounnt()
+	end
+end
+
+function DecorateStoreGoodsView:_checkDiscounnt()
+	local actId = self._discountItems and DecorateStoreEnum.DiscountItemActId[self._discountItems[2]]
+
+	if actId then
+		local isCanClaim = DecorateStoreModel.instance:isCanClaimDiscountItem(self._discountItems)
+
+		if not isCanClaim then
+			self:_readyBuy()
+		else
+			local co = ItemModel.instance:getItemConfig(self._discountItems[1], self._discountItems[2])
+
+			GameFacade.showMessageBox(MessageBoxIdDefine.DecorateDiscountTip1, MsgBoxEnum.BoxType.Yes_No, self._onJumpGetDiscountItemView, self._readyBuy, nil, self, self, nil, co and co.name or "")
+		end
+	else
+		self:_readyBuy()
+	end
+end
+
+function DecorateStoreGoodsView:_onJumpGetDiscountItemView()
+	local actId = self._discountItems[2] and DecorateStoreEnum.DiscountItemActId[self._discountItems[2]]
+
+	if actId then
+		ActivityModel.instance:setTargetActivityCategoryId(actId)
+		ActivityController.instance:openActivityBeginnerView()
+	end
+end
+
+function DecorateStoreGoodsView:_readyBuy()
 	local isFree = string.nilorempty(self._mo.config.cost) and string.nilorempty(self._mo.config.cost2)
 
 	if isFree then

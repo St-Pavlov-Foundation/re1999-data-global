@@ -38,10 +38,10 @@ function ArcadeHallQuickLinkMO:initMo()
 
 		for i = minPosX, maxPosX do
 			for j = minPosY, maxPosY do
-				local mo = self:_getGridMo(i, j)
+				local _mo = self:_getGridMo(i, j)
 
-				if mo then
-					table.insert(self._buildingGridDict[buidlingId], mo)
+				if _mo then
+					table.insert(self._buildingGridDict[buidlingId], _mo)
 				end
 			end
 		end

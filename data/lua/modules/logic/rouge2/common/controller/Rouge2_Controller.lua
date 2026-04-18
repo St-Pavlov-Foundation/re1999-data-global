@@ -39,6 +39,10 @@ end
 function Rouge2_Controller:enterRouge()
 	DungeonModel.instance.curSendEpisodeId = nil
 
+	if not LoginController.instance:isEnteredGame() then
+		return
+	end
+
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Rouge2_MapView)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.Rouge2_MapLoadingView)
 	GameSceneMgr.instance:startScene(SceneType.Rouge2, 1, 1, true)

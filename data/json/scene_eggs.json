@@ -131,5 +131,75 @@
     "actionClass": "SceneEggLightModeShow",
     "actionParams": "4",
     "parallel": 1
+  },
+  {
+    "id": 501,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_liangyue",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "311003",
+    "parallel": 1
+  },
+  {
+    "id": 502,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_yaxian",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "305305",
+    "parallel": 1
+  },
+  {
+    "id": 503,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_feilinshiduo",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "311103",
+    "parallel": 1
+  },
+  {
+    "id": 504,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_kongbutong",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "306103",
+    "parallel": 1
+  },
+  {
+    "id": 505,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_yeshumei",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "312503",
+    "parallel": 1
+  },
+  {
+    "id": 506,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_obj_e_13",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 507,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_b_water_day",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "1",
+    "parallel": 1
+  },
+  {
+    "id": 508,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_b_water_overcast",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "2",
+    "parallel": 1
+  },
+  {
+    "id": 509,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_b_water_dusk",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "3",
+    "parallel": 1
+  },
+  {
+    "id": 510,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_b_water_night",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
   }
 ]

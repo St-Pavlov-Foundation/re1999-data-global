@@ -36,7 +36,7 @@ function NecrologistStoryTipView:removeEvents()
 end
 
 function NecrologistStoryTipView:_editableInitView()
-	return
+	TMPMarkTopHelper.init(self.txtDesc.gameObject)
 end
 
 function NecrologistStoryTipView:onClickModalMask()
@@ -62,7 +62,8 @@ function NecrologistStoryTipView:setTagTip(tagId)
 	end
 
 	self.txtTitle.text = tagCo.name
-	self.txtDesc.text = tagCo.desc
+
+	TMPMarkTopHelper.SetTextWithMarksTop(self.txtDesc, tagCo.desc)
 
 	local viewHeight = recthelper.getHeight(self.viewGO.transform)
 	local txtHeight = self.txtDesc.preferredHeight

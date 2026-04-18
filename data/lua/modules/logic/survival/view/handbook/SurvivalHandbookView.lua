@@ -9,47 +9,59 @@ function SurvivalHandbookView:onInitView()
 	self.amplifierComp = gohelper.findChild(self.viewGO, "right/#amplifierComp")
 	self.npcComp = gohelper.findChild(self.viewGO, "right/#npcComp")
 	self.resultComp = gohelper.findChild(self.viewGO, "right/#resultComp")
+	self.storyComp = gohelper.findChild(self.viewGO, "right/#storyComp")
+	self.collectionComp = gohelper.findChild(self.viewGO, "right/#collectionComp")
 	self.eventTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#eventTab")
 	self.amplifierTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#amplifierTab")
 	self.npcTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#npcTab")
 	self.resultTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#resultTab")
+	self.storyTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#storyTab")
+	self.collectionTab = gohelper.findChild(self.viewGO, "#go_tabcontainer/container/#collectionTab")
 	self.tabs = {}
 
 	local tabGos = {
 		self.eventTab,
 		self.amplifierTab,
 		self.npcTab,
-		self.resultTab
+		self.resultTab,
+		self.storyTab,
+		self.collectionTab
 	}
 	local HandBookType = SurvivalEnum.HandBookType
 	local types = {
 		HandBookType.Event,
 		HandBookType.Amplifier,
 		HandBookType.Npc,
-		HandBookType.Result
+		HandBookType.Result,
+		HandBookType.Story,
+		HandBookType.Collection
 	}
 
 	for i, go in ipairs(tabGos) do
-		local survivalHandbookAmplifierTab = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalHandbookViewTab)
+		local tab = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalHandbookViewTab)
 
-		survivalHandbookAmplifierTab:setData({
+		tab:setData({
 			index = i,
 			type = types[i],
 			onClickTabCallBack = self.onClickTab,
 			onClickTabContext = self
 		})
-		table.insert(self.tabs, survivalHandbookAmplifierTab)
+		table.insert(self.tabs, tab)
 	end
 
 	self.survivalHandbookEventComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.eventComp, SurvivalHandbookEventComp, self)
 	self.survivalHandbookAmplifierComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.amplifierComp, SurvivalHandbookAmplifierComp, self)
 	self.survivalHandbookNpcComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.npcComp, SurvivalHandbookNpcComp, self)
 	self.survivalHandbookResultComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.resultComp, SurvivalHandbookResultComp, self)
+	self.survivalHandbookStoryComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.storyComp, SurvivalHandbookStoryComp, self)
+	self.survivalHandbookCollectionComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.collectionComp, SurvivalHandbookCollectionComp, self)
 	self.fragment = {
 		self.survivalHandbookEventComp,
 		self.survivalHandbookAmplifierComp,
 		self.survivalHandbookNpcComp,
-		self.survivalHandbookResultComp
+		self.survivalHandbookResultComp,
+		self.survivalHandbookStoryComp,
+		self.survivalHandbookCollectionComp
 	}
 
 	for i, v in ipairs(self.fragment) do

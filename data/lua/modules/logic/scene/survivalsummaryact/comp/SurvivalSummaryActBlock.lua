@@ -15,8 +15,8 @@ function SurvivalSummaryActBlock:_onPreloadFinish()
 
 	self.blockRoot = gohelper.create3d(sceneGo, "BlockRoot")
 
-	local shelterCfg = SurvivalConfig.instance:getShelterCfg()
-	local mapCo = SurvivalConfig.instance:getShelterMapCo(shelterCfg.mapId)
+	local mapId = SurvivalModel.instance:getSummaryActMapId()
+	local mapCo = SurvivalConfig.instance:getShelterMapCo(mapId)
 
 	self.blocks = {}
 

@@ -387,7 +387,9 @@ function CurrencyView:isNeedShieldAddBtn()
 			[ViewName.VersionActivity1_6NormalStoreGoodsView] = 1,
 			[ViewName.RoomFormulaMsgBoxView] = 1,
 			[ViewName.SummonResultView] = 1,
-			[ViewName.VersionActivity1_5NormalStoreGoodsView] = 1
+			[ViewName.VersionActivity1_5NormalStoreGoodsView] = 1,
+			[ViewName.PartyClothLotteryView] = 1,
+			[ViewName.PartyClothRewardView] = 1
 		}
 	end
 
@@ -403,12 +405,9 @@ function CurrencyView:_hideAddBtn(needHideType)
 
 	for index = paramLen, 1, -1 do
 		local param = self.param[index]
+		local itemObj = self:getCurrencyItem(index)
 
-		if param == needHideType then
-			local itemObj = self:getCurrencyItem(index)
-
-			gohelper.setActive(itemObj.btn.gameObject, false)
-		end
+		gohelper.setActive(itemObj.btn.gameObject, param ~= needHideType)
 	end
 end
 

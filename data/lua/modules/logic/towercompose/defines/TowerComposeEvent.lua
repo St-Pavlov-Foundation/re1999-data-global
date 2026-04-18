@@ -25,5 +25,8 @@ TowerComposeEvent.SelectTargetThemeLayer = 10017
 TowerComposeEvent.CloseModeChangeView = 10018
 TowerComposeEvent.OnResearchTaskRewardGetFinish = 10019
 TowerComposeEvent.SelectPlaneLayerGuide = 10020
+TowerComposeEvent.UpdateRecordReply = 10021
+TowerComposeEvent.LoadRecordReply = 10022
+TowerComposeEvent.RefreshLoadState = 10023
 
 return TowerComposeEvent

@@ -33,6 +33,10 @@ Rouge2_Enum.State = {
 	Start = 2,
 	Empty = 0
 }
+Rouge2_Enum.PopType = {
+	ViewName = 1,
+	Func = 2
+}
 Rouge2_Enum.TweenFocusDifficultyDuration = 0.2
 Rouge2_Enum.DifficultyPageNum = 2
 Rouge2_Enum.TweenSwitchPageDuration = 1

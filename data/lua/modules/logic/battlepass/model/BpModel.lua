@@ -136,6 +136,10 @@ function BpModel:getBpLv(score)
 	return math.floor(score / levelScore)
 end
 
+function BpModel:getBpCO()
+	return BpConfig.instance:getBpCO(self.id or 0)
+end
+
 function BpModel:isShowExpUp()
 	local bpCo = BpConfig.instance:getBpCO(self.id or 0)
 
@@ -224,18 +228,30 @@ end
 function BpModel:haveSpecialBonus()
 	local bpCo = BpConfig.instance:getBpCO(self.id)
 
-	if not string.nilorempty(bpCo.specialBonus) then
+	if bpCo.specialBonus > 0 then
 		return true
 	end
+end
+
+function BpModel:getSpecialDes()
+	local bpCo = BpConfig.instance:getBpCO(self.id)
+	local cfg = lua_bp_des.configDict[bpCo.specialBonus]
+
+	return cfg
 end
 
 function BpModel:getSpecialBonus()
 	local bpCo = BpConfig.instance:getBpCO(self.id)
 
-	if not string.nilorempty(bpCo.specialBonus) then
-		local itemList = GameUtil.splitString2(bpCo.specialBonus, true)
+	if bpCo.specialBonus > 0 then
+		local cfg = lua_bp_des.configDict[bpCo.specialBonus]
+		local str = cfg.items
 
-		return itemList
+		if not string.nilorempty(str) then
+			local itemList = GameUtil.splitString2(str, true)
+
+			return itemList
+		end
 	end
 end
 
@@ -293,8 +309,24 @@ function BpModel:getUpdatePopupValidCfg()
 	end
 end
 
+function BpModel:getCurBpUpdatePopupCfg()
+	local cfgs = lua_bp_update_popup.configList
+
+	for i, cfg in ipairs(cfgs) do
+		local startTime = cfg.startTime
+		local endTime = cfg.endTime
+		local startSeverTimeS = TimeUtil.stringToTimestamp(startTime)
+		local endSeverTimeS = TimeUtil.stringToTimestamp(endTime)
+		local serverTime = ServerTime.now()
+
+		if startSeverTimeS <= serverTime and serverTime <= endSeverTimeS then
+			return cfg
+		end
+	end
+end
+
 function BpModel:getCurVersionOperActId()
-	return VersionActivity3_3Enum.ActivityId.BpOperAct
+	return VersionActivity3_4Enum.ActivityId.BpOperAct
 end
 
 BpModel.instance = BpModel.New()

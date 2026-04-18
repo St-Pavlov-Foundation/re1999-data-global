@@ -104,19 +104,6 @@ BGMSwitchProgress.WeatherLight = {
 	"黄昏",
 	"夜晚"
 }
-BGMSwitchProgress.WeatherEffect = {
-	"天气无",
-	"阳光明媚",
-	"小雨",
-	"大雨",
-	"暴风雨",
-	"小雪",
-	"大雪",
-	"大雾",
-	"白天烟花",
-	"夜晚烟花",
-	"夜晚闪电"
-}
 
 function BGMSwitchProgress:_updateGMProgress()
 	if not isDebugBuild then
@@ -157,7 +144,7 @@ function BGMSwitchProgress:_updateGMProgress()
 			local lightMode = curReport and curReport.lightMode or 1
 			local effect = curReport and curReport.effect or 1
 			local lightName = BGMSwitchProgress.WeatherLight[lightMode] or lightMode
-			local effectName = BGMSwitchProgress.WeatherEffect[effect] or effect
+			local effectName = WeatherEnum.WeatherEffectName[effect] or effect
 
 			reportStr = lightName .. "-" .. effectName
 		end

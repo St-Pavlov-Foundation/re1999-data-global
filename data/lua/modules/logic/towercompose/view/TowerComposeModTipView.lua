@@ -92,6 +92,12 @@ function TowerComposeModTipView:refreshBodyModList()
 			bodyModItem.goBg1 = gohelper.findChild(bodyModItem.go, "go_bg1")
 			bodyModItem.goBg2 = gohelper.findChild(bodyModItem.go, "go_bg2")
 			bodyModItem.imageIcon = gohelper.findChildImage(bodyModItem.go, "image_icon")
+			bodyModItem.imageModColorIcon = gohelper.findChildImage(bodyModItem.go, "image_icon_01")
+			bodyModItem.materialModIcon = UnityEngine.Object.Instantiate(bodyModItem.imageModColorIcon.material)
+			bodyModItem.imageModLvColorIcon = gohelper.findChildImage(bodyModItem.go, "image_icon_02")
+			bodyModItem.materialModLvIcon = UnityEngine.Object.Instantiate(bodyModItem.imageModLvColorIcon.material)
+			bodyModItem.imageModColorIcon.material = bodyModItem.materialModIcon
+			bodyModItem.imageModLvColorIcon.material = bodyModItem.materialModLvIcon
 			bodyModItem.txtDesc = gohelper.findChildText(bodyModItem.go, "txt_desc")
 			bodyModItem.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(bodyModItem.txtDesc.gameObject, FixTmpBreakLine)
 
@@ -99,13 +105,14 @@ function TowerComposeModTipView:refreshBodyModList()
 
 			bodyModItem.txtName = gohelper.findChildText(bodyModItem.go, "txt_desc/txt_name")
 			bodyModItem.txtLv = gohelper.findChildText(bodyModItem.go, "txt_desc/txt_name/txt_lv")
+			bodyModItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(bodyModItem.go, TowerComposeModIconComp)
 			self.bodyModItemList[index] = bodyModItem
 		end
 
 		gohelper.setActive(bodyModItem.go, true)
 		gohelper.setActive(bodyModItem.goBg1, self.planeId == 1)
 		gohelper.setActive(bodyModItem.goBg2, self.planeId == 2)
-		UISpriteSetMgr.instance:setTower2Sprite(bodyModItem.imageIcon, bodyModItem.config.icon)
+		bodyModItem.modIconComp:refreshMod(bodyModItem.config.id, bodyModItem.imageIcon, bodyModItem.imageModColorIcon, bodyModItem.imageModLvColorIcon, bodyModItem.materialModIcon, bodyModItem.materialModLvIcon)
 
 		bodyModItem.txtDesc.text = SkillHelper.buildDesc(bodyModItem.config.desc)
 		bodyModItem.txtName.text = bodyModItem.config.name
@@ -130,6 +137,12 @@ function TowerComposeModTipView:refreshWordModList()
 			wordModItem.goBg1 = gohelper.findChild(wordModItem.go, "go_bg1")
 			wordModItem.goBg2 = gohelper.findChild(wordModItem.go, "go_bg2")
 			wordModItem.imageIcon = gohelper.findChildImage(wordModItem.go, "image_icon")
+			wordModItem.imageModColorIcon = gohelper.findChildImage(wordModItem.go, "image_icon_01")
+			wordModItem.materialModIcon = UnityEngine.Object.Instantiate(wordModItem.imageModColorIcon.material)
+			wordModItem.imageModLvColorIcon = gohelper.findChildImage(wordModItem.go, "image_icon_02")
+			wordModItem.materialModLvIcon = UnityEngine.Object.Instantiate(wordModItem.imageModLvColorIcon.material)
+			wordModItem.imageModColorIcon.material = wordModItem.materialModIcon
+			wordModItem.imageModLvColorIcon.material = wordModItem.materialModLvIcon
 			wordModItem.txtDesc = gohelper.findChildText(wordModItem.go, "txt_desc")
 			wordModItem.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(wordModItem.txtDesc.gameObject, FixTmpBreakLine)
 			wordModItem.txtName = gohelper.findChildText(wordModItem.go, "txt_name")
@@ -137,13 +150,14 @@ function TowerComposeModTipView:refreshWordModList()
 
 			SkillHelper.addHyperLinkClick(wordModItem.txtDesc, self._onHyperLinkClick, self)
 
+			wordModItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(wordModItem.go, TowerComposeModIconComp)
 			self.wordModItemList[index] = wordModItem
 		end
 
 		gohelper.setActive(wordModItem.go, true)
 		gohelper.setActive(wordModItem.goBg1, self.planeId == 1)
 		gohelper.setActive(wordModItem.goBg2, self.planeId == 2)
-		UISpriteSetMgr.instance:setTower2Sprite(wordModItem.imageIcon, wordModItem.config.icon)
+		wordModItem.modIconComp:refreshMod(wordModItem.config.id, wordModItem.imageIcon, wordModItem.imageModColorIcon, wordModItem.imageModLvColorIcon, wordModItem.materialModIcon, wordModItem.materialModLvIcon)
 
 		wordModItem.txtDesc.text = SkillHelper.buildDesc(wordModItem.config.desc)
 		wordModItem.txtName.text = wordModItem.config.name

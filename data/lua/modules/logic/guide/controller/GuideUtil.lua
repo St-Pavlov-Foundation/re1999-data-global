@@ -57,4 +57,20 @@ function GuideUtil.isGuideViewTarget(targetGO)
 	return false
 end
 
+function GuideUtil.findGo(path)
+	if string.find(path, "POPUP_TOP") then
+		local go = gohelper.find(path)
+
+		if go then
+			return go
+		end
+
+		local replacePath = string.gsub(path, "POPUP_TOP", "POPUPFour")
+
+		return gohelper.find(replacePath)
+	end
+
+	return gohelper.find(path)
+end
+
 return GuideUtil

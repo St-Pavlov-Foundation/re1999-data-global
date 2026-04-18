@@ -56,6 +56,10 @@ function NecrologistStoryGameBaseMO:updatePlotInfo(plotInfo)
 end
 
 function NecrologistStoryGameBaseMO:getData()
+	if not self.data then
+		self.data = {}
+	end
+
 	return self.data
 end
 

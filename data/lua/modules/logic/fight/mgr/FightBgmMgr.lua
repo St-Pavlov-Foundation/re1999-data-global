@@ -23,7 +23,7 @@ function FightBgmMgr:onConstructor()
 
 	local curScene = GameSceneMgr.instance:getCurScene()
 
-	self:com_registEvent(curScene.level, CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView)
 	self:com_registFightEvent(FightEvent.OnFightReconnect, self._switchMonsterGroup)
 	self:com_registFightEvent(FightEvent.OnStartSequenceStart, self._onStartSequenceStart)

@@ -754,5 +754,32 @@
     "permanentUnlock": "2#24#1",
     "signature": "3121",
     "preStoryId": 305101
+  },
+  {
+    "id": 29,
+    "chapterId": 0,
+    "unlock": "2#24#0",
+    "bonus": "",
+    "heroName": "language_10006328",
+    "photo": "308402",
+    "cgBg": "308401",
+    "order": 29,
+    "name": "language_10112539",
+    "nameEn": "A Song Once Heard",
+    "queryVersion": "3.4",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_29",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 13422,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 0,
+    "cgUnlockStoryId": 308407,
+    "cgPos": "771.6#-18.4",
+    "cgScale": "1",
+    "mainviewName": "language_10112539",
+    "permanentUnlock": "2#24#1",
+    "signature": "3084",
+    "preStoryId": 0
   }
 ]

@@ -79,6 +79,8 @@ function SurvivalSceneEndPushWork:openResultView()
 	if not self.context.fastExecute then
 		self.context.fastExecute = true
 	end
+
+	AudioMgr.instance:trigger(AudioEnum2_8.Survival.stop_ui_fuleyuan_tansuo_dutiao_loop)
 end
 
 function SurvivalSceneEndPushWork:onViewClose(viewName)

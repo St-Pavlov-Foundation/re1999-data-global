@@ -18,6 +18,7 @@ function StoryConfig:ctor()
 	self._picTxtsConfig = {}
 	self._storyHeroConfig = {}
 	self._storyBgEffTransConfig = {}
+	self._storyBlurTypeConfig = {}
 	self._storyBgZoneConfig = {}
 	self._audioSwitchConfig = {}
 	self._bgEffStarburstConfig = {}
@@ -77,6 +78,10 @@ function StoryConfig:_loadStoryConfig()
 	local bgEffTransConfig = addGlobalModule("modules.configs.story.lua_story_bgefftranstype")
 
 	StoryBgEffectTransModel.instance:setStoryBgEffectTransList(bgEffTransConfig)
+
+	local blurTypeConfig = addGlobalModule("modules.configs.story.lua_story_blurtype")
+
+	StoryBlurTypeModel.instance:setStoryBlurTypeList(blurTypeConfig)
 
 	if GameResMgr.IsFromEditorDir then
 		local zonePath = "configs/story/json_zone_storybg.json"

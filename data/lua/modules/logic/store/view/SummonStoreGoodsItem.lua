@@ -273,14 +273,18 @@ function SummonStoreGoodsItem:onUpdateMO(mo)
 
 	self:refreshNextRefreshTime(goodsConfig)
 
+	local isShowNewTag = false
+
 	if mo:needShowNew() then
 		local isRoomBlockPackage = self._itemType == MaterialEnum.MaterialType.BlockPackage
 		local isRoomBuilding = self._itemType == MaterialEnum.MaterialType.Building
 
 		if not isRoomBlockPackage and not isRoomBuilding then
-			gohelper.setActive(self._gonewtag, mo:needShowNew())
+			isShowNewTag = true
 		end
 	end
+
+	gohelper.setActive(self._gonewtag, isShowNewTag)
 
 	local maxBuyCount = goodsConfig.maxBuyCount
 	local remain = maxBuyCount - mo.buyCount

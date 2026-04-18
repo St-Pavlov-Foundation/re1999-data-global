@@ -238,6 +238,12 @@ end
 
 function CharacterExSkillView:refreshSkillCardInfo()
 	local skillIdDict = SkillConfig.instance:getHeroBaseSkillIdDict(self._config.id, true)
+	local heroMo = HeroModel.instance:getByHeroId(self._config.id)
+
+	if heroMo then
+		skillIdDict = SkillConfig.instance:getHeroBaseSkillIdDictByExSkillLevel(self._config.id, true, heroMo)
+	end
+
 	local skillCo, skillId
 
 	for i = 1, 3 do
@@ -505,7 +511,7 @@ function CharacterExSkillView:_refreshReshape()
 	local isEquipReshapeAttr = false
 
 	if heroMo and heroMo.destinyStoneMo then
-		local stoneCo = heroMo.destinyStoneMo:getEquipReshapeStoneCo()
+		local stoneCo = heroMo.destinyStoneMo:isEquipReshape()
 
 		if stoneCo ~= nil then
 			isEquipReshapeAttr = true

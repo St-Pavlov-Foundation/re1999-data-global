@@ -41,7 +41,10 @@ function SurvivalScenePreloader:init(sceneId, levelId)
 end
 
 function SurvivalScenePreloader:addPlayerRes()
-	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes))
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local roleRes = survivalShelterRoleMo:getRoleModelRes()
+
+	self._loader:addPath(roleRes)
 	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Miasma))
 	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Morass))
 	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.Vehicle_Magma))

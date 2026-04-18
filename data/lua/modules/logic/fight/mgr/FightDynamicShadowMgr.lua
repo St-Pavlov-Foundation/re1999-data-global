@@ -7,7 +7,7 @@ local FightDynamicShadowMgr = class("FightDynamicShadowMgr", FightBaseClass)
 function FightDynamicShadowMgr:onConstructor()
 	local curScene = GameSceneMgr.instance:getCurScene()
 
-	self:com_registEvent(curScene.level, CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 end
 
 local CtroCompDic = {
@@ -15,7 +15,7 @@ local CtroCompDic = {
 }
 
 function FightDynamicShadowMgr:onLevelLoaded(levelId)
-	local levelComp = GameSceneMgr.instance:getCurScene().level
+	local levelComp = FightGameMgr.sceneLevelMgr
 	local sceneGO = levelComp and levelComp:getSceneGo()
 	local sceneLevelCO = levelId and lua_scene_level.configDict[levelId]
 	local coDict = sceneLevelCO and lua_scene_ctrl.configDict[sceneLevelCO.resName]

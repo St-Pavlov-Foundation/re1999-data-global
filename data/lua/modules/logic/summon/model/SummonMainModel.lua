@@ -24,6 +24,8 @@ function SummonMainModel:releaseServerData()
 	self._curPoolId = nil
 	self._curPool = nil
 	self._validServerPoolMap = nil
+	self._useInfallibleItemTipDic = nil
+	self._useInfallibleItemTriggerDic = nil
 end
 
 function SummonMainModel:releaseViewData()
@@ -178,6 +180,18 @@ function SummonMainModel.validContinueTenPool(poolId)
 	end
 
 	return isValid
+end
+
+function SummonMainModel:isInfallibleSummon(poolId)
+	local summonConfig = SummonConfig.instance:getSummon(poolId)
+
+	if summonConfig.infallibleItemId == nil or summonConfig.infallibleItemId == 0 or summonConfig.infallibleItemMaxUseCount <= 0 then
+		return false
+	end
+
+	local mo = self:getPoolServerMO(poolId)
+
+	return mo and mo.infallibleItemStatus == SummonEnum.InfallibleItemState.Using
 end
 
 SummonMainModel.defaultSettings = {
@@ -930,6 +944,175 @@ function SummonMainModel.needShowReddot(summonMO)
 	end
 
 	return false
+end
+
+function SummonMainModel:isSummonPoolPackageProp(poolId, orderId)
+	if not poolId then
+		return false
+	end
+
+	local summonInfoMo = self:getPoolServerMO(poolId)
+
+	if not summonInfoMo or not summonInfoMo.propPackageMO then
+		return true
+	end
+
+	return summonInfoMo.propPackageMO:isOrderProp(orderId)
+end
+
+function SummonMainModel:setSummonPoolPackageProp(poolId, orderId, count)
+	if not poolId then
+		return
+	end
+
+	local summonInfoMo = self:getPoolServerMO(poolId)
+
+	if not summonInfoMo or not summonInfoMo.propPackageMO then
+		logError("不存在的卡池 id" .. tostring(poolId))
+
+		return
+	end
+
+	summonInfoMo.propPackageMO:addSinglePropInfo(orderId, count)
+end
+
+function SummonMainModel:canShowDestinyGift(summonPoolId)
+	if summonPoolId == nil then
+		return false
+	end
+
+	local summonPoolConfig = SummonConfig.instance:getSummonPool(summonPoolId)
+
+	if not summonPoolConfig or summonPoolConfig.infallibleItemId == nil or summonPoolConfig.infallibleItemId == 0 then
+		return false
+	end
+
+	return true
+end
+
+function SummonMainModel:setSummonInfallibleState(poolId, status)
+	if poolId == nil or status == nil then
+		return
+	end
+
+	local pool = self:getPoolServerMO(poolId)
+
+	if not pool then
+		return
+	end
+
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+
+	if poolCo.infallibleItemId == nil and poolCo.infallibleItemId == 0 and poolCo.infallibleItemMaxUseCount <= 0 then
+		return
+	end
+
+	pool.infallibleItemStatus = status
+
+	logNormal("无限抽道具状态改变 卡池id: " .. tostring(poolId) .. " 状态: " .. tostring(status))
+
+	if status == SummonEnum.InfallibleItemState.Used then
+		self:setInfallibleItemUsedTrigger(poolCo.infallibleItemId, true)
+	end
+
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonInfallibleStatusChange, status)
+end
+
+function SummonMainModel:setInfallibleItemUsedTrigger(infallibleItemId, value)
+	if not self._useInfallibleItemTriggerDic then
+		self._useInfallibleItemTriggerDic = {}
+	end
+
+	self._useInfallibleItemTriggerDic[infallibleItemId] = value
+end
+
+function SummonMainModel:getInfallibleItemUsedTrigger(infallibleItemId)
+	if not self._useInfallibleItemTriggerDic then
+		return false
+	end
+
+	return self._useInfallibleItemTriggerDic[infallibleItemId]
+end
+
+function SummonMainModel:checkCanUseInfallibleItem(poolId)
+	local poolInfo = self:getPoolServerMO(poolId)
+
+	if not poolInfo then
+		return false
+	end
+
+	local summonConfig = SummonConfig.instance:getSummonPool(poolId)
+
+	if summonConfig.infallibleItemId == nil or summonConfig.infallibleItemId == 0 or summonConfig.infallibleItemMaxUseCount <= 0 then
+		return false
+	end
+
+	local itemId = summonConfig.infallibleItemId
+	local count = ItemModel.instance:getItemCount(itemId)
+
+	if count <= 0 then
+		return false
+	end
+
+	local isUnused = poolInfo.infallibleItemStatus == SummonEnum.InfallibleItemState.Unused
+
+	return isUnused
+end
+
+SummonMainModel.useInfallibleItemTipKey = "UseInfallibleItemTip"
+
+function SummonMainModel:checkHaveShowUseInfallibleItemTip(poolId)
+	if not self._useInfallibleItemTipDic then
+		self:initShowUseInfallibleItemTip()
+	end
+
+	return self._useInfallibleItemTipDic[poolId] == true
+end
+
+function SummonMainModel:setHaveShowUseInfallibleItemTip(poolId, isShow)
+	if not self._useInfallibleItemTipDic then
+		self:initShowUseInfallibleItemTip()
+	end
+
+	self._useInfallibleItemTipDic[poolId] = isShow
+
+	local tempList = {}
+
+	for id, showStatus in pairs(self._useInfallibleItemTipDic) do
+		if showStatus == true then
+			table.insert(tempList, id)
+		end
+	end
+
+	if next(tempList) then
+		local userKey = string.format("%s_%s", PlayerModel.instance:getMyUserId(), SummonMainModel.useInfallibleItemTipKey)
+		local value = table.concat(tempList, "#")
+
+		PlayerPrefsHelper.setString(userKey, value)
+	end
+end
+
+function SummonMainModel:initShowUseInfallibleItemTip()
+	self._useInfallibleItemTipDic = {}
+
+	local userKey = string.format("%s_%s", PlayerModel.instance:getMyUserId(), SummonMainModel.useInfallibleItemTipKey)
+	local value = PlayerPrefsHelper.getString(userKey, "")
+
+	if not string.nilorempty(value) then
+		local paramList = string.splitToNumber(value, "#")
+
+		if paramList and next(paramList) then
+			for _, param in ipairs(paramList) do
+				self._useInfallibleItemTipDic[param] = true
+			end
+		end
+	end
+end
+
+function SummonMainModel:clearShowUseInfallibleItemTipRecord()
+	local userKey = string.format("%s_%s", PlayerModel.instance:getMyUserId(), SummonMainModel.useInfallibleItemTipKey)
+
+	PlayerPrefsHelper.setString(userKey, "")
 end
 
 SummonMainModel.instance = SummonMainModel.New()

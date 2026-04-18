@@ -99,7 +99,7 @@ function RoomViewConfirm:_handleMouseInput()
 		TaskDispatcher.cancelTask(self._handleMouseInput, self)
 	end
 
-	if UnityEngine.Input.GetKey("space") then
+	if UnityEngine.Input.GetKeyUp("space") then
 		self:_btnconfirmOnClick()
 		TaskDispatcher.cancelTask(self._handleMouseInput, self)
 	end

@@ -71,6 +71,10 @@ function SurvivalHardItem:onUpdateMO(mo)
 
 		local iconPath = string.format("singlebg/survival_singlebg/difficulty/difficulticon/%s.png", config.icon)
 
+		if string.nilorempty(config.icon) then
+			logError("缺少难度图标" .. config.id)
+		end
+
 		self.simageIcon:LoadImage(iconPath)
 	end
 end

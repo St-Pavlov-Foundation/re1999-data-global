@@ -131,6 +131,59 @@ function SummonRpc:onReceiveGetSummonProgressRewardsReply(resultCode, msg)
 	end
 end
 
+function SummonRpc:sendPopUpRecommendWindowRequest(poolId, orderId, callback, callbackObj)
+	local req = SummonModule_pb.PopUpRecommendWindowRequest()
+
+	req.poolId = poolId
+	req.orderId = orderId
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function SummonRpc:onReceivePopUpRecommendWindowReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local poolId = msg.poolId
+	local popUpCount = msg.popUpCount
+	local orderId = msg.orderId
+
+	SummonMainModel.instance:setSummonPoolPackageProp(poolId, orderId, popUpCount)
+end
+
+function SummonRpc:sendInfallibleSummonRequest(poolId, callback, callbackObj)
+	local req = SummonModule_pb.InfallibleSummonRequest()
+
+	req.poolId = poolId
+
+	self:sendMsg(req, callback, callbackObj)
+
+	SummonController.instance.isWaitingSummonResult = true
+
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolHistorySummonRequest, poolId)
+end
+
+function SummonRpc:onReceiveInfallibleSummonReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	SummonController.instance.isWaitingSummonResult = false
+
+	if resultCode ~= 0 then
+		SummonController.instance:dispatchEvent(SummonEvent.onSummonFailed)
+		self:sendGetSummonInfoRequest()
+
+		return
+	end
+
+	local summonResult = msg.summonResult
+
+	SummonController.instance:onInfallibleSummonSuccess(summonResult)
+	SummonController.instance:dispatchEvent(SummonEvent.onReceiveSummonReply, msg)
+end
+
 SummonRpc.instance = SummonRpc.New()
 
 return SummonRpc

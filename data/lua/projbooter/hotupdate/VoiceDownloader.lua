@@ -248,7 +248,13 @@ function VoiceDownloader:_onDownloadPackFail(packName, resUrl, failError, errorM
 		self:_onNotEnoughDiskSpace(packName)
 	else
 		HotUpdateMgr.instance:inverseUseBackup()
-		self:_setUseReserveUrl()
+		require("tolua.reflection")
+		tolua.loadassembly("Assembly-CSharp")
+
+		local type_OptionalUpdate = typeof(SLFramework.GameUpdate.OptionalUpdate)
+		local field_useReserveUrl = tolua.getfield(type_OptionalUpdate, "_useReserveUrl", 36)
+
+		field_useReserveUrl:Set(SLFramework.GameUpdate.OptionalUpdate.Instance, HotUpdateMgr.instance:getUseBackup())
 		HotUpdateMgr.instance:incFailCount()
 
 		if HotUpdateMgr.instance:isFailNeedAlert() then

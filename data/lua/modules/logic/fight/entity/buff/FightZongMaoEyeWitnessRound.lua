@@ -42,8 +42,7 @@ function FightZongMaoEyeWitnessRound:onSceneEffectLoaded(success, loader)
 		return
 	end
 
-	local fightScene = GameSceneMgr.instance:getCurScene()
-	local sceneObj = fightScene.level:getSceneGo()
+	local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 	local obj = loader:GetResource()
 
 	self.sceneEffect = gohelper.clone(obj, sceneObj)

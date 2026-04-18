@@ -1346,7 +1346,7 @@ function CharacterView:_refreshReshape()
 	local rot = 0
 
 	if self._heroMO.destinyStoneMo then
-		local co = self._heroMO.destinyStoneMo:getEquipReshapeStoneCo()
+		local co = self._heroMO.destinyStoneMo:isEquipReshape()
 
 		if co ~= nil then
 			rot = 180

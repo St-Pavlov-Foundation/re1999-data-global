@@ -78,5 +78,35 @@
     "id": 20202,
     "name": "language_10071668",
     "res": "root/#chupai"
+  },
+  {
+    "id": 10301,
+    "name": "language_10086468",
+    "res": "root/fightfloat/crit_damage"
+  },
+  {
+    "id": 10302,
+    "name": "language_10086469",
+    "res": "root/fightfloat/crit_restrain"
+  },
+  {
+    "id": 10303,
+    "name": "language_10017009",
+    "res": "root/fightfloat/crit_heal"
+  },
+  {
+    "id": 10304,
+    "name": "language_10086470",
+    "res": "root/fightfloat/crit_damage_origin"
+  },
+  {
+    "id": 10305,
+    "name": "language_10086471",
+    "res": "root/fightfloat/crit_additional_damage"
+  },
+  {
+    "id": 10306,
+    "name": "language_10086472",
+    "res": "root/fightfloat/total_damage"
   }
 ]

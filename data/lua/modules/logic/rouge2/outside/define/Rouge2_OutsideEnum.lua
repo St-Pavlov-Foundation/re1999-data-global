@@ -189,8 +189,8 @@ Rouge2_OutsideEnum.LocalDataType2PlayerKey = {
 	[Rouge2_OutsideEnum.LocalData.Illustration] = PlayerPrefsKey.Rouge2FavoriteIllustrationRedDot,
 	[Rouge2_OutsideEnum.LocalData.Avg] = PlayerPrefsKey.Rouge2FavoriteAvgRedDot,
 	[Rouge2_OutsideEnum.LocalData.Store] = PlayerPrefsKey.Rouge2StoreTabRedDot,
-	[Rouge2_OutsideEnum.LocalStatData.Collection] = PlayerPrefsKey.Rouge2StoreTabRedDot,
-	[Rouge2_OutsideEnum.LocalStatData.Formula] = PlayerPrefsKey.Rouge2StoreTabRedDot
+	[Rouge2_OutsideEnum.LocalStatData.Collection] = PlayerPrefsKey.Rouge2CollectionStatRedDot,
+	[Rouge2_OutsideEnum.LocalStatData.Formula] = PlayerPrefsKey.Rouge2FormulaStatRedDot
 }
 Rouge2_OutsideEnum.MainViewBallAudioDelay = 0.02
 Rouge2_OutsideEnum.ResultFinalDisplayType = {

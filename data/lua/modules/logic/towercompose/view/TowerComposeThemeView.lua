@@ -35,6 +35,9 @@ function TowerComposeThemeView:onInitView()
 	self._imageprogress = gohelper.findChildImage(self.viewGO, "Center/episode/#go_planeEpisode/#go_progress/image_bg/#image_progress")
 	self._btnrewardbtn = gohelper.findChildButtonWithAudio(self.viewGO, "Center/episode/#go_planeEpisode/#btn_rewardbtn")
 	self._btnprogress = gohelper.findChildButtonWithAudio(self.viewGO, "Center/episode/#go_planeEpisode/#btn_progress")
+	self._godeadline = gohelper.findChild(self.viewGO, "Center/episode/#go_planeEpisode/#go_deadline")
+	self._txttime = gohelper.findChildText(self.viewGO, "Center/episode/#go_planeEpisode/#go_deadline/#txt_time")
+	self._txtformat = gohelper.findChildText(self.viewGO, "Center/episode/#go_planeEpisode/#go_deadline/#txt_time/#txt_format")
 	self._goresearchReddot = gohelper.findChild(self.viewGO, "Center/episode/#go_planeEpisode/#go_researchReddot")
 	self._gotaskReddot = gohelper.findChild(self.viewGO, "Center/episode/#go_planeEpisode/#go_taskReddot")
 
@@ -280,6 +283,11 @@ function TowerComposeThemeView:refreshUI()
 	gohelper.setActive(self._goplaneEpisode, self.curEpisodeConfig.plane > 0)
 	self:refreshPlaneEpisodeUI()
 	self:refreshNormalEpisodeUI()
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
+
+	if self.curEpisodeConfig.plane > 0 then
+		TaskDispatcher.runRepeat(self.refreshRemainTime, self, 1)
+	end
 end
 
 function TowerComposeThemeView:checkAutoPopupEnvView()
@@ -394,6 +402,7 @@ function TowerComposeThemeView:refreshPlaneEpisodeUI()
 
 	self:refreshResearchProgress()
 	self:refreshReddot()
+	self:refreshRemainTime()
 end
 
 function TowerComposeThemeView:refreshResearchProgress()
@@ -415,6 +424,19 @@ function TowerComposeThemeView:refreshReddot()
 
 	for _, themeItem in pairs(self.themeItemMap) do
 		themeItem.comp:refreshReddot()
+	end
+end
+
+function TowerComposeThemeView:refreshRemainTime()
+	local timeStamp = TowerComposeTaskModel.instance:getTaskLimitTime()
+
+	gohelper.setActive(self._godeadline, timeStamp and timeStamp > 0)
+
+	if timeStamp and timeStamp > 0 then
+		local date, dateformate = TimeUtil.secondToRoughTime2(timeStamp, true)
+
+		self._txttime.text = date
+		self._txtformat.text = dateformate
 	end
 end
 
@@ -440,6 +462,7 @@ function TowerComposeThemeView:onClose()
 	TaskDispatcher.cancelTask(self.checkAutoPopupEnvView, self)
 	TaskDispatcher.cancelTask(self.playFinishEffect, self)
 	TaskDispatcher.cancelTask(self.selectNextLayer, self)
+	TaskDispatcher.cancelTask(self.refreshRemainTime, self)
 	TowerComposeModel.instance:clearFightFinishParam()
 	self:cleanJumpId()
 end

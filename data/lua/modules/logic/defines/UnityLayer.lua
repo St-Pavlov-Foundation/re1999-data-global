@@ -23,5 +23,6 @@ UnityLayer.SceneOrthogonal = 22
 UnityLayer.Hide = 23
 UnityLayer.SceneOrthogonalOpaque = 24
 UnityLayer.SceneOpaqueOcclusionClip = 25
+UnityLayer.UIFour = 30
 
 return UnityLayer

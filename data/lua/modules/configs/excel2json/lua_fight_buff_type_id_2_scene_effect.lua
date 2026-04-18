@@ -7,7 +7,9 @@ local fields = {
 	reverseX = 4,
 	effect = 2,
 	delEffect = 5,
+	audio = 7,
 	id = 1,
+	delAudio = 8,
 	pos = 3,
 	delTime = 6
 }

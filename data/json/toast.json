@@ -2617,7 +2617,7 @@
   },
   {
     "id": 179,
-    "tips": "language_10019995",
+    "tips": "language_10113177",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,
@@ -9161,7 +9161,7 @@
   },
   {
     "id": 283004,
-    "tips": "language_10093869",
+    "tips": "language_10113178",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,
@@ -10724,6 +10724,510 @@
     "tips": "language_10019891",
     "icon": 11,
     "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341001,
+    "tips": "language_10113179",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341002,
+    "tips": "language_10113180",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 250701,
+    "tips": "language_10113181",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 1,
+    "notShow": 0
+  },
+  {
+    "id": 341003,
+    "tips": "language_10113182",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341004,
+    "tips": "language_10082647",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341005,
+    "tips": "language_10107609",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341006,
+    "tips": "language_10035638",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341007,
+    "tips": "language_10113183",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341008,
+    "tips": "language_10019914",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341009,
+    "tips": "language_10113184",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341011,
+    "tips": "language_10113185",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341012,
+    "tips": "language_10113186",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341013,
+    "tips": "language_10113187",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -570,
+    "tips": "language_10115603",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -571,
+    "tips": "language_10113189",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -572,
+    "tips": "language_10113190",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 1
+  },
+  {
+    "id": -573,
+    "tips": "language_10113191",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -574,
+    "tips": "language_10113192",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -575,
+    "tips": "language_10113193",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -576,
+    "tips": "language_10113194",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341014,
+    "tips": "language_10113195",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341015,
+    "tips": "language_10113196",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341020,
+    "tips": "language_10113197",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341021,
+    "tips": "language_10113198",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341022,
+    "tips": "language_10113199",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341023,
+    "tips": "language_10113200",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341024,
+    "tips": "language_10113201",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341025,
+    "tips": "language_10113202",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341026,
+    "tips": "language_10113203",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341027,
+    "tips": "language_10113204",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341028,
+    "tips": "language_10113205",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341029,
+    "tips": "language_10113206",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341030,
+    "tips": "language_10113207",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341101,
+    "tips": "language_10113208",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341102,
+    "tips": "language_10113209",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341103,
+    "tips": "language_10113210",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -581,
+    "tips": "language_10113211",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -582,
+    "tips": "language_10113212",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -583,
+    "tips": "language_10113213",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -584,
+    "tips": "language_10113214",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -585,
+    "tips": "language_10113215",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -586,
+    "tips": "language_10113216",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -587,
+    "tips": "language_10113217",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341104,
+    "tips": "language_10113218",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341105,
+    "tips": "language_10113219",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341106,
+    "tips": "language_10113220",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341107,
+    "tips": "language_10113221",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341108,
+    "tips": "language_10113222",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341109,
+    "tips": "language_10113193",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341110,
+    "tips": "language_10113223",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341111,
+    "tips": "language_10113224",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341112,
+    "tips": "language_10113225",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341200,
+    "tips": "language_10113226",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341301,
+    "tips": "language_10113227",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341302,
+    "tips": "language_10112680",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341401,
+    "tips": "language_10113228",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341501,
+    "tips": "language_10113229",
+    "icon": 11,
+    "audioId": 340234,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341502,
+    "tips": "language_10113230",
+    "icon": 11,
+    "audioId": 340234,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341503,
+    "tips": "language_10113231",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341504,
+    "tips": "language_10113232",
+    "icon": 11,
+    "audioId": 340234,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 341505,
+    "tips": "language_10113233",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -481,
+    "tips": "language_10113234",
+    "icon": 11,
+    "audioId": 0,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": -577,
+    "tips": "language_10115604",
+    "icon": 0,
+    "audioId": 0,
     "notMerge": 0,
     "notShow": 0
   },

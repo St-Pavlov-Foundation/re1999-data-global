@@ -43,8 +43,6 @@ function GaoSiNiaoController:enterGame(episodeId)
 
 	self._enterFlow = GaoSiNiaoEnterFlow.New()
 
-	local gameId = self:config():getEpisodeCO_gameId(episodeId)
-
 	self._enterFlow:registerDoneListener(self._onEnterFlowRegisterDoneCb, self)
 	self._enterFlow:start(episodeId)
 end

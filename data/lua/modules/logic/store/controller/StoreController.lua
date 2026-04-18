@@ -159,17 +159,38 @@ function StoreController:openPackageStoreGoodsView(packageGoodsMO)
 end
 
 function StoreController:openDecorateStoreGoodsView(decorateGoodsMO)
-	local products = string.splitToNumber(decorateGoodsMO.config.product, "#")
-	local itemCo = ItemModel.instance:getItemConfig(products[1], products[2])
+	local productsList = GameUtil.splitString2(decorateGoodsMO.config.product, true, "|", "#")
 
-	if itemCo.subType == ItemEnum.SubType.PlayerBg then
-		local param = {
-			goodsMo = decorateGoodsMO
-		}
+	if #productsList == 1 then
+		local products = productsList[1]
+		local itemCo = ItemModel.instance:getItemConfig(products[1], products[2])
 
-		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, param)
-	else
-		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, decorateGoodsMO)
+		if itemCo.subType == ItemEnum.SubType.PlayerBg then
+			local param = {
+				goodsMo = decorateGoodsMO
+			}
+
+			ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, param)
+		elseif SceneUIPackageModel.instance:isInSceneUIPackage(products[2]) then
+			ViewMgr.instance:openView(ViewName.MainSceneSkinMaterialTipView2, {
+				canJump = true,
+				isShowTop = true,
+				goodsId = decorateGoodsMO.goodsId
+			})
+		else
+			ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, decorateGoodsMO)
+		end
+	elseif #productsList > 1 then
+		local goodsId = decorateGoodsMO.goodsId
+		local isPackage = SceneUIPackageModel.instance:isPackage(goodsId)
+
+		if isPackage then
+			ViewMgr.instance:openView(ViewName.MainSceneSkinMaterialTipView2, {
+				canJump = true,
+				isShowTop = false,
+				goodsId = decorateGoodsMO.goodsId
+			})
+		end
 	end
 end
 
@@ -337,7 +358,8 @@ function StoreController:statOpenGoods(storeId, goodsConfig)
 		[StatEnum.EventProperties.StoreId] = tostring(storeId),
 		[StatEnum.EventProperties.GoodsId] = goodsConfig.id,
 		[StatEnum.EventProperties.MaterialName] = itemConfig and itemConfig.name or "",
-		[StatEnum.EventProperties.MaterialNum] = itemQuantity
+		[StatEnum.EventProperties.MaterialNum] = itemQuantity,
+		[StatEnum.EventProperties.OpenViewList] = self:_copyOpenViewList()
 	})
 end
 
@@ -357,8 +379,24 @@ function StoreController:statOpenChargeGoods(storeId, goodsConfig)
 		[StatEnum.EventProperties.StoreId] = tostring(storeId),
 		[StatEnum.EventProperties.GoodsId] = goodsConfig.id,
 		[StatEnum.EventProperties.MaterialName] = goodsConfig and goodsConfig.name or "",
-		[StatEnum.EventProperties.MaterialNum] = 1
+		[StatEnum.EventProperties.MaterialNum] = 1,
+		[StatEnum.EventProperties.OpenViewList] = self:_copyOpenViewList()
 	})
+end
+
+function StoreController:statStartPay(goodsId)
+	StatController.instance:track(StatEnum.EventName.GameOrder, {
+		[StatEnum.EventProperties.Gearid] = tostring(goodsId),
+		[StatEnum.EventProperties.OpenViewList] = self:_copyOpenViewList()
+	})
+end
+
+function StoreController:_copyOpenViewList()
+	local openViewList = {}
+
+	tabletool.addValues(openViewList, ViewMgr.instance:getOpenViewNameList())
+
+	return openViewList
 end
 
 function StoreController:statCloseGoods(goodsConfig)

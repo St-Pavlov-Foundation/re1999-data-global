@@ -42,6 +42,19 @@ function OpenModel:updateOpenInfo(info)
 	end
 end
 
+function OpenModel:updateOneOpenInfo(info)
+	local id = tonumber(info.id)
+	local isOpen = info.isOpen
+
+	if VersionValidator.instance:isInReviewing() then
+		local co = OpenConfig.instance:getOpenCo(id)
+
+		isOpen = isOpen and co.verifingHide == 0
+	end
+
+	self._unlocks[id] = isOpen
+end
+
 function OpenModel:isFunctionUnlock(id)
 	local co = OpenConfig.instance:getOpenCo(id)
 

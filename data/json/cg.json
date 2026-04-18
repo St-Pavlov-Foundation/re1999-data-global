@@ -3526,5 +3526,17 @@
     "image": "story_atcg/3_3/3_3_at_ys_molideer.jpg",
     "preCgId": 0,
     "herostoryId": 28
+  },
+  {
+    "id": 102901,
+    "order": 0,
+    "storyChapterId": 1029,
+    "name": "language_10114809",
+    "nameEn": "Lone Mountain Song",
+    "desc": "language_10114810",
+    "episodeId": 0,
+    "image": "story_atcg/3_4/3_4_at_ys_getian.jpg",
+    "preCgId": 0,
+    "herostoryId": 29
   }
 ]

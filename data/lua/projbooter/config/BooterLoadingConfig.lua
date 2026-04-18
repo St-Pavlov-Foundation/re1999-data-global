@@ -5,7 +5,7 @@ module("projbooter.config.BooterLoadingConfig", package.seeall)
 local BooterLoadingConfig = {
 	{
 		twDesc = "它的到來讓時間變得無足輕重。時而回到過去，時而重返未來。又或是一無所有，又或是浴火重生。",
-		enTitle = "The Storm",
+		enTitle = "The \"Storm\"",
 		thaiTitle = "",
 		enDesc = "Its arrival dissolved time—what should have been the present became the past, what was once the future became the present. Something came to an end, while some were reborn.",
 		jpTitle = "ストーム",
@@ -51,7 +51,7 @@ local BooterLoadingConfig = {
 	},
 	{
 		twDesc = "歸根結底，是一個很好的年份。有聚會、倒計時、千禧蟲、15吋彩色顯示器，和一場無眠之夜。\n儘管向後展望吧，我們有取之不竭的過去呢！你想買黃金嗎？",
-		enTitle = "Modern era",
+		enTitle = "Modern Era",
 		thaiTitle = "",
 		enDesc = "It is only fair to say the 20th century is a good time. Parties, the millennium countdown, the Y2K panic, the 15-inch color monitor, and a sleepless night—we had it all. \nBut look back, my friend, for the past goes back far and leaves us so much to enjoy! Would you like a piece of gold?",
 		jpTitle = "１９９９年",

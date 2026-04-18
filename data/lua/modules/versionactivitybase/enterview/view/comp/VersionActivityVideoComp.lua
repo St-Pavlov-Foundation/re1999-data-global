@@ -38,6 +38,7 @@ end
 function VersionActivityVideoComp:_destroyVideo()
 	if self._videoPlayer then
 		self._videoPlayer:stop()
+		self._videoPlayer:clear()
 
 		self._videoPlayer = nil
 		self._videoGo = nil
@@ -91,7 +92,7 @@ end
 function VersionActivityVideoComp:_videoStatusUpdate(path, status, errorCode)
 	logNormal(string.format("VersionActivityVideoComp:_videoStatusUpdate status:%s name:%s ", status, AvProEnum.getPlayerStatusEnumName(status)))
 
-	if status == AvProEnum.PlayerStatus.Started and self._startCallback then
+	if status == VideoEnum.PlayerStatus.Started and self._startCallback then
 		self._startCallback(self._startCallbackTarget)
 	end
 end

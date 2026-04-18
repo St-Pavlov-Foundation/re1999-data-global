@@ -71,7 +71,7 @@ function CharacterRecommedHeroView:_showSpine(isShow)
 
 			x, y = -69, 0
 
-			local motion = "b_" .. SpineAnimState.idle1
+			local motion = self._uiSpine._curModel._curBodyName or "b_" .. SpineAnimState.idle1
 
 			self._uiSpine:playSpecialMotion(motion)
 		else
@@ -135,7 +135,7 @@ function CharacterRecommedHeroView:_setHeroTransform()
 		recthelper.setAnchor(self._uiSpine._go.transform, tonumber(offsets[1]), tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._uiSpine._go.transform, scale, scale, scale)
 	else
-		recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]) - 69, tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 	end
 end

@@ -1,0 +1,20 @@
+[
+  {
+    "poolId": 1,
+    "rare": 3,
+    "groupInitWeight": "10#5000|11#5000",
+    "groupChangeWeight": "10#1000|11#1000"
+  },
+  {
+    "poolId": 1,
+    "rare": 2,
+    "groupInitWeight": "7#3300|8#3300|9#3400",
+    "groupChangeWeight": "7#500|8#500|9#500"
+  },
+  {
+    "poolId": 1,
+    "rare": 1,
+    "groupInitWeight": "2#2000|3#2000|4#2000|5#2000|6#2000",
+    "groupChangeWeight": "2#400|3#400|4#400|5#400|6#400"
+  }
+]

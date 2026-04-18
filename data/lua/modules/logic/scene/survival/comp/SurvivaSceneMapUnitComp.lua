@@ -39,7 +39,7 @@ function SurvivaSceneMapUnitComp:addEvents()
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self._onAttrUpdate, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnRoleDateChange, self._onRoleDateChange, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
 end
 
@@ -48,22 +48,20 @@ function SurvivaSceneMapUnitComp:removeEvents()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitPosChange, self._onUnitPosChange, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitChange, self._onUnitChange, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapUnitDel, self._onUnitDel, self)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, self._onAttrUpdate, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnRoleDateChange, self._onRoleDateChange, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapDestoryPosAdd, self.onMapDestoryPosAdd, self)
 end
 
-function SurvivaSceneMapUnitComp:_onAttrUpdate(attrId)
-	if attrId == SurvivalEnum.AttrType.HeroFightLevel then
-		local mapSceneMo = SurvivalMapModel.instance:getSceneMo()
+function SurvivaSceneMapUnitComp:_onRoleDateChange()
+	local mapSceneMo = SurvivalMapModel.instance:getSceneMo()
 
-		if not mapSceneMo then
-			return
-		end
+	if not mapSceneMo then
+		return
+	end
 
-		for id, unitMo in pairs(mapSceneMo.unitsById) do
-			if not unitMo:getWarmingRange() then
-				SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
-			end
+	for id, unitMo in pairs(mapSceneMo.unitsById) do
+		if not unitMo:getWarmingRange() then
+			SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
 		end
 	end
 end

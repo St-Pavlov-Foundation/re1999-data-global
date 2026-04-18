@@ -152,6 +152,7 @@ function UISpriteSetMgr:ctor()
 	self._v3a0_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a0_mainactivity_spriteset.asset")
 	self._v3a2_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a2_mainactivity_spriteset.asset")
 	self._v3a3_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a3_mainactivity_spriteset.asset")
+	self._v3a4_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a4_mainactivity_spriteset.asset")
 	self._v2a7_main_activity = self:newSpriteSetUnit("ui/spriteassets/v2a7_mainactivity_spriteset.asset")
 	self._v2a7_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v2a7_dungeon.asset")
 	self._v2a7_coopergarland_sprite = self:newSpriteSetUnit("ui/spriteassets/v2a7_coopergarland_spriteset.asset")
@@ -174,6 +175,7 @@ function UISpriteSetMgr:ctor()
 	self._v3a1_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a1_dungeon.asset")
 	self._v3a2_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
 	self._v3a3_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a3_dungeon.asset")
+	self._v3a4_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a4_dungeon.asset")
 	self._rolestory_sprite = self:newSpriteSetUnit("ui/spriteassets/rolestory.asset")
 	self._fight_tower_sprite = self:newSpriteSetUnit("ui/spriteassets/fight_tower.asset")
 	self._v3a1_gaosiniao_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a1_gaosiniao_spriteset.asset")
@@ -182,9 +184,13 @@ function UISpriteSetMgr:ctor()
 	self._udimo_sprite = self:newSpriteSetUnit("ui/spriteassets/udimo_spriteset.asset")
 	self._v3a2_cruise_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a2_cruise_spriteset.asset")
 	self._v3a2_activitycollect = self:newSpriteSetUnit("ui/spriteassets/v3a2_activitycollect.asset")
+	self._findlovegame = self:newSpriteSetUnit("ui/spriteassets/v3a4_laplace_spriteset.asset")
+	self._partygamecard = self:newSpriteSetUnit("ui/spriteassets/partygame_card.asset")
 	self._v3a3_eliminate_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a3_eliminate_spriteset.asset")
 	self._v3a3_igor_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a3_igor_spriteset.asset")
 	self._v3a3_marsha_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a3_marsha_spriteset.asset")
+	self._v3a4_laplace_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a4_laplace_spriteset.asset")
+	self._v3a4_chg_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a4_chg_spriteset.asset")
 end
 
 function UISpriteSetMgr:newSpriteSetUnit(path)
@@ -836,8 +842,8 @@ function UISpriteSetMgr:setSurvivalSprite(image, name, setNativeSize)
 	self._survival:setSprite(image, name, setNativeSize)
 end
 
-function UISpriteSetMgr:setSurvivalSprite2(image, name, setNativeSize)
-	self._survival2:setSprite(image, name, setNativeSize)
+function UISpriteSetMgr:setSurvivalSprite2(image, name, setNativeSize, alpha)
+	self._survival2:setSprite(image, name, setNativeSize, alpha)
 end
 
 function UISpriteSetMgr:setMoLiDeErSprite(image, name, setNativeSize)
@@ -904,6 +910,18 @@ function UISpriteSetMgr:setV3a2Turnnback3Sprite(image, name, setNativeSize)
 	self._v3a2_activitycollect:setSprite(image, name, setNativeSize)
 end
 
+function UISpriteSetMgr:setPartyGameSprite(image, name, setNativeSize)
+	return
+end
+
+function UISpriteSetMgr:setFindLoveGameSprite(image, name, setNativeSize)
+	self._findlovegame:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setPartyGameCardSprite(image, name, setNativeSize)
+	self._partygamecard:setSprite(image, name, setNativeSize)
+end
+
 function UISpriteSetMgr:setV3a3EliminateSprite(image, name, setNativeSize)
 	self._v3a3_eliminate_spriteset:setSprite(image, name, setNativeSize)
 end
@@ -914,6 +932,22 @@ end
 
 function UISpriteSetMgr:setV3a3MarshaSprite(image, name, setNativeSize)
 	self._v3a3_marsha_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a4MainActivitySprite(image, name, setNativeSize)
+	self._v3a4_main_activity:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a4DungeonSprite(image, name, setNativeSize)
+	self._v3a2_dungeon_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a4LaplaceSprite(image, name, setNativeSize)
+	self._v3a4_laplace_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a4ChgSprite(image, name, setNativeSize)
+	self._v3a4_chg_spriteset:setSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:tryDispose()

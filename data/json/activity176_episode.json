@@ -110,5 +110,68 @@
     "elementId": 0,
     "target": "",
     "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470101,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470102,
+    "elementId": 34701011,
+    "target": "language_10115204",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470103,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470104,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470105,
+    "elementId": 34701012,
+    "target": "language_10115204",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470106,
+    "elementId": 34701013,
+    "target": "language_10115204",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470107,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470108,
+    "elementId": 0,
+    "target": "",
+    "uiTemplate": 0
+  },
+  {
+    "activityId": 13439,
+    "id": 3470109,
+    "elementId": 34701014,
+    "target": "language_10115204",
+    "uiTemplate": 0
   }
 ]

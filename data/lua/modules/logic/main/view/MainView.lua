@@ -1074,8 +1074,23 @@ function MainView:_refreshBgm()
 	end
 end
 
+function MainView:storeRedDotRefreshSupplementMonthCard(redDotIcon)
+	redDotIcon:defaultRefreshDot()
+
+	if SignInModel.instance:getCanSupplementMonthCardDays() > 0 then
+		redDotIcon.show = true
+
+		redDotIcon:showRedDot(RedDotEnum.Style.SupplementMonthCard)
+		self:showStoreDeadline(false)
+		self:registStoreDeadlineCall(false)
+		self:showBankNewEffect(true)
+
+		return
+	end
+end
+
 function MainView:_onReceiveSupplementMonthCardReply()
-	self:storeRedDotRefreshFunc(self._redBank)
+	self:storeRedDotRefreshSupplementMonthCard(self._redBank)
 end
 
 function MainView:onUpdateParam()

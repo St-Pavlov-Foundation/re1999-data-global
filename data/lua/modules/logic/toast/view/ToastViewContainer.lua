@@ -6,6 +6,7 @@ local ToastViewContainer = class("ToastViewContainer", BaseViewContainer)
 
 function ToastViewContainer:buildViews()
 	return {
+		ToastFixedView.New(),
 		ToastView.New()
 	}
 end

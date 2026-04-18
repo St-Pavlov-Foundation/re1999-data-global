@@ -99,11 +99,10 @@ function FightWorkStepChangeWave:_changeEntity()
 end
 
 function FightWorkStepChangeWave:_startLoadLevel()
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	local work = FightGameMgr.sceneLevelMgr:registWorkLoadLevelWithSwitchEffect(self._nextLevelId)
 
-	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
-
-	fightScene.level:loadLevelWithSwitchEffect(self._nextLevelId)
+	work:registFinishCallback(self._onLevelLoaded, self)
+	work:start()
 end
 
 function FightWorkStepChangeWave:_delayDone()
@@ -136,7 +135,6 @@ function FightWorkStepChangeWave:clearWork()
 	TaskDispatcher.cancelTask(self._delayDone, self)
 	TaskDispatcher.cancelTask(self._startLoadLevel, self)
 	TaskDispatcher.cancelTask(self._delayCheckNextWaveDialog, self)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:unregisterCallback(FightEvent.PushFightWave, self._onPushFightWave, self)
 end
 

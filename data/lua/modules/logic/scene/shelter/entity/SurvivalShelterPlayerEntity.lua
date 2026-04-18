@@ -25,9 +25,10 @@ function SurvivalShelterPlayerEntity:onInit()
 
 	self._loader = PrefabInstantiate.Create(self.go)
 
-	local path = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local roleRes = survivalShelterRoleMo:getRoleModelRes()
 
-	self._loader:startLoad(path, self._onResLoadEnd, self)
+	self._loader:startLoad(roleRes, self._onResLoadEnd, self)
 	self:playAnim("idle")
 end
 

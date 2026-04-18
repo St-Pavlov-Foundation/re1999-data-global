@@ -28,6 +28,13 @@ function NationalGiftBuyTipBonusItem:refresh()
 	self:_refreshRewards()
 end
 
+function NationalGiftBuyTipBonusItem:_onItemClick(index)
+	local rewardCos = string.split(self._config.bonus, "|")
+	local itemCo = string.splitToNumber(rewardCos[index], "#")
+
+	MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
+end
+
 function NationalGiftBuyTipBonusItem:_refreshRewards()
 	local rewardCos = string.split(self._config.bonus, "|")
 
@@ -39,6 +46,10 @@ function NationalGiftBuyTipBonusItem:_refreshRewards()
 			item.imgquality = gohelper.findChildImage(item.go, "img_quality")
 			item.simageitem = gohelper.findChildSingleImage(item.go, "simage_Item")
 			item.txtnum = gohelper.findChildText(item.go, "image_NumBG/txt_Num")
+			item.btnclick = gohelper.findChildButtonWithAudio(item.go, "click")
+
+			item.btnclick:AddClickListener(self._onItemClick, self, index)
+
 			self._rewardItems[index] = item
 		end
 
@@ -57,6 +68,7 @@ end
 function NationalGiftBuyTipBonusItem:destroy()
 	if self._rewardItems then
 		for _, item in pairs(self._rewardItems) do
+			item.btnclick:RemoveClickListener()
 			item.simageitem:UnLoadImage()
 		end
 

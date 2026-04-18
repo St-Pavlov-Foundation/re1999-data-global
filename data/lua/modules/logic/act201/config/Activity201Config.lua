@@ -57,7 +57,7 @@ function Activity201Config:getTestUrlByChannelId(channelId)
 end
 
 function Activity201Config:getRoleTypeStr(roleTypeId)
-	local CO = _roleTypeCO[roleTypeId or 1] or _roleTypeCO[1]
+	local CO = _roleTypeCO(roleTypeId or 1) or _roleTypeCO(1)
 
 	return gohelper.getRichColorText(CO.name, CO.nameHexColor)
 end

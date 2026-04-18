@@ -5,7 +5,7 @@ module("modules.logic.fight.mgr.FightSceneTriggerSceneAnimatorMgr", package.seea
 local FightSceneTriggerSceneAnimatorMgr = class("FightSceneTriggerSceneAnimatorMgr", FightBaseClass)
 
 function FightSceneTriggerSceneAnimatorMgr:onConstructor()
-	self:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, self._onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded)
 end
 
 function FightSceneTriggerSceneAnimatorMgr:_onLevelLoaded()

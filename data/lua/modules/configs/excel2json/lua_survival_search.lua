@@ -17,6 +17,7 @@ local fields = {
 	isRepeat = 20,
 	consume = 14,
 	incidental = 22,
+	exp = 24,
 	versions = 4,
 	priority = 7,
 	incidentalRange = 23,

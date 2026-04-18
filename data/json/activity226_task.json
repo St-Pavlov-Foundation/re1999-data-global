@@ -1,0 +1,40 @@
+[
+  {
+    "id": 740001,
+    "activityId": 13414,
+    "isOnline": 1,
+    "loopType": 1,
+    "minType": "language_10115361",
+    "name": "language_10115362",
+    "desc": "language_10115363",
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 150,
+    "sortId": 1,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#3404#1",
+    "unlockDay": 0,
+    "showDay": 0
+  },
+  {
+    "id": 740002,
+    "activityId": 13414,
+    "isOnline": 1,
+    "loopType": 1,
+    "minType": "language_10115361",
+    "name": "language_10062623",
+    "desc": "language_10007601",
+    "listenerType": "FinishTaskActivity",
+    "listenerParam": "1#6",
+    "maxProgress": 1,
+    "sortId": 2,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 1201,
+    "bonus": "2#3404#1",
+    "unlockDay": 0,
+    "showDay": 0
+  }
+]

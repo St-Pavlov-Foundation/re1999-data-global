@@ -3,12 +3,21 @@
     "activityId": 13216,
     "type": 1,
     "magnification": 3,
-    "limit": 20
+    "limit": 20,
+    "dailyLimit": 0
   },
   {
     "activityId": 13216,
     "type": 2,
     "magnification": 3,
-    "limit": 20
+    "limit": 20,
+    "dailyLimit": 0
+  },
+  {
+    "activityId": 13438,
+    "type": 1,
+    "magnification": 2,
+    "limit": 20,
+    "dailyLimit": 4
   }
 ]

@@ -1,0 +1,146 @@
+[
+  {
+    "id": 40001,
+    "level": 1,
+    "group": 1,
+    "returnLevel": 0
+  },
+  {
+    "id": 40002,
+    "level": 2,
+    "group": 1,
+    "returnLevel": 0
+  },
+  {
+    "id": 40003,
+    "level": 3,
+    "group": 1,
+    "returnLevel": 0
+  },
+  {
+    "id": 40004,
+    "level": 4,
+    "group": 1,
+    "returnLevel": 3
+  },
+  {
+    "id": 41001,
+    "level": 1,
+    "group": 3,
+    "returnLevel": 0
+  },
+  {
+    "id": 41002,
+    "level": 2,
+    "group": 3,
+    "returnLevel": 0
+  },
+  {
+    "id": 41003,
+    "level": 3,
+    "group": 3,
+    "returnLevel": 0
+  },
+  {
+    "id": 41004,
+    "level": 4,
+    "group": 3,
+    "returnLevel": 3
+  },
+  {
+    "id": 42001,
+    "level": 1,
+    "group": 5,
+    "returnLevel": 0
+  },
+  {
+    "id": 42002,
+    "level": 2,
+    "group": 5,
+    "returnLevel": 0
+  },
+  {
+    "id": 42003,
+    "level": 3,
+    "group": 5,
+    "returnLevel": 0
+  },
+  {
+    "id": 42004,
+    "level": 4,
+    "group": 5,
+    "returnLevel": 3
+  },
+  {
+    "id": 43001,
+    "level": 1,
+    "group": 7,
+    "returnLevel": 0
+  },
+  {
+    "id": 43002,
+    "level": 2,
+    "group": 7,
+    "returnLevel": 0
+  },
+  {
+    "id": 43003,
+    "level": 3,
+    "group": 7,
+    "returnLevel": 0
+  },
+  {
+    "id": 43004,
+    "level": 4,
+    "group": 7,
+    "returnLevel": 3
+  },
+  {
+    "id": 44001,
+    "level": 1,
+    "group": 9,
+    "returnLevel": 0
+  },
+  {
+    "id": 44002,
+    "level": 2,
+    "group": 9,
+    "returnLevel": 0
+  },
+  {
+    "id": 44003,
+    "level": 3,
+    "group": 9,
+    "returnLevel": 0
+  },
+  {
+    "id": 44004,
+    "level": 4,
+    "group": 9,
+    "returnLevel": 3
+  },
+  {
+    "id": 45001,
+    "level": 1,
+    "group": 11,
+    "returnLevel": 0
+  },
+  {
+    "id": 45002,
+    "level": 2,
+    "group": 11,
+    "returnLevel": 0
+  },
+  {
+    "id": 45003,
+    "level": 3,
+    "group": 11,
+    "returnLevel": 0
+  },
+  {
+    "id": 45004,
+    "level": 4,
+    "group": 11,
+    "returnLevel": 3
+  }
+]

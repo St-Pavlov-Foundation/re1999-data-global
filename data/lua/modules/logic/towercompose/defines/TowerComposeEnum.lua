@@ -59,5 +59,18 @@ TowerComposeEnum.ActiveType = {
 	Passive = 2,
 	Active = 1
 }
+TowerComposeEnum.FightResult = {
+	Win = 1,
+	Fail = 2,
+	None = 0
+}
+TowerComposeEnum.TeamOperateType = {
+	Load = 1,
+	Save = 2
+}
+TowerComposeEnum.SaveTeamState = {
+	Record = 1,
+	Current = 2
+}
 
 return TowerComposeEnum

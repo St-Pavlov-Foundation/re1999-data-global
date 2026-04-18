@@ -193,5 +193,20 @@
     "storyId": 800005,
     "iconArea": 0,
     "effect": "v1a9_caidai"
+  },
+  {
+    "id": 341001,
+    "name": "language_10114787",
+    "nameen": "Five-Pillared Bronze Vessel with Cloud Patterns",
+    "icon": "v3a4_antique_icon_1",
+    "gifticon": "v3a4_antique_icon_1",
+    "sign": "501209",
+    "title": "language_10114787",
+    "titleen": "Five-Pillared Bronze Vessel with Cloud Patterns",
+    "desc": "language_10114788",
+    "sources": "",
+    "storyId": 0,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

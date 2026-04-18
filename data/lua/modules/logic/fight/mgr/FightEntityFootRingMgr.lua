@@ -7,7 +7,7 @@ local FightEntityFootRingMgr = class("FightEntityFootRingMgr", FightBaseClass)
 function FightEntityFootRingMgr:onConstructor()
 	local curScene = GameSceneMgr.instance:getCurScene()
 
-	self:com_registEvent(curScene.level, CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 	self:com_registFightEvent(FightEvent.BeforeDeadEffect, self._onEntityDeadBefore)
 	self:com_registFightEvent(FightEvent.BeforePlayUniqueSkill, self._onBeforePlayUniqueSkill)

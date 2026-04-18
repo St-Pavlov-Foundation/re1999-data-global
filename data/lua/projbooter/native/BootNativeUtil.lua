@@ -71,7 +71,7 @@ function BootNativeUtil.isMobilePlayer()
 end
 
 function BootNativeUtil.isMuMu()
-	return false
+	return SLFramework.GameConfig.Instance.IsMuMu
 end
 
 function BootNativeUtil.getDisplayResolution()

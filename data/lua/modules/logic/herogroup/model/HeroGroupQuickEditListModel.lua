@@ -320,6 +320,66 @@ function HeroGroupQuickEditListModel:cancelAllErrorSelected()
 	end
 end
 
+function HeroGroupQuickEditListModel:towerComposeSelectHero(uid)
+	local index = self:getHeroTeamPos(uid)
+
+	if index ~= 0 then
+		self._inTeamHeroUidList[index] = "0"
+		self._inTeamHeroUidMap[uid] = nil
+
+		self:onModelUpdate()
+
+		self._selectUid = nil
+
+		return true
+	else
+		local startIndex = 1
+		local endIndex = #self._inTeamHeroUidList
+		local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+		local themeId = recordFightParam.themeId
+		local curLockPlaneId = TowerComposeModel.instance:getCurLockPlaneId(themeId)
+
+		if curLockPlaneId == 1 then
+			startIndex = #self._inTeamHeroUidList / 2 + 1
+		elseif curLockPlaneId == 2 then
+			endIndex = #self._inTeamHeroUidList / 2
+		end
+
+		local isTeamFull = true
+
+		for i = startIndex, endIndex do
+			local posOpen = HeroGroupModel.instance:isPositionOpen(i)
+
+			if self._inTeamHeroUidList[i] == "0" and posOpen then
+				isTeamFull = false
+
+				break
+			end
+		end
+
+		if isTeamFull then
+			return false
+		end
+
+		for i = startIndex, endIndex do
+			local heroUid = self._inTeamHeroUidList[i]
+
+			if heroUid == 0 or heroUid == "0" then
+				self._inTeamHeroUidList[i] = uid
+				self._inTeamHeroUidMap[uid] = 1
+
+				self:onModelUpdate()
+
+				return true
+			end
+		end
+
+		self._selectUid = uid
+	end
+
+	return false
+end
+
 function HeroGroupQuickEditListModel:setParam(adventure, isTowerBattle, groupType)
 	self.adventure = adventure
 	self.isTowerBattle = isTowerBattle

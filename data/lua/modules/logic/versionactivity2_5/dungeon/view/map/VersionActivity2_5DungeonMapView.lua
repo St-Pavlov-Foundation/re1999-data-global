@@ -80,11 +80,11 @@ function VersionActivity2_5DungeonMapView:_btncloseviewOnClick()
 end
 
 function VersionActivity2_5DungeonMapView:_btnactivitystoreOnClick()
-	VersionActivity2_5DungeonController.instance:openStoreView()
+	ReactivityController.instance:openReactivityStoreView(VersionActivity3_4Enum.ActivityId.Reactivity)
 end
 
 function VersionActivity2_5DungeonMapView:_btnactivitytaskOnClick()
-	VersionActivity2_5DungeonController.instance:openTaskView()
+	ReactivityController.instance:openReactivityTaskView(VersionActivity3_4Enum.ActivityId.Reactivity)
 end
 
 function VersionActivity2_5DungeonMapView:_btnrestaurantOnClick()
@@ -120,7 +120,7 @@ function VersionActivity2_5DungeonMapView:onRemoveElement(elementId)
 end
 
 function VersionActivity2_5DungeonMapView:_editableInitView()
-	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity2_5Enum.ActivityId.DungeonStore]
+	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_4Enum.ActivityId.ReactivityStore]
 
 	self._txtstorename.text = storeActInfoMo.config.name
 
@@ -184,9 +184,9 @@ function VersionActivity2_5DungeonMapView:onRefreshActivityState(updateActId)
 
 	if isOnline then
 		Activity165Model.instance:onInitInfo()
-	else
-		gohelper.setActive(self._btnrestaurant.gameObject, false)
 	end
+
+	gohelper.setActive(self._btnrestaurant.gameObject, false)
 end
 
 function VersionActivity2_5DungeonMapView:_onOpenView(viewName)
@@ -238,7 +238,7 @@ end
 function VersionActivity2_5DungeonMapView:refreshRestaurantBtn()
 	local isUnlockAct165Btn = VersionActivity2_5DungeonModel.instance:isUnlockAct165Btn()
 
-	gohelper.setActive(self._btnrestaurant.gameObject, isUnlockAct165Btn)
+	gohelper.setActive(self._btnrestaurant.gameObject, false)
 end
 
 function VersionActivity2_5DungeonMapView:playOpenAnimaDone()
@@ -267,7 +267,7 @@ function VersionActivity2_5DungeonMapView:refreshMask()
 end
 
 function VersionActivity2_5DungeonMapView:refreshStoreRemainTime()
-	local storeActId = VersionActivity2_5Enum.ActivityId.DungeonStore
+	local storeActId = VersionActivity3_4Enum.ActivityId.ReactivityStore
 	local actInfoMo = ActivityModel.instance:getActMO(storeActId)
 	local endTime = actInfoMo:getRealEndTimeStamp()
 	local offsetSecond = endTime - ServerTime.now()

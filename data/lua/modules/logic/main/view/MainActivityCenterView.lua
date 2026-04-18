@@ -219,6 +219,7 @@ function MainActivityCenterView:_freshBtns()
 	self:_checkActivity186Btn()
 	self:_checkActivity204Btn()
 	self:_checkActivityCruiseBtn()
+	self:_checkActivityLaplaceBtn()
 	self:_checkActivity2ndCollectionPageViewBtn()
 	self:_checkActivityImgVisible()
 	self:_sortBtns()
@@ -659,6 +660,27 @@ function MainActivityCenterView:_checkActivityCruiseBtn()
 	self._actCruiseItem:refresh()
 end
 
+function MainActivityCenterView:_checkActivityLaplaceBtn()
+	local actId = VersionActivity3_4Enum.ActivityId.LaplaceMain
+	local isOnline = ActivityHelper.isOpen(actId)
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_actLaplaceItem")
+
+		return
+	end
+
+	if not self._actLaplaceItem then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._actLaplaceItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, ActivityLaplaceMainBtnItem)
+
+		self:_addSortBtn(ActivityEnum.MainActivityCenterViewClientId.Laplace, self._actLaplaceItem)
+	end
+
+	self._actLaplaceItem:refresh()
+end
+
 function MainActivityCenterView:_createActCenterItem(class)
 	local go = gohelper.cloneInPlace(self._itemGo)
 
@@ -685,6 +707,7 @@ function MainActivityCenterView:onDestroyView()
 	GameUtil.onDestroyViewMember(self, "_roleSignViewBtn")
 	GameUtil.onDestroyViewMember(self, "_springSignViewBtn")
 	GameUtil.onDestroyViewMember(self, "_2ndItem")
+	GameUtil.onDestroyViewMember(self, "_actLaplaceItem")
 	self:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._freshBtns, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)

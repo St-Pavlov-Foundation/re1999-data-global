@@ -12,7 +12,7 @@ function FightWorkClearBeforeSwitchPlane:onStart()
 	local cur_scene = GameSceneMgr.instance:getCurScene()
 
 	cur_scene.view:onSceneClose()
-	GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
+	FightGameMgr.sceneLevelMgr:setFrontVisible(true)
 
 	if ViewMgr.instance:isOpen(ViewName.FightView) then
 		self:com_registEvent(ViewMgr.instance, ViewEvent.DestroyViewFinish, self._onDestroyViewFinish)

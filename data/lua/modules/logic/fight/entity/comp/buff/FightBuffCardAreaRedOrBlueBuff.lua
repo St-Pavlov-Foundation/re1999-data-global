@@ -44,9 +44,17 @@ function FightBuffCardAreaRedOrBlueBuff:startLoadRes()
 
 	self.resLoader:addPath(self:getEffectAbPath(self.buffRes))
 	self.resLoader:addPath(self:getEffectAbPath(self.spine1EffectRes))
-	self.resLoader:addPath(self:getEffectAbPath(self.spine2EffectRes))
+
+	if not string.nilorempty(self.spine2EffectRes) then
+		self.resLoader:addPath(self:getEffectAbPath(self.spine2EffectRes))
+	end
+
 	self.resLoader:addPath(self.spine1Res)
-	self.resLoader:addPath(self.spine2Res)
+
+	if not string.nilorempty(self.spine1Res) then
+		self.resLoader:addPath(self.spine2Res)
+	end
+
 	self.resLoader:startLoad(self.onResLoaded, self)
 
 	local audioId = self.effectCo.audioId
@@ -79,29 +87,46 @@ function FightBuffCardAreaRedOrBlueBuff:onResLoaded(loader)
 	local goContainerName = "LY_Spine_" .. (side == FightEnum.EntitySide.MySide and "R" or "L")
 
 	self.spine1 = FightGameMgr.entityMgr:buildTempSpine(self.spine1Res, self.entity.id .. "_1", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_1")
-	self.spine2 = FightGameMgr.entityMgr:buildTempSpine(self.spine2Res, self.entity.id .. "_2", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_2")
+
+	if not string.nilorempty(self.spine2Res) then
+		self.spine2 = FightGameMgr.entityMgr:buildTempSpine(self.spine2Res, self.entity.id .. "_2", side, UnityLayer.EffectMask, FightEntityLyTemp, goContainerName .. "_2")
+	end
 
 	self.spine1.spine:changeLookDir(SpineLookDir.Left)
-	self.spine2.spine:changeLookDir(SpineLookDir.Left)
+
+	if self.spine2 then
+		self.spine2.spine:changeLookDir(SpineLookDir.Left)
+	end
+
 	self:hideEntity()
 
 	self.spine1Effect = self.spine1.effect:addHangEffect(self.spine1EffectRes, ModuleEnum.SpineHangPointRoot)
-	self.spine2Effect = self.spine2.effect:addHangEffect(self.spine2EffectRes, ModuleEnum.SpineHangPointRoot)
+
+	if self.spine2 then
+		self.spine2Effect = self.spine2.effect:addHangEffect(self.spine2EffectRes, ModuleEnum.SpineHangPointRoot)
+	end
+
 	self.effectWrap = self.entity.effect:addGlobalEffect(self.buffRes)
 
 	local LY_Order = FightRenderOrderMgr.LYEffect * FightEnum.OrderRegion
 
 	self.spine1Effect:setRenderOrder(LY_Order)
-	self.spine2Effect:setRenderOrder(LY_Order)
+
+	if self.spine2Effect then
+		self.spine2Effect:setRenderOrder(LY_Order)
+	end
+
 	self.effectWrap:setRenderOrder(LY_Order)
 
 	local goSpine1Root = self.spine1Effect.effectGO and gohelper.findChild(self.spine1Effect.effectGO, "root")
 
 	self.spine1EffectAnimator = goSpine1Root and ZProj.ProjAnimatorPlayer.Get(goSpine1Root)
 
-	local goSpine2Root = self.spine2Effect.effectGO and gohelper.findChild(self.spine2Effect.effectGO, "root")
+	if self.spine2Effect then
+		local goSpine2Root = self.spine2Effect.effectGO and gohelper.findChild(self.spine2Effect.effectGO, "root")
 
-	self.spine2EffectAnimator = goSpine2Root and ZProj.ProjAnimatorPlayer.Get(goSpine2Root)
+		self.spine2EffectAnimator = goSpine2Root and ZProj.ProjAnimatorPlayer.Get(goSpine2Root)
+	end
 
 	local goEffectRoot = self.effectWrap.effectGO and gohelper.findChild(self.effectWrap.effectGO, "root")
 
@@ -115,9 +140,26 @@ function FightBuffCardAreaRedOrBlueBuff:onResLoaded(loader)
 	self:playAnim(SpineAnimState.born)
 	self:refreshEffectActive()
 	FightController.instance:registerCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, self.playAnim, self)
+	TaskDispatcher.runDelay(self.refreshSpineEffect, self, 0.1)
+end
+
+function FightBuffCardAreaRedOrBlueBuff:refreshSpineEffect()
+	if self.spine1Effect then
+		gohelper.setActive(self.spine1Effect.effectGO, false)
+		gohelper.setActive(self.spine1Effect.effectGO, true)
+	end
+
+	if self.spine2Effect then
+		gohelper.setActive(self.spine2Effect.effectGO, false)
+		gohelper.setActive(self.spine2Effect.effectGO, true)
+	end
 end
 
 function FightBuffCardAreaRedOrBlueBuff:addEffect(entity, effectWrap, side)
+	if not entity then
+		return
+	end
+
 	effectWrap:setWorldPos(self:getEffectPos(side))
 	FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)
 end
@@ -177,7 +219,11 @@ function FightBuffCardAreaRedOrBlueBuff:refreshEffectActive()
 		local showEffect = not self.playingUniqueSkill and not self.focusing and not self.hideLiangYueEffect
 
 		self.spine1Effect:setActive(showEffect)
-		self.spine2Effect:setActive(showEffect)
+
+		if self.spine2Effect then
+			self.spine2Effect:setActive(showEffect)
+		end
+
 		self.effectWrap:setActive(showEffect)
 
 		if showEffect then
@@ -194,7 +240,10 @@ function FightBuffCardAreaRedOrBlueBuff:setEntityAlpha(value)
 	end
 
 	self.spine1.spineRenderer:setAlpha(value)
-	self.spine2.spineRenderer:setAlpha(value)
+
+	if self.spine2 then
+		self.spine2.spineRenderer:setAlpha(value)
+	end
 end
 
 function FightBuffCardAreaRedOrBlueBuff:hideEntity()
@@ -215,6 +264,10 @@ function FightBuffCardAreaRedOrBlueBuff:_showEntity()
 end
 
 function FightBuffCardAreaRedOrBlueBuff:getFullSpineResPath(spineRes)
+	if string.nilorempty(spineRes) then
+		return nil
+	end
+
 	return string.format("roles/%s.prefab", spineRes)
 end
 
@@ -242,7 +295,11 @@ function FightBuffCardAreaRedOrBlueBuff:clear()
 		end
 
 		self.spine1EffectAnimator:Play("close")
-		self.spine2EffectAnimator:Play("close")
+
+		if self.spine2EffectAnimator then
+			self.spine2EffectAnimator:Play("close")
+		end
+
 		self.effectAnimator:Play("close", self.clearEffectAndEntity, self)
 	else
 		self:clearEffectAndEntity()
@@ -296,6 +353,7 @@ function FightBuffCardAreaRedOrBlueBuff:onBuffEnd()
 end
 
 function FightBuffCardAreaRedOrBlueBuff:dispose()
+	TaskDispatcher.cancelTask(self.refreshSpineEffect, self)
 	self:clear()
 end
 

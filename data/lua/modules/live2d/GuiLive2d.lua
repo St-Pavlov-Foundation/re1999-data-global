@@ -53,6 +53,20 @@ function GuiLive2d:_onScreenResize()
 	if self._rawImageGo then
 		self:setSpineScale(self._rawImageGo)
 	end
+
+	if self:_needChangeRTSize() then
+		local scale = GameUtil.getAdapterScale()
+
+		self._cameraSize = CharacterVoiceEnum.RTCameraSize / scale
+
+		if self._cameraSize > 0 and self._camera then
+			self._camera.orthographicSize = self._cameraSize
+		end
+	end
+end
+
+function GuiLive2d:_needChangeRTSize()
+	return CharacterVoiceEnum.ChangeRTSize and self._shareRT and self._shareRT ~= CharacterVoiceEnum.RTShareType.FullScreen
 end
 
 function GuiLive2d:hideCamera()
@@ -504,6 +518,12 @@ function GuiLive2d:_loadL2dResFinish()
 		self:setCameraLayer(self._cameraLayer)
 	end
 
+	if self:_needChangeRTSize() then
+		local scale = GameUtil.getAdapterScale()
+
+		self._cameraSize = CharacterVoiceEnum.RTCameraSize / scale
+	end
+
 	if self._cameraSize > 0 then
 		camera.orthographicSize = self._cameraSize
 	end
@@ -587,6 +607,10 @@ end
 
 function GuiLive2d:setSpineScale(rawimageGO)
 	local scale = GameUtil.getAdapterScale() / (self._adapterScaleOnCreate or 1) / (self._qualityScale or 1)
+
+	if self:_needChangeRTSize() then
+		scale = 1
+	end
 
 	transformhelper.setLocalScale(rawimageGO.transform, scale, scale, scale)
 end

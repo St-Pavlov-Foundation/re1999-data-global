@@ -7,11 +7,10 @@ local SurvivalSummaryActPreloader = class("SurvivalSummaryActPreloader", Surviva
 function SurvivalSummaryActPreloader:init(sceneId, levelId)
 	self._loader = MultiAbLoader.New()
 
-	local list = {}
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local roleRes = survivalShelterRoleMo:getRoleModelRes()
 
-	tabletool.addValues(list, self:getSummaryActBlock())
-	self._loader:setPathList(list)
-	self._loader:addPath(SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes))
+	self._loader:addPath(roleRes)
 
 	local npcList = SurvivalMapModel.instance.resultData:getFirstNpcMos()
 
@@ -33,9 +32,8 @@ function SurvivalSummaryActPreloader:init(sceneId, levelId)
 end
 
 function SurvivalSummaryActPreloader:getSummaryActBlock()
-	local mapId = SurvivalConfig.instance:getCurShelterMapId()
-	local co = lua_survival_shelter.configDict[mapId]
-	local mapCo_SummaryAct = SurvivalConfig.instance:getShelterMapCo(co.mapId)
+	local mapId = SurvivalModel.instance:getSummaryActMapId()
+	local mapCo_SummaryAct = SurvivalConfig.instance:getShelterMapCo(mapId)
 	local blocks = tabletool.copy(mapCo_SummaryAct.allBlockPaths)
 
 	return blocks

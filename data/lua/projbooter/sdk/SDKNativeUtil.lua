@@ -49,7 +49,7 @@ function SDKNativeUtil.updateGame(appUrl)
 end
 
 function SDKNativeUtil.openCostumerService(titleName)
-	if BootNativeUtil.isAndroid() then
+	if BootNativeUtil.isAndroid() or BootNativeUtil.isMuMu() then
 		SLFramework.NativeUtil.VoidCallNative(SDKNativeUtil.nativeClsName, "openCostumerService", titleName)
 
 		return true

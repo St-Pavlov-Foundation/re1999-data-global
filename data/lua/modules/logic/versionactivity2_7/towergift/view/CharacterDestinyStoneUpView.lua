@@ -116,6 +116,8 @@ function CharacterDestinyStoneUpView:_onUnlockStoneReply(heroId, stoneId)
 end
 
 function CharacterDestinyStoneUpView:_editableInitView()
+	self._simagestoneGlow = gohelper.findChildSingleImage(self.viewGO, "root/#simage_reshapeTitle/#glow")
+	self._imageGlow = gohelper.findChildImage(self._simagestoneGlow.gameObject, "")
 	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "root/#go_stone/#simage_stone")
 	self._simagepre = gohelper.findChildSingleImage(self.viewGO, "root/#go_prestone/#btn_prestone")
 	self._simagenext = gohelper.findChildSingleImage(self.viewGO, "root/#go_nextstone/#btn_nextstone")
@@ -277,12 +279,16 @@ function CharacterDestinyStoneUpView:_refreshStoneItem()
 	gohelper.setActive(self._goreshapeVX, isReshapeStone)
 	gohelper.setActive(self._txtstonename.gameObject, not isReshapeStone)
 	gohelper.setActive(self._simagestoneName.gameObject, isReshapeStone)
+	gohelper.setActive(self._simagestoneGlow.gameObject, isReshapeStone)
 
 	if isReshapeStone then
 		local resName = self._curStoneMo.stoneId
 
 		self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
 			self._imagestoneName:SetNativeSize()
+		end)
+		self._simagestoneGlow:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+			self._imageGlow:SetNativeSize()
 		end)
 	end
 

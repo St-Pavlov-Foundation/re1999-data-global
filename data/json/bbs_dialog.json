@@ -1,0 +1,29 @@
+[
+  {
+    "id": 100000,
+    "step": 1,
+    "icon": "",
+    "audioId": 0,
+    "text": "language_10115597",
+    "tipsDir": 2,
+    "delay": 0.3
+  },
+  {
+    "id": 100000,
+    "step": 2,
+    "icon": "313814",
+    "audioId": 613400346,
+    "text": "language_10002648",
+    "tipsDir": 2,
+    "delay": 0.3
+  },
+  {
+    "id": 100001,
+    "step": 1,
+    "icon": "313814",
+    "audioId": 613400347,
+    "text": "language_10115598",
+    "tipsDir": 2,
+    "delay": 0.3
+  }
+]

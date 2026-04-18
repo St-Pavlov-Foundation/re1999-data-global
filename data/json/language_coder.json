@@ -5605,7 +5605,7 @@
   },
   {
     "id": "decoratestore_discount_limittime",
-    "lang": "language_10068420"
+    "lang": "language_10112638"
   },
   {
     "id": "act186_signview_task_txt",
@@ -6273,19 +6273,19 @@
   },
   {
     "id": "survival_mainview_beginshrink",
-    "lang": "language_10093634"
+    "lang": "language_10082592"
   },
   {
     "id": "survival_mainview_endshrink",
-    "lang": "language_10093635"
+    "lang": "language_10082593"
   },
   {
     "id": "survival_mainview_lastshrink",
-    "lang": "language_10093636"
+    "lang": "language_10082594"
   },
   {
     "id": "survival_mainview_useitem_tips",
-    "lang": "language_10082595"
+    "lang": "language_10112639"
   },
   {
     "id": "survival_talentview_lock",
@@ -6313,7 +6313,7 @@
   },
   {
     "id": "survival_eventview_leave",
-    "lang": "language_10000985"
+    "lang": "language_90016029"
   },
   {
     "id": "survival_equipoverview_simple",
@@ -7185,7 +7185,7 @@
   },
   {
     "id": "SurvivalBossInvasionView_2",
-    "lang": "language_10093648"
+    "lang": "language_10112640"
   },
   {
     "id": "PowerMakerPatFaceView_desc_1",
@@ -7229,7 +7229,7 @@
   },
   {
     "id": "SurvivalShopView_1",
-    "lang": "language_10093657"
+    "lang": "language_10080285"
   },
   {
     "id": "SurvivalShopView_2",
@@ -7281,7 +7281,7 @@
   },
   {
     "id": "TowerDeep_teamSave_load",
-    "lang": "language_10093665"
+    "lang": "language_90016026"
   },
   {
     "id": "TowerDeep_teamSave_round",
@@ -7665,7 +7665,7 @@
   },
   {
     "id": "versionsummon_txt_tips1",
-    "lang": "language_10098709"
+    "lang": "language_10110741"
   },
   {
     "id": "versionsummon_txt_tips2",
@@ -8072,16 +8072,332 @@
     "lang": "language_10107216"
   },
   {
-    "id": "ArcadeTalentItem_getLevelValueBySkillId_fmt",
-    "lang": "language_10109436"
+    "id": "SurvivalRoleSelectView_1",
+    "lang": "language_10112641"
   },
   {
-    "id": "talent_itemtalentheroupview_tip_1",
-    "lang": "language_10109851"
+    "id": "SurvivalRoleSelectView_2",
+    "lang": "language_10090101"
   },
   {
-    "id": "talent_itemtalentheroupview_tip_6",
-    "lang": "language_10109852"
+    "id": "SurvivalRoleAttrName_1",
+    "lang": "language_90001293"
+  },
+  {
+    "id": "SurvivalRoleAttrName_2",
+    "lang": "language_10112642"
+  },
+  {
+    "id": "SurvivalRoleAttrName_3",
+    "lang": "language_10084592"
+  },
+  {
+    "id": "SurvivalRoleAttrName_4",
+    "lang": "language_10112643"
+  },
+  {
+    "id": "SurvivalRoleAttrName_5",
+    "lang": "language_90001294"
+  },
+  {
+    "id": "SurvivalHardView_3",
+    "lang": "language_10112644"
+  },
+  {
+    "id": "SurvivalHardView_4",
+    "lang": "language_10112645"
+  },
+  {
+    "id": "SurvivalHandbookView_Story_1",
+    "lang": "language_10112646"
+  },
+  {
+    "id": "SurvivalHandbookView_Story_2",
+    "lang": "language_10112647"
+  },
+  {
+    "id": "SurvivalLeaveMsgType_1",
+    "lang": "language_10112648"
+  },
+  {
+    "id": "SurvivalLeaveMsgType_2",
+    "lang": "language_10112649"
+  },
+  {
+    "id": "SurvivalLeaveMsgType_3",
+    "lang": "language_10112650"
+  },
+  {
+    "id": "SurvivalTechView_2",
+    "lang": "language_10112651"
+  },
+  {
+    "id": "SurvivalTechView_3",
+    "lang": "language_10112652"
+  },
+  {
+    "id": "SurvivalTechView_4",
+    "lang": "language_10112653"
+  },
+  {
+    "id": "SurvivalTechView_5",
+    "lang": "language_10112654"
+  },
+  {
+    "id": "SurvivalRoleAttrComp_1",
+    "lang": "language_10112655"
+  },
+  {
+    "id": "SurvivalPreviewTeamView_1",
+    "lang": "language_10112656"
+  },
+  {
+    "id": "SurvivalLeaveMsgItem_1",
+    "lang": "language_10112657"
+  },
+  {
+    "id": "SurvivalLeaveMsgItem_2",
+    "lang": "language_10112658"
+  },
+  {
+    "id": "SurvivalLeaveMsgView_1",
+    "lang": "language_10112659"
+  },
+  {
+    "id": "SurvivalLeaveMsgView_2",
+    "lang": "language_10112660"
+  },
+  {
+    "id": "SurvivalLeaveMsgView_3",
+    "lang": "language_10112661"
+  },
+  {
+    "id": "SurvivalLeaveMsgView_4",
+    "lang": "language_10112662"
+  },
+  {
+    "id": "SurvivalLeaveMsgView_5",
+    "lang": "language_10112663"
+  },
+  {
+    "id": "SurvivalTechRoleFragment_1",
+    "lang": "language_10019916"
+  },
+  {
+    "id": "SurvivalTechRoleDescItem_1",
+    "lang": "language_10112664"
+  },
+  {
+    "id": "SurvivalTechLockArea_1",
+    "lang": "language_10112665"
+  },
+  {
+    "id": "SurvivalTechShelterView_1",
+    "lang": "language_10112666"
+  },
+  {
+    "id": "SurvivalCeremonyClosingView_1",
+    "lang": "language_10112667"
+  },
+  {
+    "id": "SurvivalRoleInitAttrTip_1",
+    "lang": "language_10112668"
+  },
+  {
+    "id": "SurvivalRoleInitAttrTip_2",
+    "lang": "language_10112669"
+  },
+  {
+    "id": "SurvivalRoleInitAttrTip_3",
+    "lang": "language_10112670"
+  },
+  {
+    "id": "SurvivalRoleInitAttrTip_4",
+    "lang": "language_10112671"
+  },
+  {
+    "id": "SurvivalRoleInitAttrTip_5",
+    "lang": "language_10112672"
+  },
+  {
+    "id": "SurvivalGiveBackView_1",
+    "lang": "language_10112673"
+  },
+  {
+    "id": "SurvivalGiveBackView_2",
+    "lang": "language_10112674"
+  },
+  {
+    "id": "survival_log_rolelevelup",
+    "lang": "language_10112675"
+  },
+  {
+    "id": "SurvivalRoleLevelUpView_1",
+    "lang": "language_10112676"
+  },
+  {
+    "id": "SurvivalRoleLevelUpView_2",
+    "lang": "language_10112677"
+  },
+  {
+    "id": "laplace_chatroom_luckyrain_title",
+    "lang": "language_10112678"
+  },
+  {
+    "id": "laplace_chatroom_luckyrain_unlock",
+    "lang": "language_10112679"
+  },
+  {
+    "id": "laplace_chatroom_luckyrain_finish",
+    "lang": "language_10112680"
+  },
+  {
+    "id": "laplace_chatroom_roomNum",
+    "lang": "language_10112681"
+  },
+  {
+    "id": "v3a4bbs_quoteuser",
+    "lang": "language_10112682"
+  },
+  {
+    "id": "v3a4bbs_sender_ip",
+    "lang": "language_10112683"
+  },
+  {
+    "id": "v3a4bbs_default_reply",
+    "lang": "language_10112684"
+  },
+  {
+    "id": "v3a4bbs_wait_other_reply",
+    "lang": "language_10112685"
+  },
+  {
+    "id": "v3a4bbs_other_replying",
+    "lang": "language_10112686"
+  },
+  {
+    "id": "partygame_game2_unfinish",
+    "lang": "language_10031148"
+  },
+  {
+    "id": "partygame_game2_finishtime",
+    "lang": "language_10112687"
+  },
+  {
+    "id": "partygame_game3_hitcount",
+    "lang": "language_10112688"
+  },
+  {
+    "id": "partygame_game4_dis",
+    "lang": "language_10112689"
+  },
+  {
+    "id": "partygame_game13_finishTime",
+    "lang": "language_10112687"
+  },
+  {
+    "id": "partygame_game13_layer",
+    "lang": "language_90016028"
+  },
+  {
+    "id": "partygame_game19_finish",
+    "lang": "language_10029995"
+  },
+  {
+    "id": "partygame_game19_dis",
+    "lang": "language_10112690"
+  },
+  {
+    "id": "partygame_roundcount",
+    "lang": "language_10112691"
+  },
+  {
+    "id": "partygame_gameroundtime",
+    "lang": "language_10112692"
+  },
+  {
+    "id": "partygame_gamecountdown",
+    "lang": "language_10112693"
+  },
+  {
+    "id": "partygame_gamerank",
+    "lang": "language_10112694"
+  },
+  {
+    "id": "partygame_gamerank2",
+    "lang": "language_10112695"
+  },
+  {
+    "id": "partygame_resultViewCount",
+    "lang": "language_10112696"
+  },
+  {
+    "id": "partygame_blueWin",
+    "lang": "language_10112697"
+  },
+  {
+    "id": "partygame_redWin",
+    "lang": "language_10112698"
+  },
+  {
+    "id": "PartyGameRoundTip_1",
+    "lang": "language_10112699"
+  },
+  {
+    "id": "PartyGameRoundTip_2",
+    "lang": "language_10112700"
+  },
+  {
+    "id": "partygame_carddrop_all_title",
+    "lang": "language_10112701"
+  },
+  {
+    "id": "partygame_ready",
+    "lang": "language_10112702"
+  },
+  {
+    "id": "partygame_notready",
+    "lang": "language_10112703"
+  },
+  {
+    "id": "partygame_invited",
+    "lang": "language_10112704"
+  },
+  {
+    "id": "partygame_refuse",
+    "lang": "language_10112705"
+  },
+  {
+    "id": "partygame_owner",
+    "lang": "language_10112706"
+  },
+  {
+    "id": "partygame_inroom",
+    "lang": "language_10112707"
+  },
+  {
+    "id": "partygame_ingame",
+    "lang": "language_10112708"
+  },
+  {
+    "id": "handbookskin_festival_yushui",
+    "lang": "language_90016027"
+  },
+  {
+    "id": "v3a4_giftrecommend_tip",
+    "lang": "language_10112709"
+  },
+  {
+    "id": "main_switch_classify_title_4",
+    "lang": "language_10112710"
+  },
+  {
+    "id": "mainsceneuipackage_8013401",
+    "lang": "language_10112711"
+  },
+  {
+    "id": "partycloth_summon",
+    "lang": "language_10112712"
   },
   {
     "id": "SettingsGraphicsView_videoMode0",
@@ -8094,6 +8410,318 @@
   {
     "id": "SettingsGraphicsView_videoMode2",
     "lang": "language_10097065"
+  },
+  {
+    "id": "summon_limitreprint_banner_flag",
+    "lang": "language_10112713"
+  },
+  {
+    "id": "laplace_observerbox_unlocktimes",
+    "lang": "language_10112714"
+  },
+  {
+    "id": "laplace_observerbox_pagetip",
+    "lang": "language_10112715"
+  },
+  {
+    "id": "towercompose_modLevel",
+    "lang": "language_10068447"
+  },
+  {
+    "id": "towercompose_fightPlane1",
+    "lang": "language_10112716"
+  },
+  {
+    "id": "towercompose_fightPlane2",
+    "lang": "language_10112717"
+  },
+  {
+    "id": "v3a4_destiny_panelsview_item",
+    "lang": "language_10112718"
+  },
+  {
+    "id": "v3a4_destiny_panelsview_rewarddesc1",
+    "lang": "language_10112719"
+  },
+  {
+    "id": "v3a4_destiny_panelsview_rewarddesc2",
+    "lang": "language_10112720"
+  },
+  {
+    "id": "HeroExpBoxItem_MaxLv1",
+    "lang": "language_10082647"
+  },
+  {
+    "id": "HeroExpBoxItem_MaxLv2",
+    "lang": "language_10112721"
+  },
+  {
+    "id": "HeroExpBoxView_ConfirmBtn1",
+    "lang": "language_10112722"
+  },
+  {
+    "id": "HeroExpBoxItem_Tip1",
+    "lang": "language_10112723"
+  },
+  {
+    "id": "HeroExpBoxItem_Tip2",
+    "lang": "language_10112718"
+  },
+  {
+    "id": "polilog_ripplesonthewater_tips_txt1",
+    "lang": "language_10112724"
+  },
+  {
+    "id": "polilog_ripplesonthewater_tips_txt2",
+    "lang": "language_10112725"
+  },
+  {
+    "id": "knockout_result_rank_1",
+    "lang": "language_10112726"
+  },
+  {
+    "id": "knockout_result_rank_2",
+    "lang": "language_10112727"
+  },
+  {
+    "id": "knockout_result_rank_3",
+    "lang": "language_10112728"
+  },
+  {
+    "id": "knockout_result_rank_other",
+    "lang": "language_10112729"
+  },
+  {
+    "id": "towercompose_loadRecord",
+    "lang": "language_90016026"
+  },
+  {
+    "id": "towercompose_saveRecord",
+    "lang": "language_10093664"
+  },
+  {
+    "id": "towercompose_load_repeatFightTip",
+    "lang": "language_10112730"
+  },
+  {
+    "id": "towercompose_load_continueFightTip",
+    "lang": "language_10112731"
+  },
+  {
+    "id": "towercompose_save_tip",
+    "lang": "language_10112732"
+  },
+  {
+    "id": "towercompose_recordScore",
+    "lang": "language_10112733"
+  },
+  {
+    "id": "V3a4_Chg_GameView_txtNum",
+    "lang": "language_10112734"
+  },
+  {
+    "id": "V3a4_Chg_GameView_txtCount",
+    "lang": "language_10112735"
+  },
+  {
+    "id": "partygame_rewardCountDown",
+    "lang": "language_10112736"
+  },
+  {
+    "id": "partygame_result_hp",
+    "lang": "language_10112737"
+  },
+  {
+    "id": "partygame_result_hp_1",
+    "lang": "language_10112738"
+  },
+  {
+    "id": "partygame_reward_select",
+    "lang": "language_10112739"
+  },
+  {
+    "id": "partygame_act_reward_tip",
+    "lang": "language_10112740"
+  },
+  {
+    "id": "partygame_invite_desc",
+    "lang": "language_10112741"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_observerboxtag1",
+    "lang": "language_10112742"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_observerboxtag2",
+    "lang": "language_10112743"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_minipartytag1",
+    "lang": "language_10112744"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_minipartytag2",
+    "lang": "language_10112745"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_minipartytag3",
+    "lang": "language_10112746"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_chatroomtag1",
+    "lang": "language_10112747"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_chatroomtag2",
+    "lang": "language_10112748"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_chatroomtag3",
+    "lang": "language_10112749"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_chatroomtag4",
+    "lang": "language_10112750"
+  },
+  {
+    "id": "v3a4_laplacemainview_txt_num",
+    "lang": "language_10112751"
+  },
+  {
+    "id": "v3a4_chatroomnpcqandaview_txt_title",
+    "lang": "language_10112752"
+  },
+  {
+    "id": "p_v3a4_laplacemainview_txt3",
+    "lang": "language_10112753"
+  },
+  {
+    "id": "p_v3a4_laplacemainview_txt4",
+    "lang": "language_10112754"
+  },
+  {
+    "id": "p_v3a4_laplacemainview_txt5",
+    "lang": "language_10112755"
+  },
+  {
+    "id": "knockout_result_solo_1",
+    "lang": "language_10112756"
+  },
+  {
+    "id": "knockout_result_solo_2",
+    "lang": "language_10112757"
+  },
+  {
+    "id": "knockout_result_solo_3",
+    "lang": "language_10112758"
+  },
+  {
+    "id": "knockout_result_solo_4",
+    "lang": "language_10112759"
+  },
+  {
+    "id": "knockout_result_solo_5",
+    "lang": "language_10112760"
+  },
+  {
+    "id": "knockout_result_solo_6",
+    "lang": "language_10112761"
+  },
+  {
+    "id": "knockout_result_solo_7",
+    "lang": "language_10112762"
+  },
+  {
+    "id": "knockout_result_solo_8",
+    "lang": "language_10112763"
+  },
+  {
+    "id": "PartyGameReward_tip_1",
+    "lang": "language_10112764"
+  },
+  {
+    "id": "PartyGameReward_tip_2",
+    "lang": "language_10112765"
+  },
+  {
+    "id": "PartyGameReward_tip_3",
+    "lang": "language_10112766"
+  },
+  {
+    "id": "PartyGameReward_tip_4",
+    "lang": "language_10112767"
+  },
+  {
+    "id": "PartyGameReward_tip_5",
+    "lang": "language_10112768"
+  },
+  {
+    "id": "v3a4_chg_gameview_round1",
+    "lang": "language_10112769"
+  },
+  {
+    "id": "v3a4_chg_gameview_round2",
+    "lang": "language_10112770"
+  },
+  {
+    "id": "v3a4_chg_gameview_round3",
+    "lang": "language_10112771"
+  },
+  {
+    "id": "v3a4_chg_gameview_round4",
+    "lang": "language_10112772"
+  },
+  {
+    "id": "v3a4_chg_gameview_round5",
+    "lang": "language_10112773"
+  },
+  {
+    "id": "v3a4_chg_gameview_34701011",
+    "lang": "language_10112774"
+  },
+  {
+    "id": "v3a4_chg_gameview_34701012",
+    "lang": "language_10112775"
+  },
+  {
+    "id": "v3a4_chg_gameview_34701013",
+    "lang": "language_10112774"
+  },
+  {
+    "id": "v3a4_chg_gameview_34701014",
+    "lang": "language_10112776"
+  },
+  {
+    "id": "v3a4_chg_gameview_34701015",
+    "lang": "language_10112776"
+  },
+  {
+    "id": "ObserverBoxTaskItem_txttaskdes",
+    "lang": "language_10113088"
+  },
+  {
+    "id": "CharacterController_showCharacterGetItemToast",
+    "lang": "language_10113089"
+  },
+  {
+    "id": "ActivityWeekWalkHeartShowView_refreshProgress",
+    "lang": "language_10113090"
+  },
+  {
+    "id": "PlayerCardMO_WeekWalkDeep",
+    "lang": "language_10020408"
+  },
+  {
+    "id": "ArcadeTalentItem_getLevelValueBySkillId_fmt",
+    "lang": "language_10109436"
+  },
+  {
+    "id": "talent_itemtalentheroupview_tip_1",
+    "lang": "language_10109851"
+  },
+  {
+    "id": "talent_itemtalentheroupview_tip_6",
+    "lang": "language_10109852"
   },
   {
     "id": "FightHeatScaleView_BLE_getCrystalDesc_overseas",

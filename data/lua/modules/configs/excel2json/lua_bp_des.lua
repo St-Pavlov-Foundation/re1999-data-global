@@ -4,19 +4,22 @@ module("modules.configs.excel2json.lua_bp_des", package.seeall)
 
 local lua_bp_des = {}
 local fields = {
+	tagType = 6,
 	iconType = 4,
-	bpId = 2,
+	des = 9,
 	type = 3,
-	id = 1,
-	icon = 6,
 	items = 5,
-	des = 7
+	bpId = 2,
+	id = 1,
+	icon = 8,
+	tagTxt = 7
 }
 local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	des = 1
+	des = 2,
+	tagTxt = 1
 }
 
 function lua_bp_des.onLoad(json)

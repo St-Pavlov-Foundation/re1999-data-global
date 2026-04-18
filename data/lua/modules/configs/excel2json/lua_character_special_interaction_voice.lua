@@ -4,11 +4,12 @@ module("modules.configs.excel2json.lua_character_special_interaction_voice", pac
 
 local lua_character_special_interaction_voice = {}
 local fields = {
-	timeoutVoice = 4,
-	protectionTime = 5,
+	waitVoiceParams = 4,
+	protectionTime = 6,
 	time = 2,
+	timeoutVoice = 5,
 	id = 1,
-	statusParams = 6,
+	statusParams = 7,
 	waitVoice = 3
 }
 local primaryKey = {

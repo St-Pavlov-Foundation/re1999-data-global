@@ -15,6 +15,21 @@ function SurvivalPreviewTeamView:onInitView()
 	self._gonpccontent = gohelper.findChild(self._root, "Partner/Scroll View/Viewport/#go_content")
 	self._txtnpcnum = gohelper.findChildTextMesh(self._root, "Partner/Title/txt_Partner/#txt_MemberNum")
 	self._btnequip = gohelper.findChildButtonWithAudio(self._root, "Left/#btn_equip")
+	self.image_LeaderCard = gohelper.findChildSingleImage(self._root, "Left/image_LeaderCard")
+	self.level = gohelper.findChild(self._root, "Left/#go_level")
+	self.txt_Leader = gohelper.findChildTextMesh(self._root, "Left/Name/txt_Leader")
+	self.survivalroleleveltipcomp = gohelper.findChild(self._root, "survivalroleleveltipcomp")
+	self.survivalrolelevelcomp = gohelper.findChild(self._root, "Left/#go_level/survivalrolelevelcomp")
+	self.survivalRoleLevelComp = GameFacade.createLuaCompByGo(self.survivalrolelevelcomp, SurvivalRoleLevelComp)
+
+	self.survivalRoleLevelComp:setOnClickFunc(self.onClickBtnLevel, self)
+
+	self.survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	self.survivalroleattrcomp = gohelper.findChild(self._root, "Left/survivalroleattrcomp")
+
+	if self.survivalShelterRoleMo:haveRole() then
+		self.survivalRoleAttrComp = GameFacade.createLuaCompByGo(self.survivalroleattrcomp, SurvivalRoleAttrComp, nil, self.viewContainer)
+	end
 end
 
 function SurvivalPreviewTeamView:addEvents()
@@ -40,11 +55,34 @@ function SurvivalPreviewTeamView:onOpen()
 	self:_updateHeroList()
 	self:_initNPCItemList()
 	self:_updateNPCList()
+
+	if self.survivalShelterRoleMo:haveRole() then
+		self.survivalRoleAttrComp:setData(2, self.survivalShelterRoleMo.roleId)
+	end
+
+	self.survivalRoleLevelComp:setData(false)
+
+	local cardPath = SurvivalRoleConfig.instance:getRoleCardImage(self.survivalShelterRoleMo.roleId)
+
+	if not string.nilorempty(cardPath) then
+		self.image_LeaderCard:LoadImage(ResUrl.getSurvivalTeamIcon(cardPath))
+	end
+
+	self.txt_Leader.text = lua_survival_role.configDict[self.survivalShelterRoleMo.roleId].name
+end
+
+function SurvivalPreviewTeamView:onDestroyView()
+	self.image_LeaderCard:UnLoadImage()
+end
+
+function SurvivalPreviewTeamView:onClickBtnLevel()
+	GameFacade.openTipPopView(ViewName.SurvivalRoleLevelTipPopView, self.survivalroleleveltipcomp)
 end
 
 function SurvivalPreviewTeamView:onViewShow()
 	self:_updateHeroList()
 	self:_updateNPCList()
+	self.survivalRoleLevelComp:playProgressAnim()
 end
 
 function SurvivalPreviewTeamView:_btnreturnOnClick()

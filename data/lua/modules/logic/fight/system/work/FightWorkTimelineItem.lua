@@ -147,7 +147,7 @@ function FightWorkTimelineItem:afterPlayTimeline()
 		if entity_mo and entity_mo:isPassiveSkill(self.skillId) then
 			-- block empty
 		else
-			GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
+			FightGameMgr.sceneLevelMgr:setFrontVisible(true)
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, true)
@@ -186,7 +186,7 @@ function FightWorkTimelineItem:beforePlayTimeline()
 			end
 
 			if hide then
-				GameSceneMgr.instance:getCurScene().level:setFrontVisible(false)
+				FightGameMgr.sceneLevelMgr:setFrontVisible(false)
 			end
 		end
 	end

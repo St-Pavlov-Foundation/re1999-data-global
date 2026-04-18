@@ -37,6 +37,10 @@ function BaseSkinInteraction:canPlay(config)
 	return true
 end
 
+function BaseSkinInteraction:selectFromGroup(config)
+	return config
+end
+
 function BaseSkinInteraction:isPlayingVoice()
 	return false
 end

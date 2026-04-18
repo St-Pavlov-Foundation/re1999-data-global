@@ -1,0 +1,482 @@
+[
+  {
+    "clothId": 3400012,
+    "name": "套装一上衣",
+    "suitId": 340001,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi",
+    "image": "hlxc_hl_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400013,
+    "name": "套装一裤子",
+    "suitId": 340001,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi",
+    "image": "hlxc_hl_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400014,
+    "name": "套装一鞋",
+    "suitId": 340001,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi",
+    "image": "hlxc_hl_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400015,
+    "name": "套装一头部",
+    "suitId": 340001,
+    "rare": 1,
+    "partId": 5,
+    "partRes": "tou/head#body/body",
+    "image": "hlxc_hl_tou",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400021,
+    "name": "套装2帽子",
+    "suitId": 340002,
+    "rare": 1,
+    "partId": 1,
+    "partRes": "maozi/maozi3",
+    "image": "hlxc_kxgrl_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400022,
+    "name": "套装2上衣",
+    "suitId": 340002,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi3",
+    "image": "hlxc_kxgrl_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400023,
+    "name": "套装2裤子",
+    "suitId": 340002,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi3",
+    "image": "hlxc_kxgrl_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400024,
+    "name": "套装2鞋子",
+    "suitId": 340002,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi3",
+    "image": "hlxc_kxgrl_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400031,
+    "name": "套装3帽子",
+    "suitId": 340003,
+    "rare": 1,
+    "partId": 1,
+    "partRes": "maozi/maozi9",
+    "image": "hlxc_sshl_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400032,
+    "name": "套装3上衣",
+    "suitId": 340003,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi9",
+    "image": "hlxc_sshl_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400033,
+    "name": "套装3裤子",
+    "suitId": 340003,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi9",
+    "image": "hlxc_sshl_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400034,
+    "name": "套装3鞋子",
+    "suitId": 340003,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi9",
+    "image": "hlxc_kxgrl_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400041,
+    "name": "套装4帽子",
+    "suitId": 340004,
+    "rare": 1,
+    "partId": 1,
+    "partRes": "maozi/maozi4",
+    "image": "hlxc_hlss_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400042,
+    "name": "套装4上衣",
+    "suitId": 340004,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi4",
+    "image": "hlxc_hlss_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400043,
+    "name": "套装4裤子",
+    "suitId": 340004,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi4",
+    "image": "hlxc_hlss_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400044,
+    "name": "套装4鞋子",
+    "suitId": 340004,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi4",
+    "image": "hlxc_hlss_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400051,
+    "name": "套装5帽子",
+    "suitId": 340005,
+    "rare": 1,
+    "partId": 1,
+    "partRes": "maozi/maozi5",
+    "image": "hlxc_hlss1_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400052,
+    "name": "套装5上衣",
+    "suitId": 340005,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi5",
+    "image": "hlxc_hlss1_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400053,
+    "name": "套装5裤子",
+    "suitId": 340005,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi5",
+    "image": "hlxc_hlss1_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400054,
+    "name": "套装5鞋子",
+    "suitId": 340005,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi5",
+    "image": "hlxc_hlss1_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400061,
+    "name": "套装6帽子",
+    "suitId": 340006,
+    "rare": 1,
+    "partId": 1,
+    "partRes": "maozi/maozi6",
+    "image": "hlxc_hlxc2_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400062,
+    "name": "套装6上衣",
+    "suitId": 340006,
+    "rare": 1,
+    "partId": 2,
+    "partRes": "shangyi/shangyi6",
+    "image": "hlxc_hlxc2_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400063,
+    "name": "套装6裤子",
+    "suitId": 340006,
+    "rare": 1,
+    "partId": 3,
+    "partRes": "kuzi/kuzi6",
+    "image": "hlxc_hlxc2_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400064,
+    "name": "套装6鞋子",
+    "suitId": 340006,
+    "rare": 1,
+    "partId": 4,
+    "partRes": "xiezi/xiezi6",
+    "image": "hlxc_hlxc2_ziezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400071,
+    "name": "套装7帽子",
+    "suitId": 340007,
+    "rare": 2,
+    "partId": 1,
+    "partRes": "maozi/maozi7",
+    "image": "hlxc_hlxc_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400072,
+    "name": "套装7上衣",
+    "suitId": 340007,
+    "rare": 2,
+    "partId": 2,
+    "partRes": "shangyi/shangyi7",
+    "image": "hlxc_hlxc_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400073,
+    "name": "套装7裤子",
+    "suitId": 340007,
+    "rare": 2,
+    "partId": 3,
+    "partRes": "kuzi/kuzi7",
+    "image": "hlxc_hlxc_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400074,
+    "name": "套装7鞋子",
+    "suitId": 340007,
+    "rare": 2,
+    "partId": 4,
+    "partRes": "xiezi/xiezi7",
+    "image": "hlxc_hlxc_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400075,
+    "name": "套装7头",
+    "suitId": 340007,
+    "rare": 2,
+    "partId": 5,
+    "partRes": "tou/head7#body/body",
+    "image": "hlxc_hlxc_tou",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400081,
+    "name": "套装8帽子",
+    "suitId": 340008,
+    "rare": 2,
+    "partId": 1,
+    "partRes": "maozi/maozi8",
+    "image": "hlxc_hlxc1_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400082,
+    "name": "套装8上衣",
+    "suitId": 340008,
+    "rare": 2,
+    "partId": 2,
+    "partRes": "shangyi/shangyi8",
+    "image": "hlxc_hlxc1_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400083,
+    "name": "套装8裤子",
+    "suitId": 340008,
+    "rare": 2,
+    "partId": 3,
+    "partRes": "kuzi/kuzi8",
+    "image": "hlxc_hlxc1_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400084,
+    "name": "套装8鞋子",
+    "suitId": 340008,
+    "rare": 2,
+    "partId": 4,
+    "partRes": "xiezi/xiezi8",
+    "image": "hlxc_hlxc1_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400085,
+    "name": "套装8头",
+    "suitId": 340008,
+    "rare": 2,
+    "partId": 5,
+    "partRes": "tou/head5#body/body5",
+    "image": "hlxc_hlxc1_tou",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400091,
+    "name": "套装9帽子",
+    "suitId": 340009,
+    "rare": 2,
+    "partId": 1,
+    "partRes": "maozi/maozi11",
+    "image": "hlxc_sshl3_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400092,
+    "name": "套装9上衣",
+    "suitId": 340009,
+    "rare": 2,
+    "partId": 2,
+    "partRes": "shangyi/shangyi11",
+    "image": "hlxc_sshl3_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400093,
+    "name": "套装9裤子",
+    "suitId": 340009,
+    "rare": 2,
+    "partId": 3,
+    "partRes": "kuzi/kuzi11",
+    "image": "hlxc_sshl3_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400094,
+    "name": "套装9鞋子",
+    "suitId": 340009,
+    "rare": 2,
+    "partId": 4,
+    "partRes": "xiezi/xiezi11",
+    "image": "hlxc_ssh2_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400095,
+    "name": "套装9头",
+    "suitId": 340009,
+    "rare": 2,
+    "partId": 5,
+    "partRes": "tou/head3#body/body3",
+    "image": "hlxc_kxgrl_tou",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400101,
+    "name": "套装10帽子",
+    "suitId": 340010,
+    "rare": 3,
+    "partId": 1,
+    "partRes": "maozi/maozi10",
+    "image": "hlxc_sshl1_maozi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400102,
+    "name": "套装10上衣",
+    "suitId": 340010,
+    "rare": 3,
+    "partId": 2,
+    "partRes": "shangyi/shangyi10",
+    "image": "hlxc_sshl1_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400103,
+    "name": "套装10裤子",
+    "suitId": 340010,
+    "rare": 3,
+    "partId": 3,
+    "partRes": "kuzi/kuzi10",
+    "image": "hlxc_sshl1_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400104,
+    "name": "套装10鞋子",
+    "suitId": 340010,
+    "rare": 3,
+    "partId": 4,
+    "partRes": "xiezi/xiezi10",
+    "image": "hlxc_sshl1_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400105,
+    "name": "套装10头",
+    "suitId": 340010,
+    "rare": 3,
+    "partId": 5,
+    "partRes": "tou/head4#body/body4",
+    "image": "hlxc_hllr_tou",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400111,
+    "name": "套装11上衣",
+    "suitId": 340011,
+    "rare": 3,
+    "partId": 2,
+    "partRes": "shangyi/shangyi12",
+    "image": "tkr_yifu",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400112,
+    "name": "套装11裤子",
+    "suitId": 340011,
+    "rare": 3,
+    "partId": 3,
+    "partRes": "kuzi/kuzi12",
+    "image": "tkr_kuzi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400113,
+    "name": "套装11鞋子",
+    "suitId": 340011,
+    "rare": 3,
+    "partId": 4,
+    "partRes": "xiezi/xiezi12",
+    "image": "tkr_xiezi",
+    "activityId": 0
+  },
+  {
+    "clothId": 3400114,
+    "name": "套装11头",
+    "suitId": 340011,
+    "rare": 3,
+    "partId": 5,
+    "partRes": "tou/head12#body/body2",
+    "image": "tkr_toui",
+    "activityId": 0
+  }
+]

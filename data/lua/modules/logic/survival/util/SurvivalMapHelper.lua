@@ -64,6 +64,8 @@ function SurvivalMapHelper:tryStartFlow(recvProtoName)
 		local stepMo = v._stepMo
 
 		if stepMo then
+			logNormal("step:" .. stepMo.type)
+
 			local runOrder = v:getRunOrder(params, self.flow, index, self._steps)
 
 			if runOrder == SurvivalEnum.StepRunOrder.Before then
@@ -203,8 +205,10 @@ function SurvivalMapHelper:tryShowEventView(pos)
 	end
 end
 
-function SurvivalMapHelper:tryShowServerPanel(panel)
-	if not panel or panel.type == SurvivalEnum.PanelType.None then
+function SurvivalMapHelper:tryShowServerPanel(panel, source)
+	local isMessagePanel = source and source == 1999
+
+	if not panel or panel.type == SurvivalEnum.PanelType.None and not isMessagePanel then
 		return
 	end
 
@@ -217,25 +221,25 @@ function SurvivalMapHelper:tryShowServerPanel(panel)
 			ViewName.SurvivalMapSearchView
 		})
 
-		local itemMos = panel:getSearchItems()
-		local preItems
-
-		if SurvivalMapModel.instance.searchChangeItems and SurvivalMapModel.instance.searchChangeItems.panelUid == panel.uid then
-			preItems = tabletool.copy(itemMos)
-
-			for i, v in ipairs(SurvivalMapModel.instance.searchChangeItems.items) do
-				if preItems[v.uid] then
-					preItems[v.uid] = v
-				end
-			end
-		end
+		local itemConvertInfosList = SurvivalMapModel.instance.itemConvertInfosList
 
 		ViewMgr.instance:openView(ViewName.SurvivalMapSearchView, {
 			itemMos = panel:getSearchItems(),
 			isFirst = panel.isFirstSearch,
-			preItems = preItems
+			itemConvertInfosList = itemConvertInfosList
 		})
+		SurvivalMapModel.instance:clearItemConvert()
 	elseif type == SurvivalEnum.PanelType.TreeEvent then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local unitMo = sceneMo and sceneMo.unitsById[panel.unitId]
+
+		if not unitMo then
+			SurvivalWeekRpc.instance:sendSurvivalClosePanelRequest(panel.uid)
+			logError(string.format("没有面板对应的事件ID，强制关闭掉,treeId:%s,unitId:%s,dialogueId:%s", panel.treeId, panel.unitId, panel.dialogueId))
+
+			return
+		end
+
 		ViewMgr.instance:closeAllPopupViews({
 			ViewName.SurvivalMapEventView
 		})
@@ -285,6 +289,14 @@ function SurvivalMapHelper:tryShowServerPanel(panel)
 		ViewMgr.instance:openView(ViewName.SurvivalDecreeSelectView, {
 			panel = panel
 		})
+	elseif type == SurvivalEnum.PanelType.None and isMessagePanel then
+		ViewMgr.instance:closeAllPopupViews({
+			ViewName.SurvivalLeaveMsgView
+		})
+
+		local survivalLeaveMsgViewParam = SurvivalMapModel.instance.survivalLeaveMsgViewParam
+
+		ViewMgr.instance:openView(ViewName.SurvivalLeaveMsgView, survivalLeaveMsgViewParam)
 	end
 end
 
@@ -473,6 +485,12 @@ function SurvivalMapHelper:isInSurvivalScene()
 	return curSceneType == SceneType.Survival or curSceneType == SceneType.SurvivalShelter or curSceneType == SceneType.SurvivalSummaryAct
 end
 
+function SurvivalMapHelper:isInMapScene()
+	local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+	return curSceneType == SceneType.Survival
+end
+
 function SurvivalMapHelper:isInShelterScene()
 	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
@@ -495,6 +513,12 @@ function SurvivalMapHelper:clear()
 	self._steps = nil
 	self.serverFlow = nil
 	self._allEntity = {}
+
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if weekInfo then
+		weekInfo.oldRoleAttrDic = nil
+	end
 end
 
 function SurvivalMapHelper:gotoBuilding(buildingId, hexPoint, followerPlayer)
@@ -624,6 +648,14 @@ function SurvivalMapHelper:interactiveBuilding(buildingId)
 
 	if buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
 		ViewMgr.instance:openView(ViewName.SurvivalReputationShopView, {
+			buildingId = buildingId
+		})
+
+		return
+	end
+
+	if buildingInfo:isEqualType(SurvivalEnum.BuildingType.Tech) then
+		ViewMgr.instance:openView(ViewName.SurvivalTechShelterView, {
 			buildingId = buildingId
 		})
 
@@ -1014,7 +1046,7 @@ end
 
 local playDt
 
-function SurvivalMapHelper:addPointEffect(hexNode, effectName)
+function SurvivalMapHelper:addPointEffect(hexNode, effectName, scale)
 	effectName = effectName or SurvivalPointEffectComp.ResPaths.explode
 
 	if (playDt == nil or playDt + 0.5 < UnityEngine.Time.realtimeSinceStartup) and effectName == SurvivalPointEffectComp.ResPaths.explode then
@@ -1026,7 +1058,64 @@ function SurvivalMapHelper:addPointEffect(hexNode, effectName)
 	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(hexNode.q, hexNode.r)
 
 	tempV3:Set(x, y, z)
-	self:getScene().pointEffect:addAutoDisposeEffect(effectName, tempV3, 2)
+	self:getScene().pointEffect:addAutoDisposeEffect(effectName, tempV3, 2, scale)
+end
+
+function SurvivalMapHelper:checkRoleLevelUpCache(isJumpCheck)
+	local isOpen
+
+	if SurvivalMapHelper.instance:isInShelterScene() then
+		local isInTopView = ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMainView, {
+			ViewName.SurvivalToastView,
+			ViewName.SurvivalCommonTipsView,
+			ViewName.GuideView,
+			ViewName.GuideView2,
+			ViewName.GuideStepEditor
+		})
+
+		if isJumpCheck or isInTopView and not self:isInFlow() then
+			local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+
+			if survivalShelterRoleMo.uiShowLevel then
+				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalRoleLevelUpView, {
+					oldLevel = survivalShelterRoleMo.uiShowLevel - 1,
+					curLevel = survivalShelterRoleMo.uiShowLevel
+				})
+				survivalShelterRoleMo:clearLevelUpCache()
+
+				isOpen = true
+			end
+		end
+	elseif SurvivalMapHelper.instance:isInMapScene() then
+		local isInTopView = ViewHelper.instance:checkViewOnTheTop(ViewName.SurvivalMapMainView, {
+			ViewName.SurvivalToastView,
+			ViewName.SurvivalCommonTipsView,
+			ViewName.GuideView,
+			ViewName.GuideView2,
+			ViewName.GuideStepEditor
+		})
+
+		if isJumpCheck or isInTopView and not self:isInFlow() then
+			local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+
+			if survivalShelterRoleMo.uiShowLevel then
+				PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalRoleLevelUpView, {
+					oldLevel = survivalShelterRoleMo.uiShowLevel - 1,
+					curLevel = survivalShelterRoleMo.uiShowLevel
+				})
+				survivalShelterRoleMo:clearLevelUpCache()
+
+				isOpen = true
+			end
+
+			if survivalShelterRoleMo.isExpCache then
+				SurvivalController.instance:dispatchEvent(SurvivalEvent.OnPlayGainExpAnim)
+				survivalShelterRoleMo:clearExpCache()
+			end
+		end
+	end
+
+	return isOpen
 end
 
 SurvivalMapHelper.instance = SurvivalMapHelper.New()

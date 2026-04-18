@@ -58,6 +58,10 @@ end
 function CharacterSkinGainView:_editableInitView()
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 
+	self._uiSpine = GuiModelAgent.Create(self._golive2dcontainer, true)
+
+	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+
 	self._bgClick = gohelper.getClickWithAudio(self.viewGO)
 
 	self._bgClick:AddClickListener(self._onBgClick, self)
@@ -150,7 +154,6 @@ function CharacterSkinGainView:_refreshView()
 	end
 
 	self._txtnameen.text = heroConfig.nameEng
-	self._uiSpine = GuiModelAgent.Create(self._golive2dcontainer, true)
 
 	self._uiSpine:setResPath(self._skinCo, self._onUISpineLoaded, self)
 	self._simageicon:LoadImage(ResUrl.getHeadIconImg(self._skinCo.id), self._loadedImage, self)

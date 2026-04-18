@@ -128,6 +128,36 @@ function SummonMainController:sendStartSummon(poolId, count, isFreeEquip, needGe
 	end
 end
 
+function SummonMainController:checkCanUseInfallibleItem(poolId)
+	local poolInfo = SummonMainModel.instance:getPoolServerMO(poolId)
+
+	if not poolInfo then
+		return false
+	end
+
+	local summonConfig = SummonConfig.instance:getSummonPool(poolId)
+
+	if summonConfig.infallibleItemId == nil or summonConfig.infallibleItemId == 0 or summonConfig.infallibleItemMaxUseCount <= 0 then
+		return false
+	end
+
+	local itemId = summonConfig.infallibleItemId
+	local count = ItemModel.instance:getItemCount(itemId)
+
+	if count <= 0 then
+		return false
+	end
+
+	local isUnused = poolInfo.infallibleItemStatus == SummonEnum.InfallibleItemState.Unused
+
+	return isUnused
+end
+
+function SummonMainController:startInfallibleSummon(poolId, callback, callbackObj)
+	SummonController.instance:setSendPoolId(poolId)
+	SummonRpc.instance:sendInfallibleSummonRequest(poolId, callback, callbackObj)
+end
+
 function SummonMainController:getNeedGetInfo()
 	return self._needGetInfo
 end
@@ -318,6 +348,14 @@ function SummonMainController:setDiamondEnoughTipCb(params)
 
 		GameFacade.showToast(ToastEnum.ExchangeDiamondSummon, params.miss_quantity)
 	end
+end
+
+function SummonMainController:setSummonPoolPackageProp(poolId, order, callback, callbackObj)
+	SummonRpc.instance:sendPopUpRecommendWindowRequest(poolId, order, callback, callbackObj)
+end
+
+function SummonMainController:setLimitReplicatePoolSelect(poolId, heroIdList, callback, callbackObj)
+	SummonRpc.instance:sendChooseDoubleUpHeroRequest(poolId, heroIdList, callback, callbackObj)
 end
 
 SummonMainController.instance = SummonMainController.New()

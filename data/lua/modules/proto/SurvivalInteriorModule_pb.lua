@@ -9,6 +9,8 @@ local SurvivalInteriorModule_pb = {}
 
 SurvivalInteriorModule_pb.SURVIVALDEF_PB = require("modules.proto.SurvivalDef_pb")
 SurvivalInteriorModule_pb.HERODEF_PB = require("modules.proto.HeroDef_pb")
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREPLY_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREPLYDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.ENTERSURVIVALREPLY_MSG = protobuf.Descriptor()
@@ -23,6 +25,12 @@ SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLY_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLYDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLYINTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLYLONGDATAFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSH_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSHJSONFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REPLY_MSG = protobuf.Descriptor()
@@ -45,6 +53,9 @@ SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLY_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLYMODULEIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLYTASKIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLYFOLLOWFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREPLY_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALUSEITEMREQUEST_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALUSEITEMREQUESTITEMUIDFIELD = protobuf.FieldDescriptor()
@@ -68,6 +79,9 @@ SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHTOTALGAMETIMEFIELD = protobuf.Fiel
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHTEAMINFOFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHREASONFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUEST_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUESTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUESTINTDATAFIELD = protobuf.FieldDescriptor()
@@ -80,18 +94,48 @@ SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUEST_MSG = protobuf.Descriptor(
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUESTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUESTINTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUESTLONGDATAFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUEST_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUESTOPERATIONTYPEFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUESTPARAMFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREQUEST_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREPLY_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREPLYDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSH_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSHDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSHINTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSHLONGDATAFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG = protobuf.Descriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSH_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSHDATAFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.name = "param"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.full_name = ".SurvivalUseRoleSkillRequest.param"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.type = 9
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD.cpp_type = 9
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.name = "SurvivalUseRoleSkillRequest"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.full_name = ".SurvivalUseRoleSkillRequest"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUESTPARAMFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREPLYDATAFIELD.name = "data"
 SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREPLYDATAFIELD.full_name = ".SurvivalUpdateClientDataReply.data"
 SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREPLYDATAFIELD.number = 1
@@ -223,6 +267,62 @@ SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLY_MSG.fields = {
 }
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLY_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REPLY_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.name = "unitId"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.full_name = ".SurvivalAddMessageRequest.unitId"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.name = "configId"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.full_name = ".SurvivalAddMessageRequest.configId"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.name = "SurvivalAddMessageRequest"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.full_name = ".SurvivalAddMessageRequest"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTUNITIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUESTCONFIGIDFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.name = "unitId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.full_name = ".SurvivalEditMessageRequest.unitId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.name = "configId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.full_name = ".SurvivalEditMessageRequest.configId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.name = "SurvivalEditMessageRequest"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.full_name = ".SurvivalEditMessageRequest"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTUNITIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUESTCONFIGIDFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSHJSONFIELD.name = "json"
 SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSHJSONFIELD.full_name = ".SurvivalDailyReportPush.json"
 SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSHJSONFIELD.number = 1
@@ -431,6 +531,34 @@ SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLY_MSG.fields = {
 }
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLY_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREPLY_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.name = "unitId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.full_name = ".SurvivalEditMessageReply.unitId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.name = "configId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.full_name = ".SurvivalEditMessageReply.configId"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.name = "SurvivalEditMessageReply"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.full_name = ".SurvivalEditMessageReply"
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYUNITIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLYCONFIGIDFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREPLY_MSG.name = "SurvivalSceneGiveUpReply"
 SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREPLY_MSG.full_name = ".SurvivalSceneGiveUpReply"
 SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREPLY_MSG.nested_types = {}
@@ -632,6 +760,16 @@ SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD.has_default_value =
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD.default_value = ""
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD.type = 9
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD.cpp_type = 9
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.name = "npcDropTips"
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.full_name = ".SurvivalSceneEndPush.npcDropTips"
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.number = 11
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.index = 8
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.message_type = SurvivalInteriorModule_pb.SURVIVALDEF_PB.SURVIVALITEMTIPS_MSG
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.type = 11
+SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD.cpp_type = 10
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.name = "SurvivalSceneEndPush"
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.full_name = ".SurvivalSceneEndPush"
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.nested_types = {}
@@ -644,10 +782,29 @@ SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.fields = {
 	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHTOTALGAMETIMEFIELD,
 	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHTEAMINFOFIELD,
 	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHREASONFIELD,
-	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD
+	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHEXTRAJSONFIELD,
+	SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSHNPCDROPTIPSFIELD
 }
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.name = "useCount"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.full_name = ".SurvivalUseRoleSkillReply.useCount"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.name = "SurvivalUseRoleSkillReply"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.full_name = ".SurvivalUseRoleSkillReply"
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLYUSECOUNTFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUESTDATAFIELD.name = "data"
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUESTDATAFIELD.full_name = ".SurvivalSceneHotfix1Request.data"
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX1REQUESTDATAFIELD.number = 1
@@ -762,6 +919,35 @@ SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUEST_MSG.fields = {
 }
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUEST_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3REQUEST_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.name = "operationType"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.full_name = ".SurvivalMessageOperationReply.operationType"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.name = "message"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.full_name = ".SurvivalMessageOperationReply.message"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.default_value = nil
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.message_type = SurvivalInteriorModule_pb.SURVIVALDEF_PB.SURVIVALMESSAGE_MSG
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.type = 11
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD.cpp_type = 10
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.name = "SurvivalMessageOperationReply"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.full_name = ".SurvivalMessageOperationReply"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYOPERATIONTYPEFIELD,
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLYMESSAGEFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUESTOPERATIONTYPEFIELD.name = "operationType"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUESTOPERATIONTYPEFIELD.full_name = ".SurvivalSceneOperationRequest.operationType"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONREQUESTOPERATIONTYPEFIELD.number = 1
@@ -797,6 +983,54 @@ SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREQUEST_MSG.enum_types = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREQUEST_MSG.fields = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREQUEST_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREQUEST_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.name = "message"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.full_name = ".SurvivalAddMessageReply.message"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.message_type = SurvivalInteriorModule_pb.SURVIVALDEF_PB.SURVIVALMESSAGE_MSG
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.type = 11
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD.cpp_type = 10
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.name = "SurvivalAddMessageReply"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.full_name = ".SurvivalAddMessageReply"
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLYMESSAGEFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.name = "id"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.full_name = ".SurvivalMessagePush.id"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.name = "message"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.full_name = ".SurvivalMessagePush.message"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.label = 3
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.default_value = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.message_type = SurvivalInteriorModule_pb.SURVIVALDEF_PB.SURVIVALMESSAGE_MSG
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.type = 11
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD.cpp_type = 10
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.name = "SurvivalMessagePush"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.full_name = ".SurvivalMessagePush"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSHMESSAGEFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREPLYDATAFIELD.name = "data"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREPLYDATAFIELD.full_name = ".SurvivalSceneOperationLogReply.data"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGREPLYDATAFIELD.number = 1
@@ -853,6 +1087,44 @@ SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSH_MSG.fields = {
 }
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSH_MSG.is_extendable = false
 SurvivalInteriorModule_pb.SURVIVALSCENEHOTFIX3PUSH_MSG.extensions = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.name = "unitId"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.full_name = ".SurvivalMessageOperationRequest.unitId"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.number = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.index = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.name = "msgId"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.full_name = ".SurvivalMessageOperationRequest.msgId"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.number = 2
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.index = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.type = 3
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD.cpp_type = 2
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.name = "operationType"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.full_name = ".SurvivalMessageOperationRequest.operationType"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.number = 3
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.index = 2
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.label = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.default_value = 0
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.type = 5
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.name = "SurvivalMessageOperationRequest"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.full_name = ".SurvivalMessageOperationRequest"
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.nested_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.enum_types = {}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.fields = {
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTUNITIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTMSGIDFIELD,
+	SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUESTOPERATIONTYPEFIELD
+}
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.is_extendable = false
+SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG.extensions = {}
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSHDATAFIELD.name = "data"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSHDATAFIELD.full_name = ".SurvivalSceneOperationLogPush.data"
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSHDATAFIELD.number = 1
@@ -873,7 +1145,14 @@ SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSH_MSG.is_extendable = fals
 SurvivalInteriorModule_pb.SURVIVALSCENEOPERATIONLOGPUSH_MSG.extensions = {}
 SurvivalInteriorModule_pb.EnterSurvivalReply = protobuf.Message(SurvivalInteriorModule_pb.ENTERSURVIVALREPLY_MSG)
 SurvivalInteriorModule_pb.EnterSurvivalRequest = protobuf.Message(SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG)
+SurvivalInteriorModule_pb.SurvivalAddMessageReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREPLY_MSG)
+SurvivalInteriorModule_pb.SurvivalAddMessageRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALADDMESSAGEREQUEST_MSG)
 SurvivalInteriorModule_pb.SurvivalDailyReportPush = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALDAILYREPORTPUSH_MSG)
+SurvivalInteriorModule_pb.SurvivalEditMessageReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREPLY_MSG)
+SurvivalInteriorModule_pb.SurvivalEditMessageRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALEDITMESSAGEREQUEST_MSG)
+SurvivalInteriorModule_pb.SurvivalMessageOperationReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREPLY_MSG)
+SurvivalInteriorModule_pb.SurvivalMessageOperationRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALMESSAGEOPERATIONREQUEST_MSG)
+SurvivalInteriorModule_pb.SurvivalMessagePush = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALMESSAGEPUSH_MSG)
 SurvivalInteriorModule_pb.SurvivalSceneEndPush = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALSCENEENDPUSH_MSG)
 SurvivalInteriorModule_pb.SurvivalSceneGiveUpReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREPLY_MSG)
 SurvivalInteriorModule_pb.SurvivalSceneGiveUpRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALSCENEGIVEUPREQUEST_MSG)
@@ -897,5 +1176,7 @@ SurvivalInteriorModule_pb.SurvivalUpdateClientDataReply = protobuf.Message(Survi
 SurvivalInteriorModule_pb.SurvivalUpdateClientDataRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALUPDATECLIENTDATAREQUEST_MSG)
 SurvivalInteriorModule_pb.SurvivalUseItemReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALUSEITEMREPLY_MSG)
 SurvivalInteriorModule_pb.SurvivalUseItemRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALUSEITEMREQUEST_MSG)
+SurvivalInteriorModule_pb.SurvivalUseRoleSkillReply = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREPLY_MSG)
+SurvivalInteriorModule_pb.SurvivalUseRoleSkillRequest = protobuf.Message(SurvivalInteriorModule_pb.SURVIVALUSEROLESKILLREQUEST_MSG)
 
 return SurvivalInteriorModule_pb

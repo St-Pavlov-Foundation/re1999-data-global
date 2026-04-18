@@ -30,10 +30,16 @@ function Activity217Controller:dailyRefresh()
 end
 
 function Activity217Controller:_checkAndGetActInfo()
-	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop]
+	local actIdList = Activity217Config.instance:getActIdList()
 
-	if actInfoMo and actInfoMo:isOnline() and actInfoMo:isOpen() and not actInfoMo:isExpired() then
-		Activity217Rpc.instance:sendGet217InfosRequest(VersionActivity3_2Enum.ActivityId.CruiseTripleDrop)
+	for index, actId in ipairs(actIdList) do
+		local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+		if actInfoMo and actInfoMo:isOnline() and actInfoMo:isOpen() and not actInfoMo:isExpired() then
+			Activity217Rpc.instance:sendGet217InfosRequest(actId)
+
+			break
+		end
 	end
 end
 

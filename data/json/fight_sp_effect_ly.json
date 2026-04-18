@@ -43,5 +43,20 @@
     "spine2EffectRes": "roleeffects/roleeffect_lyblur",
     "audioId": 431100151,
     "fadeAudioId": 431100152
+  },
+  {
+    "id": 311003,
+    "path": "v3a4_ly/ly_bd",
+    "pos": [
+      6.6,
+      -0.05,
+      0
+    ],
+    "spine1Res": "v3a4_311003_ly_z/311003_ly_z_fight",
+    "spine1EffectRes": "roleeffects/roleeffect_ly_skin1",
+    "spine2Res": "",
+    "spine2EffectRes": "",
+    "audioId": 431100351,
+    "fadeAudioId": 431100352
   }
 ]

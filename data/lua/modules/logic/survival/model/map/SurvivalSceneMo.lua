@@ -64,8 +64,9 @@ function SurvivalSceneMo:init(data)
 
 	self.gameTime = data.gameTime
 	self.currMaxGameTime = data.currMaxGameTime
+	self.clockMaxTime = data.clockMaxTime
 	self.circle = data.circle
-	self.addTime = self.currMaxGameTime - tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TotalTime)))
+	self.addTime = self.currMaxGameTime - self.clockMaxTime
 	self.panel = nil
 
 	if data.panel.type ~= SurvivalEnum.PanelType.None then
@@ -102,6 +103,7 @@ function SurvivalSceneMo:init(data)
 	end
 
 	self.sceneProp = GameUtil.rpcInfoToMo(data.sceneProp, SurvivalScenePropMo)
+	self.roleSkillMo = GameUtil.rpcInfoToMo(data.skillInfo, SurvivalRoleSkillMo, self.roleSkillMo)
 end
 
 function SurvivalSceneMo:getBlockTypeByPos(pos)
@@ -502,6 +504,10 @@ function SurvivalSceneMo:isHaveIceEvent()
 	iceSpEventId = tonumber(iceSpEventId) or 0
 
 	return cfgId == iceSpEventId
+end
+
+function SurvivalSceneMo:getRoleSkillInfo()
+	return self.roleSkillMo
 end
 
 return SurvivalSceneMo

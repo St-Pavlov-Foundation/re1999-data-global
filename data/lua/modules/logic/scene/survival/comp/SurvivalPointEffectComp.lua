@@ -7,11 +7,12 @@ local SurvivalPointEffectComp = class("SurvivalPointEffectComp", BaseSceneComp)
 SurvivalPointEffectComp.ResPaths = {
 	changeModel = "survival/effects/prefab/v3a1_scene_zaiju.prefab",
 	teleportGate = "survival/effects/prefab/v3a1_scene_biaoji.prefab",
-	explode = "survival/effects/prefab/v3a1_scene_baozha.prefab",
+	skill = "survival/effects/prefab/v3a4_survival_jineng.prefab",
 	warming1 = "survival/effects/prefab/v2a8_survival_jingjie_1.prefab",
 	warming2 = "survival/effects/prefab/v2a8_survival_jingjie_2.prefab",
 	useitem = "survival/effects/prefab/v2a8_survival_daoju.prefab",
-	fastfight = "survival/effects/prefab/v2a8_scene_tiaoguo.prefab"
+	fastfight = "survival/effects/prefab/v2a8_scene_tiaoguo.prefab",
+	explode = "survival/effects/prefab/v3a1_scene_baozha.prefab"
 }
 
 function SurvivalPointEffectComp:onScenePrepared(sceneId, levelId)
@@ -19,6 +20,7 @@ function SurvivalPointEffectComp:onScenePrepared(sceneId, levelId)
 	self._effectRoot = gohelper.create3d(self._sceneGo, "PointEffectRoot")
 	self._warmingPool = {}
 	self._useitemPool = {}
+	self._skillPool = {}
 	self._allInsts = {}
 	self._allKeys = {}
 	self._autoDisposeEffect = {}
@@ -79,17 +81,19 @@ function SurvivalPointEffectComp:setTeleportGateEffect()
 	end
 end
 
-function SurvivalPointEffectComp:addAutoDisposeEffect(path, pos, time)
+function SurvivalPointEffectComp:addAutoDisposeEffect(path, pos, time, scale)
 	if not self._effectRoot then
 		return
 	end
 
 	time = time or 2
+	scale = scale or 1
 
 	local res = SurvivalMapHelper.instance:getBlockRes(path)
 	local effectGo = gohelper.clone(res, self._effectRoot)
 
 	transformhelper.setLocalPos(effectGo.transform, pos.x, pos.y, pos.z)
+	transformhelper.setLocalScale(effectGo.transform, scale, scale, scale)
 
 	self._autoDisposeEffect[effectGo] = time + UnityEngine.Time.realtimeSinceStartup
 
@@ -192,6 +196,16 @@ function SurvivalPointEffectComp:setResByType(type, q, r)
 
 			transformhelper.setLocalRotation(obj.transform, 0, 30, 0)
 		end
+	elseif type == 3 then
+		obj = table.remove(self._skillPool)
+
+		if not obj then
+			local res = SurvivalMapHelper.instance:getBlockRes(SurvivalPointEffectComp.ResPaths.skill)
+
+			obj = gohelper.clone(res, self._effectRoot)
+
+			transformhelper.setLocalRotation(obj.transform, 0, 30, 0)
+		end
 	end
 
 	gohelper.setActive(obj, true)
@@ -216,6 +230,8 @@ function SurvivalPointEffectComp:inPoolRes(type, obj)
 		table.insert(self._warmingPool, obj)
 	elseif type == 2 then
 		table.insert(self._useitemPool, obj)
+	elseif type == 3 then
+		table.insert(self._skillPool, obj)
 	end
 end
 
@@ -237,6 +253,7 @@ function SurvivalPointEffectComp:onSceneClose()
 	self._autoDisposeEffect = {}
 	self._warmingPool = {}
 	self._useitemPool = {}
+	self._skillPool = {}
 	self._allInsts = {}
 end
 

@@ -4,22 +4,23 @@ module("modules.configs.excel2json.lua_survival_shelter_intrude_fight", package.
 
 local lua_survival_shelter_intrude_fight = {}
 local fields = {
-	score = 4,
-	gridType = 8,
-	battleId = 3,
-	smallheadicon = 9,
-	name = 10,
-	image = 5,
 	target = 2,
+	destructionLevel = 16,
+	name = 10,
+	cleanLevel = 14,
+	gridType = 8,
+	cleanpoint = 15,
 	desc = 11,
 	saveMonster = 13,
-	toward = 12,
 	model = 6,
-	cleanpoint = 14,
+	battleId = 3,
+	smallheadicon = 9,
+	score = 4,
+	image = 5,
+	toward = 12,
+	drop = 17,
 	id = 1,
-	destructionLevel = 15,
-	scale = 7,
-	drop = 16
+	scale = 7
 }
 local primaryKey = {
 	"id"

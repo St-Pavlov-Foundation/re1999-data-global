@@ -1,0 +1,882 @@
+[
+  {
+    "id": 10001,
+    "type": 1,
+    "level": 1,
+    "attribute1": 2,
+    "attribute2": 5,
+    "attribute3": 2,
+    "attribute4": 3,
+    "attribute5": 1
+  },
+  {
+    "id": 10002,
+    "type": 1,
+    "level": 2,
+    "attribute1": 4,
+    "attribute2": 10,
+    "attribute3": 4,
+    "attribute4": 6,
+    "attribute5": 2
+  },
+  {
+    "id": 10003,
+    "type": 1,
+    "level": 3,
+    "attribute1": 6,
+    "attribute2": 15,
+    "attribute3": 6,
+    "attribute4": 9,
+    "attribute5": 3
+  },
+  {
+    "id": 10004,
+    "type": 1,
+    "level": 4,
+    "attribute1": 8,
+    "attribute2": 20,
+    "attribute3": 8,
+    "attribute4": 12,
+    "attribute5": 4
+  },
+  {
+    "id": 10005,
+    "type": 1,
+    "level": 5,
+    "attribute1": 10,
+    "attribute2": 25,
+    "attribute3": 10,
+    "attribute4": 15,
+    "attribute5": 5
+  },
+  {
+    "id": 10006,
+    "type": 1,
+    "level": 6,
+    "attribute1": 12,
+    "attribute2": 30,
+    "attribute3": 12,
+    "attribute4": 18,
+    "attribute5": 6
+  },
+  {
+    "id": 10007,
+    "type": 1,
+    "level": 7,
+    "attribute1": 14,
+    "attribute2": 35,
+    "attribute3": 14,
+    "attribute4": 21,
+    "attribute5": 7
+  },
+  {
+    "id": 10008,
+    "type": 1,
+    "level": 8,
+    "attribute1": 16,
+    "attribute2": 40,
+    "attribute3": 16,
+    "attribute4": 24,
+    "attribute5": 8
+  },
+  {
+    "id": 10009,
+    "type": 1,
+    "level": 9,
+    "attribute1": 18,
+    "attribute2": 45,
+    "attribute3": 18,
+    "attribute4": 27,
+    "attribute5": 9
+  },
+  {
+    "id": 10010,
+    "type": 1,
+    "level": 10,
+    "attribute1": 20,
+    "attribute2": 50,
+    "attribute3": 20,
+    "attribute4": 30,
+    "attribute5": 10
+  },
+  {
+    "id": 10011,
+    "type": 1,
+    "level": 11,
+    "attribute1": 22,
+    "attribute2": 55,
+    "attribute3": 22,
+    "attribute4": 33,
+    "attribute5": 11
+  },
+  {
+    "id": 10012,
+    "type": 1,
+    "level": 12,
+    "attribute1": 24,
+    "attribute2": 60,
+    "attribute3": 24,
+    "attribute4": 36,
+    "attribute5": 12
+  },
+  {
+    "id": 10013,
+    "type": 1,
+    "level": 13,
+    "attribute1": 26,
+    "attribute2": 65,
+    "attribute3": 26,
+    "attribute4": 39,
+    "attribute5": 13
+  },
+  {
+    "id": 10014,
+    "type": 1,
+    "level": 14,
+    "attribute1": 28,
+    "attribute2": 70,
+    "attribute3": 28,
+    "attribute4": 42,
+    "attribute5": 14
+  },
+  {
+    "id": 10015,
+    "type": 1,
+    "level": 15,
+    "attribute1": 30,
+    "attribute2": 75,
+    "attribute3": 30,
+    "attribute4": 45,
+    "attribute5": 15
+  },
+  {
+    "id": 10016,
+    "type": 1,
+    "level": 16,
+    "attribute1": 32,
+    "attribute2": 80,
+    "attribute3": 32,
+    "attribute4": 48,
+    "attribute5": 16
+  },
+  {
+    "id": 10017,
+    "type": 1,
+    "level": 17,
+    "attribute1": 34,
+    "attribute2": 85,
+    "attribute3": 34,
+    "attribute4": 51,
+    "attribute5": 17
+  },
+  {
+    "id": 10018,
+    "type": 1,
+    "level": 18,
+    "attribute1": 36,
+    "attribute2": 90,
+    "attribute3": 36,
+    "attribute4": 54,
+    "attribute5": 18
+  },
+  {
+    "id": 10019,
+    "type": 1,
+    "level": 19,
+    "attribute1": 38,
+    "attribute2": 95,
+    "attribute3": 38,
+    "attribute4": 57,
+    "attribute5": 19
+  },
+  {
+    "id": 10020,
+    "type": 1,
+    "level": 20,
+    "attribute1": 40,
+    "attribute2": 100,
+    "attribute3": 40,
+    "attribute4": 60,
+    "attribute5": 20
+  },
+  {
+    "id": 10021,
+    "type": 1,
+    "level": 21,
+    "attribute1": 42,
+    "attribute2": 105,
+    "attribute3": 42,
+    "attribute4": 63,
+    "attribute5": 21
+  },
+  {
+    "id": 10022,
+    "type": 1,
+    "level": 22,
+    "attribute1": 44,
+    "attribute2": 110,
+    "attribute3": 44,
+    "attribute4": 66,
+    "attribute5": 22
+  },
+  {
+    "id": 20001,
+    "type": 2,
+    "level": 1,
+    "attribute1": 5,
+    "attribute2": 1,
+    "attribute3": 2,
+    "attribute4": 3,
+    "attribute5": 2
+  },
+  {
+    "id": 20002,
+    "type": 2,
+    "level": 2,
+    "attribute1": 10,
+    "attribute2": 2,
+    "attribute3": 4,
+    "attribute4": 6,
+    "attribute5": 4
+  },
+  {
+    "id": 20003,
+    "type": 2,
+    "level": 3,
+    "attribute1": 15,
+    "attribute2": 3,
+    "attribute3": 6,
+    "attribute4": 9,
+    "attribute5": 6
+  },
+  {
+    "id": 20004,
+    "type": 2,
+    "level": 4,
+    "attribute1": 20,
+    "attribute2": 4,
+    "attribute3": 8,
+    "attribute4": 12,
+    "attribute5": 8
+  },
+  {
+    "id": 20005,
+    "type": 2,
+    "level": 5,
+    "attribute1": 25,
+    "attribute2": 5,
+    "attribute3": 10,
+    "attribute4": 15,
+    "attribute5": 10
+  },
+  {
+    "id": 20006,
+    "type": 2,
+    "level": 6,
+    "attribute1": 30,
+    "attribute2": 6,
+    "attribute3": 12,
+    "attribute4": 18,
+    "attribute5": 12
+  },
+  {
+    "id": 20007,
+    "type": 2,
+    "level": 7,
+    "attribute1": 35,
+    "attribute2": 7,
+    "attribute3": 14,
+    "attribute4": 21,
+    "attribute5": 14
+  },
+  {
+    "id": 20008,
+    "type": 2,
+    "level": 8,
+    "attribute1": 40,
+    "attribute2": 8,
+    "attribute3": 16,
+    "attribute4": 24,
+    "attribute5": 16
+  },
+  {
+    "id": 20009,
+    "type": 2,
+    "level": 9,
+    "attribute1": 45,
+    "attribute2": 9,
+    "attribute3": 18,
+    "attribute4": 27,
+    "attribute5": 18
+  },
+  {
+    "id": 20010,
+    "type": 2,
+    "level": 10,
+    "attribute1": 50,
+    "attribute2": 10,
+    "attribute3": 20,
+    "attribute4": 30,
+    "attribute5": 20
+  },
+  {
+    "id": 20011,
+    "type": 2,
+    "level": 11,
+    "attribute1": 55,
+    "attribute2": 11,
+    "attribute3": 22,
+    "attribute4": 33,
+    "attribute5": 22
+  },
+  {
+    "id": 20012,
+    "type": 2,
+    "level": 12,
+    "attribute1": 60,
+    "attribute2": 12,
+    "attribute3": 24,
+    "attribute4": 36,
+    "attribute5": 24
+  },
+  {
+    "id": 20013,
+    "type": 2,
+    "level": 13,
+    "attribute1": 65,
+    "attribute2": 13,
+    "attribute3": 26,
+    "attribute4": 39,
+    "attribute5": 26
+  },
+  {
+    "id": 20014,
+    "type": 2,
+    "level": 14,
+    "attribute1": 70,
+    "attribute2": 14,
+    "attribute3": 28,
+    "attribute4": 42,
+    "attribute5": 28
+  },
+  {
+    "id": 20015,
+    "type": 2,
+    "level": 15,
+    "attribute1": 75,
+    "attribute2": 15,
+    "attribute3": 30,
+    "attribute4": 45,
+    "attribute5": 30
+  },
+  {
+    "id": 20016,
+    "type": 2,
+    "level": 16,
+    "attribute1": 80,
+    "attribute2": 16,
+    "attribute3": 32,
+    "attribute4": 48,
+    "attribute5": 32
+  },
+  {
+    "id": 20017,
+    "type": 2,
+    "level": 17,
+    "attribute1": 85,
+    "attribute2": 17,
+    "attribute3": 34,
+    "attribute4": 51,
+    "attribute5": 34
+  },
+  {
+    "id": 20018,
+    "type": 2,
+    "level": 18,
+    "attribute1": 90,
+    "attribute2": 18,
+    "attribute3": 36,
+    "attribute4": 54,
+    "attribute5": 36
+  },
+  {
+    "id": 20019,
+    "type": 2,
+    "level": 19,
+    "attribute1": 95,
+    "attribute2": 19,
+    "attribute3": 38,
+    "attribute4": 57,
+    "attribute5": 38
+  },
+  {
+    "id": 20020,
+    "type": 2,
+    "level": 20,
+    "attribute1": 100,
+    "attribute2": 20,
+    "attribute3": 40,
+    "attribute4": 60,
+    "attribute5": 40
+  },
+  {
+    "id": 20021,
+    "type": 2,
+    "level": 21,
+    "attribute1": 105,
+    "attribute2": 21,
+    "attribute3": 42,
+    "attribute4": 63,
+    "attribute5": 42
+  },
+  {
+    "id": 20022,
+    "type": 2,
+    "level": 22,
+    "attribute1": 110,
+    "attribute2": 22,
+    "attribute3": 44,
+    "attribute4": 66,
+    "attribute5": 44
+  },
+  {
+    "id": 30001,
+    "type": 3,
+    "level": 1,
+    "attribute1": 2,
+    "attribute2": 1,
+    "attribute3": 3,
+    "attribute4": 5,
+    "attribute5": 2
+  },
+  {
+    "id": 30002,
+    "type": 3,
+    "level": 2,
+    "attribute1": 4,
+    "attribute2": 2,
+    "attribute3": 6,
+    "attribute4": 10,
+    "attribute5": 4
+  },
+  {
+    "id": 30003,
+    "type": 3,
+    "level": 3,
+    "attribute1": 6,
+    "attribute2": 3,
+    "attribute3": 9,
+    "attribute4": 15,
+    "attribute5": 6
+  },
+  {
+    "id": 30004,
+    "type": 3,
+    "level": 4,
+    "attribute1": 8,
+    "attribute2": 4,
+    "attribute3": 12,
+    "attribute4": 20,
+    "attribute5": 8
+  },
+  {
+    "id": 30005,
+    "type": 3,
+    "level": 5,
+    "attribute1": 10,
+    "attribute2": 5,
+    "attribute3": 15,
+    "attribute4": 25,
+    "attribute5": 10
+  },
+  {
+    "id": 30006,
+    "type": 3,
+    "level": 6,
+    "attribute1": 12,
+    "attribute2": 6,
+    "attribute3": 18,
+    "attribute4": 30,
+    "attribute5": 12
+  },
+  {
+    "id": 30007,
+    "type": 3,
+    "level": 7,
+    "attribute1": 14,
+    "attribute2": 7,
+    "attribute3": 21,
+    "attribute4": 35,
+    "attribute5": 14
+  },
+  {
+    "id": 30008,
+    "type": 3,
+    "level": 8,
+    "attribute1": 16,
+    "attribute2": 8,
+    "attribute3": 24,
+    "attribute4": 40,
+    "attribute5": 16
+  },
+  {
+    "id": 30009,
+    "type": 3,
+    "level": 9,
+    "attribute1": 18,
+    "attribute2": 9,
+    "attribute3": 27,
+    "attribute4": 45,
+    "attribute5": 18
+  },
+  {
+    "id": 30010,
+    "type": 3,
+    "level": 10,
+    "attribute1": 20,
+    "attribute2": 10,
+    "attribute3": 30,
+    "attribute4": 50,
+    "attribute5": 20
+  },
+  {
+    "id": 30011,
+    "type": 3,
+    "level": 11,
+    "attribute1": 22,
+    "attribute2": 11,
+    "attribute3": 33,
+    "attribute4": 55,
+    "attribute5": 22
+  },
+  {
+    "id": 30012,
+    "type": 3,
+    "level": 12,
+    "attribute1": 24,
+    "attribute2": 12,
+    "attribute3": 36,
+    "attribute4": 60,
+    "attribute5": 24
+  },
+  {
+    "id": 30013,
+    "type": 3,
+    "level": 13,
+    "attribute1": 26,
+    "attribute2": 13,
+    "attribute3": 39,
+    "attribute4": 65,
+    "attribute5": 26
+  },
+  {
+    "id": 30014,
+    "type": 3,
+    "level": 14,
+    "attribute1": 28,
+    "attribute2": 14,
+    "attribute3": 42,
+    "attribute4": 70,
+    "attribute5": 28
+  },
+  {
+    "id": 30015,
+    "type": 3,
+    "level": 15,
+    "attribute1": 30,
+    "attribute2": 15,
+    "attribute3": 45,
+    "attribute4": 75,
+    "attribute5": 30
+  },
+  {
+    "id": 30016,
+    "type": 3,
+    "level": 16,
+    "attribute1": 32,
+    "attribute2": 16,
+    "attribute3": 48,
+    "attribute4": 80,
+    "attribute5": 32
+  },
+  {
+    "id": 30017,
+    "type": 3,
+    "level": 17,
+    "attribute1": 34,
+    "attribute2": 17,
+    "attribute3": 51,
+    "attribute4": 85,
+    "attribute5": 34
+  },
+  {
+    "id": 30018,
+    "type": 3,
+    "level": 18,
+    "attribute1": 36,
+    "attribute2": 18,
+    "attribute3": 54,
+    "attribute4": 90,
+    "attribute5": 36
+  },
+  {
+    "id": 30019,
+    "type": 3,
+    "level": 19,
+    "attribute1": 38,
+    "attribute2": 19,
+    "attribute3": 57,
+    "attribute4": 95,
+    "attribute5": 38
+  },
+  {
+    "id": 30020,
+    "type": 3,
+    "level": 20,
+    "attribute1": 40,
+    "attribute2": 20,
+    "attribute3": 60,
+    "attribute4": 100,
+    "attribute5": 40
+  },
+  {
+    "id": 30021,
+    "type": 3,
+    "level": 21,
+    "attribute1": 42,
+    "attribute2": 21,
+    "attribute3": 63,
+    "attribute4": 105,
+    "attribute5": 42
+  },
+  {
+    "id": 30022,
+    "type": 3,
+    "level": 22,
+    "attribute1": 44,
+    "attribute2": 22,
+    "attribute3": 66,
+    "attribute4": 110,
+    "attribute5": 44
+  },
+  {
+    "id": 40001,
+    "type": 4,
+    "level": 1,
+    "attribute1": 1,
+    "attribute2": 2,
+    "attribute3": 3,
+    "attribute4": 4,
+    "attribute5": 4
+  },
+  {
+    "id": 40002,
+    "type": 4,
+    "level": 2,
+    "attribute1": 2,
+    "attribute2": 4,
+    "attribute3": 6,
+    "attribute4": 8,
+    "attribute5": 8
+  },
+  {
+    "id": 40003,
+    "type": 4,
+    "level": 3,
+    "attribute1": 3,
+    "attribute2": 6,
+    "attribute3": 9,
+    "attribute4": 12,
+    "attribute5": 12
+  },
+  {
+    "id": 40004,
+    "type": 4,
+    "level": 4,
+    "attribute1": 4,
+    "attribute2": 8,
+    "attribute3": 12,
+    "attribute4": 16,
+    "attribute5": 16
+  },
+  {
+    "id": 40005,
+    "type": 4,
+    "level": 5,
+    "attribute1": 5,
+    "attribute2": 10,
+    "attribute3": 15,
+    "attribute4": 20,
+    "attribute5": 20
+  },
+  {
+    "id": 40006,
+    "type": 4,
+    "level": 6,
+    "attribute1": 6,
+    "attribute2": 12,
+    "attribute3": 18,
+    "attribute4": 24,
+    "attribute5": 24
+  },
+  {
+    "id": 40007,
+    "type": 4,
+    "level": 7,
+    "attribute1": 7,
+    "attribute2": 14,
+    "attribute3": 21,
+    "attribute4": 28,
+    "attribute5": 28
+  },
+  {
+    "id": 40008,
+    "type": 4,
+    "level": 8,
+    "attribute1": 8,
+    "attribute2": 16,
+    "attribute3": 24,
+    "attribute4": 32,
+    "attribute5": 32
+  },
+  {
+    "id": 40009,
+    "type": 4,
+    "level": 9,
+    "attribute1": 9,
+    "attribute2": 18,
+    "attribute3": 27,
+    "attribute4": 36,
+    "attribute5": 36
+  },
+  {
+    "id": 40010,
+    "type": 4,
+    "level": 10,
+    "attribute1": 10,
+    "attribute2": 20,
+    "attribute3": 30,
+    "attribute4": 40,
+    "attribute5": 40
+  },
+  {
+    "id": 40011,
+    "type": 4,
+    "level": 11,
+    "attribute1": 11,
+    "attribute2": 22,
+    "attribute3": 33,
+    "attribute4": 44,
+    "attribute5": 44
+  },
+  {
+    "id": 40012,
+    "type": 4,
+    "level": 12,
+    "attribute1": 12,
+    "attribute2": 24,
+    "attribute3": 36,
+    "attribute4": 48,
+    "attribute5": 48
+  },
+  {
+    "id": 40013,
+    "type": 4,
+    "level": 13,
+    "attribute1": 13,
+    "attribute2": 26,
+    "attribute3": 39,
+    "attribute4": 52,
+    "attribute5": 52
+  },
+  {
+    "id": 40014,
+    "type": 4,
+    "level": 14,
+    "attribute1": 14,
+    "attribute2": 28,
+    "attribute3": 42,
+    "attribute4": 56,
+    "attribute5": 56
+  },
+  {
+    "id": 40015,
+    "type": 4,
+    "level": 15,
+    "attribute1": 15,
+    "attribute2": 30,
+    "attribute3": 45,
+    "attribute4": 60,
+    "attribute5": 60
+  },
+  {
+    "id": 40016,
+    "type": 4,
+    "level": 16,
+    "attribute1": 16,
+    "attribute2": 32,
+    "attribute3": 48,
+    "attribute4": 64,
+    "attribute5": 64
+  },
+  {
+    "id": 40017,
+    "type": 4,
+    "level": 17,
+    "attribute1": 17,
+    "attribute2": 34,
+    "attribute3": 51,
+    "attribute4": 68,
+    "attribute5": 68
+  },
+  {
+    "id": 40018,
+    "type": 4,
+    "level": 18,
+    "attribute1": 18,
+    "attribute2": 36,
+    "attribute3": 54,
+    "attribute4": 72,
+    "attribute5": 72
+  },
+  {
+    "id": 40019,
+    "type": 4,
+    "level": 19,
+    "attribute1": 19,
+    "attribute2": 38,
+    "attribute3": 57,
+    "attribute4": 76,
+    "attribute5": 76
+  },
+  {
+    "id": 40020,
+    "type": 4,
+    "level": 20,
+    "attribute1": 20,
+    "attribute2": 40,
+    "attribute3": 60,
+    "attribute4": 80,
+    "attribute5": 80
+  },
+  {
+    "id": 40021,
+    "type": 4,
+    "level": 21,
+    "attribute1": 21,
+    "attribute2": 42,
+    "attribute3": 63,
+    "attribute4": 84,
+    "attribute5": 84
+  },
+  {
+    "id": 40022,
+    "type": 4,
+    "level": 22,
+    "attribute1": 22,
+    "attribute2": 44,
+    "attribute3": 66,
+    "attribute4": 88,
+    "attribute5": 88
+  }
+]

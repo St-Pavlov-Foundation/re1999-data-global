@@ -14,7 +14,7 @@ function FightWorkClearBeforeRestart:onStart()
 	local cur_scene = GameSceneMgr.instance:getCurScene()
 
 	cur_scene.view:onSceneClose()
-	GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
+	FightGameMgr.sceneLevelMgr:setFrontVisible(true)
 end
 
 function FightWorkClearBeforeRestart:_onDestroyViewFinish(viewName)

@@ -63,6 +63,7 @@ function PlayerInfoView:_btnplayercardOnClick()
 	PlayerCardController.instance:openPlayerCardView({
 		userId = self._mo.userId
 	})
+	self:closeThis()
 end
 
 function PlayerInfoView:_btninformplayerOnClick()

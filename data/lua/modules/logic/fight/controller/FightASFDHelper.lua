@@ -40,9 +40,17 @@ function FightASFDHelper.getASFDType(fightStepData)
 	return FightEnum.ASFDType.Normal
 end
 
-function FightASFDHelper.mathReplyRule(entityId, co)
+function FightASFDHelper.mathReplyRule(entityId, co, context)
 	local rule = co.replaceRule
 
+	if string.nilorempty(rule) then
+		return true
+	end
+
+	return FightASFDHelper.checkRule(rule, entityId, context)
+end
+
+function FightASFDHelper.checkRule(rule, entityId, context)
 	if string.nilorempty(rule) then
 		return true
 	end
@@ -56,8 +64,14 @@ function FightASFDHelper.mathReplyRule(entityId, co)
 			if not FightASFDHelper.checkHasSkinRule(ruleArr, entityId) then
 				return false
 			end
-		elseif ruleId == FightEnum.ASFDReplyRule.HasBuffActId and not FightASFDHelper.checkHasBuffActIdRule(ruleArr, entityId) then
-			return false
+		elseif ruleId == FightEnum.ASFDReplyRule.HasBuffActId then
+			if not FightASFDHelper.checkHasBuffActIdRule(ruleArr, entityId) then
+				return false
+			end
+		elseif ruleId == FightEnum.ASFDReplyRule.IndexMoreThan then
+			local curIndex = context and context.emitterAttackNum or 1
+
+			return curIndex >= ruleArr[2]
 		end
 	end
 
@@ -86,7 +100,7 @@ end
 
 FightASFDHelper.tempCoList = {}
 
-function FightASFDHelper.getASFDCo(entityId, unit, default)
+function FightASFDHelper.getASFDCo(entityId, unit, default, context)
 	local list = FightASFDConfig.instance:getUnitList(unit)
 
 	if not list then
@@ -96,7 +110,7 @@ function FightASFDHelper.getASFDCo(entityId, unit, default)
 	tabletool.clear(FightASFDHelper.tempCoList)
 
 	for _, co in ipairs(list) do
-		if FightASFDHelper.mathReplyRule(entityId, co) then
+		if FightASFDHelper.mathReplyRule(entityId, co, context) then
 			table.insert(FightASFDHelper.tempCoList, co)
 		end
 	end
@@ -118,12 +132,12 @@ function FightASFDHelper.getEmitterCo(entityId)
 	return FightASFDHelper.getASFDCo(entityId, FightEnum.ASFDUnit.Emitter, FightASFDConfig.instance.defaultEmitterCo)
 end
 
-function FightASFDHelper.getMissileCo(entityId)
-	return FightASFDHelper.getASFDCo(entityId, FightEnum.ASFDUnit.Missile, FightASFDConfig.instance.defaultMissileCo)
+function FightASFDHelper.getMissileCo(entityId, context)
+	return FightASFDHelper.getASFDCo(entityId, FightEnum.ASFDUnit.Missile, FightASFDConfig.instance.defaultMissileCo, context)
 end
 
-function FightASFDHelper.getExplosionCo(entityId)
-	return FightASFDHelper.getASFDCo(entityId, FightEnum.ASFDUnit.Explosion, FightASFDConfig.instance.defaultExplosionCo)
+function FightASFDHelper.getExplosionCo(entityId, context)
+	return FightASFDHelper.getASFDCo(entityId, FightEnum.ASFDUnit.Explosion, FightASFDConfig.instance.defaultExplosionCo, context)
 end
 
 function FightASFDHelper.getEmitterPos(side, sceneEmitterId)

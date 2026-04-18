@@ -16,12 +16,18 @@ function SurvivalMapSelectView:onInitView()
 	self._gonormal = gohelper.findChild(self._root, "Right/#go_difficulty/normal")
 	self._gohard = gohelper.findChild(self._root, "Right/#go_difficulty/hard")
 	self._gohardEffect = gohelper.findChild(self.viewGO, "#simage_bghard")
-	self.BossInvasionContainer = gohelper.findChild(self._root, "Map/BossInvasionContainer")
+	self._go_recommend = gohelper.findChild(self._root, "Right/#go_recommend")
 
-	local resPath = self.viewContainer:getSetting().otherRes.survivalbossinvasionview
-	local obj = self:getResInst(resPath, self.BossInvasionContainer)
+	local cfgDic = lua_survival_map_group.configDict
 
-	self.survivalBossInvasionView = MonoHelper.addNoUpdateLuaComOnceToGo(obj, SurvivalBossInvasionView, 2)
+	self.mapName = {
+		cfgDic[10000].name,
+		cfgDic[20000].name,
+		cfgDic[30000].name,
+		cfgDic[40000].name,
+		cfgDic[50000].name,
+		cfgDic[60000].name
+	}
 end
 
 function SurvivalMapSelectView:addEvents()
@@ -38,32 +44,32 @@ function SurvivalMapSelectView:onOpen()
 	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
 
 	self._items = {}
+	self.maxRichness = nil
 
-	local mapUnlockCount = weekMo.clientData.data.nowUnlockMapsCount
-	local isChange = false
-
-	for index = 1, 4 do
+	for index = 1, 6 do
 		local mapInfo = weekMo.mapInfos[index]
-		local go = gohelper.findChild(self._root, "Map/#go_map" .. index)
+
+		if mapInfo then
+			local groupCo = mapInfo.groupCo
+
+			if self.maxRichness == nil or groupCo.mapRichness > self.maxRichness then
+				self.maxRichness = groupCo.mapRichness
+			end
+		end
+	end
+
+	for index = 1, 6 do
+		local mapInfo = weekMo.mapInfos[index]
+		local go = gohelper.findChild(self._root, "Map/version3.4/#go_map" .. index)
 
 		self._items[index] = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalMapSelectItem, {
 			callback = self.onClickMap,
 			callobj = self,
 			mapInfo = mapInfo,
-			index = index
+			index = index,
+			maxRichness = self.maxRichness,
+			name = self.mapName[index]
 		})
-
-		if mapInfo and mapUnlockCount < index then
-			self._items[index]:playUnlockAnim()
-
-			isChange = true
-		end
-	end
-
-	if isChange then
-		weekMo.clientData.data.nowUnlockMapsCount = #weekMo.mapInfos
-
-		weekMo.clientData:saveDataToServer(true)
 	end
 
 	self:onClickMap(self._groupMo.selectMapIndex + 1, true)
@@ -112,10 +118,13 @@ function SurvivalMapSelectView:_refreshInfo()
 	self._txtdesc.text = mapInfo.taskCo and mapInfo.taskCo.desc2 or ""
 
 	local arr = string.split(mapCo.effectDesc, "|") or {}
+	local num = #mapInfo.disasterIds
 
-	if mapInfo.disasterCo then
-		table.insert(arr, 1, mapInfo.disasterCo.disasterDesc)
-	elseif mapInfo.disasterId == 0 then
+	if num > 0 then
+		for i, disasterCo in ipairs(mapInfo.disasterCos) do
+			table.insert(arr, 1, disasterCo.disasterDesc)
+		end
+	elseif num == 0 then
 		local _, desc = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.NoDisasterDesc)
 
 		if not string.nilorempty(desc) then
@@ -132,6 +141,7 @@ function SurvivalMapSelectView:_refreshInfo()
 	gohelper.setActive(self._gohard, mapInfo.level == 3)
 	gohelper.setActive(self._gohardEffect, mapInfo.level == 3)
 	gohelper.CreateObjList(self, self._createEffectDesc, arr, nil, self._goeffectdesc)
+	gohelper.setActive(self._go_recommend, mapInfo.groupCo.mapRichness >= self.maxRichness)
 end
 
 function SurvivalMapSelectView:_createEffectDesc(obj, data, index)

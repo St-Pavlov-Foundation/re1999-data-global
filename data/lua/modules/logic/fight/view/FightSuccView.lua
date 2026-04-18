@@ -11,6 +11,9 @@ function FightSuccView:onInitView()
 	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#simage_maskImage")
 	self._gospine = gohelper.findChild(self.viewGO, "spineContainer/spine")
 	self._uiSpine = GuiModelAgent.Create(self._gospine, true)
+
+	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+
 	self._txtFbNameEn = gohelper.findChildText(self.viewGO, "txtFbNameen")
 
 	self._uiSpine:useRT()
@@ -779,10 +782,16 @@ function FightSuccView:_loadBonusItems()
 		self:checkHadHighRareProp(materialList)
 
 		if #materialList > 0 then
-			local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self._curChapterId)
+			local isMultiDrop, limit, total, magnification, isDaily = Activity217Model.instance:getShowTripleByChapter(self._curChapterId)
 
 			if isMultiDrop and limit > 0 and total then
-				GameFacade.showToast(ToastEnum.TripleDropTips, limit, total)
+				local actName = Activity217Model.instance:getActName()
+
+				if isDaily then
+					GameFacade.showToast(ToastEnum.MutilDropDaily, actName, limit, total)
+				else
+					GameFacade.showToast(ToastEnum.MutilDrop, actName, limit, total)
+				end
 			end
 		end
 	end

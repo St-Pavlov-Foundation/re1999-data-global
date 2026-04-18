@@ -61,9 +61,21 @@ function BackpackController:enterItemBackpack(categoryEnum)
 end
 
 function BackpackController:getCategoryCoList()
-	local categoryList = tabletool.copy(BackpackConfig.instance:getCategoryCO())
+	local categoryList = tabletool.copy(BackpackConfig.instance:getCategoryList())
 
 	table.remove(categoryList, 1)
+
+	local hasExpBoxItem = HeroExpBoxModel.instance:hasExpBoxItem()
+
+	if not hasExpBoxItem then
+		for i, co in ipairs(categoryList) do
+			if co.id == ItemEnum.CategoryType.HeroExpBox then
+				table.remove(categoryList, i)
+
+				break
+			end
+		end
+	end
 
 	if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Equip) then
 		local equipCateCo = {}

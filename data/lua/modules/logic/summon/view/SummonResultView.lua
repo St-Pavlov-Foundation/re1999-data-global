@@ -85,9 +85,12 @@ function SummonResultView:_editableInitView()
 	self._simagecurrency10normal = gohelper.findChildSingleImage(self.viewGO, "summonbtns/#go_summon10_normal/currency/#simage_currency10_normal")
 	self._txtcurrency101normal = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_1_normal")
 	self._txtcurrency102normal = gohelper.findChildText(self.viewGO, "summonbtns/#go_summon10_normal/currency/#txt_currency10_2_normal")
+	self._gosummonInfallible = gohelper.findChild(self.viewGO, "summonbtns/#go_summonInfallible")
+	self._btnsummonInfallible = gohelper.findChildButtonWithAudio(self.viewGO, "summonbtns/#go_summonInfallible/#btn_summonInfallibale")
 
 	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
 	self._btnsummon10normal:AddClickListener(self._btnsummon10OnClick, self)
+	self._btnsummonInfallible:AddClickListener(self._btnsummonInfallibleOnClick, self)
 
 	self._isReSummon = false
 	self._canSummon = true
@@ -122,12 +125,12 @@ function SummonResultView:onDestroyView()
 
 	self._btnsummon10:RemoveClickListener()
 	self._btnsummon10normal:RemoveClickListener()
+	self._btnsummonInfallible:RemoveClickListener()
 end
 
 function SummonResultView:onOpen()
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
-	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._refreshCost, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_LuckDraw_TenHero_OpenAll)
 
 	local summonResultList = self.viewParam.summonResultList
@@ -135,7 +138,7 @@ function SummonResultView:onOpen()
 	self._curPool = self:getCurPool()
 	self._summonResultList = {}
 
-	for i, v in ipairs(summonResultList) do
+	for i, v in pairs(summonResultList) do
 		table.insert(self._summonResultList, v)
 	end
 
@@ -153,7 +156,6 @@ end
 function SummonResultView:onClose()
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, self.onSummonReply, self)
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, self.onSummonFailed, self)
-	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._refreshCost, self)
 
 	if not self._isReSummon and not self:_showCommonPropView() then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonResultClose)
@@ -375,8 +377,7 @@ function SummonResultView:_setSummonBtnActive(active)
 	local mo = SummonMainModel.instance:getPoolServerMO(curPool.id)
 
 	if SummonMainModel.validContinueTenPool(curPool.id) then
-		gohelper.setActive(self._gosummon10, true)
-		gohelper.setActive(self._gosummon10normal, true)
+		gohelper.setActive(self._goBtn, true)
 		self:_summonTrack("summon10_auto_show")
 
 		local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPool.id)
@@ -384,10 +385,76 @@ function SummonResultView:_setSummonBtnActive(active)
 
 		gohelper.setActive(self._gosummon10, showDisCount)
 		gohelper.setActive(self._gosummon10normal, not showDisCount)
+		self:_setInfallibleSummon(true)
 	else
-		gohelper.setActive(self._gosummon10, false)
-		gohelper.setActive(self._gosummon10normal, false)
+		gohelper.setActive(self._goBtn, false)
 	end
+end
+
+function SummonResultView:_setInfallibleSummon(active)
+	gohelper.setActive(self._goBtn, active)
+
+	local curPool = self:getCurPool()
+	local curPoolMo = SummonMainModel.instance:getPoolServerMO(curPool.id)
+	local summonConfig = SummonConfig.instance:getSummonPool(curPool.id)
+
+	if summonConfig.infallibleItemId == nil or summonConfig.infallibleItemId == 0 or summonConfig.infallibleItemMaxUseCount <= 0 then
+		return
+	end
+
+	local isTrigger = SummonMainModel.instance:getInfallibleItemUsedTrigger(summonConfig.infallibleItemId)
+	local status = curPoolMo.infallibleItemStatus or SummonEnum.InfallibleItemState.Unused
+
+	if status == SummonEnum.InfallibleItemState.Unused then
+		return
+	end
+
+	local isUsed = status == SummonEnum.InfallibleItemState.Used
+
+	if isUsed and not isTrigger then
+		return
+	end
+
+	gohelper.setActive(self._gosummon10normal, false)
+	gohelper.setActive(self._gosummon10, false)
+
+	if status == SummonEnum.InfallibleItemState.Using then
+		gohelper.setActive(self._gosummonInfallible, true)
+	else
+		if isUsed and isTrigger then
+			local itemCo = ItemConfig.instance:getItemCo(summonConfig.infallibleItemId)
+
+			GameFacade.showToast(ToastEnum.InfallibleItemUsedTip, itemCo.name)
+			SummonMainModel.instance:setInfallibleItemUsedTrigger(summonConfig.infallibleItemId, false)
+		end
+
+		gohelper.setActive(self._gosummonInfallible, false)
+	end
+end
+
+function SummonResultView:_btnsummonInfallibleOnClick()
+	if not self._canSummon then
+		return
+	end
+
+	local curPool = self:getCurPool()
+
+	if not curPool then
+		return
+	end
+
+	local curPoolInfo = SummonMainModel.instance:getPoolServerMO(curPool.id)
+	local summonConfig = SummonConfig.instance:getSummonPool(curPool.id)
+
+	if summonConfig == nil or summonConfig.infallibleItemId == nil or summonConfig.infallibleItemId == 0 or summonConfig.infallibleItemMaxUseCount <= 0 then
+		return false
+	end
+
+	if curPoolInfo.infallibleItemStatus ~= SummonEnum.InfallibleItemState.Using then
+		return
+	end
+
+	SummonMainController.instance:startInfallibleSummon(curPool.id)
 end
 
 function SummonResultView:_btnsummon10OnClick()

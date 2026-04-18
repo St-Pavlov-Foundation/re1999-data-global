@@ -35,11 +35,13 @@ function FightSceneDirector:onSceneStart(sceneId, levelId)
 	self._fightLoadingView = true
 	self._startTime = Time.realtimeSinceStartup
 
-	self._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 	self._scene.preloader:registerCallback(FightSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
 	self._scene.preloader:startPreload(false)
 
 	self._sceneStartTime = Time.time
+
+	FightGameMgr.sceneLevelMgr:loadScene(sceneId, levelId)
 end
 
 function FightSceneDirector:registRespBeginFight()
@@ -50,14 +52,14 @@ function FightSceneDirector:onSceneClose()
 	TaskDispatcher.cancelTask(self._delayStart, self)
 	TaskDispatcher.cancelTask(self._delayCloseFightLoadingView, self)
 	SpineFpsMgr.instance:remove(SpineFpsMgr.FightScene)
-	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPreloadFinish, self)
 	FightController.instance:unregisterCallback(FightEvent.RespBeginFight, self._respBeginFight, self)
 	self._scene.preloader:unregisterCallback(FightSceneEvent.OnPreloadFinish, self._onPrepareFinish, self)
 end
 
 function FightSceneDirector:_onLevelLoaded(levelId)
-	self._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 
 	self._hasLoadScene = true
 

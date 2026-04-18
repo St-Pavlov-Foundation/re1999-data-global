@@ -28,6 +28,10 @@ function BackpackConfig:getCategoryCO()
 	return self._tabConfig.configDict
 end
 
+function BackpackConfig:getCategoryList()
+	return self._tabConfig.configList
+end
+
 function BackpackConfig:getSubclassCo()
 	return self._subclassConfig.configDict
 end

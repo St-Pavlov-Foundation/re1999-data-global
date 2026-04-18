@@ -1,0 +1,42 @@
+[
+  {
+    "round": 1,
+    "num": 4,
+    "showTime": 15.0,
+    "stopTime": 2.0,
+    "answerTime": 8.0,
+    "settleTime": 3.0,
+    "showCount": 5,
+    "showNum": "5#8"
+  },
+  {
+    "round": 2,
+    "num": 4,
+    "showTime": 12.0,
+    "stopTime": 2.0,
+    "answerTime": 8.0,
+    "settleTime": 3.0,
+    "showCount": 4,
+    "showNum": "5#8"
+  },
+  {
+    "round": 3,
+    "num": 3,
+    "showTime": 9.0,
+    "stopTime": 2.0,
+    "answerTime": 8.0,
+    "settleTime": 3.0,
+    "showCount": 3,
+    "showNum": "6#9"
+  },
+  {
+    "round": 4,
+    "num": 2,
+    "showTime": 9.0,
+    "stopTime": 2.0,
+    "answerTime": 8.0,
+    "settleTime": 3.0,
+    "showCount": 3,
+    "showNum": "6#9"
+  }
+]

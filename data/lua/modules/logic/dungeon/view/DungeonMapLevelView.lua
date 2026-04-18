@@ -959,7 +959,7 @@ function DungeonMapLevelView:showDrop()
 		return
 	end
 
-	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self._config.chapterId)
+	local isMultiDrop, limit, total, magnification, isDaily = Activity217Model.instance:getShowTripleByChapter(self._config.chapterId)
 	local multiDropShow = isMultiDrop and limit > 0
 	local episodeShow, remainTimes, dailyLimit = DoubleDropModel.instance:isShowDoubleByEpisode(self._config.id, true)
 	local showDrop = episodeShow or multiDropShow
@@ -968,7 +968,11 @@ function DungeonMapLevelView:showDrop()
 
 	if showDrop then
 		if multiDropShow then
-			self._txtdoubletimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("triple_drop_remain_times"), {
+			local actName = Activity217Model.instance:getActName()
+			local str = isDaily and luaLang("doubleactivity_intips_daily") or luaLang("doubleactivity_intips")
+
+			self._txtdoubletimes.text = GameUtil.getSubPlaceholderLuaLang(str, {
+				actName,
 				limit,
 				total
 			})

@@ -58,10 +58,11 @@ function EnterActivityViewOnExitFightSceneHelper._enterActivity12502(cls, param)
 	end
 
 	local sequence = FlowSequence.New()
+	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController()
 
 	sequence:addWork(OpenViewWork.New({
-		openFunction = VersionActivity2_5EnterController.directOpenVersionActivityEnterView,
-		openFunctionObj = VersionActivity2_5EnterController.instance,
+		openFunction = EnterActivityViewOnExitFightSceneHelper.open3_4ReactivityEnterView,
+		openFunctionObj = enterController.instance,
 		waitOpenViewName = ViewName.VersionActivity2_5EnterView
 	}))
 	sequence:registerDoneListener(function()
@@ -78,6 +79,12 @@ function EnterActivityViewOnExitFightSceneHelper._enterActivity12502(cls, param)
 	sequence:start()
 
 	EnterActivityViewOnExitFightSceneHelper.sequence = sequence
+end
+
+function EnterActivityViewOnExitFightSceneHelper.open3_4ReactivityEnterView()
+	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController()
+
+	enterController:directOpenVersionActivityEnterView(VersionActivity3_4Enum.ActivityId.Reactivity)
 end
 
 function EnterActivityViewOnExitFightSceneHelper.enterActivity12505(forceStarting, exitFightGroup)

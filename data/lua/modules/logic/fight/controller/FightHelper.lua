@@ -1968,7 +1968,7 @@ function FightHelper.processBuffEffectPath(path, entity, buffId, fieldName, audi
 
 				local fromEntityData = FightDataHelper.entityMgr:getById(buffData.fromUid)
 
-				changeBySkinConfig = fromEntityData and changeBySkinConfig[fromEntityData.skin]
+				changeBySkinConfig = changeBySkinConfig and fromEntityData and changeBySkinConfig[fromEntityData.skin]
 			end
 
 			if changeBySkinConfig then
@@ -3756,6 +3756,19 @@ function FightHelper.buildSceneAndLevel(episodeId, battleId)
 	local episodeCO = lua_episode.configDict[episodeId]
 	local handle = episodeCO and FightHelper.buildSceneAndLevelHandleDict[episodeCO.type]
 
+	if episodeCO and episodeCO.type == DungeonEnum.EpisodeType.Survival then
+		local str = lua_survival_const.configDict[4703] and lua_survival_const.configDict[4703].value or ""
+		local filterList = string.splitToNumber(str, "#")
+
+		for i, v in ipairs(filterList) do
+			if v == battleId then
+				handle = nil
+
+				break
+			end
+		end
+	end
+
 	handle = handle or FightHelper.buildDefaultSceneAndLevel
 
 	return handle(episodeId, battleId)
@@ -3883,7 +3896,7 @@ function FightHelper.clearNoUseEffect()
 end
 
 function FightHelper.isASFDSkill(skillId)
-	return skillId == FightASFDConfig.instance.skillId
+	return FightASFDConfig.instance:isASFDSkill(skillId)
 end
 
 function FightHelper.isXiTiSpecialSkill(skillId)

@@ -60,49 +60,7 @@ function SurvivalSummaryNpcHUD:setData(npcId, upInfo)
 	self.npcId = npcId
 	self.upInfo = upInfo
 	self.npcCfg = SurvivalConfig.instance:getNpcConfig(self.npcId)
-
-	local renown = SurvivalConfig.instance:getNpcRenown(self.npcId)
-
-	self.reputationId = renown[1]
-	self.weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-
-	local survivalShelterBuildingMo = self.weekInfo:getBuildingMoByReputationId(self.reputationId)
-
-	self.reputationLevel = survivalShelterBuildingMo.survivalReputationPropMo.prop.reputationLevel
-	self.reputationCfg = SurvivalConfig.instance:getReputationCfgById(self.reputationId, self.reputationLevel)
-
-	local reputationType = self.reputationCfg.type
-	local icon = SurvivalUnitIconHelper.instance:getRelationIcon(reputationType)
-
-	UISpriteSetMgr.instance:setSurvivalSprite(self._imageicon, icon)
-
 	self.txt_name.text = self.npcCfg.name
-	self._txtInfo.text = self.reputationCfg.name
-
-	local path = string.format("survival_level_icon_%s", self.reputationLevel)
-
-	UISpriteSetMgr.instance:setSurvivalSprite(self._imagelevel, path)
-
-	local reputationValue = SurvivalConfig.instance:getNpcReputationValue(self.npcId)
-
-	self.startValue = 0
-	self.endValue = reputationValue
-	self._txtadd.text = string.format("+%s", self.startValue)
-	self.textTweenId = ZProj.TweenHelper.DOTweenFloat(self.startValue, self.endValue, 2, self.setPercentValue, self.onTweenFinish, self, nil, EaseType.OutQuart)
-
-	if self.upInfo then
-		self._animgoinfo:Play()
-	end
-end
-
-function SurvivalSummaryNpcHUD:setPercentValue(value)
-	local str = string.format("+%s", math.floor(value))
-
-	self._txtadd.text = str
-end
-
-function SurvivalSummaryNpcHUD:onTweenFinish()
-	self:setPercentValue(self.endValue)
 end
 
 return SurvivalSummaryNpcHUD

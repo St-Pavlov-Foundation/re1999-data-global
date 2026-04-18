@@ -198,6 +198,76 @@ function FightLogProtobufHelper.getFightActEffectString(actEffectData, level, in
 		table.insert(strTb, FightLogProtobufHelper.getRouge2MusicInfoString(actEffectData.rouge2MusicInfo, level))
 	end
 
+	if actEffectData.hurtInfo then
+		table.insert(strTb, FightLogProtobufHelper.getHurtInfoString(actEffectData.hurtInfo, level))
+	end
+
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getHurtInfoString(hurtInfo, level)
+	level = level or 0
+
+	local initPre = FightLogProtobufHelper.getPrefix(level)
+	local className = FightLogProtobufHelper.buildClassNameByIndex("hurtInfo")
+
+	if not hurtInfo then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogProtobufHelper.getPrefix(level)
+
+	if hurtInfo.damage ~= 0 then
+		table.insert(strTb, string.format("%s damage : %s", pre, hurtInfo.damage))
+	end
+
+	if hurtInfo.reduceHp ~= 0 then
+		table.insert(strTb, string.format("%s reduceHp : %s", pre, hurtInfo.reduceHp))
+	end
+
+	if hurtInfo.reduceShield ~= 0 then
+		table.insert(strTb, string.format("%s reduceShield : %s", pre, hurtInfo.reduceShield))
+	end
+
+	table.insert(strTb, string.format("%s careerRestraint : %s", pre, hurtInfo.careerRestraint))
+	table.insert(strTb, string.format("%s critical : %s", pre, hurtInfo.critical))
+	table.insert(strTb, string.format("%s assassinate : %s", pre, hurtInfo.assassinate))
+
+	if hurtInfo.reduceShield ~= 0 then
+		table.insert(strTb, string.format("%s hurtEffect : %s", pre, hurtInfo.hurtEffect))
+	end
+
+	table.insert(strTb, string.format("%s damageFromType : %s", pre, hurtInfo.damageFromType))
+
+	if hurtInfo.configEffect ~= 0 then
+		table.insert(strTb, string.format("%s configEffect : %s", pre, hurtInfo.configEffect))
+	end
+
+	if hurtInfo.buffActId ~= 0 then
+		table.insert(strTb, string.format("%s buffActId : %s", pre, hurtInfo.buffActId))
+	end
+
+	if hurtInfo.buffUid ~= 0 then
+		table.insert(strTb, string.format("%s buffUid : %s", pre, hurtInfo.buffUid))
+	end
+
+	if hurtInfo.effectId ~= 0 then
+		table.insert(strTb, string.format("%s effectId : %s", pre, hurtInfo.effectId))
+	end
+
+	if hurtInfo.skillId ~= 0 then
+		table.insert(strTb, string.format("%s skillId : %s", pre, hurtInfo.skillId))
+	end
+
+	table.insert(strTb, string.format("%s fromUid : %s", pre, hurtInfo.fromUid))
 	table.insert(strTb, initPre .. "}")
 
 	return table.concat(strTb, "\n")

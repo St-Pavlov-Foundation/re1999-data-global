@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "playerNum": 8,
+    "refreshWeight": "60#30#10#5",
+    "numMax": "80#8#4#2",
+    "interval": "2#12",
+    "effect": "1#5#10#0"
+  },
+  {
+    "id": 2,
+    "playerNum": 4,
+    "refreshWeight": "60#30#10#5",
+    "numMax": "84#5#3#2",
+    "interval": "5#15",
+    "effect": "1#5#10#0"
+  },
+  {
+    "id": 3,
+    "playerNum": 2,
+    "refreshWeight": "60#30#10#5",
+    "numMax": "84#6#2#1",
+    "interval": "10#20",
+    "effect": "1#5#10#0"
+  }
+]

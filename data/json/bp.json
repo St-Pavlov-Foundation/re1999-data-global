@@ -21,7 +21,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 2,
@@ -45,7 +46,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 3,
@@ -69,7 +71,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 4,
@@ -93,7 +96,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 5,
@@ -117,7 +121,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 6,
@@ -141,7 +146,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 7,
@@ -165,7 +171,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 8,
@@ -189,7 +196,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 9,
@@ -213,7 +221,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 10,
@@ -237,7 +246,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 11,
@@ -261,7 +271,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 12,
@@ -285,7 +296,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 13,
@@ -309,7 +321,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 14,
@@ -333,7 +346,8 @@
     "expUpShow": true,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 15,
@@ -357,7 +371,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 16,
@@ -381,7 +396,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 17,
@@ -405,7 +421,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 18,
@@ -429,7 +446,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 19,
@@ -453,7 +471,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 305,
@@ -477,7 +496,8 @@
     "expUpShow": false,
     "promptDays": 0,
     "activityId": 0,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 20,
@@ -501,7 +521,8 @@
     "expUpShow": false,
     "promptDays": 7,
     "activityId": 13123,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
   },
   {
     "bpId": 21,
@@ -525,7 +546,8 @@
     "expUpShow": false,
     "promptDays": 7,
     "activityId": 13225,
-    "specialBonus": "1#140109#1"
+    "specialBonus": 294,
+    "specialPropDesc": ""
   },
   {
     "bpId": 22,
@@ -549,6 +571,32 @@
     "expUpShow": false,
     "promptDays": 7,
     "activityId": 13312,
-    "specialBonus": ""
+    "specialBonus": 0,
+    "specialPropDesc": ""
+  },
+  {
+    "bpId": 23,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#770001#1|1#481010#1",
+    "payStatus2Bonus": "1#770001#1|2#2#400|1#173501#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10113168",
+    "bpSkinNametxt": "language_10114950",
+    "bpSkinEnNametxt": "Reborn and Restored",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2026-05-07 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "promptDays": 7,
+    "activityId": 13419,
+    "specialBonus": 334,
+    "specialPropDesc": "language_10114951"
   }
 ]

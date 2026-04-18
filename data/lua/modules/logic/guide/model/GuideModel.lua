@@ -37,8 +37,10 @@ GuideModel.GuideFlag = {
 	SkipShowElementAnim = 19,
 	BeiLiErPuzzleGame = 50,
 	FightForbidSpeed = 8,
+	PartyGameLocalGame1Result = 61,
 	MoveFightBtn2MapView = 21,
 	FightMoveCard = 1,
+	PartyGameLocalGame2Result = 62,
 	SkipInitElement = 20,
 	AutoChessBanAllOper = 36,
 	PutTalent = 22,
@@ -51,6 +53,7 @@ GuideModel.GuideFlag = {
 	SeasonUTTU = 27,
 	SkipClickElement = 13,
 	RoomForbidBtn = 16,
+	PartyGameLocalGame1 = 60,
 	FightSetSpecificCardIndex = 30,
 	FightLeadRoleSkillGuide = 11,
 	HuiDiaoLanCombineLock = 49
@@ -114,6 +117,10 @@ function GuideModel:isFlagEnable(guideFlag)
 	end
 
 	return false
+end
+
+function GuideModel:clearFlagValue(guideFlag)
+	self._guideFlagDict[guideFlag] = nil
 end
 
 function GuideModel:getFlagValue(guideFlag)

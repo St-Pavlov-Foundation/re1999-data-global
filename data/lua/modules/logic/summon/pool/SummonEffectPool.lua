@@ -4,7 +4,6 @@ module("modules.logic.summon.pool.SummonEffectPool", package.seeall)
 
 local SummonEffectPool = _M
 local _uniqueIdCounter = 1
-local _assetItemPoolList = {}
 local _path2AssetItemDict = {}
 local _path2WrapPoolDict = {}
 local _id2UsingWrapDict = {}
@@ -12,7 +11,6 @@ local _poolContainerGO, _poolContainerTrs
 
 function SummonEffectPool.onEffectPreload(assetItem)
 	assetItem:Retain()
-	table.insert(_assetItemPoolList, assetItem)
 
 	_path2AssetItemDict[assetItem.ResPath] = assetItem
 
@@ -20,7 +18,7 @@ function SummonEffectPool.onEffectPreload(assetItem)
 end
 
 function SummonEffectPool.dispose()
-	for _, assetItem in pairs(_assetItemPoolList) do
+	for _, assetItem in pairs(_path2AssetItemDict) do
 		assetItem:Release()
 	end
 
@@ -36,7 +34,6 @@ function SummonEffectPool.dispose()
 		gohelper.destroy(wrap.containerGO)
 	end
 
-	_assetItemPoolList = {}
 	_path2AssetItemDict = {}
 	_path2WrapPoolDict = {}
 	_id2UsingWrapDict = {}
@@ -73,7 +70,7 @@ function SummonEffectPool.getEffect(path, hangPointGO)
 		else
 			effectWrap = SummonEffectPool._createWrap(path)
 
-			SummonEffectPool._instantiateEffectGO(assetItem, effectWrap)
+			SummonEffectPool._instantiateEffectGO(assetItem, effectWrap, path)
 		end
 
 		effectWrap:setHangPointGO(hangPointGO or poolContainer)

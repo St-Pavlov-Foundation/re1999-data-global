@@ -21,6 +21,17 @@ function SendWeWorkFileHelper.SendUserInfo(callback, callbackObj)
 		}
 	}
 	local msgJsonStr = cjson.encode(msgJson)
+	local typeCallback = callback and type(callback)
+
+	if typeCallback ~= "function" then
+		callback = SendWeWorkFileHelper.onSendSuccess
+	end
+
+	local typeObj = callbackObj and type(callbackObj)
+
+	if typeObj ~= "table" then
+		callbackObj = nil
+	end
 
 	SLFramework.SLWebRequestClient.Instance:PostJson(sendMsgUrl, msgJsonStr, callback or SendWeWorkFileHelper.onSendSuccess, callbackObj)
 end

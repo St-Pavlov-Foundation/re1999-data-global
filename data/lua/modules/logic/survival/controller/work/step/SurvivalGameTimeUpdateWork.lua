@@ -9,7 +9,7 @@ function SurvivalGameTimeUpdateWork:onStart(context)
 
 	sceneMo.gameTime = self._stepMo.paramInt[1] or 0
 	sceneMo.currMaxGameTime = self._stepMo.paramInt[2] or 0
-	sceneMo.addTime = sceneMo.currMaxGameTime - tonumber((SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.TotalTime)))
+	sceneMo.addTime = sceneMo.currMaxGameTime - sceneMo.clockMaxTime
 
 	local reason = self._stepMo.paramInt[3] or SurvivalEnum.GameTimeUpdateReason.Normal
 

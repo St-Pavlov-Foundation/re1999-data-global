@@ -57,6 +57,13 @@ function DecorateStoreView:onInitView()
 	self._txttitle = gohelper.findChildText(self.viewGO, "UI/common/title/#txt_title")
 	self._godiscounttip = gohelper.findChild(self.viewGO, "UI/common/#go_discountTips")
 	self._txtdiscounttip = gohelper.findChildText(self.viewGO, "UI/common/#go_discountTips/#txt_discountTips")
+	self._goscene = gohelper.findChild(self.viewGO, "UI/common/#go_scene")
+	self._btnframe = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/#go_scene/go_frame")
+	self._txtframename = gohelper.findChildText(self.viewGO, "UI/common/#go_scene/go_frame/namebg/txt_name")
+	self._goframereceive = gohelper.findChild(self.viewGO, "UI/common/#go_scene/go_frame/go_receive")
+	self._btnbackground = gohelper.findChildButtonWithAudio(self.viewGO, "UI/common/#go_scene/go_background")
+	self._txtbackgroundname = gohelper.findChildText(self.viewGO, "UI/common/#go_scene/go_background/namebg/txt_name")
+	self._gobackgroundreceive = gohelper.findChild(self.viewGO, "UI/common/#go_scene/go_background/go_receive")
 	self._gotype = gohelper.findChild(self.viewGO, "UI/type")
 	self._gotype2 = gohelper.findChild(self.viewGO, "UI/type/type2")
 	self._txtrolename = gohelper.findChildText(self.viewGO, "UI/type/type2/#txt_rolename")
@@ -82,6 +89,8 @@ function DecorateStoreView:addEvents()
 	self._btnswitch:AddClickListener(self._btnswitchOnClick, self)
 	self._btnbuy:AddClickListener(self._btnbuyOnClick, self)
 	self.btnCheck:AddClickListener(self.btnCheckOnClick, self)
+	self._btnframe:AddClickListener(self.btnframeOnClick, self)
+	self._btnbackground:AddClickListener(self.btnbackgroundOnClick, self)
 end
 
 function DecorateStoreView:removeEvents()
@@ -91,6 +100,26 @@ function DecorateStoreView:removeEvents()
 	self._btnswitch:RemoveClickListener()
 	self._btnbuy:RemoveClickListener()
 	self.btnCheck:RemoveClickListener()
+	self._btnframe:RemoveClickListener()
+	self._btnbackground:RemoveClickListener()
+end
+
+function DecorateStoreView:btnbackgroundOnClick()
+	local sceneCo = self:_getSceneGoodsSwitchCO(self._v3a4PackageGoodsIds[2])
+	local sceneSkinId = sceneCo.id
+
+	ViewMgr.instance:openView(ViewName.MainSceneSwitchInfoView, {
+		isPreview = true,
+		noInfoEffect = true,
+		sceneSkinId = sceneSkinId
+	})
+end
+
+function DecorateStoreView:btnframeOnClick()
+	local UICo = self:_getUIGoodsSwitchCO(self._v3a4PackageGoodsIds[3])
+	local uiSkinId = UICo.id
+
+	MainUISwitchController.instance:openMainUISwitchInfoView(uiSkinId, true, true, true, true)
 end
 
 function DecorateStoreView:btnCheckOnClick()
@@ -126,6 +155,7 @@ function DecorateStoreView:_btnhideOnClick()
 	StoreController.instance:dispatchEvent(StoreEvent.PlayHideStoreAnim)
 	UIBlockMgr.instance:startBlock("decoratehide")
 	TaskDispatcher.runDelay(self._startDefaultShowView, self, 0.34)
+	self:_checkMainUIScale(true)
 end
 
 function DecorateStoreView:_startDefaultShowView()
@@ -173,6 +203,7 @@ function DecorateStoreView:_showHideCallback(data)
 	end
 
 	StoreController.instance:dispatchEvent(StoreEvent.PlayShowStoreAnim)
+	self:_checkMainUIScale(false)
 end
 
 function DecorateStoreView:_btnswitchOnClick()
@@ -195,11 +226,21 @@ function DecorateStoreView:_editableInitView()
 
 	gohelper.setActive(self._btnhide.gameObject, true)
 	DecorateStoreModel.instance:initDecorateReadState()
+
+	self._v3a4PackageGoodsIds = DecorateStoreModel.instance:getV3a4PackageStoreGoodsIds()
 end
 
 function DecorateStoreView:_onCloseView(viewName)
 	if (viewName == ViewName.MainSceneStoreShowView or viewName == ViewName.MainSceneSwitchInfoView) and self._weatherSwitchControlComp then
 		MainSceneSwitchCameraController.instance:showScene(self._sceneId, self._showSceneFinished, self)
+	elseif viewName == ViewName.MainUISwitchInfoBlurMaskView and self._weatherSwitchControlComp then
+		local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
+
+		if curItemType == DecorateStoreEnum.DecorateItemType.SceneUIPackage then
+			self:_updateDecorateSceneUIPackage()
+		elseif curItemType == DecorateStoreEnum.DecorateItemType.MainUISkin then
+			self:_updateDecorateMainUISkin()
+		end
 	end
 end
 
@@ -210,6 +251,7 @@ function DecorateStoreView:_addEvents()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(StoreController.instance, StoreEvent.DecorateStoreSkinSelectItemClick, self.onDecorateSkinSelectItem, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.GainSkin, self._refreshGood, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshGood, self)
 end
 
 function DecorateStoreView:_removeEvents()
@@ -219,6 +261,7 @@ function DecorateStoreView:_removeEvents()
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.DecorateStoreSkinSelectItemClick, self.onDecorateSkinSelectItem, self)
 	self:removeEventCb(CharacterController.instance, CharacterEvent.GainSkin, self._refreshGood, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshGood, self)
 end
 
 function DecorateStoreView:_onGoodItemClick()
@@ -551,6 +594,7 @@ function DecorateStoreView:_refreshGoodDetail()
 	gohelper.setActive(self._goview2, not isFold)
 	gohelper.setActive(self._gocommon, isFold)
 	gohelper.setActive(self._gotypebg3, false)
+	self:_hideMainUI()
 
 	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
 
@@ -590,6 +634,10 @@ function DecorateStoreView:_refreshGoodDetail()
 		self:_updateDecorateBuildingVideo()
 	elseif curItemType == DecorateStoreEnum.DecorateItemType.SkinGift then
 		self:_updateDecorateSkinGift()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.SceneUIPackage then
+		self:_updateDecorateSceneUIPackage()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.MainUISkin then
+		self:_updateDecorateMainUISkin()
 	end
 
 	local btnCheckShow = curItemType == DecorateStoreEnum.DecorateItemType.SkinGift
@@ -597,6 +645,7 @@ function DecorateStoreView:_refreshGoodDetail()
 	gohelper.setActive(self.btnCheck, btnCheckShow)
 	gohelper.setActive(self.goTitleDesc, not btnCheckShow)
 	self:_refreshCommonDetail()
+	gohelper.setActive(self._goscene, curItemType == DecorateStoreEnum.DecorateItemType.SceneUIPackage)
 end
 
 function DecorateStoreView:_refreshCommonDetail()
@@ -632,13 +681,10 @@ function DecorateStoreView:_refreshCommonDetail()
 	gohelper.setActive(self._btnbuy.gameObject, true)
 
 	local discount = decorateConfig.offTag > 0 and decorateConfig.offTag or 100
+	local hasDiscount1 = discount > 0 and discount < 100
 
-	if discount > 0 and discount < 100 then
-		gohelper.setActive(self._godiscount, true)
-
+	if hasDiscount1 then
 		self._txtdiscount.text = string.format("-%s%%", discount)
-	else
-		gohelper.setActive(self._godiscount, false)
 	end
 
 	local offsetSecond = DecorateStoreModel.instance:getGoodItemLimitTime(goodId)
@@ -649,13 +695,11 @@ function DecorateStoreView:_refreshCommonDetail()
 	local hasDiscount = discount2 > 0 and discount2 < 100
 
 	if hasDiscount then
-		gohelper.setActive(self._godiscount, false)
-		gohelper.setActive(self._godiscount2, true)
-
 		self._txtdiscount2.text = string.format("-%s%%", discount2)
-	else
-		gohelper.setActive(self._godiscount2, false)
 	end
+
+	gohelper.setActive(self._godiscount, hasDiscount1)
+	gohelper.setActive(self._godiscount2, hasDiscount)
 
 	if not goodMo.config.cost or goodMo.config.cost == "" then
 		gohelper.setActive(self._gosingle, false)
@@ -1114,6 +1158,122 @@ function DecorateStoreView:onClose()
 	self:_hideMainScene()
 end
 
+function DecorateStoreView:_getSceneGoodsSwitchCO(goodsId)
+	local goodsConfig = goodsId and lua_store_goods.configDict[goodsId]
+	local product = goodsConfig and goodsConfig.product
+
+	if not product then
+		return nil
+	end
+
+	for i, v in ipairs(lua_scene_switch.configList) do
+		if string.find(product, v.itemId) then
+			return v
+		end
+	end
+
+	return lua_scene_switch.configDict[5]
+end
+
+function DecorateStoreView:_getUIGoodsSwitchCO(goodsId)
+	local goodsConfig = goodsId and lua_store_goods.configDict[goodsId]
+	local product = goodsConfig and goodsConfig.product
+
+	if not product then
+		return nil
+	end
+
+	for i, v in ipairs(lua_scene_ui.configList) do
+		if string.find(product, v.itemId) then
+			return v
+		end
+	end
+
+	return lua_scene_ui.configDict[2]
+end
+
+function DecorateStoreView:_updateDecorateSceneUIPackage()
+	local sceneCo = self:_getSceneGoodsSwitchCO(self._v3a4PackageGoodsIds[2])
+	local UICo = self:_getUIGoodsSwitchCO(self._v3a4PackageGoodsIds[3])
+
+	self._UIId = UICo.id
+	self._sceneId = sceneCo.id
+
+	local sceneItemCo = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, sceneCo.itemId)
+	local UIItemCo = ItemModel.instance:getItemConfig(MaterialEnum.MaterialType.Item, UICo.itemId)
+
+	self._txtbackgroundname.text = sceneItemCo and sceneItemCo.name or ""
+	self._txtframename.text = UIItemCo and UIItemCo.name or ""
+
+	local sceneCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, sceneCo.itemId)
+	local uiCount = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, UICo.itemId)
+
+	gohelper.setActive(self._gobackgroundreceive, sceneCount and sceneCount > 0)
+	gohelper.setActive(self._goframereceive, uiCount and uiCount > 0)
+	self:_showDecorateSceneUISkin()
+end
+
+function DecorateStoreView:_updateDecorateMainUISkin()
+	local UICo = self:_getUIGoodsSwitchCO(self._v3a4PackageGoodsIds[3])
+
+	self._UIId = UICo.id
+	self._sceneId = MainSceneSwitchModel.instance:getCurSceneId()
+
+	self:_showDecorateSceneUISkin()
+end
+
+function DecorateStoreView:_showDecorateSceneUISkin()
+	if not self._sceneId then
+		logError("DecorateStoreView:_updateDecorateMainScene sceneId is nil")
+
+		return
+	end
+
+	gohelper.setActive(self._gotypebg3, false)
+
+	self._needShowMainScene = true
+
+	gohelper.setActive(self._rawImage, false)
+	WeatherController.instance:onSceneHide()
+	MainSceneSwitchCameraController.instance:showScene(self._sceneId, self._showSceneFinished, self)
+
+	if self._mainUIView then
+		self:_showMainUI()
+	else
+		self._gomainView = gohelper.findChild(self._gotypebg, "go_mainview")
+		self._mainUIView = MonoHelper.addNoUpdateLuaComOnceToGo(self._gomainView, DecorateMainUIView)
+		self._mainUIView.viewContainer = self.viewContainer
+		self._mainUIView.viewName = self.viewName
+
+		self:_showMainUI()
+	end
+end
+
+function DecorateStoreView:_checkMainUIScale(isHide)
+	if not self._mainUIView then
+		return
+	end
+
+	local curItemType = DecorateStoreModel.getItemType(self._selectSecondTabId)
+
+	if curItemType == DecorateStoreEnum.DecorateItemType.SceneUIPackage or curItemType == DecorateStoreEnum.DecorateItemType.MainUISkin then
+		self._mainUIView:refreshOffest(isHide)
+	end
+end
+
+function DecorateStoreView:_showMainUI()
+	gohelper.setActive(self._gomainView, true)
+	self._mainUIView:showMainUI(self._UIId, 0.65, true)
+end
+
+function DecorateStoreView:_hideMainUI()
+	gohelper.setActive(self._gomainView, false)
+
+	if self._mainUIView then
+		self._mainUIView:hideMainUI()
+	end
+end
+
 function DecorateStoreView:onDestroyView()
 	MainSceneSwitchCameraController.instance:clear()
 
@@ -1135,6 +1295,12 @@ function DecorateStoreView:onDestroyView()
 		end
 
 		self._categoryItemContainer = nil
+	end
+
+	if self._mainUILoader then
+		self._mainUILoader:dispose()
+
+		self._mainUILoader = nil
 	end
 end
 

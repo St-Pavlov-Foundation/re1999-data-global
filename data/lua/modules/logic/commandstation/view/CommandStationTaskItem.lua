@@ -23,6 +23,7 @@ function CommandStationTaskItem:onInitView()
 	self._goopen = gohelper.findChild(self.viewGO, "#go_normal/#go_open")
 	self._goxunyou = gohelper.findChild(self.viewGO, "#go_normal/#go_xunyou")
 	self._gocatch = gohelper.findChild(self.viewGO, "#go_normal/#go_catch")
+	self._gospring = gohelper.findChild(self.viewGO, "#go_normal/#go_spring")
 	self._txtOpen = gohelper.findChildText(self.viewGO, "#go_normal/#go_open/image_Tag/#txt_Open")
 	self._gogetall = gohelper.findChild(self.viewGO, "#go_getall")
 	self._simagegetallbg = gohelper.findChildSingleImage(self.viewGO, "#go_getall/#simage_getallbg")
@@ -198,6 +199,7 @@ function CommandStationTaskItem:_refreshUI()
 		gohelper.setActive(self._simagenormalbg2, not isNormalShowType)
 		gohelper.setActive(self._goxunyou, not isNormalShowType and atMO.config.taskType == CommandStationEnum.TaskShowType.Parade)
 		gohelper.setActive(self._gocatch, not isNormalShowType and atMO.config.taskType == CommandStationEnum.TaskShowType.Overseas)
+		gohelper.setActive(self._gospring, not isNormalShowType and atMO.config.taskType == CommandStationEnum.TaskShowType.Spring)
 	end
 end
 

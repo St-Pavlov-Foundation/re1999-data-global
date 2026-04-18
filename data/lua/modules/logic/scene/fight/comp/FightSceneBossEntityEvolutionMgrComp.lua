@@ -24,8 +24,7 @@ function FightSceneBossEntityEvolutionMgrComp:onScenePrepared(sceneId, levelId)
 end
 
 function FightSceneBossEntityEvolutionMgrComp:_onLevelLoaded()
-	self._fightScene = GameSceneMgr.instance:getCurScene()
-	self._sceneObj = self._fightScene.level:getSceneGo()
+	self._sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 end
 
 function FightSceneBossEntityEvolutionMgrComp:isEvolutionSkin(skinId)

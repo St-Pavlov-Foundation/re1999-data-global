@@ -123,7 +123,7 @@ function BootLoadingView:reallyFix()
 
 	method:Call(instance:Get(nil, nil))
 
-	if not BootNativeUtil.isAndroid() then
+	if BootNativeUtil.isIOS() then
 		SDKMgr.instance:stopAllDownload()
 	end
 
@@ -271,8 +271,8 @@ end
 function BootLoadingView:_deleteAllCache()
 	SLFramework.GameUpdate.HotUpdateInfoMgr.RemoveLocalVersionFile()
 	SLFramework.GameUpdate.OptionalUpdate.Instance:RemoveLocalVersionFile()
-	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTmepDir1)
-	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTmepDir2)
+	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTempDir1)
+	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTempDir2)
 	ZProj.GameHelper.DeleteAllCache()
 
 	if BootNativeUtil.isWindows() then

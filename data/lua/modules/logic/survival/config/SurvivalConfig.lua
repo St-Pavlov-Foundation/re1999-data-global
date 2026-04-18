@@ -11,6 +11,16 @@ function SurvivalConfig:onInit()
 	self.npcIdToItemCo = {}
 	self._npcConfigTags = {}
 	self._npcConfigShowTags = {}
+
+	local LeaveMsgType = SurvivalEnum.LeaveMsgType
+
+	self.leaveMsgTypeList = {
+		LeaveMsgType.Sentence,
+		LeaveMsgType.Word,
+		SurvivalEnum.LeaveMsgType.Connect,
+		SurvivalEnum.LeaveMsgType.Sentence,
+		SurvivalEnum.LeaveMsgType.Word
+	}
 end
 
 function SurvivalConfig:reInit()
@@ -69,7 +79,8 @@ function SurvivalConfig:reqConfigNames()
 		"survival_rain",
 		"survival_maptarget",
 		"survival_shop",
-		"survival_shop_type"
+		"survival_shop_type",
+		"survival_message"
 	}
 end
 
@@ -530,6 +541,37 @@ function SurvivalConfig:getHardnessCfg()
 	return config
 end
 
+function SurvivalConfig:getCustomDiffIds()
+	local t = {}
+	local list = lua_survival_hardness_mod.configList
+
+	for i, cfg in ipairs(list) do
+		if cfg.subTab > 0 then
+			table.insert(t, cfg)
+		end
+	end
+
+	table.sort(t, function(cfgA, cfgB)
+		return cfgA.subTab < cfgB.subTab
+	end)
+
+	for i, cfg in ipairs(t) do
+		t[i] = cfg.id
+	end
+
+	return t
+end
+
+function SurvivalConfig:getCustomDiffBySubTab(subTab)
+	local list = lua_survival_hardness_mod.configList
+
+	for i, cfg in ipairs(list) do
+		if cfg.subTab == subTab then
+			return cfg
+		end
+	end
+end
+
 function SurvivalConfig:parseEquip()
 	self.equipGroup = {}
 
@@ -550,6 +592,112 @@ function SurvivalConfig:getEquipByGroup(group)
 	end
 
 	return self.equipGroup[group]
+end
+
+function SurvivalConfig:getLeaveMsgByType(type)
+	if self.leaveMsg == nil then
+		self.leaveMsg = {}
+
+		for i, cfg in ipairs(lua_survival_message.configList) do
+			if self.leaveMsg[cfg.type] == nil then
+				self.leaveMsg[cfg.type] = {}
+			end
+
+			table.insert(self.leaveMsg[cfg.type], cfg)
+		end
+	end
+
+	return self.leaveMsg[type]
+end
+
+function SurvivalConfig:switchServerMessage(ids)
+	local list = {
+		-1,
+		-1,
+		-1,
+		-1,
+		-1
+	}
+	local j = 0
+
+	for i, id in ipairs(ids) do
+		local cfg = lua_survival_message.configDict[id]
+		local messageType = cfg.type
+
+		for k = j + 1, #self.leaveMsgTypeList do
+			if messageType == self.leaveMsgTypeList[k] then
+				j = k
+
+				break
+			end
+		end
+
+		if j > 0 then
+			list[j] = id
+		end
+	end
+
+	return list
+end
+
+function SurvivalConfig:getMessageByIds(ids)
+	local str = ""
+
+	local function _append(desc)
+		if LangSettings.instance:isEn() and str ~= "" then
+			str = str .. " "
+		end
+
+		return str .. desc
+	end
+
+	for i, id in ipairs(ids) do
+		if self.leaveMsgTypeList[i] == SurvivalEnum.LeaveMsgType.Sentence then
+			local wordId = ids[i + 1]
+
+			if id == -1 then
+				if wordId ~= -1 then
+					local wordCfg = lua_survival_message.configDict[wordId]
+
+					str = _append(wordCfg.desc)
+				end
+			else
+				local cfg = lua_survival_message.configDict[id]
+				local have = string.match(cfg.desc, "%*%*%*")
+
+				if have then
+					local newStr = string.gsub(cfg.desc, "%*%*%*", "%%s")
+					local wordStr
+
+					if wordId > 0 then
+						local wordCfg = lua_survival_message.configDict[wordId]
+
+						wordStr = wordCfg.desc
+					else
+						wordStr = "***"
+					end
+
+					str = _append(string.format(newStr, wordStr))
+				elseif wordId > 0 then
+					local wordCfg = lua_survival_message.configDict[wordId]
+
+					str = _append(cfg.desc .. wordCfg.desc)
+				else
+					str = _append(cfg.desc)
+				end
+			end
+		elseif self.leaveMsgTypeList[i] == SurvivalEnum.LeaveMsgType.Connect then
+			if id ~= -1 then
+				local cfg = lua_survival_message.configDict[id]
+
+				str = _append(cfg.desc)
+			end
+		elseif self.leaveMsgTypeList[i] == SurvivalEnum.LeaveMsgType.Word then
+			-- block empty
+		end
+	end
+
+	return str
 end
 
 SurvivalConfig.instance = SurvivalConfig.New()

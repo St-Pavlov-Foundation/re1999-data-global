@@ -113,7 +113,10 @@ local kAct101RedList = {
 	ActivityEnum.Activity.V2a9_FreeMonthCard,
 	ActivityEnum.Activity.V3a0_SummerSign,
 	ActivityEnum.Activity.V3a1_AutumnSign,
-	ActivityEnum.Activity.V3a2_ActivityCollect
+	ActivityEnum.Activity.V3a2_ActivityCollect,
+	ActivityEnum.Activity.V3a4_ActivityCollect,
+	ActivityEnum.Activity.V3a4_DestinyGift,
+	ActivityEnum.Activity.V3a4_GiftRecommend
 }
 local kAct125List = {
 	ActivityEnum.Activity.V3a0_WarmUp,

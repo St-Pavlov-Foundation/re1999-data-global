@@ -12,6 +12,7 @@ local fields = {
 	tryoutEpisode = 33,
 	tabButton = 26,
 	openId = 17,
+	patFaceParam = 35,
 	achievementGroup = 19,
 	hintPriority = 30,
 	permanentParentAcitivityId = 22,

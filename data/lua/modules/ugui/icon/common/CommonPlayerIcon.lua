@@ -64,7 +64,11 @@ function CommonPlayerIcon:_onClick()
 		param.isSelectInFriend = self._isSelectInFriend
 	end
 
-	ViewMgr.instance:openView(ViewName.PlayerInfoView, param)
+	ViewMgr.instance:openView(self._playerInfoViewName or ViewName.PlayerInfoView, param)
+end
+
+function CommonPlayerIcon:setPlayerInfoViewName(name)
+	self._playerInfoViewName = name
 end
 
 function CommonPlayerIcon:_refreshUI()

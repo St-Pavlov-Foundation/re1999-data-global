@@ -15,7 +15,7 @@
     "map": 1,
     "id": 3,
     "resource": "walkable_a03",
-    "weight": 30
+    "weight": 20
   },
   {
     "map": 2,
@@ -27,13 +27,13 @@
     "map": 2,
     "id": 2,
     "resource": "walkable_a02",
-    "weight": 30
+    "weight": 20
   },
   {
     "map": 2,
     "id": 3,
     "resource": "walkable_a03",
-    "weight": 30
+    "weight": 20
   },
   {
     "map": 3,
@@ -51,54 +51,54 @@
     "map": 3,
     "id": 3,
     "resource": "walkable_a03",
-    "weight": 30
+    "weight": 20
   },
   {
-    "map": 3,
+    "map": 4,
+    "id": 1,
+    "resource": "walkable_a01",
+    "weight": 100
+  },
+  {
+    "map": 4,
+    "id": 2,
+    "resource": "walkable_a02",
+    "weight": 20
+  },
+  {
+    "map": 4,
+    "id": 3,
+    "resource": "walkable_a03",
+    "weight": 20
+  },
+  {
+    "map": 4,
+    "id": 4,
+    "resource": "walkable_a03",
+    "weight": 20
+  },
+  {
+    "map": 5,
+    "id": 1,
+    "resource": "walkable_a01",
+    "weight": 100
+  },
+  {
+    "map": 5,
+    "id": 2,
+    "resource": "walkable_a02",
+    "weight": 20
+  },
+  {
+    "map": 5,
+    "id": 3,
+    "resource": "walkable_a03",
+    "weight": 20
+  },
+  {
+    "map": 5,
     "id": 4,
     "resource": "walkable_a04",
-    "weight": 30
-  },
-  {
-    "map": 4,
-    "id": 1,
-    "resource": "walkable_a01",
-    "weight": 100
-  },
-  {
-    "map": 4,
-    "id": 2,
-    "resource": "walkable_a02",
-    "weight": 20
-  },
-  {
-    "map": 4,
-    "id": 3,
-    "resource": "walkable_a03",
-    "weight": 30
-  },
-  {
-    "map": 5,
-    "id": 1,
-    "resource": "walkable_a01",
-    "weight": 100
-  },
-  {
-    "map": 5,
-    "id": 2,
-    "resource": "walkable_a02",
-    "weight": 20
-  },
-  {
-    "map": 5,
-    "id": 3,
-    "resource": "walkable_a03",
-    "weight": 30
-  },
-  {
-    "map": 5,
-    "id": 4,
-    "resource": "walkable_a04",
     "weight": 20
   },
   {
@@ -118,11 +118,5 @@
     "id": 3,
     "resource": "walkable_a03",
     "weight": 20
-  },
-  {
-    "map": 6,
-    "id": 4,
-    "resource": "walkable_a03",
-    "weight": 30
   }
 ]

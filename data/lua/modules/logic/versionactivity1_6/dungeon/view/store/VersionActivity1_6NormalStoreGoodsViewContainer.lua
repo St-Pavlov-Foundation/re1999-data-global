@@ -39,6 +39,10 @@ function VersionActivity1_6NormalStoreGoodsViewContainer:_onCurrencyOpen()
 	recthelper.setAnchorX(item.txt.transform, 313)
 end
 
+function VersionActivity1_6NormalStoreGoodsViewContainer:refreshCurrencyView(currency)
+	self._currencyView:setCurrencyType(currency)
+end
+
 function VersionActivity1_6NormalStoreGoodsViewContainer:onContainerClickModalMask()
 	self:closeThis()
 end

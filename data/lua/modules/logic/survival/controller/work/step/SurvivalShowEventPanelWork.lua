@@ -33,23 +33,35 @@ function SurvivalShowEventPanelWork:onStart(context)
 	end
 
 	if not self.context.fastExecute then
-		if panel.type == SurvivalEnum.PanelType.TreeEvent and sceneMo:isHaveIceEvent() then
-			local entity = SurvivalMapHelper.instance:getEntity(0)
+		if panel.type == SurvivalEnum.PanelType.TreeEvent then
+			if sceneMo:isHaveIceEvent() then
+				local entity = SurvivalMapHelper.instance:getEntity(0)
 
-			if entity then
-				entity:playAnim("down_in")
+				if entity then
+					entity:playAnim("down_in")
+				end
+
+				UIBlockHelper.instance:startBlock("SurvivalShowEventPanelWork_Ice", 1.8)
+				SurvivalMapHelper.instance:tweenToHeroPosIfNeed(0.2)
+				TaskDispatcher.runDelay(self._delayOpenPanel, self, 1.8)
+
+				return
 			end
 
-			UIBlockHelper.instance:startBlock("SurvivalShowEventPanelWork_Ice", 1.8)
-			SurvivalMapHelper.instance:tweenToHeroPosIfNeed(0.2)
-			TaskDispatcher.runDelay(self._delayOpenPanel, self, 1.8)
+			local unitMo = sceneMo.unitsById[panel.unitId]
 
-			return
+			if not unitMo then
+				SurvivalWeekRpc.instance:sendSurvivalClosePanelRequest(panel.uid)
+				logError(string.format("没有面板对应的事件ID，强制关闭掉,treeId:%s,unitId:%s,dialogueId:%s", panel.treeId, panel.unitId, panel.dialogueId))
+				self:onDone(true)
+
+				return
+			end
 		end
 
 		panel.isFirstSearch = self.isFirst
 
-		SurvivalMapHelper.instance:tryShowServerPanel(panel)
+		SurvivalMapHelper.instance:tryShowServerPanel(panel, source)
 	end
 
 	self:onDone(true)

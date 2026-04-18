@@ -30,7 +30,13 @@ function ResSplitSaveCharacterWork:onStart(context)
 	for heroId, v in pairs(allHero) do
 		local isExclude = ResSplitModel.instance:isExcludeCharacter(heroId)
 
-		if ResSplitModel.instance:isExcludeCharacter(heroId) then
+		if isExclude == false then
+			local skillArr = FightHelper.buildSkills(heroId)
+
+			for i, m in ipairs(skillArr) do
+				ResSplitModel.instance:addIncludeSkill(m)
+			end
+
 			local voicesCo = CharacterDataConfig.instance:getCharacterVoicesCo(heroId)
 
 			if voicesCo then
@@ -42,17 +48,11 @@ function ResSplitSaveCharacterWork:onStart(context)
 					end
 				end
 			end
-		else
-			local skillArr = FightHelper.buildSkills(heroId)
 
-			for i, m in ipairs(skillArr) do
-				ResSplitModel.instance:addIncludeSkill(m)
-			end
+			local path = ResUrl.getSignature(v.signature)
+
+			ResSplitModel.instance:setInclude(ResSplitEnum.Path, path, isExclude)
 		end
-
-		local path = ResUrl.getSignature(v.signature)
-
-		ResSplitModel.instance:setInclude(ResSplitEnum.Path, path, isExclude)
 	end
 
 	self:onDone(true)
@@ -125,6 +125,26 @@ function ResSplitSaveCharacterWork:_addSkinRes(config, exclude)
 
 	if limitedCO and not string.nilorempty(limitedCO.entranceMv) then
 		ResSplitModel.instance:setInclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
+	end
+
+	local headSkinIconUnique = ResUrl.getHeadSkinIconUnique(config.id)
+
+	if not string.nilorempty(headSkinIconUnique) then
+		ResSplitModel.instance:setInclude(ResSplitEnum.Path, headSkinIconUnique, exclude)
+	end
+
+	local data = {}
+	local spineParam = string.split(config.skin2dParams, "#")
+
+	data.spinePath = spineParam[1]
+	data.spinePos = spineParam[2] and string.splitToNumber(spineParam[2], ",") or {
+		0,
+		0
+	}
+	data.spineScale = spineParam[3] and tonumber(spineParam[3]) or 1
+
+	if not string.nilorempty(data.spinePath) then
+		ResSplitModel.instance:setInclude(ResSplitEnum.Path, string.gsub(data.spinePath, "\\", "/"), exclude)
 	end
 
 	if exclude == false then

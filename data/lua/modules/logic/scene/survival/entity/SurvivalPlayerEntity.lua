@@ -17,6 +17,10 @@ function SurvivalPlayerEntity:init(go)
 end
 
 function SurvivalPlayerEntity:getResPath()
+	if self.tempResPath then
+		return self.tempResPath
+	end
+
 	return self._unitMo:getResPath()
 end
 

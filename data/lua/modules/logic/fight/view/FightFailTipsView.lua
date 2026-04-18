@@ -44,7 +44,7 @@ end
 
 function FightFailTipsView:_onGuideContinue()
 	if self.viewParam.show_scene_dissolve_effect then
-		local cur_scene_id = GameSceneMgr.instance:getCurScene().level._sceneId
+		local cur_scene_id = FightGameMgr.sceneLevelMgr.sceneId
 
 		if cur_scene_id and cur_scene_id == 11501 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_effects_fight_backtime)
@@ -84,7 +84,7 @@ function FightFailTipsView:_onLoaded()
 	TaskDispatcher.cancelTask(self.closeThis, self, 10)
 	UnityEngine.Shader.EnableKeyword("_USEPOP_ON")
 
-	self.scene_animation = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
+	self.scene_animation = FightGameMgr.sceneLevelMgr:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
 
 	self.scene_animation:Play("m_s63_ani")
 
@@ -108,6 +108,7 @@ end
 function FightFailTipsView:_requestRestart()
 	FightController.instance:dispatchEvent(FightEvent.OnEndFightForGuide)
 	FightSystem.instance:dispose()
+	FightGameMgr.entityMgr:delAllEntity()
 	DungeonFightController.instance.restartSpStage()
 end
 

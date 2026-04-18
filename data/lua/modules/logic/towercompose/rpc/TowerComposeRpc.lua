@@ -82,8 +82,71 @@ end
 
 function TowerComposeRpc:onReceiveTowerComposeFightSettlePush(resultCode, msg)
 	if resultCode == 0 then
-		TowerComposeModel.instance:onReceiveTowerComposeFightSettlePush(msg)
 		TowerComposeModel.instance:onReceiveTowerBattleFinishPush(msg)
+		TowerComposeModel.instance:onReceiveTowerComposeFightSettlePush(msg)
+	end
+end
+
+function TowerComposeRpc:sendTowerComposeUpdateRecordRequest(themeId, isUpdate)
+	local req = TowerComposeModule_pb.TowerComposeUpdateRecordRequest()
+
+	req.themeId = themeId
+	req.update = isUpdate
+
+	return self:sendMsg(req)
+end
+
+function TowerComposeRpc:onReceiveTowerComposeUpdateRecordReply(resultCode, msg)
+	if resultCode == 0 then
+		TowerComposeModel.instance:updateTowercomposeRecordBossData(msg.themeId, msg.record)
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.UpdateRecordReply, msg)
+	end
+end
+
+function TowerComposeRpc:sendTowerComposeLoadRecordRequest(themeId)
+	local req = TowerComposeModule_pb.TowerComposeLoadRecordRequest()
+
+	req.themeId = themeId
+
+	return self:sendMsg(req)
+end
+
+function TowerComposeRpc:onReceiveTowerComposeLoadRecordReply(resultCode, msg)
+	if resultCode == 0 then
+		TowerComposeModel.instance:updateTowercomposeRecordBossData(msg.themeId, msg.record)
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.LoadRecordReply)
+	end
+end
+
+function TowerComposeRpc:sendTowerComposeReChallengeRequest(themeId, planeId)
+	local req = TowerComposeModule_pb.TowerComposeReChallengeRequest()
+
+	req.themeId = themeId
+	req.planeId = planeId
+
+	return self:sendMsg(req)
+end
+
+function TowerComposeRpc:onReceiveTowerComposeReChallengeReply(resultCode, msg)
+	if resultCode == 0 then
+		TowerComposeModel.instance:updateTowerComposeBossData(msg.themeId, msg.boss)
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshLoadState)
+	end
+end
+
+function TowerComposeRpc:sendTowerComposeCancelReChallengeRequest(themeId)
+	local req = TowerComposeModule_pb.TowerComposeCancelReChallengeRequest()
+
+	req.themeId = themeId
+
+	return self:sendMsg(req)
+end
+
+function TowerComposeRpc:onReceiveTowerComposeCancelReChallengeReply(resultCode, msg)
+	if resultCode == 0 then
+		TowerComposeModel.instance:updateTowerComposeBossData(msg.themeId, msg.boss)
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshLoadState)
+		GameFacade.showToast(ToastEnum.TowerComposeExitRecord)
 	end
 end
 

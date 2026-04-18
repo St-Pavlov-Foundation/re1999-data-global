@@ -8,6 +8,8 @@ function VersionSummonPanel:onInitView()
 	self._txtremainTime = gohelper.findChildText(self.viewGO, "image_TimeBG/#txt_remainTime")
 	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Claim", AudioEnum.UI.Play_UI_Tags)
 	self._goNormal = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Normal")
+	self._txtNormal = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_Claim")
+	self._txtNormalEn = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_ClaimEn")
 	self._goHasReceived = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Received")
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
 	self._btnMask = gohelper.findChildButton(self.viewGO, "Mask")
@@ -16,6 +18,7 @@ function VersionSummonPanel:onInitView()
 	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "#simage_Title")
 	self._simageProp = gohelper.findChildSingleImage(self.viewGO, "prop/image_Prop")
 	self._txtTips = gohelper.findChildText(self.viewGO, "txt_Tips")
+	self._gohasget = gohelper.findChild(self.viewGO, "prop/go_hasget")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -44,7 +47,16 @@ function VersionSummonPanel:_btnClaimOnClick()
 	self.viewContainer:sendGet101BonusRequest()
 end
 
+function VersionSummonPanel:_btnGoToOnClick()
+	GameFacade.jump(self._jumpId)
+end
+
 function VersionSummonPanel:onOpen()
+	self._config = ActivityConfig.instance:getActivityCo(self.viewParam.actId)
+
+	local patFaceParam = self._config and self._config.patFaceParam and string.split(self._config.patFaceParam, "#")
+
+	self._jumpId = patFaceParam and patFaceParam[2]
 	self._txtremainTime.text = ""
 
 	self:internal_set_actId(self.viewParam.actId)
@@ -66,6 +78,7 @@ function VersionSummonPanel:onRefresh()
 
 	gohelper.setActive(self._goNormal, isCanGet)
 	gohelper.setActive(self._goHasReceived, not isCanGet)
+	gohelper.setActive(self._gohasget, not isCanGet)
 end
 
 function VersionSummonPanel:_refreshTimeTick()

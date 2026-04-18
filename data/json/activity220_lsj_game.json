@@ -1,0 +1,22 @@
+[
+  {
+    "groupId": 1000,
+    "gameId": "10002",
+    "source": "v3a4_lusijian_game_cutting3"
+  },
+  {
+    "groupId": 1001,
+    "gameId": "10001",
+    "source": "v3a4_lusijian_game_cutting4"
+  },
+  {
+    "groupId": 1002,
+    "gameId": "10000",
+    "source": "v3a4_lusijian_game_cutting1"
+  },
+  {
+    "groupId": 1003,
+    "gameId": "10003",
+    "source": "v3a4_lusijian_game_cutting2"
+  }
+]

@@ -21,10 +21,37 @@ function TowerComposeModEquipViewContainer:buildTabViews(tabContainerId)
 			true
 		}, HelpEnum.HelpId.TowerComposeModEquip)
 
+		self.navigateView:setOverrideClose(self.overrideClose, self)
+		self.navigateView:setOverrideHome(self.overrideHome, self)
+
 		return {
 			self.navigateView
 		}
 	end
+end
+
+function TowerComposeModEquipViewContainer:overrideClose()
+	local themeId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo.lock then
+		TowerComposeRpc.instance:sendTowerComposeCancelReChallengeRequest(themeId)
+	end
+
+	self:closeThis()
+end
+
+function TowerComposeModEquipViewContainer:overrideHome()
+	local themeId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo.lock then
+		TowerComposeRpc.instance:sendTowerComposeCancelReChallengeRequest(themeId)
+	end
+
+	NavigateButtonsView.homeClick()
 end
 
 return TowerComposeModEquipViewContainer

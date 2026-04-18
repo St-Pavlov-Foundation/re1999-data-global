@@ -112,6 +112,33 @@ function SummonStrongOneCustomPickView:_btnsummon1OnClick()
 		return
 	end
 
+	if SummonMainModel.instance:checkCanUseInfallibleItem(curPool.id) and not SummonMainModel.instance:checkHaveShowUseInfallibleItemTip(curPool.id) then
+		local tipId = MessageBoxIdDefine.SummonInfallibleUsingTip
+
+		GameFacade.showMessageBox(tipId, MsgBoxEnum.BoxType.Yes_No, self._onContinueUseCommon1Summon, nil, nil, self, nil)
+	else
+		self:_btnsummon1OnClick_1()
+	end
+end
+
+function SummonStrongOneCustomPickView:_onContinueUseCommon1Summon()
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if not curPool then
+		return
+	end
+
+	SummonMainModel.instance:setHaveShowUseInfallibleItemTip(curPool.id, true)
+	self:_btnsummon1OnClick_1()
+end
+
+function SummonStrongOneCustomPickView:_btnsummon1OnClick_1()
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if not curPool then
+		return
+	end
+
 	local pickHeroIds = self:getPickHeroIds(curPool)
 	local heroId = SummonModel.instance:getSummonFullExSkillHero(curPool.id, pickHeroIds)
 
@@ -169,6 +196,33 @@ function SummonStrongOneCustomPickView:_btnsummon1OnClick_2()
 end
 
 function SummonStrongOneCustomPickView:_btnsummon10OnClick()
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if not curPool then
+		return
+	end
+
+	if SummonMainModel.instance:checkCanUseInfallibleItem(curPool.id) and not SummonMainModel.instance:checkHaveShowUseInfallibleItemTip(curPool.id) then
+		local tipId = MessageBoxIdDefine.SummonInfallibleUsingTip
+
+		GameFacade.showMessageBox(tipId, MsgBoxEnum.BoxType.Yes_No, self._onContinueUseCommon10Summon, nil, nil, self, nil)
+	else
+		self:_btnsummon10OnClick_1()
+	end
+end
+
+function SummonStrongOneCustomPickView:_onContinueUseCommon10Summon()
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	if not curPool then
+		return
+	end
+
+	SummonMainModel.instance:setHaveShowUseInfallibleItemTip(curPool.id, true)
+	self:_btnsummon10OnClick_1()
+end
+
+function SummonStrongOneCustomPickView:_btnsummon10OnClick_1()
 	local curPool = SummonMainModel.instance:getCurPool()
 
 	if not curPool then
@@ -311,6 +365,12 @@ function SummonStrongOneCustomPickView:onDestroyView()
 		self._compFreeButton = nil
 	end
 
+	if self._compInfallibleButton then
+		self._compInfallibleButton:dispose()
+
+		self._compInfallibleButton = nil
+	end
+
 	if self._characteritem then
 		self._characteritem.btndetail:RemoveClickListener()
 		self._characteritem.simagehero:UnLoadImage()
@@ -328,6 +388,19 @@ function SummonStrongOneCustomPickView:refreshFreeSummonButton(poolCo)
 	self._compFreeButton = self._compFreeButton or SummonFreeSingleGacha.New(self._btnsummon1.gameObject, poolCo.id)
 
 	self._compFreeButton:refreshUI()
+end
+
+function SummonStrongOneCustomPickView:refreshInfallibleSummonButton(poolCo)
+	local btnGroupList = {}
+
+	table.insert(btnGroupList, self._goselfselect)
+	table.insert(btnGroupList, self._gosummonbtns)
+
+	local referenceGo = self._goselected
+
+	self._compInfallibleButton = self._compInfallibleButton or SummonDestinyGiftItem.New(btnGroupList, referenceGo, poolCo.id)
+
+	self._compInfallibleButton:refreshUI()
 end
 
 function SummonStrongOneCustomPickView:refreshCost()
@@ -516,6 +589,12 @@ function SummonStrongOneCustomPickView:refreshPoolUI()
 	if isPick then
 		self:refreshCost()
 		self:refreshFreeSummonButton(pool)
+	end
+
+	local canShowGift = SummonMainModel.instance:canShowDestinyGift(pool.id)
+
+	if canShowGift then
+		self:refreshInfallibleSummonButton(pool)
 	end
 
 	local isHaveFirstSSR = SummonCustomPickModel.instance:isHaveFirstSSR(pool.id)

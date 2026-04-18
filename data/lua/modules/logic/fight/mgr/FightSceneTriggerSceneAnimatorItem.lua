@@ -25,7 +25,7 @@ function FightSceneTriggerSceneAnimatorItem:_onLevelLoaded()
 		return
 	end
 
-	local sceneObj = self._fightScene.level:getSceneGo()
+	local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 	if not sceneObj then
 		return
@@ -49,7 +49,7 @@ function FightSceneTriggerSceneAnimatorItem:_onTriggerSceneAnimator(config)
 	self._fightScene = self._fightScene or GameSceneMgr.instance:getCurScene()
 
 	if self._fightScene then
-		local sceneObj = self._fightScene.level:getSceneGo()
+		local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 		if not gohelper.isNil(sceneObj) then
 			local ani = gohelper.findChildComponent(sceneObj, config.param1, typeof(UnityEngine.Animator))
@@ -69,7 +69,7 @@ function FightSceneTriggerSceneAnimatorItem:_onSceneStateChange(state)
 	FightController.instance:dispatchEvent(FightEvent.ChangeSceneVisible, state)
 
 	if self._fightScene then
-		local sceneObj = self._fightScene.level:getSceneGo()
+		local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 		if not gohelper.isNil(sceneObj) and self.activeState ~= state then
 			self.activeState = state

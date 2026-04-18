@@ -20,9 +20,17 @@ function SurvivalSceneViewComp:onScenePrepared(sceneId, levelId)
 	end
 
 	TaskDispatcher.runDelay(self._processGuideEvent, self, 0.3)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._processGuideEvent, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, self._processGuideEvent, self)
-	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self._processGuideEvent, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self.onViewCloseWork, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.onFlowEnd, self.onViewCloseWork, self)
+	GuideController.instance:registerCallback(GuideEvent.FinishGuideLastStep, self.onViewCloseWork, self)
+end
+
+function SurvivalSceneViewComp:onViewCloseWork()
+	if SurvivalMapModel.instance.result == SurvivalEnum.MapResult.None and self:_checkLevelUp() then
+		return
+	end
+
+	self:_processGuideEvent()
 end
 
 function SurvivalSceneViewComp:_processGuideEvent()
@@ -49,6 +57,10 @@ function SurvivalSceneViewComp:_processGuideEvent()
 			self:processSpBlockGuide()
 		end
 	end
+end
+
+function SurvivalSceneViewComp:_checkLevelUp()
+	return SurvivalMapHelper.instance:checkRoleLevelUpCache()
 end
 
 function SurvivalSceneViewComp:isHaveEquip()
@@ -99,9 +111,9 @@ function SurvivalSceneViewComp:isGuideLock()
 end
 
 function SurvivalSceneViewComp:onSceneClose(sceneId, levelId)
-	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self._processGuideEvent, self)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._processGuideEvent, self)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, self._processGuideEvent, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self.onViewCloseWork, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.onFlowEnd, self.onViewCloseWork, self)
+	GuideController.instance:unregisterCallback(GuideEvent.FinishGuideLastStep, self.onViewCloseWork, self)
 	TaskDispatcher.cancelTask(self._processGuideEvent, self)
 	ViewMgr.instance:closeView(ViewName.SurvivalMapMainView)
 	ViewMgr.instance:closeView(ViewName.SurvivalToastView)

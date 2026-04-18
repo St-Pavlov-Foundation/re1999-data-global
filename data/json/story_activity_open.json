@@ -4166,5 +4166,309 @@
     "titleEn": "Another World Forsaken",
     "labelRes": "8",
     "storyBg": "singlebg/v3a2_opening_singlebg/bg1.jpg"
+  },
+  {
+    "chapter": 34,
+    "part": 1,
+    "title": "language_10109855",
+    "titleEn": "Prophecy",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 2,
+    "title": "language_10109856",
+    "titleEn": "A Windblown Reed",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 3,
+    "title": "language_10109857",
+    "titleEn": "\"The Gate to Longevity\"",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 4,
+    "title": "language_10109858",
+    "titleEn": "Summer's Lease",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 5,
+    "title": "language_10109859",
+    "titleEn": "Free at Last",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 6,
+    "title": "language_10109860",
+    "titleEn": "Deadly Cure",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 7,
+    "title": "language_10109861",
+    "titleEn": "Separate Ways",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 8,
+    "title": "language_10109862",
+    "titleEn": "The Longevity Ritual",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 9,
+    "title": "language_10109863",
+    "titleEn": "The End ...?",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 10,
+    "title": "language_10109864",
+    "titleEn": "To \"Heaven\"",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 11,
+    "title": "language_10109865",
+    "titleEn": "Dilemma",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 12,
+    "title": "language_10109866",
+    "titleEn": "Castle in the Sky",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 13,
+    "title": "language_10109867",
+    "titleEn": "Unbending Will",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 14,
+    "title": "language_10109868",
+    "titleEn": "A Sow's Ear",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 15,
+    "title": "language_10109869",
+    "titleEn": "Into the Fire",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 16,
+    "title": "language_10109870",
+    "titleEn": "To Heaven!",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 17,
+    "title": "language_10109871",
+    "titleEn": "An Eastern Promise",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 18,
+    "title": "language_10109872",
+    "titleEn": "Pain and Gain",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 19,
+    "title": "language_10109873",
+    "titleEn": "Significance of the Insignificant",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 20,
+    "title": "language_10109874",
+    "titleEn": "No Turning Back",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 21,
+    "title": "language_10109875",
+    "titleEn": "Goodbye, Friend",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 22,
+    "title": "language_10109876",
+    "titleEn": "Long Time No See",
+    "labelRes": "22",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 23,
+    "title": "language_10109877",
+    "titleEn": "The Cage",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 24,
+    "title": "language_10109878",
+    "titleEn": "The Tiger",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 25,
+    "title": "language_10109879",
+    "titleEn": "The Old Friend",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 26,
+    "title": "language_10109880",
+    "titleEn": "The Silver Thread",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 27,
+    "title": "language_10109881",
+    "titleEn": "The Flying Leaves",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 28,
+    "title": "language_10109882",
+    "titleEn": "The Night Raid",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 29,
+    "title": "language_10109883",
+    "titleEn": "The Celebration",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 30,
+    "title": "language_10109877",
+    "titleEn": "The Cage",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 31,
+    "title": "language_10109884",
+    "titleEn": "A Daoist Awoken",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 32,
+    "title": "language_10109885",
+    "titleEn": "The Mountain in Her Memory",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 33,
+    "title": "language_10109886",
+    "titleEn": "Portward Bound",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 34,
+    "title": "language_10109887",
+    "titleEn": "Old Tricks",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 35,
+    "title": "language_10109888",
+    "titleEn": "Withered Grass",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 36,
+    "title": "language_10109889",
+    "titleEn": "Sorrows of a Distant Past",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 37,
+    "title": "language_10109890",
+    "titleEn": "The Hand She Held",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 34,
+    "part": 38,
+    "title": "language_10109891",
+    "titleEn": "Two Hundred Springs",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

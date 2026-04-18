@@ -19,6 +19,7 @@ function VersionResSplitHandler:generateResSplitCfg()
 	self:_InitGuideCfg()
 	self:_InitStoryCfg()
 	self:_initRunWork()
+	self:_getPartyGameCfg()
 	self:_loadAllStoryCfg(self._generateResSplitCfg, self)
 end
 
@@ -352,6 +353,12 @@ function VersionResSplitHandler:_getResWhiteListDict()
 				end
 			end
 		end
+	end
+
+	for i = 0, self._partyGameAssets.Length - 1 do
+		local filePath = self._partyGameAssets[i]
+
+		resWhiteDict[filePath] = true
 	end
 
 	return resWhiteDict
@@ -839,6 +846,12 @@ function VersionResSplitHandler._getResFolderFiles(folder, extension)
 	end
 
 	return files
+end
+
+function VersionResSplitHandler:_getPartyGameCfg()
+	local partyGameMgrCs = PartyGame.Runtime.GameLogic.GameMgr
+
+	self._partyGameAssets = partyGameMgrCs.Instance.GetPartyGamePreLoaderAllAssetAllDeps()
 end
 
 return VersionResSplitHandler

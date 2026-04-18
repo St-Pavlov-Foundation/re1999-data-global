@@ -15,7 +15,10 @@ function GMSubViewNewFightView:_onToggleValueChanged(toggleId, isOn)
 
 	ZProj.UGUIHelper.RebuildLayout(self.scrollRect:GetComponent(gohelper.Type_RectTransform))
 
-	self.scrollRect.verticalNormalizedPosition = 0.38659590482712
+	local isFightScene = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight
+	local pos = isFightScene and 0.38659590482712 or 1
+
+	self.scrollRect.verticalNormalizedPosition = pos
 end
 
 function GMSubViewNewFightView:addLineIndex()
@@ -41,6 +44,7 @@ function GMSubViewNewFightView:initViewContent()
 		w = 500
 	})
 	self.btnSend = self:addButton(self:getLineGroup(), "发送", self.onClickSendBtn, self)
+	self.btnCustomFight = self:addButton(self:getLineGroup(), "自定义战斗", self.onBtnCustomFight, self)
 
 	self:addTitleSplitLine("战前GM")
 	self:addLineIndex()
@@ -632,7 +636,7 @@ function GMSubViewNewFightView:onClickBtnPlayTimeline()
 	fightStepData.actType = 1
 	fightStepData.fromId = entityMo.id
 	fightStepData.toId = enemyList[1].uid
-	fightStepData.actId = skillId
+	fightStepData.actId = nil
 	fightStepData.actEffect = {}
 
 	self:buildDamageEffect(isSingle, enemyList, fightStepData.actEffect)
@@ -714,6 +718,10 @@ function GMSubViewNewFightView:onClickLogSkinBtn()
 
 		logError(str)
 	end
+end
+
+function GMSubViewNewFightView:onBtnCustomFight()
+	ViewMgr.instance:openView(ViewName.FightGmCustomFightView)
 end
 
 return GMSubViewNewFightView

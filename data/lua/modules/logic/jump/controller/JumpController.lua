@@ -214,6 +214,7 @@ function JumpController:jumpByParam(jumpParam)
 end
 
 local _notAllowJumpViewNames = {
+	"PartyGameLobbyMainView",
 	"V1a5_HarvestSeason_PanelSignView",
 	"V2a0_SummerSign_PanelView",
 	"V2a1_MoonFestival_PanelView",
@@ -264,6 +265,29 @@ local _notAllowJumpViewNames = {
 	"V3a1_AutumnSign_PanelView"
 }
 
+function JumpController:checkCanJumpView(jumpView)
+	if ViewMgr.instance:isOpen(ViewName.CommonPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
+		return false, ToastEnum.MaterialTipJump
+	end
+
+	if VirtualSummonScene.instance:isOpen() and jumpView ~= JumpEnum.JumpView.StoreView then
+		return false, ToastEnum.MaterialTipJump
+	end
+
+	self:_notAllowJumpViewNames_RoleSignPanelView()
+	self:_notAllowJumpViewNames_SpecialSignPanelView()
+
+	for _, name in ipairs(_notAllowJumpViewNames) do
+		local viewName = ViewName[name]
+
+		if ViewMgr.instance:isOpen(viewName) then
+			return false, ToastEnum.MaterialTipJump
+		end
+	end
+
+	return true, nil
+end
+
 function JumpController:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
 	self:dispatchEvent(JumpEvent.BeforeJump, jumpParam)
 	self:initLogicDefine()
@@ -278,30 +302,14 @@ function JumpController:jumpTo(jumpParam, callback, callbackObj, recordFarmItem)
 
 	local jumps = string.splitToNumber(jumpParam, "#")
 	local jumpView = jumps[1]
+	local checkViewResult, toastId = self:checkCanJumpView(jumpView)
 
-	if ViewMgr.instance:isOpen(ViewName.CommonPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
-		GameFacade.showToast(ToastEnum.MaterialTipJump)
-
-		return false
-	end
-
-	if VirtualSummonScene.instance:isOpen() and jumpView ~= JumpEnum.JumpView.StoreView then
-		GameFacade.showToast(ToastEnum.MaterialTipJump)
-
-		return false
-	end
-
-	self:_notAllowJumpViewNames_RoleSignPanelView()
-	self:_notAllowJumpViewNames_SpecialSignPanelView()
-
-	for _, name in ipairs(_notAllowJumpViewNames) do
-		local viewName = ViewName[name]
-
-		if ViewMgr.instance:isOpen(viewName) then
-			GameFacade.showToast(ToastEnum.MaterialTipJump)
-
-			return false
+	if not checkViewResult then
+		if toastId then
+			GameFacade.showToast(toastId)
 		end
+
+		return checkViewResult
 	end
 
 	if self:_checkNeedSwitchScene(jumpView) then
@@ -455,17 +463,18 @@ function JumpController:_closeModelViews(remainViewNames)
 	table.insert(remainViewNames, ViewName.MaterialTipView)
 	table.insert(remainViewNames, ViewName.ActivityBeginnerView)
 
+	local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local popUpBlurGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
+	local popUpFourGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPFour")
 	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
 	for _, viewName in ipairs(openViewNameList) do
 		local setting = ViewMgr.instance:getSetting(viewName)
 
 		if (not remainViewNames or not tabletool.indexOf(remainViewNames, viewName)) and setting.layer == UILayerName.PopUpTop and setting.viewType == ViewType.Modal then
-			local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
-			local popUpBlurGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
 			local oneViewGO = ViewMgr.instance:getContainer(viewName).viewGO
 
-			if oneViewGO and (oneViewGO.transform.parent == popUpTopGO.transform or oneViewGO.transform.parent == popUpBlurGO.transform) then
+			if oneViewGO and (oneViewGO.transform.parent == popUpTopGO.transform or oneViewGO.transform.parent == popUpBlurGO.transform or oneViewGO.transform.parent == popUpFourGO.transform) then
 				table.insert(willCloseViewNames, viewName)
 			end
 		end

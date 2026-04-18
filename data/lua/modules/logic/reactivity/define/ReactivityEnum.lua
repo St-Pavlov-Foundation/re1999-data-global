@@ -5,9 +5,9 @@ module("modules.logic.reactivity.define.ReactivityEnum", package.seeall)
 local ReactivityEnum = _M
 
 ReactivityEnum.ActivityDefine = {
-	[VersionActivity3_1Enum.ActivityId.Reactivity] = {
-		storeCurrency = CurrencyEnum.CurrencyType.V2a4Dungeon,
-		storeActId = VersionActivity3_1Enum.ActivityId.ReactivityStore
+	[VersionActivity3_4Enum.ActivityId.Reactivity] = {
+		storeCurrency = CurrencyEnum.CurrencyType.V2a5Dungeon,
+		storeActId = VersionActivity3_4Enum.ActivityId.ReactivityStore
 	}
 }
 

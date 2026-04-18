@@ -210,7 +210,7 @@ end
 
 function Rouge2_MapHelper._onEnterMainSceneDone()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Rouge2_MainView)
-	VersionActivity3_3EnterController.instance:openVersionActivityEnterView(Rouge2_MapHelper.onOpenVersionActivityView, nil, VersionActivity3_2Enum.ActivityId.Rouge2, true)
+	VersionActivity3_4EnterController.instance:openVersionActivityEnterView(Rouge2_MapHelper.onOpenVersionActivityView, nil, VersionActivity3_4Enum.ActivityId.Rouge2, true)
 end
 
 function Rouge2_MapHelper.onOpenVersionActivityView()

@@ -268,6 +268,7 @@ DungeonEnum.ElementType = {
 	FairyLand = 902,
 	EnterDialogue = 18,
 	V3a2OptionFinish = 3204,
+	V3a4BBS = 3401,
 	PipeGame = 9,
 	Story = 4,
 	ToughBattle = 901,
@@ -340,7 +341,8 @@ DungeonEnum.ElementTypeUIResIdMap = {
 	[DungeonEnum.ElementType.V3a2Note] = DungeonEnum.ElementType.SpStory,
 	[DungeonEnum.ElementType.V3a2Option] = DungeonEnum.ElementType.FullScreenQuestion,
 	[DungeonEnum.ElementType.V3a2Dialogue] = DungeonEnum.ElementType.Story,
-	[DungeonEnum.ElementType.V3a2OptionFinish] = DungeonEnum.ElementType.FullScreenQuestion
+	[DungeonEnum.ElementType.V3a2OptionFinish] = DungeonEnum.ElementType.FullScreenQuestion,
+	[DungeonEnum.ElementType.V3a4BBS] = DungeonEnum.ElementType.None
 }
 DungeonEnum.EquipDungeonChapterId = 601
 DungeonEnum.ChapterId = {

@@ -52,7 +52,7 @@ function SkillEditorSceneSelectView:_updateItems()
 end
 
 function SkillEditorSceneSelectView:_updateItemSelect(curLevelId)
-	curLevelId = curLevelId or GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	curLevelId = curLevelId or FightGameMgr.sceneLevelMgr:getCurLevelId()
 
 	local list = SkillEditorSceneSelectModel.instance:getList()
 

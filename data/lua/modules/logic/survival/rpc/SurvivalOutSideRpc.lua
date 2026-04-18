@@ -65,6 +65,81 @@ function SurvivalOutSideRpc:sendSurvivalMarkNewHandbook(ids, callback, callobj)
 	return self:sendMsg(req, callback, callobj)
 end
 
+function SurvivalOutSideRpc:sendSurvivalOutSideTechUnlockRequest(techId, teachCellId)
+	UIBlockHelper.instance:startBlock("SurvivalOutSideTechUnlockRequest", 4)
+
+	local req = SurvivalOutSideModule_pb.SurvivalOutSideTechUnlockRequest()
+
+	req.techId = teachCellId
+
+	return self:sendMsg(req, function()
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnReceiveSurvivalOutSideTechUnlockReply, {
+			techId = techId,
+			teachCellId = teachCellId
+		})
+	end, nil)
+end
+
+function SurvivalOutSideRpc:onReceiveSurvivalOutSideTechUnlockReply(resultCode, msg)
+	UIBlockHelper.instance:endBlock("SurvivalOutSideTechUnlockRequest")
+
+	if resultCode == 0 then
+		local survivalOutSideTechMo = SurvivalModel.instance:getOutSideInfo().survivalOutSideTechMo
+
+		survivalOutSideTechMo:onReceiveSurvivalOutSideTechUnlockReply(msg)
+	end
+end
+
+function SurvivalOutSideRpc:sendSurvivalOutSideTechResetRequest(techId)
+	local req = SurvivalOutSideModule_pb.SurvivalOutSideTechResetRequest()
+
+	req.belongRoleId = techId
+
+	return self:sendMsg(req)
+end
+
+function SurvivalOutSideRpc:onReceiveSurvivalOutSideTechResetReply(resultCode, msg)
+	if resultCode == 0 then
+		GameFacade.showToastString(luaLang("SurvivalTechView_2"))
+
+		local survivalOutSideTechMo = SurvivalModel.instance:getOutSideInfo().survivalOutSideTechMo
+
+		survivalOutSideTechMo:onReceiveSurvivalOutSideTechResetReply(msg)
+	end
+end
+
+function SurvivalOutSideRpc:sendSurvivalMarkRoleNotNewRequest(roleIds, callback, callobj)
+	if #roleIds > 0 then
+		local req = SurvivalOutSideModule_pb.SurvivalMarkRoleNotNewRequest()
+
+		for i, v in ipairs(roleIds) do
+			table.insert(req.roleId, v)
+		end
+
+		return self:sendMsg(req, callback, callobj)
+	end
+end
+
+function SurvivalOutSideRpc:onReceiveSurvivalMarkRoleNotNewReply(resultCode, msg)
+	return
+end
+
+function SurvivalOutSideRpc:sendSurvivalMarkModNotNewRequest(ids, callback, callobj)
+	if #ids > 0 then
+		local req = SurvivalOutSideModule_pb.SurvivalMarkModNotNewRequest()
+
+		for i, v in ipairs(ids) do
+			table.insert(req.modId, v)
+		end
+
+		return self:sendMsg(req, callback, callobj)
+	end
+end
+
+function SurvivalOutSideRpc:onReceiveSurvivalMarkModNotNewReply(resultCode, msg)
+	return
+end
+
 SurvivalOutSideRpc.instance = SurvivalOutSideRpc.New()
 
 return SurvivalOutSideRpc

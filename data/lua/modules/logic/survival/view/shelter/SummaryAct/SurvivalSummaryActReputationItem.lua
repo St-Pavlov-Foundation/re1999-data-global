@@ -2,10 +2,9 @@
 
 module("modules.logic.survival.view.shelter.SummaryAct.SurvivalSummaryActReputationItem", package.seeall)
 
-local SurvivalSummaryActReputationItem = class("SurvivalSummaryActReputationItem", SurvivalSimpleListItem)
+local SurvivalSummaryActReputationItem = class("SurvivalSummaryActReputationItem", SimpleListItem)
 
-function SurvivalSummaryActReputationItem:init(viewGO)
-	self.viewGO = viewGO
+function SurvivalSummaryActReputationItem:onInit(viewGO)
 	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
 	self._txtdec1 = gohelper.findChildText(self.viewGO, "root/#txt_dec1")
 	self._txtdec2 = gohelper.findChildText(self.viewGO, "root/#txt_dec2")

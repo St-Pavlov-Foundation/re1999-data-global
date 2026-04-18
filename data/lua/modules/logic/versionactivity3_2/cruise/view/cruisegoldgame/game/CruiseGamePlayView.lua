@@ -48,10 +48,10 @@ function CruiseGamePlayView:onInitView()
 	self.aiAnim = self.aiNode:GetComponent(gohelper.Type_Animator)
 	self.selectCardItem = nil
 
-	local selectScrollParam = SurvivalSimpleListParam.New()
+	local selectScrollParam = SimpleListParam.New()
 
 	selectScrollParam.cellClass = CruiseGameCardSelectItem
-	self.selectCardScroll = SurvivalHelper.instance:createLuaSimpleListComp(self.goSelectList, selectScrollParam, self.cardSelectItem, self.viewContainer)
+	self.selectCardScroll = GameFacade.createSimpleListComp(self.goSelectList, selectScrollParam, self.cardSelectItem, self.viewContainer)
 	self.playerCardItemMid = MonoHelper.addNoUpdateLuaComOnceToGo(self.go_playerCardItemMid, CruiseGameCardItem, self.viewContainer)
 	self.playerCardItem1 = MonoHelper.addNoUpdateLuaComOnceToGo(self.go_playerCardItem1, CruiseGameCardItem, self.viewContainer)
 	self.playerCardItem2 = MonoHelper.addNoUpdateLuaComOnceToGo(self.go_playerCardItem2, CruiseGameCardItem, self.viewContainer)
@@ -239,12 +239,12 @@ function CruiseGamePlayView:refreshSelectCardScroll()
 		}
 	}
 
-	self.selectCardScroll:setList(selectDatas)
+	self.selectCardScroll:setData(selectDatas)
 end
 
 function CruiseGamePlayView:onClickSelectItemFunc(cruiseGoldGameCardItem)
 	if self.isTriggerPlayerSelectCard then
-		if cruiseGoldGameCardItem.isSelect then
+		if cruiseGoldGameCardItem.isSelectItem then
 			AudioMgr.instance:trigger(AudioEnum3_2.play_ui_shengyan_box_songjin_draw)
 
 			local cardType = cruiseGoldGameCardItem.cardType
@@ -254,7 +254,7 @@ function CruiseGamePlayView:onClickSelectItemFunc(cruiseGoldGameCardItem)
 			cruiseGoldGameCardItem:playOutAnim()
 			self:setSelectCardState(false)
 		else
-			self.selectCardScroll:setSelect(cruiseGoldGameCardItem.index)
+			self.selectCardScroll:setSelect(cruiseGoldGameCardItem.itemIndex)
 		end
 	end
 end

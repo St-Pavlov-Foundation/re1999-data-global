@@ -245,6 +245,17 @@ function FightModel:initSpeedConfig()
 			arrs[2][2],
 			arrs[2][2]
 		}
+		arrs = GameUtil.splitString2(lua_survival_const.configDict[4704].value, true)
+		self._shelterSpeed = {
+			arrs[1][1],
+			arrs[2][1],
+			arrs[3][1]
+		}
+		self._shelterUISpeed = {
+			arrs[1][2],
+			arrs[2][2],
+			arrs[2][2]
+		}
 	end
 end
 
@@ -257,6 +268,14 @@ function FightModel:getSpeed()
 
 	if FightDataHelper.fieldMgr:isRouge2() then
 		return self._rouge2Speed[self._userSpeed] or 1
+	end
+
+	if FightDataHelper.fieldMgr:isShelter() then
+		return self._shelterSpeed[self._userSpeed] or 1
+	end
+
+	if FightDataHelper.fieldMgr:isSurvival() then
+		return self._shelterSpeed[self._userSpeed] or 1
 	end
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
@@ -289,11 +308,21 @@ function FightModel:addSpeed()
 		self._userSpeed = self._userSpeed + 1
 	end
 
+	self:updateRTPCSpeed()
+
 	return self._userSpeed
 end
 
 function FightModel:getMaxSpeed()
 	if FightDataHelper.fieldMgr:isRouge2() then
+		return 3
+	end
+
+	if FightDataHelper.fieldMgr:isShelter() then
+		return 3
+	end
+
+	if FightDataHelper.fieldMgr:isSurvival() then
 		return 3
 	end
 
@@ -317,6 +346,14 @@ function FightModel:getUISpeed()
 
 	if FightDataHelper.fieldMgr:isRouge2() then
 		return self._rouge2UISpeed[self._userSpeed] or 1
+	end
+
+	if FightDataHelper.fieldMgr:isShelter() then
+		return self._shelterUISpeed[self._userSpeed] or 1
+	end
+
+	if FightDataHelper.fieldMgr:isSurvival() then
+		return self._shelterUISpeed[self._userSpeed] or 1
 	end
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
@@ -352,6 +389,8 @@ function FightModel:getUserSpeed()
 end
 
 function FightModel:setUserSpeed(speed)
+	speed = speed or 1
+	speed = Mathf.Clamp(speed, 1, self:getMaxSpeed())
 	self._userSpeed = speed or 1
 
 	self:updateRTPCSpeed()

@@ -60,6 +60,21 @@ function NecrologistStoryTextItem:createLinksRect()
 	end
 end
 
+function NecrologistStoryTextItem:getLinkRectGO()
+	local list = NecrologistStoryHelper.calculateLinksRectData(self.txtContent)
+	local tmpGO = self.txtContent.gameObject
+
+	for i, v in ipairs(list) do
+		local _, _, _, linkId = unpack(v)
+		local name = "link" .. linkId
+		local linkGO = gohelper.findChild(tmpGO, name)
+
+		if linkGO then
+			return linkGO
+		end
+	end
+end
+
 function NecrologistStoryTextItem:caleHeight()
 	return self.txtContent.preferredHeight
 end

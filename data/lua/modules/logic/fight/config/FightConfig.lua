@@ -70,6 +70,7 @@ function FightConfig:reqConfigNames()
 		"fight_skin_special_behaviour",
 		"fight_replace_timeline",
 		"magic_circle",
+		"magic_circle_by_skill_flow",
 		"fight_dead_entity_mgr",
 		"fight_buff_reject_act",
 		"boss_action",
@@ -142,7 +143,8 @@ function FightConfig:reqConfigNames()
 		"zongmao_boss_stage_buffid_effect",
 		"battle_selection",
 		"fight_skill_force_use",
-		"fight_change_buff_effect_by_skin"
+		"fight_change_buff_effect_by_skin",
+		"magic_wqsz"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then
@@ -150,6 +152,9 @@ function FightConfig:reqConfigNames()
 		table.insert(list, "activity174_test_role")
 		table.insert(list, "editor_skill_tag")
 		table.insert(list, "editor_role_sources")
+		table.insert(list, "auto_fight_role_tool")
+		table.insert(list, "auto_fight_team_tool")
+		table.insert(list, "auto_fight_tool_const")
 	end
 
 	return list

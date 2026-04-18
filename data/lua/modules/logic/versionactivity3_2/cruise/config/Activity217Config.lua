@@ -7,6 +7,7 @@ local Activity217Config = class("Activity217Config", BaseConfig)
 function Activity217Config:ctor()
 	self._controlConfig = nil
 	self._bonusConfig = nil
+	self._actIdList = {}
 end
 
 function Activity217Config:reqConfigNames()
@@ -19,6 +20,8 @@ end
 function Activity217Config:onConfigLoaded(configName, configTable)
 	if configName == "activity217_control" then
 		self._controlConfig = configTable
+
+		self:_initActIdList()
 	elseif configName == "activity217_bonus" then
 		self._bonusConfig = configTable
 	end
@@ -40,6 +43,18 @@ function Activity217Config:getBonusCO(episodeId, actId)
 	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
 
 	return self._bonusConfig.configDict[actId][episodeId]
+end
+
+function Activity217Config:_initActIdList()
+	for index, co in ipairs(self._controlConfig.configList) do
+		if not tabletool.indexOf(self._actIdList, co.activityId) then
+			table.insert(self._actIdList, co.activityId)
+		end
+	end
+end
+
+function Activity217Config:getActIdList()
+	return self._actIdList
 end
 
 Activity217Config.instance = Activity217Config.New()

@@ -8,11 +8,14 @@ function VersionSummonFull:onInitView()
 	self._txtremainTime = gohelper.findChildText(self.viewGO, "image_TimeBG/#txt_remainTime")
 	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Claim")
 	self._goNormal = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Normal")
+	self._txtNormal = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_Claim")
+	self._txtNormalEn = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_ClaimEn")
 	self._goReceived = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Received")
 	self._simageRole = gohelper.findChildSingleImage(self.viewGO, "#simage_Role")
 	self._simageLogo = gohelper.findChildSingleImage(self.viewGO, "#simage_Logo")
 	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "#simage_Title")
 	self._simageProp = gohelper.findChildSingleImage(self.viewGO, "prop/image_Prop")
+	self._gohasget = gohelper.findChild(self.viewGO, "prop/go_hasget")
 	self._txtTips = gohelper.findChildText(self.viewGO, "txt_Tips")
 
 	if self._editableInitView then
@@ -34,6 +37,10 @@ function VersionSummonFull:_btnClaimOnClick()
 	self.viewContainer:sendGet101BonusRequest()
 end
 
+function VersionSummonFull:_btnGoToOnClick()
+	GameFacade.jump(self._jumpId)
+end
+
 function VersionSummonFull:onUpdateParam()
 	TaskDispatcher.cancelTask(self._refreshTimeTick, self)
 	TaskDispatcher.runRepeat(self._refreshTimeTick, self, TimeUtil.OneMinuteSecond)
@@ -41,6 +48,11 @@ function VersionSummonFull:onUpdateParam()
 end
 
 function VersionSummonFull:onOpen()
+	self._config = ActivityConfig.instance:getActivityCo(self.viewParam.actId)
+
+	local patFaceParam = self._config and self._config.patFaceParam and string.split(self._config.patFaceParam, "#")
+
+	self._jumpId = patFaceParam and patFaceParam[2]
 	self._txtremainTime.text = ""
 
 	self:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
@@ -55,6 +67,7 @@ function VersionSummonFull:onRefresh()
 
 	gohelper.setActive(self._goNormal, isCanGet)
 	gohelper.setActive(self._goReceived, not isCanGet)
+	gohelper.setActive(self._gohasget, not isCanGet)
 end
 
 function VersionSummonFull:_refreshTimeTick()

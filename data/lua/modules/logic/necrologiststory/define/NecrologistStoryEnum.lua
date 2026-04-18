@@ -5,19 +5,22 @@ module("modules.logic.necrologiststory.define.NecrologistStoryEnum", package.see
 local NecrologistStoryEnum = _M
 
 NecrologistStoryEnum.RoleStoryId = {
-	V3A3 = 28,
+	V3A4 = 29,
 	V3A2 = 27,
-	V3A1 = 26
+	V3A1 = 26,
+	V3A3 = 28
 }
 NecrologistStoryEnum.RoleStoryId2MOCls = {
 	[NecrologistStoryEnum.RoleStoryId.V3A1] = "NecrologistV3A1MO",
 	[NecrologistStoryEnum.RoleStoryId.V3A2] = "NecrologistV3A2MO",
-	[NecrologistStoryEnum.RoleStoryId.V3A3] = "NecrologistV3A3MO"
+	[NecrologistStoryEnum.RoleStoryId.V3A3] = "NecrologistV3A3MO",
+	[NecrologistStoryEnum.RoleStoryId.V3A4] = "NecrologistV3A4MO"
 }
 NecrologistStoryEnum.StoryId2GameView = {
 	[NecrologistStoryEnum.RoleStoryId.V3A1] = ViewName.V3A1_RoleStoryGameView,
 	[NecrologistStoryEnum.RoleStoryId.V3A2] = ViewName.V3A2_RoleStoryGameView,
-	[NecrologistStoryEnum.RoleStoryId.V3A3] = ViewName.V3A3_RoleStoryGameView
+	[NecrologistStoryEnum.RoleStoryId.V3A3] = ViewName.V3A3_RoleStoryGameView,
+	[NecrologistStoryEnum.RoleStoryId.V3A4] = ViewName.V3A4_RoleStoryLevelView
 }
 NecrologistStoryEnum.TaskParam = {
 	V3A3End2 = 2802,
@@ -62,11 +65,11 @@ NecrologistStoryEnum.BaseType = {
 NecrologistStoryEnum.WeatherType = {
 	Cloudy = 3,
 	Fire = 8,
-	Snowy = 5,
+	Snowy = 4,
 	Light = 7,
 	Flow = 6,
 	Fog = 2,
-	Rainy = 4,
+	Rainy = 5,
 	Sunny = 1
 }
 NecrologistStoryEnum.WeatherType2Name = {

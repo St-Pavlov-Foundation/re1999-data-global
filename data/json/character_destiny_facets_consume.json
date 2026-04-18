@@ -379,7 +379,7 @@
     "icon": "300701",
     "facetsSort": 100,
     "keyword": "language_10042206",
-    "type": 0,
+    "type": 1,
     "titleName": "",
     "tag": "101#125#114"
   },
@@ -442,5 +442,53 @@
     "type": 0,
     "titleName": "",
     "tag": "103#130#123"
+  },
+  {
+    "facetsId": 305301,
+    "name": "language_10112526",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 4,
+    "icon": "305301",
+    "facetsSort": 100,
+    "keyword": "language_10063814",
+    "type": 1,
+    "titleName": "",
+    "tag": "104#124#106"
+  },
+  {
+    "facetsId": 311001,
+    "name": "language_10112527",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111006#3",
+    "tend": 1,
+    "icon": "311001",
+    "facetsSort": 100,
+    "keyword": "language_10018041",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 307901,
+    "name": "language_10112528",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111007#3",
+    "tend": 5,
+    "icon": "307901",
+    "facetsSort": 100,
+    "keyword": "language_10017172",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 310401,
+    "name": "language_10112529",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111008#3",
+    "tend": 1,
+    "icon": "310401",
+    "facetsSort": 100,
+    "keyword": "language_10015372",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   }
 ]

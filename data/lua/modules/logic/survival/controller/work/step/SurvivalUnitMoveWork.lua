@@ -8,7 +8,8 @@ local moveReasonToFuncName = {
 	[SurvivalEnum.PlayerMoveReason.Transfer] = "transferTo",
 	[SurvivalEnum.PlayerMoveReason.Tornado] = "tornadoTransfer",
 	[SurvivalEnum.PlayerMoveReason.Swap] = "swapPos",
-	[SurvivalEnum.PlayerMoveReason.Summon] = "summonPos"
+	[SurvivalEnum.PlayerMoveReason.Summon] = "summonPos",
+	[SurvivalEnum.PlayerMoveReason.Rocket] = "rocketTo"
 }
 
 function SurvivalUnitMoveWork:onStart(context)

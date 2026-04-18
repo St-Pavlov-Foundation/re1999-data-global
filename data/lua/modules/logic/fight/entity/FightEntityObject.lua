@@ -38,6 +38,12 @@ function FightEntityObject:addEntityComponent(compClass)
 	return insComp
 end
 
+function FightEntityObject:setUseGoScaleReplaceSpineScale(active)
+	if self.spine and self.spine.setUseGoScaleReplaceSpineScale then
+		self.spine:setUseGoScaleReplaceSpineScale(active)
+	end
+end
+
 function FightEntityObject:initComponents()
 	self.spine = self:addEntityComponent(self:getSpineClass())
 	self.skill = self:addEntityComponent(FightSkillComp)

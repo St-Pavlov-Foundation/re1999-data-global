@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "picture": "5#2",
+    "pictureNumber": 4,
+    "firstFlip": "2#4",
+    "othersFlip": "2#4"
+  },
+  {
+    "id": 2,
+    "picture": "6#2",
+    "pictureNumber": 4,
+    "firstFlip": "3#5",
+    "othersFlip": "2#4"
+  },
+  {
+    "id": 3,
+    "picture": "7#2",
+    "pictureNumber": 4,
+    "firstFlip": "3#6",
+    "othersFlip": "2#4"
+  }
+]

@@ -265,15 +265,95 @@ function SurvivalHelper:getDirMustHave(fromPos, toPos)
 	return SurvivalEnum.Dir.Right
 end
 
-function SurvivalHelper:createLuaSimpleListComp(gameObject, listScrollParam, res, viewContainer)
-	local list = MonoHelper.addNoUpdateLuaComOnceToGo(gameObject, SurvivalSimpleListComp, {
-		listScrollParam = listScrollParam,
-		viewContainer = viewContainer
-	})
+function SurvivalHelper:getLine(start, en)
+	local x1 = start.q
+	local y1 = start.r
+	local z1 = start.s
+	local x2 = en.q
+	local y2 = en.r
+	local z2 = en.s
+	local dx = x2 - x1
+	local dy = y2 - y1
+	local dz = z2 - z1
+	local ts = {
+		0,
+		1
+	}
 
-	list:setRes(res)
+	self:_collectHalfIntegerCrossings(ts, x1, x2, dx)
+	self:_collectHalfIntegerCrossings(ts, y1, y2, dy)
+	self:_collectHalfIntegerCrossings(ts, z1, z2, dz)
+	table.sort(ts)
+
+	local uniqTs = {}
+
+	for _, t in ipairs(ts) do
+		if #uniqTs == 0 or math.abs(t - uniqTs[#uniqTs]) > 0 then
+			table.insert(uniqTs, t)
+		end
+	end
+
+	local set = {}
+	local list = {}
+
+	for i = 1, #uniqTs - 1 do
+		local tA = uniqTs[i]
+		local tB = uniqTs[i + 1]
+		local tm = (tA + tB) / 2
+		local sx = x1 + dx * tm
+		local sy = y1 + dy * tm
+		local sz = z1 + dz * tm
+		local rx, ry, rz = self:_cubeRound(sx, sy, sz)
+		local key = string.format("%s_%s_%s", rx, ry, rz)
+
+		if not set[key] then
+			set[key] = true
+
+			local node = SurvivalHexNode.New(rx, ry, rz)
+
+			table.insert(list, node)
+		end
+	end
 
 	return list
+end
+
+function SurvivalHelper:_collectHalfIntegerCrossings(ts, c1, c2, dc)
+	if dc == 0 then
+		return
+	end
+
+	local minVal = math.min(c1, c2)
+	local maxVal = math.max(c1, c2)
+	local kMin = math.floor(minVal) - 1
+	local kMax = math.floor(maxVal) + 1
+
+	for k = kMin, kMax do
+		local t = (k + 0.5 - c1) / dc
+
+		if t > 0 and t < 1 then
+			table.insert(ts, t)
+		end
+	end
+end
+
+function SurvivalHelper:_cubeRound(x, y, z)
+	local rx = Mathf.Round(x)
+	local ry = Mathf.Round(y)
+	local rz = Mathf.Round(z)
+	local xDiff = math.abs(rx - x)
+	local yDiff = math.abs(ry - y)
+	local zDiff = math.abs(rz - z)
+
+	if yDiff < xDiff and zDiff < xDiff then
+		rx = -ry - rz
+	elseif zDiff < yDiff then
+		ry = -rx - rz
+	else
+		rz = -rx - ry
+	end
+
+	return rx, ry, rz
 end
 
 SurvivalHelper.instance = SurvivalHelper.New()

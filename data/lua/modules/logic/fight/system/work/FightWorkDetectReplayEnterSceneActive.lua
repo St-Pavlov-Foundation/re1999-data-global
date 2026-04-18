@@ -16,7 +16,7 @@ function FightWorkDetectReplayEnterSceneActive:onStart()
 				local fightScene = GameSceneMgr.instance:getCurScene()
 
 				if fightScene then
-					local sceneObj = fightScene.level:getSceneGo()
+					local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 					if sceneObj then
 						local childCount = sceneObj.transform.childCount

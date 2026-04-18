@@ -3,54 +3,88 @@
     "id": 999,
     "name": "language_10086071",
     "optional": 0,
-    "hardness": "24010#22040#24031#901005#901009",
+    "subTab": 0,
+    "hardness": "3425101#3425104#24031#901005#3425102#3425103",
     "extendScore": 0,
     "desc": "",
-    "unlock": ""
+    "unlock": "",
+    "initRole": "999"
   },
   {
     "id": 1,
-    "name": "language_10086072",
+    "name": "language_10086071",
     "optional": 1,
-    "hardness": "24011#3124101#3124102#3124103#901006#901008#24033#901009#3129902",
-    "extendScore": 600,
-    "desc": "language_10086073",
-    "unlock": "overDif#999"
+    "subTab": 0,
+    "hardness": "3425101#3425104#24031#901005#3425102#3425103",
+    "extendScore": 400,
+    "desc": "language_10114714",
+    "unlock": "overDif#999",
+    "initRole": "1#2"
   },
   {
     "id": 2,
-    "name": "language_10086074",
+    "name": "language_10022475",
     "optional": 1,
-    "hardness": "24012#3124201#3124202#3124203#3124204#24022#901006#901008#24033#901009#3129902",
-    "extendScore": 800,
-    "desc": "language_10086075",
-    "unlock": "overDif#999"
-  },
-  {
-    "id": 3,
-    "name": "language_10086076",
-    "optional": 1,
-    "hardness": "24012#3124301#3124302#3124303#3124304#3124305#24023#901007#901008#24033#901009#3129901",
-    "extendScore": 1000,
-    "desc": "language_10086077",
-    "unlock": "passMods#1,2"
-  },
-  {
-    "id": 4,
-    "name": "language_10086078",
-    "optional": 1,
-    "hardness": "3124401#3124402#3124403#3124404#3124405#3124406#24024#901007#901008#24033#901009#3129901",
-    "extendScore": 1200,
-    "desc": "language_10086079",
-    "unlock": "passMods#1,2"
+    "subTab": 0,
+    "hardness": "3425201#3425204#3425202#3425203#24011#901006#901008#24033",
+    "extendScore": 600,
+    "desc": "language_10114715",
+    "unlock": "overDif#999",
+    "initRole": "1#2"
   },
   {
     "id": 9999,
-    "name": "language_10086080",
+    "name": "language_10114716",
     "optional": 1,
-    "hardness": "24021#22041#24024#901007#901008#24033#901009#3129901",
+    "subTab": 1,
+    "hardness": "3425301#3425302#3425306#3425304#3425305#24024#901007#901008#24033",
+    "extendScore": 800,
+    "desc": "language_10086081",
+    "unlock": "passMods#2",
+    "initRole": "1#2#3#4#5#6"
+  },
+  {
+    "id": 3,
+    "name": "language_10114717",
+    "optional": 0,
+    "subTab": 2,
+    "hardness": "3425401#3425402#3425406#3425407#3425404#3425405#24024#901007#901008#24033",
+    "extendScore": 800,
+    "desc": "language_10086081",
+    "unlock": "passMods#2",
+    "initRole": "1#2#3#4#5#6"
+  },
+  {
+    "id": 4,
+    "name": "language_10114718",
+    "optional": 0,
+    "subTab": 3,
+    "hardness": "3425501#3425502#3425508#3425504#3425509#3425505#3425506#3425507#24024#901007#901008#24033",
+    "extendScore": 1000,
+    "desc": "language_10086081",
+    "unlock": "passMods#9999,3",
+    "initRole": "1#2#3#4#5#6"
+  },
+  {
+    "id": 5,
+    "name": "language_10114719",
+    "optional": 0,
+    "subTab": 4,
+    "hardness": "3425601#3425602#3425608#3425609#3425604#3425610#3425605#3425606#3425607#24024#901007#901008#24033",
+    "extendScore": 1000,
+    "desc": "language_10086081",
+    "unlock": "passMods#9999,3",
+    "initRole": "1#2#3#4#5#6"
+  },
+  {
+    "id": 6,
+    "name": "language_10114720",
+    "optional": 0,
+    "subTab": 5,
+    "hardness": "3425701#3425702#3425708#3425704#3425709#3425705#3425706#3425707#24024#901007#901008#24033",
     "extendScore": 1200,
     "desc": "language_10086081",
-    "unlock": "passMods#3,4"
+    "unlock": "passMods#4,5",
+    "initRole": "1#2#3#4#5#6"
   }
 ]

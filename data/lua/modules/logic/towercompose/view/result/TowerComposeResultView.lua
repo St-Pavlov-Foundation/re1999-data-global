@@ -32,6 +32,8 @@ function TowerComposeResultView:onInitView()
 	self._goPlane2 = gohelper.findChild(self.viewGO, "go_result/#go_herogroupcontain2/go_team2/layout/#go_plane2")
 	self._btnData2 = gohelper.findChildButtonWithAudio(self.viewGO, "go_result/#go_herogroupcontain2/go_team2/#btn_Data")
 	self._goFinish = gohelper.findChild(self.viewGO, "goFinish")
+	self._btnSave = gohelper.findChildButtonWithAudio(self.viewGO, "go_result/#go_herogroupcontain2/#btn_save")
+	self._goSaved = gohelper.findChild(self.viewGO, "go_result/#go_herogroupcontain2/#go_saved")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -44,6 +46,8 @@ function TowerComposeResultView:addEvents()
 	self._btnData:AddClickListener(self._onbtnDataClick, self)
 	self._btnData1:AddClickListener(self._onbtnData1Click, self)
 	self._btnData2:AddClickListener(self._onbtnData2Click, self)
+	self._btnSave:AddClickListener(self._onSaveClick, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.UpdateRecordReply, self.onUpdateRecordReply, self)
 end
 
 function TowerComposeResultView:removeEvents()
@@ -52,6 +56,8 @@ function TowerComposeResultView:removeEvents()
 	self._btnData:RemoveClickListener()
 	self._btnData1:RemoveClickListener()
 	self._btnData2:RemoveClickListener()
+	self._btnSave:RemoveClickListener()
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.UpdateRecordReply, self.onUpdateRecordReply, self)
 end
 
 function TowerComposeResultView:_onCloseClick()
@@ -66,6 +72,20 @@ function TowerComposeResultView:_onCloseClick()
 		end
 
 		return
+	end
+
+	if self:checkCurScoreHigher() then
+		GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeCurScoreHighTip, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.sendUpdateRecordAndCloseView, nil, nil, self)
+	else
+		self:sendUpdateRecordAndCloseView()
+	end
+end
+
+function TowerComposeResultView:sendUpdateRecordAndCloseView()
+	if not self.hasSendUpdateRecord and self._towerEpisodeCo.plane == TowerComposeEnum.PlaneType.Twice then
+		TowerComposeRpc.instance:sendTowerComposeUpdateRecordRequest(self._themeId, false)
+
+		self.hasSendUpdateRecord = true
 	end
 
 	self:closeThis()
@@ -93,6 +113,19 @@ function TowerComposeResultView:_onbtnData2Click()
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
+function TowerComposeResultView:_onSaveClick()
+	if self.hasSendUpdateRecord then
+		return
+	end
+
+	local param = {}
+
+	param.operateType = TowerComposeEnum.TeamOperateType.Save
+	param.themeId = self._themeId
+
+	TowerComposeController.instance:openTowerComposeSaveView(param)
+end
+
 function TowerComposeResultView:_editableInitView()
 	self._slotItems = self:getUserDataTb_()
 
@@ -112,14 +145,19 @@ function TowerComposeResultView:onUpdateParam()
 end
 
 function TowerComposeResultView:onOpen()
-	self._themeId, self._layerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	self.fightParam = TowerComposeModel.instance:getRecordFightParam()
+	self._themeId, self._layerId = self.fightParam.themeId, self.fightParam.layerId
 	self._towerEpisodeCo = TowerComposeConfig.instance:getEpisodeConfig(self._themeId, self._layerId)
 	self._slotMapCo = TowerComposeConfig.instance:getModSlotNumMap(self._themeId)
 	self._bodyModItems = self:getUserDataTb_()
 	self._wordModItems = self:getUserDataTb_()
 	self._envModItems = self:getUserDataTb_()
+	self._resultScoreStateItems = self:getUserDataTb_()
+	self.hasSendUpdateRecord = false
+	self.isUpdateRecord = false
 
 	self:_refreshUI()
+	self:autoSaveRecord()
 end
 
 function TowerComposeResultView:_refreshUI()
@@ -288,6 +326,7 @@ end
 function TowerComposeResultView:_refreshHeroGroup1()
 	self:_refreshSlot1()
 	self:_refreshTarget1()
+	self:refreshSaveRecordUI()
 end
 
 function TowerComposeResultView:_refreshSlot1()
@@ -410,6 +449,8 @@ end
 function TowerComposeResultView:_refreshHeroGroup2()
 	self:_refreshSlot2()
 	self:_refreshTarget2()
+	self:_refreshPlaneScoreState()
+	self:refreshSaveRecordUI()
 end
 
 function TowerComposeResultView:_refreshSlot2()
@@ -434,6 +475,90 @@ function TowerComposeResultView:_refreshTarget2()
 		local entityMO = TowerComposeModel.instance:getLastEntityMO()
 
 		gohelper.setActive(self["_btnData" .. i].gameObject, hasStat and entityMO)
+	end
+end
+
+function TowerComposeResultView:_refreshPlaneScoreState()
+	local themeMo = TowerComposeModel.instance:getThemeMo(self._themeId)
+
+	for planeId = 1, 2 do
+		local scoreStateItem = self._resultScoreStateItems[planeId]
+		local targetGO = self["_goTargetList" .. planeId]
+
+		if not scoreStateItem then
+			scoreStateItem = {
+				goSucc = gohelper.findChild(targetGO, "layout/result/success"),
+				txtRecordNum = gohelper.findChildText(targetGO, "layout/result/success/#txt_recordnum"),
+				gonewRecord = gohelper.findChild(targetGO, "layout/result/success/#go_newrecord"),
+				goFail = gohelper.findChild(targetGO, "layout/result/fail")
+			}
+			self._resultScoreStateItems[planeId] = scoreStateItem
+		end
+
+		local planeData = self.bossInfoMo:getPlaneSettleData(planeId)
+
+		scoreStateItem.txtRecordNum.text = planeData and planeData.score or 0
+
+		gohelper.setActive(scoreStateItem.goSucc, planeData and planeData.result == TowerComposeEnum.FightResult.Win)
+		gohelper.setActive(scoreStateItem.goFail, planeData and (planeData.result == TowerComposeEnum.FightResult.Fail or planeData.result == TowerComposeEnum.FightResult.None))
+		gohelper.setActive(scoreStateItem.gonewRecord, planeData and planeData.newFlag)
+	end
+end
+
+function TowerComposeResultView:checkCurScoreHigher()
+	if self._towerEpisodeCo.plane ~= TowerComposeEnum.PlaneType.Twice then
+		return false
+	end
+
+	local themeMo = TowerComposeModel.instance:getThemeMo(self._themeId)
+	local curFightRecordData = self.bossInfoMo:getRecordData()
+
+	if not curFightRecordData or curFightRecordData.createTime == 0 then
+		return false
+	end
+
+	if themeMo.hasSavedRecord then
+		local recordInfoData = themeMo:getBossRecordInfoData()
+		local recordScore = recordInfoData and recordInfoData.bossMo.curScore or 0
+
+		return recordScore < self.bossInfoMo.curScore
+	end
+
+	return false
+end
+
+function TowerComposeResultView:autoSaveRecord()
+	local themeMo = TowerComposeModel.instance:getThemeMo(self._themeId)
+	local recordInfoData = themeMo:getBossRecordInfoData()
+	local settleRecordData = self.bossInfoMo:getRecordData()
+
+	if (not themeMo.hasSavedRecord or not recordInfoData) and settleRecordData and not self.hasSendUpdateRecord and self._towerEpisodeCo.plane == TowerComposeEnum.PlaneType.Twice then
+		TowerComposeRpc.instance:sendTowerComposeUpdateRecordRequest(self._themeId, true)
+	end
+end
+
+function TowerComposeResultView:onUpdateRecordReply(msg)
+	self.isUpdateRecord = msg.record and tonumber(msg.record.createTime) > 0
+	self.hasSendUpdateRecord = true
+
+	if self.isUpdateRecord then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordSaved)
+		self:refreshSaveRecordUI()
+	end
+end
+
+function TowerComposeResultView:refreshSaveRecordUI()
+	local isTwoPlane = self._towerEpisodeCo.plane == TowerComposeEnum.PlaneType.Twice
+
+	if not isTwoPlane then
+		gohelper.setActive(self._btnSave.gameObject, false)
+		gohelper.setActive(self._goSaved, false)
+	else
+		local curFightRecordData = self.bossInfoMo:getRecordData()
+		local isFirstPlaneSucc = self.bossInfoMo:isFirstPlaneSucc()
+
+		gohelper.setActive(self._btnSave.gameObject, curFightRecordData and isFirstPlaneSucc and not self.isUpdateRecord)
+		gohelper.setActive(self._goSaved, curFightRecordData and isFirstPlaneSucc and self.isUpdateRecord)
 	end
 end
 
@@ -496,6 +621,8 @@ function TowerComposeResultView:onDestroyView()
 
 		self._popupFlow = nil
 	end
+
+	self.bossInfoMo:cleanPlaneAtkStatsMap()
 end
 
 return TowerComposeResultView

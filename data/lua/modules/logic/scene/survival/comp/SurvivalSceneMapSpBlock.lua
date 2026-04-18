@@ -25,6 +25,7 @@ function SurvivalSceneMapSpBlock:_onPreloadFinish()
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	self._allBlocks = {}
+	self._allBlockDict = {}
 	self._destroyBlocks = {}
 	self._spBlockEdge = {}
 	self._edgePool = {}
@@ -46,6 +47,7 @@ function SurvivalSceneMapSpBlock:_onPreloadFinish()
 
 		self._allBlocks[id] = block
 
+		self:addBlock(unitMo.pos, block)
 		self:showHideBlock(unitMo.pos, false, true)
 
 		for i, v in ipairs(unitMo.exPoints) do
@@ -191,6 +193,7 @@ function SurvivalSceneMapSpBlock:onSpBlockAdd(unitMo)
 
 	self._allBlocks[unitMo.id] = block
 
+	self:addBlock(unitMo.pos, block)
 	self:showHideBlock(unitMo.pos, false, false)
 
 	for i, v in ipairs(unitMo.exPoints) do
@@ -213,6 +216,8 @@ function SurvivalSceneMapSpBlock:onSpBlockDelete(unitMo)
 		self._allBlocks[unitMo.id]:tryDestory()
 
 		self._allBlocks[unitMo.id] = nil
+
+		self:removeBlock(unitMo.pos)
 	end
 
 	if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
@@ -230,10 +235,40 @@ function SurvivalSceneMapSpBlock:onSceneClose()
 	self._blockRoot = nil
 	self._sceneGo = nil
 	self._allBlocks = {}
+	self._allBlockDict = {}
 	self._destroyBlocks = {}
 	self._edgeRes = nil
 	self._spBlockEdge = {}
 	self._edgePool = {}
+end
+
+function SurvivalSceneMapSpBlock:addBlock(pos, block)
+	if not block or not pos then
+		return
+	end
+
+	self._allBlockDict[pos.q] = self._allBlockDict[pos.q] or {}
+	self._allBlockDict[pos.q][pos.r] = block
+end
+
+function SurvivalSceneMapSpBlock:removeBlock(pos)
+	if not pos then
+		return
+	end
+
+	if self._allBlockDict[pos.q] and self._allBlockDict[pos.q][pos.r] then
+		self._allBlockDict[pos.q][pos.r] = nil
+	end
+end
+
+function SurvivalSceneMapSpBlock:getBlock(hexPoint)
+	if not hexPoint then
+		return
+	end
+
+	local block = self._allBlockDict[hexPoint.q] and self._allBlockDict[hexPoint.q][hexPoint.r]
+
+	return block
 end
 
 return SurvivalSceneMapSpBlock

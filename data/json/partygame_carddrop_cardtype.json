@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "language_10113068",
+    "icon": "battlegame_card_04",
+    "selectedMask": "battlegame_cardselected_02",
+    "loseIcon": "battlegame_card_lose_04"
+  },
+  {
+    "id": 2,
+    "name": "language_10113069",
+    "icon": "battlegame_card_05",
+    "selectedMask": "battlegame_cardselected_02",
+    "loseIcon": "battlegame_card_lose_05"
+  },
+  {
+    "id": 3,
+    "name": "language_10113070",
+    "icon": "battlegame_card_03",
+    "selectedMask": "battlegame_cardselected_02",
+    "loseIcon": "battlegame_card_lose_03"
+  },
+  {
+    "id": 4,
+    "name": "language_10113071",
+    "icon": "battlegame_card_01",
+    "selectedMask": "battlegame_cardselected_01",
+    "loseIcon": "battlegame_card_lose_01"
+  },
+  {
+    "id": 5,
+    "name": "language_10113072",
+    "icon": "battlegame_card_02",
+    "selectedMask": "battlegame_cardselected_01",
+    "loseIcon": "battlegame_card_lose_02"
+  }
+]

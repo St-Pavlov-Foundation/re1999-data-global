@@ -15,8 +15,7 @@ function RoomResHelper.getMapBlockResPath(resourceId, resourceType, defineWaterT
 		defineWaterType = defineWaterType or 0
 
 		local resPath = ResUrl.getRoomRes(string.format("%s/%s/%s", resourceName, defineWaterType + 1, resourceType))
-
-		resAb = ResUrl.getRoomRes(string.format("%s/%s/%s", resourceName, defineWaterType + 1, resourceType))
+		local resAb = resPath
 
 		return resPath, resAb
 	end
@@ -29,9 +28,7 @@ function RoomResHelper.getMapRiverFloorResPath(riverBlockType, defineBlockType)
 
 	local tBlockType = RoomResHelper._getBlockType(defineBlockType)
 	local resPath = ResUrl.getRoomRes(string.format("heliu_floor/%s/%s", tBlockType + 1, riverBlockType))
-	local resAb = ResUrl.getRoomResAB(string.format("heliu_floor/%s", tBlockType + 1))
-
-	resAb = resPath
+	local resAb = resPath
 
 	return resPath, resAb
 end

@@ -68,6 +68,16 @@ function TowerComposeHeroGroupSupportItem:_onSupportItemClick()
 		return
 	end
 
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, self.curPlaneId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local planeMo = themeMo:getPlaneMo(self.curPlaneId)
+
+	if isPlaneLock and planeMo.hasFight then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+		return
+	end
+
 	if not self.isNormalEpisode and self.inPlaneId == 0 or self.inPlaneId == -1 then
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, self.supportConfig.id)
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
@@ -75,6 +85,15 @@ function TowerComposeHeroGroupSupportItem:_onSupportItemClick()
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, 0)
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
 	elseif self.curPlaneId ~= self.inPlaneId then
+		local isInPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, self.inPlaneId)
+		local inPlaneMo = themeMo:getPlaneMo(self.inPlaneId)
+
+		if isInPlaneLock and inPlaneMo.hasFight then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+			return
+		end
+
 		GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeReplaceMod, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.replaceTipCallBack, nil, nil, self)
 	end
 end

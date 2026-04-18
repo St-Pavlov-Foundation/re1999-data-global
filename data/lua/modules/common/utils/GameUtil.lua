@@ -1145,6 +1145,18 @@ function GameUtil.playerPrefsSetStringByUserId(playerPrefsKey, value)
 	PlayerPrefsHelper.setString(key, value)
 end
 
+function GameUtil.deleteKey(playerPrefsKey)
+	local userId = PlayerModel.instance:getMyUserId()
+
+	if not userId or userId == 0 then
+		return
+	end
+
+	local key = playerPrefsKey .. "#" .. tostring(userId)
+
+	PlayerPrefsHelper.deleteKey(key)
+end
+
 local _uniqueMt = {
 	__call = function(t)
 		local nowIndex = t.count
@@ -1177,6 +1189,49 @@ function GameUtil.setDefaultValue(t, defaultValue)
 			return defaultValue
 		end
 	})
+end
+
+function GameUtil.getTbValue(t, ...)
+	local len = select("#", ...)
+
+	if len == 0 then
+		return t
+	end
+
+	if type(t) ~= "table" then
+		return nil
+	end
+
+	return GameUtil.getTbValue(t[...], select(2, ...))
+end
+
+function GameUtil.setTbValue(t, k, ...)
+	if type(t) ~= "table" or k == nil then
+		return
+	end
+
+	local len = select("#", ...)
+
+	if len <= 1 then
+		if type(t) == "table" then
+			t[k] = ...
+		end
+
+		return
+	end
+
+	local tb = t[k]
+
+	if tb == nil then
+		t[k] = {}
+		tb = t[k]
+	end
+
+	if type(tb) ~= "table" then
+		return
+	end
+
+	return GameUtil.setTbValue(tb, ...)
 end
 
 function GameUtil.rpcInfoToMo(info, cls, oldMo)
@@ -1462,6 +1517,16 @@ function GameUtil.getTextRenderSize(text)
 	local renderValue = text:GetRenderedValues()
 
 	return renderValue.x, renderValue.y
+end
+
+function GameUtil.copyArray(array)
+	local l = {}
+
+	for i, v in ipairs(array) do
+		table.insert(l, v)
+	end
+
+	return l
 end
 
 return GameUtil

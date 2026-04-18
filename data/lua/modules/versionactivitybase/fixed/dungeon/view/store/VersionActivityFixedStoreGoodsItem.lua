@@ -16,6 +16,7 @@ function VersionActivityFixedStoreGoodsItem:onInitView(go)
 	self.txtLimitBuy = gohelper.findChildText(self.go, "txt_limitbuy")
 	self.simageIcon = gohelper.findChildSingleImage(self.go, "simage_icon")
 	self.imageIcon = gohelper.findChildImage(self.go, "simage_icon")
+	self.frame = gohelper.findChild(self.go, "#go_frame")
 	self.txtName = gohelper.findChildText(self.go, "txt_name")
 	self.goQuantity = gohelper.findChild(self.go, "quantity")
 	self.txtQuantity = gohelper.findChildText(self.go, "quantity/txt_quantity")
@@ -29,6 +30,10 @@ function VersionActivityFixedStoreGoodsItem:onInitView(go)
 	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 end
 
+function VersionActivityFixedStoreGoodsItem:setActId(id)
+	self.actId = id
+end
+
 function VersionActivityFixedStoreGoodsItem:onClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
@@ -38,7 +43,14 @@ function VersionActivityFixedStoreGoodsItem:onClick()
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6NormalStoreGoodsView, self.storeGoodsCo)
+	if self.productItemType == MaterialEnum.MaterialType.HeroSkin then
+		ViewMgr.instance:openView(ViewName.StoreSkinGoodsView, {
+			isActivityStore = true,
+			goodsMO = self.storeGoodsCo
+		})
+	else
+		ViewMgr.instance:openView(ViewName.VersionActivity1_6NormalStoreGoodsView, self.storeGoodsCo)
+	end
 end
 
 function VersionActivityFixedStoreGoodsItem:updateInfo(storeGoodsCo)
@@ -47,7 +59,10 @@ function VersionActivityFixedStoreGoodsItem:updateInfo(storeGoodsCo)
 	self:refreshRemainBuyCount()
 
 	local productItemType, productItemId, productItemQuantity = VersionActivityFixedEnterHelper.getItemTypeIdQuantity(self.storeGoodsCo.product)
-	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId)
+
+	self.productItemType = productItemType
+
+	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId, true)
 	local rare = MaterialEnum.ItemRareSSR
 
 	if productItemConfig.rare then
@@ -60,15 +75,15 @@ function VersionActivityFixedStoreGoodsItem:updateInfo(storeGoodsCo)
 
 	VersionActivityFixedHelper.setMainActivitySprite(self.imageRare, iconName, true, self._bigVersion, self._smallVersion)
 	gohelper.setActive(self.goMaxRareEffect, rare >= MaterialEnum.ItemRareSSR)
+	gohelper.setActive(self.frame, productItemConfig.subType == ItemEnum.SubType.Portrait)
 
-	if productItemType == MaterialEnum.MaterialType.Equip then
-		local imgPath = ResUrl.getHeroDefaultEquipIcon(productItemConfig.icon)
-
-		self.simageIcon:LoadImage(imgPath, self.setImageIconNative, self)
-	else
-		self.simageIcon:LoadImage(productIconUrl, self.setImageIconNative, self)
+	if productItemConfig.subType == ItemEnum.SubType.Portrait then
+		productIconUrl = ResUrl.getPlayerHeadIcon(productItemConfig.icon)
+	elseif productItemType == MaterialEnum.MaterialType.Equip then
+		productIconUrl = ResUrl.getHeroDefaultEquipIcon(productItemConfig.icon)
 	end
 
+	self.simageIcon:LoadImage(productIconUrl, self.setImageIconNative, self)
 	gohelper.setActive(self.txtName, false)
 
 	if rare >= MaterialEnum.ItemRareR then
@@ -109,7 +124,7 @@ function VersionActivityFixedStoreGoodsItem:refreshRemainBuyCount()
 
 		self.remainBuyCount = 9999
 	else
-		local actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore
+		local actId = self.actId
 
 		gohelper.setActive(self.txtLimitBuy.gameObject, true)
 

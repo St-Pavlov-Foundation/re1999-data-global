@@ -4663,5 +4663,195 @@
     "id": 923300104,
     "eventName": "play_level_chap12_npc529603_32",
     "bankName": "npc529603_level_yuanzheng3_3"
+  },
+  {
+    "id": 923400000,
+    "eventName": "play_level_plot34_hero3138_1",
+    "bankName": "hero3138_level_bulaochun3_4"
+  },
+  {
+    "id": 923400001,
+    "eventName": "play_level_plot34_hero3138_2",
+    "bankName": "hero3138_level_bulaochun3_4"
+  },
+  {
+    "id": 923400002,
+    "eventName": "play_level_plot34_hero3138_3",
+    "bankName": "hero3138_level_bulaochun3_4"
+  },
+  {
+    "id": 923400003,
+    "eventName": "play_level_plot34_hero3138_4",
+    "bankName": "hero3138_level_bulaochun3_4"
+  },
+  {
+    "id": 923400004,
+    "eventName": "play_level_plot34_hero3138_5",
+    "bankName": "hero3138_level_bulaochun3_4"
+  },
+  {
+    "id": 923400005,
+    "eventName": "play_level_plot34_hero3137_6",
+    "bankName": "hero3137_level_bulaochun3_4"
+  },
+  {
+    "id": 923400006,
+    "eventName": "play_level_plot34_hero3141_7",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400007,
+    "eventName": "play_level_plot34_npc644103a_8",
+    "bankName": "npc644103a_level_bulaochun3_4"
+  },
+  {
+    "id": 923400008,
+    "eventName": "play_level_plot34_npc643902a_9",
+    "bankName": "npc643902a_level_bulaochun3_4"
+  },
+  {
+    "id": 923400009,
+    "eventName": "play_level_plot34_npc643902b_10",
+    "bankName": "npc643902b_level_bulaochun3_4"
+  },
+  {
+    "id": 923400010,
+    "eventName": "play_level_plot34_npc643902b_11",
+    "bankName": "npc643902b_level_bulaochun3_4"
+  },
+  {
+    "id": 923400011,
+    "eventName": "play_level_plot34_npc642301_12",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400012,
+    "eventName": "play_level_plot34_npc642301_14",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400013,
+    "eventName": "play_level_plot34_npc642301_15",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400014,
+    "eventName": "play_level_plot34_hero3141_16",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400015,
+    "eventName": "play_level_plot34_npc642301_17",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400016,
+    "eventName": "play_level_plot34_npc642301_18",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400017,
+    "eventName": "play_level_plot34_hero3141_19",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400018,
+    "eventName": "play_battle_plot34_hero3137_1",
+    "bankName": "hero3137_level_bulaochun3_4"
+  },
+  {
+    "id": 923400019,
+    "eventName": "play_battle_plot34_hero3141_2",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400020,
+    "eventName": "play_battle_plot34_hero3141_3",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400021,
+    "eventName": "play_battle_plot34_hero3137_4",
+    "bankName": "hero3137_level_bulaochun3_4"
+  },
+  {
+    "id": 923400022,
+    "eventName": "play_battle_plot34_hero3137_5",
+    "bankName": "hero3137_level_bulaochun3_4"
+  },
+  {
+    "id": 923400023,
+    "eventName": "play_battle_plot34_hero3141_6",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400024,
+    "eventName": "play_battle_plot34_npc642301_7",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400025,
+    "eventName": "play_battle_plot34_hero3141_8",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400026,
+    "eventName": "play_battle_plot34_hero3141_9",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400027,
+    "eventName": "play_battle_plot34_npc642301_10",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400028,
+    "eventName": "play_battle_plot34_npc642301_11",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400029,
+    "eventName": "play_battle_plot34_npc642301_12",
+    "bankName": "npc642301_level_bulaochun3_4"
+  },
+  {
+    "id": 923400030,
+    "eventName": "play_battle_plot34_npc644002b_13",
+    "bankName": "npc644002b_level_bulaochun3_4"
+  },
+  {
+    "id": 923400031,
+    "eventName": "play_battle_plot34_hero3141_14",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400032,
+    "eventName": "play_battle_plot34_npc644002b_15",
+    "bankName": "npc644002b_level_bulaochun3_4"
+  },
+  {
+    "id": 923400033,
+    "eventName": "play_battle_plot34_npc643002_16",
+    "bankName": "npc643002_level_bulaochun3_4"
+  },
+  {
+    "id": 923400034,
+    "eventName": "play_battle_plot34_npc643102_17",
+    "bankName": "npc643102_level_bulaochun3_4"
+  },
+  {
+    "id": 923400035,
+    "eventName": "play_battle_plot34_hero3137_18",
+    "bankName": "hero3137_level_bulaochun3_4"
+  },
+  {
+    "id": 923400036,
+    "eventName": "play_battle_plot34_hero3141_19",
+    "bankName": "hero3141_level_bulaochun3_4"
+  },
+  {
+    "id": 923400037,
+    "eventName": "play_battle_plot34_npc642501_20",
+    "bankName": "npc642501_level_bulaochun3_4"
   }
 ]

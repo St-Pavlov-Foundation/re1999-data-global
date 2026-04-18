@@ -2,16 +2,13 @@
 
 module("modules.logic.fight.system.work.FightWorkSwitchPlaneBefore", package.seeall)
 
-local FightWorkSwitchPlaneBefore = class("FightWorkSwitchPlaneBefore", BaseWork)
-
-function FightWorkSwitchPlaneBefore:ctor()
-	return
-end
+local FightWorkSwitchPlaneBefore = class("FightWorkSwitchPlaneBefore", FightWorkItem)
 
 function FightWorkSwitchPlaneBefore:onStart()
-	self.work = FightWorkClearBeforeSwitchPlane.New()
+	self.work = self:com_registWork(FightWorkClearBeforeSwitchPlane)
 
 	self.work:registFinishCallback(self._onWorkFinish, self)
+	self:cancelFightWorkSafeTimer()
 	self.work:start()
 end
 
@@ -33,13 +30,13 @@ function FightWorkSwitchPlaneBefore:_onWorkFinish()
 end
 
 function FightWorkSwitchPlaneBefore:_startLoadLevel()
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 
 	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 	local fightParam = FightModel.instance:getFightParam()
 	local firstLevelId = fightParam:getSceneLevel(1)
 
-	fightScene.level:onSceneStart(fightScene.level._sceneId, firstLevelId)
+	FightGameMgr.sceneLevelMgr:loadScene(nil, firstLevelId)
 end
 
 function FightWorkSwitchPlaneBefore:_onLevelLoaded()
@@ -64,7 +61,7 @@ function FightWorkSwitchPlaneBefore:clearWork()
 	GameSceneMgr.instance:hideLoading()
 	TaskDispatcher.cancelTask(self._delayDone, self)
 	TaskDispatcher.cancelTask(self._startLoadLevel, self)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 
 	if self.work then
 		self.work:disposeSelf()

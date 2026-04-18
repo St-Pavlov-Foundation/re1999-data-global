@@ -1,0 +1,47 @@
+[
+  {
+    "index": 1,
+    "spineRes": "v3a4_314101_lsj_z/314101_lsj_z3_fight",
+    "pos": "-0.53,-0.65,0",
+    "duration": 0.05,
+    "action": "jump",
+    "missileDelay": 0.35,
+    "missileOffset": "0.2,1.7,0"
+  },
+  {
+    "index": 2,
+    "spineRes": "v3a4_314101_lsj_z/314101_lsj_z3_fight",
+    "pos": "0.66,-0.2,0",
+    "duration": 0.05,
+    "action": "jump",
+    "missileDelay": 0.33,
+    "missileOffset": "0.2,1.7,0"
+  },
+  {
+    "index": 3,
+    "spineRes": "v3a4_314101_lsj_z/314101_lsj_z3_fight",
+    "pos": "-1.07,-0.45,0",
+    "duration": 0.15,
+    "action": "jump",
+    "missileDelay": 0.27,
+    "missileOffset": "0.2,1.7,0"
+  },
+  {
+    "index": 4,
+    "spineRes": "v3a4_314101_lsj_z/314101_lsj_z4_fight",
+    "pos": "-0.63,0.28,0",
+    "duration": 0.15,
+    "action": "jump",
+    "missileDelay": 0.35,
+    "missileOffset": "0.2,1.7,0"
+  },
+  {
+    "index": 5,
+    "spineRes": "v3a4_314101_lsj_z/314101_lsj_z4_fight",
+    "pos": "0.95,0.31,0",
+    "duration": 0.0,
+    "action": "jump",
+    "missileDelay": 0.35,
+    "missileOffset": "0.2,1.7,0"
+  }
+]

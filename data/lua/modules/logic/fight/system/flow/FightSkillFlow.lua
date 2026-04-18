@@ -54,6 +54,7 @@ function FightSkillFlow:onStart()
 	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, self._parallelDoneThis, self)
 	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, self._forceEndSkillStep, self)
 	FightController.instance:registerCallback(FightEvent.FightWorkStepSkillTimeout, self._onFightWorkStepSkillTimeout, self)
+	FightController.instance:dispatchEvent(FightEvent.OnSkillFlowStart, self.fightStepData)
 	self._sequence:registerDoneListener(self._skillFlowDone, self)
 	self._sequence:start({})
 end
@@ -116,6 +117,8 @@ function FightSkillFlow:stopSkillFlow()
 end
 
 function FightSkillFlow:_skillFlowDone()
+	FightController.instance:dispatchEvent(FightEvent.OnSkillFlowDone, self.fightStepData)
+
 	if self._sequence then
 		self._sequence:unregisterDoneListener(self._skillFlowDone, self)
 

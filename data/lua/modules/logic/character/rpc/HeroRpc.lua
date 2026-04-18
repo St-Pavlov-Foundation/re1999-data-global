@@ -177,6 +177,20 @@ function HeroRpc:_onReceiveHeroGainPush(msg)
 
 	param.heroId = msg.heroId
 	param.duplicateCount = msg.duplicateCount or 0
+	param.items = {}
+
+	if msg.items then
+		for i = 1, #msg.items do
+			local _item = msg.items[i]
+			local item = {
+				materilType = _item.materilType,
+				materilId = _item.materilId,
+				quantity = _item.quantity
+			}
+
+			table.insert(param.items, item)
+		end
+	end
 
 	local hideView = CharacterModel.instance:getGainHeroViewShowState()
 	local hideNoNewView = CharacterModel.instance:getGainHeroViewShowNewState()

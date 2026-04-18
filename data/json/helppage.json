@@ -5210,6 +5210,266 @@
     "isCn": 0
   },
   {
+    "id": 3401001,
+    "title": "",
+    "type": 1,
+    "text": "探索地图指引图1",
+    "icon": "v3a4_survival_help_1",
+    "iconText": "v3a4_survival_help_1",
+    "unlockGuideId": 34603,
+    "isCn": 0
+  },
+  {
+    "id": 3401002,
+    "title": "",
+    "type": 1,
+    "text": "探索地图指引图2",
+    "icon": "v3a4_survival_help_2",
+    "iconText": "v3a4_survival_help_2",
+    "unlockGuideId": 34603,
+    "isCn": 0
+  },
+  {
+    "id": 3401003,
+    "title": "",
+    "type": 1,
+    "text": "放大器指引图",
+    "icon": "v3a4_survival_help_3",
+    "iconText": "v3a4_survival_help_3",
+    "unlockGuideId": 34604,
+    "isCn": 0
+  },
+  {
+    "id": 3401004,
+    "title": "",
+    "type": 1,
+    "text": "油画暴雨指引图",
+    "icon": "v3a1_survival_help_1",
+    "iconText": "v3a1_survival_help_1",
+    "unlockGuideId": 34612,
+    "isCn": 0
+  },
+  {
+    "id": 3401005,
+    "title": "",
+    "type": 1,
+    "text": "地形圣火指引图",
+    "icon": "v3a1_survival_help_5",
+    "iconText": "v3a1_survival_help_5",
+    "unlockGuideId": 34609,
+    "isCn": 0
+  },
+  {
+    "id": 3401006,
+    "title": "",
+    "type": 1,
+    "text": "地形冰场指引图",
+    "icon": "v3a1_survival_help_6",
+    "iconText": "v3a1_survival_help_6",
+    "unlockGuideId": 34610,
+    "isCn": 0
+  },
+  {
+    "id": 3401007,
+    "title": "",
+    "type": 1,
+    "text": "地形水域指引图",
+    "icon": "v3a1_survival_help_7",
+    "iconText": "v3a1_survival_help_7",
+    "unlockGuideId": 34611,
+    "isCn": 0
+  },
+  {
+    "id": 3401201,
+    "title": "",
+    "type": 2,
+    "text": "露兜树的回忆",
+    "icon": "v3a4_partygame_help_1",
+    "iconText": "v3a4_partygame_help_1",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401202,
+    "title": "",
+    "type": 2,
+    "text": "以圣火照亮",
+    "icon": "v3a4_partygame_help_2",
+    "iconText": "v3a4_partygame_help_2",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401203,
+    "title": "",
+    "type": 2,
+    "text": "训练日",
+    "icon": "v3a4_partygame_help_3",
+    "iconText": "v3a4_partygame_help_3",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401204,
+    "title": "",
+    "type": 2,
+    "text": "失控视线",
+    "icon": "v3a4_partygame_help_4",
+    "iconText": "v3a4_partygame_help_4",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401205,
+    "title": "",
+    "type": 2,
+    "text": "雾都大搜查",
+    "icon": "v3a4_partygame_help_5",
+    "iconText": "v3a4_partygame_help_5",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401206,
+    "title": "",
+    "type": 2,
+    "text": "像素扭扭节",
+    "icon": "v3a4_partygame_help_6",
+    "iconText": "v3a4_partygame_help_6",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401207,
+    "title": "",
+    "type": 2,
+    "text": "魔精牛仔",
+    "icon": "v3a4_partygame_help_7",
+    "iconText": "v3a4_partygame_help_7",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401208,
+    "title": "",
+    "type": 2,
+    "text": "雪中填色本",
+    "icon": "v3a4_partygame_help_8",
+    "iconText": "v3a4_partygame_help_8",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401209,
+    "title": "",
+    "type": 2,
+    "text": "地母遗踪",
+    "icon": "v3a4_partygame_help_9",
+    "iconText": "v3a4_partygame_help_9",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401210,
+    "title": "",
+    "type": 2,
+    "text": "石窟燃烛记",
+    "icon": "v3a4_partygame_help_10",
+    "iconText": "v3a4_partygame_help_10",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401211,
+    "title": "",
+    "type": 2,
+    "text": "新毛茸塔",
+    "icon": "v3a4_partygame_help_11",
+    "iconText": "v3a4_partygame_help_11",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401212,
+    "title": "",
+    "type": 2,
+    "text": "智能妙妙分类机",
+    "icon": "v3a4_partygame_help_12",
+    "iconText": "v3a4_partygame_help_12",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401213,
+    "title": "",
+    "type": 2,
+    "text": "科马拉出逃记",
+    "icon": "v3a4_partygame_help_13",
+    "iconText": "v3a4_partygame_help_13",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401214,
+    "title": "",
+    "type": 2,
+    "text": "看爱心，波拉比！",
+    "icon": "v3a4_partygame_help_14",
+    "iconText": "v3a4_partygame_help_14",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401215,
+    "title": "",
+    "type": 2,
+    "text": "冲印箱大清点",
+    "icon": "v3a4_partygame_help_15",
+    "iconText": "v3a4_partygame_help_15",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401216,
+    "title": "",
+    "type": 2,
+    "text": "理线学第一课",
+    "icon": "v3a4_partygame_help_16",
+    "iconText": "v3a4_partygame_help_16",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401217,
+    "title": "",
+    "type": 2,
+    "text": "谁在窗帘后？",
+    "icon": "v3a4_partygame_help_17",
+    "iconText": "v3a4_partygame_help_17",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401218,
+    "title": "",
+    "type": 2,
+    "text": "华城争春",
+    "icon": "v3a4_partygame_help_18",
+    "iconText": "v3a4_partygame_help_18",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3401219,
+    "title": "",
+    "type": 2,
+    "text": "于意象之海",
+    "icon": "v3a4_partygame_help_19",
+    "iconText": "v3a4_partygame_help_19",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

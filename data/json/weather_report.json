@@ -166,5 +166,21 @@
     "effect": 11,
     "roomMode": 4,
     "audioLength": 66.0
+  },
+  {
+    "id": 22,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 12,
+    "roomMode": 1,
+    "audioLength": 66.0
+  },
+  {
+    "id": 23,
+    "lightMode": 2,
+    "roleMode": 2,
+    "effect": 13,
+    "roomMode": 1,
+    "audioLength": 66.0
   }
 ]

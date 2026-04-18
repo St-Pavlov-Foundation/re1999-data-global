@@ -1,8 +1,8 @@
 [
   {
     "id": 101,
-    "desc": "language_10095811",
-    "desc1": "language_10095812",
+    "desc": "language_10114288",
+    "desc1": "language_10114289",
     "icon": "survivalequip_icon_01",
     "name": "language_10017063",
     "icon2": "survivalequip_icon_01",
@@ -14,8 +14,8 @@
   },
   {
     "id": 102,
-    "desc": "language_10095813",
-    "desc1": "language_10095814",
+    "desc": "language_10114290",
+    "desc1": "language_10114291",
     "icon": "survivalequip_icon_02",
     "name": "language_10063814",
     "icon2": "survivalequip_icon_02",
@@ -27,8 +27,8 @@
   },
   {
     "id": 103,
-    "desc": "language_10095815",
-    "desc1": "language_10095816",
+    "desc": "language_10114292",
+    "desc1": "language_10114293",
     "icon": "survivalequip_icon_03",
     "name": "language_10074378",
     "icon2": "survivalequip_icon_03",
@@ -40,8 +40,8 @@
   },
   {
     "id": 104,
-    "desc": "language_10095817",
-    "desc1": "language_10095818",
+    "desc": "language_10114294",
+    "desc1": "language_10114295",
     "icon": "survivalequip_icon_04",
     "name": "language_10018041",
     "icon2": "survivalequip_icon_04",
@@ -53,8 +53,8 @@
   },
   {
     "id": 105,
-    "desc": "language_10095819",
-    "desc1": "language_10095820",
+    "desc": "language_10114296",
+    "desc1": "language_10114297",
     "icon": "survivalequip_icon_05",
     "name": "language_10042206",
     "icon2": "survivalequip_icon_05",
@@ -66,8 +66,8 @@
   },
   {
     "id": 106,
-    "desc": "language_10095821",
-    "desc1": "language_10095822",
+    "desc": "language_10114298",
+    "desc1": "language_10114299",
     "icon": "survivalequip_icon_06",
     "name": "language_10017339",
     "icon2": "survivalequip_icon_06",

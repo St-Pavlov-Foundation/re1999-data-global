@@ -7,7 +7,7 @@ local FightThunderMatMgr = class("FightThunderMatMgr", FightBaseClass)
 function FightThunderMatMgr:onConstructor()
 	local curScene = GameSceneMgr.instance:getCurScene()
 
-	self:com_registEvent(curScene.level, CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 end
 
 function FightThunderMatMgr:onLevelLoaded(levelId)

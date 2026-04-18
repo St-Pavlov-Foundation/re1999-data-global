@@ -54,7 +54,7 @@ function ExploreMapScenePreloadComp:init(go)
 		self._lights = sceneGo:GetComponentsInChildren(typeof(UnityEngine.Light))
 	end
 
-	self._lightmapABPath = "explore/scene/" .. levelCO.resName
+	self._lightmapABPath = "modules/explore/scene/" .. levelCO.resName
 	self._lightMapLoader = MultiAbLoader.New()
 
 	for i, v in ipairs(self._config.lightmapList) do

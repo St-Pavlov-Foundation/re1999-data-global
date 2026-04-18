@@ -3,8 +3,8 @@
 module("modules.logic.story.controller.StoryGCController", package.seeall)
 
 local StoryGCController = class("StoryGCController", BaseController)
-local GCUnuseCount = 2
-local AudioGcStepInterval = 5
+local GCUnuseCount = 3
+local AudioGcStepInterval = 10
 local Type_bg = 1
 local Type_spine = 2
 local Type_live2d = 3
@@ -133,9 +133,8 @@ function StoryGCController:_onStep(o)
 		end
 	end
 
-	local videoList = stepCO and stepCO.videoList
-	local GCStepCount = 5
-	local hasVideo = #videoList > 0
+	local GCStepCount = 3
+	local hasVideo = StoryModel.instance:isPlayingVideo()
 	local forceGC = false
 
 	if hasVideo then

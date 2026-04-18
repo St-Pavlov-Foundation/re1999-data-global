@@ -201,6 +201,7 @@ function SurvivalShelterMonsterEntity:onEffectLoadedEnd()
 end
 
 function SurvivalShelterMonsterEntity:_showSuccessFinish()
+	SurvivalModel.instance:addDebugSettleStr("_showSuccessFinish")
 	SurvivalShelterModel.instance:setNeedShowFightSuccess(false, nil)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.BossFightSuccessShowFinish)
 end

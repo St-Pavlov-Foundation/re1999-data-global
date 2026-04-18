@@ -28,10 +28,10 @@ function BpView:onInitView()
 	self._goexpup = gohelper.findChild(self.viewGO, "right/title/#go_expup")
 	self._btntitleClick = gohelper.findChildButtonWithAudio(self.viewGO, "right/title/#btn_titleClick")
 	self._rewardContainer = gohelper.findChild(self.viewGO, "right/btngroup/#rewardContainer")
-	self._btnreward = gohelper.findChildButtonWithAudio(self._rewardContainer, "#btn_reward")
-	self._hasget = gohelper.findChild(self._rewardContainer, "#btn_reward/#hasget")
-	self._txt_num = gohelper.findChildTextMesh(self._rewardContainer, "#btn_reward/numbg/#txt_num")
-	self._btn_claim = gohelper.findChild(self._rewardContainer, "#btn_reward/rewardbg/#btn_claim")
+	self._goreward = gohelper.findChild(self._rewardContainer, "#go_reward")
+	self._clickArea = gohelper.findChildButtonWithAudio(self._rewardContainer, "#clickArea")
+	self._hasget = gohelper.findChild(self._rewardContainer, "#hasget")
+	self._btn_claim = gohelper.findChild(self._rewardContainer, "#btn_claim")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -51,7 +51,7 @@ function BpView:addEvents()
 	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 	self.viewContainer:registerCallback(BpEvent.TaskTabChange, self._taskTabChange, self)
 	self._btntitleClick:AddClickListener(self._btntitleClickOnClick, self)
-	self:addClickCb(self._btnreward, self._btnrewardOnClick, self)
+	self:addClickCb(self._clickArea, self._btnrewardOnClick, self)
 	self:addEventCb(self.viewContainer, BpEvent.TapViewCloseAnimBegin, self.closeAnimBegin, self)
 	self:addEventCb(self.viewContainer, BpEvent.TapViewCloseAnimEnd, self.closeAnimEnd, self)
 end
@@ -177,10 +177,6 @@ function BpView:onOpen()
 	end
 
 	self:_toSwitchTab(2, tabIndex)
-
-	self.haveSpecialBonus = BpModel.instance:haveSpecialBonus()
-
-	gohelper.setActive(self._rewardContainer, self.haveSpecialBonus)
 	self:refreshBtnReward()
 end
 
@@ -193,13 +189,28 @@ function BpView:closeAnimEnd()
 end
 
 function BpView:refreshBtnReward()
-	if self.haveSpecialBonus then
-		gohelper.setActive(self._btn_claim, BpModel.instance.payStatus == BpEnum.PayStatus.NotPay)
-		gohelper.setActive(self._hasget, BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay)
+	self.haveSpecialBonus = BpModel.instance:haveSpecialBonus()
+
+	local isShow = self.haveSpecialBonus and BpModel.instance.payStatus ~= BpEnum.PayStatus.Pay2
+
+	gohelper.setActive(self._rewardContainer, isShow)
+
+	if isShow then
+		if not self.specialItem then
+			self.specialItem = IconMgr.instance:getCommonPropItemIcon(self._goreward)
+		end
 
 		local bonus = BpModel.instance:getSpecialBonus()[1]
 
-		self._txt_num.text = luaLang("multiple") .. bonus[3]
+		self.specialItem:onUpdateMO({
+			materilType = bonus[1],
+			materilId = bonus[2],
+			quantity = bonus[3]
+		})
+		self.specialItem:isShowCount(false)
+		self.specialItem:isShowQuality(false)
+		gohelper.setActive(self._btn_claim, BpModel.instance.payStatus == BpEnum.PayStatus.NotPay)
+		gohelper.setActive(self._hasget, BpModel.instance.payStatus ~= BpEnum.PayStatus.NotPay)
 	end
 end
 

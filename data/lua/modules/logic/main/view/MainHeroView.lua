@@ -479,9 +479,11 @@ function MainHeroView:onRoleBlend(value, isEnd)
 	self._frameBgMaterial:SetColor(self._TintColorId, weatherController:lerpColorRGBA(self._srcFrameTintColor, self._targetFrameTintColor, value))
 
 	if isEnd then
+		local alphaValue = self._targetFrameTintColor.a
+
 		self._targetFrameTintColor = nil
 
-		if weatherController:getCurLightMode() == 1 then
+		if weatherController:getCurLightMode() == 1 and alphaValue and alphaValue <= 0 then
 			self._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end
@@ -896,7 +898,9 @@ function MainHeroView:_clickDefault(pos)
 		local specialRespondConfig = self:_getSpecialTouch(CharacterEnum.VoiceType.MainViewSpecialRespond, pos)
 
 		if specialRespondConfig and self._skinInteraction:canPlay(specialRespondConfig) then
-			self:_doClickPlayVoice(specialRespondConfig)
+			local specialRespondConfig2 = self._skinInteraction:selectFromGroup(specialRespondConfig)
+
+			self:_doClickPlayVoice(specialRespondConfig2)
 		end
 
 		return

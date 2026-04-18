@@ -146,11 +146,7 @@ function GuiModelAgent:setResPath(skinCfg, loadedCb, loadedCbObj, cameraSize)
 		self._curModel:setShareRT(self._shareRT, self._rtViewName)
 
 		if self._shareRT == CharacterVoiceEnum.RTShareType.BloomAuto then
-			if CharacterVoiceEnum.BloomCameraSize[skinCfg.characterId] then
-				self._curModel:setCameraSize(CharacterVoiceEnum.BloomFullScreenEffectCameraSize)
-			else
-				self._curModel:setCameraSize(cameraSize or skinCfg.cameraSize)
-			end
+			self._curModel:setCameraSize(CharacterVoiceEnum.BloomFullScreenEffectCameraSize)
 		elseif self._shareRT == CharacterVoiceEnum.RTShareType.Normal then
 			self._curModel:setCameraSize(CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 		else

@@ -526,5 +526,101 @@
     "fightIdRear": 117333811,
     "resIdRear": 102,
     "chooseSkillNum": 6
+  },
+  {
+    "id": 1045,
+    "layer": 1,
+    "issueId": 12,
+    "preId": 0,
+    "sceneId": 41,
+    "fightIdFront": 117341111,
+    "resIdFront": 101,
+    "fightIdRear": 117341211,
+    "resIdRear": 102,
+    "chooseSkillNum": 2
+  },
+  {
+    "id": 1046,
+    "layer": 2,
+    "issueId": 12,
+    "preId": 1045,
+    "sceneId": 42,
+    "fightIdFront": 117341311,
+    "resIdFront": 101,
+    "fightIdRear": 117341411,
+    "resIdRear": 102,
+    "chooseSkillNum": 4
+  },
+  {
+    "id": 1047,
+    "layer": 3,
+    "issueId": 12,
+    "preId": 1046,
+    "sceneId": 43,
+    "fightIdFront": 117341511,
+    "resIdFront": 101,
+    "fightIdRear": 117341611,
+    "resIdRear": 102,
+    "chooseSkillNum": 6
+  },
+  {
+    "id": 1048,
+    "layer": 4,
+    "issueId": 12,
+    "preId": 1047,
+    "sceneId": 44,
+    "fightIdFront": 117341711,
+    "resIdFront": 101,
+    "fightIdRear": 117341811,
+    "resIdRear": 102,
+    "chooseSkillNum": 6
+  },
+  {
+    "id": 1049,
+    "layer": 1,
+    "issueId": 13,
+    "preId": 0,
+    "sceneId": 41,
+    "fightIdFront": 117342111,
+    "resIdFront": 101,
+    "fightIdRear": 117342211,
+    "resIdRear": 102,
+    "chooseSkillNum": 2
+  },
+  {
+    "id": 1050,
+    "layer": 2,
+    "issueId": 13,
+    "preId": 1049,
+    "sceneId": 42,
+    "fightIdFront": 117342311,
+    "resIdFront": 101,
+    "fightIdRear": 117342411,
+    "resIdRear": 102,
+    "chooseSkillNum": 4
+  },
+  {
+    "id": 1051,
+    "layer": 3,
+    "issueId": 13,
+    "preId": 1050,
+    "sceneId": 43,
+    "fightIdFront": 117342511,
+    "resIdFront": 101,
+    "fightIdRear": 117342611,
+    "resIdRear": 102,
+    "chooseSkillNum": 6
+  },
+  {
+    "id": 1052,
+    "layer": 4,
+    "issueId": 13,
+    "preId": 1051,
+    "sceneId": 44,
+    "fightIdFront": 117342711,
+    "resIdFront": 101,
+    "fightIdRear": 117342811,
+    "resIdRear": 102,
+    "chooseSkillNum": 6
   }
 ]

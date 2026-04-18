@@ -16,5 +16,122 @@
     "duration": 0.0,
     "effectHangPoint": "mountroot",
     "audio": 0
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_01",
+    "target": 1,
+    "skinId": 310404,
+    "changedPath": "v3a4_ddg/ddg_innate_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_02",
+    "target": 2,
+    "skinId": 310404,
+    "changedPath": "v3a4_ddg/ddg_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_03",
+    "target": 1,
+    "skinId": 310404,
+    "changedPath": "v3a4_ddg/ddg_innate_03",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_01",
+    "target": 1,
+    "skinId": 310403,
+    "changedPath": "v2a6_ddg/ddg_innate_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431040351
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_02",
+    "target": 2,
+    "skinId": 310403,
+    "changedPath": "v2a6_ddg/ddg_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431040352
+  },
+  {
+    "effectPath": "v2a3_ddg/ddg_innate_03",
+    "target": 1,
+    "skinId": 310403,
+    "changedPath": "v2a6_ddg/ddg_innate_03",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431040353
+  },
+  {
+    "effectPath": "v2a5_flsd/flsd_innate01",
+    "target": 2,
+    "skinId": 311103,
+    "changedPath": "v3a4_flsd/flsd_innate",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "pre_yaxian_innate_2",
+    "target": 1,
+    "skinId": 305303,
+    "changedPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_2",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "pre_yaxian_innate_2",
+    "target": 1,
+    "skinId": 305304,
+    "changedPath": "buff/pre_yaxian_innate_2",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 430530441
+  },
+  {
+    "effectPath": "pre_yaxian_innate_2",
+    "target": 1,
+    "skinId": 305305,
+    "changedPath": "buff/pre_v3a4_yx_innate_02_1",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 430530541
+  },
+  {
+    "effectPath": "pre_yaxian_innate_5_03",
+    "target": 2,
+    "skinId": 305303,
+    "changedPath": "v1a5_yaxian/pre_v1a5_yaxian_innate_5_03",
+    "duration": 0.0,
+    "effectHangPoint": "mountbottom",
+    "audio": 0
+  },
+  {
+    "effectPath": "pre_yaxian_innate_5_03",
+    "target": 2,
+    "skinId": 305304,
+    "changedPath": "v2a3_yaxian_yjdzyc/yaxian_yjtzyc_innate_03",
+    "duration": 0.0,
+    "effectHangPoint": "mountbottom",
+    "audio": 0
+  },
+  {
+    "effectPath": "pre_yaxian_innate_5_03",
+    "target": 2,
+    "skinId": 305305,
+    "changedPath": "buff/pre_v3a4_yx_innate_01_3",
+    "duration": 0.0,
+    "effectHangPoint": "mountbottom",
+    "audio": 0
   }
 ]

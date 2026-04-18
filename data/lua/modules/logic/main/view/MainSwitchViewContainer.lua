@@ -45,6 +45,7 @@ function MainSwitchViewContainer:buildTabViews(tabContainerId)
 		self:_addSceneSwitch(t)
 		self:_addUISwitch(t)
 		self:_addClickUISwitch(t)
+		self:_addSummonUISwitch(t)
 
 		return t
 	end
@@ -115,6 +116,7 @@ function MainSwitchViewContainer:_addSceneClassify(t)
 	scrollClassifyParam.scrollDir = ScrollEnum.ScrollDirV
 	scrollClassifyParam.cellWidth = 400
 	scrollClassifyParam.cellHeight = 160
+	scrollClassifyParam.cellSpaceV = -28
 
 	table.insert(views, LuaListScrollView.New(MainSwitchClassifyListModel.instance, scrollClassifyParam))
 
@@ -179,6 +181,7 @@ function MainSwitchViewContainer:_addMainUI(t)
 	table.insert(views, SwitchMainActExtraDisplay.New())
 	table.insert(views, self._mainUIHeroView)
 	table.insert(views, SwitchMainUIEagleAnimView.New())
+	table.insert(views, MainBirdAnimView.New())
 	table.insert(views, SwitchMainUIView.New())
 
 	t[1] = MultiView.New(views)
@@ -202,6 +205,27 @@ function MainSwitchViewContainer:_addClickUISwitch(t)
 	table.insert(views, ClickUISwitchView.New())
 
 	t[MainSwitchClassifyEnum.Classify.Click] = MultiView.New(views)
+end
+
+function MainSwitchViewContainer:_addSummonUISwitch(t)
+	local views = {}
+	local scrollUIParam = MixScrollParam.New()
+
+	scrollUIParam.scrollGOPath = "right/mask/#scroll_card"
+	scrollUIParam.prefabType = ScrollEnum.ScrollPrefabFromRes
+	scrollUIParam.prefabUrl = self._viewSetting.tabRes[1][2][2]
+	scrollUIParam.cellClass = SummonUISwitchItem
+	scrollUIParam.scrollDir = ScrollEnum.ScrollDirV
+	scrollUIParam.lineCount = 1
+
+	table.insert(views, LuaMixScrollView.New(SummonUISwitchListModel.instance, scrollUIParam))
+	table.insert(views, SummonUISwitchView.New())
+
+	self._summonSwitchDisplayView = SummonUISkinSwitchDisplayView.New()
+
+	table.insert(views, self._summonSwitchDisplayView)
+
+	t[MainSwitchClassifyEnum.Classify.Summon] = MultiView.New(views)
 end
 
 function MainSwitchViewContainer:_addFightUISwitch(t)
@@ -233,6 +257,14 @@ function MainSwitchViewContainer:switchTab(tabId)
 			self._displayView:hideTab()
 		end
 	end
+
+	if self._summonSwitchDisplayView and self._summonSwitchDisplayView:isShowView() then
+		if tabId == MainEnum.SwitchType.Scene then
+			self._summonSwitchDisplayView:showTab()
+		else
+			self._summonSwitchDisplayView:hideTab()
+		end
+	end
 end
 
 function MainSwitchViewContainer:switchClassifyTab(tabId)
@@ -243,10 +275,6 @@ end
 
 function MainSwitchViewContainer:getClassify()
 	return self._classifyTabId or MainSwitchClassifyEnum.Classify.Scene
-end
-
-function MainSwitchViewContainer:isInitMainFullView()
-	return false
 end
 
 function MainSwitchViewContainer:playCloseAnim(tabId)

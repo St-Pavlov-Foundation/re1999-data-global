@@ -62,7 +62,7 @@ VersionActivity2_7DungeonEnum.SpaceSceneEpisodeIndexs = {
 	19
 }
 VersionActivity2_7DungeonEnum.SceneLoadObj = "ui/viewres/versionactivity_2_7/v2a7_enter/v2a7_m_s08_hddt.prefab"
-VersionActivity2_7DungeonEnum.SceneLoadAnim = "explore/camera_anim/hddt_camer.controller"
+VersionActivity2_7DungeonEnum.SceneLoadAnim = "ui/animations/activity/v2a7_versionactivity/main/hddt_camer.controller"
 VersionActivity2_7DungeonEnum.SpaceScene = "scenes/v2a7_m_s08_hddt/scenes_prefab/v2a7_m_s08_hddt_002_p.prefab"
 VersionActivity2_7DungeonEnum.GotoSpaceAnimName = "switch1"
 VersionActivity2_7DungeonEnum.returnAnimName = "switch2"

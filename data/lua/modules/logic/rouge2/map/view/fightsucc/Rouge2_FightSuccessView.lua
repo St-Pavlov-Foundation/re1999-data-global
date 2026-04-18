@@ -7,6 +7,12 @@ local Rouge2_FightSuccessView = class("Rouge2_FightSuccessView", BaseView)
 function Rouge2_FightSuccessView:onInitView()
 	self._gospineContainer = gohelper.findChild(self.viewGO, "left/#go_spineContainer")
 	self._gospine = gohelper.findChild(self.viewGO, "left/#go_spineContainer/#go_spine")
+	self.uiSpine = GuiModelAgent.Create(self._gospine, true)
+
+	self.uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+	self.uiSpine:useRT()
+	self.uiSpine:setImgPos(0)
+
 	self._txtsayCn = gohelper.findChildText(self.viewGO, "left/#txt_sayCn")
 	self._txtsayEn = gohelper.findChildText(self.viewGO, "left/SayEn/#txt_sayEn")
 	self._btndata = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_data")
@@ -84,10 +90,7 @@ function Rouge2_FightSuccessView:refreshSpine()
 	self.randomHeroId = randomEntityMo.modelId
 	self.randomSkinId = randomEntityMo.skin
 	self.spineLoaded = false
-	self.uiSpine = GuiModelAgent.Create(self._gospine, true)
 
-	self.uiSpine:useRT()
-	self.uiSpine:setImgPos(0)
 	self.uiSpine:setResPath(self.skinCO, self.onSpineLoaded, self)
 end
 
@@ -100,8 +103,35 @@ function Rouge2_FightSuccessView:onSpineLoaded()
 
 	self.uiSpine:setUIMask(true)
 	self.uiSpine:setAllLayer(UnityLayer.UI)
-	self:playSpineVoice()
 	self:setSkinOffset()
+
+	if self.uiSpine:isLive2D() then
+		self.uiSpine:setLive2dCameraLoadFinishCallback(self.onLive2dCameraLoadedCallback, self)
+
+		return
+	end
+
+	self:playSpineVoice()
+end
+
+function Rouge2_FightSuccessView:onLive2dCameraLoadedCallback()
+	self.uiSpine:setLive2dCameraLoadFinishCallback()
+
+	self._repeatNum = CharacterVoiceEnum.DelayFrame + 1
+	self._repeatCount = 0
+
+	TaskDispatcher.cancelTask(self._delayPlayVoice, self)
+	TaskDispatcher.runRepeat(self._delayPlayVoice, self, 0, self._repeatNum)
+end
+
+function Rouge2_FightSuccessView:_delayPlayVoice()
+	self._repeatCount = self._repeatCount + 1
+
+	if self._repeatCount < self._repeatNum then
+		return
+	end
+
+	self:playSpineVoice()
 end
 
 function Rouge2_FightSuccessView:setSkinOffset()
@@ -274,6 +304,7 @@ end
 function Rouge2_FightSuccessView:onClose()
 	self.closeed = true
 
+	TaskDispatcher.cancelTask(self._delayPlayVoice, self)
 	TaskDispatcher.cancelTask(self.playAnim, self)
 
 	if self.tweenId then

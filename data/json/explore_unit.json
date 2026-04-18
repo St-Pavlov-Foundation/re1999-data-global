@@ -129,7 +129,7 @@
     "mapIcon2": "",
     "mapActiveIcon": "",
     "mapIconShow": 0,
-    "asset": "explore/zj_01/jiaohu/prefabs/zj_01_jh_jyzb_01_2.prefab"
+    "asset": "modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_jyzb_01_2.prefab"
   },
   {
     "type": 210,
@@ -206,7 +206,7 @@
     "mapIcon2": "",
     "mapActiveIcon": "",
     "mapIconShow": 0,
-    "asset": "effects/scenes/mishi_prefabs/mishi_jinengguangyuan.prefab"
+    "asset": "modules/explore/effects/scenes/mishi_prefabs/mishi_jinengguangyuan.prefab"
   },
   {
     "type": 217,

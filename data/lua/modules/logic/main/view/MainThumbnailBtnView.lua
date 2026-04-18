@@ -111,6 +111,8 @@ function MainThumbnailBtnView:_btnbellOnClick()
 		return
 	end
 
+	UIBlockHelper.instance:startBlock("MainThumbnailBtnView:_btnbellOnClick", 0.5)
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Notice) then
 		NoticeController.instance:openNoticeView()
 	else

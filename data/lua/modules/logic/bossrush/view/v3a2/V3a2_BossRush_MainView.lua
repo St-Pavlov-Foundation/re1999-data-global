@@ -16,6 +16,7 @@ function V3a2_BossRush_MainView:onInitView()
 	self._goContent = gohelper.findChild(self.viewGO, "#scroll_ChapterList/Viewport/#go_Content")
 	self._btnAchievement = gohelper.findChildButtonWithAudio(self.viewGO, "TopRight/#btn_Achievement")
 	self._txtAchievement = gohelper.findChildText(self.viewGO, "TopRight/#txt_Achievement")
+	self._gotopRight = gohelper.findChild(self.viewGO, "TopRight")
 	self._goStoreTip = gohelper.findChild(self.viewGO, "Store/image_Tips")
 	self._txtStore = gohelper.findChildText(self.viewGO, "Store/#btn_Store/txt_Store")
 	self._txtActDesc = gohelper.findChildText(self.viewGO, "txtDescr")
@@ -92,6 +93,11 @@ function V3a2_BossRush_MainView:onOpen()
 	TaskDispatcher.runRepeat(self._onRefreshDeadline, self, 1)
 	self:_refreshCurrency()
 	self:_refreshStoreTag()
+
+	local activityCfg = ActivityConfig.instance:getActivityCo(self.actId)
+	local achievementJumpId = activityCfg and activityCfg.achievementJumpId
+
+	gohelper.setActive(self._gotopRight, achievementJumpId and achievementJumpId ~= 0)
 end
 
 function V3a2_BossRush_MainView:_refreshStoreTag()

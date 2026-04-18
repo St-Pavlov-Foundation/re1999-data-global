@@ -3910,5 +3910,89 @@
     "triggerAudio": 0,
     "delAudio": 0,
     "audio": 0
+  },
+  {
+    "buffId": 30790601,
+    "orEnemy": 2,
+    "skinId": 307905,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_6/6_skill2_02",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 430790542
+  },
+  {
+    "buffId": 30790602,
+    "orEnemy": 2,
+    "skinId": 307905,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_6/6_skill2_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 430790542
+  },
+  {
+    "buffId": 31250151,
+    "orEnemy": 2,
+    "skinId": 312503,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_ysm/ysm_innate1",
+    "triggerEffect": "",
+    "delEffect": "v3a4_ysm/ysm_innate1_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431250341
+  },
+  {
+    "buffId": 31250241,
+    "orEnemy": 2,
+    "skinId": 312503,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_ysm/ysm_innate1",
+    "triggerEffect": "",
+    "delEffect": "v3a4_ysm/ysm_innate1_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431250341
+  },
+  {
+    "buffId": 31250261,
+    "orEnemy": 2,
+    "skinId": 312503,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_ysm/ysm_innate1",
+    "triggerEffect": "",
+    "delEffect": "v3a4_ysm/ysm_innate1_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431250341
+  },
+  {
+    "buffId": 31250291,
+    "orEnemy": 2,
+    "skinId": 312503,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_ysm/ysm_innate1",
+    "triggerEffect": "",
+    "delEffect": "v3a4_ysm/ysm_innate1_02",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431250341
+  },
+  {
+    "buffId": 31250181,
+    "orEnemy": 2,
+    "skinId": 312503,
+    "effectHang": "mountroot",
+    "effectPath": "v3a4_ysm/ysm_innate2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "triggerAudio": 0,
+    "delAudio": 0,
+    "audio": 431250342
   }
 ]

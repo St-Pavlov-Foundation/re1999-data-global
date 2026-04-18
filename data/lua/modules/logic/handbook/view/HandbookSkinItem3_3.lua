@@ -10,9 +10,8 @@ function HandbookSkinItem3_3:init(go)
 	self.viewGO = go
 	self._roleImage = gohelper.findChildSingleImage(self.viewGO, "item/unlock/#simage_card")
 	self._roleImageLock = gohelper.findChildSingleImage(self.viewGO, "item/lock/#simage_card")
-	self._gobtnclick = gohelper.findChild(self.viewGO, "item/unlock/#simage_card")
-	self._btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "item/unlock/#simage_card")
-	self._btnlockclick = gohelper.findChildButtonWithAudio(self.viewGO, "item/lock/#simage_card")
+	self._btnClick = gohelper.findChildButtonWithAudio(self.viewGO, "item/unlock")
+	self._btnlockclick = gohelper.findChildButtonWithAudio(self.viewGO, "item/lock")
 	self._btnEmpty = gohelper.findChildButtonWithAudio(self.viewGO, "item/empty")
 	self._goEmpty = gohelper.findChild(self.viewGO, "item/empty")
 	self._goUnlock = gohelper.findChild(self.viewGO, "item/unlock")
@@ -63,7 +62,7 @@ function HandbookSkinItem3_3:refreshItem(skinId)
 
 	local has = HeroModel.instance:checkHasSkin(skinId)
 
-	gohelper.setActive(self._roleImage.gameObject, has)
+	gohelper.setActive(self._goUnlock, has)
 	gohelper.setActive(self._goLock, not has)
 	gohelper.setActive(self._goEmpty, false)
 end
@@ -76,7 +75,7 @@ end
 
 function HandbookSkinItem3_3:_refreshEmptySkin()
 	gohelper.setActive(self._goEmpty, true)
-	gohelper.setActive(self._roleImage.gameObject, false)
+	gohelper.setActive(self._goUnlock, false)
 	gohelper.setActive(self._goLock, false)
 end
 

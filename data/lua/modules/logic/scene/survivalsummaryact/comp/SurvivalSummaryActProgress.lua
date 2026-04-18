@@ -13,69 +13,20 @@ function SurvivalSummaryActProgress:onSceneStart(sceneId, levelId)
 
 	local shelterMapId = self.weekInfo.shelterMapId
 
-	self.unitComp = SurvivalMapHelper.instance:getScene().unit
 	self.mapCo = lua_survival_shelter.configDict[shelterMapId]
 	self.npcDataList = {}
 
 	local npcList = SurvivalMapModel.instance.resultData:getFirstNpcMos()
 
-	self.buildReputationInfoDic = {}
-	self.buildReputationInfos = {}
-
 	for k, v in ipairs(npcList) do
-		local renown = SurvivalConfig.instance:getNpcRenown(v.id)
+		local data = {
+			id = v.id,
+			resource = v.co.resource,
+			config = v.co
+		}
 
-		if renown then
-			local data = {
-				id = v.id,
-				resource = v.co.resource,
-				config = v.co
-			}
-
-			table.insert(self.npcDataList, data)
-
-			local reputationId = renown[1]
-			local reputationAdd = SurvivalConfig.instance:getNpcReputationValue(v.id)
-
-			if self.buildReputationInfoDic[reputationId] == nil then
-				local info = {
-					value = 0,
-					reputationId = reputationId,
-					npcs = {}
-				}
-
-				self.buildReputationInfoDic[reputationId] = info
-
-				table.insert(self.buildReputationInfos, info)
-			end
-
-			table.insert(self.buildReputationInfoDic[reputationId].npcs, data)
-
-			self.buildReputationInfoDic[reputationId].value = self.buildReputationInfoDic[reputationId].value + reputationAdd
-		end
+		table.insert(self.npcDataList, data)
 	end
-
-	table.sort(self.buildReputationInfos, self.reputationSortFunc)
-
-	for i, info in ipairs(self.buildReputationInfos) do
-		local reputationId = info.reputationId
-		local buildMo = self.weekInfo:getBuildingMoByReputationId(reputationId)
-		local level = buildMo.survivalReputationPropMo.prop.reputationLevel
-		local reputationExp = buildMo.survivalReputationPropMo.prop.reputationExp
-
-		if level > 0 and reputationExp < info.value then
-			for idx, data in ipairs(info.npcs) do
-				data.upInfo = {
-					lastLevel = level - 1,
-					cuLevel = level
-				}
-			end
-		end
-	end
-end
-
-function SurvivalSummaryActProgress.reputationSortFunc(a, b)
-	return a.reputationId < b.reputationId
 end
 
 function SurvivalSummaryActProgress:onScenePrepared()

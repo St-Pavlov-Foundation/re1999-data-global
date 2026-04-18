@@ -12,9 +12,8 @@ function TowerComposeModEquipView:onInitView()
 	self._imagegrade = gohelper.findChildImage(self.viewGO, "left/gradebg/#image_grade")
 	self._txtlevel = gohelper.findChildText(self.viewGO, "left/gradebg/#txt_level")
 	self._btnextraTips = gohelper.findChildButtonWithAudio(self.viewGO, "left/gradebg/#txt_level/#btn_extraTips")
+	self._gobossLock = gohelper.findChild(self.viewGO, "left/gradebg/#go_bossLock")
 	self._goextraTips = gohelper.findChild(self.viewGO, "#go_extraTips")
-	self._txttipDesc = gohelper.findChildText(self.viewGO, "#go_extraTips/#txt_tipDesc")
-	self._btncloseTip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_extraTips/#btn_closeTip")
 	self._txtbossPointBase = gohelper.findChildText(self.viewGO, "left/integralbase/#txt_bossPointBase")
 	self._gorulelist = gohelper.findChild(self.viewGO, "left/buff/#go_rulelist")
 	self._btnadditionRuleclick = gohelper.findChildButtonWithAudio(self.viewGO, "left/buff/#go_rulelist/#btn_additionRuleclick")
@@ -42,6 +41,8 @@ function TowerComposeModEquipView:onInitView()
 	self._gobottom = gohelper.findChild(self.viewGO, "#go_bottom")
 	self._btnresearch = gohelper.findChildButtonWithAudio(self.viewGO, "#go_bottom/#btn_research")
 	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_bottom/#btn_ok")
+	self._btnexitLoad = gohelper.findChildButtonWithAudio(self.viewGO, "#go_bottom/#btn_exitLoad")
+	self._btnload = gohelper.findChildButtonWithAudio(self.viewGO, "#go_bottom/#btn_load")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -57,8 +58,11 @@ function TowerComposeModEquipView:addEvents()
 	self._btnresearch:AddClickListener(self._btnresearchOnClick, self)
 	self._btncloseModList:AddClickListener(self._btncloseModListOnClick, self)
 	self._btnextraTips:AddClickListener(self._btnextraTipsOnClick, self)
-	self._btncloseTip:AddClickListener(self._btncloseTipOnClick, self)
+	self._btnexitLoad:AddClickListener(self._btnexitLoadOnClick, self)
+	self._btnload:AddClickListener(self._btnloadOnClick, self)
 	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.SetPlaneMods, self.refreshUI, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshLoadStateReply, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.LoadRecordReply, self.onClickLoadBtnReply, self)
 end
 
 function TowerComposeModEquipView:removeEvents()
@@ -70,16 +74,29 @@ function TowerComposeModEquipView:removeEvents()
 	self._btnresearch:RemoveClickListener()
 	self._btncloseModList:RemoveClickListener()
 	self._btnextraTips:RemoveClickListener()
-	self._btncloseTip:RemoveClickListener()
+	self._btnexitLoad:RemoveClickListener()
+	self._btnload:RemoveClickListener()
 	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.SetPlaneMods, self.refreshUI, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshLoadStateReply, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.LoadRecordReply, self.onClickLoadBtnReply, self)
+end
+
+function TowerComposeModEquipView:_btnexitLoadOnClick()
+	TowerComposeRpc.instance:sendTowerComposeCancelReChallengeRequest(self.curThemeId)
+end
+
+function TowerComposeModEquipView:_btnloadOnClick()
+	TowerComposeRpc.instance:sendTowerComposeLoadRecordRequest(self.curThemeId)
 end
 
 function TowerComposeModEquipView:_btnextraTipsOnClick()
 	gohelper.setActive(self._goextraTips, true)
-end
 
-function TowerComposeModEquipView:_btncloseTipOnClick()
-	gohelper.setActive(self._goextraTips, false)
+	local param = {}
+
+	param.posGO = self._goextraTips
+
+	TowerComposeController.instance:openTowerComposeExtraTips(param)
 end
 
 function TowerComposeModEquipView:_btnenemyInfoOnClick()
@@ -142,6 +159,17 @@ function TowerComposeModEquipView:_btncloseModListOnClick()
 end
 
 function TowerComposeModEquipView:_btnBodyModSlotItemOnClick(bodyModSlotItem)
+	if self:checkPlaneIsLock() then
+		if bodyModSlotItem.modId > 0 then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordModLock)
+			self:openTowerComposeModTipView(self.curSelectPlaneId, TowerComposeEnum.ModType.Body)
+		else
+			GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+		end
+
+		return
+	end
+
 	if self.curSlotId == bodyModSlotItem.slotId then
 		self:_btncloseModListOnClick()
 
@@ -164,6 +192,17 @@ function TowerComposeModEquipView:_btnBodyModItemOnClick(bodyModItem)
 end
 
 function TowerComposeModEquipView:_btnWordModSelectItemOnClick(wordModSlotItem)
+	if self:checkPlaneIsLock() then
+		if wordModSlotItem.modId > 0 then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordModLock)
+			self:openTowerComposeModTipView(self.curSelectPlaneId, TowerComposeEnum.ModType.Word)
+		else
+			GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+		end
+
+		return
+	end
+
 	self:refreshWordModList(wordModSlotItem.slotId)
 
 	self.curSelectModType = TowerComposeEnum.ModType.Word
@@ -189,6 +228,17 @@ function TowerComposeModEquipView:_btnWordModItemOnClick(wordModItem)
 end
 
 function TowerComposeModEquipView:_btnEnvModSelectItemOnClick(EnvModSlotItem)
+	if self:checkPlaneIsLock() then
+		if EnvModSlotItem.modId > 0 then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordModLock)
+			self:openTowerComposeModTipView(self.curSelectPlaneId, TowerComposeEnum.ModType.Env)
+		else
+			GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+		end
+
+		return
+	end
+
 	self.curSlotId = EnvModSlotItem.slotId
 
 	self:refreshEnvModList(EnvModSlotItem.slotId)
@@ -209,11 +259,17 @@ function TowerComposeModEquipView:modItemSelect(modItem)
 
 	local needRefreshModList = false
 
+	if inPlaneId > 0 and TowerComposeModel.instance:checkPlaneLock(self.curThemeId, inPlaneId) then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordModLock)
+
+		return
+	end
+
 	if inPlaneId == 0 and modItem.initEnvModInfoMap then
 		if modItem.initEnvModInfoMap[self.curPlaneMo.planeId] then
-			self.curPlaneMo:setEquipModId(self.curSelectModType, self.curSlotId, self.themeInitEnv)
+			self:planeSetEquipMod(self.curPlaneMo, self.curSelectModType, self.curSlotId, self.themeInitEnv)
 		else
-			self.curPlaneMo:setEquipModId(self.curSelectModType, self.curSlotId, modItem.config.id)
+			self:planeSetEquipMod(self.curPlaneMo, self.curSelectModType, self.curSlotId, modItem.config.id)
 		end
 
 		self:refreshUI()
@@ -233,9 +289,9 @@ function TowerComposeModEquipView:modItemSelect(modItem)
 		local modInfo = modItem.modInfo
 
 		if self.curSelectModType == TowerComposeEnum.ModType.Env then
-			self.curPlaneMo:setEquipModId(self.curSelectModType, modInfo.slot, self.themeInitEnv)
+			self:planeSetEquipMod(self.curPlaneMo, self.curSelectModType, modInfo.slot, self.themeInitEnv)
 		else
-			self.curPlaneMo:setEquipModId(self.curSelectModType, modInfo.slot, 0)
+			self:planeSetEquipMod(self.curPlaneMo, self.curSelectModType, modInfo.slot, 0)
 		end
 
 		self:refreshUI()
@@ -248,7 +304,7 @@ function TowerComposeModEquipView:modItemSelect(modItem)
 			return
 		end
 
-		self.curPlaneMo:setEquipModId(self.curSelectModType, self.curSlotId, modItem.config.id)
+		self:planeSetEquipMod(self.curPlaneMo, self.curSelectModType, self.curSlotId, modItem.config.id)
 		self:refreshUI()
 
 		needRefreshModList = true
@@ -317,6 +373,16 @@ function TowerComposeModEquipView:replaceModTipCallBack()
 	end
 end
 
+function TowerComposeModEquipView:planeSetEquipMod(planeMo, modType, slot, modId)
+	if modId > 0 and self:checkModOverLockLevel(planeMo.planeId, modType, slot, modId) then
+		GameFacade.showToast(ToastEnum.TowerComposeModOverLockLevel)
+
+		return
+	end
+
+	planeMo:setEquipModId(modType, slot, modId)
+end
+
 function TowerComposeModEquipView:_btnokOnClick()
 	local param = {}
 
@@ -345,6 +411,7 @@ function TowerComposeModEquipView:_editableInitView()
 		self.planeItemList[planeId] = {}
 		self.planeItemList[planeId].normalGO = gohelper.findChild(self["_btnplane" .. planeId].gameObject, "normal")
 		self.planeItemList[planeId].selectGO = gohelper.findChild(self["_btnplane" .. planeId].gameObject, "select")
+		self.planeItemList[planeId].lockGO = gohelper.findChild(self["_btnplane" .. planeId].gameObject, "lock")
 	end
 
 	gohelper.setActive(self._gobodyModSlotItem, false)
@@ -371,9 +438,13 @@ function TowerComposeModEquipView:_editableInitView()
 	self._goWordModSelectBgFrame2 = gohelper.findChild(self._gowordModSelect, "go_itembg2/#select")
 	self._goEnvModSelectBg1 = gohelper.findChild(self._goenvModSelect, "go_itembg1")
 	self._goEnvModSelectBg2 = gohelper.findChild(self._goenvModSelect, "go_itembg2")
+	self._txtBodyModLevel = gohelper.findChildText(self._gobodyModSelect, "name/txt_curModLevel")
+	self._txtWordModLevel = gohelper.findChildText(self._gowordModSelect, "name/txt_curModLevel")
+	self._txtEnvModLevel = gohelper.findChildText(self._goenvModSelect, "name/txt_curModLevel")
 	self._goTop = gohelper.findChild(self.viewGO, "right/top")
 	self.lastBossLevel = -1
 	self.lastBossPointBase = -1
+	self._animView = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self._animGradebg = gohelper.findChild(self.viewGO, "left/gradebg"):GetComponent(typeof(UnityEngine.Animator))
 	self._animRight = gohelper.findChild(self.viewGO, "right"):GetComponent(typeof(UnityEngine.Animator))
 	self._animIntegralBase = gohelper.findChild(self.viewGO, "left/integralbase"):GetComponent(typeof(UnityEngine.Animator))
@@ -402,6 +473,7 @@ function TowerComposeModEquipView:onOpen()
 	self.themeConfig = TowerComposeConfig.instance:getThemeConfig(self.curThemeId)
 	self.modSlotNumMap = TowerComposeConfig.instance:getModSlotNumMap(self.curThemeId)
 	self.themeInitEnv = TowerComposeConfig.instance:getThemeInitEnv(self.curThemeId)
+	self.themeBossCareerInfo = string.splitToNumber(self.themeConfig.career, "#")
 
 	self:checkEmptyEnvAndEquipInit()
 	self:refreshUI()
@@ -435,10 +507,18 @@ function TowerComposeModEquipView:refreshUI()
 	self:refreshBossSpine()
 	self:refreshPlaneModInfo()
 	self:checkBossInfoChange()
+	self:refreshBossCareer()
+	self:refreshLoadState()
+end
+
+function TowerComposeModEquipView:refreshLoadStateReply()
+	self._animView:Play("open", 0, 0)
+	self._animView:Update(0)
+	self:refreshUI()
 end
 
 function TowerComposeModEquipView:checkBossInfoChange()
-	local bossLevel = TowerComposeModel.instance:getThemePlaneLevel(self.curThemeId)
+	local bossLevel = TowerComposeModel.instance:getThemePlaneLevel(self.curThemeId, self.curSelectModType ~= TowerComposeEnum.ModType.None)
 	local planeId = TowerComposeModel.instance:getCurSelectPlaneId()
 	local totalPointBase = TowerComposeModel.instance:calModPointBaseScore(self.curThemeId, planeId)
 	local needDelayRefresh = false
@@ -534,17 +614,11 @@ function TowerComposeModEquipView:refreshBossSpine()
 end
 
 function TowerComposeModEquipView:refreshPlaneInfo()
-	local bossMonsterGroupId = self.themeConfig.monsterGroupId
-	local monsterIdList = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[bossMonsterGroupId].monster, "#")
-	local monsterConfig = lua_monster.configDict[monsterIdList[1]]
-
-	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(monsterConfig.career))
-
 	local planeId = TowerComposeModel.instance:getCurSelectPlaneId()
 
-	self.planeMo = self.themeMo:getPlaneMo(planeId)
+	self.curPlaneMo = self.themeMo:getPlaneMo(planeId)
 
-	local bossLevel = TowerComposeModel.instance:getThemePlaneLevel(self.curThemeId)
+	local bossLevel = TowerComposeModel.instance:getThemePlaneLevel(self.curThemeId, self.curSelectModType ~= TowerComposeEnum.ModType.None)
 
 	self._txtlevel.text = string.format("Lv.%d", bossLevel)
 
@@ -556,15 +630,15 @@ function TowerComposeModEquipView:refreshPlaneInfo()
 	local maxRoundPointAdd = pointRoundCoList[#pointRoundCoList].bossPointAdd
 	local totalPointBase = TowerComposeModel.instance:calModPointBaseScore(self.curThemeId, planeId)
 
-	self._txtbossPointBase.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towercompose_pointlevel"), totalPointBase, Mathf.Floor(totalPointBase * (1 + maxRoundPointAdd / 1000)))
+	if self.curPlaneMo.isLock then
+		self._txtbossPointBase.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_recordScore"), self.curPlaneMo.curScore)
+	else
+		self._txtbossPointBase.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towercompose_pointlevel"), totalPointBase, Mathf.Floor(totalPointBase * (1 + maxRoundPointAdd / 1000)))
+	end
 
 	for _, gradeLevelGO in ipairs(self.gradeLevelGOList) do
 		gohelper.setActive(gradeLevelGO, gradeLevelGO.name == "#" .. string.lower(bossLvCo.levelReq))
 	end
-
-	local tipDesc = TowerComposeConfig.instance:getConstValue(TowerComposeEnum.ConstId.ModEquipRuleDesc, false, true)
-
-	self._txttipDesc.text = tipDesc
 
 	local battleCo = lua_battle.configDict[self.dungeonEpisodeCo.battleId]
 	local additionRule = battleCo and battleCo.additionRule or ""
@@ -598,6 +672,32 @@ function TowerComposeModEquipView:refreshPlaneInfo()
 	for index = #self.ruleList + 1, #self.ruleItemList do
 		gohelper.setActive(self.ruleItemList[index].go, false)
 	end
+end
+
+function TowerComposeModEquipView:refreshBossCareer()
+	local bossMonsterGroupId = self.themeConfig.monsterGroupId
+	local monsterIdList = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[bossMonsterGroupId].monster, "#")
+	local monsterConfig = lua_monster.configDict[monsterIdList[1]]
+	local haveModCareer, modCareer = self:checkModCareer()
+	local curBossCareer = haveModCareer and modCareer or monsterConfig.career
+
+	UISpriteSetMgr.instance:setCommonSprite(self._imagecareer, "lssx_" .. tostring(curBossCareer))
+end
+
+function TowerComposeModEquipView:checkModCareer()
+	local checkType = self.themeBossCareerInfo[1]
+	local checkSlot = self.themeBossCareerInfo[2]
+	local modId = self.curPlaneMo:getEquipModId(checkType, checkSlot)
+
+	if modId > 0 then
+		local modconfig = TowerComposeConfig.instance:getComposeModConfig(modId)
+
+		if modconfig.career > 0 then
+			return true, modconfig.career
+		end
+	end
+
+	return false
 end
 
 function TowerComposeModEquipView:refreshPlaneModInfo()
@@ -666,10 +766,18 @@ function TowerComposeModEquipView:refreshBodySlotMod()
 			bodyModSlotItem.goSelectFrame1 = gohelper.findChild(bodyModSlotItem.go, "frame/go_selectframe1")
 			bodyModSlotItem.goSelectFrame2 = gohelper.findChild(bodyModSlotItem.go, "frame/go_selectframe2")
 			bodyModSlotItem.goEmpty = gohelper.findChild(bodyModSlotItem.go, "go_empty")
+			bodyModSlotItem.goLockEmpty = gohelper.findChild(bodyModSlotItem.go, "go_lockEmpty")
 			bodyModSlotItem.imageModIcon = gohelper.findChildImage(bodyModSlotItem.go, "image_modIcon")
+			bodyModSlotItem.imageModColorIcon = gohelper.findChildImage(bodyModSlotItem.go, "image_modIcon_01")
+			bodyModSlotItem.materialModIcon = UnityEngine.Object.Instantiate(bodyModSlotItem.imageModColorIcon.material)
+			bodyModSlotItem.imageModLvColorIcon = gohelper.findChildImage(bodyModSlotItem.go, "image_modIcon_02")
+			bodyModSlotItem.materialModLvIcon = UnityEngine.Object.Instantiate(bodyModSlotItem.imageModLvColorIcon.material)
 			bodyModSlotItem.goLine = gohelper.findChild(bodyModSlotItem.go, "go_line")
 			bodyModSlotItem.btnClick = gohelper.findChildButtonWithAudio(bodyModSlotItem.go, "btn_click")
 			bodyModSlotItem.anim = bodyModSlotItem.go:GetComponent(typeof(UnityEngine.Animator))
+			bodyModSlotItem.imageModColorIcon.material = bodyModSlotItem.materialModIcon
+			bodyModSlotItem.imageModLvColorIcon.material = bodyModSlotItem.materialModLvIcon
+			bodyModSlotItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(bodyModSlotItem.go, TowerComposeModIconComp)
 			self.bodyModSlotItemList[slotId] = bodyModSlotItem
 		end
 
@@ -678,15 +786,12 @@ function TowerComposeModEquipView:refreshBodySlotMod()
 
 		bodyModSlotItem.modId = self.curPlaneMo:getEquipModId(TowerComposeEnum.ModType.Body, slotId)
 
-		gohelper.setActive(bodyModSlotItem.goEmpty, bodyModSlotItem.modId == 0)
-		gohelper.setActive(bodyModSlotItem.imageModIcon.gameObject, bodyModSlotItem.modId > 0)
+		local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.curThemeId, self.curPlaneMo.planeId)
 
-		if bodyModSlotItem.modId > 0 then
-			local modconfig = TowerComposeConfig.instance:getComposeModConfig(bodyModSlotItem.modId)
-
-			UISpriteSetMgr.instance:setTower2Sprite(bodyModSlotItem.imageModIcon, modconfig.icon)
-		end
-
+		gohelper.setActive(bodyModSlotItem.goEmpty, bodyModSlotItem.modId == 0 and not isPlaneLock)
+		gohelper.setActive(bodyModSlotItem.goLockEmpty, bodyModSlotItem.modId == 0 and isPlaneLock)
+		gohelper.setActive(bodyModSlotItem.imageModColorIcon.gameObject, bodyModSlotItem.modId > 0)
+		bodyModSlotItem.modIconComp:refreshMod(bodyModSlotItem.modId, bodyModSlotItem.imageModIcon, bodyModSlotItem.imageModColorIcon, bodyModSlotItem.imageModLvColorIcon, bodyModSlotItem.materialModIcon, bodyModSlotItem.materialModLvIcon)
 		gohelper.setActive(bodyModSlotItem.goLine, slotId < bodyModSlotNum)
 		UISpriteSetMgr.instance:setTower2Sprite(bodyModSlotItem.imageSelectBg1, string.format("tower_new_frame%d_3", slotId))
 		UISpriteSetMgr.instance:setTower2Sprite(bodyModSlotItem.imageSelectBg2, string.format("tower_new_frame%d_5", slotId))
@@ -695,6 +800,10 @@ function TowerComposeModEquipView:refreshBodySlotMod()
 		gohelper.setActive(bodyModSlotItem.goSelectBg1, self.curSelectPlaneId == 1)
 		gohelper.setActive(bodyModSlotItem.goSelectBg2, self.curSelectPlaneId == 2)
 	end
+
+	local curModLevel = self.curPlaneMo:getEquipModLevel(TowerComposeEnum.ModType.Body)
+
+	self._txtBodyModLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_modLevel"), curModLevel)
 end
 
 function TowerComposeModEquipView:refreshBodyModList(slotId)
@@ -714,6 +823,12 @@ function TowerComposeModEquipView:refreshBodyModList(slotId)
 			bodyModItem.goSelect1 = gohelper.findChild(bodyModItem.go, "go_select1")
 			bodyModItem.goSelect2 = gohelper.findChild(bodyModItem.go, "go_select2")
 			bodyModItem.imageIcon = gohelper.findChildImage(bodyModItem.go, "image_icon")
+			bodyModItem.imageModColorIcon = gohelper.findChildImage(bodyModItem.go, "image_icon_01")
+			bodyModItem.materialModIcon = UnityEngine.Object.Instantiate(bodyModItem.imageModColorIcon.material)
+			bodyModItem.imageModLvColorIcon = gohelper.findChildImage(bodyModItem.go, "image_icon_02")
+			bodyModItem.materialModLvIcon = UnityEngine.Object.Instantiate(bodyModItem.imageModLvColorIcon.material)
+			bodyModItem.imageModColorIcon.material = bodyModItem.materialModIcon
+			bodyModItem.imageModLvColorIcon.material = bodyModItem.materialModLvIcon
 			bodyModItem.txtDesc = gohelper.findChildText(bodyModItem.go, "txt_desc")
 
 			SkillHelper.addHyperLinkClick(bodyModItem.txtDesc, self._onHyperLinkClick, self)
@@ -724,6 +839,7 @@ function TowerComposeModEquipView:refreshBodyModList(slotId)
 			bodyModItem.goIsIn1 = gohelper.findChild(bodyModItem.go, "go_isIn1")
 			bodyModItem.goIsIn2 = gohelper.findChild(bodyModItem.go, "go_isIn2")
 			bodyModItem.btnClick = gohelper.findChildButtonWithAudio(bodyModItem.go, "btn_click")
+			bodyModItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(bodyModItem.go, TowerComposeModIconComp)
 			self.bodyModItemList[index] = bodyModItem
 		end
 
@@ -740,7 +856,7 @@ function TowerComposeModEquipView:refreshBodyModList(slotId)
 		gohelper.setActive(bodyModItem.goIsIn2, bodyModItem.inPlaneId > 0 and bodyModItem.inPlaneId == 2)
 		gohelper.setActive(bodyModItem.goSelect1, bodyModItem.inPlaneId > 0 and bodyModItem.inPlaneId == 1 and self.curSelectPlaneId == 1)
 		gohelper.setActive(bodyModItem.goSelect2, bodyModItem.inPlaneId > 0 and bodyModItem.inPlaneId == 2 and self.curSelectPlaneId == 2)
-		UISpriteSetMgr.instance:setTower2Sprite(bodyModItem.imageIcon, bodyModItem.config.icon)
+		bodyModItem.modIconComp:refreshMod(bodyModItem.config.id, bodyModItem.imageIcon, bodyModItem.imageModColorIcon, bodyModItem.imageModLvColorIcon, bodyModItem.materialModIcon, bodyModItem.materialModLvIcon)
 
 		bodyModItem.txtDesc.text = SkillHelper.buildDesc(bodyModItem.config.desc)
 
@@ -775,10 +891,18 @@ function TowerComposeModEquipView:refreshWordSlotMod()
 			wordModSlotItem.goSelectFrame1 = gohelper.findChild(wordModSlotItem.go, "frame/go_selectframe1")
 			wordModSlotItem.goSelectFrame2 = gohelper.findChild(wordModSlotItem.go, "frame/go_selectframe2")
 			wordModSlotItem.goEmpty = gohelper.findChild(wordModSlotItem.go, "go_empty")
+			wordModSlotItem.goLockEmpty = gohelper.findChild(wordModSlotItem.go, "go_lockEmpty")
 			wordModSlotItem.imageModIcon = gohelper.findChildImage(wordModSlotItem.go, "image_modIcon")
+			wordModSlotItem.imageModColorIcon = gohelper.findChildImage(wordModSlotItem.go, "image_modIcon_01")
+			wordModSlotItem.materialModIcon = UnityEngine.Object.Instantiate(wordModSlotItem.imageModColorIcon.material)
+			wordModSlotItem.imageModLvColorIcon = gohelper.findChildImage(wordModSlotItem.go, "image_modIcon_02")
+			wordModSlotItem.materialModLvIcon = UnityEngine.Object.Instantiate(wordModSlotItem.imageModLvColorIcon.material)
+			wordModSlotItem.imageModColorIcon.material = wordModSlotItem.materialModIcon
+			wordModSlotItem.imageModLvColorIcon.material = wordModSlotItem.materialModLvIcon
 			wordModSlotItem.goLine = gohelper.findChild(wordModSlotItem.go, "go_line")
 			wordModSlotItem.btnClick = gohelper.findChildButtonWithAudio(wordModSlotItem.go, "btn_click")
 			wordModSlotItem.anim = wordModSlotItem.go:GetComponent(typeof(UnityEngine.Animator))
+			wordModSlotItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(wordModSlotItem.go, TowerComposeModIconComp)
 			self.wordModSlotItemList[slotId] = wordModSlotItem
 		end
 
@@ -787,19 +911,20 @@ function TowerComposeModEquipView:refreshWordSlotMod()
 
 		wordModSlotItem.modId = self.curPlaneMo:getEquipModId(TowerComposeEnum.ModType.Word, slotId)
 
-		gohelper.setActive(wordModSlotItem.goEmpty, wordModSlotItem.modId == 0)
-		gohelper.setActive(wordModSlotItem.imageModIcon.gameObject, wordModSlotItem.modId > 0)
+		local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.curThemeId, self.curPlaneMo.planeId)
 
-		if wordModSlotItem.modId > 0 then
-			local modconfig = TowerComposeConfig.instance:getComposeModConfig(wordModSlotItem.modId)
-
-			UISpriteSetMgr.instance:setTower2Sprite(wordModSlotItem.imageModIcon, modconfig.icon)
-		end
-
+		gohelper.setActive(wordModSlotItem.goEmpty, wordModSlotItem.modId == 0 and not isPlaneLock)
+		gohelper.setActive(wordModSlotItem.goLockEmpty, wordModSlotItem.modId == 0 and isPlaneLock)
+		gohelper.setActive(wordModSlotItem.imageModColorIcon.gameObject, wordModSlotItem.modId > 0)
+		wordModSlotItem.modIconComp:refreshMod(wordModSlotItem.modId, wordModSlotItem.imageModIcon, wordModSlotItem.imageModColorIcon, wordModSlotItem.imageModLvColorIcon, wordModSlotItem.materialModIcon, wordModSlotItem.materialModLvIcon)
 		gohelper.setActive(wordModSlotItem.goLine, slotId < wordModSlotNum)
 		gohelper.setActive(wordModSlotItem.goSelectBg1, self.curSelectPlaneId == 1)
 		gohelper.setActive(wordModSlotItem.goSelectBg2, self.curSelectPlaneId == 2)
 	end
+
+	local curModLevel = self.curPlaneMo:getEquipModLevel(TowerComposeEnum.ModType.Word)
+
+	self._txtWordModLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_modLevel"), curModLevel)
 end
 
 function TowerComposeModEquipView:refreshWordModList(slotId)
@@ -819,6 +944,12 @@ function TowerComposeModEquipView:refreshWordModList(slotId)
 			wordModItem.goSelect1 = gohelper.findChild(wordModItem.go, "go_select1")
 			wordModItem.goSelect2 = gohelper.findChild(wordModItem.go, "go_select2")
 			wordModItem.imageIcon = gohelper.findChildImage(wordModItem.go, "image_icon")
+			wordModItem.imageModColorIcon = gohelper.findChildImage(wordModItem.go, "image_icon_01")
+			wordModItem.materialModIcon = UnityEngine.Object.Instantiate(wordModItem.imageModColorIcon.material)
+			wordModItem.imageModLvColorIcon = gohelper.findChildImage(wordModItem.go, "image_icon_02")
+			wordModItem.materialModLvIcon = UnityEngine.Object.Instantiate(wordModItem.imageModLvColorIcon.material)
+			wordModItem.imageModColorIcon.material = wordModItem.materialModIcon
+			wordModItem.imageModLvColorIcon.material = wordModItem.materialModLvIcon
 			wordModItem.txtDesc = gohelper.findChildText(wordModItem.go, "txt_desc")
 
 			SkillHelper.addHyperLinkClick(wordModItem.txtDesc, self._onHyperLinkClick, self)
@@ -829,6 +960,7 @@ function TowerComposeModEquipView:refreshWordModList(slotId)
 			wordModItem.goIsIn1 = gohelper.findChild(wordModItem.go, "go_isIn1")
 			wordModItem.goIsIn2 = gohelper.findChild(wordModItem.go, "go_isIn2")
 			wordModItem.btnClick = gohelper.findChildButtonWithAudio(wordModItem.go, "btn_click")
+			wordModItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(wordModItem.go, TowerComposeModIconComp)
 			self.wordModItemList[index] = wordModItem
 		end
 
@@ -845,7 +977,7 @@ function TowerComposeModEquipView:refreshWordModList(slotId)
 		gohelper.setActive(wordModItem.goIsIn2, wordModItem.inPlaneId > 0 and wordModItem.inPlaneId == 2)
 		gohelper.setActive(wordModItem.goSelect1, wordModItem.inPlaneId > 0 and wordModItem.inPlaneId == 1 and self.curSelectPlaneId == 1)
 		gohelper.setActive(wordModItem.goSelect2, wordModItem.inPlaneId > 0 and wordModItem.inPlaneId == 2 and self.curSelectPlaneId == 2)
-		UISpriteSetMgr.instance:setTower2Sprite(wordModItem.imageIcon, wordModItem.config.icon)
+		wordModItem.modIconComp:refreshMod(wordModItem.config.id, wordModItem.imageIcon, wordModItem.imageModColorIcon, wordModItem.imageModLvColorIcon, wordModItem.materialModIcon, wordModItem.materialModLvIcon)
 
 		wordModItem.txtDesc.text = SkillHelper.buildDesc(wordModItem.config.desc)
 
@@ -886,6 +1018,7 @@ function TowerComposeModEquipView:refreshEnvSlotMod()
 			envModSlotItem.simagePic = gohelper.findChildSingleImage(envModSlotItem.go, "go_has/simage_pic")
 			envModSlotItem.goIconBg1 = gohelper.findChild(envModSlotItem.go, "go_has/go_iconbg1")
 			envModSlotItem.goIconBg2 = gohelper.findChild(envModSlotItem.go, "go_has/go_iconbg2")
+			envModSlotItem.goSwitchIcon = gohelper.findChild(envModSlotItem.go, "go_has/go_switchIcon")
 			envModSlotItem.goEmpty = gohelper.findChild(envModSlotItem.go, "go_empty")
 			envModSlotItem.btnClick = gohelper.findChildButtonWithAudio(envModSlotItem.go, "btn_click")
 			envModSlotItem.anim = envModSlotItem.go:GetComponent(typeof(UnityEngine.Animator))
@@ -898,10 +1031,13 @@ function TowerComposeModEquipView:refreshEnvSlotMod()
 
 		envModSlotItem.modId = self.curPlaneMo:getEquipModId(TowerComposeEnum.ModType.Env, slotId)
 
+		local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.curThemeId, self.curPlaneMo.planeId)
+
 		gohelper.setActive(envModSlotItem.goEmpty, envModSlotItem.modId == 0)
 		gohelper.setActive(envModSlotItem.goHas, envModSlotItem.modId > 0)
-		gohelper.setActive(envModSlotItem.goIconBg1, self.curSelectPlaneId == 1)
-		gohelper.setActive(envModSlotItem.goIconBg2, self.curSelectPlaneId == 2)
+		gohelper.setActive(envModSlotItem.goIconBg1, self.curSelectPlaneId == 1 and not isPlaneLock)
+		gohelper.setActive(envModSlotItem.goIconBg2, self.curSelectPlaneId == 2 and not isPlaneLock)
+		gohelper.setActive(envModSlotItem.goSwitchIcon, not isPlaneLock)
 
 		if envModSlotItem.modId > 0 then
 			local modconfig = TowerComposeConfig.instance:getComposeModConfig(envModSlotItem.modId)
@@ -915,6 +1051,10 @@ function TowerComposeModEquipView:refreshEnvSlotMod()
 			envModSlotItem.descFixTmpBreakLine:refreshTmpContent(envModSlotItem.txtDesc)
 		end
 	end
+
+	local curModLevel = self.curPlaneMo:getEquipModLevel(TowerComposeEnum.ModType.Env)
+
+	self._txtEnvModLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_modLevel"), curModLevel)
 end
 
 function TowerComposeModEquipView:refreshEnvModList(slotId)
@@ -997,6 +1137,10 @@ function TowerComposeModEquipView:modListSort(modList, modType, curSelectPlaneId
 		if valueA ~= valueB then
 			return valueA < valueB
 		else
+			if configA.level ~= configB.level then
+				return configA.level < configB.level
+			end
+
 			return configA.id < configB.id
 		end
 	end)
@@ -1016,6 +1160,72 @@ end
 
 function TowerComposeModEquipView:_onHyperLinkClick(effId, clickPosition)
 	CommonBuffTipController.instance:openCommonTipView(tonumber(effId), clickPosition)
+end
+
+function TowerComposeModEquipView:refreshLoadState()
+	local bossRecordInfoData = self.themeMo:getBossRecordInfoData()
+	local curBossMo = self.themeMo:getCurBossMo()
+
+	gohelper.setActive(self._btnload.gameObject, bossRecordInfoData and not curBossMo.lock)
+	gohelper.setActive(self._btnexitLoad.gameObject, bossRecordInfoData and curBossMo.lock)
+	gohelper.setActive(self._gobossLock, bossRecordInfoData and curBossMo.lock)
+
+	for planeId, planeItem in pairs(self.planeItemList) do
+		planeItem.isLock = TowerComposeModel.instance:checkPlaneLock(self.curThemeId, planeId)
+
+		gohelper.setActive(planeItem.lockGO, planeItem.isLock)
+	end
+end
+
+function TowerComposeModEquipView:onClickLoadBtnReply()
+	local bossRecordInfoData = self.themeMo:getBossRecordInfoData()
+
+	if bossRecordInfoData then
+		local param = {}
+
+		param.operateType = TowerComposeEnum.TeamOperateType.Load
+		param.themeId = self.curThemeId
+
+		TowerComposeController.instance:openTowerComposeSaveView(param)
+	else
+		GameFacade.showToast(ToastEnum.TowerComposeRecordExpired)
+	end
+
+	self:refreshLoadState()
+end
+
+function TowerComposeModEquipView:checkPlaneIsLock()
+	self.curSelectPlaneId = TowerComposeModel.instance:getCurSelectPlaneId()
+
+	return TowerComposeModel.instance:checkPlaneLock(self.curThemeId, self.curSelectPlaneId)
+end
+
+function TowerComposeModEquipView:checkModOverLockLevel(planeId, modType, slot, modId)
+	local curBossMo = self.themeMo:getCurBossMo()
+
+	if not curBossMo or not curBossMo.lock or modId == 0 then
+		return false
+	end
+
+	local lockBossLevel = self.themeMo:getCurBossLevel()
+	local planeMo = self.themeMo:getPlaneMo(planeId)
+	local tempLevel = planeMo:getPlaneLevelByEquipMod(modType, slot, modId)
+
+	return lockBossLevel < tempLevel
+end
+
+function TowerComposeModEquipView:openTowerComposeModTipView(planeId, modType)
+	local param = {}
+
+	param.themeId = self.curThemeId
+	param.planeId = planeId
+	param.modType = modType
+	param.offsetPos = {
+		-550,
+		0
+	}
+
+	TowerComposeController.instance:openTowerComposeModTipView(param)
 end
 
 function TowerComposeModEquipView:onClose()

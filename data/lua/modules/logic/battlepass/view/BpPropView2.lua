@@ -11,7 +11,7 @@ function BpPropView2:onInitView()
 	self._goeff = gohelper.findChild(self.viewGO, "#go_eff")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btnOK")
 	self._btnBuy = gohelper.findChildButtonWithAudio(self.viewGO, "#btnBuy")
-	self._goSpecial = gohelper.findChild(self.viewGO, "#btnBuy/#txt")
+	self._goSpecial = gohelper.findChildTextMesh(self.viewGO, "#btnBuy/#txt")
 	self._txtlv = gohelper.findChildText(self.viewGO, "title/level/#txt_lv")
 	self._scrollContent2 = gohelper.findChild(self.viewGO, "#scroll2/Viewport/#go_rewards")
 	self._item = gohelper.findChild(self.viewGO, "#scroll2/Viewport/#go_rewards/#go_Items")
@@ -48,6 +48,7 @@ function BpPropView2:_onClickOK()
 end
 
 function BpPropView2:onOpen()
+	self.bpCo = BpModel.instance:getBpCO()
 	self._openDt = UnityEngine.Time.time
 	CommonPropListItem.hasOpen = false
 
@@ -83,6 +84,7 @@ function BpPropView2:onOpen()
 		local bonus = specialBonus[1]
 
 		table.insert(list, 1, {
+			isSpecial = true,
 			materilType = bonus[1],
 			materilId = bonus[2],
 			quantity = bonus[3]
@@ -91,7 +93,12 @@ function BpPropView2:onOpen()
 
 	local haveSpecialBonus = BpModel.instance:haveSpecialBonus()
 
-	gohelper.setActive(self._goSpecial, haveSpecialBonus)
+	gohelper.setActive(self._goSpecial.gameObject, haveSpecialBonus)
+
+	if haveSpecialBonus then
+		self._goSpecial.text = self.bpCo.specialPropDesc
+	end
+
 	gohelper.CreateObjList(self, self._createItem, list, self._scrollContent2, self._item)
 end
 
@@ -151,9 +158,11 @@ end
 
 function BpPropView2:_createItem(obj, data, index)
 	local limit = gohelper.findChild(obj, "#go_Limit")
+	local txtLimit = gohelper.findChildTextMesh(obj, "#go_Limit/txt_Limit")
 	local itemGo = gohelper.findChild(obj, "#go_item")
 	local isNew = gohelper.findChild(obj, "#go_new")
 	local go_cruise = gohelper.findChild(obj, "#go_cruise")
+	local txtCruise = gohelper.findChildTextMesh(obj, "#go_cruise/txt_Limit")
 	local materilType = data.materilType
 	local materilId = data.materilId
 	local quantity = data.quantity
@@ -174,13 +183,32 @@ function BpPropView2:_createItem(obj, data, index)
 	end
 
 	itemIcon:setCountFontSize(43)
-	gohelper.setActive(limit, data[4] == 1)
+
+	if data.isSpecial then
+		local cfg = BpModel.instance:getSpecialDes(self.id)
+		local isLimit = cfg.tagType == 1
+
+		gohelper.setActive(limit, isLimit)
+
+		if isLimit then
+			txtLimit.text = cfg.tagTxt
+		end
+
+		local isCruise = data.tagType == 2
+
+		gohelper.setActive(go_cruise, isCruise)
+
+		if isCruise then
+			txtCruise.text = data.tagTxt
+		end
+
+		itemIcon:setCanShowDeadLine(not isCruise)
+	else
+		gohelper.setActive(limit, false)
+		gohelper.setActive(go_cruise, false)
+	end
+
 	gohelper.setActive(isNew, data[5] == 1)
-
-	local isSpecialBonus = BpModel.instance:isSpecialBonus(materilId)
-
-	gohelper.setActive(go_cruise, isSpecialBonus)
-	itemIcon:setCanShowDeadLine(not isSpecialBonus)
 end
 
 function BpPropView2:onClickModalMask()

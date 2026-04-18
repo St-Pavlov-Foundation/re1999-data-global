@@ -101,7 +101,7 @@ function FightViewRedAndBlueArea:onLY_HadRedAndBluePointChange()
 	self.LY_cardLoadStatus = FightViewRedAndBlueArea.LoadStatus.Loading
 	self.LYLoader = PrefabInstantiate.Create(self._goLyCardContainer)
 
-	self.LYLoader:startLoad(FightLYWaitAreaCard.LY_CardPath, self.onLoadLYCardDone, self)
+	self.LYLoader:startLoad(FightLYWaitAreaCard.getResPath(), self.onLoadLYCardDone, self)
 end
 
 function FightViewRedAndBlueArea:onLoadLYCardDone(loader)

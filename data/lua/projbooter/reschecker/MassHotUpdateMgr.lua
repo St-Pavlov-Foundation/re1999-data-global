@@ -8,10 +8,15 @@ local Manual_FixRes = "Manual_FixRes"
 function MassHotUpdateMgr:ctor()
 	self._maxRetryCount = 3
 	self._downloadFailAlertNum = 0
+	self._isDownloading = false
 end
 
 function MassHotUpdateMgr:_needShowChangeZipDownload()
 	return self._downloadFailAlertNum > 3
+end
+
+function MassHotUpdateMgr:isDownloading()
+	return self._isDownloading
 end
 
 function MassHotUpdateMgr:loadUnmatchRes(cb, cbObj, diffList, checkNet)
@@ -139,6 +144,8 @@ end
 
 function MassHotUpdateMgr:_startLoadUnmatchRes()
 	SLFramework.GameUpdate.MassHotUpdate.Instance:StartLoad()
+
+	self._isDownloading = true
 end
 
 function MassHotUpdateMgr:_quitGame()
@@ -478,6 +485,8 @@ function MassHotUpdateMgr:_switchZipDownload()
 end
 
 function MassHotUpdateMgr:doCallBack(isSkip)
+	self._isDownloading = false
+
 	if self.eventDispatcher then
 		self.eventDispatcher:RemoveListener(self.eventDispatcher.MassHotUpdate_DownloadFinish)
 		self.eventDispatcher:RemoveListener(self.eventDispatcher.MassHotUpdate_Progress)

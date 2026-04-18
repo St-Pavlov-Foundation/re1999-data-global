@@ -67,6 +67,7 @@ MaterialEnum.GetApproach = {
 	BattlePass = 49,
 	AutoChessRankReward = 134,
 	AstrologyStarReward = 62,
+	PartyClothSummon = 158,
 	SignIn = 20,
 	LifeCircleSign = 133,
 	NoviceStageReward = 54
@@ -81,7 +82,8 @@ MaterialEnum.SubTypeInPack = {
 	[ItemEnum.SubType.RoomBlockGiftNew] = true,
 	[ItemEnum.SubType.RoomBlockGift] = true,
 	[ItemEnum.SubType.SkinSelelctGift] = true,
-	[ItemEnum.SubType.EquipSelectGift] = true
+	[ItemEnum.SubType.EquipSelectGift] = true,
+	[ItemEnum.SubType.HeroExpBox] = true
 }
 MaterialEnum.JumpProbabilityDisplay = {
 	[MaterialEnum.JumpProbability.Normal] = "material_jump_probability_normal",

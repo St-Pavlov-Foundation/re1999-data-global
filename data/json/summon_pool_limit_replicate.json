@@ -1,0 +1,17 @@
+[
+  {
+    "id": 3083,
+    "res": "ui/viewres/summon/version_2_5/v2a5_versionsummonqunianghalfview.prefab",
+    "class": ""
+  },
+  {
+    "id": 3086,
+    "res": "ui/viewres/summon/version_2_8/v2a8_versionsummonlucyhalfview.prefab",
+    "class": ""
+  },
+  {
+    "id": 3100,
+    "res": "ui/viewres/summon/version_3_2/v3a2_versionsummontianshinanahalfview.prefab",
+    "class": ""
+  }
+]

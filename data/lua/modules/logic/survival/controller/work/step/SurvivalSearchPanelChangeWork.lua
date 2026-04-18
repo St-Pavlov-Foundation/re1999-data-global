@@ -5,11 +5,13 @@ module("modules.logic.survival.controller.work.step.SurvivalSearchPanelChangeWor
 local SurvivalSearchPanelChangeWork = class("SurvivalSearchPanelChangeWork", SurvivalStepBaseWork)
 
 function SurvivalSearchPanelChangeWork:onStart(context)
-	SurvivalMapModel.instance.searchChangeItems = {
+	local t = {
 		items = self._stepMo.items,
-		panelUid = self._stepMo.paramLong[1]
+		panelUid = self._stepMo.paramLong[1],
+		reason = SurvivalEnum.StepType.SearchPanelChange
 	}
 
+	table.insert(SurvivalMapModel.instance.itemConvertInfosList, t)
 	self:onDone(true)
 end
 

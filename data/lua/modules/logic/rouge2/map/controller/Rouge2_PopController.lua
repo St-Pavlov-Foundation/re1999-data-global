@@ -26,7 +26,7 @@ function Rouge2_PopController:getViewData(viewName, param)
 		data = {}
 	end
 
-	data.type = RougeEnum.PopType.ViewName
+	data.type = Rouge2_Enum.PopType.ViewName
 	data.viewName = viewName
 	data.param = param
 
@@ -42,7 +42,7 @@ function Rouge2_PopController:getViewDataByFunc(viewName, openFunc, openFuncObj,
 		data = {}
 	end
 
-	data.type = RougeEnum.PopType.Func
+	data.type = Rouge2_Enum.PopType.Func
 	data.viewName = viewName
 	data.openFunc = openFunc
 	data.openFuncObj = openFuncObj
@@ -122,7 +122,7 @@ function Rouge2_PopController:_popNextView()
 
 	self.showingViewName = self.data.viewName
 
-	if self.data.type == RougeEnum.PopType.ViewName then
+	if self.data.type == Rouge2_Enum.PopType.ViewName then
 		ViewMgr.instance:openView(self.data.viewName, self.data.param)
 	else
 		self.data.openFunc(self.data.openFuncObj, unpack(self.data.funcParam))
@@ -160,6 +160,10 @@ function Rouge2_PopController:clearAllPopView()
 		for _ = 1, #self.waitPopViewList do
 			self:recycleData(table.remove(self.waitPopViewList))
 		end
+	end
+
+	if not string.nilorempty(self.showingViewName) and not ViewMgr.instance:isOpen(self.showingViewName) then
+		self.showingViewName = nil
 	end
 end
 

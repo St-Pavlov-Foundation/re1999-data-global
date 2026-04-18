@@ -2,21 +2,15 @@
 
 module("modules.logic.survival.view.shop.SurvivalShopTab", package.seeall)
 
-local SurvivalShopTab = class("SurvivalShopTab", SurvivalSimpleListItem)
+local SurvivalShopTab = class("SurvivalShopTab", SimpleListItem)
 
-function SurvivalShopTab:init(viewGO)
-	self.btnClick = gohelper.findButtonWithAudio(viewGO)
-	self.image_icon = gohelper.findChildImage(viewGO, "#image_icon")
-end
-
-function SurvivalShopTab:addEventListeners()
-	self:addClickCb(self.btnClick, self.onClick, self)
+function SurvivalShopTab:onInit()
+	self.image_icon = gohelper.findChildImage(self.viewGO, "#image_icon")
 end
 
 function SurvivalShopTab:onItemShow(data)
 	self.cfg = data.cfg
 	self.tabId = self.cfg.id
-	self.onClickFunc = data.onClickFunc
 	self.context = data.context
 
 	UISpriteSetMgr.instance:setSurvivalSprite(self.image_icon, self.cfg.tabIcon)
@@ -29,12 +23,6 @@ function SurvivalShopTab:onSelectChange(isSelect)
 		self.image_icon.color = Color.New(color.r, color.g, color.b, 1)
 	else
 		self.image_icon.color = Color.New(color.r, color.g, color.b, 0.4)
-	end
-end
-
-function SurvivalShopTab:onClick()
-	if self.onClickFunc then
-		self.onClickFunc(self.context, self)
 	end
 end
 

@@ -65,8 +65,8 @@ function Rouge2_CollectionConfig:_onLoadRelicsConfigs(configTable)
 
 		if not string.nilorempty(attrUpdate) then
 			local attrUpdateInfo = string.splitToNumber(attrUpdate, "#")
-			local attrId = attrUpdateInfo[1]
-			local attrValue = attrUpdateInfo[2]
+			local attrId = attrUpdateInfo[1] or 0
+			local attrValue = attrUpdateInfo[2] or 0
 
 			self._attr2RelicsMap[attrId] = self._attr2RelicsMap[attrId] or {}
 

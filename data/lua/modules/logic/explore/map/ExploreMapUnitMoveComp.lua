@@ -5,7 +5,7 @@ module("modules.logic.explore.map.ExploreMapUnitMoveComp", package.seeall)
 local ExploreMapUnitMoveComp = class("ExploreMapUnitMoveComp", ExploreMapBaseComp)
 
 function ExploreMapUnitMoveComp:onInit()
-	self._path = "explore/common/sprite/prefabs/msts_icon_yidong.prefab"
+	self._path = "modules/explore/common/sprite/prefabs/msts_icon_yidong.prefab"
 	self._cloneGo = nil
 	self._anim = nil
 	self._curMoveUnit = nil

@@ -541,10 +541,10 @@ function GMToolView:_onClickBtnOK2()
 		GMRpc.instance:sendGMRequest(string.format("add material 3#0#%d", num))
 	elseif itemTypeIdStrs[1] == GMAddItemView.HeroAttr then
 		local sp = string.splitToNumber(numStr, "#")
-		local p1 = sp[1] or 1
-		local p2 = sp[2] or 100
-		local p3 = sp[3] or 100
-		local p4 = sp[4] or 2
+		local p1 = sp[1] or 180
+		local p2 = sp[2] or 3
+		local p3 = sp[3] or 10
+		local p4 = sp[4] or 0
 
 		GameFacade.showToast(ToastEnum.GMToolFastAddHero, string.format(" 等级%d 洞悉%d 共鸣%d 塑造%d", p1, p2, p3, p4))
 		GMRpc.instance:sendGMRequest(string.format("add heroAttr %d#%d#%d#%d#%d", itemId, p1, p2, p3, p4))
@@ -1461,7 +1461,7 @@ function GMToolView:_initWeatherSelect()
 
 	for _, reportCo in ipairs(lua_weather_report.configList) do
 		local lightName = BGMSwitchProgress.WeatherLight[reportCo.lightMode]
-		local effectName = BGMSwitchProgress.WeatherEffect[reportCo.effect]
+		local effectName = WeatherEnum.WeatherEffectName[reportCo.effect]
 		local reportStr = string.format("%d %s-%s", reportCo.id, lightName, effectName)
 
 		table.insert(self.weatherReportIdList, reportStr)
@@ -1567,6 +1567,7 @@ function GMToolView:_showHero()
 		self.heroNodes = {}
 
 		table.insert(self.heroNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_spine_scale"))
+		table.insert(self.heroNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_spine_scale/lightspine"))
 		table.insert(self.heroNodes, gohelper.findChild(mainViewContainer.viewGO, "#go_lightspinecontrol"))
 	end
 

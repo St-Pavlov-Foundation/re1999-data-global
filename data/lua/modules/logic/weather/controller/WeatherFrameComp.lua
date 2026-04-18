@@ -106,9 +106,11 @@ function WeatherFrameComp:onRoleBlend(weatherComp, value, isEnd)
 	self._frameBgMaterial:SetColor(self._TintColorId, weatherComp:lerpColorRGBA(self._srcFrameTintColor, self._targetFrameTintColor, value))
 
 	if isEnd then
+		local alphaValue = self._targetFrameTintColor.a
+
 		self._targetFrameTintColor = nil
 
-		if weatherComp:getCurLightMode() == 1 then
+		if weatherComp:getCurLightMode() == 1 and alphaValue and alphaValue <= 0 then
 			self._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end

@@ -344,7 +344,7 @@ function SkillTipLevelComp:_onHyperLinkClick(effId, clickPosition)
 	if self.viewParam and self.viewParam.adjustBuffTip then
 		CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(effId), self.setTipPosCallback, self)
 	else
-		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(effId), CommonBuffTipEnum.Anchor[self.viewName], CommonBuffTipEnum.Pivot.Right)
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(effId), CommonBuffTipEnum.Anchor[self.viewName], CommonBuffTipEnum.Pivot.Right, nil, 1)
 	end
 end
 

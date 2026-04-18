@@ -1,0 +1,72 @@
+[
+  {
+    "id": 34111,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#834007#834008#834009#834010#834011#834012#834013#834014#610006#834017#834018",
+    "packageEffect": 1,
+    "showLimit": "1:3141",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34121,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#834008#834010#834012#834014#610006#834017#834018",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34161,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "834015#811327#834007#834008#834009#834010#834011#834012#834013#834014#610006#834017#834018",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34171,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "834023#811327#834007#834008#834009#834010#834011#834012#834013#610006#834017#834018",
+    "packageEffect": 1,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34181,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "834022#811327#834007#834008#834009#834010#834011#834012#834013#610006#834017#834018",
+    "packageEffect": 1,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34191,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "834005",
+    "packageEffect": 3,
+    "showLimit": "",
+    "className": "V3a4DestinyGiftPanelView",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 34191,
+    "order": 2,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "834021#811327#834007#834008#834009#834010#834011#834012#834013#610006#834017#834018",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  }
+]

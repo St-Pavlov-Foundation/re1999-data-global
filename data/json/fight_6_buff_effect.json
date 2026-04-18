@@ -250,5 +250,131 @@
     "effect": "v2a7_6/6_innate3_06",
     "effectHang": "",
     "audioId": 430790443
+  },
+  {
+    "id": 307905,
+    "buffId": 30790201,
+    "effect": "v3a4_6/6_innate2_01",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790202,
+    "effect": "v3a4_6/6_innate2_02",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790203,
+    "effect": "v3a4_6/6_innate2_03",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790204,
+    "effect": "v3a4_6/6_innate2_04",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790205,
+    "effect": "v3a4_6/6_innate2_05",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790206,
+    "effect": "v3a4_6/6_innate2_06",
+    "effectHang": "",
+    "audioId": 430790542
+  },
+  {
+    "id": 307905,
+    "buffId": 30790101,
+    "effect": "v3a4_6/6_innate3_01",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790102,
+    "effect": "v3a4_6/6_innate3_02",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790103,
+    "effect": "v3a4_6/6_innate3_03",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790104,
+    "effect": "v3a4_6/6_innate3_04",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790105,
+    "effect": "v3a4_6/6_innate3_05",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790106,
+    "effect": "v3a4_6/6_innate3_06",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790304,
+    "effect": "v3a4_6/6_innate3_01",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790305,
+    "effect": "v3a4_6/6_innate3_02",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790306,
+    "effect": "v3a4_6/6_innate3_03",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790307,
+    "effect": "v3a4_6/6_innate3_04",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790308,
+    "effect": "v3a4_6/6_innate3_05",
+    "effectHang": "",
+    "audioId": 430790543
+  },
+  {
+    "id": 307905,
+    "buffId": 30790309,
+    "effect": "v3a4_6/6_innate3_06",
+    "effectHang": "",
+    "audioId": 430790543
   }
 ]

@@ -26,6 +26,7 @@ function SummonMainPoolMO:init(info)
 	self.id = info.poolId
 	self.luckyBagMO = SummonLuckyBagMO.New()
 	self.customPickMO = SummonCustomPickMO.New()
+	self.propPackageMO = SummonPropPackageMo.New()
 
 	self:update(info)
 end
@@ -44,6 +45,10 @@ function SummonMainPoolMO:update(info)
 		self.customPickMO:update(info.spPoolInfo)
 	end
 
+	if info.popUpInfos then
+		self.propPackageMO:update(info.popUpInfos)
+	end
+
 	self.discountTime = info.discountTime or 0
 	self.canGetGuaranteeSRCount = info.canGetGuaranteeSRCount or 0
 	self.guaranteeSRCountDown = info.guaranteeSRCountDown or 0
@@ -51,6 +56,7 @@ function SummonMainPoolMO:update(info)
 	self.havefree10Count = info.haveFree10Count or 0
 	self.notSSRcount = info.notSSRCount or 0
 	self.totalFree10UseCount = info.totalFree10UseCount or 0
+	self.infallibleItemStatus = info.spPoolInfo and info.spPoolInfo.infallibleItemStatus or 0
 end
 
 function SummonMainPoolMO:isOpening()

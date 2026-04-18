@@ -16,6 +16,7 @@ OptionPackageEnum.UpdateState = {
 	InDownload = 2
 }
 OptionPackageEnum.Package = {
+	Explore = "opexplore",
 	VersionActivity = "opveract"
 }
 OptionPackageEnum.NeedPackLangList = {

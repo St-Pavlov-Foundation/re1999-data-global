@@ -171,6 +171,10 @@ function CharacterRecommedController:onJumpReturnRecommedView()
 			openedViewTable.viewParam.defaultTabIds[2] = tabId
 
 			CharacterRecommedHeroListModel.instance:setMoList(heroId)
+		elseif openedViewTable.viewName == ViewName.CharacterView and heroId then
+			local heroMo = HeroModel.instance:getByHeroId(heroId)
+
+			openedViewTable.viewParam = heroMo
 		end
 
 		openedViewTable.viewParam.heroId = heroId

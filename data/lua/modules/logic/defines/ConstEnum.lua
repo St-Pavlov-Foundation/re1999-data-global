@@ -146,5 +146,11 @@ ConstEnum.CumulativeRewardsMaxEpisode = 3201
 ConstEnum.CumulativeRewardsMaxElement = 3202
 ConstEnum.CruiseGlobalTaskDesc = 83207
 ConstEnum.SignInSpecialDate = 83301
+ConstEnum.SignInCalendarDecorationActId = 34001
+ConstEnum.LaplaceMiniPartyTipTitle = 34010
+ConstEnum.LaplaceMiniPartyTipDesc = 34011
+ConstEnum.LaplaceChatRoomTipTitle = 34012
+ConstEnum.LaplaceChatRoomTipDesc = 34013
+ConstEnum.V3a4PackageStoreGoodsId = 34014
 
 return ConstEnum

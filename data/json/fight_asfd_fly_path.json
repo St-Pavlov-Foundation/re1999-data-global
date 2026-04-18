@@ -1,12 +1,17 @@
 [
   {
     "id": 1,
-    "flyDuration": 0,
+    "flyDuration": 0.5,
     "lineType": 5
   },
   {
     "id": 2,
-    "flyDuration": 0,
+    "flyDuration": 0.5,
+    "lineType": 1
+  },
+  {
+    "id": 3,
+    "flyDuration": 0.2,
     "lineType": 1
   }
 ]

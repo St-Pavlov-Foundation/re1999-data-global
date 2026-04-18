@@ -1,426 +1,481 @@
-﻿module("modules.logic.survival.view.map.SurvivalSmallMapView", package.seeall)
+﻿-- chunkname: @modules/logic/survival/view/map/SurvivalSmallMapView.lua
 
-local var_0_0 = class("SurvivalSmallMapView", BaseView)
-local var_0_1 = 115
-local var_0_2 = 0.5
-local var_0_3 = 1.5
-local var_0_4 = Vector2()
+module("modules.logic.survival.view.map.SurvivalSmallMapView", package.seeall)
 
-function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "container")
-	arg_1_0._scroll = arg_1_0._goscroll:GetComponent(gohelper.Type_LimitedScrollRect)
-	arg_1_0._mapRoot = gohelper.findChild(arg_1_0.viewGO, "container/#go_map").transform
-	arg_1_0._gomapItem = gohelper.findChild(arg_1_0.viewGO, "container/#go_map/mapitems/#go_mapitem")
-	arg_1_0._gowarmItem = gohelper.findChild(arg_1_0.viewGO, "container/#go_map/warming/#go_warning")
-	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
-	arg_1_0._slider = gohelper.findChildSlider(arg_1_0.viewGO, "Right/#go_mapSlider")
-	arg_1_0._btnup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_up")
-	arg_1_0._btndown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_down")
+local SurvivalSmallMapView = class("SurvivalSmallMapView", BaseView)
+local itemSize = 115
+local minScaleValue = 0.5
+local maxScaleValue = 1.5
+local v2zero = Vector2()
+
+function SurvivalSmallMapView:onInitView()
+	self._goscroll = gohelper.findChild(self.viewGO, "container")
+	self._scroll = self._goscroll:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._mapRoot = gohelper.findChild(self.viewGO, "container/#go_map").transform
+	self._gomapItem = gohelper.findChild(self.viewGO, "container/#go_map/mapitems/#go_mapitem")
+	self._gowarmItem = gohelper.findChild(self.viewGO, "container/#go_map/warming/#go_warning")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._slider = gohelper.findChildSlider(self.viewGO, "Right/#go_mapSlider")
+	self._btnup = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_up")
+	self._btndown = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_down")
 end
 
-function var_0_0.addEvents(arg_2_0)
-	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
-	arg_2_0._btnup:AddClickListener(arg_2_0.setScaleByBtn, arg_2_0, 1)
-	arg_2_0._btndown:AddClickListener(arg_2_0.setScaleByBtn, arg_2_0, -1)
-	arg_2_0._slider:AddOnValueChanged(arg_2_0.onSliderValueChange, arg_2_0)
+function SurvivalSmallMapView:addEvents()
+	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnup:AddClickListener(self.setScaleByBtn, self, 1)
+	self._btndown:AddClickListener(self.setScaleByBtn, self, -1)
+	self._slider:AddOnValueChanged(self.onSliderValueChange, self)
 
-	arg_2_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_2_0._scroll.gameObject)
+	self._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self._scroll.gameObject)
 
-	arg_2_0._touchEventMgr:SetIgnoreUI(true)
-	arg_2_0._touchEventMgr:SetOnMultiDragCb(arg_2_0.onScaleHandler, arg_2_0)
-	arg_2_0._touchEventMgr:SetScrollWheelCb(arg_2_0.onMouseScrollWheelChange, arg_2_0)
+	self._touchEventMgr:SetIgnoreUI(true)
+	self._touchEventMgr:SetOnMultiDragCb(self.onScaleHandler, self)
+	self._touchEventMgr:SetScrollWheelCb(self.onMouseScrollWheelChange, self)
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	arg_3_0._btnClose:RemoveClickListener()
-	arg_3_0._btnup:RemoveClickListener()
-	arg_3_0._btndown:RemoveClickListener()
-	arg_3_0._slider:RemoveOnValueChanged()
+function SurvivalSmallMapView:removeEvents()
+	self._btnClose:RemoveClickListener()
+	self._btnup:RemoveClickListener()
+	self._btndown:RemoveClickListener()
+	self._slider:RemoveOnValueChanged()
 
-	if arg_3_0._touchEventMgr then
-		TouchEventMgrHepler.remove(arg_3_0._touchEventMgr)
+	if self._touchEventMgr then
+		TouchEventMgrHepler.remove(self._touchEventMgr)
 
-		arg_3_0._touchEventMgr = nil
+		self._touchEventMgr = nil
 	end
 end
 
-function var_0_0.onOpen(arg_4_0)
+function SurvivalSmallMapView:onOpen()
 	if BootNativeUtil.isMobilePlayer() then
-		TaskDispatcher.runRepeat(arg_4_0._checkMultDrag, arg_4_0, 0, -1)
+		TaskDispatcher.runRepeat(self._checkMultDrag, self, 0, -1)
 	end
 
-	arg_4_0._scale = 1
+	self._scale = 1
 
-	arg_4_0._slider:SetValue((1 - var_0_2) / (var_0_3 - var_0_2))
-	gohelper.setActive(arg_4_0._gomapItem, false)
+	self._slider:SetValue((1 - minScaleValue) / (maxScaleValue - minScaleValue))
+	gohelper.setActive(self._gomapItem, false)
 
-	local var_4_0 = SurvivalMapModel.instance:getCurMapCo()
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
 
-	arg_4_0._mapCo = var_4_0
+	self._mapCo = mapCo
 
-	recthelper.setWidth(arg_4_0._mapRoot, (arg_4_0._mapCo.maxX - arg_4_0._mapCo.minX + 2) * var_0_1)
-	recthelper.setHeight(arg_4_0._mapRoot, (arg_4_0._mapCo.maxY - arg_4_0._mapCo.minY + 2) * var_0_1)
+	recthelper.setWidth(self._mapRoot, (self._mapCo.maxX - self._mapCo.minX + 2) * itemSize)
+	recthelper.setHeight(self._mapRoot, (self._mapCo.maxY - self._mapCo.minY + 2) * itemSize)
 
-	arg_4_0._allItemDatas = {}
+	self._allItemDatas = {}
 
-	for iter_4_0, iter_4_1 in pairs(var_4_0.allBlocks) do
-		local var_4_1 = iter_4_1.pos
+	for k, blockCo in pairs(mapCo.allBlocks) do
+		local pos = blockCo.pos
 
-		table.insert(arg_4_0._allItemDatas, {
-			pos = var_4_1,
-			walkable = iter_4_1.walkable,
-			hightValue = tabletool.indexOf(var_4_0.allHightValueNode, var_4_1)
+		table.insert(self._allItemDatas, {
+			pos = pos,
+			blockCo = blockCo,
+			hightValue = tabletool.indexOf(mapCo.allHightValueNode, pos)
 		})
 
-		for iter_4_2, iter_4_3 in ipairs(iter_4_1.exNodes) do
-			table.insert(arg_4_0._allItemDatas, {
-				pos = iter_4_3,
-				walkable = iter_4_1.walkable,
-				hightValue = tabletool.indexOf(var_4_0.allHightValueNode, iter_4_3)
+		for i, exPos in ipairs(blockCo.exNodes) do
+			table.insert(self._allItemDatas, {
+				pos = exPos,
+				blockCo = blockCo,
+				hightValue = tabletool.indexOf(mapCo.allHightValueNode, exPos)
 			})
 		end
 	end
 
-	local var_4_2 = SurvivalMapModel.instance:getSceneMo()
-	local var_4_3 = var_4_2.units
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local allUnits = sceneMo.units
 
-	table.sort(var_4_3, SurvivalSceneMo.sortUnitMo)
+	table.sort(allUnits, SurvivalSceneMo.sortUnitMo)
 
-	local var_4_4 = false
+	local find = false
 
-	for iter_4_4, iter_4_5 in ipairs(var_4_3) do
-		local var_4_5 = false
+	for _, unitMo in ipairs(allUnits) do
+		find = false
 
-		for iter_4_6, iter_4_7 in ipairs(arg_4_0._allItemDatas) do
-			if iter_4_7.pos == iter_4_5.pos then
-				var_4_5 = true
+		for _, data in ipairs(self._allItemDatas) do
+			if data.pos == unitMo.pos then
+				find = true
 
-				if not iter_4_7.unitMos then
-					iter_4_7.unitMos = {}
+				if not data.unitMos then
+					data.unitMos = {}
 				end
 
-				table.insert(iter_4_7.unitMos, iter_4_5)
+				table.insert(data.unitMos, unitMo)
 
 				break
 			end
 		end
 
-		if not var_4_5 then
-			table.insert(arg_4_0._allItemDatas, {
+		if not find then
+			table.insert(self._allItemDatas, {
 				walkable = false,
 				hightValue = false,
-				pos = iter_4_5.pos,
+				pos = unitMo.pos,
 				unitMos = {
-					iter_4_5
+					unitMo
 				}
 			})
 		end
 	end
 
-	local var_4_6 = false
+	find = false
 
-	for iter_4_8, iter_4_9 in ipairs(arg_4_0._allItemDatas) do
-		if iter_4_9.pos == var_4_2.player.pos then
-			iter_4_9.unitMos = nil
-			iter_4_9.unitMo = var_4_2.player
-			var_4_6 = true
+	for _, data in ipairs(self._allItemDatas) do
+		if data.pos == sceneMo.player.pos then
+			data.unitMos = nil
+			data.unitMo = sceneMo.player
+			find = true
 
 			break
 		end
 	end
 
-	if not var_4_6 then
-		table.insert(arg_4_0._allItemDatas, {
+	if not find then
+		table.insert(self._allItemDatas, {
 			walkable = false,
 			hightValue = false,
-			pos = var_4_2.player.pos,
-			unitMo = var_4_2.player
+			pos = sceneMo.player.pos,
+			unitMo = sceneMo.player
 		})
 	end
 
-	local var_4_7 = arg_4_0._goscroll.transform
-	local var_4_8 = recthelper.getWidth(var_4_7)
-	local var_4_9 = recthelper.getHeight(var_4_7)
-	local var_4_10, var_4_11 = arg_4_0:hexToRectPos(var_4_2.player.pos.q, var_4_2.player.pos.r)
-	local var_4_12 = -var_4_10 + var_4_8 / 2 - var_0_1 / 2
-	local var_4_13 = -var_4_11 + var_4_9 / 2 - var_0_1 / 2
+	local scrollTrans = self._goscroll.transform
+	local scrollWidth = recthelper.getWidth(scrollTrans)
+	local scrollHeight = recthelper.getHeight(scrollTrans)
+	local x, y = self:hexToRectPos(sceneMo.player.pos.q, sceneMo.player.pos.r)
 
-	recthelper.setAnchor(arg_4_0._mapRoot, var_4_12, var_4_13)
+	x = -x + scrollWidth / 2 - itemSize / 2
+	y = -y + scrollHeight / 2 - itemSize / 2
 
-	local var_4_14 = var_4_2.exitPos
+	recthelper.setAnchor(self._mapRoot, x, y)
 
-	for iter_4_10, iter_4_11 in ipairs(arg_4_0._allItemDatas) do
-		iter_4_11.isInRain = SurvivalHelper.instance:getDistance(iter_4_11.pos, var_4_14) > var_4_2.circle
+	local exitPos = sceneMo.exitPos
+
+	for _, data in ipairs(self._allItemDatas) do
+		local dis = SurvivalHelper.instance:getDistance(data.pos, exitPos)
+
+		data.isInRain = dis > sceneMo.circle
 	end
 
-	arg_4_0._allMulIcons = {}
-	arg_4_0._curCreateIndex = 0
+	self._allMulIcons = {}
+	self._curCreateIndex = 0
 
-	TaskDispatcher.runRepeat(arg_4_0.frameToCreateItems, arg_4_0, 0)
-	arg_4_0:createWarmItems()
+	TaskDispatcher.runRepeat(self.frameToCreateItems, self, 0)
+	self:createWarmItems()
 end
 
-function var_0_0.createWarmItems(arg_5_0)
-	local var_5_0 = SurvivalMapModel.instance:getCurMapCo().exitPos
-	local var_5_1 = 0
-	local var_5_2 = SurvivalMapModel.instance:getSceneMo().safeZone[1]
+function SurvivalSmallMapView:createWarmItems()
+	local mapCo = SurvivalMapModel.instance:getCurMapCo()
+	local exitPos = mapCo.exitPos
+	local dis = 0
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local shrinkInfoMo = sceneMo.safeZone[1]
 
-	if var_5_2 and var_5_2.round ~= 1 then
-		var_5_1 = var_5_2.finalCircle
+	if shrinkInfoMo and shrinkInfoMo.round ~= 1 then
+		dis = shrinkInfoMo.finalCircle
 	end
 
-	if var_5_1 <= 0 then
+	if dis <= 0 then
 		return
 	end
 
-	for iter_5_0 = -var_5_1, var_5_1 do
-		for iter_5_1 = -var_5_1, var_5_1 do
-			for iter_5_2 = -var_5_1, var_5_1 do
-				if iter_5_0 + iter_5_1 + iter_5_2 == 0 and (math.abs(iter_5_0) == var_5_1 or math.abs(iter_5_1) == var_5_1 or math.abs(iter_5_2) == var_5_1) then
-					arg_5_0:createWarmItem(iter_5_0, iter_5_1, iter_5_2, var_5_1, var_5_0)
+	for q = -dis, dis do
+		for r = -dis, dis do
+			for s = -dis, dis do
+				if q + r + s == 0 and (math.abs(q) == dis or math.abs(r) == dis or math.abs(s) == dis) then
+					self:createWarmItem(q, r, s, dis, exitPos)
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.createWarmItem(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
-	local var_6_0 = gohelper.cloneInPlace(arg_6_0._gowarmItem)
+function SurvivalSmallMapView:createWarmItem(q, r, s, dis, exitPos)
+	local item = gohelper.cloneInPlace(self._gowarmItem)
 
-	gohelper.setActive(var_6_0, true)
+	gohelper.setActive(item, true)
 
-	local var_6_1, var_6_2 = arg_6_0:hexToRectPos(arg_6_1 + arg_6_5.q, arg_6_2 + arg_6_5.r)
+	local x, y = self:hexToRectPos(q + exitPos.q, r + exitPos.r)
 
-	transformhelper.setLocalPos(var_6_0.transform, var_6_1, var_6_2, 0)
+	transformhelper.setLocalPos(item.transform, x, y, 0)
 
-	local var_6_3 = {
-		[0] = arg_6_1 == arg_6_4 or arg_6_3 == -arg_6_4,
-		arg_6_3 == -arg_6_4 or arg_6_2 == arg_6_4,
-		arg_6_2 == arg_6_4 or arg_6_1 == -arg_6_4,
-		arg_6_1 == -arg_6_4 or arg_6_3 == arg_6_4,
-		arg_6_3 == arg_6_4 or arg_6_2 == -arg_6_4,
-		arg_6_2 == -arg_6_4 or arg_6_1 == arg_6_4
-	}
+	local isShowDir = {}
 
-	for iter_6_0 = 0, 5 do
-		local var_6_4 = gohelper.findChild(var_6_0, tostring(iter_6_0))
+	isShowDir[0] = q == dis or s == -dis
+	isShowDir[1] = s == -dis or r == dis
+	isShowDir[2] = r == dis or q == -dis
+	isShowDir[3] = q == -dis or s == dis
+	isShowDir[4] = s == dis or r == -dis
+	isShowDir[5] = r == -dis or q == dis
 
-		gohelper.setActive(var_6_4, var_6_3[iter_6_0])
+	for i = 0, 5 do
+		local dirGo = gohelper.findChild(item, tostring(i))
+
+		gohelper.setActive(dirGo, isShowDir[i])
 	end
 end
 
-function var_0_0.frameToCreateItems(arg_7_0)
-	for iter_7_0 = 1, 50 do
-		arg_7_0._curCreateIndex = arg_7_0._curCreateIndex + 1
+function SurvivalSmallMapView:frameToCreateItems()
+	for i = 1, 50 do
+		self._curCreateIndex = self._curCreateIndex + 1
 
-		local var_7_0 = arg_7_0._allItemDatas[arg_7_0._curCreateIndex]
+		local data = self._allItemDatas[self._curCreateIndex]
 
-		if not var_7_0 then
-			TaskDispatcher.cancelTask(arg_7_0.frameToCreateItems, arg_7_0)
+		if not data then
+			TaskDispatcher.cancelTask(self.frameToCreateItems, self)
 
-			if #arg_7_0._allMulIcons > 0 then
-				TaskDispatcher.runRepeat(arg_7_0.autoSwitchIcon, arg_7_0, 1)
+			if #self._allMulIcons > 0 then
+				TaskDispatcher.runRepeat(self.autoSwitchIcon, self, 1)
 			end
 
 			break
 		end
 
-		arg_7_0:createItem(var_7_0)
+		self:createItem(data)
 	end
 end
 
-function var_0_0.autoSwitchIcon(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._allMulIcons) do
-		ZProj.TweenHelper.DoFade(iter_8_1.icon, 1, 0, 0.2)
+function SurvivalSmallMapView:autoSwitchIcon()
+	for _, data in ipairs(self._allMulIcons) do
+		ZProj.TweenHelper.DoFade(data.icon, 1, 0, 0.2)
 	end
 
-	TaskDispatcher.runDelay(arg_8_0.autoSwitchIcon2, arg_8_0, 0.2)
+	TaskDispatcher.runDelay(self.autoSwitchIcon2, self, 0.2)
 end
 
-function var_0_0.autoSwitchIcon2(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._allMulIcons) do
-		iter_9_1.curIndex = iter_9_1.curIndex + 1
+function SurvivalSmallMapView:autoSwitchIcon2()
+	for _, data in ipairs(self._allMulIcons) do
+		data.curIndex = data.curIndex + 1
 
-		if iter_9_1.curIndex > #iter_9_1.list then
-			iter_9_1.curIndex = 1
+		if data.curIndex > #data.list then
+			data.curIndex = 1
 		end
 
-		UISpriteSetMgr.instance:setSurvivalSprite(iter_9_1.icon, iter_9_1.list[iter_9_1.curIndex])
-		ZProj.TweenHelper.DoFade(iter_9_1.icon, 0, 1, 0.2)
+		UISpriteSetMgr.instance:setSurvivalSprite(data.icon, data.list[data.curIndex])
+		ZProj.TweenHelper.DoFade(data.icon, 0, 1, 0.2)
 	end
 end
 
-function var_0_0.onClickModalMask(arg_10_0)
-	arg_10_0:closeThis()
+function SurvivalSmallMapView:onClickModalMask()
+	self:closeThis()
 end
 
-local var_0_5 = {
-	[SurvivalEnum.UnitType.Task] = "survival_smallmap_block_3_1",
+local unitTypeToIconName = {
 	[SurvivalEnum.UnitType.Treasure] = "survival_smallmap_block_3_5",
 	[SurvivalEnum.UnitType.Exit] = "survival_smallmap_block_3_8",
 	[SurvivalEnum.UnitType.Door] = "survival_smallmap_block_3_9"
 }
+local blockToIconName = {
+	[SurvivalEnum.UnitSubType.Miasma] = "survival_smallmap_block_5_2",
+	[SurvivalEnum.UnitSubType.Morass] = "survival_smallmap_block_5_2",
+	[SurvivalEnum.UnitSubType.Magma] = "survival_smallmap_block_5_2",
+	[SurvivalEnum.UnitSubType.Ice] = "survival_smallmap_block_5_2",
+	[SurvivalEnum.UnitSubType.Water] = "survival_smallmap_block_5_2"
+}
 
-function var_0_0.createItem(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.pos
-	local var_11_1 = gohelper.cloneInPlace(arg_11_0._gomapItem)
+function SurvivalSmallMapView:createItem(data)
+	local pos = data.pos
+	local item = gohelper.cloneInPlace(self._gomapItem)
 
-	gohelper.setActive(var_11_1, true)
+	if SurvivalMapModel.instance:isInFog2(pos) then
+		gohelper.setActive(item, false)
 
-	local var_11_2, var_11_3 = arg_11_0:hexToRectPos(var_11_0.q, var_11_0.r)
+		return
+	end
 
-	transformhelper.setLocalPos(var_11_1.transform, var_11_2, var_11_3, 0)
+	gohelper.setActive(item, true)
 
-	local var_11_4 = gohelper.findChildImage(var_11_1, "#image_block")
-	local var_11_5 = gohelper.findChildImage(var_11_1, "#image_icon")
-	local var_11_6 = gohelper.findChild(var_11_1, "#go_hero")
-	local var_11_7 = gohelper.findChild(var_11_1, "#go_rain")
-	local var_11_8 = gohelper.findChild(var_11_1, "#go_multiple")
+	local x, y = self:hexToRectPos(pos.q, pos.r)
 
-	UISpriteSetMgr.instance:setSurvivalSprite(var_11_4, arg_11_1.hightValue and "survival_smallmap_block_4" or "survival_smallmap_block_0")
-	gohelper.setActive(var_11_6, arg_11_1.unitMo and arg_11_1.unitMo.id == 0)
-	gohelper.setActive(var_11_7, arg_11_1.isInRain)
+	transformhelper.setLocalPos(item.transform, x, y, 0)
 
-	local var_11_9 = {}
+	local block = gohelper.findChildImage(item, "#image_block")
+	local icon = gohelper.findChildImage(item, "#image_icon")
+	local hero = gohelper.findChild(item, "#go_hero")
+	local imgHero = gohelper.findChildImage(item, "#go_hero")
+	local rain = gohelper.findChild(item, "#go_rain")
+	local multiple = gohelper.findChild(item, "#go_multiple")
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local co = sceneMo:getBlockCoByPos(pos)
 
-	if arg_11_1.unitMos then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_1.unitMos) do
-			table.insert(var_11_9, arg_11_0:getIcon(iter_11_1))
+	if co and blockToIconName[co.subType] then
+		UISpriteSetMgr.instance:setSurvivalSprite(block, blockToIconName[co.subType])
+	else
+		UISpriteSetMgr.instance:setSurvivalSprite(block, data.hightValue and "survival_smallmap_block_4" or "survival_smallmap_block_0")
+	end
+
+	local walkable = data.walkable
+
+	if not walkable then
+		if co then
+			walkable = co.subType ~= SurvivalEnum.UnitSubType.Block
+		else
+			walkable = true
 		end
 	end
 
-	gohelper.setActive(var_11_5, #var_11_9 > 0 or not arg_11_1.walkable)
-	gohelper.setActive(var_11_8, #var_11_9 > 1)
+	local isShowHero = data.unitMo and data.unitMo.id == 0
 
-	if #var_11_9 > 1 then
-		table.insert(arg_11_0._allMulIcons, {
+	gohelper.setActive(hero, isShowHero)
+
+	if isShowHero then
+		local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+		local cardPath = lua_survival_role.configDict[survivalShelterRoleMo.roleId].mapHead
+
+		UISpriteSetMgr.instance:setSurvivalSprite2(imgHero, cardPath)
+	end
+
+	gohelper.setActive(rain, data.isInRain)
+
+	local iconList = {}
+
+	if data.unitMos then
+		for _, unitMo in ipairs(data.unitMos) do
+			table.insert(iconList, self:getIcon(unitMo))
+		end
+	end
+
+	gohelper.setActive(icon, #iconList > 0 or not walkable)
+	gohelper.setActive(multiple, #iconList > 1)
+
+	if #iconList > 1 then
+		table.insert(self._allMulIcons, {
 			curIndex = 1,
-			icon = var_11_5,
-			list = var_11_9
+			icon = icon,
+			list = iconList
 		})
 	end
 
-	if var_11_9[1] then
-		UISpriteSetMgr.instance:setSurvivalSprite(var_11_5, var_11_9[1])
-	elseif not arg_11_1.walkable then
-		UISpriteSetMgr.instance:setSurvivalSprite(var_11_5, "survival_smallmap_block_2")
+	if iconList[1] then
+		UISpriteSetMgr.instance:setSurvivalSprite(icon, iconList[1])
+	elseif not walkable then
+		UISpriteSetMgr.instance:setSurvivalSprite(icon, "survival_smallmap_block_2")
 	end
 end
 
-function var_0_0.getIcon(arg_12_0, arg_12_1)
-	if not arg_12_1 then
+function SurvivalSmallMapView:getIcon(unitMo)
+	if not unitMo then
 		return
 	end
 
-	local var_12_0 = arg_12_1.unitType
-	local var_12_1 = arg_12_1.co.subType
+	local unitType = unitMo.unitType
+	local subType = unitMo.co.subType
 
-	if arg_12_1.visionVal == 8 then
+	if unitMo.visionVal == 8 then
 		return "survival_smallmap_block_3_10"
-	elseif var_12_0 == SurvivalEnum.UnitType.NPC then
-		return var_12_1 == 53 and "survival_smallmap_block_3_13" or "survival_smallmap_block_3_2"
-	elseif var_12_0 == SurvivalEnum.UnitType.Search then
-		local var_12_2 = arg_12_1.extraParam == "true"
+	elseif unitType == SurvivalEnum.UnitType.NPC then
+		return subType == 53 and "survival_smallmap_block_3_13" or "survival_smallmap_block_3_2"
+	elseif unitType == SurvivalEnum.UnitType.Search then
+		local isSearched = unitMo:isSearched()
 
-		if var_12_1 == 392 then
-			return var_12_2 and "survival_smallmap_block_3_16" or "survival_smallmap_block_3_15"
+		if subType == 392 then
+			return isSearched and "survival_smallmap_block_3_16" or "survival_smallmap_block_3_15"
 		else
-			return var_12_2 and "survival_smallmap_block_3_4" or "survival_smallmap_block_3_3"
+			return isSearched and "survival_smallmap_block_3_4" or "survival_smallmap_block_3_3"
 		end
-	elseif var_12_0 == SurvivalEnum.UnitType.Battle then
-		local var_12_3 = var_12_1 == 41 or var_12_1 == 43
-		local var_12_4 = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.HeroFightLevel)
-		local var_12_5 = arg_12_1.co.fightLevel
+	elseif unitType == SurvivalEnum.UnitType.Battle then
+		local isElite = subType == 41 or subType == 43
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local roleLevel = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
+		local fightLv = unitMo.co.fightLevel
+		local canSkip = unitMo.co.skip == 1 and fightLv <= roleLevel
 
-		if arg_12_1.co.skip == 1 and var_12_5 <= var_12_4 then
-			return var_12_3 and "survival_smallmap_block_3_12" or "survival_smallmap_block_3_11"
+		if canSkip then
+			return isElite and "survival_smallmap_block_3_12" or "survival_smallmap_block_3_11"
 		else
-			return var_12_3 and "survival_smallmap_block_3_7" or "survival_smallmap_block_3_6"
+			return isElite and "survival_smallmap_block_3_7" or "survival_smallmap_block_3_6"
+		end
+	elseif unitType == SurvivalEnum.UnitType.Task then
+		if subType == 77 then
+			return "survival_smallmap_block_3_17"
+		else
+			return "survival_smallmap_block_3_1"
 		end
 	else
-		return var_0_5[var_12_0]
+		return unitTypeToIconName[unitType]
 	end
 end
 
-function var_0_0.hexToRectPos(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0, var_13_1, var_13_2 = SurvivalHelper.instance:hexPointToWorldPoint(arg_13_1, arg_13_2)
+function SurvivalSmallMapView:hexToRectPos(q, r)
+	local x, y, z = SurvivalHelper.instance:hexPointToWorldPoint(q, r)
 
-	return (var_13_0 - arg_13_0._mapCo.minX + 0.5) * var_0_1, (var_13_2 - arg_13_0._mapCo.minY + 0.5) * var_0_1
+	return (x - self._mapCo.minX + 0.5) * itemSize, (z - self._mapCo.minY + 0.5) * itemSize
 end
 
-function var_0_0.onScaleHandler(arg_14_0, arg_14_1, arg_14_2)
-	arg_14_0.startDragPos = nil
+function SurvivalSmallMapView:onScaleHandler(isEnLarger, delta)
+	self.startDragPos = nil
 
-	arg_14_0:setScale(arg_14_0._scale * (1 + arg_14_2 * 0.01))
+	self:setScale(self._scale * (1 + delta * 0.01))
 end
 
-function var_0_0.onMouseScrollWheelChange(arg_15_0, arg_15_1)
-	arg_15_0:setScale(arg_15_0._scale * (1 + arg_15_1))
+function SurvivalSmallMapView:onMouseScrollWheelChange(deltaData)
+	self:setScale(self._scale * (1 + deltaData))
 end
 
-function var_0_0.onSliderValueChange(arg_16_0)
-	arg_16_0:setScale(var_0_2 + (var_0_3 - var_0_2) * arg_16_0._slider:GetValue(), true)
+function SurvivalSmallMapView:onSliderValueChange()
+	self:setScale(minScaleValue + (maxScaleValue - minScaleValue) * self._slider:GetValue(), true)
 end
 
-function var_0_0.setScaleByBtn(arg_17_0, arg_17_1)
-	arg_17_0:setScale(arg_17_0._scale + arg_17_1 * 0.1)
+function SurvivalSmallMapView:setScaleByBtn(delta)
+	self:setScale(self._scale + delta * 0.1)
 end
 
-function var_0_0.setScale(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_1 = Mathf.Clamp(arg_18_1, var_0_2, var_0_3)
+function SurvivalSmallMapView:setScale(scale, noSetSlider)
+	scale = Mathf.Clamp(scale, minScaleValue, maxScaleValue)
 
-	if arg_18_1 == arg_18_0._scale then
+	if scale == self._scale then
 		return
 	end
 
-	if not arg_18_2 then
-		arg_18_0._slider:SetValue((arg_18_1 - var_0_2) / (var_0_3 - var_0_2))
+	if not noSetSlider then
+		self._slider:SetValue((scale - minScaleValue) / (maxScaleValue - minScaleValue))
 	end
 
-	local var_18_0, var_18_1 = transformhelper.getLocalPos(arg_18_0._mapRoot)
-	local var_18_2 = var_18_0 / arg_18_0._scale * arg_18_1
-	local var_18_3 = var_18_1 / arg_18_0._scale * arg_18_1
+	local x, y = transformhelper.getLocalPos(self._mapRoot)
 
-	arg_18_0._scale = arg_18_1
+	x = x / self._scale * scale
+	y = y / self._scale * scale
+	self._scale = scale
 
-	transformhelper.setLocalPosXY(arg_18_0._mapRoot, var_18_2, var_18_3)
-	transformhelper.setLocalScale(arg_18_0._mapRoot, arg_18_0._scale, arg_18_0._scale, 1)
+	transformhelper.setLocalPosXY(self._mapRoot, x, y)
+	transformhelper.setLocalScale(self._mapRoot, self._scale, self._scale, 1)
 
-	arg_18_0._scroll.velocity = var_0_4
+	self._scroll.velocity = v2zero
 end
 
-function var_0_0.setCanScroll(arg_19_0, arg_19_1)
-	if arg_19_0._canScroll == nil then
-		arg_19_0._canScroll = true
+function SurvivalSmallMapView:setCanScroll(canScroll)
+	if self._canScroll == nil then
+		self._canScroll = true
 	end
 
-	if arg_19_1 ~= arg_19_0._canScroll then
-		arg_19_0._canScroll = arg_19_1
+	if canScroll ~= self._canScroll then
+		self._canScroll = canScroll
 
-		if gohelper.isNil(arg_19_0._scroll) then
+		if gohelper.isNil(self._scroll) then
 			return
 		end
 
-		if not arg_19_1 then
-			arg_19_0._scroll:StopMovement()
+		if not canScroll then
+			self._scroll:StopMovement()
 
-			arg_19_0._scroll.velocity = var_0_4
+			self._scroll.velocity = v2zero
 		end
 
-		arg_19_0._scroll.horizontal = arg_19_1
-		arg_19_0._scroll.vertical = arg_19_1
+		self._scroll.horizontal = canScroll
+		self._scroll.vertical = canScroll
 	end
 end
 
-function var_0_0._checkMultDrag(arg_20_0)
-	arg_20_0:setCanScroll(UnityEngine.Input.touchCount <= 1)
+function SurvivalSmallMapView:_checkMultDrag()
+	self:setCanScroll(UnityEngine.Input.touchCount <= 1)
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.frameToCreateItems, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._checkMultDrag, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.autoSwitchIcon, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0.autoSwitchIcon2, arg_21_0)
+function SurvivalSmallMapView:onDestroyView()
+	TaskDispatcher.cancelTask(self.frameToCreateItems, self)
+	TaskDispatcher.cancelTask(self._checkMultDrag, self)
+	TaskDispatcher.cancelTask(self.autoSwitchIcon, self)
+	TaskDispatcher.cancelTask(self.autoSwitchIcon2, self)
 end
 
-return var_0_0
+return SurvivalSmallMapView

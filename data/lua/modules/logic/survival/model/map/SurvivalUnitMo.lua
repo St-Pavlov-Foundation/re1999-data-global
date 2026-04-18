@@ -11,6 +11,8 @@ function SurvivalUnitMo:init(data)
 	self.dir = data.position.dir
 	self.visionVal = data.visionVal
 	self.fall = data.fall
+	self.force = data.force
+	self.mark = data.mark
 	self.extraParam = {}
 
 	if not string.nilorempty(data.extraParam) then
@@ -140,7 +142,9 @@ function SurvivalUnitMo:getWarmingRange()
 		return false
 	end
 
-	if self.co.skip == 1 and self.co.fightLevel <= weekMo:getAttr(SurvivalEnum.AttrType.HeroFightLevel) then
+	local roleLevel = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
+
+	if self.co.skip == 1 and roleLevel >= self.co.fightLevel then
 		return false
 	end
 
@@ -175,6 +179,16 @@ end
 
 function SurvivalUnitMo:getSubType()
 	return self.co and self.co.subType or 0
+end
+
+function SurvivalUnitMo:isMark(markType)
+	local value = bit.lshift(1, markType - 1)
+
+	return bit.band(self.mark, value) ~= 0
+end
+
+function SurvivalUnitMo:getMark()
+	return self.mark
 end
 
 return SurvivalUnitMo

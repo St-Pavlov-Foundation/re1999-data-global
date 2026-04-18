@@ -120,7 +120,7 @@ end
 function ExplorePrismUnit:isCustomShowOutLine()
 	local showIcon = not self.mo:isInteractEnabled()
 
-	return showIcon, showIcon and "explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
+	return showIcon, showIcon and "modules/explore/common/sprite/prefabs/msts_icon_xiuli.prefab"
 end
 
 function ExplorePrismUnit:isHaveIlluminant()

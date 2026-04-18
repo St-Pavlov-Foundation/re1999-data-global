@@ -1073,102 +1073,528 @@ return {
 		}
 	},
 	{
-		id = 101102,
-		orderstr = "1#2#3#4#5#6#1",
+		id = 10000,
+		orderstr = "1#2#3#4#5#6#7#8#9#10#11#12#13#14#15#16",
 		points = {
 			{
 				id = 1,
 				typeId = 3,
-				posY = 163,
-				posX = -257
+				posY = -412,
+				posX = 665
 			},
 			{
 				id = 2,
 				typeId = 1,
-				posY = 165,
-				posX = 7
+				posY = -249,
+				posX = 579
 			},
 			{
 				id = 3,
 				typeId = 1,
-				posY = 158,
-				posX = 260
+				posY = -216,
+				posX = 420
 			},
 			{
 				id = 4,
 				typeId = 1,
-				posY = -186,
-				posX = 271
+				posY = -266,
+				posX = 250
 			},
 			{
 				id = 5,
 				typeId = 1,
-				posY = -182,
-				posX = 7
+				posY = -33,
+				posX = 360
 			},
 			{
 				id = 6,
 				typeId = 1,
-				posY = -170,
-				posX = -281
+				posY = 133,
+				posX = 311
+			},
+			{
+				id = 7,
+				typeId = 1,
+				posY = 214,
+				posX = 116
+			},
+			{
+				id = 8,
+				typeId = 1,
+				posY = 182,
+				posX = -36
+			},
+			{
+				id = 9,
+				typeId = 1,
+				posY = 42,
+				posX = -127
+			},
+			{
+				id = 10,
+				typeId = 1,
+				posY = -119,
+				posX = -148
+			},
+			{
+				id = 11,
+				typeId = 1,
+				posY = 14,
+				posX = -278
+			},
+			{
+				id = 12,
+				typeId = 1,
+				posY = 33,
+				posX = -465
+			},
+			{
+				id = 13,
+				typeId = 1,
+				posY = -69,
+				posX = -600
+			},
+			{
+				id = 14,
+				typeId = 1,
+				posY = -263,
+				posX = -653
+			},
+			{
+				id = 15,
+				typeId = 1,
+				posY = -403,
+				posX = -563
+			},
+			{
+				id = 16,
+				typeId = 1,
+				posY = -484,
+				posX = -376
 			}
 		},
 		lines = {
 			{
-				endPosY = 165,
-				id = 7,
-				beginPosX = -257,
+				endPosY = -249,
+				id = 1,
+				beginPosX = 665,
 				beginPointId = 1,
-				beginPosY = 163,
+				beginPosY = -412,
 				endPointId = 2,
-				endPosX = 7
+				endPosX = 579
 			},
 			{
-				endPosY = 158,
-				id = 8,
-				beginPosX = 7,
+				endPosY = -216,
+				id = 2,
+				beginPosX = 579,
 				beginPointId = 2,
-				beginPosY = 165,
+				beginPosY = -249,
 				endPointId = 3,
-				endPosX = 260
+				endPosX = 420
 			},
 			{
-				endPosY = -186,
-				id = 9,
-				beginPosX = 260,
+				endPosY = -266,
+				id = 3,
+				beginPosX = 420,
 				beginPointId = 3,
-				beginPosY = 158,
+				beginPosY = -216,
 				endPointId = 4,
-				endPosX = 271
+				endPosX = 250
 			},
 			{
-				endPosY = -182,
-				id = 10,
-				beginPosX = 271,
+				endPosY = -33,
+				id = 4,
+				beginPosX = 250,
 				beginPointId = 4,
-				beginPosY = -186,
+				beginPosY = -266,
 				endPointId = 5,
-				endPosX = 7
+				endPosX = 360
 			},
 			{
-				endPosY = -170,
-				id = 11,
-				beginPosX = 7,
+				endPosY = 133,
+				id = 5,
+				beginPosX = 360,
 				beginPointId = 5,
-				beginPosY = -182,
+				beginPosY = -33,
 				endPointId = 6,
-				endPosX = -281
+				endPosX = 311
 			},
 			{
-				endPosY = 163,
-				id = 12,
-				beginPosX = -281,
+				endPosY = 214,
+				id = 6,
+				beginPosX = 311,
 				beginPointId = 6,
-				beginPosY = -170,
-				endPointId = 1,
-				endPosX = -257
+				beginPosY = 133,
+				endPointId = 7,
+				endPosX = 116
+			},
+			{
+				endPosY = 182,
+				id = 7,
+				beginPosX = 116,
+				beginPointId = 7,
+				beginPosY = 214,
+				endPointId = 8,
+				endPosX = -36
+			},
+			{
+				endPosY = 42,
+				id = 8,
+				beginPosX = -36,
+				beginPointId = 8,
+				beginPosY = 182,
+				endPointId = 9,
+				endPosX = -127
+			},
+			{
+				endPosY = -119,
+				id = 9,
+				beginPosX = -127,
+				beginPointId = 9,
+				beginPosY = 42,
+				endPointId = 10,
+				endPosX = -148
+			},
+			{
+				endPosY = 14,
+				id = 10,
+				beginPosX = -148,
+				beginPointId = 10,
+				beginPosY = -119,
+				endPointId = 11,
+				endPosX = -278
+			},
+			{
+				endPosY = 33,
+				id = 11,
+				beginPosX = -278,
+				beginPointId = 11,
+				beginPosY = 14,
+				endPointId = 12,
+				endPosX = -465
+			},
+			{
+				endPosY = -69,
+				id = 12,
+				beginPosX = -465,
+				beginPointId = 12,
+				beginPosY = 33,
+				endPointId = 13,
+				endPosX = -600
+			},
+			{
+				endPosY = -263,
+				id = 13,
+				beginPosX = -600,
+				beginPointId = 13,
+				beginPosY = -69,
+				endPointId = 14,
+				endPosX = -653
+			},
+			{
+				endPosY = -403,
+				id = 14,
+				beginPosX = -653,
+				beginPointId = 14,
+				beginPosY = -263,
+				endPointId = 15,
+				endPosX = -563
+			},
+			{
+				endPosY = -484,
+				id = 15,
+				beginPosX = -563,
+				beginPointId = 15,
+				beginPosY = -403,
+				endPointId = 16,
+				endPosX = -376
 			}
 		}
+	},
+	{
+		id = 10002,
+		orderstr = "1#2#3#4#5#6#7#8#9#10#11#12#13#14#1",
+		points = {
+			{
+				id = 1,
+				typeId = 3,
+				posY = -481,
+				posX = -404
+			},
+			{
+				id = 2,
+				typeId = 1,
+				posY = -332,
+				posX = -242
+			},
+			{
+				id = 3,
+				typeId = 1,
+				posY = -270,
+				posX = -24
+			},
+			{
+				id = 4,
+				typeId = 1,
+				posY = -124,
+				posX = -220
+			},
+			{
+				id = 5,
+				typeId = 1,
+				posY = 126,
+				posX = -404
+			},
+			{
+				id = 6,
+				typeId = 1,
+				posY = 282,
+				posX = -382
+			},
+			{
+				id = 7,
+				typeId = 1,
+				posY = -69,
+				posX = -6
+			},
+			{
+				id = 8,
+				typeId = 1,
+				posY = 354,
+				posX = -276
+			},
+			{
+				id = 9,
+				typeId = 1,
+				posY = 153,
+				posX = -11
+			},
+			{
+				id = 10,
+				typeId = 1,
+				posY = 55,
+				posX = 235
+			},
+			{
+				id = 11,
+				typeId = 1,
+				posY = -101,
+				posX = 282
+			},
+			{
+				id = 12,
+				typeId = 1,
+				posY = -200,
+				posX = 456
+			},
+			{
+				id = 13,
+				typeId = 1,
+				posY = -334,
+				posX = 257
+			},
+			{
+				id = 14,
+				typeId = 1,
+				posY = -445,
+				posX = -53
+			}
+		},
+		lines = {
+			{
+				endPosY = -332,
+				id = 1,
+				beginPosX = -404,
+				beginPointId = 1,
+				beginPosY = -481,
+				endPointId = 2,
+				endPosX = -242
+			},
+			{
+				endPosY = -270,
+				id = 2,
+				beginPosX = -242,
+				beginPointId = 2,
+				beginPosY = -332,
+				endPointId = 3,
+				endPosX = -24
+			},
+			{
+				endPosY = -124,
+				id = 3,
+				beginPosX = -24,
+				beginPointId = 3,
+				beginPosY = -270,
+				endPointId = 4,
+				endPosX = -220
+			},
+			{
+				endPosY = 126,
+				id = 4,
+				beginPosX = -220,
+				beginPointId = 4,
+				beginPosY = -124,
+				endPointId = 5,
+				endPosX = -404
+			},
+			{
+				endPosY = 282,
+				id = 5,
+				beginPosX = -404,
+				beginPointId = 5,
+				beginPosY = 126,
+				endPointId = 6,
+				endPosX = -382
+			},
+			{
+				endPosY = -69,
+				id = 6,
+				beginPosX = -382,
+				beginPointId = 6,
+				beginPosY = 282,
+				endPointId = 7,
+				endPosX = -6
+			},
+			{
+				endPosY = -200,
+				id = 11,
+				beginPosX = 282,
+				beginPointId = 11,
+				beginPosY = -101,
+				endPointId = 12,
+				endPosX = 456
+			},
+			{
+				endPosY = -334,
+				id = 12,
+				beginPosX = 456,
+				beginPointId = 12,
+				beginPosY = -200,
+				endPointId = 13,
+				endPosX = 257
+			},
+			{
+				endPosY = -445,
+				id = 13,
+				beginPosX = 257,
+				beginPointId = 13,
+				beginPosY = -334,
+				endPointId = 14,
+				endPosX = -53
+			},
+			{
+				endPosY = -481,
+				id = 14,
+				beginPosX = -53,
+				beginPointId = 14,
+				beginPosY = -445,
+				endPointId = 1,
+				endPosX = -404
+			}
+		}
+	},
+	{
+		id = 10003,
+		orderstr = "1#2#3#4#5#6#7#8#9#10#11#12#13#14#15#16",
+		points = {
+			{
+				id = 1,
+				typeId = 3,
+				posY = -467,
+				posX = -521
+			},
+			{
+				id = 2,
+				typeId = 1,
+				posY = -121,
+				posX = -415
+			},
+			{
+				id = 3,
+				typeId = 1,
+				posY = 173,
+				posX = -53
+			},
+			{
+				id = 4,
+				typeId = 1,
+				posY = 356,
+				posX = -73
+			},
+			{
+				id = 5,
+				typeId = 1,
+				posY = 349,
+				posX = 79
+			},
+			{
+				id = 6,
+				typeId = 1,
+				posY = 236,
+				posX = 172
+			},
+			{
+				id = 7,
+				typeId = 1,
+				posY = 200,
+				posX = 478
+			},
+			{
+				id = 8,
+				typeId = 1,
+				posY = 91,
+				posX = 564
+			},
+			{
+				id = 9,
+				typeId = 1,
+				posY = 140,
+				posX = 147
+			},
+			{
+				id = 10,
+				typeId = 1,
+				posY = 42,
+				posX = 61
+			},
+			{
+				id = 11,
+				typeId = 1,
+				posY = -82,
+				posX = 111
+			},
+			{
+				id = 12,
+				typeId = 1,
+				posY = -222,
+				posX = 209
+			},
+			{
+				id = 13,
+				typeId = 1,
+				posY = -403,
+				posX = 125
+			},
+			{
+				id = 14,
+				typeId = 1,
+				posY = -363,
+				posX = -68
+			},
+			{
+				id = 15,
+				typeId = 1,
+				posY = -241,
+				posX = -185
+			},
+			{
+				id = 16,
+				typeId = 1,
+				posY = -435,
+				posX = -313
+			}
+		},
+		lines = {}
 	},
 	{
 		id = 101101,
@@ -1283,6 +1709,412 @@ return {
 				beginPosY = 262,
 				endPointId = 7,
 				endPosX = -201
+			}
+		}
+	},
+	{
+		id = 101102,
+		orderstr = "1#2#3#4#5#6#1",
+		points = {
+			{
+				id = 1,
+				typeId = 3,
+				posY = 163,
+				posX = -257
+			},
+			{
+				id = 2,
+				typeId = 1,
+				posY = 165,
+				posX = 7
+			},
+			{
+				id = 3,
+				typeId = 1,
+				posY = 158,
+				posX = 260
+			},
+			{
+				id = 4,
+				typeId = 1,
+				posY = -186,
+				posX = 271
+			},
+			{
+				id = 5,
+				typeId = 1,
+				posY = -182,
+				posX = 7
+			},
+			{
+				id = 6,
+				typeId = 1,
+				posY = -170,
+				posX = -281
+			}
+		},
+		lines = {
+			{
+				endPosY = 165,
+				id = 7,
+				beginPosX = -257,
+				beginPointId = 1,
+				beginPosY = 163,
+				endPointId = 2,
+				endPosX = 7
+			},
+			{
+				endPosY = 158,
+				id = 8,
+				beginPosX = 7,
+				beginPointId = 2,
+				beginPosY = 165,
+				endPointId = 3,
+				endPosX = 260
+			},
+			{
+				endPosY = -186,
+				id = 9,
+				beginPosX = 260,
+				beginPointId = 3,
+				beginPosY = 158,
+				endPointId = 4,
+				endPosX = 271
+			},
+			{
+				endPosY = -182,
+				id = 10,
+				beginPosX = 271,
+				beginPointId = 4,
+				beginPosY = -186,
+				endPointId = 5,
+				endPosX = 7
+			},
+			{
+				endPosY = -170,
+				id = 11,
+				beginPosX = 7,
+				beginPointId = 5,
+				beginPosY = -182,
+				endPointId = 6,
+				endPosX = -281
+			},
+			{
+				endPosY = 163,
+				id = 12,
+				beginPosX = -281,
+				beginPointId = 6,
+				beginPosY = -170,
+				endPointId = 1,
+				endPosX = -257
+			}
+		}
+	},
+	{
+		id = 10001,
+		orderstr = "1#2#3#4#5#6#7#8#9#10#11#12#13#14#15#16#17#18#19#20#1",
+		points = {
+			{
+				id = 1,
+				typeId = 3,
+				posY = -59,
+				posX = 463
+			},
+			{
+				id = 2,
+				typeId = 1,
+				posY = -430,
+				posX = 480
+			},
+			{
+				id = 3,
+				typeId = 1,
+				posY = -449,
+				posX = 18
+			},
+			{
+				id = 4,
+				typeId = 1,
+				posY = -295,
+				posX = 12
+			},
+			{
+				id = 5,
+				typeId = 1,
+				posY = -459,
+				posX = -234
+			},
+			{
+				id = 6,
+				typeId = 1,
+				posY = -324,
+				posX = -131
+			},
+			{
+				id = 7,
+				typeId = 1,
+				posY = -356,
+				posX = -409
+			},
+			{
+				id = 8,
+				typeId = 1,
+				posY = -283,
+				posX = -261
+			},
+			{
+				id = 9,
+				typeId = 1,
+				posY = -204,
+				posX = -413
+			},
+			{
+				id = 10,
+				typeId = 1,
+				posY = -209,
+				posX = -92
+			},
+			{
+				id = 11,
+				typeId = 1,
+				posY = -62,
+				posX = -232
+			},
+			{
+				id = 12,
+				typeId = 1,
+				posY = 89,
+				posX = -117
+			},
+			{
+				id = 13,
+				typeId = 1,
+				posY = 87,
+				posX = -418
+			},
+			{
+				id = 14,
+				typeId = 1,
+				posY = 148,
+				posX = -264
+			},
+			{
+				id = 15,
+				typeId = 1,
+				posY = 255,
+				posX = -411
+			},
+			{
+				id = 16,
+				typeId = 1,
+				posY = 209,
+				posX = -102
+			},
+			{
+				id = 17,
+				typeId = 1,
+				posY = 351,
+				posX = -232
+			},
+			{
+				id = 18,
+				typeId = 1,
+				posY = 170,
+				posX = 8
+			},
+			{
+				id = 19,
+				typeId = 1,
+				posY = 339,
+				posX = 13
+			},
+			{
+				id = 20,
+				typeId = 1,
+				posY = 325,
+				posX = 468
+			}
+		},
+		lines = {
+			{
+				endPosY = -430,
+				id = 1,
+				beginPosX = 463,
+				beginPointId = 1,
+				beginPosY = -59,
+				endPointId = 2,
+				endPosX = 480
+			},
+			{
+				endPosY = -449,
+				id = 2,
+				beginPosX = 480,
+				beginPointId = 2,
+				beginPosY = -430,
+				endPointId = 3,
+				endPosX = 18
+			},
+			{
+				endPosY = -295,
+				id = 3,
+				beginPosX = 18,
+				beginPointId = 3,
+				beginPosY = -449,
+				endPointId = 4,
+				endPosX = 12
+			},
+			{
+				endPosY = -459,
+				id = 4,
+				beginPosX = 12,
+				beginPointId = 4,
+				beginPosY = -295,
+				endPointId = 5,
+				endPosX = -234
+			},
+			{
+				endPosY = -324,
+				id = 5,
+				beginPosX = -234,
+				beginPointId = 5,
+				beginPosY = -459,
+				endPointId = 6,
+				endPosX = -131
+			},
+			{
+				endPosY = -356,
+				id = 6,
+				beginPosX = -131,
+				beginPointId = 6,
+				beginPosY = -324,
+				endPointId = 7,
+				endPosX = -409
+			},
+			{
+				endPosY = -283,
+				id = 7,
+				beginPosX = -409,
+				beginPointId = 7,
+				beginPosY = -356,
+				endPointId = 8,
+				endPosX = -261
+			},
+			{
+				endPosY = -204,
+				id = 8,
+				beginPosX = -261,
+				beginPointId = 8,
+				beginPosY = -283,
+				endPointId = 9,
+				endPosX = -413
+			},
+			{
+				endPosY = -209,
+				id = 9,
+				beginPosX = -413,
+				beginPointId = 9,
+				beginPosY = -204,
+				endPointId = 10,
+				endPosX = -92
+			},
+			{
+				endPosY = -62,
+				id = 10,
+				beginPosX = -92,
+				beginPointId = 10,
+				beginPosY = -209,
+				endPointId = 11,
+				endPosX = -232
+			},
+			{
+				endPosY = 89,
+				id = 11,
+				beginPosX = -232,
+				beginPointId = 11,
+				beginPosY = -62,
+				endPointId = 12,
+				endPosX = -117
+			},
+			{
+				endPosY = 87,
+				id = 12,
+				beginPosX = -117,
+				beginPointId = 12,
+				beginPosY = 89,
+				endPointId = 13,
+				endPosX = -418
+			},
+			{
+				endPosY = 148,
+				id = 13,
+				beginPosX = -418,
+				beginPointId = 13,
+				beginPosY = 87,
+				endPointId = 14,
+				endPosX = -264
+			},
+			{
+				endPosY = 255,
+				id = 14,
+				beginPosX = -264,
+				beginPointId = 14,
+				beginPosY = 148,
+				endPointId = 15,
+				endPosX = -411
+			},
+			{
+				endPosY = 209,
+				id = 15,
+				beginPosX = -411,
+				beginPointId = 15,
+				beginPosY = 255,
+				endPointId = 16,
+				endPosX = -102
+			},
+			{
+				endPosY = 351,
+				id = 16,
+				beginPosX = -102,
+				beginPointId = 16,
+				beginPosY = 209,
+				endPointId = 17,
+				endPosX = -232
+			},
+			{
+				endPosY = 170,
+				id = 17,
+				beginPosX = -232,
+				beginPointId = 17,
+				beginPosY = 351,
+				endPointId = 18,
+				endPosX = 8
+			},
+			{
+				endPosY = 339,
+				id = 18,
+				beginPosX = 8,
+				beginPointId = 18,
+				beginPosY = 170,
+				endPointId = 19,
+				endPosX = 13
+			},
+			{
+				endPosY = 325,
+				id = 19,
+				beginPosX = 13,
+				beginPointId = 19,
+				beginPosY = 339,
+				endPointId = 20,
+				endPosX = 468
+			},
+			{
+				endPosY = -59,
+				id = 20,
+				beginPosX = 468,
+				beginPointId = 20,
+				beginPosY = 325,
+				endPointId = 1,
+				endPosX = 463
 			}
 		}
 	}

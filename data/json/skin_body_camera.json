@@ -12,5 +12,39 @@
     "camera_revert": [
       "313402_ble_heliu2"
     ]
+  },
+  {
+    "id": 310003,
+    "behavior": "CameraBehavior",
+    "res": "310003_tsnn",
+    "body": [
+      "b_jiaohu_end1"
+    ],
+    "camera": [
+      "310003_tsnn_jiaohu"
+    ],
+    "camera_revert": [
+      "310003_tsnn_jiaohu1"
+    ]
+  },
+  {
+    "id": 311003,
+    "behavior": "CameraBehavior",
+    "res": "311003_ly",
+    "body": [
+      "b_jiaohu_03_1",
+      "b_jiaohu_03_2",
+      "b_jiaohu_03_3"
+    ],
+    "camera": [
+      "311003_ly_jh",
+      "311003_ly_jh",
+      "311003_ly_jh"
+    ],
+    "camera_revert": [
+      "311003_ly_jh1",
+      "311003_ly_jh1",
+      "311003_ly_jh1"
+    ]
   }
 ]

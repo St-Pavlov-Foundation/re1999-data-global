@@ -29,6 +29,8 @@ function SurvivalView:onInitView()
 
 	self.btn_handbook = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_handbook")
 	self.handbook_go_red = gohelper.findChild(self.viewGO, "Left/#btn_handbook/#go_red")
+	self.btn_tech = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_tech")
+	self.tech_go_red = gohelper.findChild(self.viewGO, "Left/#btn_tech/#go_red")
 end
 
 function SurvivalView:addEvents()
@@ -41,6 +43,8 @@ function SurvivalView:addEvents()
 	self:addClickCb(self._btnFold, self.onClickFold, self)
 	self:addClickCb(self._btnCloseFold, self.onClickCloseFold, self)
 	self:addClickCb(self.btn_handbook, self.onClickBtnHandbook, self)
+	self:addClickCb(self.btn_tech, self.onClickBtnTech, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
 function SurvivalView:removeEvents()
@@ -67,11 +71,32 @@ function SurvivalView:onClickBtnHandbook()
 	SurvivalHandbookController.instance:sendOpenSurvivalHandbookView()
 end
 
+function SurvivalView:onClickBtnTech()
+	SurvivalStatHelper.instance:statBtnClick("onClickBtnTech", "SurvivalView")
+	ViewMgr.instance:openView(ViewName.SurvivalTechView)
+end
+
+function SurvivalView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.SurvivalCeremonyClosingView then
+		self:tryTriggerTechGuild()
+	end
+end
+
 function SurvivalView:onOpen()
 	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a8Survival, false, self._refreshRed, self)
 	TaskDispatcher.runRepeat(self.everySecondCall, self, 0, -1)
 	self:_refreshView()
 	RedDotController.instance:addRedDot(self.handbook_go_red, RedDotEnum.DotNode.SurvivalHandbook)
+	RedDotController.instance:addRedDot(self.tech_go_red, RedDotEnum.DotNode.SurvivalOutSideTeach)
+	self:tryTriggerTechGuild()
+end
+
+function SurvivalView:tryTriggerTechGuild()
+	local survivalOutSideTechMo = SurvivalModel.instance:getOutSideInfo().survivalOutSideTechMo
+
+	if survivalOutSideTechMo:haveTechPoint() then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideMainViewTech)
+	end
 end
 
 function SurvivalView:_refreshRed(redDot)
@@ -85,7 +110,9 @@ end
 
 function SurvivalView:everySecondCall()
 	if self._txtLimitTime then
-		self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity3_1Enum.ActivityId.Survival)
+		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+		self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(curVersionActivityId)
 	end
 end
 
@@ -166,7 +193,7 @@ function SurvivalView:_enterSurvival()
 		else
 			self:_firstEnterSurvival()
 		end
-	else
+	elseif outSideInfo:isEndUnLock(3001) or outSideInfo:isEndUnLock(3002) then
 		local storyId = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.StoryPassEnter)
 
 		storyId = tonumber(storyId) or 0
@@ -176,11 +203,15 @@ function SurvivalView:_enterSurvival()
 		else
 			self:_noFirstEnterSurvival()
 		end
+	else
+		self:_noFirstEnterSurvival()
 	end
 end
 
 function SurvivalView:_firstEnterSurvival()
-	SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(SurvivalConst.FirstPlayDifficulty)
+	local roleId = SurvivalModel.instance:getDefaultRoleId()
+
+	SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(SurvivalConst.FirstPlayDifficulty, nil, roleId)
 end
 
 function SurvivalView:_noFirstEnterSurvival()
@@ -204,7 +235,8 @@ end
 
 function SurvivalView:_onAchievementClick()
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
-		local config = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+		local config = ActivityConfig.instance:getActivityCo(curVersionActivityId)
 		local jumpId = config.achievementJumpId
 
 		JumpController.instance:jump(jumpId)

@@ -14,10 +14,12 @@ end
 
 function SurvivalHeroHealthView:addEvents()
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, self._refreshHealth, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnDerivedUpdate, self._refreshHealth, self)
 end
 
 function SurvivalHeroHealthView:removeEvents()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnSurvivalHeroHealthUpdate, self._refreshHealth, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnDerivedUpdate, self._refreshHealth, self)
 end
 
 function SurvivalHeroHealthView:onOpen()

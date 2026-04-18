@@ -471,4 +471,10 @@ function WaitGuideActionOpenViewWithCondition.checkFinishRouge(param)
 	return false
 end
 
+function WaitGuideActionOpenViewWithCondition.checkSinglePartyGame()
+	local curGame = PartyGameController.instance:getCurPartyGame()
+
+	return not curGame or curGame:getIsLocal()
+end
+
 return WaitGuideActionOpenViewWithCondition

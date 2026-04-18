@@ -18,9 +18,12 @@ function VersionActivity2_5JumpHandleFunc:jumpTo12502(paramsList)
 	table.insert(self.closeViewNames, ViewName.VersionActivity2_5DungeonMapLevelView)
 	VersionActivity2_5DungeonModel.instance:setMapNeedTweenState(true)
 
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController()
+
 	if episodeId then
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity2_5DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
+		enterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+			dungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity2_5DungeonMapLevelView, {
 					isJump = true,
 					episodeId = episodeId
@@ -28,14 +31,14 @@ function VersionActivity2_5JumpHandleFunc:jumpTo12502(paramsList)
 			end)
 		end, nil, actId, true)
 	else
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_5DungeonController.openVersionActivityDungeonMapView, VersionActivity2_5DungeonController.instance, actId, true)
+		enterController.instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openVersionActivityDungeonMapView, dungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
 end
 
 function VersionActivity2_5JumpHandleFunc:jumpTo12503(paramsList)
-	VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_5DungeonController.openStoreView, VersionActivity2_5DungeonController.instance, VersionActivity2_5Enum.ActivityId.Dungeon, true)
+	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(VersionActivity2_5DungeonController.openStoreView, VersionActivity2_5DungeonController.instance, VersionActivity2_5Enum.ActivityId.Dungeon, true)
 
 	return JumpEnum.JumpResult.Success
 end

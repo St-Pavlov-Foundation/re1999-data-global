@@ -282,7 +282,10 @@ function PlayerCardMO:getProgressByIndex(index)
 				local co = lua_weekwalk_scene.configDict[mapco.sceneId]
 
 				if co and co.typeName and co.name then
-					return co.typeName .. co.name
+					return GameUtil.getSubPlaceholderLuaLang(luaLang("PlayerCardMO_WeekWalkDeep"), {
+						co.typeName,
+						co.name
+					})
 				end
 			end
 		end

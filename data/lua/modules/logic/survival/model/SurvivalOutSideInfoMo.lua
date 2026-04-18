@@ -47,6 +47,19 @@ function SurvivalOutSideInfoMo:init(data)
 	local handbookBox = data.handbookBox
 
 	SurvivalHandbookModel.instance:setSurvivalHandbookBox(handbookBox)
+
+	self.survivalOutSideRoleMo = self.survivalOutSideRoleMo or SurvivalOutSideRoleMo.New()
+
+	self.survivalOutSideRoleMo:setData(data.roleBox)
+
+	self.survivalOutSideTechMo = self.survivalOutSideTechMo or SurvivalOutSideTechMo.New()
+
+	self.survivalOutSideTechMo:setData(data.outSideTechBox)
+
+	local modBox = data.modBox
+
+	self.unlockDiffIds = modBox.unlockId
+	self.newDiffIds = modBox.newIds
 end
 
 function SurvivalOutSideInfoMo:refreshDifficulty(difficulty)
@@ -74,35 +87,7 @@ function SurvivalOutSideInfoMo:refreshDifficultyMod(difficulty)
 end
 
 function SurvivalOutSideInfoMo:isUnlockDifficultyMod(modId)
-	local config = lua_survival_hardness_mod.configDict[modId]
-
-	if not config then
-		return false
-	end
-
-	if string.nilorempty(config.unlock) then
-		return true
-	end
-
-	local unlockCondition = string.split(config.unlock, "#")
-
-	if unlockCondition[1] == SurvivalEnum.HardUnlockCondition.overDif then
-		local diffId = tonumber(unlockCondition[2])
-
-		return self:isPassDifficultyMod(diffId)
-	elseif unlockCondition[1] == SurvivalEnum.HardUnlockCondition.overDifMult then
-		local diffIds = string.splitToNumber(unlockCondition[2], ",")
-
-		for i, v in ipairs(diffIds) do
-			if self:isPassDifficultyMod(v) then
-				return true
-			end
-		end
-	else
-		logError(string.format("undefine difficulty mod unlock condition : %s", config.unlock))
-	end
-
-	return false
+	return LuaUtil.tableContains(self.unlockDiffIds, modId)
 end
 
 function SurvivalOutSideInfoMo:isPassDifficultyMod(difficulty)
@@ -169,6 +154,14 @@ function SurvivalOutSideInfoMo:getEndId()
 	}))
 
 	return endIds[1] and endIds[1].id or 0
+end
+
+function SurvivalOutSideInfoMo:isEndUnLock(id)
+	for k, _ in pairs(self.endIdDict) do
+		if k == id then
+			return true
+		end
+	end
 end
 
 function SurvivalOutSideInfoMo:getBootyList()

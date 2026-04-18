@@ -432,5 +432,191 @@
       89,
       38
     ]
+  },
+  {
+    "sceneId": 5,
+    "id": 1,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_air",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      76
+    ],
+    "lightColor2": [
+      133,
+      160,
+      161,
+      40
+    ],
+    "lightColor3": [
+      255,
+      238,
+      178,
+      100
+    ],
+    "lightColor4": [
+      178,
+      222,
+      255,
+      60
+    ]
+  },
+  {
+    "sceneId": 5,
+    "id": 2,
+    "path": "s01_obj_a/Anim/Effect/v3a4_m_s01_effect_huaban01",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      242,
+      242,
+      235,
+      242
+    ],
+    "lightColor3": [
+      255,
+      149,
+      128,
+      235
+    ],
+    "lightColor4": [
+      97,
+      115,
+      110,
+      255
+    ]
+  },
+  {
+    "sceneId": 5,
+    "id": 3,
+    "path": "s01_obj_a/Anim/Effect/v3a4_m_s01_effect_huaban02",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      204,
+      204,
+      198,
+      204
+    ],
+    "lightColor3": [
+      242,
+      161,
+      144,
+      208
+    ],
+    "lightColor4": [
+      92,
+      110,
+      105,
+      255
+    ]
+  },
+  {
+    "sceneId": 5,
+    "id": 4,
+    "path": "s01_obj_a/Anim/Drawing/v3a4_xiangkuang_back",
+    "tag": "frame",
+    "colorKey": "",
+    "lightColor1": [
+      78,
+      191,
+      108,
+      42
+    ],
+    "lightColor2": [
+      40,
+      70,
+      61,
+      104
+    ],
+    "lightColor3": [
+      159,
+      102,
+      54,
+      145
+    ],
+    "lightColor4": [
+      62,
+      115,
+      123,
+      163
+    ]
+  },
+  {
+    "sceneId": 5,
+    "id": 5,
+    "path": "s01_obj_a/Anim/Effect/bgm/bg",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      20
+    ],
+    "lightColor2": [
+      107,
+      127,
+      121,
+      25
+    ],
+    "lightColor3": [
+      66,
+      43,
+      34,
+      35
+    ],
+    "lightColor4": [
+      8,
+      48,
+      60,
+      40
+    ]
+  },
+  {
+    "sceneId": 5,
+    "id": 6,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/v3a4_m_s01_yaxian/v3a4_m_s01_yaxian_b",
+    "tag": "",
+    "colorKey": "_MainCol",
+    "lightColor1": [
+      155,
+      164,
+      156,
+      255
+    ],
+    "lightColor2": [
+      132,
+      140,
+      133,
+      255
+    ],
+    "lightColor3": [
+      178,
+      134,
+      107,
+      255
+    ],
+    "lightColor4": [
+      153,
+      132,
+      107,
+      255
+    ]
   }
 ]

@@ -2,7 +2,7 @@
 
 module("modules.logic.versionactivity3_2.cruise.view.cruisegoldgame.game.CruiseGameCardSelectItem", package.seeall)
 
-local CruiseGameCardSelectItem = class("CruiseGameCardSelectItem", SurvivalSimpleListItem)
+local CruiseGameCardSelectItem = class("CruiseGameCardSelectItem", SimpleListItem)
 
 function CruiseGameCardSelectItem:onInit()
 	self.State_Normal = gohelper.findChild(self.viewGO, "anim/State_Normal")
@@ -15,11 +15,11 @@ function CruiseGameCardSelectItem:onInit()
 	self.itemAnim = self.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
-function CruiseGameCardSelectItem:addEventListeners()
+function CruiseGameCardSelectItem:onAddListeners()
 	self:addClickCb(self.btnClick, self.onClick, self)
 end
 
-function CruiseGameCardSelectItem:removeEventListeners()
+function CruiseGameCardSelectItem:onRemoveListeners()
 	return
 end
 
@@ -53,7 +53,7 @@ function CruiseGameCardSelectItem:setPlayCardActive(value)
 end
 
 function CruiseGameCardSelectItem:refreshCardLight()
-	gohelper.setActive(self.cardlight, self.isPlayCard and not self.isSelect)
+	gohelper.setActive(self.cardlight, self.isPlayCard and not self.isSelectItem)
 end
 
 function CruiseGameCardSelectItem:playOutAnim()

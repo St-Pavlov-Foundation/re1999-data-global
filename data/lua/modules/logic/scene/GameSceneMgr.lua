@@ -42,6 +42,9 @@ function GameSceneMgr:_addScenes()
 	self:_addSceneObj(SceneType.SurvivalShelter, SurvivalShelterScene)
 	self:_addSceneObj(SceneType.SurvivalSummaryAct, SurvivalSummaryAct)
 	self:_addSceneObj(SceneType.Udimo, UdimoScene)
+	self:_addSceneObj(SceneType.PartyGame, PartyGameScene)
+	self:_addSceneObj(SceneType.PartyGameLobby, PartyGameLobbyScene)
+	self:_addSceneObj(SceneType.ChatRoom, ChatRoomScene)
 end
 
 function GameSceneMgr:_addSceneObj(sceneType, sceneDefine)
@@ -269,8 +272,7 @@ function GameSceneMgr:isClosing()
 end
 
 function GameSceneMgr:isSpScene()
-	local scene = self:getCurScene()
-	local cur_scene_id = scene and scene.level and scene.level._sceneId
+	local cur_scene_id = FightGameMgr.sceneLevelMgr.sceneId
 
 	if cur_scene_id and cur_scene_id == 11501 then
 		return true

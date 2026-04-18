@@ -247,10 +247,8 @@ function ActivityCategoryItem:checkIsAct217NeedReddot(redDotIcon)
 	redDotIcon:defaultRefreshDot()
 
 	if not redDotIcon.show then
-		local expCount = Activity217Model.instance:getExpEpisodeCount(self._mo.id)
-		local coinCount = Activity217Model.instance:getCoinEpisodeCount(self._mo.id)
 		local firstShow = ActivityBeginnerController.instance:checkFirstEnter(self._mo.id)
-		local needShow = expCount > 0 and coinCount > 0 and firstShow
+		local needShow = firstShow
 
 		redDotIcon.show = needShow
 

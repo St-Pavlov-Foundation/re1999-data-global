@@ -15,11 +15,19 @@ function PlayerViewContainer:buildViews()
 end
 
 function PlayerViewContainer:buildTabViews(tabContainerId)
-	self.navigationView = NavigateButtonsView.New({
-		true,
-		true,
-		false
-	})
+	if self.viewParam and self.viewParam.hideHomeBtn then
+		self.navigationView = NavigateButtonsView.New({
+			true,
+			false,
+			false
+		})
+	else
+		self.navigationView = NavigateButtonsView.New({
+			true,
+			true,
+			false
+		})
+	end
 
 	return {
 		self.navigationView

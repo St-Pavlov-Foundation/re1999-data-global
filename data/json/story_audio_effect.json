@@ -11650,6 +11650,1186 @@
     "bankName": "prologuechapter_12_fuyong"
   },
   {
+    "id": 34500001,
+    "eventName": "play_activitysfx_bulaochun_bicycle_bell",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500002,
+    "eventName": "play_activitysfx_bulaochun_strange_amb",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500003,
+    "eventName": "play_activitysfx_bulaochun_street_01",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500004,
+    "eventName": "play_activitysfx_bulaochun_street_02",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500005,
+    "eventName": "play_activitysfx_bulaochun_internet_bar",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500006,
+    "eventName": "play_activitysfx_bulaochun_crazy_wind",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500007,
+    "eventName": "play_activitysfx_bulaochun_weird_win",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500008,
+    "eventName": "play_activitysfx_bulaochun_transition_wind",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500009,
+    "eventName": "play_activitysfx_bulaochun_auditory_recovery",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500010,
+    "eventName": "play_activitysfx_bulaochun_up_mule",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500011,
+    "eventName": "play_activitysfx_bulaochun_transformation",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500012,
+    "eventName": "play_activitysfx_bulaochun_transformation_spell",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500013,
+    "eventName": "play_activitysfx_bulaochun_document",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500014,
+    "eventName": "play_activitysfx_bulaochun_stomp_feet",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500015,
+    "eventName": "play_activitysfx_bulaochun_cloth_rustle",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500016,
+    "eventName": "play_activitysfx_bulaochun_fear_atmosphere",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500017,
+    "eventName": "play_activitysfx_bulaochun_stilts",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500018,
+    "eventName": "play_activitysfx_bulaochun_crowd_fell_down",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500019,
+    "eventName": "play_activitysfx_bulaochun_crowd_groan",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500020,
+    "eventName": "play_activitysfx_bulaochun_mule_walk",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500021,
+    "eventName": "play_activitysfx_bulaochun_mule_walked_away",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500022,
+    "eventName": "play_activitysfx_bulaochun_mule_eats_grass",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500023,
+    "eventName": "play_activitysfx_bulaochun_mule_cried_out",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500024,
+    "eventName": "play_activitysfx_bulaochun_chew_cake",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500025,
+    "eventName": "play_activitysfx_bulaochun_footsteps",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500026,
+    "eventName": "play_activitysfx_bulaochun_footsteps_loop",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500027,
+    "eventName": "play_activitysfx_bulaochun_sword_cut_branch",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500028,
+    "eventName": "play_activitysfx_bulaochun_blade_wall",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500029,
+    "eventName": "play_activitysfx_bulaochun_landing",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500030,
+    "eventName": "play_activitysfx_bulaochun_qing_kung",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500031,
+    "eventName": "play_activitysfx_bulaochun_jump_roof",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500032,
+    "eventName": "play_activitysfx_bulaochun_busy_stage",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500033,
+    "eventName": "play_activitysfx_bulaochun_forge_iron",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500034,
+    "eventName": "play_activitysfx_bulaochun_crowd_moved",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500035,
+    "eventName": "play_activitysfx_bulaochun_gently_stir",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500036,
+    "eventName": "play_activitysfx_bulaochun_drink_sugar_water",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500037,
+    "eventName": "play_activitysfx_bulaochun_sheathe",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500038,
+    "eventName": "play_activitysfx_bulaochun_shock_door",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500039,
+    "eventName": "play_activitysfx_bulaochun_super_shock_door",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500040,
+    "eventName": "play_activitysfx_bulaochun_double_footsteps",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500041,
+    "eventName": "play_activitysfx_bulaochun_rush_crowd",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500042,
+    "eventName": "play_activitysfx_bulaochun_practise_skill",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500043,
+    "eventName": "play_activitysfx_bulaochun_pace",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500044,
+    "eventName": "play_activitysfx_bulaochun_cicada_bird",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500045,
+    "eventName": "play_activitysfx_bulaochun_team_moved_forward",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500046,
+    "eventName": "play_activitysfx_bulaochun_strange_convergence",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500047,
+    "eventName": "play_activitysfx_bulaochun_commotion_noise",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500048,
+    "eventName": "play_activitysfx_bulaochun_scare",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500049,
+    "eventName": "play_activitysfx_bulaochun_latch_fell_off",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500050,
+    "eventName": "play_activitysfx_bulaochun_spitball",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500051,
+    "eventName": "play_activitysfx_bulaochun_mouse",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500052,
+    "eventName": "play_activitysfx_bulaochun_meihuajiao",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500053,
+    "eventName": "play_activitysfx_bulaochun_flatten_paper",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500054,
+    "eventName": "play_activitysfx_bulaochun_water_boiling",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500055,
+    "eventName": "play_activitysfx_bulaochun_cat_meows",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500056,
+    "eventName": "play_activitysfx_bulaochun_push_door",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500057,
+    "eventName": "play_activitysfx_bulaochun_close_door",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500058,
+    "eventName": "play_activitysfx_bulaochun_branches_rustle",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500059,
+    "eventName": "play_activitysfx_bulaochun_spitting_blood",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500060,
+    "eventName": "play_activitysfx_bulaochun_true_qi_aggregation",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500061,
+    "eventName": "play_activitysfx_bulaochun_true_qi_resistance",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500062,
+    "eventName": "play_activitysfx_bulaochun_wave_sleeves",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500063,
+    "eventName": "play_activitysfx_bulaochun_demon_vanished",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500064,
+    "eventName": "play_activitysfx_bulaochun_strike_gong",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500065,
+    "eventName": "play_activitysfx_bulaochun_pain_cough",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500066,
+    "eventName": "play_activitysfx_bulaochun_monster_roared",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500067,
+    "eventName": "play_activitysfx_bulaochun_faerie_believer",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500068,
+    "eventName": "play_activitysfx_bulaochun_dot_like_spell",
+    "bankName": "activity_bulaochun3_4_sfx_part02"
+  },
+  {
+    "id": 34500069,
+    "eventName": "play_activitysfx_bulaochun_throw_token",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500070,
+    "eventName": "play_activitysfx_bulaochun_smash_token",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500071,
+    "eventName": "play_activitysfx_bulaochun_draw_sword",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500072,
+    "eventName": "play_activitysfx_bulaochun_swing_sword",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500073,
+    "eventName": "play_activitysfx_bulaochun_slap_back",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500074,
+    "eventName": "play_activitysfx_bulaochun_offensive_steps",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500075,
+    "eventName": "play_activitysfx_bulaochun_exuviate",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500076,
+    "eventName": "play_activitysfx_bulaochun_draw_swords_crowd",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500077,
+    "eventName": "play_activitysfx_bulaochun_vibrations_rumbling",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500078,
+    "eventName": "play_activitysfx_bulaochun_chaotic_street",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500079,
+    "eventName": "play_activitysfx_bulaochun_procession",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500080,
+    "eventName": "play_activitysfx_bulaochun_earthquake",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500081,
+    "eventName": "play_activitysfx_bulaochun_frequent_cutting",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500082,
+    "eventName": "play_activitysfx_bulaochun_needle_volley",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500083,
+    "eventName": "play_activitysfx_bulaochun_deep_monste_wail",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500084,
+    "eventName": "play_activitysfx_bulaochun_boss_death",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500085,
+    "eventName": "play_activitysfx_bulaochun_screaming_crowd",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500086,
+    "eventName": "play_activitysfx_bulaochun_sheathed_guard",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500087,
+    "eventName": "play_activitysfx_bulaochun_hurricane",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500088,
+    "eventName": "play_activitysfx_bulaochun_lost_balance",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500089,
+    "eventName": "play_activitysfx_bulaochun_sword_crack",
+    "bankName": "activity_bulaochun3_4_sfx_part03"
+  },
+  {
+    "id": 34500090,
+    "eventName": "play_activitysfx_bulaochun_stone_mule_fart",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500091,
+    "eventName": "play_activitysfx_bulaochun_mule_01",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500092,
+    "eventName": "play_activitysfx_bulaochun_mule_02",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500093,
+    "eventName": "play_activitysfx_bulaochun_mule_03",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500094,
+    "eventName": "play_activitysfx_bulaochun_mule_04",
+    "bankName": "activity_bulaochun3_4_sfx_part01"
+  },
+  {
+    "id": 34500095,
+    "eventName": "play_activitystorysfx_bulaochun_juqi",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500096,
+    "eventName": "play_activitystorysfx_bulaochun_dao",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500097,
+    "eventName": "play_activitystorysfx_bulaochun_man_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500098,
+    "eventName": "play_activitystorysfx_bulaochun_tiger1",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500099,
+    "eventName": "play_activitystorysfx_bulaochun_tiger2_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500100,
+    "eventName": "play_activitystorysfx_bulaochun_tiger3_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500101,
+    "eventName": "play_activitystorysfx_bulaochun_tiger4_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500102,
+    "eventName": "play_activitystorysfx_bulaochun_tiger5",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500103,
+    "eventName": "play_activitystorysfx_bulaochun_zhua",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500104,
+    "eventName": "play_activitystorysfx_bulaochun_line",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500105,
+    "eventName": "play_activitystorysfx_bulaochun_line_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500106,
+    "eventName": "play_activitystorysfx_bulaochun_line2",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500107,
+    "eventName": "play_activitystorysfx_bulaochun_line3",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500108,
+    "eventName": "play_activitystorysfx_bulaochun_line4",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500109,
+    "eventName": "play_activitystorysfx_bulaochun_line5",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500110,
+    "eventName": "play_activitystorysfx_bulaochun_ba",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500111,
+    "eventName": "play_activitystorysfx_bulaochun_bowl1",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500112,
+    "eventName": "play_activitystorysfx_bulaochun_bowl2",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500113,
+    "eventName": "play_activitystorysfx_bulaochun_bowl3",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500114,
+    "eventName": "play_activitystorysfx_bulaochun_bowl4",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500115,
+    "eventName": "play_activitystorysfx_bulaochun_hit_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500116,
+    "eventName": "play_activitystorysfx_bulaochun_luodi",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500117,
+    "eventName": "play_activitystorysfx_bulaochun_blade",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500118,
+    "eventName": "play_activitystorysfx_bulaochun_blade2",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500119,
+    "eventName": "play_activitystorysfx_bulaochun_move",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500120,
+    "eventName": "play_activitystorysfx_bulaochun_spray",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500121,
+    "eventName": "play_activitystorysfx_bulaochun_bu_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500122,
+    "eventName": "play_activitystorysfx_bulaochun_bu",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500123,
+    "eventName": "play_activitystorysfx_bulaochun_lame_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500124,
+    "eventName": "play_activitystorysfx_bulaochun_fstp_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500125,
+    "eventName": "play_activitystorysfx_bulaochun_tiger6",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx"
+  },
+  {
+    "id": 34500126,
+    "eventName": "play_activitystory_lusijian_inn_noise",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500127,
+    "eventName": "play_activitystory_lusijian_knife_sword_01",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500128,
+    "eventName": "play_activitystory_lusijian_knife_sword_02",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500129,
+    "eventName": "play_activitystory_lusijian_back_off",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500130,
+    "eventName": "play_activitystory_lusijian_sword_knife_fighting",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500131,
+    "eventName": "play_activitystory_lusijian_throwing_sword",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500132,
+    "eventName": "play_activitystory_lusijian_draw_sword",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500133,
+    "eventName": "play_activitystory_lusijian_plate_broke",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500134,
+    "eventName": "play_activitystory_lusijian_make_off",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500135,
+    "eventName": "play_activitystory_lusijian_yank_mule",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500136,
+    "eventName": "play_activitystory_lusijian_mule_question",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500137,
+    "eventName": "play_activitystory_lusijian_mule_earnest",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500138,
+    "eventName": "play_activitystory_lusijian_mule_calmness",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500139,
+    "eventName": "play_activitystory_lusijian_sneeze",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500140,
+    "eventName": "play_activitystory_lusijian_mule_hoof",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500141,
+    "eventName": "play_activitystory_lusijian_lead_mule",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500142,
+    "eventName": "play_activitystory_lusijian_blow_gently",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500143,
+    "eventName": "play_activitystory_lusijian_void_incantation",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500144,
+    "eventName": "play_activitystory_lusijian_mule_running",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500145,
+    "eventName": "play_activitystory_lusijian_tap_tree",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500146,
+    "eventName": "play_activitystory_lusijian_sheath",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500147,
+    "eventName": "play_activitystory_lusijian_apricot_tree",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500148,
+    "eventName": "play_activitystory_lusijian_tend_grass",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx"
+  },
+  {
+    "id": 34500149,
+    "eventName": "play_activitysfx_bulaochun_bbs_input",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500150,
+    "eventName": "play_activitysfx_bulaochun_vortex_continue_01",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500151,
+    "eventName": "play_activitysfx_bulaochun_vortex_continue_02",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500152,
+    "eventName": "play_activitysfx_bulaochun_vortex_dissipate",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500153,
+    "eventName": "play_activitysfx_bulaochun_draw_special",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500154,
+    "eventName": "play_activitysfx_bulaochun_steel_knife",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500155,
+    "eventName": "play_activitysfx_bulaochun_chakram",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500156,
+    "eventName": "play_activitysfx_bulaochun_cut_out",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500157,
+    "eventName": "play_activitysfx_bulaochun_stone_lettering",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500158,
+    "eventName": "play_activitysfx_bulaochun_ring_bell_01",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500159,
+    "eventName": "play_activitysfx_bulaochun_ring_bell_02",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500160,
+    "eventName": "play_activitysfx_bulaochun_mistyi",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500161,
+    "eventName": "play_activitysfx_bulaochun_Ink_stains",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500162,
+    "eventName": "play_activitysfx_bulaochun_split",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500163,
+    "eventName": "play_activitysfx_bulaochun_cutting_01",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500164,
+    "eventName": "play_activitysfx_bulaochun_cutting_02",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500165,
+    "eventName": "play_activitysfx_bulaochun_cutting_03",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500166,
+    "eventName": "play_activitysfx_bulaochun_summon_sword",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500167,
+    "eventName": "play_activitysfx_bulaochun_vital_qi",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500168,
+    "eventName": "play_activitysfx_bulaochun_vital_qi_day",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500169,
+    "eventName": "play_activitysfx_bulaochun_large_formation",
+    "bankName": "activity_bulaochun3_4_sfx_part04"
+  },
+  {
+    "id": 34500170,
+    "eventName": "play_activitystorysfx_bulaochun_night_snowfield",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500171,
+    "eventName": "play_activitystorysfx_bulaochun_drawspear",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500172,
+    "eventName": "play_activitystorysfx_bulaochun_bag_cloth",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500173,
+    "eventName": "play_activitystorysfx_bulaochun_walk_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500174,
+    "eventName": "play_activitystorysfx_bulaochun_ti_knife",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500175,
+    "eventName": "play_activitystorysfx_bulaochun_knife_cross",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500176,
+    "eventName": "play_activitystorysfx_bulaochun_knife_cross",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500177,
+    "eventName": "play_activitystorysfx_bulaochun_knife_across",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500178,
+    "eventName": "play_activitystorysfx_bulaochun_applepick",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500179,
+    "eventName": "play_activitystorysfx_bulaochun_dao1",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500180,
+    "eventName": "play_activitystorysfx_bulaochun_dao2",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500181,
+    "eventName": "play_activitystorysfx_bulaochun_flames_boils_loop",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500182,
+    "eventName": "play_activitystorysfx_bulaochun_ding1",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500183,
+    "eventName": "play_activitystorysfx_bulaochun_knife_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500184,
+    "eventName": "play_activitystorysfx_bulaochun_cheers",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500185,
+    "eventName": "play_activitystorysfx_bulaochun_crowd_lp",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500186,
+    "eventName": "play_activitystorysfx_bulaochun_fstp2",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500187,
+    "eventName": "play_activitystorysfx_bulaochun_kada",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500188,
+    "eventName": "play_activitystorysfx_bulaochun_flint_knocking",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500189,
+    "eventName": "play_activitystorysfx_bulaochun_open_wooddoor",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500190,
+    "eventName": "play_activitystorysfx_bulaochun_sharpclaw",
+    "bankName": "activitystory_bulaochun3_4_cheng_sfx_fuyong"
+  },
+  {
+    "id": 34500191,
+    "eventName": "play_activitysfx_bulaochun_dyeing_loop",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500192,
+    "eventName": "play_activitysfx_bulaochun_tiepi2",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500193,
+    "eventName": "play_activitysfx_bulaochun_cloth",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500194,
+    "eventName": "play_activitysfx_bulaochun_fall_gem",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500195,
+    "eventName": "play_activitysfx_bulaochun_shake_lp",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500196,
+    "eventName": "play_activitysfx_bulaochun_wind1",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500197,
+    "eventName": "play_activitysfx_bulaochun_arcane_dagger",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500198,
+    "eventName": "play_activitysfx_bulaochun_dao4",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500199,
+    "eventName": "play_activitysfx_bulaochun_staggering",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500200,
+    "eventName": "play_activitysfx_bulaochun_skin_cut",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500201,
+    "eventName": "play_activitysfx_bulaochun_crowd_chaos",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500202,
+    "eventName": "play_activitysfx_bulaochun_leg_mike",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500203,
+    "eventName": "play_activitysfx_bulaochun_takuang",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500204,
+    "eventName": "play_activitysfx_bulaochun_fight",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500205,
+    "eventName": "play_activitysfx_bulaochun_heartbeating",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500206,
+    "eventName": "play_activitysfx_bulaochun_dao3",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500207,
+    "eventName": "play_activitysfx_bulaochun_candlelight",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500208,
+    "eventName": "play_activitysfx_bulaochun_steam",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500209,
+    "eventName": "play_activitysfx_bulaochun_dizziness_01",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500210,
+    "eventName": "play_activitysfx_bulaochun_dizziness_02",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500211,
+    "eventName": "play_activitysfx_bulaochun_stone_water",
+    "bankName": "activity_bulaochun3_4_sfx_fuyong"
+  },
+  {
+    "id": 34500212,
+    "eventName": "play_activitystory_lusijian_macarons_chew",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx_fuyong"
+  },
+  {
+    "id": 34500213,
+    "eventName": "play_activitystory_lusijian_eat_stewed",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx_fuyong"
+  },
+  {
+    "id": 34500214,
+    "eventName": "play_activitystory_lusijian_finger_knock",
+    "bankName": "activitystory_bulaochun3_4_lusijian_sfx_fuyong"
+  },
+  {
+    "id": 34500215,
+    "eventName": "play_ui_yuqianmanyou_throw_bi",
+    "bankName": "ui_yuqianmanyou3_4_fuyong"
+  },
+  {
+    "id": 34500216,
+    "eventName": "play_ui_yuqianmanyou_shake_lp",
+    "bankName": "ui_yuqianmanyou3_4_fuyong"
+  },
+  {
+    "id": 34500217,
+    "eventName": "play_ui_yuqianmanyou_qizi1",
+    "bankName": "ui_yuqianmanyou3_4_fuyong"
+  },
+  {
+    "id": 34500218,
+    "eventName": "play_ui_yuqianmanyou_mercury_loop",
+    "bankName": "ui_yuqianmanyou3_4_fuyong"
+  },
+  {
+    "id": 34500219,
+    "eventName": "play_activitystorysfx_bulaochun_night_lp",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500220,
+    "eventName": "play_activitystorysfx_bulaochun_ran",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500221,
+    "eventName": "play_activitystorysfx_bulaochun_ran_lp",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500222,
+    "eventName": "play_activitystorysfx_bulaochun_ran2",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500223,
+    "eventName": "play_activitystorysfx_bulaochun_moca_lp",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500224,
+    "eventName": "play_activitystorysfx_bulaochun_qin",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500225,
+    "eventName": "play_activitystorysfx_bulaochun_qin2",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500226,
+    "eventName": "play_activitystorysfx_bulaochun_qiao",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500227,
+    "eventName": "play_activitystorysfx_bulaochun_qin3",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500228,
+    "eventName": "play_activitystorysfx_bulaochun_qin4",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500229,
+    "eventName": "play_activitystorysfx_bulaochun_lufstp",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500230,
+    "eventName": "play_activitystorysfx_bulaochun_qiao2",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500231,
+    "eventName": "play_activitystorysfx_bulaochun_qiao3",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500232,
+    "eventName": "play_activitystorysfx_bulaochun_louti",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500233,
+    "eventName": "play_activitystorysfx_bulaochun_gutou",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500234,
+    "eventName": "play_activitystorysfx_bulaochun_qin5",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500235,
+    "eventName": "play_activitystorysfx_bulaochun_qin6",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
+    "id": 34500236,
+    "eventName": "play_activitystorysfx_bulaochun_chuan",
+    "bankName": "activitystory_bulaochun3_4_yishi_sfx"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -11673,6 +12853,11 @@
     "id": 530057,
     "eventName": "play_activitymusic_seasonmain_2_0",
     "bankName": "plot_music_seasonmain_2_0"
+  },
+  {
+    "id": 530058,
+    "eventName": "play_activitymusic_seasonmain_1_6",
+    "bankName": "activity1_6_music"
   },
   {
     "id": 21530001,
@@ -11993,6 +13178,46 @@
     "id": 33530004,
     "eventName": "play_dungeon2_silent_main",
     "bankName": "dungeon2_silent_main_music"
+  },
+  {
+    "id": 34530001,
+    "eventName": "play_activitymusic_theme_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530002,
+    "eventName": "play_activitymusic_xiancheng_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530003,
+    "eventName": "play_activitymusic_nianjie_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530004,
+    "eventName": "play_activitymusic_meihua_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530005,
+    "eventName": "play_activitymusic_ep_part1_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530006,
+    "eventName": "play_activitymusic_ep_part2_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530007,
+    "eventName": "play_activitymusic_kunqu_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 34530008,
+    "eventName": "play_activitymusic_theme_part1_3_4",
+    "bankName": "activity3_4_music"
   },
   {
     "id": 520105,
@@ -12558,6 +13783,51 @@
     "id": 33520005,
     "eventName": "play_yuanzheng3_3_pv_sfx_vo_music",
     "bankName": "yuanzheng3_3_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520001,
+    "eventName": "play_bulaochun3_4_cutscene_zhejian",
+    "bankName": "bulaochun3_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520002,
+    "eventName": "play_bulaochun3_4_cutscene_sibainianhou",
+    "bankName": "bulaochun3_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520003,
+    "eventName": "play_bulaochun3_4_cutscene_shouchangsheng",
+    "bankName": "bulaochun3_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520004,
+    "eventName": "play_bulaochun3_4_cutscene_jiejian",
+    "bankName": "bulaochun3_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520005,
+    "eventName": "play_bulaochun3_4_pv_sfx_vo_music",
+    "bankName": "bulaochun3_4_cutscene_sfx_vo"
+  },
+  {
+    "id": 34520006,
+    "eventName": "play_activitysfx_bulaochun_avgopen",
+    "bankName": "activity_bulaochun3_4_sfx"
+  },
+  {
+    "id": 34520007,
+    "eventName": "play_activitysfx_bulaochun_section_open",
+    "bankName": "activity_bulaochun3_4_sfx"
+  },
+  {
+    "id": 34520008,
+    "eventName": "play_activitysfx_bulaochun_continue",
+    "bankName": "activity_bulaochun3_4_sfx"
+  },
+  {
+    "id": 34520009,
+    "eventName": "play_activitysfx_bulaochun_end",
+    "bankName": "activity_bulaochun3_4_sfx"
   },
   {
     "id": 20530011,

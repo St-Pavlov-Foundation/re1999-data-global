@@ -280,6 +280,7 @@ function HelpView:setBtnItem()
 
 	gohelper.setActive(self._btnright.gameObject, index < #self._pagesCo)
 	gohelper.setActive(self._btnleft.gameObject, index > 1)
+	gohelper.setActive(self._goscroll, #self._pagesCo > 1)
 end
 
 function HelpView:setBtnShow()
@@ -303,6 +304,10 @@ function HelpView:selectHelpItem()
 	ZProj.TweenHelper.DOAnchorPosX(self._gocontent.transform, x, 0.25)
 	self:setBtnItem()
 	self:setBtnShow()
+end
+
+function HelpView:onClickModalMask()
+	HelpController.instance:dispatchEvent(HelpEvent.OnClickHelpViewMask)
 end
 
 function HelpView:onClose()

@@ -14,16 +14,15 @@ function GMSubViewActivity:initViewContent()
 	end
 
 	GMSubViewBase.initViewContent(self)
-	self:addLabel("L0", "2.5春节活动")
-
-	self._act186TalkId = self:addInputText("L0", nil, "对话id")
-
-	self:addButton("L0", "播放对话", self._playAct186Talk, self)
 	self:addLabel("L0", "轶事")
 
 	self._rolestoryId = self:addInputText("L0", nil, "故事id")
 
 	self:addButton("L0", "重置", self._resetRoleStory, self)
+
+	self._rolestoryFlagKey = self:addInputText("L0", nil, "条件参数")
+
+	self:addButton("L0", "查询", self._printRoleStoryFlagKey, self)
 	self:addTitleSplitLine("活动状态")
 
 	self._dropActivity = self:addDropDown("L1", "活动ID：", nil, self._onActivityDropValueChange, self)
@@ -116,6 +115,16 @@ function GMSubViewActivity:_resetRoleStory()
 
 	NecrologistStoryRpc.instance:_sendUpdateNecrologistStoryRequest(tonumber(rolestoryId))
 	self:closeThis()
+end
+
+function GMSubViewActivity:_printRoleStoryFlagKey()
+	local rolestoryId = tonumber(self._rolestoryId:GetText())
+	local flagKey = self._rolestoryFlagKey:GetText()
+	local mo = NecrologistStoryModel.instance:getById(rolestoryId)
+	local dict = mo and mo:getPlotSituationTab() or {}
+	local flagVal = dict[flagKey] or 0
+
+	GameFacade.showToastString(string.format("%s:%s", flagKey, flagVal))
 end
 
 function GMSubViewActivity:_enterAct178Game()

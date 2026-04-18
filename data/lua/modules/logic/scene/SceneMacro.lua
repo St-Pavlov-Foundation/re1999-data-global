@@ -18,6 +18,9 @@ SceneType.SurvivalShelter = 16
 SceneType.SurvivalSummaryAct = 17
 SceneType.Rouge2 = 18
 SceneType.Udimo = 19
+SceneType.PartyGame = 20
+SceneType.PartyGameLobby = 21
+SceneType.ChatRoom = 22
 SceneType.NameDict = {}
 
 for k, v in pairs(SceneType) do

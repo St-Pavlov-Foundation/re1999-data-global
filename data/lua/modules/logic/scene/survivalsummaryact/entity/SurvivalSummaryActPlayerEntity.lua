@@ -23,9 +23,10 @@ function SurvivalSummaryActPlayerEntity:init(go)
 	self.go = go
 	self.trans = go.transform
 
-	local path = SurvivalConfig.instance:getConstValue(SurvivalEnum.ConstId.PlayerRes)
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local roleRes = survivalShelterRoleMo:getRoleModelRes()
 	local scene = SurvivalMapHelper.instance:getScene()
-	local asset = scene.preloader:getRes(path)
+	local asset = scene.preloader:getRes(roleRes)
 
 	self.goModel = gohelper.clone(asset, go)
 

@@ -5,7 +5,7 @@ module("modules.logic.scene.fight.comp.FightSceneCardCameraComp", package.seeall
 local FightSceneCardCameraComp = class("FightSceneCardCameraComp", BaseSceneComp)
 
 function FightSceneCardCameraComp:onSceneStart(sceneId, levelId)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:registerCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:registerCallback(FightEvent.StageChanged, self._onStageChange, self)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._stopCameraAnim, self)
 	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._stopCameraAnim, self)
@@ -18,7 +18,7 @@ function FightSceneCardCameraComp:onSceneStart(sceneId, levelId)
 end
 
 function FightSceneCardCameraComp:onSceneClose(sceneId, levelId)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	FightController.instance:unregisterCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 	FightController.instance:unregisterCallback(FightEvent.StageChanged, self._onStageChange, self)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._stopCameraAnim, self)
 	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._stopCameraAnim, self)

@@ -30,6 +30,12 @@ end
 function BpChargeViewContainer:playOpenTransition()
 	local anim = "open"
 
+	if self.viewParam and self.viewParam.first then
+		anim = "first"
+
+		AudioMgr.instance:trigger(AudioEnum3_4.BP.FaceView_play_ui_bulaochun_yunying_bp)
+	end
+
 	BpChargeViewContainer.super.playOpenTransition(self, {
 		duration = 3,
 		anim = anim

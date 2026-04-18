@@ -66,11 +66,18 @@ function TowerComposeModDescTipView:refreshUI()
 			modDescItem.txtName = gohelper.findChildText(modDescItem.go, "txt_name")
 			modDescItem.txtDesc = gohelper.findChildText(modDescItem.go, "txt_desc")
 			modDescItem.imageIcon = gohelper.findChildImage(modDescItem.go, "image_icon")
+			modDescItem.imageModColorIcon = gohelper.findChildImage(modDescItem.go, "image_icon_01")
+			modDescItem.materialModIcon = UnityEngine.Object.Instantiate(modDescItem.imageModColorIcon.material)
+			modDescItem.imageModLvColorIcon = gohelper.findChildImage(modDescItem.go, "image_icon_02")
+			modDescItem.materialModLvIcon = UnityEngine.Object.Instantiate(modDescItem.imageModLvColorIcon.material)
+			modDescItem.imageModColorIcon.material = modDescItem.materialModIcon
+			modDescItem.imageModLvColorIcon.material = modDescItem.materialModLvIcon
 			modDescItem.line = gohelper.findChild(modDescItem.go, "line")
 			modDescItem.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(modDescItem.txtDesc.gameObject, FixTmpBreakLine)
 
 			SkillHelper.addHyperLinkClick(modDescItem.txtDesc, self._onHyperLinkClick, self)
 
+			modDescItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(modDescItem.go, TowerComposeModIconComp)
 			self.modDescItem[index] = modDescItem
 		end
 
@@ -79,7 +86,7 @@ function TowerComposeModDescTipView:refreshUI()
 		modDescItem.modId = modId
 		modDescItem.config = TowerComposeConfig.instance:getComposeModConfig(modId)
 
-		UISpriteSetMgr.instance:setTower2Sprite(modDescItem.imageIcon, modDescItem.config.icon)
+		modDescItem.modIconComp:refreshMod(modId, modDescItem.imageIcon, modDescItem.imageModColorIcon, modDescItem.imageModLvColorIcon, modDescItem.materialModIcon, modDescItem.materialModLvIcon)
 
 		modDescItem.txtName.text = modDescItem.config.name
 		modDescItem.txtDesc.text = SkillHelper.buildDesc(modDescItem.config.desc)

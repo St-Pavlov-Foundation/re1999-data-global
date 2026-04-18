@@ -15,6 +15,7 @@ function FightWorkMissileASFDDone:onStart()
 
 	if asfdMgr then
 		asfdMgr:clearEmitterEffect(self.fightStepData)
+		asfdMgr:clearLSJSpine(self.fightStepData)
 	end
 
 	return self:onDone(true)

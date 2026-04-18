@@ -22,6 +22,7 @@ PlayerEnum.SimpleProperty = {
 	FightTechnique = 4,
 	RoomFormulaShowTypeUnlockEffect = 7,
 	EquipPreferenceOpen = 9,
+	SummonUISkin = 24,
 	V2a7_BossRushCurrencyNum = 16,
 	MainHero = 2,
 	MainUISkin = 21,

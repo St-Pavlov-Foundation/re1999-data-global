@@ -12,14 +12,22 @@ end
 
 function ClothesStoreVideoView:addEvents()
 	self:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.OnCheckHideSkinVideo, self._onCheckHideSkillVideo, self)
 end
 
 function ClothesStoreVideoView:removeEvents()
 	self:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.OnCheckHideSkinVideo, self._onCheckHideSkillVideo, self)
 end
 
 function ClothesStoreVideoView:_onPlaySkinVideo(goodsMo)
 	self:playSkinVideo(goodsMo)
+end
+
+function ClothesStoreVideoView:_onCheckHideSkillVideo(goodsId)
+	if goodsId ~= self._curPlayGoodsId and self._curPlayGoodsId ~= nil then
+		self:_playMovieFinish()
+	end
 end
 
 function ClothesStoreVideoView:onOpen()
@@ -27,6 +35,8 @@ function ClothesStoreVideoView:onOpen()
 end
 
 function ClothesStoreVideoView:playSkinVideo(goodsMo)
+	self._curPlayGoodsId = nil
+
 	if not goodsMo then
 		self:_stopMovie()
 
@@ -71,6 +81,8 @@ function ClothesStoreVideoView:playSkinVideo(goodsMo)
 
 			self._videoPlayerGO = nil
 		end
+
+		self._curPlayGoodsId = goodsMo.goodsId
 
 		self._videoPlayer:play(self._videoPath, false, self._videoStatusUpdate, self)
 
@@ -130,6 +142,7 @@ end
 
 function ClothesStoreVideoView:_playMovieFinish()
 	self._hasPlayFinish = true
+	self._curPlayGoodsId = nil
 
 	self:_hideVideoGo()
 	NavigateMgr.instance:removeEscape(self.viewName)

@@ -5,7 +5,7 @@ module("modules.versionactivitybase.fixed.VersionActivityFixedHelper", package.s
 local VersionActivityFixedHelper = class("VersionActivityFixedHelper")
 local _version = {
 	big = 3,
-	small = 2
+	small = 4
 }
 local _versionTable
 local foramt1 = "%s_%s"
@@ -68,6 +68,18 @@ function VersionActivityFixedHelper.setDungeonSprite(image, name, setNativeSize,
 	end
 
 	UISpriteSetMgr.instance[func](UISpriteSetMgr.instance, image, name, setNativeSize)
+end
+
+function VersionActivityFixedHelper.setCustomDungeonStore(id)
+	VersionActivityFixedHelper._customDungeonStore = id
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonStore(big, small)
+	if VersionActivityFixedHelper._customDungeonStore then
+		return VersionActivityFixedHelper._customDungeonStore
+	end
+
+	return VersionActivityFixedHelper.getVersionActivityEnum(big, small).ActivityId.DungeonStore
 end
 
 function VersionActivityFixedHelper.getVersionActivityEnum(big, small)

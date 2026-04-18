@@ -9,7 +9,8 @@ function MainUISwitchConfig:reqConfigNames()
 		"scene_ui",
 		"scene_ui_reddot",
 		"main_ui_skin",
-		"main_ui_eagle"
+		"main_ui_eagle",
+		"scene_const"
 	}
 end
 
@@ -28,6 +29,8 @@ function MainUISwitchConfig:onConfigLoaded(configName, configTable)
 		self:_initMainUISkinCo()
 	elseif configName == "main_ui_eagle" then
 		self._eagleAnimConfig = configTable
+	elseif configName == "scene_const" then
+		self._constConfig = configTable
 	end
 end
 
@@ -114,6 +117,28 @@ function MainUISwitchConfig:_collectSource(itemId)
 	end
 
 	return sourceTables
+end
+
+function MainUISwitchConfig:getConstValue(constId, isNumber)
+	local co = self._constConfig.configDict[constId]
+	local value = co.value
+
+	if isNumber then
+		value = tonumber(value)
+	end
+
+	return value
+end
+
+function MainUISwitchConfig:getConstValue2(constId, isNumber)
+	local co = self._constConfig.configDict[constId]
+	local value = co.value2
+
+	if isNumber then
+		value = tonumber(value)
+	end
+
+	return value
 end
 
 MainUISwitchConfig.instance = MainUISwitchConfig.New()

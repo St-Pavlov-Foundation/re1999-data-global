@@ -20,7 +20,14 @@ function FightASFDFlyPathHelper.defaultFlyMover(flyPathId, entity, missileCo, mi
 	FightASFDHelper.changeRandomArea()
 
 	local entityMo = entity:getMO()
-	local startPos = FightASFDHelper.getStartPos(entityMo and entityMo.side or FightEnum.EntitySide.MySide, missileCo.sceneEmitterId)
+	local startPos
+
+	if asfdContext.missilePos then
+		startPos = asfdContext.missilePos
+	else
+		startPos = FightASFDHelper.getStartPos(entityMo and entityMo.side or FightEnum.EntitySide.MySide, missileCo.sceneEmitterId)
+	end
+
 	local endPos = FightASFDHelper.getEndPos(toId)
 	local p1 = startPos
 	local p2 = FightASFDHelper.getRandomPos(startPos, endPos, missileCo)
@@ -48,7 +55,14 @@ function FightASFDFlyPathHelper.straightLineFlyMover(flyPathId, entity, missileC
 	mover:registerCallback(UnitMoveEvent.Arrive, arriveCallback, arriveCallbackObj)
 
 	local entityMo = entity:getMO()
-	local startPos = FightASFDHelper.getStartPos(entityMo and entityMo.side or FightEnum.EntitySide.MySide, missileCo.sceneEmitterId)
+	local startPos
+
+	if asfdContext.missilePos then
+		startPos = asfdContext.missilePos
+	else
+		startPos = FightASFDHelper.getStartPos(entityMo and entityMo.side or FightEnum.EntitySide.MySide, missileCo.sceneEmitterId)
+	end
+
 	local endPos = FightASFDHelper.getEndPos(toId, ModuleEnum.SpineHangPoint.mountbody)
 
 	missileWrap:setWorldPos(startPos.x, startPos.y, startPos.z)
@@ -69,9 +83,44 @@ function FightASFDFlyPathHelper.straightLineFlyMover(flyPathId, entity, missileC
 	return mover
 end
 
+function FightASFDFlyPathHelper.straightLine_LSJFlyMover(flyPathId, entity, missileCo, missileWrap, toId, asfdContext, arriveCallback, arriveCallbackObj)
+	local mover = MonoHelper.addLuaComOnceToGo(missileWrap.containerGO, UnitMoverEase)
+
+	MonoHelper.addLuaComOnceToGo(missileWrap.containerGO, UnitMoverHandler)
+	mover:registerCallback(UnitMoveEvent.Arrive, arriveCallback, arriveCallbackObj)
+
+	local entityMo = entity:getMO()
+	local startPos
+
+	if asfdContext.missilePos then
+		startPos = asfdContext.missilePos
+	else
+		startPos = FightASFDHelper.getStartPos(entityMo and entityMo.side or FightEnum.EntitySide.MySide, missileCo.sceneEmitterId)
+	end
+
+	local endPos = FightASFDHelper.getEndPos(toId, ModuleEnum.SpineHangPoint.mountbody)
+
+	missileWrap:setWorldPos(startPos.x, startPos.y, startPos.z)
+
+	local rotationZ = FightASFDHelper.getZRotation(startPos.x, startPos.y, endPos.x, endPos.y)
+
+	transformhelper.setLocalRotation(missileWrap.containerGO.transform, 0, 0, rotationZ)
+
+	local flyPathCo = FightASFDConfig.instance:getFlyPathCo(flyPathId)
+
+	mover:setEaseType(flyPathCo.lineType)
+
+	local flyDuration = flyPathCo.flyDuration / FightModel.instance:getSpeed()
+
+	mover:simpleMove(startPos.x, startPos.y, startPos.z, endPos.x, endPos.y, endPos.z, flyDuration)
+
+	return mover
+end
+
 FightASFDFlyPathHelper.flyPathHandle = {
 	[FightEnum.ASFDFlyPath.Default] = FightASFDFlyPathHelper.defaultFlyMover,
-	[FightEnum.ASFDFlyPath.StraightLine] = FightASFDFlyPathHelper.straightLineFlyMover
+	[FightEnum.ASFDFlyPath.StraightLine] = FightASFDFlyPathHelper.straightLineFlyMover,
+	[FightEnum.ASFDFlyPath.StraightLine_LSJ] = FightASFDFlyPathHelper.straightLine_LSJFlyMover
 }
 
 return FightASFDFlyPathHelper

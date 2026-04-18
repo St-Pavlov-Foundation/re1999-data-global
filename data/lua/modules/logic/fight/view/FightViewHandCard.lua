@@ -96,17 +96,43 @@ function FightViewHandCard:onInitView()
 end
 
 function FightViewHandCard:initRedOrBlueArea()
-	self.goLYAreaRoot = gohelper.findChild(self.viewGO, "root/handcards/LiangyueframeRoot")
+	local skin = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.LY)
+	local co = skin and lua_fight_sp_handcard_area_ly.configDict[skin]
+
+	co = co or lua_fight_sp_handcard_area_ly.configDict[0]
+
+	local resPath = string.format("ui/viewres/fight/%s.prefab", co.path)
+
+	self.lyAreaLoader = MultiAbLoader.New()
+
+	self.lyAreaLoader:addPath(resPath)
+	self.lyAreaLoader:startLoad(self.onLyLoaderDone, self)
+end
+
+function FightViewHandCard:onLyLoaderDone()
+	local assistItem = self.lyAreaLoader:getFirstAssetItem()
+	local prefab = assistItem:GetResource()
+	local goParent = gohelper.findChild(self.viewGO, "root/handcards/")
+
+	self.goLYAreaRoot = gohelper.clone(prefab, goParent)
 	self.animatorLyRoot = self.goLYAreaRoot:GetComponent(gohelper.Type_Animator)
 	self.goRedArea = gohelper.findChild(self.goLYAreaRoot, "redarea")
 	self.goGreenArea = gohelper.findChild(self.goLYAreaRoot, "greenarea")
 	self.rectTrRedArea = self.goRedArea:GetComponent(gohelper.Type_RectTransform)
 	self.rectTrGreenArea = self.goGreenArea:GetComponent(gohelper.Type_RectTransform)
+
+	self:refreshLYAreaActive()
 end
 
 function FightViewHandCard:onDestroyView()
 	FightViewHandCard.handCardContainer = nil
 	self.LyNeedCheckFlowList = nil
+
+	if self.lyAreaLoader then
+		self.lyAreaLoader:dispose()
+
+		self.lyAreaLoader = nil
+	end
 end
 
 function FightViewHandCard:addEvents()
@@ -261,6 +287,10 @@ function FightViewHandCard:refreshLYAreaActive()
 end
 
 function FightViewHandCard:setActiveLyRoot(active)
+	if gohelper.isNil(self.goLYAreaRoot) then
+		return
+	end
+
 	local areaSize = FightDataHelper.LYDataMgr.LYCardAreaSize
 
 	if areaSize < 1 then

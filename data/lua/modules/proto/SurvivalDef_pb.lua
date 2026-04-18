@@ -8,6 +8,8 @@ module("modules.proto.SurvivalDef_pb", package.seeall)
 local SurvivalDef_pb = {}
 
 SurvivalDef_pb.HERODEF_PB = require("modules.proto.HeroDef_pb")
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURHEXDIR_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURHEXDIRHEXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURHEXDIRDIRFIELD = protobuf.FieldDescriptor()
@@ -17,6 +19,12 @@ SurvivalDef_pb.SURVIVALBAGITEMIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBAGITEMCOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBAGITEMPARAMFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBAGITEMBAGREASONFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLE_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHOP_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALSHOPIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHOPITEMSFIELD = protobuf.FieldDescriptor()
@@ -39,7 +47,6 @@ SurvivalDef_pb.SURVIVALMAPINFO_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALMAPINFOMAPIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD = protobuf.FieldDescriptor()
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALPANEL_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALPANELUIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALPANELTYPEFIELD = protobuf.FieldDescriptor()
@@ -83,6 +90,8 @@ SurvivalDef_pb.SURVIVALINTRUDEMONSTER_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALINTRUDEMONSTERMONSTERIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEMONSTERCURRENTHPFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEMONSTERCURRENTHPRATEFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLEBOX_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALTASKBOX_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALTASKBOXMODULEIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALTASKBOXTASKSFIELD = protobuf.FieldDescriptor()
@@ -107,6 +116,14 @@ SurvivalDef_pb.SURVIVALWEEKINFOCLIENTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALWEEKINFOPREEXPLORESHOPFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALWEEKINFORAINTYPEFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFO_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFOIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFOTAGSFIELD = protobuf.FieldDescriptor()
@@ -145,12 +162,23 @@ SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUNDROUNDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUNDEQUIPPLANIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUNDHEROESFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUNDFINISHEDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGE_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEBOX_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALINTRUDEBOXTEMPLATEIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALINTRUDEBOXFIGHTFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALDECREESPANELPROP_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALDECREESPANELPROPDECREESIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALDECREESPANELPROPSELECTNUMFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALNPCBOX_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALNPCBOXNPCSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENE_MSG = protobuf.Descriptor()
@@ -168,6 +196,8 @@ SurvivalDef_pb.SURVIVALSCENEFOLLOWTASKFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENECLIENTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENECELLSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBUILDINGNPCPOS_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALBUILDINGNPCPOSNPCIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBUILDINGNPCPOSPOSFIELD = protobuf.FieldDescriptor()
@@ -182,6 +212,9 @@ SurvivalDef_pb.SURVIVALSHOPITEMIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHOPITEMITEMIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHOPITEMCOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHOPITEMGROUPIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALITEMTIPS_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALITEMTIPSITEMIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALITEMTIPSCOUNTFIELD = protobuf.FieldDescriptor()
@@ -205,6 +238,9 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFOUNLOCKDIFFICULTYFIELD = protobuf.FieldDescript
 SurvivalDef_pb.SURVIVALOUTSIDEINFOENDIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALOUTSIDEINFOCLIENTDATAFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROP_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROPREPUTATIONIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROPREPUTATIONEXPFIELD = protobuf.FieldDescriptor()
@@ -215,6 +251,11 @@ SurvivalDef_pb.SURVIVALSAFEZONE_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALSAFEZONESHRINKINFOFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHANDBOOKBOX_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALHANDBOOKBOXHANDBOOKFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALNPC_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALNPCIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALNPCSTATUSFIELD = protobuf.FieldDescriptor()
@@ -227,6 +268,8 @@ SurvivalDef_pb.SURUNITPOSITIONFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURUNITVISIONVALFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURUNITEXTRAPARAMFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURUNITFALLFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURUNITFORCEFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURUNITMARKFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHRINKINFO_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALSHRINKINFOROUNDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSHRINKINFOSTARTTIMEFIELD = protobuf.FieldDescriptor()
@@ -255,6 +298,9 @@ SurvivalDef_pb.SURVIVALFOLLOWTASK_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALFOLLOWTASKMODULEIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALFOLLOWTASKTASKIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALFOLLOWTASKFOLLOWUNITUIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMODBOX_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHEXCELL_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALHEXCELLHEXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHEXCELLSTYLEFIELD = protobuf.FieldDescriptor()
@@ -272,10 +318,30 @@ SurvivalDef_pb.SURVIVALBUILDINGHEROPOSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBUILDINGNPCPOSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBUILDINGSHOPFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALHANDBOOKIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHANDBOOKISNEWFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.name = "techIds"
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.full_name = ".SurvivalInsideTechProp.techIds"
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.number = 1
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.index = 0
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.label = 3
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.type = 5
+SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.name = "SurvivalInsideTechProp"
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.full_name = ".SurvivalInsideTechProp"
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.fields = {
+	SurvivalDef_pb.SURVIVALINSIDETECHPROPTECHIDSFIELD
+}
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG.extensions = {}
 SurvivalDef_pb.SURHEXDIRHEXFIELD.name = "hex"
 SurvivalDef_pb.SURHEXDIRHEXFIELD.full_name = ".SurHexDir.hex"
 SurvivalDef_pb.SURHEXDIRHEXFIELD.number = 1
@@ -363,6 +429,64 @@ SurvivalDef_pb.SURVIVALBAGITEM_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALBAGITEM_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALBAGITEM_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.name = "roleId"
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.full_name = ".SurvivalRole.roleId"
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALROLEROLEIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.name = "progress"
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.full_name = ".SurvivalRole.progress"
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.number = 2
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.index = 1
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.type = 5
+SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.name = "maxProgress"
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.full_name = ".SurvivalRole.maxProgress"
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.number = 3
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.index = 2
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.type = 5
+SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.name = "unlocked"
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.full_name = ".SurvivalRole.unlocked"
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.number = 4
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.index = 3
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.default_value = false
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.type = 8
+SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD.cpp_type = 7
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.name = "isNew"
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.full_name = ".SurvivalRole.isNew"
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.number = 5
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.index = 4
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.default_value = false
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.type = 8
+SurvivalDef_pb.SURVIVALROLEISNEWFIELD.cpp_type = 7
+SurvivalDef_pb.SURVIVALROLE_MSG.name = "SurvivalRole"
+SurvivalDef_pb.SURVIVALROLE_MSG.full_name = ".SurvivalRole"
+SurvivalDef_pb.SURVIVALROLE_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALROLE_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALROLE_MSG.fields = {
+	SurvivalDef_pb.SURVIVALROLEROLEIDFIELD,
+	SurvivalDef_pb.SURVIVALROLEPROGRESSFIELD,
+	SurvivalDef_pb.SURVIVALROLEMAXPROGRESSFIELD,
+	SurvivalDef_pb.SURVIVALROLEUNLOCKEDFIELD,
+	SurvivalDef_pb.SURVIVALROLEISNEWFIELD
+}
+SurvivalDef_pb.SURVIVALROLE_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALROLE_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALSHOPIDFIELD.name = "id"
 SurvivalDef_pb.SURVIVALSHOPIDFIELD.full_name = ".SurvivalShop.id"
 SurvivalDef_pb.SURVIVALSHOPIDFIELD.number = 1
@@ -548,9 +672,9 @@ SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.name = "disasterId"
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.full_name = ".SurvivalMapInfo.disasterId"
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.number = 2
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.index = 1
-SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.label = 3
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.has_default_value = false
-SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.default_value = {}
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.type = 5
 SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD.cpp_type = 1
 SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD.name = "rainId"
@@ -562,15 +686,6 @@ SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD.has_default_value = false
 SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD.default_value = 0
 SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD.type = 5
 SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD.cpp_type = 1
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.name = "taskId"
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.full_name = ".SurvivalMapInfo.taskId"
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.number = 4
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.index = 3
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.label = 1
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.has_default_value = false
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.default_value = 0
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.type = 5
-SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD.cpp_type = 1
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.name = "SurvivalMapInfo"
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.full_name = ".SurvivalMapInfo"
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.nested_types = {}
@@ -578,8 +693,7 @@ SurvivalDef_pb.SURVIVALMAPINFO_MSG.enum_types = {}
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.fields = {
 	SurvivalDef_pb.SURVIVALMAPINFOMAPIDFIELD,
 	SurvivalDef_pb.SURVIVALMAPINFODISASTERIDFIELD,
-	SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD,
-	SurvivalDef_pb.SURVIVALMAPINFOTASKIDFIELD
+	SurvivalDef_pb.SURVIVALMAPINFORAINIDFIELD
 }
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALMAPINFO_MSG.extensions = {}
@@ -1005,6 +1119,25 @@ SurvivalDef_pb.SURVIVALINTRUDEMONSTER_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALINTRUDEMONSTER_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALINTRUDEMONSTER_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.name = "roles"
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.full_name = ".SurvivalRoleBox.roles"
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.number = 1
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.index = 0
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.label = 3
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.message_type = SurvivalDef_pb.SURVIVALROLE_MSG
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.type = 11
+SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.name = "SurvivalRoleBox"
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.full_name = ".SurvivalRoleBox"
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.fields = {
+	SurvivalDef_pb.SURVIVALROLEBOXROLESFIELD
+}
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALROLEBOX_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALTASKBOXMODULEIDFIELD.name = "moduleId"
 SurvivalDef_pb.SURVIVALTASKBOXMODULEIDFIELD.full_name = ".SurvivalTaskBox.moduleId"
 SurvivalDef_pb.SURVIVALTASKBOXMODULEIDFIELD.number = 1
@@ -1227,6 +1360,44 @@ SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD.message_type = SurvivalDef_pb.SURVIVALTALENTBOX_MSG
 SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD.type = 11
 SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.name = "roleId"
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.full_name = ".SurvivalWeekInfo.roleId"
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.number = 23
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.index = 20
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.name = "roleExp"
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.full_name = ".SurvivalWeekInfo.roleExp"
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.number = 24
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.index = 21
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.label = 1
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.type = 5
+SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.name = "lossReturnItems"
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.full_name = ".SurvivalWeekInfo.lossReturnItems"
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.number = 25
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.index = 22
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.label = 3
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.message_type = SurvivalDef_pb.SURVIVALITEMTIPS_MSG
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.type = 11
+SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.name = "derivedContainer"
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.full_name = ".SurvivalWeekInfo.derivedContainer"
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.number = 26
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.index = 23
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.label = 1
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.message_type = SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.type = 11
+SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD.cpp_type = 10
 SurvivalDef_pb.SURVIVALWEEKINFO_MSG.name = "SurvivalWeekInfo"
 SurvivalDef_pb.SURVIVALWEEKINFO_MSG.full_name = ".SurvivalWeekInfo"
 SurvivalDef_pb.SURVIVALWEEKINFO_MSG.nested_types = {}
@@ -1251,10 +1422,52 @@ SurvivalDef_pb.SURVIVALWEEKINFO_MSG.fields = {
 	SurvivalDef_pb.SURVIVALWEEKINFOCLIENTDATAFIELD,
 	SurvivalDef_pb.SURVIVALWEEKINFOPREEXPLORESHOPFIELD,
 	SurvivalDef_pb.SURVIVALWEEKINFORAINTYPEFIELD,
-	SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD
+	SurvivalDef_pb.SURVIVALWEEKINFOTALENTBOXFIELD,
+	SurvivalDef_pb.SURVIVALWEEKINFOROLEIDFIELD,
+	SurvivalDef_pb.SURVIVALWEEKINFOROLEEXPFIELD,
+	SurvivalDef_pb.SURVIVALWEEKINFOLOSSRETURNITEMSFIELD,
+	SurvivalDef_pb.SURVIVALWEEKINFODERIVEDCONTAINERFIELD
 }
 SurvivalDef_pb.SURVIVALWEEKINFO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALWEEKINFO_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.name = "belongRoleId"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.full_name = ".SurvivalOutSideTech.belongRoleId"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.name = "techId"
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.full_name = ".SurvivalOutSideTech.techId"
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.number = 2
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.index = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.label = 3
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.name = "techPoint"
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.full_name = ".SurvivalOutSideTech.techPoint"
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.number = 3
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.index = 2
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.type = 5
+SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.name = "SurvivalOutSideTech"
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.full_name = ".SurvivalOutSideTech"
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.fields = {
+	SurvivalDef_pb.SURVIVALOUTSIDETECHBELONGROLEIDFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDETECHTECHIDFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDETECHTECHPOINTFIELD
+}
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALRECRUITINFOIDFIELD.name = "id"
 SurvivalDef_pb.SURVIVALRECRUITINFOIDFIELD.full_name = ".SurvivalRecruitInfo.id"
 SurvivalDef_pb.SURVIVALRECRUITINFOIDFIELD.number = 1
@@ -1636,6 +1849,74 @@ SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUND_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUND_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUND_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.name = "id"
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.full_name = ".SurvivalMessage.id"
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.type = 3
+SurvivalDef_pb.SURVIVALMESSAGEIDFIELD.cpp_type = 2
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.name = "configId"
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.full_name = ".SurvivalMessage.configId"
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.number = 2
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.index = 1
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.label = 3
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.name = "likeCount"
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.full_name = ".SurvivalMessage.likeCount"
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.number = 3
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.index = 2
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.label = 1
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.type = 5
+SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.name = "dislikeCount"
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.full_name = ".SurvivalMessage.dislikeCount"
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.number = 4
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.index = 3
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.label = 1
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.type = 5
+SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.name = "isSelf"
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.full_name = ".SurvivalMessage.isSelf"
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.number = 5
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.index = 4
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.label = 1
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.default_value = false
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.type = 8
+SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD.cpp_type = 7
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.name = "status"
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.full_name = ".SurvivalMessage.status"
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.number = 6
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.index = 5
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.label = 1
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.type = 5
+SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.name = "SurvivalMessage"
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.full_name = ".SurvivalMessage"
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.fields = {
+	SurvivalDef_pb.SURVIVALMESSAGEIDFIELD,
+	SurvivalDef_pb.SURVIVALMESSAGECONFIGIDFIELD,
+	SurvivalDef_pb.SURVIVALMESSAGELIKECOUNTFIELD,
+	SurvivalDef_pb.SURVIVALMESSAGEDISLIKECOUNTFIELD,
+	SurvivalDef_pb.SURVIVALMESSAGEISSELFFIELD,
+	SurvivalDef_pb.SURVIVALMESSAGESTATUSFIELD
+}
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALMESSAGE_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALINTRUDEBOXTEMPLATEIDFIELD.name = "templateId"
 SurvivalDef_pb.SURVIVALINTRUDEBOXTEMPLATEIDFIELD.full_name = ".SurvivalIntrudeBox.templateId"
 SurvivalDef_pb.SURVIVALINTRUDEBOXTEMPLATEIDFIELD.number = 1
@@ -1665,6 +1946,25 @@ SurvivalDef_pb.SURVIVALINTRUDEBOX_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALINTRUDEBOX_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALINTRUDEBOX_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.name = "values"
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.full_name = ".SurvivalDerivedContainer.values"
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.number = 1
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.index = 0
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.label = 3
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.message_type = SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.type = 11
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.name = "SurvivalDerivedContainer"
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.full_name = ".SurvivalDerivedContainer"
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.fields = {
+	SurvivalDef_pb.SURVIVALDERIVEDCONTAINERVALUESFIELD
+}
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALDECREESPANELPROPDECREESIDFIELD.name = "decreesId"
 SurvivalDef_pb.SURVIVALDECREESPANELPROPDECREESIDFIELD.full_name = ".SurvivalDecreesPanelProp.decreesId"
 SurvivalDef_pb.SURVIVALDECREESPANELPROPDECREESIDFIELD.number = 1
@@ -1693,6 +1993,25 @@ SurvivalDef_pb.SURVIVALDECREESPANELPROP_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALDECREESPANELPROP_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALDECREESPANELPROP_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.name = "techs"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.full_name = ".SurvivalOutSideTechBox.techs"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.number = 1
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.index = 0
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.label = 3
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.message_type = SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.name = "SurvivalOutSideTechBox"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.full_name = ".SurvivalOutSideTechBox"
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.fields = {
+	SurvivalDef_pb.SURVIVALOUTSIDETECHBOXTECHSFIELD
+}
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALNPCBOXNPCSFIELD.name = "npcs"
 SurvivalDef_pb.SURVIVALNPCBOXNPCSFIELD.full_name = ".SurvivalNpcBox.npcs"
 SurvivalDef_pb.SURVIVALNPCBOXNPCSFIELD.number = 1
@@ -1848,6 +2167,25 @@ SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD.message_type = SurvivalDef_pb.SURVIVALSCENEPROP_MSG
 SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD.type = 11
 SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.name = "skillInfo"
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.full_name = ".SurvivalScene.skillInfo"
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.number = 17
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.index = 14
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.label = 1
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.message_type = SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.type = 11
+SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.name = "clockMaxTime"
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.full_name = ".SurvivalScene.clockMaxTime"
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.number = 18
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.index = 15
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.label = 1
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.type = 5
+SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD.cpp_type = 1
 SurvivalDef_pb.SURVIVALSCENE_MSG.name = "SurvivalScene"
 SurvivalDef_pb.SURVIVALSCENE_MSG.full_name = ".SurvivalScene"
 SurvivalDef_pb.SURVIVALSCENE_MSG.nested_types = {}
@@ -1866,7 +2204,9 @@ SurvivalDef_pb.SURVIVALSCENE_MSG.fields = {
 	SurvivalDef_pb.SURVIVALSCENEFOLLOWTASKFIELD,
 	SurvivalDef_pb.SURVIVALSCENECLIENTDATAFIELD,
 	SurvivalDef_pb.SURVIVALSCENECELLSFIELD,
-	SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD
+	SurvivalDef_pb.SURVIVALSCENESCENEPROPFIELD,
+	SurvivalDef_pb.SURVIVALSCENESKILLINFOFIELD,
+	SurvivalDef_pb.SURVIVALSCENECLOCKMAXTIMEFIELD
 }
 SurvivalDef_pb.SURVIVALSCENE_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALSCENE_MSG.extensions = {}
@@ -2006,6 +2346,34 @@ SurvivalDef_pb.SURVIVALSHOPITEM_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALSHOPITEM_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALSHOPITEM_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.name = "useCount"
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.full_name = ".SurvivalRoleSkillInfo.useCount"
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.number = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.index = 0
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.type = 5
+SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.name = "maxUseCount"
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.full_name = ".SurvivalRoleSkillInfo.maxUseCount"
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.number = 2
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.index = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.label = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.type = 5
+SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.name = "SurvivalRoleSkillInfo"
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.full_name = ".SurvivalRoleSkillInfo"
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.fields = {
+	SurvivalDef_pb.SURVIVALROLESKILLINFOUSECOUNTFIELD,
+	SurvivalDef_pb.SURVIVALROLESKILLINFOMAXUSECOUNTFIELD
+}
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALITEMTIPSITEMIDFIELD.name = "itemId"
 SurvivalDef_pb.SURVIVALITEMTIPSITEMIDFIELD.full_name = ".SurvivalItemTips.itemId"
 SurvivalDef_pb.SURVIVALITEMTIPSITEMIDFIELD.number = 1
@@ -2208,6 +2576,36 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD.message_type = SurvivalDef_pb.SURVIVALHANDBOOKBOX_MSG
 SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD.type = 11
 SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.name = "outSideTechBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.full_name = ".SurvivalOutSideInfo.outSideTechBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.number = 16
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.index = 14
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.message_type = SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.name = "roleBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.full_name = ".SurvivalOutSideInfo.roleBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.number = 17
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.index = 15
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.message_type = SurvivalDef_pb.SURVIVALROLEBOX_MSG
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.name = "modBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.full_name = ".SurvivalOutSideInfo.modBox"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.number = 27
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.index = 16
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.message_type = SurvivalDef_pb.SURVIVALMODBOX_MSG
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.cpp_type = 10
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.name = "SurvivalOutSideInfo"
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.full_name = ".SurvivalOutSideInfo"
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.nested_types = {}
@@ -2226,7 +2624,10 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.fields = {
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOUNLOCKDIFFICULTYFIELD,
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOENDIDFIELD,
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOCLIENTDATAFIELD,
-	SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD
 }
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.extensions = {}
@@ -2327,6 +2728,54 @@ SurvivalDef_pb.SURVIVALHANDBOOKBOX_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALHANDBOOKBOX_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALHANDBOOKBOX_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.name = "derivedId"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.full_name = ".SurvivalDerivedValue.derivedId"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.name = "finalVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.full_name = ".SurvivalDerivedValue.finalVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.number = 2
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.index = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.label = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.type = 2
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD.cpp_type = 6
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.name = "fixVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.full_name = ".SurvivalDerivedValue.fixVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.number = 3
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.index = 2
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.label = 1
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.type = 2
+SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD.cpp_type = 6
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.name = "correctionVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.full_name = ".SurvivalDerivedValue.correctionVal"
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.number = 4
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.index = 3
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.label = 3
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.type = 2
+SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD.cpp_type = 6
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.name = "SurvivalDerivedValue"
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.full_name = ".SurvivalDerivedValue"
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.fields = {
+	SurvivalDef_pb.SURVIVALDERIVEDVALUEDERIVEDIDFIELD,
+	SurvivalDef_pb.SURVIVALDERIVEDVALUEFINALVALFIELD,
+	SurvivalDef_pb.SURVIVALDERIVEDVALUEFIXVALFIELD,
+	SurvivalDef_pb.SURVIVALDERIVEDVALUECORRECTIONVALFIELD
+}
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALNPCIDFIELD.name = "id"
 SurvivalDef_pb.SURVIVALNPCIDFIELD.full_name = ".SurvivalNpc.id"
 SurvivalDef_pb.SURVIVALNPCIDFIELD.number = 1
@@ -2429,6 +2878,24 @@ SurvivalDef_pb.SURUNITFALLFIELD.has_default_value = false
 SurvivalDef_pb.SURUNITFALLFIELD.default_value = false
 SurvivalDef_pb.SURUNITFALLFIELD.type = 8
 SurvivalDef_pb.SURUNITFALLFIELD.cpp_type = 7
+SurvivalDef_pb.SURUNITFORCEFIELD.name = "force"
+SurvivalDef_pb.SURUNITFORCEFIELD.full_name = ".SurUnit.force"
+SurvivalDef_pb.SURUNITFORCEFIELD.number = 8
+SurvivalDef_pb.SURUNITFORCEFIELD.index = 7
+SurvivalDef_pb.SURUNITFORCEFIELD.label = 1
+SurvivalDef_pb.SURUNITFORCEFIELD.has_default_value = false
+SurvivalDef_pb.SURUNITFORCEFIELD.default_value = false
+SurvivalDef_pb.SURUNITFORCEFIELD.type = 8
+SurvivalDef_pb.SURUNITFORCEFIELD.cpp_type = 7
+SurvivalDef_pb.SURUNITMARKFIELD.name = "mark"
+SurvivalDef_pb.SURUNITMARKFIELD.full_name = ".SurUnit.mark"
+SurvivalDef_pb.SURUNITMARKFIELD.number = 9
+SurvivalDef_pb.SURUNITMARKFIELD.index = 8
+SurvivalDef_pb.SURUNITMARKFIELD.label = 1
+SurvivalDef_pb.SURUNITMARKFIELD.has_default_value = false
+SurvivalDef_pb.SURUNITMARKFIELD.default_value = 0
+SurvivalDef_pb.SURUNITMARKFIELD.type = 5
+SurvivalDef_pb.SURUNITMARKFIELD.cpp_type = 1
 SurvivalDef_pb.SURUNIT_MSG.name = "SurUnit"
 SurvivalDef_pb.SURUNIT_MSG.full_name = ".SurUnit"
 SurvivalDef_pb.SURUNIT_MSG.nested_types = {}
@@ -2440,7 +2907,9 @@ SurvivalDef_pb.SURUNIT_MSG.fields = {
 	SurvivalDef_pb.SURUNITPOSITIONFIELD,
 	SurvivalDef_pb.SURUNITVISIONVALFIELD,
 	SurvivalDef_pb.SURUNITEXTRAPARAMFIELD,
-	SurvivalDef_pb.SURUNITFALLFIELD
+	SurvivalDef_pb.SURUNITFALLFIELD,
+	SurvivalDef_pb.SURUNITFORCEFIELD,
+	SurvivalDef_pb.SURUNITMARKFIELD
 }
 SurvivalDef_pb.SURUNIT_MSG.is_extendable = false
 SurvivalDef_pb.SURUNIT_MSG.extensions = {}
@@ -2715,6 +3184,34 @@ SurvivalDef_pb.SURVIVALFOLLOWTASK_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALFOLLOWTASK_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALFOLLOWTASK_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.name = "unlockId"
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.full_name = ".SurvivalModBox.unlockId"
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.label = 3
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.name = "newIds"
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.full_name = ".SurvivalModBox.newIds"
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.number = 2
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.index = 1
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.label = 3
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.type = 5
+SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALMODBOX_MSG.name = "SurvivalModBox"
+SurvivalDef_pb.SURVIVALMODBOX_MSG.full_name = ".SurvivalModBox"
+SurvivalDef_pb.SURVIVALMODBOX_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALMODBOX_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALMODBOX_MSG.fields = {
+	SurvivalDef_pb.SURVIVALMODBOXUNLOCKIDFIELD,
+	SurvivalDef_pb.SURVIVALMODBOXNEWIDSFIELD
+}
+SurvivalDef_pb.SURVIVALMODBOX_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALMODBOX_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALHEXCELLHEXFIELD.name = "hex"
 SurvivalDef_pb.SURVIVALHEXCELLHEXFIELD.full_name = ".SurvivalHexCell.hex"
 SurvivalDef_pb.SURVIVALHEXCELLHEXFIELD.number = 1
@@ -2868,6 +3365,16 @@ SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD.message_type = SurvivalDef_pb.SURVIVALREPUTATIONPROP_MSG
 SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD.type = 11
 SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.name = "insideTechProp"
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.full_name = ".SurvivalBuilding.insideTechProp"
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.number = 10
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.index = 9
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.label = 1
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.message_type = SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.type = 11
+SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD.cpp_type = 10
 SurvivalDef_pb.SURVIVALBUILDING_MSG.name = "SurvivalBuilding"
 SurvivalDef_pb.SURVIVALBUILDING_MSG.full_name = ".SurvivalBuilding"
 SurvivalDef_pb.SURVIVALBUILDING_MSG.nested_types = {}
@@ -2881,7 +3388,8 @@ SurvivalDef_pb.SURVIVALBUILDING_MSG.fields = {
 	SurvivalDef_pb.SURVIVALBUILDINGHEROPOSFIELD,
 	SurvivalDef_pb.SURVIVALBUILDINGNPCPOSFIELD,
 	SurvivalDef_pb.SURVIVALBUILDINGSHOPFIELD,
-	SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD
+	SurvivalDef_pb.SURVIVALBUILDINGREPUTATIONPROPFIELD,
+	SurvivalDef_pb.SURVIVALBUILDINGINSIDETECHPROPFIELD
 }
 SurvivalDef_pb.SURVIVALBUILDING_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALBUILDING_MSG.extensions = {}
@@ -2912,6 +3420,15 @@ SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD.has_default_value = false
 SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD.default_value = 0
 SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD.type = 5
 SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.name = "status"
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.full_name = ".SurvivalHandbook.status"
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.number = 4
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.index = 3
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.label = 1
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.type = 5
+SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD.cpp_type = 1
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.name = "SurvivalHandbook"
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.full_name = ".SurvivalHandbook"
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.nested_types = {}
@@ -2919,7 +3436,8 @@ SurvivalDef_pb.SURVIVALHANDBOOK_MSG.enum_types = {}
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.fields = {
 	SurvivalDef_pb.SURVIVALHANDBOOKIDFIELD,
 	SurvivalDef_pb.SURVIVALHANDBOOKISNEWFIELD,
-	SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD
+	SurvivalDef_pb.SURVIVALHANDBOOKPARAMFIELD,
+	SurvivalDef_pb.SURVIVALHANDBOOKSTATUSFIELD
 }
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALHANDBOOK_MSG.extensions = {}
@@ -2936,6 +3454,8 @@ SurvivalDef_pb.SurvivalBuildingBox = protobuf.Message(SurvivalDef_pb.SURVIVALBUI
 SurvivalDef_pb.SurvivalBuildingHeroPos = protobuf.Message(SurvivalDef_pb.SURVIVALBUILDINGHEROPOS_MSG)
 SurvivalDef_pb.SurvivalBuildingNpcPos = protobuf.Message(SurvivalDef_pb.SURVIVALBUILDINGNPCPOS_MSG)
 SurvivalDef_pb.SurvivalDecreesPanelProp = protobuf.Message(SurvivalDef_pb.SURVIVALDECREESPANELPROP_MSG)
+SurvivalDef_pb.SurvivalDerivedContainer = protobuf.Message(SurvivalDef_pb.SURVIVALDERIVEDCONTAINER_MSG)
+SurvivalDef_pb.SurvivalDerivedValue = protobuf.Message(SurvivalDef_pb.SURVIVALDERIVEDVALUE_MSG)
 SurvivalDef_pb.SurvivalEquipBox = protobuf.Message(SurvivalDef_pb.SURVIVALEQUIPBOX_MSG)
 SurvivalDef_pb.SurvivalEquipSlot = protobuf.Message(SurvivalDef_pb.SURVIVALEQUIPSLOT_MSG)
 SurvivalDef_pb.SurvivalExploreBattleInfo = protobuf.Message(SurvivalDef_pb.SURVIVALEXPLOREBATTLEINFO_MSG)
@@ -2946,6 +3466,7 @@ SurvivalDef_pb.SurvivalHandbookBox = protobuf.Message(SurvivalDef_pb.SURVIVALHAN
 SurvivalDef_pb.SurvivalHero = protobuf.Message(SurvivalDef_pb.SURVIVALHERO_MSG)
 SurvivalDef_pb.SurvivalHeroBox = protobuf.Message(SurvivalDef_pb.SURVIVALHEROBOX_MSG)
 SurvivalDef_pb.SurvivalHexCell = protobuf.Message(SurvivalDef_pb.SURVIVALHEXCELL_MSG)
+SurvivalDef_pb.SurvivalInsideTechProp = protobuf.Message(SurvivalDef_pb.SURVIVALINSIDETECHPROP_MSG)
 SurvivalDef_pb.SurvivalIntrudeBox = protobuf.Message(SurvivalDef_pb.SURVIVALINTRUDEBOX_MSG)
 SurvivalDef_pb.SurvivalIntrudeFight = protobuf.Message(SurvivalDef_pb.SURVIVALINTRUDEFIGHT_MSG)
 SurvivalDef_pb.SurvivalIntrudeFightRound = protobuf.Message(SurvivalDef_pb.SURVIVALINTRUDEFIGHTROUND_MSG)
@@ -2954,13 +3475,20 @@ SurvivalDef_pb.SurvivalIntrudeMonster = protobuf.Message(SurvivalDef_pb.SURVIVAL
 SurvivalDef_pb.SurvivalIntrudeScheme = protobuf.Message(SurvivalDef_pb.SURVIVALINTRUDESCHEME_MSG)
 SurvivalDef_pb.SurvivalItemTips = protobuf.Message(SurvivalDef_pb.SURVIVALITEMTIPS_MSG)
 SurvivalDef_pb.SurvivalMapInfo = protobuf.Message(SurvivalDef_pb.SURVIVALMAPINFO_MSG)
+SurvivalDef_pb.SurvivalMessage = protobuf.Message(SurvivalDef_pb.SURVIVALMESSAGE_MSG)
+SurvivalDef_pb.SurvivalModBox = protobuf.Message(SurvivalDef_pb.SURVIVALMODBOX_MSG)
 SurvivalDef_pb.SurvivalNpc = protobuf.Message(SurvivalDef_pb.SURVIVALNPC_MSG)
 SurvivalDef_pb.SurvivalNpcBox = protobuf.Message(SurvivalDef_pb.SURVIVALNPCBOX_MSG)
 SurvivalDef_pb.SurvivalOutSideInfo = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG)
+SurvivalDef_pb.SurvivalOutSideTech = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG)
+SurvivalDef_pb.SurvivalOutSideTechBox = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG)
 SurvivalDef_pb.SurvivalPanel = protobuf.Message(SurvivalDef_pb.SURVIVALPANEL_MSG)
 SurvivalDef_pb.SurvivalRecruitGood = protobuf.Message(SurvivalDef_pb.SURVIVALRECRUITGOOD_MSG)
 SurvivalDef_pb.SurvivalRecruitInfo = protobuf.Message(SurvivalDef_pb.SURVIVALRECRUITINFO_MSG)
 SurvivalDef_pb.SurvivalReputationProp = protobuf.Message(SurvivalDef_pb.SURVIVALREPUTATIONPROP_MSG)
+SurvivalDef_pb.SurvivalRole = protobuf.Message(SurvivalDef_pb.SURVIVALROLE_MSG)
+SurvivalDef_pb.SurvivalRoleBox = protobuf.Message(SurvivalDef_pb.SURVIVALROLEBOX_MSG)
+SurvivalDef_pb.SurvivalRoleSkillInfo = protobuf.Message(SurvivalDef_pb.SURVIVALROLESKILLINFO_MSG)
 SurvivalDef_pb.SurvivalSafeZone = protobuf.Message(SurvivalDef_pb.SURVIVALSAFEZONE_MSG)
 SurvivalDef_pb.SurvivalScene = protobuf.Message(SurvivalDef_pb.SURVIVALSCENE_MSG)
 SurvivalDef_pb.SurvivalSceneHero = protobuf.Message(SurvivalDef_pb.SURVIVALSCENEHERO_MSG)

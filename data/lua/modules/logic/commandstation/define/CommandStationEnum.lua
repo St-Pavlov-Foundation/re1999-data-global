@@ -68,6 +68,7 @@ CommandStationEnum.TaskType = {
 CommandStationEnum.TaskShowType = {
 	Parade = 1,
 	Overseas = 2,
+	Spring = 3,
 	Normal = 0
 }
 CommandStationEnum.CharacterClickState = {

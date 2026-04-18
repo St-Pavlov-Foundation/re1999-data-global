@@ -148,5 +148,29 @@
     "name": "language_10097895",
     "useType": 2,
     "use_max": 1
+  },
+  {
+    "id": 79,
+    "name": "language_10110091",
+    "useType": 2,
+    "use_max": 1
+  },
+  {
+    "id": 77,
+    "name": "language_10110092",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 78,
+    "name": "language_10110093",
+    "useType": 1,
+    "use_max": 0
+  },
+  {
+    "id": 81,
+    "name": "language_10110094",
+    "useType": 2,
+    "use_max": 1
   }
 ]

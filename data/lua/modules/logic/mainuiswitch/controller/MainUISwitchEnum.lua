@@ -21,7 +21,9 @@ MainUISwitchEnum.MainUIPart = {
 	Fight = 9,
 	Mail = 1,
 	ActivityFight = 10,
+	CaiDan = 15,
 	Role = 6,
+	SkinBG = 14,
 	Summon = 7
 }
 MainUISwitchEnum.MainUIFontMaterialPath = "font/meshpro/outline_material/mainui/mainui_font_material_%s.mat"
@@ -35,8 +37,9 @@ MainUISwitchEnum.SwitchMainUIOffsetType = {
 }
 MainUISwitchEnum.MainUIScale = 0.8
 MainUISwitchEnum.Skin = {
-	V3a2 = 3,
+	V3a4 = 4,
 	Sp01 = 2,
+	V3a2 = 3,
 	Normal = 1
 }
 MainUISwitchEnum.EagleLocationType = {
@@ -61,5 +64,45 @@ MainUISwitchEnum.AnimName = {
 	Idle = "idle",
 	In = "in"
 }
+MainUISwitchEnum.MainUIPath = "ui/viewres/main/mainview.prefab"
+MainUISwitchEnum.ChildViewType = {
+	MainUIPartView = 5,
+	SwitchMainActExtraDisplay = 3,
+	SwitchMainUIEagleAnimView = 6,
+	SwitchMainActivityEnterView = 2,
+	SwitchMainUIView = 4,
+	MainBirdAnimView = 7,
+	SwitchMainUIShowView = 1
+}
+MainUISwitchEnum.ChildViewComp = {
+	[MainUISwitchEnum.ChildViewType.SwitchMainUIShowView] = {
+		cls = SwitchMainUIShowView
+	},
+	[MainUISwitchEnum.ChildViewType.SwitchMainActivityEnterView] = {
+		cls = SwitchMainActivityEnterView
+	},
+	[MainUISwitchEnum.ChildViewType.SwitchMainActExtraDisplay] = {
+		cls = SwitchMainActExtraDisplay
+	},
+	[MainUISwitchEnum.ChildViewType.SwitchMainUIView] = {
+		cls = SwitchMainUIView
+	},
+	[MainUISwitchEnum.ChildViewType.MainUIPartView] = {
+		cls = MainUIPartView
+	},
+	[MainUISwitchEnum.ChildViewType.SwitchMainUIEagleAnimView] = {
+		cls = SwitchMainUIEagleAnimView,
+		UIId = MainUISwitchEnum.Skin.Sp01
+	},
+	[MainUISwitchEnum.ChildViewType.MainBirdAnimView] = {
+		cls = SwitchMainUIEagleAnimView,
+		UIId = MainUISwitchEnum.Skin.V3a4
+	}
+}
+MainUISwitchEnum.ConstId = {
+	BirdClickSustainTime = 2,
+	BirdClickCount = 1
+}
+MainUISwitchEnum.FirstEnterMainView = "MainUISwitchEnum_FirstEnterMainView"
 
 return MainUISwitchEnum

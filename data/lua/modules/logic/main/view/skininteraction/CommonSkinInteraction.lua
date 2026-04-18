@@ -29,7 +29,7 @@ function CommonSkinInteraction:_beforePlayVoice(config)
 	self._isRespondType = self._isSpecialInteraction and self:_isSpecialRespondType(config.type)
 	self._changeValue = nil
 
-	local isWaitVoice = config and config.audio == self._waitVoice and not self._skipChangeStatus
+	local isWaitVoice = config and self:_isWaitVoice(config.audio) and not self._skipChangeStatus
 
 	if isWaitVoice then
 		local value = CharacterVoiceController.instance:getChangeValue(config)
@@ -98,11 +98,49 @@ function CommonSkinInteraction:_onPlayVoice()
 		self._protectionTime = config.protectionTime or 0
 		self._waitTime = config.time
 		self._waitVoice = config.waitVoice
+
+		self:_initWaitVoiceParams(config.waitVoiceParams)
+
 		self._timeoutVoiceConfig = lua_character_voice.configDict[self._voiceConfig.heroId][config.timeoutVoice]
 		self._skipChangeStatus = config.statusParams == CharacterVoiceEnum.StatusParams.Luxi_NoChangeStatus
 
 		CharacterVoiceController.instance:trackSpecialInteraction(self._voiceConfig.heroId, self._voiceConfig.audio, CharacterVoiceController.instance:getSpecialInteractionPlayType())
 	end
+end
+
+function CommonSkinInteraction:_isWaitVoice(audio)
+	if self._waitVoice == audio then
+		return true
+	end
+
+	if self._waitVoiceParamsObj then
+		return self._waitVoiceParamsObj:isWaitVoice(audio)
+	end
+end
+
+function CommonSkinInteraction:_initWaitVoiceParams(waitVoiceParams)
+	self._waitVoiceParamsObj = nil
+
+	if string.nilorempty(waitVoiceParams) then
+		return
+	end
+
+	local list = string.split(waitVoiceParams, "|")
+	local type = tonumber(list[1])
+
+	self._waitVoiceParamsObj = BaseWaitVoiceParams.getWaitVoiceParamsObj(type)
+
+	if self._waitVoiceParamsObj then
+		self._waitVoiceParamsObj:init(list)
+	end
+end
+
+function CommonSkinInteraction:selectFromGroup(config)
+	if not self._waitVoiceParamsObj then
+		return config
+	end
+
+	return self._waitVoiceParamsObj:selectFromGroup(config)
 end
 
 function CommonSkinInteraction:_waitTimeout()
@@ -134,7 +172,7 @@ function CommonSkinInteraction:canPlay(config)
 			return false
 		end
 
-		return config.audio == self._waitVoice
+		return self:_isWaitVoice(config.audio)
 	end
 
 	if self._voiceConfig and self._isRespondType then

@@ -91,6 +91,12 @@ function ToastView:_showToast()
 		return
 	end
 
+	ToastController.instance:dispatchEvent(ToastEvent.ReceiveToast, msg)
+
+	if msg.co and ToastParamEnum.FixedToast[msg.co.id] then
+		return
+	end
+
 	local newItem = table.remove(self._freeList, 1)
 
 	if not newItem then
@@ -125,6 +131,7 @@ function ToastView:_doRecycleAnimation(item, isManualRecycle)
 end
 
 function ToastView:_recycleToast(item)
+	ToastController.instance:dispatchEvent(ToastEvent.ClearCacheToastInfo, item.msg)
 	item:reset()
 	table.insert(self._freeList, item)
 end

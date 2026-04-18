@@ -1,0 +1,338 @@
+[
+  {
+    "id": 40001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 40002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 40003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 40004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 41001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 41002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 41003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 41004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 42001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 42002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 42003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 42004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 43001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 43002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 43003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 43004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 44001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 44002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 44003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 44004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 45001,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "",
+    "closeEffect": "",
+    "closeTime": 0.0,
+    "closeAudio": 0,
+    "posArr": []
+  },
+  {
+    "id": 45002,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 45003,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene_01",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_01_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  },
+  {
+    "id": 45004,
+    "enterEffect": "",
+    "enterTime": 0.0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v3a4_lsj_unique_01_scene",
+    "closeEffect": "buff/v3a4_lsj_unique_01_scene_end",
+    "closeTime": 2.0,
+    "closeAudio": 0,
+    "posArr": [
+      0,
+      3.5,
+      0
+    ]
+  }
+]

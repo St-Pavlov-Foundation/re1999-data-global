@@ -238,5 +238,77 @@
     "sampleMinHeight": 0,
     "flyPath": 0,
     "priority": 11
+  },
+  {
+    "id": 22,
+    "unit": 1,
+    "replaceRule": "2#1080",
+    "res": "buff/v3a4_asfd_lsj_fz",
+    "sceneEmitterId": 4,
+    "audio": 431410151,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 0,
+    "priority": 15
+  },
+  {
+    "id": 23,
+    "unit": 2,
+    "replaceRule": "2#1080",
+    "res": "buff/v3a4_asfd_lsj_feijian_2",
+    "sceneEmitterId": 0,
+    "audio": 431410152,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 3,
+    "priority": 15
+  },
+  {
+    "id": 24,
+    "unit": 2,
+    "replaceRule": "2#1080|3#3",
+    "res": "buff/v3a4_asfd_lsj_feijian_1",
+    "sceneEmitterId": 0,
+    "audio": 431410152,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 3,
+    "priority": 16
+  },
+  {
+    "id": 25,
+    "unit": 3,
+    "replaceRule": "2#1080",
+    "res": "buff/v3a4_asfd_lsj_feijian_2_hit",
+    "sceneEmitterId": 0,
+    "audio": 431410154,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 3,
+    "priority": 15
+  },
+  {
+    "id": 26,
+    "unit": 3,
+    "replaceRule": "2#1080|3#3",
+    "res": "buff/v3a4_asfd_lsj_feijian_1_hit",
+    "sceneEmitterId": 0,
+    "audio": 431410154,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 3,
+    "priority": 16
+  },
+  {
+    "id": 27,
+    "unit": 4,
+    "replaceRule": "2#1080",
+    "res": "buff/v3a4_asfd_lsj_fz_xl",
+    "sceneEmitterId": 4,
+    "audio": 411000011,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 0,
+    "priority": 15
   }
 ]

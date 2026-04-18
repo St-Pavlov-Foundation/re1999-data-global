@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "desc": "language_10114735",
+    "resource": "survival_map_skillicon_1",
+    "times": 3,
+    "addTalentIds": "",
+    "effect1": "noiseAttract#0#2#6",
+    "effect2": "",
+    "effect3": ""
+  },
+  {
+    "id": 2,
+    "desc": "language_10114736",
+    "resource": "survival_map_skillicon_2",
+    "times": 2,
+    "addTalentIds": "",
+    "effect1": "killMonster#2#1",
+    "effect2": "",
+    "effect3": ""
+  },
+  {
+    "id": 3,
+    "desc": "language_10114737",
+    "resource": "survival_map_skillicon_3",
+    "times": 2,
+    "addTalentIds": "",
+    "effect1": "destroyBlock#3",
+    "effect2": "",
+    "effect3": ""
+  },
+  {
+    "id": 4,
+    "desc": "language_10114738",
+    "resource": "survival_map_skillicon_5",
+    "times": 3,
+    "addTalentIds": "",
+    "effect1": "killMonster#3#1",
+    "effect2": "",
+    "effect3": ""
+  },
+  {
+    "id": 5,
+    "desc": "language_10114738",
+    "resource": "survival_map_skillicon_6",
+    "times": 3,
+    "addTalentIds": "",
+    "effect1": "killMonster#3#1",
+    "effect2": "",
+    "effect3": ""
+  },
+  {
+    "id": 6,
+    "desc": "language_10114739",
+    "resource": "survival_map_skillicon_4",
+    "times": 2,
+    "addTalentIds": "",
+    "effect1": "findDrop#0#2#30339200",
+    "effect2": "",
+    "effect3": ""
+  }
+]

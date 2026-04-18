@@ -354,13 +354,12 @@ function StoreSkinGoodsView2:_refreshSkinIcon(skinStoreCfg)
 			local spinePrefabPath = paramsArray[1]
 			local spine2PrefabPath = paramsArray[2]
 			local pos = string.splitToNumber(paramsArray[3], ",")
+			local scale = tonumber(paramsArray[4]) or 1
 			local bgPath = paramsArray[6]
 
 			signTexturePath = arrayLength > 6 and paramsArray[7] or signTexturePath
 
-			if self._skinSpine then
-				self._skinSpine:setResPath(spinePrefabPath, self._onSpine1Loaded, self, true)
-			else
+			if not self._skinSpine then
 				self._skinSpineGO = gohelper.create2d(self._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
 
 				local spineRootRect = self._skinSpineGO.transform
@@ -368,10 +367,12 @@ function StoreSkinGoodsView2:_refreshSkinIcon(skinStoreCfg)
 				transformhelper.setLocalPos(spineRootRect, pos[1], pos[2], 0)
 
 				self._skinSpine = GuiSpine.Create(self._skinSpineGO, false)
+			end
 
-				self._skinSpine:setResPath(spinePrefabPath, self._onSpine1Loaded, self, true)
+			self._skinSpine:setResPath(spinePrefabPath, self._onSpine1Loaded, self, true)
 
-				if not string.nilorempty(spine2PrefabPath) then
+			if not string.nilorempty(spine2PrefabPath) then
+				if not self._skinSpine2 then
 					self._skinSpineGO2 = gohelper.create2d(self._goUniqueSkinsSpineRoot2, "uniqueSkinSpine2")
 
 					local spine2RootRect = self._skinSpineGO2.transform
@@ -379,9 +380,17 @@ function StoreSkinGoodsView2:_refreshSkinIcon(skinStoreCfg)
 					transformhelper.setLocalPos(spine2RootRect, pos[1], pos[2], 0)
 
 					self._skinSpine2 = GuiSpine.Create(self._skinSpineGO2, false)
-
-					self._skinSpine2:setResPath(spine2PrefabPath, self._onSpine2Loaded, self, true)
 				end
+
+				self._skinSpine2:setResPath(spine2PrefabPath, self._onSpine2Loaded, self, true)
+			end
+
+			if self._skinSpineGO then
+				transformhelper.setLocalScale(self._skinSpineGO.transform, scale, scale, scale)
+			end
+
+			if self._skinSpineGO2 then
+				transformhelper.setLocalScale(self._skinSpineGO2.transform, scale, scale, scale)
 			end
 
 			if not string.nilorempty(bgPath) then

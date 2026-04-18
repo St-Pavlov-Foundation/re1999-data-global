@@ -197,7 +197,8 @@ FightStepBuilder.ActEffectWorkCls = {
 	[FightEnum.EffectType.ADDMAXROUND] = FightWorkAddMaxRound356,
 	[FightEnum.EffectType.ROUGE2CHECK] = FightWorkRouge2Check362,
 	[FightEnum.EffectType.INDICATORDIFFCHANGE] = FightWorkIndicatorDiffChange363,
-	[FightEnum.EffectType.CHANGESCENE] = FightWorkChangeScene364
+	[FightEnum.EffectType.CHANGESCENE] = FightWorkChangeScene364,
+	[FightEnum.EffectType.EMITTEREXTRADEMAGE] = FightWorkEmitterExtraDemage367
 }
 FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
@@ -248,6 +249,8 @@ function FightStepBuilder.buildStepWorkList(fightStepList)
 	local skillFlowList = {}
 
 	for i, fightStepData in ipairs(fightStepList) do
+		table.insert(stepWorkList, FightWorkBeforeSkillEffect.New(fightStepData))
+
 		if fightStepData.actType == FightEnum.ActType.SKILL then
 			if FightHelper.isASFDSkill(fightStepData.actId) then
 				local nextStepData = fightStepList[i + 1]
@@ -304,6 +307,8 @@ function FightStepBuilder.buildStepWorkList(fightStepList)
 		else
 			logError("step actType not implement: " .. fightStepData.actType)
 		end
+
+		table.insert(stepWorkList, FightWorkAfterSkillEffect.New(fightStepData))
 	end
 
 	return stepWorkList, skillFlowList

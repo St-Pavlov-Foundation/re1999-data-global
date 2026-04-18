@@ -171,6 +171,112 @@ function SurvivalViewDefine.init(module_views)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
 	}
+	module_views.SurvivalRoleSelectView = {
+		bgBlur = 1,
+		container = "SurvivalRoleSelectViewContainer",
+		destroy = 0,
+		mainRes = "ui/viewres/survival/role/survivalroleselectview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			survivalcommondesccomp = "ui/viewres/survival/common/survivalcommondesccomp.prefab",
+			survivalroleattrcomp = "ui/viewres/survival/role/survivalroleattrcomp.prefab"
+		}
+	}
+	module_views.SurvivalRoleLevelUpView = {
+		destroy = 0,
+		container = "SurvivalRoleLevelUpViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/survival/role/survivalrolelevelupview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default
+	}
+	module_views.SurvivalLeaveMsgView = {
+		destroy = 0,
+		container = "SurvivalLeaveMsgViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/survival/leavemessage/survivalleavemsgview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.SurvivalGiveBackView = {
+		bgBlur = 1,
+		container = "SurvivalGiveBackViewContainer",
+		destroy = 0,
+		mainRes = "ui/viewres/survival/leavemessage/survivalgivebackview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			survivalmapbagitem = "ui/viewres/survival/map/survivalmapbagitem.prefab",
+			survivalmapbaginfoview = "ui/viewres/survival/map/survivalmapbaginfoview.prefab"
+		},
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.SurvivalTechView = {
+		destroy = 0,
+		container = "SurvivalTechViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/survival/tech/survivaltechview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.SurvivalTechShelterView = {
+		destroy = 0,
+		container = "SurvivalTechShelterViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/survival/tech/survivaltechshelterview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.SurvivalRoleLevelTipPopView = {
+		destroy = 0,
+		container = "SurvivalRoleLevelTipPopViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/survival/role/survivalroleleveltippopview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.AnimInternal
+	}
 end
 
 function SurvivalViewDefine.initMapDefine(module_views)
@@ -191,7 +297,8 @@ function SurvivalViewDefine.initMapDefine(module_views)
 		otherRes = {
 			itemRes = "ui/viewres/survival/map/survivalmapbagitem.prefab",
 			infoView = "ui/viewres/survival/map/survivalmapbaginfoview.prefab",
-			unititem = "ui/viewres/survival/map/survivalmapunititem.prefab"
+			unititem = "ui/viewres/survival/map/survivalmapunititem.prefab",
+			roleSkillConfirmItem = "ui/viewres/survival/map/survivalmaproleskillconfirmitem.prefab"
 		}
 	}
 	module_views.SurvivalMapEventView = {
@@ -275,8 +382,10 @@ function SurvivalViewDefine.initMapDefine(module_views)
 			initNpcItemSmall = "ui/viewres/survival/map/survivalinitnpcsmallitem.prefab",
 			initNpcItem = "ui/viewres/survival/map/survivalinitnpcitem.prefab",
 			survivalbossinvasionview = "ui/viewres/survival/shelter/survivalbossinvasionview.prefab",
+			survivalroleattrcomp = "ui/viewres/survival/role/survivalroleattrcomp.prefab",
 			initHeroItem = "ui/viewres/survival/map/survivalinitheroitem.prefab",
-			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab"
+			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab",
+			survivalcommondesccomp = "ui/viewres/survival/common/survivalcommondesccomp.prefab"
 		}
 	}
 	module_views.SurvivalMapTeamView = {
@@ -296,8 +405,10 @@ function SurvivalViewDefine.initMapDefine(module_views)
 		},
 		otherRes = {
 			initNpcItemSmall = "ui/viewres/survival/map/survivalinitnpcsmallitem.prefab",
+			survivalroleattrcomp = "ui/viewres/survival/role/survivalroleattrcomp.prefab",
+			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab",
 			initHeroItemSmall = "ui/viewres/survival/map/survivalinitherosmallitem.prefab",
-			infoView = "ui/viewres/survival/map/survivalpartnermanageinfoview.prefab"
+			survivalcommondesccomp = "ui/viewres/survival/common/survivalcommondesccomp.prefab"
 		}
 	}
 	module_views.SurvivalNPCSelectView = {
@@ -359,6 +470,14 @@ function SurvivalViewDefine.initMapDefine(module_views)
 		otherRes = {
 			[1] = "singlebg/survival_singlebg/loading/survival_loading_fullbg.png"
 		}
+	}
+	module_views.SurvivalSmallMapView = {
+		destroy = 0,
+		container = "SurvivalSmallMapViewContainer",
+		bgBlur = 4,
+		mainRes = "ui/viewres/survival/map/survivalsmallmapview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal
 	}
 	module_views.SurvivalToastView = {
 		destroy = 0,

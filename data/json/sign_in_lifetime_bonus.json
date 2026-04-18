@@ -67,9 +67,9 @@
   },
   {
     "stageid": 12,
-    "logindaysid": 5000,
-    "stagetitle": "",
-    "bonus": ""
+    "logindaysid": 999,
+    "stagetitle": "language_10110060",
+    "bonus": "1#800002#1|1#530001#8"
   },
   {
     "stageid": 13,

@@ -170,6 +170,10 @@ function PlayerModel:setPlayerName(name)
 	PlayerController.instance:dispatchEvent(PlayerEvent.ChangePlayerName)
 end
 
+function PlayerModel:getPlayerName()
+	return self._name
+end
+
 function PlayerModel:setPlayerSignature(signature)
 	self._signature = signature
 

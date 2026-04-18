@@ -47,6 +47,10 @@ function SurvivalUnitEntity:init(go)
 end
 
 function SurvivalUnitEntity:getResPath()
+	if self.tempResPath then
+		return self.tempResPath
+	end
+
 	return self._unitMo:getSceneResPath()
 end
 
@@ -90,6 +94,18 @@ function SurvivalUnitEntity:_onResLoadEnd()
 
 	self:_checkIsTop(self._unitMo.pos)
 	self:updateIsShow()
+
+	if self.loadedCallback then
+		self.loadedCallback(self.loadedCallbackObj, self)
+
+		self.loadedCallback = nil
+		self.loadedCallbackObj = nil
+	end
+end
+
+function SurvivalUnitEntity:setLoadedCallback(callback, callObj)
+	self.loadedCallback = callback
+	self.loadedCallbackObj = callObj
 end
 
 function SurvivalUnitEntity:setPosAndDir(pos, dir)
@@ -186,6 +202,54 @@ function SurvivalUnitEntity:transferTo(pos, dir, callback, callObj)
 
 	self:addEffect(SurvivalConst.UnitEffectPath.Transfer1)
 	TaskDispatcher.runDelay(self._tweenToTarget, self, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.Transfer1])
+end
+
+function SurvivalUnitEntity:rocketTo(pos, dir, callback, callObj)
+	self.rocketParam = {
+		pos = pos,
+		dir = dir,
+		callback = callback,
+		callObj = callObj
+	}
+	self.tempResPath = "survival/buiding/v3a4_survival_huojian.prefab"
+
+	self:setLoadedCallback(self._rocketToTarget, self)
+
+	if not self:_checkModelPath() then
+		self:setLoadedCallback()
+		self:_rocketToTarget()
+	end
+end
+
+function SurvivalUnitEntity:_rocketToTarget()
+	local param = self.rocketParam
+
+	if not param then
+		return
+	end
+
+	local curPosX, curPosY, curPosZ = self.x, self.y, self.z
+	local endPosX, endPosY, endPosZ = SurvivalHelper.instance:hexPointToWorldPoint(param.pos.q, param.pos.r)
+	local angle = Mathf.Atan2(endPosX - curPosX, endPosZ - curPosZ) * Mathf.Rad2Deg - 90
+	local dir = param.dir
+	local rootAngle = dir * 60
+	local modelAngle = Mathf.DeltaAngle(rootAngle, angle)
+
+	transformhelper.setLocalRotation(self._resTrans, 0, modelAngle, 0)
+	self:moveTo(param.pos, dir, self._onRocketToFinished, self)
+end
+
+function SurvivalUnitEntity:_onRocketToFinished()
+	local param = self.rocketParam
+
+	self.rocketParam = nil
+	self.tempResPath = nil
+
+	self:_checkModelPath()
+
+	if param and param.callback then
+		param.callback(param.callObj)
+	end
 end
 
 function SurvivalUnitEntity:_tweenToTarget()
@@ -341,6 +405,8 @@ function SurvivalUnitEntity:_checkModelPath()
 
 		self:onModelChange()
 		SurvivalMapHelper.instance:getScene().pointEffect:addAutoDisposeEffect(SurvivalPointEffectComp.ResPaths.changeModel, self.trans.position, 2)
+
+		return true
 	end
 end
 
@@ -380,12 +446,41 @@ function SurvivalUnitEntity:onPrepairUnitMo()
 
 	if subType == 42 then
 		self:addEffect(SurvivalConst.UnitEffectPath.UnitType42)
-	elseif subType == 44 then
+	elseif subType == 44 or subType == 49 then
 		self:addEffect(SurvivalConst.UnitEffectPath.UnitType44)
 	end
 
 	if tabletool.indexOf(SurvivalConfig.instance:getHighValueUnitSubTypes(), subType) then
 		self:addEffect(SurvivalConst.UnitEffectPath.FollowUnit)
+	end
+
+	self:updateUnitMark()
+end
+
+function SurvivalUnitEntity:updateUnitMark()
+	if not self._unitMo.getMark then
+		return
+	end
+
+	local lastMark = self._unitMark
+	local curMark = self._unitMo:getMark()
+
+	self._unitMark = curMark
+
+	local isChange = lastMark ~= curMark
+
+	if not isChange then
+		return
+	end
+
+	if self._unitMo:isMark(SurvivalEnum.UnitMarkType.Attract) then
+		self:addEffect(SurvivalConst.UnitEffectPath.WelxEffect)
+	else
+		self:removeEffect(SurvivalConst.UnitEffectPath.WelxEffect)
+	end
+
+	if self._unitMo:isMark(SurvivalEnum.UnitMarkType.ItemAttract) then
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowUnitBubble, self._unitMo.id, 3, 1)
 	end
 end
 
@@ -567,6 +662,67 @@ function SurvivalUnitEntity:removeEffect(effectPath)
 	self._allEffects[effectPath] = nil
 end
 
+function SurvivalUnitEntity:addEffectTiming(effectPath, time)
+	self:addEffect(effectPath)
+
+	if time and time > 0 then
+		if not self._delayEffectDict then
+			self._delayEffectDict = {}
+		end
+
+		self._delayEffectDict[effectPath] = Time.realtimeSinceStartup + time
+
+		self:startCheckDelayEffectTimer()
+	end
+end
+
+function SurvivalUnitEntity:startCheckDelayEffectTimer()
+	if not self._delayEffectTimer then
+		self._delayEffectTimer = true
+
+		TaskDispatcher.runRepeat(self._checkDelayEffect, self, 0.05)
+	end
+end
+
+function SurvivalUnitEntity:_checkDelayEffect()
+	if not self._delayEffectDict then
+		self:destroyCheckDelayEffectTimer()
+
+		return
+	end
+
+	local now = Time.realtimeSinceStartup
+	local waitwaitRemoveListRemove
+
+	for effectPath, time in pairs(self._delayEffectDict) do
+		if time <= now then
+			self:removeEffect(effectPath)
+
+			waitwaitRemoveListRemove = waitwaitRemoveListRemove or {}
+
+			table.insert(waitwaitRemoveListRemove, effectPath)
+		end
+	end
+
+	if waitRemoveList then
+		for i = 1, #waitRemoveList do
+			self._delayEffectDict[waitRemoveList[i]] = nil
+		end
+	end
+
+	if tabletool.len(self._delayEffectDict) == 0 then
+		self:destroyCheckDelayEffectTimer()
+	end
+end
+
+function SurvivalUnitEntity:destroyCheckDelayEffectTimer()
+	if self._delayEffectTimer then
+		self._delayEffectTimer = nil
+
+		TaskDispatcher.cancelTask(self._checkDelayEffect, self)
+	end
+end
+
 function SurvivalUnitEntity:onDestroy()
 	if self._allEffects then
 		for _, loader in pairs(self._allEffects) do
@@ -592,12 +748,15 @@ function SurvivalUnitEntity:onDestroy()
 	self._targetPos = nil
 	self._callback = nil
 	self._callObj = nil
+	self.tempResPath = nil
 
 	if self._tweenId then
 		ZProj.TweenHelper.KillById(self._tweenId)
 
 		self._tweenId = nil
 	end
+
+	self:destroyCheckDelayEffectTimer()
 end
 
 return SurvivalUnitEntity

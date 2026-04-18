@@ -698,5 +698,145 @@
     "pointNum": 100,
     "versionId": 330,
     "isBig": 0
+  },
+  {
+    "id": 101,
+    "bonus": "1#110203#6",
+    "pointNum": 101,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 102,
+    "bonus": "2#5#100000",
+    "pointNum": 102,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 103,
+    "bonus": "1#110403#6",
+    "pointNum": 103,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 104,
+    "bonus": "1#120013#3|2#3#50000",
+    "pointNum": 104,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 105,
+    "bonus": "2#5#100000",
+    "pointNum": 105,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 106,
+    "bonus": "1#120012#6",
+    "pointNum": 106,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 107,
+    "bonus": "2#3#100000",
+    "pointNum": 107,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 108,
+    "bonus": "1#642801#1",
+    "pointNum": 108,
+    "versionId": 340,
+    "isBig": 1
+  },
+  {
+    "id": 109,
+    "bonus": "1#180002#3",
+    "pointNum": 109,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 110,
+    "bonus": "2#5#100000",
+    "pointNum": 110,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 111,
+    "bonus": "1#110603#6",
+    "pointNum": 111,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 112,
+    "bonus": "1#111009#1|2#3#50000",
+    "pointNum": 112,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 113,
+    "bonus": "2#5#100000",
+    "pointNum": 113,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 114,
+    "bonus": "1#110303#6",
+    "pointNum": 114,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 115,
+    "bonus": "2#3#100000",
+    "pointNum": 115,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 116,
+    "bonus": "1#110903#6",
+    "pointNum": 116,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 117,
+    "bonus": "2#5#100000",
+    "pointNum": 117,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 118,
+    "bonus": "1#111006#1|2#3#50000",
+    "pointNum": 118,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 119,
+    "bonus": "1#111012#6",
+    "pointNum": 119,
+    "versionId": 340,
+    "isBig": 0
+  },
+  {
+    "id": 120,
+    "bonus": "2#5#100000",
+    "pointNum": 120,
+    "versionId": 340,
+    "isBig": 0
   }
 ]

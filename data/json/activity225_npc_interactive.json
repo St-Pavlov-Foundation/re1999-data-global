@@ -1,0 +1,26 @@
+[
+  {
+    "interactiveId": 1,
+    "interactiveType": 1,
+    "interactiveTxt": "language_10112810",
+    "interactivePng": "v3a4_party_chatroomicon3_1"
+  },
+  {
+    "interactiveId": 2,
+    "interactiveType": 1,
+    "interactiveTxt": "language_10115327",
+    "interactivePng": "v3a4_party_chatroomicon2_1"
+  },
+  {
+    "interactiveId": 3,
+    "interactiveType": 1,
+    "interactiveTxt": "language_10115328",
+    "interactivePng": "v3a4_party_chatroomicon1_1"
+  },
+  {
+    "interactiveId": 4,
+    "interactiveType": 2,
+    "interactiveTxt": "language_10115329",
+    "interactivePng": "v3a4_party_chatroomicon4_1"
+  }
+]

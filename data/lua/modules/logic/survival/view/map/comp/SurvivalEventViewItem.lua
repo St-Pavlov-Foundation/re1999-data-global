@@ -36,7 +36,7 @@ local unitTypeToIconName = {
 	[SurvivalEnum.UnitType.Task] = "survival_map_icon_1",
 	[SurvivalEnum.UnitType.NPC] = "survival_map_icon_2",
 	[SurvivalEnum.UnitType.Treasure] = "survival_map_icon_5",
-	[SurvivalEnum.UnitType.Exit] = "survival_map_icon_22",
+	[SurvivalEnum.UnitType.Exit] = "survival_map_icon_8",
 	[SurvivalEnum.UnitType.Door] = "survival_map_icon_9"
 }
 

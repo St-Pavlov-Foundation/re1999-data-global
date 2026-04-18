@@ -42,13 +42,17 @@ function SurvivalController:_newFuncUnlock(newIds)
 end
 
 function SurvivalController:_checkActivityInfo(activityId)
-	if not activityId or activityId == VersionActivity3_1Enum.ActivityId.Survival then
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+	if not activityId or activityId == curVersionActivityId then
 		self:_getInfo()
 	end
 end
 
 function SurvivalController:_getInfo()
-	if not ActivityHelper.isOpen(VersionActivity3_1Enum.ActivityId.Survival) then
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+	if not ActivityHelper.isOpen(curVersionActivityId) then
 		return
 	end
 
@@ -183,7 +187,10 @@ function SurvivalController:exitMap()
 	MainController.instance:enterMainScene()
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.SurvivalView)
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity3_1Enum.ActivityId.Survival, true)
+
+		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, curVersionActivityId, true)
 		SurvivalController.instance:openSurvivalView(true)
 	end)
 end
@@ -350,7 +357,9 @@ function SurvivalController:enterSurvivalSettle()
 		ViewMgr.instance:openView(ViewName.SurvivalCeremonyClosingView, {
 			isWin = info.win,
 			score = info.score,
-			report = info.report
+			report = info.report,
+			commonTechPoint = info.commonTechPoint,
+			roleTechPoint = info.roleTechPoint
 		})
 		SurvivalModel.instance:setSurvivalSettleInfo(nil)
 	end

@@ -66,8 +66,8 @@ function ShelterTaskView:refreshTabList()
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
 	table.insert(list, {
-		taskType = SurvivalEnum.TaskModule.NormalTask,
-		isShow = weekInfo.inSurvival
+		isShow = false,
+		taskType = SurvivalEnum.TaskModule.NormalTask
 	})
 
 	for i = 1, #list do

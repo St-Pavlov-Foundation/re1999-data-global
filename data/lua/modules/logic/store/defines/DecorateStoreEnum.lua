@@ -9,12 +9,14 @@ DecorateStoreEnum.DecorateViewType = {
 	Fold = 1
 }
 DecorateStoreEnum.DecorateItemType = {
-	MainScene = 3,
-	BuildingVideo = 4,
-	SelfCard = 5,
 	Default = 0,
+	SceneUIPackage = 7,
 	SkinGift = 6,
+	BuildingVideo = 4,
+	MainScene = 3,
 	Icon = 1,
+	MainUISkin = 8,
+	SelfCard = 5,
 	Skin = 2
 }
 DecorateStoreEnum.DecorateType = {
@@ -27,6 +29,9 @@ DecorateStoreEnum.MaxBuyTipType = {
 }
 DecorateStoreEnum.TagType = {
 	SpecialSell = 1
+}
+DecorateStoreEnum.DiscountItemActId = {
+	[V3a4GiftRecommendEnum.OffItemId] = ActivityEnum.Activity.V3a4_GiftRecommend
 }
 
 return DecorateStoreEnum

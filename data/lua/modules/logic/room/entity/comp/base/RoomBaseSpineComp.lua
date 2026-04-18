@@ -140,6 +140,8 @@ function RoomBaseSpineComp:_onLoadFinish(loader)
 
 	self._meshRenderer = self._spineGO:GetComponent(typeof(UnityEngine.MeshRenderer))
 	self._skeletonAnim = self._spineGO:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+	self._skeletonAnim.PhysicsPositionInheritanceFactor = Vector2.New(0, 0)
+	self._skeletonAnim.PhysicsRotationInheritanceFactor = 0
 
 	gohelper.onceAddComponent(self._spineGO, UnitSpine.TypeSpineAnimationEvent)
 	TaskDispatcher.cancelTask(self._onSpineAnimEvent, self)

@@ -199,8 +199,8 @@
     "name": "language_10072598",
     "nameEn": "LABYRINTH OF MADNESS",
     "highId": 10004,
-    "show": 0,
-    "des": "language_10086216",
+    "show": 1,
+    "des": "language_10114811",
     "skinContain": "310203|310403|305803",
     "backImg": "",
     "spineParams": "",
@@ -212,9 +212,9 @@
     "name": "language_10074855",
     "nameEn": "1987 COSMIC CIRCUS",
     "highId": 10004,
-    "show": 0,
-    "des": "language_10086216",
-    "skinContain": "310803|309703|304203",
+    "show": 1,
+    "des": "language_10114812",
+    "skinContain": "304203|310803|309703",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
@@ -229,7 +229,7 @@
     "des": "language_10086227",
     "skinContain": "311703|308603|311403|304002",
     "backImg": "",
-    "spineParams": "308603|roles_bust/v3a1_308603_lx_skinsuit/308603_lx_skinsuit.prefab|30,20|1",
+    "spineParams": "308603|roles_bust/v3a1_308603_lx_skinsuit/308603_lx_skinsuit.prefab|30,-160|1",
     "tarotCardPath": "",
     "festivalParams": ""
   },
@@ -240,10 +240,10 @@
     "highId": 11001,
     "show": 1,
     "des": "language_10089256",
-    "skinContain": "305104|305604|304704|310003|308004|304804|308804|300731|310703|306204|300306",
+    "skinContain": "305104|305604|307905|304704|310003|308004|304804|308804|300731|310703|306204|300306",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": "card03|card06|card12|card15|card16|card17|card18|card20|card21|card01|card02",
+    "tarotCardPath": "card03|card06|card09|card12|card15|card16|card17|card18|card20|card21|card01|card02",
     "festivalParams": ""
   },
   {
@@ -331,11 +331,11 @@
     "highId": 13001,
     "show": 1,
     "des": "",
-    "skinContain": "0|0|309504|0|0",
+    "skinContain": "0|309504|310404|0|0",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": "handbookskin_festival_unknow,???|handbookskin_festival_unknow,???|handbookskin_festival_Christmas,12.25|handbookskin_festival_unknow,???|handbookskin_festival_unknow,???"
+    "festivalParams": "handbookskin_festival_unknow,???|handbookskin_festival_Christmas,12.25|handbookskin_festival_yushui,2.18|handbookskin_festival_unknow,???|handbookskin_festival_unknow,???"
   },
   {
     "id": 20022,
@@ -347,6 +347,19 @@
     "skinContain": "301403|312603|312103",
     "backImg": "",
     "spineParams": "",
+    "tarotCardPath": "",
+    "festivalParams": ""
+  },
+  {
+    "id": 20023,
+    "name": "language_10110754",
+    "nameEn": "Tales of the Underworld",
+    "highId": 10008,
+    "show": 1,
+    "des": "language_10114813",
+    "skinContain": "306103|312503|311003|305305|311103",
+    "backImg": "",
+    "spineParams": "311003|roles_bust/v3a4_311003_ly_skinsuit/311003_ly_skinsuit.prefab|-30,110|0.3#305305|roles_bust/v3a4_305305_yx_skinsuit/305305_yx_skinsuit.prefab|-110,-25|0.36",
     "tarotCardPath": "",
     "festivalParams": ""
   }

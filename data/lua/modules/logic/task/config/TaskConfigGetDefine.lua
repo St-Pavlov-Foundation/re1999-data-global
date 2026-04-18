@@ -27,7 +27,9 @@ function TaskConfigGetDefine:ctor()
 		[TaskEnum.TaskType.NecrologistStory] = TaskConfigGetDefine._getNecrologistStory,
 		[TaskEnum.TaskType.Activity210] = function(id)
 			return lua_activity210_task.configDict[id]
-		end
+		end,
+		[TaskEnum.TaskType.MiniParty] = TaskConfigGetDefine._getActivity223Task,
+		[TaskEnum.TaskType.ObserverBox] = TaskConfigGetDefine._getActivity226Task
 	}
 end
 
@@ -107,6 +109,14 @@ end
 
 function TaskConfigGetDefine._getNecrologistStory(id)
 	return NecrologistStoryConfig.instance:getTaskCo(id)
+end
+
+function TaskConfigGetDefine._getActivity223Task(id)
+	return MiniPartyConfig.instance:getTaskCo(id)
+end
+
+function TaskConfigGetDefine._getActivity226Task(id)
+	return ObserverBoxConfig.instance:getTaskCo(id)
 end
 
 TaskConfigGetDefine.instance = TaskConfigGetDefine.New()

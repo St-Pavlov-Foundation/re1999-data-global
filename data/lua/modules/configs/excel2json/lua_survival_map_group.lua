@@ -8,10 +8,12 @@ local fields = {
 	name = 3,
 	useScene = 5,
 	type = 2,
-	id = 1,
-	hardLevel = 7,
+	disasterLayout = 9,
 	initDisaster = 8,
-	desc = 4
+	mapRichness = 10,
+	desc = 4,
+	id = 1,
+	hardLevel = 7
 }
 local primaryKey = {
 	"id"

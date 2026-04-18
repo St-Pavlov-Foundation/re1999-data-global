@@ -44,7 +44,7 @@ function GuideExceptionFindBtn:stopCheck()
 end
 
 function GuideExceptionFindBtn:_onTick()
-	local targetGO = gohelper.find(self.goPath)
+	local targetGO = GuideUtil.findGo(self.goPath)
 
 	if not GuideUtil.isGOShowInScreen(targetGO) then
 		local funcs = self.handlerFuncs

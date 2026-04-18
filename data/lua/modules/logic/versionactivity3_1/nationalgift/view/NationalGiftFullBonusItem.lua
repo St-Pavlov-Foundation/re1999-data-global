@@ -7,8 +7,8 @@ local NationalGiftFullBonusItem = class("NationalGiftFullBonusItem", LuaCompBase
 function NationalGiftFullBonusItem:init(go, co)
 	self.go = go
 	self._config = co
-	self._txtrewardnum1 = gohelper.findChildText(self.go, "group/reward1/txt_num")
-	self._txtrewardnum2 = gohelper.findChildText(self.go, "group/reward2/txt_num")
+	self._goreward1 = gohelper.findChild(self.go, "group/go_reward1")
+	self._goreward2 = gohelper.findChild(self.go, "group/go_reward2")
 	self._gounget = gohelper.findChild(self.go, "go_unget")
 	self._gohasget = gohelper.findChild(self.go, "go_hasget")
 	self._gocanget = gohelper.findChild(self.go, "go_canget")
@@ -19,17 +19,38 @@ function NationalGiftFullBonusItem:init(go, co)
 end
 
 function NationalGiftFullBonusItem:_initItem()
+	self._rewardItems = {}
+
 	local rewards = string.split(self._config.bonus, "|")
 
 	for index, reward in ipairs(rewards) do
+		if not self._rewardItems[index] then
+			local item = {}
+
+			item.go = self["_goreward" .. index]
+			item.txtnum = gohelper.findChildText(item.go, "txt_num")
+			item.btnclick = gohelper.findChildButtonWithAudio(item.go, "click")
+
+			item.btnclick:AddClickListener(self._onItemClick, self, index)
+
+			self._rewardItems[index] = item
+		end
+
 		local rewards = string.splitToNumber(reward, "#")
 
-		self["_txtrewardnum" .. tostring(index)].text = rewards[3]
+		self._rewardItems[index].txtnum.text = rewards[3]
 	end
 
 	if self._btnClick then
 		self._btnClick:AddClickListener(self._btnClickOnClick, self)
 	end
+end
+
+function NationalGiftFullBonusItem:_onItemClick(index)
+	local rewardCos = string.split(self._config.bonus, "|")
+	local itemCo = string.splitToNumber(rewardCos[index], "#")
+
+	MaterialTipController.instance:showMaterialInfo(itemCo[1], itemCo[2])
 end
 
 function NationalGiftFullBonusItem:_btnClickOnClick()
@@ -71,6 +92,10 @@ function NationalGiftFullBonusItem:refresh()
 		gohelper.setActive(self._gocanget, showCanGet)
 	end
 
+	if self._btnClick then
+		gohelper.setActive(self._btnClick.gameObject, isCouldGet)
+	end
+
 	if self._gonextday then
 		local curDay = NationalGiftModel.instance:getCurRewardDay()
 		local showNext = isGiftHasBuy and curDay + 1 == self._config.id
@@ -80,6 +105,14 @@ function NationalGiftFullBonusItem:refresh()
 end
 
 function NationalGiftFullBonusItem:destroy()
+	if self._rewardItems then
+		for _, item in pairs(self._rewardItems) do
+			item.btnclick:RemoveClickListener()
+		end
+
+		self._rewardItems = nil
+	end
+
 	if self._btnClick then
 		self._btnClick:RemoveClickListener()
 	end

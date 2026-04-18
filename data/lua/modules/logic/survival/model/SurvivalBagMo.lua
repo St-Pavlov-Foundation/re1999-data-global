@@ -9,7 +9,6 @@ function SurvivalBagMo:init(data)
 	self.items = {}
 	self.itemsByUid = self.itemsByUid or {}
 	self.totalMass = 0
-	self.maxWeightLimit = data.maxWeightLimit
 	self.currencysById = {}
 
 	for _, v in ipairs(data.item) do
@@ -100,6 +99,13 @@ function SurvivalBagMo:removeItemByUid(itemUid)
 	else
 		logError("删除道具失败，uid：" .. tostring(itemUid))
 	end
+end
+
+function SurvivalBagMo:getMaxWeightLimit()
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local w1 = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Weight)
+
+	return w1
 end
 
 function SurvivalBagMo:getCurrencyNum(currencyId)

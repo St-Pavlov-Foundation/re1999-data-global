@@ -84,7 +84,7 @@ function ResSplitSaveHelper.addSceneRes(levelId)
 	local audioInfo = ResSplitModel.instance.audioDic[bgm]
 
 	if audioInfo then
-		ResSplitModel.instance:setInclude(ResSplitEnum.CommonAudioBank, audioInfo.bankName, exclude)
+		ResSplitModel.instance:setInclude(ResSplitEnum.CommonAudioBank, audioInfo.bankName)
 	end
 end
 

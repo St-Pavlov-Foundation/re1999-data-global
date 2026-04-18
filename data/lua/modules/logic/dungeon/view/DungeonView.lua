@@ -146,6 +146,10 @@ function DungeonView:_btnweekwalkOnClick()
 end
 
 function DungeonView:_btnexploreOnClick()
+	if OptionPackageController.instance:checkNeedDownload(OptionPackageEnum.Package.Explore) then
+		return
+	end
+
 	self:changeCategory(DungeonEnum.ChapterType.Explore, false)
 	module_views_preloader.DungeonViewExplore(function()
 		self:setBtnStatus()

@@ -14,48 +14,96 @@ end
 
 function MainUIPartView:addEvents()
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
-	self:addEventCb(MainController.instance, MainEvent.SetMainViewVisible, self._setViewVisible, self)
+	self:addEventCb(MainController.instance, MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUIFirstAnim, self._playFirstAnim, self)
+	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUICaiDanAnim, self._tiggerMainUICaiDanAnim, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
 end
 
 function MainUIPartView:removeEvents()
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
-	self:removeEventCb(MainController.instance, MainEvent.SetMainViewVisible, self._setViewVisible, self)
-	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
+	self:removeEventCb(MainController.instance, MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUIFirstAnim, self._playFirstAnim, self)
+	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUICaiDanAnim, self._tiggerMainUICaiDanAnim, self)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
 end
 
 function MainUIPartView:_OnCloseViewFinish(viewName)
-	if viewName == ViewName.LoadingView then
-		self:_setViewVisible(true)
+	if viewName == ViewName.MainThumbnailView then
+		self:_playFirstAnim()
 	end
 end
 
-function MainUIPartView:_setViewVisible(value)
-	if value and self._uiId then
-		if self._uiId == MainUISwitchEnum.Skin.Normal then
-			if not self._aniroommask then
-				local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/1/mask/image")
+function MainUIPartView:_onMainPopupFlowFinish()
+	if self._uiId then
+		self:_enterMainView()
+		self:_playFirstAnim()
+	end
+end
 
-				self._aniroommask = goani:GetComponent(typeof(UnityEngine.Animation))
+function MainUIPartView:_enterMainView()
+	if self._uiId == MainUISwitchEnum.Skin.Normal then
+		if not self._aniroommask then
+			local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/1/mask/image")
+
+			self._aniroommask = goani:GetComponent(typeof(UnityEngine.Animation))
+		end
+
+		self._aniroommask:Play()
+	else
+		if not self._aniroommask1 then
+			local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/2/icon/mask1/image")
+
+			self._aniroommask1 = goani:GetComponent(typeof(UnityEngine.Animator))
+		end
+
+		self._aniroommask1:Play("in", 0, 0)
+	end
+end
+
+function MainUIPartView:dailyRefresh()
+	if not MainController.instance:isInPopupFlow() then
+		self:_playFirstAnim()
+	end
+end
+
+function MainUIPartView:_playFirstAnim(isPause, isForce)
+	local isPlayFirst = TimeUtil.getDayFirstLoginRed(MainUISwitchEnum.FirstEnterMainView)
+	local animName = (isForce or isPlayFirst) and "first" or "idle"
+
+	if not isPause and isPlayFirst then
+		TimeUtil.setDayFirstLoginRed(MainUISwitchEnum.FirstEnterMainView)
+	end
+
+	local animList = self._animParts[self._uiId]
+
+	if animList then
+		for part, anim in pairs(animList) do
+			if part ~= MainUISwitchEnum.MainUIPart.CaiDan then
+				self:playPartAnim(anim, animName, isPause)
 			end
-
-			self._aniroommask:Play()
-		else
-			if not self._aniroommask1 then
-				local goani = gohelper.findChild(self.viewGO, "right/#btn_summon/2/icon/mask1/image")
-
-				self._aniroommask1 = goani:GetComponent(typeof(UnityEngine.Animator))
-			end
-
-			self._aniroommask1:Play("in", 0, 0)
 		end
 	end
+end
+
+function MainUIPartView:_tiggerMainUICaiDanAnim(animName, isPause, viewName)
+	if self.viewName ~= viewName then
+		return
+	end
+
+	local animList = self._animParts[self._uiId]
+	local anim = animList and animList[MainUISwitchEnum.MainUIPart.CaiDan]
+
+	self:playPartAnim(anim, animName, isPause)
 end
 
 function MainUIPartView:onOpen()
 	local skinId = self.viewParam and self.viewParam.SkinId
 
 	self:refreshMainUI(skinId)
+	self:_playFirstAnim(true)
 end
 
 function MainUIPartView:_editableInitView()
@@ -79,8 +127,11 @@ function MainUIPartView:_initMainUIPart()
 	local goactivityfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
 	local gonormaljumpfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
 	local gonormalfight = gohelper.findChild(self.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
+	local goskinBg = gohelper.findChild(self.viewGO, "#go_skinBg")
+	local goCaiDan = gohelper.findChild(self.viewGO, "right/#skin_caidan")
 
 	self._mainUIParts = self:getUserDataTb_()
+	self._animParts = self:getUserDataTb_()
 
 	for _, skinId in pairs(MainUISwitchEnum.Skin) do
 		local skinTb = self._mainUIParts[skinId]
@@ -103,6 +154,31 @@ function MainUIPartView:_initMainUIPart()
 		skinTb[MainUISwitchEnum.MainUIPart.NormalFight] = gohelper.findChild(gonormalfight, skinId)
 		skinTb[MainUISwitchEnum.MainUIPart.NormalJumpFight] = gohelper.findChild(gonormaljumpfight, skinId)
 		skinTb[MainUISwitchEnum.MainUIPart.BankEffect] = gohelper.findChild(gobankeffect, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.SkinBG] = gohelper.findChild(goskinBg, skinId)
+		skinTb[MainUISwitchEnum.MainUIPart.CaiDan] = gohelper.findChild(goCaiDan, skinId)
+
+		for _, part in pairs(MainUISwitchEnum.MainUIPart) do
+			self:_initPartAnim(skinId, part)
+		end
+	end
+end
+
+function MainUIPartView:_initPartAnim(skinId, part)
+	local animSkinTb = self._animParts[skinId]
+
+	if not animSkinTb then
+		animSkinTb = self:getUserDataTb_()
+		self._animParts[skinId] = animSkinTb
+	end
+
+	local go = self._mainUIParts[skinId][part]
+
+	if go then
+		local anim = go:GetComponent(typeof(UnityEngine.Animator))
+
+		if anim then
+			animSkinTb[part] = anim
+		end
 	end
 end
 
@@ -129,13 +205,15 @@ function MainUIPartView:refreshMainUI(id)
 			if id == skinId then
 				obj = obj or self._mainUIParts[MainUISwitchEnum.Skin.Normal][part]
 
-				gohelper.setActive(obj, true)
+				if obj then
+					gohelper.setActive(obj, self:_checkShowPartObj(skinId, part))
+				end
 			elseif self._mainUIParts[id] then
 				local skinObj = self._mainUIParts[id][part]
 
 				skinObj = skinObj or self._mainUIParts[MainUISwitchEnum.Skin.Normal][part]
 
-				if obj and skinObj and skinObj ~= obj then
+				if obj and skinObj ~= obj then
 					gohelper.setActive(obj, false)
 				end
 			end
@@ -150,7 +228,25 @@ function MainUIPartView:refreshMainUI(id)
 		TaskDispatcher.runRepeat(self._cutRoleHead, self, MainUISwitchEnum.HeadCutTime)
 	end
 
-	self:_setViewVisible(true)
+	self:_enterMainView()
+end
+
+function MainUIPartView:_checkShowPartObj(skinId, part)
+	return true
+end
+
+function MainUIPartView:playPartAnim(anim, aniName, isPause)
+	if not anim then
+		return
+	end
+
+	anim:Play(aniName, 0, 0)
+
+	if isPause then
+		anim:Update(0)
+	end
+
+	anim.enabled = not isPause
 end
 
 function MainUIPartView:_cutRoleHead()
@@ -168,6 +264,7 @@ end
 function MainUIPartView:onClose()
 	TaskDispatcher.cancelTask(self._cutRoleHead, self)
 	TaskDispatcher.cancelTask(self._delayCutHead, self)
+	TaskDispatcher.cancelTask(self._enterMainView, self)
 end
 
 function MainUIPartView:onDestroyView()

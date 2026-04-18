@@ -12,6 +12,8 @@ function FightGameMgr:onConstructor()
 	self:com_registEvent(FightController.instance, FightEvent.BeforeSwitchPlane, self.onSwitchPlane)
 	self:com_registMsg(FightMsgId.RestartGame, self.onRestartGame)
 
+	FightGameMgr.necessaryAssetLoaderMgr = self:newClass(FightNecessaryAssetLoaderMgr)
+	FightGameMgr.sceneLevelMgr = self:newClass(FightSceneLevelMgr)
 	FightGameMgr.restartMgr = self:newClass(FightRestartMgr)
 	FightGameMgr.switchPlaneMgr = self:newClass(FightSwitchPlaneMgr)
 end
@@ -38,6 +40,7 @@ function FightGameMgr:registMgr()
 
 	self.userDataClassMgr = self:addMgr(FightUserDataClassMgr)
 	self.magicCirCleMgr = self:addMgr(FightMagicCircleMgr)
+	self.magicCirCleBySKillFlowMgr = self:addMgr(FightMagicCircleBySkillFlowMgr)
 	self.entrustedWorkMgr = self:addMgr(FightEntrustedWorkMgr)
 	self.buffTypeId2EffectMgr = self:addMgr(FightBuffTypeId2EffectMgr)
 	self.entityEvolutionMgr = self:addMgr(FightEntityEvolutionMgr)

@@ -9,7 +9,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 6270517,
@@ -21,7 +23,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 6295019,
@@ -33,7 +37,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 6295020,
@@ -45,7 +51,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 6295058,
@@ -57,7 +65,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 6295059,
@@ -69,7 +79,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 104321545,
@@ -81,7 +93,9 @@
     ],
     "reverseX": 0,
     "delEffect": "",
-    "delTime": 0
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 23390071,
@@ -93,7 +107,9 @@
     ],
     "reverseX": 0,
     "delEffect": "buff/shuzhen_meimeng_xs",
-    "delTime": 1
+    "delTime": 1,
+    "audio": 0,
+    "delAudio": 0
   },
   {
     "id": 23390072,
@@ -105,6 +121,120 @@
     ],
     "reverseX": 0,
     "delEffect": "buff/shuzhen_emeng_xs",
-    "delTime": 1
+    "delTime": 1,
+    "audio": 0,
+    "delAudio": 0
+  },
+  {
+    "id": 31410050,
+    "effect": "buff/v3a4_lsj_unique_01_scene_01",
+    "pos": [
+      0,
+      3.5,
+      0
+    ],
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
+  },
+  {
+    "id": 31410051,
+    "effect": "buff/v3a4_lsj_unique_01_scene",
+    "pos": [
+      0,
+      3.5,
+      0
+    ],
+    "reverseX": 0,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 0,
+    "delAudio": 0
+  },
+  {
+    "id": 107344000,
+    "effect": "buff/buff_binansuo_dahudun_1",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000031,
+    "delAudio": 0
+  },
+  {
+    "id": 107341000,
+    "effect": "buff/buff_binansuo_dahudun_2",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000032,
+    "delAudio": 0
+  },
+  {
+    "id": 107342000,
+    "effect": "buff/buff_binansuo_dahudun_3",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000033,
+    "delAudio": 0
+  },
+  {
+    "id": 107343000,
+    "effect": "buff/buff_binansuo_dahudun_4",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000034,
+    "delAudio": 0
+  },
+  {
+    "id": 107345000,
+    "effect": "buff/buff_binansuo_dahudun_5",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000035,
+    "delAudio": 0
+  },
+  {
+    "id": 107346000,
+    "effect": "buff/buff_binansuo_dahudun_6",
+    "pos": [
+      4.5,
+      0.15,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000036,
+    "delAudio": 0
   }
 ]

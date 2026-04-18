@@ -41,6 +41,16 @@ function LightLive2d:_initSkinUiEffect()
 		end
 	end
 
+	self._effectMainFrameList = nil
+
+	for i, v in ipairs(lua_skin_effect_mainframe.configList) do
+		if string.find(self._resPath, v.id) then
+			self._effectMainFrameList = string.split(v.effect, "|")
+
+			break
+		end
+	end
+
 	self:_fakeUIEffect()
 end
 
@@ -81,6 +91,14 @@ function LightLive2d:setEffectFrameVisible(value)
 
 	if self._uiEffectList and self._uiEffectConfig.frameVisible == 1 then
 		for i, v in ipairs(self._uiEffectList) do
+			local root = gohelper.findChild(self._spineGo, v)
+
+			gohelper.setActive(root, value)
+		end
+	end
+
+	if self._effectMainFrameList then
+		for i, v in ipairs(self._effectMainFrameList) do
 			local root = gohelper.findChild(self._spineGo, v)
 
 			gohelper.setActive(root, value)

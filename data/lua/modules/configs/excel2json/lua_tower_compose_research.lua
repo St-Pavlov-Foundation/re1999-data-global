@@ -17,9 +17,8 @@ local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	icon = 3,
-	name = 1,
-	desc = 2
+	desc = 2,
+	name = 1
 }
 
 function lua_tower_compose_research.onLoad(json)

@@ -34,8 +34,6 @@ function CommonPropView:_editableInitView()
 	local parentGO = gohelper.findChild(self.viewGO, "#go_video")
 
 	self._videoPlayer = VideoPlayerMgr.instance:createGoAndVideoPlayer(parentGO)
-
-	self._videoPlayer:play("commonprop", true, nil, nil)
 end
 
 function CommonPropView:_onClickBG()
@@ -66,9 +64,7 @@ function CommonPropView:onOpen()
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards)
 	end
 
-	if self._videoPlayer and not BootNativeUtil.isIOS() then
-		self._videoPlayer:play("commonprop", true, nil, nil)
-	end
+	self._videoPlayer:play("commonprop", true, nil, nil)
 end
 
 function CommonPropView:_setCanClose()

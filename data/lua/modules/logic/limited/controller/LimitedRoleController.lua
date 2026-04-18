@@ -26,7 +26,7 @@ function LimitedRoleController:reInit()
 	self:_stopVideoAudio()
 end
 
-function LimitedRoleController:play(stage, limitedCO, callback, callbackObj)
+function LimitedRoleController:play(stage, limitedCO, callback, callbackObj, callbackParam)
 	if self._isPlayingVideo and isDebugBuild then
 		logError("正在播放限定角色入场效果 " .. stage)
 
@@ -42,6 +42,7 @@ function LimitedRoleController:play(stage, limitedCO, callback, callbackObj)
 	self._limitedCO = limitedCO
 	self._callback = callback
 	self._callbackObj = callbackObj
+	self._callbackParam = callbackParam
 
 	self:registerCallback(LimitedRoleController.PlayAction, self._playAction, self)
 	self:registerCallback(LimitedRoleController.ManualSkip, self._manualSkip, self)
@@ -228,12 +229,14 @@ function LimitedRoleController:_clearActionState()
 
 	local callback = self._callback
 	local callbackObj = self._callbackObj
+	local callbackParam = self._callbackParam
 
 	self._callback = nil
 	self._callbackObj = nil
+	self._callbackParam = nil
 
 	if callback then
-		callback(callbackObj)
+		callback(callbackObj, callbackParam)
 	end
 end
 

@@ -29,30 +29,69 @@ function SurvivalMapUseItemView:onInitView()
 	for k, v in ipairs(uinodes) do
 		self._allUIs[k] = gohelper.findChild(self.viewGO, v)
 	end
+
+	self.btnSkill = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_skill")
+	self.txtSkillTimes = gohelper.findChildTextMesh(self.viewGO, "BottomRight/#btn_skill/#txt_num")
+	self.goCannotUse = gohelper.findChild(self.viewGO, "BottomRight/#btn_skill/#Image_cannotuse")
+	self.imageSkill = gohelper.findChildImage(self.viewGO, "BottomRight/#btn_skill/#Image_SkillIcon")
+	self.goSkillClickEffect = gohelper.findChild(self.viewGO, "BottomRight/#btn_skill/#skill_click")
+
+	gohelper.setActive(self.goSkillClickEffect, false)
+
+	self.goSkillCanuseEffect = gohelper.findChild(self.viewGO, "BottomRight/#btn_skill/#skill_canuse")
+
+	gohelper.setActive(self.goSkillCanuseEffect, false)
+
+	self.goUseSkill = gohelper.findChild(self.viewGO, "#go_useskill")
+	self.btnUseSkill = gohelper.findChildButtonWithAudio(self.viewGO, "#go_useskill/skill/#btn_use")
+	self.txtSkillName = gohelper.findChildTextMesh(self.viewGO, "#go_useskill/skill/#txt_name")
+	self.txtSkillDesc = gohelper.findChildTextMesh(self.viewGO, "#go_useskill/skill/#scroll_tips/viewport/content/#txt_dec")
+	self.txtSkillTimes2 = gohelper.findChildTextMesh(self.viewGO, "#go_useskill/#btn_skill/#txt_num")
+	self.imageSkill2 = gohelper.findChildImage(self.viewGO, "#go_useskill/#btn_skill/#Image_SkillIcon")
+	self._allSkillUseRangePoints = {}
 end
 
 function SurvivalMapUseItemView:addEvents()
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshQuickItems, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnUseQuickItem, self._onUseQuickItem, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnClickTipsBtn, self._onClickTipsBtn, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnRoleSkillUpdate, self._onRoleSkillUpdate, self)
 	self.viewContainer:registerCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 	self._scrollRectWrap:AddOnValueChanged(self._onScrollRectValueChanged, self)
 	CommonDragHelper.instance:registerDragObj(self._goviewport, self._onBeginDrag, self._onDrag, self._onEndDrag, nil, self, nil, true)
+	self:addClickCb(self.btnSkill, self.onClickSkill, self)
+	self:addClickCb(self.btnUseSkill, self.onClickUseSkill, self)
 end
 
 function SurvivalMapUseItemView:removeEvents()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshQuickItems, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnUseQuickItem, self._onUseQuickItem, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnClickTipsBtn, self._onClickTipsBtn, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnRoleSkillUpdate, self._onRoleSkillUpdate, self)
 	self.viewContainer:unregisterCallback(SurvivalEvent.OnClickSurvivalScene, self._onSceneClick, self)
 	self._scrollRectWrap:RemoveOnValueChanged()
 	CommonDragHelper.instance:unregisterDragObj(self._goviewport, self._onBeginDrag, nil, self._onEndDrag, nil, self, nil, true)
+	self:removeClickCb(self.btnSkill)
+	self:removeClickCb(self.btnUseSkill)
+end
+
+function SurvivalMapUseItemView:onClickUseSkill()
+	self:confirmUseSkill()
+end
+
+function SurvivalMapUseItemView:onClickSkill()
+	self:useSkill()
+end
+
+function SurvivalMapUseItemView:_onRoleSkillUpdate()
+	self:refreshSkillInfo()
 end
 
 function SurvivalMapUseItemView:onOpen()
 	SurvivalMapModel.instance.curUseItem = nil
 
 	gohelper.setActive(self._gotips, false)
+	gohelper.setActive(self.goUseSkill, false)
 
 	self._txtTips.text = luaLang("survival_mainview_useitem_tips")
 
@@ -76,6 +115,7 @@ function SurvivalMapUseItemView:onOpen()
 	self._curCenterIndex = 0
 
 	self:_refreshQuickItems()
+	self:refreshSkillInfo()
 end
 
 function SurvivalMapUseItemView:_refreshQuickItems()
@@ -391,6 +431,11 @@ function SurvivalMapUseItemView:_onUseQuickItem(itemMo)
 		local subTypes = dict[2] or {}
 
 		self:setRangeBySubType(playerPos, range, subTypes)
+	elseif itemMo.co.subType == SurvivalEnum.ItemSubType.Quick_AttractantItem then
+		local dict = GameUtil.splitString2(effectStr, true, "#", ",")
+		local range = dict[2] and dict[2][1] or 0
+
+		self:setRangeByWalkable(playerPos, range, walkable)
 	else
 		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(itemMo.uid, "")
 
@@ -400,21 +445,21 @@ function SurvivalMapUseItemView:_onUseQuickItem(itemMo)
 	SurvivalMapModel.instance.curUseItem = itemMo
 
 	gohelper.setActive(self._gotips, true)
-
-	for k, v in ipairs(self._allUIs) do
-		gohelper.setActive(v, false)
-	end
-
+	self:setUIVisible(false)
 	self.viewContainer:setCloseFunc(self.cancelUseItem, self)
 end
 
-function SurvivalMapUseItemView:setRangeByWalkable(playerPos, range, walkable)
+function SurvivalMapUseItemView:setRangeByWalkable(playerPos, range, walkable, needPlayerPos)
 	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, range)
 
 	for i = #list, 1, -1 do
 		if list[i] == playerPos or not SurvivalHelper.instance:getValueFromDict(walkable, list[i]) then
 			table.remove(list, i)
 		end
+	end
+
+	if needPlayerPos then
+		table.insert(list, playerPos)
 	end
 
 	self:setCanUsePoints(list)
@@ -438,6 +483,33 @@ function SurvivalMapUseItemView:setRangeByBlockNPCFight(playerPos, range)
 
 		if list[i] == playerPos or not isBlock and not haveNpcOrFight then
 			table.remove(list, i)
+		end
+	end
+
+	self:setCanUsePoints(list)
+end
+
+function SurvivalMapUseItemView:setRangeByUnitType(playerPos, range, unitTypes)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local list = SurvivalHelper.instance:getAllPointsByDis(playerPos, range)
+
+	for i = #list, 1, -1 do
+		if list[i] == playerPos then
+			table.remove(list, i)
+		else
+			local haveUnit = false
+
+			for _, unitMo in ipairs(sceneMo:getUnitByPos(list[i], true, true)) do
+				if tabletool.indexOf(unitTypes, unitMo.unitType) then
+					haveUnit = true
+
+					break
+				end
+			end
+
+			if not haveUnit then
+				table.remove(list, i)
+			end
 		end
 	end
 
@@ -483,18 +555,58 @@ function SurvivalMapUseItemView:setCanUsePoints(list)
 	end
 end
 
+function SurvivalMapUseItemView:setSkillUseRangePoints(list)
+	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(-1)
+	self:setCanUsePoints(self._allCanUsePoints)
+
+	self._allSkillUseRangePoints = {}
+
+	for _, v in ipairs(list) do
+		table.insert(self._allSkillUseRangePoints, v:clone())
+		SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(-1, v.q, v.r, 3)
+	end
+end
+
 function SurvivalMapUseItemView:_onSceneClick(hexPos, data)
-	if not SurvivalMapModel.instance.curUseItem then
+	if SurvivalMapModel.instance.curUseItem then
+		data.use = true
+
+		if tabletool.indexOf(self._allCanUsePoints, hexPos) then
+			SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", hexPos.q, hexPos.r))
+		end
+
+		self:cancelUseItem()
+
 		return
 	end
 
-	data.use = true
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local skillInfo = sceneMo:getRoleSkillInfo()
 
-	if tabletool.indexOf(self._allCanUsePoints, hexPos) then
-		SurvivalInteriorRpc.instance:sendSurvivalUseItemRequest(SurvivalMapModel.instance.curUseItem.uid, string.format("%d#%d", hexPos.q, hexPos.r))
+	if skillInfo:isSkillUsing() then
+		data.use = true
+
+		if tabletool.indexOf(self._allCanUsePoints, hexPos) then
+			self.selectHexPos = hexPos
+
+			local effectRange = skillInfo:getSkillEffectRange()
+
+			if effectRange then
+				SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSelectRoleSkillHexPoint, hexPos, self.onClickUseSkill, self)
+
+				local walkable = SurvivalMapModel.instance:getCurMapCo().rawWalkables
+				local points = skillInfo:getSkillEffectRangePoints(hexPos, effectRange, walkable)
+
+				self:setSkillUseRangePoints(points)
+			else
+				self:cancelUseSkill()
+			end
+		else
+			self:cancelUseSkill()
+		end
+
+		return
 	end
-
-	self:cancelUseItem()
 end
 
 function SurvivalMapUseItemView:cancelUseItem()
@@ -503,15 +615,110 @@ function SurvivalMapUseItemView:cancelUseItem()
 
 	SurvivalMapModel.instance.curUseItem = nil
 
-	for k, v in ipairs(self._allUIs) do
-		gohelper.setActive(v, true)
-	end
-
+	self:setUIVisible(true)
 	self.viewContainer:setCloseFunc()
 end
 
 function SurvivalMapUseItemView:_onClickTipsBtn()
 	self._infoPanel:updateMo()
+end
+
+function SurvivalMapUseItemView:setUIVisible(isVisible)
+	if self._uiVisible == isVisible then
+		return
+	end
+
+	self._uiVisible = isVisible
+
+	for k, v in ipairs(self._allUIs) do
+		gohelper.setActive(v, isVisible)
+	end
+end
+
+function SurvivalMapUseItemView:refreshSkillInfo()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local skillInfo = sceneMo:getRoleSkillInfo()
+	local skillRemainTimes = skillInfo:getSkillRemainTimes()
+	local cannotUse = skillRemainTimes == 0
+
+	gohelper.setActive(self.goCannotUse, cannotUse)
+	gohelper.setActive(self.goSkillCanuseEffect, false)
+
+	local timesStr = ""
+
+	if skillRemainTimes >= 0 then
+		local maxTimes = skillInfo:getSkillMaxTimes()
+
+		timesStr = string.format("%s/%s", skillRemainTimes, maxTimes)
+	end
+
+	self.txtSkillTimes.text = timesStr
+	self.txtSkillTimes2.text = timesStr
+
+	local res = skillInfo.skillCfg.resource
+
+	UISpriteSetMgr.instance:setSurvivalSprite2(self.imageSkill, res, true)
+	UISpriteSetMgr.instance:setSurvivalSprite2(self.imageSkill2, res, true)
+end
+
+function SurvivalMapUseItemView:useSkill()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local skillInfo = sceneMo:getRoleSkillInfo()
+
+	if not skillInfo:canUseSkill() then
+		GameFacade.showToast(ToastEnum.SurvivalSkillNotTimes)
+
+		return
+	end
+
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideRoleSkillViewOpen)
+	gohelper.setActive(self.goUseSkill, true)
+
+	self.txtSkillName.text = skillInfo.skillName
+
+	local walkable = SurvivalMapModel.instance:getCurMapCo().rawWalkables
+	local playerPos = SurvivalMapModel.instance:getSceneMo().player.pos
+	local useRange = skillInfo:getSkillUseRange()
+	local effectRange = skillInfo:getSkillEffectRange()
+
+	if useRange then
+		local usePoints = skillInfo:getSkillUseRangePoints(playerPos, useRange, walkable)
+
+		self:setCanUsePoints(usePoints)
+	end
+
+	self.txtSkillDesc.text = GameUtil.getSubPlaceholderLuaLang(skillInfo.skillCfg.desc, {
+		useRange,
+		effectRange
+	})
+
+	gohelper.setActive(self.btnUseSkill, effectRange == nil)
+	skillInfo:setIsUsing(true)
+	self:setUIVisible(false)
+	self.viewContainer:setCloseFunc(self.cancelUseSkill, self)
+end
+
+function SurvivalMapUseItemView:confirmUseSkill()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local skillInfo = sceneMo:getRoleSkillInfo()
+
+	skillInfo:confirmUseSkill(self.selectHexPos)
+	self:cancelUseSkill()
+end
+
+function SurvivalMapUseItemView:cancelUseSkill()
+	self.selectHexPos = nil
+
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnSelectRoleSkillHexPoint)
+	gohelper.setActive(self.goUseSkill, false)
+
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local skillInfo = sceneMo:getRoleSkillInfo()
+
+	skillInfo:setIsUsing(false)
+	SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(-1)
+	self:setUIVisible(true)
+	self.viewContainer:setCloseFunc()
 end
 
 function SurvivalMapUseItemView:onDestroyView()

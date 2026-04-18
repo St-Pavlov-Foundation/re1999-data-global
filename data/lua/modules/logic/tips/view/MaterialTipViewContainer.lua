@@ -19,13 +19,30 @@ function MaterialTipViewContainer:buildViews()
 
 	return {
 		MaterialTipView.New(),
-		LuaListScrollView.New(MaterialTipListModel.instance, scrollParam)
+		LuaListScrollView.New(MaterialTipListModel.instance, scrollParam),
+		TabViewGroup.New(1, "righttop")
 	}
 end
 
 function MaterialTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
 	self:closeThis()
+end
+
+function MaterialTipViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 1 then
+		self._currencyView = CurrencyView.New({})
+
+		return {
+			self._currencyView
+		}
+	end
+end
+
+function MaterialTipViewContainer:refreshCurrencyView(currency)
+	self._currencyView:setCurrencyType(currency)
+
+	self._currencyView.foreHideBtn = true
 end
 
 return MaterialTipViewContainer

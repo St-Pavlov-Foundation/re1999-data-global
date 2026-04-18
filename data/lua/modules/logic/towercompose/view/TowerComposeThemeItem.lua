@@ -26,10 +26,15 @@ function TowerComposeThemeItem:init(go)
 	self._gofoldNormalTip = gohelper.findChild(self.go, "episodeContent/go_foldNormalTip")
 	self._btnfoldTip = gohelper.findChildButtonWithAudio(self.go, "episodeContent/go_foldNormalTip/btn_foldTip")
 	self._btnunfoldTip = gohelper.findChildButtonWithAudio(self.go, "episodeContent/go_foldNormalTip/btn_unfoldTip")
+	self._goepisodeTip = gohelper.findChild(self.go, "episodeContent/go_episodeTip")
+	self._goplaneUnlockTip = gohelper.findChild(self.go, "episodeContent/go_episodeTip/go_planeUnlockTip")
+	self._txtplaneUnlockTip = gohelper.findChildText(self.go, "episodeContent/go_episodeTip/go_planeUnlockTip/txt_planeUnlockTip")
+	self._gomodUnlockTip = gohelper.findChild(self.go, "episodeContent/go_episodeTip/go_modUnlockTip")
 	self._goplaneEpisodeItem = gohelper.findChild(self.go, "episodeContent/go_planeEpisodeItem")
 	self._goplaneSelect = gohelper.findChild(self.go, "episodeContent/go_planeEpisodeItem/go_planeSelect")
 	self._gofirstPlane = gohelper.findChild(self.go, "episodeContent/go_planeEpisodeItem/plane/go_firstPlane")
 	self._gosecondPlane = gohelper.findChild(self.go, "episodeContent/go_planeEpisodeItem/plane/go_secondPlane")
+	self._gosecondPlaneLockIcon = gohelper.findChild(self.go, "episodeContent/go_planeEpisodeItem/plane/go_secondPlane/go_lockIcon")
 	self._txtplaneName = gohelper.findChildText(self.go, "episodeContent/go_planeEpisodeItem/txt_planeName")
 	self._btnplaneEpisode = gohelper.findChildButtonWithAudio(self.go, "episodeContent/go_planeEpisodeItem/btn_planeEpisode")
 	self._gothemeReddot = gohelper.findChild(self.go, "theme/go_themeReddot")
@@ -50,6 +55,7 @@ TowerComposeThemeItem.normalSpace = 10
 TowerComposeThemeItem.normalEpisodeHeight = 200
 TowerComposeThemeItem.foldNormalTipHeight = 0
 TowerComposeThemeItem.planeEpisodeHeight = 200
+TowerComposeThemeItem.episodeTipHeight = 50
 TowerComposeThemeItem.selectFontSize = 40
 TowerComposeThemeItem.unselectFontSize = 28
 TowerComposeThemeItem.selectFontPos = Vector2.New(28, 42)
@@ -188,8 +194,8 @@ function TowerComposeThemeItem:refreshUI()
 	self.isFirstPlaneUnlock = self.curUnlockPlaneLayerId > 0 and self.curUnlockPlaneLayerId == self.planeLayerIdList[1]
 
 	gohelper.setActive(self._goplaneEpisodeItem, self.curUnlockPlaneLayerId > 0)
-	gohelper.setActive(self._gofirstPlane, self.isFirstPlaneUnlock and not self.isMaxPlaneLayerUnlock)
-	gohelper.setActive(self._gosecondPlane, self.isMaxPlaneLayerUnlock)
+	gohelper.setActive(self._gofirstPlane, true)
+	gohelper.setActive(self._gosecondPlane, true)
 
 	if self.curUnlockPlaneLayerId > 0 then
 		local planeEpisodeCo = TowerComposeConfig.instance:getEpisodeConfig(self.themeId, self.curUnlockPlaneLayerId)
@@ -198,6 +204,7 @@ function TowerComposeThemeItem:refreshUI()
 	end
 
 	self:refreshFoldState()
+	self:refreshPlaneEpisodeTip()
 	self:refreshNormalEpisodeItem()
 	self:refreshItemHeight()
 	self:setThemeHeight()
@@ -214,6 +221,22 @@ function TowerComposeThemeItem:refreshFoldState()
 
 	gohelper.setActive(self._btnfold, self.unfoldThemeState)
 	gohelper.setActive(self._btnunfold, not self.unfoldThemeState)
+end
+
+function TowerComposeThemeItem:refreshPlaneEpisodeTip()
+	local isPassAllEpisode, finalLayer = TowerComposeModel.instance:isAllEpisodeFinish(self.themeId)
+
+	gohelper.setActive(self._goepisodeTip, not isPassAllEpisode)
+
+	if not isPassAllEpisode then
+		gohelper.setActive(self._goplaneUnlockTip, not self.isMaxPlaneLayerUnlock and self.passLayerId < self.maxPlaneLayerId)
+		gohelper.setActive(self._gomodUnlockTip, self.isMaxPlaneLayerUnlock and finalLayer > self.passLayerId)
+
+		self._txtplaneUnlockTip.text = self.isFirstPlaneUnlock and not self.isMaxPlaneLayerUnlock and luaLang("towercompose_fightPlane2") or luaLang("towercompose_fightPlane1")
+	end
+
+	gohelper.setActive(self._gosecondPlaneLockIcon, not self.isMaxPlaneLayerUnlock)
+	ZProj.UGUIHelper.SetGrayscale(self._gosecondPlane, not self.isMaxPlaneLayerUnlock)
 end
 
 function TowerComposeThemeItem:refreshNormalEpisodeItem()
@@ -287,6 +310,9 @@ function TowerComposeThemeItem:refreshItemHeight()
 		self.episodeContentHeight = self.normalEpisodeContent1Height + self.normalEpisodeContent2Height + (self.isFirstPlaneUnlock and TowerComposeThemeItem.planeEpisodeHeight or 0)
 	end
 
+	local isPassAllEpisode = TowerComposeModel.instance:isAllEpisodeFinish(self.themeId)
+
+	self.episodeContentHeight = self.episodeContentHeight + (isPassAllEpisode and 0 or TowerComposeThemeItem.episodeTipHeight)
 	self.totalHeight = TowerComposeThemeItem.themeHeight + self.episodeContentHeight
 	self.episodeContentHeight = self.unfoldThemeState and self.episodeContentHeight or 0
 end

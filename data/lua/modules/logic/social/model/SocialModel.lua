@@ -17,6 +17,7 @@ function SocialModel:onInit()
 	self._selectFriend = nil
 	self.playSearchItemAnimDt = 0
 	self.leftSendRecommendReqDt = 0
+	self._hasGetInfo = false
 end
 
 function SocialModel:reInit()
@@ -32,6 +33,11 @@ function SocialModel:reInit()
 	self._tempMODict = {}
 	self._playerSelfMO = nil
 	self._selectFriend = nil
+	self._hasGetInfo = false
+end
+
+function SocialModel:checkGetInfo()
+	return self._hasGetInfo
 end
 
 function SocialModel:getFriendIdDict()
@@ -58,6 +64,7 @@ function SocialModel:updateSocialInfosList(friendIds, blackListIds)
 end
 
 function SocialModel:updateFriendList(friendInfos)
+	self._hasGetInfo = true
 	self._friendsMODict = {}
 	self._friendUserIdDict = {}
 
@@ -65,7 +72,7 @@ function SocialModel:updateFriendList(friendInfos)
 		for i, friendInfo in ipairs(friendInfos) do
 			local playerMO = SocialPlayerMO.New()
 
-			playerMO:init(friendInfo)
+			playerMO:init(friendInfo, SocialEnum.Type.Friend)
 
 			self._friendsMODict[playerMO.userId] = playerMO
 			self._friendUserIdDict[playerMO.userId] = true
@@ -85,7 +92,7 @@ function SocialModel:updateBlackList(blackInfos)
 		for i, blackInfo in ipairs(blackInfos) do
 			local playerMO = SocialPlayerMO.New()
 
-			playerMO:init(blackInfo)
+			playerMO:init(blackInfo, SocialEnum.Type.Black)
 
 			self._blackListMODict[playerMO.userId] = playerMO
 			self._blackListUserIdDict[playerMO.userId] = true
@@ -104,7 +111,7 @@ function SocialModel:updateRequestList(requestInfos)
 		for i, requestInfo in ipairs(requestInfos) do
 			local playerMO = SocialPlayerMO.New()
 
-			playerMO:init(requestInfo)
+			playerMO:initWithPlayCard(requestInfo, SocialEnum.Type.Request)
 
 			self._requestMODict[playerMO.userId] = playerMO
 
@@ -122,7 +129,7 @@ function SocialModel:updateRecommendList(recommendInfos)
 		for i, requestInfo in ipairs(recommendInfos) do
 			local playerMO = SocialPlayerMO.New()
 
-			playerMO:init(requestInfo)
+			playerMO:initWithPlayCard(requestInfo, SocialEnum.Type.Recommend)
 
 			self._recommendMODict[playerMO.userId] = playerMO
 
@@ -140,7 +147,7 @@ function SocialModel:updateSearchList(searchInfos)
 		for i, searchInfo in ipairs(searchInfos) do
 			local playerMO = SocialPlayerMO.New()
 
-			playerMO:init(searchInfo)
+			playerMO:initWithPlayCard(searchInfo, SocialEnum.Type.Search)
 
 			self._searchMODict[playerMO.userId] = playerMO
 
@@ -154,12 +161,16 @@ function SocialModel:updateSearchList(searchInfos)
 end
 
 function SocialModel:addFriendsByUserIds(userIds)
+	local noPlayerMo = false
+
 	if userIds and #userIds > 0 then
 		for i, userId in ipairs(userIds) do
 			local playerMO = self:getPlayerMO(userId)
 
 			if playerMO and not self._friendsMODict[playerMO.userId] then
 				self._friendsMODict[playerMO.userId] = playerMO
+			else
+				noPlayerMo = true
 			end
 
 			self._friendUserIdDict[userId] = true
@@ -167,6 +178,8 @@ function SocialModel:addFriendsByUserIds(userIds)
 
 		SocialListModel.instance:setModelList(SocialEnum.Type.Friend, self._friendsMODict)
 	end
+
+	return noPlayerMo
 end
 
 function SocialModel:addFriendsByUserInfos(userInfos)
@@ -175,7 +188,7 @@ function SocialModel:addFriendsByUserInfos(userInfos)
 			if not self._friendsMODict[userInfo.userId] then
 				local playerMO = SocialPlayerMO.New()
 
-				playerMO:init(userInfo)
+				playerMO:init(userInfo, SocialEnum.Type.Friend)
 
 				self._friendsMODict[playerMO.userId] = playerMO
 

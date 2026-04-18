@@ -7,7 +7,7 @@ local iconPref = "survival_map_icon_"
 local bgPref = "survival_map_bubble_"
 local arrowPref = "survival_map_icon_arrow0"
 local Icons = {
-	Exit = 22,
+	Exit = 8,
 	Shop = 15,
 	Door = 9,
 	Search = 3,
@@ -100,10 +100,9 @@ function SurvivalUnitIconHelper:getUnitIconAndBg(unitMo)
 			end
 		elseif unitType == SurvivalEnum.UnitType.Battle then
 			local isElite = subType == 41 or subType == 43
-			local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-			local teamLv = weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+			local roleLevel = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
 			local fightLv = unitMo.co.fightLevel
-			local canSkip = unitMo.co.skip == 1 and fightLv <= teamLv
+			local canSkip = unitMo.co.skip == 1 and fightLv <= roleLevel
 
 			if canSkip then
 				icon = isElite and Icons.Fight_Elite_Skip or Icons.Fight_Skip

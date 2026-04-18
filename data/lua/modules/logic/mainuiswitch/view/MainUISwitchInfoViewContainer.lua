@@ -31,14 +31,11 @@ function MainUISwitchInfoViewContainer:_addMainUI(t)
 	table.insert(views, SwitchMainActExtraDisplay.New())
 	table.insert(views, SwitchMainUIView.New())
 	table.insert(views, SwitchMainUIEagleAnimView.New())
+	table.insert(views, MainBirdAnimView.New())
 
 	t[1] = MultiView.New(views)
 
 	return t[1]
-end
-
-function MainUISwitchInfoViewContainer:isInitMainFullView()
-	return false
 end
 
 return MainUISwitchInfoViewContainer

@@ -1116,7 +1116,7 @@ function WeatherComp:_setDynamicEffectLightStartRotation()
 end
 
 function WeatherComp:_playVoice()
-	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
+	if not self._curReport or GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 

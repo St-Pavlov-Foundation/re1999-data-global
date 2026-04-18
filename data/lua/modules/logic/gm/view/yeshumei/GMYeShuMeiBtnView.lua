@@ -29,12 +29,17 @@ function GMYeShuMeiBtnView:initViewContent()
 	self:addButton("L2", "打开指定关卡", self._openGame, self)
 	self:addButton("L3", "打开选关界面", self._openLevelView, self)
 	self:addButton("L4", "完成当前关卡", self._finishCurrentGame, self)
+	self:addLabel("L5", "鹭鸶剪")
 
-	self._beilierEpisodeId = self:addInputText("L5", nil, "关卡ID")
+	self._act211GameId = self:addInputText("L5", nil, "编辑器gameID")
 
-	self:addButton("L5", "贝利尔打开指定关卡", self._openBeilierGame, self)
-	self:addButton("L6", "贝利尔提示次数99", self.setMaxTipCount, self)
-	self:addButton("L7", "完成贝利尔当前关卡", self._finishBeiLiErCurrentGame, self)
+	self:addButton("L5", "打开指定关卡", self._openLuSiJianGame, self)
+
+	self._act220EpisodeId = self:addInputText("L6", nil, "关卡ID")
+
+	self:addButton("L6", "打开指定关卡", self._openLuSiJianGameByEpisodeId, self)
+
+	self.showToggle = self:addToggle("L6", "显示配置点", self.onToggleValueChange, self)
 end
 
 function GMYeShuMeiBtnView:_openGMYeShuMeiView()
@@ -63,9 +68,15 @@ function GMYeShuMeiBtnView:_openGame()
 	YeShuMeiGameController.instance:enterGame(episodeId)
 end
 
-function GMYeShuMeiBtnView:_openBeilierGame()
-	local episodeId = tonumber(self._beilierEpisodeId:GetText())
-	local episodeCo = BeiLiErConfig.instance:getBeiLiErEpisodeConfigById(VersionActivity3_2Enum.ActivityId.BeiLiEr, episodeId)
+function GMYeShuMeiBtnView:_openLuSiJianGame()
+	local gameId = tonumber(self._act211GameId:GetText())
+
+	LuSiJianGameController.instance:enterTestGame(gameId)
+end
+
+function GMYeShuMeiBtnView:_openLuSiJianGameByEpisodeId()
+	local episodeId = tonumber(self._act220EpisodeId:GetText())
+	local episodeCo = LuSiJianConfig.instance:getLuSiJianEpisodeConfigById(VersionActivity3_4Enum.ActivityId.LuSiJian, episodeId)
 
 	if not episodeCo then
 		GameFacade.showToastString("关卡配置不存在")
@@ -79,7 +90,13 @@ function GMYeShuMeiBtnView:_openBeilierGame()
 		return
 	end
 
-	BeiLiErGameController.instance:enterGame(episodeId)
+	LuSiJianGameController.instance:enterGame(episodeId)
+end
+
+function GMYeShuMeiBtnView:onToggleValueChange()
+	local isOn = self.showToggle.isOn
+
+	LuSiJianGameModel.instance:setShowPointState(isOn)
 end
 
 function GMYeShuMeiBtnView:setMaxTipCount()

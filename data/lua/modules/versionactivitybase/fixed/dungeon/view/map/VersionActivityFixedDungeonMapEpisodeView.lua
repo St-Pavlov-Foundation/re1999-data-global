@@ -282,7 +282,7 @@ end
 function VersionActivityFixedDungeonMapEpisodeView:checkHardModeIsOpen()
 	local dungeonActId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
 
-	return VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapterAndGetToast(dungeonActId)
+	return VersionActivityFixedDungeonController.instance:isOpenActivityHardDungeonChapterAndGetToast(dungeonActId)
 end
 
 function VersionActivityFixedDungeonMapEpisodeView:changeEpisodeMode(mode)

@@ -1681,5 +1681,22 @@
     "controlResilience": 2000,
     "delExPointResilience": 0,
     "stressUpResilience": 0
+  },
+  {
+    "id": 116340001,
+    "dizzy": 1000,
+    "sleep": 0,
+    "petrified": 1000,
+    "frozen": 0,
+    "disarm": 0,
+    "forbid": 1000,
+    "seal": 1000,
+    "cantGetExskill": 0,
+    "charm": 1000,
+    "delExPoint": 0,
+    "stressUp": 0,
+    "controlResilience": 1000,
+    "delExPointResilience": 0,
+    "stressUpResilience": 0
   }
 ]

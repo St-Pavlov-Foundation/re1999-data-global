@@ -49,6 +49,7 @@ function SurvivalMapUnitView:initAllUnit()
 	end
 
 	self:addUnitUI(0, sceneMo.player, 99999)
+	self:initRoleSkillConfirmItem()
 	self:_onUnitIsShowChange(0)
 end
 
@@ -208,6 +209,15 @@ function SurvivalMapUnitView:_onHideUnitBubble(unitId)
 
 	if self._allUI[unitId] then
 		gohelper.setActive(self._allUI[unitId].go, true)
+	end
+end
+
+function SurvivalMapUnitView:initRoleSkillConfirmItem()
+	if not self._roleSkillConfirmItem then
+		local path = self.viewContainer._viewSetting.otherRes.roleSkillConfirmItem
+		local go = self:getResInst(path, self._allLayers[99999], "roleskillconfirmitem")
+
+		self._roleSkillConfirmItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, SurvivalRoleSkillConfirmItem)
 	end
 end
 

@@ -21,7 +21,6 @@ function GMSubViewRoom:initViewContent()
 	self:_initL6()
 	self:_initL7()
 	self:_initL8()
-	self:_initL9()
 
 	self._isInit = true
 end
@@ -29,11 +28,11 @@ end
 function GMSubViewRoom:_initL1()
 	local LStr = "L1"
 
-	self:addButton(LStr, "小屋观察", self._onClickBtnRoomOb, self)
-	self:addButton(LStr, "小屋编辑", self._onClickBtnRoomMap, self)
-	self:addButton(LStr, "小屋Debug", self._onClickBtnRoomDebug, self)
-	self:addButton(LStr, "小屋建筑占地", self._onClickRoomDebugBuildingArea, self)
-	self:addButton(LStr, "小屋一键GM", self._onClickBtnOneKey, self)
+	self:addButton(LStr, "观察模式", self._onClickBtnRoomOb, self)
+	self:addButton(LStr, "编辑模式", self._onClickBtnRoomMap, self)
+	self:addButton(LStr, "Debug模式", self._onClickBtnRoomDebug, self)
+	self:addButton(LStr, "建筑占地", self._onClickRoomDebugBuildingArea, self)
+	self:addButton(LStr, "一键GM", self._onClickBtnOneKey, self)
 end
 
 function GMSubViewRoom:_onClickBtnRoomOb()
@@ -127,28 +126,28 @@ function GMSubViewRoom:_initL3()
 	self:_onRoomTouchSpeedChange(nil, curValue)
 end
 
-function GMSubViewRoom:_onRoomRotateSpeedChange(param, value)
+function GMSubViewRoom:_onRoomRotateSpeedChange(_, value)
 	local speed = 0.2 + 1.8 * value
 
 	RoomController.instance.rotateSpeed = speed
 	self._txtRoomRotateSpeed.text = string.format("%.2f", speed)
 end
 
-function GMSubViewRoom:_onRoomMoveSpeedChange(param, value)
+function GMSubViewRoom:_onRoomMoveSpeedChange(_, value)
 	local speed = 0.2 + 1.8 * value
 
 	RoomController.instance.moveSpeed = speed
 	self._txtRoomMoveSpeed.text = string.format("%.2f", speed)
 end
 
-function GMSubViewRoom:_onRoomScaleSpeedChange(param, value)
+function GMSubViewRoom:_onRoomScaleSpeedChange(_, value)
 	local speed = 0.2 + 1.8 * value
 
 	RoomController.instance.scaleSpeed = speed
 	self._txtRoomScaleSpeed.text = string.format("%.2f", speed)
 end
 
-function GMSubViewRoom:_onRoomTouchSpeedChange(param, value)
+function GMSubViewRoom:_onRoomTouchSpeedChange(_, value)
 	local speed = 0.2 + 1.8 * value
 
 	RoomController.instance.touchMoveSpeed = speed
@@ -295,11 +294,11 @@ function GMSubViewRoom:_checkScene()
 	return false
 end
 
-function GMSubViewRoom:_checkObMode(isTips)
+function GMSubViewRoom:_checkObMode()
 	return self:_checkScene() and RoomController.instance:isObMode()
 end
 
-function GMSubViewRoom:_checkEditMode(isTips)
+function GMSubViewRoom:_checkEditMode()
 	return self:_checkScene() and RoomController.instance:isEditMode()
 end
 
@@ -545,9 +544,17 @@ function GMSubViewRoom:_initL8()
 		drop_w = 330
 	})
 
-	if RoomController.instance:isEditMode() and GameResMgr.IsFromEditorDir then
-		RoomDebugController.instance:getDebugPackageInfo(self._onInitDebugMapPackageInfo, self, LStr)
-	end
+	local colorInterStr = {
+		"选择换色类型",
+		"地块换色",
+		"建筑换色"
+	}
+
+	self:addDropDown(LStr, "小屋换色", colorInterStr, self._onRoomChangeMeshReaderColorChanged, self, {
+		total_w = 500,
+		drop_w = 330
+	})
+	self:addButton(LStr, "编辑模式GM", self._onClickEditModeGM, self)
 end
 
 function GMSubViewRoom:_onRoomWeatherSelectChanged(index)
@@ -572,109 +579,6 @@ function GMSubViewRoom:_onRoomWeatherSelectChanged(index)
 	else
 		GameFacade.showToast(94, "GM需要进入小屋可使用。")
 	end
-end
-
-function GMSubViewRoom:_onInitDebugMapPackageInfo(package, groupId)
-	local mapNameList = {
-		"选择需要复制的地图"
-	}
-
-	self._blockInfosList = {}
-
-	local tRoomConfig = RoomConfig.instance
-
-	for i, packageMap in ipairs(package) do
-		local blockInfos = {}
-
-		for _, info in ipairs(packageMap.infos) do
-			local hexPoint = HexPoint(info.x, info.y)
-			local isInBound = RoomBlockHelper.isInBoundary(hexPoint)
-
-			if tRoomConfig:getBlock(info.blockId) and not tRoomConfig:getInitBlock(info.blockId) and isInBound then
-				table.insert(blockInfos, info)
-			end
-		end
-
-		if #blockInfos > 1 then
-			table.insert(mapNameList, packageMap.packageName)
-			table.insert(self._blockInfosList, blockInfos)
-		end
-	end
-
-	self:addDropDown(groupId, "一键复制地图地块", mapNameList, self._onDropDownMapPackageChanged, self, {
-		total_w = 750,
-		drop_w = 450
-	})
-end
-
-GMSubViewRoom.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
-
-function GMSubViewRoom:_onDropDownMapPackageChanged(index)
-	if index >= 1 or index <= #self._blockInfosList then
-		if RoomMapBlockModel.instance:getConfirmBlockCount() > 0 then
-			GameFacade.showToast(ToastEnum.IconId, "需要先重置下荒原")
-
-			return
-		end
-
-		self._waitUseBlockList = {}
-
-		tabletool.addValues(self._waitUseBlockList, self._blockInfosList[index])
-		TaskDispatcher.cancelTask(self._onWaitUseBlockList, self)
-
-		if #self._waitUseBlockList > 0 then
-			UIBlockMgr.instance:startBlock(GMSubViewRoom.Drop_Down_Map_Package_Changed)
-			TaskDispatcher.runRepeat(self._onWaitUseBlockList, self, 0.001, #self._waitUseBlockList + 1)
-		end
-	end
-end
-
-function GMSubViewRoom:_onWaitUseBlockList()
-	if self._waitUseBlockList and #self._waitUseBlockList > 0 then
-		local info = self._waitUseBlockList[#self._waitUseBlockList]
-
-		table.remove(self._waitUseBlockList, #self._waitUseBlockList)
-		RoomMapController.instance:useBlockRequest(info.blockId, info.rotate, info.x, info.y)
-	else
-		UIBlockMgr.instance:endBlock(GMSubViewRoom.Drop_Down_Map_Package_Changed)
-		RoomController.instance:exitRoom(true)
-	end
-end
-
-function GMSubViewRoom:_findCharacterShadow()
-	local roomCharacterList = lua_room_character.configList or {}
-	local resDict = {}
-	local excludeDic = {
-		shadow = true
-	}
-
-	for _, characterCfg in ipairs(roomCharacterList) do
-		if not string.nilorempty(characterCfg.shadow) and not excludeDic[characterCfg.shadow] then
-			local skinConfig = SkinConfig.instance:getSkinCo(characterCfg.skinId)
-
-			if skinConfig and not string.nilorempty(skinConfig.spine) then
-				local arr = string.split(skinConfig.spine, "/")
-
-				resDict[string.format("%s_room", arr[#arr])] = characterCfg.shadow
-			end
-		end
-	end
-
-	logError(JsonUtil.encode(resDict))
-end
-
-function GMSubViewRoom:_initL9()
-	local LStr = "L9"
-	local interStr = {
-		"换色选择",
-		"地块换色",
-		"建筑换色"
-	}
-
-	self:addDropDown(LStr, "小屋换色", interStr, self._onRoomChangeMeshReaderColorChanged, self, {
-		total_w = 500,
-		drop_w = 330
-	})
 end
 
 function GMSubViewRoom:_onRoomChangeMeshReaderColorChanged(index)
@@ -707,7 +611,6 @@ function GMSubViewRoom:_onRoomChangeMeshReaderColorChanged(index)
 end
 
 local Shader = UnityEngine.Shader
-local _ENABLE_CHANGE_COLOR = "_ENABLE_CHANGE_COLOR"
 local ShaderIDMap = {
 	enableChangeColor = Shader.PropertyToID("_EnableChangeColor"),
 	hue = Shader.PropertyToID("_Hue"),
@@ -722,10 +625,9 @@ function GMSubViewRoom:_setEntityListByEffectKeyList(entityList, keyList, isOpen
 	mpb:Clear()
 
 	local cfgList = lua_room_block_color_param.configList
-	local num = #cfgList
 	local idx = 0
 
-	for i, entity in ipairs(entityList) do
+	for _, entity in ipairs(entityList) do
 		if isOpen then
 			idx = idx + 1
 
@@ -734,7 +636,6 @@ function GMSubViewRoom:_setEntityListByEffectKeyList(entityList, keyList, isOpen
 			end
 
 			local cfg = cfgList[idx]
-			local value = math.floor(i % 200) * 0.01 - 1
 
 			mpb:SetFloat(ShaderIDMap.enableChangeColor, 1)
 			mpb:SetFloat(ShaderIDMap.hue, cfg.hue)
@@ -743,21 +644,61 @@ function GMSubViewRoom:_setEntityListByEffectKeyList(entityList, keyList, isOpen
 		end
 
 		for _, key in ipairs(keyList) do
-			self:_setMeshReaderColor(entity.effect:getComponentsByPath(key, RoomEnum.ComponentName.MeshRenderer, "mesh"), mpb, open)
+			self:_setMeshReaderColor(entity.effect:getComponentsByPath(key, RoomEnum.ComponentName.MeshRenderer, "mesh"), mpb)
 		end
 	end
 end
 
-function GMSubViewRoom:_setMeshReaderColor(meshRendererList, mpb, open)
+function GMSubViewRoom:_setMeshReaderColor(meshRendererList, mpb)
 	if meshRendererList then
-		for i, meshRenderer in ipairs(meshRendererList) do
+		for _, meshRenderer in ipairs(meshRendererList) do
 			meshRenderer:SetPropertyBlock(mpb)
 		end
 	end
 end
 
+function GMSubViewRoom:_onClickEditModeGM()
+	local isEditMode = RoomController.instance:isEditMode()
+
+	if not isEditMode then
+		GameFacade.showToastString("未处于小屋编辑模式")
+
+		return
+	end
+
+	gohelper.setActive(self._subViewGo, false)
+	self.viewContainer.gmSubViewRoomEditMode:showSubView()
+end
+
+function GMSubViewRoom:_findCharacterShadow()
+	local roomCharacterList = lua_room_character.configList or {}
+	local resDict = {}
+	local excludeDic = {
+		shadow = true
+	}
+
+	for _, characterCfg in ipairs(roomCharacterList) do
+		if not string.nilorempty(characterCfg.shadow) and not excludeDic[characterCfg.shadow] then
+			local skinConfig = SkinConfig.instance:getSkinCo(characterCfg.skinId)
+
+			if skinConfig and not string.nilorempty(skinConfig.spine) then
+				local arr = string.split(skinConfig.spine, "/")
+
+				resDict[string.format("%s_room", arr[#arr])] = characterCfg.shadow
+			end
+		end
+	end
+
+	logError(JsonUtil.encode(resDict))
+end
+
+function GMSubViewRoom:_onToggleValueChanged(toggleId, isOn)
+	GMSubViewRoom.super._onToggleValueChanged(self, toggleId, isOn)
+	self.viewContainer.gmSubViewRoomEditMode:closeSubView()
+end
+
 function GMSubViewRoom:onDestroyView()
-	TaskDispatcher.cancelTask(self._onWaitUseBlockList, self)
+	return
 end
 
 return GMSubViewRoom

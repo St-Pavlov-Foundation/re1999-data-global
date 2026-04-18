@@ -10,15 +10,19 @@ function TowerComposePlaneMo:ctor(params)
 	self.modInfoMap = {}
 	self.modeInfoList = {}
 	self.hasFight = false
+	self.teamInfoData = {}
 end
 
 function TowerComposePlaneMo:updateInfo(info)
 	self.planeId = info.planeId
 
 	self:updateModsInfo(info.mods)
+	self:updateTeamInfo(info.team)
 
-	self.level = info.level or 0
-	self.hasFight = info.fight
+	self.curScore = info.currScore
+	self.fightResult = info.result
+	self.hasFight = info.result and info.result ~= TowerComposeEnum.FightResult.None
+	self.isLock = info.lock
 end
 
 function TowerComposePlaneMo:updateModsInfo(modsInfo)
@@ -53,6 +57,8 @@ function TowerComposePlaneMo:buildDefaultModInfoMap(modType)
 end
 
 function TowerComposePlaneMo:buildAllDefaultModInfoMap()
+	self.modInfoMap = {}
+
 	for modType = TowerComposeEnum.ModType.Body, TowerComposeEnum.ModType.Env do
 		self:buildDefaultModInfoMap(modType)
 	end
@@ -86,6 +92,32 @@ function TowerComposePlaneMo:buildModInfoList()
 			return a.slot < b.slot
 		end)
 	end
+end
+
+function TowerComposePlaneMo:updateTeamInfo(teamInfo)
+	if not teamInfo.heroes then
+		return
+	end
+
+	self.teamInfoData.heros = {}
+
+	for _, heroInfo in ipairs(teamInfo.heroes) do
+		local heroData = {}
+
+		heroData.pos = heroInfo.pos
+		heroData.heroId = heroInfo.heroId
+		heroData.trialId = heroInfo.trialId
+		heroData.equipId = heroInfo.mindId
+		self.teamInfoData.heros[heroData.pos] = heroData
+	end
+
+	self.teamInfoData.supportId = teamInfo.supportId
+	self.teamInfoData.researchId = teamInfo.researchId
+	self.teamInfoData.clothId = teamInfo.playerSkill
+end
+
+function TowerComposePlaneMo:getTeamInfoData()
+	return self.teamInfoData
 end
 
 function TowerComposePlaneMo:getEquipModId(modType, slot)
@@ -135,6 +167,35 @@ function TowerComposePlaneMo:dropAllSlotMod(modType)
 	end
 
 	self:buildModInfoList()
+end
+
+function TowerComposePlaneMo:getEquipModLevel(modType)
+	local curModLevel = 0
+	local modeList = self.modeInfoList[modType]
+
+	for _, modInfo in ipairs(modeList) do
+		if modInfo.modId > 0 then
+			local modConfig = TowerComposeConfig.instance:getComposeModConfig(modInfo.modId)
+
+			curModLevel = curModLevel + modConfig.level
+		end
+	end
+
+	return curModLevel
+end
+
+function TowerComposePlaneMo:getPlaneLevelByEquipMod(modType, slotId, modId)
+	local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
+	local slotModId = self.modInfoMap[modType][slotId]
+	local tempLevel = self.level
+
+	if slotModId > 0 then
+		local curModConfig = TowerComposeConfig.instance:getComposeModConfig(slotModId)
+
+		tempLevel = tempLevel - curModConfig.level
+	end
+
+	return tempLevel + modConfig.level
 end
 
 return TowerComposePlaneMo

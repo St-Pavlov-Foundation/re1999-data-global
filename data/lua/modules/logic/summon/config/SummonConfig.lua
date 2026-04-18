@@ -19,7 +19,10 @@ function SummonConfig:reqConfigNames()
 		"summon_character",
 		"summon_pool_detail",
 		"summon_equip_detail",
-		"lucky_bag_heroes"
+		"lucky_bag_heroes",
+		"summon_pool_package",
+		"summon_pool_limit_replicate",
+		"summon_pool_infallible"
 	}
 end
 
@@ -35,6 +38,7 @@ end
 
 function SummonConfig:_initEquipDetails()
 	self._equipPoolDict = {}
+	self._summonPoolPackageListDic = {}
 
 	local list = lua_summon_equip_detail.configList
 
@@ -182,13 +186,17 @@ function SummonConfig.getSummonSSRTimes(co)
 	return nil
 end
 
+local tempReward = {}
+
 function SummonConfig:getRewardItems(heroId, duplicateCount, showNewHero)
 	local rewardItems = {}
-	local reward
+
+	tabletool.clear(tempReward)
+
 	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
 	if duplicateCount <= 0 then
-		reward = heroConfig.firstItem
+		table.insert(tempReward, heroConfig.firstItem)
 
 		if showNewHero then
 			local heroReward = {}
@@ -200,23 +208,28 @@ function SummonConfig:getRewardItems(heroId, duplicateCount, showNewHero)
 			table.insert(rewardItems, heroReward)
 		end
 	elseif duplicateCount < CommonConfig.instance:getConstNum(ConstEnum.HeroDuplicateGetCount) - 1 then
-		reward = heroConfig.duplicateItem
+		table.insert(tempReward, heroConfig.duplicateItem)
+		table.insert(tempReward, heroConfig.duplicateItemSpecial)
 	else
-		reward = heroConfig.duplicateItem2
+		table.insert(tempReward, heroConfig.duplicateItem2)
 	end
 
-	if not string.nilorempty(reward) then
-		local items = string.split(reward, "|")
+	for i = 1, #tempReward do
+		local reward = tempReward[i]
 
-		for i, item in ipairs(items) do
-			local rewardItem = {}
-			local itemParams = string.split(item, "#")
+		if not string.nilorempty(reward) then
+			local items = string.split(reward, "|")
 
-			rewardItem.type = tonumber(itemParams[1])
-			rewardItem.id = tonumber(itemParams[2])
-			rewardItem.quantity = tonumber(itemParams[3])
+			for i, item in ipairs(items) do
+				local rewardItem = {}
+				local itemParams = string.split(item, "#")
 
-			table.insert(rewardItems, rewardItem)
+				rewardItem.type = tonumber(itemParams[1])
+				rewardItem.id = tonumber(itemParams[2])
+				rewardItem.quantity = tonumber(itemParams[3])
+
+				table.insert(rewardItems, rewardItem)
+			end
 		end
 	end
 
@@ -246,6 +259,16 @@ function SummonConfig.poolIsLuckyBag(poolId)
 
 	if co then
 		return SummonConfig.poolTypeIsLuckyBag(co.type)
+	end
+
+	return false
+end
+
+function SummonConfig.poolIsInfallible(poolId)
+	local co = SummonConfig.instance:getSummonPool(poolId)
+
+	if co then
+		return co.infallibleItemId ~= nil and co.infallibleItemId ~= 0 and co.infallibleItemMaxUseCount > 0
 	end
 
 	return false
@@ -297,6 +320,60 @@ function SummonConfig:getProgressRewardsByPoolId(poolId)
 	end
 
 	return self._poolProgressRewardsDic[poolId]
+end
+
+function SummonConfig:getSummonPoolPackageConfig(poolId, order)
+	if poolId == nil or order == nil then
+		return nil
+	end
+
+	local singleConfigDic = lua_summon_pool_package.configDict[poolId]
+
+	if singleConfigDic == nil then
+		return nil
+	end
+
+	return singleConfigDic[order]
+end
+
+function SummonConfig:getSummonPoolPackageConfigList(poolId)
+	if poolId == nil then
+		return nil
+	end
+
+	local singleConfigDic = lua_summon_pool_package.configDict[poolId]
+
+	if singleConfigDic == nil then
+		return nil
+	end
+
+	if not self._summonPoolPackageListDic[poolId] then
+		local list = {}
+
+		for _, config in pairs(singleConfigDic) do
+			list[config.order] = config
+		end
+
+		self._summonPoolPackageListDic[poolId] = list
+	end
+
+	return self._summonPoolPackageListDic[poolId]
+end
+
+function SummonConfig:getSummonLimitReplicateConfig(heroId)
+	if heroId == nil then
+		return nil
+	end
+
+	return lua_summon_pool_limit_replicate.configDict[heroId]
+end
+
+function SummonConfig:getSummonInfallibleConfig(infallibleItemId)
+	if infallibleItemId == nil then
+		return nil
+	end
+
+	return lua_summon_pool_infallible.configDict[infallibleItemId]
 end
 
 SummonConfig.instance = SummonConfig.New()

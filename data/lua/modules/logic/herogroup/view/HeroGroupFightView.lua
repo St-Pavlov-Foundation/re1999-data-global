@@ -1309,7 +1309,7 @@ function HeroGroupFightView:_updateReplayHeroGorupList()
 end
 
 function HeroGroupFightView:refreshDropTips()
-	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self.episodeConfig.chapterId)
+	local isMultiDrop, limit, total, magnification, isDaily = Activity217Model.instance:getShowTripleByChapter(self.episodeConfig.chapterId)
 	local multiDropShow = isMultiDrop and limit > 0
 	local episodeShow, remainTimes, dailyLimit = DoubleDropModel.instance:isShowDoubleByEpisode(self._episodeId, true)
 	local showDrop = episodeShow or multiDropShow
@@ -1318,7 +1318,11 @@ function HeroGroupFightView:refreshDropTips()
 
 	if showDrop then
 		if multiDropShow then
-			self._txtdoubledroptimes.text = GameUtil.getSubPlaceholderLuaLang(luaLang("triple_drop_remain_times"), {
+			local actName = Activity217Model.instance:getActName()
+			local str = isDaily and luaLang("doubleactivity_intips_daily") or luaLang("doubleactivity_intips")
+
+			self._txtdoubledroptimes.text = GameUtil.getSubPlaceholderLuaLang(str, {
+				actName,
 				limit,
 				total
 			})

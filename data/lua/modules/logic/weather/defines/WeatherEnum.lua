@@ -4,6 +4,21 @@ module("modules.logic.weather.defines.WeatherEnum", package.seeall)
 
 local WeatherEnum = _M
 
+WeatherEnum.WeatherEffectName = {
+	"天气无",
+	"阳光明媚",
+	"小雨",
+	"大雨",
+	"暴风雨",
+	"小雪",
+	"大雪",
+	"大雾",
+	"白天烟花",
+	"夜晚烟花",
+	"夜晚闪电",
+	"梅小雪",
+	"梅大雪"
+}
 WeatherEnum.LightMode = {
 	"During",
 	"Overcast",
@@ -43,7 +58,9 @@ WeatherEnum.EffectMode = {
 	"Heavy_Fog",
 	"Normal",
 	"Normal",
-	"Heavy_Rainstorm"
+	"Heavy_Rainstorm",
+	"Little_Snow",
+	"Heavy_Snow"
 }
 WeatherEnum.EffectAirColor = {
 	{

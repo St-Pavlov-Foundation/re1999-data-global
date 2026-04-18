@@ -31,7 +31,7 @@ function CommandStationViewDefine.init(module_views)
 		container = "CommandStationPaperViewContainer",
 		mainRes = "ui/viewres/commandstation/commandstation_paperview.prefab",
 		layer = "POPUP_TOP",
-		viewType = ViewType.Full,
+		viewType = ViewType.Normal,
 		anim = ViewAnim.Internal,
 		tabRes = {
 			{

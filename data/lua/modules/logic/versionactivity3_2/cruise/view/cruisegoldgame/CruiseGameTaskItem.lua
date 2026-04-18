@@ -2,7 +2,7 @@
 
 module("modules.logic.versionactivity3_2.cruise.view.cruisegoldgame.CruiseGameTaskItem", package.seeall)
 
-local CruiseGameTaskItem = class("CruiseGameTaskItem", SurvivalSimpleListItem)
+local CruiseGameTaskItem = class("CruiseGameTaskItem", SimpleListItem)
 
 function CruiseGameTaskItem:onInit(viewGO)
 	self.go_icon = gohelper.findChild(viewGO, "hori/#go_reward/go_icon")
@@ -22,11 +22,11 @@ function CruiseGameTaskItem:onInit(viewGO)
 	self.textCoinGray = gohelper.findChildTextMesh(viewGO, "#image_graybg/#txt_value")
 end
 
-function CruiseGameTaskItem:addEventListeners()
+function CruiseGameTaskItem:onAddListeners()
 	return
 end
 
-function CruiseGameTaskItem:removeEventListeners()
+function CruiseGameTaskItem:onRemoveListeners()
 	return
 end
 

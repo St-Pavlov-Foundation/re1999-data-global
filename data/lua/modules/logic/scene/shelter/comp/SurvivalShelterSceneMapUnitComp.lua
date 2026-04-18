@@ -196,6 +196,7 @@ function SurvivalShelterSceneMapUnitComp:refreshMonster()
 
 			gohelper.setActive(popLayer, false)
 			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, true)
+			SurvivalModel.instance:addDebugSettleStr("refreshMonster 1")
 		end
 
 		self:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, fightId, canShow or needShowDestroy)
@@ -207,6 +208,7 @@ function SurvivalShelterSceneMapUnitComp:refreshMonster()
 			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, false)
 			self:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
 			SurvivalController.instance:dispatchEvent(SurvivalEvent.BossPerformFinish)
+			SurvivalModel.instance:addDebugSettleStr("refreshMonster 2")
 			SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
 		end
 	end

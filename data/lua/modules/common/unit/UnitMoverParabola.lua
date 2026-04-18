@@ -64,6 +64,13 @@ function UnitMoverParabola:simpleMove(startX, startY, startZ, endX, endY, endZ, 
 	self._duration = duration
 
 	local distance = math.sqrt((startX - endX)^2 + (startY - endY)^2 + (startZ - endZ)^2)
+
+	if distance <= 0 then
+		logError(string.format("抛物线起始点和终点不能相等: startPos : (%s, %s, %s), endPos : (%s, %s, %s)", startX, startY, startZ, endX, endY, endZ))
+
+		distance = 0.1
+	end
+
 	local speed = distance > 0 and distance / duration or 100000000
 
 	self:setPosDirectly(startX, startY, startZ)
@@ -96,6 +103,12 @@ function UnitMoverParabola:_setHoriSpeed(speed)
 		local vx = self._wayPoint.x - self._posX
 		local vz = self._wayPoint.z - self._posZ
 		local length = math.sqrt(vx * vx + vz * vz)
+
+		if length == 0 then
+			logError("length is zero!")
+
+			length = length + 0.1
+		end
 
 		vx = vx / length
 		vz = vz / length

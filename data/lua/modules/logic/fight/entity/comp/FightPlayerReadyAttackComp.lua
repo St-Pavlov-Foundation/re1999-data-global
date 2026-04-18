@@ -68,6 +68,14 @@ end
 
 function FightPlayerReadyAttackComp:_onStageChange()
 	self:_clearReadyAttackWork()
+
+	for k, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+		local spine = entity.spine
+
+		if spine and not gohelper.isNil(spine:getSpineGO()) and spine:getAnimState() == SpineAnimState.change then
+			spine:play(SpineAnimState.posture, true, true)
+		end
+	end
 end
 
 function FightPlayerReadyAttackComp:_clearReadyAttackWork()

@@ -352,7 +352,7 @@ function FightRpc:onReceiveEndFightPush(resultCode, msg)
 	FightModel.instance:onEndFight()
 	FightModel.instance:recordPassModel(msg)
 	FightDataHelper.fieldMgr:clearData()
-	FightController.instance:dispatchEvent(FightEvent.PushEndFight)
+	FightController.instance:dispatchEvent(FightEvent.PushEndFight, msg)
 end
 
 function FightRpc:onReceiveFightWavePush(resultCode, msg)

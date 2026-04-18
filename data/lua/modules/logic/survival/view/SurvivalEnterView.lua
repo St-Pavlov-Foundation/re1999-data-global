@@ -46,7 +46,9 @@ function SurvivalEnterView:_refreshRed(redDot)
 end
 
 function SurvivalEnterView:_editableInitView()
-	self.config = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+	self.config = ActivityConfig.instance:getActivityCo(curVersionActivityId)
 	self._txtDescr.text = self.config.actDesc
 end
 
@@ -63,7 +65,7 @@ function SurvivalEnterView:_btnAchievementOnClick()
 end
 
 function SurvivalEnterView:everySecondCall()
-	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(VersionActivity3_1Enum.ActivityId.Survival)
+	return
 end
 
 function SurvivalEnterView:_onRewardClick()

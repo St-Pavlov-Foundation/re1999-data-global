@@ -19,7 +19,8 @@ function SkinConfig:reqConfigNames()
 		"skin_body_camera",
 		"skin_monster_hide_buff_effect",
 		"skin_store_tag",
-		"skin_fullscreen_effect"
+		"skin_fullscreen_effect",
+		"skin_effect_mainframe"
 	}
 end
 

@@ -49,7 +49,7 @@ function SkillEditorView:onInitView()
 end
 
 function SkillEditorView:_showSceneDissolveBtn()
-	local id = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	local id = FightGameMgr.sceneLevelMgr:getCurLevelId()
 	local config = lua_scene_level.configDict[id]
 
 	gohelper.setActive(self._btnSceneDissolve.gameObject, config and config.sceneId == 115 or false)
@@ -183,7 +183,7 @@ function SkillEditorView:_onLoaded()
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowNameUI, false)
 	UnityEngine.Shader.EnableKeyword("_USEPOP_ON")
 
-	local Animation = GameSceneMgr.instance:getCurScene().level:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
+	local Animation = FightGameMgr.sceneLevelMgr:getSceneGo().transform:GetComponent(typeof(UnityEngine.Animation))
 
 	Animation:Play("m_s63_ani")
 	TaskDispatcher.runDelay(self._onFinish, self, Animation.clip.length)

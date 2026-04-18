@@ -22,6 +22,7 @@ local fields = {
 	incidental = 26,
 	versions = 4,
 	priority = 7,
+	exp = 28,
 	incidentalRange = 27,
 	group = 3,
 	roll = 25,

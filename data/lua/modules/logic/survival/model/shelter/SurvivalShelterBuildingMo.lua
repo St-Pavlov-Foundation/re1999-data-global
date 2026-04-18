@@ -33,6 +33,12 @@ function SurvivalShelterBuildingMo:init(data, isUpgrade)
 
 	self:setReputationData(data.reputationProp)
 
+	if self:isEqualType(SurvivalEnum.BuildingType.Tech) then
+		self.survivalTechShelterMo = self.survivalTechShelterMo or SurvivalTechShelterMo.New()
+
+		self.survivalTechShelterMo:setData(data.insideTechProp)
+	end
+
 	if isUpgrade then
 		self._lockLevel = nil
 	end

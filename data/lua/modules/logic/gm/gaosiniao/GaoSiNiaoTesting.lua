@@ -741,17 +741,6 @@ function CTesting:build_test__Act210()
 
 	function self._cV3a1_GaoSiNiao_GameViewContainer.openInternal(thisObj, viewParam, ...)
 		local mapCO = _unitTest()
-		local ser = require("modules.logic.gm.gaosiniao.ser")
-		local t = {
-			_unitTest1(),
-			_unitTest2(),
-			_unitTest3(),
-			_unitTest4(),
-			_unitTest5()
-		}
-
-		ddde("file=", ser(t))
-
 		local modelInst = self._cBattleModel.instance
 		local episodeId = modelInst._episodeId
 

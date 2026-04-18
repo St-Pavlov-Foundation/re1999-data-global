@@ -48,6 +48,10 @@ function SurvivalMsgPushWork:onReceiveSurvivalBagUpdatePush(msg)
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapBagUpdate, msg)
 	elseif msg.type == SurvivalEnum.ItemSource.Shelter then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnShelterBagUpdate, msg)
+
+		local survivalShelterBuildingMo = weekInfo:getTechBuild()
+
+		survivalShelterBuildingMo.survivalTechShelterMo:refreshRedDot()
 	end
 
 	SurvivalEquipRedDotHelper.instance:checkRed()

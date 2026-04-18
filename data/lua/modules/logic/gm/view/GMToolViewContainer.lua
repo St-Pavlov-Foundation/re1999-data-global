@@ -30,6 +30,7 @@ function GMToolViewContainer:buildViews()
 	gmPresetListParam.cellHeight = 100
 	gmPresetListParam.cellSpaceH = 0
 	gmPresetListParam.cellSpaceV = 5
+	self.gmSubViewRoomEditMode = GMSubViewRoomEditMode.New()
 
 	return {
 		GMToolView.New(),
@@ -58,9 +59,11 @@ function GMToolViewContainer:buildViews()
 		GMSubViewResource.New(),
 		GMSubViewProfiler.New(),
 		GMSubViewRoom.New(),
+		self.gmSubViewRoomEditMode,
 		GMSubViewEliminate.New(),
 		GMSubViewEditorFight.New(),
 		GMYeShuMeiBtnView.New(),
+		GMSubViewPartyGame.New(),
 		GMSubViewArcade.New()
 	}
 end

@@ -56,11 +56,10 @@ function FightWorkNewEntity:onStart()
 	local entityClass, entityName = self:getEntityClass()
 
 	entityName = entityName or "entity" .. entityData.id
-
-	local entity = entityMgr:newClass(entityClass, entityName, entityData)
-
+	entity = entityMgr:newClass(entityClass, entityName, entityData)
 	entityMgr.entityDic[entity.id] = entity
 
+	entity:setUseGoScaleReplaceSpineScale(self.entityExData.useScaleReplaceSpineScale)
 	entity:resetEntity()
 
 	if self.createStage then

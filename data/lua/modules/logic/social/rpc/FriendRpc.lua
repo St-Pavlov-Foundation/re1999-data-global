@@ -4,10 +4,10 @@ module("modules.logic.social.rpc.FriendRpc", package.seeall)
 
 local FriendRpc = class("FriendRpc", BaseRpc)
 
-function FriendRpc:sendGetFriendInfoListRequest()
+function FriendRpc:sendGetFriendInfoListRequest(callback, callbackObj)
 	local req = FriendModule_pb.GetFriendInfoListRequest()
 
-	return self:sendMsg(req)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
 function FriendRpc:onReceiveGetFriendInfoListReply(resultCode, msg)
@@ -63,9 +63,12 @@ function FriendRpc:onReceiveFriendChangePush(resultCode, msg)
 			local userIds = {}
 
 			table.insert(userIds, msg.friendId)
-			SocialModel.instance:addFriendsByUserIds(userIds)
+
+			local noPlayerMo = SocialModel.instance:addFriendsByUserIds(userIds)
+
 			SocialController.instance:dispatchEvent(SocialEvent.FriendsInfoChanged)
 			SocialController.instance:dispatchEvent(SocialEvent.AddUnknownFriend)
+			SocialController.instance:dispatchEvent(SocialEvent.FriendsInfoChangedSpecial, noPlayerMo)
 		else
 			SocialModel.instance:removeFriendByUserId(msg.friendId)
 			SocialController.instance:dispatchEvent(SocialEvent.FriendsInfoChanged)

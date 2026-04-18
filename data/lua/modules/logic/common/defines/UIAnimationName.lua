@@ -14,6 +14,7 @@ local UIAnimationName = {
 	Unopen = "unopen",
 	Jump = "jump",
 	Idle = "idle",
+	Reset = "reset",
 	Finish = "finish",
 	Click = "click",
 	Left = "left",

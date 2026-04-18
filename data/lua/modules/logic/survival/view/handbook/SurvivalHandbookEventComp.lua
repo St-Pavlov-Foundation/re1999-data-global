@@ -6,7 +6,7 @@ local SurvivalHandbookEventComp = class("SurvivalHandbookEventComp", SurvivalHan
 
 function SurvivalHandbookEventComp:ctor(parentView)
 	self._parentView = parentView
-	self.handBookType = SurvivalEnum.HandBookType.Event
+	self.handbookType = SurvivalEnum.HandBookType.Event
 	self.ui3DPool = {}
 	self.Shader = UnityEngine.Shader
 end
@@ -127,7 +127,7 @@ function SurvivalHandbookEventComp:refreshList(isAnim)
 		return
 	end
 
-	local datas = SurvivalHandbookModel.instance:getHandBookDatas(self.handBookType, self.tabs[self.curSelect].subType)
+	local datas = SurvivalHandbookModel.instance:getHandBookDatas(self.handbookType, self.tabs[self.curSelect].subType)
 
 	table.sort(datas, SurvivalHandbookModel.instance.handBookSortFuncById)
 
@@ -149,7 +149,7 @@ function SurvivalHandbookEventComp:selectTab(tarSelect, isAnim)
 		self.curSelect = tarSelect
 
 		if self.curSelect then
-			SurvivalHandbookController.instance:markNewHandbook(self.handBookType, self.tabs[self.curSelect].subType)
+			SurvivalHandbookController.instance:markNewHandbook(self.handbookType, self.tabs[self.curSelect].subType)
 			gohelper.setActive(self.tabs[self.curSelect].go_selected, true)
 		end
 

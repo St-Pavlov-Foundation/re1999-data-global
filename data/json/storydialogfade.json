@@ -382,5 +382,21 @@
   {
     "id": 96,
     "skipvideo": "3_3_chapter12_03"
+  },
+  {
+    "id": 97,
+    "skipvideo": "3_4_activity_01"
+  },
+  {
+    "id": 98,
+    "skipvideo": "3_4_activity_02"
+  },
+  {
+    "id": 99,
+    "skipvideo": "3_4_activity_03"
+  },
+  {
+    "id": 100,
+    "skipvideo": "3_4_activity_04"
   }
 ]

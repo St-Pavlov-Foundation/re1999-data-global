@@ -70,6 +70,19 @@ function TowerComposeHeroGroupEditView:_btnconfirmOnClick()
 		return
 	end
 
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local planeId = Mathf.Ceil(self._singleGroupMOId / 4)
+	local isInLockPlane = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local planeMo = themeMo:getPlaneMo(planeId)
+
+	if isInLockPlane and planeMo.hasFight then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+		return
+	end
+
 	if self._heroMO then
 		if self._adventure then
 			local cd = WeekWalkModel.instance:getCurMapHeroCd(self._heroMO.heroId)

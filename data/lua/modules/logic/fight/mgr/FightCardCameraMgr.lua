@@ -6,7 +6,7 @@ local FightCardCameraMgr = class("FightCardCameraMgr", FightBaseClass)
 
 function FightCardCameraMgr:onConstructor()
 	self:com_registMsg(FightMsgId.PlayCameraAnimWhenOperateStage, self.playCameraAnimWhenOperateStage)
-	self:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 	self:com_registEvent(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView)
 	self:com_registEvent(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView)
 	self:com_registFightEvent(FightEvent.StageChanged, self.onStageChange)

@@ -33,7 +33,7 @@ function FightTLEventSetSceneObjVisible:_setVisible()
 	local fightScene = GameSceneMgr.instance:getCurScene()
 
 	if fightScene then
-		local sceneObj = fightScene.level:getSceneGo()
+		local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 		if sceneObj then
 			local tarObj = gohelper.findChild(sceneObj, self._paramsArr[1])

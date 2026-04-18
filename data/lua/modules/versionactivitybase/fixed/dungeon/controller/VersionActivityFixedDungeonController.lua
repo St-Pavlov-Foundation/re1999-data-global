@@ -18,10 +18,22 @@ function VersionActivityFixedDungeonController:_openTaskViewAfterRpc()
 	ViewMgr.instance:openView(viewName)
 end
 
-function VersionActivityFixedDungeonController:openStoreView()
-	local actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore
+function VersionActivityFixedDungeonController:openStoreView(customStoreActId, viewName)
+	VersionActivityFixedHelper.setCustomDungeonStore()
+
+	local actId = customStoreActId or VersionActivityFixedHelper.getVersionActivityDungeonStore(self._bigVersion, self._smallVersion)
 
 	if not VersionActivityEnterHelper.checkCanOpen(actId) then
+		return
+	end
+
+	VersionActivityFixedHelper.setCustomDungeonStore(customStoreActId)
+
+	if viewName then
+		Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, function()
+			ViewMgr.instance:openView(viewName)
+		end)
+
 		return
 	end
 
@@ -162,6 +174,30 @@ end
 
 function VersionActivityFixedDungeonController:getEnterVerison()
 	return self._bigVersion, self._smallVersion
+end
+
+function VersionActivityFixedDungeonController:isOpenActivityHardDungeonChapterAndGetToast(actId)
+	local activityDungeonConfig = ActivityConfig.instance:getActivityDungeonConfig(actId)
+
+	if not activityDungeonConfig then
+		logError("act Id : " .. actId .. " not exist activity dungeon config, please check!!!")
+
+		return false, 10301
+	end
+
+	local isTimeOpen = VersionActivityConfig.instance:getAct113DungeonChapterIsOpen(activityDungeonConfig.hardChapterId)
+
+	if not isTimeOpen then
+		return false, 20207
+	end
+
+	local isUnlock = DungeonModel.instance:chapterIsUnLock(activityDungeonConfig.hardChapterId)
+
+	if not isUnlock then
+		return false, 10302
+	end
+
+	return true
 end
 
 VersionActivityFixedDungeonController.instance = VersionActivityFixedDungeonController.New()

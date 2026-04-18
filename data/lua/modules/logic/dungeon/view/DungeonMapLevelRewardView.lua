@@ -468,7 +468,7 @@ function DungeonMapLevelRewardView:addFreeReward()
 end
 
 function DungeonMapLevelRewardView:addDoubleDropReward()
-	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self.chapterCo.id)
+	local isMultiDrop, limit, total, magnification = Activity217Model.instance:getShowTripleByChapter(self.chapterCo.id)
 	local episodeShow = DoubleDropModel.instance:isShowDoubleByEpisode(self.episodeId, true)
 	local multiDropShow = isMultiDrop and limit > 0
 
@@ -483,7 +483,7 @@ function DungeonMapLevelRewardView:addDoubleDropReward()
 		commonRewardList = DungeonModel.instance:getEpisodeBonus(self.episodeId)
 
 		for _, reward in ipairs(commonRewardList) do
-			local count = multiDropShow and 2 * reward[3] or reward[3]
+			local count = multiDropShow and (magnification - 1) * reward[3] or reward[3]
 
 			self:_addReward(reward[1], reward[2], count, DungeonMapLevelRewardView.TagType.TurnBack, true, DungeonMapLevelRewardView.RewardType.TurnBack)
 		end

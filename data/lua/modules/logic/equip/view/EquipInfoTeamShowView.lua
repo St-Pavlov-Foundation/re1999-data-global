@@ -305,6 +305,38 @@ function EquipInfoTeamShowView:_onClickConfirmBtnFromSeason166HeroGroupFightView
 	Season166HeroGroupModel.instance:saveCurGroupData(self.closeThis, self, curGroupMO)
 end
 
+function EquipInfoTeamShowView:_onClickConfirmBtnFromTowerComposeHeroGroupView()
+	local currentPosEquipList = self.viewContainer.listModel:getGroupCurrentPosEquip()
+	local equipUid = currentPosEquipList[1]
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkEquipUidIsInLockPlane(equipUid)
+
+	if isInLockPlane then
+		GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+
+		return
+	end
+
+	local isReplace = false
+
+	if equipUid and (EquipModel.instance:getEquip(equipUid) or HeroGroupTrialModel.instance:getEquipMo(equipUid)) then
+		isReplace = true
+	end
+
+	EquipChooseListModel.instance:clearTeamInfo()
+
+	local curGroupMO = self.viewContainer.listModel.curGroupMO
+	local equipTable = {}
+
+	equipTable.index = self.posIndex
+	equipTable.equipUid = {
+		self.selectedEquipMo and self.selectedEquipMo.uid or "0"
+	}
+
+	HeroGroupModel.instance:replaceEquips(equipTable, curGroupMO)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.ChangeEquip, self.posIndex)
+	HeroGroupModel.instance:saveCurGroupData(self.closeThis, self, curGroupMO)
+end
+
 function EquipInfoTeamShowView:_onClickConfirmBtnFromCharacterView()
 	HeroRpc.instance:setHeroDefaultEquipRequest(self.heroMo.heroId, self.selectedEquipMo and self.selectedEquipMo.uid or "0")
 end
@@ -418,7 +450,8 @@ function EquipInfoTeamShowView:_editableInitView()
 		[EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView] = self._onClickConfirmBtnFromHeroGroupFightView,
 		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = self._onClickConfirmBtnFromSeason166HeroGroupFightView,
 		[EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView] = self._onClickConfirmBtnFromHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromPresetPreviewView] = self._onClickConfirmBtnFromPresetPreviewView
+		[EquipEnum.FromViewEnum.FromPresetPreviewView] = self._onClickConfirmBtnFromPresetPreviewView,
+		[EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView] = self._onClickConfirmBtnFromTowerComposeHeroGroupView
 	}
 	self._btnMaxLevelAnim = self._btnmaxlevel.gameObject:GetComponent(typeof(UnityEngine.Animator))
 end
@@ -489,6 +522,8 @@ function EquipInfoTeamShowView:initOriginEquipMo()
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
 		self.originEquipMo = self.viewParam.equipMo
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromAssassinHeroView then
+		self.originEquipMo = self.viewParam.equipMo
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView then
 		self.originEquipMo = self.viewParam.equipMo
 	else
 		logError("not found from view ...")

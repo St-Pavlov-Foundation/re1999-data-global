@@ -33,6 +33,9 @@ function TowerComposeViewDefine.init(module_views)
 					NavigateButtonsView.prefabPath
 				}
 			}
+		},
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
 		}
 	}
 	module_views.TowerModeChangeView = {
@@ -77,9 +80,9 @@ function TowerComposeViewDefine.init(module_views)
 		anim = ViewAnim.Default
 	}
 	module_views.TowerComposeResultView = {
-		destroy = 0,
-		container = "TowerComposeResultViewContainer",
 		bgBlur = 3,
+		container = "TowerComposeResultViewContainer",
+		destroy = 0,
 		mainRes = "ui/viewres/tower/towercompose/towercompose_resultview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
@@ -90,12 +93,15 @@ function TowerComposeViewDefine.init(module_views)
 					NavigateButtonsView.prefabPath
 				}
 			}
+		},
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
 		}
 	}
 	module_views.TowerComposeNormalResultView = {
-		destroy = 0,
-		container = "TowerComposeNormalResultViewContainer",
 		bgBlur = 3,
+		container = "TowerComposeNormalResultViewContainer",
+		destroy = 0,
 		mainRes = "ui/viewres/tower/towercompose/towercompose_resultview2.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
@@ -106,6 +112,9 @@ function TowerComposeViewDefine.init(module_views)
 					NavigateButtonsView.prefabPath
 				}
 			}
+		},
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
 		}
 	}
 	module_views.TowerComposeResearchView = {
@@ -157,6 +166,9 @@ function TowerComposeViewDefine.init(module_views)
 					NavigateButtonsView.prefabPath
 				}
 			}
+		},
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
 		}
 	}
 	module_views.TowerComposeHeroGroupBuffView = {
@@ -184,7 +196,8 @@ function TowerComposeViewDefine.init(module_views)
 			}
 		},
 		otherRes = {
-			[1] = "ui/viewres/fight/clothskill.prefab"
+			[1] = "ui/viewres/fight/clothskill.prefab",
+			[2] = "ui/spriteassets/tower2.asset"
 		}
 	}
 	module_views.TowerComposeModTipView = {
@@ -193,7 +206,10 @@ function TowerComposeViewDefine.init(module_views)
 		mainRes = "ui/viewres/tower/towercompose/towercomposemodtipview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
-		anim = ViewAnim.Default
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
+		}
 	}
 	module_views.TowerComposeHeroGroupEditView = {
 		container = "TowerComposeHeroGroupEditViewContainer",
@@ -251,7 +267,30 @@ function TowerComposeViewDefine.init(module_views)
 		mainRes = "ui/viewres/tower/towercompose/towercomposemoddesctipview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
+		}
+	}
+	module_views.TowerComposeExtraTips = {
+		destroy = 0,
+		container = "TowerComposeExtraTipsContainer",
+		mainRes = "ui/viewres/tower/towercompose/towercomposeextratips.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
+	}
+	module_views.TowerComposeSaveView = {
+		destroy = 0,
+		container = "TowerComposeSaveViewContainer",
+		bgBlur = 3,
+		mainRes = "ui/viewres/tower/towercompose/towercomposesaveview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1] = "ui/spriteassets/tower2.asset"
+		}
 	}
 end
 

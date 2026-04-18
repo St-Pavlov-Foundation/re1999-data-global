@@ -30913,6 +30913,899 @@
     "waterLink": 0
   },
   {
+    "defineId": 340001,
+    "prefabPath": "3401/340001.prefab",
+    "guid": "cb587898448f6b843865f9d16a6f2c1c",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340002,
+    "prefabPath": "common_34/340002.prefab",
+    "guid": "cffdfff0cf58a4f4d9db822d45e04723",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340003,
+    "prefabPath": "3401/340003.prefab",
+    "guid": "c3158288ae51d35498c21e1a03e79979",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340004,
+    "prefabPath": "3401/340004.prefab",
+    "guid": "8a9387490c121a948b2593a8d0de2241",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340005,
+    "prefabPath": "3401/340005.prefab",
+    "guid": "cdec9aebde1ab0a44960af149d93c3ea",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340006,
+    "prefabPath": "3401/340006.prefab",
+    "guid": "83f68232e1d62a444913174f74bafa66",
+    "resourceIds": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340007,
+    "prefabPath": "3401/340007.prefab",
+    "guid": "4e0b4b2ac599c7c42a01ed8ba7e51a6d",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340008,
+    "prefabPath": "3401/340008.prefab",
+    "guid": "6f53c67bb1b077e4cbc976816b880753",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340009,
+    "prefabPath": "3401/340009.prefab",
+    "guid": "6f810595c46d79a43910e67f9a504745",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340010,
+    "prefabPath": "3401/340010.prefab",
+    "guid": "29855bdc801ee0148a41d1fe214e076c",
+    "resourceIds": [
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340011,
+    "prefabPath": "3401/340011.prefab",
+    "guid": "1127857f710186844a3460b4f619077b",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340012,
+    "prefabPath": "3401/340012.prefab",
+    "guid": "89d6c0fb2b39cd144b913015a54a354d",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340013,
+    "prefabPath": "3401/340013.prefab",
+    "guid": "90fc72a8d779a5448a14edea88c5fb00",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340014,
+    "prefabPath": "3401/340014.prefab",
+    "guid": "0063e2f3f7dc2bf42b95a64ff8348a90",
+    "resourceIds": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 70,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340015,
+    "prefabPath": "undefined/340015.prefab",
+    "guid": "2d573e7aa7497a04a8c7e59410b17ff1",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340016,
+    "prefabPath": "common_34/340016.prefab",
+    "guid": "e9574542ac91a5b478e6aa2751d1a3cc",
+    "resourceIds": [
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340017,
+    "prefabPath": "common_34/340017.prefab",
+    "guid": "dc95db159439dfe479208fd2c9c309e1",
+    "resourceIds": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "category": "v3a4",
+    "blockType": 0,
+    "waterType": 3,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340018,
+    "prefabPath": "3403/340018.prefab",
+    "guid": "160590d0a6db76d4b9e070f55aa2ba90",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340019,
+    "prefabPath": "common_34/340019.prefab",
+    "guid": "97c937f5c4d786843b52fffcefd9f720",
+    "resourceIds": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "category": "v3a4",
+    "blockType": 0,
+    "waterType": 3,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340020,
+    "prefabPath": "3404/340020.prefab",
+    "guid": "fb255a37678e23241b4d818baf3790dd",
+    "resourceIds": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340021,
+    "prefabPath": "3403/340021.prefab",
+    "guid": "3f6d96b3a20832547ac73b980f80f9cf",
+    "resourceIds": [
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340022,
+    "prefabPath": "3403/340022.prefab",
+    "guid": "70ad0a3039cbb8f4890ab0bd8dfe8ef9",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340023,
+    "prefabPath": "common_34/340023.prefab",
+    "guid": "6b97554af455859438db07c5661630e2",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340024,
+    "prefabPath": "common_34/340024.prefab",
+    "guid": "66003a6e3bf0e044aa061f5c822db21e",
+    "resourceIds": [
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340025,
+    "prefabPath": "common_34/340025.prefab",
+    "guid": "589860ef2edacc043a6e500a2e12de23",
+    "resourceIds": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340026,
+    "prefabPath": "common_34/340026.prefab",
+    "guid": "853a0b7d71bf9e44996a602721fdc1fb",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340027,
+    "prefabPath": "common_34/340027.prefab",
+    "guid": "d7546c3edd1e0a24699541d6cd9e3569",
+    "resourceIds": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "category": "v3a4",
+    "blockType": 0,
+    "waterType": 3,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340028,
+    "prefabPath": "3403/340028.prefab",
+    "guid": "79bea367863b4204881aac0363fb3607",
+    "resourceIds": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "category": "v3a4",
+    "blockType": 0,
+    "waterType": 3,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340029,
+    "prefabPath": "3402/340029.prefab",
+    "guid": "68f4a6ca9a392244c9bd05a43dd57003",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340030,
+    "prefabPath": "3402/340030.prefab",
+    "guid": "f7e234ed7d52e884faa74af3e2152c6e",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340031,
+    "prefabPath": "3402/340031.prefab",
+    "guid": "dec08c0c311aa944099f17b30c7c4163",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340032,
+    "prefabPath": "3402/340032.prefab",
+    "guid": "042f9db2daf79674b9f34c1817b84440",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340033,
+    "prefabPath": "3402/340033.prefab",
+    "guid": "c93bc6514ff802d4cb452b612c5ee630",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340034,
+    "prefabPath": "3402/340034.prefab",
+    "guid": "81a1ea1f970cd3f47b08d2210d8d6379",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340035,
+    "prefabPath": "3402/340035.prefab",
+    "guid": "c0a539e7783327c4caca58c7fad66154",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340036,
+    "prefabPath": "3402/340036.prefab",
+    "guid": "0a6658dbfd3639043ac2e5b94e4afa4a",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340037,
+    "prefabPath": "3402/340037.prefab",
+    "guid": "052de5ae4da570742b7b2b56bcf76933",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340038,
+    "prefabPath": "3402/340038.prefab",
+    "guid": "4937a6c4458ca2043b09d98d374abe7e",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340039,
+    "prefabPath": "3402/340039.prefab",
+    "guid": "a183744d169b1594bad13c4966532149",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340040,
+    "prefabPath": "3402/340040.prefab",
+    "guid": "74a90389d3126e84b96475701f7ee8ac",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340041,
+    "prefabPath": "3402/340041.prefab",
+    "guid": "8d5c400c7e1475e44b4f04db7412fd3a",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340042,
+    "prefabPath": "3402/340042.prefab",
+    "guid": "614c8394d22b6a84f8d6737c517845e3",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340043,
+    "prefabPath": "3402/340043.prefab",
+    "guid": "2280fcf71b9ff614db6de483f4c733d1",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 69,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 340044,
+    "prefabPath": "common_34/340044.prefab",
+    "guid": "5711d40a290b053428edb072426a56d5",
+    "resourceIds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "category": "v3a4",
+    "blockType": 71,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 345001,
+    "prefabPath": "16/345001.prefab",
+    "guid": "8bc7a8d8072e1f0459c10271bd7c084c",
+    "resourceIds": [
+      5,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0
+    ],
+    "category": "v3a4旗帜",
+    "blockType": 0,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 345002,
+    "prefabPath": "16/345002.prefab",
+    "guid": "d027691c968dbbd4aa39cc815dee65af",
+    "resourceIds": [
+      5,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0
+    ],
+    "category": "v3a4旗帜",
+    "blockType": 0,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
+    "defineId": 345003,
+    "prefabPath": "16/345003.prefab",
+    "guid": "d0db8b58646f8414b873f070b6a42c60",
+    "resourceIds": [
+      5,
+      5,
+      0,
+      5,
+      0,
+      5,
+      0
+    ],
+    "category": "v3a4旗帜",
+    "blockType": 0,
+    "waterType": 0,
+    "waterAreaType": 0,
+    "waterLink": 0
+  },
+  {
     "defineId": 3050001,
     "prefabPath": "30501/3050001.prefab",
     "guid": "9c61776ee1383894a992a253ab223a70",

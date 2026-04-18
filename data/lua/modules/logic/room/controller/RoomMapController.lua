@@ -281,11 +281,11 @@ function RoomMapController:_resetRoomReply(cmd, resultCode, msg)
 	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit, msg, RoomModel.instance:getObInfo(), nil, nil, nil, true)
 end
 
-function RoomMapController:useBlockRequest(blockId, rotate, x, y)
+function RoomMapController:useBlockRequest(blockId, rotate, x, y, cb, cbObj)
 	local blockCfg = RoomConfig.instance:getBlock(blockId)
 
 	if blockCfg then
-		RoomRpc.instance:sendUseBlockRequest(blockId, blockCfg.packageId, rotate, x, y)
+		RoomRpc.instance:sendUseBlockRequest(blockId, blockCfg.packageId, rotate, x, y, cb, cbObj)
 	end
 end
 

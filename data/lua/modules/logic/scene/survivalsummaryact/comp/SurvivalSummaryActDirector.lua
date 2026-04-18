@@ -40,6 +40,14 @@ function SurvivalSummaryActDirector:onSceneStart(sceneId, levelId)
 		sceneId = sceneId,
 		levelId = levelId
 	})
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenView, self)
+end
+
+function SurvivalSummaryActDirector:onOpenView(viewName)
+	if viewName == ViewName.SurvivalSummaryActView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenView, self)
+		ViewMgr.instance:closeView(ViewName.SurvivalLoadingView, true)
+	end
 end
 
 function SurvivalSummaryActDirector:_compInitDone()
@@ -47,8 +55,7 @@ function SurvivalSummaryActDirector:_compInitDone()
 
 	self._compInitSequence = nil
 
-	ViewMgr.instance:closeView(ViewName.SurvivalLoadingView)
-	SurvivalController.instance:playSummaryAct()
+	ViewMgr.instance:openView(ViewName.SurvivalSummaryActView)
 end
 
 function SurvivalSummaryActDirector:onSceneClose()
@@ -57,6 +64,8 @@ function SurvivalSummaryActDirector:onSceneClose()
 
 		self._compInitSequence = nil
 	end
+
+	self:unregisterCallback(ViewMgr.instance, self.onOpenView, self)
 end
 
 return SurvivalSummaryActDirector

@@ -245,7 +245,15 @@ function FightEntityMgr:newAllEntityAndRemoveDiff()
 
 	for entityId, entity in pairs(self.entityDic) do
 		if not self.diffEntityIdForCompareUpdate[entityId] then
-			self:delEntity(entityId)
+			local canDel = true
+
+			if entity.isTempEntity then
+				canDel = false
+			end
+
+			if canDel then
+				self:delEntity(entityId)
+			end
 		end
 	end
 end
@@ -280,7 +288,7 @@ function FightEntityMgr:showSubEntity()
 	self._showSubWork:start()
 end
 
-function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror, skin, param, reverseLookDir)
+function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror, skin, param, reverseLookDir, useScaleReplaceSpineScale)
 	local id = tostring(specificId)
 
 	id = string.nilorempty(id) and spineName or id
@@ -307,10 +315,11 @@ function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide
 
 	entityExData.entityClass = FightEntityTemp
 	entityExData.entityObjectName = id
+	entityExData.useScaleReplaceSpineScale = useScaleReplaceSpineScale
 	entityExData.lookDir = mirror and specificSide and FightHelper.getSpineLookDir(specificSide) or SpineLookDir.Left
 
 	if reverseLookDir then
-		entityExData.lookDir = FightHelper.getSpineLookDir(entitySide) == SpineLookDir.Left and SpineLookDir.Right or SpineLookDir.Left
+		entityExData.lookDir = FightHelper.getSpineLookDir(specificSide) == SpineLookDir.Left and SpineLookDir.Right or SpineLookDir.Left
 	end
 
 	entityExData.needLookCamera = false
@@ -322,6 +331,8 @@ function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide
 	end
 
 	local entity = self:newEntity(entityData)
+
+	entity.isTempEntity = true
 
 	if param and param.ingoreRainEffect then
 		entity.ingoreRainEffect = true
@@ -363,6 +374,8 @@ function FightEntityMgr:buildTempSpine(spinePath, entityId, side, layer, cls, co
 
 	local entity = self:newEntity(entityData)
 
+	entity.isTempEntity = true
+
 	if layer then
 		entity.spine:setLayer(layer, true)
 	end
@@ -393,6 +406,8 @@ function FightEntityMgr:buildTempSceneEntity(name)
 	entityExData.entityObjectName = id
 
 	local entity = self:newEntity(entityData)
+
+	entity.isTempEntity = true
 
 	return entity
 end

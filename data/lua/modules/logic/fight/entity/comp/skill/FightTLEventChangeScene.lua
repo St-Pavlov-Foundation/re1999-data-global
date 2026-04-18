@@ -8,7 +8,7 @@ function FightTLEventChangeScene:onTrackStart(fightStepData, duration, paramsArr
 	if not string.nilorempty(paramsArr[1]) then
 		local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 
-		fightScene.level:loadLevelNoEffect(tonumber(paramsArr[1]))
+		FightGameMgr.sceneLevelMgr:loadScene(nil, tonumber(paramsArr[1]))
 	end
 end
 

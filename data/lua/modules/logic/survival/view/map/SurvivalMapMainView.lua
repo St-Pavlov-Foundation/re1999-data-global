@@ -9,6 +9,8 @@ function SurvivalMapMainView:onInitView()
 
 	self._btnbag = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_bag")
 	self._gobagfull = gohelper.findChild(self.viewGO, "BottomRight/#btn_bag/#go_overweight")
+	self._gowarning = gohelper.findChild(self.viewGO, "BottomRight/#btn_bag/#go_warning")
+	self._btnmap = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_map")
 	self._btnlog = gohelper.findChildButtonWithAudio(self.viewGO, "BottomRight/#btn_log")
 	self._btnabort = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_abort")
 	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_task")
@@ -21,6 +23,7 @@ function SurvivalMapMainView:onInitView()
 	self._viewAnim = gohelper.findChildAnim(self.viewGO, "")
 	self._imageBlack = gohelper.findChildImage(self.viewGO, "#image_black")
 	self.igoreViewList = {
+		ViewName.SurvivalRoleLevelTipPopView,
 		ViewName.SurvivalToastView,
 		ViewName.GuideView,
 		ViewName.GuideView2,
@@ -29,6 +32,10 @@ function SurvivalMapMainView:onInitView()
 		ViewName.SurvivalCurrencyTipView,
 		ViewName.SurvivalCommonTipsView
 	}
+	self.survivalrolelevelcomp = gohelper.findChild(self.viewGO, "Left/survivalrolelevelcomp")
+	self.survivalRoleLevelComp = GameFacade.createLuaCompByGo(self.survivalrolelevelcomp, SurvivalRoleLevelComp)
+
+	self.survivalRoleLevelComp:setOnClickFunc(self._onClickTeam, self)
 end
 
 function SurvivalMapMainView:addEvents()
@@ -38,9 +45,11 @@ function SurvivalMapMainView:addEvents()
 	self._btnteam:AddClickListener(self._onClickTeam, self)
 	self._btnequip:AddClickListener(self._onClickEquip, self)
 	self._btnbag:AddClickListener(self._onClickBag, self)
+	self._btnmap:AddClickListener(self._onClickMap, self)
 	self._btnlog:AddClickListener(self._onClickLog, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
-	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self._refreshTeamLv, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnDerivedUpdate, self._refreshBagFull, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.OnRoleDateChange, self._refreshTeamLv, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._refreshCurTask, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, self.onPlayerTornadoTransferBegin, self)
@@ -50,6 +59,7 @@ function SurvivalMapMainView:addEvents()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onRefreshViewState, self)
 	self:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, self.refreshHelpBtnPos, self)
 	self:addEventCb(GuideController.instance, GuideEvent.FinishGuideLastStep, self.refreshHelpBtnPos, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnPlayGainExpAnim, self.onPlayGainExpAnim, self)
 end
 
 function SurvivalMapMainView:removeEvents()
@@ -59,9 +69,11 @@ function SurvivalMapMainView:removeEvents()
 	self._btnteam:RemoveClickListener()
 	self._btnequip:RemoveClickListener()
 	self._btnbag:RemoveClickListener()
+	self._btnmap:RemoveClickListener()
 	self._btnlog:RemoveClickListener()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnMapBagUpdate, self._refreshBagFull, self)
-	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnAttrUpdate, self._refreshTeamLv, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnDerivedUpdate, self._refreshBagFull, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnRoleDateChange, self._refreshTeamLv, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._refreshCurTask, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnPlayerTornadoTransferBegin, self.onPlayerTornadoTransferBegin, self)
@@ -90,6 +102,7 @@ function SurvivalMapMainView:onOpen()
 	self:onRefreshViewState()
 	self:updateEquipRed()
 	self:refreshHelpBtnPos()
+	self.survivalRoleLevelComp:setData()
 end
 
 function SurvivalMapMainView:refreshHelpBtnPos()
@@ -100,6 +113,10 @@ function SurvivalMapMainView:refreshHelpBtnPos()
 	else
 		recthelper.setAnchorX(self._btnabort.transform, 215.1)
 	end
+end
+
+function SurvivalMapMainView:onPlayGainExpAnim()
+	self.survivalRoleLevelComp:playExpGainAnim()
 end
 
 function SurvivalMapMainView:updateEquipRed()
@@ -153,6 +170,15 @@ function SurvivalMapMainView:_onClickEquip()
 	SurvivalStatHelper.instance:statBtnClick("_onClickEquip", "SurvivalMapMainView")
 end
 
+function SurvivalMapMainView:_onClickMap()
+	if SurvivalMapHelper.instance:isInFlow() then
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.SurvivalSmallMapView)
+	SurvivalStatHelper.instance:statBtnClick("_onClickMap", "SurvivalMapMainView")
+end
+
 function SurvivalMapMainView:_onClickLog()
 	SurvivalInteriorRpc.instance:sendSurvivalSceneOperationLog()
 	SurvivalStatHelper.instance:statBtnClick("_onClickLog", "SurvivalMapMainView")
@@ -160,9 +186,14 @@ end
 
 function SurvivalMapMainView:_refreshBagFull()
 	local bagMo = SurvivalMapHelper.instance:getBagMo()
-	local isFull = bagMo.totalMass > bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local max = bagMo:getMaxWeightLimit()
+	local isFull = max < bagMo.totalMass
 
 	gohelper.setActive(self._gobagfull, isFull)
+
+	local per = bagMo.totalMass / max
+
+	gohelper.setActive(self._gowarning, per >= 0.75 and per < 1)
 end
 
 function SurvivalMapMainView:_refreshCurTask()
@@ -276,14 +307,8 @@ function SurvivalMapMainView:onSceneScaleChange()
 	SurvivalMapHelper.instance:updateCloudShow()
 end
 
-function SurvivalMapMainView:_refreshTeamLv(attrId)
-	if attrId and attrId ~= SurvivalEnum.AttrType.HeroFightLevel then
-		return
-	end
-
-	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-
-	self._txtTeamLv.text = "Lv." .. weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+function SurvivalMapMainView:_refreshTeamLv()
+	self._txtTeamLv.text = "Lv." .. SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
 end
 
 function SurvivalMapMainView:onPlayerTornadoTransferBegin()

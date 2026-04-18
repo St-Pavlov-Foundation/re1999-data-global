@@ -94,4 +94,14 @@ function SurvivalSceneMapBlock:onSceneClose()
 	self._allBlocks = {}
 end
 
+function SurvivalSceneMapBlock:getBlock(hexPoint)
+	if not hexPoint then
+		return
+	end
+
+	local block = self._allBlocks[hexPoint.q] and self._allBlocks[hexPoint.q][hexPoint.r]
+
+	return block
+end
+
 return SurvivalSceneMapBlock

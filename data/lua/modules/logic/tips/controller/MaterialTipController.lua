@@ -62,6 +62,12 @@ function MaterialTipController:showMaterialInfoWithData(type, id, data)
 			return
 		end
 
+		if config.subType == ItemEnum.SubType.SummonUISkin then
+			ViewMgr.instance:openView(ViewName.SummonUISkinMaterialTipView, data)
+
+			return
+		end
+
 		if inpack ~= true and MaterialEnum.SubTypePackages[config.subType] then
 			ViewMgr.instance:openView(ViewName.MaterialPackageTipView, data)
 		elseif ItemEnum.RoomBackpackPropSubType[config.subType] then
@@ -249,6 +255,17 @@ function MaterialTipController:_onReceiveHeroGainPush_LifeCirclePickChoice(resul
 	end
 
 	LifeCircleController.instance:onReceiveHeroGainPush(msg)
+end
+
+function MaterialTipController:onUseInfallibleSummonItem(viewParam)
+	local data = {}
+	local o = {}
+
+	o.materialId = viewParam.id
+	o.quantity = viewParam.quantity
+
+	table.insert(data, o)
+	ItemRpc.instance:sendUseItemRequest(data, 0)
 end
 
 function MaterialTipController:openExchangeTipView(costMatData, targetMatData, exchangeFunc, exchangeFuncObj, getMaxTimeFunc, getMaxTimeFuncObj, getExchangeNumFunc, getExchangeNumFuncObj)

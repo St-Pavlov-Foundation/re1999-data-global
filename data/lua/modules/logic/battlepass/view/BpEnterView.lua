@@ -84,16 +84,24 @@ function BpEnterView:_editableInitView()
 	end
 
 	self.stamp2 = gohelper.findChild(self.viewGO, "stamp2")
+	self.special_item = gohelper.findChild(self.stamp2, "#special_item")
 	self.haveSpecialBonus = BpModel.instance:haveSpecialBonus()
 
 	gohelper.setActive(self.stamp2, self.haveSpecialBonus)
 
 	if self.haveSpecialBonus then
-		self._textBonusNum = gohelper.findChildTextMesh(self.viewGO, "stamp2/iconitem/#txt_num")
+		if not self.specialItem then
+			self.specialItem = IconMgr.instance:getCommonPropItemIcon(self.special_item)
+		end
 
 		local bonus = BpModel.instance:getSpecialBonus()[1]
 
-		self._textBonusNum.text = bonus[3]
+		self.specialItem:onUpdateMO({
+			materilType = bonus[1],
+			materilId = bonus[2],
+			quantity = bonus[3]
+		})
+		self.specialItem:isShowCount(false)
 	end
 end
 

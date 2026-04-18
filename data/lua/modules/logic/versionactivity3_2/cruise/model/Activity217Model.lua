@@ -26,8 +26,12 @@ function Activity217Model:updateAct217Info(info)
 	self:setAct217Info(info)
 end
 
+function Activity217Model:getActInfoById(actId)
+	return self._actInfos[actId]
+end
+
 function Activity217Model:updateExpEpisodeCount(count, actId)
-	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
+	actId = actId or self:getLiveActId()
 
 	if not self._actInfos[actId] then
 		return
@@ -37,7 +41,7 @@ function Activity217Model:updateExpEpisodeCount(count, actId)
 end
 
 function Activity217Model:updateCoinEpisodeCount(count, actId)
-	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
+	actId = actId or self:getLiveActId()
 
 	if not self._actInfos[actId] then
 		return
@@ -47,7 +51,7 @@ function Activity217Model:updateCoinEpisodeCount(count, actId)
 end
 
 function Activity217Model:getExpEpisodeCount(actId)
-	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
+	actId = actId or self:getLiveActId()
 
 	if not self._actInfos[actId] then
 		return 0
@@ -55,11 +59,11 @@ function Activity217Model:getExpEpisodeCount(actId)
 
 	local controlCo = Activity217Config.instance:getControlCO(Activity217Enum.ActType.MultiExp, actId)
 
-	return controlCo and controlCo.limit - self._actInfos[actId].expEpisodeCount or 0
+	return self:getLeftCountByCo(controlCo)
 end
 
 function Activity217Model:getCoinEpisodeCount(actId)
-	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
+	actId = actId or self:getLiveActId()
 
 	if not self._actInfos[actId] then
 		return 0
@@ -67,11 +71,11 @@ function Activity217Model:getCoinEpisodeCount(actId)
 
 	local controlCo = Activity217Config.instance:getControlCO(Activity217Enum.ActType.MultiCoin, actId)
 
-	return controlCo and controlCo.limit - self._actInfos[actId].coinEpisodeCount or 0
+	return self:getLeftCountByCo(controlCo)
 end
 
 function Activity217Model:getShowTripleByChapter(chapterId, actId)
-	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
+	actId = actId or self:getLiveActId()
 
 	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
 
@@ -79,24 +83,100 @@ function Activity217Model:getShowTripleByChapter(chapterId, actId)
 		return false
 	end
 
+	local typeToChapterMap = {
+		[Activity217Enum.ActType.MultiExp] = DungeonEnum.ChapterId.ResourceExp,
+		[Activity217Enum.ActType.MultiCoin] = DungeonEnum.ChapterId.ResourceGold
+	}
 	local controlCos = Activity217Config.instance:getControlCos(actId)
-	local isExpChapter = chapterId == DungeonEnum.ChapterId.ResourceExp
+	local actInfo = self._actInfos[actId]
 
-	if isExpChapter then
-		local expCount = Activity217Model.instance:getExpEpisodeCount(actId)
+	for index, config in ipairs(controlCos) do
+		local targetChapterId = typeToChapterMap[config.type]
 
-		return true, expCount, controlCos[Activity217Enum.ActType.MultiExp].limit
-	end
+		if targetChapterId and targetChapterId == chapterId then
+			local magnification = config.magnification
+			local limit = config.limit
+			local isDaily = false
+			local dailyLimit = 0
+			local leftCount = 0
 
-	local isCoinChapter = chapterId == DungeonEnum.ChapterId.ResourceGold
+			if not string.nilorempty(config.dailyLimit) then
+				dailyLimit = config.dailyLimit
+				isDaily = true
+			end
 
-	if isCoinChapter then
-		local coinCount = Activity217Model.instance:getCoinEpisodeCount()
+			local dailyUseCount = actInfo:getDailyUseCountByType(config.type)
+			local totalUseCount = actInfo:getTotalUseCountByType(config.type)
 
-		return true, coinCount, controlCos[Activity217Enum.ActType.MultiCoin].limit
+			if isDaily then
+				local dailyLeftCount = dailyLimit - dailyUseCount
+				local totalLeftCount = limit - totalUseCount
+
+				leftCount = totalLeftCount < dailyLeftCount and totalLeftCount or dailyLeftCount
+				limit = dailyLimit
+			else
+				leftCount = limit - totalUseCount
+			end
+
+			return true, leftCount, limit, magnification, isDaily
+		end
 	end
 
 	return false
+end
+
+function Activity217Model:getLeftCountByCo(config)
+	if not config then
+		return 0
+	end
+
+	local dailyLimit = 0
+	local leftCount = 0
+	local actId = self:getLiveActId()
+	local actInfo = self._actInfos[actId]
+	local limit = config.limit
+
+	if not string.nilorempty(config.dailyLimit) then
+		dailyLimit = config.dailyLimit
+	end
+
+	local dailyUseCount = actInfo:getDailyUseCountByType(config.type)
+	local totalUseCount = actInfo:getTotalUseCountByType(config.type)
+	local dailyLeftCount = dailyLimit - dailyUseCount
+	local totalLeftCount = limit - totalUseCount
+
+	leftCount = totalLeftCount < dailyLeftCount and totalLeftCount or dailyLeftCount
+
+	return leftCount
+end
+
+function Activity217Model:getLiveActId()
+	if self._liveId then
+		return self._liveId
+	end
+
+	for actId, mo in pairs(self._actInfos) do
+		self._liveId = actId
+
+		return actId
+	end
+
+	return -1
+end
+
+function Activity217Model:getActName()
+	local name = ""
+	local id = self:getLiveActId()
+
+	if id == -1 then
+		return name
+	end
+
+	local co = ActivityConfig.instance:getActivityCo(id)
+
+	name = co and co.name
+
+	return name
 end
 
 Activity217Model.instance = Activity217Model.New()

@@ -404,6 +404,77 @@ function StoreModel:getPackageGoodValidList(storeId)
 	return validGoods
 end
 
+function StoreModel:getSummonPoolPackageValidList(summonPoolId)
+	if summonPoolId == nil then
+		return nil
+	end
+
+	local configOrderList = SummonConfig.instance:getSummonPoolPackageConfigList(summonPoolId)
+
+	if configOrderList == nil or next(configOrderList) == nil then
+		logError("不存在卡池礼包数据 id: " .. tostring(summonPoolId))
+
+		return nil
+	end
+
+	for order, config in ipairs(configOrderList) do
+		if string.nilorempty(config.packageRecommend) then
+			logError("卡池礼包数据为空 id: " .. tostring(summonPoolId) .. " order: " .. tostring(order))
+		end
+
+		local result = {}
+		local goodsIdList = string.splitToNumber(config.packageRecommend, "#")
+
+		for _, goodsId in ipairs(goodsIdList) do
+			local goodsMo = self:getGoodsMO(goodsId)
+
+			if goodsMo == nil then
+				logNormal("找不到对应的卡池礼包 id: " .. tostring(summonPoolId) .. " order: " .. tostring(order) .. " 礼包id:" .. tostring(goodsId))
+			elseif not goodsMo:isSoldOut() then
+				table.insert(result, goodsMo)
+			end
+		end
+
+		if next(result) then
+			return result
+		end
+	end
+
+	return nil
+end
+
+function StoreModel:isSummonPoolPackageValid(summonPoolId, order)
+	if summonPoolId == nil or order == nil then
+		return false
+	end
+
+	local config = SummonConfig.instance:getSummonPoolPackageConfig(summonPoolId, order)
+
+	if config == nil then
+		logError("不存在卡池礼包数据 id: " .. tostring(summonPoolId))
+
+		return false
+	end
+
+	if string.nilorempty(config.packageRecommend) then
+		logError("卡池礼包数据为空 id: " .. tostring(summonPoolId))
+
+		return false
+	end
+
+	local goodsIdList = string.splitToNumber(config.packageRecommend, "#")
+
+	for _, goodsId in ipairs(goodsIdList) do
+		local goodsMo = self:getGoodsMO(goodsId)
+
+		if goodsMo and not goodsMo:isSoldOut() then
+			return true
+		end
+	end
+
+	return false
+end
+
 function StoreModel:checkValid(goodsMO, isChargeGoods)
 	isChargeGoods = isChargeGoods or false
 

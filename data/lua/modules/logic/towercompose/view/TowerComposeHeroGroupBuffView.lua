@@ -44,6 +44,16 @@ function TowerComposeHeroGroupBuffView:_onResearchItemClick(researchItem)
 		return
 	end
 
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, self.curPlaneId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local planeMo = themeMo:getPlaneMo(self.curPlaneId)
+
+	if isPlaneLock and planeMo.hasFight then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordBuffLock)
+
+		return
+	end
+
 	if not self.isNormalEpisode and researchItem.inPlaneId == 0 or researchItem.inPlaneId == -1 then
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Research, researchItem.config.id)
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
@@ -51,6 +61,15 @@ function TowerComposeHeroGroupBuffView:_onResearchItemClick(researchItem)
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Research, 0)
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
 	elseif self.curPlaneId ~= researchItem.inPlaneId then
+		local isInPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, researchItem.inPlaneId)
+		local inPlaneMo = themeMo:getPlaneMo(researchItem.inPlaneId)
+
+		if isInPlaneLock and inPlaneMo.hasFight then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordBuffLock)
+
+			return
+		end
+
 		self.curResearchItem = researchItem
 
 		GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeReplaceMod, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.replaceTipCallBack, nil, nil, self)
@@ -257,16 +276,20 @@ function TowerComposeHeroGroupBuffView:buildPlaneSlot(planeGO)
 
 	planeSlotItem.go = planeGO
 	planeSlotItem.goSupport = gohelper.findChild(planeGO, "support")
-	planeSlotItem.gosupportNormal = gohelper.findChild(planeSlotItem.goSupport, "normal")
+	planeSlotItem.goSupportNormal = gohelper.findChild(planeSlotItem.goSupport, "normal")
 	planeSlotItem.goSupportSelect = gohelper.findChild(planeSlotItem.goSupport, "selected")
+	planeSlotItem.goSupportAdd = gohelper.findChild(planeSlotItem.goSupport, "selected/bg2")
 	planeSlotItem.goSupportEquip = gohelper.findChild(planeSlotItem.goSupport, "equiped")
+	planeSlotItem.goSupportLock = gohelper.findChild(planeSlotItem.goSupport, "go_lock")
 	planeSlotItem.simageSupport = gohelper.findChildSingleImage(planeSlotItem.goSupport, "equiped/simage_support")
 	planeSlotItem.btnSupport = gohelper.findChildButtonWithAudio(planeSlotItem.goSupport, "btn_support")
 	planeSlotItem.animSupport = planeSlotItem.goSupport:GetComponent(typeof(UnityEngine.Animator))
 	planeSlotItem.goResearch = gohelper.findChild(planeGO, "research")
-	planeSlotItem.goresearchNormal = gohelper.findChild(planeSlotItem.goResearch, "normal")
+	planeSlotItem.goResearchNormal = gohelper.findChild(planeSlotItem.goResearch, "normal")
 	planeSlotItem.goResearchSelect = gohelper.findChild(planeSlotItem.goResearch, "selected")
+	planeSlotItem.goResearchAdd = gohelper.findChild(planeSlotItem.goResearch, "selected/bg2")
 	planeSlotItem.goResearchEquip = gohelper.findChild(planeSlotItem.goResearch, "equiped")
+	planeSlotItem.goResearchLock = gohelper.findChild(planeSlotItem.goResearch, "go_lock")
 	planeSlotItem.imageResearch = gohelper.findChildImage(planeSlotItem.goResearch, "equiped/image_research")
 	planeSlotItem.btnResearch = gohelper.findChildButtonWithAudio(planeSlotItem.goResearch, "btn_research")
 	planeSlotItem.animResearch = planeSlotItem.goResearch:GetComponent(typeof(UnityEngine.Animator))
@@ -282,14 +305,21 @@ function TowerComposeHeroGroupBuffView:refreshPlaneSlotUI(planeSlotItem)
 	planeSlotItem.researchBuffId = TowerComposeHeroGroupModel.instance:getThemePlaneBuffId(self.themeId, planeSlotItem.planeId, TowerComposeEnum.TeamBuffType.Research)
 
 	local isPlaneLayerUnlock = TowerComposeModel.instance:checkHasPlaneLayerUnlock(self.themeId)
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, planeSlotItem.planeId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local planeMo = themeMo:getPlaneMo(planeSlotItem.planeId)
 
 	gohelper.setActive(planeSlotItem.goResearch, isPlaneLayerUnlock)
 	gohelper.setActive(planeSlotItem.goSupportSelect, self.curBuffType == TowerComposeEnum.TeamBuffType.Support and self.curPlaneId == planeSlotItem.planeId)
 	gohelper.setActive(planeSlotItem.goSupportEquip, planeSlotItem.supportBuffId > 0)
-	gohelper.setActive(planeSlotItem.gosupportNormal, planeSlotItem.supportBuffId == 0)
+	gohelper.setActive(planeSlotItem.goSupportNormal, planeSlotItem.supportBuffId == 0)
+	gohelper.setActive(planeSlotItem.goSupportAdd, planeSlotItem.supportBuffId == 0 and (not isPlaneLock or not planeMo.hasFight))
+	gohelper.setActive(planeSlotItem.goSupportLock, isPlaneLock and planeMo.hasFight)
 	gohelper.setActive(planeSlotItem.goResearchSelect, self.curBuffType == TowerComposeEnum.TeamBuffType.Research and self.curPlaneId == planeSlotItem.planeId)
 	gohelper.setActive(planeSlotItem.goResearchEquip, planeSlotItem.researchBuffId > 0)
-	gohelper.setActive(planeSlotItem.goresearchNormal, planeSlotItem.researchBuffId == 0)
+	gohelper.setActive(planeSlotItem.goResearchNormal, planeSlotItem.researchBuffId == 0)
+	gohelper.setActive(planeSlotItem.goResearchAdd, planeSlotItem.researchBuffId == 0 and (not isPlaneLock or not planeMo.hasFight))
+	gohelper.setActive(planeSlotItem.goResearchLock, isPlaneLock and planeMo.hasFight)
 
 	if planeSlotItem.supportBuffId > 0 then
 		local supportConfig = TowerComposeConfig.instance:getSupportCo(planeSlotItem.supportBuffId)

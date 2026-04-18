@@ -49,7 +49,7 @@ end
 function GoldenMilletPresentController:_realOpenGoldenMilletPresentView()
 	local isShowRedDot = GoldenMilletPresentModel.instance:isShowRedDot()
 
-	ViewMgr.instance:openView(ViewName.V2a5_GoldenMilletPresentView, {
+	ViewMgr.instance:openView(ViewName.V3a4_GoldenMilletPresentView, {
 		isDisplayView = not isShowRedDot
 	})
 end

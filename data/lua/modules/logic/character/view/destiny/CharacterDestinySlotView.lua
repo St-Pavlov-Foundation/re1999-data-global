@@ -225,6 +225,8 @@ function CharacterDestinySlotView:_editableInitView()
 	self._goreshapeunselect = gohelper.findChild(self._btnreshape.gameObject, "unselect")
 	self._simagestoneName = gohelper.findChildSingleImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle")
 	self._imagestoneName = gohelper.findChildImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle")
+	self._simagestoneName1 = gohelper.findChildSingleImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle/#glow")
+	self._imagestoneName1 = gohelper.findChildImage(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#simage_reshapeTitle/#glow")
 	self._goreshapeVX = gohelper.findChild(self.viewGO, "#go_main/middle/#go_slot/#go_unlock/#go_stone/#reshape")
 	self._cgReshape = self._scrolleffect:GetComponent(typeof(UnityEngine.CanvasGroup))
 end
@@ -650,6 +652,9 @@ function CharacterDestinySlotView:_refreshSlot(isOpenView)
 
 			self._simagestoneName:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
 				self._imagestoneName:SetNativeSize()
+			end)
+			self._simagestoneName1:LoadImage(ResUrl.getTxtDestinyIcon(resName), function()
+				self._imagestoneName1:SetNativeSize()
 			end)
 		else
 			self._txtstonename.text = name

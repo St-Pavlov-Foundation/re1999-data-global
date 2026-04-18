@@ -9,7 +9,7 @@ function FightTLEventPlaySceneAnimator:onTrackStart(fightStepData, duration, par
 	local fightScene = GameSceneMgr.instance:getCurScene()
 
 	if fightScene then
-		local sceneObj = fightScene.level:getSceneGo()
+		local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 		playObj = sceneObj and gohelper.findChild(sceneObj, paramsArr[1])
 	end

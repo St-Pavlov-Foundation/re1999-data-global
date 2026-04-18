@@ -58,16 +58,19 @@ end
 
 function SurvivalShopItemMo:getBuyPrice()
 	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
-	local attrRate = 0
+	local attr
 
 	if self.shopType == SurvivalEnum.ShopType.Normal then
-		attrRate = weekMo:getAttrRaw(SurvivalEnum.AttrType.ShopBuyPriceFix)
-	else
-		attrRate = weekMo:getAttrRaw(SurvivalEnum.AttrType.BuildBuyPriceFix)
+		attr = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Buy_Map)
+	elseif self.shopType == SurvivalEnum.ShopType.PreExplore then
+		attr = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Buy_PreExplore)
+	elseif self.shopType == SurvivalEnum.ShopType.GeneralShop then
+		attr = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Buy_ComputingCenter)
 	end
 
-	local attrRate2 = weekMo:getAttrRaw(SurvivalEnum.AttrType.BuyPriceFix)
-	local price = math.floor(self.buyPrice * (1 + self.fixRate / 1000) * (1000 + attrRate + attrRate2) / 1000)
+	local price = self.buyPrice * ((1000 + self.shopItemCo.worthFix) / 1000 * attr)
+
+	price = math.floor(price)
 
 	return price
 end

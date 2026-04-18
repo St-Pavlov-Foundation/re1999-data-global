@@ -386,6 +386,7 @@ function SettingsLanguageView:onUpdateParam()
 end
 
 function SettingsLanguageView:onOpen()
+	self:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadFinish, self._refreshVoiceDropDown, self)
 	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, self._refreshVoiceDropDown, self)
 	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, self._refreshVoiceDropDown, self)
 	self:addEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackFail, self._onPackItemStateChange, self)
@@ -447,6 +448,7 @@ function SettingsLanguageView:_cleanXian(dropdown)
 end
 
 function SettingsLanguageView:onClose()
+	self:removeEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadFinish, self._refreshVoiceDropDown, self)
 	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnPackItemStateChange, self._refreshVoiceDropDown, self)
 	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackSuccess, self._refreshVoiceDropDown, self)
 	self:removeEventCb(SettingsVoicePackageController.instance, SettingsEvent.OnDownloadPackFail, self._refreshVoiceDropDownStr, self)

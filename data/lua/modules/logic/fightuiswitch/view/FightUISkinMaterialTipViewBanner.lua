@@ -19,6 +19,7 @@ function FightUISkinMaterialTipViewBanner:_createInfoItemUserDataTb_(goItem)
 	tb._go = goItem
 	tb._gotag = gohelper.findChild(goItem, "#go_tag")
 	tb._gotag2 = gohelper.findChild(goItem, "#go_tag2")
+	tb._gotagtxt = gohelper.findChildText(goItem, "#go_tag2/txt_name")
 	tb._txtdesc = gohelper.findChildText(goItem, "txt_desc")
 	tb._txtname = gohelper.findChildText(goItem, "txt_desc/txt_name")
 	tb._simageinfobg = gohelper.findChildSingleImage(goItem, "#simage_pic")
@@ -39,6 +40,9 @@ function FightUISkinMaterialTipViewBanner:_updateInfoItemUI(itemUserDataTb, item
 
 	gohelper.setActive(tb._gotag, false)
 	gohelper.setActive(tb._gotag2, true)
+
+	tb._gotagtxt.text = luaLang("p_mainsceneswitchview_title_3")
+
 	self:_addClickFightUI(tb._btn, itemId)
 
 	local mo = FightUISwitchModel.instance:getStyleMoByItemId(itemId)
@@ -60,9 +64,9 @@ function FightUISkinMaterialTipViewBanner:onOpen()
 	self:_refreshUI()
 	self:_startAutoSwitch()
 	gohelper.setActive(self._goSceneLogo, false)
-	gohelper.setActive(self._goSceneLogo2, false)
-	gohelper.setActive(self._goSceneLogo3, false)
-	gohelper.setActive(self._goSceneLogo4, true)
+	gohelper.setActive(self._goSceneLogo2, self._itemSubType == ItemEnum.SubType.FightFloatType)
+	gohelper.setActive(self._goSceneLogo3, self._itemSubType == ItemEnum.SubType.FightCard)
+	gohelper.setActive(self._goSceneLogo4, false)
 end
 
 function FightUISkinMaterialTipViewBanner:_addClickFightUI(btn, itemId)

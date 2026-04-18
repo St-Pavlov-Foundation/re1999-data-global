@@ -14,6 +14,13 @@
     "priority": 0
   },
   {
+    "id": 682802,
+    "prefabPath": "fightfloat_skin3",
+    "startTime": "",
+    "endTime": "",
+    "priority": 0
+  },
+  {
     "id": 2,
     "prefabPath": "fightfloat_skin1",
     "startTime": "2025-1-1 5:00:00",

@@ -2,16 +2,13 @@
 
 module("modules.logic.fight.system.work.FightWorkRestartBefore", package.seeall)
 
-local FightWorkRestartBefore = class("FightWorkRestartBefore", BaseWork)
-
-function FightWorkRestartBefore:ctor()
-	return
-end
+local FightWorkRestartBefore = class("FightWorkRestartBefore", FightWorkItem)
 
 function FightWorkRestartBefore:onStart()
-	self.work = FightWorkClearBeforeRestart.New()
+	self.work = self:com_registWork(FightWorkClearBeforeRestart)
 
 	self.work:registFinishCallback(self._onWorkFinish, self)
+	self:cancelFightWorkSafeTimer()
 	self.work:start()
 end
 
@@ -30,8 +27,8 @@ function FightWorkRestartBefore:_onWorkFinish()
 	if prevSceneLevelId ~= firstLevelId then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)
 		GameSceneMgr.instance:showLoading(SceneType.Fight)
-		TaskDispatcher.runDelay(self._delayDone, self, 5)
-		TaskDispatcher.runDelay(self._startLoadLevel, self, 0.25)
+		self:com_registSingleTimer(self._delayDone, 5)
+		self:com_registTimer(self._startLoadLevel, 0.25)
 
 		self._loadTime = Time.time
 	else
@@ -42,7 +39,7 @@ end
 
 function FightWorkRestartBefore:_correctRootState()
 	local fightScene = GameSceneMgr.instance:getCurScene()
-	local sceneObj = fightScene.level:getSceneGo()
+	local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 	gohelper.setActive(sceneObj, true)
 
@@ -58,13 +55,13 @@ function FightWorkRestartBefore:_correctRootState()
 end
 
 function FightWorkRestartBefore:_startLoadLevel()
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded)
 
 	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 	local fightParam = FightModel.instance:getFightParam()
 	local firstLevelId = fightParam:getSceneLevel(1)
 
-	fightScene.level:onSceneStart(fightScene.level._sceneId, firstLevelId)
+	FightGameMgr.sceneLevelMgr:loadScene(nil, firstLevelId)
 end
 
 function FightWorkRestartBefore:_onLevelLoaded()
@@ -74,8 +71,7 @@ function FightWorkRestartBefore:_onLevelLoaded()
 	if delay <= 0 then
 		self:onDone(true)
 	else
-		TaskDispatcher.cancelTask(self._delayDone, self)
-		TaskDispatcher.runDelay(self._delayDone, self, delay)
+		self:com_registSingleTimer(self._delayDone, delay)
 	end
 
 	GameSceneMgr.instance:getCurScene().camera:setSceneCameraOffset()
@@ -89,9 +85,6 @@ end
 
 function FightWorkRestartBefore:clearWork()
 	GameSceneMgr.instance:hideLoading()
-	TaskDispatcher.cancelTask(self._delayDone, self)
-	TaskDispatcher.cancelTask(self._startLoadLevel, self)
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
 
 	if self.work then
 		self.work:disposeSelf()

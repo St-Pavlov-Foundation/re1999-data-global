@@ -55,10 +55,11 @@ function SurvivalWeekRpc:onReceiveSurvivalClosePanelReply(resultCode, msg)
 	end
 end
 
-function SurvivalWeekRpc:sendSurvivalStartWeekChooseDiff(difficulty, hardnessId, callback, callobj)
+function SurvivalWeekRpc:sendSurvivalStartWeekChooseDiff(difficulty, hardnessId, roleId, callback, callobj)
 	local req = SurvivalWeekModule_pb.SurvivalStartWeekChooseDiffRequest()
 
 	req.difficulty = difficulty
+	req.roleId = roleId
 
 	if hardnessId then
 		for _, id in ipairs(hardnessId) do
@@ -75,6 +76,7 @@ function SurvivalWeekRpc:onReceiveSurvivalStartWeekChooseDiffReply(resultCode, m
 
 		if msg.weekInfo.difficulty ~= SurvivalConst.FirstPlayDifficulty then
 			ViewMgr.instance:closeView(ViewName.SurvivalHardView)
+			ViewMgr.instance:closeView(ViewName.SurvivalRoleSelectView)
 		end
 
 		local isFirstPlayer = msg.weekInfo.difficulty == SurvivalConst.FirstPlayDifficulty
@@ -695,7 +697,13 @@ end
 
 function SurvivalWeekRpc:onReceiveSurvivalItemTipsPush(resultCode, msg)
 	if resultCode == 0 then
-		SurvivalMapHelper.instance:addPushToFlow("SurvivalItemTipsPush", msg)
+		local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+		if curSceneType == SceneType.Fight then
+			SurvivalModel.instance:cacheBossFightItem(msg)
+		else
+			SurvivalMapHelper.instance:addPushToFlow("SurvivalItemTipsPush", msg)
+		end
 	end
 end
 
@@ -745,6 +753,7 @@ function SurvivalWeekRpc:onReceiveSurvivalIntrudeFightSettlePush(resultCode, msg
 			local fightId = msg.fight.fightId
 
 			if msg.fight.status == SurvivalEnum.ShelterMonsterFightState.Win and fightId ~= nil and fightId ~= 0 then
+				SurvivalModel.instance:addDebugSettleStr("onReceiveSurvivalIntrudeFightSettlePush")
 				SurvivalShelterModel.instance:setNeedShowFightSuccess(true, fightId)
 			end
 		end
@@ -990,6 +999,75 @@ function SurvivalWeekRpc:onReceiveSurvivalReputationExpReply(resultCode, msg)
 			msg = msg
 		})
 	end
+end
+
+function SurvivalWeekRpc:sendSurvivalUnlockInsideTechRequest(id)
+	local req = SurvivalWeekModule_pb.SurvivalUnlockInsideTechRequest()
+
+	req.id = id
+
+	return self:sendMsg(req)
+end
+
+function SurvivalWeekRpc:onReceiveSurvivalUnlockInsideTechReply(resultCode, msg)
+	if resultCode == 0 then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local survivalShelterBuildingMo = weekInfo:getTechBuild()
+
+		survivalShelterBuildingMo.survivalTechShelterMo:onReceiveSurvivalUnlockInsideTechReply(msg)
+	end
+end
+
+function SurvivalWeekRpc:sendSurvivalLossReturnRewardRequest()
+	local req = SurvivalWeekModule_pb.SurvivalLossReturnRewardRequest()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	self.lossReturnItems = weekInfo.lossReturnItems
+
+	return self:sendMsg(req)
+end
+
+function SurvivalWeekRpc:onReceiveSurvivalLossReturnRewardReply(resultCode, msg)
+	if resultCode == 0 then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+		local items = {}
+
+		if self.lossReturnItems then
+			for i, v in ipairs(self.lossReturnItems) do
+				local itemMo = SurvivalBagItemMo.New()
+
+				itemMo:init({
+					id = v.itemId,
+					count = v.count
+				})
+				table.insert(items, itemMo)
+			end
+
+			self.lossReturnItems = nil
+		end
+
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SurvivalGetRewardView, {
+			items = items
+		})
+
+		weekInfo.lossReturnItems = nil
+
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.OnReceiveSurvivalLossReturnRewardReply)
+	end
+end
+
+function SurvivalWeekRpc:onReceiveSurvivalDerivedContainerUpdatePush(resultCode, msg)
+	if resultCode == 0 then
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+		if weekInfo then
+			weekInfo:onReceiveSurvivalDerivedContainerUpdatePush(msg)
+		end
+	end
+end
+
+function SurvivalWeekRpc:onReceiveSurvivalNpcBoxPush(resultCode, msg)
+	return
 end
 
 SurvivalWeekRpc.instance = SurvivalWeekRpc.New()

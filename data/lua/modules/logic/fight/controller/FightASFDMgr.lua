@@ -116,6 +116,53 @@ function FightASFDMgr:onMySideRoundEnd()
 	self:clearBornEffect()
 end
 
+function FightASFDMgr:getLSJSpineList()
+	return self.lsjSpineList
+end
+
+function FightASFDMgr:getLSJPlayedAnimList()
+	return self.lsjSpinePlayedAnimList
+end
+
+local LSJEmptyEntityValue = 1
+
+function FightASFDMgr:isLSJEmptyEntity(entity)
+	return entity == LSJEmptyEntityValue
+end
+
+function FightASFDMgr:createLSJSpine(asfdContext)
+	self.lsjSpineList = self.lsjSpineList or {}
+	self.lsjSpinePlayedAnimList = self.lsjSpinePlayedAnimList or {}
+
+	tabletool.clear(self.lsjSpineList)
+	tabletool.clear(self.lsjSpinePlayedAnimList)
+
+	local max = asfdContext.emitterAttackMaxNum
+	local curIndex = asfdContext.emitterAttackNum
+
+	for i = 1, max do
+		if i < curIndex then
+			table.insert(self.lsjSpineList, LSJEmptyEntityValue)
+			table.insert(self.lsjSpinePlayedAnimList, true)
+		else
+			local co = lua_fight_lsj_asfd.configDict[i]
+
+			if co then
+				local fullRes = string.format("roles/%s.prefab", co.spineRes)
+				local entity = FightGameMgr.entityMgr:buildTempSpine(fullRes, "lsj_" .. i, FightEnum.EntitySide.MySide, nil, nil, "lsj_" .. i)
+				local emitterLocalPosX, emitterLocalPosY, emitterLocalPosZ = transformhelper.getLocalPos(self.sideEmitterWrap.containerTr)
+				local pos = FightStrUtil.instance:getSplitToNumberCache(co.pos, ",")
+				local x = pos and pos[1] or 0
+				local y = pos and pos[2] or 0
+				local z = pos and pos[3] or 0
+
+				transformhelper.setLocalPos(entity.go.transform, x + emitterLocalPosX, y + emitterLocalPosY, z + emitterLocalPosZ)
+				table.insert(self.lsjSpineList, entity)
+			end
+		end
+	end
+end
+
 function FightASFDMgr:createEmitterWrap(fightStepData)
 	if not fightStepData then
 		return
@@ -142,7 +189,7 @@ function FightASFDMgr:createEmitterWrap(fightStepData)
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, entity, FightASFDConfig.instance.skillId, fightStepData)
+	FightController.instance:dispatchEvent(FightEvent.ASFD_OnStart, entity, fightStepData.actId, fightStepData)
 	self:clearBornEffect(true)
 
 	local emitterCo = FightASFDHelper.getEmitterCo(entityId)
@@ -267,7 +314,7 @@ function FightASFDMgr:_emitterOneMissile(fightStepData, toId, asfdContext)
 		return
 	end
 
-	local missileCo = FightASFDHelper.getMissileCo(entityId)
+	local missileCo = FightASFDHelper.getMissileCo(entityId, asfdContext)
 	local missileRes = FightASFDConfig.instance:getASFDCoRes(missileCo)
 	local missileWrap = entity.effect:addGlobalEffect(missileRes)
 
@@ -382,7 +429,7 @@ function FightASFDMgr:createExplosionEffect(fightStepData, toEntityId, context)
 		return
 	end
 
-	local explosionCo = FightASFDHelper.getExplosionCo(fightStepData and fightStepData.fromId)
+	local explosionCo = FightASFDHelper.getExplosionCo(fightStepData and fightStepData.fromId, context)
 	local explosionDuration = FightASFDConfig.instance.explosionDuration / FightModel.instance:getSpeed()
 	local res = FightASFDConfig.instance:getASFDCoRes(explosionCo)
 	local wrap = toEntity.effect:addHangEffect(res, ModuleEnum.SpineHangPoint.mountbody, nil, explosionDuration)
@@ -479,6 +526,7 @@ function FightASFDMgr:onASFDFlowDone(fightStepData)
 
 	self:clearBornEffect(true)
 	self:clearEmitterEffect(fightStepData)
+	self:clearLSJSpine()
 	self:clearMissileEffect()
 	self:clearExplosionEffect()
 	tabletool.clear(self.effectWrap2EntityIdDict)
@@ -535,6 +583,21 @@ function FightASFDMgr:clearEmitterEffect(fightStepData)
 	self:playEndASFDAnim()
 
 	self.sideEmitterWrap = nil
+end
+
+function FightASFDMgr:clearLSJSpine()
+	if not self.lsjSpineList then
+		return
+	end
+
+	for _, entity in ipairs(self.lsjSpineList) do
+		if entity ~= LSJEmptyEntityValue then
+			FightGameMgr.entityMgr:delEntity(entity.id)
+		end
+	end
+
+	tabletool.clear(self.lsjSpineList)
+	tabletool.clear(self.lsjSpinePlayedAnimList)
 end
 
 function FightASFDMgr:createRemoveEmitterEffect(fightStepData)

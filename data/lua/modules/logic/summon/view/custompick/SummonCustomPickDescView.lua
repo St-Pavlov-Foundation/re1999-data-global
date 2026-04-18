@@ -283,6 +283,16 @@ function SummonCustomPickDescView:buildRareNameDict(summonPoolConfig)
 
 			table.insert(rareHeroNames[SummonEnum.CustomPickRare], heroName)
 		end
+	elseif summonPoolCfg.type == SummonEnum.Type.CustomPick and not string.nilorempty(summonPoolConfig.param2) then
+		local summonIdStr = summonPoolCfg.param2
+		local summonIds = string.splitToNumber(summonIdStr, "#")
+
+		for _, summonId in ipairs(summonIds) do
+			local heroConfig = HeroConfig.instance:getHeroCO(summonId)
+			local heroName = heroConfig.name
+
+			table.insert(rareHeroNames[SummonEnum.CustomPickRare], heroName)
+		end
 	else
 		local rare2Cfg = SummonConfig.instance:getSummon(self._poolId)
 

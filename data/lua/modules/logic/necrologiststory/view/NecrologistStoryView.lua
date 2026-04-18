@@ -85,6 +85,8 @@ function NecrologistStoryView:onSelectSection(sectionId, isSkip)
 end
 
 function NecrologistStoryView:onClickNext()
+	AudioMgr.instance:trigger(AudioEnum.NecrologistStory.UI_Common_Click)
+
 	if not self._storyGroupMo then
 		return
 	end
@@ -630,7 +632,12 @@ function NecrologistStoryView:playStory_situationValue(storyConfig, isSkip)
 		end
 	end
 
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnSituationValue)
+	if isSkip and GuideModel.instance:isGuideRunning(31307) then
+		-- block empty
+	else
+		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnSituationValue)
+	end
+
 	self:runNextStep(isSkip)
 end
 
@@ -644,6 +651,10 @@ end
 
 function NecrologistStoryView:playStory_v3a2options(storyConfig, isSkip)
 	self:createStoryItem(V3A2NecrologistStoryOptionsItem, storyConfig, isSkip)
+end
+
+function NecrologistStoryView:playStory_v3a4AudioControl(storyConfig, isSkip)
+	self:createStoryItem(NecrologistStoryClickAudioItem, storyConfig, isSkip)
 end
 
 function NecrologistStoryView:playStory_commontask(storyConfig, isSkip)

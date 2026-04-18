@@ -15,6 +15,9 @@ function FightHeroSpEffectConfig:reqConfigNames()
 		"fight_sp_effect_kkny_bear_damage_hit",
 		"fight_sp_effect_bkle",
 		"fight_sp_effect_ly",
+		"fight_sp_handcard_area_ly",
+		"fight_sp_card_ly",
+		"fight_sp_card_mask_ly",
 		"fight_sp_effect_alf",
 		"fight_sp_effect_alf_timeline",
 		"fight_sp_effect_alf_add_card",
@@ -31,7 +34,8 @@ function FightHeroSpEffectConfig:reqConfigNames()
 		"fight_ble_crystal",
 		"fight_ble_crystal_desc",
 		"fight_ble_skill_2_crystal",
-		"fight_anan_focus_timeline"
+		"fight_anan_focus_timeline",
+		"fight_yaxian_timeline"
 	}
 end
 

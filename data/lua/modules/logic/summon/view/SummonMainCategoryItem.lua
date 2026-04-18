@@ -222,6 +222,11 @@ SummonMainCategoryItem._BannerFlag_DataDict = {
 	[SummonEnum.BannerFlagType.Cobrand] = {
 		langKey = "summon_cobrand_banner_flag",
 		imageBg = "bg_lx"
+	},
+	[SummonEnum.BannerFlagType.LimitReprint] = {
+		imageBg = "v1a6_quniang_summon_tag",
+		langKey = "summon_limitreprint_banner_flag",
+		isTxtCororFormat = true
 	}
 }
 

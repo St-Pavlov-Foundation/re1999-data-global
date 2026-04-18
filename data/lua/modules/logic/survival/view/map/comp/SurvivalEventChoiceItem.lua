@@ -60,7 +60,19 @@ function SurvivalEventChoiceItem:updateData(data)
 		if icon ~= SurvivalEnum.EventChoiceIcon.None then
 			self._imageicon.color = GameUtil.parseColor(color)
 
-			UISpriteSetMgr.instance:setSurvivalSprite(self._imageicon, "survival_event_icon_" .. tostring(icon))
+			if data.isRoleExclusive then
+				local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+				local roleId = survivalShelterRoleMo.roleId
+				local path = SurvivalRoleConfig.instance:getRoleHeadImage(roleId)
+
+				if not string.nilorempty(path) then
+					UISpriteSetMgr.instance:setSurvivalSprite2(self._imageicon, path)
+				else
+					UISpriteSetMgr.instance:setSurvivalSprite(self._imageicon, "survival_event_icon_" .. tostring(icon))
+				end
+			else
+				UISpriteSetMgr.instance:setSurvivalSprite(self._imageicon, "survival_event_icon_" .. tostring(icon))
+			end
 		end
 
 		if not data.exStr then

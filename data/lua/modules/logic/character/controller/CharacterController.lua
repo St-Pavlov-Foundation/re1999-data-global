@@ -254,7 +254,7 @@ function CharacterController:showCharacterGetToast(heroId, duplicateCount)
 		if duplicateCount >= constVal - 1 then
 			reward = config.duplicateItem2
 		else
-			reward = config.duplicateItem
+			reward = config.duplicateItem .. "|" .. config.duplicateItemSpecial
 		end
 	end
 
@@ -310,6 +310,20 @@ function CharacterController:showCharacterGetTicket(heroId, ticketId)
 	local heroCo = HeroConfig.instance:getHeroCO(heroId)
 
 	GameFacade.showToastWithIcon(ToastEnum.IconId, icon, string.format(luaLang("summon_limit_ticket_gain"), cfg.name))
+end
+
+function CharacterController:showCharacterGetItemToast(items, heroId, duplicateCount)
+	if duplicateCount > 0 then
+		local desc = luaLang("character_duplicate_tips")
+		local heroCo = HeroConfig.instance:getHeroCO(heroId)
+
+		for _, item in ipairs(items) do
+			local config, icon = ItemModel.instance:getItemConfigAndIcon(item.materilType, item.materilId)
+			local toast = string.format(luaLang("CharacterController_showCharacterGetItemToast"), desc, heroCo.name, config.name, luaLang("multiple"), item.quantity)
+
+			GameFacade.showToastWithIcon(ToastEnum.IconId, icon, toast)
+		end
+	end
 end
 
 function CharacterController:setTalentHeroId(id)

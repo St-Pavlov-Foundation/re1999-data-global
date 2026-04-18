@@ -145,6 +145,10 @@ function DecorateStoreModel.getItemType(storeId)
 			return DecorateStoreEnum.DecorateItemType.MainScene
 		elseif decorateConfig.subType == ItemEnum.SubType.SkinSelelctGift then
 			return DecorateStoreEnum.DecorateItemType.SkinGift
+		elseif decorateConfig.subType == ItemEnum.SubType.SceneUIPackage then
+			return DecorateStoreEnum.DecorateItemType.SceneUIPackage
+		elseif decorateConfig.subType == ItemEnum.SubType.MainUISkin then
+			return DecorateStoreEnum.DecorateItemType.MainUISkin
 		end
 	elseif decorateConfig.productType == MaterialEnum.MaterialType.HeroSkin then
 		return DecorateStoreEnum.DecorateItemType.Skin
@@ -228,6 +232,14 @@ function DecorateStoreModel:getGoodItemLimitTime(goodsId)
 end
 
 function DecorateStoreModel:isDecorateGoodItemHas(goodId)
+	local v3a4PackageGoodsIds = DecorateStoreModel.instance:getV3a4PackageStoreGoodsIds()
+
+	if v3a4PackageGoodsIds and goodId == v3a4PackageGoodsIds[1] then
+		local isCanBuy = self:isCanBuySceneUIPackage()
+
+		return not isCanBuy
+	end
+
 	local decorateCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
 	if decorateCo.maxbuycountType ~= DecorateStoreEnum.MaxBuyTipType.Owned then
@@ -241,15 +253,22 @@ function DecorateStoreModel:isDecorateGoodItemHas(goodId)
 		local config = ItemConfig.instance:getItemCo(items[2])
 		local effect = config and config.effect or ""
 		local param = GameUtil.splitString2(effect, true)
-		local skinList = param[1]
 
-		for i, v in ipairs(skinList) do
-			if not HeroModel.instance:checkHasSkin(v) then
-				return false
+		if param == nil then
+			logError("11")
+
+			return false
+		else
+			local skinList = param[1]
+
+			for i, v in ipairs(skinList) do
+				if not HeroModel.instance:checkHasSkin(v) then
+					return false
+				end
 			end
-		end
 
-		return true
+			return true
+		end
 	end
 
 	local itemCount = ItemModel.instance:getItemQuantity(items[1], items[2])
@@ -275,6 +294,85 @@ function DecorateStoreModel:isAutoHideUIType(type)
 	end
 
 	return false
+end
+
+function DecorateStoreModel:hasDiscountItem(goodsId)
+	local storeMo = StoreModel.instance:getGoodsMO(goodsId)
+
+	if storeMo then
+		local goodsConfig = storeMo.config
+
+		if not string.nilorempty(goodsConfig.discountItem) then
+			local discounts = string.split(goodsConfig.discountItem, "|")
+			local items = string.splitToNumber(discounts[1], "#")
+			local has = ItemModel.instance:getItemQuantity(items[1], items[2]) > 0
+
+			return has, items, discounts[2] and tonumber(discounts[2])
+		end
+	else
+		local type = MaterialEnum.MaterialType.Item
+		local id = V3a4GiftRecommendEnum.OffItemId
+		local has = ItemModel.instance:getItemQuantity(type, id) > 0
+
+		return has, {
+			type,
+			id
+		}, 500
+	end
+end
+
+function DecorateStoreModel:isCanClaimDiscountItem(items)
+	if items then
+		local actId = items[2] and DecorateStoreEnum.DiscountItemActId[items[2]]
+
+		if actId then
+			local cos = ActivityConfig.instance:getNorSignActivityCos(actId)
+
+			if cos then
+				for _, co in pairs(cos) do
+					if not string.nilorempty(co.bonus) then
+						local bonus = GameUtil.splitString2(co.bonus, true, "|", "#")
+
+						for _, v in ipairs(bonus) do
+							if v[1] == items[1] and v[2] == items[2] then
+								local couldGet = ActivityType101Model.instance:isType101RewardCouldGet(actId, co.id)
+
+								if couldGet then
+									return couldGet
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+function DecorateStoreModel:isCanBuySceneUIPackage()
+	local goodsIds = self:getV3a4PackageStoreGoodsIds()
+	local hasScene = self:isDecorateGoodItemHas(goodsIds[2])
+	local hasUI = self:isDecorateGoodItemHas(goodsIds[3])
+
+	if not hasScene and not hasUI then
+		return true
+	end
+
+	return false
+end
+
+function DecorateStoreModel:getV3a4PackageStoreGoodsIds()
+	if not self._v3a4PackageStoreGoodsIds then
+		self:_initPackageStoreGoodsIds()
+	end
+
+	return self._v3a4PackageStoreGoodsIds
+end
+
+function DecorateStoreModel:_initPackageStoreGoodsIds()
+	local str = CommonConfig.instance:getConstStr(ConstEnum.V3a4PackageStoreGoodsId)
+
+	self._v3a4PackageStoreGoodsIds = string.splitToNumber(str, "#")
 end
 
 DecorateStoreModel.instance = DecorateStoreModel.New()

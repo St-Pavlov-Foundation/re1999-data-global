@@ -61,16 +61,16 @@ function SurvivalBagInfoPart:init(go)
 	self._go_rewardinherit = gohelper.findChild(go, "root/#go_info/bottom/#go_rewardinherit")
 	self._btn_rewardinherit_select = gohelper.findChildButtonWithAudio(self._go_rewardinherit, "#btn_rewardinherit_select")
 	self._btn_rewardinherit_unselect = gohelper.findChildButtonWithAudio(self._go_rewardinherit, "#btn_rewardinherit_unselect")
-	self._goscore = gohelper.findChild(go, "root/#go_info/#go_score")
-	self._txtscore = gohelper.findChildTextMesh(go, "root/#go_info/#go_score/image_NumBG/#txt_Num")
-	self._imagescore = gohelper.findChildImage(go, "root/#go_info/#go_score/image_NumBG/image_AssessIon")
+	self._goscore = gohelper.findChild(go, "root/#go_info/layout/#go_score")
+	self._txtscore = gohelper.findChildTextMesh(go, "root/#go_info/layout/#go_score/image_NumBG/#txt_Num")
+	self._imagescore = gohelper.findChildImage(go, "root/#go_info/layout/#go_score/image_NumBG/image_AssessIon")
 	self._goattritem = gohelper.findChild(go, "root/#go_info/scroll_base/Viewport/Content/#go_attrs/#go_baseitem")
 	self._goFrequency = gohelper.findChild(go, "root/#go_info/Frequency")
 	self._imageFrequency = gohelper.findChildImage(go, "root/#go_info/Frequency/image_NumBG/#txt_Num/image_FrequencyIcon")
 	self._txtFrequency = gohelper.findChildTextMesh(go, "root/#go_info/Frequency/image_NumBG/#txt_Num")
 	self._txtFrequencyName = gohelper.findChildTextMesh(go, "root/#go_info/Frequency/txt_Frequency")
 	self._goscroll = gohelper.findChild(go, "root/#go_info/scroll_base")
-	self.itemSubType_npc = gohelper.findChild(go, "root/#go_info/top/left/itemSubType_npc")
+	self.itemSubType_npc = gohelper.findChild(go, "root/#go_info/layout/itemSubType_npc")
 	self.recommend = gohelper.findChild(go, "root/#go_info/top/left/recommend")
 	self._btnClose = gohelper.findChildButtonWithAudio(go, "root/#btn_close")
 
@@ -245,8 +245,14 @@ function SurvivalBagInfoPart:updateMo(mo, param)
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_qiutu_explore_senior)
 	end
 
+	local isSp1 = self.mo and self.mo.co and self.mo.co.rare == 6 and (SurvivalEnum.ItemSource.Drop == self.mo.source or SurvivalEnum.ItemSource.Search == self.mo.source)
+
+	if isSp1 then
+		self._anim:Play("opensp1", 0, 0)
+		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_qiutu_explore_senior)
+	end
+
 	gohelper.setActive(self.recommend, self.shopType and self.mo and self:isShelterShop() and self.mo:isDisasterRecommendItem(self.param.mapId))
-	gohelper.setActive(self.itemSubType_npc, self.shopType and self.mo and self:isSurvivalShop() and self.mo:isNPCRecommendItem())
 end
 
 function SurvivalBagInfoPart:isShelterShop()
@@ -267,6 +273,7 @@ function SurvivalBagInfoPart:_refreshAll()
 		self:updateHeavy()
 		self:updateEquipTag()
 		self:updateBaseInfo()
+		gohelper.setActive(self.itemSubType_npc, self.mo and self.mo:isNPCRecommendItem())
 	end
 end
 
@@ -370,7 +377,10 @@ function SurvivalBagInfoPart:updateBaseInfo()
 
 	gohelper.setActive(self._btnleave, canRemove and self.mo.npcCo)
 	gohelper.setActive(self._btntipleave, self.mo.npcCo)
-	gohelper.setActive(self._btnremove, canRemove and not self.mo.npcCo)
+
+	self.isShowBtnRemove = canRemove and not self.mo.npcCo
+
+	gohelper.setActive(self._btnremove, self.isShowBtnRemove)
 	gohelper.setActive(self._btntipremove, not self.mo.npcCo)
 	gohelper.setActive(self._gonpc, self.mo.npcCo)
 	gohelper.setActive(self._goitem, not self.mo.npcCo)
@@ -650,6 +660,10 @@ function SurvivalBagInfoPart:_createSubDescItems(obj, data, index)
 	local txtDesc = gohelper.findChildTextMesh(obj, "")
 
 	txtDesc.text = data
+end
+
+function SurvivalBagInfoPart:_onSubDescHyperLinkClick(data, clickPosition)
+	return
 end
 
 function SurvivalBagInfoPart:_createSubDescItems2(obj, data, index)

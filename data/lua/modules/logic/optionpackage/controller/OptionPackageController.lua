@@ -218,9 +218,9 @@ function OptionPackageController:_showDownloadMsgBox(packName, tipsStr, diffList
 
 	local messageBoxId = MessageBoxIdDefine.ForbidLogin
 	local msgBoxType = MsgBoxEnum.BoxType.Yes_No
-	local yesStr = "确定下载"
+	local yesStr = luaLang("c_optionpackage_download_btn_yes")
 	local yesStrEn = "YES DOWNLOAD"
-	local noStr = "取消下载"
+	local noStr = luaLang("c_optionpackage_download_btn_no")
 	local noStrEn = "CANCEL DOWNLOAD"
 	local yesCallback = OptionPackageController._downloaderYes
 	local noCallback = OptionPackageController._downloaderNo

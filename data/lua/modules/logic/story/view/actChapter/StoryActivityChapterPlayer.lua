@@ -72,6 +72,10 @@ StoryActivityChapterPlayer.VersionSetting = {
 	[32] = {
 		[StoryActivityChapterPlayer.StoryType.Open] = "StoryActivityChapterOpen3_2",
 		[StoryActivityChapterPlayer.StoryType.Close] = "StoryActivityChapterClose3_2"
+	},
+	[34] = {
+		[StoryActivityChapterPlayer.StoryType.Open] = "StoryActivityChapterOpen3_4",
+		[StoryActivityChapterPlayer.StoryType.Close] = "StoryActivityChapterClose3_4"
 	}
 }
 

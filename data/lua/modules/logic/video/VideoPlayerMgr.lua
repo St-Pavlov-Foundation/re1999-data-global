@@ -11,7 +11,6 @@ VideoPlayerMgr.DEFAULT_WIDTH = 2592
 VideoPlayerMgr.DEFAULT_HEIGHT = 1080
 
 function VideoPlayerMgr:init()
-	self._type = Type_UnityVideoPlayer
 	self._resDict = {}
 end
 
@@ -139,7 +138,11 @@ end
 
 function VideoPlayerMgr:SwitchUrl(url)
 	if SLFramework.FrameworkSettings.IsEditor then
-		return UnityEngine.Application.dataPath .. "/../../" .. ZProj.VideoHelp.GetVideoHDPath(langVideoUrl(url))
+		if GameResMgr.IsFromEditorDir then
+			return UnityEngine.Application.dataPath .. "/../../" .. ZProj.VideoHelp.GetVideoHDPath(langVideoUrl(url))
+		else
+			return UnityEngine.Application.dataPath .. "/../ResLib/" .. SLFramework.FrameworkSettings.CurPlatformName .. "/" .. ZProj.VideoHelp.GetVideoHDPath(langVideoUrl(url))
+		end
 	else
 		return SLFramework.FrameworkSettings.GetAssetFullPathForWWW(ZProj.VideoHelp.GetVideoHDPath(langVideoUrl(url)))
 	end

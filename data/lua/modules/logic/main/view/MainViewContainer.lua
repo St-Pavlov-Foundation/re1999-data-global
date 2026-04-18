@@ -21,7 +21,8 @@ function MainViewContainer:buildViews()
 		MainActivityCenterView.New(),
 		MainNoticeRequestView.New(),
 		MainUIPartView.New(),
-		MainEagleAnimView.New()
+		MainEagleAnimView.New(),
+		MainBirdAnimView.New()
 	}
 end
 

@@ -101,12 +101,12 @@ function Live2dRTShareController:_getTextureSizeByCameraSize(orthographicSize)
 	local textureSizeByCamera = GuiLive2d.getTextureSizeByCameraSize(orthographicSize)
 	local textureSize = textureSizeByCamera * _adapterScaleOnCreate * _qualityScale
 
-	return math.floor(textureSize)
+	return CharacterVoiceEnum.ChangeRTSize and CharacterVoiceEnum.RTWidth or math.floor(textureSize)
 end
 
 function Live2dRTShareController:_getTextureSize(orthographicSize, shareType, heroId, skinId)
 	if self:_isBloomType(shareType) then
-		local cameraSize = CharacterVoiceEnum.BloomCameraSize[heroId]
+		local cameraSize = CharacterVoiceEnum.BloomTypeCameraSize
 
 		if cameraSize then
 			return self:_getTextureSizeByCameraSize(cameraSize)
@@ -136,7 +136,7 @@ function Live2dRTShareController:_createRT(orthographicSize, shareType, heroId, 
 		logError(string.format("Live2dRTShareController:_createRT orthographicSize:%s textureSize:%s shareType:%s", orthographicSize, textureSize, shareType))
 	end
 
-	if shareType == CharacterVoiceEnum.RTShareType.BloomOpen then
+	if shareType == CharacterVoiceEnum.RTShareType.BloomOpen or shareType == CharacterVoiceEnum.RTShareType.Normal then
 		return UnityEngine.RenderTexture.GetTemporary(textureSize, textureSize, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
 	end
 

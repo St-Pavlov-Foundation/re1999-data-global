@@ -21,18 +21,14 @@ function SurvivalReputationSelectView:onInitView()
 end
 
 function SurvivalReputationSelectView:createItemScroll()
-	local scrollParam = SurvivalSimpleListParam.New()
+	local scrollParam = SimpleListParam.New()
 
 	scrollParam.cellClass = SurvivalReputationSelectBagItem
 	scrollParam.lineCount = 1
-	scrollParam.cellWidth = 200
-	scrollParam.cellHeight = 200
-	scrollParam.cellSpaceH = 0
-	scrollParam.cellSpaceV = 0
 
 	local res = self.viewContainer:getSetting().otherRes.survivalreputationselectbagitem
 
-	self.survivalSimpleListComp = SurvivalHelper.instance:createLuaSimpleListComp(self._scrollitem.gameObject, scrollParam, res, self.viewContainer)
+	self.simpleListComp = GameFacade.createSimpleListComp(self._scrollitem.gameObject, scrollParam, res, self.viewContainer)
 end
 
 function SurvivalReputationSelectView:addEvents()
@@ -67,7 +63,7 @@ function SurvivalReputationSelectView:onDestroyView()
 end
 
 function SurvivalReputationSelectView:refreshItemList()
-	self.survivalSimpleListComp:setList(self.items)
+	self.simpleListComp:setData(self.items)
 end
 
 function SurvivalReputationSelectView:refreshBtnConfirm()
@@ -113,7 +109,7 @@ function SurvivalReputationSelectView:onReceiveSurvivalReputationExpReply(param)
 end
 
 function SurvivalReputationSelectView:playItemAnim()
-	local items = self.survivalSimpleListComp:getItems()
+	local items = self.simpleListComp:getItems()
 
 	for i, v in ipairs(items) do
 		v:playSearch()

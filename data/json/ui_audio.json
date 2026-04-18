@@ -13768,5 +13768,985 @@
     "id": 335070,
     "eventName": "play_ui_dungeon3_3_fightcast",
     "bankName": "ui_dungeon3_3_fightux"
+  },
+  {
+    "id": 340001,
+    "eventName": "play_ui_youyu_sources_lit",
+    "bankName": "ui_activity_2_2_youyu_sanxiao"
+  },
+  {
+    "id": 340002,
+    "eventName": "play_ui_bulaochuan_walk_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340003,
+    "eventName": "stop_ui_bulaochuan_walk_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340004,
+    "eventName": "play_ui_bulaochuan_run_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340005,
+    "eventName": "stop_ui_bulaochuan_run_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340006,
+    "eventName": "play_ui_bulaochuan_fall_down",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340007,
+    "eventName": "play_ui_bulaochuan_jump_up",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_03"
+  },
+  {
+    "id": 340008,
+    "eventName": "play_ui_bulaochuan_water_launch",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_03"
+  },
+  {
+    "id": 340009,
+    "eventName": "play_ui_bulaochuan_water_hit",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_03"
+  },
+  {
+    "id": 340010,
+    "eventName": "play_ui_bulaochuan_rope",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 340011,
+    "eventName": "play_ui_bulaochuan_cheer_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 340012,
+    "eventName": "stop_ui_bulaochuan_cheer_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 340013,
+    "eventName": "play_ui_bulaochuan_lose",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 340014,
+    "eventName": "play_ui_bulaochuan_mojing_fall",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_11"
+  },
+  {
+    "id": 340015,
+    "eventName": "play_ui_tangren_anzhu",
+    "bankName": "ui_activity_2_5_tangren_liangyue"
+  },
+  {
+    "id": 340016,
+    "eventName": "play_ui_bulaochuan_bubble_burst",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340017,
+    "eventName": "play_ui_bulaochuan_countdown_start",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340018,
+    "eventName": "play_ui_wangshi_fill_win",
+    "bankName": "ui_activity_2_1_wangshi"
+  },
+  {
+    "id": 340019,
+    "eventName": "play_ui_bulaochuan_jump_down",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_03"
+  },
+  {
+    "id": 340020,
+    "eventName": "play_ui_cikexia_link_hint",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 340021,
+    "eventName": "play_ui_cikexia_link_main_quest",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 340022,
+    "eventName": "play_ui_bulaochuan_left_right_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_11"
+  },
+  {
+    "id": 340023,
+    "eventName": "stop_ui_bulaochuan_left_right_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_11"
+  },
+  {
+    "id": 340024,
+    "eventName": "play_ui_fight_lsj_upgrade",
+    "bankName": "fight_ui_sfx_lsj3_4"
+  },
+  {
+    "id": 340025,
+    "eventName": "play_hero3141_mainsfx_adm_action",
+    "bankName": "hero3141_mainsfx"
+  },
+  {
+    "id": 340026,
+    "eventName": "stop_hero3141_mainsfx_adm_action",
+    "bankName": "hero3141_mainsfx"
+  },
+  {
+    "id": 340027,
+    "eventName": "play_hero305305_mainsfx_adm_action",
+    "bankName": "hero305305_mainsfx"
+  },
+  {
+    "id": 340028,
+    "eventName": "stop_hero305305_mainsfx_adm_action",
+    "bankName": "hero305305_mainsfx"
+  },
+  {
+    "id": 340029,
+    "eventName": "play_hero311003_mainsfx_adm_action",
+    "bankName": "hero311003_mainsfx"
+  },
+  {
+    "id": 340030,
+    "eventName": "stop_hero311003_mainsfx_adm_action",
+    "bankName": "hero311003_mainsfx"
+  },
+  {
+    "id": 340031,
+    "eventName": "play_ui_bulaochun_open_1",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340032,
+    "eventName": "play_ui_bulaochun_open_2",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340033,
+    "eventName": "play_ui_bulaochun_forum_open",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340034,
+    "eventName": "play_ui_bulaochun_forum_close",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340035,
+    "eventName": "play_ui_bulaochun_click_general",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340036,
+    "eventName": "play_ui_bulaochun_typing_loop",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340037,
+    "eventName": "stop_ui_bulaochun_typing_loop",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340038,
+    "eventName": "play_ui_bulaochun_error_prompt",
+    "bankName": "ui_activity_3_4_bulaochun"
+  },
+  {
+    "id": 340039,
+    "eventName": "play_replay_music_theme_3_4",
+    "bankName": "ui_replay_mainmusic3_4"
+  },
+  {
+    "id": 340040,
+    "eventName": "play_ui_gt_yishi_1_1_yu",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340041,
+    "eventName": "play_ui_gt_yishi_1_2_jue",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340042,
+    "eventName": "play_ui_gt_yishi_1_3_zhi",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340043,
+    "eventName": "play_ui_gt_yishi_1_pianduan",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340044,
+    "eventName": "play_ui_gt_yishi_2_1_yu",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340045,
+    "eventName": "play_ui_gt_yishi_2_2_gong_shang",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340046,
+    "eventName": "play_ui_gt_yishi_2_3_shang",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340047,
+    "eventName": "play_ui_gt_yishi_2_pianduan",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340048,
+    "eventName": "play_ui_gt_yishi_3_1_jue_yu",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340049,
+    "eventName": "play_ui_gt_yishi_3_2_shang_zhi",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340050,
+    "eventName": "play_ui_gt_yishi_3_3_jue_yu",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340051,
+    "eventName": "play_ui_gt_yishi_3_4_gong",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340052,
+    "eventName": "play_ui_gt_yishi_3_5_shang_zhi",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340053,
+    "eventName": "play_ui_gt_yishi_3_pianduan",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340054,
+    "eventName": "play_ui_gt_yishi_all",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340055,
+    "eventName": "play_ui_gt_yishi_gong",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340056,
+    "eventName": "play_ui_gt_yishi_shang",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340057,
+    "eventName": "play_ui_gt_yishi_jue",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340058,
+    "eventName": "play_ui_gt_yishi_zhi",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340059,
+    "eventName": "play_ui_gt_yishi_yu",
+    "bankName": "ui_getian_yishi_guqin3_4"
+  },
+  {
+    "id": 340060,
+    "eventName": "play_ui_yuanzheng_daji",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340061,
+    "eventName": "play_ui_bulaochuan_crab_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340062,
+    "eventName": "stop_ui_bulaochuan_crab_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340063,
+    "eventName": "play_ui_bulaochuan_commit",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340064,
+    "eventName": "play_ui_bulaochuan_floor_broken",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_02"
+  },
+  {
+    "id": 340065,
+    "eventName": "play_ui_bulaochuan_floor_recover",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_02"
+  },
+  {
+    "id": 340066,
+    "eventName": "play_ui_bulaochuan_win",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_02"
+  },
+  {
+    "id": 340067,
+    "eventName": "play_ui_bulaochuan_trolley_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340068,
+    "eventName": "stop_ui_bulaochuan_trolley_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340069,
+    "eventName": "play_ui_bulaochuan_green_light",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340070,
+    "eventName": "play_ui_bulaochuan_yellow_light_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340071,
+    "eventName": "stop_ui_bulaochuan_yellow_light_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340072,
+    "eventName": "play_ui_yuanzheng_laser",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340073,
+    "eventName": "play_ui_bulaochuan_laser_hit",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_04"
+  },
+  {
+    "id": 340074,
+    "eventName": "play_ui_bulaochuan_boat_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_05"
+  },
+  {
+    "id": 340075,
+    "eventName": "stop_ui_bulaochuan_boat_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_05"
+  },
+  {
+    "id": 340076,
+    "eventName": "play_ui_bulaochuan_boat_idel_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_05"
+  },
+  {
+    "id": 340077,
+    "eventName": "stop_ui_bulaochuan_boat_idel_loop",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_05"
+  },
+  {
+    "id": 340078,
+    "eventName": "play_ui_bulaochuan_crane",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_05"
+  },
+  {
+    "id": 340079,
+    "eventName": "play_ui_yuanzheng_move",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340080,
+    "eventName": "play_ui_bulaochuan_light",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340081,
+    "eventName": "play_ui_bulaochuan_color",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340082,
+    "eventName": "play_ui_bulaochuan_bubble_burst",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_01"
+  },
+  {
+    "id": 340083,
+    "eventName": "play_ui_bulaochuan_ice_footstep",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 340084,
+    "eventName": "stop_ui_bulaochuan_ice_footstep",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 340085,
+    "eventName": "play_ui_bulaochuan_score",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 340086,
+    "eventName": "play_ui_bulaochuan_get_candle",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_10"
+  },
+  {
+    "id": 340087,
+    "eventName": "play_ui_qiutu_skating_loop",
+    "bankName": "ui_activity_qiutu_third_door"
+  },
+  {
+    "id": 340088,
+    "eventName": "stop_ui_qiutu_skating_loop",
+    "bankName": "ui_activity_qiutu_third_door"
+  },
+  {
+    "id": 340089,
+    "eventName": "play_ui_yuanzheng_daji",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340090,
+    "eventName": "play_ui_bulaochuan_open_door",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_13"
+  },
+  {
+    "id": 340091,
+    "eventName": "play_ui_bulaochuan_close_door",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_13"
+  },
+  {
+    "id": 340092,
+    "eventName": "play_ui_bulaochuan_leak",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_19"
+  },
+  {
+    "id": 340093,
+    "eventName": "play_ui_bulaochuan_sink",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_19"
+  },
+  {
+    "id": 340094,
+    "eventName": "play_ui_yuanzheng_move",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340095,
+    "eventName": "play_ui_bulaochuan_ice_crack",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 340096,
+    "eventName": "play_ui_bulaochun_ball_smash",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_12"
+  },
+  {
+    "id": 340097,
+    "eventName": "play_ui_bulaochun_score_get",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_12"
+  },
+  {
+    "id": 340098,
+    "eventName": "play_ui_bulaochun_score_deduct",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_12"
+  },
+  {
+    "id": 340099,
+    "eventName": "play_ui_bulaochun_photo_flip",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_15"
+  },
+  {
+    "id": 340100,
+    "eventName": "play_ui_bulaochun_countdown_once",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_15"
+  },
+  {
+    "id": 340101,
+    "eventName": "play_ui_yuanzheng_move",
+    "bankName": "ui_activity_3_3_yuanzheng_jieji"
+  },
+  {
+    "id": 340102,
+    "eventName": "play_ui_diqiu_unlock",
+    "bankName": "ui_activity_2_4_diqiu_barcarole"
+  },
+  {
+    "id": 340103,
+    "eventName": "play_ui_bulaochun_ball_fall",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_12"
+  },
+  {
+    "id": 340104,
+    "eventName": "play_ui_bulaochun_choose_confirm",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_16"
+  },
+  {
+    "id": 340105,
+    "eventName": "play_ui_bulaochun_plaid_reduce",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_16"
+  },
+  {
+    "id": 340106,
+    "eventName": "play_ui_bulaochun_explo",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_16"
+  },
+  {
+    "id": 340107,
+    "eventName": "play_ui_bulaochun_title_appear",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_14"
+  },
+  {
+    "id": 340108,
+    "eventName": "play_ui_bulaochun_correct",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_14"
+  },
+  {
+    "id": 340109,
+    "eventName": "play_ui_bulaochun_dacuo",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_14"
+  },
+  {
+    "id": 340110,
+    "eventName": "play_ui_activity_dog_page",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340111,
+    "eventName": "play_ui_tangren_store_upgrade",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 340112,
+    "eventName": "play_ui_fuleyuan_tiaoyitiao_fail",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 340113,
+    "eventName": "play_ui_bulaochun_curtain_pull",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_17"
+  },
+  {
+    "id": 340114,
+    "eventName": "play_ui_yuzhou_level_unlock",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 340115,
+    "eventName": "play_ui_yuzhou_ball_trap",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 340116,
+    "eventName": "play_ui_yuzhou_ball_star",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 340117,
+    "eventName": "play_ui_activity_mark_finish",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340118,
+    "eventName": "play_ui_bulaochun_online_chouka",
+    "bankName": "ui_activity_3_4_bulaochun_online"
+  },
+  {
+    "id": 340119,
+    "eventName": "play_ui_checkpoint_chain",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 340120,
+    "eventName": "play_ui_bulaochun_cloth_preview",
+    "bankName": "ui_activity_3_4_bulaochun_online"
+  },
+  {
+    "id": 340121,
+    "eventName": "play_ui_bulaochun_cloth_confirm",
+    "bankName": "ui_activity_3_4_bulaochun_online"
+  },
+  {
+    "id": 340122,
+    "eventName": "play_ui_tangren_chess_move",
+    "bankName": "ui_activity_2_5_tangren_zizouqi"
+  },
+  {
+    "id": 340123,
+    "eventName": "play_ui_shengyan_box_songjin_win",
+    "bankName": "ui_activity_3_2_shengyan_box_carnival"
+  },
+  {
+    "id": 340124,
+    "eventName": "play_ui_yuzhou_ball_fall",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 340125,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340126,
+    "eventName": "play_ui_leimi_theft_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340127,
+    "eventName": "play_ui_shenghuo_dqq_draw",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 340128,
+    "eventName": "play_ui_shenghuo_dqq_lose",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 340129,
+    "eventName": "play_ui_checkpoint_openingcards",
+    "bankName": "fight_ui"
+  },
+  {
+    "id": 340130,
+    "eventName": "play_ui_hero_sign",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 340131,
+    "eventName": "play_ui_shenghuo_dqq_lose",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 340132,
+    "eventName": "play_ui_shenghuo_dqq_draw",
+    "bankName": "ui_activity_2_3_shenghuo_dqq"
+  },
+  {
+    "id": 340133,
+    "eventName": "play_ui_wenming_enemy_hit",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 340134,
+    "eventName": "play_ui_mingdi_gsn_win",
+    "bankName": "ui_activity_3_1_mingdi_gaosiniao"
+  },
+  {
+    "id": 340135,
+    "eventName": "play_ui_wulu_kerandian_close",
+    "bankName": "ui_activity_1_5_wulu_kerandian_interface"
+  },
+  {
+    "id": 340136,
+    "eventName": "play_ui_lushang_our_occupy",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 340137,
+    "eventName": "play_ui_mln_day_night",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340138,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 340139,
+    "eventName": "play_ui_wulu_aizila_level_enter",
+    "bankName": "ui_activity_1_5_wulu_aizila"
+  },
+  {
+    "id": 340140,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340141,
+    "eventName": "play_ui_lushang_enemy_occupy",
+    "bankName": "ui_activity_3_0_lushang_malianna"
+  },
+  {
+    "id": 340142,
+    "eventName": "play_ui_bulaochun_skill_huixue",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340143,
+    "eventName": "play_ui_bulaochun_skill_bisha",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340144,
+    "eventName": "play_ui_bulaochun_skill_shufu_1",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340145,
+    "eventName": "play_ui_bulaochun_skill_shufu_2",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340146,
+    "eventName": "play_ui_bulaochun_skill_shufu_3",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340147,
+    "eventName": "play_ui_bulaochun_skill_tuci_1",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340148,
+    "eventName": "play_ui_bulaochun_skill_tuci_2",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340149,
+    "eventName": "play_ui_bulaochun_skill_tuci_3",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340150,
+    "eventName": "play_ui_bulaochun_skill_pikan_1",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340151,
+    "eventName": "play_ui_bulaochun_skill_pikan_2",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340152,
+    "eventName": "play_ui_bulaochun_skill_pikan_3",
+    "bankName": "ui_activity_3_4_bulaochun_gameplay_duijue"
+  },
+  {
+    "id": 340153,
+    "eventName": "play_ui_bulaochuan_floor_shiny",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_02"
+  },
+  {
+    "id": 340154,
+    "eventName": "play_ui_youyu_skill_release",
+    "bankName": "ui_activity_2_2_youyu_sanxiao"
+  },
+  {
+    "id": 340201,
+    "eventName": "play_ui_bulaochun_yunying_bp",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340210,
+    "eventName": "play_ui_bulaochun_paper1",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340211,
+    "eventName": "play_ui_bulaochun_lian1",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340212,
+    "eventName": "stop_ui_bulaochun_lian1",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340213,
+    "eventName": "play_ui_bulaochun_win1",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340214,
+    "eventName": "play_ui_bulaochun_dian1",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340215,
+    "eventName": "play_ui_bulaochun_win2",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340216,
+    "eventName": "play_ui_bulaochun_level2",
+    "bankName": "ui_activity_3_4_bulaochun_lusijian"
+  },
+  {
+    "id": 340217,
+    "eventName": "play_ui_gt_yishi_open1",
+    "bankName": "ui_getian_yishi_sfx3_4"
+  },
+  {
+    "id": 340218,
+    "eventName": "play_ui_gt_yishi_level",
+    "bankName": "ui_getian_yishi_sfx3_4"
+  },
+  {
+    "id": 340219,
+    "eventName": "play_ui_gt_yishi_jiemian",
+    "bankName": "ui_getian_yishi_sfx3_4"
+  },
+  {
+    "id": 340220,
+    "eventName": "play_ui_gt_yishi_error",
+    "bankName": "ui_getian_yishi_sfx3_4"
+  },
+  {
+    "id": 340221,
+    "eventName": "play_ui_gt_yishi_complet",
+    "bankName": "ui_getian_yishi_sfx3_4"
+  },
+  {
+    "id": 340222,
+    "eventName": "play_ui_bulaochun_yy_load",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340223,
+    "eventName": "play_ui_bulaochun_yy_tan",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340224,
+    "eventName": "play_ui_bulaochun_yy_hb321",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340225,
+    "eventName": "play_ui_bulaochun_yy_hbdian",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340226,
+    "eventName": "play_ui_bulaochun_yy_hb543",
+    "bankName": "ui_activity_3_4_bulaochun_yunying"
+  },
+  {
+    "id": 340227,
+    "eventName": "play_ui_bulaochun_cheng_start",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340228,
+    "eventName": "play_ui_bulaochun_cheng_connet_loop",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340229,
+    "eventName": "stop_ui_bulaochun_cheng_connet_loop",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340230,
+    "eventName": "play_ui_bulaochun_cheng_connect_end",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340231,
+    "eventName": "play_ui_bulaochun_cheng_hit",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340232,
+    "eventName": "play_ui_bulaochun_cheng_success",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340233,
+    "eventName": "play_ui_bulaochun_cheng_fail",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340234,
+    "eventName": "play_ui_bulaochun_cheng_prompt",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340235,
+    "eventName": "play_ui_bulaochun_cheng_death",
+    "bankName": "ui_activity_3_4_bulaochun_cheng"
+  },
+  {
+    "id": 340236,
+    "eventName": "play_ui_fuleyuan_tansuo_success_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 340237,
+    "eventName": "play_ui_bulaochun_tansuo_progress",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340238,
+    "eventName": "play_ui_upgrade",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 340239,
+    "eventName": "play_ui_bulaochun_tansuo_success",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340240,
+    "eventName": "play_ui_bulaochun_tansuo_wuerlixi",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340241,
+    "eventName": "play_ui_bulaochun_tansuo_marcus",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340242,
+    "eventName": "play_ui_yuzhou_trap_dispel",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 340243,
+    "eventName": "play_ui_fuleyuan_tansuo_general_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 340244,
+    "eventName": "play_ui_leimi_level_difficulty",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 340245,
+    "eventName": "play_ui_bulaochun_tansuo_draw",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340246,
+    "eventName": "play_ui_bulaochun_tansuo_unlock",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340247,
+    "eventName": "play_ui_bulaochun_tansuo_senior",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340248,
+    "eventName": "play_ui_bulaochun_tansuo_up",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 340249,
+    "eventName": "play_ui_fuleyuan_tansuo_general_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 340250,
+    "eventName": "play_ui_bulaochun_tansuo_unlock_2",
+    "bankName": "ui_activity_3_4_bulaochun_tansuo"
   }
 ]

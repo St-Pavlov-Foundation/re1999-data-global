@@ -13,7 +13,8 @@ function FightASFDConfig:reqConfigNames()
 		"fight_asfd",
 		"fight_asfd_emitter_position",
 		"fight_asfd_const",
-		"fight_asfd_fly_path"
+		"fight_asfd_fly_path",
+		"fight_lsj_asfd"
 	}
 end
 
@@ -89,6 +90,11 @@ function FightASFDConfig:buildFightASFDConstConfig(configTable)
 	self.lineType = tonumber(configDict[24].value)
 	self.alfMaxShowEffectCount = tonumber(configDict[26].value)
 	self.xiTiSpecialSkillId = tonumber(configDict[27].value)
+	self.lsjLastASFDDelay = tonumber(configDict[28].value)
+
+	local skillList = configDict[29].value
+
+	self.asfdSkillIdList = string.splitToNumber(skillList, "#")
 	self.emitterCenterOffset = Vector2(0, 0)
 	self.myASFDConfig = self:buildASFDEmitterConfig("法术飞弹-我方")
 	self.enemyASFDConfig = self:buildASFDEmitterConfig("法术飞弹-敌方")
@@ -149,6 +155,18 @@ function FightASFDConfig:getSkillCo()
 	return self.skillCo
 end
 
+function FightASFDConfig:isASFDSkill(skillId)
+	if not skillId then
+		return
+	end
+
+	for _, _skillId in ipairs(self.asfdSkillIdList) do
+		if skillId == _skillId then
+			return true
+		end
+	end
+end
+
 function FightASFDConfig:getASFDCoRes(asfdCo)
 	if not asfdCo then
 		return
@@ -178,6 +196,18 @@ function FightASFDConfig:getASFDCoRes(asfdCo)
 	local randomPos = math.random(len)
 
 	return table.remove(resList, randomPos)
+end
+
+function FightASFDConfig:getLSJCo(index)
+	local co = index and lua_fight_lsj_asfd.configDict[index]
+
+	if not co then
+		logError("鹭鸶剪 奥术飞弹配置不存在 ： " .. tostring(index))
+
+		return lua_fight_lsj_asfd.configDict[1]
+	end
+
+	return co
 end
 
 FightASFDConfig.instance = FightASFDConfig.New()

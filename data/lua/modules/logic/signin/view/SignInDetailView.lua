@@ -6,7 +6,7 @@ local SignInDetailView = class("SignInDetailView", BaseView)
 
 function SignInDetailView:onInitView()
 	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg")
-	self._imagesignature = gohelper.findChildImage(self.viewGO, "bg/#image_signature")
+	self._imagesignature = gohelper.findChildImage(self.viewGO, "bg/signature/#image_signature")
 	self._goroleitem = gohelper.findChild(self.viewGO, "bg/#go_roleitem")
 	self._simagetopicon = gohelper.findChildSingleImage(self.viewGO, "bg/#go_roleitem/#simage_topicon")
 	self._goicontip = gohelper.findChild(self.viewGO, "bg/#go_roleitem/#go_icontip")
@@ -491,6 +491,8 @@ function SignInDetailView:_editableInitView()
 	for k, v in ipairs(self._monthgetlightanimTab) do
 		gohelper.setActive(v, false)
 	end
+
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, FestivalAtmosphereComp, self)
 end
 
 function SignInDetailView:onOpen()
@@ -1295,6 +1297,8 @@ function SignInDetailView:_refreshFestivalDecoration()
 	self:_setFestivalColor(self._txtday)
 	self._simagebg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_bg_white" or "bg_white"))
 	self._simagerewardbg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_img_di" or "img_di"))
+	SLFramework.UGUI.GuiHelper.SetColor(self._imagesignature, haveFestival and "#CD1F1B" or "#C97327")
+	self._festivalAtmosphereComp:setFestival(haveFestival)
 end
 
 function SignInDetailView:onDestroyView()
@@ -1314,6 +1318,10 @@ function SignInDetailView:onDestroyView()
 	self._simagemonthicon1:UnLoadImage()
 	self._simagemonthicon2:UnLoadImage()
 	self._simagemonthicon3:UnLoadImage()
+
+	if self._festivalAtmosphereComp then
+		self._festivalAtmosphereComp:onDestroy()
+	end
 end
 
 function SignInDetailView:closeThis()
@@ -1330,7 +1338,7 @@ function SignInDetailView:haveFestival()
 end
 
 function SignInDetailView:_setFestivalColor(textOrImg)
-	local hexColor = self:haveFestival() and "#12141C" or "#222222"
+	local hexColor = self:haveFestival() and "#792D22" or "#222222"
 
 	SLFramework.UGUI.GuiHelper.SetColor(textOrImg, hexColor)
 end

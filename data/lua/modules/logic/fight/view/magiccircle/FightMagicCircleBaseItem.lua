@@ -9,7 +9,7 @@ function FightMagicCircleBaseItem:init(go)
 
 	self.go = go
 	self.destroyed = nil
-	self._aniPlayer = SLFramework.AnimatorPlayer.Get(self.go)
+	self._aniPlayer = ZProj.ProjAnimatorPlayer.Get(self.go)
 	self._ani = self.go:GetComponent(gohelper.Type_Animator)
 
 	self:initView()

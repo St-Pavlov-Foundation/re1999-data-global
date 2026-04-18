@@ -11,6 +11,7 @@ function SurvivalHardView:onInitView()
 	self.goFrame1 = gohelper.findChild(self.viewGO, "#simage_Frame1")
 	self.goFrame2 = gohelper.findChild(self.viewGO, "#simage_Frame2")
 	self.goFrame3 = gohelper.findChild(self.viewGO, "#simage_Frame3")
+	self.image_DifficultyBG = gohelper.findChild(self.viewGO, "Panel/Left/image_DifficultyBG")
 	self.txtDifficulty = gohelper.findChildTextMesh(self.viewGO, "Panel/Left/image_DifficultyBG/txt_Difficulty")
 	self.txtDesc = gohelper.findChildTextMesh(self.viewGO, "Panel/Left/#txt_Desc")
 	self.simageLevelPic = gohelper.findChildSingleImage(self.viewGO, "Panel/Left/#simage_LevelPic")
@@ -20,6 +21,32 @@ function SurvivalHardView:onInitView()
 	self.goScroll = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List")
 	self.goDifficultyAssess = gohelper.findChild(self.viewGO, "Panel/Right/image_DifficultyAssessBG")
 	self.txtDifficultyAssess = gohelper.findChildTextMesh(self.viewGO, "Panel/Right/image_DifficultyAssessBG/txt_DifficultyAssess")
+	self.customMask = gohelper.findChild(self.viewGO, "customMask")
+	self.animCustomMask = self.customMask:GetComponent(gohelper.Type_Animator)
+	self.btnTemplate = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Left/#go_ItemPanel/btnTemplate")
+	self.goBtnTemplate = self.btnTemplate.gameObject
+	self.btnTemplateRed = gohelper.findChild(self.goBtnTemplate, "go_new")
+	self.btn_closeTip = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/Left/#go_ItemPanel/#btn_closeTip")
+
+	gohelper.setActive(self.btn_closeTip, false)
+
+	self.image_DifficultyIcon = gohelper.findChildImage(self.goBtnTemplate, "image_DifficultyIcon")
+	self.textTemplateTitle = gohelper.findChildTextMesh(self.goBtnTemplate, "textTitle")
+	self.go_templateTitleNew = gohelper.findChild(self.goBtnTemplate, "go_new")
+	self.go_templateList = gohelper.findChild(self.viewGO, "Panel/Left/#go_ItemPanel/go_templateList")
+	self.anim_templateList = self.go_templateList:GetComponent(typeof(UnityEngine.Animator))
+	self.templateListContent = gohelper.findChild(self.go_templateList, "viewport/templateListContent")
+	self.SurvivalDiffTempTab = gohelper.findChild(self.templateListContent, "SurvivalDiffTempTab")
+
+	local param = SimpleListParam.New()
+
+	param.cellClass = SurvivalDiffTempTab
+	param.lineCount = 1
+	self.templateList = GameFacade.createSimpleListComp(self.go_templateList, param, self.SurvivalDiffTempTab, self.viewContainer)
+
+	self.templateList:setOnClickItem(self.onClickTemplate, self)
+	self.templateList:setOnSelectChange(self.onSelectTemplateChange, self)
+
 	self.tabItems = {}
 
 	for i = 1, 3 do
@@ -29,6 +56,7 @@ function SurvivalHardView:onInitView()
 	self.lineItems = {}
 	self.goHardItem = gohelper.findChild(self.viewGO, "Panel/Left/#go_ItemPanel/#scroll_List/Viewport/Content/#go_SmallItem")
 	self.goLineItem = gohelper.findChild(self.viewGO, "Panel/Left/#go_ItemPanel/#scroll_List/Viewport/Content/#go_Item")
+	self.scrollContent = gohelper.findChild(self.viewGO, "Panel/Right/#scroll_List/Viewport/Content")
 	self.animator = self.viewGO:GetComponent(gohelper.Type_Animator)
 
 	self:setPanelVisible(false)
@@ -39,6 +67,8 @@ function SurvivalHardView:addEvents()
 	self:addClickCb(self.btnleft, self.onClickLeft, self)
 	self:addClickCb(self.btnright, self.onClickRight, self)
 	self:addClickCb(self.btnEmpty, self.onClickEmpty, self)
+	self:addClickCb(self.btnTemplate, self.onClickBtnTemplate, self)
+	self:addClickCb(self.btn_closeTip, self.onClickCloseTip, self)
 end
 
 function SurvivalHardView:removeEvents()
@@ -46,10 +76,15 @@ function SurvivalHardView:removeEvents()
 	self:removeClickCb(self.btnleft)
 	self:removeClickCb(self.btnright)
 	self:removeClickCb(self.btnEmpty)
+	TaskDispatcher.cancelTask(self.onCloseDiffList, self)
 end
 
 function SurvivalHardView:onClickNext()
-	SurvivalDifficultyModel.instance:sendDifficultyChoose()
+	local difficultyId = SurvivalDifficultyModel.instance:getDifficultyId()
+
+	ViewMgr.instance:openView(ViewName.SurvivalRoleSelectView, {
+		difficultyId = difficultyId
+	})
 end
 
 function SurvivalHardView:onClickLeft()
@@ -72,6 +107,58 @@ function SurvivalHardView:onClickEmpty()
 	self.inSelectCustom = true
 
 	self:refreshView()
+end
+
+function SurvivalHardView:onClickBtnTemplate()
+	self.isDiffListShow = true
+
+	local selectIndex2 = SurvivalDifficultyModel.instance:getCustomFragmentSelect()
+
+	self.curDiffListSelect = selectIndex2
+
+	gohelper.setActive(self.go_templateList, true)
+	self.templateList:setSelect(selectIndex2)
+	self:refreshTemplateList()
+	gohelper.setActive(self.btn_closeTip.gameObject, true)
+	TaskDispatcher.cancelTask(self.delayPlayUnLockAnim, self)
+	TaskDispatcher.runDelay(self.delayPlayUnLockAnim, self, 0.2)
+	SurvivalDifficultyModel.instance:markBtnDiff()
+	gohelper.setActive(self.btnTemplateRed, false)
+end
+
+function SurvivalHardView:delayPlayUnLockAnim()
+	local items = self.templateList:getItems()
+
+	for i, v in ipairs(items) do
+		v:playAnim()
+	end
+
+	SurvivalDifficultyModel.instance:markNewDiffs()
+end
+
+function SurvivalHardView:onClickCloseTip()
+	self:closeDiffList()
+end
+
+function SurvivalHardView:closeDiffList()
+	if not self.isDiffListShow then
+		return
+	end
+
+	TaskDispatcher.cancelTask(self.delayPlayUnLockAnim, self)
+
+	self.isDiffListShow = false
+
+	self.anim_templateList:Play("out")
+
+	self.curDiffListSelect = nil
+
+	TaskDispatcher.runDelay(self.onCloseDiffList, self, 0.167)
+end
+
+function SurvivalHardView:onCloseDiffList()
+	gohelper.setActive(self.go_templateList, false)
+	gohelper.setActive(self.btn_closeTip.gameObject, false)
 end
 
 function SurvivalHardView:onClickTab(index)
@@ -106,13 +193,28 @@ function SurvivalHardView:onClickGrid(item)
 		return
 	end
 
-	if SurvivalDifficultyModel.instance:selectCustomDifficulty(item.config.id) then
+	local isSelect = self:selectCustomDifficulty(item)
+
+	if not isSelect then
+		local h = recthelper.getHeight(self.scrollContent.transform)
+		local scrollView = self.viewContainer.scrollView
+
+		scrollView._csListScroll.VerticalScrollPixel = h
+	end
+end
+
+function SurvivalHardView:selectCustomDifficulty(item)
+	local v, isSelect = SurvivalDifficultyModel.instance:selectCustomDifficulty(item.config.id)
+
+	if v then
 		self:refreshNextBtn()
 		self:refreshTab()
 		self:refreshLine(item.line, item.line.data)
 		self:refreshDifficultyList()
 		self:refreshAssess()
 	end
+
+	return isSelect
 end
 
 function SurvivalHardView:createTab(index)
@@ -133,11 +235,29 @@ end
 
 function SurvivalHardView:onOpen()
 	SurvivalDifficultyModel.instance:refreshDifficulty()
+
+	local data = {}
+	local ids = SurvivalDifficultyModel.instance:getCustomTempDiffIds()
+
+	for i, id in ipairs(ids) do
+		table.insert(data, {
+			id = id,
+			onClickDiffTempBtnConfirm = self.onClickDiffTempBtnConfirm,
+			context = self
+		})
+	end
+
+	self.templateList:setData(data)
+	gohelper.setActive(self.go_templateList, false)
 	self:refreshView()
+	self:refreshBtnTemplate()
+	gohelper.setActive(self.btnTemplateRed, SurvivalDifficultyModel.instance:haveBtnNewDiff())
 end
 
 function SurvivalHardView:refreshView()
-	local isCustom = SurvivalDifficultyModel.instance:isCustomDifficulty()
+	gohelper.setActive(self.customMask, false)
+
+	local isCustom = SurvivalDifficultyModel.instance:isCustomFragment()
 
 	if isCustom then
 		self:refreshCustomView()
@@ -151,12 +271,86 @@ function SurvivalHardView:refreshCustomView()
 
 	self.simageLevelPic:LoadImage("singlebg/survival_singlebg/difficulty/survivalselectdifficulty_levelpic_01.png")
 	self:refreshCustomPanel()
+
+	local info = SurvivalModel.instance:getOutSideInfo()
+	local isUnlockCustom = info:isUnlockDifficultyMod(SurvivalConst.CustomDifficulty)
+
+	if not isUnlockCustom then
+		gohelper.setActive(self.customMask, true)
+		self.animCustomMask:Play("lock", 0, 0)
+	elseif SurvivalDifficultyModel.instance:isNewDiff(SurvivalConst.CustomDifficulty) then
+		gohelper.setActive(self.customMask, true)
+		self.animCustomMask:Play("unlock", 0, 0)
+		SurvivalDifficultyModel.instance:markNewCustomDiff()
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideCustomDiffOpen)
+		AudioMgr.instance:trigger(AudioEnum2_7.CooperGarland.play_ui_yuzhou_trap_dispel)
+	else
+		gohelper.setActive(self.customMask, false)
+		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideCustomDiffOpen)
+	end
+
 	self:refreshPanel(difficultyId)
 end
 
+function SurvivalHardView:onClickTemplate(survivalDiffTempTab)
+	if not survivalDiffTempTab.isUnlock then
+		GameFacade.showToastString(luaLang("SurvivalHardView_3"))
+
+		return
+	end
+
+	self.templateList:setSelect(survivalDiffTempTab.itemIndex)
+	self:changeFragment(survivalDiffTempTab.itemIndex, nil, false)
+
+	local selectIndex2 = SurvivalDifficultyModel.instance:getCustomFragmentSelect()
+
+	self.curDiffListSelect = selectIndex2
+
+	self:closeDiffList()
+end
+
+function SurvivalHardView:onSelectTemplateChange(survivalDiffTempTab)
+	return
+end
+
+function SurvivalHardView:onClickDiffTempBtnConfirm(survivalDiffTempTab)
+	return
+end
+
+function SurvivalHardView:changeFragment(index, callBackParam, isAnim)
+	local flag = SurvivalDifficultyModel.instance:setCustomFragmentSelect(index)
+
+	if not flag then
+		return
+	end
+
+	isAnim = isAnim ~= false
+	self.changeFragmentIndex = index
+	self.callBackParam = callBackParam
+
+	self:refreshBtnTemplate()
+
+	if isAnim then
+		local animName = "switch_buff"
+
+		self:playAnim(animName)
+		UIBlockHelper.instance:startBlock(self.viewName, 0.167, self.viewName)
+		TaskDispatcher.runDelay(self.changeFragmentDelay, self, 0.167)
+	else
+		self:changeFragmentDelay()
+	end
+end
+
+function SurvivalHardView:changeFragmentDelay()
+	self:refreshCustomView()
+
+	if self.callBackParam then
+		self.callBackParam.callBack(self.callBackParam.context, self.callBackParam.param)
+	end
+end
+
 function SurvivalHardView:refreshCustomPanel()
-	local list = SurvivalDifficultyModel.instance:getDifficultyShowList()
-	local isEmpty = next(list) == nil and not self.inSelectCustom
+	local isEmpty = false
 
 	self:setPanelVisible(not isEmpty)
 	gohelper.setActive(self.btnEmpty, isEmpty)
@@ -170,8 +364,23 @@ function SurvivalHardView:refreshCustomPanel()
 	end
 end
 
+function SurvivalHardView:refreshBtnTemplate()
+	local selectIndex2 = SurvivalDifficultyModel.instance:getCustomFragmentSelect()
+	local item = self.templateList:getItemByIndex(selectIndex2)
+
+	self.textTemplateTitle.text = item.title
+end
+
+function SurvivalHardView:refreshTemplateList()
+	local items = self.templateList:getItems()
+
+	for i, v in ipairs(items) do
+		v:refresh()
+	end
+end
+
 function SurvivalHardView:refreshNextBtn()
-	local isCustom = SurvivalDifficultyModel.instance:isCustomDifficulty()
+	local isCustom = SurvivalDifficultyModel.instance:isCustomFragment()
 
 	if not isCustom then
 		ZProj.UGUIHelper.SetGrayscale(self.btnnext.gameObject, false)
@@ -179,10 +388,7 @@ function SurvivalHardView:refreshNextBtn()
 		return
 	end
 
-	local list = SurvivalDifficultyModel.instance:getDifficultyShowList()
-	local isEmpty = next(list) == nil
-
-	ZProj.UGUIHelper.SetGrayscale(self.btnnext.gameObject, isEmpty)
+	ZProj.UGUIHelper.SetGrayscale(self.btnnext.gameObject, false)
 end
 
 function SurvivalHardView:refreshNormalView()
@@ -199,8 +405,16 @@ end
 
 function SurvivalHardView:refreshPanel(difficultyId)
 	local difficultyConfig = lua_survival_hardness_mod.configDict[difficultyId]
+	local isCustom = SurvivalDifficultyModel.instance:isCustomFragment()
 
-	self.txtDifficulty.text = difficultyConfig.name
+	if isCustom then
+		gohelper.setActive(self.image_DifficultyBG, false)
+	else
+		gohelper.setActive(self.image_DifficultyBG, true)
+
+		self.txtDifficulty.text = difficultyConfig.name
+	end
+
 	self.txtDesc.text = difficultyConfig.desc
 
 	self:refreshFrame(difficultyId)
@@ -213,9 +427,9 @@ function SurvivalHardView:refreshPanel(difficultyId)
 end
 
 function SurvivalHardView:refreshFrame(difficultyId)
-	gohelper.setActive(self.goFrame1, difficultyId == 2)
-	gohelper.setActive(self.goFrame2, difficultyId == 3)
-	gohelper.setActive(self.goFrame3, difficultyId == 4)
+	gohelper.setActive(self.goFrame1, difficultyId == 9999)
+	gohelper.setActive(self.goFrame2, difficultyId == 3 or difficultyId == 4)
+	gohelper.setActive(self.goFrame3, difficultyId == 5 or difficultyId == 6)
 end
 
 function SurvivalHardView:refreshAssess()
@@ -230,6 +444,7 @@ end
 
 function SurvivalHardView:refreshTab()
 	local selectIndex = SurvivalDifficultyModel.instance:getCustomSelectIndex()
+	local selectIndex2 = SurvivalDifficultyModel.instance:getCustomFragmentSelect()
 
 	for i, v in ipairs(self.tabItems) do
 		local isSelect = selectIndex == i
@@ -237,7 +452,7 @@ function SurvivalHardView:refreshTab()
 		gohelper.setActive(v.goSelect, isSelect)
 		gohelper.setActive(v.goUnSelect, not isSelect)
 
-		local assess = SurvivalDifficultyModel.instance:getCustomDifficultyAssess(i)
+		local assess = SurvivalDifficultyModel.instance:getCustomDifficultyAssess(i, selectIndex2)
 
 		v.txtSelectNum.text = assess
 		v.txtUnSelectNum.text = assess
@@ -380,6 +595,8 @@ function SurvivalHardView:onClose()
 	end
 
 	TaskDispatcher.cancelTask(self.refreshView, self)
+	TaskDispatcher.cancelTask(self.changeFragmentDelay, self)
+	TaskDispatcher.cancelTask(self.delayPlayUnLockAnim, self)
 end
 
 return SurvivalHardView

@@ -44,12 +44,6 @@ function PCInputController:getIsUse()
 	return false
 end
 
-BootNativeUtil.getAppVersion()
-
-function BootNativeUtil.isMuMu()
-	return false
-end
-
 function PCInputController:Switch()
 	self.init = self:getIsUse()
 end
@@ -246,7 +240,7 @@ function PCInputController:OnKeyUp(key)
 	end)
 
 	for _, v in ipairs(adaptersList) do
-		if v and v:OnkeyDown(keyName) then
+		if v and v:OnkeyUp(keyName) then
 			return
 		end
 	end

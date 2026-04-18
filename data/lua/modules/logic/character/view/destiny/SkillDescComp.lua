@@ -174,7 +174,15 @@ function SkillDescComp:addNumColor(desc)
 
 	local colorFormat = SkillHelper.getColorFormat(self:getNumberColor(), "%1")
 
-	desc = string.gsub(desc, "[+-]?[%d%./%%]+", colorFormat)
+	desc = string.gsub(desc, "([+-]?%d+%.?%d*%%?)([^%d%%%.]?)", function(num, suffix)
+		if string.match(num, "%.$") then
+			local clean_num = string.match(num, "^[+-]?%d+")
+
+			return SkillHelper.getColorFormat(self:getNumberColor(), clean_num) .. "." .. suffix
+		else
+			return SkillHelper.getColorFormat(self:getNumberColor(), num) .. suffix
+		end
+	end)
 	desc = self:revertRichText(desc)
 
 	return desc

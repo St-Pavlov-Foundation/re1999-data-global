@@ -453,7 +453,7 @@ function DungeonRewardView:showTurnBackAdditionReward(commonRewardList, isResour
 end
 
 function DungeonRewardView:showDoubleDropReward(commonRewardList, isResourceType)
-	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self._episodeInfo.chapterId)
+	local isMultiDrop, limit, total, magnification = Activity217Model.instance:getShowTripleByChapter(self._episodeInfo.chapterId)
 	local multiDropShow = isMultiDrop and limit > 0
 	local episodeShow, remainTimes, dailyLimit = DoubleDropModel.instance:isShowDoubleByEpisode(self._episodeId, true)
 	local showDrop = episodeShow or multiDropShow
@@ -472,7 +472,7 @@ function DungeonRewardView:showDoubleDropReward(commonRewardList, isResourceType
 
 			reward[1] = commonreward[1]
 			reward[2] = commonreward[2]
-			reward[3] = tostring(2 * tonumber(commonreward[3]))
+			reward[3] = tostring((magnification - 1) * tonumber(commonreward[3]))
 
 			table.insert(list, reward)
 		end

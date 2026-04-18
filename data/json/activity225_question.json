@@ -1,0 +1,51 @@
+[
+  {
+    "activityId": 13410,
+    "id": 1,
+    "npcId": 2,
+    "question": "language_10115330",
+    "answerIds": "3|1|2"
+  },
+  {
+    "activityId": 13410,
+    "id": 2,
+    "npcId": 2,
+    "question": "language_10115331",
+    "answerIds": "5|6|4"
+  },
+  {
+    "activityId": 13410,
+    "id": 3,
+    "npcId": 2,
+    "question": "language_10115332",
+    "answerIds": "7|9|8"
+  },
+  {
+    "activityId": 13410,
+    "id": 4,
+    "npcId": 2,
+    "question": "language_10115333",
+    "answerIds": "12|11|10"
+  },
+  {
+    "activityId": 13410,
+    "id": 5,
+    "npcId": 2,
+    "question": "language_10115334",
+    "answerIds": "14|13|15"
+  },
+  {
+    "activityId": 13410,
+    "id": 6,
+    "npcId": 2,
+    "question": "language_10115335",
+    "answerIds": "18|16|17"
+  },
+  {
+    "activityId": 13410,
+    "id": 7,
+    "npcId": 2,
+    "question": "language_10115336",
+    "answerIds": "20|19|21"
+  }
+]

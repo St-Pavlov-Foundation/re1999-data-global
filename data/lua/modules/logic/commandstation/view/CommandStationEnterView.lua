@@ -156,6 +156,8 @@ function CommandStationEnterView:_openMap()
 
 	UIBlockHelper.instance:startBlock("CommandStationEnterView_openMap", time)
 	VideoController.instance:openFullScreenVideoView(self._toMapVedioPath, nil, time, self._onVideoEndForOpenMap, self, {
+		setVideoPlayer = self._setVideoPlayer,
+		getVideoPlayer = self._getVideoPlayer,
 		waitViewOpen = ViewName.CommandStationMapView
 	})
 end
@@ -166,8 +168,6 @@ end
 
 function CommandStationEnterView:_setVideoPlayer(videoPlayer, videoGo)
 	gohelper.addChild(self._mapVideoNode, videoGo)
-	videoPlayer:pause()
-	videoPlayer:Seek(0)
 end
 
 function CommandStationEnterView:_delayOpenMapView()
@@ -198,10 +198,7 @@ function CommandStationEnterView:_delayPlayVideo()
 		self._changeVideoViewLayer = true
 
 		AudioMgr.instance:trigger(AudioEnum3_0.CommandStationPaper.play_ui_lushang_zhihuibu_handian)
-		VideoController.instance:openFullScreenVideoView(self._toPaperVedioPath, nil, 3, self._realOpenPaperView, self, {
-			noShowBlackBg = true,
-			waitViewOpen = ViewName.CommandStationPaperView
-		})
+		VideoController.instance:openFullScreenVideoView(self._toPaperVedioPath, nil, 5, self._realOpenPaperView, self, ViewName.CommandStationPaperView, true)
 	end)
 end
 
@@ -212,7 +209,7 @@ end
 function CommandStationEnterView:_setVideoPlayer2(videoPlayer, videoGo)
 	gohelper.addChild(self._paperVideoNode, videoGo)
 	videoPlayer:pause()
-	videoPlayer:Seek(0)
+	videoPlayer:seek(0)
 end
 
 function CommandStationEnterView:_realOpenPaperView()
@@ -504,7 +501,6 @@ function CommandStationEnterView:_onVideoStarted(videoPath)
 
 	if videoPath == self._toPaperVedioPath then
 		CommandStationController.instance:openCommandStationPaperView()
-		VideoController.instance:openFullScreenVideoView(self._toPaperVedioPath, nil, 5, self._realOpenPaperView, self, ViewName.CommandStationPaperView, true)
 	end
 end
 
@@ -750,7 +746,7 @@ function CommandStationEnterView:_showMap()
 	local constConfig = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.VersionName)
 
 	if constConfig then
-		self._txtmapname.text = luaLang("CommandStationEnterView_showMap_txtmapname")
+		self._txtmapname.text = constConfig.value4
 	end
 
 	gohelper.setActive(self._gomap, true)

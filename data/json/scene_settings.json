@@ -170,5 +170,48 @@
       295,
       295
     ]
+  },
+  {
+    "id": 5,
+    "spineOffset": [
+      0.3,
+      0
+    ],
+    "lightColor1": [
+      255,
+      248,
+      224,
+      60
+    ],
+    "lightColor2": [
+      203,
+      212,
+      209,
+      30
+    ],
+    "lightColor3": [
+      251,
+      245,
+      201,
+      0
+    ],
+    "lightColor4": [
+      81,
+      124,
+      146,
+      50
+    ],
+    "prefabLightStartRotation": [
+      60,
+      60,
+      305,
+      305
+    ],
+    "effectLightStartRotation": [
+      60,
+      60,
+      305,
+      305
+    ]
   }
 ]

@@ -367,7 +367,7 @@ function CharacterTipView:refreshUpAttrItem(equips, showAttributeOption)
 
 			local attrCo = HeroConfig.instance:getHeroAttributeCO(attrId)
 
-			item.value.text = 0
+			item.value.text = attrCo.showType == 1 and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("percent"), 0) or 0
 
 			local addValue = "+" .. tostring(GameUtil.noMoreThanOneDecimalPlace(destinyStoneAddValue)) .. "%"
 

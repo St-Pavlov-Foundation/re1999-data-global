@@ -52,10 +52,14 @@ function SurvivalBagItem:init(go)
 	self.go_shop_price = gohelper.findChild(self.goRoot, "#go_shop_price")
 	self.txt_price_shop = gohelper.findChildTextMesh(self.go_shop_price, "#txt_price")
 	self.imagePrice = gohelper.findChildImage(self.go_shop_price, "#txt_price/#imagePrice")
-	self.itemSubType_npc = gohelper.findChild(self._gonormal, "itemSubType_npc")
+	self.itemSubType_npc = gohelper.findChild(self._gonormal, "collection/itemSubType_npc")
 	self.recommend = gohelper.findChild(self._gonormal, "recommend")
 	self.go_score = gohelper.findChild(self.goRoot, "#go_score")
 	self.txt_score = gohelper.findChildTextMesh(self.go_score, "#txt_score")
+end
+
+function SurvivalBagItem:onDestroy()
+	TaskDispatcher.cancelTask(self._onSublimationAnimEnd, self)
 end
 
 function SurvivalBagItem:getItemAnimators()
@@ -102,13 +106,15 @@ function SurvivalBagItem:updateMo(mo, param)
 
 	gohelper.setActive(self._gonormal, isHas)
 
-	if isHas and param.jumpAnimHas then
+	if isHas and param.jumpAnimHas and not param.jumpOpenAnim then
 		self._animHas:Play("open", 0, 1)
 	end
 
 	if not param.jumpAnimHas and not isEmpty and not isUnknown then
 		if mo.co.rare == 5 then
 			self._animHas:Play("opensp", 0, 1)
+		elseif mo.co.rare == 6 then
+			self._animHas:Play("opensp1", 0, 1)
 		else
 			self._animHas:Play("open", 0, 1)
 		end
@@ -166,6 +172,7 @@ function SurvivalBagItem:updateMo(mo, param)
 	end
 
 	self:setIsSelect(false)
+	self:setItemSubType_npc(mo:isNPCRecommendItem())
 end
 
 function SurvivalBagItem:_createTagItem(obj, data, index)
@@ -219,6 +226,9 @@ function SurvivalBagItem:showLoading(isShow)
 		if self._mo and self._mo.co and self._mo.co.rare == 5 then
 			self._animHas:Play("opensp", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_sougua_4)
+		elseif self._mo and self._mo.co and self._mo.co.rare == 6 then
+			self._animHas:Play("opensp1", 0, 0)
+			AudioMgr.instance:trigger(AudioEnum3_4.Survival.play_ui_bulaochun_tansuo_senior)
 		else
 			self._animHas:Play("open", 0, 0)
 		end
@@ -238,6 +248,25 @@ end
 function SurvivalBagItem:playPut()
 	gohelper.setActive(self._goput, false)
 	gohelper.setActive(self._goput, true)
+end
+
+function SurvivalBagItem:playSublimationAnim2(t, nextMo)
+	AudioMgr.instance:trigger(AudioEnum3_4.Survival.play_ui_bulaochun_tansuo_up)
+
+	self.sublimationAnimnNextMo = nextMo
+
+	self._animHas:Play("up" .. t, 0, 0)
+	TaskDispatcher.runDelay(self._onSublimationAnimEnd, self, 0.8)
+end
+
+function SurvivalBagItem:_onSublimationAnimEnd()
+	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_sougua_4)
+	self:updateMo(self.sublimationAnimnNextMo, {
+		jumpAnimHas = true,
+		jumpOpenAnim = true
+	})
+
+	self.sublimationAnimnNextMo = nil
 end
 
 function SurvivalBagItem:playComposeAnim()
@@ -295,9 +324,19 @@ function SurvivalBagItem:setReputationShopStyle(param)
 end
 
 function SurvivalBagItem:setShopStyle(param)
+	self.shopStyleParam = param
+
 	gohelper.setActive(self.go_shop_price, param.isShow)
 
-	self.txt_price_shop.text = param.price
+	if param.isShow then
+		local currencyNum = param.currencyNum
+
+		if currencyNum < param.price then
+			self.txt_price_shop.text = string.format("<#BF2E11>%s</color>", param.price)
+		else
+			self.txt_price_shop.text = string.format("<#CAC8C5>%s</color>", param.price)
+		end
+	end
 end
 
 function SurvivalBagItem:setItemSubType_npc(value)

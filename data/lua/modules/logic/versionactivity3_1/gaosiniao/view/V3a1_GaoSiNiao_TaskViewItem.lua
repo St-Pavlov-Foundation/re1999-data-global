@@ -13,22 +13,28 @@ function V3a1_GaoSiNiao_TaskViewItem:_getRewardList()
 		return {}
 	end
 
-	bonus = tonumber(bonus)
-
 	local rewardList = {}
 
 	if tonumber(bonus) then
 		local list = DungeonConfig.instance:getRewardItems(tonumber(bonus))
 
-		for k, v in ipairs(list) do
-			rewardList[k] = {
+		for i, v in ipairs(list) do
+			rewardList[i] = {
 				v[1],
 				v[2],
 				v[3]
 			}
 		end
 	else
-		rewardList = ItemModel.instance:getItemDataListByConfigStr(bonus)
+		local list = ItemModel.instance:getItemDataListByConfigStr(bonus)
+
+		for i, v in ipairs(list) do
+			rewardList[i] = {
+				v.materilType,
+				v.materilId,
+				v.quantity
+			}
+		end
 	end
 
 	return rewardList

@@ -23,7 +23,9 @@ function TowerComposeHeroGroupView:onInitView()
 	self._gotipsitem = gohelper.findChild(self.viewGO, "#go_container/trialContainer/#go_trialTips/#go_tipsbg/#go_tipsitem")
 	self._btncloth = gohelper.findChildButtonWithAudio(self.viewGO, "#go_container/btnContain/#btnCloth")
 	self._goPlane1 = gohelper.findChild(self.viewGO, "#go_herogroupcontain2/go_team1/#go_plane1")
+	self._goPlaneLock1 = gohelper.findChild(self.viewGO, "#go_herogroupcontain2/go_team1/#go_planeLock1")
 	self._goPlane2 = gohelper.findChild(self.viewGO, "#go_herogroupcontain2/go_team2/#go_plane2")
+	self._goPlaneLock2 = gohelper.findChild(self.viewGO, "#go_herogroupcontain2/go_team2/#go_planeLock2")
 	self._btncloth1 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_herogroupcontain2/go_team1/#btn_cloth1")
 	self._btncloth2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_herogroupcontain2/go_team2/#btn_cloth2")
 
@@ -40,6 +42,9 @@ function TowerComposeHeroGroupView:addEvents()
 	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.refreshPlaneBuffSlot, self)
 	self:addEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
 	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.TowerComposeSelectCloth, self.refreshPlayerClothSlot, self)
+	self:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self.onEquipChange, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.LoadRecordReply, self.loadRecordReply, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshUI, self)
 end
 
 function TowerComposeHeroGroupView:removeEvents()
@@ -50,6 +55,9 @@ function TowerComposeHeroGroupView:removeEvents()
 	self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.refreshPlaneBuffSlot, self)
 	self:removeEventCb(FightController.instance, FightEvent.RespBeginFight, self._respBeginFight, self)
 	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.TowerComposeSelectCloth, self.refreshPlayerClothSlot, self)
+	self:removeEventCb(EquipController.instance, EquipEvent.onDeleteEquip, self.onEquipChange, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.LoadRecordReply, self.loadRecordReply, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshLoadState, self.refreshUI, self)
 end
 
 function TowerComposeHeroGroupView:_btntipsOnClick()
@@ -147,7 +155,9 @@ function TowerComposeHeroGroupView:onOpen()
 end
 
 function TowerComposeHeroGroupView:refreshUI()
+	TowerComposeHeroGroupModel.instance:replaceLockPlaneBuffItem()
 	self:_setTrialNumTips()
+	self:refreshPlaneLock()
 	self:refreshPlaneBuffSlot()
 	self:refreshPlayerClothSlot()
 end
@@ -251,15 +261,20 @@ function TowerComposeHeroGroupView:buildPlaneSlot(planeGO)
 
 	planeSlotItem.go = planeGO
 	planeSlotItem.goSupport = gohelper.findChild(planeGO, "go_support")
-	planeSlotItem.gosupportNormal = gohelper.findChild(planeSlotItem.goSupport, "normal")
+	planeSlotItem.goSupportNormal = gohelper.findChild(planeSlotItem.goSupport, "normal")
+	planeSlotItem.goSupportAdd = gohelper.findChild(planeSlotItem.goSupport, "normal/bg2")
 	planeSlotItem.goSupportSelect = gohelper.findChild(planeSlotItem.goSupport, "selected")
 	planeSlotItem.goSupportEquip = gohelper.findChild(planeSlotItem.goSupport, "equiped")
+	planeSlotItem.goSupportLock = gohelper.findChild(planeSlotItem.goSupport, "go_lock")
 	planeSlotItem.simageSupport = gohelper.findChildSingleImage(planeSlotItem.goSupport, "equiped/simage_support")
+	planeSlotItem.imageCareer = gohelper.findChildImage(planeSlotItem.goSupport, "equiped/image_career")
 	planeSlotItem.btnSupport = gohelper.findChildButtonWithAudio(planeSlotItem.goSupport, "btn_support")
 	planeSlotItem.goResearch = gohelper.findChild(planeGO, "go_research")
-	planeSlotItem.goresearchNormal = gohelper.findChild(planeSlotItem.goResearch, "normal")
+	planeSlotItem.goResearchNormal = gohelper.findChild(planeSlotItem.goResearch, "normal")
+	planeSlotItem.goResearchAdd = gohelper.findChild(planeSlotItem.goResearch, "normal/bg2")
 	planeSlotItem.goResearchSelect = gohelper.findChild(planeSlotItem.goResearch, "selected")
 	planeSlotItem.goResearchEquip = gohelper.findChild(planeSlotItem.goResearch, "equiped")
+	planeSlotItem.goResearchLock = gohelper.findChild(planeSlotItem.goResearch, "go_lock")
 	planeSlotItem.imageResearch = gohelper.findChildImage(planeSlotItem.goResearch, "equiped/image_research")
 	planeSlotItem.btnResearch = gohelper.findChildButtonWithAudio(planeSlotItem.goResearch, "btn_research")
 
@@ -274,14 +289,21 @@ function TowerComposeHeroGroupView:refreshPlaneSlotUI(planeSlotItem)
 	planeSlotItem.researchBuffId = TowerComposeHeroGroupModel.instance:getThemePlaneBuffId(self.themeId, planeSlotItem.planeId, TowerComposeEnum.TeamBuffType.Research)
 
 	local isPlaneLayerUnlock = TowerComposeModel.instance:checkHasPlaneLayerUnlock(self.themeId)
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, planeSlotItem.planeId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local planeMo = themeMo:getPlaneMo(planeSlotItem.planeId)
 
 	gohelper.setActive(planeSlotItem.goResearch, isPlaneLayerUnlock)
 	gohelper.setActive(planeSlotItem.goSupportSelect, false)
+	gohelper.setActive(planeSlotItem.goSupportAdd, planeSlotItem.supportBuffId == 0 and (not isPlaneLock or not planeMo.hasFight))
+	gohelper.setActive(planeSlotItem.goSupportLock, isPlaneLock and planeMo.hasFight)
 	gohelper.setActive(planeSlotItem.goSupportEquip, planeSlotItem.supportBuffId > 0)
-	gohelper.setActive(planeSlotItem.gosupportNormal, planeSlotItem.supportBuffId == 0)
+	gohelper.setActive(planeSlotItem.goSupportNormal, planeSlotItem.supportBuffId == 0)
 	gohelper.setActive(planeSlotItem.goResearchSelect, false)
+	gohelper.setActive(planeSlotItem.goResearchAdd, planeSlotItem.researchBuffId == 0 and (not isPlaneLock or not planeMo.hasFight))
+	gohelper.setActive(planeSlotItem.goResearchLock, isPlaneLock and planeMo.hasFight)
 	gohelper.setActive(planeSlotItem.goResearchEquip, planeSlotItem.researchBuffId > 0)
-	gohelper.setActive(planeSlotItem.goresearchNormal, planeSlotItem.researchBuffId == 0)
+	gohelper.setActive(planeSlotItem.goResearchNormal, planeSlotItem.researchBuffId == 0)
 
 	if planeSlotItem.supportBuffId > 0 then
 		local supportConfig = TowerComposeConfig.instance:getSupportCo(planeSlotItem.supportBuffId)
@@ -291,6 +313,7 @@ function TowerComposeHeroGroupView:refreshPlaneSlotUI(planeSlotItem)
 		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
 		planeSlotItem.simageSupport:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
+		UISpriteSetMgr.instance:setCommonSprite(planeSlotItem.imageCareer, "lssx_" .. tostring(heroConfig.career))
 	else
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, planeSlotItem.planeId, TowerComposeEnum.TeamBuffType.Support, 0)
 	end
@@ -344,6 +367,7 @@ function TowerComposeHeroGroupView:buildPlayerClothSlot(btnCloth)
 	playerClothItem._btncloth = btnCloth
 	playerClothItem._txtclothName = gohelper.findChildText(playerClothItem.go, "txt_clothName")
 	playerClothItem._txtclothNameEn = gohelper.findChildText(playerClothItem.go, "txt_clothName/txt_clothNameEn")
+	playerClothItem._goclothLock = gohelper.findChild(playerClothItem.go, "go_lock")
 
 	playerClothItem._btncloth:AddClickListener(self._btnclothOnClock, self, playerClothItem)
 
@@ -359,6 +383,12 @@ function TowerComposeHeroGroupView:refreshPlayerClothUI(playerClothItem)
 	local clothMO = PlayerClothModel.instance:getById(playerClothItem.clothId)
 
 	gohelper.setActive(playerClothItem._txtclothName.gameObject, clothMO)
+
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, playerClothItem.planeId)
+	local planeMo = themeMo:getPlaneMo(playerClothItem.planeId)
+
+	gohelper.setActive(playerClothItem._goclothLock, isPlaneLock and planeMo.hasFight)
 
 	if clothMO then
 		local clothConfig = lua_cloth.configDict[clothMO.clothId]
@@ -426,6 +456,44 @@ function TowerComposeHeroGroupView:checkPlaneHeroGroupEmpty()
 	end
 
 	return false
+end
+
+function TowerComposeHeroGroupView:refreshPlaneLock()
+	if self.towerEpisodeConfig.plane == 2 then
+		local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+
+		for planeId = 1, self.towerEpisodeConfig.plane do
+			local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, planeId)
+			local planeMo = themeMo:getPlaneMo(planeId)
+
+			gohelper.setActive(self["_goPlaneLock" .. planeId], isPlaneLock and planeMo.hasFight)
+		end
+	else
+		gohelper.setActive(self._goPlaneLock1, false)
+		gohelper.setActive(self._goPlaneLock2, false)
+	end
+end
+
+function TowerComposeHeroGroupView:onEquipChange()
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+
+	logError("aaaa")
+
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo.lock then
+		TowerComposeRpc.instance:sendTowerComposeLoadRecordRequest(self.themeId)
+	end
+end
+
+function TowerComposeHeroGroupView:loadRecordReply()
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local bossRecordInfoData = themeMo:getBossRecordInfoData()
+
+	if not bossRecordInfoData then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordExpired)
+		TowerComposeRpc.instance:sendTowerComposeCancelReChallengeRequest(self.themeId)
+	end
 end
 
 function TowerComposeHeroGroupView:onClose()

@@ -10,6 +10,7 @@ function TowerComposeHeroGroupQuickEditItem:init(go)
 	self._txtorder = gohelper.findChildText(go, "#go_orderbg/#txt_order")
 	self._goaddNum = gohelper.findChild(go, "#go_addnum")
 	self._txtNum = gohelper.findChildText(go, "#go_addnum/#txt_num")
+	self._goplaneLock = gohelper.findChild(go, "#go_planeLock")
 end
 
 function TowerComposeHeroGroupQuickEditItem:updateTrialTag()
@@ -26,6 +27,10 @@ function TowerComposeHeroGroupQuickEditItem:updateTrialTag()
 	if isExtraHero then
 		self._txtNum.text = string.format("+%s", extraCo.bossPointBase)
 	end
+
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkHeroUidIsInLockPlane(self._mo.uid)
+
+	gohelper.setActive(self._goplaneLock, isInLockPlane)
 end
 
 function TowerComposeHeroGroupQuickEditItem:updateTrialRepeat(mo)
@@ -79,6 +84,14 @@ function TowerComposeHeroGroupQuickEditItem:_onItemClick()
 		return
 	end
 
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkHeroUidIsInLockPlane(self._mo.uid)
+
+	if isInLockPlane then
+		GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+
+		return
+	end
+
 	if self._mo:isTrial() and not HeroGroupQuickEditListModel.instance:inInTeam(self._mo.uid) then
 		local insetIndex = TowerComposeHeroGroupModel.instance:getQuickSelectOrder()
 
@@ -90,7 +103,7 @@ function TowerComposeHeroGroupQuickEditItem:_onItemClick()
 	end
 
 	if self._mo and not self._mo.isPosLock then
-		local result = HeroGroupQuickEditListModel.instance:selectHero(self._mo.uid)
+		local result = HeroGroupQuickEditListModel.instance:towerComposeSelectHero(self._mo.uid)
 
 		if not result then
 			return
@@ -108,6 +121,15 @@ function TowerComposeHeroGroupQuickEditItem:_onItemClick()
 end
 
 function TowerComposeHeroGroupQuickEditItem:_show_goorderbg()
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkHeroUidIsInLockPlane(self._mo.uid)
+
+	if isInLockPlane then
+		gohelper.setActive(self._goorderbg, false)
+		gohelper.setActive(self._goframe, false)
+
+		return
+	end
+
 	gohelper.setActive(self._goorderbg, true)
 	gohelper.setActive(self._goframe, true)
 

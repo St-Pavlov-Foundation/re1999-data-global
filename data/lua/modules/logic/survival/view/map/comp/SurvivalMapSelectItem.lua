@@ -9,18 +9,19 @@ function SurvivalMapSelectItem:ctor(params)
 	self._callobj = params.callobj
 	self._mapInfo = params.mapInfo
 	self._index = params.index
+	self.maxRichness = params.maxRichness
+	self.name = params.name
 end
 
 function SurvivalMapSelectItem:init(go)
 	self._anim = gohelper.findChildAnim(go, "")
-	self._goinfo = gohelper.findChild(go, "info")
-	self._txtname = gohelper.findChildTextMesh(go, "info/namebg/txt_map")
-	self._goselect = gohelper.findChild(go, "info/#go_select")
-	self._btnclick = gohelper.findChildButtonWithAudio(go, "info/#btn_click")
-	self._simageBg = gohelper.findChildSingleImage(go, "#simage_bg")
-	self._gohard = gohelper.findChild(go, "#simage_bghard")
-	self._simageIcon = gohelper.findChildSingleImage(go, "info/#simage_icon")
-	self._goempty = gohelper.findChild(go, "empty")
+	self._golocked = gohelper.findChild(go, "locked")
+	self._txtnamelock = gohelper.findChildTextMesh(go, "locked/namebg/txt_map")
+	self._gounlock = gohelper.findChild(go, "unlock")
+	self._txtnameunlock = gohelper.findChildTextMesh(go, "unlock/namebg/txt_map")
+	self._goselect = gohelper.findChild(go, "unlock/#go_select")
+	self._btnclick = gohelper.findChildButtonWithAudio(go, "#btn_click")
+	self._gorecommend = gohelper.findChild(go, "#go_recommend")
 
 	self:_refreshView()
 end
@@ -34,22 +35,26 @@ function SurvivalMapSelectItem:removeEventListeners()
 end
 
 function SurvivalMapSelectItem:_refreshView()
-	gohelper.setActive(self._goempty, not self._mapInfo)
-	gohelper.setActive(self._goinfo, self._mapInfo)
+	self._isLock = not self._mapInfo
+
+	gohelper.setActive(self._golocked, self._isLock)
+	gohelper.setActive(self._gounlock, not self._isLock)
 
 	if self._mapInfo then
-		self._txtname.text = GameUtil.setFirstStrSize(self._mapInfo.groupCo.name, 56)
+		local name = self._mapInfo.groupCo.name
 
-		self._simageBg:LoadImage(ResUrl.getSurvivalMapIcon(string.format("survival_map_newblock_%d_%d", self._index, self._mapInfo.level)))
-		self._simageIcon:LoadImage(ResUrl.getSurvivalMapIcon("survival_map_block0" .. self._mapInfo.groupCo.type))
-		gohelper.setActive(self._gohard, self._mapInfo.level == 3)
+		self._txtnamelock.text = GameUtil.setFirstStrSize(name, 56)
+		self._txtnameunlock.text = GameUtil.setFirstStrSize(name, 56)
 	else
-		self._simageBg:LoadImage(ResUrl.getSurvivalMapIcon(string.format("survival_map_newblock_%d_%d", self._index, 0)))
-		gohelper.setActive(self._gohard, false)
+		self._txtnamelock.text = GameUtil.setFirstStrSize(self.name, 56)
 	end
+
+	gohelper.setActive(self._gorecommend, not self._isLock and self._mapInfo.groupCo.mapRichness >= self.maxRichness)
 end
 
 function SurvivalMapSelectItem:playUnlockAnim()
+	gohelper.setActive(self._golocked, true)
+	gohelper.setActive(self._gounlock, true)
 	self._anim:Play("unlock", 0, 0)
 end
 

@@ -18,7 +18,7 @@ local activeRuneUnitBackTime = activeRuneUnitStayTime + 0.6
 local flyAnimPer = 0.5
 
 function ExploreWhirlRune:onInit()
-	self._resPath = "explore/zj_01/jiaohu/prefabs/zj_01_jh_mfdj_01.prefab"
+	self._resPath = "modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_mfdj_01.prefab"
 
 	self.trans:SetParent(ExploreController.instance:getMap():getHero().trans, false)
 end

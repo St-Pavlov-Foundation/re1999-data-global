@@ -23,6 +23,24 @@ function OpenRpc:onReceiveUpdateOpenPush(resultCode, msg)
 	end
 end
 
+function OpenRpc:sendGetOpenInfoRequest(id, callback, callbackObj)
+	local req = OpenModule_pb.GetOpenInfoRequest()
+
+	req.id = id
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function OpenRpc:onReceiveGetOpenInfoReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local openIfo = msg.openIfo
+
+	OpenModel.instance:updateOneOpenInfo(openIfo)
+end
+
 OpenRpc.instance = OpenRpc.New()
 
 return OpenRpc

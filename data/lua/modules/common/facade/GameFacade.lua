@@ -96,4 +96,44 @@ function GameFacade.showOptionAndParamsMessageBox(messageBoxId, msgBoxType, opti
 	MessageBoxController.instance:showOptionAndParamsMsgBox(messageBoxId, msgBoxType, optionType, optionExParam, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
 end
 
+function GameFacade.createLuaComp(resKey, goParent, class, ctorParam, viewContainer)
+	local res = viewContainer._viewSetting.otherRes[resKey]
+	local goRes = viewContainer:getResInst(res, goParent, nil)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(goRes, class, ctorParam)
+
+	comp.__viewContainer = viewContainer
+
+	return comp
+end
+
+function GameFacade.createLuaCompByGo(go, class, ctorParam, viewContainer)
+	local comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, class, ctorParam)
+
+	comp.__viewContainer = viewContainer
+
+	return comp
+end
+
+function GameFacade.createSimpleListComp(gameObject, listParam, res, viewContainer)
+	local list = MonoHelper.addNoUpdateLuaComOnceToGo(gameObject, SimpleListComp, {
+		listParam = listParam,
+		viewContainer = viewContainer
+	})
+
+	list:setRes(res)
+	list:onCreate()
+
+	return list
+end
+
+function GameFacade.openTipPopView(viewName, posGo, param)
+	param = param or {}
+
+	if posGo then
+		param._worldPos = posGo.transform.position
+	end
+
+	ViewMgr.instance:openView(viewName, param)
+end
+
 return GameFacade

@@ -27,7 +27,8 @@ end
 function VersionActivityFixedEnterBgmView:initActHandle()
 	if not self.actHandleDict then
 		self.actHandleDict = {
-			[BossRushConfig.instance:getActivityId()] = self._bossrushBgmHandle
+			[BossRushConfig.instance:getActivityId()] = self._bossrushBgmHandle,
+			[ChgController.instance:actId()] = self._chgBgmHandle
 		}
 	end
 end
@@ -129,6 +130,17 @@ function VersionActivityFixedEnterBgmView:_bossrushBgmHandle(actId)
 	self.bgmId = bgmId
 
 	AudioBgmManager.instance:setSwitchData(VersionActivityFixedHelper.getVersionActivityAudioBgmLayer(), FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Comeshow)
+	AudioBgmManager.instance:modifyBgmAudioId(VersionActivityFixedHelper.getVersionActivityAudioBgmLayer(), bgmId)
+end
+
+function VersionActivityFixedEnterBgmView:_chgBgmHandle(actId)
+	self.playingActId = actId
+
+	local bgmId = ActivityConfig.instance:getActivityEnterViewBgm(actId)
+
+	self.bgmId = bgmId
+
+	AudioBgmManager.instance:setSwitchData(VersionActivityFixedHelper.getVersionActivityAudioBgmLayer(), FightEnum.AudioSwitchGroup, FightEnum.AudioSwitch.Fightnormal)
 	AudioBgmManager.instance:modifyBgmAudioId(VersionActivityFixedHelper.getVersionActivityAudioBgmLayer(), bgmId)
 end
 

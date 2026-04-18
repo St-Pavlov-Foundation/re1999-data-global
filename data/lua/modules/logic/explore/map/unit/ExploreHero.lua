@@ -12,7 +12,7 @@ function ExploreHero:onInit()
 
 	self._batonLoader = PrefabInstantiate.Create(self._baton)
 
-	self._batonLoader:startLoad("explore/roles/prefabs/zhihuibang.prefab", self._onBatonLoadEnd, self)
+	self._batonLoader:startLoad("modules/explore/roles/prefabs/zhihuibang.prefab", self._onBatonLoadEnd, self)
 	ExploreHero.super.onInit(self)
 end
 

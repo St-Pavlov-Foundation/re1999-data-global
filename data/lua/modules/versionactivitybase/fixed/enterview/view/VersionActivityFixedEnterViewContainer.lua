@@ -9,7 +9,9 @@ function VersionActivityFixedEnterViewContainer:buildViews()
 	local finishFunc = tabViewGroupFix.onOpenFinish
 
 	function tabViewGroupFix:onOpenFinish()
-		self.viewContainer:markPlayedSubViewAnim()
+		if self.viewParam.jumpActId and self.viewParam.jumpActId ~= VersionActivityFixedHelper.getVersionActivityEnum().Dungeon then
+			self.viewContainer:markPlayedSubViewAnim()
+		end
 
 		self._hasOpenFinish = true
 

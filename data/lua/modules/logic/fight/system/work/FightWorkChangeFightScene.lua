@@ -23,11 +23,8 @@ function FightWorkChangeFightScene:onStart()
 end
 
 function FightWorkChangeFightScene:_startLoadLevel()
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
-
-	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
-
-	fightScene.level:onSceneStart(self.sceneId, self.levelId)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded)
+	FightGameMgr.sceneLevelMgr:loadScene(self.sceneId, self.levelId)
 end
 
 function FightWorkChangeFightScene:_onLevelLoaded()

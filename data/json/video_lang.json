@@ -673,5 +673,23 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "3_4_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_4_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

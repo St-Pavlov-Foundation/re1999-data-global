@@ -33,8 +33,6 @@ function SurvivalShelterScenePreloader:getRes(path)
 	local assetItem = self._loader:getAssetItem(path)
 
 	if not assetItem then
-		logError("no assetItem " .. path)
-
 		return
 	end
 

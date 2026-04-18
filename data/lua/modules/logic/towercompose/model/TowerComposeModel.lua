@@ -61,12 +61,12 @@ function TowerComposeModel:updateThemeInfo(themeInfo)
 	themeInfoMo:updateInfo(themeInfo)
 end
 
-function TowerComposeModel:updateBossSettle(bossSettle)
+function TowerComposeModel:updateBossSettle(bossSettle, themeId)
 	if not self._bossSettleInfo then
 		self._bossSettleInfo = TowerComposeBossSettleMo.New()
 	end
 
-	self._bossSettleInfo:update(bossSettle)
+	self._bossSettleInfo:update(bossSettle, themeId)
 end
 
 function TowerComposeModel:getBossSettleInfo()
@@ -106,6 +106,8 @@ function TowerComposeModel:onReceiveTowerComposeSetModsReply(info)
 	local themeInfoMo = self.themeDataMap[themeId]
 
 	if themeInfoMo then
+		themeInfoMo:setCurBossLevel(info.level)
+
 		for _, planeInfo in ipairs(info.planes) do
 			themeInfoMo:updatePlaneInfoData(planeInfo)
 		end
@@ -133,12 +135,12 @@ function TowerComposeModel:onReceiveTowerComposeFightSettlePush(info)
 	local themeInfo = info.theme
 
 	self:updateThemeInfo(themeInfo)
-	self:updateBossSettle(info.bossSettle)
+	self:updateBossSettle(info.bossSettle, themeInfo.themeId)
 
 	self.fightParamsStr = info.params
 	self.fightResult = info.result
 
-	if self.fightResult == 1 then
+	if self.fightResult == TowerComposeEnum.FightResult.Win then
 		self:setCurFightPlaneId(self.fightParamsStr)
 	end
 end
@@ -553,13 +555,17 @@ function TowerComposeModel:getAllUnlockTypeModCoList(themeId, modType, slotId)
 	return modConfigList
 end
 
-function TowerComposeModel:getThemePlaneLevel(themeId)
+function TowerComposeModel:getThemePlaneLevel(themeId, isEquiping)
 	local themeMo = self:getThemeMo(themeId)
 
-	self.plane1Mo = themeMo:getPlaneMo(1)
-	self.plane2Mo = themeMo:getPlaneMo(2)
+	if isEquiping then
+		local plane1Mo = themeMo:getPlaneMo(1)
+		local plane2Mo = themeMo:getPlaneMo(2)
 
-	return Mathf.Max(self.plane1Mo.level, self.plane2Mo and self.plane2Mo.level or 0)
+		return Mathf.Max(plane1Mo.level, plane2Mo and plane2Mo.level or 0)
+	else
+		return themeMo:getCurBossLevel()
+	end
 end
 
 function TowerComposeModel:replaceLevelSkillDesc(skillDesc, curLevel, hightLightColor, normalLightColor)
@@ -654,14 +660,35 @@ function TowerComposeModel:setCurFightPlaneId(params, isReconnect)
 
 	if towerEpisodeConfig.plane == 2 and not isReconnect then
 		local themeMo = self:getThemeMo(themeId)
+		local curBossMo = themeMo:getCurBossMo()
+		local isBossLock = curBossMo.lock
+		local isAllPlaneLock = self:isAllPlaneLock(themeId)
 
-		for plane = 1, 2 do
-			local planeMo = themeMo:getPlaneMo(plane)
+		if isAllPlaneLock then
+			local planeInfoMap = curBossMo:getPlaneInfoMap()
 
-			if not planeMo.hasFight then
-				self.curFightPlaneId = plane
+			for planeId, planeMo in pairs(planeInfoMap) do
+				if not planeMo.hasFight then
+					self.curFightPlaneId = planeId
 
-				break
+					break
+				end
+			end
+		else
+			for plane = 1, 2 do
+				local planeMo = themeMo:getPlaneMo(plane)
+
+				if isBossLock and not planeMo.isLock then
+					self.curFightPlaneId = plane
+
+					break
+				end
+
+				if not planeMo.hasFight then
+					self.curFightPlaneId = plane
+
+					break
+				end
 			end
 		end
 
@@ -809,6 +836,85 @@ function TowerComposeModel:isIgnoreCalModPointBase(modId)
 	local modIdList = string.splitToNumber(modIdListStr, "#")
 
 	return tabletool.indexOf(modIdList, modId)
+end
+
+function TowerComposeModel:updateTowercomposeRecordBossData(themeId, recordInfo)
+	local curThemeMo = self:getThemeMo(themeId)
+
+	if not curThemeMo then
+		return
+	end
+
+	curThemeMo:updateComposeBossRecordInfo(recordInfo)
+end
+
+function TowerComposeModel:updateTowerComposeBossData(themeId, bossInfo)
+	local curThemeMo = self:getThemeMo(themeId)
+
+	if not curThemeMo then
+		return
+	end
+
+	curThemeMo:updateComposeBossInfo(bossInfo)
+end
+
+function TowerComposeModel:getCurLockPlaneId(themeId, checkNotLock)
+	local curThemeMo = self:getThemeMo(themeId)
+
+	if curThemeMo then
+		local curBossMo = curThemeMo:getCurBossMo()
+
+		if curBossMo then
+			local planeInfoMap = curBossMo:getPlaneInfoMap()
+
+			for planeId, planeMo in pairs(planeInfoMap) do
+				if not checkNotLock and planeMo.isLock then
+					return planeId
+				end
+
+				if checkNotLock and not planeMo.isLock then
+					return planeId
+				end
+			end
+		end
+	end
+
+	return 0
+end
+
+function TowerComposeModel:checkPlaneLock(themeId, planeId)
+	local curThemeMo = self:getThemeMo(themeId)
+
+	if curThemeMo then
+		local curBossMo = curThemeMo:getCurBossMo()
+
+		if curBossMo then
+			local planeInfoMap = curBossMo:getPlaneInfoMap()
+
+			return planeInfoMap[planeId] and planeInfoMap[planeId].isLock
+		end
+	end
+
+	return false
+end
+
+function TowerComposeModel:isAllPlaneLock(themeId)
+	for planeId = 1, 2 do
+		if not self:checkPlaneLock(themeId, planeId) then
+			return false
+		end
+	end
+
+	return true
+end
+
+function TowerComposeModel:isAllEpisodeFinish(themeId)
+	local passLayer = self:getThemePassLayer(themeId)
+	local allEpisodeList = TowerComposeConfig.instance:getThemeAllEpisodeConfig(themeId)
+	local finalEpisodeCo = allEpisodeList[#allEpisodeList]
+	local isAllEpisodeFinish = passLayer == finalEpisodeCo.layerId
+
+	return isAllEpisodeFinish, finalEpisodeCo.layerId
 end
 
 TowerComposeModel.instance = TowerComposeModel.New()

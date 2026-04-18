@@ -14,6 +14,20 @@ function SurvivalMapTeamView:onInitView()
 	self._btnequip = gohelper.findChildButtonWithAudio(self._root, "Left/#btn_equip")
 	self._goinfo = gohelper.findChild(self.viewGO, "Panel/#go_info")
 	self._btnCloseTips = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/#go_info/#btn_closeinfo")
+	self.image_LeaderCard = gohelper.findChildSingleImage(self._root, "Left/image_LeaderCard")
+	self.txt_Leader = gohelper.findChildTextMesh(self._root, "Left/Name/txt_Leader")
+	self.survivalroleleveltipcomp = gohelper.findChild(self._root, "survivalroleleveltipcomp")
+	self.survivalrolelevelcomp = gohelper.findChild(self._root, "Left/#go_level/survivalrolelevelcomp")
+	self.survivalRoleLevelComp = GameFacade.createLuaCompByGo(self.survivalrolelevelcomp, SurvivalRoleLevelComp)
+
+	self.survivalRoleLevelComp:setOnClickFunc(self.onClickBtnLevel, self)
+
+	self.survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	self.survivalroleattrcomp = gohelper.findChild(self._root, "Left/survivalroleattrcomp")
+
+	if self.survivalShelterRoleMo:haveRole() then
+		self.survivalRoleAttrComp = GameFacade.createLuaCompByGo(self.survivalroleattrcomp, SurvivalRoleAttrComp, nil, self.viewContainer)
+	end
 end
 
 function SurvivalMapTeamView:addEvents()
@@ -39,6 +53,20 @@ function SurvivalMapTeamView:onOpen()
 	self:_updateHeroList()
 	self:_initNPCItemList()
 	self:_updateNPCList()
+	self.survivalRoleAttrComp:setData(2, self.survivalShelterRoleMo.roleId)
+	self.survivalRoleLevelComp:setData()
+
+	local cardPath = SurvivalRoleConfig.instance:getRoleCardImage(self.survivalShelterRoleMo.roleId)
+
+	if not string.nilorempty(cardPath) then
+		self.image_LeaderCard:LoadImage(ResUrl.getSurvivalTeamIcon(cardPath))
+	end
+
+	self.txt_Leader.text = lua_survival_role.configDict[self.survivalShelterRoleMo.roleId].name
+end
+
+function SurvivalMapTeamView:onDestroyView()
+	self.image_LeaderCard:UnLoadImage()
 end
 
 function SurvivalMapTeamView:_btnCloseTipsOnClick()
@@ -88,9 +116,10 @@ function SurvivalMapTeamView:_updateHeroList()
 
 	self._txtheronum.text = string.format("(%d/%d)", count, self._initGroupMo:getCarryHeroCount())
 
-	local exWeight = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local w1 = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Weight)
 
-	self._txtWeight.text = exWeight
+	self._txtWeight.text = w1
 end
 
 function SurvivalMapTeamView:_initNPCItemList()
@@ -142,6 +171,10 @@ function SurvivalMapTeamView:_showNpcInfoView(npcMo)
 
 	gohelper.setActive(self._goinfo, true)
 	self._infoPanel:updateMo(npcMo, true)
+end
+
+function SurvivalMapTeamView:onClickBtnLevel()
+	GameFacade.openTipPopView(ViewName.SurvivalRoleLevelTipPopView, self.survivalroleleveltipcomp)
 end
 
 return SurvivalMapTeamView

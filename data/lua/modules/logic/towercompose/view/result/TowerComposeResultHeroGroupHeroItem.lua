@@ -14,4 +14,12 @@ function TowerComposeResultHeroGroupHeroItem:setPlaneType(planeType)
 	self.planeType = planeType
 end
 
+function TowerComposeResultHeroGroupHeroItem:_onClickThis()
+	return
+end
+
+function TowerComposeResultHeroGroupHeroItem:_onClickEquip()
+	return
+end
+
 return TowerComposeResultHeroGroupHeroItem

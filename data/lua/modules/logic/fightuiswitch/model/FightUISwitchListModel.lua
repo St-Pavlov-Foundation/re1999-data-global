@@ -64,7 +64,7 @@ function FightUISwitchListModel.sortMo(x, y)
 		return x:getRare() > y:getRare()
 	end
 
-	return x.sort > y.sort
+	return x.co.sort > y.co.sort
 end
 
 function FightUISwitchListModel:onSelect(id, isSelect)

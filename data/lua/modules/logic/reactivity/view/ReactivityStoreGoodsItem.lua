@@ -71,7 +71,7 @@ function ReactivityStoreGoodsItem:updateInfo(storeGoodsCo)
 	end
 
 	gohelper.setActive(self.goMaxRareEffect, rare >= 5)
-	UISpriteSetMgr.instance:setV1a8MainActivitySprite(self.imageRare, "v1a8_store_quality_" .. rare)
+	UISpriteSetMgr.instance:setV2a5MainActivitySprite(self.imageRare, "v2a5_store_quality_" .. rare)
 
 	if needConvert and self.remainBuyCount > 0 then
 		gohelper.setActive(self.goIconExchange, true)

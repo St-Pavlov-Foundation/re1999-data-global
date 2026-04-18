@@ -149,13 +149,10 @@ function DecorateGoodsItem:_refreshDetail()
 	end
 
 	local discount = self._decorateConfig.offTag > 0 and self._decorateConfig.offTag or 100
+	local hasDiscount1 = discount > 0 and discount < 100
 
-	if discount > 0 and discount < 100 then
-		gohelper.setActive(self._godiscount, true)
-
+	if hasDiscount1 then
 		self._txtdiscount.text = string.format("-%s%%", discount)
-	else
-		gohelper.setActive(self._godiscount, false)
 	end
 
 	if self._decorateConfig.onlineTag == 0 then
@@ -182,13 +179,11 @@ function DecorateGoodsItem:_refreshDetail()
 	local hasDiscount = discount2 > 0 and discount2 < 100
 
 	if hasDiscount then
-		gohelper.setActive(self._godiscount, false)
-		gohelper.setActive(self._godiscount2, true)
-
 		self._txtdiscount2.text = string.format("-%s%%", discount2)
-	else
-		gohelper.setActive(self._godiscount2, false)
 	end
+
+	gohelper.setActive(self._godiscount, hasDiscount1)
+	gohelper.setActive(self._godiscount2, hasDiscount)
 
 	if string.nilorempty(self._decorateConfig.tag1) then
 		gohelper.setActive(self._golimit, false)

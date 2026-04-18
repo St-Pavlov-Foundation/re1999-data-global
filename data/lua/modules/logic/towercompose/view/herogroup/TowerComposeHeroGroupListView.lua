@@ -168,6 +168,61 @@ function TowerComposeHeroGroupListView:checkReplaceHeroList()
 
 	HeroSingleGroupModel.instance:setMaxHeroCount(self.roleNum)
 	groupMO:setTowerComposeHeroList(self.roleNum)
+
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo and curBossMo.lock then
+		local heroList = {}
+
+		for pos = 1, self.roleNum do
+			local planeId = Mathf.Ceil(pos / 4)
+			local planeMo = curBossMo:getPlaneMo(planeId)
+			local teamInfoData = planeMo:getTeamInfoData()
+			local dataPos = pos > 4 and pos - 4 or pos
+			local heroData = teamInfoData.heros[dataPos]
+
+			if heroData then
+				if heroData.heroId > 0 then
+					local heroMo = HeroModel.instance:getByHeroId(heroData.heroId)
+
+					table.insert(heroList, {
+						heroUid = heroMo.uid,
+						equipUid = {
+							heroData.equipId
+						}
+					})
+				elseif heroData.trialId > 0 then
+					local trialCo = lua_hero_trial.configDict[heroData.trialId][0]
+					local heroId = tostring(tonumber(trialCo.id .. "." .. trialCo.trialTemplate) - 1099511627776)
+
+					table.insert(heroList, {
+						heroUid = heroId,
+						equipUid = {
+							tostring(trialCo.equipId)
+						}
+					})
+				else
+					table.insert(heroList, {
+						heroUid = "0",
+						equipUid = {
+							"0"
+						}
+					})
+				end
+			else
+				table.insert(heroList, {
+					heroUid = "0",
+					equipUid = {
+						"0"
+					}
+				})
+			end
+		end
+
+		TowerComposeHeroGroupModel.instance:replaceLockPlaneHeroList(groupMO, heroList)
+	end
+
 	HeroSingleGroupModel.instance:setSingleGroup(groupMO, true)
 end
 
@@ -294,6 +349,12 @@ function TowerComposeHeroGroupListView:canDrag(param, isWrap)
 		return false
 	end
 
+	if self:checkHeroItemInLockPlane(param) then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+		return false
+	end
+
 	return true
 end
 
@@ -307,6 +368,21 @@ function TowerComposeHeroGroupListView:_checkCanDrag(param)
 
 		return true
 	end
+end
+
+function TowerComposeHeroGroupListView:checkHeroItemInLockPlane(index)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo and curBossMo.lock then
+		local planeId = Mathf.Ceil(index / 4)
+		local planeMo = themeMo:getPlaneMo(planeId)
+		local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, planeId)
+
+		return isPlaneLock and planeMo.hasFight
+	end
+
+	return false
 end
 
 function TowerComposeHeroGroupListView:_onBeginDrag(param, pointerEventData)
@@ -370,6 +446,15 @@ function TowerComposeHeroGroupListView:_onEndDrag(param, pointerEventData)
 	end
 
 	if dragToIndex <= 0 then
+		self:setHeroItemPos(heroItem, index, true, completeDragFunc, self)
+
+		return
+	end
+
+	local dragToIndexIsInLockPlane = self:checkHeroItemInLockPlane(dragToIndex)
+
+	if dragToIndexIsInLockPlane then
+		GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
 		self:setHeroItemPos(heroItem, index, true, completeDragFunc, self)
 
 		return

@@ -20,6 +20,10 @@ function CameraBehavior:_onInit()
 	self._bodyRevertCameraName = {}
 
 	for i, v in ipairs(config.body) do
+		if SLFramework.FrameworkSettings.IsEditor and string.find(v, "b_") ~= 1 then
+			logError("CameraBehavior body name must start with b_ name:", v)
+		end
+
 		self._bodyCameraName[v] = config.camera[i]
 		self._bodyRevertCameraName[v] = config.camera_revert[i]
 	end

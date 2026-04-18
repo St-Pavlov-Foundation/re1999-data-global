@@ -27,7 +27,8 @@ function ShelterMapEventView:onInitView()
 	gohelper.setActive(gohelper.findChild(self.viewGO, "Top"), false)
 
 	self._goinfo = gohelper.findChild(self.viewGO, "Panel/#go_info")
-	self._click = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_clicknext")
+	self._click = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/#btn_clicknext")
+	self._click2 = gohelper.findChildButtonWithAudio(self.viewGO, "Panel/#scroll/viewport/#btn_clicknext2")
 	self._goitemRoot = gohelper.findChild(self.viewGO, "Panel/#scroll/viewport/content/#scroll_Reward")
 
 	gohelper.setActive(self._goitemRoot, false)
@@ -39,11 +40,13 @@ end
 
 function ShelterMapEventView:addEvents()
 	self._click:AddClickListener(self.nextStep, self)
+	self._click2:AddClickListener(self.nextStep, self)
 	self._btnNpc:AddClickListener(self.showNpcInfo, self)
 end
 
 function ShelterMapEventView:removeEvents()
 	self._click:RemoveClickListener()
+	self._click2:RemoveClickListener()
 	self._btnNpc:RemoveClickListener()
 end
 
@@ -134,6 +137,7 @@ function ShelterMapEventView:nextStep()
 	}
 
 	gohelper.setActive(self._click, true)
+	gohelper.setActive(self._click2, true)
 
 	self._curDescIndex = 0
 
@@ -187,6 +191,7 @@ function ShelterMapEventView:finishDialog()
 	self._txtDesc.text = self.curStepData and self.curStepData.desc or ""
 
 	gohelper.setActive(self._click, false)
+	gohelper.setActive(self._click2, false)
 	self:showOption()
 
 	self.curStepData = nil

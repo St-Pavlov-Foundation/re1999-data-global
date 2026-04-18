@@ -96,6 +96,20 @@ function StoryExitBtn:_hideCallback()
 	self:setActive(false)
 end
 
+function StoryExitBtn:_isForceHideTopBtn()
+	if not self._ForceHideTopView then
+		self._ForceHideTopView = {
+			ViewName.V3a4BBSView
+		}
+	end
+
+	for _, viewName in ipairs(self._ForceHideTopView) do
+		if ViewMgr.instance:isOpen(viewName) then
+			return true
+		end
+	end
+end
+
 function StoryExitBtn:setActive(isActive)
 	local hideTopBtns = StoryModel.instance:getHideBtns()
 
@@ -113,7 +127,9 @@ function StoryExitBtn:setActive(isActive)
 
 	self.isActive = isActive
 
-	gohelper.setActive(self.go, isActive)
+	local isForceHide = self:_isForceHideTopBtn()
+
+	gohelper.setActive(self.go, not isForceHide and isActive)
 
 	if self.callback then
 		self.callback(self.frontView)

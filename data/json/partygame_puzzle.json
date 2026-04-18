@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "answerTime": 60,
+    "pictureIds": "1#2#3#4#5#6#7#8#9#10#11#12#13",
+    "exchange": false
+  },
+  {
+    "id": 2,
+    "answerTime": 60,
+    "pictureIds": "1#2#3#4#5#6#7#8#9#10#11#12#13",
+    "exchange": false
+  },
+  {
+    "id": 3,
+    "answerTime": 75,
+    "pictureIds": "1#2#3#4#5#6#7#8#9#10#11#12#13",
+    "exchange": true
+  }
+]

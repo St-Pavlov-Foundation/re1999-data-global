@@ -212,7 +212,7 @@ function ActivityWeekWalkHeartShowView:_refreshProgress()
 		local map = info:getNotFinishedMap()
 		local sceneConfig = map.sceneConfig
 
-		progress = string.format("%s%s", sceneConfig.name, sceneConfig.battleName)
+		progress = string.format(luaLang("ActivityWeekWalkHeartShowView_refreshProgress"), sceneConfig.name, sceneConfig.battleName)
 	end
 
 	self._txtprogress.text = progress

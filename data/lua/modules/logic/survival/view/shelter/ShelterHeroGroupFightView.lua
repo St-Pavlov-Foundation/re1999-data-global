@@ -13,6 +13,8 @@ function ShelterHeroGroupFightView:_editableInitView()
 	self._goHeroEffect = gohelper.findChild(self.viewGO, "#go_container/#go_HeroEffect")
 
 	gohelper.setActive(self._goSwitchItem, false)
+
+	self.simage_hero = gohelper.findChildImage(self.viewGO, "#go_container/#go_HeroEffect/#simage_hero")
 end
 
 function ShelterHeroGroupFightView:onOpen()
@@ -34,6 +36,19 @@ function ShelterHeroGroupFightView:onOpen()
 		self.selectIndex = curRound
 
 		TaskDispatcher.runDelay(self._autoSwitchSuccessRound, self, 0.5)
+	end
+
+	local roleInfo = weekInfo:getRoleInfo()
+	local roleId = roleInfo.roleId
+
+	if roleId == SurvivalRoleConfig.instance:getDefaultRoleId() then
+		roleId = SurvivalRoleConfig.instance:getDefaultRoleIdSwitch()
+	end
+
+	local path = "survival_herogroup_role_" .. roleId
+
+	if not string.nilorempty(path) then
+		UISpriteSetMgr.instance:setSurvivalSprite2(self.simage_hero, path)
 	end
 end
 

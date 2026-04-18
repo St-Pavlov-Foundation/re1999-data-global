@@ -231,8 +231,21 @@ end
 
 function TowerComposeHeroGroupModel:getQuickSelectOrder()
 	local inTeamHeroUidList = HeroGroupQuickEditListModel.instance:getHeroUids()
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local startIndex = 1
+	local endIndex = #inTeamHeroUidList
+	local curLockPlaneId = TowerComposeModel.instance:getCurLockPlaneId(themeId)
 
-	for pos, heroUid in ipairs(inTeamHeroUidList) do
+	if curLockPlaneId == 1 then
+		startIndex = #inTeamHeroUidList / 2 + 1
+	elseif curLockPlaneId == 2 then
+		endIndex = #inTeamHeroUidList / 2
+	end
+
+	for pos = startIndex, endIndex do
+		local heroUid = inTeamHeroUidList[pos]
+
 		if heroUid == "0" then
 			return pos
 		end
@@ -381,6 +394,102 @@ function TowerComposeHeroGroupModel:getPlaneRealExtraCoList(themeId, planeId)
 	end
 
 	return realExtraHeroCoList
+end
+
+function TowerComposeHeroGroupModel:replaceLockPlaneHeroList(heroGroupMo, lockHeroList)
+	heroGroupMo.heroList = lockHeroList
+	heroGroupMo.equips = {}
+	heroGroupMo.trialDict = {}
+
+	for pos, heroData in ipairs(lockHeroList) do
+		heroGroupMo.heroList[pos] = heroData.heroUid
+
+		local equipUid = heroData.equipUid
+
+		if equipUid then
+			local index = pos - 1
+
+			heroGroupMo.equips[index] = HeroGroupEquipMO.New()
+
+			heroGroupMo.equips[index]:init({
+				index = index,
+				equipUid = equipUid
+			})
+		end
+
+		local heroUid = heroData.heroUid
+
+		if tonumber(heroUid) < 0 then
+			local heroMO = HeroGroupTrialModel.instance:getById(heroUid)
+
+			if heroMO then
+				heroGroupMo.trialDict[pos] = {
+					heroMO.trialCo.id,
+					0
+				}
+			else
+				heroGroupMo.heroList[pos] = "0"
+			end
+		end
+	end
+end
+
+function TowerComposeHeroGroupModel:checkHeroUidIsInLockPlane(heroUid)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+
+	for pos, uid in ipairs(heroGroupMo.heroList) do
+		if heroUid == uid then
+			local planeId = Mathf.Ceil(pos / 4)
+			local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
+			local planeMo = themeMo:getPlaneMo(planeId)
+
+			return isPlaneLock and planeMo.hasFight
+		end
+	end
+
+	return false
+end
+
+function TowerComposeHeroGroupModel:checkEquipUidIsInLockPlane(equipUid)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
+
+	for pos, heroGroupEquipMo in ipairs(heroGroupMo.equips) do
+		if equipUid == heroGroupEquipMo.equipUid[1] then
+			local planeId = Mathf.Ceil(pos / 4)
+			local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
+			local planeMo = themeMo:getPlaneMo(planeId)
+
+			return isPlaneLock and planeMo.hasFight
+		end
+	end
+
+	return false
+end
+
+function TowerComposeHeroGroupModel:replaceLockPlaneBuffItem()
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local curBossMo = themeMo:getCurBossMo()
+
+	if curBossMo and curBossMo.lock then
+		self:initSaveThemePlaneBuffId()
+
+		for planeId = 1, 2 do
+			local planeMo = curBossMo:getPlaneMo(planeId)
+			local teamInfoData = planeMo:getTeamInfoData()
+
+			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Support, teamInfoData.supportId)
+			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Research, teamInfoData.researchId)
+			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Cloth, teamInfoData.clothId)
+		end
+	end
 end
 
 TowerComposeHeroGroupModel.instance = TowerComposeHeroGroupModel.New()

@@ -219,7 +219,7 @@ function ResCheckMgr:getAllLocalLang()
 			hasLocalVersion = tabletool.indexOf(packageTypeList, lang) ~= nil
 		end
 
-		if default or hasLocalVersion or isCurLang then
+		if default or hasLocalVersion or isCurLang or HotUpdateVoiceMgr.ForceSelect[lang] then
 			table.insert(langShortcuts, lang)
 		end
 	end

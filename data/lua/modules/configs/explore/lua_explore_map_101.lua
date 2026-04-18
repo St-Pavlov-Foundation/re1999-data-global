@@ -2,24 +2,24 @@
 
 local path = {
 	"",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_block_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_block_02.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_ctjg_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_mfjg_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_mfdj_02.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_tp_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_bx_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_fighting_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_sj_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_exit_01.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_sj_02.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_fighting_02.prefab",
-	"explore/zj_01/jiaohu/prefabs/zj_01_jh_dt_01.prefab",
-	"explore/zj_01/fenwei/prefabs/zj_01_fw_lunyi_01.prefab",
-	"explore/zj_01/fenwei/prefabs/zj_01_jhfw_jushuyi_01.prefab",
-	"explore/zj_01/fenwei/prefabs/zj_01_jhfw_boliqin_01.prefab",
-	"explore/zj_01/fenwei/prefabs/zj_01_jhfw_desk_01.prefab",
-	"explore/zj_01/fenwei/prefabs/zj_01_fw_paper_01.prefab"
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_block_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_block_02.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_ctjg_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_mfjg_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_mfdj_02.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_tp_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_bx_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_fighting_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_sj_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_exit_01.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_sj_02.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_fighting_02.prefab",
+	"modules/explore/zj_01/jiaohu/prefabs/zj_01_jh_dt_01.prefab",
+	"modules/explore/zj_01/fenwei/prefabs/zj_01_fw_lunyi_01.prefab",
+	"modules/explore/zj_01/fenwei/prefabs/zj_01_jhfw_jushuyi_01.prefab",
+	"modules/explore/zj_01/fenwei/prefabs/zj_01_jhfw_boliqin_01.prefab",
+	"modules/explore/zj_01/fenwei/prefabs/zj_01_jhfw_desk_01.prefab",
+	"modules/explore/zj_01/fenwei/prefabs/zj_01_fw_paper_01.prefab"
 }
 
 return {

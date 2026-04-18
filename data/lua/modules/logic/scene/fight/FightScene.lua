@@ -6,7 +6,6 @@ local FightScene = class("FightScene", BaseScene)
 
 function FightScene:_createAllComps()
 	self:_addComp("director", FightSceneDirector)
-	self:_addComp("level", FightSceneLevelComp)
 	self:_addComp("camera", FightSceneCameraComp)
 	self:_addComp("view", FightSceneViewComp)
 	self:_addComp("preloader", FightScenePreloader)

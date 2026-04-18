@@ -17,6 +17,8 @@ function SurvivalResultMo:init(data)
 
 	self.teamInfo:init(data.teamInfo)
 
+	self.npcDropTips = data.npcDropTips
+
 	local bag = SurvivalShelterModel.instance:getWeekInfo():getBag(SurvivalEnum.ItemSource.Map)
 
 	self.firstItems = {}
@@ -137,6 +139,7 @@ function SurvivalResultMo:init(data)
 	self.afterItems = {}
 	self.afterNpcs = {}
 	self.afterCurrencyItems = {}
+	self.afterItemWorth = 0
 
 	local afterItems = {}
 
@@ -172,6 +175,8 @@ function SurvivalResultMo:init(data)
 				logError("转换货币的时候，多出来一个道具:" .. itemMo.co.name)
 				table.insert(afterItems, itemMo)
 			end
+
+			self.afterItemWorth = self.afterItemWorth + itemMo.count * itemMo.co.worth
 		end
 	end
 

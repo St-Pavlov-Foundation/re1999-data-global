@@ -52,6 +52,7 @@ function SurvivalChoiceMo:clearValues()
 	self.isShowBogusBtn = false
 	self.exBogusData = nil
 	self.openFogRange = nil
+	self.isRoleExclusive = nil
 end
 
 function SurvivalChoiceMo:refreshData()
@@ -84,6 +85,22 @@ function SurvivalChoiceMo:checkConditionStr()
 
 		if func then
 			func(self, arr[2])
+		end
+	end
+end
+
+function SurvivalChoiceMo:checkCondition_RoleExclusive(param)
+	local ids = string.splitToNumber(param, "#")
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local roleId = survivalShelterRoleMo.roleId
+
+	if roleId then
+		for _, id in ipairs(ids) do
+			if id == roleId then
+				self.isRoleExclusive = true
+
+				break
+			end
 		end
 	end
 end

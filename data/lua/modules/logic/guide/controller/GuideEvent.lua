@@ -23,6 +23,7 @@ GuideEvent.onReceiveFinishGuideReply = 16
 GuideEvent.SetMaskOffset = 101
 GuideEvent.FadeView = 102
 GuideEvent.SetMaskPosition = 103
+GuideEvent.InterruptGuide = 104
 GuideEvent.OnPushBoxWinPause1 = 1001
 GuideEvent.OnPushBoxWinPause2 = 1002
 GuideEvent.OnPushBoxWinPause3 = 1003

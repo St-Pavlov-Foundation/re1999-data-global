@@ -31,7 +31,7 @@ function ExploreOutLineComp:setup(go)
 	local icon = self.unit.mo.isStrong and co.icon2 or co.icon
 
 	if not string.nilorempty(icon) then
-		self._iconPath = "explore/common/sprite/prefabs/" .. icon .. ".prefab"
+		self._iconPath = "modules/explore/common/sprite/prefabs/" .. icon .. ".prefab"
 	end
 end
 

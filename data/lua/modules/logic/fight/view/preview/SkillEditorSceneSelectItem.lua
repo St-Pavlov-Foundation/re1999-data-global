@@ -34,14 +34,14 @@ function SkillEditorSceneSelectItem:onSelect(isSelect)
 end
 
 function SkillEditorSceneSelectItem:_onClickThis()
-	local oldId = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	local oldId = FightGameMgr.sceneLevelMgr:getCurLevelId()
 	local newId = self._mo.co.id
 
 	if oldId ~= newId then
 		local index = SkillEditorSceneSelectModel.instance:getIndex(self._mo)
 
 		SkillEditorSceneSelectModel.instance:selectCell(index, true)
-		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevel(newId)
+		FightGameMgr.sceneLevelMgr:loadScene(nil, newId)
 		SkillEditorMgr.instance:setSceneLevelId(newId)
 		self:_setCameraOffset(newId)
 		FightController.instance:dispatchEvent(FightEvent.OnSkillEditorSceneChange)

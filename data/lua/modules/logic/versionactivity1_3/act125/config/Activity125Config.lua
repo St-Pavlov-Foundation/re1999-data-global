@@ -223,6 +223,10 @@ function Activity125Config:getCultivationDestinyActId(fallback)
 	return ActivityConfig.instance:getConstAsNum(7, fallback or 13210)
 end
 
+function Activity125Config:getWarmUpActId(fallback)
+	return ActivityConfig.instance:getConstAsNum(11, fallback or 13443)
+end
+
 Activity125Config.instance = Activity125Config.New()
 
 return Activity125Config

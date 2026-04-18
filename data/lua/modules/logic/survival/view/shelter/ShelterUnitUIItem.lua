@@ -31,12 +31,13 @@ function ShelterUnitUIItem:init(go)
 	self.animGoBuildInfo = self.goBuildInfo:GetComponent(gohelper.Type_Animation)
 	self.txtBuildInfo = gohelper.findChildTextMesh(self.rootGO, "#go_Info/Info/#txt_Info")
 	self.image_level_reputation = gohelper.findChildImage(self.rootGO, "#go_Info/Info/#txt_Info/#image_level")
-	self.go_reddot_reputation = gohelper.findChild(self.rootGO, "#go_Info/Info/#txt_Info/#go_reddot")
+	self.go_reddot = gohelper.findChild(self.rootGO, "#go_Info/Info/#txt_Info/#go_reddot")
 	self.goMonster = gohelper.findChild(self.rootGO, "monster")
 	self.sImageMonsterIcon = gohelper.findChildSingleImage(self.rootGO, "monster/#go_monsterHeadIcon")
 	self.goMonsterTime = gohelper.findChild(self.rootGO, "monster/Time")
 	self.txtTime = gohelper.findChildTextMesh(self.rootGO, "monster/Time/#txt_LimitTime")
 	self.goHero = gohelper.findChild(self.rootGO, "hero")
+	self._simage_hero = gohelper.findChildImage(self.rootGO, "hero/#simage_hero")
 	self.goarrow = gohelper.findChild(self.rootGO, "arrow")
 	self.goarrowright = gohelper.findChild(self.rootGO, "arrow/right")
 	self.goarrowtop = gohelper.findChild(self.rootGO, "arrow/top")
@@ -48,7 +49,7 @@ function ShelterUnitUIItem:init(go)
 	self:initFollower()
 	self:initBg()
 	self:refreshInfo()
-	self:refreshReputationRedDot()
+	self:refreshRedDot()
 end
 
 function ShelterUnitUIItem:onStart()
@@ -89,6 +90,8 @@ function ShelterUnitUIItem:initFollower()
 
 	if self.unitType == SurvivalEnum.ShelterUnitType.Player then
 		canShowRange = true
+	elseif self.unitType == SurvivalEnum.ShelterUnitType.Npc then
+		canShowRange = true
 	end
 
 	if not canShowRange then
@@ -111,7 +114,7 @@ function ShelterUnitUIItem:initFollower()
 		local halfScreenWidth = screenRightX / 2
 		local halfScreenHeight = screenTopY / 2
 
-		self._uiFollower:SetRange(-halfScreenWidth, halfScreenWidth, -halfScreenHeight, halfScreenHeight)
+		self._uiFollower:SetRange(-halfScreenWidth + 250, halfScreenWidth - 150, -halfScreenHeight + 110, halfScreenHeight - 110)
 		self._uiFollower:SetArrowCallback(self.onArrowCallback, self)
 	end
 
@@ -250,6 +253,11 @@ function ShelterUnitUIItem:refreshPlayerInfo()
 	gohelper.setActive(self.goHero, true)
 	gohelper.setActive(self.imagebubble, false)
 	self:setBubbleIcon()
+
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+	local path = lua_survival_role.configDict[survivalShelterRoleMo.roleId].moveHead
+
+	UISpriteSetMgr.instance:setSurvivalSprite2(self._simage_hero, path)
 end
 
 function ShelterUnitUIItem:refreshBuildingInfo()
@@ -375,14 +383,18 @@ function ShelterUnitUIItem:refreshReputation(isCheckChange)
 	end
 end
 
-function ShelterUnitUIItem:refreshReputationRedDot()
+function ShelterUnitUIItem:refreshRedDot()
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
 
-	if buildingInfo and buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
-		local redDotType = SurvivalConfig.instance:getReputationRedDotType(buildingInfo.buildingId)
+	if buildingInfo then
+		if buildingInfo:isEqualType(SurvivalEnum.BuildingType.ReputationShop) then
+			local redDotType = SurvivalConfig.instance:getReputationRedDotType(buildingInfo.buildingId)
 
-		RedDotController.instance:addRedDot(self.go_reddot_reputation, redDotType)
+			RedDotController.instance:addRedDot(self.go_reddot, redDotType)
+		elseif buildingInfo:isEqualType(SurvivalEnum.BuildingType.Tech) then
+			RedDotController.instance:addRedDot(self.go_reddot, RedDotEnum.DotNode.SurvivalTeach)
+		end
 	end
 end
 

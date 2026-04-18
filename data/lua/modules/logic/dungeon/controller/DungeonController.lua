@@ -1070,10 +1070,13 @@ function DungeonController:enterTowerComposeView(episodeId)
 
 		local fightParam = TowerComposeModel.instance:getRecordFightParam()
 		local fightFinishParam = TowerComposeModel.instance:getFightFinishParam()
+		local themeMo = TowerComposeModel.instance:getThemeMo(fightParam.themeId)
+		local curBossMo = themeMo:getCurBossMo()
 		local isWin = fightFinishParam and fightFinishParam.result == 1
 
 		viewParam.themeId = fightParam.themeId
 		viewParam.layerId = fightParam.layerId
+		viewParam.isNotReset = curBossMo and curBossMo.lock and (not fightFinishParam or not fightFinishParam.result or fightFinishParam.result == TowerComposeEnum.FightResult.None)
 
 		local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(fightParam.themeId, fightParam.layerId)
 

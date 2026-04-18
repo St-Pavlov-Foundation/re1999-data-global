@@ -64,6 +64,12 @@ function ActCenterItemBase:_addNotEventRedDot(cb, cbObj)
 	self._redDot = RedDotController.instance:addNotEventRedDot(self._goactivityreddot, cb, cbObj)
 end
 
+function ActCenterItemBase:setReddotShowType(showType)
+	if self._redDot then
+		self._redDot:setShowType(showType)
+	end
+end
+
 function ActCenterItemBase:isShowRedDot()
 	return self._redDot and self._redDot.isShowRedDot
 end

@@ -120,8 +120,10 @@ end
 function TowerComposeThemeInfoView:_editableInitView()
 	gohelper.setActive(self._gowordTipContent, true)
 	gohelper.setActive(self._goroleItem, false)
+	gohelper.setActive(self._gowordItem, false)
 
 	self.roleBuffList = self:getUserDataTb_()
+	self.wordItemList = self:getUserDataTb_()
 	self._animWord = self._goword:GetComponent(gohelper.Type_Animator)
 end
 
@@ -186,7 +188,7 @@ function TowerComposeThemeInfoView:checkIsEpisodeLock()
 	local unlockScore = tonumber(self.curEpisodeConfig.unlock)
 	local themeMo = TowerComposeModel.instance:getThemeMo(self.curThemeId)
 
-	return unlockScore > themeMo.highScore
+	return unlockScore > themeMo:getCurBossHighScore()
 end
 
 function TowerComposeThemeInfoView:checkJump()
@@ -226,17 +228,31 @@ function TowerComposeThemeInfoView:refreshWord()
 
 	gohelper.setActive(self._goword, self.curEpisodeConfig.plane == 0 and #self.unlockModIdList > 0)
 
-	if #self.unlockModIdList > 0 then
-		gohelper.CreateObjList(self, self._onWordItemShow, self.unlockModIdList, self._gowordContent, self._gowordItem)
+	for index, modId in ipairs(self.unlockModIdList) do
+		local wordItem = self.wordItemList[index]
+
+		if not wordItem then
+			wordItem = {
+				go = gohelper.clone(self._gowordItem, self._gowordContent, "wordItem" .. index)
+			}
+			wordItem.imageIcon = gohelper.findChildImage(wordItem.go, "image_icon")
+			wordItem.imageModColorIcon = gohelper.findChildImage(wordItem.go, "image_icon_01")
+			wordItem.materialModIcon = UnityEngine.Object.Instantiate(wordItem.imageModColorIcon.material)
+			wordItem.imageModLvColorIcon = gohelper.findChildImage(wordItem.go, "image_icon_02")
+			wordItem.materialModLvIcon = UnityEngine.Object.Instantiate(wordItem.imageModLvColorIcon.material)
+			wordItem.imageModColorIcon.material = wordItem.materialModIcon
+			wordItem.imageModLvColorIcon.material = wordItem.materialModLvIcon
+			wordItem.modIconComp = MonoHelper.addNoUpdateLuaComOnceToGo(wordItem.go, TowerComposeModIconComp)
+			self.wordItemList[index] = wordItem
+		end
+
+		wordItem.modIconComp:refreshMod(modId, wordItem.imageIcon, wordItem.imageModColorIcon, wordItem.imageModLvColorIcon, wordItem.materialModIcon, wordItem.materialModLvIcon)
+		gohelper.setActive(wordItem.go, true)
 	end
-end
 
-function TowerComposeThemeInfoView:_onWordItemShow(obj, data, index)
-	local modId = data
-	local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
-	local imageIcon = gohelper.findChildImage(obj, "image_icon")
-
-	UISpriteSetMgr.instance:setTower2Sprite(imageIcon, modConfig.icon)
+	for index = #self.unlockModIdList + 1, #self.wordItemList do
+		gohelper.setActive(self.wordItemList[index].go, false)
+	end
 end
 
 function TowerComposeThemeInfoView:refreshPlaneInfo()
@@ -379,11 +395,12 @@ end
 
 function TowerComposeThemeInfoView:refreshRecord()
 	local themeMo = TowerComposeModel.instance:getThemeMo(self.curThemeId)
+	local highScore = themeMo:getCurBossHighScore()
 
-	gohelper.setActive(self._gomaxScore, themeMo.highScore > 0)
-	gohelper.setActive(self._gonorecord, themeMo.highScore == 0)
+	gohelper.setActive(self._gomaxScore, self.curLayerId <= self.passLayerId or self.curEpisodeConfig.plane == 2)
+	gohelper.setActive(self._gonorecord, self.curLayerId > self.passLayerId and self.curEpisodeConfig.plane < 2)
 
-	self._txtmaxScore.text = themeMo.highScore
+	self._txtmaxScore.text = highScore
 end
 
 function TowerComposeThemeInfoView:playWordUnlockAnim()

@@ -119,5 +119,71 @@
     "durationDay": 42,
     "triggerType": 3,
     "cdtimes": 300
+  },
+  {
+    "id": 12,
+    "buildingId": 0,
+    "effectSequence": "13#12",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-04-16 05:00:00",
+    "durationDay": 15,
+    "triggerType": 3,
+    "cdtimes": 3600
+  },
+  {
+    "id": 13,
+    "buildingId": 0,
+    "effectSequence": "12#13",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-05-01 05:00:00",
+    "durationDay": 15,
+    "triggerType": 3,
+    "cdtimes": 3600
+  },
+  {
+    "id": 14,
+    "buildingId": 0,
+    "effectSequence": "13#12",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-05-16 05:00:00",
+    "durationDay": 12,
+    "triggerType": 3,
+    "cdtimes": 3600
+  },
+  {
+    "id": 15,
+    "buildingId": 0,
+    "effectSequence": "11",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-04-16 05:00:00",
+    "durationDay": 15,
+    "triggerType": 3,
+    "cdtimes": 14400
+  },
+  {
+    "id": 16,
+    "buildingId": 0,
+    "effectSequence": "11",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-05-01 05:00:00",
+    "durationDay": 15,
+    "triggerType": 3,
+    "cdtimes": 14400
+  },
+  {
+    "id": 17,
+    "buildingId": 0,
+    "effectSequence": "6",
+    "residentEffect": 1,
+    "cyclesTimes": 0,
+    "openTime": "2026-04-16 05:00:00",
+    "durationDay": 42,
+    "triggerType": 3,
+    "cdtimes": 300
   }
 ]

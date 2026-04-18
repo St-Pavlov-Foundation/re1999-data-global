@@ -1,0 +1,226 @@
+[
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 1,
+    "bonus": "2#2#100",
+    "bonusWeight": 1000
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 2,
+    "bonus": "1#491010#1",
+    "bonusWeight": 1000
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 3,
+    "bonus": "1#110503#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 4,
+    "bonus": "1#111012#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 5,
+    "bonus": "1#110403#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 6,
+    "bonus": "1#111002#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 7,
+    "bonus": "1#110303#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 8,
+    "bonus": "1#110803#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 9,
+    "bonus": "1#111001#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 10,
+    "bonus": "1#110502#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 11,
+    "bonus": "1#110702#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 12,
+    "bonus": "1#110402#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 13,
+    "bonus": "1#110102#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 14,
+    "bonus": "1#110302#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 15,
+    "bonus": "2#3#5000",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 1,
+    "id": 16,
+    "bonus": "2#5#5000",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 1,
+    "bonus": "2#2#100",
+    "bonusWeight": 1000
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 2,
+    "bonus": "1#491010#1",
+    "bonusWeight": 1000
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 3,
+    "bonus": "1#110203#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 4,
+    "bonus": "1#110603#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 5,
+    "bonus": "1#110103#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 6,
+    "bonus": "1#110703#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 7,
+    "bonus": "1#110903#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 8,
+    "bonus": "1#111103#1",
+    "bonusWeight": 800
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 9,
+    "bonus": "1#110202#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 10,
+    "bonus": "1#110602#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 11,
+    "bonus": "1#110802#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 12,
+    "bonus": "1#110902#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 13,
+    "bonus": "1#111102#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 14,
+    "bonus": "9#1003#2#1",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 15,
+    "bonus": "2#3#5000",
+    "bonusWeight": 1150
+  },
+  {
+    "activityId": 13414,
+    "cardId": 2,
+    "id": 16,
+    "bonus": "2#5#5000",
+    "bonusWeight": 1150
+  }
+]

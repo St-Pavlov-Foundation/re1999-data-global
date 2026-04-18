@@ -22,20 +22,18 @@ function CruiseGameTaskView:onInitView()
 	self.listSpacing = layoutGroup.spacing
 	self.scrollWidth = recthelper.getWidth(self.scrollItem.transform)
 
-	local scrollParam = SurvivalSimpleListParam.New()
+	local scrollParam = SimpleListParam.New()
 
 	scrollParam.cellClass = CruiseGameTaskItem
 	scrollParam.lineCount = 1
-	scrollParam.cellWidth = self.cellWidth
-	scrollParam.cellHeight = 600
 	scrollParam.cellSpaceH = self.listSpacing
 	scrollParam.endSpace = 50
 
 	local res = self.rewardItem
 
-	self.survivalSimpleListComp = SurvivalHelper.instance:createLuaSimpleListComp(self.scrollItem, scrollParam, res, self.viewContainer)
+	self.simpleListComp = GameFacade.createSimpleListComp(self.scrollItem, scrollParam, res, self.viewContainer)
 
-	self.survivalSimpleListComp:setOnValueChanged(self.onValueChangedCallBack, self)
+	self.simpleListComp:setOnValueChanged(self.onValueChangedCallBack, self)
 	gohelper.setActive(self.bubble, false)
 end
 
@@ -53,7 +51,7 @@ function CruiseGameTaskView:onOpen()
 
 	self:refreshList()
 	self:refreshBubble()
-	self.survivalSimpleListComp:moveTo(self.unLockMaxIndex)
+	self.simpleListComp:moveTo(self.unLockMaxIndex)
 end
 
 function CruiseGameTaskView:onClose()
@@ -73,7 +71,7 @@ function CruiseGameTaskView:onValueChangedCallBack(scrollX, scrollY)
 end
 
 function CruiseGameTaskView:refreshBubble()
-	local scrollPixel = self.survivalSimpleListComp:getScrollPixel()
+	local scrollPixel = self.simpleListComp:getScrollPixel()
 	local bubbleShowIndex
 
 	for i, cfg in ipairs(self.datas) do
@@ -137,8 +135,8 @@ function CruiseGameTaskView:refreshList()
 		end
 	end
 
-	self.survivalSimpleListComp:setList(self.datas)
-	self.survivalSimpleListComp:setRefreshAnimation(0.06, nil, 0.24)
+	self.simpleListComp:setData(self.datas)
+	self.simpleListComp:setRefreshAnimation(true, 0.06, nil, 0.24)
 
 	local nextLevel = self.unLockMaxIndex + 1
 

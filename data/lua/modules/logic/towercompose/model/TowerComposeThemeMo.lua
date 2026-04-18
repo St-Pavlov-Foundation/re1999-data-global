@@ -8,11 +8,11 @@ function TowerComposeThemeMo:ctor(themeId)
 	self.themeId = themeId
 	self.passLayerId = 0
 	self.researchProgress = 0
-	self.highScore = 0
-	self.curScore = 0
 	self.unlockModIdMap = {}
 	self.unlockModIdList = {}
-	self.planeInfoMap = {}
+	self.curBossMo = nil
+	self.bossRecordInfoData = nil
+	self.hasSavedRecord = false
 end
 
 function TowerComposeThemeMo:updateInfo(info)
@@ -21,7 +21,9 @@ function TowerComposeThemeMo:updateInfo(info)
 
 	self:updateUnlockModIds(info.unlockModIds)
 	self:updateComposeBossInfo(info.boss)
+	self:updateComposeBossRecordInfo(info.currRecord)
 
+	self.hasSavedRecord = info.savedRecord
 	self.passLayerId = info.passMaxLayerId
 end
 
@@ -36,25 +38,40 @@ function TowerComposeThemeMo:updateUnlockModIds(unlockModIds)
 end
 
 function TowerComposeThemeMo:updateComposeBossInfo(bossInfo)
-	for index, planeInfo in ipairs(bossInfo.planes) do
-		self:updatePlaneInfoData(planeInfo)
+	if not self.curBossMo then
+		self.curBossMo = TowerComposeBossMo.New({
+			themeId = self.themeId
+		})
 	end
 
-	self.highScore = bossInfo.highScore
-	self.curScore = bossInfo.currScore
+	self.curBossMo:updateComposeBossInfo(bossInfo)
+end
+
+function TowerComposeThemeMo:updateComposeBossRecordInfo(recordInfo)
+	if recordInfo and tonumber(recordInfo.createTime) > 0 then
+		if not self.bossRecordInfoData then
+			self.bossRecordInfoData = {}
+			self.bossRecordInfoData.bossMo = TowerComposeBossMo.New({
+				themeId = self.themeId
+			})
+		end
+
+		self.bossRecordInfoData.createTime = tonumber(recordInfo.createTime)
+
+		self.bossRecordInfoData.bossMo:updateComposeBossInfo(recordInfo.boss)
+	else
+		self.bossRecordInfoData = nil
+	end
+end
+
+function TowerComposeThemeMo:getBossRecordInfoData()
+	return self.bossRecordInfoData
 end
 
 function TowerComposeThemeMo:updatePlaneInfoData(planeInfo)
-	local planeInfoMo = self.planeInfoMap[planeInfo.planeId]
-
-	if not planeInfoMo then
-		planeInfoMo = TowerComposePlaneMo.New({
-			themeId = self.themeId
-		})
-		self.planeInfoMap[planeInfo.planeId] = planeInfoMo
+	if self.curBossMo then
+		self.curBossMo:updatePlaneInfoData(planeInfo)
 	end
-
-	planeInfoMo:updateInfo(planeInfo)
 end
 
 function TowerComposeThemeMo:updateResearchProgress(progress)
@@ -62,7 +79,25 @@ function TowerComposeThemeMo:updateResearchProgress(progress)
 end
 
 function TowerComposeThemeMo:getPlaneMo(planeId)
-	return self.planeInfoMap[planeId]
+	return self.curBossMo and self.curBossMo:getPlaneMo(planeId)
+end
+
+function TowerComposeThemeMo:setCurBossLevel(level)
+	if self.curBossMo then
+		self.curBossMo:setBossLevel(level)
+	end
+end
+
+function TowerComposeThemeMo:getCurBossLevel()
+	return self.curBossMo and self.curBossMo.level
+end
+
+function TowerComposeThemeMo:getCurBossHighScore()
+	return self.curBossMo and self.curBossMo.highScore
+end
+
+function TowerComposeThemeMo:getCurBossMo()
+	return self.curBossMo
 end
 
 function TowerComposeThemeMo:getAllUnlockModIdList()
@@ -71,6 +106,50 @@ end
 
 function TowerComposeThemeMo:isModUnlock(modId)
 	return self.unlockModIdMap[modId]
+end
+
+function TowerComposeThemeMo:getPlaneResultState(planeId)
+	local planeMo = self:getPlaneMo(planeId)
+
+	return planeMo and planeMo.fightResult
+end
+
+function TowerComposeThemeMo:isAllPlaneSucc(isRecord)
+	if isRecord then
+		local currentRecordBossMo = self.bossRecordInfoData and self.bossRecordInfoData.bossMo
+
+		if not currentRecordBossMo then
+			return false
+		end
+
+		local planeInfoMap = currentRecordBossMo:getPlaneInfoMap()
+
+		for planeId, planeMo in pairs(planeInfoMap) do
+			if planeMo.fightResult ~= TowerComposeEnum.FightResult.Win then
+				return false, planeId
+			end
+		end
+
+		return true
+	else
+		local bossSettleMo = TowerComposeModel.instance:getBossSettleInfo()
+		local recordInfoData = bossSettleMo and bossSettleMo:getRecordData()
+
+		if recordInfoData then
+			local recordBossMo = recordInfoData.bossMo
+			local planeInfoMap = recordBossMo:getPlaneInfoMap()
+
+			for planeId, planeMo in pairs(planeInfoMap) do
+				if planeMo.fightResult ~= TowerComposeEnum.FightResult.Win then
+					return false, planeId
+				end
+			end
+
+			return true
+		else
+			return false
+		end
+	end
 end
 
 return TowerComposeThemeMo

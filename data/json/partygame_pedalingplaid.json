@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "playerNum": 8,
+    "type": 1,
+    "assetId": 90002,
+    "param": 1.0,
+    "maxNum": 1,
+    "duration": 5.0,
+    "interval": "5#8"
+  },
+  {
+    "id": 2,
+    "playerNum": 8,
+    "type": 1,
+    "assetId": 90003,
+    "param": 3.0,
+    "maxNum": 2,
+    "duration": 5.0,
+    "interval": "4#6|4#6"
+  },
+  {
+    "id": 3,
+    "playerNum": 8,
+    "type": 1,
+    "assetId": 90004,
+    "param": -1.0,
+    "maxNum": 2,
+    "duration": 5.0,
+    "interval": "4#6|4#6"
+  },
+  {
+    "id": 4,
+    "playerNum": 8,
+    "type": 2,
+    "assetId": 90005,
+    "param": 5.0,
+    "maxNum": 1,
+    "duration": 4.0,
+    "interval": "2#4"
+  },
+  {
+    "id": 5,
+    "playerNum": 8,
+    "type": 3,
+    "assetId": 90006,
+    "param": 2.0,
+    "maxNum": 2,
+    "duration": 3.0,
+    "interval": "4#7|5#8"
+  },
+  {
+    "id": 6,
+    "playerNum": 4,
+    "type": 1,
+    "assetId": 90002,
+    "param": 1.0,
+    "maxNum": 1,
+    "duration": 5.0,
+    "interval": "5#8"
+  },
+  {
+    "id": 7,
+    "playerNum": 4,
+    "type": 1,
+    "assetId": 90003,
+    "param": 3.0,
+    "maxNum": 2,
+    "duration": 5.0,
+    "interval": "4#6|4#6"
+  },
+  {
+    "id": 8,
+    "playerNum": 4,
+    "type": 1,
+    "assetId": 90004,
+    "param": -1.0,
+    "maxNum": 2,
+    "duration": 5.0,
+    "interval": "4#6|4#6"
+  },
+  {
+    "id": 9,
+    "playerNum": 4,
+    "type": 2,
+    "assetId": 90005,
+    "param": 5.0,
+    "maxNum": 1,
+    "duration": 4.0,
+    "interval": "2#4"
+  },
+  {
+    "id": 10,
+    "playerNum": 4,
+    "type": 3,
+    "assetId": 90006,
+    "param": 2.0,
+    "maxNum": 2,
+    "duration": 3.0,
+    "interval": "2#4|2#4"
+  },
+  {
+    "id": 11,
+    "playerNum": 2,
+    "type": 1,
+    "assetId": 90002,
+    "param": 1.0,
+    "maxNum": 1,
+    "duration": 5.0,
+    "interval": "2#4"
+  },
+  {
+    "id": 12,
+    "playerNum": 2,
+    "type": 1,
+    "assetId": 90003,
+    "param": 3.0,
+    "maxNum": 1,
+    "duration": 5.0,
+    "interval": "2#4"
+  },
+  {
+    "id": 13,
+    "playerNum": 2,
+    "type": 1,
+    "assetId": 90004,
+    "param": -1.0,
+    "maxNum": 2,
+    "duration": 5.0,
+    "interval": "4#6|4#6"
+  },
+  {
+    "id": 14,
+    "playerNum": 2,
+    "type": 2,
+    "assetId": 90005,
+    "param": 5.0,
+    "maxNum": 1,
+    "duration": 4.0,
+    "interval": "2#4"
+  },
+  {
+    "id": 15,
+    "playerNum": 2,
+    "type": 3,
+    "assetId": 90006,
+    "param": 2.0,
+    "maxNum": 2,
+    "duration": 3.0,
+    "interval": "2#4|2#4"
+  }
+]

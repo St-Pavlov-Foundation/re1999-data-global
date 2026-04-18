@@ -29,7 +29,7 @@ function BpPropView:_editableInitView()
 	self._titleAni = self.viewGO:GetComponent(typeof(UnityEngine.Animation))
 	self._videoPlayer = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._govideo)
 
-	self._videoPlayer:play("videos/commonprop.mp4", true, nil, nil)
+	self._videoPlayer:play("commonprop", true, nil, nil)
 end
 
 function BpPropView:_onClickBG()

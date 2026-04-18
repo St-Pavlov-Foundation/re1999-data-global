@@ -25,6 +25,10 @@ end
 
 function SDKController:onLoginSuccess()
 	SDKModel.instance:updateBaseProperties()
+
+	local bEnabledScreenshot = SettingsModel.instance:getScreenshotSwitch()
+
+	SDKMgr.instance:setShareEnabled(bEnabledScreenshot)
 end
 
 function SDKController:openSDKExitView(loginCallback, exitCallback)

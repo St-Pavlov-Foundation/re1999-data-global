@@ -12,7 +12,7 @@ function SurvivalMapModel:onInit()
 	self.curUseItem = nil
 	self.result = SurvivalEnum.MapResult.None
 	self.showCostTime = 0
-	self.searchChangeItems = nil
+	self.itemConvertInfosList = {}
 	self.resultData = SurvivalResultMo.New()
 	self._initGroupMo = SurvivalInitGroupModel.New()
 	self.isSearchRemove = false
@@ -20,10 +20,15 @@ function SurvivalMapModel:onInit()
 	self.isFightEnter = false
 	self.guideSpBlockPos = nil
 	self._cacheHexPoints = {}
+	self.survivalLeaveMsgViewParam = nil
 end
 
 function SurvivalMapModel:reInit()
 	self:onInit()
+end
+
+function SurvivalMapModel:clearItemConvert()
+	self.itemConvertInfosList = {}
 end
 
 function SurvivalMapModel:getCacheHexNode(index)
@@ -69,6 +74,10 @@ function SurvivalMapModel:setSceneData(scene)
 
 	GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.SurvivalTeamSave, str)
 	SurvivalEquipRedDotHelper.instance:checkRed()
+
+	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
+
+	survivalShelterRoleMo:clearExpCache()
 end
 
 function SurvivalMapModel:getSceneMo()
@@ -198,7 +207,7 @@ function SurvivalMapModel:canWalk(isTips)
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 	local bagMo = weekInfo:getBag(SurvivalEnum.ItemSource.Map)
 
-	if bagMo.totalMass > bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight) then
+	if bagMo.totalMass > bagMo:getMaxWeightLimit() then
 		if isTips then
 			GameFacade.showToast(ToastEnum.SurvivalNoMoveWeight)
 		end
@@ -231,6 +240,18 @@ function SurvivalMapModel:getSelectMapId()
 	local mapInfo = weekMo.mapInfos[survivalInitGroupModel.selectMapIndex + 1]
 
 	return mapInfo.mapId
+end
+
+function SurvivalMapModel:onUseRoleSkill(info)
+	local sceneMo = self:getSceneMo()
+
+	if not sceneMo then
+		return
+	end
+
+	local skillInfo = sceneMo:getRoleSkillInfo()
+
+	skillInfo:onUseRoleSkill(info)
 end
 
 SurvivalMapModel.instance = SurvivalMapModel.New()

@@ -224,7 +224,7 @@ FightEnum.EffectType = {
 	LAYERSLAVEHALO = 232,
 	ENTERFIGHTDEAL = 233,
 	COLD = 80,
-	PALSY = 81,
+	EMITTEREXTRADEMAGE = 367,
 	IMMUNITY = 33,
 	HARMSTATISTIC = 114,
 	DEADLYPOISON = 255,
@@ -327,12 +327,13 @@ FightEnum.EffectType = {
 	DAMAGEEXTRA = 18,
 	CANTGETEXSKILL = 129,
 	UPDATEITEMPLAYERSKILL = 1002,
-	SHIELDCHANGE = 41,
-	REDORBLUECHANGETRIGGER = 307,
-	EZIOBIGSKILLORIGINDAMAGE = 1001,
 	SUMMON = 86,
-	MAXHPCHANGE = 108,
+	REDORBLUECHANGETRIGGER = 307,
+	SHIELDCHANGE = 41,
+	EZIOBIGSKILLORIGINDAMAGE = 1001,
+	PALSY = 81,
 	DEAD = 9,
+	MAXHPCHANGE = 108,
 	STORAGEINJURY = 167,
 	EXPOINTFIX = 39,
 	ASSISTBOSSCHANGE = 260,
@@ -804,6 +805,7 @@ FightEnum.BuffType_ExPointCardMove = "ExPointCardMove"
 FightEnum.BuffType_FixAttrTeamEnergyAndBuff = "FixAttrTeamEnergyAndBuff"
 FightEnum.BuffType_FixAttrTeamEnergy = "FixAttrTeamEnergy"
 FightEnum.BuffType_EmitterCareerChange = "EmitterCareerChange"
+FightEnum.BuffType_ChangeEmitterSkill = "ChangeEmitterSkill"
 FightEnum.BuffType_CardAreaRedOrBlue = "CardAreaRedOrBlue"
 FightEnum.BuffType_RedOrBlueCount = "RedOrBlueCount"
 FightEnum.BuffType_RedOrBlueChangeTrigger = "RedOrBlueChangeTrigger"
@@ -1198,6 +1200,7 @@ FightEnum.ASFDUnit = {
 }
 FightEnum.ASFDFlyPath = {
 	Default = 1,
+	StraightLine_LSJ = 3,
 	StraightLine = 2
 }
 FightEnum.ASFDType = {
@@ -1208,6 +1211,7 @@ FightEnum.ASFDEffect = {
 	Normal = 1
 }
 FightEnum.ASFDReplyRule = {
+	IndexMoreThan = 3,
 	HasSkin = 1,
 	HasBuffActId = 2
 }
@@ -1233,11 +1237,13 @@ FightEnum.CardIconId = {
 }
 FightEnum.MagicCircleUIType = {
 	Electric = 1,
+	LSJ = 2,
 	Normal = 0
 }
 FightEnum.MagicCircleUIType2Name = {
 	[FightEnum.MagicCircleUIType.Normal] = "shuzhenitem",
-	[FightEnum.MagicCircleUIType.Electric] = "electricmagiccircle"
+	[FightEnum.MagicCircleUIType.Electric] = "electricmagiccircle",
+	[FightEnum.MagicCircleUIType.LSJ] = "lsj"
 }
 FightEnum.ExPointType = {
 	Common = 0,
@@ -1283,9 +1289,11 @@ FightEnum.MultiHpType = {
 FightEnum.ProgressId = {
 	Progress_5 = 5,
 	Progress_500M = 7,
-	Progress_6 = 6
+	Progress_6 = 6,
+	Progress_8 = 8
 }
 FightEnum.HeroId = {
+	LY = 3110,
 	BLE = 3134,
 	ALF = 3113
 }
@@ -1367,6 +1375,15 @@ FightEnum.AssistBossType = {
 	CombineBoss3_3 = 1,
 	Rouge3_3 = 2,
 	Normal = 0
+}
+FightEnum.Career = {
+	Animal = 4,
+	Wisdom = 6,
+	Wood = 3,
+	Rock = 1,
+	Spirit = 5,
+	Star = 2,
+	None = 0
 }
 
 return FightEnum

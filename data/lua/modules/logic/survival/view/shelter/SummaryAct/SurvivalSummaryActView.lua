@@ -21,6 +21,7 @@ end
 
 function SurvivalSummaryActView:addEvents()
 	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onViewClose, self)
 end
 
 function SurvivalSummaryActView:removeEvents()
@@ -28,17 +29,23 @@ function SurvivalSummaryActView:removeEvents()
 end
 
 function SurvivalSummaryActView:_btnCloseOnClick()
-	if not self.isClickClose and (not self.popupFlow or self.popupFlow:isFlowDone()) then
+	return
+end
+
+function SurvivalSummaryActView:_onViewClose(viewName)
+	if viewName == ViewName.SurvivalGetRewardView then
+		self:startClose()
+	end
+end
+
+function SurvivalSummaryActView:startClose()
+	TaskDispatcher.runDelay(function()
 		if self.survivalSummaryActNpcWork then
 			self.survivalSummaryActNpcWork:playCloseAnim()
 		end
 
 		TaskDispatcher.runDelay(self.closeThis, self, 0.2)
-
-		self.isClickClose = true
-
-		return
-	end
+	end, self, 1.5)
 end
 
 function SurvivalSummaryActView:onOpen()
@@ -70,9 +77,19 @@ function SurvivalSummaryActView:onOpen()
 	self.popupFlow:registerDoneListener(self.onDone, self)
 	self:buildPlayerWork()
 	self:buildNpcWork()
-	self:buildDelay(2)
+	self.popupFlow:addWork(TimerWork.New(1))
+
+	local npcDropTips = SurvivalMapModel.instance.resultData.npcDropTips
+
+	if npcDropTips then
+		self.popupFlow:addWork(FunctionWork.New(self.showRewardView, self))
+	else
+		self.popupFlow:addWork(FunctionWork.New(function()
+			self:startClose()
+		end, self))
+	end
+
 	self.popupFlow:start()
-	self:refreshReputationListComp()
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideSurvivalSummaryActStart)
 end
 
@@ -88,6 +105,28 @@ function SurvivalSummaryActView:onDestroyView()
 	end
 
 	SurvivalController.instance:exitMap()
+end
+
+function SurvivalSummaryActView:showRewardView()
+	local npcDropTips = SurvivalMapModel.instance.resultData.npcDropTips
+
+	if npcDropTips then
+		local items = {}
+
+		for k, v in ipairs(npcDropTips) do
+			local itemMo = SurvivalBagItemMo.New()
+
+			itemMo:init({
+				id = v.itemId,
+				count = v.count
+			})
+			table.insert(items, itemMo)
+		end
+
+		ViewMgr.instance:openView(ViewName.SurvivalGetRewardView, {
+			items = items
+		})
+	end
 end
 
 function SurvivalSummaryActView:buildPlayerWork()
@@ -121,25 +160,14 @@ function SurvivalSummaryActView:onDone()
 end
 
 function SurvivalSummaryActView:createReputationListComp()
-	local scrollParam = SurvivalSimpleListParam.New()
+	local scrollParam = SimpleListParam.New()
 
 	scrollParam.cellClass = SurvivalSummaryActReputationItem
 	scrollParam.lineCount = 1
-	scrollParam.cellWidth = 452
-	scrollParam.cellHeight = 138
-	scrollParam.cellSpaceH = 0
-	scrollParam.cellSpaceV = 0
 
 	local res = self.reputationItem
 
-	self.listComp = SurvivalHelper.instance:createLuaSimpleListComp(self.reputationList.gameObject, scrollParam, res, self.viewContainer)
-end
-
-function SurvivalSummaryActView:refreshReputationListComp()
-	local scene = SurvivalMapHelper.instance:getScene()
-	local reputationInfos = scene.actProgress.buildReputationInfos
-
-	self.listComp:setList(reputationInfos)
+	self.listComp = GameFacade.createSimpleListComp(self.reputationList.gameObject, scrollParam, res, self.viewContainer)
 end
 
 return SurvivalSummaryActView

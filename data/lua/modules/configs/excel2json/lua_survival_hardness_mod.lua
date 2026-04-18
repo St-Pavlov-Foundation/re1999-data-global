@@ -4,13 +4,15 @@ module("modules.configs.excel2json.lua_survival_hardness_mod", package.seeall)
 
 local lua_survival_hardness_mod = {}
 local fields = {
-	optional = 3,
+	unlock = 8,
+	extendScore = 6,
 	name = 2,
-	extendScore = 5,
-	unlock = 7,
+	subTab = 4,
+	hardness = 5,
+	initRole = 9,
+	desc = 7,
 	id = 1,
-	hardness = 4,
-	desc = 6
+	optional = 3
 }
 local primaryKey = {
 	"id"

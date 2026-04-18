@@ -1597,11 +1597,17 @@ function FightViewHandCardItem:playCardAConvertCardB()
 
 		TaskDispatcher.runDelay(self._afterConvertCardEffect, self, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 	else
+		if self.convertCardEffectLoaded then
+			return
+		end
+
 		self._loader:loadAsset("ui/viewres/fight/card_intensive.prefab", self._onCardAConvertCardBLoaded, self)
 	end
 end
 
 function FightViewHandCardItem:_onCardAConvertCardBLoaded(loader)
+	self.convertCardEffectLoaded = true
+
 	local tarPrefab = loader:GetResource()
 
 	self._convertEffect = gohelper.clone(tarPrefab, self._cardConvertEffect)

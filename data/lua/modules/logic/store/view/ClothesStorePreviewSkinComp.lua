@@ -24,9 +24,9 @@ function ClothesStorePreviewSkinComp:init(go)
 	self._txtskinName = gohelper.findChildText(self.viewGO, "#txt_skinName")
 	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "#txt_skinNameEn")
 	self.special2dBgScale = {
-		[306604] = 2,
-		[302504] = 2,
-		[308603] = 2,
+		[305305] = 2,
+		[310003] = 0.5,
+		[311003] = 2,
 		[308303] = 2
 	}
 end
@@ -124,6 +124,10 @@ function ClothesStorePreviewSkinComp:refreshInfo()
 	end
 end
 
+function ClothesStorePreviewSkinComp:setBloomView(viewName)
+	self._bloomView = viewName
+end
+
 function ClothesStorePreviewSkinComp:refreshLive2d()
 	local live2dbg = self.skinCo.live2dbg
 
@@ -135,6 +139,10 @@ function ClothesStorePreviewSkinComp:refreshLive2d()
 
 	if self._uiSpine == nil then
 		self._uiSpine = GuiModelAgent.Create(self._gobigspine, true)
+
+		if self._bloomView then
+			self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self._bloomView)
+		end
 
 		self._uiSpine:setResPath(self.skinCo, self._onUISpineLoaded, self, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 	else

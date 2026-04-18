@@ -37,4 +37,8 @@ function Survival3DModelComp:playNextAnim(animType)
 	self.survivalUI3DRender:playNextAnim(animType)
 end
 
+function Survival3DModelComp:playSearchEffect()
+	self.survivalUI3DRender:playSearchEffect()
+end
+
 return Survival3DModelComp

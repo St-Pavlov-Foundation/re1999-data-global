@@ -68,12 +68,13 @@ function FightShuZhenView:OnClickMagicCircleText(preferredHeight, position)
 	local y = pos.y - preferredHeight + recthelper.getAnchorY(self.topLeftRootTr)
 
 	recthelper.setAnchorY(self.detailTr, y)
-	gohelper.setActive(self._detail, true)
 
 	local magicMo = FightModel.instance:getMagicCircleInfo()
 	local magicConfig = magicMo and magicMo.magicCircleId and lua_magic_circle.configDict[magicMo.magicCircleId]
 
 	if magicMo and magicConfig then
+		gohelper.setActive(self._detail, true)
+
 		local round = magicMo.round == -1 and "∞" or magicMo.round
 
 		self._detailTitle.text = magicConfig.name
@@ -116,7 +117,8 @@ end
 
 FightShuZhenView.UiType2Class = {
 	[FightEnum.MagicCircleUIType.Normal] = FightMagicCircleNormal,
-	[FightEnum.MagicCircleUIType.Electric] = FightMagicCircleElectric
+	[FightEnum.MagicCircleUIType.Electric] = FightMagicCircleElectric,
+	[FightEnum.MagicCircleUIType.LSJ] = FightMagicCircleLSJ
 }
 
 function FightShuZhenView:createMagicItem()

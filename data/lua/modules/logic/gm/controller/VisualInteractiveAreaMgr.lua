@@ -14,7 +14,8 @@ VisualInteractiveAreaMgr.LoadStatus = {
 }
 VisualInteractiveAreaMgr.needCheckComponentList = {
 	SLFramework.UGUI.ButtonWrap,
-	SLFramework.UGUI.UIClickListener
+	SLFramework.UGUI.UIClickListener,
+	SLFramework.UGUI.UILongPressListener
 }
 VisualInteractiveAreaMgr.CloneMaskGoName = "cloneMaskItem"
 VisualInteractiveAreaMgr.TextSizeGoName = "textSizeItem"

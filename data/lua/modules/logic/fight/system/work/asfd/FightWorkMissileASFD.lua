@@ -4,11 +4,19 @@ module("modules.logic.fight.system.work.asfd.FightWorkMissileASFD", package.seea
 
 local FightWorkMissileASFD = class("FightWorkMissileASFD", BaseWork)
 
-function FightWorkMissileASFD:ctor(fightStepData, asfdContext)
+function FightWorkMissileASFD:ctor(fightStepData, asfdContext, interval)
 	FightWorkMissileASFD.super.ctor(self, fightStepData)
 
 	self.fightStepData = fightStepData
 	self.asfdContext = asfdContext
+	self.interval = interval or self:getDefaultInterval()
+	self.interval = self.interval / FightModel.instance:getUISpeed()
+end
+
+function FightWorkMissileASFD:getDefaultInterval()
+	local missInterval = FightASFDConfig.instance:getMissileInterval(self.asfdContext.emitterAttackNum)
+
+	return missInterval
 end
 
 function FightWorkMissileASFD:onStart()
@@ -21,12 +29,7 @@ function FightWorkMissileASFD:onStart()
 	end
 
 	asfdMgr:emitMissile(self.fightStepData, self.asfdContext)
-
-	local missInterval = FightASFDConfig.instance:getMissileInterval(self.asfdContext.emitterAttackNum)
-
-	missInterval = missInterval / FightModel.instance:getUISpeed()
-
-	TaskDispatcher.runDelay(self.waitDone, self, missInterval)
+	TaskDispatcher.runDelay(self.waitDone, self, self.interval)
 end
 
 function FightWorkMissileASFD:delayDone()

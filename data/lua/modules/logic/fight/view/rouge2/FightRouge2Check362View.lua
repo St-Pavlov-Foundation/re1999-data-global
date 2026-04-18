@@ -78,7 +78,7 @@ function FightRouge2Check362View:getRelicCo()
 	local co = id and lua_fight_rouge2_check_relic.configDict[id]
 
 	if not co then
-		logError(string.format("co is nil, data : %s, buffId : %s", str, self.buffId))
+		logError(string.format("co is nil, data : %s, buffId : %s", id, self.buffId))
 
 		co = lua_fight_rouge2_check_relic.configList[1]
 	end

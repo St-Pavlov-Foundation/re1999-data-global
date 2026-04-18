@@ -18,7 +18,7 @@ function ExploreShowAreaStep:onInit()
 	self.areaGo = ExploreController.instance:getMap():getContainRootByAreaId(self._unLockAreas[1]).go
 	self._loader = MultiAbLoader.New()
 
-	self._loader:addPath(string.format("explore/camera_anim/%d_%d.controller", ExploreModel.instance:getMapId(), self._unLockAreas[1]))
+	self._loader:addPath(string.format("modules/explore/camera_anim/%d_%d.controller", ExploreModel.instance:getMapId(), self._unLockAreas[1]))
 	self._loader:startLoad(self._loadedFinish, self)
 end
 

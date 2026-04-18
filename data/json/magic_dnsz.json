@@ -1,0 +1,17 @@
+[
+  {
+    "level": 1,
+    "id": 30001,
+    "progress": 0
+  },
+  {
+    "level": 2,
+    "id": 30002,
+    "progress": 50
+  },
+  {
+    "level": 3,
+    "id": 30003,
+    "progress": 120
+  }
+]

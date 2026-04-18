@@ -12,6 +12,7 @@ end
 
 function SurvivalFightUIItem:addEventListeners()
 	SurvivalFightUIItem.super.addEventListeners(self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnRoleDateChange, self.refreshInfo, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnAttrUpdate, self.refreshInfo, self)
 end
 
@@ -33,11 +34,10 @@ function SurvivalFightUIItem:refreshInfo()
 
 	self._txtlevel.text = "LV." .. self._unitMo.co.fightLevel
 
-	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
-	local teamLv = weekInfo:getAttr(SurvivalEnum.AttrType.HeroFightLevel)
+	local roleLevel = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
 	local fightLv = self._unitMo.co.fightLevel
 
-	gohelper.setActive(self._fightArrow, fightLv <= teamLv and self._unitMo.co.skip == 1)
+	gohelper.setActive(self._fightArrow, fightLv <= roleLevel and self._unitMo.co.skip == 1)
 	self:updateIconAndBg()
 end
 

@@ -33,7 +33,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10002,
@@ -69,7 +70,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10003,
@@ -105,7 +107,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10004,
@@ -141,7 +144,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10005,
@@ -177,7 +181,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10010,
@@ -213,7 +218,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10011,
@@ -249,7 +255,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10012,
@@ -285,7 +292,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10013,
@@ -312,7 +320,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "v3a3_enterview_smy_1#v3a3_enterview_smy_0",
+    "tabBgPath": "v3a4_enterview_smy_1#v3a4_enterview_smy_0",
     "tabButton": "",
     "tabBgmId": 3200065,
     "achievementJumpId": 0,
@@ -321,7 +329,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11100,
@@ -357,7 +366,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11101,
@@ -393,7 +403,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11102,
@@ -429,7 +440,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11103,
@@ -465,7 +477,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11104,
@@ -501,7 +514,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11111,
@@ -537,7 +551,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11112,
@@ -573,7 +588,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11113,
@@ -609,7 +625,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11114,
@@ -645,7 +662,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11115,
@@ -681,7 +699,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11200,
@@ -717,7 +736,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11201,
@@ -753,7 +773,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11202,
@@ -789,7 +810,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11203,
@@ -825,7 +847,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11204,
@@ -861,7 +884,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11205,
@@ -897,7 +921,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11206,
@@ -933,7 +958,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11207,
@@ -969,7 +995,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11208,
@@ -1005,7 +1032,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11209,
@@ -1041,7 +1069,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11210,
@@ -1077,7 +1106,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11211,
@@ -1113,7 +1143,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11212,
@@ -1149,7 +1180,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11300,
@@ -1185,7 +1217,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11301,
@@ -1221,7 +1254,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11302,
@@ -1257,7 +1291,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11303,
@@ -1293,7 +1328,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11304,
@@ -1329,7 +1365,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11305,
@@ -1365,7 +1402,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11306,
@@ -1401,7 +1439,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11307,
@@ -1437,7 +1476,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11308,
@@ -1473,7 +1513,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11309,
@@ -1509,7 +1550,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11310,
@@ -1545,7 +1587,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11311,
@@ -1581,7 +1624,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11312,
@@ -1617,7 +1661,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11313,
@@ -1653,7 +1698,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10014,
@@ -1689,7 +1735,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11400,
@@ -1725,7 +1772,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11401,
@@ -1761,7 +1809,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11402,
@@ -1797,7 +1846,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11403,
@@ -1833,7 +1883,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11404,
@@ -1869,7 +1920,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11405,
@@ -1905,7 +1957,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11406,
@@ -1941,7 +1994,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11407,
@@ -1977,7 +2031,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11408,
@@ -2013,7 +2068,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11409,
@@ -2049,7 +2105,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11410,
@@ -2085,7 +2142,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11411,
@@ -2121,7 +2179,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11412,
@@ -2157,7 +2216,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11413,
@@ -2193,7 +2253,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11414,
@@ -2229,7 +2290,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11419,
@@ -2265,7 +2327,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11420,
@@ -2301,7 +2364,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11421,
@@ -2337,7 +2401,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11422,
@@ -2373,7 +2438,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11423,
@@ -2409,7 +2475,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11424,
@@ -2445,7 +2512,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11425,
@@ -2481,7 +2549,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11426,
@@ -2517,7 +2586,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11500,
@@ -2553,7 +2623,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11501,
@@ -2589,7 +2660,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11502,
@@ -2625,7 +2697,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11503,
@@ -2661,7 +2734,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11505,
@@ -2697,7 +2771,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11506,
@@ -2733,7 +2808,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11507,
@@ -2769,7 +2845,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11508,
@@ -2805,7 +2882,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11509,
@@ -2841,7 +2919,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11510,
@@ -2877,7 +2956,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11511,
@@ -2913,7 +2993,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11512,
@@ -2949,7 +3030,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11513,
@@ -2985,7 +3067,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11514,
@@ -3021,7 +3104,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11515,
@@ -3057,7 +3141,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11516,
@@ -3093,7 +3178,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11517,
@@ -3129,7 +3215,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11600,
@@ -3165,7 +3252,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11601,
@@ -3201,7 +3289,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11602,
@@ -3237,7 +3326,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11603,
@@ -3273,7 +3363,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11604,
@@ -3309,7 +3400,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11605,
@@ -3345,7 +3437,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11606,
@@ -3381,7 +3474,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11607,
@@ -3417,7 +3511,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11608,
@@ -3453,7 +3548,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11609,
@@ -3489,7 +3585,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11610,
@@ -3525,7 +3622,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11611,
@@ -3561,7 +3659,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11612,
@@ -3597,7 +3696,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11613,
@@ -3633,7 +3733,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11614,
@@ -3669,7 +3770,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11615,
@@ -3705,7 +3807,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11616,
@@ -3741,7 +3844,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11617,
@@ -3777,7 +3881,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11618,
@@ -3813,7 +3918,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11619,
@@ -3849,7 +3955,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11620,
@@ -3885,7 +3992,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11621,
@@ -3921,7 +4029,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11622,
@@ -3957,7 +4066,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11700,
@@ -3993,7 +4103,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11701,
@@ -4029,7 +4140,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11702,
@@ -4065,7 +4177,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11703,
@@ -4101,7 +4214,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11704,
@@ -4137,7 +4251,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11705,
@@ -4173,7 +4288,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11706,
@@ -4209,7 +4325,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11707,
@@ -4245,7 +4362,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11708,
@@ -4281,7 +4399,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11710,
@@ -4317,7 +4436,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11711,
@@ -4353,7 +4473,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11712,
@@ -4389,7 +4510,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11713,
@@ -4425,7 +4547,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11714,
@@ -4461,7 +4584,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11715,
@@ -4497,7 +4621,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11716,
@@ -4533,7 +4658,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11720,
@@ -4569,7 +4695,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11800,
@@ -4605,7 +4732,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11801,
@@ -4641,7 +4769,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11802,
@@ -4677,7 +4806,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11803,
@@ -4713,7 +4843,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11804,
@@ -4749,7 +4880,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11805,
@@ -4785,7 +4917,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11806,
@@ -4821,7 +4954,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11807,
@@ -4857,7 +4991,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11808,
@@ -4893,7 +5028,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11809,
@@ -4929,7 +5065,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11810,
@@ -4965,7 +5102,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11811,
@@ -5001,7 +5139,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11812,
@@ -5037,7 +5176,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11813,
@@ -5073,7 +5213,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11814,
@@ -5109,7 +5250,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11815,
@@ -5145,7 +5287,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11816,
@@ -5181,7 +5324,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11901,
@@ -5217,7 +5361,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11902,
@@ -5253,7 +5398,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11903,
@@ -5289,7 +5435,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11904,
@@ -5325,7 +5472,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11905,
@@ -5361,7 +5509,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11906,
@@ -5397,7 +5546,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11907,
@@ -5433,7 +5583,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11908,
@@ -5469,7 +5620,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11909,
@@ -5505,7 +5657,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11910,
@@ -5541,7 +5694,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11911,
@@ -5577,7 +5731,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11912,
@@ -5613,7 +5768,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11913,
@@ -5649,7 +5805,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11914,
@@ -5685,7 +5842,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11915,
@@ -5721,7 +5879,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11916,
@@ -5757,7 +5916,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11917,
@@ -5793,7 +5953,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11918,
@@ -5829,7 +5990,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11919,
@@ -5865,7 +6027,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11920,
@@ -5901,7 +6064,8 @@
     "extraDisplayId": 4,
     "extraDisplayIcon": "singlebg_lang/txt_rouge/enter/rk_rouge.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11921,
@@ -5937,7 +6101,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11922,
@@ -5973,7 +6138,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11923,
@@ -6009,7 +6175,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11924,
@@ -6045,7 +6212,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12001,
@@ -6081,7 +6249,8 @@
     "extraDisplayId": 2,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12002,
@@ -6117,7 +6286,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12003,
@@ -6153,7 +6323,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12004,
@@ -6189,7 +6360,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12005,
@@ -6225,7 +6397,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12006,
@@ -6261,7 +6434,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12007,
@@ -6297,7 +6471,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12008,
@@ -6333,7 +6508,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12009,
@@ -6369,7 +6545,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12011,
@@ -6405,7 +6582,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12012,
@@ -6441,7 +6619,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12013,
@@ -6477,7 +6656,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12020,
@@ -6513,7 +6693,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12023,
@@ -6549,7 +6730,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12021,
@@ -6585,7 +6767,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12022,
@@ -6621,7 +6804,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12029,
@@ -6657,7 +6841,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12101,
@@ -6693,7 +6878,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12102,
@@ -6729,7 +6915,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12103,
@@ -6765,7 +6952,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12104,
@@ -6801,7 +6989,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12105,
@@ -6837,7 +7026,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 219101,
-    "tryoutcharacter": 3097
+    "tryoutcharacter": 3097,
+    "patFaceParam": ""
   },
   {
     "id": 12106,
@@ -6873,7 +7063,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12107,
@@ -6909,7 +7100,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12108,
@@ -6945,7 +7137,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12109,
@@ -6981,7 +7174,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12110,
@@ -7017,7 +7211,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12111,
@@ -7053,7 +7248,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12113,
@@ -7089,7 +7285,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12114,
@@ -7125,7 +7322,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 219001,
-    "tryoutcharacter": 3098
+    "tryoutcharacter": 3098,
+    "patFaceParam": ""
   },
   {
     "id": 12115,
@@ -7161,7 +7359,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12116,
@@ -7197,7 +7396,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12117,
@@ -7233,7 +7433,8 @@
     "extraDisplayId": 4,
     "extraDisplayIcon": "singlebg_lang/txt_rouge/enter/rk_rouge.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12118,
@@ -7269,7 +7470,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12201,
@@ -7305,7 +7507,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12202,
@@ -7341,7 +7544,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12203,
@@ -7377,7 +7581,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 229001,
-    "tryoutcharacter": 3100
+    "tryoutcharacter": 3100,
+    "patFaceParam": ""
   },
   {
     "id": 12204,
@@ -7413,7 +7618,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 229101,
-    "tryoutcharacter": 3102
+    "tryoutcharacter": 3102,
+    "patFaceParam": ""
   },
   {
     "id": 12205,
@@ -7449,7 +7655,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12206,
@@ -7485,7 +7692,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12207,
@@ -7521,7 +7729,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12208,
@@ -7557,7 +7766,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12209,
@@ -7593,7 +7803,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12210,
@@ -7629,7 +7840,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season2_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12211,
@@ -7665,7 +7877,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12212,
@@ -7701,7 +7914,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12221,
@@ -7737,7 +7951,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12222,
@@ -7773,7 +7988,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12230,
@@ -7809,7 +8025,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12231,
@@ -7845,7 +8062,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12232,
@@ -7881,7 +8099,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12233,
@@ -7917,7 +8136,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12234,
@@ -7953,7 +8173,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12235,
@@ -7989,7 +8210,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12236,
@@ -8025,7 +8247,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12237,
@@ -8061,7 +8284,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12238,
@@ -8097,7 +8321,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12239,
@@ -8133,7 +8358,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12240,
@@ -8169,7 +8395,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12241,
@@ -8205,7 +8432,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12242,
@@ -8241,7 +8469,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12243,
@@ -8277,7 +8506,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12301,
@@ -8313,7 +8543,8 @@
     "extraDisplayId": 2,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12302,
@@ -8349,7 +8580,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12303,
@@ -8385,7 +8617,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12304,
@@ -8421,7 +8654,8 @@
     "extraDisplayId": 6,
     "extraDisplayIcon": "singlebg_lang/txt_act174_singlebg/act174_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12305,
@@ -8457,7 +8691,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 239001,
-    "tryoutcharacter": 3104
+    "tryoutcharacter": 3104,
+    "patFaceParam": ""
   },
   {
     "id": 12306,
@@ -8493,7 +8728,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 239101,
-    "tryoutcharacter": 3105
+    "tryoutcharacter": 3105,
+    "patFaceParam": ""
   },
   {
     "id": 12307,
@@ -8529,7 +8765,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12308,
@@ -8565,7 +8802,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12309,
@@ -8601,7 +8839,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12310,
@@ -8637,7 +8876,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12311,
@@ -8673,7 +8913,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12312,
@@ -8709,7 +8950,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12313,
@@ -8745,7 +8987,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12315,
@@ -8781,7 +9024,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12316,
@@ -8817,7 +9061,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12317,
@@ -8853,7 +9098,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12318,
@@ -8889,7 +9135,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12319,
@@ -8925,7 +9172,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12320,
@@ -8952,7 +9200,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "2#2|1#620103|1#620102|1#620101",
-    "tabBgPath": "v3a3_enterview_tower_1#v3a3_enterview_tower_0",
+    "tabBgPath": "v3a4_enterview_tower_1#v3a4_enterview_tower_0",
     "tabButton": "0#1",
     "tabBgmId": 20230003,
     "achievementJumpId": 10013111,
@@ -8961,7 +9209,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12321,
@@ -8997,7 +9246,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12401,
@@ -9033,7 +9283,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12402,
@@ -9069,7 +9320,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12403,
@@ -9105,7 +9357,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12404,
@@ -9141,7 +9394,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 249101,
-    "tryoutcharacter": 3109
+    "tryoutcharacter": 3109,
+    "patFaceParam": ""
   },
   {
     "id": 12405,
@@ -9177,7 +9431,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 249001,
-    "tryoutcharacter": 3108
+    "tryoutcharacter": 3108,
+    "patFaceParam": ""
   },
   {
     "id": 12406,
@@ -9213,7 +9468,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12407,
@@ -9249,7 +9505,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12408,
@@ -9285,7 +9542,8 @@
     "extraDisplayId": 2,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12409,
@@ -9321,7 +9579,8 @@
     "extraDisplayId": 4,
     "extraDisplayIcon": "singlebg_lang/txt_rouge/enter/rk_rouge.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12400,
@@ -9357,7 +9616,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season2_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12410,
@@ -9393,7 +9653,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12431,
@@ -9429,7 +9690,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12432,
@@ -9465,7 +9727,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12433,
@@ -9501,7 +9764,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12434,
@@ -9537,7 +9801,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12435,
@@ -9573,7 +9838,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12436,
@@ -9609,7 +9875,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12437,
@@ -9645,7 +9912,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12501,
@@ -9681,7 +9949,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12502,
@@ -9695,7 +9964,7 @@
     "logoName": "",
     "joinCondition": "OpenFunction=50",
     "confirmCondition": "",
-    "displayPriority": 1,
+    "displayPriority": 2,
     "banner": "",
     "desc": "",
     "showCenter": 0,
@@ -9704,11 +9973,11 @@
     "redDotId": 2502,
     "achievementGroup": 0,
     "storyId": 202500,
-    "isRetroAcitivity": 0,
+    "isRetroAcitivity": 1,
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "",
+    "tabBgPath": "v3a4_enterview_v1a6reprint_1#v3a4_enterview_v1a6reprint_0",
     "tabButton": "1#1",
     "tabBgmId": 20250003,
     "achievementJumpId": 10012506,
@@ -9717,7 +9986,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12503,
@@ -9753,7 +10023,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12504,
@@ -9789,7 +10060,8 @@
     "extraDisplayId": 7,
     "extraDisplayIcon": "singlebg_lang\\txt_v2a5_autochess_singlebg\\main\\v2a5_autochess_main_enter.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12505,
@@ -9825,7 +10097,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12506,
@@ -9861,7 +10134,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12507,
@@ -9897,7 +10171,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12508,
@@ -9933,7 +10208,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12509,
@@ -9969,7 +10245,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12510,
@@ -10005,7 +10282,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12511,
@@ -10041,7 +10319,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12512,
@@ -10077,7 +10356,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 259001,
-    "tryoutcharacter": 3110
+    "tryoutcharacter": 3110,
+    "patFaceParam": ""
   },
   {
     "id": 12513,
@@ -10113,7 +10393,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 259101,
-    "tryoutcharacter": 3111
+    "tryoutcharacter": 3111,
+    "patFaceParam": ""
   },
   {
     "id": 12514,
@@ -10149,7 +10430,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12515,
@@ -10185,7 +10467,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12516,
@@ -10221,7 +10504,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12517,
@@ -10257,7 +10541,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12518,
@@ -10293,7 +10578,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12519,
@@ -10329,7 +10615,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12520,
@@ -10365,7 +10652,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12521,
@@ -10401,7 +10689,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12522,
@@ -10437,7 +10726,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12523,
@@ -10473,7 +10763,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12524,
@@ -10509,7 +10800,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12525,
@@ -10545,7 +10837,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12587,
@@ -10581,7 +10874,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12588,
@@ -10617,7 +10911,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12589,
@@ -10653,7 +10948,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12601,
@@ -10689,7 +10985,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12602,
@@ -10725,7 +11022,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12603,
@@ -10761,7 +11059,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12604,
@@ -10797,7 +11096,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12605,
@@ -10833,7 +11133,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 269201,
-    "tryoutcharacter": 3114
+    "tryoutcharacter": 3114,
+    "patFaceParam": ""
   },
   {
     "id": 12606,
@@ -10869,7 +11170,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 269101,
-    "tryoutcharacter": 3113
+    "tryoutcharacter": 3113,
+    "patFaceParam": ""
   },
   {
     "id": 12608,
@@ -10905,7 +11207,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12609,
@@ -10941,7 +11244,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12610,
@@ -10977,7 +11281,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12611,
@@ -11013,7 +11318,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12613,
@@ -11049,7 +11355,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12614,
@@ -11085,7 +11392,8 @@
     "extraDisplayId": 4,
     "extraDisplayIcon": "singlebg\\rouge\\rouge_dlc_enter.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12615,
@@ -11121,7 +11429,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12617,
@@ -11157,7 +11466,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12618,
@@ -11193,7 +11503,8 @@
     "extraDisplayId": 3,
     "extraDisplayIcon": "singlebg/dungeon/rolestory_singlebg/season2_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 10015,
@@ -11220,7 +11531,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "v3a3_enterview_xmy_1#v3a3_enterview_xmy_0",
+    "tabBgPath": "v3a4_enterview_xmy_1#v3a4_enterview_xmy_0",
     "tabButton": "",
     "tabBgmId": 3200065,
     "achievementJumpId": 0,
@@ -11229,7 +11540,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12619,
@@ -11265,7 +11577,8 @@
     "extraDisplayId": 9,
     "extraDisplayIcon": "singlebg/activity/weekwalkheart_img_01.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12621,
@@ -11301,7 +11614,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12622,
@@ -11337,7 +11651,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12701,
@@ -11373,7 +11688,8 @@
     "extraDisplayId": 10,
     "extraDisplayIcon": "singlebg_lang/txt_act191_singlebg/act191_main_banner.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12702,
@@ -11409,7 +11725,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 2760101,
-    "tryoutcharacter": 3116
+    "tryoutcharacter": 3116,
+    "patFaceParam": ""
   },
   {
     "id": 12703,
@@ -11445,7 +11762,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 2770101,
-    "tryoutcharacter": 3117
+    "tryoutcharacter": 3117,
+    "patFaceParam": ""
   },
   {
     "id": 12704,
@@ -11481,7 +11799,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12705,
@@ -11517,7 +11836,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12706,
@@ -11553,7 +11873,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12707,
@@ -11589,7 +11910,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12708,
@@ -11625,7 +11947,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12709,
@@ -11661,7 +11984,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12710,
@@ -11697,7 +12021,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12711,
@@ -11733,7 +12058,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12712,
@@ -11769,7 +12095,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12713,
@@ -11805,7 +12132,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12714,
@@ -11841,7 +12169,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12716,
@@ -11877,7 +12206,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12717,
@@ -11913,7 +12243,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12718,
@@ -11949,7 +12280,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12719,
@@ -11985,7 +12317,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12720,
@@ -12021,7 +12354,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12721,
@@ -12057,7 +12391,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12722,
@@ -12093,7 +12428,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12733,
@@ -12129,7 +12465,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12734,
@@ -12165,7 +12502,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12801,
@@ -12201,7 +12539,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12802,
@@ -12237,7 +12576,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12803,
@@ -12273,7 +12613,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12804,
@@ -12309,7 +12650,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12805,
@@ -12345,7 +12687,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12806,
@@ -12381,7 +12724,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "singlebg_lang/txt_v2a8_survival_singlebg/survival_mainenter_banner.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12807,
@@ -12417,7 +12761,8 @@
     "extraDisplayId": 8,
     "extraDisplayIcon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a5_autochess_main_enter.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12808,
@@ -12453,7 +12798,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12809,
@@ -12489,7 +12835,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12810,
@@ -12525,7 +12872,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": " ",
     "tryoutEpisode": 289001,
-    "tryoutcharacter": 3120
+    "tryoutcharacter": 3120,
+    "patFaceParam": ""
   },
   {
     "id": 12811,
@@ -12561,7 +12909,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 289101,
-    "tryoutcharacter": 3121
+    "tryoutcharacter": 3121,
+    "patFaceParam": ""
   },
   {
     "id": 12812,
@@ -12597,7 +12946,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12861,
@@ -12633,7 +12983,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12862,
@@ -12669,7 +13020,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12863,
@@ -12705,7 +13057,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12864,
@@ -12741,7 +13094,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12865,
@@ -12777,7 +13131,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12866,
@@ -12813,7 +13168,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12867,
@@ -12849,7 +13205,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12868,
@@ -12885,7 +13242,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12869,
@@ -12921,7 +13279,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12870,
@@ -12957,7 +13316,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12871,
@@ -12993,7 +13353,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12872,
@@ -13029,7 +13390,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12873,
@@ -13065,7 +13427,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12874,
@@ -13101,7 +13464,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12875,
@@ -13137,7 +13501,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12876,
@@ -13173,7 +13538,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12877,
@@ -13209,7 +13575,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12878,
@@ -13245,7 +13612,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12879,
@@ -13281,7 +13649,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12880,
@@ -13317,7 +13686,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12881,
@@ -13353,7 +13723,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12882,
@@ -13389,7 +13760,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12899,
@@ -13425,7 +13797,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12813,
@@ -13461,7 +13834,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12814,
@@ -13497,7 +13871,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12860,
@@ -13533,7 +13908,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13000,
@@ -13569,7 +13945,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13001,
@@ -13605,7 +13982,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13002,
@@ -13641,7 +14019,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13003,
@@ -13677,7 +14056,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13004,
@@ -13713,7 +14093,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13005,
@@ -13749,7 +14130,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13006,
@@ -13785,7 +14167,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13007,
@@ -13821,7 +14204,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13008,
@@ -13857,7 +14241,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13009,
@@ -13893,7 +14278,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13010,
@@ -13929,7 +14315,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13011,
@@ -13965,7 +14352,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 309201,
-    "tryoutcharacter": 3126
+    "tryoutcharacter": 3126,
+    "patFaceParam": ""
   },
   {
     "id": 13012,
@@ -14001,7 +14389,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13013,
@@ -14037,7 +14426,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13014,
@@ -14073,7 +14463,8 @@
     "extraDisplayId": 8500,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13015,
@@ -14109,7 +14500,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 309101,
-    "tryoutcharacter": 3128
+    "tryoutcharacter": 3128,
+    "patFaceParam": ""
   },
   {
     "id": 13016,
@@ -14145,7 +14537,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13017,
@@ -14181,7 +14574,8 @@
     "extraDisplayId": 8100,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13018,
@@ -14217,7 +14611,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130501,
@@ -14253,7 +14648,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130502,
@@ -14289,7 +14685,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130503,
@@ -14325,7 +14722,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130504,
@@ -14361,7 +14759,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130505,
@@ -14397,7 +14796,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130506,
@@ -14433,7 +14833,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130507,
@@ -14469,7 +14870,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130508,
@@ -14505,7 +14907,8 @@
     "extraDisplayId": 2,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130510,
@@ -14541,7 +14944,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130511,
@@ -14577,7 +14981,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130512,
@@ -14613,7 +15018,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130513,
@@ -14649,7 +15055,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130514,
@@ -14685,7 +15092,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130515,
@@ -14721,7 +15129,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130516,
@@ -14757,7 +15166,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130517,
@@ -14793,7 +15203,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130518,
@@ -14829,7 +15240,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130519,
@@ -14865,7 +15277,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130520,
@@ -14901,7 +15314,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130521,
@@ -14937,7 +15351,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130522,
@@ -14973,7 +15388,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130523,
@@ -15009,7 +15425,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130524,
@@ -15045,7 +15462,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130525,
@@ -15081,7 +15499,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130526,
@@ -15117,7 +15536,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130527,
@@ -15153,7 +15573,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130528,
@@ -15189,7 +15610,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130529,
@@ -15225,7 +15647,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130530,
@@ -15261,7 +15684,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 130531,
@@ -15297,7 +15721,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13108,
@@ -15333,7 +15758,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13110,
@@ -15369,7 +15795,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13109,
@@ -15405,7 +15832,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13119,
@@ -15441,7 +15869,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13122,
@@ -15477,7 +15906,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13112,
@@ -15513,7 +15943,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13111,
@@ -15549,7 +15980,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13101,
@@ -15585,7 +16017,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13123,
@@ -15621,7 +16054,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13124,
@@ -15657,7 +16091,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13107,
@@ -15693,7 +16128,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13113,
@@ -15729,7 +16165,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13118,
@@ -15765,7 +16202,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 3160101,
-    "tryoutcharacter": 3132
+    "tryoutcharacter": 3132,
+    "patFaceParam": ""
   },
   {
     "id": 13120,
@@ -15801,7 +16239,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13121,
@@ -15837,7 +16276,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13116,
@@ -15873,7 +16313,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13106,
@@ -15909,7 +16350,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "singlebg_lang/txt_survival_singlebg/survival_mainenter_banner.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13102,
@@ -15945,7 +16387,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13103,
@@ -15981,7 +16424,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13104,
@@ -16017,7 +16461,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13105,
@@ -16053,7 +16498,8 @@
     "extraDisplayId": 10,
     "extraDisplayIcon": "singlebg_lang/txt_act191_singlebg/act191_main_banner.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13114,
@@ -16089,7 +16535,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13115,
@@ -16125,7 +16572,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13117,
@@ -16161,7 +16609,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 3150101,
-    "tryoutcharacter": 3125
+    "tryoutcharacter": 3125,
+    "patFaceParam": ""
   },
   {
     "id": 13130,
@@ -16197,7 +16646,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13202,
@@ -16233,7 +16683,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13204,
@@ -16269,7 +16720,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13205,
@@ -16305,7 +16757,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13206,
@@ -16341,7 +16794,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13207,
@@ -16377,7 +16831,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13208,
@@ -16413,7 +16868,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13209,
@@ -16440,7 +16896,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "v3a3_enterview_rouge_1#v3a3_enterview_rouge_0",
+    "tabBgPath": "v3a4_enterview_rouge_1#v3a4_enterview_rouge_0",
     "tabButton": "0#1",
     "tabBgmId": 3320005,
     "achievementJumpId": 10013233,
@@ -16449,7 +16905,8 @@
     "extraDisplayId": 12,
     "extraDisplayIcon": "singlebg_lang/txt_rouge2/main/rouge2_enter_banner.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13210,
@@ -16485,7 +16942,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13211,
@@ -16521,7 +16979,8 @@
     "extraDisplayId": 8,
     "extraDisplayIcon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a5_autochess_main_enter.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13212,
@@ -16557,7 +17016,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13213,
@@ -16593,7 +17053,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13214,
@@ -16629,7 +17090,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13215,
@@ -16665,7 +17127,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13216,
@@ -16701,7 +17164,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13217,
@@ -16737,7 +17201,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13218,
@@ -16773,7 +17238,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13219,
@@ -16809,7 +17275,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13220,
@@ -16845,7 +17312,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13221,
@@ -16881,7 +17349,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13222,
@@ -16917,7 +17386,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13223,
@@ -16953,7 +17423,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13224,
@@ -16989,7 +17460,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13225,
@@ -17025,7 +17497,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13226,
@@ -17061,7 +17534,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13227,
@@ -17097,7 +17571,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13228,
@@ -17133,7 +17608,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13229,
@@ -17169,7 +17645,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 3260101,
-    "tryoutcharacter": 3135
+    "tryoutcharacter": 3135,
+    "patFaceParam": ""
   },
   {
     "id": 13230,
@@ -17205,7 +17682,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13231,
@@ -17241,7 +17719,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 3250101,
-    "tryoutcharacter": 3134
+    "tryoutcharacter": 3134,
+    "patFaceParam": ""
   },
   {
     "id": 13232,
@@ -17277,7 +17756,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13233,
@@ -17313,7 +17793,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13234,
@@ -17349,7 +17830,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13235,
@@ -17385,7 +17867,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13236,
@@ -17421,7 +17904,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13237,
@@ -17457,7 +17941,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13301,
@@ -17493,7 +17978,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13302,
@@ -17529,7 +18015,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13321,
@@ -17565,7 +18052,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13303,
@@ -17601,7 +18089,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13305,
@@ -17637,7 +18126,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13306,
@@ -17673,7 +18163,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13307,
@@ -17709,7 +18200,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13308,
@@ -17745,7 +18237,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13309,
@@ -17781,7 +18274,8 @@
     "extraDisplayId": 13,
     "extraDisplayIcon": "singlebg_lang/txt_v3a3_eliminate_singlebg/v3a3_eliminate_img_entrance.png",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13310,
@@ -17817,7 +18311,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "289001",
     "tryoutEpisode": 3350101,
-    "tryoutcharacter": 3127
+    "tryoutcharacter": 3127,
+    "patFaceParam": ""
   },
   {
     "id": 13311,
@@ -17853,7 +18348,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13312,
@@ -17889,7 +18385,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13313,
@@ -17925,7 +18422,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "289001",
     "tryoutEpisode": 3360101,
-    "tryoutcharacter": 3092
+    "tryoutcharacter": 3092,
+    "patFaceParam": ""
   },
   {
     "id": 13314,
@@ -17961,7 +18459,8 @@
     "extraDisplayId": 1,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13315,
@@ -17997,7 +18496,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13316,
@@ -18033,7 +18533,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13317,
@@ -18069,7 +18570,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13318,
@@ -18105,7 +18607,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13319,
@@ -18141,7 +18644,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13320,
@@ -18177,7 +18681,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13322,
@@ -18213,7 +18718,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13323,
@@ -18249,7 +18755,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 13324,
@@ -18285,7 +18792,1266 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13401,
+    "tabName": "",
+    "name": "language_10109905",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 105,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 203400,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13402,
+    "tabName": "language_10109905",
+    "name": "language_10109905",
+    "nameEn": "Spring Unending",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 113,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 1,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 3404,
+    "achievementGroup": 0,
+    "storyId": 203400,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "1#1",
+    "tabBgmId": 3340201,
+    "achievementJumpId": 10013441,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13403,
+    "tabName": "",
+    "name": "language_10110739",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 107,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13406,
+    "tabName": "language_10080262",
+    "name": "language_10080262",
+    "nameEn": "Pre-Storm Protocol",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 200,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 2,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 2806,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "v3a4_enterview_survival_1#v3a4_enterview_survival_0",
+    "tabButton": "0#0",
+    "tabBgmId": 3280010,
+    "achievementJumpId": 10013109,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "singlebg_lang/txt_survival_singlebg/survival_mainenter_banner.png",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13407,
+    "tabName": "language_10110740",
+    "name": "language_10110740",
+    "nameEn": "On Fate's Cue",
+    "actDesc": "language_10110741",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 950,
+    "hintPriority": 8800,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": "3141"
+  },
+  {
+    "id": 13408,
+    "tabName": "language_10110742",
+    "name": "language_10110742",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 100,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3409,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13409,
+    "tabName": "language_10110743",
+    "name": "language_10110743",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 224,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3410,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13410,
+    "tabName": "language_10109961",
+    "name": "language_10109961",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 225,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3411,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13412,
+    "tabName": "language_10110744",
+    "name": "language_10110744",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3421,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13413,
+    "tabName": "language_10109959",
+    "name": "language_10109959",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 223,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3415,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13414,
+    "tabName": "language_10110088",
+    "name": "language_10110088",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 226,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3420,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13415,
+    "tabName": "language_10110745",
+    "name": "language_10110745",
+    "nameEn": "Musae's Arcade",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 227,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 2,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 340001,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "v3a4_enterview_partygame_1#v3a4_enterview_partygame_0",
+    "tabButton": "",
+    "tabBgmId": 3340001,
+    "achievementJumpId": 10013441,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 14,
+    "extraDisplayIcon": "singlebg_lang/txt_v3a4_party_singlebg/v3a4_partygame_enterbanner.png",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13416,
+    "tabName": "language_10110746",
+    "name": "language_10110746",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 107,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13417,
+    "tabName": "language_10076038",
+    "name": "language_10076038",
+    "nameEn": "§临时文案占位",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 100,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13418,
+    "tabName": "language_10076022",
+    "name": "language_10076022",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 100,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13419,
+    "tabName": "language_10090464",
+    "name": "language_10090464",
+    "nameEn": "Roaring Revelry",
+    "actDesc": "language_10092414",
+    "actTip": "",
+    "typeId": 214,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 48,
+    "redDotId": 3125,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 5000,
+    "hintPriority": 7000,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13420,
+    "tabName": "language_10000065",
+    "name": "language_10000065",
+    "nameEn": "Mane's Bulletin",
+    "actDesc": "language_10034509",
+    "actTip": "",
+    "typeId": 128,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=73",
+    "confirmCondition": "",
+    "displayPriority": 401,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 73,
+    "redDotId": 1086,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "v3a4_enterview_bossrush_1#v3a4_enterview_bossrush_0",
+    "tabButton": "0#0",
+    "tabBgmId": 3320004,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13421,
+    "tabName": "language_10110747",
+    "name": "language_10110747",
+    "nameEn": "Whispers at the Hollowed Window",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3406,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 2200,
+    "hintPriority": 8200,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13422,
+    "tabName": "language_10000105",
+    "name": "language_10000105",
+    "nameEn": "",
+    "actDesc": "language_10000106",
+    "actTip": "",
+    "typeId": 207,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=64",
+    "confirmCondition": "",
+    "displayPriority": 501,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 64,
+    "redDotId": 3101,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "9#1446|9#1001|1#180003",
+    "tabBgPath": "v3a4_enterview_rolestory_1#v3a4_enterview_rolestory_0",
+    "tabButton": "0#1",
+    "tabBgmId": 510056,
+    "achievementJumpId": 10013441,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 1,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13432,
+    "tabName": "language_10098724",
+    "name": "language_10098724",
+    "nameEn": "Breaking Signals",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3217,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "5#306103|1#173504|1#481010",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 2000,
+    "hintPriority": 8000,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13433,
+    "tabName": "language_10059245",
+    "name": "language_10059245",
+    "nameEn": "Euphoria and Lucidity",
+    "actDesc": "language_10059246",
+    "actTip": "",
+    "typeId": 125,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 1,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "310401#311001#305301#307901#300701",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 800,
+    "hintPriority": 8500,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13434,
+    "tabName": "language_10110748",
+    "name": "language_10110748",
+    "nameEn": "Spring Unending I",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 900,
+    "hintPriority": 8600,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13435,
+    "tabName": "language_10110749",
+    "name": "language_10110749",
+    "nameEn": "Spring Unending II",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 900,
+    "hintPriority": 8600,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13436,
+    "tabName": "language_10073411",
+    "name": "language_10073411",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 107,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=78",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 78,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13437,
+    "tabName": "language_10110099",
+    "name": "language_10110099",
+    "nameEn": "Spring Comes Slowly",
+    "actDesc": "language_10110750",
+    "actTip": "",
+    "typeId": 220,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 2,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 3215,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "v3a4_enterview_role_1#v3a4_enterview_role_0",
+    "tabButton": "0#1",
+    "tabBgmId": 3340202,
+    "achievementJumpId": 10013441,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 3450101,
+    "tryoutcharacter": 3141,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13438,
+    "tabName": "language_10110751",
+    "name": "language_10110751",
+    "nameEn": "Double Echoes",
+    "actDesc": "language_10110752",
+    "actTip": "",
+    "typeId": 217,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10210",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 2100,
+    "hintPriority": 3000,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13439,
+    "tabName": "language_10110100",
+    "name": "language_10110100",
+    "nameEn": "To Slay a Tiger",
+    "actDesc": "language_10110753",
+    "actTip": "",
+    "typeId": 151,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 2,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 3441,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "v3a4_enterview_role_1#v3a4_enterview_role_0",
+    "tabButton": "0#1",
+    "tabBgmId": 3340203,
+    "achievementJumpId": 10013441,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 3460101,
+    "tryoutcharacter": 3137,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13440,
+    "tabName": "language_10066847",
+    "name": "language_10066847",
+    "nameEn": "",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 107,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 0,
+    "param": "",
+    "openId": 50,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 0,
+    "hintPriority": 0,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13441,
+    "tabName": "language_10110754",
+    "name": "language_10110754",
+    "nameEn": "Tales of the Underworld",
+    "actDesc": "language_10110755",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 1000,
+    "hintPriority": 9000,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13442,
+    "tabName": "language_10110756",
+    "name": "language_10110756",
+    "nameEn": "Souvenir of the Snow",
+    "actDesc": "language_10110757",
+    "actTip": "",
+    "typeId": 101,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "834005#34191",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 2500,
+    "hintPriority": 8300,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13443,
+    "tabName": "language_10110758",
+    "name": "language_10110758",
+    "nameEn": "Carvings on the Sun Stone",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 125,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 5500,
+    "hintPriority": 8400,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13444,
+    "tabName": "language_10054377",
+    "name": "language_10054377",
+    "nameEn": "Greetings from the Suitcase",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 201,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "EpisodeFinish=10101",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 999,
+    "hintPriority": 999,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13445,
+    "tabName": "language_10097073",
+    "name": "language_10097073",
+    "nameEn": "The Shimmering Feast",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 212,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 3127,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 2600,
+    "hintPriority": 8450,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
+  },
+  {
+    "id": 13446,
+    "tabName": "language_10110759",
+    "name": "language_10110759",
+    "nameEn": "Breathtaking Gallery",
+    "actDesc": "",
+    "actTip": "",
+    "typeId": 100,
+    "logoType": 0,
+    "logoName": "",
+    "joinCondition": "OpenFunction=50",
+    "confirmCondition": "",
+    "displayPriority": 0,
+    "banner": "",
+    "desc": "",
+    "showCenter": 2,
+    "param": "",
+    "openId": 0,
+    "redDotId": 0,
+    "achievementGroup": 0,
+    "storyId": 0,
+    "isRetroAcitivity": 0,
+    "permanentParentAcitivityId": 0,
+    "achievementGroupPath": "",
+    "activityBonus": "",
+    "tabBgPath": "",
+    "tabButton": "",
+    "tabBgmId": 0,
+    "achievementJumpId": 0,
+    "defaultPriority": 1500,
+    "hintPriority": 1999,
+    "extraDisplayId": 0,
+    "extraDisplayIcon": "",
+    "tryoutEpisode": 0,
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12607,
@@ -18321,7 +20087,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12244,
@@ -18357,7 +20124,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11520,
@@ -18393,7 +20161,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 100002,
@@ -18429,7 +20198,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 11213,
@@ -18465,7 +20235,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 100001,
@@ -18501,7 +20272,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12681,
@@ -18537,7 +20309,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12581,
@@ -18573,7 +20346,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12481,
@@ -18609,7 +20383,8 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   },
   {
     "id": 12781,
@@ -18645,6 +20420,7 @@
     "extraDisplayId": 0,
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
-    "tryoutcharacter": 0
+    "tryoutcharacter": 0,
+    "patFaceParam": ""
   }
 ]

@@ -25,6 +25,10 @@ SocialEnum.TabIndex = {
 	Black = 4,
 	Request = 3
 }
+SocialEnum.NeedShowTextType2 = {
+	[PlayerCardEnum.RightContent.CreatTime] = true,
+	[PlayerCardEnum.RightContent.TotalCostPower] = true
+}
 SocialEnum.SearchFriendCD = 2
 SocialEnum.FriendChatCD = 2
 

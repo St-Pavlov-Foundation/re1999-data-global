@@ -394,6 +394,8 @@ function StoryFrontView:onOpen()
 	self:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._setBtnsVisible, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._setBtnsVisible, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 
 	if StoryModel.instance:getHideBtns() then
 		self:setBtnVisible(false)
@@ -450,6 +452,8 @@ function StoryFrontView:onClose()
 	self:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._setBtnsVisible, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._setBtnsVisible, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
 function StoryFrontView:_onSkip()
@@ -783,9 +787,11 @@ function StoryFrontView:setBtnVisible(isVisible)
 		return
 	end
 
-	self.btnVisible = isVisible
+	local isForceHide = self:_isForceHideTopBtn()
 
-	gohelper.setActive(self._gobtns, isVisible)
+	self.btnVisible = not isForceHide and isVisible
+
+	gohelper.setActive(self._gobtns, self.btnVisible)
 end
 
 function StoryFrontView:_setBtnsVisible(viewName)
@@ -801,6 +807,40 @@ function StoryFrontView:_setBtnsVisible(viewName)
 		local isBtnActive = self._gobtnleft.activeInHierarchy
 
 		gohelper.setActive(self._gobtnleft, not isBtnActive)
+	end
+end
+
+function StoryFrontView:_isForceHideTopBtn()
+	if not self._ForceHideTopView then
+		self._ForceHideTopView = {
+			ViewName.V3a4BBSView
+		}
+	end
+
+	for _, viewName in ipairs(self._ForceHideTopView) do
+		if ViewMgr.instance:isOpen(viewName) then
+			return true
+		end
+	end
+end
+
+function StoryFrontView:_onOpenView(viewName)
+	if viewName == ViewName.V3a4BBSView then
+		self:setBtnVisible(false)
+
+		if self._exitBtn then
+			self._exitBtn:setActive(false)
+		end
+	end
+end
+
+function StoryFrontView:_onCloseView(viewName)
+	if viewName == ViewName.V3a4BBSView then
+		self:setBtnVisible(true)
+
+		if self._exitBtn then
+			self._exitBtn:refresh(true)
+		end
 	end
 end
 

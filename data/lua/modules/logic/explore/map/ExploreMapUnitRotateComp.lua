@@ -15,7 +15,7 @@ function ExploreMapUnitRotateComp:onInit()
 
 	self._loader = PrefabInstantiate.Create(self._containerGO)
 
-	self._loader:startLoad("explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", self._onLoaded, self)
+	self._loader:startLoad("modules/explore/common/sprite/prefabs/msts_icon_xuanzhuan.prefab", self._onLoaded, self)
 end
 
 function ExploreMapUnitRotateComp:_onLoaded()

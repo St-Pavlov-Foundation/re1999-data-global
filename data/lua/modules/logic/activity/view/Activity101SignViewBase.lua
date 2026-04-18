@@ -312,12 +312,16 @@ end
 
 function Activity101SignViewBase:_updateScrollViewPos()
 	self:updateRewardCouldGetHorizontalScrollPixel(function(index)
-		if index <= 4 then
-			return index - 4
-		else
-			local list = self:getTempDataList()
+		do return index end
 
-			return list and #list or index
+		if false then
+			if index <= 4 then
+				return index - 4
+			else
+				local list = self:getTempDataList()
+
+				return list and #list or index
+			end
 		end
 	end)
 end

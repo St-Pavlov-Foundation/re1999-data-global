@@ -23,7 +23,7 @@ function DecorateSkinSelectViewContainer:buildViews()
 	scrollParam.cellSpaceV = 44
 	scrollParam.startSpace = 30
 	scrollParam.endSpace = 30
-	self._scrollView = LuaListScrollView.New(DecorateSkinSelectListModel.instance, scrollParam, times)
+	self._scrollView = LuaListScrollView.New(DecorateSkinSelectListModel.instance, scrollParam)
 
 	table.insert(views, self._scrollView)
 

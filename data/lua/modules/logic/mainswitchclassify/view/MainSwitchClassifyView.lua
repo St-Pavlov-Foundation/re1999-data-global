@@ -8,6 +8,8 @@ function MainSwitchClassifyView:onInitView()
 	self._gobg2 = gohelper.findChild(self.viewGO, "#go_bg2")
 	self._gobg1 = gohelper.findChild(self.viewGO, "#go_bg1")
 	self._goleft = gohelper.findChild(self.viewGO, "left/#go_left")
+	self._left = gohelper.findChild(self.viewGO, "left")
+	self._root = gohelper.findChild(self.viewGO, "root")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -19,8 +21,9 @@ function MainSwitchClassifyView:addEvents()
 	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, self._onSwitchUIVisible, self)
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
 	self:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchVisible, self._onSwitchUIVisible, self)
+	self:addEventCb(SummonUISwitchController.instance, SummonUISwitchEvent.SwitchVisible, self._onSwitchUIVisible, self)
 	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ForceShowSceneTab, self._onForceShowSceneTab, self)
-	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.refreshReddot, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.refreshView, self)
 end
 
 function MainSwitchClassifyView:removeEvents()
@@ -28,8 +31,9 @@ function MainSwitchClassifyView:removeEvents()
 	self:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, self._onSwitchUIVisible, self)
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, self._onSwitchUIVisible, self)
 	self:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchVisible, self._onSwitchUIVisible, self)
+	self:removeEventCb(SummonUISwitchController.instance, SummonUISwitchEvent.SwitchVisible, self._onSwitchUIVisible, self)
 	self:removeEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.ForceShowSceneTab, self._onForceShowSceneTab, self)
-	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.refreshReddot, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.refreshView, self)
 end
 
 function MainSwitchClassifyView:_onForceShowSceneTab()
@@ -40,6 +44,15 @@ function MainSwitchClassifyView:_toSwitchTab(tabContainerId, tabId)
 	if tabContainerId == self._tabContainerId then
 		self._tabId = tabId
 	end
+
+	self:_refreshRootSibling()
+end
+
+function MainSwitchClassifyView:_refreshRootSibling()
+	local isScene = self._tabId == MainSwitchClassifyEnum.Classify.Scene
+
+	gohelper.setSibling(self._left, isScene and 1 or 2)
+	gohelper.setSibling(self._root, isScene and 2 or 1)
 end
 
 function MainSwitchClassifyView:_editableInitView()
@@ -60,6 +73,8 @@ function MainSwitchClassifyView:onOpen()
 
 	self._tabContainerId = 3
 	self._tabId = self.viewParam.defaultTabIds[1]
+
+	self:_refreshRootSibling()
 end
 
 function MainSwitchClassifyView:onClose()
@@ -84,7 +99,7 @@ function MainSwitchClassifyView:_clearScene()
 	MainHeroView.setPostProcessBlur()
 end
 
-function MainSwitchClassifyView:refreshReddot()
+function MainSwitchClassifyView:refreshView()
 	MainSwitchClassifyListModel.instance:onModelUpdate()
 end
 

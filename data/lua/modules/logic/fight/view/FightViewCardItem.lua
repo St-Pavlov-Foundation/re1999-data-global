@@ -141,6 +141,14 @@ function FightViewCardItem:init(go)
 	self.goASFDSkill = gohelper.findChild(go, "asfd")
 	self.asfdSkillSimage = gohelper.findChildSingleImage(go, "asfd/imgIcon")
 	self.asfdNumTxt = gohelper.findChildText(go, "asfd/#txt_Num")
+	self.goASFDSkill_2 = gohelper.findChild(go, "asfd2")
+	self.asfdNumTxt_2 = gohelper.findChildText(go, "asfd2/#txt_Num")
+	self.career2ASDFGoDict = self:getUserDataTb_()
+	self.career2ASDFGoDict[FightEnum.Career.Star] = self.goASFDSkill
+	self.career2ASDFGoDict[FightEnum.Career.Wood] = self.goASFDSkill_2
+	self.career2ASDFTxtDict = self:getUserDataTb_()
+	self.career2ASDFTxtDict[FightEnum.Career.Star] = self.asfdNumTxt
+	self.career2ASDFTxtDict[FightEnum.Career.Wood] = self.asfdNumTxt_2
 	self.goPreDelete = gohelper.findChild(go, "go_predelete")
 	self.goPreDeleteNormal = gohelper.findChild(go, "go_predelete/normal")
 	self.goPreDeleteUnique = gohelper.findChild(go, "go_predelete/ultimate")
@@ -153,14 +161,7 @@ function FightViewCardItem:init(go)
 	self.goPreDeleteCard = gohelper.findChild(go, "go_predeletecard")
 
 	gohelper.setActive(self.goPreDeleteCard, false)
-
-	self.goRedAndBlue = gohelper.findChild(go, "#go_Liangyue")
-	self.goLyMask = gohelper.findChild(go, "#go_Liangyue/mask")
-	self.goRed = gohelper.findChild(go, "#go_Liangyue/red")
-	self.goBlue = gohelper.findChild(go, "#go_Liangyue/green")
-	self.goBoth = gohelper.findChild(go, "#go_Liangyue/both")
-
-	self:resetRedAndBlue()
+	self:initLyRedAndBlue()
 
 	self._heatRoot = gohelper.findChild(go, "#go_heat")
 	self.goBloodPool = gohelper.findChild(go, "blood_pool")
@@ -238,7 +239,45 @@ function FightViewCardItem:init(go)
 		end
 	end
 
+	if PCInputController.instance:getIsUse() then
+		local x, y = recthelper.getAnchor(self.goTopLayout.transform)
+
+		recthelper.setAnchor(self.goTopLayout.transform, x, y + 50)
+	end
+
 	self.playedHideCardOpenAnim = false
+end
+
+function FightViewCardItem:initLyRedAndBlue()
+	self.goLyRoot = gohelper.findChild(self.go, "ly_root")
+
+	gohelper.setActive(self.goLyRoot, true)
+
+	local skin = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.LY)
+	local co = skin and lua_fight_sp_card_mask_ly.configDict[skin]
+
+	co = co or lua_fight_sp_card_mask_ly.configList[1]
+	self.lyLoader = PrefabInstantiate.Create(self.goLyRoot)
+
+	local resPath = string.format("ui/viewres/fight/%s.prefab", co.path)
+
+	self.lyLoader:startLoad(resPath, self.onLyLoaderDone, self)
+end
+
+function FightViewCardItem:onLyLoaderDone()
+	self.goRedAndBlue = self.lyLoader:getInstGO()
+
+	gohelper.setActive(self.goRedAndBlue, true)
+
+	self.goLyMask = gohelper.findChild(self.goRedAndBlue, "mask")
+	self.goRed = gohelper.findChild(self.goRedAndBlue, "red")
+	self.goBlue = gohelper.findChild(self.goRedAndBlue, "green")
+	self.goBoth = gohelper.findChild(self.goRedAndBlue, "both")
+
+	self:resetRedAndBlue()
+	self:setActiveRed(self.ly_red_active)
+	self:setActiveBlue(self.ly_blue_active)
+	self:setActiveBoth(self.ly_both_active)
 end
 
 function FightViewCardItem:changeTopLayoutAnchorYOffset(offset)
@@ -366,7 +405,11 @@ function FightViewCardItem:onEmitterEnergyChange()
 		return
 	end
 
-	self.asfdNumTxt.text = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
+	local energy = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
+
+	for _, txt in pairs(self.career2ASDFTxtDict) do
+		txt.text = energy
+	end
 
 	if self._disappearFlow and self._disappearFlow.status == WorkStatus.Running then
 		return
@@ -376,11 +419,15 @@ function FightViewCardItem:onEmitterEnergyChange()
 		return
 	end
 
+	local goAsfd = self:getGoASFDSkill(self.entityId)
+
 	AudioMgr.instance:trigger(20248003)
 
-	self.asfdSkillAnimator = self.asfdSkillAnimator or self.goASFDSkill:GetComponent(gohelper.Type_Animator)
+	local animator = goAsfd:GetComponent(gohelper.Type_Animator)
 
-	self.asfdSkillAnimator:Play("aggrandizement", 0, 0)
+	if animator then
+		animator:Play("aggrandizement", 0, 0)
+	end
 end
 
 function FightViewCardItem:resetAllNode()
@@ -401,7 +448,7 @@ function FightViewCardItem:updateItem(entityId, skillId, cardInfoMO)
 	self:resetAllNode()
 	gohelper.setActive(self.go, true)
 	gohelper.setActive(self.goTag, true)
-	gohelper.setActive(self.goRedAndBlue, true)
+	gohelper.setActive(self.goLyRoot, true)
 	gohelper.setActive(self._layout, true)
 	gohelper.setActive(self.frontBgRoot, true)
 	gohelper.setActive(self.backBgRoot, true)
@@ -728,21 +775,38 @@ function FightViewCardItem:refreshBloodPoolSkill(entityId, skillId, cardInfoMO)
 end
 
 function FightViewCardItem:refreshASFDSkill(entityId, skillId, cardInfoMO)
-	gohelper.setActive(self.goASFDSkill, true)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+	local career = entityMO and entityMO:getCareer()
+
+	career = career ~= FightEnum.Career.None and career or FightEnum.Career.Star
+
+	for c, go in pairs(self.career2ASDFGoDict) do
+		gohelper.setActive(go, c == career)
+	end
+
 	gohelper.setActive(self.goTag, true)
 	gohelper.setActive(self._tag.gameObject, true)
-
-	local url = ResUrl.getSkillIcon(FightASFDConfig.instance.normalSkillIcon)
-
-	self.asfdSkillSimage:LoadImage(url)
-
-	self.asfdNumTxt.text = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
-
 	self._tag:LoadImage(ResUrl.getAttributeIcon("attribute_asfd"))
+
+	local energy = FightDataHelper.ASFDDataMgr:getEmitterEnergy(FightEnum.EntitySide.MySide)
+
+	for _, txt in pairs(self.career2ASDFTxtDict) do
+		txt.text = energy
+	end
 
 	local showTagPos = FightViewCardItem.TagPosForLvs[1]
 
 	recthelper.setAnchor(self._tagRootTr, showTagPos[1], showTagPos[2])
+end
+
+function FightViewCardItem:getGoASFDSkill(entityId)
+	local entityMO = FightDataHelper.entityMgr:getById(entityId)
+	local career = entityMO and entityMO:getCareer()
+	local go = career and self.career2ASDFGoDict[career]
+
+	go = go or self.career2ASDFGoDict[FightEnum.Career.Star]
+
+	return go
 end
 
 function FightViewCardItem:refreshXiTiSpecialSkill(entityId, skillId, cardInfoMO)
@@ -1433,16 +1497,34 @@ function FightViewCardItem:getASFDScreenPos()
 end
 
 function FightViewCardItem:setActiveRed(active)
+	if gohelper.isNil(self.goRed) then
+		self.ly_red_active = active
+
+		return
+	end
+
 	gohelper.setActive(self.goRed, active)
 	self:refreshLyMaskActive()
 end
 
 function FightViewCardItem:setActiveBlue(active)
+	if gohelper.isNil(self.goBlue) then
+		self.ly_blue_active = active
+
+		return
+	end
+
 	gohelper.setActive(self.goBlue, active)
 	self:refreshLyMaskActive()
 end
 
 function FightViewCardItem:setActiveBoth(active)
+	if gohelper.isNil(self.goBoth) then
+		self.ly_both_active = active
+
+		return
+	end
+
 	gohelper.setActive(self.goBoth, active)
 	self:refreshLyMaskActive()
 end
@@ -1503,6 +1585,12 @@ function FightViewCardItem:onDestroy()
 		self.hideVxLoader:dispose()
 
 		self.hideVxLoader = nil
+	end
+
+	if self.lyLoader then
+		self.lyLoader:dispose()
+
+		self.lyLoader = nil
 	end
 
 	self:releaseEffectFlow()

@@ -37,8 +37,6 @@ function Rouge2_StoreModel:refreshStoreStage()
 			table.insert(self._openStoreStageList, id)
 		end
 	end
-
-	Rouge2_OutsideModel.instance:checkStoreRedDot()
 end
 
 function Rouge2_StoreModel:updateInfo(outsideInfo)
@@ -136,6 +134,8 @@ function Rouge2_StoreModel:refreshAllBuyState()
 			end
 		end
 	end
+
+	Rouge2_OutsideModel.instance:checkStoreRedDot()
 end
 
 function Rouge2_StoreModel:getGoodsBuyCount(id)

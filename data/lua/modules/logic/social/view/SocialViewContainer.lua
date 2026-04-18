@@ -77,13 +77,13 @@ function SocialViewContainer:getRequestScrollParam()
 
 	requestScrollParam.scrollGOPath = "scrollview"
 	requestScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-	requestScrollParam.prefabUrl = self._viewSetting.otherRes[2]
-	requestScrollParam.cellClass = SocialRequestItem
+	requestScrollParam.prefabUrl = self._viewSetting.otherRes[7]
+	requestScrollParam.cellClass = SocialContentItem
 	requestScrollParam.scrollDir = ScrollEnum.ScrollDirV
-	requestScrollParam.lineCount = 1
-	requestScrollParam.cellWidth = 1560
-	requestScrollParam.cellHeight = 160
-	requestScrollParam.cellSpaceH = 0
+	requestScrollParam.lineCount = 2
+	requestScrollParam.cellWidth = 744
+	requestScrollParam.cellHeight = 428
+	requestScrollParam.cellSpaceH = 24
 	requestScrollParam.cellSpaceV = 24
 
 	return requestScrollParam
@@ -94,13 +94,13 @@ function SocialViewContainer:getRecommendScrollParam()
 
 	recommendScrollParam.scrollGOPath = "container/#go_recommend/scrollview"
 	recommendScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-	recommendScrollParam.prefabUrl = self._viewSetting.otherRes[3]
-	recommendScrollParam.cellClass = SocialSearchItem
+	recommendScrollParam.prefabUrl = self._viewSetting.otherRes[7]
+	recommendScrollParam.cellClass = SocialContentItem
 	recommendScrollParam.scrollDir = ScrollEnum.ScrollDirV
-	recommendScrollParam.lineCount = 1
-	recommendScrollParam.cellWidth = 1560
-	recommendScrollParam.cellHeight = 160
-	recommendScrollParam.cellSpaceH = 0
+	recommendScrollParam.lineCount = 2
+	recommendScrollParam.cellWidth = 744
+	recommendScrollParam.cellHeight = 428
+	recommendScrollParam.cellSpaceH = 24
 	recommendScrollParam.cellSpaceV = 24
 
 	return recommendScrollParam
@@ -111,13 +111,13 @@ function SocialViewContainer:getSearchScrollParam()
 
 	searchScrollParam.scrollGOPath = "container/#go_searchresults/scrollview"
 	searchScrollParam.prefabType = ScrollEnum.ScrollPrefabFromRes
-	searchScrollParam.prefabUrl = self._viewSetting.otherRes[3]
-	searchScrollParam.cellClass = SocialSearchItem
+	searchScrollParam.prefabUrl = self._viewSetting.otherRes[7]
+	searchScrollParam.cellClass = SocialContentItem
 	searchScrollParam.scrollDir = ScrollEnum.ScrollDirV
-	searchScrollParam.lineCount = 1
-	searchScrollParam.cellWidth = 1560
-	searchScrollParam.cellHeight = 160
-	searchScrollParam.cellSpaceH = 0
+	searchScrollParam.lineCount = 2
+	searchScrollParam.cellWidth = 744
+	searchScrollParam.cellHeight = 428
+	searchScrollParam.cellSpaceH = 24
 	searchScrollParam.cellSpaceV = 24
 
 	return searchScrollParam

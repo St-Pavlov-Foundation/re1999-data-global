@@ -100,7 +100,8 @@ function PlayerView:_btnplayercardOnClick()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.PlayerCard) then
 		PlayerCardController.instance:openPlayerCardView({
-			userId = self._info.userId
+			userId = self._info.userId,
+			hideHomeBtn = self.viewParam.hideHomeBtn
 		})
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.PlayerCard))

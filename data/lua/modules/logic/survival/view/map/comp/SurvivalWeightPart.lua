@@ -36,7 +36,7 @@ end
 
 function SurvivalWeightPart:refreshView()
 	local bagMo = self.bag
-	local maxWeightLimit = bagMo.maxWeightLimit + SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local maxWeightLimit = bagMo:getMaxWeightLimit()
 	local value = bagMo.totalMass / maxWeightLimit
 	local massNum = string.format("%s/%s", bagMo.totalMass, maxWeightLimit)
 	local statu = 1

@@ -176,6 +176,8 @@ function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faith
 		Activity197Controller.instance:setRummageReward(ViewName.CommonPropView, materialDataMOList)
 	elseif getApproach == MaterialEnum.GetApproach.SkinCoupon then
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.SkinCouponTipView, ViewName.SkinCouponTipView, materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.PartyClothSummon then
+		PartyClothController.instance:openSummonRewardView(materialDataMOList)
 	else
 		self:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 	end
@@ -228,6 +230,14 @@ function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOLis
 		if co then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainUISwitchInfoBlurMaskView, {
 				SkinId = co.id
+			})
+		end
+
+		local summonConfig = SummonUISwitchConfig.instance:getSummonSwitchConfigByItemId(mo.materilId)
+
+		if summonConfig then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.SummonUISwitchInfoView, {
+				sceneSkinId = summonConfig.id
 			})
 		end
 	end

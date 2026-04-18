@@ -16,6 +16,7 @@ function SummonMainView:onInitView()
 	self._btnconvertStore2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_convertStore2")
 	self._btndetail = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_detail")
 	self._btnsummonrecord = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/btns/#btn_summonrecord")
+	self._gopoolPackage = gohelper.findChild(self.viewGO, "#go_ui/btns/#go_poolPackage")
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_ui/#go_lefttop")
 
 	if self._editableInitView then
@@ -65,6 +66,10 @@ function SummonMainView:_btnsummonrecordOnClick()
 	ViewMgr.instance:openView(ViewName.SummonPoolHistoryView)
 end
 
+function SummonMainView:_btnsummonpoolpackageOnClick()
+	self:openPackageView(0, 0)
+end
+
 function SummonMainView:_editableInitView()
 	self._txtrecord = gohelper.findChildTextMesh(self.viewGO, "#go_ui/btns/#btn_summonrecord/txt")
 	self._goblackloading = gohelper.findChild(self.viewGO, "#blackloading")
@@ -74,6 +79,9 @@ function SummonMainView:_editableInitView()
 	SummonMainModel.instance:setFirstTimeSwitch(true)
 	gohelper.addUIClickAudio(self._btnconvertStore.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
 	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
+
+	self._summonPoolBtnDic = self:getUserDataTb_()
+	self._summonPoolPackageLoader = PrefabInstantiate.Create(self._gopoolPackage)
 end
 
 function SummonMainView:_handleTabSet()
@@ -94,6 +102,8 @@ function SummonMainView:_handleTabSet()
 	else
 		self._txtrecord:SetText(luaLang("p_summonpool_record"))
 	end
+
+	self:checkSummonPoolPackage()
 
 	local showHightStoreBtn = false
 	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
@@ -133,7 +143,13 @@ function SummonMainView:onOpen()
 	self:addEventCb(SummonController.instance, SummonEvent.summonMainCloseImmediately, self.closeThis, self)
 	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
+	self:addEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkSummonPoolPackage, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonPoolPackageRedDotChange, self.onSummonPoolPackageRedDotChange, self)
 	TaskDispatcher.runRepeat(self.repeatCallCountdown, self, 10)
+
+	if PatFaceModel.instance:getIsPatting() then
+		self.viewContainer:hideHomeButton()
+	end
 
 	if SDKChannelEventModel.instance:needAppReview() then
 		SDKController.instance:openSDKScoreJumpView()
@@ -253,16 +269,177 @@ function SummonMainView:repeatCallCountdown()
 	SummonController.instance:dispatchEvent(SummonEvent.onRemainTimeCountdown)
 end
 
+function SummonMainView:checkSummonPoolPackage()
+	local curPool = SummonMainModel.instance:getCurPool()
+	local poolId = curPool.id
+	local poolPackageConfigList = SummonConfig.instance:getSummonPoolPackageConfigList(poolId)
+
+	if poolPackageConfigList == nil or next(poolPackageConfigList) == nil then
+		gohelper.setActive(self._gopoolPackage, false)
+
+		return
+	end
+
+	local poolPackageConfig
+
+	for _, config in ipairs(poolPackageConfigList) do
+		if config.packageRecommendSwitch == true and StoreModel.instance:isSummonPoolPackageValid(poolId, config.order) then
+			poolPackageConfig = config
+
+			break
+		end
+	end
+
+	local isEmpty = poolPackageConfig == nil
+
+	gohelper.setActive(self._gopoolPackage, not isEmpty)
+
+	if isEmpty then
+		return
+	end
+
+	self.poolPackageConfig = poolPackageConfig
+
+	local type = poolPackageConfig.packageEffect
+
+	if not self._summonPoolBtnDic[type] then
+		local prefabPath = ResUrl.getSummonPoolPackageItemPath(poolPackageConfig.packageEffect)
+
+		self._summonPoolPackageLoader:startLoad(prefabPath, self.onSummonPoolPackageBtnLoad, self)
+	else
+		self:refreshSummonPoolState(type)
+		self:checkSummonPoolPackageProp()
+	end
+end
+
+function SummonMainView:checkSummonPoolPackageProp()
+	local getHeroDic = self.viewParam.getHeroDic
+
+	if getHeroDic == nil or next(getHeroDic) == nil then
+		return
+	end
+
+	local poolId = self.poolPackageConfig.id
+	local orderId = self.poolPackageConfig.order
+
+	if not SummonMainModel.instance:isSummonPoolPackageProp(poolId, orderId) and SummonPoolPackageHelper.checkSummonPoolCanProp(poolId, orderId, getHeroDic) then
+		SummonMainController.instance:setSummonPoolPackageProp(poolId, orderId, self.openPackageView, self)
+	end
+end
+
+function SummonMainView:onSummonPoolPackageRedDotChange(poolId)
+	if self.poolPackageConfig and self.poolPackageConfig.id == poolId then
+		self:refreshSummonPoolState(self.poolPackageConfig.packageEffect)
+	end
+end
+
+function SummonMainView:onSummonPoolPackageBtnLoad()
+	local poolPackageConfig = self.poolPackageConfig
+	local type = poolPackageConfig.packageEffect
+	local itemGo = self._summonPoolPackageLoader:getInstGO()
+
+	gohelper.setParent(itemGo, self._gopoolPackage)
+
+	if not string.nilorempty(poolPackageConfig.posOffset) then
+		local posParam = string.splitToNumber(poolPackageConfig.posOffset, "#")
+
+		if posParam then
+			transformhelper.setLocalPosXY(itemGo.transform, posParam[1] or 0, posParam[2] or 0)
+		else
+			logError("卡池礼包参数错误 id: " .. tostring(poolPackageConfig.id) .. " 参数: " .. poolPackageConfig.posOffset)
+		end
+	end
+
+	local item = self:getUserDataTb_()
+
+	item.gameObject = itemGo
+
+	local btnDetail = gohelper.findChildButton(itemGo, "")
+
+	item.btnDetail = btnDetail
+
+	local redDotParent = gohelper.findChild(itemGo, "go_reddot")
+
+	item.redDot = RedDotController.instance:addNotEventRedDot(redDotParent, self.checkSummonPoolRedDot, self, RedDotEnum.Style.NewTag)
+
+	btnDetail:AddClickListener(self._btnsummonpoolpackageOnClick, self)
+
+	self._summonPoolBtnDic[type] = item
+
+	self:refreshSummonPoolState(type)
+	self:checkSummonPoolPackageProp()
+end
+
+function SummonMainView:checkSummonPoolRedDot()
+	local poolId = self.poolPackageConfig.id
+
+	if not SummonModel.instance:isSummonPoolPackageRedDotShow(poolId) then
+		return true
+	end
+
+	return false
+end
+
+function SummonMainView:refreshSummonPoolState(type)
+	if self._summonPoolBtnDic and next(self._summonPoolBtnDic) then
+		for effectType, item in pairs(self._summonPoolBtnDic) do
+			gohelper.setActive(item.gameObject, effectType == type)
+
+			if effectType == type then
+				item.redDot:refreshRedDot()
+			end
+		end
+	end
+end
+
+function SummonMainView:openPackageView(cmd, resultCode)
+	if resultCode == 0 then
+		local curPool = SummonMainModel.instance:getCurPool()
+
+		if curPool == nil then
+			return
+		end
+
+		if self.poolPackageConfig == nil then
+			return
+		end
+
+		if not SummonModel.instance:isSummonPoolPackageRedDotShow(self.poolPackageConfig.id) then
+			SummonModel.instance:setSummonPoolPackageRedDotShow(self.poolPackageConfig.id)
+		end
+
+		SummonController.instance:openSummonPoolPackageView(curPool.id, self.poolPackageConfig.order)
+	end
+end
+
 function SummonMainView:onClose()
 	TaskDispatcher.cancelTask(self.afterBlackLoading, self)
 	TaskDispatcher.cancelTask(self.afterCloseLoading, self)
 	TaskDispatcher.cancelTask(self.checkCallPreloader, self)
 	TaskDispatcher.cancelTask(self.repeatCallCountdown, self)
 	TaskDispatcher.cancelTask(self.returnToMainScene, self)
+	self:removeEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkSummonPoolPackage, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonPoolPackageRedDotChange, self.onSummonPoolPackageRedDotChange, self)
 end
 
 function SummonMainView:onDestroyView()
-	return
+	for _, item in pairs(self._summonPoolBtnDic) do
+		item.btnDetail:RemoveClickListener()
+
+		item.btnDetail = nil
+		item.redDot = nil
+		item.gameObject = nil
+	end
+
+	tabletool.clear(self._summonPoolBtnDic)
+
+	self._summonPoolBtnDic = nil
+
+	if self._summonPoolPackageLoader then
+		self._summonPoolPackageLoader:dispose()
+
+		self._summonPoolPackageLoader = nil
+	end
 end
 
 return SummonMainView

@@ -37,7 +37,7 @@ function FullScreenVideoView:onOpen()
 
 	self._videoPath = self.viewParam.videoPath
 
-	self._videoPlayer:play(self._videoPath, false, self.videoStatusUpdate, self)
+	self._videoPlayer:play(self.viewParam.videoPath, false, self.videoStatusUpdate, self)
 	gohelper.setActive(self._goblackbg, not self.viewParam.noShowBlackBg)
 
 	local bgAdapter = self.videoGo:GetComponent(typeof(ZProj.UIBgSelfAdapter))

@@ -25,15 +25,13 @@ function ProjModuleStart:addCrashsightSceneData()
 end
 
 function ProjModuleStart:addCrashsightResCheckerV()
-	if ResCheckMgr.instance.GetOutVersion then
-		local markVersion = ResCheckMgr.instance:GetOutVersion()
+	local markVersion = ResCheckMgr.instance:GetOutVersion()
 
-		if string.nilorempty(markVersion) then
-			markVersion = "0"
-		end
-
-		CrashSightAgent.AddSceneData("K#resCheckerV", markVersion)
+	if string.nilorempty(markVersion) then
+		markVersion = "0"
 	end
+
+	CrashSightAgent.AddSceneData("K#resCheckerV", markVersion)
 end
 
 function ProjModuleStart:onAbDependenciesInited()

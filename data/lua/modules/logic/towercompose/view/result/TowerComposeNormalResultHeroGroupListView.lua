@@ -37,7 +37,8 @@ function TowerComposeNormalResultHeroGroupListView:onOpen()
 end
 
 function TowerComposeNormalResultHeroGroupListView:_initData()
-	self._themeId, self._layerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	self.fightParam = TowerComposeModel.instance:getRecordFightParam()
+	self._themeId, self._layerId = self.fightParam.themeId, self.fightParam.layerId
 	self._towerEpisodeCo = TowerComposeConfig.instance:getEpisodeConfig(self._themeId, self._layerId)
 	self._dunEpisodeCo = DungeonConfig.instance:getEpisodeCO(self._towerEpisodeCo.episodeId)
 	self._episodeId = self._towerEpisodeCo.episodeId

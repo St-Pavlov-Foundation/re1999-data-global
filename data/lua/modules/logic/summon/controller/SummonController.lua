@@ -690,6 +690,13 @@ function SummonController:clearSummonPopupList()
 end
 
 function SummonController.getCharScenePrefabPath()
+	local curUseId = SummonUISwitchModel.instance:getCurUseUI()
+	local config = SummonUISwitchConfig.instance:getSummonSwitchConfig(curUseId)
+
+	if config and not string.nilorempty(config.resName) then
+		return config.resName
+	end
+
 	return SummonEnum.SummonCharScenePath
 end
 
@@ -942,6 +949,87 @@ function SummonController:simpleEnterSummonScene(heroIdList, backToMainSceneCall
 	self._simpleFlow = VirtualSummonBehaviorFlow.New()
 
 	self._simpleFlow:start(heroIdList, backToMainSceneCallBack)
+end
+
+function SummonController:openSummonPoolPackageView(poolId, order)
+	local packageConfig = SummonConfig.instance:getSummonPoolPackageConfig(poolId, order)
+
+	if not packageConfig or not StoreModel.instance:isSummonPoolPackageValid(poolId, order) then
+		return
+	end
+
+	if string.nilorempty(packageConfig.className) then
+		self:openSummonPoolPackageDefaultView(poolId, order)
+	else
+		local viewParam = {}
+
+		viewParam.poolId = poolId
+		viewParam.order = order
+
+		local define = _G[packageConfig.className]
+
+		if define then
+			ViewMgr.instance:openView(packageConfig.className, viewParam)
+		else
+			logError("卡池礼包 界面不存在" .. tostring(packageConfig.className))
+			self:openSummonPoolPackageDefaultView(poolId, order)
+		end
+	end
+end
+
+function SummonController:useInfallibleItem(poolId, materialId, quantity, callback, callbackObj)
+	local poolInfo = SummonMainModel.instance:getPoolServerMO(poolId)
+	local poolCo = SummonConfig.instance:getSummonPool(poolId)
+	local times = SummonConfig.getSummonSSRTimes(poolCo)
+	local ssrRemainCount = math.max(0, poolInfo.notSSRcount % times)
+	local tipId = MessageBoxIdDefine.SummonInfallibleUseTip
+
+	self.tempInfallibleParam = {}
+	self.tempInfallibleParam.materialId = materialId
+	self.tempInfallibleParam.quantity = quantity
+	self.tempInfallibleParam.callback = callback
+	self.tempInfallibleParam.callbackObj = callbackObj
+
+	GameFacade.showMessageBox(tipId, MsgBoxEnum.BoxType.Yes_No, self.realUseInfallibleItem, self.noUseInfallibleItem, nil, self, self, nil, ssrRemainCount, times)
+end
+
+function SummonController:realUseInfallibleItem()
+	local param = self.tempInfallibleParam
+
+	ItemRpc.instance:simpleSendUseItemRequest(param.materialId, param.quantity, 0, param.callback, param.callbackObj)
+
+	self.tempInfallibleParam = nil
+end
+
+function SummonController:noUseInfallibleItem()
+	self.tempInfallibleParam = nil
+end
+
+function SummonController:openSummonPoolPackageDefaultView(poolId, order)
+	local viewParam = {}
+
+	viewParam.poolId = poolId
+	viewParam.order = order
+
+	ViewMgr.instance:openView(ViewName.SummonGiftPropBaseView, viewParam)
+end
+
+function SummonController:onInfallibleSummonSuccess(summonResult)
+	local poolId = self:getSendPoolId()
+
+	self:summonSuccess(summonResult)
+
+	local summonResultMo = SummonModel.instance:getSummonResult()
+
+	for _, result in pairs(summonResultMo) do
+		local rare = result.heroConfig.rare
+
+		if rare and rare >= CharacterEnum.MaxRare then
+			SummonMainModel.instance:setSummonInfallibleState(poolId, SummonEnum.InfallibleItemState.Used)
+
+			break
+		end
+	end
 end
 
 SummonController.instance = SummonController.New()

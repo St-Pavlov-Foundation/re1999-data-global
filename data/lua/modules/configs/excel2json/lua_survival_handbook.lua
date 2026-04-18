@@ -6,6 +6,7 @@ local lua_survival_handbook = {}
 local fields = {
 	subtype = 3,
 	name = 4,
+	roleId = 8,
 	type = 2,
 	id = 1,
 	eventId = 7,

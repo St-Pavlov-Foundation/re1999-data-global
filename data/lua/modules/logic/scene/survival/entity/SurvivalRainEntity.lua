@@ -119,19 +119,8 @@ function SurvivalRainEntity:_setRainParam()
 	end
 end
 
-local rain_UpdateRainSetting
-
 function SurvivalRainEntity:applyRainParam()
-	if not rain_UpdateRainSetting then
-		require("tolua.reflection")
-		tolua.loadassembly("Assembly-CSharp")
-
-		local type_rain = tolua.findtype("ZProj.SurvivalRain")
-
-		rain_UpdateRainSetting = tolua.gettypemethod(type_rain, "UpdateRainSetting", 36)
-	end
-
-	rain_UpdateRainSetting:Call(self._rainComp)
+	self._rainComp:UpdateRainSetting()
 end
 
 function SurvivalRainEntity:getTexture(fileName)

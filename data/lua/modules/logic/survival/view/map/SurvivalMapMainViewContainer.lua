@@ -12,7 +12,6 @@ function SurvivalMapMainViewContainer:buildViews()
 		SurvivalMapUseItemView.New(),
 		SurvivalMapTreeOpenFogView.New(),
 		SurvivalHeroHealthView.New(),
-		SurvivalMapRadarView.New(),
 		SurvivalMapBubbleView.New(),
 		SurvivalMapGMPosView.New(),
 		SurvivalMapTalentView.New(),

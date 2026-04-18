@@ -54,7 +54,7 @@ end
 function CorvusTaskItem:_btnnotfinishbgOnClick()
 	local mo = self._mo
 	local config = mo.config
-	local jumpId = config.jumpId
+	local jumpId = config.jumpId or config.jumpid
 
 	if jumpId ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_resources_open)
@@ -148,7 +148,7 @@ function CorvusTaskItem:_refreshNormalUI()
 	end
 
 	self._txtnum.text = math.min(progress, maxProgress)
-	self._txttaskdes.text = CO.desc
+	self._txttaskdes.text = CO.desc or CO.taskDesc
 	self._txttotal.text = maxProgress
 
 	gohelper.setActive(self._btnnotfinishbgGo, mo:isUnfinished())
@@ -289,6 +289,12 @@ function CorvusTaskItem:_onOneClickClaimReward(actId)
 	end
 
 	if self._mo.getAll then
+		return
+	end
+
+	local mo = self._mo
+
+	if mo:isUnfinished() or mo:isClaimed() then
 		return
 	end
 

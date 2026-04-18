@@ -111,6 +111,7 @@ StoreEnum.SeasonCardGoodsId = 832004
 StoreEnum.SupplementMonthCardItemId = 2929001
 StoreEnum.V3a3_SkinDiscountItemId = 833003
 StoreEnum.V3a3_SkinDiscountAdvancedItemId = 713301
+StoreEnum.V3a4_DestinySummonPackage = 834005
 StoreEnum.V3a2_SummonSimulationPickItemId = 832005
 StoreEnum.NewbiePackId = 811461
 StoreEnum.NormalRoomTicket = 600001
@@ -158,5 +159,6 @@ StoreEnum.chargeOptionalType = {
 	GroupOption = 1,
 	PosOption = 0
 }
+StoreEnum.SummonPoolPackageMinCount = 2
 
 return StoreEnum

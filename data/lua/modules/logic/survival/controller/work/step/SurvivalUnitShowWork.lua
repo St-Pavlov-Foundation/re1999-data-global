@@ -6,13 +6,11 @@ local SurvivalUnitShowWork = class("SurvivalUnitShowWork", SurvivalStepBaseWork)
 
 function SurvivalUnitShowWork:onStart(context)
 	local newUnitIds = {}
-	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	for i, unit in ipairs(self._stepMo.unit) do
 		local unitMo = SurvivalUnitMo.New()
 
 		unitMo:init(unit)
-		sceneMo:addUnit(unitMo)
 
 		newUnitIds[unitMo.id] = true
 	end
@@ -29,7 +27,47 @@ function SurvivalUnitShowWork:onStart(context)
 		end
 	end
 
+	if reason == 1003 then
+		context.tryTrigger = true
+
+		local entity = SurvivalMapHelper.instance:getEntity(0)
+
+		if not entity then
+			self:addUnit()
+		else
+			entity:addEffect(SurvivalConst.UnitEffectPath.MksEffect)
+			TaskDispatcher.runDelay(self._delayDone, self, SurvivalConst.UnitEffectTime[SurvivalConst.UnitEffectPath.MksEffect])
+		end
+	else
+		self:addUnit()
+	end
+end
+
+function SurvivalUnitShowWork:addUnit()
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+
+	for i, unit in ipairs(self._stepMo.unit) do
+		local unitMo = SurvivalUnitMo.New()
+
+		unitMo:init(unit)
+		sceneMo:addUnit(unitMo)
+	end
+
 	self:onDone(true)
+end
+
+function SurvivalUnitShowWork:_delayDone()
+	local entity = SurvivalMapHelper.instance:getEntity(0)
+
+	if entity then
+		entity:removeEffect(SurvivalConst.UnitEffectPath.MksEffect)
+	end
+
+	self:addUnit()
+end
+
+function SurvivalUnitShowWork:clearWork()
+	TaskDispatcher.cancelTask(self._delayDone, self)
 end
 
 function SurvivalUnitShowWork:getRunOrder(params, flow)

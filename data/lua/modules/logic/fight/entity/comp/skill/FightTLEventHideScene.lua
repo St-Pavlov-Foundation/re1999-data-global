@@ -7,7 +7,7 @@ local FightTLEventHideScene = class("FightTLEventHideScene", FightTimelineTrackI
 function FightTLEventHideScene:onTrackStart(fightStepData, duration, paramsArr)
 	self.noRevert = paramsArr[1] == "1"
 
-	local sceneLevelComp = GameSceneMgr.instance:getCurScene().level
+	local sceneLevelComp = FightGameMgr.sceneLevelMgr
 
 	if sceneLevelComp then
 		local sceneGO = sceneLevelComp:getSceneGo()

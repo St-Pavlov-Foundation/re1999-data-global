@@ -6,7 +6,7 @@ local SummonEnum = _M
 
 SummonEnum.SummonSceneId = 501
 SummonEnum.SummonEquipSceneId = 502
-SummonEnum.SummonCharScenePath = "scenes/m_s06_summon/m_s06_summon_p_real.prefab"
+SummonEnum.SummonCharScenePath = "scenes/v3a4_m_s06_summon/v3a4_m_s06_summon_p.prefab"
 SummonEnum.SummonEquipPreloadPath = {
 	EquipUISR = "scenes/m_s03_xx/s03_ui_sr.prefab",
 	EquipBoomR = "scenes/m_s03_xx/equip_r.prefab",
@@ -222,6 +222,7 @@ SummonEnum.DetailParagraphType = {
 SummonEnum.BannerFlagType = {
 	Limit = 3,
 	Activity = 2,
+	LimitReprint = 6,
 	Cobrand = 5,
 	Reprint = 4,
 	Newbie = 1
@@ -250,6 +251,11 @@ SummonEnum.CharacterCoBrandingGiftView = {
 }
 SummonEnum.ShowHighStoreById = {
 	[33171] = true
+}
+SummonEnum.InfallibleItemState = {
+	Using = 1,
+	Unused = 0,
+	Used = 2
 }
 
 return SummonEnum

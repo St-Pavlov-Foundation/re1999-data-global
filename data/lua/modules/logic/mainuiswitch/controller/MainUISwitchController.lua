@@ -24,22 +24,26 @@ function MainUISwitchController:_onGetInfoFinish()
 	MainUISwitchModel.instance:initMainUI()
 end
 
-function MainUISwitchController:openMainUISwitchInfoView(skinId, noInfoEffect, isPreview)
+function MainUISwitchController:openMainUISwitchInfoView(skinId, noInfoEffect, isPreview, isCloseMoHideScene, hideExtraDisPlay)
 	ViewMgr.instance:openView(ViewName.MainUISwitchInfoBlurMaskView, {
 		SkinId = skinId,
 		noInfoEffect = noInfoEffect,
-		isPreview = isPreview
+		isPreview = isPreview,
+		hideExtraDisPlay = hideExtraDisPlay,
+		isCloseMoHideScene = isCloseMoHideScene
 	})
 end
 
-function MainUISwitchController:openMainUISwitchInfoViewGiftSet(skinId, sceneId)
+function MainUISwitchController:openMainUISwitchInfoViewGiftSet(skinId, sceneId, isCloseMoHideScene, hideExtraDisPlay)
 	ViewMgr.instance:openView(ViewName.MainUISwitchInfoBlurMaskView, {
 		isPreview = true,
 		isNotShowLeft = true,
 		isNotShowHero = true,
 		noInfoEffect = true,
 		SkinId = skinId,
-		sceneId = sceneId
+		sceneId = sceneId,
+		hideExtraDisPlay = hideExtraDisPlay,
+		isCloseMoHideScene = isCloseMoHideScene
 	})
 end
 
@@ -66,6 +70,10 @@ function MainUISwitchController.closeReddot(id)
 end
 
 function MainUISwitchController:isClickEagle()
+	return self:isClickObj("#go_eagleclick")
+end
+
+function MainUISwitchController:isClickObj(objName)
 	if not self._pointerEventData then
 		self._pointerEventData = UnityEngine.EventSystems.PointerEventData.New(UnityEngine.EventSystems.EventSystem.current)
 		self._raycastResults = System.Collections.Generic.List_UnityEngine_EventSystems_RaycastResult.New()
@@ -80,7 +88,7 @@ function MainUISwitchController:isClickEagle()
 	while iter:MoveNext() do
 		local raycastResult = iter.Current
 
-		if raycastResult.gameObject.name == "#go_eagleclick" then
+		if raycastResult.gameObject.name == objName then
 			return true
 		end
 	end

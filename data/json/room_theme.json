@@ -286,5 +286,17 @@
     "collectionBonus": "11#13303#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3401,
+    "name": "language_10114769",
+    "nameEn": "Spring, Ink on Wilderness",
+    "desc": "language_10114851",
+    "rewardIcon": "1702400",
+    "building": "13401|13402|13403",
+    "packages": "3401|3402|3403|3404",
+    "collectionBonus": "11#13403#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

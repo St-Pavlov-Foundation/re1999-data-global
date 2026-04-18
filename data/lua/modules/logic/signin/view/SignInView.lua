@@ -355,6 +355,10 @@ function SignInView:_refreshGMDateContent(changeNum)
 
 	self._txtdesc.text = SignInConfig.instance:getSignDescByDate(datets)
 
+	ZProj.UGUIHelper.RebuildLayout(self._txtdesc.gameObject.transform)
+	gohelper.setActive(self._txtdesc.gameObject, false)
+	gohelper.setActive(self._txtdesc.gameObject, true)
+
 	local dayStr = string.format("%02d", os.date("%d", datets))
 
 	self:_setDayTextStr(dayStr)
@@ -664,6 +668,7 @@ function SignInView:_editableInitView()
 
 	self._btnchangeGo = self._btnchange.gameObject
 	self._btnchange2Go = self._btnchange2.gameObject
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, FestivalAtmosphereComp, self)
 
 	self:_setActive_LifeCicle(false)
 	RedDotController.instance:addRedDot(self._goLifeCircleRed, RedDotEnum.DotNode.LifeCircleNewConfig, nil, self._checkLifeCircleRed, self)
@@ -907,6 +912,9 @@ function SignInView:_setTitleInfo()
 
 	self._txtdesc.text = SignInConfig.instance:getSignDescByDate(datets)
 
+	ZProj.UGUIHelper.RebuildLayout(self._txtdesc.gameObject.transform)
+	gohelper.setActive(self._txtdesc.gameObject, false)
+	gohelper.setActive(self._txtdesc.gameObject, true)
 	self:_setDayTextStr(string.format("%02d", self._targetDate[3]))
 
 	self._txtmonth.text = string.format("%02d", self._targetDate[2])
@@ -1595,12 +1603,13 @@ function SignInView:_refreshFestivalDecoration()
 	gohelper.setActive(self._gochange, not haveFestival)
 	gohelper.setActive(self._txtday, not haveFestival)
 	gohelper.setActive(self._txtdayfestival, haveFestival)
-	self:_setFestivalColor(self._txtmonth)
-	self:_setFestivalColor(self._imgbias)
+	self:_setFestivalColor(self._txtmonth, "#792D22")
+	self:_setFestivalColor(self._imgbias, "#792D22")
 	self:_setFestivalColor(self._txtday)
 	self:_setFestivalColor(self._txtdate)
 	self._simagebg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_bg_white2" or "bg_white2"))
 	self._simagerewardbg:LoadImage(ResUrl.getSignInBg(haveFestival and "act_img_di" or "img_di"))
+	self._festivalAtmosphereComp:setFestival(haveFestival)
 end
 
 function SignInView:onClose()
@@ -1641,6 +1650,10 @@ function SignInView:onDestroyView()
 	self._simagebirthdaybg2:UnLoadImage()
 	self._simagebirthdayIcon:UnLoadImage()
 
+	if self._festivalAtmosphereComp then
+		self._festivalAtmosphereComp:onDestroy()
+	end
+
 	if self.viewParam and self.viewParam.callback then
 		self.viewParam.callback(self.viewParam.callbackObj)
 	end
@@ -1666,8 +1679,10 @@ function SignInView:haveFestival(isReset)
 	return self._haveFestival
 end
 
-function SignInView:_setFestivalColor(textOrImg)
-	local hexColor = self:haveFestival() and "#12141C" or "#222222"
+function SignInView:_setFestivalColor(textOrImg, festColor)
+	festColor = festColor or "#12141C"
+
+	local hexColor = self:haveFestival() and festColor or "#222222"
 
 	SLFramework.UGUI.GuiHelper.SetColor(textOrImg, hexColor)
 end

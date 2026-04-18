@@ -179,6 +179,8 @@ function StoryView:addEvent()
 	self:addEventCb(StoryController.instance, StoryEvent.HideDialog, self._hideDialog, self)
 	self:addEventCb(StoryController.instance, StoryEvent.DialogConFinished, self._dialogConFinished, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
 function StoryView:removeEvent()
@@ -198,6 +200,8 @@ function StoryView:removeEvent()
 	self:removeEventCb(StoryController.instance, StoryEvent.HideDialog, self._hideDialog, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.DialogConFinished, self._dialogConFinished, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
 
 function StoryView:_onCloseViewFinish(viewName)
@@ -206,6 +210,37 @@ function StoryView:_onCloseViewFinish(viewName)
 			StoryTool.enablePostProcess(true)
 
 			return
+		end
+	end
+end
+
+function StoryView:_onOpenView(viewName)
+	if viewName == ViewName.V3a4BBSView then
+		TaskDispatcher.cancelTask(self._enterNextStep, self)
+
+		self._orignEff4 = self._goeff4 and self._goeff4.activeInHierarchy
+
+		gohelper.setActive(self._goeff4, false)
+	end
+end
+
+function StoryView:_onCloseView(viewName)
+	if viewName == ViewName.V3a4BBSView then
+		self:_enterNextStep()
+		gohelper.setActive(self._goeff4, self._orignEff4)
+	end
+end
+
+function StoryView:_isOpenOtherView()
+	if not self._openOtherView then
+		self._openOtherView = {
+			ViewName.V3a4BBSView
+		}
+	end
+
+	for _, viewName in ipairs(self._openOtherView) do
+		if ViewMgr.instance:isOpen(viewName) then
+			return true
 		end
 	end
 end
@@ -298,6 +333,7 @@ function StoryView:_storyFinished(isSkip)
 	self._stepCo = nil
 
 	TaskDispatcher.cancelTask(self._onCheckNext, self)
+	TaskDispatcher.cancelTask(self._startShake, self)
 	self._dialogItem:storyFinished()
 	StoryModel.instance:enableClick(false)
 
@@ -349,6 +385,10 @@ function StoryView:onUpdateParam()
 end
 
 function StoryView:_enterNextStep()
+	if self:_isOpenOtherView() then
+		return
+	end
+
 	StoryController.instance:dispatchEvent(StoryEvent.PlayFullTextOut)
 
 	if self._diaLineTxt and self._diaLineTxt[2] then

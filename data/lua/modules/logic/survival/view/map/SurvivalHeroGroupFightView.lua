@@ -7,6 +7,8 @@ local SurvivalHeroGroupFightView = class("SurvivalHeroGroupFightView", HeroGroup
 function SurvivalHeroGroupFightView:_editableInitView()
 	self:checkHeroList()
 	SurvivalHeroGroupFightView.super._editableInitView(self)
+
+	self.simage_hero = gohelper.findChildImage(self.viewGO, "#go_container/#go_HeroEffect/#simage_hero")
 end
 
 function SurvivalHeroGroupFightView:_refreshBtns(isCostPower)
@@ -30,6 +32,20 @@ end
 function SurvivalHeroGroupFightView:_refreshReplay()
 	gohelper.setActive(self._goReplayBtn, false)
 	gohelper.setActive(self._gomemorytimes, false)
+
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+	local roleInfo = weekInfo:getRoleInfo()
+	local roleId = roleInfo.roleId
+
+	if roleId == SurvivalRoleConfig.instance:getDefaultRoleId() then
+		roleId = SurvivalRoleConfig.instance:getDefaultRoleIdSwitch()
+	end
+
+	local path = "survival_herogroup_role_" .. roleId
+
+	if not string.nilorempty(path) then
+		UISpriteSetMgr.instance:setSurvivalSprite2(self.simage_hero, path)
+	end
 end
 
 function SurvivalHeroGroupFightView:_refreshPowerShow()

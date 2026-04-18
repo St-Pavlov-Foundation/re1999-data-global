@@ -9,7 +9,8 @@ function FightNewProgressView:onInitView()
 	self.progressHandleDict = {
 		[FightEnum.ProgressId.Progress_5] = self.showFightConquerBattleProgress,
 		[FightEnum.ProgressId.Progress_6] = self.showFightConquerBattleProgress,
-		[FightEnum.ProgressId.Progress_500M] = self.showProgress500M
+		[FightEnum.ProgressId.Progress_500M] = self.showProgress500M,
+		[FightEnum.ProgressId.Progress_8] = self.showYuQianRuQinBossProgress
 	}
 end
 
@@ -82,6 +83,20 @@ function FightNewProgressView:showProgress500M()
 	local goRoot = gohelper.findChild(self.viewGO, "root/topLeftContent")
 
 	self.progress500MView = self:com_openSubView(FightProgress500MView, "ui/viewres/fight/fighttower/fightprogressview.prefab", goRoot)
+end
+
+function FightNewProgressView:showYuQianRuQinBossProgress()
+	if self.progress8View then
+		return
+	end
+
+	local goRoot = gohelper.findChild(self.viewGO, "root/topLeftContent/#go_commonalityslider")
+
+	gohelper.setActive(goRoot, true)
+
+	local path = "ui/viewres/fight/commonalityslider3.prefab"
+
+	self.progress8View = self:com_openSubView(FightCommonalitySlider5, path, goRoot, FightDataHelper.fieldMgr.progressDic:getDataByShowId(FightEnum.ProgressId.Progress_8))
 end
 
 return FightNewProgressView

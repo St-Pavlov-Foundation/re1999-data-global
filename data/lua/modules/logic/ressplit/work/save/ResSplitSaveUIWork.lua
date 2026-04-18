@@ -27,13 +27,7 @@ function ResSplitSaveUIWork:onStart(context)
 		"optionalgift_singlebg"
 	}
 	local langDic = {
-		"",
-		"/lang/common",
-		"/lang/en",
-		"/lang/jp",
-		"/lang/kr",
-		"/lang/tw",
-		"/lang/zh"
+		""
 	}
 	local excludeViewDicList = {}
 	local excludeSinglebgDicList = {}
@@ -131,12 +125,10 @@ function ResSplitSaveUIWork:onStart(context)
 
 	for i, v in pairs(excludeSinglebgDicList) do
 		ResSplitModel.instance:setInclude(ResSplitEnum.SinglebgFolder, v, true)
-		ResSplitModel.instance:setInclude(ResSplitEnum.Folder, v, true)
 	end
 
 	for i, v in pairs(excludeSinglebgLangDicList) do
 		ResSplitModel.instance:setInclude(ResSplitEnum.SinglebgFolder, v, true)
-		ResSplitModel.instance:setInclude(ResSplitEnum.Folder, v, true)
 	end
 
 	for _, v in pairs(saveTypes) do

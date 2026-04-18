@@ -165,7 +165,7 @@ function FightPaTaDataMgr:getCurAreaSkillInfo()
 	for i = #self.bossInfoList, 1, -1 do
 		local skillInfo = self.bossInfoList[i]
 
-		if power >= skillInfo.powerLow and power <= self:getNeedPower(skillInfo) then
+		if power >= skillInfo.powerLow and power <= skillInfo.powerHigh then
 			return skillInfo
 		end
 	end

@@ -5,6 +5,7 @@ module("modules.logic.rouge.view.RougeSimpleItemBase", package.seeall)
 local RougeSimpleItemBase = class("RougeSimpleItemBase", ListScrollCellExtend)
 local table_insert = table.insert
 local UGUIHelper = ZProj.UGUIHelper
+local CSRectTrHelper = SLFramework.UGUI.RectTrHelper
 
 function RougeSimpleItemBase:ctor(ctorParam)
 	RougeSimpleItemBase.super.ctor(self, ctorParam)
@@ -100,6 +101,14 @@ function RougeSimpleItemBase:index()
 	return self._index
 end
 
+function RougeSimpleItemBase:setName(name)
+	self.viewGO.name = name
+end
+
+function RougeSimpleItemBase:name()
+	return self.viewGO.name
+end
+
 function RougeSimpleItemBase:setActive(isActive)
 	gohelper.setActive(self.viewGO, isActive)
 end
@@ -112,12 +121,64 @@ function RougeSimpleItemBase:posY()
 	return recthelper.getAnchorY(self._trans)
 end
 
+function RougeSimpleItemBase:posXY()
+	return recthelper.getAnchor(self._trans)
+end
+
+function RougeSimpleItemBase:WPos()
+	return self._trans.position
+end
+
+function RougeSimpleItemBase:setWPos(newWPos)
+	self._trans.position = newWPos
+end
+
+function RougeSimpleItemBase:setAPos(newAPosX, newAPosY, targetTransform)
+	recthelper.setAnchor(targetTransform or self._trans, newAPosX, newAPosY)
+end
+
+function RougeSimpleItemBase:zeroPos()
+	self:setLocalPosXY(0, 0)
+end
+
+function RougeSimpleItemBase:uiPosToScreenPos2(targetTransform)
+	return recthelper.uiPosToScreenPos2(targetTransform or self._trans)
+end
+
+function RougeSimpleItemBase:screenPosToLocal(screenPosX, screenPosY, targetTransform)
+	targetTransform = targetTransform or self._trans
+
+	local localPosV2 = CSRectTrHelper.ScreenPosToAnchorPos(Vector2.New(screenPosX, screenPosY), targetTransform.parent, CameraMgr.instance:getUICamera())
+
+	return localPosV2
+end
+
+function RougeSimpleItemBase:setPosByScreenPos(screenPosX, screenPosY, targetTransform)
+	local localPosV2 = self:screenPosToLocal(screenPosX, screenPosY, targetTransform)
+
+	self:setLocalPosXY(localPosV2.x, localPosV2.y, targetTransform)
+end
+
+function RougeSimpleItemBase:setDock(targetRectTrans, eDock, curRectTrans, ...)
+	UIDockingHelper.setDock(eDock, curRectTrans or self._trans, targetRectTrans, ...)
+end
+
+function RougeSimpleItemBase:logicParentTrans()
+	local p = self:parent()
+
+	return p:transform()
+end
+
 function RougeSimpleItemBase:transform()
 	return self._trans
 end
 
 function RougeSimpleItemBase:pivot()
 	return self._trans.pivot
+end
+
+function RougeSimpleItemBase:setPivot(newPivot)
+	self._trans.pivot = newPivot
 end
 
 function RougeSimpleItemBase:rect()
@@ -141,11 +202,50 @@ function RougeSimpleItemBase:setParent(newParentTrans, worldPositionStays)
 end
 
 function RougeSimpleItemBase:setParentAndResetPosZero(newParentTrans)
-	self:setParent(newParentTrans, false)
+	self:setParent(newParentTrans)
+	self:zeroPos()
 end
 
 function RougeSimpleItemBase:localRotateZ(zDegree, targetTransform)
 	transformhelper.setLocalRotation(targetTransform or self._trans, 0, 0, zDegree)
+end
+
+function RougeSimpleItemBase:setLocalPosXY(x, y, targetTransform)
+	transformhelper.setLocalPosXY(targetTransform or self._trans, x, y)
+end
+
+function RougeSimpleItemBase:GetComponent(csType)
+	return self.viewGO:GetComponent(csType)
+end
+
+function RougeSimpleItemBase:setWH(newWidth, newHeight, targetTransform)
+	recthelper.setSize(targetTransform or self._trans, newWidth, newHeight)
+end
+
+function RougeSimpleItemBase:setScale(newScaleValue, targetTransform)
+	self:setScaleXYZ(newScaleValue, newScaleValue, newScaleValue, targetTransform)
+end
+
+function RougeSimpleItemBase:setScaleXYZ(newScaleX, newScaleY, newScaleZ, targetTransform)
+	transformhelper.setLocalScale(targetTransform or self._trans, newScaleX or 1, newScaleY or 1, newScaleZ or 1)
+end
+
+function RougeSimpleItemBase:XYWH(targetTransform)
+	local w = recthelper.getWidth(targetTransform or self._trans)
+	local h = recthelper.getHeight(targetTransform or self._trans)
+	local x, y = self:posXY()
+
+	return x, y, w, h
+end
+
+function RougeSimpleItemBase:isOverlaps(lhsRectTr, rhsRectTr)
+	rhsRectTr = rhsRectTr or self._trans
+
+	if not lhsRectTr or not rhsRectTr then
+		return false
+	end
+
+	return UGUIHelper.Overlaps(lhsRectTr, rhsRectTr, CameraMgr.instance:getUICamera())
 end
 
 function RougeSimpleItemBase:_onSetScrollParentGameObject(limitScrollRectCmp)

@@ -20,6 +20,7 @@ local fields = {
 	bpviewpos = 14,
 	showBonus = 15,
 	weekLimitTimes = 18,
+	specialPropDesc = 23,
 	bpSkinDesc = 10,
 	bpSkinNametxt = 11,
 	expLevelUp = 9,
@@ -33,6 +34,7 @@ local primaryKey = {
 local mlStringKey = {
 	bpSkinNametxt = 3,
 	name = 1,
+	specialPropDesc = 4,
 	bpSkinDesc = 2
 }
 

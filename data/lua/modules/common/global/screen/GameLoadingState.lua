@@ -15,6 +15,8 @@ GameLoadingState.LoadingCachotChangeView = 8
 GameLoadingState.SurvivalLoadingView = 9
 GameLoadingState.VersionActivity2_8BossStoryLoadingView = 10
 GameLoadingState.Rouge2_MapLoadingView = 11
+GameLoadingState.PartyGameLobbyLoadingView = 12
+GameLoadingState.PartyGameCardDropLoadingView = 13
 
 local ViewNames = {
 	[GameLoadingState.LoadingView] = ViewName.LoadingView,
@@ -27,7 +29,9 @@ local ViewNames = {
 	[GameLoadingState.LoadingCachotChangeView] = ViewName.V1a6_CachotLayerChangeView,
 	[GameLoadingState.SurvivalLoadingView] = ViewName.SurvivalLoadingView,
 	[GameLoadingState.VersionActivity2_8BossStoryLoadingView] = ViewName.VersionActivity2_8BossStoryLoadingView,
-	[GameLoadingState.Rouge2_MapLoadingView] = ViewName.Rouge2_MapLoadingView
+	[GameLoadingState.Rouge2_MapLoadingView] = ViewName.Rouge2_MapLoadingView,
+	[GameLoadingState.PartyGameLobbyLoadingView] = ViewName.PartyGameLobbyLoadingView,
+	[GameLoadingState.PartyGameCardDropLoadingView] = ViewName.CardDropLoadingView
 }
 local ViewNameDict = {
 	[ViewName.LoadingView] = GameLoadingState.LoadingView,
@@ -40,7 +44,9 @@ local ViewNameDict = {
 	[ViewName.V1a6_CachotLayerChangeView] = GameLoadingState.LoadingCachotChangeView,
 	[ViewName.SurvivalLoadingView] = GameLoadingState.SurvivalLoadingView,
 	[ViewName.VersionActivity2_8BossStoryLoadingView] = GameLoadingState.VersionActivity2_8BossStoryLoadingView,
-	[ViewName.Rouge2_MapLoadingView] = GameLoadingState.Rouge2_MapLoadingView
+	[ViewName.Rouge2_MapLoadingView] = GameLoadingState.Rouge2_MapLoadingView,
+	[ViewName.PartyGameLobbyLoadingView] = GameLoadingState.PartyGameLobbyLoadingView,
+	[ViewName.CardDropLoadingView] = GameLoadingState.PartyGameCardDropLoadingView
 }
 
 function GameLoadingState:ctor()
@@ -133,6 +139,8 @@ function GameLoadingState:_closeLoading()
 	elseif self._showLoadingView == ViewName.SurvivalLoadingView then
 		-- block empty
 	elseif self._showLoadingView == ViewName.VersionActivity2_8BossStoryLoadingView then
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.CanCloseLoading)
+	elseif self._showLoadingView == ViewName.PartyGameLobbyLoadingView then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.CanCloseLoading)
 	else
 		ViewMgr.instance:closeView(self._showLoadingView)

@@ -15,7 +15,7 @@ function FightWorkTriggerSceneEffect:onStart()
 	local fightScene = GameSceneMgr.instance:getCurScene()
 
 	if fightScene then
-		local sceneObj = fightScene.level:getSceneGo()
+		local sceneObj = FightGameMgr.sceneLevelMgr:getSceneGo()
 
 		if sceneObj then
 			local sceneEntity = FightHelper.getEntity(FightEntityScene.MySideId)

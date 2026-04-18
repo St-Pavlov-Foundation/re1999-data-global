@@ -17,16 +17,14 @@ function FightTLEventChangeSceneByEffect:onTrackStart(fightStepData, duration, p
 		return
 	end
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded)
 
 	local fightScene = GameSceneMgr.instance:getScene(SceneType.Fight)
 
-	fightScene.level:loadLevelNoEffect(levelId)
+	FightGameMgr.sceneLevelMgr:loadScene(nil, levelId)
 end
 
 function FightTLEventChangeSceneByEffect:_onLevelLoaded()
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
-
 	local entityDic = FightGameMgr.entityMgr:getAllEntity()
 
 	if entityDic then
@@ -37,11 +35,11 @@ function FightTLEventChangeSceneByEffect:_onLevelLoaded()
 end
 
 function FightTLEventChangeSceneByEffect:onTrackEnd()
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	return
 end
 
 function FightTLEventChangeSceneByEffect:onDestructor()
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, self._onLevelLoaded, self)
+	return
 end
 
 return FightTLEventChangeSceneByEffect

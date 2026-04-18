@@ -15,6 +15,7 @@ function FightWorkPlayStart:onStart()
 
 	local flow = self:com_registFlowSequence()
 
+	flow:addWork(FightGameMgr.necessaryAssetLoaderMgr:registWorkLoadAsset())
 	flow:registWork(FightWorkFunction, FightDataHelper.stateMgr.setMark, FightDataHelper.stateMgr, FightStateDataMgr.Mark.NewAllEntityWhenEnter)
 	flow:addWork(FightGameMgr.entityMgr:registNewAllEntityWork())
 	flow:registWork(FightWorkFunction, FightDataHelper.stateMgr.clearMark, FightDataHelper.stateMgr, FightStateDataMgr.Mark.NewAllEntityWhenEnter)

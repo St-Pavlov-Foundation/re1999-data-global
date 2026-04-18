@@ -181,7 +181,7 @@ function CharacterVoiceConfigChecker:_handlerMainViewSpecialRespond(config)
 end
 
 function CharacterVoiceConfigChecker:_handlerMainViewDragSpecialRespond(config)
-	if not string.nilorempty(config.param2) then
+	if not string.nilorempty(config.param2) and config.param2 ~= "skipcheck" then
 		local list = string.split(config.param2, "#")
 
 		if #list == 0 or not list[1] or not tonumber(list[2]) or not tonumber(list[3]) then

@@ -90,5 +90,30 @@
     "reportSwitchTime": 10,
     "previews": [],
     "storyId": 0
+  },
+  {
+    "id": 5,
+    "defaultUnlock": 0,
+    "itemId": 240005,
+    "icon": "mainsceneswitch_item05",
+    "previewIcon": "mainsceneskinmaterial_pic05",
+    "resName": "v3a4_m_s01_zjm_a",
+    "eggList": [
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510
+    ],
+    "eggSwitchTime": 0,
+    "initReportId": 1,
+    "reportSwitchTime": 10,
+    "previews": [],
+    "storyId": 0
   }
 ]

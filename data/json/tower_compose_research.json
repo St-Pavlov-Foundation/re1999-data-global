@@ -5,7 +5,7 @@
     "req": 0,
     "name": "language_10107480",
     "desc": "language_10107481",
-    "icon": "language_10107482",
+    "icon": "zy_1_7",
     "additionRule": "",
     "exLevel": ""
   },
@@ -15,7 +15,7 @@
     "req": 50,
     "name": "language_10107483",
     "desc": "language_10106139",
-    "icon": "language_10107484",
+    "icon": "zy_1_2",
     "additionRule": "1#113330002",
     "exLevel": ""
   },
@@ -25,7 +25,7 @@
     "req": 100,
     "name": "language_10107485",
     "desc": "language_10106140",
-    "icon": "language_10107486",
+    "icon": "zy_1_3",
     "additionRule": "1#113330003",
     "exLevel": ""
   },
@@ -35,7 +35,7 @@
     "req": 200,
     "name": "language_10107487",
     "desc": "language_10106138",
-    "icon": "language_10107488",
+    "icon": "zy_1_1",
     "additionRule": "1#113330001|1#113330012",
     "exLevel": "1#1|2#1"
   },
@@ -45,7 +45,7 @@
     "req": 300,
     "name": "language_10090331",
     "desc": "language_10106141",
-    "icon": "language_10107489",
+    "icon": "zy_1_4",
     "additionRule": "1#113330004",
     "exLevel": ""
   },
@@ -55,7 +55,7 @@
     "req": 400,
     "name": "language_10103386",
     "desc": "language_10106142",
-    "icon": "language_10107490",
+    "icon": "zy_1_5",
     "additionRule": "1#113330005",
     "exLevel": ""
   },
@@ -65,27 +65,27 @@
     "req": 500,
     "name": "language_10072832",
     "desc": "language_10106143",
-    "icon": "language_10107491",
+    "icon": "zy_1_6",
     "additionRule": "1#113330006",
     "exLevel": ""
   },
   {
     "id": 2401,
-    "themeId": 2,
+    "themeId": 1,
     "req": 600,
     "name": "language_10090339",
     "desc": "language_10106144",
-    "icon": "language_10107488",
+    "icon": "zy_1_13",
     "additionRule": "1#113330007",
     "exLevel": ""
   },
   {
     "id": 2402,
-    "themeId": 2,
+    "themeId": 1,
     "req": 700,
     "name": "language_10018041",
     "desc": "language_10106145",
-    "icon": "language_10107484",
+    "icon": "zy_1_18",
     "additionRule": "1#113330008",
     "exLevel": ""
   },
@@ -95,7 +95,7 @@
     "req": 800,
     "name": "language_10090260",
     "desc": "language_10106146",
-    "icon": "language_10107486",
+    "icon": "zy_1_3",
     "additionRule": "2#113330009",
     "exLevel": ""
   },
@@ -105,7 +105,7 @@
     "req": 900,
     "name": "language_10100054",
     "desc": "language_10106147",
-    "icon": "language_10107489",
+    "icon": "zy_1_4",
     "additionRule": "1#113330010",
     "exLevel": ""
   }

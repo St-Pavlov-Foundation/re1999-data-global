@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "playerNum": 8,
+    "numMax": 6,
+    "interval": "2#5"
+  },
+  {
+    "id": 2,
+    "playerNum": 4,
+    "numMax": 4,
+    "interval": "2#4"
+  },
+  {
+    "id": 3,
+    "playerNum": 2,
+    "numMax": 4,
+    "interval": "2#4"
+  }
+]

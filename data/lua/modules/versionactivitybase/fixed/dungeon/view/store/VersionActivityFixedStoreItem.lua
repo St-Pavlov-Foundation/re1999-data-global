@@ -7,9 +7,7 @@ local CLIP_POS_Y = 424
 local START_FADE_POS_Y = 382.32
 local SHOW_TAG_POS_Y = 300
 
-local function sortGoods(goodCo1, goodCo2)
-	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	local actId = VersionActivityFixedHelper.getVersionActivityEnum(bigVersion, smallVersion).ActivityId.DungeonStore
+local function sortGoods(goodCo1, goodCo2, actId)
 	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo1.id) <= 0
 	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo2.id) <= 0
 
@@ -18,6 +16,10 @@ local function sortGoods(goodCo1, goodCo2)
 	end
 
 	return goodCo1.id < goodCo2.id
+end
+
+function VersionActivityFixedStoreItem:setActId(id)
+	self.actId = id
 end
 
 function VersionActivityFixedStoreItem:onInitView(go)
@@ -58,7 +60,9 @@ function VersionActivityFixedStoreItem:updateInfo(groupId, groupGoodsCoList)
 end
 
 function VersionActivityFixedStoreItem:sortGoodsCoList()
-	table.sort(self.groupGoodsCoList, sortGoods)
+	table.sort(self.groupGoodsCoList, function(a, b)
+		return sortGoods(a, b, self.actId)
+	end)
 end
 
 function VersionActivityFixedStoreItem:refreshTag()
@@ -96,24 +100,29 @@ end
 
 function VersionActivityFixedStoreItem:refreshGoods()
 	local goodsItem
+	local count = 0
 
 	for index, goodsCo in ipairs(self.groupGoodsCoList) do
-		goodsItem = self.goodsItemList[index]
+		if goodsCo.specProduct ~= 1 then
+			goodsItem = self.goodsItemList[goodsCo.id]
 
-		if not goodsItem then
-			local goodsItemGO = gohelper.cloneInPlace(self.goStoreGoodsItem)
+			if not goodsItem then
+				local goodsItemGO = gohelper.cloneInPlace(self.goStoreGoodsItem)
 
-			goodsItem = VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(self._bigVersion, self._smallVersion).New()
+				goodsItem = VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(self._bigVersion, self._smallVersion).New()
 
-			goodsItem:onInitView(goodsItemGO)
-			table.insert(self.goodsItemList, goodsItem)
+				goodsItem:setActId(self.actId)
+				goodsItem:onInitView(goodsItemGO)
+
+				self.goodsItemList[goodsCo.id] = goodsItem
+			end
+
+			goodsItem:updateInfo(goodsCo)
+
+			count = count + 1
+
+			gohelper.setSibling(goodsItem.go, index)
 		end
-
-		goodsItem:updateInfo(goodsCo)
-	end
-
-	for i = #self.groupGoodsCoList + 1, #self.goodsItemList do
-		self.goodsItemList[i]:hide()
 	end
 end
 
@@ -122,7 +131,7 @@ function VersionActivityFixedStoreItem:getHeight()
 end
 
 function VersionActivityFixedStoreItem:onDestroy()
-	for _, goodsItem in ipairs(self.goodsItemList) do
+	for _, goodsItem in pairs(self.goodsItemList) do
 		goodsItem:onDestroy()
 	end
 

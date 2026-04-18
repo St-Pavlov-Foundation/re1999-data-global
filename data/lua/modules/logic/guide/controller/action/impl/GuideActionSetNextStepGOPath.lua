@@ -358,25 +358,13 @@ function GuideActionSetNextStepGOPath:getNecrologistStoryLastLinkTextPath()
 		return
 	end
 
-	local tmpTextGO = gohelper.findChild(lastItem.viewGO, "content/txtContent")
+	local linkGO = lastItem:getLinkRectGO()
 
-	if not tmpTextGO then
+	if not linkGO then
 		return
 	end
 
-	local transform = tmpTextGO.transform
-
-	if transform.childCount == 0 then
-		return
-	end
-
-	local linkTrs = transform:GetChild(0)
-
-	if not linkTrs then
-		return
-	end
-
-	return SLFramework.GameObjectHelper.GetPath(linkTrs.gameObject)
+	return SLFramework.GameObjectHelper.GetPath(linkGO)
 end
 
 function GuideActionSetNextStepGOPath:getNecrologistStoryLastMagicPath()

@@ -10,6 +10,8 @@ function SummonModel:onInit()
 	self._duplicateCountList = nil
 	self._freeEquipSummon = nil
 	self._isEquipSendFree = nil
+	self._summonPoolPackageRedDotDic = nil
+	self._summonPoolPackageRedDotList = nil
 
 	self:setIsDrawing(false)
 end
@@ -20,6 +22,8 @@ function SummonModel:reInit()
 	self._duplicateCountList = nil
 	self._freeEquipSummon = nil
 	self._isEquipSendFree = nil
+	self._summonPoolPackageRedDotDic = nil
+	self._summonPoolPackageRedDotList = nil
 
 	self:setIsDrawing(false)
 end
@@ -489,6 +493,92 @@ function SummonModel:clearCacheReward()
 
 		self.cacheRewardCount = nil
 	end
+end
+
+function SummonModel:getSummonPoolUpList(poolId)
+	local poolConfig = SummonConfig.instance:getSummonPool(poolId)
+
+	if poolConfig.type == SummonEnum.Type.CustomPick or poolConfig.type == SummonEnum.Type.StrongCustomOnePick then
+		local heroList = SummonPoolDetailCategoryListModel.buildCustomPickDict(poolId)
+
+		return {
+			[CharacterEnum.MaxRare] = heroList
+		}
+	else
+		return SummonPoolDetailCategoryListModel.buildProbUpDict(poolId)
+	end
+end
+
+function SummonModel:getSummonPoolPackageRedDotKey()
+	return "SummonSummonPoolPackageRedDot_" .. tostring(PlayerModel.instance:getMyUserId())
+end
+
+function SummonModel:isSummonPoolPackageRedDotShow(poolId)
+	if not self._summonPoolPackageRedDotDic then
+		self._summonPoolPackageRedDotDic = {}
+
+		local key = self:getSummonPoolPackageRedDotKey()
+		local dataStr = PlayerPrefsHelper.getString(key, "")
+		local list = string.splitToNumber(dataStr, "#")
+
+		self._summonPoolPackageRedDotList = list
+
+		for _, id in ipairs(list) do
+			self._summonPoolPackageRedDotDic[id] = true
+		end
+	end
+
+	return self._summonPoolPackageRedDotDic[poolId] == true
+end
+
+function SummonModel:setSummonPoolPackageRedDotShow(curPoolId, callback, callbackObj)
+	local key = self:getSummonPoolPackageRedDotKey()
+	local allPools = SummonMainModel.getValidPools()
+	local isChange = false
+
+	if allPools and next(allPools) then
+		for _, pool in ipairs(allPools) do
+			local poolId = pool.id
+			local poolPackageConfigList = SummonConfig.instance:getSummonPoolPackageConfigList(poolId)
+
+			if poolPackageConfigList and next(poolPackageConfigList) then
+				for _, poolPackageConfig in ipairs(poolPackageConfigList) do
+					if poolPackageConfig.packageRecommendSwitch == true and not self:isSummonPoolPackageRedDotShow(poolId) then
+						isChange = true
+
+						logNormal("添加卡池礼包红点记录 id" .. tostring(poolId))
+						table.insert(self._summonPoolPackageRedDotList, poolId)
+
+						self._summonPoolPackageRedDotDic[poolId] = true
+
+						break
+					end
+				end
+			end
+		end
+	end
+
+	if isChange then
+		local dataStr = table.concat(self._summonPoolPackageRedDotList, "#")
+
+		PlayerPrefsHelper.setString(key, dataStr)
+		SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolPackageRedDotChange, curPoolId)
+	end
+
+	if callback then
+		callback(callbackObj)
+	end
+end
+
+function SummonModel:clearSummonPoolPackageRedDot()
+	local key = "SummonSummonPoolPackageRedDot_" .. tostring(PlayerModel.instance:getMyUserId())
+
+	PlayerPrefsHelper.setString(key, "")
+
+	self._summonPoolPackageRedDotDic = nil
+	self._summonPoolPackageRedDotList = nil
+
+	logError("清除卡池礼包红点记录")
 end
 
 SummonModel.instance = SummonModel.New()

@@ -58,7 +58,13 @@ function TowerComposeResearchTaskItem:_btnnormalOnClick()
 			return
 		end
 
-		GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeJumpToReplaceMod, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.dropAndReplaceModCallBack, nil, nil, self)
+		local curNotLockPlane = TowerComposeModel.instance:getCurLockPlaneId(themeId, true)
+
+		if curNotLockPlane == 0 then
+			GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeResearchJumpAllPlaneLock, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.dropAndReplaceModCallBack, nil, nil, self)
+		else
+			GameFacade.showOptionMessageBox(MessageBoxIdDefine.TowerComposeResearchJumpPlane, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.dropAndReplaceModCallBack, nil, nil, self, nil, nil, luaLang("towercompose_plane" .. curNotLockPlane))
+		end
 	end
 end
 

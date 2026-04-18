@@ -42,6 +42,10 @@ function FightCheckCrashMgr:onStageChanged(stage)
 end
 
 function FightCheckCrashMgr:tick()
+	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
+		return
+	end
+
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Operate then
 		return
 	end

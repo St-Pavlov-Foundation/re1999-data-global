@@ -23,7 +23,7 @@ function SurvivalIntrudeFightMo:init(data)
 
 		local max = 0
 
-		self.cleanPoints = string.splitToNumber(self.fightCo.cleanpoint, "|")
+		self.cleanPoints = string.splitToNumber(self.fightCo.cleanLevel, "|")
 
 		for i, v in ipairs(data.schemes) do
 			local point = self.cleanPoints[i]
@@ -64,6 +64,10 @@ function SurvivalIntrudeFightMo:getIntrudeSchemeMo(id)
 			return v
 		end
 	end
+end
+
+function SurvivalIntrudeFightMo:canShowBossUI()
+	return self.fightId > 0
 end
 
 function SurvivalIntrudeFightMo:isNotStart()
@@ -151,15 +155,6 @@ end
 
 function SurvivalIntrudeFightMo:getBattleId()
 	return self.fightCo.battleId
-end
-
-function SurvivalIntrudeFightMo:getMaxCleanPoint()
-	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
-	local v = weekMo:getAttr(SurvivalEnum.AttrType.DecodingFix, self.maxCleanPoint)
-
-	v = math.floor(v)
-
-	return v
 end
 
 return SurvivalIntrudeFightMo

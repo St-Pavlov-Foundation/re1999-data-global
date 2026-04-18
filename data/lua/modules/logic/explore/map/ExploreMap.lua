@@ -928,7 +928,7 @@ function ExploreMap:_initCharacter()
 
 	self._hero:setMap(self)
 	self._hero:onUpdateExploreInfo()
-	self._hero:setResPath("explore/roles/prefabs/hero.prefab")
+	self._hero:setResPath("modules/explore/roles/prefabs/hero.prefab")
 end
 
 function ExploreMap:_initClickEffect()

@@ -369,5 +369,93 @@
     "stopAudio": 320015,
     "specialInsightDesc": "",
     "specialLive2d": ""
+  },
+  {
+    "id": 314101,
+    "spine": "v3a4_314101_lsjxx/314101_lsjxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "",
+    "mvtime": 0,
+    "voice": [],
+    "actionTime": [],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 0,
+    "specialInsightDesc": "",
+    "specialLive2d": ""
+  },
+  {
+    "id": 314102,
+    "spine": "v3a4_314102_lsjxx/314102_lsjxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a4_lusijian_open",
+    "mvtime": 15,
+    "voice": [
+      1314144
+    ],
+    "actionTime": [
+      16
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 340025,
+    "stopAudio": 340026,
+    "specialInsightDesc": "",
+    "specialLive2d": ""
+  },
+  {
+    "id": 305305,
+    "spine": "v3a4_305305_yxxx/305305_yxxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a4_yaxian_open",
+    "mvtime": 16,
+    "voice": [
+      13053129
+    ],
+    "actionTime": [
+      8
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 340027,
+    "stopAudio": 340028,
+    "specialInsightDesc": "",
+    "specialLive2d": ""
+  },
+  {
+    "id": 311003,
+    "spine": "v3a4_311003_lyxx/311003_lyxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a4_liangyue_open",
+    "mvtime": 15,
+    "voice": [
+      1311088
+    ],
+    "actionTime": [
+      11
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 340029,
+    "stopAudio": 340030,
+    "specialInsightDesc": "",
+    "specialLive2d": ""
   }
 ]

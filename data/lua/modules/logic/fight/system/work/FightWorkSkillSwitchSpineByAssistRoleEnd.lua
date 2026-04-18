@@ -47,6 +47,16 @@ function FightWorkSkillSwitchSpineByAssistRoleEnd:showSrcEntity()
 end
 
 function FightWorkSkillSwitchSpineByAssistRoleEnd:deleteEntity()
+	local entity = FightGameMgr.entityMgr:getById(self.fightStepData.fromId)
+
+	if not entity then
+		return
+	end
+
+	if entity.skill and entity.skill.workComp:hasAliveWork() then
+		return
+	end
+
 	FightGameMgr.entityMgr:delEntity(self.fightStepData.fromId)
 end
 

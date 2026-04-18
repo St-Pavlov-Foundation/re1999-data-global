@@ -1060,5 +1060,23 @@
     "audioLength": 133.0,
     "audioEvaluates": "language_10104847",
     "isNonLoop": 0
+  },
+  {
+    "id": 1013401,
+    "audio": 340039,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221241,
+    "defaultUnlock": 0,
+    "audioName": "language_10109905",
+    "audioNameEn": "Paganini: Cantabile",
+    "audioIntroduce": "language_10109906",
+    "audioBg": "102431_1",
+    "audioicon": "102431_2",
+    "sort": 0,
+    "audioType": 24,
+    "audioLength": 116.0,
+    "audioEvaluates": "language_10109907",
+    "isNonLoop": 0
   }
 ]

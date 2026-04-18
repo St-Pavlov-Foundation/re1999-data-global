@@ -27,6 +27,8 @@ function NecrologistStoryTaskView:_editableInitView()
 end
 
 function NecrologistStoryTaskView:onOpen()
+	AudioMgr.instance:trigger(AudioEnum.NecrologistStory.play_ui_mail_open_1)
+
 	self.roleStoryId = self.viewParam.roleStoryId
 
 	local cfg = RoleStoryConfig.instance:getStoryById(self.roleStoryId)

@@ -775,6 +775,12 @@ function SDKMgr:stopAllDownload()
 	return self.csharpInst:StopAllDownload()
 end
 
+function SDKMgr:setShareEnabled(enabled)
+	if BootNativeUtil.isAndroid() then
+		self.csharpInst:CallVoidFuncWithParams("setShareEnabled", enabled)
+	end
+end
+
 SDKMgr.instance = SDKMgr.New()
 
 return SDKMgr

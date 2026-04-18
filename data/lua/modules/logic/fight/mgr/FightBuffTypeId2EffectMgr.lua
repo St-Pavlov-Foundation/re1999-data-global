@@ -79,13 +79,19 @@ function FightBuffTypeId2EffectMgr:_onRemoveEntityBuff(entityId, buffMO)
 				local effectWrap = vertin.effect:addGlobalEffect(effect)
 
 				effectWrap:setLocalPos(posX, posY, posZ)
-				self:com_registTimer(self.removeDelEffect, config.delTime, effectWrap)
+				self:com_registTimer(self.removeDelEffect, config.delTime, {
+					effectWrap = effectWrap,
+					config = config
+				})
+				AudioMgr.instance:trigger(config.audio)
 			end
 		end
 	end
 end
 
-function FightBuffTypeId2EffectMgr:removeDelEffect(effectWrap)
+function FightBuffTypeId2EffectMgr:removeDelEffect(tab)
+	local effectWrap = tab.effectWrap
+	local config = tab.config
 	local vertin = FightHelper.getEntity(FightEntityScene.MySideId)
 
 	if not vertin then
@@ -93,6 +99,7 @@ function FightBuffTypeId2EffectMgr:removeDelEffect(effectWrap)
 	end
 
 	vertin.effect:removeEffect(effectWrap)
+	AudioMgr.instance:trigger(config.delAudio)
 end
 
 function FightBuffTypeId2EffectMgr:addBuff(entityId, buffTypeId)

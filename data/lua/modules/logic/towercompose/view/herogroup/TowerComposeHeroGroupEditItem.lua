@@ -7,6 +7,7 @@ local TowerComposeHeroGroupEditItem = class("TowerComposeHeroGroupEditItem", Her
 function TowerComposeHeroGroupEditItem:_initObj(go)
 	TowerComposeHeroGroupEditItem.super._initObj(self, go)
 
+	self._goplaneLock = gohelper.findChild(go, "#go_planeLock")
 	self._goaddNum = gohelper.findChild(go, "#go_addnum")
 	self._txtNum = gohelper.findChildText(go, "#go_addnum/#txt_num")
 end
@@ -25,6 +26,10 @@ function TowerComposeHeroGroupEditItem:updateTrialTag()
 	if isExtraHero then
 		self._txtNum.text = string.format("+%s", extraCo.bossPointBase)
 	end
+
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkHeroUidIsInLockPlane(self._mo.uid)
+
+	gohelper.setActive(self._goplaneLock, isInLockPlane)
 end
 
 function TowerComposeHeroGroupEditItem:updateTrialRepeat()
@@ -64,6 +69,13 @@ function TowerComposeHeroGroupEditItem:_onItemClick()
 	end
 
 	local singleGroupMO = HeroSingleGroupModel.instance:getById(self._view.viewContainer.viewParam.singleGroupMOId)
+	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkHeroUidIsInLockPlane(self._mo.uid)
+
+	if isInLockPlane then
+		GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+
+		return
+	end
 
 	if self._mo:isTrial() and not TowerComposeHeroGroupModel.instance:checkCanSelectTrialHero(self._mo.trialCo, self._view.viewContainer.viewParam.singleGroupMOId) then
 		TowerComposeController.instance:showPlaneTrialLimitToast(Mathf.Ceil(self._view.viewContainer.viewParam.singleGroupMOId / 4))

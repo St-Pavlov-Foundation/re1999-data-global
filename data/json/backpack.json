@@ -17,7 +17,14 @@
     "id": 3,
     "name": "language_10003210",
     "subname": "Consumables",
-    "includeitem": "14#48#49#50#52#53#60#61#54#63#55#65#64#66#69#70#75#71",
+    "includeitem": "14#48#49#50#52#53#60#61#54#63#55#65#64#66#69#70#75#71#78#81",
+    "includecurrency": ""
+  },
+  {
+    "id": 6,
+    "name": "language_10110078",
+    "subname": "Immaterial Cabinet",
+    "includeitem": "79#77",
     "includecurrency": ""
   }
 ]

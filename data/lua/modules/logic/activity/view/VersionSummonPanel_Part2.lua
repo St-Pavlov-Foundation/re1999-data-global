@@ -6,7 +6,10 @@ local VersionSummonPanel_Part2 = class("VersionSummonPanel_Part2", VersionSummon
 
 function VersionSummonPanel_Part2:_editableInitView()
 	self._simageRole:LoadImage(ResUrl.getVersionSummonSingleBg("versionsummon_rolepanel_2"))
-	self._simageTitle:LoadImage(ResUrl.getVersionSummonSingleBgLang("versionsummon_txt_2"))
+
+	if self._simageTitle then
+		self._simageTitle:LoadImage(ResUrl.getVersionSummonSingleBgLang("versionsummon_txt_2"))
+	end
 
 	self._txtTips.text = luaLang("versionsummon_txt_tips2")
 end

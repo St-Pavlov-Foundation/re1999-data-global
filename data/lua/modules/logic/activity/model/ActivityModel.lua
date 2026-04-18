@@ -253,10 +253,26 @@ function ActivityModel:removeFinishedCategory(actCo)
 
 				self:addFinishActivity(id)
 			end
-		elseif id == ActivityEnum.Activity.V3a3_SkinDiscount and not StoreModel.instance:isSkinDiscountNotSoldOut() then
-			actCo[index] = nil
+		elseif id == ActivityEnum.Activity.V3a3_SkinDiscount then
+			if not StoreModel.instance:isSkinDiscountNotSoldOut() then
+				actCo[index] = nil
 
-			self:addFinishActivity(id)
+				self:addFinishActivity(id)
+			end
+		elseif id == ActivityEnum.Activity.V3a4_DestinyGift and ActivityType101Model.instance:isType101RewardGet(id, 1) then
+			local config = ActivityConfig.instance:getActivityCo(id)
+			local param = string.splitToNumber(config.param, "#")
+			local storeGoodsMo = StoreModel.instance:getGoodsMO(param[1])
+
+			if storeGoodsMo and storeGoodsMo:isSoldOut() then
+				local poolInfo = SummonMainModel.instance:getPoolServerMO(param[2])
+
+				if poolInfo and poolInfo.infallibleItemStatus == SummonEnum.InfallibleItemState.Used then
+					actCo[index] = nil
+
+					self:addFinishActivity(id)
+				end
+			end
 		end
 	end
 end

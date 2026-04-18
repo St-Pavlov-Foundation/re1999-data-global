@@ -192,6 +192,13 @@ function VersionActivity2_5DungeonMapSceneElements:onRemoveElement(id)
 		self:showNewElements()
 	else
 		self._needRemoveElementId = id
+
+		local config = lua_chapter_map_element.configDict[id]
+		local isDialog = config.type == DungeonEnum.ElementType.EnterDialogue
+
+		if isDialog then
+			DungeonController.instance:dispatchEvent(DungeonEvent.EndShowRewardView)
+		end
 	end
 
 	local arrowItem = self._arrowList[id]

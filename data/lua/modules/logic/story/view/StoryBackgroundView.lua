@@ -135,7 +135,8 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.SetLayer] = self._actBgEffSetLayer,
 		[StoryEnum.BgEffectType.BgDistress] = self._actBgEffBgDistress,
 		[StoryEnum.BgEffectType.HandCameraShake] = self._actBgEffHandCameraShake,
-		[StoryEnum.BgEffectType.Penetration] = self._actBgEffPenetration
+		[StoryEnum.BgEffectType.Penetration] = self._actBgEffPenetration,
+		[StoryEnum.BgEffectType.CustomBlur] = self._actBgEffCustomBlur
 	}
 	self._handleResetBgEffs = {
 		[StoryEnum.BgEffectType.BgBlur] = self._resetBgEffBlur,
@@ -158,7 +159,8 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.SetLayer] = self._resetBgEffSetLayer,
 		[StoryEnum.BgEffectType.BgDistress] = self._resetBgEffBgDistress,
 		[StoryEnum.BgEffectType.HandCameraShake] = self._resetBgEffHandCameraShake,
-		[StoryEnum.BgEffectType.Penetration] = self._resetBgEffPenetration
+		[StoryEnum.BgEffectType.Penetration] = self._resetBgEffPenetration,
+		[StoryEnum.BgEffectType.CustomBlur] = self._resetBgEffCustomBlur
 	}
 end
 
@@ -786,14 +788,6 @@ function StoryBackgroundView:_resetBgEffDistress()
 		self._bgDistressCls:destroy()
 
 		self._bgDistressCls = nil
-	end
-end
-
-function StoryBackgroundView:_resetBgEffOutFocus()
-	if self._bgOutFocusCls then
-		self._bgOutFocusCls:destroy()
-
-		self._bgOutFocusCls = nil
 	end
 end
 
@@ -1756,6 +1750,14 @@ function StoryBackgroundView:_actBgEffOutFocus()
 	end
 end
 
+function StoryBackgroundView:_resetBgEffOutFocus()
+	if self._bgOutFocusCls then
+		self._bgOutFocusCls:destroy()
+
+		self._bgOutFocusCls = nil
+	end
+end
+
 function StoryBackgroundView:_actBgEffDiamondLight()
 	if not self._bgDiamondLightCls then
 		if self._bgCo.effDegree == 1 then
@@ -1889,6 +1891,34 @@ function StoryBackgroundView:_resetBgEffPenetration()
 		self._bgPenetrationCls:destroy()
 
 		self._bgPenetrationCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffCustomBlur()
+	local rad = self._lastBgCo and math.atan2(self._lastBgCo.offset[2] - self._bgCo.offset[2], self._lastBgCo.offset[1] - self._bgCo.offset[1]) or 0
+	local angle = math.deg(rad)
+
+	if not self._bgCustomBlurCls then
+		if self._bgCo.effDegree == 0 then
+			return
+		end
+
+		self._bgCustomBlurCls = StoryBgEffsCustomBlur.New()
+
+		self._bgCustomBlurCls:init(self._bgCo)
+		self._bgCustomBlurCls:setAngle(angle)
+		self._bgCustomBlurCls:start(self._resetBgEffCustomBlur, self)
+	else
+		self._bgCustomBlurCls:setAngle(angle)
+		self._bgCustomBlurCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffCustomBlur()
+	if self._bgCustomBlurCls then
+		self._bgCustomBlurCls:destroy()
+
+		self._bgCustomBlurCls = nil
 	end
 end
 
@@ -2194,6 +2224,7 @@ function StoryBackgroundView:_clearBg()
 	self:_resetBgEffSetLayer(true)
 	self:_resetBgEffBgShake()
 	self:_resetBgEffHandCameraShake()
+	self:_resetBgEffCustomBlur()
 
 	if self._blurId then
 		ZProj.TweenHelper.KillById(self._blurId)

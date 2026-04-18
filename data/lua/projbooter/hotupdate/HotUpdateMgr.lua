@@ -501,7 +501,13 @@ function HotUpdateMgr:_onHotUpdateDownloadFail(errorCode, errorMsg)
 	end
 
 	self:inverseUseBackup()
-	self:_setUseReserveDomain()
+	require("tolua.reflection")
+	tolua.loadassembly("Assembly-CSharp")
+
+	local type_HotUpdate = typeof(SLFramework.GameUpdate.HotUpdate)
+	local field_useReserveDomain = tolua.getfield(type_HotUpdate, "_useReserveDomain", 36)
+
+	field_useReserveDomain:Set(SLFramework.GameUpdate.HotUpdate.Instance, self:getUseBackup())
 	self:incFailCount()
 
 	if self:isFailNeedAlert() then

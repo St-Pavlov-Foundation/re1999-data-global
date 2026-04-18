@@ -43,6 +43,9 @@ function EquipInfoTeamShowViewContainer:buildViews()
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
 		self.listModel = OdysseyEquipInfoTeamListModel.instance
 		equipScrollParam.cellClass = OdysseyEquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView then
+		self.listModel = EquipInfoTeamListModel.instance
+		equipScrollParam.cellClass = TowerComposeEquipInfoTeamItem
 	else
 		logError("not found from view ...")
 

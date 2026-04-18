@@ -140,7 +140,7 @@ function ExploreBaseDisplayUnit:setResPath(url)
 		return
 	end
 
-	if url == "explore/prefabs/unit/ice.prefab" or url == "" then
+	if url == "modules/explore/prefabs/unit/ice.prefab" or url == "" then
 		url = nil
 	end
 

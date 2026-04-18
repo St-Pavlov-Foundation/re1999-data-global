@@ -270,7 +270,7 @@ function HeroGroupHandler.hanldeHeroListData(episodeId)
 	end
 end
 
-function HeroGroupHandler.getHeroTeamRoleNum(episodeId)
+function HeroGroupHandler.getTowerComposeHeroTeamRoleNum(episodeId)
 	local isTowerComposeEpisode = TowerComposeHeroGroupModel.instance:isTowerComposeEpisode(episodeId)
 
 	if not isTowerComposeEpisode then
@@ -286,7 +286,7 @@ function HeroGroupHandler.getHeroTeamRoleNum(episodeId)
 end
 
 HeroGroupHandler.getHeroRoleNumHandleFunc = {
-	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getHeroTeamRoleNum
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeHeroTeamRoleNum
 }
 
 function HeroGroupHandler.getHeroRoleOpenNum(episodeId)

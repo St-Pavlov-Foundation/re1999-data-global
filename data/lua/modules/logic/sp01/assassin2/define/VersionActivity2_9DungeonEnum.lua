@@ -38,21 +38,6 @@ VersionActivity2_9DungeonEnum.OutSideAreaPos = {
 	X = -1000,
 	Y = -1000
 }
-VersionActivity2_9DungeonEnum.SpaceSceneEpisodeIndexs = {
-	18,
-	19
-}
-VersionActivity2_9DungeonEnum.SceneLoadObj = "ui/viewres/versionactivity_2_7/v2a7_enter/v2a7_m_s08_hddt.prefab"
-VersionActivity2_9DungeonEnum.SceneLoadAnim = "explore/camera_anim/hddt_camer.controller"
-VersionActivity2_9DungeonEnum.GotoSpaceAnimName = "switch1"
-VersionActivity2_9DungeonEnum.returnAnimName = "switch2"
-VersionActivity2_9DungeonEnum.DragEndAnimTime = 1.2
-VersionActivity2_9DungeonEnum.DragSpeed = 1
-VersionActivity2_9DungeonEnum.SceneAnimType = {
-	Normal = 3,
-	ReturnEarth = 2,
-	GotoSpace = 1
-}
 VersionActivity2_9DungeonEnum.EpisodeMode2Icon = {
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story] = "v2a9_dungeonmap_icon_1",
 	[VersionActivityDungeonBaseEnum.DungeonMode.Story2] = "v2a9_dungeonmap_icon_2",

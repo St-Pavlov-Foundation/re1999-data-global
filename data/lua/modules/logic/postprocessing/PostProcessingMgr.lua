@@ -63,6 +63,32 @@ function PostProcessingMgr:init(mainCameraGo, unitCameraGo, uiCameraGo)
 	self._fullViewCanBlur = {
 		[ViewName.DungeonMapView] = true
 	}
+
+	self:initUIFourthLayer()
+end
+
+function PostProcessingMgr:initUIFourthLayer()
+	local fourGo = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPFour")
+
+	if fourGo then
+		return
+	end
+
+	local go = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPBlur")
+	local goFour = gohelper.cloneInPlace(go, "POPUPFour")
+
+	gohelper.setSiblingAfter(goFour, go)
+
+	local canvas = goFour:GetComponent("Canvas")
+
+	canvas.sortingOrder = 9
+
+	gohelper.setLayer(goFour, UnityLayer.UIFour)
+
+	local layermask = LayerMask.GetMask("UIFour")
+	local uiCamera = CameraMgr.instance:getUICamera()
+
+	PostProcessingMgr.setCameraLayerInt(uiCamera, layermask, true)
 end
 
 function PostProcessingMgr:getCaptureView()
@@ -71,6 +97,8 @@ end
 
 function PostProcessingMgr:setViewBlur(viewName, blur)
 	self._viewNameBlurDict[viewName] = blur
+
+	self:_refreshViewBlur()
 end
 
 function PostProcessingMgr:_getViewBlur(viewName)
@@ -130,6 +158,7 @@ function PostProcessingMgr:_onOpenFinishView(viewName)
 	if viewName == "LoginView" or viewName == "SimulateLoginView" then
 		self:setUnitActive(false)
 	else
+		self:_refreshFourthLayer(false)
 		self:_refreshViewBlur(ViewEvent.OnOpenViewFinish)
 	end
 end
@@ -212,6 +241,12 @@ function PostProcessingMgr:_judgeBlur()
 end
 
 function PostProcessingMgr:_refreshPopUpBlur(viewName, isOpen, isReOpen, viewEvent)
+	if viewEvent == ViewEvent.OnCloseView then
+		self:_resetCloseView(viewName)
+	end
+
+	self:_refreshFourthLayer(true)
+
 	local viewNameList = ViewMgr.instance:getOpenViewNameList()
 	local blur, blurViewName = self:_judgeBlur()
 
@@ -219,6 +254,114 @@ function PostProcessingMgr:_refreshPopUpBlur(viewName, isOpen, isReOpen, viewEve
 		self:_refreshPopUpBlurIsBlur(viewName, isOpen, blurViewName)
 	else
 		self:_refreshPopUpBlurNotBlur(viewName, isOpen)
+	end
+
+	if viewEvent == ViewEvent.OnCloseViewFinish then
+		self:_refreshFourthLayer(false)
+	end
+end
+
+function PostProcessingMgr:_resetCloseView(closeViewName)
+	local popUpFourGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPFour")
+	local fourTransform = popUpFourGO.transform
+	local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local oneViewContainer = ViewMgr.instance:getContainer(closeViewName)
+	local oneViewGO = oneViewContainer and oneViewContainer.viewGO
+	local oneViewParentTr = oneViewGO and oneViewGO.transform.parent or nil
+
+	if oneViewParentTr == fourTransform then
+		gohelper.addChild(popUpTopGO, oneViewGO)
+		self:_setChildCanvasLayer(oneViewGO, UnityLayer.UITop, false)
+	end
+end
+
+function PostProcessingMgr:_refreshFourthLayer(reset)
+	local popUpFourGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPFour")
+	local fourTransform = popUpFourGO.transform
+	local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+
+	if reset then
+		TaskDispatcher.cancelTask(self._changeTopCaptureView, self)
+
+		local viewMask = gohelper.findChild(popUpFourGO, "ViewMask")
+
+		if viewMask then
+			gohelper.addChild(popUpTopGO, viewMask)
+			gohelper.setAsFirstSibling(viewMask)
+		end
+
+		local captureView = gohelper.findChild(popUpFourGO, "CaptureView")
+
+		if captureView then
+			gohelper.addChild(popUpTopGO, captureView)
+			gohelper.setAsFirstSibling(captureView)
+		end
+	end
+
+	local viewNameList = ViewMgr.instance:getOpenViewNameList()
+	local len = #viewNameList
+
+	for i = 1, len do
+		local one = viewNameList[i]
+		local oneViewContainer = ViewMgr.instance:getContainer(one)
+		local oneViewGO = oneViewContainer and oneViewContainer.viewGO
+		local oneViewParentTr = oneViewGO and oneViewGO.transform.parent or nil
+
+		if reset then
+			self._autoBloomActive = false
+
+			if oneViewParentTr == fourTransform then
+				gohelper.addChild(popUpTopGO, oneViewGO)
+				self:_setChildCanvasLayer(oneViewGO, UnityLayer.UITop, false)
+			end
+		else
+			local bloomViewType = CharacterVoiceEnum.NormalBloomView[one]
+
+			if i == len and bloomViewType then
+				if bloomViewType == CharacterVoiceEnum.NormalBloomViewType.Capture then
+					self._delayChangeViewGo = oneViewGO
+
+					TaskDispatcher.cancelTask(self._changeTopCaptureView, self)
+					TaskDispatcher.runDelay(self._changeTopCaptureView, self, 0.1)
+				elseif oneViewGO then
+					gohelper.addChild(popUpFourGO, oneViewGO)
+					self:_setChildCanvasLayer(oneViewGO, UnityLayer.UIFour, false)
+				end
+
+				if bloomViewType == CharacterVoiceEnum.NormalBloomViewType.CustomOpen then
+					self._autoBloomActive = self._customOpenBloom
+				else
+					self._autoBloomActive = true
+				end
+			end
+		end
+	end
+end
+
+function PostProcessingMgr:_changeTopCaptureView()
+	local popUpFourGO = gohelper.findChild(ViewMgr.instance:getUIRoot(), "POPUPFour")
+	local popUpTopGO = gohelper.findChild(ViewMgr.instance:getTopUIRoot(), "POPUP_TOP")
+	local viewMask = gohelper.findChild(popUpTopGO, "ViewMask")
+
+	if viewMask then
+		gohelper.addChild(popUpFourGO, viewMask)
+		gohelper.setAsFirstSibling(viewMask)
+	end
+
+	local captureView = gohelper.findChild(popUpTopGO, "CaptureView")
+
+	if captureView then
+		gohelper.addChild(popUpFourGO, captureView)
+		gohelper.setAsFirstSibling(captureView)
+	end
+
+	if self._delayChangeViewGo then
+		local oneViewGO = self._delayChangeViewGo
+
+		self._delayChangeViewGo = nil
+
+		gohelper.addChild(popUpFourGO, oneViewGO)
+		self:_setChildCanvasLayer(oneViewGO, UnityLayer.UIFour, false)
 	end
 end
 
@@ -439,6 +582,11 @@ function PostProcessingMgr:setUIBloom(active)
 	self._uiBloomActive = active
 end
 
+function PostProcessingMgr:setCustomOpenBloom(value)
+	self._autoBloomActive = value
+	self._customOpenBloom = value
+end
+
 function PostProcessingMgr:setIgnoreUIBlur(Ignore)
 	self._isIgnoreUIBlur = Ignore
 end
@@ -473,7 +621,7 @@ function PostProcessingMgr:setUIBlurActive(activeType, blurParam, hideUI, viewEv
 		else
 			self:setUIActive(true)
 
-			self._unitCamData.usePostProcess = (activeType == 2 or activeType == 4) and sceneType ~= SceneType.Room
+			self._unitCamData.usePostProcess = (activeType == 2 or activeType == 4) and sceneType ~= SceneType.Room and sceneType ~= SceneType.PartyGameLobby
 
 			self:setUIPPValue("bloomActive", false)
 			self:setUIPPValue("localMaskActive", activeType == 2 or activeType == 4)
@@ -486,7 +634,7 @@ function PostProcessingMgr:setUIBlurActive(activeType, blurParam, hideUI, viewEv
 			end
 		end
 
-		if self._uiBloomActive then
+		if self._uiBloomActive or self._autoBloomActive then
 			self._uiCamData.usePostProcess = true
 
 			self:setUIPPValue("bloomActive", true)

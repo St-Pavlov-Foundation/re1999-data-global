@@ -40,6 +40,7 @@ function GMSubViewRole:initViewContent()
 	})
 
 	self:addButton("L5", "播放语音", self._onClickPlayVoice, self)
+	self:addButton("L5", "打开皮肤获得界面", self._onClickShowSkinGetView, self)
 	self:addTitleSplitLine("快速养成")
 	self:addButton("L6", "全角色获得", self.onClickGetAllHero, self)
 	self:addButton("L6", "全角色一键拉满（等级,共鸣，塑造）", self.onClickUpgradeAllToMax, self)
@@ -117,6 +118,16 @@ function GMSubViewRole:_onClickPlayVoice()
 	local id = tonumber(self._voiceId:GetText())
 
 	CharacterController.instance:dispatchEvent(CharacterEvent.MainHeroGmPlayVoice, id)
+end
+
+function GMSubViewRole:_onClickShowSkinGetView()
+	self:closeThis()
+
+	local id = tonumber(self._voiceId:GetText())
+
+	CharacterController:openCharacterSkinGainView({
+		skinId = id
+	})
 end
 
 function GMSubViewRole:_onMainThumbnailToggleChanged()

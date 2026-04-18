@@ -35,6 +35,8 @@ addGlobalModule("projbooter.hotupdate.HotUpdateOptionPackageMgr", "HotUpdateOpti
 addGlobalModule("projbooter.reschecker.MassHotUpdateMgr", "MassHotUpdateMgr")
 addGlobalModule("projbooter.reschecker.ResCheckMgr", "ResCheckMgr")
 addGlobalModule("projbooter.hotupdate.HotUpdateTipsHttpGetter", "HotUpdateTipsHttpGetter")
+addGlobalModule("projbooter.reschecker.MassHotUpdateMgr", "MassHotUpdateMgr")
+addGlobalModule("projbooter.reschecker.ResCheckMgr", "ResCheckMgr")
 addGlobalModule("projbooter.audio.BootAudioMgr", "BootAudioMgr")
 addGlobalModule("projbooter.sdk.SDKNativeUtil", "SDKNativeUtil")
 addGlobalModule("projbooter.sdk.SDKMgr", "SDKMgr")
@@ -310,12 +312,12 @@ end
 
 function ProjBooter:loadLogicLua()
 	BootLoadingView.instance:showFixBtn()
-	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTmepDir2)
+	SLFramework.FileHelper.ClearDir(SLFramework.FrameworkSettings.PersistentResTempDir2)
 	logNormal("ProjBooter:loadLogicLua")
 	BootLoadingView.instance:show(0.1, booterLang("loading_res"))
 
 	if GameResMgr.IsFromEditorDir or VersionValidator.instance:isInReviewing() and BootNativeUtil.isIOS() then
-		self:loadLogicLuaTrue()
+		self:loadHotupdateAssembly()
 	else
 		self:resCheck()
 	end
@@ -331,7 +333,7 @@ function ProjBooter:onResCheckFinish(allPass, diffList)
 	self._resCheckdiffList = diffList
 
 	if allPass then
-		self:loadLogicLuaTrue()
+		self:loadHotupdateAssembly()
 	elseif BootVoiceNewView.instance:isNeverOpen() then
 		BootVoiceNewView.instance:show(self.loadUnmatchRes, self)
 	else
@@ -345,6 +347,10 @@ end
 
 function ProjBooter:loadUnmatchResFinish()
 	logNormal("ProjBooter:loadUnmatchResFinish")
+	self:loadHotupdateAssembly()
+end
+
+function ProjBooter:loadHotupdateAssembly()
 	self:loadLogicLuaTrue()
 end
 

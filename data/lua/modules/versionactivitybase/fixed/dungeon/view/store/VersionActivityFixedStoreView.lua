@@ -9,6 +9,7 @@ function VersionActivityFixedStoreView:onInitView()
 	self._goContent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content")
 	self._gostoreItem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
 	self._txttime = gohelper.findChildText(self.viewGO, "title/image_LimitTimeBG/#txt_time")
+	self._gospitem = gohelper.findChild(self.viewGO, "dsc_store")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -20,6 +21,7 @@ function VersionActivityFixedStoreView:addEvents()
 	self:addEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self, LuaEventSystem.Low)
 	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onCurrencyChange, self, LuaEventSystem.Low)
+	self:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._refreshView, self, LuaEventSystem.Low)
 end
 
 function VersionActivityFixedStoreView:removeEvents()
@@ -27,6 +29,7 @@ function VersionActivityFixedStoreView:removeEvents()
 	self:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, self.closeThis, self)
 	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._onCurrencyChange, self)
 	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onCurrencyChange, self)
+	self:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, self._refreshView)
 end
 
 function VersionActivityFixedStoreView:_onScrollValueChanged()
@@ -43,22 +46,44 @@ function VersionActivityFixedStoreView:_editableInitView()
 	gohelper.setActive(self._gostoreItem, false)
 
 	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	self.actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore
+	self.actId = VersionActivityFixedHelper.getVersionActivityDungeonStore(self._bigVersion, self._smallVersion)
+
+	VersionActivityFixedHelper.setCustomDungeonStore()
+
 	self.storeItemList = self:getUserDataTb_()
 	self.rectTrContent = self._goContent:GetComponent(gohelper.Type_RectTransform)
 end
 
 function VersionActivityFixedStoreView:onOpen()
+	VersionActivityFixedStoreListModel.instance:initStoreGoodsConfig()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
 	self:refreshTime()
 	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
 	self:refreshStoreContent()
 	self:_onScrollValueChanged()
 	self:scrollToFirstNoSellOutStore()
+
+	local isShowSpecial = self.viewContainer.isShowSpecialItem and self.viewContainer:isShowSpecialItem()
+
+	if isShowSpecial then
+		local spGoodsList = VersionActivityFixedStoreListModel.instance:getSpecialGoodsList()
+
+		if #spGoodsList > 0 then
+			if not self._spGoodsItem then
+				self._spGoodsItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gospitem, VersionActivitySpecialStoreGoodsItem)
+			end
+
+			self._spGoodsItem:onUpdateMO(self.actId)
+		end
+
+		gohelper.setActive(self._gospitem, #spGoodsList > 0)
+	else
+		gohelper.setActive(self._gospitem, false)
+	end
 end
 
 function VersionActivityFixedStoreView:refreshTime()
-	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 	local remainTimeStr = actInfoMo:getRemainTimeStr3(false, false)
 
 	self._txttime.text = remainTimeStr
@@ -81,6 +106,7 @@ function VersionActivityFixedStoreView:refreshStoreContent()
 
 			storeItem = VersionActivityFixedHelper.getVersionActivityStoreItem(self._bigVersion, self._smallVersion).New()
 
+			storeItem:setActId(self.actId)
 			storeItem:onInitView(storeItemGo)
 			table.insert(self.storeItemList, storeItem)
 		end
@@ -121,12 +147,14 @@ function VersionActivityFixedStoreView:getFirstNoSellOutGroup()
 
 	for index, groupGoodsCoList in ipairs(storeGroupDict) do
 		for _, goodsCo in ipairs(groupGoodsCoList) do
-			if goodsCo.maxBuyCount == 0 then
-				return index
-			end
+			if goodsCo.specProduct ~= 1 then
+				if goodsCo.maxBuyCount == 0 then
+					return index
+				end
 
-			if goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.actId, goodsCo.id) > 0 then
-				return index
+				if goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.actId, goodsCo.id) > 0 then
+					return index
+				end
 			end
 		end
 	end
@@ -136,6 +164,14 @@ end
 
 function VersionActivityFixedStoreView:_onCurrencyChange()
 	self.viewContainer:refreshCurrencyItem()
+end
+
+function VersionActivityFixedStoreView:_refreshView()
+	self.viewContainer:refreshCurrencyItem()
+
+	if self._spGoodsItem then
+		self._spGoodsItem:onUpdateMO(self.actId)
+	end
 end
 
 function VersionActivityFixedStoreView:onClose()

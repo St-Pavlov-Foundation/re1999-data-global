@@ -24,6 +24,7 @@ EquipEnum.FromViewEnum = {
 	FromSeason166HeroGroupFightView = 8,
 	FromSeasonFightView = 3,
 	FromHeroGroupFightView = 1,
+	FromTowerComposeHeroGroupView = 12,
 	FromRougeHeroGroupFightView = 7,
 	FromCachotHeroGroupFightView = 5,
 	FromPresetPreviewView = 11

@@ -23,9 +23,12 @@ function DecorateStoreGoodsBuyView:onInitView()
 	self._gopayitem = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_pay/#go_payitem")
 	self._btninsight = gohelper.findChildButtonWithAudio(self.viewGO, "right/#go_buyContent/buy/#btn_insight")
 	self._txtcostnum = gohelper.findChildText(self.viewGO, "right/#go_buyContent/buy/#txt_costnum")
+	self._txtoriginalprice = gohelper.findChildText(self.viewGO, "right/#go_buyContent/buy/#txt_costnum/#txt_original_price")
 	self._imagecosticon = gohelper.findChildImage(self.viewGO, "right/#go_buyContent/buy/#txt_costnum/#simage_costicon")
 	self._gosource = gohelper.findChild(self.viewGO, "right/#go_source")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
+	self._gotips = gohelper.findChild(self.viewGO, "right/#go_buyContent/#go_tips")
+	self._txtdiscounttips = gohelper.findChildText(self.viewGO, "right/#go_buyContent/#go_tips/#txt_discount")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -37,6 +40,7 @@ function DecorateStoreGoodsBuyView:addEvents()
 	self._btninsight:AddClickListener(self._btninsightOnClick, self)
 	self._btnticket:AddClickListener(self._btnClickUseTicket, self)
 	self._btnclose:AddClickListener(self._btncloseOnClick, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshUI, self)
 end
 
 function DecorateStoreGoodsBuyView:removeEvents()
@@ -44,6 +48,7 @@ function DecorateStoreGoodsBuyView:removeEvents()
 	self._btninsight:RemoveClickListener()
 	self._btnticket:RemoveClickListener()
 	self._btnclose:RemoveClickListener()
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshNorSignActivity, self._refreshUI, self)
 end
 
 function DecorateStoreGoodsBuyView:_btnthemeOnClick()
@@ -51,6 +56,49 @@ function DecorateStoreGoodsBuyView:_btnthemeOnClick()
 end
 
 function DecorateStoreGoodsBuyView:_btninsightOnClick()
+	local has, items = DecorateStoreModel.instance:hasDiscountItem(self._mo.goodsId)
+
+	self._discountItems = items
+
+	local isCanBuySceneUIPackage = DecorateStoreModel.instance:isCanBuySceneUIPackage()
+
+	if has and items and isCanBuySceneUIPackage then
+		local co = ItemModel.instance:getItemConfig(items[1], items[2])
+
+		GameFacade.showMessageBox(MessageBoxIdDefine.DecorateDiscountTip2, MsgBoxEnum.BoxType.Yes_No, self._checkDiscounnt, self.closeThis, nil, self, self, nil, co and co.name or "", self._mo.config.name)
+	else
+		self:_checkDiscounnt()
+	end
+end
+
+function DecorateStoreGoodsBuyView:_checkDiscounnt()
+	local actId = self._discountItems and DecorateStoreEnum.DiscountItemActId[self._discountItems[2]]
+
+	if actId then
+		local isCanClaim = DecorateStoreModel.instance:isCanClaimDiscountItem(self._discountItems)
+
+		if not isCanClaim then
+			self:_readyBuy()
+		else
+			local co = ItemModel.instance:getItemConfig(self._discountItems[1], self._discountItems[2])
+
+			GameFacade.showMessageBox(MessageBoxIdDefine.DecorateDiscountTip1, MsgBoxEnum.BoxType.Yes_No, self._onJumpGetDiscountItemView, self._readyBuy, nil, self, self, nil, co and co.name or "")
+		end
+	else
+		self:_readyBuy()
+	end
+end
+
+function DecorateStoreGoodsBuyView:_onJumpGetDiscountItemView()
+	local actId = self._discountItems[2] and DecorateStoreEnum.DiscountItemActId[self._discountItems[2]]
+
+	if actId then
+		ActivityModel.instance:setTargetActivityCategoryId(actId)
+		ActivityController.instance:openActivityBeginnerView()
+	end
+end
+
+function DecorateStoreGoodsBuyView:_readyBuy()
 	local curIndex = DecorateStoreModel.instance:getCurCostIndex()
 	local costParam = self._currencyParam[curIndex]
 
@@ -151,6 +199,9 @@ function DecorateStoreGoodsBuyView:_setCurrency()
 
 	if self._mo.config.cost ~= "" then
 		local costs = string.splitToNumber(self._mo.config.cost, "#")
+		local realCost = self:_getCostNum(tonumber(costs[3]))
+
+		costs[3] = realCost
 
 		table.insert(currencyParam, costs[2])
 		table.insert(self._currencyParam, costs)
@@ -160,6 +211,11 @@ function DecorateStoreGoodsBuyView:_setCurrency()
 		local cost2s = string.splitToNumber(self._mo.config.cost2, "#")
 
 		table.insert(currencyParam, cost2s[2])
+
+		local realCost = self:_getCostNum(tonumber(cost2s[3]))
+
+		cost2s[3] = realCost
+
 		table.insert(self._currencyParam, cost2s)
 	end
 
@@ -188,6 +244,14 @@ function DecorateStoreGoodsBuyView:_refreshUI()
 
 	self._txtdesc.text = self._itemCo.desc
 	self._txtname.text = self._itemCo.name
+
+	local has, _, discount = DecorateStoreModel.instance:hasDiscountItem(self._mo.goodsId)
+
+	if has then
+		self._txtdiscounttips.text = string.format("-%s%%", discount * 0.1)
+	end
+
+	gohelper.setActive(self._gotips, has)
 end
 
 function DecorateStoreGoodsBuyView:_createPayItemUserDataTb_(goItem, index)
@@ -288,6 +352,8 @@ function DecorateStoreGoodsBuyView:_refreshCost()
 	local costParam = self._currencyParam[curIndex]
 
 	if costParam then
+		self._decorateConfig = DecorateStoreConfig.instance:getDecorateConfig(self._mo.goodsId)
+
 		local str = self:_getCurrencyIconStr(costParam[1], costParam[2])
 
 		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecosticon, str)
@@ -296,7 +362,7 @@ function DecorateStoreGoodsBuyView:_refreshCost()
 
 		SLFramework.UGUI.GuiHelper.SetColor(self._txtcostnum, quantity and quantity >= costParam[3] and "#595959" or "#BF2E11")
 
-		self._txtcostnum.text = costParam[3]
+		self._txtcostnum.text = tostring(costParam[3])
 
 		local item = self._infoItemTbList[1]
 
@@ -311,13 +377,35 @@ function DecorateStoreGoodsBuyView:_refreshCost()
 		local count = ItemModel.instance:getItemQuantity(self._products[1], self._products[2])
 
 		item._txtnum.text = string.format("%s/%s", count, self._products[3])
-		item._txtgold.text = costParam[3]
+		item._txtgold.text = tostring(costParam[3])
 
 		UISpriteSetMgr.instance:setCurrencyItemSprite(item._imagegold, str)
 		gohelper.setActive(item._go, true)
+
+		if self._txtoriginalprice then
+			local originalCost = self._decorateConfig["originalCost" .. curIndex]
+
+			gohelper.setActive(self._txtoriginalprice, originalCost ~= nil)
+
+			if originalCost then
+				self._txtoriginalprice.text = tostring(originalCost)
+			end
+		end
 	else
 		logError("消耗货币数据出错")
 	end
+end
+
+function DecorateStoreGoodsBuyView:_getCostNum(costNum)
+	local has, _, discount = DecorateStoreModel.instance:hasDiscountItem(self._mo.goodsId)
+
+	if discount then
+		self._txtdiscounttips.text = string.format("-%s%%", discount * 0.1)
+
+		return has and costNum * discount * 0.001 or costNum
+	end
+
+	return costNum
 end
 
 function DecorateStoreGoodsBuyView:onClickModalMask()

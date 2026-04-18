@@ -328,17 +328,24 @@ function V3a2_BossRush_HandBookEnemyInfoView:_doTweenExp(orgin, target)
 	end
 
 	ZProj.TweenHelper.KillByObj(self._imageslider)
-	self:_showExpSlider()
-
-	if orgin == target then
-		return
-	end
 
 	local time = 1
+
+	self:_showExpSlider()
 
 	self.tweenId = ZProj.TweenHelper.DOTweenFloat(orgin, target, time, self.frameCallback, self.finishCallback, self, nil, EaseType.Linear)
 
 	local fillAmount = self._needExp == 0 and 0 or target / self._needExp * self._sliderScale
+
+	if fillAmount - self._imageslider.fillAmount < 0.01 then
+		self._imageslider.fillAmount = fillAmount
+		self._saveExp = self._heightScore
+
+		self:_setProgressTxt()
+		self:_onfinishExpLoopAudio()
+
+		return
+	end
 
 	self:_onPlayExpLoopAudio()
 	TaskDispatcher.cancelTask(self._onfinishExpLoopAudio, self)

@@ -86,6 +86,8 @@ function FightTLEventCreateSpine:onTrackStart(fightStepData, duration, paramsArr
 		specificOrder = renderOrder * FightEnum.OrderRegion
 	end
 
+	self.useGoScaleReplaceSpineScale = FightTLHelper.getBoolParam(paramsArr[20])
+
 	local defenders = {}
 
 	if paramsArr[10] == "1" then
@@ -145,6 +147,31 @@ function FightTLEventCreateSpine:_onTickLookAtCamera()
 	end
 end
 
+function FightTLEventCreateSpine:onSpineLoaded(spine)
+	if self.spineEntity == spine.entity then
+		self:setSubRootPathRenderer()
+	end
+end
+
+function FightTLEventCreateSpine:setSubRootPathRenderer()
+	if self.spineEntity and self.spineEntity.spine then
+		local obj = self.spineEntity.spine:getSpineGO()
+		local arr = string.split(self._paramsArr[19], "#")
+
+		for k, path in pairs(arr) do
+			local subObj = gohelper.findChild(obj, path)
+
+			if subObj then
+				local renderer = subObj:GetComponent(typeof(UnityEngine.MeshRenderer))
+
+				if renderer then
+					renderer.sortingOrder = self.specificOrder
+				end
+			end
+		end
+	end
+end
+
 function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, scale, posX, posY, posZ, hangPointGO, specificOrder, actionName)
 	local entityMgr = FightGameMgr.entityMgr
 	local specificSide = self._attacker:getSide()
@@ -156,7 +183,18 @@ function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, sca
 		}
 	end
 
-	local spineEntity = entityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror == 1, nil, entityParam, self._paramsArr[18] == "1")
+	local spineEntity = entityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror == 1, nil, entityParam, self._paramsArr[18] == "1", self.useGoScaleReplaceSpineScale)
+
+	self.spineEntity = spineEntity
+	self.specificOrder = specificOrder
+
+	if not string.nilorempty(self._paramsArr[19]) and spineEntity.spine then
+		if gohelper.isNil(spineEntity.spine:getSpineGO()) then
+			self:com_registFightEvent(FightEvent.OnSpineLoaded, self.onSpineLoaded)
+		else
+			self:setSubRootPathRenderer()
+		end
+	end
 
 	spineEntity.variantHeart:setEntity(self._attacker)
 	spineEntity:setScale(scale)

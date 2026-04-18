@@ -25,6 +25,8 @@ function SummonMainCharacterProbUp:onInitView()
 	self._simageline = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#txt_deadline/#simage_line")
 	self._txtpreferential = gohelper.findChildText(self.viewGO, "#go_ui/current/first/#txt_times")
 	self._gopreferential = gohelper.findChild(self.viewGO, "#go_ui/current/first")
+	self._gospine = gohelper.findChild(self.viewGO, "#go_ui/current/node1/#go_spine")
+	self._gorole = gohelper.findChild(self.viewGO, "#go_ui/current/node1/#simage_role")
 
 	for i = 1, 3 do
 		self["_simagead" .. i] = gohelper.findChildSingleImage(self.viewGO, "#go_ui/current/#simage_ad" .. i)
@@ -67,6 +69,19 @@ function SummonMainCharacterProbUp:initCharacterItemCount()
 	self._characterItemCount = SummonCharacterProbUpPreloadConfig.getCharacterItemCountByName(className)
 end
 
+function SummonMainCharacterProbUp:initSpine()
+	local poolId = SummonMainModel.instance:getCurId()
+	local poolConfig = SummonConfig.instance:getSummonPool(poolId)
+
+	if poolConfig and self._gospine then
+		if not self._spineComp then
+			self._spineComp = SummonSpineComp.Create(self._gospine)
+		end
+
+		self._spineComp:setConfig(poolConfig, self._gorole)
+	end
+end
+
 function SummonMainCharacterProbUp:_editableInitView()
 	self._characteritems = {}
 	self._pageitems = {}
@@ -74,6 +89,7 @@ function SummonMainCharacterProbUp:_editableInitView()
 
 	self:refreshSingleImage()
 	self:initCharacterItemCount()
+	self:initSpine()
 
 	for i = 1, self._characterItemCount do
 		local characteritem = self:getUserDataTb_()
@@ -131,6 +147,10 @@ function SummonMainCharacterProbUp:onDestroyView()
 
 	if self._btnshop then
 		self._btnshop:RemoveClickListener()
+	end
+
+	if self._spineComp then
+		self._spineComp:onDestroy()
 	end
 end
 

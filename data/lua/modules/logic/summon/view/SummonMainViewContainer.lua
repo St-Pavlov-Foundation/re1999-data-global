@@ -93,6 +93,8 @@ function SummonMainViewContainer:buildTabViews(tabContainerId)
 		self._tabInsts = SummonMainModel.instance:createUIClassTab()
 
 		return self._tabInsts
+	elseif tabContainerId == 4 then
+		return {}
 	end
 end
 
@@ -104,6 +106,16 @@ function SummonMainViewContainer:onContainerOpenFinish()
 	end
 
 	self:preloadUIRes()
+end
+
+function SummonMainViewContainer:hideHomeButton()
+	if self._navigateButtonView then
+		self._navigateButtonView:setParam({
+			true,
+			false,
+			false
+		})
+	end
 end
 
 function SummonMainViewContainer:refreshHelp()

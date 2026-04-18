@@ -21,6 +21,7 @@ function DungeonResChapterItem:onInitView()
 	self._txtTurnBackTip = gohelper.findChildText(self.viewGO, "anim/turnback_tipsbg/tips")
 	self._goDoubleDropTip = gohelper.findChild(self.viewGO, "anim/#go_doubledroptip")
 	self._gotripledroptip = gohelper.findChild(self.viewGO, "anim/#go_tripledroptip")
+	self._txttripledropTip = gohelper.findChildText(self.viewGO, "anim/#go_tripledroptip/tips")
 	self._gotrace = gohelper.findChild(self.viewGO, "anim/#go_trace")
 
 	if self._editableInitView then
@@ -33,7 +34,7 @@ function DungeonResChapterItem:addEvents()
 	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.onUpdateParam, self)
 	self:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.onUpdateParam, self)
 	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.showDoubleDropTips, self)
-	self:addEventCb(CruiseController.instance, CruiseEvent.RefreshTripleDropInfo, self.showTripleDropTips, self)
+	self:addEventCb(CruiseController.instance, CruiseEvent.RefreshTripleDropInfo, self.showMultiDropTips, self)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.onUpdateParam, self)
 	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
@@ -43,7 +44,7 @@ function DungeonResChapterItem:removeEvents()
 	self:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, self.onUpdateParam, self)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.onUpdateParam, self)
 	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, self.showDoubleDropTips, self)
-	self:removeEventCb(CruiseController.instance, CruiseEvent.RefreshTripleDropInfo, self.showTripleDropTips, self)
+	self:removeEventCb(CruiseController.instance, CruiseEvent.RefreshTripleDropInfo, self.showMultiDropTips, self)
 	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnRefreshTraced, self._refreshTraced, self)
 end
 
@@ -141,7 +142,7 @@ function DungeonResChapterItem:onUpdateParam()
 	end
 
 	self:showEquip(self._chapterCo)
-	self:showTripleDropTips()
+	self:showMultiDropTips()
 	self:showTurnBackAddition()
 	self:showDoubleDropTips()
 	gohelper.setActive(self._goopentime, hasOpenTime)
@@ -296,9 +297,19 @@ function DungeonResChapterItem:showDoubleDropTips()
 	self.isShowDouble = isShowDouble
 end
 
-function DungeonResChapterItem:showTripleDropTips()
-	local isMultiDrop, limit, total = Activity217Model.instance:getShowTripleByChapter(self._chapterCo.id)
+function DungeonResChapterItem:showMultiDropTips()
+	local isMultiDrop, limit, total, magnification = Activity217Model.instance:getShowTripleByChapter(self._chapterCo.id)
 	local multiDropShow = isMultiDrop and limit > 0
+
+	if multiDropShow then
+		local actName = Activity217Model.instance:getActName()
+
+		magnification = magnification and magnification - 1 .. "00"
+
+		local str = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("doubleactivity_outtips"), actName, magnification)
+
+		self._txttripledropTip.text = str
+	end
 
 	gohelper.setActive(self._gotripledroptip, multiDropShow)
 

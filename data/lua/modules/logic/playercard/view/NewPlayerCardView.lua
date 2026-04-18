@@ -362,9 +362,9 @@ function NewPlayerCardView:setProgressType(go, type, index)
 		if not string.nilorempty(exploreCollection) then
 			local arr = GameUtil.splitString2(exploreCollection, true) or {}
 
-			txtNum1.text = arr[3][1] or 0
-			txtNum2.text = arr[1][1] or 0
-			txtNum3.text = arr[2][1] or 0
+			self:_refreshExportItem(1, arr[3], "dungeon_secretroom_btn_triangle", txtNum1)
+			self:_refreshExportItem(2, arr[2], "dungeon_secretroom_btn_sandglass", txtNum2)
+			self:_refreshExportItem(3, arr[1], "dungeon_secretroom_btn_box", txtNum3)
 		else
 			txtNum1.text = 0
 			txtNum2.text = 0
@@ -390,6 +390,26 @@ function NewPlayerCardView:setProgressType(go, type, index)
 		else
 			txtNum2.text = 0
 		end
+	end
+end
+
+function NewPlayerCardView:_refreshExportItem(index, data, imageKey, txtitem)
+	local num = data and data[1]
+	local fullNum = data and data[2]
+	local icon = gohelper.findChildImage(txtitem.gameObject, "icon")
+
+	if num then
+		txtitem.text = num
+	else
+		txtitem.text = PlayerCardEnum.EmptyString
+	end
+
+	local isFull = num and fullNum and fullNum <= num
+
+	if isFull then
+		UISpriteSetMgr.instance:setExploreSprite(icon, imageKey .. "1", true)
+	else
+		UISpriteSetMgr.instance:setExploreSprite(icon, imageKey .. "2", true)
 	end
 end
 

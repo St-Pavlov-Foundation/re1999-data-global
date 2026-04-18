@@ -7,7 +7,7 @@ local ExploreGrid = class("ExploreGrid", ExploreBaseUnit)
 function ExploreGrid:onInit()
 	self._resLoader = PrefabInstantiate.Create(self.go)
 
-	self._resLoader:startLoad("explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
+	self._resLoader:startLoad("modules/explore/prefabs/unit/m_s10_dynamic_ground_01.prefab")
 end
 
 function ExploreGrid:setName(name)

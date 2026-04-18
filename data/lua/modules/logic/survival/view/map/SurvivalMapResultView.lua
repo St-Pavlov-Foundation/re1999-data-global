@@ -4,8 +4,7 @@ module("modules.logic.survival.view.map.SurvivalMapResultView", package.seeall)
 
 local SurvivalMapResultView = class("SurvivalMapResultView", BaseView)
 local currencys = {
-	SurvivalEnum.CurrencyType.Gold,
-	SurvivalEnum.CurrencyType.Decoding
+	SurvivalEnum.CurrencyType.Gold
 }
 
 function SurvivalMapResultView:onInitView()
@@ -289,8 +288,8 @@ function SurvivalMapResultView:setCurrItem(value)
 	local afterVal = self._resultMo.afterCurrencyItems
 
 	for i = 1, #currencys do
-		local preCount = preVal[currencys[i]] or 0
-		local afterCount = afterVal[currencys[i]] or 0
+		local preCount = (preVal[currencys[i]] or 0) + self._resultMo.afterItemWorth
+		local afterCount = (afterVal[currencys[i]] or 0) + self._resultMo.afterItemWorth
 		local count = math.floor(preCount + (afterCount - preCount) * value)
 		local txt = self["_txttag" .. i]
 

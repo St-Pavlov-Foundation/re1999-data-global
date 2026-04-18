@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "defaultUnlock": 1,
+    "itemId": 800001,
+    "icon": "mainsceneswitch_summonbg_01",
+    "previewIcon": "",
+    "resName": "scenes/m_s06_summon/m_s06_summon_p_real.prefab"
+  },
+  {
+    "id": 2,
+    "defaultUnlock": 0,
+    "itemId": 800002,
+    "icon": "mainsceneswitch_summonbg_02",
+    "previewIcon": "mainsceneswitch_summonbg_pic02",
+    "resName": "scenes/v3a4_m_s06_summon/v3a4_m_s06_summon_p.prefab"
+  }
+]

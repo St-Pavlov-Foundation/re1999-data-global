@@ -21,6 +21,7 @@ function TowerComposeController:addConstEvents()
 	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self.onSetTaskList, self)
 	self:registerCallback(TowerEvent.DailyReresh, self.dailyReddotRefresh, self)
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, self.setFightStatisticsData, self)
 end
 
 function TowerComposeController:jumpView(param)
@@ -109,16 +110,25 @@ function TowerComposeController:dropTypeAllModAndEquip(param, modList)
 		local themeMo = TowerComposeModel.instance:getThemeMo(param.themeId)
 		local modTypeMap = self:getModTypeMap(modList)
 		local modSlotNumMap = TowerComposeConfig.instance:getModSlotNumMap(param.themeId)
+		local curNotLockPlane = TowerComposeModel.instance:getCurLockPlaneId(param.themeId, true)
 
-		for planeId = 1, towerEpisodeConfig.plane do
-			local planeMo = themeMo:getPlaneMo(planeId)
-
-			for modType, modList in pairs(modTypeMap) do
-				planeMo:dropAllSlotMod(modType)
-			end
+		if curNotLockPlane == 0 then
+			return
 		end
 
-		local equipPlaneMo = themeMo:getPlaneMo(1)
+		local isReplaceModInLockPlane = self:checkReplaceModIsLock(param.themeId, modTypeMap)
+
+		if isReplaceModInLockPlane then
+			GameFacade.showToast(ToastEnum.TowerComposeJumpModLock)
+
+			return
+		end
+
+		local notUnlockPlaneMo = themeMo:getPlaneMo(curNotLockPlane)
+
+		for modType, modList in pairs(modTypeMap) do
+			notUnlockPlaneMo:dropAllSlotMod(modType)
+		end
 
 		for modType, modList in pairs(modTypeMap) do
 			local slotNum = modSlotNumMap[modType]
@@ -127,14 +137,37 @@ function TowerComposeController:dropTypeAllModAndEquip(param, modList)
 				if slot <= slotNum then
 					local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
 					local equipSlot = modConfig.slot > 0 and modConfig.slot or slot
+					local modInPlaneId, modInPlaneInfo = TowerComposeModel.instance:checkModIsInPlane(modId, modConfig.type)
 
-					equipPlaneMo:setEquipModId(modType, equipSlot, modId)
+					if modInPlaneId > 0 and modInPlaneId ~= curNotLockPlane then
+						local modInPlaneMo = themeMo:getPlaneMo(modInPlaneId)
+
+						modInPlaneMo:setEquipModId(modType, modInPlaneInfo.slot, 0)
+					end
+
+					notUnlockPlaneMo:setEquipModId(modType, equipSlot, modId)
 				end
 			end
 		end
 
 		TowerComposeModel.instance:sendSetModsRequest(param.themeId, param.layerId)
 	end
+end
+
+function TowerComposeController:checkReplaceModIsLock(themeId, modTypeMap)
+	for modType, modList in pairs(modTypeMap) do
+		for slot, modId in ipairs(modList) do
+			local modConfig = TowerComposeConfig.instance:getComposeModConfig(modId)
+			local modInPlaneId = TowerComposeModel.instance:checkModIsInPlane(modId, modConfig.type)
+			local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(themeId, modInPlaneId)
+
+			if isPlaneLock then
+				return true
+			end
+		end
+	end
+
+	return false
 end
 
 function TowerComposeController:getModTypeMap(modList)
@@ -164,7 +197,9 @@ function TowerComposeController:_openMainSelectView(_, resultCode, _)
 		return
 	end
 
-	TowerComposeRpc.instance:sendTowerComposeGetInfoRequest(true, function(_, infoCode, _)
+	local notReset = self._mainviewParam and self._mainviewParam.isNotReset
+
+	TowerComposeRpc.instance:sendTowerComposeGetInfoRequest(not notReset, function(_, infoCode, _)
 		if infoCode == 0 then
 			TaskRpc.instance:sendGetTaskInfoRequest({
 				TaskEnum.TaskType.Tower,
@@ -200,7 +235,7 @@ function TowerComposeController:_openTowerComposeMainView(_, resultCode, _)
 	self.enterFlow = FlowSequence.New()
 
 	if not ViewMgr.instance:isOpen(ViewName.TowerMainSelectView) then
-		self.enterFlow:addWork(TowerMainSelectEnterWork.New())
+		self.enterFlow:addWork(TowerMainSelectEnterWork.New(self._mainviewParam))
 	end
 
 	self.enterFlow:addWork(TowerEnterWork.New(self._mainviewParam, ViewName.TowerComposeMainView))
@@ -395,6 +430,14 @@ function TowerComposeController:openTowerComposeModDescTipView(param)
 	ViewMgr.instance:openView(ViewName.TowerComposeModDescTipView, param)
 end
 
+function TowerComposeController:openTowerComposeExtraTips(param)
+	ViewMgr.instance:openView(ViewName.TowerComposeExtraTips, param)
+end
+
+function TowerComposeController:openTowerComposeSaveView(param)
+	ViewMgr.instance:openView(ViewName.TowerComposeSaveView, param)
+end
+
 function TowerComposeController:setModDescColor(desc, notSetNumColor, bracketColor, numColor)
 	local curBracketColor = bracketColor or "#4e6698"
 	local bracketColorFormat = string.format("<color=%s>%s</color>", curBracketColor, "%1")
@@ -448,6 +491,14 @@ function TowerComposeController:showPlaneTrialLimitToast(planeId)
 		GameFacade.showToast(ToastEnum.TowerComposePlaneTrialLimit, episodeConfig.name, planeName)
 	else
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, 1)
+	end
+end
+
+function TowerComposeController:setFightStatisticsData(endFightPushInfo)
+	local bossSettleMo = TowerComposeModel.instance:getBossSettleInfo()
+
+	if bossSettleMo then
+		bossSettleMo:setAtkStat(endFightPushInfo)
 	end
 end
 

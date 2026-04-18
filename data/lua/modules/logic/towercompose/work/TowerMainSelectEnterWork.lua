@@ -4,6 +4,10 @@ module("modules.logic.towercompose.work.TowerMainSelectEnterWork", package.seeal
 
 local TowerMainSelectEnterWork = class("TowerMainSelectEnterWork", BaseWork)
 
+function TowerMainSelectEnterWork:ctor(mainViewParam)
+	self._mainviewParam = mainViewParam
+end
+
 function TowerMainSelectEnterWork:onStart(context)
 	TowerRpc.instance:sendGetTowerInfoRequest(self._openMainSelectView, self)
 end
@@ -13,7 +17,9 @@ function TowerMainSelectEnterWork:_openMainSelectView(_, resultCode, _)
 		return
 	end
 
-	TowerComposeRpc.instance:sendTowerComposeGetInfoRequest(true, function(_, _, infoCode)
+	local notReset = self._mainviewParam and self._mainviewParam.isNotReset
+
+	TowerComposeRpc.instance:sendTowerComposeGetInfoRequest(not notReset, function(_, _, infoCode)
 		if infoCode == 0 then
 			TaskRpc.instance:sendGetTaskInfoRequest({
 				TaskEnum.TaskType.Tower,

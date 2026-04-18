@@ -4,6 +4,7 @@ module("modules.logic.social.controller.SocialEvent", package.seeall)
 
 local SocialEvent = _M
 
+SocialEvent.FriendsInfoChangedSpecial = 100
 SocialEvent.FriendsInfoChanged = 101
 SocialEvent.BlackListInfoChanged = 102
 SocialEvent.SearchInfoChanged = 103

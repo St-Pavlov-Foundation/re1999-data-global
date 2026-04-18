@@ -8,12 +8,13 @@ function PlayerController:enterSelectScene()
 	ViewMgr.instance:openView(ViewName.PlayerView)
 end
 
-function PlayerController:openPlayerView(playerInfo, playerSelf, heroCover)
+function PlayerController:openPlayerView(playerInfo, playerSelf, heroCover, hideHomeBtn)
 	local param = {}
 
 	param.playerInfo = playerInfo
 	param.playerSelf = playerSelf
 	param.heroCover = heroCover
+	param.hideHomeBtn = hideHomeBtn
 
 	ViewMgr.instance:openView(ViewName.PlayerView, param)
 end

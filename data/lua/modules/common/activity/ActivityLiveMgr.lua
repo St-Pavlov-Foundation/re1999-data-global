@@ -19,7 +19,7 @@ end
 
 function ActivityLiveMgr:initActivityMgrList()
 	self.actMgrInstanceList = {
-		ActivityLiveMgr3_3.instance
+		ActivityLiveMgr3_4.instance
 	}
 	self.actId2ViewList = {}
 	self.actIdCloseCheckList = {}

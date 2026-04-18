@@ -110,7 +110,6 @@ end
 
 if GameResMgr.IsFromEditorDir then
 	require("tolua.reflection")
-	tolua.loadassembly("Assembly-CSharp")
 	tolua.loadassembly("Assembly-CSharp-Editor")
 	tolua.loadassembly("System.Core")
 

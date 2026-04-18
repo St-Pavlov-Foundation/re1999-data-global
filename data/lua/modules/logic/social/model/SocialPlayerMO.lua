@@ -4,7 +4,7 @@ module("modules.logic.social.model.SocialPlayerMO", package.seeall)
 
 local SocialPlayerMO = pureTable("SocialPlayerMO")
 
-function SocialPlayerMO:init(info)
+function SocialPlayerMO:init(info, type)
 	self.id = info.userId
 	self.userId = info.userId
 	self.name = info.name
@@ -14,6 +14,26 @@ function SocialPlayerMO:init(info)
 	self.desc = info.desc
 	self.infos = info.infos
 	self.bg = info.bg or 0
+	self.type = type
+end
+
+function SocialPlayerMO:initWithPlayCard(info, type)
+	if info and info.friendInfo then
+		self:init(info.friendInfo, type)
+	else
+		self:init(info, type)
+	end
+
+	if info and info.playerCardExtInfo then
+		self:_initPlayerCardExtInfo(info.playerCardExtInfo)
+	end
+end
+
+function SocialPlayerMO:_initPlayerCardExtInfo(playerCardExtInfo)
+	self.playercardMo = PlayerCardMO.New()
+
+	self.playercardMo:init(self.id)
+	self.playercardMo:updateInfo(playerCardExtInfo.playerCardInfo, playerCardExtInfo.playerInfo)
 end
 
 function SocialPlayerMO:isSendAddFriend()
@@ -30,6 +50,10 @@ end
 
 function SocialPlayerMO:isMyBlackList()
 	return SocialModel.instance:isMyBlackListByUserId(self.userId)
+end
+
+function SocialPlayerMO:getPlayerCardInfo()
+	return self.playercardMo
 end
 
 return SocialPlayerMO

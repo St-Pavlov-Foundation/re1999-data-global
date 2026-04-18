@@ -151,6 +151,10 @@ function VersionActivity1_6NormalStoreGoodsView:_editableInitView()
 	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
 	self._imagecosticon = gohelper.findChildImage(self.viewGO, "root/#go_buy/#go_buynormal/cost/#simage_costicon")
+	self._goboxtip = gohelper.findChild(self.viewGO, "root/buy_tip")
+	self._txtboxtipnum = gohelper.findChildText(self.viewGO, "root/buy_tip/bg/#txt_num")
+	self._txtboxkeyname = gohelper.findChildText(self.viewGO, "root/buy_tip/bg/txt")
+	self._imageboxtipicon = gohelper.findChildImage(self.viewGO, "root/buy_tip/bg/icon")
 
 	gohelper.setActive(self._gotips, false)
 	gohelper.setActive(self._gobuy, true)
@@ -192,6 +196,44 @@ function VersionActivity1_6NormalStoreGoodsView:onOpen()
 	self.currentBuyCount = 1
 
 	self:refreshUI()
+
+	local itemCo = ItemModel.instance:getItemConfig(self.itemType, self.itemId)
+
+	gohelper.setActive(self._goboxtip, itemCo.subType == ItemEnum.SubType.HeroExpBox)
+
+	if itemCo.subType == ItemEnum.SubType.HeroExpBox then
+		local quantity = HeroExpBoxModel.instance:getKeyCount()
+		local needKeyCount = HeroExpBoxModel.instance:getNeedKeyCount(itemCo.id)
+		local icon = HeroExpBoxModel.instance:getKeyIcon()
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageboxtipicon, icon .. "_1", true)
+
+		local str = ""
+
+		if needKeyCount <= quantity then
+			str = string.format("%d/%d", quantity, needKeyCount)
+		else
+			str = string.format("<color=%s>%d</color>/%d", "#FF0000", quantity, needKeyCount)
+		end
+
+		self._txtboxtipnum.text = str
+		self._txtboxkeyname.text = HeroExpBoxModel.instance:getKeyName()
+
+		local currency = {
+			{
+				isCurrencySprite = true,
+				type = MaterialEnum.MaterialType.Currency,
+				id = self.costId
+			},
+			{
+				isCurrencySprite = true,
+				type = MaterialEnum.MaterialType.Item,
+				id = HeroExpBoxEnum.KeyIds[1]
+			}
+		}
+
+		self.viewContainer:refreshCurrencyView(currency)
+	end
 end
 
 function VersionActivity1_6NormalStoreGoodsView:refreshUI()

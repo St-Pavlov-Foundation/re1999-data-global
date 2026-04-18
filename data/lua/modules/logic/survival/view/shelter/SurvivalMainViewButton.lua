@@ -37,6 +37,7 @@ function SurvivalMainViewButton:onInitView()
 	self.goNormalRoot = gohelper.findChild(self.viewGO, "go_normalroot")
 	self.goLeftTop = gohelper.findChild(self.viewGO, "#go_lefttop")
 	self.igoreViewList = {
+		ViewName.SurvivalRoleLevelTipPopView,
 		ViewName.SurvivalToastView,
 		ViewName.GuideView,
 		ViewName.GuideView2,
@@ -46,6 +47,7 @@ function SurvivalMainViewButton:onInitView()
 	self.animator = self.viewGO:GetComponent(gohelper.Type_Animator)
 	self.goRaycast = gohelper.findChild(self.viewGO, "raycast")
 	self.interceptMask = gohelper.findChild(self.viewGO, "interceptMask")
+	self.btnLossReturn = gohelper.findChildButtonWithAudio(self.viewGO, "go_normalroot/BottomRight/#btnLossReturn")
 end
 
 function SurvivalMainViewButton:addEvents()
@@ -67,6 +69,8 @@ function SurvivalMainViewButton:addEvents()
 	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
 	self:addEventCb(SurvivalController.instance, SurvivalEvent.BossPerformFinish, self.refreshInterceptMask, self)
+	self:addClickCb(self.btnLossReturn, self.onClickLossReturn, self)
+	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalLossReturnRewardReply, self.onReceiveSurvivalLossReturnRewardReply, self)
 end
 
 function SurvivalMainViewButton:removeEvents()
@@ -87,6 +91,7 @@ function SurvivalMainViewButton:removeEvents()
 	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
 	self:removeEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
+	TaskDispatcher.cancelTask(self.onDelayCheckMainViewAnim, self)
 end
 
 function SurvivalMainViewButton:refreshHelpBtnPos()
@@ -198,6 +203,41 @@ function SurvivalMainViewButton:onClickEquip()
 	SurvivalStatHelper.instance:statBtnClick("onClickEquip", "SurvivalMainView")
 end
 
+function SurvivalMainViewButton:onClickLossReturn()
+	local items = {}
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	if self:haveLossReturn() then
+		for k, v in ipairs(weekInfo.lossReturnItems) do
+			local itemMo = SurvivalBagItemMo.New()
+
+			itemMo:init({
+				id = v.itemId,
+				count = v.count
+			})
+			table.insert(items, itemMo)
+		end
+
+		ViewMgr.instance:openView(ViewName.SurvivalGiveBackView, {
+			items = items
+		})
+	end
+end
+
+function SurvivalMainViewButton:onReceiveSurvivalLossReturnRewardReply()
+	self:refreshLossReturnRed()
+end
+
+function SurvivalMainViewButton:refreshLossReturnRed()
+	gohelper.setActive(self.btnLossReturn.gameObject, self:haveLossReturn())
+end
+
+function SurvivalMainViewButton:haveLossReturn()
+	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+	return weekInfo.lossReturnItems and #weekInfo.lossReturnItems > 0
+end
+
 function SurvivalMainViewButton:onOpenView()
 	self:refreshViewUIVisible()
 	self:refreshInterceptMask()
@@ -228,14 +268,21 @@ function SurvivalMainViewButton:setViewUIVisible(isVisible)
 
 	self._isViewUIVisible = isVisible
 
+	TaskDispatcher.cancelTask(self.onDelayCheckMainViewAnim, self)
+
 	if isVisible then
 		self.animator:Play("in", 0, 0)
+		TaskDispatcher.runDelay(self.onDelayCheckMainViewAnim, self, 0.767)
 	else
 		self.animator:Play("out", 0, 0)
 	end
 
 	gohelper.setActive(self.goRaycast, not isVisible)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMainViewVisible, isVisible)
+end
+
+function SurvivalMainViewButton:onDelayCheckMainViewAnim()
+	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnDelayCheckMainViewAnim)
 end
 
 function SurvivalMainViewButton:refreshInterceptMask()
@@ -263,6 +310,7 @@ end
 function SurvivalMainViewButton:onOpen()
 	self:refreshView()
 	self:refreshHelpBtnPos()
+	self:refreshLossReturnRed()
 end
 
 function SurvivalMainViewButton:updateEquipRed()

@@ -118,5 +118,35 @@
     "name": "language_10105878",
     "resource": "",
     "desc": "language_10105879"
+  },
+  {
+    "id": 3084001,
+    "name": "language_10110729",
+    "resource": "",
+    "desc": "language_10110730"
+  },
+  {
+    "id": 3084002,
+    "name": "language_10110731",
+    "resource": "",
+    "desc": "language_10110732"
+  },
+  {
+    "id": 3084003,
+    "name": "language_10110733",
+    "resource": "",
+    "desc": "language_10110734"
+  },
+  {
+    "id": 3084004,
+    "name": "language_10110735",
+    "resource": "",
+    "desc": "language_10110736"
+  },
+  {
+    "id": 3084005,
+    "name": "language_10110737",
+    "resource": "",
+    "desc": "language_10110738"
   }
 ]

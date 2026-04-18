@@ -98,11 +98,10 @@ function SurvivalInitTeamViewContainer:_delayProcessEvent()
 end
 
 function SurvivalInitTeamViewContainer:setWeightNum()
-	local initGroup = SurvivalMapModel.instance:getInitGroup()
-	local heroCount = tabletool.len(initGroup.allSelectHeroMos)
-	local exWeight = SurvivalShelterModel.instance:getWeekInfo():getAttr(SurvivalEnum.AttrType.AttrWeight)
+	local weekMo = SurvivalShelterModel.instance:getWeekInfo()
+	local w1 = weekMo:getDerivedAttrFinalValue(SurvivalEnum.DerivedAttr.Weight)
 
-	self._txtWeight.text = exWeight
+	self._txtWeight.text = w1
 end
 
 function SurvivalInitTeamViewContainer:playAnim(animName)

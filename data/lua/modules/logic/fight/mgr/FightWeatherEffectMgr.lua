@@ -7,7 +7,7 @@ local FightWeatherEffectMgr = class("FightWeatherEffectMgr", FightBaseClass)
 function FightWeatherEffectMgr:onConstructor()
 	local curScene = GameSceneMgr.instance:getCurScene()
 
-	self:com_registEvent(curScene.level, CommonSceneLevelComp.OnLevelLoaded, self.onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self.onLevelLoaded)
 	self:com_registFightEvent(FightEvent.SetEntityWeatherEffectVisible, self._setEntityWeatherEffectVisible)
 	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 	self:com_registFightEvent(FightEvent.OnRestartStageBefore, self._releaseAllEntityEffect)

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "language_10110746",
+    "enName": "Musae's Store",
+    "pos": [
+      -61.62,
+      7.95,
+      0.3
+    ],
+    "icon": "v3a4_party_hall_btnshop",
+    "scenePath": "scene/building/v3a4_bxhy_building_shangdian_01 (1)"
+  },
+  {
+    "id": 2,
+    "name": "language_10113084",
+    "enName": "Musae's Dressing Room",
+    "pos": [
+      -4.28,
+      7.95,
+      -8.93
+    ],
+    "icon": "v3a4_party_hall_btncloth",
+    "scenePath": "scene/building/v3a4_bxhy_building_huanzhuangdidian_01 (1)"
+  },
+  {
+    "id": 3,
+    "name": "language_10113085",
+    "enName": "Garment Vending Machine",
+    "pos": [
+      -13.46,
+      7.95,
+      -2.41
+    ],
+    "icon": "v3a4_party_hall_btnlottery",
+    "scenePath": "scene/building/v3a4_bxhy_building_fuzhuangchouqu_01 (1)"
+  }
+]

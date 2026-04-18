@@ -12,6 +12,7 @@ function FightEntityExData:onConstructor()
 	self.entityObjectName = nil
 	self.spineUrl = nil
 	self.needLookCamera = true
+	self.useScaleReplaceSpineScale = false
 end
 
 function FightEntityExData:getCustomDefaultEntityInitData()

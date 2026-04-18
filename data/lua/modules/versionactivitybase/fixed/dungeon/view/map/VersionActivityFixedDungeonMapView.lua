@@ -104,7 +104,7 @@ end
 function VersionActivityFixedDungeonMapView:_editableInitView()
 	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]
 
-	self._txtstorename.text = storeActInfoMo.config.name
+	self._txtstorename.text = storeActInfoMo and storeActInfoMo.config.name or ""
 
 	NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
 	TaskDispatcher.runRepeat(self._everyMinuteCall, self, TimeUtil.OneMinuteSecond)

@@ -18,7 +18,6 @@ function FightAutoBtnView:addEvents()
 	self:com_registFightEvent(FightEvent.OnGuideStopAutoFight, self._onGuideStopAutoFight)
 	self:com_registFightEvent(FightEvent.GuideRecordAutoState, self.onGuideRecordAutoState)
 	self:com_registFightEvent(FightEvent.GuideRefreshAutoStateByRecord, self.onGuideRefreshAutoStateByRecord)
-	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleAutoFight, self.onClick, self)
 end
 
 function FightAutoBtnView:OnKeyAutoPress()

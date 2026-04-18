@@ -24,6 +24,7 @@ function GuiSpine:initSkeletonComponent()
 
 	self._skeletonComponent.freeze = self._bFreeze
 	self._skeletonComponent.startingLoop = false
+	self._skeletonComponent.PhysicsPositionInheritanceFactor = Vector2.New(0, 0)
 	self._animationEvent = GuiSpine.TypeUISpineAnimationEvent
 end
 

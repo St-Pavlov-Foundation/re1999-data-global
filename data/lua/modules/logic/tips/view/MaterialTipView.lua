@@ -308,6 +308,10 @@ function MaterialTipView:_editableInitView()
 
 	self._txtsource.text = luaLang("materialview_source")
 	self._txtSummonsimulationtips = gohelper.findChildText(self._goSummonsimulationtips, "txt_tips")
+	self._goboxtip = gohelper.findChild(self.viewGO, "buy_tip")
+	self._txtboxtipnum = gohelper.findChildText(self.viewGO, "buy_tip/bg/#txt_num")
+	self._txtboxkeyname = gohelper.findChildText(self.viewGO, "buy_tip/bg/txt")
+	self._imageboxtipicon = gohelper.findChildImage(self.viewGO, "buy_tip/bg/icon")
 end
 
 function MaterialTipView:_cloneJumpItem()
@@ -822,8 +826,27 @@ function MaterialTipView:_btnuseOnClick()
 		TurnbackPickEquipController.instance:openTurnbackPickEquipView(effectArr, MaterialTipController.onUseOptionalTurnbackEquipGift, MaterialTipController, viewParam)
 	elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
 		CharacterController.instance:useSkinGiftItem(self._config.id)
+	elseif self._config.subType == ItemEnum.SubType.HeroExpBox then
+		if HeroExpBoxModel.instance:getKeyCount() >= HeroExpBoxModel.instance:getNeedKeyCount(self._config.id) then
+			HeroExpBoxController.instance:openHeroExpBoxView(self._config.id)
+		else
+			local keyCo = HeroExpBoxModel.instance:getKeyCo()
+
+			GameFacade.showToast(ToastEnum.NoEnoughItem, keyCo.name)
+
+			return
+		end
+	elseif self._config.subType == ItemEnum.SubType.DestinySummonPackage then
+		local poolId = self._config.effect
+		local param = string.format("%s#%s", JumpEnum.JumpView.SummonView, poolId)
+
+		JumpController.instance:jumpByParam(param)
 	else
 		ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
+	end
+
+	if materialId == V3a4GiftRecommendEnum.OffItemId and ViewMgr.instance:isOpen(ViewName.V3a4GiftRecommendPanelview) then
+		ViewMgr.instance:closeView(ViewName.V3a4GiftRecommendPanelview)
 	end
 
 	self:closeThis()
@@ -1039,7 +1062,7 @@ function MaterialTipView:_refreshUI()
 			showDetail = false
 
 			recthelper.setAnchorY(self._btnuse.transform, -190)
-		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift or self._config.subType == ItemEnum.SubType.HeroExpBox then
 			showDetail = false
 
 			recthelper.setAnchorY(self._btnuse.transform, -190)
@@ -1049,6 +1072,8 @@ function MaterialTipView:_refreshUI()
 			recthelper.setAnchorY(self._btnuse.transform, -190)
 			recthelper.setAnchorY(self._goincludeScroll.transform, 45)
 		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+			showDetail = false
+		elseif self._config.subType == ItemEnum.SubType.DestinySummonPackage then
 			showDetail = false
 		end
 
@@ -1195,6 +1220,49 @@ function MaterialTipView:_refreshUI()
 		if self:_isPackageSkin() then
 			self._txtSummonsimulationtips.text = luaLang("ruledetail")
 		end
+	end
+
+	local currency = {}
+
+	gohelper.setActive(self._goboxtip, self._config.subType == ItemEnum.SubType.HeroExpBox)
+
+	if self._config.subType == ItemEnum.SubType.HeroExpBox then
+		local quantity = HeroExpBoxModel.instance:getKeyCount()
+		local needKeyCount = HeroExpBoxModel.instance:getNeedKeyCount(self._config.id)
+		local icon = HeroExpBoxModel.instance:getKeyIcon()
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageboxtipicon, icon .. "_1", true)
+
+		local str = ""
+
+		if needKeyCount <= quantity then
+			str = string.format("%d/%d", quantity, needKeyCount)
+		else
+			str = string.format("<color=%s>%d</color>/%d", "#FF0000", quantity, needKeyCount)
+		end
+
+		self._txtboxtipnum.text = str
+		self._txtboxkeyname.text = HeroExpBoxModel.instance:getKeyName()
+
+		local effect = HeroExpBoxModel.instance:getBoxEffect(self._config.id)
+		local needKey = effect.needKeyCount
+		local gray = quantity < needKey
+
+		ZProj.UGUIHelper.SetGrayscale(self._btnuse.gameObject, gray)
+
+		currency = {
+			{
+				isCurrencySprite = true,
+				type = MaterialEnum.MaterialType.Item,
+				id = HeroExpBoxEnum.KeyIds[1]
+			}
+		}
+	else
+		ZProj.UGUIHelper.SetGrayscale(self._btnuse.gameObject, false)
+	end
+
+	if self.viewContainer.refreshCurrencyView then
+		self.viewContainer:refreshCurrencyView(currency)
 	end
 end
 
@@ -1457,6 +1525,19 @@ function MaterialTipView:_refreshInclude()
 			MaterialTipListModel.instance:setData(includeItems)
 
 			return
+		elseif self:checkShowHeroExpBox() then
+			self._contentHorizontal.enabled = false
+
+			if not self._content then
+				self._content = self._goincludeContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+			end
+
+			self._content.enabled = false
+			includeItems = HeroExpBoxModel.instance:getBoxEffectIncludeItems(self._config.id)
+
+			MaterialTipListModel.instance:setData(includeItems)
+
+			return
 		else
 			includeItems = GameUtil.splitString2(self._config.effect, true)
 		end
@@ -1538,6 +1619,10 @@ function MaterialTipView:checkOnlyShowEquip()
 	end
 
 	return false
+end
+
+function MaterialTipView:checkShowHeroExpBox()
+	return self._config.subType == ItemEnum.SubType.HeroExpBox
 end
 
 function MaterialTipView:checkIncludeEquip(includeItems)

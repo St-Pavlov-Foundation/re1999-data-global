@@ -1,5 +1,15 @@
 [
   {
+    "id": 32821021,
+    "desc": "language_10085975",
+    "icon": "survival_new_bossbuff5_1"
+  },
+  {
+    "id": 32821022,
+    "desc": "language_10081049",
+    "icon": "survival_new_bossbuff5_1"
+  },
+  {
     "id": 73151001,
     "desc": "language_10080981",
     "icon": "survival_new_bossbuff5_1"
@@ -37,6 +47,11 @@
   {
     "id": 73151008,
     "desc": "language_10096485",
+    "icon": "survival_new_bossbuff5_1"
+  },
+  {
+    "id": 73151009,
+    "desc": "language_10114654",
     "icon": "survival_new_bossbuff5_1"
   },
   {

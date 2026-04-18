@@ -73,6 +73,7 @@ function GMFightEntityBuffItem:_onClickDel()
 		localData:delBuff(self._mo.uid)
 	end
 
+	FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self._mo)
 	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFDEL, self._mo.buffId, self._mo.uid, 0, self._mo)
 	FightRpc.instance:sendEntityInfoRequest(entityMO.id)
 end
@@ -96,6 +97,7 @@ function GMFightEntityBuffItem:_onAddEditDuration(inputStr)
 		end
 
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, self._mo.count, targetDuration, self._mo.layer))
+		FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self._mo)
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
 		self._duration:SetText(tostring(self._mo.duration) or "")
@@ -122,6 +124,7 @@ function GMFightEntityBuffItem:_onAddEditCount(inputStr)
 		end
 
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, targetCount, self._mo.duration, self._mo.layer))
+		FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self._mo)
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
 		self._count:SetText(tostring(self._mo.count) or "")
@@ -148,6 +151,7 @@ function GMFightEntityBuffItem:_onAddEditLayer(inputStr)
 		end
 
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", entityMO.id, self._mo.id, self._mo.count, self._mo.duration, targetLayer))
+		FightMsgMgr.sendMsg(FightMsgId.OnUpdateBuff, self._mo)
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, entityMO.id, FightEnum.EffectType.BUFFUPDATE, self._mo.buffId, self._mo.uid, 0)
 	else
 		self._layer:SetText(tostring(self._mo.layer) or "")

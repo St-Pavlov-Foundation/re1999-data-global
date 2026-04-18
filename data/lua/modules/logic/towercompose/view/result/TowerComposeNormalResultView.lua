@@ -75,7 +75,8 @@ function TowerComposeNormalResultView:onUpdateParam()
 end
 
 function TowerComposeNormalResultView:onOpen()
-	self._themeId, self._layerId = TowerComposeModel.instance:getCurThemeIdAndLayer()
+	self.fightParam = TowerComposeModel.instance:getRecordFightParam()
+	self._themeId, self._layerId = self.fightParam.themeId, self.fightParam.layerId
 	self._towerEpisodeCo = TowerComposeConfig.instance:getEpisodeConfig(self._themeId, self._layerId)
 	self._slotMapCo = TowerComposeConfig.instance:getModSlotNumMap(self._themeId)
 

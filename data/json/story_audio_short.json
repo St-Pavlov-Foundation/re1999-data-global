@@ -3120,6 +3120,246 @@
     "bankName": "hero3127_mainstory"
   },
   {
+    "id": 6214101,
+    "eventName": "play_hero3141_mainstory_39",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214102,
+    "eventName": "play_hero3141_mainstory_40",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214103,
+    "eventName": "play_hero3141_mainstory_41",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214104,
+    "eventName": "play_hero3141_mainstory_42",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214105,
+    "eventName": "play_hero3141_mainstory_43",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214106,
+    "eventName": "play_hero3141_mainstory_44",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214107,
+    "eventName": "play_hero3141_mainstory_45",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214108,
+    "eventName": "play_hero3141_mainstory_46",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214109,
+    "eventName": "play_hero3141_mainstory_47",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214110,
+    "eventName": "play_hero3141_mainstory_48",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214111,
+    "eventName": "play_hero3141_mainstory_49",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214112,
+    "eventName": "play_hero3141_mainstory_50",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214113,
+    "eventName": "play_hero3141_mainstory_51",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214114,
+    "eventName": "play_hero3141_mainstory_52",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214115,
+    "eventName": "play_hero3141_mainstory_53",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6214116,
+    "eventName": "play_hero3141_mainstory_54",
+    "bankName": "hero3141_mainstory"
+  },
+  {
+    "id": 6213701,
+    "eventName": "play_hero3137_mainstory_39",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213702,
+    "eventName": "play_hero3137_mainstory_40",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213703,
+    "eventName": "play_hero3137_mainstory_41",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213704,
+    "eventName": "play_hero3137_mainstory_42",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213705,
+    "eventName": "play_hero3137_mainstory_43",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213706,
+    "eventName": "play_hero3137_mainstory_44",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213707,
+    "eventName": "play_hero3137_mainstory_45",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213708,
+    "eventName": "play_hero3137_mainstory_46",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213709,
+    "eventName": "play_hero3137_mainstory_47",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213710,
+    "eventName": "play_hero3137_mainstory_48",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213711,
+    "eventName": "play_hero3137_mainstory_49",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213712,
+    "eventName": "play_hero3137_mainstory_50",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213713,
+    "eventName": "play_hero3137_mainstory_51",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213714,
+    "eventName": "play_hero3137_mainstory_52",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213715,
+    "eventName": "play_hero3137_mainstory_53",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213716,
+    "eventName": "play_hero3137_mainstory_54",
+    "bankName": "hero3137_mainstory"
+  },
+  {
+    "id": 6213801,
+    "eventName": "play_hero3138_mainstory_39",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213802,
+    "eventName": "play_hero3138_mainstory_40",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213803,
+    "eventName": "play_hero3138_mainstory_41",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213804,
+    "eventName": "play_hero3138_mainstory_42",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213805,
+    "eventName": "play_hero3138_mainstory_43",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213806,
+    "eventName": "play_hero3138_mainstory_44",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213807,
+    "eventName": "play_hero3138_mainstory_45",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213808,
+    "eventName": "play_hero3138_mainstory_46",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213809,
+    "eventName": "play_hero3138_mainstory_47",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213810,
+    "eventName": "play_hero3138_mainstory_48",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213811,
+    "eventName": "play_hero3138_mainstory_49",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213812,
+    "eventName": "play_hero3138_mainstory_50",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213813,
+    "eventName": "play_hero3138_mainstory_51",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213814,
+    "eventName": "play_hero3138_mainstory_52",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213815,
+    "eventName": "play_hero3138_mainstory_53",
+    "bankName": "hero3138_mainstory"
+  },
+  {
+    "id": 6213816,
+    "eventName": "play_hero3138_mainstory_54",
+    "bankName": "hero3138_mainstory"
+  },
+  {
     "id": 612900001,
     "eventName": "play_activityvoc_plots01_npc613101_147",
     "bankName": "activityvoc_npc613101_s01_cikeshang"

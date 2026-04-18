@@ -48,5 +48,105 @@
     "skillEx": 30810413,
     "passiveSkill": "",
     "exchangeSkill": "30810315#30810356|30810325#30810366|30810251#30810371|30810301#30810391"
+  },
+  {
+    "heroId": 305301,
+    "skillLevel": 1,
+    "desc": "language_10112530",
+    "skillGroup1": "30530164|30530165|30530166",
+    "skillGroup2": "",
+    "skillEx": 30530182,
+    "passiveSkill": "",
+    "exchangeSkill": ""
+  },
+  {
+    "heroId": 305301,
+    "skillLevel": 2,
+    "desc": "language_10112531",
+    "skillGroup1": "30530164|30530165|30530166",
+    "skillGroup2": "",
+    "skillEx": 30530183,
+    "passiveSkill": "",
+    "exchangeSkill": "30530190#30530152"
+  },
+  {
+    "heroId": 305301,
+    "skillLevel": 3,
+    "desc": "language_10112532",
+    "skillGroup1": "30530167|30530168|30530169",
+    "skillGroup2": "",
+    "skillEx": 30530183,
+    "passiveSkill": "",
+    "exchangeSkill": "30530152#30530154"
+  },
+  {
+    "heroId": 305301,
+    "skillLevel": 4,
+    "desc": "language_10112533",
+    "skillGroup1": "30530167|30530168|30530169",
+    "skillGroup2": "30530174|30530175|30530176",
+    "skillEx": 30530183,
+    "passiveSkill": "",
+    "exchangeSkill": "30530154#30530156|30530151#30530157"
+  },
+  {
+    "heroId": 305301,
+    "skillLevel": 5,
+    "desc": "language_10112534",
+    "skillGroup1": "30530167|30530168|30530169",
+    "skillGroup2": "30530174|30530175|30530176",
+    "skillEx": 30530184,
+    "passiveSkill": "",
+    "exchangeSkill": "30530191#30530158"
+  },
+  {
+    "heroId": 300701,
+    "skillLevel": 1,
+    "desc": "language_10017622",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 30071231,
+    "passiveSkill": "",
+    "exchangeSkill": "30070442#30071441"
+  },
+  {
+    "heroId": 300701,
+    "skillLevel": 2,
+    "desc": "language_10112535",
+    "skillGroup1": "30072211|30072212|30072213",
+    "skillGroup2": "",
+    "skillEx": 30071231,
+    "passiveSkill": "",
+    "exchangeSkill": "30070442#30071441"
+  },
+  {
+    "heroId": 300701,
+    "skillLevel": 3,
+    "desc": "language_10112536",
+    "skillGroup1": "30072211|30072212|30072213",
+    "skillGroup2": "",
+    "skillEx": 30073231,
+    "passiveSkill": "",
+    "exchangeSkill": "30070443#30073441"
+  },
+  {
+    "heroId": 300701,
+    "skillLevel": 4,
+    "desc": "language_10112537",
+    "skillGroup1": "30072211|30072212|30072213",
+    "skillGroup2": "30074221|30074222|30074223",
+    "skillEx": 30073231,
+    "passiveSkill": "",
+    "exchangeSkill": "30070443#30073441"
+  },
+  {
+    "heroId": 300701,
+    "skillLevel": 5,
+    "desc": "language_10112538",
+    "skillGroup1": "30072211|30072212|30072213",
+    "skillGroup2": "30074221|30074222|30074223",
+    "skillEx": 30075231,
+    "passiveSkill": "",
+    "exchangeSkill": "30070444#30075441"
   }
 ]

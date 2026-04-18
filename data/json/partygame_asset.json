@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1,
+    "filePath": "modules/party_game/common/prefabs/character"
+  },
+  {
+    "id": 11,
+    "filePath": "modules/party_game/common/prefabs/character_1_5"
+  },
+  {
+    "id": 12,
+    "filePath": "modules/party_game/common/prefabs/character_100"
+  },
+  {
+    "id": 101,
+    "filePath": "modules/party_game/test/prefabs/sphere"
+  },
+  {
+    "id": 102,
+    "filePath": "modules/party_game/test/prefabs/cube"
+  },
+  {
+    "id": 103,
+    "filePath": "modules/party_game/test/prefabs/capsule"
+  },
+  {
+    "id": 104,
+    "filePath": "modules/party_game/test/scenes/character_demo/character_demo_world"
+  },
+  {
+    "id": 105,
+    "filePath": "party_game/scenes/determinist_demo/determinist_demo_world"
+  },
+  {
+    "id": 106,
+    "filePath": "party_game/scenes/cross_road_demo/cross_road_demo_world"
+  },
+  {
+    "id": 107,
+    "filePath": "party_game/scenes/cross_road_demo/car_01"
+  },
+  {
+    "id": 108,
+    "filePath": "party_game/scenes/cross_road_demo/car_02"
+  },
+  {
+    "id": 109,
+    "filePath": "party_game/scenes/cross_road_demo/car_03"
+  },
+  {
+    "id": 10001,
+    "filePath": "modules/party_game/game1/prefabs/party_game_grabbing_world"
+  },
+  {
+    "id": 10002,
+    "filePath": "modules/party_game/game1/prefabs/party_game_box"
+  },
+  {
+    "id": 10003,
+    "filePath": "modules/party_game/game1/prefabs/party_game1_shuguo"
+  },
+  {
+    "id": 10005,
+    "filePath": "modules/party_game/game1/prefabs/party_game_500014"
+  },
+  {
+    "id": 20001,
+    "filePath": "modules/party_game/game2/prefabs/game2_p"
+  },
+  {
+    "id": 20002,
+    "filePath": "modules/party_game/game2/prefabs/road"
+  },
+  {
+    "id": 20003,
+    "filePath": "modules/party_game/game2/prefabs/road_trap"
+  },
+  {
+    "id": 30001,
+    "filePath": "modules/party_game/game3/prefabs/game3_p"
+  },
+  {
+    "id": 30002,
+    "filePath": "modules/party_game/game3/prefabs/bullet"
+  },
+  {
+    "id": 30003,
+    "filePath": "modules/party_game/game3/prefabs/party_game3_qingwa"
+  },
+  {
+    "id": 40001,
+    "filePath": "modules/party_game/game4/prefabs/game4_p"
+  },
+  {
+    "id": 40002,
+    "filePath": "modules/party_game/game4/prefabs/car"
+  },
+  {
+    "id": 50001,
+    "filePath": "modules/party_game/game5/prefabs/game5_p"
+  },
+  {
+    "id": 50002,
+    "filePath": "modules/party_game/game5/prefabs/party_game5_chuan01"
+  },
+  {
+    "id": 50003,
+    "filePath": "modules/party_game/game5/prefabs/party_game5_chuan02"
+  },
+  {
+    "id": 50004,
+    "filePath": "modules/party_game/game5/prefabs/party_game5_chuan03"
+  },
+  {
+    "id": 50005,
+    "filePath": "modules/party_game/game5/prefabs/party_game5_chuan04"
+  },
+  {
+    "id": 50006,
+    "filePath": "modules/party_game/game5/prefabs/party_game5_icon"
+  },
+  {
+    "id": 60001,
+    "filePath": "modules/party_game/game6/prefabs/game6_p"
+  },
+  {
+    "id": 70001,
+    "filePath": "modules/party_game/game7/prefabs/game7_p"
+  },
+  {
+    "id": 70002,
+    "filePath": "modules/party_game/game7/prefabs/party_game7_icon_1"
+  },
+  {
+    "id": 70003,
+    "filePath": "modules/party_game/game7/prefabs/party_game7_icon_2"
+  },
+  {
+    "id": 70004,
+    "filePath": "modules/party_game/game7/prefabs/party_game7_icon_3"
+  },
+  {
+    "id": 70005,
+    "filePath": "modules/party_game/game7/prefabs/party_game7_icon_5"
+  },
+  {
+    "id": 70006,
+    "filePath": "modules/party_game/game7/prefabs/party_game7_icon_10"
+  },
+  {
+    "id": 80001,
+    "filePath": "modules/party_game/game8/prefabs/game8_p"
+  },
+  {
+    "id": 80002,
+    "filePath": "modules/party_game/game8/prefabs/road"
+  },
+  {
+    "id": 80003,
+    "filePath": "modules/party_game/game8/prefabs/item"
+  },
+  {
+    "id": 90001,
+    "filePath": "modules/party_game/game9/prefabs/game9_p"
+  },
+  {
+    "id": 90002,
+    "filePath": "modules/party_game/game9/prefabs/party_game9_zengyi1"
+  },
+  {
+    "id": 90003,
+    "filePath": "modules/party_game/game9/prefabs/party_game9_zengyi2"
+  },
+  {
+    "id": 90004,
+    "filePath": "modules/party_game/game9/prefabs/party_game9_jianyi1"
+  },
+  {
+    "id": 90005,
+    "filePath": "modules/party_game/game9/prefabs/party_game9_guantou"
+  },
+  {
+    "id": 90006,
+    "filePath": "modules/party_game/game9/prefabs/party_game9_liefeng"
+  },
+  {
+    "id": 100001,
+    "filePath": "modules/party_game/game10/prefabs/game10_p"
+  },
+  {
+    "id": 100002,
+    "filePath": "modules/party_game/game10/prefabs/party_game10_boss"
+  },
+  {
+    "id": 100003,
+    "filePath": "modules/party_game/game10/prefabs/party_game10_jinbi"
+  },
+  {
+    "id": 100004,
+    "filePath": "modules/party_game/game10/prefabs/party_game10_jinbi2"
+  },
+  {
+    "id": 100005,
+    "filePath": "modules/party_game/game10/prefabs/party_game10_jinbi3"
+  },
+  {
+    "id": 100006,
+    "filePath": "modules/party_game/game10/prefabs/party_game10_baoshi"
+  },
+  {
+    "id": 110001,
+    "filePath": "modules/party_game/game11/prefabs/game11_p"
+  },
+  {
+    "id": 110002,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_background"
+  },
+  {
+    "id": 110003,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing001"
+  },
+  {
+    "id": 110004,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing002"
+  },
+  {
+    "id": 110005,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing003"
+  },
+  {
+    "id": 110006,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing004"
+  },
+  {
+    "id": 110007,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing005"
+  },
+  {
+    "id": 110008,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing006"
+  },
+  {
+    "id": 110009,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing007"
+  },
+  {
+    "id": 110010,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing008"
+  },
+  {
+    "id": 110011,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing009"
+  },
+  {
+    "id": 110012,
+    "filePath": "modules/party_game/game11/prefabs/party_game11_mojing010"
+  },
+  {
+    "id": 110013,
+    "filePath": "modules/party_game/game11/prefabs/box"
+  },
+  {
+    "id": 120001,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/party_game_collatingsort_world"
+  },
+  {
+    "id": 120002,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/ball"
+  },
+  {
+    "id": 120003,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board"
+  },
+  {
+    "id": 120004,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/box"
+  },
+  {
+    "id": 120005,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/box_inner"
+  },
+  {
+    "id": 120006,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board1"
+  },
+  {
+    "id": 120007,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board2"
+  },
+  {
+    "id": 120008,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board3"
+  },
+  {
+    "id": 120009,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board4"
+  },
+  {
+    "id": 120010,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board5"
+  },
+  {
+    "id": 120011,
+    "filePath": "modules/party_game/game_collatingsort/prefabs/board6"
+  },
+  {
+    "id": 130001,
+    "filePath": "modules/party_game/game13/prefabs/game13_p"
+  },
+  {
+    "id": 140001,
+    "filePath": "modules/party_game/game14/prefabs/game14_p"
+  },
+  {
+    "id": 150001,
+    "filePath": "modules/party_game/game15/prefabs/game15_p"
+  },
+  {
+    "id": 160001,
+    "filePath": "modules/party_game/game16/prefabs/game16_p"
+  },
+  {
+    "id": 170001,
+    "filePath": "modules/party_game/game17/prefabs/game17_p"
+  },
+  {
+    "id": 180001,
+    "filePath": "modules/party_game/game18/prefabs/game18_p"
+  },
+  {
+    "id": 190001,
+    "filePath": "modules/party_game/game19/prefabs/game19_p"
+  },
+  {
+    "id": 190002,
+    "filePath": "modules/party_game/game19/prefabs/party_game19_box_01"
+  },
+  {
+    "id": 1000001,
+    "filePath": "modules/party_game/game100/prefabs/game100_p"
+  }
+]

@@ -493,6 +493,8 @@ function FightViewClothSkill:_onStartSequenceFinish()
 	local clothLevelCO = self:_getClothLevelCO()
 
 	if clothLevelCO then
+		self._cardOpAddPower = 0
+
 		local curPower = FightModel.instance.power
 
 		if not self._lockSimulation then
@@ -502,7 +504,6 @@ function FightViewClothSkill:_onStartSequenceFinish()
 		local maxPower = clothLevelCO.maxPower
 
 		curPower = Mathf.Clamp(curPower, 0, maxPower)
-		self._cardOpAddPower = 0
 		FightModel.instance.power = curPower
 
 		self:_updateUI()

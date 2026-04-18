@@ -12,7 +12,12 @@ ToastItem.ToastType = {
 	Normal = 1
 }
 
+function ToastItem:getGo()
+	return self._go
+end
+
 function ToastItem:init(go)
+	self._go = go
 	self.tr = go.transform
 	self._gonormal = gohelper.findChild(go, "#go_normal")
 	self._txt = gohelper.findChildText(go, "#go_normal/content/contentText")
@@ -29,11 +34,14 @@ function ToastItem:init(go)
 
 	self.canvasGroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
 	self._duration = 0.5
-	self._showToastDuration = 3
+	self._animDuration = self._duration * 2
+	self.height = recthelper.getHeight(self.tr)
+	self.width = recthelper.getWidth(self.tr)
 	self.startAnchorPositionY = 0
 end
 
 function ToastItem:setMsg(msg)
+	self._toastId = msg.co and msg.co.id
 	self.msg = msg
 	self.canvasGroup.alpha = 1
 	self._txt.text = self:getTip()
@@ -79,7 +87,9 @@ function ToastItem:appearAnimation()
 	self.startTweenId = csTweenHelper.DOAnchorPosX(self.tr, 0, self._duration, function()
 		self.startTweenId = nil
 
-		TaskDispatcher.runDelay(self._delay, self, self._showToastDuration)
+		local showTime = ToastController:getShowTime(self._toastId) - self._animDuration
+
+		TaskDispatcher.runDelay(self._delay, self, showTime)
 	end)
 end
 
@@ -101,7 +111,7 @@ function ToastItem:quitAnimation(quitAnimationDoneCallback, callbackObj)
 end
 
 function ToastItem:quitAnimationFrame(value)
-	local upPositionY = (1 - value) * self.height
+	local upPositionY = (1 - value) * (ToastParamEnum.ToastHeight[self._toastId] or self.height)
 
 	recthelper.setAnchorY(self.tr, self.startAnchorPositionY + upPositionY)
 

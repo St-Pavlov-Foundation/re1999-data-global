@@ -38,5 +38,8 @@ SummonEvent.onCustomPickListChanged = 902
 SummonEvent.onSummonScenePrepared = 1001
 SummonEvent.onSummonProgressRewards = 2001
 SummonEvent.onReceiveSummonReply = 2002
+SummonEvent.onSummonPoolPackageRedDotChange = 3003
+SummonEvent.onLimitationReplicationSelectHero = 4001
+SummonEvent.onSummonInfallibleStatusChange = 5001
 
 return SummonEvent

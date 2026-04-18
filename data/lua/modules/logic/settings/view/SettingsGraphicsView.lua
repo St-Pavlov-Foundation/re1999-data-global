@@ -249,10 +249,7 @@ function SettingsGraphicsView:_btnShotOnClick()
 
 	SettingsModel.instance:setScreenshotSwitch(screenshotSwitch)
 	self:_refreshShotUI()
-
-	if screenshotSwitch and BootNativeUtil.isAndroid() then
-		SDKMgr.instance:requestReadAndWritePermission()
-	end
+	SDKMgr.instance:setShareEnabled(screenshotSwitch and true or false)
 end
 
 function SettingsGraphicsView:_onValueChanged(index)

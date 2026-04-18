@@ -16,7 +16,7 @@ function FightVariantCrayonComp:onConstructor(entity)
 	self.entity = entity
 	self.go = entity.go
 
-	self:com_registEvent(GameSceneMgr.instance, SceneEventName.OnLevelLoaded, self._onLevelLoaded)
+	self:com_registFightEvent(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded)
 	self:com_registFightEvent(FightEvent.OnSpineMaterialChange, self._onMatChange, LuaEventSystem.Low)
 	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
 end

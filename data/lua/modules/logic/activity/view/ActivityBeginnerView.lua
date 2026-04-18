@@ -139,7 +139,11 @@ local activitySubViewDict = {
 	[VersionActivity3_2Enum.ActivityId.CruiseTripleDrop] = ViewName.CruiseTripleDropFullView,
 	[VersionActivity3_2Enum.ActivityId.ActivityCollect] = ViewName.V3A2ActivityCollectView,
 	[ActivityEnum.Activity.V3a3_TowerDeep] = ViewName.V3a3TowerGiftFullView,
-	[ActivityEnum.Activity.V3a3_SkinDiscount] = ViewName.SkinDiscountCompensateActivityView
+	[ActivityEnum.Activity.V3a3_SkinDiscount] = ViewName.SkinDiscountCompensateActivityView,
+	[ActivityEnum.Activity.V3a4_GiftRecommend] = ViewName.V3a4GiftRecommendFullview,
+	[ActivityEnum.Activity.V3a4_DestinyGift] = ViewName.V3a4DestinyGiftFullView,
+	[VersionActivity3_4Enum.ActivityId.ActivityCollect] = ViewName.V3A4ActivityCollectView,
+	[ActivityEnum.Activity.V3a4_GoldenMilletPresent] = ViewName.V3a4_GoldenMilletPresentFullView
 }
 local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -167,6 +171,7 @@ function ActivityBeginnerView:onOpen()
 	self:_initCultivationDestiny()
 	self:_initDoubleDan()
 	self:_initNationalGift()
+	self:_initDoubleDrop()
 
 	self._needSetSortInfos = true
 
@@ -192,13 +197,17 @@ function ActivityBeginnerView:_refreshView()
 		if isIos and ActivityEnum.IOSHideActIdMap[tonumber(v)] then
 			logNormal("iOS临时屏蔽双端登录活动入口")
 		else
-			local o = {}
+			local hasAct = self:_checkHasAct(v)
 
-			o.id = v
-			o.co = ActivityConfig.instance:getActivityCo(v)
-			o.type = ActivityEnum.ActivityType.Beginner
+			if hasAct then
+				local o = {}
 
-			table.insert(self.data, o)
+				o.id = v
+				o.co = ActivityConfig.instance:getActivityCo(v)
+				o.type = ActivityEnum.ActivityType.Beginner
+
+				table.insert(self.data, o)
+			end
 		end
 	end
 
@@ -212,6 +221,16 @@ function ActivityBeginnerView:_refreshView()
 	ActivityBeginnerCategoryListModel.instance:setOpenViewTime()
 	ActivityBeginnerCategoryListModel.instance:setCategoryList(self.data)
 	self:_openSubView()
+end
+
+function ActivityBeginnerView:_checkHasAct(id)
+	if id == ActivityEnum.Activity.V3a4_GiftRecommend then
+		local hasAct = self:_isCanOpenV3a4GiftRecommendAct(id)
+
+		return hasAct
+	end
+
+	return true
 end
 
 function ActivityBeginnerView:_openSubView()
@@ -359,8 +378,9 @@ function ActivityBeginnerView:_initWarmUp()
 
 	s_WarmUp = true
 
-	local key = GameBranchMgr.instance:Vxax_ActId("WarmUp", ActivityEnum.Activity.V2a8_WarmUp)
-	local val = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.V2a8_WarmUp)
+	local actId = Activity125Config.instance:getWarmUpActId()
+	local key = GameBranchMgr.instance:Vxax_ActId("WarmUp", actId)
+	local val = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.WarmUp)
 
 	activitySubViewDict[key] = val
 end
@@ -472,6 +492,43 @@ function ActivityBeginnerView:_initNationalGift()
 
 		activitySubViewDict[actId] = viewName
 	end
+end
+
+function ActivityBeginnerView:_initDoubleDrop()
+	local actId = Activity217Model.instance:getLiveActId()
+
+	if actId ~= -1 then
+		activitySubViewDict[actId] = ViewName.V3a4_DoubleDropView
+	end
+end
+
+function ActivityBeginnerView:_isCanOpenV3a4GiftRecommendAct(actId)
+	local isOpenAct = ActivityType101Model.instance:isOpen(actId)
+
+	if not isOpenAct then
+		return false
+	end
+
+	local signInfo = ActivityType101Model.instance:getType101Info(actId)
+
+	if signInfo then
+		for _, info in ipairs(signInfo) do
+			if info.state < 2 then
+				return true
+			end
+		end
+	end
+
+	local goodsIds = DecorateStoreModel.instance:getV3a4PackageStoreGoodsIds()
+	local canBuyPackage = DecorateStoreModel.instance:isCanBuySceneUIPackage()
+	local hasScene = DecorateStoreModel.instance:isDecorateGoodItemHas(goodsIds[2])
+	local hasUI = DecorateStoreModel.instance:isDecorateGoodItemHas(goodsIds[3])
+
+	if canBuyPackage or not hasScene or not hasUI then
+		return true
+	end
+
+	return false
 end
 
 return ActivityBeginnerView

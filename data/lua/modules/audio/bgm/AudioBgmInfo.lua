@@ -121,6 +121,11 @@ function AudioBgmInfo:_initBgmDatas()
 	self:_addBgmData(AudioBgmEnum.Layer.ArcadeOutSide, AudioEnum3_3.bgm.play_8bit_music_explore, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.Igor, AudioEnum3_3.bgm.play_activitymusic_zuozhan_3_3, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.ArcadeInSide, AudioEnum3_3.bgm.play_8bit_music_combat, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_4Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.PartyGame, 0, AudioEnum3_4.bgm.partygame_bgm_stop)
+	self:_addBgmData(AudioBgmEnum.Layer.PartyGameLobby, AudioEnum3_4.bgm.partygame_lobby, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.PartyGameMain, AudioEnum3_4.bgm.partygame_main, AudioEnum3_4.bgm.partygame_bgm_stop)
+	self:_addBgmData(AudioBgmEnum.Layer.V3A4RoleStory, 0, 0)
 end
 
 function AudioBgmInfo:_initBgmUsage()
@@ -687,6 +692,33 @@ function AudioBgmInfo:_initBgmUsage()
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.ArcadeGameView
 	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity3_4Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity3_4EnterView
+	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.PartyGame
+	}, AudioBgmEnum.UsageType.Scene, {
+		SceneType.PartyGame
+	})
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.PartyGameLobby
+	}, AudioBgmEnum.UsageType.Scene, {
+		SceneType.PartyGameLobby
+	})
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.PartyGameMain
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.LaplaceForumMainView,
+		ViewName.PartyGameLobbyLoadingView,
+		ViewName.ChatRoomMainView
+	}, nil, nil, true)
+	self:_addBgmUsage({
+		AudioBgmEnum.Layer.V3A4RoleStory
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.V3A4_RoleStoryGameView
+	})
 end
 
 function AudioBgmInfo:_initBgmBind()

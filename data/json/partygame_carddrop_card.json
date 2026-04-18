@@ -1,0 +1,893 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "variantType": 0,
+    "power": 1,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "110"
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "variantType": 0,
+    "power": 2,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "120"
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "variantType": 0,
+    "power": 3,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "130"
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "variantType": 0,
+    "power": 4,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "140"
+  },
+  {
+    "id": 5,
+    "type": 1,
+    "variantType": 0,
+    "power": 5,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "150"
+  },
+  {
+    "id": 6,
+    "type": 1,
+    "variantType": 0,
+    "power": 6,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "160"
+  },
+  {
+    "id": 7,
+    "type": 1,
+    "variantType": 0,
+    "power": 7,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "170"
+  },
+  {
+    "id": 8,
+    "type": 1,
+    "variantType": 0,
+    "power": 8,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "180"
+  },
+  {
+    "id": 9,
+    "type": 1,
+    "variantType": 0,
+    "power": 9,
+    "desc": "language_10113057",
+    "timeline": "pg_01_g1",
+    "order": "190"
+  },
+  {
+    "id": 11,
+    "type": 2,
+    "variantType": 0,
+    "power": 1,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "210"
+  },
+  {
+    "id": 12,
+    "type": 2,
+    "variantType": 0,
+    "power": 2,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "220"
+  },
+  {
+    "id": 13,
+    "type": 2,
+    "variantType": 0,
+    "power": 3,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "230"
+  },
+  {
+    "id": 14,
+    "type": 2,
+    "variantType": 0,
+    "power": 4,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "240"
+  },
+  {
+    "id": 15,
+    "type": 2,
+    "variantType": 0,
+    "power": 5,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "250"
+  },
+  {
+    "id": 16,
+    "type": 2,
+    "variantType": 0,
+    "power": 6,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "260"
+  },
+  {
+    "id": 17,
+    "type": 2,
+    "variantType": 0,
+    "power": 7,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "270"
+  },
+  {
+    "id": 18,
+    "type": 2,
+    "variantType": 0,
+    "power": 8,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "280"
+  },
+  {
+    "id": 19,
+    "type": 2,
+    "variantType": 0,
+    "power": 9,
+    "desc": "language_10113058",
+    "timeline": "pg_02_r1",
+    "order": "290"
+  },
+  {
+    "id": 21,
+    "type": 3,
+    "variantType": 0,
+    "power": 1,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "310"
+  },
+  {
+    "id": 22,
+    "type": 3,
+    "variantType": 0,
+    "power": 2,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "320"
+  },
+  {
+    "id": 23,
+    "type": 3,
+    "variantType": 0,
+    "power": 3,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "330"
+  },
+  {
+    "id": 24,
+    "type": 3,
+    "variantType": 0,
+    "power": 4,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "340"
+  },
+  {
+    "id": 25,
+    "type": 3,
+    "variantType": 0,
+    "power": 5,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "350"
+  },
+  {
+    "id": 26,
+    "type": 3,
+    "variantType": 0,
+    "power": 6,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "360"
+  },
+  {
+    "id": 27,
+    "type": 3,
+    "variantType": 0,
+    "power": 7,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "370"
+  },
+  {
+    "id": 28,
+    "type": 3,
+    "variantType": 0,
+    "power": 8,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "380"
+  },
+  {
+    "id": 29,
+    "type": 3,
+    "variantType": 0,
+    "power": 9,
+    "desc": "language_10113059",
+    "timeline": "pg_03_b1",
+    "order": "390"
+  },
+  {
+    "id": 101,
+    "type": 4,
+    "variantType": 0,
+    "power": 1,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "410"
+  },
+  {
+    "id": 102,
+    "type": 4,
+    "variantType": 0,
+    "power": 2,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "420"
+  },
+  {
+    "id": 103,
+    "type": 4,
+    "variantType": 0,
+    "power": 3,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "430"
+  },
+  {
+    "id": 104,
+    "type": 4,
+    "variantType": 0,
+    "power": 4,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "440"
+  },
+  {
+    "id": 105,
+    "type": 4,
+    "variantType": 0,
+    "power": 5,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "450"
+  },
+  {
+    "id": 106,
+    "type": 4,
+    "variantType": 0,
+    "power": 6,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "460"
+  },
+  {
+    "id": 107,
+    "type": 4,
+    "variantType": 0,
+    "power": 7,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "470"
+  },
+  {
+    "id": 108,
+    "type": 4,
+    "variantType": 0,
+    "power": 8,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "480"
+  },
+  {
+    "id": 109,
+    "type": 4,
+    "variantType": 0,
+    "power": 9,
+    "desc": "language_10113060",
+    "timeline": "pg_04_ult",
+    "order": "490"
+  },
+  {
+    "id": 201,
+    "type": 5,
+    "variantType": 0,
+    "power": 1,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "510"
+  },
+  {
+    "id": 202,
+    "type": 5,
+    "variantType": 0,
+    "power": 2,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "520"
+  },
+  {
+    "id": 203,
+    "type": 5,
+    "variantType": 0,
+    "power": 3,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "530"
+  },
+  {
+    "id": 204,
+    "type": 5,
+    "variantType": 0,
+    "power": 4,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "540"
+  },
+  {
+    "id": 205,
+    "type": 5,
+    "variantType": 0,
+    "power": 5,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "550"
+  },
+  {
+    "id": 206,
+    "type": 5,
+    "variantType": 0,
+    "power": 6,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "560"
+  },
+  {
+    "id": 207,
+    "type": 5,
+    "variantType": 0,
+    "power": 7,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "570"
+  },
+  {
+    "id": 208,
+    "type": 5,
+    "variantType": 0,
+    "power": 8,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "580"
+  },
+  {
+    "id": 209,
+    "type": 5,
+    "variantType": 0,
+    "power": 9,
+    "desc": "language_10113061",
+    "timeline": "pg_05_heal",
+    "order": "590"
+  },
+  {
+    "id": 301,
+    "type": 1,
+    "variantType": 1,
+    "power": 1,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "111"
+  },
+  {
+    "id": 302,
+    "type": 1,
+    "variantType": 1,
+    "power": 2,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "121"
+  },
+  {
+    "id": 303,
+    "type": 1,
+    "variantType": 1,
+    "power": 3,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "131"
+  },
+  {
+    "id": 304,
+    "type": 1,
+    "variantType": 1,
+    "power": 4,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "141"
+  },
+  {
+    "id": 305,
+    "type": 1,
+    "variantType": 1,
+    "power": 5,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "151"
+  },
+  {
+    "id": 306,
+    "type": 1,
+    "variantType": 1,
+    "power": 6,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "161"
+  },
+  {
+    "id": 307,
+    "type": 1,
+    "variantType": 1,
+    "power": 7,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "171"
+  },
+  {
+    "id": 308,
+    "type": 1,
+    "variantType": 1,
+    "power": 8,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "181"
+  },
+  {
+    "id": 309,
+    "type": 1,
+    "variantType": 1,
+    "power": 9,
+    "desc": "language_10113062",
+    "timeline": "pg_01_g2",
+    "order": "191"
+  },
+  {
+    "id": 311,
+    "type": 2,
+    "variantType": 1,
+    "power": 1,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "211"
+  },
+  {
+    "id": 312,
+    "type": 2,
+    "variantType": 1,
+    "power": 2,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "221"
+  },
+  {
+    "id": 313,
+    "type": 2,
+    "variantType": 1,
+    "power": 3,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "231"
+  },
+  {
+    "id": 314,
+    "type": 2,
+    "variantType": 1,
+    "power": 4,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "241"
+  },
+  {
+    "id": 315,
+    "type": 2,
+    "variantType": 1,
+    "power": 5,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "251"
+  },
+  {
+    "id": 316,
+    "type": 2,
+    "variantType": 1,
+    "power": 6,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "261"
+  },
+  {
+    "id": 317,
+    "type": 2,
+    "variantType": 1,
+    "power": 7,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "271"
+  },
+  {
+    "id": 318,
+    "type": 2,
+    "variantType": 1,
+    "power": 8,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "281"
+  },
+  {
+    "id": 319,
+    "type": 2,
+    "variantType": 1,
+    "power": 9,
+    "desc": "language_10113063",
+    "timeline": "pg_02_r2",
+    "order": "291"
+  },
+  {
+    "id": 321,
+    "type": 3,
+    "variantType": 1,
+    "power": 1,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "311"
+  },
+  {
+    "id": 322,
+    "type": 3,
+    "variantType": 1,
+    "power": 2,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "321"
+  },
+  {
+    "id": 323,
+    "type": 3,
+    "variantType": 1,
+    "power": 3,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "331"
+  },
+  {
+    "id": 324,
+    "type": 3,
+    "variantType": 1,
+    "power": 4,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "341"
+  },
+  {
+    "id": 325,
+    "type": 3,
+    "variantType": 1,
+    "power": 5,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "351"
+  },
+  {
+    "id": 326,
+    "type": 3,
+    "variantType": 1,
+    "power": 6,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "361"
+  },
+  {
+    "id": 327,
+    "type": 3,
+    "variantType": 1,
+    "power": 7,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "371"
+  },
+  {
+    "id": 328,
+    "type": 3,
+    "variantType": 1,
+    "power": 8,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "381"
+  },
+  {
+    "id": 329,
+    "type": 3,
+    "variantType": 1,
+    "power": 9,
+    "desc": "language_10113064",
+    "timeline": "pg_03_b2",
+    "order": "391"
+  },
+  {
+    "id": 401,
+    "type": 1,
+    "variantType": 2,
+    "power": 1,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "112"
+  },
+  {
+    "id": 402,
+    "type": 1,
+    "variantType": 2,
+    "power": 2,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "122"
+  },
+  {
+    "id": 403,
+    "type": 1,
+    "variantType": 2,
+    "power": 3,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "132"
+  },
+  {
+    "id": 404,
+    "type": 1,
+    "variantType": 2,
+    "power": 4,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "142"
+  },
+  {
+    "id": 405,
+    "type": 1,
+    "variantType": 2,
+    "power": 5,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "152"
+  },
+  {
+    "id": 406,
+    "type": 1,
+    "variantType": 2,
+    "power": 6,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "162"
+  },
+  {
+    "id": 407,
+    "type": 1,
+    "variantType": 2,
+    "power": 7,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "172"
+  },
+  {
+    "id": 408,
+    "type": 1,
+    "variantType": 2,
+    "power": 8,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "182"
+  },
+  {
+    "id": 409,
+    "type": 1,
+    "variantType": 2,
+    "power": 9,
+    "desc": "language_10113065",
+    "timeline": "pg_01_g3",
+    "order": "192"
+  },
+  {
+    "id": 411,
+    "type": 2,
+    "variantType": 2,
+    "power": 1,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "212"
+  },
+  {
+    "id": 412,
+    "type": 2,
+    "variantType": 2,
+    "power": 2,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "222"
+  },
+  {
+    "id": 413,
+    "type": 2,
+    "variantType": 2,
+    "power": 3,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "232"
+  },
+  {
+    "id": 414,
+    "type": 2,
+    "variantType": 2,
+    "power": 4,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "242"
+  },
+  {
+    "id": 415,
+    "type": 2,
+    "variantType": 2,
+    "power": 5,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "252"
+  },
+  {
+    "id": 416,
+    "type": 2,
+    "variantType": 2,
+    "power": 6,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "262"
+  },
+  {
+    "id": 417,
+    "type": 2,
+    "variantType": 2,
+    "power": 7,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "272"
+  },
+  {
+    "id": 418,
+    "type": 2,
+    "variantType": 2,
+    "power": 8,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "282"
+  },
+  {
+    "id": 419,
+    "type": 2,
+    "variantType": 2,
+    "power": 9,
+    "desc": "language_10113066",
+    "timeline": "pg_02_r3",
+    "order": "292"
+  },
+  {
+    "id": 421,
+    "type": 3,
+    "variantType": 2,
+    "power": 1,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "312"
+  },
+  {
+    "id": 422,
+    "type": 3,
+    "variantType": 2,
+    "power": 2,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "322"
+  },
+  {
+    "id": 423,
+    "type": 3,
+    "variantType": 2,
+    "power": 3,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "332"
+  },
+  {
+    "id": 424,
+    "type": 3,
+    "variantType": 2,
+    "power": 4,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "342"
+  },
+  {
+    "id": 425,
+    "type": 3,
+    "variantType": 2,
+    "power": 5,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "352"
+  },
+  {
+    "id": 426,
+    "type": 3,
+    "variantType": 2,
+    "power": 6,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "362"
+  },
+  {
+    "id": 427,
+    "type": 3,
+    "variantType": 2,
+    "power": 7,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "372"
+  },
+  {
+    "id": 428,
+    "type": 3,
+    "variantType": 2,
+    "power": 8,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "382"
+  },
+  {
+    "id": 429,
+    "type": 3,
+    "variantType": 2,
+    "power": 9,
+    "desc": "language_10113067",
+    "timeline": "pg_03_b3",
+    "order": "392"
+  }
+]

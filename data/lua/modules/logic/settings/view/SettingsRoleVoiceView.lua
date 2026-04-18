@@ -91,6 +91,10 @@ function SettingsRoleVoiceView:_refreshLangOptionSelectState_overseas(langId, ac
 end
 
 function SettingsRoleVoiceView:_refreshLangMode_overseas(langId)
+	if not self._selectedCharMos or #self._selectedCharMos == 0 then
+		return
+	end
+
 	for _, item in ipairs(self._voiceItemObjList or {}) do
 		local heroId = self._selectedCharMos[1].heroId
 		local isIn = SettingsRoleVoiceModel.instance:isHeroSp01(heroId)

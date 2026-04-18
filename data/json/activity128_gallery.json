@@ -45,6 +45,18 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#19",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 4
+  },
+  {
+    "type": 105,
+    "id": 116340001,
+    "typeName": "language_10110155",
+    "minType": 5,
+    "galleryBg": "v3a4_bossrush_handbook_boss1",
+    "point": "2500000|5000000|10000000|30000000",
+    "pointExp": "200|200|50|50",
+    "recommendStrategy": "4#16",
+    "lurkNumber": 100,
+    "sort": 5
   }
 ]

@@ -64,7 +64,7 @@ function MainActExtraDisplay:_btnrolestoryOnClick()
 	local handler = self._actClickHandler[self.activityShowState]
 
 	if handler then
-		handler(self)
+		handler(self, self.activityShowState)
 	end
 end
 
@@ -97,7 +97,10 @@ end
 
 function MainActExtraDisplay:_onSurvivalClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity3_1Enum.ActivityId.Survival)
+
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+
+	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, curVersionActivityId)
 end
 
 function MainActExtraDisplay:_onDouQuQuClick()
@@ -152,6 +155,14 @@ function MainActExtraDisplay:_onActArcadeClick()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
 	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+
+	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
+end
+
+function MainActExtraDisplay:_onCommonActClick(id)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+
+	local actId = self:_getBindActivityId(id)
 
 	self:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, actId)
 end
@@ -216,6 +227,29 @@ function MainActExtraDisplay:_initActs()
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, self.refreshAct191Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge2, self.refreshRouge2Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Arcade, self.refreshArcadeBtn)
+	self:_initDefaultHandler()
+end
+
+function MainActExtraDisplay:_initDefaultHandler()
+	for _, id in pairs(ActivityEnum.MainViewActivityState) do
+		if id >= ActivityEnum.MainViewActivityState.PartyGame then
+			if not self._actHandler[id] then
+				self._actHandler[id] = self._getCommonActStatus
+			end
+
+			if not self._actGetStartTimeHandler[id] then
+				self._actGetStartTimeHandler[id] = self._getCommonActStartTime
+			end
+
+			if not self._actClickHandler[id] then
+				self._actClickHandler[id] = self._onCommonActClick
+			end
+
+			if not self._actRefreshBtnHandler[id] then
+				self._actRefreshBtnHandler[id] = self._refreshCommonActBtn
+			end
+		end
+	end
 end
 
 function MainActExtraDisplay:_addRefreshBtnHandler(id, handler)
@@ -292,14 +326,16 @@ function MainActExtraDisplay:_getRougeStartTime()
 end
 
 function MainActExtraDisplay:_getSurvivalStatus()
-	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local actId = curVersionActivityId
 	local status = actId and ActivityHelper.getActivityStatus(actId)
 
 	return status == ActivityEnum.ActivityStatus.Normal
 end
 
 function MainActExtraDisplay:_getSurvivalStartTime()
-	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local actId = curVersionActivityId
 	local actMo = ActivityModel.instance:getActMO(actId)
 
 	return actMo and actMo:getRealStartTimeStamp() * 1000
@@ -403,6 +439,20 @@ function MainActExtraDisplay:_getArcadeStartTime()
 	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
+function MainActExtraDisplay:_getCommonActStatus(id)
+	local actId = self:_getBindActivityId(id)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
+
+	return status == ActivityEnum.ActivityStatus.Normal
+end
+
+function MainActExtraDisplay:_getCommonActStartTime(id)
+	local actId = self:_getBindActivityId(id)
+	local actMo = ActivityModel.instance:getActMO(actId)
+
+	return actMo and actMo:getRealStartTimeStamp() * 1000
+end
+
 function MainActExtraDisplay:_onStoryChange()
 	self:onRefreshActivityState()
 end
@@ -444,7 +494,8 @@ end
 function MainActExtraDisplay:refreshSurvivalBtn()
 	gohelper.setActive(self._btnrolestory, true)
 
-	local activityConfig = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local activityConfig = ActivityConfig.instance:getActivityCo(curVersionActivityId)
 
 	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
@@ -520,6 +571,26 @@ function MainActExtraDisplay:refreshArcadeBtn()
 	gohelper.setActive(self._btnrolestory, true)
 
 	local actId = self:_getBindActivityId(ActivityEnum.MainViewActivityState.Arcade)
+	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
+
+	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
+
+	self._txtrolestory.text = ""
+
+	local activityCo = ActivityConfig.instance:getActivityCo(actId)
+
+	RedDotController.instance:addRedDot(self._gorolestoryred, activityCo.redDotId)
+
+	local hasNew = ActivityStageHelper.checkOneActivityStageHasChange(actId)
+
+	gohelper.setActive(self._gorolestorynew, hasNew)
+	gohelper.setActive(self._gorolestoryred, not hasNew)
+end
+
+function MainActExtraDisplay:_refreshCommonActBtn(id)
+	gohelper.setActive(self._btnrolestory, true)
+
+	local actId = self:_getBindActivityId(id)
 	local activityConfig = ActivityConfig.instance:getActivityCo(actId)
 
 	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
@@ -653,9 +724,9 @@ function MainActExtraDisplay:checkShowActivityEnter()
 			logError("MainActExtraDisplay 活动没有对应的handler id:" .. tostring(v.id))
 		end
 
-		if handler and handler(self) then
+		if handler and handler(self, v.id) then
 			local getStartTimeHandler = self._actGetStartTimeHandler[v.id]
-			local time = getStartTimeHandler(self)
+			local time = getStartTimeHandler(self, v.id)
 
 			if lastStartTime <= time then
 				lastStartTime = time
@@ -709,7 +780,7 @@ function MainActExtraDisplay:_refreshBtns()
 	local handler = self._actRefreshBtnHandler[self.activityShowState]
 
 	if handler then
-		handler(self)
+		handler(self, self.activityShowState)
 	end
 end
 

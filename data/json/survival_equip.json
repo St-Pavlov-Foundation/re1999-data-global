@@ -25,7 +25,7 @@
   },
   {
     "id": 7300101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10001,
     "score": 300,
     "effectDesc": "language_10095547",
@@ -61,7 +61,7 @@
   },
   {
     "id": 7300102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10002,
     "score": 300,
     "effectDesc": "language_10095551",
@@ -97,7 +97,7 @@
   },
   {
     "id": 7300103,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10003,
     "score": 300,
     "effectDesc": "language_10095556",
@@ -133,7 +133,7 @@
   },
   {
     "id": 7300104,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10004,
     "score": 300,
     "effectDesc": "language_10085013",
@@ -169,7 +169,7 @@
   },
   {
     "id": 7300105,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10005,
     "score": 300,
     "effectDesc": "language_10085020",
@@ -205,7 +205,7 @@
   },
   {
     "id": 7300201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10006,
     "score": 300,
     "effectDesc": "language_10085027",
@@ -241,7 +241,7 @@
   },
   {
     "id": 7300202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10007,
     "score": 300,
     "effectDesc": "language_10085034",
@@ -277,7 +277,7 @@
   },
   {
     "id": 7300203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10008,
     "score": 300,
     "effectDesc": "language_10095559",
@@ -313,7 +313,7 @@
   },
   {
     "id": 7301101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10101,
     "score": 300,
     "effectDesc": "language_10095565",
@@ -349,7 +349,7 @@
   },
   {
     "id": 7301102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10102,
     "score": 300,
     "effectDesc": "language_10095571",
@@ -385,7 +385,7 @@
   },
   {
     "id": 7301201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10103,
     "score": 300,
     "effectDesc": "language_10095575",
@@ -421,7 +421,7 @@
   },
   {
     "id": 7301202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10104,
     "score": 300,
     "effectDesc": "language_10095579",
@@ -457,7 +457,7 @@
   },
   {
     "id": 7301203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10105,
     "score": 300,
     "effectDesc": "language_10095583",
@@ -493,7 +493,7 @@
   },
   {
     "id": 7301204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10106,
     "score": 300,
     "effectDesc": "language_10095587",
@@ -529,7 +529,7 @@
   },
   {
     "id": 7301205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10107,
     "score": 300,
     "effectDesc": "language_10095591",
@@ -565,7 +565,7 @@
   },
   {
     "id": 7301206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10108,
     "score": 300,
     "effectDesc": "language_10095595",
@@ -601,7 +601,7 @@
   },
   {
     "id": 7302101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10201,
     "score": 300,
     "effectDesc": "language_10095601",
@@ -637,7 +637,7 @@
   },
   {
     "id": 7302102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10202,
     "score": 300,
     "effectDesc": "language_10095607",
@@ -673,7 +673,7 @@
   },
   {
     "id": 7302201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10203,
     "score": 300,
     "effectDesc": "language_10095609",
@@ -709,7 +709,7 @@
   },
   {
     "id": 7302202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10204,
     "score": 300,
     "effectDesc": "language_10095613",
@@ -745,7 +745,7 @@
   },
   {
     "id": 7302203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10205,
     "score": 300,
     "effectDesc": "language_10095615",
@@ -781,7 +781,7 @@
   },
   {
     "id": 7302204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10206,
     "score": 300,
     "effectDesc": "language_10095617",
@@ -817,7 +817,7 @@
   },
   {
     "id": 7302205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10207,
     "score": 300,
     "effectDesc": "language_10095621",
@@ -853,7 +853,7 @@
   },
   {
     "id": 7302206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10208,
     "score": 300,
     "effectDesc": "language_10095625",
@@ -889,7 +889,7 @@
   },
   {
     "id": 7303101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10301,
     "score": 300,
     "effectDesc": "language_10095631",
@@ -925,7 +925,7 @@
   },
   {
     "id": 7303102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10302,
     "score": 300,
     "effectDesc": "language_10095637",
@@ -961,7 +961,7 @@
   },
   {
     "id": 7303201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10303,
     "score": 300,
     "effectDesc": "language_10095641",
@@ -997,7 +997,7 @@
   },
   {
     "id": 7303202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10304,
     "score": 300,
     "effectDesc": "language_10095645",
@@ -1033,7 +1033,7 @@
   },
   {
     "id": 7303203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10305,
     "score": 300,
     "effectDesc": "language_10095649",
@@ -1069,7 +1069,7 @@
   },
   {
     "id": 7303204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10306,
     "score": 300,
     "effectDesc": "language_10095653",
@@ -1105,7 +1105,7 @@
   },
   {
     "id": 7303205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10307,
     "score": 300,
     "effectDesc": "language_10095657",
@@ -1141,7 +1141,7 @@
   },
   {
     "id": 7303206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10308,
     "score": 300,
     "effectDesc": "language_10095661",
@@ -1177,7 +1177,7 @@
   },
   {
     "id": 7304101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10401,
     "score": 300,
     "effectDesc": "language_10095667",
@@ -1213,7 +1213,7 @@
   },
   {
     "id": 7304102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10402,
     "score": 300,
     "effectDesc": "language_10095673",
@@ -1249,7 +1249,7 @@
   },
   {
     "id": 7304201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10403,
     "score": 300,
     "effectDesc": "language_10095675",
@@ -1285,7 +1285,7 @@
   },
   {
     "id": 7304202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10404,
     "score": 300,
     "effectDesc": "language_10095679",
@@ -1321,7 +1321,7 @@
   },
   {
     "id": 7304203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10405,
     "score": 300,
     "effectDesc": "language_10095683",
@@ -1357,7 +1357,7 @@
   },
   {
     "id": 7304204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10406,
     "score": 300,
     "effectDesc": "language_10095687",
@@ -1393,7 +1393,7 @@
   },
   {
     "id": 7304205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10407,
     "score": 300,
     "effectDesc": "language_10095691",
@@ -1429,7 +1429,7 @@
   },
   {
     "id": 7304206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10408,
     "score": 300,
     "effectDesc": "language_10095695",
@@ -1465,7 +1465,7 @@
   },
   {
     "id": 7305101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10501,
     "score": 300,
     "effectDesc": "language_10095701",
@@ -1501,7 +1501,7 @@
   },
   {
     "id": 7305102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10502,
     "score": 300,
     "effectDesc": "language_10095707",
@@ -1537,7 +1537,7 @@
   },
   {
     "id": 7305201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10503,
     "score": 300,
     "effectDesc": "language_10095711",
@@ -1573,7 +1573,7 @@
   },
   {
     "id": 7305202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10504,
     "score": 300,
     "effectDesc": "language_10095715",
@@ -1609,7 +1609,7 @@
   },
   {
     "id": 7305203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10505,
     "score": 300,
     "effectDesc": "language_10095719",
@@ -1645,7 +1645,7 @@
   },
   {
     "id": 7305204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10506,
     "score": 300,
     "effectDesc": "language_10095723",
@@ -1681,7 +1681,7 @@
   },
   {
     "id": 7305205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10507,
     "score": 300,
     "effectDesc": "language_10095727",
@@ -1717,7 +1717,7 @@
   },
   {
     "id": 7305206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10508,
     "score": 300,
     "effectDesc": "language_10095731",
@@ -1753,7 +1753,7 @@
   },
   {
     "id": 7306101,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10601,
     "score": 300,
     "effectDesc": "language_10095737",
@@ -1789,7 +1789,7 @@
   },
   {
     "id": 7306102,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10602,
     "score": 300,
     "effectDesc": "language_10095743",
@@ -1825,7 +1825,7 @@
   },
   {
     "id": 7306201,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10603,
     "score": 300,
     "effectDesc": "language_10095748",
@@ -1861,7 +1861,7 @@
   },
   {
     "id": 7306202,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10604,
     "score": 300,
     "effectDesc": "language_10095753",
@@ -1897,7 +1897,7 @@
   },
   {
     "id": 7306203,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10605,
     "score": 300,
     "effectDesc": "language_10095757",
@@ -1933,7 +1933,7 @@
   },
   {
     "id": 7306204,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10606,
     "score": 300,
     "effectDesc": "language_10095763",
@@ -1969,7 +1969,7 @@
   },
   {
     "id": 7306205,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10607,
     "score": 300,
     "effectDesc": "language_10095767",
@@ -2005,7 +2005,7 @@
   },
   {
     "id": 7306206,
-    "extendCost": 500,
+    "extendCost": 400,
     "group": 10608,
     "score": 300,
     "effectDesc": "language_10095771",
@@ -2198,7 +2198,7 @@
   {
     "id": 7000316,
     "extendCost": 400,
-    "group": 10009,
+    "group": 10015,
     "score": 250,
     "effectDesc": "language_10095802",
     "effectDesc2": "language_10095803",
@@ -2210,7 +2210,7 @@
   {
     "id": 7000317,
     "extendCost": 400,
-    "group": 10010,
+    "group": 10017,
     "score": 250,
     "effectDesc": "language_10095804",
     "effectDesc2": "language_10095790",
@@ -2234,7 +2234,7 @@
   {
     "id": 7000319,
     "extendCost": 400,
-    "group": 10012,
+    "group": 10022,
     "score": 250,
     "effectDesc": "language_10095807",
     "effectDesc2": "language_10095808",
@@ -2246,7 +2246,7 @@
   {
     "id": 7000320,
     "extendCost": 400,
-    "group": 10013,
+    "group": 10023,
     "score": 250,
     "effectDesc": "language_10095809",
     "effectDesc2": "language_10095810",

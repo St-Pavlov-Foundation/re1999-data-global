@@ -1,0 +1,32 @@
+[
+  {
+    "itemId": 1001,
+    "point": 1,
+    "name": "language_10110244",
+    "resource": "singlebg_lang/txt_dungeon/getian/rolestory_getian_melody_1.png"
+  },
+  {
+    "itemId": 1002,
+    "point": 2,
+    "name": "language_10110245",
+    "resource": "singlebg_lang/txt_dungeon/getian/rolestory_getian_melody_2.png"
+  },
+  {
+    "itemId": 1003,
+    "point": 3,
+    "name": "language_10110246",
+    "resource": "singlebg_lang/txt_dungeon/getian/rolestory_getian_melody_3.png"
+  },
+  {
+    "itemId": 1004,
+    "point": 5,
+    "name": "language_10110247",
+    "resource": "singlebg_lang/txt_dungeon/getian/rolestory_getian_melody_4.png"
+  },
+  {
+    "itemId": 1005,
+    "point": 6,
+    "name": "language_10110248",
+    "resource": "singlebg_lang/txt_dungeon/getian/rolestory_getian_melody_5.png"
+  }
+]

@@ -76,6 +76,29 @@ function SwitchMainActExtraDisplay:_initActs()
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Act191, self.refreshAct191Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Rouge2, self.refreshRouge2Btn)
 	self:_addRefreshBtnHandler(ActivityEnum.MainViewActivityState.Arcade, self.refreshArcadeBtn)
+	self:_initDefaultHandler()
+end
+
+function SwitchMainActExtraDisplay:_initDefaultHandler()
+	for _, id in pairs(ActivityEnum.MainViewActivityState) do
+		if id >= ActivityEnum.MainViewActivityState.PartyGame then
+			if not self._actHandler[id] then
+				self._actHandler[id] = self._getCommonActStatus
+			end
+
+			if not self._actGetStartTimeHandler[id] then
+				self._actGetStartTimeHandler[id] = self._getCommonActStartTime
+			end
+
+			if not self._actClickHandler[id] then
+				self._actClickHandler[id] = self._onCommonActClick
+			end
+
+			if not self._actRefreshBtnHandler[id] then
+				self._actRefreshBtnHandler[id] = self._refreshCommonActBtn
+			end
+		end
+	end
 end
 
 function SwitchMainActExtraDisplay:_addRefreshBtnHandler(id, handler)
@@ -152,14 +175,16 @@ function SwitchMainActExtraDisplay:_getRougeStartTime()
 end
 
 function SwitchMainActExtraDisplay:_getSurvivalStatus()
-	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local actId = curVersionActivityId
 	local status = actId and ActivityHelper.getActivityStatus(actId)
 
 	return status == ActivityEnum.ActivityStatus.Normal
 end
 
 function SwitchMainActExtraDisplay:_getSurvivalStartTime()
-	local actId = VersionActivity3_1Enum.ActivityId.Survival
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local actId = curVersionActivityId
 	local actMo = ActivityModel.instance:getActMO(actId)
 
 	return actMo and actMo:getRealStartTimeStamp() * 1000
@@ -263,6 +288,20 @@ function SwitchMainActExtraDisplay:_getArcadeStartTime()
 	return actMo and actMo:getRealStartTimeStamp() * 1000
 end
 
+function SwitchMainActExtraDisplay:_getCommonActStatus(id)
+	local actId = self:_getBindActivityId(id)
+	local status = actId and ActivityHelper.getActivityStatus(actId)
+
+	return status == ActivityEnum.ActivityStatus.Normal
+end
+
+function SwitchMainActExtraDisplay:_getCommonActStartTime(id)
+	local actId = self:_getBindActivityId(id)
+	local actMo = ActivityModel.instance:getActMO(actId)
+
+	return actMo and actMo:getRealStartTimeStamp() * 1000
+end
+
 function SwitchMainActExtraDisplay:_onStoryChange()
 	self:onRefreshActivityState()
 end
@@ -304,7 +343,8 @@ end
 function SwitchMainActExtraDisplay:refreshSurvivalBtn()
 	gohelper.setActive(self._btnrolestory, true)
 
-	local activityConfig = ActivityConfig.instance:getActivityCo(VersionActivity3_1Enum.ActivityId.Survival)
+	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
+	local activityConfig = ActivityConfig.instance:getActivityCo(curVersionActivityId)
 
 	self:_roleStoryLoadImage(activityConfig.extraDisplayIcon, self.onLoadImage, self)
 
@@ -565,6 +605,14 @@ function SwitchMainActExtraDisplay:_refreshBtns()
 end
 
 function SwitchMainActExtraDisplay:onOpen()
+	local isHide = self.viewParam.hideExtraDisPlay
+
+	self:hideExtraDisPlay(isHide)
+
+	if isHide then
+		return
+	end
+
 	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, self._onStoryChange, self)
 	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.StoryNewChange, self._onStoryNewChange, self)
 	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
@@ -577,6 +625,11 @@ function SwitchMainActExtraDisplay:onOpen()
 
 	self:onRefreshActivityState()
 	self:showKeyTips()
+end
+
+function SwitchMainActExtraDisplay:hideExtraDisPlay(isHide)
+	gohelper.setActive(self._btnrolestory.gameObject, not isHide)
+	gohelper.setActive(self._btnreactivity.gameObject, not isHide)
 end
 
 function SwitchMainActExtraDisplay:showKeyTips()
@@ -595,6 +648,12 @@ function SwitchMainActExtraDisplay:onDestroyView()
 	if self._simagerolestory then
 		self._simagerolestory:UnLoadImage()
 	end
+
+	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ActStoryChange, self._onStoryChange, self)
+	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.StoryNewChange, self._onStoryNewChange, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self.onRefreshActivityState, self)
+	self:removeEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, self.onRefreshActivityState, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.ChangeActivityStage, self.onRefreshActivityState, self)
 end
 
 return SwitchMainActExtraDisplay

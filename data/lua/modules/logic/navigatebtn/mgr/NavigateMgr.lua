@@ -12,7 +12,8 @@ local IgnoreEscViewNameDict = {
 	[ViewName.GMErrorView] = true,
 	[ViewName.RougeMapTipView] = true,
 	[ViewName.Rouge2_MapTipView] = true,
-	[ViewName.SurvivalToastView] = true
+	[ViewName.SurvivalToastView] = true,
+	[ViewName.PartyGameHelpView] = true
 }
 local IgnoreTopLayerViewDict = {
 	[ViewName.RougeMapTipView] = true,

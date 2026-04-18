@@ -4,11 +4,26 @@ module("modules.logic.survival.model.shelter.SurvivalWeekClientDataMo", package.
 
 local SurvivalWeekClientDataMo = pureTable("SurvivalWeekClientDataMo")
 
+function SurvivalWeekClientDataMo:ctor()
+	self.keyReplace = {
+		"ver",
+		"nowUnlockMapsCount",
+		"shopLevelUI",
+		"shopHUDLevelUI",
+		"decodingItemNum",
+		"isBossWeak",
+		"bossRepress",
+		"bossRepressProgress",
+		"techLockCheckLevel"
+	}
+end
+
 function SurvivalWeekClientDataMo:init(data, weekMo)
 	local dict = {}
 
 	if not string.nilorempty(data) then
 		dict = cjson.decode(data)
+		dict = self:decompressionTable(dict)
 	end
 
 	if dict.ver and dict.ver ~= self:getCurVersion() then
@@ -16,21 +31,16 @@ function SurvivalWeekClientDataMo:init(data, weekMo)
 	end
 
 	dict.ver = dict.ver or self:getCurVersion()
-
-	local isChange = false
-
-	if not dict.nowUnlockMapsCount then
-		dict.nowUnlockMapsCount = #weekMo.mapInfos
-		isChange = true
-	end
-
 	dict.shopLevelUI = dict.shopLevelUI or {}
 	dict.shopHUDLevelUI = dict.shopHUDLevelUI or {}
 	dict.decodingItemNum = dict.decodingItemNum or 0
 	dict.isBossWeak = dict.isBossWeak or false
 	dict.bossRepress = dict.bossRepress or {}
 	dict.bossRepressProgress = dict.bossRepressProgress or 0.089
+	dict.techLockCheckLevel = dict.techLockCheckLevel or 1
 	self.data = dict
+
+	local isChange = false
 
 	if isChange and weekMo.day > 0 then
 		self.isDirty = true
@@ -102,19 +112,25 @@ function SurvivalWeekClientDataMo:setReputationShopHUDUILevel(shopId, level)
 end
 
 function SurvivalWeekClientDataMo:getBossRepress(fightId, id)
-	local key = string.format("%s_%s", fightId, id)
-
-	if self.data.bossRepress[key] then
-		return self.data.bossRepress[key]
+	if self.data.bossRepress.fightId == fightId and self.data.bossRepress.repress then
+		for i, fId in ipairs(self.data.bossRepress.repress) do
+			if fId == id then
+				return true
+			end
+		end
 	end
 
-	return 0
+	return false
 end
 
 function SurvivalWeekClientDataMo:setBossRepress(fightId, id)
-	local key = string.format("%s_%s", fightId, id)
+	if self.data.bossRepress.fightId ~= fightId then
+		self.data.bossRepress.fightId = fightId
+		self.data.bossRepress.repress = {}
+	end
 
-	self.data.bossRepress[key] = true
+	table.insert(self.data.bossRepress.repress, id)
+
 	self.isDirty = true
 end
 
@@ -139,10 +155,55 @@ function SurvivalWeekClientDataMo:saveDataToServer(force)
 	end
 
 	if force or self.isDirty then
-		SurvivalWeekRpc.instance:sendSurvivalSurvivalWeekClientData(cjson.encode(self.data))
+		local newData = self:compressTable(self.data)
+
+		SurvivalWeekRpc.instance:sendSurvivalSurvivalWeekClientData(cjson.encode(newData))
 
 		self.isDirty = false
 	end
+end
+
+function SurvivalWeekClientDataMo:setTechLockCheckLevel(value)
+	if self.data.techLockCheckLevel ~= value then
+		self.data.techLockCheckLevel = value
+		self.isDirty = true
+	end
+end
+
+function SurvivalWeekClientDataMo:compressTable(data)
+	local newData = {}
+
+	for key, v in pairs(data) do
+		local index = self:compressKey(key)
+
+		newData[index] = v
+	end
+
+	return newData
+end
+
+function SurvivalWeekClientDataMo:decompressionTable(data)
+	local newData = {}
+
+	for i, v in ipairs(data) do
+		local index = self:deCompressKey(i)
+
+		newData[index] = v
+	end
+
+	return newData
+end
+
+function SurvivalWeekClientDataMo:compressKey(key)
+	for i, k in ipairs(self.keyReplace) do
+		if k == key then
+			return i
+		end
+	end
+end
+
+function SurvivalWeekClientDataMo:deCompressKey(index)
+	return self.keyReplace[index]
 end
 
 return SurvivalWeekClientDataMo

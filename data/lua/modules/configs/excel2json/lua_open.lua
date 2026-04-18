@@ -10,6 +10,7 @@ local fields = {
 	verifingEpisodeId = 7,
 	roomLevel = 13,
 	playerLv = 4,
+	dailyOpenTime = 14,
 	episodeId = 5,
 	elementId = 6,
 	isAlwaysShowBtn = 8,

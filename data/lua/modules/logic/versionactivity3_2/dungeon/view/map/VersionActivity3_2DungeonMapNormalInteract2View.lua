@@ -248,6 +248,15 @@ function VersionActivity3_2DungeonMapNormalInteract2View:_showOption()
 	end
 end
 
+function VersionActivity3_2DungeonMapNormalInteract2View:_initGo(go, data)
+	local txtOption = gohelper.findChildText(go, "#txt_option")
+	local goprogress = gohelper.findChild(go, "progress")
+
+	gohelper.setActive(goprogress, false)
+
+	txtOption.text = self._optionConfig["option" .. data]
+end
+
 function VersionActivity3_2DungeonMapNormalInteract2View:_onItemShow(obj, data, index)
 	local isSelected = false
 	local goSelected = gohelper.findChild(obj, "go_select")
@@ -255,20 +264,8 @@ function VersionActivity3_2DungeonMapNormalInteract2View:_onItemShow(obj, data, 
 
 	gohelper.setActive(goSelected, isSelected)
 	gohelper.setActive(goUnSelected, not isSelected)
-
-	local progressValue = 0
-
-	function initGo(go)
-		local txtOption = gohelper.findChildText(go, "#txt_option")
-		local goprogress = gohelper.findChild(go, "progress")
-
-		gohelper.setActive(goprogress, false)
-
-		txtOption.text = self._optionConfig["option" .. data]
-	end
-
-	initGo(goSelected)
-	initGo(goUnSelected)
+	self:_initGo(goSelected, data)
+	self:_initGo(goUnSelected, data)
 
 	local btnclick = gohelper.findChildButtonWithAudio(obj, "#btn_click")
 	local param = self:_addBtnClick(btnclick, data, index)

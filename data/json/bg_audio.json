@@ -2238,5 +2238,235 @@
     "id": 3330010,
     "eventName": "play_activitymusic_zuozhan_3_3",
     "bankName": "activity3_3_music"
+  },
+  {
+    "id": 3340001,
+    "eventName": "play_lianji_main_music",
+    "bankName": "activity_3_4_lianji_music"
+  },
+  {
+    "id": 3340002,
+    "eventName": "play_lianji_hall_music",
+    "bankName": "activity_3_4_lianji_music"
+  },
+  {
+    "id": 3340003,
+    "eventName": "play_lianji_playcards_music",
+    "bankName": "activity_3_4_lianji_music"
+  },
+  {
+    "id": 3340004,
+    "eventName": "play_lianji_g1g12_mission_1_4",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340005,
+    "eventName": "play_lianji_g2_normalbattle_music_1_5",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340006,
+    "eventName": "play_lianji_g3_seasonmain_1_6",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340007,
+    "eventName": "play_lianji_g4_humorousburglary_1_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340008,
+    "eventName": "play_lianji_g5_dramaticclimax_1_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340009,
+    "eventName": "play_lianji_g6_fadein_disco_2_0",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340010,
+    "eventName": "play_lianji_g7_highway_2_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340011,
+    "eventName": "play_lianji_g8_battle_rimetcup_normal_1_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340012,
+    "eventName": "play_lianji_g9_plot_music_driveacar_chao",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340013,
+    "eventName": "play_lianji_g10_leimi_mainmuisc_1_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340014,
+    "eventName": "play_lianji_g11_seasonmain_1_3",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340015,
+    "eventName": "play_lianji_g1g12_mission_1_4",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340016,
+    "eventName": "play_lianji_g13_normalfight_music_2_3",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340017,
+    "eventName": "play_lianji_g14_8bit_explore_3_3",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340018,
+    "eventName": "play_lianji_g15_seasonmain_2_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340019,
+    "eventName": "play_lianji_g16_battle_rimetcup_combatlist_1_1",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340020,
+    "eventName": "play_lianji_g17_autochess_prepare_2_5",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340021,
+    "eventName": "play_lianji_g18_nianjie_3_4",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340022,
+    "eventName": "play_lianji_g19_ui_boxparademuisc",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340023,
+    "eventName": "play_ui_checkpoint_noise_ship",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3340024,
+    "eventName": "play_ui_checkpoint_noise_manors",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3340025,
+    "eventName": "play_ui_checkpoint_noise_invalides",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3340026,
+    "eventName": "play_ui_checkpoint_noise_slumdog",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3340027,
+    "eventName": "play_ui_checkpoint_noise_1_3_main_activity_day",
+    "bankName": "ui_checkpointamb_molu1_3_amb"
+  },
+  {
+    "id": 3340028,
+    "eventName": "play_ui_checkpoint_noise_uluru_day",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3340029,
+    "eventName": "play_ui_bulaochuan_desert_amb",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 3340030,
+    "eventName": "stop_ui_bulaochuan_desert_amb",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_07"
+  },
+  {
+    "id": 3340031,
+    "eventName": "play_ui_bulaochuan_snow_amb",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 3340032,
+    "eventName": "stop_ui_bulaochuan_snow_amb",
+    "bankName": "ui_activity_3_4_bulaochuan_gameplay_09"
+  },
+  {
+    "id": 3340033,
+    "eventName": "stop_activitymusic_lianji_3_4",
+    "bankName": "activity_3_4_lianji_add_music"
+  },
+  {
+    "id": 3340100,
+    "eventName": "play_battle_bulaochun_3_4_normalfight",
+    "bankName": "activity_bulaochun_combataudio"
+  },
+  {
+    "id": 3340101,
+    "eventName": "play_battle_bulaochun_3_4_bossfight",
+    "bankName": "activity_bulaochun_combataudio"
+  },
+  {
+    "id": 3340110,
+    "eventName": "play_ui_checkpoint_noise_outerstreet",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3340111,
+    "eventName": "play_ui_checkpoint_noise_night",
+    "bankName": "activtiy_shuori_combataudio_noise"
+  },
+  {
+    "id": 3340112,
+    "eventName": "play_ui_checkpoint_noise_base",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3340113,
+    "eventName": "play_ui_checkpoint_noise_1_3_main_activity_night",
+    "bankName": "ui_checkpointamb_molu1_3_amb"
+  },
+  {
+    "id": 3340114,
+    "eventName": "play_ui_checkpoint_noise_hall",
+    "bankName": "activtiy_shuori_combataudio_noise"
+  },
+  {
+    "id": 3340115,
+    "eventName": "play_ui_checkpoint_noise_1_3_main_activity_night",
+    "bankName": "ui_checkpointamb_molu1_3_amb"
+  },
+  {
+    "id": 3340116,
+    "eventName": "play_ui_checkpoint_noise_exterior",
+    "bankName": "activtiy_wangshi_combataudio_noise"
+  },
+  {
+    "id": 3340117,
+    "eventName": "play_ui_checkpoint_noise_suburb",
+    "bankName": "activtiy_shuori_combataudio_noise"
+  },
+  {
+    "id": 3340201,
+    "eventName": "play_activitymusic_theme_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 3340202,
+    "eventName": "play_activitymusic_xiancheng_3_4",
+    "bankName": "activity3_4_music"
+  },
+  {
+    "id": 3340203,
+    "eventName": "play_battle_bulaochun_3_4_normalfight",
+    "bankName": "activity_bulaochun_combataudio"
   }
 ]

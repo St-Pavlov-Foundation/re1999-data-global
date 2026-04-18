@@ -424,6 +424,11 @@ end
 function FightViewHandCardItemLock.isLockByLockBuffType(feature, skillConfig, entityId)
 	local isBigSkill = skillConfig.isBigSkill == 1 and true or false
 	local featureType = feature.featureType
+
+	if featureType == FightEnum.BuffFeature.Dream and string.splitToNumber(feature.featureStr, "#")[2] == 1 then
+		return false
+	end
+
 	local lockObj = LockAllBuffType[featureType]
 
 	if lockObj == true then

@@ -413,5 +413,65 @@
     "skinId": 301403,
     "animName": "interact",
     "shadow": 1
+  },
+  {
+    "skinId": 314101,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314102,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313701,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313702,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313801,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313802,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 305305,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 311003,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 312503,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 307905,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310404,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 311103,
+    "animName": "interact",
+    "shadow": 1
   }
 ]

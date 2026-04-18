@@ -22,6 +22,9 @@ function GMSubViewSurvival:initViewContent()
 	end
 
 	GMSubViewBase.initViewContent(self)
+	self:addTitleSplitLine("业务")
+	self:addLineIndex()
+	self:addButton(self:getLineGroup(), "进入主界面", self.openSurvivalView, self)
 	self:addTitleSplitLine("避难所")
 	self:addLineIndex()
 	self:addButton(self:getLineGroup(), "一键添加所有NPC", self.addAllNPC, self)
@@ -156,6 +159,10 @@ function GMSubViewSurvival:setDay()
 	GMRpc.instance:sendGMRequest("surChangeDay " .. self._txtDay:GetText())
 end
 
+function GMSubViewSurvival:openSurvivalView()
+	SurvivalController.instance:openSurvivalView(false)
+end
+
 function GMSubViewSurvival:addAllNPC()
 	GMRpc.instance:sendGMRequest("surAddNpc 0")
 end
@@ -259,7 +266,7 @@ function GMSubViewSurvival:enterSurvival()
 		if not SurvivalModel.instance:getOutSideInfo().inWeek then
 			isOneKeyEnter = true
 
-			SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(1, nil, recvCb, enterWeek)
+			SurvivalWeekRpc.instance:sendSurvivalStartWeekChooseDiff(1, nil, SurvivalModel.instance:getDefaultRoleId(), recvCb, enterWeek)
 		else
 			SurvivalWeekRpc.instance:sendSurvivalGetWeekInfo(recvCb, enterSurvivalCb)
 		end

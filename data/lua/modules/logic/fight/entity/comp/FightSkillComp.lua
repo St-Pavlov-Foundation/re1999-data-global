@@ -65,6 +65,10 @@ FightSkillComp.FrameEventHandlerCls = {
 	FightTLEventAddEffectByBuffActId,
 	FightTLAnAnRecycleEffect,
 	FightTLEventChangeSceneByEffect,
+	FightTLYXASFDEffect,
+	FightTLAddEffectByEffectType,
+	FightTLPlayActionByEffectType,
+	FightTLExecuteEffectType,
 	[1001] = FightTLEventObjFly,
 	[1002] = FightTLEventSetSign
 }

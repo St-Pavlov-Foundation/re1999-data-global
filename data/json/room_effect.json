@@ -58,5 +58,23 @@
     "resPath": "effects/prefabs/v1a6_yhcd/v2a5_yanhua_zd.prefab",
     "duration": 60,
     "audioId": 20009067
+  },
+  {
+    "id": 11,
+    "resPath": "effects/prefabs/v1a6_yhcd/v3a4_yanhua_zd.prefab",
+    "duration": 60,
+    "audioId": 20009067
+  },
+  {
+    "id": 12,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_m.prefab",
+    "duration": 11,
+    "audioId": 20009065
+  },
+  {
+    "id": 13,
+    "resPath": "effects/prefabs/v1a6_yhcd/v1a6_yanhua_l.prefab",
+    "duration": 6,
+    "audioId": 20009064
   }
 ]
