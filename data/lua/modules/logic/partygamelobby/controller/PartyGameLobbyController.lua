@@ -426,6 +426,9 @@ function PartyGameLobbyController:enterGameLobbyGuide()
 		}
 	end
 
+	PartyGameRpc.instance:setUpKcpRpcCallBack()
+	PartyGameController.instance:setUpLuaCallBack()
+
 	if self._guideList then
 		for i = 34012, 34017 do
 			if GuideModel.instance:isGuideRunning(i) then
@@ -531,6 +534,8 @@ function PartyGameLobbyController:enterGameLobby()
 		return
 	end
 
+	PartyGameRpc.instance:setUpKcpRpcCallBack()
+	PartyGameController.instance:setUpLuaCallBack()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.PartyGameLobbyLoadingView)
 	GameSceneMgr.instance:startScene(SceneType.PartyGameLobby, 1, 1, true)
 end

@@ -78,6 +78,7 @@ function SocialBaseItem:_initTag()
 		tagItem.go = gohelper.findChild(self.viewGO, "box/tag/tag_" .. i)
 		tagItem.imgicon = gohelper.findChildImage(tagItem.go, "#image_icon")
 		tagItem.txtnum = gohelper.findChildText(tagItem.go, "#txt_num")
+		tagItem.txtnum_overseas = gohelper.findChildText(tagItem.go, "#txt_num/#go_text_overseas")
 
 		if i > 1 then
 			tagItem.txtnum2 = gohelper.findChildText(tagItem.go, "#txt_num2")
@@ -126,7 +127,15 @@ function SocialBaseItem:_updateTag()
 				gohelper.setActive(tag.imgicon.gameObject, true)
 				UISpriteSetMgr.instance:setSocialSkinSprite(tag.imgicon, "social_playercardicon_" .. id, true)
 
-				tag.txtnum.text = self._playercardInfo:getBaseInfoByIndex(id)
+				if tag.txtnum_overseas then
+					local day, dayStr = self._playercardInfo:getBaseInfoByIndex(id, true)
+
+					tag.txtnum_overseas.text = dayStr
+					tag.txtnum.text = day
+				else
+					tag.txtnum.text = self._playercardInfo:getBaseInfoByIndex(id)
+				end
+
 				tag.txtnum2.text = self._playercardInfo:getBaseInfoByIndex(id)
 			end
 		end

@@ -7,6 +7,18 @@ local SurvivalSummaryActPreloader = class("SurvivalSummaryActPreloader", Surviva
 function SurvivalSummaryActPreloader:init(sceneId, levelId)
 	self._loader = MultiAbLoader.New()
 
+	if not GameResMgr.IsFromEditorDir then
+		local list = {}
+
+		self._loader:setPathList(list)
+		self._loader:addPath(self:getMapBlockAbPath())
+	else
+		local list = {}
+
+		tabletool.addValues(list, self:getSummaryActBlock())
+		self._loader:setPathList(list)
+	end
+
 	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
 	local roleRes = survivalShelterRoleMo:getRoleModelRes()
 

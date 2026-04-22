@@ -90,7 +90,7 @@ function MainActivityAdapter:ctor()
 end
 
 function MainActivityAdapter:OnkeyUp(keyName)
-	if ViewMgr.instance:IsPopUpViewOpen() and not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) or ViewMgr.instance:isOpen(ViewName.SummonView) then
+	if ViewMgr.instance:IsPopUpViewOpen() and ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) or ViewMgr.instance:isOpen(ViewName.SummonView) then
 		return
 	end
 
@@ -98,7 +98,7 @@ function MainActivityAdapter:OnkeyUp(keyName)
 end
 
 function MainActivityAdapter:OnkeyDown(keyName)
-	if ViewMgr.instance:IsPopUpViewOpen() then
+	if ViewMgr.instance:IsPopUpViewOpen() and ViewMgr.instance:isOpen(ViewName.MainThumbnailView) or ViewMgr.instance:isOpen(ViewName.SettingsView) or ViewMgr.instance:isOpen(ViewName.SummonView) then
 		return
 	end
 

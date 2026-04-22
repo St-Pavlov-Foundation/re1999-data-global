@@ -275,6 +275,12 @@ function PartyGameRoomModel:createRoom(roomId, version)
 end
 
 function PartyGameRoomModel.getResVersion()
+	do
+		local version = PartyGameRoomModel.getVersion(110, 0, 840)
+
+		return version
+	end
+
 	if isDebugBuild and PartyGameRoomModel._fakeResVersion then
 		local paramList = string.splitToNumber(PartyGameRoomModel._fakeResVersion, ".")
 		local first = paramList[1]

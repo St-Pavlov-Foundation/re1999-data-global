@@ -5,10 +5,18 @@ module("modules.logic.partygame.controller.PartyGameController", package.seeall)
 local PartyGameController = class("PartyGameController", BaseController)
 local partyGameMgrCs = PartyGame.Runtime.GameLogic.GameMgr
 
-function PartyGameController:onInit()
+function PartyGameController:setUpLuaCallBack()
+	if self._hasSetUpLuaCallBack then
+		return
+	end
+
+	self._hasSetUpLuaCallBack = true
+
 	partyGameMgrCs.Instance:SetLuaCallBack(self, self.gameStateChange, self.logicTickFinish, self.gamePlayerPush, self.kcpNetStateChange)
 	self:SetReconnectLuaCallBack()
+end
 
+function PartyGameController:onInit()
 	self._curPartyGame = nil
 	self._isFirstLogin = true
 	self._partyIsEnd = false

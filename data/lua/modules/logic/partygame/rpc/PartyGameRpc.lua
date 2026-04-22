@@ -6,8 +6,18 @@ local PartyGameRpc = class("PartyGameRpc", BaseRpc)
 local PartyGame_Runtime_Utils_KcpSocketUtil = PartyGame.Runtime.Utils.KcpSocketUtil
 local partyGameMgrCs = PartyGame.Runtime.GameLogic.GameMgr
 
-function PartyGameRpc:onInit()
+function PartyGameRpc:setUpKcpRpcCallBack()
+	if self._hasSetUpLuaCallBack then
+		return
+	end
+
+	self._hasSetUpLuaCallBack = true
+
 	partyGameMgrCs.Instance:SetKcpRpcCallBack(self.handleServerMsg, self)
+end
+
+function PartyGameRpc:onInit()
+	return
 end
 
 function PartyGameRpc:reInit()
