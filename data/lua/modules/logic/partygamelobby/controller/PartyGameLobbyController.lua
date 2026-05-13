@@ -368,6 +368,8 @@ function PartyGameLobbyController:GetPartyRoomInfo()
 end
 
 function PartyGameLobbyController:_onGetPartyRoomInfo(cmd, resultCode, msg)
+	PartyGameRoomModel.instance:setAllowPingSvrList(true)
+
 	if resultCode ~= 0 then
 		return
 	end

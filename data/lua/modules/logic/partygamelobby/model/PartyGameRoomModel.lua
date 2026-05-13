@@ -25,6 +25,14 @@ function PartyGameRoomModel:onReceivePartyServerListReply(msg)
 end
 
 function PartyGameRoomModel:pingServerList(pingCompletedCb, pingCompletedObj)
+	if not self._allowPingSvrList then
+		if pingCompletedCb then
+			callWithCatch(pingCompletedCb, pingCompletedObj)
+		end
+
+		return
+	end
+
 	if pingCompletedCb then
 		self._pingCompletedCb = pingCompletedCb
 		self._pingCompletedObj = pingCompletedObj
@@ -73,7 +81,7 @@ function PartyGameRoomModel:_clearPingObjList()
 	self._pingCompletedObj = nil
 end
 
-function PartyGameRoomModel:getFastestPartyServerMO()
+function PartyGameRoomModel:getFastestPartyServerMOImpl()
 	local fastestMO
 
 	for _, mo in pairs(self._partyServers) do
@@ -88,6 +96,11 @@ function PartyGameRoomModel:getFastestPartyServerMO()
 		end
 	end
 
+	return fastestMO
+end
+
+function PartyGameRoomModel:getFastestPartyServerMO()
+	local fastestMO = self:getFastestPartyServerMOImpl()
 	local area, ping
 
 	if fastestMO then
@@ -117,11 +130,16 @@ function PartyGameRoomModel:getFastestAreaId()
 	return areaId
 end
 
+function PartyGameRoomModel:setAllowPingSvrList(bAllow)
+	self._allowPingSvrList = bAllow
+end
+
 function PartyGameRoomModel:onInit()
 	self:reInit()
 end
 
 function PartyGameRoomModel:reInit()
+	self._allowPingSvrList = false
 	self._partyServers = {}
 
 	self:_clearPingObjList()

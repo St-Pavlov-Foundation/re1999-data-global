@@ -17,22 +17,8 @@ function SurvivalRainEntity:init(go)
 	self._rainLoader = PrefabInstantiate.Create(self._param and self._param.effectRoot or go)
 	self._textureLoader = SequenceAbLoader.New()
 
-	if GameResMgr.IsFromEditorDir then
-		local texturePaths = SLFramework.FileHelper.GetDirFilePaths("Assets/ZResourcesLib/survival/common/rain")
-
-		if texturePaths then
-			for i = 0, texturePaths.Length - 1 do
-				local path = texturePaths[i]
-
-				if string.sub(path, -4) == ".png" then
-					local fileName = SLFramework.FileHelper.GetFileName(path, true)
-
-					self._textureLoader:addPath("survival/common/rain/" .. fileName)
-				end
-			end
-		end
-	else
-		self._textureLoader:addPath("survival/common/rain_notbasics")
+	for fileName in pairs(SurvivalRainParam.PngDict) do
+		self._textureLoader:addPath("survival/common/rain/" .. fileName .. ".png")
 	end
 
 	self._textureLoader:startLoad(self._onAbLoaded, self)

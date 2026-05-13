@@ -57,8 +57,47 @@ function PartyRoomRpc:_onSentJoinPartyRoomRequestCb(_, resultCode, msg)
 end
 
 function PartyRoomRpc:simpleCreatePartyRoomReq()
+	local fastestMO = PartyGameRoomModel.instance:getFastestPartyServerMOImpl()
+
+	if not fastestMO then
+		PartyGameRoomModel.instance:setAllowPingSvrList(true)
+		PartyGameRoomModel.instance:pingServerList(self._onPingDoneCreatePartyRoomReq, self)
+
+		return
+	end
+
 	PartyGameRoomModel.instance:pingServerList()
+	self:_onPingDoneCreatePartyRoomReq()
+end
+
+function PartyRoomRpc:_onPingDoneCreatePartyRoomReq()
 	PartyRoomRpc.instance:sendCreatePartyRoomRequest(PartyGameRoomModel.getResVersion())
+end
+
+function PartyRoomRpc:pingAndJoinPartyRoomReq(roomId)
+	self._tmpWillJoinRoomId = roomId
+
+	local fastestMO = PartyGameRoomModel.instance:getFastestPartyServerMOImpl()
+
+	if not fastestMO then
+		PartyGameRoomModel.instance:setAllowPingSvrList(true)
+		PartyGameRoomModel.instance:pingServerList(self._onPingDoneSimpleJoinPartyRoomReq, self)
+
+		return
+	end
+
+	PartyGameRoomModel.instance:pingServerList()
+	self:_onPingDoneSimpleJoinPartyRoomReq()
+end
+
+function PartyRoomRpc:_onPingDoneSimpleJoinPartyRoomReq()
+	local roomId = self._tmpWillJoinRoomId
+	local buf = PartyGameStatHelper.instance:reqPartyGameInviteBuf(true)
+
+	buf.operation = StatEnum.PartyGameEnum.AcceptInvite
+	buf.targetRoleId = 0
+
+	PartyRoomRpc.instance:simpleJoinPartyRoomReq(roomId)
 end
 
 function PartyRoomRpc:sendCreatePartyRoomRequest(version, area)

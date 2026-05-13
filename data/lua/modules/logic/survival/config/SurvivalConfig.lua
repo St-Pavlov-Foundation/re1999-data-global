@@ -644,7 +644,7 @@ function SurvivalConfig:getMessageByIds(ids)
 	local str = ""
 
 	local function _append(desc)
-		if LangSettings.instance:isEn() and str ~= "" then
+		if (LangSettings.instance:isEn() or LangSettings.instance:isKr()) and str ~= "" then
 			str = str .. " "
 		end
 

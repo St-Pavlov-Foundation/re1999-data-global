@@ -87,5 +87,16 @@ SurvivalRainParam[SurvivalEnum.RainType.Rain3] = {
 	[SurvivalRainParam._SurvivalRain_Main_Color] = Color(0.7882, 0.3098, 1, 0.2274),
 	[SurvivalRainParam._SurvivalRain_Obj_Color] = Color(0.2, 0.2509804, 0.3647059, 0.8)
 }
+SurvivalRainParam.PngDict = {}
+
+for k, v in pairs(SurvivalEnum.RainType) do
+	if SurvivalRainParam[v] then
+		for kk, vv in pairs(SurvivalRainParam[v]) do
+			if SurvivalRainParam.ParamToShaderFunc[kk] == Shader.SetGlobalTexture then
+				SurvivalRainParam.PngDict[vv] = true
+			end
+		end
+	end
+end
 
 return SurvivalRainParam

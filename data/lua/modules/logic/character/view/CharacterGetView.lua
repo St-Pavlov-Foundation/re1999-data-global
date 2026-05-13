@@ -265,6 +265,7 @@ function CharacterGetView:_openAnimFinish()
 	self._animator:Play(UIAnimationName.Loop, 0, 0)
 	self._animator:Play(UIAnimationName.Voice, 1, 0)
 
+	self._animator.speed = 1
 	self._animFinish = true
 
 	self:_tryPlayVoice()
