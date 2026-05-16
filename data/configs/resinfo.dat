@@ -32335,9 +32335,9 @@
         "v": "6c9e655e335fc6bd2870fb08ad64fbb8"
       },
       "bundles/28538bc1a334e7df499aa3e33790fe3e.dat": {
-        "md5": "3aa366941331abd777ddb4de8c10aa44",
-        "size": 814737,
-        "v": "6c9e655e335fc6bd2870fb08ad64fbb8"
+        "md5": "36ddaf8183e44235ec5240dbbaa4bc99",
+        "size": 865667,
+        "v": "96ece27af03d9472f52d11106c67223c"
       },
       "bundles/285db933cc1720c7e2bad98126bf7305.dat": {
         "md5": "7d801e90f3788c2dc7cfd7f49f0987ae",
@@ -46630,9 +46630,9 @@
         "v": "6c9e655e335fc6bd2870fb08ad64fbb8"
       },
       "bundles/8d4b86b9016910a358cbf2d8e8874233.dat": {
-        "md5": "1655282f597d4bd1407182a1782ce556",
-        "size": 7438337,
-        "v": "e03ed9c89c964ec058fd5cd9e87db95b"
+        "md5": "30489e9f90079487236a1cbe829f5afa",
+        "size": 7438918,
+        "v": "96ece27af03d9472f52d11106c67223c"
       },
       "bundles/8d4c78bd50fe8ecdc47009381ffd4dc7.dat": {
         "md5": "cecf99f48fb28b6ad41348aecc2426f7",
@@ -62330,9 +62330,9 @@
         "v": "6c9e655e335fc6bd2870fb08ad64fbb8"
       },
       "configs/allmanifest.dat": {
-        "md5": "8c73753e8ca4779ba2c7268850999ad8",
-        "size": 635352,
-        "v": "ec94f635a006532c7b19e439ee2259f5"
+        "md5": "e7b14a675a423d21f2fcb8e33d42dfd7",
+        "size": 635353,
+        "v": "96ece27af03d9472f52d11106c67223c"
       },
       "configs/datacfg_1.dat": {
         "md5": "300920f693f44e32719afae196d6a98d",
@@ -62430,9 +62430,9 @@
         "v": "e03ed9c89c964ec058fd5cd9e87db95b"
       },
       "configs/metainfo.dat": {
-        "md5": "241dc27ed49798cb7bc5f450887a04ec",
+        "md5": "81801e2c9ae92e9ede092ca48363df28",
         "size": 301049,
-        "v": "ec94f635a006532c7b19e439ee2259f5"
+        "v": "96ece27af03d9472f52d11106c67223c"
       },
       "hotupdate_752190_c419f445a6a2fa7aa1dd611f26156709_1eb1828676ac94dccc68baf9e14b3d97.zip": {
         "md5": "c419f445a6a2fa7aa1dd611f26156709",
