@@ -23,6 +23,7 @@ function FightWorkOriginDamage:onStart()
 		end
 	end
 
+	FightGameMgr.triggerBuffMgr:triggerBuffEffect(self.actEffectData)
 	self:onDone(true)
 end
 

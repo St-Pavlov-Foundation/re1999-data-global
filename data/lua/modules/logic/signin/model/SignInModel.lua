@@ -524,7 +524,7 @@ function SignInModel:setTargetDate(year, month, day, wday)
 
 	if not wday then
 		local timestamp = TimeUtil.timeToTimeStamp(year, month, day, wday, TimeDispatcher.DailyRefreshTime, 1, 1)
-		local date = os.date("*t", timestamp)
+		local date = os.date("*t", ServerTime.timeInLocal(timestamp))
 
 		wday = date.wday
 	end

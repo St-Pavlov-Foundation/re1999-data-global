@@ -58,7 +58,7 @@ function RoomSceneCameraFOVBlockComp:_checkIsNeedUpdateBlock()
 end
 
 function RoomSceneCameraFOVBlockComp:_updateEntityFovBlock()
-	local playingInteractionParam = self:_getPlayingInteractionParam()
+	local playingInteractionParam, blockType = self:_getPlayingInteractionParam()
 
 	if not playingInteractionParam and (not self._lastOpenNum or self._lastOpenNum == 0) then
 		return
@@ -67,22 +67,22 @@ function RoomSceneCameraFOVBlockComp:_updateEntityFovBlock()
 	self._lastOpenNum = 0
 
 	local scene = GameSceneMgr.instance:getCurScene()
-	local meshRendererList = RoomCharacterHelper.getAllBlockMeshRendererList()
+	local hexPointList, curBuildingUid = self:_getHexPointList(playingInteractionParam, blockType)
+	local meshRendererList = RoomCharacterHelper.getAllBlockMeshRendererList(hexPointList, curBuildingUid)
 	local meshInstanceIdList = {}
 
 	for i, meshRenderer in ipairs(meshRendererList) do
 		table.insert(meshInstanceIdList, meshRenderer:GetInstanceID())
 	end
 
-	local blockMeshRendererInstanceIdDict = self:_getBlockMeshRendererDict(meshRendererList, meshInstanceIdList)
 	local mpb
+	local keyword = _KEY_WORLD._SCREENCOORD
+	local alphaThresholdID = ShaderIDMap.alphaThreshold
+	local blockMeshRendererInstanceIdDict = self:_getBlockMeshRendererDict(meshRendererList, meshInstanceIdList)
 	local lastMeshReaderDic = self._lastMeshReaderDic or {}
 	local curMeshReaderDic = {}
 
 	self._lastMeshReaderDic = curMeshReaderDic
-
-	local keyword = _KEY_WORLD._SCREENCOORD
-	local alphaThresholdID = ShaderIDMap.alphaThreshold
 
 	for i, meshRenderer in ipairs(meshRendererList) do
 		local instanceId = meshInstanceIdList[i]
@@ -91,7 +91,7 @@ function RoomSceneCameraFOVBlockComp:_updateEntityFovBlock()
 		if blockValue and blockValue > 0 then
 			self._lastOpenNum = self._lastOpenNum + 1
 
-			if lastMeshReaderDic[instanceId] ~= blockValue then
+			if not lastMeshReaderDic[instanceId] or lastMeshReaderDic[instanceId].blockValue ~= blockValue then
 				if not mpb then
 					mpb = scene.mapmgr:getPropertyBlock()
 
@@ -103,12 +103,102 @@ function RoomSceneCameraFOVBlockComp:_updateEntityFovBlock()
 				meshRenderer:SetPropertyBlock(mpb)
 			end
 
-			curMeshReaderDic[instanceId] = blockValue
-		elseif lastMeshReaderDic[instanceId] then
-			MaterialReplaceHelper.SetRendererKeyworld(meshRenderer, keyword, false)
-			meshRenderer:SetPropertyBlock(nil)
+			curMeshReaderDic[instanceId] = {
+				meshRenderer = meshRenderer,
+				blockValue = blockValue
+			}
 		end
 	end
+
+	for instanceId, data in pairs(lastMeshReaderDic) do
+		if not curMeshReaderDic[instanceId] then
+			MaterialReplaceHelper.SetRendererKeyworld(data.meshRenderer, keyword, false)
+			data.meshRenderer:SetPropertyBlock(nil)
+		end
+
+		for dataKey, _ in pairs(data) do
+			rawset(data, dataKey, nil)
+		end
+
+		rawset(lastMeshReaderDic, instanceId, nil)
+	end
+end
+
+function RoomSceneCameraFOVBlockComp:_getHexPointList(playingInteractionParam, blockType)
+	if not playingInteractionParam or not blockType then
+		return
+	end
+
+	local hexPointList, curBuildingUid, worldHexPointList
+
+	if blockType == _BLOCK_TYP.Building then
+		local pointList, buildingHexPoint
+		local buildingMO = RoomMapBuildingModel.instance:getBuildingMOById(playingInteractionParam)
+
+		if buildingMO then
+			pointList = RoomMapModel.instance:getBuildingPointList(buildingMO.buildingId, buildingMO.rotate)
+			buildingHexPoint = buildingMO.hexPoint
+		end
+
+		if pointList and buildingHexPoint then
+			worldHexPointList = {}
+
+			for i = 1, #pointList do
+				local worldPoint = buildingHexPoint + pointList[i]
+
+				worldHexPointList[i] = worldPoint
+			end
+
+			curBuildingUid = playingInteractionParam
+		end
+	elseif blockType == _BLOCK_TYP.Vehicle or blockType == _BLOCK_TYP.Hero then
+		local goTrs
+
+		if blockType == _BLOCK_TYP.Vehicle then
+			local vehicleEntity = self._scene.vehiclemgr:getVehicleEntity(playingInteractionParam)
+
+			goTrs = vehicleEntity and vehicleEntity.goTrs
+		elseif blockType == _BLOCK_TYP.Hero then
+			local characterEntity = self._scene.charactermgr:getCharacterEntity(playingInteractionParam.heroId, SceneTag.RoomCharacter)
+
+			goTrs = characterEntity and characterEntity.goTrs
+		end
+
+		if not gohelper.isNil(goTrs) then
+			local x, _, z = transformhelper.getPos(goTrs)
+			local hexX, hexY = HexMath.posXYToRoundHexYX(x, z, RoomBlockEnum.BlockSize)
+
+			worldHexPointList = {
+				HexPoint.New(hexX, hexY)
+			}
+		end
+	else
+		logError(string.format("RoomSceneCameraFOVBlockComp:_getHexPointList unknow type:%s", tostring(blockType)))
+	end
+
+	if worldHexPointList then
+		hexPointList = {}
+
+		local range = 1
+		local dict = {}
+
+		for _, worldPoint in ipairs(worldHexPointList) do
+			local rangList = worldPoint:inRanges(range)
+
+			for _, p in ipairs(rangList) do
+				local x = p.x
+				local y = p.y
+
+				if not dict[x] or not dict[x][y] then
+					hexPointList[#hexPointList + 1] = p
+					dict[x] = dict[x] or {}
+					dict[x][y] = true
+				end
+			end
+		end
+	end
+
+	return hexPointList, curBuildingUid
 end
 
 local _EmptyIstanceIdDict = {}
@@ -163,7 +253,6 @@ function RoomSceneCameraFOVBlockComp:_getBlockMeshRendererDict(meshRendererList,
 
 	if #rayList > 0 then
 		local dic = {}
-		local curTime = Time.time
 
 		self:_addBuildingMeshRendererIdDict(buildingUid, dic)
 
@@ -363,6 +452,16 @@ function RoomSceneCameraFOVBlockComp:onSceneClose()
 		end
 
 		rawset(boundsDict, idx, nil)
+	end
+
+	if self._lastMeshReaderDic then
+		for instanceId, data in pairs(self._lastMeshReaderDic) do
+			for dataKey, _ in pairs(data) do
+				rawset(data, dataKey, nil)
+			end
+
+			rawset(self._lastMeshReaderDic, instanceId, nil)
+		end
 	end
 end
 

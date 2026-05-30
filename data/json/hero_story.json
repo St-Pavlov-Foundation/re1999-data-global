@@ -781,5 +781,32 @@
     "permanentUnlock": "2#24#1",
     "signature": "3084",
     "preStoryId": 0
+  },
+  {
+    "id": 30,
+    "chapterId": 0,
+    "unlock": "2#24#0",
+    "bonus": "",
+    "heroName": "language_10005194",
+    "photo": "303202",
+    "cgBg": "303201",
+    "order": 30,
+    "name": "language_10117477",
+    "nameEn": "All the World's a Chip",
+    "queryVersion": "3.5",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_30",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 13508,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 0,
+    "cgUnlockStoryId": 303208,
+    "cgPos": "771.6#-18.4",
+    "cgScale": "1",
+    "mainviewName": "language_10117477",
+    "permanentUnlock": "2#24#1",
+    "signature": "3032",
+    "preStoryId": 0
   }
 ]

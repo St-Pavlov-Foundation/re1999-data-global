@@ -11,11 +11,15 @@ function SurvivalShelterPlayerMo:init(shelterMapId, isNewWeek)
 		self:deleteLocalData()
 	end
 
+	self:initPos()
+end
+
+function SurvivalShelterPlayerMo:initPos()
 	local key = self:getLocalkKey()
 	local localPos = PlayerPrefsHelper.getString(key)
 
 	if string.nilorempty(localPos) then
-		localPos = SurvivalConfig.instance:getShelterPlayerInitPos(shelterMapId)
+		localPos = SurvivalConfig.instance:getShelterPlayerInitPos(self.shelterMapId)
 
 		local posList = string.splitToNumber(localPos, "#")
 
@@ -57,7 +61,7 @@ function SurvivalShelterPlayerMo:setPosAndDir(pos, dir)
 		self.dir = dir
 	end
 
-	if posChange or dirChange then
+	if (posChange or dirChange) and not SurvivalMapHelper.instance:isInCollectionRoom() then
 		self:savePosAndDir()
 	end
 

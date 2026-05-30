@@ -95,9 +95,9 @@
     "name": "language_10039329",
     "nameEn": "CONSTRUCTIVISM IN CONCEPT",
     "highId": 10003,
-    "show": 0,
-    "des": "language_10086216",
-    "skinContain": "305103|304703|301603|301803",
+    "show": 1,
+    "des": "language_10118209",
+    "skinContain": "301803|305103|304703|301603",
     "backImg": "singlebg/act174/act174_ready_fullbg2.png",
     "spineParams": "",
     "tarotCardPath": "",
@@ -318,7 +318,7 @@
     "highId": 10001,
     "show": 1,
     "des": "language_10103716",
-    "skinContain": "307004|308104|309602",
+    "skinContain": "307004|308104|309602|306403",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
@@ -331,11 +331,11 @@
     "highId": 13001,
     "show": 1,
     "des": "",
-    "skinContain": "0|309504|310404|0|0",
+    "skinContain": "309504|310404|309804|0|0",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": "handbookskin_festival_unknow,???|handbookskin_festival_Christmas,12.25|handbookskin_festival_yushui,2.18|handbookskin_festival_unknow,???|handbookskin_festival_unknow,???"
+    "festivalParams": "handbookskin_festival_Christmas,12.25|handbookskin_festival_yushui,2.18|handbookskin_festival_Easter,4.5|handbookskin_festival_unknow,???|handbookskin_festival_unknow,???"
   },
   {
     "id": 20022,
@@ -360,6 +360,19 @@
     "skinContain": "306103|312503|311003|305305|311103",
     "backImg": "",
     "spineParams": "311003|roles_bust/v3a4_311003_ly_skinsuit/311003_ly_skinsuit.prefab|-30,110|0.3#305305|roles_bust/v3a4_305305_yx_skinsuit/305305_yx_skinsuit.prefab|-110,-25|0.36",
+    "tarotCardPath": "",
+    "festivalParams": ""
+  },
+  {
+    "id": 20024,
+    "name": "language_10118192",
+    "nameEn": "The Palette Within",
+    "highId": 10005,
+    "show": 1,
+    "des": "language_10118210",
+    "skinContain": "311704|313203|300503",
+    "backImg": "",
+    "spineParams": "",
     "tarotCardPath": "",
     "festivalParams": ""
   }

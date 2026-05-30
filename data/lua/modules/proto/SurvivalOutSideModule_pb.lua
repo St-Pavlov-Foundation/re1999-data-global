@@ -31,12 +31,18 @@ SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREPLY_MSG = protobuf.Descriptor(
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREPLYIDSFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALMARKMODNOTNEWREPLY_MSG = protobuf.Descriptor()
 SurvivalOutSideModule_pb.SURVIVALMARKMODNOTNEWREPLYMODIDFIELD = protobuf.FieldDescriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG = protobuf.Descriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD = protobuf.FieldDescriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALHANDBOOKPUSH_MSG = protobuf.Descriptor()
 SurvivalOutSideModule_pb.SURVIVALHANDBOOKPUSHHANDBOOKFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALOUTSIDETECHRESETREQUEST_MSG = protobuf.Descriptor()
 SurvivalOutSideModule_pb.SURVIVALOUTSIDETECHRESETREQUESTBELONGROLEIDFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUEST_MSG = protobuf.Descriptor()
 SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUESTDATAFIELD = protobuf.FieldDescriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG = protobuf.Descriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD = protobuf.FieldDescriptor()
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREQUEST_MSG = protobuf.Descriptor()
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREQUESTIDSFIELD = protobuf.FieldDescriptor()
 SurvivalOutSideModule_pb.SURVIVALOUTSIDEGAINREWARDREPLY_MSG = protobuf.Descriptor()
@@ -249,6 +255,34 @@ SurvivalOutSideModule_pb.SURVIVALMARKMODNOTNEWREPLY_MSG.fields = {
 }
 SurvivalOutSideModule_pb.SURVIVALMARKMODNOTNEWREPLY_MSG.is_extendable = false
 SurvivalOutSideModule_pb.SURVIVALMARKMODNOTNEWREPLY_MSG.extensions = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.name = "id"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.full_name = ".SurvivalOutsideShopBuyRequest.id"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.number = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.index = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.label = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.has_default_value = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.default_value = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.type = 5
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD.cpp_type = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.name = "count"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.full_name = ".SurvivalOutsideShopBuyRequest.count"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.number = 2
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.index = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.label = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.has_default_value = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.default_value = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.type = 5
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD.cpp_type = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.name = "SurvivalOutsideShopBuyRequest"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.full_name = ".SurvivalOutsideShopBuyRequest"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.nested_types = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.enum_types = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.fields = {
+	SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTIDFIELD,
+	SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUESTCOUNTFIELD
+}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.is_extendable = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG.extensions = {}
 SurvivalOutSideModule_pb.SURVIVALHANDBOOKPUSHHANDBOOKFIELD.name = "handbook"
 SurvivalOutSideModule_pb.SURVIVALHANDBOOKPUSHHANDBOOKFIELD.full_name = ".SurvivalHandbookPush.handbook"
 SurvivalOutSideModule_pb.SURVIVALHANDBOOKPUSHHANDBOOKFIELD.number = 1
@@ -304,6 +338,34 @@ SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUEST_MSG.fields = {
 }
 SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUEST_MSG.is_extendable = false
 SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUEST_MSG.extensions = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.name = "id"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.full_name = ".SurvivalOutsideShopBuyReply.id"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.number = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.index = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.label = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.has_default_value = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.default_value = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.type = 5
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD.cpp_type = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.name = "count"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.full_name = ".SurvivalOutsideShopBuyReply.count"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.number = 2
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.index = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.label = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.has_default_value = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.default_value = 0
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.type = 5
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD.cpp_type = 1
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.name = "SurvivalOutsideShopBuyReply"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.full_name = ".SurvivalOutsideShopBuyReply"
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.nested_types = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.enum_types = {}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.fields = {
+	SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYIDFIELD,
+	SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLYCOUNTFIELD
+}
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.is_extendable = false
+SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG.extensions = {}
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREQUESTIDSFIELD.name = "ids"
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREQUESTIDSFIELD.full_name = ".SurvivalMarkNewHandbookRequest.ids"
 SurvivalOutSideModule_pb.SURVIVALMARKNEWHANDBOOKREQUESTIDSFIELD.number = 1
@@ -355,6 +417,8 @@ SurvivalOutSideModule_pb.SurvivalOutSideTechResetReply = protobuf.Message(Surviv
 SurvivalOutSideModule_pb.SurvivalOutSideTechResetRequest = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALOUTSIDETECHRESETREQUEST_MSG)
 SurvivalOutSideModule_pb.SurvivalOutSideTechUnlockReply = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALOUTSIDETECHUNLOCKREPLY_MSG)
 SurvivalOutSideModule_pb.SurvivalOutSideTechUnlockRequest = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALOUTSIDETECHUNLOCKREQUEST_MSG)
+SurvivalOutSideModule_pb.SurvivalOutsideShopBuyReply = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREPLY_MSG)
+SurvivalOutSideModule_pb.SurvivalOutsideShopBuyRequest = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALOUTSIDESHOPBUYREQUEST_MSG)
 SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataReply = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREPLY_MSG)
 SurvivalOutSideModule_pb.SurvivalSurvivalOutSideClientDataRequest = protobuf.Message(SurvivalOutSideModule_pb.SURVIVALSURVIVALOUTSIDECLIENTDATAREQUEST_MSG)
 

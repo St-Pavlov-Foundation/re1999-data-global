@@ -77,23 +77,9 @@ function Activity186MainBtnItem:onRefresh()
 	self:refreshData()
 
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_6" or "icon_6"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_6")
 
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self:_setMainSprite(spriteName)
 end
 
@@ -114,6 +100,12 @@ end
 
 function Activity186MainBtnItem:refreshDot()
 	self:_refreshRedDot()
+end
+
+function Activity186MainBtnItem:_gm_ActIds()
+	return {
+		Activity186Model.instance:getActId()
+	}
 end
 
 return Activity186MainBtnItem

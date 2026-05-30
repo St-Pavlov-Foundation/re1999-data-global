@@ -66,9 +66,11 @@ function RougeMapInputView:onCloseView(viewName)
 end
 
 function RougeMapInputView:onClose()
-	self.click:RemoveClickListener()
+	if self.click then
+		self.click:RemoveClickListener()
 
-	self.click = nil
+		self.click = nil
+	end
 end
 
 return RougeMapInputView

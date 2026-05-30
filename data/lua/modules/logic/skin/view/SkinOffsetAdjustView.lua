@@ -390,33 +390,33 @@ function SkinOffsetAdjustView:_initViewList()
 	self._viewNameList = {}
 
 	table.insert(self._viewNameList, "0#动态立绘(常量表的501~505设置相对偏移)")
-	self:_addView("主界面", ViewName.MainView, self._onMainViewOpen, self._onMainViewUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
-	self:_addView("相框", ViewName.MainView, self._onMainViewFrameOpen, self._onMainViewFrameUpdate, "UIRoot/HUD/MainView/#go_spine_scale/lightspine/#go_lightspine", "mainViewFrameOffset")
-	self:_addView("主界面缩略图界面", ViewName.MainThumbnailView, self.onMainThumbnailViewOpen, self.onMainThumbnailViewUpdate, "UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine/#go_lightspine", "mainThumbnailViewOffset", "mainViewOffset")
-	self:_addView("角色切换界面 -> 复用主界面, 不能特殊设置", ViewName.CharacterSwitchView, self._onCommonCharacterViewOpen, self._onCharacterSwitchUpdate, "UIRoot/POPUP_TOP/CharacterSwitchView/#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
-	self:_addView("角色界面", ViewName.CharacterView, self._onCharacterViewOpen, self._onCharacterViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/dynamiccontainer/#go_spine", "characterViewOffset")
-	self:_addView("洞悉界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterRankUpView, self._onCommonCharacterViewOpen, self._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterRankUpView/spineContainer/#go_spine", "characterRankUpViewOffset", "characterViewOffset")
-	self:_addView("结算界面 -> 复用角色界面, 可以特殊设置", ViewName.FightSuccView, self._onCommonCharacterViewOpen, self._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/FightSuccView/spineContainer/spine", "fightSuccViewOffset", "characterViewOffset")
-	self:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, self._onCharacterGetViewOpen, self._onCharacterRankUpViewUpdate, "UIRoot/POPUP_TOP/CharacterGetView/charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
-	self:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, self._onCharacterDataViewOpen, self._onCharacterSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
-	self:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, self._onCharacterDataViewOpen, self._onCharacterDataVoiceViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
-	self:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.PlayerCardView, self._onPlayerCardViewOpen, self._onPlayerCardViewUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewLive2dOffset", "characterViewOffset")
-	self:_addView("装饰商店", ViewName.StoreView, self._onDecorateStoreViewOpen, self._onDecorateStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
-	self:_addView("皮肤商店", ViewName.StoreView, self._onClothesStoreViewOpen, self._onClothesStoreViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/storeskinview2(Clone)/#go_has/character/bg/characterSpine/#go_skincontainer", "skin2dParams")
-	self:_addView("皮肤界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpenDynamic, self._onCharacterSkinDynamicDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer", "skinSwitchLive2dOffset")
+	self:_addView("主界面", ViewName.MainView, self._onMainViewOpen, self._onMainViewUpdate, "#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
+	self:_addView("相框", ViewName.MainView, self._onMainViewFrameOpen, self._onMainViewFrameUpdate, "#go_spine_scale/lightspine/#go_lightspine", "mainViewFrameOffset")
+	self:_addView("主界面缩略图界面", ViewName.MainThumbnailView, self.onMainThumbnailViewOpen, self.onMainThumbnailViewUpdate, "#go_spine_scale/lightspine/#go_lightspine", "mainThumbnailViewOffset", "mainViewOffset")
+	self:_addView("角色切换界面 -> 复用主界面, 不能特殊设置", ViewName.CharacterSwitchView, self._onCommonCharacterViewOpen, self._onCharacterSwitchUpdate, "#go_spine_scale/lightspine/#go_lightspine", "mainViewOffset")
+	self:_addView("角色界面", ViewName.CharacterView, self._onCharacterViewOpen, self._onCharacterViewUpdate, "anim/#go_herocontainer/dynamiccontainer/#go_spine", "characterViewOffset")
+	self:_addView("洞悉界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterRankUpView, self._onCommonCharacterViewOpen, self._onCharacterRankUpViewUpdate, "spineContainer/#go_spine", "characterRankUpViewOffset", "characterViewOffset")
+	self:_addView("结算界面 -> 复用角色界面, 可以特殊设置", ViewName.FightSuccView, self._onCommonCharacterViewOpen, self._onCharacterRankUpViewUpdate, "spineContainer/spine", "fightSuccViewOffset", "characterViewOffset")
+	self:_addView("角色获得界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterGetView, self._onCharacterGetViewOpen, self._onCharacterRankUpViewUpdate, "charactercontainer/#go_spine", "characterGetViewOffset", "characterViewOffset")
+	self:_addView("角色封面界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, self._onCharacterDataViewOpen, self._onCharacterSkinViewUpdate, "content/characterdatatitleview(Clone)/content/character/charactericoncontainer/#go_spine", "characterDataTitleViewOffset", "characterViewOffset")
+	self:_addView("语音界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterDataView, self._onCharacterDataViewOpen, self._onCharacterDataVoiceViewUpdate, "content/characterdatavoiceview(Clone)/content/#simage_characterbg/charactercontainer/#go_spine", "characterDataVoiceViewOffset", "characterViewOffset")
+	self:_addView("个人名片 -> 复用角色界面, 可以特殊设置", ViewName.NewPlayerCardContentView, self._onPlayerCardViewOpen, self._onPlayerCardViewUpdate, "view", "playercardViewLive2dOffset", "characterViewOffset")
+	self:_addView("装饰商店", ViewName.StoreView, self._onDecorateStoreViewOpen, self._onDecorateStoreViewUpdate, "#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinl2dOffset")
+	self:_addView("皮肤商店", ViewName.StoreView, self._onClothesStoreViewOpen, self._onClothesStoreViewUpdate, "#go_store/storeskinview2(Clone)/#go_has/character/bg/characterSpine/#go_skincontainer", "skin2dParams")
+	self:_addView("皮肤界面 -> 复用角色界面, 可以特殊设置", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpenDynamic, self._onCharacterSkinDynamicDrawingViewUpdate1, "characterSpine/#go_skincontainer", "skinSwitchLive2dOffset")
 	table.insert(self._viewNameList, "0#静态立绘")
-	self:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, self._onCharacterDataViewOpenFromHandbook, self._onCharacterStaticSkinViewUpdate, "UIRoot/POPUP_SECOND/CharacterDataView/content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset", nil, nil, nil, true)
-	self:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpen, self._onCharacterSkinStaticDrawingViewUpdate1, "UIRoot/POPUP_TOP/CharacterSkinView/characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset", nil, nil, nil, true)
-	self:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, self._onCharacterSkinGainViewOpen, self._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinGainView/root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset", nil, nil, nil, true)
-	self:_addView("角色界面静态立绘", ViewName.CharacterView, self._onCharacterViewChangeStaticDrawingOpen, self._onCharacterViewSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/CharacterView/anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset", nil, nil, nil, true)
-	self:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, self._onCharacterGetViewOpen, self._onCharacterSkinStaticDrawingViewUpdate, "UIRoot/POPUP_TOP/SummonHeroDetailView/charactercontainer/#simage_character", "summonHeroViewOffset", nil, nil, nil, true)
-	self:_addView("个人名片", ViewName.PlayerCardView, self._onPlayerCardViewOpen, self._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
-	self:_addView("装饰商店静态立绘", ViewName.StoreView, self._onDecorateStoreStaticViewOpen, self._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset", nil, nil, nil, true)
-	self:_addView("6选3Up", ViewName.SummonThreeCustomPickView, self._onSummonCustomThreePickOpen, self._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset", nil, nil, nil, true)
+	self:_addView("角色封面界面静态立绘偏移", ViewName.CharacterDataView, self._onCharacterDataViewOpenFromHandbook, self._onCharacterStaticSkinViewUpdate, "content/characterdatatitleview(Clone)/content/character/#simage_characterstaticskin", "characterTitleViewStaticOffset", nil, nil, nil, true)
+	self:_addView("皮肤界面静态立绘", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpen, self._onCharacterSkinStaticDrawingViewUpdate1, "characterSpine/#go_skincontainer/#simage_skin", "skinViewImgOffset", nil, nil, nil, true)
+	self:_addView("皮肤获得界面静态立绘", ViewName.CharacterSkinGainView, self._onCharacterSkinGainViewOpen, self._onCharacterSkinStaticDrawingViewUpdate, "root/bgroot/#go_skincontainer/#simage_icon", "skinGainViewImgOffset", nil, nil, nil, true)
+	self:_addView("角色界面静态立绘", ViewName.CharacterView, self._onCharacterViewChangeStaticDrawingOpen, self._onCharacterViewSkinStaticDrawingViewUpdate, "anim/#go_herocontainer/staticcontainer/#simage_static", "characterViewImgOffset", nil, nil, nil, true)
+	self:_addView("招募界面静态立绘", ViewName.SummonHeroDetailView, self._onCharacterGetViewOpen, self._onCharacterSkinStaticDrawingViewUpdate, "charactercontainer/#simage_character", "summonHeroViewOffset", nil, nil, nil, true)
+	self:_addView("个人名片", ViewName.NewPlayerCardContentView, self._onPlayerCardViewOpen, self._onPlayerCardViewStaticDrawingUpdate, "view", "playercardViewImgOffset", "characterViewImgOffset", nil, nil, true)
+	self:_addView("装饰商店静态立绘", ViewName.StoreView, self._onDecorateStoreStaticViewOpen, self._onDecorateStoreStaticViewUpdate, "#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset", nil, nil, nil, true)
+	self:_addView("6选3Up", ViewName.SummonThreeCustomPickView, self._onSummonCustomThreePickOpen, self._onSummonCustomThreePickDataUpdate, "#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset", nil, nil, nil, true)
 	table.insert(self._viewNameList, "0#spine小人")
-	self:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpen, self._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
+	self:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, self._onCharacterSkinSwitchViewOpen, self._onCharacterSkinSwitchViewUpdate, "smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
 	table.insert(self._viewNameList, "0#皮肤放大缩小界面")
-	self:_addView("皮肤放大缩小界面live2d", ViewName.CharacterSkinFullScreenView, self._onCharacterSkinFullViewOpen, self._onCharacterSkinFullViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine", "fullScreenLive2dOffset", "characterViewOffset", self.beforeOpenSkinFullView, self.beforeCloseSkinFullView)
+	self:_addView("皮肤放大缩小界面live2d", ViewName.CharacterSkinFullScreenView, self._onCharacterSkinFullViewOpen, self._onCharacterSkinFullViewUpdate, "#go_scroll/dynamicContainer/#go_spinecontainer/#go_spine", "fullScreenLive2dOffset", "characterViewOffset", self.beforeOpenSkinFullView, self.beforeCloseSkinFullView)
 	self:initViewItem()
 end
 
@@ -630,6 +630,19 @@ function SkinOffsetAdjustView:setOffset(skinInfo, key, callback, defaultOffset, 
 	end
 end
 
+function SkinOffsetAdjustView:getCurViewGo()
+	local viewName = self._curViewInfo[2]
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
+
+	if not viewContainer then
+		logError("view Container is nil, " .. tostring(viewName))
+
+		return
+	end
+
+	return viewContainer.viewGO
+end
+
 function SkinOffsetAdjustView:_onMainViewFrameUpdate()
 	if not self._curViewInfo or not self._curSkinInfo then
 		return
@@ -637,7 +650,13 @@ function SkinOffsetAdjustView:_onMainViewFrameUpdate()
 
 	local offsetName = "mainViewOffset"
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self:setOffset(self._curSkinInfo, offsetName, function(x, y, s)
 		local transform = container.transform
@@ -687,7 +706,13 @@ function SkinOffsetAdjustView:_onMainViewSwitchHeroUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, self._curSkinInfo, true)
 	self:setOffset(self._curSkinInfo, offsetName, function(x, y, s)
@@ -706,7 +731,13 @@ function SkinOffsetAdjustView:_onCharacterSwitchUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, self._curSkinInfo, true)
 
@@ -733,7 +764,13 @@ function SkinOffsetAdjustView:_onCharacterViewUpdate(needReset)
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self._uiSpine = GuiModelAgent.Create(container, true)
 
@@ -752,8 +789,14 @@ function SkinOffsetAdjustView:_onCharacterHoloUpdate()
 		return
 	end
 
-	local containerName = "UIRoot/POPUP_TOP/CharacterView/anim/bgcanvas/bg/#simage_playerbg"
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local containerName = "anim/bgcanvas/bg/#simage_playerbg"
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self:setOffset(self._curSkinInfo, "haloOffset", function(x, y, s)
 		local transform = container.transform
@@ -772,7 +815,13 @@ function SkinOffsetAdjustView:_onCharacterRankUpViewUpdate()
 	local offsetName = self._curViewInfo[6]
 	local parentOffsetName = self._curViewInfo[7]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self._uiSpine = GuiModelAgent.Create(container, true)
 
@@ -798,7 +847,13 @@ function SkinOffsetAdjustView:_onCharacterSkinViewUpdate()
 	local offsetName = self._curViewInfo[6]
 	local parentOffsetName = self._curViewInfo[7]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self._uiSpine = GuiModelAgent.Create(container, true)
 
@@ -823,7 +878,13 @@ function SkinOffsetAdjustView:_onCharacterStaticSkinViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local imgGo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local imgGo = gohelper.findChild(viewGo, containerName)
 	local img = gohelper.getSingleImage(imgGo)
 
 	img:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -849,7 +910,13 @@ function SkinOffsetAdjustView:_onCharacterSkinSwitchViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self._uiSpine = GuiSpine.Create(container, false)
 
@@ -869,7 +936,13 @@ function SkinOffsetAdjustView:_onPlayerCardViewStaticDrawingUpdate()
 	end
 
 	local containerName = self._curViewInfo[5]
-	local childviewcontainer = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local childviewcontainer = gohelper.findChild(viewGo, containerName)
 	local viewgo = childviewcontainer.transform:GetChild(0).gameObject
 	local skinimage = gohelper.findChild(viewgo, "root/main/top/role/skinnode/#simage_role")
 	local offsetName = self._curViewInfo[6]
@@ -902,7 +975,13 @@ function SkinOffsetAdjustView:_onDecorateStoreStaticViewUpdate()
 	end
 
 	local containerName = self._curViewInfo[5]
-	local viewgo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local viewgo = gohelper.findChild(viewGo, containerName)
 	local simageSkin = gohelper.findChildSingleImage(viewgo, "#simage_skin")
 	local offsetName = self._curViewInfo[6]
 
@@ -944,7 +1023,13 @@ function SkinOffsetAdjustView:_onCharacterSkinStaticDrawingViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local imgGo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local imgGo = gohelper.findChild(viewGo, containerName)
 	local img = gohelper.getSingleImage(imgGo)
 
 	img:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -965,7 +1050,13 @@ function SkinOffsetAdjustView:_onCharacterSkinDynamicDrawingViewUpdate1()
 	end
 
 	local containerName = self._curViewInfo[5]
-	local viewgo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local viewgo = gohelper.findChild(viewGo, containerName)
 	local spineGo = gohelper.findChild(viewgo, "#go_spinecontainer/#go_spine")
 	local simagel2d = gohelper.findChildSingleImage(viewgo, "#simage_l2d")
 	local offsetName = self._curViewInfo[6]
@@ -1024,7 +1115,13 @@ function SkinOffsetAdjustView:_onCharacterSkinStaticDrawingViewUpdate1()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local imgGo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local imgGo = gohelper.findChild(viewGo, containerName)
 	local img = gohelper.getSingleImage(imgGo)
 
 	img:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -1044,7 +1141,13 @@ function SkinOffsetAdjustView:_onCharacterViewSkinStaticDrawingViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local imgGo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local imgGo = gohelper.findChild(viewGo, containerName)
 	local img = gohelper.getSingleImage(imgGo)
 
 	img:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -1062,7 +1165,13 @@ end
 function SkinOffsetAdjustView:_onCharacterSkinGetDetailViewBaseUpdate(imgPath)
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local imgGo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local imgGo = gohelper.findChild(viewGo, containerName)
 	local img = gohelper.getSingleImage(imgGo)
 
 	img:LoadImage(imgPath, function()
@@ -1092,7 +1201,13 @@ function SkinOffsetAdjustView:_onPlayerClothViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 	local charactericon = gohelper.getSingleImage(container)
 
 	charactericon.LoadImage(charactericon, ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -1122,7 +1237,13 @@ function SkinOffsetAdjustView:_onCharacterDataVoiceViewUpdate()
 
 	TaskDispatcher.runDelay(function()
 		local containerName = self._curViewInfo[5]
-		local container = gohelper.find(containerName)
+		local viewGo = self:getCurViewGo()
+
+		if not viewGo then
+			return
+		end
+
+		local container = gohelper.findChild(viewGo, containerName)
 
 		self._uiSpine = GuiModelAgent.Create(container, true)
 
@@ -1147,10 +1268,16 @@ function SkinOffsetAdjustView:_onPlayerCardViewUpdate()
 	end
 
 	local containerName = self._curViewInfo[5]
-	local childviewcontainer = gohelper.find(containerName)
-	local viewgo = childviewcontainer.transform:GetChild(0)
-	local container = gohelper.findChild(viewgo, "main/top/role/skinnode/")
-	local skinimage = gohelper.findChild(viewgo, "main/top/role/skinnode/#simage_role")
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local childviewcontainer = gohelper.findChild(viewGo, containerName)
+	local viewgo = childviewcontainer.transform:GetChild(0).gameObject
+	local container = gohelper.findChild(viewgo, "root/main/top/role/skinnode/")
+	local skinimage = gohelper.findChild(viewgo, "root/main/top/role/skinnode/#simage_role")
 
 	gohelper.setActive(skinimage, false)
 
@@ -1181,7 +1308,20 @@ function SkinOffsetAdjustView:_onDecorateStoreViewUpdate()
 	end
 
 	local containerName = self._curViewInfo[5]
-	local viewgo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local viewgo = gohelper.findChild(viewGo, containerName)
+
+	if not viewgo then
+		logError("container name is nil .. " .. tostring(containerName))
+
+		return
+	end
+
 	local spineGo = gohelper.findChild(viewgo, "#go_spinecontainer/#go_spine")
 	local simagel2d = gohelper.findChildSingleImage(viewgo, "#go_spinecontainer/#simage_l2d")
 	local offsetName = self._curViewInfo[6]
@@ -1247,7 +1387,13 @@ function SkinOffsetAdjustView:_onClothesStoreViewUpdate()
 	spineData.spineScale = spineParam[3] and tonumber(spineParam[3]) or 1
 
 	local containerName = self._curViewInfo[5]
-	local viewgo = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local viewgo = gohelper.findChild(viewGo, containerName)
 	local spineGo = gohelper.findChild(viewgo, "#go_2d/#go_spinecontainer/#go_spine")
 	local simagel2d = gohelper.findChildSingleImage(viewgo, "#go_2d/#simage_skin")
 
@@ -1506,8 +1652,14 @@ function SkinOffsetAdjustView:_onSummonCustomThreePickDataUpdate()
 		return
 	end
 
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
 	local containerName = self._curViewInfo[5]
-	local offlineName = "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline"
+	local offlineName = "#go_ui/current/#go_selected/#go_role%s/#simage_role%s_outline"
 	local offsetName = self._curViewInfo[6]
 	local maxCount = SummonCustomPickChoiceListModel.instance:getMaxSelectCount()
 	local imgs = {}
@@ -1516,7 +1668,7 @@ function SkinOffsetAdjustView:_onSummonCustomThreePickDataUpdate()
 	for i = 1, maxCount do
 		local indexStr = tostring(i)
 		local path = string.format(containerName, indexStr, indexStr)
-		local imgGo = gohelper.find(path)
+		local imgGo = gohelper.findChild(viewGo, path)
 		local img = gohelper.getSingleImage(imgGo)
 
 		img:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -1524,7 +1676,7 @@ function SkinOffsetAdjustView:_onSummonCustomThreePickDataUpdate()
 		end, nil)
 
 		local offlinePath = string.format(offlineName, indexStr, indexStr)
-		local offlineGo = gohelper.find(offlinePath)
+		local offlineGo = gohelper.findChild(viewGo, offlinePath)
 		local offline = gohelper.getSingleImage(offlineGo)
 
 		offline:LoadImage(ResUrl.getHeadIconImg(self._curSkinInfo.id), function()
@@ -1584,7 +1736,13 @@ function SkinOffsetAdjustView:onMainThumbnailViewUpdate()
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
 	local parentOffsetName = self._curViewInfo[7]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	container.transform:SetParent(mainViewSpineContainerGo.transform, false)
 	MainController.instance:dispatchEvent(MainEvent.ChangeMainHeroSkin, self._curSkinInfo, true, false)
@@ -1778,7 +1936,13 @@ function SkinOffsetAdjustView:_onCharacterSkinFullViewUpdate()
 
 	local offsetName = self._curViewInfo[6]
 	local containerName = self._curViewInfo[5]
-	local container = gohelper.find(containerName)
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local container = gohelper.findChild(viewGo, containerName)
 
 	self._uiSpine = GuiModelAgent.Create(container, true)
 
@@ -1801,11 +1965,17 @@ function SkinOffsetAdjustView:_onCharacterSkinFullViewUpdate()
 end
 
 function SkinOffsetAdjustView:onLive2dCameraLoadedCallback(live2d)
-	local goDynamicContainer = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer")
+	local viewGo = self:getCurViewGo()
+
+	if not viewGo then
+		return
+	end
+
+	local goDynamicContainer = gohelper.findChild(viewGo, "#go_scroll/dynamicContainer")
 
 	gohelper.addChild(goDynamicContainer, live2d._rawImageGo)
 
-	local goSpineContainer = gohelper.find("UIRoot/POPUP_TOP/CharacterSkinFullScreenView/#go_scroll/dynamicContainer/#go_spinecontainer")
+	local goSpineContainer = gohelper.findChild(viewGo, "#go_scroll/dynamicContainer/#go_spinecontainer")
 	local image = live2d._rawImageGo:GetComponent(gohelper.Type_RawImage)
 
 	self.live2dCamera = live2d._camera

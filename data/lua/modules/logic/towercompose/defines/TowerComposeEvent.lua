@@ -28,5 +28,8 @@ TowerComposeEvent.SelectPlaneLayerGuide = 10020
 TowerComposeEvent.UpdateRecordReply = 10021
 TowerComposeEvent.LoadRecordReply = 10022
 TowerComposeEvent.RefreshLoadState = 10023
+TowerComposeEvent.RefreshAssistState = 10024
+TowerComposeEvent.SelectPlaneSupportSlot = 10025
+TowerComposeEvent.SelectAssistCallBack = 10026
 
 return TowerComposeEvent

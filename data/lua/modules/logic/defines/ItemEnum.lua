@@ -4,6 +4,10 @@ module("modules.logic.defines.ItemEnum", package.seeall)
 
 local ItemEnum = _M
 
+ItemEnum.clientDisplayType = {
+	SpecifiedGift = 1,
+	BpCustomSelect = 2
+}
 ItemEnum.SubType = {
 	RandomGift = 49,
 	CommonItem = 14,

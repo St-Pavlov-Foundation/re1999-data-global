@@ -48,6 +48,7 @@ function FightBuffComp:onConstructor(entity)
 
 	self:registSkinBuffEffect()
 	self:com_registFightEvent(FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData)
+	self:registClasses()
 end
 
 function FightBuffComp:dealStartBuff()
@@ -533,7 +534,7 @@ function FightBuffComp:_showBuffFloat(buff)
 			if FightSkillBuffMgr.instance:buffIsStackerBuff(buffCO) and buffTypeCO.takeStage == -1 then
 				local stacked_count = FightSkillBuffMgr.instance:getStackedCount(self._entity.id, buff)
 
-				show_content = show_content .. luaLang("multiple") .. stacked_count
+				show_content = formatLuaLang("FightBuffComp_floatXBuff_overseas", show_content, stacked_count)
 			end
 
 			FightFloatMgr.instance:float(buff.entityId, FightEnum.FloatType.buff, show_content, buffTypeCO.dontShowFloat, false)
@@ -782,6 +783,18 @@ function FightBuffComp:registSkinBuffEffect()
 
 	if zongMaoBossStageBuffIdEffectConfig then
 		self.buffMgr:newClass(FightZongMaoBossStageBuffIdEffect, self._entity, entityData, zongMaoBossStageBuffIdEffectConfig)
+	end
+end
+
+function FightBuffComp:registClasses()
+	local entityData = FightDataHelper.entityMgr:getById(self._entity.id)
+
+	if not entityData then
+		return
+	end
+
+	if entityData.modelId == 3023 then
+		self:newClass(FightBuffShiXiHangShiPenEffect, self._entity)
 	end
 end
 

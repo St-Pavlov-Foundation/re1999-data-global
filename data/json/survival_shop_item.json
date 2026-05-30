@@ -8116,5 +8116,41 @@
     "worthFix": 0,
     "item": 700007,
     "maxNum": 1
+  },
+  {
+    "id": 983,
+    "groupId": 520042,
+    "type": 0,
+    "unlock": "",
+    "worthFix": 250,
+    "item": 551001,
+    "maxNum": 1
+  },
+  {
+    "id": 984,
+    "groupId": 520043,
+    "type": 0,
+    "unlock": "",
+    "worthFix": 250,
+    "item": 553013,
+    "maxNum": 1
+  },
+  {
+    "id": 985,
+    "groupId": 520044,
+    "type": 0,
+    "unlock": "",
+    "worthFix": -500,
+    "item": 700008,
+    "maxNum": 1
+  },
+  {
+    "id": 986,
+    "groupId": 520045,
+    "type": 0,
+    "unlock": "",
+    "worthFix": -500,
+    "item": 553006,
+    "maxNum": 1
   }
 ]

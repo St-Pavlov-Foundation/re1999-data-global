@@ -6685,7 +6685,7 @@
     "color": 2,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10041509"
+    "desc": "language_10117392"
   },
   {
     "id": 2190004,
@@ -6725,7 +6725,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10041512"
+    "desc": "language_10118660"
   },
   {
     "id": 2190009,
@@ -6733,7 +6733,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10041513"
+    "desc": "language_10117393"
   },
   {
     "id": 5190001,
@@ -8821,7 +8821,7 @@
     "color": 2,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10055213"
+    "desc": "language_10117394"
   },
   {
     "id": 2220003,
@@ -8829,7 +8829,7 @@
     "color": 2,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10055214"
+    "desc": "language_10117395"
   },
   {
     "id": 2220004,
@@ -8837,7 +8837,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10055215"
+    "desc": "language_10117396"
   },
   {
     "id": 2220005,
@@ -12858,10 +12858,10 @@
   {
     "id": 925010120,
     "name": "language_10066655",
-    "color": 0,
+    "color": 2,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10093454"
+    "desc": "language_10117397"
   },
   {
     "id": 925010121,
@@ -16773,7 +16773,7 @@
     "color": 0,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10106649"
+    "desc": "language_10117207"
   },
   {
     "id": 31280113,
@@ -16909,7 +16909,7 @@
     "color": 0,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10106652"
+    "desc": "language_10117398"
   },
   {
     "id": 31280130,
@@ -22813,7 +22813,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10112057"
+    "desc": "language_10117399"
   },
   {
     "id": 30530506,
@@ -22821,7 +22821,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10112059"
+    "desc": "language_10117400"
   },
   {
     "id": 30530507,
@@ -22829,7 +22829,7 @@
     "color": 1,
     "notAddLink": 0,
     "isSpecialCharacter": 0,
-    "desc": "language_10112061"
+    "desc": "language_10117401"
   },
   {
     "id": 30530508,
@@ -25070,5 +25070,381 @@
     "notAddLink": 0,
     "isSpecialCharacter": 0,
     "desc": "language_10041502"
+  },
+  {
+    "id": 30530520,
+    "name": "language_10117402",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117403"
+  },
+  {
+    "id": 31420000,
+    "name": "language_10117233",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117234"
+  },
+  {
+    "id": 31420001,
+    "name": "language_10116010",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117404"
+  },
+  {
+    "id": 31420002,
+    "name": "language_10117405",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117406"
+  },
+  {
+    "id": 31420003,
+    "name": "language_10117407",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117408"
+  },
+  {
+    "id": 31420004,
+    "name": "language_10117409",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117238"
+  },
+  {
+    "id": 31420005,
+    "name": "language_10117237",
+    "color": 1,
+    "notAddLink": 1,
+    "isSpecialCharacter": 0,
+    "desc": ""
+  },
+  {
+    "id": 31420006,
+    "name": "language_10117239",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117410"
+  },
+  {
+    "id": 31422001,
+    "name": "language_10117411",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117412"
+  },
+  {
+    "id": 31422002,
+    "name": "language_10117413",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117414"
+  },
+  {
+    "id": 31422004,
+    "name": "language_10117415",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117248"
+  },
+  {
+    "id": 31422006,
+    "name": "language_10117416",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117417"
+  },
+  {
+    "id": 31423001,
+    "name": "language_10117418",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117419"
+  },
+  {
+    "id": 31423002,
+    "name": "language_10117420",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117421"
+  },
+  {
+    "id": 31423006,
+    "name": "language_10117422",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117423"
+  },
+  {
+    "id": 31424004,
+    "name": "language_10117424",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117251"
+  },
+  {
+    "id": 31425001,
+    "name": "language_10117425",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117426"
+  },
+  {
+    "id": 31425002,
+    "name": "language_10117427",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117428"
+  },
+  {
+    "id": 31425003,
+    "name": "language_10117429",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117430"
+  },
+  {
+    "id": 31425004,
+    "name": "language_10117431",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117252"
+  },
+  {
+    "id": 31425006,
+    "name": "language_10117432",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117433"
+  },
+  {
+    "id": 30980142,
+    "name": "language_10049172",
+    "color": 1,
+    "notAddLink": 1,
+    "isSpecialCharacter": 0,
+    "desc": ""
+  },
+  {
+    "id": 31360001,
+    "name": "language_10117434",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117435"
+  },
+  {
+    "id": 31360002,
+    "name": "language_10117436",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117265"
+  },
+  {
+    "id": 31360003,
+    "name": "language_10117267",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117268"
+  },
+  {
+    "id": 31360004,
+    "name": "language_10117437",
+    "color": 1,
+    "notAddLink": 1,
+    "isSpecialCharacter": 0,
+    "desc": ""
+  },
+  {
+    "id": 31360005,
+    "name": "language_10116776",
+    "color": 1,
+    "notAddLink": 1,
+    "isSpecialCharacter": 0,
+    "desc": ""
+  },
+  {
+    "id": 31360006,
+    "name": "language_10116780",
+    "color": 1,
+    "notAddLink": 1,
+    "isSpecialCharacter": 0,
+    "desc": ""
+  },
+  {
+    "id": 31362002,
+    "name": "language_10117438",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117439"
+  },
+  {
+    "id": 31364001,
+    "name": "language_10117440",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117441"
+  },
+  {
+    "id": 109350212,
+    "name": "language_10117291",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117292"
+  },
+  {
+    "id": 109350214,
+    "name": "language_10117295",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117296"
+  },
+  {
+    "id": 109350225,
+    "name": "language_10117300",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117301"
+  },
+  {
+    "id": 109350226,
+    "name": "language_10117442",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117302"
+  },
+  {
+    "id": 235001,
+    "name": "language_10117328",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117443"
+  },
+  {
+    "id": 235002,
+    "name": "language_10116011",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 1,
+    "desc": "language_10117444"
+  },
+  {
+    "id": 30730211,
+    "name": "language_10117445",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117370"
+  },
+  {
+    "id": 118353051,
+    "name": "language_10117375",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117376"
+  },
+  {
+    "id": 118353061,
+    "name": "language_10098784",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117377"
+  },
+  {
+    "id": 118353081,
+    "name": "language_10117378",
+    "color": 2,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117446"
+  },
+  {
+    "id": 118353091,
+    "name": "language_10117382",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117383"
+  },
+  {
+    "id": 118353092,
+    "name": "language_10117384",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117385"
+  },
+  {
+    "id": 118353030,
+    "name": "language_10116813",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117141"
+  },
+  {
+    "id": 118353040,
+    "name": "language_10116814",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117142"
+  },
+  {
+    "id": 117351181,
+    "name": "language_10116867",
+    "color": 2,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117447"
+  },
+  {
+    "id": 117351183,
+    "name": "language_10116868",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117448"
+  },
+  {
+    "id": 117351120,
+    "name": "language_10116852",
+    "color": 1,
+    "notAddLink": 0,
+    "isSpecialCharacter": 0,
+    "desc": "language_10117184"
   }
 ]

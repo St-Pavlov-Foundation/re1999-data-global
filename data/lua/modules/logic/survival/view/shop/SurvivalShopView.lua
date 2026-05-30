@@ -96,6 +96,7 @@ function SurvivalShopView:onOpen()
 	end
 
 	self.mapId = self.viewParam.mapId
+	self.dayMode = self.viewParam.dayMode
 	self.shopType = self._shopMo.shopType
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideShopOpen, self.shopType)
@@ -262,14 +263,14 @@ end
 
 function SurvivalShopView:onClickBtnEnter()
 	if self.isBuyItem then
-		SurvivalController.instance:enterSurvivalMap(SurvivalMapModel.instance:getInitGroup())
+		SurvivalController.instance:enterSurvivalMap(SurvivalMapModel.instance:getInitGroup(), self.dayMode)
 	else
 		GameFacade.showOptionMessageBox(MessageBoxIdDefine.Sign_SurvivalShopView_Buy, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self.onYesClick, nil, nil, self)
 	end
 end
 
 function SurvivalShopView:onYesClick()
-	SurvivalController.instance:enterSurvivalMap(SurvivalMapModel.instance:getInitGroup())
+	SurvivalController.instance:enterSurvivalMap(SurvivalMapModel.instance:getInitGroup(), self.dayMode)
 end
 
 function SurvivalShopView:_onSortChange(sortData, isDec, filterList)

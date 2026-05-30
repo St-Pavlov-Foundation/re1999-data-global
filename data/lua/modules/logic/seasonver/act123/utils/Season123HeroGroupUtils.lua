@@ -5,33 +5,33 @@ module("modules.logic.seasonver.act123.utils.Season123HeroGroupUtils", package.s
 local Season123HeroGroupUtils = class("Season123HeroGroupUtils")
 
 function Season123HeroGroupUtils.buildSnapshotHeroGroups(snapshots)
-	local list = {}
+	local dict = {}
 
 	for _, v in ipairs(snapshots) do
-		local snapMo = HeroGroupMO.New()
-
-		snapMo:setSeasonCardLimit(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
-
-		local isEmpty = v.heroList == nil or #v.heroList <= 0
-
-		if isEmpty then
-			if not Season123HeroGroupUtils.checkFirstCopyHeroGroup(v, snapMo) then
-				Season123HeroGroupUtils.createEmptyGroup(v, snapMo)
-			end
-		else
-			snapMo:init(v)
-		end
-
-		Season123HeroGroupUtils.formation104Equips(snapMo)
-
-		list[v.groupId] = snapMo
+		dict[v.groupId] = Season123HeroGroupUtils.buildSingleSnapshotHeroGroup(v)
 	end
 
-	table.sort(list, function(a, b)
-		return a.groupId < b.groupId
-	end)
+	return dict
+end
 
-	return list
+function Season123HeroGroupUtils.buildSingleSnapshotHeroGroup(snapshot)
+	local snapMo = HeroGroupMO.New()
+
+	snapMo:setSeasonCardLimit(Activity123Enum.MainCardNum, Activity123Enum.HeroCardNum)
+
+	local isEmpty = snapshot.heroList == nil or #snapshot.heroList <= 0
+
+	if isEmpty then
+		if not Season123HeroGroupUtils.checkFirstCopyHeroGroup(snapshot, snapMo) then
+			Season123HeroGroupUtils.createEmptyGroup(snapshot, snapMo)
+		end
+	else
+		snapMo:init(snapshot)
+	end
+
+	Season123HeroGroupUtils.formation104Equips(snapMo)
+
+	return snapMo
 end
 
 function Season123HeroGroupUtils.checkFirstCopyHeroGroup(snapshot, snapMo)
@@ -76,7 +76,7 @@ function Season123HeroGroupUtils.formation104Equips(heroGroup)
 	end
 
 	for pos, seasonEquipMO in pairs(heroGroup.activity104Equips) do
-		seasonEquipMO:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+		seasonEquipMO:setLimitNum(Activity123Enum.MainCardNum, Activity123Enum.HeroCardNum)
 
 		local count = pos < ModuleEnum.MaxHeroCountInGroup and Activity123Enum.HeroCardNum or Activity123Enum.MainCardNum
 
@@ -137,7 +137,7 @@ function Season123HeroGroupUtils.createEmptyGroup(snapshot, snapMo)
 	for i = 0, maxPos do
 		local equipMo = HeroGroupActivity104EquipMo.New()
 
-		equipMo:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+		equipMo:setLimitNum(Activity123Enum.MainCardNum, Activity123Enum.HeroCardNum)
 		equipMo:init({
 			index = i,
 			equipUid = {
@@ -177,6 +177,8 @@ function Season123HeroGroupUtils.swapHeroItem(groupPos, otherGroupPos)
 
 	heroGroupMO.heroList[srcPos + 1] = targetHeroId
 	heroGroupMO.heroList[targetPos + 1] = srcHeroId
+
+	HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
 end
 
 function Season123HeroGroupUtils.syncHeroGroupFromFightGroup(heroGroupMo, fightGroup)
@@ -214,7 +216,7 @@ function Season123HeroGroupUtils.syncHeroGroupFromFightGroup(heroGroupMo, fightG
 		if heroGroupMo.activity104Equips[index] == nil then
 			heroGroupMo.activity104Equips[index] = HeroGroupActivity104EquipMo.New()
 
-			heroGroupMo.activity104Equips[index]:setLimitNum(Season123EquipHeroItemListModel.HeroMaxPos, Season123EquipHeroItemListModel.MaxPos)
+			heroGroupMo.activity104Equips[index]:setLimitNum(Activity123Enum.MainCardNum, Activity123Enum.HeroCardNum)
 		end
 
 		heroGroupMo.activity104Equips[index]:init({
@@ -238,7 +240,7 @@ function Season123HeroGroupUtils.getHeroGroupEquipCardId(season123MO, subId, slo
 	end
 
 	local itemUid = equipUids.equipUid[slot]
-	local itemId = season123MO:getItemIdByUid(itemUid)
+	local itemId = tonumber(itemUid)
 
 	if itemId ~= nil then
 		return itemId, itemUid
@@ -346,19 +348,35 @@ function Season123HeroGroupUtils.getAllHeroActivity123Equips(heroGroupMO)
 			mo.heroUid = heroGroupMO.heroList[posIndex] or Activity123Enum.EmptyUid
 		end
 
-		for i, _equipUid in ipairs(v.equipUid) do
-			if _equipUid and _equipUid ~= Activity123Enum.EmptyUid then
-				if seasonMO then
-					local equipId = seasonMO:getItemIdByUid(_equipUid)
+		mo.equipUid = v.equipUid
 
-					v.equipUid[i] = equipId and equipId > 0 and _equipUid or Activity123Enum.EmptyUid
-				else
-					v.equipUid[i] = Activity123Enum.EmptyUid
-				end
-			end
+		table.insert(result, mo)
+	end
+
+	return result
+end
+
+function Season123HeroGroupUtils.getAllHeroActivity123EquipsToFightEquipMO(heroGroupMO)
+	local result = {}
+	local battleContext = Season123Model.instance:getBattleContext()
+	local actId = battleContext and battleContext.actId
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+
+	for index, v in pairs(heroGroupMO.activity104Equips) do
+		local posIndex = index + 1
+		local mo = FightEquipMO.New()
+
+		if posIndex == Season123EquipItemListModel.MainCharPos + 1 then
+			mo.heroUid = "-100000"
+		else
+			mo.heroUid = heroGroupMO.heroList[posIndex] or Activity123Enum.EmptyUid
 		end
 
-		mo.equipUid = v.equipUid
+		mo.equipId = {}
+
+		for i, _equipUid in ipairs(v.equipUid) do
+			table.insert(mo.equipId, tonumber(_equipUid))
+		end
 
 		table.insert(result, mo)
 	end
@@ -404,7 +422,7 @@ function Season123HeroGroupUtils.fiterFightCardData(index, list, equips, trialDi
 		heroUid = nil
 	end
 
-	local nullHero = not heroUid or heroUid == Season123EquipItemListModel.EmptyUid
+	local nullHero = not heroUid or heroUid == Activity123Enum.EmptyUid
 
 	if nullHero and pos ~= Season123EquipItemListModel.MainCharPos then
 		return
@@ -420,7 +438,7 @@ function Season123HeroGroupUtils.fiterFightCardData(index, list, equips, trialDi
 
 	for slot = 1, maxSlot do
 		local equipUid = equips and equips[index] and equips[index].equipUid and equips[index].equipUid[slot]
-		local equipId
+		local equipId = equips and equips[index] and equips[index].equipId and equips[index].equipId[slot]
 
 		if equipUid then
 			equipId = seasonMO:getItemIdByUid(equipUid)

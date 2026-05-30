@@ -386,14 +386,8 @@ function ActivityModel.showActivityEffect()
 		return false
 	end
 
-	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-	if not config then
-		return false
-	end
-
-	local activityId = config.id
-	local status = ActivityHelper.getActivityStatus(activityId)
+	local activityId = CommonConfig.instance:getConstNum(ConstEnum.MainActAtmosphereActId)
+	local status = ActivityHelper.getActivityStatus(activityId, true)
 
 	if status == ActivityEnum.ActivityStatus.Normal or status == ActivityEnum.ActivityStatus.NotUnlock then
 		return true

@@ -133,6 +133,14 @@ function AutoChessWarnUpView:refreshUI()
 				local item = MonoHelper.addNoUpdateLuaComOnceToGo(collectionGo, AutoChessCollectionItem)
 
 				item:setData(id)
+
+				if LangSettings.instance:isJp() then
+					item.txtDesc.fontSize = 36
+
+					local namebg = gohelper.findChild(collectionGo, "namebg")
+
+					transformhelper.setLocalScale(namebg.transform, 1.3, 1.3, 1.3)
+				end
 			end
 		end
 
@@ -159,6 +167,10 @@ function AutoChessWarnUpView:refreshUI()
 			item:setData(self.cardpackCfgs[k])
 			item:setCheckCallback(self._checkCardpack, self)
 			transformhelper.setLocalScale(item.go.transform, 0.7, 0.7, 1)
+
+			if LangSettings.instance:isJp() then
+				item.txtDesc.fontSize = 36
+			end
 		end
 	elseif self.index == 4 then
 		local chesCfg = AutoChessConfig.instance:getChessCfg(self.bossId)

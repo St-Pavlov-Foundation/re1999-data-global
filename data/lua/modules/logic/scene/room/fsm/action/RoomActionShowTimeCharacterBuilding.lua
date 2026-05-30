@@ -335,9 +335,16 @@ function RoomActionShowTimeCharacterBuilding:moveCharacterInsideBuilding()
 			return
 		end
 
-		local x, y, z = transformhelper.getPos(positionZeroGO.transform)
+		local posZeroTrans = positionZeroGO.transform
+		local x, y, z = transformhelper.getPos(posZeroTrans)
 
 		characterEntity:setLocalPos(x, y, z)
+
+		self.charOriScaleX, self.charOriScaleY, self.charOriScaleZ = characterEntity:getLocalScaleXYZ()
+
+		local scaleX, scaleY, scaleZ = transformhelper.getLocalScale(posZeroTrans)
+
+		characterEntity:setLocalScale(scaleX, scaleY, scaleZ)
 	else
 		local showtime = self:_getShowTime()
 
@@ -563,6 +570,14 @@ function RoomActionShowTimeCharacterBuilding:_onInteractionFinish()
 	end
 
 	self:_clearLoader()
+
+	if self.charOriScaleX and self.charOriScaleY and self.charOriScaleZ then
+		self._characterEntity:setLocalScale(self.charOriScaleX, self.charOriScaleY, self.charOriScaleZ)
+	end
+
+	self.charOriScaleX = nil
+	self.charOriScaleY = nil
+	self.charOriScaleZ = nil
 
 	if self._interaTionCfg.buildingInside then
 		self._roomCharacterMO:setIsFreeze(false)

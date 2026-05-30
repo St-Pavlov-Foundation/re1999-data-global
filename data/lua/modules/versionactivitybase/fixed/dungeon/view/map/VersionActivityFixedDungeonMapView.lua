@@ -72,11 +72,19 @@ function VersionActivityFixedDungeonMapView:_btncloseviewOnClick()
 end
 
 function VersionActivityFixedDungeonMapView:_btnactivitystoreOnClick()
-	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openStoreView()
+	if self._isRetroAcitivity then
+		ReactivityController.instance:openReactivityStoreView(self._dungeonActId)
+	else
+		VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openStoreView()
+	end
 end
 
 function VersionActivityFixedDungeonMapView:_btnactivitytaskOnClick()
-	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openTaskView()
+	if self._isRetroAcitivity then
+		ReactivityController.instance:openReactivityTaskView(self._dungeonActId)
+	else
+		VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openTaskView()
+	end
 end
 
 function VersionActivityFixedDungeonMapView:_onEscBtnClick()
@@ -102,14 +110,29 @@ function VersionActivityFixedDungeonMapView:onRemoveElement(elementId)
 end
 
 function VersionActivityFixedDungeonMapView:_editableInitView()
-	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	local enum = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion)
+
+	self._dungeonActId = enum.ActivityId.Dungeon
+
+	local co = ActivityConfig.instance:getActivityCo(self._dungeonActId)
+
+	self._dungeonStore = enum.ActivityId.DungeonStore
+	self._isRetroAcitivity = co.isRetroAcitivity ~= 0
+
+	if self._isRetroAcitivity then
+		local _enum = VersionActivityFixedHelper.getVersionActivityEnum()
+
+		self._dungeonStore = _enum.ActivityId.ReactivityStore
+	end
+
+	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[self._dungeonStore]
 
 	self._txtstorename.text = storeActInfoMo and storeActInfoMo.config.name or ""
 
 	NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
 	TaskDispatcher.runRepeat(self._everyMinuteCall, self, TimeUtil.OneMinuteSecond)
-
-	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	local reddot = VersionActivityFixedHelper.getVersionActivityDungeonTaskReddotId(self._bigVersion, self._smallVersion)
 
@@ -222,7 +245,7 @@ function VersionActivityFixedDungeonMapView:refreshMask()
 end
 
 function VersionActivityFixedDungeonMapView:refreshStoreRemainTime()
-	local storeActId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore
+	local storeActId = self._dungeonStore
 	local actInfoMo = ActivityModel.instance:getActMO(storeActId)
 	local endTime = actInfoMo:getRealEndTimeStamp()
 	local offsetSecond = endTime - ServerTime.now()

@@ -181,8 +181,26 @@ function StoryHeroItem:_fadeInFinished()
 	end
 end
 
+function StoryHeroItem:_isSpMat()
+	local effCo = self._heroCo.effs[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+
+	if not LuaUtil.isEmptyStr(effCo) then
+		local effs = string.split(effCo, "#")
+
+		if #effs >= 2 and effs[1] == StoryEnum.HeroEffect.Erase and tonumber(effs[2]) == 0 then
+			return true
+		end
+	end
+
+	return false
+end
+
 function StoryHeroItem:_setHeroMat(mat)
 	if self._isLightSpine then
+		return
+	end
+
+	if self:_isSpMat() then
 		return
 	end
 
@@ -348,9 +366,8 @@ function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj,
 	canvas.overrideSorting = true
 
 	local siblingIndex = gohelper.getSibling(self._heroGo)
-	local parentGo = gohelper.findChild(self.viewGO.transform.parent.gameObject, "#go_rolebg")
 
-	self._blitEff = parentGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
 
 	local bgRootGo = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
 
@@ -586,6 +603,8 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 	if not effCo or effCo == "" then
 		self:_clearHeroFlash()
 		self:_clearHeroDissolve()
+		self:_clearHeroWaterWave()
+		self:_clearHeroErase()
 
 		return
 	end
@@ -598,6 +617,14 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 
 	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.SetDissolve then
 		self:_clearHeroDissolve()
+	end
+
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.WaterWave then
+		self:_clearHeroWaterWave()
+	end
+
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.Erase then
+		self:_clearHeroErase()
 	end
 
 	if effs[1] == StoryEnum.HeroEffect.Gray then
@@ -630,6 +657,10 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 		self:_setHeroFlash(effs[2])
 	elseif effs[1] == StoryEnum.HeroEffect.SetDissolve then
 		self:_setHeroDissolve(effs[2])
+	elseif effs[1] == StoryEnum.HeroEffect.WaterWave then
+		self:_setHeroWaterWave()
+	elseif effs[1] == StoryEnum.HeroEffect.Erase then
+		self:_setHeroErase(tonumber(effs[2]))
 	else
 		if not self._heroSpineGo then
 			return
@@ -641,10 +672,14 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 			self._heroLoader:dispose()
 		end
 
+		if not effectCos or #effectCos < 1 then
+			return
+		end
+
 		self._heroLoader = MultiAbLoader.New()
 
 		for _, v in ipairs(effectCos) do
-			if string.find(v[2], "roomcritteremoji") then
+			if not v or #v < 2 or string.find(v[2], "roomcritteremoji") then
 				return
 			end
 
@@ -700,6 +735,46 @@ function StoryHeroItem:_clearHeroDissolve()
 	end
 end
 
+function StoryHeroItem:_setHeroWaterWave()
+	if not self._heroWaterWaveCls then
+		self._heroWaterWaveCls = StoryHeroEffsWaterWave.New()
+	end
+
+	self._heroWaterWaveCls:init(self._heroSpineGo)
+	self._heroWaterWaveCls:start()
+end
+
+function StoryHeroItem:_clearHeroWaterWave()
+	if self._heroWaterWaveCls then
+		self._heroWaterWaveCls:destroy()
+
+		self._heroWaterWaveCls = nil
+	end
+end
+
+function StoryHeroItem:_setHeroErase(eraseparam)
+	if not self._heroEraseCls then
+		if eraseparam == 1 then
+			return
+		end
+
+		self._heroEraseCls = StoryHeroEffsErase.New()
+
+		self._heroEraseCls:init(self._heroSpineGo, self._heroSpine)
+		self._heroEraseCls:start(eraseparam)
+	else
+		self._heroEraseCls:reset(eraseparam)
+	end
+end
+
+function StoryHeroItem:_clearHeroErase()
+	if self._heroEraseCls then
+		self._heroEraseCls:destroy()
+
+		self._heroEraseCls = nil
+	end
+end
+
 function StoryHeroItem:_setStyDissolve()
 	self._heroSkeletonGraphic.material = self._styDissolveMat
 
@@ -716,6 +791,9 @@ function StoryHeroItem:onDestroy()
 	StoryController.instance:unregisterCallback(StoryEvent.OnFollowPicture, self._playFollowPicture, self)
 	TaskDispatcher.cancelTask(self._followPicture, self)
 	self:_clearHeroFlash()
+	self:_clearHeroDissolve()
+	self:_clearHeroWaterWave()
+	self:_clearHeroErase()
 	TaskDispatcher.cancelTask(self._onDelay, self)
 	self:_grayUpdate(0)
 

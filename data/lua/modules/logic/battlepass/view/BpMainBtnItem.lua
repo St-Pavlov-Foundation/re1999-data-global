@@ -38,25 +38,10 @@ end
 
 function BpMainBtnItem:_refreshItem()
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_3" or "icon_3"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_3")
 
 	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
-
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self:_refreshDeadline()
 	TaskDispatcher.runRepeat(self._refreshDeadline, self, 1)
 	self._redDot:refreshDot()

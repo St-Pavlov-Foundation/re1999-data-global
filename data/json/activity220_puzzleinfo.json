@@ -238,5 +238,133 @@
   {
     "fragment": 100509,
     "img": "puzzle_05/img_liubianxing2_9"
+  },
+  {
+    "fragment": 350101,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_01"
+  },
+  {
+    "fragment": 350102,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_02"
+  },
+  {
+    "fragment": 350103,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_03"
+  },
+  {
+    "fragment": 350104,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_04"
+  },
+  {
+    "fragment": 350105,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_05"
+  },
+  {
+    "fragment": 350106,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_06"
+  },
+  {
+    "fragment": 350107,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_07"
+  },
+  {
+    "fragment": 350108,
+    "img": "puzzle_01/v3a5_lorentz_piece_01_08"
+  },
+  {
+    "fragment": 350201,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_01"
+  },
+  {
+    "fragment": 350202,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_02"
+  },
+  {
+    "fragment": 350203,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_03"
+  },
+  {
+    "fragment": 350204,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_04"
+  },
+  {
+    "fragment": 350205,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_05"
+  },
+  {
+    "fragment": 350206,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_06"
+  },
+  {
+    "fragment": 350207,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_07"
+  },
+  {
+    "fragment": 350208,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_08"
+  },
+  {
+    "fragment": 350209,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_09"
+  },
+  {
+    "fragment": 350210,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_10"
+  },
+  {
+    "fragment": 350211,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_11"
+  },
+  {
+    "fragment": 350212,
+    "img": "puzzle_02/v3a5_lorentz_piece_02_12"
+  },
+  {
+    "fragment": 350301,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_01"
+  },
+  {
+    "fragment": 350302,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_02"
+  },
+  {
+    "fragment": 350303,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_03"
+  },
+  {
+    "fragment": 350304,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_04"
+  },
+  {
+    "fragment": 350305,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_05"
+  },
+  {
+    "fragment": 350306,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_06"
+  },
+  {
+    "fragment": 350307,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_07"
+  },
+  {
+    "fragment": 350308,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_08"
+  },
+  {
+    "fragment": 350309,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_09"
+  },
+  {
+    "fragment": 350310,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_10"
+  },
+  {
+    "fragment": 350311,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_11"
+  },
+  {
+    "fragment": 350312,
+    "img": "puzzle_03/v3a5_lorentz_piece_03_12"
   }
 ]

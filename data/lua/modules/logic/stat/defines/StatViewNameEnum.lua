@@ -212,7 +212,20 @@ StatViewNameEnum.ChineseViewName = {
 	[ViewName.MiniPartyView] = "微型派对界面",
 	[ViewName.ObserverBoxView] = "观测者之盒界面",
 	[ViewName.HeroExpBoxPanelView] = "迷思留影集界面",
-	[ViewName.ChatRoomMainView] = "语义萃取研究室场景"
+	[ViewName.ChatRoomMainView] = "语义萃取研究室场景",
+	[ViewName.VersionActivity3_5EnterView] = "3.5版本活动页",
+	[ViewName.VersionActivity3_5DungeonMapView] = "副本地图-绿松石蛇俱乐部",
+	[ViewName.VersionActivity3_5StoreView] = "3.5副本商店",
+	[ViewName.LorentzLevelView] = "洛伦兹角色活动",
+	[ViewName.LorentzTaskView] = "洛伦兹角色任务",
+	[ViewName.LamonaLevelView] = "拉莫纳角色活动",
+	[ViewName.LamonaTaskView] = "拉莫纳角色任务",
+	[ViewName.V3A5_RoleStoryGameView] = "轶事玩法",
+	[ViewName.CharacterDestinySlotView] = "角色狂想界面",
+	[ViewName.VersionActivity2_3NewCultivationGiftView] = "狂想活动界面",
+	[ViewName.VersionActivity2_3NewCultivationDetailView] = "闪念总览效果界面",
+	[ViewName.Season123_3_5EntryView] = "UTTU玩法",
+	[ViewName.Season123_3_5EpisodeListView] = "UTTU选择关卡"
 }
 StatViewNameEnum.NeedTrackViewDict = {
 	[ViewName.TurnBackFullView] = true,
@@ -402,7 +415,19 @@ StatViewNameEnum.NeedTrackViewDict = {
 	[ViewName.MiniPartyView] = true,
 	[ViewName.ObserverBoxView] = true,
 	[ViewName.HeroExpBoxPanelView] = true,
-	[ViewName.ChatRoomMainView] = true
+	[ViewName.ChatRoomMainView] = true,
+	[ViewName.VersionActivity3_5EnterView] = true,
+	[ViewName.VersionActivity3_5DungeonMapView] = true,
+	[ViewName.VersionActivity3_5StoreView] = true,
+	[ViewName.LorentzLevelView] = true,
+	[ViewName.LorentzTaskView] = true,
+	[ViewName.LamonaLevelView] = true,
+	[ViewName.LamonaTaskView] = true,
+	[ViewName.V3A5_RoleStoryGameView] = true,
+	[ViewName.VersionActivity2_3NewCultivationGiftView] = true,
+	[ViewName.VersionActivity2_3NewCultivationDetailView] = true,
+	[ViewName.Season123_3_5EntryView] = true,
+	[ViewName.Season123_3_5EpisodeListView] = true
 }
 StatViewNameEnum.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
@@ -421,7 +446,8 @@ StatViewNameEnum.NeedListenTabSwitchList = {
 	ViewName.VersionActivity3_1EnterView,
 	ViewName.VersionActivity3_2EnterView,
 	ViewName.VersionActivity3_3EnterView,
-	ViewName.VersionActivity3_4EnterView
+	ViewName.VersionActivity3_4EnterView,
+	ViewName.VersionActivity3_5EnterView
 }
 StatViewNameEnum.TabViewContainerID = {
 	[ViewName.VersionActivity1_8EnterView] = 2,
@@ -440,7 +466,8 @@ StatViewNameEnum.TabViewContainerID = {
 	[ViewName.VersionActivity3_1EnterView] = 2,
 	[ViewName.VersionActivity3_2EnterView] = 2,
 	[ViewName.VersionActivity3_3EnterView] = 2,
-	[ViewName.VersionActivity3_4EnterView] = 2
+	[ViewName.VersionActivity3_4EnterView] = 2,
+	[ViewName.VersionActivity3_5EnterView] = 2
 }
 StatViewNameEnum.TabViewName = {
 	VersionActivity3_0_v2a3_ReactivityEnterview = "2.3活动复刻",
@@ -480,17 +507,22 @@ StatViewNameEnum.TabViewName = {
 	V3a4_Chg_EnterView = "程和光",
 	V2a7_v2a0_ReactivityEnterview = "2.0活动复刻",
 	VersionActivity2_3ZhiXinQuanErEnterView = "纸信圈儿",
+	VersionActivity3_5DungeonEnterView = "绿松石蛇俱乐部",
 	V2a7_LengZhou6EnterView = "冷周六",
 	VersionActivity2_8AutoChessEnterView = "魔精自走棋",
 	V2a5_v1a6_ReactivityEnterview = "1.6活动复刻",
+	VersionActivity3_5LorentzEnterView = "洛伦兹",
+	V3a5_v2a7_ReactivityEnterview = "2.7活动复刻",
 	V2a2_RoomCritterEnterView = "魔精公司",
 	VersionActivity3_0KaRongEnterView = "卡戎",
 	VersionActivity2_6DungeonEnterView = "疯癫与文明",
+	V3a5_Season123EnterView = "UTTU",
 	VersionActivity2_8MoLiDeErEnterView = "莫莉德尔",
 	V2a4_PinballEnterView = "图图石子",
 	V2a3_Season123EnterView = "赛季",
 	V2a6_XugoujiEnterView = "虚构集",
 	V2a3_ReactivityEnterview = "2.3活动复刻",
+	VersionActivity3_5LamonaEnterView = "拉莫纳",
 	VersionActivity3_4PartyGameEnterView = "联机玩法",
 	SurvivalEnterView = "雨前漫游指南",
 	V2a2_LoperaEnterView = "洛佩拉",

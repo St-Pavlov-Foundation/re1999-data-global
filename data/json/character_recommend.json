@@ -415,9 +415,9 @@
   },
   {
     "id": 3053,
-    "teamRec": "3053#3066#3079#3083",
+    "teamRec": "3053#3066#3079#3083|3053#3141#3039#3117",
     "teamDisplay": 1,
-    "equipRec": "1437|1511|1440",
+    "equipRec": "1511|1540",
     "equipDisplay": 1,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
@@ -568,7 +568,7 @@
   },
   {
     "id": 3073,
-    "teamRec": "3073#3081#3062#3117",
+    "teamRec": "3073#3081#3139#3127",
     "teamDisplay": 1,
     "equipRec": "1515|1509|1546",
     "equipDisplay": 1,
@@ -1067,6 +1067,42 @@
     "teamDisplay": 1,
     "equipRec": "1564",
     "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3139,
+    "teamRec": "3134#3139#3081#3127|3073#3139#3081#3127",
+    "teamDisplay": 1,
+    "equipRec": "1565",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3142,
+    "teamRec": "3142#3104#3098#3117|3142#3056#3098#3117",
+    "teamDisplay": 1,
+    "equipRec": "1566",
+    "equipDisplay": 1,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3136,
+    "teamRec": "",
+    "teamDisplay": 0,
+    "equipRec": "",
+    "equipDisplay": 0,
+    "lvRec": "2#40|3#50|4#60",
+    "resonanceRec": "5|10|13|15"
+  },
+  {
+    "id": 3138,
+    "teamRec": "",
+    "teamDisplay": 0,
+    "equipRec": "",
+    "equipDisplay": 0,
     "lvRec": "2#40|3#50|4#60",
     "resonanceRec": "5|10|13|15"
   }

@@ -30,24 +30,90 @@ function SurvivalShelterSceneDirector:startEnterProgress()
 
 	self.directorFlow = FlowSequence.New()
 
-	local parallelWork1 = FlowParallel.New()
-	local survivalOpenViewWork = SurvivalOpenViewWork.New({
-		viewName = ViewName.SurvivalMainView
-	})
+	if SurvivalController.instance.isOldSettle then
+		local parallelWork1 = FlowParallel.New()
+		local survivalOpenViewWork = SurvivalOpenViewWork.New({
+			viewName = ViewName.SurvivalMainView
+		})
 
-	survivalOpenViewWork:registerDoneListener(self.onOpenView, self)
-	parallelWork1:addWork(survivalOpenViewWork)
+		survivalOpenViewWork:registerDoneListener(self.onOpenView, self)
+		parallelWork1:addWork(survivalOpenViewWork)
 
-	if PopupController.instance:getPopupCount() > 0 then
-		parallelWork1:addWork(PopupViewFinishWork.New())
+		if PopupController.instance:getPopupCount() > 0 then
+			parallelWork1:addWork(PopupViewFinishWork.New())
+		end
+
+		self.directorFlow:addWork(parallelWork1)
+		self.directorFlow:registerDoneListener(self.onSceneViewPopupFinish, self)
+		self.directorFlow:start()
+	else
+		local parallelWork1 = FlowParallel.New()
+		local survivalOpenViewWork = SurvivalOpenViewWork.New({
+			viewName = ViewName.SurvivalMainView
+		})
+
+		survivalOpenViewWork:registerDoneListener(self.onOpenView, self)
+		parallelWork1:addWork(survivalOpenViewWork)
+
+		local flow = FlowSequence.New()
+		local info = SurvivalModel.instance:getSurvivalSettleInfo()
+
+		if info then
+			flow:addWork(SurvivalSettlePerformanceWork.New())
+		else
+			local needShowDestroy, fightId = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+
+			if needShowDestroy then
+				flow:addWork(FunctionWork.New(function()
+					UIBlockMgrExtend.setNeedCircleMv(false)
+					UIBlockHelper.instance:startBlock("SurvivalSettlePerformanceWork", 3)
+					PopupController.instance:setPause("SurvivalShelterSceneDirector", true)
+
+					local curScene = GameSceneMgr.instance:getCurScene()
+					local unit = curScene.unit
+					local entity = unit:getShelterMonster()
+
+					if entity then
+						entity:playFightEffect()
+					end
+
+					SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
+				end))
+				flow:addWork(TimerWork.New(3))
+				flow:addWork(FunctionWork.New(function()
+					UIBlockHelper.instance:endBlock("SurvivalSettlePerformanceWork")
+					UIBlockMgrExtend.setNeedCircleMv(true)
+					PopupController.instance:setPause("SurvivalShelterSceneDirector", false)
+					SurvivalController.instance:dispatchEvent(SurvivalEvent.BossFightSuccessShowFinish)
+					SurvivalMapHelper.instance:refreshPlayerEntity()
+				end))
+			end
+		end
+
+		if PopupController.instance:getPopupCount() > 0 then
+			flow:addWork(PopupViewFinishWork.New())
+		end
+
+		parallelWork1:addWork(flow)
+		self.directorFlow:addWork(parallelWork1)
+		self.directorFlow:registerDoneListener(self.onSceneViewPopupFinish, self)
+		self.directorFlow:start()
 	end
-
-	self.directorFlow:addWork(parallelWork1)
-	self.directorFlow:registerDoneListener(self.onSceneViewPopupFinish, self)
-	self.directorFlow:start()
 end
 
 function SurvivalShelterSceneDirector:onSceneViewPopupFinish()
+	if SurvivalController.instance.isOldSettle then
+		-- block empty
+	else
+		local info = SurvivalModel.instance:getSurvivalSettleInfo()
+
+		if info then
+			SurvivalController.instance:showResultPanel()
+
+			return
+		end
+	end
+
 	SurvivalController.instance:onScenePopupFinish()
 	self:processGuideEvent()
 end

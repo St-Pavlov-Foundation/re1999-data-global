@@ -167,6 +167,10 @@ function FightRpc:insertOp(op, opList)
 		oper.param3 = op.param3
 	end
 
+	if op.cardParam1 then
+		oper.cardParam1 = op.cardParam1
+	end
+
 	table.insert(opList, oper)
 end
 
@@ -402,6 +406,7 @@ function FightRpc:onReceiveUseClothSkillReply(resultCode, msg)
 		FightGameMgr.playMgr:playCloth()
 	else
 		FightController.instance:dispatchEvent(FightEvent.RespUseClothSkillFail)
+		FightMsgMgr.sendMsg(FightMsgId.UseClothSkillReplyFail)
 	end
 end
 

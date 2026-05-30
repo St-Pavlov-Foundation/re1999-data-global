@@ -2,7 +2,7 @@
 
 module("modules.logic.autochess.main.view.AutoChessEnterView", package.seeall)
 
-local AutoChessEnterView = class("AutoChessEnterView", BaseView)
+local AutoChessEnterView = class("AutoChessEnterView", VersionActivityEnterBaseSubView)
 
 function AutoChessEnterView:onInitView()
 	self._txtLimitTime = gohelper.findChildText(self.viewGO, "LimitTime/#txt_LimitTime")
@@ -42,14 +42,11 @@ end
 function AutoChessEnterView:_editableInitView()
 	self.actId = self.viewContainer.activityId
 	self.config = ActivityConfig.instance:getActivityCo(self.actId)
-	self.animComp = VersionActivity3_2SubAnimatorComp.get(self.viewGO, self)
 	self.warningItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goWarningContent, AutoChessWarningItem)
 end
 
 function AutoChessEnterView:onOpen()
-	self.animComp:playOpenAnim()
-	self:_showLeftTime()
-	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
+	AutoChessEnterView.super.onOpen(self)
 	Activity182Rpc.instance:sendGetAct182InfoRequest(self.actId, self.refreshUI, self)
 end
 
@@ -59,12 +56,7 @@ function AutoChessEnterView:refreshUI(_, resultCode)
 	end
 end
 
-function AutoChessEnterView:onDestroyView()
-	self.animComp:destroy()
-	TaskDispatcher.cancelTask(self._showLeftTime, self)
-end
-
-function AutoChessEnterView:_showLeftTime()
+function AutoChessEnterView:everySecondCall()
 	self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(self.actId)
 end
 

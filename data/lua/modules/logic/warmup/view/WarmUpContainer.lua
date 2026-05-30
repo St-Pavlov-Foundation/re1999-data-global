@@ -17,11 +17,9 @@ end
 
 function WarmUpContainer:buildViews()
 	self._warmUp = WarmUp.New()
-	self._warmUpLeftView = WarmUpLeftView.New()
 
 	return {
-		self._warmUp,
-		self._warmUpLeftView
+		self._warmUp
 	}
 end
 
@@ -32,8 +30,8 @@ function WarmUpContainer:onContainerInit()
 	WarmUpContainer.super.onContainerInit(self)
 
 	self._tweenSwitchContext = {
-		lastEpisode = false,
-		curEpisodeId = false
+		curEpisodeId = false,
+		lastEpisodeId = false
 	}
 end
 
@@ -67,16 +65,14 @@ end
 
 function WarmUpContainer:onDataUpdateFirst()
 	self._warmUp:onDataUpdateFirst()
-	self._warmUpLeftView:onDataUpdateFirst()
 end
 
 function WarmUpContainer:onDataUpdate()
 	self._warmUp:onDataUpdate()
-	self._warmUpLeftView:onDataUpdate()
 end
 
 function WarmUpContainer:onDataUpdateDoneFirst()
-	self:tryTweenDesc()
+	self:tryTweenDesc(self:checkLocalIsPlayCur())
 end
 
 function WarmUpContainer:onSwitchEpisode()
@@ -85,7 +81,6 @@ function WarmUpContainer:onSwitchEpisode()
 	self:_play_stop_UI_Bus()
 	self._warmUp:setBlock_scroll(false)
 	self._warmUp:onSwitchEpisode()
-	self._warmUpLeftView:onSwitchEpisode()
 end
 
 function WarmUpContainer:onUpdateActivity()
@@ -101,34 +96,55 @@ function WarmUpContainer:episode2Index(episodeId)
 	return self._warmUp:episode2Index(episodeId)
 end
 
-function WarmUpContainer:switchTabWithAnim(lastEpisode, curEpisodeId)
-	if self._tweenSwitchContext.lastEpisode then
+function WarmUpContainer:switchTabWithAnim(lastEpisodeId, curEpisodeId)
+	local ctx = self._tweenSwitchContext
+
+	if ctx.lastEpisodeId then
 		return
 	end
 
 	if not curEpisodeId then
-		self._tweenSwitchContext.lastEpisode = false
-		self._tweenSwitchContext.curEpisodeId = false
+		ctx.lastEpisodeId = false
+		ctx.curEpisodeId = false
+		ctx.cbTweenSwitch = nil
+		ctx.cbObjTweenSwitch = nil
 
 		return
 	end
 
 	self._isPlaying = false
-	self._tweenSwitchContext.lastEpisode = lastEpisode
-	self._tweenSwitchContext.curEpisodeId = curEpisodeId
+	ctx.lastEpisodeId = lastEpisodeId
+	ctx.curEpisodeId = curEpisodeId
+	ctx.cbTweenSwitch = self._onTweenSwitchDone
+	ctx.cbObjTweenSwitch = self
 
-	self._warmUp:tweenSwitch(function()
-		self._tweenSwitchContext.lastEpisode = false
-	end)
+	self._warmUp:tweenSwitch(lastEpisodeId, curEpisodeId, self._onTweenSwitchDone, self)
 end
 
-function WarmUpContainer:switchTabNoAnim(lastEpisode, curEpisodeId)
-	curEpisodeId = curEpisodeId or self._tweenSwitchContext.curEpisodeId
-	self._tweenSwitchContext.lastEpisode = false
-	self._tweenSwitchContext.curEpisodeId = false
+function WarmUpContainer:_onTweenSwitchDone()
+	local ctx = self._tweenSwitchContext
+
+	self._warmUp:onSwitch(ctx.curEpisodeId, ctx.lastEpisodeId)
+
+	ctx.lastEpisodeId = false
+	ctx.cbTweenSwitch = nil
+	ctx.cbObjTweenSwitch = nil
+end
+
+function WarmUpContainer:switchTabNoAnim(curEpisodeId, bSlient)
+	local ctx = self._tweenSwitchContext
+
+	curEpisodeId = curEpisodeId or ctx.curEpisodeId
+	ctx.lastEpisodeId = false
+	ctx.curEpisodeId = false
+	ctx.cbTweenSwitch = nil
+	ctx.cbObjTweenSwitch = nil
 
 	self:setCurSelectEpisodeIdSlient(curEpisodeId)
-	Activity125Controller.instance:dispatchEvent(Activity125Event.SwitchEpisode)
+
+	if not bSlient then
+		Activity125Controller.instance:dispatchEvent(Activity125Event.SwitchEpisode)
+	end
 end
 
 function WarmUpContainer:sendFinishAct125EpisodeRequest(...)
@@ -143,6 +159,7 @@ function WarmUpContainer:onCloseViewFinish(viewName)
 	end
 
 	self._warmUp:playRewardItemsHasGetAnim()
+	self._warmUp:playTabItemsUnlockAnim()
 
 	self.__isWaitingPlayHasGetAnim = false
 end
@@ -151,7 +168,7 @@ function WarmUpContainer:isWaitingPlayHasGetAnim()
 	return self.__isWaitingPlayHasGetAnim
 end
 
-function WarmUpContainer:tryTweenDesc()
+function WarmUpContainer:tryTweenDesc(bNoAnim)
 	self._needWaitCount = 0
 
 	local isRecevied, localIsPlay = self:getRLOCCur()
@@ -168,8 +185,12 @@ function WarmUpContainer:tryTweenDesc()
 		return
 	end
 
-	self:setLocalIsPlayCurByUser()
-	self:openDesc()
+	if bNoAnim then
+		self:_onOpenDescDone()
+	else
+		self:setLocalIsPlayCurByUser()
+		self:openDesc()
+	end
 end
 
 function WarmUpContainer:checkIsDone(episodeId)
@@ -187,13 +208,15 @@ end
 function WarmUpContainer:openDesc()
 	self._warmUp:setBlock_scroll(true)
 	self:addNeedWaitCount()
-	self._warmUp:openDesc(function()
-		self._isPlaying = false
+	self._warmUp:openDesc(self._onOpenDescDone, self)
+end
 
-		self:onAnimDone()
-		self._warmUp:setBlock_scroll(false)
-		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
-	end)
+function WarmUpContainer:_onOpenDescDone()
+	self._isPlaying = false
+
+	self:onAnimDone()
+	self._warmUp:setBlock_scroll(false)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 end
 
 function WarmUpContainer:setNeedWaitCount(needWaitCount)
@@ -212,7 +235,7 @@ function WarmUpContainer:onAnimDone()
 	end
 
 	self:setLocalIsPlayCur()
-	self._warmUp:_refresh()
+	self._warmUp:_refreshRightView()
 end
 
 local kEpisode = "Act125Episode|"

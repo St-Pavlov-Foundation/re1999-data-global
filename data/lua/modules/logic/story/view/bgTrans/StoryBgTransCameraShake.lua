@@ -8,15 +8,15 @@ function StoryBgTransCameraShake:ctor()
 	StoryBgTransCameraShake.super.ctor(self)
 end
 
-function StoryBgTransCameraShake:init()
+function StoryBgTransCameraShake:init(transType)
 	StoryBgTransCameraShake.super.init(self)
 
 	self._transInTime = 0.267
 	self._transOutTime = 0.267
-	self._transType = StoryEnum.BgTransType.ShakeCamera
+	self._transType = transType or StoryEnum.BgTransType.ShakeCameraLR
 	self._transMo = StoryBgEffectTransModel.instance:getStoryBgEffectTransByType(self._transType)
 	self._shakeCameraPrefabPath = ResUrl.getStoryBgEffect(self._transMo.prefab)
-	self._shakeCameraAnimPath = "ui/animations/dynamic/story_avg_shake.controller"
+	self._shakeCameraAnimPath = transType == StoryEnum.BgTransType.ShakeCameraLR and "ui/animations/dynamic/story_avg_shake.controller" or "ui/animations/dynamic/story_avg_shake_2.controller"
 	self._shakeCameraMatPath = "ui/materials/dynamic/storybg_edge_stretch.mat"
 
 	table.insert(self._resList, self._shakeCameraPrefabPath)

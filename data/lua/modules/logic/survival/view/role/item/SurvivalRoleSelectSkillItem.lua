@@ -15,8 +15,9 @@ end
 
 function SurvivalRoleSelectSkillItem:onItemShow(data)
 	self.skillId = data.skillId
+	self.heroId = data.heroId
 	self.cfg = lua_survival_role_skill.configDict[self.skillId]
-	self.txt_SkillDesc.text = SurvivalRoleConfig.instance:getSkillDesc(self.cfg.id)
+	self.txt_SkillDesc.text = SurvivalRoleConfig.instance:getSkillDesc(self.heroId)
 
 	local res = self.cfg.resource
 

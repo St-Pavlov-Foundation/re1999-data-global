@@ -19,22 +19,13 @@ end
 Season123EquipHeroController.Toast_Save_Succ = 2855
 
 function Season123EquipHeroController:onOpenView(actId, stage, slot, callback, callbackObj)
-	self._isOpening = true
 	self._callback = callback
 	self._callbackObj = callbackObj
 
 	Season123Controller.instance:registerCallback(Season123Event.OnEquipItemChange, self.handleItemChanged, self)
 	Season123Controller.instance:registerCallback(Season123Event.OnPlayerPrefNewUpdate, self.handlePlayerPrefNewUpdate, self)
 	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, self.handleSnapshotSaveSucc, self)
-
-	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
-	local equipUidList
-
-	if heroGroupMO and heroGroupMO.activity104Equips and heroGroupMO.activity104Equips[Activity123Enum.MainCharPos] then
-		equipUidList = tabletool.copy(heroGroupMO.activity104Equips[Activity123Enum.MainCharPos].equipUid)
-	end
-
-	Season123EquipHeroItemListModel.instance:initDatas(actId, stage, slot, equipUidList)
+	self:initModelData(actId, stage, slot)
 end
 
 function Season123EquipHeroController:onCloseView()
@@ -46,6 +37,19 @@ function Season123EquipHeroController:onCloseView()
 	Season123EquipHeroItemListModel.instance:flushRecord()
 	Season123Controller.instance:dispatchEvent(Season123Event.OnPlayerPrefNewUpdate)
 	Season123EquipHeroItemListModel.instance:clear()
+end
+
+function Season123EquipHeroController:initModelData(actId, stage, slot)
+	self._isOpening = true
+
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local equipUidList
+
+	if heroGroupMO and heroGroupMO.activity104Equips and heroGroupMO.activity104Equips[Activity123Enum.MainCharPos] then
+		equipUidList = tabletool.copy(heroGroupMO.activity104Equips[Activity123Enum.MainCharPos].equipUid)
+	end
+
+	Season123EquipHeroItemListModel.instance:initDatas(actId, stage, slot, equipUidList)
 end
 
 function Season123EquipHeroController:handleSnapshotSaveSucc(snapshotId)
@@ -95,7 +99,7 @@ function Season123EquipHeroController:equipItemOnlyShow(itemUid)
 	Season123EquipHeroItemListModel.instance:equipShowItem(itemUid)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
 	self:dispatchEvent(Season123EquipEvent.EquipChangeCard, {
-		isNew = oldUid == Season123EquipHeroItemListModel.EmptyUid,
+		isNew = oldUid == Activity123Enum.EmptyUid,
 		unloadSlot = unloadSlotIndex
 	})
 end
@@ -139,12 +143,13 @@ function Season123EquipHeroController:saveShowSlot()
 
 	local equipUidList = Season123EquipHeroItemListModel.instance:getEquipedCards()
 	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
+	local activity104Equips = heroGroupMO and heroGroupMO:getAct104PosEquips(Activity123Enum.MainCharPos)
 
-	if heroGroupMO and heroGroupMO.activity104Equips and heroGroupMO.activity104Equips[Activity123Enum.MainCharPos] then
+	if activity104Equips then
 		for slot, equipUid in ipairs(equipUidList) do
 			local uid = equipUidList[slot] or Activity123Enum.EmptyUid
 
-			heroGroupMO.activity104Equips[Activity123Enum.MainCharPos].equipUid[slot] = uid
+			activity104Equips.equipUid[slot] = uid
 		end
 
 		HeroGroupModel.instance:saveCurGroupData()
@@ -157,7 +162,7 @@ function Season123EquipHeroController:checkSlotUnlock()
 	if curPos ~= Season123EquipHeroItemListModel.MainCharPos then
 		return Season123EquipHeroItemListModel.instance:getShowUnlockSlotCount() <= 0
 	else
-		for slot = Season123EquipHeroItemListModel.HeroMaxPos, 1, -1 do
+		for slot = Activity123Enum.MainCardNum, 1, -1 do
 			if Season123Model.instance:isSeasonStagePosUnlock(Season123EquipHeroItemListModel.instance.activityId, Season123EquipHeroItemListModel.instance.stage, slot, curPos) then
 				return false
 			end
@@ -189,6 +194,18 @@ end
 
 function Season123EquipHeroController:getFilterModel()
 	return Season123EquipHeroItemListModel.instance.tagModel
+end
+
+function Season123EquipHeroController:realEquipItem(actId, stage, slot, equipUid)
+	if not self._isOpening then
+		self:initModelData(actId, stage, slot)
+	end
+
+	self:equipItemOnlyShow(equipUid)
+
+	if self:checkCanSaveSlot() then
+		self:saveShowSlot()
+	end
 end
 
 Season123EquipHeroController.instance = Season123EquipHeroController.New()

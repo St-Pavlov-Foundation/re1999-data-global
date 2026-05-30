@@ -62,6 +62,30 @@ function HeroSingleGroupModel:setSingleGroup(heroGroupMO, setTrial)
 	end
 end
 
+function HeroSingleGroupModel:setHeroList(newHeroUids)
+	for i = 1, HeroGroupModel.instance:getBattleRoleNum() do
+		local heroUid = newHeroUids[i]
+
+		if heroUid ~= nil then
+			self:addTo(heroUid, i)
+
+			local singleGroupMO = self:getByIndex(i)
+
+			if tonumber(heroUid) < 0 then
+				local heroMO = HeroGroupTrialModel.instance:getById(heroUid)
+
+				if heroMO then
+					singleGroupMO:setTrial(heroMO.trialCo.id, heroMO.trialCo.trialTemplate)
+				else
+					singleGroupMO:setTrial()
+				end
+			else
+				singleGroupMO:setTrial()
+			end
+		end
+	end
+end
+
 function HeroSingleGroupModel:addToEmpty(heroUid)
 	local moList = self:getList()
 

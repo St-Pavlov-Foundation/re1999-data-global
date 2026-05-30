@@ -14,5 +14,37 @@
   {
     "skillId": 104331010,
     "order": 100
+  },
+  {
+    "skillId": 117351181,
+    "order": 100
+  },
+  {
+    "skillId": 117351182,
+    "order": 100
+  },
+  {
+    "skillId": 117351183,
+    "order": 100
+  },
+  {
+    "skillId": 117351184,
+    "order": 100
+  },
+  {
+    "skillId": 117351191,
+    "order": 100
+  },
+  {
+    "skillId": 117351192,
+    "order": 100
+  },
+  {
+    "skillId": 117351193,
+    "order": 100
+  },
+  {
+    "skillId": 117351194,
+    "order": 100
   }
 ]

@@ -1,0 +1,13 @@
+[
+  {
+    "activityId": 13506,
+    "row": 6,
+    "column": 6,
+    "reward": "1001#6|1002#2|1003#2|1004#2|1005#2|1006#1|1007#1|1008#1|1009#1|1010#8|1011#8|1012#1|1013#1",
+    "cost": "2#3502#1",
+    "intensifyRate": 250,
+    "intensifyGuaranteeCount": 6,
+    "effectWeights": "1#30|2#70",
+    "finalReward": "11#13414#1"
+  }
+]

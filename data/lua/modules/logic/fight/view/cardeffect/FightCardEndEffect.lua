@@ -137,7 +137,7 @@ function FightCardEndEffect:_playCardFlow()
 		if fightViewPlayCard then
 			for _, op in ipairs(ops) do
 				if FightCardDataHelper.checkOpAsPlayCardHandle(op) then
-					local temp_index = fightViewPlayCard:getShowIndex(op)
+					local temp_index = FightDataHelper.operationDataMgr:getShowIndex(op)
 
 					if temp_index then
 						clone_index[temp_index] = {
@@ -202,6 +202,14 @@ function FightCardEndEffect:_playCardFlow()
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #self._playCardItemGOs)
+
+	local lorentzRecordCardItem = fightView and fightView.fightViewPlayCard and fightView.fightViewPlayCard.lorenzRecordCardItem
+
+	if lorentzRecordCardItem then
+		flow:addWork(FunctionWork.New(function()
+			lorentzRecordCardItem:playAnim("close")
+		end))
+	end
 
 	local version = FightModel.instance:getVersion()
 

@@ -186,15 +186,57 @@ end
 function HeroGroupTrialModel:getFilterList()
 	self:checkBattleIdIsVaild()
 
-	local list = {}
+	local selectTags = CharacterSearchFilterModel.instance:getSelectLocalTags()
+	local dmgDict = {}
+	local careerDict = {}
+	local tagDict = {}
 
-	for _, mo in ipairs(self:getList()) do
-		if (not self._filterCareers or tabletool.indexOf(self._filterCareers, mo.config.career)) and (not self._filterDmgs or tabletool.indexOf(self._filterDmgs, mo.config.dmgType)) then
+	if self._filterCareers then
+		for _, career in ipairs(self._filterCareers) do
+			careerDict[career] = true
+		end
+	end
+
+	if self._filterDmgs then
+		for _, dmg in ipairs(self._filterDmgs) do
+			dmgDict[dmg] = true
+		end
+	end
+
+	if selectTags then
+		for _, tagList in pairs(selectTags) do
+			for _, tagId in ipairs(tagList) do
+				tagDict[tagId] = true
+			end
+		end
+	end
+
+	local isFilterCareer = next(careerDict) ~= nil
+	local isFilterDmg = next(dmgDict) ~= nil
+	local isFilterTag = next(tagDict) ~= nil
+	local list = {}
+	local heroList = self:getList()
+
+	for _, mo in ipairs(heroList) do
+		if (not isFilterCareer or careerDict[mo.config.career]) and (not isFilterDmg or dmgDict[mo.config.dmgType]) and (not isFilterTag or self:_isFilterTag(tagDict, mo)) then
 			table.insert(list, mo)
 		end
 	end
 
 	return list
+end
+
+function HeroGroupTrialModel:_isFilterTag(tagDict, heroMo)
+	local battleTag = heroMo:getHeroBattleTag()
+	local battleTags = string.split(battleTag, "#")
+
+	for _, tagId in ipairs(battleTags) do
+		if tagDict[tagId] then
+			return true
+		end
+	end
+
+	return false
 end
 
 function HeroGroupTrialModel:clear()

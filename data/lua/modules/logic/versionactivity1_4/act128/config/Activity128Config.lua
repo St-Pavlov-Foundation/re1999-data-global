@@ -29,7 +29,8 @@ function Activity128Config:reqConfigNames()
 		"activity128_gallery",
 		"activity128_level",
 		"activity128_tag",
-		"activity128_conceal_desc"
+		"activity128_conceal_desc",
+		"activity128_bosstype"
 	}
 end
 

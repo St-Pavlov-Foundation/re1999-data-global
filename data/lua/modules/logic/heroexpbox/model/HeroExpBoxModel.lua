@@ -105,16 +105,23 @@ end
 
 function HeroExpBoxModel:getBoxCount()
 	local quantity = 0
+	local configs = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.HeroExpBox)
 
-	for _, id in ipairs(HeroExpBoxEnum.BoxIds) do
-		quantity = quantity + ItemModel.instance:getItemQuantity(MaterialType, id)
+	for _, co in ipairs(configs) do
+		quantity = quantity + ItemModel.instance:getItemQuantity(MaterialType, co.id)
 	end
 
 	return quantity
 end
 
+function HeroExpBoxModel:getBoxId()
+	local configs = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.HeroExpBox)
+
+	return configs and configs[1] and configs[1].id
+end
+
 function HeroExpBoxModel:getKeyCo()
-	local co = ItemModel.instance:getItemConfig(MaterialType, HeroExpBoxEnum.KeyIds[1])
+	local co = ItemModel.instance:getItemConfig(MaterialType, self:getKeyId())
 
 	return co
 end
@@ -133,12 +140,19 @@ end
 
 function HeroExpBoxModel:getKeyCount()
 	local quantity = 0
+	local configs = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.HeroExpBoxKey)
 
-	for _, id in ipairs(HeroExpBoxEnum.KeyIds) do
-		quantity = quantity + ItemModel.instance:getItemQuantity(MaterialType, id)
+	for _, co in ipairs(configs) do
+		quantity = quantity + ItemModel.instance:getItemQuantity(MaterialType, co.id)
 	end
 
 	return quantity
+end
+
+function HeroExpBoxModel:getKeyId()
+	local configs = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.HeroExpBoxKey)
+
+	return configs and configs[1] and configs[1].id
 end
 
 function HeroExpBoxModel:getNeedKeyCount(itemId)

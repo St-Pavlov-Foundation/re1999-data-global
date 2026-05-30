@@ -198,7 +198,11 @@ FightStepBuilder.ActEffectWorkCls = {
 	[FightEnum.EffectType.ROUGE2CHECK] = FightWorkRouge2Check362,
 	[FightEnum.EffectType.INDICATORDIFFCHANGE] = FightWorkIndicatorDiffChange363,
 	[FightEnum.EffectType.CHANGESCENE] = FightWorkChangeScene364,
-	[FightEnum.EffectType.EMITTEREXTRADEMAGE] = FightWorkEmitterExtraDemage367
+	[FightEnum.EffectType.EMITTEREXTRADEMAGE] = FightWorkEmitterExtraDemage367,
+	[FightEnum.EffectType.BUFFERFLYADDHANDCARD] = FightWorkAddHandCard,
+	[FightEnum.EffectType.EXTCAREERWEAK] = FightWorkExtCareerWeak368,
+	[FightEnum.EffectType.TOUGHNESSRECOVER] = FightWorkToughnessRecover369,
+	[FightEnum.EffectType.TOUGHNESSCHANGE] = FightWorkToughnessChange370
 }
 FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
@@ -228,7 +232,8 @@ FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ZXQREMOVECARD] = FightWorkZXQRemoveCardContainer,
 	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = FightWorkDeadlyPoisonContainer,
 	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonCritContainer,
-	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336Container
+	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336Container,
+	[FightEnum.EffectType.BUFFERFLYADDHANDCARD] = FightWorkAddHandCardContainer
 }
 
 setmetatable(FightStepBuilder.EffectType2FlowOrWork, {

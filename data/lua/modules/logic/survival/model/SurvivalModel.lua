@@ -29,7 +29,7 @@ function SurvivalModel:reInit()
 end
 
 function SurvivalModel:getCurVersionActivityId()
-	return VersionActivity3_4Enum.ActivityId.Survival
+	return VersionActivity3_5Enum.ActivityId.Survival
 end
 
 function SurvivalModel:onGetInfo(info)
@@ -82,6 +82,10 @@ end
 
 function SurvivalModel:getSummaryActMapId()
 	return 3102
+end
+
+function SurvivalModel:getCollectionRoomMapId()
+	return 10003
 end
 
 function SurvivalModel:getDefaultRoleId()

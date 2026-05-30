@@ -157,7 +157,7 @@ function FightViewPlayCardItem:updateItem(fightBeginRoundOp)
 			self._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
 		end
 
-		self._cardItem:updateItem(op.belongToEntityId, op.skillId)
+		self._cardItem:updateItem(op.belongToEntityId, op.skillId, op.cardInfoMO)
 
 		local entityMO = FightDataHelper.entityMgr:getById(op.belongToEntityId)
 		local buffList = FightBuffHelper.simulateBuffList(entityMO, op)
@@ -352,23 +352,39 @@ function FightViewPlayCardItem:_onClickThis()
 		return
 	end
 
-	if FightDataHelper.operationDataMgr:isCardOpEnd() then
-		return
-	end
-
 	local curOperateState = FightDataHelper.stageMgr:getCurOperateState()
 
 	if curOperateState == FightStageMgr.OperateStateType.Discard then
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
+
+		return self:_resetRoundOp()
+	elseif curOperateState == FightStageMgr.OperateStateType.RecordSkill then
+		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.RecordSkill)
+
+		return self:_resetRoundOp()
+	end
+
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
+		return
 	end
 
 	if not FightDataHelper.stageMgr:isFree(filterOperateState) then
 		return
 	end
 
+	return self:_resetRoundOp()
+end
+
+function FightViewPlayCardItem:_resetRoundOp()
 	FightRpc.instance:sendResetRoundRequest()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightResetCard)
 	FightAudioMgr.instance:stopAllCardAudio()
+end
+
+function FightViewPlayCardItem:setPreLv(lv)
+	if self._cardItem then
+		self._cardItem:setPreLv(lv)
+	end
 end
 
 return FightViewPlayCardItem

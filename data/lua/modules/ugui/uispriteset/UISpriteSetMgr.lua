@@ -191,6 +191,10 @@ function UISpriteSetMgr:ctor()
 	self._v3a3_marsha_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a3_marsha_spriteset.asset")
 	self._v3a4_laplace_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a4_laplace_spriteset.asset")
 	self._v3a4_chg_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a4_chg_spriteset.asset")
+	self._v3a5_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a5_mainactivity_spriteset.asset")
+	self._v3a5_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
+	self._v3a5_lamona = self:newSpriteSetUnit("ui/spriteassets/v3a5_lamona_spriteset.asset")
+	self._v3a5_schoolstart = self:newSpriteSetUnit("ui/spriteassets/v3a5_schoolstart_spriteset.asset")
 end
 
 function UISpriteSetMgr:newSpriteSetUnit(path)
@@ -948,6 +952,22 @@ end
 
 function UISpriteSetMgr:setV3a4ChgSprite(image, name, setNativeSize)
 	self._v3a4_chg_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a5MainActivitySprite(image, name, setNativeSize)
+	self._v3a5_main_activity:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a5DungeonSprite(image, name, setNativeSize)
+	self._v3a5_dungeon_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a5LamonaSprite(image, name, setNativeSize)
+	self._v3a5_lamona:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a5SchoolStartSprite(image, name, setNativeSize)
+	self._v3a5_schoolstart:setSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:tryDispose()

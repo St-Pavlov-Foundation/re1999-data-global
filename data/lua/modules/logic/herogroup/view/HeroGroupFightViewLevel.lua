@@ -521,6 +521,18 @@ function HeroGroupFightViewLevel:_showEnemyList()
 		})
 	end
 
+	local career8Num = 0
+
+	for i = #enemy_career_list, 1, -1 do
+		local career = enemy_career_list[i].career
+
+		if career == 8 then
+			table.remove(enemy_career_list, i)
+
+			career8Num = career8Num + 1
+		end
+	end
+
 	gohelper.CreateObjList(self, self._onEnemyItemShow, enemy_career_list, gohelper.findChild(self._goenemyteam, "enemyList"), gohelper.findChild(self._goenemyteam, "enemyList/go_enemyitem"))
 
 	local recommendLevel = FightHelper.getBattleRecommendLevel(fight_param.battleId, self._isSimple)
@@ -529,6 +541,18 @@ function HeroGroupFightViewLevel:_showEnemyList()
 		self._txtrecommendlevel.text = HeroConfig.instance:getLevelDisplayVariant(recommendLevel)
 	else
 		self._txtrecommendlevel.text = ""
+	end
+
+	local obj = gohelper.findChild(self._goenemyteam, "enemynum")
+
+	if #enemy_career_list == 0 and career8Num > 0 then
+		gohelper.setActive(obj, true)
+
+		local text = gohelper.findChildText(obj, "#txt_enemynum")
+
+		text.text = #enemy_list + #enemy_boss_list
+	else
+		gohelper.setActive(obj, false)
 	end
 end
 

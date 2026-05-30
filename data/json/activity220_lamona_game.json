@@ -1,0 +1,44 @@
+[
+  {
+    "gameId": 1001,
+    "mapId": 1001,
+    "targetDesc": "language_10118571",
+    "propId": 401,
+    "propCount": 1
+  },
+  {
+    "gameId": 1002,
+    "mapId": 1002,
+    "targetDesc": "language_10118571",
+    "propId": 402,
+    "propCount": 1
+  },
+  {
+    "gameId": 1003,
+    "mapId": 1003,
+    "targetDesc": "language_10118571",
+    "propId": 401,
+    "propCount": 1
+  },
+  {
+    "gameId": 1004,
+    "mapId": 1004,
+    "targetDesc": "language_10118571",
+    "propId": 402,
+    "propCount": 2
+  },
+  {
+    "gameId": 1005,
+    "mapId": 1005,
+    "targetDesc": "language_10118571",
+    "propId": 401,
+    "propCount": 1
+  },
+  {
+    "gameId": 1006,
+    "mapId": 1006,
+    "targetDesc": "language_10118571",
+    "propId": 402,
+    "propCount": 1
+  }
+]

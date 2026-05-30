@@ -7,7 +7,9 @@ local DEFAULT_CAREER = CharacterEnum.CareerType.Yan
 local ActId2PickAssistViewName = {}
 local assistType2PickAssistViewName = {
 	[PickAssistEnum.Type.Rouge] = "RougePickAssistView",
-	[PickAssistEnum.Type.Survival] = "SurvivalPickAssistView"
+	[PickAssistEnum.Type.Survival] = "SurvivalPickAssistView",
+	[PickAssistEnum.Type.TowerCompose1] = "TowerComposePickAssistView",
+	[PickAssistEnum.Type.TowerCompose2] = "TowerComposePickAssistView"
 }
 
 local function createPickAssistHeroMO(dungeonAssistHeroMo)
@@ -42,11 +44,12 @@ function PickAssistListModel:onCloseView()
 	self:clearData()
 end
 
-function PickAssistListModel:init(actId, assistType, selectedHeroUid)
+function PickAssistListModel:init(actId, assistType, selectedHeroUid, notNeedCareer)
 	self.activityId = actId
 	self._assistType = assistType
+	self._notNeedCareer = notNeedCareer
 
-	if not self.career then
+	if not self.career and not notNeedCareer then
 		self:setCareer(DEFAULT_CAREER)
 	end
 
@@ -78,7 +81,7 @@ function PickAssistListModel:initSelectedMO(selectedHeroUid)
 end
 
 function PickAssistListModel:updateDatas()
-	if not self.activityId or not self.career then
+	if not self.activityId or not self.career and not self._notNeedCareer then
 		return
 	end
 
@@ -99,7 +102,7 @@ function PickAssistListModel:setListByCareer()
 			local mo = createPickAssistHeroMO(dungeonAssistHeroMo)
 			local career = mo and mo:getCareer()
 
-			if mo and career == self.career then
+			if mo and (career == self.career or self._notNeedCareer) then
 				table.insert(list, mo)
 
 				if lastSelectMO and lastSelectMO:isSameHero(mo) then

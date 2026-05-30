@@ -79,4 +79,16 @@ AudioEnum2_6.WarmUp = {
 	play_ui_wenming_page_20260904 = 20260904
 }
 
+local bgm = {
+	Act2_6DungeonBgm = 3260001
+}
+
+for key, value in pairs(bgm) do
+	if isDebugBuild and AudioEnum.Bgm[key] then
+		logError("AudioEnum.Bgm重复定义" .. key)
+	end
+
+	AudioEnum.Bgm[key] = value
+end
+
 return AudioEnum2_6

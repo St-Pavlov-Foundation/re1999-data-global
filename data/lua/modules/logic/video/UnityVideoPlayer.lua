@@ -120,7 +120,7 @@ function UnityVideoPlayer:play(url, loop, callback, callbackObj)
 	logNormal("UnityVideoPlayer play : " .. self._videoPlayer.url)
 	self:setEventListener(callback, callbackObj)
 
-	self._loop = loop or _loop
+	self._loop = loop and true or false
 	self._videoPlayer.isLooping = self._loop
 
 	if self._needRawImage then

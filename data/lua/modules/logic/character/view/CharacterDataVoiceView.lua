@@ -209,6 +209,9 @@ function CharacterDataVoiceView:_resetNeedItemAnimState()
 	self._scroll.vertical = true
 
 	self:_disableClipAlpha()
+
+	self._scroll.enabled = false
+	self._scroll.enabled = true
 end
 
 function CharacterDataVoiceView:_refreshUI()

@@ -190,5 +190,101 @@
     "effect": "v3a1_gsn/gsn_ys_3",
     "effectHangPoint": "special1",
     "audio": 431320152
+  },
+  {
+    "id": 31320114,
+    "skin": 313203,
+    "electricLevel": 1,
+    "effect": "v3a5_gsn/gsn_ys_1",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320114,
+    "skin": 313203,
+    "electricLevel": 2,
+    "effect": "v3a5_gsn/gsn_ys_2",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320114,
+    "skin": 313203,
+    "electricLevel": 3,
+    "effect": "v3a5_gsn/gsn_ys_3",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320118,
+    "skin": 313203,
+    "electricLevel": 1,
+    "effect": "v3a5_gsn/gsn_ys_1",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320118,
+    "skin": 313203,
+    "electricLevel": 2,
+    "effect": "v3a5_gsn/gsn_ys_2",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320118,
+    "skin": 313203,
+    "electricLevel": 3,
+    "effect": "v3a5_gsn/gsn_ys_3",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320119,
+    "skin": 313203,
+    "electricLevel": 1,
+    "effect": "v3a5_gsn/gsn_ys_1",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320119,
+    "skin": 313203,
+    "electricLevel": 2,
+    "effect": "v3a5_gsn/gsn_ys_2",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320119,
+    "skin": 313203,
+    "electricLevel": 3,
+    "effect": "v3a5_gsn/gsn_ys_3",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320122,
+    "skin": 313203,
+    "electricLevel": 1,
+    "effect": "v3a5_gsn/gsn_ys_1",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320122,
+    "skin": 313203,
+    "electricLevel": 2,
+    "effect": "v3a5_gsn/gsn_ys_2",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
+  },
+  {
+    "id": 31320122,
+    "skin": 313203,
+    "electricLevel": 3,
+    "effect": "v3a5_gsn/gsn_ys_3",
+    "effectHangPoint": "mountroot",
+    "audio": 431320352
   }
 ]

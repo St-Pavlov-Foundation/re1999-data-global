@@ -116,6 +116,19 @@ function FightViewHandCardItemRestrain.getNewRestrainStatus(uid, skillId)
 	local isForbidRestrainTag = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRestrainTag)
 
 	if isUserCardStage and isOpen and notAuto and notSelectZero and selectEntity and needShowRestrain and not isForbidRestrainTag then
+		local cardEntityMO = FightDataHelper.entityMgr:getById(uid)
+		local selectEntityMO = selectEntity:getMO()
+
+		if cardEntityMO and selectEntityMO then
+			local weakCareers = selectEntityMO.weakCareers
+
+			for i, v in ipairs(weakCareers) do
+				if v == cardEntityMO.career then
+					return FightViewHandCardItemRestrain.RestrainMvStatus.Restrain
+				end
+			end
+		end
+
 		if FightBuffHelper.notRestrainAll(uid) then
 			return FightViewHandCardItemRestrain.RestrainMvStatus.None
 		end
@@ -124,11 +137,9 @@ function FightViewHandCardItemRestrain.getNewRestrainStatus(uid, skillId)
 			return FightViewHandCardItemRestrain.RestrainMvStatus.Restrain
 		end
 
-		local cardEntityMO = FightDataHelper.entityMgr:getById(uid)
+		local selectEntityCO = selectEntityMO and selectEntityMO:getCO()
 		local cardEntityCO = cardEntityMO and cardEntityMO:getCO()
 		local career1 = cardEntityCO and cardEntityCO.career or 0
-		local selectEntityMO = selectEntity:getMO()
-		local selectEntityCO = selectEntityMO and selectEntityMO:getCO()
 		local career2 = selectEntityCO and selectEntityCO.career or 0
 		local version = FightModel.instance:getVersion()
 

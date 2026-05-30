@@ -80,11 +80,9 @@ function HandBookCharacterView:_btnclassifyOnClick()
 
 	param.dmgs = {}
 	param.attrs = {}
-	param.locations = {}
 
 	tabletool.addValues(param.dmgs, self._selectDmgs)
 	tabletool.addValues(param.attrs, self._selectCareers)
-	tabletool.addValues(param.locations, self._selectLocations)
 	CharacterController.instance:openCharacterFilterView(param)
 end
 
@@ -98,13 +96,18 @@ function HandBookCharacterView:_onFilterList(param)
 			self._selectCareers[i] = param.attrs[i]
 		end
 
-		for i = 1, #param.locations do
-			self._selectLocations[i] = param.locations[i]
-		end
-
 		self._dmgFilterCount = self:_findFilterCount(self._selectDmgs)
 		self._careerFilterCount = self:_findFilterCount(self._selectCareers)
-		self._locationFilterCount = self:_findFilterCount(self._selectLocations)
+		self._tagsFilterTotalCount = 0
+		self._selectTags = CharacterSearchFilterModel.instance:getSelectLocalTags()
+
+		if self._selectTags then
+			for type, list in pairs(self._selectTags) do
+				local count = list and #list or 0
+
+				self._tagsFilterTotalCount = self._tagsFilterTotalCount + count
+			end
+		end
 
 		self:_refreshFilterState()
 		self:_refreshShowFirstPage()
@@ -179,20 +182,12 @@ function HandBookCharacterView:_editableInitView()
 	self._isSortL2H = false
 	self._dmgFilterCount = 0
 	self._careerFilterCount = 0
-	self._locationFilterCount = 0
+	self._tagsFilterTotalCount = 0
 	self._selectDmgs = {
 		false,
 		false
 	}
 	self._selectCareers = {
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
-	}
-	self._selectLocations = {
 		false,
 		false,
 		false,
@@ -357,11 +352,10 @@ end
 function HandBookCharacterView:_resetFilterParam()
 	self:_resetFilterList(self._selectDmgs)
 	self:_resetFilterList(self._selectCareers)
-	self:_resetFilterList(self._selectLocations)
 
 	self._dmgFilterCount = 0
 	self._careerFilterCount = 0
-	self._locationFilterCount = 0
+	self._tagsFilterTotalCount = 0
 	self._isSortL2H = false
 end
 
@@ -381,7 +375,7 @@ end
 
 function HandBookCharacterView:_refreshFilterState()
 	if self:_isAllHeroType() then
-		local isFiltering = self._dmgFilterCount > 0 or self._careerFilterCount > 0 or self._locationFilterCount > 0
+		local isFiltering = self._dmgFilterCount > 0 or self._careerFilterCount > 0 or self._tagsFilterTotalCount > 0
 
 		gohelper.setActive(self._goFiltering, isFiltering)
 		gohelper.setActive(self._goFilterno, not isFiltering)
@@ -424,29 +418,12 @@ function HandBookCharacterView:_checkConfig(cfg)
 		return cfg.heroType == self.heroType
 	end
 
-	local tagTabs = {
-		101,
-		102,
-		103,
-		104,
-		106,
-		107
-	}
+	local isDmg = self._dmgFilterCount == 0 or self._selectDmgs[cfg.dmgType]
+	local isCareers = self._careerFilterCount == 0 or self._selectCareers[cfg.career]
+	local isFilterTag = self._tagsFilterTotalCount == 0 or self._selectTags and CharacterModel.instance:isFilterTagByBattleTags(self._selectTags, cfg.battleTag, cfg.id)
 
-	if (self._dmgFilterCount == 0 or self._selectDmgs[cfg.dmgType]) and (self._careerFilterCount == 0 or self._selectCareers[cfg.career]) then
-		if self._locationFilterCount == 0 then
-			return true
-		end
-
-		local filterTags = string.splitToNumber(cfg.battleTag, "#")
-
-		for key, tab in ipairs(tagTabs) do
-			for _, tag in pairs(filterTags) do
-				if self._selectLocations[key] and tag == tab then
-					return true
-				end
-			end
-		end
+	if isDmg and isCareers and isFilterTag then
+		return true
 	end
 
 	return false
@@ -623,6 +600,7 @@ function HandBookCharacterView:_playCloseViewAnim()
 
 	self._containerAnim:Play(UIAnimationName.Close)
 	self._gohumantipAnimtor:Play(UIAnimationName.Close)
+	CharacterSearchFilterModel.instance:exitParentView()
 	gohelper.setActive(self._gohumansubtip, false)
 	gohelper.setActive(self._gotipclose, false)
 end
@@ -633,6 +611,7 @@ function HandBookCharacterView:onClose()
 	self._simagecoverbg2:UnLoadImage()
 	self._simagecoverbg1peper1:UnLoadImage()
 	self._simagecoverbg1peper1:UnLoadImage()
+	CharacterSearchFilterModel.instance:exitParentView()
 end
 
 function HandBookCharacterView:onDestroyView()

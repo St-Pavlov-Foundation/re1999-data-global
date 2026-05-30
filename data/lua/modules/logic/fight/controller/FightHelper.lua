@@ -892,6 +892,43 @@ end
 
 function FightHelper.detectAttributeCounter()
 	local fight_param = FightModel.instance:getFightParam()
+
+	if BossRushController.instance:isInBossRushDungeon() then
+		local concealCo = BossRushConfig.instance:getConcealCo(fight_param.episodeId)
+
+		if not concealCo or not (concealCo.maxConceal > 0) then
+			for i, v in ipairs(fight_param.monsterGroupIds) do
+				local ids = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[v].monster, "#")
+
+				for index, id in ipairs(ids) do
+					local monsterCO = lua_monster.configDict[id]
+
+					if monsterCO and not string.nilorempty(monsterCO.career_weak) then
+						local weakList = string.splitToNumber(monsterCO.career_weak, "#")
+
+						return weakList, {}
+					end
+				end
+			end
+		end
+	end
+
+	if Season123Controller.isEpisodeFromSeason123(fight_param.episodeId) then
+		for i, v in ipairs(fight_param.monsterGroupIds) do
+			local ids = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[v].monster, "#")
+
+			for index, id in ipairs(ids) do
+				local monsterCO = lua_monster.configDict[id]
+
+				if monsterCO and not string.nilorempty(monsterCO.career_weak) then
+					local weakList = string.splitToNumber(monsterCO.career_weak, "#")
+
+					return weakList, {}
+				end
+			end
+		end
+	end
+
 	local recommended, counter = FightHelper.getAttributeCounter(fight_param.monsterGroupIds, GameSceneMgr.instance:isSpScene())
 
 	return recommended, counter
@@ -1389,11 +1426,7 @@ function FightHelper.getEffectAbPath(path)
 end
 
 function FightHelper.getRolesTimelinePath(timelineName)
-	if GameResMgr.IsFromEditorDir then
-		return ResUrl.getSkillTimeline(timelineName)
-	else
-		return ResUrl.getRolesTimeline()
-	end
+	return ResUrl.getSkillTimeline(timelineName)
 end
 
 function FightHelper.getCameraAniPath(resName)
@@ -4327,6 +4360,26 @@ function FightHelper.getActEffectData(targetEffectType, fightStep)
 	return nil
 end
 
+function FightHelper.getActEffectDataList(targetEffectType, fightStep, targetList)
+	local actEffectList = fightStep and fightStep.actEffect
+
+	if not actEffectList then
+		return targetList
+	end
+
+	for _, actEffectData in ipairs(actEffectList) do
+		local effectType = actEffectData.effectType
+
+		if effectType == FightEnum.EffectType.FIGHTSTEP then
+			FightHelper.getActEffectDataList(targetEffectType, actEffectData.fightStep, targetList)
+		elseif effectType == targetEffectType then
+			table.insert(targetList, actEffectData)
+		end
+	end
+
+	return targetList
+end
+
 function FightHelper.checkInPaTaAfterSwitchScene()
 	if not FightDataHelper.fieldMgr:is3_3PaTa() then
 		return false
@@ -4337,6 +4390,41 @@ function FightHelper.checkInPaTaAfterSwitchScene()
 	local value = param and param:getKey(key)
 
 	return value ~= nil
+end
+
+function FightHelper.getEntityRecordSkillIdAndCount(entityId)
+	local entityMo = entityId and FightDataHelper.entityMgr:getById(entityId)
+	local buffDict = entityMo and entityMo:getBuffDic()
+
+	if not buffDict then
+		logError("buff dict is nil, entityId : " .. tostring(entityId))
+
+		return
+	end
+
+	for _, buffMo in pairs(buffDict) do
+		local buffActInfoList = buffMo.actInfo
+
+		for _, buffActInfo in ipairs(buffActInfoList) do
+			if buffActInfo.actId == FightEnum.BuffActId.ButterflyRecordSkill then
+				local array = FightStrUtil.instance:getSplitToNumberCache(buffActInfo.strParam, ",")
+				local count = array and array[1]
+				local skillId = array and array[2]
+
+				if not count then
+					logError(string.format("count is %s, buffId : %s", count, buffMo.buffId))
+				end
+
+				if not skillId then
+					logError(string.format("skillId is %s, buffId : %s", skillId, buffMo.buffId))
+				end
+
+				return skillId, count
+			end
+		end
+	end
+
+	logError("not found ButterflyRecordSkill Buff")
 end
 
 return FightHelper

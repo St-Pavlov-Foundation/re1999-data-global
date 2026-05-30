@@ -3,6 +3,8 @@
 module("modules.logic.versionactivity1_3.act125.model.Activity125MO", package.seeall)
 
 local Activity125MO = pureTable("Activity125MO")
+local kState_None = 0
+local kState_Received = 1
 
 function Activity125MO:ctor()
 	self._userId = PlayerModel.instance:getMyUserId()
@@ -27,7 +29,7 @@ function Activity125MO:initConfig()
 	self._episodeList = {}
 
 	if self.config then
-		for k, v in pairs(self.config) do
+		for _, v in pairs(self.config) do
 			table.insert(self._episodeList, v)
 		end
 
@@ -56,7 +58,7 @@ function Activity125MO:isEpisodeFinished(episodeId)
 		return false
 	end
 
-	return self._episdoeInfos and self._episdoeInfos[episodeId] == 1
+	return self._episdoeInfos and self._episdoeInfos[episodeId] == kState_Received
 end
 
 function Activity125MO:getEpisodeConfig(episodeId)
@@ -69,13 +71,13 @@ function Activity125MO:isEpisodeUnLock(episodeId)
 	local isPreEpisodeFinished = true
 
 	if preEpisodeId and preEpisodeId > 0 then
-		isPreEpisodeFinished = self._episdoeInfos[preEpisodeId] == 1 or self:checkLocalIsPlay(preEpisodeId) and self._episdoeInfos[preEpisodeId] == 0
+		isPreEpisodeFinished = self._episdoeInfos[preEpisodeId] == kState_Received or self:checkLocalIsPlay(preEpisodeId) and self._episdoeInfos[preEpisodeId] == kState_None
 	end
 
 	return isPreEpisodeFinished and self._episdoeInfos[episodeId] ~= nil
 end
 
-function Activity125MO:isEpisodeDayOpen(episodeId, real)
+function Activity125MO:isEpisodeDayOpen(episodeId)
 	local result = false
 	local actMO = ActivityModel.instance:getActMO(self.id)
 	local episodeCfg = self:getEpisodeConfig(episodeId)
@@ -115,9 +117,10 @@ end
 function Activity125MO:getLastEpisode()
 	for i = #self._episodeList, 1, -1 do
 		local value = self._episodeList[i]
+		local episodeId = value.id
 
-		if self:isEpisodeReallyOpen(value.id) then
-			return value.id
+		if self:isEpisodeReallyOpen(episodeId) then
+			return episodeId
 		end
 	end
 
@@ -127,10 +130,12 @@ function Activity125MO:getLastEpisode()
 end
 
 function Activity125MO:getFirstRewardEpisode()
-	for index, value in ipairs(self._episodeList) do
-		if self:isEpisodeReallyOpen(value.id) then
-			if self._episdoeInfos[value.id] == 0 then
-				return value.id
+	for _, value in ipairs(self._episodeList) do
+		local episodeId = value.id
+
+		if self:isEpisodeReallyOpen(episodeId) then
+			if self._episdoeInfos[episodeId] == kState_None then
+				return episodeId
 			end
 		else
 			return value.preId
@@ -188,10 +193,11 @@ function Activity125MO:getSelectEpisodeId()
 end
 
 function Activity125MO:isAllEpisodeFinish()
-	for index, value in ipairs(self._episodeList) do
-		local state = self._episdoeInfos[value.id]
+	for _, value in ipairs(self._episodeList) do
+		local episodeId = value.id
+		local state = self._episdoeInfos[episodeId]
 
-		if not state or state == 0 then
+		if not state or state == kState_None then
 			return false
 		end
 	end
@@ -199,15 +205,16 @@ function Activity125MO:isAllEpisodeFinish()
 	return true
 end
 
-function Activity125MO:isHasEpisodeCanReceiveReward(episodeId)
-	if episodeId then
-		return self._episdoeInfos[episodeId] == 0
+function Activity125MO:isHasEpisodeCanReceiveReward(optEpisodeId)
+	if optEpisodeId then
+		return self._episdoeInfos[optEpisodeId] == kState_None
 	end
 
-	for index, value in ipairs(self._episodeList) do
-		local state = self._episdoeInfos[value.id]
+	for _, value in ipairs(self._episodeList) do
+		local episodeId = value.id
+		local state = self._episdoeInfos[episodeId]
 
-		if state == 0 then
+		if state == kState_None then
 			return true
 		end
 	end
@@ -244,10 +251,11 @@ end
 
 function Activity125MO:hasEpisodeCanGetReward()
 	for _, value in ipairs(self._episodeList) do
-		local state = self._episdoeInfos[value.id]
-		local localIsPlay = self:checkLocalIsPlay(value.id)
+		local episodeId = value.id
+		local state = self._episdoeInfos[episodeId]
+		local localIsPlay = self:checkLocalIsPlay(episodeId)
 
-		if state == 0 and localIsPlay then
+		if state == kState_None and localIsPlay then
 			return true
 		end
 	end
@@ -274,6 +282,40 @@ function Activity125MO:hasRedDot()
 	end
 
 	return false
+end
+
+function Activity125MO:getLatestEpisode()
+	local foundInex = -1
+
+	for index, value in ipairs(self._episodeList) do
+		local episodeId = value.id
+
+		if self:isEpisodeReallyOpen(episodeId) then
+			local isRecevied, _, _, canGetReward = self:getRLOC(episodeId)
+
+			if not isRecevied then
+				if foundInex == -1 or canGetReward then
+					return episodeId
+				else
+					break
+				end
+			else
+				foundInex = index
+			end
+		else
+			return value.preId
+		end
+	end
+
+	if foundInex ~= -1 then
+		local foundEpisode = self._episodeList[foundInex]
+
+		return foundEpisode.id
+	end
+
+	local lastEpisode = self._episodeList[#self._episodeList]
+
+	return lastEpisode and lastEpisode.id
 end
 
 return Activity125MO

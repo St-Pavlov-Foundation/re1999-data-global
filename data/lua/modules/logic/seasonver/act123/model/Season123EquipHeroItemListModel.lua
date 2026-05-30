@@ -6,9 +6,6 @@ local Season123EquipHeroItemListModel = class("Season123EquipHeroItemListModel",
 
 Season123EquipHeroItemListModel.MainCharPos = ModuleEnum.MaxHeroCountInGroup
 Season123EquipHeroItemListModel.TotalEquipPos = 5
-Season123EquipHeroItemListModel.MaxPos = 1
-Season123EquipHeroItemListModel.HeroMaxPos = 2
-Season123EquipHeroItemListModel.EmptyUid = "0"
 
 function Season123EquipHeroItemListModel:clear()
 	Season123EquipHeroItemListModel.super.clear(self)
@@ -43,7 +40,7 @@ function Season123EquipHeroItemListModel:initDatas(activityId, stage, slotIndex,
 	self.curEquipMap = {}
 
 	for i = 1, posMaxCount do
-		self.curEquipMap[i] = Season123EquipHeroItemListModel.EmptyUid
+		self.curEquipMap[i] = Activity123Enum.EmptyUid
 	end
 
 	self.curSelectSlot = slotIndex or 1
@@ -68,7 +65,23 @@ function Season123EquipHeroItemListModel:initUnlockIndex()
 end
 
 function Season123EquipHeroItemListModel:initItemMap()
-	self._itemMap = Season123Model.instance:getAllItemMo(self.activityId) or {}
+	self._itemMap = {}
+
+	local stageConfig = Season123Config.instance:getStageCo(self.activityId, self.stage)
+	local list = string.splitToNumber(stageConfig.mainEquip, "#")
+
+	for _, itemId in ipairs(list) do
+		local itemMO = Season123ItemMO.New()
+		local uid = tostring(itemId)
+
+		itemMO:setData({
+			quantity = 1,
+			itemId = itemId,
+			uid = uid
+		})
+
+		self._itemMap[uid] = itemMO
+	end
 end
 
 function Season123EquipHeroItemListModel:initPlayerPrefs()
@@ -129,7 +142,7 @@ function Season123EquipHeroItemListModel:setListData(itemId, itemUid, itemMO, li
 			if not itemMO then
 				itemMO = Season123ItemMO.New()
 
-				itemMO:init({
+				itemMO:setData({
 					quantity = 1,
 					itemId = itemId,
 					uid = itemUid
@@ -167,7 +180,7 @@ function Season123EquipHeroItemListModel:refreshMergeList()
 	local deckIdMap = {}
 
 	for k, v in pairs(self.curEquipMap) do
-		if v ~= Season123EquipHeroItemListModel.EmptyUid then
+		if v ~= Activity123Enum.EmptyUid then
 			curSelectIdMap[v] = true
 		end
 	end
@@ -221,7 +234,7 @@ function Season123EquipHeroItemListModel:equipItem(itemUid, slot)
 end
 
 function Season123EquipHeroItemListModel:unloadShowSlot(slot)
-	self.curEquipMap[slot] = Season123EquipHeroItemListModel.EmptyUid
+	self.curEquipMap[slot] = Activity123Enum.EmptyUid
 end
 
 function Season123EquipHeroItemListModel:unloadItem(itemUid)
@@ -232,7 +245,7 @@ function Season123EquipHeroItemListModel:unloadItem(itemUid)
 
 	for i = 1, posMaxCount do
 		if self.curEquipMap[i] == itemUid then
-			self.curEquipMap[i] = Season123EquipHeroItemListModel.EmptyUid
+			self.curEquipMap[i] = Activity123Enum.EmptyUid
 		end
 	end
 end
@@ -262,7 +275,7 @@ function Season123EquipHeroItemListModel:getItemUidByPos(targetPos, targetSlot)
 		end
 	end
 
-	return Season123EquipHeroItemListModel.EmptyUid
+	return Activity123Enum.EmptyUid
 end
 
 function Season123EquipHeroItemListModel:getItemEquipedPos(itemUid)
@@ -270,7 +283,7 @@ function Season123EquipHeroItemListModel:getItemEquipedPos(itemUid)
 end
 
 function Season123EquipHeroItemListModel:getEquipMaxCount(pos)
-	return pos == Season123EquipHeroItemListModel.MainCharPos and Season123EquipHeroItemListModel.HeroMaxPos or Season123EquipHeroItemListModel.MaxPos
+	return pos == Season123EquipHeroItemListModel.MainCharPos and Activity123Enum.MainCardNum or Activity123Enum.HeroCardNum
 end
 
 function Season123EquipHeroItemListModel:getPosHeroUid(targetPos)
@@ -325,7 +338,7 @@ function Season123EquipHeroItemListModel:isAllSlotEmpty()
 	local equipCount = self:getEquipMaxCount(self.curPos)
 
 	for slot = 1, equipCount do
-		if self.curEquipMap[slot] ~= Season123EquipHeroItemListModel.EmptyUid then
+		if self.curEquipMap[slot] ~= Activity123Enum.EmptyUid then
 			return false
 		end
 	end
@@ -360,7 +373,7 @@ function Season123EquipHeroItemListModel:flushSlot(slot)
 
 	self:unloadItemByPos(self.curPos, slot)
 
-	if itemUid ~= Season123EquipHeroItemListModel.EmptyUid then
+	if itemUid ~= Activity123Enum.EmptyUid then
 		self:unloadTeamLimitCard(itemUid)
 		self:unloadItem(itemUid)
 		self:equipItem(itemUid, slot)
@@ -416,8 +429,8 @@ end
 function Season123EquipHeroItemListModel:packUpdateEquips()
 	local equipInfos = {}
 
-	for slot = 1, Season123EquipHeroItemListModel.HeroMaxPos do
-		equipInfos[slot] = self.curEquipMap[slot] or Season123EquipHeroItemListModel.EmptyUid
+	for slot = 1, Activity123Enum.MainCardNum do
+		equipInfos[slot] = self.curEquipMap[slot] or Activity123Enum.EmptyUid
 	end
 
 	return equipInfos
@@ -427,8 +440,8 @@ function Season123EquipHeroItemListModel:checkResetCurSelected()
 	local posMaxCount = self:getEquipMaxCount(self.curPos)
 
 	for i = 1, posMaxCount do
-		if self.curEquipMap[i] ~= Season123EquipHeroItemListModel.EmptyUid and not self._itemMap[self.curEquipMap[i]] then
-			self.curEquipMap[i] = Season123EquipHeroItemListModel.EmptyUid
+		if self.curEquipMap[i] ~= Activity123Enum.EmptyUid and not self._itemMap[self.curEquipMap[i]] then
+			self.curEquipMap[i] = Activity123Enum.EmptyUid
 		end
 	end
 end

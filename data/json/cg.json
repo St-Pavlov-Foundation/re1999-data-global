@@ -3538,5 +3538,17 @@
     "image": "story_atcg/3_4/3_4_at_ys_getian.jpg",
     "preCgId": 0,
     "herostoryId": 29
+  },
+  {
+    "id": 103001,
+    "order": 0,
+    "storyChapterId": 1030,
+    "name": "language_10118206",
+    "nameEn": "Constant Wonder",
+    "desc": "language_10118207",
+    "episodeId": 0,
+    "image": "story_atcg/3_5/3_5_at_ys_baifuzhang.jpg",
+    "preCgId": 0,
+    "herostoryId": 30
   }
 ]

@@ -19,7 +19,12 @@ function FightWorkPlayAroundUpRank:onStart()
 		local oldSkillId = usedCard.skillId
 
 		FightDataUtil.coverData(self.actEffectData.cardInfo, usedCard)
-		self:com_sendFightEvent(FightEvent.PlayCardAroundUpRank, index, oldSkillId)
+
+		if self.actEffectData.effectNum1 == 1 then
+			self:com_sendFightEvent(FightEvent.PlayCardAroundUpRank_Lorentz, index, usedCard)
+		else
+			self:com_sendFightEvent(FightEvent.PlayCardAroundUpRank, index, oldSkillId)
+		end
 	end
 
 	self:com_registTimer(self._delayAfterPerformance, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed() + 0.1)

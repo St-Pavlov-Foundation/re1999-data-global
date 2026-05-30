@@ -74,6 +74,9 @@ SurvivalDef_pb.SURVIVALINTRUDEFIGHTSTATUSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENEHERO_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALSCENEHEROUIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENEHEROHEROIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITGOOD_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALRECRUITGOODIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITGOODNPCIDFIELD = protobuf.FieldDescriptor()
@@ -82,6 +85,7 @@ SurvivalDef_pb.SURVIVALSCENEPROPMAGMASTATUSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENEPROPRADARHEXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALEXPLOREBATTLEINFO_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALEXPLOREBATTLEINFOUNITIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALEXPLOREBATTLEINFOBATTLEIDFIELD = protobuf.FieldDescriptor()
@@ -130,6 +134,8 @@ SurvivalDef_pb.SURVIVALRECRUITINFOTAGSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFOSELECTEDTAGSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFOCANREFRESHTIMESFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALRECRUITINFOGOODFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG = protobuf.Descriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSTEP_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALSTEPTYPEFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALSTEPIDFIELD = protobuf.FieldDescriptor()
@@ -241,6 +247,7 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD = protobuf.FieldDescriptor()
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROP_MSG = protobuf.Descriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROPREPUTATIONIDFIELD = protobuf.FieldDescriptor()
 SurvivalDef_pb.SURVIVALREPUTATIONPROPREPUTATIONEXPFIELD = protobuf.FieldDescriptor()
@@ -965,6 +972,34 @@ SurvivalDef_pb.SURVIVALSCENEHERO_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALSCENEHERO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALSCENEHERO_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.name = "id"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.full_name = ".SurvivalOutSideMallItem.id"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.number = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.index = 0
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.type = 5
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.name = "count"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.full_name = ".SurvivalOutSideMallItem.count"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.number = 2
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.index = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.type = 5
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD.cpp_type = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.name = "SurvivalOutSideMallItem"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.full_name = ".SurvivalOutSideMallItem"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.fields = {
+	SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMIDFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMCOUNTFIELD
+}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALRECRUITGOODIDFIELD.name = "id"
 SurvivalDef_pb.SURVIVALRECRUITGOODIDFIELD.full_name = ".SurvivalRecruitGood.id"
 SurvivalDef_pb.SURVIVALRECRUITGOODIDFIELD.number = 1
@@ -1031,6 +1066,15 @@ SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD.message_type = SurvivalDef_pb.SURHEX_MSG
 SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD.type = 11
 SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.name = "mode"
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.full_name = ".SurvivalSceneProp.mode"
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.number = 5
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.index = 4
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.label = 1
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.default_value = 0
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.type = 5
+SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD.cpp_type = 1
 SurvivalDef_pb.SURVIVALSCENEPROP_MSG.name = "SurvivalSceneProp"
 SurvivalDef_pb.SURVIVALSCENEPROP_MSG.full_name = ".SurvivalSceneProp"
 SurvivalDef_pb.SURVIVALSCENEPROP_MSG.nested_types = {}
@@ -1039,7 +1083,8 @@ SurvivalDef_pb.SURVIVALSCENEPROP_MSG.fields = {
 	SurvivalDef_pb.SURVIVALSCENEPROPMAGMASTATUSFIELD,
 	SurvivalDef_pb.SURVIVALSCENEPROPRADARHEXFIELD,
 	SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEFIELD,
-	SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD
+	SurvivalDef_pb.SURVIVALSCENEPROPTELEPORTGATEHEXFIELD,
+	SurvivalDef_pb.SURVIVALSCENEPROPMODEFIELD
 }
 SurvivalDef_pb.SURVIVALSCENEPROP_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALSCENEPROP_MSG.extensions = {}
@@ -1527,6 +1572,25 @@ SurvivalDef_pb.SURVIVALRECRUITINFO_MSG.fields = {
 }
 SurvivalDef_pb.SURVIVALRECRUITINFO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALRECRUITINFO_MSG.extensions = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.name = "items"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.full_name = ".SurvivalOutSideMall.items"
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.number = 1
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.index = 0
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.label = 3
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.default_value = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.message_type = SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.name = "SurvivalOutSideMall"
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.full_name = ".SurvivalOutSideMall"
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.nested_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.enum_types = {}
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.fields = {
+	SurvivalDef_pb.SURVIVALOUTSIDEMALLITEMSFIELD
+}
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.is_extendable = false
+SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG.extensions = {}
 SurvivalDef_pb.SURVIVALSTEPTYPEFIELD.name = "type"
 SurvivalDef_pb.SURVIVALSTEPTYPEFIELD.full_name = ".SurvivalStep.type"
 SurvivalDef_pb.SURVIVALSTEPTYPEFIELD.number = 1
@@ -2606,6 +2670,16 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.default_value = nil
 SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.message_type = SurvivalDef_pb.SURVIVALMODBOX_MSG
 SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.type = 11
 SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD.cpp_type = 10
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.name = "mall"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.full_name = ".SurvivalOutSideInfo.mall"
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.number = 28
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.index = 17
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.label = 1
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.has_default_value = false
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.default_value = nil
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.message_type = SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.type = 11
+SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD.cpp_type = 10
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.name = "SurvivalOutSideInfo"
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.full_name = ".SurvivalOutSideInfo"
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.nested_types = {}
@@ -2627,7 +2701,8 @@ SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.fields = {
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOHANDBOOKBOXFIELD,
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOOUTSIDETECHBOXFIELD,
 	SurvivalDef_pb.SURVIVALOUTSIDEINFOROLEBOXFIELD,
-	SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOMODBOXFIELD,
+	SurvivalDef_pb.SURVIVALOUTSIDEINFOMALLFIELD
 }
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.is_extendable = false
 SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG.extensions = {}
@@ -3480,6 +3555,8 @@ SurvivalDef_pb.SurvivalModBox = protobuf.Message(SurvivalDef_pb.SURVIVALMODBOX_M
 SurvivalDef_pb.SurvivalNpc = protobuf.Message(SurvivalDef_pb.SURVIVALNPC_MSG)
 SurvivalDef_pb.SurvivalNpcBox = protobuf.Message(SurvivalDef_pb.SURVIVALNPCBOX_MSG)
 SurvivalDef_pb.SurvivalOutSideInfo = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDEINFO_MSG)
+SurvivalDef_pb.SurvivalOutSideMall = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDEMALL_MSG)
+SurvivalDef_pb.SurvivalOutSideMallItem = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDEMALLITEM_MSG)
 SurvivalDef_pb.SurvivalOutSideTech = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDETECH_MSG)
 SurvivalDef_pb.SurvivalOutSideTechBox = protobuf.Message(SurvivalDef_pb.SURVIVALOUTSIDETECHBOX_MSG)
 SurvivalDef_pb.SurvivalPanel = protobuf.Message(SurvivalDef_pb.SURVIVALPANEL_MSG)

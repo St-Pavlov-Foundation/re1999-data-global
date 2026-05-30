@@ -133,5 +133,41 @@
     "duration": 0.0,
     "effectHangPoint": "mountbottom",
     "audio": 0
+  },
+  {
+    "effectPath": "v3a1_gsn/gsn_mb_buff",
+    "target": 2,
+    "skinId": 313203,
+    "changedPath": "v3a5_gsn/gsn_mb_buff",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v3a1_gsn/gsn_zy_innate",
+    "target": 1,
+    "skinId": 313203,
+    "changedPath": "v3a5_gsn/gsn_zy_innate",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 431320351
+  },
+  {
+    "effectPath": "v2a1_lsp/lsp_innate1_01",
+    "target": 1,
+    "skinId": 309804,
+    "changedPath": "v3a5_lsp/lsp_innate1_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 430980141
+  },
+  {
+    "effectPath": "v2a7_kphh/kphh_debuff3",
+    "target": 2,
+    "skinId": 311704,
+    "changedPath": "v3a5_kphh/kphh_debuff3",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431170446
   }
 ]

@@ -173,11 +173,7 @@ function CharacterView:_editableInitView()
 	end
 
 	self._careerlabels = self:getUserDataTb_()
-
-	for i = 1, 3 do
-		self._careerlabels[i] = gohelper.findChildText(self._gocareer, "careerlabel" .. i)
-	end
-
+	self._careeritem = gohelper.findChild(self._gocareer, "careerlabel")
 	self._attributevalues = {}
 	self._levelUpAttributeValues = {}
 
@@ -1364,13 +1360,28 @@ function CharacterView:_refreshCareer()
 		tags = string.split(battleTag, "#")
 	end
 
-	for i = 1, 3 do
-		if i <= #tags then
-			self._careerlabels[i].text = HeroConfig.instance:getBattleTagConfigCO(tags[i]).tagName
-		else
-			self._careerlabels[i].text = ""
-		end
+	for i, tag in ipairs(tags) do
+		local item = self:_getCareerItem(i)
+
+		item.txt.text = HeroConfig.instance:getBattleTagConfigCO(tag).tagName
 	end
+
+	for i = 1, #self._careerlabels do
+		gohelper.setActive(self._careerlabels[i].go, i <= #tags)
+	end
+end
+
+function CharacterView:_getCareerItem(index)
+	local item = self._careerlabels[index]
+
+	if not item then
+		item = self:getUserDataTb_()
+		item.go = gohelper.cloneInPlace(self._careeritem, "career_" .. index)
+		item.txt = item.go:GetComponent(gohelper.Type_TextMesh)
+		self._careerlabels[index] = item
+	end
+
+	return item
 end
 
 function CharacterView:_onAttributeChanged(level, heroId)
@@ -1756,6 +1767,7 @@ function CharacterView:onAnimDone()
 	self._isAnim = false
 
 	self:setShaderKeyWord()
+	self.viewContainer:_cancelBlock()
 end
 
 function CharacterView:setShaderKeyWord()

@@ -4,6 +4,10 @@ module("modules.logic.versionactivity2_6.common.EnterActivityViewOnExitFightScen
 
 local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
 
+local function _openPermanent_EnterView(viewParam)
+	PermanentController.instance:jump2Activity(VersionActivity2_6Enum.ActivityId.EnterView, viewParam)
+end
+
 function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
@@ -18,8 +22,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12606(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_6EnterView)
-		VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_6Enum.ActivityId.DiceHero, true)
+		local actId = VersionActivity2_6Enum.ActivityId.DiceHero
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		RoleActivityController.instance:enterActivity(actId)
 	end)
 end
 
@@ -29,8 +36,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12605(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_6EnterView)
-		VersionActivity2_6EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_6Enum.ActivityId.Xugouji, true)
+		local actId = VersionActivity2_6Enum.ActivityId.Xugouji
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		XugoujiController.instance:openXugoujiLevelView()
 	end)
 end
 

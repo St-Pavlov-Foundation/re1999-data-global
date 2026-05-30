@@ -17,6 +17,7 @@ local fields = {
 	product = 3,
 	specProduct = 15,
 	id = 2,
+	isShowBtnDetail = 16,
 	activityId = 1,
 	preGoodsId = 10
 }

@@ -976,5 +976,65 @@
     "id": 2,
     "res": "dialogue_yeermolai_right",
     "pos": "165#0"
+  },
+  {
+    "dialogueId": 57,
+    "id": 1,
+    "res": "dialogue_x_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 57,
+    "id": 2,
+    "res": "dialogue_xiaochunque_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 58,
+    "id": 1,
+    "res": "dialogue_kongnaodai_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 58,
+    "id": 2,
+    "res": "dialogue_xugouji_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 59,
+    "id": 1,
+    "res": "dialogue_baifuzhang_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 59,
+    "id": 2,
+    "res": "dialogue_hudie_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 60,
+    "id": 1,
+    "res": "dialogue_x_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 60,
+    "id": 2,
+    "res": "dialogue_xingti_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 61,
+    "id": 1,
+    "res": "dialogue_kongnaodai_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 61,
+    "id": 2,
+    "res": "dialogue_qingjiegong_right",
+    "pos": "165#0"
   }
 ]

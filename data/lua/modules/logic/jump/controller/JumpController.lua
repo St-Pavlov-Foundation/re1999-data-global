@@ -266,7 +266,7 @@ local _notAllowJumpViewNames = {
 }
 
 function JumpController:checkCanJumpView(jumpView)
-	if ViewMgr.instance:isOpen(ViewName.CommonPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
+	if ViewMgr.instance:isOpen(ViewName.CommonPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView) and (ViewMgr.instance:isOpen(ViewName.MaterialTipView) or ViewMgr.instance:isOpen(ViewName.RoomMaterialTipView)) or ViewMgr.instance:isOpen(ViewName.BpPropView2) or ViewMgr.instance:isOpen(ViewName.FightSuccView) then
 		return false, ToastEnum.MaterialTipJump
 	end
 

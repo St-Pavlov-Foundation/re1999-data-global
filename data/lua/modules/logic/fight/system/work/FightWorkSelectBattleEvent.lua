@@ -28,7 +28,10 @@ function FightWorkSelectBattleEvent:onStart()
 			if config and config.type == "BattleSelection" and actInfo.param[#actInfo.param] == 0 and #actInfo.param >= 2 and lua_battle_selection.configDict[actInfo.param[1]] then
 				self:cancelFightWorkSafeTimer()
 				self:com_registFightEvent(FightEvent.RespUseClothSkillFail, self._onRespUseClothSkillFail)
-				ViewMgr.instance:openView(ViewName.FightSupportEventView, {
+
+				local viewName = self:getViewName(actInfo.param)
+
+				ViewMgr.instance:openView(viewName, {
 					buffData = buffData,
 					actInfo = actInfo
 				})
@@ -39,6 +42,16 @@ function FightWorkSelectBattleEvent:onStart()
 	end
 
 	return self:onDone(true)
+end
+
+function FightWorkSelectBattleEvent:getViewName(param)
+	local selectId = param[1]
+
+	if selectId == 3303017 or selectId == 3303018 or selectId == 3303019 or selectId == 3303020 or selectId == 3303021 or selectId == 3303022 or selectId == 3303023 or selectId == 3303024 then
+		return ViewName.Fight3_5BaiFuZhangWheelView
+	end
+
+	return ViewName.FightSupportEventView
 end
 
 function FightWorkSelectBattleEvent:_onRespUseClothSkillFail()

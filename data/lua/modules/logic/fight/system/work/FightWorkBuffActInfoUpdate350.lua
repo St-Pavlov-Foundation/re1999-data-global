@@ -28,6 +28,7 @@ function FightWorkBuffActInfoUpdate350:onStart()
 	handle = handle or self.defaultHandle
 
 	handle(self)
+	FightMsgMgr.sendMsg(FightMsgId.UpdateEntityBuffActInfo, self.actEffectData.targetId, buffUid, self.actEffectData.buffActInfo)
 end
 
 function FightWorkBuffActInfoUpdate350.initBuffActHandle()

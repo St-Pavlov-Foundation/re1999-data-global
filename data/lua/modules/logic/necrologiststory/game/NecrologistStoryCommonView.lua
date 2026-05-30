@@ -4,13 +4,20 @@ module("modules.logic.necrologiststory.game.NecrologistStoryCommonView", package
 
 local NecrologistStoryCommonView = class("NecrologistStoryCommonView", BaseView)
 
+function NecrologistStoryCommonView:ctor(rootPath)
+	NecrologistStoryCommonView.super.ctor(self)
+
+	self._rootPath = rootPath or ""
+end
+
 function NecrologistStoryCommonView:onInitView()
-	self.btnReward = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_reward")
-	self.goRewardRed = gohelper.findChild(self.viewGO, "#btn_reward/#go_reddot")
-	self.goRewardTime = gohelper.findChild(self.viewGO, "#btn_reward/#go_time")
-	self.txtRewardTime = gohelper.findChildTextMesh(self.viewGO, "#btn_reward/#go_time/#txt_time")
-	self.txtRewardTimeFormat = gohelper.findChildTextMesh(self.viewGO, "#btn_reward/#go_time/#txt_time/#txt_format")
-	self.btnReview = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_review")
+	self.rootGO = gohelper.findChild(self.viewGO, self._rootPath)
+	self.btnReward = gohelper.findChildButtonWithAudio(self.rootGO, "#btn_reward")
+	self.goRewardRed = gohelper.findChild(self.rootGO, "#btn_reward/#go_reddot")
+	self.goRewardTime = gohelper.findChild(self.rootGO, "#btn_reward/#go_time")
+	self.txtRewardTime = gohelper.findChildTextMesh(self.rootGO, "#btn_reward/#go_time/#txt_time")
+	self.txtRewardTimeFormat = gohelper.findChildTextMesh(self.rootGO, "#btn_reward/#go_time/#txt_time/#txt_format")
+	self.btnReview = gohelper.findChildButtonWithAudio(self.rootGO, "#btn_review")
 	self.animReward = self.btnReward.gameObject:GetComponent(typeof(UnityEngine.Animator))
 
 	if self._editableInitView then

@@ -145,4 +145,37 @@ function Season123ProgressUtils.getResultBg(pic, actId)
 	return Season123ViewHelper.getIconUrl(url, pic, actId)
 end
 
+function Season123ProgressUtils.isEpisodeUnlock(actId, stage, layer)
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+
+	if not seasonMO then
+		return false
+	end
+
+	local curStageMO = seasonMO:getStageMO(stage)
+
+	if not curStageMO then
+		return false
+	end
+
+	local episodeMO = curStageMO:getEpisodeMo(layer)
+	local isFinished = episodeMO and episodeMO:isFinished()
+
+	if isFinished then
+		return true
+	end
+
+	if layer <= 1 then
+		return true
+	end
+
+	local prevLayerMO = curStageMO:getEpisodeMo(layer - 1)
+
+	if not prevLayerMO or not prevLayerMO:isFinished() then
+		return false
+	end
+
+	return true
+end
+
 return Season123ProgressUtils

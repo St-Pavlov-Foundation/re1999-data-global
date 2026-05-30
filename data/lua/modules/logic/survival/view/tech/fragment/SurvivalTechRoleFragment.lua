@@ -135,7 +135,7 @@ function SurvivalTechRoleFragment:setData(techId)
 
 	local slotRoot
 
-	for i = 1, 4 do
+	for i = 1, 6 do
 		local go = gohelper.findChild(self.viewGO, "cells/Suit_0" .. i)
 
 		if i == self.techIconType then

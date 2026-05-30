@@ -26,6 +26,15 @@ function BossRushConfig:getIssxIconName(stage, layer)
 	return "lssx_" .. career
 end
 
+function BossRushConfig:getMonsterCO(stage, layer)
+	layer = self:getDefaultLayer(stage) or 1
+
+	local monsterId = self:getFinalMonsterId(stage, layer)
+	local monsterCO = lua_monster.configDict[monsterId]
+
+	return monsterCO
+end
+
 function BossRushConfig:getDefaultLayer(stage)
 	local stageEpisode = self:getEpisodeStages(stage)
 
@@ -368,6 +377,6 @@ function BossRushConfig:getV3a2BossTypeByStage(stage)
 	end
 end
 
-BossRushConfig.instance = BossRushConfig.New(VersionActivity3_4Enum.ActivityId.BossRush)
+BossRushConfig.instance = BossRushConfig.New(VersionActivity3_5Enum.ActivityId.BossRush)
 
 return BossRushConfig

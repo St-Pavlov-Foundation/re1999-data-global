@@ -21,7 +21,12 @@ function SurvivalShelterPlayerEntity:onCtor(param)
 end
 
 function SurvivalShelterPlayerEntity:onInit()
-	self:setPosAndDir(self._unitMo.pos, self._unitMo.dir)
+	if SurvivalMapHelper.instance:isInCollectionRoom() then
+		self:setPosAndDir(SurvivalHexNode.New(-1, 2), 1)
+	else
+		self._unitMo:initPos()
+		self:setPosAndDir(self._unitMo.pos, self._unitMo.dir)
+	end
 
 	self._loader = PrefabInstantiate.Create(self.go)
 
@@ -223,16 +228,16 @@ function SurvivalShelterPlayerEntity:_endMove(isEnd)
 	self._callObj = nil
 	self._callParam = nil
 
-	if callback then
-		callback(callObj, callParam)
-	end
-
 	if isEnd then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.CameraFollowerTarget)
 		SurvivalMapHelper.instance:getScene().path:hidePath()
 	end
 
 	self:updateEntity()
+
+	if callback then
+		callback(callObj, callParam)
+	end
 end
 
 function SurvivalShelterPlayerEntity:stopMove()

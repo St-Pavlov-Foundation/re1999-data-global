@@ -41,6 +41,7 @@ function GameSceneMgr:_addScenes()
 	self:_addSceneObj(SceneType.Survival, SurvivalScene)
 	self:_addSceneObj(SceneType.SurvivalShelter, SurvivalShelterScene)
 	self:_addSceneObj(SceneType.SurvivalSummaryAct, SurvivalSummaryAct)
+	self:_addSceneObj(SceneType.SurvivalCollectionRoom, SurvivalCollectionRoomScene)
 	self:_addSceneObj(SceneType.Udimo, UdimoScene)
 	self:_addSceneObj(SceneType.PartyGame, PartyGameScene)
 	self:_addSceneObj(SceneType.PartyGameLobby, PartyGameLobbyScene)
@@ -164,7 +165,7 @@ function GameSceneMgr:startScene(sceneType, sceneId, levelId, forceStarting, for
 	self:showLoading(sceneType)
 	self:closeScene(sceneType, sceneId, levelId)
 
-	if sceneType == SceneType.Main or sceneType == SceneType.Room or sceneType == SceneType.Explore or sceneType == SceneType.SurvivalShelter or sceneType == SceneType.SurvivalSummaryAct or sceneType == SceneType.Survival or sceneType == SceneType.Cachot then
+	if sceneType == SceneType.Main or sceneType == SceneType.Room or sceneType == SceneType.Explore or sceneType == SceneType.SurvivalShelter or sceneType == SceneType.SurvivalSummaryAct or sceneType == SceneType.SurvivalCollectionRoom or sceneType == SceneType.Survival or sceneType == SceneType.Cachot then
 		TaskDispatcher.runDelay(self._onDelayStartScene, self, 1.467)
 	else
 		self._isStarting = true
@@ -272,7 +273,7 @@ function GameSceneMgr:isClosing()
 end
 
 function GameSceneMgr:isSpScene()
-	local cur_scene_id = FightGameMgr.sceneLevelMgr.sceneId
+	local cur_scene_id = FightGameMgr.sceneLevelMgr and FightGameMgr.sceneLevelMgr.sceneId
 
 	if cur_scene_id and cur_scene_id == 11501 then
 		return true

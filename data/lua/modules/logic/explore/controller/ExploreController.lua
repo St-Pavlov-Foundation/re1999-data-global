@@ -204,7 +204,7 @@ function ExploreController:exit()
 		return
 	end
 
-	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Explore, false)
+	DungeonModel.instance:setAdvPlayJumpType(DungeonEnum.AdvPlayType.Explore)
 
 	DungeonModel.instance.curSendEpisodeId = ExploreConfig.instance:getEpisodeId(ExploreModel.instance:getMapId())
 

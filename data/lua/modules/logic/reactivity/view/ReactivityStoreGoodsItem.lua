@@ -71,7 +71,12 @@ function ReactivityStoreGoodsItem:updateInfo(storeGoodsCo)
 	end
 
 	gohelper.setActive(self.goMaxRareEffect, rare >= 5)
-	UISpriteSetMgr.instance:setV2a5MainActivitySprite(self.imageRare, "v2a5_store_quality_" .. rare)
+
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
+
+	local iconName = VersionActivityFixedHelper.getVersionActivityStoreRareIcon(self._bigVersion, self._smallVersion) .. rare
+
+	VersionActivityFixedHelper.setMainActivitySprite(self.imageRare, iconName, true, self._bigVersion, self._smallVersion)
 
 	if needConvert and self.remainBuyCount > 0 then
 		gohelper.setActive(self.goIconExchange, true)

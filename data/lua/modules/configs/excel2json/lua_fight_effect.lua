@@ -5,11 +5,13 @@ module("modules.configs.excel2json.lua_fight_effect", package.seeall)
 local lua_fight_effect = {}
 local fields = {
 	career3 = 4,
-	career5 = 6,
 	career2 = 3,
+	career1 = 2,
+	career8 = 9,
+	career7 = 8,
 	career6 = 7,
 	id = 1,
-	career1 = 2,
+	career5 = 6,
 	career4 = 5
 }
 local primaryKey = {

@@ -22,6 +22,7 @@ function FeiLinShiDuoEpisodeLevelView:onInitView()
 	self._goPath = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/path/path_2")
 	self._animPath = self._goPath:GetComponent(gohelper.Type_Animator)
 	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO)
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -35,6 +36,7 @@ function FeiLinShiDuoEpisodeLevelView:addEvents()
 	self._drag:AddDragEndListener(self._onDragEnd, self)
 	self._touch:AddClickDownListener(self._onClickDown, self)
 	self._scrollStory:AddOnValueChanged(self._onScrollValueChanged, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, self.onSelectEpisode, self)
 	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, self.playEpisodeUnlockAnim, self)
 	self:addEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, self.switchBG, self)
@@ -48,10 +50,37 @@ function FeiLinShiDuoEpisodeLevelView:removeEvents()
 	self._drag:RemoveDragEndListener()
 	self._touch:RemoveClickDownListener()
 	self._scrollStory:RemoveOnValueChanged()
+	self._btnTrial:RemoveClickListener()
 	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SelectEpisode, self.onSelectEpisode, self)
 	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.NextEpisodePlayUnlockAnim, self.playEpisodeUnlockAnim, self)
 	self:removeEventCb(FeiLinShiDuoGameController.instance, FeiLinShiDuoEvent.SwitchBG, self.switchBG, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
+end
+
+function FeiLinShiDuoEpisodeLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function FeiLinShiDuoEpisodeLevelView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(self.activityId) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
 end
 
 function FeiLinShiDuoEpisodeLevelView:_btnPlayBtnOnClick()
@@ -75,6 +104,7 @@ function FeiLinShiDuoEpisodeLevelView:_editableInitView()
 	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a5_Act185Task, nil, self.refreshReddot, self)
 
 	self.activityId = VersionActivity2_5Enum.ActivityId.FeiLinShiDuo
+	self.config = ActivityConfig.instance:getActivityCo(self.activityId)
 
 	self:initEpisodeItem()
 

@@ -53,12 +53,24 @@ function FixTmpBreakLine:replaceContent(content)
 	local result = ""
 	local char = ""
 	local isInTag = false
+	local checkTagFirstChar = false
 
 	for i = 1, #content do
 		char = string.sub(content, i, i)
 
+		if checkTagFirstChar then
+			local byte = string.byte(char, 1)
+
+			if byte >= 234 and byte <= 237 then
+				isInTag = false
+			end
+
+			checkTagFirstChar = false
+		end
+
 		if char == "<" then
 			isInTag = true
+			checkTagFirstChar = true
 		elseif char == ">" then
 			isInTag = false
 		end

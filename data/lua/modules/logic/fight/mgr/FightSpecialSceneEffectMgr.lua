@@ -150,53 +150,7 @@ function FightSpecialSceneEffectMgr:_releaseShiSiHangShiGoodEffect()
 end
 
 function FightSpecialSceneEffectMgr:_detectShiSiHangShiGoodEffect(tar_entity, buff)
-	local entityMO = tar_entity:getMO()
-
-	if entityMO and entityMO.modelId == 3023 then
-		local level, rank = HeroConfig.instance:getShowLevel(entityMO.level)
-
-		if rank < 2 then
-			return
-		end
-
-		local haveGoodBuff = false
-		local buffDic = entityMO:getBuffDic()
-
-		for _, buffMO in pairs(buffDic) do
-			local buff_config = lua_skill_buff.configDict[buffMO.buffId]
-			local buff_type_config = lua_skill_bufftype.configDict[buff_config.typeId]
-
-			for index, value in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
-				if buff_type_config.type == value then
-					haveGoodBuff = true
-
-					break
-				end
-			end
-
-			if haveGoodBuff then
-				break
-			end
-		end
-
-		if haveGoodBuff then
-			if not self._shi_si_hang_shi_good_effect then
-				self._shi_si_hang_shi_good_effect = tar_entity.effect:addHangEffect("buff/shisihangshi_innate", ModuleEnum.SpineHangPoint.mountweapon, nil, nil, {
-					z = 0,
-					x = 0,
-					y = 0
-				})
-
-				self._shi_si_hang_shi_good_effect:setLocalPos(0, 0, 0)
-
-				self._shi_si_hang_shi_uid = tar_entity.id
-
-				FightRenderOrderMgr.instance:onAddEffectWrap(tar_entity.id, self._shi_si_hang_shi_good_effect)
-			end
-		else
-			self:_releaseShiSiHangShiGoodEffect()
-		end
-	end
+	return
 end
 
 function FightSpecialSceneEffectMgr:_detectPlayCarAnimation(tar_entity, buff)

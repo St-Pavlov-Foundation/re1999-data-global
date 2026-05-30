@@ -16,6 +16,7 @@ function FightOperationItemData:setByProto(proto)
 	self.param1 = proto.param1
 	self.param2 = proto.param2
 	self.param3 = proto.param3
+	self.cardParam1 = proto.cardParam1
 end
 
 function FightOperationItemData:moveCard(fromIndex, toIndex, cardData)
@@ -40,12 +41,13 @@ function FightOperationItemData:moveUniversalCard(fromIndex, toIndex, cardData)
 	self.moveToIndex = toIndex
 end
 
-function FightOperationItemData:playCard(cardIndex, aimUid, cardData, param2, param3)
+function FightOperationItemData:playCard(cardIndex, aimUid, cardData, param2, param3, cardParam1)
 	self.operType = FightEnum.CardOpType.PlayCard
 	self.toId = self:getTarget(aimUid, cardData.skillId)
 	self.param1 = cardIndex
 	self.param2 = param2
 	self.param3 = param3
+	self.cardParam1 = cardParam1
 
 	local uid = cardData.uid
 	local skillId = cardData.skillId
@@ -62,6 +64,12 @@ function FightOperationItemData:playCard(cardIndex, aimUid, cardData, param2, pa
 	self.cardInfoMO = self.cardData
 end
 
+function FightOperationItemData:setCardParam1(skillId, entityUid)
+	self.cardParam1 = string.format("%s#%s", skillId, entityUid)
+	self.cardParam1_skillId = skillId
+	self.cardParam1_entityUid = entityUid
+end
+
 function FightOperationItemData:playAssistBossHandCard(skillId, toId)
 	self.operType = FightEnum.CardOpType.AssistBoss
 	self.param1 = skillId
@@ -72,12 +80,10 @@ function FightOperationItemData:playAssistBossHandCard(skillId, toId)
 
 	self.belongToEntityId = assistBoss.id
 	self.costActPoint = 0
-
-	local cardProto = FightDef_pb.CardInfo()
-
-	cardProto.skillId = skillId
-	cardProto.uid = self.belongToEntityId
-	self.cardInfoMO = FightCardInfoData.New(cardProto)
+	self.cardInfoMO = FightCardInfoData.New({
+		skillId = skillId,
+		uid = self.belongToEntityId
+	})
 end
 
 function FightOperationItemData:playPlayerFinisherSkill(skillId, toId)

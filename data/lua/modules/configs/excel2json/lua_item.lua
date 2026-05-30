@@ -14,6 +14,7 @@ local fields = {
 	desc = 4,
 	rare = 8,
 	subType = 5,
+	clientDisplayType = 23,
 	itemSortIdx = 21,
 	icon = 7,
 	price = 17,

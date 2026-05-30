@@ -151,8 +151,6 @@ end
 
 function DoorRoleEffect:_stopVideo()
 	if self._avProVideoPlayer then
-		self._avProVideoPlayer:stop()
-
 		self._avProVideoPlayer = nil
 		self._particleSystem = nil
 	end
@@ -160,16 +158,6 @@ end
 
 function DoorRoleEffect:_clearVideos()
 	self:_setIdle2CameraEnabled(false)
-
-	for _, avProVideoPlayer in ipairs(self._videoList) do
-		if avProVideoPlayer ~= nil then
-			if not BootNativeUtil.isIOS() then
-				avProVideoPlayer:stop()
-			end
-
-			avProVideoPlayer:clear()
-		end
-	end
 
 	self._videoList = {}
 	self._avProVideoPlayer = nil

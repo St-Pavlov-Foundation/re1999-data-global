@@ -81,7 +81,7 @@ function SurvivalSettleWeekPushWork:setActiveUIBlock(blockKey, isActiveBlock, is
 	UIBlockMgrExtend.setNeedCircleMv(isNeedCircleMv)
 
 	if isActiveBlock then
-		UIBlockHelper.instance:startBlock(blockKey, 6)
+		UIBlockHelper.instance:startBlock(blockKey, 8)
 	else
 		UIBlockHelper.instance:endBlock(blockKey)
 	end
@@ -103,20 +103,33 @@ function SurvivalSettleWeekPushWork:_tweenToPlayerPos()
 
 	if not player then
 		self:showResultPanel(false)
+		SurvivalModel.instance:addDebugSettleStr("雨前结算打印 没有玩家? _tweenToPlayerPos")
+		logError(SurvivalModel.instance.debugSettleStr)
 
 		return
 	end
 
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.ChangeCameraScale, 1, true)
 	player:focusEntity(1, self.playEntityAnim, self)
+	TaskDispatcher.runDelay(self.delayFocusEntity, self, 3)
+end
+
+function SurvivalSettleWeekPushWork:delayFocusEntity()
+	self:playEntityAnim()
+	SurvivalModel.instance:addDebugSettleStr("雨前结算打印 delayFocusEntity")
+	logError(SurvivalModel.instance.debugSettleStr)
 end
 
 function SurvivalSettleWeekPushWork:playEntityAnim()
+	TaskDispatcher.cancelTask(self.delayFocusEntity, self)
+
 	local curScene = GameSceneMgr.instance:getCurScene()
 	local player = curScene and curScene.unit and curScene.unit:getPlayer()
 
 	if not player then
 		self:showResultPanel(false)
+		SurvivalModel.instance:addDebugSettleStr("雨前结算打印 没有玩家? playEntityAnim")
+		logError(SurvivalModel.instance.debugSettleStr)
 
 		return
 	end
@@ -188,6 +201,7 @@ function SurvivalSettleWeekPushWork:clearWork()
 	TaskDispatcher.cancelTask(self.delayProtectFinish, self)
 	TaskDispatcher.cancelTask(self._tweenToPlayerPos, self)
 	TaskDispatcher.cancelTask(self.onPlayerAnimFinish, self)
+	TaskDispatcher.cancelTask(self.delayFocusEntity, self)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.EnterSceneFinish, self._onEnterOneSceneFinish, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.BossPerformFinish, self._bossPerformFinish, self)
 	SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)

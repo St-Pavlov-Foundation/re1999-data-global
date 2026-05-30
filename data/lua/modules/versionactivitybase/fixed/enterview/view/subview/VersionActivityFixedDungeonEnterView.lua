@@ -51,11 +51,11 @@ function VersionActivityFixedDungeonEnterView:onRefreshActivity(actId)
 end
 
 function VersionActivityFixedDungeonEnterView:_btnstoreOnClick()
-	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openStoreView()
+	VersionActivityFixedDungeonController.instance:openStoreView()
 end
 
 function VersionActivityFixedDungeonEnterView:_btnenterOnClick()
-	VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openVersionActivityDungeonMapView()
+	VersionActivityFixedDungeonController.instance:openVersionActivityDungeonMapView()
 end
 
 function VersionActivityFixedDungeonEnterView:_btnFinishedOnClick()
@@ -68,18 +68,23 @@ end
 
 function VersionActivityFixedDungeonEnterView:_editableInitView()
 	self._txtstorename = gohelper.findChildText(self.viewGO, "entrance/#btn_store/normal/txt_shop")
-	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
-	self.actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
-	self.animComp = VersionActivityFixedHelper.getVersionActivitySubAnimatorComp().get(self.viewGO, self)
+
+	local enum = VersionActivityFixedHelper.getVersionActivityEnum()
+
+	self.actId = enum.ActivityId.Dungeon
+
+	local subAnimatorComp = VersionActivityFixedHelper.getVersionActivitySubAnimatorComp()
+
+	self.animComp = subAnimatorComp.get(self.viewGO, self)
 	self.goEnter = self._btnenter.gameObject
 	self.goFinish = self._btnFinished.gameObject
 	self.goStore = self._btnstore.gameObject
 	self.goLock = self._btnLocked.gameObject
-	self.actId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+	self.actId = enum.ActivityId.Dungeon
 	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
 	self:_setDesc()
-	RedDotController.instance:addRedDot(self._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(self._bigVersion, self._smallVersion))
+	RedDotController.instance:addRedDot(self._goreddot, VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId())
 end
 
 function VersionActivityFixedDungeonEnterView:_setDesc()
@@ -95,6 +100,7 @@ function VersionActivityFixedDungeonEnterView:onUpdateParam()
 end
 
 function VersionActivityFixedDungeonEnterView:onOpen()
+	VersionActivityFixedDungeonController.instance:setEnterVerison()
 	self:refreshUI()
 	self.animComp:playOpenAnim()
 	TaskDispatcher.runRepeat(self.everyMinuteCall, self, TimeUtil.OneMinuteSecond)
@@ -112,6 +118,10 @@ function VersionActivityFixedDungeonEnterView:refreshUI()
 end
 
 function VersionActivityFixedDungeonEnterView:refreshRemainTime()
+	if not self._txttime then
+		return
+	end
+
 	local actInfoMo = ActivityModel.instance:getActivityInfo()[self.actId]
 	local offsetSecond = actInfoMo:getRealEndTimeStamp() - ServerTime.now()
 
@@ -125,7 +135,7 @@ function VersionActivityFixedDungeonEnterView:refreshRemainTime()
 		gohelper.setActive(self._txttime, false)
 	end
 
-	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore]
+	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]
 
 	self._txtstorename.text = storeActInfoMo.config.name
 	self._txtStoreTime.text = storeActInfoMo:getRemainTimeStr2ByEndTime(true)
@@ -144,21 +154,21 @@ function VersionActivityFixedDungeonEnterView:refreshActivityState()
 
 	gohelper.setActive(self._gotime, not isExpired)
 
-	local storeStatus = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.DungeonStore)
+	local storeStatus = ActivityHelper.getActivityStatusAndToast(VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore)
 	local isStoreNormal = storeStatus == ActivityEnum.ActivityStatus.Normal
 
 	gohelper.setActive(self.goStore, isStoreNormal)
 end
 
 function VersionActivityFixedDungeonEnterView:refreshStoreCurrency()
-	local currencyMO = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType(self._bigVersion, self._smallVersion))
+	local currencyMO = CurrencyModel.instance:getCurrency(VersionActivityFixedHelper.getVersionActivityCurrencyType())
 	local quantity = currencyMO and currencyMO.quantity or 0
 
 	self._txtStoreNum.text = GameUtil.numberDisplay(quantity)
 end
 
 function VersionActivityFixedDungeonEnterView:refreshRedDot()
-	local dungeonActId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+	local dungeonActId = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon
 	local isOpen = VersionActivityDungeonBaseController.instance:isOpenActivityHardDungeonChapter(dungeonActId)
 	local isNormalStatus = ActivityHelper.getActivityStatus(dungeonActId) == ActivityEnum.ActivityStatus.Normal
 

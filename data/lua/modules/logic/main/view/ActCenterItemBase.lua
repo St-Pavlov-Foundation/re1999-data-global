@@ -19,6 +19,8 @@ function ActCenterItemBase:init(go)
 	self._act_iconbgGo = gohelper.findChild(go, "act_iconbg")
 	self._act_iconbg_effGo = gohelper.findChild(go, "act_iconbg_eff")
 	self._goexpup = gohelper.findChild(self.go, "#go_expup")
+	self._txtgm = gohelper.findChildText(go, "txt_gm")
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(go, FestivalAtmosphereComp, self)
 
 	self:_initActEff()
 
@@ -27,6 +29,7 @@ function ActCenterItemBase:init(go)
 	self:onInit(go)
 	self:_addEvent()
 	gohelper.setActive(go, true)
+	self:_gm_Show_Activitycenter()
 end
 
 function ActCenterItemBase:onDestroyView()
@@ -34,6 +37,7 @@ function ActCenterItemBase:onDestroyView()
 	self:onDestroy()
 	gohelper.destroy(self.go)
 	self:__onDispose()
+	self._festivalAtmosphereComp:onDestroy()
 end
 
 function ActCenterItemBase:_addEvent()
@@ -109,21 +113,22 @@ function ActCenterItemBase:isShowActivityEffect(forceUpdate)
 end
 
 function ActCenterItemBase:_initActEff()
-	local mainActAtmosphereConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-	self._mainViewActBtnGoList = self:getUserDataTb_()
-
-	for i, path in ipairs(mainActAtmosphereConfig.mainViewActBtn or {}) do
-		self._mainViewActBtnGoList[i] = gohelper.findChild(self.go, path)
-	end
-
 	local isShow = self:isShowActivityEffect()
 
-	for _, go in pairs(self._mainViewActBtnGoList) do
-		gohelper.setActive(go, isShow)
+	self._festivalAtmosphereComp:setFestival(isShow)
+	self:_setActive_act_iconbg(isShow and ActivityModel.checkIsShowFxVisible())
+end
+
+function ActCenterItemBase:setFestival(isFestival)
+	self._festivalAtmosphereComp:setFestival(isFestival)
+end
+
+function ActCenterItemBase:getActBtnPrefixIconName(isShow, iconName)
+	if isShow then
+		return ActivityEnum.ActBtnPrefix.mainView .. iconName
 	end
 
-	self:_setActive_act_iconbg(isShow and ActivityModel.checkIsShowFxVisible())
+	return iconName
 end
 
 function ActCenterItemBase:onInit(go)
@@ -148,6 +153,99 @@ end
 
 function ActCenterItemBase:onRemoveEvent()
 	return
+end
+
+function ActCenterItemBase:_gm_Show_Activitycenter()
+	gohelper.setActive(self._txtgm.gameObject, false)
+
+	local isOpenGM = GMController.instance:isOpenGM() and GMSubViewActivity.isOnOpenAllActCenter
+
+	if not isOpenGM then
+		return
+	end
+
+	local dict = self:_gm_getActIdDict()
+	local list = {}
+	local gmTxt = ""
+
+	if not dict then
+		return
+	end
+
+	for id, _ in pairs(dict) do
+		table.insert(list, id)
+	end
+
+	table.sort(list, function(a, b)
+		return tonumber(a) < tonumber(b)
+	end)
+
+	for _, id in ipairs(list) do
+		local txt = string.format("<color=#BDB4A9>[%s]</color>", id)
+		local list2 = dict[id]
+
+		table.sort(list2, function(a, b)
+			return tonumber(a) < tonumber(b)
+		end)
+
+		for _, actId in ipairs(list2) do
+			txt = txt .. " " .. actId
+		end
+
+		gmTxt = gmTxt .. txt .. "\n"
+	end
+
+	self:showGm(gmTxt)
+end
+
+function ActCenterItemBase:_gm_getActIdDict()
+	local list = self:_gm_ActIds()
+
+	if not list then
+		return
+	end
+
+	local dict = {}
+
+	for _, actId in ipairs(list) do
+		local id = string.sub(tostring(actId), 2, 3)
+
+		if not dict[id] then
+			dict[id] = {}
+		end
+
+		table.insert(dict[id], actId)
+	end
+
+	return dict
+end
+
+function ActCenterItemBase:_gm_ActIds()
+	if not self._data then
+		return
+	end
+
+	if not self.onGetActId then
+		return
+	end
+
+	return {
+		self:onGetActId()
+	}
+end
+
+function ActCenterItemBase:showGm(gmTxt)
+	if not self._txtgm then
+		return
+	end
+
+	if string.nilorempty(gmTxt) then
+		gohelper.setActive(self._txtgm.gameObject, false)
+	else
+		gohelper.setActive(self._txtgm.gameObject, true)
+
+		self._txtgm.text = gmTxt
+	end
 end
 
 function ActCenterItemBase:onClick()

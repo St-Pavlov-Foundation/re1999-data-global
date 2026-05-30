@@ -61,23 +61,9 @@ function ActivityCruiseMainBtnItem:onRefresh()
 	self:refreshData()
 
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_7" or "icon_7"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_7")
 
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self:_setMainSprite(spriteName)
 end
 
@@ -98,6 +84,12 @@ end
 
 function ActivityCruiseMainBtnItem:refreshDot()
 	self:_refreshRedDot()
+end
+
+function ActivityCruiseMainBtnItem:_gm_ActIds()
+	return {
+		VersionActivity3_2Enum.ActivityId.CruiseMain
+	}
 end
 
 return ActivityCruiseMainBtnItem

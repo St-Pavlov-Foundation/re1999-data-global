@@ -38,5 +38,13 @@
     "param2": "1#1#0#0",
     "param3": "",
     "param4": ""
+  },
+  {
+    "resName": "v3a5_m_s358_bhmsh_boss",
+    "ctrlName": "DynamicShadow",
+    "param1": "m_s358_anim_cloud_manual",
+    "param2": "0.16#0.3#3#-2",
+    "param3": "",
+    "param4": ""
   }
 ]

@@ -95,7 +95,9 @@ function StoreLinkGiftItemComp:_refreshPrice()
 	if mo.isChargeGoods then
 		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
 	else
-		content = StoreConfig.instance:getRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
+		local showRefreshTime = StoreHelper.getShowRefreshTimeByGoodsMO(mo)
+
+		content = StoreConfig.instance:getRemainText(maxBuyCount, showRefreshTime, remain, mo.offlineTime)
 	end
 
 	if string.nilorempty(content) then

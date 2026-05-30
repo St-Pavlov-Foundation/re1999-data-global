@@ -459,6 +459,16 @@ function SurvivalHandbookModel:getHandBookUnlockDatas(type, subType)
 	return result
 end
 
+function SurvivalHandbookModel:getHandbookByCollectionBuild(id)
+	local datas = self:getHandBookDatas(SurvivalEnum.HandBookType.Collection, 0)
+
+	for j, mo in ipairs(datas) do
+		if mo.links == id then
+			return mo
+		end
+	end
+end
+
 function SurvivalHandbookModel:_parseBasicData()
 	if self.handbookMoDic then
 		return

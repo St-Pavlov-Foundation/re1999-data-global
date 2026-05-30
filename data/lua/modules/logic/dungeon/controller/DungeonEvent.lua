@@ -81,5 +81,6 @@ DungeonEvent.BossStoryPreMoveMapPos = 604
 DungeonEvent.OnCoverDungeonRecordReply = 1001
 DungeonEvent.OnDramaRewardStatusChange = 1101
 DungeonEvent.OnStartDungeonExtraParams = 1102
+DungeonEvent.OnRefreshAssistReply = 1103
 
 return DungeonEvent

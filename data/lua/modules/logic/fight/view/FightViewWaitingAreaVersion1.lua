@@ -44,6 +44,7 @@ function FightViewWaitingAreaVersion1:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.ForceEndSkillStep, self._onForceEndSkillStep, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayCardAroundUpRank, self._onPlayCardAroundUpRank, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayCardAroundDownRank, self._onPlayCardAroundDownRank, self)
+	self:addEventCb(FightController.instance, FightEvent.PlayCardAroundUpRank_Lorentz, self._onPlayCardAroundUpRank_Lorentz, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayCardAroundSetGray, self._onPlayCardAroundSetGray, self)
 	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self._onAddUseCard, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayChangeRankFail, self._onPlayChangeRankFail, self)
@@ -492,6 +493,17 @@ function FightViewWaitingAreaVersion1:_onPlayCardAroundUpRank(index, oldSkillId)
 
 		gohelper.setActive(lockGO, false)
 		cardItem:playCardLevelChange(nil, oldSkillId)
+	end
+end
+
+function FightViewWaitingAreaVersion1:_onPlayCardAroundUpRank_Lorentz(index, newCardInfoMo)
+	local cardItem = self._cardItemList[index]
+
+	if cardItem then
+		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+
+		gohelper.setActive(lockGO, false)
+		cardItem:playCardLevelChange_Lorentz(newCardInfoMo)
 	end
 end
 

@@ -512,9 +512,6 @@ function HeroGroupMO:_dropAidEquip()
 	if self.trialDict then
 		for i, trialData in pairs(self.trialDict) do
 			self:_setPosEquips(i - 1, nil)
-			self:updateActivity104PosEquips({
-				index = i - 1
-			})
 		end
 	end
 end

@@ -106,7 +106,7 @@ function HeroGroupSnapshotModel:getCurSnapshotId()
 	return self.curSnapshotId
 end
 
-function HeroGroupSnapshotModel:getCurGroupId(snapshotId)
+function HeroGroupSnapshotModel:getCurGroupId(snapshotId, isSurvivalDebug)
 	local index = self:getSelectIndex(snapshotId)
 
 	snapshotId = snapshotId or self.curSnapshotId
@@ -115,7 +115,21 @@ function HeroGroupSnapshotModel:getCurGroupId(snapshotId)
 		return index
 	end
 
-	return self.curGroupIds[index]
+	local v = self.curGroupIds[index]
+
+	if isSurvivalDebug and v == nil then
+		v = self.curGroupIds[1] or 1
+
+		local str = ""
+
+		for i, id in ipairs(self.curGroupIds) do
+			str = str .. " " .. id
+		end
+
+		logError(string.format("雨前漫游 英雄保存报错 index:%s ids:%s", index, str))
+	end
+
+	return v
 end
 
 function HeroGroupSnapshotModel:getCurGroup()

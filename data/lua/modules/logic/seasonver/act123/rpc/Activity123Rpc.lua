@@ -71,6 +71,7 @@ function Activity123Rpc:onReceiveAct123ChangeFightGroupReply(resultCode, msg)
 	if mo then
 		mo.heroGroupSnapshotSubId = msg.heroGroupSnapshotSubId
 
+		HeroGroupModel.instance:_setSingleGroup()
 		Season123Controller.instance:dispatchEvent(Season123Event.HeroGroupIndexChanged, {
 			actId = msg.activityId,
 			groupIndex = msg.heroGroupSnapshotSubId
@@ -280,6 +281,24 @@ function Activity123Rpc:onReceiveGetAct123StageRecordReply(resultCode, msg)
 	end
 
 	Season123RecordModel.instance:setSeason123ServerRecordData(msg)
+end
+
+function Activity123Rpc:sendAct123ReceiveStageBonusRequest(actId, stage, callback, callbackObj)
+	local req = Activity123Module_pb.Act123ReceiveStageBonusRequest()
+
+	req.activityId = actId
+	req.stage = stage
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Activity123Rpc:onReceiveAct123ReceiveStageBonusReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Season123Model.instance:setGetStageBonus(msg)
+	Season123Controller.instance:dispatchEvent(Season123Event.StageRewardGet)
 end
 
 Activity123Rpc.instance = Activity123Rpc.New()

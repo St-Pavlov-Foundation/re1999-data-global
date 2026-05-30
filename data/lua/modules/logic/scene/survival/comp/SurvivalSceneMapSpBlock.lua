@@ -203,6 +203,8 @@ function SurvivalSceneMapSpBlock:onSpBlockAdd(unitMo)
 	if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
 		self:checkEdge(unitMo.pos)
 	end
+
+	self:checkPetrifaction(unitMo, true)
 end
 
 function SurvivalSceneMapSpBlock:onSpBlockDelete(unitMo)
@@ -222,6 +224,35 @@ function SurvivalSceneMapSpBlock:onSpBlockDelete(unitMo)
 
 	if unitMo:getSubType() ~= SurvivalEnum.UnitSubType.Block then
 		self:checkEdge(unitMo.pos)
+	end
+
+	self:checkPetrifaction(unitMo, false)
+end
+
+function SurvivalSceneMapSpBlock:checkPetrifaction(survivalUnitMo, isAdd)
+	if survivalUnitMo:getSubType() == SurvivalEnum.UnitSubType.Petrifaction then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local list = sceneMo:getUnitByPos(survivalUnitMo.pos, true, true)
+
+		if list then
+			for i, unitMo in ipairs(list) do
+				if SurvivalMapHelper.instance:isPetrifactionTar(unitMo) then
+					if isAdd then
+						SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
+						SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowUnitBubble, unitMo.id, 1, 0)
+					else
+						local warmingRange = unitMo:getWarmingRange()
+
+						if warmingRange then
+							SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
+							self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
+						end
+
+						SurvivalController.instance:dispatchEvent(SurvivalEvent.HideUnitBubble, unitMo.id)
+					end
+				end
+			end
+		end
 	end
 end
 
@@ -269,6 +300,16 @@ function SurvivalSceneMapSpBlock:getBlock(hexPoint)
 	local block = self._allBlockDict[hexPoint.q] and self._allBlockDict[hexPoint.q][hexPoint.r]
 
 	return block
+end
+
+function SurvivalSceneMapSpBlock:_showEffect(id, pos, range)
+	local walkablePos = SurvivalMapModel.instance:getCurMapCo().walkables
+
+	for i, v in ipairs(SurvivalHelper.instance:getAllPointsByDis(pos, range)) do
+		if SurvivalHelper.instance:getValueFromDict(walkablePos, v) then
+			SurvivalMapHelper.instance:getScene().pointEffect:setPointEffectType(id, v.q, v.r, 1)
+		end
+	end
 end
 
 return SurvivalSceneMapSpBlock

@@ -65,7 +65,7 @@ function SurvivalSummaryActDirector:onSceneClose()
 		self._compInitSequence = nil
 	end
 
-	self:unregisterCallback(ViewMgr.instance, self.onOpenView, self)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenView, self)
 end
 
 return SurvivalSummaryActDirector

@@ -3,7 +3,7 @@
     "id": 10001,
     "coverType": "1",
     "excludeTypes": "",
-    "rejectTypes": "10002#10005",
+    "rejectTypes": "10002#10005#10007#10010#10011",
     "stage": 0,
     "decStage": 303,
     "feature": "frozen",
@@ -13,7 +13,7 @@
     "id": 10002,
     "coverType": "1",
     "excludeTypes": "",
-    "rejectTypes": "10001#10005",
+    "rejectTypes": "10001#10005#10007#10010#10011",
     "stage": 301,
     "decStage": 303,
     "feature": "burn#100#100",
@@ -43,7 +43,7 @@
     "id": 10005,
     "coverType": "1",
     "excludeTypes": "",
-    "rejectTypes": "10001#10002",
+    "rejectTypes": "10001#10002#10007#10010#10011",
     "stage": 0,
     "decStage": 303,
     "feature": "blockade",
@@ -63,7 +63,7 @@
     "id": 10007,
     "coverType": "1",
     "excludeTypes": "",
-    "rejectTypes": "",
+    "rejectTypes": "10001#10002#10005#10010#10011",
     "stage": 212,
     "decStage": 303,
     "feature": "depresse#100#100",
@@ -88,5 +88,25 @@
     "decStage": 303,
     "feature": "rouge2Attr103",
     "desc": ""
+  },
+  {
+    "id": 10011,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10001#10002#10005#10007#10010",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "ramona",
+    "desc": "language_10116010"
+  },
+  {
+    "id": 10010,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10001#10002#10005#10007#10011",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "lorenz",
+    "desc": "language_10116011"
   }
 ]

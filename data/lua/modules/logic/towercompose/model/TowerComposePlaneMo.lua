@@ -114,6 +114,19 @@ function TowerComposePlaneMo:updateTeamInfo(teamInfo)
 	self.teamInfoData.supportId = teamInfo.supportId
 	self.teamInfoData.researchId = teamInfo.researchId
 	self.teamInfoData.clothId = teamInfo.playerSkill
+
+	self:updateSupportAssistHero(teamInfo.supportAssistHero)
+end
+
+function TowerComposePlaneMo:updateSupportAssistHero(supportAssistHero)
+	local assistHero = {}
+
+	assistHero.heroUid = tonumber(supportAssistHero.uid)
+	assistHero.heroId = tonumber(supportAssistHero.heroId)
+	assistHero.level = supportAssistHero.level
+	assistHero.skin = supportAssistHero.skin
+	assistHero.exSkillLevel = supportAssistHero.exSkillLevel
+	self.teamInfoData.assistHero = assistHero
 end
 
 function TowerComposePlaneMo:getTeamInfoData()

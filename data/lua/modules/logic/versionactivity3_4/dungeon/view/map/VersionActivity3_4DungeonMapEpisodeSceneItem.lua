@@ -392,7 +392,7 @@ function VersionActivity3_4DungeonMapEpisodeSceneItem:setImage(image, light, epi
 	local starType = VersionActivityFixedHelper.getVersionActivityDungeonEnum(self._bigVersion, self._smallVersion).EpisodeStarType[episodeConfig.chapterId]
 	local lightStateIcon = light and starType.light or starType.empty
 
-	VersionActivityFixedHelper.setDungeonSprite(image, lightStateIcon)
+	VersionActivityFixedHelper.setDungeonSprite(image, lightStateIcon, true, self._bigVersion, self._smallVersion)
 end
 
 function VersionActivity3_4DungeonMapEpisodeSceneItem:getMaxWidth()

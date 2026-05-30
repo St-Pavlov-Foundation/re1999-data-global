@@ -17,7 +17,7 @@ function FightCenterView:removeEvents()
 end
 
 function FightCenterView:onOpen()
-	return
+	self:newClass(FightToughnessBreakEffect, self.viewGO)
 end
 
 function FightCenterView:onClose()

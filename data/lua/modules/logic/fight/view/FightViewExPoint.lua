@@ -119,6 +119,10 @@ function FightViewExPoint:_onPlayHandCard(cardInfoMO)
 		return
 	end
 
+	if FightCardDataHelper.hadNotAddExPointEnchant(cardInfoMO) then
+		return
+	end
+
 	local playCardAddExPoint = entityMO:getPlayCardAddExPoint()
 
 	if playCardAddExPoint < 1 then

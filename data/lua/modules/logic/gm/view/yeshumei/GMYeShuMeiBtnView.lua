@@ -40,6 +40,10 @@ function GMYeShuMeiBtnView:initViewContent()
 	self:addButton("L6", "打开指定关卡", self._openLuSiJianGameByEpisodeId, self)
 
 	self.showToggle = self:addToggle("L6", "显示配置点", self.onToggleValueChange, self)
+	self._lorentzGameId = self:addInputText("L7", nil, "gameID")
+
+	self:addButton("L7", "打开指定关卡", self._openLorentzGame, self)
+	self:addButton("L8", "提示次数99", self.setMaxTipCount, self)
 end
 
 function GMYeShuMeiBtnView:_openGMYeShuMeiView()
@@ -99,12 +103,6 @@ function GMYeShuMeiBtnView:onToggleValueChange()
 	LuSiJianGameModel.instance:setShowPointState(isOn)
 end
 
-function GMYeShuMeiBtnView:setMaxTipCount()
-	if ViewMgr.instance:isOpen(ViewName.BeiLiErGameView) then
-		BeiLiErGameModel.instance:setMaxTipCount()
-	end
-end
-
 function GMYeShuMeiBtnView:_openLevelView()
 	YeShuMeiController.instance:enterLevelView()
 end
@@ -119,6 +117,18 @@ function GMYeShuMeiBtnView:_finishBeiLiErCurrentGame()
 	local episodeId = BeiLiErModel.instance:getCurEpisode()
 
 	BeiLiErController.instance:_onGameFinished(VersionActivity3_2Enum.ActivityId.BeiLiEr, episodeId)
+end
+
+function GMYeShuMeiBtnView:_openLorentzGame()
+	local gameId = tonumber(self._lorentzGameId:GetText())
+
+	LorentzGameController.instance:reallyEnterGame(gameId)
+end
+
+function GMYeShuMeiBtnView:setMaxTipCount()
+	if ViewMgr.instance:isOpen(ViewName.LorentzGameView) then
+		LorentzGameModel.instance:setMaxTipCount()
+	end
 end
 
 return GMYeShuMeiBtnView

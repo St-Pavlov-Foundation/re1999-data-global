@@ -26,11 +26,17 @@ end
 function TowerComposeHeroGroupBuffView:addEvents()
 	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.HeroGroupSelectBuff, self.refreshUI, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshAssistState, self.refreshUI, self)
+	self:addEventCb(DungeonController.instance, DungeonEvent.OnRefreshAssistReply, self.onRefreshAssistReply, self)
+	self:addEventCb(TowerComposeController.instance, TowerComposeEvent.SelectPlaneSupportSlot, self.onSelectPlaneSupportSlot, self)
 end
 
 function TowerComposeHeroGroupBuffView:removeEvents()
 	self._btnclose:RemoveClickListener()
 	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.HeroGroupSelectBuff, self.refreshUI, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.RefreshAssistState, self.refreshUI, self)
+	self:removeEventCb(DungeonController.instance, DungeonEvent.OnRefreshAssistReply, self.onRefreshAssistReply, self)
+	self:removeEventCb(TowerComposeController.instance, TowerComposeEvent.SelectPlaneSupportSlot, self.onSelectPlaneSupportSlot, self)
 end
 
 function TowerComposeHeroGroupBuffView:_btncloseOnClick()
@@ -95,6 +101,14 @@ function TowerComposeHeroGroupBuffView:_onResearchSlotClick(planeSlotItem)
 	self:refreshUI()
 end
 
+function TowerComposeHeroGroupBuffView:onSelectPlaneSupportSlot(planeId)
+	local planeSlotItem = self.planeSlotItemMap[planeId]
+
+	if planeSlotItem then
+		self:_onSupportSlotClick(planeSlotItem)
+	end
+end
+
 function TowerComposeHeroGroupBuffView:_editableInitView()
 	self.supportItemList = self:getUserDataTb_()
 	self.researchItemList = self:getUserDataTb_()
@@ -120,14 +134,13 @@ function TowerComposeHeroGroupBuffView:onOpen()
 	self.showTwoPlane = self.towerEpisodeConfig.plane > 1
 	self.episodeId = self.fightParam.episodeId
 
-	local supportHeroCoList = TowerComposeConfig.instance:getAllSupportCoList(self.themeId)
-
-	self.heroCoList = self:buildHeroCoList(supportHeroCoList, false)
-
 	self:refreshUI()
 end
 
 function TowerComposeHeroGroupBuffView:refreshUI()
+	local supportHeroCoList = TowerComposeConfig.instance:getAllSupportCoList(self.themeId)
+
+	self.heroCoList = self:buildHeroCoList(supportHeroCoList)
 	self.curPlaneId, self.curBuffType = TowerComposeHeroGroupModel.instance:getCurSelectPlaneIdAndType()
 
 	gohelper.setActive(self._gosupportView, self.curBuffType == TowerComposeEnum.TeamBuffType.Support)
@@ -198,12 +211,13 @@ function TowerComposeHeroGroupBuffView:refreshSupportView()
 			supportItem = {
 				go = gohelper.clone(self._gosupportItem, self._gosupportContent, "supportItem" .. heroCoData.config.id)
 			}
-			supportItem.comp = MonoHelper.addNoUpdateLuaComOnceToGo(supportItem.go, TowerComposeHeroGroupSupportItem, {
-				heroCoData = heroCoData
-			})
+			supportItem.comp = MonoHelper.addNoUpdateLuaComOnceToGo(supportItem.go, TowerComposeHeroGroupSupportItem)
 			self.supportItemList[index] = supportItem
 		end
 
+		supportItem.comp:initData({
+			heroCoData = heroCoData
+		})
 		gohelper.setActive(supportItem.go, true)
 		supportItem.comp:refreshUI()
 	end
@@ -218,26 +232,44 @@ function TowerComposeHeroGroupBuffView:buildHeroCoList(heroCoList)
 	local heroIdMap = {}
 
 	for index, heroCo in ipairs(heroCoList) do
-		if not heroIdMap[heroCo.heroId] then
-			local coData = {}
+		local coData = heroIdMap[heroCo.heroId]
 
-			coData.index = index
-			coData.heroMo = HeroModel.instance:getByHeroId(heroCo.heroId)
-
-			local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(heroCo.themeId, heroCo.heroId, coData.heroMo and coData.heroMo.exSkillLevel or 0)
-
-			coData.config = curSupportCo
-			coData.heroConfig = HeroConfig.instance:getHeroCO(heroCo.heroId)
-			coData.canShow = coData.heroMo ~= nil
+		if not coData then
+			coData = {
+				index = index,
+				heroMo = HeroModel.instance:getByHeroId(heroCo.heroId),
+				heroConfig = HeroConfig.instance:getHeroCO(heroCo.heroId)
+			}
 
 			table.insert(newHeroCoList, coData)
 
 			heroIdMap[heroCo.heroId] = coData
 		end
+
+		local isAssistHero, assistHeroData = self:checkIsAssitHero(heroCo.themeId, heroCo.heroId)
+
+		if isAssistHero and assistHeroData and next(assistHeroData) then
+			local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(heroCo.themeId, heroCo.heroId, assistHeroData.exSkillLevel or 0)
+
+			coData.config = curSupportCo
+			coData.canShow = true
+			coData.isNormalEpisode = self.isNormalEpisode
+		else
+			local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(heroCo.themeId, heroCo.heroId, coData.heroMo and coData.heroMo.exSkillLevel or 0)
+
+			coData.config = curSupportCo
+			coData.canShow = coData.heroMo ~= nil
+			coData.isNormalEpisode = self.isNormalEpisode
+		end
 	end
 
 	table.sort(newHeroCoList, function(a, b)
-		if a.canShow ~= b.canShow then
+		local aInPlane = TowerComposeHeroGroupModel.instance:checkBuffInPlane(a.config.themeId, TowerComposeEnum.TeamBuffType.Support, a.config.id, a.isNormalEpisode)
+		local bInPlane = TowerComposeHeroGroupModel.instance:checkBuffInPlane(b.config.themeId, TowerComposeEnum.TeamBuffType.Support, b.config.id, b.isNormalEpisode)
+
+		if aInPlane ~= bInPlane then
+			return bInPlane < aInPlane
+		elseif a.canShow ~= b.canShow then
 			return a.canShow
 		elseif a.heroConfig.rare ~= b.heroConfig.rare then
 			return a.heroConfig.rare > b.heroConfig.rare
@@ -247,6 +279,26 @@ function TowerComposeHeroGroupBuffView:buildHeroCoList(heroCoList)
 	end)
 
 	return newHeroCoList
+end
+
+function TowerComposeHeroGroupBuffView:checkIsAssitHero(themeId, heroId)
+	if self.towerEpisodeConfig.plane > 0 then
+		for planeId = 1, self.towerEpisodeConfig.plane do
+			local assistHeroData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(themeId, planeId)
+
+			if assistHeroData and assistHeroData.heroId == heroId then
+				return true, assistHeroData
+			end
+		end
+	else
+		local assistHeroData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(themeId, 0)
+
+		if assistHeroData and assistHeroData.heroId == heroId then
+			return true, assistHeroData
+		end
+	end
+
+	return false
 end
 
 function TowerComposeHeroGroupBuffView:refreshPlaneSlot()
@@ -284,6 +336,7 @@ function TowerComposeHeroGroupBuffView:buildPlaneSlot(planeGO)
 	planeSlotItem.simageSupport = gohelper.findChildSingleImage(planeSlotItem.goSupport, "equiped/simage_support")
 	planeSlotItem.btnSupport = gohelper.findChildButtonWithAudio(planeSlotItem.goSupport, "btn_support")
 	planeSlotItem.animSupport = planeSlotItem.goSupport:GetComponent(typeof(UnityEngine.Animator))
+	planeSlotItem.goAssist = gohelper.findChild(planeSlotItem.goSupport, "go_assist")
 	planeSlotItem.goResearch = gohelper.findChild(planeGO, "research")
 	planeSlotItem.goResearchNormal = gohelper.findChild(planeSlotItem.goResearch, "normal")
 	planeSlotItem.goResearchSelect = gohelper.findChild(planeSlotItem.goResearch, "selected")
@@ -308,6 +361,9 @@ function TowerComposeHeroGroupBuffView:refreshPlaneSlotUI(planeSlotItem)
 	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, planeSlotItem.planeId)
 	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
 	local planeMo = themeMo:getPlaneMo(planeSlotItem.planeId)
+	local assistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, planeSlotItem.planeId)
+	local assistHeroId = assistData.heroId or 0
+	local assistHeroId, assistId = assistHeroId, assistData.heroUid or 0
 
 	gohelper.setActive(planeSlotItem.goResearch, isPlaneLayerUnlock)
 	gohelper.setActive(planeSlotItem.goSupportSelect, self.curBuffType == TowerComposeEnum.TeamBuffType.Support and self.curPlaneId == planeSlotItem.planeId)
@@ -326,9 +382,15 @@ function TowerComposeHeroGroupBuffView:refreshPlaneSlotUI(planeSlotItem)
 		local heroMo = HeroModel.instance:getByHeroId(supportConfig.heroId)
 		local heroConfig = HeroConfig.instance:getHeroCO(supportConfig.heroId)
 		local skinId = heroMo and heroMo.skin or heroConfig.skinId
+
+		skinId = assistData and assistData.heroId == supportConfig.heroId and assistData.skin > 0 and assistData.skin or skinId
+
 		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
 		planeSlotItem.simageSupport:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
+		gohelper.setActive(planeSlotItem.goAssist, supportConfig.heroId == assistHeroId)
+	else
+		gohelper.setActive(planeSlotItem.goAssist, false)
 	end
 
 	if planeSlotItem.researchBuffId > 0 then
@@ -359,6 +421,41 @@ function TowerComposeHeroGroupBuffView:refreshPlaneSlotUI(planeSlotItem)
 			AudioMgr.instance:trigger(AudioEnum.TowerCompose.play_ui_fight_ly_card_close)
 		end
 	end
+end
+
+function TowerComposeHeroGroupBuffView:onRefreshAssistReply(info)
+	if info.assistType == PickAssistEnum.Type.TowerCompose1 or info.assistType == PickAssistEnum.Type.TowerCompose2 then
+		local assistHeroId = info.ext
+		local assistList = DungeonAssistModel.instance:getAssistList(info.assistType)
+
+		PickAssistController.instance:recordAssistRefreshTime()
+
+		if #assistList > 0 then
+			PickAssistController.instance:openPickAssistView(info.assistType, info.assistType, nil, self.selectAssistHeroCallBack, self, false, assistHeroId, true)
+		else
+			GameFacade.showToast(ToastEnum.TowerComposeAssistNotFind)
+		end
+
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshAssistState)
+	end
+end
+
+function TowerComposeHeroGroupBuffView:selectAssistHeroCallBack(pickAssistHeroMO)
+	if pickAssistHeroMO then
+		local assistType = TowerComposeHeroGroupModel.instance:getNotUsedAssistType(self.themeId)
+
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistType(self.themeId, pickAssistHeroMO.heroId, assistType)
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, pickAssistHeroMO)
+
+		local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(self.themeId, pickAssistHeroMO.heroId, pickAssistHeroMO.exSkillLevel)
+
+		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, curSupportCo.id)
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshAssistState)
+
+		self._scrollsupportList.verticalNormalizedPosition = 1
+	end
+
+	TowerComposeController.instance:dispatchEvent(TowerComposeEvent.SelectAssistCallBack, pickAssistHeroMO)
 end
 
 function TowerComposeHeroGroupBuffView:onClose()

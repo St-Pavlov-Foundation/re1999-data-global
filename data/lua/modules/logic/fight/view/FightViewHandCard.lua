@@ -52,7 +52,7 @@ function FightViewHandCard:onInitView()
 	FightViewHandCard.HalfItemWidth = recthelper.getWidth(self._handCardItemPrefab.transform) / 2
 	FightViewHandCard.HandCardWidth = HandCardWidth
 	FightViewHandCard.HandCardHeight = HandCardHeight
-	self._correctHandCardScale = FightViewHandCardSequenceFlow.New()
+	self._correctHandCardScale = FightViewHandCardSequenceFlow.New("_correctHandCardScale")
 
 	self._correctHandCardScale:addWork(FigthCardDistributeCorrectScale.New())
 
@@ -62,35 +62,35 @@ function FightViewHandCard:onInitView()
 	self._cardDistributeFlow:addWork(FigthCardDistributeEffect.New())
 	self._cardDistributeFlow:addWork(FightCardCombineEndEffect.New())
 
-	self._cardCombineFlow = FightViewHandCardSequenceFlow.New()
+	self._cardCombineFlow = FightViewHandCardSequenceFlow.New("_cardCombineFlow")
 
 	self._cardCombineFlow:addWork(FightCardCombineEffect.New())
 
-	self._cardLongPressFlow = FightViewHandCardSequenceFlow.New()
+	self._cardLongPressFlow = FightViewHandCardSequenceFlow.New("_cardLongPressFlow")
 
 	self._cardLongPressFlow:addWork(FightCardLongPressEffect.New())
 
-	self._cardLongPressEndFlow = FightViewHandCardSequenceFlow.New()
+	self._cardLongPressEndFlow = FightViewHandCardSequenceFlow.New("_cardLongPressEndFlow")
 
 	self._cardLongPressEndFlow:addWork(FightCardLongPressEndEffect.New())
 
-	self._cardDragFlow = FightViewHandCardSequenceFlow.New()
+	self._cardDragFlow = FightViewHandCardSequenceFlow.New("_cardDragFlow")
 
 	self._cardDragFlow:addWork(FightCardDragEffect.New())
 
-	self._cardDragEndFlow = FightViewHandCardSequenceFlow.New()
+	self._cardDragEndFlow = FightViewHandCardSequenceFlow.New("_cardDragEndFlow")
 
 	self._cardDragEndFlow:addWork(FightCardDragEndEffect.New())
 
-	self._redealCardFlow = FightViewHandCardSequenceFlow.New()
+	self._redealCardFlow = FightViewHandCardSequenceFlow.New("_redealCardFlow")
 
 	self._redealCardFlow:addWork(FightCardRedealEffect.New())
 
-	self._universalAppearFlow = FightViewHandCardSequenceFlow.New()
+	self._universalAppearFlow = FightViewHandCardSequenceFlow.New("_universalAppearFlow")
 
 	self._universalAppearFlow:addWork(FightCardUniversalAppearEffect.New())
 
-	self._magicEffectCardFlow = FightViewHandCardSequenceFlow.New()
+	self._magicEffectCardFlow = FightViewHandCardSequenceFlow.New("_magicEffectCardFlow")
 
 	self._magicEffectCardFlow:addWork(FightCardChangeMagicEffect.New())
 end
@@ -132,6 +132,12 @@ function FightViewHandCard:onDestroyView()
 		self.lyAreaLoader:dispose()
 
 		self.lyAreaLoader = nil
+	end
+
+	if self.lorentzLoader then
+		self.lorentzLoader:dispose()
+
+		self.lorentzLoader = nil
 	end
 end
 
@@ -191,6 +197,10 @@ function FightViewHandCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.LY_CardAreaSizeChange, self.onLY_CardAreaSizeChange, self)
 	self:addEventCb(FightController.instance, FightEvent.RefreshCardHeatShow, self._onRefreshCardHeatShow, self)
 	self:addEventCb(FightController.instance, FightEvent.ASFD_OnChangeCardEnergy, self.onChangeCardEnergy, self)
+	self:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, self.refreshLYAreaActive, self)
+	self:addEventCb(FightController.instance, FightEvent.BeforeSendOperate2ServerAnimDone, self.onBeforeSendOperate2ServerAnimDone, self)
+	self:addEventCb(FightController.instance, FightEvent.OnOperateMgrDisposeAllWork, self.removePreHandCardFlow, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshPreLv, self.onRefreshPreLv, self)
 	self:_setBlockOperate(false)
 	self:_refreshPrecisionShow()
 end
@@ -223,8 +233,95 @@ function FightViewHandCard:onClose()
 	self._magicEffectCardFlow:stop()
 end
 
+function FightViewHandCard:onRefreshPreLv(existEffectTagCountDict)
+	for i, cardItem in ipairs(self._handCardItemList) do
+		self:updateOneCardItemCardPreLv(cardItem, existEffectTagCountDict)
+	end
+end
+
+function FightViewHandCard:updateOneCardItemCardPreLv(cardItem, existEffectTagCountDict)
+	if not existEffectTagCountDict then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local cardInfo = cardItem and cardItem.cardInfoMO
+
+	if not cardInfo then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local belongUid = cardInfo.uid
+	local entityMo = FightDataHelper.entityMgr:getById(belongUid)
+
+	if not entityMo then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local skillId = cardInfo.skillId
+	local curSkillCo = lua_skill.configDict[skillId]
+
+	if not curSkillCo then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	if FightCardDataHelper.isBigSkill(skillId) then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local cardIndex = entityMo:getSkillIdIndex(skillId)
+
+	if not cardIndex then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local canUpEffectTagList = entityMo:getCanUpEffectTagList(cardIndex)
+
+	if not canUpEffectTagList then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local count = 0
+
+	for _, effectTag in ipairs(canUpEffectTagList) do
+		local existCount = existEffectTagCountDict[effectTag]
+
+		if existCount then
+			count = count + existCount
+		end
+	end
+
+	cardItem:setPreLv(count)
+end
+
+function FightViewHandCard:onBeforeSendOperate2ServerAnimDone()
+	if self.preOperateEndFlow then
+		self:removeHandCardFlow(self.preOperateEndFlow)
+
+		self.preOperateEndFlow = nil
+	end
+end
+
 function FightViewHandCard:_onHandCardFlowCreate(flow)
 	table.insert(self.LyNeedCheckFlowList, flow)
+end
+
+function FightViewHandCard:removeHandCardFlow(flow)
+	tabletool.removeValue(self.LyNeedCheckFlowList, flow)
+	self:refreshLYAreaActive()
 end
 
 function FightViewHandCard:_onHandCardFlowEnd(flow)
@@ -254,6 +351,8 @@ function FightViewHandCard:_onStageChanged(curStage)
 		gohelper.setActive(self._precisionFrame, false)
 		self:_setBlockOperate(false)
 	end
+
+	self:onRefreshPreLv()
 
 	return self:refreshLYAreaActive()
 end
@@ -392,11 +491,20 @@ function FightViewHandCard:onRegistCardEndAniFlow()
 end
 
 function FightViewHandCard:buildOperateEndFlow()
+	if self.preOperateEndFlow then
+		self:removeHandCardFlow(self.preOperateEndFlow)
+
+		self.preOperateEndFlow = nil
+	end
+
 	local flow = self:com_registFlowSequence()
-	local oldFlow = FightViewHandCardSequenceFlow.New()
+	local oldFlow = FightViewHandCardSequenceFlow.New("OperateEnd")
 
 	oldFlow:addWork(FightGuideCardEnd.New())
 	oldFlow:addWork(FightCardEndEffect.New())
+
+	self.preOperateEndFlow = oldFlow
+
 	flow:addWork(oldFlow)
 
 	local context = self:getUserDataTb_()
@@ -620,7 +728,7 @@ function FightViewHandCard:_onDistributeCards()
 	self:_combineCards(cards)
 end
 
-function FightViewHandCard:_playHandCard(from, targetEntityId, param2, param3)
+function FightViewHandCard:_playHandCard(from, targetEntityId, param2, param3, cardParam1)
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
@@ -638,10 +746,18 @@ function FightViewHandCard:_playHandCard(from, targetEntityId, param2, param3)
 		return
 	end
 
-	FightGameMgr.operateMgr:playHandCard(from, targetEntityId, param2, param3)
+	FightGameMgr.operateMgr:playHandCard(from, targetEntityId, param2, param3, cardParam1)
 end
 
-function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, param3)
+function FightViewHandCard:removePreHandCardFlow()
+	if self.preHandCardFlow then
+		self:removeHandCardFlow(self.preHandCardFlow)
+
+		self.preHandCardFlow = nil
+	end
+end
+
+function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, param3, cardParam1)
 	local cards = FightDataHelper.handCardMgr.handCard
 	local cardInfoMO = cards[from]
 
@@ -659,12 +775,18 @@ function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, p
 		return
 	end
 
+	self:removePreHandCardFlow()
+
 	local flow = self:com_registFlowSequence()
-	local oldFlow = FightViewHandCardSequenceFlow.New()
+	local oldFlow = FightViewHandCardSequenceFlow.New("PlayHandCardFlow")
+
+	self.preHandCardFlow = oldFlow
 
 	oldFlow:addWork(FightCardRouge2PushMusicWork.New())
+	oldFlow:addWork(FightCardRecordSkillBeforePlay.New())
 	oldFlow:addWork(FightCardPlayEffect.New())
 	oldFlow:addWork(FightCardDissolveCardsAfterPlay.New())
+	oldFlow:addWork(FightCardRecordSkillAfterPlay.New())
 	oldFlow:addWork(FightCardDiscardAfterPlay.New())
 	oldFlow:addWork(FightCardCheckCombineCards.New())
 	oldFlow:addWork(FightCardRouge2PopMusicWork.New())
@@ -681,7 +803,7 @@ function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, p
 
 	local fightBeginRoundOp = FightDataHelper.operationDataMgr:newOperation()
 
-	fightBeginRoundOp:playCard(from, targetEntityId, cardInfoMO, param2, param3)
+	fightBeginRoundOp:playCard(from, targetEntityId, cardInfoMO, param2, param3, cardParam1)
 
 	fightBeginRoundOp.cardColor = FightDataHelper.LYDataMgr:getCardColor(cards, from)
 	fightBeginRoundOp.cardInfoMO.areaRedOrBlue = fightBeginRoundOp.cardColor
@@ -768,8 +890,8 @@ function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, p
 	return flow
 end
 
-function FightViewHandCard:onRegistPlayHandCardWork(from, targetEntityId, param2, param3)
-	local flow = self:buildPlayHandCardFlow(from, targetEntityId, param2, param3)
+function FightViewHandCard:onRegistPlayHandCardWork(from, targetEntityId, param2, param3, cardParam1)
+	local flow = self:buildPlayHandCardFlow(from, targetEntityId, param2, param3, cardParam1)
 
 	if flow then
 		FightMsgMgr.replyMsg(FightMsgId.RegistPlayHandCardWork, flow)
@@ -781,6 +903,7 @@ function FightViewHandCard:_onPlayCardDone()
 	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, self.playCardFightBeginRoundOp)
 	FightController.instance:dispatchEvent(FightEvent.PlayCardOver)
 	self:_detectPlayPrecisionEffect()
+	self:removePreHandCardFlow()
 
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		self:_setBlockOperate(true)
@@ -1229,6 +1352,7 @@ end
 function FightViewHandCard:_resetCard(oldCardOps)
 	FightGameMgr.operateMgr:cancelAllOperate()
 	FightDataHelper.paTaMgr:resetOp()
+	self:onRefreshPreLv()
 	FightController.instance:dispatchEvent(FightEvent.OnResetCard, oldCardOps)
 end
 
@@ -1768,7 +1892,12 @@ function FightViewHandCard:_onEnterOperateState(operateState)
 			end
 		end
 
-		recthelper.setWidth(self._abandonLine, count * HandCardWidth + 20)
+		local scale = FightCardDataHelper.getHandCardContainerScale(false)
+		local srcWidth = FightViewHandCard.calcTotalWidth(count, 1) + 20
+
+		recthelper.setWidth(self._abandonLine, scale * srcWidth)
+	elseif operateState == FightStageMgr.OperateStateType.RecordSkill then
+		self:enterRecordSkillState()
 	end
 end
 
@@ -1784,9 +1913,111 @@ function FightViewHandCard:cancelAbandonState()
 	self._playCardTransform:SetSiblingIndex(FightViewHandCard.playCardSiblingIndex)
 end
 
+function FightViewHandCard:enterRecordSkillState()
+	self.goLorentz = self.goLorentz or gohelper.findChild(self.viewGO, "root/#go_lorentz")
+	self.goLorentzCardRootTr = gohelper.findChildComponent(self.goLorentz, "cardRoot", gohelper.Type_RectTransform)
+
+	gohelper.setActive(self.goLorentz, true)
+	gohelper.setAsLastSibling(self.goLorentz)
+	self._playCardTransform:SetAsLastSibling()
+
+	for i = 1, #self._handCardItemList do
+		local handCardItem = self._handCardItemList[i]
+
+		if handCardItem then
+			local cardInfo = handCardItem.cardInfoMO
+
+			if FightDataHelper.operationDataMgr:canRecordCard(cardInfo) then
+				handCardItem.go.transform:SetParent(self.goLorentzCardRootTr, true)
+			end
+		end
+	end
+
+	self:showLorentzArea()
+end
+
+function FightViewHandCard:exitRecordSkillState()
+	gohelper.setActive(self.goLorentz, false)
+	self:hideLorentzArea()
+	self._playCardTransform:SetSiblingIndex(FightViewHandCard.playCardSiblingIndex)
+
+	local childCount = self.goLorentzCardRootTr.childCount
+
+	for i = childCount - 1, 0, -1 do
+		self.goLorentzCardRootTr:GetChild(i):SetParent(self._handCardTr, true)
+	end
+
+	for _, cardItem in ipairs(self._handCardItemList) do
+		recthelper.setAnchorY(cardItem.tr, 0)
+	end
+end
+
+function FightViewHandCard:showLorentzArea()
+	self.lorentzActive = true
+
+	if self.goLorentzArea then
+		self:refreshLorentzArea()
+
+		return
+	end
+
+	if self.lorentzLoader then
+		return
+	end
+
+	self.lorentzLoader = MultiAbLoader.New()
+
+	self.lorentzLoader:addPath("ui/viewres/fight/fight_lorentz_handcard.prefab")
+	self.lorentzLoader:startLoad(self.onLoadLorentzDone, self)
+end
+
+FightViewHandCard.LorentzWidthOffset = 137
+
+function FightViewHandCard:onLoadLorentzDone()
+	local prefab = self.lorentzLoader:getFirstAssetItem():GetResource()
+
+	self.goLorentzArea = gohelper.clone(prefab, self.goLorentz)
+	self.rectLorentzArea = self.goLorentzArea:GetComponent(gohelper.Type_RectTransform)
+
+	recthelper.setAnchor(self.rectLorentzArea, 0, 0)
+	self:refreshLorentzArea()
+end
+
+function FightViewHandCard:refreshLorentzArea()
+	if not self.lorentzActive then
+		gohelper.setActive(self.goLorentzArea, false)
+
+		return
+	end
+
+	local cards = FightDataHelper.handCardMgr.handCard
+	local len = cards and #cards or 0
+
+	if len < 1 then
+		gohelper.setActive(self.goLorentzArea, false)
+
+		return
+	end
+
+	AudioMgr.instance:trigger(350023)
+
+	local width = FightViewHandCard.calcTotalWidth(len, 1) + FightViewHandCard.LorentzWidthOffset
+
+	gohelper.setActive(self.goLorentzArea, true)
+	recthelper.setWidth(self.rectLorentzArea, width)
+end
+
+function FightViewHandCard:hideLorentzArea()
+	self.lorentzActive = false
+
+	self:refreshLorentzArea()
+end
+
 function FightViewHandCard:_onExitOperateState(operateState)
 	if operateState == FightStageMgr.OperateStateType.Discard then
 		self:cancelAbandonState()
+	elseif operateState == FightStageMgr.OperateStateType.RecordSkill then
+		self:exitRecordSkillState()
 	end
 end
 

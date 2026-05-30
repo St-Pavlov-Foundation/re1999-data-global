@@ -8696,6 +8696,62 @@
     "lang": "language_10112776"
   },
   {
+    "id": "v3a5_lamona_remain_round",
+    "lang": "language_10117558"
+  },
+  {
+    "id": "store_buylimit_version",
+    "lang": "language_10117559"
+  },
+  {
+    "id": "v3a5_season_detailview_txt_star1",
+    "lang": "language_10117560"
+  },
+  {
+    "id": "Season123CardDetailView_EmptyDesc",
+    "lang": "language_10117561"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_1",
+    "lang": "language_10117562"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_2",
+    "lang": "language_10117563"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_3",
+    "lang": "language_10117564"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_4",
+    "lang": "language_10117565"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_5",
+    "lang": "language_10051639"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_6",
+    "lang": "language_10029425"
+  },
+  {
+    "id": "fight_bai_fu_zhang_wheel_7",
+    "lang": "language_10029426"
+  },
+  {
+    "id": "V3a5_SchoolStartTaskItem_txttaskdes",
+    "lang": "language_10118663"
+  },
+  {
+    "id": "AutoChessCard_txtSkillDesc",
+    "lang": "language_10113090"
+  },
+  {
+    "id": "FightBuffComp_floatXBuff_overseas",
+    "lang": "language_10118664"
+  },
+  {
     "id": "ObserverBoxTaskItem_txttaskdes",
     "lang": "language_10113088"
   },

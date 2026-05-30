@@ -32,9 +32,6 @@ end
 function Season123EpisodeListModel:initEpisodeList()
 	local episodeList = {}
 	local episodeCfgs = Season123Config.instance:getSeasonEpisodeByStage(self.activityId, self.stage)
-
-	logNormal("episode list length : " .. tostring(#episodeCfgs))
-
 	local seasonMO = Season123Model.instance:getActInfo(self.activityId)
 	local curStageMO = seasonMO:getStageMO(self.stage)
 

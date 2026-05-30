@@ -46,6 +46,7 @@ function FightDataMgr:initTempDataMgr()
 	self.LYDataMgr = self:registMgr(FightLYDataMgr)
 	self.bloodPoolDataMgr = self:registMgr(FightBloodPoolDataMgr)
 	self.rouge2MusicDataMgr = self:registMgr(FightRouge2MusicDataMgr)
+	self.baiFuZhangWheelDataMgr = self:registMgr(Fight3_5BaiFuZhangWheelDataMgr)
 end
 
 function FightDataMgr:cancelOperation()

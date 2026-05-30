@@ -168,19 +168,20 @@ end
 
 local FilterEffectType = {
 	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = true,
-	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = true
+	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = true,
+	[FightEnum.EffectType.NONE] = true
 }
 
 FightTLEventDefHit.nuoDiKaLostLife = 60212
 
 function FightTLEventDefHit:needFilter(actEffectData)
 	if not actEffectData then
-		return false
+		return true
 	end
 
 	local effectType = actEffectData.effectType
 
-	if effectType == FightEnum.EffectType.SHIELD and FilterEffectType[actEffectData.configEffect] then
+	if effectType == FightEnum.EffectType.SHIELD and FilterEffectType[actEffectData.effectNum1] then
 		return true
 	end
 

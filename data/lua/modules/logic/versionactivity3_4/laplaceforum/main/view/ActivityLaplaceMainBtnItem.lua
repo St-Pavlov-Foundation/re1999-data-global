@@ -110,23 +110,9 @@ function ActivityLaplaceMainBtnItem:onRefresh()
 	self:refreshData()
 
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_8" or "icon_8"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_8")
 
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self:_setMainSprite(spriteName)
 end
 
@@ -152,6 +138,12 @@ end
 function ActivityLaplaceMainBtnItem:onDestroyView()
 	ActivityLaplaceMainBtnItem.super.onDestroyView(self)
 	TaskDispatcher.cancelTask(self._checkLuckyRainChanged, self)
+end
+
+function ActivityLaplaceMainBtnItem:_gm_ActIds()
+	return {
+		VersionActivity3_4Enum.ActivityId.LaplaceMain
+	}
 end
 
 return ActivityLaplaceMainBtnItem

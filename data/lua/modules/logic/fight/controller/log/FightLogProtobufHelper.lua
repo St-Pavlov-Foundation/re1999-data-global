@@ -151,6 +151,7 @@ function FightLogProtobufHelper.getFightActEffectString(actEffectData, level, in
 	local pre = FightLogProtobufHelper.getPrefix(level)
 
 	FightLogProtobufHelper.addStack(strTb, pre, stack, className)
+	table.insert(strTb, string.format("%s clientId : %s", pre, actEffectData.clientId))
 	table.insert(strTb, string.format("%s targetId : %s 作用对象:%s", pre, actEffectData.targetId, FightLogProtobufHelper.getEntityName(actEffectData.targetId)))
 	table.insert(strTb, string.format("%s effectType : %s 效果类型:%s", pre, actEffectData.effectType, FightLogHelper.getEffectTypeName(actEffectData.effectType)))
 	table.insert(strTb, string.format("%s effectNum : %s", pre, actEffectData.effectNum))

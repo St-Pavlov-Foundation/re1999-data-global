@@ -11,6 +11,7 @@ function V3a2_BossRush_HandBookEnemyInfoView:onInitView()
 	self._gorightcontainer = gohelper.findChild(self.viewGO, "#go_right_container")
 	self._goheader = gohelper.findChild(self.viewGO, "#go_right_container/#go_header")
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#go_right_container/#go_header/head/#simage_icon")
+	self._imageicon = gohelper.findChildImage(self.viewGO, "#go_right_container/#go_header/head/#simage_icon")
 	self._imagecareer = gohelper.findChildImage(self.viewGO, "#go_right_container/#go_header/head/#image_career")
 	self._txtnameEn = gohelper.findChildText(self.viewGO, "#go_right_container/#go_header/root/name/#txt_nameEn")
 	self._txtname = gohelper.findChildText(self.viewGO, "#go_right_container/#go_header/root/name/#txt_name")
@@ -122,6 +123,15 @@ function V3a2_BossRush_HandBookEnemyInfoView:refreshHeader()
 	local skinConfig = self.skinConfig
 
 	self._simageicon:LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
+
+	local variantId = monsterConfig.heartVariantId
+
+	if variantId ~= 0 then
+		IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(variantId), self._imageicon)
+	else
+		self._imageicon.material = nil
+	end
+
 	UISpriteSetMgr.instance:setEnemyInfoSprite(self._imagecareer, "sxy_" .. monsterConfig.career)
 
 	self._txtname.text = self._handBookMo:getBossName()

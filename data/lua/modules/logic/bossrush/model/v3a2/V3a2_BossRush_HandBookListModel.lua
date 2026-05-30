@@ -7,16 +7,31 @@ local V3a2_BossRush_HandBookListModel = class("V3a2_BossRush_HandBookListModel",
 function V3a2_BossRush_HandBookListModel:setMoList()
 	local moList = {}
 
-	for _, mo in pairs(V3a2_BossRushModel.instance:getHandBookMos()) do
+	for _, mo in pairs(V3a2_BossRushModel.instance:getHandBookGroupMos()) do
+		table.sort(mo.bossGroup, self.sortBoss)
 		table.insert(moList, mo)
 	end
 
-	table.sort(moList, self.sort)
+	table.sort(moList, self.sortGroup)
+
+	local mo = moList[1].bossGroup[1]
+
+	self:onSelect(mo)
 	self:setList(moList)
-	self:_onSelectMo(moList[1])
 end
 
-function V3a2_BossRush_HandBookListModel.sort(a, b)
+function V3a2_BossRush_HandBookListModel.sortGroup(a, b)
+	local a_sort = a.config.sort
+	local b_sort = b.config.sort
+
+	if a_sort ~= b_sort then
+		return a_sort < b_sort
+	end
+
+	return a.config.mintype < b.config.mintype
+end
+
+function V3a2_BossRush_HandBookListModel.sortBoss(a, b)
 	local a_sort = a.config.sort
 	local b_sort = b.config.sort
 
@@ -27,20 +42,9 @@ function V3a2_BossRush_HandBookListModel.sort(a, b)
 	return a:getBossType() < b:getBossType()
 end
 
-function V3a2_BossRush_HandBookListModel:_onSelectMo(mo)
-	if not mo then
-		return
-	end
-
-	local index = self:getIndex(mo)
-
-	self:selectCell(index, true)
-
-	self._selectMo = mo
-end
-
 function V3a2_BossRush_HandBookListModel:onSelect(mo)
-	self:_onSelectMo(mo)
+	self._selectMo = mo
+
 	BossRushController.instance:dispatchEvent(BossRushEvent.V3a2_BossRush_HandBook_SelectMonster, mo)
 end
 

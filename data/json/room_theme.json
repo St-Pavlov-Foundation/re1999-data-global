@@ -298,5 +298,17 @@
     "collectionBonus": "11#13403#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3501,
+    "name": "language_10118193",
+    "nameEn": "A Celebration of Two Worlds",
+    "desc": "language_10118244",
+    "rewardIcon": "1702500",
+    "building": "13501|13502|13503",
+    "packages": "3501|3502|3503|3504",
+    "collectionBonus": "11#13503#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

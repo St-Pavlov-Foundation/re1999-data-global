@@ -21,7 +21,7 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#13",
     "lurkNumber": 100,
-    "sort": 2
+    "sort": 1
   },
   {
     "type": 103,
@@ -33,7 +33,7 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "3#9",
     "lurkNumber": 100,
-    "sort": 3
+    "sort": 1
   },
   {
     "type": 104,
@@ -45,7 +45,7 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#19",
     "lurkNumber": 100,
-    "sort": 4
+    "sort": 1
   },
   {
     "type": 105,
@@ -55,8 +55,20 @@
     "galleryBg": "v3a4_bossrush_handbook_boss1",
     "point": "2500000|5000000|10000000|30000000",
     "pointExp": "200|200|50|50",
-    "recommendStrategy": "4#16",
+    "recommendStrategy": "4#18",
     "lurkNumber": 100,
-    "sort": 5
+    "sort": 1
+  },
+  {
+    "type": 106,
+    "id": 118353111,
+    "typeName": "language_10116038",
+    "minType": 1,
+    "galleryBg": "v3a5_bossrush_handbook_boss1",
+    "point": "2500000|5000000|10000000|30000000",
+    "pointExp": "200|200|50|50",
+    "recommendStrategy": "4#11",
+    "lurkNumber": 0,
+    "sort": 2
   }
 ]

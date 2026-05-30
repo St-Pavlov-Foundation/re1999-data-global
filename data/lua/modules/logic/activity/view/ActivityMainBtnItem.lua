@@ -38,25 +38,10 @@ end
 
 function ActivityMainBtnItem:_refreshItem()
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. self._centerCo.icon or self._centerCo.icon
+	local spriteName = self:getActBtnPrefixIconName(isShow, self._centerCo.icon)
 
 	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
-
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self._redDot:refreshDot()
 end
 
@@ -405,6 +390,24 @@ function ActivityMainBtnItem:_checkActivityWelfareRedDot(redDotIcon)
 			end
 		end
 	end
+end
+
+function ActivityMainBtnItem:_gm_getActIdDict()
+	local centerCo = ActivityModel.instance:getActivityCenter()
+	local list = centerCo[self._centerId]
+	local dict = {}
+
+	for _, actId in ipairs(list) do
+		local id = string.sub(tostring(actId), 2, 3)
+
+		if not dict[id] then
+			dict[id] = {}
+		end
+
+		table.insert(dict[id], actId)
+	end
+
+	return dict
 end
 
 return ActivityMainBtnItem

@@ -15,6 +15,7 @@ end
 function MainUIPartView:addEvents()
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
 	self:addEventCb(MainController.instance, MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	self:addEventCb(MainController.instance, MainEvent.OnDailyPopupFlowFinish, self._onMainPopupFlowFinish, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUIFirstAnim, self._playFirstAnim, self)
 	self:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUICaiDanAnim, self._tiggerMainUICaiDanAnim, self)
@@ -24,6 +25,7 @@ end
 function MainUIPartView:removeEvents()
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.UseMainUI, self.refreshMainUI, self)
 	self:removeEventCb(MainController.instance, MainEvent.OnMainPopupFlowFinish, self._onMainPopupFlowFinish, self)
+	self:removeEventCb(MainController.instance, MainEvent.OnDailyPopupFlowFinish, self._onMainPopupFlowFinish, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._OnCloseViewFinish, self, LuaEventSystem.Low)
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUIFirstAnim, self._playFirstAnim, self)
 	self:removeEventCb(MainUISwitchController.instance, MainUISwitchEvent.TiggerMainUICaiDanAnim, self._tiggerMainUICaiDanAnim, self)
@@ -31,9 +33,7 @@ function MainUIPartView:removeEvents()
 end
 
 function MainUIPartView:_OnCloseViewFinish(viewName)
-	if viewName == ViewName.MainThumbnailView then
-		self:_playFirstAnim()
-	end
+	return
 end
 
 function MainUIPartView:_onMainPopupFlowFinish()

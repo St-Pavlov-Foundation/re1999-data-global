@@ -823,12 +823,6 @@ function RougeHeroGroupModel:getHeroGroupItemPos()
 	return self._herogroupItemPos
 end
 
-HeroGroupModel.RestrictType = {
-	Rare = 3,
-	HeroId = 1,
-	Career = 2
-}
-
 function RougeHeroGroupModel:initRestrictHeroData(battleConfig)
 	self.restrictHeroIdList = nil
 	self.restrictCareerList = nil

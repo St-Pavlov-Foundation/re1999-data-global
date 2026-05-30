@@ -9,7 +9,7 @@ local SwitchTime = 2.5
 function FightSceneLevelMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.OnRestartFightDisposeDone, self._onRestartFightDisposeDone)
 	self:com_registFightEvent(FightEvent.OnSwitchPlaneClearAssetDone, self._onSwitchPlaneClearAssetDone)
-	self:newClass(FightSceneLevelSceneEffectMgr)
+	self:newClass(FightSceneLevelSceneEffectMgr, self)
 end
 
 function FightSceneLevelMgr:loadScene(sceneId, levelId)

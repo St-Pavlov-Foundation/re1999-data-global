@@ -13,6 +13,9 @@ function FightOperationDataMgr:onConstructor()
 	self.playerFinisherSkillUsedCount = nil
 	self.curSelectEntityId = 0
 	self.survivalTalentSkillUsedCount = 0
+	self._begin_round_ops = {}
+	self._extra_move_round_ops = {}
+	self._all_recorded_ops = {}
 end
 
 function FightOperationDataMgr:getOpList()
@@ -35,6 +38,9 @@ function FightOperationDataMgr:clearClientSimulationData()
 	self.extraMoveUsedCount = 0
 	self.playerFinisherSkillUsedCount = nil
 	self.survivalTalentSkillUsedCount = 0
+
+	self:setLorenzRecordSkillDepend(nil)
+	self:setLorenzRecordSkillId(nil)
 end
 
 function FightOperationDataMgr:onCancelOperation()
@@ -50,8 +56,12 @@ end
 function FightOperationDataMgr:onStageChanged(curStage)
 	self:clearClientSimulationData()
 
-	if curStage == FightStageMgr.StageType.Play and not FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.ClothSkill) then
-		self.extraMoveAct = 0
+	if curStage == FightStageMgr.StageType.Play then
+		if not FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.ClothSkill) then
+			self.extraMoveAct = 0
+		end
+	elseif curStage == FightStageMgr.StageType.Operate then
+		self:buildCanRecordCardEffectTag()
 	end
 end
 
@@ -296,6 +306,160 @@ function FightOperationDataMgr:checkOpIsFlying(op)
 	end
 
 	return self.op2FlyItemDict[op]
+end
+
+function FightOperationDataMgr:setLorenzRecordSkillDepend(roundOp)
+	self.lorenz_dependRoundOp = roundOp
+end
+
+function FightOperationDataMgr:getLorenzRecordSkillDepend()
+	return self.lorenz_dependRoundOp
+end
+
+function FightOperationDataMgr:setLorenzRecordSkillId(skillId)
+	self.lorenz_skillId = tonumber(skillId)
+end
+
+function FightOperationDataMgr:getLorenzRecordSkillId()
+	return self.lorenz_skillId
+end
+
+function FightOperationDataMgr:getShowIndex(roundOp)
+	local refresh_index = tabletool.indexOf(self._begin_round_ops, roundOp)
+
+	if refresh_index then
+		for i = 1, refresh_index - 1 do
+			local op = self._begin_round_ops[i]
+
+			if op:needCopyCard() then
+				refresh_index = refresh_index + 1
+			end
+		end
+	end
+
+	return refresh_index
+end
+
+function FightOperationDataMgr:getBeginRoundOpList()
+	return self._begin_round_ops
+end
+
+function FightOperationDataMgr:addBeginRoundOp(roundOp)
+	table.insert(self._begin_round_ops, roundOp)
+end
+
+function FightOperationDataMgr:getExtraMoveRoundOpList()
+	return self._extra_move_round_ops
+end
+
+function FightOperationDataMgr:addExtraMoveRoundOp(roundOp)
+	table.insert(self._extra_move_round_ops, roundOp)
+end
+
+function FightOperationDataMgr:getAllRecordOpList()
+	return self._all_recorded_ops
+end
+
+function FightOperationDataMgr:addAllRecordRoundOp(roundOp)
+	table.insert(self._all_recorded_ops, roundOp)
+end
+
+function FightOperationDataMgr:removeAllRecordRoundOp(roundOp)
+	return self:removeListValue(self._all_recorded_ops, roundOp)
+end
+
+function FightOperationDataMgr:clearAllRecordRoundData()
+	tabletool.clear(self._all_recorded_ops)
+end
+
+function FightOperationDataMgr:clearBeginRoundData()
+	tabletool.clear(self._begin_round_ops)
+	tabletool.clear(self._extra_move_round_ops)
+	tabletool.clear(self._all_recorded_ops)
+	self:setLorenzRecordSkillId(nil)
+	self:setLorenzRecordSkillDepend(nil)
+end
+
+function FightOperationDataMgr:removeListValue(list, value)
+	if not list then
+		return
+	end
+
+	for i, v in ipairs(list) do
+		if v == value then
+			table.remove(list, i)
+
+			return i
+		end
+	end
+end
+
+function FightOperationDataMgr:buildCanRecordCardEffectTag()
+	self.entityRecordDict = self.entityRecordDict or {}
+
+	for _, list in pairs(self.entityRecordDict) do
+		tabletool.clear(list)
+	end
+
+	local entityList = FightDataHelper.entityMgr:getMyNormalList()
+
+	for _, entityMo in ipairs(entityList) do
+		local buffDict = entityMo:getBuffDic()
+
+		for _, buffMo in pairs(buffDict) do
+			local buffActInfoList = buffMo.actInfo
+
+			for _, buffActInfo in ipairs(buffActInfoList) do
+				if buffActInfo.actId == FightEnum.BuffActId.ButterflyRecordSkill then
+					local list = self.entityRecordDict[entityMo.uid]
+
+					if not list then
+						list = {}
+						self.entityRecordDict[entityMo.uid] = list
+					end
+
+					tabletool.addValues(list, buffActInfo.param)
+				end
+			end
+		end
+	end
+end
+
+function FightOperationDataMgr:canRecordCard(cardInfoMo, entityId)
+	local skillId = cardInfoMo and cardInfoMo.skillId
+
+	if FightCardDataHelper.isBigSkill(skillId) then
+		return
+	end
+
+	local skillCo = skillId and lua_skill.configDict[skillId]
+
+	if not skillCo then
+		return
+	end
+
+	if not entityId then
+		local dependOp = self.lorenz_dependRoundOp
+		local cardInfo = dependOp and dependOp.cardInfoMO
+
+		entityId = cardInfo and cardInfo.uid
+	end
+
+	if not entityId then
+		return
+	end
+
+	local canRecordTagList = self.entityRecordDict and self.entityRecordDict[entityId]
+
+	if not canRecordTagList then
+		return
+	end
+
+	local effectTag = skillCo.effectTag
+
+	if tabletool.indexOf(canRecordTagList, effectTag) then
+		return true
+	end
 end
 
 return FightOperationDataMgr

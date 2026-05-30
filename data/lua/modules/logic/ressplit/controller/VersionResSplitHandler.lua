@@ -253,8 +253,8 @@ function VersionResSplitHandler:_mergeSplitResult()
 	local wenNameWhiteDic = self._auidoWhiteWork.wenNameWhiteDic
 
 	for packName, packageMap in pairs(mergeResult) do
-		if packageMap.pathList then
-			self:_checkResWhiteList(packageMap.pathList, resWhiteDict)
+		for resType, resPathList in pairs(packageMap) do
+			self:_checkResWhiteList(resPathList, resWhiteDict)
 		end
 
 		if packageMap.audioBank then
@@ -263,6 +263,12 @@ function VersionResSplitHandler:_mergeSplitResult()
 
 		if packageMap.audioWem then
 			self:_checkResWhiteList(packageMap.audioWem, wenNameWhiteDic)
+		end
+	end
+
+	for packName, packageMap in pairs(mergeResult) do
+		for resType, resPathList in pairs(packageMap) do
+			self:_removeSameResPathList(resPathList)
 		end
 	end
 
@@ -369,6 +375,23 @@ function VersionResSplitHandler:_checkResWhiteList(pathList, resWhiteDict)
 		for i = #pathList, 1, -1 do
 			if resWhiteDict[pathList[i]] then
 				table.remove(pathList, i)
+			end
+		end
+	end
+end
+
+function VersionResSplitHandler:_removeSameResPathList(resPathList)
+	if resPathList and #resPathList > 0 then
+		local reaPathMap = {}
+		local count = #resPathList
+
+		for i = count, 1, -1 do
+			local resPath = resPathList[i]
+
+			if reaPathMap[resPath] then
+				table.remove(resPathList, i)
+			else
+				reaPathMap[resPath] = true
 			end
 		end
 	end

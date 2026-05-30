@@ -147,6 +147,7 @@ ConstEnum.CumulativeRewardsMaxElement = 3202
 ConstEnum.CruiseGlobalTaskDesc = 83207
 ConstEnum.SignInSpecialDate = 83301
 ConstEnum.SignInCalendarDecorationActId = 34001
+ConstEnum.MainActAtmosphereActId = 34002
 ConstEnum.LaplaceMiniPartyTipTitle = 34010
 ConstEnum.LaplaceMiniPartyTipDesc = 34011
 ConstEnum.LaplaceChatRoomTipTitle = 34012

@@ -85,6 +85,7 @@ function FightWorkNewEntity:onStart()
 	end
 
 	flow:registWork(FightWorkFunction, self.setEntitySpeed, self, entity)
+	flow:registWork(FightWorkSendEvent, FightEvent.OnAddNewEntity, entity.id, entityData)
 	self:playWorkAndDone(flow)
 end
 

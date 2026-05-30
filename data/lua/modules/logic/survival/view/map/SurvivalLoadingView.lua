@@ -12,7 +12,7 @@ function SurvivalLoadingView:onOpen()
 	AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_tansuo_loading)
 	TaskDispatcher.runDelay(self.checkViewIsOpenFinish, self, 5)
 
-	local random = math.random(1, 3)
+	local random = math.random(1, 5)
 	local path = "survival_stickericon_" .. random
 
 	UISpriteSetMgr.instance:setSurvivalSprite2(self.image_wuerlixi, path)

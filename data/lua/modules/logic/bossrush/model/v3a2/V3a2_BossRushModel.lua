@@ -7,6 +7,7 @@ local V3a2_BossRushModel = class("V3a2_BossRushModel", BaseModel)
 function V3a2_BossRushModel:init()
 	self._config = BossRushConfig.instance
 	self._gainMilestoneLevel = 0
+	self._rank = 0
 end
 
 function V3a2_BossRushModel:onRefresh128InfosReply(msg)
@@ -214,6 +215,33 @@ function V3a2_BossRushModel:getStrategyByStage(stage)
 	if mo then
 		return mo:getStrategy()
 	end
+end
+
+function V3a2_BossRushModel:getHandBookGroupMos()
+	if not self._handbookGroupMOs then
+		self._handbookGroupMOs = {}
+
+		local mos = self:getHandBookMos()
+
+		if mos then
+			for i, mo in pairs(mos) do
+				local minType = mo.config.minType
+				local groupMos = self._handbookGroupMOs[minType]
+
+				if not groupMos then
+					groupMos = {
+						bossGroup = {},
+						config = lua_activity128_bosstype.configDict[minType]
+					}
+					self._handbookGroupMOs[minType] = groupMos
+				end
+
+				table.insert(groupMos.bossGroup, mo)
+			end
+		end
+	end
+
+	return self._handbookGroupMOs
 end
 
 function V3a2_BossRushModel:setScore(extra)

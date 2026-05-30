@@ -33,11 +33,19 @@ function Season123HeroGroupQuickEditModel:copyQuickEditCardList()
 	for pos, heroUid in ipairs(heroGroupMO.heroList) do
 		local posOpen = HeroGroupModel.instance:isPositionOpen(pos)
 
-		if heroUid ~= "0" and not repeatHero[heroUid] then
-			local tmpMO = Season123HeroUtils.getHeroMO(self.activityId, heroUid, self.stage)
+		if tonumber(heroUid) > 0 and not repeatHero[heroUid] then
+			table.insert(newMOList, HeroModel.instance:getById(heroUid))
 
-			if self:checkSeasonBox(tmpMO) then
-				table.insert(newMOList, tmpMO)
+			if posOpen then
+				self._inTeamHeroUidMap[heroUid] = 1
+			end
+
+			repeatHero[heroUid] = true
+		else
+			local singleGroupMo = HeroSingleGroupModel.instance:getByIndex(pos)
+
+			if singleGroupMo.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroUid))
 
 				if posOpen then
 					self._inTeamHeroUidMap[heroUid] = 1
@@ -67,11 +75,19 @@ function Season123HeroGroupQuickEditModel:copyQuickEditCardList()
 		tabletool.addValues(newMOList, deathList)
 	end
 
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
+
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
+		end
+	end
+
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
 		self.sortIndexMap = {}
 
 		for i, v in ipairs(newMOList) do
-			self.sortIndexMap[v] = i
+			self.sortIndexMap[v.uid] = i
 		end
 
 		table.sort(newMOList, Season123HeroGroupQuickEditModel.sortDead)
@@ -81,47 +97,28 @@ function Season123HeroGroupQuickEditModel:copyQuickEditCardList()
 end
 
 function Season123HeroGroupQuickEditModel.sortDead(a, b)
-	local aIsDead = Season123HeroGroupQuickEditModel.instance:getHeroIsDead(a)
-	local bIsDead = Season123HeroGroupQuickEditModel.instance:getHeroIsDead(b)
+	local aIsDead = Season123HeroGroupEditModel.instance:getHeroIsDead(a)
+	local bIsDead = Season123HeroGroupEditModel.instance:getHeroIsDead(b)
 
 	if aIsDead ~= bIsDead then
 		return bIsDead
-	else
-		local aIndex = Season123HeroGroupEditModel.instance.sortIndexMap[a]
-		local bIndex = Season123HeroGroupEditModel.instance.sortIndexMap[b]
-
-		return aIndex < bIndex
-	end
-end
-
-function Season123HeroGroupQuickEditModel:getHeroIsDead(mo)
-	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		local isDead = false
-		local actId = self.activityId
-		local stage = self.stage
-		local layer = self.layer
-		local seasonHeroMO = Season123Model.instance:getSeasonHeroMO(actId, stage, layer, mo.uid)
-
-		if seasonHeroMO ~= nil then
-			isDead = seasonHeroMO.hpRate <= 0
-		end
-
-		return isDead
 	end
 
-	return false
+	local aIsRestrict = HeroGroupModel.instance:isRestrict(a.uid) and true or false
+	local bIsRestrict = HeroGroupModel.instance:isRestrict(b.uid) and true or false
+
+	if aIsRestrict ~= bIsRestrict then
+		return bIsRestrict
+	end
+
+	local aIndex = Season123HeroGroupQuickEditModel.instance.sortIndexMap[a.uid]
+	local bIndex = Season123HeroGroupQuickEditModel.instance.sortIndexMap[b.uid]
+
+	return aIndex < bIndex
 end
 
 function Season123HeroGroupQuickEditModel:checkSeasonBox(heroMO)
-	if self.episodeCO then
-		if self.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
-			return Season123Model.instance:getSeasonHeroMO(self.activityId, self.stage, self.layer, heroMO.uid)
-		else
-			return true
-		end
-	end
-
-	return false
+	return true
 end
 
 function Season123HeroGroupQuickEditModel:keepSelect(selectIndex)
@@ -233,6 +230,54 @@ end
 
 function Season123HeroGroupQuickEditModel:setParam(adventure)
 	self.adventure = adventure
+end
+
+function Season123HeroGroupQuickEditModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUidMap then
+		return false
+	end
+
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
+
+		if not mo then
+			logError("heroId:" .. heroId .. ", " .. "uid:" .. uid .. "数据为空")
+
+			return false
+		end
+
+		if mo.heroId == heroId and uid ~= mo.uid then
+			return true
+		end
+	end
+
+	return false
+end
+
+function Season123HeroGroupQuickEditModel:isTrialLimit()
+	if not self._inTeamHeroUidMap then
+		return false
+	end
+
+	local curNum = 0
+
+	for inTeamUid in pairs(self._inTeamHeroUidMap) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
+		end
+	end
+
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
+end
+
+function Season123HeroGroupQuickEditModel:inInTeam(uid)
+	if not self._inTeamHeroUidMap then
+		return false
+	end
+
+	return self._inTeamHeroUidMap[uid] and true or false
 end
 
 function Season123HeroGroupQuickEditModel:clear()

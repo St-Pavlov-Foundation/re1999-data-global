@@ -10,7 +10,8 @@ function NecrologistStoryConfig:ctor()
 	self.versionConfigList = {
 		NecrologistStoryV3A1Config,
 		NecrologistStoryV3A2Config,
-		NecrologistStoryV3A4Config
+		NecrologistStoryV3A4Config,
+		NecrologistStoryV3A5Config
 	}
 end
 

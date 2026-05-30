@@ -308,8 +308,8 @@ function FightWorkEffectDeadNew:_doneAndRemoveEntity()
 	local entityMgr = FightGameMgr.entityMgr
 	local isMySide = self._deadEntity:isMySide()
 	local entityMO = self._deadEntity:getMO()
-	local deadMgrConfig = lua_fight_dead_entity_mgr.configDict[entityMO.skin]
-	local deadPerformanceConfig = lua_fight_skin_dead_performance.configDict[entityMO.skin]
+	local deadMgrConfig = entityMO and lua_fight_dead_entity_mgr.configDict[entityMO.skin]
+	local deadPerformanceConfig = entityMO and lua_fight_skin_dead_performance.configDict[entityMO.skin]
 
 	if deadMgrConfig then
 		entityMgr.entityDic[self._deadEntity.id] = nil

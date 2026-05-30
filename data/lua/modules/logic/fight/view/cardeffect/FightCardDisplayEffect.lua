@@ -65,11 +65,29 @@ function FightCardDisplayEffect:onStart(context)
 
 	self._flow = FlowParallel.New()
 
+	self._flow:addWork(FunctionWork.New(self.tryPlayLaMoNaCloseAnim, self))
 	self._flow:addWork(tipsSequence)
 	self._flow:addWork(itemAnchorSequence)
 	self._flow:addWork(itemScaleSequence)
 	self._flow:registerDoneListener(self._onWorkDone, self)
 	self._flow:start()
+end
+
+function FightCardDisplayEffect:tryPlayLaMoNaCloseAnim()
+	local cardItem = self.context.cardItem
+
+	if not cardItem then
+		return
+	end
+
+	local hasEnchantId = FightCardDataHelper.hasTargetEnchantId(cardItem._cardInfoMO, FightEnum.EnchantedType.Ramona)
+
+	if not hasEnchantId then
+		return
+	end
+
+	cardItem:playLaMoNaAnim("close")
+	AudioMgr.instance:trigger(350004)
 end
 
 function FightCardDisplayEffect:onStop()

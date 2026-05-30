@@ -95,7 +95,7 @@ function Season123_2_1EquipHeroView:handleEquipUpdate()
 end
 
 function Season123_2_1EquipHeroView:refreshSlots()
-	for slotIndex = 1, Season123EquipHeroItemListModel.HeroMaxPos do
+	for slotIndex = 1, Activity123Enum.MainCardNum do
 		self:refreshSlot(slotIndex)
 	end
 end
@@ -121,7 +121,7 @@ function Season123_2_1EquipHeroView:refreshSlot(slotIndex)
 	gohelper.setActive(item.goBtnAdd, not isLock)
 	gohelper.setActive(item.goLock, isLock)
 
-	if itemUid == Season123EquipHeroItemListModel.EmptyUid then
+	if itemUid == Activity123Enum.EmptyUid then
 		gohelper.setActive(item.goPos, false)
 		gohelper.setActive(item.goEmpty, true)
 	else
@@ -155,7 +155,7 @@ function Season123_2_1EquipHeroView:refreshDesc(descItem, itemUid, slotIndex)
 		return
 	end
 
-	if itemUid == Season123EquipHeroItemListModel.EmptyUid then
+	if itemUid == Activity123Enum.EmptyUid then
 		gohelper.setActive(descItem.go, false)
 	else
 		gohelper.setActive(descItem.go, true)

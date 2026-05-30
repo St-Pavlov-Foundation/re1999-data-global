@@ -473,5 +473,40 @@
     "skinId": 311103,
     "animName": "interact",
     "shadow": 1
+  },
+  {
+    "skinId": 313901,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313902,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314201,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314202,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 311704,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 313203,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 309804,
+    "animName": "interact",
+    "shadow": 1
   }
 ]

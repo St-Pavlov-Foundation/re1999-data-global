@@ -298,6 +298,16 @@ function CTesting:build_test__Act125()
 		end
 	end
 
+	function self._cRpc.onReceiveFinishAct125EpisodeReply(thisObj, resultCode, msg)
+		if resultCode == 0 then
+			Activity125Model.instance:refreshActivityInfo(msg)
+			Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
+			Activity125Controller.instance:dispatchEvent(Activity125Event.EpisodeFinished, msg.episodeId)
+		end
+
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, {})
+	end
+
 	local cMO = Activity125MO
 	local isTestAnim = true
 	local isTestDays = true
@@ -329,12 +339,16 @@ function CTesting:build_test__Act125()
 			return true
 		end
 
-		function cMO.isEpisodeReallyOpen(thisObj, episodeId)
-			return true
-		end
-
 		function cMO.isEpisodeUnLock(thisObj, episodeId)
 			return true
+		end
+	end
+
+	local cView = WarmUp
+
+	if cView then
+		function cView._showDeadline(thisObj)
+			return
 		end
 	end
 end

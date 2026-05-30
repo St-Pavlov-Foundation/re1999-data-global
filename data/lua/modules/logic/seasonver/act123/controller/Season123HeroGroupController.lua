@@ -82,13 +82,7 @@ function Season123HeroGroupController.saveHeroGroup(actId, groupIndex)
 		return
 	end
 
-	local heroGroupMO
-
-	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		heroGroupMO = seasonMO.heroGroupSnapshot[groupIndex]
-	elseif Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-		heroGroupMO = seasonMO.retailHeroGroups[groupIndex]
-	end
+	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
 	if not heroGroupMO then
 		return
@@ -104,9 +98,7 @@ function Season123HeroGroupController:openHeroGroupView(battleId, episodeId)
 		return
 	end
 
-	Season123HeroGroupModel.instance:init(context.actId, context.layer, context.episodeId, context.stage)
-	HeroGroupModel.instance:setReplayParam(nil)
-	HeroGroupModel.instance:setParam(battleId, episodeId)
+	self:initHeroGroupModel(context.actId, context.stage, context.layer, battleId, episodeId)
 
 	local hasUnlock = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
 	local userDungeonMO = DungeonModel.instance:getEpisodeInfo(episodeId)
@@ -130,6 +122,12 @@ function Season123HeroGroupController:openHeroGroupView(battleId, episodeId)
 		episodeId = context.episodeId,
 		stage = context.stage
 	})
+end
+
+function Season123HeroGroupController:initHeroGroupModel(actId, stage, layer, battleId, episodeId)
+	Season123HeroGroupModel.instance:init(actId, layer, episodeId, stage)
+	HeroGroupModel.instance:setReplayParam(nil)
+	HeroGroupModel.instance:setParam(battleId, episodeId)
 end
 
 function Season123HeroGroupController:handleGetFightRecordGroupReply(fightGroupMO)
@@ -168,6 +166,8 @@ function Season123HeroGroupController.changeEquipFromSelect(groupId, index, equi
 end
 
 function Season123HeroGroupController.checkUnloadHero(actId, stage, layer, removeNow)
+	do return false end
+
 	local heroGroupMO = HeroGroupModel.instance:getCurGroupMO()
 
 	if not heroGroupMO.heroList then

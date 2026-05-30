@@ -272,6 +272,11 @@ end
 
 function SummonMainCategoryItem:_refreshNewFlag()
 	local isShowNew = false
+
+	if not self._mo then
+		return
+	end
+
 	local poolCfg = self._mo.originConf
 
 	if poolCfg and self._imagenew then

@@ -42,13 +42,15 @@ function FightEntityMgr:registNewEntityWork(entityData, ...)
 end
 
 function FightEntityMgr:delEntity(entityId)
-	if self.entityDic[entityId] then
+	local tarEntity = self.entityDic[entityId]
+
+	if tarEntity then
 		if FightSkillMgr.instance:isEntityPlayingTimeline(entityId) then
-			FightSkillMgr.instance:afterTimeline(self.entityDic[entityId])
+			FightSkillMgr.instance:afterTimeline(tarEntity)
 		end
 
-		FightController.instance:dispatchEvent(FightEvent.BeforeDestroyEntity, entityId)
-		self.entityDic[entityId]:disposeSelf()
+		FightController.instance:dispatchEvent(FightEvent.BeforeDestroyEntity, tarEntity)
+		tarEntity:disposeSelf()
 
 		self.entityDic[entityId] = nil
 	end

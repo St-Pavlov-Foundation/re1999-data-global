@@ -16,18 +16,6 @@ function OdysseyHeroGroupEditView:onOpen()
 	self._groupType = self:_getGroupType()
 	self._isWeekWalk_2 = self._groupType == HeroGroupEnum.GroupType.WeekWalk_2
 
-	for i = 1, 2 do
-		self._selectDmgs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectAttrs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectLocations[i] = false
-	end
-
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 
 	local mainHeroConstCo = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.TrialHeroId)
@@ -63,6 +51,7 @@ function OdysseyHeroGroupEditView:onOpen()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
 	self:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)

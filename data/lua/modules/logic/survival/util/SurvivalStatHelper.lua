@@ -129,6 +129,16 @@ function SurvivalStatHelper:statUseRoleSkill()
 	})
 end
 
+function SurvivalStatHelper:statCollectionRoomClose(time)
+	local outSideMo = SurvivalModel.instance:getOutSideInfo()
+
+	StatController.instance:track(StatEnum.EventName.SurvivalCollectionRoomClose, {
+		[StatEnum.EventProperties.Season] = outSideMo.season,
+		[StatEnum.EventProperties.SurvivalBaseObj] = self:getWeekData(),
+		[StatEnum.EventProperties.UseTime] = time
+	})
+end
+
 SurvivalStatHelper.instance = SurvivalStatHelper.New()
 
 return SurvivalStatHelper

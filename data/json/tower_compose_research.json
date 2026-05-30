@@ -91,21 +91,21 @@
   },
   {
     "id": 3401,
-    "themeId": 3,
+    "themeId": 1,
     "req": 800,
     "name": "language_10090260",
     "desc": "language_10106146",
-    "icon": "zy_1_3",
+    "icon": "zy_1_19",
     "additionRule": "2#113330009",
     "exLevel": ""
   },
   {
     "id": 3402,
-    "themeId": 3,
+    "themeId": 1,
     "req": 900,
     "name": "language_10100054",
-    "desc": "language_10106147",
-    "icon": "zy_1_4",
+    "desc": "language_10117672",
+    "icon": "zy_1_12",
     "additionRule": "1#113330010",
     "exLevel": ""
   }

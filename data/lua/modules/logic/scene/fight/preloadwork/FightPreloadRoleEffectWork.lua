@@ -182,15 +182,8 @@ local TimelineEffectType = {
 function FightPreloadRoleEffectWork:_analyseSingleTimeline(timeline)
 	local list = {}
 	local list2 = {}
-	local tlAssetItem
+	local tlAssetItem = FightPreloadController.instance:getFightAssetItem(ResUrl.getSkillTimeline(timeline))
 	local timelineUrl = ResUrl.getSkillTimeline(timeline)
-
-	if GameResMgr.IsFromEditorDir then
-		tlAssetItem = FightPreloadController.instance:getFightAssetItem(ResUrl.getSkillTimeline(timeline))
-	else
-		tlAssetItem = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
-	end
-
 	local jsonStr = ZProj.SkillTimelineAssetHelper.GeAssetJson(tlAssetItem, timelineUrl)
 
 	if not string.nilorempty(jsonStr) then

@@ -10,6 +10,7 @@ function SurvivalShelterBuildingCo:init(data, allPaths)
 	self.pos = SurvivalHexNode.New(data[1], data[2])
 	self.id = data[3]
 	self.cfgId = data[4]
+	self.cfg = lua_survival_building.configDict[self.cfgId][1]
 	self.dir = data[5]
 	self.assetPath = allPaths[data[6]]
 	self.exPoints = {}
@@ -30,6 +31,10 @@ end
 
 function SurvivalShelterBuildingCo:isInRange(ponit)
 	return SurvivalHelper.instance:getValueFromDict(self.ponitRange, ponit)
+end
+
+function SurvivalShelterBuildingCo:isCollection()
+	return self.cfg.type == SurvivalEnum.BuildingType.Collection
 end
 
 return SurvivalShelterBuildingCo

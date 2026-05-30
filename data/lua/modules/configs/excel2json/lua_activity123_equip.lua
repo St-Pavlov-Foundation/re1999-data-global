@@ -10,8 +10,11 @@ local fields = {
 	indexLimit = 17,
 	decomposeGet = 18,
 	composeCost = 19,
+	scoreStage = 21,
+	scoreTitle = 20,
 	equipId = 1,
 	signOffset = 9,
+	scoreStageTitle = 22,
 	skillId = 11,
 	tag = 14,
 	icon = 6,
@@ -28,7 +31,9 @@ local primaryKey = {
 	"equipId"
 }
 local mlStringKey = {
-	name = 1
+	scoreTitle = 2,
+	name = 1,
+	scoreStageTitle = 3
 }
 
 function lua_activity123_equip.onLoad(json)

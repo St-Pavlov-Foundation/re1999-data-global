@@ -73,10 +73,9 @@ MaterialEnum.GetApproach = {
 	NoviceStageReward = 54
 }
 MaterialEnum.SubTypePackages = {
-	[48] = true,
+	[53] = true,
 	[50] = true,
-	[52] = true,
-	[53] = true
+	[52] = true
 }
 MaterialEnum.SubTypeInPack = {
 	[ItemEnum.SubType.RoomBlockGiftNew] = true,

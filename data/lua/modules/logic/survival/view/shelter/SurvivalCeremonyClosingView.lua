@@ -48,6 +48,10 @@ function SurvivalCeremonyClosingView:onInitView()
 	self._txtItemScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_Item/#go_ItemScore/#txt_ItemScore")
 	self._goTotalScore = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore")
 	self._txtTotalScore = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/#txt_TotalScore")
+	self._txtTotalCoin = gohelper.findChildText(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/go_currency/#txt_TotalScore")
+	self._gocurrency = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/go_currency")
+	self._gocurrencyLimit = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/go_currency/layout/txt_desc")
+	self._gocurrencymax = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_TotalScore/go_currency_max")
 	self._gorewardTips = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content/#go_rewardTips")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 
@@ -113,6 +117,8 @@ function SurvivalCeremonyClosingView:_editableInitView()
 	self._animationCollection = self._goCollection:GetComponent(gohelper.Type_Animation)
 	self._animationExtraItem = self._goItem:GetComponent(gohelper.Type_Animation)
 	self._animationTotalScore = self._goTotalScore:GetComponent(gohelper.Type_Animation)
+	self._animationGoCurrency = self._gocurrency:GetComponent(gohelper.Type_Animation)
+	self._animationGoCurrencyMax = self._gocurrencymax:GetComponent(gohelper.Type_Animation)
 	self._animationTalentGain = self._gorewardTips:GetComponent(gohelper.Type_Animation)
 
 	local content = gohelper.findChild(self.viewGO, "#scroll_contentlist/viewport/content")
@@ -150,6 +156,7 @@ function SurvivalCeremonyClosingView:onOpen()
 	end
 
 	self._totalScore = self._report.totalCount
+	self._coinNum = self.viewParam.score
 
 	SurvivalShelterChooseNpcListModel.instance:clearSelectList()
 	SurvivalShelterChooseEquipListModel.instance:clearSelectList()
@@ -181,6 +188,7 @@ function SurvivalCeremonyClosingView:_initView()
 	self._allShowGO = self:getUserDataTb_()
 	self._allShowAnimation = self:getUserDataTb_()
 	self._showTime = {}
+	self._extraAnims = {}
 	self._maxStep = 0
 
 	self:_initEnding()
@@ -508,17 +516,35 @@ function SurvivalCeremonyClosingView:_initItem()
 end
 
 function SurvivalCeremonyClosingView:_initTotalScore()
-	local totalScore = self._totalScore
+	self._txtTotalScore.text = self._totalScore
+	self._txtTotalCoin.text = self._coinNum
 
-	self._txtTotalScore.text = totalScore
+	local isMax = self._coinNum == -1
 
-	self:addShowStep(self._animationTotalScore, showTime[8], self._canvasGroupTotalScore)
+	gohelper.setActive(self._gocurrency, not isMax)
+	gohelper.setActive(self._gocurrencymax, isMax)
+
+	local isLimit = false
+	local num = tonumber(lua_survival_const.configDict[6003].value)
+
+	if num <= self._coinNum then
+		isLimit = true
+	end
+
+	gohelper.setActive(self._gocurrencyLimit, isLimit)
+	self:addShowStep(self._animationTotalScore, showTime[8], self._canvasGroupTotalScore, {
+		self._animationGoCurrency,
+		self._animationGoCurrencyMax
+	})
 end
 
-function SurvivalCeremonyClosingView:addShowStep(anim, time, canvasGroup)
+function SurvivalCeremonyClosingView:addShowStep(anim, time, canvasGroup, extraAnims)
+	extraAnims = extraAnims or {}
+
 	table.insert(self._allShowAnimation, anim)
 	table.insert(self._allShowGO, anim.gameObject)
 	table.insert(self._showTime, time)
+	table.insert(self._extraAnims, extraAnims)
 
 	self._maxStep = self._maxStep + 1
 
@@ -604,6 +630,7 @@ function SurvivalCeremonyClosingView:_refreshCurProgress()
 	local go = self._allShowGO[self._progress]
 	local time = self._showTime[self._progress]
 	local animation = self._allShowAnimation[self._progress]
+	local extraAnims = self._extraAnims[self._progress]
 	local contentY = self:getContentY()
 
 	if contentY > 0 then
@@ -616,6 +643,10 @@ function SurvivalCeremonyClosingView:_refreshCurProgress()
 
 	if animation then
 		animation:Play()
+	end
+
+	for i, anim in ipairs(extraAnims) do
+		anim:Play()
 	end
 end
 

@@ -30,6 +30,7 @@ function FightWorkSendOperate2Server:onFinish()
 
 	FightDataUtil.coverData(cards, FightLocalDataMgr.instance.handCardMgr:getHandCard())
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
+	FightController.instance:dispatchEvent(FightEvent.BeforeSendOperate2ServerAnimDone)
 
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.DouQuQu) then
 		return

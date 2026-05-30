@@ -13,7 +13,7 @@ function SeasonFightHandler.getSeasonEquips(curGroupMO, fightParam)
 	local seasonEquips
 
 	if Season123Controller.isEpisodeFromSeason123(fightParam.episodeId) then
-		seasonEquips = Season123HeroGroupUtils.getAllHeroActivity123Equips(curGroupMO)
+		seasonEquips = Season123HeroGroupUtils.getAllHeroActivity123EquipsToFightEquipMO(curGroupMO)
 	else
 		seasonEquips = curGroupMO:getAllHeroActivity104Equips()
 	end

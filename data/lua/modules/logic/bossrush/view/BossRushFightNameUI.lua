@@ -7,8 +7,8 @@ local BossRushFightNameUI = class("BossRushFightNameUI", FightNameUI)
 function BossRushFightNameUI:_onLoaded()
 	BossRushFightNameUI.super._onLoaded(self)
 
-	self._topHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/#img_unlimitedtophp")
-	self._botHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/#img_unlimitedbothp")
+	self._topHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/#img_unlimitedtophp")
+	self._botHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/#img_unlimitedbothp")
 
 	self:_checkBoss()
 

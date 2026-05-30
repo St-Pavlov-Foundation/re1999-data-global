@@ -144,15 +144,6 @@
     "dec": ""
   },
   {
-    "id": 20008,
-    "type": "Detonate",
-    "effect": "",
-    "effectHangPoint": "",
-    "audioId": 0,
-    "dec_Type": 5,
-    "dec": "language_10015271"
-  },
-  {
     "id": 20009,
     "type": "Detonate2",
     "effect": "",
@@ -3204,15 +3195,6 @@
     "dec": ""
   },
   {
-    "id": 60237,
-    "type": "Detonate3",
-    "effect": "",
-    "effectHangPoint": "",
-    "audioId": 0,
-    "dec_Type": 0,
-    "dec": ""
-  },
-  {
     "id": 60238,
     "type": "SettleBurn",
     "effect": "",
@@ -3603,6 +3585,87 @@
     "id": 60274,
     "type": "AbsorbExPointConvertPower",
     "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60280,
+    "type": "AddToughness",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60281,
+    "type": "AddCardRankByEffectTag",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60282,
+    "type": "ButterflyDamage",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60283,
+    "type": "BufferflyRecordSkill",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60284,
+    "type": "PoisonConvertToPowerfulPoisonBuff",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60285,
+    "type": "RemoveBuffToEnchant",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60286,
+    "type": "RemoveShieldValueByAttrAndBuff",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60287,
+    "type": "ToughnessRecover",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60288,
+    "type": "LostLife",
+    "effect": "buff/buff_podun",
     "effectHangPoint": "",
     "audioId": 0,
     "dec_Type": 0,

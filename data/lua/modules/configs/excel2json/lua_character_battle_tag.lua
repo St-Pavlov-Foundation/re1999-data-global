@@ -5,6 +5,7 @@ module("modules.configs.excel2json.lua_character_battle_tag", package.seeall)
 local lua_character_battle_tag = {}
 local fields = {
 	id = 1,
+	typeid = 3,
 	tagName = 2
 }
 local primaryKey = {

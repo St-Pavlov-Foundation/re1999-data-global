@@ -115,8 +115,8 @@ end
 function Season123_2_0EquipView:refreshSlots()
 	local isEmptyShow = true
 
-	for slotIndex = 1, Season123EquipItemListModel.MaxPos do
-		if Season123EquipItemListModel.instance.curEquipMap[slotIndex] ~= Season123EquipItemListModel.EmptyUid then
+	for slotIndex = 1, Activity123Enum.HeroCardNum do
+		if Season123EquipItemListModel.instance.curEquipMap[slotIndex] ~= Activity123Enum.EmptyUid then
 			isEmptyShow = false
 		end
 
@@ -147,7 +147,7 @@ function Season123_2_0EquipView:refreshSlot(slotIndex)
 	gohelper.setActive(item.goBtnAdd, not isLock)
 	gohelper.setActive(item.goLock, isLock)
 
-	if itemUid == Season123EquipItemListModel.EmptyUid then
+	if itemUid == Activity123Enum.EmptyUid then
 		gohelper.setActive(item.goPos, false)
 		gohelper.setActive(item.goEmpty, true)
 
@@ -191,7 +191,7 @@ function Season123_2_0EquipView:refreshDesc(descItem, itemUid, slotIndex)
 		return
 	end
 
-	if itemUid == Season123EquipItemListModel.EmptyUid then
+	if itemUid == Activity123Enum.EmptyUid then
 		gohelper.setActive(descItem.go, false)
 	else
 		gohelper.setActive(descItem.go, true)

@@ -121,6 +121,17 @@ function SurvivaSceneMapUnitComp:_onUnitPosChange(_, unitMo, isDel)
 		SurvivalMapHelper.instance:getScene().pointEffect:clearPointsByKey(unitMo.id)
 		self:_showEffect(unitMo.id, unitMo.pos, warmingRange)
 	end
+
+	if SurvivalMapHelper.instance:isPetrifactionTar(unitMo) then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local blockType = sceneMo:getBlockTypeByPos(unitMo.pos)
+
+		if blockType and blockType == SurvivalEnum.UnitSubType.Petrifaction then
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowUnitBubble, unitMo.id, 1, 0)
+		else
+			SurvivalController.instance:dispatchEvent(SurvivalEvent.HideUnitBubble, unitMo.id, 1, 0)
+		end
+	end
 end
 
 function SurvivaSceneMapUnitComp:_onUnitChange(unitId)

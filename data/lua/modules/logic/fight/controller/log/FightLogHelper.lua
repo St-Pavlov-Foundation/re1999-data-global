@@ -887,6 +887,7 @@ FightLogHelper.EffectTypeNameDict = {
 	[FightEnum.EffectType.CHANGESCENE] = "切换场景",
 	[FightEnum.EffectType.ANANFOCUSBUFF] = "(安安狂想)收集全场buff",
 	[FightEnum.EffectType.EMITTEREXTRADEMAGE] = "飞弹额外伤害",
+	[FightEnum.EffectType.BUFFERFLYADDHANDCARD] = "洛伦兹蝴蝶添加卡牌",
 	[FightEnum.EffectType.TRIGGER] = "触发器",
 	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = "EZIO大招伤害",
 	[FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE] = "EZIO大招本源创伤",

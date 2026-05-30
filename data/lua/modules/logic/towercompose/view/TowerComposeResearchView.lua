@@ -7,7 +7,10 @@ local TowerComposeResearchView = class("TowerComposeResearchView", BaseView)
 function TowerComposeResearchView:onInitView()
 	self._scrollprogress = gohelper.findChildScrollRect(self.viewGO, "root/left/#scroll_progress")
 	self._goprogressContent = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent")
+	self._goprogressBarBg = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent/progress/#go_progressBarBg")
+	self._gobarBgIcon = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent/progress/#go_progressBarBg/#go_barBgIcon")
 	self._goprogressBar = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent/progress/#go_progressBar")
+	self._gobarIcon = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent/progress/#go_progressBar/#go_barIcon")
 	self._goprogressItem = gohelper.findChild(self.viewGO, "root/left/#scroll_progress/Viewport/#go_progressContent/#go_progressItem")
 	self._txtcurProgress = gohelper.findChildText(self.viewGO, "root/left/progressinfo/#txt_curProgress")
 	self._goeffectTargetPos = gohelper.findChild(self.viewGO, "root/left/#go_effectTargetPos")
@@ -39,6 +42,7 @@ end
 TowerComposeResearchView.TaskMaskTime = 0.65
 TowerComposeResearchView.TaskGetAnimTime = 0.567
 TowerComposeResearchView.progressItemH = 220
+TowerComposeResearchView.barItemH = 1020
 
 function TowerComposeResearchView:_editableInitView()
 	self._taskAnimRemoveItem = ListScrollAnimRemoveItem.Get(self.viewContainer.scrollView)
@@ -48,7 +52,10 @@ function TowerComposeResearchView:_editableInitView()
 
 	self.removeIndexTab = {}
 	self.progressItemMap = self:getUserDataTb_()
+	self.barBgItemList = self:getUserDataTb_()
 
+	gohelper.setActive(self._gobarBgIcon, false)
+	gohelper.setActive(self._gobarIcon, false)
 	gohelper.setActive(self._goprogressItem, false)
 	gohelper.setActive(self._goblock, false)
 
@@ -75,7 +82,33 @@ function TowerComposeResearchView:onOpen()
 end
 
 function TowerComposeResearchView:refreshUI()
+	self:refreshProgressBarBg()
 	self:refreshProgressInfo()
+end
+
+function TowerComposeResearchView:refreshProgressBarBg()
+	local allResearchCoList = TowerComposeConfig.instance:getAllResearchCoList(self.curThemeId)
+	local barBgH = #allResearchCoList * TowerComposeResearchView.progressItemH
+
+	recthelper.setHeight(self._goprogressBarBg.transform, barBgH)
+
+	local bgItemCount = Mathf.Ceil(barBgH / TowerComposeResearchView.barItemH)
+
+	for index = 1, bgItemCount do
+		local bgItem = self.barBgItemList[index]
+
+		if not bgItem then
+			bgItem = {
+				index = index,
+				bgItemGO = gohelper.clone(self._gobarBgIcon, self._goprogressBarBg, "bgGO" .. index),
+				barItemGO = gohelper.clone(self._gobarIcon, self._goprogressBar, "barGO" .. index)
+			}
+			self.barBgItemList[index] = bgItem
+		end
+
+		gohelper.setActive(bgItem.bgItemGO, true)
+		gohelper.setActive(bgItem.barItemGO, true)
+	end
 end
 
 function TowerComposeResearchView:refreshProgressInfo()

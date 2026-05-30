@@ -567,6 +567,19 @@ function JumpController:canJumpToRougeMainView(jumpParam)
 	return isCanJump, toastId, toastParamList
 end
 
+function JumpController:canJumpToSurvivalView()
+	local isCanJump = true
+	local toastId, toastParamList
+	local isShow = SurvivalController.instance:isOpenSurvival()
+
+	if not isShow then
+		isCanJump = false
+		toastId, toastParamList = OpenHelper.getToastIdAndParam(OpenEnum.UnlockFunc.Survival)
+	end
+
+	return isCanJump, toastId, toastParamList
+end
+
 function JumpController:canJumpToRougeRewardView(jumpParam)
 	local isCanJump = true
 	local toastId, toastParamList
@@ -754,7 +767,8 @@ JumpController.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.VersionEnterView] = JumpController.canJumpToVersionEnterView,
 	[JumpEnum.JumpView.RougeRewardView] = JumpController.canJumpToRougeRewardView,
 	[JumpEnum.JumpView.RougeMainView] = JumpController.canJumpToRougeMainView,
-	[JumpEnum.JumpView.StoreSupplementMonthCardUseView] = JumpController.canJumpToStoreSupplementMonthCardUseView
+	[JumpEnum.JumpView.StoreSupplementMonthCardUseView] = JumpController.canJumpToStoreSupplementMonthCardUseView,
+	[JumpEnum.JumpView.SurvivalView] = JumpController.canJumpToSurvivalView
 }
 JumpController.CanJumpActFunc = {
 	[JumpEnum.ActIdEnum.Act113] = JumpController.canJump2Activity1_1Dungeon,

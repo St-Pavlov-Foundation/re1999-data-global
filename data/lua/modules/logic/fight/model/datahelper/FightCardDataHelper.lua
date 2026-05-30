@@ -193,6 +193,10 @@ function FightCardDataHelper.canCombineCard(cardInfo1, cardInfo2, entityDataMgr)
 		return false
 	end
 
+	if FightCardDataHelper.hadNotCombineEnchant(cardInfo1) or FightCardDataHelper.hadNotCombineEnchant(cardInfo2) then
+		return false
+	end
+
 	local skillConfig1 = lua_skill.configDict[skillId1]
 	local skillConfig2 = lua_skill.configDict[skillId2]
 
@@ -249,6 +253,10 @@ function FightCardDataHelper.canCombineWithUniversal(universal_card_info, target
 	local target_skill_id = target_card_info.skillId
 
 	if target_skill_id == FightEnum.UniversalCard1 or target_skill_id == FightEnum.UniversalCard2 then
+		return false
+	end
+
+	if FightCardDataHelper.hadNotCombineEnchant(target_card_info) then
 		return false
 	end
 
@@ -433,6 +441,34 @@ function FightCardDataHelper.isSkill3(card_info)
 	return card_info.cardType == FightEnum.CardType.SKILL3
 end
 
+function FightCardDataHelper.hadNotCombineEnchant(cardInfo)
+	if not cardInfo then
+		return false
+	end
+
+	local enchants = cardInfo.enchants
+
+	if not enchants then
+		return false
+	end
+
+	for _, enchant in ipairs(enchants) do
+		if FightCardDataHelper.checkIsNotCombineEnchant(enchant.enchantId) then
+			return true
+		end
+	end
+
+	return false
+end
+
+local NotCombineEnchantsList = {
+	FightEnum.EnchantedType.Lorenz
+}
+
+function FightCardDataHelper.checkIsNotCombineEnchant(enchantId)
+	return tabletool.indexOf(NotCombineEnchantsList, enchantId)
+end
+
 function FightCardDataHelper.isSpecialCard(card_info)
 	if not card_info then
 		return
@@ -521,10 +557,20 @@ function FightCardDataHelper.playActCost(cardData)
 
 	if FightCardDataHelper.isSpecialCardById(uid, skillId) then
 		costPoint = (cardType == FightEnum.CardType.ROUGE_SP or cardType == FightEnum.CardType.USE_ACT_POINT) and 1 or 0
+
+		return costPoint
 	end
 
 	if FightCardDataHelper.isSkill3(cardData) then
 		costPoint = 0
+
+		return costPoint
+	end
+
+	if FightCardDataHelper.hadNotCostPointEnchant(cardData) then
+		costPoint = 0
+
+		return costPoint
 	end
 
 	local skillCo = lua_skill.configDict[skillId]
@@ -539,6 +585,50 @@ function FightCardDataHelper.playActCost(cardData)
 	end
 
 	return costPoint
+end
+
+local NotCostPointEnchantsList = {
+	FightEnum.EnchantedType.Lorenz
+}
+
+function FightCardDataHelper.hadNotCostPointEnchant(cardData)
+	if not cardData then
+		return
+	end
+
+	local enchantList = cardData.enchants
+
+	if not enchantList then
+		return
+	end
+
+	for _, enchant in pairs(enchantList) do
+		if tabletool.indexOf(NotCostPointEnchantsList, enchant.enchantId) then
+			return true
+		end
+	end
+end
+
+local NotAddExPointEnchantsList = {
+	FightEnum.EnchantedType.Lorenz
+}
+
+function FightCardDataHelper.hadNotAddExPointEnchant(cardData)
+	if not cardData then
+		return
+	end
+
+	local enchantList = cardData.enchants
+
+	if not enchantList then
+		return
+	end
+
+	for _, enchant in pairs(enchantList) do
+		if tabletool.indexOf(NotAddExPointEnchantsList, enchant.enchantId) then
+			return true
+		end
+	end
 end
 
 function FightCardDataHelper.canPlayCard(card_info)
@@ -946,6 +1036,24 @@ function FightCardDataHelper.getCardSkin()
 	end
 
 	return config.itemId
+end
+
+function FightCardDataHelper.hasTargetEnchantId(cardInfo, enchantId)
+	if not cardInfo then
+		return
+	end
+
+	local enchantList = cardInfo.enchants
+
+	if not enchantList then
+		return
+	end
+
+	for _, v in ipairs(enchantList) do
+		if v.enchantId == enchantId then
+			return true
+		end
+	end
 end
 
 return FightCardDataHelper

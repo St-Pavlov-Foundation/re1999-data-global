@@ -8,10 +8,13 @@ local fields = {
 	layerName = 8,
 	stagePicture = 6,
 	desc = 9,
-	unlockEquipIndex = 10,
+	recommendInfo = 10,
 	layerPicture = 7,
+	usableEquip = 11,
 	episodeId = 4,
-	displayMark = 11,
+	displayMark = 14,
+	unlockEquipIndex = 13,
+	gottenEquip = 12,
 	stage = 2,
 	activityId = 1,
 	layer = 3
@@ -22,8 +25,9 @@ local primaryKey = {
 	"layer"
 }
 local mlStringKey = {
-	desc = 2,
-	layerName = 1
+	recommendInfo = 3,
+	layerName = 1,
+	desc = 2
 }
 
 function lua_activity123_episode.onLoad(json)

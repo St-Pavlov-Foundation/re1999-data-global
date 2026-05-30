@@ -8,14 +8,21 @@ function SurvivalDifficultyModel:refreshDifficulty()
 	self.difficultyList = self:getDifficultyList()
 
 	local difficultyIndex = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.SurvivalHardSelect, 1)
+	local firstUnLock
 
-	difficultyIndex = math.min(#self.difficultyList, difficultyIndex)
+	for i, v in ipairs(self.difficultyList) do
+		if self:isUnLockDiff(v.id) then
+			firstUnLock = i
+		end
+	end
+
+	difficultyIndex = math.min(firstUnLock, difficultyIndex)
 	self.difficultyIndex = difficultyIndex
 	self.customSelectIndex = 1
 	self.customDifficultyList = self:getCustomDifficultyList()
 	self.customFragmentMoDic = {}
 	self.customFragmentMos = {}
-	self.customFragmentSelect = 1
+	self.customFragmentSelect = GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.SurvivalHardTempSelect, 1)
 
 	local list = self:getCustomTempDiffIds()
 
@@ -34,6 +41,8 @@ function SurvivalDifficultyModel:setCustomFragmentSelect(index)
 	end
 
 	self.customFragmentSelect = index
+
+	GameUtil.playerPrefsSetNumberByUserId(PlayerPrefsKey.SurvivalHardTempSelect, index)
 
 	return true
 end

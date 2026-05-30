@@ -50,6 +50,7 @@ TaskEnum.TaskType = {
 	AutoChess = 47,
 	CommandStationNormal = 62,
 	Activity183 = 46,
+	SchoolStart = 75,
 	Tower = 40,
 	Activity179 = 42,
 	ActivityShow = 16,

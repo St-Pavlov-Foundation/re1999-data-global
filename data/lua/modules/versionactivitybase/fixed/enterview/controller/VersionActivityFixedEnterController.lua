@@ -21,6 +21,8 @@ function VersionActivityFixedEnterController:_internalOpenView(viewName, actId, 
 end
 
 function VersionActivityFixedEnterController:_internalOpenEnterView(viewName, actId, viewParams)
+	VersionActivityFixedDungeonController.instance:setEnterVerison()
+
 	local hasPlayedVideo = VersionActivityBaseController.instance:isPlayedActivityVideo(actId)
 
 	if hasPlayedVideo then

@@ -98,8 +98,20 @@ function RoomCharacterEntity:setLocalPos(x, y, z, tween)
 	end
 end
 
+function RoomCharacterEntity:setLocalScale(scaleX, scaleY, scaleZ)
+	if not scaleX or not scaleY or not scaleZ then
+		return
+	end
+
+	transformhelper.setLocalScale(self.goTrs, scaleX, scaleY, scaleZ)
+end
+
 function RoomCharacterEntity:getLocalPosXYZ()
 	return transformhelper.getLocalPos(self.goTrs)
+end
+
+function RoomCharacterEntity:getLocalScaleXYZ()
+	return transformhelper.getLocalScale(self.goTrs)
 end
 
 function RoomCharacterEntity:_frameCallback(value, param)

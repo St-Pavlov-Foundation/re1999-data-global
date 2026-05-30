@@ -143,7 +143,9 @@ local activitySubViewDict = {
 	[ActivityEnum.Activity.V3a4_GiftRecommend] = ViewName.V3a4GiftRecommendFullview,
 	[ActivityEnum.Activity.V3a4_DestinyGift] = ViewName.V3a4DestinyGiftFullView,
 	[VersionActivity3_4Enum.ActivityId.ActivityCollect] = ViewName.V3A4ActivityCollectView,
-	[ActivityEnum.Activity.V3a4_GoldenMilletPresent] = ViewName.V3a4_GoldenMilletPresentFullView
+	[ActivityEnum.Activity.V3a4_GoldenMilletPresent] = ViewName.V3a4_GoldenMilletPresentFullView,
+	[ActivityEnum.Activity.V3a5_SchoolStart] = ViewName.V3a5_SchoolStartView,
+	[VersionActivity3_5Enum.ActivityId.ActivityCollect] = ViewName.V3A5ActivityCollectView
 }
 local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -271,6 +273,10 @@ function ActivityBeginnerView:_openSubView()
 	}
 
 	ViewMgr.instance:openView(self._viewName, viewParam, true)
+	StatController.instance:track(StatEnum.EventName.ButtonClick, {
+		[StatEnum.EventProperties.ViewName] = "ActivityBeginnerView",
+		[StatEnum.EventProperties.ButtonName] = self._viewName or ""
+	})
 end
 
 function ActivityBeginnerView:setCategoryRedDotData(actId)

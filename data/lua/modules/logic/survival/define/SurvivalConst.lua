@@ -26,6 +26,7 @@ SurvivalConst.UnitEffectPath = {
 	Fly = "survival/effects/prefab/v2a8_scene_yidong.prefab",
 	UnitType44 = "survival/effects/prefab/v2a8_scene_smoke_02.prefab",
 	MksEffect = "survival/effects/prefab/v3a4_scene_mks.prefab",
+	SnatchEffect = "survival/effects/prefab/v3a5_scene_xingti.prefab",
 	Transfer1 = "survival/effects/prefab/v2a8_scene_chuansong_02.prefab",
 	FollowUnit = "survival/effects/prefab/v2a8_scene_jinguang.prefab",
 	CreateUnit = "survival/effects/prefab/v2a8_scene_bianshen.prefab",

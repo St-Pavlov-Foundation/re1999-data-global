@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "storyId": 303201,
+    "preId": 0
+  },
+  {
+    "id": 2,
+    "storyId": 303202,
+    "preId": 1
+  },
+  {
+    "id": 3,
+    "storyId": 303203,
+    "preId": 2
+  },
+  {
+    "id": 4,
+    "storyId": 303204,
+    "preId": 3
+  },
+  {
+    "id": 5,
+    "storyId": 303205,
+    "preId": 4
+  },
+  {
+    "id": 6,
+    "storyId": 303206,
+    "preId": 5
+  },
+  {
+    "id": 7,
+    "storyId": 303207,
+    "preId": 6
+  },
+  {
+    "id": 8,
+    "storyId": 303208,
+    "preId": 7
+  }
+]

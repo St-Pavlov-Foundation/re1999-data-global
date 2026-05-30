@@ -116,7 +116,8 @@ local kAct101RedList = {
 	ActivityEnum.Activity.V3a2_ActivityCollect,
 	ActivityEnum.Activity.V3a4_ActivityCollect,
 	ActivityEnum.Activity.V3a4_DestinyGift,
-	ActivityEnum.Activity.V3a4_GiftRecommend
+	ActivityEnum.Activity.V3a4_GiftRecommend,
+	VersionActivity3_5Enum.ActivityId.ActivityCollect
 }
 local kAct125List = {
 	ActivityEnum.Activity.V3a0_WarmUp,

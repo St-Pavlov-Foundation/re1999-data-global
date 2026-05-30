@@ -21,6 +21,7 @@ function XugoujiLevelView:onInitView()
 	self._pathAnimator = ZProj.ProjAnimatorPlayer.Get(self._goPath)
 	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
 	self._taskAnimator = self._goTaskAni:GetComponent(gohelper.Type_Animator)
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ end
 function XugoujiLevelView:addEvents()
 	self._btntask:AddClickListener(self._btntaskOnClick, self)
 	self._btnChallenge:AddClickListener(self._btnChallengeOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self:addEventCb(XugoujiController.instance, XugoujiEvent.EpisodeUpdate, self._onEpisodeUpdate, self)
 	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a6XugoujiTask)
@@ -38,7 +40,34 @@ end
 function XugoujiLevelView:removeEvents()
 	self._btntask:RemoveClickListener()
 	self._btnChallenge:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
+end
+
+function XugoujiLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function XugoujiLevelView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(actId) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
 end
 
 function XugoujiLevelView:_btntaskOnClick()
@@ -106,6 +135,9 @@ function XugoujiLevelView:_initStages()
 
 	local curFinishedCount = Activity188Model.instance:getFinishedCount()
 	local episodeCfgList = Activity188Config.instance:getEpisodeCfgList(actId)
+
+	self.config = ActivityConfig.instance:getActivityCo(actId)
+
 	local selectIndex = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Version2_6XugoujiSelect .. actId, "1")
 
 	selectIndex = tonumber(selectIndex) or 1

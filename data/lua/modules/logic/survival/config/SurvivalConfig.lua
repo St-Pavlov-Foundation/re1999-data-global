@@ -80,7 +80,8 @@ function SurvivalConfig:reqConfigNames()
 		"survival_maptarget",
 		"survival_shop",
 		"survival_shop_type",
-		"survival_message"
+		"survival_message",
+		"survival_reward_shop"
 	}
 end
 
@@ -154,7 +155,15 @@ function SurvivalConfig:getCurShelterMapId()
 end
 
 function SurvivalConfig:getShelterMapCo(id)
-	local mapId = id or self:getCurShelterMapId()
+	local mapId = id
+
+	if not mapId then
+		if SurvivalMapHelper.instance:isInCollectionRoom() then
+			mapId = SurvivalModel.instance:getCollectionRoomMapId()
+		else
+			mapId = self:getCurShelterMapId()
+		end
+	end
 
 	if not self._allShelterCo[mapId] then
 		local data = addGlobalModule("modules.configs.survival.lua_survival_shelter_building_" .. tostring(mapId), "lua_survival_shelter_building_" .. tostring(mapId))

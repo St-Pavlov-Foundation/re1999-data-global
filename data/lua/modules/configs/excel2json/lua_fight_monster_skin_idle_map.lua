@@ -6,6 +6,7 @@ local lua_fight_monster_skin_idle_map = {}
 local fields = {
 	freezeAnimName = 4,
 	idleAnimName = 2,
+	giddyAnimName = 6,
 	skinId = 1,
 	sleepAnimName = 5,
 	hitAnimName = 3

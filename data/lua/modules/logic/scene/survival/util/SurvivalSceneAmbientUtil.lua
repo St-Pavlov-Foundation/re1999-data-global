@@ -6,7 +6,7 @@ local SurvivalSceneAmbientUtil = class("SurvivalSceneAmbientUtil")
 local Shader = UnityEngine.Shader
 local ShaderIDMap = RoomSceneAmbientComp.ShaderIDMap
 
-function SurvivalSceneAmbientUtil:_onLightLoaded(lightGo, isShelterScene)
+function SurvivalSceneAmbientUtil:_onLightLoaded(lightGo, isUseShelterAmbient)
 	if not lightGo then
 		return
 	end
@@ -33,8 +33,12 @@ function SurvivalSceneAmbientUtil:_onLightLoaded(lightGo, isShelterScene)
 	self._matFogPlane = self._sceneAmbient and self._sceneAmbient.matFogPlane
 	self._matFogParticle = self._sceneAmbient and self._sceneAmbient.matFogParticle
 
-	self:initData()
-	self:updateSceneAmbient(isShelterScene)
+	if isUseShelterAmbient == nil then
+		isUseShelterAmbient = SurvivalMapHelper:isUseShelterAmbient()
+	end
+
+	self:initData(isUseShelterAmbient)
+	self:updateSceneAmbient(isUseShelterAmbient)
 end
 
 function SurvivalSceneAmbientUtil:disable()
@@ -48,18 +52,37 @@ function SurvivalSceneAmbientUtil:disable()
 	self._configs = nil
 end
 
-local Scene_Ambient_Ids = {
-	"sur_day3",
-	"sur_day",
-	"sur_day2",
-	"sur_night"
-}
-
-function SurvivalSceneAmbientUtil:initData()
+function SurvivalSceneAmbientUtil:initData(isUseShelterAmbient)
 	self._configs = {}
 	self._tempV2 = Vector2()
 	self._tempV4 = Vector4()
 	self._tempColor = Color()
+
+	local Scene_Ambient_Ids
+
+	if isUseShelterAmbient then
+		Scene_Ambient_Ids = {
+			"sur_day3",
+			"sur_day",
+			"sur_day2",
+			"sur_night"
+		}
+	else
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local mode = sceneMo.sceneProp.mode
+
+		if mode == 0 then
+			Scene_Ambient_Ids = {
+				"sur_day",
+				"sur_day2"
+			}
+		else
+			Scene_Ambient_Ids = {
+				"sur_night",
+				"sur_day3"
+			}
+		end
+	end
 
 	for k, v in ipairs(Scene_Ambient_Ids) do
 		local curAmbientCfg = RoomConfig.instance:getSceneAmbientConfig(v)
@@ -96,12 +119,8 @@ function SurvivalSceneAmbientUtil:TrColor(data)
 	return self._tempColor
 end
 
-function SurvivalSceneAmbientUtil:updateSceneAmbient(isShelterScene)
-	if isShelterScene == nil then
-		isShelterScene = SurvivalMapHelper:isInShelterScene()
-	end
-
-	if isShelterScene then
+function SurvivalSceneAmbientUtil:updateSceneAmbient(isUseShelterAmbient)
+	if isUseShelterAmbient then
 		self._data = self._configs[1]
 
 		self:applyData()

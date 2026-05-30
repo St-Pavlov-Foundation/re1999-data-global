@@ -9,6 +9,7 @@ function SurvivalScenePropMo:init(data)
 	self.radarPosition = SurvivalHexNode.New(data.radarHex.q, data.radarHex.r)
 	self.teleportGate = data.teleportGate
 	self.teleportGateHex = SurvivalHexNode.New(data.teleportGateHex.q, data.teleportGateHex.r)
+	self.mode = data.mode
 end
 
 return SurvivalScenePropMo

@@ -31,7 +31,7 @@ function SurvivalSceneCameraComp:onSceneStart(...)
 
 	self.sceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if self.sceneType == SceneType.SurvivalShelter then
+	if self.sceneType == SceneType.SurvivalShelter or self.sceneType == SceneType.SurvivalCollectionRoom then
 		local mapCo = SurvivalConfig.instance:getShelterMapCo()
 
 		self.mapMinX = mapCo.minX + 2
@@ -61,7 +61,7 @@ function SurvivalSceneCameraComp:onScenePrepared(sceneId, levelId)
 
 	self:checkIsInMiasma(true)
 
-	if self.sceneType == SceneType.SurvivalShelter then
+	if self.sceneType == SceneType.SurvivalShelter or self.sceneType == SceneType.SurvivalCollectionRoom then
 		self:setDistance(10)
 		self:setRotate(0, 45)
 

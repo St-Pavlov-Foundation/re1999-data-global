@@ -275,6 +275,10 @@ function HeroGroupController:onReceiveHeroGroupSnapshot(msg)
 	local snapshotId = msg.snapshotId
 	local subId = msg.snapshotSubId
 	local groupInfo = msg.groupInfo
+
+	if snapshotId == ModuleEnum.HeroGroupSnapshotType.Season123 then
+		Season123Model.instance:setSnapshotByHeroGroup(subId, msg)
+	end
 end
 
 HeroGroupController.instance = HeroGroupController.New()

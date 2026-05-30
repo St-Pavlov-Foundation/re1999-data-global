@@ -34,6 +34,7 @@ function V3a2_BossRush_EnterView:addEvents()
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
 	self:addEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, self._refreshStoreTag, self)
 	self:addEventCb(BossRushController.instance, BossRushEvent.onReceiveAct128GetExpReply, self.playRankBtnAnim, self)
+	self:addEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128InfosReply, self._onReceiveGet128InfosReply, self)
 end
 
 function V3a2_BossRush_EnterView:removeEvents()
@@ -45,6 +46,7 @@ function V3a2_BossRush_EnterView:removeEvents()
 	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
 	self:removeEventCb(BossRushController.instance, BossRushEvent.OnEnterStoreView, self._refreshStoreTag, self)
 	self:removeEventCb(BossRushController.instance, BossRushEvent.onReceiveAct128GetExpReply, self.playRankBtnAnim, self)
+	self:removeEventCb(BossRushController.instance, BossRushEvent.OnReceiveGet128InfosReply, self._onReceiveGet128InfosReply, self)
 end
 
 function V3a2_BossRush_EnterView:_btnUnOpenOnClick()
@@ -104,6 +106,12 @@ function V3a2_BossRush_EnterView:_editableInitView()
 		end
 	end
 
+	local activityId = BossRushConfig.instance:getActivityId()
+
+	if ActivityHelper.isOpen(activityId) then
+		BossRushRpc.instance:sendGet128InfosRequest()
+	end
+
 	self:_initRank()
 end
 
@@ -152,13 +160,7 @@ function V3a2_BossRush_EnterView:onOpen()
 
 	self._isInfo = false
 
-	BossRushRpc.instance:sendGet128InfosRequest(function()
-		if self._rankBtn then
-			self._rankBtn:refreshUI()
-		end
-
-		self._isInfo = true
-	end)
+	BossRushRpc.instance:sendGet128InfosRequest()
 
 	if not actInfoMo then
 		self._txtLimitTime.text = ""
@@ -201,6 +203,14 @@ function V3a2_BossRush_EnterView:playRankBtnAnim()
 	if self._rankBtn then
 		self._rankBtn:playAnim()
 	end
+end
+
+function V3a2_BossRush_EnterView:_onReceiveGet128InfosReply()
+	if self._rankBtn then
+		self._rankBtn:refreshUI()
+	end
+
+	self._isInfo = true
 end
 
 function V3a2_BossRush_EnterView:_refreshTime()

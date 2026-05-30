@@ -330,4 +330,52 @@ function StoreHelper.checkIsShowCoBrandedTag(goodsId)
 	return false
 end
 
+function StoreHelper.getEndTimeStampByGoodsCfgMO(goodsCfg, goodsMO)
+	local showRefreshTime = StoreHelper.getShowRefreshTimeByGoodsCfg(goodsCfg)
+
+	if showRefreshTime == StoreEnum.RefreshTime.Day then
+		return ServerTime.getToadyEndTimeStamp(true)
+	elseif showRefreshTime == StoreEnum.RefreshTime.Week then
+		return ServerTime.getWeekEndTimeStamp(true)
+	elseif showRefreshTime == StoreEnum.RefreshTime.Month then
+		return ServerTime.getMonthEndTimeStamp(true)
+	elseif showRefreshTime == StoreEnum.RefreshTime.Version and goodsMO and goodsMO.offlineTime then
+		return goodsMO.offlineTime
+	end
+
+	return -1
+end
+
+function StoreHelper.isHasRefreshTimeByGoodsCfg(goodsCfg)
+	local showRefreshTime = StoreHelper.getShowRefreshTimeByGoodsCfg(goodsCfg)
+
+	return StoreEnum.RefreshTime.Forever == showRefreshTime
+end
+
+function StoreHelper.getShowRefreshTimeByGoodsCfg(goodsCfg)
+	if goodsCfg then
+		if goodsCfg.refreshTime == StoreEnum.RefreshTime.Forever and goodsCfg.showRefreshTime then
+			return goodsCfg.showRefreshTime
+		end
+
+		return goodsCfg.refreshTime or StoreEnum.RefreshTime.Forever
+	end
+
+	return StoreEnum.RefreshTime.Forever
+end
+
+function StoreHelper.getShowRefreshTimeByGoodsMO(goodsMO)
+	if goodsMO then
+		local refreshTime = goodsMO.refreshTime
+
+		if refreshTime == StoreEnum.RefreshTime.Forever and goodsMO.config and goodsMO.config.showRefreshTime then
+			return goodsMO.config.showRefreshTime
+		end
+
+		return refreshTime or StoreEnum.RefreshTime.Forever
+	end
+
+	return StoreEnum.RefreshTime.Forever
+end
+
 return StoreHelper

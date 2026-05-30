@@ -1,0 +1,137 @@
+[
+  {
+    "id": 101,
+    "type": 1,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "juese",
+    "icon": ""
+  },
+  {
+    "id": 201,
+    "type": 2,
+    "attributeList": [
+      "step#3",
+      "viewRange#3"
+    ],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "youling_0",
+    "icon": ""
+  },
+  {
+    "id": 202,
+    "type": 2,
+    "attributeList": [
+      "step#3",
+      "viewRange#3"
+    ],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "youling_0",
+    "icon": ""
+  },
+  {
+    "id": 301,
+    "type": 3,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "icon_zhuanqiang",
+    "icon": ""
+  },
+  {
+    "id": 302,
+    "type": 3,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "icon_yanshi",
+    "icon": ""
+  },
+  {
+    "id": 303,
+    "type": 3,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "icon_zhiwu_1",
+    "icon": ""
+  },
+  {
+    "id": 304,
+    "type": 3,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "icon_zhiwu_2",
+    "icon": ""
+  },
+  {
+    "id": 401,
+    "type": 4,
+    "attributeList": [
+      "effectRange#0"
+    ],
+    "desc": "language_10118572",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [
+      "step#-99"
+    ],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": true,
+    "imgName": "icon_lahzu",
+    "icon": "icon_prop_2"
+  },
+  {
+    "id": 402,
+    "type": 4,
+    "attributeList": [
+      "effectRange#1"
+    ],
+    "desc": "language_10118573",
+    "effectRangeUnitId": 403,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [
+      "step#-2",
+      "viewRange#-2"
+    ],
+    "removeAfterEffect": false,
+    "imgName": "icon_aicao",
+    "icon": "icon_prop_1"
+  },
+  {
+    "id": 403,
+    "type": 5,
+    "attributeList": [],
+    "desc": "",
+    "effectRangeUnitId": 0,
+    "changeGhostAttrs": [],
+    "changeGhostTempAttrs": [],
+    "removeAfterEffect": false,
+    "imgName": "icon_wu",
+    "icon": ""
+  }
+]

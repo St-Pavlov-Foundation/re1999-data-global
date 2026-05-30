@@ -18,6 +18,11 @@ function SurvivalShelterScenePreloader:init(sceneId, levelId)
 		self._loader:addPath(v)
 	end
 
+	self.monsterEffectPath = "survival/effects/prefab/v2a8_scene_smoke_02.prefab"
+	self.monsterFightSuccessPath = "survival/effects/prefab/v2a8_scene_zhandou.prefab"
+
+	self._loader:addPath(self.monsterEffectPath)
+	self._loader:addPath(self.monsterFightSuccessPath)
 	self._loader:startLoad(self._onPreloadFinish, self)
 end
 
@@ -37,6 +42,20 @@ function SurvivalShelterScenePreloader:getRes(path)
 	end
 
 	return assetItem:GetResource(path)
+end
+
+function SurvivalShelterScenePreloader:getMonsterEffect(parent)
+	local asset = self:getRes(self.monsterEffectPath)
+	local go = gohelper.clone(asset, parent)
+
+	return go
+end
+
+function SurvivalShelterScenePreloader:getMonsterFightSuccessPath(parent)
+	local asset = self:getRes(self.monsterFightSuccessPath)
+	local go = gohelper.clone(asset, parent)
+
+	return go
 end
 
 function SurvivalShelterScenePreloader:getMapBlockAbPath()

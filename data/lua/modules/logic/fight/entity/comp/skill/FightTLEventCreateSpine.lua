@@ -135,6 +135,10 @@ end
 
 function FightTLEventCreateSpine:_setupEntityLookAt(needLookAtCamera)
 	if needLookAtCamera and needLookAtCamera == "1" then
+		for _, entity in ipairs(self._spineEntityList) do
+			FightDataHelper.entityExMgr:getById(entity.id).needLookCamera = true
+		end
+
 		TaskDispatcher.runRepeat(self._onTickLookAtCamera, self, 0.01)
 	end
 end

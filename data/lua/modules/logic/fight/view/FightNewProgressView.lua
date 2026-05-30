@@ -10,7 +10,8 @@ function FightNewProgressView:onInitView()
 		[FightEnum.ProgressId.Progress_5] = self.showFightConquerBattleProgress,
 		[FightEnum.ProgressId.Progress_6] = self.showFightConquerBattleProgress,
 		[FightEnum.ProgressId.Progress_500M] = self.showProgress500M,
-		[FightEnum.ProgressId.Progress_8] = self.showYuQianRuQinBossProgress
+		[FightEnum.ProgressId.Progress_8] = self.showYuQianRuQinBossProgress,
+		[FightEnum.ProgressId.Progress_9] = self.showCelebrityCardProgress
 	}
 end
 
@@ -97,6 +98,19 @@ function FightNewProgressView:showYuQianRuQinBossProgress()
 	local path = "ui/viewres/fight/commonalityslider3.prefab"
 
 	self.progress8View = self:com_openSubView(FightCommonalitySlider5, path, goRoot, FightDataHelper.fieldMgr.progressDic:getDataByShowId(FightEnum.ProgressId.Progress_8))
+end
+
+function FightNewProgressView:showCelebrityCardProgress()
+	if self.progress9View then
+		return
+	end
+
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.CelebrityCard3_5)
+	local url = "ui/viewres/seasonver/v3a5_act123/season123fightcarditem.prefab"
+
+	self.progress9View = self:com_openSubView(FightCelebrityCard3_5View, url, parentRoot)
+
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.CelebrityCard3_5)
 end
 
 return FightNewProgressView

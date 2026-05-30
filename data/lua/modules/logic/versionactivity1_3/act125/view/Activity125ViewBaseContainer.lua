@@ -128,6 +128,12 @@ function Activity125ViewBaseContainer:getFirstRewardEpisode()
 	return mo:getFirstRewardEpisode()
 end
 
+function Activity125ViewBaseContainer:getLatestEpisode()
+	local mo = self:getActivity125MO()
+
+	return mo:getLatestEpisode()
+end
+
 function Activity125ViewBaseContainer:getRLOC(episodeId)
 	local mo = self:getActivity125MO()
 

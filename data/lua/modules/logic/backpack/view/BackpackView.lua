@@ -49,6 +49,8 @@ function BackpackView:onClose()
 end
 
 function BackpackView:_refreshView()
+	self._cateList = BackpackController.instance:getCategoryCoList()
+
 	BackpackModel.instance:setBackpackCategoryList(self._cateList)
 	BackpackCategoryListModel.instance:setCategoryList(self._cateList)
 end

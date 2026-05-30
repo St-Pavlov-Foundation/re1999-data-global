@@ -19,6 +19,7 @@ end
 function CharacterController:addConstEvents()
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.dailyRefresh, self)
 	self:registerCallback(CharacterEvent.characterFirstToShow, self._onCharacterFirstToShow, self)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, self._onGetInfoFinish, self)
 end
 
 function CharacterController:_onCharacterFirstToShow(id)
@@ -166,6 +167,12 @@ end
 
 function CharacterController:openCharacterFilterView(param)
 	ViewMgr.instance:openView(ViewName.CharacterBackpackSearchFilterView, param)
+end
+
+function CharacterController:closeCharacterFilterView()
+	if ViewMgr.instance:isOpen(ViewName.CharacterBackpackSearchFilterView) then
+		ViewMgr.instance:closeView(ViewName.CharacterBackpackSearchFilterView)
+	end
 end
 
 function CharacterController:playRoleVoice(heroId)
@@ -565,6 +572,12 @@ function CharacterController:_onUseSkinGiftItemCallback(cmd, resultCode, msg)
 	end
 
 	GameFacade.showToast(ToastEnum.SkinGiftExChangeTips)
+end
+
+function CharacterController:_onGetInfoFinish()
+	local value = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.HeroSearchFilterTags)
+
+	CharacterSearchFilterModel.instance:refreshEditorLowTags(value)
 end
 
 CharacterController.instance = CharacterController.New()

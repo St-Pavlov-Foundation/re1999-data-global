@@ -4,7 +4,8 @@ module("modules.logic.seasonver.act123.model.Season123StageMO", package.seeall)
 
 local Season123StageMO = pureTable("Season123StageMO")
 
-function Season123StageMO:init(info)
+function Season123StageMO:init(info, actId)
+	self.actId = actId
 	self.stage = info.stage
 	self.isPass = info.isPass == 1
 	self.episodeMap = self.episodeMap or {}
@@ -13,6 +14,7 @@ function Season123StageMO:init(info)
 
 	self:updateEpisodes(info.act123Episodes)
 	self:initAssistHeroMO(info)
+	self:updateBonus(info.bonusIds)
 end
 
 function Season123StageMO:updateEpisodes(episodes)
@@ -75,6 +77,46 @@ function Season123StageMO:updateReduceEpisodeRoundState(layer, state)
 	local episodeMO = self.episodeMap[layer]
 
 	self.reduceState[layer] = episodeMO and state or false
+end
+
+function Season123StageMO:updateBonus(bonusIds)
+	self.bonusIds = {}
+
+	if bonusIds then
+		for i = 1, #bonusIds do
+			self.bonusIds[bonusIds[i]] = true
+		end
+	end
+end
+
+function Season123StageMO:isBonusGet(bonusId)
+	return self.bonusIds[bonusId] or false
+end
+
+function Season123StageMO:getEpisodeMo(layer)
+	return self.episodeMap[layer]
+end
+
+function Season123StageMO:getProgressStar()
+	local current, total = 0, 0
+	local episodeList = Season123Config.instance:getSeasonEpisodeStageCos(self.actId, self.stage)
+
+	if not episodeList then
+		return current, total
+	end
+
+	for i = 1, #episodeList do
+		local episodeConfig = episodeList[i]
+		local episodeMO = self:getEpisodeMo(episodeConfig.layer)
+
+		if episodeMO then
+			current = current + episodeMO.star
+		end
+
+		total = total + Season123Config.instance:getSeasonEpisodeTotalStar(episodeConfig.episodeId)
+	end
+
+	return current, total
 end
 
 return Season123StageMO

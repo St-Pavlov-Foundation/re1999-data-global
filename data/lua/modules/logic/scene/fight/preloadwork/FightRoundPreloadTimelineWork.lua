@@ -7,20 +7,6 @@ local FightRoundPreloadTimelineWork = class("FightRoundPreloadTimelineWork", Bas
 function FightRoundPreloadTimelineWork:onStart(context)
 	local timelineUrlList = self:_getTimelineUrlList()
 
-	if not GameResMgr.IsFromEditorDir then
-		self.context.timelineDict = self.context.timelineDict or {}
-
-		for _, resPath in ipairs(timelineUrlList) do
-			local tar_timeline = FightPreloadController.instance:getFightAssetItem(ResUrl.getRolesTimeline())
-
-			self.context.timelineDict[resPath] = tar_timeline
-		end
-
-		self:onDone(true)
-
-		return
-	end
-
 	self._loader = SequenceAbLoader.New()
 
 	for _, resPath in ipairs(timelineUrlList) do

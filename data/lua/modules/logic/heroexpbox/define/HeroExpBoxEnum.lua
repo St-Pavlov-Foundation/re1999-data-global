@@ -9,15 +9,6 @@ HeroExpBoxEnum.ItemSubType = {
 	ItemEnum.SubType.HeroExpBoxKey,
 	ItemEnum.SubType.HeroExpBoxCurrency
 }
-HeroExpBoxEnum.BoxIds = {
-	793401,
-	793402
-}
-HeroExpBoxEnum.KeyIds = {
-	770001,
-	770002
-}
-HeroExpBoxEnum.CurrencyId = 780001
 HeroExpBoxEnum.HeroStatus = {
 	EnoughHeroItem = 3,
 	MAX = 4,

@@ -160,7 +160,7 @@ function GMSubViewSurvival:setDay()
 end
 
 function GMSubViewSurvival:openSurvivalView()
-	SurvivalController.instance:openSurvivalView(false)
+	SurvivalController.instance:openSurvivalView(true)
 end
 
 function GMSubViewSurvival:addAllNPC()
@@ -243,7 +243,7 @@ function GMSubViewSurvival:enterSurvival()
 					return
 				end
 
-				SurvivalController.instance:enterSurvivalMap(initGroup)
+				SurvivalController.instance:enterSurvivalMap(initGroup, 0)
 
 				if isOneKeyEnter then
 					TaskDispatcher.runDelay(function()

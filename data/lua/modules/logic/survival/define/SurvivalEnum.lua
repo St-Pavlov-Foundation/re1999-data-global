@@ -21,13 +21,14 @@ SurvivalEnum.UnitType = {
 	Block = 9
 }
 SurvivalEnum.UnitSubType = {
-	Water = 96,
-	Shop = 77,
 	Ice = 95,
-	Magma = 94,
-	Miasma = 92,
-	Morass = 93,
+	Shop = 77,
 	BlockEvent = 791,
+	Petrifaction = 97,
+	Morass = 93,
+	Water = 96,
+	Miasma = 92,
+	Magma = 94,
 	Block = 91
 }
 SurvivalEnum.Dir = {
@@ -450,7 +451,7 @@ SurvivalEnum.BuildingType = {
 	Population = 3,
 	Npc = 9,
 	Explore = 5,
-	Collection = 14,
+	Collection = 15,
 	Shop = 11,
 	ReputationShop = 12,
 	Equipment = 8,
@@ -458,6 +459,7 @@ SurvivalEnum.BuildingType = {
 	Health = 6,
 	Tent = 7,
 	Tech = 13,
+	CollectionRoom = 14,
 	Warehouse = 10
 }
 SurvivalEnum.InfoShowType = {
@@ -615,18 +617,23 @@ SurvivalEnum.DerivedAttr = {
 	Sell_ComputingCenter = 2
 }
 SurvivalEnum.RoleSkillEffect = {
+	SnatchItem = "snatchItem",
+	KillMonster = "killMonster",
+	ReplaceBlockUnit = "replaceBlockUnit",
 	FindDrop = "findDrop",
 	DestroyBlock = "destroyBlock",
-	KillMonster = "killMonster",
 	NoiseAttract = "noiseAttract"
 }
 SurvivalEnum.SelectPointSkill = {
 	[SurvivalEnum.RoleSkillEffect.KillMonster] = 1,
-	[SurvivalEnum.RoleSkillEffect.DestroyBlock] = 1
+	[SurvivalEnum.RoleSkillEffect.DestroyBlock] = 1,
+	[SurvivalEnum.RoleSkillEffect.SnatchItem] = 1,
+	[SurvivalEnum.RoleSkillEffect.ReplaceBlockUnit] = 1
 }
 SurvivalEnum.UnitMarkType = {
-	ItemAttract = 2,
-	Attract = 1
+	Skill_Chase = 3,
+	Attract = 1,
+	ItemAttract = 2
 }
 
 return SurvivalEnum

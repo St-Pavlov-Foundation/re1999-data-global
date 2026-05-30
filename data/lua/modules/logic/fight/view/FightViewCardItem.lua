@@ -7,10 +7,21 @@ local FightViewCardItem = class("FightViewCardItem", LuaCompBase)
 FightViewCardItem.TagPosForLvs = nil
 
 function FightViewCardItem:ctor(handCardType)
+	self.preLv = 0
 	self.handCardType = handCardType or FightEnum.CardShowType.Default
 end
 
 function FightViewCardItem:init(go)
+	self.useSkin = false
+
+	if self.handCardType == FightEnum.CardShowType.HandCard or self.handCardType == FightEnum.CardShowType.Operation or self.handCardType == FightEnum.CardShowType.PlayCard then
+		local cardSkin = FightCardDataHelper.getCardSkin()
+
+		if cardSkin == 672801 then
+			self.useSkin = true
+		end
+	end
+
 	self.go = go
 	self._canvasGroup = go:GetComponent(gohelper.Type_CanvasGroup)
 	self.tr = go.transform
@@ -63,12 +74,34 @@ function FightViewCardItem:init(go)
 	self._starGO = gohelper.findChild(go, "star")
 	self._starCanvas = gohelper.onceAddComponent(self._starGO, typeof(UnityEngine.CanvasGroup))
 	self._innerStartGOs = self:getUserDataTb_()
+	self._innerStarPreLvGoList = self:getUserDataTb_()
+	self._innerStarPreLvGoDict = {}
 
 	for i = 1, FightEnum.MaxSkillCardLv do
 		local starObj = gohelper.findChild(go, "star/star" .. i)
 
 		table.insert(self._innerStartGOs, starObj)
 		table.insert(self._starItemCanvas, gohelper.onceAddComponent(starObj, typeof(UnityEngine.CanvasGroup)))
+
+		local preLvGo = gohelper.findChild(starObj, "prelv")
+
+		table.insert(self._innerStarPreLvGoList, preLvGo)
+		gohelper.setActive(preLvGo, false)
+
+		local lvGoList = {}
+
+		for lv = i + 1, FightEnum.MaxSkillCardLv do
+			local lvGo = gohelper.findChild(preLvGo, "pre_" .. lv)
+
+			gohelper.setActive(lvGo, false)
+			table.insert(lvGoList, lvGo)
+
+			local image = lvGo:GetComponent(gohelper.Type_Image)
+
+			UISpriteSetMgr.instance:setFightSkillCardSprite(image, "xx1", true)
+		end
+
+		table.insert(self._innerStarPreLvGoDict, lvGoList)
 	end
 
 	self._layout = gohelper.findChild(self.go, "layout")
@@ -76,6 +109,9 @@ function FightViewCardItem:init(go)
 	gohelper.setActive(self._layout, true)
 
 	self._predisplay = gohelper.findChild(go, "layout/predisplay")
+	self._predisplayLorentz = gohelper.findChild(go, "layout/predisplay_lorentz")
+	self.baifuzhang_wheel_card = gohelper.findChild(go, "layout/baifuzhang_wheel_card")
+	self.baifuzhang_wheel_cardText = gohelper.findChildText(self.baifuzhang_wheel_card, "image_BG/txt_predisplay")
 	self._cardAni = gohelper.onceAddComponent(go, typeof(UnityEngine.Animator))
 	self._cardAppearEffectRoot = gohelper.findChild(go, "cardAppearEffectRoot")
 	self._cardMask = gohelper.findChild(go, "cardmask")
@@ -115,6 +151,10 @@ function FightViewCardItem:init(go)
 	self._precisionEffect = gohelper.findChild(self.go, "AccurateEnchant/effect")
 
 	gohelper.setActive(self._precisionEffect, false)
+
+	self.goLorentzVx = gohelper.findChild(self.go, "#go_lorentz_vx")
+	self.goLaMoNaVx = gohelper.findChild(self.go, "#go_lamona_vx")
+
 	self:initSuperimposeNode()
 
 	self.goTopLayout = gohelper.findChild(go, "topLayout")
@@ -172,15 +212,6 @@ function FightViewCardItem:init(go)
 	self.xingtiGo = self.xingtiTxt.gameObject
 	self.alfLoadStatus = FightViewCardItem.AlfLoadStatus.None
 	self.useCardCopyLoadStatus = FightViewCardItem.AlfLoadStatus.None
-	self.useSkin = false
-
-	if self.handCardType == FightEnum.CardShowType.HandCard or self.handCardType == FightEnum.CardShowType.Operation or self.handCardType == FightEnum.CardShowType.PlayCard then
-		local cardSkin = FightCardDataHelper.getCardSkin()
-
-		if cardSkin == 672801 then
-			self.useSkin = true
-		end
-	end
 
 	if self.useSkin then
 		local frontBgRoot = gohelper.create2d(go, "skinFrontBg")
@@ -221,14 +252,16 @@ function FightViewCardItem:init(go)
 			for index = 0, transform.childCount - 1 do
 				local child = transform:GetChild(index)
 				local childName = child.name
-				local img = gohelper.onceAddComponent(child.gameObject, gohelper.Type_Image)
+				local img = child:GetComponent(gohelper.Type_Image)
 
-				if childName == "light" then
-					UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx1", true)
-				elseif childName == "lightblue" then
-					UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx3", true)
-				else
-					UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx2", true)
+				if img then
+					if childName == "light" then
+						UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx1", true)
+					elseif childName == "lightblue" then
+						UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx3", true)
+					elseif string.sub(childName, 1, 4) == "dark" then
+						UISpriteSetMgr.instance:setFightSkillCardSprite(img, "xx2", true)
+					end
 				end
 			end
 		end
@@ -470,25 +503,11 @@ function FightViewCardItem:updateItem(entityId, skillId, cardInfoMO)
 
 	self:_hideAniEffect()
 	self:refreshCardIcon()
-
-	local skillCardLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
-	local showStar = skillCardLv < FightEnum.UniqueSkillCardLv and skillCardLv > 0
-
-	gohelper.setActive(self._starGO, showStar)
-
-	self._starCanvas.alpha = 1
-
-	for i, startGO in ipairs(self._innerStartGOs) do
-		gohelper.setActive(startGO, i == skillCardLv)
-
-		if self._starItemCanvas[i] then
-			self._starItemCanvas[i].alpha = 1
-		end
-	end
-
+	self:refreshStar()
 	self:refreshTag()
 
 	local skillCO = lua_skill.configDict[self.skillId]
+	local skillCardLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
 
 	self._txt.text = skillCO.id .. "\nLv." .. skillCardLv
 
@@ -508,10 +527,11 @@ function FightViewCardItem:updateItem(entityId, skillId, cardInfoMO)
 	gohelper.setActive(self._uniqueCardEffect, showBigSkillEffect)
 	gohelper.setActive(self.frontBgNormal, skillCardLv ~= FightEnum.UniqueSkillCardLv)
 	gohelper.setActive(self.frontBgBigSkill, skillCardLv == FightEnum.UniqueSkillCardLv)
-	gohelper.setActive(self._predisplay, self._cardInfoMO and self._cardInfoMO.tempCard)
+	self:_refreshPreDisplay()
 	self:_showUpgradeEffect()
 	self:_showEnchantsEffect()
 	self:_showRouge2EnchantsEffect()
+	self:refreshLaMoNaEnchantVx()
 	self:_refreshGray()
 	self:_refreshASFD()
 	self:_refreshRouge2Music()
@@ -520,6 +540,91 @@ function FightViewCardItem:updateItem(entityId, skillId, cardInfoMO)
 	self:refreshXiTiSpecialSkill(entityId, skillId, cardInfoMO)
 	self:refreshSuperimposeIcon()
 	self:refreshAssistRoleIcon()
+	self:refreshBaiFuZhangWheelCard()
+	self:refreshEnchantText()
+end
+
+function FightViewCardItem:refreshBaiFuZhangWheelCard()
+	gohelper.setActive(self.baifuzhang_wheel_card, false)
+
+	local skillId = self.skillId
+
+	if skillId == 117351181 or skillId == 117351183 or skillId == 117351191 or skillId == 117351193 then
+		gohelper.setActive(self.baifuzhang_wheel_card, true)
+
+		self.baifuzhang_wheel_cardText.text = luaLang("fight_bai_fu_zhang_wheel_6")
+
+		return
+	end
+
+	if skillId == 117351182 or skillId == 117351184 or skillId == 117351192 or skillId == 117351194 then
+		gohelper.setActive(self.baifuzhang_wheel_card, true)
+
+		self.baifuzhang_wheel_cardText.text = luaLang("fight_bai_fu_zhang_wheel_7")
+
+		return
+	end
+end
+
+function FightViewCardItem:_refreshPreDisplay()
+	gohelper.setActive(self._predisplay, false)
+	gohelper.setActive(self._predisplayLorentz, false)
+
+	local isTemp = self._cardInfoMO and self._cardInfoMO.tempCard
+
+	if not isTemp then
+		return
+	end
+
+	local enchantList = self._cardInfoMO and self._cardInfoMO.enchants
+
+	if enchantList then
+		for _, v in ipairs(enchantList) do
+			if v.enchantId == FightEnum.EnchantedType.Lorenz then
+				gohelper.setActive(self._predisplayLorentz, true)
+
+				return
+			end
+		end
+	end
+
+	gohelper.setActive(self._predisplay, true)
+end
+
+function FightViewCardItem:refreshEnchantText()
+	local text = gohelper.findChildText(self.go, "enchant_text")
+
+	gohelper.setActive(text.gameObject, false)
+
+	do return end
+
+	if not SLFramework.FrameworkSettings.IsEditor then
+		return
+	end
+
+	if not self._cardInfoMO then
+		return
+	end
+
+	local enchantList = self._cardInfoMO.enchants
+
+	if not enchantList then
+		return
+	end
+
+	if #enchantList < 1 then
+		return
+	end
+
+	gohelper.setActive(text.gameObject, true)
+
+	local str = "附魔:"
+
+	for _, v in ipairs(enchantList) do
+		str = str .. v.enchantId .. "\n"
+	end
+
+	text.text = str
 end
 
 function FightViewCardItem:refreshAssistRoleIcon()
@@ -882,6 +987,7 @@ function FightViewCardItem:_showEnchantsEffect()
 	gohelper.setActive(self._blockadeOne, false)
 	gohelper.setActive(self._precision, false)
 	gohelper.setActive(self._precisionEffect, false)
+	gohelper.setActive(self.goLorentzVx, false)
 
 	if not self._cardInfoMO then
 		return
@@ -917,9 +1023,77 @@ function FightViewCardItem:_showEnchantsEffect()
 				if self._cardInfoMO.clientData.custom_handCardIndex == 1 then
 					FightController.instance:dispatchEvent(FightEvent.RefreshHandCardPrecisionEffect)
 				end
+			elseif v.enchantId == FightEnum.EnchantedType.Lorenz then
+				gohelper.setActive(self.goLorentzVx, true)
+				self:tryLoadLorentzEnchantVxPrefab()
 			end
 		end
 	end
+end
+
+function FightViewCardItem:refreshLaMoNaEnchantVx(active)
+	if active == nil then
+		active = FightCardDataHelper.hasTargetEnchantId(self._cardInfoMO, FightEnum.EnchantedType.Ramona)
+	end
+
+	gohelper.setActive(self.goLaMoNaVx, active)
+
+	if not active then
+		self.playedLaMoNaOpenAnim = false
+
+		return
+	end
+
+	local isBigSkill = FightCardDataHelper.isBigSkill(self.skillId)
+
+	self.goLaMoNaSmall = self.goLaMoNaSmall or gohelper.findChild(self.goLaMoNaVx, "#go_small")
+	self.goLaMoNaBig = self.goLaMoNaBig or gohelper.findChild(self.goLaMoNaVx, "#go_big")
+
+	gohelper.setActive(self.goLaMoNaBig, isBigSkill)
+	gohelper.setActive(self.goLaMoNaSmall, not isBigSkill)
+
+	if self.handCardType == FightEnum.CardShowType.HandCard and not self.playedLaMoNaOpenAnim then
+		self.playedLaMoNaOpenAnim = true
+
+		self:playLaMoNaAnim("open")
+	end
+end
+
+function FightViewCardItem:tryPlayLaMoNaVx()
+	if self.handCardType ~= FightEnum.CardShowType.HandCard then
+		return
+	end
+
+	local hasLaMoNaEnchantId = FightCardDataHelper.hasTargetEnchantId(self._cardInfoMO, FightEnum.EnchantedType.Ramona)
+
+	if not hasLaMoNaEnchantId then
+		self:refreshLaMoNaEnchantVx(false)
+
+		return
+	end
+
+	self:refreshLaMoNaEnchantVx(true)
+	AudioMgr.instance:trigger(350003)
+end
+
+function FightViewCardItem:playLaMoNaAnim(animName)
+	local isBigSkill = FightCardDataHelper.isBigSkill(self.skillId)
+	local go = isBigSkill and self.goLaMoNaBig or self.goLaMoNaSmall
+	local animator = go and go:GetComponent(gohelper.Type_Animator)
+
+	if animator then
+		animator:Play(animName, 0, 0)
+	end
+end
+
+function FightViewCardItem:tryLoadLorentzEnchantVxPrefab()
+	if self.lorentzEnchantVxLoader then
+		return
+	end
+
+	self.lorentzEnchantVxLoader = PrefabInstantiate.Create(self.goLorentzVx)
+
+	self.lorentzEnchantVxLoader:startLoad("ui/viewres/fight/card_lorentz_fumo.prefab")
 end
 
 function FightViewCardItem:setRouge2TreasureRoot(go)
@@ -1202,6 +1376,7 @@ function FightViewCardItem:playUsedCardDisplay(tipsGO)
 
 	context.skillTipsGO = tipsGO
 	context.skillItemGO = self.go
+	context.cardItem = self
 
 	self._cardDisplayFlow:start(context)
 end
@@ -1267,6 +1442,44 @@ function FightViewCardItem:playCardLevelChange(cardData, oldSkillId, failType)
 	else
 		AudioMgr.instance:trigger(20211403)
 	end
+end
+
+FightViewCardItem.LorentzLvChangeAnimDuration = 1.2
+
+function FightViewCardItem:playCardLevelChange_Lorentz(cardInfoMo)
+	self._cardInfoMO = cardInfoMo
+
+	if self.goLorentzLvUp then
+		gohelper.setActive(self.goLorentzLvUp, false)
+		gohelper.setActive(self.goLorentzLvUp, true)
+		AudioMgr.instance:trigger(350022)
+		TaskDispatcher.runDelay(self.onLorentzLvChangeDone, self, FightViewCardItem.LorentzLvChangeAnimDuration)
+
+		return
+	end
+
+	if self.lorentzLvLoader then
+		return
+	end
+
+	self.lorentzLvLoader = MultiAbLoader.New()
+
+	self.lorentzLvLoader:addPath("ui/viewres/fight/card_lorentz_lvup.prefab")
+	self.lorentzLvLoader:startLoad(self.onLorentzLvLoadDone, self)
+end
+
+function FightViewCardItem:onLorentzLvLoadDone()
+	local assetItem = self.lorentzLvLoader:getFirstAssetItem()
+	local prefab = assetItem:GetResource()
+
+	self.goLorentzLvUp = gohelper.clone(prefab, self.go)
+
+	self:playCardLevelChange_Lorentz(self._cardInfoMO)
+end
+
+function FightViewCardItem:onLorentzLvChangeDone()
+	self:updateItem(self._cardInfoMO.uid, self._cardInfoMO.skillId, self._cardInfoMO)
+	gohelper.setActive(self.goLorentzLvUp, false)
 end
 
 function FightViewCardItem:_refreshGray()
@@ -1567,6 +1780,7 @@ function FightViewCardItem:releaseEffectFlow()
 end
 
 function FightViewCardItem:onDestroy()
+	TaskDispatcher.cancelTask(self.onLorentzLvChangeDone, self)
 	self.simageRouge2SkillIcon:UnLoadImage()
 
 	if self._loader then
@@ -1585,6 +1799,12 @@ function FightViewCardItem:onDestroy()
 		self.lyLoader:dispose()
 
 		self.lyLoader = nil
+	end
+
+	if self.lorentzEnchantVxLoader then
+		self.lorentzEnchantVxLoader:dispose()
+
+		self.lorentzEnchantVxLoader = nil
 	end
 
 	self:releaseEffectFlow()
@@ -1777,6 +1997,51 @@ function FightViewCardItem:clearUseCardCopyEffect()
 	end
 
 	TaskDispatcher.cancelTask(self.showCardGo, self)
+end
+
+function FightViewCardItem:setPreLv(preLv)
+	if self.handCardType == FightEnum.CardShowType.Operation or self.handCardType == FightEnum.CardShowType.HandCard then
+		self.preLv = preLv
+
+		self:refreshStar()
+	end
+end
+
+function FightViewCardItem:refreshStar()
+	local skillCardLv = FightCardDataHelper.getSkillLv(self.entityId, self.skillId)
+	local showStar = skillCardLv < FightEnum.UniqueSkillCardLv and skillCardLv > 0
+
+	gohelper.setActive(self._starGO, showStar)
+
+	self._starCanvas.alpha = 1
+
+	if not showStar then
+		return
+	end
+
+	for i, startGO in ipairs(self._innerStartGOs) do
+		gohelper.setActive(startGO, i == skillCardLv)
+
+		if self._starItemCanvas[i] then
+			self._starItemCanvas[i].alpha = 1
+		end
+
+		if i == skillCardLv then
+			local preLvGo = self._innerStarPreLvGoList[i]
+
+			if preLvGo then
+				gohelper.setActive(preLvGo, self.preLv > 0)
+
+				local lvList = self._innerStarPreLvGoDict[i]
+
+				if lvList then
+					for index, lvGo in ipairs(lvList) do
+						gohelper.setActive(lvGo, index <= self.preLv)
+					end
+				end
+			end
+		end
+	end
 end
 
 return FightViewCardItem

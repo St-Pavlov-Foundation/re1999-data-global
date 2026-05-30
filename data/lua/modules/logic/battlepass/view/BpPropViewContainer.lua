@@ -23,8 +23,19 @@ function BpPropViewContainer:buildViews()
 
 	table.insert(views, LuaListScrollView.New(CommonPropListModel.instance, scrollParam))
 	table.insert(views, CommonPropView.New())
+	table.insert(views, TabViewGroup.New(2))
 
 	return views
+end
+
+function BpPropViewContainer:buildTabViews(tabContainerId)
+	if tabContainerId == 2 then
+		self._useTipsView = CommonPropUseTipsView.New()
+
+		return {
+			self._useTipsView
+		}
+	end
 end
 
 return BpPropViewContainer

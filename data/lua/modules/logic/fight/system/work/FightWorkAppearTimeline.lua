@@ -199,6 +199,14 @@ function FightWorkAppearTimeline:_afterPlayAppearTimeline()
 	gohelper.setActive(ViewMgr.instance:getUILayer(UILayerName.Hud), true)
 	FightController.instance:dispatchEvent(FightEvent.AfterPlayAppearTimeline)
 	TaskDispatcher.runDelay(self._delayRefreshAlpha, self, 0.01)
+
+	local entitys = FightHelper.getAllEntitys()
+
+	for _, entity in ipairs(entitys) do
+		if entity:isEnemySide() and entity.nameUI then
+			entity.nameUI:setActive(true)
+		end
+	end
 end
 
 function FightWorkAppearTimeline:_delayRefreshAlpha()

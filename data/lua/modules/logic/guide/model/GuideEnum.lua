@@ -48,7 +48,8 @@ GuideEnum.GuideId = {
 	RoomDailyOrder = 418,
 	NecrologistStoryLinkText = 31308,
 	NecrologistStoryMagic = 31303,
-	WeekWalkDeep = 506
+	WeekWalkDeep = 506,
+	V3A5NecrologistStoryGame = 35011
 }
 GuideEnum.EventTrigger = {
 	Act178FoodNotEnough = 2,

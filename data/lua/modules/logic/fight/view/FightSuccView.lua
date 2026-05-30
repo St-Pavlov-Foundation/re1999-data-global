@@ -442,6 +442,7 @@ function FightSuccView:_setEpisodeName(episodeCO, episodeIndex, normalEpisodeCO)
 	end
 
 	local chapterConfig = DungeonConfig.instance:getChapterCO(episodeCO.chapterId)
+	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	if chapterConfig then
 		if chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or chapterConfig.type == DungeonEnum.ChapterType.Activity1_2DungeonHard then
@@ -468,7 +469,7 @@ function FightSuccView:_setEpisodeName(episodeCO, episodeIndex, normalEpisodeCO)
 			episodeIndex = VersionActivity2_4DungeonConfig.instance:getEpisodeIndex(episodeCO.id)
 		elseif chapterConfig.actId == VersionActivity2_5Enum.ActivityId.Dungeon then
 			episodeIndex = VersionActivity2_5DungeonConfig.instance:getEpisodeIndex(episodeCO.id)
-		elseif chapterConfig.actId == VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon then
+		elseif chapterConfig.actId == VersionActivityFixedHelper.getVersionActivityEnum(bigVersion, smallVersion).ActivityId.Dungeon then
 			episodeIndex = VersionActivityFixedDungeonConfig.instance:getEpisodeIndex(episodeCO.id)
 		end
 	end

@@ -61,11 +61,11 @@ function FightFocusView:onInitView()
 	self._btnenemypassiveSkill = gohelper.findChildButtonWithAudio(self.viewGO, "fightinfocontainer/#go_infoView/content/enemy/enemypassiveskill/passiveSkills/btn_passiveclick")
 	self._goresistance = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/enemy/#go_resistance")
 	self._txthp = gohelper.findChildText(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/#txt_hp")
-	self._sliderhp = gohelper.findChildSlider(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/#slider_hp")
-	self.enemyHpRect = gohelper.findChildComponent(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/#slider_hp/Fill Area/hp", gohelper.Type_RectTransform)
-	self.myHpRect = gohelper.findChildComponent(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/#slider_hp/Fill Area/hp2", gohelper.Type_RectTransform)
-	self.fictionHp = gohelper.findChildImage(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/xuxue")
-	self.reduceHpGo = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/reducehp")
+	self._sliderhp = gohelper.findChildSlider(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_xuetiao/#slider_hp")
+	self.enemyHpRect = gohelper.findChildComponent(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_xuetiao/#slider_hp/Fill Area/hp", gohelper.Type_RectTransform)
+	self.myHpRect = gohelper.findChildComponent(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_xuetiao/#slider_hp/Fill Area/hp2", gohelper.Type_RectTransform)
+	self.fictionHp = gohelper.findChildImage(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_xuetiao/xuxue")
+	self.reduceHpGo = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_xuetiao/reducehp")
 	self.reduceHpImage = self.reduceHpGo:GetComponent(gohelper.Type_Image)
 	self._goattributeroot = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_attribute_root")
 	self._btnattribute = gohelper.findChildButton(self.viewGO, "fightinfocontainer/#go_attribute_root/#btn_attribute")
@@ -104,8 +104,8 @@ function FightFocusView:onInitView()
 	self._bossSkillInfos = {}
 	self._isbuffviewopen = false
 	self._canClickAttribute = false
-	self._multiHpRoot = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/image_HPFrame/image_HPBG")
-	self._multiHpItem = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/image_HPFrame/image_HPBG/image_HpItem")
+	self._multiHpRoot = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/image_HPFrame/image_HPBG")
+	self._multiHpItem = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/image_HPFrame/image_HPBG/image_HpItem")
 	self._btnSwitchEnemy = gohelper.findChildButton(self.viewGO, "fightinfocontainer/#go_switch/#btn_enemy")
 	self._btnSwitchMember = gohelper.findChildButton(self.viewGO, "fightinfocontainer/#go_switch/#btn_member")
 	self._switchEnemyNormal = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_switch/#btn_enemy/normal")
@@ -134,6 +134,9 @@ function FightFocusView:onInitView()
 	self.txtHealth = gohelper.findChildText(self.viewGO, "fightinfocontainer/#go_survivalHealth/#txt_survivalHealth")
 	self.imageHealth = gohelper.findChildImage(self.viewGO, "fightinfocontainer/#go_survivalHealth/#image_icon")
 	self.healthClick = gohelper.findChildClickWithDefaultAudio(self.viewGO, "fightinfocontainer/#go_survivalHealth/#btn_click")
+	self.go_toughness = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/hp/layout/go_toughness")
+	self.go_toughnessReward = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/toughnessReward")
+	self.go_weakness = gohelper.findChild(self.viewGO, "fightinfocontainer/#go_infoView/content/info/weekness")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -1280,6 +1283,11 @@ function FightFocusView:_refreshMO(entityMO)
 			gohelper.setActive(self._goenemypassiveSkill, false)
 		end
 	end
+
+	local hasToughness = self:refreshToughness(entityMO)
+
+	self:refreshToughnessReward(entityMO)
+	self:refreshWeakness(entityMO, hasToughness)
 end
 
 function FightFocusView:_refreshEnemyPassiveSkill(monsterCO)
@@ -1598,6 +1606,19 @@ function FightFocusView:refreshScrollEnemy()
 			local icon = FightNameUIHealthComp.getHealthIcon(health)
 
 			UISpriteSetMgr.instance:setFightSprite(enemyItem.healthTag, icon, true)
+		end
+
+		local obj = gohelper.findChild(enemyItem.go, "item/toughnessReward")
+		local monsterConfig = lua_monster.configDict[entityMo.modelId]
+
+		if monsterConfig and not string.nilorempty(monsterConfig.toughness) then
+			local entity = FightGameMgr.entityMgr:getById(entityMo.id)
+
+			if entity then
+				self:newClass(FightNameUIToughnessIconMgr, entity, obj, monsterConfig)
+			end
+		else
+			gohelper.setActive(obj, false)
 		end
 	end
 
@@ -2273,6 +2294,185 @@ function FightFocusView:refreshHealth(entityMo)
 	local icon = FightNameUIHealthComp.getHealthIcon(health)
 
 	UISpriteSetMgr.instance:setFightSprite(self.imageHealth, icon, true)
+end
+
+function FightFocusView:refreshToughness(entityMO)
+	if not entityMO then
+		gohelper.setActive(self.go_toughness, false)
+		recthelper.setAnchorY(self._txthp.transform, 6.2)
+
+		return false
+	end
+
+	local monsterConfig = lua_monster.configDict[entityMO.modelId]
+
+	if not monsterConfig then
+		gohelper.setActive(self.go_toughness, false)
+		recthelper.setAnchorY(self._txthp.transform, 6.2)
+
+		return false
+	end
+
+	if string.nilorempty(monsterConfig.toughness) then
+		gohelper.setActive(self.go_toughness, false)
+		recthelper.setAnchorY(self._txthp.transform, 6.2)
+
+		return false
+	end
+
+	gohelper.setActive(self.go_toughness, true)
+	recthelper.setAnchorY(self._txthp.transform, -53)
+
+	local fill = gohelper.findChildImage(self.go_toughness, "fill")
+	local fillWidth = recthelper.getWidth(fill.transform)
+
+	self.toughnessFillWidth = fillWidth
+
+	local lineObj = gohelper.findChild(self.go_toughness, "fill/line")
+	local arr = string.splitToNumber(monsterConfig.toughness, "#")
+	local lineCount = arr[2] - 1
+
+	self.toughnessLineCount = lineCount
+
+	local dataList = {}
+
+	for i = 1, lineCount do
+		dataList[i] = i
+	end
+
+	gohelper.CreateObjList(self, self.onToughLineItemShow, dataList, fill.gameObject, lineObj)
+
+	local showType = arr[3]
+
+	if showType == 0 then
+		local oneNum = arr[1]
+		local maxNum = oneNum * arr[2]
+
+		fill.fillAmount = ((entityMO.toughnessPoint - 1) * oneNum + entityMO.toughnessValue) / maxNum
+	elseif showType == 1 then
+		local oneNum = entityMO.attrMO.hp * arr[1] / 1000
+		local maxNum = oneNum * arr[2]
+
+		fill.fillAmount = ((entityMO.toughnessPoint - 1) * oneNum + entityMO.toughnessValue) / maxNum
+	end
+
+	return true
+end
+
+function FightFocusView:onToughLineItemShow(obj, data, index)
+	local posX = 0 - self.toughnessFillWidth / 2 + self.toughnessFillWidth / (self.toughnessLineCount + 1) * index
+
+	recthelper.setAnchorX(obj.transform, posX)
+end
+
+function FightFocusView:refreshToughnessReward(entityMO)
+	if not entityMO then
+		gohelper.setActive(self.go_toughnessReward, false)
+
+		return
+	end
+
+	local monsterConfig = lua_monster.configDict[entityMO.modelId]
+
+	if not monsterConfig then
+		gohelper.setActive(self.go_toughnessReward, false)
+
+		return
+	end
+
+	if string.nilorempty(monsterConfig.toughness) then
+		gohelper.setActive(self.go_toughnessReward, false)
+
+		return
+	end
+
+	local toughnessConfig = lua_toughnessskill.configDict[monsterConfig.toughnessSkill]
+
+	if not toughnessConfig then
+		gohelper.setActive(self.go_toughnessReward, false)
+
+		return
+	end
+
+	local buffId = toughnessConfig.cdBuff
+	local empty = gohelper.findChild(self.go_toughnessReward, "empty")
+	local has = gohelper.findChild(self.go_toughnessReward, "has")
+	local icon = gohelper.findChildImage(self.go_toughnessReward, "has/#image_reward")
+	local cd = gohelper.findChild(self.go_toughnessReward, "cd")
+	local cdText = gohelper.findChildText(self.go_toughnessReward, "cd/#txt_cd")
+	local isBroken = entityMO.isBroken
+
+	if not isBroken then
+		gohelper.setActive(empty, false)
+		gohelper.setActive(has, true)
+		gohelper.setActive(cd, false)
+		UISpriteSetMgr.instance:setFightSprite(icon, toughnessConfig.iconNormal, true)
+	else
+		local hasBuff
+		local buffData = entityMO:hasBuffId(buffId)
+
+		if buffData and buffData.actInfo then
+			for i, v in ipairs(buffData.actInfo) do
+				if v.actId == 1102 and v.param[1] > 0 then
+					hasBuff = v.param[1]
+				end
+			end
+
+			if hasBuff then
+				gohelper.setActive(empty, false)
+				gohelper.setActive(has, false)
+				gohelper.setActive(cd, true)
+
+				cdText.text = hasBuff
+			else
+				gohelper.setActive(empty, true)
+				gohelper.setActive(has, false)
+				gohelper.setActive(cd, false)
+			end
+		else
+			gohelper.setActive(empty, true)
+			gohelper.setActive(has, false)
+			gohelper.setActive(cd, false)
+		end
+	end
+end
+
+function FightFocusView:refreshWeakness(entityMO, hasToughness)
+	if not entityMO then
+		return
+	end
+
+	local weaknessList = {}
+
+	for i, v in ipairs(entityMO.weakCareers) do
+		table.insert(weaknessList, v)
+	end
+
+	local hasWeakness = #weaknessList > 0
+
+	gohelper.setActive(self.go_weakness, hasWeakness)
+
+	if hasWeakness then
+		table.insert(weaknessList, 1, -99)
+
+		local weaknessItem = gohelper.findChild(self.go_weakness, "#image_icon")
+
+		gohelper.CreateObjList(self, self.onWeaknessItemShow, weaknessList, self.go_weakness, weaknessItem)
+
+		if not hasToughness then
+			recthelper.setAnchorY(self._txthp.transform, -42)
+		end
+	end
+end
+
+function FightFocusView:onWeaknessItemShow(obj, data, index)
+	if index == 1 then
+		return
+	end
+
+	local image = gohelper.onceAddComponent(obj, gohelper.Type_Image)
+
+	UISpriteSetMgr.instance:setFightSprite(image, "fight_toughness_fighticon_" .. data)
 end
 
 return FightFocusView

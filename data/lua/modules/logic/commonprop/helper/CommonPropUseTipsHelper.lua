@@ -79,7 +79,7 @@ function CommonPropUseTipsHelper.checkShow(itemId)
 				return false
 			end
 
-			local jumps = string.splitToNumber(jumpParam, "#")
+			local jumps = string.splitToNumber(jumpConfig.param, "#")
 			local jumpView = jumps[1]
 			local checkViewCanJump = JumpController.instance:checkCanJumpView(jumpView)
 
@@ -135,7 +135,8 @@ function CommonPropUseTipsHelper.checkParamHandler_2(itemId, param)
 		return false
 	end
 
-	local boxEffect = HeroExpBoxModel.instance:getBoxEffect(HeroExpBoxEnum.BoxIds[1])
+	local boxId = HeroExpBoxModel.instance:getBoxId()
+	local boxEffect = HeroExpBoxModel.instance:getBoxEffect(boxId)
 	local needKeyCount = boxEffect.needKeyCount
 	local curKeyCount = HeroExpBoxModel.instance:getKeyCount()
 

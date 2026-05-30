@@ -31,19 +31,20 @@ function SurvivalView:onInitView()
 	self.handbook_go_red = gohelper.findChild(self.viewGO, "Left/#btn_handbook/#go_red")
 	self.btn_tech = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_tech")
 	self.tech_go_red = gohelper.findChild(self.viewGO, "Left/#btn_tech/#go_red")
+	self.btn_store = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_store")
 end
 
 function SurvivalView:addEvents()
 	self._btnContinue:AddClickListener(self._onContinueClick, self)
 	self._btnEnter:AddClickListener(self._onEnterClick, self)
 	self._btnabort:AddClickListener(self._onAbortClick, self)
-	self._btnachievement:AddClickListener(self._onAchievementClick, self)
 	self._btnreward:AddClickListener(self._onRewardClick, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnOutInfoChange, self._refreshView, self)
 	self:addClickCb(self._btnFold, self.onClickFold, self)
 	self:addClickCb(self._btnCloseFold, self.onClickCloseFold, self)
 	self:addClickCb(self.btn_handbook, self.onClickBtnHandbook, self)
 	self:addClickCb(self.btn_tech, self.onClickBtnTech, self)
+	self:addClickCb(self.btn_store, self.onClickBtnStore, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
@@ -51,7 +52,6 @@ function SurvivalView:removeEvents()
 	self._btnContinue:RemoveClickListener()
 	self._btnEnter:RemoveClickListener()
 	self._btnabort:RemoveClickListener()
-	self._btnachievement:RemoveClickListener()
 	self._btnreward:RemoveClickListener()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnOutInfoChange, self._refreshView, self)
 	self:removeClickCb(self._btnFold)
@@ -76,6 +76,11 @@ function SurvivalView:onClickBtnTech()
 	ViewMgr.instance:openView(ViewName.SurvivalTechView)
 end
 
+function SurvivalView:onClickBtnStore()
+	SurvivalStatHelper.instance:statBtnClick("onClickBtnStore", "SurvivalView")
+	ViewMgr.instance:openView(ViewName.SurvivalStoreView)
+end
+
 function SurvivalView:_onCloseViewFinish(viewName)
 	if viewName == ViewName.SurvivalCeremonyClosingView then
 		self:tryTriggerTechGuild()
@@ -83,8 +88,6 @@ function SurvivalView:_onCloseViewFinish(viewName)
 end
 
 function SurvivalView:onOpen()
-	RedDotController.instance:addRedDot(self._gored, RedDotEnum.DotNode.V2a8Survival, false, self._refreshRed, self)
-	TaskDispatcher.runRepeat(self.everySecondCall, self, 0, -1)
 	self:_refreshView()
 	RedDotController.instance:addRedDot(self.handbook_go_red, RedDotEnum.DotNode.SurvivalHandbook)
 	RedDotController.instance:addRedDot(self.tech_go_red, RedDotEnum.DotNode.SurvivalOutSideTeach)
@@ -96,23 +99,6 @@ function SurvivalView:tryTriggerTechGuild()
 
 	if survivalOutSideTechMo:haveTechPoint() then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.GuideMainViewTech)
-	end
-end
-
-function SurvivalView:_refreshRed(redDot)
-	redDot:defaultRefreshDot()
-
-	local isShow = redDot.show
-
-	gohelper.setActive(self.goCanget, isShow)
-	gohelper.setActive(self.goNormal, not isShow)
-end
-
-function SurvivalView:everySecondCall()
-	if self._txtLimitTime then
-		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
-
-		self._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(curVersionActivityId)
 	end
 end
 
@@ -233,27 +219,13 @@ function SurvivalView:_onRecvWeekInfo(cmd, resultCode, msg)
 	end
 end
 
-function SurvivalView:_onAchievementClick()
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
-		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
-		local config = ActivityConfig.instance:getActivityCo(curVersionActivityId)
-		local jumpId = config.achievementJumpId
-
-		JumpController.instance:jump(jumpId)
-	else
-		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Achievement))
-	end
-
-	SurvivalStatHelper.instance:statBtnClick("_onAchievementClick", "SurvivalView")
-end
-
 function SurvivalView:_onRewardClick()
 	ViewMgr.instance:openView(ViewName.SurvivalShelterRewardView)
 	SurvivalStatHelper.instance:statBtnClick("_onRewardClick", "SurvivalView")
 end
 
 function SurvivalView:onClose()
-	TaskDispatcher.cancelTask(self.everySecondCall, self)
+	return
 end
 
 return SurvivalView

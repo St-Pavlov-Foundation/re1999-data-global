@@ -15,6 +15,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a4_bossrush_bossname_1",
     "skinIds": "620207#620304#620208",
+    "heartVariantId": 0,
     "skinScales": "0.7#0.8#1",
     "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
   },
@@ -34,6 +35,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
     "resultViewNameSImage": "v1a4_bossrush_bossname_3",
     "skinIds": "413401",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-353#-558"
   },
@@ -53,6 +55,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v1a4_bossrush_bossname_2",
     "skinIds": "610401",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
   },
@@ -72,6 +75,7 @@
     "resultViewFullBgSImage": "v1a5_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a5_bossrush_bossname_1",
     "skinIds": "690102#670401",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-556#-529|-195#-225"
   },
@@ -91,6 +95,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v1a4_bossrush_bossname_2",
     "skinIds": "610401",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
   },
@@ -110,6 +115,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a4_bossrush_bossname_1",
     "skinIds": "620207#620304#620208",
+    "heartVariantId": 0,
     "skinScales": "0.7#0.8#1",
     "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
   },
@@ -129,6 +135,7 @@
     "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a6_bossrush_bossname_1",
     "skinIds": "680403#680404#680401#680402",
+    "heartVariantId": 0,
     "skinScales": "1#1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   },
@@ -148,6 +155,7 @@
     "resultViewFullBgSImage": "v1a5_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a5_bossrush_bossname_1",
     "skinIds": "690102#670401",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-556#-529|-195#-225"
   },
@@ -167,6 +175,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
     "resultViewNameSImage": "v1a4_bossrush_bossname_3",
     "skinIds": "413401",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-353#-558"
   },
@@ -186,6 +195,7 @@
     "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a7_bossrush_bossname_1",
     "skinIds": "670404",
+    "heartVariantId": 0,
     "skinScales": "1.2",
     "skinOffsetXYs": "-390.5#-411"
   },
@@ -205,6 +215,7 @@
     "resultViewFullBgSImage": "v1a5_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a5_bossrush_bossname_1",
     "skinIds": "690102#670401",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-556#-529|-195#-225"
   },
@@ -224,6 +235,7 @@
     "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a6_bossrush_bossname_1",
     "skinIds": "680403#680404#680401#680402",
+    "heartVariantId": 0,
     "skinScales": "1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   },
@@ -243,6 +255,7 @@
     "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a8_bossrush_bossname_1",
     "skinIds": "630409",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-473"
   },
@@ -262,6 +275,7 @@
     "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a7_bossrush_bossname_1",
     "skinIds": "670404",
+    "heartVariantId": 0,
     "skinScales": "1.2",
     "skinOffsetXYs": "-390.5#-411"
   },
@@ -281,6 +295,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v1a4_bossrush_bossname_2",
     "skinIds": "610401",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
   },
@@ -300,6 +315,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a4_bossrush_bossname_1",
     "skinIds": "620207#620304#620208",
+    "heartVariantId": 0,
     "skinScales": "0.7#0.8#1",
     "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
   },
@@ -319,6 +335,7 @@
     "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a8_bossrush_bossname_1",
     "skinIds": "630409",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-473"
   },
@@ -338,6 +355,7 @@
     "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a6_bossrush_bossname_1",
     "skinIds": "680403#680404#680401#680402",
+    "heartVariantId": 0,
     "skinScales": "1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   },
@@ -357,6 +375,7 @@
     "resultViewFullBgSImage": "v2a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a0_bossrush_bossname_1",
     "skinIds": "670212",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-545#-440"
   },
@@ -376,6 +395,7 @@
     "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a7_bossrush_bossname_1",
     "skinIds": "670404",
+    "heartVariantId": 0,
     "skinScales": "1.2",
     "skinOffsetXYs": "-390.5#-411"
   },
@@ -395,6 +415,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
     "resultViewNameSImage": "v1a4_bossrush_bossname_3",
     "skinIds": "413401",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-353#-558"
   },
@@ -414,6 +435,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a4_bossrush_bossname_1",
     "skinIds": "620207#620304#620208",
+    "heartVariantId": 0,
     "skinScales": "0.7#0.8#1",
     "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
   },
@@ -433,6 +455,7 @@
     "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a7_bossrush_bossname_1",
     "skinIds": "670404",
+    "heartVariantId": 0,
     "skinScales": "1.2",
     "skinOffsetXYs": "-390.5#-411"
   },
@@ -452,6 +475,7 @@
     "resultViewFullBgSImage": "v2a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a0_bossrush_bossname_1",
     "skinIds": "670212",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-545#-440"
   },
@@ -471,6 +495,7 @@
     "resultViewFullBgSImage": "v2a2_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a2_bossrush_bossname_1",
     "skinIds": "610302",
+    "heartVariantId": 0,
     "skinScales": "0.85#0.85",
     "skinOffsetXYs": "-420#-330"
   },
@@ -490,6 +515,7 @@
     "resultViewFullBgSImage": "v1a5_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a5_bossrush_bossname_1",
     "skinIds": "690102#670401",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-556#-529|-195#-225"
   },
@@ -509,6 +535,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v1a4_bossrush_bossname_2",
     "skinIds": "610401",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
   },
@@ -528,6 +555,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a4_bossrush_bossname_1",
     "skinIds": "620207#620304#620208",
+    "heartVariantId": 0,
     "skinScales": "0.7#0.8#1",
     "skinOffsetXYs": "-261#2|-208#-513|-63#-515"
   },
@@ -547,6 +575,7 @@
     "resultViewFullBgSImage": "v2a2_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a2_bossrush_bossname_1",
     "skinIds": "610302",
+    "heartVariantId": 0,
     "skinScales": "0.85#0.85",
     "skinOffsetXYs": "-420#-330"
   },
@@ -566,6 +595,7 @@
     "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a6_bossrush_bossname_1",
     "skinIds": "680403#680404#680401#680402",
+    "heartVariantId": 0,
     "skinScales": "1#1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   },
@@ -585,6 +615,7 @@
     "resultViewFullBgSImage": "v2a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a4_bossrush_bossname_1",
     "skinIds": "610405#610404",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-290#-485|-345#-513"
   },
@@ -604,6 +635,7 @@
     "resultViewFullBgSImage": "v2a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a0_bossrush_bossname_1",
     "skinIds": "670212",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-545#-440"
   },
@@ -623,6 +655,7 @@
     "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a8_bossrush_bossname_1",
     "skinIds": "630409",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-473"
   },
@@ -642,6 +675,7 @@
     "resultViewFullBgSImage": "v1a7_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a7_bossrush_bossname_1",
     "skinIds": "670404",
+    "heartVariantId": 0,
     "skinScales": "1.2",
     "skinOffsetXYs": "-390.5#-411"
   },
@@ -661,6 +695,7 @@
     "resultViewFullBgSImage": "v2a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a4_bossrush_bossname_1",
     "skinIds": "610405#610404",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-290#-485|-345#-513"
   },
@@ -680,6 +715,7 @@
     "resultViewFullBgSImage": "v1a6_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a6_bossrush_bossname_1",
     "skinIds": "680403#680404#680401#680402",
+    "heartVariantId": 0,
     "skinScales": "1#1#1#1",
     "skinOffsetXYs": "-364#1|-369#-406|-133#-311|-578#-315"
   },
@@ -699,6 +735,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v1a4_bossrush_bossname_2",
     "skinIds": "610401",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-517#-503"
   },
@@ -718,6 +755,7 @@
     "resultViewFullBgSImage": "v2a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a0_bossrush_bossname_1",
     "skinIds": "670212",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-545#-440"
   },
@@ -737,6 +775,7 @@
     "resultViewFullBgSImage": "v2a2_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a2_bossrush_bossname_1",
     "skinIds": "610302",
+    "heartVariantId": 0,
     "skinScales": "0.85#0.85",
     "skinOffsetXYs": "-420#-330"
   },
@@ -756,6 +795,7 @@
     "resultViewFullBgSImage": "v3a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v3a0_bossrush_bossname_1",
     "skinIds": "670405",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-483#-375"
   },
@@ -775,6 +815,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
     "resultViewNameSImage": "v1a4_bossrush_bossname_3",
     "skinIds": "413401",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-353#-558"
   },
@@ -794,6 +835,7 @@
     "resultViewFullBgSImage": "v2a4_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a4_bossrush_bossname_1",
     "skinIds": "610405#610404",
+    "heartVariantId": 0,
     "skinScales": "1#1",
     "skinOffsetXYs": "-290#-485|-345#-513"
   },
@@ -813,6 +855,7 @@
     "resultViewFullBgSImage": "v2a9_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v2a9_bossrush_bossname_3",
     "skinIds": "640403",
+    "heartVariantId": 0,
     "skinScales": "0.35",
     "skinOffsetXYs": "-332#-364"
   },
@@ -832,6 +875,7 @@
     "resultViewFullBgSImage": "v2a9_bossrush_resultfullbg_2",
     "resultViewNameSImage": "v2a9_bossrush_bossname_4",
     "skinIds": "640305",
+    "heartVariantId": 0,
     "skinScales": "1.1",
     "skinOffsetXYs": "-316#-440"
   },
@@ -851,6 +895,7 @@
     "resultViewFullBgSImage": "v1a4_bossrush_resultfullbg_3",
     "resultViewNameSImage": "v1a4_bossrush_bossname_3",
     "skinIds": "413401",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-353#-558"
   },
@@ -870,6 +915,7 @@
     "resultViewFullBgSImage": "v3a0_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v3a0_bossrush_bossname_1",
     "skinIds": "670405",
+    "heartVariantId": 0,
     "skinScales": "0.85",
     "skinOffsetXYs": "-483#-375"
   },
@@ -889,6 +935,7 @@
     "resultViewFullBgSImage": "v1a8_bossrush_resultfullbg_1",
     "resultViewNameSImage": "v1a8_bossrush_bossname_1",
     "skinIds": "630409",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-473"
   },
@@ -908,6 +955,7 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss3fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss3titlebg",
     "skinIds": "610410",
+    "heartVariantId": 0,
     "skinScales": "0.9",
     "skinOffsetXYs": "-265#-528"
   },
@@ -927,6 +975,7 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss1fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss1titlebg",
     "skinIds": "610407",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-278#-480"
   },
@@ -946,6 +995,7 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss2fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss2titlebg",
     "skinIds": "6404012",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-373"
   },
@@ -965,6 +1015,7 @@
     "resultViewFullBgSImage": "v3a3_bossrush_leveldetail_boss1fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss2titlebg",
     "skinIds": "610413",
+    "heartVariantId": 0,
     "skinScales": "0.9",
     "skinOffsetXYs": "-241#-373"
   },
@@ -984,6 +1035,7 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss3fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss3titlebg",
     "skinIds": "610410",
+    "heartVariantId": 0,
     "skinScales": "0.9",
     "skinOffsetXYs": "-265#-528"
   },
@@ -1003,6 +1055,7 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss2fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss2titlebg",
     "skinIds": "6404012",
+    "heartVariantId": 0,
     "skinScales": "1",
     "skinOffsetXYs": "-241#-373"
   },
@@ -1022,6 +1075,7 @@
     "resultViewFullBgSImage": "v3a4_bossrush_leveldetail_boss1fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss1titlebg",
     "skinIds": "610411",
+    "heartVariantId": 0,
     "skinScales": "0.8",
     "skinOffsetXYs": "-383#-373"
   },
@@ -1041,6 +1095,7 @@
     "resultViewFullBgSImage": "v3a3_bossrush_leveldetail_boss1fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss2titlebg",
     "skinIds": "610413",
+    "heartVariantId": 0,
     "skinScales": "0.9",
     "skinOffsetXYs": "-241#-373"
   },
@@ -1060,7 +1115,68 @@
     "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss3fullbg",
     "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss3titlebg",
     "skinIds": "610410",
+    "heartVariantId": 0,
     "skinScales": "0.9",
     "skinOffsetXYs": "-265#-528"
+  },
+  {
+    "activityId": 13519,
+    "stage": 1,
+    "version": 1,
+    "name": "language_10116038",
+    "name_en": "Distortion of Faith Type II",
+    "type": 106,
+    "maxPoints": 5000000,
+    "layer4MaxPoints": 0,
+    "openDay": 1,
+    "bossRushMainItemBossSprite": "v3a5_bossrush_boss1",
+    "bossRushMainBg": "v3a2_bossrush_boss3",
+    "bossRushLevelDetailFullBgSimage": "v3a2_bossrush_leveldetail_boss3fullbg",
+    "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss3fullbg",
+    "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss3titlebg",
+    "skinIds": "610410",
+    "heartVariantId": 10,
+    "skinScales": "0.9",
+    "skinOffsetXYs": "-265#-528"
+  },
+  {
+    "activityId": 13519,
+    "stage": 2,
+    "version": 1,
+    "name": "language_10105240",
+    "name_en": "Insatiable Bloodsucker",
+    "type": 104,
+    "maxPoints": 5000000,
+    "layer4MaxPoints": 0,
+    "openDay": 8,
+    "bossRushMainItemBossSprite": "v3a3_bossrush_boss1",
+    "bossRushMainBg": "v3a2_bossrush_boss2",
+    "bossRushLevelDetailFullBgSimage": "v3a3_bossrush_leveldetail_boss1fullbg",
+    "resultViewFullBgSImage": "v3a3_bossrush_leveldetail_boss1fullbg",
+    "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss2titlebg",
+    "skinIds": "610413",
+    "heartVariantId": 0,
+    "skinScales": "0.9",
+    "skinOffsetXYs": "-241#-373"
+  },
+  {
+    "activityId": 13519,
+    "stage": 3,
+    "version": 1,
+    "name": "language_10098145",
+    "name_en": "The Cocooned Lament",
+    "type": 102,
+    "maxPoints": 5000000,
+    "layer4MaxPoints": 0,
+    "openDay": 15,
+    "bossRushMainItemBossSprite": "v3a2_bossrush_boss1",
+    "bossRushMainBg": "v3a2_bossrush_boss1",
+    "bossRushLevelDetailFullBgSimage": "v3a2_bossrush_leveldetail_boss1fullbg",
+    "resultViewFullBgSImage": "v3a2_bossrush_leveldetail_boss1fullbg",
+    "resultViewNameSImage": "v3a2_bossrush_leveldetail_boss1titlebg",
+    "skinIds": "610407",
+    "heartVariantId": 0,
+    "skinScales": "1",
+    "skinOffsetXYs": "-278#-480"
   }
 ]

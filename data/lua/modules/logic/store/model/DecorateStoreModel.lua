@@ -21,6 +21,14 @@ function DecorateStoreModel:setCurGood(goodId)
 end
 
 function DecorateStoreModel:getCurGood(storeId)
+	if self._curGoodId > 0 then
+		local goodMo = StoreModel.instance:getGoodsMO(self._curGoodId)
+
+		if not goodMo then
+			self._curGoodId = 0
+		end
+	end
+
 	if self._curGoodId == 0 then
 		self._curGoodId = self:getDecorateGoodList(storeId)[1].goodsId
 	else

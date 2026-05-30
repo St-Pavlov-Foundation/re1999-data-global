@@ -6,7 +6,7 @@ local Season123TaskModel = class("Season123TaskModel", ListScrollModel)
 
 function Season123TaskModel:onInit()
 	self.tempTaskModel = BaseModel.New()
-	self.curTaskType = Activity123Enum.TaskRewardViewType
+	self.curTaskType = Activity123Enum.TaskNormalType
 	self.stageTaskMap = {}
 	self.normalTaskMap = {}
 	self.reddotShowMap = {}
@@ -270,7 +270,7 @@ function Season123TaskModel:initStageAndTaskType()
 	elseif isNormalTaskHaveReward then
 		self.curTaskType = Activity123Enum.TaskNormalType
 	else
-		self.curTaskType = saveTaskType
+		self.curTaskType = Activity123Enum.TaskNormalType
 	end
 
 	self.curStage = stageIndex

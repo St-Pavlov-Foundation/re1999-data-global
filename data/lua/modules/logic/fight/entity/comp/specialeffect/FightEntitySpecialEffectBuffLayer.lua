@@ -255,13 +255,12 @@ function FightEntitySpecialEffectBuffLayer:_refreshEffect(buffId, list, layer, e
 		end
 
 		if config.delayTimeBeforeLoop > 0 then
-			TaskDispatcher.runDelay(function()
-				if loopEffectWrap then
-					loopEffectWrap:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
-				end
+			local timerData = {
+				buffId = buffId,
+				loopEffectWrap = loopEffectWrap
+			}
 
-				self:_refreshEffectState(buffId)
-			end, self, config.delayTimeBeforeLoop / 1000)
+			self:com_registTimer(self.setActiveEffect, config.delayTimeBeforeLoop / 1000, timerData)
 		else
 			if loopEffectWrap then
 				loopEffectWrap:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
@@ -290,6 +289,14 @@ function FightEntitySpecialEffectBuffLayer:_refreshEffect(buffId, list, layer, e
 			end
 		end
 	end
+end
+
+function FightEntitySpecialEffectBuffLayer:setActiveEffect(timerData)
+	if timerData.loopEffectWrap then
+		timerData.loopEffectWrap:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
+	end
+
+	self:_refreshEffectState(timerData.buffId)
 end
 
 function FightEntitySpecialEffectBuffLayer:_refreshEffectState(buffId)

@@ -23,7 +23,7 @@ end
 function SurvivalShelterScene:onClose()
 	local nextSceneType = GameSceneMgr.instance:getNextSceneType()
 
-	if nextSceneType ~= SceneType.Survival and nextSceneType ~= SceneType.SurvivalShelter and nextSceneType ~= SceneType.SurvivalSummaryAct then
+	if not SurvivalMapHelper.instance:isSurvivalScene(nextSceneType) then
 		SurvivalMapHelper.instance:clear()
 	end
 

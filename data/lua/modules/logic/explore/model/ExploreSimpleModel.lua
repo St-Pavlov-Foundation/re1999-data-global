@@ -246,6 +246,8 @@ function ExploreSimpleModel:checkTaskRed()
 			self.taskRed[taskParam[1]][taskParam[2]] = true
 		end
 	end
+
+	self:refreshRedPoint()
 end
 
 function ExploreSimpleModel:getTaskRed(chapterId, coinType)
@@ -329,6 +331,8 @@ function ExploreSimpleModel:markArchive(chapterId, isNew, id)
 
 		self:savePrefData()
 	end
+
+	self:refreshRedPoint()
 end
 
 function ExploreSimpleModel:getChapterIsNew(chapterId)
@@ -489,6 +493,54 @@ function ExploreSimpleModel:savePrefData()
 	local str = cjson.encode(self.localData)
 
 	PlayerPrefsHelper.setString(PlayerPrefsKey.ExploreRedDotData .. PlayerModel.instance:getMyUserId(), str)
+end
+
+function ExploreSimpleModel:refreshRedPoint()
+	local chapterCoList = DungeonConfig.instance:getExploreChapterList()
+
+	for i, chapterCo in ipairs(chapterCoList) do
+		local num = 0
+
+		if self:getHaveNewArchive(chapterCo.id) then
+			num = num + 1
+		end
+
+		for coinType = 1, 2 do
+			if ExploreSimpleModel.instance:getTaskRed(chapterCo.id, coinType) then
+				num = num + 1
+			end
+		end
+
+		local redDotInfoList = {}
+		local str = "Explore_Chapter" .. i
+		local red = RedDotEnum.DotNode[str]
+
+		table.insert(redDotInfoList, {
+			id = red,
+			value = num
+		})
+		RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList, true)
+	end
+end
+
+function ExploreSimpleModel:isShowExplore()
+	local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Explore)
+
+	if not isOpen then
+		return false
+	end
+
+	local isForbid = GuideController.instance:isForbidGuides()
+
+	if isForbid then
+		return true
+	end
+
+	if VersionValidator.instance:isInReviewing() then
+		return true
+	end
+
+	return true
 end
 
 ExploreSimpleModel.instance = ExploreSimpleModel.New()

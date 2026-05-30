@@ -33,6 +33,7 @@ function VersionActivity1_6NormalStoreGoodsView:onInitView()
 	self._gotips = gohelper.findChild(self.viewGO, "root/#go_tips")
 	self._txtlocktips = gohelper.findChildText(self.viewGO, "root/#go_tips/#txt_locktips")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
+	self._btnLook = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_overview")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -40,6 +41,7 @@ function VersionActivity1_6NormalStoreGoodsView:onInitView()
 end
 
 function VersionActivity1_6NormalStoreGoodsView:addEvents()
+	self._btnLook:AddClickListener(self._btnclickOnClick, self)
 	self._btnclick:AddClickListener(self._btnclickOnClick, self)
 	self._btnmin:AddClickListener(self._btnminOnClick, self)
 	self._btnsub:AddClickListener(self._btnsubOnClick, self)
@@ -51,6 +53,7 @@ function VersionActivity1_6NormalStoreGoodsView:addEvents()
 end
 
 function VersionActivity1_6NormalStoreGoodsView:removeEvents()
+	self._btnLook:RemoveClickListener()
 	self._btnclick:RemoveClickListener()
 	self._btnmin:RemoveClickListener()
 	self._btnsub:RemoveClickListener()
@@ -228,12 +231,14 @@ function VersionActivity1_6NormalStoreGoodsView:onOpen()
 			{
 				isCurrencySprite = true,
 				type = MaterialEnum.MaterialType.Item,
-				id = HeroExpBoxEnum.KeyIds[1]
+				id = HeroExpBoxModel.instance:getKeyId()
 			}
 		}
 
 		self.viewContainer:refreshCurrencyView(currency)
 	end
+
+	gohelper.setActive(self._btnLook.gameObject, self.storeGoodsCo.isShowBtnDetail)
 end
 
 function VersionActivity1_6NormalStoreGoodsView:refreshUI()

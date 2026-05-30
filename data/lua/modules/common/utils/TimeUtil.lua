@@ -280,6 +280,10 @@ function TimeUtil.secondToRoughTime2(seconds, useEn)
 		date = 1
 		dateformate = useEn and TimeUtil.DateEnFormat.Hour or luaLang("time_hour")
 	else
+		if min == 0 then
+			min = 1
+		end
+
 		date = min
 		dateformate = useEn and TimeUtil.DateEnFormat.Minute or luaLang("time_minute")
 	end

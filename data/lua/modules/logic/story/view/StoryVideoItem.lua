@@ -60,13 +60,7 @@ function StoryVideoItem:_playVideo()
 	StoryModel.instance:setSpecialVideoPlaying(self._videoName)
 
 	if self._videoPlayer then
-		self._videoPlayer:play(self._videoName, self._loop, self._onVideoEvent, self)
-	end
-end
-
-function StoryVideoItem:_onVideoEvent(path, status, errorCode)
-	if status == VideoEnum.PlayerStatus.Started and self._startCallBack then
-		self._startCallBack(self._startCallBackObj)
+		self._videoPlayer:play(self._videoName, self._loop, self._startCallBack, self._startCallBackObj)
 	end
 end
 

@@ -11,12 +11,14 @@ function NecrologistStoryErasePictureComp:init(go)
 	self.imgMask = gohelper.findChildImage(go, "mask")
 	self.simageNormal = gohelper.findChildSingleImage(go, "normal")
 	self.simageMask = gohelper.findChildSingleImage(go, "mask")
-	self.lockMaterialId = 10
-	self.normalMatId = 11
+end
 
-	local lockMaterialPath = IconMaterialMgr.instance:getMaterialPath(self.lockMaterialId)
+function NecrologistStoryErasePictureComp:setMaterial(lockMaterial)
+	if gohelper.isNil(self.imgMask) then
+		return
+	end
 
-	IconMaterialMgr.instance:loadMaterialAddSet(lockMaterialPath, self.imgMask)
+	self.imgMask.material = lockMaterial
 end
 
 function NecrologistStoryErasePictureComp:setEraseData(picPath, brushSize, finishRate)

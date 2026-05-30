@@ -21,7 +21,8 @@ function NecrologistStoryControlMgrComp:init(go)
 		[NecrologistStoryEnum.StoryControlType.DragPic] = NecrologistStoryControlDragPic,
 		[NecrologistStoryEnum.StoryControlType.StopAudio] = NecrologistStoryControlStopAudio,
 		[NecrologistStoryEnum.StoryControlType.ClickPic] = NecrologistStoryControlClickPic,
-		[NecrologistStoryEnum.StoryControlType.SlidePic] = NecrologistStoryControlSliderPic
+		[NecrologistStoryEnum.StoryControlType.SlidePic] = NecrologistStoryControlSliderPic,
+		[NecrologistStoryEnum.StoryControlType.ChangeVolume] = NecrologistStoryControlChangeVolume
 	}
 end
 

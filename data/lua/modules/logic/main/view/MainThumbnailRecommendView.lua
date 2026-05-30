@@ -117,7 +117,7 @@ function MainThumbnailRecommendView:_startAutoSwitch()
 end
 
 function MainThumbnailRecommendView:_onSwitch()
-	if #self._pagesCo == 1 then
+	if #self._pagesCo <= 1 then
 		TaskDispatcher.cancelTask(self._onSwitch, self)
 
 		return
@@ -468,9 +468,11 @@ end
 function MainThumbnailRecommendView:_updateContentPos(contentItemIndex, posIndex, focusContent)
 	local content = self._helpItems[contentItemIndex]
 
-	if content then
-		recthelper.setAnchorX(content._go.transform, self:_getContentPos(posIndex))
+	if not content then
+		return
 	end
+
+	recthelper.setAnchorX(content._go.transform, self:_getContentPos(posIndex))
 
 	if not focusContent then
 		return

@@ -264,7 +264,7 @@ end
 
 function UdimoController:_getRandomWeatherId(temp)
 	local weatherId = UdimoWeatherModel.instance:getWeatherId()
-	local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId, winLevel)
+	local cfgWeatherId = UdimoConfig.instance:findCfgWeatherId(weatherId)
 	local cfgWeatherIdList = UdimoConfig.instance:getCfgWeatherIdList(cfgWeatherId, temp, true)
 	local index = math.random(#cfgWeatherIdList)
 	local randomCfgWeatherId = cfgWeatherIdList[index]

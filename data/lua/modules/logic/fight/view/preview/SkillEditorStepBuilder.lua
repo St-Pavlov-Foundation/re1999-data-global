@@ -532,6 +532,7 @@ function SkillEditorStepBuilder._buildOneBehaviorBuffs(skillCO, actEffect, buffI
 			buffProto.duration = existBuffMO and existBuffMO.duration + buffCO.duringTime or buffCO.duringTime
 			buffProto.count = existBuffMO and existBuffMO.count + buffCO.effectCount or buffCO.effectCount
 			buffProto.uid = existBuffMO and existBuffMO.uid or SkillEditorBuffSelectView.genBuffUid()
+			buffProto.fromUid = existBuffMO and existBuffMO.fromUid or attackerId
 
 			local buffMO = FightBuffInfoData.New(buffProto, oneTargetId)
 			local actEffectData = FightActEffectData.New()

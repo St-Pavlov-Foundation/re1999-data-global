@@ -60,8 +60,8 @@ function ExploreMapScenePreloadComp:init(go)
 	for i, v in ipairs(self._config.lightmapList) do
 		self._lightmapUseByDic[i] = {}
 
-		self._lightMapLoader:addPath(string.gsub(v[1], "lightmap", "Lightmap"))
-		self._lightMapLoader:addPath(string.gsub(v[2], "lightmap", "Lightmap"))
+		self._lightMapLoader:addPath(v[1])
+		self._lightMapLoader:addPath(v[2])
 	end
 
 	self._lightMapLoader:addPath(emptLightmapColorPath)

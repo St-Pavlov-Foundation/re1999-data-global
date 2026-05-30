@@ -7,7 +7,8 @@ local SimpleListComp = class("SimpleListComp", LuaCompBase)
 function SimpleListComp:ctor(param)
 	self.param = param.listParam
 	self.viewContainer = param.viewContainer
-	self.className = self.param.cellClass.__cname
+	self.cellClass = self.param.cellClass
+	self.paramClassName = self.cellClass and self.cellClass.__cname or "dynamic"
 	self.items = {}
 	self.listScrollView = nil
 	self.mixScrollView = nil
@@ -18,6 +19,7 @@ function SimpleListComp:ctor(param)
 		viewContainer = self.viewContainer,
 		simpleListComp = self
 	}
+	self.isClickAutoSelect = self.param.isClickAutoSelect
 end
 
 function SimpleListComp:init(go)
@@ -86,11 +88,9 @@ function SimpleListComp:onCreate()
 	if not self.res then
 		local trans = self.content.transform:GetChild(0)
 
-		if not gohelper.isNil(trans) then
-			self.res = trans.gameObject
+		self.res = trans.gameObject
 
-			gohelper.setActive(self.res, false)
-		end
+		gohelper.setActive(self.res, false)
 	end
 
 	if self.res then
@@ -98,7 +98,7 @@ function SimpleListComp:onCreate()
 		local isResString = type(self.res) == "string"
 
 		if isResString then
-			local go = self.viewContainer:getResInst(self.res, self.go, self.param.cellClass.__cname)
+			local go = self.viewContainer:getResInst(self.res, self.go, self.cellClass.__cname)
 
 			self.res = go
 
@@ -144,6 +144,10 @@ end
 
 function SimpleListComp:onDestroy()
 	self:clearRemoveAnim()
+end
+
+function SimpleListComp:getItemGoName(index)
+	self.paramClassName = self.cellClass.__cname
 end
 
 function SimpleListComp:isListScrollViewType()
@@ -204,11 +208,6 @@ end
 
 function SimpleListComp:getItemByIndex(index)
 	return self.items[index]
-end
-
-function SimpleListComp:setOnClickItem(onClickItemFunc, context)
-	self.onClickItemFunc = onClickItemFunc
-	self.onClickItemFuncContext = context
 end
 
 function SimpleListComp:setRefreshAnimation(isPlay, interval, groupNum, startDelayS)
@@ -364,7 +363,7 @@ function SimpleListComp:onListScrollViewUpdateCell(cellGO, index)
 	local go, item
 
 	if childCount <= 0 then
-		local name = self.className .. index
+		local name = self.paramClassName .. "_" .. index
 
 		if self.isResString then
 			go = self.viewContainer:getResInst(self.res, cellGO, name)
@@ -374,10 +373,10 @@ function SimpleListComp:onListScrollViewUpdateCell(cellGO, index)
 
 		gohelper.setActive(go, true)
 
-		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass, self.cellCtorParam)
+		item = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.cellClass, self.cellCtorParam)
 	else
 		go = cellGO.transform:GetChild(0).gameObject
-		item = MonoHelper.getLuaComFromGo(go, self.param.cellClass, self.cellCtorParam)
+		item = MonoHelper.getLuaComFromGo(go, self.cellClass, self.cellCtorParam)
 	end
 
 	if self.items[index] and self.items[index] ~= item then
@@ -389,7 +388,7 @@ function SimpleListComp:onListScrollViewUpdateCell(cellGO, index)
 	local isSelect = index == self.select
 	local isLastItem = index == #self.datas
 
-	item:showItem(self.datas[index], index, isSelect, isLastItem, self.onClickItemFunc, self.onClickItemFuncContext)
+	item:showItem(self.datas[index], index, isSelect, isLastItem, self.onClickItem, self)
 	item:setSelect(self.select == index)
 	self:tryPlayShowAnim(item)
 end
@@ -415,6 +414,11 @@ function SimpleListComp:getScrollPixel()
 	end
 end
 
+function SimpleListComp:addCustomItem(go, class)
+	class = class or self.cellClass
+	self.items[#self.items + 1] = MonoHelper.addNoUpdateLuaComOnceToGo(go, class, self.cellCtorParam)
+end
+
 function SimpleListComp:refreshCustomMode()
 	local customItemAmount = #self.items
 	local listLength = #self.datas
@@ -422,7 +426,7 @@ function SimpleListComp:refreshCustomMode()
 	for index = 1, listLength do
 		if customItemAmount < index then
 			local go
-			local name = self.className .. index
+			local name = self.paramClassName .. "_" .. index
 
 			if self.isResString then
 				go = self.viewContainer:getResInst(self.res, self.customMode_content, name, self)
@@ -432,7 +436,7 @@ function SimpleListComp:refreshCustomMode()
 
 			gohelper.setActive(go, true)
 
-			self.items[index] = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass, self.cellCtorParam)
+			self.items[index] = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.cellClass, self.cellCtorParam)
 		end
 
 		local item = self.items[index]
@@ -442,7 +446,8 @@ function SimpleListComp:refreshCustomMode()
 		local isLastItem = index == #self.datas
 		local isSelect = index == self.select
 
-		item:showItem(self.datas[index], index, isSelect, isLastItem, self.onClickItemFunc, self.onClickItemFuncContext)
+		item:showItem(self.datas[index], index, isSelect, isLastItem, self.onClickItem, self)
+		item:setSelect(self.select == index)
 		self:tryPlayShowAnim(item)
 	end
 
@@ -454,12 +459,27 @@ function SimpleListComp:refreshCustomMode()
 	end
 end
 
-function SimpleListComp:addCustomItem(go)
-	self.items[#self.items + 1] = MonoHelper.addNoUpdateLuaComOnceToGo(go, self.param.cellClass, self.cellCtorParam)
-end
-
 function SimpleListComp:rebuildLayout()
 	ZProj.UGUIHelper.RebuildLayout(self.customMode_content.transform)
+end
+
+function SimpleListComp:setOnClickItem(onClickItemFunc, context)
+	self.onClickItemFunc = onClickItemFunc
+	self.onClickItemFuncContext = context
+end
+
+function SimpleListComp:setIsClickAutoSelect(v)
+	self.isClickAutoSelect = v
+end
+
+function SimpleListComp:onClickItem(item)
+	if self.onClickItemFunc then
+		self.onClickItemFunc(self.onClickItemFuncContext, item)
+	end
+
+	if self.isClickAutoSelect then
+		self:setSelect(item.itemIndex)
+	end
 end
 
 function SimpleListComp:setSelect(tarSelect)

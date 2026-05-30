@@ -4,18 +4,19 @@ module("modules.configs.excel2json.lua_activity123_stage", package.seeall)
 
 local lua_activity123_stage = {}
 local fields = {
-	recommendSchool = 12,
+	recommendSchool = 13,
 	name = 4,
 	preCondition = 3,
 	finalScale = 9,
-	initPos = 6,
+	mainEquip = 10,
 	initScale = 7,
-	stageCondition = 11,
+	initPos = 6,
+	stageCondition = 12,
 	res = 5,
 	finalPos = 8,
 	stage = 2,
 	activityId = 1,
-	recommend = 10
+	recommend = 11
 }
 local primaryKey = {
 	"activityId",

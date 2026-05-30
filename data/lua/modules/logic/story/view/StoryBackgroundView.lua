@@ -112,7 +112,8 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgTransType.TurnPage3] = self._turnPageTrans,
 		[StoryEnum.BgTransType.Bloom1] = self._bloom1Trans,
 		[StoryEnum.BgTransType.Bloom2] = self._bloom2Trans,
-		[StoryEnum.BgTransType.ShakeCamera] = self._shakeCameraTrans
+		[StoryEnum.BgTransType.ShakeCameraLR] = self._shakeCameraTrans,
+		[StoryEnum.BgTransType.ShakeCameraUD] = self._shakeCameraTrans
 	}
 	self._handleBgEffsFuncDict = {
 		[StoryEnum.BgEffectType.BgBlur] = self._actBgEffBlur,
@@ -136,7 +137,8 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.BgDistress] = self._actBgEffBgDistress,
 		[StoryEnum.BgEffectType.HandCameraShake] = self._actBgEffHandCameraShake,
 		[StoryEnum.BgEffectType.Penetration] = self._actBgEffPenetration,
-		[StoryEnum.BgEffectType.CustomBlur] = self._actBgEffCustomBlur
+		[StoryEnum.BgEffectType.CustomBlur] = self._actBgEffCustomBlur,
+		[StoryEnum.BgEffectType.LineLight] = self._actBgEffLineLight
 	}
 	self._handleResetBgEffs = {
 		[StoryEnum.BgEffectType.BgBlur] = self._resetBgEffBlur,
@@ -160,7 +162,8 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.BgDistress] = self._resetBgEffBgDistress,
 		[StoryEnum.BgEffectType.HandCameraShake] = self._resetBgEffHandCameraShake,
 		[StoryEnum.BgEffectType.Penetration] = self._resetBgEffPenetration,
-		[StoryEnum.BgEffectType.CustomBlur] = self._resetBgEffCustomBlur
+		[StoryEnum.BgEffectType.CustomBlur] = self._resetBgEffCustomBlur,
+		[StoryEnum.BgEffectType.LineLight] = self._resetBgEffLineLight
 	}
 end
 
@@ -355,7 +358,7 @@ function StoryBackgroundView:_enterChange()
 	self._prefabPath = nil
 
 	if self._handleBgTransFuncDict[self._bgCo.transType] then
-		self._handleBgTransFuncDict[self._bgCo.transType](self)
+		self._handleBgTransFuncDict[self._bgCo.transType](self, self._bgCo.transType)
 	else
 		self:_commonTrans(self._bgCo.transType)
 	end
@@ -1123,11 +1126,11 @@ function StoryBackgroundView:_onTurnPageFinished()
 	rectMask2D.padding = Vector4(0, 0, 0, 0)
 end
 
-function StoryBackgroundView:_shakeCameraTrans()
-	self._curTransType = StoryEnum.BgTransType.ShakeCamera
+function StoryBackgroundView:_shakeCameraTrans(transType)
+	self._curTransType = transType or StoryEnum.BgTransType.ShakeCameraLR
 	self._bgTrans = StoryBgTransCameraShake.New()
 
-	self._bgTrans:init()
+	self._bgTrans:init(self._curTransType)
 	self._bgTrans:start(self._onShakeCameraFinished, self)
 end
 
@@ -1922,6 +1925,29 @@ function StoryBackgroundView:_resetBgEffCustomBlur()
 	end
 end
 
+function StoryBackgroundView:_actBgEffLineLight()
+	if not self._bgLineLightCls then
+		if self._bgCo.effDegree == 1 then
+			return
+		end
+
+		self._bgLineLightCls = StoryBgEffsLineLight.New()
+
+		self._bgLineLightCls:init(self._bgCo)
+		self._bgLineLightCls:start(self._resetBgEffLineLight, self)
+	else
+		self._bgLineLightCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffLineLight()
+	if self._bgLineLightCls then
+		self._bgLineLightCls:destroy()
+
+		self._bgLineLightCls = nil
+	end
+end
+
 function StoryBackgroundView:_resetBgEffOpposition()
 	if self._bgOppositionId then
 		ZProj.TweenHelper.KillById(self._bgOppositionId)
@@ -2225,6 +2251,7 @@ function StoryBackgroundView:_clearBg()
 	self:_resetBgEffBgShake()
 	self:_resetBgEffHandCameraShake()
 	self:_resetBgEffCustomBlur()
+	self:_resetBgEffLineLight()
 
 	if self._blurId then
 		ZProj.TweenHelper.KillById(self._blurId)
@@ -2329,6 +2356,7 @@ function StoryBackgroundView:onDestroyView()
 
 	self:_clearBg()
 	self:_actBgEffFullGrayUpdate(0.5)
+	PostProcessingMgr.instance:setBlurWeight(1)
 
 	if self._borderFadeId then
 		ZProj.TweenHelper.KillById(self._borderFadeId)

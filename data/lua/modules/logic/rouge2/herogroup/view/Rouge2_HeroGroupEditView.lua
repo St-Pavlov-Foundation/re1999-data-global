@@ -45,12 +45,6 @@ function Rouge2_HeroGroupEditView:onInitView()
 	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
 	self._btnquickedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
 	self._goexarrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
-	self._gosearchfilter = gohelper.findChild(self.viewGO, "#go_searchfilter")
-	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
-	self._godmgitem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
-	self._goattritem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
-	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
-	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._goops = gohelper.findChild(self.viewGO, "#go_ops")
 	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_confirm")
@@ -76,9 +70,6 @@ function Rouge2_HeroGroupEditView:addEvents()
 	self._btncancel:AddClickListener(self._btncancelOnClick, self)
 	self._btnpassiveskill:AddClickListener(self._btnpassiveskillOnClick, self)
 	self._btnquickedit:AddClickListener(self._btnquickeditOnClick, self)
-	self._btnclosefilterview:AddClickListener(self._btncloseFilterViewOnClick, self)
-	self._btnreset:AddClickListener(self._btnresetOnClick, self)
-	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
 function Rouge2_HeroGroupEditView:removeEvents()
@@ -95,119 +86,14 @@ function Rouge2_HeroGroupEditView:removeEvents()
 	self._btncancel:RemoveClickListener()
 	self._btnpassiveskill:RemoveClickListener()
 	self._btnquickedit:RemoveClickListener()
-	self._btnclosefilterview:RemoveClickListener()
-	self._btnreset:RemoveClickListener()
-	self._btnok:RemoveClickListener()
-end
-
-function Rouge2_HeroGroupEditView:_btncloseFilterViewOnClick()
-	self._selectDmgs = LuaUtil.deepCopy(self._curDmgs)
-	self._selectAttrs = LuaUtil.deepCopy(self._curAttrs)
-	self._selectLocations = LuaUtil.deepCopy(self._curLocations)
-
-	self:_refreshBtnIcon()
-	gohelper.setActive(self._gosearchfilter, false)
 end
 
 function Rouge2_HeroGroupEditView:_btnclassifyOnClick()
-	gohelper.setActive(self._gosearchfilter, true)
-	self:_refreshFilterView()
-end
+	local param = {
+		filterType = CharacterEnum.FilterType.HeroGroup
+	}
 
-function Rouge2_HeroGroupEditView:_btnresetOnClick()
-	for i = 1, 2 do
-		self._selectDmgs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectAttrs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectLocations[i] = false
-	end
-
-	self:_refreshBtnIcon()
-	self:_refreshFilterView()
-end
-
-function Rouge2_HeroGroupEditView:_btnokOnClick()
-	gohelper.setActive(self._gosearchfilter, false)
-
-	local dmgs = {}
-
-	for i = 1, 2 do
-		if self._selectDmgs[i] then
-			table.insert(dmgs, i)
-		end
-	end
-
-	local careers = {}
-
-	for i = 1, 6 do
-		if self._selectAttrs[i] then
-			table.insert(careers, i)
-		end
-	end
-
-	local locations = {}
-
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
-
-	if #dmgs == 0 then
-		dmgs = {
-			1,
-			2
-		}
-	end
-
-	if #careers == 0 then
-		careers = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	if #locations == 0 then
-		locations = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
-
-	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
-
-	local filterParam = {}
-
-	filterParam.dmgs = dmgs
-	filterParam.careers = careers
-	filterParam.locations = locations
-
-	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.HeroGroup)
-	HeroGroupTrialModel.instance:setFilter(dmgs, careers)
-
-	self._curDmgs = LuaUtil.deepCopy(self._selectDmgs)
-	self._curAttrs = LuaUtil.deepCopy(self._selectAttrs)
-	self._curLocations = LuaUtil.deepCopy(self._selectLocations)
-
-	self:_refreshBtnIcon()
-	self:_refreshCurScrollBySort()
-	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
+	CharacterController.instance:openCharacterFilterView(param)
 end
 
 function Rouge2_HeroGroupEditView:_btnpassiveskillOnClick()
@@ -493,28 +379,6 @@ function Rouge2_HeroGroupEditView:_btnquickeditOnClick()
 	end
 end
 
-function Rouge2_HeroGroupEditView:_attrBtnOnClick(i)
-	self._selectAttrs[i] = not self._selectAttrs[i]
-
-	self:_refreshFilterView()
-end
-
-function Rouge2_HeroGroupEditView:_dmgBtnOnClick(i)
-	if not self._selectDmgs[i] then
-		self._selectDmgs[3 - i] = self._selectDmgs[i]
-	end
-
-	self._selectDmgs[i] = not self._selectDmgs[i]
-
-	self:_refreshFilterView()
-end
-
-function Rouge2_HeroGroupEditView:_locationBtnOnClick(i)
-	self._selectLocations[i] = not self._selectLocations[i]
-
-	self:_refreshFilterView()
-end
-
 function Rouge2_HeroGroupEditView:_onHeroItemClick(heroMO)
 	self._heroMO = heroMO
 
@@ -746,25 +610,7 @@ function Rouge2_HeroGroupEditView:_refreshBtnIcon()
 	gohelper.setActive(self._rareBtns[1], tag ~= 2)
 	gohelper.setActive(self._rareBtns[2], tag == 2)
 
-	local hasFilter = false
-
-	for _, v in pairs(self._selectDmgs) do
-		if v then
-			hasFilter = true
-		end
-	end
-
-	for _, v in pairs(self._selectAttrs) do
-		if v then
-			hasFilter = true
-		end
-	end
-
-	for _, v in pairs(self._selectLocations) do
-		if v then
-			hasFilter = true
-		end
-	end
+	local hasFilter = CharacterSearchFilterModel.instance:hasFilter()
 
 	gohelper.setActive(self._classifyBtns[1], not hasFilter)
 	gohelper.setActive(self._classifyBtns[2], hasFilter)
@@ -775,84 +621,7 @@ function Rouge2_HeroGroupEditView:_refreshBtnIcon()
 	transformhelper.setLocalScale(self._rareArrow[2], 1, state[2], 1)
 end
 
-function Rouge2_HeroGroupEditView:_refreshFilterView()
-	for i = 1, 2 do
-		gohelper.setActive(self._dmgUnselects[i], not self._selectDmgs[i])
-		gohelper.setActive(self._dmgSelects[i], self._selectDmgs[i])
-	end
-
-	for i = 1, 6 do
-		gohelper.setActive(self._attrUnselects[i], not self._selectAttrs[i])
-		gohelper.setActive(self._attrSelects[i], self._selectAttrs[i])
-	end
-
-	for i = 1, 6 do
-		gohelper.setActive(self._locationUnselects[i], not self._selectLocations[i])
-		gohelper.setActive(self._locationSelects[i], self._selectLocations[i])
-	end
-end
-
 function Rouge2_HeroGroupEditView:_updateHeroList()
-	local dmgs = {}
-
-	for i = 1, 2 do
-		if self._selectDmgs[i] then
-			table.insert(dmgs, i)
-		end
-	end
-
-	local careers = {}
-
-	for i = 1, 6 do
-		if self._selectAttrs[i] then
-			table.insert(careers, i)
-		end
-	end
-
-	local locations = {}
-
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
-
-	if #dmgs == 0 then
-		dmgs = {
-			1,
-			2
-		}
-	end
-
-	if #careers == 0 then
-		careers = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	if #locations == 0 then
-		locations = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	local filterParam = {}
-
-	filterParam.dmgs = dmgs
-	filterParam.careers = careers
-	filterParam.locations = locations
-
-	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.HeroGroup)
 	self:_refreshBtnIcon()
 
 	if self._isShowQuickEdit then
@@ -1050,21 +819,6 @@ function Rouge2_HeroGroupEditView:_editableInitView()
 	self._rareBtns = self:getUserDataTb_()
 	self._rareArrow = self:getUserDataTb_()
 	self._classifyBtns = self:getUserDataTb_()
-	self._selectDmgs = {}
-	self._dmgSelects = self:getUserDataTb_()
-	self._dmgUnselects = self:getUserDataTb_()
-	self._dmgBtnClicks = self:getUserDataTb_()
-	self._selectAttrs = {}
-	self._attrSelects = self:getUserDataTb_()
-	self._attrUnselects = self:getUserDataTb_()
-	self._attrBtnClicks = self:getUserDataTb_()
-	self._selectLocations = {}
-	self._locationSelects = self:getUserDataTb_()
-	self._locationUnselects = self:getUserDataTb_()
-	self._locationBtnClicks = self:getUserDataTb_()
-	self._curDmgs = {}
-	self._curAttrs = {}
-	self._curLocations = {}
 
 	for i = 1, 2 do
 		self._lvBtns[i] = gohelper.findChild(self._btnlvrank.gameObject, "btn" .. tostring(i))
@@ -1072,27 +826,6 @@ function Rouge2_HeroGroupEditView:_editableInitView()
 		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
 		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
 		self._classifyBtns[i] = gohelper.findChild(self._btnclassify.gameObject, "btn" .. tostring(i))
-		self._dmgUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/unselected")
-		self._dmgSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/selected")
-		self._dmgBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/click")
-
-		self._dmgBtnClicks[i]:AddClickListener(self._dmgBtnOnClick, self, i)
-	end
-
-	for i = 1, 6 do
-		self._attrUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/unselected")
-		self._attrSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/selected")
-		self._attrBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/click")
-
-		self._attrBtnClicks[i]:AddClickListener(self._attrBtnOnClick, self, i)
-	end
-
-	for i = 1, 6 do
-		self._locationUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/unselected")
-		self._locationSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/selected")
-		self._locationBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/click")
-
-		self._locationBtnClicks[i]:AddClickListener(self._locationBtnOnClick, self, i)
 	end
 
 	self._goBtnEditQuickMode = gohelper.findChild(self._btnquickedit.gameObject, "btn2")
@@ -1146,19 +879,6 @@ function Rouge2_HeroGroupEditView:onOpen()
 	self._adventure = self.viewParam and self.viewParam.adventure
 	self._equips = self.viewParam and self.viewParam.equips
 	self._isTowerBattle = TowerModel.instance:isInTowerBattle()
-
-	for i = 1, 2 do
-		self._selectDmgs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectAttrs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectLocations[i] = false
-	end
-
 	self._activityId = self.viewParam and self.viewParam.activityId
 	self._episodeId = self.viewParam and self.viewParam.episodeId
 
@@ -1200,6 +920,7 @@ function Rouge2_HeroGroupEditView:onOpen()
 	self:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._updateHeroList, self)
 	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._updateHeroList, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
@@ -1228,6 +949,7 @@ function Rouge2_HeroGroupEditView:onClose()
 	self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
 	self:removeEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
 	self:removeEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._updateHeroList, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	CharacterModel.instance:setFakeLevel()
 	Rouge2_HeroGroupEditListModel.instance:cancelAllSelected()
 	Rouge2_HeroGroupEditListModel.instance:clear()
@@ -1235,10 +957,8 @@ function Rouge2_HeroGroupEditView:onClose()
 	Rouge2_HeroGroupQuickEditListModel.instance:clear()
 	HeroGroupTrialModel.instance:setFilter()
 	CommonHeroHelper.instance:resetGrayState()
-
-	self._selectDmgs = {}
-	self._selectAttrs = {}
-	self._selectLocations = {}
+	CharacterController.instance:closeCharacterFilterView()
+	CharacterSearchFilterModel.instance:exitParentView()
 end
 
 function Rouge2_HeroGroupEditView:_onAudioTrigger(audioId)
@@ -1252,6 +972,32 @@ end
 function Rouge2_HeroGroupEditView:_markFavorSuccess()
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
+end
+
+function Rouge2_HeroGroupEditView:_showRecommendCareer()
+	local recommended, counter = FightHelper.detectAttributeCounter()
+
+	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, self._goattrlist, self._goattritem)
+
+	self._txtrecommendAttrDesc.text = #recommended == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
+
+	gohelper.setActive(self._goattrlist, #recommended ~= 0)
+end
+
+function Rouge2_HeroGroupEditView:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "icon")
+
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
+end
+
+function Rouge2_HeroGroupEditView:_onFilterList(param)
+	local dmgs, careers = param.dmgs1, param.careers2
+
+	HeroGroupTrialModel.instance:setFilter(dmgs, careers)
+	self:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
+	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
 end
 
 function Rouge2_HeroGroupEditView:_onCloseView(viewName)
@@ -1268,18 +1014,6 @@ function Rouge2_HeroGroupEditView:onDestroyView()
 
 	self._imgBg = nil
 	self._simageredlight = nil
-
-	for i = 1, 2 do
-		self._dmgBtnClicks[i]:RemoveClickListener()
-	end
-
-	for i = 1, 6 do
-		self._attrBtnClicks[i]:RemoveClickListener()
-	end
-
-	for i = 1, 6 do
-		self._locationBtnClicks[i]:RemoveClickListener()
-	end
 end
 
 return Rouge2_HeroGroupEditView

@@ -58,10 +58,12 @@ function SurvivalInitTeamViewContainer:nextStep()
 
 		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 		local mapId = SurvivalMapModel.instance:getSelectMapId()
+		local dayMode = SurvivalMapModel.instance.dayMode
 
 		ViewMgr.instance:openView(ViewName.SurvivalShopView, {
 			shopMo = weekInfo.preExploreShop,
-			mapId = mapId
+			mapId = mapId,
+			dayMode = dayMode
 		})
 	end
 end

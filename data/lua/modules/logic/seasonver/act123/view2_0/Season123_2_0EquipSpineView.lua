@@ -70,7 +70,7 @@ function Season123_2_0EquipSpineView:refreshHeroSkin()
 	local curPos = Season123EquipItemListModel.instance.curPos
 	local heroUid = Season123EquipItemListModel.instance:getPosHeroUid(curPos)
 
-	if not heroUid or heroUid == Season123EquipItemListModel.EmptyUid then
+	if not heroUid or heroUid == Activity123Enum.EmptyUid then
 		gohelper.setActive(self._gospine, false)
 
 		return nil

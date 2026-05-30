@@ -6,14 +6,14 @@ local VersionActivity2_7DungeonMapViewContainer = class("VersionActivity2_7Dunge
 
 function VersionActivity2_7DungeonMapViewContainer:buildViews()
 	self.mapScene = VersionActivity2_7DungeonMapScene.New()
-	self.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements().New()
-	self.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView().New()
-	self.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView().New()
-	self.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView().New()
+	self.mapSceneElements = VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements(2, 7).New()
+	self.mapView = VersionActivityFixedHelper.getVersionActivityDungeonMapView(2, 7).New()
+	self.mapEpisodeView = VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView(2, 7).New()
+	self.interactView = VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView(2, 7).New()
 	self.mapElementReward = DungeonMapElementReward.New()
 
 	local views = {
-		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView().New(),
+		VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView(2, 7).New(),
 		self.mapScene,
 		self.mapSceneElements,
 		self.mapView,

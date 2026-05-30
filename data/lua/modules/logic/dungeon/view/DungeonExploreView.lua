@@ -73,12 +73,7 @@ function DungeonExploreView:_onCloseView(viewName)
 end
 
 function DungeonExploreView:onOpen()
-	if ViewMgr.instance:isOpen(ViewName.LoadingView) then
-		gohelper.setActive(self.viewGO, false)
-		self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
-	else
-		self:onShow()
-	end
+	self:onShow()
 end
 
 function DungeonExploreView:onShow()
@@ -137,6 +132,9 @@ function DungeonExploreView:onChapterClick(index)
 
 		if not isFirst then
 			AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
+
+			self._anim.enabled = true
+
 			self._anim:Play("switch", 0, 0)
 			self._anim:Update(0)
 			TaskDispatcher.runDelay(self._delayRefreshView, self, 0)

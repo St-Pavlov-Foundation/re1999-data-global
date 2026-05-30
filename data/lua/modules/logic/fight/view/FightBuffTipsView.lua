@@ -119,9 +119,11 @@ function FightBuffTipsView:getCommonBuffTipScrollAnchor(rectTrViewGo, rectTrScro
 	end
 
 	local contentHeight = math.min(recthelper.getHeight(scrollTr), recthelper.getHeight(scrollContentTr))
-	local halfHeight = contentHeight / 2
+	local halfHeight = recthelper.getHeight(self._gobuffinfocontainer.transform) / 2
 
-	recthelper.setAnchor(rectTrScrollTip, anchorX, anchorY + halfHeight)
+	anchorY = recthelper.getAnchorY(self._gobuffinfocontainer.transform) + halfHeight
+
+	recthelper.setAnchor(rectTrScrollTip, anchorX, anchorY)
 end
 
 FightBuffTipsView.filterTypeKey = {

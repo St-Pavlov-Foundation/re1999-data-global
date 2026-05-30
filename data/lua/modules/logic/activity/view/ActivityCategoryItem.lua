@@ -88,7 +88,11 @@ function ActivityCategoryItem:_refreshItem()
 		if actId == ActivityEnum.Activity.DreamShow then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
 		elseif actId == DoubleDropModel.instance:getActId() then
-			RedDotController.instance:addRedDot(self._goreddot, dotId, actId, self.checkActivityShowFirstEnter, self)
+			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
+
+			if self._selected and redDotId > 0 then
+				RedDotRpc.instance:sendShowRedDotRequest(redDotId, false)
+			end
 		elseif actId == ActivityEnum.Activity.Activity1_7WarmUp then
 			if self._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(actId)
@@ -204,6 +208,8 @@ function ActivityCategoryItem:_refreshItem()
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
 		elseif typeId == ActivityEnum.ActivityTypeID.Act217 then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsAct217NeedReddot, self)
+		elseif actId == ActivityEnum.Activity.V3a5_SchoolStart then
+			RedDotController.instance:addRedDot(self._goreddot, redDotId)
 		else
 			RedDotController.instance:addRedDot(self._goreddot, dotId, self._mo.id)
 		end

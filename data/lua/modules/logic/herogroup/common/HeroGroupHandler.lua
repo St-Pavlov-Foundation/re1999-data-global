@@ -303,4 +303,11 @@ function HeroGroupHandler.getHeroRoleOpenNum(episodeId)
 	end
 end
 
+function HeroGroupHandler.getTrialHeroUID(trialId, trialTemplate)
+	trialId = trialId or 0
+	trialTemplate = trialTemplate or 0
+
+	return tostring(tonumber(string.format("%d.%d", trialId, trialTemplate)) - 1099511627776)
+end
+
 return HeroGroupHandler

@@ -342,6 +342,9 @@ function TowerComposeSaveView:refreshRoleBuff(planeItem, planeMo)
 		local heroMo = HeroModel.instance:getByHeroId(supportConfig.heroId)
 		local heroConfig = HeroConfig.instance:getHeroCO(supportConfig.heroId)
 		local skinId = heroMo and heroMo.skin or heroConfig.skinId
+
+		skinId = teamInfoData.assistHero and teamInfoData.assistHero.heroId == supportConfig.heroId and teamInfoData.assistHero.skin > 0 and teamInfoData.assistHero.skin or skinId
+
 		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
 		planeItem.simageSupport:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))

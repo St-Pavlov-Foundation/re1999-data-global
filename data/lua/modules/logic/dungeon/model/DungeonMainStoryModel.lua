@@ -29,7 +29,8 @@ function DungeonMainStoryModel:getConflictGuides()
 			19317,
 			19319,
 			19701,
-			23201
+			23201,
+			35051
 		}
 	end
 

@@ -12,8 +12,8 @@ function ExploreMapLightMapObj:ctor(lightmapData, config, emptRes, lightmapColor
 	self._emptRes = emptRes
 	self._lightmapColorAssetItem = lightmapColorAssetItem
 	self._lightmapDirAssetItem = lightmapDirAssetItem
-	self.lightmapColorPath = string.gsub(config[1], "lightmap", "Lightmap")
-	self.lightmapDirPath = string.gsub(config[2], "lightmap", "Lightmap")
+	self.lightmapColorPath = config[1]
+	self.lightmapDirPath = config[2]
 end
 
 function ExploreMapLightMapObj:show()

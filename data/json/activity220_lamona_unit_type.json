@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "resName": "v3a5_lamona_player",
+    "layer": 3
+  },
+  {
+    "id": 2,
+    "resName": "v3a5_lamona_ghost",
+    "layer": 2
+  },
+  {
+    "id": 3,
+    "resName": "v3a5_lamona_wall",
+    "layer": 0
+  },
+  {
+    "id": 4,
+    "resName": "v3a5_lamona_prop",
+    "layer": 1
+  },
+  {
+    "id": 5,
+    "resName": "v3a5_lamona_fog",
+    "layer": 4
+  }
+]

@@ -10,7 +10,7 @@ end
 
 function FightReplayWorkPlayCard:onStart()
 	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, self._onCombineCardEnd, self)
-	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, self.cardOp.param1, self.cardOp.toId, self.cardOp.param2, self.cardOp.param3)
+	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, self.cardOp.param1, self.cardOp.toId, self.cardOp.param2, self.cardOp.param3, self.cardOp.cardParam1)
 end
 
 function FightReplayWorkPlayCard:_onCombineCardEnd()

@@ -332,7 +332,7 @@ function AutoChessCard:refreshConfigAttr(chessData)
 			local skillDesc = AutoChessHelper.buildSkillDesc(self.config.skillDesc)
 			local tip = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("autochesscard_growup_tip"), chessData.cd)
 
-			self._txtSkillDesc.text = string.format("%s%s", skillDesc, tip)
+			self._txtSkillDesc.text = string.format(luaLang("AutoChessCard_txtSkillDesc"), skillDesc, tip)
 		else
 			self._txtSkillDesc.text = AutoChessHelper.buildSkillDesc(self.config.skillDesc)
 		end

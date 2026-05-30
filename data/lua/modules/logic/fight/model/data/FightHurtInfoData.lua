@@ -60,6 +60,10 @@ function FightHurtInfoData:onConstructor(proto)
 	if proto:HasField("fromUid") then
 		self.fromUid = proto.fromUid
 	end
+
+	self.toughnessValue = proto.toughnessValue
+	self.toughnessPoint = proto.toughnessPoint
+	self.broken = proto.broken
 end
 
 function FightHurtInfoData:getFloatType()

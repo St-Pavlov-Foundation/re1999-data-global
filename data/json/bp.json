@@ -598,5 +598,30 @@
     "activityId": 13419,
     "specialBonus": 334,
     "specialPropDesc": "language_10114951"
+  },
+  {
+    "bpId": 24,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#823501#1|1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#173601#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10117695",
+    "bpSkinNametxt": "language_10118313",
+    "bpSkinEnNametxt": "Cold Cradle",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2026-06-18 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "promptDays": 7,
+    "activityId": 13507,
+    "specialBonus": 355,
+    "specialPropDesc": "language_10118314"
   }
 ]

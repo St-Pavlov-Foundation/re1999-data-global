@@ -68,7 +68,13 @@ function SurvivalMainViewButton:addEvents()
 	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnBuildingInfoUpdate, self.onBuildingInfoUpdate, self)
 	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnShelterBagUpdate, self.onShelterBagUpdate, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnEquipRedUpdate, self.updateEquipRed, self)
-	self:addEventCb(SurvivalController.instance, SurvivalEvent.BossPerformFinish, self.refreshInterceptMask, self)
+
+	if SurvivalController.instance.isOldSettle then
+		self:addEventCb(SurvivalController.instance, SurvivalEvent.BossPerformFinish, self.refreshInterceptMask, self)
+	else
+		self:addEventCb(SurvivalController.instance, SurvivalEvent.BossFightSuccessShowFinish, self.refreshInterceptMask, self)
+	end
+
 	self:addClickCb(self.btnLossReturn, self.onClickLossReturn, self)
 	self:addEventCb(SurvivalController.instance, SurvivalEvent.OnReceiveSurvivalLossReturnRewardReply, self.onReceiveSurvivalLossReturnRewardReply, self)
 end
@@ -286,9 +292,7 @@ function SurvivalMainViewButton:onDelayCheckMainViewAnim()
 end
 
 function SurvivalMainViewButton:refreshInterceptMask()
-	local needShowDestroy, fightId = SurvivalShelterModel.instance:getNeedShowFightSuccess()
-
-	gohelper.setActive(self.interceptMask, needShowDestroy)
+	return
 end
 
 function SurvivalMainViewButton:onTaskDataUpdate()

@@ -89,6 +89,7 @@ function SurvivalMapSearchView:onOpen()
 	self.itemConvertInfosList = self.viewParam.itemConvertInfosList
 	self.convertAccount = #self.itemConvertInfosList
 
+	SurvivalMapModel.instance:clearItemConvert()
 	self:parseConvertItemMos()
 
 	self._allItemMos = self.convertItemMosList[1].items
@@ -232,7 +233,7 @@ function SurvivalMapSearchView:parseConvertItemMos()
 
 				local nextItemMo
 
-				for k, mo in pairs(nextItems) do
+				for _i, mo in pairs(nextItems) do
 					if v.uid == mo.uid then
 						nextItemMo = mo
 

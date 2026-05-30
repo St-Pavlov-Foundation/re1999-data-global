@@ -292,6 +292,24 @@ function TowerComposeViewDefine.init(module_views)
 			[1] = "ui/spriteassets/tower2.asset"
 		}
 	}
+	module_views.TowerComposePickAssistView = {
+		destroy = 0,
+		container = "TowerComposePickAssistViewContainer",
+		mainRes = "ui/viewres/tower/towercompose/towercomposeassistview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			[1] = "ui/viewres/tower/towercompose/towercomposeassistitem.prefab"
+		}
+	}
 end
 
 return TowerComposeViewDefine

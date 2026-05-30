@@ -3,7 +3,7 @@
 module("modules.logic.fight.view.FightViewTechnique", package.seeall)
 
 local FightViewTechnique = class("FightViewTechnique", BaseView)
-local buffType2Id, battleId2Id, invalidBuff2Id, resistanceIdList, getCardEnergyList, getASFDSkillList, createBloodPoolList, heatScaleList
+local buffType2Id, battleId2Id, invalidBuff2Id, resistanceIdList, getCardEnergyList, getASFDSkillList, createBloodPoolList, heatScaleList, weakCareerList
 
 function FightViewTechnique:onInitView()
 	if not buffType2Id then
@@ -14,6 +14,7 @@ function FightViewTechnique:onInitView()
 		getASFDSkillList = {}
 		createBloodPoolList = {}
 		heatScaleList = {}
+		weakCareerList = {}
 
 		for _, co in ipairs(lua_fight_technique.configList) do
 			local array = string.split(co.condition, "|")
@@ -41,6 +42,8 @@ function FightViewTechnique:onInitView()
 					table.insert(createBloodPoolList, co.id)
 				elseif temp[1] == "8" then
 					table.insert(heatScaleList, co.id)
+				elseif temp[1] == "9" then
+					table.insert(weakCareerList, co.id)
 				end
 			end
 		end
@@ -66,6 +69,7 @@ function FightViewTechnique:addEvents()
 	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self.AddUseCard, self)
 	self:addEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate, self)
 	self:addEventCb(FightController.instance, FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate, self)
+	self:addEventCb(FightController.instance, FightEvent.OnAddNewEntity, self.onAddNewEntity, self)
 end
 
 function FightViewTechnique:removeEvents()
@@ -80,11 +84,30 @@ function FightViewTechnique:removeEvents()
 	self:removeEventCb(FightController.instance, FightEvent.AddUseCard, self.AddUseCard, self)
 	self:removeEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate, self)
 	self:removeEventCb(FightController.instance, FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate, self)
+	self:removeEventCb(FightController.instance, FightEvent.OnAddNewEntity, self.onAddNewEntity, self)
 end
 
 function FightViewTechnique:onOpen()
 	FightViewTechniqueModel.instance:initFromSimpleProperty()
+
+	local entityDataDic = FightDataHelper.entityMgr.entityDataDic
+
+	for k, entityData in pairs(entityDataDic) do
+		self:onAddNewEntity(entityData.id, entityData)
+	end
+
 	self:_udpateAnchorY()
+end
+
+function FightViewTechnique:onAddNewEntity(entityId, entityData)
+	local weaknessList = entityData.weakCareers
+	local hasWeakness = weaknessList and #weaknessList > 0
+
+	if hasWeakness then
+		for _, v in ipairs(weakCareerList) do
+			self:_checkAdd(v)
+		end
+	end
 end
 
 function FightViewTechnique:onBloodPoolCreate(teamType)

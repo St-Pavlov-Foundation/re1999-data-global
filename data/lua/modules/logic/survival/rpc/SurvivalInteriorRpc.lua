@@ -4,7 +4,7 @@ module("modules.logic.survival.rpc.SurvivalInteriorRpc", package.seeall)
 
 local SurvivalInteriorRpc = class("SurvivalInteriorRpc", BaseRpc)
 
-function SurvivalInteriorRpc:sendEnterSurvival(initGroupMo, callback, callobj)
+function SurvivalInteriorRpc:sendEnterSurvival(initGroupMo, mode, callback, callobj)
 	local req = SurvivalInteriorModule_pb.EnterSurvivalRequest()
 
 	if initGroupMo then
@@ -25,6 +25,10 @@ function SurvivalInteriorRpc:sendEnterSurvival(initGroupMo, callback, callobj)
 				table.insert(req.npcId, npcMo.id)
 			end
 		end
+	end
+
+	if mode then
+		req.mode = mode
 	end
 
 	return self:sendMsg(req, callback, callobj)

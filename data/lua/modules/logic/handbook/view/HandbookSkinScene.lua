@@ -24,23 +24,25 @@ local cardDefaultPosMap = {
 local resetPosDuration = 0.25
 
 HandbookSkinScene.SkinSuitId2SuitView = {
+	[20008] = ViewName.HandbookSkinSuitDetailView1_8,
+	[20009] = ViewName.HandbookSkinSuitDetailView1_9,
+	[20010] = ViewName.HandbookSkinSuitDetailView2_0,
 	[20011] = ViewName.HandbookSkinSuitDetailView2_1,
 	[20012] = ViewName.HandbookSkinSuitDetailView2_2,
+	[20013] = ViewName.HandbookSkinSuitDetailView2_3,
 	[20014] = ViewName.HandbookSkinSuitDetailView2_4,
 	[20015] = ViewName.HandbookSkinSuitDetailView2_5,
-	[20009] = ViewName.HandbookSkinSuitDetailView1_9,
+	[20016] = ViewName.HandbookSkinSuitDetailView2_6,
+	[20017] = ViewName.HandbookSkinSuitDetailView2_7,
 	[20018] = ViewName.HandbookSkinSuitDetailView2_8,
-	[20013] = ViewName.HandbookSkinSuitDetailView2_3,
-	[20010] = ViewName.HandbookSkinSuitDetailView2_0,
-	[20019] = ViewName.HandbookSkinSuitDetailView3_0,
 	[22003] = ViewName.HandbookSkinSuitDetailView2_9,
+	[20019] = ViewName.HandbookSkinSuitDetailView3_0,
 	[20020] = ViewName.HandbookSkinSuitDetailView3_1,
 	[20021] = ViewName.HandbookSkinSuitDetailView3_2,
 	[21002] = ViewName.HandbookSkinSuitDetailView3_3,
 	[20022] = ViewName.HandbookSkinSuitDetailView3_3_1,
 	[20023] = ViewName.HandbookSkinSuitDetailView3_4,
-	[20016] = ViewName.HandbookSkinSuitDetailView2_6,
-	[20017] = ViewName.HandbookSkinSuitDetailView2_7
+	[20024] = ViewName.HandbookSkinSuitDetailView3_5
 }
 
 function HandbookSkinScene:onInitView()

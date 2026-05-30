@@ -53,6 +53,10 @@ function Season123EpisodeDetailController:switchLayer(isNext)
 end
 
 function Season123EpisodeDetailController:checkEnterFightScene()
+	self:enterBattle()
+
+	do return end
+
 	if self:isStageNeedClean() then
 		GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, self.checkCleanNextLayers, nil, nil, self, nil, nil)
 

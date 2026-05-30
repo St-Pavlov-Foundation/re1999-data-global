@@ -5,7 +5,6 @@ module("modules.logic.story.view.StoryHeroView", package.seeall)
 local StoryHeroView = class("StoryHeroView", BaseView)
 
 function StoryHeroView:onInitView()
-	self._gorolebg = gohelper.findChild(self.viewGO, "#go_rolebg")
 	self._goroles = gohelper.findChild(self.viewGO, "#go_roles")
 
 	if self._editableInitView then
@@ -36,7 +35,7 @@ function StoryHeroView:_removeEvent()
 end
 
 function StoryHeroView:_editableInitView()
-	self._blitEff = self._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
 	self._heros = {}
 
 	self:_loadRes()

@@ -183,25 +183,25 @@ function FightNameUI:_onLoaded()
 
 	self:_doSetActive()
 
-	self._gohpbg = gohelper.findChild(self._uiGO, "layout/top/hp/container/bg")
-	self._gochoushibg = gohelper.findChild(self._uiGO, "layout/top/hp/container/choushibg")
-	self._imgHpMinus = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/minus")
+	self._gohpbg = gohelper.findChild(self._uiGO, "layout/hp/container/bg")
+	self._gochoushibg = gohelper.findChild(self._uiGO, "layout/hp/container/choushibg")
+	self._imgHpMinus = gohelper.findChildImage(self._uiGO, "layout/hp/container/minus")
 
 	local isMySide = self.entity:isMySide()
-	local imgMyHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/my")
-	local imgEnemyHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/enemy")
+	local imgMyHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/my")
+	local imgEnemyHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/enemy")
 
 	gohelper.setActive(imgMyHp.gameObject, isMySide)
 	gohelper.setActive(imgEnemyHp.gameObject, not isMySide)
 
-	self.fictionHp = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/xuxue")
-	self._hpGo = gohelper.findChild(self._uiGO, "layout/top/hp")
-	self._hp_ani = gohelper.findChild(self._uiGO, "layout/top/hp"):GetComponent(typeof(UnityEngine.Animator))
-	self._hp_container_tran = gohelper.findChild(self._uiGO, "layout/top/hp/container").transform
+	self.fictionHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/xuxue")
+	self._hpGo = gohelper.findChild(self._uiGO, "layout/hp")
+	self._hp_ani = gohelper.findChild(self._uiGO, "layout/hp"):GetComponent(typeof(UnityEngine.Animator))
+	self._hp_container_tran = gohelper.findChild(self._uiGO, "layout/hp/container").transform
 	self._imgHp = isMySide and imgMyHp or imgEnemyHp
-	self._imgHpShield = gohelper.findChildImage(self._uiGO, "layout/top/hp/container/shield")
-	self._txtHp = gohelper.findChildText(self._uiGO, "layout/top/hp/Text")
-	self._reduceHp = gohelper.findChild(self._uiGO, "layout/top/hp/container/reduce")
+	self._imgHpShield = gohelper.findChildImage(self._uiGO, "layout/hp/container/shield")
+	self._txtHp = gohelper.findChildText(self._uiGO, "layout/hp/Text")
+	self._reduceHp = gohelper.findChild(self._uiGO, "layout/hp/container/reduce")
 	self._reduceHpImage = self._reduceHp:GetComponent(gohelper.Type_Image)
 
 	self:resetHp()
@@ -218,6 +218,9 @@ function FightNameUI:_onLoaded()
 	end
 
 	self:initPowerMgr()
+	self:initWeaknessMgr()
+	self:initToughnessMgr()
+	self:initToughnessIconMgr()
 
 	self._opContainerGO = gohelper.findChild(self._uiGO, "layout/top/op")
 	self._opContainerTr = self._opContainerGO.transform
@@ -346,6 +349,52 @@ function FightNameUI:initPowerMgr()
 	self.powerView = FightNamePowerInfoView.New(self.entity.id, self._uiGO)
 end
 
+function FightNameUI:initWeaknessMgr()
+	local obj = gohelper.findChild(self._uiGO, "layout/weekness")
+
+	self.weaknessMgr = self:newClass(FightEntityWeaknessView, self.entity, obj)
+end
+
+function FightNameUI:initToughnessMgr()
+	local obj = gohelper.findChild(self._uiGO, "layout/toughness")
+	local monsterConfig = lua_monster.configDict[self.entity.entityData.modelId]
+
+	if not monsterConfig then
+		gohelper.setActive(obj, false)
+
+		return
+	end
+
+	if string.nilorempty(monsterConfig.toughness) then
+		gohelper.setActive(obj, false)
+
+		return
+	end
+
+	gohelper.setActive(obj, true)
+
+	self.toughnessMgr = self:newClass(FightNameUIToughnessView, self.entity, obj, monsterConfig)
+end
+
+function FightNameUI:initToughnessIconMgr()
+	local obj = gohelper.findChild(self._uiGO, "toughnessReward")
+	local monsterConfig = lua_monster.configDict[self.entity.entityData.modelId]
+
+	if not monsterConfig then
+		gohelper.setActive(obj, false)
+
+		return
+	end
+
+	if string.nilorempty(monsterConfig.toughness) then
+		gohelper.setActive(obj, false)
+
+		return
+	end
+
+	self.toughnessIconMgr = self:newClass(FightNameUIToughnessIconMgr, self.entity, obj, monsterConfig)
+end
+
 function FightNameUI:initStressMgr()
 	local entityMo = self.entity:getMO()
 
@@ -406,9 +455,13 @@ function FightNameUI:onDestructor()
 	TaskDispatcher.cancelTask(self._onDelAniOver, self)
 	FightNameMgr.instance:unregister(self)
 	gohelper.destroy(self._containerGO)
-	self._uiLoader:dispose()
 
-	self._uiLoader = nil
+	if self._uiLoader then
+		self._uiLoader:dispose()
+
+		self._uiLoader = nil
+	end
+
 	self._containerGO = nil
 end
 

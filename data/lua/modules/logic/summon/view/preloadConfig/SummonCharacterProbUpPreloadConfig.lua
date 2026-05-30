@@ -15,6 +15,25 @@ function SummonCharacterProbUpPreloadConfig.getCharacterItemCountByName(name)
 	return SummonCharacterProbUpPreloadConfig.characterItemCounts[name] or 1
 end
 
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3510 = {
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_role2.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_dec.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_fullmask.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_role1.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_fullbg.png"
+}
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3511 = {
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_decbg1.png",
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_role1.png",
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_fullbg.png"
+}
+SummonCharacterProbUpPreloadConfig.preloadLists["version_3_5/v3a5_versionsummonlakehalfview"] = {
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_role2.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_dec.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_fullmask.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_role1.png",
+	"singlebg/summon/heroversion_3_5/v3a5_lake/v3a5_lake_fullbg.png"
+}
 SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer339 = {
 	"singlebg/summon/heroversion_3_4/v3a4_cengheguang/v3a4_cengheguang_dec02.png",
 	"singlebg/summon/heroversion_3_4/v3a4_cengheguang/v3a4_cengheguang_role1.png",
@@ -747,6 +766,8 @@ SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVerBeta1 = 
 	ResUrl.getSummonCoverBg("hero/leftdown"),
 	ResUrl.getSummonCoverBg("hero/rightup")
 }
+SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer3510 = 2
+SummonCharacterProbUpPreloadConfig.characterItemCounts["version_3_5/v3a5_versionsummonlakehalfview"] = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer3312 = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer318 = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer307 = 2

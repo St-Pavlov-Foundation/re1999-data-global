@@ -17,7 +17,8 @@ function Season123Config:reqConfigNames()
 		"activity123_equip_tag",
 		"activity123_story",
 		"activity123_retail",
-		"activity123_trial"
+		"activity123_trial",
+		"activity123_stage_reward"
 	}
 end
 
@@ -45,6 +46,8 @@ function Season123Config:onConfigLoaded(configName, configTable)
 		self._retailConfig = configTable
 	elseif configName == "activity123_trial" then
 		self._trialConfig = configTable
+	elseif configName == "activity123_stage_reward" then
+		self._stageRewardConfig = configTable
 	end
 end
 
@@ -534,6 +537,52 @@ function Season123Config:getCardSpecialEffectMap(equipId)
 
 		return effectMap
 	end
+end
+
+function Season123Config:getSeasonEpisodeTotalStar(episodeId)
+	local advancedCondition = DungeonConfig.instance:getEpisodeAdvancedCondition(episodeId)
+	local conditionList = string.splitToNumber(advancedCondition, "|")
+
+	if #conditionList == 0 then
+		return 2
+	end
+
+	local count = #conditionList + 1
+
+	return count
+end
+
+function Season123Config:getStageRewardList(actId, stage)
+	if not self._stageRewardDict then
+		self._stageRewardDict = {}
+
+		for _, rewardCo in ipairs(self._stageRewardConfig.configList) do
+			if not self._stageRewardDict[rewardCo.activityId] then
+				self._stageRewardDict[rewardCo.activityId] = {}
+			end
+
+			if not self._stageRewardDict[rewardCo.activityId][rewardCo.stageId] then
+				self._stageRewardDict[rewardCo.activityId][rewardCo.stageId] = {}
+			end
+
+			table.insert(self._stageRewardDict[rewardCo.activityId][rewardCo.stageId], rewardCo)
+		end
+
+		for _, stageDict in pairs(self._stageRewardDict) do
+			for _, rewardList in pairs(stageDict) do
+				table.sort(rewardList, SortUtil.keyLower("star"))
+			end
+		end
+	end
+
+	local dict = self._stageRewardDict[actId]
+
+	if not dict then
+		dict = {}
+		self._stageRewardDict[actId] = dict
+	end
+
+	return dict[stage] or {}
 end
 
 Season123Config.instance = Season123Config.New()

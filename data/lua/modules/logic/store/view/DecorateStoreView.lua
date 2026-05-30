@@ -536,35 +536,39 @@ function DecorateStoreView:_refreshGoodItems(isUnfold)
 	end
 
 	for index, v in ipairs(goods) do
-		if not self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId] then
+		local foldGoods = self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold]
+
+		if not foldGoods[v.goodsId] then
 			local path = self.viewContainer:getSetting().otherRes[6]
 			local childGO = self:getResInst(path, self._goContent1, "good_" .. tostring(v.goodsId))
 
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId] = DecorateGoodsItem.New()
+			foldGoods[v.goodsId] = DecorateGoodsItem.New()
 
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:init(childGO, v)
+			foldGoods[v.goodsId]:init(childGO, v)
 		else
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:reset(v)
+			foldGoods[v.goodsId]:reset(v)
 		end
 
-		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:setFold(true)
-		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId]:playIn(index, isUnfold)
-		gohelper.setSibling(self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.Fold][v.goodsId].go, index)
+		foldGoods[v.goodsId]:setFold(true)
+		foldGoods[v.goodsId]:playIn(index, isUnfold)
+		gohelper.setSibling(foldGoods[v.goodsId].go, index)
 
-		if not self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId] then
+		local unfoldGoods = self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold]
+
+		if not unfoldGoods[v.goodsId] then
 			local path = self.viewContainer:getSetting().otherRes[6]
 			local childGO = self:getResInst(path, self._goContent2, "good_" .. tostring(v.goodsId))
 
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId] = DecorateGoodsItem.New()
+			unfoldGoods[v.goodsId] = DecorateGoodsItem.New()
 
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:init(childGO, v)
+			unfoldGoods[v.goodsId]:init(childGO, v)
 		else
-			self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:reset(v)
+			unfoldGoods[v.goodsId]:reset(v)
 		end
 
-		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:setFold(false)
-		self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId]:playIn(index, isUnfold)
-		gohelper.setSibling(self._goodItems[self._selectSecondTabId][DecorateStoreEnum.DecorateViewType.UnFold][v.goodsId].go, index)
+		unfoldGoods[v.goodsId]:setFold(false)
+		unfoldGoods[v.goodsId]:playIn(index, isUnfold)
+		gohelper.setSibling(unfoldGoods[v.goodsId].go, index)
 	end
 end
 
@@ -717,9 +721,11 @@ function DecorateStoreView:_refreshCommonDetail()
 		gohelper.setActive(self._gosingle, false)
 		gohelper.setActive(self._godouble, true)
 
-		self._txtcurprice1.text = 0.01 * discount2 * costs[3]
+		local priceCost1 = 0.01 * discount2 * costs[3]
 
-		if decorateConfig.originalCost1 > 0 then
+		self._txtcurprice1.text = priceCost1
+
+		if decorateConfig.originalCost1 > 0 and decorateConfig.originalCost1 ~= priceCost1 then
 			gohelper.setActive(self._txtoriginalprice1.gameObject, true)
 
 			self._txtoriginalprice1.text = decorateConfig.originalCost1
@@ -732,10 +738,11 @@ function DecorateStoreView:_refreshCommonDetail()
 		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagedoubleicon1, costCo.icon .. "_1", true)
 
 		local cost2s = string.splitToNumber(goodMo.config.cost2, "#")
+		local priceCost2 = 0.01 * discount2 * cost2s[3]
 
-		self._txtcurprice2.text = 0.01 * discount2 * cost2s[3]
+		self._txtcurprice2.text = priceCost2
 
-		if decorateConfig.originalCost2 > 0 then
+		if decorateConfig.originalCost2 > 0 and decorateConfig.originalCost2 ~= priceCost2 then
 			gohelper.setActive(self._txtoriginalprice2.gameObject, true)
 
 			self._txtoriginalprice2.text = decorateConfig.originalCost2

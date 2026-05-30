@@ -284,7 +284,7 @@ function DecorateStoreGoodsView:_refreshIcon()
 	else
 		local products = string.splitToNumber(self._goodConfig.product, "#")
 		local _, icon = ItemModel.instance:getItemConfigAndIcon(products[1], products[2], true)
-		local itemCount = ItemModel.instance:getItemCount(products[2])
+		local itemCount = ItemModel.instance:getItemQuantity(products[1], products[2])
 
 		gohelper.setActive(self._goType3, true)
 		gohelper.setActive(self._gohadnumber, decorateCo.maxbuycountType == DecorateStoreEnum.MaxBuyTipType.SoldOut)

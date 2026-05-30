@@ -157,7 +157,7 @@ function ShelterUnitUIItem:onClick()
 
 	local survivalBubbleComp = SurvivalMapHelper.instance:getSurvivalBubbleComp()
 
-	if survivalBubbleComp:isPlayerBubbleIntercept() then
+	if survivalBubbleComp and survivalBubbleComp:isPlayerBubbleIntercept() then
 		return
 	end
 

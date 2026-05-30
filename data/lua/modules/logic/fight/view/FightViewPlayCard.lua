@@ -10,6 +10,7 @@ FightViewPlayCard.VisibleCount = 9
 FightViewPlayCard.HalfScrollWidth = 610
 FightViewPlayCard.OffsetX = 1220 - FightViewPlayCard.PlayCardWidth * FightViewPlayCard.VisibleCount
 FightViewPlayCard.OffsetHalfX = FightViewPlayCard.OffsetX / 2
+FightViewPlayCard.LorenzCardWidth = 80
 
 function FightViewPlayCard:onInitView()
 	self._playCardGO = gohelper.findChild(self.viewGO, "root/playcards")
@@ -26,7 +27,7 @@ function FightViewPlayCard:onInitView()
 	self._resetCardFlow = FlowSequence.New()
 
 	self._resetCardFlow:addWork(FightCardResetEffect.New())
-	self:_clearBeginRoundOps()
+	FightDataHelper.operationDataMgr:clearBeginRoundData()
 end
 
 function FightViewPlayCard:addEvents()
@@ -69,6 +70,7 @@ function FightViewPlayCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, self._onHidePlayCardAllCard, self)
 	self:addEventCb(FightController.instance, FightEvent.StageChanged, self.onStageChanged, self)
 	self:addEventCb(FightController.instance, FightEvent.BeforeCancelOperation, self.onBeforeCancelOperation, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshRecordSkill, self.onRefreshRecordSkill, self)
 	self:createExtraMoveItem()
 	self:refreshAllItemPos()
 end
@@ -112,7 +114,7 @@ function FightViewPlayCard:onClose()
 
 	self._resetCardFlow:unregisterDoneListener(self._onResetEffectDone, self)
 	self._resetCardFlow:stop()
-	self:_clearBeginRoundOps()
+	FightDataHelper.operationDataMgr:clearBeginRoundData()
 	self:_releaseAllFlyItems()
 end
 
@@ -189,6 +191,30 @@ function FightViewPlayCard:_resetScrollView()
 	self._scrollView.enabled = true
 end
 
+function FightViewPlayCard:onRefreshRecordSkill()
+	self:refreshAllItemPos()
+end
+
+function FightViewPlayCard:showLorenzRecordSkill()
+	if not self.lorenzRecordCardItem then
+		local go = gohelper.findChild(self.viewGO, "root/playcards/#go_lorentz_smallcardslot")
+
+		go = gohelper.clone(go, self._playCardItemRoot)
+		self.lorenzRecordCardItem = FightLorenzCardItem.Create(go)
+	end
+
+	self.lorenzRecordCardItem:updateSkill()
+	self.lorenzRecordCardItem:show()
+end
+
+function FightViewPlayCard:hideLorenzRecordSkill()
+	if not self.lorenzRecordCardItem then
+		return
+	end
+
+	self.lorenzRecordCardItem:hide()
+end
+
 function FightViewPlayCard:_onAddPlayOperationData(round_op)
 	if not round_op then
 		return
@@ -208,7 +234,7 @@ function FightViewPlayCard:_onAddPlayOperationData(round_op)
 			return
 		end
 
-		local index = self:getShowIndex(round_op)
+		local index = FightDataHelper.operationDataMgr:getShowIndex(round_op)
 		local itemObj = self._playCardItemList[index]
 
 		if not itemObj then
@@ -311,6 +337,110 @@ function FightViewPlayCard.addExtraMoveActToShowPlayItemCount(showPlayItemCount)
 	return showPlayItemCount
 end
 
+function FightViewPlayCard:updateCardItemPreLv()
+	self.effectTagCountDict = self.effectTagCountDict or {}
+
+	tabletool.clear(self.effectTagCountDict)
+
+	local opList = FightDataHelper.operationDataMgr:getOpList()
+
+	for i = 1, #opList do
+		local op = opList[i]
+
+		if op:isPlayCard() then
+			local skillId = op.skillId
+
+			if not FightCardDataHelper.isBigSkill(skillId) then
+				local skillCo = skillId and lua_skill.configDict[skillId]
+				local effectTag = skillCo and skillCo.effectTag
+
+				if effectTag then
+					local existCount = self.effectTagCountDict[effectTag]
+
+					if existCount then
+						self.effectTagCountDict[effectTag] = existCount + 1
+					else
+						self.effectTagCountDict[effectTag] = 1
+					end
+				end
+			end
+		end
+	end
+
+	for i, cardItem in ipairs(self._playCardItemList) do
+		self:updateOneCardItemCardPreLv(cardItem)
+	end
+
+	FightController.instance:dispatchEvent(FightEvent.RefreshPreLv, self.effectTagCountDict)
+end
+
+function FightViewPlayCard:updateOneCardItemCardPreLv(cardItem)
+	local op = cardItem and cardItem.fightBeginRoundOp
+
+	if not op then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local belongUid = op.belongToEntityId
+	local entityMo = FightDataHelper.entityMgr:getById(belongUid)
+
+	if not entityMo then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local skillId = op.skillId
+	local curSkillCo = lua_skill.configDict[skillId]
+
+	if not curSkillCo then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	if FightCardDataHelper.isBigSkill(skillId) then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local cardIndex = entityMo:getSkillIdIndex(skillId)
+
+	if not cardIndex then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local canUpEffectTagList = entityMo:getCanUpEffectTagList(cardIndex)
+
+	if not canUpEffectTagList then
+		cardItem:setPreLv(0)
+
+		return
+	end
+
+	local curSkillEffectTag = curSkillCo.effectTag
+	local count = 0
+
+	for _, effectTag in ipairs(canUpEffectTagList) do
+		local existCount = self.effectTagCountDict[effectTag]
+
+		if existCount then
+			count = count + existCount
+
+			if curSkillEffectTag == effectTag then
+				count = count - 1
+			end
+		end
+	end
+
+	cardItem:setPreLv(count)
+end
+
 function FightViewPlayCard:_refreshAllItemData()
 	self:_clearAllItemData()
 	self:refreshAllItemPosIfEmptyCreate()
@@ -320,10 +450,16 @@ function FightViewPlayCard:_refreshAllItemData()
 	for _, op in ipairs(opActList) do
 		self:recordPlayData(op)
 		self:_refreshPlayOperationData(op)
+
+		if not string.nilorempty(op.cardParam1) then
+			FightDataHelper.operationDataMgr:setLorenzRecordSkillDepend(op)
+			FightDataHelper.operationDataMgr:setLorenzRecordSkillId(op.cardParam1_skillId)
+			self:onRefreshRecordSkill()
+		end
 	end
 
 	self:_refreshSeasonArrowShow()
-	tabletool.clear(self._all_recorded_ops)
+	FightDataHelper.operationDataMgr:clearAllRecordRoundData()
 	self:checkDispatchEvent(opActList[#opActList])
 end
 
@@ -333,10 +469,14 @@ function FightViewPlayCard:refreshPlayCardTrPosAndWidth(itemCount)
 	if itemCount <= FightViewPlayCard.VisibleCount then
 		recthelper.setAnchorX(self._playCardItemTransform, 0)
 	else
-		recthelper.setAnchorX(self._playCardItemTransform, (itemCount - FightViewPlayCard.VisibleCount) * FightViewPlayCard.HalfCardWidth - FightViewPlayCard.OffsetHalfX)
+		local anchorX = (itemCount - FightViewPlayCard.VisibleCount) * FightViewPlayCard.HalfCardWidth - FightViewPlayCard.OffsetHalfX
+
+		recthelper.setAnchorX(self._playCardItemTransform, anchorX)
 	end
 
-	recthelper.setWidth(self._playCardItemTransform, itemCount * FightViewPlayCard.PlayCardWidth)
+	local width = FightViewPlayCard.getPlayCardRootWidth(itemCount)
+
+	recthelper.setWidth(self._playCardItemTransform, width)
 end
 
 function FightViewPlayCard:recordPlayData(round_op)
@@ -349,18 +489,19 @@ function FightViewPlayCard:recordPlayData(round_op)
 	end
 
 	if FightCardDataHelper.checkOpAsPlayCardHandle(round_op) then
-		table.insert(self._begin_round_ops, round_op)
+		FightDataHelper.operationDataMgr:addBeginRoundOp(round_op)
 	elseif round_op:isMoveCard() then
 		local extraMoveAct = FightDataHelper.operationDataMgr.extraMoveAct
+		local extraMoveRoundOpList = FightDataHelper.operationDataMgr:getExtraMoveRoundOpList()
 
-		if extraMoveAct > 0 and extraMoveAct > #self._extra_move_round_ops then
-			table.insert(self._extra_move_round_ops, round_op)
+		if extraMoveAct > 0 and extraMoveAct > #extraMoveRoundOpList then
+			FightDataHelper.operationDataMgr:addExtraMoveRoundOp(round_op)
 		else
-			table.insert(self._begin_round_ops, round_op)
+			FightDataHelper.operationDataMgr:addBeginRoundOp(round_op)
 		end
 	end
 
-	table.insert(self._all_recorded_ops, round_op)
+	FightDataHelper.operationDataMgr:addAllRecordRoundOp(round_op)
 end
 
 function FightViewPlayCard:removeListValue(list, value)
@@ -378,7 +519,9 @@ function FightViewPlayCard:removeListValue(list, value)
 end
 
 function FightViewPlayCard:checkDispatchEvent(round_op)
-	if #self._all_recorded_ops == 0 then
+	local allRecordOpList = FightDataHelper.operationDataMgr:getAllRecordOpList()
+
+	if #allRecordOpList == 0 then
 		FightController.instance:dispatchEvent(FightEvent.DetectCardOpEndAfterOperationEffectDone, round_op)
 	end
 end
@@ -387,7 +530,7 @@ function FightViewPlayCard:_onPlayOperationEffectDone(round_op)
 	self:_refreshPlayOperationData(round_op)
 	self:_refreshSeasonArrowShow()
 
-	local removeIndex = self:removeListValue(self._all_recorded_ops, round_op)
+	local removeIndex = FightDataHelper.operationDataMgr:removeAllRecordRoundOp(round_op)
 
 	if removeIndex then
 		self:checkDispatchEvent(round_op)
@@ -399,7 +542,7 @@ function FightViewPlayCard:_onPlayCardFlayFinish(round_op)
 end
 
 function FightViewPlayCard:_onPlayCardFlowDone(round_op)
-	local removeIndex = self:removeListValue(self._all_recorded_ops, round_op)
+	local removeIndex = FightDataHelper.operationDataMgr:removeAllRecordRoundOp(round_op)
 
 	if removeIndex then
 		self:checkDispatchEvent(round_op)
@@ -407,7 +550,7 @@ function FightViewPlayCard:_onPlayCardFlowDone(round_op)
 end
 
 function FightViewPlayCard:_onPlayAssistBossCardDone(round_op)
-	local removeIndex = self:removeListValue(self._all_recorded_ops, round_op)
+	local removeIndex = FightDataHelper.operationDataMgr:removeAllRecordRoundOp(round_op)
 
 	if removeIndex then
 		self:checkDispatchEvent(round_op)
@@ -415,13 +558,13 @@ function FightViewPlayCard:_onPlayAssistBossCardDone(round_op)
 end
 
 function FightViewPlayCard:_onPlayRouge2MusicCardFlowDone(round_op)
-	local removeIndex = self:removeListValue(self._all_recorded_ops, round_op)
+	local removeIndex = FightDataHelper.operationDataMgr:removeAllRecordRoundOp(round_op)
 
 	if removeIndex then
 		self:checkDispatchEvent(round_op)
 	end
 
-	local index = self:getShowIndex(round_op)
+	local index = FightDataHelper.operationDataMgr:getShowIndex(round_op)
 	local playCardItem = index and self._playCardItemList[index]
 
 	if not playCardItem then
@@ -464,7 +607,7 @@ function FightViewPlayCard:_refreshSeasonArrowShow()
 end
 
 function FightViewPlayCard:_refreshPlayOperationData(round_op)
-	local refresh_index = self:getShowIndex(round_op)
+	local refresh_index = FightDataHelper.operationDataMgr:getShowIndex(round_op)
 
 	if refresh_index then
 		self:_refreshItemData(refresh_index, round_op)
@@ -472,29 +615,14 @@ function FightViewPlayCard:_refreshPlayOperationData(round_op)
 		return
 	end
 
-	local find = tabletool.indexOf(self._extra_move_round_ops, round_op)
+	local extraMoveRoundOpList = FightDataHelper.operationDataMgr:getExtraMoveRoundOpList()
+	local find = tabletool.indexOf(extraMoveRoundOpList, round_op)
 
 	if find then
 		self:refreshExtraMoveItem()
 
 		return
 	end
-end
-
-function FightViewPlayCard:getShowIndex(fightBeginRoundOp)
-	local refresh_index = tabletool.indexOf(self._begin_round_ops, fightBeginRoundOp)
-
-	if refresh_index then
-		for i = 1, refresh_index - 1 do
-			local op = self._begin_round_ops[i]
-
-			if op:needCopyCard() then
-				refresh_index = refresh_index + 1
-			end
-		end
-	end
-
-	return refresh_index
 end
 
 function FightViewPlayCard:_refreshItemData(refresh_index, round_op)
@@ -521,6 +649,7 @@ function FightViewPlayCard:_refreshItemData(refresh_index, round_op)
 
 	gohelper.setActive(playCardItem.go, true)
 	playCardItem:updateItem(round_op)
+	self:updateCardItemPreLv()
 
 	if round_op and round_op:needCopyCard() then
 		self:refreshAllItemPosIfEmptyCreate()
@@ -651,7 +780,7 @@ function FightViewPlayCard:_clearAllItemData()
 		playCardItem:updateItem(nil)
 	end
 
-	self:_clearBeginRoundOps()
+	FightDataHelper.operationDataMgr:clearBeginRoundData()
 end
 
 function FightViewPlayCard:_onNoActCostMoveFlowOver()
@@ -706,24 +835,6 @@ function FightViewPlayCard:_showPlayCardEffect(cardInfoMO, toPlayCardIndex, tail
 	end
 end
 
-function FightViewPlayCard:_clearBeginRoundOps()
-	if not self._begin_round_ops then
-		self._begin_round_ops = {}
-	end
-
-	if not self._extra_move_round_ops then
-		self._extra_move_round_ops = {}
-	end
-
-	if not self._all_recorded_ops then
-		self._all_recorded_ops = {}
-	end
-
-	tabletool.clear(self._begin_round_ops)
-	tabletool.clear(self._extra_move_round_ops)
-	tabletool.clear(self._all_recorded_ops)
-end
-
 function FightViewPlayCard:onBeforeCancelOperation()
 	self.curIndex2OriginHandCardIndex = {}
 
@@ -757,17 +868,18 @@ function FightViewPlayCard:_hideRankChangeEffect()
 end
 
 function FightViewPlayCard:_onResetEffectDone()
-	self:refreshAllItemPosIfEmptyCreate()
 	self:_clearAllItemData()
+	self:refreshAllItemPosIfEmptyCreate()
 	self._resetCardFlow:unregisterDoneListener(self._onResetEffectDone, self)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
 end
 
 function FightViewPlayCard:refreshAllItemPosIfEmptyCreate()
-	self:refreshExtraMoveItem()
-
 	local showPlayItemCount = FightViewPlayCard.getMaxItemCount()
 	local totalCount = FightViewPlayCard.addExtraMoveActToShowPlayItemCount(showPlayItemCount)
+
+	self:refreshPlayCardTrPosAndWidth(totalCount)
+	self:refreshExtraMoveItem()
 
 	for i = 1, showPlayItemCount do
 		local playCardItem = self._playCardItemList[i]
@@ -790,14 +902,15 @@ function FightViewPlayCard:refreshAllItemPosIfEmptyCreate()
 		end
 	end
 
-	self:refreshPlayCardTrPosAndWidth(totalCount)
+	self:refreshLorentzAnchor()
 end
 
 function FightViewPlayCard:refreshAllItemPos()
-	self:refreshExtraMoveItem()
-
 	local showPlayItemCount = FightViewPlayCard.getMaxItemCount()
 	local totalItemCount = FightViewPlayCard.addExtraMoveActToShowPlayItemCount(showPlayItemCount)
+
+	self:refreshPlayCardTrPosAndWidth(totalItemCount)
+	self:refreshExtraMoveItem()
 
 	for i = 1, showPlayItemCount do
 		local playCardItem = self._playCardItemList[i]
@@ -815,9 +928,34 @@ function FightViewPlayCard:refreshAllItemPos()
 		recthelper.setAnchor(playCardItem.tr, posX, posY)
 	end
 
-	showPlayItemCount = FightViewPlayCard.addExtraMoveActToShowPlayItemCount(showPlayItemCount)
+	for i = showPlayItemCount + 1, #self._playCardItemList do
+		local playCardItem = self._playCardItemList[i]
 
-	self:refreshPlayCardTrPosAndWidth(showPlayItemCount)
+		if playCardItem then
+			playCardItem:updateItem(nil)
+			gohelper.setActive(playCardItem.go, false)
+		end
+	end
+
+	self:refreshLorentzAnchor()
+end
+
+function FightViewPlayCard:refreshLorentzAnchor()
+	local totalItemCount = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
+	local dependOp = FightDataHelper.operationDataMgr:getLorenzRecordSkillDepend()
+
+	if not dependOp then
+		self:hideLorenzRecordSkill()
+	else
+		self:showLorenzRecordSkill()
+
+		if self.lorenzRecordCardItem then
+			local index = FightDataHelper.operationDataMgr:getShowIndex(dependOp)
+			local posX, posY = FightViewPlayCard.calcLorenzCardPosX(index, totalItemCount)
+
+			self.lorenzRecordCardItem:setAnchor(posX, posY)
+		end
+	end
 end
 
 function FightViewPlayCard:refreshExtraMoveItem()
@@ -835,7 +973,8 @@ function FightViewPlayCard:refreshExtraMoveItem()
 
 		recthelper.setAnchor(self.extraMoveItem.tr, posX, posY)
 
-		local roundOp = self._extra_move_round_ops and self._extra_move_round_ops[1]
+		local extraMoveRoundOpList = FightDataHelper.operationDataMgr:getExtraMoveRoundOpList()
+		local roundOp = extraMoveRoundOpList[1]
 
 		if roundOp and roundOp:isMoveCard() then
 			self.extraMoveItem:updateItem(roundOp)
@@ -870,10 +1009,45 @@ function FightViewPlayCard:createExtraMoveItem()
 	self.extraMoveItem:showExtMoveEffect()
 end
 
-function FightViewPlayCard.calcCardPosX(cardIndex, cardCount)
-	local posX = -FightViewPlayCard.PlayCardWidth * cardCount / 2 - FightViewPlayCard.HalfCardWidth
+function FightViewPlayCard.getPlayCardRootWidth(itemCount)
+	local width = itemCount * FightViewPlayCard.PlayCardWidth
+	local dependOp = FightDataHelper.operationDataMgr:getLorenzRecordSkillDepend()
 
-	return posX + FightViewPlayCard.PlayCardWidth * cardIndex, 2
+	if dependOp then
+		width = width + FightViewPlayCard.LorenzCardWidth
+	end
+
+	return width
+end
+
+function FightViewPlayCard.calcCardPosX(cardIndex, cardCount)
+	local playCardItemRootWidth = FightViewPlayCard.getPlayCardRootWidth(cardCount)
+	local halfWidth = playCardItemRootWidth / 2
+	local startAnchorPos = -halfWidth - FightViewPlayCard.HalfCardWidth
+	local posX = startAnchorPos + FightViewPlayCard.PlayCardWidth * cardIndex
+	local posY = 2
+	local dependRoundOp = FightDataHelper.operationDataMgr:getLorenzRecordSkillDepend()
+
+	if not dependRoundOp then
+		return posX, posY
+	end
+
+	local dependIndex = FightDataHelper.operationDataMgr:getShowIndex(dependRoundOp)
+
+	if cardIndex <= dependIndex then
+		return posX, posY
+	end
+
+	return posX + FightViewPlayCard.LorenzCardWidth, posY
+end
+
+function FightViewPlayCard.calcLorenzCardPosX(cardIndex, cardCount)
+	local posX, posY = FightViewPlayCard.calcCardPosX(cardIndex, cardCount)
+
+	posX = posX + FightViewPlayCard.PlayCardWidth * 0.5
+	posX = posX + FightViewPlayCard.LorenzCardWidth * 0.5
+
+	return posX, posY
 end
 
 return FightViewPlayCard

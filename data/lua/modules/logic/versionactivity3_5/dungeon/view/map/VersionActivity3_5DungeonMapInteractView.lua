@@ -1,0 +1,58 @@
+﻿-- chunkname: @modules/logic/versionactivity3_5/dungeon/view/map/VersionActivity3_5DungeonMapInteractView.lua
+
+module("modules.logic.versionactivity3_5.dungeon.view.map.VersionActivity3_5DungeonMapInteractView", package.seeall)
+
+local VersionActivity3_5DungeonMapInteractView = class("VersionActivity3_5DungeonMapInteractView", BaseViewExtended)
+
+function VersionActivity3_5DungeonMapInteractView:onInitView(go)
+	self._gointeractroot = gohelper.findChild(self.viewGO, "#go_interactive_root")
+	self._gointeractitem = gohelper.findChild(self.viewGO, "#go_interactive_root/#go_interactitem")
+
+	gohelper.setActive(self._gointeractitem, false)
+	gohelper.setActive(self._gointeractroot, false)
+end
+
+function VersionActivity3_5DungeonMapInteractView:addEvents()
+	self:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController().instance, VersionActivityFixedDungeonEvent.OnClickElement, self._onClickElement, self)
+	self:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, self.onHideInteractUI, self)
+end
+
+function VersionActivity3_5DungeonMapInteractView:hide()
+	if self._interactView then
+		self._interactView:hide()
+	end
+end
+
+function VersionActivity3_5DungeonMapInteractView:_onClickElement(mapElement)
+	local config = mapElement._config
+
+	if config.type == DungeonEnum.ElementType.V3a4BBS then
+		local postId = tonumber(config.param)
+
+		V3a4BBSController.instance:openV3a4BBSView(postId, nil, config.id)
+	else
+		self._interactView = self:_getInteractView()
+
+		self._interactView:removeEvents()
+		self._interactView:addEvents()
+		self._interactView:showInteractUI(mapElement)
+	end
+end
+
+function VersionActivity3_5DungeonMapInteractView:_getInteractView()
+	if not self._interact1View then
+		self._interact1View = self:openSubView(VersionActivity3_5DungeonMapNormalInteractView, self.viewGO)
+	end
+
+	return self._interact1View
+end
+
+function VersionActivity3_5DungeonMapInteractView:onHideInteractUI()
+	if self._interactView then
+		self._interactView:removeEvents()
+
+		self._interactView = nil
+	end
+end
+
+return VersionActivity3_5DungeonMapInteractView

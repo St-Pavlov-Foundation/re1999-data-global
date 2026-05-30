@@ -5,20 +5,18 @@ module("modules.logic.warmup.view.WarmUp", package.seeall)
 local WarmUp = class("WarmUp", BaseView)
 
 function WarmUp:onInitView()
-	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "BG/#simage_fullbg")
-	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Title")
-	self._txtLimitTime = gohelper.findChildText(self.viewGO, "Right/LimitTime/#txt_LimitTime")
-	self._scrollTaskTabList = gohelper.findChildScrollRect(self.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	self._goradiotaskitem = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
-	self._goreddot = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem/#go_reddot")
-	self._goTitle = gohelper.findChild(self.viewGO, "Right/TaskPanel/#go_Title")
-	self._txtTaskTitle = gohelper.findChildText(self.viewGO, "Right/TaskPanel/#go_Title/#txt_TaskTitle")
-	self._scrollTaskDesc = gohelper.findChildScrollRect(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
-	self._txtTaskContent = gohelper.findChildText(self.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
-	self._goWrongChannel = gohelper.findChild(self.viewGO, "Right/TaskPanel/#go_WrongChannel")
-	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "Right/RawardPanel/#scroll_Reward")
-	self._gorewarditem = gohelper.findChild(self.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	self._btngetreward = gohelper.findChildButtonWithAudio(self.viewGO, "Right/RawardPanel/#btn_getreward")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#Simage_Title/LimitTime/#txt_LimitTime")
+	self._scrollTaskTabList = gohelper.findChildScrollRect(self.viewGO, "opened/open/image_panelbg_right/Right/TaskTab/#scroll_TaskTabList")
+	self._goradiotaskitem = gohelper.findChild(self.viewGO, "opened/open/image_panelbg_right/Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
+	self._goTitle = gohelper.findChild(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel/#go_Title")
+	self._txtTaskTitle = gohelper.findChildText(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel/#go_Title/#txt_TaskTitle")
+	self._goWrongChannel = gohelper.findChild(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel/#go_WrongChannel")
+	self._scrollTaskDesc = gohelper.findChildScrollRect(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel/#scroll_TaskDesc")
+	self._txtTaskContent = gohelper.findChildText(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
+	self._scrollReward = gohelper.findChildScrollRect(self.viewGO, "opened/open/image_panelbg_left/RawardPanel/#scroll_Reward")
+	self._gorewarditem = gohelper.findChild(self.viewGO, "opened/open/image_panelbg_left/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	self._btngetreward = gohelper.findChildButtonWithAudio(self.viewGO, "opened/open/image_panelbg_left/RawardPanel/#btn_getreward")
+	self._gotips = gohelper.findChild(self.viewGO, "unopen/Cabinet/unOpen/node_panel/node_book/#go_tips")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -27,17 +25,30 @@ end
 
 function WarmUp:addEvents()
 	self._btngetreward:AddClickListener(self._btngetrewardOnClick, self)
+	self._click:AddClickListener(self._onClick, self)
+	self._clickLeft:AddClickListener(self._onClickLeft, self)
+	self._clickRight:AddClickListener(self._onClickRight, self)
 end
 
 function WarmUp:removeEvents()
 	self._btngetreward:RemoveClickListener()
+	self._click:RemoveClickListener()
+	self._clickLeft:RemoveClickListener()
+	self._clickRight:RemoveClickListener()
 end
 
 local Vector4 = _G.Vector4
 local splitToNumber = string.splitToNumber
 local split = string.split
 local csAnimatorPlayer = SLFramework.AnimatorPlayer
-local kAnimEvt = "switch"
+local kAnimEvt = "onSwitchTaskPanel"
+local kTimeout = 9.99
+local kFirstLocked = -1
+local kFirstUnlocked = 0
+local kHasDragged = 1
+local States = {
+	SwipeDone = 1
+}
 
 function WarmUp:_btngetrewardOnClick()
 	local _, _, _, canGetReward = self.viewContainer:getRLOCCur()
@@ -50,12 +61,70 @@ function WarmUp:_btngetrewardOnClick()
 	self.viewContainer:sendFinishAct125EpisodeRequest()
 end
 
+function WarmUp:_onClickLeft()
+	local curEpisodeId = self:_episodeId()
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
+	local toEpisodeId = GameUtil.clamp(curEpisodeId - 1, 0, maxEpisodeCount)
+
+	if toEpisodeId >= 1 then
+		self:onClickTab(toEpisodeId)
+		self:_taskScrollToIndex(toEpisodeId - 2)
+	else
+		self:_day1ToCover()
+	end
+end
+
+local kBlock_day1ToCover = "WarmUp:_day1ToCover"
+
+function WarmUp:_day1ToCover()
+	UIBlockMgrExtend.setNeedCircleMv(false)
+	UIBlockHelper.instance:startBlock(kBlock_day1ToCover, kTimeout, self.viewName)
+	self:_setActive_openAndUnopen(false)
+	self:_setActive_drag(true)
+	self:_playAnim("open_to_close", self._onDay1ToCover, self)
+end
+
+function WarmUp:_onDay1ToCover()
+	local episodeId = self.viewContainer:getFirstRewardEpisode()
+	local isRecevied = self.viewContainer:getRLOC(episodeId)
+
+	self.viewContainer:setCurSelectEpisodeIdSlient(episodeId)
+
+	self._lastSelectedIndex = nil
+
+	self:_doSwitchByEpisodeId(episodeId, true)
+	self:_setSelectIndex(self:episode2Index(episodeId), true)
+	self:_setActive_reddot(not isRecevied)
+	self:_setActive_guide(true, true)
+	UIBlockHelper.instance:endBlock(kBlock_day1ToCover)
+	UIBlockMgrExtend.setNeedCircleMv(true)
+end
+
+function WarmUp:_onClickRight()
+	local curEpisodeId = self:_episodeId()
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
+	local toEpisodeId = GameUtil.clamp(curEpisodeId + 1, 1, maxEpisodeCount)
+
+	self:onClickTab(toEpisodeId)
+	self:_taskScrollToIndex(toEpisodeId - 2)
+end
+
+function WarmUp:ctor()
+	self._draggedState = kFirstLocked
+	self._drag = UIDragListenerHelper.New()
+end
+
 function WarmUp:_editableInitView()
 	local scroll_TaskDescGo = self._scrollTaskDesc.gameObject
 	local scroll_TaskDesc_ViewPort = gohelper.findChild(scroll_TaskDescGo, "Viewport")
-	local scroll_TaskTabList = gohelper.findChild(self.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	local scroll_TaskTabList = self._scrollTaskTabList.gameObject
 	local scroll_TaskTabList_Content = gohelper.findChild(scroll_TaskTabList, "Viewport/Content")
 
+	self._openGo = gohelper.findChild(self.viewGO, "opened")
+	self._unopenGo = gohelper.findChild(self.viewGO, "unopen")
+	self._unopen_go_reddot = gohelper.findChild(self._unopenGo, "Cabinet/unOpen/#go_reddot")
+	self._image_jiantou1Go = gohelper.findChild(self._openGo, "image_jiantou1")
+	self._image_jiantou2Go = gohelper.findChild(self._openGo, "image_jiantou2")
 	self._btngetrewardGo = self._btngetreward.gameObject
 	self._txtTaskContentTran = self._txtTaskContent.transform
 	self._scroll_TaskDescGo = scroll_TaskDescGo
@@ -68,21 +137,42 @@ function WarmUp:_editableInitView()
 	self._animatorPlayer = csAnimatorPlayer.Get(self.viewGO)
 	self._animSelf = self._animatorPlayer.animator
 	self._animEvent = gohelper.onceAddComponent(self.viewGO, gohelper.Type_AnimationEventWrap)
+	self._guideGo = gohelper.findChild(self.viewGO, "img_hand")
+	self._animator_guide = self._guideGo:GetComponent(gohelper.Type_Animator)
+	self._taskPanelGo = gohelper.findChild(self.viewGO, "opened/open/image_panelbg_right/Right/TaskPanel")
+	self._animatorPlayerTaskPanel = csAnimatorPlayer.Get(self._taskPanelGo)
+	self._animEventTaskPanel = gohelper.onceAddComponent(self._taskPanelGo, gohelper.Type_AnimationEventWrap)
 
-	self._animEvent:AddEventListener(kAnimEvt, self._onSwitch, self)
+	self._animEventTaskPanel:AddEventListener(kAnimEvt, self._onSwitchTaskPanel, self)
+
+	self._godrag = gohelper.findChild(self._unopenGo, "Click")
+
+	self._drag:create(self._godrag)
+	self._drag:registerCallback(self._drag.EventBegin, self._onDragBegin, self)
+	self._drag:registerCallback(self._drag.EventEnd, self._onDragEnd, self)
 	self:_resetTaskContentPos()
 	self:_setActive_goWrongChannel(false)
+	gohelper.setActive(self._gorewarditem, false)
 	gohelper.setActive(self._goradiotaskitem, false)
+	gohelper.setActive(self._image_jiantou1Go, true)
 
+	self._click = gohelper.getClick(self._godrag)
+	self._clickLeft = gohelper.getClick(self._image_jiantou1Go)
+	self._clickRight = gohelper.getClick(self._image_jiantou2Go)
 	self._txtLimitTime.text = ""
 	self._descHeight = 0
 	self._rewardCount = 0
 	self._itemTabList = {}
 	self._rewardItemList = {}
+	self._unlockedIndex = 0
 end
 
 function WarmUp:onDataUpdateFirst()
 	self:_refreshOnce()
+
+	local isDone = self:_checkIsDone()
+
+	self._draggedState = isDone and kFirstUnlocked or kFirstLocked
 end
 
 function WarmUp:onDataUpdate()
@@ -90,16 +180,27 @@ function WarmUp:onDataUpdate()
 end
 
 function WarmUp:onSwitchEpisode()
+	self._drag:clear()
 	self._descScrollRect:StopMovement()
 	self:_resetTweenDescPos()
 	self:_refresh()
 	self.viewContainer:tryTweenDesc()
+	self:_refreshAnimState()
+
+	local isDone = self:_checkIsDone()
+
+	if self._draggedState == kFirstUnlocked and not isDone then
+		self._draggedState = kFirstLocked - 1
+	elseif self._draggedState < kFirstLocked and isDone then
+		self._draggedState = kFirstUnlocked
+	end
 end
 
 function WarmUp:onUpdateActivity()
 	self._descScrollRect:StopMovement()
 	self:_setTaskContentToEnd()
 	self:_refresh()
+	self:_refreshAnimState()
 end
 
 function WarmUp:onUpdateParam()
@@ -107,29 +208,77 @@ function WarmUp:onUpdateParam()
 	self:_refresh()
 end
 
+local kBlock_onOpen = "WarmUp:onOpen"
+
 function WarmUp:onOpen()
 	self._lastSelectedIndex = nil
 
 	local parentGO = self.viewParam.parent
 
 	gohelper.addChild(parentGO, self.viewGO)
+	UIBlockMgrExtend.setNeedCircleMv(false)
+	UIBlockHelper.instance:startBlock(kBlock_onOpen, kTimeout, self.viewName)
+
+	self._bInPlaying = true
+	self._afterInAnimCbCbObj = {}
+
+	TaskDispatcher.cancelTask(self._inDone, self)
+	TaskDispatcher.runDelay(self._inDone, self, 0.16)
+end
+
+function WarmUp:_inDone()
+	self._bInPlaying = false
+
+	for _, info in ipairs(self._afterInAnimCbCbObj or {}) do
+		local cb, cbObj = info[1], info[2]
+
+		if cb then
+			cb(cbObj)
+		end
+	end
+
+	self._afterInAnimCbCbObj = {}
+
+	UIBlockHelper.instance:endBlock(kBlock_onOpen)
+	UIBlockMgrExtend.setNeedCircleMv(true)
 end
 
 function WarmUp:onClose()
+	TaskDispatcher.cancelTask(self._inDone, self)
 	GameUtil.onDestroyViewMember_TweenId(self, "_movetweenId")
 	GameUtil.onDestroyViewMember_TweenId(self, "_tweenId")
 	TaskDispatcher.cancelTask(self._showLeftTime, self)
 end
 
 function WarmUp:onDestroyView()
+	TaskDispatcher.cancelTask(self._inDone, self)
+	GameUtil.onDestroyViewMember(self, "_drag")
 	self._animEvent:RemoveAllEventListener()
+	self._animEventTaskPanel:RemoveAllEventListener()
 	GameUtil.onDestroyViewMemberList(self, "_itemTabList")
 end
 
 function WarmUp:_refreshOnce()
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
+
+	for i = 1, maxEpisodeCount do
+		local episodeId = i
+
+		if self.viewContainer:isEpisodeReallyOpen(episodeId) then
+			self._unlockedIndex = i
+		else
+			break
+		end
+	end
+
 	self:_showDeadline()
 	self:_refreshTabList()
 	self:_autoSelectTab()
+	self:_refreshAnimState()
+end
+
+function WarmUp:_setActive_reddot(isActive)
+	gohelper.setActive(self._unopen_go_reddot, isActive)
 end
 
 function WarmUp:_refresh()
@@ -137,6 +286,59 @@ function WarmUp:_refresh()
 	self:_refreshTabList()
 	self:_refreshRewards()
 	self:_refreshRightView()
+end
+
+function WarmUp:_refreshAnimState(bAutoSwipeDone)
+	local isDone = self:_checkIsDone()
+	local index = self:_episode2Index()
+
+	self:_refreshArrow(index)
+
+	local _, localIsPlay = self.viewContainer:getRLOCCur()
+
+	if isDone then
+		self:_setActive_guide(false)
+		self:_setActive_drag(false)
+		self:_setActive_openAndUnopen(true)
+		self:_playAnimOpened()
+	elseif localIsPlay then
+		-- block empty
+	else
+		local state = self:_getState()
+
+		if bAutoSwipeDone or States.SwipeDone == state then
+			if not bAutoSwipeDone then
+				self:_setActive_guide(false)
+			end
+
+			self:_setActive_drag(false)
+			self:_setActive_openAndUnopen(true)
+			self:_playAnimAfterSwiped(bAutoSwipeDone)
+		elseif state == 0 then
+			local targetEpisodeId = self.viewContainer:getFirstRewardEpisode()
+			local isShowingReceived = index ~= self:_episode2Index(targetEpisodeId)
+
+			self:_setActive_guide(self._draggedState <= kFirstLocked and (isShowingReceived or index == 1))
+			self:_setActive_drag(true)
+			self:_playAnimIdle()
+			self:_setActive_openAndUnopen(isShowingReceived)
+		else
+			logError("[WarmUp] invalid state: " .. tostring(state))
+		end
+	end
+end
+
+function WarmUp:_setActive_openAndUnopen(isOpen)
+	self:_setActive_openGo(isOpen)
+	self:_setActive_unopenGo(not isOpen)
+end
+
+function WarmUp:_refreshArrow(optIndex)
+	optIndex = optIndex or self:_episode2Index() or 0
+
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
+
+	gohelper.setActive(self._image_jiantou2Go, optIndex < maxEpisodeCount)
 end
 
 function WarmUp:_refreshRightView()
@@ -180,7 +382,7 @@ end
 function WarmUp:_showDeadline()
 	self:_showLeftTime()
 	TaskDispatcher.cancelTask(self._showLeftTime, self)
-	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
+	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
 end
 
 function WarmUp:_showLeftTime()
@@ -188,7 +390,7 @@ function WarmUp:_showLeftTime()
 end
 
 function WarmUp:_refreshTabList()
-	local curEpisodeId = self.viewContainer:getCurSelectedEpisode()
+	local curEpisodeId = self:_episodeId()
 	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
 
 	for i = 1, maxEpisodeCount do
@@ -223,10 +425,14 @@ function WarmUp:_setSelectIndex(index, isFocus)
 		return
 	end
 
+	local curEpisodeId = self:_episodeId()
+
 	if isFocus then
 		self:_taskScrollToIndex(index)
+
+		self._lastSelectedIndex = nil
 	else
-		self:onClickTab(self:index2EpisodeId(self.viewContainer:getCurSelectedEpisode()) or 1)
+		self:onClickTab(self:index2EpisodeId(curEpisodeId) or 1)
 	end
 end
 
@@ -236,14 +442,12 @@ function WarmUp:_taskScrollToIndex(index)
 	local maxScrollPosX = math.max(recthelper.getWidth(self._goTaskContentTran) - self._taskScrollViewportWidth, 0)
 	local posX = math.min((index - 1) * kItemWidth_go_radiotaskitem, maxScrollPosX)
 
-	recthelper.setAnchorX(self._goTaskContentTran, -posX)
-
-	self._lastSelectedIndex = index
+	recthelper.setAnchorX(self._goTaskContentTran, -math.max(0, posX))
 end
 
 function WarmUp:onClickTab(mo)
 	local curEpisodeId = mo
-	local lastEpisodeId = self.viewContainer:getCurSelectedEpisode()
+	local lastEpisodeId = self:_episodeId()
 
 	if lastEpisodeId == curEpisodeId then
 		return
@@ -265,16 +469,33 @@ function WarmUp:onClickTab(mo)
 		return
 	end
 
-	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_close)
+	gohelper.setActive(self._guideGo, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 
-	self._lastSelectedIndex = self:episode2Index(curEpisodeId)
+	self._lastSelectedIndex = self:_doSelectTabByEpisodeId(curEpisodeId)
 
 	self.viewContainer:switchTabWithAnim(lastEpisodeId, curEpisodeId)
 end
 
-function WarmUp:_refreshRewards()
-	local co = self.viewContainer:getEpisodeConfigCur()
+function WarmUp:_doSelectTabByEpisodeId(toSelectEpisodeId)
+	local lastItem = self._itemTabList[self._lastSelectedIndex]
+
+	if lastItem then
+		lastItem:playAnimIdle()
+	end
+
+	local newSelectedIndex = self:episode2Index(toSelectEpisodeId)
+	local curItem = self._itemTabList[newSelectedIndex]
+
+	if curItem then
+		curItem:playAnimSelect()
+	end
+
+	return newSelectedIndex
+end
+
+function WarmUp:_refreshRewards(optEpisodeId)
+	local co = self.viewContainer:getEpisodeConfig(optEpisodeId or self:_episodeId())
 	local rewardBonus = co.bonus
 	local rewards = split(rewardBonus, "|")
 	local itemCount = #rewards
@@ -390,7 +611,7 @@ function WarmUp:_setMaskPaddingBottom(bottom)
 end
 
 function WarmUp:_autoSelectTab()
-	local episodeId = self.viewContainer:getCurSelectedEpisode() or self.viewContainer:getFirstRewardEpisode()
+	local episodeId = self.viewContainer:getLatestEpisode() or self:_episodeId()
 
 	self.viewContainer:setCurSelectEpisodeIdSlient(episodeId)
 	self:_setSelectIndex(self:episode2Index(episodeId), true)
@@ -429,25 +650,123 @@ function WarmUp:_resetTweenDescPos()
 end
 
 function WarmUp:_playAnim(name, cb, cbObj)
-	self._animatorPlayer:Play(name, cb, cbObj)
-end
+	if self._bInPlaying then
+		table.insert(self._afterInAnimCbCbObj, {
+			cb,
+			cbObj
+		})
 
-function WarmUp:tweenSwitch(cb, cbObj)
-	self:_playAnim(UIAnimationName.Switch, cb, cbObj)
-end
-
-function WarmUp:_onSwitch()
-	local lastEpisodeId = self.viewContainer:getCurSelectedEpisode()
-	local curEpisodeId
-
-	if self._lastSelectedIndex then
-		local item = self._itemTabList[self._lastSelectedIndex]
-		local mo = item._mo
-
-		curEpisodeId = mo
+		return
 	end
 
-	self.viewContainer:switchTabNoAnim(lastEpisodeId, curEpisodeId)
+	self._animatorPlayer:Play(name, cb or function()
+		return
+	end, cbObj)
+end
+
+function WarmUp:tweenSwitch(lastEpisodeId, curEpisodeId, cb, cbObj)
+	if not curEpisodeId or not lastEpisodeId then
+		if cb then
+			cb(cbObj)
+		end
+
+		return
+	end
+
+	local lastIsRecevied, lastLocalIsPlay = self.viewContainer:getRLOC(lastEpisodeId)
+	local curIsRecevied, curLocalIsPlay = self.viewContainer:getRLOC(curEpisodeId)
+
+	if curIsRecevied or curLocalIsPlay then
+		self:_tweenSwitchToOld(lastEpisodeId, curEpisodeId, cb, cbObj)
+	elseif cb then
+		cb(cbObj)
+	end
+
+	do return end
+
+	local lastIsDone = self:_checkIsDone(lastEpisodeId) or lastLocalIsPlay or lastIsRecevied
+	local curIsDone = self:_checkIsDone(curEpisodeId) or curIsRecevied or curLocalIsPlay
+
+	if lastIsDone and curIsDone then
+		if cb then
+			cb(cbObj)
+		end
+
+		return
+	end
+
+	local animName
+	local lastState = self:_getState(0, lastEpisodeId)
+	local curState = self:_getState(0, curEpisodeId)
+
+	if lastState == States.SwipeDone then
+		if cb then
+			cb(cbObj)
+		end
+
+		return
+	end
+
+	if curState == 0 and lastState == 0 then
+		if cb then
+			cb(cbObj)
+		end
+
+		return
+	end
+
+	if not lastIsDone and curIsDone then
+		animName = "close_to_open"
+	elseif lastIsDone and not curIsDone then
+		animName = "open_to_close"
+	else
+		assert(false, string.format("invalid state lastEpisodeId: %s(%s), curEpisodeId: %s(%s)", tostring(lastEpisodeId), tostring(lastState), tostring(curEpisodeId), tostring(curState)))
+	end
+
+	self:_playAnim(animName, cb, cbObj)
+end
+
+local kBlock_tweenSwitchToOld = "WarmUp:_tweenSwitchToOld"
+
+function WarmUp:_tweenSwitchToOld(lastEpisodeId, curEpisodeId, cb, cbObj)
+	UIBlockMgrExtend.setNeedCircleMv(false)
+	UIBlockHelper.instance:startBlock(kBlock_tweenSwitchToOld, kTimeout, self.viewName)
+	self._drag:clear()
+	self._descScrollRect:StopMovement()
+	self:_resetTweenDescPos()
+	self:_doSelectTabByEpisodeId(curEpisodeId)
+
+	local ctx = self.viewContainer._tweenSwitchContext
+
+	ctx.cbTweenSwitch = cb
+	ctx.cbObjTweenSwitch = cbObj
+
+	self:_playTaskPanelSwitch()
+end
+
+function WarmUp:_onSwitchTaskPanel()
+	local ctx = self.viewContainer._tweenSwitchContext
+
+	if ctx.cbTweenSwitch then
+		ctx.cbTweenSwitch(ctx.cbObjTweenSwitch)
+
+		ctx.cbTweenSwitch = nil
+		ctx.cbObjTweenSwitch = nil
+	end
+
+	UIBlockHelper.instance:endBlock(kBlock_tweenSwitchToOld)
+	UIBlockMgrExtend.setNeedCircleMv(true)
+end
+
+function WarmUp:_doSwitchByEpisodeId(toSelectEpisodeId, bSlient)
+	self.viewContainer:switchTabNoAnim(toSelectEpisodeId or self:_episodeId(), bSlient)
+end
+
+function WarmUp:onSwitch(curEpisodeId, lastEpisodeId)
+	lastEpisodeId = lastEpisodeId or self:_episodeId()
+
+	self:_doSwitchByEpisodeId(curEpisodeId)
+	self:_refreshAnimState(curEpisodeId > 1)
 end
 
 function WarmUp:playRewardItemsHasGetAnim()
@@ -455,6 +774,38 @@ function WarmUp:playRewardItemsHasGetAnim()
 		local item = self._rewardItemList[i]
 
 		item:playAnim_hasget()
+	end
+end
+
+function WarmUp:playTabItemsUnlockAnim()
+	local maxEpisodeCount = self.viewContainer:getEpisodeCount()
+	local newUnlockIndex = self._unlockedIndex or 1
+	local bFirst = true
+
+	for i = self._unlockedIndex + 1, maxEpisodeCount do
+		local episodeId = i
+
+		if self.viewContainer:isEpisodeReallyOpen(episodeId) then
+			if bFirst then
+				bFirst = false
+
+				self:_taskScrollToIndex(newUnlockIndex)
+			end
+
+			local item = self._itemTabList[i]
+
+			newUnlockIndex = i
+
+			item:playAnimUnlock()
+		end
+	end
+
+	local isDiff = newUnlockIndex ~= self._unlockedIndex
+
+	self._unlockedIndex = newUnlockIndex
+
+	if isDiff then
+		self:_setActive_guide(true)
 	end
 end
 
@@ -484,6 +835,159 @@ end
 
 function WarmUp:_getTaskContentEndPosY()
 	return math.max(0, self._descHeight - self._taskDescViewportHeight)
+end
+
+function WarmUp:_episodeId()
+	return self.viewContainer:getCurSelectedEpisode()
+end
+
+function WarmUp:_episode2Index(episodeId)
+	return self.viewContainer:episode2Index(episodeId or self:_episodeId())
+end
+
+function WarmUp:_checkIsDone(episodeId)
+	return self.viewContainer:checkIsDone(episodeId or self:_episodeId())
+end
+
+function WarmUp:_saveStateDone(isDone, episodeId)
+	self.viewContainer:saveStateDone(episodeId or self:_episodeId(), isDone)
+end
+
+function WarmUp:_saveState(value, episodeId)
+	assert(value ~= 1999, "please call _saveStateDone instead")
+	self.viewContainer:saveState(episodeId or self:_episodeId(), value)
+end
+
+function WarmUp:_getState(defaultValue, episodeId)
+	return self.viewContainer:getState(episodeId or self:_episodeId(), defaultValue)
+end
+
+function WarmUp:_setActive_drag(isActive)
+	gohelper.setActive(self._godrag, isActive)
+	gohelper.setActive(self._gotips, isActive)
+end
+
+function WarmUp:_setActive_guide(isActive, bForceSlide)
+	gohelper.setActive(self._guideGo, isActive)
+
+	if isActive then
+		local newUnlockIndex = self._unlockedIndex or 1
+
+		if newUnlockIndex <= 1 or bForceSlide then
+			self:_playGuideSlideAnim()
+		else
+			self:_playGuideClickAnim()
+		end
+	end
+end
+
+function WarmUp:_setActive_openGo(isActive)
+	gohelper.setActive(self._openGo, isActive)
+
+	if isActive and self:_episode2Index() == 1 then
+		self:_refreshTabList()
+	end
+end
+
+function WarmUp:_setActive_unopenGo(isActive)
+	gohelper.setActive(self._unopenGo, isActive)
+end
+
+function WarmUp:_onClick()
+	self:_playAnimAfterSwipe()
+end
+
+function WarmUp:_onDragBegin()
+	self:_setActive_guide(false)
+end
+
+function WarmUp:_onDragEnd()
+	if self._drag:isSwipeLeft() then
+		self:_playAnimAfterSwipe()
+	end
+end
+
+function WarmUp:_playAnimIdle(cb, cbObj)
+	self:_playAnim("idle_close", cb, cbObj)
+end
+
+function WarmUp:_playAnimOpened(cb, cbObj)
+	self:_playAnim("idle_open", cb, cbObj)
+end
+
+function WarmUp:_playAnimOpen(cb, cbObj)
+	self:_playAnim("close_to_open", cb, cbObj)
+	self:_setActive_openGo(true)
+	self:_setActive_unopenGo(true)
+end
+
+function WarmUp:_playAnimAfterSwipe()
+	self:_setActive_guide(false)
+	self:_setActive_drag(false)
+	self:_saveState(States.SwipeDone)
+	self:_playAnimAfterSwiped()
+	self.viewContainer:setLocalIsPlayCurByUser()
+end
+
+local kBlock_Click = "WarmUp:kBlock_Click"
+
+function WarmUp:_playAnimAfterSwiped(bAutoSwipeDone)
+	UIBlockMgrExtend.setNeedCircleMv(false)
+	UIBlockHelper.instance:startBlock(kBlock_Click, kTimeout, self.viewName)
+	self.viewContainer:addNeedWaitCount()
+
+	if bAutoSwipeDone then
+		self:_playAnimOpened(self._onPlayEndAnimOpen, self)
+	else
+		AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Action_Cardsopen)
+		self:_playAnimOpen(self._onPlayEndAnimOpen, self)
+	end
+
+	self.viewContainer:openDesc()
+end
+
+function WarmUp:_onPlayEndAnimOpen()
+	UIBlockHelper.instance:endBlock(kBlock_Click)
+	UIBlockMgrExtend.setNeedCircleMv(true)
+	self:_saveStateDone(true)
+end
+
+function WarmUp:_playGuideSlideAnim()
+	self:_playGuideAnim("slide", 0, 0)
+end
+
+function WarmUp:_playGuideClickAnim()
+	self:_playGuideAnim("click", 0, 0)
+end
+
+function WarmUp:_playGuideAnim(name, ...)
+	self._animator_guide:Play(name, ...)
+end
+
+function WarmUp:_playTaskPanelSwitch(...)
+	self:_playTaskPanelAnim(UIAnimationName.Switch, ...)
+end
+
+function WarmUp:_playTaskPanelIdle(...)
+	self:_playTaskPanelAnim(UIAnimationName.Idle, ...)
+end
+
+function WarmUp:_playTaskPanelAnim(name, a1, a2)
+	self._animatorPlayerTaskPanel:Play(name, a1 or function()
+		return
+	end, a2)
+end
+
+function WarmUp:_play_ui_shengyan_item_appeared()
+	return
+end
+
+function WarmUp:_play_ui_shengyan_unsheathe_dagger()
+	return
+end
+
+function WarmUp:_play_ui_fuleyuan_yure_whoosh()
+	return
 end
 
 return WarmUp

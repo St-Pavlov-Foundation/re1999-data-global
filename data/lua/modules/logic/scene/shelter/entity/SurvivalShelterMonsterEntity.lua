@@ -171,32 +171,72 @@ function SurvivalShelterMonsterEntity:isInPlayerPos()
 	return player:isInPosList(self.ponitRange)
 end
 
-function SurvivalShelterMonsterEntity:getEffectPath()
-	local needShowFightSuccess = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+function SurvivalShelterMonsterEntity:showEffect()
+	if gohelper.isNil(self._effectRoot) then
+		self._effectRoot = gohelper.create3d(self.trans.gameObject, "EffectRoot")
 
-	if needShowFightSuccess then
-		return fightSuccessPath
+		gohelper.setActive(self._effectRoot, false)
 	end
 
-	return effectPath
-end
-
-function SurvivalShelterMonsterEntity:onEffectLoadedEnd()
-	if gohelper.isNil(self._goEffect) then
+	if not gohelper.isNil(self.monsterEffect) then
 		return
 	end
 
-	local tr = self._goEffect.transform
-	local scale = self:getScale()
+	local scene = SurvivalMapHelper.instance:getScene()
 
-	transformhelper.setLocalScale(tr, scale, scale, scale)
+	if SurvivalController.instance.isOldSettle then
+		local needShowFightSuccess = SurvivalShelterModel.instance:getNeedShowFightSuccess()
 
-	local needShowFightSuccess = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+		if needShowFightSuccess then
+			self.monsterEffect = scene.preloader:getMonsterFightSuccessPath(self._effectRoot)
+		else
+			self.monsterEffect = scene.preloader:getMonsterEffect(self._effectRoot)
+		end
 
-	if needShowFightSuccess then
+		if gohelper.isNil(self.monsterEffect) then
+			return
+		end
+
+		local tr = self.monsterEffect.transform
+		local scale = self:getScale()
+
+		transformhelper.setLocalScale(tr, scale, scale, scale)
+
+		local needShowFightSuccess = SurvivalShelterModel.instance:getNeedShowFightSuccess()
+
+		if needShowFightSuccess then
+			transformhelper.setLocalPos(tr, 0, -0.35, 0)
+			AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_fight)
+			TaskDispatcher.runDelay(self._showSuccessFinish, self, showSuccessTime)
+		end
+	else
+		self.monsterEffect = scene.preloader:getMonsterEffect(self._effectRoot)
+
+		if not gohelper.isNil(self.monsterEffect) then
+			local tr = self.monsterEffect.transform
+			local scale = self:getScale()
+
+			transformhelper.setLocalScale(tr, scale, scale, scale)
+		end
+	end
+end
+
+function SurvivalShelterMonsterEntity:playFightEffect()
+	if self.monsterEffect then
+		gohelper.setActive(self.monsterEffect, false)
+	end
+
+	local scene = SurvivalMapHelper.instance:getScene()
+
+	self.monsterFightEffect = scene.preloader:getMonsterFightSuccessPath(self._effectRoot)
+
+	if not gohelper.isNil(self.monsterEffect) then
+		local tr = self.monsterFightEffect.transform
+		local scale = self:getScale()
+
+		transformhelper.setLocalScale(tr, scale, scale, scale)
 		transformhelper.setLocalPos(tr, 0, -0.35, 0)
 		AudioMgr.instance:trigger(AudioEnum2_8.Survival.play_ui_fuleyuan_binansuo_fight)
-		TaskDispatcher.runDelay(self._showSuccessFinish, self, showSuccessTime)
 	end
 end
 

@@ -48,6 +48,19 @@ function StoryViewMgr:getStoryBlitEffSecond()
 	return blitEff
 end
 
+function StoryViewMgr:getStoryRoleBlitEff()
+	local go = self:getStoryHeroView()
+
+	if not go then
+		return
+	end
+
+	local blitGo = gohelper.findChild(go, "#go_rolebg")
+	local blitEff = blitGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
+
+	return blitEff
+end
+
 function StoryViewMgr:getStoryFrontBgGo()
 	local bgRootGo = self:getStoryBackgroundView()
 

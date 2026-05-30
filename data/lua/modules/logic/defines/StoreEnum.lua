@@ -22,9 +22,10 @@ StoreEnum.Discount = {
 }
 StoreEnum.RefreshTime = {
 	Day = 1,
-	Week = 2,
+	Version = 1001,
 	Month = 3,
-	Forever = 0
+	Forever = 0,
+	Week = 2
 }
 StoreEnum.ChargeRefreshTime = {
 	Day = 3,
@@ -158,6 +159,9 @@ StoreEnum.StoreId2TabId = {
 StoreEnum.chargeOptionalType = {
 	GroupOption = 1,
 	PosOption = 0
+}
+StoreEnum.SurvivalStore = {
+	NormalStore = 301
 }
 StoreEnum.SummonPoolPackageMinCount = 2
 

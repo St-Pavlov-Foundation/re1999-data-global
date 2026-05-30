@@ -16,6 +16,7 @@ function SimpleListParam:ctor()
 	self.sortMode = ScrollEnum.ScrollSortNone
 	self.frameUpdateMs = 10
 	self.minUpdateCountInFrame = 1
+	self.isClickAutoSelect = false
 end
 
 return SimpleListParam

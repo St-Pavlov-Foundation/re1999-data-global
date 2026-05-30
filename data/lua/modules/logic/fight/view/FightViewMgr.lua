@@ -184,6 +184,17 @@ function FightViewMgr:onOpen()
 	self:showRouge2TreasureView()
 	self:showRouge2Task()
 	self:showRouge2Slapstick()
+	self:openLorentzCardView()
+end
+
+function FightViewMgr:openLorentzCardView()
+	if self.lorentzCardView then
+		return
+	end
+
+	local viewGo = gohelper.findChild(self.viewGO, "root/#go_lorentz_cards")
+
+	self.lorentzCardView = self:com_openSubView(FightLorentzCardView, viewGo)
 end
 
 function FightViewMgr:showRouge2Slapstick()
@@ -616,6 +627,11 @@ function FightViewMgr:_onBtnLoaded(success, loader)
 	self:com_registFightEvent(FightEvent.CardBoxNumChange, self.onCardBoxNumChange)
 	self:com_registFightEvent(FightEvent.CardDeckGenerate, self.onDeckGenerate_Anim)
 	self:com_registFightEvent(FightEvent.CardDeckDelete, self.onDeckDelete_Anim)
+	self:com_registFightEvent(FightEvent.CardBoxPlayAnim, self.onPlayCardBoxAnim)
+end
+
+function FightViewMgr:onPlayCardBoxAnim(animName)
+	self._deckBtnAniPlayer:Play(animName, self.playIdleAnim, self)
 end
 
 function FightViewMgr:activeDeck()
@@ -694,18 +710,18 @@ function FightViewMgr:_onSeasonTalentClick()
 	Season166Controller.instance:openTalentInfoView()
 end
 
-function FightViewMgr:_deckAniFinish()
+function FightViewMgr:playIdleAnim()
 	self._deckCardAnimator.enabled = true
 
 	self._deckCardAnimator:Play("idle")
 end
 
 function FightViewMgr:_onCardDeckGenerate()
-	self._deckBtnAniPlayer:Play("add", self._deckAniFinish, self)
+	self._deckBtnAniPlayer:Play("add", self.playIdleAnim, self)
 end
 
 function FightViewMgr:_onCardClear()
-	self._deckBtnAniPlayer:Play("delete", self._deckAniFinish, self)
+	self._deckBtnAniPlayer:Play("delete", self.playIdleAnim, self)
 end
 
 function FightViewMgr:_showTaskPart()

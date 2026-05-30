@@ -47,39 +47,6 @@ function VersionActivity2_5JumpHandleFunc.enterRoleActivity(actId)
 	RoleActivityController.instance:enterActivity(actId)
 end
 
-function VersionActivity2_5JumpHandleFunc:jumpTo11602(paramsList)
-	local actId = paramsList[2]
-	local episodeId = paramsList[3]
-
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_5EnterView)
-	table.insert(self.closeViewNames, ViewName.VersionActivity1_6DungeonMapLevelView)
-
-	if episodeId then
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			VersionActivity1_6DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
-				ViewMgr.instance:openView(ViewName.VersionActivity1_6DungeonMapLevelView, {
-					isJump = true,
-					episodeId = episodeId
-				})
-			end)
-		end, nil, actId, true)
-	else
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(VersionActivity1_6DungeonController.openVersionActivityDungeonMapView, VersionActivity1_6DungeonController.instance, actId, true)
-	end
-
-	return JumpEnum.JumpResult.Success
-end
-
-function VersionActivity2_5JumpHandleFunc:jumpTo12514(paramsList)
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_5EnterView)
-	VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		table.insert(self.waitOpenViewNames, ViewName.ReactivityStoreView)
-		ReactivityController.instance:openReactivityStoreView(VersionActivity2_5Enum.ActivityId.Reactivity)
-	end)
-
-	return JumpEnum.JumpResult.Success
-end
-
 function VersionActivity2_5JumpHandleFunc:jumpTo12505(paramsList)
 	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_5EnterView)
 	table.insert(self.waitOpenViewNames, ViewName.Act183MainView)

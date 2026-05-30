@@ -5470,6 +5470,96 @@
     "isCn": 0
   },
   {
+    "id": 3510001,
+    "title": "",
+    "type": 2,
+    "text": "操作说明",
+    "icon": "v3a5_luolunzhi_help_1",
+    "iconText": "v3a5_luolunzhi_help_1",
+    "unlockGuideId": 35031,
+    "isCn": 0
+  },
+  {
+    "id": 3504101,
+    "title": "",
+    "type": 1,
+    "text": "3.5鬃毛韧性条指引图",
+    "icon": "v3a5_bossrush_help_1",
+    "iconText": "v3a5_bossrush_help_1",
+    "unlockGuideId": 35041,
+    "isCn": 0
+  },
+  {
+    "id": 3504201,
+    "title": "",
+    "type": 1,
+    "text": "3.5战中下注指引图1",
+    "icon": "v3a5_zhangdou_help_1",
+    "iconText": "v3a5_zhangdou_help_1",
+    "unlockGuideId": 35042,
+    "isCn": 0
+  },
+  {
+    "id": 3504202,
+    "title": "",
+    "type": 1,
+    "text": "3.5战中下注指引图2",
+    "icon": "v3a5_zhangdou_help_2",
+    "iconText": "v3a5_zhangdou_help_2",
+    "unlockGuideId": 35042,
+    "isCn": 0
+  },
+  {
+    "id": 3504203,
+    "title": "",
+    "type": 1,
+    "text": "3.5战中下注指引图3",
+    "icon": "v3a5_zhangdou_help_3",
+    "iconText": "v3a5_zhangdou_help_3",
+    "unlockGuideId": 35042,
+    "isCn": 0
+  },
+  {
+    "id": 3511001,
+    "title": "",
+    "type": 2,
+    "text": "3.5UTTU团队名人卡指引1",
+    "icon": "v3a5_shaijiwanfa_help_2",
+    "iconText": "v3a5_shaijiwanfa_help_2",
+    "unlockGuideId": 35061,
+    "isCn": 0
+  },
+  {
+    "id": 3511002,
+    "title": "",
+    "type": 2,
+    "text": "3.5UTTU团队名人卡指引2",
+    "icon": "v3a5_shaijiwanfa_help_1",
+    "iconText": "v3a5_shaijiwanfa_help_1",
+    "unlockGuideId": 35061,
+    "isCn": 0
+  },
+  {
+    "id": 3512001,
+    "title": "",
+    "type": 2,
+    "text": "3.5UTTU积分奖励1",
+    "icon": "v3a5_shaijiwanfa_help_3",
+    "iconText": "v3a5_shaijiwanfa_help_3",
+    "unlockGuideId": 35061,
+    "isCn": 0
+  },
+  {
+    "id": 3512002,
+    "title": "",
+    "type": 2,
+    "text": "3.5UTTU积分奖励2",
+    "icon": "v3a5_shaijiwanfa_help_4",
+    "iconText": "v3a5_shaijiwanfa_help_4",
+    "unlockGuideId": 35061,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

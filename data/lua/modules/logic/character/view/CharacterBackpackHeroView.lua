@@ -73,14 +73,6 @@ function CharacterBackpackHeroView:_editableInitView()
 		false,
 		false
 	}
-	self._selectLocations = {
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
-	}
 
 	CharacterBackpackCardListModel.instance:updateModel()
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.BackpackHero)
@@ -91,7 +83,7 @@ function CharacterBackpackHeroView:_btnclassifyOnClick()
 
 	param.dmgs = LuaUtil.deepCopy(self._selectDmgs)
 	param.attrs = LuaUtil.deepCopy(self._selectAttrs)
-	param.locations = LuaUtil.deepCopy(self._selectLocations)
+	param.filterType = CharacterEnum.FilterType.BackpackHero
 
 	CharacterController.instance:openCharacterFilterView(param)
 end
@@ -153,12 +145,6 @@ function CharacterBackpackHeroView:_refreshBtnIcon()
 		end
 	end
 
-	for _, v in pairs(self._selectLocations) do
-		if v then
-			hasFilter = true
-		end
-	end
-
 	gohelper.setActive(self._classifyBtns[1], not hasFilter)
 	gohelper.setActive(self._classifyBtns[2], hasFilter)
 	transformhelper.setLocalScale(self._lvArrow[1], 1, state[1], 1)
@@ -191,7 +177,7 @@ end
 function CharacterBackpackHeroView:_onFilterList(param)
 	self._selectDmgs = param.dmgs
 	self._selectAttrs = param.attrs
-	self._selectLocations = param.locations
+	self._selectTags = param.selectTags
 
 	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
@@ -217,12 +203,6 @@ function CharacterBackpackHeroView:_updateHeroList()
 	end
 
 	local locations = {}
-
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
 
 	if #dmgs == 0 then
 		dmgs = {
@@ -268,6 +248,7 @@ function CharacterBackpackHeroView:onClose()
 	self:removeEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	CharacterBackpackCardListModel.instance:clearCardList()
 	CharacterBackpackCardListModel.instance:setFirstShowCharacter(nil)
+	CharacterSearchFilterModel.instance:exitParentView()
 end
 
 function CharacterBackpackHeroView:onDestroyView()

@@ -144,7 +144,8 @@ function FightConfig:reqConfigNames()
 		"battle_selection",
 		"fight_skill_force_use",
 		"fight_change_buff_effect_by_skin",
-		"magic_wqsz"
+		"magic_wqsz",
+		"toughnessskill"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then

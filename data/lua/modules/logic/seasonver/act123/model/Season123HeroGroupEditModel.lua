@@ -21,7 +21,14 @@ function Season123HeroGroupEditModel:getMoveHeroIndex()
 end
 
 function Season123HeroGroupEditModel:copyCharacterCardList(init)
-	local moList = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	local moList
+
+	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
+		moList = {}
+	else
+		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()
+	end
+
 	local heroMO = Season123Model.instance:getAssistData(self.activityId, self.stage)
 
 	if heroMO and Season123Controller.isEpisodeFromSeason123(self.episodeId) and Season123HeroGroupModel.instance:isEpisodeSeason123() then
@@ -33,29 +40,27 @@ function Season123HeroGroupEditModel:copyCharacterCardList(init)
 
 	self._inTeamHeroUids = {}
 
-	local selectIndex = 0
+	local selectIndex = 1
 	local index = 1
 	local alreadyList = HeroSingleGroupModel.instance:getList()
 
 	for i, heroSingleGroupMO in ipairs(alreadyList) do
-		local heroUid = heroSingleGroupMO.heroUid
-
-		if not heroSingleGroupMO.aid and tonumber(heroUid) > 0 and not repeatHero[heroUid] then
-			local tmpMO = Season123HeroUtils.getHeroMO(self.activityId, heroUid, self.stage)
-
-			if self:checkSeasonBox(tmpMO) then
-				table.insert(newMOList, tmpMO)
-
-				if self.specialHero == heroUid then
-					self._inTeamHeroUids[heroUid] = 2
-					selectIndex = index
-				else
-					self._inTeamHeroUids[heroUid] = 1
-					index = index + 1
-				end
-
-				repeatHero[heroUid] = true
+		if heroSingleGroupMO.trial or not heroSingleGroupMO.aid and tonumber(heroSingleGroupMO.heroUid) > 0 and not repeatHero[heroSingleGroupMO.heroUid] then
+			if heroSingleGroupMO.trial then
+				table.insert(newMOList, HeroGroupTrialModel.instance:getById(heroSingleGroupMO.heroUid))
+			else
+				table.insert(newMOList, HeroModel.instance:getById(heroSingleGroupMO.heroUid))
 			end
+
+			if self.specialHero == heroSingleGroupMO.heroUid then
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 2
+				selectIndex = index
+			else
+				self._inTeamHeroUids[heroSingleGroupMO.heroUid] = 1
+				index = index + 1
+			end
+
+			repeatHero[heroSingleGroupMO.heroUid] = true
 		end
 	end
 
@@ -71,7 +76,7 @@ function Season123HeroGroupEditModel:copyCharacterCardList(init)
 	local groupHeroNum = #newMOList
 
 	for i, mo in ipairs(moList) do
-		if not repeatHero[mo.uid] and self:checkSeasonBox(mo) then
+		if not repeatHero[mo.uid] then
 			repeatHero[mo.uid] = true
 
 			if self._moveHeroId and mo.heroId == self._moveHeroId then
@@ -85,11 +90,24 @@ function Season123HeroGroupEditModel:copyCharacterCardList(init)
 		end
 	end
 
+	local state = CharacterModel.instance:getRankState()
+	local tag = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
+
+	HeroGroupTrialModel.instance:sortByLevelAndRare(tag == 1, state[tag] == 1)
+
+	local trialList = HeroGroupTrialModel.instance:getFilterList()
+
+	for i, heroMo in ipairs(trialList) do
+		if not repeatHero[heroMo.uid] then
+			table.insert(newMOList, heroMo)
+		end
+	end
+
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
 		self.sortIndexMap = {}
 
 		for i, v in ipairs(newMOList) do
-			self.sortIndexMap[v] = i
+			self.sortIndexMap[v.uid] = i
 		end
 
 		table.sort(newMOList, Season123HeroGroupEditModel.sortDead)
@@ -114,12 +132,19 @@ function Season123HeroGroupEditModel.sortDead(a, b)
 
 	if aIsDead ~= bIsDead then
 		return bIsDead
-	else
-		local aIndex = Season123HeroGroupEditModel.instance.sortIndexMap[a]
-		local bIndex = Season123HeroGroupEditModel.instance.sortIndexMap[b]
-
-		return aIndex < bIndex
 	end
+
+	local aIsRestrict = HeroGroupModel.instance:isRestrict(a.uid) and true or false
+	local bIsRestrict = HeroGroupModel.instance:isRestrict(b.uid) and true or false
+
+	if aIsRestrict ~= bIsRestrict then
+		return bIsRestrict
+	end
+
+	local aIndex = Season123HeroGroupEditModel.instance.sortIndexMap[a.uid]
+	local bIndex = Season123HeroGroupEditModel.instance.sortIndexMap[b.uid]
+
+	return aIndex < bIndex
 end
 
 function Season123HeroGroupEditModel:getHeroIsDead(mo)
@@ -141,15 +166,7 @@ function Season123HeroGroupEditModel:getHeroIsDead(mo)
 end
 
 function Season123HeroGroupEditModel:checkSeasonBox(heroMO)
-	if self.episodeCO then
-		if self.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
-			return Season123Model.instance:getSeasonHeroMO(self.activityId, self.stage, self.layer, heroMO.uid)
-		else
-			return true
-		end
-	end
-
-	return false
+	return true
 end
 
 function Season123HeroGroupEditModel:cancelAllSelected()
@@ -202,6 +219,46 @@ function Season123HeroGroupEditModel:getAssistHeroList()
 	end
 
 	return heroMOs
+end
+
+function Season123HeroGroupEditModel:isTrialLimit()
+	if not self._inTeamHeroUids then
+		return false
+	end
+
+	local curNum = 0
+
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
+
+		if mo:isTrial() then
+			curNum = curNum + 1
+		end
+	end
+
+	return curNum >= HeroGroupTrialModel.instance:getLimitNum()
+end
+
+function Season123HeroGroupEditModel:isRepeatHero(heroId, uid)
+	if not self._inTeamHeroUids then
+		return false
+	end
+
+	for inTeamUid in pairs(self._inTeamHeroUids) do
+		local mo = self:getById(inTeamUid)
+
+		if not mo then
+			logError("heroId:" .. heroId .. ", " .. "uid:" .. uid .. "数据为空")
+
+			return false
+		end
+
+		if mo.heroId == heroId and uid ~= mo.uid then
+			return true
+		end
+	end
+
+	return false
 end
 
 Season123HeroGroupEditModel.instance = Season123HeroGroupEditModel.New()

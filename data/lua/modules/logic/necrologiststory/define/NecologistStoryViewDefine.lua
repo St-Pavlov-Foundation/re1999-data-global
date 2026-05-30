@@ -19,6 +19,8 @@ function NecologistStoryViewDefine.init(module_views)
 			}
 		},
 		otherRes = {
+			"ui/viewres/dungeon/rolestory/necrologiststoryweather.prefab",
+			"ui/materials/dynamic/ui_halfgray2.mat",
 			NecrologistStoryDialogItem.getResPath(),
 			NecrologistStoryLocationItem.getResPath(),
 			NecrologistStoryAsideItem.getResPath(),
@@ -28,8 +30,8 @@ function NecologistStoryViewDefine.init(module_views)
 			NecrologistStoryDragPictureItem.getResPath(),
 			NecrologistStorySystemItem.getResPath(),
 			NecrologistStoryClickPictureItem.getResPath(),
-			weatherRes = "ui/viewres/dungeon/rolestory/necrologiststoryweather.prefab",
-			NecrologistStorySliderPictureItem.getResPath()
+			NecrologistStorySliderPictureItem.getResPath(),
+			V3A5NecrologistStoryLongPressItem.getResPath()
 		}
 	}
 	module_views.NecrologistStoryReviewView = {
@@ -191,6 +193,28 @@ function NecologistStoryViewDefine.init(module_views)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Internal
+	}
+	module_views.V3A5_RoleStoryGameView = {
+		destroy = 0,
+		container = "V3A5_RoleStoryGameViewContainer",
+		mainRes = "ui/viewres/dungeon/rolestory/v3a5/v3a5_rolestorygameview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.V3A5_RoleStoryBulletView = {
+		destroy = 0,
+		container = "V3A5_RoleStoryBulletViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/dungeon/rolestory/v3a5/v3a5_rolestorybulletview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal
 	}
 end
 

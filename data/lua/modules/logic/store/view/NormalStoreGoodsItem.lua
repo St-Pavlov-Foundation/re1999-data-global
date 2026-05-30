@@ -330,6 +330,8 @@ function NormalStoreGoodsItem:refreshNormalGoods()
 		self._txtmaterialNum.text = luaLang("store_free")
 
 		gohelper.setActive(self._imagematerial.gameObject, false)
+
+		self._costQuantity = 0
 	else
 		local costs = string.split(cost, "|")
 		local costParam = costs[mo.buyCount + 1] or costs[#costs]
@@ -399,13 +401,12 @@ function NormalStoreGoodsItem:refreshNormalGoods()
 		gohelper.setActive(self._txtoriginalCost.gameObject, mo.config.originalCost > 0)
 	end
 
-	local offTag = self._costQuantity / mo.config.originalCost
+	local offTag = math.ceil(100 * self._costQuantity / mo.config.originalCost)
 
-	offTag = math.ceil(offTag * 100)
 	self._txtdiscount.text = string.format("-%d%%", 100 - offTag)
 	self._txtoriginalCost.text = mo.config.originalCost
 
-	gohelper.setActive(self._gooffflineTime, not self._hideOffflineTime and mo.offlineTime > 0)
+	gohelper.setActive(self._gooffflineTime, not self._hideOffflineTime and mo.offlineTime > 0 and StoreHelper.isHasRefreshTimeByGoodsCfg(mo.config))
 
 	local offEndTime = mo.offlineTime - ServerTime.now()
 
@@ -478,12 +479,12 @@ function NormalStoreGoodsItem:updateGoodsItemAttribute(goodsConfig)
 end
 
 function NormalStoreGoodsItem:refreshNextRefreshTime(goodsConfig)
-	local isShow = self._soldout and goodsConfig.refreshTime ~= StoreEnum.RefreshTime.Forever
+	local isShow = self._soldout and not StoreHelper.isHasRefreshTimeByGoodsCfg(goodsConfig)
 
 	gohelper.setActive(self._goRefreshTime, isShow)
 
 	if isShow then
-		local remainRefreshTime = self:getEndTimeStamp(goodsConfig) - ServerTime.now()
+		local remainRefreshTime = StoreHelper.getEndTimeStampByGoodsCfgMO(goodsConfig, self._mo) - ServerTime.now()
 
 		if remainRefreshTime > 0 then
 			gohelper.setActive(self._goRefreshTime, true)
@@ -498,24 +499,6 @@ function NormalStoreGoodsItem:refreshNextRefreshTime(goodsConfig)
 		else
 			self._txtRefreshTime.text = ""
 		end
-	end
-end
-
-function NormalStoreGoodsItem:getEndTimeStamp(goodsConfig)
-	if not goodsConfig then
-		return -1
-	end
-
-	if goodsConfig.refreshTime == StoreEnum.RefreshTime.Forever then
-		return -1
-	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Day then
-		return ServerTime.getToadyEndTimeStamp(true)
-	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Week then
-		return ServerTime.getWeekEndTimeStamp(true)
-	elseif goodsConfig.refreshTime == StoreEnum.RefreshTime.Month then
-		return ServerTime.getMonthEndTimeStamp(true)
-	else
-		return -1
 	end
 end
 

@@ -42,7 +42,7 @@ function FightWorkPlayTimeline:_playTimeline()
 
 		FightController.instance:registerCallback(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity, self)
 		FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.Low)
-		TaskDispatcher.runDelay(self._delayDone, self, 30)
+		TaskDispatcher.runDelay(self._delayDone, self, 60)
 		self._entity.skill:playTimeline(self._timeline, temp_data)
 	else
 		self:onDone(true)

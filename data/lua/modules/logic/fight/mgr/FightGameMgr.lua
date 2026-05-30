@@ -32,7 +32,6 @@ function FightGameMgr:registMgr()
 	self.checkCrashMgr = self:addMgr(FightCheckCrashMgr)
 	self.entrustEntityMgr = self:addMgr(FightEntrustEntityMgr)
 	self.entrustDeadEntityMgr = self:addMgr(FightEntrustDeadEntityMgr)
-	self.wadingEffect = self:addMgr(FightWadingEffectMgr)
 
 	if GameSceneMgr.instance:useDefaultScene() == false then
 		self.sceneTriggerSceneAnimatorMgr = self:addMgr(FightSceneTriggerSceneAnimatorMgr)
@@ -49,12 +48,12 @@ function FightGameMgr:registMgr()
 	self.dynamicShadowMgr = self:addMgr(FightDynamicShadowMgr)
 	self.thunderMatMgr = self:addMgr(FightThunderMatMgr)
 	self.entityFootRingMgr = self:addMgr(FightEntityFootRingMgr)
-	self.weatherEffectMgr = self:addMgr(FightWeatherEffectMgr)
 	self.spineColorBySceneMgr = self:addMgr(FightSpineColorBySceneMgr)
 	self.bgmMgr = self:addMgr(FightBgmMgr)
 	self.bloomMgr = self:addMgr(FightBloomMgr)
 	self.asfdMgr = self:addMgr(FightASFDMgr)
 	self.transitionMgr = self:addMgr(FightTransitionMgr)
+	self.triggerBuffMgr = self:addMgr(FightTriggerBuffMgr)
 end
 
 function FightGameMgr:addMgr(class)

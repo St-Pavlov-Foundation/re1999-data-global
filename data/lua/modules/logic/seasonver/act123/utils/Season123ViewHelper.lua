@@ -29,7 +29,7 @@ end
 function Season123ViewHelper.getIconUrl(url, param, actId)
 	actId = actId or Season123Model.instance:getCurSeasonId()
 
-	local version = Activity123Enum.SeasonResourcePrefix[actId]
+	local version = Activity123Enum.SeasonIconPrefix[actId]
 
 	return string.format(url, version, param)
 end

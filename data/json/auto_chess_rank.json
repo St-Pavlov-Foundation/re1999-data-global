@@ -310,5 +310,113 @@
     "reward": 32901037,
     "isShow": true,
     "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 1,
+    "icon": "",
+    "name": "language_10079896",
+    "protection": true,
+    "score": 0,
+    "round2Score": "0|0|0|5|10|20|30|40|50|65|80|100|120",
+    "reward": 0,
+    "isShow": false,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 2,
+    "icon": "v2a5_autochess_badgeicon_1",
+    "name": "language_10065934",
+    "protection": true,
+    "score": 200,
+    "round2Score": "0|0|0|5|10|20|30|40|50|65|80|100|120",
+    "reward": 0,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 3,
+    "icon": "v2a5_autochess_badgeicon_2",
+    "name": "language_10065935",
+    "protection": true,
+    "score": 500,
+    "round2Score": "0|0|0|5|10|20|30|40|50|60|70|80|100",
+    "reward": 35901031,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 4,
+    "icon": "v2a5_autochess_badgeicon_3",
+    "name": "language_10065936",
+    "protection": true,
+    "score": 800,
+    "round2Score": "0|0|0|5|10|15|20|30|40|50|60|70|90",
+    "reward": 35901032,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 5,
+    "icon": "v2a5_autochess_badgeicon_4",
+    "name": "language_10065937",
+    "protection": true,
+    "score": 1200,
+    "round2Score": "0|0|0|0|5|10|15|20|30|40|50|65|85",
+    "reward": 35901033,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 6,
+    "icon": "v2a5_autochess_badgeicon_5",
+    "name": "language_10065938",
+    "protection": true,
+    "score": 1600,
+    "round2Score": "0|0|0|0|0|5|10|15|20|30|40|60|80",
+    "reward": 35901034,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 7,
+    "icon": "v2a5_autochess_badgeicon_6",
+    "name": "language_10065939",
+    "protection": true,
+    "score": 2000,
+    "round2Score": "0|0|0|0|0|0|5|10|15|20|30|50|70",
+    "reward": 35901035,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 8,
+    "icon": "v2a5_autochess_badgeicon_7",
+    "name": "language_10065940",
+    "protection": true,
+    "score": 2400,
+    "round2Score": "0|0|0|0|0|0|0|5|10|20|30|40|60",
+    "reward": 35901036,
+    "isShow": true,
+    "maxRound": 12
+  },
+  {
+    "activityId": 13511,
+    "rankId": 9,
+    "icon": "v2a5_autochess_badgeicon_8",
+    "name": "language_10065941",
+    "protection": false,
+    "score": 99999,
+    "round2Score": "-55|-55|-55|-50|-45|-40|-30|-20|-10|0|10|20|35",
+    "reward": 35901037,
+    "isShow": true,
+    "maxRound": 12
   }
 ]

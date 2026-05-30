@@ -3,6 +3,26 @@
 module("modules.versionactivitybase.fixed.dungeon.view.maplevel.VersionActivityFixedDungeonMapLevelView", package.seeall)
 
 local VersionActivityFixedDungeonMapLevelView = class("VersionActivityFixedDungeonMapLevelView", BaseView)
+local k_VersionActivity3_5Dungeon = 3510113
+
+function VersionActivityFixedDungeonMapLevelView:_buildEpisodeName_overseas(firstSize, firstName, remainName, txtColor, episodeCo, nameLen)
+	local isJp = LangSettings.instance:isJp()
+	local isjpth13 = self.showEpisodeCo.id == k_VersionActivity3_5Dungeon and isJp
+
+	if isjpth13 then
+		local secondName = ""
+
+		if nameLen > 2 then
+			remainName = GameUtil.utf8sub(episodeCo.name, 3, nameLen - 2)
+			secondName = GameUtil.utf8sub(episodeCo.name, 2, 1)
+		end
+
+		return self:buildColorText(string.format("%s<size=%s>%s</size>%s", firstName, firstSize, secondName, remainName), txtColor)
+	else
+		return self:buildColorText(string.format("<size=%s>%s</size>%s", firstSize, firstName, remainName), txtColor)
+	end
+end
+
 local OPEN_ANIM_TIME = 0.4
 local UNLOCK_ANIM_TIME = 2.7
 
@@ -551,14 +571,18 @@ function VersionActivityFixedDungeonMapLevelView:buildEpisodeName(episodeCo)
 	local _firstSize = 112
 
 	if GameConfig:GetCurLangType() == LangSettings.en or GameConfig:GetCurLangType() == LangSettings.jp then
-		_firstSize = 90
+		if episodeCo.name == "Determinism and Chaos Theory" then
+			_firstSize = 50
+		else
+			_firstSize = 90
+		end
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
 		_firstSize = 100
 	end
 
 	local txtColor = self.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard and "#cfccc9" or "#cfccc9"
 
-	return self:buildColorText(string.format("<size=%s>%s</size>%s", _firstSize, firstName, remainName), txtColor)
+	return self:_buildEpisodeName_overseas(_firstSize, firstName, remainName, txtColor, episodeCo, nameLen)
 end
 
 function VersionActivityFixedDungeonMapLevelView:buildColorText(text, color)

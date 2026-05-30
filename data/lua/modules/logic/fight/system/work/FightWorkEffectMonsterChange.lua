@@ -28,6 +28,7 @@ function FightWorkEffectMonsterChange:onStart()
 		return
 	end
 
+	self.oldEntity = oldEntity
 	self._newEntityMO.custom_refreshNameUIOp = true
 
 	local flowDone = self:com_registWorkDoneFlowSequence()
@@ -60,6 +61,7 @@ function FightWorkEffectMonsterChange:registBuildNewEntityWork()
 	local flow = self:com_registFlowSequence()
 
 	flow:registWork(FightWorkFunction, FightGameMgr.entityMgr.delEntity, FightGameMgr.entityMgr, self._newEntityMO.id)
+	flow:registWork(FightWorkSendEvent, FightEvent.BeforeDestroyEntity, self.oldEntity)
 	flow:addWork(FightGameMgr.entityMgr:registNewEntityWork(self._newEntityMO))
 	flow:registWork(FightWorkFunction, self.dealBuffAfterNewEntity, self)
 

@@ -2468,5 +2468,65 @@
     "id": 3340203,
     "eventName": "play_battle_bulaochun_3_4_normalfight",
     "bankName": "activity_bulaochun_combataudio"
+  },
+  {
+    "id": 3350001,
+    "eventName": "play_activitymusic_theme_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 3350002,
+    "eventName": "play_activitymusic_bihua_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 3350003,
+    "eventName": "play_plot_music_gentlehope",
+    "bankName": "plot_music_gentlehope"
+  },
+  {
+    "id": 3350004,
+    "eventName": "play_activitymusic_seasonmain_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 3350005,
+    "eventName": "play_battle_lusongshi_3_5_normalfight",
+    "bankName": "activity_lusongshi_combataudio"
+  },
+  {
+    "id": 3350006,
+    "eventName": "play_battle_lusongshi_3_5_bossfight",
+    "bankName": "activity_lusongshi_combataudio"
+  },
+  {
+    "id": 3350007,
+    "eventName": "play_ui_checkpoint_noise_graveyard",
+    "bankName": "activity_lusongshi_combataudio_noise"
+  },
+  {
+    "id": 3350008,
+    "eventName": "play_ui_checkpoint_noise_emeng_loop",
+    "bankName": "activity_yuanzheng_combataudio_noise"
+  },
+  {
+    "id": 3350009,
+    "eventName": "play_ui_checkpoint_noise_hotel_room",
+    "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3350010,
+    "eventName": "play_ui_checkpoint_noise_outerstreet",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3350011,
+    "eventName": "play_ui_checkpoint_noise_athletes_lounge",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3350012,
+    "eventName": "play_ui_checkpoint_noise_misihai",
+    "bankName": "activity_lusongshi_combataudio_noise"
   }
 ]

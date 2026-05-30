@@ -90,16 +90,7 @@ function FightCardPlayEffect:onStart(context)
 		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, self._cardInfoMO, self._clonePlayCardGO, self.context.fightBeginRoundOp)
 	end))
 	sequence:addWork(WorkWaitSeconds.New(self._dt * 1))
-
-	if need_cobine_card then
-		sequence:addWork(FunctionWork.New(function()
-			self:_playShrinkFlow()
-		end))
-		sequence:addWork(WorkWaitSeconds.New(self._dt * 6))
-	else
-		sequence:addWork(self:_startShrinkFlow())
-	end
-
+	sequence:addWork(self:_startShrinkFlow())
 	self._main_flow:addWork(sequence)
 	TaskDispatcher.runDelay(self._delayDone, self, 10 / FightModel.instance:getUISpeed())
 	self._main_flow:registerDoneListener(self._onPlayCardDone, self)
@@ -151,7 +142,7 @@ function FightCardPlayEffect:_buildNoActCostMoveFlow()
 	local noActCostMoveFlow = FlowParallel.New()
 	local showPlayItemCount = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
 	local playCardItemList = self.context.view.viewContainer.fightViewPlayCard._playCardItemList
-	local start_index = self.context.view.viewContainer.fightViewPlayCard:getShowIndex(self.context.fightBeginRoundOp)
+	local start_index = FightDataHelper.operationDataMgr:getShowIndex(self.context.fightBeginRoundOp)
 
 	if showPlayItemCount > FightViewPlayCard.VisibleCount then
 		-- block empty
@@ -181,12 +172,6 @@ function FightCardPlayEffect:_buildNoActCostMoveFlow()
 	end))
 
 	return sequence
-end
-
-function FightCardPlayEffect:_playShrinkFlow()
-	self._shrinkFlow = self:_startShrinkFlow()
-
-	self._shrinkFlow:start()
 end
 
 function FightCardPlayEffect:_startShrinkFlow()
@@ -236,12 +221,6 @@ function FightCardPlayEffect:clearWork()
 		self._main_flow:stop()
 
 		self._main_flow = nil
-	end
-
-	if self._shrinkFlow then
-		self._shrinkFlow:stop()
-
-		self._shrinkFlow = nil
 	end
 end
 

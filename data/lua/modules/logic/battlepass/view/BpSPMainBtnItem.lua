@@ -26,24 +26,10 @@ end
 
 function BpSPMainBtnItem:_refreshItem()
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_6" or "icon_6"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_6")
 
 	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
-
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
+	self:setFestival(isShow)
 
 	self._redDot = RedDotController.instance:addRedDot(self._goactivityreddot, RedDotEnum.DotNode.BattlePassSPMain)
 end

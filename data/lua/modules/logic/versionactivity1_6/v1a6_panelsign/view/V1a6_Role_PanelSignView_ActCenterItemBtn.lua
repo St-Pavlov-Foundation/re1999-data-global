@@ -76,4 +76,11 @@ function V1a6_Role_PanelSignView_ActCenterItemBtn:_checkRed()
 	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId) and true or false
 end
 
+function V1a6_Role_PanelSignView_ActCenterItemBtn:_gm_ActIds()
+	return {
+		ActivityEnum.Activity.RoleSignViewPart1_1_6,
+		ActivityEnum.Activity.RoleSignViewPart2_1_6
+	}
+end
+
 return V1a6_Role_PanelSignView_ActCenterItemBtn

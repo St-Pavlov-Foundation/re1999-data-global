@@ -9,7 +9,17 @@ function WeekWalkTarotItem:onInitView()
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_bg/#simage_icon")
 	self._txtname = gohelper.findChildText(self.viewGO, "#simage_bg/#txt_name")
 	self._txtdesc = gohelper.findChildText(self.viewGO, "#simage_bg/#txt_desc")
+
+	if self._txtdesc == nil then
+		self._txtdesc = gohelper.findChildText(self.viewGO, "#simage_bg/#scroll_desc/viewport/#txt_desc")
+	end
+
 	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#simage_bg/#btn_click")
+
+	if self._btnclick == nil then
+		self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#simage_bg/#scroll_desc/#btn_click")
+	end
+
 	self._gotip = gohelper.findChild(self.viewGO, "#go_tip")
 	self._btnclosetip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_tip/#btn_closetip")
 	self._txtheronamecn = gohelper.findChildText(self.viewGO, "#go_tip/#txt_heronamecn")

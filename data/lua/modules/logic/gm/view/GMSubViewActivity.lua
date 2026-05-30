@@ -86,6 +86,7 @@ function GMSubViewActivity:initViewContent()
 	self:addButton("L8", "直接进入弹珠游戏", self._enterAct178Game, self)
 	self:addLabel("L9", "2.6 活动")
 	self:addButton("L9", "虚构集卡牌ID开关", self._setXugoujiDebugMode, self)
+	self:_initActivityCenter()
 	self:initActivityDrop()
 
 	self._inited = true
@@ -321,6 +322,23 @@ function GMSubViewActivity:_setXugoujiDebugMode()
 	XugoujiController.instance:setDebugMode(not isDebugMode)
 	PlayerPrefsHelper.setNumber("XugoujiDebugMode", isDebugMode and 0 or 1)
 	XugoujiController.instance:dispatchEvent(XugoujiEvent.TurnChanged)
+end
+
+function GMSubViewActivity:_initActivityCenter()
+	self._openAllActCenter = self:addToggle("L10", "展示此版本活动中心入口", self._onShowAllActCenterToggleChange, self)
+	self._openAllActCenter.isOn = GMSubViewActivity.isOnOpenAllActCenter
+end
+
+function GMSubViewActivity:_onShowAllActCenterToggleChange()
+	local isOn = self._openAllActCenter.isOn
+
+	GMSubViewActivity.isOnOpenAllActCenter = isOn
+
+	if not self._showActivityCenter then
+		self._showActivityCenter = GM_ShowActivityCenter.New()
+	end
+
+	self._showActivityCenter:setOn(isOn)
 end
 
 function GMSubViewActivity.copyConfig(co)

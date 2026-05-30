@@ -166,13 +166,14 @@ function DungeonController:_onFocusEpisode(id)
 	DungeonModel.instance:setLastSendEpisodeId(tonumber(id))
 end
 
-function DungeonController:enterDungeonView(initModel, fromMainView)
+function DungeonController:enterDungeonView(initModel, fromMainView, advPlayJumpType)
 	if initModel then
 		DungeonModel.instance:initModel()
 	end
 
 	local params = {
-		fromMainView = fromMainView
+		fromMainView = fromMainView,
+		advPlayJumpType = advPlayJumpType
 	}
 
 	return self:openDungeonView(params, false)
@@ -1168,6 +1169,47 @@ function DungeonController.saveFiveHeroGroupData(heroGroupMO, heroGroupType, epi
 	else
 		logError(string.format("未设置快照id, 无法保存, snapshotId:%s, snapshotSubId:%s", snapshotId, snapshotSubId))
 	end
+end
+
+function DungeonController:isShowEntrance()
+	local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Explore)
+
+	if not isOpen then
+		return false
+	end
+
+	local isForbid = GuideController.instance:isForbidGuides()
+
+	if isForbid then
+		return true
+	end
+end
+
+function DungeonController:needShowDungeonViewByAdvPlay()
+	return DungeonModel.instance.advPlayJumpType
+end
+
+function DungeonController:showDungeonViewByAdvPlay()
+	local advPlayJumpType = DungeonModel.instance.advPlayJumpType
+
+	DungeonModel.instance.advPlayJumpType = nil
+
+	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.AdvPlay)
+	self:enterDungeonView(nil, nil, advPlayJumpType)
+
+	local viewName
+
+	if advPlayJumpType == DungeonEnum.AdvPlayType.Survival then
+		SurvivalController.instance:openSurvivalView(true)
+
+		viewName = "SurvivalView"
+	elseif advPlayJumpType == DungeonEnum.AdvPlayType.Explore then
+		ViewMgr.instance:openView(ViewName.DungeonExploreView)
+
+		viewName = "DungeonExploreView"
+	end
+
+	return viewName
 end
 
 DungeonController.instance = DungeonController.New()

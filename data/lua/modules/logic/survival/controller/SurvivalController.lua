@@ -12,6 +12,8 @@ function SurvivalController:reInit()
 	end
 
 	TaskDispatcher.cancelTask(self.onDelayPopupFinishEvent, self)
+
+	self.isOldSettle = true
 end
 
 function SurvivalController:addConstEvents()
@@ -50,6 +52,14 @@ function SurvivalController:_checkActivityInfo(activityId)
 end
 
 function SurvivalController:_getInfo()
+	if not self:isOpenSurvival() then
+		return
+	end
+
+	SurvivalOutSideRpc.instance:sendSurvivalOutSideGetInfo()
+end
+
+function SurvivalController:isOpenSurvival()
 	local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
 
 	if not ActivityHelper.isOpen(curVersionActivityId) then
@@ -60,7 +70,7 @@ function SurvivalController:_getInfo()
 		return
 	end
 
-	SurvivalOutSideRpc.instance:sendSurvivalOutSideGetInfo()
+	return true
 end
 
 function SurvivalController:openSurvivalView(isRpc)
@@ -75,8 +85,8 @@ function SurvivalController:_openSurvivalView()
 	ViewMgr.instance:openView(ViewName.SurvivalView)
 end
 
-function SurvivalController:enterSurvivalMap(initGroupMo)
-	SurvivalInteriorRpc.instance:sendEnterSurvival(initGroupMo, self._onEnterSurvival, self)
+function SurvivalController:enterSurvivalMap(initGroupMo, mode)
+	SurvivalInteriorRpc.instance:sendEnterSurvival(initGroupMo, mode, self._onEnterSurvival, self)
 end
 
 function SurvivalController:_onRecvGMMsg()
@@ -166,7 +176,7 @@ end
 function SurvivalController:exitMap()
 	local curSceneType = GameSceneMgr.instance:getCurSceneType()
 
-	if curSceneType == SceneType.SurvivalSummaryAct then
+	if curSceneType == SceneType.SurvivalSummaryAct or curSceneType == SceneType.SurvivalCollectionRoom then
 		self:enterSurvivalShelterScene()
 
 		return
@@ -178,6 +188,8 @@ function SurvivalController:exitMap()
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
+	DungeonModel.instance:setAdvPlayJumpType(DungeonEnum.AdvPlayType.Survival)
+
 	if curSceneType == SceneType.Survival and outsideMo.inWeek and not inSurvival then
 		self:enterShelterMap()
 
@@ -185,14 +197,6 @@ function SurvivalController:exitMap()
 	end
 
 	MainController.instance:enterMainScene()
-	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.SurvivalView)
-
-		local curVersionActivityId = SurvivalModel.instance:getCurVersionActivityId()
-
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, curVersionActivityId, true)
-		SurvivalController.instance:openSurvivalView(true)
-	end)
 end
 
 function SurvivalController:openEquipView()
@@ -224,7 +228,7 @@ function SurvivalController:_onRecvWeekInfo(cmd, resultCode, msg)
 		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
 		if weekInfo.inSurvival then
-			SurvivalInteriorRpc.instance:sendEnterSurvival(nil, self._onRecvMapInfo, self)
+			SurvivalInteriorRpc.instance:sendEnterSurvival(nil, nil, self._onRecvMapInfo, self)
 		else
 			local fightCo = weekInfo.intrudeBox.fight.fightCo
 			local battleId = fightCo and fightCo.battleId or 0
@@ -413,16 +417,63 @@ function SurvivalController:callShelterBackFight()
 end
 
 function SurvivalController:playSettleWork(msg)
-	if self._settleFlow then
-		self._settleFlow:destroy()
+	if self.isOldSettle then
+		if self._settleFlow then
+			self._settleFlow:destroy()
 
-		self._settleFlow = nil
+			self._settleFlow = nil
+		end
+
+		self._settleFlow = FlowSequence.New()
+
+		self._settleFlow:addWork(SurvivalSettleWeekPushWork.New(msg))
+		self._settleFlow:start()
+	else
+		SurvivalModel.instance:clearDebugSettleStr()
+		SurvivalModel.instance:setSurvivalSettleInfo(msg)
+
+		local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
+
+		if weekInfo and weekInfo.intrudeBox and weekInfo.intrudeBox.fight and msg.win then
+			local fight = weekInfo.intrudeBox.fight
+			local isFight = fight:isFighting()
+
+			fight:setWin()
+
+			if isFight then
+				SurvivalShelterModel.instance:setNeedShowFightSuccess(true, fight.fightId)
+			end
+		end
+
+		UIBlockHelper.instance:endBlock(SurvivalEnum.SurvivalIntrudeAbandonBlock)
+
+		local curSceneType = GameSceneMgr.instance:getCurSceneType()
+
+		if curSceneType == SceneType.Fight then
+			-- block empty
+		elseif curSceneType == SceneType.SurvivalShelter then
+			if GameSceneMgr.instance:isLoading() then
+				-- block empty
+			else
+				local flow = FlowSequence.New()
+
+				flow:addWork(SurvivalSettlePerformanceWork.New())
+				flow:addWork(FunctionWork.New(self.showResultPanel, self))
+				flow:start()
+			end
+		else
+			self:enterSurvivalSettle()
+		end
 	end
+end
 
-	self._settleFlow = FlowSequence.New()
+function SurvivalController:showResultPanel()
+	local info = SurvivalModel.instance:getSurvivalSettleInfo()
+	local isWin = info and info.win
 
-	self._settleFlow:addWork(SurvivalSettleWeekPushWork.New(msg))
-	self._settleFlow:start()
+	ViewMgr.instance:openView(ViewName.SurvivalShelterResultPanelView, {
+		isWin = isWin
+	})
 end
 
 function SurvivalController:tryShowTaskEventPanel(moduleId, taskId)

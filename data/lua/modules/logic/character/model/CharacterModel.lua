@@ -108,7 +108,7 @@ function CharacterModel:_updateShowHeroDict()
 	end
 end
 
-function CharacterModel:_sortByLevel(isShowHero)
+function CharacterModel:_sortByLevel(isShowHero, isSortTag)
 	if isShowHero then
 		self:_updateShowHeroDict()
 	else
@@ -120,6 +120,8 @@ function CharacterModel:_sortByLevel(isShowHero)
 		local bLevel = self._fakeLevelDict and self._fakeLevelDict[b.heroId] or b.level
 		local aShowHeroScore = self._showHeroDict[a.heroId] or 0
 		local bShowHeroScore = self._showHeroDict[b.heroId] or 0
+		local aTagCount = self._tagCountDict and self._tagCountDict[a.heroId] or 0
+		local bTagCount = self._tagCountDict and self._tagCountDict[b.heroId] or 0
 
 		if self._sortByRankDesc and a.rank ~= b.rank then
 			return a.rank > b.rank
@@ -131,12 +133,16 @@ function CharacterModel:_sortByLevel(isShowHero)
 			return false
 		elseif a.isFavor ~= b.isFavor then
 			return a.isFavor
+		elseif isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif aLevel ~= bLevel then
 			if self._levelAscend then
 				return aLevel < bLevel
 			else
 				return bLevel < aLevel
 			end
+		elseif not isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif a.config.rare ~= b.config.rare then
 			return a.config.rare > b.config.rare
 		elseif a.exSkillLevel ~= b.exSkillLevel then
@@ -181,7 +187,7 @@ function CharacterModel:setCardListByRare(isShowHero, type)
 	self:_setCharacterCardList(self._curCardList)
 end
 
-function CharacterModel:_sortByRare(isShowHero)
+function CharacterModel:_sortByRare(isShowHero, isSortTag)
 	if isShowHero then
 		self:_updateShowHeroDict()
 	else
@@ -193,6 +199,8 @@ function CharacterModel:_sortByRare(isShowHero)
 		local bLevel = self._fakeLevelDict and self._fakeLevelDict[b.heroId] or b.level
 		local aShowHeroScore = self._showHeroDict[a.heroId] or 0
 		local bShowHeroScore = self._showHeroDict[b.heroId] or 0
+		local aTagCount = self._tagCountDict and self._tagCountDict[a.heroId] or 0
+		local bTagCount = self._tagCountDict and self._tagCountDict[b.heroId] or 0
 
 		if bShowHeroScore < aShowHeroScore then
 			return true
@@ -200,12 +208,16 @@ function CharacterModel:_sortByRare(isShowHero)
 			return false
 		elseif a.isFavor ~= b.isFavor then
 			return a.isFavor
+		elseif isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif a.config.rare ~= b.config.rare then
 			if self._rareAscend then
 				return a.config.rare < b.config.rare
 			else
 				return a.config.rare > b.config.rare
 			end
+		elseif not isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif aLevel ~= bLevel then
 			return bLevel < aLevel
 		elseif a.exSkillLevel ~= b.exSkillLevel then
@@ -235,7 +247,7 @@ function CharacterModel:setCardListByFaith(isShowHero, type)
 	self:_setCharacterCardList(self._curCardList)
 end
 
-function CharacterModel:_sortByFaith(isShowHero)
+function CharacterModel:_sortByFaith(isShowHero, isSortTag)
 	if isShowHero then
 		self:_updateShowHeroDict()
 	else
@@ -247,6 +259,8 @@ function CharacterModel:_sortByFaith(isShowHero)
 		local bLevel = self._fakeLevelDict and self._fakeLevelDict[b.heroId] or b.level
 		local aShowHeroScore = self._showHeroDict[a.heroId] or 0
 		local bShowHeroScore = self._showHeroDict[b.heroId] or 0
+		local aTagCount = self._tagCountDict and self._tagCountDict[a.heroId] or 0
+		local bTagCount = self._tagCountDict and self._tagCountDict[b.heroId] or 0
 
 		if bShowHeroScore < aShowHeroScore then
 			return true
@@ -254,12 +268,16 @@ function CharacterModel:_sortByFaith(isShowHero)
 			return false
 		elseif a.isFavor ~= b.isFavor then
 			return a.isFavor
+		elseif isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif a.faith ~= b.faith then
 			if self._faithAscend then
 				return a.faith < b.faith
 			else
 				return a.faith > b.faith
 			end
+		elseif not isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif aLevel ~= bLevel then
 			if self._faithAscend then
 				return aLevel < bLevel
@@ -296,7 +314,7 @@ function CharacterModel:setCardListByExSkill(isShowHero, type)
 	self:_setCharacterCardList(self._curCardList)
 end
 
-function CharacterModel:_sortByExSkill(isShowHero)
+function CharacterModel:_sortByExSkill(isShowHero, isSortTag)
 	if isShowHero then
 		self:_updateShowHeroDict()
 	else
@@ -308,6 +326,8 @@ function CharacterModel:_sortByExSkill(isShowHero)
 		local bLevel = self._fakeLevelDict and self._fakeLevelDict[b.heroId] or b.level
 		local aShowHeroScore = self._showHeroDict[a.heroId] or 0
 		local bShowHeroScore = self._showHeroDict[b.heroId] or 0
+		local aTagCount = self._tagCountDict and self._tagCountDict[a.heroId] or 0
+		local bTagCount = self._tagCountDict and self._tagCountDict[b.heroId] or 0
 
 		if bShowHeroScore < aShowHeroScore then
 			return true
@@ -315,12 +335,16 @@ function CharacterModel:_sortByExSkill(isShowHero)
 			return false
 		elseif a.isFavor ~= b.isFavor then
 			return a.isFavor
+		elseif isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif a.exSkillLevel ~= b.exSkillLevel then
 			if self._exSklAscend then
 				return a.exSkillLevel < b.exSkillLevel
 			else
 				return a.exSkillLevel > b.exSkillLevel
 			end
+		elseif not isSortTag and aTagCount ~= bTagCount then
+			return bTagCount < aTagCount
 		elseif aLevel ~= bLevel then
 			return bLevel < aLevel
 		elseif a.config.rare ~= b.config.rare then
@@ -468,61 +492,21 @@ function CharacterModel:filterCardListByDmgAndCareer(filterParam, isShowHero, ty
 		self._btnTag[type] = 1
 	end
 
-	local tagTab = {
-		101,
-		102,
-		103,
-		104,
-		106,
-		107
-	}
-
 	self._curCardList = {}
 
 	local heroList = tabletool.copy(self:_getHeroList())
 
 	self:checkAppendHeroMOs(heroList)
-
-	local allShow = #filterParam.locations >= 6
-
-	for _, v in pairs(heroList) do
-		local show = false
-
-		for _, dmg in pairs(filterParam.dmgs) do
-			for _, career in pairs(filterParam.careers) do
-				for _, location in pairs(filterParam.locations) do
-					if self._showHeroDict[v.heroId] then
-						table.insert(self._curCardList, v)
-					end
-
-					if v.config.career == career and v.config.dmgType == dmg then
-						if allShow then
-							if not self:_isHeroInCardList(v.heroId) then
-								table.insert(self._curCardList, v)
-							end
-						else
-							local fitLocations = string.splitToNumber(HeroConfig.instance:getHeroCO(v.heroId).battleTag, "#")
-
-							for _, fit in pairs(fitLocations) do
-								if fit == tagTab[location] and not self:_isHeroInCardList(v.heroId) then
-									table.insert(self._curCardList, v)
-								end
-							end
-						end
-					end
-				end
-			end
-		end
-	end
+	self:_filterHeroNewFunc(heroList, filterParam)
 
 	if self._btnTag[type] == 1 then
-		self:_sortByLevel(isShowHero)
+		self:_sortByLevel(isShowHero, true)
 	elseif self._btnTag[type] == 2 then
-		self:_sortByRare(isShowHero)
+		self:_sortByRare(isShowHero, true)
 	elseif self._btnTag[type] == 3 then
-		self:_sortByFaith(isShowHero)
+		self:_sortByFaith(isShowHero, true)
 	elseif self._btnTag[type] == 4 then
-		self:_sortByExSkill(isShowHero)
+		self:_sortByExSkill(isShowHero, true)
 	end
 
 	self:_setCharacterCardList(self._curCardList)
@@ -565,6 +549,74 @@ function CharacterModel:filterCardListByCareerAndCharType(filterParam, isShowHer
 
 	self:_sortByLangTypeAndRareOrTrust(self._btnTag[type] == 2, self._btnTag[type] == 3)
 	self:_setCharacterCardList(self._curCardList)
+end
+
+function CharacterModel:_filterHeroNewFunc(heroList, filterParam)
+	self._tagCountDict = {}
+
+	local selectTags = CharacterSearchFilterModel.instance:getSelectLocalTags()
+
+	for _, v in pairs(heroList) do
+		local heroCo = v.config
+		local isDmg = LuaUtil.tableContains(filterParam.dmgs, heroCo.dmgType)
+		local isCareers = LuaUtil.tableContains(filterParam.careers, heroCo.career)
+		local isFilterTag = selectTags and self:_isFilterTag(selectTags, v)
+
+		if isDmg and isCareers and isFilterTag and not self:_isHeroInCardList(v.heroId) then
+			table.insert(self._curCardList, v)
+		end
+	end
+end
+
+function CharacterModel:_sortByTag()
+	return
+end
+
+function CharacterModel:_isFilterTag(selectTags, heroMo)
+	local battleTag = heroMo:getHeroBattleTag()
+
+	return self:isFilterTagByBattleTags(selectTags, battleTag, heroMo.heroId)
+end
+
+function CharacterModel:isFilterTagByBattleTags(selectTags, battleTag, heroId)
+	self._tagCountDict[heroId] = 0
+
+	if not selectTags then
+		return true
+	end
+
+	local count = tabletool.len(selectTags)
+
+	if count == 0 then
+		return true
+	end
+
+	local battleTags = string.split(battleTag, "#")
+	local count1 = 0
+
+	for _, list in pairs(selectTags) do
+		local count2 = 0
+
+		for _, tagId in ipairs(list) do
+			if LuaUtil.tableContains(battleTags, tagId) then
+				count2 = count2 + 1
+			end
+		end
+
+		if #list > 0 and count2 == 0 then
+			return false
+		end
+
+		count1 = count1 + count2
+	end
+
+	self._tagCountDict[heroId] = count1
+
+	return true
+end
+
+function CharacterModel:clearTagCountDict()
+	self._tagCountDict = {}
 end
 
 function CharacterModel:setCardListByCareerIndex(index, isShowHero)

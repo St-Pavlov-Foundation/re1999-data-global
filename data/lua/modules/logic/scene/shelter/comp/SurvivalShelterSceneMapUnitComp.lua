@@ -191,25 +191,29 @@ function SurvivalShelterSceneMapUnitComp:refreshMonster()
 			fightId = masterFight.fightId
 		end
 
-		if needShowDestroy then
-			local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+		if SurvivalController.instance.isOldSettle then
+			if needShowDestroy then
+				local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-			gohelper.setActive(popLayer, false)
-			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, true)
-			SurvivalModel.instance:addDebugSettleStr("refreshMonster 1")
-		end
+				gohelper.setActive(popLayer, false)
+				PopupController.instance:setPause(ViewName.SurvivalGetRewardView, true)
+				SurvivalModel.instance:addDebugSettleStr("refreshMonster 1")
+			end
 
-		self:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, fightId, canShow or needShowDestroy)
+			self:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, fightId, canShow or needShowDestroy)
 
-		if needShowDestroy ~= nil and not needShowDestroy then
-			local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
+			if needShowDestroy ~= nil and not needShowDestroy then
+				local popLayer = ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 
-			gohelper.setActive(popLayer, true)
-			PopupController.instance:setPause(ViewName.SurvivalGetRewardView, false)
-			self:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
-			SurvivalController.instance:dispatchEvent(SurvivalEvent.BossPerformFinish)
-			SurvivalModel.instance:addDebugSettleStr("refreshMonster 2")
-			SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
+				gohelper.setActive(popLayer, true)
+				PopupController.instance:setPause(ViewName.SurvivalGetRewardView, false)
+				self:refreshEntity(SurvivalEnum.ShelterUnitType.Player, 0, true)
+				SurvivalController.instance:dispatchEvent(SurvivalEvent.BossPerformFinish)
+				SurvivalModel.instance:addDebugSettleStr("refreshMonster 2")
+				SurvivalShelterModel.instance:setNeedShowFightSuccess(nil, nil)
+			end
+		else
+			self:refreshEntity(SurvivalEnum.ShelterUnitType.Monster, fightId, canShow or needShowDestroy)
 		end
 	end
 end
@@ -263,6 +267,22 @@ end
 
 function SurvivalShelterSceneMapUnitComp:getAllEntity()
 	return self._allUnits
+end
+
+function SurvivalShelterSceneMapUnitComp:getEntityDict(unitType)
+	for _unityType, entityDict in pairs(self._allUnits) do
+		if _unityType == unitType then
+			return entityDict
+		end
+	end
+end
+
+function SurvivalShelterSceneMapUnitComp:getShelterMonster()
+	local dic = self:getEntityDict(SurvivalEnum.ShelterUnitType.Monster)
+
+	for i, v in pairs(dic) do
+		return v
+	end
 end
 
 function SurvivalShelterSceneMapUnitComp:getUnitParentGO(unitType)

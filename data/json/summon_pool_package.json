@@ -68,5 +68,35 @@
     "showLimit": "",
     "className": "",
     "posOffset": "0#0"
+  },
+  {
+    "id": 35111,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#835003#835005#835007#835009#811315#610004#610006#835019#835011#835020#835013",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 35121,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "835018#811327#835004#835006#835008#835010#610004#610006#835019#835012#835020#835014",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 35161,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "835017#811327#835003#835004#835005#835006#835007#835008#811315#610004#610006#835019#835011#835012#835020#835013#835014",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
   }
 ]

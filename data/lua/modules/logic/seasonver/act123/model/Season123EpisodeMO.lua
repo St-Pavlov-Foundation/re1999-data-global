@@ -11,6 +11,8 @@ function Season123EpisodeMO:init(info)
 	self.effectMainCelebrityEquipIds = info.effectMainCelebrityEquipIds or {}
 
 	self:initHeroes(info.heroInfos)
+
+	self.star = info.star or 0
 end
 
 function Season123EpisodeMO:update(info)

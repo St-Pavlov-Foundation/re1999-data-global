@@ -104,7 +104,7 @@ end
 
 function FeiLinShiDuoStatHelper:sendDungeonFinish()
 	StatController.instance:track(StatEnum.EventName.Act185DungeonFinish, {
-		[StatEnum.EventProperties.FeiLinShiDuo_EpisodeId] = self.curEpisodeId,
+		[StatEnum.EventProperties.FeiLinShiDuo_EpisodeId] = tostring(self.curEpisodeId),
 		[StatEnum.EventProperties.FeiLinShiDuo_EpisodeUseTime] = UnityEngine.Time.realtimeSinceStartup - self.episodeStartTime
 	})
 end

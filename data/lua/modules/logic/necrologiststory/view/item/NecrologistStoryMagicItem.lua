@@ -46,8 +46,6 @@ function NecrologistStoryMagicItem:onClickMagic()
 		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePic, picName)
 	end
 
-	gohelper.setActive(self.goReddot, false)
-
 	self.isClicked = true
 
 	if self.leftTime and self.leftTime > 0 and self._tweenId then
@@ -71,8 +69,6 @@ function NecrologistStoryMagicItem:onPlayStory(isSkip)
 	AudioMgr.instance:trigger(AudioEnum.NecrologistStory.play_ui_qiutu_award_all)
 
 	self.isClicked = false
-
-	gohelper.setActive(self.goReddot, true)
 
 	local param = string.split(self._controlParam, "#")
 
@@ -182,6 +178,9 @@ function NecrologistStoryMagicItem:setSkillIcon(isAble)
 		gohelper.setActive(item.go, true)
 		gohelper.setActive(item.goAble, isAble)
 		gohelper.setActive(item.goUnable, not isAble)
+		gohelper.setActive(self.goReddot, isAble)
+	else
+		gohelper.setActive(self.goReddot, false)
 	end
 end
 

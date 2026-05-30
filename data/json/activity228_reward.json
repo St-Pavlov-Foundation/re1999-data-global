@@ -1,0 +1,67 @@
+[
+  {
+    "rewardId": 1001,
+    "reward": "2#2#40",
+    "important": 1
+  },
+  {
+    "rewardId": 1002,
+    "reward": "1#110402#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1003,
+    "reward": "1#110302#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1004,
+    "reward": "1#110902#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1005,
+    "reward": "1#111001#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1006,
+    "reward": "1#110403#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1007,
+    "reward": "1#110303#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1008,
+    "reward": "1#110603#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1009,
+    "reward": "1#111002#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1010,
+    "reward": "2#5#5000",
+    "important": 0
+  },
+  {
+    "rewardId": 1011,
+    "reward": "2#3#5000",
+    "important": 0
+  },
+  {
+    "rewardId": 1012,
+    "reward": "1#110503#1",
+    "important": 0
+  },
+  {
+    "rewardId": 1013,
+    "reward": "1#110203#1",
+    "important": 0
+  }
+]

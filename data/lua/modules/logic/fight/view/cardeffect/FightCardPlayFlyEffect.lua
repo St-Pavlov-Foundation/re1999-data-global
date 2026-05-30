@@ -17,7 +17,7 @@ function FightCardPlayFlyEffect:ctor(parent_view, card_mo, card_obj, fightBeginR
 	self._dt = dt * TimeFactor3 / FightModel.instance:getUISpeed()
 	self._parent_view = parent_view
 	self._card_mo = card_mo
-	self._show_index = parent_view:getShowIndex(fightBeginRoundOp)
+	self._show_index = FightDataHelper.operationDataMgr:getShowIndex(fightBeginRoundOp)
 	self._card_obj = card_obj
 	self._fightBeginRoundOp = fightBeginRoundOp
 	self._card_transform = card_obj.transform

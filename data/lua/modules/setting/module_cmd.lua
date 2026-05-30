@@ -630,6 +630,11 @@ local module_cmd = {
 		"GetAct123StageRecordRequest",
 		"GetAct123StageRecordReply"
 	},
+	[-28000] = {
+		"Activity123",
+		"Act123ReceiveStageBonusRequest",
+		"Act123ReceiveStageBonusReply"
+	},
 	[-19468] = {
 		"Activity124",
 		"GetAct124InfosRequest",
@@ -2527,6 +2532,21 @@ local module_cmd = {
 		"Activity226",
 		"ReceiveAct226BonusRequest",
 		"ReceiveAct226BonusReply"
+	},
+	[20410] = {
+		"Activity228",
+		"GetAct228InfoRequest",
+		"GetAct228InfoReply"
+	},
+	[-20609] = {
+		"Activity228",
+		"Act228FlipGridRequest",
+		"Act228FlipGridGridReply"
+	},
+	[-12929] = {
+		"Activity228",
+		"Act228GetFinalBonusRequest",
+		"Act228GetFinalBonusReply"
 	},
 	[-14582] = {
 		"Activity",
@@ -6349,6 +6369,11 @@ local module_cmd = {
 		"SurvivalOutSide",
 		"SurvivalMarkModNotNewRequest",
 		"SurvivalMarkModNotNewReply"
+	},
+	[5293] = {
+		"SurvivalOutSide",
+		"SurvivalOutsideShopBuyRequest",
+		"SurvivalOutsideShopBuyReply"
 	},
 	[726] = {
 		"SurvivalWeek",

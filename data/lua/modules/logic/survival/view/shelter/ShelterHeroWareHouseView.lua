@@ -29,14 +29,6 @@ function ShelterHeroWareHouseView:onInitView()
 		false,
 		false
 	}
-	self._selectLocations = {
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
-	}
 	self._scrollcard.verticalNormalizedPosition = 1
 	_, self._initScrollContentPosY = transformhelper.getLocalPos(self._goScrollContent.transform)
 end
@@ -84,7 +76,6 @@ end
 function ShelterHeroWareHouseView:_onFilterList(param)
 	self._selectDmgs = param.dmgs
 	self._selectAttrs = param.attrs
-	self._selectLocations = param.locations
 
 	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
 
@@ -97,7 +88,6 @@ function ShelterHeroWareHouseView:_btnclassifyOnClick()
 
 	param.dmgs = LuaUtil.deepCopy(self._selectDmgs)
 	param.attrs = LuaUtil.deepCopy(self._selectAttrs)
-	param.locations = LuaUtil.deepCopy(self._selectLocations)
 	param.filterType = self.filterType
 
 	CharacterController.instance:openCharacterFilterView(param)
@@ -160,12 +150,6 @@ function ShelterHeroWareHouseView:_refreshBtnIcon()
 		end
 	end
 
-	for _, v in pairs(self._selectLocations) do
-		if v then
-			hasFilter = true
-		end
-	end
-
 	gohelper.setActive(self._classifyBtns[1], not hasFilter)
 	gohelper.setActive(self._classifyBtns[2], hasFilter)
 	transformhelper.setLocalScale(self._lvArrow[1], 1, state[1], 1)
@@ -209,12 +193,6 @@ function ShelterHeroWareHouseView:_updateHeroList()
 
 	local locations = {}
 
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
-
 	if #dmgs == 0 then
 		dmgs = {
 			1,
@@ -255,7 +233,7 @@ function ShelterHeroWareHouseView:_updateHeroList()
 end
 
 function ShelterHeroWareHouseView:onClose()
-	return
+	CharacterSearchFilterModel.instance:exitParentView()
 end
 
 function ShelterHeroWareHouseView:onDestroyView()

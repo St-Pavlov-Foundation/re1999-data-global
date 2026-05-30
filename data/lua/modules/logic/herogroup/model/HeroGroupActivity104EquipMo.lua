@@ -7,38 +7,14 @@ local HeroGroupActivity104EquipMo = pureTable("HeroGroupActivity104EquipMo")
 function HeroGroupActivity104EquipMo:init(info)
 	self.index = info.index
 
-	if self.index == 4 then
-		if not self._mainCardNum then
-			local equipUid = info.equipUid and info.equipUid[1] or "0"
+	local cardNum = self.index == 4 and (self._mainCardNum or 1) or self._normalCardNum or 2
 
-			self.equipUid = {
-				equipUid
-			}
-		else
-			self.equipUid = {}
+	self.equipUid = {}
 
-			for i = 1, self._mainCardNum do
-				local equipUid = info.equipUid and info.equipUid[i] or "0"
+	for i = 1, cardNum do
+		local equipUid = info.equipUid and info.equipUid[i] or "0"
 
-				table.insert(self.equipUid, equipUid)
-			end
-		end
-	else
-		self.equipUid = {}
-
-		if not self._normalCardNum then
-			for i = 1, 2 do
-				local equipUid = info.equipUid and info.equipUid[i] or "0"
-
-				table.insert(self.equipUid, equipUid)
-			end
-		else
-			for i = 1, self._normalCardNum do
-				local equipUid = info.equipUid and info.equipUid[i] or "0"
-
-				table.insert(self.equipUid, equipUid)
-			end
-		end
+		table.insert(self.equipUid, equipUid)
 	end
 end
 

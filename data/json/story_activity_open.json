@@ -4470,5 +4470,301 @@
     "titleEn": "Two Hundred Springs",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 1,
+    "title": "language_10115871",
+    "titleEn": "Butterfly Effect",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 2,
+    "title": "language_10115873",
+    "titleEn": "Determinism and Chaos Theory",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 3,
+    "title": "language_10115875",
+    "titleEn": "Public Property",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 4,
+    "title": "language_10115877",
+    "titleEn": "Aesthetic Gaze",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 5,
+    "title": "language_10115879",
+    "titleEn": "Oztoalli",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 6,
+    "title": "language_10115881",
+    "titleEn": "Ghost Song",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 7,
+    "title": "language_10115883",
+    "titleEn": "Mexican Souvenir",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 8,
+    "title": "language_10115885",
+    "titleEn": "Roaming in America",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 9,
+    "title": "language_10115887",
+    "titleEn": "\"Elysium\" of Art",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 10,
+    "title": "language_10115889",
+    "titleEn": "Cuentos Completos",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 11,
+    "title": "language_10115891",
+    "titleEn": "Scream",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 12,
+    "title": "language_10115893",
+    "titleEn": "Box-Bound Ruler",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 13,
+    "title": "language_10115895",
+    "titleEn": "Code of Silence",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 14,
+    "title": "language_10115897",
+    "titleEn": "A Typical Laplace Incident",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 15,
+    "title": "language_10115899",
+    "titleEn": "An Ordinary Citizen",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 16,
+    "title": "language_10115901",
+    "titleEn": "Path of the Dead",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 17,
+    "title": "language_10115903",
+    "titleEn": "Convergence",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 18,
+    "title": "language_10115905",
+    "titleEn": "Nothing Is Everlasting",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 19,
+    "title": "language_10115907",
+    "titleEn": "Metaphor",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 20,
+    "title": "language_10093302",
+    "titleEn": "Virtue",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 21,
+    "title": "language_10115910",
+    "titleEn": "Pure Fiction",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 22,
+    "title": "language_10118585",
+    "titleEn": "A Soggy Ideal",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 23,
+    "title": "language_10118586",
+    "titleEn": "What Is Pried",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 24,
+    "title": "language_10118587",
+    "titleEn": "Verification of Possibility",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 25,
+    "title": "language_10118588",
+    "titleEn": "\"The Masses\"",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 26,
+    "title": "language_10118589",
+    "titleEn": "The Inevitable Sink",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 27,
+    "title": "language_10118590",
+    "titleEn": "Conjecture and Proof",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 28,
+    "title": "language_10118591",
+    "titleEn": "The Hidden Scar",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 29,
+    "title": "language_10118592",
+    "titleEn": "A Single Flutter",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 30,
+    "title": "language_10118574",
+    "titleEn": "The \"Mask\" Wearer",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 31,
+    "title": "language_10118575",
+    "titleEn": "The Temptation of Happiness",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 32,
+    "title": "language_10118576",
+    "titleEn": "Parrot",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 33,
+    "title": "language_10118577",
+    "titleEn": "By the Still Lake",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 34,
+    "title": "language_10118578",
+    "titleEn": "Ghost Tricks",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 35,
+    "title": "language_10118579",
+    "titleEn": "Summoning Spring",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 36,
+    "title": "language_10118580",
+    "titleEn": "Together Forever",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 35,
+    "part": 37,
+    "title": "language_10118581",
+    "titleEn": "A New Life for Us",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

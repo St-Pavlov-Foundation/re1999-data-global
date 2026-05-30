@@ -53,6 +53,11 @@ function DungeonPackStartDungeonRequestHelper.packTowerComposeCustomParam(reques
 	extraParams.planeId = TowerComposeModel.instance:getCurFightPlaneId()
 	extraParams.supportId = TowerComposeHeroGroupModel.instance:getThemePlaneBuffId(extraParams.themeId, extraParams.planeId, TowerComposeEnum.TeamBuffType.Support)
 	extraParams.researchId = TowerComposeHeroGroupModel.instance:getThemePlaneBuffId(extraParams.themeId, extraParams.planeId, TowerComposeEnum.TeamBuffType.Research)
+
+	local assistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(extraParams.themeId, extraParams.planeId)
+
+	extraParams.supportAssistUid = tonumber(assistData.heroUid or 0)
+	extraParams.supportAssistType = assistData.assistType or 0
 	request.params = cjson.encode(extraParams)
 end
 

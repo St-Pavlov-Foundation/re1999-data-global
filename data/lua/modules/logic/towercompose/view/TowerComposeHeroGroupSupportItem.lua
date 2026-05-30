@@ -4,7 +4,7 @@ module("modules.logic.towercompose.view.TowerComposeHeroGroupSupportItem", packa
 
 local TowerComposeHeroGroupSupportItem = class("TowerComposeHeroGroupSupportItem", LuaCompBase)
 
-function TowerComposeHeroGroupSupportItem:ctor(param)
+function TowerComposeHeroGroupSupportItem:initData(param)
 	self.param = param
 	self.heroCoData = self.param.heroCoData
 	self.supportConfig = self.heroCoData.config
@@ -41,6 +41,12 @@ function TowerComposeHeroGroupSupportItem:init(go)
 
 	self.goMask = gohelper.findChild(self.go, "go_mask")
 	self.btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_click")
+	self.btnAssist = gohelper.findChildButtonWithAudio(self.go, "btn_assist")
+	self.goAssistNormal = gohelper.findChild(self.go, "btn_assist/go_assistNormal")
+	self.goAssistCancel = gohelper.findChild(self.go, "btn_assist/go_assistCancel")
+	self.goAssistInTeam = gohelper.findChild(self.go, "btn_assist/go_assistInTeam")
+	self.goAssistCD = gohelper.findChild(self.go, "btn_assist/go_assistCD")
+	self.imageAssistCD = gohelper.findChildImage(self.go, "btn_assist/go_assistCD/icon")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -49,14 +55,16 @@ end
 
 function TowerComposeHeroGroupSupportItem:addEventListeners()
 	self.btnClick:AddClickListener(self._onSupportItemClick, self)
+	self.btnAssist:AddClickListener(self._onAssistItemClick, self)
 end
 
 function TowerComposeHeroGroupSupportItem:removeEventListeners()
 	self.btnClick:RemoveClickListener()
+	self.btnAssist:RemoveClickListener()
 end
 
 function TowerComposeHeroGroupSupportItem:_onSupportItemClick()
-	if not self.heroMo then
+	if not self.heroMo and not self.assistHeroMo then
 		GameFacade.showToast(ToastEnum.TowerComposeNotHaveHero)
 
 		return
@@ -79,10 +87,24 @@ function TowerComposeHeroGroupSupportItem:_onSupportItemClick()
 	end
 
 	if not self.isNormalEpisode and self.inPlaneId == 0 or self.inPlaneId == -1 then
+		local inPlaneAssistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.curPlaneId)
+
+		if inPlaneAssistData and next(inPlaneAssistData) and inPlaneAssistData.heroId > 0 then
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, nil)
+		end
+
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, self.supportConfig.id)
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
 	elseif self.curPlaneId == self.inPlaneId then
 		TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, 0)
+
+		local inPlaneAssistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.curPlaneId)
+
+		if inPlaneAssistData and next(inPlaneAssistData) and inPlaneAssistData.heroId > 0 then
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, nil)
+			GameFacade.showToast(ToastEnum.TowerComposeCancelAssist)
+		end
+
 		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
 	elseif self.curPlaneId ~= self.inPlaneId then
 		local isInPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, self.inPlaneId)
@@ -101,7 +123,76 @@ end
 function TowerComposeHeroGroupSupportItem:replaceTipCallBack()
 	TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.inPlaneId, TowerComposeEnum.TeamBuffType.Support, 0)
 	TowerComposeHeroGroupModel.instance:setThemePlaneBuffId(self.themeId, self.curPlaneId, TowerComposeEnum.TeamBuffType.Support, self.supportConfig.id)
+
+	local inPlaneAssistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.inPlaneId)
+	local curPlaneAssistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.curPlaneId)
+
+	if inPlaneAssistData and next(inPlaneAssistData) and inPlaneAssistData.heroId > 0 then
+		if curPlaneAssistData and next(curPlaneAssistData) and curPlaneAssistData.heroId > 0 then
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistType(self.themeId, curPlaneAssistData.heroId, nil)
+		end
+
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, inPlaneAssistData)
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.inPlaneId, nil)
+	elseif curPlaneAssistData and next(curPlaneAssistData) and curPlaneAssistData.heroId > 0 and (not inPlaneAssistData or not next(inPlaneAssistData) or inPlaneAssistData.heroId == 0) then
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistType(self.themeId, curPlaneAssistData.heroId, nil)
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, nil)
+	end
+
 	TowerComposeController.instance:dispatchEvent(TowerComposeEvent.HeroGroupSelectBuff)
+end
+
+function TowerComposeHeroGroupSupportItem:_onAssistItemClick()
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(self.themeId, self.curPlaneId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(self.themeId)
+	local planeMo = themeMo:getPlaneMo(self.curPlaneId)
+	local isHeroInSupport, supportHeroInPlaneId = TowerComposeHeroGroupModel.instance:checkEquipedSupportHero(self.heroId)
+
+	if self.isHeroInTeams and self.assistHeroId ~= self.heroId then
+		GameFacade.showToast(ToastEnum.TowerComposeAssistInTeam)
+
+		return
+	elseif not self.isHeroInTeams and isHeroInSupport and supportHeroInPlaneId ~= self.curPlaneId then
+		TowerComposeController.instance:dispatchEvent(TowerComposeEvent.SelectPlaneSupportSlot, supportHeroInPlaneId)
+		GameFacade.showToast(ToastEnum.TowerComposeChangePlane, luaLang("towercompose_plane" .. supportHeroInPlaneId))
+	elseif not self.isHeroInTeams and self.assistHeroId == self.heroId then
+		if self.assistHeroInPlane ~= self.curPlaneId then
+			TowerComposeController.instance:dispatchEvent(TowerComposeEvent.SelectPlaneSupportSlot, self.assistHeroInPlane)
+			GameFacade.showToast(ToastEnum.TowerComposeChangePlane, luaLang("towercompose_plane" .. (self.assistHeroInPlane or 1)))
+		else
+			if isPlaneLock and planeMo.hasFight then
+				GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+				return
+			end
+
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistType(self.themeId, self.heroId, nil)
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, nil)
+			GameFacade.showToast(ToastEnum.TowerComposeCancelAssist)
+			TowerComposeController.instance:dispatchEvent(TowerComposeEvent.RefreshAssistState)
+		end
+	elseif self.isInCD then
+		GameFacade.showToast(ToastEnum.Season123RefreshAssistInCD)
+	else
+		if isPlaneLock and planeMo.hasFight then
+			GameFacade.showToast(ToastEnum.TowerComposeRecordRoleLock)
+
+			return
+		end
+
+		local planeAssistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.curPlaneId)
+
+		if planeAssistData and next(planeAssistData) and planeAssistData.heroId > 0 then
+			TowerComposeHeroGroupModel.instance:setThemePlaneAssistType(self.themeId, planeAssistData.heroId, nil)
+			GameFacade.showToast(ToastEnum.TowerComposeCancelAssist)
+		end
+
+		TowerComposeHeroGroupModel.instance:setThemePlaneAssistData(self.themeId, self.curPlaneId, nil)
+
+		local assistType = TowerComposeHeroGroupModel.instance:getNotUsedAssistType(self.themeId)
+
+		DungeonRpc.instance:sendRefreshAssistRequest(assistType, nil, nil, tostring(self.heroId))
+	end
 end
 
 function TowerComposeHeroGroupSupportItem:_editableInitView()
@@ -112,6 +203,9 @@ function TowerComposeHeroGroupSupportItem:_editableInitView()
 	self.towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(themeId, layerId)
 	self.isNormalEpisode = self.towerEpisodeConfig.plane == 0
 	self.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtDesc.gameObject, FixTmpBreakLine)
+
+	TaskDispatcher.cancelTask(self.refreshCD, self)
+	TaskDispatcher.runRepeat(self.refreshCD, self, 0.01)
 end
 
 function TowerComposeHeroGroupSupportItem:refreshUI()
@@ -131,6 +225,8 @@ function TowerComposeHeroGroupSupportItem:refreshUI()
 
 	self.isHeroInTeams = TowerComposeHeroGroupModel.instance:checkHeroIsInTeam(self.heroId)
 
+	self:refreshAssist()
+
 	if self.heroMo then
 		self.txtName.text = self.isHeroInTeams and GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("towercompose_inTeams"), heroConfig.name) or heroConfig.name
 	else
@@ -143,18 +239,19 @@ function TowerComposeHeroGroupSupportItem:refreshUI()
 	self.txtActive.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towercompose_activeEffectDesc"), heroTag, activeDesc)
 
 	local replaceDesc = SkillHelper.buildDesc(self.supportConfig.desc)
+	local curHeroMo = self.assistHeroMo or self.heroMo
 
-	self.txtDesc.text = TowerComposeModel.instance:replaceLevelSkillDesc(replaceDesc, self.heroMo and self.heroMo.exSkillLevel or 0)
+	self.txtDesc.text = TowerComposeModel.instance:replaceLevelSkillDesc(replaceDesc, curHeroMo and curHeroMo.exSkillLevel or 0)
 
 	self.descFixTmpBreakLine:refreshTmpContent(self.txtDesc)
-	gohelper.setActive(self.txtLevel, self.heroMo ~= nil)
-	gohelper.setActive(self.goExskill, self.heroMo ~= nil)
-	gohelper.setActive(self.goMask, self.heroMo == nil)
+	gohelper.setActive(self.txtLevel, curHeroMo ~= nil)
+	gohelper.setActive(self.goExskill, curHeroMo ~= nil)
+	gohelper.setActive(self.goMask, curHeroMo == nil and self.assistHeroId ~= self.heroId)
 
-	if self.heroMo then
-		self.imageExskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[self.heroMo.exSkillLevel] or 0
+	if curHeroMo then
+		self.imageExskill.fillAmount = SummonCustomPickChoiceItem.exSkillFillAmount[curHeroMo.exSkillLevel] or 0
 
-		local showLevel, rank = HeroConfig.instance:getShowLevel(self.heroMo.level)
+		local showLevel, rank = HeroConfig.instance:getShowLevel(curHeroMo.level)
 		local tmpRank = rank - 1
 
 		for index, rankItem in ipairs(self.rankList) do
@@ -165,7 +262,7 @@ function TowerComposeHeroGroupSupportItem:refreshUI()
 
 		self.txtLevel.text = string.format("Lv.%s", showLevel)
 
-		local skinId = self.heroMo.skin
+		local skinId = curHeroMo.skin
 		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
 		self.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))
@@ -186,12 +283,38 @@ function TowerComposeHeroGroupSupportItem:refreshUI()
 	UISpriteSetMgr.instance:setCommonSprite(self.imageCareer, "lssx_" .. strCareer)
 end
 
+function TowerComposeHeroGroupSupportItem:refreshAssist()
+	self.assistHeroInPlane = TowerComposeHeroGroupModel.instance:checkAssistInPlane(self.themeId, self.heroId, self.towerEpisodeConfig.plane)
+
+	local saveAssistHeroData = self.assistHeroInPlane > -1 and TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.assistHeroInPlane) or nil
+
+	self.assistHeroMo = saveAssistHeroData and saveAssistHeroData.heroId == self.heroId and saveAssistHeroData or nil
+
+	local assistData = self.assistHeroInPlane > -1 and TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self.themeId, self.assistHeroInPlane) or {}
+
+	self.assistHeroId, self.assistId = assistData.heroId or 0, assistData.heroUid or 0
+
+	gohelper.setActive(self.goAssistCancel, not self.isHeroInTeams and self.assistHeroId == self.heroId)
+	gohelper.setActive(self.goAssistNormal, not self.isHeroInTeams and self.assistHeroId ~= self.heroId)
+	gohelper.setActive(self.goAssistInTeam, self.isHeroInTeams and self.assistHeroId ~= self.heroId)
+	self:refreshCD()
+end
+
+function TowerComposeHeroGroupSupportItem:refreshCD()
+	local cdRate = PickAssistController.instance:getRefreshCDRate()
+
+	self.isInCD = cdRate > 0
+	self.imageAssistCD.fillAmount = cdRate
+
+	gohelper.setActive(self.goAssistCD, self.isInCD)
+end
+
 function TowerComposeHeroGroupSupportItem:_onHyperLinkClick(effId, clickPosition)
 	CommonBuffTipController.instance:openCommonTipView(tonumber(effId), clickPosition)
 end
 
 function TowerComposeHeroGroupSupportItem:onDestroy()
-	return
+	TaskDispatcher.cancelTask(self.refreshCD, self)
 end
 
 return TowerComposeHeroGroupSupportItem

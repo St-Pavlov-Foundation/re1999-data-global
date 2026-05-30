@@ -304,5 +304,22 @@
       0,
       -1
     ]
+  },
+  {
+    "id": 22100003,
+    "skinId": 309804,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 430980142,
+    "loopEffect": "buff/lsp_innate2_01",
+    "closeEffect": "buff/lsp_innate2_01",
+    "closeTime": 1000,
+    "closeAniName": "",
+    "closeAudio": 430980143,
+    "posArr": [
+      -5.5,
+      0,
+      -1
+    ]
   }
 ]

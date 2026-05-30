@@ -22,7 +22,8 @@ function FightAutoPlayCardWork:onStart()
 	local toId = self._beginRoundOp.toId
 	local param2 = self._beginRoundOp.param2
 	local param3 = self._beginRoundOp.param3
-	local work = FightMsgMgr.sendMsg(FightMsgId.RegistPlayHandCardWork, index, toId, param2, param3)
+	local cardParam1 = self._beginRoundOp.cardParam1
+	local work = FightMsgMgr.sendMsg(FightMsgId.RegistPlayHandCardWork, index, toId, param2, param3, cardParam1)
 
 	self:playWorkAndDone(work)
 end

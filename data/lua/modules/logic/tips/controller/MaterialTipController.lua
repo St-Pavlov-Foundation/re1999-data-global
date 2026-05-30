@@ -281,6 +281,22 @@ function MaterialTipController:openExchangeTipView(costMatData, targetMatData, e
 	})
 end
 
+function MaterialTipController:openPackageRewardDetailView(rewardList)
+	local data = {}
+
+	data.rewardList = rewardList
+
+	ViewMgr.instance:openView(ViewName.PackageRewardDetailView, data)
+end
+
+function MaterialTipController:isSpecifiedGift(config)
+	return config.subType == ItemEnum.SubType.SpecifiedGift and config.clientDisplayType == ItemEnum.clientDisplayType.SpecifiedGift
+end
+
+function MaterialTipController:isBpCustomSelect(config)
+	return config.subType == ItemEnum.SubType.SpecifiedGift and config.clientDisplayType == ItemEnum.clientDisplayType.BpCustomSelect
+end
+
 MaterialTipController.instance = MaterialTipController.New()
 
 return MaterialTipController

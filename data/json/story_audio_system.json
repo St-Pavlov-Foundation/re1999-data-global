@@ -4853,5 +4853,105 @@
     "id": 923400037,
     "eventName": "play_battle_plot34_npc642501_20",
     "bankName": "npc642501_level_bulaochun3_4"
+  },
+  {
+    "id": 923500001,
+    "eventName": "play_level_plot35_hero3112_8",
+    "bankName": "hero3112_level_lusongshi3_5"
+  },
+  {
+    "id": 923500002,
+    "eventName": "play_level_plot35_hero3112_9",
+    "bankName": "hero3112_level_lusongshi3_5"
+  },
+  {
+    "id": 923500003,
+    "eventName": "play_level_plot35_hero3112_10",
+    "bankName": "hero3112_level_lusongshi3_5"
+  },
+  {
+    "id": 923500004,
+    "eventName": "play_level_plot35_hero3142_11",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500005,
+    "eventName": "play_level_plot35_hero3112_12",
+    "bankName": "hero3112_level_lusongshi3_5"
+  },
+  {
+    "id": 923500006,
+    "eventName": "play_level_plot35_hero3142_15",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500007,
+    "eventName": "play_level_plot35_hero3142_16",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500008,
+    "eventName": "play_level_plot35_hero3142_17",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500009,
+    "eventName": "play_level_plot35_hero3142_18",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500010,
+    "eventName": "play_level_plot35_hero3142_19",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500011,
+    "eventName": "play_battle_plot35_npc641601_1",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500012,
+    "eventName": "play_battle_plot35_npc641601_2",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500013,
+    "eventName": "play_battle_plot35_hero3142_3",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500014,
+    "eventName": "play_battle_plot35_hero3142_4",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500015,
+    "eventName": "play_battle_plot35_hero3142_5",
+    "bankName": "hero3142_level_lusongshi3_5"
+  },
+  {
+    "id": 923500016,
+    "eventName": "play_battle_plot35_npc641601_6",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500017,
+    "eventName": "play_battle_plot35_npc641601_7",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500018,
+    "eventName": "play_battle_plot35_npc641601_8",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500019,
+    "eventName": "play_battle_plot35_npc641601_9",
+    "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923500020,
+    "eventName": "play_battle_plot35_npc641601_10",
+    "bankName": "npc641601_level_lusongshi3_5"
   }
 ]

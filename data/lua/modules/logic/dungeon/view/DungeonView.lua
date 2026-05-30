@@ -70,6 +70,10 @@ function DungeonView:onInitView()
 	self._gotowerUnselectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText")
 	self._gotowerSelectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_tower/#go_towerSelectText")
 	self._gotowerReddotEffect = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_tower/#go_towerUnselectText/redpoint")
+	self._btnadvplay = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/categorylist/#btn_advplay")
+	self._goadvplayUnselectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_advplay/#go_advplayUnselectText")
+	self._goadvplaySelectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_advplay/#go_advplaySelectText")
+	self._goadvplayReddotEffect = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_advplay/#go_advplayUnselectText/redpoint")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -88,6 +92,7 @@ function DungeonView:addEvents()
 	self._btnanecdote:AddClickListener(self._btnanecdoteOnClick, self)
 	self._btnDramaReward:AddClickListener(self._btnDramaRewardOnClick, self)
 	self._btntower:AddClickListener(self._btnTowerOnClick, self)
+	self._btnadvplay:AddClickListener(self._btnadvplayOnClick, self)
 	self:addEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, self._onResidentStoryChange, self)
 	self:addEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, self._showTowerEffect, self)
 	self:addEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnLoadFinishTracedIcon, self._refreshTracedIcon, self)
@@ -106,6 +111,7 @@ function DungeonView:removeEvents()
 	self._btnanecdote:RemoveClickListener()
 	self._btnDramaReward:RemoveClickListener()
 	self._btntower:RemoveClickListener()
+	self._btnadvplay:RemoveClickListener()
 	self:removeEventCb(RoleStoryController.instance, RoleStoryEvent.ResidentStoryChange, self._onResidentStoryChange, self)
 	self:removeEventCb(TowerController.instance, TowerEvent.RefreshTowerReddot, self._showTowerEffect, self)
 	self:removeEventCb(CharacterRecommedController.instance, CharacterRecommedEvent.OnLoadFinishTracedIcon, self._refreshTracedIcon, self)
@@ -114,6 +120,24 @@ end
 
 function DungeonView:_btnTowerOnClick()
 	TowerComposeController.instance:openTowerMainSelectView()
+end
+
+function DungeonView:_btnadvplayOnClick()
+	self:trackClickButton("_btnadvplayOnClick")
+
+	if DungeonModel.instance:chapterListIsAdvPlay() then
+		return
+	end
+
+	self:changeCategory(DungeonEnum.ChapterType.AdvPlay)
+	self:setBtnStatus()
+end
+
+function DungeonView:trackClickButton(buttonName)
+	StatController.instance:track(StatEnum.EventName.ButtonClick, {
+		[StatEnum.EventProperties.ViewName] = "DungeonView",
+		[StatEnum.EventProperties.ButtonName] = buttonName or ""
+	})
 end
 
 function DungeonView:_btnpermanentOnClick()
@@ -317,29 +341,21 @@ function DungeonView:_isShowWeekWalk()
 end
 
 function DungeonView:_isShowExplore()
-	local isOpen = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Explore)
+	return false
+end
 
-	if not isOpen then
-		return false
-	end
+function DungeonView:_isShowAdvPlay()
+	local isExploreOpen = ExploreSimpleModel.instance:isShowExplore()
+	local isSurvivalOpen = SurvivalController.instance:isOpenSurvival()
 
-	local isForbid = GuideController.instance:isForbidGuides()
-
-	if isForbid then
-		return true
-	end
-
-	if VersionValidator.instance:isInReviewing() then
-		return true
-	end
-
-	return true
+	return isExploreOpen or isSurvivalOpen
 end
 
 function DungeonView:_refreshBtnUnlock()
 	gohelper.setActive(self._btngold.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.GainDungeon))
 	gohelper.setActive(self._btnweekwalk.gameObject, self:_isShowWeekWalk())
 	gohelper.setActive(self._btnexplore.gameObject, self:_isShowExplore())
+	gohelper.setActive(self._btnadvplay.gameObject, self:_isShowAdvPlay())
 
 	local breakTypeOpenTimeValid = DungeonModel.instance:getChapterListOpenTimeValid(DungeonEnum.ChapterType.Break)
 
@@ -363,6 +379,7 @@ function DungeonView:setBtnStatus()
 	local isPermanent = DungeonModel.instance:chapterListIsPermanent()
 	local isRougeType = false
 	local isTowerType = false
+	local isAdvPlayType = DungeonModel.instance:chapterListIsAdvPlay()
 
 	isNormalType = isNormalType or isSeasonType
 
@@ -424,6 +441,8 @@ function DungeonView:setBtnStatus()
 	gohelper.setActive(self._goweekwalk, isWeekWalkType)
 	gohelper.setActive(self._goexplore, isExploreType)
 	gohelper.setActive(self._gopermanent, isPermanent)
+	gohelper.setActive(self._goadvplayUnselectText, not isAdvPlayType)
+	gohelper.setActive(self._goadvplaySelectText, isAdvPlayType)
 	DungeonModel.instance:setDungeonStoryviewState(isNormalType)
 	self:refreshRoleStoryStatus()
 
@@ -439,6 +458,8 @@ function DungeonView:setBtnStatus()
 		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Explore)
 	elseif isPermanent then
 		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Permanent)
+	elseif isAdvPlayType then
+		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.AdvPlay)
 	else
 		self.viewContainer:switchTab()
 	end
@@ -546,6 +567,7 @@ function DungeonView:onOpen()
 	self:_refreshBtnUnlock()
 	self:playCategoryAnimation()
 	self:_refreshTraced()
+	RedDotController.instance:addRedDotTag(self._goadvplayReddotEffect, RedDotEnum.DotNode.AdvPlay)
 end
 
 function DungeonView:_moveChapter(chapterId)

@@ -207,6 +207,16 @@ function Season123Controller:getFightRuleTipViewName()
 	return Season123ViewHelper.getViewName(nil, "FightRuleTipView")
 end
 
+function Season123Controller:getProgressViewName()
+	return Season123ViewHelper.getViewName(nil, "ProgressView")
+end
+
+function Season123Controller:openSeasonCardDescView(equipId)
+	Season123ViewHelper.openView(nil, "CardDescView", {
+		equipId = equipId
+	})
+end
+
 function Season123Controller:enterVersionActivityView(viewName, actId, callback, callbackObj)
 	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(actId)
 

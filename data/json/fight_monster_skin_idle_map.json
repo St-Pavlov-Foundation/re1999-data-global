@@ -4,55 +4,79 @@
     "idleAnimName": "idle",
     "hitAnimName": "hit",
     "freezeAnimName": "",
-    "sleepAnimName": ""
+    "sleepAnimName": "",
+    "giddyAnimName": ""
   },
   {
     "skinId": 6404011,
     "idleAnimName": "idle2",
     "hitAnimName": "hit2",
     "freezeAnimName": "",
-    "sleepAnimName": ""
+    "sleepAnimName": "",
+    "giddyAnimName": ""
   },
   {
     "skinId": 6404012,
     "idleAnimName": "idle3",
     "hitAnimName": "hit3",
     "freezeAnimName": "hit3",
-    "sleepAnimName": ""
+    "sleepAnimName": "",
+    "giddyAnimName": ""
   },
   {
     "skinId": 690401,
     "idleAnimName": "idle",
     "hitAnimName": "hit",
     "freezeAnimName": "freeze",
-    "sleepAnimName": "sleep"
+    "sleepAnimName": "sleep",
+    "giddyAnimName": ""
   },
   {
     "skinId": 6904011,
     "idleAnimName": "idle2",
     "hitAnimName": "hit2",
     "freezeAnimName": "freeze2",
-    "sleepAnimName": "sleep2"
+    "sleepAnimName": "sleep2",
+    "giddyAnimName": ""
   },
   {
     "skinId": 63030501,
     "idleAnimName": "idle2",
     "hitAnimName": "idle2",
     "freezeAnimName": "idle2",
-    "sleepAnimName": "idle2"
+    "sleepAnimName": "idle2",
+    "giddyAnimName": ""
   },
   {
     "skinId": 630411,
     "idleAnimName": "idle1",
     "hitAnimName": "hit1",
     "freezeAnimName": "freeze",
-    "sleepAnimName": "sleep"
+    "sleepAnimName": "sleep",
+    "giddyAnimName": ""
   },
   {
     "skinId": 6304111,
     "idleAnimName": "idle2",
     "hitAnimName": "hit2",
     "freezeAnimName": "freeze2",
-    "sleepAnimName": "sleep2"
+    "sleepAnimName": "sleep2",
+    "giddyAnimName": ""
+  },
+  {
+    "skinId": 640405,
+    "idleAnimName": "idle",
+    "hitAnimName": "hit",
+    "freezeAnimName": "freeze",
+    "sleepAnimName": "sleep",
+    "giddyAnimName": "giddy"
+  },
+  {
+    "skinId": 6404051,
+    "idleAnimName": "idle2",
+    "hitAnimName": "hit2",
+    "freezeAnimName": "freeze2",
+    "sleepAnimName": "sleep2",
+    "giddyAnimName": "giddy2"
   }
 ]

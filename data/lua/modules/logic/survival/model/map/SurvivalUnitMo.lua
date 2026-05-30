@@ -142,6 +142,15 @@ function SurvivalUnitMo:getWarmingRange()
 		return false
 	end
 
+	if SurvivalMapHelper.instance:isPetrifactionTar(self) then
+		local sceneMo = SurvivalMapModel.instance:getSceneMo()
+		local blockType = sceneMo:getBlockTypeByPos(self.pos)
+
+		if blockType and blockType == SurvivalEnum.UnitSubType.Petrifaction then
+			return 0
+		end
+	end
+
 	local roleLevel = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo.level
 
 	if self.co.skip == 1 and roleLevel >= self.co.fightLevel then
@@ -171,6 +180,10 @@ end
 
 function SurvivalUnitMo:isBlock()
 	return self.unitType == SurvivalEnum.UnitType.Block
+end
+
+function SurvivalUnitMo:isBattle()
+	return self.unitType == SurvivalEnum.UnitType.Battle
 end
 
 function SurvivalUnitMo:isBlockEvent()

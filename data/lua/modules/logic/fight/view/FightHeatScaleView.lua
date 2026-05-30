@@ -26,7 +26,14 @@ function FightHeatScaleView:initView(viewGo, teamType)
 	self.viewTr = self.viewGo.transform
 	self.root = gohelper.findChild(self.viewGo, "root")
 	self.animator = self.root:GetComponent(gohelper.Type_Animator)
-	self.fillMountImage = gohelper.findChildImage(self.root, "#go_gemfg")
+	self.goNormal = gohelper.findChild(self.root, "go_normal")
+	self.goSp = gohelper.findChild(self.root, "go_sp")
+
+	gohelper.setActive(self.goNormal, true)
+	gohelper.setActive(self.goSp, false)
+
+	self.fillMountImage1 = gohelper.findChildImage(self.goNormal, "#go_gemfg")
+	self.fillMountImage2 = gohelper.findChildImage(self.goSp, "#go_gemfg")
 	self.txtValue = gohelper.findChildText(self.root, "mask/#txt_num")
 	self.goAddItemContainer = gohelper.findChild(self.root, "addItemContainer")
 	self.goAddItem = gohelper.findChild(self.goAddItemContainer, "addItem")
@@ -99,8 +106,10 @@ function FightHeatScaleView:directUpdateValue(value)
 	self.tweenValue = value
 
 	local floatValue = value / self.maxValue
+	local fillAmount = self:getFillMount(floatValue)
 
-	self.fillMountImage.fillAmount = self:getFillMount(floatValue)
+	self.fillMountImage1.fillAmount = fillAmount
+	self.fillMountImage2.fillAmount = fillAmount
 	self.txtValue.text = value
 	self.txtValue1.text = value
 	self.txtValueAdd.text = value

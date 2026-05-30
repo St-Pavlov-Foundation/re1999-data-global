@@ -191,6 +191,8 @@ function FightSpineComp:_initSpine(spineGO)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.AfterInitSpine, self)
+	self:newClass(FightEntityWadingEffect, self.entity)
+	self:newClass(FightEntityWeatherEffect, self.entity)
 end
 
 function FightSpineComp:setLayer(layer, recursive)

@@ -12,6 +12,8 @@ function TowerComposeHeroGroupModel:reInit()
 	TowerComposeHeroGroupModel.super.reInit(self)
 
 	self.themePlaneBuffDataMap = {}
+	self.themePlaneAssitDataMap = {}
+	self.themePlaneAssistTypeMap = {}
 	self.curSelectPlaneId = 0
 	self.curSelectBuffType = TowerComposeEnum.TeamBuffType.Support
 end
@@ -33,6 +35,7 @@ function TowerComposeHeroGroupModel:initSaveThemePlaneBuffId()
 
 	if towerEpisodeConfig.plane == 0 then
 		self:buildEmptyPlaneBuffMap(themeId, 0)
+		self:buildEmptyPlaneAssistMap(themeId, 0)
 
 		local planeData = string.splitToNumber(saveData.buffParamsStr or "", "#") or {}
 
@@ -44,15 +47,37 @@ function TowerComposeHeroGroupModel:initSaveThemePlaneBuffId()
 	else
 		for plane = 1, 2 do
 			self:buildEmptyPlaneBuffMap(themeId, plane)
+			self:buildEmptyPlaneAssistMap(themeId, plane)
 		end
 
-		local dataList = GameUtil.splitString2(saveData.buffParamsStr or "", true) or {}
+		local buffDataList = GameUtil.splitString2(saveData.buffParamsStr or "", true) or {}
 
-		for planeId, planeData in ipairs(dataList) do
+		for planeId, planeData in ipairs(buffDataList) do
 			for buffType, saveId in pairs(planeData) do
 				self.themePlaneBuffDataMap[themeId] = self.themePlaneBuffDataMap[themeId] or {}
 				self.themePlaneBuffDataMap[themeId][planeId] = self.themePlaneBuffDataMap[themeId][planeId] or {}
 				self.themePlaneBuffDataMap[themeId][planeId][buffType] = saveId
+			end
+		end
+	end
+
+	if saveData.assistDataMap and next(saveData.assistDataMap) and saveData.assistDataMap then
+		for themeId, planeAssistData in pairs(saveData.assistDataMap) do
+			for planeId, assistData in pairs(planeAssistData) do
+				self.themePlaneAssitDataMap[themeId] = self.themePlaneAssitDataMap[themeId] or {}
+				self.themePlaneAssitDataMap[themeId][tonumber(planeId)] = assistData
+			end
+		end
+	end
+
+	for planeId, assistData in pairs(self.themePlaneAssitDataMap[themeId]) do
+		if assistData and next(assistData) and assistData.heroId > 0 then
+			if towerEpisodeConfig.plane == 0 and planeId == 0 then
+				self:setThemePlaneAssistType(themeId, assistData.heroId, assistData.assistType)
+
+				break
+			elseif towerEpisodeConfig.plane > 0 and planeId > 0 then
+				self:setThemePlaneAssistType(themeId, assistData.heroId, assistData.assistType)
 			end
 		end
 	end
@@ -69,6 +94,13 @@ function TowerComposeHeroGroupModel:buildEmptyPlaneBuffMap(themeId, planeId)
 	return self.themePlaneBuffDataMap
 end
 
+function TowerComposeHeroGroupModel:buildEmptyPlaneAssistMap(themeId, planeId)
+	self.themePlaneAssitDataMap[themeId] = self.themePlaneAssitDataMap[themeId] or {}
+	self.themePlaneAssitDataMap[themeId][planeId] = {}
+
+	return self.themePlaneAssitDataMap
+end
+
 function TowerComposeHeroGroupModel:getThemePlaneBuffId(themeId, planeId, buffType)
 	if not self.themePlaneBuffDataMap[themeId] or not self.themePlaneBuffDataMap[themeId][planeId] then
 		self:initSaveThemePlaneBuffId()
@@ -79,7 +111,7 @@ function TowerComposeHeroGroupModel:getThemePlaneBuffId(themeId, planeId, buffTy
 	if buffType == TowerComposeEnum.TeamBuffType.Research and buffId > 0 then
 		buffId = TowerComposeModel.instance:checkCurThemeResearchUnlock(themeId, buffId) and buffId or 0
 	elseif buffType == TowerComposeEnum.TeamBuffType.Support and buffId > 0 then
-		buffId = self:getCurRealSupportId(themeId, buffId)
+		buffId = self:getCurRealSupportId(themeId, buffId, planeId)
 	elseif buffType == TowerComposeEnum.TeamBuffType.Cloth and buffId > 0 then
 		-- block empty
 	end
@@ -87,7 +119,7 @@ function TowerComposeHeroGroupModel:getThemePlaneBuffId(themeId, planeId, buffTy
 	return buffId
 end
 
-function TowerComposeHeroGroupModel:getCurRealSupportId(themeId, supportId)
+function TowerComposeHeroGroupModel:getCurRealSupportId(themeId, supportId, planeId)
 	local supportCo = TowerComposeConfig.instance:getSupportCo(supportId)
 
 	if not supportCo then
@@ -99,6 +131,15 @@ function TowerComposeHeroGroupModel:getCurRealSupportId(themeId, supportId)
 	end
 
 	local heroMo = HeroModel.instance:getByHeroId(supportCo.heroId)
+	local assistHeroData = self:getThemePlaneAssistData(themeId, planeId)
+
+	if assistHeroData and next(assistHeroData) and assistHeroData.heroId > 0 then
+		local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(themeId, assistHeroData.heroId, assistHeroData.exSkillLevel)
+
+		supportId = curSupportCo and curSupportCo.id or 0
+
+		return supportId
+	end
 
 	if heroMo then
 		local curSupportCo = TowerComposeConfig.instance:getThemeCurLvHeroIdSupportCo(themeId, heroMo.heroId, heroMo.exSkillLevel)
@@ -117,6 +158,64 @@ function TowerComposeHeroGroupModel:setThemePlaneBuffId(themeId, planeId, buffTy
 	self.themePlaneBuffDataMap[themeId][planeId][buffType] = buffId
 end
 
+function TowerComposeHeroGroupModel:setThemePlaneAssistData(themeId, planeId, assistHeroMo)
+	self.themePlaneAssitDataMap[themeId] = self.themePlaneAssitDataMap[themeId] or {}
+	self.themePlaneAssitDataMap[themeId][planeId] = self.themePlaneAssitDataMap[themeId][planeId] or {}
+
+	local planeAssistData = {}
+
+	if assistHeroMo and next(assistHeroMo) then
+		planeAssistData.heroId = tonumber(assistHeroMo.heroId)
+		planeAssistData.heroUid = tonumber(assistHeroMo.heroUid)
+		planeAssistData.exSkillLevel = assistHeroMo.exSkillLevel
+		planeAssistData.level = assistHeroMo.level
+		planeAssistData.skin = assistHeroMo.skin
+		planeAssistData.assistType = self:getThemePlaneAssistType(themeId, planeAssistData.heroId)
+	end
+
+	self.themePlaneAssitDataMap[themeId][planeId] = planeAssistData
+end
+
+function TowerComposeHeroGroupModel:getThemePlaneAssistData(themeId, planeId)
+	if not self.themePlaneAssitDataMap[themeId] or not self.themePlaneAssitDataMap[themeId][planeId] then
+		self:initSaveThemePlaneBuffId()
+	end
+
+	local assistData = self.themePlaneAssitDataMap[themeId][planeId] or {}
+
+	return assistData
+end
+
+function TowerComposeHeroGroupModel:setThemePlaneAssistType(themeId, heroId, assistType)
+	self.themePlaneAssistTypeMap[themeId] = self.themePlaneAssistTypeMap[themeId] or {}
+	self.themePlaneAssistTypeMap[themeId][heroId] = assistType
+end
+
+function TowerComposeHeroGroupModel:getThemePlaneAssistType(themeId, heroId)
+	local assistType = self.themePlaneAssistTypeMap[themeId] and self.themePlaneAssistTypeMap[themeId][heroId] or 0
+
+	return assistType
+end
+
+function TowerComposeHeroGroupModel:getNotUsedAssistType(themeId)
+	local notUsedAssistType = PickAssistEnum.Type.TowerCompose1
+	local usedAssistTypeMap = {}
+
+	for heroId, assistType in pairs(self.themePlaneAssistTypeMap[themeId] or {}) do
+		usedAssistTypeMap[assistType] = true
+	end
+
+	for assistType = PickAssistEnum.Type.TowerCompose1, PickAssistEnum.Type.TowerCompose2 do
+		if not usedAssistTypeMap[assistType] then
+			notUsedAssistType = assistType
+
+			break
+		end
+	end
+
+	return notUsedAssistType
+end
+
 function TowerComposeHeroGroupModel:saveThemePlaneBuffData()
 	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
 	local themeId = recordFightParam.themeId
@@ -129,17 +228,17 @@ function TowerComposeHeroGroupModel:saveThemePlaneBuffData()
 
 		saveBuffParamsStr = table.concat(buffMap, "#")
 	else
-		local planeMap = self.themePlaneBuffDataMap[themeId] or {}
-		local saveStrList = {}
+		local planeBuffMap = self.themePlaneBuffDataMap[themeId] or {}
+		local saveBuffStrList = {}
 
 		for planeId = 1, 2 do
-			local buffMap = planeMap[planeId] or {}
+			local buffMap = planeBuffMap[planeId] or {}
 
 			saveBuffParamsStr = table.concat(buffMap, "#")
-			saveStrList[planeId] = saveBuffParamsStr
+			saveBuffStrList[planeId] = saveBuffParamsStr
 		end
 
-		saveBuffParamsStr = table.concat(saveStrList, "|")
+		saveBuffParamsStr = table.concat(saveBuffStrList, "|")
 	end
 
 	self:buildSaveParams(saveBuffParamsStr)
@@ -151,6 +250,7 @@ function TowerComposeHeroGroupModel:buildSaveParams(saveBuffParamsStr)
 
 	saveParamData.heroList = curGroupMO.heroList
 	saveParamData.buffParamsStr = saveBuffParamsStr
+	saveParamData.assistDataMap = self.themePlaneAssitDataMap
 
 	local saveParamsStr = cjson.encode(saveParamData)
 
@@ -266,7 +366,7 @@ function TowerComposeHeroGroupModel:checkEquipedSupportHero(heroId)
 				local supportConfig = TowerComposeConfig.instance:getSupportCo(supportId)
 
 				if supportConfig.heroId == heroId then
-					return true
+					return true, planeId
 				end
 			end
 		end
@@ -277,7 +377,7 @@ function TowerComposeHeroGroupModel:checkEquipedSupportHero(heroId)
 			local supportConfig = TowerComposeConfig.instance:getSupportCo(supportId)
 
 			if supportConfig.heroId == heroId then
-				return true
+				return true, 0
 			end
 		end
 	end
@@ -459,9 +559,9 @@ function TowerComposeHeroGroupModel:checkEquipUidIsInLockPlane(equipUid)
 	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
 	local heroGroupMo = HeroGroupModel.instance:getCurGroupMO()
 
-	for pos, heroGroupEquipMo in ipairs(heroGroupMo.equips) do
-		if equipUid == heroGroupEquipMo.equipUid[1] then
-			local planeId = Mathf.Ceil(pos / 4)
+	for pos = 0, #heroGroupMo.equips - 1 do
+		if equipUid == heroGroupMo.equips[pos].equipUid[1] then
+			local planeId = Mathf.Ceil((pos + 1) / 4)
 			local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
 			local planeMo = themeMo:getPlaneMo(planeId)
 
@@ -488,8 +588,50 @@ function TowerComposeHeroGroupModel:replaceLockPlaneBuffItem()
 			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Support, teamInfoData.supportId)
 			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Research, teamInfoData.researchId)
 			self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Cloth, teamInfoData.clothId)
+			self:setThemePlaneAssistData(themeId, planeId, teamInfoData.assistHero)
 		end
 	end
+end
+
+function TowerComposeHeroGroupModel:checkAndDropAssistHero(themeId, planeId)
+	local assistData = self:getThemePlaneAssistData(themeId, planeId)
+	local heroId, assistId = tonumber(assistData.heroId), tonumber(assistData.heroUid)
+	local isPlaneLock = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
+	local themeMo = TowerComposeModel.instance:getThemeMo(themeId)
+	local planeMo = themeMo:getPlaneMo(planeId)
+	local isLock = isPlaneLock and planeMo and planeMo.hasFight
+	local teamInfoData = planeMo and planeMo:getTeamInfoData()
+
+	if (assistId and assistId > 0 or teamInfoData and teamInfoData.assistHero and teamInfoData.assistHero.heroUid > 0) and not isLock then
+		self:setThemePlaneBuffId(themeId, planeId, TowerComposeEnum.TeamBuffType.Support, 0)
+		self:setThemePlaneAssistData(themeId, planeId, nil)
+
+		local removeHeroId = heroId > 0 and heroId or teamInfoData.assistHero.heroId or 0
+
+		if removeHeroId > 0 then
+			self:setThemePlaneAssistType(themeId, removeHeroId, nil)
+		end
+	end
+end
+
+function TowerComposeHeroGroupModel:checkAssistInPlane(themeId, heroId, planeCount)
+	if planeCount > 0 then
+		for planeId = 1, planeCount do
+			local assistData = self:getThemePlaneAssistData(themeId, planeId)
+
+			if assistData.heroId == heroId then
+				return planeId, assistData
+			end
+		end
+	else
+		local assistData = self:getThemePlaneAssistData(themeId, 0)
+
+		if assistData.heroId == heroId then
+			return 0, assistData
+		end
+	end
+
+	return -1
 end
 
 TowerComposeHeroGroupModel.instance = TowerComposeHeroGroupModel.New()

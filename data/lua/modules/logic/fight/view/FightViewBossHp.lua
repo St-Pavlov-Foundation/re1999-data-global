@@ -55,6 +55,9 @@ function FightViewBossHp:onInitView()
 	self.killLineComp = FightBossHpKillLineComp.New(FightHpKillLineComp.KillLineType.BossHp)
 
 	self.killLineComp:init(self._imgHp.gameObject)
+
+	self.toughnessObj = gohelper.findChild(self.viewGO, "toughness")
+	self.weakCareerObj = gohelper.findChild(self.viewGO, "Alpha/bossHp/weekness")
 end
 
 function FightViewBossHp:onOpen()
@@ -143,6 +146,11 @@ function FightViewBossHp:_checkBossAndUpdate()
 
 	if not self._bossEntityMO then
 		self._bossEntityMO = self:_getBossEntityMO()
+
+		if self._bossEntityMO then
+			self:newClass(FightBossHpToughness, self.toughnessObj, self._bossEntityMO)
+			self:newClass(FightBossHpWeakCareers, self.weakCareerObj, self._bossEntityMO)
+		end
 	end
 
 	self.killLineComp:refreshByEntityMo(self._bossEntityMO)

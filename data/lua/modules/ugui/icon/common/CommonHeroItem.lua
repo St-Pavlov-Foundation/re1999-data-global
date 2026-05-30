@@ -139,6 +139,8 @@ function CommonHeroItem:_initObj()
 
 	self:isShowSeasonMask(false)
 	self:setTrialRepeatCn(luaLang("p_commonheroitemnew_repeat"))
+
+	self._nameCnTxt.enableWordWrapping = LangSettings.instance:isJp() == false
 end
 
 function CommonHeroItem:addClickListener(callback, callbackObj)
@@ -626,7 +628,12 @@ function CommonHeroItem:setStyle_HeroGroupEdit()
 		self:_setTxtPos("_nameEnTxt", 0.55, 41.1)
 		self:_setTxtPos("_lvObj", 1.7, 82)
 		self:_setTxtPos("_rankObj", 1.7, -107.7)
-		self:_setWH("_nameCnTxt", 165, 50)
+
+		if LangSettings.instance:isEn() then
+			self:_setWH("_nameCnTxt", 165, 50)
+		else
+			self:_setWH("_nameCnTxt", 165, 40)
+		end
 
 		return
 	end
@@ -653,6 +660,14 @@ function CommonHeroItem:setStyle_SeasonPickAssist()
 	self:_setTxtPos("_nameCnTxt", 0.55, 153.4)
 	self:_setTxtPos("_nameEnTxt", 0.55, 124.3)
 	self:_setTxtPos("_goexskill", 1.7, -170)
+
+	if SettingsModel.instance:isOverseas() then
+		if LangSettings.instance:isEn() then
+			self:_setWH("_nameCnTxt", 205, 50)
+		else
+			self:_setWH("_nameCnTxt", 205, 40)
+		end
+	end
 end
 
 function CommonHeroItem:setStyle_RougePickAssist()
@@ -666,6 +681,14 @@ function CommonHeroItem:setStyle_RougePickAssist()
 	self:_setTxtPos("_nameCnTxt", 0.55, 153.4)
 	self:_setTxtPos("_nameEnTxt", 0.55, 124.3)
 	self:_setTxtPos("_goexskill", 1.7, -170)
+
+	if SettingsModel.instance:isOverseas() then
+		if LangSettings.instance:isEn() then
+			self:_setWH("_nameCnTxt", 205, 50)
+		else
+			self:_setWH("_nameCnTxt", 205, 40)
+		end
+	end
 end
 
 function CommonHeroItem:setStyle_CharacterBackpack()
@@ -674,11 +697,17 @@ function CommonHeroItem:setStyle_CharacterBackpack()
 		self:_setTranScale("_nameEnTxt", 1, 1)
 		self:_setTranScale("_lvObj", 1, 1)
 		self:_setTranScale("_rankObj", 0.18, 0.18)
-		self:_setTxtPos("_nameCnTxt", 0, 69)
 		self:_setTxtPos("_nameEnTxt", 1.1, 42.29)
 		self:_setTxtPos("_lvObj", 2.02, 75)
 		self:_setTxtPos("_rankObj", 1.06, -127.22)
-		self:_setWH("_nameCnTxt", 205, 50)
+
+		if LangSettings.instance:isEn() then
+			self:_setWH("_nameCnTxt", 205, 50)
+			self:_setTxtPos("_nameCnTxt", 0, 62)
+		else
+			self:_setWH("_nameCnTxt", 205, 40)
+			self:_setTxtPos("_nameCnTxt", 0, 69)
+		end
 
 		return
 	end
@@ -703,6 +732,12 @@ function CommonHeroItem:setStyle_SurvivalHeroGroupEdit()
 	self:_setTxtPos("_nameEnTxt", 0.55, 36.1)
 	self:_setTxtPos("_lvObj", 1.7, 75)
 	self:_setTxtPos("_rankObj", 1.7, -107.7)
+
+	if LangSettings.instance:isEn() then
+		self:_setWH("_nameCnTxt", 165, 50)
+	else
+		self:_setWH("_nameCnTxt", 165, 40)
+	end
 end
 
 function CommonHeroItem:setTrialRepeatCn(txt)

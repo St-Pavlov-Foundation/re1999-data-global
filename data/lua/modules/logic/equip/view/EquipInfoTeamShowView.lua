@@ -308,12 +308,25 @@ end
 function EquipInfoTeamShowView:_onClickConfirmBtnFromTowerComposeHeroGroupView()
 	local currentPosEquipList = self.viewContainer.listModel:getGroupCurrentPosEquip()
 	local equipUid = currentPosEquipList[1]
-	local isInLockPlane = TowerComposeHeroGroupModel.instance:checkEquipUidIsInLockPlane(equipUid)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local themeId = recordFightParam.themeId
+	local planeId = Mathf.Ceil((self.posIndex + 1) / 4)
+	local isInLockPlane = TowerComposeModel.instance:checkPlaneLock(themeId, planeId)
 
 	if isInLockPlane then
 		GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
 
 		return
+	end
+
+	if self.selectedEquipMo and self.selectedEquipMo.uid then
+		local isTargetInLockPlane = TowerComposeHeroGroupModel.instance:checkEquipUidIsInLockPlane(self.selectedEquipMo.uid)
+
+		if isTargetInLockPlane then
+			GameFacade.showToast(ToastEnum.TowerComposeChallengeLock)
+
+			return
+		end
 	end
 
 	local isReplace = false

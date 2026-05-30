@@ -98,6 +98,13 @@ function FightEntityMO:init(info, side)
 	self._powerInfos = {}
 
 	self:setPowerInfos(info.powerInfos)
+
+	self.act104EquipUids = {}
+
+	for i, v in ipairs(info.act104EquipUids) do
+		table.insert(self.act104EquipUids, v)
+	end
+
 	self:buildSummonedInfo(info.SummonedList)
 
 	self.teamType = info.teamType
@@ -116,6 +123,15 @@ function FightEntityMO:init(info, side)
 	self.destinyStone = info.destinyStone
 	self.destinyRank = info.destinyRank
 	self.customUnitId = info.customUnitId
+	self.weakCareers = {}
+
+	for i, v in ipairs(info.weakCareers) do
+		table.insert(self.weakCareers, v)
+	end
+
+	self.toughnessValue = info.toughnessValue
+	self.toughnessPoint = info.toughnessPoint
+	self.isBroken = info.isBroken
 end
 
 function FightEntityMO:_buildAttr(attr)
@@ -144,6 +160,7 @@ function FightEntityMO:_buildSkills(entityInfo)
 	self.passiveSkillDic = {}
 	self.skillGroup1 = {}
 	self.skillGroup2 = {}
+	self.skillId2Index = {}
 
 	for i, skillId in ipairs(entityInfo.skillGroup1) do
 		table.insert(self.skillList, skillId)
@@ -152,6 +169,7 @@ function FightEntityMO:_buildSkills(entityInfo)
 		self.skillId2Lv[skillId] = i
 		self.skillNextLvId[skillId] = entityInfo.skillGroup1[i + 1]
 		self.skillPrevLvId[skillId] = entityInfo.skillGroup1[i - 1]
+		self.skillId2Index[skillId] = 1
 	end
 
 	for i, skillId in ipairs(entityInfo.skillGroup2) do
@@ -161,6 +179,7 @@ function FightEntityMO:_buildSkills(entityInfo)
 		self.skillId2Lv[skillId] = i
 		self.skillNextLvId[skillId] = entityInfo.skillGroup2[i + 1]
 		self.skillPrevLvId[skillId] = entityInfo.skillGroup2[i - 1]
+		self.skillId2Index[skillId] = 2
 	end
 
 	for _, skillId in ipairs(entityInfo.passiveSkill) do
@@ -173,6 +192,8 @@ function FightEntityMO:_buildSkills(entityInfo)
 
 	self.skillId2Lv[entityInfo.exSkill] = 4
 	self.exSkill = entityInfo.exSkill
+
+	self:updateCanPreCalculateCardLv()
 end
 
 function FightEntityMO:addPassiveSkill(skillId)
@@ -183,6 +204,8 @@ function FightEntityMO:addPassiveSkill(skillId)
 	if self.skillList and not tabletool.indexOf(self.skillList, skillId) then
 		table.insert(self.skillList, skillId)
 	end
+
+	self:updateCanPreCalculateCardLv()
 end
 
 function FightEntityMO:removePassiveSkill(skillId)
@@ -193,10 +216,62 @@ function FightEntityMO:removePassiveSkill(skillId)
 	if self.skillList then
 		tabletool.removeValue(self.skillList, skillId)
 	end
+
+	self:updateCanPreCalculateCardLv()
 end
 
 function FightEntityMO:isPassiveSkill(skillId)
 	return self.passiveSkillDic and self.passiveSkillDic[skillId]
+end
+
+function FightEntityMO:updateCanPreCalculateCardLv()
+	self.cardCanUpEffectTagList = self.cardCanUpEffectTagList or {
+		{},
+		{}
+	}
+
+	tabletool.clear(self.cardCanUpEffectTagList[1])
+	tabletool.clear(self.cardCanUpEffectTagList[2])
+
+	if not self.passiveSkillDic then
+		return
+	end
+
+	local targetBehaviourId = FightEnum.BehaviourId.AddCardRankByEffectTag
+
+	for skillId, _ in pairs(self.passiveSkillDic) do
+		local skillCo = lua_skill.configDict[skillId]
+
+		if skillCo then
+			for i = 1, FightEnum.MaxBehavior do
+				local behavior = skillCo["behavior" .. i]
+
+				if not string.nilorempty(behavior) then
+					local behaviourArray = FightStrUtil.instance:getSplitCache(behavior, "#")
+					local behaviourId = behaviourArray and tonumber(behaviourArray[1])
+
+					if behaviourId == targetBehaviourId then
+						local canUpEffectTagList = FightStrUtil.instance:getSplitToNumberCache(behaviourArray[2], ",")
+						local cardIndex = tonumber(behaviourArray[3])
+
+						tabletool.addValues(self.cardCanUpEffectTagList[cardIndex], canUpEffectTagList)
+					end
+				end
+			end
+		end
+	end
+end
+
+function FightEntityMO:getCanUpEffectTagList(cardIndex)
+	if self.cardCanUpEffectTagList then
+		return self.cardCanUpEffectTagList[cardIndex]
+	end
+end
+
+function FightEntityMO:getSkillIdIndex(skillId)
+	if self.skillId2Index then
+		return self.skillId2Index[skillId]
+	end
 end
 
 function FightEntityMO:hasSkill(skillId)
@@ -616,6 +691,14 @@ function FightEntityMO:hasBuffId(buffId)
 	for _, buffMo in pairs(self.buffDic) do
 		if buffMo.buffId == buffId then
 			return true
+		end
+	end
+end
+
+function FightEntityMO:getBuffDataByBuffId(buffId)
+	for _, buffMo in pairs(self.buffDic) do
+		if buffMo.buffId == buffId then
+			return buffMo
 		end
 	end
 end

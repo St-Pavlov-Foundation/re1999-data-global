@@ -84,6 +84,7 @@ function SwitchMainUIShowView:removeEvents()
 end
 
 function SwitchMainUIShowView:_editableInitView()
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, FestivalAtmosphereComp, self)
 	self._goleft = gohelper.findChild(self.viewGO, "left")
 	self._golefttop = gohelper.findChild(self.viewGO, "left_top")
 	self._goright = gohelper.findChild(self.viewGO, "right")
@@ -144,17 +145,8 @@ end
 
 function SwitchMainUIShowView:_checkActivityImgVisible()
 	local isShow = ActivityModel.showActivityEffect()
-	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if config then
-		for _, path in ipairs(config.mainView) do
-			local go = gohelper.findChild(self.viewGO, path)
-
-			if go then
-				gohelper.setActive(go, isShow)
-			end
-		end
-	end
+	self._festivalAtmosphereComp:setFestival(isShow)
 end
 
 function SwitchMainUIShowView:onOpen()
@@ -500,6 +492,8 @@ function SwitchMainUIShowView:onClose()
 
 		self._currencyLoader = nil
 	end
+
+	self._festivalAtmosphereComp:onDestroy()
 end
 
 return SwitchMainUIShowView

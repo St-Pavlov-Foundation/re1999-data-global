@@ -11,7 +11,8 @@
     "listenerParam": "13",
     "maxProgress": 1,
     "jumpId": 10012604,
-    "bonus": "26801011"
+    "bonus": "26801011",
+    "activityId": 12606
   },
   {
     "id": 510002,
@@ -25,7 +26,8 @@
     "listenerParam": "16",
     "maxProgress": 1,
     "jumpId": 10012604,
-    "bonus": "26801012"
+    "bonus": "26801012",
+    "activityId": 12606
   },
   {
     "id": 510003,
@@ -39,7 +41,8 @@
     "listenerParam": "23",
     "maxProgress": 1,
     "jumpId": 10012605,
-    "bonus": "26801013"
+    "bonus": "26801013",
+    "activityId": 12606
   },
   {
     "id": 510004,
@@ -53,7 +56,8 @@
     "listenerParam": "26",
     "maxProgress": 1,
     "jumpId": 10012605,
-    "bonus": "26801014"
+    "bonus": "26801014",
+    "activityId": 12606
   },
   {
     "id": 510005,
@@ -67,7 +71,8 @@
     "listenerParam": "33",
     "maxProgress": 1,
     "jumpId": 10012606,
-    "bonus": "26801015"
+    "bonus": "26801015",
+    "activityId": 12606
   },
   {
     "id": 510006,
@@ -81,7 +86,8 @@
     "listenerParam": "36",
     "maxProgress": 1,
     "jumpId": 10012606,
-    "bonus": "26801016"
+    "bonus": "26801016",
+    "activityId": 12606
   },
   {
     "id": 510007,
@@ -95,7 +101,8 @@
     "listenerParam": "43",
     "maxProgress": 1,
     "jumpId": 10012607,
-    "bonus": "26801017"
+    "bonus": "26801017",
+    "activityId": 12606
   },
   {
     "id": 510008,
@@ -109,7 +116,8 @@
     "listenerParam": "46",
     "maxProgress": 1,
     "jumpId": 10012607,
-    "bonus": "26801018"
+    "bonus": "26801018",
+    "activityId": 12606
   },
   {
     "id": 510009,
@@ -123,7 +131,8 @@
     "listenerParam": "5",
     "maxProgress": 1,
     "jumpId": 10012608,
-    "bonus": "26801019"
+    "bonus": "26801019",
+    "activityId": 12606
   },
   {
     "id": 510010,
@@ -137,7 +146,8 @@
     "listenerParam": "5",
     "maxProgress": 2,
     "jumpId": 10012608,
-    "bonus": "26801020"
+    "bonus": "26801020",
+    "activityId": 12606
   },
   {
     "id": 510011,
@@ -151,7 +161,8 @@
     "listenerParam": "5",
     "maxProgress": 3,
     "jumpId": 10012608,
-    "bonus": "26801021"
+    "bonus": "26801021",
+    "activityId": 12606
   },
   {
     "id": 510012,
@@ -165,7 +176,8 @@
     "listenerParam": "5",
     "maxProgress": 1,
     "jumpId": 10012608,
-    "bonus": "26801022"
+    "bonus": "26801022",
+    "activityId": 12606
   },
   {
     "id": 510013,
@@ -179,6 +191,7 @@
     "listenerParam": "269101",
     "maxProgress": 1,
     "jumpId": 10012609,
-    "bonus": "26801023"
+    "bonus": "26801023",
+    "activityId": 12606
   }
 ]

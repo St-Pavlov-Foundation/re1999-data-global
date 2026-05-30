@@ -257,5 +257,19 @@
     "icon": "1040",
     "desc": "language_10110203",
     "rules": "1#117342007"
+  },
+  {
+    "id": 2040,
+    "name": "language_10117712",
+    "icon": "1041",
+    "desc": "language_10116099",
+    "rules": "1#118350170"
+  },
+  {
+    "id": 2041,
+    "name": "language_10117713",
+    "icon": "1042",
+    "desc": "language_10116100",
+    "rules": "1#118350180"
   }
 ]

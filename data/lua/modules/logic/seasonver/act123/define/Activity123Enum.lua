@@ -10,8 +10,8 @@ Activity123Enum.TestActivityID = 11700
 Activity123Enum.TestActivityStage = 1
 Activity123Enum.PickHeroCount = 8
 Activity123Enum.SupportPosIndex = 8
-Activity123Enum.HeroCardNum = 1
-Activity123Enum.MainCardNum = 2
+Activity123Enum.HeroCardNum = 2
+Activity123Enum.MainCardNum = 1
 Activity123Enum.TaskNormalType = 0
 Activity123Enum.TaskRewardViewType = 1
 Activity123Enum.CardPackageSubType = 22
@@ -76,6 +76,7 @@ Activity123Enum.SeasonID = {
 	Season2 = 11811,
 	Season6 = 12315,
 	Season1 = 11700,
+	Season7 = 13513,
 	Season4 = 12006,
 	Season3 = 11906
 }
@@ -85,7 +86,8 @@ Activity123Enum.SeasonIconFolder = {
 	[Activity123Enum.SeasonID.Season3] = "v1a9_season_singlebg",
 	[Activity123Enum.SeasonID.Season4] = "v2a0_season_singlebg",
 	[Activity123Enum.SeasonID.Season5] = "v2a1_season_singlebg",
-	[Activity123Enum.SeasonID.Season6] = "v2a3_season_singlebg"
+	[Activity123Enum.SeasonID.Season6] = "v2a3_season_singlebg",
+	[Activity123Enum.SeasonID.Season7] = "v2a3_season_singlebg"
 }
 Activity123Enum.RuleTab = {
 	Card = 2,
@@ -101,7 +103,8 @@ Activity123Enum.SeasonViewPrefix = {
 	[Activity123Enum.SeasonID.Season3] = "_1_9",
 	[Activity123Enum.SeasonID.Season4] = "_2_0",
 	[Activity123Enum.SeasonID.Season5] = "_2_1",
-	[Activity123Enum.SeasonID.Season6] = "_2_3"
+	[Activity123Enum.SeasonID.Season6] = "_2_3",
+	[Activity123Enum.SeasonID.Season7] = "_3_5"
 }
 Activity123Enum.SeasonVersionPrefix = {
 	[Activity123Enum.SeasonID.Season1] = "1_7",
@@ -109,7 +112,8 @@ Activity123Enum.SeasonVersionPrefix = {
 	[Activity123Enum.SeasonID.Season3] = "1_9",
 	[Activity123Enum.SeasonID.Season4] = "2_0",
 	[Activity123Enum.SeasonID.Season5] = "2_1",
-	[Activity123Enum.SeasonID.Season6] = "2_3"
+	[Activity123Enum.SeasonID.Season6] = "2_3",
+	[Activity123Enum.SeasonID.Season7] = "3_5"
 }
 Activity123Enum.SeasonResourcePrefix = {
 	[Activity123Enum.SeasonID.Season1] = "v1a7",
@@ -117,7 +121,11 @@ Activity123Enum.SeasonResourcePrefix = {
 	[Activity123Enum.SeasonID.Season3] = "v1a9",
 	[Activity123Enum.SeasonID.Season4] = "v2a0",
 	[Activity123Enum.SeasonID.Season5] = "v2a1",
-	[Activity123Enum.SeasonID.Season6] = "v2a3"
+	[Activity123Enum.SeasonID.Season6] = "v2a3",
+	[Activity123Enum.SeasonID.Season7] = "v3a5"
+}
+Activity123Enum.SeasonIconPrefix = {
+	[Activity123Enum.SeasonID.Season7] = "v2a3"
 }
 Activity123Enum.EquipCardEffect = {
 	AddHeroGroupCardSlot = 104,

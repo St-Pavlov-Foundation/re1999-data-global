@@ -193,7 +193,7 @@ function SurvivalMapMainView:_refreshBagFull()
 
 	local per = bagMo.totalMass / max
 
-	gohelper.setActive(self._gowarning, per >= 0.75 and per < 1)
+	gohelper.setActive(self._gowarning, per >= 0.75 and per <= 1)
 end
 
 function SurvivalMapMainView:_refreshCurTask()

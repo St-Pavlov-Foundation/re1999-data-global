@@ -31,21 +31,21 @@
   },
   {
     "id": 4,
-    "desc": "language_10114738",
-    "resource": "survival_map_skillicon_5",
-    "times": 3,
+    "desc": "language_10118185",
+    "resource": "survival_map_skillicon_6",
+    "times": 5,
     "addTalentIds": "",
-    "effect1": "killMonster#3#1",
+    "effect1": "snatchItem#1#0#41,42,43,44,45,46,47,49:307091201&77:307091202",
     "effect2": "",
     "effect3": ""
   },
   {
     "id": 5,
-    "desc": "language_10114738",
-    "resource": "survival_map_skillicon_6",
-    "times": 3,
+    "desc": "language_10118186",
+    "resource": "survival_map_skillicon_5",
+    "times": 1,
     "addTalentIds": "",
-    "effect1": "killMonster#3#1",
+    "effect1": "replaceBlockUnit#3#2#70099#792",
     "effect2": "",
     "effect3": ""
   },
@@ -55,7 +55,7 @@
     "resource": "survival_map_skillicon_4",
     "times": 2,
     "addTalentIds": "",
-    "effect1": "findDrop#0#2#30339200",
+    "effect1": "findDrop#0#3#30339200",
     "effect2": "",
     "effect3": ""
   }

@@ -115,7 +115,11 @@ function Season123Model:isSeasonStagePosUnlock(actId, stage, slot, pos)
 
 	local unlockIndex = self:getUnlockCardIndex(pos, slot)
 
-	return seasonMO:isStageSlotUnlock(stage, unlockIndex) or seasonMO.unlockIndexSet and seasonMO.unlockIndexSet[unlockIndex]
+	if stage and seasonMO:isStageSlotUnlock(stage, unlockIndex) then
+		return true
+	end
+
+	return seasonMO.unlockIndexSet and seasonMO.unlockIndexSet[unlockIndex]
 end
 
 function Season123Model:getUnlockCardIndex(pos, slot)
@@ -367,6 +371,25 @@ end
 
 function Season123Model:getRetailRandomSceneKey()
 	return "Season123RetailRandomSceneId" .. "#" .. tostring(self._curSeasonId) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+end
+
+function Season123Model:setGetStageBonus(msg)
+	local seasonMO = self:getActInfo(msg.activityId)
+
+	if not seasonMO then
+		return
+	end
+
+	seasonMO:updateBonus(msg.stage, msg.bonusIds)
+end
+
+function Season123Model:setSnapshotByHeroGroup(subId, param)
+	local actId = self:getCurSeasonId()
+	local mo = self:getActInfo(actId)
+
+	if mo then
+		mo:setSnapshotByHeroGroup(subId, param)
+	end
 end
 
 Season123Model.instance = Season123Model.New()

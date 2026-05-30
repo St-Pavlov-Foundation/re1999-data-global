@@ -78,6 +78,8 @@ function VersionActivityFixedDungeonController:_onReceiveTaskInfoReply()
 end
 
 function VersionActivityFixedDungeonController:_internalOpenVersionActivityDungeonMapView(big, small)
+	self:setEnterVerison(big, small)
+
 	if not self.hasReceivedTaskInfo then
 		return
 	end
@@ -163,9 +165,9 @@ function VersionActivityFixedDungeonController:loadDictFromStr(jsonStr)
 	return result
 end
 
-function VersionActivityFixedDungeonController:openVersionActivityReactivityDungeonMapView(big, small)
+function VersionActivityFixedDungeonController:openVersionActivityReactivityDungeonMapView(big, small, chapterId, episodeId, callback, callbackObj)
 	self:setEnterVerison(big, small)
-	self:_openVersionActivityDungeonMapView()
+	self:_openVersionActivityDungeonMapView(chapterId, episodeId, callback, callbackObj)
 end
 
 function VersionActivityFixedDungeonController:setEnterVerison(big, small)

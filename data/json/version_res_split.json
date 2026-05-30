@@ -1286,6 +1286,121 @@
     "packName": "opexplore"
   },
   {
+    "id": 27,
+    "audio": [
+      20250003
+    ],
+    "chapter": [
+      25101,
+      25201,
+      25301,
+      25401,
+      25900,
+      25910
+    ],
+    "guide": [],
+    "story": [
+      311001,
+      311002,
+      311003,
+      311004,
+      311005,
+      311006,
+      311007,
+      311008,
+      311101,
+      311102,
+      311103,
+      311104,
+      311105,
+      311106,
+      311107
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_5_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_5/v2a5_dungeon",
+      "ui/viewres/versionactivity_2_5/liangyue",
+      "ui/viewres/versionactivity_2_5/feilinshiduo"
+    ],
+    "uiPath": [],
+    "packName": "opveract"
+  },
+  {
+    "id": 28,
+    "audio": [
+      3260001
+    ],
+    "chapter": [
+      26910,
+      26920
+    ],
+    "guide": [],
+    "story": [
+      311401,
+      311402,
+      311403,
+      311404,
+      311405,
+      311406,
+      311407,
+      311408,
+      311409
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_6_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_6/v2a6_xugouji",
+      "ui/viewres/versionactivity_2_6/dicehero"
+    ],
+    "uiPath": [],
+    "packName": "opveract"
+  },
+  {
+    "id": 29,
+    "audio": [
+      3340001,
+      3340002,
+      3340003,
+      3340004,
+      3340005,
+      3340006,
+      3340007,
+      3340008,
+      3340009,
+      3340010,
+      3340011,
+      3340012,
+      3340013,
+      3340014,
+      3340015,
+      3340016,
+      3340017,
+      3340018,
+      3340019,
+      3340020,
+      3340021,
+      3340022
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [],
+    "folderPath": [
+      "modules/party_game"
+    ],
+    "videoPath": [],
+    "path": [],
+    "uiFolder": [],
+    "uiPath": [],
+    "packName": "oppartygame"
+  },
+  {
     "id": 23,
     "audio": [],
     "chapter": [],

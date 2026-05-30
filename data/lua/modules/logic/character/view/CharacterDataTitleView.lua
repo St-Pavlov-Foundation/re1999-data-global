@@ -217,7 +217,7 @@ function CharacterDataTitleView:_initAdjustStaticOffsetInfo()
 end
 
 function CharacterDataTitleView:loadSpine()
-	local skinId = self.haveSkinList and self.haveSkinList[self.currentShowSkinIndex].skin or self.heroInfo.skin
+	local skinId = self.haveSkinList and self.haveSkinList[self.currentShowSkinIndex] and self.haveSkinList[self.currentShowSkinIndex].skin or self.heroInfo.skin
 	local skinCo = SkinConfig.instance:getSkinCo(skinId)
 
 	self._uiSpine:setResPath(skinCo, self._onSpineLoaded, self)
@@ -326,14 +326,46 @@ function CharacterDataTitleView:_getFormatStr(content)
 		return ""
 	end
 
-	local first = GameUtil.utf8sub(content, 1, 1)
-	local remain = ""
+	local startIndex = 1
+	local jumpIndex = 1
+	local hasPunctuation = false
 
-	if GameUtil.utf8len(content) >= 2 then
-		remain = GameUtil.utf8sub(content, 2, GameUtil.utf8len(content) - 1)
+	if content:sub(1, 3) == "<i>" then
+		jumpIndex = 4
 	end
 
-	return string.format("<size=90>%s</size>%s", first, remain)
+	for index = jumpIndex, #content do
+		local first = GameUtil.utf8sub(content, jumpIndex, 1)
+
+		hasPunctuation = GameUtil.containsPunctuation(first)
+
+		if not hasPunctuation then
+			break
+		end
+
+		jumpIndex = jumpIndex + 1
+	end
+
+	if not hasPunctuation and startIndex < jumpIndex then
+		local first = GameUtil.utf8sub(content, startIndex, jumpIndex - startIndex)
+		local large = GameUtil.utf8sub(content, jumpIndex, 1)
+		local remain = ""
+
+		if GameUtil.utf8len(content) >= 2 then
+			remain = GameUtil.utf8sub(content, jumpIndex + 1, GameUtil.utf8len(content) - jumpIndex + 1)
+		end
+
+		return string.format("%s<size=94>%s</size><space=-22><voffset=-0.05em> %s", first, large, remain)
+	else
+		local first = GameUtil.utf8sub(content, 1, 1)
+		local remain = ""
+
+		if GameUtil.utf8len(content) >= 2 then
+			remain = GameUtil.utf8sub(content, 2, GameUtil.utf8len(content) - 1)
+		end
+
+		return string.format("<size=94>%s</size><space=-22><voffset=-0.05em> %s", first, remain)
+	end
 end
 
 function CharacterDataTitleView:_onSignatureImageLoad()

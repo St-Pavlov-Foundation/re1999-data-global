@@ -21,6 +21,7 @@ function SurvivalMapModel:onInit()
 	self.guideSpBlockPos = nil
 	self._cacheHexPoints = {}
 	self.survivalLeaveMsgViewParam = nil
+	self.dayMode = nil
 end
 
 function SurvivalMapModel:reInit()

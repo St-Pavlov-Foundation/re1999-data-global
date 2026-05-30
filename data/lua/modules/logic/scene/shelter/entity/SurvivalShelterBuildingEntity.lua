@@ -88,11 +88,27 @@ function SurvivalShelterBuildingEntity:_onResLoadEnd()
 		end
 	end
 
+	if self.buildingCo:isCollection() then
+		local scene = SurvivalMapHelper.instance:getScene()
+		local mo = SurvivalHandbookModel.instance:getHandbookByCollectionBuild(self.buildingCo.cfgId)
+		local itemMo = mo:getSurvivalBagItemMo()
+		local iconPath = ResUrl.getSurvivalItemIcon(itemMo.co.icon)
+		local texture = scene.preloader:getRes(iconPath)
+		local materialGO = gohelper.findChild(self.goModel, "anim/survival_icon_a")
+
+		if materialGO and texture then
+			local renderer = materialGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+
+			if renderer then
+				renderer.material:SetTexture("_MainTex", texture)
+			end
+		end
+	end
+
 	self:onLoadedEnd()
 end
 
 function SurvivalShelterBuildingEntity:initTrans(trans)
-	transformhelper.setLocalPos(trans, 0, 0, 0)
 	transformhelper.setLocalRotation(trans, 0, 0, 0)
 	transformhelper.setLocalScale(trans, 1, 1, 1)
 end
@@ -100,6 +116,11 @@ end
 function SurvivalShelterBuildingEntity:canShow()
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 	local buildingInfo = weekInfo:getBuildingInfo(self.unitId)
+
+	if not buildingInfo then
+		return true
+	end
+
 	local isShow = buildingInfo and buildingInfo:isBuild() or false
 
 	return isShow

@@ -46,8 +46,8 @@ function FightBossPassiveTipsView:onPassiveSkillClick(bossSkillInfos, skillIconT
 
 	local bgHeight = viewHeight > 800 and 800 or viewHeight
 
-	recthelper.setHeight(self.contectBg.transform, viewHeight + 50)
 	recthelper.setHeight(self.objContent.transform, viewHeight)
+	recthelper.setHeight(self.contectBg.transform, viewHeight + 50)
 	recthelper.setAnchorY(self.objContent.transform, 0)
 end
 

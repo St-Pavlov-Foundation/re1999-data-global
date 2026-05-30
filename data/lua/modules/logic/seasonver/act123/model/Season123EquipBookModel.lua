@@ -23,11 +23,14 @@ function Season123EquipBookModel:clear()
 	self.AnimRowCount = 4
 	self.OpenAnimTime = 0.06
 	self.OpenAnimStartTime = 0.05
+	self.selectStage = nil
+	self.equipStageDict = nil
 end
 
 function Season123EquipBookModel:initDatas(activityId)
 	self.curActId = activityId
 	self.curSelectItemId = nil
+	self.selectStage = nil
 
 	self:initSubModel()
 	self:initPlayerPrefs()
@@ -44,10 +47,43 @@ function Season123EquipBookModel:initList()
 end
 
 function Season123EquipBookModel:initConfig()
-	local list = {}
-	local cfgDict = Season123Config.instance:getSeasonEquipCos()
+	local stage = self:getSelectStage()
+	local equipList = self.equipStageDict and self.equipStageDict[stage]
 
-	for itemId, cfg in pairs(cfgDict) do
+	if not equipList then
+		if not self.equipStageDict then
+			self.equipStageDict = {}
+		end
+
+		local dict = {}
+		local episodeList = Season123Config.instance:getSeasonEpisodeStageCos(self.curActId, stage)
+
+		for _, episode in pairs(episodeList) do
+			local isUnlock = Season123ProgressUtils.isEpisodeUnlock(self.curActId, stage, episode.layer)
+
+			if isUnlock then
+				local usableEquipList = string.splitToNumber(episode.usableEquip, "#")
+
+				for _, equipId in ipairs(usableEquipList) do
+					dict[equipId] = true
+				end
+			end
+		end
+
+		equipList = {}
+
+		for equipId, _ in pairs(dict) do
+			table.insert(equipList, equipId)
+		end
+
+		self.equipStageDict[stage] = equipList
+	end
+
+	local list = {}
+
+	for _, itemId in pairs(equipList) do
+		local cfg = Season123Config.instance:getSeasonEquipCo(itemId)
+
 		if not Season123EquipMetaUtils.isBanActivity(cfg, self.curActId) and self:isCardCanShowByTag(cfg.tag) then
 			local equipBookMO = Season123EquipBookMO.New()
 
@@ -244,6 +280,45 @@ function Season123EquipBookModel:getAllEquipItem()
 			end
 		end
 	end
+end
+
+function Season123EquipBookModel:setSelectStage(stage)
+	local rs = Season123ProgressUtils.isStageUnlock(self.curActId, stage)
+
+	if not rs then
+		return
+	end
+
+	if stage == self.selectStage then
+		return
+	end
+
+	self.selectStage = stage
+
+	self:initList()
+
+	return true
+end
+
+function Season123EquipBookModel:getSelectStage()
+	local stage = self.selectStage
+
+	if stage == nil then
+		local stageList = Season123Config.instance:getStageCos(self.curActId)
+
+		for i, v in ipairs(stageList) do
+			local rs = Season123ProgressUtils.isStageUnlock(v.activityId, v.stage)
+
+			if rs then
+				stage = v.stage
+				self.selectStage = stage
+
+				break
+			end
+		end
+	end
+
+	return stage
 end
 
 Season123EquipBookModel.instance = Season123EquipBookModel.New()

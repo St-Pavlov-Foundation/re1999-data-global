@@ -68,6 +68,14 @@ end
 
 function SummonMainView:_btnsummonpoolpackageOnClick()
 	self:openPackageView(0, 0)
+
+	local curPool = SummonMainModel.instance:getCurPool()
+
+	StatController.instance:track(StatEnum.EventName.ButtonClick, {
+		[StatEnum.EventProperties.ViewName] = "SummonMainView",
+		[StatEnum.EventProperties.ButtonName] = "packageBtn",
+		[StatEnum.EventProperties.PoolName] = curPool and curPool.nameCn or ""
+	})
 end
 
 function SummonMainView:_editableInitView()

@@ -42,5 +42,16 @@
     "previewImage": "mainsceneswitch_cardbg_pic02",
     "banner": "20201#20202",
     "showres": "sence_01/card02"
+  },
+  {
+    "id": 103,
+    "type": 1,
+    "defaultUnlock": 0,
+    "itemId": 682802,
+    "sort": 3,
+    "image": "mainsceneswitch_numbg_03",
+    "previewImage": "mainsceneswitch_numbg_pic03",
+    "banner": "10301#10302#10303#10304#10305#10306",
+    "showres": "sence_01/num03"
   }
 ]

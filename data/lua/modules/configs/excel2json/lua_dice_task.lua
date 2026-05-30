@@ -15,6 +15,7 @@ local fields = {
 	minType = 3,
 	openLimit = 7,
 	maxProgress = 10,
+	activityId = 13,
 	bonus = 12
 }
 local primaryKey = {

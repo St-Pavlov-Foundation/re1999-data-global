@@ -18,6 +18,7 @@ function LiangYueLevelView:onInitView()
 	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._scrollStory = gohelper.findChildScrollRect(self._gostoryPath, "")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ function LiangYueLevelView:addEvents()
 	self._drag:AddDragBeginListener(self._onDragBegin, self)
 	self._drag:AddDragEndListener(self._onDragEnd, self)
 	self._touch:AddClickDownListener(self._onClickDown, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self:addEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, self.onEpisodeFinish, self)
 	self:addEventCb(LiangYueController.instance, LiangYueEvent.OnClickStoryItem, self.onClickStoryItem, self)
 end
@@ -41,8 +43,35 @@ function LiangYueLevelView:removeEvents()
 	self._drag:RemoveDragEndListener()
 	self._touch:RemoveClickDownListener()
 	self._scrollStory:RemoveOnValueChanged()
+	self._btnTrial:RemoveClickListener()
 	self:removeEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, self.onEpisodeFinish, self)
 	self:removeEventCb(LiangYueController.instance, LiangYueEvent.OnClickStoryItem, self.onClickStoryItem, self)
+end
+
+function LiangYueLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function LiangYueLevelView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(self._actId) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
 end
 
 function LiangYueLevelView:_btnPlayBtnOnClick()
@@ -55,6 +84,7 @@ end
 
 function LiangYueLevelView:_editableInitView()
 	self._actId = VersionActivity2_5Enum.ActivityId.LiangYue
+	self.config = ActivityConfig.instance:getActivityCo(self._actId)
 	self._taskAnimator = self._btnTask.gameObject:GetComponentInChildren(typeof(UnityEngine.Animator))
 
 	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V2a5_Act184Task, nil, self._refreshRedDot, self)

@@ -115,6 +115,8 @@ function GameFacade.createLuaCompByGo(go, class, ctorParam, viewContainer)
 end
 
 function GameFacade.createSimpleListComp(gameObject, listParam, res, viewContainer)
+	listParam = listParam or SimpleListParam.New()
+
 	local list = MonoHelper.addNoUpdateLuaComOnceToGo(gameObject, SimpleListComp, {
 		listParam = listParam,
 		viewContainer = viewContainer
@@ -124,6 +126,15 @@ function GameFacade.createSimpleListComp(gameObject, listParam, res, viewContain
 	list:onCreate()
 
 	return list
+end
+
+function GameFacade.createSimpleListParam(cellClass, isClickAutoSelect)
+	local listParam = SimpleListParam.New()
+
+	listParam.cellClass = cellClass
+	listParam.isClickAutoSelect = isClickAutoSelect
+
+	return listParam
 end
 
 function GameFacade.openTipPopView(viewName, posGo, param)

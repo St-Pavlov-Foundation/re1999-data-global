@@ -1,0 +1,37 @@
+[
+  {
+    "toughnessskill": 1,
+    "passiveSkill": "109350008",
+    "cdBuff": 0,
+    "iconNormal": "fight_toughness_reward1_1",
+    "iconBreak": ""
+  },
+  {
+    "toughnessskill": 2,
+    "passiveSkill": "109350009",
+    "cdBuff": 109350002,
+    "iconNormal": "fight_toughness_reward1_2",
+    "iconBreak": ""
+  },
+  {
+    "toughnessskill": 3,
+    "passiveSkill": "109350008",
+    "cdBuff": 0,
+    "iconNormal": "fight_toughness_reward1_3",
+    "iconBreak": ""
+  },
+  {
+    "toughnessskill": 10,
+    "passiveSkill": "118350001",
+    "cdBuff": 118350001,
+    "iconNormal": "fight_toughness_reward1_2",
+    "iconBreak": ""
+  },
+  {
+    "toughnessskill": 11,
+    "passiveSkill": "109350304",
+    "cdBuff": 0,
+    "iconNormal": "fight_toughness_reward1_1",
+    "iconBreak": ""
+  }
+]

@@ -14,23 +14,9 @@ end
 
 function Activity2ndBtnItem:onRefresh()
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_7" or "act_icon_7"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_7")
 
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
-
+	self:setFestival(isShow)
 	self:_setMainSprite(spriteName)
 end
 
@@ -68,6 +54,16 @@ end
 
 function Activity2ndBtnItem:refreshDot()
 	self:_refreshRedDot()
+end
+
+function Activity2ndBtnItem:_gm_ActIds()
+	local actIds = tabletool.copy(Activity2ndEnum.ActivityOrder)
+
+	table.insert(actIds, Activity196Enum.ActId)
+	table.insert(actIds, Activity2ndEnum.ActivityId.MailActivty)
+	table.insert(actIds, Activity2ndEnum.ActivityId.V2a8_PVPopupReward)
+
+	return actIds
 end
 
 return Activity2ndBtnItem

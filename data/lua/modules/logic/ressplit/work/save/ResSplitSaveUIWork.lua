@@ -19,6 +19,7 @@ function ResSplitSaveUIWork:onStart(context)
 		"video",
 		"gm",
 		"loginbg",
+		"share",
 		"loading",
 		"login",
 		"propitem",

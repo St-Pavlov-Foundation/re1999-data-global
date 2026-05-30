@@ -18,6 +18,8 @@ function DungeonExploreChapterItem:init(go)
 	self._goselectStar = gohelper.findChild(go, "#go_selected/#simage_star")
 	self._gounselectStar = gohelper.findChild(go, "#go_unselected/#simage_star")
 	self._anim = go:GetComponent(typeof(UnityEngine.Animator))
+	self._goRed1 = gohelper.findChild(go, "#go_selected/#go_red")
+	self._goRed2 = gohelper.findChild(go, "#go_unselected/#go_red")
 
 	self._btnclick:AddClickListener(self._click, self)
 	ExploreController.instance:registerCallback(ExploreEvent.OnChapterClick, self.onChapterClick, self)
@@ -66,6 +68,11 @@ function DungeonExploreChapterItem:setData(config, index)
 	ExploreSimpleModel.instance:markChapterNew(self._config.id)
 
 	self._isLock = isLock
+
+	local str = "Explore_Chapter" .. self._index
+
+	RedDotController.instance:addRedDot(self._goRed1, RedDotEnum.DotNode[str])
+	RedDotController.instance:addRedDot(self._goRed2, RedDotEnum.DotNode[str])
 end
 
 function DungeonExploreChapterItem:_unlockFinish()

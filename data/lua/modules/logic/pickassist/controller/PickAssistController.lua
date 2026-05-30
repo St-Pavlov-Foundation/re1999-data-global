@@ -4,7 +4,7 @@ module("modules.logic.pickassist.controller.PickAssistController", package.seeal
 
 local PickAssistController = class("PickAssistController", BaseController)
 
-function PickAssistController:openPickAssistView(assistType, actId, selectedHeroUid, finishCall, finishCallObj, isAutoRefresh)
+function PickAssistController:openPickAssistView(assistType, actId, selectedHeroUid, finishCall, finishCallObj, isAutoRefresh, extraStr, notNeedCareer)
 	if not assistType or not actId then
 		return
 	end
@@ -14,20 +14,22 @@ function PickAssistController:openPickAssistView(assistType, actId, selectedHero
 	self._selectedHeroUid = selectedHeroUid
 	self._finishCall = finishCall
 	self._finishCallObj = finishCallObj
+	self._notNeedCareer = notNeedCareer
+	self._extraStr = extraStr
 
 	local canRefresh = self:checkCanRefresh()
 
 	if isAutoRefresh and canRefresh then
 		self.tmpIsRecordRefreshTime = true
 
-		DungeonRpc.instance:sendRefreshAssistRequest(assistType, self._openPickAssistViewAfterRpc, self)
+		DungeonRpc.instance:sendRefreshAssistRequest(assistType, self._openPickAssistViewAfterRpc, self, self._extraStr)
 	else
 		self:_openPickAssistViewAfterRpc()
 	end
 end
 
 function PickAssistController:_openPickAssistViewAfterRpc(cmd, resultCode, msg)
-	PickAssistListModel.instance:init(self._actId, self._assistType, self._selectedHeroUid)
+	PickAssistListModel.instance:init(self._actId, self._assistType, self._selectedHeroUid, self._notNeedCareer)
 
 	if self.tmpIsRecordRefreshTime then
 		self:recordAssistRefreshTime()
@@ -59,7 +61,7 @@ function PickAssistController:sendRefreshList()
 	local assistType = PickAssistListModel.instance:getAssistType()
 
 	if assistType then
-		DungeonRpc.instance:sendRefreshAssistRequest(assistType, self.onRefreshAssist, self)
+		DungeonRpc.instance:sendRefreshAssistRequest(assistType, self.onRefreshAssist, self, self._extraStr)
 	end
 end
 

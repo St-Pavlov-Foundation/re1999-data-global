@@ -277,6 +277,36 @@ function SurvivalViewDefine.init(module_views)
 		viewType = ViewType.Normal,
 		anim = ViewAnim.AnimInternal
 	}
+	module_views.SurvivalStoreView = {
+		destroy = 0,
+		container = "SurvivalStoreViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/survival/common/survivalstoreview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			},
+			{
+				{
+					CurrencyView.prefabPath
+				}
+			}
+		}
+	}
+	module_views.SurvivalInfoView = {
+		destroy = 0,
+		container = "SurvivalInfoViewContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/survival/common/survivalcommondesccomp.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.AnimInternal,
+		tabRes = {}
+	}
 end
 
 function SurvivalViewDefine.initMapDefine(module_views)
@@ -1028,6 +1058,24 @@ function SurvivalViewDefine.initShelterDefine(module_views)
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
+	}
+	module_views.SurvivalCollectionRoomView = {
+		destroy = 0,
+		container = "SurvivalCollectionRoomViewContainer",
+		mainRes = "ui/viewres/survival/shelter/survivalcollectionroomview.prefab",
+		layer = "HUD",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			unititem = "ui/viewres/survival/shelter/survivalshelterunititem.prefab"
+		}
 	}
 end
 

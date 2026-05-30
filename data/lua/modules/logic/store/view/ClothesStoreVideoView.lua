@@ -78,8 +78,6 @@ function ClothesStoreVideoView:playSkinVideo(goodsMo)
 			self._videoPlayer, self._videoPlayerGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoGO)
 
 			local uiVideoAdapter = MonoHelper.addNoUpdateLuaComOnceToGo(self._videoPlayerGO, FullScreenVideoAdapter)
-
-			self._videoPlayerGO = nil
 		end
 
 		self._curPlayGoodsId = goodsMo.goodsId
@@ -129,6 +127,12 @@ function ClothesStoreVideoView:_stopMovie()
 		self._videoPlayer:stop()
 
 		self._videoPlayer = nil
+	end
+
+	if self._videoPlayerGO then
+		gohelper.destroy(self._videoPlayerGO)
+
+		self._videoPlayerGO = nil
 	end
 
 	TaskDispatcher.cancelTask(self._timeout, self)

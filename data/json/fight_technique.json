@@ -933,5 +933,22 @@
     "isCn": 0,
     "displayType": "",
     "noDisplayType": ""
+  },
+  {
+    "id": 63,
+    "mainTitleId": 1,
+    "subTitleId": 11,
+    "condition": "9",
+    "mainTitle_cn": "language_10033387",
+    "mainTitle_en": "language_10033388",
+    "title_cn": "language_10118385",
+    "title_en": "Afflatus Weakness",
+    "iconShow": "",
+    "picture1": "zhandoutujian_zhongmao",
+    "picture2": "",
+    "content1": "language_10118386",
+    "isCn": 0,
+    "displayType": "",
+    "noDisplayType": ""
   }
 ]

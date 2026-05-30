@@ -75,14 +75,6 @@ function VersionActivity1_6EnterController:_openVersionActivityEnterView(viewNam
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.VersionActivity1_6EnterView, {
-		actId = VersionActivity1_6Enum.ActivityId.EnterView,
-		activityIdListWithGroup = VersionActivity1_6Enum.EnterViewActIdListWithGroup,
-		mainActIdList = VersionActivity1_6Enum.EnterViewMainActIdList,
-		actId2AmbientDict = VersionActivity1_6Enum.ActId2Ambient,
-		actId2OpenAudioDict = VersionActivity1_6Enum.ActId2OpenAudio
-	})
-
 	if self.openedCallback then
 		self.openedCallback(self.openedCallbackObj)
 

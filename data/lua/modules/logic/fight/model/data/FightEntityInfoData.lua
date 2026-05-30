@@ -64,6 +64,12 @@ function FightEntityInfoData:onConstructor(proto)
 		table.insert(self.powerInfos, powerData)
 	end
 
+	self.act104EquipUids = {}
+
+	for i, v in ipairs(proto.act104EquipUids) do
+		table.insert(self.act104EquipUids, v)
+	end
+
 	self.SummonedList = {}
 
 	for i, v in ipairs(proto.SummonedList) do
@@ -96,6 +102,15 @@ function FightEntityInfoData:onConstructor(proto)
 	end
 
 	self.customUnitId = proto.customUnitId
+	self.weakCareers = {}
+
+	for i, v in ipairs(proto.weakCareers) do
+		table.insert(self.weakCareers, v)
+	end
+
+	self.toughnessValue = proto.toughnessValue
+	self.toughnessPoint = proto.toughnessPoint
+	self.isBroken = proto.isBroken
 end
 
 return FightEntityInfoData

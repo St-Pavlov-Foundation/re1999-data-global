@@ -168,7 +168,7 @@ end
 
 function PartyGameRewardGuideView:autoSelect()
 	for i = 1, #self._allCanSelectIds do
-		canSelectCount = self._canSelectCount - tabletool.len(self._selectedIndexList)
+		local canSelectCount = self._canSelectCount - tabletool.len(self._selectedIndexList)
 
 		if canSelectCount <= 0 then
 			break

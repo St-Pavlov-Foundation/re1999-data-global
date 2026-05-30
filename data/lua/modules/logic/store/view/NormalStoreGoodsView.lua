@@ -439,7 +439,8 @@ function NormalStoreGoodsView:_refreshInclude()
 		return
 	end
 
-	local showInclude = self._itemSubType == ItemEnum.SubType.SpecifiedGift
+	local itemConfig, itemIcon = ItemModel.instance:getItemConfigAndIcon(self._itemType, self._itemId, true)
+	local showInclude = MaterialTipController.instance:isSpecifiedGift(itemConfig) or MaterialTipController.instance:isBpCustomSelect(itemConfig)
 
 	if not showInclude then
 		return

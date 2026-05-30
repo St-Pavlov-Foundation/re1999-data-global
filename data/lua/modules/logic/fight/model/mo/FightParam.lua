@@ -187,6 +187,16 @@ function FightParam.initFightGroup(fightGroup, clothId, heroList, subHeroList, e
 				end
 			end
 
+			if v.equipId then
+				for _, id in ipairs(v.equipId) do
+					table.insert(fightEquip.equipId, id)
+
+					if trialDict[i] then
+						table.insert(trialDict[i].act104EquipId, id)
+					end
+				end
+			end
+
 			table.insert(fightGroup.activity104Equips, fightEquip)
 		end
 	end

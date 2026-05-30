@@ -326,7 +326,7 @@ function BpModel:getCurBpUpdatePopupCfg()
 end
 
 function BpModel:getCurVersionOperActId()
-	return VersionActivity3_4Enum.ActivityId.BpOperAct
+	return VersionActivity3_5Enum.ActivityId.BpOperAct
 end
 
 BpModel.instance = BpModel.New()

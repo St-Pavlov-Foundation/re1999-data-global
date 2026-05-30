@@ -78,6 +78,8 @@ function V3a2_BossRush_RankBtn:playAnim()
 
 	self._txtrank.text = rank
 
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(self._imageIcon, V3a2_BossRushModel.instance:getRankLevelBg(rank))
+
 	if self._imageSliderFG.fillAmount == fillAmount then
 		return
 	end

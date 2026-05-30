@@ -127,7 +127,7 @@ function HeroGroupFightRuleDescView:_setRuleDescItem(ruleCo, targetId)
 
 	local v2 = desc:GetPreferredValues()
 
-	return math.max(kDescItemMinHeight, v2.y)
+	return math.max(kDescItemMinHeight, v2.y) + 27
 end
 
 function HeroGroupFightRuleDescView:onClose()

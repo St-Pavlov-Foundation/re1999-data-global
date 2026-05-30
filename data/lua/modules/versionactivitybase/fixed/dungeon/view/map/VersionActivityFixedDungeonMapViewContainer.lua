@@ -72,6 +72,7 @@ function VersionActivityFixedDungeonMapViewContainer:onClickHome()
 end
 
 function VersionActivityFixedDungeonMapViewContainer:onContainerInit()
+	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 	self.versionActivityDungeonBaseMo = VersionActivityFixedDungeonMo.New()
 
 	self.versionActivityDungeonBaseMo:init(VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon, self.viewParam.chapterId, self.viewParam.episodeId)

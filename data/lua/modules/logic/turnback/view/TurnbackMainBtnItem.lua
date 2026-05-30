@@ -27,24 +27,10 @@ end
 
 function TurnbackMainBtnItem:_refreshItem()
 	local isShow = ActivityModel.showActivityEffect()
-	local atmoConfig = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local spriteName = isShow and atmoConfig.mainViewActBtnPrefix .. "icon_4" or "icon_4"
+	local spriteName = self:getActBtnPrefixIconName(isShow, "icon_4")
 
 	UISpriteSetMgr.instance:setMainSprite(self._imgitem, spriteName, true)
-
-	if not isShow then
-		local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-		if config then
-			for _, path in ipairs(config.mainViewActBtn) do
-				local go = gohelper.findChild(self.go, path)
-
-				if go then
-					gohelper.setActive(go, isShow)
-				end
-			end
-		end
-	end
+	self:setFestival(isShow)
 
 	if TurnbackModel.instance:getCurTurnbackMoWithNilError() then
 		gohelper.setActive(self._godeadline, true)

@@ -85,6 +85,8 @@ function MainThumbnailView:onPlayCloseTransitionFinish()
 end
 
 function MainThumbnailView:_editableInitView()
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, FestivalAtmosphereComp, self)
+
 	self:_onChangePlayerName()
 
 	self._txtlevel.text = string.format("<size=19>Lv</size>.%s", PlayerModel.instance:getPlayinfo().level)
@@ -152,27 +154,8 @@ end
 
 function MainThumbnailView:_checkActivityImgVisible()
 	local isShow = ActivityModel.showActivityEffect()
-	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local isShowDefaultBg = true
 
-	if config then
-		for i, path in ipairs(config.mainThumbnailView) do
-			local image = gohelper.findChild(self.viewGO, path)
-
-			if image then
-				gohelper.setActive(image, isShow)
-
-				isShowDefaultBg = isShow
-			end
-		end
-	end
-
-	local isShowLogo = isShow and config.isShowLogo or false
-	local mainThumbnailViewActBg = isShow and config.mainThumbnailViewActBg or false
-
-	gohelper.setActive(self._simageleftbg, isShowDefaultBg)
-	gohelper.setActive(self._simagelogoGo, isShowLogo)
-	gohelper.setActive(self._simageactbgGo, mainThumbnailViewActBg)
+	self._festivalAtmosphereComp:setFestival(isShow)
 end
 
 function MainThumbnailView:refreshRedDot()
@@ -197,6 +180,7 @@ end
 function MainThumbnailView:onDestroyView()
 	self._simagesignature:UnLoadImage()
 	self._simageleftbg:UnLoadImage()
+	self._festivalAtmosphereComp:onDestroy()
 end
 
 return MainThumbnailView

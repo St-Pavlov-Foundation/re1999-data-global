@@ -13,7 +13,7 @@ function ReactivityTaskView:refreshRemainTime_overseas()
 end
 
 function ReactivityTaskView:onInitView()
-	self.txtTime = gohelper.findChildTextMesh(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_time")
+	self.txtTime = gohelper.findChildTextMesh(self.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 	self._btnactivitystore = gohelper.findChildButtonWithAudio(self.viewGO, "Left/Prop/#btn_shop")
 	self._txtstorenum = gohelper.findChildTextMesh(self.viewGO, "Left/Prop/txt_PropName/#txt_PropNum")
 

@@ -49,6 +49,13 @@ TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG = protobuf.Descriptor()
 TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLEPLANESFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLENEWFLAGFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLERECORDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG = protobuf.Descriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLY_MSG = protobuf.Descriptor()
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLYTHEMEIDFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLYRECORDFIELD = protobuf.FieldDescriptor()
@@ -74,6 +81,7 @@ TowerComposeModule_pb.TOWERCOMPOSETEAMHEROESFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTIDFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSETEAMRESEARCHIDFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD = protobuf.FieldDescriptor()
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSERECHALLENGEREQUEST_MSG = protobuf.Descriptor()
 TowerComposeModule_pb.TOWERCOMPOSERECHALLENGEREQUESTTHEMEIDFIELD = protobuf.FieldDescriptor()
 TowerComposeModule_pb.TOWERCOMPOSERECHALLENGEREQUESTPLANEIDFIELD = protobuf.FieldDescriptor()
@@ -511,6 +519,74 @@ TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.fields = {
 }
 TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.is_extendable = false
 TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG.extensions = {}
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.name = "uid"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.full_name = ".TowerComposeAssistHero.uid"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.number = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.index = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.label = 2
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.type = 3
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD.cpp_type = 2
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.name = "heroId"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.full_name = ".TowerComposeAssistHero.heroId"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.number = 2
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.index = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.label = 2
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.name = "level"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.full_name = ".TowerComposeAssistHero.level"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.number = 3
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.index = 2
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.name = "breakthrough"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.full_name = ".TowerComposeAssistHero.breakthrough"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.number = 4
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.index = 3
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.name = "skin"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.full_name = ".TowerComposeAssistHero.skin"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.number = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.index = 4
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.name = "exSkillLevel"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.full_name = ".TowerComposeAssistHero.exSkillLevel"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.number = 6
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.index = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.default_value = 0
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.type = 5
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.name = "TowerComposeAssistHero"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.full_name = ".TowerComposeAssistHero"
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.nested_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.enum_types = {}
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.fields = {
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROUIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROHEROIDFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROLEVELFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROBREAKTHROUGHFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROSKINFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSEASSISTHEROEXSKILLLEVELFIELD
+}
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.is_extendable = false
+TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG.extensions = {}
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLYTHEMEIDFIELD.name = "themeId"
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLYTHEMEIDFIELD.full_name = ".TowerComposeUpdateRecordReply.themeId"
 TowerComposeModule_pb.TOWERCOMPOSEUPDATERECORDREPLYTHEMEIDFIELD.number = 1
@@ -738,6 +814,16 @@ TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD.has_default_value = false
 TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD.default_value = 0
 TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD.type = 5
 TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD.cpp_type = 1
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.name = "supportAssistHero"
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.full_name = ".TowerComposeTeam.supportAssistHero"
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.number = 5
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.index = 4
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.label = 1
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.has_default_value = false
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.default_value = nil
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.message_type = TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.type = 11
+TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD.cpp_type = 10
 TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.name = "TowerComposeTeam"
 TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.full_name = ".TowerComposeTeam"
 TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.nested_types = {}
@@ -746,7 +832,8 @@ TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.fields = {
 	TowerComposeModule_pb.TOWERCOMPOSETEAMHEROESFIELD,
 	TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTIDFIELD,
 	TowerComposeModule_pb.TOWERCOMPOSETEAMRESEARCHIDFIELD,
-	TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD
+	TowerComposeModule_pb.TOWERCOMPOSETEAMPLAYERSKILLFIELD,
+	TowerComposeModule_pb.TOWERCOMPOSETEAMSUPPORTASSISTHEROFIELD
 }
 TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.is_extendable = false
 TowerComposeModule_pb.TOWERCOMPOSETEAM_MSG.extensions = {}
@@ -1064,6 +1151,7 @@ TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.fields = {
 }
 TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.is_extendable = false
 TowerComposeModule_pb.TOWERCOMPOSEMODS_MSG.extensions = {}
+TowerComposeModule_pb.TowerComposeAssistHero = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEASSISTHERO_MSG)
 TowerComposeModule_pb.TowerComposeBoss = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEBOSS_MSG)
 TowerComposeModule_pb.TowerComposeBossRecord = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEBOSSRECORD_MSG)
 TowerComposeModule_pb.TowerComposeBossSettle = protobuf.Message(TowerComposeModule_pb.TOWERCOMPOSEBOSSSETTLE_MSG)

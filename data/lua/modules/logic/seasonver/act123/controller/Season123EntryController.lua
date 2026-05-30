@@ -40,12 +40,8 @@ function Season123EntryController:openStage(stage)
 		return
 	end
 
-	if stageMO.episodeMap[1] and not stageMO.episodeMap[1]:isFinished() and stage ~= seasonMO.stage then
-		if seasonMO.stage ~= 0 and stage ~= seasonMO.stage and not Season123ProgressUtils.checkStageIsFinish(actId, seasonMO.stage) then
-			GameFacade.showMessageBox(MessageBoxIdDefine.Season123WarningCleanStage, MsgBoxEnum.BoxType.Yes_No, self.cleanAndStartPickHero, nil, nil, self)
-		else
-			self:startPickHero()
-		end
+	if stage ~= seasonMO.stage then
+		Activity123Rpc.instance:sendAct123EnterStageRequest(actId, stage, {}, nil, self.handlePickHeroSuccess, self)
 	else
 		return true
 	end
@@ -94,6 +90,10 @@ function Season123EntryController:processJumpParam(viewParam)
 			jumpId = viewParam.jumpId,
 			jumpParam = viewParam.jumpParam
 		})
+
+		if battleContext.stage then
+			self:goToStage(battleContext.stage)
+		end
 	elseif viewParam.jumpId == Activity123Enum.JumpId.Retail then
 		Season123Controller.instance:dispatchEvent(Season123Event.OtherViewAutoOpened)
 		Season123Controller.instance:openSeasonRetail({
@@ -103,12 +103,42 @@ function Season123EntryController:processJumpParam(viewParam)
 		self:goToStage(viewParam.jumpParam.stage)
 	elseif viewParam.jumpId == Activity123Enum.JumpId.MarketStageFinish then
 		self:goToStage(viewParam.jumpParam.stage)
-		Season123Controller.instance:dispatchEvent(Season123Event.OtherViewAutoOpened)
-		ViewMgr.instance:openView(Season123Controller.instance:getStageFinishViewName(), {
-			actId = Season123EntryModel.instance.activityId,
-			stage = viewParam.jumpParam.stage
-		})
+		self:handleMarketStageFinish()
 	end
+end
+
+function Season123EntryController:handleMarketStageFinish(actId, stageId)
+	local isFirstPass = self:isFirstPassStage(actId, stageId)
+
+	if isFirstPass then
+		self:setStageAlreadyPass(actId, stageId)
+	end
+
+	Season123Controller.instance:dispatchEvent(Season123Event.StageFinishWithoutStory, isFirstPass)
+end
+
+function Season123EntryController:isFirstPassStage(actId, stage)
+	local key = self:getPassKey(actId, stage)
+
+	if not string.nilorempty(key) then
+		local rs = PlayerPrefsHelper.getString(key, "")
+
+		return string.nilorempty(rs)
+	end
+end
+
+function Season123EntryController:setStageAlreadyPass(actId, stage)
+	local key = self:getPassKey(actId, stage)
+
+	if not string.nilorempty(key) then
+		PlayerPrefsHelper.setString(key, "1")
+	end
+end
+
+function Season123EntryController:getPassKey(actId, stage)
+	local useId = PlayerModel.instance:getMyUserId()
+
+	return "FirstPassStage" .. tostring(useId) .. "#" .. tostring(actId) .. tostring(stage)
 end
 
 function Season123EntryController:_realOpenStageRecords()
@@ -140,15 +170,32 @@ function Season123EntryController:goToStage(stage)
 end
 
 function Season123EntryController:handlePickHeroSuccess()
+	self:handleEnterStage()
+
 	local actId = Season123EntryModel.instance.activityId
 
-	Activity123Rpc.instance:sendGet123InfosRequest(actId, self.handleEnterStage, self)
+	Activity123Rpc.instance:sendGet123InfosRequest(actId)
 end
 
 function Season123EntryController:handleEnterStage()
+	local actId = Season123EntryModel.instance.activityId
+	local stage = Season123EntryModel.instance:getCurrentStage()
+	local seasonMO = Season123Model.instance:getActInfo(actId)
+	local stageMO = seasonMO and seasonMO:getStageMO(stage)
+	local needPlayLoadingAnim = not stageMO or stageMO:isNeverTry()
+
+	if not needPlayLoadingAnim then
+		ViewMgr.instance:openView(Season123Controller.instance:getEpisodeListViewName(), {
+			actId = actId,
+			stage = stage
+		})
+
+		return
+	end
+
 	ViewMgr.instance:openView(Season123Controller.instance:getStageLoadingViewName(), {
-		actId = Season123EntryModel.instance.activityId,
-		stage = Season123EntryModel.instance:getCurrentStage()
+		actId = actId,
+		stage = stage
 	})
 end
 

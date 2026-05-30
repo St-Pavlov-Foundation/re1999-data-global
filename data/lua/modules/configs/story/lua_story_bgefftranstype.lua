@@ -273,7 +273,7 @@ return {
 	},
 	{
 		30,
-		"甩镜头",
+		"甩镜头左右",
 		"",
 		"v3a0_dynamicblur_controller.prefab",
 		"",
@@ -348,6 +348,15 @@ return {
 		"河流背景",
 		"",
 		"v3a3_beijingtexiao.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		39,
+		"甩镜头上下",
+		"",
+		"v3a0_dynamicblur_controller.prefab",
 		"",
 		0,
 		""

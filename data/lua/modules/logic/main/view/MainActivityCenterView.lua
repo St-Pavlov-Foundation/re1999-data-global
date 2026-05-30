@@ -19,6 +19,7 @@ function MainActivityCenterView:removeEvents()
 end
 
 function MainActivityCenterView:_editableInitView()
+	self._festivalAtmosphereComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, FestivalAtmosphereComp, self)
 	self._itemGoParent = gohelper.findChild(self.viewGO, "left/#go_activity")
 	self._itemGoParentTran = self._itemGoParent.transform
 	self._itemGo = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/Viewport/Content/actcenteritem")
@@ -36,6 +37,7 @@ function MainActivityCenterView:_editableInitView()
 	self._goactivity = gohelper.findChild(self.viewGO, "left/#go_activity")
 	self._activityLogo = gohelper.findChild(self.viewGO, "left/#go_activity/actlogo")
 	self._goactbg = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/#go_actbg")
+	self._goActbgImage = gohelper.findChild(self.viewGO, "left/#go_activity/scroll_view/#go_actbg/image")
 	self._goactbgTrans = self._goactbg.transform
 	self._goactbgOffsetX = recthelper.getAnchorX(self._goactbgTrans)
 
@@ -227,23 +229,8 @@ end
 
 function MainActivityCenterView:_checkActivityImgVisible()
 	local isShow = ActivityModel.showActivityEffect()
-	local showLogo = isShow and ActivityModel.checkIsShowLogoVisible()
-	local showActBg = isShow and ActivityModel.checkIsShowActBgVisible()
 
-	gohelper.setActive(self._activityLogo, showLogo)
-	gohelper.setActive(self._goactbg, showActBg)
-
-	local config = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-	if config then
-		for _, path in ipairs(config.mainView) do
-			local go = gohelper.findChild(self.viewGO, path)
-
-			if go then
-				gohelper.setActive(go, isShow)
-			end
-		end
-	end
+	self._festivalAtmosphereComp:setFestival(isShow)
 end
 
 function MainActivityCenterView:_refreshNorSignActivity()
@@ -712,6 +699,7 @@ function MainActivityCenterView:onDestroyView()
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	self._festivalAtmosphereComp:onDestroy()
 end
 
 function MainActivityCenterView:_updateRoleSignViewBtn()
@@ -760,6 +748,7 @@ function MainActivityCenterView:_refreshActBgWidth()
 	width = width + offset
 
 	recthelper.setWidth(self._goactbgTrans, GameUtil.clamp(width, 0, kMaxActBgWidth))
+	gohelper.setActive(self._goActbgImage, num > 0)
 end
 
 return MainActivityCenterView

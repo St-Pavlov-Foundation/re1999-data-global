@@ -39,6 +39,20 @@ function V1a4_BossRushLevelDetail_Spine:setScale(scale)
 	transformhelper.setLocalScale(self._gospineTran, scale, scale, scale)
 end
 
+function V1a4_BossRushLevelDetail_Spine:settVariant(variant)
+	if not self._skeletonGraphic then
+		self._skeletonGraphic = self._uiSpine:getSkeletonGraphic()
+	end
+
+	local variantPath = V3a2BossRushEnum.Variant[variant]
+
+	if string.nilorempty(variantPath) then
+		return
+	end
+
+	IconMaterialMgr.instance:loadMaterialAddSet(variantPath, self._skeletonGraphic)
+end
+
 function V1a4_BossRushLevelDetail_Spine:onDestroy()
 	if self._uiSpine then
 		self._uiSpine:doClear()

@@ -15278,5 +15278,1040 @@
     "id": 1306140,
     "eventName": "play_hero3061fightingvoc_32",
     "bankName": "hero3061_skill"
+  },
+  {
+    "id": 1313901,
+    "eventName": "play_hero3139_mainvoc_1",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313902,
+    "eventName": "play_hero3139_mainvoc_2",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313903,
+    "eventName": "play_hero3139_mainvoc_3",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313904,
+    "eventName": "play_hero3139_mainvoc_4",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313905,
+    "eventName": "play_hero3139_mainvoc_5",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313906,
+    "eventName": "play_hero3139_mainvoc_6",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313907,
+    "eventName": "play_hero3139_mainvoc_7",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313908,
+    "eventName": "play_hero3139_mainvoc_8",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313909,
+    "eventName": "play_hero3139_mainvoc_9",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313910,
+    "eventName": "play_hero3139_mainvoc_10",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313911,
+    "eventName": "play_hero3139_mainvoc_11",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313912,
+    "eventName": "play_hero3139_mainvoc_12",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313913,
+    "eventName": "play_hero3139_mainvoc_13",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313914,
+    "eventName": "play_hero3139_mainvoc_14",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313915,
+    "eventName": "play_hero3139_mainvoc_15",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313916,
+    "eventName": "play_hero3139_mainvoc_16",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313917,
+    "eventName": "play_hero3139_mainvoc_17",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313918,
+    "eventName": "play_hero3139_mainvoc_18",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313919,
+    "eventName": "play_hero3139_fightingvoc_19",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313920,
+    "eventName": "play_hero3139_fightingvoc_20",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313921,
+    "eventName": "play_hero3139_fightingvoc_21",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313922,
+    "eventName": "play_hero3139_fightingvoc_22",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313923,
+    "eventName": "play_hero3139_fightingvoc_23",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313924,
+    "eventName": "play_hero3139_fightingvoc_24",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313925,
+    "eventName": "play_hero3139_fightingvoc_25",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313926,
+    "eventName": "play_hero3139_fightingvoc_26",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313927,
+    "eventName": "play_hero3139_fightingvoc_27",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313928,
+    "eventName": "play_hero3139_fightingvoc_28",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313929,
+    "eventName": "play_hero3139_fightingvoc_29",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313930,
+    "eventName": "play_hero3139_fightingvoc_30",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313931,
+    "eventName": "play_hero3139_fightingvoc_31",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313932,
+    "eventName": "play_hero3139_fightingvoc_32",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313933,
+    "eventName": "play_hero3139_fightingvoc_33",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313934,
+    "eventName": "play_hero3139_fightingvoc_34",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313935,
+    "eventName": "play_hero3139_fightingvoc_33",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313936,
+    "eventName": "play_hero3139_fightingvoc_34",
+    "bankName": "hero3139_vo"
+  },
+  {
+    "id": 1313937,
+    "eventName": "play_hero3139_mainvoc_12",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313938,
+    "eventName": "play_hero3139_mainvoc_18",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313944,
+    "eventName": "play_hero3139_mainvoc_4",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1313945,
+    "eventName": "play_hero3139_mainvoc_5",
+    "bankName": "hero3139_mainvoc"
+  },
+  {
+    "id": 1314201,
+    "eventName": "play_hero3142_mainvoc_1",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314202,
+    "eventName": "play_hero3142_mainvoc_2",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314203,
+    "eventName": "play_hero3142_mainvoc_3",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314204,
+    "eventName": "play_hero3142_mainvoc_4",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314205,
+    "eventName": "play_hero3142_mainvoc_5",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314206,
+    "eventName": "play_hero3142_mainvoc_6",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314207,
+    "eventName": "play_hero3142_mainvoc_7",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314208,
+    "eventName": "play_hero3142_mainvoc_8",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314209,
+    "eventName": "play_hero3142_mainvoc_9",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314210,
+    "eventName": "play_hero3142_mainvoc_10",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314211,
+    "eventName": "play_hero3142_mainvoc_11",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314212,
+    "eventName": "play_hero3142_mainvoc_12",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314213,
+    "eventName": "play_hero3142_mainvoc_13",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314214,
+    "eventName": "play_hero3142_mainvoc_14",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314215,
+    "eventName": "play_hero3142_mainvoc_15",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314216,
+    "eventName": "play_hero3142_mainvoc_16",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314217,
+    "eventName": "play_hero3142_mainvoc_17",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314218,
+    "eventName": "play_hero3142_mainvoc_18",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314219,
+    "eventName": "play_hero3142_fightingvoc_19",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314220,
+    "eventName": "play_hero3142_fightingvoc_20",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314221,
+    "eventName": "play_hero3142_fightingvoc_21",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314222,
+    "eventName": "play_hero3142_fightingvoc_22",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314223,
+    "eventName": "play_hero3142_fightingvoc_23",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314224,
+    "eventName": "play_hero3142_fightingvoc_24",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314225,
+    "eventName": "play_hero3142_fightingvoc_25",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314226,
+    "eventName": "play_hero3142_fightingvoc_26",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314227,
+    "eventName": "play_hero3142_fightingvoc_27",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314228,
+    "eventName": "play_hero3142_fightingvoc_28",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314229,
+    "eventName": "play_hero3142_fightingvoc_29",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314230,
+    "eventName": "play_hero3142_fightingvoc_30",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314231,
+    "eventName": "play_hero3142_fightingvoc_31",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314232,
+    "eventName": "play_hero3142_fightingvoc_32",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314233,
+    "eventName": "play_hero3142_fightingvoc_33",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314234,
+    "eventName": "play_hero3142_fightingvoc_34",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314235,
+    "eventName": "play_hero3142_fightingvoc_33",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314236,
+    "eventName": "play_hero3142_fightingvoc_34",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314237,
+    "eventName": "play_hero3142_mainvoc_16",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314238,
+    "eventName": "play_hero3142_mainvoc_18",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314239,
+    "eventName": "play_hero3142_fightingvoc_32",
+    "bankName": "hero3142_vo"
+  },
+  {
+    "id": 1314246,
+    "eventName": "play_hero3142_mainvoc_7",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314247,
+    "eventName": "play_hero3142_mainvoc_4",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1314248,
+    "eventName": "play_hero3142_mainvoc_13",
+    "bankName": "hero3142_mainvoc"
+  },
+  {
+    "id": 1313601,
+    "eventName": "play_hero3136_mainvoc_1",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313602,
+    "eventName": "play_hero3136_mainvoc_2",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313603,
+    "eventName": "play_hero3136_mainvoc_3",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313604,
+    "eventName": "play_hero3136_mainvoc_4",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313605,
+    "eventName": "play_hero3136_mainvoc_5",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313606,
+    "eventName": "play_hero3136_mainvoc_6",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313607,
+    "eventName": "play_hero3136_mainvoc_7",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313608,
+    "eventName": "play_hero3136_mainvoc_8",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313609,
+    "eventName": "play_hero3136_mainvoc_9",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313610,
+    "eventName": "play_hero3136_mainvoc_10",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313611,
+    "eventName": "play_hero3136_mainvoc_11",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313612,
+    "eventName": "play_hero3136_mainvoc_12",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313613,
+    "eventName": "play_hero3136_mainvoc_13",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313614,
+    "eventName": "play_hero3136_mainvoc_14",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313615,
+    "eventName": "play_hero3136_mainvoc_15",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313616,
+    "eventName": "play_hero3136_mainvoc_16",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313617,
+    "eventName": "play_hero3136_mainvoc_17",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313618,
+    "eventName": "play_hero3136_mainvoc_18",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313619,
+    "eventName": "play_hero3136_fightingvoc_19",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313620,
+    "eventName": "play_hero3136_fightingvoc_20",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313621,
+    "eventName": "play_hero3136_fightingvoc_21",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313622,
+    "eventName": "play_hero3136_fightingvoc_22",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313623,
+    "eventName": "play_hero3136_fightingvoc_23",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313624,
+    "eventName": "play_hero3136_fightingvoc_24",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313625,
+    "eventName": "play_hero3136_fightingvoc_25",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313626,
+    "eventName": "play_hero3136_fightingvoc_26",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313627,
+    "eventName": "play_hero3136_fightingvoc_27",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313628,
+    "eventName": "play_hero3136_fightingvoc_28",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313629,
+    "eventName": "play_hero3136_fightingvoc_29",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313630,
+    "eventName": "play_hero3136_fightingvoc_30",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313631,
+    "eventName": "play_hero3136_fightingvoc_31",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313632,
+    "eventName": "play_hero3136_fightingvoc_32",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313633,
+    "eventName": "play_hero3136_fightingvoc_33",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313634,
+    "eventName": "play_hero3136_fightingvoc_34",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313635,
+    "eventName": "play_hero3136_mainvoc_6",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313636,
+    "eventName": "play_hero3136_mainvoc_13",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1313637,
+    "eventName": "play_hero3136_fightingvoc_32",
+    "bankName": "hero3136_vo"
+  },
+  {
+    "id": 1313638,
+    "eventName": "play_hero3136_mainvoc_2",
+    "bankName": "hero3136_mainvoc"
+  },
+  {
+    "id": 1311750,
+    "eventName": "play_hero311704_fightingvoc_55",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311751,
+    "eventName": "play_hero311704_fightingvoc_56",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311752,
+    "eventName": "play_hero311704_fightingvoc_57",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311753,
+    "eventName": "play_hero311704_fightingvoc_58",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311754,
+    "eventName": "play_hero311704_fightingvoc_59",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311755,
+    "eventName": "play_hero311704_fightingvoc_60",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311756,
+    "eventName": "play_hero311704_fightingvoc_61",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311757,
+    "eventName": "play_hero311704_fightingvoc_62",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311758,
+    "eventName": "play_hero311704_fightingvoc_63",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311759,
+    "eventName": "play_hero311704_fightingvoc_64",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311760,
+    "eventName": "play_hero311704_fightingvoc_65",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311761,
+    "eventName": "play_hero311704_fightingvoc_66",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311762,
+    "eventName": "play_hero311704_fightingvoc_67",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311763,
+    "eventName": "play_hero311704_fightingvoc_68",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311764,
+    "eventName": "play_hero3117_fightingvoc_33",
+    "bankName": "hero3117_vo"
+  },
+  {
+    "id": 1311765,
+    "eventName": "play_hero311704_fightingvoc_70",
+    "bankName": "hero311704_vo_skin"
+  },
+  {
+    "id": 1311766,
+    "eventName": "play_hero3117_mainvoc_1",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311767,
+    "eventName": "play_hero3117_mainvoc_2",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311768,
+    "eventName": "play_hero3117_mainvoc_3",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311769,
+    "eventName": "play_hero3117_mainvoc_4",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311770,
+    "eventName": "play_hero3117_mainvoc_6",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311771,
+    "eventName": "play_hero3117_mainvoc_10",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311772,
+    "eventName": "play_hero3117_mainvoc_12",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311773,
+    "eventName": "play_hero3117_mainvoc_15",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311774,
+    "eventName": "play_hero3117_mainvoc_16",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311775,
+    "eventName": "play_hero3117_mainvoc_17",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1311776,
+    "eventName": "play_hero3117_mainvoc_18",
+    "bankName": "hero3117_mainvoc"
+  },
+  {
+    "id": 1313244,
+    "eventName": "play_hero313203_fightingvoc_55",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313245,
+    "eventName": "play_hero313203_fightingvoc_56",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313246,
+    "eventName": "play_hero313203_fightingvoc_57",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313247,
+    "eventName": "play_hero313203_fightingvoc_58",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313248,
+    "eventName": "play_hero313203_fightingvoc_59",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313249,
+    "eventName": "play_hero313203_fightingvoc_60",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313250,
+    "eventName": "play_hero313203_fightingvoc_61",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313251,
+    "eventName": "play_hero313203_fightingvoc_62",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313252,
+    "eventName": "play_hero313203_fightingvoc_63",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313253,
+    "eventName": "play_hero313203_fightingvoc_64",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313254,
+    "eventName": "play_hero313203_fightingvoc_65",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313255,
+    "eventName": "play_hero313203_fightingvoc_66",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313256,
+    "eventName": "play_hero313203_fightingvoc_67",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313257,
+    "eventName": "play_hero313203_fightingvoc_68",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313258,
+    "eventName": "play_hero3132_fightingvoc_33",
+    "bankName": "hero3132_vo"
+  },
+  {
+    "id": 1313259,
+    "eventName": "play_hero313203_fightingvoc_70",
+    "bankName": "hero313203_vo_skin"
+  },
+  {
+    "id": 1313260,
+    "eventName": "play_hero3132_mainvoc_1",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313261,
+    "eventName": "play_hero3132_mainvoc_2",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313262,
+    "eventName": "play_hero3132_mainvoc_4",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313263,
+    "eventName": "play_hero3132_mainvoc_11",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313264,
+    "eventName": "play_hero3132_mainvoc_12",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313265,
+    "eventName": "play_hero3132_mainvoc_14",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313266,
+    "eventName": "play_hero3132_mainvoc_18",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313267,
+    "eventName": "play_hero3132_mainvoc_16",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313268,
+    "eventName": "play_hero3132_mainvoc_9",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313269,
+    "eventName": "play_hero3132_mainvoc_13",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1313270,
+    "eventName": "play_hero3132_mainvoc_5",
+    "bankName": "hero3132_mainvoc"
+  },
+  {
+    "id": 1309861,
+    "eventName": "play_hero3098_mainvoc_1",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309862,
+    "eventName": "play_hero3098_mainvoc_2",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309863,
+    "eventName": "play_hero3098_mainvoc_3",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309864,
+    "eventName": "play_hero3098_mainvoc_5",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309865,
+    "eventName": "play_hero3098_mainvoc_9",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309866,
+    "eventName": "play_hero3098_mainvoc_11",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309867,
+    "eventName": "play_hero3098_mainvoc_14",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309868,
+    "eventName": "play_hero3098_mainvoc_17",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309869,
+    "eventName": "play_hero3098_mainvoc_18",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309870,
+    "eventName": "play_hero3098_fightingvoc_27",
+    "bankName": "hero3098_vo"
+  },
+  {
+    "id": 1309871,
+    "eventName": "play_hero3098_fightingvoc_34",
+    "bankName": "hero3098_vo"
+  },
+  {
+    "id": 1309872,
+    "eventName": "play_hero3098_fightingvoc_33",
+    "bankName": "hero3098_vo"
+  },
+  {
+    "id": 1309873,
+    "eventName": "play_hero3098_mainvoc_8",
+    "bankName": "hero3098_mainvoc"
+  },
+  {
+    "id": 1309876,
+    "eventName": "play_hero3098_fightingvoc_32",
+    "bankName": "hero3098_vo"
+  },
+  {
+    "id": 1313639,
+    "eventName": "play_hero3136_mainsfx_kafei",
+    "bankName": "hero3136_mainsfx"
+  },
+  {
+    "id": 1314240,
+    "eventName": "play_hero3142_mainsfx_chuling1",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1314241,
+    "eventName": "play_hero3142_mainsfx_chuling3",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1314242,
+    "eventName": "play_hero3142_mainsfx_lazhu1",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1314243,
+    "eventName": "play_hero3142_mainsfx_yinyue1",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1314244,
+    "eventName": "play_hero3142_mainsfx_yinyue2",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1314245,
+    "eventName": "play_hero3142_mainsfx_yinyue3",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 1313939,
+    "eventName": "play_hero3139_mainsfx_shoutao",
+    "bankName": "hero3139_mainsfx"
+  },
+  {
+    "id": 1313940,
+    "eventName": "play_hero3139_mainsfx_xia",
+    "bankName": "hero3139_mainsfx"
+  },
+  {
+    "id": 1313941,
+    "eventName": "play_hero3139_mainsfx_xia2",
+    "bankName": "hero3139_mainsfx"
+  },
+  {
+    "id": 1313942,
+    "eventName": "play_hero3139_mainsfx_wuqiku",
+    "bankName": "hero3139_mainsfx"
+  },
+  {
+    "id": 1313943,
+    "eventName": "play_hero3139_mainsfx_wuqiku2",
+    "bankName": "hero3139_mainsfx"
+  },
+  {
+    "id": 1313271,
+    "eventName": "play_hero313203_mainsfx_fenghua",
+    "bankName": "hero313203_mainsfx"
+  },
+  {
+    "id": 1311777,
+    "eventName": "play_hero311704_mainsfx_shizhi",
+    "bankName": "hero311704_mainsfx"
+  },
+  {
+    "id": 1311778,
+    "eventName": "play_hero311704_mainsfx_zhiren",
+    "bankName": "hero311704_mainsfx"
+  },
+  {
+    "id": 1311779,
+    "eventName": "play_hero311704_mainsfx_zuohua",
+    "bankName": "hero311704_mainsfx"
+  },
+  {
+    "id": 1311780,
+    "eventName": "play_hero311704_mainsfx_fall",
+    "bankName": "hero311704_mainsfx"
+  },
+  {
+    "id": 1309874,
+    "eventName": "play_hero309804_mainsfx_poke",
+    "bankName": "hero309804_mainsfx"
+  },
+  {
+    "id": 1309875,
+    "eventName": "play_hero309804_mainsfx_hongmen",
+    "bankName": "hero309804_mainsfx"
   }
 ]

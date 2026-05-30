@@ -44,4 +44,12 @@ function SurvivalSummaryActPreloader:getSummaryActBlock()
 	return blocks
 end
 
+function SurvivalSummaryActPreloader:onSceneClose(sceneId, levelId)
+	if self._loader then
+		self._loader:dispose()
+
+		self._loader = nil
+	end
+end
+
 return SurvivalSummaryActPreloader

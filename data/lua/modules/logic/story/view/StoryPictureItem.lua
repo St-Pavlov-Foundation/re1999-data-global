@@ -483,6 +483,7 @@ function StoryPictureItem:destroyPicture(picCo, isSkip, keepTime)
 		return
 	end
 
+	TaskDispatcher.cancelTask(self._build, self)
 	TaskDispatcher.cancelTask(self._playShake, self)
 	TaskDispatcher.cancelTask(self._realDestroy, self)
 	TaskDispatcher.cancelTask(self._startDestroy, self)

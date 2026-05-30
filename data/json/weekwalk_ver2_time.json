@@ -97,11 +97,35 @@
   },
   {
     "timeId": 13,
-    "issueId": 10,
-    "optionalSkills": "2032#2001#2034#2022#2006#2010",
+    "issueId": 13,
+    "optionalSkills": "2039#2032#2010#2033#2015#2026",
     "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#106320121",
-    "ruleRear": "1#106320122"
+    "ruleFront": "1#117342005",
+    "ruleRear": "1#117342006"
+  },
+  {
+    "timeId": 14,
+    "issueId": 14,
+    "optionalSkills": "2040#2023#2041#2029#2010#2034",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#118350150",
+    "ruleRear": "1#118350160"
+  },
+  {
+    "timeId": 16,
+    "issueId": 13,
+    "optionalSkills": "2039#2032#2010#2033#2015#2026",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#117342005",
+    "ruleRear": "1#117342006"
+  },
+  {
+    "timeId": 17,
+    "issueId": 14,
+    "optionalSkills": "2040#2023#2041#2029#2010#2034",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#118350150",
+    "ruleRear": "1#118350160"
   },
   {
     "timeId": 15,
@@ -110,13 +134,5 @@
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#117341005",
     "ruleRear": "1#117341006"
-  },
-  {
-    "timeId": 14,
-    "issueId": 11,
-    "optionalSkills": "2035#2002#2036#2037#2015#2006",
-    "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#117333505",
-    "ruleRear": "1#117333506"
   }
 ]

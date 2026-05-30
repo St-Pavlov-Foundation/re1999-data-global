@@ -426,7 +426,9 @@ function PackageStoreGoodsView:_updateNormalPackCommon(leftbg, txtremain, gorema
 	if self._mo.isChargeGoods then
 		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, self._mo.refreshTime, remain, self._mo.offlineTime)
 	else
-		content = StoreConfig.instance:getRemainText(maxBuyCount, self._mo.refreshTime, remain, self._mo.offlineTime)
+		local showRefreshTime = StoreHelper.getShowRefreshTimeByGoodsMO(self._mo)
+
+		content = StoreConfig.instance:getRemainText(maxBuyCount, showRefreshTime, remain, self._mo.offlineTime)
 	end
 
 	if string.nilorempty(content) then

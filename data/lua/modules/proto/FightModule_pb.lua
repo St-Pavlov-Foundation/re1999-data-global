@@ -25,6 +25,7 @@ FightModule_pb.RECONNECTFIGHTREQUEST_MSG = protobuf.Descriptor()
 FightModule_pb.AUTOROUNDREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.AUTOROUNDREPLYOPERSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.AUTOROUNDREPLYTOIDFIELD = protobuf.FieldDescriptor()
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLYTEAMAINFOSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLYTEAMBINFOSFIELD = protobuf.FieldDescriptor()
@@ -297,13 +298,23 @@ FightModule_pb.AUTOROUNDREPLYTOIDFIELD.has_default_value = false
 FightModule_pb.AUTOROUNDREPLYTOIDFIELD.default_value = 0
 FightModule_pb.AUTOROUNDREPLYTOIDFIELD.type = 3
 FightModule_pb.AUTOROUNDREPLYTOIDFIELD.cpp_type = 2
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.name = "clothSkill"
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.full_name = ".AutoRoundReply.clothSkill"
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.number = 3
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.index = 2
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.label = 1
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.has_default_value = false
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.default_value = 0
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.type = 5
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.cpp_type = 1
 FightModule_pb.AUTOROUNDREPLY_MSG.name = "AutoRoundReply"
 FightModule_pb.AUTOROUNDREPLY_MSG.full_name = ".AutoRoundReply"
 FightModule_pb.AUTOROUNDREPLY_MSG.nested_types = {}
 FightModule_pb.AUTOROUNDREPLY_MSG.enum_types = {}
 FightModule_pb.AUTOROUNDREPLY_MSG.fields = {
 	FightModule_pb.AUTOROUNDREPLYOPERSFIELD,
-	FightModule_pb.AUTOROUNDREPLYTOIDFIELD
+	FightModule_pb.AUTOROUNDREPLYTOIDFIELD,
+	FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD
 }
 FightModule_pb.AUTOROUNDREPLY_MSG.is_extendable = false
 FightModule_pb.AUTOROUNDREPLY_MSG.extensions = {}

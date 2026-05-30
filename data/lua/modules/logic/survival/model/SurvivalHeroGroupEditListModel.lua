@@ -16,8 +16,25 @@ function SurvivalHeroGroupEditListModel:copyCharacterCardList(init)
 		teamInfo = SurvivalMapModel.instance:getSceneMo().teamInfo
 		moList = {}
 
-		for uid in pairs(teamInfo.heroUids) do
-			table.insert(moList, (teamInfo:getHeroMo(uid)))
+		local hero = CharacterBackpackCardListModel.instance:getCharacterCardList()
+
+		if hero then
+			for i, heroMo in ipairs(hero) do
+				local uid = heroMo.uid
+				local have
+
+				for id in pairs(teamInfo.heroUids) do
+					if id == uid then
+						have = true
+
+						break
+					end
+				end
+
+				if have then
+					table.insert(moList, (teamInfo:getHeroMo(uid)))
+				end
+			end
 		end
 	else
 		moList = CharacterBackpackCardListModel.instance:getCharacterCardList()

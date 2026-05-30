@@ -45,7 +45,7 @@ function Season123MO:initStages(stages)
 		local stageData = stages[i]
 		local stageMO = Season123StageMO.New()
 
-		stageMO:init(stageData)
+		stageMO:init(stageData, self.activityId)
 		table.insert(self.stageList, stageMO)
 
 		self.stageMap[stageData.stage] = stageMO
@@ -75,7 +75,7 @@ function Season123MO:updateStages(stages)
 		if not stageMO then
 			stageMO = Season123StageMO.New()
 
-			stageMO:init(stageData)
+			stageMO:init(stageData, self.activityId)
 			table.insert(self.stageList, stageMO)
 
 			needAdd = true
@@ -243,6 +243,20 @@ function Season123MO:getStageRewardCount(stageId)
 	end
 
 	return hasGetCount, totalRewardCount
+end
+
+function Season123MO:updateBonus(stage, bonusIds)
+	local stageMO = self:getStageMO(stage)
+
+	if not stageMO then
+		return
+	end
+
+	return stageMO:updateBonus(bonusIds)
+end
+
+function Season123MO:setSnapshotByHeroGroup(subId, param)
+	self.heroGroupSnapshot[subId] = Season123HeroGroupUtils.buildSingleSnapshotHeroGroup(param.groupInfo)
 end
 
 return Season123MO

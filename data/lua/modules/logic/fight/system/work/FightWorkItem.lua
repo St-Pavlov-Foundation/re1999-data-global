@@ -243,6 +243,7 @@ function FightWorkItem:onDoneAndKeepPlay()
 	end
 
 	self.SUCCEEDED = true
+	self.IS_ON_DONE_AND_KEEP_PLAY = true
 
 	local callbackList = tabletool.copy(self.CALLBACK)
 
@@ -252,7 +253,7 @@ function FightWorkItem:onDoneAndKeepPlay()
 end
 
 function FightWorkItem:isAlive()
-	return not self.IS_DISPOSED and not self.WORK_IS_FINISHED
+	return not self.IS_DISPOSED and not self.WORK_IS_FINISHED and not self.IS_ON_DONE_AND_KEEP_PLAY
 end
 
 function FightWorkItem:disposeSelf()

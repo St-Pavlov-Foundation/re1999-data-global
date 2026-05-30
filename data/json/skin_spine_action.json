@@ -8251,5 +8251,194 @@
     "effectRemoveTime": 0.0,
     "audioId": 467010792,
     "dieAnim": ""
+  },
+  {
+    "skinId": 313901,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a5_llzhd_born_01#buff/roleeffect_llzhd",
+    "effectHangPoint": "mountroot#mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431390191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313901,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431390192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314201,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a5_lmn_born_01#buff/born/pre_v3a5_lmn_born_02#buff/born/pre_v3a5_lmn_born_03",
+    "effectHangPoint": "special1#mountweapon#mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431420191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314201,
+    "actionName": "die",
+    "effect": "v3a5_lmn/lmn_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431420192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313601,
+    "actionName": "born",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431360191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313601,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431360192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309804,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a5_lsp_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 430980491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 309804,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 430980192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313203,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a5_gsn_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431320391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 313203,
+    "actionName": "die",
+    "effect": "v3a5_gsn/gsn_die",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431320392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311704,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a5_kphh_born_01#buff/born/pre_v3a5_kphh_born_02",
+    "effectHangPoint": "mountweapon#mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431170491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 311704,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431170492,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670157,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467015792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 630227,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463022792,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670159,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467015992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670165,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467015992,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670161,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467016192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 670168,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 467016192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 620163,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 462011692,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640154,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 463012392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 640155,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 441120192,
+    "dieAnim": ""
   }
 ]

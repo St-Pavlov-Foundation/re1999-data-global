@@ -31,5 +31,8 @@ V3a2BossRushEnum.AnimEventName = {
 	PlayAudio_Appraise = "PlayAudio_Appraise",
 	RecordScore = "RecordScore"
 }
+V3a2BossRushEnum.Variant = {
+	[10] = "ui/materials/dynamic/ui_headicon_stylization_10.mat"
+}
 
 return V3a2BossRushEnum

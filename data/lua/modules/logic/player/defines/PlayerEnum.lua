@@ -24,6 +24,7 @@ PlayerEnum.SimpleProperty = {
 	EquipPreferenceOpen = 9,
 	SummonUISkin = 24,
 	V2a7_BossRushCurrencyNum = 16,
+	HeroSearchFilterTags = 25,
 	MainHero = 2,
 	MainUISkin = 21,
 	PreviouslyOn = 17,

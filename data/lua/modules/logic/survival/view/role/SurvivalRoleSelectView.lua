@@ -155,6 +155,7 @@ function SurvivalRoleSelectView:refreshSelect()
 
 	local skillData = {
 		{
+			heroId = self.cfg.id,
 			skillId = self.cfg.skill
 		}
 	}

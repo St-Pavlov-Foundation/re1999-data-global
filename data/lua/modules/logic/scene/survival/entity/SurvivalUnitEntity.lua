@@ -482,6 +482,12 @@ function SurvivalUnitEntity:updateUnitMark()
 	if self._unitMo:isMark(SurvivalEnum.UnitMarkType.ItemAttract) then
 		SurvivalController.instance:dispatchEvent(SurvivalEvent.ShowUnitBubble, self._unitMo.id, 3, 1)
 	end
+
+	if self._unitMo:isMark(SurvivalEnum.UnitMarkType.Skill_Chase) then
+		self:addEffect(SurvivalConst.UnitEffectPath.SnatchEffect)
+	else
+		self:removeEffect(SurvivalConst.UnitEffectPath.SnatchEffect)
+	end
 end
 
 function SurvivalUnitEntity:_onFollowTaskUpdate()

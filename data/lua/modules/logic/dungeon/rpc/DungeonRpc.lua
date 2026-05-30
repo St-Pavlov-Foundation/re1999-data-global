@@ -409,10 +409,11 @@ function DungeonRpc:onReceivePuzzleFinishReply(resultCode, msg)
 	end
 end
 
-function DungeonRpc:sendRefreshAssistRequest(assistType, callback, callbackObj)
+function DungeonRpc:sendRefreshAssistRequest(assistType, callback, callbackObj, ext)
 	local req = DungeonModule_pb.RefreshAssistRequest()
 
 	req.assistType = assistType
+	req.ext = ext or ""
 
 	return self:sendMsg(req, callback, callbackObj)
 end
@@ -420,6 +421,7 @@ end
 function DungeonRpc:onReceiveRefreshAssistReply(resultCode, msg)
 	if resultCode == 0 then
 		DungeonAssistModel.instance:setAssistHeroCareersByServerData(msg.assistType, msg.assistHeroCareers)
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnRefreshAssistReply, msg)
 	end
 end
 

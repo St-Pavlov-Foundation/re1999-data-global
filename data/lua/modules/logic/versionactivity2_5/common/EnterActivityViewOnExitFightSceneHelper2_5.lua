@@ -4,6 +4,10 @@ module("modules.logic.versionactivity2_5.common.EnterActivityViewOnExitFightScen
 
 local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
 
+local function _openPermanent_EnterView(viewParam)
+	PermanentController.instance:jump2Activity(VersionActivity2_5Enum.ActivityId.EnterView, viewParam)
+end
+
 function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
@@ -58,13 +62,8 @@ function EnterActivityViewOnExitFightSceneHelper._enterActivity12502(cls, param)
 	end
 
 	local sequence = FlowSequence.New()
-	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController()
 
-	sequence:addWork(OpenViewWork.New({
-		openFunction = EnterActivityViewOnExitFightSceneHelper.open3_4ReactivityEnterView,
-		openFunctionObj = enterController.instance,
-		waitOpenViewName = ViewName.VersionActivity2_5EnterView
-	}))
+	PermanentController.instance:jump2Activity(VersionActivity2_5Enum.ActivityId.EnterView)
 	sequence:registerDoneListener(function()
 		if needLoadMapLevel then
 			VersionActivity2_5DungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
@@ -115,8 +114,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12512(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_5EnterView)
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_5Enum.ActivityId.LiangYue, true)
+		local actId = VersionActivity2_5Enum.ActivityId.LiangYue
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		LiangYueController.instance:enterLevelView(actId)
 	end)
 end
 
@@ -126,8 +128,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12513(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_5EnterView)
-		VersionActivity2_5EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_5Enum.ActivityId.FeiLinShiDuo, true)
+		local actId = VersionActivity2_5Enum.ActivityId.FeiLinShiDuo
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		FeiLinShiDuoGameController.instance:enterEpisodeLevelView(actId)
 	end)
 end
 

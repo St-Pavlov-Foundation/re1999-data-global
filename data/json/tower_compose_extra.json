@@ -103,5 +103,15 @@
     "id": 3138,
     "themeId": 1,
     "bossPointBase": 200
+  },
+  {
+    "id": 3139,
+    "themeId": 1,
+    "bossPointBase": 50
+  },
+  {
+    "id": 3142,
+    "themeId": 1,
+    "bossPointBase": 50
   }
 ]

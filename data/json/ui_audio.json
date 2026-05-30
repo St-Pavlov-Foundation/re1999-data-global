@@ -14748,5 +14748,315 @@
     "id": 340250,
     "eventName": "play_ui_bulaochun_tansuo_unlock_2",
     "bankName": "ui_activity_3_4_bulaochun_tansuo"
+  },
+  {
+    "id": 350001,
+    "eventName": "play_ui_kaixue_jingxi",
+    "bankName": "ui_activity_3_5_lusongshi_kaixue"
+  },
+  {
+    "id": 350002,
+    "eventName": "play_ui_kaixue_putong",
+    "bankName": "ui_activity_3_5_lusongshi_kaixue"
+  },
+  {
+    "id": 350003,
+    "eventName": "play_ui_fight_lamonafumo_appear",
+    "bankName": "fight_ui_sfx_lamona3_5"
+  },
+  {
+    "id": 350004,
+    "eventName": "play_ui_fight_lamonafumo_disappear",
+    "bankName": "fight_ui_sfx_lamona3_5"
+  },
+  {
+    "id": 350005,
+    "eventName": "play_ui_bfz_yishi_xuli",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350006,
+    "eventName": "stop_ui_bfz_yishi_xuli",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350007,
+    "eventName": "play_ui_bfz_yishi_coin_throw",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350008,
+    "eventName": "play_ui_bfz_yishi_coin_fall",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350009,
+    "eventName": "play_ui_bfz_yishi_bullet_take",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350010,
+    "eventName": "play_ui_bfz_yishi_bullet_load",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350011,
+    "eventName": "play_ui_bfz_yishi_coin_stand",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350012,
+    "eventName": "play_ui_bfz_yishi_coin_glow",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350013,
+    "eventName": "play_ui_bfz_yishi_antenna_loop",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350014,
+    "eventName": "stop_ui_bfz_yishi_antenna_loop",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350015,
+    "eventName": "play_ui_bfz_yishi_antenna_straighten",
+    "bankName": "ui_baifuzhang_yishi_sfx3_5"
+  },
+  {
+    "id": 350016,
+    "eventName": "play_ui_lusongshi_open_1",
+    "bankName": "ui_activity_3_5_lusongshi"
+  },
+  {
+    "id": 350017,
+    "eventName": "play_ui_lusongshi_open_2",
+    "bankName": "ui_activity_3_5_lusongshi"
+  },
+  {
+    "id": 350018,
+    "eventName": "play_ui_molu_sky_open",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 350019,
+    "eventName": "play_ui_gudu_input_right",
+    "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 350020,
+    "eventName": "play_replay_music_theme_3_5",
+    "bankName": "ui_replay_mainmusic3_5"
+  },
+  {
+    "id": 350021,
+    "eventName": "play_replay_music_seasonmain_3_5",
+    "bankName": "ui_replay_mainmusic3_5"
+  },
+  {
+    "id": 350022,
+    "eventName": "play_ui_fight_luolunzi_cardup3_5",
+    "bankName": "fight_ui_sfx_luolunzi3_5"
+  },
+  {
+    "id": 350023,
+    "eventName": "play_ui_fight_luolunzi_printeropen3_5",
+    "bankName": "fight_ui_sfx_luolunzi3_5"
+  },
+  {
+    "id": 350024,
+    "eventName": "play_ui_fight_luolunzi_printercard3_5",
+    "bankName": "fight_ui_sfx_luolunzi3_5"
+  },
+  {
+    "id": 350025,
+    "eventName": "",
+    "bankName": ""
+  },
+  {
+    "id": 350026,
+    "eventName": "play_ui_fight_luolunzi_printerfly3_5",
+    "bankName": "fight_ui_sfx_luolunzi3_5"
+  },
+  {
+    "id": 350027,
+    "eventName": "play_ui_fight_cradbox3_5",
+    "bankName": "fight_ui_sfx3_5"
+  },
+  {
+    "id": 350031,
+    "eventName": "play_ui_shengyan_beilier_open_sp",
+    "bankName": "ui_activity_3_2_shengyan_beilier"
+  },
+  {
+    "id": 350032,
+    "eventName": "play_ui_hero_card_gone",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 350033,
+    "eventName": "play_ui_lushang_zhihuibu_fanhui",
+    "bankName": "ui_activity_3_0_lushang_zhihuibu"
+  },
+  {
+    "id": 350034,
+    "eventName": "play_ui_fight_xiazhu_open",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350035,
+    "eventName": "play_ui_fight_xiazhu_open_special",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350036,
+    "eventName": "play_ui_fight_xiazhu_clock",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350037,
+    "eventName": "play_ui_fight_xiazhu_selected",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350038,
+    "eventName": "play_ui_fight_xiazhu_confirm",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350039,
+    "eventName": "play_ui_fight_xiazhu_open_2",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350040,
+    "eventName": "play_ui_fight_xiazhu_card_2",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350041,
+    "eventName": "play_ui_fight_xiazhu_card_3",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350042,
+    "eventName": "play_ui_fight_xiazhu_wheel",
+    "bankName": "fight_ui_sfx_xiazhu3_5"
+  },
+  {
+    "id": 350043,
+    "eventName": "play_ui_fight_poren3_5",
+    "bankName": "fight_ui_sfx3_5"
+  },
+  {
+    "id": 350051,
+    "eventName": "play_ui_lusongshi_lmn_level1",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350052,
+    "eventName": "play_ui_lusongshi_lmn_enter",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350053,
+    "eventName": "play_ui_lusongshi_lmn_exit",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350054,
+    "eventName": "play_ui_lusongshi_lmn_move1",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350055,
+    "eventName": "play_ui_lusongshi_lmn_move2",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350056,
+    "eventName": "play_ui_lusongshi_lmn_shufu",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350057,
+    "eventName": "play_ui_lusongshi_lmn_clean",
+    "bankName": "ui_activity_3_5_lusongshi_lamona"
+  },
+  {
+    "id": 350058,
+    "eventName": "play_ui_yuanzheng_mrs_win",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 350059,
+    "eventName": "play_ui_yuanzheng_mrs_fail",
+    "bankName": "ui_activity_3_3_yuanzheng_marsha"
+  },
+  {
+    "id": 350060,
+    "eventName": "play_ui_lusongshi_tansuo_xingti",
+    "bankName": "ui_activity_3_5_lusongshi_tansuo"
+  },
+  {
+    "id": 350070,
+    "eventName": "play_fight_ui_uttu_enter",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350071,
+    "eventName": "play_fight_ui_uttu_card_slide",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350072,
+    "eventName": "play_fight_ui_uttu_card_pop",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350073,
+    "eventName": "play_ui_jinye_film_slide",
+    "bankName": "ui_activity_1_7_jinye"
+  },
+  {
+    "id": 350074,
+    "eventName": "play_fight_ui_uttu_digital",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350075,
+    "eventName": "play_fight_ui_uttu_card_lift",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350076,
+    "eventName": "play_fight_ui_uttu_pass_level",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350077,
+    "eventName": "play_ui_pkls_prop_get",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 350078,
+    "eventName": "play_fight_ui_uttu_click_get",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350079,
+    "eventName": "play_ui_rewards",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 350080,
+    "eventName": "play_fight_ui_uttu_popup",
+    "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 350081,
+    "eventName": "play_fight_ui_uttu_award",
+    "bankName": "fight_ui_sfx_uttu3_5"
   }
 ]

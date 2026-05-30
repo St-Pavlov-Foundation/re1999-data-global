@@ -4,7 +4,9 @@ module("modules.logic.fight.flow.FightViewHandCardSequenceFlow", package.seeall)
 
 local FightViewHandCardSequenceFlow = class("FightViewHandCardSequenceFlow", FlowSequence)
 
-function FightViewHandCardSequenceFlow:ctor(...)
+function FightViewHandCardSequenceFlow:ctor(name, ...)
+	self.name = name
+
 	FightViewHandCardSequenceFlow.super.ctor(self, ...)
 	FightController.instance:dispatchEvent(FightEvent.OnHandCardFlowCreate, self)
 end

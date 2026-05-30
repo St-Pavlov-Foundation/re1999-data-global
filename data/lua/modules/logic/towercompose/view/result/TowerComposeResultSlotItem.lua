@@ -50,6 +50,10 @@ function TowerComposeResultSlotItem:refresh()
 		local heroMo = HeroModel.instance:getByHeroId(supportConfig.heroId)
 		local heroConfig = HeroConfig.instance:getHeroCO(supportConfig.heroId)
 		local skinId = heroMo and heroMo.skin or heroConfig.skinId
+		local assistData = TowerComposeHeroGroupModel.instance:getThemePlaneAssistData(self._themeId, self._planeId)
+
+		skinId = assistData and assistData.heroId == supportConfig.heroId and assistData.skin > 0 and assistData.skin or skinId
+
 		local skinConfig = SkinConfig.instance:getSkinCo(skinId)
 
 		self._simageSupport:LoadImage(ResUrl.getRoomHeadIcon(skinConfig.headIcon))

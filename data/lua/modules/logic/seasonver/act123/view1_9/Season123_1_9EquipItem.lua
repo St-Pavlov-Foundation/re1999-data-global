@@ -81,7 +81,7 @@ function Season123_1_9EquipItem:refreshUI()
 	else
 		local heroUid = Season123EquipItemListModel.instance:getPosHeroUid(equipPos)
 
-		if heroUid ~= nil and heroUid ~= Season123EquipItemListModel.EmptyUid then
+		if heroUid ~= nil and heroUid ~= Activity123Enum.EmptyUid then
 			self:refreshEquipedHero(heroUid)
 		else
 			gohelper.setActive(self._gorole, false)

@@ -70,5 +70,23 @@
     "desc": "language_10097903",
     "descParam": "1",
     "checkParam": ""
+  },
+  {
+    "id": 793501,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 906,
+    "desc": "language_10110097",
+    "descParam": "",
+    "checkParam": "2"
+  },
+  {
+    "id": 823501,
+    "priority": 1,
+    "type": 1,
+    "jumpId": 54,
+    "desc": "language_10097903",
+    "descParam": "1",
+    "checkParam": ""
   }
 ]

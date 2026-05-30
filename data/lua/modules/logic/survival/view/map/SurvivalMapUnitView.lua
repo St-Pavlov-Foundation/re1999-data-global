@@ -25,6 +25,7 @@ function SurvivalMapUnitView:addEvents()
 	SurvivalController.instance:registerCallback(SurvivalEvent.UpdateUnitIsShow, self._onUnitIsShowChange, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
 	SurvivalController.instance:registerCallback(SurvivalEvent.ShowUnitBubble, self._onShowUnitBubble, self)
+	SurvivalController.instance:registerCallback(SurvivalEvent.HideUnitBubble, self._onHideUnitBubble, self)
 end
 
 function SurvivalMapUnitView:removeEvents()
@@ -34,6 +35,7 @@ function SurvivalMapUnitView:removeEvents()
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.UpdateUnitIsShow, self._onUnitIsShowChange, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.OnFollowTaskUpdate, self._onFollowTaskUpdate, self)
 	SurvivalController.instance:unregisterCallback(SurvivalEvent.ShowUnitBubble, self._onShowUnitBubble, self)
+	SurvivalController.instance:unregisterCallback(SurvivalEvent.HideUnitBubble, self._onHideUnitBubble, self)
 end
 
 function SurvivalMapUnitView:initAllUnit()
@@ -46,6 +48,15 @@ function SurvivalMapUnitView:initAllUnit()
 		end
 
 		self:addUnitUI(id, unitMo)
+
+		if SurvivalMapHelper.instance:isPetrifactionTar(unitMo) then
+			local sceneMo = SurvivalMapModel.instance:getSceneMo()
+			local blockType = sceneMo:getBlockTypeByPos(unitMo.pos)
+
+			if blockType and blockType == SurvivalEnum.UnitSubType.Petrifaction then
+				self:_onShowUnitBubble(unitMo.id, 1, 0)
+			end
+		end
 	end
 
 	self:addUnitUI(0, sceneMo.player, 99999)

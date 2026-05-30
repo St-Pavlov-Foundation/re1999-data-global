@@ -7,6 +7,7 @@ local V3a2_BossRush_HandBookItem = class("V3a2_BossRush_HandBookItem", ListScrol
 function V3a2_BossRush_HandBookItem:onInitView()
 	self._goSelectedBG = gohelper.findChild(self.viewGO, "#go_SelectedBG")
 	self._simageboss = gohelper.findChildSingleImage(self.viewGO, "#simage_boss")
+	self._imageboss = gohelper.findChildImage(self.viewGO, "#simage_boss")
 	self._txtName = gohelper.findChildText(self.viewGO, "#txt_Name")
 	self._goLocked = gohelper.findChild(self.viewGO, "#go_Locked")
 	self._goselect = gohelper.findChild(self.viewGO, "#go_select")
@@ -50,10 +51,27 @@ function V3a2_BossRush_HandBookItem:onUpdateMO(mo)
 
 	gohelper.setActive(self._goLocked, not mo.haveFight)
 	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.BossRushHankBookBoss, mo:getBossType())
+	self:refreshSelect()
 end
 
 function V3a2_BossRush_HandBookItem:onSelect(isSelect)
 	gohelper.setActive(self._goselect, isSelect)
+end
+
+function V3a2_BossRush_HandBookItem:refreshSelect()
+	local isSelect = self:_isSelect()
+
+	gohelper.setActive(self._goselect, isSelect)
+end
+
+function V3a2_BossRush_HandBookItem:_isSelect()
+	local curSelect = V3a2_BossRush_HandBookListModel.instance:getSelectMo()
+
+	if not curSelect then
+		return false
+	end
+
+	return curSelect.config.type == self.mo.config.type
 end
 
 function V3a2_BossRush_HandBookItem:onDestroyView()

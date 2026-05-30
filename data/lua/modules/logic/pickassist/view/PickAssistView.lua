@@ -36,7 +36,7 @@ function PickAssistView:removeEvents()
 	self._btnrefresh:RemoveClickListener()
 	self._btndetail:RemoveClickListener()
 	self._btnconfirm:RemoveClickListener()
-	self:addEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, self.onBeforeRefreshAssistList, self)
+	self:removeEventCb(PickAssistController.instance, PickAssistEvent.BeforeRefreshAssistList, self.onBeforeRefreshAssistList, self)
 	self:removeEventCb(PickAssistController.instance, PickAssistEvent.SetCareer, self.refreshIsEmpty, self)
 	self:removeEventCb(PickAssistController.instance, PickAssistEvent.RefreshSelectAssistHero, self.refreshBtnDetail, self)
 end

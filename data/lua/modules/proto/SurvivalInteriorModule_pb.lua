@@ -41,6 +41,7 @@ SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTINDEXFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTHEROUIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD = protobuf.FieldDescriptor()
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREQUEST_MSG = protobuf.Descriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREQUESTMODULEIDFIELD = protobuf.FieldDescriptor()
 SurvivalInteriorModule_pb.SURVIVALTASKFOLLOWREQUESTTASKIDFIELD = protobuf.FieldDescriptor()
@@ -406,6 +407,15 @@ SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD.has_default_value = fal
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD.default_value = {}
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD.type = 5
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD.cpp_type = 1
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.name = "mode"
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.full_name = ".EnterSurvivalRequest.mode"
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.number = 4
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.index = 3
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.label = 1
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.has_default_value = false
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.default_value = 0
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.type = 5
+SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD.cpp_type = 1
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.name = "EnterSurvivalRequest"
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.full_name = ".EnterSurvivalRequest"
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.nested_types = {}
@@ -413,7 +423,8 @@ SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.enum_types = {}
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.fields = {
 	SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTINDEXFIELD,
 	SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTHEROUIDFIELD,
-	SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD
+	SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTNPCIDFIELD,
+	SurvivalInteriorModule_pb.ENTERSURVIVALREQUESTMODEFIELD
 }
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.is_extendable = false
 SurvivalInteriorModule_pb.ENTERSURVIVALREQUEST_MSG.extensions = {}

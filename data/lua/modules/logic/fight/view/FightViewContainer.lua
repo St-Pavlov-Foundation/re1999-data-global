@@ -37,6 +37,7 @@ function FightViewContainer:buildViews()
 
 	self.rightElementLayoutView = FightViewRightElementsLayout.New()
 	self.rightBottomElementLayoutView = FightViewRightBottomElementsLayout.New()
+	self.viewMgr = FightViewMgr.New()
 
 	local views = {
 		self.rightElementLayoutView,
@@ -71,7 +72,7 @@ function FightViewContainer:buildViews()
 	}
 
 	table.insert(views, FightViewBossHpMgr.New())
-	table.insert(views, FightViewMgr.New())
+	table.insert(views, self.viewMgr)
 	table.insert(views, FightViewBuffId2Behaviour.New())
 
 	return views

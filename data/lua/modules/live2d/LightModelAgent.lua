@@ -99,7 +99,9 @@ function LightModelAgent:_onFadeInFinish()
 		return
 	end
 
-	self._ppEffectMask.enabled = false
+	if self._ppEffectMask then
+		self._ppEffectMask.enabled = false
+	end
 
 	if not self._isLive2D then
 		self._curModel:getRenderer().materials = self._curModel:getSharedMats()
@@ -117,7 +119,10 @@ function LightModelAgent:_onFadeInFinish()
 
 			if not gohelper.isNil(material) then
 				material:DisableKeyword("USE_INVISIBLE")
-				self._ppEffectMask:SetPassEnable(material, "useInvisible", false)
+
+				if self._ppEffectMask then
+					self._ppEffectMask:SetPassEnable(material, "useInvisible", false)
+				end
 			end
 		end
 	end

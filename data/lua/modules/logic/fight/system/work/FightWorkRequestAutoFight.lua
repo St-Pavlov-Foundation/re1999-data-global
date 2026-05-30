@@ -11,11 +11,18 @@ end
 function FightWorkRequestAutoFight:onStart()
 	self:com_registMsg(FightMsgId.AutoRoundReply, self.onAutoRoundReply)
 	self:com_registMsg(FightMsgId.AutoRoundReplyFail, self.onAutoRoundReplyFail)
+	self:com_registMsg(FightMsgId.UseClothSkillReplyFail, self.onUseClothSkillReplyFail)
 	FightRpc.instance:sendAutoRoundRequest(FightDataHelper.operationDataMgr:getOpList())
 	self:cancelFightWorkSafeTimer()
 end
 
 function FightWorkRequestAutoFight:onAutoRoundReply(msg)
+	if msg.clothSkill ~= 0 then
+		FightRpc.instance:sendUseClothSkillRequest(msg.clothSkill, nil, nil, 0)
+
+		return
+	end
+
 	local autoPlayCardList = {}
 
 	for _, oper in ipairs(msg.opers) do
@@ -65,6 +72,10 @@ function FightWorkRequestAutoFight:onAutoRoundReply(msg)
 end
 
 function FightWorkRequestAutoFight:onAutoRoundReplyFail()
+	self:onDone(true)
+end
+
+function FightWorkRequestAutoFight:onUseClothSkillReplyFail()
 	self:onDone(true)
 end
 

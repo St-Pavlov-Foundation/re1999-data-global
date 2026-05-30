@@ -8,6 +8,8 @@ function DiceHeroMainView:onInitView()
 	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
 	self._gotaskred = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
 	self._taskAnimator = gohelper.findChildAnim(self.viewGO, "#btn_Task/ani")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
+	self._goTrial = gohelper.findChild(self.viewGO, "#go_Try")
 
 	for i = 1, 5 do
 		self["_btnstage" .. i] = gohelper.findChildButton(self.viewGO, "#btn_stage" .. i)
@@ -24,9 +26,11 @@ function DiceHeroMainView:addEvents()
 		self["_btnstage" .. i]:AddClickListener(self._onClickStage, self, i)
 	end
 
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	DiceHeroController.instance:registerCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
 	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
 end
 
 function DiceHeroMainView:removeEvents()
@@ -36,18 +40,49 @@ function DiceHeroMainView:removeEvents()
 		self["_btnstage" .. i]:RemoveClickListener()
 	end
 
+	self._btnTrial:RemoveClickListener()
 	DiceHeroController.instance:unregisterCallback(DiceHeroEvent.InfoUpdate, self._onInfoUpdate, self)
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, self._refreshTask, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
+end
+
+function DiceHeroMainView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
+end
+
+function DiceHeroMainView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(self.activityId) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
 end
 
 function DiceHeroMainView:onOpen()
 	self:_refreshTask()
 
+	self.activityId = VersionActivity2_6Enum.ActivityId.DiceHero
+	self.config = ActivityConfig.instance:getActivityCo(self.activityId)
 	DiceHeroModel.instance.isUnlockNewChapter = false
 
 	RedDotController.instance:addRedDot(self._gotaskred, RedDotEnum.DotNode.V2a6DiceHero)
 	self:_onInfoUpdate()
+	self:_refreshTryBtn()
 end
 
 function DiceHeroMainView:_refreshTask()
@@ -162,6 +197,35 @@ end
 
 function DiceHeroMainView:onDestroyView()
 	TaskDispatcher.cancelTask(self._delayRefreshAnim, self)
+end
+
+function DiceHeroMainView:_onRefreshActivityState(actId)
+	self:_refreshTryBtn()
+end
+
+function DiceHeroMainView:_refreshTryBtn()
+	local isOpen = self:_isOpenAct()
+
+	gohelper.setActive(self._goTrial, isOpen)
+end
+
+function DiceHeroMainView:_isOpenAct()
+	if not ActivityHelper.isOpen(self.activityId) then
+		return false
+	end
+
+	local permanentActId = VersionActivity2_6Enum.ActivityId.EnterView
+	local actInfo = ActivityModel.instance:getActMO(permanentActId)
+
+	if not actInfo then
+		return false
+	end
+
+	if not actInfo:isPermanentUnlock() then
+		return false
+	end
+
+	return true
 end
 
 return DiceHeroMainView

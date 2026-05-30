@@ -18,7 +18,7 @@ function HeroGroupPresetTabListModel:_getOnlineList(list)
 	local result = {}
 
 	for i, v in ipairs(list) do
-		if self:_isUnlock(v.unlockId) then
+		if self:_isUnlock(v.unlockId) and HeroGroupPresetEnum.HeroGroupType2SnapshotAllType[v.id] then
 			if v.actType == 0 then
 				table.insert(result, v)
 			else

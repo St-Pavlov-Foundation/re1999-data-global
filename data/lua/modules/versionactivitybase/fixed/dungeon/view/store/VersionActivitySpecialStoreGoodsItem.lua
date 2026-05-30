@@ -13,6 +13,7 @@ function VersionActivitySpecialStoreGoodsItem:init(go)
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "go_sold/Icon")
 	self._txtnum = gohelper.findChildText(self.viewGO, "go_sold/Icon/txt_icon")
 	self._simagecosticon = gohelper.findChildSingleImage(self.viewGO, "go_sold/txt_bg/#txt3/icon")
+	self._imagecosticon = gohelper.findChildImage(self.viewGO, "go_sold/txt_bg/#txt3/icon")
 	self._txt3 = gohelper.findChildText(self.viewGO, "go_sold/txt_bg/#txt3")
 	self._txt4 = gohelper.findChildText(self.viewGO, "go_sold/txt_bg/#txt4")
 	self._gosoldout = gohelper.findChild(self.viewGO, "go_soldout")
@@ -90,7 +91,15 @@ function VersionActivitySpecialStoreGoodsItem:onUpdateMO(actId)
 	self._txt3.text = costs[3]
 	self._txt4.text = self._goodsCo.originalCost
 
-	local _, costIcon = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
+	local costCo, costIcon = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
+
+	if costs[1] == MaterialEnum.MaterialType.Currency then
+		if self._imagecosticon then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagecosticon, costCo.icon .. "_1")
+		end
+	elseif self._simagecosticon then
+		self._simagecosticon:LoadImage(costIcon)
+	end
 end
 
 function VersionActivitySpecialStoreGoodsItem:_getShowGoods()
@@ -116,7 +125,13 @@ function VersionActivitySpecialStoreGoodsItem:_getRemainBuyCount(goodsCo)
 end
 
 function VersionActivitySpecialStoreGoodsItem:onDestroy()
-	self._simageicon:UnLoadImage()
+	if self._simagecosticon then
+		self._simagecosticon:UnLoadImage()
+	end
+
+	if self._simageicon then
+		self._simageicon:UnLoadImage()
+	end
 end
 
 return VersionActivitySpecialStoreGoodsItem

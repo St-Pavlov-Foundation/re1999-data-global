@@ -12,13 +12,14 @@ local fields = {
 	name_en = 5,
 	bossRushMainBg = 11,
 	bossRushMainItemBossSprite = 10,
-	skinOffsetXYs = 17,
+	skinOffsetXYs = 18,
 	resultViewNameSImage = 14,
 	layer4MaxPoints = 8,
 	stage = 2,
 	activityId = 1,
 	openDay = 9,
-	skinScales = 16,
+	heartVariantId = 16,
+	skinScales = 17,
 	resultViewFullBgSImage = 13,
 	version = 3
 }

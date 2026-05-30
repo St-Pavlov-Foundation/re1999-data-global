@@ -5,7 +5,6 @@ module("modules.logic.story.view.StoryLeadRoleSpineView", package.seeall)
 local StoryLeadRoleSpineView = class("StoryLeadRoleSpineView", BaseView)
 
 function StoryLeadRoleSpineView:onInitView()
-	self._gorolebg = gohelper.findChild(self.viewGO, "#go_rolebg")
 	self._gospineroot = gohelper.findChild(self.viewGO, "#go_spineroot")
 	self._gospine = gohelper.findChild(self.viewGO, "#go_spineroot/mask/#go_spine")
 
@@ -23,7 +22,7 @@ function StoryLeadRoleSpineView:removeEvents()
 end
 
 function StoryLeadRoleSpineView:_editableInitView()
-	self._blitEff = self._gorolebg:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
 	self._heroSpines = {}
 	self._goSpines = {}
 	self._heroSkeletonGraphics = {}

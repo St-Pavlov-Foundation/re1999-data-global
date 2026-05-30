@@ -140,6 +140,22 @@ function SurvivalOutSideRpc:onReceiveSurvivalMarkModNotNewReply(resultCode, msg)
 	return
 end
 
+function SurvivalOutSideRpc:sendSurvivalOutsideShopBuyRequest(id, count, callback, callobj)
+	local req = SurvivalOutSideModule_pb.SurvivalOutsideShopBuyRequest()
+
+	req.id = id
+	req.count = count
+
+	return self:sendMsg(req, callback, callobj)
+end
+
+function SurvivalOutSideRpc:onReceiveSurvivalOutsideShopBuyReply(resultCode, msg)
+	if resultCode == 0 then
+		SurvivalStoreModel.instance:onReceiveSurvivalOutsideShopBuyReply(msg)
+		SurvivalStoreController.instance:dispatchEvent(SurvivalEvent.OnSurvivalOutsideShopBuyReply)
+	end
+end
+
 SurvivalOutSideRpc.instance = SurvivalOutSideRpc.New()
 
 return SurvivalOutSideRpc

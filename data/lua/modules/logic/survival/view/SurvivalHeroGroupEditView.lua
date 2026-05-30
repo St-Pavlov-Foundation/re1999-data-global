@@ -45,12 +45,6 @@ function SurvivalHeroGroupEditView:onInitView()
 	self._btnclassify = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_classify")
 	self._btnquickedit = gohelper.findChildButtonWithAudio(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_quickedit")
 	self._goexarrow = gohelper.findChild(self.viewGO, "#go_rolecontainer/#go_rolesort/#btn_exskillrank/#go_exarrow")
-	self._gosearchfilter = gohelper.findChild(self.viewGO, "#go_searchfilter")
-	self._btnclosefilterview = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/#btn_closefilterview")
-	self._godmgitem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/dmgContainer/#go_dmgitem")
-	self._goattritem = gohelper.findChild(self.viewGO, "#go_searchfilter/container/attrContainer/#go_attritem")
-	self._btnreset = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_reset")
-	self._btnok = gohelper.findChildButtonWithAudio(self.viewGO, "#go_searchfilter/container/#btn_ok")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_confirm")
 	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ops/#btn_cancel")
@@ -77,9 +71,6 @@ function SurvivalHeroGroupEditView:addEvents()
 	self._btncancel:AddClickListener(self._btncancelOnClick, self)
 	self._btnpassiveskill:AddClickListener(self._btnpassiveskillOnClick, self)
 	self._btnquickedit:AddClickListener(self._btnquickeditOnClick, self)
-	self._btnclosefilterview:AddClickListener(self._btncloseFilterViewOnClick, self)
-	self._btnreset:AddClickListener(self._btnresetOnClick, self)
-	self._btnok:AddClickListener(self._btnokOnClick, self)
 end
 
 function SurvivalHeroGroupEditView:removeEvents()
@@ -96,119 +87,14 @@ function SurvivalHeroGroupEditView:removeEvents()
 	self._btncancel:RemoveClickListener()
 	self._btnpassiveskill:RemoveClickListener()
 	self._btnquickedit:RemoveClickListener()
-	self._btnclosefilterview:RemoveClickListener()
-	self._btnreset:RemoveClickListener()
-	self._btnok:RemoveClickListener()
-end
-
-function SurvivalHeroGroupEditView:_btncloseFilterViewOnClick()
-	self._selectDmgs = LuaUtil.deepCopy(self._curDmgs)
-	self._selectAttrs = LuaUtil.deepCopy(self._curAttrs)
-	self._selectLocations = LuaUtil.deepCopy(self._curLocations)
-
-	self:_refreshBtnIcon()
-	gohelper.setActive(self._gosearchfilter, false)
 end
 
 function SurvivalHeroGroupEditView:_btnclassifyOnClick()
-	gohelper.setActive(self._gosearchfilter, true)
-	self:_refreshFilterView()
-end
+	local param = {
+		filterType = CharacterEnum.FilterType.Survival
+	}
 
-function SurvivalHeroGroupEditView:_btnresetOnClick()
-	for i = 1, 2 do
-		self._selectDmgs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectAttrs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectLocations[i] = false
-	end
-
-	self:_refreshBtnIcon()
-	self:_refreshFilterView()
-end
-
-function SurvivalHeroGroupEditView:_btnokOnClick()
-	gohelper.setActive(self._gosearchfilter, false)
-
-	local dmgs = {}
-
-	for i = 1, 2 do
-		if self._selectDmgs[i] then
-			table.insert(dmgs, i)
-		end
-	end
-
-	local careers = {}
-
-	for i = 1, 6 do
-		if self._selectAttrs[i] then
-			table.insert(careers, i)
-		end
-	end
-
-	local locations = {}
-
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
-
-	if #dmgs == 0 then
-		dmgs = {
-			1,
-			2
-		}
-	end
-
-	if #careers == 0 then
-		careers = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	if #locations == 0 then
-		locations = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	local x, y = transformhelper.getLocalPos(self._goScrollContent.transform)
-
-	transformhelper.setLocalPosXY(self._goScrollContent.transform, x, self._initScrollContentPosY)
-
-	local filterParam = {}
-
-	filterParam.dmgs = dmgs
-	filterParam.careers = careers
-	filterParam.locations = locations
-
-	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.Survival)
-	HeroGroupTrialModel.instance:setFilter(dmgs, careers)
-
-	self._curDmgs = LuaUtil.deepCopy(self._selectDmgs)
-	self._curAttrs = LuaUtil.deepCopy(self._selectAttrs)
-	self._curLocations = LuaUtil.deepCopy(self._selectLocations)
-
-	self:_refreshBtnIcon()
-	self:_refreshCurScrollBySort()
-	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
+	CharacterController.instance:openCharacterFilterView(param)
 end
 
 function SurvivalHeroGroupEditView:_btnpassiveskillOnClick()
@@ -518,28 +404,6 @@ function SurvivalHeroGroupEditView:_btnquickeditOnClick()
 	end
 end
 
-function SurvivalHeroGroupEditView:_attrBtnOnClick(i)
-	self._selectAttrs[i] = not self._selectAttrs[i]
-
-	self:_refreshFilterView()
-end
-
-function SurvivalHeroGroupEditView:_dmgBtnOnClick(i)
-	if not self._selectDmgs[i] then
-		self._selectDmgs[3 - i] = self._selectDmgs[i]
-	end
-
-	self._selectDmgs[i] = not self._selectDmgs[i]
-
-	self:_refreshFilterView()
-end
-
-function SurvivalHeroGroupEditView:_locationBtnOnClick(i)
-	self._selectLocations[i] = not self._selectLocations[i]
-
-	self:_refreshFilterView()
-end
-
 function SurvivalHeroGroupEditView:_onHeroItemClick(heroMO)
 	self._heroMO = heroMO
 
@@ -650,12 +514,33 @@ function SurvivalHeroGroupEditView:_refreshMainInfo()
 			tags = string.split(self._heroMO.config.battleTag, "#")
 		end
 
+		if self._go_pos_overseas_1 == nil then
+			self._go_pos_overseas_1 = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/special/#go_pos_overseas")
+			self._go_pos_overseas_2 = gohelper.cloneInPlace(self._go_pos_overseas_1, "#go_pos_overseas_2")
+		end
+
+		gohelper.setActive(self._go_pos_overseas_2, #tags >= 4)
+
 		for i = 1, #tags do
 			local careerTable = self._careerGOs[i]
 
 			if not careerTable then
 				careerTable = self:getUserDataTb_()
-				careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+
+				local parentGO
+
+				if i > 3 then
+					parentGO = self._go_pos_overseas_2
+				else
+					parentGO = self._go_pos_overseas_1
+				end
+
+				if parentGO then
+					careerTable.go = gohelper.clone(self._gospecialitem, parentGO, "item" .. i)
+				else
+					careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+				end
+
 				careerTable.textfour = gohelper.findChildText(careerTable.go, "#go_fourword/name")
 				careerTable.textthree = gohelper.findChildText(careerTable.go, "#go_threeword/name")
 				careerTable.texttwo = gohelper.findChildText(careerTable.go, "#go_twoword/name")
@@ -773,25 +658,7 @@ function SurvivalHeroGroupEditView:_refreshBtnIcon()
 	gohelper.setActive(self._rareBtns[1], tag ~= 2)
 	gohelper.setActive(self._rareBtns[2], tag == 2)
 
-	local hasFilter = false
-
-	for _, v in pairs(self._selectDmgs) do
-		if v then
-			hasFilter = true
-		end
-	end
-
-	for _, v in pairs(self._selectAttrs) do
-		if v then
-			hasFilter = true
-		end
-	end
-
-	for _, v in pairs(self._selectLocations) do
-		if v then
-			hasFilter = true
-		end
-	end
+	local hasFilter = CharacterSearchFilterModel.instance:hasFilter()
 
 	gohelper.setActive(self._classifyBtns[1], not hasFilter)
 	gohelper.setActive(self._classifyBtns[2], hasFilter)
@@ -802,84 +669,7 @@ function SurvivalHeroGroupEditView:_refreshBtnIcon()
 	transformhelper.setLocalScale(self._rareArrow[2], 1, state[2], 1)
 end
 
-function SurvivalHeroGroupEditView:_refreshFilterView()
-	for i = 1, 2 do
-		gohelper.setActive(self._dmgUnselects[i], not self._selectDmgs[i])
-		gohelper.setActive(self._dmgSelects[i], self._selectDmgs[i])
-	end
-
-	for i = 1, 6 do
-		gohelper.setActive(self._attrUnselects[i], not self._selectAttrs[i])
-		gohelper.setActive(self._attrSelects[i], self._selectAttrs[i])
-	end
-
-	for i = 1, 6 do
-		gohelper.setActive(self._locationUnselects[i], not self._selectLocations[i])
-		gohelper.setActive(self._locationSelects[i], self._selectLocations[i])
-	end
-end
-
 function SurvivalHeroGroupEditView:_updateHeroList()
-	local dmgs = {}
-
-	for i = 1, 2 do
-		if self._selectDmgs[i] then
-			table.insert(dmgs, i)
-		end
-	end
-
-	local careers = {}
-
-	for i = 1, 6 do
-		if self._selectAttrs[i] then
-			table.insert(careers, i)
-		end
-	end
-
-	local locations = {}
-
-	for i = 1, 6 do
-		if self._selectLocations[i] then
-			table.insert(locations, i)
-		end
-	end
-
-	if #dmgs == 0 then
-		dmgs = {
-			1,
-			2
-		}
-	end
-
-	if #careers == 0 then
-		careers = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	if #locations == 0 then
-		locations = {
-			1,
-			2,
-			3,
-			4,
-			5,
-			6
-		}
-	end
-
-	local filterParam = {}
-
-	filterParam.dmgs = dmgs
-	filterParam.careers = careers
-	filterParam.locations = locations
-
-	CharacterModel.instance:filterCardListByDmgAndCareer(filterParam, false, CharacterEnum.FilterType.Survival)
 	self:_refreshBtnIcon()
 
 	if self._isShowQuickEdit then
@@ -1059,21 +849,6 @@ function SurvivalHeroGroupEditView:_editableInitView()
 	self._rareBtns = self:getUserDataTb_()
 	self._rareArrow = self:getUserDataTb_()
 	self._classifyBtns = self:getUserDataTb_()
-	self._selectDmgs = {}
-	self._dmgSelects = self:getUserDataTb_()
-	self._dmgUnselects = self:getUserDataTb_()
-	self._dmgBtnClicks = self:getUserDataTb_()
-	self._selectAttrs = {}
-	self._attrSelects = self:getUserDataTb_()
-	self._attrUnselects = self:getUserDataTb_()
-	self._attrBtnClicks = self:getUserDataTb_()
-	self._selectLocations = {}
-	self._locationSelects = self:getUserDataTb_()
-	self._locationUnselects = self:getUserDataTb_()
-	self._locationBtnClicks = self:getUserDataTb_()
-	self._curDmgs = {}
-	self._curAttrs = {}
-	self._curLocations = {}
 
 	for i = 1, 2 do
 		self._lvBtns[i] = gohelper.findChild(self._btnlvrank.gameObject, "btn" .. tostring(i))
@@ -1081,27 +856,6 @@ function SurvivalHeroGroupEditView:_editableInitView()
 		self._rareBtns[i] = gohelper.findChild(self._btnrarerank.gameObject, "btn" .. tostring(i))
 		self._rareArrow[i] = gohelper.findChild(self._rareBtns[i], "txt/arrow").transform
 		self._classifyBtns[i] = gohelper.findChild(self._btnclassify.gameObject, "btn" .. tostring(i))
-		self._dmgUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/unselected")
-		self._dmgSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/selected")
-		self._dmgBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/dmgContainer/#go_dmg" .. i .. "/click")
-
-		self._dmgBtnClicks[i]:AddClickListener(self._dmgBtnOnClick, self, i)
-	end
-
-	for i = 1, 6 do
-		self._attrUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/unselected")
-		self._attrSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/selected")
-		self._attrBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/attrContainer/#go_attr" .. i .. "/click")
-
-		self._attrBtnClicks[i]:AddClickListener(self._attrBtnOnClick, self, i)
-	end
-
-	for i = 1, 6 do
-		self._locationUnselects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/unselected")
-		self._locationSelects[i] = gohelper.findChild(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/selected")
-		self._locationBtnClicks[i] = gohelper.findChildButtonWithAudio(self._gosearchfilter, "container/Scroll View/Viewport/Content/locationContainer/#go_location" .. i .. "/click")
-
-		self._locationBtnClicks[i]:AddClickListener(self._locationBtnOnClick, self, i)
 	end
 
 	self._goBtnEditQuickMode = gohelper.findChild(self._btnquickedit.gameObject, "btn2")
@@ -1165,18 +919,6 @@ function SurvivalHeroGroupEditView:onOpen()
 	self._groupType = self:_getGroupType()
 	self._isWeekWalk_2 = self._groupType == HeroGroupEnum.GroupType.WeekWalk_2
 
-	for i = 1, 2 do
-		self._selectDmgs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectAttrs[i] = false
-	end
-
-	for i = 1, 6 do
-		self._selectLocations[i] = false
-	end
-
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.Survival)
 	SurvivalHeroGroupEditListModel.instance:setParam(self._originalHeroUid, self._adventure, self._isTowerBattle, self._groupType)
 	SurvivalHeroGroupQuickEditListModel.instance:setParam(self._adventure, self._isTowerBattle, self._groupType)
@@ -1205,6 +947,7 @@ function SurvivalHeroGroupEditView:onOpen()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
 	self:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
+	self:addEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	gohelper.addUIClickAudio(self._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
 	gohelper.addUIClickAudio(self._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
@@ -1231,6 +974,7 @@ function SurvivalHeroGroupEditView:onClose()
 	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, self._onGroupModify, self)
 	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, self._onGroupModify, self)
 	self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self._refreshCharacterInfo, self)
+	self:removeEventCb(CharacterController.instance, CharacterEvent.FilterBackpack, self._onFilterList, self)
 	self:removeEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, self._onAudioTrigger, self)
 	CharacterModel.instance:setFakeLevel()
 	SurvivalHeroGroupEditListModel.instance:cancelAllSelected()
@@ -1239,10 +983,8 @@ function SurvivalHeroGroupEditView:onClose()
 	SurvivalHeroGroupQuickEditListModel.instance:clear()
 	HeroGroupTrialModel.instance:setFilter()
 	CommonHeroHelper.instance:resetGrayState()
-
-	self._selectDmgs = {}
-	self._selectAttrs = {}
-	self._selectLocations = {}
+	CharacterController.instance:closeCharacterFilterView()
+	CharacterSearchFilterModel.instance:exitParentView()
 end
 
 function SurvivalHeroGroupEditView:_onAudioTrigger(audioId)
@@ -1282,24 +1024,22 @@ function SurvivalHeroGroupEditView:_showCharacterRankUpView(func)
 	func()
 end
 
+function SurvivalHeroGroupEditView:_onFilterList(param)
+	local dmgs, careers = param.dmgs1, param.careers2
+
+	HeroGroupTrialModel.instance:setFilter(dmgs, careers)
+	self:_refreshBtnIcon()
+	self:_refreshCurScrollBySort()
+	ViewMgr.instance:closeView(ViewName.CharacterLevelUpView)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_property)
+end
+
 function SurvivalHeroGroupEditView:onDestroyView()
 	self._imgBg:UnLoadImage()
 	self._simageredlight:UnLoadImage()
 
 	self._imgBg = nil
 	self._simageredlight = nil
-
-	for i = 1, 2 do
-		self._dmgBtnClicks[i]:RemoveClickListener()
-	end
-
-	for i = 1, 6 do
-		self._attrBtnClicks[i]:RemoveClickListener()
-	end
-
-	for i = 1, 6 do
-		self._locationBtnClicks[i]:RemoveClickListener()
-	end
 end
 
 return SurvivalHeroGroupEditView

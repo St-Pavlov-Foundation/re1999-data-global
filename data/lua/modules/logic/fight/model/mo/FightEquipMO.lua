@@ -7,6 +7,7 @@ local FightEquipMO = pureTable("FightEquipMO")
 function FightEquipMO:ctor()
 	self.heroUid = nil
 	self.equipUid = nil
+	self.equipId = nil
 end
 
 return FightEquipMO

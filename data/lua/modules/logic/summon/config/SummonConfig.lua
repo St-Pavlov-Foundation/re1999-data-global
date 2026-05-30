@@ -220,7 +220,7 @@ function SummonConfig:getRewardItems(heroId, duplicateCount, showNewHero)
 		if not string.nilorempty(reward) then
 			local items = string.split(reward, "|")
 
-			for i, item in ipairs(items) do
+			for _, item in ipairs(items) do
 				local rewardItem = {}
 				local itemParams = string.split(item, "#")
 

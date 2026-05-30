@@ -131,7 +131,7 @@ function Season123HeroGroupModel:getMainPosEquipId(slot)
 			local equipMO = curGroupMO.activity104Equips[mainRolePos - 1]
 
 			if equipMO and equipMO.equipUid[slot] then
-				return Season123HeroGroupModel.instance:getItemIdByUid(equipMO.equipUid[slot])
+				return tonumber(equipMO.equipUid[slot])
 			end
 		end
 	end
@@ -166,7 +166,7 @@ function Season123HeroGroupModel:buildAidHeroGroup()
 
 		local battleCO = HeroGroupModel.instance.battleConfig
 
-		if not battleCO or string.nilorempty(battleCO.aid) then
+		if not battleCO then
 			return
 		end
 
@@ -174,11 +174,12 @@ function Season123HeroGroupModel:buildAidHeroGroup()
 
 		if #configAids > 0 or battleCO.trialLimit > 0 then
 			local tempHeroGroupSnapshot = {}
+			local heroGroupSnapshot = seasonMO.heroGroupSnapshot
 
-			for i, v in ipairs(self.heroGroupSnapshot) do
+			for i, v in ipairs(heroGroupSnapshot) do
 				tempHeroGroupSnapshot[i] = HeroGroupModel.instance:generateTempGroup(v)
 
-				tempHeroGroupSnapshot[i]:setTemp(false)
+				tempHeroGroupSnapshot[i]:setTemp(true)
 				Season123HeroGroupUtils.formation104Equips(tempHeroGroupSnapshot[i])
 			end
 
@@ -210,7 +211,7 @@ function Season123HeroGroupModel:getCurrentHeroGroup()
 
 	local battleCO = HeroGroupModel.instance.battleConfig
 
-	if battleCO and not string.nilorempty(battleCO.aid) then
+	if battleCO then
 		local configAids = string.splitToNumber(battleCO.aid, "#")
 
 		if #configAids > 0 or battleCO.trialLimit > 0 then

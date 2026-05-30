@@ -255,6 +255,22 @@ function GameUtil.containsPunctuation(str)
 				k = k + 1
 			elseif byte >= 228 and byte <= 233 then
 				k = k + 3
+			elseif byte == 227 then
+				local b2 = string.byte(str, k + 1)
+
+				if b2 then
+					if b2 == 129 or b2 == 130 then
+						k = k + 3
+					elseif b2 == 130 or b2 == 131 then
+						k = k + 3
+					else
+						return true
+					end
+				else
+					return false
+				end
+			elseif byte >= 234 and byte <= 237 then
+				k = k + 3
 			else
 				return true
 			end

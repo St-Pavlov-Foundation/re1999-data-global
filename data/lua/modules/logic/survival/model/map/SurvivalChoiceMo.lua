@@ -227,6 +227,82 @@ function SurvivalChoiceMo:checkCondition_CostItem(param)
 	end
 end
 
+function SurvivalChoiceMo:checkCondition_SnatchCond(param)
+	local sceneMo = SurvivalMapModel.instance:getSceneMo()
+	local unitMo = sceneMo.unitsById[self.unitId]
+
+	if not unitMo then
+		return
+	end
+
+	local index = tonumber(self.otherParam) + 1
+	local subItem = unitMo.co.subItem
+
+	if not string.nilorempty(subItem) then
+		local bagMo = SurvivalMapHelper.instance:getBagMo()
+
+		self.exShowItemMos = {}
+		self.isShowBogusBtn = true
+		self.exStepDesc = luaLang("survival_eventview_commititem")
+		self.isValid = true
+
+		local itemsList = {}
+		local l = string.split(subItem, "|")
+
+		for i, str in ipairs(l) do
+			itemsList[i] = {}
+
+			local l2 = string.split(str, "&")
+
+			for j, str2 in ipairs(l2) do
+				local l3 = string.split(str2, ":")
+
+				table.insert(itemsList[i], {
+					tonumber(l3[1]),
+					(tonumber(l3[2]))
+				})
+			end
+		end
+
+		local currencyMo
+		local items = itemsList[index]
+
+		if items then
+			for _, arr in ipairs(items) do
+				local itemId = arr[1]
+				local count = arr[2]
+				local itemMo = SurvivalBagItemMo.New()
+
+				itemMo:init({
+					id = itemId,
+					count = count
+				})
+				table.insert(self.exShowItemMos, itemMo)
+
+				if not currencyMo and itemMo:isCurrency() then
+					currencyMo = itemMo
+				end
+
+				local nowNum = bagMo:getItemCountPlus(itemId)
+
+				if nowNum < count and self.isValid then
+					self.isValid = false
+
+					if itemMo:isCurrency() then
+						self.exStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_choice_currencyGE"), itemMo.co.name, itemMo.count)
+					else
+						self.exStr = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("survival_choice_item_noenough"), itemMo.co.name)
+					end
+				end
+			end
+
+			if self.isValid and currencyMo then
+				self.exStr = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("survival_choice_costitem"), currencyMo.co.name, currencyMo.count)
+			end
+		end
+	end
+end
+
 function SurvivalChoiceMo:checkCondition_RecrNpc(param)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local unitMo = sceneMo.unitsById[self.unitId]

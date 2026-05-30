@@ -17,12 +17,14 @@ end
 function FightOperateMgr:onStageChanged(curStage, preStage)
 	if curStage == FightStageMgr.StageType.Play then
 		self.workComp:disposeAllWork()
+		self:com_sendFightEvent(FightEvent.OnOperateMgrDisposeAllWork)
 		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.SendOperation2Server)
 	end
 end
 
 function FightOperateMgr:cancelAllOperate()
 	self.workComp:disposeAllWork()
+	self:com_sendFightEvent(FightEvent.OnOperateMgrDisposeAllWork)
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.SendOperation2Server)
 end
 
@@ -43,10 +45,10 @@ function FightOperateMgr:newOperateFlow()
 	return flow
 end
 
-function FightOperateMgr:playHandCard(index, toId, discardedIndex, selectedSkillId)
+function FightOperateMgr:playHandCard(index, toId, discardedIndex, selectedSkillId, cardParam1)
 	local flow = self:newOperateFlow()
 
-	flow:registWork(FightWorkPlayHandCard, index, toId, discardedIndex, selectedSkillId)
+	flow:registWork(FightWorkPlayHandCard, index, toId, discardedIndex, selectedSkillId, cardParam1)
 	flow:start()
 end
 

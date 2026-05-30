@@ -173,5 +173,40 @@
     "levelBg": "v3a2_bossrush_main_scorebg_lv3",
     "spLevelBg": 3,
     "bonus": "1#120013#2"
+  },
+  {
+    "playerLevel": 26,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv3",
+    "spLevelBg": 3,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 27,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv3",
+    "spLevelBg": 3,
+    "bonus": "1#110504#1"
+  },
+  {
+    "playerLevel": 28,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv3",
+    "spLevelBg": 3,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 29,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv3",
+    "spLevelBg": 3,
+    "bonus": ""
+  },
+  {
+    "playerLevel": 30,
+    "needExp": 100,
+    "levelBg": "v3a2_bossrush_main_scorebg_lv4",
+    "spLevelBg": 4,
+    "bonus": "1#111009#1"
   }
 ]

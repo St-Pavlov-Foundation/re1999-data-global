@@ -51,7 +51,14 @@ function ActivityInsightShowTaskItem:_btnuseOnClick()
 	local data = {}
 
 	data.id = self._config.itemId
-	data.uid = ItemInsightModel.instance:getEarliestExpireInsight(data.id).uid
+
+	local insightMo = ItemInsightModel.instance:getEarliestExpireInsight(data.id)
+
+	if not insightMo then
+		return
+	end
+
+	data.uid = insightMo.uid
 
 	GiftController.instance:openGiftInsightHeroChoiceView(data)
 end

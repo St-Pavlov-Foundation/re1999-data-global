@@ -474,6 +474,10 @@ function CharacterDestinySlotView:onOpen()
 	self:_refreshEmpty()
 	self.viewContainer:setCurDestinySlot(destinyStoneMo)
 	self:_refreshTrial()
+
+	if self._heroMO and self._heroMO.heroId then
+		self:_statEnterView(self._heroMO.heroId)
+	end
 end
 
 function CharacterDestinySlotView:_refreshTrial()
@@ -1082,6 +1086,19 @@ function CharacterDestinySlotView:onDestroyView()
 			end
 		end
 	end
+end
+
+function CharacterDestinySlotView:_statEnterView(heroId)
+	if self._lastStatId == heroId then
+		return
+	end
+
+	self._lastStatId = heroId
+
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
+	local chineseViewNameStr = (StatViewNameEnum.ChineseViewName[self.viewName] or self.viewName) .. "-" .. (heroCfg and heroCfg.name or "")
+
+	StatViewController.instance:trackViewName(chineseViewNameStr)
 end
 
 return CharacterDestinySlotView

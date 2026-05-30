@@ -27294,5 +27294,717 @@
   {
     "id": 5521061,
     "type": "Random"
+  },
+  {
+    "id": 780,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780100,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780101,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780102,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780103,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780104,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780105,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780106,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780201,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780202,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780203,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780204,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780205,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780206,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780207,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780208,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780209,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780210,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780211,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780212,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780213,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780301,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780302,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780303,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780304,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780305,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780306,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780307,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780401,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 780402,
+    "type": "HasWeakCareer"
+  },
+  {
+    "id": 781,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781100,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781101,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781102,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781103,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781104,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781105,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781106,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781201,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781202,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781203,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781204,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781205,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781206,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781207,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781208,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781209,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781210,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781211,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781212,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781213,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781301,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781302,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781303,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781304,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781305,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781306,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781307,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781401,
+    "type": "HasToughness"
+  },
+  {
+    "id": 781402,
+    "type": "HasToughness"
+  },
+  {
+    "id": 782,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782100,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782101,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782102,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782103,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782104,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782105,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782106,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782201,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782202,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782203,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782204,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782205,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782206,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782207,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782208,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782209,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782210,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782211,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782212,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782213,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782301,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782302,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782303,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782304,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782305,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782306,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782307,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782401,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 782402,
+    "type": "ToughnessValue"
+  },
+  {
+    "id": 783,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783100,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783101,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783102,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783103,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783104,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783105,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783106,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783201,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783202,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783203,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783204,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783205,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783206,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783207,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783208,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783209,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783210,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783211,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783212,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783213,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783301,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783302,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783303,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783304,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783305,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783306,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783307,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783401,
+    "type": "IsBroken"
+  },
+  {
+    "id": 783402,
+    "type": "IsBroken"
+  },
+  {
+    "id": 784,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784005,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784021,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784100,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784101,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784102,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784103,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784104,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784105,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784106,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784201,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784202,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784203,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784204,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784205,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784206,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784207,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784208,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784209,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784210,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784211,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784212,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784213,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784301,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784302,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784303,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784304,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784305,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784306,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784307,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784401,
+    "type": "InRouge2"
+  },
+  {
+    "id": 784402,
+    "type": "InRouge2"
+  },
+  {
+    "id": 2082,
+    "type": "None"
+  },
+  {
+    "id": 2092,
+    "type": "None"
+  },
+  {
+    "id": 18100,
+    "type": "HasBuff"
+  },
+  {
+    "id": 785,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785100,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785101,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785102,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785103,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785104,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785105,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785106,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785201,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785202,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785203,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785204,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785205,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785206,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785207,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785208,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785209,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785210,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785211,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785212,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785213,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785301,
+    "type": "PerBuffGetByGroup"
+  },
+  {
+    "id": 785307,
+    "type": "PerBuffGetByGroup"
   }
 ]

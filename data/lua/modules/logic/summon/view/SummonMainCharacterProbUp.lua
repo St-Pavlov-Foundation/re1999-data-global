@@ -437,9 +437,11 @@ function SummonMainCharacterProbUp:_refreshPreferentialInfo()
 	local preferentialLimitCount = poolMO.canGetGuaranteeSRCount
 
 	if self._gopreferential then
-		gohelper.setActive(self._gopreferential, preferentialLimitCount > 0)
+		local bShow = preferentialLimitCount > 0 and poolMO.guaranteeSRCountDown > 0
 
-		if self._txtpreferential and preferentialLimitCount > 0 then
+		gohelper.setActive(self._gopreferential, bShow)
+
+		if self._txtpreferential and bShow then
 			local preferential = poolMO.guaranteeSRCountDown
 
 			self._txtpreferential.text = preferential

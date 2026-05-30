@@ -14,9 +14,9 @@ function V3a2_BossRush_LevelDetailView:onInitView()
 	self._btnbonus = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_bonus")
 	self._goRedPoint1 = gohelper.findChild(self.viewGO, "Left/#btn_bonus/#go_RedPoint1")
 	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "DetailPanel/Title/title/#simage_Title")
-	self._imageIssxIcon = gohelper.findChildImage(self.viewGO, "DetailPanel/Title/title/#image_IssxIcon")
-	self._txtEn = gohelper.findChildText(self.viewGO, "DetailPanel/Title/title/#txt_En")
-	self._txtName = gohelper.findChildText(self.viewGO, "DetailPanel/Title/title/#txt_Name")
+	self._imageIssxIcon = gohelper.findChildImage(self.viewGO, "DetailPanel/Title/title/#simage_Title/#image_IssxIcon")
+	self._txtEn = gohelper.findChildText(self.viewGO, "DetailPanel/Title/title/#simage_Title/#txt_Name/#txt_En")
+	self._txtName = gohelper.findChildText(self.viewGO, "DetailPanel/Title/title/#simage_Title/#txt_Name")
 	self._btnSearchIcon = gohelper.findChildButtonWithAudio(self.viewGO, "DetailPanel/Title/title/#btn_SearchIcon")
 	self._scrolldesc = gohelper.findChildScrollRect(self.viewGO, "DetailPanel/#scroll_desc")
 	self._txtDescr = gohelper.findChildText(self.viewGO, "DetailPanel/#scroll_desc/Viewport/#txt_Descr")
@@ -35,6 +35,8 @@ function V3a2_BossRush_LevelDetailView:onInitView()
 	self._btnGo = gohelper.findChildButtonWithAudio(self.viewGO, "DetailPanel/#btn_Go")
 	self._txtDoubleTimes = gohelper.findChildText(self.viewGO, "DetailPanel/#btn_Go/#txt_DoubleTimes")
 	self._gorank = gohelper.findChild(self.viewGO, "DetailPanel/#go_rank")
+	self._goweak = gohelper.findChild(self.viewGO, "DetailPanel/#go_weak")
+	self._goweakicon = gohelper.findChild(self.viewGO, "DetailPanel/#go_weak/tipsbg/icon")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -84,6 +86,7 @@ end
 
 function V3a2_BossRush_LevelDetailView:_editableInitView()
 	self._lurkInfoItems = self:getUserDataTb_()
+	self._weakItems = self:getUserDataTb_()
 	self._gomask = gohelper.findChild(self.viewGO, "mask")
 
 	gohelper.setActive(self._txtdesc.gameObject, false)
@@ -122,6 +125,7 @@ function V3a2_BossRush_LevelDetailView:_refreshMonster()
 	local skinIdList = BossRushConfig.instance:getMonsterSkinIdList(self._stage)
 	local skinScaleList = BossRushConfig.instance:getMonsterSkinScaleList(self._stage)
 	local skinOffsetXYs = BossRushConfig.instance:getMonsterSkinOffsetXYs(self._stage)
+	local heartVariantId = self._stageCO.heartVariantId
 
 	self:_initMonsterSpines(#skinIdList)
 	self:_refreshStrategy()
@@ -134,6 +138,10 @@ function V3a2_BossRush_LevelDetailView:_refreshMonster()
 		item:setData(skinId)
 		item:setScale(scale)
 		item:setOffsetXY(offsetXY[1], offsetXY[2])
+
+		if heartVariantId and heartVariantId ~= 0 then
+			item:settVariant(heartVariantId)
+		end
 	end
 end
 
@@ -208,26 +216,53 @@ end
 function V3a2_BossRush_LevelDetailView:_refreshLurk()
 	local episodeId = self._layerCO.episodeId
 	local concealCo = BossRushConfig.instance:getConcealCo(episodeId)
+	local isConceal = concealCo and concealCo.maxConceal > 0
 
-	self._txtresilienceValue.text = concealCo and concealCo.maxConceal or ""
+	if isConceal then
+		self._txtresilienceValue.text = concealCo and concealCo.maxConceal or ""
 
-	local count = 0
+		local count = 0
 
-	if not string.nilorempty(concealCo.spDesc) then
-		local spDesc = string.split(concealCo.spDesc, "|")
+		if not string.nilorempty(concealCo.spDesc) then
+			local spDesc = string.split(concealCo.spDesc, "|")
 
-		for i, desc in ipairs(spDesc) do
-			local item = self:_getLurkInfoItem(i)
+			for i, desc in ipairs(spDesc) do
+				local item = self:_getLurkInfoItem(i)
 
-			item.txt.text = desc
+				item.txt.text = desc
+			end
+
+			count = #spDesc
 		end
 
-		count = #spDesc
+		for i = 1, #self._lurkInfoItems do
+			gohelper.setActive(self._lurkInfoItems[i].go, i <= count)
+		end
+	else
+		local monsterCO = BossRushConfig.instance:getMonsterCO(self._stage, self._layerCO.layer)
+		local count = 0
+
+		if monsterCO and not string.nilorempty(monsterCO.career_weak) then
+			local weakList = string.splitToNumber(monsterCO.career_weak, "#")
+
+			for i, weak in ipairs(weakList) do
+				local item = self:_getWeekItem(i)
+				local issxIconName = FightFailView.CareerToImageName[weak]
+
+				UISpriteSetMgr.instance:setCommonSprite(item.icon, issxIconName, true)
+
+				count = count + 1
+			end
+		end
+
+		for i = 1, #self._weakItems do
+			gohelper.setActive(self._weakItems[i].go, i <= count)
+		end
 	end
 
-	for i = 1, #self._lurkInfoItems do
-		gohelper.setActive(self._lurkInfoItems[i].go, i <= count)
-	end
+	gohelper.setActive(self._goresilience, isConceal)
+	gohelper.setActive(self._goweak, not isConceal)
+	gohelper.setActive(self._imageIssxIcon.gameObject, isConceal)
 end
 
 function V3a2_BossRush_LevelDetailView:_getLurkInfoItem(index)
@@ -241,6 +276,22 @@ function V3a2_BossRush_LevelDetailView:_getLurkInfoItem(index)
 		item.go = go
 		item.txt = go:GetComponent(gohelper.Type_TextMesh)
 		self._lurkInfoItems[index] = item
+	end
+
+	return item
+end
+
+function V3a2_BossRush_LevelDetailView:_getWeekItem(index)
+	local item = self._weakItems[index]
+
+	if not item then
+		item = self:getUserDataTb_()
+
+		local go = index == 1 and self._goweakicon or gohelper.cloneInPlace(self._goweakicon.gameObject)
+
+		item.go = go
+		item.icon = go:GetComponent(gohelper.Type_Image)
+		self._weakItems[index] = item
 	end
 
 	return item

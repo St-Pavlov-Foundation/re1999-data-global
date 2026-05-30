@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "characterId": 2,
+    "text": "language_10118640",
+    "groupId": 1,
+    "voiceId": 613501016
+  },
+  {
+    "id": 2,
+    "characterId": 1,
+    "text": "language_90016044",
+    "groupId": 1,
+    "voiceId": 613501718
+  },
+  {
+    "id": 3,
+    "characterId": 2,
+    "text": "language_10118641",
+    "groupId": 2,
+    "voiceId": 613501017
+  },
+  {
+    "id": 4,
+    "characterId": 1,
+    "text": "language_10118642",
+    "groupId": 2,
+    "voiceId": 613501720
+  },
+  {
+    "id": 5,
+    "characterId": 1,
+    "text": "language_10118643",
+    "groupId": 2,
+    "voiceId": 613501721
+  },
+  {
+    "id": 6,
+    "characterId": 1,
+    "text": "language_10118644",
+    "groupId": 2,
+    "voiceId": 613501722
+  },
+  {
+    "id": 7,
+    "characterId": 1,
+    "text": "language_10118645",
+    "groupId": 3,
+    "voiceId": 613501723
+  },
+  {
+    "id": 8,
+    "characterId": 1,
+    "text": "language_10118646",
+    "groupId": 4,
+    "voiceId": 613501724
+  },
+  {
+    "id": 9,
+    "characterId": 1,
+    "text": "language_10118647",
+    "groupId": 4,
+    "voiceId": 613501725
+  },
+  {
+    "id": 10,
+    "characterId": 2,
+    "text": "language_10118648",
+    "groupId": 4,
+    "voiceId": 613501018
+  },
+  {
+    "id": 11,
+    "characterId": 3,
+    "text": "language_10118649",
+    "groupId": 4,
+    "voiceId": 613501874
+  },
+  {
+    "id": 12,
+    "characterId": 3,
+    "text": "language_10118650",
+    "groupId": 5,
+    "voiceId": 613501875
+  },
+  {
+    "id": 13,
+    "characterId": 3,
+    "text": "language_10115872",
+    "groupId": 5,
+    "voiceId": 613501876
+  },
+  {
+    "id": 14,
+    "characterId": 1,
+    "text": "language_10118651",
+    "groupId": 5,
+    "voiceId": 613501726
+  },
+  {
+    "id": 15,
+    "characterId": 1,
+    "text": "language_10118652",
+    "groupId": 6,
+    "voiceId": 613501713
+  },
+  {
+    "id": 16,
+    "characterId": 1,
+    "text": "language_10118653",
+    "groupId": 6,
+    "voiceId": 613501714
+  },
+  {
+    "id": 17,
+    "characterId": 1,
+    "text": "language_10118654",
+    "groupId": 6,
+    "voiceId": 613501715
+  },
+  {
+    "id": 18,
+    "characterId": 1,
+    "text": "language_10118655",
+    "groupId": 6,
+    "voiceId": 613501716
+  }
+]

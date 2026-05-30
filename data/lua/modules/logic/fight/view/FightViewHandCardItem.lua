@@ -101,6 +101,7 @@ function FightViewHandCardItem:addEventListeners()
 	self:addEventCb(FightController.instance, FightEvent.CancelOperation, self._onCancelOperation, self)
 	self:addEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, self._allocateEnergyDone, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayCardOver, self._showASFD, self)
+	self:addEventCb(FightController.instance, FightEvent.CardEffectChange, self.onCardEffectChange, self)
 end
 
 function FightViewHandCardItem:removeEventListeners()
@@ -134,6 +135,16 @@ function FightViewHandCardItem:removeEventListeners()
 	self:removeEventCb(FightController.instance, FightEvent.ASFD_AllocateCardEnergyDone, self._allocateEnergyDone, self)
 	self:removeEventCb(FightController.instance, FightEvent.PlayCardOver, self._showASFD, self)
 	TaskDispatcher.cancelTask(self._delayDisableAnim, self)
+end
+
+function FightViewHandCardItem:onCardEffectChange(index)
+	if index ~= self.index then
+		return
+	end
+
+	if self._cardItem then
+		self._cardItem:tryPlayLaMoNaVx()
+	end
 end
 
 function FightViewHandCardItem:_allocateEnergyDone()
@@ -344,17 +355,19 @@ function FightViewHandCardItem:_onDragHandCardBegin(index, position, cardInfoMO)
 
 	self._isHandCardDraging = true
 
-	if not FightEnum.UniversalCard[cardInfoMO.skillId] or cardInfoMO == self.cardInfoMO then
+	if not FightEnum.UniversalCard[cardInfoMO.skillId] then
 		return
 	end
 
-	local dragLevel = FightCardDataHelper.getSkillLv(cardInfoMO.uid, cardInfoMO.skillId)
+	if cardInfoMO == self.cardInfoMO then
+		return
+	end
+
+	if FightCardDataHelper.canCombineWithUniversalForPerformance(cardInfoMO, self.cardInfoMO) then
+		return
+	end
+
 	local thisLevel = FightCardDataHelper.getSkillLv(self.cardInfoMO.uid, self.cardInfoMO.skillId)
-
-	if thisLevel <= dragLevel then
-		return
-	end
-
 	local universalMaskGO = gohelper.findChild(self._forAnimGO, "universalMask")
 
 	gohelper.setActive(universalMaskGO, true)
@@ -1009,19 +1022,18 @@ function FightViewHandCardItem:_onClickThis()
 		return
 	end
 
-	if not FightDataHelper.stageMgr:isEmptyOperateState() and FightDataHelper.stageMgr:getCurOperateState() ~= FightStageMgr.OperateStateType.Discard then
+	local curOperateState = FightDataHelper.stageMgr:getCurOperateState()
+
+	if not FightDataHelper.stageMgr:isEmptyOperateState() and curOperateState ~= FightStageMgr.OperateStateType.Discard and curOperateState ~= FightStageMgr.OperateStateType.RecordSkill then
 		return
 	end
 
-	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
-		local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+	if curOperateState == FightStageMgr.OperateStateType.Discard then
+		self:handleDiscardOperateState()
 
-		if entityMO and FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId) then
-			return
-		end
-
-		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
-		FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, self.index)
+		return
+	elseif curOperateState == FightStageMgr.OperateStateType.RecordSkill then
+		self:handleRecordSkillOperateState()
 
 		return
 	end
@@ -1112,10 +1124,76 @@ function FightViewHandCardItem:_onClickThis()
 	self:_toPlayCard()
 end
 
-function FightViewHandCardItem:_toPlayCard(entityId, param2, param3)
+function FightViewHandCardItem:handleDiscardOperateState()
+	local entityMO = FightDataHelper.entityMgr:getById(self.cardInfoMO.uid)
+
+	if entityMO and FightCardDataHelper.isBigSkill(self.cardInfoMO.skillId) then
+		return
+	end
+
+	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
+	FightController.instance:dispatchEvent(FightEvent.PlayDiscardEffect, self.index)
+end
+
+local RecordEffectDuration = 1
+
+function FightViewHandCardItem:handleRecordSkillOperateState()
+	if not FightDataHelper.operationDataMgr:canRecordCard(self.cardInfoMO) then
+		return
+	end
+
+	self.showRecordSkillClickEffecting = true
+
+	TaskDispatcher.cancelTask(self.onRecordSkillClickEffectDone, self)
+	TaskDispatcher.runDelay(self.onRecordSkillClickEffectDone, self, RecordEffectDuration)
+	self:tryShowRecordSkillClickEffect()
+	FightController.instance:dispatchEvent(FightEvent.SelectRecordSkill, self.index)
+	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.RecordSkill)
+end
+
+function FightViewHandCardItem:tryShowRecordSkillClickEffect()
+	if self.goRecordSkillClickEffectGo then
+		self:_refreshRecordSkillClickEffect()
+
+		return
+	end
+
+	if self.recordSkillClickLoader then
+		return
+	end
+
+	self.recordSkillClickLoader = MultiAbLoader.New()
+
+	local path = "ui/viewres/fight/card_lorentz_click.prefab"
+
+	self.recordSkillClickLoader:addPath(path)
+	self.recordSkillClickLoader:startLoad(self.onLoadRecordSkillClickDone, self)
+end
+
+function FightViewHandCardItem:onLoadRecordSkillClickDone()
+	local assetItem = self.recordSkillClickLoader:getFirstAssetItem()
+
+	self.goRecordSkillClickEffectGo = gohelper.clone(assetItem:GetResource(), self.go)
+
+	self:tryShowRecordSkillClickEffect()
+end
+
+function FightViewHandCardItem:onRecordSkillClickEffectDone()
+	self.showRecordSkillClickEffecting = false
+
+	self:_refreshRecordSkillClickEffect()
+end
+
+function FightViewHandCardItem:_refreshRecordSkillClickEffect()
+	if self.goRecordSkillClickEffectGo then
+		gohelper.setActive(self.goRecordSkillClickEffectGo, self.showRecordSkillClickEffecting)
+	end
+end
+
+function FightViewHandCardItem:_toPlayCard(entityId, param2, param3, cardParam1)
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 	FightController.instance:dispatchEvent(FightEvent.BeforePlayHandCard, self.index, entityId)
-	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, self.index, entityId, param2, param3)
+	FightController.instance:dispatchEvent(FightEvent.PlayHandCard, self.index, entityId, param2, param3, cardParam1)
 end
 
 function FightViewHandCardItem:_onDragBegin(param, pointerEventData)
@@ -1269,6 +1347,10 @@ function FightViewHandCardItem:_onLongPress()
 		if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.DiscardEffect then
 			return
 		end
+
+		if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.RecordSkill then
+			return
+		end
 	end
 
 	if not self._isDraging then
@@ -1355,7 +1437,7 @@ function FightViewHandCardItem:_simulateDragHandCardEnd(index, toIndex)
 	GuideController.instance:dispatchEvent(GuideEvent.SpecialEventDone, GuideEnum.SpecialEventEnum.FightCardOp)
 end
 
-function FightViewHandCardItem:_simulatePlayHandCard(index, toId, param2, param3)
+function FightViewHandCardItem:_simulatePlayHandCard(index, toId, param2, param3, cardParam1)
 	if not self.cardInfoMO then
 		return
 	end
@@ -1364,7 +1446,7 @@ function FightViewHandCardItem:_simulatePlayHandCard(index, toId, param2, param3
 		return
 	end
 
-	self:_toPlayCard(toId, param2, param3)
+	self:_toPlayCard(toId, param2, param3, cardParam1)
 end
 
 function FightViewHandCardItem:playCardAni(aniPath, aniname)
@@ -1700,6 +1782,14 @@ function FightViewHandCardItem:releaseSelf()
 
 		self._loader = nil
 	end
+
+	TaskDispatcher.cancelTask(self.onRecordSkillClickEffectDone, self)
+
+	if self.recordSkillClickLoader then
+		self.recordSkillClickLoader:dispose()
+
+		self.recordSkillClickLoader = nil
+	end
 end
 
 function FightViewHandCardItem.replaceLockBg(obj)
@@ -1762,6 +1852,12 @@ function FightViewHandCardItem.replaceLockBg(obj)
 		if bg then
 			UISpriteSetMgr.instance:setFightSkillCardSprite(bg, spName, true)
 		end
+	end
+end
+
+function FightViewHandCardItem:setPreLv(lv)
+	if self._cardItem then
+		self._cardItem:setPreLv(lv)
 	end
 end
 

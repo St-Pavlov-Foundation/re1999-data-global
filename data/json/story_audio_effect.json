@@ -12830,6 +12830,1001 @@
     "bankName": "activitystory_bulaochun3_4_yishi_sfx"
   },
   {
+    "id": 35500001,
+    "eventName": "play_activitystory_lusongshi_qidao_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500002,
+    "eventName": "play_activitystory_lusongshi_street_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500003,
+    "eventName": "play_activitystory_lusongshi_footsteps",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500004,
+    "eventName": "play_activitystory_lusongshi_factory_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500005,
+    "eventName": "play_activitystory_lusongshi_fire_iron_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500006,
+    "eventName": "play_activitystory_lusongshi_highheels_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500007,
+    "eventName": "play_activitystory_lusongshi_metal_throw",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500008,
+    "eventName": "play_activitystory_lusongshi_splat",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500009,
+    "eventName": "play_activitystory_lusongshi_splat_crazy_loop",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500010,
+    "eventName": "play_activitystory_lusongshi_girls_scream",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500011,
+    "eventName": "play_activitystory_lusongshi_slap_face",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500012,
+    "eventName": "play_activitystory_lusongshi_revolver",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500013,
+    "eventName": "play_activitystory_lusongshi_shot_empty",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500014,
+    "eventName": "play_activitystory_lusongshi_shot_change",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx"
+  },
+  {
+    "id": 35500015,
+    "eventName": "play_activitystory_lamona_crowd_discussion",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500016,
+    "eventName": "play_activitystory_lamona_screamed",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500017,
+    "eventName": "play_activitystory_lamona_cross_railing",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500018,
+    "eventName": "play_activitystory_lamona_put_down",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500019,
+    "eventName": "play_activitystory_lamona_throw_paper",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500020,
+    "eventName": "play_activitystory_lamona_boots_walk",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500021,
+    "eventName": "play_activitystory_lamona_boots_fast_walk",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500022,
+    "eventName": "play_activitystory_lamona_boots_stop",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500023,
+    "eventName": "play_activitystory_lamona_glass_jar_explosion",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500024,
+    "eventName": "play_activitystory_lamona_uneasy",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500025,
+    "eventName": "play_activitystory_lamona_breeze_chime",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500026,
+    "eventName": "play_activitystory_lamona_putdown_bouquet",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500027,
+    "eventName": "play_activitystory_lamona_communicator_close",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500028,
+    "eventName": "play_activitystory_lamona_parquet_floor",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500029,
+    "eventName": "play_activitystory_lamona_chirp",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500030,
+    "eventName": "play_activitystory_lamona_stack_documents",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx"
+  },
+  {
+    "id": 35500031,
+    "eventName": "play_activitysfx_lusongshi_niblet",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500032,
+    "eventName": "play_activitysfx_lusongshi_clearing_cardtable",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500033,
+    "eventName": "play_activitysfx_lusongshi_discard_cards",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500034,
+    "eventName": "play_activitysfx_lusongshi_mexico_street_day",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500035,
+    "eventName": "play_activitysfx_lusongshi_mexico_street_night",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500036,
+    "eventName": "play_activitysfx_lusongshi_mexico_street_night_hazy",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500037,
+    "eventName": "play_activitysfx_lusongshi_fist",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500038,
+    "eventName": "play_activitysfx_lusongshi_leap_down",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500039,
+    "eventName": "play_activitysfx_lusongshi_meeting_room",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500040,
+    "eventName": "play_activitysfx_lusongshi_pull_suitcase",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500041,
+    "eventName": "play_activitysfx_lusongshi_corridor",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500042,
+    "eventName": "play_activitysfx_lusongshi_lobby",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500043,
+    "eventName": "play_activitysfx_lusongshi_rewinding",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500044,
+    "eventName": "play_activitysfx_lusongshi_projector_stopped",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500045,
+    "eventName": "play_activitysfx_lusongshi_pick_lock",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500046,
+    "eventName": "play_activitysfx_lusongshi_downtime",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500047,
+    "eventName": "play_activitysfx_lusongshi_painting",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500048,
+    "eventName": "play_activitysfx_lusongshi_sprinkle_powder",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500049,
+    "eventName": "play_activitysfx_lusongshi_stun_reverb",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500050,
+    "eventName": "play_activitysfx_lusongshi_blade_against",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500051,
+    "eventName": "play_activitysfx_lusongshi_scrape_fabric",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500052,
+    "eventName": "play_activitysfx_lusongshi_two_footsteps",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500053,
+    "eventName": "play_activitysfx_lusongshi_many_walk",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500054,
+    "eventName": "play_activitysfx_lusongshi_many_running",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500055,
+    "eventName": "play_activitysfx_lusongshi_enter_cemetery",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500056,
+    "eventName": "play_activitysfx_lusongshi_coffin_opened",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500057,
+    "eventName": "play_activitysfx_lusongshi_climb_out",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500058,
+    "eventName": "play_activitysfx_lusongshi_open_pocket",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500059,
+    "eventName": "play_activitysfx_lusongshi_remove_blood",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500060,
+    "eventName": "play_activitysfx_lusongshi_light_candle",
+    "bankName": "activity_lusongshi3_5_sfx_part01"
+  },
+  {
+    "id": 35500061,
+    "eventName": "play_activitysfx_lusongshi_auction_noise",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500062,
+    "eventName": "play_activitysfx_lusongshi_auction_laughter",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500063,
+    "eventName": "play_activitysfx_lusongshi_transport_paintings",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500064,
+    "eventName": "play_activitysfx_lusongshi_auction_uproar",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500065,
+    "eventName": "play_activitysfx_lusongshi_auction_uproar_hazy",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500066,
+    "eventName": "play_activitysfx_lusongshi_transliterator",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500067,
+    "eventName": "play_activitysfx_lusongshi_falling_sky",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500068,
+    "eventName": "play_activitysfx_lusongshi_auction_riot",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500069,
+    "eventName": "play_activitysfx_lusongshi_auction_riot_hazy",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500070,
+    "eventName": "play_activitysfx_lusongshi_mop_hit",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500071,
+    "eventName": "play_activitysfx_lusongshi_fast_run",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500072,
+    "eventName": "play_activitysfx_lusongshi_hold_box",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500073,
+    "eventName": "play_activitysfx_lusongshi_push_out_box",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500074,
+    "eventName": "play_activitysfx_lusongshi_mouse_caught",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500075,
+    "eventName": "play_activitysfx_lusongshi_mouse_squeaked",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500076,
+    "eventName": "play_activitysfx_lusongshi_butterfly_printer",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500077,
+    "eventName": "play_activitysfx_lusongshi_heavy_slap_car",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500078,
+    "eventName": "play_activitysfx_lusongshi_car_repairing",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500079,
+    "eventName": "play_activitysfx_lusongshi_close_hood",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500080,
+    "eventName": "play_activitysfx_lusongshi_weak_breathing",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500081,
+    "eventName": "play_activitysfx_lusongshi_snow_walk",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500082,
+    "eventName": "play_activitysfx_lusongshi_knocl_door",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500083,
+    "eventName": "play_activitysfx_lusongshi_clear_debris",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500084,
+    "eventName": "play_activitysfx_lusongshi_dead_day",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500085,
+    "eventName": "play_activitysfx_lusongshi_dead_day_noise",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500086,
+    "eventName": "play_activitysfx_lusongshi_cheers_toasting",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500087,
+    "eventName": "play_activitysfx_lusongshi_stick_ground",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500088,
+    "eventName": "play_activitysfx_lusongshi_candies_fall",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500089,
+    "eventName": "play_activitysfx_lusongshi_painful_scratching",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500090,
+    "eventName": "play_activitysfx_lusongshi_dead_day_riot",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500091,
+    "eventName": "play_activitysfx_lusongshi_kick_reverb",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500092,
+    "eventName": "play_activitysfx_lusongshi_myth_sea_noise",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500093,
+    "eventName": "play_activitysfx_lusongshi_dripping_reverb",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500094,
+    "eventName": "play_activitysfx_lusongshi_tread_water_reverb",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500095,
+    "eventName": "play_activitysfx_lusongshi_mural_cracked",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500096,
+    "eventName": "play_activitysfx_lusongshi_pickup_mop",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500097,
+    "eventName": "play_activitysfx_lusongshi_paintbrush_fall",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500098,
+    "eventName": "play_activitysfx_lusongshi_shake_paint_bottle",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500099,
+    "eventName": "play_activitysfx_lusongshi_pull_collar",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500100,
+    "eventName": "play_activitysfx_lusongshi_countermeasures",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500101,
+    "eventName": "play_activitysfx_lusongshi_load_bullet",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500102,
+    "eventName": "play_activitysfx_lusongshi_mouse_carrying",
+    "bankName": "activity_lusongshi3_5_sfx_part02"
+  },
+  {
+    "id": 35500103,
+    "eventName": "play_activitystorysfx_lusongshi_zuo1",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500104,
+    "eventName": "play_activitystorysfx_lusongshi_zhi1_lp",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500105,
+    "eventName": "play_activitystorysfx_lusongshi_zhi2",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500106,
+    "eventName": "play_activitystorysfx_lusongshi_bei",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500107,
+    "eventName": "play_activitystorysfx_lusongshi_room_lp",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500108,
+    "eventName": "play_activitystorysfx_lusongshi_room2_lp",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500109,
+    "eventName": "play_activitystorysfx_lusongshi_fu1",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500110,
+    "eventName": "play_activitystorysfx_lusongshi_fu2",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500111,
+    "eventName": "play_activitystorysfx_lusongshi_instmt",
+    "bankName": "activitystory_lusongshi3_5_hudie_sfx"
+  },
+  {
+    "id": 35500112,
+    "eventName": "play_activitysfx_lusongshi_item_collision",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500113,
+    "eventName": "play_activitysfx_lusongshi_gimp_footsteps",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500114,
+    "eventName": "play_activitysfx_lusongshi_handedly",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500115,
+    "eventName": "play_activitysfx_lusongshi_trample",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500116,
+    "eventName": "play_activitysfx_lusongshi_video_play",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500117,
+    "eventName": "play_activitysfx_lusongshi_knock_door",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500118,
+    "eventName": "play_activitysfx_lusongshi_crowd_cheered",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500119,
+    "eventName": "play_activitysfx_lusongshi_approach",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500120,
+    "eventName": "play_activitystory_lusongshi_coin",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx_fuyong"
+  },
+  {
+    "id": 35500121,
+    "eventName": "play_activitystory_lusongshi_cheer",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx_fuyong"
+  },
+  {
+    "id": 35500122,
+    "eventName": "play_activitystory_lusongshi_struggle",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx_fuyong"
+  },
+  {
+    "id": 35500123,
+    "eventName": "play_activitystory_lusongshi_drag",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx_fuyong"
+  },
+  {
+    "id": 35500124,
+    "eventName": "play_activitystory_lusongshi_cliff_fall",
+    "bankName": "activitystory_lusongshi3_5_yishi_baifuzhang_sfx_fuyong"
+  },
+  {
+    "id": 35500125,
+    "eventName": "play_activitystory_lamona_huxi1_lp",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500126,
+    "eventName": "play_activitystory_lamona_huxi2_lp",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500127,
+    "eventName": "play_activitystory_lamona_huxi3",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500128,
+    "eventName": "play_activitystory_lamona_candle_loop",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500129,
+    "eventName": "play_activitystory_lamona_document",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500130,
+    "eventName": "play_activitystory_lamona_boot_wood",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500131,
+    "eventName": "play_activitystory_lamona_xiliya_loop",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500132,
+    "eventName": "play_activitystory_lamona_ran2",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500133,
+    "eventName": "play_activitystory_lamona_qishen",
+    "bankName": "activitystory_lusongshi3_5_lamona_sfx_fuyong"
+  },
+  {
+    "id": 35500134,
+    "eventName": "play_activitysfx_lusongshi_smoke",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500135,
+    "eventName": "play_activitysfx_lusongsh_patted",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500136,
+    "eventName": "play_activitysfx_lusongshi_stone_mark",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500137,
+    "eventName": "play_activitysfx_lusongshi_lie_down_coffin",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500138,
+    "eventName": "play_activitysfx_lusongshi_sweep_loop",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500139,
+    "eventName": "play_activitysfx_lusongshi_energy_loop",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500140,
+    "eventName": "play_activitysfx_lusongsh_coin",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500141,
+    "eventName": "play_activitysfx_lusongshi_fstp_snow",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500142,
+    "eventName": "play_activitysfx_lusongshi_unlocking",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500143,
+    "eventName": "play_activitysfx_lusongshi_trashcan_bump",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500144,
+    "eventName": "play_activitysfx_lusongshi_paper_feeding",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500145,
+    "eventName": "play_activitysfx_lusongshi_mentaldisorder_loop",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500146,
+    "eventName": "play_activitysfx_lusongsh_mouse",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500147,
+    "eventName": "play_activitysfx_lusongshi_boots_approach",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500148,
+    "eventName": "play_activitysfx_lusongshi_typing",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500149,
+    "eventName": "play_activitysfx_lusongshi_gently_kaimen",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500150,
+    "eventName": "play_activitysfx_lusongshi_tinnitus_loop",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500151,
+    "eventName": "play_activitysfx_lusongshi_dudu4",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500152,
+    "eventName": "play_activitysfx_lusongshi_flesh_blood",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500153,
+    "eventName": "play_activitysfx_lusongshi_kongnaodai_footsteps",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500154,
+    "eventName": "play_activitysfx_lusongshi_kongnaodai_leave",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500155,
+    "eventName": "play_activitysfx_lusongshi_kongnaodai_walk",
+    "bankName": "activity_lusongshi3_5_sfx_fuyong"
+  },
+  {
+    "id": 35500156,
+    "eventName": "play_activitysfx_lusongshi_erase_fade_in",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500157,
+    "eventName": "play_activitysfx_lusongshi_erase_fade_out",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500158,
+    "eventName": "play_activitysfx_lusongshi_dim_candlelight",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500159,
+    "eventName": "play_activitysfx_lusongshi_corn_kernels",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500160,
+    "eventName": "play_activitysfx_lusongshi_symbol",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500161,
+    "eventName": "play_activitysfx_lusongshi_symbol_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500162,
+    "eventName": "play_activitysfx_lusongshi_symbol_conversion",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500163,
+    "eventName": "play_activitysfx_lusongshi_occult_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500164,
+    "eventName": "play_activitysfx_lusongshi_occult",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500165,
+    "eventName": "play_activitysfx_lusongshi_ghostly_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500166,
+    "eventName": "play_activitysfx_lusongshi_spell",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500167,
+    "eventName": "play_activitysfx_lusongshi_spell_fragrance",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500168,
+    "eventName": "play_activitysfx_lusongshi_purify",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500169,
+    "eventName": "play_activitysfx_lusongshi_candle",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500170,
+    "eventName": "play_activitysfx_lusongshi_candle_tilted",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500171,
+    "eventName": "play_activitysfx_lusongshi_band_combustion",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500172,
+    "eventName": "play_activitysfx_lusongshi_band_symbol",
+    "bankName": "activity_lusongshi3_5_sfx_part03"
+  },
+  {
+    "id": 35500173,
+    "eventName": "play_activitysfx_lusongshi_solar",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500174,
+    "eventName": "play_activitysfx_lusongshi_solar_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500175,
+    "eventName": "play_activitysfx_lusongshi_solar_cut",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500176,
+    "eventName": "play_activitysfx_lusongshi_energy_flow",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500177,
+    "eventName": "play_activitysfx_lusongshi_mouse_entry",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500178,
+    "eventName": "play_activitysfx_lusongshi_mouse_advance",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500179,
+    "eventName": "play_activitysfx_lusongshi_gun_child",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500180,
+    "eventName": "play_activitysfx_lusongshi_distorted_shadow",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500181,
+    "eventName": "play_activitysfx_lusongshi_reasoning_entry",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500182,
+    "eventName": "play_activitysfx_lusongshi_reasoning_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500183,
+    "eventName": "play_activitysfx_lusongshi_reasoning_coordinates",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500184,
+    "eventName": "play_activitysfx_lusongshi_line_flashback_01",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500185,
+    "eventName": "play_activitysfx_lusongshi_line_flashback_02",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500186,
+    "eventName": "play_activitysfx_lusongshi_memory_finding",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500187,
+    "eventName": "play_activitysfx_lusongshi_memory_entry",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500188,
+    "eventName": "play_activitysfx_lusongshi_memory_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500189,
+    "eventName": "play_activitysfx_lusongshi_fiddle",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500190,
+    "eventName": "play_activitysfx_lusongshi_paint_peeling",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500191,
+    "eventName": "play_activitysfx_lusongshi_murel_transforms",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500192,
+    "eventName": "play_activitysfx_lusongshi_hummingbird_dissipate",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500193,
+    "eventName": "play_activitysfx_lusongshi_hummingbird_converge",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500194,
+    "eventName": "play_activitysfx_lusongshi_mural_revealed",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500195,
+    "eventName": "play_activitysfx_lusongshi_name_entry",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500196,
+    "eventName": "play_activitysfx_lusongshi_name_loop",
+    "bankName": "activity_lusongshi3_5_sfx_part04"
+  },
+  {
+    "id": 35500197,
+    "eventName": "play_hero3142_mainsfx_chuling1",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 35500198,
+    "eventName": "play_hero3142_mainsfx_chuling3",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
+    "id": 35500199,
+    "eventName": "play_hero3142_mainsfx_lazhu1",
+    "bankName": "hero3142_mainsfx"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -13218,6 +14213,31 @@
     "id": 34530008,
     "eventName": "play_activitymusic_theme_part1_3_4",
     "bankName": "activity3_4_music"
+  },
+  {
+    "id": 35530001,
+    "eventName": "play_activitymusic_theme_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 35530002,
+    "eventName": "play_activitymusic_zibai_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 35530003,
+    "eventName": "play_activitymusic_bihua_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 35530004,
+    "eventName": "play_activitymusic_seasonmain_3_5",
+    "bankName": "activity3_5_music"
+  },
+  {
+    "id": 35530005,
+    "eventName": "play_activitymusic_ep_acomp_3_5",
+    "bankName": "activity3_5_music"
   },
   {
     "id": 520105,
@@ -13828,6 +14848,51 @@
     "id": 34520009,
     "eventName": "play_activitysfx_bulaochun_end",
     "bankName": "activity_bulaochun3_4_sfx"
+  },
+  {
+    "id": 35520000,
+    "eventName": "play_lusongshi3_5_pv_sfx_vo_music",
+    "bankName": "lusongshi3_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 35520001,
+    "eventName": "play_lusongshi3_5_cutscene_hudiexiaoying",
+    "bankName": "lusongshi3_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 35520002,
+    "eventName": "play_lusongshi3_5_cutscene_bihua",
+    "bankName": "lusongshi3_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 35520003,
+    "eventName": "play_lusongshi3_5_cutscene_butterfly_sniper",
+    "bankName": "lusongshi3_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 35520004,
+    "eventName": "play_lusongshi3_5_cutscene_margaret_larisa",
+    "bankName": "lusongshi3_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 35520005,
+    "eventName": "play_activitysfx_lusongshi_chapter_open",
+    "bankName": "activity_lusongshi3_5_sfx"
+  },
+  {
+    "id": 35520006,
+    "eventName": "play_activitysfx_lusongshi_chapter_close",
+    "bankName": "activity_lusongshi3_5_sfx"
+  },
+  {
+    "id": 35520007,
+    "eventName": "play_activitysfx_lusongshi_subsection_open",
+    "bankName": "activity_lusongshi3_5_sfx"
+  },
+  {
+    "id": 35520008,
+    "eventName": "play_activitysfx_lusongshi_subsection_close",
+    "bankName": "activity_lusongshi3_5_sfx"
   },
   {
     "id": 20530011,

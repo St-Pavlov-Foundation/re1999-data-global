@@ -507,6 +507,7 @@ end
 
 function FightEntityObject:onDestructor()
 	gohelper.destroy(self.go)
+	FightMsgMgr.sendMsg(FightMsgId.AfterDestroyEntity, self.id)
 end
 
 return FightEntityObject

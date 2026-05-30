@@ -4,6 +4,11 @@ module("modules.logic.survival.model.SurvivalOutSideInfoMo", package.seeall)
 
 local SurvivalOutSideInfoMo = pureTable("SurvivalOutSideInfoMo")
 
+function SurvivalOutSideInfoMo:ctor()
+	self.difficultyModDict = {}
+	self.difficultyDict = {}
+end
+
 function SurvivalOutSideInfoMo:init(data)
 	self.season = data.season
 	self.versions = data.versions
@@ -60,6 +65,8 @@ function SurvivalOutSideInfoMo:init(data)
 
 	self.unlockDiffIds = modBox.unlockId
 	self.newDiffIds = modBox.newIds
+
+	SurvivalStoreModel.instance:setData(data.mall)
 end
 
 function SurvivalOutSideInfoMo:refreshDifficulty(difficulty)

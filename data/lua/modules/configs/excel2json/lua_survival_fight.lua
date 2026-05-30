@@ -26,6 +26,7 @@ local fields = {
 	incidentalRange = 27,
 	group = 3,
 	roll = 25,
+	subItem = 29,
 	resource = 8,
 	enforce = 16,
 	behavior = 13,

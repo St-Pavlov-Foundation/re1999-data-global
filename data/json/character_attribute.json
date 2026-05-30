@@ -713,5 +713,83 @@
     "showcolor": 0,
     "icon": "",
     "sortId": 0
+  },
+  {
+    "id": 225,
+    "attrType": "toughnessAdd",
+    "type": 3,
+    "name": "language_10117484",
+    "desc": "language_10117485",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 226,
+    "attrType": "toughnessDrop",
+    "type": 3,
+    "name": "language_10117486",
+    "desc": "language_10117487",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 227,
+    "attrType": "multiWeakDmgAdd",
+    "type": 3,
+    "name": "language_10117488",
+    "desc": "language_10117489",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 228,
+    "attrType": "multiWeakDmgDrop",
+    "type": 3,
+    "name": "language_10117490",
+    "desc": "language_10117491",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 229,
+    "attrType": "playAddRate2",
+    "type": 3,
+    "name": "language_10117492",
+    "desc": "language_10117492",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 230,
+    "attrType": "playDropRate2",
+    "type": 3,
+    "name": "language_10117493",
+    "desc": "language_10117493",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
   }
 ]

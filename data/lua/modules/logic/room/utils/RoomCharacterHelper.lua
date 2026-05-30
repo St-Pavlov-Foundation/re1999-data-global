@@ -641,19 +641,76 @@ function RoomCharacterHelper.isCharacterBlock(blockPosition, positionList)
 	return false
 end
 
-function RoomCharacterHelper.getAllBlockMeshRendererList()
+function RoomCharacterHelper.getAllBlockMeshRendererList(hexPointList, excludeBuildingUid)
 	local scene = GameSceneMgr.instance:getCurScene()
 	local entityList = {}
-
-	LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
-	LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomEmptyBlock))
-	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
-	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
-	LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomPartBuilding))
-
 	local meshRendererListTable = {}
 
-	for i, entity in ipairs(entityList) do
+	if hexPointList then
+		local hexDict = {}
+
+		for _, p in ipairs(hexPointList) do
+			hexDict[p.x] = hexDict[p.x] or {}
+			hexDict[p.x][p.y] = true
+		end
+
+		local function isHexInDict(p)
+			if p then
+				return hexDict[p.x] and hexDict[p.x][p.y]
+			end
+		end
+
+		local mapTags = {
+			SceneTag.RoomMapBlock,
+			SceneTag.RoomEmptyBlock
+		}
+
+		for _, t in ipairs(mapTags) do
+			local dict = scene.mapmgr:getTagUnitDict(t)
+
+			if dict then
+				for _, entity in pairs(dict) do
+					local mo = entity:getMO()
+
+					if mo and mo.hexPoint and isHexInDict(mo.hexPoint) then
+						table.insert(entityList, entity)
+					end
+				end
+			end
+		end
+
+		local buildTags = {
+			SceneTag.RoomBuilding,
+			SceneTag.RoomInitBuilding,
+			SceneTag.RoomPartBuilding
+		}
+
+		for _, t in ipairs(buildTags) do
+			local dict = scene.buildingmgr:getTagUnitDict(t)
+
+			if dict then
+				for _, entity in pairs(dict) do
+					if t == SceneTag.RoomBuilding then
+						local mo = entity:getMO()
+
+						if mo and mo.buildingUid ~= excludeBuildingUid and isHexInDict(mo.hexPoint) then
+							table.insert(entityList, entity)
+						end
+					else
+						table.insert(entityList, entity)
+					end
+				end
+			end
+		end
+	else
+		LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomMapBlock))
+		LuaUtil.insertDict(entityList, scene.mapmgr:getTagUnitDict(SceneTag.RoomEmptyBlock))
+		LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomBuilding))
+		LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomInitBuilding))
+		LuaUtil.insertDict(entityList, scene.buildingmgr:getTagUnitDict(SceneTag.RoomPartBuilding))
+	end
+
+	for _, entity in ipairs(entityList) do
 		tabletool.addValues(meshRendererListTable, entity:getCharacterMeshRendererList())
 	end
 

@@ -17,6 +17,7 @@ local fields = {
 	roleId = 22,
 	copyIds = 16,
 	exp = 23,
+	subItem = 24,
 	versions = 4,
 	priority = 7,
 	incidentalRange = 21,

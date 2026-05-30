@@ -98,7 +98,8 @@ local RevertUIBlurView = {
 	ViewName.VersionActivity2_7StoreView,
 	ViewName.VersionActivity2_7TaskView,
 	ViewName.DungeonRewardView,
-	ViewName.StoryFrontView
+	ViewName.StoryFrontView,
+	ViewName.ReactivityStoreView
 }
 
 function VersionActivity2_7DungeonMapScene:_onOpenView(viewName)

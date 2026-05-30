@@ -377,6 +377,18 @@ function ResUrl.getEffect(effectName)
 	return string.format("effects/prefabs/%s.prefab", effectName)
 end
 
+function ResUrl.getEffectName(effectPath)
+	if string.nilorempty(effectPath) then
+		return
+	end
+
+	local effectName = string.gsub(effectPath, "effects/prefabs/", "", 1)
+
+	effectName = string.gsub(effectName, ".prefab", "", 1)
+
+	return effectName
+end
+
 function ResUrl.getStoryPrefabRes(resName)
 	return string.format("ui/viewres/story/%s.prefab", resName)
 end
@@ -1811,6 +1823,14 @@ function ResUrl.getV3a4PartySingleBg(resName, path)
 	else
 		return string.format("singlebg/v3a4_party_singlebg/%s.png", resName)
 	end
+end
+
+function ResUrl.getV3a5LamonaSingleBg(resName)
+	return string.format("singlebg/v3a5_lamona_singlebg/%s.png", resName)
+end
+
+function ResUrl.getLorentzIcon(resName)
+	return string.format("singlebg/v3a5_lorentz_singlebg/puzzle/%s.png", resName)
 end
 
 function ResUrl.getUISpinePrefabBySkin(skinCO)

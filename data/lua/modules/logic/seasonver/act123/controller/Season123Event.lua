@@ -60,5 +60,8 @@ Season123Event.GotCardView = 99001
 Season123Event.GuideEntryOtherViewPop = 99002
 Season123Event.GuideEntryOtherViewClose = 99003
 Season123Event.EnterMainEpiosdeHeroGroupView = 99004
+Season123Event.StageRewardGet = 99005
+Season123Event.CardDetailSwitch = 99006
+Season123Event.GuideStageShow = 99007
 
 return Season123Event

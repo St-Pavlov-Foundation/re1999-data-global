@@ -4,27 +4,29 @@ module("modules.configs.excel2json.lua_monster_skill_template", package.seeall)
 
 local lua_monster_skill_template = {}
 local fields = {
-	gender = 7,
+	uniqueSkill_point = 14,
 	name = 2,
+	gender = 7,
 	career = 8,
-	baseStress = 18,
-	uniqueSkill = 12,
-	uniqueSkill_point = 13,
+	uniqueSkill = 13,
+	skin = 15,
 	nameEng = 3,
-	identity = 20,
-	race = 21,
-	camp = 17,
-	dmgType = 9,
-	activeSkill = 11,
-	powerMax = 15,
+	baseStress = 20,
+	race = 23,
+	camp = 19,
+	dmgType = 10,
+	identity = 22,
+	career_weak = 9,
+	activeSkill = 12,
+	powerMax = 17,
 	des = 4,
-	passiveSkill = 10,
+	passiveSkill = 11,
 	instance = 6,
-	property = 16,
-	resistance = 14,
+	property = 18,
+	resistance = 16,
 	template = 5,
 	id = 1,
-	maxStress = 19
+	maxStress = 21
 }
 local primaryKey = {
 	"id"
