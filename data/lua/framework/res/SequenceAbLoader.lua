@@ -1,177 +1,179 @@
-﻿module("framework.res.SequenceAbLoader", package.seeall)
+﻿-- chunkname: @framework/res/SequenceAbLoader.lua
 
-local var_0_0 = class("SequenceAbLoader")
+module("framework.res.SequenceAbLoader", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._pathList = {}
-	arg_1_0._resDict = {}
-	arg_1_0._singlePath2AssetItemDict = {}
-	arg_1_0._resList = {}
-	arg_1_0._finishCallback = nil
-	arg_1_0._oneFinishCallback = nil
-	arg_1_0._loadFailCallback = nil
-	arg_1_0._callbackTarget = nil
-	arg_1_0._interval = 0.01
-	arg_1_0._concurrentCount = 1
-	arg_1_0._loadIndex = 1
-	arg_1_0._loadingCount = 0
-	arg_1_0.isLoading = false
+local SequenceAbLoader = class("SequenceAbLoader")
+
+function SequenceAbLoader:ctor()
+	self._pathList = {}
+	self._resDict = {}
+	self._singlePath2AssetItemDict = {}
+	self._resList = {}
+	self._finishCallback = nil
+	self._oneFinishCallback = nil
+	self._loadFailCallback = nil
+	self._callbackTarget = nil
+	self._interval = 0.01
+	self._concurrentCount = 1
+	self._loadIndex = 1
+	self._loadingCount = 0
+	self.isLoading = false
 end
 
-function var_0_0.addPath(arg_2_0, arg_2_1)
-	table.insert(arg_2_0._pathList, arg_2_1)
+function SequenceAbLoader:addPath(path)
+	table.insert(self._pathList, path)
 end
 
-function var_0_0.setPathList(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._pathList = arg_3_1
+function SequenceAbLoader:setPathList(pathList)
+	if pathList then
+		self._pathList = pathList
 	end
 end
 
-function var_0_0.setInterval(arg_4_0, arg_4_1)
-	arg_4_0._interval = arg_4_1
+function SequenceAbLoader:setInterval(seconds)
+	self._interval = seconds
 end
 
-function var_0_0.setConcurrentCount(arg_5_0, arg_5_1)
-	arg_5_0._concurrentCount = arg_5_1
+function SequenceAbLoader:setConcurrentCount(count)
+	self._concurrentCount = count
 end
 
-function var_0_0.startLoad(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.isLoading = true
-	arg_6_0._finishCallback = arg_6_1
-	arg_6_0._callbackTarget = arg_6_2
-	arg_6_0._loadIndex = 0
+function SequenceAbLoader:startLoad(finishCallback, callbackTarget)
+	self.isLoading = true
+	self._finishCallback = finishCallback
+	self._callbackTarget = callbackTarget
+	self._loadIndex = 0
 
-	arg_6_0:_loadNext()
+	self:_loadNext()
 end
 
-function var_0_0.setOneFinishCallback(arg_7_0, arg_7_1)
-	arg_7_0._oneFinishCallback = arg_7_1
+function SequenceAbLoader:setOneFinishCallback(oneFinishCallback)
+	self._oneFinishCallback = oneFinishCallback
 end
 
-function var_0_0.setLoadFailCallback(arg_8_0, arg_8_1)
-	arg_8_0._loadFailCallback = arg_8_1
+function SequenceAbLoader:setLoadFailCallback(loadFailCallback)
+	self._loadFailCallback = loadFailCallback
 end
 
-function var_0_0.getAssetItemDict(arg_9_0)
-	return arg_9_0._resDict
+function SequenceAbLoader:getAssetItemDict()
+	return self._resDict
 end
 
-function var_0_0.getAssetItem(arg_10_0, arg_10_1)
-	return arg_10_0._resDict[arg_10_1] or arg_10_0._singlePath2AssetItemDict[arg_10_1]
+function SequenceAbLoader:getAssetItem(path)
+	return self._resDict[path] or self._singlePath2AssetItemDict[path]
 end
 
-function var_0_0.getFirstAssetItem(arg_11_0)
-	local var_11_0 = arg_11_0._pathList[1]
+function SequenceAbLoader:getFirstAssetItem()
+	local firstPath = self._pathList[1]
 
-	return arg_11_0:getAssetItem(var_11_0)
+	return self:getAssetItem(firstPath)
 end
 
-function var_0_0.dispose(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._loadNext, arg_12_0)
+function SequenceAbLoader:dispose()
+	TaskDispatcher.cancelTask(self._loadNext, self)
 
-	if arg_12_0._pathList and #arg_12_0._resList < #arg_12_0._pathList then
-		for iter_12_0, iter_12_1 in ipairs(arg_12_0._pathList) do
-			removeAssetLoadCb(iter_12_1, arg_12_0._onLoadCallback, arg_12_0)
+	if self._pathList and #self._resList < #self._pathList then
+		for _, v in ipairs(self._pathList) do
+			removeAssetLoadCb(v, self._onLoadCallback, self)
 		end
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(arg_12_0._resList) do
-		iter_12_3:Release()
+	for _, assetItem in ipairs(self._resList) do
+		assetItem:Release()
 	end
 
-	arg_12_0._pathList = nil
-	arg_12_0._resDict = nil
-	arg_12_0._resList = nil
-	arg_12_0._finishCallback = nil
-	arg_12_0._oneFinishCallback = nil
-	arg_12_0._callbackTarget = nil
+	self._pathList = nil
+	self._resDict = nil
+	self._resList = nil
+	self._finishCallback = nil
+	self._oneFinishCallback = nil
+	self._callbackTarget = nil
 end
 
-function var_0_0._loadNext(arg_13_0)
-	if arg_13_0._loadIndex >= #arg_13_0._pathList and arg_13_0._loadingCount == 0 then
-		arg_13_0:_callback()
+function SequenceAbLoader:_loadNext()
+	if self._loadIndex >= #self._pathList and self._loadingCount == 0 then
+		self:_callback()
 
 		return
 	end
 
-	local var_13_0 = SLFramework.FrameworkSettings.IsEditor
+	local isEditor = SLFramework.FrameworkSettings.IsEditor
 
-	for iter_13_0 = 1, arg_13_0._concurrentCount do
-		arg_13_0._loadIndex = arg_13_0._loadIndex + 1
+	for i = 1, self._concurrentCount do
+		self._loadIndex = self._loadIndex + 1
 
-		local var_13_1 = arg_13_0._pathList and arg_13_0._pathList[arg_13_0._loadIndex]
+		local path = self._pathList and self._pathList[self._loadIndex]
 
-		if var_13_1 then
-			arg_13_0._loadingCount = arg_13_0._loadingCount + 1
+		if path then
+			self._loadingCount = self._loadingCount + 1
 
-			loadAbAsset(var_13_1, false, arg_13_0._onLoadCallback, arg_13_0)
+			loadAbAsset(path, false, self._onLoadCallback, self)
 
-			if var_13_0 and string.find(var_13_1, "\\") then
-				logError(string.format("SequenceAbLoader loadAbAsset path:%s error,can not contain \\", var_13_1))
+			if isEditor and string.find(path, "\\") then
+				logError(string.format("SequenceAbLoader loadAbAsset path:%s error,can not contain \\", path))
 			end
 		end
 	end
 end
 
-function var_0_0._onLoadCallback(arg_14_0, arg_14_1)
-	if not arg_14_0._resList then
+function SequenceAbLoader:_onLoadCallback(assetItem)
+	if not self._resList then
 		return
 	end
 
-	table.insert(arg_14_0._resList, arg_14_1)
+	table.insert(self._resList, assetItem)
 
-	if arg_14_1.IsLoadSuccess then
-		arg_14_1:Retain()
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
 
-		arg_14_0._resDict[arg_14_1.ResPath] = arg_14_1
+		self._resDict[assetItem.ResPath] = assetItem
 
-		local var_14_0 = arg_14_1.AllAssetNames
+		local allAssetNames = assetItem.AllAssetNames
 
-		if var_14_0 then
-			for iter_14_0 = 0, var_14_0.Length - 1 do
-				local var_14_1 = ResUrl.getPathWithoutAssetLib(var_14_0[iter_14_0])
+		if allAssetNames then
+			for i = 0, allAssetNames.Length - 1 do
+				local singlePath = ResUrl.getPathWithoutAssetLib(assetItem:getAssetsNameByIndex(i))
 
-				arg_14_0._singlePath2AssetItemDict[var_14_1] = arg_14_1
+				self._singlePath2AssetItemDict[singlePath] = assetItem
 			end
 		end
 
-		if arg_14_0._oneFinishCallback then
-			if arg_14_0._callbackTarget then
-				arg_14_0._oneFinishCallback(arg_14_0._callbackTarget, arg_14_0, arg_14_1)
+		if self._oneFinishCallback then
+			if self._callbackTarget then
+				self._oneFinishCallback(self._callbackTarget, self, assetItem)
 			else
-				arg_14_0._oneFinishCallback(arg_14_0, arg_14_1)
+				self._oneFinishCallback(self, assetItem)
 			end
 		end
-	elseif arg_14_0._loadFailCallback then
-		if arg_14_0._callbackTarget then
-			arg_14_0._loadFailCallback(arg_14_0._callbackTarget, arg_14_0, arg_14_1)
+	elseif self._loadFailCallback then
+		if self._callbackTarget then
+			self._loadFailCallback(self._callbackTarget, self, assetItem)
 		else
-			arg_14_0._loadFailCallback(arg_14_0, arg_14_1)
+			self._loadFailCallback(self, assetItem)
 		end
 	end
 
-	arg_14_0._loadingCount = arg_14_0._loadingCount - 1
+	self._loadingCount = self._loadingCount - 1
 
-	if arg_14_0._loadingCount <= 0 then
-		if arg_14_0._interval and arg_14_0._interval > 0 then
-			TaskDispatcher.runDelay(arg_14_0._loadNext, arg_14_0, arg_14_0._interval)
+	if self._loadingCount <= 0 then
+		if self._interval and self._interval > 0 then
+			TaskDispatcher.runDelay(self._loadNext, self, self._interval)
 		else
-			arg_14_0:_loadNext()
-		end
-	end
-end
-
-function var_0_0._callback(arg_15_0)
-	arg_15_0.isLoading = false
-
-	if arg_15_0._finishCallback then
-		if arg_15_0._callbackTarget then
-			arg_15_0._finishCallback(arg_15_0._callbackTarget, arg_15_0)
-		else
-			arg_15_0._finishCallback(arg_15_0)
+			self:_loadNext()
 		end
 	end
 end
 
-return var_0_0
+function SequenceAbLoader:_callback()
+	self.isLoading = false
+
+	if self._finishCallback then
+		if self._callbackTarget then
+			self._finishCallback(self._callbackTarget, self)
+		else
+			self._finishCallback(self)
+		end
+	end
+end
+
+return SequenceAbLoader

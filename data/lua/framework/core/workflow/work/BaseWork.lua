@@ -1,134 +1,136 @@
-﻿module("framework.core.workflow.work.BaseWork", package.seeall)
+﻿-- chunkname: @framework/core/workflow/work/BaseWork.lua
 
-local var_0_0 = class("BaseWork")
-local var_0_1 = "done"
+module("framework.core.workflow.work.BaseWork", package.seeall)
 
-function var_0_0.initInternal(arg_1_0)
-	arg_1_0.context = nil
-	arg_1_0.root = nil
-	arg_1_0.parent = nil
-	arg_1_0.isSuccess = false
-	arg_1_0.status = WorkStatus.Init
-	arg_1_0.flowName = nil
+local BaseWork = class("BaseWork")
+local DoneEvent = "done"
+
+function BaseWork:initInternal()
+	self.context = nil
+	self.root = nil
+	self.parent = nil
+	self.isSuccess = false
+	self.status = WorkStatus.Init
+	self.flowName = nil
 end
 
-function var_0_0.setRootInternal(arg_2_0, arg_2_1)
-	arg_2_0.root = arg_2_1
+function BaseWork:setRootInternal(root)
+	self.root = root
 end
 
-function var_0_0.setParentInternal(arg_3_0, arg_3_1)
-	arg_3_0.parent = arg_3_1
+function BaseWork:setParentInternal(parent)
+	self.parent = parent
 end
 
-function var_0_0.onStartInternal(arg_4_0, arg_4_1)
-	arg_4_0.context = arg_4_1
-	arg_4_0.status = WorkStatus.Running
+function BaseWork:onStartInternal(context)
+	self.context = context
+	self.status = WorkStatus.Running
 
-	return arg_4_0:onStart(arg_4_1)
+	return self:onStart(context)
 end
 
-function var_0_0.onStopInternal(arg_5_0)
-	arg_5_0.status = WorkStatus.Stopped
+function BaseWork:onStopInternal()
+	self.status = WorkStatus.Stopped
 
-	arg_5_0:onStop()
+	self:onStop()
 end
 
-function var_0_0.onResumeInternal(arg_6_0)
-	arg_6_0.status = WorkStatus.Running
+function BaseWork:onResumeInternal()
+	self.status = WorkStatus.Running
 
-	arg_6_0:onResume()
+	self:onResume()
 end
 
-function var_0_0.onResetInternal(arg_7_0)
-	arg_7_0.status = WorkStatus.Init
+function BaseWork:onResetInternal()
+	self.status = WorkStatus.Init
 
-	arg_7_0:onReset()
+	self:onReset()
 end
 
-function var_0_0.onDestroyInternal(arg_8_0)
-	arg_8_0:onDestroy()
+function BaseWork:onDestroyInternal()
+	self:onDestroy()
 
-	arg_8_0.context = nil
-	arg_8_0.parent = nil
+	self.context = nil
+	self.parent = nil
 end
 
-function var_0_0.onDone(arg_9_0, arg_9_1)
-	arg_9_0.isSuccess = arg_9_1
-	arg_9_0.status = WorkStatus.Done
+function BaseWork:onDone(isSuccess)
+	self.isSuccess = isSuccess
+	self.status = WorkStatus.Done
 
-	if arg_9_0.beforeClearWork then
-		arg_9_0:beforeClearWork()
+	if self.beforeClearWork then
+		self:beforeClearWork()
 	end
 
-	arg_9_0:clearWork()
+	self:clearWork()
 
-	if arg_9_0.parent then
-		if arg_9_0._dispatcher then
-			arg_9_0.parent:onWorkDone(arg_9_0)
+	if self.parent then
+		if self._dispatcher then
+			self.parent:onWorkDone(self)
 		else
-			return arg_9_0.parent:onWorkDone(arg_9_0)
+			return self.parent:onWorkDone(self)
 		end
 	end
 
-	if arg_9_0._dispatcher then
-		arg_9_0._dispatcher:dispatchEvent(var_0_1, arg_9_1)
+	if self._dispatcher then
+		self._dispatcher:dispatchEvent(DoneEvent, isSuccess)
 	end
 end
 
-function var_0_0.registerDoneListener(arg_10_0, arg_10_1, arg_10_2)
-	if not arg_10_0._dispatcher then
-		arg_10_0._dispatcher = {}
+function BaseWork:registerDoneListener(handler, handlerTarget)
+	if not self._dispatcher then
+		self._dispatcher = {}
 
-		LuaEventSystem.addEventMechanism(arg_10_0._dispatcher)
+		LuaEventSystem.addEventMechanism(self._dispatcher)
 	end
 
-	arg_10_0._dispatcher:registerCallback(var_0_1, arg_10_1, arg_10_2)
+	self._dispatcher:registerCallback(DoneEvent, handler, handlerTarget)
 end
 
-function var_0_0.unregisterDoneListener(arg_11_0, arg_11_1, arg_11_2)
-	if arg_11_0._dispatcher then
-		arg_11_0._dispatcher:unregisterCallback(var_0_1, arg_11_1, arg_11_2)
+function BaseWork:unregisterDoneListener(handler, handlerTarget)
+	if self._dispatcher then
+		self._dispatcher:unregisterCallback(DoneEvent, handler, handlerTarget)
 	end
 end
 
-function var_0_0.ctor(arg_12_0)
+function BaseWork:ctor()
 	return
 end
 
-function var_0_0.onStart(arg_13_0, arg_13_1)
+function BaseWork:onStart(context)
 	return
 end
 
-function var_0_0.onStop(arg_14_0)
-	if arg_14_0.beforeClearWork then
-		arg_14_0:beforeClearWork()
+function BaseWork:onStop()
+	if self.beforeClearWork then
+		self:beforeClearWork()
 	end
 
-	arg_14_0:clearWork()
+	self:clearWork()
 end
 
-function var_0_0.onResume(arg_15_0)
+function BaseWork:onResume()
 	return
 end
 
-function var_0_0.onReset(arg_16_0)
-	if arg_16_0.beforeClearWork then
-		arg_16_0:beforeClearWork()
+function BaseWork:onReset()
+	if self.beforeClearWork then
+		self:beforeClearWork()
 	end
 
-	arg_16_0:clearWork()
+	self:clearWork()
 end
 
-function var_0_0.onDestroy(arg_17_0)
-	if arg_17_0.beforeClearWork then
-		arg_17_0:beforeClearWork()
+function BaseWork:onDestroy()
+	if self.beforeClearWork then
+		self:beforeClearWork()
 	end
 
-	arg_17_0:clearWork()
+	self:clearWork()
 end
 
-function var_0_0.clearWork(arg_18_0)
+function BaseWork:clearWork()
 	return
 end
 
-return var_0_0
+return BaseWork

@@ -1,77 +1,79 @@
-﻿module("framework.core.callback.LuaGeneralCallback", package.seeall)
+﻿-- chunkname: @framework/core/callback/LuaGeneralCallback.lua
 
-local var_0_0 = class("LuaGeneralCallback")
+module("framework.core.callback.LuaGeneralCallback", package.seeall)
 
-var_0_0._pool = nil
+local LuaGeneralCallback = class("LuaGeneralCallback")
 
-function var_0_0.getPool()
-	if not var_0_0._pool then
-		var_0_0._pool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
+LuaGeneralCallback._pool = nil
+
+function LuaGeneralCallback.getPool()
+	if not LuaGeneralCallback._pool then
+		LuaGeneralCallback._pool = LuaObjPool.New(32, LuaGeneralCallback._poolNew, LuaGeneralCallback._poolRelease, LuaGeneralCallback._poolReset)
 	end
 
-	return var_0_0._pool
+	return LuaGeneralCallback._pool
 end
 
-function var_0_0._poolNew()
-	return var_0_0.New()
+function LuaGeneralCallback._poolNew()
+	return LuaGeneralCallback.New()
 end
 
-function var_0_0._poolRelease(arg_3_0)
-	arg_3_0:release()
+function LuaGeneralCallback._poolRelease(luaObj)
+	luaObj:release()
 end
 
-function var_0_0._poolReset(arg_4_0)
-	arg_4_0:reset()
+function LuaGeneralCallback._poolReset(luaObj)
+	luaObj:reset()
 end
 
-function var_0_0.ctor(arg_5_0)
-	arg_5_0.id = 0
-	arg_5_0.callback = nil
-	arg_5_0.hasCbObj = false
-	arg_5_0.cbObjContainer = {}
+function LuaGeneralCallback:ctor()
+	self.id = 0
+	self.callback = nil
+	self.hasCbObj = false
+	self.cbObjContainer = {}
 
-	setmetatable(arg_5_0.cbObjContainer, {
+	setmetatable(self.cbObjContainer, {
 		__mode = "v"
 	})
 
-	arg_5_0.cbObjContainer.value = nil
+	self.cbObjContainer.value = nil
 end
 
-function var_0_0.setCbObj(arg_6_0, arg_6_1)
-	arg_6_0.hasCbObj = arg_6_1 ~= nil
+function LuaGeneralCallback:setCbObj(cbObj)
+	self.hasCbObj = cbObj ~= nil
 
-	if arg_6_0.hasCbObj then
-		arg_6_0.cbObjContainer.value = arg_6_1
+	if self.hasCbObj then
+		self.cbObjContainer.value = cbObj
 	end
 end
 
-function var_0_0.invoke(arg_7_0, ...)
-	if arg_7_0.hasCbObj and not arg_7_0.cbObjContainer.value then
+function LuaGeneralCallback:invoke(...)
+	if self.hasCbObj and not self.cbObjContainer.value then
 		return false
 	end
 
-	local var_7_0 = {
+	local args = {
 		...
 	}
 
-	if not arg_7_0.hasCbObj then
-		arg_7_0.callback(unpack(var_7_0))
+	if not self.hasCbObj then
+		self.callback(unpack(args))
 	else
-		arg_7_0.callback(arg_7_0.cbObjContainer.value, unpack(var_7_0))
+		self.callback(self.cbObjContainer.value, unpack(args))
 	end
 
 	return true
 end
 
-function var_0_0.reset(arg_8_0)
-	arg_8_0.id = 0
-	arg_8_0.callback = nil
-	arg_8_0.hasCbObj = false
-	arg_8_0.cbObjContainer.value = nil
+function LuaGeneralCallback:reset()
+	self.id = 0
+	self.callback = nil
+	self.hasCbObj = false
+	self.cbObjContainer.value = nil
 end
 
-function var_0_0.release(arg_9_0)
-	arg_9_0:reset()
+function LuaGeneralCallback:release()
+	self:reset()
 end
 
-return var_0_0
+return LuaGeneralCallback

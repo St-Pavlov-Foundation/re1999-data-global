@@ -1,93 +1,95 @@
-﻿module("framework.core.taskdispatcher.TaskItem", package.seeall)
+﻿-- chunkname: @framework/core/taskdispatcher/TaskItem.lua
 
-local var_0_0 = class("TaskItem")
+module("framework.core.taskdispatcher.TaskItem", package.seeall)
 
-var_0_0.IsIOSPlayer = SLFramework.FrameworkSettings.CurPlatform == SLFramework.FrameworkSettings.IOSPlayer
-var_0_0.frameCount = 0
-var_0_0._itemPool = nil
+local TaskItem = class("TaskItem")
 
-local var_0_1 = __G__TRACKBACK__
-local var_0_2 = xpcall
+TaskItem.IsIOSPlayer = SLFramework.FrameworkSettings.CurPlatform == SLFramework.FrameworkSettings.IOSPlayer
+TaskItem.frameCount = 0
+TaskItem._itemPool = nil
 
-function var_0_0.createPool()
-	var_0_0._itemPool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
+local TRACKBACK = __G__TRACKBACK__
+local _xpcall = xpcall
 
-	return var_0_0._itemPool
+function TaskItem.createPool()
+	TaskItem._itemPool = LuaObjPool.New(32, TaskItem._poolNew, TaskItem._poolRelease, TaskItem._poolReset)
+
+	return TaskItem._itemPool
 end
 
-function var_0_0._poolNew()
-	return var_0_0.New()
+function TaskItem._poolNew()
+	return TaskItem.New()
 end
 
-function var_0_0._poolRelease(arg_3_0)
-	arg_3_0:release()
+function TaskItem._poolRelease(luaObj)
+	luaObj:release()
 end
 
-function var_0_0._poolReset(arg_4_0)
-	arg_4_0:reset()
+function TaskItem._poolReset(luaObj)
+	luaObj:reset()
 end
 
-function var_0_0.reset(arg_5_0)
-	arg_5_0.interval = 0
-	arg_5_0.addFrame = 0
-	arg_5_0.timeCount = 0
+function TaskItem:reset()
+	self.interval = 0
+	self.addFrame = 0
+	self.timeCount = 0
 
-	arg_5_0:setCb(nil, nil)
+	self:setCb(nil, nil)
 
-	arg_5_0.repeatCount = 0
-	arg_5_0.isLoop = false
-	arg_5_0.hasInvoked = false
-	arg_5_0.status = TaskDispatcher.Idle
+	self.repeatCount = 0
+	self.isLoop = false
+	self.hasInvoked = false
+	self.status = TaskDispatcher.Idle
 end
 
-function var_0_0.ctor(arg_6_0)
-	arg_6_0:reset()
+function TaskItem:ctor()
+	self:reset()
 end
 
-function var_0_0.release(arg_7_0)
-	arg_7_0:reset()
+function TaskItem:release()
+	self:reset()
 end
 
-function var_0_0.setCb(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.callback = arg_8_1
-	arg_8_0.cbObj = arg_8_2
+function TaskItem:setCb(callback, cbObj)
+	self.callback = callback
+	self.cbObj = cbObj
 end
 
-function var_0_0.update(arg_9_0, arg_9_1)
-	if arg_9_0.status == TaskDispatcher.ToDelete then
-		arg_9_0.repeatCount = 0
+function TaskItem:update(deltaTime)
+	if self.status == TaskDispatcher.ToDelete then
+		self.repeatCount = 0
 
 		return false
 	end
 
-	arg_9_0.hasInvoked = false
+	self.hasInvoked = false
 
-	if arg_9_0.addFrame >= var_0_0.frameCount then
-		return arg_9_0.hasInvoked
+	if self.addFrame >= TaskItem.frameCount then
+		return self.hasInvoked
 	end
 
-	arg_9_0.timeCount = arg_9_0.timeCount + arg_9_1
+	self.timeCount = self.timeCount + deltaTime
 
-	if arg_9_0.timeCount < arg_9_0.interval then
-		return arg_9_0.hasInvoked
+	if self.timeCount < self.interval then
+		return self.hasInvoked
 	end
 
-	arg_9_0.hasInvoked = true
-	arg_9_0.timeCount = arg_9_0.timeCount - arg_9_0.interval
+	self.hasInvoked = true
+	self.timeCount = self.timeCount - self.interval
 
-	if arg_9_0.cbObj then
-		var_0_2(arg_9_0.callback, var_0_1, arg_9_0.cbObj)
+	if self.cbObj then
+		_xpcall(self.callback, TRACKBACK, self.cbObj)
 	else
-		var_0_2(arg_9_0.callback, var_0_1)
+		_xpcall(self.callback, TRACKBACK)
 	end
 
-	arg_9_0.repeatCount = arg_9_0.repeatCount - 1
+	self.repeatCount = self.repeatCount - 1
 
-	return arg_9_0.hasInvoked
+	return self.hasInvoked
 end
 
-function var_0_0.logStr(arg_10_0)
-	return "callback = " .. tostring(arg_10_0.callback) .. " cbObj = " .. tostring(arg_10_0.cbObj) .. " interval = " .. arg_10_0.interval .. " addFrame = " .. arg_10_0.addFrame .. " timeCount = " .. arg_10_0.timeCount .. " repeatCount = " .. arg_10_0.repeatCount .. " isLoop = " .. tostring(arg_10_0.isLoop) .. " hasInvoked = " .. tostring(arg_10_0.hasInvoked) .. " status = " .. arg_10_0.status
+function TaskItem:logStr()
+	return "callback = " .. tostring(self.callback) .. " cbObj = " .. tostring(self.cbObj) .. " interval = " .. self.interval .. " addFrame = " .. self.addFrame .. " timeCount = " .. self.timeCount .. " repeatCount = " .. self.repeatCount .. " isLoop = " .. tostring(self.isLoop) .. " hasInvoked = " .. tostring(self.hasInvoked) .. " status = " .. self.status
 end
 
-return var_0_0
+return TaskItem

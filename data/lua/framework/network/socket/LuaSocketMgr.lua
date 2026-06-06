@@ -1,291 +1,294 @@
-﻿module("framework.network.socket.LuaSocketMgr", package.seeall)
+﻿-- chunkname: @framework/network/socket/LuaSocketMgr.lua
 
-local var_0_0 = class("LuaSocketMgr")
+module("framework.network.socket.LuaSocketMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._systemCmds = nil
-	arg_1_0._moduleCmds = nil
-	arg_1_0._preSenders = {}
-	arg_1_0._preReceivers = {}
-	arg_1_0._req2CmdDict = {}
-	arg_1_0._res2CmdDict = {}
-	arg_1_0._csSocketMgr = SLFramework.SocketMgr.Instance
-	arg_1_0._ignoreSomeCmdLog = false
-	arg_1_0._ignoreCmds = {}
-	arg_1_0._headerSize4Send = 11
+local LuaSocketMgr = class("LuaSocketMgr")
+
+function LuaSocketMgr:ctor()
+	self._systemCmds = nil
+	self._moduleCmds = nil
+	self._preSenders = {}
+	self._preReceivers = {}
+	self._req2CmdDict = {}
+	self._res2CmdDict = {}
+	self._csSocketMgr = SLFramework.SocketMgr.Instance
+	self._ignoreSomeCmdLog = false
+	self._ignoreCmds = {}
+	self._headerSize4Send = 11
 end
 
-function var_0_0.setIgnoreSomeCmdLog(arg_2_0, arg_2_1)
-	if not arg_2_1 then
-		arg_2_0._ignoreSomeCmdLog = false
+function LuaSocketMgr:setIgnoreSomeCmdLog(cmds)
+	if not cmds then
+		self._ignoreSomeCmdLog = false
 
 		return
 	end
 
-	arg_2_0._ignoreSomeCmdLog = true
+	self._ignoreSomeCmdLog = true
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		arg_2_0._ignoreCmds[iter_2_1] = true
+	for _, cmdName in ipairs(cmds) do
+		self._ignoreCmds[cmdName] = true
 	end
 end
 
-function var_0_0._canLog(arg_3_0, arg_3_1)
-	return not arg_3_0._ignoreSomeCmdLog or not arg_3_0._ignoreCmds[arg_3_1]
+function LuaSocketMgr:_canLog(protoName)
+	return not self._ignoreSomeCmdLog or not self._ignoreCmds[protoName]
 end
 
-function var_0_0.init(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0._systemCmds = arg_4_1
-	arg_4_0._moduleCmds = arg_4_2
+function LuaSocketMgr:init(systemCmds, moduleCmds)
+	self._systemCmds = systemCmds
+	self._moduleCmds = moduleCmds
 
-	for iter_4_0, iter_4_1 in pairs(arg_4_0._moduleCmds) do
-		if #iter_4_1 == 3 then
-			arg_4_0._req2CmdDict[iter_4_1[2]] = iter_4_0
-			arg_4_0._res2CmdDict[iter_4_1[3]] = iter_4_0
-		elseif #iter_4_1 == 2 then
-			arg_4_0._res2CmdDict[iter_4_1[2]] = iter_4_0
+	for k, v in pairs(self._moduleCmds) do
+		if #v == 3 then
+			self._req2CmdDict[v[2]] = k
+			self._res2CmdDict[v[3]] = k
+		elseif #v == 2 then
+			self._res2CmdDict[v[2]] = k
 		end
 	end
 
-	arg_4_0._csSocketMgr:SetLuaHandler(arg_4_0._onReceiveMainMsg, arg_4_0, SocketId.Main)
+	self._csSocketMgr:SetLuaHandler(self._onReceiveMainMsg, self, SocketId.Main)
 end
 
-function var_0_0.reInit(arg_5_0)
-	arg_5_0._csSocketMgr:Dispose()
-	arg_5_0._csSocketMgr:SetLuaHandler(arg_5_0._onReceiveMainMsg, arg_5_0, SocketId.Main)
+function LuaSocketMgr:reInit()
+	self._csSocketMgr:Dispose()
+	self._csSocketMgr:SetLuaHandler(self._onReceiveMainMsg, self, SocketId.Main)
 end
 
-function var_0_0.registerPreSender(arg_6_0, arg_6_1)
-	table.insert(arg_6_0._preSenders, arg_6_1)
+function LuaSocketMgr:registerPreSender(preSender)
+	table.insert(self._preSenders, preSender)
 end
 
-function var_0_0.unregisterPreSender(arg_7_0, arg_7_1)
-	if not arg_7_1 then
+function LuaSocketMgr:unregisterPreSender(preSender)
+	if not preSender then
 		return
 	end
 
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._preSenders) do
-		if iter_7_1 == arg_7_1 then
-			table.remove(arg_7_0._preSenders, iter_7_0)
+	for i, v in ipairs(self._preSenders) do
+		if v == preSender then
+			table.remove(self._preSenders, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.registerPreReceiver(arg_8_0, arg_8_1)
-	table.insert(arg_8_0._preReceivers, arg_8_1)
+function LuaSocketMgr:registerPreReceiver(preReceiver)
+	table.insert(self._preReceivers, preReceiver)
 end
 
-function var_0_0.unregisterPreReceiver(arg_9_0, arg_9_1)
-	if not arg_9_1 then
+function LuaSocketMgr:unregisterPreReceiver(preReceiver)
+	if not preReceiver then
 		return
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._preReceivers) do
-		if iter_9_1 == arg_9_1 then
-			table.remove(arg_9_0._preReceivers, iter_9_0)
+	for i, v in ipairs(self._preReceivers) do
+		if v == preReceiver then
+			table.remove(self._preReceivers, i)
 
 			break
 		end
 	end
 end
 
-function var_0_0.setConnectBeginCallback(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	arg_10_0._csSocketMgr:SetConnectBeginCallback(arg_10_1, arg_10_2, arg_10_3 or SocketId.Main)
+function LuaSocketMgr:setConnectBeginCallback(connectBeginCall, luaTarget, socketId)
+	self._csSocketMgr:SetConnectBeginCallback(connectBeginCall, luaTarget, socketId or SocketId.Main)
 end
 
-function var_0_0.setConnectEndCallback(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	arg_11_0._csSocketMgr:setConnectEndCallback(arg_11_1, arg_11_2, arg_11_3 or SocketId.Main)
+function LuaSocketMgr:setConnectEndCallback(connectEndCall, luaTarget, socketId)
+	self._csSocketMgr:setConnectEndCallback(connectEndCall, luaTarget, socketId or SocketId.Main)
 end
 
-function var_0_0.setSeqId(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._csSocketMgr:SetSeqId(arg_12_1, arg_12_2 or SocketId.Main)
+function LuaSocketMgr:setSeqId(seqId, socketId)
+	self._csSocketMgr:SetSeqId(seqId, socketId or SocketId.Main)
 end
 
-function var_0_0.beginConnect(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	return arg_13_0._csSocketMgr:BeginConnect(arg_13_1, arg_13_2, arg_13_3 or SocketId.Main)
+function LuaSocketMgr:beginConnect(ip, port, socketId)
+	return self._csSocketMgr:BeginConnect(ip, port, socketId or SocketId.Main)
 end
 
-function var_0_0.endConnect(arg_14_0, arg_14_1)
-	arg_14_0._csSocketMgr:EndConnect(arg_14_1 or SocketId.Main)
+function LuaSocketMgr:endConnect(socketId)
+	self._csSocketMgr:EndConnect(socketId or SocketId.Main)
 end
 
-function var_0_0.isConnected(arg_15_0, arg_15_1)
-	return arg_15_0._csSocketMgr:IsConnected(arg_15_1 or SocketId.Main)
+function LuaSocketMgr:isConnected(socketId)
+	return self._csSocketMgr:IsConnected(socketId or SocketId.Main)
 end
 
-function var_0_0.sendSysMsg(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0
+function LuaSocketMgr:sendSysMsg(cmd, dataTable, socketId)
+	local isBlockSend
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._preSenders) do
-		var_16_0 = iter_16_1.preSendSysMsg and iter_16_1:preSendSysMsg(arg_16_1, arg_16_2, arg_16_3 or SocketId.Main) or var_16_0
+	for _, preSender in ipairs(self._preSenders) do
+		isBlockSend = preSender.preSendSysMsg and preSender:preSendSysMsg(cmd, dataTable, socketId or SocketId.Main) or isBlockSend
 	end
 
-	if not var_16_0 then
-		arg_16_0:reallySendSysMsg(arg_16_1, arg_16_2, arg_16_3 or SocketId.Main)
-	end
-end
-
-function var_0_0.getSysMsgSendBuffLen(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0._systemCmds.GetSendMsg(arg_17_1, arg_17_2)
-
-	return string.len(var_17_0) + arg_17_0._headerSize4Send
-end
-
-function var_0_0.reallySendSysMsg(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0._systemCmds.GetSendMsg(arg_18_1, arg_18_2)
-
-	arg_18_0._csSocketMgr:SendMsg(arg_18_1, var_18_0, arg_18_3 or SocketId.Main)
-
-	local var_18_1 = arg_18_0._systemCmds.GetRequestName(arg_18_1)
-
-	if canLogNormal and isDebugBuild and arg_18_0:_canLog(var_18_1) then
-		logNormal(string.format("==> Send Sys Msg, cmd:%d %s size:%d\n%s", arg_18_1, var_18_1, string.len(var_18_0), cjson.encode(arg_18_2)))
+	if not isBlockSend then
+		self:reallySendSysMsg(cmd, dataTable, socketId or SocketId.Main)
 	end
 end
 
-function var_0_0.sendMsg(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_1.__cname
-	local var_19_1 = arg_19_0._req2CmdDict[var_19_0]
+function LuaSocketMgr:getSysMsgSendBuffLen(cmd, dataTable)
+	local buffer = self._systemCmds.GetSendMsg(cmd, dataTable)
 
-	if var_19_1 then
-		local var_19_2
+	return string.len(buffer) + self._headerSize4Send
+end
 
-		for iter_19_0, iter_19_1 in ipairs(arg_19_0._preSenders) do
-			if iter_19_1.blockSendProto then
-				var_19_2 = iter_19_1:blockSendProto(var_19_1, arg_19_1, arg_19_2 or SocketId.Main)
+function LuaSocketMgr:reallySendSysMsg(cmd, dataTable, socketId)
+	local buffer = self._systemCmds.GetSendMsg(cmd, dataTable)
 
-				if var_19_2 then
+	self._csSocketMgr:SendMsg(cmd, buffer, socketId or SocketId.Main)
+
+	local requestName = self._systemCmds.GetRequestName(cmd)
+
+	if canLogNormal and isDebugBuild and self:_canLog(requestName) then
+		logNormal(string.format("==> Send Sys Msg, cmd:%d %s size:%d\n%s", cmd, requestName, string.len(buffer), cjson.encode(dataTable)))
+	end
+end
+
+function LuaSocketMgr:sendMsg(proto, socketId)
+	local protoName = proto.__cname
+	local cmd = self._req2CmdDict[protoName]
+
+	if cmd then
+		local isBlockSend
+
+		for _, preSender in ipairs(self._preSenders) do
+			if preSender.blockSendProto then
+				isBlockSend = preSender:blockSendProto(cmd, proto, socketId or SocketId.Main)
+
+				if isBlockSend then
 					break
 				end
 			end
 		end
 
-		if not var_19_2 then
-			for iter_19_2, iter_19_3 in ipairs(arg_19_0._preSenders) do
-				if iter_19_3.preSendProto then
-					iter_19_3:preSendProto(var_19_1, arg_19_1, arg_19_2 or SocketId.Main)
+		if not isBlockSend then
+			for _, preSender in ipairs(self._preSenders) do
+				if preSender.preSendProto then
+					preSender:preSendProto(cmd, proto, socketId or SocketId.Main)
 				end
 			end
 
-			arg_19_0:reallySendMsg(var_19_1, arg_19_1, arg_19_2 or SocketId.Main)
+			self:reallySendMsg(cmd, proto, socketId or SocketId.Main)
 		else
-			logWarn("LuaSocketMgr block " .. var_19_0)
+			logWarn("LuaSocketMgr block " .. protoName)
 		end
 	else
-		logError("cmd not exist: " .. var_19_0)
+		logError("cmd not exist: " .. protoName)
 	end
 end
 
-function var_0_0.reallySendMsg(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_2:SerializeToString()
+function LuaSocketMgr:reallySendMsg(cmd, proto, socketId)
+	local buffer = proto:SerializeToString()
 
-	arg_20_0._csSocketMgr:SendMsg(arg_20_1, var_20_0, arg_20_3 or SocketId.Main)
+	self._csSocketMgr:SendMsg(cmd, buffer, socketId or SocketId.Main)
 
-	local var_20_1 = arg_20_2.__cname
+	local requestName = proto.__cname
 
-	if canLogNormal and isDebugBuild and arg_20_0:_canLog(var_20_1) then
-		logNormal(string.format("==> Send Msg, cmd:%d %s size:%d\n%s", arg_20_1, var_20_1, string.len(var_20_0), tostring(arg_20_2)))
+	if canLogNormal and isDebugBuild and self:_canLog(requestName) then
+		logNormal(string.format("==> Send Msg, cmd:%d %s size:%d\n%s", cmd, requestName, string.len(buffer), tostring(proto)))
 	end
 end
 
-function var_0_0._onReceiveMainMsg(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4, arg_21_5)
-	local var_21_0 = arg_21_0._systemCmds[arg_21_2]
+function LuaSocketMgr:_onReceiveMainMsg(resultCode, cmd, data, downTag, socketId)
+	local systemCmd = self._systemCmds[cmd]
 
-	if var_21_0 then
-		local var_21_1 = arg_21_0._systemCmds.GetReceiveMsg(arg_21_2, arg_21_3)
-		local var_21_2 = arg_21_0._systemCmds.GetResponseName(arg_21_2)
+	if systemCmd then
+		local msg = self._systemCmds.GetReceiveMsg(cmd, data)
+		local responseName = self._systemCmds.GetResponseName(cmd)
 
-		if canLogNormal and isDebugBuild and arg_21_0:_canLog(var_21_2) then
-			logNormal(string.format("<== Recv Sys Msg, cmd:%d %s size:%d resultCode:%d downTag:%d\n%s", arg_21_2, var_21_2, string.len(arg_21_3), arg_21_1, arg_21_4, cjson.encode(var_21_1)))
+		if canLogNormal and isDebugBuild and self:_canLog(responseName) then
+			logNormal(string.format("<== Recv Sys Msg, cmd:%d %s size:%d resultCode:%d downTag:%d\n%s", cmd, responseName, string.len(data), resultCode, downTag, cjson.encode(msg)))
 		end
 
-		local var_21_3
+		local isBlockReceive
 
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._preReceivers) do
-			var_21_3 = iter_21_1.preReceiveSysMsg and iter_21_1:preReceiveSysMsg(arg_21_1, arg_21_2, var_21_2, var_21_1, arg_21_4, arg_21_5) or var_21_3
+		for _, preReceiver in ipairs(self._preReceivers) do
+			isBlockReceive = preReceiver.preReceiveSysMsg and preReceiver:preReceiveSysMsg(resultCode, cmd, responseName, msg, downTag, socketId) or isBlockReceive
 		end
 
-		if not var_21_3 then
-			arg_21_0:_rpcReceiveMsg(var_21_0[1], true, arg_21_1, arg_21_2, var_21_2, var_21_1, arg_21_4, arg_21_5)
+		if not isBlockReceive then
+			self:_rpcReceiveMsg(systemCmd[1], true, resultCode, cmd, responseName, msg, downTag, socketId)
 		end
 	else
-		local var_21_4 = arg_21_0._moduleCmds[arg_21_2]
+		local moduleCmd = self._moduleCmds[cmd]
 
-		if not var_21_4 then
-			logError("cmd not exist: " .. arg_21_2)
+		if not moduleCmd then
+			logError("cmd not exist: " .. cmd)
 
 			return
 		end
 
-		local var_21_5 = #var_21_4 == 3 and var_21_4[3] or var_21_4[2]
-		local var_21_6 = var_21_4[1] .. "Module_pb"
-		local var_21_7 = getGlobal(var_21_6) or addGlobalModule("modules.proto." .. var_21_6, var_21_6)
+		local responseName = #moduleCmd == 3 and moduleCmd[3] or moduleCmd[2]
+		local pbName = moduleCmd[1] .. "Module_pb"
+		local pbTable = getGlobal(pbName) or addGlobalModule("modules.proto." .. pbName, pbName)
 
-		if not var_21_7 then
-			logError(string.format("pb not exist: %s res = %s", var_21_6, var_21_5))
+		if not pbTable then
+			logError(string.format("pb not exist: %s res = %s", pbName, responseName))
 
 			return
 		end
 
-		local var_21_8 = var_21_7[var_21_5]()
+		local resStruct = pbTable[responseName]
+		local msg = resStruct()
 
-		var_21_8:ParseFromString(arg_21_3)
+		msg:ParseFromString(data)
 
-		if canLogNormal and isDebugBuild and arg_21_0:_canLog(var_21_5) then
-			local var_21_9 = arg_21_1 == 0 and "" or "<color=#FFA500>"
-			local var_21_10 = arg_21_1 == 0 and "" or "</color>"
+		if canLogNormal and isDebugBuild and self:_canLog(responseName) then
+			local colorTagStart = resultCode == 0 and "" or "<color=#FFA500>"
+			local colorTagEnd = resultCode == 0 and "" or "</color>"
 
-			logNormal(string.format("%s<== Recv Msg, cmd:%d %s size:%d resultCode:%d downTag:%d%s\n%s", var_21_9, arg_21_2, var_21_5, string.len(arg_21_3), arg_21_1, arg_21_4, var_21_10, tostring(var_21_8)))
+			logNormal(string.format("%s<== Recv Msg, cmd:%d %s size:%d resultCode:%d downTag:%d%s\n%s", colorTagStart, cmd, responseName, string.len(data), resultCode, downTag, colorTagEnd, tostring(msg)))
 
-			if string.len(arg_21_3) > 1000 then
-				local var_21_11 = tostring(var_21_8)
-				local var_21_12 = string.split(var_21_11, "\n")
-				local var_21_13 = math.ceil(#var_21_12 / 500)
+			if string.len(data) > 1000 then
+				local msgStr = tostring(msg)
+				local lines = string.split(msgStr, "\n")
+				local count = math.ceil(#lines / 500)
 
-				for iter_21_2 = 1, var_21_13 do
-					local var_21_14 = (iter_21_2 - 1) * 500 + 1
-					local var_21_15 = math.min(iter_21_2 * 500, #var_21_12)
+				for i = 1, count do
+					local startIdx = (i - 1) * 500 + 1
+					local endIdx = math.min(i * 500, #lines)
 
-					logNormal(table.concat(var_21_12, "\n", var_21_14, var_21_15))
+					logNormal(table.concat(lines, "\n", startIdx, endIdx))
 				end
 			end
 		end
 
-		local var_21_16
+		local isBlockReceive
 
-		for iter_21_3, iter_21_4 in ipairs(arg_21_0._preReceivers) do
-			var_21_16 = iter_21_4.preReceiveMsg and iter_21_4:preReceiveMsg(arg_21_1, arg_21_2, var_21_5, var_21_8, arg_21_4, arg_21_5) or var_21_16
+		for _, preReceiver in ipairs(self._preReceivers) do
+			isBlockReceive = preReceiver.preReceiveMsg and preReceiver:preReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId) or isBlockReceive
 		end
 
-		if not var_21_16 then
-			arg_21_0:_rpcReceiveMsg(var_21_4[1], false, arg_21_1, arg_21_2, var_21_5, var_21_8, arg_21_4, arg_21_5)
+		if not isBlockReceive then
+			self:_rpcReceiveMsg(moduleCmd[1], false, resultCode, cmd, responseName, msg, downTag, socketId)
 		end
 	end
 end
 
-function var_0_0._rpcReceiveMsg(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7, arg_22_8)
-	if arg_22_2 then
-		SystemLoginRpc.instance:onReceiveMsg(arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7, arg_22_8)
+function LuaSocketMgr:_rpcReceiveMsg(moduleName, isSystemCmd, resultCode, cmd, responseName, msg, downTag, socketId)
+	if isSystemCmd then
+		SystemLoginRpc.instance:onReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId)
 
 		return
 	end
 
-	local var_22_0 = getGlobal(arg_22_1 .. "Rpc")
+	local rpc = getGlobal(moduleName .. "Rpc")
 
-	if var_22_0 and var_22_0["onReceive" .. arg_22_5] then
-		var_22_0.instance:onReceiveMsg(arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7, arg_22_8)
+	if rpc and rpc["onReceive" .. responseName] then
+		rpc.instance:onReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId)
 
 		return
 	else
-		local var_22_1 = ModuleMgr.instance:getSetting(arg_22_1)
+		local moduleSetting = ModuleMgr.instance:getSetting(moduleName)
 
-		if var_22_1 and var_22_1.rpc then
-			for iter_22_0, iter_22_1 in ipairs(var_22_1.rpc) do
-				local var_22_2 = getGlobal(iter_22_1)
+		if moduleSetting and moduleSetting.rpc then
+			for _, rpcName in ipairs(moduleSetting.rpc) do
+				rpc = getGlobal(rpcName)
 
-				if var_22_2 and var_22_2["onReceive" .. arg_22_5] then
-					var_22_2.instance:onReceiveMsg(arg_22_3, arg_22_4, arg_22_5, arg_22_6, arg_22_7, arg_22_8)
+				if rpc and rpc["onReceive" .. responseName] then
+					rpc.instance:onReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId)
 
 					return
 				end
@@ -293,25 +296,33 @@ function var_0_0._rpcReceiveMsg(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4
 		end
 	end
 
-	logError(string.format("cmd_%d onReceive%s = nil, module:%s", arg_22_4, arg_22_5, arg_22_1))
+	logError(string.format("cmd_%d onReceive%s = nil, module:%s", cmd, responseName, moduleName))
 end
 
-function var_0_0.getCmdByPbStructName(arg_23_0, arg_23_1)
-	return arg_23_0._req2CmdDict[arg_23_1] or arg_23_0._res2CmdDict[arg_23_1]
+function LuaSocketMgr:getCmdByPbStructName(pbStructName)
+	local cmd = self._req2CmdDict[pbStructName]
+
+	cmd = cmd or self._res2CmdDict[pbStructName]
+
+	return cmd
 end
 
-function var_0_0.getCmdSettingDict(arg_24_0)
-	return arg_24_0._moduleCmds
+function LuaSocketMgr:getCmdSettingDict()
+	return self._moduleCmds
 end
 
-function var_0_0.getCmdSetting(arg_25_0, arg_25_1)
-	return arg_25_0._moduleCmds[arg_25_1]
+function LuaSocketMgr:getCmdSetting(cmd)
+	return self._moduleCmds[cmd]
 end
 
-function var_0_0.getSysCmdSetting(arg_26_0, arg_26_1)
-	return arg_26_0._systemCmds[arg_26_1]
+function LuaSocketMgr:getSysCmdSetting(cmd)
+	return self._systemCmds[cmd]
 end
 
-var_0_0.instance = var_0_0.New()
+function LuaSocketMgr:getSystemCmd()
+	return self._systemCmds
+end
 
-return var_0_0
+LuaSocketMgr.instance = LuaSocketMgr.New()
+
+return LuaSocketMgr

@@ -1,9 +1,11 @@
-﻿module("framework.network.NetworkConst", package.seeall)
+﻿-- chunkname: @framework/network/NetworkConst.lua
 
-local var_0_0 = {}
+module("framework.network.NetworkConst", package.seeall)
 
-var_0_0.SocketConnectTimeout = 5
-var_0_0.SystemLoginTimeout = 10
-var_0_0.UnresponsiveMsgMaxTime = 10
+local NetworkConst = {}
 
-return var_0_0
+NetworkConst.SocketConnectTimeout = 5
+NetworkConst.SystemLoginTimeout = 10
+NetworkConst.UnresponsiveMsgMaxTime = 10
+
+return NetworkConst

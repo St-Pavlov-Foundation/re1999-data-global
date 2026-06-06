@@ -1,122 +1,127 @@
-﻿module("framework.mvc.view.ViewModalMaskMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ViewModalMaskMgr.lua
 
-local var_0_0 = class("ViewModalMaskMgr")
+module("framework.mvc.view.ViewModalMaskMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.DefaultMaskAlpha = 0
-	arg_1_0._maskGO = nil
-	arg_1_0._imgMask = nil
+local ViewModalMaskMgr = class("ViewModalMaskMgr")
+
+function ViewModalMaskMgr:ctor()
+	self.DefaultMaskAlpha = 0
+	self._maskGO = nil
+	self._imgMask = nil
 end
 
-function var_0_0.init(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenView, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, arg_2_0._onReOpenWhileOpen, arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
+function ViewModalMaskMgr:init()
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.ReOpenWhileOpen, self._onReOpenWhileOpen, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0._onOpenView(arg_3_0, arg_3_1, arg_3_2)
-	if ViewMgr.instance:isModal(arg_3_1) then
-		arg_3_0:_adjustMask(arg_3_1)
-	elseif ViewMgr.instance:isFull(arg_3_1) then
-		arg_3_0:_hideModalMask()
+function ViewModalMaskMgr:_onOpenView(viewName, viewParam)
+	if ViewMgr.instance:isModal(viewName) then
+		self:_adjustMask(viewName)
+	elseif ViewMgr.instance:isFull(viewName) then
+		self:_hideModalMask()
 	end
 end
 
-function var_0_0._onReOpenWhileOpen(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0:_onOpenView(arg_4_1, arg_4_2)
+function ViewModalMaskMgr:_onReOpenWhileOpen(viewName, viewParam)
+	self:_onOpenView(viewName, viewParam)
 end
 
-function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = ViewMgr.instance:isModal(arg_5_1)
+function ViewModalMaskMgr:_onCloseViewFinish(viewName, viewParam)
+	local isModal = ViewMgr.instance:isModal(viewName)
 
-	if var_5_0 then
-		arg_5_0:_hideModalMask()
+	if isModal then
+		self:_hideModalMask()
 	end
 
-	if ViewMgr.instance:isFull(arg_5_1) or var_5_0 then
-		local var_5_1 = ViewMgr.instance:getOpenViewNameList()
+	if ViewMgr.instance:isFull(viewName) or isModal then
+		local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-		for iter_5_0 = #var_5_1, 1, -1 do
-			local var_5_2 = var_5_1[iter_5_0]
+		for i = #openViewNameList, 1, -1 do
+			local existViewName = openViewNameList[i]
 
-			if ViewMgr.instance:isModal(var_5_2) and ViewMgr.instance:isOpenFinish(var_5_2) then
-				arg_5_0:_adjustMask(var_5_2)
+			if ViewMgr.instance:isModal(existViewName) and ViewMgr.instance:isOpenFinish(existViewName) then
+				self:_adjustMask(existViewName)
 
 				break
-			elseif ViewMgr.instance:isFull(var_5_2) then
+			elseif ViewMgr.instance:isFull(existViewName) then
 				break
 			end
 		end
 	end
 end
 
-function var_0_0._checkCreateMask(arg_6_0)
-	if not arg_6_0._maskGO then
-		arg_6_0._maskGO = gohelper.find("UIRoot/POPUP/ViewMask")
-		arg_6_0._imgMask = arg_6_0._maskGO:GetComponent(gohelper.Type_Image)
-		arg_6_0.DefaultMaskAlpha = arg_6_0._imgMask.color.a
+function ViewModalMaskMgr:_checkCreateMask()
+	if not self._maskGO then
+		self._maskGO = gohelper.find("UIRoot/POPUP/ViewMask")
+		self._imgMask = self._maskGO:GetComponent(gohelper.Type_Image)
+		self.DefaultMaskAlpha = self._imgMask.color.a
 
-		gohelper.setActive(arg_6_0._maskGO, true)
-		SLFramework.UGUI.UIClickListener.Get(arg_6_0._maskGO):AddClickListener(arg_6_0._onClickModalMask, arg_6_0)
+		gohelper.setActive(self._maskGO, true)
+		SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickModalMask, self)
 	end
 end
 
-function var_0_0._adjustMask(arg_7_0, arg_7_1)
-	arg_7_0:_checkCreateMask()
+function ViewModalMaskMgr:_adjustMask(viewName)
+	self:_checkCreateMask()
 
-	local var_7_0 = ViewMgr.instance:getContainer(arg_7_1)
-	local var_7_1 = var_7_0:getSetting()
-	local var_7_2 = ViewMgr.instance:getUILayer(var_7_1.layer)
+	local viewContainer = ViewMgr.instance:getContainer(viewName)
+	local setting = viewContainer:getSetting()
+	local uiLayerGO = ViewMgr.instance:getUILayer(setting.layer)
 
-	gohelper.addChild(var_7_2, arg_7_0._maskGO)
-	gohelper.setActive(arg_7_0._maskGO, true)
-	gohelper.setSiblingBefore(arg_7_0._maskGO, var_7_0.viewGO)
+	gohelper.addChild(uiLayerGO, self._maskGO)
+	gohelper.setActive(self._maskGO, true)
+	gohelper.setSiblingBefore(self._maskGO, viewContainer.viewGO)
 
-	local var_7_3
+	local customAlpha
 
-	if var_7_0.getCustomViewMaskAlpha then
-		var_7_3 = var_7_0:getCustomViewMaskAlpha()
+	if viewContainer.getCustomViewMaskAlpha then
+		customAlpha = viewContainer:getCustomViewMaskAlpha()
 	end
 
-	local var_7_4
+	local maskAlpha = customAlpha or setting.maskAlpha or self.DefaultMaskAlpha
+	local color = self._imgMask.color
 
-	var_7_4.a, var_7_4 = var_7_3 or var_7_1.maskAlpha or arg_7_0.DefaultMaskAlpha, arg_7_0._imgMask.color
-	arg_7_0._imgMask.color = var_7_4
+	color.a = maskAlpha
+	self._imgMask.color = color
 end
 
-function var_0_0._hideModalMask(arg_8_0)
-	gohelper.setActive(arg_8_0._maskGO, false)
+function ViewModalMaskMgr:_hideModalMask()
+	gohelper.setActive(self._maskGO, false)
 end
 
-function var_0_0._onClickModalMask(arg_9_0)
-	local var_9_0
-	local var_9_1 = ViewMgr.instance:getOpenViewNameList()
+function ViewModalMaskMgr:_onClickModalMask()
+	local lastModalViewName
+	local openViewNameList = ViewMgr.instance:getOpenViewNameList()
 
-	for iter_9_0 = #var_9_1, 1, -1 do
-		local var_9_2 = var_9_1[iter_9_0]
+	for i = #openViewNameList, 1, -1 do
+		local viewName = openViewNameList[i]
 
-		if ViewMgr.instance:isModal(var_9_2) then
-			var_9_0 = var_9_2
+		if ViewMgr.instance:isModal(viewName) then
+			lastModalViewName = viewName
 
 			break
-		elseif ViewMgr.instance:isFull(var_9_2) then
+		elseif ViewMgr.instance:isFull(viewName) then
 			break
 		end
 	end
 
-	if var_9_0 then
-		if ViewMgr.instance:isOpenFinish(var_9_0) then
-			ViewMgr.instance:getContainer(var_9_0):onClickModalMaskInternal()
+	if lastModalViewName then
+		if ViewMgr.instance:isOpenFinish(lastModalViewName) then
+			local viewContainer = ViewMgr.instance:getContainer(lastModalViewName)
+
+			viewContainer:onClickModalMaskInternal()
 		else
-			logNormal("modal view not open finish: " .. var_9_0)
+			logNormal("modal view not open finish: " .. lastModalViewName)
 		end
 	else
-		arg_9_0:_hideModalMask()
+		self:_hideModalMask()
 		logError("no modal view belong to mask")
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ViewModalMaskMgr.instance = ViewModalMaskMgr.New()
 
-return var_0_0
+return ViewModalMaskMgr

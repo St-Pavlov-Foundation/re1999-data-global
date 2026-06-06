@@ -1,13 +1,15 @@
-﻿module("framework.mvc.view.UILayerName", package.seeall)
+﻿-- chunkname: @framework/mvc/view/UILayerName.lua
 
-local var_0_0 = {}
+module("framework.mvc.view.UILayerName", package.seeall)
 
-var_0_0.Hud = "HUD"
-var_0_0.PopUp = "POPUP"
-var_0_0.PopUpTop = "POPUP_TOP"
-var_0_0.Guide = "GUIDE"
-var_0_0.Message = "MESSAGE"
-var_0_0.Top = "TOP"
-var_0_0.IDCanvasPopUp = "IDCanvas/POPUP"
+local UILayerName = {}
 
-return var_0_0
+UILayerName.Hud = "HUD"
+UILayerName.PopUp = "POPUP"
+UILayerName.PopUpTop = "POPUP_TOP"
+UILayerName.Guide = "GUIDE"
+UILayerName.Message = "MESSAGE"
+UILayerName.Top = "TOP"
+UILayerName.IDCanvasPopUp = "IDCanvas/POPUP"
+
+return UILayerName

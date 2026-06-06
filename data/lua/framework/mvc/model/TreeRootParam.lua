@@ -1,15 +1,17 @@
-﻿module("framework.mvc.model.TreeRootParam", package.seeall)
+﻿-- chunkname: @framework/mvc/model/TreeRootParam.lua
 
-local var_0_0 = pureTable("TreeRootParam")
+module("framework.mvc.model.TreeRootParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.rootType = 0
-	arg_1_0.rootLength = 0
-	arg_1_0.nodeType = 0
-	arg_1_0.nodeLength = 0
-	arg_1_0.nodeCountEachLine = -1
-	arg_1_0.nodeStartSpace = 0
-	arg_1_0.nodeEndSpace = 0
+local TreeRootParam = pureTable("TreeRootParam")
+
+function TreeRootParam:ctor()
+	self.rootType = 0
+	self.rootLength = 0
+	self.nodeType = 0
+	self.nodeLength = 0
+	self.nodeCountEachLine = -1
+	self.nodeStartSpace = 0
+	self.nodeEndSpace = 0
 end
 
-return var_0_0
+return TreeRootParam

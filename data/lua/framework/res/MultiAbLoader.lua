@@ -1,148 +1,140 @@
-﻿module("framework.res.MultiAbLoader", package.seeall)
+﻿-- chunkname: @framework/res/MultiAbLoader.lua
 
-local var_0_0 = class("MultiAbLoader")
+module("framework.res.MultiAbLoader", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._pathList = {}
-	arg_1_0._resDict = {}
-	arg_1_0._singlePath2AssetItemDict = {}
-	arg_1_0._resList = {}
-	arg_1_0._finishCallback = nil
-	arg_1_0._oneFinishCallback = nil
-	arg_1_0._loadFailCallback = nil
-	arg_1_0._callbackTarget = nil
-	arg_1_0.isLoading = false
+local MultiAbLoader = class("MultiAbLoader")
+
+function MultiAbLoader:ctor()
+	self._pathList = {}
+	self._resDict = {}
+	self._singlePath2AssetItemDict = {}
+	self._resList = {}
+	self._finishCallback = nil
+	self._oneFinishCallback = nil
+	self._loadFailCallback = nil
+	self._callbackTarget = nil
+	self.isLoading = false
 end
 
-function var_0_0.addPath(arg_2_0, arg_2_1)
-	table.insert(arg_2_0._pathList, arg_2_1)
+function MultiAbLoader:addPath(path)
+	table.insert(self._pathList, path)
 end
 
-function var_0_0.setPathList(arg_3_0, arg_3_1)
-	if arg_3_1 then
-		arg_3_0._pathList = arg_3_1
+function MultiAbLoader:setPathList(pathList)
+	if pathList then
+		self._pathList = pathList
 	end
 end
 
-function var_0_0.startLoad(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.isLoading = true
-	arg_4_0._finishCallback = arg_4_1
-	arg_4_0._callbackTarget = arg_4_2
+function MultiAbLoader:startLoad(finishCallback, callbackTarget)
+	self.isLoading = true
+	self._finishCallback = finishCallback
+	self._callbackTarget = callbackTarget
 
-	local var_4_0 = SLFramework.FrameworkSettings.IsEditor
-	local var_4_1 = arg_4_0._pathList and #arg_4_0._pathList or 0
+	local isEditor = SLFramework.FrameworkSettings.IsEditor
+	local count = self._pathList and #self._pathList or 0
 
-	if var_4_1 > 0 then
-		for iter_4_0 = 1, var_4_1 do
-			local var_4_2 = arg_4_0._pathList[iter_4_0]
+	if count > 0 then
+		for i = 1, count do
+			local path = self._pathList[i]
 
-			loadAbAsset(var_4_2, false, arg_4_0._onLoadCallback, arg_4_0)
+			loadAbAsset(path, false, self._onLoadCallback, self)
 
-			if var_4_0 and string.find(var_4_2, "\\") then
-				logError(string.format("MultiAbLoader loadAbAsset path:%s error,can not contain \\", var_4_2))
+			if isEditor and string.find(path, "\\") then
+				logError(string.format("MultiAbLoader loadAbAsset path:%s error,can not contain \\", path))
 			end
 		end
 	else
-		arg_4_0:_callback()
+		self:_callback()
 	end
 end
 
-function var_0_0.setOneFinishCallback(arg_5_0, arg_5_1)
-	arg_5_0._oneFinishCallback = arg_5_1
+function MultiAbLoader:setOneFinishCallback(oneFinishCallback)
+	self._oneFinishCallback = oneFinishCallback
 end
 
-function var_0_0.setLoadFailCallback(arg_6_0, arg_6_1)
-	arg_6_0._loadFailCallback = arg_6_1
+function MultiAbLoader:setLoadFailCallback(loadFailCallback)
+	self._loadFailCallback = loadFailCallback
 end
 
-function var_0_0.getAssetItemDict(arg_7_0)
-	return arg_7_0._resDict
+function MultiAbLoader:getAssetItemDict()
+	return self._resDict
 end
 
-function var_0_0.getAssetItem(arg_8_0, arg_8_1)
-	return arg_8_0._resDict[arg_8_1] or arg_8_0._singlePath2AssetItemDict[arg_8_1]
+function MultiAbLoader:getAssetItem(path)
+	return self._resDict[path]
 end
 
-function var_0_0.getFirstAssetItem(arg_9_0)
-	local var_9_0 = arg_9_0._pathList[1]
+function MultiAbLoader:getFirstAssetItem()
+	local firstPath = self._pathList[1]
 
-	return arg_9_0:getAssetItem(var_9_0)
+	return self:getAssetItem(firstPath)
 end
 
-function var_0_0.dispose(arg_10_0)
-	if arg_10_0._pathList and #arg_10_0._resList < #arg_10_0._pathList then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._pathList) do
-			removeAssetLoadCb(iter_10_1, arg_10_0._onLoadCallback, arg_10_0)
+function MultiAbLoader:dispose()
+	if self._pathList and #self._resList < #self._pathList then
+		for _, v in ipairs(self._pathList) do
+			removeAssetLoadCb(v, self._onLoadCallback, self)
 		end
 	end
 
-	if arg_10_0._resList then
-		for iter_10_2, iter_10_3 in ipairs(arg_10_0._resList) do
-			iter_10_3:Release()
-			rawset(arg_10_0._resList, iter_10_2, nil)
+	if self._resList then
+		for i, assetItem in ipairs(self._resList) do
+			assetItem:Release()
+			rawset(self._resList, i, nil)
 		end
 	end
 
-	arg_10_0._pathList = nil
-	arg_10_0._resDict = nil
-	arg_10_0._resList = nil
-	arg_10_0._finishCallback = nil
-	arg_10_0._oneFinishCallback = nil
-	arg_10_0._callbackTarget = nil
+	self._pathList = nil
+	self._resDict = nil
+	self._resList = nil
+	self._finishCallback = nil
+	self._oneFinishCallback = nil
+	self._callbackTarget = nil
 end
 
-function var_0_0._onLoadCallback(arg_11_0, arg_11_1)
-	if not arg_11_0._resList then
+function MultiAbLoader:_onLoadCallback(assetItem)
+	if not self._resList then
 		return
 	end
 
-	table.insert(arg_11_0._resList, arg_11_1)
+	table.insert(self._resList, assetItem)
 
-	if arg_11_1.IsLoadSuccess then
-		arg_11_1:Retain()
+	if assetItem.IsLoadSuccess then
+		assetItem:Retain()
 
-		arg_11_0._resDict[arg_11_1.ResPath] = arg_11_1
+		self._resDict[assetItem.ResPath] = assetItem
 
-		local var_11_0 = arg_11_1.AllAssetNames
-
-		if var_11_0 then
-			for iter_11_0 = 0, var_11_0.Length - 1 do
-				local var_11_1 = ResUrl.getPathWithoutAssetLib(var_11_0[iter_11_0])
-
-				arg_11_0._singlePath2AssetItemDict[var_11_1] = arg_11_1
-			end
-		end
-
-		if arg_11_0._oneFinishCallback then
-			if arg_11_0._callbackTarget then
-				arg_11_0._oneFinishCallback(arg_11_0._callbackTarget, arg_11_0, arg_11_1)
+		if self._oneFinishCallback then
+			if self._callbackTarget then
+				self._oneFinishCallback(self._callbackTarget, self, assetItem)
 			else
-				arg_11_0._oneFinishCallback(arg_11_0, arg_11_1)
+				self._oneFinishCallback(self, assetItem)
 			end
 		end
-	elseif arg_11_0._loadFailCallback then
-		if arg_11_0._callbackTarget then
-			arg_11_0._loadFailCallback(arg_11_0._callbackTarget, arg_11_0, arg_11_1)
+	elseif self._loadFailCallback then
+		if self._callbackTarget then
+			self._loadFailCallback(self._callbackTarget, self, assetItem)
 		else
-			arg_11_0._loadFailCallback(arg_11_0, arg_11_1)
+			self._loadFailCallback(self, assetItem)
 		end
 	end
 
-	if #arg_11_0._resList >= #arg_11_0._pathList then
-		arg_11_0:_callback()
+	if #self._resList >= #self._pathList then
+		self:_callback()
 	end
 end
 
-function var_0_0._callback(arg_12_0)
-	arg_12_0.isLoading = false
+function MultiAbLoader:_callback()
+	self.isLoading = false
 
-	if arg_12_0._finishCallback then
-		if arg_12_0._callbackTarget then
-			arg_12_0._finishCallback(arg_12_0._callbackTarget, arg_12_0)
+	if self._finishCallback then
+		if self._callbackTarget then
+			self._finishCallback(self._callbackTarget, self)
 		else
-			arg_12_0._finishCallback(arg_12_0)
+			self._finishCallback(self)
 		end
 	end
 end
 
-return var_0_0
+return MultiAbLoader

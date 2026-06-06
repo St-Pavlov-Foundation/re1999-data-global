@@ -1,89 +1,96 @@
-﻿module("framework.core.eventsystem.EventItem", package.seeall)
+﻿-- chunkname: @framework/core/eventsystem/EventItem.lua
 
-local var_0_0 = class("EventItem")
+module("framework.core.eventsystem.EventItem", package.seeall)
 
-var_0_0.IsIOSPlayer = SLFramework.FrameworkSettings.CurPlatform == SLFramework.FrameworkSettings.IOSPlayer
+local EventItem = class("EventItem")
 
-local var_0_1 = _G.callWithCatch
-local var_0_2 = xpcall
+EventItem.IsIOSPlayer = SLFramework.FrameworkSettings.CurPlatform == SLFramework.FrameworkSettings.IOSPlayer
 
-function var_0_0.getPool()
-	if var_0_0._pool == nil then
-		var_0_0._pool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
+local callWithCatch = _G.callWithCatch
+local _xpcall = xpcall
+
+function EventItem.getPool()
+	if EventItem._pool == nil then
+		EventItem._pool = LuaObjPool.New(32, EventItem._poolNew, EventItem._poolRelease, EventItem._poolReset)
 	end
 
-	return var_0_0._pool
+	return EventItem._pool
 end
 
-function var_0_0._poolNew()
-	return var_0_0.New()
+function EventItem._poolNew()
+	return EventItem.New()
 end
 
-function var_0_0._poolRelease(arg_3_0)
-	arg_3_0:release()
+function EventItem._poolRelease(luaObj)
+	luaObj:release()
 end
 
-function var_0_0._poolReset(arg_4_0)
-	arg_4_0:reset()
+function EventItem._poolReset(luaObj)
+	luaObj:reset()
 end
 
-function var_0_0.ctor(arg_5_0)
-	arg_5_0:reset()
+function EventItem:ctor()
+	self:reset()
 end
 
-function var_0_0.release(arg_6_0)
-	arg_6_0:reset()
+function EventItem:release()
+	self:reset()
 end
 
-function var_0_0.ctor(arg_7_0)
-	arg_7_0.cbObjContainer = {}
+function EventItem:ctor()
+	self.cbObjContainer = {}
 
-	setmetatable(arg_7_0.cbObjContainer, {
+	setmetatable(self.cbObjContainer, {
 		__mode = "v"
 	})
-	arg_7_0:reset()
+	self:reset()
 end
 
-function var_0_0.reset(arg_8_0)
-	arg_8_0.eventName = nil
-	arg_8_0.callback = nil
-	arg_8_0.cbObjContainer.value = nil
-	arg_8_0.hasCbObj = false
-	arg_8_0.status = LuaEventSystem.Idle
-	arg_8_0.priority = LuaEventSystem.Low
-	arg_8_0.removeAll = nil
+function EventItem:reset()
+	self.eventName = nil
+	self.callback = nil
+	self.cbObjContainer.value = nil
+	self.hasCbObj = false
+	self.status = LuaEventSystem.Idle
+	self.priority = LuaEventSystem.Low
+	self.removeAll = nil
 end
 
-function var_0_0.setCbObj(arg_9_0, arg_9_1)
-	arg_9_0.hasCbObj = arg_9_1 ~= nil
+function EventItem:setCbObj(cbObj)
+	self.hasCbObj = cbObj ~= nil
 
-	if arg_9_0.hasCbObj then
-		arg_9_0.cbObjContainer.value = arg_9_1
+	if self.hasCbObj then
+		self.cbObjContainer.value = cbObj
 	end
 end
 
-function var_0_0.getCbObj(arg_10_0)
-	if arg_10_0.hasCbObj then
-		return arg_10_0.cbObjContainer.value
+function EventItem:getCbObj()
+	if self.hasCbObj then
+		return self.cbObjContainer.value
 	end
 
 	return nil
 end
 
-function var_0_0.dispatch(arg_11_0, ...)
-	if arg_11_0.hasCbObj and not arg_11_0.cbObjContainer.value then
+function EventItem:dispatch(...)
+	if self.hasCbObj and not self.cbObjContainer.value then
 		return false
 	end
 
-	if not arg_11_0.hasCbObj then
-		var_0_1(arg_11_0.callback, ...)
-	elseif (... ~= nil and select("#", ...) or 0) > 0 then
-		var_0_2(arg_11_0.callback, __G__TRACKBACK__, arg_11_0.cbObjContainer.value, select(1, ...))
+	if not self.hasCbObj then
+		callWithCatch(self.callback, ...)
 	else
-		var_0_2(arg_11_0.callback, __G__TRACKBACK__, arg_11_0.cbObjContainer.value)
+		local args = ...
+		local len = args ~= nil and select("#", ...) or 0
+
+		if len > 0 then
+			_xpcall(self.callback, __G__TRACKBACK__, self.cbObjContainer.value, select(1, ...))
+		else
+			_xpcall(self.callback, __G__TRACKBACK__, self.cbObjContainer.value)
+		end
 	end
 
 	return true
 end
 
-return var_0_0
+return EventItem

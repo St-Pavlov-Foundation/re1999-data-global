@@ -1,150 +1,152 @@
-﻿module("framework.mvc.ConfigMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/ConfigMgr.lua
 
-local var_0_0 = class("ConfigMgr")
+module("framework.mvc.ConfigMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._resPath = "configs/excel2json/json_"
-	arg_1_0._luaPath = "modules.configs.excel2json.lua_"
-	arg_1_0._abPath = "configs/datacfg_"
-	arg_1_0._requestorList = {}
-	arg_1_0._configNameList = {}
-	arg_1_0._configName2PathDict = {}
-	arg_1_0._configList = {}
-	arg_1_0._configDict = {}
-	arg_1_0._onLoadedCallback = nil
-	arg_1_0._onLoadedCallbackObj = nil
+local ConfigMgr = class("ConfigMgr")
+
+function ConfigMgr:ctor()
+	self._resPath = "configs/excel2json/json_"
+	self._luaPath = "modules.configs.excel2json.lua_"
+	self._abPath = "configs/datacfg_"
+	self._requestorList = {}
+	self._configNameList = {}
+	self._configName2PathDict = {}
+	self._configList = {}
+	self._configDict = {}
+	self._onLoadedCallback = nil
+	self._onLoadedCallbackObj = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._resPath = arg_2_1
-	arg_2_0._luaPath = arg_2_2
-	arg_2_0._abPath = arg_2_3
+function ConfigMgr:init(resPath, luaPath, abPath)
+	self._resPath = resPath
+	self._luaPath = luaPath
+	self._abPath = abPath
 end
 
-function var_0_0.addRequestor(arg_3_0, arg_3_1)
-	table.insert(arg_3_0._requestorList, arg_3_1)
+function ConfigMgr:addRequestor(requestor)
+	table.insert(self._requestorList, requestor)
 
-	local var_3_0 = arg_3_1:reqConfigNames()
-	local var_3_1 = var_3_0 and #var_3_0 or 0
+	local configNames = requestor:reqConfigNames()
+	local configCount = configNames and #configNames or 0
 
-	for iter_3_0 = 1, var_3_1 do
-		local var_3_2 = var_3_0[iter_3_0]
+	for i = 1, configCount do
+		local configName = configNames[i]
 
-		if not arg_3_0._configName2PathDict[var_3_2] then
-			local var_3_3 = string.format("%s%s.json", arg_3_0._resPath, var_3_2)
+		if not self._configName2PathDict[configName] then
+			local configPath = string.format("%s%s.json", self._resPath, configName)
 
-			arg_3_0._configName2PathDict[var_3_2] = var_3_3
+			self._configName2PathDict[configName] = configPath
 
-			table.insert(arg_3_0._configNameList, var_3_2)
+			table.insert(self._configNameList, configName)
 		end
 	end
 end
 
-function var_0_0.loadConfigs(arg_4_0, arg_4_1, arg_4_2)
-	if #arg_4_0._configNameList == 0 then
-		if arg_4_1 then
-			if arg_4_2 then
-				arg_4_1(arg_4_2)
+function ConfigMgr:loadConfigs(callback, callbackObj)
+	if #self._configNameList == 0 then
+		if callback then
+			if callbackObj then
+				callback(callbackObj)
 			else
-				arg_4_1()
+				callback()
 			end
 		end
 
 		return
 	end
 
-	arg_4_0._onLoadedCallback = arg_4_1
-	arg_4_0._onLoadedCallbackObj = arg_4_2
+	self._onLoadedCallback = callback
+	self._onLoadedCallbackObj = callbackObj
 
 	if GameResMgr.IsFromEditorDir then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._configNameList) do
-			local var_4_0 = arg_4_0._configName2PathDict[iter_4_1]
+		for _, v in ipairs(self._configNameList) do
+			local configPath = self._configName2PathDict[v]
 
-			loadNonAbAsset(var_4_0, SLFramework.AssetType.TEXT, arg_4_0._onConfigAbCallback, arg_4_0)
+			loadNonAbAsset(configPath, SLFramework.AssetType.TEXT, self._onConfigAbCallback, self)
 		end
 
 		logNormal("--编辑器Direct运行时，检查对应的json、jua是否有缺")
-		arg_4_0:_editorCheckLuaJson()
+		self:_editorCheckLuaJson()
 	else
-		logNormal("-- json的ab是 AllToOne ，加载一次，就可以把所有json拿到了（可能会有多余的配置，自觉删除无用配置，否则报错）self._abPath = " .. arg_4_0._abPath)
+		logNormal("-- json的ab是 AllToOne ，加载一次，就可以把所有json拿到了（可能会有多余的配置，自觉删除无用配置，否则报错）self._abPath = " .. self._abPath)
 
-		arg_4_0._jsonList = {}
-		arg_4_0._frameHandleNum = 20
-		arg_4_0._nowHandNum = 0
-		arg_4_0._allHandNum = 0
-		arg_4_0._maxConfigDatNum = 5
-		arg_4_0._configDatIndex = 1
+		self._jsonList = {}
+		self._frameHandleNum = 20
+		self._nowHandNum = 0
+		self._allHandNum = 0
+		self._maxConfigDatNum = 5
+		self._configDatIndex = 1
 
-		loadNonAbAsset(string.format("%s%s%s", arg_4_0._abPath, arg_4_0._configDatIndex, ".dat"), SLFramework.AssetType.DATA, arg_4_0._onConfigOneAbCallback, arg_4_0)
+		loadNonAbAsset(string.format("%s%s%s", self._abPath, self._configDatIndex, ".dat"), SLFramework.AssetType.DATA, self._onConfigOneAbCallback, self)
 	end
 end
 
-function var_0_0._onConfigOneAbCallback(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1:GetNonAbTextAsset(true)
-	local var_5_1 = cjson.decode(var_5_0)
+function ConfigMgr:_onConfigOneAbCallback(assetItem)
+	local allDataStr = assetItem:GetNonAbTextAsset(true)
+	local allJson = cjson.decode(allDataStr)
 
-	arg_5_0._allHandNum = arg_5_0._allHandNum + tabletool.len(var_5_1)
+	self._allHandNum = self._allHandNum + tabletool.len(allJson)
 
-	for iter_5_0, iter_5_1 in pairs(var_5_1) do
-		table.insert(arg_5_0._jsonList, iter_5_1)
+	for _, config in pairs(allJson) do
+		table.insert(self._jsonList, config)
 	end
 
-	if arg_5_0._configDatIndex == arg_5_0._maxConfigDatNum then
-		arg_5_0:_onConfigAllAbCallback()
+	if self._configDatIndex == self._maxConfigDatNum then
+		self:_onConfigAllAbCallback()
 	else
-		arg_5_0._configDatIndex = arg_5_0._configDatIndex + 1
+		self._configDatIndex = self._configDatIndex + 1
 
-		loadNonAbAsset(string.format("%s%s%s", arg_5_0._abPath, arg_5_0._configDatIndex, ".dat"), SLFramework.AssetType.DATA, arg_5_0._onConfigOneAbCallback, arg_5_0)
+		loadNonAbAsset(string.format("%s%s%s", self._abPath, self._configDatIndex, ".dat"), SLFramework.AssetType.DATA, self._onConfigOneAbCallback, self)
 	end
 end
 
-function var_0_0._onConfigAllAbCallback(arg_6_0)
-	TaskDispatcher.runRepeat(arg_6_0._onConfigLoadedRepeat, arg_6_0, 0.01)
+function ConfigMgr:_onConfigAllAbCallback()
+	TaskDispatcher.runRepeat(self._onConfigLoadedRepeat, self, 0.01)
 end
 
-function var_0_0._onConfigAbCallback(arg_7_0, arg_7_1)
-	if not arg_7_1.IsLoadSuccess then
-		logError("config load fail: " .. arg_7_1.ResPath)
+function ConfigMgr:_onConfigAbCallback(assetItem)
+	if not assetItem.IsLoadSuccess then
+		logError("config load fail: " .. assetItem.ResPath)
 
 		return
 	end
 
 	if GameResMgr.IsFromEditorDir then
-		arg_7_0:_onConfigLoaded(arg_7_1.TextAsset)
+		self:_onConfigLoaded(assetItem.TextAsset)
 	else
-		local var_7_0 = arg_7_1:GetNonAbTextAsset(true)
-		local var_7_1 = cjson.decode(var_7_0)
+		local allDataStr = assetItem:GetNonAbTextAsset(true)
+		local allJson = cjson.decode(allDataStr)
 
-		arg_7_0._frameHandleNum = 20
-		arg_7_0._nowHandNum = 0
-		arg_7_0._allHandNum = tabletool.len(var_7_1)
-		arg_7_0._jsonList = {}
+		self._frameHandleNum = 20
+		self._nowHandNum = 0
+		self._allHandNum = tabletool.len(allJson)
+		self._jsonList = {}
 
-		for iter_7_0, iter_7_1 in pairs(var_7_1) do
-			table.insert(arg_7_0._jsonList, iter_7_1)
+		for _, config in pairs(allJson) do
+			table.insert(self._jsonList, config)
 		end
 
-		TaskDispatcher.runRepeat(arg_7_0._onConfigLoadedRepeat, arg_7_0, 0.01)
+		TaskDispatcher.runRepeat(self._onConfigLoadedRepeat, self, 0.01)
 	end
 end
 
-function var_0_0._onConfigLoadedRepeat(arg_8_0)
-	for iter_8_0 = 1, arg_8_0._frameHandleNum do
-		arg_8_0._nowHandNum = arg_8_0._nowHandNum + 1
+function ConfigMgr:_onConfigLoadedRepeat()
+	for i = 1, self._frameHandleNum do
+		self._nowHandNum = self._nowHandNum + 1
 
-		local var_8_0 = arg_8_0._jsonList[arg_8_0._nowHandNum]
+		local config = self._jsonList[self._nowHandNum]
 
-		arg_8_0:_onConfigLoaded(var_8_0)
+		self:_onConfigLoaded(config)
 
-		if arg_8_0._nowHandNum == arg_8_0._allHandNum then
-			TaskDispatcher.cancelTask(arg_8_0._onConfigLoadedRepeat, arg_8_0)
+		if self._nowHandNum == self._allHandNum then
+			TaskDispatcher.cancelTask(self._onConfigLoadedRepeat, self)
 
-			arg_8_0._jsonList = nil
+			self._jsonList = nil
 
-			if not GameResMgr.IsFromEditorDir and #arg_8_0._configList ~= #arg_8_0._configNameList then
-				for iter_8_1, iter_8_2 in ipairs(arg_8_0._configNameList) do
-					if not arg_8_0._configDict[iter_8_2] then
-						logError("config: <" .. iter_8_2 .. "> not exist. You're runnning in AssetBundle mode.")
+			if not GameResMgr.IsFromEditorDir and #self._configList ~= #self._configNameList then
+				for _, configName in ipairs(self._configNameList) do
+					if not self._configDict[configName] then
+						logError("config: <" .. configName .. "> not exist. You're runnning in AssetBundle mode.")
 					end
 				end
 			end
@@ -154,134 +156,136 @@ function var_0_0._onConfigLoadedRepeat(arg_8_0)
 	end
 end
 
-function var_0_0._onConfigLoaded(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:_decodeJsonStr(arg_9_1)
-	local var_9_1 = var_9_0[1]
-	local var_9_2 = var_9_0[2]
+function ConfigMgr:_onConfigLoaded(jsonString)
+	local json = self:_decodeJsonStr(jsonString)
+	local configName = json[1]
+	local configText = json[2]
 
-	if not var_9_1 then
-		logError("config name not exist: " .. arg_9_1)
+	if not configName then
+		logError("config name not exist: " .. jsonString)
 
 		return
 	end
 
-	local var_9_3 = addGlobalModule(arg_9_0._luaPath .. var_9_1, var_9_1)
+	local luaConfig = addGlobalModule(self._luaPath .. configName, configName)
 
-	if not var_9_3 then
-		logError("config lua head not exist: <" .. var_9_1 .. ">")
+	if not luaConfig then
+		logError("config lua head not exist: <" .. configName .. ">")
 
 		return
 	end
 
 	if not GameResMgr.IsFromEditorDir and isDebugBuild and GameConfig.UseDebugLuaFile then
-		local var_9_4 = UnityEngine.Application.persistentDataPath .. string.format("/lua/json_%s.json", var_9_1)
-		local var_9_5 = SLFramework.FileHelper.ReadText(var_9_4)
+		local filePath = UnityEngine.Application.persistentDataPath .. string.format("/lua/json_%s.json", configName)
+		local text = SLFramework.FileHelper.ReadText(filePath)
 
-		if not string.nilorempty(var_9_5) then
-			logNormal("替换了外部目录的json配置表：" .. var_9_1)
+		if not string.nilorempty(text) then
+			logNormal("替换了外部目录的json配置表：" .. configName)
 
-			var_9_2 = arg_9_0:_decodeJsonStr(var_9_5)[2]
+			json = self:_decodeJsonStr(text)
+			configText = json[2]
 		end
 	end
 
-	var_9_3.onLoad(var_9_2)
+	luaConfig.onLoad(configText)
 
-	if not arg_9_0._configDict[var_9_1] then
-		if arg_9_0._configName2PathDict[var_9_1] then
-			arg_9_0._configDict[var_9_1] = var_9_3
+	if not self._configDict[configName] then
+		if self._configName2PathDict[configName] then
+			self._configDict[configName] = luaConfig
 
-			table.insert(arg_9_0._configList, var_9_3)
+			table.insert(self._configList, luaConfig)
 		else
-			logWarn("config: <" .. var_9_1 .. "> never use, please remove it")
+			logWarn("config: <" .. configName .. "> never use, please remove it")
 		end
 	end
 
-	if #arg_9_0._configList == #arg_9_0._configNameList and not arg_9_0._requestorCbDone then
-		arg_9_0._requestorCbDone = true
+	if #self._configList == #self._configNameList and not self._requestorCbDone then
+		self._requestorCbDone = true
 
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0._requestorList) do
-			local var_9_6 = iter_9_1:reqConfigNames()
-			local var_9_7 = var_9_6 and #var_9_6 or 0
+		for _, requestor in ipairs(self._requestorList) do
+			local configNames = requestor:reqConfigNames()
+			local configCount = configNames and #configNames or 0
 
-			for iter_9_2 = 1, var_9_7 do
-				iter_9_1:onConfigLoaded(var_9_6[iter_9_2], arg_9_0._configDict[var_9_6[iter_9_2]])
+			for i = 1, configCount do
+				requestor:onConfigLoaded(configNames[i], self._configDict[configNames[i]])
 			end
 		end
 
-		if arg_9_0._onLoadedCallback then
-			if arg_9_0._onLoadedCallbackObj then
-				arg_9_0._onLoadedCallback(arg_9_0._onLoadedCallbackObj)
+		if self._onLoadedCallback then
+			if self._onLoadedCallbackObj then
+				self._onLoadedCallback(self._onLoadedCallbackObj)
 			else
-				arg_9_0._onLoadedCallback()
+				self._onLoadedCallback()
 			end
 		end
 
-		arg_9_0._onLoadedCallback = nil
-		arg_9_0._onLoadedCallbackObj = nil
+		self._onLoadedCallback = nil
+		self._onLoadedCallbackObj = nil
 	end
 end
 
-function var_0_0._decodeJsonStr(arg_10_0, arg_10_1)
-	local var_10_0
+function ConfigMgr:_decodeJsonStr(jsonString)
+	local json
 
 	if isDebugBuild then
-		local var_10_1, var_10_2 = pcall(cjson.decode, arg_10_1)
+		local ok, ret = pcall(cjson.decode, jsonString)
 
-		if not var_10_1 then
-			logError("配置解析失败: " .. arg_10_1)
+		if not ok then
+			logError("配置解析失败: " .. jsonString)
 
 			return
 		end
 
-		var_10_0 = var_10_2
+		json = ret
 	else
-		var_10_0 = cjson.decode(arg_10_1)
+		json = cjson.decode(jsonString)
 	end
 
-	return var_10_0
+	return json
 end
 
-function var_0_0._editorCheckLuaJson(arg_11_0)
-	local var_11_0 = SLFramework.FrameworkSettings.ProjLuaRootDir .. "/modules/configs/excel2json/"
-	local var_11_1 = SLFramework.FrameworkSettings.AssetRootDir .. "/configs/excel2json/"
-	local var_11_2 = SLFramework.FileHelper.GetDirFilePaths(var_11_0)
-	local var_11_3 = SLFramework.FileHelper.GetDirFilePaths(var_11_1)
-	local var_11_4 = {}
-	local var_11_5 = {}
+function ConfigMgr:_editorCheckLuaJson()
+	local luaPath = SLFramework.FrameworkSettings.ProjLuaRootDir .. "/modules/configs/excel2json/"
+	local jsonPath = SLFramework.FrameworkSettings.AssetRootDir .. "/configs/excel2json/"
+	local luaFilePaths = SLFramework.FileHelper.GetDirFilePaths(luaPath)
+	local jsonFilePaths = SLFramework.FileHelper.GetDirFilePaths(jsonPath)
+	local luaDict = {}
+	local jsonDict = {}
 
-	for iter_11_0 = 0, var_11_2.Length - 1 do
-		local var_11_6 = var_11_2[iter_11_0]
+	for i = 0, luaFilePaths.Length - 1 do
+		local name = luaFilePaths[i]
 
-		if not string.find(var_11_6, ".meta") and string.find(var_11_6, "lua_") then
-			local var_11_7 = SLFramework.FileHelper.GetFileName(var_11_6, false)
-
-			var_11_4[string.sub(var_11_7, 5)] = true
+		if not string.find(name, ".meta") and string.find(name, "lua_") then
+			name = SLFramework.FileHelper.GetFileName(name, false)
+			name = string.sub(name, 5)
+			luaDict[name] = true
 		end
 	end
 
-	for iter_11_1 = 0, var_11_3.Length - 1 do
-		local var_11_8 = var_11_3[iter_11_1]
+	for i = 0, jsonFilePaths.Length - 1 do
+		local name = jsonFilePaths[i]
 
-		if not string.find(var_11_8, ".meta") and string.find(var_11_8, "json_") then
-			local var_11_9 = SLFramework.FileHelper.GetFileName(var_11_8, false)
+		if not string.find(name, ".meta") and string.find(name, "json_") then
+			local name = SLFramework.FileHelper.GetFileName(name, false)
 
-			var_11_5[string.sub(var_11_9, 6)] = true
+			name = string.sub(name, 6)
+			jsonDict[name] = true
 		end
 	end
 
-	for iter_11_2, iter_11_3 in pairs(var_11_4) do
-		if not var_11_5[iter_11_2] then
-			logError("config lua_" .. iter_11_2 .. ".lua not match, <color=red><json_" .. iter_11_2 .. ".json>" .. " not exist</color>")
+	for name, _ in pairs(luaDict) do
+		if not jsonDict[name] then
+			logError("config lua_" .. name .. ".lua not match, <color=red><json_" .. name .. ".json>" .. " not exist</color>")
 		end
 	end
 
-	for iter_11_4, iter_11_5 in pairs(var_11_5) do
-		if not var_11_4[iter_11_4] then
-			logError("config json_" .. iter_11_4 .. ".json not match, <color=red><lua_" .. iter_11_4 .. ".lua>" .. " not exist</color>")
+	for name, _ in pairs(jsonDict) do
+		if not luaDict[name] then
+			logError("config json_" .. name .. ".json not match, <color=red><lua_" .. name .. ".lua>" .. " not exist</color>")
 		end
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ConfigMgr.instance = ConfigMgr.New()
 
-return var_0_0
+return ConfigMgr

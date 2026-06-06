@@ -1,16 +1,18 @@
-﻿module("framework.mvc.model.MixScrollParam", package.seeall)
+﻿-- chunkname: @framework/mvc/model/MixScrollParam.lua
 
-local var_0_0 = pureTable("MixScrollParam")
+module("framework.mvc.model.MixScrollParam", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.scrollGOPath = nil
-	arg_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
-	arg_1_0.prefabUrl = nil
-	arg_1_0.cellClass = nil
-	arg_1_0.scrollDir = ScrollEnum.ScrollDirH
-	arg_1_0.emptyScrollParam = nil
-	arg_1_0.startSpace = 0
-	arg_1_0.endSpace = 0
+local MixScrollParam = pureTable("MixScrollParam")
+
+function MixScrollParam:ctor()
+	self.scrollGOPath = nil
+	self.prefabType = ScrollEnum.ScrollPrefabFromRes
+	self.prefabUrl = nil
+	self.cellClass = nil
+	self.scrollDir = ScrollEnum.ScrollDirH
+	self.emptyScrollParam = nil
+	self.startSpace = 0
+	self.endSpace = 0
 end
 
-return var_0_0
+return MixScrollParam

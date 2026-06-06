@@ -1,120 +1,124 @@
-﻿module("framework.core.datastruct.PriorityQueue", package.seeall)
+﻿-- chunkname: @framework/core/datastruct/PriorityQueue.lua
 
-local var_0_0 = class("PriorityQueue")
+module("framework.core.datastruct.PriorityQueue", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._compareFunc = arg_1_1
-	arg_1_0._dataList = {}
-	arg_1_0._markRemoveDict = {}
-	arg_1_0._removeCount = 0
+local PriorityQueue = class("PriorityQueue")
+
+function PriorityQueue:ctor(compareFunc)
+	self._compareFunc = compareFunc
+	self._dataList = {}
+	self._markRemoveDict = {}
+	self._removeCount = 0
 end
 
-function var_0_0.getFirst(arg_2_0)
-	arg_2_0:_disposeMarkRemove()
+function PriorityQueue:getFirst()
+	self:_disposeMarkRemove()
 
-	return arg_2_0._dataList[1]
+	return self._dataList[1]
 end
 
-function var_0_0.getFirstAndRemove(arg_3_0)
-	arg_3_0:_disposeMarkRemove()
+function PriorityQueue:getFirstAndRemove()
+	self:_disposeMarkRemove()
 
-	local var_3_0 = arg_3_0._dataList[1]
-	local var_3_1 = #arg_3_0._dataList
+	local first = self._dataList[1]
+	local len = #self._dataList
 
-	arg_3_0._dataList[1] = arg_3_0._dataList[var_3_1]
-	arg_3_0._dataList[var_3_1] = nil
+	self._dataList[1] = self._dataList[len]
+	self._dataList[len] = nil
 
-	arg_3_0:_sink(1)
+	self:_sink(1)
 
-	return var_3_0
+	return first
 end
 
-function var_0_0.add(arg_4_0, arg_4_1)
-	local var_4_0 = #arg_4_0._dataList + 1
+function PriorityQueue:add(data)
+	local newLen = #self._dataList + 1
 
-	arg_4_0._dataList[var_4_0] = arg_4_1
+	self._dataList[newLen] = data
 
-	arg_4_0:_float(var_4_0)
+	self:_float(newLen)
 end
 
-function var_0_0.getSize(arg_5_0)
-	return #arg_5_0._dataList - arg_5_0._removeCount
+function PriorityQueue:getSize()
+	return #self._dataList - self._removeCount
 end
 
-function var_0_0.markRemove(arg_6_0, arg_6_1)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._dataList) do
-		if not arg_6_0._markRemoveDict[iter_6_1] and arg_6_1(iter_6_1) then
-			local var_6_0 = type(iter_6_1)
-			local var_6_1 = var_6_0 == "table" or var_6_0 == "userdata" or var_6_0 == "function"
+function PriorityQueue:markRemove(checkRemoveFunc)
+	for i, data in ipairs(self._dataList) do
+		local hasMarkRemove = self._markRemoveDict[data]
 
-			if not var_6_1 then
-				logWarn("PriorityQueue mark remove warnning, type = " .. var_6_0 .. ", value = " .. tostring(iter_6_1))
+		if not hasMarkRemove and checkRemoveFunc(data) then
+			local dataType = type(data)
+			local isDataRef = dataType == "table" or dataType == "userdata" or dataType == "function"
+
+			if not isDataRef then
+				logWarn("PriorityQueue mark remove warnning, type = " .. dataType .. ", value = " .. tostring(data))
 			end
 
-			local var_6_2 = var_6_1 and iter_6_1 or {
-				iter_6_1
+			local removeData = isDataRef and data or {
+				data
 			}
 
-			arg_6_0._dataList[iter_6_0] = var_6_2
-			arg_6_0._markRemoveDict[var_6_2] = true
-			arg_6_0._removeCount = arg_6_0._removeCount + 1
+			self._dataList[i] = removeData
+			self._markRemoveDict[removeData] = true
+			self._removeCount = self._removeCount + 1
 		end
 	end
 end
 
-function var_0_0._sink(arg_7_0, arg_7_1)
-	local var_7_0 = #arg_7_0._dataList
+function PriorityQueue:_sink(index)
+	local len = #self._dataList
 
-	while var_7_0 >= 2 * arg_7_1 do
-		local var_7_1 = 2 * arg_7_1
+	while len >= 2 * index do
+		local childIndex = 2 * index
 
-		if var_7_0 >= var_7_1 + 1 and not arg_7_0._compareFunc(arg_7_0._dataList[var_7_1], arg_7_0._dataList[var_7_1 + 1]) then
-			var_7_1 = var_7_1 + 1
+		if len >= childIndex + 1 and not self._compareFunc(self._dataList[childIndex], self._dataList[childIndex + 1]) then
+			childIndex = childIndex + 1
 		end
 
-		if arg_7_0._compareFunc(arg_7_0._dataList[arg_7_1], arg_7_0._dataList[var_7_1]) then
+		if self._compareFunc(self._dataList[index], self._dataList[childIndex]) then
 			break
 		end
 
-		arg_7_0:_swap(arg_7_1, var_7_1)
+		self:_swap(index, childIndex)
 
-		arg_7_1 = var_7_1
+		index = childIndex
 	end
 end
 
-function var_0_0._float(arg_8_0, arg_8_1)
-	while arg_8_1 > 1 do
-		local var_8_0 = bit.rshift(arg_8_1, 1)
+function PriorityQueue:_float(index)
+	while index > 1 do
+		local parentIndex = bit.rshift(index, 1)
 
-		if not arg_8_0._compareFunc(arg_8_0._dataList[arg_8_1], arg_8_0._dataList[var_8_0]) then
+		if not self._compareFunc(self._dataList[index], self._dataList[parentIndex]) then
 			break
 		end
 
-		arg_8_0:_swap(arg_8_1, var_8_0)
+		self:_swap(index, parentIndex)
 
-		arg_8_1 = var_8_0
+		index = parentIndex
 	end
 end
 
-function var_0_0._swap(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = arg_9_0._dataList[arg_9_1]
+function PriorityQueue:_swap(index1, index2)
+	local temp = self._dataList[index1]
 
-	arg_9_0._dataList[arg_9_1] = arg_9_0._dataList[arg_9_2]
-	arg_9_0._dataList[arg_9_2] = var_9_0
+	self._dataList[index1] = self._dataList[index2]
+	self._dataList[index2] = temp
 end
 
-function var_0_0._disposeMarkRemove(arg_10_0)
-	while #arg_10_0._dataList > 0 and arg_10_0._markRemoveDict[arg_10_0._dataList[1]] do
-		arg_10_0._markRemoveDict[arg_10_0._dataList[1]] = nil
-		arg_10_0._removeCount = arg_10_0._removeCount - 1
+function PriorityQueue:_disposeMarkRemove()
+	while #self._dataList > 0 and self._markRemoveDict[self._dataList[1]] do
+		self._markRemoveDict[self._dataList[1]] = nil
+		self._removeCount = self._removeCount - 1
 
-		local var_10_0 = #arg_10_0._dataList
+		local len = #self._dataList
 
-		arg_10_0._dataList[1] = arg_10_0._dataList[var_10_0]
-		arg_10_0._dataList[var_10_0] = nil
+		self._dataList[1] = self._dataList[len]
+		self._dataList[len] = nil
 
-		arg_10_0:_sink(1)
+		self:_sink(1)
 	end
 end
 
-return var_0_0
+return PriorityQueue

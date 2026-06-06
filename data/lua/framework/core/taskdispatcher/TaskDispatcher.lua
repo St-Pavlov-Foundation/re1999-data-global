@@ -1,255 +1,264 @@
-﻿module("framework.core.taskdispatcher.TaskDispatcher", package.seeall)
+﻿-- chunkname: @framework/core/taskdispatcher/TaskDispatcher.lua
 
-local var_0_0 = {}
+module("framework.core.taskdispatcher.TaskDispatcher", package.seeall)
 
-var_0_0.Idle = 1
-var_0_0.Active = 2
-var_0_0.ToInsert = 3
-var_0_0.ToDelete = 4
+local TaskDispatcher = {}
 
-function var_0_0.init()
-	UpdateBeat:Add(var_0_0._onUnityUpdate, var_0_0)
+TaskDispatcher.Idle = 1
+TaskDispatcher.Active = 2
+TaskDispatcher.ToInsert = 3
+TaskDispatcher.ToDelete = 4
 
-	var_0_0._taskPool = TaskItem.createPool()
-	var_0_0._allTasks = {}
-	var_0_0._onceIdxList = {}
-	var_0_0._deltaTasks = {}
-	var_0_0._isDispatching = false
+function TaskDispatcher.init()
+	UpdateBeat:Add(TaskDispatcher._onUnityUpdate, TaskDispatcher)
+
+	TaskDispatcher._taskPool = TaskItem.createPool()
+	TaskDispatcher._allTasks = {}
+	TaskDispatcher._onceIdxList = {}
+	TaskDispatcher._deltaTasks = {}
+	TaskDispatcher._isDispatching = false
 end
 
-function var_0_0.runDelay(arg_2_0, arg_2_1, arg_2_2)
-	if not arg_2_0 or not arg_2_2 then
+function TaskDispatcher.runDelay(callback, cbObj, delay)
+	if not callback or not delay then
 		logError("TaskDispatcher.runDelay, callback or delay should not be null!")
 
 		return
 	end
 
-	var_0_0._addNewTask(arg_2_0, arg_2_1, arg_2_2, 1, false)
+	TaskDispatcher._addNewTask(callback, cbObj, delay, 1, false)
 end
 
-function var_0_0.runRepeat(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	if not arg_3_0 or not arg_3_2 then
+function TaskDispatcher.runRepeat(callback, cbObj, interval, repeatCount)
+	if not callback or not interval then
 		logError("TaskDispatcher.runDelay, callback or interval should not be null!")
 
 		return
 	end
 
-	var_0_0._addNewTask(arg_3_0, arg_3_1, arg_3_2, arg_3_3 or -1, true)
+	TaskDispatcher._addNewTask(callback, cbObj, interval, repeatCount or -1, true)
 end
 
-function var_0_0.cancelTask(arg_4_0, arg_4_1)
-	if var_0_0._isDispatching then
-		local var_4_0 = var_0_0._getTaskWhichCbInDispatch(arg_4_0, arg_4_1)
+function TaskDispatcher.cancelTask(callback, cbObj)
+	if TaskDispatcher._isDispatching then
+		local alreadyTask = TaskDispatcher._getTaskWhichCbInDispatch(callback, cbObj)
 
-		if var_4_0 then
-			var_4_0.status = var_0_0.ToDelete
+		if alreadyTask then
+			alreadyTask.status = TaskDispatcher.ToDelete
 		end
 
-		var_0_0._removeFromDeltaQueue(arg_4_0, arg_4_1)
+		TaskDispatcher._removeFromDeltaQueue(callback, cbObj)
 
-		local var_4_1 = var_0_0._taskPool:getObject()
+		local deleteTask = TaskDispatcher._taskPool:getObject()
 
-		var_4_1.status = var_0_0.ToDelete
+		deleteTask.status = TaskDispatcher.ToDelete
 
-		var_4_1:setCb(arg_4_0, arg_4_1)
-		table.insert(var_0_0._deltaTasks, var_4_1)
+		deleteTask:setCb(callback, cbObj)
+		table.insert(TaskDispatcher._deltaTasks, deleteTask)
 	else
-		var_0_0._directDelete(arg_4_0, arg_4_1)
+		TaskDispatcher._directDelete(callback, cbObj)
 	end
 end
 
-function var_0_0._addNewTask(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	local var_5_0 = false
+function TaskDispatcher._addNewTask(callback, cbObj, interval, repeatCount, isLoop)
+	local toDelete = false
 
-	if var_0_0._isDispatching then
-		local var_5_1 = var_0_0._getTaskInDeltaQueue(arg_5_0, arg_5_1)
+	if TaskDispatcher._isDispatching then
+		local deltaTask = TaskDispatcher._getTaskInDeltaQueue(callback, cbObj)
 
-		if var_5_1 then
-			if var_0_0.ToInsert == var_5_1.status then
+		if deltaTask then
+			if TaskDispatcher.ToInsert == deltaTask.status then
 				return
-			elseif var_0_0.ToDelete == var_5_1.status then
-				var_5_0 = true
+			elseif TaskDispatcher.ToDelete == deltaTask.status then
+				toDelete = true
 			end
 		end
 	end
 
-	local var_5_2 = var_0_0._getTaskWhichCbInDispatch(arg_5_0, arg_5_1)
+	local alreadyTask = TaskDispatcher._getTaskWhichCbInDispatch(callback, cbObj)
 
-	if var_5_2 ~= nil and var_5_2.isLoop and var_5_2.status ~= var_0_0.ToDelete and not var_5_0 then
+	if alreadyTask ~= nil and alreadyTask.isLoop and alreadyTask.status ~= TaskDispatcher.ToDelete and not toDelete then
 		return
 	end
 
-	if var_0_0._isDispatching then
-		var_0_0._removeFromDeltaQueue(arg_5_0, arg_5_1)
+	if TaskDispatcher._isDispatching then
+		TaskDispatcher._removeFromDeltaQueue(callback, cbObj)
 	end
 
-	local var_5_3 = var_0_0._taskPool:getObject()
+	local newTask = TaskDispatcher._taskPool:getObject()
 
-	var_5_3:setCb(arg_5_0, arg_5_1)
+	newTask:setCb(callback, cbObj)
 
-	var_5_3.interval = arg_5_2
-	var_5_3.isLoop = arg_5_4
-	var_5_3.repeatCount = arg_5_3
-	var_5_3.addFrame = TaskItem.frameCount
-	var_5_3.status = var_0_0.Active
+	newTask.interval = interval
+	newTask.isLoop = isLoop
+	newTask.repeatCount = repeatCount
+	newTask.addFrame = TaskItem.frameCount
+	newTask.status = TaskDispatcher.Active
 
-	if var_0_0._isDispatching then
-		var_5_3.status = var_0_0.ToInsert
+	if TaskDispatcher._isDispatching then
+		newTask.status = TaskDispatcher.ToInsert
 
-		table.insert(var_0_0._deltaTasks, var_5_3)
+		table.insert(TaskDispatcher._deltaTasks, newTask)
 	else
-		var_0_0._directAdd(var_5_3)
+		TaskDispatcher._directAdd(newTask)
 	end
 end
 
-function var_0_0._onUnityUpdate()
-	var_0_0._isDispatching = true
+function TaskDispatcher._onUnityUpdate()
+	TaskDispatcher._isDispatching = true
 
-	var_0_0._taskTick(Time.deltaTime)
+	TaskDispatcher._taskTick(Time.deltaTime)
 
-	var_0_0._isDispatching = false
+	TaskDispatcher._isDispatching = false
 
-	var_0_0._doAddOrRemove()
+	TaskDispatcher._doAddOrRemove()
 
 	TaskItem.frameCount = TaskItem.frameCount + 1
 end
 
-function var_0_0._doAddOrRemove()
-	local var_7_0 = #var_0_0._deltaTasks
-	local var_7_1
+function TaskDispatcher._doAddOrRemove()
+	local count = #TaskDispatcher._deltaTasks
+	local tmpTask
 
-	for iter_7_0 = 1, var_7_0 do
-		local var_7_2 = var_0_0._deltaTasks[iter_7_0]
+	for idx = 1, count do
+		tmpTask = TaskDispatcher._deltaTasks[idx]
 
-		if var_0_0.ToDelete == var_7_2.status then
-			var_0_0._directDelete(var_7_2.callback, var_7_2.cbObj)
-		elseif var_0_0.ToInsert == var_7_2.status then
-			var_0_0._directAdd(var_7_2)
+		if TaskDispatcher.ToDelete == tmpTask.status then
+			TaskDispatcher._directDelete(tmpTask.callback, tmpTask.cbObj)
+		elseif TaskDispatcher.ToInsert == tmpTask.status then
+			TaskDispatcher._directAdd(tmpTask)
 		end
 
-		var_0_0._deltaTasks[iter_7_0] = nil
+		TaskDispatcher._deltaTasks[idx] = nil
 	end
 end
 
-function var_0_0._removeFromDeltaQueue(arg_8_0, arg_8_1)
-	local var_8_0 = #var_0_0._deltaTasks
-	local var_8_1
+function TaskDispatcher._removeFromDeltaQueue(callback, cbObj)
+	local count = #TaskDispatcher._deltaTasks
+	local tmpTask
 
-	for iter_8_0 = var_8_0, 1, -1 do
-		local var_8_2 = var_0_0._deltaTasks[iter_8_0]
+	for idx = count, 1, -1 do
+		tmpTask = TaskDispatcher._deltaTasks[idx]
 
-		if var_8_2.callback == arg_8_0 and var_8_2.cbObj == arg_8_1 then
-			var_0_0._taskPool:putObject(var_8_2)
-			table.remove(var_0_0._deltaTasks, iter_8_0)
+		if tmpTask.callback == callback and tmpTask.cbObj == cbObj then
+			TaskDispatcher._taskPool:putObject(tmpTask)
+			table.remove(TaskDispatcher._deltaTasks, idx)
 
 			break
 		end
 	end
 end
 
-function var_0_0._directAdd(arg_9_0)
-	local var_9_0, var_9_1 = var_0_0._getTaskWhichCbInDispatch(arg_9_0.callback, arg_9_0.cbObj)
+function TaskDispatcher._directAdd(taskItem)
+	local alreadyTask, index = TaskDispatcher._getTaskWhichCbInDispatch(taskItem.callback, taskItem.cbObj)
 
-	if var_9_0 and var_9_0.status ~= var_0_0.ToDelete then
-		var_0_0._taskPool:putObject(arg_9_0)
+	if alreadyTask and alreadyTask.status ~= TaskDispatcher.ToDelete then
+		TaskDispatcher._taskPool:putObject(taskItem)
 
 		return
 	end
 
-	if var_9_0 then
-		table.remove(var_0_0._allTasks, var_9_1)
+	if alreadyTask then
+		table.remove(TaskDispatcher._allTasks, index)
 	end
 
-	arg_9_0.status = var_0_0.Active
+	taskItem.status = TaskDispatcher.Active
 
-	table.insert(var_0_0._allTasks, arg_9_0)
+	table.insert(TaskDispatcher._allTasks, taskItem)
 end
 
-function var_0_0._directDelete(arg_10_0, arg_10_1)
-	local var_10_0 = #var_0_0._allTasks
-	local var_10_1
+function TaskDispatcher._directDelete(callback, cbObj)
+	local count = #TaskDispatcher._allTasks
+	local tmpTask
 
-	for iter_10_0 = var_10_0, 1, -1 do
-		local var_10_2 = var_0_0._allTasks[iter_10_0]
+	for idx = count, 1, -1 do
+		tmpTask = TaskDispatcher._allTasks[idx]
 
-		if var_10_2.callback == arg_10_0 and var_10_2.cbObj == arg_10_1 then
-			var_0_0._taskPool:putObject(var_10_2)
-			table.remove(var_0_0._allTasks, iter_10_0)
+		if tmpTask.callback == callback and tmpTask.cbObj == cbObj then
+			TaskDispatcher._taskPool:putObject(tmpTask)
+			table.remove(TaskDispatcher._allTasks, idx)
 		end
 	end
 end
 
-function var_0_0._getTaskWhichCbInDispatch(arg_11_0, arg_11_1)
-	local var_11_0 = #var_0_0._allTasks
-	local var_11_1
+function TaskDispatcher._getTaskWhichCbInDispatch(callback, cbObj)
+	local count = #TaskDispatcher._allTasks
+	local tmpTask
 
-	for iter_11_0 = var_11_0, 1, -1 do
-		local var_11_2 = var_0_0._allTasks[iter_11_0]
+	for idx = count, 1, -1 do
+		tmpTask = TaskDispatcher._allTasks[idx]
 
-		if var_11_2.callback == arg_11_0 and var_11_2.cbObj == arg_11_1 then
-			return var_11_2, iter_11_0
+		if tmpTask.callback == callback and tmpTask.cbObj == cbObj then
+			return tmpTask, idx
 		end
 	end
 
 	return nil, 0
 end
 
-function var_0_0._getTaskInDeltaQueue(arg_12_0, arg_12_1)
-	local var_12_0
+function TaskDispatcher._getTaskInDeltaQueue(callback, cbObj)
+	local tmpTask
+	local count = #TaskDispatcher._deltaTasks
 
-	for iter_12_0 = #var_0_0._deltaTasks, 1, -1 do
-		local var_12_1 = var_0_0._deltaTasks[iter_12_0]
+	for idx = count, 1, -1 do
+		tmpTask = TaskDispatcher._deltaTasks[idx]
 
-		if var_12_1.callback == arg_12_0 and var_12_1.cbObj == arg_12_1 then
-			return var_12_1
+		if tmpTask.callback == callback and tmpTask.cbObj == cbObj then
+			return tmpTask
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._taskTick(arg_13_0)
-	local var_13_0 = #var_0_0._allTasks
-	local var_13_1 = false
-	local var_13_2
+function TaskDispatcher._taskTick(deltaTime)
+	local count = #TaskDispatcher._allTasks
+	local hasInvoked = false
+	local tmpTask
 
-	for iter_13_0 = 1, var_13_0 do
-		local var_13_3 = var_0_0._allTasks[iter_13_0]
+	for idx = 1, count do
+		tmpTask = TaskDispatcher._allTasks[idx]
 
-		if var_0_0.ToDelete ~= var_13_3.status and var_13_3:update(arg_13_0) and var_13_3.repeatCount == 0 then
-			table.insert(var_0_0._onceIdxList, iter_13_0)
+		if TaskDispatcher.ToDelete ~= tmpTask.status then
+			hasInvoked = tmpTask:update(deltaTime)
+
+			if hasInvoked and tmpTask.repeatCount == 0 then
+				table.insert(TaskDispatcher._onceIdxList, idx)
+			end
 		end
 	end
 
-	for iter_13_1 = #var_0_0._onceIdxList, 1, -1 do
-		local var_13_4 = var_0_0._onceIdxList[iter_13_1]
+	count = #TaskDispatcher._onceIdxList
 
-		var_0_0._taskPool:putObject(var_0_0._allTasks[var_13_4])
-		table.remove(var_0_0._allTasks, var_13_4)
-		table.remove(var_0_0._onceIdxList, iter_13_1)
+	for idx = count, 1, -1 do
+		local removeIdx = TaskDispatcher._onceIdxList[idx]
+
+		TaskDispatcher._taskPool:putObject(TaskDispatcher._allTasks[removeIdx])
+		table.remove(TaskDispatcher._allTasks, removeIdx)
+		table.remove(TaskDispatcher._onceIdxList, idx)
 	end
 end
 
-function var_0_0._logToBeDeleteItems()
-	local var_14_0 = "TaskDispatcher._logToBeDeleteItems: "
+function TaskDispatcher._logToBeDeleteItems()
+	local log = "TaskDispatcher._logToBeDeleteItems: "
 
-	for iter_14_0, iter_14_1 in ipairs(var_0_0._allTasks) do
-		if iter_14_1.status == var_0_0.ToDelete then
-			var_14_0 = var_14_0 .. iter_14_0 .. " = " .. iter_14_1:logStr() .. "\n"
+	for index, value in ipairs(TaskDispatcher._allTasks) do
+		if value.status == TaskDispatcher.ToDelete then
+			log = log .. index .. " = " .. value:logStr() .. "\n"
 		end
 	end
 
-	logWarn(var_14_0)
+	logWarn(log)
 end
 
-function var_0_0._logAllTasks()
-	local var_15_0 = "TaskDispatcher._logToBeDeleteItems: "
+function TaskDispatcher._logAllTasks()
+	local log = "TaskDispatcher._logToBeDeleteItems: "
 
-	for iter_15_0, iter_15_1 in ipairs(var_0_0._allTasks) do
-		var_15_0 = var_15_0 .. iter_15_0 .. " = " .. iter_15_1:logStr() .. "\n"
+	for index, value in ipairs(TaskDispatcher._allTasks) do
+		log = log .. index .. " = " .. value:logStr() .. "\n"
 	end
 
-	logWarn(var_15_0)
+	logWarn(log)
 end
 
-return var_0_0
+return TaskDispatcher

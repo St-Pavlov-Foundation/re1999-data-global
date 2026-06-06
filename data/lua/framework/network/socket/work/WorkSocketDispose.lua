@@ -1,10 +1,18 @@
-﻿module("framework.network.socket.work.WorkSocketDispose", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkSocketDispose.lua
 
-local var_0_0 = class("WorkSocketDispose", BaseWork)
+module("framework.network.socket.work.WorkSocketDispose", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local WorkSocketDispose = class("WorkSocketDispose", BaseWork)
+
+function WorkSocketDispose:onStart(context)
+	if SDKMgr.instance:isAccelerating() then
+		ZProj.LinkBoostController.Instance:Setup()
+	else
+		ZProj.LinkBoostController.Instance:Close()
+	end
+
 	LuaSocketMgr.instance:reInit()
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return WorkSocketDispose

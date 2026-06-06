@@ -1,104 +1,109 @@
-﻿module("framework.storage.PlayerPrefsHelper", package.seeall)
+﻿-- chunkname: @framework/storage/PlayerPrefsHelper.lua
 
-local var_0_0 = {}
+module("framework.storage.PlayerPrefsHelper", package.seeall)
 
-var_0_0.FlushInterval = 0.1
-var_0_0._keySet = {}
-var_0_0._dict = {}
-var_0_0._needFlushDict = {}
-var_0_0._needFlush = false
-var_0_0._needSave = false
+local PlayerPrefsHelper = {}
 
-function var_0_0.getNumber(arg_1_0, arg_1_1)
-	return var_0_0._get(arg_1_0, arg_1_1, true)
+PlayerPrefsHelper.FlushInterval = 0.1
+PlayerPrefsHelper._keySet = {}
+PlayerPrefsHelper._dict = {}
+PlayerPrefsHelper._needFlushDict = {}
+PlayerPrefsHelper._needFlush = false
+PlayerPrefsHelper._needSave = false
+
+function PlayerPrefsHelper.getNumber(key, defaultValue)
+	return PlayerPrefsHelper._get(key, defaultValue, true)
 end
 
-function var_0_0.getString(arg_2_0, arg_2_1)
-	return var_0_0._get(arg_2_0, arg_2_1, false)
+function PlayerPrefsHelper.getString(key, defaultValue)
+	return PlayerPrefsHelper._get(key, defaultValue, false)
 end
 
-function var_0_0.setNumber(arg_3_0, arg_3_1)
-	var_0_0._set(arg_3_0, tonumber(arg_3_1))
+function PlayerPrefsHelper.setNumber(key, value)
+	PlayerPrefsHelper._set(key, tonumber(value))
 end
 
-function var_0_0.setString(arg_4_0, arg_4_1)
-	var_0_0._set(arg_4_0, tostring(arg_4_1))
+function PlayerPrefsHelper.setString(key, value)
+	PlayerPrefsHelper._set(key, tostring(value))
 end
 
-function var_0_0.hasKey(arg_5_0)
-	local var_5_0 = var_0_0._keySet[arg_5_0]
+function PlayerPrefsHelper.hasKey(key)
+	local hasKey = PlayerPrefsHelper._keySet[key]
 
-	if var_5_0 ~= nil then
-		return var_5_0
+	if hasKey ~= nil then
+		return hasKey
 	end
 
-	local var_5_1 = UnityEngine.PlayerPrefs.HasKey(arg_5_0)
+	hasKey = UnityEngine.PlayerPrefs.HasKey(key)
+	PlayerPrefsHelper._keySet[key] = hasKey
 
-	var_0_0._keySet[arg_5_0] = var_5_1
-
-	return var_5_1
+	return hasKey
 end
 
-function var_0_0.deleteKey(arg_6_0)
-	if var_0_0._keySet[arg_6_0] == false then
+function PlayerPrefsHelper.deleteKey(key)
+	local hasKey = PlayerPrefsHelper._keySet[key]
+
+	if hasKey == false then
 		return
 	end
 
-	var_0_0._keySet[arg_6_0] = false
-	var_0_0._dict[arg_6_0] = nil
-	var_0_0._needFlushDict[arg_6_0] = nil
+	PlayerPrefsHelper._keySet[key] = false
+	PlayerPrefsHelper._dict[key] = nil
+	PlayerPrefsHelper._needFlushDict[key] = nil
 
-	UnityEngine.PlayerPrefs.DeleteKey(arg_6_0)
+	UnityEngine.PlayerPrefs.DeleteKey(key)
 end
 
-function var_0_0.deleteAll()
-	var_0_0._keySet = {}
-	var_0_0._dict = {}
-	var_0_0._needFlushDict = {}
+function PlayerPrefsHelper.deleteAll()
+	PlayerPrefsHelper._keySet = {}
+	PlayerPrefsHelper._dict = {}
+	PlayerPrefsHelper._needFlushDict = {}
 
 	UnityEngine.PlayerPrefs.DeleteAll()
 end
 
-function var_0_0._get(arg_8_0, arg_8_1, arg_8_2)
-	if var_0_0._keySet[arg_8_0] == true then
-		if var_0_0._dict[arg_8_0] == nil then
-			local var_8_0 = arg_8_2 and UnityEngine.PlayerPrefs.GetFloat(arg_8_0) or UnityEngine.PlayerPrefs.GetString(arg_8_0)
+function PlayerPrefsHelper._get(key, defaultValue, numOrStr)
+	if PlayerPrefsHelper._keySet[key] == true then
+		if PlayerPrefsHelper._dict[key] == nil then
+			local value = numOrStr and UnityEngine.PlayerPrefs.GetFloat(key) or UnityEngine.PlayerPrefs.GetString(key)
 
-			var_0_0._dict[arg_8_0] = var_8_0
-			var_0_0._keySet[arg_8_0] = true
+			PlayerPrefsHelper._dict[key] = value
+			PlayerPrefsHelper._keySet[key] = true
 		end
 
-		return var_0_0._dict[arg_8_0]
-	elseif var_0_0._keySet[arg_8_0] == nil then
-		if UnityEngine.PlayerPrefs.HasKey(arg_8_0) then
-			local var_8_1 = arg_8_2 and UnityEngine.PlayerPrefs.GetFloat(arg_8_0) or UnityEngine.PlayerPrefs.GetString(arg_8_0)
+		return PlayerPrefsHelper._dict[key]
+	elseif PlayerPrefsHelper._keySet[key] == nil then
+		local hasKey = UnityEngine.PlayerPrefs.HasKey(key)
 
-			var_0_0._dict[arg_8_0] = var_8_1
-			var_0_0._keySet[arg_8_0] = true
+		if hasKey then
+			local value = numOrStr and UnityEngine.PlayerPrefs.GetFloat(key) or UnityEngine.PlayerPrefs.GetString(key)
 
-			return var_8_1
+			PlayerPrefsHelper._dict[key] = value
+			PlayerPrefsHelper._keySet[key] = true
+
+			return value
 		else
-			var_0_0._keySet[arg_8_0] = false
+			PlayerPrefsHelper._keySet[key] = false
 
-			return arg_8_1
+			return defaultValue
 		end
 	else
-		return arg_8_1
+		return defaultValue
 	end
 end
 
-function var_0_0._set(arg_9_0, arg_9_1)
-	if arg_9_1 ~= nil then
-		if var_0_0._dict[arg_9_0] ~= arg_9_1 then
-			var_0_0._dict[arg_9_0] = arg_9_1
-			var_0_0._keySet[arg_9_0] = true
-			var_0_0._needFlushDict[arg_9_0] = arg_9_1
+function PlayerPrefsHelper._set(key, value)
+	if value ~= nil then
+		if PlayerPrefsHelper._dict[key] ~= value then
+			PlayerPrefsHelper._dict[key] = value
+			PlayerPrefsHelper._keySet[key] = true
+			PlayerPrefsHelper._needFlushDict[key] = value
 
-			if not var_0_0._needFlush then
-				var_0_0._needFlush = true
-				var_0_0._needSave = true
+			if not PlayerPrefsHelper._needFlush then
+				PlayerPrefsHelper._needFlush = true
+				PlayerPrefsHelper._needSave = true
 
-				TaskDispatcher.runDelay(var_0_0.flush, nil, var_0_0.FlushInterval)
+				TaskDispatcher.runDelay(PlayerPrefsHelper.flush, nil, PlayerPrefsHelper.FlushInterval)
 			end
 		end
 	else
@@ -106,28 +111,30 @@ function var_0_0._set(arg_9_0, arg_9_1)
 	end
 end
 
-function var_0_0.flush()
-	if var_0_0._needFlush then
-		var_0_0._needFlush = false
+function PlayerPrefsHelper.flush()
+	if PlayerPrefsHelper._needFlush then
+		PlayerPrefsHelper._needFlush = false
 
-		for iter_10_0, iter_10_1 in pairs(var_0_0._needFlushDict) do
-			if type(iter_10_1) == "number" then
-				UnityEngine.PlayerPrefs.SetFloat(iter_10_0, iter_10_1)
+		for key, value in pairs(PlayerPrefsHelper._needFlushDict) do
+			local numOrStr = type(value) == "number"
+
+			if numOrStr then
+				UnityEngine.PlayerPrefs.SetFloat(key, value)
 			else
-				UnityEngine.PlayerPrefs.SetString(iter_10_0, iter_10_1)
+				UnityEngine.PlayerPrefs.SetString(key, value)
 			end
 		end
 
-		var_0_0._needFlushDict = {}
+		PlayerPrefsHelper._needFlushDict = {}
 	end
 end
 
-function var_0_0.save()
-	if var_0_0._needSave then
-		var_0_0._needSave = false
+function PlayerPrefsHelper.save()
+	if PlayerPrefsHelper._needSave then
+		PlayerPrefsHelper._needSave = false
 
 		UnityEngine.PlayerPrefs.Save()
 	end
 end
 
-return var_0_0
+return PlayerPrefsHelper

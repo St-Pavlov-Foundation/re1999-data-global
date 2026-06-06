@@ -1,228 +1,229 @@
-﻿module("framework.luamono.LuaNoUpdateMonoContainer", package.seeall)
+﻿-- chunkname: @framework/luamono/LuaNoUpdateMonoContainer.lua
 
-local var_0_0 = class("LuaNoUpdateMonoContainer")
-local var_0_1 = {}
+module("framework.luamono.LuaNoUpdateMonoContainer", package.seeall)
 
-function var_0_0.tryDispose()
-	for iter_1_0, iter_1_1 in pairs(var_0_1) do
-		if gohelper.isNil(iter_1_0._go) then
+local LuaNoUpdateMonoContainer = class("LuaNoUpdateMonoContainer")
+local containers_static = {}
+
+function LuaNoUpdateMonoContainer.tryDispose()
+	for container, _ in pairs(containers_static) do
+		if gohelper.isNil(container._go) then
 			if isDebugBuild then
-				logWarn("保底 destory: " .. iter_1_0._path)
+				logWarn("保底 destory: " .. container._path)
 			end
 
-			callWithCatch(iter_1_0.__onDispose, iter_1_0)
+			callWithCatch(container.__onDispose, container)
 		end
 	end
 end
 
-function var_0_0.__onDispose(arg_2_0)
-	if not var_0_1[arg_2_0] then
+function LuaNoUpdateMonoContainer:__onDispose()
+	if not containers_static[self] then
 		return
 	end
 
-	var_0_1[arg_2_0] = nil
+	containers_static[self] = nil
 
-	if not arg_2_0._luaMonoList then
+	if not self._luaMonoList then
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._luaMonoList) do
-		iter_2_1:__onDispose()
+	for _, comp in ipairs(self._luaMonoList) do
+		comp:__onDispose()
 	end
 
-	arg_2_0._monoCom = nil
-	arg_2_0._go = nil
-	arg_2_0._luaMonoList = nil
-	arg_2_0._hasStarted = false
+	self._monoCom = nil
+	self._go = nil
+	self._luaMonoList = nil
+	self._hasStarted = false
 end
 
-function var_0_0.ctor(arg_3_0, arg_3_1)
-	arg_3_0._monoCom = arg_3_1
-	arg_3_0._go = arg_3_1.gameObject
-	arg_3_0._luaMonoList = {}
-	arg_3_0._hasStarted = false
-	arg_3_0._compNames = {}
+function LuaNoUpdateMonoContainer:ctor(monoCom)
+	self._monoCom = monoCom
+	self._go = monoCom.gameObject
+	self._luaMonoList = {}
+	self._hasStarted = false
+	self._compNames = {}
 
 	if isDebugBuild then
-		arg_3_0._path = SLFramework.GameObjectHelper.GetPath(arg_3_0._go)
+		self._path = SLFramework.GameObjectHelper.GetPath(self._go)
 	end
 
-	var_0_1[arg_3_0] = true
+	containers_static[self] = true
 end
 
-function var_0_0.getCompNames(arg_4_0)
-	return arg_4_0._compNames
+function LuaNoUpdateMonoContainer:getCompNames()
+	return self._compNames
 end
 
-function var_0_0.addCompOnce(arg_5_0, arg_5_1, arg_5_2)
-	local var_5_0 = arg_5_0:getComp(arg_5_1)
+function LuaNoUpdateMonoContainer:addCompOnce(clsDefine, ctorParam)
+	local comp = self:getComp(clsDefine)
 
-	if var_5_0 ~= nil then
-		return var_5_0
+	if comp ~= nil then
+		return comp
 	end
 
-	local var_5_1 = arg_5_1.New(arg_5_2)
+	comp = clsDefine.New(ctorParam)
 
-	var_5_1:__onInit()
-	var_5_1:init(arg_5_0._go)
+	comp:__onInit()
+	comp:init(self._go)
 
-	if arg_5_0._hasStarted then
-		if var_5_1.onEnable and arg_5_0._monoCom:IsEnabled() then
-			var_5_1:onEnable()
+	if self._hasStarted then
+		if comp.onEnable and self._monoCom:IsEnabled() then
+			comp:onEnable()
 		end
 
-		if var_5_1.onStart then
-			var_5_1:onStart()
+		if comp.onStart then
+			comp:onStart()
 		end
 
-		if var_5_1.addEventListeners then
-			var_5_1:addEventListeners()
+		if comp.addEventListeners then
+			comp:addEventListeners()
 		end
 	end
 
-	table.insert(arg_5_0._luaMonoList, var_5_1)
-	table.insert(arg_5_0._compNames, var_5_1.__cname)
+	table.insert(self._luaMonoList, comp)
+	table.insert(self._compNames, comp.__cname)
 
-	return var_5_1
+	return comp
 end
 
-function var_0_0.removeComp(arg_6_0, arg_6_1)
-	local var_6_0 = #arg_6_0._luaMonoList
-	local var_6_1
+function LuaNoUpdateMonoContainer:removeComp(comp)
+	local count = #self._luaMonoList
+	local tmpComp
 
-	for iter_6_0 = var_6_0, 1, -1 do
-		local var_6_2 = arg_6_0._luaMonoList[iter_6_0]
+	for idx = count, 1, -1 do
+		tmpComp = self._luaMonoList[idx]
 
-		if arg_6_1 == var_6_2 then
-			table.remove(arg_6_0._luaMonoList, iter_6_0)
-			table.remove(arg_6_0._compNames, iter_6_0)
-			arg_6_0:_onRemove(var_6_2)
+		if comp == tmpComp then
+			table.remove(self._luaMonoList, idx)
+			table.remove(self._compNames, idx)
+			self:_onRemove(tmpComp)
 
 			break
 		end
 	end
 end
 
-function var_0_0.removeCompByDefine(arg_7_0, arg_7_1)
-	local var_7_0 = #arg_7_0._luaMonoList
-	local var_7_1
+function LuaNoUpdateMonoContainer:removeCompByDefine(clsDefine)
+	local count = #self._luaMonoList
+	local tmpComp
 
-	for iter_7_0 = var_7_0, 1, -1 do
-		local var_7_2 = arg_7_0._luaMonoList[iter_7_0]
+	for idx = count, 1, -1 do
+		tmpComp = self._luaMonoList[idx]
 
-		if isTypeOf(var_7_2, arg_7_1) then
-			table.remove(arg_7_0._luaMonoList, iter_7_0)
-			table.remove(arg_7_0._compNames, iter_7_0)
-			arg_7_0:_onRemove(var_7_2)
+		if isTypeOf(tmpComp, clsDefine) then
+			table.remove(self._luaMonoList, idx)
+			table.remove(self._compNames, idx)
+			self:_onRemove(tmpComp)
 
 			break
 		end
 	end
 end
 
-function var_0_0._onRemove(arg_8_0, arg_8_1)
-	if arg_8_1.onDisable then
-		arg_8_1:onDisable()
+function LuaNoUpdateMonoContainer:_onRemove(comp)
+	if comp.onDisable then
+		comp:onDisable()
 	end
 
-	if arg_8_1.removeEventListeners then
-		arg_8_1:removeEventListeners()
+	if comp.removeEventListeners then
+		comp:removeEventListeners()
 	end
 
-	if arg_8_1.onDestroy then
-		arg_8_1:onDestroy()
+	if comp.onDestroy then
+		comp:onDestroy()
 	end
 
-	arg_8_1:__onDispose()
+	comp:__onDispose()
 end
 
-function var_0_0.getComp(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._luaMonoList) do
-		if isTypeOf(iter_9_1, arg_9_1) then
-			return iter_9_1
+function LuaNoUpdateMonoContainer:getComp(clsDefine)
+	for _, comp in ipairs(self._luaMonoList) do
+		if isTypeOf(comp, clsDefine) then
+			return comp
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.onEnable(arg_10_0)
-	local var_10_0 = {}
+function LuaNoUpdateMonoContainer:onEnable()
+	local tempTable = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0._luaMonoList) do
-		table.insert(var_10_0, iter_10_1)
+	for _, comp in ipairs(self._luaMonoList) do
+		table.insert(tempTable, comp)
 	end
 
-	for iter_10_2, iter_10_3 in ipairs(var_10_0) do
-		if iter_10_3.onEnable then
-			iter_10_3:onEnable()
+	for _, comp in ipairs(tempTable) do
+		if comp.onEnable then
+			comp:onEnable()
 		end
 	end
 
-	local var_10_1
+	tempTable = nil
 end
 
-function var_0_0.onDisable(arg_11_0)
-	local var_11_0 = {}
+function LuaNoUpdateMonoContainer:onDisable()
+	local tempTable = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0._luaMonoList) do
-		table.insert(var_11_0, iter_11_1)
+	for _, comp in ipairs(self._luaMonoList) do
+		table.insert(tempTable, comp)
 	end
 
-	for iter_11_2, iter_11_3 in ipairs(var_11_0) do
-		if iter_11_3.onDisable then
-			iter_11_3:onDisable()
+	for _, comp in ipairs(tempTable) do
+		if comp.onDisable then
+			comp:onDisable()
 		end
 	end
 
-	local var_11_1
+	tempTable = nil
 end
 
-function var_0_0.onStart(arg_12_0)
-	arg_12_0._hasStarted = true
+function LuaNoUpdateMonoContainer:onStart()
+	self._hasStarted = true
 
-	local var_12_0 = {}
+	local tempTable = {}
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._luaMonoList) do
-		table.insert(var_12_0, iter_12_1)
+	for _, comp in ipairs(self._luaMonoList) do
+		table.insert(tempTable, comp)
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(var_12_0) do
-		if iter_12_3.onStart then
-			iter_12_3:onStart()
+	for _, comp in ipairs(tempTable) do
+		if comp.onStart then
+			comp:onStart()
 		end
 
-		if iter_12_3.addEventListeners then
-			iter_12_3:addEventListeners()
+		if comp.addEventListeners then
+			comp:addEventListeners()
 		end
 	end
 
-	local var_12_1
+	tempTable = nil
 end
 
-function var_0_0.onDestroy(arg_13_0)
-	if not var_0_1[arg_13_0] then
+function LuaNoUpdateMonoContainer:onDestroy()
+	if not containers_static[self] then
 		return
 	end
 
-	var_0_1[arg_13_0] = nil
+	containers_static[self] = nil
 
-	local var_13_0 = {}
+	local tempTable = {}
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._luaMonoList) do
-		table.insert(var_13_0, iter_13_1)
+	for _, comp in ipairs(self._luaMonoList) do
+		table.insert(tempTable, comp)
 	end
 
-	for iter_13_2, iter_13_3 in ipairs(var_13_0) do
-		arg_13_0:_onRemove(iter_13_3)
+	for _, comp in ipairs(tempTable) do
+		self:_onRemove(comp)
 	end
 
-	local var_13_1
-
-	arg_13_0._monoCom = nil
-	arg_13_0._go = nil
-	arg_13_0._luaMonoList = nil
-	arg_13_0._hasStarted = false
+	tempTable = nil
+	self._monoCom = nil
+	self._go = nil
+	self._luaMonoList = nil
+	self._hasStarted = false
 end
 
-return var_0_0
+return LuaNoUpdateMonoContainer

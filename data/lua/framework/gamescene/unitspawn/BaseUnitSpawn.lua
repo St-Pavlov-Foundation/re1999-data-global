@@ -1,42 +1,44 @@
-﻿module("framework.gamescene.unitspawn.BaseUnitSpawn", package.seeall)
+﻿-- chunkname: @framework/gamescene/unitspawn/BaseUnitSpawn.lua
 
-local var_0_0 = class("BaseUnitSpawn", LuaCompBase)
+module("framework.gamescene.unitspawn.BaseUnitSpawn", package.seeall)
 
-function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0.go = arg_1_1
-	arg_1_0.go.tag = arg_1_0:getTag()
-	arg_1_0._compList = {}
+local BaseUnitSpawn = class("BaseUnitSpawn", LuaCompBase)
 
-	arg_1_0:initComponents()
+function BaseUnitSpawn:init(go)
+	self.go = go
+	self.go.tag = self:getTag()
+	self._compList = {}
+
+	self:initComponents()
 end
 
-function var_0_0.onStart(arg_2_0)
+function BaseUnitSpawn:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_3_0)
-	arg_3_0._compList = nil
-	arg_3_0.go = nil
+function BaseUnitSpawn:onDestroy()
+	self._compList = nil
+	self.go = nil
 end
 
-function var_0_0.addComp(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = MonoHelper.addLuaComOnceToGo(arg_4_0.go, arg_4_2, arg_4_0)
+function BaseUnitSpawn:addComp(compName, compClass)
+	local compInst = MonoHelper.addLuaComOnceToGo(self.go, compClass, self)
 
-	arg_4_0[arg_4_1] = var_4_0
+	self[compName] = compInst
 
-	table.insert(arg_4_0._compList, var_4_0)
+	table.insert(self._compList, compInst)
 end
 
-function var_0_0.getCompList(arg_5_0)
-	return arg_5_0._compList
+function BaseUnitSpawn:getCompList()
+	return self._compList
 end
 
-function var_0_0.getTag(arg_6_0)
+function BaseUnitSpawn:getTag()
 	return SceneTag.Untagged
 end
 
-function var_0_0.initComponents(arg_7_0)
+function BaseUnitSpawn:initComponents()
 	return
 end
 
-return var_0_0
+return BaseUnitSpawn

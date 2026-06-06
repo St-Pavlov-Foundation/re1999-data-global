@@ -1,7 +1,9 @@
-﻿module("framework.gamescene.SceneTag", package.seeall)
+﻿-- chunkname: @framework/gamescene/SceneTag.lua
 
-local var_0_0 = {}
+module("framework.gamescene.SceneTag", package.seeall)
 
-var_0_0.Untagged = "Untagged"
+local SceneTag = {}
 
-return var_0_0
+SceneTag.Untagged = "Untagged"
+
+return SceneTag

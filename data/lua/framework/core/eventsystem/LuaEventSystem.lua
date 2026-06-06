@@ -1,257 +1,263 @@
-﻿module("framework.core.eventsystem.LuaEventSystem", package.seeall)
+﻿-- chunkname: @framework/core/eventsystem/LuaEventSystem.lua
 
-local var_0_0 = {}
+module("framework.core.eventsystem.LuaEventSystem", package.seeall)
 
-var_0_0.Idle = 1
-var_0_0.Active = 2
-var_0_0.ToInsert = 3
-var_0_0.ToDelete = 4
-var_0_0.High = 1
-var_0_0.Common = 2
-var_0_0.Low = 3
+local LuaEventSystem = {}
 
-function var_0_0.addEventMechanism(arg_1_0)
-	arg_1_0._allEvents = {}
-	arg_1_0._allDeltaEvents = {}
-	arg_1_0._inDispatching = {}
-	arg_1_0._dispatchDelta = {}
+LuaEventSystem.Idle = 1
+LuaEventSystem.Active = 2
+LuaEventSystem.ToInsert = 3
+LuaEventSystem.ToDelete = 4
+LuaEventSystem.High = 1
+LuaEventSystem.Common = 2
+LuaEventSystem.Low = 3
 
-	function arg_1_0.registerCallback(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-		if arg_2_2 == nil then
+function LuaEventSystem.addEventMechanism(luaObj)
+	luaObj._allEvents = {}
+	luaObj._allDeltaEvents = {}
+	luaObj._inDispatching = {}
+	luaObj._dispatchDelta = {}
+
+	function luaObj.registerCallback(eventSender, eventName, callback, cbObj, priority)
+		if callback == nil then
 			logError("LuaEventSystem registerCallback callback shoule not be nil, please check it!")
 
 			return
 		end
 
-		local var_2_0 = false
+		local toDelete = false
 
-		if arg_2_0._inDispatching[arg_2_1] then
-			local var_2_1 = arg_2_0:_getStatusInDeltaList(arg_2_1, arg_2_2, arg_2_3)
+		if eventSender._inDispatching[eventName] then
+			local status = eventSender:_getStatusInDeltaList(eventName, callback, cbObj)
 
-			if var_2_1 == var_0_0.ToDelete then
-				var_2_0 = true
-			elseif var_2_1 == var_0_0.ToInsert then
+			if status == LuaEventSystem.ToDelete then
+				toDelete = true
+			elseif status == LuaEventSystem.ToInsert then
 				return
 			end
 		end
 
-		if arg_2_0:_isInEventQueue(arg_2_1, arg_2_2, arg_2_3) and not var_2_0 then
+		local isInQueue = eventSender:_isInEventQueue(eventName, callback, cbObj)
+
+		if isInQueue and not toDelete then
 			return
 		end
 
-		local var_2_2 = EventItem.getPool():getObject()
+		local eventItem = EventItem.getPool():getObject()
 
-		var_2_2.eventName = arg_2_1
-		var_2_2.callback = arg_2_2
+		eventItem.eventName = eventName
+		eventItem.callback = callback
 
-		var_2_2:setCbObj(arg_2_3)
+		eventItem:setCbObj(cbObj)
 
-		var_2_2.priority = arg_2_4 or var_0_0.Common
+		eventItem.priority = priority or LuaEventSystem.Common
 
-		if arg_2_0._inDispatching[arg_2_1] then
-			arg_2_0:_removeFromDeltaList(arg_2_1, arg_2_2, arg_2_3)
+		if eventSender._inDispatching[eventName] then
+			eventSender:_removeFromDeltaList(eventName, callback, cbObj)
 
-			var_2_2.status = var_0_0.ToInsert
+			eventItem.status = LuaEventSystem.ToInsert
 
-			local var_2_3 = arg_2_0._allDeltaEvents[arg_2_1]
+			local deltaList = eventSender._allDeltaEvents[eventName]
 
-			if not var_2_3 then
-				var_2_3 = {}
-				arg_2_0._allDeltaEvents[arg_2_1] = var_2_3
+			if not deltaList then
+				deltaList = {}
+				eventSender._allDeltaEvents[eventName] = deltaList
 			end
 
-			table.insert(var_2_3, var_2_2)
+			table.insert(deltaList, eventItem)
 		else
-			arg_2_0:_directAddEvent(var_2_2)
+			eventSender:_directAddEvent(eventItem)
 		end
 	end
 
-	function arg_1_0.unregisterCallback(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-		if not arg_3_0._allEvents[arg_3_1] then
+	function luaObj.unregisterCallback(eventSender, eventName, callback, cbObj, removeAll)
+		local eventList = eventSender._allEvents[eventName]
+
+		if not eventList then
 			return
 		end
 
-		if arg_3_0._inDispatching[arg_3_1] then
-			arg_3_0:_removeFromDeltaList(arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+		if eventSender._inDispatching[eventName] then
+			eventSender:_removeFromDeltaList(eventName, callback, cbObj, removeAll)
 
-			local var_3_0 = EventItem.getPool():getObject()
+			local eventItem = EventItem.getPool():getObject()
 
-			var_3_0.eventName = arg_3_1
-			var_3_0.callback = arg_3_2
+			eventItem.eventName = eventName
+			eventItem.callback = callback
 
-			var_3_0:setCbObj(arg_3_3)
+			eventItem:setCbObj(cbObj)
 
-			var_3_0.status = var_0_0.ToDelete
-			var_3_0.removeAll = arg_3_4
+			eventItem.status = LuaEventSystem.ToDelete
+			eventItem.removeAll = removeAll
 
-			local var_3_1 = arg_3_0._allDeltaEvents[arg_3_1]
+			local deltaList = eventSender._allDeltaEvents[eventName]
 
-			if not var_3_1 then
-				var_3_1 = {}
-				arg_3_0._allDeltaEvents[arg_3_1] = var_3_1
+			if not deltaList then
+				deltaList = {}
+				eventSender._allDeltaEvents[eventName] = deltaList
 			end
 
-			table.insert(var_3_1, var_3_0)
+			table.insert(deltaList, eventItem)
 		else
-			arg_3_0:_directRemoveEvent(arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+			eventSender:_directRemoveEvent(eventName, callback, cbObj, removeAll)
 		end
 	end
 
-	function arg_1_0.unregisterAllCallback(arg_4_0, arg_4_1)
-		local var_4_0 = arg_4_0._allEvents[arg_4_1]
+	function luaObj.unregisterAllCallback(eventSender, eventName)
+		local eventList = eventSender._allEvents[eventName]
 
-		if not var_4_0 then
+		if not eventList then
 			return
 		end
 
-		local var_4_1 = {}
-		local var_4_2
+		local removeList = {}
+		local priorityList
 
-		for iter_4_0 = var_0_0.High, var_0_0.Low do
-			local var_4_3 = var_4_0[iter_4_0]
+		for idx = LuaEventSystem.High, LuaEventSystem.Low do
+			priorityList = eventList[idx]
 
-			for iter_4_1 = 1, #var_4_3 do
-				local var_4_4 = var_4_3[iter_4_1]
-				local var_4_5 = EventItem.getPool():getObject()
+			for idy = 1, #priorityList do
+				local eventItem = priorityList[idy]
+				local removeItem = EventItem.getPool():getObject()
 
-				var_4_5.callback = var_4_4.callback
+				removeItem.callback = eventItem.callback
 
-				var_4_5:setCbObj(var_4_4:getCbObj())
-				table.insert(var_4_1, var_4_5)
+				removeItem:setCbObj(eventItem:getCbObj())
+				table.insert(removeList, removeItem)
 			end
 		end
 
-		for iter_4_2, iter_4_3 in ipairs(var_4_1) do
-			arg_4_0:unregisterCallback(arg_4_1, iter_4_3.callback, iter_4_3:getCbObj())
+		for _, removeItem in ipairs(removeList) do
+			eventSender:unregisterCallback(eventName, removeItem.callback, removeItem:getCbObj())
 		end
 	end
 
-	function arg_1_0.dispatchEvent(arg_5_0, arg_5_1, ...)
-		if arg_1_0._allEvents == nil or arg_1_0._allEvents[arg_5_1] == nil then
+	function luaObj.dispatchEvent(eventSender, eventName, ...)
+		if luaObj._allEvents == nil or luaObj._allEvents[eventName] == nil then
 			return
 		end
 
-		if arg_1_0._inDispatching[arg_5_1] then
-			local var_5_0 = DispatchItem.getPool():getObject()
+		if luaObj._inDispatching[eventName] then
+			local dispatchItem = DispatchItem.getPool():getObject()
 
-			var_5_0.eventName = arg_5_1
+			dispatchItem.eventName = eventName
 
-			if ... == nil then
-				var_5_0.eventArgs = nil
+			local args = ...
+
+			if args == nil then
+				dispatchItem.eventArgs = nil
 			else
-				var_5_0.eventArgs = {
+				dispatchItem.eventArgs = {
 					...
 				}
 			end
 
-			table.insert(arg_1_0._dispatchDelta, var_5_0)
+			table.insert(luaObj._dispatchDelta, dispatchItem)
 
 			return
 		end
 
-		arg_1_0._inDispatching[arg_5_1] = true
+		luaObj._inDispatching[eventName] = true
 
-		arg_5_0:_directDispatch(arg_5_1, ...)
+		eventSender:_directDispatch(eventName, ...)
 
-		arg_1_0._inDispatching[arg_5_1] = nil
+		luaObj._inDispatching[eventName] = nil
 
-		local var_5_1 = arg_5_0._allDeltaEvents[arg_5_1]
+		local deltaEvents = eventSender._allDeltaEvents[eventName]
 
-		if var_5_1 ~= nil then
-			local var_5_2 = #var_5_1
-			local var_5_3
+		if deltaEvents ~= nil then
+			local deltaCount = #deltaEvents
+			local eventItem
 
-			for iter_5_0 = 1, var_5_2 do
-				local var_5_4 = var_5_1[iter_5_0]
+			for idx = 1, deltaCount do
+				eventItem = deltaEvents[idx]
 
-				if var_0_0.ToInsert == var_5_4.status then
-					arg_5_0:_directAddEvent(var_5_4)
-				elseif var_0_0.ToDelete == var_5_4.status then
-					arg_5_0:_directRemoveEvent(var_5_4.eventName, var_5_4.callback, var_5_4:getCbObj(), var_5_4.removeAll)
-					EventItem.getPool():putObject(var_5_4)
+				if LuaEventSystem.ToInsert == eventItem.status then
+					eventSender:_directAddEvent(eventItem)
+				elseif LuaEventSystem.ToDelete == eventItem.status then
+					eventSender:_directRemoveEvent(eventItem.eventName, eventItem.callback, eventItem:getCbObj(), eventItem.removeAll)
+					EventItem.getPool():putObject(eventItem)
 				end
 
-				var_5_1[iter_5_0] = nil
+				deltaEvents[idx] = nil
 			end
 		end
 
-		if #arg_5_0._dispatchDelta > 0 then
-			local var_5_5 = table.remove(arg_5_0._dispatchDelta, 1)
+		if #eventSender._dispatchDelta > 0 then
+			local dispatchItem = table.remove(eventSender._dispatchDelta, 1)
 
-			if not arg_5_0._inDispatching[var_5_5.eventName] then
-				if var_5_5.eventArgs ~= nil then
-					arg_5_0:dispatchEvent(var_5_5.eventName, unpack(var_5_5.eventArgs))
+			if not eventSender._inDispatching[dispatchItem.eventName] then
+				if dispatchItem.eventArgs ~= nil then
+					eventSender:dispatchEvent(dispatchItem.eventName, unpack(dispatchItem.eventArgs))
 				else
-					arg_5_0:dispatchEvent(var_5_5.eventName)
+					eventSender:dispatchEvent(dispatchItem.eventName)
 				end
 
-				DispatchItem.getPool():putObject(var_5_5)
+				DispatchItem.getPool():putObject(dispatchItem)
 			else
-				table.insert(arg_5_0._dispatchDelta, 1, var_5_5)
+				table.insert(eventSender._dispatchDelta, 1, dispatchItem)
 			end
 		end
 	end
 
-	function arg_1_0._directDispatch(arg_6_0, arg_6_1, ...)
-		local var_6_0 = arg_1_0._allEvents[arg_6_1]
-		local var_6_1
-		local var_6_2
-		local var_6_3
+	function luaObj._directDispatch(eventSender, eventName, ...)
+		local curEvents = luaObj._allEvents[eventName]
+		local priorityItems, priorityCount, eventItem
 
-		for iter_6_0 = var_0_0.High, var_0_0.Low do
-			local var_6_4 = var_6_0[iter_6_0]
-			local var_6_5 = #var_6_4
+		for idx = LuaEventSystem.High, LuaEventSystem.Low do
+			priorityItems = curEvents[idx]
+			priorityCount = #priorityItems
 
-			for iter_6_1 = 1, var_6_5 do
-				local var_6_6 = var_6_4[iter_6_1]
+			for idy = 1, priorityCount do
+				eventItem = priorityItems[idy]
 
-				if not var_6_6:dispatch(...) then
-					arg_6_0:unregisterCallback(arg_6_1, var_6_6.callback, var_6_6:getCbObj())
+				if not eventItem:dispatch(...) then
+					eventSender:unregisterCallback(eventName, eventItem.callback, eventItem:getCbObj())
 				end
 			end
 		end
 	end
 
-	function arg_1_0._directAddEvent(arg_7_0, arg_7_1)
-		local var_7_0 = arg_7_0._allEvents[arg_7_1.eventName]
+	function luaObj._directAddEvent(eventSender, eventItem)
+		local curEventList = eventSender._allEvents[eventItem.eventName]
 
-		if var_7_0 == nil then
-			var_7_0 = {}
+		if curEventList == nil then
+			curEventList = {}
 
-			for iter_7_0 = var_0_0.High, var_0_0.Low do
-				var_7_0[iter_7_0] = {}
+			for idx = LuaEventSystem.High, LuaEventSystem.Low do
+				curEventList[idx] = {}
 			end
 
-			arg_7_0._allEvents[arg_7_1.eventName] = var_7_0
+			eventSender._allEvents[eventItem.eventName] = curEventList
 		end
 
-		if arg_7_0:_isInEventQueue(arg_7_1.eventName, arg_7_1.callback, arg_7_1:getCbObj()) then
-			EventItem.getPool():putObject(arg_7_1)
+		if eventSender:_isInEventQueue(eventItem.eventName, eventItem.callback, eventItem:getCbObj()) then
+			EventItem.getPool():putObject(eventItem)
 
 			return
 		end
 
-		arg_7_1.status = var_0_0.Active
+		eventItem.status = LuaEventSystem.Active
 
-		table.insert(var_7_0[arg_7_1.priority], arg_7_1)
+		table.insert(curEventList[eventItem.priority], eventItem)
 	end
 
-	function arg_1_0._isInEventQueue(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-		local var_8_0 = arg_8_0._allEvents[arg_8_1]
+	function luaObj._isInEventQueue(eventSender, eventName, callback, cbObj)
+		local eventList = eventSender._allEvents[eventName]
 
-		if var_8_0 == nil then
+		if eventList == nil then
 			return false
 		end
 
-		local var_8_1
+		local priorityList
 
-		for iter_8_0 = var_0_0.High, var_0_0.Low do
-			local var_8_2 = var_8_0[iter_8_0]
+		for idx = LuaEventSystem.High, LuaEventSystem.Low do
+			priorityList = eventList[idx]
 
-			for iter_8_1 = 1, #var_8_2 do
-				local var_8_3 = var_8_2[iter_8_1]
+			for idy = 1, #priorityList do
+				local eventItem = priorityList[idy]
 
-				if var_8_3.callback == arg_8_2 and var_8_3:getCbObj() == arg_8_3 then
+				if eventItem.callback == callback and eventItem:getCbObj() == cbObj then
 					return true
 				end
 			end
@@ -260,28 +266,28 @@ function var_0_0.addEventMechanism(arg_1_0)
 		return false
 	end
 
-	function arg_1_0._directRemoveEvent(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-		local var_9_0 = arg_9_0._allEvents[arg_9_1]
+	function luaObj._directRemoveEvent(eventSender, eventName, callback, cbObj, removeAll)
+		local eventList = eventSender._allEvents[eventName]
 
-		if var_9_0 == nil then
+		if eventList == nil then
 			return
 		end
 
-		local var_9_1
+		local priorityList
 
-		for iter_9_0 = var_0_0.High, var_0_0.Low do
-			local var_9_2 = var_9_0[iter_9_0]
+		for idx = LuaEventSystem.High, LuaEventSystem.Low do
+			priorityList = eventList[idx]
 
-			for iter_9_1 = #var_9_2, 1, -1 do
-				local var_9_3 = var_9_2[iter_9_1]
+			for idy = #priorityList, 1, -1 do
+				local eventItem = priorityList[idy]
 
-				if var_9_3.callback == arg_9_2 then
-					if arg_9_4 then
-						EventItem.getPool():putObject(var_9_3)
-						table.remove(var_9_2, iter_9_1)
-					elseif var_9_3:getCbObj() == arg_9_3 then
-						EventItem.getPool():putObject(var_9_3)
-						table.remove(var_9_2, iter_9_1)
+				if eventItem.callback == callback then
+					if removeAll then
+						EventItem.getPool():putObject(eventItem)
+						table.remove(priorityList, idy)
+					elseif eventItem:getCbObj() == cbObj then
+						EventItem.getPool():putObject(eventItem)
+						table.remove(priorityList, idy)
 
 						break
 					end
@@ -290,43 +296,43 @@ function var_0_0.addEventMechanism(arg_1_0)
 		end
 	end
 
-	function arg_1_0._getStatusInDeltaList(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-		local var_10_0 = arg_10_0._allDeltaEvents[arg_10_1]
+	function luaObj._getStatusInDeltaList(eventSender, eventName, callback, cbObj)
+		local curDeltaList = eventSender._allDeltaEvents[eventName]
 
-		if var_10_0 == nil then
+		if curDeltaList == nil then
 			return 0
 		end
 
-		local var_10_1
+		local deltaItem
 
-		for iter_10_0 = #var_10_0, 1, -1 do
-			local var_10_2 = var_10_0[iter_10_0]
+		for idx = #curDeltaList, 1, -1 do
+			deltaItem = curDeltaList[idx]
 
-			if var_10_2.eventName == arg_10_1 and var_10_2.callback == arg_10_2 and var_10_2:getCbObj() == arg_10_3 then
-				return var_10_2.status
+			if deltaItem.eventName == eventName and deltaItem.callback == callback and deltaItem:getCbObj() == cbObj then
+				return deltaItem.status
 			end
 		end
 	end
 
-	function arg_1_0._removeFromDeltaList(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
-		local var_11_0 = arg_11_0._allDeltaEvents[arg_11_1]
+	function luaObj._removeFromDeltaList(eventSender, eventName, callback, cbObj, removeAll)
+		local deltaList = eventSender._allDeltaEvents[eventName]
 
-		if not var_11_0 then
+		if not deltaList then
 			return
 		end
 
-		local var_11_1
+		local eventItem
 
-		for iter_11_0 = #var_11_0, 1, -1 do
-			local var_11_2 = var_11_0[iter_11_0]
+		for idx = #deltaList, 1, -1 do
+			eventItem = deltaList[idx]
 
-			if var_11_2.callback == arg_11_2 then
-				if arg_11_4 then
-					EventItem.getPool():putObject(var_11_2)
-					table.remove(var_11_0, iter_11_0)
-				elseif var_11_2:getCbObj() == arg_11_3 then
-					EventItem.getPool():putObject(var_11_2)
-					table.remove(var_11_0, iter_11_0)
+			if eventItem.callback == callback then
+				if removeAll then
+					EventItem.getPool():putObject(eventItem)
+					table.remove(deltaList, idx)
+				elseif eventItem:getCbObj() == cbObj then
+					EventItem.getPool():putObject(eventItem)
+					table.remove(deltaList, idx)
 
 					break
 				end
@@ -335,4 +341,4 @@ function var_0_0.addEventMechanism(arg_1_0)
 	end
 end
 
-return var_0_0
+return LuaEventSystem

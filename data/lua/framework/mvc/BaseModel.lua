@@ -1,162 +1,164 @@
-﻿module("framework.mvc.BaseModel", package.seeall)
+﻿-- chunkname: @framework/mvc/BaseModel.lua
 
-local var_0_0 = class("BaseModel")
+module("framework.mvc.BaseModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._idCounter = 1
-	arg_1_0._list = {}
-	arg_1_0._dict = {}
+local BaseModel = class("BaseModel")
+
+function BaseModel:ctor()
+	self._idCounter = 1
+	self._list = {}
+	self._dict = {}
 end
 
-function var_0_0.onInit(arg_2_0)
+function BaseModel:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_3_0)
+function BaseModel:reInit()
 	return
 end
 
-function var_0_0.reInitInternal(arg_4_0)
-	arg_4_0:clear()
-	arg_4_0:reInit()
+function BaseModel:reInitInternal()
+	self:clear()
+	self:reInit()
 end
 
-function var_0_0.clear(arg_5_0)
-	arg_5_0._idCounter = 1
-	arg_5_0._list = {}
-	arg_5_0._dict = {}
+function BaseModel:clear()
+	self._idCounter = 1
+	self._list = {}
+	self._dict = {}
 end
 
-function var_0_0.getList(arg_6_0)
-	return arg_6_0._list
+function BaseModel:getList()
+	return self._list
 end
 
-function var_0_0.getDict(arg_7_0)
-	return arg_7_0._dict
+function BaseModel:getDict()
+	return self._dict
 end
 
-function var_0_0.getCount(arg_8_0)
-	return #arg_8_0._list
+function BaseModel:getCount()
+	return #self._list
 end
 
-function var_0_0.getById(arg_9_0, arg_9_1)
-	return arg_9_0._dict[arg_9_1]
+function BaseModel:getById(id)
+	return self._dict[id]
 end
 
-function var_0_0.getByIndex(arg_10_0, arg_10_1)
-	return arg_10_0._list[arg_10_1]
+function BaseModel:getByIndex(index)
+	return self._list[index]
 end
 
-function var_0_0.getIndex(arg_11_0, arg_11_1)
-	return tabletool.indexOf(arg_11_0._list, arg_11_1)
+function BaseModel:getIndex(mo)
+	return tabletool.indexOf(self._list, mo)
 end
 
-function var_0_0.sort(arg_12_0, arg_12_1)
-	table.sort(arg_12_0._list, arg_12_1)
+function BaseModel:sort(sortFunction)
+	table.sort(self._list, sortFunction)
 end
 
-function var_0_0.addList(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
-		arg_13_0:_fillMOId(iter_13_1)
+function BaseModel:addList(list)
+	for i, mo in ipairs(list) do
+		self:_fillMOId(mo)
 
-		if arg_13_0._dict[iter_13_1.id] then
-			local var_13_0 = tabletool.indexOf(arg_13_0._list, iter_13_1)
+		if self._dict[mo.id] then
+			local existIndex = tabletool.indexOf(self._list, mo)
 
-			if var_13_0 then
-				arg_13_0._list[var_13_0] = iter_13_1
+			if existIndex then
+				self._list[existIndex] = mo
 			else
-				for iter_13_2, iter_13_3 in ipairs(arg_13_0._list) do
-					if iter_13_3.id == iter_13_1.id then
-						arg_13_0._list[iter_13_2] = iter_13_1
+				for j, existMO in ipairs(self._list) do
+					if existMO.id == mo.id then
+						self._list[j] = mo
 
 						break
 					end
 				end
 
-				logError("mo.id duplicated, type = " .. (iter_13_1.__cname or "nil") .. ", id = " .. iter_13_1.id)
+				logError("mo.id duplicated, type = " .. (mo.__cname or "nil") .. ", id = " .. mo.id)
 			end
 		else
-			table.insert(arg_13_0._list, iter_13_1)
+			table.insert(self._list, mo)
 		end
 
-		arg_13_0._dict[iter_13_1.id] = iter_13_1
+		self._dict[mo.id] = mo
 	end
 end
 
-function var_0_0.setList(arg_14_0, arg_14_1)
-	arg_14_0._list = {}
-	arg_14_0._dict = {}
+function BaseModel:setList(list)
+	self._list = {}
+	self._dict = {}
 
-	arg_14_0:addList(arg_14_1)
+	self:addList(list)
 end
 
-function var_0_0.addAt(arg_15_0, arg_15_1, arg_15_2)
-	arg_15_0:_fillMOId(arg_15_1)
+function BaseModel:addAt(mo, index)
+	self:_fillMOId(mo)
 
-	if arg_15_0._dict[arg_15_1.id] then
-		local var_15_0 = tabletool.indexOf(arg_15_0._list, arg_15_1)
+	if self._dict[mo.id] then
+		local existIndex = tabletool.indexOf(self._list, mo)
 
-		if var_15_0 then
-			arg_15_0._list[var_15_0] = arg_15_1
+		if existIndex then
+			self._list[existIndex] = mo
 		else
-			logError("mo in dict, but not in list: " .. cjson.encode(arg_15_1))
+			logError("mo in dict, but not in list: " .. cjson.encode(mo))
 		end
 
-		logWarn(string.format("%s:addAt(mo, %d) fail, mo.id = %d has exist, cover origin data", arg_15_0.__cname, arg_15_2, arg_15_1.id))
+		logWarn(string.format("%s:addAt(mo, %d) fail, mo.id = %d has exist, cover origin data", self.__cname, index, mo.id))
 	else
-		table.insert(arg_15_0._list, arg_15_2, arg_15_1)
+		table.insert(self._list, index, mo)
 	end
 
-	arg_15_0._dict[arg_15_1.id] = arg_15_1
+	self._dict[mo.id] = mo
 end
 
-function var_0_0.addAtFirst(arg_16_0, arg_16_1)
-	arg_16_0:addAt(arg_16_1, 1)
+function BaseModel:addAtFirst(mo)
+	self:addAt(mo, 1)
 end
 
-function var_0_0.addAtLast(arg_17_0, arg_17_1)
-	arg_17_0:addAt(arg_17_1, #arg_17_0._list + 1)
+function BaseModel:addAtLast(mo)
+	self:addAt(mo, #self._list + 1)
 end
 
-function var_0_0.removeAt(arg_18_0, arg_18_1)
-	if arg_18_1 > #arg_18_0._list then
+function BaseModel:removeAt(index)
+	if index > #self._list then
 		return nil
 	end
 
-	local var_18_0 = table.remove(arg_18_0._list, arg_18_1)
+	local mo = table.remove(self._list, index)
 
-	if var_18_0 then
-		arg_18_0._dict[var_18_0.id] = nil
+	if mo then
+		self._dict[mo.id] = nil
 	end
 
-	return var_18_0
+	return mo
 end
 
-function var_0_0.removeFirst(arg_19_0)
-	return arg_19_0:removeAt(1)
+function BaseModel:removeFirst()
+	return self:removeAt(1)
 end
 
-function var_0_0.removeLast(arg_20_0)
-	return arg_20_0:removeAt(#arg_20_0._list)
+function BaseModel:removeLast()
+	return self:removeAt(#self._list)
 end
 
-function var_0_0.remove(arg_21_0, arg_21_1)
-	local var_21_0 = tabletool.indexOf(arg_21_0._list, arg_21_1)
+function BaseModel:remove(mo)
+	local index = tabletool.indexOf(self._list, mo)
 
-	if var_21_0 then
-		return arg_21_0:removeAt(var_21_0)
+	if index then
+		return self:removeAt(index)
 	end
 end
 
-function var_0_0._fillMOId(arg_22_0, arg_22_1)
-	if not arg_22_1.id then
-		while arg_22_0._dict[arg_22_0._idCounter] do
-			arg_22_0._idCounter = arg_22_0._idCounter + 1
+function BaseModel:_fillMOId(mo)
+	if not mo.id then
+		while self._dict[self._idCounter] do
+			self._idCounter = self._idCounter + 1
 		end
 
-		arg_22_1.id = arg_22_0._idCounter
-		arg_22_0._idCounter = arg_22_0._idCounter + 1
+		mo.id = self._idCounter
+		self._idCounter = self._idCounter + 1
 	end
 end
 
-return var_0_0
+return BaseModel

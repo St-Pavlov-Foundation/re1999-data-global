@@ -1,9 +1,11 @@
-﻿module("framework.mvc.view.ViewType", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ViewType.lua
 
-local var_0_0 = {}
+module("framework.mvc.view.ViewType", package.seeall)
 
-var_0_0.Normal = 1
-var_0_0.Modal = 2
-var_0_0.Full = 3
+local ViewType = {}
 
-return var_0_0
+ViewType.Normal = 1
+ViewType.Modal = 2
+ViewType.Full = 3
+
+return ViewType

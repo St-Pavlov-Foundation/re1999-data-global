@@ -1,4 +1,6 @@
-﻿module("framework.mvc.view.ScrollEnum", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ScrollEnum.lua
+
+module("framework.mvc.view.ScrollEnum", package.seeall)
 
 ScrollEnum.ScrollDirH = 0
 ScrollEnum.ScrollDirV = 1

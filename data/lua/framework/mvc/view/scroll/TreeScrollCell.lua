@@ -1,71 +1,73 @@
-﻿module("framework.mvc.view.scroll.TreeScrollCell", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/TreeScrollCell.lua
 
-local var_0_0 = class("TreeScrollCell", LuaCompBase)
+module("framework.mvc.view.scroll.TreeScrollCell", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._rootIndex = nil
-	arg_1_0._nodeIndex = nil
-	arg_1_0._go = nil
-	arg_1_0._view = nil
-	arg_1_0._isRoot = nil
-	arg_1_0._isNode = nil
+local TreeScrollCell = class("TreeScrollCell", LuaCompBase)
+
+function TreeScrollCell:ctor()
+	self._rootIndex = nil
+	self._nodeIndex = nil
+	self._go = nil
+	self._view = nil
+	self._isRoot = nil
+	self._isNode = nil
 end
 
-function var_0_0.initInternal(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._go = arg_2_1
-	arg_2_0._view = arg_2_2
+function TreeScrollCell:initInternal(go, view)
+	self._go = go
+	self._view = view
 end
 
-function var_0_0.onUpdateRootMOInternal(arg_3_0, arg_3_1)
-	if not arg_3_0._isRoot then
-		arg_3_0._isRoot = true
+function TreeScrollCell:onUpdateRootMOInternal(mo)
+	if not self._isRoot then
+		self._isRoot = true
 
-		arg_3_0:initRoot()
+		self:initRoot()
 	end
 
-	arg_3_0:onUpdateRootMO(arg_3_1)
+	self:onUpdateRootMO(mo)
 end
 
-function var_0_0.onUpdateNodeMOInternal(arg_4_0, arg_4_1)
-	if not arg_4_0._isNode then
-		arg_4_0._isNode = true
+function TreeScrollCell:onUpdateNodeMOInternal(mo)
+	if not self._isNode then
+		self._isNode = true
 
-		arg_4_0:initNode()
+		self:initNode()
 	end
 
-	arg_4_0:onUpdateNodeMO(arg_4_1)
+	self:onUpdateNodeMO(mo)
 end
 
-function var_0_0.initRoot(arg_5_0)
+function TreeScrollCell:initRoot()
 	return
 end
 
-function var_0_0.initNode(arg_6_0)
+function TreeScrollCell:initNode()
 	return
 end
 
-function var_0_0.addEventListeners(arg_7_0)
+function TreeScrollCell:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_8_0)
+function TreeScrollCell:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateRootMO(arg_9_0, arg_9_1)
+function TreeScrollCell:onUpdateRootMO(mo)
 	return
 end
 
-function var_0_0.onUpdateNodeMO(arg_10_0, arg_10_1)
+function TreeScrollCell:onUpdateNodeMO(mo)
 	return
 end
 
-function var_0_0.onSelect(arg_11_0, arg_11_1)
+function TreeScrollCell:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroy(arg_12_0)
+function TreeScrollCell:onDestroy()
 	return
 end
 
-return var_0_0
+return TreeScrollCell

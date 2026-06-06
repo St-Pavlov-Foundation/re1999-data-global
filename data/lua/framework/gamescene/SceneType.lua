@@ -1,9 +1,11 @@
-﻿module("framework.gamescene.SceneType", package.seeall)
+﻿-- chunkname: @framework/gamescene/SceneType.lua
 
-local var_0_0 = {}
+module("framework.gamescene.SceneType", package.seeall)
 
-var_0_0.Empty = 1
-var_0_0.Main = 2
-var_0_0.Fight = 3
+local SceneType = {}
 
-return var_0_0
+SceneType.Empty = 1
+SceneType.Main = 2
+SceneType.Fight = 3
+
+return SceneType

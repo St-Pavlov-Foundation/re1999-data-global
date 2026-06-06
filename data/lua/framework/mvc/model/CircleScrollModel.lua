@@ -1,3 +1,7 @@
-﻿module("framework.mvc.model.CircleScrollModel", package.seeall)
+﻿-- chunkname: @framework/mvc/model/CircleScrollModel.lua
 
-return (class("CircleScrollModel", ListScrollModel))
+module("framework.mvc.model.CircleScrollModel", package.seeall)
+
+local CircleScrollModel = class("CircleScrollModel", ListScrollModel)
+
+return CircleScrollModel

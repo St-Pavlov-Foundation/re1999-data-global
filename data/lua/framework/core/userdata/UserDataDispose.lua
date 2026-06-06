@@ -1,147 +1,152 @@
-﻿module("framework.core.userdata.UserDataDispose", package.seeall)
+﻿-- chunkname: @framework/core/userdata/UserDataDispose.lua
 
-local var_0_0 = class("UserDataDispose")
+module("framework.core.userdata.UserDataDispose", package.seeall)
 
-function var_0_0.__onInit(arg_1_0)
-	getmetatable(arg_1_0).__newindex = function(arg_2_0, arg_2_1, arg_2_2)
-		rawset(arg_2_0, arg_2_1, arg_2_2)
+local UserDataDispose = class("UserDataDispose")
 
-		if type(arg_2_2) == "userdata" then
-			if not rawget(arg_2_0, "__userDataKeys") then
-				rawset(arg_2_0, "__userDataKeys", {})
+function UserDataDispose:__onInit()
+	local metaTable = getmetatable(self)
+
+	function metaTable.__newindex(selfObj, key, value)
+		rawset(selfObj, key, value)
+
+		if type(value) == "userdata" then
+			if not rawget(selfObj, "__userDataKeys") then
+				rawset(selfObj, "__userDataKeys", {})
 			end
 
-			arg_2_0.__userDataKeys[arg_2_1] = true
+			selfObj.__userDataKeys[key] = true
 		end
 	end
-	arg_1_0.__userDataTbs = {}
-	arg_1_0.__eventTbs = {}
-	arg_1_0.__clickObjs = {}
+
+	self.__userDataTbs = {}
+	self.__eventTbs = {}
+	self.__clickObjs = {}
 end
 
-function var_0_0.__onDispose(arg_3_0)
-	if arg_3_0.__userDataKeys then
-		local var_3_0 = arg_3_0.__userDataKeys
+function UserDataDispose:__onDispose()
+	if self.__userDataKeys then
+		local userDataKeys = self.__userDataKeys
 
-		for iter_3_0, iter_3_1 in pairs(var_3_0) do
-			rawset(arg_3_0, iter_3_0, nil)
+		for key, _ in pairs(userDataKeys) do
+			rawset(self, key, nil)
 		end
 
-		arg_3_0.__userDataKeys = nil
+		self.__userDataKeys = nil
 	end
 
-	if arg_3_0.__userDataTbs then
-		for iter_3_2, iter_3_3 in ipairs(arg_3_0.__userDataTbs) do
-			for iter_3_4 in pairs(iter_3_3) do
-				rawset(iter_3_3, iter_3_4, nil)
+	if self.__userDataTbs then
+		for idx, tb in ipairs(self.__userDataTbs) do
+			for key in pairs(tb) do
+				rawset(tb, key, nil)
 			end
 
-			rawset(arg_3_0.__userDataTbs, iter_3_2, nil)
+			rawset(self.__userDataTbs, idx, nil)
 		end
 
-		arg_3_0.__userDataTbs = nil
+		self.__userDataTbs = nil
 	end
 
-	if arg_3_0.__eventTbs then
-		for iter_3_5, iter_3_6 in ipairs(arg_3_0.__eventTbs) do
-			iter_3_6[1]:unregisterCallback(iter_3_6[2], iter_3_6[3], iter_3_6[4])
+	if self.__eventTbs then
+		for _, evtInfo in ipairs(self.__eventTbs) do
+			evtInfo[1]:unregisterCallback(evtInfo[2], evtInfo[3], evtInfo[4])
 		end
 
-		arg_3_0.__eventTbs = nil
+		self.__eventTbs = nil
 	end
 
-	if arg_3_0.__clickObjs then
-		for iter_3_7, iter_3_8 in pairs(arg_3_0.__clickObjs) do
-			if not iter_3_7:Equals(nil) then
-				iter_3_7:RemoveClickListener()
+	if self.__clickObjs then
+		for clickObj, _ in pairs(self.__clickObjs) do
+			if not clickObj:Equals(nil) then
+				clickObj:RemoveClickListener()
 			end
 		end
 
-		arg_3_0.__clickObjs = nil
+		self.__clickObjs = nil
 	end
 end
 
-function var_0_0.getUserDataTb_(arg_4_0)
-	local var_4_0 = {}
+function UserDataDispose:getUserDataTb_()
+	local ret = {}
 
-	if arg_4_0.__userDataTbs then
-		table.insert(arg_4_0.__userDataTbs, var_4_0)
+	if self.__userDataTbs then
+		table.insert(self.__userDataTbs, ret)
 	end
 
-	return var_4_0
+	return ret
 end
 
-function var_0_0.addEventCb(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	if not arg_5_1 or not arg_5_2 or not arg_5_3 then
+function UserDataDispose:addEventCb(ctrlInstance, evtName, callback, cbObj, priority)
+	if not ctrlInstance or not evtName or not callback then
 		logError("UserDataDispose:addEventCb ctrlInstance or evtName or callback is null!")
 
 		return
 	end
 
-	arg_5_1:registerCallback(arg_5_2, arg_5_3, arg_5_4, arg_5_5)
+	ctrlInstance:registerCallback(evtName, callback, cbObj, priority)
 
-	if arg_5_0.__eventTbs then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_0.__eventTbs) do
-			if iter_5_1[1] == arg_5_1 and iter_5_1[2] == arg_5_2 and iter_5_1[3] == arg_5_3 and iter_5_1[4] == arg_5_4 then
+	if self.__eventTbs then
+		for _, evtInfo in ipairs(self.__eventTbs) do
+			if evtInfo[1] == ctrlInstance and evtInfo[2] == evtName and evtInfo[3] == callback and evtInfo[4] == cbObj then
 				return
 			end
 		end
 	end
 
-	table.insert(arg_5_0.__eventTbs, {
-		arg_5_1,
-		arg_5_2,
-		arg_5_3,
-		arg_5_4
+	table.insert(self.__eventTbs, {
+		ctrlInstance,
+		evtName,
+		callback,
+		cbObj
 	})
 end
 
-function var_0_0.removeEventCb(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	if not arg_6_1 or not arg_6_2 or not arg_6_3 then
+function UserDataDispose:removeEventCb(ctrlInstance, evtName, callback, cbObj)
+	if not ctrlInstance or not evtName or not callback then
 		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
 
 		return
 	end
 
-	if arg_6_0.__eventTbs then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_0.__eventTbs) do
-			if iter_6_1[1] == arg_6_1 and iter_6_1[2] == arg_6_2 and iter_6_1[3] == arg_6_3 and iter_6_1[4] == arg_6_4 then
-				table.remove(arg_6_0.__eventTbs, iter_6_0)
+	if self.__eventTbs then
+		for i, evtInfo in ipairs(self.__eventTbs) do
+			if evtInfo[1] == ctrlInstance and evtInfo[2] == evtName and evtInfo[3] == callback and evtInfo[4] == cbObj then
+				table.remove(self.__eventTbs, i)
 
 				break
 			end
 		end
 	end
 
-	arg_6_1:unregisterCallback(arg_6_2, arg_6_3, arg_6_4)
+	ctrlInstance:unregisterCallback(evtName, callback, cbObj)
 end
 
-function var_0_0.addClickCb(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	if not arg_7_1 or arg_7_1:Equals(nil) or not arg_7_2 or not arg_7_3 then
+function UserDataDispose:addClickCb(clickObj, callback, cbObj, param)
+	if not clickObj or clickObj:Equals(nil) or not callback or not cbObj then
 		logError("UserDataDispose:addClickCb clickObj or callback or cbObj is null!")
 
 		return
 	end
 
-	if arg_7_0.__clickObjs and not arg_7_0.__clickObjs[arg_7_1] then
-		arg_7_0.__clickObjs[arg_7_1] = true
+	if self.__clickObjs and not self.__clickObjs[clickObj] then
+		self.__clickObjs[clickObj] = true
 
-		arg_7_1:AddClickListener(arg_7_2, arg_7_3, arg_7_4)
+		clickObj:AddClickListener(callback, cbObj, param)
 	end
 end
 
-function var_0_0.removeClickCb(arg_8_0, arg_8_1)
-	if not arg_8_1 or arg_8_1:Equals(nil) then
+function UserDataDispose:removeClickCb(clickObj)
+	if not clickObj or clickObj:Equals(nil) then
 		logError("UserDataDispose:removeClickCb clickObj is null!")
 
 		return
 	end
 
-	if arg_8_0.__clickObjs and arg_8_0.__clickObjs[arg_8_1] then
-		arg_8_0.__clickObjs[arg_8_1] = nil
+	if self.__clickObjs and self.__clickObjs[clickObj] then
+		self.__clickObjs[clickObj] = nil
 
-		arg_8_1:RemoveClickListener()
+		clickObj:RemoveClickListener()
 	end
 end
 
-return var_0_0
+return UserDataDispose

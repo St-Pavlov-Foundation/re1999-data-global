@@ -1,182 +1,184 @@
-﻿module("framework.mvc.view.scroll.LuaListScrollView", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/LuaListScrollView.lua
 
-local var_0_0 = class("LuaListScrollView", BaseScrollView)
+module("framework.mvc.view.scroll.LuaListScrollView", package.seeall)
 
-var_0_0.PrefabInstName = "prefabInst"
+local LuaListScrollView = class("LuaListScrollView", BaseScrollView)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2.emptyScrollParam)
+LuaListScrollView.PrefabInstName = "prefabInst"
 
-	arg_1_0._csListScroll = nil
-	arg_1_0._model = arg_1_1
-	arg_1_0._param = arg_1_2
-	arg_1_0._selectMOs = {}
-	arg_1_0._cellCompDict = {}
+function LuaListScrollView:ctor(scrollModel, listScrollParam)
+	LuaListScrollView.super.ctor(self, scrollModel, listScrollParam.emptyScrollParam)
+
+	self._csListScroll = nil
+	self._model = scrollModel
+	self._param = listScrollParam
+	self._selectMOs = {}
+	self._cellCompDict = {}
 end
 
-function var_0_0.onInitView(arg_2_0)
-	var_0_0.super.onInitView(arg_2_0)
+function LuaListScrollView:onInitView()
+	LuaListScrollView.super.onInitView(self)
 
-	if arg_2_0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
-		arg_2_0._cellSourceGO = gohelper.findChild(arg_2_0.viewGO, arg_2_0._param.prefabUrl)
+	if self._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+		self._cellSourceGO = gohelper.findChild(self.viewGO, self._param.prefabUrl)
 
-		gohelper.setActive(arg_2_0._cellSourceGO, false)
+		gohelper.setActive(self._cellSourceGO, false)
 	end
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, arg_2_0._param.scrollGOPath)
+	local scrollGO = gohelper.findChild(self.viewGO, self._param.scrollGOPath)
 
-	arg_2_0._csListScroll = SLFramework.UGUI.ListScrollView.Get(var_2_0)
+	self._csListScroll = SLFramework.UGUI.ListScrollView.Get(scrollGO)
 
-	arg_2_0._csListScroll:Init(arg_2_0._param.scrollDir, arg_2_0._param.lineCount, arg_2_0._param.cellWidth, arg_2_0._param.cellHeight, arg_2_0._param.cellSpaceH, arg_2_0._param.cellSpaceV, arg_2_0._param.startSpace, arg_2_0._param.endSpace, arg_2_0._param.sortMode, arg_2_0._param.frameUpdateMs, arg_2_0._param.minUpdateCountInFrame, arg_2_0._onUpdateCell, arg_2_0.onUpdateFinish, arg_2_0._onSelectCell, arg_2_0)
+	self._csListScroll:Init(self._param.scrollDir, self._param.lineCount, self._param.cellWidth, self._param.cellHeight, self._param.cellSpaceH, self._param.cellSpaceV, self._param.startSpace, self._param.endSpace, self._param.sortMode, self._param.frameUpdateMs, self._param.minUpdateCountInFrame, self._onUpdateCell, self.onUpdateFinish, self._onSelectCell, self)
 end
 
-function var_0_0.clear(arg_3_0)
-	if arg_3_0._csListScroll then
-		arg_3_0._csListScroll:Clear()
+function LuaListScrollView:clear()
+	if self._csListScroll then
+		self._csListScroll:Clear()
 	end
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	var_0_0.super.onDestroyView(arg_4_0)
-	arg_4_0._csListScroll:Clear()
+function LuaListScrollView:onDestroyView()
+	LuaListScrollView.super.onDestroyView(self)
+	self._csListScroll:Clear()
 
-	arg_4_0._csListScroll = nil
-	arg_4_0._model = nil
-	arg_4_0._param = nil
-	arg_4_0._selectMOs = nil
-	arg_4_0._cellCompDict = nil
+	self._csListScroll = nil
+	self._model = nil
+	self._param = nil
+	self._selectMOs = nil
+	self._cellCompDict = nil
 end
 
-function var_0_0.getCsListScroll(arg_5_0)
-	return arg_5_0._csListScroll
+function LuaListScrollView:getCsListScroll()
+	return self._csListScroll
 end
 
-function var_0_0.refreshScroll(arg_6_0)
-	var_0_0.super.refreshScroll(arg_6_0)
+function LuaListScrollView:refreshScroll()
+	LuaListScrollView.super.refreshScroll(self)
 
-	local var_6_0 = arg_6_0._model:getCount()
+	local moCount = self._model:getCount()
 
-	arg_6_0._csListScroll:UpdateTotalCount(var_6_0)
-	arg_6_0:updateEmptyGO(var_6_0)
+	self._csListScroll:UpdateTotalCount(moCount)
+	self:updateEmptyGO(moCount)
 end
 
-function var_0_0.selectCell(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_0._model:getByIndex(arg_7_1)
+function LuaListScrollView:selectCell(index, isSelect)
+	local mo = self._model:getByIndex(index)
 
-	if not var_7_0 then
+	if not mo then
 		return
 	end
 
-	if arg_7_0._param.multiSelect then
-		local var_7_1 = tabletool.indexOf(arg_7_0._selectMOs, var_7_0)
+	if self._param.multiSelect then
+		local i = tabletool.indexOf(self._selectMOs, mo)
 
-		if var_7_1 and not arg_7_2 then
-			table.remove(arg_7_0._selectMOs, var_7_1)
+		if i and not isSelect then
+			table.remove(self._selectMOs, i)
 		else
-			table.insert(arg_7_0._selectMOs, var_7_0)
+			table.insert(self._selectMOs, mo)
 		end
 	else
-		local var_7_2 = arg_7_0._selectMOs[1]
+		local firstSelectMO = self._selectMOs[1]
 
-		if var_7_2 then
-			local var_7_3 = arg_7_0._model:getIndex(var_7_2)
+		if firstSelectMO then
+			local i = self._model:getIndex(firstSelectMO)
 
-			if var_7_3 then
-				arg_7_0._csListScroll:SelectCell(var_7_3 - 1, false)
+			if i then
+				self._csListScroll:SelectCell(i - 1, false)
 			end
 		end
 
-		if arg_7_2 then
-			arg_7_0._selectMOs = {
-				var_7_0
+		if isSelect then
+			self._selectMOs = {
+				mo
 			}
 		else
-			arg_7_0._selectMOs = {}
+			self._selectMOs = {}
 		end
 	end
 
-	arg_7_0._csListScroll:SelectCell(arg_7_1 - 1, arg_7_2)
+	self._csListScroll:SelectCell(index - 1, isSelect)
 end
 
-function var_0_0.getFirstSelect(arg_8_0)
-	return arg_8_0._selectMOs[1]
+function LuaListScrollView:getFirstSelect()
+	return self._selectMOs[1]
 end
 
-function var_0_0.getSelectList(arg_9_0)
-	return arg_9_0._selectMOs
+function LuaListScrollView:getSelectList()
+	return self._selectMOs
 end
 
-function var_0_0.setSelect(arg_10_0, arg_10_1)
-	arg_10_0:setSelectList({
-		arg_10_1
+function LuaListScrollView:setSelect(mo)
+	self:setSelectList({
+		mo
 	})
 end
 
-function var_0_0.setSelectList(arg_11_0, arg_11_1)
-	arg_11_0._selectMOs = {}
+function LuaListScrollView:setSelectList(list)
+	self._selectMOs = {}
 
-	if arg_11_1 then
-		for iter_11_0, iter_11_1 in ipairs(arg_11_1) do
-			table.insert(arg_11_0._selectMOs, iter_11_1)
+	if list then
+		for _, mo in ipairs(list) do
+			table.insert(self._selectMOs, mo)
 		end
 	end
 
-	if arg_11_0._csListScroll then
-		arg_11_0._csListScroll:UpdateVisualCells()
+	if self._csListScroll then
+		self._csListScroll:UpdateVisualCells()
 	end
 end
 
-function var_0_0._onUpdateCell(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = gohelper.findChild(arg_12_1, var_0_0.PrefabInstName)
-	local var_12_1
+function LuaListScrollView:_onUpdateCell(cellGO, index)
+	local prefabInstGO = gohelper.findChild(cellGO, LuaListScrollView.PrefabInstName)
+	local luaCellComp
 
-	if var_12_0 then
-		var_12_1 = MonoHelper.getLuaComFromGo(var_12_0, arg_12_0._param.cellClass)
+	if prefabInstGO then
+		luaCellComp = MonoHelper.getLuaComFromGo(prefabInstGO, self._param.cellClass)
 	else
-		if arg_12_0._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
-			var_12_0 = arg_12_0:getResInst(arg_12_0._param.prefabUrl, arg_12_1, var_0_0.PrefabInstName)
-		elseif arg_12_0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
-			var_12_0 = gohelper.clone(arg_12_0._cellSourceGO, arg_12_1, var_0_0.PrefabInstName)
+		if self._param.prefabType == ScrollEnum.ScrollPrefabFromRes then
+			prefabInstGO = self:getResInst(self._param.prefabUrl, cellGO, LuaListScrollView.PrefabInstName)
+		elseif self._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+			prefabInstGO = gohelper.clone(self._cellSourceGO, cellGO, LuaListScrollView.PrefabInstName)
 
-			gohelper.setActive(var_12_0, true)
+			gohelper.setActive(prefabInstGO, true)
 		else
-			logError("ListScrollView prefabType not support: " .. arg_12_0._param.prefabType)
+			logError("ListScrollView prefabType not support: " .. self._param.prefabType)
 		end
 
-		var_12_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, arg_12_0._param.cellClass)
+		luaCellComp = MonoHelper.addNoUpdateLuaComOnceToGo(prefabInstGO, self._param.cellClass)
 
-		var_12_1:initInternal(var_12_0, arg_12_0)
+		luaCellComp:initInternal(prefabInstGO, self)
 
-		arg_12_0._cellCompDict[var_12_1] = true
+		self._cellCompDict[luaCellComp] = true
 	end
 
-	local var_12_2 = arg_12_0._model:getByIndex(arg_12_2 + 1)
+	local mo = self._model:getByIndex(index + 1)
 
-	var_12_1._index = arg_12_2 + 1
+	luaCellComp._index = index + 1
 
-	var_12_1:onUpdateMO(var_12_2)
+	luaCellComp:onUpdateMO(mo)
 
-	if tabletool.indexOf(arg_12_0._selectMOs, var_12_2) then
-		var_12_1:onSelect(true)
+	if tabletool.indexOf(self._selectMOs, mo) then
+		luaCellComp:onSelect(true)
 	else
-		var_12_1:onSelect(false)
+		luaCellComp:onSelect(false)
 	end
 end
 
-function var_0_0.onUpdateFinish(arg_13_0)
+function LuaListScrollView:onUpdateFinish()
 	return
 end
 
-function var_0_0._onSelectCell(arg_14_0, arg_14_1, arg_14_2)
-	local var_14_0 = gohelper.findChild(arg_14_1, var_0_0.PrefabInstName)
+function LuaListScrollView:_onSelectCell(cellGO, isSelect)
+	local prefabInstGO = gohelper.findChild(cellGO, LuaListScrollView.PrefabInstName)
 
-	if var_14_0 then
-		local var_14_1 = MonoHelper.getLuaComFromGo(var_14_0, arg_14_0._param.cellClass)
+	if prefabInstGO then
+		local luaCellComp = MonoHelper.getLuaComFromGo(prefabInstGO, self._param.cellClass)
 
-		if var_14_1 then
-			var_14_1:onSelect(arg_14_2)
+		if luaCellComp then
+			luaCellComp:onSelect(isSelect)
 		end
 	end
 end
 
-return var_0_0
+return LuaListScrollView

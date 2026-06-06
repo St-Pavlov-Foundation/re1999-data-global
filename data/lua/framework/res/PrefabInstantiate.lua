@@ -1,79 +1,93 @@
-﻿module("framework.res.PrefabInstantiate", package.seeall)
+﻿-- chunkname: @framework/res/PrefabInstantiate.lua
 
-local var_0_0 = class("PrefabInstantiate", LuaCompBase)
+module("framework.res.PrefabInstantiate", package.seeall)
 
-function var_0_0.Create(arg_1_0)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0, var_0_0)
+local PrefabInstantiate = class("PrefabInstantiate", LuaCompBase)
+
+function PrefabInstantiate.Create(containerGO)
+	return MonoHelper.addNoUpdateLuaComOnceToGo(containerGO, PrefabInstantiate)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._containerGO = arg_2_1
-	arg_2_0._path = nil
-	arg_2_0._assetItem = nil
-	arg_2_0._instGO = nil
-	arg_2_0._finishCallback = nil
-	arg_2_0._callbackTarget = nil
+function PrefabInstantiate:init(containerGO)
+	self._containerGO = containerGO
+	self._path = nil
+	self._assetItem = nil
+	self._instGO = nil
+	self._finishCallback = nil
+	self._callbackTarget = nil
 end
 
-function var_0_0.startLoad(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	arg_3_0._path = arg_3_1
-	arg_3_0._finishCallback = arg_3_2
-	arg_3_0._callbackTarget = arg_3_3
+function PrefabInstantiate:startLoad(path, finishCallback, callbackTarget)
+	if gohelper.isNil(self._containerGO) then
+		logError("self._containerGO is nil, but startLoad:" .. tostring(path))
 
-	loadAbAsset(arg_3_1, false, arg_3_0._onLoadCallback, arg_3_0)
-end
-
-function var_0_0.getPath(arg_4_0)
-	return arg_4_0._path
-end
-
-function var_0_0.getAssetItem(arg_5_0)
-	return arg_5_0._assetItem
-end
-
-function var_0_0.getInstGO(arg_6_0)
-	return arg_6_0._instGO
-end
-
-function var_0_0.dispose(arg_7_0)
-	if arg_7_0._path then
-		removeAssetLoadCb(arg_7_0._path, arg_7_0._onLoadCallback, arg_7_0)
+		return
 	end
 
-	if arg_7_0._assetItem then
-		arg_7_0._assetItem:Release()
+	self._path = path
+	self._finishCallback = finishCallback
+	self._callbackTarget = callbackTarget
+
+	loadAbAsset(path, false, self._onLoadCallback, self)
+end
+
+function PrefabInstantiate:getPath()
+	return self._path
+end
+
+function PrefabInstantiate:getAssetItem()
+	return self._assetItem
+end
+
+function PrefabInstantiate:getInstGO()
+	return self._instGO
+end
+
+function PrefabInstantiate:dispose()
+	if self._path then
+		removeAssetLoadCb(self._path, self._onLoadCallback, self)
 	end
 
-	gohelper.destroy(arg_7_0._instGO)
+	if self._assetItem then
+		self._assetItem:Release()
+	end
 
-	arg_7_0._path = nil
-	arg_7_0._assetItem = nil
-	arg_7_0._instGO = nil
-	arg_7_0._finishCallback = nil
-	arg_7_0._callbackTarget = nil
+	gohelper.destroy(self._instGO)
+
+	self._path = nil
+	self._assetItem = nil
+	self._instGO = nil
+	self._finishCallback = nil
+	self._callbackTarget = nil
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0:dispose()
-	arg_8_0:__onDispose()
+function PrefabInstantiate:onDestroy()
+	self:dispose()
+	self:__onDispose()
 end
 
-function var_0_0._onLoadCallback(arg_9_0, arg_9_1)
-	if arg_9_1.IsLoadSuccess then
-		arg_9_0._assetItem = arg_9_1
+function PrefabInstantiate:_onLoadCallback(assetItem)
+	if assetItem.IsLoadSuccess then
+		if gohelper.isNil(self._containerGO) then
+			logError("self._containerGO is nil, but _onLoadCallback:" .. tostring(self._path))
 
-		arg_9_0._assetItem:Retain()
+			return
+		end
 
-		arg_9_0._instGO = gohelper.clone(arg_9_0._assetItem:GetResource(arg_9_0._path), arg_9_0._containerGO)
+		self._assetItem = assetItem
 
-		if arg_9_0._finishCallback then
-			if arg_9_0._callbackTarget then
-				arg_9_0._finishCallback(arg_9_0._callbackTarget, arg_9_0)
+		self._assetItem:Retain()
+
+		self._instGO = gohelper.clone(self._assetItem:GetResource(self._path), self._containerGO)
+
+		if self._finishCallback then
+			if self._callbackTarget then
+				self._finishCallback(self._callbackTarget, self)
 			else
-				arg_9_0._finishCallback(arg_9_0)
+				self._finishCallback(self)
 			end
 		end
 	end
 end
 
-return var_0_0
+return PrefabInstantiate

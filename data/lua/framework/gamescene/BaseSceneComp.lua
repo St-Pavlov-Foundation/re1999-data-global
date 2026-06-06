@@ -1,32 +1,34 @@
-﻿module("framework.gamescene.BaseSceneComp", package.seeall)
+﻿-- chunkname: @framework/gamescene/BaseSceneComp.lua
 
-local var_0_0 = class("BaseSceneComp")
+module("framework.gamescene.BaseSceneComp", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._sceneObj = arg_1_1
-	arg_1_0.isOnStarted = nil
+local BaseSceneComp = class("BaseSceneComp")
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function BaseSceneComp:ctor(scene)
+	self._sceneObj = scene
+	self.isOnStarted = nil
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.getCurScene(arg_2_0)
-	return arg_2_0._sceneObj
+function BaseSceneComp:getCurScene()
+	return self._sceneObj
 end
 
-function var_0_0.onInit(arg_3_0)
+function BaseSceneComp:onInit()
 	return
 end
 
-function var_0_0.onSceneStart(arg_4_0, arg_4_1, arg_4_2)
+function BaseSceneComp:onSceneStart(sceneId, levelId)
 	return
 end
 
-function var_0_0.onScenePrepared(arg_5_0, arg_5_1, arg_5_2)
+function BaseSceneComp:onScenePrepared(sceneId, levelId)
 	return
 end
 
-function var_0_0.onSceneClose(arg_6_0)
+function BaseSceneComp:onSceneClose()
 	return
 end
 
-return var_0_0
+return BaseSceneComp

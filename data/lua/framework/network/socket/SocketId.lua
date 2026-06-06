@@ -1,7 +1,10 @@
-﻿module("framework.network.socket.SocketId", package.seeall)
+﻿-- chunkname: @framework/network/socket/SocketId.lua
 
-local var_0_0 = {}
+module("framework.network.socket.SocketId", package.seeall)
 
-var_0_0.Main = 0
+local SocketId = {}
 
-return var_0_0
+SocketId.Main = 0
+SocketId.PartyGame = 1
+
+return SocketId

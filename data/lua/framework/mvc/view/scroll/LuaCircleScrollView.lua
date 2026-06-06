@@ -1,42 +1,44 @@
-﻿module("framework.mvc.view.scroll.LuaCircleScrollView", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/LuaCircleScrollView.lua
 
-local var_0_0 = class("LuaCircleScrollView", BaseScrollView)
+module("framework.mvc.view.scroll.LuaCircleScrollView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	var_0_0.super.ctor(arg_1_0, arg_1_1, arg_1_2.emptyScrollParam)
+local LuaCircleScrollView = class("LuaCircleScrollView", BaseScrollView)
 
-	arg_1_0._csCircleScroll = nil
-	arg_1_0._model = arg_1_1
-	arg_1_0._param = arg_1_2
-	arg_1_0._cellCompDict = {}
+function LuaCircleScrollView:ctor(scrollModel, circleScrollParam)
+	LuaCircleScrollView.super.ctor(self, scrollModel, circleScrollParam.emptyScrollParam)
+
+	self._csCircleScroll = nil
+	self._model = scrollModel
+	self._param = circleScrollParam
+	self._cellCompDict = {}
 end
 
-function var_0_0.onInitView(arg_2_0)
-	var_0_0.super.onInitView(arg_2_0)
+function LuaCircleScrollView:onInitView()
+	LuaCircleScrollView.super.onInitView(self)
 
-	if arg_2_0._param.prefabType == ScrollEnum.ScrollPrefabFromView then
-		arg_2_0._cellSourceGO = gohelper.findChild(arg_2_0.viewGO, arg_2_0._param.prefabUrl)
+	if self._param.prefabType == ScrollEnum.ScrollPrefabFromView then
+		self._cellSourceGO = gohelper.findChild(self.viewGO, self._param.prefabUrl)
 
-		gohelper.setActive(arg_2_0._cellSourceGO, false)
+		gohelper.setActive(self._cellSourceGO, false)
 	end
 
-	local var_2_0 = gohelper.findChild(arg_2_0.viewGO, arg_2_0._param.scrollGOPath)
+	local scrollGO = gohelper.findChild(self.viewGO, self._param.scrollGOPath)
 
-	arg_2_0._csCircleScroll = SLFramework.UGUI.CircleScrollView.Get(var_2_0)
+	self._csCircleScroll = SLFramework.UGUI.CircleScrollView.Get(scrollGO)
 
-	arg_2_0._csCircleScroll:Init(arg_2_0._param.scrollDir, arg_2_0._param.rotateDir, arg_2_0._param.circleCellCount, arg_2_0._param.scrollRadius, arg_2_0._param.cellRadius, arg_2_0._param.firstDegree, arg_2_0._param.isLoop, arg_2_0._onUpdateCell, arg_2_0._onSelectCell, arg_2_0)
+	self._csCircleScroll:Init(self._param.scrollDir, self._param.rotateDir, self._param.circleCellCount, self._param.scrollRadius, self._param.cellRadius, self._param.firstDegree, self._param.isLoop, self._onUpdateCell, self._onSelectCell, self)
 end
 
-function var_0_0.getCsScroll(arg_3_0)
-	return arg_3_0._csCircleScroll
+function LuaCircleScrollView:getCsScroll()
+	return self._csCircleScroll
 end
 
-function var_0_0._onUpdateCell(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function LuaCircleScrollView:_onUpdateCell(cellGO, listIndex, cellIndex)
 	return
 end
 
-function var_0_0._onSelectCell(arg_5_0, arg_5_1, arg_5_2)
+function LuaCircleScrollView:_onSelectCell(cellGO, isSelect)
 	return
 end
 
-return var_0_0
+return LuaCircleScrollView

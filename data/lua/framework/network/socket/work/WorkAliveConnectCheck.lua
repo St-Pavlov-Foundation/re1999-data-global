@@ -1,52 +1,57 @@
-﻿module("framework.network.socket.work.WorkAliveConnectCheck", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkAliveConnectCheck.lua
 
-local var_0_0 = class("WorkAliveConnectCheck", BaseWork)
+module("framework.network.socket.work.WorkAliveConnectCheck", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
-	arg_1_0:_addEvents()
+local WorkAliveConnectCheck = class("WorkAliveConnectCheck", BaseWork)
+
+function WorkAliveConnectCheck:onStart(context)
+	self:_addEvents()
 end
 
-function var_0_0.onResume(arg_2_0)
-	arg_2_0:_addEvents()
+function WorkAliveConnectCheck:onResume()
+	self:_addEvents()
 end
 
-function var_0_0.clearWork(arg_3_0)
-	arg_3_0:_removeEvents()
+function WorkAliveConnectCheck:clearWork()
+	self:_removeEvents()
 end
 
-function var_0_0._addEvents(arg_4_0)
-	TaskDispatcher.runRepeat(arg_4_0._onSecond, arg_4_0, 1)
+function WorkAliveConnectCheck:_addEvents()
+	ConnectAliveMgr.instance:resetLastReceiverTime()
+	TaskDispatcher.runRepeat(self._onSecond, self, 1)
 end
 
-function var_0_0._removeEvents(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onSecond, arg_5_0)
+function WorkAliveConnectCheck:_removeEvents()
+	TaskDispatcher.cancelTask(self._onSecond, self)
 end
 
-function var_0_0._onSecond(arg_6_0)
+function WorkAliveConnectCheck:_onSecond()
 	if not LuaSocketMgr.instance:isConnected() then
 		logNormal("socket 断开了，检查工作结束，准备发起自动重连")
-		arg_6_0:onDone(true)
+		self:onDone(true)
 
 		return
 	end
 
-	local var_6_0 = ConnectAliveMgr.instance:getFirstUnresponsiveMsg()
+	local msg = ConnectAliveMgr.instance:getFirstUnresponsiveMsg()
+	local nowTime = Time.realtimeSinceStartup
+	local lastReceiverTime = ConnectAliveMgr.instance:getLastReceiverTime()
 
-	if var_6_0 and Time.realtimeSinceStartup - var_6_0.time > NetworkConst.UnresponsiveMsgMaxTime then
-		local var_6_1 = "cmd_" .. var_6_0.cmd .. " 超时未响应，主动断开连接，准备发起自动重连, "
-		local var_6_2 = string.format("%.2f - %.2f > %.2f", Time.realtimeSinceStartup, var_6_0.time, NetworkConst.UnresponsiveMsgMaxTime)
-		local var_6_3 = ConnectAliveMgr.instance:getUnresponsiveMsgList()
-		local var_6_4 = ", 未响应包" .. #var_6_3 .. ": "
+	if msg and nowTime - msg.time > NetworkConst.UnresponsiveMsgMaxTime and nowTime - lastReceiverTime > NetworkConst.UnresponsiveMsgMaxTime then
+		local timeOutMsg = "cmd_" .. msg.cmd .. " 超时未响应，主动断开连接，准备发起自动重连, "
+		local timeLogMsg = string.format("%.2f - %.2f > %.2f", nowTime, msg.time, NetworkConst.UnresponsiveMsgMaxTime)
+		local list = ConnectAliveMgr.instance:getUnresponsiveMsgList()
+		local unresponsiveMsg = ", 未响应包" .. #list .. ": "
 
-		for iter_6_0, iter_6_1 in ipairs(var_6_3) do
-			var_6_4 = string.format("%s%d(%.2f)", var_6_4, iter_6_1.cmd, iter_6_1.time)
+		for i, one in ipairs(list) do
+			unresponsiveMsg = string.format("%s%d(%.2f)", unresponsiveMsg, one.cmd, one.time)
 		end
 
-		logNormal(var_6_1 .. var_6_2 .. var_6_4)
+		logNormal(timeOutMsg .. timeLogMsg .. unresponsiveMsg)
 		LuaSocketMgr.instance:endConnect()
 		ConnectAliveMgr.instance:dispatchEvent(ConnectEvent.OnMsgTimeout)
-		arg_6_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-return var_0_0
+return WorkAliveConnectCheck

@@ -1,86 +1,91 @@
-﻿module("framework.network.socket.work.WorkConnectSocket", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkConnectSocket.lua
 
-local var_0_0 = class("WorkConnectSocket", BaseWork)
-local var_0_1 = "ConnectSocket"
+module("framework.network.socket.work.WorkConnectSocket", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._firstLogin = arg_1_1
+local WorkConnectSocket = class("WorkConnectSocket", BaseWork)
+local ConnectSocketBlockKey = "ConnectSocket"
+
+function WorkConnectSocket:ctor(firstLogin)
+	self._firstLogin = firstLogin
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	arg_2_0._ip = SLFramework.UnityHelper.ParseDomainToIp(arg_2_1.ip)
-	arg_2_0._port = arg_2_1.port
+function WorkConnectSocket:onStart(context)
+	self._ip = SLFramework.UnityHelper.ParseDomainToIp(context.ip)
+	self._port = context.port
 
-	if arg_2_0._firstLogin then
-		arg_2_0._startTime = os.time()
+	if self._firstLogin then
+		self._startTime = os.time()
 
 		SLFramework.TimeWatch.Instance:Start()
 
-		local var_2_0 = {
-			account = arg_2_1.account,
-			password = arg_2_1.password
-		}
+		local req = {}
 
-		var_2_0.connectWay = 0
-		arg_2_0._dataLength = LuaSocketMgr.instance:getSysMsgSendBuffLen(1, var_2_0)
+		req.account = context.account
+		req.password = context.password
+		req.connectWay = 0
+		self._dataLength = LuaSocketMgr.instance:getSysMsgSendBuffLen(1, req)
 	end
 
-	UIBlockMgr.instance:startBlock(var_0_1)
-	LuaSocketMgr.instance:setConnectBeginCallback(arg_2_0._onConnectBegin, arg_2_0)
+	UIBlockMgr.instance:startBlock(ConnectSocketBlockKey)
+	LuaSocketMgr.instance:setConnectBeginCallback(self._onConnectBegin, self)
 
-	if LuaSocketMgr.instance:beginConnect(arg_2_0._ip, arg_2_0._port) then
-		TaskDispatcher.runDelay(arg_2_0._onConnectTimeout, arg_2_0, NetworkConst.SocketConnectTimeout)
+	local result = LuaSocketMgr.instance:beginConnect(self._ip, self._port)
+
+	if result then
+		TaskDispatcher.runDelay(self._onConnectTimeout, self, NetworkConst.SocketConnectTimeout)
 	else
 		logWarn("<color=#FF0000>connect fail: isConnecting, or IpEndPoint = null</color>")
 
-		arg_2_0.context.socketFail = true
+		self.context.socketFail = true
 
-		arg_2_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0.onResume(arg_3_0)
-	LuaSocketMgr.instance:setConnectBeginCallback(arg_3_0._onConnectBegin, arg_3_0)
-	TaskDispatcher.runDelay(arg_3_0._onConnectTimeout, arg_3_0, NetworkConst.SocketConnectTimeout)
+function WorkConnectSocket:onResume()
+	LuaSocketMgr.instance:setConnectBeginCallback(self._onConnectBegin, self)
+	TaskDispatcher.runDelay(self._onConnectTimeout, self, NetworkConst.SocketConnectTimeout)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
+function WorkConnectSocket:clearWork()
+	UIBlockMgr.instance:endBlock(ConnectSocketBlockKey)
 	LuaSocketMgr.instance:setConnectBeginCallback(nil, nil)
-	TaskDispatcher.cancelTask(arg_4_0._onConnectTimeout, arg_4_0)
+	TaskDispatcher.cancelTask(self._onConnectTimeout, self)
 end
 
-function var_0_0._onConnectBegin(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_0._firstLogin then
-		local var_5_0 = arg_5_2 and SDKDataTrackMgr.RequestResult.success or SDKDataTrackMgr.RequestResult.fail
-		local var_5_1 = SLFramework.TimeWatch.Instance:Watch()
-		local var_5_2 = var_5_1 - var_5_1 % 0.001
+function WorkConnectSocket:_onConnectBegin(socketId, isConnected)
+	if self._firstLogin then
+		local result = isConnected and SDKDataTrackMgr.RequestResult.success or SDKDataTrackMgr.RequestResult.fail
+		local spendTime = SLFramework.TimeWatch.Instance:Watch()
 
-		SDKDataTrackMgr.instance:trackSocketConnectEvent(var_5_0, arg_5_0._startTime, var_5_2, arg_5_0._dataLength, arg_5_0._ip .. ":" .. arg_5_0._port)
+		spendTime = spendTime - spendTime % 0.001
+
+		SDKDataTrackMgr.instance:trackSocketConnectEvent(result, self._startTime, spendTime, self._dataLength, self._ip .. ":" .. self._port)
 	end
 
-	if arg_5_2 then
-		arg_5_0.context.socketFail = nil
+	if isConnected then
+		self.context.socketFail = nil
 
-		arg_5_0:onDone(true)
+		self:onDone(true)
 	else
-		arg_5_0.context.socketFail = true
+		self.context.socketFail = true
 
-		arg_5_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0._onConnectTimeout(arg_6_0)
-	if arg_6_0._firstLogin then
-		local var_6_0 = SLFramework.TimeWatch.Instance:Watch()
-		local var_6_1 = var_6_0 - var_6_0 % 0.001
+function WorkConnectSocket:_onConnectTimeout()
+	if self._firstLogin then
+		local spendTime = SLFramework.TimeWatch.Instance:Watch()
 
-		SDKDataTrackMgr.instance:trackSocketConnectEvent(SDKDataTrackMgr.RequestResult.fail, arg_6_0._startTime, var_6_1, arg_6_0._dataLength, arg_6_0._ip .. ":" .. arg_6_0._port)
+		spendTime = spendTime - spendTime % 0.001
+
+		SDKDataTrackMgr.instance:trackSocketConnectEvent(SDKDataTrackMgr.RequestResult.fail, self._startTime, spendTime, self._dataLength, self._ip .. ":" .. self._port)
 	end
 
-	arg_6_0.context.socketFail = true
+	self.context.socketFail = true
 
-	arg_6_0:onDone(false)
+	self:onDone(false)
 end
 
-return var_0_0
+return WorkConnectSocket

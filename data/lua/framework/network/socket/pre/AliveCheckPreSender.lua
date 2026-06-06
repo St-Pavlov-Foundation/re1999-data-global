@@ -1,49 +1,51 @@
-﻿module("framework.network.socket.pre.AliveCheckPreSender", package.seeall)
+﻿-- chunkname: @framework/network/socket/pre/AliveCheckPreSender.lua
 
-local var_0_0 = class("AliveCheckPreSender", BasePreSender)
+module("framework.network.socket.pre.AliveCheckPreSender", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	var_0_0.super.ctor(arg_1_0)
+local AliveCheckPreSender = class("AliveCheckPreSender", BasePreSender)
 
-	arg_1_0._sendCmdInfoList = {}
+function AliveCheckPreSender:ctor()
+	AliveCheckPreSender.super.ctor(self)
+
+	self._sendCmdInfoList = {}
 end
 
-function var_0_0.getFirstUnresponsiveMsg(arg_2_0)
-	return arg_2_0._sendCmdInfoList[1]
+function AliveCheckPreSender:getFirstUnresponsiveMsg()
+	return self._sendCmdInfoList[1]
 end
 
-function var_0_0.getUnresponsiveMsgList(arg_3_0)
-	return arg_3_0._sendCmdInfoList
+function AliveCheckPreSender:getUnresponsiveMsgList()
+	return self._sendCmdInfoList
 end
 
-function var_0_0.clear(arg_4_0)
-	arg_4_0._sendCmdInfoList = {}
+function AliveCheckPreSender:clear()
+	self._sendCmdInfoList = {}
 end
 
-function var_0_0.preSendSysMsg(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+function AliveCheckPreSender:preSendSysMsg(cmd, dataTable, socketId)
 	return
 end
 
-function var_0_0.preSendProto(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = {
-		cmd = arg_6_1,
-		msg = arg_6_2,
-		socketId = arg_6_3,
-		time = Time.realtimeSinceStartup
-	}
+function AliveCheckPreSender:preSendProto(cmd, proto, socketId)
+	local sendInfo = {}
 
-	table.insert(arg_6_0._sendCmdInfoList, var_6_0)
+	sendInfo.cmd = cmd
+	sendInfo.msg = proto
+	sendInfo.socketId = socketId
+	sendInfo.time = Time.realtimeSinceStartup
+
+	table.insert(self._sendCmdInfoList, sendInfo)
 end
 
-function var_0_0.onReceiveMsg(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0._sendCmdInfoList) do
-		if iter_7_1.cmd == arg_7_1 then
-			table.remove(arg_7_0._sendCmdInfoList, iter_7_0)
+function AliveCheckPreSender:onReceiveMsg(cmd)
+	for i, v in ipairs(self._sendCmdInfoList) do
+		if v.cmd == cmd then
+			table.remove(self._sendCmdInfoList, i)
 
-			if iter_7_0 ~= 1 then
-				local var_7_0 = arg_7_0._sendCmdInfoList[1] and arg_7_0._sendCmdInfoList[1].cmd
+			if i ~= 1 then
+				local expectCmd = self._sendCmdInfoList[1] and self._sendCmdInfoList[1].cmd
 
-				logError("打个log：消息不是按顺序收到的！跳跃了 " .. iter_7_0 - 1 .. " 个包 期待的cmd = " .. var_7_0)
+				logError("打个log：消息不是按顺序收到的！跳跃了 " .. i - 1 .. " 个包 期待的cmd = " .. expectCmd)
 			end
 
 			break
@@ -51,14 +53,14 @@ function var_0_0.onReceiveMsg(arg_7_0, arg_7_1)
 	end
 end
 
-function var_0_0.ignoreUnimportantCmds(arg_8_0, arg_8_1)
-	for iter_8_0 = #arg_8_0._sendCmdInfoList, 1, -1 do
-		local var_8_0 = arg_8_0._sendCmdInfoList[iter_8_0]
+function AliveCheckPreSender:ignoreUnimportantCmds(cmd)
+	for i = #self._sendCmdInfoList, 1, -1 do
+		local sendInfo = self._sendCmdInfoList[i]
 
-		if GameMsgLockState.IgnoreCmds[var_8_0.cmd] then
-			table.remove(arg_8_0._sendCmdInfoList, iter_8_0)
+		if GameMsgLockState.IgnoreCmds[sendInfo.cmd] then
+			table.remove(self._sendCmdInfoList, i)
 		end
 	end
 end
 
-return var_0_0
+return AliveCheckPreSender

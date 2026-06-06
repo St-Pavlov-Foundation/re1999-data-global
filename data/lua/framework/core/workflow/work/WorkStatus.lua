@@ -1,10 +1,12 @@
-﻿module("framework.core.workflow.work.WorkStatus", package.seeall)
+﻿-- chunkname: @framework/core/workflow/work/WorkStatus.lua
 
-local var_0_0 = {}
+module("framework.core.workflow.work.WorkStatus", package.seeall)
 
-var_0_0.Init = 1
-var_0_0.Running = 2
-var_0_0.Stopped = 3
-var_0_0.Done = 4
+local WorkStatus = {}
 
-return var_0_0
+WorkStatus.Init = 1
+WorkStatus.Running = 2
+WorkStatus.Stopped = 3
+WorkStatus.Done = 4
+
+return WorkStatus

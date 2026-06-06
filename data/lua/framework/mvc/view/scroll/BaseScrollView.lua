@@ -1,101 +1,103 @@
-﻿module("framework.mvc.view.scroll.BaseScrollView", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/BaseScrollView.lua
 
-local var_0_0 = class("BaseScrollView", BaseView)
+module("framework.mvc.view.scroll.BaseScrollView", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._model = arg_1_1
-	arg_1_0._emptyParam = arg_1_2
-	arg_1_0._isShowing = false
-	arg_1_0._needRefresh = true
-	arg_1_0._emptyGO = nil
-	arg_1_0._emptyHandler = nil
+local BaseScrollView = class("BaseScrollView", BaseView)
+
+function BaseScrollView:ctor(scrollModel, emptyScrollParam)
+	self._model = scrollModel
+	self._emptyParam = emptyScrollParam
+	self._isShowing = false
+	self._needRefresh = true
+	self._emptyGO = nil
+	self._emptyHandler = nil
 end
 
-function var_0_0.onInitView(arg_2_0)
-	if arg_2_0._model then
-		arg_2_0._model:addScrollView(arg_2_0)
+function BaseScrollView:onInitView()
+	if self._model then
+		self._model:addScrollView(self)
 	end
 
-	if arg_2_0._emptyParam then
-		if arg_2_0._emptyParam.prefabType == ScrollEnum.ScrollPrefabFromView then
-			arg_2_0._emptyGO = gohelper.findChild(arg_2_0.viewGO, arg_2_0._emptyParam.prefabUrl)
+	if self._emptyParam then
+		if self._emptyParam.prefabType == ScrollEnum.ScrollPrefabFromView then
+			self._emptyGO = gohelper.findChild(self.viewGO, self._emptyParam.prefabUrl)
 		else
-			local var_2_0 = gohelper.findChild(arg_2_0.viewGO, arg_2_0._emptyParam.parentPath)
+			local parentGO = gohelper.findChild(self.viewGO, self._emptyParam.parentPath)
 
-			if not var_2_0 then
-				logError("empty go parent cannot find: " .. arg_2_0._emptyParam.parentPath)
+			if not parentGO then
+				logError("empty go parent cannot find: " .. self._emptyParam.parentPath)
 			end
 
-			arg_2_0._emptyGO = arg_2_0:getResInst(arg_2_0._emptyParam.prefabUrl, var_2_0)
+			self._emptyGO = self:getResInst(self._emptyParam.prefabUrl, parentGO)
 
-			if not arg_2_0._emptyGO then
-				logError("empty res cannot find: " .. arg_2_0._emptyParam.prefabUrl)
+			if not self._emptyGO then
+				logError("empty res cannot find: " .. self._emptyParam.prefabUrl)
 			end
 		end
 
-		arg_2_0._emptyHandler = arg_2_0._emptyParam.handleClass.New()
+		self._emptyHandler = self._emptyParam.handleClass.New()
 
-		if not arg_2_0._emptyHandler then
-			logError("empty handler cannot find: " .. (arg_2_0._emptyParam.handleClass and arg_2_0._emptyParam.handleClass.__cname or arg_2_0.viewContainer.viewName))
+		if not self._emptyHandler then
+			logError("empty handler cannot find: " .. (self._emptyParam.handleClass and self._emptyParam.handleClass.__cname or self.viewContainer.viewName))
 		end
 	end
 
-	if arg_2_0._param and arg_2_0._param.scrollGOPath and GameResMgr.IsFromEditorDir then
-		local var_2_1 = gohelper.findChild(arg_2_0.viewGO, arg_2_0._param.scrollGOPath)
-		local var_2_2 = gohelper.create2d(var_2_1, arg_2_0._param.prefabUrl)
+	if self._param and self._param.scrollGOPath and GameResMgr.IsFromEditorDir then
+		local scrollGO = gohelper.findChild(self.viewGO, self._param.scrollGOPath)
+		local pathGO = gohelper.create2d(scrollGO, self._param.prefabUrl)
 
-		gohelper.setSibling(var_2_2, 0)
+		gohelper.setSibling(pathGO, 0)
 	end
 end
 
-function var_0_0.onOpen(arg_3_0)
-	arg_3_0._isShowing = true
+function BaseScrollView:onOpen()
+	self._isShowing = true
 
-	if arg_3_0._needRefresh then
-		arg_3_0:refreshScroll()
+	if self._needRefresh then
+		self:refreshScroll()
 	end
 end
 
-function var_0_0.onCloseFinish(arg_4_0)
-	arg_4_0._isShowing = false
+function BaseScrollView:onCloseFinish()
+	self._isShowing = false
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._model then
-		arg_5_0._model:removeScrollView(arg_5_0)
+function BaseScrollView:onDestroyView()
+	if self._model then
+		self._model:removeScrollView(self)
 
-		arg_5_0._model = nil
+		self._model = nil
 	end
 
-	if arg_5_0._emptyGO then
-		gohelper.destroy(arg_5_0._emptyGO)
+	if self._emptyGO then
+		gohelper.destroy(self._emptyGO)
 
-		arg_5_0._emptyGO = nil
-		arg_5_0._emptyParam = nil
-		arg_5_0._emptyHandler = nil
+		self._emptyGO = nil
+		self._emptyParam = nil
+		self._emptyHandler = nil
 	end
 end
 
-function var_0_0.onModelUpdate(arg_6_0)
-	if arg_6_0._isShowing then
-		arg_6_0:refreshScroll()
+function BaseScrollView:onModelUpdate()
+	if self._isShowing then
+		self:refreshScroll()
 	else
-		arg_6_0._needRefresh = true
+		self._needRefresh = true
 	end
 end
 
-function var_0_0.refreshScroll(arg_7_0)
-	arg_7_0._needRefresh = false
+function BaseScrollView:refreshScroll()
+	self._needRefresh = false
 end
 
-function var_0_0.updateEmptyGO(arg_8_0, arg_8_1)
-	if arg_8_0._emptyGO then
-		gohelper.setActive(arg_8_0._emptyGO, arg_8_1 <= 0)
+function BaseScrollView:updateEmptyGO(cellCount)
+	if self._emptyGO then
+		gohelper.setActive(self._emptyGO, cellCount <= 0)
 
-		if arg_8_1 <= 0 then
-			arg_8_0._emptyHandler:refreshEmptyView(arg_8_0._emptyGO, arg_8_0._emptyParam.params)
+		if cellCount <= 0 then
+			self._emptyHandler:refreshEmptyView(self._emptyGO, self._emptyParam.params)
 		end
 	end
 end
 
-return var_0_0
+return BaseScrollView

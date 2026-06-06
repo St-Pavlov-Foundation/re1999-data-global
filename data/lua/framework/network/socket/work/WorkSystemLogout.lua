@@ -1,10 +1,13 @@
-﻿module("framework.network.socket.work.WorkSystemLogout", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkSystemLogout.lua
 
-local var_0_0 = class("WorkSystemLogout", BaseWork)
+module("framework.network.socket.work.WorkSystemLogout", package.seeall)
 
-function var_0_0.onStart(arg_1_0, arg_1_1)
+local WorkSystemLogout = class("WorkSystemLogout", BaseWork)
+
+function WorkSystemLogout:onStart(context)
 	LuaSocketMgr.instance:endConnect()
-	arg_1_0:onDone(true)
+	PartyGameController.instance:KcpEndConnect()
+	self:onDone(true)
 end
 
-return var_0_0
+return WorkSystemLogout

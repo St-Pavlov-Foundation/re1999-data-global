@@ -1,167 +1,169 @@
-﻿module("framework.mvc.model.TreeScrollModel", package.seeall)
+﻿-- chunkname: @framework/mvc/model/TreeScrollModel.lua
 
-local var_0_0 = class("TreeScrollModel", BaseModel)
+module("framework.mvc.model.TreeScrollModel", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._stopUpdate = false
-	arg_1_0._scrollViews = {}
-	arg_1_0._moList = {}
+local TreeScrollModel = class("TreeScrollModel", BaseModel)
+
+function TreeScrollModel:ctor()
+	self._stopUpdate = false
+	self._scrollViews = {}
+	self._moList = {}
 end
 
-function var_0_0.reInitInternal(arg_2_0)
-	var_0_0.super.reInitInternal(arg_2_0)
+function TreeScrollModel:reInitInternal()
+	TreeScrollModel.super.reInitInternal(self)
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._scrollViews) do
-		if iter_2_1.clear then
-			iter_2_1:clear()
+	for _, scrollView in ipairs(self._scrollViews) do
+		if scrollView.clear then
+			scrollView:clear()
 		end
 	end
 end
 
-function var_0_0.clear(arg_3_0)
-	arg_3_0._stopUpdate = false
-	arg_3_0._moList = {}
+function TreeScrollModel:clear()
+	self._stopUpdate = false
+	self._moList = {}
 
-	arg_3_0:onModelUpdate()
+	self:onModelUpdate()
 end
 
-function var_0_0.getInfoList(arg_4_0)
-	local var_4_0 = {}
-	local var_4_1 = arg_4_0:getRootCount()
+function TreeScrollModel:getInfoList()
+	local treeInfoList = {}
+	local rootCount = self:getRootCount()
 
-	for iter_4_0 = 1, var_4_1 do
-		local var_4_2 = {}
-		local var_4_3 = arg_4_0._moList[iter_4_0].treeRootParam
+	for i = 1, rootCount do
+		local rootInfo4CSharp = {}
+		local treeRootParam = self._moList[i].treeRootParam
 
-		var_4_2.rootType = var_4_3.rootType or 0
-		var_4_2.rootIndex = iter_4_0 - 1
-		var_4_2.rootLength = var_4_3.rootLength or 0
-		var_4_2.nodeType = var_4_3.nodeType or 0
-		var_4_2.nodeLength = var_4_3.nodeLength or 0
-		var_4_2.nodeStartSpace = var_4_3.nodeStartSpace or 0
-		var_4_2.nodeEndSpace = var_4_3.nodeEndSpace or 0
-		var_4_2.nodeCountEachLine = var_4_3.nodeCountEachLine or 0
-		var_4_2.isExpanded = var_4_3.isExpanded or false
-		var_4_2.nodeCount = arg_4_0:getNodeCount(iter_4_0)
+		rootInfo4CSharp.rootType = treeRootParam.rootType or 0
+		rootInfo4CSharp.rootIndex = i - 1
+		rootInfo4CSharp.rootLength = treeRootParam.rootLength or 0
+		rootInfo4CSharp.nodeType = treeRootParam.nodeType or 0
+		rootInfo4CSharp.nodeLength = treeRootParam.nodeLength or 0
+		rootInfo4CSharp.nodeStartSpace = treeRootParam.nodeStartSpace or 0
+		rootInfo4CSharp.nodeEndSpace = treeRootParam.nodeEndSpace or 0
+		rootInfo4CSharp.nodeCountEachLine = treeRootParam.nodeCountEachLine or 0
+		rootInfo4CSharp.isExpanded = treeRootParam.isExpanded or false
+		rootInfo4CSharp.nodeCount = self:getNodeCount(i)
 
-		if var_4_2.nodeCountEachLine <= 0 then
-			var_4_2.nodeCountEachLine = 1
+		if rootInfo4CSharp.nodeCountEachLine <= 0 then
+			rootInfo4CSharp.nodeCountEachLine = 1
 		end
 
-		var_4_0[iter_4_0] = var_4_2
+		treeInfoList[i] = rootInfo4CSharp
 	end
 
-	return var_4_0
+	return treeInfoList
 end
 
-function var_0_0.getRootCount(arg_5_0)
-	return #arg_5_0._moList
+function TreeScrollModel:getRootCount()
+	return #self._moList
 end
 
-function var_0_0.getNodeCount(arg_6_0, arg_6_1)
-	return #arg_6_0._moList[arg_6_1].children
+function TreeScrollModel:getNodeCount(rootIndex)
+	return #self._moList[rootIndex].children
 end
 
-function var_0_0.getByIndex(arg_7_0, arg_7_1, arg_7_2)
-	if arg_7_2 == 0 then
-		return arg_7_0._moList[arg_7_1].mo
+function TreeScrollModel:getByIndex(rootIndex, nodeIndex)
+	if nodeIndex == 0 then
+		return self._moList[rootIndex].mo
 	else
-		return arg_7_0._moList[arg_7_1].children[arg_7_2]
+		return self._moList[rootIndex].children[nodeIndex]
 	end
 end
 
-function var_0_0.addRoot(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = #arg_8_0._moList
+function TreeScrollModel:addRoot(mo, treeRootParam, rootIndex)
+	local count = #self._moList
 
-	if not arg_8_3 or arg_8_3 > var_8_0 + 1 then
-		arg_8_3 = var_8_0 + 1
-	elseif arg_8_3 < 1 then
-		arg_8_3 = 1
+	if not rootIndex or rootIndex > count + 1 then
+		rootIndex = count + 1
+	elseif rootIndex < 1 then
+		rootIndex = 1
 	end
 
-	table.insert(arg_8_0._moList, arg_8_3, {
-		mo = arg_8_1,
-		treeRootParam = arg_8_2,
+	table.insert(self._moList, rootIndex, {
+		mo = mo,
+		treeRootParam = treeRootParam,
 		children = {}
 	})
-	arg_8_0:onModelUpdate()
+	self:onModelUpdate()
 end
 
-function var_0_0.addNode(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	local var_9_0 = arg_9_0._moList[arg_9_2].children
-	local var_9_1 = #var_9_0
+function TreeScrollModel:addNode(mo, rootIndex, nodeIndex)
+	local subList = self._moList[rootIndex].children
+	local count = #subList
 
-	if not arg_9_3 or arg_9_3 > var_9_1 + 1 then
-		arg_9_3 = var_9_1 + 1
-	elseif arg_9_3 < 1 then
-		arg_9_3 = 1
+	if not nodeIndex or nodeIndex > count + 1 then
+		nodeIndex = count + 1
+	elseif nodeIndex < 1 then
+		nodeIndex = 1
 	end
 
-	table.insert(var_9_0, arg_9_3, arg_9_1)
+	table.insert(subList, nodeIndex, mo)
 
-	arg_9_0._moList[arg_9_2].children = var_9_0
+	self._moList[rootIndex].children = subList
 
-	arg_9_0:onModelUpdate()
+	self:onModelUpdate()
 end
 
-function var_0_0.removeRoot(arg_10_0, arg_10_1)
-	if not arg_10_1 or arg_10_1 < 1 then
+function TreeScrollModel:removeRoot(rootIndex)
+	if not rootIndex or rootIndex < 1 then
 		return nil
 	end
 
-	if arg_10_1 > #arg_10_0._moList then
+	if rootIndex > #self._moList then
 		return nil
 	end
 
-	local var_10_0 = table.remove(arg_10_0._moList, arg_10_1)
+	local root = table.remove(self._moList, rootIndex)
 
-	arg_10_0:onModelUpdate()
+	self:onModelUpdate()
 
-	return var_10_0.mo
+	return root.mo
 end
 
-function var_0_0.removeNode(arg_11_0, arg_11_1, arg_11_2)
-	if not arg_11_1 or arg_11_1 < 1 then
+function TreeScrollModel:removeNode(rootIndex, nodeIndex)
+	if not rootIndex or rootIndex < 1 then
 		return nil
 	end
 
-	if arg_11_1 > #arg_11_0._moList then
+	if rootIndex > #self._moList then
 		return nil
 	end
 
-	local var_11_0 = table.remove(arg_11_0._moList[arg_11_1].children, arg_11_2)
+	local mo = table.remove(self._moList[rootIndex].children, nodeIndex)
 
-	arg_11_0:onModelUpdate()
+	self:onModelUpdate()
 
-	return var_11_0
+	return mo
 end
 
-function var_0_0.stopUpdate(arg_12_0)
-	arg_12_0._stopUpdate = true
+function TreeScrollModel:stopUpdate()
+	self._stopUpdate = true
 end
 
-function var_0_0.resumeUpdate(arg_13_0)
-	arg_13_0._stopUpdate = false
+function TreeScrollModel:resumeUpdate()
+	self._stopUpdate = false
 
-	arg_13_0:onModelUpdate()
+	self:onModelUpdate()
 end
 
-function var_0_0.onModelUpdate(arg_14_0)
-	if arg_14_0._stopUpdate then
+function TreeScrollModel:onModelUpdate()
+	if self._stopUpdate then
 		return
 	end
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
-		iter_14_1:onModelUpdate()
+	for _, scrollView in ipairs(self._scrollViews) do
+		scrollView:onModelUpdate()
 	end
 end
 
-function var_0_0.addScrollView(arg_15_0, arg_15_1)
-	table.insert(arg_15_0._scrollViews, arg_15_1)
+function TreeScrollModel:addScrollView(scrollView)
+	table.insert(self._scrollViews, scrollView)
 end
 
-function var_0_0.removeScrollView(arg_16_0, arg_16_1)
-	tabletool.removeValue(arg_16_0._scrollViews, arg_16_1)
+function TreeScrollModel:removeScrollView(scrollView)
+	tabletool.removeValue(self._scrollViews, scrollView)
 end
 
-return var_0_0
+return TreeScrollModel

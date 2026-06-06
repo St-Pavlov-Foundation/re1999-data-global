@@ -1,21 +1,23 @@
-﻿module("framework.network.socket.pre.BasePreSender", package.seeall)
+﻿-- chunkname: @framework/network/socket/pre/BasePreSender.lua
 
-local var_0_0 = class("BasePreSender")
+module("framework.network.socket.pre.BasePreSender", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local BasePreSender = class("BasePreSender")
+
+function BasePreSender:ctor()
 	return
 end
 
-function var_0_0.preSendSysMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function BasePreSender:preSendSysMsg(cmd, dataTable, socketId)
 	return
 end
 
-function var_0_0.blockSendProto(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function BasePreSender:blockSendProto(cmd, proto, socketId)
 	return nil
 end
 
-function var_0_0.preSendProto(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function BasePreSender:preSendProto(cmd, proto, socketId)
 	return
 end
 
-return var_0_0
+return BasePreSender

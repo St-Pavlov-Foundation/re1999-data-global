@@ -1,42 +1,44 @@
-﻿module("framework.core.eventsystem.DispatchItem", package.seeall)
+﻿-- chunkname: @framework/core/eventsystem/DispatchItem.lua
 
-local var_0_0 = class("DispatchItem")
+module("framework.core.eventsystem.DispatchItem", package.seeall)
 
-function var_0_0.createPool()
-	var_0_0._pool = LuaObjPool.New(32, var_0_0._poolNew, var_0_0._poolRelease, var_0_0._poolReset)
+local DispatchItem = class("DispatchItem")
+
+function DispatchItem.createPool()
+	DispatchItem._pool = LuaObjPool.New(32, DispatchItem._poolNew, DispatchItem._poolRelease, DispatchItem._poolReset)
 end
 
-function var_0_0.getPool()
-	if var_0_0._pool == nil then
-		var_0_0.createPool()
+function DispatchItem.getPool()
+	if DispatchItem._pool == nil then
+		DispatchItem.createPool()
 	end
 
-	return var_0_0._pool
+	return DispatchItem._pool
 end
 
-function var_0_0._poolNew()
-	return var_0_0.New()
+function DispatchItem._poolNew()
+	return DispatchItem.New()
 end
 
-function var_0_0._poolRelease(arg_4_0)
-	arg_4_0:release()
+function DispatchItem._poolRelease(luaObj)
+	luaObj:release()
 end
 
-function var_0_0._poolReset(arg_5_0)
-	arg_5_0:reset()
+function DispatchItem._poolReset(luaObj)
+	luaObj:reset()
 end
 
-function var_0_0.ctor(arg_6_0)
-	arg_6_0:reset()
+function DispatchItem:ctor()
+	self:reset()
 end
 
-function var_0_0.release(arg_7_0)
-	arg_7_0:reset()
+function DispatchItem:release()
+	self:reset()
 end
 
-function var_0_0.reset(arg_8_0)
-	arg_8_0.eventName = nil
-	arg_8_0.eventArgs = nil
+function DispatchItem:reset()
+	self.eventName = nil
+	self.eventArgs = nil
 end
 
-return var_0_0
+return DispatchItem

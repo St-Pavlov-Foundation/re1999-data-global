@@ -1,100 +1,110 @@
-﻿module("framework.mvc.BaseRpc", package.seeall)
+﻿-- chunkname: @framework/mvc/BaseRpc.lua
 
-local var_0_0 = class("BaseRpc")
+module("framework.mvc.BaseRpc", package.seeall)
 
-function var_0_0.onInit(arg_1_0)
+local BaseRpc = class("BaseRpc")
+
+function BaseRpc:onInit()
 	return
 end
 
-function var_0_0.reInit(arg_2_0)
+function BaseRpc:reInit()
 	return
 end
 
-function var_0_0.onInitInternal(arg_3_0)
-	arg_3_0._callbackId = 0
-	arg_3_0._cmdCallbackTab = {}
+function BaseRpc:onInitInternal()
+	self._callbackId = 0
+	self._cmdCallbackTab = {}
 
-	arg_3_0:onInit()
+	self:onInit()
 end
 
-function var_0_0.reInitInternal(arg_4_0)
-	arg_4_0._callbackId = 0
-	arg_4_0._cmdCallbackTab = {}
+function BaseRpc:reInitInternal()
+	self._callbackId = 0
+	self._cmdCallbackTab = {}
 
-	arg_4_0:reInit()
+	self:reInit()
 end
 
-function var_0_0.sendSysMsg(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
-	if LuaSocketMgr.instance:isConnected(arg_5_5) then
-		LuaSocketMgr.instance:sendSysMsg(arg_5_1, arg_5_2, arg_5_5)
+function BaseRpc:sendSysMsg(cmd, data, callback, callbackObj, socketId)
+	if LuaSocketMgr.instance:isConnected(socketId) then
+		LuaSocketMgr.instance:sendSysMsg(cmd, data, socketId)
 
-		return arg_5_0:addCallback(arg_5_1, arg_5_3, arg_5_4)
+		return self:addCallback(cmd, callback, callbackObj)
 	else
-		logWarn("send system cmd_" .. arg_5_1 .. " fail, reason: lost connect")
+		logWarn("send system cmd_" .. cmd .. " fail, reason: lost connect")
 	end
 end
 
-function var_0_0.sendMsg(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
-	local var_6_0 = LuaSocketMgr.instance:getCmdByPbStructName(arg_6_1.__cname)
+function BaseRpc:sendMsg(protobuf, callback, callbackObj, socketId)
+	local cmd = LuaSocketMgr.instance:getCmdByPbStructName(protobuf.__cname)
 
-	if LuaSocketMgr.instance:isConnected(arg_6_4) and ConnectAliveMgr.instance:isConnected() then
-		LuaSocketMgr.instance:sendMsg(arg_6_1, arg_6_4)
+	if LuaSocketMgr.instance:isConnected(socketId) and ConnectAliveMgr.instance:isConnected() then
+		LuaSocketMgr.instance:sendMsg(protobuf, socketId)
 
-		return arg_6_0:addCallback(var_6_0, arg_6_2, arg_6_3)
+		return self:addCallback(cmd, callback, callbackObj)
 	else
-		logWarn("send protobuf cmd_" .. var_6_0 .. " fail, reason: lost connect")
-		ConnectAliveMgr.instance:addUnresponsiveMsg(var_6_0, arg_6_1, arg_6_4)
+		logWarn("send protobuf cmd_" .. cmd .. " fail, reason: lost connect")
+		ConnectAliveMgr.instance:addUnresponsiveMsg(cmd, protobuf, socketId)
 
-		return arg_6_0:addCallback(var_6_0, arg_6_2, arg_6_3)
+		return self:addCallback(cmd, callback, callbackObj)
 	end
 end
 
-function var_0_0.addCallback(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
-	if arg_7_2 then
-		arg_7_0._callbackId = arg_7_0._callbackId + 1
+local kcpSocketUtil = PartyGame.Runtime.Utils.KcpSocketUtil
 
-		local var_7_0 = arg_7_0._cmdCallbackTab[arg_7_1]
+function BaseRpc:sendKcpMsg(protobuf)
+	kcpSocketUtil.SendMessage(protobuf)
+end
 
-		if not var_7_0 then
-			var_7_0 = {}
-			arg_7_0._cmdCallbackTab[arg_7_1] = var_7_0
+function BaseRpc:addCallback(cmd, callback, callbackObj)
+	if callback then
+		self._callbackId = self._callbackId + 1
+
+		local cbList = self._cmdCallbackTab[cmd]
+
+		if not cbList then
+			cbList = {}
+			self._cmdCallbackTab[cmd] = cbList
 		end
 
-		local var_7_1 = LuaGeneralCallback.getPool():getObject()
+		local luaCb = LuaGeneralCallback.getPool():getObject()
 
-		var_7_1.callback = arg_7_2
+		luaCb.callback = callback
 
-		var_7_1:setCbObj(arg_7_3)
+		luaCb:setCbObj(callbackObj)
 
-		var_7_1.id = arg_7_0._callbackId
+		luaCb.id = self._callbackId
 
-		table.insert(var_7_0, var_7_1)
+		table.insert(cbList, luaCb)
 
-		return var_7_1.id
+		return luaCb.id
 	end
 end
 
-function var_0_0.removeCallbackByCmd(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0._cmdCallbackTab[arg_8_1]
+function BaseRpc:removeCallbackByCmd(cmd)
+	local list = self._cmdCallbackTab[cmd]
 
-	if not var_8_0 then
+	if not list then
 		return
 	end
 
-	arg_8_0._cmdCallbackTab[arg_8_1] = nil
+	self._cmdCallbackTab[cmd] = nil
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
-		LuaGeneralCallback.getPool():putObject(iter_8_1)
+	for _, luaCb in ipairs(list) do
+		LuaGeneralCallback.getPool():putObject(luaCb)
 	end
 end
 
-function var_0_0.removeCallbackById(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._cmdCallbackTab) do
-		if iter_9_1 then
-			for iter_9_2 = #iter_9_1, 1, -1 do
-				if arg_9_1 == iter_9_1[iter_9_2].id then
-					LuaGeneralCallback.getPool():putObject(iter_9_1[iter_9_2])
-					table.remove(iter_9_1, iter_9_2)
+function BaseRpc:removeCallbackById(callbackId)
+	for _, cbList in pairs(self._cmdCallbackTab) do
+		if cbList then
+			local length = #cbList
+
+			for i = length, 1, -1 do
+				if callbackId == cbList[i].id then
+					LuaGeneralCallback.getPool():putObject(cbList[i])
+					table.remove(cbList, i)
 
 					return
 				end
@@ -103,31 +113,31 @@ function var_0_0.removeCallbackById(arg_9_0, arg_9_1)
 	end
 end
 
-function var_0_0.onReceiveMsg(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6)
-	local var_10_0 = arg_10_0["onReceive" .. arg_10_3]
+function BaseRpc:onReceiveMsg(resultCode, cmd, recvProtoName, msg, downTag, socketId)
+	local handleFunc = self["onReceive" .. recvProtoName]
 
-	if var_10_0 then
-		callWithCatch(var_10_0, arg_10_0, arg_10_1, arg_10_4)
+	if handleFunc then
+		callWithCatch(handleFunc, self, resultCode, msg)
 	else
-		logError(string.format("cmd_%d onReceive%s = nil, %s", arg_10_2, arg_10_3, arg_10_0.__cname))
+		logError(string.format("cmd_%d onReceive%s = nil, %s", cmd, recvProtoName, self.__cname))
 	end
 
-	if not arg_10_0._cmdCallbackTab then
-		logError(string.format("cmd callbackDict = nil, %s => module_mvc.lua ", arg_10_0.__cname))
+	if not self._cmdCallbackTab then
+		logError(string.format("cmd callbackDict = nil, %s => module_mvc.lua ", self.__cname))
 
 		return
 	end
 
-	local var_10_1 = arg_10_0._cmdCallbackTab[arg_10_2]
+	local cbList = self._cmdCallbackTab[cmd]
 
-	if var_10_1 then
-		arg_10_0._cmdCallbackTab[arg_10_2] = nil
+	if cbList then
+		self._cmdCallbackTab[cmd] = nil
 
-		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-			callWithCatch(iter_10_1.invoke, iter_10_1, arg_10_2, arg_10_1, arg_10_4)
-			LuaGeneralCallback.getPool():putObject(iter_10_1)
+		for _, luaCb in ipairs(cbList) do
+			callWithCatch(luaCb.invoke, luaCb, cmd, resultCode, msg)
+			LuaGeneralCallback.getPool():putObject(luaCb)
 		end
 	end
 end
 
-return var_0_0
+return BaseRpc

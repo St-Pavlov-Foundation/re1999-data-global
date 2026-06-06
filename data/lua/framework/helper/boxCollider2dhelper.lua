@@ -1,22 +1,24 @@
-﻿module("framework.helper.boxCollider2dhelper", package.seeall)
+﻿-- chunkname: @framework/helper/boxCollider2dhelper.lua
 
-local var_0_0 = {}
-local var_0_1 = SLFramework.UGUI.BoxCollider2DHelper
+module("framework.helper.boxCollider2dhelper", package.seeall)
 
-function var_0_0.getOffset(arg_1_0)
-	return var_0_1.GetOffset(arg_1_0, 0, 0)
+local boxCollider2dhelper = {}
+local CSBoxC2dHelper = SLFramework.UGUI.BoxCollider2DHelper
+
+function boxCollider2dhelper.getOffset(boxCollider2d)
+	return CSBoxC2dHelper.GetOffset(boxCollider2d, 0, 0)
 end
 
-function var_0_0.setOffset(arg_2_0, arg_2_1, arg_2_2)
-	return var_0_1.SetOffset(arg_2_0, arg_2_1, arg_2_2)
+function boxCollider2dhelper.setOffset(boxCollider2d, x, y)
+	return CSBoxC2dHelper.SetOffset(boxCollider2d, x, y)
 end
 
-function var_0_0.getSize(arg_3_0)
-	return var_0_1.GetSize(arg_3_0, 0, 0)
+function boxCollider2dhelper.getSize(boxCollider2d)
+	return CSBoxC2dHelper.GetSize(boxCollider2d, 0, 0)
 end
 
-function var_0_0.setSize(arg_4_0, arg_4_1, arg_4_2)
-	var_0_1.SetSize(arg_4_0, arg_4_1, arg_4_2)
+function boxCollider2dhelper.setSize(boxCollider2d, x, y)
+	CSBoxC2dHelper.SetSize(boxCollider2d, x, y)
 end
 
-return var_0_0
+return boxCollider2dhelper

@@ -1,9 +1,11 @@
-﻿module("framework.mvc.view.scroll.BaseEmptyScrollHandler", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/BaseEmptyScrollHandler.lua
 
-local var_0_0 = class("BaseEmptyScrollHandler")
+module("framework.mvc.view.scroll.BaseEmptyScrollHandler", package.seeall)
 
-function var_0_0.refreshEmptyView(arg_1_0, arg_1_1, arg_1_2)
+local BaseEmptyScrollHandler = class("BaseEmptyScrollHandler")
+
+function BaseEmptyScrollHandler:refreshEmptyView(emptyGO, params)
 	return
 end
 
-return var_0_0
+return BaseEmptyScrollHandler

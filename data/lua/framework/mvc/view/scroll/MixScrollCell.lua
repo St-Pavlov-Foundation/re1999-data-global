@@ -1,40 +1,42 @@
-﻿module("framework.mvc.view.scroll.MixScrollCell", package.seeall)
+﻿-- chunkname: @framework/mvc/view/scroll/MixScrollCell.lua
 
-local var_0_0 = class("MixScrollCell", LuaCompBase)
+module("framework.mvc.view.scroll.MixScrollCell", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._index = nil
-	arg_1_0._go = nil
-	arg_1_0._view = nil
+local MixScrollCell = class("MixScrollCell", LuaCompBase)
+
+function MixScrollCell:ctor()
+	self._index = nil
+	self._go = nil
+	self._view = nil
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
+function MixScrollCell:init(go)
 	return
 end
 
-function var_0_0.initInternal(arg_3_0, arg_3_1, arg_3_2)
-	arg_3_0._go = arg_3_1
-	arg_3_0._view = arg_3_2
+function MixScrollCell:initInternal(go, view)
+	self._go = go
+	self._view = view
 end
 
-function var_0_0.addEventListeners(arg_4_0)
+function MixScrollCell:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_5_0)
+function MixScrollCell:removeEventListeners()
 	return
 end
 
-function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function MixScrollCell:onUpdateMO(mo, mixType, param)
 	return
 end
 
-function var_0_0.onSelect(arg_7_0, arg_7_1)
+function MixScrollCell:onSelect(isSelect)
 	return
 end
 
-function var_0_0.onDestroy(arg_8_0)
+function MixScrollCell:onDestroy()
 	return
 end
 
-return var_0_0
+return MixScrollCell

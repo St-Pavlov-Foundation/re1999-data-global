@@ -1,17 +1,19 @@
-﻿module("framework.network.socket.pre.BasePreReceiver", package.seeall)
+﻿-- chunkname: @framework/network/socket/pre/BasePreReceiver.lua
 
-local var_0_0 = class("BasePreReceiver")
+module("framework.network.socket.pre.BasePreReceiver", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local BasePreReceiver = class("BasePreReceiver")
+
+function BasePreReceiver:ctor()
 	return
 end
 
-function var_0_0.preReceiveMsg(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
+function BasePreReceiver:preReceiveMsg(resultCode, cmd, responseName, msg, downTag, socketId)
 	return
 end
 
-function var_0_0.preReceiveSysMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
+function BasePreReceiver:preReceiveSysMsg(resultCode, cmd, responseName, msg, downTag, socketId)
 	return
 end
 
-return var_0_0
+return BasePreReceiver

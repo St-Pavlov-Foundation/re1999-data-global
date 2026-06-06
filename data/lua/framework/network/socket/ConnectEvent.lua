@@ -1,12 +1,14 @@
-﻿module("framework.network.socket.ConnectEvent", package.seeall)
+﻿-- chunkname: @framework/network/socket/ConnectEvent.lua
 
-local var_0_0 = {}
+module("framework.network.socket.ConnectEvent", package.seeall)
 
-var_0_0.OnLostConnect = 1
-var_0_0.OnReconnectSucc = 2
-var_0_0.OnReconnectFail = 3
-var_0_0.OnServerKickedOut = 4
-var_0_0.OnLostMessage = 5
-var_0_0.OnMsgTimeout = 6
+local ConnectEvent = {}
 
-return var_0_0
+ConnectEvent.OnLostConnect = 1
+ConnectEvent.OnReconnectSucc = 2
+ConnectEvent.OnReconnectFail = 3
+ConnectEvent.OnServerKickedOut = 4
+ConnectEvent.OnLostMessage = 5
+ConnectEvent.OnMsgTimeout = 6
+
+return ConnectEvent

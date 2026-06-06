@@ -1,37 +1,39 @@
-﻿module("framework.core.workflow.flow.BaseFlow", package.seeall)
+﻿-- chunkname: @framework/core/workflow/flow/BaseFlow.lua
 
-local var_0_0 = class("BaseFlow", BaseWork)
+module("framework.core.workflow.flow.BaseFlow", package.seeall)
 
-function var_0_0.start(arg_1_0, arg_1_1)
-	arg_1_0:onStartInternal(arg_1_1)
+local BaseFlow = class("BaseFlow", BaseWork)
+
+function BaseFlow:start(context)
+	self:onStartInternal(context)
 end
 
-function var_0_0.stop(arg_2_0)
-	arg_2_0:onStopInternal()
+function BaseFlow:stop()
+	self:onStopInternal()
 end
 
-function var_0_0.resume(arg_3_0)
-	arg_3_0:onResumeInternal()
+function BaseFlow:resume()
+	self:onResumeInternal()
 end
 
-function var_0_0.destroy(arg_4_0)
-	arg_4_0:onDestroyInternal()
+function BaseFlow:destroy()
+	self:onDestroyInternal()
 end
 
-function var_0_0.reset(arg_5_0)
-	arg_5_0:onResetInternal()
+function BaseFlow:reset()
+	self:onResetInternal()
 end
 
-function var_0_0.addWork(arg_6_0, arg_6_1)
-	arg_6_1:initInternal()
+function BaseFlow:addWork(work)
+	work:initInternal()
 
-	arg_6_1.flowName = arg_6_0.flowName
+	work.flowName = self.flowName
 
-	arg_6_1:setParentInternal(arg_6_0)
+	work:setParentInternal(self)
 end
 
-function var_0_0.onWorkDone(arg_7_0, arg_7_1)
-	arg_7_1:onResetInternal()
+function BaseFlow:onWorkDone(work)
+	work:onResetInternal()
 end
 
-return var_0_0
+return BaseFlow

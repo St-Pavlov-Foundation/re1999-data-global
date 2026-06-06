@@ -1,29 +1,31 @@
-﻿module("framework.luamono.LuaCompBase", package.seeall)
+﻿-- chunkname: @framework/luamono/LuaCompBase.lua
 
-local var_0_0 = class("LuaCompBase", UserDataDispose)
+module("framework.luamono.LuaCompBase", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
+local LuaCompBase = class("LuaCompBase", UserDataDispose)
+
+function LuaCompBase:ctor()
 	return
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
+function LuaCompBase:init(go)
 	return
 end
 
-function var_0_0.addEventListeners(arg_3_0)
+function LuaCompBase:addEventListeners()
 	return
 end
 
-function var_0_0.removeEventListeners(arg_4_0)
+function LuaCompBase:removeEventListeners()
 	return
 end
 
-function var_0_0.onStart(arg_5_0)
+function LuaCompBase:onStart()
 	return
 end
 
-function var_0_0.onDestroy(arg_6_0)
+function LuaCompBase:onDestroy()
 	return
 end
 
-return var_0_0
+return LuaCompBase

@@ -1,82 +1,84 @@
-﻿module("framework.mvc.view.ViewDestroyMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ViewDestroyMgr.lua
 
-local var_0_0 = class("ViewDestroyMgr")
+module("framework.mvc.view.ViewDestroyMgr", package.seeall)
 
-var_0_0.TickInterval = 0.03
+local ViewDestroyMgr = class("ViewDestroyMgr")
 
-function var_0_0.init(arg_1_0)
-	arg_1_0._isRunning = false
-	arg_1_0._dict = {}
-	arg_1_0._priorityQueue = PriorityQueue.New(function(arg_2_0, arg_2_1)
-		return arg_2_0.destroyTime < arg_2_1.destroyTime
+ViewDestroyMgr.TickInterval = 0.03
+
+function ViewDestroyMgr:init()
+	self._isRunning = false
+	self._dict = {}
+	self._priorityQueue = PriorityQueue.New(function(viewObj1, viewObj2)
+		return viewObj1.destroyTime < viewObj2.destroyTime
 	end)
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_1_0._onCloseViewFinish, arg_1_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
-function var_0_0.destroyImmediately(arg_3_0)
-	while arg_3_0._priorityQueue:getSize() > 0 do
-		local var_3_0 = arg_3_0._priorityQueue:getFirst()
+function ViewDestroyMgr:destroyImmediately()
+	while self._priorityQueue:getSize() > 0 do
+		local viewObj = self._priorityQueue:getFirst()
 
-		arg_3_0._priorityQueue:getFirstAndRemove()
-		ViewMgr.instance:destroyView(var_3_0.viewName)
+		self._priorityQueue:getFirstAndRemove()
+		ViewMgr.instance:destroyView(viewObj.viewName)
 	end
 
-	arg_3_0._isRunning = false
+	self._isRunning = false
 
-	TaskDispatcher.cancelTask(arg_3_0._tick, arg_3_0)
+	TaskDispatcher.cancelTask(self._tick, self)
 end
 
-function var_0_0._onOpenView(arg_4_0, arg_4_1)
-	if arg_4_0._dict[arg_4_1] then
-		arg_4_0._dict[arg_4_1] = nil
+function ViewDestroyMgr:_onOpenView(viewName)
+	if self._dict[viewName] then
+		self._dict[viewName] = nil
 
-		arg_4_0._priorityQueue:markRemove(function(arg_5_0)
-			return arg_5_0.viewName == arg_4_1
+		self._priorityQueue:markRemove(function(viewObj)
+			return viewObj.viewName == viewName
 		end)
 	end
 end
 
-function var_0_0._onCloseViewFinish(arg_6_0, arg_6_1)
-	local var_6_0 = ViewMgr.instance:getSetting(arg_6_1)
-	local var_6_1 = Time.realtimeSinceStartup + (var_6_0.destroy or var_0_0.TickInterval)
+function ViewDestroyMgr:_onCloseViewFinish(viewName)
+	local viewSetting = ViewMgr.instance:getSetting(viewName)
+	local destroyTime = Time.realtimeSinceStartup + (viewSetting.destroy or ViewDestroyMgr.TickInterval)
 
-	arg_6_0._dict[arg_6_1] = true
+	self._dict[viewName] = true
 
-	arg_6_0._priorityQueue:add({
-		viewName = arg_6_1,
-		destroyTime = var_6_1
+	self._priorityQueue:add({
+		viewName = viewName,
+		destroyTime = destroyTime
 	})
 
-	if not arg_6_0._isRunning then
-		arg_6_0._isRunning = true
+	if not self._isRunning then
+		self._isRunning = true
 
-		TaskDispatcher.runRepeat(arg_6_0._tick, arg_6_0, var_0_0.TickInterval)
+		TaskDispatcher.runRepeat(self._tick, self, ViewDestroyMgr.TickInterval)
 	end
 end
 
-function var_0_0._tick(arg_7_0)
-	local var_7_0 = Time.realtimeSinceStartup
+function ViewDestroyMgr:_tick()
+	local nowTime = Time.realtimeSinceStartup
 
-	while arg_7_0._priorityQueue:getSize() > 0 do
-		local var_7_1 = arg_7_0._priorityQueue:getFirst()
+	while self._priorityQueue:getSize() > 0 do
+		local viewObj = self._priorityQueue:getFirst()
 
-		if var_7_0 > var_7_1.destroyTime then
-			arg_7_0._priorityQueue:getFirstAndRemove()
-			ViewMgr.instance:destroyView(var_7_1.viewName)
+		if nowTime > viewObj.destroyTime then
+			self._priorityQueue:getFirstAndRemove()
+			ViewMgr.instance:destroyView(viewObj.viewName)
 		else
 			break
 		end
 	end
 
-	if arg_7_0._priorityQueue:getSize() == 0 then
-		arg_7_0._isRunning = false
+	if self._priorityQueue:getSize() == 0 then
+		self._isRunning = false
 
-		TaskDispatcher.cancelTask(arg_7_0._tick, arg_7_0)
+		TaskDispatcher.cancelTask(self._tick, self)
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+ViewDestroyMgr.instance = ViewDestroyMgr.New()
 
-return var_0_0
+return ViewDestroyMgr

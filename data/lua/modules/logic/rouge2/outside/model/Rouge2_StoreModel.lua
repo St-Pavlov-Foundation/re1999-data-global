@@ -182,10 +182,6 @@ function Rouge2_StoreModel:isCurStoreOpen(showToast)
 
 	local openTime = TimeUtil.stringToTimestamp(self._curStageConfig.startTime)
 	local endTime = TimeUtil.stringToTimestamp(self._curStageConfig.endTime)
-
-	openTime = ServerTime.timeInLocal(openTime)
-	endTime = ServerTime.timeInLocal(endTime)
-
 	local nowTime = ServerTime.now()
 	local isOpen = openTime <= nowTime and nowTime < endTime
 

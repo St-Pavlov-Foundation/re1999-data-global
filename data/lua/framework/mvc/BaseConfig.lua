@@ -1,17 +1,19 @@
-﻿module("framework.mvc.BaseConfig", package.seeall)
+﻿-- chunkname: @framework/mvc/BaseConfig.lua
 
-local var_0_0 = class("BaseConfig")
+module("framework.mvc.BaseConfig", package.seeall)
 
-function var_0_0.reqConfigNames(arg_1_0)
+local BaseConfig = class("BaseConfig")
+
+function BaseConfig:reqConfigNames()
 	return nil
 end
 
-function var_0_0.onInit(arg_2_0)
+function BaseConfig:onInit()
 	return
 end
 
-function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+function BaseConfig:onConfigLoaded(configName, configTable)
 	return
 end
 
-return var_0_0
+return BaseConfig

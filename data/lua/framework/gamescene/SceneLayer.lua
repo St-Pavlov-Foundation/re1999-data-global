@@ -1,9 +1,11 @@
-﻿module("framework.gamescene.SceneLayer", package.seeall)
+﻿-- chunkname: @framework/gamescene/SceneLayer.lua
 
-local var_0_0 = {}
+module("framework.gamescene.SceneLayer", package.seeall)
 
-var_0_0.Default = "Default"
-var_0_0.Water = "Water"
-var_0_0.UI = "UI"
+local SceneLayer = {}
 
-return var_0_0
+SceneLayer.Default = "Default"
+SceneLayer.Water = "Water"
+SceneLayer.UI = "UI"
+
+return SceneLayer

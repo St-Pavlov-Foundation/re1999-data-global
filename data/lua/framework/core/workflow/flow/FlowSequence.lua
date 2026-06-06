@@ -1,113 +1,115 @@
-﻿module("framework.core.workflow.flow.FlowSequence", package.seeall)
+﻿-- chunkname: @framework/core/workflow/flow/FlowSequence.lua
 
-local var_0_0 = class("FlowSequence", BaseFlow)
+module("framework.core.workflow.flow.FlowSequence", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._workList = {}
-	arg_1_0._curIndex = 0
+local FlowSequence = class("FlowSequence", BaseFlow)
+
+function FlowSequence:ctor()
+	self._workList = {}
+	self._curIndex = 0
 end
 
-function var_0_0.addWork(arg_2_0, arg_2_1)
-	var_0_0.super.addWork(arg_2_0, arg_2_1)
-	table.insert(arg_2_0._workList, arg_2_1)
+function FlowSequence:addWork(work)
+	FlowSequence.super.addWork(self, work)
+	table.insert(self._workList, work)
 end
 
-function var_0_0.onWorkDone(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0._workList[arg_3_0._curIndex]
+function FlowSequence:onWorkDone(work)
+	local currWork = self._workList[self._curIndex]
 
-	if var_3_0 and arg_3_1 ~= var_3_0 then
+	if currWork and work ~= currWork then
 		return
 	end
 
-	if arg_3_1.isSuccess then
-		arg_3_1:onResetInternal()
+	if work.isSuccess then
+		work:onResetInternal()
 
-		return arg_3_0:_runNext()
+		return self:_runNext()
 	else
-		arg_3_1:onResetInternal()
+		work:onResetInternal()
 
-		return arg_3_0:onDone(false)
+		return self:onDone(false)
 	end
 end
 
-function var_0_0.getWorkList(arg_4_0)
-	return arg_4_0._workList
+function FlowSequence:getWorkList()
+	return self._workList
 end
 
-function var_0_0.onStartInternal(arg_5_0, arg_5_1)
-	var_0_0.super.onStartInternal(arg_5_0, arg_5_1)
+function FlowSequence:onStartInternal(context)
+	FlowSequence.super.onStartInternal(self, context)
 
-	arg_5_0._curIndex = 0
+	self._curIndex = 0
 
-	return arg_5_0:_runNext()
+	return self:_runNext()
 end
 
-function var_0_0.onStopInternal(arg_6_0)
-	var_0_0.super.onStopInternal(arg_6_0)
+function FlowSequence:onStopInternal()
+	FlowSequence.super.onStopInternal(self)
 
-	local var_6_0 = arg_6_0._workList[arg_6_0._curIndex]
+	local currWork = self._workList[self._curIndex]
 
-	if var_6_0 and var_6_0.status == WorkStatus.Running then
-		var_6_0:onStopInternal()
+	if currWork and currWork.status == WorkStatus.Running then
+		currWork:onStopInternal()
 	end
 end
 
-function var_0_0.onResumeInternal(arg_7_0)
-	var_0_0.super.onResumeInternal(arg_7_0)
+function FlowSequence:onResumeInternal()
+	FlowSequence.super.onResumeInternal(self)
 
-	local var_7_0 = arg_7_0._workList[arg_7_0._curIndex]
+	local currWork = self._workList[self._curIndex]
 
-	if var_7_0 and var_7_0.status == WorkStatus.Stopped then
-		var_7_0:onResumeInternal()
+	if currWork and currWork.status == WorkStatus.Stopped then
+		currWork:onResumeInternal()
 	end
 end
 
-function var_0_0.onResetInternal(arg_8_0)
-	var_0_0.super.onResetInternal(arg_8_0)
+function FlowSequence:onResetInternal()
+	FlowSequence.super.onResetInternal(self)
 
-	if arg_8_0.status == WorkStatus.Running or arg_8_0.status == WorkStatus.Stopped then
-		local var_8_0 = arg_8_0._workList[arg_8_0._curIndex]
+	if self.status == WorkStatus.Running or self.status == WorkStatus.Stopped then
+		local currWork = self._workList[self._curIndex]
 
-		if var_8_0 and (var_8_0.status == WorkStatus.Running or var_8_0.status == WorkStatus.Stopped) then
-			var_8_0:onResetInternal()
+		if currWork and (currWork.status == WorkStatus.Running or currWork.status == WorkStatus.Stopped) then
+			currWork:onResetInternal()
 		end
 	end
 
-	arg_8_0._curIndex = 0
+	self._curIndex = 0
 end
 
-function var_0_0.onDestroyInternal(arg_9_0)
-	var_0_0.super.onDestroyInternal(arg_9_0)
+function FlowSequence:onDestroyInternal()
+	FlowSequence.super.onDestroyInternal(self)
 
-	if not arg_9_0._workList then
+	if not self._workList then
 		return
 	end
 
-	if arg_9_0.status == WorkStatus.Running or arg_9_0.status == WorkStatus.Stopped then
-		local var_9_0 = arg_9_0._workList[arg_9_0._curIndex]
+	if self.status == WorkStatus.Running or self.status == WorkStatus.Stopped then
+		local currWork = self._workList[self._curIndex]
 
-		if var_9_0 then
-			var_9_0:onStopInternal()
-			var_9_0:onResetInternal()
+		if currWork then
+			currWork:onStopInternal()
+			currWork:onResetInternal()
 		end
 	end
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0._workList) do
-		iter_9_1:onDestroyInternal()
+	for _, work in ipairs(self._workList) do
+		work:onDestroyInternal()
 	end
 
-	arg_9_0._workList = nil
-	arg_9_0._curIndex = nil
+	self._workList = nil
+	self._curIndex = nil
 end
 
-function var_0_0._runNext(arg_10_0)
-	arg_10_0._curIndex = arg_10_0._curIndex + 1
+function FlowSequence:_runNext()
+	self._curIndex = self._curIndex + 1
 
-	if arg_10_0._curIndex <= #arg_10_0._workList then
-		return arg_10_0._workList[arg_10_0._curIndex]:onStartInternal(arg_10_0.context)
+	if self._curIndex <= #self._workList then
+		return self._workList[self._curIndex]:onStartInternal(self.context)
 	else
-		return arg_10_0:onDone(true)
+		return self:onDone(true)
 	end
 end
 
-return var_0_0
+return FlowSequence

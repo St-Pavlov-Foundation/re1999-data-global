@@ -1,60 +1,64 @@
-﻿module("framework.mvc.view.ViewBackStackMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ViewBackStackMgr.lua
 
-local var_0_0 = class("ViewBackStackMgr")
+module("framework.mvc.view.ViewBackStackMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._backStack = {}
+local ViewBackStackMgr = class("ViewBackStackMgr")
+
+function ViewBackStackMgr:ctor()
+	self._backStack = {}
 end
 
-function var_0_0.init(arg_2_0)
+function ViewBackStackMgr:init()
 	return
 end
 
-function var_0_0._onFullOpen(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0:isFull(arg_3_1) then
-		arg_3_0:_backStackPush(arg_3_1)
+function ViewBackStackMgr:_onFullOpen(viewName, viewParam)
+	if self:isFull(viewName) then
+		self:_backStackPush(viewName)
 	end
 end
 
-function var_0_0._onFullClose(arg_4_0, arg_4_1)
-	if arg_4_0:isFull(arg_4_1) then
-		if arg_4_0:_backStackTop() == arg_4_1 then
-			arg_4_0:_backStackPop()
+function ViewBackStackMgr:_onFullClose(viewName)
+	if self:isFull(viewName) then
+		local top = self:_backStackTop()
+
+		if top == viewName then
+			self:_backStackPop()
 		else
-			arg_4_0:removeInBackStack()
+			self:removeInBackStack()
 		end
 	end
 end
 
-function var_0_0._backStackPush(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0:removeInBackStack(arg_5_1)
-	table.insert(arg_5_0._backStack, {
-		viewName = arg_5_1,
-		viewParam = arg_5_2
+function ViewBackStackMgr:_backStackPush(viewName, viewParam)
+	self:removeInBackStack(viewName)
+	table.insert(self._backStack, {
+		viewName = viewName,
+		viewParam = viewParam
 	})
 end
 
-function var_0_0._backStackPop(arg_6_0, arg_6_1)
-	local var_6_0 = #arg_6_0._backStack
-	local var_6_1 = arg_6_0._backStack[var_6_0]
+function ViewBackStackMgr:_backStackPop(viewName)
+	local topIndex = #self._backStack
+	local top = self._backStack[topIndex]
 
-	if var_6_1 and var_6_1.viewName == arg_6_1 then
-		table.remove(arg_6_0._backStack, var_6_0)
+	if top and top.viewName == viewName then
+		table.remove(self._backStack, topIndex)
 
-		return var_6_1
+		return top
 	else
-		logError("view not in stack top, can't remove: " .. arg_6_1)
+		logError("view not in stack top, can't remove: " .. viewName)
 	end
 end
 
-function var_0_0._backStackTop(arg_7_0)
-	return arg_7_0._backStack[#arg_7_0._backStack]
+function ViewBackStackMgr:_backStackTop()
+	return self._backStack[#self._backStack]
 end
 
-function var_0_0.removeInBackStack(arg_8_0, arg_8_1)
-	tabletool.removeValue(arg_8_0._backStack, arg_8_1)
+function ViewBackStackMgr:removeInBackStack(viewName)
+	tabletool.removeValue(self._backStack, viewName)
 end
 
-var_0_0.instance = var_0_0.New()
+ViewBackStackMgr.instance = ViewBackStackMgr.New()
 
-return var_0_0
+return ViewBackStackMgr

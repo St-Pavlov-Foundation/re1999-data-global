@@ -1,32 +1,34 @@
-﻿module("framework.network.socket.work.WorkResendPackets", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkResendPackets.lua
 
-local var_0_0 = class("WorkResendPackets", BaseWork)
+module("framework.network.socket.work.WorkResendPackets", package.seeall)
 
-var_0_0.NonResendCmdDict = {}
+local WorkResendPackets = class("WorkResendPackets", BaseWork)
 
-function var_0_0.onStart(arg_1_0)
-	local var_1_0 = ConnectAliveMgr.instance:getUnresponsiveMsgList()
+WorkResendPackets.NonResendCmdDict = {}
+
+function WorkResendPackets:onStart()
+	local unresponsiveMsgList = ConnectAliveMgr.instance:getUnresponsiveMsgList()
 
 	ConnectAliveMgr.instance:clearUnresponsiveMsgList()
 
-	local var_1_1 = {}
+	local temp = {}
 
-	for iter_1_0 = 1, #var_1_0 do
-		local var_1_2 = var_1_0[iter_1_0]
+	for i = 1, #unresponsiveMsgList do
+		local msgTable = unresponsiveMsgList[i]
 
-		if not var_0_0.NonResendCmdDict[var_1_2.cmd] then
-			var_1_2.time = Time.realtimeSinceStartup
+		if not WorkResendPackets.NonResendCmdDict[msgTable.cmd] then
+			msgTable.time = Time.realtimeSinceStartup
 
-			LuaSocketMgr.instance:sendMsg(var_1_2.msg, var_1_2.socketId)
-			table.insert(var_1_1, var_1_2.msg.__cname)
+			LuaSocketMgr.instance:sendMsg(msgTable.msg, msgTable.socketId)
+			table.insert(temp, msgTable.msg.__cname)
 		end
 	end
 
-	if #var_1_1 > 0 then
-		logNormal("前端补包协议：" .. table.concat(var_1_1, ","))
+	if #temp > 0 then
+		logNormal("前端补包协议：" .. table.concat(temp, ","))
 	end
 
-	arg_1_0:onDone(true)
+	self:onDone(true)
 end
 
-return var_0_0
+return WorkResendPackets

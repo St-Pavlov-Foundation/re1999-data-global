@@ -1,42 +1,44 @@
-﻿module("framework.network.socket.work.WorkSystemLogin", package.seeall)
+﻿-- chunkname: @framework/network/socket/work/WorkSystemLogin.lua
 
-local var_0_0 = class("WorkSystemLogin", BaseWork)
-local var_0_1 = "SystemLogin"
+module("framework.network.socket.work.WorkSystemLogin", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._connectWay = arg_1_1.connectWay
+local WorkSystemLogin = class("WorkSystemLogin", BaseWork)
+local SystemLoginBlockKey = "SystemLogin"
+
+function WorkSystemLogin:ctor(params)
+	self._connectWay = params.connectWay
 end
 
-function var_0_0.onStart(arg_2_0, arg_2_1)
-	UIBlockMgr.instance:startBlock(var_0_1)
+function WorkSystemLogin:onStart(context)
+	UIBlockMgr.instance:startBlock(SystemLoginBlockKey)
 
-	arg_2_0._account = arg_2_1.account
-	arg_2_0._password = arg_2_1.password
-	arg_2_0._callbackId = SystemLoginRpc.instance:sendLoginRequest(arg_2_0._account, arg_2_0._password, arg_2_0._connectWay, arg_2_0._onLoginCallback, arg_2_0)
+	self._account = context.account
+	self._password = context.password
+	self._callbackId = SystemLoginRpc.instance:sendLoginRequest(self._account, self._password, self._connectWay, self._onLoginCallback, self)
 
-	TaskDispatcher.runDelay(arg_2_0._onSystemLoginTimeout, arg_2_0, NetworkConst.SystemLoginTimeout)
+	TaskDispatcher.runDelay(self._onSystemLoginTimeout, self, NetworkConst.SystemLoginTimeout)
 end
 
-function var_0_0.clearWork(arg_3_0)
-	UIBlockMgr.instance:endBlock(var_0_1)
-	SystemLoginRpc.instance:removeCallbackById(arg_3_0._callbackId)
-	TaskDispatcher.cancelTask(arg_3_0._onSystemLoginTimeout, arg_3_0)
+function WorkSystemLogin:clearWork()
+	UIBlockMgr.instance:endBlock(SystemLoginBlockKey)
+	SystemLoginRpc.instance:removeCallbackById(self._callbackId)
+	TaskDispatcher.cancelTask(self._onSystemLoginTimeout, self)
 end
 
-function var_0_0._onLoginCallback(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_2 == 0 then
-		arg_4_0:onDone(true)
+function WorkSystemLogin:_onLoginCallback(cmd, status, msg)
+	if status == 0 then
+		self:onDone(true)
 	else
-		arg_4_0.context.dontReconnect = true
-		arg_4_0.context.systemLoginFail = true
-		arg_4_0.context.msg = arg_4_3.reason
+		self.context.dontReconnect = true
+		self.context.systemLoginFail = true
+		self.context.msg = msg.reason
 
-		arg_4_0:onDone(false)
+		self:onDone(false)
 	end
 end
 
-function var_0_0._onSystemLoginTimeout(arg_5_0)
-	arg_5_0:onDone(false)
+function WorkSystemLogin:_onSystemLoginTimeout()
+	self:onDone(false)
 end
 
-return var_0_0
+return WorkSystemLogin

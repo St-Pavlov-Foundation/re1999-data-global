@@ -1,124 +1,126 @@
-﻿module("framework.mvc.view.BaseView", package.seeall)
+﻿-- chunkname: @framework/mvc/view/BaseView.lua
 
-local var_0_0 = class("BaseView", UserDataDispose)
+module("framework.mvc.view.BaseView", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0.viewGO = nil
-	arg_1_0.viewContainer = nil
-	arg_1_0.viewParam = nil
-	arg_1_0.viewName = nil
-	arg_1_0.tabContainer = nil
-	arg_1_0.rootGO = nil
-	arg_1_0._childViews = nil
-	arg_1_0._tryCallResultDict = nil
+local BaseView = class("BaseView", UserDataDispose)
+
+function BaseView:ctor()
+	self.viewGO = nil
+	self.viewContainer = nil
+	self.viewParam = nil
+	self.viewName = nil
+	self.tabContainer = nil
+	self.rootGO = nil
+	self._childViews = nil
+	self._tryCallResultDict = nil
 end
 
-function var_0_0.onInitViewInternal(arg_2_0)
-	arg_2_0._has_onInitView = true
+function BaseView:onInitViewInternal()
+	self._has_onInitView = true
 
-	if arg_2_0._childViews then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._childViews) do
-			iter_2_1.viewGO = arg_2_0.viewGO
-			iter_2_1.viewContainer = arg_2_0.viewContainer
-			iter_2_1.viewName = arg_2_0.viewName
+	if self._childViews then
+		for _, child in ipairs(self._childViews) do
+			child.viewGO = self.viewGO
+			child.viewContainer = self.viewContainer
+			child.viewName = self.viewName
 		end
 	end
 
-	arg_2_0:_internalCall("onInitView")
+	self:_internalCall("onInitView")
 end
 
-function var_0_0.addEventsInternal(arg_3_0)
-	arg_3_0._has_addEvents = true
+function BaseView:addEventsInternal()
+	self._has_addEvents = true
 
-	arg_3_0:_internalCall("addEvents")
+	self:_internalCall("addEvents")
 end
 
-function var_0_0.onOpenInternal(arg_4_0)
-	arg_4_0._has_onOpen = true
+function BaseView:onOpenInternal()
+	self._has_onOpen = true
 
-	arg_4_0:_internalCall("onOpen")
+	self:_internalCall("onOpen")
 end
 
-function var_0_0.onOpenFinishInternal(arg_5_0)
-	arg_5_0._has_onOpenFinish = true
+function BaseView:onOpenFinishInternal()
+	self._has_onOpenFinish = true
 
-	arg_5_0:_internalCall("onOpenFinish")
+	self:_internalCall("onOpenFinish")
 end
 
-function var_0_0.onUpdateParamInternal(arg_6_0)
-	arg_6_0:_internalCall("onUpdateParam")
+function BaseView:onUpdateParamInternal()
+	self:_internalCall("onUpdateParam")
 end
 
-function var_0_0.onClickModalMaskInternal(arg_7_0)
-	arg_7_0:_internalCall("onClickModalMask")
+function BaseView:onClickModalMaskInternal()
+	self:_internalCall("onClickModalMask")
 end
 
-function var_0_0.onCloseInternal(arg_8_0)
-	arg_8_0._has_onOpen = false
-	arg_8_0._has_onOpenFinish = false
+function BaseView:onCloseInternal()
+	self._has_onOpen = false
+	self._has_onOpenFinish = false
 
-	arg_8_0:_internalCall("onClose")
+	self:_internalCall("onClose")
 end
 
-function var_0_0.onCloseFinishInternal(arg_9_0)
-	arg_9_0:_internalCall("onCloseFinish")
+function BaseView:onCloseFinishInternal()
+	self:_internalCall("onCloseFinish")
 end
 
-function var_0_0.removeEventsInternal(arg_10_0)
-	arg_10_0._has_addEvents = false
+function BaseView:removeEventsInternal()
+	self._has_addEvents = false
 
-	arg_10_0:_internalCall("removeEvents")
+	self:_internalCall("removeEvents")
 end
 
-function var_0_0.onDestroyViewInternal(arg_11_0)
-	arg_11_0._has_onInitView = false
+function BaseView:onDestroyViewInternal()
+	self._has_onInitView = false
 
-	arg_11_0:_internalCall("onDestroyView")
+	self:_internalCall("onDestroyView")
 
-	arg_11_0._childViews = nil
+	self._childViews = nil
 
-	arg_11_0:tryCallMethodName("__onDispose")
+	self:tryCallMethodName("__onDispose")
 end
 
-function var_0_0._internalCall(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0._childViews and tabletool.copy(arg_12_0._childViews)
+function BaseView:_internalCall(method)
+	local temp = self._childViews and tabletool.copy(self._childViews)
 
-	if var_12_0 then
-		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-			iter_12_1[arg_12_1 .. "Internal"](iter_12_1)
+	if temp then
+		for _, child in ipairs(temp) do
+			child[method .. "Internal"](child)
 		end
 	end
 
-	arg_12_0:tryCallMethodName(arg_12_1)
+	self:tryCallMethodName(method)
 end
 
-function var_0_0.tryCallMethodName(arg_13_0, arg_13_1)
-	local var_13_0, var_13_1 = xpcall(arg_13_0[arg_13_1], __G__TRACKBACK__, arg_13_0)
+function BaseView:tryCallMethodName(method)
+	local isOk, result = xpcall(self[method], __G__TRACKBACK__, self)
 
-	arg_13_0._tryCallResultDict = arg_13_0._tryCallResultDict or {}
-	arg_13_0._tryCallResultDict[arg_13_1] = var_13_0
+	self._tryCallResultDict = self._tryCallResultDict or {}
+	self._tryCallResultDict[method] = isOk
 
-	return var_13_0, var_13_1
+	return isOk, result
 end
 
-function var_0_0.isHasTryCallFail(arg_14_0)
-	if arg_14_0._tryCallResultDict then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._tryCallResultDict) do
-			if iter_14_1 == false then
+function BaseView:isHasTryCallFail()
+	if self._tryCallResultDict then
+		for method, isOk in pairs(self._tryCallResultDict) do
+			if isOk == false then
 				return true
 			end
 		end
 	end
 
-	local var_14_0 = arg_14_0._childViews
+	local temp = self._childViews
 
-	if var_14_0 then
-		local var_14_1 = #var_14_0
+	if temp then
+		local count = #temp
 
-		for iter_14_2 = 1, var_14_1 do
-			local var_14_2 = var_14_0[iter_14_2]
+		for i = 1, count do
+			local child = temp[i]
 
-			if var_14_2 and var_14_2:isHasTryCallFail() then
+			if child and child:isHasTryCallFail() then
 				return true
 			end
 		end
@@ -127,91 +129,91 @@ function var_0_0.isHasTryCallFail(arg_14_0)
 	return false
 end
 
-function var_0_0.onInitView(arg_15_0)
+function BaseView:onInitView()
 	return
 end
 
-function var_0_0.addEvents(arg_16_0)
+function BaseView:addEvents()
 	return
 end
 
-function var_0_0.onOpen(arg_17_0)
+function BaseView:onOpen()
 	return
 end
 
-function var_0_0.onOpenFinish(arg_18_0)
+function BaseView:onOpenFinish()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_19_0)
+function BaseView:onUpdateParam()
 	return
 end
 
-function var_0_0.onClickModalMask(arg_20_0)
+function BaseView:onClickModalMask()
 	return
 end
 
-function var_0_0.onClose(arg_21_0)
+function BaseView:onClose()
 	return
 end
 
-function var_0_0.onCloseFinish(arg_22_0)
+function BaseView:onCloseFinish()
 	return
 end
 
-function var_0_0.removeEvents(arg_23_0)
+function BaseView:removeEvents()
 	return
 end
 
-function var_0_0.onDestroyView(arg_24_0)
+function BaseView:onDestroyView()
 	return
 end
 
-function var_0_0.getResInst(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	return arg_25_0.viewContainer:getResInst(arg_25_1, arg_25_2, arg_25_3)
+function BaseView:getResInst(resPath, parentGO, name)
+	return self.viewContainer:getResInst(resPath, parentGO, name)
 end
 
-function var_0_0.closeThis(arg_26_0)
-	ViewMgr.instance:closeView(arg_26_0.viewName, nil, true)
+function BaseView:closeThis()
+	ViewMgr.instance:closeView(self.viewName, nil, true)
 end
 
-function var_0_0.addChildView(arg_27_0, arg_27_1)
-	if not arg_27_1 then
+function BaseView:addChildView(view)
+	if not view then
 		return
 	end
 
-	if not isTypeOf(arg_27_1, var_0_0) then
-		logError("addChildView fail, view must inherited from BaseView: " .. (arg_27_1.__cname or "nil"))
+	if not isTypeOf(view, BaseView) then
+		logError("addChildView fail, view must inherited from BaseView: " .. (view.__cname or "nil"))
 
 		return
 	end
 
-	arg_27_0._childViews = arg_27_0._childViews or {}
+	self._childViews = self._childViews or {}
 
-	if not tabletool.indexOf(arg_27_0._childViews, arg_27_1) then
-		table.insert(arg_27_0._childViews, arg_27_1)
-		arg_27_1:__onInit()
+	if not tabletool.indexOf(self._childViews, view) then
+		table.insert(self._childViews, view)
+		view:__onInit()
 
-		arg_27_1.viewGO = arg_27_0.viewGO
-		arg_27_1.viewContainer = arg_27_0.viewContainer
-		arg_27_1.viewName = arg_27_0.viewName
+		view.viewGO = self.viewGO
+		view.viewContainer = self.viewContainer
+		view.viewName = self.viewName
 
-		if arg_27_0._has_onInitView then
-			arg_27_1:onInitViewInternal()
+		if self._has_onInitView then
+			view:onInitViewInternal()
 		end
 
-		if arg_27_0._has_addEvents then
-			arg_27_1:addEventsInternal()
+		if self._has_addEvents then
+			view:addEventsInternal()
 		end
 
-		if arg_27_0._has_onOpen then
-			arg_27_1:onOpenInternal()
+		if self._has_onOpen then
+			view:onOpenInternal()
 		end
 
-		if arg_27_0._has_onOpenFinish then
-			arg_27_1:onOpenFinishInternal()
+		if self._has_onOpenFinish then
+			view:onOpenFinishInternal()
 		end
 	end
 end
 
-return var_0_0
+return BaseView

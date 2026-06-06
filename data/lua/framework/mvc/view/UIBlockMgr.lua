@@ -1,84 +1,86 @@
-﻿module("framework.mvc.view.UIBlockMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/view/UIBlockMgr.lua
 
-local var_0_0 = class("UIBlockMgr")
+module("framework.mvc.view.UIBlockMgr", package.seeall)
 
-var_0_0.DefaultKey = "default"
+local UIBlockMgr = class("UIBlockMgr")
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._blockKeyDict = {}
-	arg_1_0._goBlock = nil
-	arg_1_0._clickCounter = 0
+UIBlockMgr.DefaultKey = "default"
+
+function UIBlockMgr:ctor()
+	self._blockKeyDict = {}
+	self._goBlock = nil
+	self._clickCounter = 0
 end
 
-function var_0_0.startBlock(arg_2_0, arg_2_1)
-	arg_2_1 = arg_2_1 or var_0_0.DefaultKey
-	arg_2_0._blockKeyDict[arg_2_1] = true
+function UIBlockMgr:startBlock(blockKey)
+	blockKey = blockKey or UIBlockMgr.DefaultKey
+	self._blockKeyDict[blockKey] = true
 
-	arg_2_0:_checkFirstCreateMask()
-	gohelper.setActive(arg_2_0._goBlock, true)
+	self:_checkFirstCreateMask()
+	gohelper.setActive(self._goBlock, true)
 end
 
-function var_0_0.endBlock(arg_3_0, arg_3_1)
-	arg_3_1 = arg_3_1 or var_0_0.DefaultKey
-	arg_3_0._blockKeyDict[arg_3_1] = nil
+function UIBlockMgr:endBlock(blockKey)
+	blockKey = blockKey or UIBlockMgr.DefaultKey
+	self._blockKeyDict[blockKey] = nil
 
-	for iter_3_0, iter_3_1 in pairs(arg_3_0._blockKeyDict) do
+	for _, _ in pairs(self._blockKeyDict) do
 		return
 	end
 
-	gohelper.setActive(arg_3_0._goBlock, false)
+	gohelper.setActive(self._goBlock, false)
 
-	arg_3_0._clickCounter = 0
+	self._clickCounter = 0
 end
 
-function var_0_0.endAll(arg_4_0)
-	if arg_4_0:isBlock() then
-		arg_4_0._blockKeyDict = {}
+function UIBlockMgr:endAll()
+	if self:isBlock() then
+		self._blockKeyDict = {}
 
-		gohelper.setActive(arg_4_0._goBlock, false)
+		gohelper.setActive(self._goBlock, false)
 
-		arg_4_0._clickCounter = 0
+		self._clickCounter = 0
 	end
 end
 
-function var_0_0.isBlock(arg_5_0)
-	for iter_5_0, iter_5_1 in pairs(arg_5_0._blockKeyDict) do
+function UIBlockMgr:isBlock()
+	for _, _ in pairs(self._blockKeyDict) do
 		return true
 	end
 end
 
-function var_0_0.isKeyBlock(arg_6_0, arg_6_1)
-	return arg_6_0._blockKeyDict[arg_6_1]
+function UIBlockMgr:isKeyBlock(blockKey)
+	return self._blockKeyDict[blockKey]
 end
 
-function var_0_0.getBlockGO(arg_7_0)
-	arg_7_0:_checkFirstCreateMask()
+function UIBlockMgr:getBlockGO()
+	self:_checkFirstCreateMask()
 
-	return arg_7_0._goBlock
+	return self._goBlock
 end
 
-function var_0_0._checkFirstCreateMask(arg_8_0)
-	if not arg_8_0._goBlock then
-		arg_8_0._goBlock = gohelper.find("UIRoot/TOP/UIBlock")
+function UIBlockMgr:_checkFirstCreateMask()
+	if not self._goBlock then
+		self._goBlock = gohelper.find("UIRoot/TOP/UIBlock")
 
-		SLFramework.UGUI.UIClickListener.Get(arg_8_0._goBlock):AddClickListener(arg_8_0._onClickBlock, arg_8_0)
+		SLFramework.UGUI.UIClickListener.Get(self._goBlock):AddClickListener(self._onClickBlock, self)
 	end
 end
 
-function var_0_0._onClickBlock(arg_9_0)
-	arg_9_0._clickCounter = arg_9_0._clickCounter + 1
+function UIBlockMgr:_onClickBlock()
+	self._clickCounter = self._clickCounter + 1
 
-	if arg_9_0._clickCounter == 5 then
-		local var_9_0 = {}
+	if self._clickCounter == 5 then
+		local keyList = {}
 
-		for iter_9_0, iter_9_1 in pairs(arg_9_0._blockKeyDict) do
-			table.insert(var_9_0, iter_9_0)
+		for key, _ in pairs(self._blockKeyDict) do
+			table.insert(keyList, key)
 		end
 
-		logNormal("BlockKeys: " .. table.concat(var_9_0, ","))
+		logNormal("BlockKeys: " .. table.concat(keyList, ","))
 	end
 end
 
-var_0_0.instance = var_0_0.New()
+UIBlockMgr.instance = UIBlockMgr.New()
 
-return var_0_0
+return UIBlockMgr

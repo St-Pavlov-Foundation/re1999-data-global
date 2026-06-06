@@ -1,60 +1,64 @@
-﻿module("framework.core.pool.LuaObjPool", package.seeall)
+﻿-- chunkname: @framework/core/pool/LuaObjPool.lua
 
-local var_0_0 = class("LuaObjPool")
+module("framework.core.pool.LuaObjPool", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
-	arg_1_0._maxCount = arg_1_1
-	arg_1_0._newFunc = arg_1_2
-	arg_1_0._releaseFunc = arg_1_3
-	arg_1_0._resetFunc = arg_1_4
+local LuaObjPool = class("LuaObjPool")
 
-	if arg_1_1 == nil or arg_1_2 == nil or arg_1_3 == nil or arg_1_4 == nil then
+function LuaObjPool:ctor(maxCount, newFunc, releaseFunc, resetFunc)
+	self._maxCount = maxCount
+	self._newFunc = newFunc
+	self._releaseFunc = releaseFunc
+	self._resetFunc = resetFunc
+
+	if maxCount == nil or newFunc == nil or releaseFunc == nil or resetFunc == nil then
 		logError("LuaObjPool, 对象池构造，所有参数都不能为nil")
 	end
 
-	if arg_1_0._maxCount == 0 then
-		arg_1_0._maxCount = 32
+	if self._maxCount == 0 then
+		self._maxCount = 32
 	end
 
-	arg_1_0._cacheList = {}
+	self._cacheList = {}
 end
 
-function var_0_0.getObject(arg_2_0)
-	if #arg_2_0._cacheList < 1 then
-		return arg_2_0._newFunc()
+function LuaObjPool:getObject()
+	local curCount = #self._cacheList
+
+	if curCount < 1 then
+		return self._newFunc()
 	else
-		return table.remove(arg_2_0._cacheList)
+		return table.remove(self._cacheList)
 	end
 end
 
-function var_0_0.putObject(arg_3_0, arg_3_1)
-	local var_3_0 = #arg_3_0._cacheList
+function LuaObjPool:putObject(luaObj)
+	local curCount = #self._cacheList
 
-	arg_3_0._resetFunc(arg_3_1)
+	self._resetFunc(luaObj)
 
-	if var_3_0 >= arg_3_0._maxCount then
-		arg_3_0._releaseFunc(arg_3_1)
-	elseif not tabletool.indexOf(arg_3_0._cacheList, arg_3_1) then
-		table.insert(arg_3_0._cacheList, arg_3_1)
+	if curCount >= self._maxCount then
+		self._releaseFunc(luaObj)
+	elseif not tabletool.indexOf(self._cacheList, luaObj) then
+		table.insert(self._cacheList, luaObj)
 	end
 end
 
-function var_0_0.dispose(arg_4_0)
-	local var_4_0 = #arg_4_0._cacheList
+function LuaObjPool:dispose()
+	local curCount = #self._cacheList
 
-	if var_4_0 == 0 then
+	if curCount == 0 then
 		return
 	end
 
-	local var_4_1
+	local luaObj
 
-	for iter_4_0 = 1, var_4_0 do
-		local var_4_2 = arg_4_0._cacheList[iter_4_0]
+	for idx = 1, curCount do
+		luaObj = self._cacheList[idx]
 
-		arg_4_0._releaseFunc(var_4_2)
+		self._releaseFunc(luaObj)
 
-		arg_4_0._cacheList[iter_4_0] = nil
+		self._cacheList[idx] = nil
 	end
 end
 
-return var_0_0
+return LuaObjPool

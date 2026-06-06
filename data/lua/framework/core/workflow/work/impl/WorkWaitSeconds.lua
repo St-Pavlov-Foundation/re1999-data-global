@@ -1,41 +1,43 @@
-﻿module("framework.core.workflow.work.impl.WorkWaitSeconds", package.seeall)
+﻿-- chunkname: @framework/core/workflow/work/impl/WorkWaitSeconds.lua
 
-local var_0_0 = class("WorkWaitSeconds", BaseWork)
+module("framework.core.workflow.work.impl.WorkWaitSeconds", package.seeall)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._waitSeconds = arg_1_1 or 0.01
+local WorkWaitSeconds = class("WorkWaitSeconds", BaseWork)
+
+function WorkWaitSeconds:ctor(waitSeconds)
+	self._waitSeconds = waitSeconds or 0.01
 end
 
-function var_0_0.onStart(arg_2_0)
-	arg_2_0._startTime = Time.realtimeSinceStartup
+function WorkWaitSeconds:onStart()
+	self._startTime = Time.realtimeSinceStartup
 
-	TaskDispatcher.runDelay(arg_2_0._onTimeEnd, arg_2_0, arg_2_0._waitSeconds)
+	TaskDispatcher.runDelay(self._onTimeEnd, self, self._waitSeconds)
 end
 
-function var_0_0.onStop(arg_3_0)
-	arg_3_0._waitSeconds = Time.realtimeSinceStartup - arg_3_0._startTime
+function WorkWaitSeconds:onStop()
+	self._waitSeconds = Time.realtimeSinceStartup - self._startTime
 
-	TaskDispatcher.cancelTask(arg_3_0._onTimeEnd, arg_3_0)
+	TaskDispatcher.cancelTask(self._onTimeEnd, self)
 end
 
-function var_0_0.onResume(arg_4_0)
-	if arg_4_0._waitSeconds > 0 then
-		TaskDispatcher.runDelay(arg_4_0._onTimeEnd, arg_4_0, arg_4_0._waitSeconds)
+function WorkWaitSeconds:onResume()
+	if self._waitSeconds > 0 then
+		TaskDispatcher.runDelay(self._onTimeEnd, self, self._waitSeconds)
 	else
-		arg_4_0:onDone(true)
+		self:onDone(true)
 	end
 end
 
-function var_0_0.onReset(arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._onTimeEnd, arg_5_0)
+function WorkWaitSeconds:onReset()
+	TaskDispatcher.cancelTask(self._onTimeEnd, self)
 end
 
-function var_0_0.onDestroy(arg_6_0)
-	TaskDispatcher.cancelTask(arg_6_0._onTimeEnd, arg_6_0)
+function WorkWaitSeconds:onDestroy()
+	TaskDispatcher.cancelTask(self._onTimeEnd, self)
 end
 
-function var_0_0._onTimeEnd(arg_7_0)
-	arg_7_0:onDone(true)
+function WorkWaitSeconds:_onTimeEnd()
+	self:onDone(true)
 end
 
-return var_0_0
+return WorkWaitSeconds

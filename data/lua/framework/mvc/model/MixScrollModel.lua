@@ -1,9 +1,11 @@
-﻿module("framework.mvc.model.MixScrollModel", package.seeall)
+﻿-- chunkname: @framework/mvc/model/MixScrollModel.lua
 
-local var_0_0 = class("MixScrollModel", ListScrollModel)
+module("framework.mvc.model.MixScrollModel", package.seeall)
 
-function var_0_0.getInfoList(arg_1_0, arg_1_1)
+local MixScrollModel = class("MixScrollModel", ListScrollModel)
+
+function MixScrollModel:getInfoList(scrollGO)
 	return
 end
 
-return var_0_0
+return MixScrollModel

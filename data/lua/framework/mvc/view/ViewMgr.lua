@@ -1,195 +1,197 @@
-﻿module("framework.mvc.view.ViewMgr", package.seeall)
+﻿-- chunkname: @framework/mvc/view/ViewMgr.lua
 
-local var_0_0 = class("ViewMgr")
+module("framework.mvc.view.ViewMgr", package.seeall)
 
-function var_0_0.ctor(arg_1_0)
-	arg_1_0._viewSettings = nil
-	arg_1_0._viewContainerDict = {}
-	arg_1_0._openViewNameList = {}
-	arg_1_0._openViewNameSet = {}
-	arg_1_0._uiCanvas = nil
-	arg_1_0._uiRoot = nil
-	arg_1_0._topUICanvas = nil
-	arg_1_0._topUIRoot = nil
-	arg_1_0._uiLayerDict = {}
+local ViewMgr = class("ViewMgr")
 
-	LuaEventSystem.addEventMechanism(arg_1_0)
+function ViewMgr:ctor()
+	self._viewSettings = nil
+	self._viewContainerDict = {}
+	self._openViewNameList = {}
+	self._openViewNameSet = {}
+	self._uiCanvas = nil
+	self._uiRoot = nil
+	self._topUICanvas = nil
+	self._topUIRoot = nil
+	self._uiLayerDict = {}
+
+	LuaEventSystem.addEventMechanism(self)
 end
 
-function var_0_0.init(arg_2_0, arg_2_1)
-	arg_2_0._viewSettings = arg_2_1
+function ViewMgr:init(viewSettings)
+	self._viewSettings = viewSettings
 
 	ViewModalMaskMgr.instance:init()
 	ViewFullScreenMgr.instance:init()
 	ViewDestroyMgr.instance:init()
 end
 
-function var_0_0.openTabView(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
-	arg_3_2 = arg_3_2 or {}
-	arg_3_2.defaultTabIds = {
-		arg_3_4,
-		arg_3_5,
-		arg_3_6
+function ViewMgr:openTabView(viewName, param, isImmediate, tabId1, tabId2, tabId3)
+	param = param or {}
+	param.defaultTabIds = {
+		tabId1,
+		tabId2,
+		tabId3
 	}
 
-	arg_3_0:openView(arg_3_1, arg_3_2, arg_3_3)
+	self:openView(viewName, param, isImmediate)
 end
 
-function var_0_0.openView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	if arg_4_1 == nil or arg_4_1 == "" then
+function ViewMgr:openView(viewName, param, isImmediate)
+	if viewName == nil or viewName == "" then
 		logError("viewName is empty")
 
 		return
 	end
 
-	local var_4_0 = arg_4_0:getContainer(arg_4_1)
+	local existViewContainer = self:getContainer(viewName)
 
-	if arg_4_0._openViewNameSet[arg_4_1] and var_4_0 then
-		tabletool.removeValue(arg_4_0._openViewNameList, arg_4_1)
-		table.insert(arg_4_0._openViewNameList, arg_4_1)
-		gohelper.setAsLastSibling(var_4_0.viewGO)
-		var_4_0:onUpdateParamInternal(arg_4_2)
-		var_0_0.instance:dispatchEvent(ViewEvent.ReOpenWhileOpen, arg_4_1, arg_4_2)
+	if self._openViewNameSet[viewName] and existViewContainer then
+		tabletool.removeValue(self._openViewNameList, viewName)
+		table.insert(self._openViewNameList, viewName)
+		gohelper.setAsLastSibling(existViewContainer.viewGO)
+		existViewContainer:onUpdateParamInternal(param)
+		ViewMgr.instance:dispatchEvent(ViewEvent.ReOpenWhileOpen, viewName, param)
 
 		return
 	end
 
-	local var_4_1 = arg_4_0:_createContainer(arg_4_1)
+	local viewContainer = self:_createContainer(viewName)
 
-	arg_4_0._viewContainerDict[arg_4_1] = var_4_1
+	self._viewContainerDict[viewName] = viewContainer
 
-	table.insert(arg_4_0._openViewNameList, arg_4_1)
+	table.insert(self._openViewNameList, viewName)
 
-	arg_4_0._openViewNameSet[arg_4_1] = true
+	self._openViewNameSet[viewName] = true
 
-	var_4_1:openInternal(arg_4_2, arg_4_3)
+	viewContainer:openInternal(param, isImmediate)
 end
 
-function var_0_0.closeView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_1 or not arg_5_0._openViewNameSet[arg_5_1] then
+function ViewMgr:closeView(viewName, isImmediate, closeManually)
+	if not viewName or not self._openViewNameSet[viewName] then
 		return
 	end
 
-	arg_5_0._openViewNameSet[arg_5_1] = nil
+	self._openViewNameSet[viewName] = nil
 
-	tabletool.removeValue(arg_5_0._openViewNameList, arg_5_1)
+	tabletool.removeValue(self._openViewNameList, viewName)
 
-	local var_5_0 = arg_5_0:getContainer(arg_5_1)
+	local viewContainer = self:getContainer(viewName)
 
-	var_5_0:setCloseType(arg_5_3 and BaseViewContainer.CloseTypeManual or nil)
-	var_5_0:closeInternal(arg_5_2)
+	viewContainer:setCloseType(closeManually and BaseViewContainer.CloseTypeManual or nil)
+	viewContainer:closeInternal(isImmediate)
 end
 
-function var_0_0.destroyView(arg_6_0, arg_6_1)
-	local var_6_0 = arg_6_0:getContainer(arg_6_1)
+function ViewMgr:destroyView(viewName)
+	local viewContainer = self:getContainer(viewName)
 
-	if var_6_0 then
-		if var_6_0:isOpen() then
-			var_6_0:closeInternal(true)
+	if viewContainer then
+		if viewContainer:isOpen() then
+			viewContainer:closeInternal(true)
 		end
 
-		var_6_0:destroyView()
-		var_6_0:__onDispose()
+		viewContainer:destroyView()
+		viewContainer:__onDispose()
 
-		arg_6_0._viewContainerDict[arg_6_1] = nil
+		self._viewContainerDict[viewName] = nil
 
-		if arg_6_0:isFull(arg_6_1) then
-			var_0_0.instance:dispatchEvent(ViewEvent.DestroyFullViewFinish, arg_6_1)
-		elseif arg_6_0:isModal(arg_6_1) then
-			var_0_0.instance:dispatchEvent(ViewEvent.DestroyModalViewFinish, arg_6_1)
+		if self:isFull(viewName) then
+			ViewMgr.instance:dispatchEvent(ViewEvent.DestroyFullViewFinish, viewName)
+		elseif self:isModal(viewName) then
+			ViewMgr.instance:dispatchEvent(ViewEvent.DestroyModalViewFinish, viewName)
 		end
 
-		var_0_0.instance:dispatchEvent(ViewEvent.DestroyViewFinish, arg_6_1)
+		ViewMgr.instance:dispatchEvent(ViewEvent.DestroyViewFinish, viewName)
 	end
 end
 
-function var_0_0.isOpen(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0:getContainer(arg_7_1)
+function ViewMgr:isOpen(viewName)
+	local viewContainer = self:getContainer(viewName)
 
-	return var_7_0 and var_7_0:isOpen()
+	return viewContainer and viewContainer:isOpen()
 end
 
-function var_0_0.isOpening(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0:getContainer(arg_8_1)
+function ViewMgr:isOpening(viewName)
+	local viewContainer = self:getContainer(viewName)
 
-	return var_8_0 and var_8_0:isOpening()
+	return viewContainer and viewContainer:isOpening()
 end
 
-function var_0_0.isOpenFinish(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0:getContainer(arg_9_1)
+function ViewMgr:isOpenFinish(viewName)
+	local viewContainer = self:getContainer(viewName)
 
-	return var_9_0 and var_9_0:isOpenFinish()
+	return viewContainer and viewContainer:isOpenFinish()
 end
 
-function var_0_0.closeAllModalViews(arg_10_0, arg_10_1)
-	local var_10_0
+function ViewMgr:closeAllModalViews(excludeArr)
+	local views
 
-	for iter_10_0 = #arg_10_0._openViewNameList, 1, -1 do
-		local var_10_1 = arg_10_0._openViewNameList[iter_10_0]
+	for i = #self._openViewNameList, 1, -1 do
+		local viewName = self._openViewNameList[i]
 
-		if (not arg_10_1 or not tabletool.indexOf(arg_10_1, var_10_1)) and arg_10_0:isModal(var_10_1) then
-			var_10_0 = var_10_0 or {}
+		if (not excludeArr or not tabletool.indexOf(excludeArr, viewName)) and self:isModal(viewName) then
+			views = views or {}
 
-			table.insert(var_10_0, var_10_1)
+			table.insert(views, viewName)
 		end
 	end
 
-	if var_10_0 then
-		for iter_10_1 = 1, #var_10_0 do
-			arg_10_0:closeView(var_10_0[iter_10_1], true)
-		end
-	end
-end
-
-function var_0_0.closeAllPopupViews(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0
-
-	for iter_11_0 = #arg_11_0._openViewNameList, 1, -1 do
-		local var_11_1 = arg_11_0._openViewNameList[iter_11_0]
-		local var_11_2 = arg_11_0:getSetting(var_11_1)
-
-		if (not arg_11_1 or not tabletool.indexOf(arg_11_1, var_11_1)) and (var_11_2.layer == UILayerName.PopUpTop or var_11_2.layer == UILayerName.PopUp) then
-			var_11_0 = var_11_0 or {}
-
-			table.insert(var_11_0, var_11_1)
-		end
-	end
-
-	if var_11_0 then
-		local var_11_3 = #var_11_0
-
-		for iter_11_1 = 1, var_11_3 do
-			arg_11_0:closeView(var_11_0[iter_11_1], true, iter_11_1 == var_11_3 and arg_11_2)
+	if views then
+		for i = 1, #views do
+			self:closeView(views[i], true)
 		end
 	end
 end
 
-function var_0_0.closeAllViews(arg_12_0, arg_12_1)
-	local var_12_0
+function ViewMgr:closeAllPopupViews(excludeArr, closeManually)
+	local views
 
-	for iter_12_0 = #arg_12_0._openViewNameList, 1, -1 do
-		local var_12_1 = arg_12_0._openViewNameList[iter_12_0]
+	for i = #self._openViewNameList, 1, -1 do
+		local viewName = self._openViewNameList[i]
+		local setting = self:getSetting(viewName)
 
-		if not arg_12_1 or not tabletool.indexOf(arg_12_1, var_12_1) then
-			var_12_0 = var_12_0 or {}
+		if (not excludeArr or not tabletool.indexOf(excludeArr, viewName)) and (setting.layer == UILayerName.PopUpTop or setting.layer == UILayerName.PopUp) then
+			views = views or {}
 
-			table.insert(var_12_0, var_12_1)
+			table.insert(views, viewName)
 		end
 	end
 
-	if var_12_0 then
-		for iter_12_1 = 1, #var_12_0 do
-			arg_12_0:closeView(var_12_0[iter_12_1], true)
+	if views then
+		local len = #views
+
+		for i = 1, len do
+			self:closeView(views[i], true, i == len and closeManually)
 		end
 	end
 end
 
-function var_0_0.IsPopUpViewOpen(arg_13_0)
-	for iter_13_0 = #arg_13_0._openViewNameList, 1, -1 do
-		local var_13_0 = arg_13_0._openViewNameList[iter_13_0]
-		local var_13_1 = arg_13_0:getSetting(var_13_0)
+function ViewMgr:closeAllViews(excludeArr)
+	local views
 
-		if var_13_1.layer == UILayerName.PopUpTop or var_13_1.layer == UILayerName.PopUp or var_13_1.layer == UILayerName.Guide then
+	for i = #self._openViewNameList, 1, -1 do
+		local viewName = self._openViewNameList[i]
+
+		if not excludeArr or not tabletool.indexOf(excludeArr, viewName) then
+			views = views or {}
+
+			table.insert(views, viewName)
+		end
+	end
+
+	if views then
+		for i = 1, #views do
+			self:closeView(views[i], true)
+		end
+	end
+end
+
+function ViewMgr:IsPopUpViewOpen()
+	for i = #self._openViewNameList, 1, -1 do
+		local viewName = self._openViewNameList[i]
+		local setting = self:getSetting(viewName)
+
+		if setting.layer == UILayerName.PopUpTop or setting.layer == UILayerName.PopUp or setting.layer == UILayerName.Guide then
 			return true
 		end
 	end
@@ -197,17 +199,17 @@ function var_0_0.IsPopUpViewOpen(arg_13_0)
 	return false
 end
 
-function var_0_0.getSetting(arg_14_0, arg_14_1)
-	return arg_14_0._viewSettings[arg_14_1]
+function ViewMgr:getSetting(viewName)
+	return self._viewSettings[viewName]
 end
 
-function var_0_0.getOpenViewNameList(arg_15_0)
-	return arg_15_0._openViewNameList
+function ViewMgr:getOpenViewNameList()
+	return self._openViewNameList
 end
 
-function var_0_0.hasOpenFullView(arg_16_0)
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0._openViewNameList) do
-		if arg_16_0:isFull(iter_16_1) then
+function ViewMgr:hasOpenFullView()
+	for _, viewName in ipairs(self._openViewNameList) do
+		if self:isFull(viewName) then
 			return true
 		end
 	end
@@ -215,106 +217,108 @@ function var_0_0.hasOpenFullView(arg_16_0)
 	return false
 end
 
-function var_0_0.isNormal(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_0._viewSettings[arg_17_1]
+function ViewMgr:isNormal(viewName)
+	local viewSetting = self._viewSettings[viewName]
 
-	return var_17_0 and var_17_0.viewType == ViewType.Normal
+	return viewSetting and viewSetting.viewType == ViewType.Normal
 end
 
-function var_0_0.isModal(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._viewSettings[arg_18_1]
+function ViewMgr:isModal(viewName)
+	local viewSetting = self._viewSettings[viewName]
 
-	return var_18_0 and var_18_0.viewType == ViewType.Modal
+	return viewSetting and viewSetting.viewType == ViewType.Modal
 end
 
-function var_0_0.isFull(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0._viewSettings[arg_19_1]
+function ViewMgr:isFull(viewName)
+	local viewSetting = self._viewSettings[viewName]
 
-	return var_19_0 and var_19_0.viewType == ViewType.Full
+	return viewSetting and viewSetting.viewType == ViewType.Full
 end
 
-function var_0_0.getUIRoot(arg_20_0)
-	if not arg_20_0._uiRoot then
-		arg_20_0._uiRoot = gohelper.find("UIRoot")
+function ViewMgr:getUIRoot()
+	if not self._uiRoot then
+		self._uiRoot = gohelper.find("UIRoot")
 	end
 
-	return arg_20_0._uiRoot
+	return self._uiRoot
 end
 
-function var_0_0.getTopUIRoot(arg_21_0)
-	if not arg_21_0._topUIRoot then
-		arg_21_0._topUIRoot = gohelper.find("UIRoot")
+function ViewMgr:getTopUIRoot()
+	if not self._topUIRoot then
+		self._topUIRoot = gohelper.find("UIRoot")
 	end
 
-	return arg_21_0._topUIRoot
+	return self._topUIRoot
 end
 
-function var_0_0.getUICanvas(arg_22_0)
-	if not arg_22_0._uiCanvas then
-		arg_22_0._uiCanvas = arg_22_0:getUIRoot():GetComponent("Canvas")
+function ViewMgr:getUICanvas()
+	if not self._uiCanvas then
+		self._uiCanvas = self:getUIRoot():GetComponent("Canvas")
 	end
 
-	return arg_22_0._uiCanvas
+	return self._uiCanvas
 end
 
-function var_0_0.getTopUICanvas(arg_23_0)
-	if not arg_23_0._topUICanvas then
-		arg_23_0._topUICanvas = arg_23_0:getTopUIRoot():GetComponent("Canvas")
+function ViewMgr:getTopUICanvas()
+	if not self._topUICanvas then
+		self._topUICanvas = self:getTopUIRoot():GetComponent("Canvas")
 	end
 
-	return arg_23_0._topUICanvas
+	return self._topUICanvas
 end
 
-function var_0_0.getUILayer(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._uiLayerDict[arg_24_1]
+function ViewMgr:getUILayer(uiLayerName)
+	local innerRoot = self._uiLayerDict[uiLayerName]
 
-	if not var_24_0 then
-		if arg_24_1 == UILayerName.IDCanvasPopUp then
-			var_24_0 = gohelper.find(arg_24_1)
+	if not innerRoot then
+		if uiLayerName == UILayerName.IDCanvasPopUp then
+			innerRoot = gohelper.find(uiLayerName)
 		else
-			local var_24_1 = arg_24_0:getUIRoot()
+			local root = self:getUIRoot()
 
-			var_24_0 = gohelper.findChild(arg_24_0:getUIRoot(), arg_24_1)
-			var_24_0 = var_24_0 or gohelper.findChild(arg_24_0:getTopUIRoot(), arg_24_1)
+			innerRoot = gohelper.findChild(self:getUIRoot(), uiLayerName)
+			innerRoot = innerRoot or gohelper.findChild(self:getTopUIRoot(), uiLayerName)
 		end
 
-		if var_24_0 then
-			arg_24_0._uiLayerDict[arg_24_1] = var_24_0
+		if innerRoot then
+			self._uiLayerDict[uiLayerName] = innerRoot
 		end
 	end
 
-	return var_24_0
+	return innerRoot
 end
 
-function var_0_0.getContainer(arg_25_0, arg_25_1)
-	return arg_25_0._viewContainerDict[arg_25_1]
+function ViewMgr:getContainer(viewName)
+	return self._viewContainerDict[viewName]
 end
 
-function var_0_0._createContainer(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._viewContainerDict[arg_26_1]
+function ViewMgr:_createContainer(viewName)
+	local viewContainer = self._viewContainerDict[viewName]
 
-	if not var_26_0 then
-		local var_26_1 = arg_26_0:getSetting(arg_26_1)
+	if not viewContainer then
+		local viewSetting = self:getSetting(viewName)
 
-		if var_26_1 == nil then
-			logError("view setting is nil " .. arg_26_1)
+		if viewSetting == nil then
+			logError("view setting is nil " .. viewName)
 		end
 
-		local var_26_2 = getModulePath(var_26_1.container)
+		local classPath = getModulePath(viewSetting.container)
 
-		if var_26_2 then
-			var_26_0 = addGlobalModule(var_26_2).New()
+		if classPath then
+			local classDefine = addGlobalModule(classPath)
 
-			var_26_0:__onInit()
-			var_26_0:setSetting(arg_26_1, var_26_1)
+			viewContainer = classDefine.New()
+
+			viewContainer:__onInit()
+			viewContainer:setSetting(viewName, viewSetting)
 		else
-			logError("ViewContainer class path not exist: " .. arg_26_1)
+			logError("ViewContainer class path not exist: " .. viewName)
 		end
 	end
 
-	return var_26_0
+	return viewContainer
 end
 
-var_0_0.instance = var_0_0.New()
+ViewMgr.instance = ViewMgr.New()
 
-return var_0_0
+return ViewMgr
