@@ -22,6 +22,14 @@ function FightPlayMgr:onStageChanged(curStage, preStage)
 end
 
 function FightPlayMgr:playStart()
+	if FightDataHelper.stateMgr.isFinish then
+		DungeonModel.instance.curSendEpisodeId = nil
+
+		MainController.instance:enterMainScene(true)
+
+		return
+	end
+
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
 	local flow = self.workComp:registWork(FightWorkFlowSequence)

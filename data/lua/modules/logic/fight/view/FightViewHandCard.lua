@@ -200,7 +200,7 @@ function FightViewHandCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.OnPlayCardFlowDone, self.refreshLYAreaActive, self)
 	self:addEventCb(FightController.instance, FightEvent.BeforeSendOperate2ServerAnimDone, self.onBeforeSendOperate2ServerAnimDone, self)
 	self:addEventCb(FightController.instance, FightEvent.OnOperateMgrDisposeAllWork, self.removePreHandCardFlow, self)
-	self:addEventCb(FightController.instance, FightEvent.RefreshPreLv, self.onRefreshPreLv, self)
+	self:addEventCb(FightController.instance, FightEvent.RefreshPreLv, self.refreshPreLv, self)
 	self:_setBlockOperate(false)
 	self:_refreshPrecisionShow()
 end
@@ -233,8 +233,14 @@ function FightViewHandCard:onClose()
 	self._magicEffectCardFlow:stop()
 end
 
-function FightViewHandCard:onRefreshPreLv(existEffectTagCountDict)
-	for i, cardItem in ipairs(self._handCardItemList) do
+function FightViewHandCard:refreshPreLv(existEffectTagCountDict)
+	self.existEffectTagCountDict = existEffectTagCountDict
+
+	self:_refreshPreLv(self.existEffectTagCountDict)
+end
+
+function FightViewHandCard:_refreshPreLv(existEffectTagCountDict)
+	for _, cardItem in ipairs(self._handCardItemList) do
 		self:updateOneCardItemCardPreLv(cardItem, existEffectTagCountDict)
 	end
 end
@@ -352,7 +358,7 @@ function FightViewHandCard:_onStageChanged(curStage)
 		self:_setBlockOperate(false)
 	end
 
-	self:onRefreshPreLv()
+	self:refreshPreLv()
 
 	return self:refreshLYAreaActive()
 end
@@ -1352,7 +1358,7 @@ end
 function FightViewHandCard:_resetCard(oldCardOps)
 	FightGameMgr.operateMgr:cancelAllOperate()
 	FightDataHelper.paTaMgr:resetOp()
-	self:onRefreshPreLv()
+	self:refreshPreLv()
 	FightController.instance:dispatchEvent(FightEvent.OnResetCard, oldCardOps)
 end
 
@@ -1418,6 +1424,7 @@ function FightViewHandCard:_updateHandCards(handCards, startIndex)
 
 	self:refreshPreDeleteCard(handCards)
 	self:refreshLyCardTag()
+	self:_refreshPreLv(self.existEffectTagCountDict)
 end
 
 function FightViewHandCard:_setBlockOperate(isBlock)
