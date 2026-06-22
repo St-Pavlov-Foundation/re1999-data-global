@@ -34823,6 +34823,11 @@
         "size": 942682,
         "v": "4c226509bf30f87a3c56efb1c0472f7c"
       },
+      "bundles/28538bc1a334e7df499aa3e33790fe3e.dat": {
+        "md5": "34aa6e561dc53f865b2fa8253660a092",
+        "size": 865565,
+        "v": "b02148a4d4bac4a4b078bd29673ac354"
+      },
       "bundles/285db933cc1720c7e2bad98126bf7305.dat": {
         "md5": "7d801e90f3788c2dc7cfd7f49f0987ae",
         "size": 199494,
@@ -65149,9 +65154,9 @@
         "v": "4c226509bf30f87a3c56efb1c0472f7c"
       },
       "configs/allmanifest.dat": {
-        "md5": "aec94030f1a918b57df4de2960311ba6",
+        "md5": "a25b3e11a41d4f7aa1a416c78fbcf3fe",
         "size": 646365,
-        "v": "c8db0b850ffbc3b3784ebe9c14f4fcca"
+        "v": "b02148a4d4bac4a4b078bd29673ac354"
       },
       "configs/datacfg_1.dat": {
         "md5": "90f1c0e596e96e14987a28defac88695",
@@ -65249,9 +65254,9 @@
         "v": "c8db0b850ffbc3b3784ebe9c14f4fcca"
       },
       "configs/metainfo.dat": {
-        "md5": "968d0d5ec5e4c1c5e60f10eadef26de1",
+        "md5": "34e2e961a74a8b8764d950ac6bcc2963",
         "size": 305799,
-        "v": "c8db0b850ffbc3b3784ebe9c14f4fcca"
+        "v": "b02148a4d4bac4a4b078bd29673ac354"
       },
       "hotupdate_628329_ee3c7d8b5e205275c8331f5aee921dfa_dd669a4a0ebb001e9a9480507742aca6.zip": {
         "md5": "ee3c7d8b5e205275c8331f5aee921dfa",
@@ -65289,9 +65294,9 @@
         "v": "36b062c7bb98235e0a011eac9126fff2"
       },
       "luabytes/1ef779789c622b1c289aa82872b7fe05.dat": {
-        "md5": "9534cd6de3fc82b850ad6751e25e10f4",
-        "size": 37230360,
-        "v": "c8db0b850ffbc3b3784ebe9c14f4fcca"
+        "md5": "758b325245e7c4c5a61003c2f3a85832",
+        "size": 37230435,
+        "v": "b02148a4d4bac4a4b078bd29673ac354"
       },
       "luabytes/24376b19ec1cdb7815e53e2be086b0bb.dat": {
         "md5": "ffc420eefd8961ad4cd773f907cf481a",
@@ -65319,9 +65324,9 @@
         "v": "4c226509bf30f87a3c56efb1c0472f7c"
       },
       "luabytes/9c2019bedb92e2327bfe12024e2922a4.dat": {
-        "md5": "05fe386de2c57fe19302f59c701db5c9",
-        "size": 37289481,
-        "v": "c8db0b850ffbc3b3784ebe9c14f4fcca"
+        "md5": "abcc3902e205e2cd21fe86abc2971c00",
+        "size": 37289559,
+        "v": "b02148a4d4bac4a4b078bd29673ac354"
       },
       "luabytes/c5d60ce014bb88707088b32a10fc5d8a.dat": {
         "md5": "c26761caa548494a19ca7479a79892ef",

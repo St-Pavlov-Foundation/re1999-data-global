@@ -337,6 +337,12 @@ function VersionResSplitHandler:_getResWhiteListDict()
 	if whiteList and #whiteList > 0 then
 		for _, resPath in ipairs(whiteList) do
 			resWhiteDict[resPath] = true
+			resWhiteDict["lang/common/" .. resPath] = true
+			resWhiteDict["lang/zh/" .. resPath] = true
+			resWhiteDict["lang/en/" .. resPath] = true
+			resWhiteDict["lang/tw/" .. resPath] = true
+			resWhiteDict["lang/jp/" .. resPath] = true
+			resWhiteDict["lang/kr/" .. resPath] = true
 		end
 	end
 
