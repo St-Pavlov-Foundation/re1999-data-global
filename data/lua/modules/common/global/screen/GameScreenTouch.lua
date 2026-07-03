@@ -37,6 +37,14 @@ function GameScreenTouch:_onTick()
 	end
 end
 
+function GameScreenTouch:resetTick()
+	TaskDispatcher.cancelTask(self._onTick, self)
+
+	self._lastTime = Time.realtimeSinceStartup
+
+	TaskDispatcher.runRepeat(self._onTick, self, 5)
+end
+
 function GameScreenTouch:_onApplicationPause(isFront)
 	if isFront then
 		self._lastTime = Time.realtimeSinceStartup

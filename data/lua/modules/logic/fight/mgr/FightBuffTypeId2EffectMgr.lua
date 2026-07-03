@@ -60,6 +60,11 @@ function FightBuffTypeId2EffectMgr:_onRemoveEntityBuff(entityId, buffMO)
 
 		if counter == 0 then
 			local effect = config.delEffect
+
+			if string.nilorempty(effect) then
+				return
+			end
+
 			local pos = config.pos
 			local posX = pos[1] or 0
 
@@ -138,6 +143,11 @@ function FightBuffTypeId2EffectMgr:addEffect(entityId, buffTypeId)
 	end
 
 	local effect = config.effect
+
+	if string.nilorempty(effect) then
+		return
+	end
+
 	local pos = config.pos
 	local posX = pos[1] or 0
 

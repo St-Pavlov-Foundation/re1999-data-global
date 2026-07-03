@@ -2548,6 +2548,84 @@ local module_cmd = {
 		"Act228GetFinalBonusRequest",
 		"Act228GetFinalBonusReply"
 	},
+	[32636] = {
+		"Activity229",
+		"GetAct229InfoRequest",
+		"GetAct229InfoReply"
+	},
+	[15591] = {
+		"Activity229",
+		"Act229ResetStageRequest",
+		"Act229ResetStageReply"
+	},
+	[29242] = {
+		"Activity229",
+		"StartAct229BattleRequest",
+		"StartAct229BattleReply"
+	},
+	[-1727] = {
+		"Activity229",
+		"Act229BattleFinishPush"
+	},
+	[10606] = {
+		"Activity231",
+		"GetAct231InfoRequest",
+		"GetAct231InfoReply"
+	},
+	[3798] = {
+		"Activity231",
+		"Act231BuyResearcherRequest",
+		"Act231BuyResearcherReply"
+	},
+	[-20997] = {
+		"Activity231",
+		"Act231UnlockSeatRequest",
+		"Act231UnlockSeatReply"
+	},
+	[21853] = {
+		"Activity231",
+		"Act231StartResearchRequest",
+		"Act231StartResearchReply"
+	},
+	[-26736] = {
+		"Activity231",
+		"Act231FinishResearchRequest",
+		"Act231FinishResearchReply"
+	},
+	[26061] = {
+		"Activity231",
+		"Act231PauseResearchRequest",
+		"Act231PauseResearchReply"
+	},
+	[244] = {
+		"Activity231",
+		"Act231ContinueResearchRequest",
+		"Act231ContinueResearchReply"
+	},
+	[-14125] = {
+		"Activity231",
+		"Act231RecordPlaySecondRequest",
+		"Act231RecordPlaySecondReply"
+	},
+	[20280] = {
+		"Activity231",
+		"Act231MissionPush"
+	},
+	[-22802] = {
+		"Activity240",
+		"Act240GetInfoRequest",
+		"Act240GetInfoReply"
+	},
+	[5098] = {
+		"Activity240",
+		"Act240SignInRequest",
+		"Act240SignInReply"
+	},
+	[26560] = {
+		"Activity240",
+		"Act240BackdateRequest",
+		"Act240BackdateReply"
+	},
 	[-14582] = {
 		"Activity",
 		"GetActivityInfosRequest",
@@ -3219,6 +3297,16 @@ local module_cmd = {
 		"Currency",
 		"ExchangeDiamondRequest",
 		"ExchangeDiamondReply"
+	},
+	[20144] = {
+		"Currency",
+		"ExchangeSameCurrencyRequest",
+		"ExchangeSameCurrencyReply"
+	},
+	[25023] = {
+		"Currency",
+		"PopExchangeSameCurrencyRequest",
+		"PopExchangeSameCurrencyReply"
 	},
 	[-15619] = {
 		"Dialog",
@@ -4782,6 +4870,11 @@ local module_cmd = {
 		"SetPlayerCardCritterRequest",
 		"SetPlayerCardCritterReply"
 	},
+	[6526] = {
+		"PlayerCard",
+		"SetPlayerCardBadgeRequest",
+		"SetPlayerCardBadgeReply"
+	},
 	[14839] = {
 		"Player",
 		"GetPlayerInfoRequest",
@@ -5549,6 +5642,11 @@ local module_cmd = {
 		"Rouge2SelectDropRequest",
 		"Rouge2SelectDropReply"
 	},
+	[5609] = {
+		"Rouge2",
+		"Rouge2RefreshDropRequest",
+		"Rouge2RefreshDropReply"
+	},
 	[31123] = {
 		"Rouge2",
 		"Rouge2SelectLostCollectionRequest",
@@ -5568,6 +5666,16 @@ local module_cmd = {
 		"Rouge2",
 		"Rouge2EndBandRequest",
 		"Rouge2EndBandReply"
+	},
+	[-9298] = {
+		"Rouge2",
+		"Rouge2EndCheckRequest",
+		"Rouge2EndCheckReply"
+	},
+	[14503] = {
+		"Rouge2",
+		"Rouge2ReRollCheckRequest",
+		"Rouge2ReRollCheckReply"
 	},
 	[-4728] = {
 		"Rouge2",

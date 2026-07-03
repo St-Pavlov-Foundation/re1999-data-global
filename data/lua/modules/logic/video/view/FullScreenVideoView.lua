@@ -35,6 +35,9 @@ function FullScreenVideoView:onOpen()
 		AudioMgr.instance:trigger(self.viewParam.videoAudio)
 	end
 
+	self._videoPlayer:setSkipOnDrop(true)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "FullScreenVideoView", true)
+
 	self._videoPath = self.viewParam.videoPath
 
 	self._videoPlayer:play(self.viewParam.videoPath, false, self.videoStatusUpdate, self)
@@ -101,6 +104,7 @@ function FullScreenVideoView:_onViewOpen(viewName)
 end
 
 function FullScreenVideoView:onDestroyView()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "FullScreenVideoView", false)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onViewOpen, self)
 	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
 

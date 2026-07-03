@@ -6,9 +6,11 @@ local lua_copost_password_paper = {}
 local fields = {
 	id = 1,
 	diskText = 5,
+	item = 7,
 	order = 6,
 	allNum = 3,
 	diskIcon = 4,
+	viewType = 8,
 	versionId = 2
 }
 local primaryKey = {

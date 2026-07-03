@@ -4,21 +4,23 @@ module("modules.configs.excel2json.lua_activity125", package.seeall)
 
 local lua_activity125 = {}
 local fields = {
-	targetFrequency = 7,
-	name = 8,
+	clientbonus = 12,
+	key = 15,
+	taskId = 5,
+	musictime = 13,
+	groupId = 17,
+	name = 9,
+	targetFrequency = 8,
+	sourceid = 16,
+	text = 10,
 	preId = 3,
-	musictime = 12,
-	clientbonus = 11,
-	openDay = 4,
-	time = 13,
-	sourceid = 15,
-	text = 9,
-	key = 14,
-	initFrequency = 6,
-	id = 2,
-	frequency = 5,
+	initFrequency = 7,
 	activityId = 1,
-	bonus = 10
+	openDay = 4,
+	time = 14,
+	id = 2,
+	frequency = 6,
+	bonus = 11
 }
 local primaryKey = {
 	"activityId",

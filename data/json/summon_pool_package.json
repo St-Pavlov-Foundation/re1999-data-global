@@ -98,5 +98,25 @@
     "showLimit": "",
     "className": "",
     "posOffset": "0#0"
+  },
+  {
+    "id": 36131,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "836010#811327#836002#836003#836004#811315#610004#610006#836006#836007",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 36141,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#836002#836003#836004#811315#610004#610006#836006#836007",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
   }
 ]

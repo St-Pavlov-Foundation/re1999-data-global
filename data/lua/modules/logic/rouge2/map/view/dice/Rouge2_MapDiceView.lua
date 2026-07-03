@@ -28,6 +28,7 @@ end
 
 function Rouge2_MapDiceView:addEvents()
 	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
 end
 
 function Rouge2_MapDiceView:removeEvents()
@@ -35,7 +36,7 @@ function Rouge2_MapDiceView:removeEvents()
 end
 
 function Rouge2_MapDiceView:_btnCloseOnClick()
-	self:closeThis()
+	self.viewContainer:endAttrCheck()
 end
 
 function Rouge2_MapDiceView:_editableInitView()
@@ -55,17 +56,21 @@ function Rouge2_MapDiceView:_editableInitView()
 end
 
 function Rouge2_MapDiceView:onUpdateParam()
-	return
+	self:refresh(self.viewParam and self.viewParam.checkResInfo)
 end
 
 function Rouge2_MapDiceView:onOpen()
-	self:refreshInfo()
+	self:refresh(self.viewParam and self.viewParam.checkResInfo)
+end
+
+function Rouge2_MapDiceView:refresh(checkResInfo)
+	self:refreshInfo(checkResInfo)
 	self:refreshTitle()
 	self:refreshFixUI()
 end
 
-function Rouge2_MapDiceView:refreshInfo()
-	self._checkResInfo = self.viewParam and self.viewParam.checkResInfo
+function Rouge2_MapDiceView:refreshInfo(checkResInfo)
+	self._checkResInfo = checkResInfo
 	self._checkCo = self._checkResInfo and self._checkResInfo:getCheckConfig()
 	self._checkId = self._checkResInfo and self._checkResInfo:getCheckId()
 	self._checkDiceRes = self._checkResInfo and self._checkResInfo:getCheckDiceRes()
@@ -99,10 +104,20 @@ function Rouge2_MapDiceView:refreshFixUI()
 
 	self._fixInfoList, self._totalFixValue = self:_buildFixInfoList()
 
+	local useFixItemMap = {}
+
 	for index, fixInfo in ipairs(self._fixInfoList) do
 		local fixItem = self:_getOrCreateFixItem(index)
 
 		fixItem:onUpdateMO(fixInfo, index)
+
+		useFixItemMap[fixItem] = true
+	end
+
+	for _, fixItem in pairs(self._fixItemTab) do
+		if not useFixItemMap[fixItem] then
+			fixItem:setVisible(false)
+		end
 	end
 end
 
@@ -157,8 +172,6 @@ function Rouge2_MapDiceView:_getOrCreateFixItem(index)
 	local fixItem = self._fixItemTab[index]
 
 	if not fixItem then
-		fixItem = self:getUserDataTb_()
-
 		local go = gohelper.cloneInPlace(self._goFixItem, index)
 
 		fixItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, Rouge2_MapDiceFixItem)
@@ -174,6 +187,22 @@ end
 
 function Rouge2_MapDiceView:getTotalFixValue()
 	return self._totalFixValue
+end
+
+function Rouge2_MapDiceView:_onUpdateMapInfo()
+	local isAttrCheck = Rouge2_MapAttrCheckHelper.isAttrCheckInteract()
+
+	if not isAttrCheck then
+		return
+	end
+
+	local checkResInfo = Rouge2_MapAttrCheckHelper.buildCurCheckResInfoMO()
+
+	self:refresh(checkResInfo)
+end
+
+function Rouge2_MapDiceView:getCheckResInfo()
+	return self._checkResInfo
 end
 
 function Rouge2_MapDiceView:onClose()

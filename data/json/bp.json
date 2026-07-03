@@ -623,5 +623,30 @@
     "activityId": 13507,
     "specialBonus": 355,
     "specialPropDesc": "language_10118314"
+  },
+  {
+    "bpId": 25,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#823601#1|1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#173701#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10119379",
+    "bpSkinNametxt": "language_10119465",
+    "bpSkinEnNametxt": "The Weight of Words",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2026-07-02 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "promptDays": 7,
+    "activityId": 13607,
+    "specialBonus": 375,
+    "specialPropDesc": "language_10118314"
   }
 ]

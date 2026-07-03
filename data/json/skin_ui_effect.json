@@ -592,5 +592,14 @@
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
+  },
+  {
+    "id": 312703,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_mes_idle2",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
   }
 ]

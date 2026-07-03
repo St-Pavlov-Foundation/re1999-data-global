@@ -35,4 +35,14 @@ function SummonResultViewContainer:_buildCurrency()
 	}
 end
 
+function SummonResultViewContainer:refreshCurrencyType(curPool)
+	if self._currencyView then
+		local pool = curPool or SummonMainModel.instance:getCurPool()
+
+		if pool then
+			self._currencyView:setCurrencyType(SummonMainModel.getCostCurrencyParam(pool))
+		end
+	end
+end
+
 return SummonResultViewContainer

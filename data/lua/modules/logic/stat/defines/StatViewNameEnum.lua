@@ -225,7 +225,12 @@ StatViewNameEnum.ChineseViewName = {
 	[ViewName.VersionActivity2_3NewCultivationGiftView] = "狂想活动界面",
 	[ViewName.VersionActivity2_3NewCultivationDetailView] = "闪念总览效果界面",
 	[ViewName.Season123_3_5EntryView] = "UTTU玩法",
-	[ViewName.Season123_3_5EpisodeListView] = "UTTU选择关卡"
+	[ViewName.Season123_3_5EpisodeListView] = "UTTU选择关卡",
+	[ViewName.VersionActivity3_6EnterView] = "3.6版本活动页",
+	[ViewName.VersionActivity3_6DungeonMapView] = "副本地图-人们向何处去",
+	[ViewName.VersionActivity3_6StoreView] = "3.6副本商店",
+	[ViewName.AbyssMainView] = "焦点闪回-选择关卡",
+	[ViewName.V3a6YaMiMainView] = "哑谜角色活动"
 }
 StatViewNameEnum.NeedTrackViewDict = {
 	[ViewName.TurnBackFullView] = true,
@@ -427,7 +432,12 @@ StatViewNameEnum.NeedTrackViewDict = {
 	[ViewName.VersionActivity2_3NewCultivationGiftView] = true,
 	[ViewName.VersionActivity2_3NewCultivationDetailView] = true,
 	[ViewName.Season123_3_5EntryView] = true,
-	[ViewName.Season123_3_5EpisodeListView] = true
+	[ViewName.Season123_3_5EpisodeListView] = true,
+	[ViewName.VersionActivity3_6EnterView] = true,
+	[ViewName.VersionActivity3_6DungeonMapView] = true,
+	[ViewName.VersionActivity3_6StoreView] = true,
+	[ViewName.AbyssMainView] = true,
+	[ViewName.V3a6YaMiMainView] = true
 }
 StatViewNameEnum.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
@@ -447,7 +457,8 @@ StatViewNameEnum.NeedListenTabSwitchList = {
 	ViewName.VersionActivity3_2EnterView,
 	ViewName.VersionActivity3_3EnterView,
 	ViewName.VersionActivity3_4EnterView,
-	ViewName.VersionActivity3_5EnterView
+	ViewName.VersionActivity3_5EnterView,
+	ViewName.VersionActivity3_6EnterView
 }
 StatViewNameEnum.TabViewContainerID = {
 	[ViewName.VersionActivity1_8EnterView] = 2,
@@ -467,7 +478,8 @@ StatViewNameEnum.TabViewContainerID = {
 	[ViewName.VersionActivity3_2EnterView] = 2,
 	[ViewName.VersionActivity3_3EnterView] = 2,
 	[ViewName.VersionActivity3_4EnterView] = 2,
-	[ViewName.VersionActivity3_5EnterView] = 2
+	[ViewName.VersionActivity3_5EnterView] = 2,
+	[ViewName.VersionActivity3_6EnterView] = 2
 }
 StatViewNameEnum.TabViewName = {
 	VersionActivity3_0_v2a3_ReactivityEnterview = "2.3活动复刻",
@@ -491,7 +503,7 @@ StatViewNameEnum.TabViewName = {
 	V2a6_CooperGarlandEnterView = "库珀花环",
 	VersionActivity2_4DungeonEnterView = "地球上最后的夜晚",
 	V2a2_Season166EnterView = "赛季",
-	VersionActivity2_4RougeEnterView = "常驻肉鸽",
+	V3a6YaMiEnterView = "哑谜",
 	VersionActivity2_5LiangYueEnterView = "梁月",
 	VersionActivity3_2HuiDiaoLanEnterView = "灰调蓝",
 	VersionActivity2_3DungeonEnterView = "圣火纪行：东区黎明",
@@ -512,6 +524,8 @@ StatViewNameEnum.TabViewName = {
 	VersionActivity2_8AutoChessEnterView = "魔精自走棋",
 	V2a5_v1a6_ReactivityEnterview = "1.6活动复刻",
 	VersionActivity3_5LorentzEnterView = "洛伦兹",
+	AbyssEnterView = "焦点闪回",
+	VersionActivity2_4RougeEnterView = "常驻肉鸽",
 	V3a5_v2a7_ReactivityEnterview = "2.7活动复刻",
 	V2a2_RoomCritterEnterView = "魔精公司",
 	VersionActivity3_0KaRongEnterView = "卡戎",
@@ -519,6 +533,7 @@ StatViewNameEnum.TabViewName = {
 	V3a5_Season123EnterView = "UTTU",
 	VersionActivity2_8MoLiDeErEnterView = "莫莉德尔",
 	V2a4_PinballEnterView = "图图石子",
+	VersionActivity3_6DungeonEnterView = "人们向何处去",
 	V2a3_Season123EnterView = "赛季",
 	V2a6_XugoujiEnterView = "虚构集",
 	V2a3_ReactivityEnterview = "2.3活动复刻",

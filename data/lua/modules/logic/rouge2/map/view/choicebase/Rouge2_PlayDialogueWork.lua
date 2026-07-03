@@ -4,7 +4,7 @@ module("modules.logic.rouge2.map.view.choicebase.Rouge2_PlayDialogueWork", packa
 
 local Rouge2_PlayDialogueWork = class("Rouge2_PlayDialogueWork", BaseWork)
 
-function Rouge2_PlayDialogueWork:onStart(context)
+function Rouge2_PlayDialogueWork:onStart()
 	self._flow = FlowSequence.New()
 
 	local isPoping = Rouge2_PopController.instance:isPopping()

@@ -677,26 +677,26 @@ function StoryFrontItem:playTextFadeIn(co, callback, callbackobj)
 
 	self:_killFloatTween()
 
+	local txt = self._markScreenText.text
+
+	if string.match(txt, "<color=#%x+>") then
+		txt = string.gsub(txt, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
+	end
+
+	local markTopList = StoryTool.getMarkTopTextList(txt)
+
+	txt = StoryTool.filterMarkTop(txt)
+	self._markScreenText.text = StoryTool.filterSpTag(txt)
+
+	TaskDispatcher.runDelay(function()
+		if self._conMark and markTopList and #markTopList > 0 then
+			self._conMark:SetMarksTop(markTopList)
+		end
+	end, nil, 0.01)
+
 	if self._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
 		self:_fadeFinished()
 	else
-		local txt = self._markScreenText.text
-
-		if string.match(txt, "<color=#%x+>") then
-			txt = string.gsub(txt, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
-		end
-
-		local markTopList = StoryTool.getMarkTopTextList(txt)
-
-		txt = StoryTool.filterMarkTop(txt)
-		self._markScreenText.text = StoryTool.filterSpTag(txt)
-
-		TaskDispatcher.runDelay(function()
-			if self._conMark and markTopList and #markTopList > 0 then
-				self._conMark:SetMarksTop(markTopList)
-			end
-		end, nil, 0.01)
-
 		self._floatTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, self._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._fadeUpdate, self._fadeFinished, self, nil, EaseType.Linear)
 	end
 end

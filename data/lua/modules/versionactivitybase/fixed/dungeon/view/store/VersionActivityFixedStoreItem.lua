@@ -15,6 +15,10 @@ local function sortGoods(goodCo1, goodCo2, actId)
 		return goods2SellOut
 	end
 
+	if goodCo1.specProduct ~= goodCo2.specProduct then
+		return goodCo1.specProduct == 1
+	end
+
 	return goodCo1.id < goodCo2.id
 end
 
@@ -103,26 +107,25 @@ function VersionActivityFixedStoreItem:refreshGoods()
 	local count = 0
 
 	for index, goodsCo in ipairs(self.groupGoodsCoList) do
-		if goodsCo.specProduct ~= 1 then
-			goodsItem = self.goodsItemList[goodsCo.id]
+		goodsItem = self.goodsItemList[goodsCo.id]
 
-			if not goodsItem then
-				local goodsItemGO = gohelper.cloneInPlace(self.goStoreGoodsItem)
+		if not goodsItem then
+			local goodsItemGO = gohelper.cloneInPlace(self.goStoreGoodsItem)
+			local storeGoodsItem = goodsCo.specProduct == 1 and VersionActivitySpecialStoreGoodsItem or VersionActivityFixedStoreGoodsItem
 
-				goodsItem = VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(self._bigVersion, self._smallVersion).New()
+			goodsItem = storeGoodsItem.New()
 
-				goodsItem:setActId(self.actId)
-				goodsItem:onInitView(goodsItemGO)
+			goodsItem:setActId(self.actId)
+			goodsItem:onInitView(goodsItemGO)
 
-				self.goodsItemList[goodsCo.id] = goodsItem
-			end
-
-			goodsItem:updateInfo(goodsCo)
-
-			count = count + 1
-
-			gohelper.setSibling(goodsItem.go, index)
+			self.goodsItemList[goodsCo.id] = goodsItem
 		end
+
+		goodsItem:updateInfo(goodsCo)
+
+		count = count + 1
+
+		gohelper.setSibling(goodsItem.go, index)
 	end
 end
 

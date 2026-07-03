@@ -137,6 +137,12 @@ function LoginGetInfoWork:_initInfo()
 			UnlockVoucherRpc.instance,
 			"sendGetUnlockVoucherInfoRequest",
 			false
+		},
+		{
+			CurrencyRpc.sendExchangeSameCurrencyRequest,
+			CurrencyRpc.instance,
+			"sendExchangeSameCurrencyRequest",
+			false
 		}
 	}
 

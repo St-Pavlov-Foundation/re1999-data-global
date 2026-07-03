@@ -68,6 +68,7 @@ PlayerDef_pb.PLAYERCARDINFOWEEKWALKVER2PLATINUMCUPFIELD = protobuf.FieldDescript
 PlayerDef_pb.PLAYERCARDINFOHEROCOUNTFIELD = protobuf.FieldDescriptor()
 PlayerDef_pb.PLAYERCARDINFOTOWERLAYERMETREFIELD = protobuf.FieldDescriptor()
 PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD = protobuf.FieldDescriptor()
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD = protobuf.FieldDescriptor()
 PlayerDef_pb.PLAYERCLOTH_MSG = protobuf.Descriptor()
 PlayerDef_pb.PLAYERCLOTHCLOTHIDFIELD = protobuf.FieldDescriptor()
 PlayerDef_pb.PLAYERCLOTHLEVELFIELD = protobuf.FieldDescriptor()
@@ -636,6 +637,15 @@ PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD.has_default_value = false
 PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD.default_value = 0
 PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD.type = 5
 PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD.cpp_type = 1
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.name = "badgeIds"
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.full_name = ".PlayerCardInfo.badgeIds"
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.number = 26
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.index = 25
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.label = 3
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.has_default_value = false
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.default_value = {}
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.type = 5
+PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD.cpp_type = 1
 PlayerDef_pb.PLAYERCARDINFO_MSG.name = "PlayerCardInfo"
 PlayerDef_pb.PLAYERCARDINFO_MSG.full_name = ".PlayerCardInfo"
 PlayerDef_pb.PLAYERCARDINFO_MSG.nested_types = {}
@@ -665,7 +675,8 @@ PlayerDef_pb.PLAYERCARDINFO_MSG.fields = {
 	PlayerDef_pb.PLAYERCARDINFOWEEKWALKVER2PLATINUMCUPFIELD,
 	PlayerDef_pb.PLAYERCARDINFOHEROCOUNTFIELD,
 	PlayerDef_pb.PLAYERCARDINFOTOWERLAYERMETREFIELD,
-	PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD
+	PlayerDef_pb.PLAYERCARDINFOACT128LEVELFIELD,
+	PlayerDef_pb.PLAYERCARDINFOBADGEIDSFIELD
 }
 PlayerDef_pb.PLAYERCARDINFO_MSG.is_extendable = false
 PlayerDef_pb.PLAYERCARDINFO_MSG.extensions = {}

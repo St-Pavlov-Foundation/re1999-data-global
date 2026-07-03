@@ -796,6 +796,12 @@ function FightBuffComp:registClasses()
 	if entityData.modelId == 3023 then
 		self:newClass(FightBuffShiXiHangShiPenEffect, self._entity)
 	end
+
+	local skin = entityData.skin
+
+	if lua_fight_ya_mi_hu_ti_effect.configDict[skin] then
+		self:newClass(FightBuffYaMiHuTiEffect, self._entity)
+	end
 end
 
 return FightBuffComp

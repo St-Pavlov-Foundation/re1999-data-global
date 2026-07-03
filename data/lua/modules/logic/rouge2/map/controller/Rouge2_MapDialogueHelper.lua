@@ -66,7 +66,7 @@ function Rouge2_MapDialogueHelper._getEventDescList(nodeMo)
 	local eventMo = nodeMo.eventMo
 	local selectChoiceList = eventMo:getChoiceSelectList()
 	local selectCheckResList = eventMo:getChoiceSelectCheckResList()
-	local selectChoiceNum = selectChoiceList and #selectChoiceList or 0
+	local selectChoiceNum = selectCheckResList and #selectCheckResList or 0
 	local list = {}
 	local eventCo = nodeMo:getEventCo()
 	local mainDesc = eventCo and eventCo.mainDesc

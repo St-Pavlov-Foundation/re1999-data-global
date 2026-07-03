@@ -115,6 +115,7 @@ function MassHotUpdateMgr:_setUnmatchRes(diffList)
 
 	self._allSize = tonumber(tostring(allSize))
 	self._lastFailedFileCount = 0
+	self._nextStatProgressPer = 0
 
 	if self._allSize > 0 then
 		if not self._checkNet or UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
@@ -182,6 +183,7 @@ function MassHotUpdateMgr:updateFakerSize()
 	local progressMsg = string.format(booterLang("mass_download_Progress"), curSize, allSize)
 
 	BootLoadingView.instance:show(percent, progressMsg)
+	self:trackUpdatePer(percent)
 end
 
 MassHotUpdateMgr.FakerAdvanceNumDic = {
@@ -249,6 +251,7 @@ function MassHotUpdateMgr:onDownloadProgress(curSize, allSize)
 	local progressMsg = string.format(booterLang("mass_download_Progress"), curSize, allSize)
 
 	HotUpdateProgress.instance:setProgressDownloadRes(percent, progressMsg)
+	self:trackUpdatePer(percent)
 end
 
 function MassHotUpdateMgr:onDownloadFinish(failedFileCount, failSize, errorCodeList, errorMsgList)
@@ -265,6 +268,7 @@ function MassHotUpdateMgr:onDownloadFinish(failedFileCount, failSize, errorCodeL
 	self._lastRecvSize = recvSize
 
 	if failedFileCount == 0 then
+		self:trackUpdatePer(1)
 		self:doCallBack()
 	else
 		if self._lastFailedFileCount ~= failedFileCount then
@@ -511,6 +515,21 @@ function MassHotUpdateMgr:doCallBack(isSkip)
 	if self.cb then
 		self.cb(self.cbObj)
 	end
+end
+
+function MassHotUpdateMgr:trackUpdatePer(percentage)
+	if percentage < self._nextStatProgressPer then
+		return
+	end
+
+	self._nextStatProgressPer = self._nextStatProgressPer + 0.2
+
+	local data = {
+		update_amount = self._allSize,
+		update_percentage = tostring(math.ceil(percentage * 100))
+	}
+
+	SDKDataTrackMgr.instance:trackMassHotUpdatePer(data)
 end
 
 function MassHotUpdateMgr:_quitGame()

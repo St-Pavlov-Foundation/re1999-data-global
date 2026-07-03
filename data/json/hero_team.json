@@ -232,5 +232,18 @@
     "sort": 18,
     "minNum": 1,
     "maxNum": 20
+  },
+  {
+    "id": 19,
+    "actType": 229,
+    "name": "language_10118665",
+    "unlockId": 50,
+    "batNum": 4,
+    "supNum": 0,
+    "isDisplay": 1,
+    "isChangeName": 1,
+    "sort": 19,
+    "minNum": 4,
+    "maxNum": 10
   }
 ]

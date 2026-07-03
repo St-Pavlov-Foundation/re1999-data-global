@@ -113,8 +113,14 @@ function FightNameMgr:_delayAdujstUISibling()
 	table.sort(self._fightNameUIList, function(nameUI1, nameUI2)
 		local pos1 = nameUI1.entity.go.transform.position
 		local pos2 = nameUI2.entity.go.transform.position
+		local hasYaMiShield1 = FightMsgMgr.sendMsg(FightMsgId.GetYaMiShieldData, nameUI1.entity.id)
+		local hasYaMiShield2 = FightMsgMgr.sendMsg(FightMsgId.GetYaMiShieldData, nameUI2.entity.id)
 
-		if pos1.z ~= pos2.z then
+		if hasYaMiShield1 and not hasYaMiShield2 then
+			return false
+		elseif not hasYaMiShield1 and hasYaMiShield2 then
+			return true
+		elseif pos1.z ~= pos2.z then
 			return pos1.z > pos2.z
 		elseif pos1.x ~= pos2.x then
 			return math.abs(pos1.x) > math.abs(pos2.x)

@@ -290,7 +290,7 @@ function Rouge2_MapModel:setMapCurInteractive(info)
 		return
 	end
 
-	if self.curInteractiveIndex == info.curInteractiveIndex then
+	if self.curInteractiveIndex == info.curInteractiveIndex and self.curInteractive == info.curInteractive then
 		return
 	end
 
@@ -690,14 +690,13 @@ function Rouge2_MapModel:checkIsLoading()
 	return self.loading
 end
 
-function Rouge2_MapModel:recordCurChoiceEventSelectId(choiceId, choiceIndex, choiceRate)
+function Rouge2_MapModel:recordCurChoiceEventSelectId(choiceId, choiceIndex)
 	self.curChoiceId = choiceId
 	self.curChoiceIndex = choiceIndex
-	self.curChoiceRate = choiceRate
 end
 
 function Rouge2_MapModel:getCurChoiceId()
-	return self.curChoiceId, self.curChoiceIndex, self.curChoiceRate
+	return self.curChoiceId, self.curChoiceIndex
 end
 
 function Rouge2_MapModel:setPlayingDialogue(playing)

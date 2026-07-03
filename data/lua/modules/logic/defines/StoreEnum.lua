@@ -54,6 +54,8 @@ StoreEnum.StoreId = {
 	DecorateStore = 800,
 	Summon = 130,
 	RoomStore = 170,
+	MonthCardRecommend = 1000,
+	TowerStore = 140,
 	VersionPackage = 612,
 	SummonCost = 118,
 	LimitStore = 112,
@@ -66,13 +68,20 @@ StoreEnum.StoreId = {
 	Skin = 510,
 	GlowCharge = 412
 }
-StoreEnum.DefaultTabId = StoreEnum.StoreId.RecommendStore
+StoreEnum.DefaultTabId = StoreEnum.StoreId.MonthCardRecommend
 StoreEnum.RecommendPackageStoreIdList = {
 	StoreEnum.StoreId.VersionPackage,
 	StoreEnum.StoreId.OneTimePackage,
 	StoreEnum.StoreId.NormalPackage,
 	StoreEnum.StoreId.EventPackage,
 	StoreEnum.StoreId.MediciPackage
+}
+StoreEnum.DailyRefreshStoreIdList = {
+	StoreEnum.StoreId.VersionPackage,
+	StoreEnum.StoreId.OneTimePackage,
+	StoreEnum.StoreId.NormalPackage,
+	StoreEnum.StoreId.Skin,
+	StoreEnum.StoreId.DecorateStore
 }
 StoreEnum.RecommendSubStoreId = {
 	StoreRoleSkinView = 801,
@@ -164,5 +173,26 @@ StoreEnum.SurvivalStore = {
 	NormalStore = 301
 }
 StoreEnum.SummonPoolPackageMinCount = 2
+StoreEnum.DefaultSelectFirstTabList = {
+	[StoreEnum.StoreId.MonthCardRecommend] = 1,
+	[StoreEnum.StoreId.Package] = 2,
+	[StoreEnum.StoreTabId.Skin] = 3,
+	[StoreEnum.StoreId.DecorateStore] = 4
+}
+StoreEnum.NewPlayerRegisterLimit = 82
+StoreEnum.MonthAndSeasonCardTab = {
+	MonthCard = 1,
+	SeasonCard = 2
+}
+StoreEnum.MonthAndSeasonCardTab2GoodsDic = {
+	[StoreEnum.MonthAndSeasonCardTab.MonthCard] = StoreEnum.MonthCardGoodsId,
+	[StoreEnum.MonthAndSeasonCardTab.SeasonCard] = StoreEnum.SeasonCardGoodsId
+}
+StoreEnum.ChargeStoreMonthCardDic = {
+	[StoreEnum.MonthCardGoodsId] = true,
+	[StoreEnum.SeasonCardGoodsId] = true,
+	[StoreEnum.LittleMonthCardGoodsId] = true
+}
+StoreEnum.RecommendPackageMaxCount = 8
 
 return StoreEnum

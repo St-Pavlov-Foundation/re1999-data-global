@@ -24,7 +24,7 @@ end
 function Rouge2_BackpackBoxTipsView:addEvents()
 	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 	self._btnconfirm:AddClickListener(self._btnconfirmOnClick, self)
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateAttrInfo, self._onUpdateAttrInfo, self)
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
 end
 
 function Rouge2_BackpackBoxTipsView:removeEvents()
@@ -115,7 +115,7 @@ function Rouge2_BackpackBoxTipsView:_refreshAttrItem(obj, attrId, index)
 	Rouge2_IconHelper.setAttributeIcon(attrId, imagebase)
 end
 
-function Rouge2_BackpackBoxTipsView:_onUpdateAttrInfo()
+function Rouge2_BackpackBoxTipsView:_onUpdateRougeInfo()
 	self:refreshUI()
 end
 

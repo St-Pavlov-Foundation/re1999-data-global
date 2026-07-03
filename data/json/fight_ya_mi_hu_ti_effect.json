@@ -1,0 +1,30 @@
+[
+  {
+    "id": 314301,
+    "effect": "buff/buff_v3a6_ym_qthd",
+    "pos": [
+      1,
+      0,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000044,
+    "delAudio": 0
+  },
+  {
+    "id": 314302,
+    "effect": "buff/buff_v3a6_ym_qthd",
+    "pos": [
+      1,
+      0,
+      0
+    ],
+    "reverseX": 1,
+    "delEffect": "",
+    "delTime": 0,
+    "audio": 411000044,
+    "delAudio": 0
+  }
+]

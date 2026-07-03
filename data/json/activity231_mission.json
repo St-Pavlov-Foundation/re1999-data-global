@@ -1,0 +1,101 @@
+[
+  {
+    "activityId": 13608,
+    "id": 100001,
+    "unlockCondition": "",
+    "desc": "language_10119608",
+    "listenerType": "ResearchMaterial",
+    "listenerParam": "101#102",
+    "maxProgress": 1,
+    "prepose": "",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100002,
+    "unlockCondition": "ResearchLevel#1",
+    "desc": "language_10119609",
+    "listenerType": "ResearchCount",
+    "listenerParam": "",
+    "maxProgress": 2,
+    "prepose": "100001",
+    "bonus": 6000
+  },
+  {
+    "activityId": 13608,
+    "id": 100003,
+    "unlockCondition": "ResearchLevel#2",
+    "desc": "language_10119610",
+    "listenerType": "ResearchMaterial",
+    "listenerParam": "902",
+    "maxProgress": 1,
+    "prepose": "100002",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100004,
+    "unlockCondition": "ResearchLevel#2",
+    "desc": "language_10119611",
+    "listenerType": "ResearchMaterial",
+    "listenerParam": "903",
+    "maxProgress": 1,
+    "prepose": "100003",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100005,
+    "unlockCondition": "ResearchLevel#3",
+    "desc": "language_10119612",
+    "listenerType": "ResearchMaterial",
+    "listenerParam": "904",
+    "maxProgress": 1,
+    "prepose": "100004",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100006,
+    "unlockCondition": "ResearchLevel#3",
+    "desc": "language_10119613",
+    "listenerType": "ResearchRating",
+    "listenerParam": "2",
+    "maxProgress": 1,
+    "prepose": "100005",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100007,
+    "unlockCondition": "ResearchLevel#5",
+    "desc": "language_10119614",
+    "listenerType": "ResearchMaterial",
+    "listenerParam": "301",
+    "maxProgress": 1,
+    "prepose": "100006",
+    "bonus": 3000
+  },
+  {
+    "activityId": 13608,
+    "id": 100008,
+    "unlockCondition": "ResearchLevel#5",
+    "desc": "language_10119615",
+    "listenerType": "ResearchRating",
+    "listenerParam": "3",
+    "maxProgress": 1,
+    "prepose": "100007",
+    "bonus": 6000
+  },
+  {
+    "activityId": 13608,
+    "id": 100009,
+    "unlockCondition": "ResearchLevel#6",
+    "desc": "language_10119616",
+    "listenerType": "ResearchRating",
+    "listenerParam": "4",
+    "maxProgress": 1,
+    "prepose": "100008",
+    "bonus": 9000
+  }
+]

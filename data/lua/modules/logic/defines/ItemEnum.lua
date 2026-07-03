@@ -43,6 +43,7 @@ ItemEnum.SubType = {
 	HeroExpBoxKey = 77,
 	SummonUISkin = 80,
 	OptionalHeroGift = 52,
+	Badge = 39,
 	UnlimitedPower = 32,
 	DecorateDiscountTicket = 63,
 	CritterTrain = 28,

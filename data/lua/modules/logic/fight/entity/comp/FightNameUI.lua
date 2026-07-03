@@ -173,6 +173,7 @@ function FightNameUI:getUIGO()
 end
 
 function FightNameUI:_onLoaded()
+	self:com_registMsg(FightMsgId.GetHpFillAmount, self.onGetHpFillAmount)
 	gohelper.setAsLastSibling(self._floatContainerGO)
 
 	self._uiGO = self._uiLoader:getInstGO()
@@ -221,6 +222,7 @@ function FightNameUI:_onLoaded()
 	self:initWeaknessMgr()
 	self:initToughnessMgr()
 	self:initToughnessIconMgr()
+	self:initYaMiShieldMgr()
 
 	self._opContainerGO = gohelper.findChild(self._uiGO, "layout/top/op")
 	self._opContainerTr = self._opContainerGO.transform
@@ -393,6 +395,10 @@ function FightNameUI:initToughnessIconMgr()
 	end
 
 	self.toughnessIconMgr = self:newClass(FightNameUIToughnessIconMgr, self.entity, obj, monsterConfig)
+end
+
+function FightNameUI:initYaMiShieldMgr()
+	self.yaMiShieldMgr = self:newClass(FightNameUIYaMiShieldMgr, self.entity, self._uiGO)
 end
 
 function FightNameUI:initStressMgr()
@@ -643,8 +649,9 @@ end
 function FightNameUI:getFloatItemStartY()
 	local opItemList = FightMsgMgr.sendMsg(FightMsgId.GetEnemyAiUseCardItemList, self.entity.id)
 	local opItemCount = opItemList and #opItemList or 0
+	local yamiShieldOffset = FightMsgMgr.sendMsg(FightMsgId.GetYaMiShieldUIOffset, self.entity.id) or 0
 
-	return (self.buffMgr:getBuffLineCount() or 0) * 34.5 + (opItemCount > 0 and 42 or 0)
+	return (self.buffMgr:getBuffLineCount() or 0) * 34.5 + (opItemCount > 0 and 42 or 0) + yamiShieldOffset
 end
 
 function FightNameUI:showPoisoningEffect(buffCO)
@@ -681,6 +688,14 @@ function FightNameUI:setShield(num)
 	self:_tweenFillAmount()
 end
 
+function FightNameUI:onGetHpFillAmount(entityId)
+	if entityId and entityId ~= self.entity.id then
+		return
+	end
+
+	FightMsgMgr.replyMsg(FightMsgId.GetHpFillAmount, self.curHpFillAmount)
+end
+
 function FightNameUI:_tweenFillAmount(curHp, curShield)
 	curHp = curHp or self._curHp
 	curShield = curShield or self._curShield
@@ -694,6 +709,7 @@ function FightNameUI:_tweenFillAmount(curHp, curShield)
 	end
 
 	self._imgHp.fillAmount = hpFillAmount
+	self.curHpFillAmount = hpFillAmount
 
 	ZProj.TweenHelper.KillByObj(self._imgHpMinus)
 	ZProj.TweenHelper.DOFillAmount(self._imgHpMinus, hpBgFillAmount, 0.5)
@@ -703,6 +719,7 @@ function FightNameUI:_tweenFillAmount(curHp, curShield)
 	ZProj.TweenHelper.DOFillAmount(self.fictionHp, fictionHpPercent, 0.5)
 	gohelper.setActive(self._imgHpMinus.gameObject, curShield <= 0)
 	self:refreshReduceHp()
+	FightMsgMgr.sendMsg(FightMsgId.UpdateYaMiSliderItem, self.entity.id)
 end
 
 function FightNameUI:resetHp()

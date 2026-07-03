@@ -80,6 +80,7 @@ AudioEnum2_6.WarmUp = {
 }
 
 local bgm = {
+	XugoujiBgm = 3260003,
 	Act2_6DungeonBgm = 3260001
 }
 

@@ -196,6 +196,10 @@ function JumpController:canJumpToActivityView(jumpParam)
 		return self:defaultCanJump(jumpParam)
 	end
 
+	if actId == VersionActivity3_6Enum.ActivityId.YaMi then
+		return VersionActivity3_6CanJumpFunc:canJumpTo13608(jumpParamArray)
+	end
+
 	return false, toastId, toastParamList
 end
 
@@ -729,6 +733,34 @@ function JumpController:canJumpToStoreSupplementMonthCardUseView(jumpParam)
 	return true
 end
 
+function JumpController:canJump2Abyss(jumpParam)
+	local constConfig = AbyssConfig.instance:getConstConfig(AbyssEnum.ConstId.ActId)
+
+	if not constConfig or string.nilorempty(constConfig.value) then
+		logError("新深渊 不存在常量活动id配置")
+
+		return false, ToastEnum.ActivityNotOpen
+	end
+
+	local jumpActId = tonumber(constConfig.value)
+	local activityConfig = ActivityConfig.instance:getActivityCo(jumpActId)
+
+	if activityConfig.openId ~= 0 and not OpenModel.instance:isFunctionUnlock(activityConfig.openId) then
+		local toastId, toastParamList = OpenHelper.getToastIdAndParam(activityConfig.openId)
+
+		return false, toastId, toastParamList
+	end
+
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(jumpActId)
+	local canJump = status == ActivityEnum.ActivityStatus.Normal
+
+	if not canJump then
+		return false, toastId, toastParam
+	end
+
+	return true
+end
+
 JumpController.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.StoreView] = JumpController.canJumpToStoreView,
 	[JumpEnum.JumpView.SummonView] = JumpController.canJumpToSummonView,
@@ -768,7 +800,8 @@ JumpController.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.RougeRewardView] = JumpController.canJumpToRougeRewardView,
 	[JumpEnum.JumpView.RougeMainView] = JumpController.canJumpToRougeMainView,
 	[JumpEnum.JumpView.StoreSupplementMonthCardUseView] = JumpController.canJumpToStoreSupplementMonthCardUseView,
-	[JumpEnum.JumpView.SurvivalView] = JumpController.canJumpToSurvivalView
+	[JumpEnum.JumpView.SurvivalView] = JumpController.canJumpToSurvivalView,
+	[JumpEnum.JumpView.Abyss] = JumpController.canJump2Abyss
 }
 JumpController.CanJumpActFunc = {
 	[JumpEnum.ActIdEnum.Act113] = JumpController.canJump2Activity1_1Dungeon,

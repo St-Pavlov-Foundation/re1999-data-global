@@ -132,6 +132,10 @@ function HotUpdateMgr:start(onFinish, finishObj, onDownloadSucc, downloadSuccObj
 		osType = 2
 	end
 
+	if GameConfig.Instance.IsMuMu then
+		osType = 5
+	end
+
 	local channelId = SDKMgr.instance:getChannelId()
 	local resVersion = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
 	local appVersion = tonumber(BootNativeUtil.getAppVersion())

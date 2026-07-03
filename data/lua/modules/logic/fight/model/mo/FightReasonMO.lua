@@ -58,6 +58,10 @@ function FightReasonMO:_parseData()
 		Season166Model.instance:unpackFightReconnectData(self.data)
 	elseif co.type == DungeonEnum.EpisodeType.Act183 then
 		Act183Controller.instance:onReconnectFight(self.episodeId)
+	elseif co.type == DungeonEnum.EpisodeType.Abyss then
+		local dataParams = cjson.decode(self.data)
+
+		AbyssController.instance:onReconnectFight(dataParams)
 	end
 end
 

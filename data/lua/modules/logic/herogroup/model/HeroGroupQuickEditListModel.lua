@@ -65,6 +65,7 @@ function HeroGroupQuickEditListModel:copyQuickEditCardList()
 
 	local isTowerBattle = self.isTowerBattle
 	local isWeekWalk_2 = self.isWeekWalk_2
+	local isAbyss = self.isAbyss
 	local deathList = {}
 
 	if isTowerBattle then
@@ -102,13 +103,19 @@ function HeroGroupQuickEditListModel:copyQuickEditCardList()
 				else
 					table.insert(newMOList, mo)
 				end
+			elseif isAbyss then
+				if AbyssModel.instance:isCurHeroLocked(mo.heroId) then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
 			else
 				table.insert(newMOList, mo)
 			end
 		end
 	end
 
-	if self.adventure or isTowerBattle or isWeekWalk_2 then
+	if self.adventure or isTowerBattle or isWeekWalk_2 or isAbyss then
 		tabletool.addValues(newMOList, deathList)
 	end
 
@@ -299,7 +306,11 @@ function HeroGroupQuickEditListModel:checkHeroIsError(uid)
 		if cd > 0 then
 			return true
 		end
-	elseif self.isTowerBattle and TowerModel.instance:isHeroBan(mo.heroId) then
+	elseif self.isTowerBattle then
+		if TowerModel.instance:isHeroBan(mo.heroId) then
+			return true
+		end
+	elseif self.isAbyss and AbyssModel.instance:isCurHeroLocked(mo.heroId) then
 		return true
 	end
 end
@@ -385,6 +396,7 @@ function HeroGroupQuickEditListModel:setParam(adventure, isTowerBattle, groupTyp
 	self.isTowerBattle = isTowerBattle
 	self._groupType = groupType
 	self.isWeekWalk_2 = groupType == HeroGroupEnum.GroupType.WeekWalk_2
+	self.isAbyss = groupType == HeroGroupEnum.GroupType.Abyss
 end
 
 function HeroGroupQuickEditListModel:clear()

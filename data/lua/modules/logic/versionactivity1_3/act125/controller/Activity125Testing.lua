@@ -147,7 +147,7 @@ function STesting:handleGetTaskInfoReply(req, reply)
 		end
 
 		for actId, actTable in pairs(self._taskInfoDict[typeId]) do
-			if actId == 12436 then
+			if actId == 13612 then
 				for taskId, info in pairs(actTable) do
 					table.insert(taskInfo, info)
 				end
@@ -344,12 +344,20 @@ function CTesting:build_test__Act125()
 		end
 	end
 
-	local cView = WarmUp
-
-	if cView then
-		function cView._showDeadline(thisObj)
+	if WarmUp then
+		function WarmUp._showDeadline(thisObj)
 			return
 		end
+	end
+
+	if V3a6_WarmUp then
+		function V3a6_WarmUp._showDeadline(thisObj)
+			return
+		end
+	end
+
+	function self._cCfg.getWarmUpActId(thisObj)
+		return 13612
 	end
 end
 
@@ -418,7 +426,7 @@ function Activity125Testing:_offline_test()
 		end
 	end
 
-	local myActId = recentCO and recentCO.activityId or nil
+	local myActId = 13612
 
 	logError(myActId)
 

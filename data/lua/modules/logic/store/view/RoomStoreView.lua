@@ -186,7 +186,7 @@ function RoomStoreView:initCategoryItemTable(index)
 
 		self.viewContainer.notPlayAnimation = true
 
-		StoreController.instance:statSwitchStore(jumpTab)
+		StoreController.instance:onSwitchTab(jumpTab)
 	end, categoryItemTable)
 	table.insert(self._categoryItemContainer, categoryItemTable)
 	gohelper.setActive(categoryItemTable.go_childItem, false)
@@ -289,10 +289,12 @@ function RoomStoreView:_refreshGoods(update, goodsId)
 		self.storeId = secondConfig and secondConfig.storeId or 0
 	end
 
+	local isShowEmpty = true
+
 	if self.storeId == 0 then
 		StoreNormalGoodsItemListModel.instance:setMOList()
 	elseif self.storeId == StoreEnum.StoreId.CritterStore then
-		gohelper.setActive(self._goempty, false)
+		isShowEmpty = false
 
 		if update then
 			self.viewContainer:playCritterStoreAnimation()
@@ -302,12 +304,6 @@ function RoomStoreView:_refreshGoods(update, goodsId)
 
 		if storeMO then
 			local storeGoodsMOList = storeMO:getGoodsList(true)
-
-			if not next(storeGoodsMOList) then
-				gohelper.setActive(self._goempty, true)
-			else
-				gohelper.setActive(self._goempty, false)
-			end
 
 			self.rootGoodsList = {}
 
@@ -361,6 +357,10 @@ function RoomStoreView:_refreshGoods(update, goodsId)
 				end
 			end
 
+			if self.rootGoodsList and #self.rootGoodsList > 0 then
+				isShowEmpty = false
+			end
+
 			StoreRoomGoodsItemListModel.instance:setMOList(self.rootGoodsList)
 
 			if self._csPixel then
@@ -375,6 +375,8 @@ function RoomStoreView:_refreshGoods(update, goodsId)
 			})
 		end
 	end
+
+	gohelper.setActive(self._goempty, isShowEmpty)
 end
 
 function RoomStoreView:changeContentPosY(param)

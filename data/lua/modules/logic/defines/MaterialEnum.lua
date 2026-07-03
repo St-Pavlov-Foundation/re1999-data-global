@@ -66,6 +66,7 @@ MaterialEnum.GetApproach = {
 	Explore = 45,
 	BattlePass = 49,
 	AutoChessRankReward = 134,
+	CommandStationPaperReward = 169,
 	AstrologyStarReward = 62,
 	PartyClothSummon = 158,
 	SignIn = 20,

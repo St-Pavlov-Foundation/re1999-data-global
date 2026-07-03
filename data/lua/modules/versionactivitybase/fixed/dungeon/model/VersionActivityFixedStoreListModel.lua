@@ -46,6 +46,10 @@ function VersionActivityFixedStoreListModel._sortGoods(goodsCo1, goodsCo2)
 	local goods1SellOut = goodsCo1.maxBuyCount ~= 0 and goodsCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodsCo1.id) <= 0
 	local goods2SellOut = goodsCo2.maxBuyCount ~= 0 and goodsCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodsCo2.id) <= 0
 
+	if goodsCo1.specProduct ~= goodsCo2.specProduct then
+		return goodsCo1.specProduct == 1
+	end
+
 	if goods1SellOut ~= goods2SellOut then
 		if goods1SellOut then
 			return false

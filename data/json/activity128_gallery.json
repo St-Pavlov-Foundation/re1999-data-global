@@ -70,5 +70,17 @@
     "recommendStrategy": "4#11",
     "lurkNumber": 0,
     "sort": 2
+  },
+  {
+    "type": 107,
+    "id": 103363111,
+    "typeName": "language_10118833",
+    "minType": 3,
+    "galleryBg": "v3a6_bossrush_handbook_boss1",
+    "point": "2500000|5000000|10000000|30000000",
+    "pointExp": "200|200|50|50",
+    "recommendStrategy": "3#9",
+    "lurkNumber": 0,
+    "sort": 2
   }
 ]

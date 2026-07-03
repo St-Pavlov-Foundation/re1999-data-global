@@ -45,7 +45,7 @@ function FightCalculateDataMgr:afterPlayRoundData(roundData)
 	end
 end
 
-function FightCalculateDataMgr:progressToughnessByHurtInfo(actEffectData)
+function FightCalculateDataMgr:processHurtInfo(actEffectData)
 	if not actEffectData then
 		return
 	end
@@ -70,6 +70,60 @@ function FightCalculateDataMgr:progressToughnessByHurtInfo(actEffectData)
 
 		self:com_sendMsg(FightMsgId.ToughnessBreakEffect)
 	end
+
+	entityMO:setHp(entityMO.currentHp + hurtInfo.reduceHp)
+
+	hurtInfo.reduceShield = 0
+	hurtInfo.reduceTeamShareShield = 0
+
+	local absorbHurtParam = hurtInfo.absorbHurtParam
+
+	if not string.nilorempty(absorbHurtParam) then
+		hurtInfo.analysed = true
+		absorbHurtParam = cjson.decode(absorbHurtParam)
+
+		local reduceShieldBuffMap = absorbHurtParam.reduceShieldBuffMap
+
+		if not string.nilorempty(reduceShieldBuffMap) then
+			local arr = string.split(reduceShieldBuffMap, "|")
+
+			for i = 1, #arr do
+				local tab = string.split(arr[i], "#")
+				local offset = tonumber(tab[2] or 0)
+
+				hurtInfo.reduceShield = hurtInfo.reduceShield + offset
+				entityMO.shieldValue = entityMO.shieldValue - offset
+			end
+		end
+
+		local reduceTeamShareShieldBuffMap = absorbHurtParam.reduceTeamShareShieldBuffMap
+
+		if not string.nilorempty(reduceTeamShareShieldBuffMap) then
+			local arr = string.split(reduceTeamShareShieldBuffMap, "|")
+
+			for i = 1, #arr do
+				local tab = string.split(arr[i], "#")
+				local buff = self:getBuffMo(tab[1])
+
+				if buff then
+					local actInfo = buff.actInfo
+
+					for _, data in ipairs(actInfo) do
+						if data.actId == 1125 then
+							local value = data.param[1]
+
+							if value then
+								local offset = tonumber(tab[2] or 0)
+
+								data.param[1] = value - offset
+								hurtInfo.reduceTeamShareShield = hurtInfo.reduceTeamShareShield + offset
+							end
+						end
+					end
+				end
+			end
+		end
+	end
 end
 
 function FightCalculateDataMgr:playEffect2(actEffectData)
@@ -79,8 +133,7 @@ function FightCalculateDataMgr:playEffect2(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect3(actEffectData)
@@ -90,8 +143,7 @@ function FightCalculateDataMgr:playEffect3(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect4(actEffectData)
@@ -102,7 +154,7 @@ function FightCalculateDataMgr:playEffect4(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp + actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect5(actEffectData)
@@ -118,9 +170,9 @@ function FightCalculateDataMgr:playEffect5(actEffectData)
 		return
 	end
 
-	self.buffDict[buff.uid] = buff
-
 	entityMO:addBuff(buff)
+
+	self.buffDict[buff.uid] = entityMO.buffDic[buff.uid]
 end
 
 function FightCalculateDataMgr:playEffect6(actEffectData)
@@ -181,7 +233,7 @@ function FightCalculateDataMgr:playEffect12(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp + actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect13(actEffectData)
@@ -212,7 +264,7 @@ function FightCalculateDataMgr:playEffect18(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect19(actEffectData)
@@ -305,7 +357,7 @@ function FightCalculateDataMgr:playEffect38(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect39(actEffectData)
@@ -320,7 +372,7 @@ function FightCalculateDataMgr:playEffect40(actEffectData)
 	end
 
 	entityMO:setHp(actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect41(actEffectData)
@@ -332,7 +384,7 @@ function FightCalculateDataMgr:playEffect41(actEffectData)
 
 	entityMO:setHp(entityMO.currentHp + actEffectData.effectNum)
 	entityMO:setShield(0)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect42(actEffectData)
@@ -419,7 +471,7 @@ function FightCalculateDataMgr:playEffect57(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp + actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect58(actEffectData)
@@ -831,7 +883,7 @@ function FightCalculateDataMgr:playEffect109(actEffectData)
 	end
 
 	entityMO:setHp(actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect110(actEffectData)
@@ -842,7 +894,7 @@ function FightCalculateDataMgr:playEffect110(actEffectData)
 	end
 
 	entityMO:setHp(0)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect111(actEffectData)
@@ -1008,8 +1060,7 @@ function FightCalculateDataMgr:playEffect130(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect131(actEffectData)
@@ -1019,8 +1070,7 @@ function FightCalculateDataMgr:playEffect131(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect132(actEffectData)
@@ -1473,7 +1523,7 @@ function FightCalculateDataMgr:playEffect192(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect193(actEffectData)
@@ -1484,7 +1534,7 @@ function FightCalculateDataMgr:playEffect193(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect195(actEffectData)
@@ -1495,7 +1545,7 @@ function FightCalculateDataMgr:playEffect195(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp + actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect196(actEffectData)
@@ -1558,7 +1608,7 @@ function FightCalculateDataMgr:playEffect202(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect206(actEffectData)
@@ -1777,7 +1827,7 @@ function FightCalculateDataMgr:playEffect253(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect256(actEffectData)
@@ -1838,7 +1888,7 @@ function FightCalculateDataMgr:playEffect263(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect264(actEffectData)
@@ -1849,7 +1899,7 @@ function FightCalculateDataMgr:playEffect264(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect265(actEffectData)
@@ -1863,8 +1913,7 @@ function FightCalculateDataMgr:playEffect267(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect268(actEffectData)
@@ -1874,8 +1923,7 @@ function FightCalculateDataMgr:playEffect268(actEffectData)
 		return
 	end
 
-	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect269(actEffectData)
@@ -1978,7 +2026,7 @@ function FightCalculateDataMgr:playEffect282(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect283(actEffectData)
@@ -2088,7 +2136,7 @@ function FightCalculateDataMgr:playEffect314(actEffectData)
 	end
 
 	entityMO:setHp(entityMO.currentHp - actEffectData.effectNum)
-	self:progressToughnessByHurtInfo(actEffectData)
+	self:processHurtInfo(actEffectData)
 end
 
 function FightCalculateDataMgr:playEffect316(actEffectData)

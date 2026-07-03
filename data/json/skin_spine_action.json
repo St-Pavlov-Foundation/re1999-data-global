@@ -8440,5 +8440,50 @@
     "effectRemoveTime": 0.0,
     "audioId": 441120192,
     "dieAnim": ""
+  },
+  {
+    "skinId": 311404,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a6_xgj_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431140491,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314301,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a6_ym_born",
+    "effectHangPoint": "mounthead",
+    "effectRemoveTime": 0.0,
+    "audioId": 431430191,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314301,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431430192,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312703,
+    "actionName": "born",
+    "effect": "buff/born/pre_v3a6_mes_born",
+    "effectHangPoint": "mountweapon",
+    "effectRemoveTime": 0.0,
+    "audioId": 431270391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 312703,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431270392,
+    "dieAnim": ""
   }
 ]

@@ -41,8 +41,4 @@ function Rouge2_MsgPushWork:onReceiveRouge2BagItemRemovePush(msg)
 	Rouge2_BackpackController.instance:buildItemReddot()
 end
 
-function Rouge2_MsgPushWork:onReceiveRouge2CheckInfoPush(msg)
-	Rouge2_MapAttrCheckHelper.onGetCheckResultMsg(msg)
-end
-
 return Rouge2_MsgPushWork

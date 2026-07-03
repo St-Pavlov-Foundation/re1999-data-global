@@ -1,0 +1,20 @@
+[
+  {
+    "activityId": 13216,
+    "subType": 1,
+    "reddotId": 3507,
+    "jumpId": 0
+  },
+  {
+    "activityId": 13438,
+    "subType": 2,
+    "reddotId": 3505,
+    "jumpId": 0
+  },
+  {
+    "activityId": 13602,
+    "subType": 3,
+    "reddotId": 3506,
+    "jumpId": 3501
+  }
+]

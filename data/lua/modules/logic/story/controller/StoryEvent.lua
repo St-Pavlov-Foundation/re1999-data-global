@@ -56,5 +56,6 @@ StoryEvent.OnSkipClick = 3031
 StoryEvent.OnReplaceHero = 4001
 StoryEvent.OnFollowPicture = 5001
 StoryEvent.OnHeroShowed = 5002
+StoryEvent.OnFollowPictureEnd = 5003
 
 return StoryEvent

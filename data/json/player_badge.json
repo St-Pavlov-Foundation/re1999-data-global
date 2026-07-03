@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "灵魂行者·Ⅰ",
+    "bigIcon": "",
+    "icon": "",
+    "group": 1,
+    "level": 1,
+    "item": 180005
+  },
+  {
+    "id": 2,
+    "name": "灵魂行者·Ⅱ",
+    "bigIcon": "",
+    "icon": "",
+    "group": 1,
+    "level": 2,
+    "item": 180006
+  },
+  {
+    "id": 3,
+    "name": "灵魂行者·Ⅲ",
+    "bigIcon": "",
+    "icon": "",
+    "group": 1,
+    "level": 3,
+    "item": 180007
+  },
+  {
+    "id": 4,
+    "name": "灵魂行者·Ⅳ",
+    "bigIcon": "",
+    "icon": "",
+    "group": 1,
+    "level": 4,
+    "item": 180008
+  }
+]

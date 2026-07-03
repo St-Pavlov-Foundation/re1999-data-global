@@ -4953,5 +4953,165 @@
     "id": 923500020,
     "eventName": "play_battle_plot35_npc641601_10",
     "bankName": "npc641601_level_lusongshi3_5"
+  },
+  {
+    "id": 923600000,
+    "eventName": "play_level_plot36_hero3065_3",
+    "bankName": "hero3065_level_renmen3_6"
+  },
+  {
+    "id": 923600001,
+    "eventName": "play_level_plot36_hero3065_4",
+    "bankName": "hero3065_level_renmen3_6"
+  },
+  {
+    "id": 923600002,
+    "eventName": "play_level_plot36_hero3143_5",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600003,
+    "eventName": "play_level_plot36_hero3065_7",
+    "bankName": "hero3065_level_renmen3_6"
+  },
+  {
+    "id": 923600004,
+    "eventName": "play_level_plot36_hero3065_8",
+    "bankName": "hero3065_level_renmen3_6"
+  },
+  {
+    "id": 923600005,
+    "eventName": "play_level_plot36_hero3065_9",
+    "bankName": "hero3065_level_renmen3_6"
+  },
+  {
+    "id": 923600006,
+    "eventName": "play_level_plot36_npcnoname321_10",
+    "bankName": "npcnoname321_level_renmen3_6"
+  },
+  {
+    "id": 923600007,
+    "eventName": "play_level_plot36_npcnoname321_11",
+    "bankName": "npcnoname321_level_renmen3_6"
+  },
+  {
+    "id": 923600008,
+    "eventName": "play_level_plot36_hero3143_12",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600009,
+    "eventName": "play_level_plot36_hero3107_13",
+    "bankName": "hero3107_level_renmen3_6"
+  },
+  {
+    "id": 923600010,
+    "eventName": "play_level_plot36_hero3143_14",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600011,
+    "eventName": "play_level_plot36_hero3143_15",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600012,
+    "eventName": "play_level_plot36_npc633001_16",
+    "bankName": "npc633001_level_renmen3_6"
+  },
+  {
+    "id": 923600013,
+    "eventName": "play_level_plot36_npc633001_17",
+    "bankName": "npc633001_level_renmen3_6"
+  },
+  {
+    "id": 923600014,
+    "eventName": "play_level_plot36_hero3143_18",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600015,
+    "eventName": "play_level_plot36_hero3143_19",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600016,
+    "eventName": "play_level_plot36_hero3143_20",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600017,
+    "eventName": "play_level_plot36_hero3143_21",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600018,
+    "eventName": "play_battle_plot36_npc645501_1",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600019,
+    "eventName": "play_battle_plot36_npc645501_2",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600020,
+    "eventName": "play_battle_plot36_npc645501_3",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600021,
+    "eventName": "play_battle_plot36_npc645501_4",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600022,
+    "eventName": "play_battle_plot36_npc645501_5",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600023,
+    "eventName": "play_battle_plot36_hero3143_6",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600024,
+    "eventName": "play_battle_plot36_hero3143_7",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600025,
+    "eventName": "play_battle_plot36_hero3143_8",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600026,
+    "eventName": "play_battle_plot36_npc645501_9",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600027,
+    "eventName": "play_battle_plot36_npc645501_10",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600028,
+    "eventName": "play_battle_plot36_npc645501_11",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600029,
+    "eventName": "play_battle_plot36_npc645501_12",
+    "bankName": "npc645501_level_renmen3_6"
+  },
+  {
+    "id": 923600030,
+    "eventName": "play_battle_plot36_hero3143_13",
+    "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923600031,
+    "eventName": "play_battle_plot36_hero3143_14",
+    "bankName": "hero3143_level_renmen3_6"
   }
 ]

@@ -118,6 +118,8 @@ function TowerComposeTaskItem:_editableInitView()
 	self.rewardItemTab = self:getUserDataTb_()
 	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self._scrollrewards = self._goscrollRewards:GetComponent(gohelper.Type_LimitedScrollRect)
+	self._goscrollDesc = gohelper.findChild(self.viewGO, "#go_normal/scroll_desc")
+	self._scrolldesc = self._goscrollDesc:GetComponent(gohelper.Type_LimitedScrollRect)
 end
 
 function TowerComposeTaskItem:onUpdateMO(mo)
@@ -127,6 +129,7 @@ function TowerComposeTaskItem:onUpdateMO(mo)
 
 	self.mo = mo
 	self._scrollrewards.parentGameObject = self._view._csListScroll.gameObject
+	self._scrolldesc.parentGameObject = self._view._csListScroll.gameObject
 
 	if self.mo.canGetAll then
 		gohelper.setActive(self._gonormal, false)

@@ -28,6 +28,8 @@ function NewPlayerCardView:onInitView()
 	self._btncritter = gohelper.findChildButton(self.viewGO, "root/main/critter/#btn_critter")
 	self._goBgEffect = gohelper.findChild(self.viewGO, "#bg_effect")
 	self._goTopEffect = gohelper.findChild(self.viewGO, "#top_effect")
+	self._gocritterroot = gohelper.findChild(self.viewGO, "root/main/critter")
+	self._gobadgeroot = gohelper.findChild(self.viewGO, "root/main/badge")
 	self._openswitchskin = false
 	self._progressItemList = {}
 	self._baseInfoItemList = {}
@@ -52,6 +54,7 @@ function NewPlayerCardView:addEvents()
 	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseProgressView, self._onCloseProgressView, self)
 	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseBaseInfoView, self._onCloseBaseInfoView, self)
 	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.OnCloseCritterView, self._onCloseCritterView, self)
+	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.CutEquipType, self._onCutEquipType, self)
 end
 
 function NewPlayerCardView:removeEvents()
@@ -59,6 +62,10 @@ function NewPlayerCardView:removeEvents()
 	self._btnleftcontent:RemoveClickListener()
 	self._btnrightcontent:RemoveClickListener()
 	self._btncritter:RemoveClickListener()
+
+	if self._btnSwtichBadge then
+		self._btnSwtichBadge:RemoveClickListener()
+	end
 end
 
 function NewPlayerCardView:_editableInitView()
@@ -160,6 +167,13 @@ function NewPlayerCardView:onOpen(tempSkinId)
 
 	self.progressopen = false
 	self.baseinfoopen = false
+
+	self:_initBadge()
+	self:_onCutEquipType()
+
+	if self.viewParam and self.viewParam.justOpenBadgeView then
+		self:_btncritterOnClick()
+	end
 end
 
 function NewPlayerCardView:onClose()
@@ -215,12 +229,6 @@ end
 
 function NewPlayerCardView:_btncritterOnClick()
 	if self.playercardinfo:isSelf() then
-		local isCritterOpen = PlayerCardModel.instance:getCritterOpen()
-
-		if not isCritterOpen then
-			return
-		end
-
 		self._animator:Update(0)
 		self._animator:Play("to_critter")
 		ViewMgr.instance:openView(ViewName.PlayerCardCritterPlaceView)
@@ -249,6 +257,17 @@ function NewPlayerCardView:_onCloseCritterView()
 	self._animator:Update(0)
 	self._animator:Play("back_critter")
 	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_2)
+end
+
+function NewPlayerCardView:_onCutEquipType()
+	if not self.playercardinfo then
+		return
+	end
+
+	local equipType = self.playercardinfo:getShowSettingByType(PlayerCardEnum.ShowSettingsType.ShowEquipType)
+
+	gohelper.setActive(self._gocritter, equipType == PlayerCardEnum.EquipType.Critter)
+	gohelper.setActive(self._gobadgeroot, equipType == PlayerCardEnum.EquipType.Badge)
 end
 
 function NewPlayerCardView:backBottomView()
@@ -638,6 +657,30 @@ function NewPlayerCardView:_loadedImage()
 		recthelper.setAnchor(self._simagerole.transform, tonumber(offsets[1]), tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._simagerole.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	end
+end
+
+function NewPlayerCardView:_initBadge()
+	local otherRes = self.viewContainer:getSetting().otherRes
+
+	if not self._badgeComps then
+		local badgeResGO = self.viewContainer:getResInst(otherRes.badge, self._gobadgeroot)
+
+		self._badgeComps = MonoHelper.addNoUpdateLuaComOnceToGo(badgeResGO, PlayerCardBadgeView)
+
+		self._badgeComps:onUpdateMO(self.playercardinfo)
+	end
+
+	local goswitch = gohelper.findChild(self.viewGO, "root/main/switch")
+
+	if self.playercardinfo:isSelf() and not self._btnSwtichBadge then
+		local switchResGO = self:getResInst(otherRes.switch, goswitch)
+
+		self._btnSwtichBadge = gohelper.findChildButtonWithAudio(switchResGO, "root/#btn_switch")
+
+		self._btnSwtichBadge:AddClickListener(self._btncritterOnClick, self)
+	end
+
+	gohelper.setActive(goswitch, self.playercardinfo:isSelf())
 end
 
 function NewPlayerCardView:onDestroy()

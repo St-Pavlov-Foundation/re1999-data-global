@@ -272,7 +272,7 @@ end
 
 function VersionActivity2_7DungeonMapScene:_getEpisodeCoByIndex(index)
 	if not self._episodeList then
-		local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum()
+		local dungeonEnum = VersionActivityFixedHelper.getVersionActivityDungeonEnum(2, 7)
 
 		self._episodeList = DungeonConfig.instance:getChapterEpisodeCOList(dungeonEnum.DungeonChapterId.Story)
 	end

@@ -134,6 +134,12 @@ function HeroGroupRecommendGroupItem:_btnuseOnClick()
 		return
 	end
 
+	if AbyssModel.instance:isInAbyssBattle() then
+		self:onAbyssUse(info, heroGroupMO, configAids, battleConfig.roleNum, battleConfig.playerMax, true, configTrial)
+
+		return
+	end
+
 	heroGroupMO:initWithBattle(info, configAids, battleConfig.roleNum, battleConfig.playerMax, true, configTrial)
 	HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
@@ -170,6 +176,31 @@ function HeroGroupRecommendGroupItem:onTowerUse(info, heroGroupMO, ...)
 		local mo = HeroModel.instance:getById(v)
 
 		if mo and TowerModel.instance:isHeroBan(mo.heroId) then
+			info.heroList[i] = tostring(0)
+		end
+	end
+
+	heroGroupMO:initWithBattle(info, ...)
+	HeroSingleGroupModel.instance:setSingleGroup(heroGroupMO, true)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
+	HeroGroupModel.instance:saveCurGroupData()
+	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
+end
+
+function HeroGroupRecommendGroupItem:onAbyssUse(info, heroGroupMO, ...)
+	local stageMo = AbyssModel.instance:getCurStageMo()
+
+	if stageMo and stageMo:isChallenged() then
+		GameFacade.showToast(ToastEnum.AbyssHeroGroupCannotEdit)
+		ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
+
+		return
+	end
+
+	for i, v in ipairs(info.heroList) do
+		local mo = HeroModel.instance:getById(v)
+
+		if mo and AbyssModel.instance:isCurHeroLocked(mo.heroId) then
 			info.heroList[i] = tostring(0)
 		end
 	end

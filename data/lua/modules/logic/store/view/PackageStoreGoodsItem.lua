@@ -7,6 +7,10 @@ local PackageStoreGoodsItem = class("PackageStoreGoodsItem", ListScrollCellExten
 function PackageStoreGoodsItem:onInitView()
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "#simage_icon")
 	self._iconImage = self._simageicon:GetComponent(gohelper.Type_Image)
+	self._gofx = gohelper.findChild(self.viewGO, "#go_fx")
+	self._simageitembg = gohelper.findChildSingleImage(self.viewGO, "#simage_itembg")
+	self._simageiconbg = gohelper.findChildSingleImage(self.viewGO, "#simage_iconbg")
+	self._simageiconnum = gohelper.findChildSingleImage(self.viewGO, "#simage_iconnum")
 	self._txtmaterialNum = gohelper.findChildText(self.viewGO, "cost/txt_materialNum")
 	self._imagematerial = gohelper.findChildImage(self.viewGO, "cost/simage_material")
 	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
@@ -30,6 +34,8 @@ function PackageStoreGoodsItem:onInitView()
 	self._goSkinTips = gohelper.findChild(self.viewGO, "#go_SkinTips")
 	self._imgProp = gohelper.findChildImage(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
 	self._txtPropNum = gohelper.findChildTextMesh(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
+	self._gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self._txttips = gohelper.findChildTextMesh(self.viewGO, "#go_tips/image/#txt_Num")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -74,6 +80,14 @@ function PackageStoreGoodsItem:_editableInitView()
 	self._gologoTab = gohelper.findChild(self.viewGO, "#simage_logo")
 	self._gotxtv2a8_09 = gohelper.findChild(self.viewGO, "txt_v2a8_09")
 	self._gojinfanglun = gohelper.findChild(self.viewGO, "#go_jinfanglun")
+
+	gohelper.setActive(self._txteng, false)
+	gohelper.setActive(self._gooptionalgift, false)
+	gohelper.setActive(self._gooptionalvx, false)
+	gohelper.setActive(self._txtpickdesc.gameObject, false)
+
+	self._bgEffectDic = self:getUserDataTb_()
+	self._loader = MultiAbLoader.New()
 end
 
 function PackageStoreGoodsItem:_onClick()
@@ -170,7 +184,7 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 	gohelper.setActive(self._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(mo.goodsId))
 	gohelper.setActive(self._golevellimit, not self:_isStoreItemUnlock())
 	gohelper.setActive(self._gomooncardup, false)
-	gohelper.setActive(self._nationalgifttag, mo.config.offTag == "1")
+	gohelper.setActive(self._nationalgifttag, tonumber(mo.config.offTag) == ChargePackageEnum.OffTagType.New)
 
 	if not self:_isStoreItemUnlock() then
 		local episodeId = self._mo.config.needEpisodeId
@@ -197,9 +211,66 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 	end
 
 	self._txtname.text = self._mo.config.name
-	self._txteng.text = self._mo.config.nameEn
 
 	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(self._mo.config.bigImg))
+
+	if string.nilorempty(self._mo.config.underlay) then
+		logError("商店改版 缺少底板配置 商品id:" .. tostring(self._mo.goodsId))
+	else
+		local underlayParam = string.splitToNumber(self._mo.config.underlay, "#")
+
+		logNormal(string.format("---商店改版 底板配置 id: %s 底板id: %s 价格: %s ", self._mo.goodsId, underlayParam[1], self._mo.isChargeGoods and PayModel.instance:getProductOriginPriceNum(self._mo.id) or 0))
+
+		local itemBgIconName = "panel/package_quality_" .. self:_getNumStr(underlayParam[1])
+
+		logNormal("商店改版 底板: " .. itemBgIconName)
+		self._simageitembg:LoadImage(ResUrl.getStorePackageIcon(itemBgIconName))
+
+		local itemBgIndex = StoreHelper.getPackageIconBgIndex(self._mo.goodsId, self._mo.id, underlayParam[1])
+		local itemIconBgName = itemBgIconName .. "_" .. self:_getNumStr(itemBgIndex)
+
+		logNormal("商店改版 图标底板: " .. itemIconBgName)
+		self._simageiconbg:LoadImage(ResUrl.getStorePackageIcon(itemIconBgName))
+
+		local showLevelBg = mo.buyLevel ~= nil and mo.buyLevel ~= 0
+
+		gohelper.setActive(self._simageiconnum, showLevelBg)
+
+		if showLevelBg then
+			local levelIconName = itemBgIconName .. "_" .. self:_getNumStr(mo.buyLevel)
+
+			logNormal("商店改版 等级图标: " .. levelIconName)
+			self._simageiconnum:LoadImage(ResUrl.getStorePackageIcon(levelIconName))
+		end
+
+		local bgEffectId = underlayParam[2]
+		local showEffect = bgEffectId ~= nil and bgEffectId ~= 0
+
+		gohelper.setActive(self._gofx, showEffect)
+
+		if showEffect then
+			self._curBgEffectId = bgEffectId
+
+			logNormal("商店改版 特效:" .. tostring(bgEffectId))
+
+			if not self._bgEffectDic[bgEffectId] then
+				local resPath = "ui/viewres/store/effect/packagestoregoodsitem_effect_" .. self:_getNumStr(bgEffectId) .. ".prefab"
+
+				self._loader:addPath(resPath)
+				self._loader:startLoad(self.onEffectLoadFinish, self)
+			else
+				self:refreshBgEffect()
+			end
+		end
+	end
+
+	local haveSlogan = not string.nilorempty(self._mo.config.slogan)
+
+	gohelper.setActive(self._gotips, haveSlogan)
+
+	if haveSlogan then
+		self._txttips.text = self._mo.config.slogan
+	end
 
 	local cost = self._mo.cost
 
@@ -268,13 +339,9 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 
 	gohelper.setActive(self._goremaintime, mo.offlineTime > 0)
 
-	if offEndTime > 3600 then
-		local time, str = TimeUtil.secondToRoughTime(offEndTime)
+	local str, strFormat = TimeUtil.secondToRoughTime(offEndTime, true)
 
-		self._txtremiantime.text = formatLuaLang("remain", time .. str)
-	else
-		self._txtremiantime.text = luaLang("not_enough_one_hour")
-	end
+	self._txtremiantime.text = str .. strFormat
 
 	local offTag = tonumber(mo:getDiscount())
 
@@ -290,7 +357,13 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 		gohelper.setActive(self._gotag, false)
 	end
 
-	gohelper.setActive(self._gonewtag, mo:needShowNew())
+	local needShowNew = mo:needShowNew()
+
+	if needShowNew then
+		StoreModel.instance:markPackageGoodsNewRedDot(mo.goodsId)
+	end
+
+	gohelper.setActive(self._gonewtag, needShowNew)
 
 	self._hascloth = self._mo:alreadyHas()
 
@@ -349,11 +422,6 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 		end
 	end
 
-	local isOptional = mo.isChargeGoods and mo.config.type == StoreEnum.StoreChargeType.Optional or mo.goodsId == StoreEnum.NewbiePackId
-
-	gohelper.setActive(self._gooptionalgift, isOptional)
-	gohelper.setActive(self._gooptionalvx, isOptional and not mo.goodsId == StoreEnum.NewbiePackId)
-	gohelper.setActive(self._txtpickdesc.gameObject, mo.goodsId == StoreEnum.NewbiePackId)
 	self:_onUpdateMO_newMatUpTag(mo)
 	self:_onUpdateMO_coBrandedTag(mo)
 	self:_onUpdateMO_gosummonSimulationPickFX(mo)
@@ -363,6 +431,23 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 	self:_onUpdateMO_godestinySummonPackageTag(mo)
 	self:refreshSkinTips(mo)
 	gohelper.setActive(self._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[mo.goodsId])
+end
+
+function PackageStoreGoodsItem:onEffectLoadFinish()
+	if not self._bgEffectDic[self._curBgEffectId] then
+		local framePrefab = self._loader:getFirstAssetItem():GetResource()
+		local effectGo = gohelper.clone(framePrefab, self._gofx)
+
+		self._bgEffectDic[self._curBgEffectId] = effectGo
+	end
+
+	self:refreshBgEffect()
+end
+
+function PackageStoreGoodsItem:refreshBgEffect()
+	for id, go in pairs(self._bgEffectDic) do
+		gohelper.setActive(go, id == self._curBgEffectId)
+	end
 end
 
 function PackageStoreGoodsItem:showMonthCardTips()
@@ -409,6 +494,14 @@ function PackageStoreGoodsItem:onDestroy()
 
 		self._linkGiftItemComp = nil
 	end
+
+	tabletool.clear(self._bgEffectDic)
+
+	self._bgEffectDic = nil
+
+	self._loader:dispose()
+
+	self._loader = nil
 end
 
 function PackageStoreGoodsItem:_onUpdateMO_newMatUpTag(mo)
@@ -455,7 +548,6 @@ function PackageStoreGoodsItem:_onUpdateMO_linkPackage(mo)
 
 	gohelper.setActive(self._golinkgift, isLinkGift)
 	gohelper.setActive(self._txtname, not isLinkGift)
-	gohelper.setActive(self._txteng, not isLinkGift)
 
 	if isLinkGift then
 		if self._linkGiftItemComp == nil then
@@ -487,6 +579,14 @@ end
 function PackageStoreGoodsItem:setClickCallback(callback, callbackObj)
 	self._clickCallback = callback
 	self._clickCallbackObj = callbackObj
+end
+
+function PackageStoreGoodsItem:_getNumStr(num)
+	if tonumber(num) < 10 then
+		return "0" .. num
+	end
+
+	return tostring(num)
 end
 
 return PackageStoreGoodsItem

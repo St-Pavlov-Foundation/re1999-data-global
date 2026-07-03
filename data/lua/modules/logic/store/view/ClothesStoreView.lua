@@ -30,6 +30,7 @@ function ClothesStoreView:onInitView()
 	self.txtOriginalPrice = gohelper.findChildTextMesh(self.goCost, "currency1/#txt_original_price")
 	self.imagematerial = gohelper.findChildImage(self.goCost, "currency2/icon/simage_material")
 	self.txtMaterialNum = gohelper.findChildTextMesh(self.goCost, "currency2/txt_materialNum")
+	self.txtOriginalMaterialNum = gohelper.findChildTextMesh(self.goCost, "currency2/#txt_original_price")
 	self.goHasget = gohelper.findChild(self.viewGO, "#go_has/RightBtn/#go_hasget")
 	self.goSkinTips = gohelper.findChild(self.viewGO, "#go_has/RightBtn/go_tips")
 	self.txtPropNum = gohelper.findChildTextMesh(self.goSkinTips, "#txt_Tips")
@@ -577,9 +578,6 @@ function ClothesStoreView:refreshSkinInfo()
 	local str = string.format("%s_1", id)
 
 	UISpriteSetMgr.instance:setCurrencyItemSprite(self.imagematerial, str, true)
-
-	self.txtMaterialNum.text = costInfo[3]
-
 	gohelper.setActive(self.goDiscount, config.originalCost > 0)
 
 	local offTag = costInfo[3] / config.originalCost
@@ -665,15 +663,32 @@ function ClothesStoreView:refreshChargeInfo(goodsMo, skinCo)
 	end
 
 	local deductionItemCount = 0
+	local deductionCost = 0
 
 	if not string.nilorempty(goodsMo.config.deductionItem) then
 		local info = GameUtil.splitString2(goodsMo.config.deductionItem, true)
 
 		deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
 		self.txtCostDeduction.text = -info[2][1]
+
+		if deductionItemCount > 0 then
+			deductionCost = info[2][1]
+		end
 	end
 
 	gohelper.setActive(self.goCostDeduction, deductionItemCount > 0)
+
+	local costInfo = string.splitToNumber(goodsMo.config.cost, "#")
+	local materialNum = costInfo[3]
+	local realCost = math.max(0, materialNum - deductionCost)
+
+	self.txtMaterialNum.text = realCost
+
+	if deductionCost > 0 then
+		self.txtOriginalMaterialNum.text = materialNum
+	else
+		self.txtOriginalMaterialNum.text = ""
+	end
 end
 
 function ClothesStoreView:refreshNewArrow()

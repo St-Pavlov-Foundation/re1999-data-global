@@ -12,6 +12,7 @@ Rouge2_MapSixDiceItem.rotationDict = {
 	Vector3(0, 0, 0),
 	(Vector3(180, 0, 0))
 }
+Rouge2_MapSixDiceItem.rotationNum = tabletool.len(Rouge2_MapSixDiceItem.rotationDict)
 
 local RandomRotationDuration = 1.5
 local RandomRotationStep = 0.3
@@ -31,12 +32,15 @@ function Rouge2_MapSixDiceItem:addEventListeners()
 end
 
 function Rouge2_MapSixDiceItem:initRotation()
-	local randomIndex = math.random(1, 6)
-	local rotation = Rouge2_MapSixDiceItem.rotationDict[randomIndex]
+	local randomIndex = math.random(1, Rouge2_MapSixDiceItem.rotationNum)
+	local targetRandomIndex = self._lastRandomIndex or randomIndex
+	local rotation = Rouge2_MapSixDiceItem.rotationDict[targetRandomIndex]
 
 	if not rotation then
 		return
 	end
+
+	self._lastRandomIndex = targetRandomIndex
 
 	transformhelper.setLocalRotation(self._tranNormal, rotation.x, rotation.y, rotation.z)
 end

@@ -3,14 +3,16 @@
 module("modules.logic.versionactivity1_3.act125.controller.Activity125Event", package.seeall)
 
 local Activity125Event = {}
+local _get = GameUtil.getUniqueTb()
 
-Activity125Event.DataUpdate = 101
-Activity125Event.OnFMScrollValueChange = 102
-Activity125Event.OnChannelSelected = 103
-Activity125Event.OnChannelItemClick = 104
-Activity125Event.EpisodeFinished = 105
-Activity125Event.EpisodeUnlock = 106
-Activity125Event.SwitchEpisode = 107
-Activity125Event.OnClickFile = 801
+Activity125Event.DataUpdate = _get()
+Activity125Event.OnFMScrollValueChange = _get()
+Activity125Event.OnChannelSelected = _get()
+Activity125Event.OnChannelItemClick = _get()
+Activity125Event.EpisodeFinished = _get()
+Activity125Event.EpisodeUnlock = _get()
+Activity125Event.SwitchEpisode = _get()
+Activity125Event.OnClickFile = _get()
+Activity125Event.OnGameFinished = _get()
 
 return Activity125Event

@@ -87,13 +87,13 @@ function ActivityCategoryItem:_refreshItem()
 
 		if actId == ActivityEnum.Activity.DreamShow then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
-		elseif actId == DoubleDropModel.instance:getActId() then
+		elseif actId == DoubleDropModel.instance:getActId() or typeId == ActivityEnum.ActivityTypeID.Act217 and Activity217Config.instance:getSubTypeCO(actId) then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
 
 			if self._selected and redDotId > 0 then
 				RedDotRpc.instance:sendShowRedDotRequest(redDotId, false)
 			end
-		elseif actId == ActivityEnum.Activity.Activity1_7WarmUp then
+		elseif actId == ActivityEnum.Activity.Activity1_7WarmUp or actId == V3a6_WarmUpConfig.instance:actId() then
 			if self._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(actId)
 
@@ -208,7 +208,7 @@ function ActivityCategoryItem:_refreshItem()
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstEnter, self)
 		elseif typeId == ActivityEnum.ActivityTypeID.Act217 then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsAct217NeedReddot, self)
-		elseif actId == ActivityEnum.Activity.V3a5_SchoolStart then
+		elseif actId == ActivityEnum.Activity.V3a5_SchoolStart or actId == VersionActivity3_8Enum.ActivityId.FreeMonthCard then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId)
 		else
 			RedDotController.instance:addRedDot(self._goreddot, dotId, self._mo.id)
@@ -277,7 +277,9 @@ function ActivityCategoryItem:checkIsAct146NeedReddot(redDotIcon)
 end
 
 function ActivityCategoryItem:checkIsV1A7WarmupRed(redDotIcon)
-	redDotIcon.show = Activity125Controller.instance:checkActRed(ActivityEnum.Activity.Activity1_7WarmUp)
+	local actId = self._mo.id
+
+	redDotIcon.show = Activity125Controller.instance:checkActRed(actId)
 
 	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end

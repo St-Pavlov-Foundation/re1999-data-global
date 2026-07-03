@@ -3,6 +3,14 @@
 module("modules.logic.story.view.StoryHeroItem", package.seeall)
 
 local StoryHeroItem = class("StoryHeroItem")
+local screenSplitLeftStencilRef = 10
+local screenSplitRightStencilRef = 30
+local screenSplitStencilComp = 3
+local screenSplitStencilOp = 0
+local screenSplitRoleCount = 2
+local stencilPropName = "_Stencil"
+local stencilCompPropName = "_StencilComp"
+local stencilOpPropName = "_StencilOp"
 
 function StoryHeroItem:init(go)
 	self.viewGO = go
@@ -14,6 +22,7 @@ function StoryHeroItem:init(go)
 	self._heroSkeletonGraphic = nil
 
 	StoryController.instance:registerCallback(StoryEvent.OnFollowPicture, self._playFollowPicture, self)
+	StoryController.instance:registerCallback(StoryEvent.OnFollowPictureEnd, self._endFollowPicture, self)
 end
 
 function StoryHeroItem:_playFollowPicture(picGo, heroId)
@@ -22,9 +31,16 @@ function StoryHeroItem:_playFollowPicture(picGo, heroId)
 	end
 
 	self._picGo = picGo
-	self._picInitPosX, self._picInitPosY = transformhelper.getPos(self._picGo.transform)
 
 	TaskDispatcher.runRepeat(self._followPicture, self, 0.02)
+end
+
+function StoryHeroItem:_endFollowPicture(picGo, heroId)
+	if self._heroCo.heroIndex ~= heroId then
+		return
+	end
+
+	TaskDispatcher.cancelTask(self._followPicture, self)
 end
 
 function StoryHeroItem:_followPicture()
@@ -36,7 +52,7 @@ function StoryHeroItem:_followPicture()
 
 	local posX, posY = transformhelper.getLocalPos(self._picGo.transform)
 
-	transformhelper.setLocalPosXY(self._heroGo.transform, posX - self._picInitPosX, posY - self._picInitPosY)
+	transformhelper.setLocalPosXY(self._heroGo.transform, posX, posY)
 
 	self._heroGo.transform.localScale = self._picGo.transform.localScale
 end
@@ -213,11 +229,11 @@ function StoryHeroItem:_setHeroMat(mat)
 	end
 
 	if self._isLive2D then
-		if mat.name == "spine_ui_default" and self._initMat then
+		if string.match(mat.name, "spine_ui_default") and self._initMat then
 			mat = self._initMat
 		end
 
-		if mat.name == "spine_ui_dark" then
+		if string.match(mat.name, "spine_ui_dark") then
 			self._heroSpine:SetDark()
 		else
 			self._heroSpine:SetBright()
@@ -227,12 +243,12 @@ function StoryHeroItem:_setHeroMat(mat)
 	end
 
 	if self._heroSkeletonGraphic then
-		if self._heroSkeletonGraphic.material and self._heroSkeletonGraphic.material == mat then
-			return
-		end
-
 		if self._initMat then
-			if mat.name == "spine_ui_default" then
+			if self._heroSkeletonGraphic.material and string.match(self._heroSkeletonGraphic.material.name, mat.name) then
+				return
+			end
+
+			if string.match(mat.name, "spine_ui_default") then
 				mat = self._initMat
 
 				local color = Color.New(1, 1, 1, 1)
@@ -367,13 +383,13 @@ function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj,
 
 	local siblingIndex = gohelper.getSibling(self._heroGo)
 
-	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
+	self._blitEff = StoryViewMgr.instance:getStoryBlitEff()
 
 	local bgRootGo = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
 
 	self._bgGo = gohelper.findChild(bgRootGo, "#go_upbg/#simage_bgimg")
 
-	gohelper.setLayer(self._heroGo, UnityLayer.UISecond, true)
+	gohelper.setLayer(self._heroGo, self.viewGO.layer, true)
 
 	local heroCo = StoryHeroLibraryModel.instance:getStoryLibraryHeroByIndex(self._heroCo.heroIndex)
 
@@ -410,17 +426,22 @@ function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj,
 			self._heroSkeletonGraphic = self._heroSpine:getSkeletonGraphic()
 			self._heroSpineGo = self._heroSpine:getSpineGo()
 
+			gohelper.setLayer(self._heroSpineGo, self._heroGo.layer, true)
 			gohelper.setActive(self._heroSpineGo, false)
 
 			canvas.sortingOrder = (siblingIndex + 1) * 10
 
-			if self._heroSkeletonGraphic and self._heroSkeletonGraphic.material.name ~= "spine_ui_default" then
+			if self._heroSkeletonGraphic and not string.match(self._heroSkeletonGraphic.material.name, "spine_ui_default") then
 				self._initMat = self._heroSkeletonGraphic.material
 			end
 
 			self:_setHeroMat(mat)
 			self:_fadeIn()
 			self:_playHeroVoice()
+
+			if StoryModel.instance:isInScreenSplitMode() then
+				self:setScreenSplitStencil(self._heroCo.heroPos[1] < 0)
+			end
 
 			if callback then
 				callback(callbackObj)
@@ -452,10 +473,14 @@ function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj,
 
 			canvas.sortingOrder = (siblingIndex + 1) * 10
 
-			gohelper.setLayer(self._heroSpineGo, UnityLayer.UISecond, true)
+			gohelper.setLayer(self._heroSpineGo, self._heroGo.layer, true)
 			self:_setHeroMat(mat)
 			self:_fadeIn()
 			self:_playHeroVoice()
+
+			if StoryModel.instance:isInScreenSplitMode() then
+				self:setScreenSplitStencil(self._heroCo.heroPos[1] < 0)
+			end
 
 			if callback then
 				callback(callbackObj)
@@ -776,9 +801,118 @@ function StoryHeroItem:_clearHeroErase()
 end
 
 function StoryHeroItem:_setStyDissolve()
-	self._heroSkeletonGraphic.material = self._styDissolveMat
+	self._heroSkeletonGraphic.material = UnityEngine.Material.Instantiate(self._styDissolveMat)
 
 	gohelper.clone(self._styDissolvePrefab, self._heroSpineGo)
+end
+
+function StoryHeroItem:setScreenSplitStencil(isLeft)
+	self._inScrennSplitStencil = true
+
+	local stencilRef = isLeft and screenSplitLeftStencilRef or screenSplitRightStencilRef
+	local heroSkeletonGraphic = self._heroSkeletonGraphic
+
+	if heroSkeletonGraphic and heroSkeletonGraphic.material then
+		local material = heroSkeletonGraphic.material
+
+		self:_setScreenSplitStencilOnMaterial(material, stencilRef)
+
+		return
+	end
+
+	local heroSpineGo = self._heroSpineGo
+
+	if not heroSpineGo or gohelper.isNil(heroSpineGo) then
+		return
+	end
+
+	local cubctrl = heroSpineGo:GetComponent(typeof(ZProj.CubismController))
+
+	if cubctrl then
+		for i = 0, cubctrl.InstancedMaterials.Length - 1 do
+			local material = cubctrl.InstancedMaterials[i]
+
+			self:_setScreenSplitStencilOnMaterial(material, stencilRef)
+		end
+	end
+end
+
+function StoryHeroItem:revertScreenSplitStencil()
+	self._inScrennSplitStencil = false
+
+	self:_restoreScreenSplitStencil()
+end
+
+function StoryHeroItem:_setScreenSplitStencilOnMaterial(material, stencilRef)
+	if gohelper.isNil(material) then
+		return
+	end
+
+	self:_recordScreenSplitStencil(material)
+
+	if material:HasProperty(stencilPropName) then
+		material:SetFloat(stencilPropName, stencilRef)
+	end
+
+	if material:HasProperty(stencilCompPropName) then
+		material:SetFloat(stencilCompPropName, screenSplitStencilComp)
+	end
+
+	if material:HasProperty(stencilOpPropName) then
+		material:SetFloat(stencilOpPropName, screenSplitStencilOp)
+	end
+end
+
+function StoryHeroItem:_recordScreenSplitStencil(material)
+	if gohelper.isNil(material) then
+		return
+	end
+
+	self._screenSplitStencilData = self._screenSplitStencilData or {}
+
+	if self._screenSplitStencilData[material] then
+		return
+	end
+
+	local data = {}
+
+	if material:HasProperty(stencilPropName) then
+		data.stencil = material:GetFloat(stencilPropName)
+	end
+
+	if material:HasProperty(stencilCompPropName) then
+		data.stencilComp = material:GetFloat(stencilCompPropName)
+	end
+
+	if material:HasProperty(stencilOpPropName) then
+		data.stencilOp = material:GetFloat(stencilOpPropName)
+	end
+
+	self._screenSplitStencilData[material] = data
+end
+
+function StoryHeroItem:_restoreScreenSplitStencil()
+	if not self._screenSplitStencilData then
+		return
+	end
+
+	for material, data in pairs(self._screenSplitStencilData) do
+		if not gohelper.isNil(material) then
+			if data.stencil ~= nil and material:HasProperty(stencilPropName) then
+				material:SetFloat(stencilPropName, data.stencil)
+			end
+
+			if data.stencilComp ~= nil and material:HasProperty(stencilCompPropName) then
+				material:SetFloat(stencilCompPropName, data.stencilComp)
+			end
+
+			if data.stencilOp ~= nil and material:HasProperty(stencilOpPropName) then
+				material:SetFloat(stencilOpPropName, data.stencilOp)
+			end
+		end
+	end
+
+	self._screenSplitStencilData = nil
 end
 
 function StoryHeroItem:stopVoice()
@@ -789,11 +923,13 @@ end
 
 function StoryHeroItem:onDestroy()
 	StoryController.instance:unregisterCallback(StoryEvent.OnFollowPicture, self._playFollowPicture, self)
+	StoryController.instance:unregisterCallback(StoryEvent.OnFollowPictureEnd, self._endFollowPicture, self)
 	TaskDispatcher.cancelTask(self._followPicture, self)
 	self:_clearHeroFlash()
 	self:_clearHeroDissolve()
 	self:_clearHeroWaterWave()
 	self:_clearHeroErase()
+	self:revertScreenSplitStencil()
 	TaskDispatcher.cancelTask(self._onDelay, self)
 	self:_grayUpdate(0)
 

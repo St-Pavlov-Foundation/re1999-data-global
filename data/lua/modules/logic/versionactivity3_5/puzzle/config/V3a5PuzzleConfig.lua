@@ -37,10 +37,10 @@ function V3a5PuzzleConfig:v3a5_textConfigLoaded(configTable)
 	end
 end
 
-function V3a5PuzzleConfig:getConstValue(constId)
+function V3a5PuzzleConfig:getConstValue(constId, isValue2)
 	local co = lua_v3a5_constant.configDict[constId]
 
-	return co and co.value
+	return co and (isValue2 and co.value2 or co.value)
 end
 
 function V3a5PuzzleConfig:getCharacterCo(heroId)

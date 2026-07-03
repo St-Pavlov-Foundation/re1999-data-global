@@ -623,6 +623,13 @@
     "patFaceOrder": 1500
   },
   {
+    "id": 30801,
+    "patFaceActivityId": 13813,
+    "patFaceViewName": "VersionActivity3_8FreeMonthCardPanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 1000
+  },
+  {
     "id": 20206,
     "patFaceActivityId": 12244,
     "patFaceViewName": "V2a2_SpringFestival_PanelView",

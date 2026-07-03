@@ -6,6 +6,7 @@ local FightStatView = class("FightStatView", BaseView)
 
 function FightStatView:onInitView()
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "btnClose")
+	self._btnclosebg = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_closebg")
 	self._simagebgicon1 = gohelper.findChildSingleImage(self.viewGO, "frame/#simage_bgicon1")
 	self._simagebgicon2 = gohelper.findChildSingleImage(self.viewGO, "frame/#simage_bgicon2")
 	self._btndata = gohelper.findChildButtonWithAudio(self.viewGO, "switch/#btn_data")
@@ -20,12 +21,14 @@ end
 
 function FightStatView:addEvents()
 	self._btnClose:AddClickListener(self.closeThis, self)
+	self._btnclosebg:AddClickListener(self.closeThis, self)
 	self._btndata:AddClickListener(self._btnDataOnClick, self)
 	self._btnskill:AddClickListener(self._btnSkillOnClick, self)
 end
 
 function FightStatView:removeEvents()
 	self._btnClose:RemoveClickListener()
+	self._btnclosebg:RemoveClickListener()
 	self._btndata:RemoveClickListener()
 	self._btnskill:RemoveClickListener()
 end

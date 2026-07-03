@@ -1,0 +1,146 @@
+[
+  {
+    "id": 361001,
+    "name": "",
+    "desc": "language_10119732",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3610011#3610012"
+  },
+  {
+    "id": 361002,
+    "name": "",
+    "desc": "language_10119733",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3610021"
+  },
+  {
+    "id": 361003,
+    "name": "",
+    "desc": "language_10119734",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3610031#3610032#3610033#3610034#3610035#3610036#3610037"
+  },
+  {
+    "id": 361004,
+    "name": "",
+    "desc": "language_10119735",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3610041"
+  },
+  {
+    "id": 362001,
+    "name": "",
+    "desc": "language_10119736",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620011"
+  },
+  {
+    "id": 362002,
+    "name": "",
+    "desc": "language_10119737",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620021"
+  },
+  {
+    "id": 362003,
+    "name": "",
+    "desc": "language_10119738",
+    "icon": "",
+    "type": 1,
+    "cd": 10,
+    "effectIds": "3620031#3620032#3620033"
+  },
+  {
+    "id": 362004,
+    "name": "",
+    "desc": "language_10119739",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620041"
+  },
+  {
+    "id": 362005,
+    "name": "",
+    "desc": "language_10119740",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620051"
+  },
+  {
+    "id": 362006,
+    "name": "",
+    "desc": "language_10119741",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620061"
+  },
+  {
+    "id": 362007,
+    "name": "",
+    "desc": "language_10119742",
+    "icon": "",
+    "type": 1,
+    "cd": 10,
+    "effectIds": "3620071#3620072#3620073"
+  },
+  {
+    "id": 362008,
+    "name": "",
+    "desc": "language_10119743",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3620081"
+  },
+  {
+    "id": 363001,
+    "name": "",
+    "desc": "language_10119744",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3630011"
+  },
+  {
+    "id": 363002,
+    "name": "",
+    "desc": "language_10119745",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3630021"
+  },
+  {
+    "id": 363003,
+    "name": "",
+    "desc": "language_10119746",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3630031"
+  },
+  {
+    "id": 363004,
+    "name": "",
+    "desc": "language_10119747",
+    "icon": "",
+    "type": 2,
+    "cd": 0,
+    "effectIds": "3630041"
+  }
+]

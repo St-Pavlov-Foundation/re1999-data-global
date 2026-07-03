@@ -88,6 +88,7 @@ function HeroGroupPresetEditListModel:copyCharacterCardList(init)
 	local groupHeroNum = #newMOList
 	local isTowerBattle = self.isTowerBattle
 	local isWeekWalk_2 = self.isWeekWalk_2
+	local isAbyss = self.isAbyss
 	local deathList = {}
 
 	if isTowerBattle then
@@ -125,6 +126,12 @@ function HeroGroupPresetEditListModel:copyCharacterCardList(init)
 				else
 					table.insert(newMOList, mo)
 				end
+			elseif isAbyss then
+				if AbyssModel.instance:isCurHeroLocked(mo.heroId) then
+					table.insert(deathList, mo)
+				else
+					table.insert(newMOList, mo)
+				end
 			elseif self._moveHeroId and mo.heroId == self._moveHeroId then
 				self._moveHeroId = nil
 				self._moveHeroIndex = groupHeroNum + 1
@@ -136,7 +143,7 @@ function HeroGroupPresetEditListModel:copyCharacterCardList(init)
 		end
 	end
 
-	if self.adventure or isTowerBattle or isWeekWalk_2 then
+	if self.adventure or isTowerBattle or isWeekWalk_2 or isAbyss then
 		tabletool.addValues(newMOList, deathList)
 	end
 
@@ -214,6 +221,7 @@ function HeroGroupPresetEditListModel:setParam(heroUid, adventure, isTowerBattle
 	self.isTowerBattle = isTowerBattle
 	self._groupType = groupType
 	self.isWeekWalk_2 = groupType == HeroGroupEnum.GroupType.WeekWalk_2
+	self.isAbyss = groupType == HeroGroupEnum.GroupType.Abyss
 end
 
 HeroGroupPresetEditListModel.instance = HeroGroupPresetEditListModel.New()

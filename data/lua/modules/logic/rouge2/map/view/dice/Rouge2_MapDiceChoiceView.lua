@@ -77,9 +77,11 @@ end
 
 function Rouge2_MapDiceChoiceView:refreshInfo()
 	self._checkResInfo = self.viewParam and self.viewParam.checkResInfo
+	self._fromType = self._checkResInfo and self._checkResInfo:getFromType()
 	self._nodeId = self._checkResInfo and self._checkResInfo:getNodeId()
 	self._isNodeValid = self._nodeId and self._nodeId ~= 0
-	self._nodeMo = self._isNodeValid and Rouge2_MapModel.instance:getNode(self._nodeId)
+	self._isChoiceDice = self._fromType == Rouge2_MapEnum.InteractFromType.Event and self._isNodeValid
+	self._nodeMo = self._isChoiceDice and Rouge2_MapModel.instance:getNode(self._nodeId)
 
 	if not self._nodeMo then
 		self._expand = false
@@ -96,7 +98,10 @@ function Rouge2_MapDiceChoiceView:refreshInfo()
 	self._expand = self._expand and self._isChoiceEvent
 
 	if self._isChoiceEvent then
-		self._choiceId, self._choiceIndex, self._curCheckRate = Rouge2_MapModel.instance:getCurChoiceId()
+		self._choiceId = self._eventMo:getCurSelectChoiceId()
+		self._choiceIdList = self._eventMo:getChoiceIdList()
+		self._choiceIndex = self._choiceIdList and tabletool.indexOf(self._choiceIdList, self._choiceId)
+		self._curCheckRate = self._eventMo:getChoiceCheckRate(self._choiceId)
 		self._choiceIndex = self._choiceIndex or 1
 		self._curCheckRate = self._curCheckRate or 0
 		self._choiceCo = Rouge2_MapConfig.instance:getChoiceConfig(self._choiceId)

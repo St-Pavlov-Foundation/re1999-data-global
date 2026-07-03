@@ -71,7 +71,9 @@ function FightBuffGetDescHelper.getBuffFeatureHandle(feature)
 			[FightEnum.BuffFeature.Raspberry] = FightBuffGetDescHelper.formatActInfoTwoParam,
 			[FightEnum.BuffFeature.RaspberryBigSkill] = FightBuffGetDescHelper.formatActInfoOneParam,
 			[FightEnum.BuffFeature.AttrByHeatScale] = FightBuffGetDescHelper.getAttrByHeatScaleDesc,
-			[FightEnum.BuffFeature.HeatScaleUseSkill] = FightBuffGetDescHelper.formatActInfoOneParam
+			[FightEnum.BuffFeature.HeatScaleUseSkill] = FightBuffGetDescHelper.formatActInfoOneParam,
+			[FightEnum.BuffFeature.TeamShareShield] = FightBuffGetDescHelper.formatActInfoOneParam,
+			[FightEnum.BuffFeature.TeamExElectricTransConsumeValueAttr] = FightBuffGetDescHelper.getTeamExElectricTransConsumeValueAttrDesc
 		}
 	end
 
@@ -204,6 +206,12 @@ function FightBuffGetDescHelper.formatActInfoTwoParam(buffMo, buffCo, buffActCo,
 end
 
 function FightBuffGetDescHelper.getAttrByHeatScaleDesc(buffMo, buffCo, buffActCo, paramArray, buffActInfo)
+	local param = buffActInfo.param
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(buffCo.desc, param[1] / 10)
+end
+
+function FightBuffGetDescHelper.getTeamExElectricTransConsumeValueAttrDesc(buffMo, buffCo, buffActCo, paramArray, buffActInfo)
 	local param = buffActInfo.param
 
 	return GameUtil.getSubPlaceholderLuaLangOneParam(buffCo.desc, param[1] / 10)

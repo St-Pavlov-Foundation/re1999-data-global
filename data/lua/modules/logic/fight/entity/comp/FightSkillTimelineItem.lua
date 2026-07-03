@@ -106,6 +106,14 @@ function FightSkillTimelineItem:_onFrameEventPlayCallback(type, id, duration, pa
 	local typeCls = FightSkillComp.FrameEventHandlerCls[type]
 
 	if typeCls then
+		if type == 3 then
+			local version = FightDataHelper.fieldMgr.version
+
+			if version < 7 then
+				typeCls = FightOldClassOfTimelineDamage
+			end
+		end
+
 		if type == 30 and self.entity.skill:sameSkillPlaying() then
 			return
 		end

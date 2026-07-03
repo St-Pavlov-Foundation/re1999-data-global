@@ -389,6 +389,18 @@ module_views.V3a3_DoubleDanActivity_FullView = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
+module_views.V3a8_WarmUp = {
+	destroy = 0,
+	container = "V3a8_WarmUpContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/warmup/v3a8_warmup.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+
+MonthCardViewDefine.init(module_views)
+
 module_views.SimulateLoginView = {
 	destroy = 3,
 	container = "SimulateLoginViewContainer",
@@ -4918,6 +4930,9 @@ module_views.StoreView = {
 			},
 			{
 				"ui/viewres/store/decoratestoreview.prefab"
+			},
+			{
+				"ui/viewres/store/monthandseasoncardview.prefab"
 			}
 		},
 		{
@@ -4957,6 +4972,14 @@ module_views.StoreView = {
 		{
 			{
 				"ui/viewres/store/storesummonview.prefab"
+			}
+		},
+		{
+			{
+				"ui/viewres/store/storemonthcardview.prefab"
+			},
+			{
+				"ui/viewres/store/storeseasoncardview.prefab"
 			}
 		}
 	},
@@ -6407,6 +6430,24 @@ module_views.HandbookSkinSuitDetailView3_5 = {
 	destroy = 0,
 	container = "HandbookSkinSuitDetailView3_5Container",
 	mainRes = "ui/viewres/skinhandbook/skinsuitdetailview_3_5.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/skinhandbook/skinsuitdetailviewbtns.prefab"
+	}
+}
+module_views.HandbookSkinSuitDetailView1_7 = {
+	destroy = 0,
+	container = "HandbookSkinSuitDetailView1_7Container",
+	mainRes = "ui/viewres/skinhandbook/skinsuitdetailview_1_7.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	anim = ViewAnim.Default,
@@ -17103,6 +17144,8 @@ module_views.NewPlayerCardContentView = {
 		}
 	},
 	otherRes = {
+		badge = "ui/viewres/player/playercard/playercard_socialbadgeview.prefab",
+		switch = "ui/viewres/player/playercard/playercard_socialbadgeswitchview.prefab",
 		misihaiitem = "ui/viewres/player/playercard/playercardachieve_misihai.prefab",
 		achieveitem = "ui/viewres/achievement/achievementmainicon.prefab",
 		skinpreview = "ui/viewres/player/playercard/playercardskinpreview.prefab"
@@ -17251,6 +17294,19 @@ module_views.PlayerCardGetView = {
 		misihaiitem = "ui/viewres/player/playercard/playercardachieve_misihai.prefab",
 		achieveitem = "ui/viewres/achievement/achievementmainicon.prefab"
 	}
+}
+module_views.PlayerCardBadgeGetView = {
+	bgBlur = 1,
+	container = "PlayerCardBadgeGetViewContainer",
+	mainRes = "ui/viewres/player/playercard/playercard_socialbadgegetview.prefab",
+	destroy = 0,
+	blurIterations = 2,
+	blurFactor = 0.1,
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	desampleRate = PostProcessingMgr.DesamplingRate.x8,
+	reduceRate = PostProcessingMgr.DesamplingRate.x8
 }
 module_views.VersionActivity2_2EnterView = {
 	destroy = 0,
@@ -23066,6 +23122,20 @@ module_views.Permanent2_6EnterView = {
 		}
 	}
 }
+module_views.Permanent2_7EnterView = {
+	destroy = 0,
+	container = "Permanent2_7EnterViewContainer",
+	mainRes = "ui/viewres/dungeon/reappear/v2a7_reappear_mainactivity_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
 module_views.Permanent2_2EnterView = {
 	destroy = 0,
 	container = "Permanent2_2EnterViewContainer",
@@ -24496,6 +24566,7 @@ VersionActivityViewDefine.init(module_views)
 VersionActivity3_2ViewDefine.init(module_views)
 VersionActivity3_4ViewDefine.init(module_views)
 VersionActivity3_5ViewDefine.init(module_views)
+VersionActivity3_6ViewDefine.init(module_views)
 
 module_views.GMYeShuMeiView = {
 	destroy = 0,
@@ -25260,7 +25331,8 @@ module_views.Rouge2_MapDiceView = {
 	anim = ViewAnim.Internal,
 	otherRes = {
 		"scenes/v3a2_ui_touzi/prefabs/v3a2_ui_touzi_1.prefab",
-		Rouge2_Enum.ResPath.MapChoiceItem
+		Rouge2_Enum.ResPath.MapChoiceItem,
+		Rouge2_Enum.ResPath.CoinView
 	},
 	tabRes = {
 		{
@@ -25630,6 +25702,24 @@ module_views.Rouge2_BackpackPetStageResultView = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	}
+}
+module_views.Rouge2_FightRecordView = {
+	destroy = 0,
+	container = "Rouge2_FightRecordViewContainer",
+	mainRes = "ui/viewres/rouge2/record/rouge2_fightrecordview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/rouge2/record/rouge2_fightrecorditem.prefab",
+		[2] = "ui/viewres/rouge2/result/rouge2_resultheroitem.prefab"
 	}
 }
 module_views.Rouge2_EnterView = {
@@ -26854,6 +26944,14 @@ module_views.V3a4_DoubleDropView = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
+module_views.V3a6DoubleDropView = {
+	destroy = 0,
+	container = "V3a6DoubleDropViewContainer",
+	mainRes = "ui/viewres/activity/v3a6_doubledrop.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
 module_views.V3a4_GoldenMilletPresentView = {
 	destroy = 0,
 	container = "V3a4_GoldenMilletPresentViewContainer",
@@ -27121,6 +27219,29 @@ module_views.LorentzTaskView = {
 		[1] = "ui/viewres/versionactivity_3_5/v3a5_lorentz/v3a5_lorentz_taskitem.prefab"
 	}
 }
+module_views.AbyssMainView = {
+	destroy = 0,
+	container = "AbyssMainViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_mainview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+module_views.AbyssEnterView = {
+	destroy = 0,
+	container = "AbyssEnterViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal
+}
 module_views.V3A5ActivityCollectView = {
 	destroy = 0,
 	container = "V3A5ActivityCollectViewContainer",
@@ -27143,6 +27264,121 @@ module_views.DungeonExploreView = {
 				NavigateButtonsView.prefabPath
 			}
 		}
+	}
+}
+module_views.AbyssStageDetailView = {
+	destroy = 0,
+	container = "AbyssStageDetailViewContainer",
+	bgBlur = 4,
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_chapterdetailview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	otherRes = {
+		"ui/viewres/cloudredemption/clip/clip_icon_01.prefab",
+		"ui/viewres/cloudredemption/clip/clip_icon_02.prefab",
+		"ui/viewres/cloudredemption/clip/clip_icon_03.prefab"
+	}
+}
+module_views.AbyssHeroGroupFightView = {
+	bgBlur = 4,
+	container = "AbyssHeroGroupFightViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_herogroupview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Internal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/fight/clothskill.prefab"
+	}
+}
+module_views.AbyssTaskView = {
+	destroy = 0,
+	container = "AbyssTaskViewContainer",
+	bgBlur = 4,
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_rewardview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		[1] = "ui/viewres/cloudredemption/cloudredemption_rewarditem.prefab"
+	}
+}
+module_views.AbyssFightSuccView = {
+	destroy = 0,
+	container = "AbyssFightSuccViewContainer",
+	mainRes = "ui/viewres/cloudredemption/cloudredemption_resultview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full
+}
+module_views.ActivityCollectView = {
+	destroy = 0,
+	container = "ActivityCollectViewContainer",
+	mainRes = "ui/viewres/activity/v3a2_activitycollect_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+module_views.CurrencyExchangeTipsView = {
+	destroy = 0,
+	container = "CurrencyExchangeTipsViewContainer",
+	mainRes = "ui/viewres/store/storecurrencyreplacetipsmainview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal
+}
+
+V3a6YaMiViewDefine.init(module_views)
+
+module_views.V3a6_WarmUp = {
+	destroy = 0,
+	container = "V3a6_WarmUpContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/v3a6_warmup/v3a6_warmup.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+module_views.V3a6_WarmUp_DialogueView = {
+	destroy = 0,
+	container = "V3a6_WarmUp_DialogueViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/v3a6_warmup/v3a6_warmup_dialogueview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+module_views.V3a6_WarmUp_TaskView = {
+	destroy = 0,
+	container = "V3a6_WarmUp_TaskViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/v3a6_warmup/v3a6_warmup_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	otherRes = {
+		[1] = "ui/viewres/v3a6_warmup/v3a6_warmup_taskitem.prefab"
 	}
 }
 

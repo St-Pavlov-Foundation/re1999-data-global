@@ -4766,5 +4766,117 @@
     "titleEn": "A New Life for Us",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 1,
+    "title": "language_10118758",
+    "titleEn": "That Uncanny Green",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 2,
+    "title": "language_10008873",
+    "titleEn": "The Spiral",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 3,
+    "title": "language_10118761",
+    "titleEn": "The Answer at the Bottom",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 4,
+    "title": "language_10118763",
+    "titleEn": "Portable Reality",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 5,
+    "title": "language_10118765",
+    "titleEn": "Passersby",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 6,
+    "title": "language_10118767",
+    "titleEn": "All Is but a Riddle",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 7,
+    "title": "language_10118769",
+    "titleEn": "Flowing Memories",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 8,
+    "title": "language_10118771",
+    "titleEn": "Night Climber",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 9,
+    "title": "language_10118773",
+    "titleEn": "The Looping Pangram",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 10,
+    "title": "language_10118775",
+    "titleEn": "That Familiar Bitterness",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 11,
+    "title": "language_10003913",
+    "titleEn": "Open Sesame",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 12,
+    "title": "language_10118778",
+    "titleEn": "That Endless Green",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 13,
+    "title": "language_10118780",
+    "titleEn": "Fellow Travelers",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 36,
+    "part": 14,
+    "title": "language_10118782",
+    "titleEn": "Don't Look Back In Anger",
+    "labelRes": "14",
+    "storyBg": ""
   }
 ]

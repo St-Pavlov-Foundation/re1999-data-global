@@ -160,6 +160,7 @@ function LimitedRoleController:_playAction()
 
 					self._isPlayingAction = true
 
+					MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, false)
 					TaskDispatcher.runDelay(self._clearActionState, self, actionTime2)
 				end
 

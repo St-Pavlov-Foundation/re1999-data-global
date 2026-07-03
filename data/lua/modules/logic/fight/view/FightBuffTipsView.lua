@@ -142,13 +142,7 @@ function FightBuffTipsView:updateBuffDesc(entityMo, buffItemList, goBuffItem, vi
 	buffMOs = FightBuffHelper.filterBuffType(buffMOs, FightBuffTipsView.filterTypeKey)
 
 	FightSkillBuffMgr.instance:dealStackerBuff(buffMOs)
-	table.sort(buffMOs, function(buffMO1, buffMO2)
-		if buffMO1.time ~= buffMO2.time then
-			return buffMO1.time < buffMO2.time
-		end
-
-		return buffMO1.id < buffMO2.id
-	end)
+	table.sort(buffMOs, FightNameUIBuffMgr.sortBuffMo)
 
 	for _, item in ipairs(buffItemList) do
 		gohelper.setActive(item.go, false)

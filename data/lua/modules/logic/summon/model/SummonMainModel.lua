@@ -612,8 +612,9 @@ function SummonMainModel:getDiscountTime10Server(poolId)
 	return 0
 end
 
-function SummonMainModel:getDiscountCostId(poolId)
+function SummonMainModel:getDiscountCostId(poolId, costId)
 	local co = SummonConfig.instance:getSummonPool(poolId)
+	local tCostId = 0
 
 	if co then
 		local discountCost10 = co.discountCost10
@@ -623,12 +624,16 @@ function SummonMainModel:getDiscountCostId(poolId)
 			local cost = string.splitToNumber(costStr, "#")
 
 			if cost then
-				return cost[2]
+				tCostId = cost[2]
+
+				if not costId or costId == tCostId then
+					return tCostId
+				end
 			end
 		end
 	end
 
-	return 0
+	return tCostId
 end
 
 function SummonMainModel:getDiscountTime10(poolId)
@@ -641,7 +646,7 @@ function SummonMainModel:getDiscountTime10(poolId)
 	return 0
 end
 
-function SummonMainModel:getDiscountCost10(poolId, index)
+function SummonMainModel:getDiscountCost10(poolId, index, costId)
 	local disCountTimeconfig = self:getDiscountTime10(poolId)
 	local disCountTimeServer = self:getDiscountTime10Server(poolId)
 	local disTime = index or disCountTimeconfig - disCountTimeServer + 1
@@ -651,10 +656,14 @@ function SummonMainModel:getDiscountCost10(poolId, index)
 
 		if co then
 			local discountCost10 = co.discountCost10
-			local cost = string.splitToNumber(discountCost10, "#")
+			local discountCost10Str = string.split(discountCost10, "|")
 
-			if cost then
-				return cost[3]
+			for i, costStr in ipairs(discountCost10Str) do
+				local cost = string.splitToNumber(costStr, "#")
+
+				if cost and (not costId or costId == cost[2]) then
+					return cost[3]
+				end
 			end
 		end
 	end
@@ -693,7 +702,47 @@ function SummonMainModel:checkFree10CountOver(poolId)
 	return false
 end
 
-function SummonMainModel.getCostByConfig(costs, isGetFirstCost)
+function SummonMainModel:getCost10ById(poolId)
+	local poolCfg = SummonConfig.instance:getSummonPool(poolId)
+
+	if not poolCfg then
+		logError(string.format("no summon cost config, poolId:%s", poolId))
+
+		return
+	end
+
+	local discount = self:getDiscountTime10Server(poolId)
+
+	if discount > 0 then
+		return SummonMainModel.getCostByConfig(poolCfg.cost10, false, poolCfg.discountCost10)
+	end
+
+	return SummonMainModel.getCostByConfig(poolCfg.cost10, false, nil)
+end
+
+function SummonMainModel._getCostToDict(costs)
+	local dict
+
+	if costs and not string.nilorempty(costs) then
+		dict = {}
+
+		local costsList = string.split(costs, "|")
+
+		for i, costStr in ipairs(costsList) do
+			local cost = string.splitToNumber(costStr, "#")
+
+			if cost then
+				local cost_type, cost_id, cost_num = cost[1], cost[2], cost[3]
+
+				RoomHelper.add2KeyValue(dict, cost_type, cost_id, cost_num)
+			end
+		end
+	end
+
+	return dict
+end
+
+function SummonMainModel.getCostByConfig(costs, isGetFirstCost, discountCost)
 	if string.nilorempty(costs) then
 		logError("no summon cost config")
 
@@ -707,10 +756,16 @@ function SummonMainModel.getCostByConfig(costs, isGetFirstCost)
 	local itemCostFlagDict = {}
 	local firstIdDict = isGetFirstCost and {} or nil
 	local firstTypeDict = isGetFirstCost and {} or nil
+	local discountDict = SummonMainModel._getCostToDict(discountCost)
 
 	for i, costStr in ipairs(costs) do
 		local cost = string.splitToNumber(costStr, "#")
 		local cost_type, cost_id, cost_num = cost[1], cost[2], cost[3]
+
+		if discountDict and discountDict[cost_type] and discountDict[cost_type][cost_id] then
+			cost_num = discountDict[cost_type][cost_id]
+		end
+
 		local count = ItemModel.instance:getItemQuantity(cost_type, cost_id)
 		local ownNum = (costsNumDict[cost_num] or 0) + count
 
@@ -725,7 +780,7 @@ function SummonMainModel.getCostByConfig(costs, isGetFirstCost)
 				cost_type = firstTypeDict[cost_num] or cost_type
 			end
 
-			return cost_type, cost_id, cost_num, ownNum
+			return cost_type, cost_id, cost_num, ownNum, cost[3]
 		end
 
 		if not itemCostFlagDict[costStr] then

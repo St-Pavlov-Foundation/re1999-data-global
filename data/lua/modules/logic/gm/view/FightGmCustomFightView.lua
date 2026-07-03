@@ -201,14 +201,14 @@ function FightGmCustomFightView:setTeamData(teamData)
 	local listData = {}
 
 	for i = 1, 4 do
-		local heroId = teamData["position" .. i]
-		local config = lua_auto_fight_role_tool.configDict[heroId]
+		local configId = teamData["position" .. i]
+		local config = lua_auto_fight_role_tool.configDict[configId]
 
 		if config then
 			local proto = FightToolModule_pb.CustomFightEntityInfo()
 
 			proto.pos = i
-			proto.heroId = heroId
+			proto.heroId = config.roleId
 			proto.level = config.lv
 			proto.exLevel = config.exLv
 			proto.equipId = config.equip

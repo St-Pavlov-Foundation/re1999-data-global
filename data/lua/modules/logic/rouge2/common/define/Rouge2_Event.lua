@@ -38,5 +38,7 @@ E("OnUpdateRevivalCoin")
 E("SwitchCollectionInfoType")
 E("OpenRougeView")
 E("OnUpdateTeamSystem")
+E("OnSaveRecordDone")
+E("OnUpdateRecordInfo")
 
 return Rouge2_Event

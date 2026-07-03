@@ -168,7 +168,7 @@ function Activity114DialogBaseItem:playDialog(diaTxt, stepCo, callback, callback
 	gohelper.setActive(self._goconversation, true)
 	gohelper.setActive(self._gonexticon, true)
 
-	if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+	if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 		self:playMagicText(diatxt, callback, callbackobj)
 	else
 		self:playNormalText(diatxt, callback, callbackobj)
@@ -227,9 +227,9 @@ function Activity114DialogBaseItem:playMagicText(txt, callback, callbackobj)
 
 	self._magicFireAnim:Play("story_magicfont_particle")
 	self._reshapeMagicFireAnim:Play("story_magicfont_particle")
-	gohelper.setActive(self._magicFireGo, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
+	gohelper.setActive(self._magicFireGo, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic)
 	gohelper.setActive(self._reshapeMagicFireGo, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
-	gohelper.setActive(self._txtcontentmagic.gameObject, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic)
+	gohelper.setActive(self._txtcontentmagic.gameObject, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic)
 	gohelper.setActive(self._txtcontentreshapemagic, self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 
 	if self._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
@@ -270,7 +270,7 @@ function Activity114DialogBaseItem:_getMagicWordShowTime(txt)
 end
 
 function Activity114DialogBaseItem:_magicConUpdate(value)
-	local width = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.getWidth(self._txtcontentmagic.gameObject.transform) or recthelper.getWidth(self._txtcontentreshapemagic.gameObject.transform)
+	local width = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic and recthelper.getWidth(self._txtcontentmagic.gameObject.transform) or recthelper.getWidth(self._txtcontentreshapemagic.gameObject.transform)
 
 	if value > (width + 100) / 2215 and width > 1 then
 		if self._magicConTweenId then
@@ -305,10 +305,10 @@ function Activity114DialogBaseItem:_magicConUpdate(value)
 	end
 
 	local rate = (startPosX + value * (conWidth + 10)) / totalWidth
-	local screenposy = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.uiPosToScreenPos(self._txtcontentmagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y or recthelper.uiPosToScreenPos(self._txtcontentreshapemagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y
-	local psPos = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic and recthelper.screenPosToAnchorPos(Vector2(rate * screenWidth, screenposy), self._gofirework.transform) or recthelper.screenPosToAnchorPos(Vector2(rate * screenWidth, screenposy), self._goreshapefirework.transform)
+	local screenposy = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic and recthelper.uiPosToScreenPos(self._txtcontentmagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y or recthelper.uiPosToScreenPos(self._txtcontentreshapemagic.gameObject.transform, ViewMgr.instance:getUICanvas()).y
+	local psPos = self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic and recthelper.screenPosToAnchorPos(Vector2(rate * screenWidth, screenposy), self._gofirework.transform) or recthelper.screenPosToAnchorPos(Vector2(rate * screenWidth, screenposy), self._goreshapefirework.transform)
 
-	if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic then
+	if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic then
 		transformhelper.setLocalPos(self._txtcontentmagic.transform, x, y, 1 - rate)
 		transformhelper.setLocalPos(self._magicFireGo.transform, psPos.x, psPos.y, 0)
 	else
@@ -662,7 +662,7 @@ end
 
 function Activity114DialogBaseItem:_onConAudioFinished(audioId)
 	if self._textShowFinished then
-		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 			self:_magicConFinished()
 		else
 			self:conFinished()
@@ -892,7 +892,7 @@ end
 
 function Activity114DialogBaseItem:startAutoEnterNext()
 	if self._playingAudioId == 0 and self._textShowFinished then
-		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic or self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
 			self:_magicConFinished()
 		else
 			self:conFinished()

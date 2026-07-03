@@ -28,7 +28,9 @@ RoleActivityEnum.LevelView = {
 	[VersionActivity2_5Enum.ActivityId.LiangYue] = ViewName.LiangYueLevelView,
 	[VersionActivity2_5Enum.ActivityId.FeiLinShiDuo] = ViewName.FeiLinShiDuoEpisodeLevelView,
 	[VersionActivity2_6Enum.ActivityId.Xugouji] = ViewName.XugoujiLevelView,
-	[VersionActivity2_6Enum.ActivityId.DiceHero] = ViewName.DiceHeroMainView
+	[VersionActivity2_6Enum.ActivityId.DiceHero] = ViewName.DiceHeroMainView,
+	[VersionActivity2_7Enum.ActivityId.CooperGarland] = ViewName.CooperGarlandLevelView,
+	[VersionActivity2_7Enum.ActivityId.LengZhou6] = ViewName.LengZhou6LevelView
 }
 
 return RoleActivityEnum

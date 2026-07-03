@@ -360,5 +360,32 @@ return {
 		"",
 		0,
 		""
+	},
+	{
+		40,
+		"分屏",
+		"ui_default_stencil",
+		"v3a6_stencil_beforebg.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		41,
+		"退出分屏",
+		"",
+		"v3a6_screennoise.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		42,
+		"纹理抖动",
+		"",
+		"",
+		"",
+		0,
+		""
 	}
 }

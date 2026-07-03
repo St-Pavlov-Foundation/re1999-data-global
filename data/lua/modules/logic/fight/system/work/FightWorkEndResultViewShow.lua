@@ -217,6 +217,10 @@ function FightWorkEndResultViewShow:_showSuccView()
 			end
 
 			return
+		elseif episode_config.type == DungeonEnum.EpisodeType.Abyss then
+			AbyssController.instance:openFightSuccView()
+
+			return
 		end
 	end
 

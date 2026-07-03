@@ -72,7 +72,10 @@ function StorePackageGoodsMO:init(belongStoreId, goodsId, buyCount, offlineTime)
 end
 
 function StorePackageGoodsMO:initRedDotTime()
-	if string.nilorempty(self.config.newStartTime) then
+	local haveStartTime = not string.nilorempty(self.config.newStartTime)
+	local haveEndTime = not string.nilorempty(self.config.newEndTime)
+
+	if not haveStartTime then
 		self.newStartTime = 0
 	else
 		local newStartTimeStamp = TimeUtil.stringToTimestamp(self.config.newStartTime)
@@ -80,8 +83,12 @@ function StorePackageGoodsMO:initRedDotTime()
 		self.newStartTime = newStartTimeStamp
 	end
 
-	if string.nilorempty(self.config.newEndTime) then
-		self.newEndTime = 0
+	if not haveEndTime then
+		if haveStartTime then
+			self.newEndTime = TimeUtil.MaxValue
+		else
+			self.newEndTime = 0
+		end
 	else
 		local newEndTimeStamp = TimeUtil.stringToTimestamp(self.config.newEndTime)
 

@@ -491,7 +491,7 @@ function FightBLESelectCrystalView:refreshOneDescItem(descItem)
 
 		descItem.txtDesc.text = desc
 		descItem.txtTag.text = tag
-		descItem.txtCrystal.text = string.format("%s×%s", self.crystalNameDict[crystal], selectCount)
+		descItem.txtCrystal.text = string.format(luaLang("FightBLESelectCrystalView_txtCrystal"), self.crystalNameDict[crystal], selectCount)
 
 		for i = 1, selectCount do
 			local goImage = descItem.imageList[i]

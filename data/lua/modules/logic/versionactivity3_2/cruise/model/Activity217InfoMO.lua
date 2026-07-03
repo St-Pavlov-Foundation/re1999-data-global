@@ -18,6 +18,8 @@ function Activity217InfoMO:init(info)
 	if info.typeInfos and #info.typeInfos > 0 then
 		self:_updateTypeInfos(info.typeInfos)
 	end
+
+	self._subTypeCo = Activity217Config.instance:getSubTypeCO(info.activityId)
 end
 
 function Activity217InfoMO:_updateTypeInfos(infoList)
@@ -37,6 +39,8 @@ function Activity217InfoMO:updateInfo(info)
 	if info.typeInfos and #info.typeInfos > 0 then
 		self:_updateTypeInfos(info.typeInfos)
 	end
+
+	self._subTypeCo = Activity217Config.instance:getSubTypeCO(info.activityId)
 end
 
 function Activity217InfoMO:getDailyUseCountByType(type)
@@ -65,6 +69,14 @@ end
 
 function Activity217InfoMO:updateCoinEpisodeCount(count)
 	self.coinEpisodeCount = count
+end
+
+function Activity217InfoMO:getJumpId()
+	return self._subTypeCo and self._subTypeCo.jumpId
+end
+
+function Activity217InfoMO:getReddot()
+	return self._subTypeCo and self._subTypeCo.reddotId
 end
 
 return Activity217InfoMO

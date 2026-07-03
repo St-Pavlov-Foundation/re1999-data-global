@@ -63,22 +63,28 @@ function FightRoundView:onOpen()
 			conditionText = luaLang("v1a4_bossrushleveldetail_txt_target")
 		end
 
-		self:_setConditionText(self._txtCondition, conditionText, true)
-
-		local platCondition = DungeonConfig.instance:getEpisodeAdvancedConditionText(episodeId, FightModel.instance:getBattleId())
-
-		if string.nilorempty(platCondition) then
+		if episodeConfig and episodeConfig.type == DungeonEnum.EpisodeType.Abyss then
+			AbyssHelper.loadFightRoundCondition(episodeId, self._goalList, self._goCondition)
 			gohelper.setActive(self._goPlatCondition, false)
-		else
-			self:_setConditionText(self._txtPlatCondition, platCondition, true)
-		end
-
-		local platCondition2 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(episodeId, FightModel.instance:getBattleId())
-
-		if string.nilorempty(platCondition2) then
 			gohelper.setActive(self._goplatinum1, false)
 		else
-			self:_setConditionText(self._txtcondition3, platCondition2, true)
+			self:_setConditionText(self._txtCondition, conditionText, true)
+
+			local platCondition = DungeonConfig.instance:getEpisodeAdvancedConditionText(episodeId, FightModel.instance:getBattleId())
+
+			if string.nilorempty(platCondition) then
+				gohelper.setActive(self._goPlatCondition, false)
+			else
+				self:_setConditionText(self._txtPlatCondition, platCondition, true)
+			end
+
+			local platCondition2 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(episodeId, FightModel.instance:getBattleId())
+
+			if string.nilorempty(platCondition2) then
+				gohelper.setActive(self._goplatinum1, false)
+			else
+				self:_setConditionText(self._txtcondition3, platCondition2, true)
+			end
 		end
 	else
 		gohelper.setActive(self._goCondition, false)

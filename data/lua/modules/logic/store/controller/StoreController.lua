@@ -220,6 +220,7 @@ function StoreController:readTab(jumpTab)
 	end
 
 	self:_readTab(storeId)
+	self:clearMarkedPackageGoodsRedDot()
 end
 
 function StoreController:_readTab(storeId)
@@ -281,10 +282,52 @@ function StoreController:_readTab(storeId)
 					end
 				end
 
-				ChargeRpc.instance:sendReadChargeNewRequest(ids)
+				if ids and next(ids) then
+					ChargeRpc.instance:sendReadChargeNewRequest(ids)
+				end
 			end
 		end
 	end
+end
+
+function StoreController:checkStoreCurrencyExchange(jumpTab)
+	local storeId = StoreModel.instance:jumpTabIdToStoreId(jumpTab)
+
+	if storeId == self._lastViewStoreId then
+		return
+	end
+
+	if not ViewMgr.instance:isOpen(ViewName.StoreView) and ViewMgr.instance:isOpen(ViewName.StoreView) then
+		return
+	end
+
+	local currencyId = CurrencyExchangeConfig.instance:getExchangeCurrencyIdByStoreId(storeId)
+
+	if not currencyId then
+		return
+	end
+
+	local exchangeConfig = CurrencyExchangeConfig.instance:getExchangeConfig(currencyId)
+
+	if not exchangeConfig then
+		return
+	end
+
+	local versionConstConfig = lua_const.configDict[ConstEnum.VersionId]
+	local version = tonumber(versionConstConfig.value)
+
+	if exchangeConfig.versionId ~= version then
+		return
+	end
+
+	local infoMo = CurrencyExchangeModel.instance:getInfoMo(storeId)
+
+	if not infoMo or infoMo:isProped() == true then
+		return
+	end
+
+	logNormal("打开对应的货币转化弹窗")
+	CurrencyExchangeController.instance:setCurrencyExchangeState(exchangeConfig.currencyId)
 end
 
 function StoreController:statSwitchStore(jumpTab)
@@ -316,6 +359,11 @@ function StoreController:statSwitchStore(jumpTab)
 
 	self._tabTime = ServerTime.now()
 	self._lastViewStoreId = storeId
+end
+
+function StoreController:onSwitchTab(jumpTab)
+	self:checkStoreCurrencyExchange(jumpTab)
+	self:statSwitchStore(jumpTab)
 end
 
 function StoreController:statExitStore()
@@ -704,6 +752,22 @@ function StoreController:needHideHome()
 	end
 
 	return false
+end
+
+function StoreController:clearMarkedPackageGoodsRedDot()
+	local goodsDic = StoreModel.instance:getMarkedPackageGoodsNewRedDot()
+
+	if goodsDic and next(goodsDic) then
+		local ids = {}
+
+		for goodsId, _ in pairs(goodsDic) do
+			logNormal("清除充值礼包红点标记 id:" .. tostring(goodsId))
+			table.insert(ids, goodsId)
+		end
+
+		ChargeRpc.instance:sendReadChargeNewRequest(ids)
+		StoreModel.instance:clearMarkedPackageGoodsNewRedDot()
+	end
 end
 
 StoreController.instance = StoreController.New()

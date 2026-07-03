@@ -13,29 +13,22 @@ function Rouge2_MapChoiceView:addEvents()
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChoiceFlowDone, self.onChoiceFlowDone, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChoiceEventChange, self.onChoiceEventChange, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onReceiveChoiceEvent, self.onReceiveChoiceEvent, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onBeforeActorMoveToEnd, self.onBeforeActorMoveToEnd, self)
-end
-
-function Rouge2_MapChoiceView:onBeforeActorMoveToEnd()
-	self.beforeChangeMap = true
 end
 
 function Rouge2_MapChoiceView:onChoiceFlowDone()
-	if self.beforeChangeMap or self.nodeMo:isFinishEvent() then
-		if not Rouge2_MapDialogueHelper.hasLastSelectDesc(self.nodeMo) then
-			self:closeThis()
+	if self:checkIsChangeMap() or self.nodeMo:isFinishEvent() then
+		self:changeState(Rouge2_MapEnum.ChoiceViewState.Finish)
+
+		if self.hasTweenDialogue then
+			self:playChoiceHideAnim()
 		else
-			self:changeState(Rouge2_MapEnum.ChoiceViewState.Finish)
+			self:closeThis()
 		end
 
 		return
 	end
 
-	if self.hasTweenDialogue then
-		self:playChoiceHideAnim()
-	else
-		self:triggerEventHandle()
-	end
+	self:triggerEventHandle()
 end
 
 function Rouge2_MapChoiceView:onReceiveChoiceEvent()
@@ -43,31 +36,13 @@ function Rouge2_MapChoiceView:onReceiveChoiceEvent()
 end
 
 function Rouge2_MapChoiceView:playSelectDialogue()
-	if self.beforeChangeMap then
-		self:closeThis()
-
-		return
-	end
-
 	self:changeState(Rouge2_MapEnum.ChoiceViewState.PlayingDialogue)
 
-	self.hasTweenDialogue = Rouge2_MapDialogueHelper.select(self._dialogueListComp, self.nodeMo, self.onSelectedDescDone, self)
+	self.hasTweenDialogue = Rouge2_MapDialogueHelper.select(self._dialogueListComp, self.nodeMo)
 
 	if self.hasTweenDialogue then
 		self:playChoiceHideAnim()
-	else
-		self:playChoiceShowAnim()
 	end
-end
-
-function Rouge2_MapChoiceView:onSelectedDescDone()
-	if self.nodeMo and self.nodeMo:isFinishEvent() then
-		self:changeState(Rouge2_MapEnum.ChoiceViewState.Finish)
-
-		return
-	end
-
-	self:triggerEventHandle()
 end
 
 function Rouge2_MapChoiceView:triggerEventHandle()
@@ -76,12 +51,8 @@ function Rouge2_MapChoiceView:triggerEventHandle()
 	Rouge2_MapChoiceEventHelper.triggerEventHandleOnChoiceView(curNode)
 end
 
-function Rouge2_MapChoiceView:onClickBlockOnFinishState()
-	self:triggerEventHandle()
-end
-
 function Rouge2_MapChoiceView:onChoiceEventChange(nodeMo)
-	if self.beforeChangeMap then
+	if self:checkIsChangeMap() then
 		self:closeThis()
 
 		return
@@ -100,35 +71,35 @@ function Rouge2_MapChoiceView:onChoiceEventChange(nodeMo)
 			return
 		end
 
-		self:onChangeDialogueDone()
+		self:switch2SelectChoice()
 	else
 		self.curEventId = newEventId
 		self.eventCo = Rouge2_MapConfig.instance:getRougeEvent(self.curEventId)
 
 		self:changeState(Rouge2_MapEnum.ChoiceViewState.PlayingDialogue)
-		Rouge2_MapDialogueHelper.init(self._dialogueListComp, self.nodeMo, self.onChangeDialogueDone, self)
+		Rouge2_MapDialogueHelper.init(self._dialogueListComp, self.nodeMo, self.onChoiceFlowDone, self)
 	end
 
 	self:refreshUI()
-end
-
-function Rouge2_MapChoiceView:onChangeDialogueDone()
-	self:changeState(Rouge2_MapEnum.ChoiceViewState.WaitSelect)
-	self:refreshChoice()
-	self:playChoiceShowAnim()
 end
 
 function Rouge2_MapChoiceView:initViewData()
 	self.nodeMo = self.viewParam
 	self.curEventId = self.nodeMo.eventId
 	self.eventCo = Rouge2_MapConfig.instance:getRougeEvent(self.curEventId)
-	self.isEventFinish = Rouge2_OutsideModel.instance:passedEventId(self.curEventId)
+	self.isPassEvent = Rouge2_OutsideModel.instance:passedEventId(self.curEventId)
 end
 
 function Rouge2_MapChoiceView:onOpen()
 	Rouge2_MapChoiceView.super.onOpen(self)
 	self:refreshUI()
-	Rouge2_MapDialogueHelper.init(self._dialogueListComp, self.nodeMo, self.onEnterDialogueDone, self)
+	Rouge2_MapDialogueHelper.init(self._dialogueListComp, self.nodeMo, self.switch2SelectChoice, self)
+end
+
+function Rouge2_MapChoiceView:switch2SelectChoice()
+	self:changeState(Rouge2_MapEnum.ChoiceViewState.WaitSelect)
+	self:refreshChoice()
+	self:playChoiceShowAnim()
 end
 
 function Rouge2_MapChoiceView:refreshUI()
@@ -143,12 +114,6 @@ function Rouge2_MapChoiceView:refreshUI()
 	self._txtName.text = self.eventCo.name
 end
 
-function Rouge2_MapChoiceView:onEnterDialogueDone()
-	self:changeState(Rouge2_MapEnum.ChoiceViewState.WaitSelect)
-	self:refreshChoice()
-	self:playChoiceShowAnim()
-end
-
 function Rouge2_MapChoiceView:refreshChoice()
 	local choiceIdList = self.nodeMo.eventMo:getChoiceIdList()
 
@@ -161,10 +126,19 @@ function Rouge2_MapChoiceView:refreshChoice()
 	Rouge2_MapHelper.loadItemWithCustomUpdateFunc(self.goChoiceItem, Rouge2_MapNodeChoiceItem, choiceIdList, self.choiceItemList, self.updateItem, self)
 end
 
+function Rouge2_MapChoiceView:onPlayDialogueDone()
+	Rouge2_MapChoiceView.super.onPlayDialogueDone(self)
+
+	if self:checkIsChangeMap() or self.nodeMo:isFinishEvent() then
+		self:changeState(Rouge2_MapEnum.ChoiceViewState.Finish)
+		Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onDialogueFlowDone)
+	end
+end
+
 function Rouge2_MapChoiceView:changeState(state)
 	Rouge2_MapChoiceView.super.changeState(self, state)
 
-	local isJumpChoice = self.isEventFinish and state == Rouge2_MapEnum.ChoiceViewState.PlayingDialogue
+	local isJumpChoice = self.isPassEvent and state == Rouge2_MapEnum.ChoiceViewState.PlayingDialogue
 
 	gohelper.setActive(self._btnSkip.gameObject, isJumpChoice)
 end
@@ -173,8 +147,12 @@ function Rouge2_MapChoiceView:updateItem(item, index, choiceId)
 	item:update(choiceId, self.nodeMo, index)
 end
 
-function Rouge2_MapChoiceView:onDestroyView()
-	Rouge2_MapChoiceView.super.onDestroyView(self)
+function Rouge2_MapChoiceView:checkIsChangeMap()
+	return Rouge2_MapModel.instance:needPlayMoveToEndAnim()
+end
+
+function Rouge2_MapChoiceView:onClickBlockOnFinishState()
+	self:triggerEventHandle()
 end
 
 return Rouge2_MapChoiceView

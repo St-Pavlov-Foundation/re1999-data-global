@@ -103,6 +103,44 @@ function CurrencyRpc:onReceiveExchangeDiamondReply(resultCode, msg)
 	end
 end
 
+function CurrencyRpc:sendExchangeSameCurrencyRequest(callback, callbackObj)
+	local req = CurrencyModule_pb.ExchangeSameCurrencyRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function CurrencyRpc:onReceiveExchangeSameCurrencyReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local currencyExchanges = msg.currencyExchanges
+
+	CurrencyExchangeModel.instance:initInfo(currencyExchanges)
+end
+
+function CurrencyRpc:sendPopExchangeSameCurrencyRequest(currencyIds, callback, callbackObj)
+	local req = CurrencyModule_pb.PopExchangeSameCurrencyRequest()
+
+	tabletool.clear(req.currencyIds)
+
+	for _, currencyId in ipairs(currencyIds) do
+		table.insert(req.currencyIds, currencyId)
+	end
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function CurrencyRpc:onReceivePopExchangeSameCurrencyReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local currencyIds = msg.currencyIds
+
+	CurrencyExchangeModel.instance:onInfoChange(currencyIds)
+end
+
 CurrencyRpc.instance = CurrencyRpc.New()
 
 return CurrencyRpc

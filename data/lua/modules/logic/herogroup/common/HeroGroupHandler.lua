@@ -139,6 +139,14 @@ function HeroGroupHandler.getSurvivalSnapShot()
 	}
 end
 
+function HeroGroupHandler.getAbyssSnapShot()
+	return ModuleEnum.HeroGroupSnapshotType.Abyss, {
+		1,
+		2,
+		3
+	}
+end
+
 HeroGroupHandler.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.getTowerPermanentSnapShot,
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerBossSnapShot,
@@ -147,7 +155,8 @@ HeroGroupHandler.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeSnapShot,
 	[DungeonEnum.EpisodeType.Act183] = HeroGroupHandler.getAct183SnapShot,
 	[DungeonEnum.EpisodeType.Shelter] = HeroGroupHandler.getShelterSnapShot,
-	[DungeonEnum.EpisodeType.Survival] = HeroGroupHandler.getSurvivalSnapShot
+	[DungeonEnum.EpisodeType.Survival] = HeroGroupHandler.getSurvivalSnapShot,
+	[DungeonEnum.EpisodeType.Abyss] = HeroGroupHandler.getAbyssSnapShot
 }
 
 function HeroGroupHandler.getSnapShot(episodeId)

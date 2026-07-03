@@ -144,4 +144,8 @@ function Rouge2_ResultMO:getQuintupleCountAndScore()
 	return count, score
 end
 
+function Rouge2_ResultMO:getDifficulty()
+	return self.reviewInfo and self.reviewInfo.difficulty
+end
+
 return Rouge2_ResultMO

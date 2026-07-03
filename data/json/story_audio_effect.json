@@ -13825,6 +13825,516 @@
     "bankName": "hero3142_mainsfx"
   },
   {
+    "id": 36500001,
+    "eventName": "play_activitysfx_renmen_drawer_pistol",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500002,
+    "eventName": "play_activitysfx_renmen_pistol_load",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500003,
+    "eventName": "play_activitysfx_renmen_pistol_chamber",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500004,
+    "eventName": "play_activitysfx_renmen_graves_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500005,
+    "eventName": "play_activitysfx_renmen_church_bell",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500006,
+    "eventName": "play_activitysfx_renmen_tears_paper",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500007,
+    "eventName": "play_activitysfx_renmen_shovel_end",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500008,
+    "eventName": "play_activitysfx_renmen_metalcans_throw",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500009,
+    "eventName": "play_activitysfx_renmen_metalcans_put",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500010,
+    "eventName": "play_activitysfx_renmen_metalcans_open",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500011,
+    "eventName": "play_activitysfx_renmen_metalcans_transition",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500012,
+    "eventName": "play_activitysfx_renmen_door_open",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500013,
+    "eventName": "play_activitysfx_renmen_paper_balls",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500014,
+    "eventName": "play_activitysfx_renmen_file_tap",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500015,
+    "eventName": "play_activitysfx_renmen_meeting_room_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500016,
+    "eventName": "play_activitysfx_renmen_grassland_step_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500017,
+    "eventName": "play_activitysfx_renmen_beach_step_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500018,
+    "eventName": "play_activitysfx_renmen_beach_step_multiple",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500019,
+    "eventName": "play_activitysfx_renmen_cheer",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500020,
+    "eventName": "play_activitysfx_renmen_bubble_burst_1",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500021,
+    "eventName": "play_activitysfx_renmen_bubble_burst_2",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500022,
+    "eventName": "play_activitysfx_renmen_bubble_burst_3",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500023,
+    "eventName": "play_activitysfx_renmen_bubble_burst_4",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500024,
+    "eventName": "play_activitysfx_renmen_bubble_burst_5",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500025,
+    "eventName": "play_activitysfx_renmen_bell_soft_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500026,
+    "eventName": "play_activitysfx_renmen_tube_water_fill",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500027,
+    "eventName": "play_activitysfx_renmen_data_load",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500028,
+    "eventName": "play_activitysfx_renmen_home_amb_lp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500029,
+    "eventName": "play_activitysfx_renmen_walk_open_door",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500030,
+    "eventName": "play_activitysfx_renmen_walk_sit_down",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500031,
+    "eventName": "play_activitysfx_renmen_tie_shoes_stamp",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500032,
+    "eventName": "play_activitysfx_renmen_keys_throw",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500033,
+    "eventName": "play_activitysfx_renmen_wood_door",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500034,
+    "eventName": "play_activitysfx_renmen_door_close_transition",
+    "bankName": "activity_renmen3_6_sfx_part01"
+  },
+  {
+    "id": 36500035,
+    "eventName": "play_activitysfx_renmen_gear_fall",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500036,
+    "eventName": "play_activitysfx_renmen_bag_take_cube",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500037,
+    "eventName": "play_activitysfx_renmen_monster_surround",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500038,
+    "eventName": "play_activitysfx_renmen_baita_amb_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500039,
+    "eventName": "play_activitysfx_renmen_walk_mirror_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500040,
+    "eventName": "play_activitysfx_renmen_crow_loud",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500041,
+    "eventName": "play_activitysfx_renmen_communicator_1",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500042,
+    "eventName": "play_activitysfx_renmen_communicator_2",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500043,
+    "eventName": "play_activitysfx_renmen_communicator_3",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500044,
+    "eventName": "play_activitysfx_renmen_badge_fall",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500045,
+    "eventName": "play_activitysfx_renmen_walk_mirror_stagger",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500046,
+    "eventName": "play_activitysfx_renmen_paper_tear",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500047,
+    "eventName": "play_activitysfx_renmen_atmosphere_nervous_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500048,
+    "eventName": "play_activitysfx_renmen_door_pound_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500049,
+    "eventName": "play_activitysfx_renmen_data_amb_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500050,
+    "eventName": "play_activitysfx_renmen_wall_touch",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500051,
+    "eventName": "play_activitysfx_renmen_wall_tap",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500052,
+    "eventName": "play_activitysfx_renmen_communicator_throw",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500053,
+    "eventName": "play_activitysfx_renmen_crow_die",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500054,
+    "eventName": "play_activitysfx_renmen_squash_lp",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500055,
+    "eventName": "play_activitysfx_renmen_metal_dissolve",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500056,
+    "eventName": "play_activitysfx_renmen_rummaging",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500057,
+    "eventName": "play_activitysfx_renmen_mechanism_revolve",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500058,
+    "eventName": "play_activitysfx_renmen_box_pull",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500059,
+    "eventName": "play_activitysfx_renmen_box_close",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500060,
+    "eventName": "play_activitysfx_renmen_salutes",
+    "bankName": "activity_renmen3_6_sfx_part02"
+  },
+  {
+    "id": 36500061,
+    "eventName": "play_activitysfx_renmen_rain_1",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500062,
+    "eventName": "play_activitysfx_renmen_rain_lp",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500063,
+    "eventName": "play_activitysfx_renmen_decrypt_lp",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500064,
+    "eventName": "play_activitysfx_renmen_decrypt_2",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500065,
+    "eventName": "play_activitysfx_renmen_toybox_open",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500066,
+    "eventName": "play_activitysfx_renmen_toybox_close",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500067,
+    "eventName": "play_activitysfx_renmen_windbell_1",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500068,
+    "eventName": "play_activitysfx_renmen_windbell_2",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500069,
+    "eventName": "play_activitysfx_renmen_fault_1_lp",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500070,
+    "eventName": "play_activitysfx_renmen_fault_2_lp",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500071,
+    "eventName": "play_activitysfx_renmen_fault_transition",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500072,
+    "eventName": "play_activitysfx_renmen_mucus",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500073,
+    "eventName": "play_activitysfx_renmen_digital_data",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500074,
+    "eventName": "play_activitysfx_renmen_gear_rotation",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500075,
+    "eventName": "play_activitysfx_renmen_killer_click_1",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500076,
+    "eventName": "play_activitysfx_renmen_killer_click_2",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500077,
+    "eventName": "play_activitysfx_renmen_killer_click_3",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500078,
+    "eventName": "play_activitysfx_renmen_killer_click_4",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500079,
+    "eventName": "play_activitysfx_renmen_killer_bubble",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500080,
+    "eventName": "play_activitysfx_renmen_killer_eyes",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500081,
+    "eventName": "play_activitysfx_renmen_mosaic_disappear",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500082,
+    "eventName": "play_activitysfx_renmen_mosaic_appear",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500083,
+    "eventName": "play_activitysfx_renmen_mosaic_move",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500084,
+    "eventName": "play_activitysfx_renmen_flashlight_1",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500085,
+    "eventName": "play_activitysfx_renmen_flashlight_2",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500086,
+    "eventName": "play_activitysfx_renmen_flashlight_3",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500087,
+    "eventName": "play_activitysfx_renmen_cell_1",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500088,
+    "eventName": "play_activitysfx_renmen_cell_2",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500089,
+    "eventName": "play_activitysfx_renmen_flash",
+    "bankName": "activity_renmen3_6_sfx_part03"
+  },
+  {
+    "id": 36500090,
+    "eventName": "play_activitysfx_renmen_throw_bi",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500091,
+    "eventName": "play_activitysfx_renmen_bubble",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500092,
+    "eventName": "play_activitysfx_renmen_succeed",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500093,
+    "eventName": "play_activitysfx_renmen_boxian2",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500094,
+    "eventName": "play_activitysfx_renmen_switch",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500095,
+    "eventName": "play_activitysfx_renmen_writer2",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500096,
+    "eventName": "play_activitysfx_renmen_wind1",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500097,
+    "eventName": "play_activitysfx_renmen_consciousness",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500098,
+    "eventName": "play_activitysfx_renmen_clockwise",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500099,
+    "eventName": "play_activitysfx_renmen_pen1",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500100,
+    "eventName": "play_activitysfx_renmen_pad1_lp",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500101,
+    "eventName": "play_activitysfx_renmen_shake_lp",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
+    "id": 36500102,
+    "eventName": "play_activitysfx_renmen_whooshwhite",
+    "bankName": "activity_renmen3_6_sfx_fuyong"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -14238,6 +14748,26 @@
     "id": 35530005,
     "eventName": "play_activitymusic_ep_acomp_3_5",
     "bankName": "activity3_5_music"
+  },
+  {
+    "id": 36530001,
+    "eventName": "play_activitymusic_theme_3_6",
+    "bankName": "activity3_6_music"
+  },
+  {
+    "id": 36530002,
+    "eventName": "play_activitymusic_zangli_3_6",
+    "bankName": "activity3_6_music"
+  },
+  {
+    "id": 36530003,
+    "eventName": "play_activitymusic_tansuo_3_6",
+    "bankName": "activity3_6_music"
+  },
+  {
+    "id": 36530004,
+    "eventName": "play_activitymusic_ep_accomp_3_6",
+    "bankName": "activity3_6_music"
   },
   {
     "id": 520105,
@@ -14893,6 +15423,31 @@
     "id": 35520008,
     "eventName": "play_activitysfx_lusongshi_subsection_close",
     "bankName": "activity_lusongshi3_5_sfx"
+  },
+  {
+    "id": 36520001,
+    "eventName": "play_activitysfx_renmen_avg_open",
+    "bankName": "activity_renmen3_6_sfx"
+  },
+  {
+    "id": 36520002,
+    "eventName": "play_activitysfx_renmen_avg_open2",
+    "bankName": "activity_renmen3_6_sfx"
+  },
+  {
+    "id": 36520003,
+    "eventName": "play_activitysfx_renmen_avg_continue",
+    "bankName": "activity_renmen3_6_sfx"
+  },
+  {
+    "id": 36520004,
+    "eventName": "play_activitysfx_renmen_avg_end",
+    "bankName": "activity_renmen3_6_sfx"
+  },
+  {
+    "id": 36520005,
+    "eventName": "play_renmen3_6_pv_sfx_vo_music",
+    "bankName": "renmen3_6_cutscene_sfx_vo"
   },
   {
     "id": 20530011,

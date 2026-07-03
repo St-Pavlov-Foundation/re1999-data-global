@@ -5,7 +5,7 @@ module("modules.versionactivitybase.fixed.VersionActivityFixedHelper", package.s
 local VersionActivityFixedHelper = class("VersionActivityFixedHelper")
 local _version = {
 	big = 3,
-	small = 5
+	small = 6
 }
 local _versionTable
 local foramt1 = "%s_%s"
@@ -194,6 +194,54 @@ function VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(bi
 	return func
 end
 
+function VersionActivityFixedHelper.getVersionActivityDungeonFragmentInfoViewName(big, small)
+	big, small = _getVersion(big, small)
+
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonFragmentInfoView
+
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonFragmentInfoView", foramt1, big, small)
+
+		func = ViewName[title]
+		_versionTable[big][small]._DungeonFragmentInfoView = func
+	end
+
+	return func
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonReportFullViewName(big, small)
+	big, small = _getVersion(big, small)
+
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonReportFullViewName
+
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonReportFullView", foramt1, big, small)
+
+		func = ViewName[title]
+		_versionTable[big][small]._DungeonReportFullViewName = func
+	end
+
+	return func
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonReportTipsViewName(big, small)
+	big, small = _getVersion(big, small)
+
+	local table = _getVersionTable(big, small)
+	local func = table._DungeonReportTipsView
+
+	if not func then
+		local title = _getVersionFuncForamt("VersionActivity%sDungeonReportTipsView", foramt1, big, small)
+
+		func = ViewName[title]
+		_versionTable[big][small]._DungeonReportTipsView = func
+	end
+
+	return func
+end
+
 function VersionActivityFixedHelper.getVersionActivityDungeonEnterReddotId(big, small)
 	big, small = _getVersion(big, small)
 
@@ -272,7 +320,7 @@ function VersionActivityFixedHelper.getVersionActivityStoreRareIcon(big, small)
 	return func
 end
 
-function VersionActivityFixedHelper._getFixed(big, small, name)
+function VersionActivityFixedHelper._getFixed(big, small, name, suffix)
 	big, small = _getVersion(big, small)
 
 	local table = _getVersionTable(big, small)
@@ -283,107 +331,158 @@ function VersionActivityFixedHelper._getFixed(big, small, name)
 		local title = _getVersionFuncForamt(_format, foramt1, big, small)
 		local fixedTitle = string.format(_format, "Fixed")
 
-		func = _G[title] or _G[fixedTitle]
+		func = _G[title]
+
+		if not func then
+			if suffix then
+				fixedTitle = fixedTitle .. suffix
+			end
+
+			func = _G[fixedTitle]
+		end
+
 		_versionTable[big][small][name] = func
 	end
 
 	return func
 end
 
-function VersionActivityFixedHelper.getVersionActivityEnterController(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "EnterController")
+function VersionActivityFixedHelper.getVersionActivityEnterController(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterController", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonController(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonController")
+function VersionActivityFixedHelper.getVersionActivityDungeonController(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonController", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapElement(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapElement")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapElement(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapElement", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapHoleView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapHoleView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapHoleView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapScene(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapScene")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapScene(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapScene", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapSceneElements")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapSceneElements(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapSceneElements", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapChapterLayout(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapChapterLayout")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapChapterLayout(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapChapterLayout", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeItem(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeItem")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeItem(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeItem", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapFinishElement(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapFinishElement")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapFinishElement(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapFinishElement", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapInteractView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapInteractView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapInteractView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonMapLevelView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapLevelView")
+function VersionActivityFixedHelper.getVersionActivityDungeonMapLevelView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapLevelView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "StoreGoodsItem")
+function VersionActivityFixedHelper.getVersionActivityStoreGoodsItem(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreGoodsItem", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityStoreItem(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "StoreItem")
+function VersionActivityFixedHelper.getVersionActivityStoreItem(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreItem", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityStoreView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "StoreView")
+function VersionActivityFixedHelper.getVersionActivityStoreView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "StoreView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityTaskItem(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "TaskItem")
+function VersionActivityFixedHelper.getVersionActivityTaskItem(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "TaskItem", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityTaskView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "TaskView")
+function VersionActivityFixedHelper.getVersionActivityTaskView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "TaskView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityDungeonEnterView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "DungeonEnterView")
+function VersionActivityFixedHelper.getVersionActivityDungeonEnterView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonEnterView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivitySubAnimatorComp(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "SubAnimatorComp")
+function VersionActivityFixedHelper.getVersionActivitySubAnimatorComp(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "SubAnimatorComp", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityEnterBgmView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "EnterBgmView")
+function VersionActivityFixedHelper.getVersionActivityEnterBgmView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterBgmView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityEnterView(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "EnterView")
+function VersionActivityFixedHelper.getVersionActivityEnterView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterView", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem1(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem1")
+function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem1(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem1", suffix)
 end
 
-function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem2(big, small)
-	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem2")
+function VersionActivityFixedHelper.getVersionActivityEnterViewTabItem2(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "EnterViewTabItem2", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonFragmentInfoView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonFragmentInfoView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapNormalInteractView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapNormalInteractView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapControlView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapControlView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapTaskInfo(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapTaskInfo", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeSceneView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeSceneView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapElementReward(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapElementReward", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonReportFullView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonReportFullView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonReportTipsView(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonReportTipsView", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityDungeonMapEpisodeSceneItem(big, small, suffix)
+	return VersionActivityFixedHelper._getFixed(big, small, "DungeonMapEpisodeSceneItem", suffix)
+end
+
+function VersionActivityFixedHelper.getVersionActivityScriptSuffix(big, small)
+	local enum = VersionActivityFixedHelper.getVersionActivityEnum(big, small)
+
+	return enum and enum.ScriptSuffix
 end
 
 function VersionActivityFixedHelper.isTargetVersion(big, small)

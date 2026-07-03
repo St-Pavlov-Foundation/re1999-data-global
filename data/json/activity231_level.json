@@ -1,0 +1,57 @@
+[
+  {
+    "activityId": 13608,
+    "level": 0,
+    "exp": 0
+  },
+  {
+    "activityId": 13608,
+    "level": 1,
+    "exp": 75
+  },
+  {
+    "activityId": 13608,
+    "level": 2,
+    "exp": 375
+  },
+  {
+    "activityId": 13608,
+    "level": 3,
+    "exp": 975
+  },
+  {
+    "activityId": 13608,
+    "level": 4,
+    "exp": 1975
+  },
+  {
+    "activityId": 13608,
+    "level": 5,
+    "exp": 3475
+  },
+  {
+    "activityId": 13608,
+    "level": 6,
+    "exp": 5875
+  },
+  {
+    "activityId": 13608,
+    "level": 7,
+    "exp": 9875
+  },
+  {
+    "activityId": 13608,
+    "level": 8,
+    "exp": 15875
+  },
+  {
+    "activityId": 13608,
+    "level": 9,
+    "exp": 21875
+  },
+  {
+    "activityId": 13608,
+    "level": 10,
+    "exp": 28875
+  }
+]

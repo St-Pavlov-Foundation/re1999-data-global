@@ -27,7 +27,8 @@ function StoryView:onInitView()
 	self._gocontentroot = gohelper.findChild(self.viewGO, "#go_contentroot")
 	self._gonexticon = gohelper.findChild(self.viewGO, "#go_contentroot/nexticon")
 	self._goconversation = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation")
-	self._goblackbottom = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/content/blackBottom")
+	self._gocontents = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents")
+	self._goblackbottom = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/blackBottom")
 	self._gohead = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_head")
 	self._goheadgrey = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_head/#go_headgrey")
 	self._simagehead = gohelper.findChildSingleImage(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_head/#simage_head")
@@ -38,7 +39,6 @@ function StoryView:onInitView()
 	self._txtnamecn1 = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_name/namelayout/#txt_namecn1")
 	self._txtnamecn2 = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_name/namelayout/#txt_namecn2")
 	self._txtnameen = gohelper.findChildText(self.viewGO, "#go_contentroot/#go_conversation/#go_contents/content/#go_name/namelayout/#txt_nameen")
-	self._gocontents = gohelper.findChild(self.viewGO, "#go_contentroot/#go_conversation/#go_contents")
 	self._gonoconversation = gohelper.findChild(self.viewGO, "#go_contentroot/#go_noconversation")
 	self._gotop = gohelper.findChild(self.viewGO, "#go_top")
 	self._goimg3 = gohelper.findChild(self.viewGO, "#go_top/#go_img3")
@@ -278,6 +278,8 @@ function StoryView:_initView()
 	self._goimg1 = gohelper.findChild(bgGo, "#go_bottomitem/#go_img1")
 	self._govideo1 = gohelper.findChild(bgGo, "#go_bottomitem/#go_video1")
 	self._goeff1 = gohelper.findChild(bgGo, "#go_bottomitem/#go_eff1")
+	self._goBottomBgEffRoot = gohelper.findChild(bgGo, "#go_bottombg")
+	self._goUpBgEffRoot = gohelper.findChild(bgGo, "#go_upbg")
 
 	gohelper.setActive(self._gocontentroot, false)
 	self:_initItems()
@@ -336,6 +338,7 @@ function StoryView:_storyFinished(isSkip)
 	TaskDispatcher.cancelTask(self._startShake, self)
 	self._dialogItem:storyFinished()
 	StoryModel.instance:enableClick(false)
+	StoryModel.instance:setInScreenSplitMode(false)
 
 	if self._dialogItem then
 		self._dialogItem:stopConAudio()
@@ -343,7 +346,7 @@ function StoryView:_storyFinished(isSkip)
 
 	if StoryController.instance._hideStartAndEndDark then
 		self:stopAllAudio(1.5)
-		gohelper.setActive(self._gospine, false)
+		self:_showLeadRoleSpine(false)
 
 		if self._confadeId then
 			ZProj.TweenHelper.KillById(self._confadeId)
@@ -361,6 +364,11 @@ function StoryView:_storyFinished(isSkip)
 	end
 
 	self:stopAllAudio(1.5)
+end
+
+function StoryView:_showLeadRoleSpine(show)
+	gohelper.setActive(self._gospine, show)
+	gohelper.setActive(self._gonamebg, show)
 end
 
 function StoryView:onClose()
@@ -491,7 +499,7 @@ end
 
 function StoryView:_showNormalLeadHero(param)
 	gohelper.setActive(self._gohead, true)
-	gohelper.setActive(self._gospine, false)
+	self:_showLeadRoleSpine(false)
 
 	local name = param.conditionValue2[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
 	local nameEn = param.conditionValue2[LanguageEnum.LanguageStoryType.EN]
@@ -505,7 +513,7 @@ function StoryView:_showSpineLeadHero(param)
 
 	StoryController.instance:dispatchEvent(StoryEvent.LeadRoleViewShow, true, heroIcon)
 	gohelper.setActive(self._gohead, false)
-	gohelper.setActive(self._gospine, true)
+	self:_showLeadRoleSpine(true)
 
 	self._txtnamecn1.text = luaLang("mainrolename")
 	self._txtnamecn2.text = luaLang("mainrolename")
@@ -734,8 +742,7 @@ function StoryView:_showConversationItem(show)
 
 	if not self._stepCo.conversation.iconShow then
 		gohelper.setActive(self._gohead, false)
-		gohelper.setActive(self._gospine, false)
-		gohelper.setActive(self._gonamebg, false)
+		self:_showLeadRoleSpine(false)
 		self._simagehead:UnLoadImage()
 		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, false, false, false)
 
@@ -796,13 +803,11 @@ function StoryView:_showHeadContentIcon(icon)
 
 	if self:_isHeroLead() then
 		gohelper.setActive(self._gohead, false)
-		gohelper.setActive(self._gospine, true)
-		gohelper.setActive(self._gonamebg, true)
+		self:_showLeadRoleSpine(true)
 		self._simagehead:UnLoadImage()
 		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, true, false, false)
 	else
-		gohelper.setActive(self._gospine, false)
-		gohelper.setActive(self._gonamebg, false)
+		self:_showLeadRoleSpine(false)
 		gohelper.setActive(self._gohead, true)
 
 		local isCut = StoryModel.instance:isHeroIconCuts(string.split(icon, ".")[1])
@@ -1247,6 +1252,18 @@ function StoryView:_buildEffect(name, eff)
 	elseif eff.layer < 10 then
 		effGo = self._goeff3
 		order = 2000
+	elseif eff.layer == 11 then
+		effGo = self._goeff1
+		order = 4
+	elseif eff.layer == 12 then
+		effGo = self._goeff1
+		order = 4
+	elseif eff.layer == 13 then
+		effGo = self._goeff2
+		order = 1000
+	elseif eff.layer == 14 then
+		effGo = self._goeff2
+		order = 1000
 	else
 		if not self._goeff4 then
 			local frontGo = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO

@@ -140,6 +140,18 @@ function Activity125ViewBaseContainer:getRLOC(episodeId)
 	return mo:getRLOC(episodeId)
 end
 
+function Activity125ViewBaseContainer:getPreTaskInfo(episodeId, ...)
+	local mo = self:getActivity125MO()
+
+	return mo:getPreTaskInfo(episodeId, ...)
+end
+
+function Activity125ViewBaseContainer:checkPassedPreTask(episodeId, ...)
+	local mo = self:getActivity125MO()
+
+	return mo:checkPassedPreTask(episodeId, ...)
+end
+
 function Activity125ViewBaseContainer:isActivityOpen()
 	return Activity125Model.instance:isActivityOpen(self:actId())
 end
@@ -152,6 +164,12 @@ function Activity125ViewBaseContainer:getEpisodeList()
 	local mo = self:getActivity125MO()
 
 	return mo:getEpisodeList() or {}
+end
+
+function Activity125ViewBaseContainer:isAllEpisodeFinish()
+	local mo = self:getActivity125MO()
+
+	return mo:isAllEpisodeFinish()
 end
 
 function Activity125ViewBaseContainer:getEpisodeConfigCur()

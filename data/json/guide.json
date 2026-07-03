@@ -8974,5 +8974,82 @@
     "priority": 0,
     "parallel": 1,
     "restart": 0
+  },
+  {
+    "id": 36001,
+    "desc": "哑谜外围玩法指引",
+    "isOnline": 1,
+    "trigger": "OpenView#V3a6YaMiMainView",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36002,
+    "desc": "哑谜外围人员指引",
+    "isOnline": 1,
+    "trigger": "OpenView#V3a6YaMiSelectHeroView",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36003,
+    "desc": "哑谜外围演出指引",
+    "isOnline": 1,
+    "trigger": "OpenView#V3a6YaMiPerformView",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36004,
+    "desc": "哑谜外围结算指引",
+    "isOnline": 1,
+    "trigger": "OpenView#V3a6YaMiEvaluationView",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36005,
+    "desc": "哑谜外围奖励指引",
+    "isOnline": 1,
+    "trigger": "OpenView#V3a6YaMiMainView|FinishGuide#36004",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36006,
+    "desc": "焦点闪回指引1",
+    "isOnline": 1,
+    "trigger": "OpenView#VersionActivity3_6EnterView",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
+  },
+  {
+    "id": 36007,
+    "desc": "焦点闪回指引2",
+    "isOnline": 1,
+    "trigger": "FinishGuide#36006",
+    "invalid": "",
+    "interruptFinish": 1,
+    "priority": 0,
+    "parallel": 1,
+    "restart": 0
   }
 ]

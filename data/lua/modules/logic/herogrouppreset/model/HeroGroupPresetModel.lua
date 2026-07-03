@@ -268,6 +268,10 @@ function HeroGroupPresetModel:setParam(battleId, episodeId, adventure, isReConne
 		self.heroGroupType = ModuleEnum.HeroGroupType.General
 
 		HeroGroupSnapshotModel.instance:setParam(self.episodeId)
+	elseif self._episodeType == DungeonEnum.EpisodeType.Abyss then
+		self.heroGroupType = ModuleEnum.HeroGroupType.General
+
+		HeroGroupSnapshotModel.instance:setParam(self.episodeId)
 	elseif chapterCO and battleCO and battleCO.useTemp ~= 0 or amountLimit or #configAids > 0 or battleCO and ToughBattleModel.instance:getEpisodeId() then
 		self.heroGroupType = ModuleEnum.HeroGroupType.Temp
 		self._heroGroupList = {}

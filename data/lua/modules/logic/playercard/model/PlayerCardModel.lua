@@ -10,6 +10,8 @@ end
 
 function PlayerCardModel:reInit()
 	self.characterSwitchFlag = nil
+	self._badgeMoDict = nil
+	self._equipType = nil
 end
 
 function PlayerCardModel:updateCardInfo(cardInfo, playerInfo)
@@ -209,6 +211,59 @@ function PlayerCardModel:getCritterOpen()
 	local isCritterOpen = isCritterUnlock and #allCritterList > 0
 
 	return isCritterOpen
+end
+
+function PlayerCardModel:setHideBadgeFromOthers(isHide)
+	local mo = self:getCardInfo()
+
+	if mo then
+		local settings = mo:setShowSetting(PlayerCardEnum.ShowSettingsType.HideBadgeFormOther, isHide and "1" or "0")
+
+		PlayerCardRpc.instance:sendSetPlayerCardShowSettingRequest(settings)
+	end
+end
+
+function PlayerCardModel:_initBadgeMos()
+	self._badgeMoDict = {}
+
+	for _, co in ipairs(lua_playercard_badge.configList) do
+		local mo = PlayerCardBadgeMO.New()
+
+		mo:initMO(co)
+
+		self._badgeMoDict[co.id] = mo
+	end
+end
+
+function PlayerCardModel:getBadgeMos()
+	if not self._badgeMoDict then
+		self:_initBadgeMos()
+	end
+
+	return self._badgeMoDict
+end
+
+function PlayerCardModel:getBadgeMoById(id)
+	if not self._badgeMoDict then
+		self:_initBadgeMos()
+	end
+
+	return self._badgeMoDict[id]
+end
+
+function PlayerCardModel:isShowBadgeGetView()
+	local key = PlayerModel.instance:getPlayerPrefsKey("ShowBadgeGetViewToday")
+	local today = ServerTime.getServerTimeToday(true)
+	local saveToday = PlayerPrefsHelper.getNumber(key, 0)
+
+	return today ~= saveToday
+end
+
+function PlayerCardModel:setShowBadgeGetView(isShow)
+	local key = PlayerModel.instance:getPlayerPrefsKey("ShowBadgeGetViewToday")
+	local today = ServerTime.getServerTimeToday(true)
+
+	PlayerPrefsHelper.setNumber(key, isShow and 0 or today)
 end
 
 PlayerCardModel.instance = PlayerCardModel.New()

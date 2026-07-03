@@ -128,7 +128,7 @@ function RoomBlockGiftStoreGoodsView:_btnbuyOnClick()
 	end
 
 	if self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
-		if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._buyGood, self, self.closeThis, self) then
+		if CurrencyController.instance:checkFreeDiamondEnough(self._costQuantity, CurrencyEnum.PayDiamondExchangeSource.Store, nil, self._onDiamondEnoughBuyGood, self, self.closeThis, self) then
 			self:_buyGood(self._curSelectCostIndex)
 		end
 	elseif self._costType == MaterialEnum.MaterialType.Currency and self._costId == CurrencyEnum.CurrencyType.Diamond then
@@ -156,6 +156,10 @@ function RoomBlockGiftStoreGoodsView:_btnbuyOnClick()
 			GameFacade.showToast(ToastEnum.ClickRoomStoreInsight, config.name)
 		end
 	end
+end
+
+function RoomBlockGiftStoreGoodsView:_onDiamondEnoughBuyGood()
+	self:_buyGood(self._curSelectCostIndex)
 end
 
 function RoomBlockGiftStoreGoodsView:_storeCurrencyNotEnoughCallback()

@@ -44,14 +44,4 @@ function Rouge2_MapExploreChoiceView:changeState(state)
 	end
 end
 
-function Rouge2_MapExploreChoiceView:onChoiceFlowDone()
-	Rouge2_MapExploreChoiceView.super.onChoiceFlowDone(self)
-
-	if self.beforeChangeMap or self.nodeMo:isFinishEvent() then
-		return
-	end
-
-	self:triggerEventHandle()
-end
-
 return Rouge2_MapExploreChoiceView

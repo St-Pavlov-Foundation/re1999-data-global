@@ -6,6 +6,7 @@ local StoryHeroView = class("StoryHeroView", BaseView)
 
 function StoryHeroView:onInitView()
 	self._goroles = gohelper.findChild(self.viewGO, "#go_roles")
+	self._rootImage = self.viewGO:GetComponent(gohelper.Type_Image)
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -35,7 +36,7 @@ function StoryHeroView:_removeEvent()
 end
 
 function StoryHeroView:_editableInitView()
-	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
+	self._blitEff = StoryViewMgr.instance:getStoryBlitEff()
 	self._heros = {}
 
 	self:_loadRes()
@@ -43,12 +44,22 @@ end
 
 local normalMatPath = "spine/spine_ui_default.mat"
 local darkMatPath = "spine/spine_ui_dark.mat"
+local screenSplitRolesPrefabPath = ResUrl.getStoryBgEffect("v3a6_stencil_roles")
+local screenSplitLeftStencilRef = 10
+local screenSplitRightStencilRef = 30
+local screenSplitStencilComp = 3
+local screenSplitStencilOp = 0
+local screenSplitRoleCount = 2
+local stencilPropName = "_Stencil"
+local stencilCompPropName = "_StencilComp"
+local stencilOpPropName = "_StencilOp"
 
 function StoryHeroView:_loadRes()
 	self._matLoader = MultiAbLoader.New()
 
 	self._matLoader:addPath(normalMatPath)
 	self._matLoader:addPath(darkMatPath)
+	self._matLoader:addPath(screenSplitRolesPrefabPath)
 	self._matLoader:startLoad(self._onResLoaded, self)
 end
 
@@ -56,7 +67,7 @@ function StoryHeroView:_onResLoaded()
 	local norMat = self._matLoader:getAssetItem(normalMatPath)
 
 	if norMat then
-		self._normalMat = norMat:GetResource(normalMatPath)
+		self._normalMat = UnityEngine.Material.Instantiate(norMat:GetResource(normalMatPath))
 	else
 		logError("Resource is not found at path : " .. normalMatPath)
 	end
@@ -64,9 +75,17 @@ function StoryHeroView:_onResLoaded()
 	local darkMat = self._matLoader:getAssetItem(darkMatPath)
 
 	if darkMat then
-		self._darkMat = darkMat:GetResource(darkMatPath)
+		self._darkMat = UnityEngine.Material.Instantiate(darkMat:GetResource(darkMatPath))
 	else
 		logError("Resource is not found at path : " .. darkMatPath)
+	end
+
+	local screenSplitRolesPrefab = self._matLoader:getAssetItem(screenSplitRolesPrefabPath)
+
+	if screenSplitRolesPrefab then
+		self._screenSplitRolesPrefab = screenSplitRolesPrefab:GetResource(screenSplitRolesPrefabPath)
+	else
+		logError("Resource is not found at path : " .. screenSplitRolesPrefabPath)
 	end
 
 	self:_resetHeroMat()
@@ -127,6 +146,20 @@ function StoryHeroView:_onUpdateHero(param)
 
 	if self._stepCo.bg.transType ~= StoryEnum.BgTransType.DarkFade and self._stepCo.bg.transType ~= StoryEnum.BgTransType.WhiteFade then
 		self:_updateHeroList(self._stepCo.heroList)
+	end
+
+	local bgCo = self._stepCo.bg
+
+	if bgCo.transType == StoryEnum.BgTransType.ScreenSplit and bgCo.effType == StoryEnum.BgEffectType.EnterSplitScreen then
+		self._splitScreen = true
+		self._rootImage.enabled = false
+
+		self:_ensureScreenSplitRolesGo()
+	elseif bgCo.transType == StoryEnum.BgTransType.ScreenSplitExit and bgCo.effType == StoryEnum.BgEffectType.ExitSplitScreen then
+		self._splitScreen = false
+		self._rootImage.enabled = true
+
+		self:_resetScreenSplitRolesParent()
 	end
 end
 
@@ -258,6 +291,30 @@ function StoryHeroView:_updateHeroList(param)
 	StoryController.instance:dispatchEvent(StoryEvent.RefreshConversation)
 end
 
+function StoryHeroView:_ensureScreenSplitRolesGo()
+	if self._screenSplitRolesGo and not gohelper.isNil(self._screenSplitRolesGo) then
+		gohelper.setActive(self._screenSplitRolesGo, true)
+
+		return true
+	end
+
+	if not self._screenSplitRolesPrefab then
+		return false
+	end
+
+	self._screenSplitRolesGo = gohelper.clone(self._screenSplitRolesPrefab, self._goroles)
+
+	gohelper.setActive(self._screenSplitRolesGo, true)
+
+	return true
+end
+
+function StoryHeroView:_resetScreenSplitRolesParent()
+	if self._screenSplitRolesGo and not gohelper.isNil(self._screenSplitRolesGo) then
+		gohelper.setActive(self._screenSplitRolesGo, false)
+	end
+end
+
 function StoryHeroView:_playShowHero()
 	local hasNewHero = false
 	local conAudioId = self._stepCo.conversation.audios[1] or 0
@@ -274,7 +331,7 @@ function StoryHeroView:_playShowHero()
 			self._heros[v.heroIndex] = heroItem
 
 			heroItem:init(self._goroles, v)
-			heroItem:buildHero(v, mat, hasBottomEffect, self._onEnableClick, self, conAudioId)
+			heroItem:buildHero(v, mat, hasBottomEffect, self._onHeroBuildFinished, self, conAudioId)
 		else
 			self._heros[v.heroIndex]:resetHero(v, mat, hasBottomEffect, conAudioId)
 		end
@@ -290,6 +347,10 @@ function StoryHeroView:_playShowHero()
 	end
 
 	StoryController.instance:dispatchEvent(StoryEvent.OnHeroShowed)
+end
+
+function StoryHeroView:_onHeroBuildFinished()
+	self:_onEnableClick()
 end
 
 function StoryHeroView:_onEnableClick()
@@ -312,6 +373,13 @@ function StoryHeroView:onDestroyView()
 	TaskDispatcher.cancelTask(self._playShowHero, self)
 	ViewMgr.instance:closeView(ViewName.StoryView, true)
 	ViewMgr.instance:closeView(ViewName.StoryLeadRoleSpineView, true)
+
+	if self._screenSplitRolesGo and not gohelper.isNil(self._screenSplitRolesGo) then
+		gohelper.destroy(self._screenSplitRolesGo)
+
+		self._screenSplitRolesGo = nil
+	end
+
 	self:_clearItems()
 	self._blitEff:SetKeepCapture(false)
 

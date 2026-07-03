@@ -229,7 +229,7 @@ function DungeonController:jumpDungeon(param)
 
 	if not chapterConfig then
 		table.insert(remainViewNames, ViewName.DungeonView)
-		self:openDungeonView(nil)
+		self:openDungeonView()
 
 		return remainViewNames
 	end
@@ -834,6 +834,12 @@ function DungeonController:showDungeonView()
 		return viewName
 	end
 
+	viewName = self:enterAbyssView(curSendEpisodeId)
+
+	if viewName then
+		return viewName
+	end
+
 	local elementEpisodeId = curSendEpisodeId and DungeonConfig.instance:getElementEpisode(curSendEpisodeId)
 	local isElementEpisode = false
 
@@ -1091,6 +1097,30 @@ function DungeonController:enterTowerComposeView(episodeId)
 
 		return ViewName.TowerComposeMainView
 	end
+end
+
+function DungeonController:enterAbyssView(episodeId)
+	local episodeConfig = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	if not episodeConfig then
+		return nil
+	end
+
+	if episodeConfig.type ~= DungeonEnum.EpisodeType.Abyss then
+		return nil
+	end
+
+	ViewMgr.instance:openView(ViewName.MainView)
+
+	local actId = AbyssModel.instance:getCurActId()
+
+	if actId == nil or not ActivityModel.instance:isActOnLine(actId) then
+		return ViewName.MainView
+	end
+
+	AbyssController.instance:openMainView(actId, true)
+
+	return ViewName.AbyssMainView
 end
 
 function DungeonController.closePreviewChapterDungeonMapViewActEnd(actId, viewName)

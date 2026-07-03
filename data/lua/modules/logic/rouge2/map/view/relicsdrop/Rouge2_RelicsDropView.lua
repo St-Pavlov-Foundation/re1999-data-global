@@ -22,6 +22,7 @@ function Rouge2_RelicsDropView:onInitView()
 	self._goTopRight = gohelper.findChild(self.viewGO, "#go_topright")
 	self._goLevelUpSuccEffect = gohelper.findChild(self.viewGO, "#go_successEffect")
 	self._imageTitleBG = gohelper.findChild(self.viewGO, "Title/image_TitleBG")
+	self._goRefresh = gohelper.findChild(self.viewGO, "#go_Refresh")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -42,7 +43,9 @@ end
 
 function Rouge2_RelicsDropView:_editableInitView()
 	self._goScroll = self._scrollView.gameObject
+	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
 
+	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
 	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Attr_Detail)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goTopRight, Rouge2_Enum.ItemDescModeDataKey.RelicsDrop)
 end
@@ -77,9 +80,13 @@ function Rouge2_RelicsDropView:initViewParam()
 
 	NavigateMgr.instance:removeEscape(self.viewName)
 
-	if self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select or self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.LevelUp then
+	self._canSelect = self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select or self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.LevelUp
+
+	if self._canSelect then
 		NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 	end
+
+	self._refreshLoader:show(self._canSelect)
 end
 
 function Rouge2_RelicsDropView:refreshUI()
@@ -120,6 +127,12 @@ end
 function Rouge2_RelicsDropView:_refreshRelicsItem(relicsItem, relicsId, index)
 	relicsItem:setParentScroll(self._goScroll)
 	relicsItem:onUpdateMO(index, self._viewEnum, self._dataType, relicsId, self)
+end
+
+function Rouge2_RelicsDropView:_onRefreshItemCallback(dropList)
+	self._relicsList = dropList or {}
+
+	self:refreshRelicsList()
 end
 
 return Rouge2_RelicsDropView

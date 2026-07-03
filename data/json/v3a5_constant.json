@@ -1,18 +1,37 @@
 [
   {
     "id": 1,
-    "value": 3
+    "value": 3,
+    "value2": ""
   },
   {
     "id": 2,
-    "value": 6
+    "value": 6,
+    "value2": ""
   },
   {
     "id": 3,
-    "value": 203512
+    "value": 203512,
+    "value2": ""
   },
   {
     "id": 4,
-    "value": 203513
+    "value": 203513,
+    "value2": ""
+  },
+  {
+    "id": 201,
+    "value": 0,
+    "value2": "ZUKUNFT"
+  },
+  {
+    "id": 202,
+    "value": 203619,
+    "value2": ""
+  },
+  {
+    "id": 203,
+    "value": 203620,
+    "value2": ""
   }
 ]

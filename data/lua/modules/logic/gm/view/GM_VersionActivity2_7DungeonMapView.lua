@@ -5,9 +5,7 @@ module("modules.logic.gm.view.GM_VersionActivity2_7DungeonMapView", package.seea
 local GM_VersionActivity2_7DungeonMapView = class("GM_VersionActivity2_7DungeonMapView", GM_VersionActivity_DungeonMapView)
 
 function GM_VersionActivity2_7DungeonMapView.register()
-	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapView_register(VersionActivityFixedDungeonMapView)
-	GM_VersionActivity_DungeonMapView.VersionActivityX_XMapEpisodeItem_register(VersionActivityFixedDungeonMapEpisodeItem)
-	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapLevelView_register(VersionActivityFixedDungeonMapLevelView, 2, 6)
+	return
 end
 
 return GM_VersionActivity2_7DungeonMapView

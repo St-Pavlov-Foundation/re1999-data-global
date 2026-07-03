@@ -198,7 +198,7 @@ function RecommendStoreView:_onSwitchCloseAnimDone()
 	TaskDispatcher.cancelTask(self._onSwitchCloseAnimDone, self)
 	self:_refreshTabs(self._jumpTab)
 	self:refreshRightPage()
-	StoreController.instance:statSwitchStore(self._jumpTab)
+	StoreController.instance:onSwitchTab(self._jumpTab)
 
 	self._jumpTab = nil
 end

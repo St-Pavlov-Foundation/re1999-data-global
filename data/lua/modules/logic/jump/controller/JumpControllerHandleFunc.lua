@@ -1827,6 +1827,68 @@ function JumpController:jumpToSurvivalView()
 	SurvivalController.instance:openSurvivalView()
 end
 
+function JumpController:jumpToAbyss()
+	local constConfig = AbyssConfig.instance:getConstConfig(AbyssEnum.ConstId.ActId)
+
+	if not constConfig or string.nilorempty(constConfig.value) then
+		logError("新深渊 不存在常量活动id配置")
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local jumpActId = tonumber(constConfig.value)
+	local status, toastId, toastParam = ActivityHelper.getActivityStatusAndToast(jumpActId)
+	local canJump = status == ActivityEnum.ActivityStatus.Normal
+
+	if not canJump then
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local viewName = VersionActivityFixedHelper.getVersionActivityEnterViewName()
+
+	if not ViewMgr.instance:isOpen(viewName) then
+		self:jumpToMainView()
+	end
+
+	local version = ActivityHelper.getActivityVersion(jumpActId)
+	local jumpFuncs = _G[string.format("VersionActivity%sJumpHandleFunc", version)]
+
+	if jumpFuncs and jumpFuncs["jumpTo" .. jumpActId] then
+		return jumpFuncs["jumpTo" .. jumpActId](self)
+	end
+
+	return JumpEnum.JumpResult.Success
+end
+
+function JumpController:jumpToWeekWalk(jumpParam)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.WeekWalk) then
+		GameFacade.showToast(ToastEnum.ActivityWeekWalkDeepShowView)
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local info = WeekWalkModel.instance:getInfo()
+	local mapLayerInfo = info and info:getMapInfoByLayer(WeekWalkEnum.LastShallowLayer)
+	local isShallowLayerFinish = mapLayerInfo and mapLayerInfo.isFinished >= 1
+
+	if not isShallowLayerFinish then
+		GameFacade.showToast(ToastEnum.ActivityWeekWalkDeepShowView)
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local weekWalkType = jumpArray[2]
+
+	if weekWalkType == 1 then
+		WeekWalkController.instance:jumpWeekWalkDeepLayerView()
+	elseif weekWalkType == 2 then
+		WeekWalk_2Controller.instance:jumpWeekWalkHeartLayerView()
+	end
+
+	return JumpEnum.JumpResult.Success
+end
+
 function JumpController:_useSupplementMonthCard()
 	SignInRpc.instance:sendSupplementMonthCardRequest()
 end
@@ -1892,7 +1954,9 @@ JumpController.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.SkinGiftUseType] = JumpController.jumpToSkinGiftUseTypeView,
 	[JumpEnum.JumpView.StoreSupplementMonthCardUseView] = JumpController.jumpToStoreSupplementMonthCardUseView,
 	[JumpEnum.JumpView.LaplaceChatRoom] = JumpController.jumpToLaplaceChatRoomView,
-	[JumpEnum.JumpView.SurvivalView] = JumpController.jumpToSurvivalView
+	[JumpEnum.JumpView.SurvivalView] = JumpController.jumpToSurvivalView,
+	[JumpEnum.JumpView.Abyss] = JumpController.jumpToAbyss,
+	[JumpEnum.JumpView.WeekWalk] = JumpController.jumpToWeekWalk
 }
 JumpController.JumpActViewToHandleFunc = {
 	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = JumpController.V2a4_WuErLiXi,

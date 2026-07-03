@@ -23,6 +23,7 @@ function SocialBaseItem:onInitView(go, parent)
 	self._btnconfirm = gohelper.findChildButtonWithAudio(self.viewGO, "info/btn/#btn_confirm")
 	self._btncancel = gohelper.findChildButtonWithAudio(self.viewGO, "info/btn/#btn_cancel")
 	self._gosent = gohelper.findChild(self.viewGO, "info/btn/#go_sent")
+	self._gobadge = gohelper.findChild(self.viewGO, "info/badge")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -48,6 +49,8 @@ function SocialBaseItem:_editableInitView()
 	self:_initRole()
 	self:_initTag()
 	self:_initAchievement()
+
+	self._badgeItems = self:getUserDataTb_()
 
 	if not self._playericon then
 		self._playericon = IconMgr.instance:getCommonPlayerIcon(self._goplayericon)
@@ -96,6 +99,7 @@ function SocialBaseItem:onUpdateMO(mo)
 	self:updateInfo()
 	self:updateAchievement()
 	self:updateRole()
+	self:_refreshBadges()
 end
 
 function SocialBaseItem:updateBox()
@@ -265,9 +269,103 @@ function SocialBaseItem:onSelect(isSelect)
 	return
 end
 
+local badgePrefabPath = "ui/viewres/social/socialsearchbadgeview.prefab"
+
+function SocialBaseItem:_refreshBadges()
+	if not self._gobadge then
+		return
+	end
+
+	local isHideBadge = self._playercardInfo:getShowSettingByType(PlayerCardEnum.ShowSettingsType.HideBadgeFormOther)
+	local equipBadgeIds = self._playercardInfo:getEquipBadges()
+
+	if equipBadgeIds and isHideBadge and isHideBadge == 0 then
+		if self._badgePrefab then
+			self:_refreshBadgeItems()
+		elseif not self._isLoadingBadge then
+			if not self._loader then
+				self._loader = MultiAbLoader.New()
+			end
+
+			self._loader:addPath(badgePrefabPath)
+			self._loader:startLoad(self._onLoadFinish, self)
+
+			self._isLoadingBadge = true
+		end
+	else
+		for _, item in ipairs(self._badgeItems) do
+			gohelper.setActive(item.go, false)
+		end
+
+		gohelper.setActive(self._badgePrefab, false)
+	end
+end
+
+function SocialBaseItem:_refreshBadgeItems()
+	local count = 0
+
+	if self._playercardInfo then
+		local equipBadgeIds = self._playercardInfo:getEquipBadges()
+
+		if equipBadgeIds then
+			for i, id in ipairs(equipBadgeIds) do
+				if id > 0 then
+					local item = self:_getBadgeItem(i)
+					local co = PlayerCardConfig.instance:getBageCoById(id)
+
+					UISpriteSetMgr.instance:setPlayerCard2Sprite(item.icon, co.icon)
+
+					count = count + 1
+				end
+			end
+		end
+	end
+
+	for i, item in ipairs(self._badgeItems) do
+		gohelper.setActive(item.go, i <= count)
+	end
+
+	gohelper.setActive(self._badgePrefab, count > 0)
+end
+
+function SocialBaseItem:_onLoadFinish()
+	local assetItem = self._loader:getAssetItem(badgePrefabPath)
+	local res = assetItem:GetResource(badgePrefabPath)
+
+	self._badgePrefab = gohelper.clone(res, self._gobadge)
+
+	gohelper.setActive(self._badgePrefab, false)
+
+	self._isLoadingBadge = false
+
+	self:_refreshBadgeItems()
+end
+
+function SocialBaseItem:_getBadgeItem(index)
+	local item = self._badgeItems[index]
+
+	if not item and self._badgePrefab then
+		item = self:getUserDataTb_()
+
+		local badge = gohelper.findChild(self._badgePrefab, "root/#image_badge")
+
+		item.go = index == 1 and badge or gohelper.cloneInPlace(badge, "badge_" .. index)
+		item.icon = item.go:GetComponent(typeof(UnityEngine.UI.Image))
+		self._badgeItems[index] = item
+	end
+
+	return item
+end
+
 function SocialBaseItem:onCloseInternal()
 	self:removeEvents()
 	self._btncopy:RemoveClickListener()
+
+	if self._loader then
+		self._loader:dispose()
+
+		self._loader = nil
+	end
 end
 
 function SocialBaseItem:onDestroyView()

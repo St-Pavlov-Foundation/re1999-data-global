@@ -178,7 +178,7 @@ Rouge2_MapEnum.ChoiceStatus = {
 }
 Rouge2_MapEnum.DialogueInterval = 0.03
 Rouge2_MapEnum.InteractType = {
-	GainAttribute = 2,
+	Dice = 999,
 	TransferCareer = 6,
 	LossAttrBuff = 8,
 	Drop = 1,
@@ -189,9 +189,18 @@ Rouge2_MapEnum.InteractType = {
 	Band = 9,
 	EntrustChanged = 17,
 	ResearchInstitute = 18,
+	GainAttribute = 2,
 	AcceptEntrust = 12,
 	LossAttrRelics = 4,
 	ExchangeRelics = 10
+}
+Rouge2_MapEnum.InteractFromType = {
+	MiddleTrigger = 3,
+	Career1Reward = 6,
+	GM = 5,
+	Event = 1,
+	Entrust = 4,
+	Career = 2
 }
 Rouge2_MapEnum.PieceEntrustType = {
 	Normal = 1,

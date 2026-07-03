@@ -9,7 +9,8 @@ local FlyEffectActType = {
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.COLDSATURDAYHURT] = true,
 	[FightEnum.EffectType.NUODIKARANDOMATTACK] = true,
-	[FightEnum.EffectType.NUODIKATEAMATTACK] = true
+	[FightEnum.EffectType.NUODIKATEAMATTACK] = true,
+	[FightEnum.EffectType.BUFFADD] = true
 }
 
 function FightTLEventAtkFlyEffect:onTrackStart(fightStepData, duration, paramsArr)
@@ -20,6 +21,7 @@ function FightTLEventAtkFlyEffect:onTrackStart(fightStepData, duration, paramsAr
 	end
 
 	self._paramsArr = paramsArr
+	self.invokeBuff = paramsArr[28] == "1"
 	self._effectName = paramsArr[1]
 	self.fightStepData = fightStepData
 	self._duration = duration
@@ -200,6 +202,10 @@ function FightTLEventAtkFlyEffect:_flyEffectSingle(startX, startY, startZ, endX,
 	for _, actEffectData in ipairs(self._actEffect_list) do
 		local can_play = FlyEffectActType[actEffectData.effectType]
 
+		if actEffectData.effectType == FightEnum.EffectType.BUFFADD and not self.invokeBuff then
+			can_play = false
+		end
+
 		if not can_play and actEffectData.effectType ~= FightEnum.EffectType.EXPOINTCHANGE and actEffectData.effectType ~= FightEnum.EffectType.FIGHTSTEP and self._act_entity_finished and not self._act_entity_finished[actEffectData.targetId] then
 			can_play = true
 		end
@@ -241,6 +247,10 @@ function FightTLEventAtkFlyEffect:_flyEffectTarget(startX, startY, startZ, defOf
 
 	for _, actEffectData in ipairs(invoke_list) do
 		local can_play = FlyEffectActType[actEffectData.effectType]
+
+		if actEffectData.effectType == FightEnum.EffectType.BUFFADD and not self.invokeBuff then
+			can_play = false
+		end
 
 		if not can_play and self._act_entity_finished and not self._act_entity_finished[actEffectData.targetId] then
 			can_play = true

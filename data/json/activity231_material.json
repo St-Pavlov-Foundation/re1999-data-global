@@ -1,0 +1,82 @@
+[
+  {
+    "activityId": 13608,
+    "id": 901,
+    "type": 1,
+    "unlockCondition": "",
+    "name": "language_10119600",
+    "icon": "v3a6_dormitorymode_icon_5",
+    "cost": 0,
+    "advantage": 1
+  },
+  {
+    "activityId": 13608,
+    "id": 902,
+    "type": 1,
+    "unlockCondition": "",
+    "name": "language_10119601",
+    "icon": "v3a6_dormitorymode_icon_6",
+    "cost": 0,
+    "advantage": 2
+  },
+  {
+    "activityId": 13608,
+    "id": 903,
+    "type": 1,
+    "unlockCondition": "",
+    "name": "language_10119602",
+    "icon": "v3a6_dormitorymode_icon_7",
+    "cost": 0,
+    "advantage": 3
+  },
+  {
+    "activityId": 13608,
+    "id": 904,
+    "type": 1,
+    "unlockCondition": "ResearchLevel#3",
+    "name": "language_10119603",
+    "icon": "v3a6_dormitorymode_icon_8",
+    "cost": 0,
+    "advantage": 4
+  },
+  {
+    "activityId": 13608,
+    "id": 101,
+    "type": 2,
+    "unlockCondition": "",
+    "name": "language_10119604",
+    "icon": "v3a6_dormitorymode_icon_1",
+    "cost": 1000,
+    "advantage": 0
+  },
+  {
+    "activityId": 13608,
+    "id": 102,
+    "type": 2,
+    "unlockCondition": "",
+    "name": "language_10119605",
+    "icon": "v3a6_dormitorymode_icon_2",
+    "cost": 2000,
+    "advantage": 0
+  },
+  {
+    "activityId": 13608,
+    "id": 201,
+    "type": 2,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10119606",
+    "icon": "v3a6_dormitorymode_icon_3",
+    "cost": 4000,
+    "advantage": 0
+  },
+  {
+    "activityId": 13608,
+    "id": 301,
+    "type": 2,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10119607",
+    "icon": "v3a6_dormitorymode_icon_4",
+    "cost": 8000,
+    "advantage": 0
+  }
+]

@@ -350,6 +350,14 @@ function PlayerCardController:getCurViewParam()
 	return self.viewParam
 end
 
+function PlayerCardController:openBadgeGetView(id, getApproach, materials)
+	ViewMgr.instance:openView(ViewName.PlayerCardBadgeGetView, {
+		id = id,
+		getApproach = getApproach,
+		materials = materials
+	})
+end
+
 PlayerCardController.instance = PlayerCardController.New()
 
 return PlayerCardController

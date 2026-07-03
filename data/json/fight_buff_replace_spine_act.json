@@ -677,5 +677,12 @@
     "priority": 1,
     "combination": [],
     "suffix": "_trans"
+  },
+  {
+    "id": 670310,
+    "buffId": 116360020,
+    "priority": 1,
+    "combination": [],
+    "suffix": "1"
   }
 ]

@@ -113,6 +113,10 @@ function VoiceHttpGetter:_getUrl()
 		osType = 0
 	end
 
+	if GameConfig.Instance.IsMuMu then
+		osType = 5
+	end
+
 	local serverType = GameChannelConfig.getServerType()
 
 	table.insert(param, string.format("os_type=%s", osType))

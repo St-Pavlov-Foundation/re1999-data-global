@@ -161,6 +161,16 @@ function HeroGroupPresetEditView:_btnconfirmOnClick()
 						return
 					end
 				end
+			elseif self._isAbyss then
+				for k, heroUid in pairs(newHeroUids) do
+					local mo = HeroModel.instance:getById(heroUid)
+
+					if mo and AbyssModel.instance:isCurHeroLocked(mo.heroId) then
+						GameFacade.showToast(ToastEnum.AbyssHeroGroupEdit)
+
+						return
+					end
+				end
 			end
 		end
 
@@ -201,8 +211,14 @@ function HeroGroupPresetEditView:_btnconfirmOnClick()
 
 				return
 			end
-		elseif self._isTowerBattle and TowerModel.instance:isHeroBan(self._heroMO.heroId) then
-			GameFacade.showToast(ToastEnum.TowerHeroGroupEdit)
+		elseif self._isTowerBattle then
+			if TowerModel.instance:isHeroBan(self._heroMO.heroId) then
+				GameFacade.showToast(ToastEnum.TowerHeroGroupEdit)
+
+				return
+			end
+		elseif self._isAbyss and AbyssModel.instance:isCurHeroLocked(self._heroMO.heroId) then
+			GameFacade.showToast(ToastEnum.AbyssHeroGroupEdit)
 
 			return
 		end
@@ -882,6 +898,8 @@ function HeroGroupPresetEditView:_getGroupType()
 
 	if episodeType == DungeonEnum.EpisodeType.WeekWalk_2 then
 		return HeroGroupEnum.GroupType.WeekWalk_2
+	elseif episodeType == DungeonEnum.EpisodeType.Abyss then
+		return HeroGroupEnum.GroupType.Abyss
 	end
 end
 
@@ -900,6 +918,7 @@ function HeroGroupPresetEditView:onOpen()
 	self._isTowerBattle = TowerModel.instance:isInTowerBattle()
 	self._groupType = self:_getGroupType()
 	self._isWeekWalk_2 = self._groupType == HeroGroupEnum.GroupType.WeekWalk_2
+	self._isAbyss = self._groupType == HeroGroupEnum.GroupType.Abyss
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	self._heroGroupEditListModel:setParam(self._originalHeroUid, self._adventure, self._isTowerBattle, self._groupType)

@@ -7,7 +7,6 @@ local WaitSec2MoveOtherValue = 0.06
 local FixValueFadeOutWaitTime = 0.1
 local MiddleValueFadeInDuration = 0.3
 local DiceAnimDuration = 2
-local WaitSeconds2Close = 2
 
 Rouge2_MapDiceAnimView.DiceType = {
 	Twenty = 20,
@@ -59,6 +58,7 @@ function Rouge2_MapDiceAnimView:addEvents()
 	self._btnClick:AddClickListener(self._btnClickOnClick, self)
 	self._btnJump:AddClickListener(self._btnJumpOnClick, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.OnJumpFinishDice, self._onJumpFinishDice, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateMapInfo, self._onUpdateMapInfo, self)
 end
 
 function Rouge2_MapDiceAnimView:removeEvents()
@@ -84,10 +84,12 @@ function Rouge2_MapDiceAnimView:_editableInitView()
 	self._tranFlyContent = self._goFlyContent.transform
 	self._uiFlying = self._goFlyMgr:GetComponent(typeof(UnityEngine.UI.UIFlying))
 	self._uiFlyingEndPos = recthelper.rectToRelativeAnchorPos(self._goFlyEndPos.transform.position, self._tranFlyContent)
+	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 	self._infoAnimWorkParam = self:getUserDataTb_()
 	self._infoAnimWorkParam.go = self._goInfo
 	self._mainView = self.viewContainer._views[1]
+	self._rollView = self.viewContainer._views[4]
 	self._diceType2ItemTab = self:getUserDataTb_()
 
 	self:initDicePrefabTab()
@@ -119,17 +121,22 @@ function Rouge2_MapDiceAnimView:initPosList()
 end
 
 function Rouge2_MapDiceAnimView:onOpen()
+	self:refresh()
+end
+
+function Rouge2_MapDiceAnimView:refresh()
 	self:initViewParams()
 	self:initDiceList()
 end
 
 function Rouge2_MapDiceAnimView:initViewParams()
-	self._checkResInfo = self.viewParam and self.viewParam.checkResInfo
+	self._checkResInfo = self._mainView:getCheckResInfo()
 	self._checkCo = self._checkResInfo and self._checkResInfo:getCheckConfig()
 	self._checkId = self._checkResInfo and self._checkResInfo:getCheckId()
 	self._checkDiceRes = self._checkResInfo and self._checkResInfo:getCheckDiceRes()
 	self._checkRes = self._checkResInfo and self._checkResInfo:getCheckRes()
 	self._isSucceed = self._checkRes ~= Rouge2_MapEnum.AttrCheckResult.Failure
+	self._reRollTimes = self._checkResInfo and self._checkResInfo:getCheckReRollTimes()
 end
 
 function Rouge2_MapDiceAnimView:getOrCreateDiceItem(diceType, index)
@@ -196,6 +203,9 @@ function Rouge2_MapDiceAnimView:initDiceList()
 	self._baseDicePoint = self._totalDicePoint
 	self._txtMiddle.text = self._totalDicePoint
 
+	gohelper.setActive(self._goResult, false)
+	gohelper.setActive(self._btnClick.gameObject, true)
+	gohelper.setActive(self._btnJump.gameObject, false)
 	gohelper.setActive(self._txtMiddle.gameObject, false)
 end
 
@@ -317,25 +327,31 @@ function Rouge2_MapDiceAnimView:playFinishAnim()
 	self._txtMiddle.text = self._totalDicePoint
 
 	gohelper.setActive(self._txtMiddle.gameObject, true)
-	self._animator:Play("result", 0, 0)
 	gohelper.setActive(self._goResult, true)
 	gohelper.setActive(self._goFailure, self._checkRes == Rouge2_MapEnum.AttrCheckResult.Failure)
 	gohelper.setActive(self._goSucceed, self._checkRes == Rouge2_MapEnum.AttrCheckResult.Succeed)
 	gohelper.setActive(self._goBigSucceed, self._checkRes == Rouge2_MapEnum.AttrCheckResult.BigSucceed)
+	self._animator:Play("result", 0, 0)
+	self._animatorPlayer:Play("result", self._onPlayFinishAnimDone, self)
 
 	if self._checkRes == Rouge2_MapEnum.AttrCheckResult.Failure then
 		AudioMgr.instance:trigger(AudioEnum.Rouge2.DiceFail)
 	else
 		AudioMgr.instance:trigger(AudioEnum.Rouge2.DiceSucc)
 	end
+end
 
-	TaskDispatcher.cancelTask(self.closeThis, self)
-	TaskDispatcher.runDelay(self.closeThis, self, WaitSeconds2Close)
+function Rouge2_MapDiceAnimView:_onPlayFinishAnimDone()
+	self._rollView:checkShowRediceTips()
 end
 
 function Rouge2_MapDiceAnimView:_onJumpFinishDice()
 	self:destroyFlow()
 	self:playFinishAnim()
+end
+
+function Rouge2_MapDiceAnimView:_onUpdateMapInfo()
+	self:refresh()
 end
 
 function Rouge2_MapDiceAnimView:onAllFixItemMoveDone()
@@ -357,7 +373,6 @@ function Rouge2_MapDiceAnimView:destroyFlow()
 end
 
 function Rouge2_MapDiceAnimView:onClose()
-	TaskDispatcher.cancelTask(self.closeThis, self)
 	self:destroyFlow()
 end
 

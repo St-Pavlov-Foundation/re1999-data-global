@@ -15,6 +15,7 @@ TimeUtil.OneHourSecond = 3600
 TimeUtil.OneMinuteSecond = 60
 TimeUtil.OneSecond = 1
 TimeUtil.OneSecondMilliSecond = 1000
+TimeUtil.MaxValue = 2147483647
 TimeUtil.DateEnFormat = {
 	Day = "d",
 	Hour = "h",

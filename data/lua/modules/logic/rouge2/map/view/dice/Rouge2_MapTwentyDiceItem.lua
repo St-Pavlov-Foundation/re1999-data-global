@@ -24,6 +24,7 @@ Rouge2_MapTwentyDiceItem.rotationDict = {
 	Vector3(135, 0, -60),
 	(Vector3(0, 0, 0))
 }
+Rouge2_MapTwentyDiceItem.rotationNum = tabletool.len(Rouge2_MapTwentyDiceItem.rotationDict)
 
 function Rouge2_MapTwentyDiceItem:ctor(parent)
 	self._parent = parent
@@ -63,9 +64,9 @@ function Rouge2_MapTwentyDiceItem:initInfo(diceInfo)
 end
 
 function Rouge2_MapTwentyDiceItem:initRotation()
-	local rotationNum = tabletool.len(Rouge2_MapTwentyDiceItem.rotationDict)
-	local randomIndex = math.random(1, rotationNum)
-	local rotation = Rouge2_MapTwentyDiceItem.rotationDict[randomIndex]
+	local randomIndex = math.random(1, Rouge2_MapTwentyDiceItem.rotationNum)
+	local targetRandomIndex = self._lastRandomIndex or randomIndex
+	local rotation = Rouge2_MapTwentyDiceItem.rotationDict[targetRandomIndex]
 
 	if not rotation then
 		return
@@ -82,6 +83,7 @@ function Rouge2_MapTwentyDiceItem:dice()
 	local rotation = Rouge2_MapTwentyDiceItem.rotationDict[self._randomIndex] or Vector3.zero
 
 	self._rotateTweenId = ZProj.TweenHelper.DOLocalRotate(self._tranrotation, rotation.x, rotation.y, rotation.z, 0.2, self._delayTweenRotate, self, nil, EaseType.Linear)
+	self._lastRandomIndex = self._randomIndex
 end
 
 function Rouge2_MapTwentyDiceItem:_delayTweenRotate()

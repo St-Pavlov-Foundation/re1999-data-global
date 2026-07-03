@@ -4,6 +4,10 @@ module("modules.logic.versionactivity2_7.common.EnterActivityViewOnExitFightScen
 
 local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
 
+local function _openPermanent_EnterView(viewParam)
+	PermanentController.instance:jump2Activity(VersionActivity2_7Enum.ActivityId.EnterView, viewParam)
+end
+
 function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
@@ -27,8 +31,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12703(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_7EnterView)
-		VersionActivityFixedEnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_7Enum.ActivityId.CooperGarland, true)
+		local actId = VersionActivity2_7Enum.ActivityId.CooperGarland
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		CooperGarlandController.instance:openLevelView()
 	end)
 end
 
@@ -38,8 +45,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12702(forceStartin
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_7EnterView)
-		VersionActivityFixedEnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_7Enum.ActivityId.LengZhou6, true)
+		local actId = VersionActivity2_7Enum.ActivityId.LengZhou6
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		LengZhou6Controller.instance:enterLevelView(actId)
 	end)
 end
 
@@ -80,11 +90,7 @@ function EnterActivityViewOnExitFightSceneHelper._enterActivity12706(cls, param)
 	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController()
 	local sequence = FlowSequence.New()
 
-	sequence:addWork(OpenViewWork.New({
-		openFunction = EnterActivityViewOnExitFightSceneHelper.open3_5ReactivityEnterView,
-		openFunctionObj = enterController.instance,
-		waitOpenViewName = enterViewName
-	}))
+	PermanentController.instance:jump2Activity(VersionActivity2_7Enum.ActivityId.EnterView)
 	sequence:registerDoneListener(function()
 		local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController(big, small)
 

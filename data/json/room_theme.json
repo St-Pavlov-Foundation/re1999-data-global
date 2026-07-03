@@ -310,5 +310,17 @@
     "collectionBonus": "11#13503#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3601,
+    "name": "language_10119421",
+    "nameEn": "Parterre of Puzzles",
+    "desc": "language_10119441",
+    "rewardIcon": "1702600",
+    "building": "13601|13602|13603",
+    "packages": "3601|3602|3603|3604",
+    "collectionBonus": "11#13603#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

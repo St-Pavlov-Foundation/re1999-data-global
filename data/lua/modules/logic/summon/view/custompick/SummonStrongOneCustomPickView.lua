@@ -249,9 +249,9 @@ function SummonStrongOneCustomPickView:_btnsummon10OnClick_2()
 		return
 	end
 
-	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.getCostByConfig(curPool.cost10)
+	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.instance:getCost10ById(curPool.id)
 	local discountCost = SummonMainModel.instance:getDiscountCost10(curPool.id)
-	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id, cost_id)
 
 	if discountCostId == cost_id then
 		cost_num = discountCost < 0 and cost_num or discountCost
@@ -423,14 +423,14 @@ function SummonStrongOneCustomPickView:_refreshSingleCost(costs, icon, numTxt)
 end
 
 function SummonStrongOneCustomPickView:refreshCost10(costs)
-	local cost_type, cost_id, cost_num = SummonMainModel.instance.getCostByConfig(costs)
+	local curPoolId = SummonMainModel.instance:getCurId()
+	local cost_type, cost_id, costNum, ownNum, cost_num = SummonMainModel.instance:getCost10ById(curPoolId)
 	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
 
 	self._simagecurrency10:LoadImage(cost_icon)
 	self._simagecurrency10normal:LoadImage(cost_icon)
 
-	local curPoolId = SummonMainModel.instance:getCurId()
-	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId, cost_id)
 	local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPoolId)
 	local showDisCount = discountTime10Server > 0
 

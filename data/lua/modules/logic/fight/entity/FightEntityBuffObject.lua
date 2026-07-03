@@ -14,6 +14,9 @@ end
 local buffId2EffectClass = {
 	[104342520] = FightBuffIdEffect104342520
 }
+local buffActId2Class = {
+	[1125] = FightBuffActIdEffect1125
+}
 
 function FightEntityBuffObject:onAddBuff()
 	local buffId = self.buffId
@@ -39,6 +42,16 @@ function FightEntityBuffObject:onAddBuff()
 
 	if effectClass then
 		self:newClass(effectClass, self.buffData)
+	end
+
+	local actInfo = self.buffData.actInfo
+
+	for i, v in ipairs(actInfo) do
+		local effectClass = buffActId2Class[v.actId]
+
+		if effectClass then
+			self:newClass(effectClass, self.buffData, v)
+		end
 	end
 
 	FightMsgMgr.sendMsg(FightMsgId.OnAddBuff, self.buffData)

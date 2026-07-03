@@ -3606,5 +3606,61 @@
     "target": 1,
     "simulate": 0,
     "condition": "5#311704"
+  },
+  {
+    "id": "xugouji_311401_skill1",
+    "timeline": "xugouji_311404_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311404"
+  },
+  {
+    "id": "xugouji_311401_skill2",
+    "timeline": "xugouji_311404_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311404"
+  },
+  {
+    "id": "xugouji_311401_skill3",
+    "timeline": "xugouji_311404_skill3",
+    "priority": 1,
+    "target": 3,
+    "simulate": 1,
+    "condition": "5#311404"
+  },
+  {
+    "id": "xugouji_311401_unique",
+    "timeline": "xugouji_311404_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311404"
+  },
+  {
+    "id": "maersha_312701_skill1",
+    "timeline": "maersha_312703_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 0,
+    "condition": "5#312703"
+  },
+  {
+    "id": "maersha_312701_skill2",
+    "timeline": "maersha_312703_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 0,
+    "condition": "5#312703"
+  },
+  {
+    "id": "maersha_312701_unique",
+    "timeline": "maersha_312703_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 0,
+    "condition": "5#312703"
   }
 ]

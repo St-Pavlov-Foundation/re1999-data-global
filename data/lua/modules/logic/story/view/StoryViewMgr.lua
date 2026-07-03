@@ -4,14 +4,6 @@ module("modules.logic.story.view.StoryViewMgr", package.seeall)
 
 local StoryViewMgr = class("StoryViewMgr")
 
-function StoryViewMgr:open(storyId)
-	return
-end
-
-function StoryViewMgr:close()
-	return
-end
-
 function StoryViewMgr:getStoryBackgroundView()
 	local viewContainer = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView)
 
@@ -42,21 +34,8 @@ function StoryViewMgr:getStoryBlitEffSecond()
 		return
 	end
 
-	local blitGo = gohelper.findChild(go, "#go_blitbgsecond")
-	local blitEff = blitGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
-
-	return blitEff
-end
-
-function StoryViewMgr:getStoryRoleBlitEff()
-	local go = self:getStoryHeroView()
-
-	if not go then
-		return
-	end
-
-	local blitGo = gohelper.findChild(go, "#go_rolebg")
-	local blitEff = blitGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
+	local blitSecondGo = gohelper.findChild(go, "#go_blitbgsecond")
+	local blitEff = blitSecondGo:GetComponent(typeof(UrpCustom.UIBlitEffect))
 
 	return blitEff
 end

@@ -139,7 +139,9 @@ function ActivityHelper._loadVersionActivityEnum(bigVersion, smallVersion)
 		local version = string.format("%d_%d", bigVersion, smallVersion)
 
 		for name, id in pairs(enum.ActivityId) do
-			_activityIdToVersionDict[id] = version
+			if not _activityIdToVersionDict[id] then
+				_activityIdToVersionDict[id] = version
+			end
 		end
 	end
 

@@ -8,5 +8,8 @@ BlurEnum.Never = 0
 BlurEnum.UseRadialBlur = 1
 BlurEnum.UseDistortionBlur = 2
 BlurEnum.UseGaussianBlur = 3
+BlurEnum.IgnoreCloseView = {
+	CommandStationPaperGetRewardView = true
+}
 
 return BlurEnum

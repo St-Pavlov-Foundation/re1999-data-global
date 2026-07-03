@@ -83,15 +83,11 @@ function Activity217Model:getShowTripleByChapter(chapterId, actId)
 		return false
 	end
 
-	local typeToChapterMap = {
-		[Activity217Enum.ActType.MultiExp] = DungeonEnum.ChapterId.ResourceExp,
-		[Activity217Enum.ActType.MultiCoin] = DungeonEnum.ChapterId.ResourceGold
-	}
 	local controlCos = Activity217Config.instance:getControlCos(actId)
 	local actInfo = self._actInfos[actId]
 
-	for index, config in ipairs(controlCos) do
-		local targetChapterId = typeToChapterMap[config.type]
+	for _, config in pairs(controlCos) do
+		local targetChapterId = Activity217Enum.DungeonChapter[config.showtype]
 
 		if targetChapterId and targetChapterId == chapterId then
 			local magnification = config.magnification

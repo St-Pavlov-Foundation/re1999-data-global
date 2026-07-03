@@ -95,6 +95,10 @@ function VersionActivityVideoComp:_videoStatusUpdate(path, status, errorCode)
 	if status == VideoEnum.PlayerStatus.Started and self._startCallback then
 		self._startCallback(self._startCallbackTarget)
 	end
+
+	if status == VideoEnum.PlayerStatus.FinishedPlaying and self._curLoop then
+		self._videoPlayer:rewind(false)
+	end
 end
 
 function VersionActivityVideoComp:setStartCallback(callback, callbackTarget)

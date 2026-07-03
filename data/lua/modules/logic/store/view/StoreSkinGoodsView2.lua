@@ -509,7 +509,7 @@ function StoreSkinGoodsView2:refreshStoreSkinTips()
 
 	self.txtStoreSkinTips.text = GameUtil.getSubPlaceholderLuaLangOneParam(text, storeGoodsMo.config.name)
 
-	local path = ResUrl.getStorePackageIcon("detail_" .. storeGoodsMo.config.bigImg)
+	local path = ResUrl.getStorePackageIcon(storeGoodsMo.config.bigImg)
 
 	self.simageStoreSkinTips:LoadImage(path, function()
 		ZProj.UGUIHelper.SetImageSize(self.simageStoreSkinTips.gameObject)

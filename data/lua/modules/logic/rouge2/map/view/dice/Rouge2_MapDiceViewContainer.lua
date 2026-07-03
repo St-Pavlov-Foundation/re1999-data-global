@@ -10,6 +10,8 @@ function Rouge2_MapDiceViewContainer:buildViews()
 	table.insert(views, Rouge2_MapDiceView.New())
 	table.insert(views, Rouge2_MapDiceAnimView.New())
 	table.insert(views, Rouge2_MapDiceChoiceView.New())
+	table.insert(views, Rouge2_MapDiceReRollView.New())
+	table.insert(views, Rouge2_MapCoinView.New())
 	table.insert(views, TabViewGroup.New(1, "root/#go_lefttop"))
 
 	return views
@@ -49,6 +51,32 @@ end
 
 function Rouge2_MapDiceViewContainer:overrideHelperBtn()
 	Rouge2_Controller.instance:openTechniqueView(Rouge2_MapEnum.TechniqueId.DiceView)
+end
+
+function Rouge2_MapDiceViewContainer:endAttrCheck()
+	if not Rouge2_MapAttrCheckHelper.isAttrCheckInteract() then
+		self:closeThis()
+
+		return
+	end
+
+	self._endCheckCbId = Rouge2_Rpc.instance:sendRouge2EndCheckRequest(self._onEndCheckCallback, self)
+end
+
+function Rouge2_MapDiceViewContainer:_onEndCheckCallback(_, resultCode)
+	if resultCode ~= 0 then
+		return
+	end
+
+	self:closeThis()
+end
+
+function Rouge2_MapDiceViewContainer:onContainerClose()
+	if self._endCheckCbId then
+		Rouge2_Rpc.instance:removeCallbackById(self._endCheckCbId)
+
+		self._endCheckCbId = nil
+	end
 end
 
 return Rouge2_MapDiceViewContainer

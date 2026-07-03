@@ -37,6 +37,7 @@ JumpEnum.JumpView = {
 	StoreView = 1,
 	LeiMiTeBeiDungeonView = 101,
 	DoubleDrop = 10013444,
+	Abyss = 229,
 	StoreSupplementMonthCardUseView = 56,
 	StoryHandBook = 173,
 	MainUISwitchInfoViewGiftSet = 203,

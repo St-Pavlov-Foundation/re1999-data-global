@@ -16,7 +16,7 @@ end
 
 function Rouge2_MapPieceChoiceViewExtend:addEvents()
 	self._btnContinue:AddClickListener(self._btnContinueOnClick, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChoiceDialogueDone, self._onChoiceDialogueDone, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onPlayDialogueDone, self._onPlayDialogueDone, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChangeChoiceViewState, self._onChangeState, self)
 end
 
@@ -42,7 +42,7 @@ function Rouge2_MapPieceChoiceViewExtend:_btnContinueOnClick()
 	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onSwitch2SelectChoice)
 end
 
-function Rouge2_MapPieceChoiceViewExtend:_onChoiceDialogueDone()
+function Rouge2_MapPieceChoiceViewExtend:_onPlayDialogueDone()
 	self:refreshContinueTitle()
 	gohelper.setActive(self._btnContinue.gameObject, true)
 end

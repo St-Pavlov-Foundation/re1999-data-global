@@ -4,11 +4,12 @@ module("modules.configs.excel2json.lua_activity217_control", package.seeall)
 
 local lua_activity217_control = {}
 local fields = {
-	limit = 4,
-	dailyLimit = 5,
+	showtype = 3,
+	dailyLimit = 6,
+	limit = 5,
 	type = 2,
 	activityId = 1,
-	magnification = 3
+	magnification = 4
 }
 local primaryKey = {
 	"activityId",

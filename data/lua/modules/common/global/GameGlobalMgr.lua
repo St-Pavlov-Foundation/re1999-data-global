@@ -61,6 +61,10 @@ function GameGlobalMgr:playTouchEffect(pos)
 	self._screenTouch:playTouchEffect(pos)
 end
 
+function GameGlobalMgr:resetTouchTick()
+	self._screenTouch:resetTick()
+end
+
 function GameGlobalMgr:refreshTouchEffectSkin()
 	self._screenTouch:refreshEffect()
 end

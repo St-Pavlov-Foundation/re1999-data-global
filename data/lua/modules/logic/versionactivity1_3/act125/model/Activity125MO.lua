@@ -87,7 +87,6 @@ function Activity125MO:isEpisodeDayOpen(episodeId)
 
 	if actMO and openDay then
 		local openTime = actMO:getRealStartTimeStamp() + (openDay - 1) * TimeUtil.OneDaySecond
-		local time = ServerTime.now()
 
 		remainTime = openTime - ServerTime.now()
 
@@ -148,20 +147,16 @@ function Activity125MO:getFirstRewardEpisode()
 end
 
 function Activity125MO:setLocalIsPlay(id)
-	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, self.id, id)
+	local key = self:_PlayerPrefsKey_VersionActivityWarmUpView() .. tostring(id)
 
-	PlayerPrefsHelper.setString(key, 1)
+	self:_saveInt(key, 1)
 end
 
 function Activity125MO:checkLocalIsPlay(id)
-	local key = string.format("%s_%s_%s_%s", PlayerModel.instance:getPlayinfo().userId, PlayerPrefsKey.VersionActivityWarmUpView, self.id, id)
-	local value = PlayerPrefsHelper.getString(key, "")
+	local key = self:_PlayerPrefsKey_VersionActivityWarmUpView() .. tostring(id)
+	local value = self:_getInt(key, 0)
 
-	if string.nilorempty(value) then
-		return false
-	end
-
-	return true
+	return value == 1
 end
 
 function Activity125MO:setOldEpisode(id)
@@ -223,18 +218,15 @@ function Activity125MO:isHasEpisodeCanReceiveReward(optEpisodeId)
 end
 
 function Activity125MO:isFirstCheckEpisode(episodeId)
-	local key = string.format("%s_%s_%s_%s", self._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, self.id, episodeId)
-	local isFirst = PlayerPrefsHelper.getNumber(key, 0)
+	local key = self:_PlayerPrefsKey_Activity125FirstCheckEpisode() .. tostring(episodeId)
 
-	return isFirst == 0
+	return self:_getInt(key, 0) == 0
 end
 
 function Activity125MO:setHasCheckEpisode(episodeId)
-	local key = string.format("%s_%s_%s_%s", self._userId, PlayerPrefsKey.Activity125FirstCheckEpisode, self.id, episodeId)
+	local key = self:_PlayerPrefsKey_Activity125FirstCheckEpisode() .. tostring(episodeId)
 
-	if self:isFirstCheckEpisode(episodeId) then
-		PlayerPrefsHelper.setNumber(key, 1)
-	end
+	self:_saveInt(key, 1)
 end
 
 function Activity125MO:hasEpisodeCanCheck()
@@ -316,6 +308,79 @@ function Activity125MO:getLatestEpisode()
 	local lastEpisode = self._episodeList[#self._episodeList]
 
 	return lastEpisode and lastEpisode.id
+end
+
+function Activity125MO:actId()
+	return self.id
+end
+
+function Activity125MO:_saveInt(key, value)
+	GameUtil.playerPrefsSetNumberByUserId(key, value)
+end
+
+function Activity125MO:_getInt(key, defaultValue)
+	return GameUtil.playerPrefsGetNumberByUserId(key, defaultValue)
+end
+
+function Activity125MO:_getPlayerPrefsKey(prefix)
+	return prefix .. tostring(self:actId())
+end
+
+function Activity125MO:_PlayerPrefsKey_VersionActivityWarmUpView()
+	return self:_getPlayerPrefsKey(PlayerPrefsKey.VersionActivityWarmUpView)
+end
+
+function Activity125MO:_PlayerPrefsKey_Activity125FirstCheckEpisode()
+	return self:_getPlayerPrefsKey(PlayerPrefsKey.Activity125FirstCheckEpisode)
+end
+
+function Activity125MO:getPreTaskInfo(episodeId, optTaskType)
+	local episodeCfg = self:getEpisodeConfig(episodeId)
+
+	if not episodeCfg then
+		return nil
+	end
+
+	local taskId = episodeCfg.taskId
+	local taskCO = Activity125Config.instance:getTaskCO(taskId)
+
+	if not taskCO then
+		return nil
+	end
+
+	local taskMoList = TaskModel.instance:getTaskMoList(optTaskType or TaskEnum.TaskType.Activity125, self:actId())
+	local taskMO
+
+	for _, v in pairs(taskMoList) do
+		if v.id == taskId then
+			taskMO = v
+
+			break
+		end
+	end
+
+	if not taskMO then
+		return nil
+	end
+
+	return {
+		taskId = taskId,
+		taskCO = taskCO,
+		taskMO = taskMO,
+		taskMoList = taskMoList
+	}
+end
+
+function Activity125MO:checkPassedPreTask(episodeId, optTaskType)
+	local taskInfo = self:getPreTaskInfo(episodeId, optTaskType)
+
+	if not taskInfo then
+		return false
+	end
+
+	local taskMO = taskInfo.taskMO
+
+	return taskMO:isFinished()
 end
 
 return Activity125MO

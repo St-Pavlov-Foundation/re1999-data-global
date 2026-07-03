@@ -27,6 +27,11 @@ function VersionActivityFixedStoreGoodsItem:onInitView(go)
 
 	self.goClick:AddClickListener(self.onClick, self)
 
+	self._gonode2 = gohelper.findChild(self.go, "node2")
+	self._gospecial = gohelper.findChild(self.go, "go_special")
+	self._goTag2 = gohelper.findChild(self.go, "go_tag2")
+	self._txtTag2 = gohelper.findChildText(self.go, "go_tag2/#txt1")
+	self._txtCost2 = gohelper.findChildText(self.go, "txt_cost2")
 	self._bigVersion, self._smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 end
 
@@ -54,6 +59,18 @@ function VersionActivityFixedStoreGoodsItem:onClick()
 end
 
 function VersionActivityFixedStoreGoodsItem:updateInfo(storeGoodsCo)
+	gohelper.setActive(self._gonode2, storeGoodsCo.specProduct == 1)
+	gohelper.setActive(self._gospecial, storeGoodsCo.specProduct == 1)
+	gohelper.setActive(self._goTag2, not string.nilorempty(storeGoodsCo.offTag))
+
+	if not string.nilorempty(storeGoodsCo.offTag) then
+		self._txtTag2.text = tonumber(storeGoodsCo.offTag) * 100 .. "%"
+	end
+
+	self._txtCost2.text = storeGoodsCo.originalCost
+
+	gohelper.setActive(self._txtCost2.gameObject, storeGoodsCo.originalCost > 0)
+
 	self.storeGoodsCo = storeGoodsCo
 
 	self:refreshRemainBuyCount()

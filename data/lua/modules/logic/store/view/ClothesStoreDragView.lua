@@ -77,7 +77,7 @@ function ClothesStoreDragView:_onViewDragEnd(param, pointerEventData)
 	TaskDispatcher.cancelTask(self.disAbleShader, self)
 	TaskDispatcher.runDelay(self.disAbleShader, self, 0.33)
 
-	if newSelectSkinIndex then
+	if newSelectSkinIndex and newSelectSkinIndex ~= curSkinIndex then
 		StoreClothesGoodsItemListModel.instance:setSelectIndex(newSelectSkinIndex, true)
 	else
 		recthelper.setAnchor(self._goskincontainer.transform, 0, 0)

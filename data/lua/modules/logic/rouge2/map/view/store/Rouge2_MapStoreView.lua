@@ -159,6 +159,15 @@ function Rouge2_MapStoreView:onOpen()
 
 	Rouge2_MapStoreGoodsListModel.instance:initList(self._nodeMo)
 	self:refresh()
+	self:setStealMode()
+end
+
+function Rouge2_MapStoreView:setStealMode()
+	if not Rouge2_MapAttrCheckHelper.isAttrCheckInteract() then
+		return
+	end
+
+	Rouge2_MapStoreGoodsListModel.instance:changeState(Rouge2_MapEnum.StoreState.Steal)
 end
 
 function Rouge2_MapStoreView:onUpdateParam()

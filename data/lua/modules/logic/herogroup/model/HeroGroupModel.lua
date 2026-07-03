@@ -274,6 +274,10 @@ function HeroGroupModel:setParam(battleId, episodeId, adventure, isReConnect, ep
 		self.heroGroupType = ModuleEnum.HeroGroupType.General
 
 		HeroGroupSnapshotModel.instance:setParam(self.episodeId)
+	elseif self._episodeType == DungeonEnum.EpisodeType.Abyss then
+		self.heroGroupType = ModuleEnum.HeroGroupType.General
+
+		HeroGroupSnapshotModel.instance:setParam(self.episodeId)
 	elseif chapterCO and battleCO and battleCO.useTemp ~= 0 or amountLimit or #configAids > 0 or battleCO and ToughBattleModel.instance:getEpisodeId() then
 		self.heroGroupType = ModuleEnum.HeroGroupType.Temp
 		self._heroGroupList = {}
@@ -362,12 +366,16 @@ function HeroGroupModel:_convertToPreset()
 	if self.heroGroupType == ModuleEnum.HeroGroupType.General then
 		local episdoeConfig = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 
-		if episdoeConfig and episdoeConfig.type == DungeonEnum.EpisodeType.TowerPermanent or episdoeConfig.type == DungeonEnum.EpisodeType.TowerLimited or episdoeConfig.type == DungeonEnum.EpisodeType.TowerDeep then
-			if HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] then
-				self._presetHeroGroupType = HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit
-			end
+		if episdoeConfig then
+			if episdoeConfig.type == DungeonEnum.EpisodeType.TowerPermanent or episdoeConfig.type == DungeonEnum.EpisodeType.TowerLimited or episdoeConfig.type == DungeonEnum.EpisodeType.TowerDeep then
+				if HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] then
+					self._presetHeroGroupType = HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit
+				end
 
-			return
+				return
+			elseif episdoeConfig.type == DungeonEnum.EpisodeType.Abyss then
+				self._presetHeroGroupType = HeroGroupPresetEnum.HeroGroupType.Abyss
+			end
 		end
 	end
 end

@@ -163,7 +163,22 @@ function SurvivalMapHelper:tryRemoveFlow()
 	end
 
 	if ServerTime.now() - self.flow.context.beginDt > 5 then
-		logError("可能卡主了，清掉数据吧")
+		local curWorks = self:getCurRunningWorks(self.flow)
+		local workNames = {}
+
+		for i, v in ipairs(curWorks) do
+			table.insert(workNames, v.__cname)
+		end
+
+		local pauseKeys = {}
+
+		if PopupController.instance:isPause() then
+			for k in pairs(PopupController.instance._pauseDict) do
+				table.insert(pauseKeys, tostring(k))
+			end
+		end
+
+		logError("可能卡主了，清掉数据吧!runningwork:" .. table.concat(workNames, ",") .. " pauseKey:" .. table.concat(pauseKeys, ","))
 
 		self._steps = nil
 
@@ -173,6 +188,27 @@ function SurvivalMapHelper:tryRemoveFlow()
 
 		return true
 	end
+end
+
+function SurvivalMapHelper:getCurRunningWorks(flow)
+	local works = {}
+	local workList = flow:getWorkList()
+
+	if not workList or flow.status ~= WorkStatus.Running then
+		return works
+	end
+
+	for i, work in ipairs(workList) do
+		if work.status == WorkStatus.Running then
+			if isTypeOf(work, BaseFlow) then
+				tabletool.addValues(works, self:getCurRunningWorks(work))
+			else
+				table.insert(works, work)
+			end
+		end
+	end
+
+	return works
 end
 
 function SurvivalMapHelper:tryShowEventView(pos)

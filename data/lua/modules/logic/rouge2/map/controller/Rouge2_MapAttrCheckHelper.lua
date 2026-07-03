@@ -4,18 +4,13 @@ module("modules.logic.rouge2.map.controller.Rouge2_MapAttrCheckHelper", package.
 
 local Rouge2_MapAttrCheckHelper = class("Rouge2_MapAttrCheckHelper")
 
-function Rouge2_MapAttrCheckHelper.onGetCheckResultMsg(msg)
-	if not msg or not msg:HasField("checkInfo") then
+function Rouge2_MapAttrCheckHelper.triggerCheckResult()
+	if not Rouge2_MapAttrCheckHelper.isAttrCheckInteract() then
 		return
 	end
 
-	local checkResInfo = Rouge2_DiceCheckResInfoMO.New()
+	local checkResInfo = Rouge2_MapAttrCheckHelper.buildCurCheckResInfoMO()
 
-	checkResInfo:init(msg.checkInfo)
-	Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
-end
-
-function Rouge2_MapAttrCheckHelper.triggerCheckResult(checkResInfo)
 	if not checkResInfo then
 		return
 	end
@@ -83,6 +78,48 @@ function Rouge2_MapAttrCheckHelper.isChoiceAttrThreshold(choiceId)
 	end
 
 	return true
+end
+
+function Rouge2_MapAttrCheckHelper.getRediceCostNum(checkId, rediceNum)
+	local checkCo = Rouge2_CareerConfig.instance:getDiceCheckConfig(checkId, Rouge2_MapEnum.AttrCheckResult.Failure)
+	local retryCostStr = checkCo and checkCo.retryCost
+
+	if string.nilorempty(retryCostStr) then
+		return 0
+	end
+
+	local retryCostList = string.splitToNumber(retryCostStr, "#")
+	local baseRetryCost = retryCostList and retryCostList[1] or 0
+	local stepRetryCost = retryCostList and retryCostList[2] or 0
+	local targetRetryCost = baseRetryCost + (rediceNum - 1) * stepRetryCost
+
+	return targetRetryCost
+end
+
+function Rouge2_MapAttrCheckHelper.isAttrCheckInteract()
+	local cutInteract = Rouge2_MapModel.instance:getCurInteractive()
+	local curInteractType = Rouge2_MapModel.instance:getCurInteractType()
+
+	return not string.nilorempty(cutInteract) and curInteractType == Rouge2_MapEnum.InteractType.Dice
+end
+
+function Rouge2_MapAttrCheckHelper.buildCurCheckResInfoMO()
+	local curInteract = Rouge2_MapModel.instance:getCurInteractiveJson()
+	local checkResInfo = Rouge2_DiceCheckResInfoMO.New()
+
+	checkResInfo:init(curInteract)
+
+	return checkResInfo
+end
+
+function Rouge2_MapAttrCheckHelper.endCheck(callback, callbackObj)
+	if not Rouge2_MapAttrCheckHelper.isAttrCheckInteract() then
+		ViewMgr.instance:closeView(ViewName.Rouge2_MapDiceView)
+
+		return
+	end
+
+	return Rouge2_Rpc.instance:sendRouge2EndCheckRequest(callback, callbackObj)
 end
 
 return Rouge2_MapAttrCheckHelper

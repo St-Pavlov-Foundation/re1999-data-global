@@ -2358,5 +2358,25 @@
     "canShowHandbook": "",
     "upperLimit": 1,
     "characterId": ""
+  },
+  {
+    "id": 1567,
+    "name": "language_10119538",
+    "name_en": "The Riddle's Limit",
+    "skillName": "",
+    "icon": "1567",
+    "rare": 5,
+    "skillType": 1567,
+    "strengthType": 1567,
+    "tag": "1#5",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10119539",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1,
+    "characterId": ""
   }
 ]

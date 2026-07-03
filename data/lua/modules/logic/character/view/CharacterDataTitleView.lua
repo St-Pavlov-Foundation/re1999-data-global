@@ -355,7 +355,7 @@ function CharacterDataTitleView:_getFormatStr(content)
 			remain = GameUtil.utf8sub(content, jumpIndex + 1, GameUtil.utf8len(content) - jumpIndex + 1)
 		end
 
-		return string.format("%s<size=94>%s</size><space=-22><voffset=-0.05em> %s", first, large, remain)
+		return string.format(luaLang("CharacterDataTitleView_getFormatStr1"), first, large, remain)
 	else
 		local first = GameUtil.utf8sub(content, 1, 1)
 		local remain = ""
@@ -364,7 +364,7 @@ function CharacterDataTitleView:_getFormatStr(content)
 			remain = GameUtil.utf8sub(content, 2, GameUtil.utf8len(content) - 1)
 		end
 
-		return string.format("<size=94>%s</size><space=-22><voffset=-0.05em> %s", first, remain)
+		return string.format(luaLang("CharacterDataTitleView_getFormatStr2"), first, remain)
 	end
 end
 

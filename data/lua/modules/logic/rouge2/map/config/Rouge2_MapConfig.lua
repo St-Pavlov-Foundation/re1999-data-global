@@ -30,7 +30,8 @@ function Rouge2_MapConfig:reqConfigNames()
 		"rouge2_weather",
 		"rouge2_weather_rule",
 		"rouge2_band",
-		"rouge2_funnyfight_event"
+		"rouge2_funnyfight_event",
+		"rouge2_drop_type"
 	}
 
 	return nameTable
@@ -49,6 +50,8 @@ function Rouge2_MapConfig:onConfigLoaded(configName, configTable)
 		self:initChoiceConfig()
 	elseif configName == "rouge2_layer" then
 		self:initLayerConfig()
+	elseif configName == "rouge2_drop_type" then
+		self:initDropTypeConfig()
 	end
 end
 
@@ -96,6 +99,16 @@ function Rouge2_MapConfig:initLayerCellConfig(layerCo)
 	cellMap[2] = GameUtil.splitString2(layerCo.gridPosType2, true)
 	cellMap[3] = GameUtil.splitString2(layerCo.gridPosType3, true)
 	self.mapCellPosMap[layerCo.id] = cellMap
+end
+
+function Rouge2_MapConfig:initDropTypeConfig()
+	self.dropType2CostList = {}
+
+	for _, co in ipairs(lua_rouge2_drop_type.configList) do
+		local costList = string.splitToNumber(co.refreshCost, "#")
+
+		self.dropType2CostList[co.id] = costList
+	end
 end
 
 function Rouge2_MapConfig:initMapVoiceCo()
@@ -719,6 +732,12 @@ function Rouge2_MapConfig:isRelicsUnRemove(relicsId)
 	end
 
 	return self._unRemoveRelicsIdMap and self._unRemoveRelicsIdMap[relicsId] == true
+end
+
+function Rouge2_MapConfig:getItemRefreshCost(dropType, refreshNum)
+	local costList = self.dropType2CostList and self.dropType2CostList[dropType]
+
+	return costList and costList[refreshNum]
 end
 
 Rouge2_MapConfig.instance = Rouge2_MapConfig.New()

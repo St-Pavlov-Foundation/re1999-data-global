@@ -50,14 +50,15 @@ function V3a1_BpOperActModel:getAllShowTask()
 	local taskMos = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.BpOperAct)
 
 	for _, taskMo in pairs(taskMos) do
-		local isFinished = self:isTaskFinished(taskMo.id)
+		local curActId = BpModel.instance:getCurVersionOperActId()
+		local taskCo = V3a1_BpOperActConfig.instance:getTaskCO(taskMo.id)
 
-		if isFinished then
-			table.insert(taskList, taskMo.id)
-		else
-			local taskCo = V3a1_BpOperActConfig.instance:getTaskCO(taskMo.id)
+		if taskCo and taskCo.activityId == curActId then
+			local isFinished = self:isTaskFinished(taskMo.id)
 
-			if LuaUtil.isEmptyStr(taskCo.prepose) then
+			if isFinished then
+				table.insert(taskList, taskMo.id)
+			elseif LuaUtil.isEmptyStr(taskCo.prepose) then
 				table.insert(taskList, taskMo.id)
 			else
 				local isPreFinished = self:isTaskFinished(tonumber(taskCo.prepose))

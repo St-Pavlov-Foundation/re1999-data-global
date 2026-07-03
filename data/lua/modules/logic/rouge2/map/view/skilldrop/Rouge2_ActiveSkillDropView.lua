@@ -23,6 +23,7 @@ function Rouge2_ActiveSkillDropView:onInitView()
 	self._goAssemblyList = gohelper.findChild(self.viewGO, "Capacity/List/#go_AssemblyList")
 	self._goAssemblyItem = gohelper.findChild(self.viewGO, "Capacity/List/#go_AssemblyList/#go_AssemblyItem")
 	self._goMode = gohelper.findChild(self.viewGO, "#go_Mode")
+	self._goRefresh = gohelper.findChild(self.viewGO, "#go_Refresh")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -83,7 +84,9 @@ end
 
 function Rouge2_ActiveSkillDropView:_editableInitView()
 	self._goScrollSkill = self._scrollSkill.gameObject
+	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
 
+	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
 	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goToolbar, Rouge2_Enum.TeamRecommendTipType.Default)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.SkillDrop)
 end
@@ -107,6 +110,8 @@ function Rouge2_ActiveSkillDropView:initViewParam()
 	if self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select then
 		NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 	end
+
+	self._refreshLoader:show(self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 end
 
 function Rouge2_ActiveSkillDropView:refreshUI()
@@ -174,6 +179,12 @@ function Rouge2_ActiveSkillDropView:_refreshSingleAssembly(obj, index)
 	local goSelected = gohelper.findChild(goRoot, "#image_Icon")
 
 	gohelper.setActive(goSelected, index <= self._allAssembleCost)
+end
+
+function Rouge2_ActiveSkillDropView:_onRefreshItemCallback(dropList)
+	self._skillList = dropList or {}
+
+	self:refreshActiveSkillList()
 end
 
 function Rouge2_ActiveSkillDropView:onClose()

@@ -19,6 +19,8 @@ function StoryConfig:ctor()
 	self._storyHeroConfig = {}
 	self._storyBgEffTransConfig = {}
 	self._storyBlurTypeConfig = {}
+	self._storyTextureEffectTypeConfig = {}
+	self._storyShapeMaskEffectTypeConfig = {}
 	self._storyBgZoneConfig = {}
 	self._audioSwitchConfig = {}
 	self._bgEffStarburstConfig = {}
@@ -82,6 +84,14 @@ function StoryConfig:_loadStoryConfig()
 	local blurTypeConfig = addGlobalModule("modules.configs.story.lua_story_blurtype")
 
 	StoryBlurTypeModel.instance:setStoryBlurTypeList(blurTypeConfig)
+
+	local textureEffectTypeConfig = addGlobalModule("modules.configs.story.lua_story_textureeffecttype")
+
+	StoryTextureEffectTypeModel.instance:setStoryTextureEffectTypeList(textureEffectTypeConfig)
+
+	local shapeMaskEffectTypeConfig = addGlobalModule("modules.configs.story.lua_story_shapemasktype")
+
+	StoryShapeMaskEffectTypeModel.instance:setStoryShapeMaskEffectTypeList(shapeMaskEffectTypeConfig)
 
 	if GameResMgr.IsFromEditorDir then
 		local zonePath = "configs/story/json_zone_storybg.json"

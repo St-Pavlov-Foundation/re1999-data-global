@@ -1,0 +1,58 @@
+[
+  {
+    "activityId": 13608,
+    "id": 1,
+    "preId": 0,
+    "cost": 0,
+    "orientation": 1
+  },
+  {
+    "activityId": 13608,
+    "id": 2,
+    "preId": 1,
+    "cost": 3000,
+    "orientation": 2
+  },
+  {
+    "activityId": 13608,
+    "id": 3,
+    "preId": 2,
+    "cost": 3000,
+    "orientation": 1
+  },
+  {
+    "activityId": 13608,
+    "id": 4,
+    "preId": 3,
+    "cost": 6000,
+    "orientation": 2
+  },
+  {
+    "activityId": 13608,
+    "id": 5,
+    "preId": 4,
+    "cost": 12000,
+    "orientation": 1
+  },
+  {
+    "activityId": 13608,
+    "id": 6,
+    "preId": 5,
+    "cost": 12000,
+    "orientation": 2
+  },
+  {
+    "activityId": 13608,
+    "id": 7,
+    "preId": 6,
+    "cost": 24000,
+    "orientation": 1
+  },
+  {
+    "activityId": 13608,
+    "id": 8,
+    "preId": 7,
+    "cost": 48000,
+    "orientation": 2
+  }
+]

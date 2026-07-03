@@ -108,6 +108,7 @@ function MainView:addEvents()
 	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSummon, self.OnNotifyEnterSummon, self)
 	self:addEventCb(SettingsController.instance, SettingsEvent.OnKeyTipsChange, self.showKeyTips, self)
 	self:addEventCb(SignInController.instance, SignInEvent.GetSignInReply, self._onReceiveSupplementMonthCardReply, self)
+	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onReceiveSupplementMonthCardReply, self)
 end
 
 function MainView:removeEvents()
@@ -135,6 +136,7 @@ function MainView:removeEvents()
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterRole, self.OnNotifyEnterRole, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyEnterSummon, self.OnNotifyEnterSummon, self)
 	self:removeEventCb(SettingsController.instance, SettingsEvent.OnKeyTipsChange, self.showKeyTips, self)
+	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._onReceiveSupplementMonthCardReply, self)
 end
 
 function MainView:_btnhideOnClick()
@@ -401,12 +403,10 @@ function MainView:_btncostOnClick()
 end
 
 function MainView:_OnDailyRefresh()
-	local _, storeIds = StoreHelper.getRecommendStoreSecondTabConfig()
+	local storeIds = StoreHelper.getDailyRefreshStoreList()
 
-	if storeIds and #storeIds > 0 then
-		StoreRpc.instance:sendGetStoreInfosRequest(storeIds)
-	end
-
+	StoreRpc.instance:sendGetStoreInfosRequest(storeIds)
+	ChargeRpc.instance:sendGetChargeInfoRequest()
 	ActivityRpc.instance:sendGetActivityInfosRequest()
 	RedDotRpc.instance:sendGetRedDotInfosRequest({
 		RedDotEnum.DotNode.VersionActivityEnterRedDot
@@ -578,22 +578,6 @@ function MainView:storeRedDotRefreshFunc(redDotIcon)
 		self:showBankNewEffect(true)
 
 		return
-	end
-
-	local recommendStoreConfigList = StoreHelper.getRecommendStoreSecondTabConfig()
-
-	for _, v in ipairs(recommendStoreConfigList) do
-		if StoreController.instance:isNeedShowRedDotNewTag(v) and not StoreController.instance:isEnteredRecommendStore(v.id) then
-			redDotIcon.show = true
-
-			redDotIcon:showRedDot(RedDotEnum.Style.NewTag)
-			redDotIcon:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
-			self:showStoreDeadline(false)
-			self:registStoreDeadlineCall(false)
-			self:showBankNewEffect(true)
-
-			return
-		end
 	end
 
 	local storedotinfos = StoreModel.instance:getAllRedDotInfo()
@@ -1084,8 +1068,8 @@ function MainView:storeRedDotRefreshSupplementMonthCard(redDotIcon)
 		self:showStoreDeadline(false)
 		self:registStoreDeadlineCall(false)
 		self:showBankNewEffect(true)
-
-		return
+	else
+		redDotIcon:refreshDot()
 	end
 end
 

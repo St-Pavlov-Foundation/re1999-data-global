@@ -722,7 +722,8 @@ local BattleEpisodeTypes = {
 	[DungeonEnum.EpisodeType.V2_8BossAct] = true,
 	[DungeonEnum.EpisodeType.V3_2SP] = true,
 	[DungeonEnum.EpisodeType.GameJumpFight] = true,
-	[DungeonEnum.EpisodeType.V3_2ZongMao] = true
+	[DungeonEnum.EpisodeType.V3_2ZongMao] = true,
+	[DungeonEnum.EpisodeType.Abyss] = true
 }
 
 function DungeonModel.isBattleEpisode(config)

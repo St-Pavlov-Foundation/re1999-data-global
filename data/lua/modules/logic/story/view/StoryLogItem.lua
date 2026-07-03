@@ -256,7 +256,8 @@ function StoryLogItem:onUpdateMO(mo, mixType)
 		gohelper.setActive(self._gonormal, true)
 		gohelper.setActive(self._gobranch, false)
 
-		local co = StoryStepModel.instance:getStepListById(mo.info).conversation
+		local stepCo = StoryStepModel.instance:getStepListById(mo.info)
+		local co = stepCo.conversation
 		local txt = string.find(co.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], "<voffset") and co.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] or GameUtil.filterRichText(co.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
 		if SDKModel.instance:isDmm() and LangSettings.instance:isJp() then
@@ -272,14 +273,19 @@ function StoryLogItem:onUpdateMO(mo, mixType)
 			end
 		end
 
-		self._audioId = co.audios[1] or 0
+		self._audioId = 0
+
+		if co.audios[1] and not co.disableAudio[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] then
+			self._audioId = co.audios[1]
+		end
+
 		txt = StoryModel.instance:getStoryTxtByVoiceType(StoryTool.getFilterDia(txt), self._audioId)
 
 		local markTopList = StoryTool.getMarkTopTextList(txt)
 
 		txt = StoryTool.filterMarkTop(txt)
 
-		if co.effType == StoryEnum.ConversationEffectType.Magic then
+		if StoryModel.instance:isMagicType(stepCo) then
 			txt = StoryConfig.instance:replaceStoryMagicText(txt)
 		end
 

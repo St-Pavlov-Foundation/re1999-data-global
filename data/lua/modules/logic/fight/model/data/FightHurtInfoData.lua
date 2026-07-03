@@ -4,28 +4,6 @@ module("modules.logic.fight.model.data.FightHurtInfoData", package.seeall)
 
 local FightHurtInfoData = FightDataClass("FightHurtInfoData")
 
-FightHurtInfoData.DamageType = {
-	Damage = GameUtil.getEnumId(),
-	OriginDamage = GameUtil.getEnumId(),
-	AdditionalDamage = GameUtil.getEnumId()
-}
-
-function FightHurtInfoData.getDamageTypeByHurtEffect(hurtEffect)
-	if hurtEffect == FightEnum.EffectType.DAMAGE then
-		return FightHurtInfoData.DamageType.Damage
-	elseif hurtEffect == FightEnum.EffectType.CRIT then
-		return FightHurtInfoData.DamageType.Damage
-	elseif hurtEffect == FightEnum.EffectType.ORIGINDAMAGE then
-		return FightHurtInfoData.DamageType.OriginDamage
-	elseif hurtEffect == FightEnum.EffectType.ORIGINCRIT then
-		return FightHurtInfoData.DamageType.OriginDamage
-	elseif hurtEffect == FightEnum.EffectType.ADDITIONALDAMAGE then
-		return FightHurtInfoData.DamageType.AdditionalDamage
-	elseif hurtEffect == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
-		return FightHurtInfoData.DamageType.AdditionalDamage
-	end
-end
-
 FightHurtInfoData.DamageFromType = {
 	AbsorbHurt = 5,
 	Skill = 1,
@@ -43,9 +21,10 @@ local criticalType = {
 }
 
 function FightHurtInfoData:onConstructor(proto)
+	self:initClientField()
+
 	self.damage = proto.damage
 	self.reduceHp = proto.reduceHp
-	self.reduceShield = proto.reduceShield
 	self.careerRestraint = proto.careerRestraint
 	self.critical = criticalType[proto.hurtEffect]
 	self.assassinate = proto.assassinate
@@ -64,30 +43,19 @@ function FightHurtInfoData:onConstructor(proto)
 	self.toughnessValue = proto.toughnessValue
 	self.toughnessPoint = proto.toughnessPoint
 	self.broken = proto.broken
+	self.absorbHurtParam = proto.absorbHurtParam
+	self.reduceShield = 0
+	self.reduceTeamShareShield = 0
+	self.hurtMergeFlag = proto.hurtMergeFlag
 end
 
-function FightHurtInfoData:getFloatType()
-	local damageType = FightHurtInfoData.getDamageTypeByHurtEffect(self.hurtEffect)
-
-	if damageType == FightHurtInfoData.DamageType.Damage then
-		local isRestrain = self.skillId ~= 0 and self.careerRestraint
-
-		if isRestrain then
-			return self.critical and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.restrain
-		else
-			return self.critical and FightEnum.FloatType.crit_damage or FightEnum.FloatType.damage
-		end
-	end
-
-	if damageType == FightHurtInfoData.DamageType.OriginDamage then
-		return self.critical and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-	end
-
-	if damageType == FightHurtInfoData.DamageType.AdditionalDamage then
-		return self.critical and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage
-	end
-
-	return FightEnum.FloatType.damage
+function FightHurtInfoData:initClientField()
+	self.client_damageRate = 0
+	self.client_floatNum = 0
+	self.client_reduceHp = 0
+	self.client_reduceShield = 0
+	self.client_reduceTeamShareShield = 0
+	self.client_yamiShieldPlayUIEffect = false
 end
 
 return FightHurtInfoData

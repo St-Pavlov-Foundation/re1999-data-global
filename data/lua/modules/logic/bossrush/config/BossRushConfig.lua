@@ -377,6 +377,6 @@ function BossRushConfig:getV3a2BossTypeByStage(stage)
 	end
 end
 
-BossRushConfig.instance = BossRushConfig.New(VersionActivity3_5Enum.ActivityId.BossRush)
+BossRushConfig.instance = BossRushConfig.New(VersionActivity3_6Enum.ActivityId.BossRush)
 
 return BossRushConfig

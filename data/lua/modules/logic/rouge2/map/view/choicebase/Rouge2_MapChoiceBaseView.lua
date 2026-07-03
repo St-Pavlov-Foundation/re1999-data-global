@@ -33,7 +33,7 @@ function Rouge2_MapChoiceBaseView:addEvents()
 	self.dialogueBlockClick:AddClickListener(self.onClickDialogueBlock, self)
 	self._btnSkip:AddClickListener(self._btnSkipOnClick, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChoiceDialogueDone, self.onChoiceDialogueDone, self, LuaEventSystem.High)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onPlayDialogueDone, self.onPlayDialogueDone, self, LuaEventSystem.High)
 end
 
 function Rouge2_MapChoiceBaseView:removeEvents()
@@ -113,6 +113,7 @@ function Rouge2_MapChoiceBaseView:changeState(state)
 
 	gohelper.setActive(self._godialogueblock, isBlock)
 	gohelper.setActive(self._gochoicecontainer, self.state == Rouge2_MapEnum.ChoiceViewState.WaitSelect)
+	logError("state =" .. tostring(self.state == Rouge2_MapEnum.ChoiceViewState.WaitSelect))
 
 	if state == Rouge2_MapEnum.ChoiceViewState.Finish then
 		self.scrollClick:RemoveClickListener()
@@ -131,18 +132,7 @@ function Rouge2_MapChoiceBaseView:initViewData()
 	return
 end
 
-function Rouge2_MapChoiceBaseView:startPlayDialogue(playInfoList, callback, callbackObj)
-	if self.closeed then
-		logError("start dialogue after close view !!!")
-
-		return
-	end
-
-	self:changeState(Rouge2_MapEnum.ChoiceViewState.PlayingDialogue)
-	self._dialogueListComp:startPlayDialogue(playInfoList, callback, callbackObj)
-end
-
-function Rouge2_MapChoiceBaseView:onChoiceDialogueDone()
+function Rouge2_MapChoiceBaseView:onPlayDialogueDone()
 	self:changeState(Rouge2_MapEnum.ChoiceViewState.DialogueDone)
 end
 

@@ -9,7 +9,6 @@ function VersionActivityFixedStoreView:onInitView()
 	self._goContent = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content")
 	self._gostoreItem = gohelper.findChild(self.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
 	self._txttime = gohelper.findChildText(self.viewGO, "title/image_LimitTimeBG/#txt_time")
-	self._gospitem = gohelper.findChild(self.viewGO, "dsc_store")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -62,24 +61,6 @@ function VersionActivityFixedStoreView:onOpen()
 	self:refreshStoreContent()
 	self:_onScrollValueChanged()
 	self:scrollToFirstNoSellOutStore()
-
-	local isShowSpecial = self.viewContainer.isShowSpecialItem and self.viewContainer:isShowSpecialItem()
-
-	if isShowSpecial then
-		local spGoodsList = VersionActivityFixedStoreListModel.instance:getSpecialGoodsList()
-
-		if #spGoodsList > 0 then
-			if not self._spGoodsItem then
-				self._spGoodsItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._gospitem, VersionActivitySpecialStoreGoodsItem)
-			end
-
-			self._spGoodsItem:onUpdateMO(self.actId)
-		end
-
-		gohelper.setActive(self._gospitem, #spGoodsList > 0)
-	else
-		gohelper.setActive(self._gospitem, false)
-	end
 end
 
 function VersionActivityFixedStoreView:refreshTime()
@@ -112,6 +93,11 @@ function VersionActivityFixedStoreView:refreshStoreContent()
 		end
 
 		storeItem:updateInfo(i, storeGroupDict[i])
+	end
+
+	if self._gospitem and self.storeItemList[1] then
+		gohelper.addChild(self.storeItemList[1].go, self._gospitem)
+		gohelper.setAsFirstSibling(self._gospitem)
 	end
 end
 
@@ -147,14 +133,12 @@ function VersionActivityFixedStoreView:getFirstNoSellOutGroup()
 
 	for index, groupGoodsCoList in ipairs(storeGroupDict) do
 		for _, goodsCo in ipairs(groupGoodsCoList) do
-			if goodsCo.specProduct ~= 1 then
-				if goodsCo.maxBuyCount == 0 then
-					return index
-				end
+			if goodsCo.maxBuyCount == 0 then
+				return index
+			end
 
-				if goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.actId, goodsCo.id) > 0 then
-					return index
-				end
+			if goodsCo.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(self.actId, goodsCo.id) > 0 then
+				return index
 			end
 		end
 	end
@@ -168,10 +152,6 @@ end
 
 function VersionActivityFixedStoreView:_refreshView()
 	self.viewContainer:refreshCurrencyItem()
-
-	if self._spGoodsItem then
-		self._spGoodsItem:onUpdateMO(self.actId)
-	end
 end
 
 function VersionActivityFixedStoreView:onClose()

@@ -228,6 +228,14 @@ function MaterialTipView:_onEndEdit(inputStr)
 end
 
 function MaterialTipView:_btncloseOnClick()
+	if self._originData.isReturnLastTipView and (self.viewParam.type ~= self._originData.type or self.viewParam.id ~= self._originData.id) then
+		self.viewParam = self._originData
+
+		self:_refreshUI()
+
+		return
+	end
+
 	self:closeThis()
 end
 
@@ -988,6 +996,9 @@ function MaterialTipView:onOpen()
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshItemQuantity, self)
 	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshItemQuantity, self)
 	self:addGmBtnAudio()
+
+	self._originData = self.viewParam
+
 	self:_refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
@@ -1359,9 +1370,9 @@ function MaterialTipView:_onRefreshNewInsightDeadline()
 end
 
 function MaterialTipView:_onRefreshSpecialExpiredItemDeadline()
-	local ts = CurrencyController.instance:getExpireItemDeadLineTime()
+	local ts = ItemExpireModel.instance:getSpecialExpireItemEarliestExpireTime(self.viewParam.id)
 
-	if ts then
+	if ts and ts > 0 then
 		local hasExpire = ts <= ServerTime.now()
 
 		if hasExpire then

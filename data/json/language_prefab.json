@@ -11149,7 +11149,7 @@
   },
   {
     "id": "p_v1a7_warmup_txt_Reward",
-    "lang": "language_10035585"
+    "lang": "language_10119920"
   },
   {
     "id": "p_v1a7_warmup_txt_Tips",
@@ -17321,7 +17321,7 @@
   },
   {
     "id": "p_storeseasoncardview_txt_tips1",
-    "lang": "language_10068508"
+    "lang": "language_10119309"
   },
   {
     "id": "p_storeseasoncardview_txt_tips2",
@@ -18373,7 +18373,7 @@
   },
   {
     "id": "p_towermainview_txt_store",
-    "lang": "language_10073411"
+    "lang": "language_10119310"
   },
   {
     "id": "p_towermainview_txt_task",
@@ -21441,7 +21441,7 @@
   },
   {
     "id": "p_v2a9_monthcard_panelview_txt_canget",
-    "lang": "language_10077730"
+    "lang": "language_10030183"
   },
   {
     "id": "p_v2a9_monthcard_panelview_txt_hasget",
@@ -23385,7 +23385,7 @@
   },
   {
     "id": "p_activitycollect_fullview_txt6",
-    "lang": "language_10100477"
+    "lang": "language_10119311"
   },
   {
     "id": "p_activitycollect_fullview_txt7",
@@ -25265,7 +25265,7 @@
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title2",
-    "lang": "language_10117570"
+    "lang": "language_10119312"
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title3",
@@ -27214,6 +27214,370 @@
   {
     "id": "p_survival_closingview_txt_newdec3",
     "lang": "language_10117659"
+  },
+  {
+    "id": "p_cloudredemption_chapterdetailview_btn",
+    "lang": "language_10119313"
+  },
+  {
+    "id": "p_cloudredemption_rewardview_title",
+    "lang": "language_10119314"
+  },
+  {
+    "id": "p_cloudredemption_mainview_tip",
+    "lang": "language_10119315"
+  },
+  {
+    "id": "p_cloudredemption_resultview_wintitle",
+    "lang": "language_10032197"
+  },
+  {
+    "id": "p_cloudredemption_enterview_txt_desc",
+    "lang": "language_10119316"
+  },
+  {
+    "id": "p_storemonthcardview_buynums",
+    "lang": "language_10119317"
+  },
+  {
+    "id": "p_cloudredemption_resultview_newtag",
+    "lang": "language_10119318"
+  },
+  {
+    "id": "p_v3a6_storeview_txt_title1",
+    "lang": "language_10119319"
+  },
+  {
+    "id": "p_v3a6_storeview_txt_title2",
+    "lang": "language_10119320"
+  },
+  {
+    "id": "p_v3a6_storeview_txt_title3",
+    "lang": "language_10119321"
+  },
+  {
+    "id": "p_fightfocusview_yami_txt_name",
+    "lang": "language_10015499"
+  },
+  {
+    "id": "p_fightfocusview_yami_txt_desc",
+    "lang": "language_10119322"
+  },
+  {
+    "id": "p_playercardcritterplaceview_txt_critter",
+    "lang": "language_10021407"
+  },
+  {
+    "id": "p_playercardcritterplaceview_txt_badge",
+    "lang": "language_10119323"
+  },
+  {
+    "id": "p_playercardcritterplaceview_txt_option",
+    "lang": "language_10119324"
+  },
+  {
+    "id": "p_storemonthcardview_sold_out",
+    "lang": "language_10019985"
+  },
+  {
+    "id": "p_a17_reappear_mainactivity_enterview_txt_EntranceRole1",
+    "lang": "language_10073122"
+  },
+  {
+    "id": "p_a17_reappear_mainactivity_enterview_txt_EntranceRole2",
+    "lang": "language_10073123"
+  },
+  {
+    "id": "P_v3a2_activitycollect_fullview_node1title",
+    "lang": "language_10119325"
+  },
+  {
+    "id": "P_v3a2_activitycollect_fullview_node2title",
+    "lang": "language_10119326"
+  },
+  {
+    "id": "p_v3a6_dungeonmapview_go_play",
+    "lang": "language_10118748"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_enterview_txt_enter",
+    "lang": "language_10119327"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_taskview_title",
+    "lang": "language_10119328"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_encyclope",
+    "lang": "language_10119329"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_handbook",
+    "lang": "language_10119330"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_evaluationresultview_txt_name",
+    "lang": "language_10119331"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_evaluationresultview_txt_funds",
+    "lang": "language_10119332"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_evaluationresultview_txt_funds2",
+    "lang": "language_10119333"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_evaluationresultview_txt_funds3",
+    "lang": "language_10119334"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_evaluationresultview_txt_level",
+    "lang": "language_10119335"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_title",
+    "lang": "language_10031189"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_ok",
+    "lang": "language_10052398"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_recipe",
+    "lang": "language_10119336"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_schedule",
+    "lang": "language_10119337"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_skilluse",
+    "lang": "language_10119338"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_performview_txt_score",
+    "lang": "language_10119339"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_start",
+    "lang": "language_10119340"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_start_en",
+    "lang": "language_10030296"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_continue",
+    "lang": "language_10119341"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_btn_continue_en",
+    "lang": "language_10119342"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_mainview_goal",
+    "lang": "language_90016051"
+  },
+  {
+    "id": "p_towermainview_txt_storeEn",
+    "lang": "language_10119343"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_skillinfoview_txt_title",
+    "lang": "language_10100646"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_skillinfoview_txt_useskill",
+    "lang": "language_10119344"
+  },
+  {
+    "id": "p_dungeonmapview_txt_v3a6_dormitorymode",
+    "lang": "language_10118748"
+  },
+  {
+    "id": "p_dungeonmapview_txt_v3a6_dormitorymodeEn",
+    "lang": "language_10047787"
+  },
+  {
+    "id": "p_rouge2_mapdiceview_txt_confirm",
+    "lang": "language_10119272"
+  },
+  {
+    "id": "p_rouge2_mapdiceview_txt_AbortRedice",
+    "lang": "language_10032053"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_choosematerialsview_txt_name1",
+    "lang": "language_10119345"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_choosematerialsview_txt_name2",
+    "lang": "language_10082754"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_choosematerialsview_txt_limit",
+    "lang": ""
+  },
+  {
+    "id": "p_v3a6_dormitorymode_choosematerialsview_txt_money",
+    "lang": "language_10119346"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_handbookview2_txt_tips",
+    "lang": ""
+  },
+  {
+    "id": "p_v3a6_dormitorymode_employeedetailpanel_txt_noskill",
+    "lang": "language_10119347"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_employeedetailpanel_txt_empty",
+    "lang": "language_10119348"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_employeedetailpanel_txt_skill",
+    "lang": "language_10100646"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_employeedetailpanel_txt_hire",
+    "lang": "language_10119349"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_confirmselectionview_txt_title1",
+    "lang": "language_10119350"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_confirmselectionview_txt_title2",
+    "lang": "language_10119351"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_confirmselectionview_txt_title3",
+    "lang": "language_10119352"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_confirmselectionview_txt_tips",
+    "lang": "language_10119353"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_choosepersonview_txt_name",
+    "lang": "language_10119354"
+  },
+  {
+    "id": "p_v3a6_warmup_go_reward",
+    "lang": "language_10119355"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_goto",
+    "lang": "language_10119301"
+  },
+  {
+    "id": "p_v3a6_warmup_btn_goto",
+    "lang": "language_10074655"
+  },
+  {
+    "id": "p_v3a6_warmup_taskview_txt_title",
+    "lang": "language_10119356"
+  },
+  {
+    "id": "p_v3a6_warmup_taskview_txt_desc",
+    "lang": "language_10119357"
+  },
+  {
+    "id": "p_v3a6_warmup_dialogueview_txt_claimreward",
+    "lang": "language_10119358"
+  },
+  {
+    "id": "p_v3a6_warmup_dialogueview_txt_tips",
+    "lang": "language_10119359"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_place1",
+    "lang": "language_10119360"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_place2",
+    "lang": "language_10119361"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_place3",
+    "lang": "language_10119362"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_place4",
+    "lang": "language_10119363"
+  },
+  {
+    "id": "p_v3a6_warmup_txt_place5",
+    "lang": "language_10119364"
+  },
+  {
+    "id": "p_v3a6_abyss_teamrecommendtips_txt_title",
+    "lang": "language_10107228"
+  },
+  {
+    "id": "p_v3a6_abyss_rewarditem_allget",
+    "lang": "language_10030184"
+  },
+  {
+    "id": "p_playercard_socialbadgegetview_txt_goto",
+    "lang": "language_10119365"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_confirmselectionview_txt_preview",
+    "lang": "language_10119366"
+  },
+  {
+    "id": "p_avg_spelling_view_txt_tips",
+    "lang": "language_10119367"
+  },
+  {
+    "id": "p_playercard_badgeempty",
+    "lang": "language_10119368"
+  },
+  {
+    "id": "p_v3a8_warmup_txt_tip",
+    "lang": "language_10119921"
+  },
+  {
+    "id": "p_v3a8_warmup_txt_reward",
+    "lang": "language_10119920"
+  },
+  {
+    "id": "p_v3a8_warmup_txt_tip01",
+    "lang": "language_10119922"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_fullview_txt_nums",
+    "lang": "language_10119923"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_fullview_txt_nums_2",
+    "lang": "language_10119924"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_fullview_txt_goods",
+    "lang": "language_10119925"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_taskview_txt_title",
+    "lang": "language_10119926"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_taskview_txt_tip",
+    "lang": "language_10119927"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_fullview_txt_desc2",
+    "lang": "language_10119928"
+  },
+  {
+    "id": "p_sp02_storeseasoncard_fullview_txt_desc",
+    "lang": "language_10119929"
+  },
+  {
+    "id": "p_v3a6_dormitorymode_txt_unlock_overseas",
+    "lang": "language_90016052"
   },
   {
     "id": "p_v2a9_login_fullview_txt_reward2_GLOBAL",

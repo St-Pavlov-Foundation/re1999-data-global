@@ -378,4 +378,101 @@ function StoreHelper.getShowRefreshTimeByGoodsMO(goodsMO)
 	return StoreEnum.RefreshTime.Forever
 end
 
+function StoreHelper.getPackageIconBgIndex(goodsId, id, underlay)
+	if not goodsId then
+		return ChargePackageEnum.ItemBg.High
+	end
+
+	if underlay <= ChargePackageEnum.PackageType.SingleCurrencyPackage then
+		return ChargePackageEnum.ItemBg.High
+	end
+
+	local mo = StoreModel.instance:getGoodsMO(goodsId)
+
+	if not mo or not mo.isChargeGoods then
+		return ChargePackageEnum.ItemBg.High
+	end
+
+	local price = PayModel.instance:getProductOriginPriceNum(id)
+	local count = #ChargePackageEnum.ItemBgPriceList
+
+	for i = count, 1, -1 do
+		local targetPrice = ChargePackageEnum.ItemBgPriceList[i]
+
+		if targetPrice < price then
+			return i
+		end
+	end
+
+	return ChargePackageEnum.ItemBg.Low
+end
+
+function StoreHelper.checkMonthCardRecommendTabIsFirst(tabId)
+	local monthCardInfo = StoreModel.instance:getMonthCardInfo()
+
+	if monthCardInfo == nil then
+		return true
+	end
+
+	local remainDay = monthCardInfo:getRemainDay()
+
+	if remainDay < StoreEnum.MonthCardStatus.NotEnoughThreeDay or SignInModel.instance:getCanSupplementMonthCardDays() > 0 then
+		return true
+	end
+
+	local seasonCardGoodsInfo = StoreModel.instance:getGoodsMO(StoreEnum.SeasonCardGoodsId)
+
+	if seasonCardGoodsInfo and not seasonCardGoodsInfo:isSoldOut() then
+		return true
+	end
+
+	return false
+end
+
+function StoreHelper.checkDefaultTabIsFirst(tabId)
+	local isShow, isActRedDot = StoreModel.instance:isTabMainRedDotShow(tabId)
+
+	return isShow or isActRedDot
+end
+
+StoreHelper.checkStoreFirstHandler = {
+	[StoreEnum.StoreId.MonthCardRecommend] = StoreHelper.checkMonthCardRecommendTabIsFirst
+}
+
+function StoreHelper.tryGetStoreDefaultTabHandler(tabId)
+	if StoreHelper.checkStoreFirstHandler[tabId] then
+		return StoreHelper.checkStoreFirstHandler[tabId]
+	end
+
+	return StoreHelper.checkDefaultTabIsFirst
+end
+
+function StoreHelper.getDefaultSelectFirstStoreTab(tabConfigList)
+	if tabConfigList and next(tabConfigList) then
+		for _, tabConfig in ipairs(tabConfigList) do
+			local tabId = tabConfig.id
+
+			if StoreEnum.DefaultSelectFirstTabList[tabId] then
+				local handler = StoreHelper.tryGetStoreDefaultTabHandler(tabId)
+
+				if handler and handler(tabId) then
+					return tabId
+				end
+			end
+		end
+	end
+
+	return StoreEnum.StoreId.Package
+end
+
+function StoreHelper.getDailyRefreshStoreList()
+	local list = {}
+
+	for _, storeId in ipairs(StoreEnum.DailyRefreshStoreIdList) do
+		table.insert(list, storeId)
+	end
+
+	return list
+end
+
 return StoreHelper

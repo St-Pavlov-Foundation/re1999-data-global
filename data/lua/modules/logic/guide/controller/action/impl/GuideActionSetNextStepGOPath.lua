@@ -492,4 +492,22 @@ function GuideActionSetNextStepGOPath:getRouge2CanActiveTalent()
 	return SLFramework.GameObjectHelper.GetPath(goClick)
 end
 
+function GuideActionSetNextStepGOPath:getAbyssCanClickStagePath()
+	local actId = AbyssModel.instance:getCurActId()
+
+	if not actId or not ActivityModel.instance:isActOnLine(actId) then
+		return
+	end
+
+	local info = AbyssModel.instance:getInfoMo(actId)
+
+	if info.stageInfoList and next(info.stageInfoList) then
+		for _, stageInfo in ipairs(info.stageInfoList) do
+			if stageInfo:isChallenged() and stageInfo.star > 0 then
+				return string.format("UIRoot/POPUP_TOP/AbyssMainView/#go_clipNode/clip%s/#btn_click", stageInfo.stageId)
+			end
+		end
+	end
+end
+
 return GuideActionSetNextStepGOPath

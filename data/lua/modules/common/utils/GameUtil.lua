@@ -1545,4 +1545,14 @@ function GameUtil.copyArray(array)
 	return l
 end
 
+function GameUtil.approximately(num1, num2, eps)
+	eps = eps or 1e-06
+
+	return eps > math.abs(num1 - num2)
+end
+
+function GameUtil.isApproxZero(num, eps)
+	return GameUtil.approximately(num, 0, eps)
+end
+
 return GameUtil

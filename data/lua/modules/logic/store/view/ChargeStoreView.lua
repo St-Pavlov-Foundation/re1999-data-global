@@ -135,7 +135,7 @@ function ChargeStoreView:initCategoryItemTable(index)
 		local jumpTab = categoryItemTable.tabId
 
 		self:_refreshTabs(jumpTab)
-		StoreController.instance:statSwitchStore(jumpTab)
+		StoreController.instance:onSwitchTab(jumpTab)
 	end, categoryItemTable)
 	table.insert(self._categoryItemContainer, categoryItemTable)
 	gohelper.setActive(categoryItemTable.go_childItem, false)

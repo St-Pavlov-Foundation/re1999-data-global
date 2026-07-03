@@ -113,11 +113,8 @@ local kAct101RedList = {
 	ActivityEnum.Activity.V2a9_FreeMonthCard,
 	ActivityEnum.Activity.V3a0_SummerSign,
 	ActivityEnum.Activity.V3a1_AutumnSign,
-	ActivityEnum.Activity.V3a2_ActivityCollect,
-	ActivityEnum.Activity.V3a4_ActivityCollect,
 	ActivityEnum.Activity.V3a4_DestinyGift,
-	ActivityEnum.Activity.V3a4_GiftRecommend,
-	VersionActivity3_5Enum.ActivityId.ActivityCollect
+	ActivityEnum.Activity.V3a4_GiftRecommend
 }
 local kAct125List = {
 	ActivityEnum.Activity.V3a0_WarmUp,
@@ -183,6 +180,7 @@ function ActivityController:checkGetActivityInfo()
 	self:requestAct186Info()
 	self:requestAct165Info()
 	self:requestRouge2Info()
+	self:requestAbyssInfo()
 end
 
 function ActivityController:requestAct186Info()
@@ -205,12 +203,34 @@ function ActivityController:requestRouge2Info()
 	end
 end
 
+function ActivityController:requestAbyssInfo()
+	if not AbyssModel.instance:isFirstGetInfo() and AbyssModel.instance:isFunctionUnlock() then
+		local constConfig = AbyssConfig.instance:getConstConfig(AbyssEnum.ConstId.ActId)
+
+		if not constConfig or string.nilorempty(constConfig.value) then
+			logError("新深渊 不存在常量活动id配置")
+
+			return
+		end
+
+		local actId = tonumber(constConfig.value)
+
+		if not ActivityModel.instance:isActOnLine(actId) then
+			return
+		end
+
+		AbyssModel.instance:setCurActId(actId)
+		AbyssController.instance:getActivityInfo(actId)
+	end
+end
+
 function ActivityController:updateAct101Infos(targetActId)
 	self:_initRoleSign_kAct101RedList()
 	self:_initSpecialSign_kAct101RedList()
 	self:_initLinkageActivity_kAct101RedList()
 	self:_initVersionSummon_kAct101RedList()
 	self:_initDoubleDan_kAct101RedList()
+	self:_initActivityCollect_kAct101RedList()
 
 	if not targetActId then
 		for _, actId in ipairs(kAct101RedList) do
@@ -315,6 +335,14 @@ function ActivityController:_initDoubleDan_kAct101RedList()
 	local actId = GameBranchMgr.instance:Vxax_ActId("DoubleDan", ActivityType101Config.instance:getDoubleDanActId())
 
 	if actId then
+		table.insert(kAct101RedList, actId)
+	end
+end
+
+function ActivityController:_initActivityCollect_kAct101RedList()
+	local actId = ActivityCollectModel.instance:getCurActivityId()
+
+	if actId and not LuaUtil.tableContains(kAct101RedList, actId) then
 		table.insert(kAct101RedList, actId)
 	end
 end

@@ -678,8 +678,22 @@ function HeroGroupFightView:_refreshUI()
 	self:_refreshCloth()
 	self:_setTrialNumTips()
 	self:refreshDropTips()
+	self:_refreshCareerRestrain()
 	self.viewContainer:setNavigateOverrideClose()
 	gohelper.setActive(self._goReplayBtn, not HeroGroupBalanceHelper.getIsBalanceMode() and self.episodeConfig and self.episodeConfig.canUseRecord == 1 and self._chapterConfig.type ~= DungeonEnum.ChapterType.WeekWalk)
+end
+
+function HeroGroupFightView:_refreshCareerRestrain()
+	local fightParam = FightModel.instance:getFightParam()
+
+	if not fightParam then
+		return
+	end
+
+	local showCareerRestrain = not FightHelper.checkIsMultiCareer(fightParam.monsterGroupIds)
+
+	logNormal("是否显示属性相克按钮: " .. tostring(showCareerRestrain))
+	gohelper.setActive(self._btncareerrestrain, showCareerRestrain)
 end
 
 function HeroGroupFightView:_refreshCost(visible)

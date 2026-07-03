@@ -8,5 +8,9 @@ Activity217Enum.ActType = {
 	MultiCoin = 2,
 	MultiExp = 1
 }
+Activity217Enum.DungeonChapter = {
+	[Activity217Enum.ActType.MultiExp] = DungeonEnum.ChapterId.ResourceExp,
+	[Activity217Enum.ActType.MultiCoin] = DungeonEnum.ChapterId.ResourceGold
+}
 
 return Activity217Enum

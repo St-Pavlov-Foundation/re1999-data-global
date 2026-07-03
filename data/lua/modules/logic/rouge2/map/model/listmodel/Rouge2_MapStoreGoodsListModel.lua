@@ -9,13 +9,20 @@ function Rouge2_MapStoreGoodsListModel:initList(nodeMo)
 	self._nodeMo = nodeMo
 	self._eventMo = nodeMo.eventMo
 	self._stealRateMap = {}
+	self._state = Rouge2_MapEnum.StoreState.Normal
 
 	self:refreshList()
 	self:select(DefaultSelectIndex)
 end
 
 function Rouge2_MapStoreGoodsListModel:refreshList()
-	self._state = self._eventMo:getStoreState()
+	local state = self._eventMo:getStoreState()
+
+	if state ~= self._state and state == Rouge2_MapEnum.StoreState.Normal and self._state == Rouge2_MapEnum.StoreState.Steal then
+		state = Rouge2_MapEnum.StoreState.Steal
+	end
+
+	self._state = state
 
 	local posGoodsList = self._eventMo.posGoodsList or {}
 

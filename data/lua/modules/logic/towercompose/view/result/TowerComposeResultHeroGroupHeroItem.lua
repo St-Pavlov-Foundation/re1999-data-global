@@ -22,4 +22,8 @@ function TowerComposeResultHeroGroupHeroItem:_onClickEquip()
 	return
 end
 
+function TowerComposeResultHeroGroupHeroItem:_checkDrag()
+	return true
+end
+
 return TowerComposeResultHeroGroupHeroItem

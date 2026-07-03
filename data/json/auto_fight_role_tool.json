@@ -1,5 +1,6 @@
 [
   {
+    "id": 300300,
     "roleId": 3003,
     "lv": 150,
     "exLv": 0,
@@ -11,6 +12,19 @@
     "destiny": 0
   },
   {
+    "id": 300301,
+    "roleId": 3003,
+    "lv": 150,
+    "exLv": 1,
+    "equip": 0,
+    "equipLv": 60,
+    "equipExLv": 0,
+    "talentLv": 12,
+    "talentStyle": 5,
+    "destiny": 0
+  },
+  {
+    "id": 300400,
     "roleId": 3004,
     "lv": 150,
     "exLv": 0,
@@ -22,6 +36,7 @@
     "destiny": 0
   },
   {
+    "id": 300500,
     "roleId": 3005,
     "lv": 150,
     "exLv": 0,
@@ -33,6 +48,7 @@
     "destiny": 0
   },
   {
+    "id": 300600,
     "roleId": 3006,
     "lv": 150,
     "exLv": 0,
@@ -44,6 +60,7 @@
     "destiny": 0
   },
   {
+    "id": 300700,
     "roleId": 3007,
     "lv": 150,
     "exLv": 0,
@@ -55,6 +72,7 @@
     "destiny": 0
   },
   {
+    "id": 300900,
     "roleId": 3009,
     "lv": 150,
     "exLv": 0,
@@ -66,6 +84,7 @@
     "destiny": 0
   },
   {
+    "id": 301000,
     "roleId": 3010,
     "lv": 150,
     "exLv": 0,
@@ -77,6 +96,7 @@
     "destiny": 0
   },
   {
+    "id": 301100,
     "roleId": 3011,
     "lv": 150,
     "exLv": 0,
@@ -88,6 +108,7 @@
     "destiny": 0
   },
   {
+    "id": 301200,
     "roleId": 3012,
     "lv": 150,
     "exLv": 0,
@@ -99,6 +120,7 @@
     "destiny": 0
   },
   {
+    "id": 301300,
     "roleId": 3013,
     "lv": 150,
     "exLv": 0,
@@ -110,6 +132,7 @@
     "destiny": 0
   },
   {
+    "id": 301400,
     "roleId": 3014,
     "lv": 150,
     "exLv": 0,
@@ -121,6 +144,7 @@
     "destiny": 0
   },
   {
+    "id": 301500,
     "roleId": 3015,
     "lv": 150,
     "exLv": 0,
@@ -132,6 +156,7 @@
     "destiny": 0
   },
   {
+    "id": 301600,
     "roleId": 3016,
     "lv": 150,
     "exLv": 0,
@@ -143,6 +168,7 @@
     "destiny": 0
   },
   {
+    "id": 301700,
     "roleId": 3017,
     "lv": 150,
     "exLv": 0,
@@ -154,6 +180,7 @@
     "destiny": 0
   },
   {
+    "id": 314100,
     "roleId": 3141,
     "lv": 180,
     "exLv": 0,
@@ -165,6 +192,43 @@
     "destiny": 0
   },
   {
+    "id": 314101,
+    "roleId": 3141,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1563,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314102,
+    "roleId": 3141,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1563,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314105,
+    "roleId": 3141,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1563,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 305300,
     "roleId": 3053,
     "lv": 180,
     "exLv": 0,
@@ -176,6 +240,43 @@
     "destiny": 305301
   },
   {
+    "id": 305301,
+    "roleId": 3053,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1540,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 305301
+  },
+  {
+    "id": 305302,
+    "roleId": 3053,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1540,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 305301
+  },
+  {
+    "id": 305305,
+    "roleId": 3053,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1540,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 305301
+  },
+  {
+    "id": 303900,
     "roleId": 3039,
     "lv": 180,
     "exLv": 0,
@@ -187,6 +288,43 @@
     "destiny": 303902
   },
   {
+    "id": 303901,
+    "roleId": 3039,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1444,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 303902
+  },
+  {
+    "id": 303902,
+    "roleId": 3039,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1444,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 303902
+  },
+  {
+    "id": 303905,
+    "roleId": 3039,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1444,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 303902
+  },
+  {
+    "id": 311700,
     "roleId": 3117,
     "lv": 180,
     "exLv": 0,
@@ -198,6 +336,43 @@
     "destiny": 0
   },
   {
+    "id": 311701,
+    "roleId": 3117,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1547,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 311702,
+    "roleId": 3117,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1547,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 311705,
+    "roleId": 3117,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1547,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312000,
     "roleId": 3120,
     "lv": 180,
     "exLv": 0,
@@ -209,6 +384,43 @@
     "destiny": 0
   },
   {
+    "id": 312001,
+    "roleId": 3120,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1548,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312002,
+    "roleId": 3120,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1548,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312005,
+    "roleId": 3120,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1548,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312600,
     "roleId": 3126,
     "lv": 180,
     "exLv": 0,
@@ -220,6 +432,43 @@
     "destiny": 0
   },
   {
+    "id": 312601,
+    "roleId": 3126,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1553,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312602,
+    "roleId": 3126,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1553,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312605,
+    "roleId": 3126,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1553,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 308800,
     "roleId": 3088,
     "lv": 180,
     "exLv": 0,
@@ -231,6 +480,43 @@
     "destiny": 308801
   },
   {
+    "id": 308801,
+    "roleId": 3088,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1537,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308801
+  },
+  {
+    "id": 308802,
+    "roleId": 3088,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1537,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308801
+  },
+  {
+    "id": 308805,
+    "roleId": 3088,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1537,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308801
+  },
+  {
+    "id": 312500,
     "roleId": 3125,
     "lv": 180,
     "exLv": 0,
@@ -242,6 +528,43 @@
     "destiny": 0
   },
   {
+    "id": 312501,
+    "roleId": 3125,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1556,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312502,
+    "roleId": 3125,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1556,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312505,
+    "roleId": 3125,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1556,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313400,
     "roleId": 3134,
     "lv": 180,
     "exLv": 0,
@@ -253,6 +576,43 @@
     "destiny": 0
   },
   {
+    "id": 313401,
+    "roleId": 3134,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1558,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313402,
+    "roleId": 3134,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1558,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313405,
+    "roleId": 3134,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1558,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313900,
     "roleId": 3139,
     "lv": 180,
     "exLv": 0,
@@ -264,6 +624,43 @@
     "destiny": 0
   },
   {
+    "id": 313901,
+    "roleId": 3139,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1565,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313902,
+    "roleId": 3139,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1565,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313905,
+    "roleId": 3139,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1565,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 308100,
     "roleId": 3081,
     "lv": 180,
     "exLv": 0,
@@ -275,6 +672,43 @@
     "destiny": 308101
   },
   {
+    "id": 308101,
+    "roleId": 3081,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1560,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308101
+  },
+  {
+    "id": 308102,
+    "roleId": 3081,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1560,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308101
+  },
+  {
+    "id": 308105,
+    "roleId": 3081,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1560,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308101
+  },
+  {
+    "id": 312700,
     "roleId": 3127,
     "lv": 180,
     "exLv": 0,
@@ -286,6 +720,43 @@
     "destiny": 0
   },
   {
+    "id": 312701,
+    "roleId": 3127,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1561,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312702,
+    "roleId": 3127,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1561,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312705,
+    "roleId": 3127,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1561,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 308600,
     "roleId": 3086,
     "lv": 180,
     "exLv": 0,
@@ -297,6 +768,139 @@
     "destiny": 308601
   },
   {
+    "id": 308601,
+    "roleId": 3086,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1527,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308601
+  },
+  {
+    "id": 308602,
+    "roleId": 3086,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1527,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308601
+  },
+  {
+    "id": 308605,
+    "roleId": 3086,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1527,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 308601
+  },
+  {
+    "id": 313200,
+    "roleId": 3132,
+    "lv": 180,
+    "exLv": 0,
+    "equip": 1557,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313201,
+    "roleId": 3132,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1557,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313202,
+    "roleId": 3132,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1557,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313205,
+    "roleId": 3132,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1557,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313500,
+    "roleId": 3135,
+    "lv": 180,
+    "exLv": 0,
+    "equip": 1559,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313501,
+    "roleId": 3135,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1559,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313502,
+    "roleId": 3135,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1559,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 313505,
+    "roleId": 3135,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1559,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 310700,
     "roleId": 3107,
     "lv": 180,
     "exLv": 0,
@@ -308,6 +912,43 @@
     "destiny": 0
   },
   {
+    "id": 310701,
+    "roleId": 3107,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1550,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 310702,
+    "roleId": 3107,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1550,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 310705,
+    "roleId": 3107,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1550,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312800,
     "roleId": 3128,
     "lv": 180,
     "exLv": 0,
@@ -319,9 +960,82 @@
     "destiny": 0
   },
   {
+    "id": 312801,
+    "roleId": 3128,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1554,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312802,
+    "roleId": 3128,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1554,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 312805,
+    "roleId": 3128,
+    "lv": 180,
+    "exLv": 5,
+    "equip": 1554,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314300,
     "roleId": 3143,
     "lv": 180,
     "exLv": 0,
+    "equip": 1567,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314301,
+    "roleId": 3143,
+    "lv": 180,
+    "exLv": 1,
+    "equip": 1567,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314302,
+    "roleId": 3143,
+    "lv": 180,
+    "exLv": 2,
+    "equip": 1567,
+    "equipLv": 60,
+    "equipExLv": 5,
+    "talentLv": 10,
+    "talentStyle": 0,
+    "destiny": 0
+  },
+  {
+    "id": 314305,
+    "roleId": 3143,
+    "lv": 180,
+    "exLv": 5,
     "equip": 1567,
     "equipLv": 60,
     "equipExLv": 5,

@@ -9,13 +9,14 @@ Rouge2_Enum.ResPath = {
 	AttributeMap = "ui/viewres/rouge2/rouge2_careerattributemap.prefab",
 	BackpackTalentView = "ui/viewres/rouge2/backpack/rouge2_backpacktalentview.prefab",
 	AttrToolBar = "ui/viewres/rouge2/rouge2_attributetoolbar.prefab",
-	ChoiceCheckItem = "ui/viewres/rouge2/map/rouge2_mapchoicecheckitem.prefab",
+	ItemRefreshComp = "ui/viewres/rouge2/map/rouge2_itemrefreshcomp.prefab",
 	MapExploreChoiceItem = "ui/viewres/rouge2/map/rouge2_mapexplorechoiceitem.prefab",
 	ComBuffItem = "ui/viewres/rouge2/backpack/rouge2_commonbuffitem.prefab",
 	CoinView = "ui/viewres/rouge2/map/rouge2_mapcoinview.prefab",
 	ItemDescSpriteAb = "font/bmfont",
 	BackpackPet = "ui/viewres/rouge2/backpack/rouge2_backpackpet.prefab",
 	BackpackFormulaItem = "ui/viewres/rouge2/backpack/rouge2_backpackformulaitem.prefab",
+	ChoiceCheckItem = "ui/viewres/rouge2/map/rouge2_mapchoicecheckitem.prefab",
 	CareerAttrActiveItem = "ui/viewres/rouge2/rouge2_careerattributeactiveitem.prefab",
 	BuffDropItem = "ui/viewres/rouge2/map/rouge2_buffdropitem.prefab",
 	DifficultyItem = "ui/viewres/rouge2/rouge2_difficultyitem.prefab",
@@ -302,6 +303,10 @@ Rouge2_Enum.AttrDropArrowType = {
 Rouge2_Enum.AttrDropArrowSpriteIndex = {
 	[Rouge2_Enum.AttrDropArrowType.Black] = 6,
 	[Rouge2_Enum.AttrDropArrowType.White] = 1
+}
+Rouge2_Enum.RecordViewType = {
+	Edit = 2,
+	Show = 1
 }
 
 return Rouge2_Enum

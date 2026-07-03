@@ -4,14 +4,14 @@ module("modules.logic.versionactivity1_3.act125.controller.Activity125Controller
 
 local Activity125Controller = class("Activity125Controller", BaseController)
 
-function Activity125Controller:getAct125InfoFromServer(actId)
+function Activity125Controller:getAct125InfoFromServer(actId, svrCallback, svrCallbackObj)
 	actId = actId or ActivityEnum.Activity.VersionActivity1_3Radio
 
 	if ActivityModel.instance:isActOnLine(actId) then
 		local remainTime = ActivityModel.instance:getRemainTimeSec(actId)
 
 		if remainTime and remainTime > 0 then
-			Activity125Rpc.instance:sendGetAct125InfosRequest(actId)
+			Activity125Rpc.instance:sendGetAct125InfosRequest(actId, svrCallback, svrCallbackObj)
 		end
 	end
 end

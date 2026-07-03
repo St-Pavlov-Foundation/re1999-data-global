@@ -27,7 +27,7 @@ function UnityVideoPlayer:init(go)
 
 	self._videoPlayer = gohelper.onceAddComponent(go, typeof(UnityEngine.Video.VideoPlayer))
 	self._videoPlayer.playOnAwake = false
-	self._videoPlayer.timeUpdateMode = UnityEngine.Video.VideoTimeUpdateMode.GameTime
+	self._videoPlayer.timeUpdateMode = UnityEngine.Video.VideoTimeUpdateMode.UnscaledGameTime
 
 	if self._needRawImage == true and not self._rtTarget then
 		self._rawImage = gohelper.onceAddComponent(go, gohelper.Type_RawImage)

@@ -123,6 +123,7 @@ function Rouge2_Controller:startEndFlow()
 		self.endFlow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Rouge2_SettlementView))
 		self.endFlow:addWork(Rouge2_WaitOpenSettlementUnlockWork.New())
 		self.endFlow:addWork(Rouge2_WaitOpenReviewWork.New())
+		self.endFlow:addWork(Rouge2_WaitResultRecordDoneWork.New())
 		self.endFlow:registerDoneListener(self.onEndFlowDone, self)
 		self.endFlow:start()
 	end

@@ -550,7 +550,11 @@ function HeroGroupFightViewLevel:_showEnemyList()
 
 		local text = gohelper.findChildText(obj, "#txt_enemynum")
 
-		text.text = #enemy_list + #enemy_boss_list
+		if text then
+			text.text = #enemy_list + #enemy_boss_list
+		else
+			logError("战斗页面没有适配韧性条UI,请检查")
+		end
 	else
 		gohelper.setActive(obj, false)
 	end

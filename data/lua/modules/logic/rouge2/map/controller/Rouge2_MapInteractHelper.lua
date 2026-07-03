@@ -41,7 +41,8 @@ function Rouge2_MapInteractHelper._initInteractHandle()
 			[Rouge2_MapEnum.InteractType.Band] = Rouge2_MapInteractHelper.handBand,
 			[Rouge2_MapEnum.InteractType.ExchangeRelics] = Rouge2_MapInteractHelper.handleExchangeRelics,
 			[Rouge2_MapEnum.InteractType.ResearchInstitute] = Rouge2_MapInteractHelper.handleResearchInstitute,
-			[Rouge2_MapEnum.InteractType.SelectDrop] = Rouge2_MapInteractHelper.handleSelectDrop
+			[Rouge2_MapEnum.InteractType.SelectDrop] = Rouge2_MapInteractHelper.handleSelectDrop,
+			[Rouge2_MapEnum.InteractType.Dice] = Rouge2_MapInteractHelper.handleDice
 		}
 	end
 end
@@ -203,6 +204,11 @@ function Rouge2_MapInteractHelper.handleSelectDrop()
 			interactive = curInteractive
 		})
 	end
+end
+
+function Rouge2_MapInteractHelper.handleDice()
+	logNormal("属性检定")
+	Rouge2_MapAttrCheckHelper.triggerCheckResult()
 end
 
 return Rouge2_MapInteractHelper

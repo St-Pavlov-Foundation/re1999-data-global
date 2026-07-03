@@ -1,0 +1,23 @@
+[
+  {
+    "activityId": 13601,
+    "stage": 1,
+    "episodeId": 2290101,
+    "careerPrefer": "6#5",
+    "teamRecommend": "112"
+  },
+  {
+    "activityId": 13601,
+    "stage": 2,
+    "episodeId": 2290102,
+    "careerPrefer": "3#2",
+    "teamRecommend": "113"
+  },
+  {
+    "activityId": 13601,
+    "stage": 3,
+    "episodeId": 2290103,
+    "careerPrefer": "6#5#4",
+    "teamRecommend": "114"
+  }
+]

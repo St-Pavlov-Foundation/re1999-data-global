@@ -21,6 +21,7 @@ function Rouge2_AttrBuffDropView:onInitView()
 	self._imageTitleBG = gohelper.findChild(self.viewGO, "#go_Info/Title/image_TitleBG")
 	self._goTips = gohelper.findChild(self.viewGO, "#go_Info/#go_tips")
 	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Info/#go_tips/#txt_tips")
+	self._goRefresh = gohelper.findChild(self.viewGO, "#go_Info/#go_Refresh")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -41,7 +42,9 @@ end
 
 function Rouge2_AttrBuffDropView:_editableInitView()
 	self._goScroll = self._scrollView.gameObject
+	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
 
+	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goTopRight, Rouge2_Enum.ItemDescModeDataKey.AttrBuffDrop)
 	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goBottomLeft, Rouge2_Enum.TeamRecommendTipType.Default)
 end
@@ -68,9 +71,13 @@ function Rouge2_AttrBuffDropView:initViewParam()
 
 	NavigateMgr.instance:removeEscape(self.viewName)
 
-	if self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select or self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.LevelUp then
+	local canSelect = self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select or self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.LevelUp
+
+	if canSelect then
 		NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 	end
+
+	self._refreshLoader:show(canSelect)
 end
 
 function Rouge2_AttrBuffDropView:refreshUI()
@@ -123,6 +130,12 @@ function Rouge2_AttrBuffDropView:refreshTips()
 	else
 		self._txtTips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_attrbuffdropview_nextreward"), remainStep)
 	end
+end
+
+function Rouge2_AttrBuffDropView:_onRefreshItemCallback(dropList)
+	self._itemList = dropList or {}
+
+	self:refreshBuffList()
 end
 
 return Rouge2_AttrBuffDropView

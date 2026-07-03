@@ -12,6 +12,8 @@ ConstEnum.SummonPoolDoubleSSRRate = 20002
 ConstEnum.StorePackageNewMatTime = 2301
 ConstEnum.StorePackageNewMatChargeGoodIds = 2302
 ConstEnum.StorePackageShowCoBradedTagGoodIds = 2303
+ConstEnum.V3a8FreeMonthCardTitle = 83809
+ConstEnum.V3a8FreeMonthCardDesc = 83810
 ConstEnum.MailMaxCount = 1
 ConstEnum.RoleRandomSignature = 6
 ConstEnum.PlayerViewSpine = 7
@@ -21,6 +23,7 @@ ConstEnum.CharacterNameLimit = 10
 ConstEnum.PlayerMaxLev = 11
 ConstEnum.FightSpeed = 12
 ConstEnum.FightReplaySpeed = 13
+ConstEnum.FightVersion = 1707
 ConstEnum.MainViewDefaultHeroId = 15
 ConstEnum.AdventureCameraDefaultSize = 16
 ConstEnum.AdventureCameraMinSize = 17
@@ -153,5 +156,6 @@ ConstEnum.LaplaceMiniPartyTipDesc = 34011
 ConstEnum.LaplaceChatRoomTipTitle = 34012
 ConstEnum.LaplaceChatRoomTipDesc = 34013
 ConstEnum.V3a4PackageStoreGoodsId = 34014
+ConstEnum.VersionId = 300
 
 return ConstEnum

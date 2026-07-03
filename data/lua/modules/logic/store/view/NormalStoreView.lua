@@ -257,7 +257,7 @@ function NormalStoreView:initCategoryItemTable(index)
 
 		self.viewContainer.notPlayAnimation = true
 
-		StoreController.instance:statSwitchStore(jumpTab)
+		StoreController.instance:onSwitchTab(jumpTab)
 	end, categoryItemTable)
 	table.insert(self._categoryItemContainer, categoryItemTable)
 	gohelper.setActive(categoryItemTable.go_childItem, false)

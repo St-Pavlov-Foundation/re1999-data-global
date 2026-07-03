@@ -66,6 +66,16 @@ function StoryStepConversationMo:ctor()
 		0,
 		0
 	}
+	self.disableAudio = {
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false
+	}
 	self.diaTexts = {
 		"",
 		"",
@@ -121,10 +131,15 @@ function StoryStepConversationMo:init(info)
 	} or string.splitToNumber(audioParams[1], "&")
 
 	if audioParams[2] then
-		local audios = string.splitToNumber(audioParams[2], "|")
+		local audios = string.split(audioParams[2], "|")
 
-		for i = 1, #audios do
-			self.audioDelayTimes[i] = audios[i]
+		for i = 1, 8 do
+			if audios[i] then
+				local extraParams = string.split(audios[i], "-")
+
+				self.audioDelayTimes[i] = tonumber(extraParams[1])
+				self.disableAudio[i] = extraParams[2] and extraParams[2] == "0" or false
+			end
 		end
 	end
 

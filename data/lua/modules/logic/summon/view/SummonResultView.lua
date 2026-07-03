@@ -489,9 +489,9 @@ function SummonResultView:_btnsummon10OnClick_2()
 		return
 	end
 
-	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost10)
+	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.instance:getCost10ById(curPool.id)
 	local discountCost = SummonMainModel.instance:getDiscountCost10(curPool.id)
-	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id, cost_id)
 
 	if discountCostId == cost_id then
 		cost_num = discountCost < 0 and cost_num or discountCost
@@ -507,8 +507,8 @@ function SummonResultView:_btnsummon10OnClick_2()
 	param.noCallback = self._btnokOnClick
 	param.noCallbackObj = self
 	param.notEnough = false
+	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
 
-	local ownNum = ItemModel.instance:getItemQuantity(cost_type, cost_id)
 	local itemEnough = cost_num <= ownNum
 	local everyCostCount = SummonMainModel.instance.everyCostCount
 	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
@@ -554,18 +554,19 @@ function SummonResultView:_refreshCost()
 
 	if curPool then
 		self:refreshCost10(curPool.cost10)
+		self.viewContainer:refreshCurrencyType(curPool)
 	end
 end
 
 function SummonResultView:refreshCost10(costs)
-	local cost_type, cost_id, cost_num = SummonMainModel.instance.getCostByConfig(costs)
+	local curPoolId = SummonMainModel.instance:getCurId()
+	local cost_type, cost_id, costNum, ownNum, cost_num = SummonMainModel.instance:getCost10ById(curPoolId)
 	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
 
 	self._simagecurrency10:LoadImage(cost_icon)
 	self._simagecurrency10normal:LoadImage(cost_icon)
 
-	local curPoolId = SummonMainModel.instance:getCurId()
-	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId)
+	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPoolId, cost_id)
 	local discountTime10Server = SummonMainModel.instance:getDiscountTime10Server(curPoolId)
 	local showDisCount = discountTime10Server > 0
 

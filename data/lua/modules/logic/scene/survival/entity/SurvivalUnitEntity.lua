@@ -698,15 +698,15 @@ function SurvivalUnitEntity:_checkDelayEffect()
 	end
 
 	local now = Time.realtimeSinceStartup
-	local waitwaitRemoveListRemove
+	local waitRemoveList
 
 	for effectPath, time in pairs(self._delayEffectDict) do
 		if time <= now then
 			self:removeEffect(effectPath)
 
-			waitwaitRemoveListRemove = waitwaitRemoveListRemove or {}
+			waitRemoveList = waitRemoveList or {}
 
-			table.insert(waitwaitRemoveListRemove, effectPath)
+			table.insert(waitRemoveList, effectPath)
 		end
 	end
 

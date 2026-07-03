@@ -13,6 +13,8 @@ function PackageStoreGoodsView:onInitView()
 	self._simageleftbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_leftbg")
 	self._simagerightbg = gohelper.findChildSingleImage(self.viewGO, "view/bg/#simage_rightbg")
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "view/propinfo/#simage_icon")
+	self._simageiconbg = gohelper.findChildSingleImage(self.viewGO, "view/propinfo/#simage_iconbg")
+	self._simageiconnum = gohelper.findChildSingleImage(self.viewGO, "view/propinfo/#simage_iconnum")
 	self._txtgoodsNameCn = gohelper.findChildText(self.viewGO, "view/propinfo/txt_goodslayout/#txt_goodsNameCn")
 	self._goSecondGoodsName = gohelper.findChild(self.viewGO, "view/propinfo/#txt_goodsNameCn/#txt_goodstips")
 	self._btnbuy = gohelper.findChildButton(self.viewGO, "view/propinfo/#btn_buy")
@@ -46,7 +48,7 @@ function PackageStoreGoodsView:onInitView()
 	self._icondailyreleaserepower = gohelper.findChild(self._dailyreleasereward, "right/#go_powericon")
 	self._txtDailyReleaseDesc1 = gohelper.findChildText(self._godailyrelease, "desc/info/txt")
 	self._txtDailyReleaseDesc2 = gohelper.findChildText(self._godailyrelease, "desc/info/txt (1)")
-	self._gonewbiePick = gohelper.findChild(self.viewGO, "view/propinfo/#simage_icon/#txt_pickdesc")
+	self._gonewbiePick = gohelper.findChild(self.viewGO, "view/propinfo/#simage_icon/#go_pickdesc")
 	self._golittlemonthcard = gohelper.findChild(self.viewGO, "view/littlemonthcard")
 	self._littlemonthcardreward = gohelper.findChild(self._golittlemonthcard, "reward")
 	self._littlemonthcardtxtleft = gohelper.findChildText(self._littlemonthcardreward, "left/txt")
@@ -155,6 +157,7 @@ function PackageStoreGoodsView:_editableInitView()
 	self._seasoncard_iconright = gohelper.findChild(rewardGo, "right/#go_righticon")
 	self._seasoncard_iconpower = gohelper.findChild(rewardGo, "right/#go_powericon")
 	self._btnoverview = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_overview")
+	self._txtpickdesc = gohelper.findChildTextMesh(self.viewGO, "view/propinfo/#simage_icon/#go_pickdesc/#txt_pickdesc")
 end
 
 function PackageStoreGoodsView:onUpdateParam()
@@ -171,7 +174,36 @@ function PackageStoreGoodsView:onOpen()
 
 	self._txtgoodsNameCn.text = self._mo.config.name
 
-	self._simageicon:LoadImage(ResUrl.getStorePackageIcon("detail_" .. self._mo.config.bigImg), self._loadiconCb, self)
+	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(self._mo.config.bigImg), self._loadiconCb, self)
+
+	if string.nilorempty(self._mo.config.underlay) then
+		logError("商店改版 缺少底板配置 商品id:" .. tostring(self._mo.goodsId))
+	else
+		local underlayParam = string.splitToNumber(self._mo.config.underlay, "#")
+
+		logNormal(string.format("---商店改版 底板配置 id: %s 底板id: %s 价格: %s ", self._mo.goodsId, underlayParam[1], self._mo.isChargeGoods and PayModel.instance:getProductOriginPriceNum(self._mo.id) or 0))
+
+		local itemBgIconName = "panel/package_quality_" .. self:_getNumStr(underlayParam[1])
+
+		logNormal("商店改版 底板: " .. itemBgIconName)
+
+		local itemBgIndex = StoreHelper.getPackageIconBgIndex(self._mo.goodsId, self._mo.id, underlayParam[1])
+		local itemIconBgName = itemBgIconName .. "_" .. self:_getNumStr(itemBgIndex)
+
+		logNormal("商店改版 图标底板: " .. itemIconBgName)
+		self._simageiconbg:LoadImage(ResUrl.getStorePackageIcon(itemIconBgName))
+
+		local showLevelBg = self._mo.buyLevel ~= nil and self._mo.buyLevel ~= 0
+
+		gohelper.setActive(self._simageiconnum, showLevelBg)
+
+		if showLevelBg then
+			local levelIconName = itemBgIconName .. "_" .. self:_getNumStr(self._mo.buyLevel)
+
+			logNormal("商店改版 等级图标: " .. levelIconName)
+			self._simageiconnum:LoadImage(ResUrl.getStorePackageIcon(levelIconName))
+		end
+	end
 
 	if self._mo.config.id == monthCardId then
 		recthelper.setAnchor(self._simageicon.transform, monthCardX, monthCardY)
@@ -219,7 +251,15 @@ function PackageStoreGoodsView:onOpen()
 		self:_updateNormal()
 	end
 
-	gohelper.setActive(self._gonewbiePick, isNewbiePackage)
+	local isNewbiePackage = self._mo.id == StoreEnum.NewbiePackId
+	local showTag = isNewbiePackage or not string.nilorempty(self._mo.config.slogan)
+
+	gohelper.setActive(self._gonewbiePick, showTag)
+
+	if showTag then
+		self._txtpickdesc.text = self._mo.config.slogan
+	end
+
 	self:refreshSkinTips(self._mo)
 
 	if self._btnoverview then
@@ -776,6 +816,14 @@ function PackageStoreGoodsView:onDestroyView()
 	if self._monthCardDailyItemIcon then
 		self._monthCardDailyItemIcon:onDestroy()
 	end
+end
+
+function PackageStoreGoodsView:_getNumStr(num)
+	if tonumber(num) < 10 then
+		return "0" .. num
+	end
+
+	return tostring(num)
 end
 
 return PackageStoreGoodsView

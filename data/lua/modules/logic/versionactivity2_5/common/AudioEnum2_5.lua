@@ -30,6 +30,8 @@ AudioEnum.GoldenMillet = {
 
 local bgm = {
 	Act2_5DungeonBgm = 20250003,
+	LiangYue = 20250701,
+	FeiLinShiDuo = 20250801,
 	play_autochess = 3251821
 }
 

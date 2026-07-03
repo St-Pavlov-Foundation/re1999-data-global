@@ -45,8 +45,10 @@ end
 function PlayerCardRpc:sendSetPlayerCardShowSettingRequest(showSettings, callback, callbackObj)
 	local req = PlayerCardModule_pb.SetPlayerCardShowSettingRequest()
 
-	for i, v in ipairs(showSettings) do
-		table.insert(req.showSettings, v)
+	for key, value in pairs(showSettings) do
+		local setting = string.format("%s#%s", key, value)
+
+		req.showSettings:append(setting)
 	end
 
 	return self:sendMsg(req, callback, callbackObj)
@@ -168,6 +170,24 @@ function PlayerCardRpc:onReceiveSetPlayerCardCritterReply(resultCode, msg)
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SelectCritter, {
 		uid = msg.critterUid
 	})
+end
+
+function PlayerCardRpc:sendSetPlayerCardBadgeRequest(badgeIds, callback, callbackObj)
+	local req = PlayerCardModule_pb.SetPlayerCardBadgeRequest()
+
+	for _, id in ipairs(badgeIds) do
+		req.badgeIds:append(id)
+	end
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function PlayerCardRpc:onReceiveSetPlayerCardBadgeReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.ModifyEquipBadge)
 end
 
 PlayerCardRpc.instance = PlayerCardRpc.New()

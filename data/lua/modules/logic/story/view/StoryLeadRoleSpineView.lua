@@ -22,7 +22,7 @@ function StoryLeadRoleSpineView:removeEvents()
 end
 
 function StoryLeadRoleSpineView:_editableInitView()
-	self._blitEff = StoryViewMgr.instance:getStoryRoleBlitEff()
+	self._blitEff = StoryViewMgr.instance:getStoryBlitEff()
 	self._heroSpines = {}
 	self._goSpines = {}
 	self._heroSkeletonGraphics = {}

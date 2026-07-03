@@ -3586,5 +3586,89 @@
     "de": "",
     "fr": "",
     "thai": ""
+  },
+  {
+    "id": 3601,
+    "fontType": 1,
+    "zh": "<size=50><color=#D2D2D2><i>敲开它。</i></color></size>",
+    "tw": "<size=50><color=#D2D2D2><i>敲開它。</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>Knock it open.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>두드려라</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>叩き続けろ。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3602,
+    "fontType": 1,
+    "zh": "<size=50><color=#D2D2D2><i>这是唯一的路。敲开它。</i></color></size>",
+    "tw": "<size=50><color=#D2D2D2><i>這是唯一的路。敲開它。</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>This is the only path. \nKnock it open.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>그게 유일한 길이다. \n문을 두드려라.</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>これは避けて通れない道。\nだから、開くまで叩くんだ。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3603,
+    "fontType": 1,
+    "zh": "<size=50><color=#D2D2D2><i>证明你的资格。敲开它。</i></color></size>",
+    "tw": "<size=50><color=#D2D2D2><i>證明你的資格。敲開它。</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>Prove yourself. \nKnock it open.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>자신의 자격을 증명해. \n문을 두드려라.</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>自分の資格を証明するためにも、\n叩き開けろ。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3604,
+    "fontType": 1,
+    "zh": "<size=60><color=#D2D2D2><i>为何要将你的一切\n交由某个存在决定？</i></color></size>",
+    "tw": "<size=60><color=#D2D2D2><i>為何要將你的一切\n交由某個存在決定？</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>Why surrender everything \nabout yourself to something else?</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>어째서 자신의 모든 것을 다른 \n존재의 손에 맡기려 하는 거지?</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>なぜ、自分のすべてを、\n何者かに委ねなければならない？</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3605,
+    "fontType": 1,
+    "zh": "<size=50><color=#BCBCBC><i>研究员对门外的呼喊\n充耳不闻。</i></color></size>",
+    "tw": "<size=50><color=#BCBCBC><i>研究員對門外的呼喊\n充耳不聞。</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>Enigma ignores the voices \ncalling from outside.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>연구원은 밖에서 들리는 \n소리를 애써 무시했다.</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>暗号学者は外の呼び声に\n耳を貸さなかった。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3606,
+    "fontType": 1,
+    "zh": "<size=50><color=#D2D2D2><i>这只是又一群坚信\n能够以科学解读世间一切的人。</i></color></size>",
+    "tw": "<size=50><color=#D2D2D2><i>這只是又一群堅信\n能夠以科學解讀世間一切的人。</i></color></size>",
+    "en": "<size=42><color=#D2D2D2><i>Just another group of people who \nbelieve science can explain everything.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>그들 역시 모든 것을 과학적으로 \n해석할 수 있다고 믿어 의심치 않는, \n또 하나의 집단이자,</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>科学で世界のすべてを解釈できると\n信じて疑わない人々。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 3607,
+    "fontType": 1,
+    "zh": "<size=50><color=#D2D2D2><i>一群自认为能够成功的……\n探求者。</i></color></size>",
+    "tw": "<size=50><color=#D2D2D2><i>一群自認為能夠成功的……\n探求者。</i></color></size>",
+    "en": "<size=45><color=#D2D2D2><i>Just some seekers who \nthink they can solve it all.</i></color></size>",
+    "kr": "<size=45><color=#D2D2D2><i>스스로 성공할 수 있다고 \n믿어 의심치 않는... 탐구자였다.</i></color></size>",
+    "jp": "<size=45><color=#D2D2D2><i>自分たちなら成功できると\n信じている…探求者たち。</i></color></size>",
+    "de": "",
+    "fr": "",
+    "thai": ""
   }
 ]

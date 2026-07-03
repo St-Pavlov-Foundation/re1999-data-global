@@ -198,7 +198,12 @@ function CommandStationEnterView:_delayPlayVideo()
 		self._changeVideoViewLayer = true
 
 		AudioMgr.instance:trigger(AudioEnum3_0.CommandStationPaper.play_ui_lushang_zhihuibu_handian)
-		VideoController.instance:openFullScreenVideoView(self._toPaperVedioPath, nil, 5, self._realOpenPaperView, self, ViewName.CommandStationPaperView, true)
+		VideoController.instance:openFullScreenVideoView(self._toPaperVedioPath, nil, 5, self._realOpenPaperView, self, {
+			noshowBlackBg = true,
+			setVideoPlayer = self._setVideoPlayer2,
+			getVideoPlayer = self._getVideoPlayer2,
+			waitViewOpen = ViewName.CommandStationPaperView
+		})
 	end)
 end
 
@@ -500,7 +505,7 @@ function CommandStationEnterView:_onVideoStarted(videoPath)
 	end
 
 	if videoPath == self._toPaperVedioPath then
-		CommandStationController.instance:openCommandStationPaperView()
+		self.viewContainer:setVisibleInternal(false)
 	end
 end
 
@@ -546,14 +551,6 @@ function CommandStationEnterView:_OnOpenView(viewName)
 			local hudLayer = ViewMgr.instance:getUILayer("HUD")
 
 			gohelper.addChild(hudLayer, container.viewGO)
-		end
-	end
-
-	if viewName == ViewName.CommandStationPaperView and ViewMgr.instance:isOpen(ViewName.FullScreenVideoView) then
-		local container = ViewMgr.instance:getContainer(ViewName.CommandStationPaperView)
-
-		if container and not gohelper.isNil(container.viewGO) then
-			container:setVisibleInternal(false)
 		end
 	end
 end

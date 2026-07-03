@@ -53,7 +53,8 @@ function Rouge2_MapDiceFixItem:onUpdateMO(fixInfo)
 	end
 
 	gohelper.setActive(self.txtFixValue.gameObject, true)
-	gohelper.setActive(self.go, true)
+	self:setVisible(true)
+	self:playAnim("idle")
 end
 
 function Rouge2_MapDiceFixItem:setFixValueMaskable(maskable)
@@ -93,6 +94,12 @@ function Rouge2_MapDiceFixItem:startFlying(goFlyMgr, tranFlyContent, endPos)
 	self.uiFlying.endPosition = endPos
 
 	self.uiFlying:StartFlying()
+end
+
+function Rouge2_MapDiceFixItem:setVisible(visible)
+	self._visible = visible
+
+	gohelper.setActive(self.go, self._visible)
 end
 
 function Rouge2_MapDiceFixItem:onDestroy()

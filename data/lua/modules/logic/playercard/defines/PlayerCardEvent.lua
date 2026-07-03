@@ -24,5 +24,7 @@ PlayerCardEvent.RefreshProgressView = 1017
 PlayerCardEvent.RefreshBaseInfoView = 1018
 PlayerCardEvent.OnCloseBottomView = 1019
 PlayerCardEvent.ChangeSkin = 1020
+PlayerCardEvent.ModifyEquipBadge = 1021
+PlayerCardEvent.CutEquipType = 1022
 
 return PlayerCardEvent

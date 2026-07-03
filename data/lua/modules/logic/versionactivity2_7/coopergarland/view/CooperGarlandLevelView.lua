@@ -18,6 +18,7 @@ function CooperGarlandLevelView:onInitView()
 	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
 	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
 	self._btnExtraEpisode = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_ChallengeBtn")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ function CooperGarlandLevelView:addEvents()
 	self._drag:AddDragBeginListener(self._onDragBegin, self)
 	self._drag:AddDragEndListener(self._onDragEnd, self)
 	self._touch:AddClickDownListener(self._onClickDown, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self._onInfoUpdate, self)
 	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, self._onClickEpisode, self)
 	self:addEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, self._onFirstFinishEpisode, self)
@@ -41,6 +43,7 @@ function CooperGarlandLevelView:removeEvents()
 	self._drag:RemoveDragBeginListener()
 	self._drag:RemoveDragEndListener()
 	self._touch:RemoveClickDownListener()
+	self._btnTrial:RemoveClickListener()
 	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnAct192InfoUpdate, self._onInfoUpdate, self)
 	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.OnClickEpisode, self._onClickEpisode, self)
 	self:removeEventCb(CooperGarlandController.instance, CooperGarlandEvent.FirstFinishEpisode, self._onFirstFinishEpisode, self)
@@ -48,6 +51,32 @@ end
 
 function CooperGarlandLevelView:_btnTaskOnClick()
 	CooperGarlandController.instance:openTaskView()
+end
+
+function CooperGarlandLevelView:_clickTrial()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function CooperGarlandLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function CooperGarlandLevelView:_btnExtraEpisodeOnClick()
@@ -97,6 +126,7 @@ end
 
 function CooperGarlandLevelView:_editableInitView()
 	self.actId = CooperGarlandModel.instance:getAct192Id()
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
 	local goTaskAnim = gohelper.findChild(self.viewGO, "#btn_Task/ani")
 
@@ -171,7 +201,6 @@ end
 
 function CooperGarlandLevelView:onOpen()
 	self:refreshUI()
-	TaskDispatcher.runRepeat(self.refreshTime, self, TimeUtil.OneMinuteSecond)
 	self:focusNewestLevelItem()
 
 	local pathIndex = 0
@@ -203,7 +232,6 @@ function CooperGarlandLevelView:getNewestLevelItem()
 end
 
 function CooperGarlandLevelView:refreshUI()
-	self:refreshTime()
 	self:refreshExtraEpisode()
 end
 
@@ -313,7 +341,6 @@ function CooperGarlandLevelView:onClose()
 	self._waitFinishAnimEpisode = nil
 	self._finishEpisodeIndex = nil
 
-	TaskDispatcher.cancelTask(self.refreshTime, self)
 	TaskDispatcher.cancelTask(self._playEpisodeUnlockAnim, self)
 end
 

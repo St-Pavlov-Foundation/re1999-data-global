@@ -134,6 +134,16 @@ function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faith
 			return
 		end
 
+		if ViewMgr.instance:isOpen(ViewName.AbyssTaskView) then
+			AbyssTaskListModel.instance:setTaskRewardList(materialDataMOList)
+
+			return
+		end
+
+		if self:isShowBadgeGetView(materialDataMOList) then
+			return
+		end
+
 		TaskController.instance:getRewardByLine(getApproach, ViewName.CommonPropView, materialDataMOList)
 
 		if #equip_cards > 0 then
@@ -178,6 +188,8 @@ function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faith
 		PopupController.instance:addPopupView(PopupEnum.PriorityType.SkinCouponTipView, ViewName.SkinCouponTipView, materialDataMOList)
 	elseif getApproach == MaterialEnum.GetApproach.PartyClothSummon then
 		PartyClothController.instance:openSummonRewardView(materialDataMOList)
+	elseif getApproach == MaterialEnum.GetApproach.CommandStationPaperReward then
+		-- block empty
 	else
 		self:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 	end
@@ -252,6 +264,10 @@ function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOLis
 		end
 	end
 
+	if self:isShowBadgeGetView(materialDataMOList) then
+		return
+	end
+
 	local itemCnt = #materialDataMOList
 
 	if itemCnt ~= 0 and materialDataMOList[1].materilType == MaterialEnum.MaterialType.Critter then
@@ -275,6 +291,39 @@ function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOLis
 	end
 
 	self:simpleShowView(materialDataMOList)
+end
+
+function MaterialRpc:isShowBadgeGetView(materialDataMOList)
+	local showBadgeId
+
+	for _, mo in ipairs(materialDataMOList) do
+		local itemco = ItemConfig.instance:getItemCo(mo.materilId)
+
+		if itemco and itemco.subType == ItemEnum.SubType.Badge and PlayerCardModel.instance:isShowBadgeGetView() and not string.nilorempty(itemco.effect) then
+			local badgeId = tonumber(itemco.effect)
+
+			if showBadgeId then
+				local showCo = PlayerCardConfig.instance:getBageCoById(showBadgeId)
+				local co = PlayerCardConfig.instance:getBageCoById(badgeId)
+
+				if co then
+					if showCo.level < co.level then
+						showBadgeId = badgeId
+					elseif showCo.level == co.level and showCo.id < co.id then
+						showBadgeId = badgeId
+					end
+				end
+			else
+				showBadgeId = badgeId
+			end
+		end
+	end
+
+	if showBadgeId then
+		PlayerCardController.instance:openBadgeGetView(showBadgeId, nil, materialDataMOList)
+
+		return true
+	end
 end
 
 function MaterialRpc:simpleShowView(materialDataMOList)

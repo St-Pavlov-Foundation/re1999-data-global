@@ -75,8 +75,22 @@ function V3a2_BossRush_RankBonus:_refreshBonus()
 		for index, rewardArr in ipairs(self._rewardList) do
 			local item = self:_getBonusItem(index)
 			local config, icon = ItemModel.instance:getItemConfigAndIcon(rewardArr[1], rewardArr[2])
+			local isHeadIcon = false
 
-			item.simageIcon:LoadImage(icon)
+			if config.subType == ItemEnum.SubType.Portrait then
+				self._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(item.simageheadicon)
+
+				self._liveHeadIcon:setLiveHead(config.id)
+
+				isHeadIcon = true
+			else
+				item.simageIcon:LoadImage(icon)
+
+				isHeadIcon = false
+			end
+
+			gohelper.setActive(item.simageIcon.gameObject, not isHeadIcon)
+			gohelper.setActive(item.goplayericon.gameObject, isHeadIcon)
 
 			item.txtRewardcount.text = luaLang("multiple") .. rewardArr[3]
 
@@ -153,10 +167,13 @@ function V3a2_BossRush_RankBonus:_getBonusItem(index)
 
 		item.imageIcon = gohelper.findChildImage(go, "#go_normal/simage_reward")
 		item.normalCanvasGroup = gohelper.onceAddComponent(item.gonormal, typeof(UnityEngine.CanvasGroup))
-		item.clickItem = SLFramework.UGUI.UIClickListener.Get(item.simageIcon.gameObject)
+		item.clickItem = gohelper.findChildButtonWithAudio(go, "#go_normal/#btn_click")
 
 		item.clickItem:AddClickListener(self._btnItemOnClick, self, index)
 
+		item.goplayericon = gohelper.findChild(item.gonormal, "#go_playericon")
+		item.simageheadicon = gohelper.findChildSingleImage(item.gonormal, "#go_playericon/#simage_headicon")
+		item.goframe = gohelper.findChild(item.gonormal, "#go_playericon/#go_frame")
 		self.rewardItemList[index] = item
 	end
 

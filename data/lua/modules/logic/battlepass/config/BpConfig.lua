@@ -245,7 +245,7 @@ function BpConfig:getItemShowSize(itemType, itemId)
 end
 
 function BpConfig:getSpActId(fallback)
-	return ActivityConfig.instance:getConstAsNum(5, fallback or VersionActivity2_2Enum.ActivityId.BPSP)
+	return ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.BpSpActId, fallback or VersionActivity2_2Enum.ActivityId.BPSP)
 end
 
 function BpConfig:getBpSkinViewParamCO(skilId)

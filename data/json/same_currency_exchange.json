@@ -1,0 +1,10 @@
+[
+  {
+    "currencyId": 28,
+    "versionId": 360,
+    "desc": "language_10118746",
+    "image": "singlebg/currencyitem/228_99.png",
+    "boxPath": "ui/viewres/store/storecurrencyreplacetipsview.prefab",
+    "storeEntranceId": "140"
+  }
+]

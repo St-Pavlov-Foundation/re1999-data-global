@@ -24,6 +24,7 @@ local cardDefaultPosMap = {
 local resetPosDuration = 0.25
 
 HandbookSkinScene.SkinSuitId2SuitView = {
+	[20007] = ViewName.HandbookSkinSuitDetailView1_7,
 	[20008] = ViewName.HandbookSkinSuitDetailView1_8,
 	[20009] = ViewName.HandbookSkinSuitDetailView1_9,
 	[20010] = ViewName.HandbookSkinSuitDetailView2_0,

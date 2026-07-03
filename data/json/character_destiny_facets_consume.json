@@ -514,5 +514,17 @@
     "type": 0,
     "titleName": "",
     "tag": "102#107#116#129"
+  },
+  {
+    "facetsId": 311401,
+    "name": "language_10119233",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 1,
+    "icon": "311401",
+    "facetsSort": 100,
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   }
 ]

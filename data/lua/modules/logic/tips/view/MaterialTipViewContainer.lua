@@ -16,9 +16,10 @@ function MaterialTipViewContainer:buildViews()
 	scrollParam.cellWidth = 250
 	scrollParam.cellHeight = 250
 	scrollParam.cellSpaceH = -46.5
+	self._materialTipView = MaterialTipView.New()
 
 	return {
-		MaterialTipView.New(),
+		self._materialTipView,
 		LuaListScrollView.New(MaterialTipListModel.instance, scrollParam),
 		TabViewGroup.New(1, "righttop")
 	}
@@ -26,7 +27,12 @@ end
 
 function MaterialTipViewContainer:onContainerClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	self:closeThis()
+
+	if self._materialTipView and self._materialTipView._btncloseOnClick then
+		self._materialTipView:_btncloseOnClick()
+	else
+		self:closeThis()
+	end
 end
 
 function MaterialTipViewContainer:buildTabViews(tabContainerId)

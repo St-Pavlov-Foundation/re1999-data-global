@@ -133,7 +133,7 @@ function SummonGiftPropBaseView:onItemShow(item, data, index)
 end
 
 function SummonGiftPropBaseView:onClose()
-	return
+	StoreController.instance:clearMarkedPackageGoodsRedDot()
 end
 
 function SummonGiftPropBaseView:onDestroyView()

@@ -845,11 +845,13 @@ FightEnum.BuffFeature = {
 	ResistancesAttr = "ResistancesAttr",
 	ConsumeBuffLayerCastChannel = "ConsumeBuffLayerCastChannel",
 	AttrByHeatScale = "AttrByHeatScale",
-	RaspberryBigSkill = "RaspberryBigSkill",
+	TeamExElectricTransConsumeValueAttr = "TeamExElectricTransConsumeValueAttr",
 	HeatScaleUseSkill = "HeatScaleUseSkill",
 	SpecialCountCastBuff = "SpecialCountCastBuff",
 	InjuryBank = "InjuryBank",
 	ConsumeBuffAddBuffContinueChannel = "ConsumeBuffAddBuffContinueChannel",
+	TeamShareShield = "TeamShareShield",
+	RaspberryBigSkill = "RaspberryBigSkill",
 	BeAttackAccrualFixAttr = "BeAttackAccrualFixAttr",
 	StorageDamage = "StorageDamage",
 	NuoDiKaCastChannel = "NuoDiKaCastChannel",
@@ -860,6 +862,7 @@ FightEnum.BuffFeature = {
 	UseSkillHasBuffCond = "UseSkillHasBuffCond",
 	Raspberry = "Raspberry",
 	SkillLevelJudgeAdd = "SkillLevelJudgeAdd",
+	TeamImmunityTimes = "TeamImmunityTimes",
 	None = "None"
 }
 FightEnum.BuffFeatureMap = {
@@ -1393,10 +1396,12 @@ FightEnum.Career = {
 	Animal = 4,
 	Wisdom = 6,
 	Wood = 3,
+	Multi = 8,
 	Rock = 1,
 	Spirit = 5,
 	Star = 2,
 	None = 0
 }
+FightEnum.MultiCareerShowCount = 3
 
 return FightEnum

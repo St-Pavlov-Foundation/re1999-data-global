@@ -1401,6 +1401,56 @@
     "packName": "oppartygame"
   },
   {
+    "id": 30,
+    "audio": [
+      3270003
+    ],
+    "chapter": [
+      27101,
+      27201,
+      27301,
+      27401,
+      27601,
+      27701
+    ],
+    "guide": [],
+    "story": [
+      311601,
+      311602,
+      311603,
+      311604,
+      311605,
+      311606,
+      311607,
+      311608,
+      311609,
+      311610,
+      311611,
+      311701,
+      311702,
+      311703,
+      311704,
+      311705,
+      311706,
+      311707,
+      311708,
+      311709,
+      311710
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_7_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_7/v2a7_dungeon",
+      "ui/viewres/versionactivity_2_7/v2a7_lengzhouliu",
+      "ui/viewres/versionactivity_2_7/v2a7_kubohuahuan"
+    ],
+    "uiPath": [],
+    "packName": "opveract"
+  },
+  {
     "id": 23,
     "audio": [],
     "chapter": [],

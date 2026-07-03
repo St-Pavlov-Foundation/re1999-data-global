@@ -13,7 +13,8 @@ end
 function Activity217Config:reqConfigNames()
 	return {
 		"activity217_control",
-		"activity217_bonus"
+		"activity217_bonus",
+		"activity220_sub_type"
 	}
 end
 
@@ -43,6 +44,12 @@ function Activity217Config:getBonusCO(episodeId, actId)
 	actId = actId or VersionActivity3_2Enum.ActivityId.CruiseTripleDrop
 
 	return self._bonusConfig.configDict[actId][episodeId]
+end
+
+function Activity217Config:getSubTypeCO(actId)
+	actId = actId or ActivityEnum.Activity.V3a6_DoubleDrop
+
+	return lua_activity220_sub_type.configDict[actId]
 end
 
 function Activity217Config:_initActIdList()

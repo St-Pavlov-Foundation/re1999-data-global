@@ -12,12 +12,13 @@ local fields = {
 	takeStage = 6,
 	cannotRemove = 8,
 	excludeTypes = 5,
-	group = 3,
+	sortPriority = 15,
 	takeAct = 7,
 	matSort = 12,
 	aniSort = 13,
 	id = 1,
-	playEffect = 14
+	playEffect = 14,
+	group = 3
 }
 local primaryKey = {
 	"id"

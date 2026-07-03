@@ -63,6 +63,13 @@ function HeroGroupEditItem:updateLimitStatus()
 		local isLock = TowerModel.instance:isHeroBan(self._mo.config.id)
 
 		self._heroItem:setLost(isLock)
+	elseif HeroGroupQuickEditListModel.instance.isAbyss then
+		gohelper.setActive(self._gohp, false)
+
+		local isLock = AbyssModel.instance:isCurHeroLocked(self._mo.config.id)
+
+		self._heroItem:setInjury(isLock)
+		self._heroItem:setInjuryText(luaLang("v3a6_abyss_lock_desc_cn"), "")
 	else
 		gohelper.setActive(self._gohp, false)
 

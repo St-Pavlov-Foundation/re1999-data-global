@@ -218,7 +218,7 @@ function HeroGroupPresetTeamHeroItem:_showEquip()
 		self.equipicon:LoadImage(ResUrl.getEquipIcon(equipMO.config.icon))
 	end
 
-	self._equipMo = equipMO
+	self._equipMO = equipMO
 end
 
 function HeroGroupPresetTeamHeroItem:getShowLevelText(showLevel)

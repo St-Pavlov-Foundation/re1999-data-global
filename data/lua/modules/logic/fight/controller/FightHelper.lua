@@ -934,6 +934,99 @@ function FightHelper.detectAttributeCounter()
 	return recommended, counter
 end
 
+function FightHelper.checkIsMultiCareer(monsterGroupIds)
+	for i, v in ipairs(monsterGroupIds) do
+		local ids = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[v].monster, "#")
+
+		for index, id in ipairs(ids) do
+			local monsterConfig = lua_monster.configDict[id]
+
+			if not monsterConfig then
+				logError("怪物表找不到id:" .. id)
+			elseif monsterConfig.career == FightEnum.Career.Multi then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function FightHelper.getMultiAttributeCounter(monsterGroupIds)
+	local bossGroup = {}
+	local commonGroup = {}
+	local haveMultiCareerBoss = false
+
+	for i, v in ipairs(monsterGroupIds) do
+		local monsterGroupConfig = lua_monster_group.configDict[v]
+
+		if monsterGroupConfig then
+			local commonMonsterIds = FightStrUtil.instance:getSplitToNumberCache(monsterGroupConfig.monster, "#")
+			local haveBoss = not string.nilorempty(monsterGroupConfig.bossId)
+
+			for _, monsterId in ipairs(commonMonsterIds) do
+				local monsterConfig = lua_monster.configDict[monsterId]
+
+				if not monsterConfig then
+					logError("怪物表找不到id:" .. monsterId)
+				elseif monsterConfig.career == FightEnum.Career.Multi then
+					if haveBoss and FightHelper.isBossId(monsterGroupConfig.bossId, monsterId) then
+						haveMultiCareerBoss = true
+
+						table.insert(bossGroup, monsterConfig)
+					end
+
+					if not haveMultiCareerBoss then
+						table.insert(commonGroup, monsterConfig)
+					end
+				end
+			end
+		else
+			logError("怪物组表找不到id:" .. v)
+		end
+	end
+
+	local tempConfigList = haveMultiCareerBoss and bossGroup or commonGroup
+	local careerTypeCount = 0
+	local careerDic = {}
+
+	for _, monsterConfig in ipairs(tempConfigList) do
+		if not string.nilorempty(monsterConfig.career_weak) then
+			local careerParam = FightStrUtil.instance:getSplitToNumberCache(monsterConfig.career_weak, "#")
+
+			if careerParam and next(careerParam) then
+				for _, career in ipairs(careerParam) do
+					if not careerDic[career] then
+						careerTypeCount = careerTypeCount + 1
+					end
+
+					careerDic[career] = (careerDic[career] or 0) + 1
+				end
+			end
+		end
+	end
+
+	local recommended = {}
+	local counter = {}
+
+	if careerTypeCount > FightEnum.MultiCareerShowCount then
+		return recommended, counter
+	end
+
+	for career, _ in pairs(careerDic) do
+		table.insert(recommended, career)
+	end
+
+	table.sort(recommended, FightHelper.sortRecommend)
+	logNormal("多弱点boss 组id:" .. tostring(table.concat(monsterGroupIds, ",")) .. " 推荐灵感: " .. tostring(table.concat(recommended, ",")))
+
+	return recommended, counter
+end
+
+function FightHelper.sortRecommend(a, b)
+	return a < b
+end
+
 function FightHelper.getAttributeCounter(monsterGroupIds, isSpScene)
 	local is_boss
 	local enemy_career_tab = {}
@@ -946,6 +1039,8 @@ function FightHelper.getAttributeCounter(monsterGroupIds, isSpScene)
 		if enemy_career ~= 5 and enemy_career ~= 6 then
 			enemy_career_tab[enemy_career] = (enemy_career_tab[enemy_career] or 0) + 1
 		end
+	elseif FightHelper.checkIsMultiCareer(monsterGroupIds) then
+		return FightHelper.getMultiAttributeCounter(monsterGroupIds)
 	else
 		for i, v in ipairs(monsterGroupIds) do
 			if not string.nilorempty(lua_monster_group.configDict[v].bossId) then

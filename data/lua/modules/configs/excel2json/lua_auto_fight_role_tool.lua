@@ -4,17 +4,19 @@ module("modules.configs.excel2json.lua_auto_fight_role_tool", package.seeall)
 
 local lua_auto_fight_role_tool = {}
 local fields = {
-	roleId = 1,
-	exLv = 3,
-	equipLv = 5,
-	talentLv = 7,
-	destiny = 9,
-	talentStyle = 8,
-	equip = 4,
-	equipExLv = 6,
-	lv = 2
+	equip = 5,
+	exLv = 4,
+	equipLv = 6,
+	talentStyle = 9,
+	destiny = 10,
+	roleId = 2,
+	talentLv = 8,
+	equipExLv = 7,
+	id = 1,
+	lv = 3
 }
 local primaryKey = {
+	"id",
 	"roleId"
 }
 local mlStringKey = {}

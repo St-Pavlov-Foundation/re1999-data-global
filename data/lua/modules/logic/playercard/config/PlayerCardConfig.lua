@@ -11,7 +11,9 @@ end
 function PlayerCardConfig:reqConfigNames()
 	return {
 		"playercard",
-		"player_newspaper"
+		"player_newspaper",
+		"playercard_badge",
+		"playercard_const"
 	}
 end
 
@@ -37,6 +39,10 @@ end
 
 function PlayerCardConfig:getCardProgressById(id)
 	return self.playcardProgressConfig.configList[id]
+end
+
+function PlayerCardConfig:getBageCoById(id)
+	return lua_playercard_badge.configDict[id]
 end
 
 function PlayerCardConfig:getBgPath(name)

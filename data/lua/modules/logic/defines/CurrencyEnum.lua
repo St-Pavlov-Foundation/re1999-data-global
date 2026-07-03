@@ -64,6 +64,7 @@ CurrencyEnum.CurrencyType = {
 	V1a8FactoryRawMat = 1811,
 	V2a8Dungeon = 2801,
 	V2a3Dungeon = 2301,
+	V3a6Dungeon = 3601,
 	V3a5Dungeon = 3501,
 	RoleStory = 24
 }

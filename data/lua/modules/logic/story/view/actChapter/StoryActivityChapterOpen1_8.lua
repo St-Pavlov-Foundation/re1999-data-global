@@ -101,7 +101,7 @@ function StoryActivityChapterOpen1_8:getLangResBg(name)
 end
 
 function StoryActivityChapterOpen1_8:getVideoName(part)
-	return part == 1 and "1_8_kaimu"
+	return part == 1 and "1_8_opening_1"
 end
 
 function StoryActivityChapterOpen1_8:getAudioId(part)

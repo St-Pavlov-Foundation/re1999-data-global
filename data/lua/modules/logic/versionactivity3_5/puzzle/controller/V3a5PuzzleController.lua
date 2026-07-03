@@ -20,26 +20,42 @@ function V3a5PuzzleController:reInit()
 	return
 end
 
+function V3a5PuzzleController:_initStoryViewInfo()
+	self._storyViewInfos = {}
+
+	for const, viewName in pairs(V3a5PuzzleEnum.StoryView) do
+		local storyId = V3a5PuzzleConfig.instance:getConstValue(const)
+
+		self._storyViewInfos[storyId] = viewName
+	end
+end
+
 function V3a5PuzzleController:checkOpenPuzzleView(storyId)
-	if not self._preStoryId then
-		self._preStoryId = V3a5PuzzleConfig.instance:getConstValue(V3a5PuzzleEnum.ConstId.PreStoryId)
+	if not self._storyViewInfos then
+		self:_initStoryViewInfo()
 	end
 
-	if self._preStoryId == storyId then
-		ViewMgr.instance:openView(ViewName.V3a5PuzzleView, {
-			storyId = storyId
-		})
+	for _storyId, viewName in pairs(self._storyViewInfos) do
+		if _storyId == storyId then
+			ViewMgr.instance:openView(viewName, {
+				storyId = storyId
+			})
 
-		return true
+			return true
+		end
 	end
 
 	return false
 end
 
-function V3a5PuzzleController:playNextStory(cb, cbObj)
-	if not self._nextStoryId then
-		self._nextStoryId = V3a5PuzzleConfig.instance:getConstValue(V3a5PuzzleEnum.ConstId.NextStoryId)
+function V3a5PuzzleController:playNextStory(viewName, cb, cbObj)
+	local nextStory = V3a5PuzzleEnum.NextStoryView[viewName]
+
+	if not nextStory then
+		return
 	end
+
+	local nextStoryId = V3a5PuzzleConfig.instance:getConstValue(nextStory)
 
 	local function _cb()
 		DungeonRpc.instance:sendEndDungeonRequest(false)
@@ -49,7 +65,7 @@ function V3a5PuzzleController:playNextStory(cb, cbObj)
 		end
 	end
 
-	StoryController.instance:playStory(self._nextStoryId, nil, _cb)
+	StoryController.instance:playStory(nextStoryId, nil, _cb)
 end
 
 V3a5PuzzleController.instance = V3a5PuzzleController.New()

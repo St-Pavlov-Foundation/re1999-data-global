@@ -139,6 +139,7 @@ function UISpriteSetMgr:ctor()
 	self._act178 = self:newSpriteSetUnit("ui/spriteassets/v2a4_tutushizi_spriteset.asset")
 	self._v2a4_wuerlixi_sprite = self:newSpriteSetUnit("ui/spriteassets/v2a4_wuerlixi_spriteset.asset")
 	self._playercard = self:newSpriteSetUnit("ui/spriteassets/playercard.asset")
+	self._playercard2 = self:newSpriteSetUnit("ui/spriteassets/playercard2.asset")
 	self._v2a5_main_activity = self:newSpriteSetUnit("ui/spriteassets/v2a5_mainactivity_spriteset.asset")
 	self._v2a5_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v2a5_dungeon.asset")
 	self._v2a5_autochess_sprite = self:newSpriteSetUnit("ui/spriteassets/v2a5_autochess_spriteset.asset")
@@ -195,6 +196,10 @@ function UISpriteSetMgr:ctor()
 	self._v3a5_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
 	self._v3a5_lamona = self:newSpriteSetUnit("ui/spriteassets/v3a5_lamona_spriteset.asset")
 	self._v3a5_schoolstart = self:newSpriteSetUnit("ui/spriteassets/v3a5_schoolstart_spriteset.asset")
+	self._v3a6_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a6_mainactivity_spriteset.asset")
+	self._v3a6_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
+	self._v3a6_dormitorymode_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a6_dormitorymode_spriteset.asset")
+	self._avg_spelling_sprite = self:newSpriteSetUnit("ui/spriteassets/avg_spelling_spriteset.asset")
 end
 
 function UISpriteSetMgr:newSpriteSetUnit(path)
@@ -742,6 +747,10 @@ function UISpriteSetMgr:setPlayerCardSprite(image, name, setNativeSize)
 	self._playercard:setSprite(image, name, setNativeSize)
 end
 
+function UISpriteSetMgr:setPlayerCard2Sprite(image, name, setNativeSize)
+	self._playercard2:setSprite(image, name, setNativeSize)
+end
+
 function UISpriteSetMgr:setV2a5MainActivitySprite(image, name, setNativeSize)
 	self._v2a5_main_activity:setSprite(image, name, setNativeSize)
 end
@@ -968,6 +977,22 @@ end
 
 function UISpriteSetMgr:setV3a5SchoolStartSprite(image, name, setNativeSize)
 	self._v3a5_schoolstart:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a6MainActivitySprite(image, name, setNativeSize)
+	self._v3a6_main_activity:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a6DungeonSprite(image, name, setNativeSize)
+	self._v3a6_dungeon_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a6YaMiSprite(image, name, setNativeSize)
+	self._v3a6_dormitorymode_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setAVGSpellingSprite(image, name, setNativeSize)
+	self._avg_spelling_sprite:setSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:tryDispose()

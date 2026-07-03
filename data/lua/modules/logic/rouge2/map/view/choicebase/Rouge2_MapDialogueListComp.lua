@@ -28,6 +28,7 @@ function Rouge2_MapDialogueListComp:init(go)
 	self._doneInfoList = {}
 	self._freeItemList = self:getUserDataTb_()
 	self._useItemList = self:getUserDataTb_()
+	self._dialogueNum = 0
 	self._viewName2FlowCls = {}
 	self._viewName2FlowCls[ViewName.Rouge2_MapChoiceView] = Rouge2_MapStoryDialogueFlow
 	self._viewName2FlowCls[ViewName.Rouge2_MapPieceChoiceView] = Rouge2_MapStoryDialogueFlow
@@ -86,6 +87,8 @@ function Rouge2_MapDialogueListComp:clear()
 		table.insert(self._freeItemList, useItem)
 	end
 
+	self._dialogueNum = 0
+
 	self:_initFlow()
 end
 
@@ -108,58 +111,18 @@ function Rouge2_MapDialogueListComp:_addDialogueFlow(dialogueList, playType, don
 	end
 
 	if doneCallback and doneCallbackObj then
-		flow:registerDoneListener(doneCallback, doneCallbackObj)
+		flow:addWork(FunctionWork.New(doneCallback, doneCallbackObj))
 	end
 
 	self._flow:addWork(flow)
-end
 
-function Rouge2_MapDialogueListComp:_buildFlow_Story(flow, dialogueList, playType)
-	local stepNum = dialogueList and #dialogueList or 0
-
-	for i, info in ipairs(dialogueList) do
-		flow:addWork(self:_buildOneStepFlow(i, stepNum, info, playType))
-	end
-
-	if playType ~= Rouge2_MapEnum.DialoguePlayType.Directly then
-		flow:addWork(FunctionWork.New(self._onDialogueDone, self))
-		flow:addWork(WaitEventWork.New("Rouge2_MapController;Rouge2_MapEvent;onSwitch2SelectChoice"))
-	end
+	self._dialogueNum = self._dialogueNum + dialogueNum
 end
 
 function Rouge2_MapDialogueListComp:_onDialogueDone()
 	self:_rebuildLayout()
 	Rouge2_MapModel.instance:setPlayingDialogue(false)
-	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onChoiceDialogueDone)
-end
-
-function Rouge2_MapDialogueListComp:_buildOneStepFlow(index, stepNum, info, playType)
-	local flow = FlowSequence.New()
-
-	flow:addWork(FunctionWork.New(self.showArrow, self, false))
-
-	local itemWork = Rouge2_MapDialogueItemWork.New(index)
-
-	itemWork:initInfo(info, playType)
-	flow:addWork(itemWork)
-	flow:addWork(WorkWaitSeconds.New(0.01))
-	flow:addWork(FunctionWork.New(self.showArrow, self, index < stepNum))
-
-	if index < stepNum and playType ~= Rouge2_MapEnum.DialoguePlayType.Directly then
-		flow:addWork(WaitEventWork.New("Rouge2_MapController;Rouge2_MapEvent;onSwitchNextChoiceDialogue"))
-	end
-
-	return flow
-end
-
-function Rouge2_MapDialogueListComp:_buildFlow_Explore(flow, dialogueList, playType)
-	local stepNum = dialogueList and #dialogueList or 0
-
-	for i, info in ipairs(dialogueList) do
-		flow:addWork(self:_buildOneStepFlow(i, stepNum, info, playType))
-	end
-
-	flow:addWork(FunctionWork.New(self._onDialogueDone, self))
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onDialogueFlowDone)
 end
 
 function Rouge2_MapDialogueListComp:_getOrCreateDialogueItem()
@@ -185,22 +148,12 @@ end
 
 function Rouge2_MapDialogueListComp:_initFlow()
 	self:_destroyFlow()
+	self:_rebuildLayout()
+	Rouge2_MapModel.instance:setPlayingDialogue(true)
 
 	self._flow = FlowSequence.New()
 
-	self._flow:addWork(FunctionWork.New(self._onFullFlowStart, self))
-	self._flow:registerDoneListener(self._onFullFlowDone, self)
-end
-
-function Rouge2_MapDialogueListComp:_onFullFlowStart()
-	self:_rebuildLayout()
-	Rouge2_MapModel.instance:setPlayingDialogue(true)
-end
-
-function Rouge2_MapDialogueListComp:_onFullFlowDone()
-	self:_rebuildLayout()
-	Rouge2_MapModel.instance:setPlayingDialogue(false)
-	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onChoiceDialogueDone)
+	self._flow:registerDoneListener(self._onDialogueDone, self)
 end
 
 function Rouge2_MapDialogueListComp:_rebuildLayout()
@@ -209,6 +162,14 @@ function Rouge2_MapDialogueListComp:_rebuildLayout()
 	self._scrollDialogue.verticalNormalizedPosition = Rouge2_MapEnum.ScrollPosition.Bottom
 
 	self:refresArrow()
+end
+
+function Rouge2_MapDialogueListComp:getDialogueNum()
+	return self._dialogueNum
+end
+
+function Rouge2_MapDialogueListComp:hasAnyDialogue()
+	return self._dialogueNum and self._dialogueNum > 0
 end
 
 function Rouge2_MapDialogueListComp:_destroyFlow()

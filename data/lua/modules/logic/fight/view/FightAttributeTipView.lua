@@ -57,7 +57,12 @@ end
 
 function FightAttributeTipView:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.onReceiveEntityInfoReply, self._onReceiveEntityInfoReply, self)
-	FightRpc.instance:sendEntityInfoRequest(self.viewParam.entityMO.id)
+
+	if self.viewParam._msgOfEntityInfo then
+		self:_onReceiveEntityInfoReply(self.viewParam._msgOfEntityInfo)
+	else
+		FightRpc.instance:sendEntityInfoRequest(self.viewParam.entityMO.id)
+	end
 end
 
 function FightAttributeTipView:_onAttributeTipShow(obj, data, index)

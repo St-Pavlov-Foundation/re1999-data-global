@@ -471,12 +471,12 @@ function FightRpc:onReceiveGetFightRecordGroupReply(resultCode, msg)
 	end
 end
 
-function FightRpc:sendEntityInfoRequest(entityId)
+function FightRpc:sendEntityInfoRequest(entityId, callback, callbackObj)
 	local req = FightModule_pb.EntityInfoRequest()
 
 	req.uid = entityId
 
-	self:sendMsg(req)
+	return self:sendMsg(req, callback, callbackObj)
 end
 
 function FightRpc:onReceiveEntityInfoReply(resultCode, msg)

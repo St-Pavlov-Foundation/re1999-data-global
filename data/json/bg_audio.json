@@ -2528,5 +2528,65 @@
     "id": 3350012,
     "eventName": "play_ui_checkpoint_noise_misihai",
     "bankName": "activity_lusongshi_combataudio_noise"
+  },
+  {
+    "id": 3360001,
+    "eventName": "play_activitymusic_theme_3_6",
+    "bankName": "activity3_6_music"
+  },
+  {
+    "id": 3360002,
+    "eventName": "play_moni_main_music_3_6",
+    "bankName": "activity_moni_music"
+  },
+  {
+    "id": 3360003,
+    "eventName": "play_ui_checkpoint_noise_dreams",
+    "bankName": "activity_renmen_combataudio_noise"
+  },
+  {
+    "id": 3360004,
+    "eventName": "play_ui_checkpoint_noise_sea_area",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
+    "id": 3360005,
+    "eventName": "play_ui_checkpoint_noise_uluru_night",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3360006,
+    "eventName": "play_ui_checkpoint_noise_forest",
+    "bankName": "activity_renmen_combataudio_noise"
+  },
+  {
+    "id": 3360007,
+    "eventName": "play_ui_checkpoint_noise_forest_evening",
+    "bankName": "activity_renmen_combataudio_noise"
+  },
+  {
+    "id": 3360008,
+    "eventName": "play_ui_checkpoint_noise_tower",
+    "bankName": "activity_renmen_combataudio_noise"
+  },
+  {
+    "id": 3360009,
+    "eventName": "play_battle_renmen_3_6_shenyuan_bossfight",
+    "bankName": "activity_shenyuan_combataudio"
+  },
+  {
+    "id": 3360010,
+    "eventName": "play_battle_renmen_3_6_normalfight",
+    "bankName": "activity_renmen_combataudio"
+  },
+  {
+    "id": 3360011,
+    "eventName": "play_battle_renmen_3_6_bossfight",
+    "bankName": "activity_renmen_combataudio"
+  },
+  {
+    "id": 3360012,
+    "eventName": "play_shenyuan_main_music_3_6",
+    "bankName": "activity_shenyuan_music"
   }
 ]

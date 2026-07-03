@@ -53,5 +53,14 @@ PlayerCardEnum.FriendViewType = {
 }
 PlayerCardEnum.PlayerCardGuideId = 24110
 PlayerCardEnum.TowerMaxStageId = 7
+PlayerCardEnum.MaxEquipBadgeCount = 3
+PlayerCardEnum.EquipType = {
+	Critter = 1,
+	Badge = 2
+}
+PlayerCardEnum.ShowSettingsType = {
+	ShowEquipType = 1,
+	HideBadgeFormOther = 2
+}
 
 return PlayerCardEnum

@@ -111,6 +111,27 @@ function ItemExpireModel:getEarliestExpireExpireItem(expireId)
 	return tempExpireItem
 end
 
+function ItemExpireModel:getSpecialExpireItemEarliestExpireTime(itemId)
+	local expireTime = 0
+	local expireitemlist = ItemExpireModel.instance:getExpireItemList() or {}
+
+	for _, expireitem in pairs(expireitemlist) do
+		if expireitem.expireId == itemId then
+			local config = ItemConfig.instance:getItemSpecialExpiredItemCo(expireitem.expireId)
+
+			if config.expireType ~= 0 and ItemExpireModel.instance:getExpireItemCount(expireitem.uid) > 0 then
+				local time = ItemExpireModel.instance:getExpireItemDeadline(expireitem.uid)
+
+				if not expireTime or expireTime == 0 or time < expireTime then
+					expireTime = time
+				end
+			end
+		end
+	end
+
+	return expireTime
+end
+
 ItemExpireModel.instance = ItemExpireModel.New()
 
 return ItemExpireModel

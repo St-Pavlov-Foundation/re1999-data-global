@@ -2549,7 +2549,7 @@
   },
   {
     "id": "storemonthcard_tips",
-    "lang": "language_10035519"
+    "lang": "language_10119267"
   },
   {
     "id": "activityweekwalkdeepview_empty",
@@ -8740,6 +8740,194 @@
     "lang": "language_10029426"
   },
   {
+    "id": "v3a6_abyss_stage_round_desc",
+    "lang": "language_10119268"
+  },
+  {
+    "id": "v3a6_abyss_result_round_desc",
+    "lang": "language_10119269"
+  },
+  {
+    "id": "v3a6_abyss_reward_desc",
+    "lang": "language_10119270"
+  },
+  {
+    "id": "rouge2_mapdiceview_redicetips",
+    "lang": "language_10119271"
+  },
+  {
+    "id": "rouge2_mapdiceview_startredice",
+    "lang": "language_10119272"
+  },
+  {
+    "id": "rouge2_mapdiceview_abortredice",
+    "lang": "language_10032053"
+  },
+  {
+    "id": "rouge2_mapdiceview_startredicetips",
+    "lang": "language_10119273"
+  },
+  {
+    "id": "rouge2_itemrefreshview_refreshcost",
+    "lang": "language_10119274"
+  },
+  {
+    "id": "v3a6_abyss_lock_desc_cn",
+    "lang": "language_10119275"
+  },
+  {
+    "id": "v3a6_doubledrop_txt_title",
+    "lang": "language_10119276"
+  },
+  {
+    "id": "rouge2_fightrecord_confirm",
+    "lang": "language_10029754"
+  },
+  {
+    "id": "rouge2_fightrecord_abort",
+    "lang": "language_10032053"
+  },
+  {
+    "id": "handbookskin_festival_dushu",
+    "lang": "language_10119277"
+  },
+  {
+    "id": "v3a6_yami_selectproduct_tip1",
+    "lang": "language_10119278"
+  },
+  {
+    "id": "v3a6_yami_selectproduct_tip2",
+    "lang": "language_10119279"
+  },
+  {
+    "id": "v3a6_yami_selectproduct_rewardnum",
+    "lang": "language_10119280"
+  },
+  {
+    "id": "v3a6_yami_percent",
+    "lang": "language_10055625"
+  },
+  {
+    "id": "v3a6_yami_add_value",
+    "lang": "language_10119281"
+  },
+  {
+    "id": "v3a6_yami_recommend_hero_attr",
+    "lang": "language_10119282"
+  },
+  {
+    "id": "v3a6_yami_result_rank4",
+    "lang": "language_10119283"
+  },
+  {
+    "id": "v3a6_yami_result_rank3",
+    "lang": "language_10119284"
+  },
+  {
+    "id": "v3a6_yami_result_rank2",
+    "lang": "language_10119285"
+  },
+  {
+    "id": "v3a6_yami_result_rank1",
+    "lang": "language_10119286"
+  },
+  {
+    "id": "v3a6_yami_result_rank",
+    "lang": "language_10119287"
+  },
+  {
+    "id": "v3a6_yami_material_unlock",
+    "lang": "language_10119288"
+  },
+  {
+    "id": "v3a6_yami_attr1",
+    "lang": "language_10119289"
+  },
+  {
+    "id": "v3a6_yami_attr2",
+    "lang": "language_10119290"
+  },
+  {
+    "id": "v3a6_yami_attr3",
+    "lang": "language_10119291"
+  },
+  {
+    "id": "v3a6_yami_attr4",
+    "lang": "language_10119292"
+  },
+  {
+    "id": "v3a6_yami_researcher",
+    "lang": "language_10119293"
+  },
+  {
+    "id": "V3a6_WarmUp_txtnum",
+    "lang": "language_10119294"
+  },
+  {
+    "id": "v3a6_warmup_dialogueview_txt_tips1",
+    "lang": "language_10119295"
+  },
+  {
+    "id": "v3a6_warmup_dialogueview_txt_tips2",
+    "lang": "language_10119296"
+  },
+  {
+    "id": "v3a6_warmup_dialogueview_txt_tips3",
+    "lang": "language_10119297"
+  },
+  {
+    "id": "v3a6_warmup_dialogueview_txt_tips4",
+    "lang": "language_10119298"
+  },
+  {
+    "id": "v3a6_warmup_dialogueview_txt_tips5",
+    "lang": "language_10119299"
+  },
+  {
+    "id": "v3a6_warmup_txt_goto1",
+    "lang": "language_10119300"
+  },
+  {
+    "id": "v3a6_warmup_txt_goto2",
+    "lang": "language_10119301"
+  },
+  {
+    "id": "v3a6_warmup_txt_task1",
+    "lang": "language_10119302"
+  },
+  {
+    "id": "v3a6_warmup_txt_task2",
+    "lang": "language_10119303"
+  },
+  {
+    "id": "v3a6_warmup_txt_task3",
+    "lang": "language_10119304"
+  },
+  {
+    "id": "v3a6_warmup_txt_finish",
+    "lang": "language_10119305"
+  },
+  {
+    "id": "Playercard_badge_limittime",
+    "lang": "language_10119306"
+  },
+  {
+    "id": "collectView_weekwalk_unlock_tip",
+    "lang": "language_10119307"
+  },
+  {
+    "id": "FightBLESelectCrystalView_txtCrystal",
+    "lang": "language_10118664"
+  },
+  {
+    "id": "CharacterDataTitleView_getFormatStr1",
+    "lang": "language_10119850"
+  },
+  {
+    "id": "CharacterDataTitleView_getFormatStr2",
+    "lang": "language_10119851"
+  },
+  {
     "id": "V3a5_SchoolStartTaskItem_txttaskdes",
     "lang": "language_10118663"
   },
@@ -8798,6 +8986,10 @@
   {
     "id": "SettingsGraphicsView_videoMode_tips",
     "lang": "language_10097066"
+  },
+  {
+    "id": "SkillDescComp_replaceSkillTag_overseas",
+    "lang": "language_10119308"
   },
   {
     "id": "Season3_0FightRuleView_txtEffectDesc",
@@ -8910,10 +9102,6 @@
   {
     "id": "PinballBuildView_createEffectItem",
     "lang": "language_10020123"
-  },
-  {
-    "id": "SkillDescComp_replaceSkillTag_overseas",
-    "lang": "language_10065815"
   },
   {
     "id": "PinballController_sep",

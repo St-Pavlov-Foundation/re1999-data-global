@@ -3670,5 +3670,32 @@
     "audioId": 0,
     "dec_Type": 0,
     "dec": ""
+  },
+  {
+    "id": 60290,
+    "type": "SupplyTeamShareShield",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60310,
+    "type": "LostLife",
+    "effect": "buff/buff_podun_2",
+    "effectHangPoint": "mountmiddle",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60311,
+    "type": "ConsumeBuffUseSkill3",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
   }
 ]

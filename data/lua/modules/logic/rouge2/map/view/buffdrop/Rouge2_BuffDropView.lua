@@ -23,6 +23,7 @@ function Rouge2_BuffDropView:onInitView()
 	self._goToolbar = gohelper.findChild(self.viewGO, "#go_Toolbar")
 	self._goTopLeft = gohelper.findChild(self.viewGO, "#go_topleft")
 	self._goMode = gohelper.findChild(self.viewGO, "#go_Mode")
+	self._goRefresh = gohelper.findChild(self.viewGO, "#go_Refresh")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -42,6 +43,9 @@ function Rouge2_BuffDropView:_btnCloseOnClick()
 end
 
 function Rouge2_BuffDropView:_editableInitView()
+	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
+
+	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BuffDrop)
 	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goToolbar, Rouge2_Enum.TeamRecommendTipType.Default)
 
@@ -70,6 +74,8 @@ function Rouge2_BuffDropView:initViewParam()
 	if self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select then
 		NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 	end
+
+	self._refreshLoader:show(self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 end
 
 function Rouge2_BuffDropView:refreshUI()
@@ -107,6 +113,12 @@ function Rouge2_BuffDropView:refreshScrollPos()
 	scrollPos = scrollPos or Vector2(0, 0)
 
 	recthelper.setAnchor(self._tranScrollView, scrollPos.x, scrollPos.y)
+end
+
+function Rouge2_BuffDropView:_onRefreshItemCallback(dropList)
+	self._buffList = dropList or {}
+
+	self:refreshBuffList()
 end
 
 return Rouge2_BuffDropView

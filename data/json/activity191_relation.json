@@ -71,7 +71,7 @@
   },
   {
     "id": 6,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "rite",
     "name": "language_90001157",
     "level": 0,
@@ -85,7 +85,7 @@
   },
   {
     "id": 7,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "rite",
     "name": "language_90001157",
     "level": 1,
@@ -99,7 +99,7 @@
   },
   {
     "id": 8,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "rite",
     "name": "language_90001157",
     "level": 2,
@@ -113,7 +113,7 @@
   },
   {
     "id": 9,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "rite",
     "name": "language_90001157",
     "level": 3,
@@ -127,7 +127,7 @@
   },
   {
     "id": 10,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "rite",
     "name": "language_90001157",
     "level": 4,
@@ -211,7 +211,7 @@
   },
   {
     "id": 16,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 0,
@@ -225,7 +225,7 @@
   },
   {
     "id": 17,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 1,
@@ -239,7 +239,7 @@
   },
   {
     "id": 18,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "lossLife",
     "name": "language_90001156",
     "level": 2,
@@ -617,7 +617,7 @@
   },
   {
     "id": 45,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 0,
@@ -631,7 +631,7 @@
   },
   {
     "id": 46,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 1,
@@ -645,7 +645,7 @@
   },
   {
     "id": 47,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 2,
@@ -659,7 +659,7 @@
   },
   {
     "id": 48,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 3,
@@ -673,7 +673,7 @@
   },
   {
     "id": 49,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "fightBack",
     "name": "language_90001154",
     "level": 4,
@@ -1163,7 +1163,7 @@
   },
   {
     "id": 84,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 0,
@@ -1177,7 +1177,7 @@
   },
   {
     "id": 85,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 1,
@@ -1191,7 +1191,7 @@
   },
   {
     "id": 86,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "humanism",
     "name": "language_90001155",
     "level": 2,
@@ -1345,7 +1345,7 @@
   },
   {
     "id": 97,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "begin",
     "name": "language_90001160",
     "level": 0,
@@ -1359,7 +1359,7 @@
   },
   {
     "id": 98,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "begin",
     "name": "language_90001160",
     "level": 1,
@@ -1373,7 +1373,7 @@
   },
   {
     "id": 99,
-    "activityId": 0,
+    "activityId": 12701,
     "tag": "begin",
     "name": "language_90001160",
     "level": 2,

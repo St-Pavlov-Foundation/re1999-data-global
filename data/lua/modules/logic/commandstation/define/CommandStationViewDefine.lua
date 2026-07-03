@@ -53,6 +53,15 @@ function CommandStationViewDefine.init(module_views)
 		viewType = ViewType.Modal,
 		anim = ViewAnim.Internal
 	}
+	module_views.CommandStationPaperGetRewardView = {
+		bgBlur = 4,
+		container = "CommandStationPaperGetRewardViewContainer",
+		destroy = 0,
+		mainRes = "ui/viewres/commandstation/commandstation_getdiskview2.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Internal
+	}
 	module_views.CommandStationTaskView = {
 		destroy = 0,
 		container = "CommandStationTaskViewContainer",

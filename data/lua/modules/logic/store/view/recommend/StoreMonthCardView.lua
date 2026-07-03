@@ -23,6 +23,7 @@ function StoreMonthCardView:onInitView()
 	self._imglimittime = gohelper.findChildImage(self.viewGO, "view/tips/tips3/#go_limittime")
 	self._btnbuy = gohelper.findChildButtonWithAudio(self.viewGO, "view/buy/#btn_buy")
 	self._txtcost = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost")
+	self._txtbuynums = gohelper.findChildText(self.viewGO, "view/buy/txt_buynums")
 	self._txtcosticon = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost/costicon")
 	self._txtgoodstips = gohelper.findChildText(self.viewGO, "view/buy/#txt_goodstips")
 	self._gomooncardup = gohelper.findChild(self.viewGO, "view/#go_mooncardup")
@@ -40,6 +41,7 @@ function StoreMonthCardView:onInitView()
 	self._txtpatchcurrtime = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/#go_currenttime/timetxt")
 	self._txtpatchday = gohelper.findChildText(self.viewGO, "view/#go_yuekapatch/infobg/#txt_patchday")
 	self._gopatchinfo = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/infobg")
+	self._goreddot = gohelper.findChild(self.viewGO, "view/#go_yuekapatch/#go_reddot")
 	self._txtcosthw = gohelper.findChildText(self.viewGO, "view/buy/#txt_cost_hw")
 
 	if self._editableInitView then
@@ -76,12 +78,33 @@ function StoreMonthCardView:_btnbuyOnClick()
 		StoreController.instance:openPackageStoreGoodsView(packageMo)
 	else
 		self.viewContainer.storeView:_refreshTabs(StoreEnum.StoreId.Package, StoreEnum.MonthCardGoodsId)
-		StoreController.instance:statSwitchStore(StoreEnum.StoreId.Package)
+		StoreController.instance:onSwitchTab(StoreEnum.StoreId.Package)
 	end
 end
 
 function StoreMonthCardView:onWenHaoClick()
 	HelpController.instance:openStoreTipView(CommonConfig.instance:getConstStr(ConstEnum.MouthTipsDesc))
+end
+
+function StoreMonthCardView._btnItemDetailOnClick(param)
+	local selfObj = param.self
+	local index = param.index
+
+	selfObj:_btnItemDetailClick(index)
+end
+
+function StoreMonthCardView:_btnItemDetailClick(index)
+	if not self._bonusList then
+		return
+	end
+
+	local bonusParam = self._bonusList[index]
+
+	if not bonusParam then
+		return
+	end
+
+	MaterialTipController.instance:showMaterialInfo(bonusParam[1], bonusParam[2], false)
 end
 
 function StoreMonthCardView:_editableInitView()
@@ -107,6 +130,33 @@ function StoreMonthCardView:_editableInitView()
 	self._simagesupplement:LoadImage(ResUrl.getSpecialPropItemIcon(StoreEnum.SupplementMonthCardItemId))
 
 	self._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
+
+	local clickCount = 4
+	local offset = 2
+
+	self._itemClickList = self:getUserDataTb_()
+
+	local tipGo = gohelper.findChild(self.viewGO, string.format("view/tips"))
+
+	for i = 1, clickCount do
+		local subTipGo = tipGo.transform:GetChild(i + offset - 1).gameObject
+		local bgGo = subTipGo.transform:GetChild(0).gameObject
+
+		table.insert(self._itemClickList, gohelper.getClick(bgGo))
+	end
+
+	for index, clickItem in ipairs(self._itemClickList) do
+		clickItem:AddClickListener(self._btnItemDetailOnClick, {
+			self = self,
+			index = index
+		})
+	end
+
+	self._btnsupplement = gohelper.getClick(self._simagesupplement.gameObject)
+
+	self._btnsupplement:AddClickListener(self.onClickSupplementItem, self)
+
+	self.supplementRedDot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._checkSupplementRedDot, self)
 	self._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
 
 	local symbol = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
@@ -124,6 +174,10 @@ function StoreMonthCardView:_editableInitView()
 	else
 		self._txtcosthw.text = string.format("<size=30>%s</size>%s", symbol, numStr)
 	end
+end
+
+function StoreMonthCardView:onClickSupplementItem()
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.SpecialExpiredItem, StoreEnum.SupplementMonthCardItemId, false)
 end
 
 function StoreMonthCardView:onUpdateParam()
@@ -159,6 +213,26 @@ function StoreMonthCardView:onOpen()
 	self:refreshUI()
 	self:_initCurrency()
 	StoreMonthCardView.super.onOpen(self)
+
+	local jumpGoodsId = self.viewContainer:getJumpGoodsId()
+
+	if not jumpGoodsId then
+		return
+	end
+
+	local goodId = tonumber(jumpGoodsId)
+
+	if not goodId or goodId <= 0 then
+		return
+	end
+
+	local goodMo = StoreModel.instance:getGoodsMO(goodId)
+
+	if not goodMo then
+		return
+	end
+
+	StoreController.instance:openPackageStoreGoodsView(goodMo)
 end
 
 function StoreMonthCardView:refreshUI()
@@ -207,10 +281,12 @@ end
 
 function StoreMonthCardView:refreshRewardIcon()
 	local monthCardCo = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	local onceIconUrl, onceQuantity = self:getIconUrlAndQuantity(string.split(monthCardCo.onceBonus, "|")[1])
-	local onceIcon2Url, onceQuan2tity = self:getIconUrlAndQuantity(string.split(monthCardCo.onceBonus, "|")[2])
-	local dayIconUrl, dayQuantity = self:getIconUrlAndQuantity(string.split(monthCardCo.dailyBonus, "|")[1])
-	local powertable = string.split(monthCardCo.dailyBonus, "|")[2]
+	local onceBonusParam = string.split(monthCardCo.onceBonus, "|")
+	local dailyBonusParam = string.split(monthCardCo.dailyBonus, "|")
+	local onceIconUrl, onceQuantity = self:getIconUrlAndQuantity(onceBonusParam[1])
+	local onceIcon2Url, onceQuan2tity = self:getIconUrlAndQuantity(onceBonusParam[2])
+	local dayIconUrl, dayQuantity = self:getIconUrlAndQuantity(dailyBonusParam[1])
+	local powertable = dailyBonusParam[2]
 	local power = string.split(powertable, "#")
 	local powerconfig, powericon = ItemModel.instance:getItemConfigAndIcon(power[1], power[2])
 
@@ -235,6 +311,18 @@ function StoreMonthCardView:refreshRewardIcon()
 	if powerconfig.expireTime then
 		gohelper.setActive(self._golimittime, true)
 	end
+
+	local bonusList = {}
+
+	for _, param in ipairs(onceBonusParam) do
+		table.insert(bonusList, string.splitToNumber(param, "#"))
+	end
+
+	for _, param in ipairs(dailyBonusParam) do
+		table.insert(bonusList, string.splitToNumber(param, "#"))
+	end
+
+	self._bonusList = bonusList
 end
 
 function StoreMonthCardView:getIconUrlAndQuantity(iconStr)
@@ -254,6 +342,7 @@ function StoreMonthCardView:onMonthCardInfoChange()
 	self.monthCardInfo = StoreModel.instance:getMonthCardInfo()
 
 	self:refreshRemainDay()
+	self:_refreshSupplement()
 end
 
 function StoreMonthCardView:onDailyRefresh()
@@ -305,7 +394,7 @@ function StoreMonthCardView:_refreshSupplement()
 	if itemcount < 1 then
 		showlimiticon = true
 	else
-		local itemDeadline = CurrencyController.instance:getExpireItemDeadLineTime()
+		local itemDeadline = ItemExpireModel.instance:getSpecialExpireItemEarliestExpireTime(StoreEnum.SupplementMonthCardItemId)
 
 		if itemDeadline and itemDeadline > 0 then
 			local limitSec = itemDeadline - ServerTime.now()
@@ -318,6 +407,25 @@ function StoreMonthCardView:_refreshSupplement()
 	gohelper.setActive(self._gopatchlimittime, showlimiticon)
 	gohelper.setActive(self._gopatchcurrtime, not showlimiticon)
 	gohelper.setActive(self._gopatchinfo, showtips)
+
+	local storeMonthCardInfo = StoreModel.instance:getMonthCardInfo()
+	local isMaxDay = storeMonthCardInfo and storeMonthCardInfo:getRemainDay() >= StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId).maxDaysLimit - 1
+	local goodId = StoreEnum.MonthCardGoodsId
+	local packageMo = StoreModel.instance:getGoodsMO(goodId)
+	local isSoldOut = not packageMo or packageMo:isSoldOut()
+
+	gohelper.setActive(self._txtbuynums, not isSoldOut and not isMaxDay)
+	self:_refreshSupplementRedDot()
+end
+
+function StoreMonthCardView:_refreshSupplementRedDot()
+	self.supplementRedDot:refreshRedDot()
+end
+
+function StoreMonthCardView:_checkSupplementRedDot()
+	local showRedDot = SignInModel.instance:getCanSupplementMonthCardDays() > 0
+
+	return showRedDot
 end
 
 function StoreMonthCardView:_btnbuqianOnClick()
@@ -373,6 +481,16 @@ function StoreMonthCardView:onDestroyView()
 	self.wenhaoClick:RemoveClickListener()
 	self:removeEventCb(StoreController.instance, StoreEvent.MonthCardInfoChanged, self.onMonthCardInfoChange, self)
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.onDailyRefresh, self)
+
+	for _, clickItem in ipairs(self._itemClickList) do
+		clickItem:RemoveClickListener()
+	end
+
+	tabletool.clear(self._itemClickList)
+
+	self._itemClickList = nil
+
+	self._btnsupplement:RemoveClickListener()
 end
 
 return StoreMonthCardView

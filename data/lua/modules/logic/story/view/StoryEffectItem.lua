@@ -3,6 +3,9 @@
 module("modules.logic.story.view.StoryEffectItem", package.seeall)
 
 local StoryEffectItem = class("StoryEffectItem")
+local stencilPropName = "_Stencil"
+local stencilCompPropName = "_StencilComp"
+local stencilOpPropName = "_StencilOp"
 
 function StoryEffectItem:init(go, path, effCo, order, callback, callbackObj)
 	self.viewGO = go
@@ -34,6 +37,14 @@ function StoryEffectItem:reset(go, effCo, order)
 
 	self._effectGo.transform:SetParent(self._uieffectGo.transform, false)
 	self._effectOrderContainer:SetBaseOrder(self._effOrder)
+
+	if self._effectCo.layer == 11 or self._effectCo.layer == 13 then
+		self:_setParticleStencil(10, 3, 0)
+	elseif self._effectCo.layer == 12 or self._effectCo.layer == 14 then
+		self:_setParticleStencil(30, 3, 0)
+	elseif self._setStencil and self._effectCo.layer ~= 11 and self._effectCo.layer ~= 12 and self._effectCo.layer ~= 13 and self._effectCo.layer ~= 14 then
+		self:_resetParticleStencil()
+	end
 end
 
 function StoryEffectItem:_buildNormalEffect()
@@ -69,6 +80,10 @@ function StoryEffectItem:_onNormalEffectLoaded()
 		gohelper.setLayer(self._effectGo, UnityLayer.UI, true)
 	elseif self._effectCo.layer < 10 then
 		gohelper.setLayer(self._effectGo, UnityLayer.UISecond, true)
+	elseif self._effectCo.layer == 12 or self._effectCo.layer == 11 then
+		gohelper.setLayer(self._effectGo, UnityLayer.UI, true)
+	elseif self._effectCo.layer == 14 or self._effectCo.layer == 13 then
+		gohelper.setLayer(self._effectGo, UnityLayer.UISecond, true)
 	else
 		gohelper.setLayer(self._effectGo, UnityLayer.UITop, true)
 	end
@@ -87,9 +102,71 @@ function StoryEffectItem:_onNormalEffectLoaded()
 		self:_playFollowBg()
 	end
 
+	if self._effectCo.layer == 11 or self._effectCo.layer == 13 then
+		self:_setParticleStencil(10, 3, 0)
+	elseif self._effectCo.layer == 12 or self._effectCo.layer == 14 then
+		self:_setParticleStencil(30, 3, 0)
+	elseif self._setStencil and self._effectCo.layer ~= 11 and self._effectCo.layer ~= 12 and self._effectCo.layer ~= 13 and self._effectCo.layer ~= 14 then
+		self:_resetParticleStencil()
+	end
+
 	self._effectOrderContainer = gohelper.onceAddComponent(self._effectGo, typeof(ZProj.EffectOrderContainer))
 
 	self._effectOrderContainer:SetBaseOrder(self._effOrder)
+end
+
+function StoryEffectItem:_setParticleStencil(stencilValue, stencilComp, stencilOp)
+	if not self._effectGo or not self._effectGo.transform then
+		return
+	end
+
+	self._setStencil = true
+
+	local particles = self._effectGo.transform:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem))
+
+	for i = 0, particles.Length - 1 do
+		local renderer = particles[i].gameObject:GetComponent(typeof(UnityEngine.Renderer))
+
+		if renderer then
+			local materials = renderer.materials
+
+			for j = 0, materials.Length - 1 do
+				local material = materials[j]
+
+				if not gohelper.isNil(material) then
+					if material:HasProperty(stencilPropName) then
+						material:SetFloat(stencilPropName, stencilValue)
+					end
+
+					if material:HasProperty(stencilCompPropName) then
+						material:SetFloat(stencilCompPropName, stencilComp)
+					end
+
+					if material:HasProperty(stencilOpPropName) then
+						material:SetFloat(stencilOpPropName, stencilOp)
+					end
+				end
+			end
+		end
+	end
+end
+
+function StoryEffectItem:_resetParticleStencil()
+	self._setStencil = false
+
+	local stepId = StoryModel.instance:getCurStepId()
+	local stepCo = StoryStepModel.instance:getStepListById(stepId)
+	local bgCo = stepCo.bg
+
+	if bgCo.transType == StoryEnum.BgTransType.ScreenSplitExit then
+		TaskDispatcher.runDelay(self._doResetParticleStencil, self, 1)
+	else
+		self:_doResetParticleStencil()
+	end
+end
+
+function StoryEffectItem:_doResetParticleStencil()
+	self:_setParticleStencil(0, 8, 0)
 end
 
 function StoryEffectItem:_playFollowBg()

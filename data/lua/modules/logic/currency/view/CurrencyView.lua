@@ -48,6 +48,35 @@ function CurrencyView:_btncurrencyClick(param)
 	end
 end
 
+function CurrencyView._btncurrencyExchangeOnClick(param)
+	local selfObj = param.self
+	local index = param.index
+
+	selfObj:_btncurrencyExchangeClick(selfObj.param[index])
+end
+
+function CurrencyView:_btncurrencyExchangeClick(param)
+	if not param then
+		return
+	end
+
+	local currencyId
+
+	if type(param) == "number" then
+		currencyId = param
+	else
+		currencyId = param.id
+	end
+
+	local infoMo = CurrencyExchangeModel.instance:getInfoMo(currencyId)
+
+	if not infoMo then
+		return
+	end
+
+	CurrencyExchangeController.instance:openCurrencyExchangeView(currencyId)
+end
+
 function CurrencyView:setOpenCallback(callback, callbackObj)
 	self._openCallback = callback
 	self._openCallbackObj = callbackObj
@@ -137,6 +166,7 @@ function CurrencyView:onDestroyView()
 		itemObj.simage:UnLoadImage()
 		itemObj.btn:RemoveClickListener()
 		itemObj.btncurrency:RemoveClickListener()
+		itemObj.btnexchangetip:RemoveClickListener()
 	end
 end
 
@@ -204,6 +234,7 @@ function CurrencyView:_onCurrencyChange()
 		if param then
 			local isSingleImage = false
 			local showBtn = true
+			local showExchangeTipBtn = false
 
 			if type(param) == "number" then
 				local currencyID = param
@@ -231,6 +262,10 @@ function CurrencyView:_onCurrencyChange()
 					showBtn = false
 
 					itemObj.btn.gameObject:SetActive(false)
+				end
+
+				if self:isNeedExchangeTipBtn(currencyID) then
+					showExchangeTipBtn = true
 				end
 
 				if currencyID == CurrencyEnum.CurrencyType.Power then
@@ -274,6 +309,10 @@ function CurrencyView:_onCurrencyChange()
 					showBtn = false
 				end
 
+				if self:isNeedExchangeTipBtn(id) then
+					showExchangeTipBtn = true
+				end
+
 				if type == MaterialEnum.MaterialType.PowerPotion then
 					self.powerItemObj = itemObj
 
@@ -292,6 +331,7 @@ function CurrencyView:_onCurrencyChange()
 			gohelper.setActive(itemObj.image.gameObject, not isSingleImage)
 			gohelper.setActive(itemObj.simage.gameObject, isSingleImage)
 			gohelper.setActive(itemObj.btn, showBtn)
+			gohelper.setActive(itemObj.btnexchangetip, showExchangeTipBtn)
 		else
 			itemObj.go:SetActive(false)
 		end
@@ -330,12 +370,17 @@ function CurrencyView:getCurrencyItem(index)
 		currencyObj.goCurrentTime = gohelper.findChild(go, "#btn_currency/#go_currenttime")
 		currencyObj.txtTime = gohelper.findChildText(go, "#btn_currency/#go_currenttime/timetxt")
 		currencyObj.deadlineEffect = gohelper.findChild(go, "#btn_currency/#effect")
+		currencyObj.btnexchangetip = gohelper.findChildButtonWithAudio(go, "#btn_currency/#btn_exchangetip")
 
 		currencyObj.btn:AddClickListener(self._onClick, {
 			self = self,
 			index = index
 		})
 		currencyObj.btncurrency:AddClickListener(self._btncurrencyOnClick, {
+			self = self,
+			index = index
+		})
+		currencyObj.btnexchangetip:AddClickListener(self._btncurrencyExchangeOnClick, {
 			self = self,
 			index = index
 		})
@@ -346,6 +391,37 @@ function CurrencyView:getCurrencyItem(index)
 	end
 
 	return currencyObj
+end
+
+function CurrencyView:isNeedExchangeTipBtn(currencyId)
+	if not self.viewName then
+		return false
+	end
+
+	if self.viewName ~= ViewName.StoreView then
+		return false
+	end
+
+	local exchangeConfig = CurrencyExchangeConfig.instance:getExchangeConfig(currencyId)
+
+	if not exchangeConfig then
+		return false
+	end
+
+	local infoMo = CurrencyExchangeModel.instance:getInfoMo(currencyId)
+
+	if not infoMo then
+		return false
+	end
+
+	local versionConstConfig = lua_const.configDict[ConstEnum.VersionId]
+	local version = tonumber(versionConstConfig.value)
+
+	if exchangeConfig.versionId ~= version then
+		return false
+	end
+
+	return true
 end
 
 function CurrencyView:isNeedShieldAddBtn()
@@ -449,7 +525,7 @@ function CurrencyView:_onRefreshExpireItemDeadline()
 end
 
 function CurrencyView:_onRefreshExpireItemDeadlineUI()
-	local itemDeadline = CurrencyController.instance:getExpireItemDeadLineTime()
+	local itemDeadline = ItemExpireModel.instance:getSpecialExpireItemEarliestExpireTime(StoreEnum.SupplementMonthCardItemId)
 
 	if itemDeadline and itemDeadline > 0 then
 		local limitSec = itemDeadline - ServerTime.now()

@@ -8,11 +8,14 @@ function Rouge2_DiceCheckResInfoMO:init(info)
 	self.checkId = info.checkId
 	self.checkDiceRes = GameUtil.splitString2(info.checkDiceRes, true)
 	self.checkRes = info.checkRes
-	self.resRate = info.resRate
-	self.fixValue = info.fixValue
+	self.resRate = info.checkResRate
+	self.fixValue = info.checkFixValue
 	self.checkCo = Rouge2_CareerConfig.instance:getDiceCheckConfig(self.checkId, self.checkRes)
 
-	self:_parseParams(info.param)
+	self:_parseParams(info.checkParam)
+
+	self.checkReRollTimes = info.checkReRollTimes
+	self.fromType = info.fromType
 end
 
 function Rouge2_DiceCheckResInfoMO:_parseParams(param)
@@ -72,6 +75,14 @@ end
 
 function Rouge2_DiceCheckResInfoMO:getCheckConfig()
 	return self.checkCo
+end
+
+function Rouge2_DiceCheckResInfoMO:getCheckReRollTimes()
+	return self.checkReRollTimes
+end
+
+function Rouge2_DiceCheckResInfoMO:getFromType()
+	return self.fromType
 end
 
 function Rouge2_DiceCheckResInfoMO:_paramHanleFunc_ItemFixPointMap(paramList)

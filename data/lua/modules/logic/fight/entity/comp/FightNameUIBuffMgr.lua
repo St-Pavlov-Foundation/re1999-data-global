@@ -123,6 +123,15 @@ function FightNameUIBuffMgr.sortBuffItem(item1, item2)
 end
 
 function FightNameUIBuffMgr.sortBuffMo(buffMO1, buffMO2)
+	local buffConfig1 = lua_skill_buff.configDict[buffMO1.buffId]
+	local buffConfig2 = lua_skill_buff.configDict[buffMO2.buffId]
+	local buffTypeConfig1 = buffConfig1 and lua_skill_bufftype.configDict[buffConfig1.typeId]
+	local buffTypeConfig2 = buffConfig2 and lua_skill_bufftype.configDict[buffConfig2.typeId]
+
+	if buffTypeConfig1 and buffTypeConfig2 and buffTypeConfig1.sortPriority ~= buffTypeConfig2.sortPriority then
+		return buffTypeConfig1.sortPriority > buffTypeConfig2.sortPriority
+	end
+
 	if buffMO1.time ~= buffMO2.time then
 		return buffMO1.time < buffMO2.time
 	end

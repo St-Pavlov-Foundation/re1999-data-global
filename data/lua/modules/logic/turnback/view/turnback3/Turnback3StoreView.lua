@@ -278,7 +278,7 @@ function Turnback3StoreView:_updateStoreItem(item)
 
 	item.imagebg.preserveAspect = true
 
-	item.simagebg:LoadImage(ResUrl.getStorePackageIcon("detail_" .. mo.config.bigImg))
+	item.simagebg:LoadImage(ResUrl.getStorePackageIcon(mo.config.bigImg))
 
 	local maxBuyCount = mo.maxBuyCount
 	local remain = maxBuyCount - mo.buyCount

@@ -52,5 +52,17 @@
     "effectCompName": "CommonRoleFaceEffect",
     "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
     "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
+  },
+  {
+    "heroResName": "310103_blm",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
+    "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
+  },
+  {
+    "heroResName": "310103_blm_p",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",
+    "node": "root/mountweapon/roleeffect_blm_chijing|root/mountweapon/roleeffect_blm_shengqi|root/mountweapon/roleeffect_blm_kaixin|root/mountweapon/roleeffect_blm_nanguo"
   }
 ]

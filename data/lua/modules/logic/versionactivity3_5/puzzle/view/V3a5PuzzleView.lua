@@ -136,7 +136,7 @@ end
 
 function V3a5PuzzleView:_playNextStory()
 	TaskDispatcher.runDelay(self.closeThis, self, 1)
-	V3a5PuzzleController.instance:playNextStory(self.closeThis, self)
+	V3a5PuzzleController.instance:playNextStory(self.viewName, self.closeThis, self)
 end
 
 function V3a5PuzzleView:onClose()

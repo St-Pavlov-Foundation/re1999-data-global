@@ -9,8 +9,6 @@ FightTLEventDefHit.directCharacterHitEffectType = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
-	[FightEnum.EffectType.SHIELD] = true,
-	[FightEnum.EffectType.SHIELDDEL] = true,
 	[FightEnum.EffectType.NUODIKARANDOMATTACK] = true,
 	[FightEnum.EffectType.NUODIKATEAMATTACK] = true,
 	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = true
@@ -103,8 +101,6 @@ function FightTLEventDefHit:onTrackStart(fightStepData, duration, paramsArr)
 		invoke_list = self.fightStepData.actEffect
 	end
 
-	self:_preProcessShieldData(fightStepData, self.fightStepData.actEffect)
-
 	for _, actEffectData in ipairs(invoke_list) do
 		if not self:needFilter(actEffectData) then
 			local effectType = actEffectData.effectType
@@ -114,11 +110,7 @@ function FightTLEventDefHit:onTrackStart(fightStepData, duration, paramsArr)
 				if oneDefender then
 					table.insert(self._defenders, oneDefender)
 
-					if actEffectData.effectType == FightEnum.EffectType.SHIELDDEL then
-						local effectShieldDel = FightWorkEffectShieldDel.New(fightStepData, actEffectData)
-
-						effectShieldDel:start()
-					elseif actEffectData.configEffect == FightEnum.DirectDamageType then
+					if actEffectData.configEffect == FightEnum.DirectDamageType then
 						self:_playDefHit(oneDefender, actEffectData)
 					elseif dontSkillEffectIdStr == tostring(actEffectData.configEffect) then
 						-- block empty
@@ -179,12 +171,6 @@ function FightTLEventDefHit:needFilter(actEffectData)
 		return true
 	end
 
-	local effectType = actEffectData.effectType
-
-	if effectType == FightEnum.EffectType.SHIELD and FilterEffectType[actEffectData.effectNum1] then
-		return true
-	end
-
 	if actEffectData.configEffect == FightTLEventDefHit.nuoDiKaLostLife then
 		return true
 	end
@@ -193,62 +179,6 @@ end
 function FightTLEventDefHit:onTrackEnd()
 	if self._defenders and #self._defenders > 0 then
 		self:_onDelayActionFinish()
-	end
-end
-
-function FightTLEventDefHit:_preProcessShieldData(fightStepData, invoke_list)
-	if fightStepData.hasProcessShield then
-		return
-	end
-
-	fightStepData.hasProcessShield = true
-
-	local oldShieldDict = {}
-
-	for i, actEffectData in ipairs(invoke_list) do
-		if actEffectData.effectType == FightEnum.EffectType.SHIELD then
-			local oneDefender = FightHelper.getEntity(actEffectData.targetId)
-
-			if oneDefender then
-				local oldShield = oldShieldDict[actEffectData.targetId]
-
-				if not oldShield then
-					local defenderMO = oneDefender:getMO()
-
-					oldShield = defenderMO and defenderMO.shieldValue or 0
-					oldShieldDict[actEffectData.targetId] = oldShield
-				end
-
-				actEffectData.diffValue = math.abs(actEffectData.effectNum - oldShield)
-				actEffectData.sign = oldShield < actEffectData.effectNum and 1 or -1
-
-				local nextMO = invoke_list[i + 1]
-
-				if nextMO and nextMO.effectType == FightEnum.EffectType.SHIELDBROCKEN then
-					nextMO = invoke_list[i + 2]
-				end
-
-				if nextMO and nextMO.targetId == actEffectData.targetId and originHitEffectType[nextMO.effectType] then
-					actEffectData.isShieldOriginDamage = true
-					nextMO.shieldOriginEffectNum = nextMO.effectNum + actEffectData.diffValue
-				end
-
-				if nextMO and nextMO.targetId == actEffectData.targetId and additionalHitEffectType[nextMO.effectType] then
-					actEffectData.isShieldAdditionalDamage = true
-					nextMO.shieldAdditionalEffectNum = nextMO.effectNum + actEffectData.diffValue
-				end
-
-				oldShieldDict[actEffectData.targetId] = actEffectData.effectNum
-			end
-		end
-
-		if actEffectData.effectType == FightEnum.EffectType.SHIELDDEL then
-			oldShieldDict[actEffectData.targetId] = 0
-		end
-
-		if actEffectData.effectType == FightEnum.EffectType.SHIELDVALUECHANGE then
-			oldShieldDict[actEffectData.targetId] = actEffectData.effectNum
-		end
 	end
 end
 
@@ -340,7 +270,64 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 	local nuoDiKaDamage = (actEffectData.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or actEffectData.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and actEffectData.effectNum1 == FightEnum.EffectType.DAMAGE
 	local nuoDiKaCrit = (actEffectData.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or actEffectData.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and actEffectData.effectNum1 == FightEnum.EffectType.CRIT
 
-	if actEffectData.effectType == FightEnum.EffectType.DAMAGE or nuoDiKaDamage then
+	if actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLDAMAGE then
+		self.ezioDamage = actEffectData.configEffect
+
+		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.effectNum, self._ratio)
+
+		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
+		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
+
+		local floatType = isRestrain and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+
+		if actEffectData.effectNum1 == 3 then
+			floatType = isRestrain and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
+		end
+
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
+
+		table.insert(self._floatParams, {
+			actEffectData.targetId,
+			floatType,
+			floatNum,
+			true
+		})
+
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
+		end
+
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+
+		return
+	elseif actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
+		self.ezioDamage = actEffectData.configEffect
+
+		local numAbs = actEffectData.effectNum
+
+		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
+		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
+
+		local floatType = actEffectData.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
+
+		table.insert(self._floatParams, {
+			actEffectData.targetId,
+			floatType,
+			floatNum,
+			false
+		})
+
+		if numAbs ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
+		end
+
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+
+		return
+	elseif nuoDiKaDamage then
 		local showFloat = true
 
 		if self.ezioDamage == actEffectData.configEffect then
@@ -397,7 +384,9 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		self:_playHitVoice(oneDefender)
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -decreaseHp)
 		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
-	elseif actEffectData.effectType == FightEnum.EffectType.CRIT or nuoDiKaCrit then
+
+		return
+	elseif nuoDiKaCrit then
 		local showFloat = true
 
 		if self.ezioDamage == actEffectData.configEffect then
@@ -454,145 +443,234 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		self:_playHitVoice(oneDefender)
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -decreaseHp)
 		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+
+		return
+	end
+
+	local hurtInfo = actEffectData.hurtInfo
+	local damageNum = hurtInfo.damage
+	local reduceHp = hurtInfo.reduceHp
+	local reduceShield = hurtInfo.reduceShield
+	local reduceTeamShareShield = hurtInfo.reduceTeamShareShield
+
+	if reduceTeamShareShield ~= 0 and not hurtInfo.client_yamiShieldPlayUIEffect then
+		self.needRefreshYaMiShield = true
+		hurtInfo.client_yamiShieldPlayUIEffect = true
+	end
+
+	if actEffectData.effectType == FightEnum.EffectType.DAMAGE or nuoDiKaDamage then
+		local showFloat = true
+
+		if self.ezioDamage == actEffectData.configEffect then
+			showFloat = false
+			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
+		end
+
+		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self._ratio
+
+		local curRate = hurtInfo.client_damageRate
+		local floatNum = 0
+		local floatType = isRestrain and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+
+		if curRate >= 1 then
+			floatNum = damageNum - hurtInfo.client_floatNum
+		else
+			floatNum = math.floor(damageNum * self._ratio)
+		end
+
+		hurtInfo.client_floatNum = hurtInfo.client_floatNum + floatNum
+		floatNum = oneDefender:isMySide() and -floatNum or floatNum
+
+		if showFloat then
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				floatNum,
+				actEffectData.effectNum1 == 1
+			})
+		end
+
+		local reduceHpNum = 0
+
+		if curRate >= 1 then
+			reduceHpNum = reduceHp - hurtInfo.client_reduceHp
+		else
+			reduceHpNum = math.floor(reduceHp * self._ratio)
+		end
+
+		hurtInfo.client_reduceHp = hurtInfo.client_reduceHp + reduceHpNum
+
+		if oneDefender.nameUI then
+			oneDefender.nameUI:addHp(reduceHpNum)
+		end
+
+		local reduceShieldNum = 0
+
+		if curRate >= 1 then
+			reduceShieldNum = reduceShield - hurtInfo.client_reduceShield
+		else
+			reduceShieldNum = math.floor(reduceShield * self._ratio)
+		end
+
+		hurtInfo.client_reduceShield = hurtInfo.client_reduceShield + reduceShieldNum
+		reduceShieldNum = -reduceShieldNum
+
+		if oneDefender.nameUI then
+			local oldValue = oneDefender.nameUI._curShield
+
+			oneDefender.nameUI:setShield(oldValue + reduceShieldNum)
+
+			if nuoDiKaDamage then
+				FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, oneDefender.nameUI._curShield)
+			end
+		end
+
+		if reduceShieldNum ~= 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, reduceShieldNum)
+		end
+
+		if floatNum ~= 0 then
+			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
+		end
+
+		self:_playHitAudio(oneDefender, false)
+		self:_playHitVoice(oneDefender)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, reduceHpNum)
+	elseif actEffectData.effectType == FightEnum.EffectType.CRIT or nuoDiKaCrit then
+		local showFloat = true
+
+		if self.ezioDamage == actEffectData.configEffect then
+			showFloat = false
+			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
+		end
+
+		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self._ratio
+
+		local curRate = hurtInfo.client_damageRate
+		local floatNum = 0
+		local floatType = isRestrain and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
+
+		if curRate >= 1 then
+			floatNum = damageNum - hurtInfo.client_floatNum
+		else
+			floatNum = math.floor(damageNum * self._ratio)
+		end
+
+		hurtInfo.client_floatNum = hurtInfo.client_floatNum + floatNum
+		floatNum = oneDefender:isMySide() and -floatNum or floatNum
+
+		if showFloat then
+			table.insert(self._floatParams, {
+				actEffectData.targetId,
+				floatType,
+				floatNum,
+				actEffectData.effectNum1 == 1
+			})
+		end
+
+		local reduceHpNum = 0
+
+		if curRate >= 1 then
+			reduceHpNum = reduceHp - hurtInfo.client_reduceHp
+		else
+			reduceHpNum = math.floor(reduceHp * self._ratio)
+		end
+
+		hurtInfo.client_reduceHp = hurtInfo.client_reduceHp + reduceHpNum
+
+		if oneDefender.nameUI then
+			oneDefender.nameUI:addHp(reduceHpNum)
+		end
+
+		local reduceShieldNum = 0
+
+		if curRate >= 1 then
+			reduceShieldNum = reduceShield - hurtInfo.client_reduceShield
+		else
+			reduceShieldNum = math.floor(reduceShield * self._ratio)
+		end
+
+		hurtInfo.client_reduceShield = hurtInfo.client_reduceShield + reduceShieldNum
+		reduceShieldNum = -reduceShieldNum
+
+		if oneDefender.nameUI then
+			local oldValue = oneDefender.nameUI._curShield
+
+			oneDefender.nameUI:setShield(oldValue + reduceShieldNum)
+
+			if nuoDiKaCrit then
+				FightController.instance:dispatchEvent(FightEvent.SetFakeNuoDiKaDamageShield, defenderMO.id, oneDefender.nameUI._curShield)
+			end
+		end
+
+		if reduceShieldNum ~= 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, reduceShieldNum)
+		end
+
+		if floatNum ~= 0 then
+			self:_checkPlayAction(oneDefender, self._critAction, actEffectData)
+		end
+
+		self:_playHitAudio(oneDefender, true)
+		self:_playHitVoice(oneDefender)
+		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, reduceHpNum)
 	elseif actEffectData.effectType == FightEnum.EffectType.MISS then
 		if self._ratio > 0 then
 			self:_checkPlayAction(oneDefender, self._missAction, actEffectData)
 			FightFloatMgr.instance:float(actEffectData.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good, false)
 		end
-	elseif actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLDAMAGE then
-		self.ezioDamage = actEffectData.configEffect
-
-		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.effectNum, self._ratio)
-
-		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
-		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
-
-		local floatType = isRestrain and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
-
-		if actEffectData.effectNum1 == 3 then
-			floatType = isRestrain and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
-		end
-
-		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
-
-		table.insert(self._floatParams, {
-			actEffectData.targetId,
-			floatType,
-			floatNum,
-			true
-		})
-
-		if numAbs ~= 0 then
-			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
-		end
-
-		self:_playHitAudio(oneDefender, false)
-		self:_playHitVoice(oneDefender)
-	elseif actEffectData.effectType == FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE then
-		self.ezioDamage = actEffectData.configEffect
-
-		local numAbs = actEffectData.effectNum
-
-		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(oneDefender.id, numAbs)
-		self:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, oneDefender.id)
-
-		local floatType = actEffectData.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
-
-		table.insert(self._floatParams, {
-			actEffectData.targetId,
-			floatType,
-			floatNum,
-			false
-		})
-
-		if numAbs ~= 0 then
-			self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
-		end
-
-		self:_playHitAudio(oneDefender, false)
-		self:_playHitVoice(oneDefender)
-	elseif actEffectData.effectType == FightEnum.EffectType.SHIELD then
-		local old = defenderMO.shieldValue
-		local numAbs = self:_calcNum(actEffectData.clientId, actEffectData.targetId, actEffectData.diffValue or 0, self._ratio)
-		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
-
-		if oneDefender.nameUI then
-			oneDefender.nameUI:setShield(oneDefender.nameUI._curShield + numAbs * actEffectData.sign)
-		end
-
-		if actEffectData.sign == -1 then
-			if not actEffectData.isShieldOriginDamage and not actEffectData.isShieldAdditionalDamage then
-				local floatType = isRestrain and FightEnum.FloatType.shield_restrain or FightEnum.FloatType.shield_damage
-
-				table.insert(self._floatParams, {
-					actEffectData.targetId,
-					floatType,
-					floatNum,
-					actEffectData.buffActId == 1
-				})
-			end
-
-			local playHit = true
-
-			if not FightHelper.checkShieldHit(actEffectData) then
-				playHit = false
-			end
-
-			if actEffectData.effectNum1 == FightEnum.EffectType.ORIGINDAMAGE and not self._forcePlayHitForOrigin then
-				playHit = false
-			end
-
-			if actEffectData.effectNum1 == FightEnum.EffectType.ORIGINCRIT and not self._forcePlayHitForOrigin then
-				playHit = false
-			end
-
-			if numAbs ~= 0 and playHit then
-				self:_checkPlayAction(oneDefender, self._defeAction, actEffectData)
-			end
-
-			if playHit then
-				self:_playHitAudio(oneDefender, false)
-				self:_playHitVoice(oneDefender)
-			end
-		end
-
-		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, numAbs * actEffectData.sign)
-		FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
 	elseif originHitEffectType[actEffectData.effectType] then
-		local numAbs = actEffectData.effectNum
-		local isCrit = actEffectData.effectType == FightEnum.EffectType.ORIGINCRIT
+		local floatType = actEffectData.effectType == FightEnum.EffectType.ORIGINCRIT and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+		local flag = hurtInfo.hurtMergeFlag
 
-		if numAbs > 0 and oneDefender.nameUI then
-			oneDefender.nameUI:addHp(-numAbs)
+		if flag ~= 0 then
+			local roundData = FightDataHelper.roundMgr:getRoundData()
+			local tab = roundData.hurtMergeFlag[flag]
+
+			if tab then
+				damageNum = tab.damage
+				tab.damage = 0
+				floatType = tab.critical and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+			end
 		end
 
-		local floatType = isCrit and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
-		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
+		if damageNum ~= 0 then
+			local floatNum = damageNum
 
-		if not actEffectData.shieldOriginEffectNum then
-			if numAbs > 0 then
-				table.insert(self._floatParams, {
-					actEffectData.targetId,
-					floatType,
-					floatNum,
-					actEffectData.effectNum1 == 1
-				})
-			end
-		else
-			local tempNum = oneDefender:isMySide() and -actEffectData.shieldOriginEffectNum or actEffectData.shieldOriginEffectNum
+			floatNum = oneDefender:isMySide() and -floatNum or floatNum
 
 			table.insert(self._floatParams, {
 				actEffectData.targetId,
 				floatType,
-				tempNum,
+				floatNum,
 				actEffectData.effectNum1 == 1
 			})
 		end
 
-		if numAbs > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -numAbs)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+		local reduceHpNum = hurtInfo.reduceHp
+
+		if reduceHpNum ~= 0 then
+			if oneDefender.nameUI then
+				oneDefender.nameUI:addHp(reduceHpNum)
+			end
+
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, reduceHpNum)
+		end
+
+		local reduceShieldNum = hurtInfo.reduceShield
+
+		if reduceShieldNum ~= 0 then
+			reduceShieldNum = -reduceShieldNum
+		end
+
+		if oneDefender.nameUI then
+			local oldValue = oneDefender.nameUI._curShield
+
+			oneDefender.nameUI:setShield(oldValue + reduceShieldNum)
+		end
+
+		if reduceShieldNum ~= 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, reduceShieldNum)
 		end
 
 		if self._forcePlayHitForOrigin then
@@ -601,39 +679,42 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 			self:_playHitVoice(oneDefender)
 		end
 	elseif additionalHitEffectType[actEffectData.effectType] then
-		local numAbs = actEffectData.effectNum
-		local isCrit = actEffectData.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT
+		local floatNum = damageNum
+		local floatType = actEffectData.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage
 
-		if numAbs > 0 and oneDefender.nameUI then
-			oneDefender.nameUI:addHp(-numAbs)
-		end
+		floatNum = oneDefender:isMySide() and -floatNum or floatNum
 
-		local floatType = isCrit and FightEnum.FloatType.crit_additional_damage or FightEnum.FloatType.additional_damage
-		local floatNum = oneDefender:isMySide() and -numAbs or numAbs
+		table.insert(self._floatParams, {
+			actEffectData.targetId,
+			floatType,
+			floatNum,
+			actEffectData.effectNum1 == 1
+		})
 
-		if not actEffectData.shieldAdditionalEffectNum then
-			if numAbs > 0 then
-				table.insert(self._floatParams, {
-					actEffectData.targetId,
-					floatType,
-					floatNum,
-					actEffectData.effectNum1 == 1
-				})
+		local reduceHpNum = hurtInfo.reduceHp
+
+		if reduceHpNum ~= 0 then
+			if oneDefender.nameUI then
+				oneDefender.nameUI:addHp(reduceHpNum)
 			end
-		else
-			local tempNum = oneDefender:isMySide() and -actEffectData.shieldAdditionalEffectNum or actEffectData.shieldAdditionalEffectNum
 
-			table.insert(self._floatParams, {
-				actEffectData.targetId,
-				floatType,
-				tempNum,
-				actEffectData.effectNum1 == 1
-			})
+			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, reduceHpNum)
 		end
 
-		if numAbs > 0 then
-			FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, -numAbs)
-			FightController.instance:dispatchEvent(FightEvent.OnSkillDamage, self.fightStepData, actEffectData, oneDefender, floatNum, self._isLastHit, fixedPos)
+		local reduceShieldNum = hurtInfo.reduceShield
+
+		if reduceShieldNum ~= 0 then
+			reduceShieldNum = -reduceShieldNum
+		end
+
+		if oneDefender.nameUI then
+			local oldValue = oneDefender.nameUI._curShield
+
+			oneDefender.nameUI:setShield(oldValue + reduceShieldNum)
+		end
+
+		if reduceShieldNum ~= 0 then
+			FightController.instance:dispatchEvent(FightEvent.OnShieldChange, oneDefender, reduceShieldNum)
 		end
 	end
 
@@ -688,14 +769,6 @@ function FightTLEventDefHit:_statisticAndFloat()
 
 			if num and num ~= 0 then
 				local finallyFloatType = floatType
-
-				if floatType == FightEnum.FloatType.shield_damage then
-					finallyFloatType = targetDict[FightEnum.FloatType.damage] and FightEnum.FloatType.damage or FightEnum.FloatType.crit_damage
-				elseif floatType == FightEnum.FloatType.shield_restrain then
-					finallyFloatType = targetDict[FightEnum.FloatType.restrain] and FightEnum.FloatType.restrain or FightEnum.FloatType.crit_restrain
-				elseif floatType == FightEnum.FloatType.shield_berestrain then
-					finallyFloatType = targetDict[FightEnum.FloatType.berestrain] and FightEnum.FloatType.berestrain or FightEnum.FloatType.crit_berestrain
-				end
 
 				if finallyFloatType ~= floatType then
 					targetDict[floatType] = 0
@@ -812,30 +885,6 @@ function FightTLEventDefHit:_playHitVoice(entity)
 		end
 
 		FightAudioMgr.instance:playHitVoice(heroId, customAudioLang)
-	end
-end
-
-function FightTLEventDefHit:_calcNum(actEffectDataId, targetId, effectNum, ratio)
-	if self._hasRatio then
-		self._context.floatNum = self._context.floatNum or {}
-		self._context.floatNum[targetId] = self._context.floatNum[targetId] or {}
-		self._context.floatNum[targetId][actEffectDataId] = self._context.floatNum[targetId][actEffectDataId] or {}
-
-		local numTable = self._context.floatNum[targetId][actEffectDataId]
-		local preRatio = numTable.ratio or 0
-		local preTotal = numTable.total or 0
-		local nowRatio = ratio + preRatio
-
-		nowRatio = nowRatio < 1 and nowRatio or 1
-
-		local num = math.floor(nowRatio * effectNum + 0.5) - preTotal
-
-		numTable.ratio = ratio + preRatio
-		numTable.total = preTotal + num
-
-		return num
-	else
-		return 0
 	end
 end
 
@@ -1104,6 +1153,10 @@ function FightTLEventDefHit:onDestructor()
 	self._attacker = nil
 
 	self:showEzioOriginFloat()
+
+	if self.needRefreshYaMiShield then
+		FightMsgMgr.sendMsg(FightMsgId.RefreshYaMiShieldAfterDamage)
+	end
 end
 
 function FightTLEventDefHit:showEzioOriginFloat()
@@ -1125,6 +1178,30 @@ function FightTLEventDefHit:showEzioOriginFloat()
 				end
 			end
 		end
+	end
+end
+
+function FightTLEventDefHit:_calcNum(actEffectDataId, targetId, effectNum, ratio)
+	if self._hasRatio then
+		self._context.floatNum = self._context.floatNum or {}
+		self._context.floatNum[targetId] = self._context.floatNum[targetId] or {}
+		self._context.floatNum[targetId][actEffectDataId] = self._context.floatNum[targetId][actEffectDataId] or {}
+
+		local numTable = self._context.floatNum[targetId][actEffectDataId]
+		local preRatio = numTable.ratio or 0
+		local preTotal = numTable.total or 0
+		local nowRatio = ratio + preRatio
+
+		nowRatio = nowRatio < 1 and nowRatio or 1
+
+		local num = math.floor(nowRatio * effectNum + 0.5) - preTotal
+
+		numTable.ratio = ratio + preRatio
+		numTable.total = preTotal + num
+
+		return num
+	else
+		return 0
 	end
 end
 

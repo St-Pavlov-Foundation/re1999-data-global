@@ -1139,5 +1139,26 @@
     "motion": "b_xia2|b_wuqiku|b_wuqiku2",
     "node": "Drawables/bone/effect-Bone/roleeffect_llzhd_x0|Drawables/bone/effect-Bone/roleeffect_llzhd_wqk0#Drawables/bone2/effect-Bone/roleeffect_llzhd_wqk2#Drawables/bone4/effect-Bone/roleeffect_llzhd_wqk4#Drawables/bone5/effect-Bone/roleeffect_llzhd_wqk5#Drawables/bone6/effect-Bone/roleeffect_llzhd_wqk6#Drawables/bone7/effect-Bone/roleeffect_llzhd_wqk7#Drawables/bone8/effect-Bone/roleeffect_llzhd_wqk8#Drawables/bone9/effect-Bone/roleeffect_llzhd_wqk9#Drawables/bone10/effect-Bone/roleeffect_llzhd_wqk10|Drawables/bone/effect-Bone/roleeffect_llzhd_wqk0#Drawables/bone2/effect-Bone/roleeffect_llzhd_wqk2_2#Drawables/bone4/effect-Bone/roleeffect_llzhd_wqk4#Drawables/bone5/effect-Bone/roleeffect_llzhd_wqk5#Drawables/bone6/effect-Bone/roleeffect_llzhd_wqk6#Drawables/bone7/effect-Bone/roleeffect_llzhd_wqk7#Drawables/bone8/effect-Bone/roleeffect_llzhd_wqk8#Drawables/bone9/effect-Bone/roleeffect_llzhd_wqk9#Drawables/bone10/effect-Bone/roleeffect_llzhd_wqk10#Drawables/bone3/effect-Bone/roleeffect_llzhd_wqk2_3",
     "everNode": ""
+  },
+  {
+    "heroResName": "314302_yami",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_yansuan1",
+    "node": "Drawables/bone3/effect-Bone/roleeffect_ym_ys3",
+    "everNode": ""
+  },
+  {
+    "heroResName": "311404_xgj",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_bajian1|b_xiezi|b_sikao",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_xgj_bj2#Drawables/bone3/effect-Bone/roleeffect_xgj_bj3#Drawables/bone4/effect-Bone/roleeffect_xgj_bj4|Drawables/bone4/effect-Bone/roleeffect_xgj_xz4#Drawables/bone/effect-Bone/roleeffect_xgj_xz0|Drawables/bone7/effect-Bone/roleeffect_xgj_sk6",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312703_mes",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_idle|b_zhaoliang|b_qidao|b_shiyan2",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_mes_idle2|Drawables/bone2/effect-Bone/roleeffect_mes_zl2#Drawables/bone/effect-Bone/roleeffect_mes_zl0|Drawables/bone/effect-Bone/roleeffect_mes_qd0|Drawables/bone/effect-Bone/roleeffect_mes_sy0",
+    "everNode": ""
   }
 ]

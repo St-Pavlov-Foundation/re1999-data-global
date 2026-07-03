@@ -37,8 +37,6 @@ function Activity217Controller:_checkAndGetActInfo()
 
 		if actInfoMo and actInfoMo:isOnline() and actInfoMo:isOpen() and not actInfoMo:isExpired() then
 			Activity217Rpc.instance:sendGet217InfosRequest(actId)
-
-			break
 		end
 	end
 end

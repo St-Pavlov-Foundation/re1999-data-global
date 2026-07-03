@@ -4,19 +4,14 @@ module("modules.configs.excel2json.lua_survival_decree", package.seeall)
 
 local lua_survival_decree = {}
 local fields = {
-	versions = 4,
-	name = 6,
-	tags = 11,
-	type = 2,
-	group = 3,
-	stageVotes = 8,
-	condition = 9,
-	desc = 7,
-	limit = 12,
-	getTalents = 13,
-	seasons = 5,
+	versions = 3,
+	name = 5,
+	group = 2,
+	seasons = 4,
 	id = 1,
-	icon = 10
+	icon = 7,
+	getTalents = 8,
+	desc = 6
 }
 local primaryKey = {
 	"id"

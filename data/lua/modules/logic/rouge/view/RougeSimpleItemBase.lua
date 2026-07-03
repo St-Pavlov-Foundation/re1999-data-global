@@ -113,6 +113,10 @@ function RougeSimpleItemBase:setActive(isActive)
 	gohelper.setActive(self.viewGO, isActive)
 end
 
+function RougeSimpleItemBase:setActive01(isActive, targetTransform)
+	GameUtil.setActive01(targetTransform or self._trans, isActive)
+end
+
 function RougeSimpleItemBase:posX()
 	return recthelper.getAnchorX(self._trans)
 end

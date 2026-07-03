@@ -139,6 +139,8 @@ function StoryGCController:_onStep(o)
 
 	if hasVideo then
 		self._videoStepCountDown = GCStepCount
+
+		GameGlobalMgr.instance:resetTouchTick()
 	elseif self._videoStepCountDown then
 		self._videoStepCountDown = self._videoStepCountDown - 1
 

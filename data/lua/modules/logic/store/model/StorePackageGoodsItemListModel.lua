@@ -61,6 +61,17 @@ function StorePackageGoodsItemListModel:setMOList(storeMO, moList, excludeList, 
 
 	StoreController.instance:dispatchEvent(StoreEvent.BeforeUpdatePackageStore)
 	self:setList(self._moList)
+
+	if next(self._moList) then
+		local scrollView = self._scrollViews[1]
+
+		if not scrollView then
+			return
+		end
+
+		scrollView:moveToByIndex(1)
+	end
+
 	StoreController.instance:dispatchEvent(StoreEvent.AfterUpdatePackageStore)
 end
 
@@ -98,6 +109,54 @@ function StorePackageGoodsItemListModel:checkPreGoodsId(goodsId)
 	local preGoodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
 	return preGoodsMO and preGoodsMO:isSoldOut()
+end
+
+function StorePackageGoodsItemListModel:moveToNewGoods()
+	local scrollView = self._scrollViews[1]
+
+	if not scrollView then
+		return
+	end
+
+	local newIndex = self:findNewGoodsIndex()
+
+	if not newIndex then
+		return
+	end
+
+	scrollView:moveToByIndex(newIndex, 0.1)
+end
+
+function StorePackageGoodsItemListModel:findNewGoodsIndex()
+	local scrollView = self._scrollViews[1]
+
+	if not scrollView then
+		return
+	end
+
+	local csList = scrollView:getCsListScroll()
+	local moList = self:getList()
+	local newIndex
+	local hasInit = false
+	local isVisual = false
+
+	for i = 1, #moList do
+		local mo = moList[i]
+
+		isVisual = csList:IsVisual(i - 1)
+
+		if not hasInit and isVisual then
+			hasInit = true
+		end
+
+		if hasInit and not isVisual and mo:needShowNew() then
+			newIndex = i
+
+			break
+		end
+	end
+
+	return newIndex
 end
 
 function StorePackageGoodsItemListModel._sortFunction(x, y)

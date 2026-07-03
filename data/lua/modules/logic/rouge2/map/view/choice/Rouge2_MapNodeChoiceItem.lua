@@ -41,9 +41,7 @@ function Rouge2_MapNodeChoiceItem:onClickSelf()
 end
 
 function Rouge2_MapNodeChoiceItem:onSelectAnimDone()
-	local checkRate = self.nodeMo.eventMo:getChoiceCheckRate(self.choiceId)
-
-	Rouge2_MapModel.instance:recordCurChoiceEventSelectId(self.choiceId, self._index, checkRate)
+	Rouge2_MapModel.instance:recordCurChoiceEventSelectId(self.choiceId, self._index)
 
 	local layerId = Rouge2_MapModel.instance:getLayerId()
 

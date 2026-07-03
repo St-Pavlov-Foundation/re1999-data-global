@@ -86,6 +86,10 @@ function Rouge2_StoreStageItem:refreshUI()
 	local openTime = TimeUtil.stringToTimestamp(self.config.startTime)
 	local endTime = TimeUtil.stringToTimestamp(self.config.endTime)
 	local nowTime = ServerTime.now()
+
+	openTime = ServerTime.timeInLocal(openTime)
+	endTime = ServerTime.timeInLocal(endTime)
+
 	local isStart = openTime <= nowTime
 	local isOpen = isStart and nowTime < endTime
 

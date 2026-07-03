@@ -262,5 +262,11 @@
     "skinId": 1,
     "motion": "lazhu1|lazhu2|lazhu3|chayao1|chayao2|chayao3",
     "onlyStopCut": 1
+  },
+  {
+    "heroId": 3143,
+    "skinId": 1,
+    "motion": "yansuan1|yansuan2|zhize|baishou",
+    "onlyStopCut": 1
   }
 ]

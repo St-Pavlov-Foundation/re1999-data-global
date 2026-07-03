@@ -71,6 +71,9 @@ CommandStationEnum.TaskShowType = {
 	Spring = 3,
 	Normal = 0
 }
+CommandStationEnum.PaperViewType = {
+	Uid = 1
+}
 CommandStationEnum.CharacterClickState = {
 	Default = 0,
 	NoClick = 1

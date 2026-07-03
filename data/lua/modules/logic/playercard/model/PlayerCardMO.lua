@@ -12,6 +12,7 @@ end
 function PlayerCardMO:updateInfo(cardInfo, playerInfo)
 	self.playerInfo = playerInfo
 
+	self:updateShowSetting(cardInfo.showSettings)
 	self:updateProgressSetting(cardInfo.progressSetting)
 	self:updateBaseInfoSetting(cardInfo.baseSetting)
 	self:updateHeroCover(cardInfo.heroCover)
@@ -38,7 +39,42 @@ function PlayerCardMO:updateInfo(cardInfo, playerInfo)
 	self.towerLayerMetre = cardInfo.towerLayerMetre
 	self.act128Level = cardInfo.act128Level
 
+	self:updateEquipBadge(cardInfo.badgeIds)
 	self:setHeroCount(cardInfo.heroCount)
+end
+
+function PlayerCardMO:updateShowSetting(showSetting)
+	self._showSettings = {}
+
+	if showSetting then
+		for i = 1, #showSetting do
+			local setting = showSetting[i]
+			local split = string.splitToNumber(setting, "#")
+
+			self._showSettings[split[1]] = split[2]
+		end
+	else
+		self._showSettings[PlayerCardEnum.ShowSettingsType.ShowEquipType] = PlayerCardEnum.EquipType.Critter
+		self._showSettings[PlayerCardEnum.ShowSettingsType.HideBadgeFormOther] = 0
+	end
+end
+
+function PlayerCardMO:setShowSetting(key, value)
+	if not self._showSettings then
+		self._showSettings = {}
+	end
+
+	self._showSettings[key] = value
+
+	return self._showSettings
+end
+
+function PlayerCardMO:getShowSetting()
+	return self._showSettings
+end
+
+function PlayerCardMO:getShowSettingByType(type)
+	return self._showSettings and self._showSettings[type]
 end
 
 function PlayerCardMO:setHeroCount(heroCount)
@@ -416,6 +452,67 @@ function PlayerCardMO:getHeroRarePercent()
 	local heroRareSSRPercent = math.min(AllRareSSRHeroCount > 0 and info.heroRareSSRCount / AllRareSSRHeroCount or 1, 1)
 
 	return heroRareNNPercent, heroRareNPercent, heroRareRPercent, heroRareSRPercent, heroRareSSRPercent
+end
+
+function PlayerCardMO:updateEquipBadge(badgeIds)
+	self._badgeList = {}
+
+	for i = 1, PlayerCardEnum.MaxEquipBadgeCount do
+		table.insert(self._badgeList, badgeIds and badgeIds[i] or 0)
+	end
+end
+
+function PlayerCardMO:getEquipBadges()
+	return self._badgeList
+end
+
+function PlayerCardMO:modifyEquipBadges(badgeId)
+	local index = self:getEquipIndexBadge(badgeId)
+	local isModify = false
+
+	if index > 0 then
+		self._badgeList[index] = 0
+		isModify = true
+	else
+		local iscan
+
+		for i, id in ipairs(self._badgeList) do
+			if id <= 0 then
+				self._badgeList[i] = badgeId
+				isModify = true
+
+				break
+			end
+		end
+	end
+
+	return self._badgeList, isModify
+end
+
+function PlayerCardMO:getEquipBadgeIdsStr()
+	local value = ""
+
+	for i, badgeId in ipairs(self._badgeList) do
+		value = i == 1 and tostring(badgeId) or value .. "|" .. badgeId
+	end
+
+	return value
+end
+
+function PlayerCardMO:isEquipBadge(id)
+	return self:getEquipIndexBadge(id) > 0
+end
+
+function PlayerCardMO:getEquipIndexBadge(id)
+	local list = self:getEquipBadges()
+
+	for i, badgeId in ipairs(list) do
+		if badgeId == id then
+			return i
+		end
+	end
+
+	return -1
 end
 
 return PlayerCardMO

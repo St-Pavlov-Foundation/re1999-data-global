@@ -15058,5 +15058,130 @@
     "id": 350081,
     "eventName": "play_fight_ui_uttu_award",
     "bankName": "fight_ui_sfx_uttu3_5"
+  },
+  {
+    "id": 360001,
+    "eventName": "play_ui_molu_jlbn_open",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 360002,
+    "eventName": "play_ui_settleaccounts_win",
+    "bankName": "ui_settleaccounts"
+  },
+  {
+    "id": 360003,
+    "eventName": "play_ui_fight_shield3_6",
+    "bankName": "fight_ui_sfx3_6"
+  },
+  {
+    "id": 360004,
+    "eventName": "play_ui_fight_shieldup3_6",
+    "bankName": "fight_ui_sfx3_6"
+  },
+  {
+    "id": 360005,
+    "eventName": "play_ui_fight_shielddown3_6",
+    "bankName": "fight_ui_sfx3_6"
+  },
+  {
+    "id": 360006,
+    "eventName": "play_ui_fight_shielddestroy3_6",
+    "bankName": "fight_ui_sfx3_6"
+  },
+  {
+    "id": 360010,
+    "eventName": "play_replay_music_theme_3_6",
+    "bankName": "ui_replay_mainmusic3_6"
+  },
+  {
+    "id": 360011,
+    "eventName": "play_ui_replay_mainmusic3_6type",
+    "bankName": "ui_replay_mainmusic_type3_6"
+  },
+  {
+    "id": 360012,
+    "eventName": "play_ui_renmen_open",
+    "bankName": "ui_activity_3_6_renmen"
+  },
+  {
+    "id": 360013,
+    "eventName": "play_ui_renmen_open2",
+    "bankName": "ui_activity_3_6_renmen"
+  },
+  {
+    "id": 360014,
+    "eventName": "play_ui_renmen_waiwei_tan",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360015,
+    "eventName": "play_ui_renmen_waiwei_hua_lp",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360016,
+    "eventName": "stop_ui_renmen_waiwei_hua_lp",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360017,
+    "eventName": "play_ui_renmen_waiwei_open1",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360018,
+    "eventName": "play_ui_renmen_waiwei_tan2",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360019,
+    "eventName": "play_ui_renmen_waiwei_fire",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360020,
+    "eventName": "play_ui_renmen_waiwei_win",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360021,
+    "eventName": "play_ui_renmen_waiwei_shuzi",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360022,
+    "eventName": "play_ui_renmen_waiwei_shuzi2",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360023,
+    "eventName": "play_ui_renmen_waiwei_level",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360024,
+    "eventName": "play_ui_renmen_waiwei_shouji",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360025,
+    "eventName": "play_ui_renmen_waiwei_shua",
+    "bankName": "ui_activity_renmen_waiwei"
+  },
+  {
+    "id": 360026,
+    "eventName": "play_ui_molu_exit_appear",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 380022,
+    "eventName": "play_ui_mln_unlock",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 380023,
+    "eventName": "play_ui_wulu_kerandian_monster02_stand",
+    "bankName": "ui_activity_1_5_wulu_kerandian_checkpoint"
   }
 ]

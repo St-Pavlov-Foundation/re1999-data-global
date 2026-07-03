@@ -1,35 +1,35 @@
 [
   {
     "id": 1001,
-    "name": "0塑 原始人队",
-    "position1": 3003,
-    "position2": 3004,
-    "position3": 3005,
-    "position4": 3006
+    "name": "0000木启示",
+    "position1": 314100,
+    "position2": 305300,
+    "position3": 303900,
+    "position4": 311700
   },
   {
     "id": 1002,
-    "name": "0塑木启示",
-    "position1": 3141,
-    "position2": 3053,
-    "position3": 3039,
-    "position4": 3117
+    "name": "2100木启示",
+    "position1": 314102,
+    "position2": 305301,
+    "position3": 303900,
+    "position4": 311700
   },
   {
     "id": 1003,
-    "name": "0塑薪血",
-    "position1": 3120,
-    "position2": 3126,
-    "position3": 3088,
-    "position4": 3125
+    "name": "5200木启示",
+    "position1": 314105,
+    "position2": 305302,
+    "position3": 303900,
+    "position4": 311700
   },
   {
     "id": 1004,
-    "name": "0塑余辉",
-    "position1": 3134,
-    "position2": 3139,
-    "position3": 3081,
-    "position4": 3127
+    "name": "5555木启示",
+    "position1": 314105,
+    "position2": 305305,
+    "position3": 303905,
+    "position4": 311705
   },
   {
     "id": 1005,
@@ -38,5 +38,165 @@
     "position2": 3107,
     "position3": 3128,
     "position4": 3143
+  },
+  {
+    "id": 1011,
+    "name": "0000薪血",
+    "position1": 312000,
+    "position2": 312600,
+    "position3": 308800,
+    "position4": 312500
+  },
+  {
+    "id": 1012,
+    "name": "2100薪血",
+    "position1": 312002,
+    "position2": 312601,
+    "position3": 308800,
+    "position4": 312500
+  },
+  {
+    "id": 1013,
+    "name": "5200薪血",
+    "position1": 312005,
+    "position2": 312602,
+    "position3": 308800,
+    "position4": 312500
+  },
+  {
+    "id": 1014,
+    "name": "5555薪血",
+    "position1": 312005,
+    "position2": 312605,
+    "position3": 308805,
+    "position4": 312505
+  },
+  {
+    "id": 1021,
+    "name": "0000余辉",
+    "position1": 313400,
+    "position2": 313900,
+    "position3": 308100,
+    "position4": 312700
+  },
+  {
+    "id": 1022,
+    "name": "2100余辉",
+    "position1": 313402,
+    "position2": 313901,
+    "position3": 308100,
+    "position4": 312700
+  },
+  {
+    "id": 1023,
+    "name": "5200余辉",
+    "position1": 313405,
+    "position2": 313902,
+    "position3": 308100,
+    "position4": 312700
+  },
+  {
+    "id": 1024,
+    "name": "5555余辉",
+    "position1": 313405,
+    "position2": 313905,
+    "position3": 308105,
+    "position4": 312705
+  },
+  {
+    "id": 1031,
+    "name": "0000露西电能",
+    "position1": 308600,
+    "position2": 310700,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1032,
+    "name": "2100露西电能",
+    "position1": 308602,
+    "position2": 310701,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1033,
+    "name": "5200露西电能",
+    "position1": 308605,
+    "position2": 310702,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1034,
+    "name": "5555露西电能",
+    "position1": 308605,
+    "position2": 310705,
+    "position3": 312805,
+    "position4": 314305
+  },
+  {
+    "id": 1041,
+    "name": "0000告死鸟电能",
+    "position1": 313200,
+    "position2": 310700,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1042,
+    "name": "2100告死鸟电能",
+    "position1": 313202,
+    "position2": 310701,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1043,
+    "name": "5200告死鸟电能",
+    "position1": 313205,
+    "position2": 310702,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1044,
+    "name": "5555告死鸟电能",
+    "position1": 313205,
+    "position2": 310705,
+    "position3": 312805,
+    "position4": 314305
+  },
+  {
+    "id": 1051,
+    "name": "0000灰调蓝电能",
+    "position1": 313500,
+    "position2": 310700,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1052,
+    "name": "2100灰调蓝电能",
+    "position1": 313502,
+    "position2": 310701,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1053,
+    "name": "5200灰调蓝电能",
+    "position1": 313505,
+    "position2": 310702,
+    "position3": 312800,
+    "position4": 314300
+  },
+  {
+    "id": 1054,
+    "name": "5555灰调蓝电能",
+    "position1": 313505,
+    "position2": 310705,
+    "position3": 312805,
+    "position4": 314305
   }
 ]

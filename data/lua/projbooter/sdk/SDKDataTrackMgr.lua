@@ -46,6 +46,7 @@ SDKDataTrackMgr.EventName = {
 	hotupdate_21_40 = "hotupdate_21_40",
 	voice_pack_downloading = "voice_pack_downloading",
 	socket_connect = "socket_connect",
+	hot_update_packages = "hot_update_packages",
 	hotupdate_request_resource = "hotupdate_request_resource",
 	confirm_download_resources = "confirm_download_resources",
 	first_socket_connect = "first_socket_connect",
@@ -508,6 +509,13 @@ function SDKDataTrackMgr:trackResourceFixup(data)
 		[SDKDataTrackMgr.EventProperties.resource_fixup_count] = data.count or 0,
 		[SDKDataTrackMgr.EventProperties.entrance] = data.entrance or "",
 		[SDKDataTrackMgr.EventProperties.fail_count] = data.fail_count or 0
+	})
+end
+
+function SDKDataTrackMgr:trackMassHotUpdatePer(data)
+	SDKDataTrackMgr.instance:track(SDKDataTrackMgr.EventName.hot_update_packages, {
+		[SDKDataTrackMgr.EventProperties.UpdateAmount] = data.update_amount or 0,
+		[SDKDataTrackMgr.EventProperties.UpdatePercentage] = data.update_percentage or ""
 	})
 end
 

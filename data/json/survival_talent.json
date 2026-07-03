@@ -1776,7 +1776,7 @@
     "versions": "",
     "seasons": "",
     "name": "language_10113957",
-    "desc1": "language_10118667",
+    "desc1": "language_10119932",
     "desc2": ""
   },
   {
@@ -3698,6 +3698,16 @@
     "name": "language_10094159",
     "desc1": "language_10095331",
     "desc2": ""
+  },
+  {
+    "id": 212044,
+    "groupId": 0,
+    "pos": 0,
+    "versions": "",
+    "seasons": "",
+    "name": "language_10095096",
+    "desc1": "language_10095097",
+    "desc2": "language_10084677"
   },
   {
     "id": 2130011,
@@ -7206,7 +7216,7 @@
     "versions": "",
     "seasons": "",
     "name": "language_10117990",
-    "desc1": "language_10110221",
+    "desc1": "language_10114311",
     "desc2": ""
   },
   {

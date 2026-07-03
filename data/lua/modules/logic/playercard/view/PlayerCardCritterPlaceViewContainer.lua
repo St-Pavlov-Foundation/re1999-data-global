@@ -16,6 +16,14 @@ function PlayerCardCritterPlaceViewContainer:buildViews()
 
 	table.insert(views, critterPlaceListView1)
 	table.insert(views, critterPlaceListView2)
+
+	local scrollBadgeParam1 = self:getBadgeScrollParam1()
+	local scrollBadgeParam2 = self:getBadgeScrollParam2()
+	local badgePlaceListView1 = LuaListScrollView.New(PlayerCardBadgeListModel.instance, scrollBadgeParam1)
+	local badgePlaceListView2 = LuaListScrollView.New(PlayerCardBadgeListModel.instance, scrollBadgeParam2)
+
+	table.insert(views, badgePlaceListView1)
+	table.insert(views, badgePlaceListView2)
 	table.insert(views, TabViewGroup.New(1, "#go_topright"))
 
 	return views
@@ -68,6 +76,38 @@ function PlayerCardCritterPlaceViewContainer:getScrollParam2()
 	scrollParam.lineCount = self:_getLineCount(scrollWidth, scrollParam.cellWidth)
 	scrollParam.cellSpaceV = 20
 	scrollParam.startSpace = 10
+
+	return scrollParam
+end
+
+function PlayerCardCritterPlaceViewContainer:getBadgeScrollParam1()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "#go_critterview1/badgescroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_badgeicon"
+	scrollParam.cellClass = PlayerCardBadgePlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellWidth = 180
+	scrollParam.cellHeight = 240
+	scrollParam.cellSpaceH = 30
+	scrollParam.startSpace = 30
+
+	return scrollParam
+end
+
+function PlayerCardCritterPlaceViewContainer:getBadgeScrollParam2()
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.scrollGOPath = "#go_critterview2/badgescroll"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_badgeicon"
+	scrollParam.cellClass = PlayerCardBadgePlaceItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellWidth = 180
+	scrollParam.cellHeight = 240
+	scrollParam.cellSpaceH = 30
+	scrollParam.startSpace = 30
 
 	return scrollParam
 end

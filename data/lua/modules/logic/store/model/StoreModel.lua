@@ -37,6 +37,7 @@ function StoreModel:onInit()
 	self._curPackageStore = StoreEnum.StoreId.NormalPackage
 	self.monthCardInfo = nil
 	self._packageStoreRpcLeftNum = 0
+	self.cachePackageGoodsDic = {}
 end
 
 function StoreModel:reInit()
@@ -171,7 +172,7 @@ function StoreModel:chargeOrderComplete(id)
 	self.updateChargeStore = false
 
 	if mo == nil then
-		if id == StoreEnum.LittleMonthCardGoodsId then
+		if StoreEnum.ChargeStoreMonthCardDic[id] then
 			mo = self._allPackageDic[id]
 		else
 			mo = self._chargePackageStoreDic[id] or self._versionChargePackageDict[id] or self._onceTimeChargePackageDict[id]
@@ -185,7 +186,7 @@ function StoreModel:chargeOrderComplete(id)
 
 		local goodsId = mo.config.id
 
-		if goodsId == StoreEnum.MonthCardGoodsId or goodsId == StoreEnum.LittleMonthCardGoodsId or goodsId == StoreEnum.SeasonCardGoodsId then
+		if StoreEnum.ChargeStoreMonthCardDic[goodsId] then
 			ChargeRpc.instance:sendGetMonthCardInfoRequest(self.updateGoodsInfo, self)
 		else
 			self:updateGoodsInfo()
@@ -306,7 +307,7 @@ function StoreModel:getRecommendPackageList(refresh)
 
 	self._recommendPackageList = {}
 
-	local recommendPackageNum = CommonConfig.instance:getConstNum(ConstEnum.RecommendStoreCount) or 5
+	local recommendPackageNum = CommonConfig.instance:getConstNum(ConstEnum.RecommendStoreCount) or StoreEnum.RecommendPackageMaxCount
 
 	if recommendPackageNum == 0 then
 		return self._recommendPackageList
@@ -866,10 +867,25 @@ function StoreModel:getSecondTabs(firstTabId, filterOpen, order)
 	end
 
 	if order and #tabList > 1 then
-		table.sort(tabList, self._tabSortFunction)
+		if firstTabId == StoreEnum.StoreId.Package and not self:isNewPlayer() then
+			table.sort(tabList, self._tabPackageSortFunction)
+		else
+			table.sort(tabList, self._tabSortFunction)
+		end
 	end
 
 	return tabList
+end
+
+function StoreModel:isNewPlayer()
+	local registerTime = ServerTime.timeInLocal(PlayerModel.instance:getPlayerRegisterTime() / TimeUtil.OneSecondMilliSecond)
+	local curTime = ServerTime.now()
+
+	if math.max(0, curTime - registerTime) >= StoreEnum.NewPlayerRegisterLimit * TimeUtil.OneDaySecond then
+		return false
+	end
+
+	return true
 end
 
 function StoreModel:getRecommendSecondTabs(firstTabId, filterOpen)
@@ -971,6 +987,18 @@ function StoreModel:isTabOpen(tabId)
 end
 
 function StoreModel._tabSortFunction(xConfig, yConfig)
+	return xConfig.order > yConfig.order
+end
+
+function StoreModel._tabPackageSortFunction(xConfig, yConfig)
+	if xConfig.id == StoreEnum.StoreId.OneTimePackage then
+		return false
+	end
+
+	if yConfig.id == StoreEnum.StoreId.OneTimePackage then
+		return true
+	end
+
 	return xConfig.order > yConfig.order
 end
 
@@ -1325,6 +1353,22 @@ function StoreModel:getPackageGoodMo(goodsId)
 			end
 		end
 	end
+end
+
+function StoreModel:markPackageGoodsNewRedDot(goodsId)
+	self.cachePackageGoodsDic[goodsId] = true
+end
+
+function StoreModel:isMarkPackageGoodsNewRedDot(goodsId)
+	return self.cachePackageGoodsDic and self.cachePackageGoodsDic[goodsId]
+end
+
+function StoreModel:clearMarkedPackageGoodsNewRedDot()
+	tabletool.clear(self.cachePackageGoodsDic)
+end
+
+function StoreModel:getMarkedPackageGoodsNewRedDot()
+	return self.cachePackageGoodsDic
 end
 
 StoreModel.instance = StoreModel.New()

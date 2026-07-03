@@ -26,6 +26,7 @@ function LengZhou6LevelView:onInitView()
 	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/#txt_limittime")
 	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
 	self._goreddot = gohelper.findChild(self.viewGO, "#btn_Task/#go_reddot")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 
 	if self._editableInitView then
@@ -38,6 +39,7 @@ function LengZhou6LevelView:addEvents()
 	self._drag:AddDragBeginListener(self._onDragBegin, self)
 	self._drag:AddDragEndListener(self._onDragEnd, self)
 	self._touch:AddClickDownListener(self._onClickDown, self)
+	self._btnTrial:AddClickListener(self._clickTrial, self)
 end
 
 function LengZhou6LevelView:removeEvents()
@@ -45,6 +47,33 @@ function LengZhou6LevelView:removeEvents()
 	self._drag:RemoveDragBeginListener()
 	self._drag:RemoveDragEndListener()
 	self._touch:RemoveClickDownListener()
+	self._btnTrial:RemoveClickListener()
+end
+
+function LengZhou6LevelView:_clickTrial()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actCo.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function LengZhou6LevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actCo.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function LengZhou6LevelView:_btnTaskOnClick()
@@ -76,13 +105,12 @@ end
 
 function LengZhou6LevelView:onOpen()
 	self.actId = LengZhou6Model.instance:getAct190Id()
+	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
 	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickEpisode, self._onClickEpisode, self)
 	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnReceiveEpisodeInfo, self._refreshEpisode, self)
 	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnFinishEpisode, self._onFinishEpisode, self)
 	self:addEventCb(LengZhou6Controller.instance, LengZhou6Event.OnClickCloseGameView, self._onClickCloseGameView, self)
-	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
-	self:showLeftTime()
 	AudioMgr.instance:trigger(AudioEnum2_7.LengZhou6.play_ui_yuzhou_lzl_open)
 	TaskDispatcher.runDelay(self.updateStage, self, 0.5)
 	self:initStage()
@@ -126,7 +154,7 @@ function LengZhou6LevelView:showLeftTime()
 end
 
 function LengZhou6LevelView:onClose()
-	TaskDispatcher.cancelTask(self.showLeftTime, self)
+	return
 end
 
 function LengZhou6LevelView:_refreshRedDot(reddot)

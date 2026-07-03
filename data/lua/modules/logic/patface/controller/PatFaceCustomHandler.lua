@@ -4,6 +4,31 @@ module("modules.logic.patface.controller.PatFaceCustomHandler", package.seeall)
 
 local PatFaceCustomHandler = {}
 
+function PatFaceCustomHandler.V3a8FreeMonthCardCanPat()
+	local actId = ActivityEnum.Activity.FreeMonthCard
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+	if not actInfoMo then
+		return false
+	end
+
+	local isExpired = actInfoMo:getRealEndTimeStamp() - ServerTime.now() < 1
+	local canPat = actInfoMo:isOnline() and actInfoMo:isOpen() and not isExpired
+
+	if not canPat then
+		return false
+	end
+
+	local curDay = VersionActivity3_8FreeMonthCardModel.instance:getCurSignDay()
+	local couldGet = VersionActivity3_8FreeMonthCardModel.instance:isDayCanSign(curDay)
+
+	return couldGet
+end
+
+function PatFaceCustomHandler.V3a8FreeMonthCardPat()
+	MonthCardController.instance:openV3a8PanelView()
+end
+
 function PatFaceCustomHandler.activity142CheckCanPat(patFaceId)
 	local result = false
 	local isInOpen = Activity136Model.instance:isActivity136InOpen()

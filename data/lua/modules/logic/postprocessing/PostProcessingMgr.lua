@@ -164,6 +164,10 @@ function PostProcessingMgr:_onOpenFinishView(viewName)
 end
 
 function PostProcessingMgr:_onCloseView(viewName)
+	if BlurEnum.IgnoreCloseView[viewName] then
+		return
+	end
+
 	self:_refreshPopUpBlur(viewName, false, false, ViewEvent.OnCloseView)
 	self:_closeRefreshViewBlur(ViewEvent.OnCloseView, viewName)
 	self:_adjustMask(viewName, true)

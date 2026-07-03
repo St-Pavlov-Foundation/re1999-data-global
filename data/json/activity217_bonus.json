@@ -124,5 +124,47 @@
     "chapterId": 401,
     "episodeType": 1,
     "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50101,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50102,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50103,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50104,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50105,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 13602,
+    "episodeId": 50106,
+    "chapterId": 501,
+    "episodeType": 1,
+    "extraBonus": ""
   }
 ]

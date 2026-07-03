@@ -39,6 +39,8 @@ function CommonHeroItem:init(go)
 	self._injury1 = gohelper.findChild(go, "deephurt")
 	self._gohurtcn = gohelper.findChild(go, "deephurt/hurtcn")
 	self._gohurten = gohelper.findChild(go, "deephurt/hurten")
+	self._txthurtcn = gohelper.findChildTextMesh(go, "deephurt/hurtcn")
+	self._txthurten = gohelper.findChildTextMesh(go, "deephurt/hurten")
 	self._gorestrict = gohelper.findChild(go, "restrict")
 	self._selectframe = gohelper.findChild(go, "selectframe")
 	self._injuryselectframe = gohelper.findChild(go, "injuryselectframe")
@@ -350,6 +352,16 @@ end
 function CommonHeroItem:setInjury(injury)
 	gohelper.setActive(self._injury1, injury)
 	self:setDamage(injury)
+end
+
+function CommonHeroItem:setInjuryText(textCn, textEn)
+	if self._txthurtcn then
+		self._txthurtcn.text = textCn
+	end
+
+	if self._txthurten then
+		self._txthurten.text = textEn
+	end
 end
 
 function CommonHeroItem:setDamage(injury)

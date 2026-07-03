@@ -257,11 +257,7 @@ function TowerController:openTowerPermanentView(param)
 end
 
 function TowerController:openTowerStoreView()
-	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.TowerStore, function()
-		local viewParam = {}
-
-		ViewMgr.instance:openView(ViewName.TowerStoreView, viewParam)
-	end, self)
+	StoreController.instance:openStoreView(StoreEnum.StoreId.TowerStore)
 end
 
 function TowerController:openTowerHeroTrialView(param)

@@ -630,12 +630,32 @@ function Rouge2_Rpc:onReceiveRouge2BagItemUpdatePush(resultCode, msg)
 	Rouge2_MapChoiceController.instance:addPushToFlow("Rouge2BagItemUpdatePush", msg)
 end
 
-function Rouge2_Rpc:onReceiveRouge2CheckInfoPush(resultCode, msg)
+function Rouge2_Rpc:sendRouge2EndCheckRequest(callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2EndCheckRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2EndCheckReply(resultCode, msg)
 	if resultCode ~= 0 then
 		return
 	end
 
-	Rouge2_MapChoiceController.instance:addPushToFlow("Rouge2CheckInfoPush", msg)
+	Rouge2_MapModel.instance:updateMapInfo(msg.map)
+end
+
+function Rouge2_Rpc:sendRouge2ReRollCheckRequest(callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2ReRollCheckRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2ReRollCheckReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_MapModel.instance:updateMapInfo(msg.map)
 end
 
 function Rouge2_Rpc:sendRouge2SummonerActiveTalentRequest(talentId, callback, callbackObj)

@@ -329,6 +329,9 @@ function Rouge2_StoreView:refreshTime()
 
 	local stageConfig = Rouge2_OutSideConfig.instance:getRewardStageConfigById(self._curState)
 	local curStageEndTime = TimeUtil.stringToTimestamp(stageConfig.endTime)
+
+	curStageEndTime = ServerTime.timeInLocal(curStageEndTime)
+
 	local offsetSecond = curStageEndTime - ServerTime.now()
 	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
 	local hourSecond = offsetSecond % TimeUtil.OneDaySecond

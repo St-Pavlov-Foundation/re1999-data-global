@@ -75,6 +75,8 @@ function MaterialTipController:showMaterialInfoWithData(type, id, data)
 		elseif config.subType == ItemEnum.SubType.PlayerBg then
 			ViewMgr.instance:openView(ViewName.DecorateStoreGoodsTipView, data)
 		else
+			data.isReturnLastTipView = true
+
 			ViewMgr.instance:openView(ViewName.MaterialTipView, data)
 		end
 	elseif type == MaterialEnum.MaterialType.Currency then

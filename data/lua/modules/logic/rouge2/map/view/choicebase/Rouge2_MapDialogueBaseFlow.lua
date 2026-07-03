@@ -18,27 +18,38 @@ function Rouge2_MapDialogueBaseFlow:onStart(listComp)
 
 	self._flow = FlowSequence.New()
 
-	self:onBeforePlay()
-
-	for i, info in ipairs(self._dialogueList) do
-		self._flow:addWork(self:_buildOneStepFlow(i, self._stepNum, info, self._playType))
-	end
-
-	self:onAfterPlay()
-	self._flow:registerDoneListener(self._onDialogueFlowDone, self)
+	self:addBeforePlayWork(self._flow)
+	self:addOnPlayWork(self._flow)
+	self:addAfterPlayWork(self._flow)
+	self._flow:addWork(FunctionWork.New(self._onDialogueFlowDone, self))
 	self._flow:start(listComp)
 end
 
-function Rouge2_MapDialogueBaseFlow:onBeforePlay()
+function Rouge2_MapDialogueBaseFlow:addOnPlayWork(flow)
+	local playFlow = FlowSequence.New()
+
+	for i, info in ipairs(self._dialogueList) do
+		playFlow:addWork(self:_buildOneStepFlow(i, self._stepNum, info, self._playType))
+	end
+
+	playFlow:addWork(FunctionWork.New(self._onPlayDialogueDone, self))
+	flow:addWork(playFlow)
+end
+
+function Rouge2_MapDialogueBaseFlow:addBeforePlayWork(flow)
 	return
 end
 
-function Rouge2_MapDialogueBaseFlow:onAfterPlay()
+function Rouge2_MapDialogueBaseFlow:addAfterPlayWork(flow)
 	return
+end
+
+function Rouge2_MapDialogueBaseFlow:_onPlayDialogueDone()
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onPlayDialogueDone)
 end
 
 function Rouge2_MapDialogueBaseFlow:_onDialogueFlowDone()
-	self._listComp:_onDialogueDone()
+	self._listComp:_rebuildLayout()
 	self:onDone(true)
 end
 
@@ -100,6 +111,10 @@ function Rouge2_MapDialogueBaseFlow:clearWork()
 	end
 
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.OnJumpToChoiceState, self._onJumpToChoiceState, self)
+end
+
+function Rouge2_MapDialogueBaseFlow:getStepNum()
+	return self._stepNum
 end
 
 return Rouge2_MapDialogueBaseFlow

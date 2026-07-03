@@ -198,6 +198,7 @@ function StoreSkinGoodsItem:onUpdateMO(mo)
 	end
 
 	local alreadyHas = mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(mo)
+	local deductionNum = 0
 
 	if alreadyHas then
 		gohelper.setActive(self._goowned, true)
@@ -215,6 +216,11 @@ function StoreSkinGoodsItem:onUpdateMO(mo)
 			local info = GameUtil.splitString2(self._mo.config.deductionItem, true)
 
 			deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
+
+			if deductionItemCount > 0 then
+				deductionNum = info[2][1]
+			end
+
 			self._txtdeduction.text = -info[2][1]
 		end
 
@@ -233,7 +239,7 @@ function StoreSkinGoodsItem:onUpdateMO(mo)
 
 	UISpriteSetMgr.instance:setCurrencyItemSprite(self._simagematerial, str, true)
 
-	self._txtmaterialNum.text = self._costQuantity
+	self._txtmaterialNum.text = math.max(0, self._costQuantity - deductionNum)
 
 	gohelper.setActive(self._godiscount, mo.config.originalCost > 0)
 	gohelper.setActive(self._txtoriginalprice.gameObject, mo.config.originalCost > 0)

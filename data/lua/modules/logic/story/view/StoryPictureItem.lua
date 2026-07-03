@@ -303,7 +303,7 @@ function StoryPictureItem:_followBg()
 end
 
 function StoryPictureItem:_playScale()
-	if not self._picCo or not self._picImg then
+	if not self._picCo then
 		return
 	end
 
@@ -318,6 +318,10 @@ function StoryPictureItem:_playScale()
 			return
 		end
 
+		if not self._picImg then
+			return
+		end
+
 		self._picImg.color = color
 
 		return
@@ -327,6 +331,10 @@ function StoryPictureItem:_playScale()
 	self._scaleTweenId = ZProj.TweenHelper.DOScale(self._picGo.transform, self._picCo.effRate, self._picCo.effRate, 1, transTime)
 
 	if self._picCo.picType ~= StoryEnum.PictureType.Transparency then
+		return
+	end
+
+	if not self._picImg then
 		return
 	end
 
@@ -585,6 +593,10 @@ function StoryPictureItem:_realDestroy()
 	end
 
 	gohelper.destroy(self._picParentGo)
+
+	if self._picCo.picType == StoryEnum.PictureType.HeroFollow then
+		StoryController.instance:dispatchEvent(StoryEvent.OnFollowPictureEnd, self._picGo, tonumber(self._picCo.picture))
+	end
 end
 
 return StoryPictureItem

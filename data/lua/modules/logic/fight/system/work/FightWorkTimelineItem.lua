@@ -116,11 +116,6 @@ function FightWorkTimelineItem:afterPlayTimeline()
 
 	self:_resetTargetHp()
 
-	if self.timelineItem then
-		self:_checkFloatTable(self.timelineItem.timelineContext.floatNum, "伤害")
-		self:_checkFloatTable(self.timelineItem.timelineContext.healFloatNum, "回血")
-	end
-
 	if self.entity.buff then
 		self.entity.buff:showBuffEffects("before_skill_timeline")
 	end
@@ -238,34 +233,6 @@ function FightWorkTimelineItem:_resetTargetHp()
 
 		if oneDefender and oneDefender.nameUI then
 			oneDefender.nameUI:resetHp()
-		end
-	end
-end
-
-function FightWorkTimelineItem:_checkFloatTable(floatTable, tag)
-	if not floatTable then
-		return
-	end
-
-	if not isDebugBuild then
-		return
-	end
-
-	if Time.timeScale > 1 then
-		return
-	end
-
-	if FightModel.instance:getSpeed() > 1.5 then
-		return
-	end
-
-	for _, numTable in pairs(floatTable) do
-		for actEffectDataId, typeTb in pairs(numTable) do
-			if math.abs(typeTb.ratio - 1) > 0.0001 then
-				logError("技能" .. tag .. "系数之和为" .. typeTb.ratio .. " " .. self.timelineName)
-			end
-
-			return
 		end
 	end
 end

@@ -328,6 +328,8 @@ function FightQuitTipView:_loadCondition()
 			return
 		elseif VersionActivity2_9DungeonHelper.loadFightCondition(self, self._episodeId, self._gopasstarget) then
 			return
+		elseif AbyssHelper.loadFightCondition(self, episodeConfig.type, self._episodeId, self._gopasstarget, self._goconditionitemdesc, self._goconditionitem) then
+			return
 		end
 	end
 

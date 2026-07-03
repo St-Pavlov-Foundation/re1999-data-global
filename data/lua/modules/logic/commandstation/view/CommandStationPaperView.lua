@@ -51,12 +51,12 @@ function CommandStationPaperView:onOpen()
 	self._itemNum = CommandStationConfig.instance:getCurPaperCount()
 
 	RedDotController.instance:addRedDot(self._goTaskRed, RedDotEnum.DotNode.CommandStationTask)
-	self:initPaper()
 
 	self._paperList = CommandStationConfig.instance:getPaperList()
 	self._curPaperIndex = Mathf.Clamp(CommandStationModel.instance.paper + 1, 1, #self._paperList)
 
 	gohelper.setActive(self._gobuttom, #self._paperList > 1)
+	self:initPaper()
 
 	self._goPoints = self._goPoints or self:getUserDataTb_()
 
@@ -297,6 +297,42 @@ function CommandStationPaperView:_onChangePage(num)
 	TaskDispatcher.runDelay(self.refreshPaperCountAndPlayAudio, self, 0.167)
 end
 
+function CommandStationPaperView:_showBgByUid(bgSingleImage)
+	if not bgSingleImage then
+		logError("_showBgByUid bgSingleImage is nil")
+
+		return
+	end
+
+	local uid = tostring(PlayerModel.instance:getMyUserId())
+	local uidLength = string.len(uid)
+
+	if uidLength < 2 then
+		logError("_showBgByUid uidLength < 2")
+
+		return
+	end
+
+	local str = string.sub(uid, uidLength - 1, uidLength)
+	local value = tonumber(str)
+
+	if not value then
+		logError("_showBgByUid value is nil")
+
+		return
+	end
+
+	if value <= 24 then
+		bgSingleImage:LoadImage("singlebg/commandstation/paper/commandstation_paper_panelbg7_1_2.png")
+	elseif value <= 49 then
+		bgSingleImage:LoadImage("singlebg/commandstation/paper/commandstation_paper_panelbg7_1_3.png")
+	elseif value <= 74 then
+		bgSingleImage:LoadImage("singlebg/commandstation/paper/commandstation_paper_panelbg7_1_4.png")
+	else
+		bgSingleImage:LoadImage("singlebg/commandstation/paper/commandstation_paper_panelbg7_1_5.png")
+	end
+end
+
 function CommandStationPaperView:initPaper()
 	if self._paperRoots then
 		return
@@ -331,6 +367,14 @@ function CommandStationPaperView:initPaper()
 
 			afterMarkRoot = afterMarkRoot and afterMarkRoot.transform
 			beforeMarkRoot = beforeMarkRoot and beforeMarkRoot.transform
+
+			local paperConfig = self._paperList[index]
+
+			if paperConfig and paperConfig.viewType == CommandStationEnum.PaperViewType.Uid then
+				local bgSingleImage = gohelper.findChildSingleImage(self._paperRoots[index], "Panel/ViewPort/Content/image_PanelBG1")
+
+				self:_showBgByUid(bgSingleImage)
+			end
 
 			if afterMarkRoot then
 				for j = 0, afterMarkRoot.childCount - 1 do
@@ -405,6 +449,7 @@ end
 
 function CommandStationPaperView:onClickDish()
 	ViewMgr.instance:openView(ViewName.CommandStationPaperGetView, {
+		isDone = true,
 		paperCo = self._paperList[self._curPaperIndex]
 	})
 end

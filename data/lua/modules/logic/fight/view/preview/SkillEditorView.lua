@@ -106,7 +106,6 @@ end
 
 function SkillEditorView:_onClickExit()
 	self:closeThis()
-	SkillEditorMgr.instance:exit()
 	FightController.instance:exitFightScene()
 end
 
@@ -234,6 +233,7 @@ function SkillEditorView:onClose()
 	camera_obj:GetComponent(typeof(Cinemachine.CinemachineBrain)).enabled = true
 
 	FightSystem.instance:dispose()
+	SkillEditorMgr.instance:exit()
 end
 
 function SkillEditorView:_onSetSkillEditorViewVisible(state)

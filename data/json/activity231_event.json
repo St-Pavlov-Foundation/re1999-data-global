@@ -1,0 +1,152 @@
+[
+  {
+    "activityId": 13608,
+    "id": 101,
+    "unlockCondition": "",
+    "name": "language_10119690",
+    "desc": "language_10119691",
+    "button": "language_10029754",
+    "effect": "15#15#15#15",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 102,
+    "unlockCondition": "",
+    "name": "language_10119692",
+    "desc": "language_10119693",
+    "button": "language_10029754",
+    "effect": "-15#-15#15#15",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 103,
+    "unlockCondition": "",
+    "name": "language_10119694",
+    "desc": "language_10119695",
+    "button": "language_10029754",
+    "effect": "20#20#10#10",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 104,
+    "unlockCondition": "",
+    "name": "language_10119696",
+    "desc": "language_10119697",
+    "button": "language_10029754",
+    "effect": "8#8#18#18",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 105,
+    "unlockCondition": "",
+    "name": "language_10119698",
+    "desc": "language_10119699",
+    "button": "language_10029754",
+    "effect": "10#15#15#10",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 106,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10119700",
+    "desc": "language_10119701",
+    "button": "language_10029754",
+    "effect": "50#50#50#50",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 107,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10119702",
+    "desc": "language_10119703",
+    "button": "language_10029754",
+    "effect": "-50#-50#25#25",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 108,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10066970",
+    "desc": "language_10119704",
+    "button": "language_10029754",
+    "effect": "25#25#75#75",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 109,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10119705",
+    "desc": "language_10119706",
+    "button": "language_10029754",
+    "effect": "100#100#-50#-50",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 110,
+    "unlockCondition": "ResearchLevel#2",
+    "name": "language_10119707",
+    "desc": "language_10119708",
+    "button": "language_10029754",
+    "effect": "-25#50#50#-25",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 111,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10119709",
+    "desc": "language_10119710",
+    "button": "language_10029754",
+    "effect": "100#100#100#100",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 112,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10119711",
+    "desc": "language_10119712",
+    "button": "language_10029754",
+    "effect": "-100#-100#200#200",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 113,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10071551",
+    "desc": "language_10119713",
+    "button": "language_10029754",
+    "effect": "75#75#75#75",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 114,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10119714",
+    "desc": "language_10119715",
+    "button": "language_10029754",
+    "effect": "150#150#-100#-100",
+    "weight": 100
+  },
+  {
+    "activityId": 13608,
+    "id": 115,
+    "unlockCondition": "ResearchLevel#5",
+    "name": "language_10119716",
+    "desc": "language_10119717",
+    "button": "language_10029754",
+    "effect": "-100#150#150#-100",
+    "weight": 100
+  }
+]

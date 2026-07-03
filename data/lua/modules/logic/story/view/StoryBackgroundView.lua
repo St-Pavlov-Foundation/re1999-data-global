@@ -113,7 +113,9 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgTransType.Bloom1] = self._bloom1Trans,
 		[StoryEnum.BgTransType.Bloom2] = self._bloom2Trans,
 		[StoryEnum.BgTransType.ShakeCameraLR] = self._shakeCameraTrans,
-		[StoryEnum.BgTransType.ShakeCameraUD] = self._shakeCameraTrans
+		[StoryEnum.BgTransType.ShakeCameraUD] = self._shakeCameraTrans,
+		[StoryEnum.BgTransType.ScreenSplit] = self._screenSplitTrans,
+		[StoryEnum.BgTransType.ScreenSplitExit] = self._screenSplitExitTrans
 	}
 	self._handleBgEffsFuncDict = {
 		[StoryEnum.BgEffectType.BgBlur] = self._actBgEffBlur,
@@ -127,6 +129,7 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.BlindFilter] = self._actBgEffBlindFilter,
 		[StoryEnum.BgEffectType.Opposition] = self._actBgEffOpposition,
 		[StoryEnum.BgEffectType.RgbSplit] = self._actBgEffRgbSplit,
+		[StoryEnum.BgEffectType.Malfunction] = self._actBgEffMalfunction,
 		[StoryEnum.BgEffectType.EagleEye] = self._actBgEffEagleEye,
 		[StoryEnum.BgEffectType.Filter] = self._actBgEffFilter,
 		[StoryEnum.BgEffectType.Distress] = self._actBgEffDistress,
@@ -138,7 +141,11 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.HandCameraShake] = self._actBgEffHandCameraShake,
 		[StoryEnum.BgEffectType.Penetration] = self._actBgEffPenetration,
 		[StoryEnum.BgEffectType.CustomBlur] = self._actBgEffCustomBlur,
-		[StoryEnum.BgEffectType.LineLight] = self._actBgEffLineLight
+		[StoryEnum.BgEffectType.LineLight] = self._actBgEffLineLight,
+		[StoryEnum.BgEffectType.EnterSplitScreen] = self._actBgEffEnterSplitScreen,
+		[StoryEnum.BgEffectType.ExitSplitScreen] = self._actBgEffExitSplitScreen,
+		[StoryEnum.BgEffectType.TextureShake] = self._actBgEffTextureShake,
+		[StoryEnum.BgEffectType.ShapeMask] = self._actBgEffShapeMask
 	}
 	self._handleResetBgEffs = {
 		[StoryEnum.BgEffectType.BgBlur] = self._resetBgEffBlur,
@@ -152,6 +159,7 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.BlindFilter] = self._resetBgEffBlindFilter,
 		[StoryEnum.BgEffectType.Opposition] = self._resetBgEffOpposition,
 		[StoryEnum.BgEffectType.RgbSplit] = self._resetBgEffRgbSplit,
+		[StoryEnum.BgEffectType.Malfunction] = self._resetBgEffMalfunction,
 		[StoryEnum.BgEffectType.EagleEye] = self._resetBgEffEagleEye,
 		[StoryEnum.BgEffectType.Filter] = self._resetBgEffFilter,
 		[StoryEnum.BgEffectType.Distress] = self._resetBgEffDistress,
@@ -163,7 +171,11 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.HandCameraShake] = self._resetBgEffHandCameraShake,
 		[StoryEnum.BgEffectType.Penetration] = self._resetBgEffPenetration,
 		[StoryEnum.BgEffectType.CustomBlur] = self._resetBgEffCustomBlur,
-		[StoryEnum.BgEffectType.LineLight] = self._resetBgEffLineLight
+		[StoryEnum.BgEffectType.LineLight] = self._resetBgEffLineLight,
+		[StoryEnum.BgEffectType.EnterSplitScreen] = self._resetBgEffEnterSplitScreen,
+		[StoryEnum.BgEffectType.ExitSplitScreen] = self._resetBgEffExitSplitScreen,
+		[StoryEnum.BgEffectType.TextureShake] = self._resetBgEffTextureShake,
+		[StoryEnum.BgEffectType.ShapeMask] = self._resetBgEffShapeMask
 	}
 end
 
@@ -333,6 +345,10 @@ function StoryBackgroundView:_ignoreClearMat()
 	end
 
 	if (self._lastBgCo.transType == StoryEnum.BgTransType.MeltOut15 or self._lastBgCo.transType == StoryEnum.BgTransType.MeltOut25) and (self._bgCo.transType == StoryEnum.BgTransType.MeltIn15 or self._bgCo.transType == StoryEnum.BgTransType.MeltIn25 or self._bgCo.transType == StoryEnum.BgTransType.Hard) then
+		return true
+	end
+
+	if self._bgCo.effType == StoryEnum.BgEffectType.ExitSplitScreen then
 		return true
 	end
 
@@ -1135,6 +1151,42 @@ function StoryBackgroundView:_shakeCameraTrans(transType)
 end
 
 function StoryBackgroundView:_onShakeCameraFinished()
+	if self._bgTrans then
+		self._bgTrans:destroy()
+
+		self._bgTrans = nil
+	end
+end
+
+function StoryBackgroundView:_screenSplitTrans(transType)
+	self._curTransType = transType or StoryEnum.BgTransType.ScreenSplit
+	self._bgTrans = StoryBgTransScreenSplit.New()
+
+	self._bgTrans:init(self._curTransType)
+	self._bgTrans:start(self._onScreenSplitFinished, self)
+
+	self._cimagebgold.color = Color.white
+end
+
+function StoryBackgroundView:_onScreenSplitFinished()
+	if self._bgTrans then
+		self._bgTrans:destroy()
+
+		self._bgTrans = nil
+	end
+end
+
+function StoryBackgroundView:_screenSplitExitTrans(transType)
+	self._curTransType = transType or StoryEnum.BgTransType.ScreenSplitExit
+	self._bgTrans = StoryBgTransScreenSplit.New()
+
+	self._bgTrans:init(self._curTransType)
+	self._bgTrans:start(self._onScreenSplitExitFinished, self)
+
+	self._cimagebgold.color = Color.white
+end
+
+function StoryBackgroundView:_onScreenSplitExitFinished()
 	if self._bgTrans then
 		self._bgTrans:destroy()
 
@@ -1948,6 +2000,84 @@ function StoryBackgroundView:_resetBgEffLineLight()
 	end
 end
 
+function StoryBackgroundView:_actBgEffEnterSplitScreen()
+	if not self._bgEnterSplitScreenCls then
+		self._bgEnterSplitScreenCls = StoryBgEffsEnterSplitScreen.New()
+
+		self._bgEnterSplitScreenCls:init(self._bgCo)
+		self._bgEnterSplitScreenCls:start(self._resetBgEffEnterSplitScreen, self)
+	else
+		self._bgEnterSplitScreenCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffEnterSplitScreen()
+	local isSplitScreen = StoryModel.instance:isInScreenSplitMode()
+
+	if not isSplitScreen and self._bgEnterSplitScreenCls then
+		self._bgEnterSplitScreenCls:destroy()
+
+		self._bgEnterSplitScreenCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffExitSplitScreen()
+	if not self._bgExitSplitScreenCls then
+		self._bgExitSplitScreenCls = StoryBgEffsExitSplitScreen.New()
+
+		self._bgExitSplitScreenCls:init(self._bgCo)
+		self._bgExitSplitScreenCls:start(self._resetBgEffExitSplitScreen, self)
+	else
+		self._bgExitSplitScreenCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffExitSplitScreen()
+	if self._bgCo.effType ~= StoryEnum.BgEffectType.ExitSplitScreen and self._bgExitSplitScreenCls then
+		self._bgExitSplitScreenCls:destroy()
+
+		self._bgExitSplitScreenCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffTextureShake()
+	if not self._bgEffTextureShake then
+		self._bgEffTextureShake = StoryBgEffsTextureShake.New()
+
+		self._bgEffTextureShake:init(self._bgCo)
+		self._bgEffTextureShake:start(self._resetBgEffTextureShake, self)
+	else
+		self._bgEffTextureShake:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffTextureShake()
+	if self._bgEffTextureShake then
+		self._bgEffTextureShake:destroy()
+
+		self._bgEffTextureShake = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffShapeMask()
+	if not self._bgEffShapeMask then
+		self._bgEffShapeMask = StoryBgEffsShapeMask.New()
+
+		self._bgEffShapeMask:init(self._bgCo)
+		self._bgEffShapeMask:start(self._resetBgEffShapeMask, self)
+	else
+		self._bgEffShapeMask:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffShapeMask()
+	if self._bgEffShapeMask then
+		self._bgEffShapeMask:destroy()
+
+		self._bgEffShapeMask = nil
+	end
+end
+
 function StoryBackgroundView:_resetBgEffOpposition()
 	if self._bgOppositionId then
 		ZProj.TweenHelper.KillById(self._bgOppositionId)
@@ -2060,6 +2190,9 @@ function StoryBackgroundView:_resetBgEffRgbSplit()
 	end
 
 	gohelper.setLayer(self._gobliteff, UnityLayer.UI, true)
+	StoryViewMgr.instance:setStoryHeroViewLayer(UnityLayer.UISecond)
+	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
+	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UISecond)
 end
 
 function StoryBackgroundView:_actBgEffRgbSplit()
@@ -2168,7 +2301,12 @@ end
 function StoryBackgroundView:_onLoopWeakRgbSplitResLoaded()
 	if self._loopWeakRgbSplitPrefPath then
 		local prefAssetItem = self._loader:getAssetItem(self._loopWeakRgbSplitPrefPath)
-		local frontGo = ViewMgr.instance:getContainer(ViewName.StoryHeroView).viewGO
+
+		StoryViewMgr.instance:setStoryHeroViewLayer(UnityLayer.UIThird)
+		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UIThird)
+		StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
+
+		local frontGo = StoryViewMgr.instance:getStoryHeroView()
 
 		self._rbgSplitGo = gohelper.clone(prefAssetItem:GetResource(), frontGo)
 
@@ -2214,6 +2352,81 @@ function StoryBackgroundView:_onLoopStrongRgbSplitResLoaded()
 	end
 end
 
+function StoryBackgroundView:_actBgEffMalfunction()
+	if self._bgCo.effDegree == StoryEnum.BgRgbSplitType.Trans then
+		self:_showTransMalfunction()
+	end
+end
+
+function StoryBackgroundView:_resetBgEffMalfunction()
+	if self._malfunctionGo then
+		gohelper.destroy(self._malfunctionGo)
+
+		self._malfunctionGo = nil
+	end
+
+	if self._gobliteff then
+		gohelper.setLayer(self._gobliteff, UnityLayer.UI, true)
+	end
+end
+
+function StoryBackgroundView:_showTransMalfunction()
+	if self._rbgSplitGo then
+		gohelper.destroy(self._rbgSplitGo)
+
+		self._rbgSplitGo = nil
+	end
+
+	self._transMalfunctionPrefPath = ResUrl.getStoryBgEffect("storybg_rgbsplit_changebg_doublerole2")
+
+	local resList = {}
+
+	table.insert(resList, self._transMalfunctionPrefPath)
+	self:loadRes(resList, self._onTransMalfunctionResLoaded, self)
+end
+
+function StoryBackgroundView:_onTransMalfunctionResLoaded()
+	if self._transMalfunctionPrefPath then
+		local prefAssetItem = self._loader:getAssetItem(self._transMalfunctionPrefPath)
+		local frontGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+
+		self._malfunctionGo = gohelper.clone(prefAssetItem:GetResource(), frontGo)
+
+		self:_setTransMalfunction()
+	end
+end
+
+function StoryBackgroundView:_setTransMalfunction()
+	StoryTool.enablePostProcess(true)
+	gohelper.setAsFirstSibling(self._malfunctionGo)
+
+	self._imgOld = gohelper.findChildImage(self._malfunctionGo, "image_old")
+	self._imgNew = gohelper.findChildImage(self._malfunctionGo, "image_new")
+	self._goAnim = gohelper.findChild(self._malfunctionGo, "anim")
+
+	gohelper.setActive(self._imgOld.gameObject, true)
+	gohelper.setActive(self._imgNew.gameObject, true)
+	gohelper.setActive(self._goAnim, true)
+
+	local canvas = gohelper.onceAddComponent(self._malfunctionGo, typeof(UnityEngine.Canvas))
+
+	canvas.overrideSorting = true
+	canvas.sortingOrder = 2004
+
+	gohelper.setLayer(self._gobliteff, UnityLayer.UISecond, true)
+	gohelper.setLayer(self._malfunctionGo, UnityLayer.UISecond, true)
+	self._imgOld.material:SetTexture("_MainTex", self._lastCaptureTexture)
+	self._imgNew.material:SetTexture("_MainTex", self._blitEffSecond.capturedTexture)
+	TaskDispatcher.runDelay(self._changeMalfunctionLayer, self, 2.8)
+	TaskDispatcher.runDelay(self._resetBgEffMalfunction, self, 4)
+end
+
+function StoryBackgroundView:_changeMalfunctionLayer()
+	if self._malfunctionGo then
+		gohelper.setLayer(self._malfunctionGo, UnityLayer.UITop, true)
+	end
+end
+
 function StoryBackgroundView:loadRes(resList, callback, callbackObj)
 	if self._loader then
 		self._loader:dispose()
@@ -2252,6 +2465,11 @@ function StoryBackgroundView:_clearBg()
 	self:_resetBgEffHandCameraShake()
 	self:_resetBgEffCustomBlur()
 	self:_resetBgEffLineLight()
+	self:_resetBgEffEnterSplitScreen()
+	self:_resetBgEffExitSplitScreen()
+	self:_resetBgEffTextureShake()
+	self:_resetBgEffShapeMask()
+	self:_resetBgEffMalfunction()
 
 	if self._blurId then
 		ZProj.TweenHelper.KillById(self._blurId)

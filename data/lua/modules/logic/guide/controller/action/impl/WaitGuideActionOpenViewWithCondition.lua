@@ -477,4 +477,24 @@ function WaitGuideActionOpenViewWithCondition.checkSinglePartyGame()
 	return not curGame or curGame:getIsLocal()
 end
 
+function WaitGuideActionOpenViewWithCondition.checkAbyssStateFinish()
+	local actId = AbyssModel.instance:getCurActId()
+
+	if not actId or not ActivityModel.instance:isActOnLine(actId) then
+		return false
+	end
+
+	local info = AbyssModel.instance:getInfoMo(actId)
+
+	if info.stageInfoList and next(info.stageInfoList) then
+		for _, stageInfo in ipairs(info.stageInfoList) do
+			if stageInfo:isChallenged() and stageInfo.star > 0 then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
 return WaitGuideActionOpenViewWithCondition

@@ -72,10 +72,12 @@ function VersionActivityFixedDungeonMapView:_btncloseviewOnClick()
 end
 
 function VersionActivityFixedDungeonMapView:_btnactivitystoreOnClick()
-	if self._isRetroAcitivity then
-		ReactivityController.instance:openReactivityStoreView(self._dungeonActId)
-	else
+	local co = ActivityConfig.instance:getActivityCo(self._dungeonActId)
+
+	if co.isRetroAcitivity == 0 then
 		VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance:openStoreView()
+	elseif co.isRetroAcitivity == 1 then
+		ReactivityController.instance:openReactivityStoreView(self._dungeonActId)
 	end
 end
 
@@ -118,13 +120,21 @@ function VersionActivityFixedDungeonMapView:_editableInitView()
 
 	local co = ActivityConfig.instance:getActivityCo(self._dungeonActId)
 
-	self._dungeonStore = enum.ActivityId.DungeonStore
-	self._isRetroAcitivity = co.isRetroAcitivity ~= 0
+	self._isPermanent = co.isRetroAcitivity == 2
 
-	if self._isRetroAcitivity then
+	if co.isRetroAcitivity == 0 then
+		self._dungeonStore = enum.ActivityId.DungeonStore
+	elseif co.isRetroAcitivity == 1 then
 		local _enum = VersionActivityFixedHelper.getVersionActivityEnum()
 
 		self._dungeonStore = _enum.ActivityId.ReactivityStore
+	end
+
+	gohelper.setActive(self._btnactivitystore.gameObject, not self._isPermanent)
+	gohelper.setActive(self._btnactivitytask.gameObject, not self._isPermanent)
+
+	if self._isPermanent then
+		return
 	end
 
 	local storeActInfoMo = ActivityModel.instance:getActivityInfo()[self._dungeonStore]
@@ -163,6 +173,10 @@ function VersionActivityFixedDungeonMapView:refreshUI()
 end
 
 function VersionActivityFixedDungeonMapView:refreshActivityCurrency()
+	if self._isPermanent then
+		return
+	end
+
 	local currencyType = VersionActivityFixedHelper.getVersionActivityCurrencyType(self._bigVersion, self._smallVersion)
 	local currencyMO = CurrencyModel.instance:getCurrency(currencyType)
 	local quantity = currencyMO and currencyMO.quantity or 0
@@ -245,8 +259,17 @@ function VersionActivityFixedDungeonMapView:refreshMask()
 end
 
 function VersionActivityFixedDungeonMapView:refreshStoreRemainTime()
+	if self._isPermanent then
+		return
+	end
+
 	local storeActId = self._dungeonStore
 	local actInfoMo = ActivityModel.instance:getActMO(storeActId)
+
+	if not actInfoMo or not self._txtStoreRemainTime then
+		return
+	end
+
 	local endTime = actInfoMo:getRealEndTimeStamp()
 	local offsetSecond = endTime - ServerTime.now()
 
