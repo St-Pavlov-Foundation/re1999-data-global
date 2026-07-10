@@ -22,7 +22,7 @@ function StoreGoodsMO:initRedDotTime()
 	if string.nilorempty(self.config.newStartTime) then
 		self.newStartTime = 0
 	else
-		local newStartTimeStamp = TimeUtil.stringToTimestamp(self.config.newStartTime) - ServerTime.clientToServerOffset()
+		local newStartTimeStamp = TimeUtil.stringToTimestamp(self.config.newStartTime)
 
 		self.newStartTime = newStartTimeStamp
 	end
@@ -30,7 +30,7 @@ function StoreGoodsMO:initRedDotTime()
 	if string.nilorempty(self.config.newEndTime) then
 		self.newEndTime = 0
 	else
-		local newEndTimeStamp = TimeUtil.stringToTimestamp(self.config.newEndTime) - ServerTime.clientToServerOffset()
+		local newEndTimeStamp = TimeUtil.stringToTimestamp(self.config.newEndTime)
 
 		self.newEndTime = newEndTimeStamp
 	end
