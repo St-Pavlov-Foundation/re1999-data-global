@@ -1,219 +1,112 @@
 [
   {
-    "id": 129,
-    "icon": "rouge2_buff_7_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 126,
-    "icon": "rouge2_buff_1_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 127,
-    "icon": "rouge2_buff_3_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 124,
-    "icon": "rouge2_buff_4_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 123,
-    "icon": "rouge2_buff_5_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
     "id": 114,
-    "icon": "rouge2_buff_2_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 112,
-    "icon": "rouge2_buff_6_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 125,
-    "icon": "rouge2_buff_8_1",
-    "desc": "",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 1,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018033",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 2,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018034",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 101,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018035",
-    "color": "language_10107789",
-    "visible": 1
-  },
-  {
-    "id": 102,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018036",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 103,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018037",
-    "color": "language_10107789",
-    "visible": 2
-  },
-  {
-    "id": 104,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10017009",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 105,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018038",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 106,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018039",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 107,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10017155",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 108,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10015499",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 109,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018040",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 110,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10009336",
-    "color": "language_10107789",
+    "icon": "rouge2_buff_7",
+    "recommendAttribute": "101|103",
+    "desc": "language_10126288",
+    "color": "965B26",
+    "bg": "",
+    "bgColor": "965B26",
     "visible": 0
   },
   {
     "id": 111,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10015538",
-    "color": "language_10107789",
+    "icon": "rouge2_buff_1",
+    "recommendAttribute": "101|102",
+    "desc": "language_10126289",
+    "color": "D8988B",
+    "bg": "",
+    "bgColor": "6A2626",
+    "visible": 0
+  },
+  {
+    "id": 112,
+    "icon": "rouge2_buff_3",
+    "recommendAttribute": "102|105",
+    "desc": "language_10126290",
+    "color": "D7C88D",
+    "bg": "",
+    "bgColor": "574618",
     "visible": 0
   },
   {
     "id": 113,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10008465",
-    "color": "language_10107789",
+    "icon": "rouge2_buff_4",
+    "recommendAttribute": "104|105",
+    "desc": "language_10126291",
+    "color": "85C2B6",
+    "bg": "",
+    "bgColor": "185D4F",
     "visible": 0
   },
   {
-    "id": 115,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10018042",
-    "color": "language_10107789",
+    "id": 109,
+    "icon": "rouge2_buff_5",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "9ADD91",
+    "bg": "",
+    "bgColor": "3A7432",
     "visible": 0
   },
   {
-    "id": 116,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10017149",
-    "color": "language_10107789",
+    "id": 110,
+    "icon": "rouge2_buff_2",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "BCBDD2",
+    "bg": "",
+    "bgColor": "47494D",
     "visible": 0
   },
   {
-    "id": 118,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10008540",
-    "color": "language_10107789",
+    "id": 107,
+    "icon": "rouge2_buff_6",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "C298DA",
+    "bg": "",
+    "bgColor": "481C61",
     "visible": 0
   },
   {
-    "id": 119,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10015515",
-    "color": "language_10107789",
+    "id": 108,
+    "icon": "rouge2_buff_8",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "8394E1",
+    "bg": "",
+    "bgColor": "0F3B5D",
     "visible": 0
   },
   {
-    "id": 120,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10041776",
-    "color": "language_10107789",
+    "id": 131,
+    "icon": "rouge2_buff_9",
+    "recommendAttribute": "103|104",
+    "desc": "language_10126292",
+    "color": "8394E1",
+    "bg": "",
+    "bgColor": "0F3B5D",
     "visible": 0
   },
   {
-    "id": 121,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10041777",
-    "color": "language_10107789",
+    "id": 101,
+    "icon": "rouge2_buff_2",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "8394E1",
+    "bg": "",
+    "bgColor": "0F3B5D",
     "visible": 0
   },
   {
-    "id": 122,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10047672",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 128,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10082464",
-    "color": "language_10107789",
-    "visible": 0
-  },
-  {
-    "id": 150,
-    "icon": "rouge2_buff_7_1",
-    "desc": "language_10054495",
-    "color": "language_10107789",
+    "id": 102,
+    "icon": "rouge2_buff_2",
+    "recommendAttribute": "",
+    "desc": "",
+    "color": "8394E1",
+    "bg": "",
+    "bgColor": "0F3B5D",
     "visible": 0
   }
 ]

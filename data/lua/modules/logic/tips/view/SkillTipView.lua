@@ -96,6 +96,8 @@ function SkillTipView:initInfo(info, isCharacter, entityId)
 
 	param.viewName = self.viewName
 	param.entityId = entityId
+	param.heroId = param and param.heroId
+	param.skillIndex = param and param.skillIndex
 
 	if self.viewName == ViewName.FightFocusView then
 		param.monsterName = self.monsterName

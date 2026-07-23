@@ -85,6 +85,16 @@ function GMRpc:onReceiveServerErrorInfoPush(resultCode, msg)
 	end
 end
 
+function GMRpc:sendGmModuleRequest(callback, callbackObj)
+	local req = GMModule_pb.GmModuleRequest()
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function GMRpc:onReceiveGmModuleReply(resultCode, msg)
+	return
+end
+
 GMRpc.instance = GMRpc.New()
 
 return GMRpc

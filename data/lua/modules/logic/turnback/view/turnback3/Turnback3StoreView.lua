@@ -222,9 +222,11 @@ function Turnback3StoreView:_refreshLeftBottom()
 			item.goempty = gohelper.findChild(item.go, "#go_empty")
 			item.goitem = gohelper.findChild(item.go, "#go_item")
 			item.btnclick = gohelper.findChildButton(item.go, "#go_item/#btn_click")
+			item.itemBg = gohelper.findChildSingleImage(item.goitem, "bg")
 			item.simagebg = gohelper.findChildSingleImage(item.goitem, "#simage_bg")
 			item.imagebg = gohelper.findChildImage(item.goitem, "#simage_bg")
 			item.simageicon = gohelper.findChildSingleImage(item.goitem, "#simage_icon")
+			item.imageicon = gohelper.findChildImage(item.goitem, "#simage_icon")
 			item.txtlimit = gohelper.findChildText(item.goitem, "#txt_limit")
 			item.txtpriceNum = gohelper.findChildText(item.goitem, "#txt_priceNum")
 			item.txtname = gohelper.findChildText(item.goitem, "txt_name")
@@ -276,9 +278,39 @@ end
 function Turnback3StoreView:_updateStoreItem(item)
 	local mo = item.mo
 
-	item.imagebg.preserveAspect = true
+	item.imageicon.preserveAspect = true
 
-	item.simagebg:LoadImage(ResUrl.getStorePackageIcon(mo.config.bigImg))
+	item.simageicon:LoadImage(ResUrl.getStorePackageIcon(mo.config.bigImg))
+
+	local underlayParam
+
+	if string.nilorempty(mo.config.underlay) then
+		logError("商店改版 缺少底板配置 商品id:" .. tostring(mo.goodsId))
+
+		underlayParam = string.splitToNumber(ChargePackageEnum.DefaultUnderlayParam, "#")
+	else
+		underlayParam = string.splitToNumber(mo.config.underlay, "#")
+	end
+
+	logNormal(string.format("---商店改版 底板配置 id: %s 底板id: %s 价格: %s ", mo.goodsId, underlayParam[1], mo.isChargeGoods and PayModel.instance:getProductOriginPriceNum(mo.id) or 0))
+
+	local itemBgIconName = "panel/package_quality_" .. self:_getNumStr(underlayParam[1])
+
+	logNormal("商店改版 底板: " .. itemBgIconName)
+	item.itemBg:LoadImage(ResUrl.getStorePackageIcon(itemBgIconName))
+
+	local itemBgIndex
+
+	if mo.config.showBg ~= nil and mo.config.showBg ~= 0 then
+		itemBgIndex = mo.config.showBg
+	else
+		itemBgIndex = StoreHelper.getPackageIconBgIndex(mo.goodsId, mo.id, underlayParam[1])
+	end
+
+	local itemIconBgName = itemBgIconName .. "_" .. self:_getNumStr(itemBgIndex)
+
+	logNormal("商店改版 图标底板: " .. itemIconBgName)
+	item.simagebg:LoadImage(ResUrl.getStorePackageIcon(itemIconBgName))
 
 	local maxBuyCount = mo.maxBuyCount
 	local remain = maxBuyCount - mo.buyCount
@@ -314,6 +346,14 @@ function Turnback3StoreView:_updateStoreItem(item)
 
 		item.txtpriceNum.text = costQuantity
 	end
+end
+
+function Turnback3StoreView:_getNumStr(num)
+	if tonumber(num) < 10 then
+		return "0" .. num
+	end
+
+	return tostring(num)
 end
 
 function Turnback3StoreView:_onClickItem(item)

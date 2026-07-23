@@ -68,6 +68,18 @@ function Rouge2_DifficultySelectView:_btnStartOnClick()
 		return
 	end
 
+	local highDifficulty = tonumber(lua_rouge2_const.configDict[Rouge2_MapEnum.ConstKey.HighDifficulty].value)
+
+	if highDifficulty and highDifficulty <= self._difficultyId then
+		GameFacade.showOptionMessageBox(MessageBoxIdDefine.Rouge2HighDifficulty, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, self._sendRpc2SelectDifficulty, nil, nil, self)
+
+		return
+	end
+
+	self:_sendRpc2SelectDifficulty()
+end
+
+function Rouge2_DifficultySelectView:_sendRpc2SelectDifficulty()
 	Rouge2_Rpc.instance:sendEnterRouge2SelectDifficultyRequest(self._difficultyId, function(__, resultCode)
 		if resultCode ~= 0 then
 			return

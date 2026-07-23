@@ -170,8 +170,7 @@ function StoryEffectItem:_doResetParticleStencil()
 end
 
 function StoryEffectItem:_playFollowBg()
-	self._bgGo = StoryViewMgr.instance:getStoryFrontBgGo()
-	self._bgFrontGo = gohelper.findChild(self._bgGo, "#simage_bgimg")
+	self._bgFrontGo = StoryViewMgr.instance:getStoryFrontBgImgGo()
 
 	local frontTransX, frontTransY = transformhelper.getLocalPos(self._bgFrontGo.transform)
 
@@ -191,7 +190,8 @@ function StoryEffectItem:_playFollowBg()
 end
 
 function StoryEffectItem:_followBg()
-	local scaleX, scaleY = transformhelper.getLocalScale(self._bgGo.transform)
+	local bgGo = StoryViewMgr.instance:getStoryFrontBgGo()
+	local scaleX, scaleY = transformhelper.getLocalScale(bgGo.transform)
 	local frontTransX, frontTransY = transformhelper.getLocalPos(self._bgFrontGo.transform)
 	local posX = scaleX * (self._deltaPos[1] + frontTransX - self._initFrontPos[1])
 	local posY = scaleY * (self._deltaPos[2] + frontTransY - self._initFrontPos[2])

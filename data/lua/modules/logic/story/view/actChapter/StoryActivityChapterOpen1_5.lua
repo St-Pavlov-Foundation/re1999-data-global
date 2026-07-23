@@ -86,7 +86,13 @@ function StoryActivityChapterOpen1_5:getLangResBg(name)
 end
 
 function StoryActivityChapterOpen1_5:getVideoName(part)
-	return part == 1 and "1_5_opening_1"
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas then
+		return part == 1 and "1_5_opening_1"
+	else
+		return part == 1 and "1_5_kaimu"
+	end
 end
 
 function StoryActivityChapterOpen1_5:getAudioId(part)

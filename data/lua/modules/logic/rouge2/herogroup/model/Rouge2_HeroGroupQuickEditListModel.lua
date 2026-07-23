@@ -4,8 +4,7 @@ module("modules.logic.rouge2.herogroup.model.Rouge2_HeroGroupQuickEditListModel"
 
 local Rouge2_HeroGroupQuickEditListModel = class("Rouge2_HeroGroupQuickEditListModel", MixScrollModel)
 
-function Rouge2_HeroGroupQuickEditListModel:init(actId, episodeId)
-	self.activityId = actId
+function Rouge2_HeroGroupQuickEditListModel:init(episodeId)
 	self.episodeId = episodeId
 	self.episodeCo = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 end

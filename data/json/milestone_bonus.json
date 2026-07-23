@@ -1,0 +1,44 @@
+[
+  {
+    "milestoneId": 385501,
+    "bonusId": 1,
+    "needProgress": 1,
+    "bonus": "2#3#20000",
+    "special": false
+  },
+  {
+    "milestoneId": 385501,
+    "bonusId": 2,
+    "needProgress": 3,
+    "bonus": "1#110503#2",
+    "special": false
+  },
+  {
+    "milestoneId": 385501,
+    "bonusId": 3,
+    "needProgress": 6,
+    "bonus": "1#110504#1",
+    "special": false
+  },
+  {
+    "milestoneId": 385501,
+    "bonusId": 4,
+    "needProgress": 10,
+    "bonus": "1#173857#1",
+    "special": true
+  },
+  {
+    "milestoneId": 385501,
+    "bonusId": 5,
+    "needProgress": 12,
+    "bonus": "1#111009#1",
+    "special": false
+  },
+  {
+    "milestoneId": 385501,
+    "bonusId": 6,
+    "needProgress": 15,
+    "bonus": "2#5#20000",
+    "special": false
+  }
+]

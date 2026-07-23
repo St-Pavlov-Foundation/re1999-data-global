@@ -166,5 +166,21 @@
   {
     "timeline": "v3a4m_620409_unique",
     "speed": "1#1"
+  },
+  {
+    "timeline": "glove_skill_01",
+    "speed": "1#1"
+  },
+  {
+    "timeline": "glove_skill_02",
+    "speed": "1#1"
+  },
+  {
+    "timeline": "glove_skill_03",
+    "speed": "1#1"
+  },
+  {
+    "timeline": "glove_skill_04",
+    "speed": "1#1"
   }
 ]

@@ -121,7 +121,11 @@ function V3a6DoubleDropView:refresh()
 		local chapterCo = lua_chapter.configDict[Activity217Enum.DungeonChapter[config.showtype]]
 		local magnification = (config.magnification - 1) * 100
 
-		item.txttitle.text = GameUtil.getSubPlaceholderLuaLangTwoParam(lang, chapterCo.name, magnification)
+		item.txttitle.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang, chapterCo.name)
+
+		local lang1 = luaLang("add_percent_value")
+
+		item.txtrate.text = GameUtil.getSubPlaceholderLuaLangOneParam(lang1, magnification)
 
 		local point = pointList[index]
 		local item = self._items[config.showtype]
@@ -157,6 +161,7 @@ function V3a6DoubleDropView:_getItem(index)
 		item.txttoday = gohelper.findChildText(item.go, "go_today/#txt_today")
 		item.txttotalday = gohelper.findChildText(item.go, "go_today/#txt_totalday")
 		item.txttitle = gohelper.findChildText(item.go, "bg/txt_desc")
+		item.txtrate = gohelper.findChildText(item.go, "bg/#txt_rate")
 		self._descItems[index] = item
 	end
 

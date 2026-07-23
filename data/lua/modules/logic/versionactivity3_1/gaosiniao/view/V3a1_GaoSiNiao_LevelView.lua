@@ -21,6 +21,7 @@ function V3a1_GaoSiNiao_LevelView:onInitView()
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
 	self._btnEndless = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Endless")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -29,12 +30,40 @@ end
 
 function V3a1_GaoSiNiao_LevelView:addEvents()
 	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self._btnEndless:AddClickListener(self._btnEndlessOnClick, self)
 end
 
 function V3a1_GaoSiNiao_LevelView:removeEvents()
 	self._btntask:RemoveClickListener()
 	self._btnEndless:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
+end
+
+function V3a1_GaoSiNiao_LevelView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(self:_actId()) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function V3a1_GaoSiNiao_LevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function V3a1_GaoSiNiao_LevelView:ctor(...)
@@ -85,6 +114,7 @@ end
 
 function V3a1_GaoSiNiao_LevelView:_editableInitView()
 	self._btnEndlessGo = self._btnEndless.gameObject
+	self.config = ActivityConfig.instance:getActivityCo(self:_actId())
 	self._gotaskani = gohelper.findChild(self.viewGO, "#btn_task/ani")
 	self._animTask = self._gotaskani:GetComponent(typeof(UnityEngine.Animator))
 

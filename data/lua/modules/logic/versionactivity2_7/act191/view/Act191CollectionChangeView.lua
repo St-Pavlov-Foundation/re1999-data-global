@@ -167,9 +167,13 @@ function Act191CollectionChangeView:initAddItem()
 end
 
 function Act191CollectionChangeView:refreshUI()
-	local stageIndex = tonumber(lua_activity191_stage.configDict[self.actId][self.gameInfo.curStage].name)
+	local stageCo = Activity191Config.instance:getStageCfg(self.actId, self.gameInfo.curStage)
 
-	self.maxAddCnt = self.maxCntParams[stageIndex][2] - self.nodeDetailMo.replaceNum
+	if stageCo then
+		local stageIndex = tonumber(stageCo.name)
+
+		self.maxAddCnt = self.maxCntParams[stageIndex][2] - self.nodeDetailMo.replaceNum
+	end
 
 	self:refreshCollectionItem()
 	self:refreshLeftTimes()

@@ -2065,6 +2065,10 @@ function SkinOffsetAdjustView:onClose()
 	module_views.CharacterGetView.viewType = ViewType.Normal
 
 	logError("偏移编辑器修改了部分界面的参数，关闭偏移编辑器后应重开游戏再体验！！！")
+
+	CharacterVoiceEnum.RTSizeLegacy = false
+
+	NavigateButtonsView.homeClick()
 end
 
 function SkinOffsetAdjustView:removeDragListener(drag)

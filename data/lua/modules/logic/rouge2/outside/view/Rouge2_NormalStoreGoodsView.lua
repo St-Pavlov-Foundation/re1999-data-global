@@ -195,10 +195,10 @@ function Rouge2_NormalStoreGoodsView:onOpen()
 end
 
 function Rouge2_NormalStoreGoodsView:refreshUI()
-	local itemCo, itemIcon = ItemModel.instance:getItemConfigAndIcon(self.itemType, self.itemId)
+	local itemCo, itemIcon = ItemModel.instance:getItemConfigAndIcon(self.itemType, self.itemId, true)
 
 	self._txtgoodsNameCn.text = itemCo.name
-	self._txtgoodsDesc.text = itemCo.desc
+	self._txtgoodsDesc.text = self.itemType == MaterialEnum.MaterialType.Hero and itemCo.desc2 or itemCo.desc
 	self._txtgoodsUseDesc.text = itemCo.useDesc
 
 	if tonumber(self.itemType) == MaterialEnum.MaterialType.Equip then

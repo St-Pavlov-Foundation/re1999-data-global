@@ -8,5 +8,15 @@
     "id": 102,
     "desc": "language_10100921",
     "endingStoryId": 603202
+  },
+  {
+    "id": 103,
+    "desc": "language_10125269",
+    "endingStoryId": 603701
+  },
+  {
+    "id": 104,
+    "desc": "language_10125270",
+    "endingStoryId": 603702
   }
 ]

@@ -497,4 +497,16 @@ function WaitGuideActionOpenViewWithCondition.checkAbyssStateFinish()
 	return false
 end
 
+function WaitGuideActionOpenViewWithCondition.enterTowerFirstMap()
+	return TowerV3a7Model.instance:inFirstMap()
+end
+
+function WaitGuideActionOpenViewWithCondition.enterEchoSong(id)
+	return V3a8EchoSongModel.instance:getGameId() == tonumber(id)
+end
+
+function WaitGuideActionOpenViewWithCondition.checkAtomicDungeonUnlock()
+	return AtomicDungeonController.instance:isUnlockDungeon()
+end
+
 return WaitGuideActionOpenViewWithCondition

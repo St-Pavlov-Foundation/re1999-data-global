@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1000101,
+    "name": "language_10128412",
+    "tips": "language_10128413",
+    "pic": "sodache_difficult_btn_4",
+    "price": "10000000:12000",
+    "skillIds": ""
+  },
+  {
+    "id": 1000102,
+    "name": "language_10128414",
+    "tips": "language_10128415",
+    "pic": "sodache_difficult_btn_3",
+    "price": "10000000:8000",
+    "skillIds": ""
+  },
+  {
+    "id": 1000103,
+    "name": "language_10128416",
+    "tips": "language_10128417",
+    "pic": "sodache_difficult_btn_2",
+    "price": "10000000:5000",
+    "skillIds": ""
+  },
+  {
+    "id": 1000104,
+    "name": "language_10128418",
+    "tips": "language_10128419",
+    "pic": "sodache_difficult_btn_1",
+    "price": "",
+    "skillIds": ""
+  },
+  {
+    "id": 2000101,
+    "name": "language_10128420",
+    "tips": "language_10128413",
+    "pic": "sodache_difficult_btn_4",
+    "price": "10000000:20000",
+    "skillIds": ""
+  },
+  {
+    "id": 2000102,
+    "name": "language_10128412",
+    "tips": "language_10128415",
+    "pic": "sodache_difficult_btn_3",
+    "price": "10000000:12000",
+    "skillIds": ""
+  },
+  {
+    "id": 2000103,
+    "name": "language_10128421",
+    "tips": "language_10128417",
+    "pic": "sodache_difficult_btn_2",
+    "price": "10000000:8000",
+    "skillIds": ""
+  },
+  {
+    "id": 2000104,
+    "name": "language_10128416",
+    "tips": "language_10128419",
+    "pic": "sodache_difficult_btn_1",
+    "price": "10000000:5000",
+    "skillIds": ""
+  },
+  {
+    "id": 9000001,
+    "name": "language_10128414",
+    "tips": "language_10128415",
+    "pic": "sodache_difficult_btn_3",
+    "price": "10000000:3000",
+    "skillIds": "50"
+  }
+]

@@ -46,6 +46,7 @@ function MainHeroView:onOpen()
 	self:addEventCb(MainController.instance, MainEvent.OnShowMainThumbnailView, self._onShowMainThumbnailView, self)
 	self:addEventCb(MainController.instance, MainEvent.SetMainViewRootVisible, self._setViewRootVisible, self)
 	self:addEventCb(MainController.instance, MainEvent.ForceStopVoice, self._forceStopVoice, self)
+	self:addEventCb(MainController.instance, MainEvent.SetHeroInScene, self._onSetHeroInScene, self)
 	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.StartSwitchScene, self._onStartSwitchScene, self, LuaEventSystem.High)
 	self:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchSceneFinish, self._onSwitchSceneFinish, self)
 	self:addEventCb(StoryController.instance, StoryEvent.Start, self._onStart, self)
@@ -56,6 +57,15 @@ function MainHeroView:onOpen()
 	self:addEventCb(LoginController.instance, LoginEvent.OnBeginLogout, self._onBeginLogout, self)
 	self:addEventCb(PlayerCardController.instance, PlayerCardEvent.RefreshMainHeroSkin, self._onRefreshMainHeroSkin, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.MainHeroGmPlayVoice, self._onMainHeroGmPlayVoice, self)
+	self:addEventCb(CharacterVoiceController.instance, CharacterVoiceEvent.XRAnInteractionStart, self._onXRAnInteractionStart, self)
+
+	local canvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+
+	self._canvasGroupForVoice = canvasGroup
+end
+
+function MainHeroView:_onXRAnInteractionStart()
+	self._animator:Play("mainview_out", 0, 0)
 end
 
 function MainHeroView:_onMainHeroGmPlayVoice(voiceId)
@@ -81,7 +91,15 @@ function MainHeroView:_onScreenResize()
 end
 
 function MainHeroView:_onStart(storyId)
+	if CharacterVoiceEnum.MainViewIgnoreStory[storyId] then
+		return
+	end
+
 	if self._lightSpine then
+		if not self._showInScene then
+			self:_setStencil(true)
+		end
+
 		self._isSpineCleared = true
 
 		self:_onStopVoice()
@@ -96,6 +114,10 @@ function MainHeroView:_onStart(storyId)
 end
 
 function MainHeroView:_onFinish(storyId)
+	if CharacterVoiceEnum.MainViewIgnoreStory[storyId] then
+		return
+	end
+
 	if not self._isSpineCleared then
 		return
 	end
@@ -297,6 +319,11 @@ function MainHeroView:_initFrame()
 end
 
 function MainHeroView:_editableInitView()
+	local canvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+
+	self._canvasGroup = canvasGroup
+	self._canvasGroupForVoice = canvasGroup
+
 	self:_clearTrackMainHeroInteractionData()
 	self:_enableKeyword()
 
@@ -1068,6 +1095,90 @@ function MainHeroView:_onStopVoice()
 	end
 end
 
+function MainHeroView:_initVoiceEffects(config)
+	if string.nilorempty(config.effects) then
+		return
+	end
+
+	self:_resetVoiceEffects()
+
+	local voiceEffects = string.splitToNumber(config.effects, "|")
+	local effectParams = GameUtil.splitString2(config.effectParams, true, "|", "#")
+
+	self._voiceEffects = {}
+
+	local lang
+
+	if AudioConfig.instance:getAudioCOById(config.audio) then
+		lang = AudioMgr.instance:getLangByAudioId(config.audio)
+	else
+		lang = AudioMgr.instance:getCurLang()
+	end
+
+	local targetIndex = GameLanguageMgr.instance:getStoryIndexByShortCut(lang)
+
+	for i, effectType in ipairs(voiceEffects) do
+		local duration = effectParams[i][targetIndex]
+
+		if duration then
+			self._voiceEffects[effectType] = {
+				endTime = Time.time + duration
+			}
+
+			if effectType == CharacterVoiceEnum.EffectsType.HideMainView then
+				self._animator:Play("mainview_out", 0, 0)
+			elseif effectType == CharacterVoiceEnum.EffectsType.RestrictedInteraction then
+				self._canvasGroupForVoice.blocksRaycasts = false
+			end
+		else
+			logError(string.format("MainHeroView _initVoiceEffects duration is nil for audio:%s effectType %s targetIndex:%s", config.audio, effectType, targetIndex))
+		end
+	end
+
+	TaskDispatcher.cancelTask(self._frameCheckVoiceEffect, self)
+	TaskDispatcher.runRepeat(self._frameCheckVoiceEffect, self, 0)
+end
+
+function MainHeroView:_frameCheckVoiceEffect()
+	if not self._voiceEffects then
+		TaskDispatcher.cancelTask(self._frameCheckVoiceEffect, self)
+
+		return
+	end
+
+	for k, v in pairs(self._voiceEffects) do
+		if Time.time >= v.endTime then
+			if k == CharacterVoiceEnum.EffectsType.HideMainView then
+				self._animator:Play("mainview_in", 0, 0)
+			elseif k == CharacterVoiceEnum.EffectsType.RestrictedInteraction then
+				self._canvasGroupForVoice.blocksRaycasts = true
+			end
+
+			self._voiceEffects[k] = nil
+		end
+	end
+
+	if next(self._voiceEffects) == nil then
+		TaskDispatcher.cancelTask(self._frameCheckVoiceEffect, self)
+	end
+end
+
+function MainHeroView:_resetVoiceEffects()
+	if not self._voiceEffects then
+		return
+	end
+
+	if self._voiceEffects[CharacterVoiceEnum.EffectsType.HideMainView] then
+		self._animator:Play("mainview_in", 0, 0)
+	end
+
+	if self._voiceEffects[CharacterVoiceEnum.EffectsType.RestrictedInteraction] then
+		self._canvasGroupForVoice.blocksRaycasts = true
+	end
+
+	self._voiceEffects = nil
+end
+
 function MainHeroView:playVoice(config)
 	if not self._lightSpine then
 		return
@@ -1080,6 +1191,7 @@ function MainHeroView:playVoice(config)
 	self:_onStopVoice()
 
 	if self._skinInteraction then
+		self:_initVoiceEffects(config)
 		self._skinInteraction:onPlayVoice(config)
 	end
 
@@ -1274,6 +1386,12 @@ function MainHeroView:_setShowInScene(showInScene)
 	end
 
 	MainController.instance:dispatchEvent(MainEvent.HeroShowInScene, self._showInScene)
+end
+
+function MainHeroView:_onSetHeroInScene(showInScene)
+	if self._showInScene ~= showInScene then
+		self:_setShowInScene(showInScene)
+	end
 end
 
 function MainHeroView:debugShowMode(showInScene)
@@ -1525,6 +1643,10 @@ end
 
 function MainHeroView:onClose()
 	if self._lightSpine then
+		if not self._showInScene then
+			self:_setStencil(true)
+		end
+
 		self._lightSpine:doDestroy()
 
 		self._lightSpine = nil
@@ -1552,6 +1674,7 @@ function MainHeroView:onClose()
 	TaskDispatcher.cancelTask(self._hideLightSpineVisible, self)
 	TaskDispatcher.cancelTask(self._setSpineScale, self)
 	TaskDispatcher.cancelTask(self._delayInitLightSpine, self)
+	TaskDispatcher.cancelTask(self._frameCheckVoiceEffect, self)
 	self:_resetPostProcessValue()
 	self:_clearEvents()
 end

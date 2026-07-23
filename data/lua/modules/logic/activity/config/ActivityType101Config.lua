@@ -221,6 +221,16 @@ function ActivityType101Config:getVersionSummonActIdList()
 	return ActivityConfig.instance:getConstAsNumList(6, "#", {})
 end
 
+function ActivityType101Config:getConst(id, fallback)
+	local CO = _constCO(id)
+
+	if not CO then
+		return fallback
+	end
+
+	return CO.strValue
+end
+
 function ActivityType101Config:getConstAsNum(id, fallback)
 	local CO = _constCO(id)
 

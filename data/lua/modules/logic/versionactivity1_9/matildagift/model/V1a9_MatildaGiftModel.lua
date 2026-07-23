@@ -5,7 +5,7 @@ module("modules.logic.versionactivity1_9.matildagift.model.V1a9_MatildaGiftModel
 local V1a9_MatildaGiftModel = class("V1a9_MatildaGiftModel", BaseModel)
 
 function V1a9_MatildaGiftModel:getMatildagiftActId()
-	return ActivityEnum.Activity.V2a8_Matildagift
+	return ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.Gifg5StarCharacter, ActivityEnum.Activity.V2a8_Matildagift)
 end
 
 function V1a9_MatildaGiftModel:isMatildaGiftOpen(notOpenToast)

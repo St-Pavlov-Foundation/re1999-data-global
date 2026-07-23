@@ -4,13 +4,39 @@
     "audioId": 320027,
     "storePrefab": "bpfaceview2",
     "openAudioId": 0,
-    "closeAudioId": 0
+    "closeAudioId": 0,
+    "online": 0
   },
   {
     "skinId": 309504,
     "audioId": 330010,
     "storePrefab": "bpface_skinfestivalview",
     "openAudioId": 330009,
-    "closeAudioId": 330011
+    "closeAudioId": 330011,
+    "online": 0
+  },
+  {
+    "skinId": 312803,
+    "audioId": 0,
+    "storePrefab": "bpface_skintaluoview",
+    "openAudioId": 0,
+    "closeAudioId": 0,
+    "online": 0
+  },
+  {
+    "skinId": 309203,
+    "audioId": 0,
+    "storePrefab": "bpface_skintaluoview",
+    "openAudioId": 0,
+    "closeAudioId": 0,
+    "online": 0
+  },
+  {
+    "skinId": 312606,
+    "audioId": 0,
+    "storePrefab": "bpface_skintaluoview",
+    "openAudioId": 0,
+    "closeAudioId": 0,
+    "online": 1
   }
 ]

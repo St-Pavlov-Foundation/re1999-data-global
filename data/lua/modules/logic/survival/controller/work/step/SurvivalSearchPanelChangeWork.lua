@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalSearchPanelChangeWor
 
 local SurvivalSearchPanelChangeWork = class("SurvivalSearchPanelChangeWork", SurvivalStepBaseWork)
 
-function SurvivalSearchPanelChangeWork:onStart(context)
+function SurvivalSearchPanelChangeWork:onStart2(context)
 	local t = {
 		items = self._stepMo.items,
 		panelUid = self._stepMo.paramLong[1],

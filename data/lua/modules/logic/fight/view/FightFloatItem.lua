@@ -228,16 +228,7 @@ function FightFloatItem:_floatTotal(content, param, isAssassinate)
 	gohelper.setActive(childRoot, from_entity and def_entity)
 
 	if from_entity and def_entity then
-		local attackerMO = from_entity:getMO()
-		local defenderMO = def_entity:getMO()
-		local attackerCO = attackerMO and attackerMO:getCO()
-		local defenderCO = defenderMO and defenderMO:getCO()
-		local career1 = attackerCO and attackerCO.career or 0
-		local career2 = defenderCO and defenderCO.career or 0
-		local restrain = FightConfig.instance:getRestrain(career1, career2) or 1000
-		local tar_index
-
-		tar_index = restrain == 1000 and 3 or restrain > 1000 and 1 or 2
+		local tar_index = param.isRestrain and 1 or 3
 
 		for i = 1, 3 do
 			local text = gohelper.findChildText(self._typeGO, "x/txtNum" .. i)

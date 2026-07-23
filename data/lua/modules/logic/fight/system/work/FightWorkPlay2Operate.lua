@@ -9,7 +9,15 @@ function FightWorkPlay2Operate:onConstructor(isStart, isClothSkill)
 	self.isClothSkill = isClothSkill
 end
 
+function FightWorkPlay2Operate:dispatchAfterEffectWorkDoneEvent()
+	FightController.instance:dispatchEvent(FightEvent.AfterEffectWorkDone)
+end
+
 function FightWorkPlay2Operate:onStart()
+	if FightScene.isLowMemory then
+		FightHelper.clearNoUseEffect()
+	end
+
 	FightGameMgr.checkCrashMgr:play2Operate()
 	FightViewPartVisible.set(true, true, true, false, false)
 
@@ -22,6 +30,8 @@ function FightWorkPlay2Operate:onStart()
 	if not self.isClothSkill then
 		flow:registWork(FightWorkRefreshEnemyAiUseCard)
 	end
+
+	flow:addWork(FunctionWork.New(self.dispatchAfterEffectWorkDoneEvent, self))
 
 	if FightDataHelper.stateMgr.isReplay then
 		self:playWorkAndDone(flow)
@@ -50,10 +60,15 @@ function FightWorkPlay2Operate:onStart()
 	local guiding = FightMsgMgr.sendMsg(FightMsgId.CheckGuideBeforeOperate)
 
 	if guiding then
-		flow:registWork(FightWorkFunction, self.isGuiding, self)
-		self:playWorkAndDone(flow)
+		if guiding == 37100 then
+			flow:registWork(FightWorkSendMsg, FightMsgId.ContinueGuideBeforeOperate)
+			flow:registWork(FightWorkWaitEvent, FightEvent.Wait37100GuideEndEvent)
+		else
+			flow:registWork(FightWorkFunction, self.isGuiding, self)
+			self:playWorkAndDone(flow)
 
-		return
+			return
+		end
 	end
 
 	local curRoundId = FightModel.instance:getCurRoundId()
@@ -63,12 +78,14 @@ function FightWorkPlay2Operate:onStart()
 	if FightDataHelper.stateMgr:getIsAuto() then
 		flow:registWork(FightWorkRequestAutoFight)
 	else
+		flow:registWork(FightWork3_7BossQte)
 		flow:registWork(FightWorkCheckUseAiJiAoQte)
 		flow:registWork(FightWorkClearAiJiAoQteTempData)
 		flow:registWork(FightWorkCheckNewSeasonSubSkill)
 		flow:registWork(FightWorkCheckNaNaBindContract)
 		flow:registWork(FightWorkCheckLuXiHeroUpgrade)
 		flow:registWork(FightWorkBLESelectCrystal)
+		flow:registWork(FightWorkSSWLSelectCard)
 		flow:registWork(FightWorkSelectBattleEvent)
 		flow:registWork(FightWorkFunction, FightDataHelper.tempMgr.clearBattleSelectCount, FightDataHelper.tempMgr)
 	end

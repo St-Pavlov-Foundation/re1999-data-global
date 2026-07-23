@@ -41,5 +41,7 @@ SummonEvent.onReceiveSummonReply = 2002
 SummonEvent.onSummonPoolPackageRedDotChange = 3003
 SummonEvent.onLimitationReplicationSelectHero = 4001
 SummonEvent.onSummonInfallibleStatusChange = 5001
+SummonEvent.onSummonOptionalProgressRewards = 5002
+SummonEvent.onSummonPoolPackageProp = 5003
 
 return SummonEvent

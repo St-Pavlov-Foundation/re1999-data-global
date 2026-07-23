@@ -12,6 +12,8 @@ function ArcadeCharacterWork:ctor()
 		[ArcadeGameEnum.PlayerActType.UseBomb] = self._onUseBomb
 	}
 	self._attackTargetSelector = ArcadeSkillTargetLinkColor.New()
+
+	self._attackTargetSelector:setOwner(ArcadeGameEnum.EntityType.Character)
 end
 
 function ArcadeCharacterWork:onStart(room)
@@ -187,8 +189,12 @@ function ArcadeCharacterWork:_onUseBomb(actParam)
 
 	local characterId = characterMO:getId()
 	local bombId = ArcadeConfig.instance:getCharacterBomb(characterId)
+	local direction = characterMO:getDirection()
 
-	ArcadeGameController.instance:placeBomb(bombId, actParam.targetGridX, actParam.targetGridY)
+	ArcadeGameController.instance:playerPlaceBomb(bombId, actParam.targetGridX, actParam.targetGridY, {
+		isCharacterBomb = true,
+		direction = direction
+	})
 	ArcadeStatHelper.instance:AddUseBoomTimes()
 	self:_actionFinish()
 end
@@ -199,7 +205,7 @@ end
 
 function ArcadeCharacterWork:_endCharacterWork(isNegativeAct)
 	ArcadeGameController.instance:endPlayerTurn()
-	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.Character803, ArcadeGameModel.instance:getCharacterMO())
+	ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.Character803, ArcadeGameModel.instance:getCharacterMO())
 
 	local masterMOList = ArcadeGameModel.instance:getMonsterList()
 

@@ -28,6 +28,7 @@ function SummonMainCharacterNewbie:onInitView()
 	self._simagetips1 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/tips/#simage_tips1")
 	self._simagetips2 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/tips/#simage_tips2")
 	self._simagetips3 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/tips/#simage_tips3")
+	self._imagetips4 = gohelper.findChildSingleImage(self.viewGO, "#go_ui/tips/#image_tips4")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -107,46 +108,7 @@ function SummonMainCharacterNewbie:_btnsummon1OnClick()
 		return
 	end
 
-	local curPool = SummonMainModel.instance:getCurPool()
-
-	if not curPool then
-		return
-	end
-
-	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost1)
-	local param = {}
-
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
-	param.callback = self._summon1Confirm
-	param.callbackObj = self
-	param.notEnough = false
-
-	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
-	local itemEnough = cost_num <= num
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not itemEnough and currencyNum < everyCostCount then
-		param.notEnough = true
-	end
-
-	if itemEnough then
-		param.needTransform = false
-
-		self:_summon1Confirm()
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = everyCostCount
-		param.miss_quantity = 1
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon1Action()
 end
 
 function SummonMainCharacterNewbie:_summon1Confirm()
@@ -160,51 +122,7 @@ function SummonMainCharacterNewbie:_summon1Confirm()
 end
 
 function SummonMainCharacterNewbie:_btnsummon10OnClick()
-	local curPool = SummonMainModel.instance:getCurPool()
-
-	if not curPool then
-		return
-	end
-
-	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.getCostByConfig(curPool.cost10)
-	local maxGachaTimes = 10
-	local param = {}
-
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
-	param.callback = self._summon10Confirm
-	param.callbackObj = self
-	param.notEnough = false
-	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
-
-	local itemEnough = cost_num <= ownNum
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local remainCount = maxGachaTimes - ownNum
-	local costRemain = everyCostCount * remainCount
-
-	param.gachaTimes = maxGachaTimes
-
-	if not itemEnough and currencyNum < costRemain then
-		param.notEnough = true
-	end
-
-	if itemEnough then
-		param.needTransform = false
-
-		self:_summon10Confirm(param)
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = costRemain
-		param.miss_quantity = remainCount
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon10Action()
 end
 
 function SummonMainCharacterNewbie:_summon10Confirm(param)
@@ -251,6 +169,10 @@ function SummonMainCharacterNewbie:_editableInitView()
 		table.insert(self._characteritems, characteritem)
 		characteritem.btndetail:AddClickListener(SummonMainCharacterNewbie._onClickDetailByIndex, self, i)
 	end
+
+	gohelper.setActive(self._imagetips4, false)
+
+	self._txtProgress = gohelper.findChildTextMesh(self.viewGO, "#go_ui/tips/txt1")
 
 	local summontxt1 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon1/text")
 	local summontxt10 = gohelper.findChildText(self.viewGO, "#go_ui/summonbtns/summon10/text")
@@ -304,6 +226,7 @@ function SummonMainCharacterNewbie:_refreshPoolUI()
 	local times = SummonConfig.getSummonSSRTimes(pool) or "-"
 	local curTimes = SummonMainModel.instance:getNewbieProgress() or "-"
 
+	self._txtProgress.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("V3a8_Summon_Newbie_Progress_Desc"), times)
 	self._txtsummonnum.text = string.format("%s/%s", curTimes, times)
 
 	self:showSummonPool(pool)

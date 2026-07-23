@@ -1,0 +1,35 @@
+[
+  {
+    "id": 37101,
+    "levelId": 32453703,
+    "bossIcon": "rouge2_bossbattle_monster_1",
+    "tabIcon": "rouge2_save_boss_1",
+    "tag": "",
+    "battleInfo": "language_10121187",
+    "reward": "371011#371012#371013",
+    "resultBossIcon": "rouge2_bossbattle_monster_1",
+    "resultTitleIcon": "v3a2_bossrush_leveldetail_boss1titlebg"
+  },
+  {
+    "id": 37102,
+    "levelId": 32453701,
+    "bossIcon": "rouge2_bossbattle_monster_2",
+    "tabIcon": "rouge2_save_boss_2",
+    "tag": "",
+    "battleInfo": "language_10121188",
+    "reward": "371021#371022#371023",
+    "resultBossIcon": "rouge2_bossbattle_monster_2",
+    "resultTitleIcon": "v3a2_bossrush_leveldetail_boss1titlebg"
+  },
+  {
+    "id": 37103,
+    "levelId": 32453702,
+    "bossIcon": "rouge2_bossbattle_monster_3",
+    "tabIcon": "rouge2_save_boss_3",
+    "tag": "",
+    "battleInfo": "language_10121189",
+    "reward": "371031#371032#371033",
+    "resultBossIcon": "rouge2_bossbattle_monster_3",
+    "resultTitleIcon": "v3a2_bossrush_leveldetail_boss1titlebg"
+  }
+]

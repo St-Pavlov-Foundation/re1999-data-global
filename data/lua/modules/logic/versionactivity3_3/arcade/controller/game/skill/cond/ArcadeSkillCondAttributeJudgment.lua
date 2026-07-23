@@ -3,7 +3,6 @@
 module("modules.logic.versionactivity3_3.arcade.controller.game.skill.cond.ArcadeSkillCondAttributeJudgment", package.seeall)
 
 local ArcadeSkillCondAttributeJudgment = class("ArcadeSkillCondAttributeJudgment", ArcadeSkillCondBase)
-local JudgmentOperator = {}
 
 function ArcadeSkillCondAttributeJudgment:onCtor()
 	local params = self._params
@@ -17,17 +16,18 @@ end
 function ArcadeSkillCondAttributeJudgment:onIsCondSuccess()
 	logNormal("ArcadeSkillCondAttributeJudgment:isCondSuccess() == > 特定属性的数值大于等于/小于等于X时，则触发")
 
-	local opFunc = JudgmentOperator[self._opName]
+	local JudgmentOperator = {
+		"gtet",
+		"ltet"
+	}
+	local opStr = JudgmentOperator[self._opName] or self._opName
+	local compareFunc = ArcadeGameHelper.getCompareFunc(opStr)
 
-	if opFunc then
-		if opFunc(self:_getAttrValue(self._context.target), self._value) then
-			return true
-		end
-	else
-		logError(string.format("技能id：[%s]配置运算符错误。运算符：2 小于等于；1 大于等于", self._context and self._context.skillId))
+	if compareFunc then
+		local attrValue = self:_getAttrValue(self._context.target)
+
+		return compareFunc(attrValue, self._value)
 	end
-
-	return false
 end
 
 function ArcadeSkillCondAttributeJudgment:_getAttrValue(unitMO)
@@ -37,28 +37,5 @@ function ArcadeSkillCondAttributeJudgment:_getAttrValue(unitMO)
 
 	return unitMO:getAttributeValue(self._attrId)
 end
-
-function JudgmentOperator.lt(a, b)
-	return a < b
-end
-
-function JudgmentOperator.gt(a, b)
-	return b < a
-end
-
-function JudgmentOperator.et(a, b)
-	return a == b
-end
-
-function JudgmentOperator.ltet(a, b)
-	return a <= b
-end
-
-function JudgmentOperator.gtet(a, b)
-	return b <= a
-end
-
-JudgmentOperator[1] = JudgmentOperator.gtet
-JudgmentOperator[2] = JudgmentOperator.ltet
 
 return ArcadeSkillCondAttributeJudgment

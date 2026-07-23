@@ -2,7 +2,7 @@
 
 module("modules.logic.necrologiststory.config.NecrologistStoryV3A2Config", package.seeall)
 
-local NecrologistStoryV3A2Config = class("NecrologistStoryV3A2Config", BaseConfig)
+local NecrologistStoryV3A2Config = class("NecrologistStoryV3A2Config", NecrologistStoryVersionConfigBase)
 
 function NecrologistStoryV3A2Config:ctor()
 	return
@@ -13,15 +13,6 @@ function NecrologistStoryV3A2Config:reqConfigNames()
 		"hero_story_mode_v3a2_item",
 		"hero_story_mode_v3a2_base"
 	}
-end
-
-function NecrologistStoryV3A2Config:onConfigLoaded(configName, configTable)
-	local loadFuncName = string.format("onLoad%s", configName)
-	local func = self[loadFuncName]
-
-	if func then
-		func(self, configTable)
-	end
 end
 
 function NecrologistStoryV3A2Config:onLoadhero_story_mode_v3a2_item(configTable)

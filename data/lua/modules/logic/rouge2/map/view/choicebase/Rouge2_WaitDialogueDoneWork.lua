@@ -11,6 +11,7 @@ function Rouge2_WaitDialogueDoneWork:onStart()
 		return self:onDone(true)
 	end
 
+	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.onPlayDialogueDone, self._onDialogueDone, self)
 	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.onDialogueFlowDone, self._onDialogueDone, self)
 end
 
@@ -19,6 +20,7 @@ function Rouge2_WaitDialogueDoneWork:_onDialogueDone()
 end
 
 function Rouge2_WaitDialogueDoneWork:clearWork()
+	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.onPlayDialogueDone, self._onDialogueDone, self)
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.onDialogueFlowDone, self._onDialogueDone, self)
 end
 

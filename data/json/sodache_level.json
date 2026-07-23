@@ -1,0 +1,98 @@
+[
+  {
+    "level": 1,
+    "cosume": 0,
+    "desc": "",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 2,
+    "cosume": 30,
+    "desc": "language_10128724",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 3,
+    "cosume": 130,
+    "desc": "language_10128725",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 4,
+    "cosume": 270,
+    "desc": "language_10128726",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 5,
+    "cosume": 450,
+    "desc": "language_10128727",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": "30013#50#0"
+  },
+  {
+    "level": 6,
+    "cosume": 670,
+    "desc": "language_10128728",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 7,
+    "cosume": 930,
+    "desc": "language_10128729",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  },
+  {
+    "level": 8,
+    "cosume": 1230,
+    "desc": "language_10128730",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": "40004#-100#0"
+  },
+  {
+    "level": 9,
+    "cosume": 1570,
+    "desc": "language_10128731",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": "30013#50#0"
+  },
+  {
+    "level": 10,
+    "cosume": 1950,
+    "desc": "language_10128732",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": "40004#-100#0"
+  },
+  {
+    "level": 11,
+    "cosume": 2370,
+    "desc": "language_10128733",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": "30013#100#0"
+  },
+  {
+    "level": 12,
+    "cosume": 2830,
+    "desc": "language_10128734",
+    "effect": "",
+    "effectDesc": "",
+    "globalAttri": ""
+  }
+]

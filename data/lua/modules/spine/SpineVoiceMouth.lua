@@ -198,7 +198,7 @@ function SpineVoiceMouth:_playMouthActionList(mouth)
 				end
 
 				if self._autoBizui and mouthEnd ~= mouthStart then
-					self:_addMouthBizui(false, lastMouthEnd, mouthStart)
+					self:_addMouthBizui(false, lastMouthEnd, mouthStart, true)
 				end
 
 				self:_addMouth(i == count and not self._autoBizui, mouthAction, mouthStart, mouthEnd)
@@ -235,6 +235,10 @@ function SpineVoiceMouth:_checkMouthParam(param)
 end
 
 function SpineVoiceMouth:_addMouth(lastOne, mouthAction, mouthStart, mouthEnd)
+	if not mouthStart or not mouthEnd then
+		return
+	end
+
 	local function startCallback()
 		if self._spine then
 			self._curMouth = "t_" .. mouthAction
@@ -256,7 +260,7 @@ function SpineVoiceMouth:_addMouth(lastOne, mouthAction, mouthStart, mouthEnd)
 
 			if lastOne then
 				self:stopMouthCallback()
-			else
+			elseif not self._autoBizui then
 				self:stopMouthCallback(true)
 			end
 		end
@@ -268,7 +272,11 @@ function SpineVoiceMouth:_addMouth(lastOne, mouthAction, mouthStart, mouthEnd)
 	TaskDispatcher.runDelay(stopCallback, nil, mouthEnd)
 end
 
-function SpineVoiceMouth:_addMouthBizui(lastOne, mouthStart, mouthEnd)
+function SpineVoiceMouth:_addMouthBizui(lastOne, mouthStart, mouthEnd, skipStop)
+	if mouthStart == mouthEnd or not mouthStart or not mouthEnd then
+		return
+	end
+
 	local function startCallback()
 		if self._spine then
 			local curFace = self._spine:getCurFace()
@@ -291,6 +299,13 @@ function SpineVoiceMouth:_addMouthBizui(lastOne, mouthStart, mouthEnd)
 		end
 	end
 
+	table.insert(self._mouthDelayCallbackList, startCallback)
+	TaskDispatcher.runDelay(startCallback, nil, mouthStart)
+
+	if skipStop then
+		return
+	end
+
 	local stopCallback
 
 	function stopCallback()
@@ -309,9 +324,7 @@ function SpineVoiceMouth:_addMouthBizui(lastOne, mouthStart, mouthEnd)
 		end
 	end
 
-	table.insert(self._mouthDelayCallbackList, startCallback)
 	table.insert(self._mouthStopDelayCallbackList, stopCallback)
-	TaskDispatcher.runDelay(startCallback, nil, mouthStart)
 	TaskDispatcher.runDelay(stopCallback, nil, mouthEnd)
 end
 
@@ -407,6 +420,10 @@ end
 function SpineVoiceMouth:removeTaskActions()
 	self:_stopMouthRepeat()
 	self:_clearAutoMouthCallback()
+end
+
+function SpineVoiceMouth:suspend()
+	self:removeTaskActions()
 end
 
 return SpineVoiceMouth

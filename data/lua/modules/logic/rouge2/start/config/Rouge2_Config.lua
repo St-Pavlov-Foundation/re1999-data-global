@@ -45,6 +45,7 @@ function Rouge2_Config:reqConfigNames()
 		"rouge2_const",
 		"rouge2_difficulty",
 		"rouge2_result",
+		"rouge2_result_assess",
 		"rouge2_badge",
 		"rouge2_ending",
 		"rouge2_technique"
@@ -68,6 +69,8 @@ function Rouge2_Config:onConfigLoaded(configName, configTable)
 		self._endingConfig = configTable
 	elseif configName == "rouge2_technique" then
 		self.techniqueConfig = configTable
+	elseif configName == "rouge2_result_assess" then
+		self:_onLoadResultAssessConfig(configTable)
 	end
 end
 
@@ -87,6 +90,28 @@ function Rouge2_Config:_onLoadDifficultyConfig(configTable)
 
 		self._preDifficulty2CoDict[preDifficulty] = self.difficultyConfig.configDict[preDifficulty] or nil
 	end
+end
+
+function Rouge2_Config:_onLoadResultAssessConfig(configTable)
+	self._assessCoNum = 0
+	self._assessCoList = {}
+	self._score2AssessCoMap = {}
+
+	for _, assessCo in ipairs(configTable.configList) do
+		local needScore = assessCo.needScore
+
+		self._score2AssessCoMap[needScore] = assessCo
+
+		table.insert(self._assessCoList, assessCo)
+
+		self._assessCoNum = self._assessCoNum + 1
+	end
+
+	table.sort(self._assessCoList, self._sortAssessConfigFunc)
+end
+
+function Rouge2_Config._sortAssessConfigFunc(aAssessCo, bAssessCo)
+	return aAssessCo.level < bAssessCo.level
 end
 
 function Rouge2_Config:getDifficultyCoList()
@@ -193,6 +218,19 @@ function Rouge2_Config:getTechniqueIdList()
 	end
 
 	return result
+end
+
+function Rouge2_Config:getAssessConfigByScore(score)
+	for i = 1, self._assessCoNum do
+		local assessCo = self._assessCoList[i]
+		local needScore = assessCo and assessCo.needScore or 0
+
+		if score < needScore then
+			return self._assessCoList[i - 1]
+		end
+	end
+
+	return self._assessCoList and self._assessCoList[self._assessCoNum]
 end
 
 Rouge2_Config.instance = Rouge2_Config.New()

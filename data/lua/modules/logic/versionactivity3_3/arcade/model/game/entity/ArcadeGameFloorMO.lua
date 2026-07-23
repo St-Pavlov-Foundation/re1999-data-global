@@ -6,34 +6,13 @@ local ArcadeGameFloorMO = class("ArcadeGameFloorMO", ArcadeGameBaseUnitMO)
 
 function ArcadeGameFloorMO:onCtor()
 	self._curCdRound = 0
-	self._config = ArcadeConfig.instance:getSkillFloorCfg(self.id, true)
 	self._entityType = ArcadeGameEnum.EntityType.Floor
 
-	if self._config and self._config.skill then
-		self._skillSetMO:addSkillById(self._config.skill)
+	local skill = ArcadeConfig.instance:getFloorSkill(self.id)
+
+	if skill then
+		self._skillSetMO:addSkillById(skill)
 	end
-end
-
-function ArcadeGameFloorMO:getCfg()
-	return self._config
-end
-
-function ArcadeGameFloorMO:getSize()
-	return 1, 1
-end
-
-function ArcadeGameFloorMO:getRes()
-	local cfg = self:getCfg()
-
-	if cfg and not string.nilorempty(cfg.resPath) then
-		return ResUrl.getArcadeSceneRes(cfg.resPath)
-	end
-
-	return nil
-end
-
-function ArcadeGameFloorMO:getCdRound()
-	return self._curCdRound
 end
 
 function ArcadeGameFloorMO:setCdRound(round)
@@ -44,8 +23,30 @@ function ArcadeGameFloorMO:setCdRound(round)
 	end
 end
 
+function ArcadeGameFloorMO:getCfg()
+	local cfg = ArcadeConfig.instance:getFloorCfg(self.id, true)
+
+	return cfg
+end
+
+function ArcadeGameFloorMO:getSize()
+	if not self._sizeX then
+		self._sizeX, self._sizeY = ArcadeConfig.instance:getFloorSize(self.id)
+	end
+
+	return self._sizeX, self._sizeY
+end
+
+function ArcadeGameFloorMO:getRes()
+	return ArcadeConfig.instance:getFloorRes(self.id)
+end
+
+function ArcadeGameFloorMO:getCdRound()
+	return self._curCdRound
+end
+
 function ArcadeGameFloorMO:getLimitRound()
-	return self._config and self._config.limitRound or -1
+	return ArcadeConfig.instance:getFloorLimitRound(self.id)
 end
 
 return ArcadeGameFloorMO

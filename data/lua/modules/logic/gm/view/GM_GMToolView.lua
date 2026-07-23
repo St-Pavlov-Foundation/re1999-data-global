@@ -113,6 +113,14 @@ function GM_GMToolView.GMToolView_register(T)
 			return
 		end
 
+		local tar = "小瑞安依"
+
+		if string.sub(input, 1, #tar) == tar then
+			TravelGoController.instance:exeGM(input)
+
+			return
+		end
+
 		if string.find(input, "#") == 1 then
 			local param = string.split(input, " ")
 

@@ -259,19 +259,32 @@ function ActivityModel:removeFinishedCategory(actCo)
 
 				self:addFinishActivity(id)
 			end
-		elseif id == ActivityEnum.Activity.V3a4_DestinyGift and ActivityType101Model.instance:isType101RewardGet(id, 1) then
-			local config = ActivityConfig.instance:getActivityCo(id)
-			local param = string.splitToNumber(config.param, "#")
-			local storeGoodsMo = StoreModel.instance:getGoodsMO(param[1])
+		elseif id == ActivityEnum.Activity.V3a4_DestinyGift then
+			if ActivityType101Model.instance:isType101RewardGet(id, 1) then
+				local config = ActivityConfig.instance:getActivityCo(id)
+				local param = string.splitToNumber(config.param, "#")
+				local storeGoodsMo = StoreModel.instance:getGoodsMO(param[1])
 
-			if storeGoodsMo and storeGoodsMo:isSoldOut() then
-				local poolInfo = SummonMainModel.instance:getPoolServerMO(param[2])
+				if storeGoodsMo and storeGoodsMo:isSoldOut() then
+					local poolInfo = SummonMainModel.instance:getPoolServerMO(param[2])
 
-				if poolInfo and poolInfo.infallibleItemStatus == SummonEnum.InfallibleItemState.Used then
-					actCo[index] = nil
+					if poolInfo and poolInfo.infallibleItemStatus == SummonEnum.InfallibleItemState.Used then
+						actCo[index] = nil
 
-					self:addFinishActivity(id)
+						self:addFinishActivity(id)
+					end
 				end
+			end
+		elseif ActivityEnum.CheckFinishActDic[id] then
+			local functionName = string.format("CheckActivity%sFinish", id)
+			local checkFunc = ActivityFinishHelper[functionName]
+
+			if not checkFunc then
+				logError("没有找到对应的活动隐藏检测函数 actId:" .. tostring(id))
+			elseif checkFunc(id) then
+				actCo[index] = nil
+
+				self:addFinishActivity(id)
 			end
 		end
 	end
@@ -313,7 +326,7 @@ end
 
 function ActivityModel:removeSelectSixAfterRemoveFinished(actCo)
 	for index, id in pairs(actCo) do
-		if id == ActivityEnum.Activity.V2a7_SelfSelectSix2 and ActivityType101Model.instance:isType101RewardGet(id, 1) then
+		if (id == ActivityEnum.Activity.V2a7_SelfSelectSix2 or id == ActivityEnum.Activity.V3a8_SelfSelectSix) and ActivityType101Model.instance:isType101RewardGet(id, 1) then
 			actCo[index] = nil
 		end
 	end

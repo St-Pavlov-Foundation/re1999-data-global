@@ -227,6 +227,8 @@ function Act191AssistantView:refreshEquipStatus()
 end
 
 function Act191AssistantView:refreshAssistantInfo()
+	self.skillIds = {}
+
 	local config = self.summonCfgList[self.selectIndex]
 
 	self._txtName.text = config.name
@@ -243,7 +245,9 @@ function Act191AssistantView:refreshAssistantInfo()
 		local bossCo = lua_activity191_assist_boss.configDict[config.id]
 
 		self.passiveSkillIds = string.splitToNumber(bossCo.passiveSkills, "|")
-		self.uniqueSkill = bossCo.uniqueSkill
+		self.skillIds[1] = tonumber(bossCo.activeSkill1)
+		self.skillIds[2] = tonumber(bossCo.activeSkill2)
+		self.skillIds[3] = tonumber(bossCo.uniqueSkill)
 
 		local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 		local a, t = gameInfo:getBossAttr()
@@ -260,7 +264,8 @@ function Act191AssistantView:refreshAssistantInfo()
 		local skillTemplateCo = lua_monster_skill_template.configDict[monsterCo.skillTemplate]
 
 		self.passiveSkillIds = string.splitToNumber(skillTemplateCo.passiveSkill, "|")
-		self.uniqueSkill = tonumber(skillTemplateCo.uniqueSkill)
+		self.skillIds[1] = tonumber(skillTemplateCo.activeSkill)
+		self.skillIds[3] = tonumber(skillTemplateCo.uniqueSkill)
 		self._txtAttack.text = templateCo.attack
 		self._txtHp.text = templateCo.life
 		self._txtDef.text = templateCo.defense
@@ -284,31 +289,38 @@ function Act191AssistantView:refreshAssistantInfo()
 		gohelper.setActive(self._goPassiveSkill, false)
 	end
 
-	local skillCO = lua_skill.configDict[self.uniqueSkill]
+	for i = 1, 3 do
+		local skillItem = self.skillItemList[i]
+		local skillId = self.skillIds[i]
 
-	if skillCO then
-		local skillItem = self.skillItemList[3]
+		if skillId and skillId ~= 0 then
+			local skillCfg = lua_skill.configDict[skillId]
 
-		skillItem.icon:LoadImage(ResUrl.getSkillIcon(skillCO.icon))
-	else
-		logError(string.format("skillId not found : %s", self.uniqueSkill))
+			if skillCfg then
+				skillItem.icon:LoadImage(ResUrl.getSkillIcon(skillCfg.icon))
+				skillItem.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. skillCfg.showTag))
+			else
+				logError(string.format("skillId not found : %s", skillId))
+			end
+		end
+
+		gohelper.setActive(skillItem.go, skillId and skillId ~= 0)
 	end
 end
 
 function Act191AssistantView:_onSkillCardClick(index)
-	if index == 3 then
-		local config = self.summonCfgList[self.selectIndex]
-		local info = {}
+	local config = self.summonCfgList[self.selectIndex]
+	local info = {}
 
-		info.super = index == 3
-		info.skillIdList = {
-			self.uniqueSkill
-		}
-		info.monsterName = config.name
-		info.skillIndex = index
+	info.super = index == 3
+	info.skillIndex = index
+	info.skillIdList = {
+		self.skillIds[index]
+	}
+	info.monsterName = config.name
+	info.isDeviceSkill = true
 
-		ViewMgr.instance:openView(ViewName.SkillTipView, info)
-	end
+	ViewMgr.instance:openView(ViewName.SkillTipView, info)
 end
 
 function Act191AssistantView:onClickHyperLink(effectId)

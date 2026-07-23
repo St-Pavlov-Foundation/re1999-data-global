@@ -18,6 +18,7 @@ local fields = {
 	mainTitle_cn = 5,
 	id = 1,
 	content1 = 12,
+	group = 16,
 	subTitleId = 3
 }
 local primaryKey = {

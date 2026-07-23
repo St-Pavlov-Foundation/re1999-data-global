@@ -132,6 +132,18 @@ function ArcadeOutSideRpc:onReceiveArcadeAttrChangePush(resultCode, msg)
 	ArcadeController.instance:dispatchEvent(ArcadeEvent.OnReceiveArcadeAttrChangePush)
 end
 
+function ArcadeOutSideRpc:sendArcadeCloseRewardPanelRequest()
+	local req = ArcadeOutSideModule_pb.ArcadeCloseRewardPanelRequest()
+
+	self:sendMsg(req)
+end
+
+function ArcadeOutSideRpc:onReceiveArcadeCloseRewardPanelReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+end
+
 ArcadeOutSideRpc.instance = ArcadeOutSideRpc.New()
 
 return ArcadeOutSideRpc

@@ -63,4 +63,8 @@ function Rouge2_BagItemMO:isTriggerUnlockEffect()
 	return attrVal and attrVal ~= 0
 end
 
+function Rouge2_BagItemMO:__tostring()
+	return string.format("uid : %s, itemId : %s, count : %s, bagType : %s", self._uid, self._itemId, self._count, self._bagType)
+end
+
 return Rouge2_BagItemMO

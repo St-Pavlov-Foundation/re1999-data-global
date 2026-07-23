@@ -121,48 +121,51 @@ function V1a6_BossRush_BonusView:activeTab()
 end
 
 function V1a6_BossRush_BonusView:_addRedDot()
-	local tabViewEnum = BossRushModel.instance:getActivityBonus()
+	local reddotId = RedDotEnum.DotNode.BossRushBossAchievement
+	local goRedDot = self._tabs[1].goRedDot
 
-	if tabViewEnum then
-		for i, tab in ipairs(tabViewEnum) do
-			local reddotId = tab.Reddot
-			local goRedDot = self._tabs[i].goRedDot
+	if reddotId and goRedDot then
+		local uid = BossRushRedModel.instance:getUId(reddotId, self._stage)
 
-			if reddotId and goRedDot then
-				local uid = BossRushRedModel.instance:getUId(reddotId, self._stage)
+		RedDotController.instance:addRedDot(goRedDot, reddotId, uid)
+	end
 
-				RedDotController.instance:addRedDot(goRedDot, reddotId, uid)
-			end
-		end
+	local reddotId = RedDotEnum.DotNode.BossRushBossSchedule
+	local goRedDot = self._tabs[2].goRedDot
+
+	if reddotId and goRedDot then
+		local uid = BossRushRedModel.instance:getUId(reddotId, self._stage)
+
+		RedDotController.instance:addRedDot(goRedDot, reddotId, uid)
 	end
 end
 
 function V1a6_BossRush_BonusView:_refreshRedDot()
-	local tabViewEnum = BossRushModel.instance:getActivityBonus()
+	local goRedDot1 = self._tabs[1].goRedDot
 
-	if tabViewEnum then
-		for i, tab in ipairs(tabViewEnum) do
-			local goRedDot = self._tabs[i].goRedDot
+	if goRedDot1 then
+		local isShow = V1a4_BossRush_ScoreTaskAchievementListModel.instance:isReddot(self._stage, 1)
 
-			if goRedDot and tab.ListModel and tab.ListModel.instance.isReddot then
-				local isShow = tab.ListModel.instance:isReddot(self._stage, i)
+		gohelper.setActive(goRedDot1, isShow)
+	end
 
-				gohelper.setActive(goRedDot, isShow)
-			end
-		end
+	local goRedDot2 = self._tabs[2].goRedDot
+
+	if goRedDot2 then
+		local isShow = V1a4_BossRush_ScheduleViewListModel.instance:isReddot(self._stage, 2)
+
+		gohelper.setActive(goRedDot2, isShow)
 	end
 end
 
 function V1a6_BossRush_BonusView:_refreshTab()
-	local tabViewEnum = BossRushModel.instance:getActivityBonus()
-	local isTab3 = #tabViewEnum > 2
-	local width = isTab3 and 326 or 489
+	local width = 489
 
 	for i, item in ipairs(self._tabs) do
 		recthelper.setWidth(item.go.transform, width)
-		gohelper.setActive(item.go, i <= #tabViewEnum)
+		gohelper.setActive(item.go, i <= 2)
 
-		local txt = tabViewEnum[i] and tabViewEnum[i].TabTitle
+		local txt = i == 1 and "p_v1a4_bossrushleveldetail_txt_Score" or "p_v1a4_bossrush_resultpanel_txt_total"
 
 		if not string.nilorempty(txt) then
 			item.txtUnSelected.text = luaLang(txt)

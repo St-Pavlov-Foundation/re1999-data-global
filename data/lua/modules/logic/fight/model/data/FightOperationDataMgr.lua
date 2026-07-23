@@ -123,6 +123,18 @@ function FightOperationDataMgr:getPlayCardOpList()
 	return list
 end
 
+function FightOperationDataMgr:getPlayCardOpCount()
+	local count = 0
+
+	for _, op in ipairs(self.operationList) do
+		if FightCardDataHelper.checkOpAsPlayCardHandle(op) then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
 function FightOperationDataMgr:getMoveCardOpList()
 	local list = {}
 
@@ -186,7 +198,7 @@ function FightOperationDataMgr:isCardOpEnd()
 		return true
 	end
 
-	if FightCardDataHelper.allFrozenCard(handCards) then
+	if FightCardDataHelper.allPlayCardCantUse(handCards) then
 		return true
 	end
 

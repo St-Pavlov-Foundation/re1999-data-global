@@ -10,11 +10,8 @@ function V1a4_BossRushMainViewContainer:buildViews()
 	helpShowView:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
 	helpShowView:setDelayTime(0.5)
 
-	local activityMainView = BossRushModel.instance:getActivityMainView()
-	local mainViewClass = activityMainView and activityMainView.MainViewClass or V1a4_BossRushMainView
-	local mainView = mainViewClass.New()
 	local views = {
-		mainView,
+		V1a4_BossRushMainView.New(),
 		TabViewGroup.New(1, "top_left"),
 		helpShowView
 	}

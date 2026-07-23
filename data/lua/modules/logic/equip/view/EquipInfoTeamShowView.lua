@@ -19,6 +19,7 @@ function EquipInfoTeamShowView:onInitView()
 	self._imageherocareer = gohelper.findChildImage(self.viewGO, "container/#go_container/#go_herocontainer/#image_herocareer")
 	self._goequipinfo = gohelper.findChild(self.viewGO, "container/#go_container/#go_equipinfo")
 	self._txtname = gohelper.findChildText(self.viewGO, "container/#go_container/#go_equipinfo/#txt_name")
+	self._btndouble = gohelper.findChildButtonWithAudio(self.viewGO, "container/#go_container/#go_equipinfo/#txt_name/#Image_icon")
 	self._txtlevel = gohelper.findChildText(self.viewGO, "container/#go_container/#go_equipinfo/#go_attr/#txt_level")
 	self._image1 = gohelper.findChildImage(self.viewGO, "container/#go_container/#go_equipinfo/go_insigt/#image_1")
 	self._image2 = gohelper.findChildImage(self.viewGO, "container/#go_container/#go_equipinfo/go_insigt/#image_2")
@@ -81,6 +82,7 @@ function EquipInfoTeamShowView:addEvents()
 	self._btnfilter:AddClickListener(self._btnfilterOnClick, self)
 	self._btnmaxlevel:AddClickListener(self._onClickMaxLevelBtn, self)
 	self._btngoto:AddClickListener(self._onClickGotoBtn, self)
+	self._btndouble:AddClickListener(self._onClickdoubleBtn, self)
 end
 
 function EquipInfoTeamShowView:removeEvents()
@@ -94,6 +96,22 @@ function EquipInfoTeamShowView:removeEvents()
 	self._btnfilter:RemoveClickListener()
 	self._btnmaxlevel:RemoveClickListener()
 	self._btngoto:RemoveClickListener()
+	self._btndouble:RemoveClickListener()
+end
+
+function EquipInfoTeamShowView:_onClickdoubleBtn()
+	local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(self.selectedEquipMo.equipId)
+
+	if not otherEquipId then
+		return
+	end
+
+	local equipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+
+	ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
+		isOtherEquipId = true,
+		equipMo = equipMo
+	})
 end
 
 function EquipInfoTeamShowView:_onClickGotoBtn()
@@ -464,7 +482,8 @@ function EquipInfoTeamShowView:_editableInitView()
 		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = self._onClickConfirmBtnFromSeason166HeroGroupFightView,
 		[EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView] = self._onClickConfirmBtnFromHeroGroupFightView,
 		[EquipEnum.FromViewEnum.FromPresetPreviewView] = self._onClickConfirmBtnFromPresetPreviewView,
-		[EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView] = self._onClickConfirmBtnFromTowerComposeHeroGroupView
+		[EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView] = self._onClickConfirmBtnFromTowerComposeHeroGroupView,
+		[EquipEnum.FromViewEnum.FromTwinssychubeEquipInfoView] = self._onClickConfirmBtnFromCharacterView
 	}
 	self._btnMaxLevelAnim = self._btnmaxlevel.gameObject:GetComponent(typeof(UnityEngine.Animator))
 end
@@ -498,6 +517,10 @@ function EquipInfoTeamShowView:onOpen()
 	self.listModel = self.viewContainer:getListModel()
 
 	self.listModel:onOpen(self.viewParam, self.filterMo)
+
+	if self.viewParam.fromView == EquipEnum.FromViewEnum.FromTwinssychubeEquipInfoView and self.originEquipMo then
+		self.listModel:setCurrentSelectEquipMo(self.originEquipMo)
+	end
 
 	self.selectedEquipMo = self.listModel:getCurrentSelectEquipMo()
 
@@ -537,6 +560,8 @@ function EquipInfoTeamShowView:initOriginEquipMo()
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromAssassinHeroView then
 		self.originEquipMo = self.viewParam.equipMo
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView then
+		self.originEquipMo = self.viewParam.equipMo
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTwinssychubeEquipInfoView then
 		self.originEquipMo = self.viewParam.equipMo
 	else
 		logError("not found from view ...")
@@ -790,7 +815,7 @@ function EquipInfoTeamShowView:refreshHeroInfo()
 
 	self._txtheroname.text = self.heroMo:getHeroName()
 
-	UISpriteSetMgr.instance:setHandBookCareerSprite(self._imageherocareer, "sx_icon_" .. tostring(self.heroMo.config.career))
+	UISpriteSetMgr.instance:setCommonSprite(self._imageherocareer, "sx_icon_" .. tostring(self.heroMo.config.career), true)
 end
 
 function EquipInfoTeamShowView:refreshLeftUI()
@@ -847,11 +872,42 @@ function EquipInfoTeamShowView:refreshLeftUI()
 
 	gohelper.setActive(self._btnjump.gameObject, isShowBtnJump)
 	gohelper.setActive(self._gobuttom, not isTrialDefaultEquip)
+	gohelper.setActive(self._btndouble.gameObject, self:_isShowDoubleBtn())
+end
+
+function EquipInfoTeamShowView:_isShowDoubleBtn()
+	if not self.heroMo or self.heroMo.heroId ~= CharacterEnum.TwinssychubeHeroId then
+		return false
+	end
+
+	local otherEquipId = self.selectedEquipMo and EquipModel.instance:getOtherTwinssychubeEquipId(self.selectedEquipMo.equipId)
+
+	if not otherEquipId then
+		return false
+	end
+
+	if EquipModel.instance:haveEquip(otherEquipId) then
+		local equipMo
+
+		if self.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCharacterView then
+			equipMo = self.viewParam.equipMo
+		end
+
+		return EquipModel.instance:isActivateTwinssychubeEquip(self.heroMo, equipMo)
+	end
+
+	return false
 end
 
 function EquipInfoTeamShowView:refreshCenterUI()
 	if self.selectedEquipMo then
-		self._simageequip:LoadImage(ResUrl.getEquipSuit(self.selectedEquipMo.config.icon))
+		local icon = self.selectedEquipMo.config.icon
+
+		if self:_isShowDoubleBtn() then
+			icon = "1571_1572"
+		end
+
+		self._simageequip:LoadImage(ResUrl.getEquipSuit(icon))
 		gohelper.setActive(self._gocenter, true)
 	else
 		gohelper.setActive(self._gocenter, false)

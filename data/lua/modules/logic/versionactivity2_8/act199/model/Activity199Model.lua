@@ -13,7 +13,7 @@ function Activity199Model:reInit()
 end
 
 function Activity199Model:getActivity199Id()
-	return Activity2ndEnum.ActivityId.welfareActivity
+	return ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.SelfSelectCharacterExp, Activity2ndEnum.ActivityId.welfareActivity)
 end
 
 function Activity199Model:isActivity199Open()

@@ -115,5 +115,37 @@
     "reportSwitchTime": 10,
     "previews": [],
     "storyId": 0
+  },
+  {
+    "id": 6,
+    "defaultUnlock": 0,
+    "itemId": 240006,
+    "icon": "mainsceneswitch_item06",
+    "previewIcon": "mainsceneskinmaterial_pic06",
+    "resName": "sp02_m_s01_zjm_a",
+    "eggList": [
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617
+    ],
+    "eggSwitchTime": 0,
+    "initReportId": 1,
+    "reportSwitchTime": 10,
+    "previews": [],
+    "storyId": 0
   }
 ]

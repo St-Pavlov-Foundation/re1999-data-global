@@ -1,22 +1,42 @@
 [
   {
     "id": 1,
-    "camp": "language_10083505"
+    "camp": "language_10083505",
+    "location": 0,
+    "textId": 0,
+    "text": "",
+    "unlockId": 0
   },
   {
     "id": 2,
-    "camp": "language_10106055"
+    "camp": "language_10106055",
+    "location": 0,
+    "textId": 0,
+    "text": "",
+    "unlockId": 0
   },
   {
     "id": 3,
-    "camp": "language_10003456"
+    "camp": "language_10003456",
+    "location": 0,
+    "textId": 0,
+    "text": "",
+    "unlockId": 0
   },
   {
     "id": 4,
-    "camp": "language_10107262"
+    "camp": "language_10107262",
+    "location": 0,
+    "textId": 0,
+    "text": "",
+    "unlockId": 0
   },
   {
     "id": 5,
-    "camp": "language_10029684"
+    "camp": "language_10029684",
+    "location": 0,
+    "textId": 0,
+    "text": "",
+    "unlockId": 0
   }
 ]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "MA-9炸肉包",
+    "prefab": "1",
+    "weight": 355,
+    "firstScore": 150,
+    "afterScore": 100,
+    "appearTime": "2#3",
+    "disappearTime": "0.6#0.8",
+    "disappearDealy": 1,
+    "hitDisappearDelay": 1,
+    "maxShowNum": "2#3",
+    "firstShowNum": "1#2",
+    "hitRadius": "150"
+  },
+  {
+    "id": 2,
+    "name": "VOV-A6型实验助手",
+    "prefab": "2",
+    "weight": 410,
+    "firstScore": 100,
+    "afterScore": 50,
+    "appearTime": "3#4",
+    "disappearTime": "0.8#1",
+    "disappearDealy": 1,
+    "hitDisappearDelay": 1,
+    "maxShowNum": "2#3",
+    "firstShowNum": "1#2",
+    "hitRadius": "150"
+  },
+  {
+    "id": 3,
+    "name": "捷列什科娃",
+    "prefab": "3",
+    "weight": 235,
+    "firstScore": -50,
+    "afterScore": 0,
+    "appearTime": "2#3",
+    "disappearTime": "1#1",
+    "disappearDealy": 1,
+    "hitDisappearDelay": 1,
+    "maxShowNum": "1#2",
+    "firstShowNum": "1#2",
+    "hitRadius": "150"
+  }
+]

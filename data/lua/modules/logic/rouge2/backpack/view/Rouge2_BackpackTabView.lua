@@ -17,7 +17,7 @@ function Rouge2_BackpackTabView:onInitView()
 end
 
 function Rouge2_BackpackTabView:addEvents()
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSwitchSkillViewType, self._onSwitchSkillViewType, self)
+	return
 end
 
 function Rouge2_BackpackTabView:removeEvents()
@@ -26,20 +26,6 @@ end
 
 function Rouge2_BackpackTabView:_editableInitView()
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
-
-	NavigateMgr.instance:addEscape(self.viewName, self._clickEscapeCallback, self)
-end
-
-function Rouge2_BackpackTabView:_clickEscapeCallback()
-	local curSelectType = self.viewContainer:getCurSelectType()
-
-	if curSelectType == Rouge2_Enum.BackpackTabContainerId and self._skillViewType == Rouge2_BackpackSkillView.ViewState.Edit then
-		self.viewContainer:_closeSkillEditViewCallback()
-
-		return
-	end
-
-	self:closeThis()
 end
 
 function Rouge2_BackpackTabView:onUpdateParam()
@@ -72,16 +58,6 @@ function Rouge2_BackpackTabView:initTabItemList()
 	end
 
 	gohelper.setActive(self._goTabItem, false)
-end
-
-function Rouge2_BackpackTabView:_onSwitchSkillViewType(skillViewType)
-	self._skillViewType = skillViewType
-
-	if skillViewType == Rouge2_BackpackSkillView.ViewState.Edit then
-		self._animator:Play("to_skilledit", 0, 0)
-	elseif skillViewType == Rouge2_BackpackSkillView.ViewState.Panel then
-		self._animator:Play("to_skill", 0, 0)
-	end
 end
 
 function Rouge2_BackpackTabView:onClose()

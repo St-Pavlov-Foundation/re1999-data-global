@@ -38,5 +38,9 @@
   {
     "gameId": 2008,
     "gameType": 2
+  },
+  {
+    "gameId": 2009,
+    "gameType": 2
   }
 ]

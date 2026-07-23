@@ -123,6 +123,31 @@ function EquipStrengthenView:_btnfastaddOnClick()
 end
 
 function EquipStrengthenView:_btnupgradeOnClick()
+	local key = PlayerModel.instance:getPlayerPrefsKey(EquipLvUpEnum.ShowUseTipKey)
+	local today = ServerTime.getServerTimeToday(true)
+	local saveToday = PlayerPrefsHelper.getNumber(key, 0)
+
+	if today ~= saveToday then
+		local lvUpItem = EquipLvUpModel.instance:getCanUseItemId(self._equipMO.equipId)
+
+		if lvUpItem then
+			ViewMgr.instance:openView(ViewName.EquipLvUpItemUseTipView, {
+				itemId = lvUpItem,
+				equipMo = self._equipMO,
+				yesFunc = self.closeThis,
+				yesFuncObj = self,
+				closeFunc = self._upgradeFunc,
+				closeFuncObj = self
+			})
+
+			return
+		end
+	end
+
+	self:_upgradeFunc()
+end
+
+function EquipStrengthenView:_upgradeFunc()
 	local list = EquipChooseListModel.instance:getChooseEquipList()
 
 	if not list or #list == 0 then
@@ -402,6 +427,13 @@ function EquipStrengthenView:onOpen()
 	self._viewAnim:Play(UIAnimationName.Open)
 	self:playOutsideNodeAnimation(UIAnimationName.Open)
 	self.viewContainer:playCurrencyViewAnimation("go_righttop_ina")
+
+	if self.viewParam.useLvUpItem then
+		self:playExpBreakAnimationEffect()
+		self:playExpAnimationEffect()
+
+		self.viewParam.useLvUpItem = nil
+	end
 end
 
 function EquipStrengthenView:showContainer()

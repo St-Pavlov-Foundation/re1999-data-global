@@ -94,7 +94,7 @@ function V1a6_BossRush_StoreModel:checkUpdateStoreActivity()
 						actId = mo.config.activityId
 					end
 				elseif actId ~= mo.config.activityId then
-					logError("鬃毛信托特约期汇绑定活动id不一致：" .. "  " .. mo.config.id)
+					logError("鬃毛信托特约期汇绑定活动id不一致：" .. "  " .. mo.config.id .. "  其他的活动：" .. actId)
 
 					return
 				end
@@ -219,16 +219,22 @@ function V1a6_BossRush_StoreModel:readStoreGroupNewMo(storeId)
 			limitCount = limitCount
 		}
 
-		if not string.nilorempty(saveStoreGroupMo) then
-			local groupMoList = GameUtil.splitString2(saveStoreGroupMo, true, "|", "#")
+		if mo:isSoldOut() or limitCount <= 0 and mo.config.maxBuyCount > 0 then
+			_mo.isNew = false
+		elseif not string.nilorempty(saveStoreGroupMo) then
+			local saveGroupMoList = GameUtil.splitString2(saveStoreGroupMo, true, "|", "#")
 			local hasMo
 
-			for _, goodsMo in pairs(groupMoList) do
-				if goodsMo and goodsMo[1] == goodsId then
-					if limitCount > goodsMo[2] then
+			for _, saveGoodsMo in pairs(saveGroupMoList) do
+				local saveGoodsId = saveGoodsMo[1]
+				local saveGoodsLimitCount = saveGoodsMo[2]
+				local saveGoodsIsNew = saveGoodsMo[3]
+
+				if saveGoodsMo and saveGoodsId == goodsId then
+					if saveGoodsLimitCount < limitCount then
 						_mo.isNew = true
 					else
-						_mo.isNew = goodsMo[3] == 0
+						_mo.isNew = saveGoodsIsNew == 0
 						hasMo = true
 					end
 				end

@@ -13,8 +13,9 @@ function GuideUtil.isGOShowInScreen(go)
 	end
 
 	local rectTransform = go:GetComponent(typeRectTransform)
+	local uiCamera = CameraMgr.instance:getUICamera()
 
-	if rectTransform then
+	if rectTransform and bit.band(uiCamera.cullingMask, 2^go.layer) > 0 then
 		uiRootTr = uiRootTr or ViewMgr.instance:getUIRoot().transform
 
 		if ZProj.UGUIHelper.Overlaps(rectTransform, uiRootTr, CameraMgr.instance:getUICamera()) then

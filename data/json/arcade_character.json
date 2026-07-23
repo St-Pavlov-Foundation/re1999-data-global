@@ -34,7 +34,8 @@
       -32,
       0
     ],
-    "desc": "language_10104727"
+    "desc": "language_10104727",
+    "lockTip": "language_10107251"
   },
   {
     "id": 101,
@@ -71,7 +72,8 @@
       43,
       0
     ],
-    "desc": "language_10104728"
+    "desc": "language_10104728",
+    "lockTip": "language_10107251"
   },
   {
     "id": 103,
@@ -108,7 +110,8 @@
       0,
       0
     ],
-    "desc": "language_10104729"
+    "desc": "language_10104729",
+    "lockTip": "language_10107251"
   },
   {
     "id": 104,
@@ -145,7 +148,8 @@
       11,
       -32
     ],
-    "desc": "language_10104730"
+    "desc": "language_10104730",
+    "lockTip": "language_10107251"
   },
   {
     "id": 105,
@@ -182,6 +186,83 @@
       7,
       -18
     ],
-    "desc": "language_10104731"
+    "desc": "language_10104731",
+    "lockTip": "language_10107252"
+  },
+  {
+    "id": 106,
+    "name": "language_10037139",
+    "attack": 1,
+    "hpCap": 8,
+    "defense": 0,
+    "skillCost": 1000,
+    "skill": 201,
+    "bomb": 107,
+    "collection": 10007,
+    "shape": "1#1",
+    "resPath": "v3a7_m_s12_role1x1_002",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a7_m_s12_role1x1_002",
+    "icon2": "v3a7_m_s12_xx4_5x6_002",
+    "icon2Scale": [
+      0.4,
+      0.4
+    ],
+    "icon2Offset": [
+      -12,
+      -63
+    ],
+    "icon2Offset2": [
+      -20,
+      -32
+    ],
+    "desc": "language_10120169",
+    "lockTip": "language_10120170"
+  },
+  {
+    "id": 107,
+    "name": "language_10017969",
+    "attack": 1,
+    "hpCap": 12,
+    "defense": 0,
+    "skillCost": 700,
+    "skill": 202,
+    "bomb": 108,
+    "collection": 10010,
+    "shape": "1#1",
+    "resPath": "v3a7_m_s12_role1x1_001",
+    "scale": [
+      1.5,
+      1.5
+    ],
+    "hpPos": [
+      0,
+      -0.4
+    ],
+    "category": "character",
+    "icon": "v3a7_m_s12_role1x1_001",
+    "icon2": "v3a7_m_s12_xx4_5x6_001",
+    "icon2Scale": [
+      0.4,
+      0.4
+    ],
+    "icon2Offset": [
+      25,
+      -33
+    ],
+    "icon2Offset2": [
+      7,
+      -18
+    ],
+    "desc": "language_10120171",
+    "lockTip": "language_10120172"
   }
 ]

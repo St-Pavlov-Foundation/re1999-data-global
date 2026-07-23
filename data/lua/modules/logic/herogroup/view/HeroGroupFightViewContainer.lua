@@ -137,6 +137,9 @@ function HeroGroupFightViewContainer:_closeCallback()
 		SurvivalController.instance:enterSurvivalMap()
 	elseif episodeCO.type == DungeonEnum.EpisodeType.Shelter then
 		SurvivalController.instance:enterShelterMap()
+	elseif episodeCO.type == DungeonEnum.EpisodeType.Sodache then
+		SodacheStatHelper.instance:startEnterFight()
+		SodacheController.instance:enterScene()
 	else
 		if episodeCO.chapterId == DungeonEnum.ChapterId.BossStory then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.VersionActivity2_8BossStoryLoadingView)

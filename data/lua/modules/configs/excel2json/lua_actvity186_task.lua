@@ -6,6 +6,7 @@ local lua_actvity186_task = {}
 local fields = {
 	missionorder = 17,
 	name = 7,
+	showDay = 18,
 	bonusMail = 9,
 	desc = 8,
 	listenerParam = 11,

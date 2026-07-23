@@ -28,16 +28,17 @@ function FightWorkPlayEffectTimelineByOperation:playTimeline()
 
 	self.played = true
 
-	local fightStepData = {
-		actId = 0,
-		actEffect = {
-			self.actEffectData
-		},
-		fromId = self.originFightStepData.fromId,
-		toId = self.actEffectData.targetId,
-		actType = FightEnum.ActType.SKILL,
-		stepUid = FightTLEventEntityVisible.latestStepUid or 0
+	local fightStepData = FightStepData.New(FightDef_pb.FightStep())
+
+	fightStepData.actEffect = {
+		self.actEffectData
 	}
+	fightStepData.fromId = self.originFightStepData.fromId
+	fightStepData.toId = self.actEffectData.targetId
+	fightStepData.actId = 0
+	fightStepData.actType = FightEnum.ActType.SKILL
+	fightStepData.stepUid = FightTLEventEntityVisible.latestStepUid or 0
+
 	local count = self.param.count or 0
 
 	count = count + 1
@@ -88,6 +89,8 @@ function FightWorkPlayEffectTimelineByOperation:playTimeline()
 		return
 	end
 
+	self:com_registMsg(FightMsgId.GetCurRealPlayEffectTimelineByOperationCount, self.onGetCurRealPlayEffectTimelineByOperationCount)
+
 	self.fightStepData = fightStepData
 	fightStepData.playerOperationCountForPlayEffectTimeline = count
 	fightStepData.maxPlayerOperationCountForPlayEffectTimeline = self.originFightStepData.maxPlayerOperationCountForPlayEffectTimeline
@@ -100,6 +103,12 @@ function FightWorkPlayEffectTimelineByOperation:playTimeline()
 
 	work:registFinishCallback(self.onTimelineFinish, self)
 	work:start()
+end
+
+function FightWorkPlayEffectTimelineByOperation:onGetCurRealPlayEffectTimelineByOperationCount(fightStepData)
+	if fightStepData == self.fightStepData then
+		FightMsgMgr.replyMsg(FightMsgId.GetCurRealPlayEffectTimelineByOperationCount, self.originFightStepData.playerOperationCountForPlayEffectTimeline)
+	end
 end
 
 function FightWorkPlayEffectTimelineByOperation:onTimelineFinish()

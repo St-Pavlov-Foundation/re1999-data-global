@@ -49,6 +49,7 @@ function FightBuffComp:onConstructor(entity)
 	self:registSkinBuffEffect()
 	self:com_registFightEvent(FightEvent.CoverPerformanceEntityData, self._onCoverPerformanceEntityData)
 	self:registClasses()
+	self:com_registMsg(FightMsgId.Hide3_7BossBuffEffect, self.onHide3_7BossBuffEffect)
 end
 
 function FightBuffComp:dealStartBuff()
@@ -479,6 +480,20 @@ function FightBuffComp:hideBuffEffects(nonActiveKey)
 	FightController.instance:dispatchEvent(FightEvent.SetBuffEffectVisible, self._entity.id, false)
 end
 
+function FightBuffComp:onHide3_7BossBuffEffect(entityId)
+	if entityId ~= self._entity.id then
+		return
+	end
+
+	for _, effectWrap in pairs(self._buffEffectDict) do
+		effectWrap:setActive(false)
+	end
+
+	for _, effectWrap in pairs(self._loopBuffEffectWrapDict) do
+		effectWrap:setActive(false)
+	end
+end
+
 function FightBuffComp:hideLoopEffects(nonActiveKey)
 	local entityMO = self._entity:getMO()
 
@@ -621,8 +636,29 @@ function FightBuffComp:delBuff(buffUid, isDead)
 				if reference_count == 0 then
 					self._addBuffEffectPathDic[effectWrap.path] = nil
 
-					self._entity.effect:removeEffect(effectWrap)
-					FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
+					local hasDelAnimator = false
+
+					if not string.nilorempty(buffCO.delAnimator) and not self.IS_DISPOSED then
+						hasDelAnimator = true
+
+						local arr = string.split(buffCO.delAnimator, "#")
+						local delEffectFlow = self:com_registFlowSequence()
+
+						if not gohelper.isNil(effectWrap.effectGO) then
+							local obj = gohelper.findChild(effectWrap.effectGO, arr[1])
+
+							if obj then
+								delEffectFlow:registWork(FightWorkPlayAnimator, obj, arr[2])
+								delEffectFlow:registFinishCallback(self.removeEffectAfterDelAnimator, self, effectWrap)
+								delEffectFlow:start()
+							end
+						end
+					end
+
+					if not hasDelAnimator then
+						self._entity.effect:removeEffect(effectWrap)
+						FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
+					end
 				end
 			end
 		end
@@ -708,6 +744,11 @@ function FightBuffComp:delBuff(buffUid, isDead)
 	self.buffMgr:removeBuff(buffMO.uid)
 end
 
+function FightBuffComp:removeEffectAfterDelAnimator(effectWrap)
+	self._entity.effect:removeEffect(effectWrap)
+	FightRenderOrderMgr.instance:onRemoveEffectWrap(self._entity.id, effectWrap)
+end
+
 function FightBuffComp:getBuffAnim()
 	local buffMO = self._animPriorityQueue:getFirst()
 
@@ -773,6 +814,20 @@ function FightBuffComp:registSkinBuffEffect()
 
 	local skinBuffEffectMgr = self.skinBuffEffectMgr
 	local skinId = entityData.skin
+	local skinConfig = lua_skin.configDict[skinId]
+
+	if skinConfig then
+		local dianJiShiConfig = lua_fight_dian_ji_shi_buff_effect.configDict[skinId]
+
+		if not dianJiShiConfig and skinConfig.characterId == 3140 then
+			dianJiShiConfig = lua_fight_dian_ji_shi_buff_effect.configDict[0]
+		end
+
+		if dianJiShiConfig then
+			self:newClass(FightBuffDianJiShiEffect, self._entity, entityData, dianJiShiConfig)
+		end
+	end
+
 	local luxiUpgradeEffectConfig = lua_fight_luxi_upgrade_effect.configDict[skinId]
 
 	if luxiUpgradeEffectConfig then

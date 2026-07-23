@@ -27,7 +27,7 @@ function StoryExitBtn:onClickExitBtn()
 end
 
 function StoryExitBtn:onMessageYes()
-	StoryController.instance:dispatchEvent(StoryEvent.Skip, true)
+	StoryController.instance:dispatchEvent(StoryEvent.OnSkipConfirm, true)
 end
 
 function StoryExitBtn:onClickNext()

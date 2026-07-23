@@ -150,6 +150,8 @@ end
 function Activity114Live2dView:_editableInitView()
 	self._uiSpine = GuiModelAgent.Create(self._lightspine, true)
 
+	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+
 	local skinCo = lua_skin.configDict[305601]
 
 	self._uiSpine:setResPath(skinCo, self.onSpineLoaded, self)

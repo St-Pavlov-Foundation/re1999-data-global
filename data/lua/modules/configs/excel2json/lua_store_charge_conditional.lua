@@ -4,13 +4,16 @@ module("modules.configs.excel2json.lua_store_charge_conditional", package.seeall
 
 local lua_store_charge_conditional = {}
 local fields = {
-	id = 8,
+	clientType = 14,
 	order2 = 9,
-	idsStr = 11,
+	redDot = 12,
+	signInIdParam = 11,
 	bigImg3 = 7,
 	conDesc = 10,
+	idsStr = 13,
 	listenerType = 2,
 	listenerParam = 3,
+	id = 8,
 	goodsId = 1,
 	maxProgress = 4,
 	bigImg2 = 6,

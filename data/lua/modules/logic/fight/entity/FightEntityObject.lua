@@ -49,15 +49,16 @@ function FightEntityObject:initComponents()
 	self.skill = self:addEntityComponent(FightSkillComp)
 	self.effect = self:addEntityComponent(FightEffectComp)
 	self.buff = self:addEntityComponent(FightBuffComp)
-	self.spineRenderer = self:addEntityComponent(FightSpineRendererComp)
+	self.spineRenderer = self:addEntityComponent(self:getSpineRendererClass())
 	self.moveComp = self:addEntityComponent(FightEntityMoveComp)
 	self.skinSpineAction = self:addEntityComponent(FightSkinSpineAction)
 	self.skinSpineEffect = self:addEntityComponent(FightSkinSpineEffect)
 	self.totalDamage = self:addEntityComponent(FightTotalDamageComp)
 	self.uniqueEffect = self:addEntityComponent(FightUniqueEffectComp)
 	self.skinCustomComp = self:addEntityComponent(FightSkinCustomComp)
+	self.spineScaleComp = self:addEntityComponent(FightSpineScaleComp)
 
-	local mo = self:getMO()
+	local mo = self.entityData
 
 	if BossRushController.instance:isInBossRushInfiniteFight(true) then
 		self.nameUI = self:addEntityComponent(BossRushFightNameUI)
@@ -70,8 +71,24 @@ function FightEntityObject:initComponents()
 	end
 
 	if self.entityData.modelId == 3092 then
+		local skin = self.entityData.skin
+
 		FightGameMgr.timelinePreLoaderMgr:preLoadTimeline("yigeer_309201_unique", self.entityData)
+
+		if skin == 309203 then
+			FightGameMgr.timelinePreLoaderMgr:preLoadTimeline("yigeer_309203_unique", self.entityData)
+		end
 	end
+end
+
+function FightEntityObject:getSpineRendererClass()
+	local skin = self.entityData.skin
+
+	if lua_fight_monster_3d.configDict[skin] then
+		return Fight3DSpineRendererComp
+	end
+
+	return FightSpineRendererComp
 end
 
 function FightEntityObject:setCreateStage(stage)
@@ -83,6 +100,12 @@ function FightEntityObject:getCreateStage()
 end
 
 function FightEntityObject:getSpineClass()
+	local skin = self.entityData.skin
+
+	if lua_fight_monster_3d.configDict[skin] then
+		return Fight3DSpineComp
+	end
+
 	return FightUnitSpine
 end
 
@@ -425,7 +448,7 @@ function FightEntityObject:onLogicExit()
 	FightRenderOrderMgr.instance:unregister(self.id)
 	FightGameMgr.bloomMgr:removeEntity(self)
 
-	if self.go then
+	if not gohelper.isNil(self.go) then
 		local transformListener = ZProj.TransformListener.Get(self.go)
 
 		transformListener:RemovePositionCallback()

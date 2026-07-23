@@ -5,6 +5,10 @@
     "desc": "language_10104817",
     "skill": 3309102,
     "resPath": "v3a3_m_s12_dl1x1_001",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
     "category": "floor",
     "icon": "v3a3_m_s12_dl1x1_001a",
     "limitRound": 6
@@ -15,6 +19,10 @@
     "desc": "language_10104819",
     "skill": 3309101,
     "resPath": "v3a3_m_s12_dl1x1_002",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
     "category": "floor",
     "icon": "v3a3_m_s12_dl1x1_002",
     "limitRound": -1
@@ -25,6 +33,10 @@
     "desc": "language_10104820",
     "skill": 3309103,
     "resPath": "v3a3_m_s12_dl1x1_003",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
     "category": "floor",
     "icon": "v3a3_m_s12_dl1x1_003a",
     "limitRound": 12
@@ -35,6 +47,10 @@
     "desc": "language_10104820",
     "skill": 3309103,
     "resPath": "v3a3_m_s12_dl1x1_003",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
     "category": "",
     "icon": "v3a3_m_s12_dl1x1_003a",
     "limitRound": -1
@@ -45,8 +61,60 @@
     "desc": "language_10104817",
     "skill": 3309102,
     "resPath": "v3a3_m_s12_dl1x1_001",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
     "category": "",
     "icon": "v3a3_m_s12_dl1x1_001a",
+    "limitRound": -1
+  },
+  {
+    "id": 106,
+    "name": "language_10120188",
+    "desc": "language_10120189",
+    "skill": 3718101,
+    "resPath": "v3a7_m_s12_dl1x1_001",
+    "shape": "1#1",
+    "scale": [],
+    "posOffset": [],
+    "priority": 1,
+    "category": "floor",
+    "icon": "v3a7_m_s12_dl1x1_001",
+    "limitRound": -1
+  },
+  {
+    "id": 107,
+    "name": "language_10120190",
+    "desc": "",
+    "skill": 3718102,
+    "resPath": "v3a7_m_s12_jz2x2_002",
+    "shape": "2#2",
+    "scale": [],
+    "posOffset": [
+      0.5,
+      0.6
+    ],
+    "priority": 2,
+    "category": "",
+    "icon": "v3a7_m_s12_jz2x2_002",
+    "limitRound": -1
+  },
+  {
+    "id": 9999,
+    "name": "language_10120190",
+    "desc": "",
+    "skill": 3309101,
+    "resPath": "v3a7_m_s12_jz2x2_002",
+    "shape": "2#2",
+    "scale": [],
+    "posOffset": [
+      0.5,
+      0.6
+    ],
+    "priority": 2,
+    "category": "",
+    "icon": "v3a7_m_s12_jz2x2_002",
     "limitRound": -1
   }
 ]

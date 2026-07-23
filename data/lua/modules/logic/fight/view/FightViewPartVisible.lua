@@ -50,12 +50,20 @@ function FightViewPartVisible:onInitView()
 	self._enemyRoundTextGO = gohelper.findChild(self.viewGO, "root/enemyRoundText")
 	self._waitingAreaGO = gohelper.findChild(self.viewGO, "root/waitingArea")
 	self._rogueSkillRoot = gohelper.findChild(self.viewGO, "root/rogueSkillRoot")
+	self._playCardTr = self._playCardGO.transform
+
+	self:_onSetPlayCardPartOriginPos()
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.HandCardGo, self._handCardGO)
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.HandCardInnerGo, self._handCardInnerGO)
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.ClothSkillGo, self._clothSkillGO)
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.PlayCardGO, self._playCardGO)
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.WaitingAreaGO, self._waitingAreaGO)
+
 	visible_clothSkill = false
 	visible_handCard = false
 	visible_playCard = false
 	visible_enemyRound = false
 	visible_waitingArea = false
-	self._play_card_origin_x, self._play_card_origin_y = recthelper.getAnchor(self._playCardGO.transform)
 end
 
 function FightViewPartVisible:addEvents()
@@ -158,9 +166,7 @@ function FightViewPartVisible:_updateUI()
 	end
 
 	if FightDataHelper.fieldMgr:isRouge2() then
-		local curCareer = FightHelper.getRouge2Career()
-
-		gohelper.setActive(self._rogueSkillRoot, curCareer == FightEnum.Rouge2Career.TubularBell and GMFightShowState.clothSkill)
+		gohelper.setActive(self._rogueSkillRoot, GMFightShowState.clothSkill)
 		gohelper.setActive(self._clothSkillGO, false)
 	else
 		local canShowCloth = PlayerClothModel.instance:getSpEpisodeClothID() or OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill) and FightModel.instance.clothId > 0
@@ -201,11 +207,14 @@ function FightViewPartVisible:onCameraFocusChanged(isFocus)
 end
 
 function FightViewPartVisible:_onSetPlayCardPartOutScreen()
-	recthelper.setAnchor(self._playCardGO.transform, 10000, 10000)
+	recthelper.setAnchor(self._playCardTr, 10000, 10000)
 end
 
 function FightViewPartVisible:_onSetPlayCardPartOriginPos()
-	recthelper.setAnchor(self._playCardGO.transform, self._play_card_origin_x, self._play_card_origin_y)
+	local originAnchor, scale = FightPlayCardLayoutHelper.getAnchorPosAndScale(FightPlayCardLayoutHelper.PlayCardOperateType.PlayCard)
+
+	recthelper.setAnchor(self._playCardTr, originAnchor.x, originAnchor.y)
+	transformhelper.setLocalScale(self._playCardTr, scale, scale, scale)
 end
 
 function FightViewPartVisible:_onSetHandCardVisible(state, revert)

@@ -11,7 +11,7 @@ function ArcadeFlyingEffectMgr:onInit()
 
 	self._effectListDict = {}
 	self._effectList = {}
-	self._bezierY = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectOffectY, true) or 2
+	self._bezierY = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectOffsetY, true) or 2
 	self._bezierTime = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectTime, true) or 0.3
 end
 

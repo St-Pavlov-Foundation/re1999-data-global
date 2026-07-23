@@ -16,6 +16,7 @@ UnityLayer.Unit = 11
 UnityLayer.Scene = 12
 UnityLayer.SceneEffect = 13
 UnityLayer.SceneOpaque = 15
+UnityLayer.UnitOpaque = 18
 UnityLayer.EffectMask = 19
 UnityLayer.UISecond = 20
 UnityLayer.UIThird = 21

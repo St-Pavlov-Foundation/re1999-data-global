@@ -14,7 +14,8 @@ function SpineVoice:ctor()
 end
 
 function SpineVoice:_init()
-	self._spineVoiceMouth = self:_addComponent(SpineVoiceMouth, true)
+	self._normalVoiceMouth = self:_addComponent(SpineVoiceMouth, true)
+	self._spineVoiceMouth = self._normalVoiceMouth
 	self._voiceFace = self:_addComponent(SpineVoiceFace, true)
 end
 
@@ -111,7 +112,42 @@ function SpineVoice:playVoice(spine, voiceConfig, callback, txtContent, txtEnCon
 	end
 end
 
+function SpineVoice:getMouth(voiceCo)
+	local shortcut = self:getVoiceLang()
+
+	if shortcut == "zh" then
+		return voiceCo.mouth
+	else
+		return voiceCo[shortcut .. "mouth"] or voiceCo.mouth
+	end
+end
+
 function SpineVoice:_initSpineVoiceMouth(voiceConfig, spine)
+	local mouth = self:getMouth(voiceConfig)
+
+	self._useAutoMouth = string.find(mouth, Live2dVoiceMouthAuto.AutoActionName)
+
+	local prevMouth = self._spineVoiceMouth
+
+	if self._useAutoMouth then
+		self._autoVoiceMouth = self._autoVoiceMouth or Live2dVoiceMouthAuto.New()
+		self._spineVoiceMouth = self._autoVoiceMouth
+	else
+		self._spineVoiceMouth = self._normalVoiceMouth
+	end
+
+	if prevMouth and prevMouth ~= self._spineVoiceMouth then
+		prevMouth:suspend()
+
+		if self:getInStory() and prevMouth == self._autoVoiceMouth then
+			local mouth = self._autoVoiceMouth:getMouth(voiceConfig)
+
+			if string.nilorempty(mouth) then
+				prevMouth:_setBiZui()
+			end
+		end
+	end
+
 	self._spineVoiceMouth:init(self, voiceConfig, spine)
 end
 
@@ -121,6 +157,14 @@ end
 
 function SpineVoice:playing()
 	return self._playVoice
+end
+
+function SpineVoice:isPlayingVoiceId(id)
+	if not self._playVoice then
+		return false
+	end
+
+	return self._voiceConfig and self._voiceConfig.audio == id
 end
 
 function SpineVoice:onSpineVoiceAudioStop()

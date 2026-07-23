@@ -188,13 +188,20 @@ function VersionActivityFixedDungeonMapView:onRefreshActivityState(updateActId)
 	return
 end
 
+function VersionActivityFixedDungeonMapView:setMask2DVisible(visible)
+	if visible then
+		self._rectmask2D.padding = RECT_MASK_PADDING_OPEN_MAP_LEVEL
+	else
+		self._rectmask2D.padding = RECT_MASK_PADDING
+	end
+end
+
 function VersionActivityFixedDungeonMapView:_onOpenView(viewName)
 	if viewName ~= VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName(self._bigVersion, self._smallVersion) then
 		return
 	end
 
-	self._rectmask2D.padding = RECT_MASK_PADDING_OPEN_MAP_LEVEL
-
+	self:setMask2DVisible(true)
 	gohelper.setActive(self._btncloseview, true)
 	self:hideBtnUI()
 end
@@ -217,8 +224,7 @@ function VersionActivityFixedDungeonMapView:_onCloseView(viewName)
 		return
 	end
 
-	self._rectmask2D.padding = RECT_MASK_PADDING
-
+	self:setMask2DVisible(false)
 	gohelper.setActive(self._btncloseview, false)
 	self:showBtnUI()
 end

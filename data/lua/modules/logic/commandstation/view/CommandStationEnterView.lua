@@ -240,39 +240,14 @@ function CommandStationEnterView:_btnactivityOnClick()
 	local controller = self._constActParamConfig.value2
 	local controllerIns = _G[controller]
 
+	controllerIns = controllerIns or _G.VersionActivityMainFixedEnterController
+
 	controllerIns.instance:openVersionActivityEnterView()
 	CommandStationController.StatCommandStationButtonClick(self.viewName, "_btnactivityOnClick")
 end
 
 function CommandStationEnterView.isUnlockRelationShipBoard()
-	local config = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockAct)
-	local actId = config.value
-	local status = actId > 0 and ActivityHelper.getActivityStatus(actId)
-	local showActivity = status == ActivityEnum.ActivityStatus.Normal
-
-	if showActivity then
-		return true
-	end
-
-	local dungeonUnlockConfig = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockDungeon)
-	local dungeonId = dungeonUnlockConfig.value
-
-	if DungeonModel.instance:hasPassLevelAndStory(dungeonId) then
-		return true
-	end
-
-	local chapterId = CommandStationEnum.UnlockRelationShipChapterId
-	local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterId)
-
-	for _, config in ipairs(chapterList) do
-		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
-
-		if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevelAndStory(episodeList[1].id) then
-			return true
-		end
-	end
-
-	return false
+	return CommandStationController.relationShipUnlockByDungeon() or CommandStationController.relationShipUnlockByChapter12() or CommandStationController.showNewChapterPage()
 end
 
 function CommandStationEnterView:_updateRelationShipBoardBtnStatus()
@@ -612,6 +587,10 @@ function CommandStationEnterView:_updateActBtn()
 end
 
 function CommandStationEnterView:_isShowActivity()
+	if CommandStationEnum.ForceHideCommandStation then
+		return false, nil
+	end
+
 	if self._constActParamConfig2 then
 		local actId = self._constActParamConfig2.value
 		local status = actId > 0 and ActivityHelper.getActivityStatus(actId)

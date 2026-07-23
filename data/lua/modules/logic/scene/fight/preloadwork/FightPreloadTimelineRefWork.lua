@@ -78,7 +78,11 @@ function FightPreloadTimelineRefWork:_getUrlList()
 						local spineName = FightTLEventCreateSpine.getSkinSpineName(paramList[1], skinId)
 
 						if not string.nilorempty(spineName) then
-							urlDict[ResUrl.getSpineFightPrefab(spineName)] = timelineUrl
+							if string.sub(spineName, 1, 8) == "roles_3d" then
+								urlDict[string.format("%s.prefab", spineName)] = timelineUrl
+							else
+								urlDict[ResUrl.getSpineFightPrefab(spineName)] = timelineUrl
+							end
 						end
 					end
 				end

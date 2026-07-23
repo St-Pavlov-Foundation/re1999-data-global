@@ -48,10 +48,11 @@ function Rouge2_AttributeToolBarItem:refresh(index, careerId, attributeMo)
 	self._attrId = attributeMo.attrId
 	self._attrValue = attributeMo.value or 0
 	self._attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._attrId)
-	self._maxAttrValue = self._attrCo and self._attrCo.showMax or 0
+	self._difficulty = Rouge2_Model.instance:getDifficulty()
+	self._minAttrValue, self._maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(self._difficulty, self._attrId)
 	self._isMax = self._attrValue >= self._maxAttrValue
-	self._isRecommend = Rouge2_CareerConfig.instance:isAttrRecommend(self._careerId, self._attrId)
-	self._nextAttrDropCo = Rouge2_AttributeConfig.instance:getNextAttrDropConfig(self._careerId, self._attrId, self._attrValue)
+	self._isRecommend = Rouge2_BackpackController.instance:isAttrRecommend(self._careerId, self._attrId)
+	self._nextAttrDropCo = Rouge2_AttributeConfig.instance:getNextAttrDropConfig(self._careerId, self._attrId, self._attrValue, self._difficulty)
 	self._nextAttrDropLv = self._nextAttrDropCo and self._nextAttrDropCo.needNum
 	self._indexDropCo = Rouge2_AttributeConfig.instance:getIndexAttrDropConfig(self._careerId, self._attrId, self._attrDropIndex)
 	self._isIndexOver = self._indexDropCo and self._indexDropCo.needNum <= self._attrValue

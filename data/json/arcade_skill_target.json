@@ -3,276 +3,406 @@
     "id": 1,
     "clztype": "character",
     "targets": "character",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 10,
     "clztype": "rect",
-    "targets": "character#monster#baseInteractive",
+    "targets": "character|monster|baseInteractive",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 11,
     "clztype": "rect",
-    "targets": "character#monster#baseInteractive",
+    "targets": "character|monster|baseInteractive",
+    "ignoreSelf": false,
     "effect": "5#5"
   },
   {
     "id": 12,
     "clztype": "cross",
-    "targets": "character#monster#baseInteractive",
+    "targets": "character|monster|baseInteractive",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 13,
     "clztype": "rect",
     "targets": "character",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 14,
     "clztype": "outline",
-    "targets": "character#grid",
+    "targets": "character|grid",
+    "ignoreSelf": false,
     "effect": "1"
   },
   {
     "id": 15,
     "clztype": "outline",
-    "targets": "character#grid",
+    "targets": "character|grid",
+    "ignoreSelf": false,
     "effect": "2"
   },
   {
     "id": 16,
     "clztype": "outline",
-    "targets": "character#grid",
+    "targets": "character|grid",
+    "ignoreSelf": false,
     "effect": "3"
   },
   {
     "id": 101,
     "clztype": "owner",
     "targets": "",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 201,
     "clztype": "scope",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "3"
   },
   {
     "id": 202,
     "clztype": "line",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "2"
   },
   {
     "id": 203,
     "clztype": "line",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "3"
   },
   {
     "id": 204,
     "clztype": "line",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "100"
   },
   {
     "id": 301,
     "clztype": "attacker",
     "targets": "",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 302,
     "clztype": "floor",
     "targets": "",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 303,
     "clztype": "rect",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "20#3"
   },
   {
     "id": 304,
     "clztype": "color",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 305,
     "clztype": "random",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "3"
   },
   {
     "id": 306,
     "clztype": "shapeSize",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": ""
   },
   {
     "id": 307,
     "clztype": "rect",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "100#100"
   },
   {
     "id": 308,
     "clztype": "rect",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 309,
     "clztype": "line",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "1"
   },
   {
     "id": 310,
     "clztype": "rect",
     "targets": "character",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 311,
     "clztype": "cross",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 312,
     "clztype": "rect",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "1#1"
   },
   {
     "id": 313,
     "clztype": "rect",
     "targets": "character",
+    "ignoreSelf": false,
     "effect": "2#2"
   },
   {
     "id": 314,
     "clztype": "line",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "99"
   },
   {
     "id": 701,
     "clztype": "rect",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 702,
     "clztype": "rect",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "2#2"
   },
   {
     "id": 703,
     "clztype": "cross",
-    "targets": "character#monster#baseInteractive",
+    "targets": "character|monster|baseInteractive",
+    "ignoreSelf": false,
     "effect": "3#3"
   },
   {
     "id": 704,
     "clztype": "outline",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "1"
   },
   {
     "id": 705,
     "clztype": "outline",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "1"
   },
   {
     "id": 706,
     "clztype": "line",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "99"
   },
   {
     "id": 707,
     "clztype": "outline",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "2"
   },
   {
     "id": 708,
     "clztype": "outline",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "2"
   },
   {
     "id": 709,
     "clztype": "cross",
-    "targets": "grid#character",
+    "targets": "grid|character",
+    "ignoreSelf": false,
     "effect": "100#100"
   },
   {
     "id": 710,
     "clztype": "rect",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "4#4"
   },
   {
     "id": 711,
     "clztype": "rect",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "6#6"
   },
   {
     "id": 712,
     "clztype": "cross",
-    "targets": "character#monster",
+    "targets": "character|monster",
+    "ignoreSelf": false,
     "effect": "100#100"
   },
   {
     "id": 713,
     "clztype": "cross",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "100#100"
   },
   {
     "id": 714,
     "clztype": "outline",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "1"
   },
   {
     "id": 715,
     "clztype": "outline",
     "targets": "grid",
+    "ignoreSelf": false,
     "effect": "2"
   },
   {
     "id": 716,
     "clztype": "cross",
     "targets": "character",
+    "ignoreSelf": false,
     "effect": "100#100"
   },
   {
     "id": 717,
     "clztype": "cross",
     "targets": "",
+    "ignoreSelf": false,
     "effect": "0#100"
   },
   {
     "id": 718,
     "clztype": "cross",
     "targets": "",
+    "ignoreSelf": false,
     "effect": "0#100"
   },
   {
     "id": 999,
     "clztype": "line",
     "targets": "monster",
+    "ignoreSelf": false,
     "effect": "0"
+  },
+  {
+    "id": 99990,
+    "clztype": "triangle",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "2"
+  },
+  {
+    "id": 99991,
+    "clztype": "triangle",
+    "targets": "monster#332003,332004",
+    "ignoreSelf": false,
+    "effect": "3"
+  },
+  {
+    "id": 99992,
+    "clztype": "rect",
+    "targets": "character#102|grid#1001,1002",
+    "ignoreSelf": false,
+    "effect": "3#3"
+  },
+  {
+    "id": 99993,
+    "clztype": "random",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "5"
+  },
+  {
+    "id": 719,
+    "clztype": "random",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "3"
+  },
+  {
+    "id": 720,
+    "clztype": "rect",
+    "targets": "floor#106",
+    "ignoreSelf": false,
+    "effect": "3#3"
+  },
+  {
+    "id": 721,
+    "clztype": "random",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "10"
+  },
+  {
+    "id": 722,
+    "clztype": "random",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "12"
+  },
+  {
+    "id": 723,
+    "clztype": "random",
+    "targets": "grid",
+    "ignoreSelf": false,
+    "effect": "64"
+  },
+  {
+    "id": 315,
+    "clztype": "rect",
+    "targets": "monster",
+    "ignoreSelf": false,
+    "effect": "1#1"
+  },
+  {
+    "id": 205,
+    "clztype": "triangle",
+    "targets": "monster",
+    "ignoreSelf": false,
+    "effect": "3"
+  },
+  {
+    "id": 801,
+    "clztype": "specBuff",
+    "targets": "monster",
+    "ignoreSelf": false,
+    "effect": "204"
   }
 ]

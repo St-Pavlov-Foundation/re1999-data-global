@@ -58,5 +58,11 @@
     "icon": "529301",
     "resType": 1,
     "path": "v2a8_head_2"
+  },
+  {
+    "id": 11,
+    "icon": "652902",
+    "resType": 0,
+    "path": "rolesprefab/s02_652902_wetbdg/652902_wetbdg.prefab"
   }
 ]

@@ -13,15 +13,32 @@ function FightCardDisplayEndEffect:onStart(context)
 	self._flow = FlowSequence.New()
 
 	if context.skillItemGO then
-		local fadeWork = TweenWork.New({
-			from = 1,
-			type = "DOFadeCanvasGroup",
-			to = 0,
-			go = context.skillItemGO,
-			t = self._dt * 5
-		})
+		local canFade = true
+		local param = context.param
 
-		self._flow:addWork(fadeWork)
+		if param then
+			if param.noCardFade then
+				canFade = false
+			end
+
+			local skillId = param.skillId
+
+			if skillId and FightHelper.checkIsDevicePowerCard(skillId) then
+				canFade = false
+			end
+		end
+
+		if canFade then
+			local fadeWork = TweenWork.New({
+				from = 1,
+				type = "DOFadeCanvasGroup",
+				to = 0,
+				go = context.skillItemGO,
+				t = self._dt * 5
+			})
+
+			self._flow:addWork(fadeWork)
+		end
 	end
 
 	local waitTr = context.waitingAreaGO.transform

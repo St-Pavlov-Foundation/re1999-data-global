@@ -29,10 +29,12 @@ function Rouge2_AttrDetailBaseTabItem:_btnClickOnClick()
 	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnSelectAttrTab, self._groupIndex, self._index)
 end
 
-function Rouge2_AttrDetailBaseTabItem:onUpdateMO(careerId, groupIndex, index)
+function Rouge2_AttrDetailBaseTabItem:onUpdateMO(careerId, groupIndex, index, parentView, params)
 	self._groupIndex = groupIndex
 	self._index = index
 	self._careerId = careerId
+	self._parentView = parentView
+	self._params = params
 
 	self:refreshUI()
 	self:onSelect(false)

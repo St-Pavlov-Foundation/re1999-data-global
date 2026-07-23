@@ -8,10 +8,23 @@ function ArcadeSkillNormal:onCtor()
 	self.skillConfig = ArcadeConfig.instance:getPassiveSkillCfg(self.skillId, true)
 end
 
-function ArcadeSkillNormal:onTrigger()
-	for _, triggerBase in ipairs(self._triggerBaseList) do
-		triggerBase:trigger(self._triggerPoint, self._context, self._ignoreTriggerPoint)
+function ArcadeSkillNormal:onTrigger(params)
+	local triggerPoint = params and params.triggerPoint
+
+	if not triggerPoint then
+		return
 	end
+
+	local context = params.context or {}
+	local ignoreTriggerPoint = params.ignoreTriggerPoint
+
+	for _, triggerBase in ipairs(self._triggerBaseList) do
+		triggerBase:trigger(triggerPoint, context, ignoreTriggerPoint)
+	end
+end
+
+function ArcadeSkillNormal:getTriggerOrder()
+	return self.skillConfig and self.skillConfig.triggerOrder or 0
 end
 
 return ArcadeSkillNormal

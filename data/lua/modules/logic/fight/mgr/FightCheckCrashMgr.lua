@@ -12,7 +12,8 @@ function FightCheckCrashMgr:onConstructor()
 		[ViewName.GuideView] = true,
 		[ViewName.FightGuideView] = true,
 		[ViewName.FightTechniqueGuideView] = true,
-		[ViewName.HelpView] = true
+		[ViewName.HelpView] = true,
+		[ViewName.FightSystemFightNoticeView] = true
 	}
 end
 

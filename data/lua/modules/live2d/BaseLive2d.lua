@@ -66,6 +66,12 @@ function BaseLive2d:doClear()
 end
 
 function BaseLive2d:_clear()
+	if self.customEffectComp then
+		MonoHelper.removeLuaComFromGo(self._gameObj, BaseLive2dSpecialEffect)
+
+		self.customEffectComp = nil
+	end
+
 	if self._resLoader then
 		self._resLoader:dispose()
 	end
@@ -83,6 +89,7 @@ function BaseLive2d:_clear()
 	end
 
 	self._cubismController = nil
+	self._cubismParameterModifider = nil
 	self._resPath = nil
 
 	if self._spineGo then
@@ -112,6 +119,10 @@ end
 
 function BaseLive2d:isPlayingVoice()
 	return self._live2dVoice and self._live2dVoice:playing()
+end
+
+function BaseLive2d:isPlayingVoiceId(id)
+	return self._live2dVoice and self._live2dVoice:isPlayingVoiceId(id)
 end
 
 function BaseLive2d:getPlayVoiceStartTime()
@@ -195,6 +206,7 @@ function BaseLive2d:_onResLoaded()
 	self._spineTr = self._spineGo.transform
 	self._renderer = nil
 
+	self:initSpecialEffect(self._resPath)
 	self:_initRoleEffect()
 	self:_initFaceEffect()
 	self:initSkeletonComponent()
@@ -326,6 +338,10 @@ function BaseLive2d:setBodyAnimation(bodyName, loop, mixTime)
 
 	if self._bodyChangeCallback then
 		self._bodyChangeCallback(self._bodyChangeCallbackObj, oldBodyName, bodyName)
+	end
+
+	if self.customEffectComp then
+		self.customEffectComp:onBodyChange(oldBodyName, bodyName)
 	end
 end
 
@@ -509,6 +525,48 @@ end
 
 function BaseLive2d:getMouthController()
 	return self._cubismMouthController
+end
+
+function BaseLive2d:initSpecialEffect(resPath)
+	if not self.customEffectComp then
+		local skinName = string.match(resPath, "([^/]-)%.[^.]*$")
+		local clsName = string.format("Live2dSpecialEffect_%s", skinName)
+		local cls = _G[clsName]
+
+		if cls then
+			self.customEffectComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gameObj, cls)
+		end
+	end
+
+	if self.customEffectComp then
+		self.customEffectComp:setLive2d(self)
+	end
+end
+
+function BaseLive2d:addParameter(name, mode, value)
+	if not self._cubismController then
+		return
+	end
+
+	self._cubismParameterModifider = self._cubismParameterModifider or self._cubismController:GetCubismParameterModifier()
+
+	return self._cubismParameterModifider:AddParameter(name, mode, value)
+end
+
+function BaseLive2d:updateParameter(index, value)
+	if not self._cubismParameterModifider then
+		return
+	end
+
+	self._cubismParameterModifider:UpdateParameter(index, value)
+end
+
+function BaseLive2d:removeParameter(name)
+	if not self._cubismParameterModifider then
+		return
+	end
+
+	self._cubismParameterModifider:RemoveParameter(name)
 end
 
 function BaseLive2d:onDestroy()

@@ -11,12 +11,14 @@ function MoLiDeErLevelView:onInitView()
 	self._gostages = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/#go_stages")
 	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
 	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_title/#simage_title")
+	self._txtLimitTimeContainer = gohelper.findChild(self.viewGO, "#go_title/image_LimitTimeBG")
 	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#go_title/image_LimitTimeBG/#txt_LimitTime")
 	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
 	self._goreddotreward = gohelper.findChild(self.viewGO, "#btn_task/#go_reddotreward")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
 	self._goPathParent = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/path/path_2")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -25,14 +27,42 @@ end
 
 function MoLiDeErLevelView:addEvents()
 	self._btntask:AddClickListener(self._btntaskOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, self.onEpisodeFinish, self)
 	self:addEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, self.onClickEpisodeItem, self)
 end
 
 function MoLiDeErLevelView:removeEvents()
 	self._btntask:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
 	self:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnFinishEpisode, self.onEpisodeFinish, self)
 	self:removeEventCb(MoLiDeErController.instance, MoLiDeErEvent.OnClickEpisodeItem, self.onClickEpisodeItem, self)
+end
+
+function MoLiDeErLevelView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function MoLiDeErLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function MoLiDeErLevelView:_btntaskOnClick()
@@ -46,6 +76,8 @@ function MoLiDeErLevelView:_editableInitView()
 	self:_initLevelItem()
 
 	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+	gohelper.setActive(self._txtLimitTimeContainer, false)
 end
 
 function MoLiDeErLevelView:_initLevelItem()
@@ -87,6 +119,8 @@ function MoLiDeErLevelView:onOpen()
 	TaskDispatcher.runRepeat(self.updateTime, self, TimeUtil.OneMinuteSecond)
 
 	self._actId = MoLiDeErModel.instance:getCurActId()
+	self.actId = self._actId
+	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
 
 	self:updateTime()
 	self:refreshUI()

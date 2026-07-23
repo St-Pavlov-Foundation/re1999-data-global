@@ -4,6 +4,10 @@ module("modules.logic.fight.entity.comp.skill.FightTLEventCreateSpine", package.
 
 local FightTLEventCreateSpine = class("FightTLEventCreateSpine", FightTimelineTrackItem)
 
+function FightTLEventCreateSpine:onConstructor()
+	self.classId = FightObject.Counter
+end
+
 function FightTLEventCreateSpine.getSkinSpineName(spineParam, skinId)
 	if string.nilorempty(spineParam) or skinId == 0 then
 		return spineParam
@@ -37,6 +41,14 @@ end
 
 function FightTLEventCreateSpine:onTrackStart(fightStepData, duration, paramsArr)
 	self._paramsArr = paramsArr
+
+	if not string.nilorempty(paramsArr[23]) then
+		FightGameMgr.tokenReleaseEntityMgr:removeEntity(paramsArr[23])
+
+		return
+	end
+
+	self.tokenRelease = not string.nilorempty(paramsArr[22]) and paramsArr[22]
 	self._attacker = FightHelper.getEntity(fightStepData.fromId)
 
 	local spineParam = string.split(paramsArr[1], "#")
@@ -187,7 +199,27 @@ function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, sca
 		}
 	end
 
+	local createEntityId = entityMgr:getTempEntityIdBySpineNameOrSpecificId(spineName, specificId)
+	local entityExData = FightDataHelper.entityExMgr:getById(createEntityId)
+
+	if string.sub(spineName, 1, 8) == "roles_3d" then
+		entityExData.spineUrl = spineName .. ".prefab"
+		entityExData.entityClass = FightTemp3DEntityObject
+	end
+
+	if not string.nilorempty(self._paramsArr[20]) then
+		entityExData.skin = tonumber(self._paramsArr[20])
+	end
+
+	if not string.nilorempty(self._paramsArr[21]) then
+		entityExData.timelineTempEntitySign[self._paramsArr[21]] = true
+	end
+
 	local spineEntity = entityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror == 1, nil, entityParam, self._paramsArr[18] == "1", self.useGoScaleReplaceSpineScale)
+
+	if self.tokenRelease then
+		FightGameMgr.tokenReleaseEntityMgr:addEntity(self.tokenRelease, spineEntity)
+	end
 
 	self.spineEntity = spineEntity
 	self.specificOrder = specificOrder
@@ -238,6 +270,12 @@ function FightTLEventCreateSpine:_createSpine(spineName, specificId, mirror, sca
 	end
 
 	table.insert(self._spineEntityList, spineEntity)
+
+	if not string.nilorempty(self._paramsArr[24]) then
+		local layer = tonumber(self._paramsArr[24])
+
+		spineEntity.spine:setLayer(layer, true)
+	end
 end
 
 function FightTLEventCreateSpine:_getHangPointGO(fightStepData, hangPointId, param)
@@ -281,6 +319,9 @@ function FightTLEventCreateSpine:_clear()
 	if self._spineEntityList then
 		for i, spineEntity in ipairs(self._spineEntityList) do
 			local entityMgr = FightGameMgr.entityMgr
+
+			FightDataHelper.entityExMgr.exDataDic[spineEntity.id] = nil
+
 			local canRemove = true
 
 			if self._paramsArr[14] == "1" then
@@ -288,6 +329,10 @@ function FightTLEventCreateSpine:_clear()
 			end
 
 			if not string.nilorempty(self._paramsArr[15]) then
+				canRemove = false
+			end
+
+			if self.tokenRelease then
 				canRemove = false
 			end
 

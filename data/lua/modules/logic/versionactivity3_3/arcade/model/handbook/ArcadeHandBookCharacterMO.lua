@@ -50,13 +50,13 @@ function ArcadeHandBookCharacterMO:getBigIconTrans()
 end
 
 function ArcadeHandBookCharacterMO:getLockTip()
-	local eleId = self:getEleId()
+	local lockTip = ArcadeConfig:getCharacterLockTip(self.id)
 
-	if eleId == 105 then
-		return "p_v3a3_eliminate_handbook_lock3"
+	if string.nilorempty(lockTip) then
+		lockTip = ArcadeHandBookCharacterMO.super.getLockTip()
 	end
 
-	return "p_v3a3_eliminate_handbook_lock2"
+	return lockTip
 end
 
 return ArcadeHandBookCharacterMO

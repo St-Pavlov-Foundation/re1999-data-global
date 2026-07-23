@@ -4,27 +4,14 @@ module("modules.logic.versionactivity3_3.arcade.controller.game.skill.target.Arc
 
 local ArcadeSkillTargetCharacter = class("ArcadeSkillTargetCharacter", ArcadeSkillTargetBase)
 
+function ArcadeSkillTargetCharacter:onConfigParams()
+	self._targetCanOutsideRoom = true
+end
+
 function ArcadeSkillTargetCharacter:onFindTarget()
 	local characterMO = ArcadeGameModel.instance:getCharacterMO()
 
-	if characterMO then
-		self:addTarget(characterMO)
-	end
-end
-
-function ArcadeSkillTargetCharacter:addTarget(target)
-	if not target or target:getIsDead() then
-		return
-	end
-
-	local uid = target:getUid()
-
-	if not self._targetIdDict[uid] then
-		table.insert(self._targetList, target)
-
-		self._targetIdDict[uid] = true
-		self._isAddNewTarget = true
-	end
+	self:addTarget(characterMO)
 end
 
 return ArcadeSkillTargetCharacter

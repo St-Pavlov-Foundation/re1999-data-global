@@ -123,7 +123,7 @@ function Rouge2_MapChoiceController:isFlowRunning()
 end
 
 function Rouge2_MapChoiceController:isPushFlowDone()
-	return self._pushFlow and self._pushFlow.status == WorkStatus.Done
+	return self._pushFlow and self._pushFlow.isSuccess == true
 end
 
 function Rouge2_MapChoiceController:_onChoiceFlowDone()

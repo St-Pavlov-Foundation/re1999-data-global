@@ -4,169 +4,10 @@ module("modules.logic.rouge2.backpack.controller.Rouge2_BackpackController", pac
 
 local Rouge2_BackpackController = class("Rouge2_BackpackController", BaseController)
 
-function Rouge2_BackpackController:tryReplaceActiveSkill(index, skillUid)
-	local isCan, toastId = self:checkCanReplaceActiveSkill(index, skillUid)
-
-	if isCan then
-		local skillMo = Rouge2_BackpackSkillEditListModel.instance:getMo(skillUid)
-		local skillIndex = Rouge2_BackpackSkillEditListModel.instance:getIndex(skillMo)
-
-		Rouge2_BackpackSkillEditListModel.instance:selectCell(skillIndex, false)
-		self:tryRemoveActiveSkill(index)
-		self:tryRemoveActiveSkillByUid(skillUid)
-		self:sendUseActiveSkillIdsRpc(index, skillUid)
-	elseif toastId then
-		GameFacade.showToast(toastId)
-	end
-
-	return isCan
-end
-
-function Rouge2_BackpackController:sendUseActiveSkillIdsRpc(index, skillUid)
-	Rouge2_Rpc.instance:sendRouge2EquipCareerActiveSkillRequest(index, skillUid)
-end
-
-function Rouge2_BackpackController:isCanEquipAnySkill(index)
-	local isUse = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
-
-	if isUse then
-		return
-	end
-
-	local notUseSkillList = Rouge2_BackpackModel.instance:getAllNotUseActiveSkillList()
-
-	if not notUseSkillList then
-		return
-	end
-
-	for _, skillMo in ipairs(notUseSkillList) do
-		local skillUid = skillMo:getUid()
-		local isCan = self:checkCanReplaceActiveSkill(index, skillUid)
-
-		if isCan then
-			return true
-		end
-	end
-end
-
-function Rouge2_BackpackController:hasAnyActiveSkillCanEquip()
-	for i = 1, Rouge2_Enum.MaxActiveSkillNum do
-		if self:isCanEquipAnySkill(i) then
-			return true
-		end
-	end
-end
-
-function Rouge2_BackpackController:tryRemoveActiveSkill(index)
-	local isEquip = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
-
-	if isEquip then
-		Rouge2_BackpackController.instance:sendUseActiveSkillIdsRpc(index, Rouge2_Enum.EmptyActiveSkill)
-	end
-
-	return isEquip
-end
-
-function Rouge2_BackpackController:tryRemoveActiveSkillByUid(skillUid)
-	local index = Rouge2_BackpackModel.instance:uid2UseActiveSkillIndex(skillUid)
-
-	return self:tryRemoveActiveSkill(index)
-end
-
-function Rouge2_BackpackController:checkCanReplaceActiveSkill(index, newSkillUid)
-	if not index or index < 0 or index > Rouge2_Enum.MaxActiveSkillNum then
-		return
-	end
-
-	local newSkillMo = Rouge2_BackpackModel.instance:getItem(newSkillUid)
-	local oldSkillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(index)
-	local isCan = true
-	local toastId
-
-	if not self:checkIfOverAssembleCost(oldSkillMo, newSkillMo) then
-		isCan = false
-		toastId = ToastEnum.Rouge2OverAssembleCost
-	elseif not self:checkIfBXSAttrFit(index, newSkillMo) then
-		isCan = false
-		toastId = nil
-	elseif not Rouge2_BackpackModel.instance:isActiveSkillHoleUnlock(index) then
-		isCan = false
-	end
-
-	return isCan, toastId
-end
-
-function Rouge2_BackpackController:checkIfBXSAttrFit(index, newSkillMo)
-	if newSkillMo and Rouge2_Model.instance:isUseBXSCareer() then
-		local bxsAttrId = Rouge2_MapConfig.instance:getBXSAttrId(index)
-
-		if bxsAttrId ~= newSkillMo:getAttrTag() then
-			return false
-		end
-	end
-
-	return true
-end
-
-function Rouge2_BackpackController:checkIfOverAssembleCost(oldSkillMo, newSkillMo)
-	if not newSkillMo or newSkillMo.id == 0 then
-		return true
-	end
-
-	local oldSkillCost = 0
-	local oldSkillId = oldSkillMo and oldSkillMo:getItemId()
-
-	if oldSkillId and oldSkillId ~= 0 then
-		local oldSkillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(oldSkillId)
-
-		oldSkillCost = oldSkillCo and oldSkillCo.assembleCost or 0
-	end
-
-	local newSkillCost = 0
-	local newSkillId = newSkillMo and newSkillMo:getItemId()
-
-	if newSkillId and newSkillId ~= 0 then
-		local newSkillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(newSkillId)
-
-		newSkillCost = newSkillCo and newSkillCo.assembleCost or 0
-	end
-
-	local costOffset = newSkillCost - oldSkillCost
-	local curAssembleCost = Rouge2_BackpackModel.instance:getUseActiveSkillAssembleCost()
-	local maxAssembleCost = Rouge2_Model.instance:getAttrValue(Rouge2_MapEnum.BasicAttrId.ActiveSkillCapacity)
-
-	return maxAssembleCost >= curAssembleCost + costOffset
-end
-
-function Rouge2_BackpackController:tryEquipSkillsAfterSelectCareer()
-	local notUseSkillList = Rouge2_BackpackModel.instance:getAllNotUseActiveSkillList()
-	local notUseSkillNum = notUseSkillList and #notUseSkillList or 0
-	local equipSkillNum = 0
-
-	for i = 1, notUseSkillNum do
-		local skillMo = notUseSkillList and notUseSkillList[i]
-		local skillUid = skillMo and skillMo:getUid()
-
-		for j = 1, Rouge2_Enum.MaxActiveSkillNum do
-			if self:tryReplaceActiveSkill(j, skillUid) then
-				self:updateItemReddotStatus(skillUid, Rouge2_Enum.ItemStatus.Old)
-
-				equipSkillNum = equipSkillNum + 1
-
-				break
-			end
-		end
-
-		if equipSkillNum >= Rouge2_Enum.MaxActiveSkillNum then
-			break
-		end
-	end
-end
-
 function Rouge2_BackpackController:buildItemReddot()
 	local redDotInfo = {}
 	local hasNewItem = false
-	local isAnyHoleUnlock = self:isAnyActiveSkillHoleUnlock()
+	local isAnyHoleUnlock = self:isAnySkillHoleCanActiveOrActive()
 
 	for _, bagType in pairs(Rouge2_Enum.BagType) do
 		local itemList = Rouge2_BackpackModel.instance:getItemList(bagType)
@@ -246,6 +87,16 @@ function Rouge2_BackpackController:readAllActiveSkills()
 	end
 end
 
+function Rouge2_BackpackController:readAllItems(bagType)
+	local allItems = bagType and Rouge2_BackpackModel.instance:getItemList(bagType)
+
+	if allItems then
+		for _, itemMo in ipairs(allItems) do
+			self:updateItemReddotStatus(itemMo:getUid(), Rouge2_Enum.ItemStatus.Old)
+		end
+	end
+end
+
 function Rouge2_BackpackController:switchItemDescMode(dataFlag, targetMode)
 	local key = self:_getItemDescModeKey(dataFlag)
 
@@ -302,6 +153,7 @@ function Rouge2_BackpackController:showGetItemView(reason, getItemList)
 
 	local type2ItemList = {}
 	local updateRelicsList = {}
+	local updateSkillList = {}
 
 	for _, itemInfo in ipairs(getItemList) do
 		local itemMo = Rouge2_BagItemMO.New()
@@ -309,12 +161,22 @@ function Rouge2_BackpackController:showGetItemView(reason, getItemList)
 		itemMo:init(itemInfo)
 
 		local uid = itemMo:getUid()
+		local itemId = itemMo:getItemId()
 		local itemType = Rouge2_BackpackHelper.uid2BagType(uid)
 		local isRelics = itemType == Rouge2_Enum.BagType.Relics
-		local updateId = isRelics and Rouge2_CollectionConfig.instance:getBaseRelicsId(itemMo:getItemId())
+		local isActiveSkill = itemType == Rouge2_Enum.BagType.ActiveSkill
+		local preLevelSkillId = isActiveSkill and Rouge2_CollectionConfig.instance:getPreLevelActiveSkillId(itemId)
+		local updateId = isRelics and Rouge2_CollectionConfig.instance:getBaseRelicsId(itemId)
 
 		if updateId and updateId ~= 0 then
 			table.insert(updateRelicsList, itemMo)
+		elseif preLevelSkillId and preLevelSkillId ~= 0 then
+			table.insert(updateSkillList, {
+				preDataType = Rouge2_Enum.ItemDataType.Config,
+				preDataId = preLevelSkillId,
+				resultDataType = Rouge2_Enum.ItemDataType.Clone,
+				resultDataId = itemMo
+			})
 		else
 			type2ItemList[itemType] = type2ItemList[itemType] or {}
 
@@ -350,6 +212,14 @@ function Rouge2_BackpackController:showGetItemView(reason, getItemList)
 			})
 		end
 	end
+
+	local updateSkillNum = updateSkillList and #updateSkillList or 0
+
+	if updateSkillNum > 0 then
+		Rouge2_PopController.instance:addPopViewWithViewName(ViewName.Rouge2_ActiveSkillLevelUpView, {
+			skillList = updateSkillList
+		})
+	end
 end
 
 function Rouge2_BackpackController:buildBXSBoxReddot()
@@ -372,12 +242,12 @@ function Rouge2_BackpackController:buildBXSBoxReddot()
 	})
 end
 
-function Rouge2_BackpackController:checkCanGuideAssembleCost()
-	return not Rouge2_Model.instance:isUseBXSCareer()
-end
-
 function Rouge2_BackpackController:isCanResetTalentStage()
 	local activeTalentIdList = Rouge2_BackpackModel.instance:getActiveTalentIds()
+
+	if not activeTalentIdList then
+		return
+	end
 
 	for _, talentId in ipairs(activeTalentIdList) do
 		local talentCo = Rouge2_CareerConfig.instance:getTalentConfig(talentId)
@@ -491,11 +361,12 @@ function Rouge2_BackpackController:getNewUnlockTalentId()
 	end
 end
 
-function Rouge2_BackpackController:isAnyActiveSkillHoleUnlock()
+function Rouge2_BackpackController:isAnySkillHoleCanActiveOrActive()
 	for i = 1, Rouge2_Enum.MaxActiveSkillNum do
-		local isUnlock = Rouge2_BackpackModel.instance:isActiveSkillHoleUnlock(i)
+		local status = Rouge2_BackpackModel.instance:getActiveSkillHoleStatus(i)
+		local isValid = status and status >= Rouge2_Enum.ActiveSkillHoleStatus.UnlockCanActive
 
-		if isUnlock then
+		if isValid then
 			return true
 		end
 	end
@@ -503,23 +374,161 @@ function Rouge2_BackpackController:isAnyActiveSkillHoleUnlock()
 	return false
 end
 
-function Rouge2_BackpackController:checkCurTeamSystemId()
-	local curTeamSystemId = Rouge2_Model.instance:getCurTeamSystemId()
+function Rouge2_BackpackController:isBagActiveSkillUpdateAttr(attrId)
+	local skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
 
-	if not curTeamSystemId or curTeamSystemId == Rouge2_Enum.UnselectTeamSystemId then
+	if not skillList then
 		return
 	end
 
-	local careerId = Rouge2_Model.instance:getCareerId()
-	local recommendSystemIdList = Rouge2_CareerConfig.instance:getCareerRecommendTeamList(careerId) or {}
+	for _, skillMo in ipairs(skillList) do
+		local skillId = skillMo:getItemId()
+		local isSkillUpdateAttr = Rouge2_CollectionConfig.instance:isSkillUpdateAttr(skillId, attrId)
 
-	for _, recommendSystemId in ipairs(recommendSystemIdList) do
-		if curTeamSystemId == recommendSystemId then
-			return
+		if isSkillUpdateAttr then
+			return true
+		end
+	end
+end
+
+function Rouge2_BackpackController:getAllHeroIdList()
+	local allHeroIdMap = {}
+	local allHeroIdList = {}
+	local allHeroList = HeroModel.instance:getAllHero()
+
+	if allHeroList then
+		for heroId in pairs(allHeroList) do
+			allHeroIdMap[heroId] = true
+
+			table.insert(allHeroIdList, heroId)
 		end
 	end
 
-	Rouge2_Rpc.instance:sendRouge2SetSystemIdRequest(Rouge2_Enum.UnselectTeamSystemId)
+	local trialHeroList = self:getActiveSkillTrialHeroList()
+
+	if trialHeroList then
+		for _, trialInfo in ipairs(trialHeroList) do
+			local trialId = trialInfo[1]
+			local templateId = trialInfo[2] or 0
+			local trialCo = lua_hero_trial.configDict[trialId][templateId]
+			local heroId = trialCo and trialCo.heroId
+
+			if heroId and not allHeroIdMap[heroId] then
+				allHeroIdMap[heroId] = true
+
+				table.insert(allHeroIdList, heroId)
+			end
+		end
+	end
+
+	return allHeroIdList
+end
+
+function Rouge2_BackpackController:getActiveSkillTrialHeroList()
+	local skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+
+	if not skillList then
+		return
+	end
+
+	local trialHeroMap = {}
+	local trialHeroList = {}
+
+	for _, skillMo in ipairs(skillList) do
+		local trialInfoList = Rouge2_CollectionConfig.instance:getTrialHeroListBySkillId(skillMo:getItemId())
+
+		if trialInfoList then
+			for _, trialInfo in ipairs(trialInfoList) do
+				local trialId = trialInfo[1]
+
+				if trialId and not trialHeroMap[trialId] then
+					trialHeroMap[trialId] = true
+
+					table.insert(trialHeroList, trialInfo)
+				end
+			end
+		end
+	end
+
+	return trialHeroList
+end
+
+function Rouge2_BackpackController:isHeroGetFromActiveSkill(targetHeroId)
+	local trialCo = self:getTrialConfigByHeroId(targetHeroId)
+
+	return trialCo ~= nil
+end
+
+function Rouge2_BackpackController:getTrialConfigByHeroId(targetHeroId)
+	if not targetHeroId then
+		return
+	end
+
+	local skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+
+	if not skillList then
+		return
+	end
+
+	for _, skillMo in ipairs(skillList) do
+		local trialInfoList = Rouge2_CollectionConfig.instance:getTrialHeroListBySkillId(skillMo:getItemId())
+
+		if trialInfoList then
+			for _, trialInfo in ipairs(trialInfoList) do
+				local trialId = trialInfo[1]
+				local templateId = trialInfo[2] or 0
+				local trialCo = lua_hero_trial.configDict[trialId][templateId]
+				local heroId = trialCo and trialCo.heroId
+
+				if heroId == targetHeroId then
+					return trialCo
+				end
+			end
+		end
+	end
+end
+
+function Rouge2_BackpackController:isHasTrialHero(trialId, templateId)
+	local skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+
+	if not skillList then
+		return
+	end
+
+	templateId = templateId or 0
+
+	for _, skillMo in ipairs(skillList) do
+		local trialInfoList = Rouge2_CollectionConfig.instance:getTrialHeroListBySkillId(skillMo:getItemId())
+
+		if trialInfoList then
+			for _, trialInfo in ipairs(trialInfoList) do
+				local id = trialInfo[1]
+				local modelId = trialInfo[2] or 0
+
+				if id == trialId and templateId == modelId then
+					return true
+				end
+			end
+		end
+	end
+end
+
+function Rouge2_BackpackController:isAttrRecommend(careerId, attrId, systemId)
+	careerId = careerId or Rouge2_Model.instance:getCareerId()
+	systemId = systemId or Rouge2_Model.instance:getCurTeamSystemId()
+
+	return Rouge2_CareerConfig.instance:isSystemRecommendAttr(systemId, attrId) or self:isBagActiveSkillUpdateAttr(attrId)
+end
+
+function Rouge2_BackpackController:getAttrValueRange(difficulty, attrId)
+	difficulty = difficulty or Rouge2_Model.instance:getDifficulty()
+
+	local exAttrLimit = Rouge2_AttributeConfig.instance:getExAttrLimit(difficulty, attrId)
+	local attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(attrId)
+	local originMinValue = attrCo and attrCo.min or 0
+	local originMaxValue = attrCo and attrCo.showMax or 0
+
+	return originMinValue, originMaxValue + exAttrLimit
 end
 
 Rouge2_BackpackController.instance = Rouge2_BackpackController.New()

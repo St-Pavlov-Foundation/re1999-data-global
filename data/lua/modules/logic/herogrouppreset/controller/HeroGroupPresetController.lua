@@ -106,11 +106,31 @@ function HeroGroupPresetController:initCopyHeroGroupList()
 	local list = HeroGroupPresetHeroGroupChangeController.instance:getHeroGroupList(heroGroupType)
 
 	if list then
+		local useIds = {}
+
 		for _, v in pairs(list) do
 			local heroGroupMO = HeroGroupMO.New()
 
 			heroGroupMO:init(v)
+
+			if v.id then
+				useIds[v.id] = true
+			end
+
 			table.insert(self._copyList, heroGroupMO)
+		end
+
+		for i, v in ipairs(self._copyList) do
+			if not v.id then
+				local newId = 1
+
+				while useIds[newId] do
+					newId = newId + 1
+				end
+
+				v.id = newId
+				v.groupId = v.id
+			end
 		end
 	end
 end

@@ -5,8 +5,10 @@ module("modules.logic.defines.ItemEnum", package.seeall)
 local ItemEnum = _M
 
 ItemEnum.clientDisplayType = {
-	SpecifiedGift = 1,
-	BpCustomSelect = 2
+	BpCustomSelect = 2,
+	SkinGift = 4,
+	HeroSelect = 3,
+	SpecifiedGift = 1
 }
 ItemEnum.SubType = {
 	RandomGift = 49,
@@ -43,12 +45,16 @@ ItemEnum.SubType = {
 	HeroExpBoxKey = 77,
 	SummonUISkin = 80,
 	OptionalHeroGift = 52,
-	Badge = 39,
+	ItemConvert = 85,
 	UnlimitedPower = 32,
+	Badge = 39,
+	NewDestinyStoneUp = 86,
+	InspirationBox = 82,
 	DecorateDiscountTicket = 63,
 	CritterTrain = 28,
 	EquipBreak = 18,
 	CommonGift = 50,
+	DecorateBundle = 83,
 	LimitPower = 31,
 	RoomManufactureItem = 25,
 	RoomBlockGiftNew = 69,
@@ -57,6 +63,7 @@ ItemEnum.SubType = {
 	CritterSummon = 29,
 	DestinySummonPackage = 81,
 	MainUISkin = 35,
+	EquipLvUp = 84,
 	DestinyStoneUp = 64
 }
 ItemEnum.CategoryType = {
@@ -89,8 +96,9 @@ ItemEnum.RoomBackpackPropSubType = {
 ItemEnum.NewbiePackGiftId = 520010
 ItemEnum.NoExpiredNum = 70128
 ItemEnum.Tag = {
-	PackageSkin = 2,
-	SummonSkin = 1
+	GoldenMilletPresentSkin = 3,
+	SummonSkin = 1,
+	PackageSkin = 2
 }
 ItemEnum.GetApproach2Tag = {
 	[MaterialEnum.GetApproach.MonthCard] = 1

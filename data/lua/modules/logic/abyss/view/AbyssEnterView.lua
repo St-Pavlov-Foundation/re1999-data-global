@@ -88,7 +88,17 @@ function AbyssEnterView:checkParam()
 		gohelper.addChild(parent, self.viewGO)
 	end
 
-	self.actId = VersionActivity3_6Enum.ActivityId.Abyss
+	local constConfig = AbyssConfig.instance:getConstConfig(AbyssEnum.ConstId.ActId)
+
+	if not constConfig or string.nilorempty(constConfig.value) then
+		logError("新深渊 不存在常量活动id配置")
+
+		return
+	end
+
+	local actId = tonumber(constConfig.value)
+
+	self.actId = actId
 
 	AbyssModel.instance:setCurActId(self.actId)
 end

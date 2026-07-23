@@ -152,7 +152,7 @@ function ArcadeHandBookMO:getBigIconTrans()
 end
 
 function ArcadeHandBookMO:getLockTip()
-	return "p_v3a3_eliminate_handbook_lock"
+	return luaLang("p_v3a3_eliminate_handbook_lock")
 end
 
 return ArcadeHandBookMO

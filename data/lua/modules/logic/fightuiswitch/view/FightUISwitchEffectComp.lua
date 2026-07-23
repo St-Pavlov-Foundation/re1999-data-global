@@ -295,33 +295,8 @@ function FightUISwitchEffectComp:_repeatShowEffectAnimCB()
 	local tb = self:_getCurShowEffectSceneRootTb()
 
 	if tb and tb.anim then
-		local stateName = self:_getAnimStateName(tb)
-
-		if not string.nilorempty(stateName) then
-			tb.anim:Play(stateName, 0, 0)
-		else
-			gohelper.setActive(tb.anim.gameObject, false)
-			gohelper.setActive(tb.anim.gameObject, true)
-		end
-	end
-end
-
-function FightUISwitchEffectComp:_getAnimStateName(tb)
-	if not tb or not tb.anim then
-		return
-	end
-
-	if tb.stateName then
-		return tb.stateName
-	end
-
-	local clipName = tb.anim.runtimeAnimatorController.animationClips[0].name
-	local stateInfo = tb.anim:GetCurrentAnimatorStateInfo(0)
-
-	if stateInfo.shortNameHash == UnityEngine.Animator.StringToHash(clipName) then
-		tb.stateName = clipName
-
-		return clipName
+		gohelper.setActive(tb.anim.gameObject, false)
+		gohelper.setActive(tb.anim.gameObject, true)
 	end
 end
 
@@ -331,6 +306,14 @@ function FightUISwitchEffectComp:onClose()
 	self._effectSceneRoot = nil
 
 	self:removeEvent()
+
+	if self._effectItems then
+		for i = 1, #self._effectItems do
+			local item = self._effectItems[i]
+
+			gohelper.destroy(item.viewGO)
+		end
+	end
 end
 
 function FightUISwitchEffectComp:onDestroy()

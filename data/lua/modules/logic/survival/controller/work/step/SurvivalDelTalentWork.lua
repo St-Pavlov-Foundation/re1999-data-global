@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalDelTalentWork", pack
 
 local SurvivalDelTalentWork = class("SurvivalDelTalentWork", SurvivalStepBaseWork)
 
-function SurvivalDelTalentWork:onStart(context)
+function SurvivalDelTalentWork:onStart2(context)
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
 	for i, v in ipairs(self._stepMo.paramInt) do

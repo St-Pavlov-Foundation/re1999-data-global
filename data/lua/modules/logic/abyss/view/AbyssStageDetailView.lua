@@ -9,7 +9,7 @@ function AbyssStageDetailView:onInitView()
 	self._goCareer = gohelper.findChild(self.viewGO, "recommend/carreer/#go_Career")
 	self._goCareerItem = gohelper.findChild(self.viewGO, "recommend/carreer/#go_Career/#go_CareerItem")
 	self._txtrecommonddes = gohelper.findChildText(self.viewGO, "recommend/carreer/#go_Career/#txt_recommonddes")
-	self._txtlevel = gohelper.findChildText(self.viewGO, "recommend/level/#txt_level")
+	self._txtDesc = gohelper.findChildText(self.viewGO, "recommend/level/#txt_desc")
 	self._gorconditionitem = gohelper.findChild(self.viewGO, "chapterconditions/scroll_info/viewport/content/#go_rconditionitem")
 	self._gostar2 = gohelper.findChild(self.viewGO, "chapterconditions/scroll_info/viewport/content/#go_rconditionitem/#go_star2")
 	self._gostar1 = gohelper.findChild(self.viewGO, "chapterconditions/scroll_info/viewport/content/#go_rconditionitem/#go_star1")
@@ -37,6 +37,7 @@ function AbyssStageDetailView:addEvents()
 	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 	self._btnclosebg:AddClickListener(self._btncloseOnClick, self)
+	self._btnRecommend:AddClickListener(self._btnRecommendOnClick, self)
 	self:addEventCb(AbyssController.instance, AbyssEvent.OnResetStage, self.refreshUI, self)
 	self:addEventCb(AbyssController.instance, AbyssEvent.OnUpdateStageInfo, self.refreshUI, self)
 end
@@ -47,6 +48,7 @@ function AbyssStageDetailView:removeEvents()
 	self._btnstart:RemoveClickListener()
 	self._btnclose:RemoveClickListener()
 	self._btnclosebg:RemoveClickListener()
+	self._btnRecommend:RemoveClickListener()
 	self:removeEventCb(AbyssController.instance, AbyssEvent.OnResetStage, self.refreshUI, self)
 	self:removeEventCb(AbyssController.instance, AbyssEvent.OnUpdateStageInfo, self.refreshUI, self)
 end
@@ -88,8 +90,24 @@ function AbyssStageDetailView:_btncloseOnClick()
 	self:closeThis()
 end
 
+function AbyssStageDetailView:_btnRecommendOnClick()
+	local episodeId = self.stageConfig.episodeId
+
+	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(episodeId, self._receiveRecommend, self)
+end
+
+function AbyssStageDetailView:_receiveRecommend(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	HeroGroupModel.instance:setAfterUpdateRecommendState(true)
+	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, msg)
+end
+
 function AbyssStageDetailView:_editableInitView()
 	self._goStageParent = gohelper.findChild(self.viewGO, "#go_clipNode/clip")
+	self._btnRecommend = gohelper.findChildButton(self.viewGO, "right/#btn_tuijian")
 end
 
 function AbyssStageDetailView:onUpdateParam()
@@ -201,7 +219,7 @@ function AbyssStageDetailView:refreshRecommendInfo()
 	local battleId = self.episodeConfig.battleId
 	local text = AbyssHelper.getRecommendTeamList(self.stageConfig.teamRecommend)
 
-	self._txtlevel.text = text
+	self._txtDesc.text = text
 
 	local recommended
 

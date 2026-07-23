@@ -20,6 +20,7 @@ local fields = {
 	hpPos = 13,
 	skillCost = 6,
 	icon2Scale = 17,
+	lockTip = 21,
 	category = 14,
 	icon2 = 16,
 	shape = 10,
@@ -29,8 +30,9 @@ local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	desc = 2,
-	name = 1
+	lockTip = 3,
+	name = 1,
+	desc = 2
 }
 
 function lua_arcade_character.onLoad(json)

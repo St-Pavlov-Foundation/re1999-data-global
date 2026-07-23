@@ -1,6 +1,69 @@
 ﻿-- chunkname: @modules/setting/module_mvc.lua
 
 local module_mvc = {
+	EquipLvUp = {
+		model = {
+			"EquipLvUpModel"
+		},
+		controller = {
+			"EquipLvUpController"
+		}
+	},
+	V3a8EchoSong = {
+		model = {
+			"V3a8EchoSongModel"
+		},
+		controller = {
+			"V3a8EchoSongController"
+		},
+		rpc = {
+			"V3a8EchoSongRpc"
+		},
+		config = {
+			"V3a8EchoSongConfig"
+		}
+	},
+	Activity236 = {
+		model = {
+			"Act236Model"
+		},
+		controller = {
+			"Act236Controller"
+		},
+		rpc = {
+			"Act236Rpc"
+		},
+		config = {
+			"Act236Config"
+		}
+	},
+	Teaching = {
+		model = {
+			"TeachingModel"
+		},
+		controller = {
+			"TeachingController"
+		},
+		rpc = {
+			"TeachingRpc"
+		},
+		config = {
+			"TeachingConfig"
+		}
+	},
+	TowerV3a7 = {
+		model = {
+			"TowerV3a7Model",
+			"TowerV3a7ChessManModel",
+			"TowerV3a7RoomModel"
+		},
+		controller = {
+			"TowerV3a7Controller"
+		},
+		config = {
+			"TowerV3a7Config"
+		}
+	},
 	CurrencyExchange = {
 		model = {
 			"CurrencyExchangeModel"
@@ -24,6 +87,22 @@ local module_mvc = {
 		},
 		config = {
 			"V3a6YaMiConfig"
+		}
+	},
+	Activity235 = {
+		model = {
+			"AtomicOperationActivityModel",
+			"AtomicOperationActivityGameModel"
+		},
+		controller = {
+			"AtomicOperationActivityController",
+			"AtomicOperationActivityGameController"
+		},
+		rpc = {
+			"AtomicOperationActivityRpc"
+		},
+		config = {
+			"AtomicOperationActivityConfig"
 		}
 	},
 	V3a5Puzzle = {
@@ -733,7 +812,8 @@ local module_mvc = {
 			"Rouge2_CollectionConfig",
 			"Rouge2_AttributeConfig",
 			"Rouge2_MapConfig",
-			"Rouge2_ChatConfig"
+			"Rouge2_ChatConfig",
+			"Rouge2_BossBattleConfig"
 		},
 		controller = {
 			"Rouge2_Controller",
@@ -1634,7 +1714,8 @@ local module_mvc = {
 		},
 		controller = {
 			"ActivityController",
-			"ActivityBeginnerController"
+			"ActivityBeginnerController",
+			"Act101VersionSummonController"
 		},
 		rpc = {
 			"ActivityRpc",
@@ -1963,6 +2044,17 @@ local module_mvc = {
 		},
 		config = {
 			"DungeonGameConfig"
+		}
+	},
+	mazeV3a7 = {
+		model = {
+			"DungeonMazeV3a7Model"
+		},
+		controller = {
+			"DungeonMazeV3a7Controller"
+		},
+		config = {
+			"DungeonMazeV3a7Config"
 		}
 	},
 	JumpGame = {
@@ -2864,7 +2956,8 @@ local module_mvc = {
 			"TowerTaskModel",
 			"TowerTimeLimitLevelModel",
 			"TowerPermanentDeepModel",
-			"TowerDeepTaskModel"
+			"TowerDeepTaskModel",
+			"TowerHeroTrialListModel"
 		},
 		rpc = {
 			"TowerRpc",
@@ -3710,6 +3803,196 @@ local module_mvc = {
 		},
 		config = {
 			"ActivityCollectConfig"
+		}
+	},
+	Sodache = {
+		model = {
+			"SodacheModel"
+		},
+		config = {
+			"SodacheConfig"
+		},
+		rpc = {
+			"SodacheInsideRpc",
+			"SodacheOutsideRpc"
+		},
+		controller = {
+			"SodacheController"
+		}
+	},
+	Anniversary3 = {
+		model = {
+			"Anniversary3Model",
+			"GuessGameModel",
+			"Anniversary3ActBpModel"
+		},
+		config = {
+			"Anniversary3Config",
+			"Activity233Config",
+			"Activity234Config"
+		},
+		rpc = {
+			"Activity233Rpc",
+			"Activity234Rpc"
+		},
+		controller = {
+			"Anniversary3Controller",
+			"GuessGameController",
+			"Anniversary3ActBpController"
+		}
+	},
+	TravelGo = {
+		model = {
+			"TravelGoModel"
+		},
+		config = {
+			"TravelGoConfig"
+		},
+		controller = {
+			"TravelGoController"
+		}
+	},
+	XRuiAnYi = {
+		model = {
+			"XRuiAnYiModel",
+			"XRuiAnYiTaskListModel"
+		},
+		config = {
+			"XRuiAnYiConfig"
+		},
+		controller = {
+			"XRuiAnYiController"
+		}
+	},
+	Wmz = {
+		model = {
+			"WmzSysModel",
+			"WmzBattleModel"
+		},
+		config = {
+			"WmzConfig"
+		},
+		controller = {
+			"WmzController"
+		}
+	},
+	V3a8DianJiShi = {
+		model = {
+			"DianJiShiGameModel",
+			"DianJiShiModel"
+		},
+		controller = {
+			"DianJiShiGameController",
+			"DianJiShiLevelController"
+		},
+		rpc = {},
+		config = {
+			"DianJiShiGameConfig"
+		}
+	},
+	GlobalVote = {
+		model = {
+			"GlobalVoteModel"
+		},
+		controller = {
+			"GlobalVoteController"
+		},
+		rpc = {
+			"GlobalVoteRpc"
+		}
+	},
+	V3a8_DragonBoat = {
+		config = {
+			"V3a8_DragonBoatConfig"
+		},
+		model = {
+			"V3a8_DragonBoatModel"
+		},
+		rpc = {
+			"V3a8_DragonBoatRpc",
+			"Activity241Rpc"
+		},
+		controller = {
+			"V3a8_DragonBoatController"
+		}
+	},
+	V3a8_SelfSelectSix = {
+		model = {
+			"VersionActivity3_8SelfSelectSixModel"
+		},
+		controller = {
+			"VersionActivity3_8SelfSelectSixController"
+		}
+	},
+	Act240 = {
+		model = {
+			"VersionActivity3_8FreeMonthCardModel"
+		},
+		controller = {
+			"MonthCardController"
+		},
+		rpc = {
+			"Activity240Rpc"
+		},
+		config = {
+			"Activity240Config"
+		}
+	},
+	AtomicHeart = {
+		config = {
+			"AtomicDungeonConfig",
+			"AtomicConfig"
+		},
+		model = {
+			"AtomicModel",
+			"AtomicDungeonModel",
+			"AtomicDungeonTaskModel",
+			"AtomicDataBaseViewModel",
+			"AtomicTalentViewModel"
+		},
+		rpc = {
+			"AtomicRpc"
+		},
+		controller = {
+			"AtomicController",
+			"AtomicDungeonController",
+			"VersionActivity3_10DungeonController"
+		}
+	},
+	Milestone = {
+		config = {
+			"MileStoneConfig"
+		},
+		model = {
+			"MileStoneModel"
+		},
+		rpc = {
+			"MileStoneRpc"
+		},
+		controller = {
+			"MileStoneController"
+		}
+	},
+	Sp02_PaoMian = {
+		config = {
+			"Sp02_GuessMeConfig",
+			"Sp02_MarcusConfig"
+		},
+		model = {
+			"Sp02_GuessMeModel",
+			"Sp02_MarcusModel"
+		},
+		rpc = {
+			"Activity238Rpc",
+			"Activity239Rpc"
+		},
+		controller = {
+			"Sp02_PaoMianController"
+		}
+	},
+	SceneUIPackage = {
+		model = {
+			"SceneUIPackageModel"
 		}
 	}
 }

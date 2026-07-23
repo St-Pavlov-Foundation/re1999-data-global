@@ -23,6 +23,7 @@ function SDKDataTrackMgr.activateExtend()
 	SDKDataTrackMgr.EventName.resource_fixup = "resource_fixup"
 	SDKDataTrackMgr.EventName.click_activity_jump_button = "click_activity_jump_button"
 	SDKDataTrackMgr.EventName.act_chengheguang_operation = "act_chengheguang_operation"
+	SDKDataTrackMgr.EventName.act_WMZ_operation = "act_WMZ_operation"
 	SDKDataTrackMgr.EventProperties.current_language = "current_language"
 	SDKDataTrackMgr.EventProperties.entrance = "entrance"
 	SDKDataTrackMgr.EventProperties.current_voice_pack_list = "current_voice_pack_list"
@@ -40,6 +41,7 @@ function SDKDataTrackMgr.activateExtend()
 	SDKDataTrackMgr.EventProperties.resource_fixup_count = "resource_count"
 	SDKDataTrackMgr.EventProperties.act210_grid_info = "act210_grid_info"
 	SDKDataTrackMgr.EventProperties.used_times = "used_times"
+	SDKDataTrackMgr.EventProperties.reset_times = "reset_times"
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.current_language] = "string"
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.entrance] = "string"
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.current_voice_pack_list] = "list"
@@ -57,6 +59,7 @@ function SDKDataTrackMgr.activateExtend()
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.resource_fixup_count] = "number"
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.act210_grid_info] = "array"
 	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.used_times] = "number"
+	SDKDataTrackMgr.PropertyTypes[SDKDataTrackMgr.EventProperties.reset_times] = "number"
 end
 
 function SDKDataTrackMgr:trackVoicePackDownloadConfirm(data)
@@ -161,6 +164,17 @@ function SDKDataTrackMgr:track_act_chengheguang_operation(OperationType, Episode
 		[StatEnum.EventProperties.Time] = Time or -1,
 		[StatEnum.EventProperties.IsWin] = IsWin or false,
 		[StatEnum.EventProperties.IsFirst] = IsFirst or false
+	})
+end
+
+function SDKDataTrackMgr:track_act_WMZ_operation(OperationType, MapId, UseTime, reset_times, RoundNum, CompletedLayers)
+	StatController.instance:track(SDKDataTrackMgr.EventName.act_WMZ_operation, {
+		[StatEnum.EventProperties.OperationType] = OperationType or "",
+		[StatEnum.EventProperties.MapId] = tostring(MapId) or "0",
+		[StatEnum.EventProperties.UseTime] = UseTime or -1,
+		[SDKDataTrackMgr.EventProperties.reset_times] = reset_times or -1,
+		[StatEnum.EventProperties.RoundNum] = RoundNum or -1,
+		[StatEnum.EventProperties.CompletedLayers] = CompletedLayers or -1
 	})
 end
 

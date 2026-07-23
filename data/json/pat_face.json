@@ -400,7 +400,7 @@
   },
   {
     "id": 20802,
-    "patFaceActivityId": 12869,
+    "patFaceActivityId": 13740,
     "patFaceViewName": "V2a8_WuErLiXiGiftView",
     "patFaceStoryId": 0,
     "patFaceOrder": 2081
@@ -435,7 +435,7 @@
   },
   {
     "id": 20806,
-    "patFaceActivityId": 12863,
+    "patFaceActivityId": 13715,
     "patFaceViewName": "V2a8_SelfSelectCharacterView",
     "patFaceStoryId": 0,
     "patFaceOrder": 2082
@@ -575,14 +575,14 @@
   },
   {
     "id": 30200,
-    "patFaceActivityId": 13208,
+    "patFaceActivityId": 13734,
     "patFaceViewName": "versionsummonpanel",
     "patFaceStoryId": 0,
     "patFaceOrder": 30200
   },
   {
     "id": 30201,
-    "patFaceActivityId": 0,
+    "patFaceActivityId": 138525,
     "patFaceViewName": "",
     "patFaceStoryId": 0,
     "patFaceOrder": 50000
@@ -617,10 +617,17 @@
   },
   {
     "id": 30402,
-    "patFaceActivityId": 13441,
-    "patFaceViewName": "V3a4_GoldenMilletPresentView",
+    "patFaceActivityId": 0,
+    "patFaceViewName": "",
     "patFaceStoryId": 0,
     "patFaceOrder": 1500
+  },
+  {
+    "id": 30700,
+    "patFaceActivityId": 13734,
+    "patFaceViewName": "",
+    "patFaceStoryId": 800007,
+    "patFaceOrder": 30199
   },
   {
     "id": 30801,
@@ -628,6 +635,20 @@
     "patFaceViewName": "VersionActivity3_8FreeMonthCardPanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 1000
+  },
+  {
+    "id": 385002,
+    "patFaceActivityId": 138506,
+    "patFaceViewName": "AtomicOperationActivityEnterPatFaceView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30200
+  },
+  {
+    "id": 385003,
+    "patFaceActivityId": 138516,
+    "patFaceViewName": "SceneUIPackagePanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30198
   },
   {
     "id": 20206,

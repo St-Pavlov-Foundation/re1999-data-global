@@ -43,6 +43,7 @@ function HeroMo:ctor()
 	self.belongOtherPlayer = false
 	self.otherPlayerEquipMo = nil
 	self.extraStr = nil
+	self.deviceMo = nil
 end
 
 function HeroMo:init(info, config)
@@ -327,6 +328,8 @@ function HeroMo:update(info)
 	self.extraMo = self.extraMo or CharacterExtraMO.New(self)
 
 	self.extraMo:refreshMo(info.extraStr)
+
+	self.deviceMo = self:getDeviceMo()
 end
 
 function HeroMo:_getListInfo(originList, cls)
@@ -670,10 +673,47 @@ function HeroMo:getTotalBaseAttrDict(equipUidList, level, rankLevel, isBalance, 
 				local equipMO = HeroGroupTrialModel.instance:getEquipMo(equipUid)
 
 				self:_calcEquipAttr(equipMO, equipAttrDict, equipBreakAddAttrDict)
+
+				if self.heroId == CharacterEnum.TwinssychubeHeroId then
+					local otherEquipId = equipMO and EquipModel.instance:getOtherTwinssychubeEquipId(equipMO.equipId)
+					local otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+
+					if otherEquipMo then
+						self:_calcEquipAttr(otherEquipMo, equipAttrDict, equipBreakAddAttrDict)
+					end
+				end
 			else
 				local equipMO = EquipModel.instance:getEquip(equipUid)
 
 				self:_calcEquipAttr(equipMO, equipAttrDict, equipBreakAddAttrDict, equipLv)
+
+				if self.heroId == CharacterEnum.TwinssychubeHeroId then
+					local otherEquipMo
+
+					if trialEquipMo then
+						local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
+
+						if otherEquipId then
+							otherEquipMo = EquipMO.New()
+
+							local co = {
+								equipId = otherEquipId,
+								equipLv = trialEquipMo.level,
+								equipRefine = trialEquipMo.refineLv
+							}
+
+							otherEquipMo:initByTrialCO(co)
+						end
+					else
+						local otherEquipId = equipMO and EquipModel.instance:getOtherTwinssychubeEquipId(equipMO.equipId)
+
+						otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+					end
+
+					if otherEquipMo then
+						self:_calcEquipAttr(otherEquipMo, equipAttrDict, equipBreakAddAttrDict, equipLv)
+					end
+				end
 			end
 		end
 
@@ -1007,6 +1047,10 @@ function HeroMo:getHeroType()
 	return self.config.heroType
 end
 
+function HeroMo:getHeroDestinyStoneMo()
+	return self.destinyStoneMo
+end
+
 function HeroMo:getHeroBattleTag()
 	if self.destinyStoneMo then
 		local stoneMo = self.destinyStoneMo:getCurUseStoneMo()
@@ -1027,6 +1071,49 @@ function HeroMo:getTalentTxtByHeroType()
 	local heroType = self:getHeroType()
 
 	return CharacterEnum.TalentTxtByHeroType[heroType]
+end
+
+function HeroMo:getDeviceId()
+	if self.destinyStoneMo then
+		local exSkillCo = self.destinyStoneMo:getExpExchangeSkillCo(self.exSkillLevel)
+
+		if exSkillCo and exSkillCo.deviceId > 0 then
+			return exSkillCo.deviceId
+		end
+
+		local stoneCo = self.destinyStoneMo:getCurUseStoneCo()
+
+		if stoneCo and not string.nilorempty(stoneCo.deviceAdd) then
+			local devices = GameUtil.splitString2(stoneCo.deviceAdd, true)
+
+			for _, v in pairs(devices) do
+				if v[1] == self.exSkillLevel then
+					return v[2]
+				end
+			end
+		end
+	end
+
+	local exSkillCos = SkillConfig.instance:getheroexskillco(self.heroId)
+	local exSkillCo = exSkillCos and exSkillCos[self.exSkillLevel]
+
+	if exSkillCo and exSkillCo.deviceId > 0 then
+		return exSkillCo.deviceId
+	end
+
+	return self.config and self.config.deviceId
+end
+
+function HeroMo:getDeviceMo()
+	local deviceId = self:getDeviceId()
+
+	if deviceId and deviceId > 0 then
+		self.deviceMo = self.deviceMo or HeroDeviceMO.New(self.heroId)
+
+		self.deviceMo:refreshDevice(deviceId)
+
+		return self.deviceMo
+	end
 end
 
 return HeroMo

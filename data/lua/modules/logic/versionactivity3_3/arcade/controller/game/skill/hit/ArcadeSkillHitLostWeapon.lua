@@ -20,7 +20,7 @@ function ArcadeSkillHitLostWeapon:onHit()
 		tabletool.addValues(self._weaponUIdList, weaponList)
 
 		for _, uid in ipairs(self._weaponUIdList) do
-			characterMO:removeCollection(uid)
+			ArcadeGameController.instance:lossCollection(uid)
 		end
 
 		self:addHiter(characterMO)

@@ -303,7 +303,7 @@ function V3a6_WarmUpDialogueItem:getTypewriterShowText()
 			tm(self._tagStack)
 		end
 	else
-		retText = self.curText
+		retText = self.curText or ""
 
 		if tagStackCount > 0 then
 			if self._tagCount == tagStackCount then

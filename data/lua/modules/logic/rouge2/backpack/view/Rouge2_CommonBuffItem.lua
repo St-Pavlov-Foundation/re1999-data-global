@@ -19,6 +19,7 @@ function Rouge2_CommonBuffItem:init(go)
 	self._txtDesc = gohelper.findChildText(self.go, "root/#go_Container/#txt_Desc")
 	self._goSelect = gohelper.findChild(self.go, "root/#go_Select")
 	self._goReddot = gohelper.findChild(self.go, "root/Info/#go_Reddot")
+	self._goRecommend = gohelper.findChild(self.go, "root/Info/#go_Recommend")
 	self._goTeamTips = gohelper.findChild(self.go, "root/Info/#go_TeamTips")
 	self._animator = gohelper.onceAddComponent(self.go, gohelper.Type_Animator)
 
@@ -27,7 +28,8 @@ function Rouge2_CommonBuffItem:init(go)
 	self:initRareEffectTab()
 
 	self._teamTipsParams = {}
-	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Drop)
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.MultiItemSystemTag)
+	self._teamTipsLoader2 = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.ItemRecommend)
 	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go)
 
 	self._listener:initCallback(self.refreshItemDesc, self)
@@ -50,9 +52,10 @@ function Rouge2_CommonBuffItem:onUpdateMO(dataType, id)
 	self._id = id
 	self._buffCo, self._buffMo = Rouge2_BackpackHelper.getItemCofigAndMo(dataType, id)
 	self._buffId = self._buffCo and self._buffCo.id
-	self._teamTipsParams.itemId = self._buffId
+	self._teamTipsParams[Rouge2_Enum.TeamRecommendParam.ItemId] = self._buffId
 
 	self._teamTipsLoader:initInfo(nil, self._teamTipsParams)
+	self._teamTipsLoader2:initInfo(nil, self._teamTipsParams)
 	self._listener:startListen()
 	self:refreshUI()
 end

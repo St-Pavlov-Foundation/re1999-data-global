@@ -12,11 +12,13 @@ end
 
 local type2Class = {
 	[FightEnum.PowerType.Alert] = FightNamePowerInfoView6,
-	[FightEnum.PowerType.ZongMaoBossEnergy] = FightNamePowerInfoView9
+	[FightEnum.PowerType.ZongMaoBossEnergy] = FightNamePowerInfoView9,
+	[FightEnum.PowerType.Atomic] = FightNamePowerInfoView11
 }
 local type2url = {
 	[FightEnum.PowerType.Alert] = "ui/viewres/fight/fightalertview.prefab",
-	[FightEnum.PowerType.ZongMaoBossEnergy] = "ui/viewres/fight/fight_bossspecialenergy.prefab"
+	[FightEnum.PowerType.ZongMaoBossEnergy] = "ui/viewres/fight/fight_bossspecialenergy.prefab",
+	[FightEnum.PowerType.Atomic] = "ui/viewres/fight/fightstressitem.prefab"
 }
 
 function FightNamePowerInfoView:onLogicEnter()
@@ -51,6 +53,8 @@ function FightNamePowerInfoView:getParentRoot(powerId)
 		local bossEnergyRoot = gohelper.create2d(self.fightNameObj, "expointContainer")
 
 		return bossEnergyRoot
+	elseif powerId == FightEnum.PowerType.Atomic then
+		return gohelper.findChild(self.fightNameObj, "#go_fightstressitem")
 	end
 end
 

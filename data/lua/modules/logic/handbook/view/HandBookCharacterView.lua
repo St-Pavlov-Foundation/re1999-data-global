@@ -419,7 +419,7 @@ function HandBookCharacterView:_checkConfig(cfg)
 	end
 
 	local isDmg = self._dmgFilterCount == 0 or self._selectDmgs[cfg.dmgType]
-	local isCareers = self._careerFilterCount == 0 or self._selectCareers[cfg.career]
+	local isCareers = self._careerFilterCount == 0 or CharacterModel.instance:filterHerobyCareer_1(self._selectCareers, cfg.career)
 	local isFilterTag = self._tagsFilterTotalCount == 0 or self._selectTags and CharacterModel.instance:isFilterTagByBattleTags(self._selectTags, cfg.battleTag, cfg.id)
 
 	if isDmg and isCareers and isFilterTag then
@@ -587,8 +587,10 @@ function HandBookCharacterView:onDragEndHandle(param, pointerEventData)
 
 		if endDragPosX < self.startDragPosX then
 			self:rightPageOnClick()
+			self:onClickCloseTipBtn()
 		else
 			self:leftPageOnClick()
+			self:onClickCloseTipBtn()
 		end
 	end
 end

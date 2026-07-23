@@ -49,7 +49,10 @@ function ClickUISwitchController:setCurClickUIStyle(id, callback, callbackObj)
 	PlayerModel.instance:forceSetSimpleProperty(simpleProperty, tostring(id))
 	PlayerRpc.instance:sendSetSimplePropertyRequest(simpleProperty, tostring(id))
 	ClickUISwitchController.instance:dispatchEvent(ClickUISwitchEvent.UseClickUI, id)
-	callback(callbackObj)
+
+	if callback then
+		callback(callbackObj)
+	end
 end
 
 function ClickUISwitchController.hasReddot(id)

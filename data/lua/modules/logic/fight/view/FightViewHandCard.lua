@@ -9,7 +9,7 @@ local HandCardWidth = 185
 FightViewHandCard.blockOperate = false
 
 function FightViewHandCard:onInitView()
-	self.skinDownEffectRoot = gohelper.findChild(self.viewGO, "root/hand_card_skin_down")
+	self.skinDownEffectRoot = gohelper.findChild(self.viewGO, "root/handcards/hand_card_skin_down")
 	self.skinUpEffectRoot = gohelper.findChild(self.viewGO, "root/hand_card_skin_up")
 	self._handCardContainer = gohelper.findChild(self.viewGO, "root/handcards")
 	self._handCardGO = gohelper.findChild(self.viewGO, "root/handcards/handcards")
@@ -36,10 +36,15 @@ function FightViewHandCard:onInitView()
 	gohelper.setActive(self._handCardItemPrefab, false)
 
 	self._handCardItemList = {}
+	self._handCardItemPool = {}
 
 	self:_setBlockOperate(false)
 
 	self.areaSize = 0
+	self.deviceBlackBg = gohelper.findChildClickWithDefaultAudio(self.viewGO, "root/#go_devicediscard")
+
+	self.deviceBlackBg:AddClickListener(self.onClickDeviceBg, self)
+
 	self.LyNeedCheckFlowList = {}
 
 	self:initRedOrBlueArea()
@@ -95,6 +100,14 @@ function FightViewHandCard:onInitView()
 	self._magicEffectCardFlow:addWork(FightCardChangeMagicEffect.New())
 end
 
+function FightViewHandCard:onClickDeviceBg()
+	local curOperateState = FightDataHelper.stageMgr:getCurOperateState()
+
+	if curOperateState == FightStageMgr.OperateStateType.DeviceDiscard then
+		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.DeviceDiscard)
+	end
+end
+
 function FightViewHandCard:initRedOrBlueArea()
 	local skin = FightDataHelper.entityMgr:getHeroSkin(FightEnum.HeroId.LY)
 	local co = skin and lua_fight_sp_handcard_area_ly.configDict[skin]
@@ -139,6 +152,10 @@ function FightViewHandCard:onDestroyView()
 
 		self.lorentzLoader = nil
 	end
+
+	self.handCardMoving = false
+
+	self:clearHandCardMoveDone()
 end
 
 function FightViewHandCard:addEvents()
@@ -147,6 +164,7 @@ function FightViewHandCard:addEvents()
 end
 
 function FightViewHandCard:onOpen()
+	self:com_registMsg(FightMsgId.GetSkinDownEffectRoot, self.onGetSkinDownEffectRoot)
 	self:_updateNow()
 	self:addEventCb(FightController.instance, FightEvent.DistributeCards, self._startDistributeCards, self)
 	self:addEventCb(FightController.instance, FightEvent.PushCardInfo, self._updateNow, self)
@@ -168,12 +186,14 @@ function FightViewHandCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.SetBlockCardOperate, self._setBlockOperate, self)
 	self:addEventCb(FightController.instance, FightEvent.SpCardAdd, self._onSpCardAdd, self)
 	self:addEventCb(FightController.instance, FightEvent.AddHandCard, self._onAddHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.OnDevice_AddHandCard, self._onDeviceAddHandCard, self)
 	self:addEventCb(FightController.instance, FightEvent.TempCardRemove, self._onTempCardRemove, self)
 	self:addEventCb(FightController.instance, FightEvent.ChangeToTempCard, self._onChangeToTempCard, self)
 	self:addEventCb(FightController.instance, FightEvent.CorrectHandCardScale, self._onCorrectHandCardScale, self)
 	self:addEventCb(FightController.instance, FightEvent.RemoveEntityCards, self._onRemoveEntityCards, self)
 	self:addEventCb(FightController.instance, FightEvent.CardRemove, self._onCardRemove, self)
 	self:addEventCb(FightController.instance, FightEvent.CardRemove2, self._onCardRemove2, self)
+	self:addEventCb(FightController.instance, FightEvent.OnDevice_RemoveHandCard, self._onDeviceSkillRemoveHandCard, self)
 	self:addEventCb(FightController.instance, FightEvent.RefreshHandCard, self._updateNow, self)
 	self:addEventCb(FightController.instance, FightEvent.CardsCompose, self._onCardsCompose, self)
 	self:addEventCb(FightController.instance, FightEvent.CardsComposeTimeOut, self._onCardsComposeTimeOut, self)
@@ -201,6 +221,9 @@ function FightViewHandCard:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.BeforeSendOperate2ServerAnimDone, self.onBeforeSendOperate2ServerAnimDone, self)
 	self:addEventCb(FightController.instance, FightEvent.OnOperateMgrDisposeAllWork, self.removePreHandCardFlow, self)
 	self:addEventCb(FightController.instance, FightEvent.RefreshPreLv, self.refreshPreLv, self)
+	self:addEventCb(FightController.instance, FightEvent.TriggerMoveHandCard, self.onTriggerMoveHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.TriggerInsertHandCard, self.onTriggerInsertHandCard, self)
+	self:addEventCb(FightController.instance, FightEvent.UpdateOneHandCard, self.updateOneCard, self)
 	self:_setBlockOperate(false)
 	self:_refreshPrecisionShow()
 end
@@ -217,6 +240,12 @@ function FightViewHandCard:onClose()
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelectLeft, self.selectLeftCard, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelectRight, self.selectRightCard, self)
 
+	if self.deviceBlackBg then
+		self.deviceBlackBg:RemoveClickListener()
+
+		self.deviceBlackBg = nil
+	end
+
 	for i, v in ipairs(self._handCardItemList) do
 		v:releaseSelf()
 	end
@@ -231,6 +260,73 @@ function FightViewHandCard:onClose()
 	self._redealCardFlow:stop()
 	self._universalAppearFlow:stop()
 	self._magicEffectCardFlow:stop()
+
+	if self.moveHandCardFlow then
+		self.moveHandCardFlow:unregisterDoneListener(self.onMoveHandCardFlowDone, self)
+		self.moveHandCardFlow:stop()
+
+		self.moveHandCardFlow = nil
+	end
+
+	if self.insertHandCardFlow then
+		self.insertHandCardFlow:unregisterDoneListener(self.onInsertHandCardDone, self)
+		self.insertHandCardFlow:stop()
+
+		self.insertHandCardFlow = nil
+	end
+end
+
+function FightViewHandCard:onTriggerInsertHandCard(insertIndex)
+	local handCardList = FightDataHelper.handCardMgr.handCard
+	local handCardItem = self:createHandCardItem()
+
+	transformhelper.setLocalScale(handCardItem.tr, 1, 1, 1)
+	handCardItem:updateItem(insertIndex, handCardList[insertIndex])
+	gohelper.setAsLastSibling(handCardItem.go)
+
+	if not self.insertHandCardFlow then
+		self.insertHandCardFlow = FightViewHandCardSequenceFlow.New("insertHandCardFlow")
+
+		self.insertHandCardFlow:registerDoneListener(self.onInsertHandCardDone, self)
+		self.insertHandCardFlow:addWork(FightInsertHandCardWork.New())
+	end
+
+	self.insertHandCardFlow:stop()
+
+	self.insertCardContext = self.moveHandCardContext or self:getUserDataTb_()
+	self.insertCardContext.handCardItemList = self._handCardItemList
+	self.insertCardContext.insertIndex = insertIndex
+	self.insertCardContext.insertHandCardItem = handCardItem
+
+	self.insertHandCardFlow:start(self.insertCardContext)
+end
+
+function FightViewHandCard:onInsertHandCardDone()
+	self:_updateNow()
+	FightController.instance:dispatchEvent(FightEvent.TriggerInsertHandCardDone)
+end
+
+function FightViewHandCard:onTriggerMoveHandCard(startIndex, endIndex)
+	if not self.moveHandCardFlow then
+		self.moveHandCardFlow = FightViewHandCardSequenceFlow.New("moveHandCardFlow")
+
+		self.moveHandCardFlow:registerDoneListener(self.onMoveHandCardFlowDone, self)
+		self.moveHandCardFlow:addWork(FightMoveCardWork.New())
+	end
+
+	self.moveHandCardFlow:stop()
+
+	self.moveHandCardContext = self.moveHandCardContext or self:getUserDataTb_()
+	self.moveHandCardContext.handCardItemList = self._handCardItemList
+	self.moveHandCardContext.startIndex = startIndex
+	self.moveHandCardContext.endIndex = endIndex
+
+	self.moveHandCardFlow:start(self.moveHandCardContext)
+end
+
+function FightViewHandCard:onMoveHandCardFlowDone()
+	self:_updateNow()
+	FightController.instance:dispatchEvent(FightEvent.TriggerMoveHandCardDone)
 end
 
 function FightViewHandCard:refreshPreLv(existEffectTagCountDict)
@@ -518,6 +614,9 @@ function FightViewHandCard:buildOperateEndFlow()
 	context.handCardContainer = self._handCardGO
 	context.playCardContainer = gohelper.findChild(self.viewGO, "root/playcards")
 	context.waitCardContainer = gohelper.findChild(self.viewGO, "root/waitingArea/inner")
+	context.deviceContainer = self.viewContainer:getCacheUserData(FightViewContainerCacheKey.UserDataKey.DeviceAreaGo)
+	context.rectDeviceCard = self.viewContainer:getCacheUserData(FightViewContainerCacheKey.UserDataKey.RectDeviceCard)
+	context.goCalculatePosObj = self.viewContainer:getCacheUserData(FightViewContainerCacheKey.UserDataKey.GoCalculatePosObj)
 	context.handCardItemList = self._handCardItemList
 	flow.context = context
 
@@ -659,6 +758,11 @@ function FightViewHandCard:_startDistributeCards(beforeCards, distributeCards, i
 	if isEnterDistribute then
 		if cardSkin == 672801 then
 			local work = self:com_registWork(FightWorkEnterDistributeCards672801, self, self.distributeCards)
+
+			work:registFinishCallback(self.onEnterDistributeCardsSkinDone, self)
+			work:start()
+		elseif cardSkin == 672802 then
+			local work = self:com_registWork(FightWorkEnterDistributeCards672802, self, self.distributeCards)
 
 			work:registFinishCallback(self.onEnterDistributeCardsSkinDone, self)
 			work:start()
@@ -826,6 +930,7 @@ function FightViewHandCard:buildPlayHandCardFlow(from, targetEntityId, param2, p
 		FightController.instance:dispatchEvent(FightEvent.RefreshCardHeatShow, heatId)
 	end
 
+	FightDataHelper.tempMgr:onPlayHandCard(fightBeginRoundOp)
 	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, fightBeginRoundOp)
 	table.remove(cards, from)
 
@@ -941,10 +1046,27 @@ function FightViewHandCard:_playCardAudio(cardInfoMO)
 		return
 	end
 
-	local skillCardLv = FightCardDataHelper.getSkillLv(cardInfoMO.uid, cardInfoMO.skillId)
-	local heroId = entityMO.modelId
-	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 	local audioId
+	local heroId = entityMO.modelId
+
+	if FightHelper.checkIsDevicePowerCard(cardInfoMO.skillId) then
+		local randomValue = math.random(2)
+
+		if randomValue == 1 then
+			audioId = FightAudioMgr.instance:getHeroVoiceRandom(heroId, CharacterEnum.VoiceType.FightCardStar12, cardInfoMO.uid)
+		else
+			audioId = FightAudioMgr.instance:getHeroVoiceRandom(heroId, CharacterEnum.VoiceType.FightCardStar3, cardInfoMO.uid)
+		end
+
+		if audioId then
+			FightAudioMgr.instance:playCardAudio(cardInfoMO.uid, audioId, heroId)
+		end
+
+		return
+	end
+
+	local skillCardLv = FightCardDataHelper.getSkillLv(cardInfoMO.uid, cardInfoMO.skillId)
+	local heroConfig = HeroConfig.instance:getHeroCO(heroId)
 
 	if cardInfoMO.cardType == FightEnum.CardType.SKILL3 then
 		audioId = self:getSkill3AudioId(entityMO, cardInfoMO)
@@ -1073,6 +1195,7 @@ function FightViewHandCard:_playUniversalAppear()
 end
 
 function FightViewHandCard:_onSpCardAdd(index)
+	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_add_universalcard)
 	self:_playCorrectHandCardScale(0)
 
 	local cards = FightDataHelper.handCardMgr.handCard
@@ -1120,14 +1243,21 @@ function FightViewHandCard:_onRemoveEntityCards(entityId)
 	for i = #self._handCardItemList, 1, -1 do
 		local cardItem = self._handCardItemList[i]
 
-		if cardItem.go.activeInHierarchy and cardItem:dissolveEntityCard(entityId) then
-			table.insert(self._handCardItemList, table.remove(self._handCardItemList, i))
+		if cardItem.go.activeInHierarchy and cardItem:dissolveEntityCard(entityId, self.onDissolveCardDone, self) then
+			table.remove(self._handCardItemList, i)
 		end
 	end
 
 	FightViewHandCard.refreshCardIndex(self._handCardItemList)
+
+	local delay = 1 / FightModel.instance:getUISpeed()
+
 	TaskDispatcher.cancelTask(self._correctActiveCardObjPos, self)
-	TaskDispatcher.runDelay(self._correctActiveCardObjPos, self, 1 / FightModel.instance:getUISpeed())
+	TaskDispatcher.runDelay(self._correctActiveCardObjPos, self, delay)
+end
+
+function FightViewHandCard:onDissolveCardDone(cardItem)
+	self:recycleHandCardItem(cardItem)
 end
 
 function FightViewHandCard.refreshCardIndex(handCardItemList)
@@ -1159,6 +1289,26 @@ function FightViewHandCard:_onPlayCombineCards(cards)
 	self:_combineCards(cards)
 end
 
+function FightViewHandCard:_onDeviceSkillRemoveHandCard(indexes)
+	for i, index in ipairs(indexes) do
+		local cardItem = table.remove(self._handCardItemList, index)
+
+		if cardItem and cardItem.go.activeInHierarchy then
+			cardItem:playDeviceRemoveEffect(self.onDeviceRemoveCardDone, self)
+		end
+	end
+end
+
+function FightViewHandCard:onDeviceRemoveCardDone(handCardItem)
+	self:recycleHandCardItem(handCardItem)
+	FightViewHandCard.refreshCardIndex(self._handCardItemList)
+	self:_correctActiveCardObjPos(self.onDeviceRemoveCardCorrectPosDone, self)
+end
+
+function FightViewHandCard:onDeviceRemoveCardCorrectPosDone()
+	FightController.instance:dispatchEvent(FightEvent.OnDevice_RemoveHandCardDone)
+end
+
 function FightViewHandCard:_onCardRemove(indexs, delayTime, canCombine)
 	self:_onCardRemove2(indexs)
 
@@ -1179,8 +1329,7 @@ function FightViewHandCard:_onCardRemove2(indexs)
 		local cardItem = table.remove(self._handCardItemList, index)
 
 		if cardItem and cardItem.go.activeInHierarchy then
-			cardItem:dissolveCard()
-			table.insert(self._handCardItemList, cardItem)
+			cardItem:dissolveCard(self.onDissolveCardDone, self)
 		end
 	end
 
@@ -1189,7 +1338,18 @@ function FightViewHandCard:_onCardRemove2(indexs)
 	TaskDispatcher.runDelay(self._correctActiveCardObjPos, self, 1 / FightModel.instance:getUISpeed())
 end
 
-function FightViewHandCard:_correctActiveCardObjPos()
+function FightViewHandCard:_correctActiveCardObjPos(callback, callbackObj)
+	if self.handCardMoving then
+		logError("hand card moving")
+
+		return
+	end
+
+	self.handCardMoving = true
+	self.handCardMoveDoneCallback = callback
+	self.handCardMoveDoneCallbackObj = callbackObj
+	self.handCardMovingCount = 0
+
 	local delayIndex = 0
 
 	for i = 1, #self._handCardItemList do
@@ -1208,11 +1368,68 @@ function FightViewHandCard:_correctActiveCardObjPos()
 		local endX = FightViewHandCard.calcCardPosX(i)
 
 		if math.abs(curPosX - endX) >= 10 then
-			cardItem:moveSelfPos(i, delayIndex, endX)
+			if self.handCardMoveDoneCallback then
+				self.handCardMovingCount = self.handCardMovingCount + 1
+
+				cardItem:moveSelfPos(i, delayIndex, self.onPreHandCardMoveDone, self)
+			else
+				cardItem:moveSelfPos(i, delayIndex)
+			end
 
 			delayIndex = delayIndex + 1
 		end
 	end
+
+	if self.handCardMovingCount < 1 then
+		self:onPreHandCardMoveDone()
+	end
+end
+
+function FightViewHandCard:onPreHandCardMoveDone()
+	self.handCardMovingCount = self.handCardMovingCount - 1
+
+	if self.handCardMovingCount <= 0 then
+		self.handCardMoving = false
+
+		if self.handCardMoveDoneCallback then
+			local callback = self.handCardMoveDoneCallback
+			local callbackObj = self.handCardMoveDoneCallbackObj
+
+			self:clearHandCardMoveDone()
+			callback(callbackObj)
+		end
+	end
+end
+
+function FightViewHandCard:clearHandCardMoveDone()
+	self.handCardMoveDoneCallback = nil
+	self.handCardMoveDoneCallbackObj = nil
+	self.handCardMovingCount = 0
+end
+
+function FightViewHandCard:_onDeviceAddHandCard()
+	self:_playCorrectHandCardScale(0)
+
+	local cards = FightDataHelper.handCardMgr.handCard
+	local cardCount = #cards
+
+	self:_updateHandCards(cards, cardCount)
+
+	local tarCard = self._handCardItemList[cardCount]
+
+	if tarCard then
+		tarCard:playDeviceAddCard(self._onDeviceAddHandCardDone, self)
+	else
+		self:_onDeviceAddHandCardDone()
+	end
+end
+
+function FightViewHandCard:_onDeviceAddHandCardDone(handCardItem)
+	if handCardItem then
+		handCardItem:setDeviceEffectGoActive(false)
+	end
+
+	FightController.instance:dispatchEvent(FightEvent.OnDevice_AddHandCardDone)
 end
 
 function FightViewHandCard:_onAddHandCard(cardInfoMO, canCombine)
@@ -1254,8 +1471,7 @@ function FightViewHandCard:_onMasterCardRemove(indexs, delayTime, canCombine)
 		local cardItem = table.remove(self._handCardItemList, index)
 
 		if cardItem and cardItem.go.activeInHierarchy then
-			cardItem:playMasterCardRemove()
-			table.insert(self._handCardItemList, cardItem)
+			cardItem:playMasterCardRemove(self.onMasterCardRemoveDone, self)
 		end
 	end
 
@@ -1269,18 +1485,22 @@ function FightViewHandCard:_onMasterCardRemove(indexs, delayTime, canCombine)
 	end
 end
 
+function FightViewHandCard:onMasterCardRemoveDone(handCardItem)
+	self:recycleHandCardItem(handCardItem)
+end
+
 function FightViewHandCard:_combineCardsAfterAddHandCard()
 	local cards = FightDataHelper.handCardMgr.handCard
 
 	self:_combineCards(cards)
 end
 
-function FightViewHandCard:_onCardAConvertCardB(index)
+function FightViewHandCard:_onCardAConvertCardB(index, actEffectData)
 	local cards = FightDataHelper.handCardMgr.handCard
 	local cardItem = self._handCardItemList[index]
 
 	if cardItem then
-		cardItem:playCardAConvertCardB()
+		cardItem:playCardAConvertCardB(actEffectData)
 		cardItem:updateItem(index, cards[index])
 	else
 		self:_updateNow()
@@ -1393,14 +1613,7 @@ function FightViewHandCard:_updateHandCards(handCards, startIndex)
 	for i = startIndex or 1, handCardCount do
 		local handCardItem = self._handCardItemList[i]
 
-		if not handCardItem then
-			local handCardGO = gohelper.clone(self._handCardItemPrefab, self._handCardGO)
-
-			handCardItem = MonoHelper.addLuaComOnceToGo(handCardGO, FightViewHandCardItem, self)
-
-			table.insert(self._handCardItemList, handCardItem)
-		end
-
+		handCardItem = handCardItem or self:createHandCardItem()
 		handCardItem.go.name = "cardItem" .. i
 
 		local posX = FightViewHandCard.calcCardPosX(i)
@@ -1412,19 +1625,80 @@ function FightViewHandCard:_updateHandCards(handCards, startIndex)
 		gohelper.setAsLastSibling(handCardItem.go)
 	end
 
-	for i = handCardCount + 1, #self._handCardItemList do
-		local handCardItem = self._handCardItemList[i]
+	for i = #self._handCardItemList, handCardCount + 1, -1 do
+		local handCardItem = table.remove(self._handCardItemList)
 
-		gohelper.setActive(handCardItem.go, false)
-
-		handCardItem.go.name = "cardItem" .. i
-
-		handCardItem:updateItem(i, nil)
+		self:recycleHandCardItem(handCardItem)
 	end
 
 	self:refreshPreDeleteCard(handCards)
 	self:refreshLyCardTag()
 	self:_refreshPreLv(self.existEffectTagCountDict)
+end
+
+function FightViewHandCard:updateOneCard(index, updateFromType)
+	local handCards = FightDataHelper.handCardMgr.handCard
+
+	handCards = self:_filterInvalidCard(handCards)
+
+	local handCardCount = handCards and #handCards or 0
+
+	for i = 1, handCardCount do
+		if i == index then
+			local handCardItem = self._handCardItemList[i]
+
+			if not handCardItem then
+				handCardItem = self:createHandCardItem()
+
+				local posX = FightViewHandCard.calcCardPosX(i)
+
+				recthelper.setAnchor(handCardItem.tr, posX, 0)
+				gohelper.setActive(handCardItem.go, true)
+				transformhelper.setLocalScale(handCardItem.tr, 1, 1, 1)
+			end
+
+			handCardItem:updateItem(i, handCards[i], updateFromType)
+
+			break
+		end
+	end
+end
+
+function FightViewHandCard:createHandCardItem()
+	local handCardItem = table.remove(self._handCardItemPool)
+
+	if handCardItem then
+		table.insert(self._handCardItemList, handCardItem)
+
+		return handCardItem
+	end
+
+	local handCardGO = gohelper.clone(self._handCardItemPrefab, self._handCardGO)
+
+	handCardItem = MonoHelper.addLuaComOnceToGo(handCardGO, FightViewHandCardItem, self)
+
+	table.insert(self._handCardItemList, handCardItem)
+
+	return handCardItem
+end
+
+function FightViewHandCard:recycleHandCardItem(handCardItem)
+	gohelper.setActive(handCardItem.go, false)
+
+	handCardItem.go.name = "cardItem0"
+
+	handCardItem:updateItem(0, nil)
+	handCardItem:setDeviceEffectGoActive(false)
+
+	gohelper.onceAddComponent(handCardItem:getForAnimGo(), gohelper.Type_CanvasGroup).alpha = 1
+
+	for _, cardItem in ipairs(self._handCardItemPool) do
+		if cardItem == handCardItem then
+			return
+		end
+	end
+
+	table.insert(self._handCardItemPool, handCardItem)
 end
 
 function FightViewHandCard:_setBlockOperate(isBlock)
@@ -1831,8 +2105,14 @@ function FightViewHandCard:_longPressHandCardEnd(index)
 		return
 	end
 
-	self._handCardItemList[index]:stopLongPressEffect()
-	self._handCardItemList[index]:onLongPressEnd()
+	local cardItem = self._handCardItemList[index]
+
+	if not cardItem then
+		return
+	end
+
+	cardItem:stopLongPressEffect()
+	cardItem:onLongPressEnd()
 
 	if self._cardLongPressFlow.status == WorkStatus.Running then
 		self._cardLongPressFlow:stop()
@@ -1905,6 +2185,8 @@ function FightViewHandCard:_onEnterOperateState(operateState)
 		recthelper.setWidth(self._abandonLine, scale * srcWidth)
 	elseif operateState == FightStageMgr.OperateStateType.RecordSkill then
 		self:enterRecordSkillState()
+	elseif operateState == FightStageMgr.OperateStateType.DeviceDiscard then
+		self:enterDeviceDiscardCardState()
 	end
 end
 
@@ -1918,6 +2200,29 @@ function FightViewHandCard:cancelAbandonState()
 	end
 
 	self._playCardTransform:SetSiblingIndex(FightViewHandCard.playCardSiblingIndex)
+end
+
+function FightViewHandCard:enterDeviceDiscardCardState()
+	self.goDeviceDiscard = self.goDeviceDiscard or gohelper.findChild(self.viewGO, "root/#go_devicediscard")
+	self.rectDeviceDiscardRoot = gohelper.findChildComponent(self.goDeviceDiscard, "cardRoot", gohelper.Type_RectTransform)
+
+	gohelper.setActive(self.goDeviceDiscard, true)
+	gohelper.setAsLastSibling(self.goDeviceDiscard)
+	self._playCardTransform:SetAsLastSibling()
+
+	local handCardMgr = FightDataHelper.handCardMgr
+
+	for i = 1, #self._handCardItemList do
+		local handCardItem = self._handCardItemList[i]
+
+		if handCardItem then
+			local cardInfo = handCardItem.cardInfoMO
+
+			if handCardMgr:checkCardIsDeviceCard(cardInfo) then
+				handCardItem.go.transform:SetParent(self.rectDeviceDiscardRoot, true)
+			end
+		end
+	end
 end
 
 function FightViewHandCard:enterRecordSkillState()
@@ -1941,6 +2246,21 @@ function FightViewHandCard:enterRecordSkillState()
 	end
 
 	self:showLorentzArea()
+end
+
+function FightViewHandCard:exitDeviceDiscardState()
+	gohelper.setActive(self.goDeviceDiscard, false)
+	self._playCardTransform:SetSiblingIndex(FightViewHandCard.playCardSiblingIndex)
+
+	local childCount = self.rectDeviceDiscardRoot.childCount
+
+	for i = childCount - 1, 0, -1 do
+		self.rectDeviceDiscardRoot:GetChild(i):SetParent(self._handCardTr, true)
+	end
+
+	for _, cardItem in ipairs(self._handCardItemList) do
+		recthelper.setAnchorY(cardItem.tr, 0)
+	end
 end
 
 function FightViewHandCard:exitRecordSkillState()
@@ -2025,6 +2345,8 @@ function FightViewHandCard:_onExitOperateState(operateState)
 		self:cancelAbandonState()
 	elseif operateState == FightStageMgr.OperateStateType.RecordSkill then
 		self:exitRecordSkillState()
+	elseif operateState == FightStageMgr.OperateStateType.DeviceDiscard then
+		self:exitDeviceDiscardState()
 	end
 end
 
@@ -2049,6 +2371,10 @@ function FightViewHandCard:onChangeCardEnergy(changeList)
 			cardItem:changeEnergy()
 		end
 	end
+end
+
+function FightViewHandCard:onGetSkinDownEffectRoot()
+	FightMsgMgr.replyMsg(FightMsgId.GetSkinDownEffectRoot, self.skinDownEffectRoot)
 end
 
 function FightViewHandCard.calcCardPosXDraging(cardIndex, cardCount, dragToIndex, dragCardScale)

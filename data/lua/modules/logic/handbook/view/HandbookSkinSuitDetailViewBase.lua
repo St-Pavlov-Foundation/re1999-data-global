@@ -51,6 +51,19 @@ function HandbookSkinSuitDetailViewBase:_editableInitView()
 end
 
 function HandbookSkinSuitDetailViewBase:_getPhotoRootGo(photoCount)
+	local i = photoCount
+
+	repeat
+		i = i + 1
+
+		local go = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages/handbookskinitem/photo" .. i)
+		local isNil = gohelper.isNil(go)
+
+		if not isNil then
+			gohelper.setActive(go, false)
+		end
+	until isNil
+
 	self._skinItemGoList = self:getUserDataTb_()
 
 	for i = 1, photoCount do

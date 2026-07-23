@@ -97,6 +97,7 @@ function ActivityHelper.initActivityVersion()
 
 		ActivityHelper._loadAllDefineVersionActivityEnum()
 		ActivityHelper._loadVersionActivityEnum(2, 9)
+		ActivityHelper._loadVersionActivityEnum(3, 10)
 	end
 end
 

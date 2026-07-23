@@ -9,8 +9,8 @@ Rouge2_AttrBuffDropItem.Rare2DescColor = {
 	"#E5C59B",
 	"#FCFBF6"
 }
-Rouge2_AttrBuffDropItem.bracketColor = "#829DD9"
-Rouge2_AttrBuffDropItem.percentColor = "#D97157"
+Rouge2_AttrBuffDropItem.bracketColor = "#6088FF"
+Rouge2_AttrBuffDropItem.percentColor = "#CE6A51"
 
 function Rouge2_AttrBuffDropItem:init(go)
 	self.go = go
@@ -142,7 +142,7 @@ function Rouge2_AttrBuffDropItem:refreshUI()
 
 	self._listener:startListen()
 
-	self._teamTipsParam.itemId = self._buffId
+	self._teamTipsParam[Rouge2_Enum.TeamRecommendParam.ItemId] = self._buffId
 
 	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
 	Rouge2_IconHelper.setAttrBuffRareIcon(self._buffId, self._simageBg, Rouge2_Enum.ItemRareIconType.Bg)

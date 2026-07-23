@@ -22,5 +22,8 @@ BpEnum.ButtonName = {
 	Close = "关闭",
 	CloseBg = "空白处关闭"
 }
+BpEnum.StoreSkinOnlineState = {
+	Online = 1
+}
 
 return BpEnum

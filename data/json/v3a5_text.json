@@ -124,5 +124,131 @@
     "text": "language_10118655",
     "groupId": 6,
     "voiceId": 613501716
+  },
+  {
+    "id": 3810011,
+    "characterId": 3801,
+    "text": "language_10131078",
+    "groupId": 381001,
+    "voiceId": 0
+  },
+  {
+    "id": 3810012,
+    "characterId": 3801,
+    "text": "language_10131079",
+    "groupId": 381001,
+    "voiceId": 0
+  },
+  {
+    "id": 3810013,
+    "characterId": 3802,
+    "text": "language_10131080",
+    "groupId": 381001,
+    "voiceId": 0
+  },
+  {
+    "id": 3810014,
+    "characterId": 3801,
+    "text": "language_10131081",
+    "groupId": 381001,
+    "voiceId": 0
+  },
+  {
+    "id": 3810021,
+    "characterId": 3801,
+    "text": "language_10131082",
+    "groupId": 381002,
+    "voiceId": 0
+  },
+  {
+    "id": 3810031,
+    "characterId": 3802,
+    "text": "language_10131083",
+    "groupId": 381003,
+    "voiceId": 0
+  },
+  {
+    "id": 3810032,
+    "characterId": 3801,
+    "text": "language_10131084",
+    "groupId": 381003,
+    "voiceId": 0
+  },
+  {
+    "id": 3810041,
+    "characterId": 3802,
+    "text": "language_10131085",
+    "groupId": 381004,
+    "voiceId": 0
+  },
+  {
+    "id": 3810042,
+    "characterId": 3801,
+    "text": "language_10131086",
+    "groupId": 381004,
+    "voiceId": 0
+  },
+  {
+    "id": 3820011,
+    "characterId": 3801,
+    "text": "language_10131087",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820012,
+    "characterId": 3801,
+    "text": "language_10131088",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820013,
+    "characterId": 3801,
+    "text": "language_10131089",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820014,
+    "characterId": 3802,
+    "text": "language_10131090",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820015,
+    "characterId": 3801,
+    "text": "language_10131091",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820016,
+    "characterId": 3801,
+    "text": "language_10131092",
+    "groupId": 382001,
+    "voiceId": 0
+  },
+  {
+    "id": 3820021,
+    "characterId": 3802,
+    "text": "language_10131093",
+    "groupId": 382002,
+    "voiceId": 0
+  },
+  {
+    "id": 3820022,
+    "characterId": 3801,
+    "text": "language_10131094",
+    "groupId": 382002,
+    "voiceId": 0
+  },
+  {
+    "id": 3820023,
+    "characterId": 3801,
+    "text": "language_10131095",
+    "groupId": 382002,
+    "voiceId": 0
   }
 ]

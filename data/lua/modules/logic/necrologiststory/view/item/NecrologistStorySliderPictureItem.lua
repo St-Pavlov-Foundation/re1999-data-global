@@ -18,14 +18,6 @@ function NecrologistStorySliderPictureItem:onInit()
 	self.goTips = gohelper.findChild(self.viewGO, "root/tips")
 end
 
-function NecrologistStorySliderPictureItem:addEventListeners()
-	return
-end
-
-function NecrologistStorySliderPictureItem:removeEventListeners()
-	return
-end
-
 function NecrologistStorySliderPictureItem:addDrag(go)
 	if self._drag then
 		return

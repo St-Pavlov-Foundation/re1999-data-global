@@ -167,8 +167,9 @@ function StoryHeroItem:_fadeInUpdate(value)
 end
 
 function StoryHeroItem:_setHeroFadeMat()
-	local posx, posy = transformhelper.getLocalPos(self._bgGo.transform)
-	local scalex, scaley = transformhelper.getLocalScale(self._bgGo.transform)
+	local bgImgGo = StoryViewMgr.instance:getStoryFrontBgImgGo()
+	local posx, posy = transformhelper.getLocalPos(bgImgGo.transform)
+	local scalex, scaley = transformhelper.getLocalScale(bgImgGo.transform)
 	local vec4 = Vector4.New(scalex, scaley, posx, posy)
 	local texture = self._blitEff.capturedTexture
 
@@ -320,6 +321,13 @@ function StoryHeroItem:_fadeOut()
 		return
 	end
 
+	local fadeOutDuration = 0.35
+
+	if self._heroGlowCls then
+		self._heroGlowCls:startFadeOut(fadeOutDuration)
+		self:_setHeroFadeMat()
+	end
+
 	self:_checkMatKeyWord()
 
 	if self._fadeOutTweenId then
@@ -328,7 +336,7 @@ function StoryHeroItem:_fadeOut()
 		self._fadeOutTweenId = nil
 	end
 
-	self._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 0.35, self._fadeOutUpdate, self._fadeOutFinished, self, nil, EaseType.Linear)
+	self._fadeOutTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, fadeOutDuration, self._fadeOutUpdate, self._fadeOutFinished, self, nil, EaseType.Linear)
 end
 
 function StoryHeroItem:_fadeOutUpdate(value)
@@ -384,10 +392,6 @@ function StoryHeroItem:buildHero(v, mat, hasBottomEffect, callback, callbackObj,
 	local siblingIndex = gohelper.getSibling(self._heroGo)
 
 	self._blitEff = StoryViewMgr.instance:getStoryBlitEff()
-
-	local bgRootGo = ViewMgr.instance:getContainer(ViewName.StoryBackgroundView).viewGO
-
-	self._bgGo = gohelper.findChild(bgRootGo, "#go_upbg/#simage_bgimg")
 
 	gohelper.setLayer(self._heroGo, self.viewGO.layer, true)
 
@@ -628,8 +632,11 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 	if not effCo or effCo == "" then
 		self:_clearHeroFlash()
 		self:_clearHeroDissolve()
+		self:_clearHeroDissolveAndSoft()
 		self:_clearHeroWaterWave()
 		self:_clearHeroErase()
+		self:_clearHeroGlow()
+		self:_clearHeroBlackFog()
 
 		return
 	end
@@ -650,6 +657,18 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 
 	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.Erase then
 		self:_clearHeroErase()
+	end
+
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.Glow then
+		self:_clearHeroGlow()
+	end
+
+	if not effs[1] or effs[1] ~= StoryEnum.HeroEffect.BlackFog then
+		self:_clearHeroBlackFog()
+	end
+
+	if effs[1] ~= StoryEnum.HeroEffect.DissolveAndSoft then
+		self:_clearHeroDissolveAndSoft()
 	end
 
 	if effs[1] == StoryEnum.HeroEffect.Gray then
@@ -686,6 +705,12 @@ function StoryHeroItem:_checkAndPlayHeroEffect()
 		self:_setHeroWaterWave()
 	elseif effs[1] == StoryEnum.HeroEffect.Erase then
 		self:_setHeroErase(tonumber(effs[2]))
+	elseif effs[1] == StoryEnum.HeroEffect.Glow then
+		self:_setHeroGlow()
+	elseif effs[1] == StoryEnum.HeroEffect.BlackFog then
+		self:_setHeroBlackFog()
+	elseif effs[1] == StoryEnum.HeroEffect.DissolveAndSoft then
+		self:_setHeroDissolveAndSoft(effs[2])
 	else
 		if not self._heroSpineGo then
 			return
@@ -760,6 +785,23 @@ function StoryHeroItem:_clearHeroDissolve()
 	end
 end
 
+function StoryHeroItem:_setHeroDissolveAndSoft(inTime)
+	if not self._heroDissolveAndSoftCls then
+		self._heroDissolveAndSoftCls = StoryHeroEffsDissolveAndSoft.New()
+	end
+
+	self._heroDissolveAndSoftCls:init(self._heroSpineGo)
+	self._heroDissolveAndSoftCls:start(inTime)
+end
+
+function StoryHeroItem:_clearHeroDissolveAndSoft()
+	if self._heroDissolveAndSoftCls then
+		self._heroDissolveAndSoftCls:destroy()
+
+		self._heroDissolveAndSoftCls = nil
+	end
+end
+
 function StoryHeroItem:_setHeroWaterWave()
 	if not self._heroWaterWaveCls then
 		self._heroWaterWaveCls = StoryHeroEffsWaterWave.New()
@@ -797,6 +839,40 @@ function StoryHeroItem:_clearHeroErase()
 		self._heroEraseCls:destroy()
 
 		self._heroEraseCls = nil
+	end
+end
+
+function StoryHeroItem:_setHeroGlow()
+	if not self._heroGlowCls then
+		self._heroGlowCls = StoryHeroEffsGlow.New()
+	end
+
+	self._heroGlowCls:init(self._heroSpineGo)
+	self._heroGlowCls:start()
+end
+
+function StoryHeroItem:_clearHeroGlow()
+	if self._heroGlowCls then
+		self._heroGlowCls:destroy()
+
+		self._heroGlowCls = nil
+	end
+end
+
+function StoryHeroItem:_setHeroBlackFog()
+	if not self._heroBlackFogCls then
+		self._heroBlackFogCls = StoryHeroEffsBlackFog.New()
+	end
+
+	self._heroBlackFogCls:init(self._heroSpineGo)
+	self._heroBlackFogCls:start()
+end
+
+function StoryHeroItem:_clearHeroBlackFog()
+	if self._heroBlackFogCls then
+		self._heroBlackFogCls:destroy()
+
+		self._heroBlackFogCls = nil
 	end
 end
 
@@ -927,8 +1003,11 @@ function StoryHeroItem:onDestroy()
 	TaskDispatcher.cancelTask(self._followPicture, self)
 	self:_clearHeroFlash()
 	self:_clearHeroDissolve()
+	self:_clearHeroDissolveAndSoft()
 	self:_clearHeroWaterWave()
 	self:_clearHeroErase()
+	self:_clearHeroGlow()
+	self:_clearHeroBlackFog()
 	self:revertScreenSplitStencil()
 	TaskDispatcher.cancelTask(self._onDelay, self)
 	self:_grayUpdate(0)

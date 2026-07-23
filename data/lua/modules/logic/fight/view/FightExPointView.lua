@@ -15,12 +15,14 @@ local type2Class = {
 	[FightEnum.ExPointType.Common] = FightExPointCommonView,
 	[FightEnum.ExPointType.Belief] = FightExPointBeliefView,
 	[FightEnum.ExPointType.Synchronization] = FightExPointSynchronizationView,
-	[FightEnum.ExPointType.Adrenaline] = FightExPointAdrenalineView
+	[FightEnum.ExPointType.Adrenaline] = FightExPointAdrenalineView,
+	[FightEnum.ExPointType.DevicePower] = FightExPointDevicePowerView
 }
 local type2url = {
 	[FightEnum.ExPointType.Belief] = "ui/viewres/fight/fight_nuodika_energyview.prefab",
 	[FightEnum.ExPointType.Synchronization] = "ui/viewres/fight/fightaijiaoenergeyview.prefab",
-	[FightEnum.ExPointType.Adrenaline] = "ui/viewres/fight/fight_expoint_adrenalineview.prefab"
+	[FightEnum.ExPointType.Adrenaline] = "ui/viewres/fight/fight_expoint_adrenalineview.prefab",
+	[FightEnum.ExPointType.DevicePower] = "ui/viewres/fight/fight3_7deviceenergeyview.prefab"
 }
 
 function FightExPointView:onLogicEnter()

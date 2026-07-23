@@ -32,10 +32,22 @@ function RoomShowTimeCharacterBuilding:endState()
 end
 
 function RoomShowTimeCharacterBuilding:stop()
+	if self._actionDict then
+		for _, action in pairs(self._actionDict) do
+			action:stop()
+		end
+	end
+
 	self:endState()
 end
 
 function RoomShowTimeCharacterBuilding:clear()
+	if self._actionDict then
+		for _, action in pairs(self._actionDict) do
+			action:clear()
+		end
+	end
+
 	self:endState()
 end
 

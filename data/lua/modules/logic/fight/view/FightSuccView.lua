@@ -27,8 +27,10 @@ function FightSuccView:onInitView()
 	self._txtExp = gohelper.findChildText(self.viewGO, "goalcontent/txtLv/txtExp")
 	self._txtAddExp = gohelper.findChildText(self.viewGO, "goalcontent/txtLv/progress/txtAddExp")
 	self._sliderExp = gohelper.findChildSlider(self.viewGO, "goalcontent/txtLv/progress")
-	self._txtSayCn = gohelper.findChildText(self.viewGO, "txtSayCn")
-	self._txtSayEn = gohelper.findChildText(self.viewGO, "SayEn/txtSayEn")
+	self._txtSayCn = gohelper.findChildText(self.viewGO, "layout/txtSayCn")
+	self._txtSayCn.text = ""
+	self._txtSayEn = gohelper.findChildText(self.viewGO, "layout/txtSayEn")
+	self._txtSayEn.text = ""
 	self._favorIcon = gohelper.findChild(self.viewGO, "scroll/viewport/content/favor")
 	self._goCondition = gohelper.findChild(self.viewGO, "goalcontent/goallist/fightgoal")
 	self._goPlatCondition = gohelper.findChild(self.viewGO, "goalcontent/goallist/platinum")
@@ -510,7 +512,7 @@ function FightSuccView:_setSpineVoice()
 
 			self._uiSpine:setUIMask(true)
 			self:_playSpineVoice()
-			self._uiSpine:setAllLayer(UnityLayer.UI)
+			self._uiSpine:setAllLayer(UnityLayer.UI3D)
 		end, self, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 
 		local offsets, isNil = SkinConfig.instance:getSkinOffset(skinCO.fightSuccViewOffset)
@@ -524,7 +526,7 @@ function FightSuccView:_setSpineVoice()
 		local offsetX = tonumber(offsets[1])
 		local offsetY = tonumber(offsets[2])
 
-		recthelper.setAnchor(self._gospine.transform, offsetX, offsetY)
+		CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 	else
 		gohelper.setActive(self._gospine, false)
@@ -667,6 +669,9 @@ function FightSuccView:_onClickClose()
 		param.mark = true
 		param.episodeId = DungeonModel.instance.curSendEpisodeId
 
+		local sceneGo = FightGameMgr.sceneLevelMgr:getSceneGo()
+
+		gohelper.setActive(sceneGo, false)
 		StoryController.instance:playStory(storyId, param, function()
 			TaskDispatcher.runDelay(FightSuccView.onStoryEnd, nil, 3)
 
@@ -690,6 +695,10 @@ function FightSuccView._finishStoryFromServer(storyId)
 end
 
 function FightSuccView.checkStoryEnd()
+	local sceneGo = FightGameMgr.sceneLevelMgr:getSceneGo()
+
+	gohelper.setActive(sceneGo, true)
+
 	if FightSuccView._clientFinish and FightSuccView._serverFinish then
 		FightSuccView.onStoryEnd()
 	end

@@ -4,8 +4,8 @@ module("modules.logic.versionactivity1_4.act128.config.Activity128Config", packa
 
 local Activity128Config = class("Activity128Config", BaseConfig)
 
-function Activity128Config:ctor(activityId)
-	self.__activityId = activityId
+function Activity128Config:ctor()
+	return
 end
 
 function Activity128Config:reqConfigNames()
@@ -126,7 +126,7 @@ local function getEvaluateCO(id)
 end
 
 function Activity128Config:__getOrCreateStageRewardList()
-	local activityId = self.__activityId
+	local activityId = self:getActivityId()
 
 	if self.__cumulativeRewards then
 		return self.__cumulativeRewards
@@ -162,7 +162,7 @@ function Activity128Config:__getOrCreateStageRewardList()
 end
 
 function Activity128Config:__getOrCreateTaskList()
-	local activityId = self.__activityId
+	local activityId = self:getActivityId()
 
 	if self.__taskList then
 		return self.__taskList
@@ -198,11 +198,15 @@ function Activity128Config:getTaskCO(id)
 end
 
 function Activity128Config:getStages()
-	return getStages(self.__activityId)
+	local activityId = self:getActivityId()
+
+	return getStages(activityId)
 end
 
 function Activity128Config:getStageCO(stage)
-	return getStageCO(self.__activityId, stage)
+	local activityId = self:getActivityId()
+
+	return getStageCO(activityId, stage)
 end
 
 function Activity128Config:getStageCOMaxPoints(stage)
@@ -213,11 +217,15 @@ function Activity128Config:getStageCOMaxPoints(stage)
 end
 
 function Activity128Config:getEpisodeStages(stage)
-	return getEpisodeStages(self.__activityId, stage)
+	local activityId = self:getActivityId()
+
+	return getEpisodeStages(activityId, stage)
 end
 
 function Activity128Config:getEpisodeCO(stage, layer)
-	return getEpisodeCO(self.__activityId, stage, layer)
+	local activityId = self:getActivityId()
+
+	return getEpisodeCO(activityId, stage, layer)
 end
 
 function Activity128Config:getDungeonEpisodeId(stage, layer)
@@ -247,7 +255,9 @@ function Activity128Config:getDungeonBattleScenceIds(stage, layer)
 end
 
 function Activity128Config:getAchievementTaskCO(stage, taskId)
-	return getAchievementTaskCO(self.__activityId, stage, taskId)
+	local activityId = self:getActivityId()
+
+	return getAchievementTaskCO(activityId, stage, taskId)
 end
 
 function Activity128Config:isInfinite(stage, layer)
@@ -409,15 +419,19 @@ function Activity128Config:getRemainTimeStr(endServerTs, eTimeFmtStyle)
 end
 
 function Activity128Config:checkActivityId(activityId)
-	return self.__activityId == activityId
+	local actId = self:getActivityId()
+
+	return actId == activityId
 end
 
 function Activity128Config:getActivityId()
-	return self.__activityId
+	return ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.BossRushAct, VersionActivity3_7Enum.ActivityId.BossRush)
 end
 
 function Activity128Config:getActRoleEnhance()
-	return lua_activity128_enhance.configDict[self.__activityId]
+	local actId = self:getActivityId()
+
+	return lua_activity128_enhance.configDict[actId]
 end
 
 function Activity128Config:_initActLayer4rewards()
@@ -445,8 +459,10 @@ function Activity128Config:_initActLayer4rewards()
 end
 
 function Activity128Config:getActLayer4rewards(stage)
-	if self.layer4Rewards[self.__activityId] then
-		return self.layer4Rewards[self.__activityId][stage]
+	local actId = self:getActivityId()
+
+	if self.layer4Rewards[actId] then
+		return self.layer4Rewards[actId][stage]
 	end
 
 	return {}

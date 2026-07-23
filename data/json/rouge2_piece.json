@@ -200,7 +200,7 @@
   {
     "id": 114002,
     "entrustType": 0,
-    "pieceRes": "v3a2_m_s16_chess_9",
+    "pieceRes": "",
     "title": "",
     "desc": "",
     "talkId": 0,
@@ -209,7 +209,7 @@
   {
     "id": 114003,
     "entrustType": 0,
-    "pieceRes": "v3a2_m_s16_chess_9",
+    "pieceRes": "",
     "title": "",
     "desc": "",
     "talkId": 0,
@@ -218,7 +218,7 @@
   {
     "id": 114004,
     "entrustType": 0,
-    "pieceRes": "v3a2_m_s16_chess_9",
+    "pieceRes": "",
     "title": "",
     "desc": "",
     "talkId": 0,
@@ -227,10 +227,136 @@
   {
     "id": 114005,
     "entrustType": 0,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112012,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11211,
+    "bossEffect": 0
+  },
+  {
+    "id": 113006,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11311,
+    "bossEffect": 0
+  },
+  {
+    "id": 114006,
+    "entrustType": 5,
+    "pieceRes": "v3a2_m_s16_chess_7",
+    "title": "",
+    "desc": "",
+    "talkId": 11401,
+    "bossEffect": 0
+  },
+  {
+    "id": 112013,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11212,
+    "bossEffect": 0
+  },
+  {
+    "id": 113007,
+    "entrustType": 2,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11312,
+    "bossEffect": 0
+  },
+  {
+    "id": 114007,
+    "entrustType": 5,
+    "pieceRes": "",
+    "title": "",
+    "desc": "",
+    "talkId": 11402,
+    "bossEffect": 0
+  },
+  {
+    "id": 112015,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_7",
+    "title": "",
+    "desc": "",
+    "talkId": 11213,
+    "bossEffect": 0
+  },
+  {
+    "id": 113008,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11313,
+    "bossEffect": 0
+  },
+  {
+    "id": 113009,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 11314,
+    "bossEffect": 0
+  },
+  {
+    "id": 113010,
+    "entrustType": 1,
     "pieceRes": "v3a2_m_s16_chess_9",
     "title": "",
     "desc": "",
     "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 113011,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 113012,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_9",
+    "title": "",
+    "desc": "",
+    "talkId": 0,
+    "bossEffect": 0
+  },
+  {
+    "id": 112018,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11216,
+    "bossEffect": 0
+  },
+  {
+    "id": 112019,
+    "entrustType": 1,
+    "pieceRes": "v3a2_m_s16_chess_2",
+    "title": "",
+    "desc": "",
+    "talkId": 11217,
     "bossEffect": 0
   }
 ]

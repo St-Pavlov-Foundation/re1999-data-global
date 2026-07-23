@@ -34,7 +34,7 @@ function StoryPictureItem:_checkFollowHero()
 		return
 	end
 
-	StoryController.instance:dispatchEvent(StoryEvent.OnFollowPicture, self._picGo, tonumber(self._picCo.picture))
+	StoryController.instance:dispatchEvent(StoryEvent.OnFollowPicture, self._picGoRoot, tonumber(self._picCo.picture))
 end
 
 function StoryPictureItem:_build()
@@ -66,13 +66,13 @@ function StoryPictureItem:_build()
 	end
 
 	if self._picCo.picType == StoryEnum.PictureType.FullScreen then
-		local path = "ui/viewres/story/storyfullfocusitem.prefab"
+		local path = "ui/viewres/story/view/storyfullfocusitem.prefab"
 
 		self._pictureLoader = PrefabInstantiate.Create(self._picParentGo)
 
 		self._pictureLoader:startLoad(path, self._onFullFocusPictureLoaded, self)
 	else
-		local path = "ui/viewres/story/storynormalpicitem.prefab"
+		local path = "ui/viewres/story/view/storynormalpicitem.prefab"
 
 		self._pictureLoader = PrefabInstantiate.Create(self._picParentGo)
 
@@ -89,12 +89,21 @@ function StoryPictureItem:_onPicPrefabLoaded()
 	self._picGo = self._pictureLoader:getInstGO()
 	self._picAni = self._picGo:GetComponent(typeof(UnityEngine.Animator))
 	self._picAni.enabled = false
+	self._picGoRoot = gohelper.findChild(self._picGo, "root")
 
-	transformhelper.setLocalPosXY(self._picGo.transform, self._picCo.pos[1], self._picCo.pos[2])
+	transformhelper.setLocalPosXY(self._picGoRoot.transform, self._picCo.pos[1], self._picCo.pos[2])
 
-	self._simg = gohelper.findChildSingleImage(self._picGo, "result")
-	self._txtTmp = gohelper.findChildText(self._picGo, "txt_tmp")
-	self._gosptxt = gohelper.findChild(self._picGo, "#go_sptxt")
+	self._simg = gohelper.findChildSingleImage(self._picGo, "root/result")
+	self._gotmptxt = gohelper.findChild(self._picGo, "root/#go_tmptxt")
+	self._tmpTxts = {}
+
+	for i = 1, 3 do
+		local tmpTxt = gohelper.findChildText(self._gotmptxt, "txt" .. i)
+
+		table.insert(self._tmpTxts, tmpTxt)
+	end
+
+	self._gosptxt = gohelper.findChild(self._picGo, "root/#go_sptxt")
 	self._spTxts = {}
 
 	for i = 1, 3 do
@@ -103,7 +112,7 @@ function StoryPictureItem:_onPicPrefabLoaded()
 		table.insert(self._spTxts, spTxt)
 	end
 
-	transformhelper.setLocalPosXY(self._txtTmp.transform, 0, 0)
+	transformhelper.setLocalPosXY(self._gotmptxt.transform, 0, 0)
 	transformhelper.setLocalPosXY(self._gosptxt.transform, 0, 0)
 
 	if self._picCo.picType == StoryEnum.PictureType.PicTxt then
@@ -124,44 +133,45 @@ function StoryPictureItem:_onPicPrefabLoaded()
 			return
 		end
 
-		gohelper.setActive(self._txtTmp.gameObject, fontType == 0)
-		gohelper.setActive(self._gosptxt, fontType ~= 0)
+		local useTmp = self._picCo.inType == StoryEnum.PictureInType.SoftLight or self._picCo.inType == StoryEnum.PictureInType.GostMagic
+
+		gohelper.setActive(self._gotmptxt, useTmp)
+		gohelper.setActive(self._gosptxt, not useTmp)
+
+		self._useTxts = useTmp and self._tmpTxts or self._spTxts
 
 		for i = 1, 3 do
-			gohelper.setActive(self._spTxts[i].gameObject, fontType == i)
+			gohelper.setActive(self._useTxts[i].gameObject, fontType == i)
 		end
 
 		local txt = picTxtCo[curLang]
 		local time = 0.1 * LuaUtil.getStrLen(txt) * txtCo[2]
+		local playDoText = not useTmp and self._picCo.inType ~= StoryEnum.PictureInType.TxtFadeIn and fontType ~= 0
 
-		if self._picCo.inType ~= StoryEnum.PictureInType.TxtFadeIn and fontType ~= 0 then
-			self._dtTweenId = ZProj.TweenHelper.DOText(self._spTxts[fontType], txt, time, nil, nil, nil, EaseType.Linear)
+		if playDoText then
+			self._dtTweenId = ZProj.TweenHelper.DOText(self._useTxts[fontType], txt, time, nil, nil, nil, EaseType.Linear)
+		end
+
+		if self._picCo.inType == StoryEnum.PictureInType.SoftLight or self._picCo.inType == StoryEnum.PictureInType.GostMagic then
+			self:_playTextEffect(true, self._useTxts[fontType], self._picCo.inType)
 		end
 
 		if self._picCo.inType == StoryEnum.PictureInType.FadeIn or self._picCo.inType == StoryEnum.PictureInType.TxtFadeIn then
 			if fontType == 0 then
-				self._txtmarktop = IconMgr.instance:getCommonTextMarkTop(self._txtTmp.gameObject):GetComponent(gohelper.Type_TextMesh)
-				self._conMark = gohelper.onceAddComponent(self._txtTmp.gameObject, typeof(ZProj.TMPMark))
-
-				self._conMark:SetMarkTopGo(self._txtmarktop.gameObject)
+				fontType = picTxtCo.fontType + 1
 
 				local filterResult = StoryTool.filterMarkTop(txt)
 
-				self._txtTmp.text = filterResult
+				gohelper.setActive(self._useTxts[fontType].gameObject, true)
 
-				self._conMark:SetTopOffset(0, -0.5971)
-				TaskDispatcher.runDelay(function()
-					local markTopList = StoryTool.getMarkTopTextList(txt)
-
-					self._conMark:SetMarksTop(markTopList)
-				end, nil, 0.01)
+				self._useTxts[fontType].text = filterResult
 			else
-				self._spTxts[fontType].text = txt
+				self._useTxts[fontType].text = txt
 			end
 
-			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGo, 0, 1, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
+			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGoRoot, 0, 1, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
 		else
-			self._picGo:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
+			self._picGoRoot:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 1
 		end
 
 		if self._picCo.effType == StoryEnum.PictureEffectType.Shake then
@@ -169,7 +179,7 @@ function StoryPictureItem:_onPicPrefabLoaded()
 				return
 			end
 
-			transformhelper.setLocalPosXY(self._txtTmp.transform, self._picCo.pos[1], self._picCo.pos[2])
+			transformhelper.setLocalPosXY(self._gotmptxt.transform, self._picCo.pos[1], self._picCo.pos[2])
 			transformhelper.setLocalPosXY(self._gosptxt.transform, self._picCo.pos[1], self._picCo.pos[2])
 
 			if self._picCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
@@ -178,7 +188,7 @@ function StoryPictureItem:_onPicPrefabLoaded()
 				TaskDispatcher.runDelay(self._playShake, self, self._picCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 			end
 		elseif self._picCo.effType == StoryEnum.PictureEffectType.Scale then
-			transformhelper.setLocalPosXY(self._txtTmp.transform, self._picCo.pos[1], self._picCo.pos[2])
+			transformhelper.setLocalPosXY(self._gotmptxt.transform, self._picCo.pos[1], self._picCo.pos[2])
 			transformhelper.setLocalPosXY(self._gosptxt.transform, self._picCo.pos[1], self._picCo.pos[2])
 
 			if self._picCo.effDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
@@ -195,16 +205,16 @@ function StoryPictureItem:_onPicPrefabLoaded()
 
 	if self._picCo.picType == StoryEnum.PictureType.HeroFollow then
 		gohelper.setActive(self._simg.gameObject, false)
-		gohelper.setActive(self._txtTmp.gameObject, false)
-		gohelper.setActive(self._gosptxt.gameObject, false)
+		gohelper.setActive(self._gotmptxt, false)
+		gohelper.setActive(self._gosptxt, false)
 		self:_onPicImageLoaded()
 
 		return
 	end
 
 	gohelper.setActive(self._simg.gameObject, true)
-	gohelper.setActive(self._txtTmp.gameObject, false)
-	gohelper.setActive(self._gosptxt.gameObject, false)
+	gohelper.setActive(self._gotmptxt, false)
+	gohelper.setActive(self._gosptxt, false)
 	self._simg:LoadImage(ResUrl.getStoryItem(self._picCo.picture), self._onPicImageLoaded, self)
 end
 
@@ -233,7 +243,7 @@ function StoryPictureItem:_onPicImageLoaded()
 		end
 
 		if self._picCo.inType == StoryEnum.PictureInType.FadeIn then
-			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGo, 0, alpha, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
+			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGoRoot, 0, alpha, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
 		end
 	end
 
@@ -285,7 +295,7 @@ function StoryPictureItem:_playFollowBg()
 
 	self._bgGo = gohelper.findChild(bgRootGo, "#go_upbg")
 
-	local picTransX, picTransY = transformhelper.getLocalPos(self._picGo.transform)
+	local picTransX, picTransY = transformhelper.getLocalPos(self._picGoRoot.transform)
 
 	self._deltaPos = {
 		picTransX,
@@ -298,8 +308,8 @@ end
 function StoryPictureItem:_followBg()
 	local scaleX, scaleY = transformhelper.getLocalScale(self._bgGo.transform)
 
-	transformhelper.setLocalPosXY(self._picGo.transform, scaleX * self._deltaPos[1], scaleY * self._deltaPos[2])
-	transformhelper.setLocalScale(self._picGo.transform, scaleY, scaleY, 1)
+	transformhelper.setLocalPosXY(self._picGoRoot.transform, scaleX * self._deltaPos[1], scaleY * self._deltaPos[2])
+	transformhelper.setLocalScale(self._picGoRoot.transform, scaleY, scaleY, 1)
 end
 
 function StoryPictureItem:_playScale()
@@ -311,8 +321,8 @@ function StoryPictureItem:_playScale()
 	local color = SLFramework.UGUI.GuiHelper.ParseColor(self._picCo.picColor)
 
 	if transTime < 0.1 then
-		transformhelper.setLocalScale(self._picGo.transform, self._picCo.effRate, self._picCo.effRate, 1)
-		transformhelper.setLocalPosXY(self._picGo.transform, self._picCo.pos[1], self._picCo.pos[2])
+		transformhelper.setLocalScale(self._picGoRoot.transform, self._picCo.effRate, self._picCo.effRate, 1)
+		transformhelper.setLocalPosXY(self._picGoRoot.transform, self._picCo.pos[1], self._picCo.pos[2])
 
 		if self._picCo.picType ~= StoryEnum.PictureType.Transparency then
 			return
@@ -327,8 +337,8 @@ function StoryPictureItem:_playScale()
 		return
 	end
 
-	self._posTweenId = ZProj.TweenHelper.DOAnchorPos(self._picGo.transform, self._picCo.pos[1], self._picCo.pos[2], transTime, nil, nil, nil, self._picCo.effDegree)
-	self._scaleTweenId = ZProj.TweenHelper.DOScale(self._picGo.transform, self._picCo.effRate, self._picCo.effRate, 1, transTime)
+	self._posTweenId = ZProj.TweenHelper.DOAnchorPos(self._picGoRoot.transform, self._picCo.pos[1], self._picCo.pos[2], transTime, nil, nil, nil, self._picCo.effDegree)
+	self._scaleTweenId = ZProj.TweenHelper.DOScale(self._picGoRoot.transform, self._picCo.effRate, self._picCo.effRate, 1, transTime)
 
 	if self._picCo.picType ~= StoryEnum.PictureType.Transparency then
 		return
@@ -344,7 +354,7 @@ end
 function StoryPictureItem:resetStep()
 	TaskDispatcher.cancelTask(self._playShake, self)
 	TaskDispatcher.cancelTask(self._shakeStop, self)
-	ZProj.TweenHelper.KillByObj(self._picGo)
+	ZProj.TweenHelper.KillByObj(self._picGoRoot)
 end
 
 function StoryPictureItem:_killTweenId()
@@ -371,6 +381,8 @@ function StoryPictureItem:_killTweenId()
 
 		self._alphaTweenId = nil
 	end
+
+	ZProj.TweenHelper.KillByObj(self._picGoRoot)
 end
 
 function StoryPictureItem:reset(go, picCo)
@@ -458,7 +470,7 @@ function StoryPictureItem:_setFullPicture()
 
 	self._picImg.color = color
 
-	ZProj.TweenHelper.DOFadeCanvasGroup(self._picGo, 0, color.a, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
+	ZProj.TweenHelper.DOFadeCanvasGroup(self._picGoRoot, 0, color.a, self._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
 end
 
 function StoryPictureItem:_onFullFocusPictureLoaded()
@@ -469,11 +481,24 @@ function StoryPictureItem:_onFullFocusPictureLoaded()
 	self._picLoaded = true
 	self._picGo = self._pictureLoader:getInstGO()
 	self._picGo.name = self._picName
+	self._picGoRoot = self._picGo
 
 	self:_setFullPicture()
 
 	if self._setDestroy then
 		TaskDispatcher.runDelay(self._realDestroy, self, 0.1)
+	end
+end
+
+function StoryPictureItem:_playTextEffect(isVisible, textComp, effectType)
+	if isVisible then
+		if not self._textLightComp then
+			self._textLightComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._picParentGo, StoryTextLightComp)
+		end
+
+		self._textLightComp:playTextEffect(textComp, effectType)
+	elseif self._textLightComp then
+		self._textLightComp:hideTextEffect()
 	end
 end
 
@@ -512,7 +537,7 @@ function StoryPictureItem:_startDestroy()
 	if self._picDestroyCo.outType == StoryEnum.PictureOutType.Hard then
 		self:onDestroy()
 	else
-		if not self._picGo or not self._picLoaded then
+		if not self._picGoRoot or not self._picLoaded then
 			self:_releaseLoader()
 
 			return
@@ -521,9 +546,9 @@ function StoryPictureItem:_startDestroy()
 		ZProj.TweenHelper.KillByObj(self._picImg)
 
 		if self._picDestroyCo.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] > 0.1 then
-			local startAlpha = self._picGo:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha
+			local startAlpha = self._picGoRoot:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha
 
-			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGo, startAlpha, 0, self._picDestroyCo.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] - 0.1, self.onDestroy, self, nil, EaseType.Linear)
+			ZProj.TweenHelper.DOFadeCanvasGroup(self._picGoRoot, startAlpha, 0, self._picDestroyCo.outTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] - 0.1, self.onDestroy, self, nil, EaseType.Linear)
 		else
 			self:onDestroy()
 		end
@@ -534,6 +559,7 @@ function StoryPictureItem:onDestroy()
 	UIBlockMgr.instance:endBlock("waitHero")
 	StoryController.instance:unregisterCallback(StoryEvent.OnHeroShowed, self._checkFollowHero, self)
 	TaskDispatcher.cancelTask(self._build, self)
+	TaskDispatcher.cancelTask(self._checkDestroyItem, self)
 
 	if self._picDestroyCo and self._picDestroyCo.picType == StoryEnum.PictureType.FullScreen then
 		TaskDispatcher.runRepeat(self._checkDestroyItem, self, 0.1)
@@ -564,6 +590,12 @@ function StoryPictureItem:_releaseLoader()
 end
 
 function StoryPictureItem:_realDestroy()
+	if gohelper.isNil(self.viewGO) then
+		TaskDispatcher.cancelTask(self._checkDestroyItem, self)
+
+		return
+	end
+
 	if self._picRootCanvas then
 		self._picRootCanvas.sortingOrder = 1008
 		self._picRootCanvas.overrideSorting = true
@@ -583,7 +615,7 @@ function StoryPictureItem:_realDestroy()
 	TaskDispatcher.cancelTask(self._checkDestroyItem, self)
 	TaskDispatcher.cancelTask(self._startDestroy, self)
 	TaskDispatcher.cancelTask(self._build, self)
-	ZProj.TweenHelper.KillByObj(self._picGo)
+	ZProj.TweenHelper.KillByObj(self._picGoRoot)
 	TaskDispatcher.cancelTask(self._shakeStop, self)
 
 	if self._simg then
@@ -594,8 +626,8 @@ function StoryPictureItem:_realDestroy()
 
 	gohelper.destroy(self._picParentGo)
 
-	if self._picCo.picType == StoryEnum.PictureType.HeroFollow then
-		StoryController.instance:dispatchEvent(StoryEvent.OnFollowPictureEnd, self._picGo, tonumber(self._picCo.picture))
+	if self._picCo.picType == StoryEnum.PictureType.HeroFollow and self._picGoRoot then
+		StoryController.instance:dispatchEvent(StoryEvent.OnFollowPictureEnd, self._picGoRoot, tonumber(self._picCo.picture))
 	end
 end
 

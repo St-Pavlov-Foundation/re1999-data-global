@@ -10,7 +10,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20002,
@@ -23,7 +24,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20003,
@@ -36,20 +38,22 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20004,
     "name": "language_10086219",
     "nameEn": "BETWEEN LINES AND NUMBERS",
     "highId": 10003,
-    "show": 0,
-    "des": "language_10086216",
-    "skinContain": "301103|300403|306403|303002",
+    "show": 1,
+    "des": "language_10129216",
+    "skinContain": "301103|300403|303002",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20005,
@@ -62,7 +66,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20006,
@@ -75,7 +80,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20007,
@@ -88,7 +94,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20008,
@@ -101,7 +108,8 @@
     "backImg": "singlebg/act174/act174_ready_fullbg2.png",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20009,
@@ -114,7 +122,8 @@
     "backImg": "",
     "spineParams": "302504|roles_bust/v3a1_302504_xt_skinsuit/302504_xt_skinsuit.prefab|0,-60|1.55",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20010,
@@ -127,7 +136,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20011,
@@ -140,7 +150,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20012,
@@ -153,7 +164,8 @@
     "backImg": "",
     "spineParams": "306604|roles_bust/v3a1_306604_37_skinsuit/306604_37_skinsuit.prefab|150,210|0.8",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20013,
@@ -161,12 +173,13 @@
     "nameEn": "VICTORY IN THE BIG SMOKE",
     "highId": 10006,
     "show": 1,
-    "des": "language_10086225",
-    "skinContain": "304304|300404|308803|303602",
+    "des": "language_10129217",
+    "skinContain": "304304|300404|308803|303602|301503|305303|305002|302203|307003|303203|302503|302803",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": "20001#20005"
   },
   {
     "id": 20014,
@@ -179,7 +192,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20015,
@@ -192,7 +206,8 @@
     "backImg": "",
     "spineParams": "308303|roles_bust/v3a2_308303_qn_skinsuit/308303_qn_skinsuit.prefab|0,0|1.4",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20016,
@@ -205,7 +220,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20017,
@@ -218,7 +234,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20018,
@@ -231,7 +248,8 @@
     "backImg": "",
     "spineParams": "308603|roles_bust/v3a1_308603_lx_skinsuit/308603_lx_skinsuit.prefab|30,-160|1",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 21001,
@@ -240,11 +258,12 @@
     "highId": 11001,
     "show": 1,
     "des": "language_10089256",
-    "skinContain": "305104|305604|312703|307905|304704|310003|308004|304804|308804|300731|310703|306204|300306",
+    "skinContain": "312703|307905|312606|304704|310003|308004|304804|308804|300731|310703|306204|300306|305104|305604",
     "backImg": "",
     "spineParams": "",
-    "tarotCardPath": "card03|card06|card08|card09|card12|card15|card16|card17|card18|card20|card21|card01|card02",
-    "festivalParams": ""
+    "tarotCardPath": "card08|card09|card11|card12|card15|card16|card17|card18|card20|card21|card01|card02|card03|card06",
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 22001,
@@ -257,7 +276,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 22002,
@@ -270,7 +290,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20019,
@@ -283,7 +304,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 22003,
@@ -296,7 +318,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20020,
@@ -309,7 +332,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20021,
@@ -322,7 +346,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 21002,
@@ -331,11 +356,12 @@
     "highId": 13001,
     "show": 1,
     "des": "",
-    "skinContain": "310404|309804|311404|309504|0",
+    "skinContain": "309804|311404|307705|309504|310404",
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": "handbookskin_festival_yushui,2.18|handbookskin_festival_Easter,4.5|handbookskin_festival_dushu,4.23|handbookskin_festival_Christmas,12.25|handbookskin_festival_unknow,???"
+    "festivalParams": "handbookskin_festival_Easter,4.5|handbookskin_festival_dushu,4.23|handbookskin_festival_internationalyouthday,8.12|handbookskin_festival_Christmas,12.25|handbookskin_festival_yushui,2.18",
+    "includeSuit": ""
   },
   {
     "id": 20022,
@@ -348,7 +374,8 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20023,
@@ -361,7 +388,8 @@
     "backImg": "",
     "spineParams": "311003|roles_bust/v3a4_311003_ly_skinsuit/311003_ly_skinsuit.prefab|-30,110|0.3#305305|roles_bust/v3a4_305305_yx_skinsuit/305305_yx_skinsuit.prefab|-110,-25|0.36",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
   },
   {
     "id": 20024,
@@ -374,6 +402,21 @@
     "backImg": "",
     "spineParams": "",
     "tarotCardPath": "",
-    "festivalParams": ""
+    "festivalParams": "",
+    "includeSuit": ""
+  },
+  {
+    "id": 22004,
+    "name": "language_10122402",
+    "nameEn": "A Machinery-Themed Glimpse into the Future",
+    "highId": 12001,
+    "show": 1,
+    "des": "language_10129218",
+    "skinContain": "310604|314903|310504|303904",
+    "backImg": "",
+    "spineParams": "310504|roles_bust/s02_310504_zxqe_skinsuit/310504_zxqe_skinsuit.prefab|30,-25|1",
+    "tarotCardPath": "",
+    "festivalParams": "",
+    "includeSuit": ""
   }
 ]

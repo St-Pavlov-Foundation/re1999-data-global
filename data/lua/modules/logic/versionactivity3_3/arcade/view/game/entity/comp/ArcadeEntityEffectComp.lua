@@ -62,8 +62,6 @@ function ArcadeEntityEffectComp:playBulletEffect(effectId)
 end
 
 function ArcadeEntityEffectComp:_beginTweenBullet(effectId, effectGO)
-	self:_killBulletTween()
-
 	if gohelper.isNil(effectGO) then
 		return
 	end
@@ -141,6 +139,8 @@ function ArcadeEntityEffectComp:_beginTweenBullet(effectId, effectGO)
 		return
 	end
 
+	self:removeEffect(self._playingBulletEffectId)
+
 	local effectTrans = effectGO.transform
 
 	transformhelper.setLocalPosXY(effectTrans, beginPosX, beginPosY)
@@ -164,28 +164,21 @@ function ArcadeEntityEffectComp:_beginTweenBullet(effectId, effectGO)
 end
 
 function ArcadeEntityEffectComp:_onBulletTweenEnd()
-	self:_killBulletTween()
-end
-
-function ArcadeEntityEffectComp:_killBulletTween()
-	if self._bulletTweenId then
-		ZProj.TweenHelper.KillById(self._bulletTweenId)
-
-		self._bulletTweenId = nil
-	end
-
-	if self._playingBulletEffectId then
-		self:removeEffect(self._playingBulletEffectId)
-	end
-
-	self._playingBulletEffectId = nil
+	self:removeEffect(self._playingBulletEffectId)
 end
 
 function ArcadeEntityEffectComp:playEffect(effectId)
+	local willPlaySceneEff = true
 	local scene = ArcadeGameController.instance:getGameScene()
 	local resName = ArcadeConfig.instance:getEffectResName(effectId)
 
 	if not scene or string.nilorempty(resName) then
+		willPlaySceneEff = false
+	end
+
+	ArcadeGameController.instance:dispatchEvent(ArcadeEvent.PlayUIEffect, effectId, not willPlaySceneEff)
+
+	if not willPlaySceneEff then
 		return
 	end
 
@@ -239,19 +232,23 @@ function ArcadeEntityEffectComp:onLoadEffectFinished(param)
 		return
 	end
 
-	local assetRes = scene.loader:getResource(param.resPath, param.resAbPath)
+	local effectId = param.effectId
+	local effGO = self._effectGODict[effectId]
 
-	if not assetRes then
-		return
+	if gohelper.isNil(effGO) then
+		local assetRes = scene.loader:getResource(param.resPath, param.resAbPath)
+
+		if not assetRes then
+			return
+		end
+
+		effGO = gohelper.clone(assetRes, self.go)
+		self._effectGODict[effectId] = effGO
 	end
 
-	local effectId = param.effectId
-	local effGO = gohelper.clone(assetRes, self.go)
 	local rotationType = ArcadeConfig.instance:getEffectRotationType(effectId)
 
 	self:_setGoRotationByType(effGO, rotationType)
-
-	self._effectGODict[effectId] = effGO
 
 	local dir = ArcadeConfig.instance:getEffectDirection(effectId)
 	local x, y = self:_getLocalPosByDir(dir)
@@ -275,6 +272,10 @@ function ArcadeEntityEffectComp:_playEffectAudioId(effectId)
 end
 
 function ArcadeEntityEffectComp:removeEffect(effectId)
+	if not effectId then
+		return
+	end
+
 	local resName = ArcadeConfig.instance:getEffectResName(effectId)
 
 	if string.nilorempty(resName) then
@@ -291,6 +292,22 @@ function ArcadeEntityEffectComp:removeEffect(effectId)
 		self._playingBulletEffectId = nil
 
 		self:_killBulletTween()
+	end
+end
+
+function ArcadeEntityEffectComp:removeAllEffect()
+	for _, effectGO in pairs(self._effectGODict) do
+		gohelper.setActive(effectGO, false)
+	end
+
+	self:_killBulletTween()
+end
+
+function ArcadeEntityEffectComp:_killBulletTween()
+	if self._bulletTweenId then
+		ZProj.TweenHelper.KillById(self._bulletTweenId)
+
+		self._bulletTweenId = nil
 	end
 end
 

@@ -202,23 +202,29 @@ function Rouge2_MapHelper.backToMainScene()
 	Rouge2_PopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
 	Rouge2_StatController.instance:quitMap()
-	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
+	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Rouge2)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.Rouge2_MapLoadingView)
 	MainController.instance:enterMainScene(true, false)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, Rouge2_MapHelper._onEnterMainSceneDone)
 end
 
 function Rouge2_MapHelper._onEnterMainSceneDone()
-	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Rouge2_MainView)
-	VersionActivity3_4EnterController.instance:openVersionActivityEnterView(Rouge2_MapHelper.onOpenVersionActivityView, nil, VersionActivity3_4Enum.ActivityId.Rouge2, true)
+	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Rouge2_EnterView)
+
+	local sequence = FlowSequence.New()
+
+	sequence:addWork(OpenViewWork.New({
+		openFunction = Rouge2_MapHelper.openEnterView,
+		waitOpenViewName = ViewName.DungeonView
+	}))
+	sequence:start()
 end
 
-function Rouge2_MapHelper.onOpenVersionActivityView()
-	local param = {
+function Rouge2_MapHelper.openEnterView()
+	Rouge2_Controller.instance:enterDungeonView()
+	Rouge2_Controller.instance:openEnterView({
 		openMain = true
-	}
-
-	Rouge2_Controller.instance:openEnterView(param, false)
+	}, false)
 end
 
 function Rouge2_MapHelper.getEpisodeIndex(stage)

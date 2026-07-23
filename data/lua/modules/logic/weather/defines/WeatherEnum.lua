@@ -197,7 +197,8 @@ WeatherEnum.RainEmission = {
 	[WeatherEnum.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
 }
 WeatherEnum.EffectTag = {
-	Frame = "frame"
+	Frame = "frame",
+	EffectAirStartColor = "effectAirStartColor"
 }
 
 return WeatherEnum

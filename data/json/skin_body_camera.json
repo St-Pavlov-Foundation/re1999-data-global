@@ -46,5 +46,19 @@
       "311003_ly_jh1",
       "311003_ly_jh1"
     ]
+  },
+  {
+    "id": 310504,
+    "behavior": "CameraBehavior",
+    "res": "310504_zxqe",
+    "body": [
+      "b_jiaohu03"
+    ],
+    "camera": [
+      "310504_zxqe_jh03"
+    ],
+    "camera_revert": [
+      "310504_zxqe_jh04"
+    ]
   }
 ]

@@ -110,6 +110,7 @@ function CharacterExSkillView:_editableInitView()
 		skillCardGo.go = go
 		skillCardGo.icon = gohelper.findChildSingleImage(go, "ani/imgIcon")
 		skillCardGo.tagIcon = gohelper.findChildSingleImage(go, "ani/tag/tagIcon")
+		skillCardGo.gostar = gohelper.findChild(go, "ani/star")
 		self.skillCardGoDict[i] = skillCardGo
 	end
 
@@ -245,6 +246,7 @@ function CharacterExSkillView:refreshSkillCardInfo()
 	end
 
 	local skillCo, skillId
+	local deviceMo = heroMo and heroMo:getDeviceMo()
 
 	for i = 1, 3 do
 		skillId = skillIdDict[i]
@@ -254,6 +256,22 @@ function CharacterExSkillView:refreshSkillCardInfo()
 
 			if not skillCo then
 				logError(string.format("heroID : %s, skillId not found : %s", self._config.id, skillId))
+			end
+
+			local isDeviceSkill = false
+
+			if deviceMo then
+				local deviceSkillId = deviceMo:getSkillId(i)
+
+				if deviceSkillId == skillId then
+					isDeviceSkill = true
+				end
+			end
+
+			local gostar = self.skillCardGoDict[i].gostar
+
+			if gostar then
+				gohelper.setActive(gostar, not isDeviceSkill)
 			end
 
 			self.skillCardGoDict[i].icon:LoadImage(ResUrl.getSkillIcon(skillCo.icon))

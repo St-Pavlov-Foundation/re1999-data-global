@@ -108,5 +108,25 @@
     "decStage": 303,
     "feature": "lorenz",
     "desc": "language_10116011"
+  },
+  {
+    "id": 10012,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "10001#10002#10005#10007#10011",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "degradation",
+    "desc": "language_10121105"
+  },
+  {
+    "id": 10013,
+    "coverType": "1",
+    "excludeTypes": "",
+    "rejectTypes": "",
+    "stage": 0,
+    "decStage": 303,
+    "feature": "notCalSize",
+    "desc": "language_10121106"
   }
 ]

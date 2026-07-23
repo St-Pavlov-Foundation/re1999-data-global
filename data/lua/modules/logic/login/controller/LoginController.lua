@@ -35,6 +35,7 @@ function LoginController:onInitFinish()
 
 	self._moduleLoginFlow:addWork(LoginPreInfoWork.New())
 	self._moduleLoginFlow:addWork(LoginPreLoadWork.New())
+	self._moduleLoginFlow:addWork(LoginIngoreSomeCmdLog.New())
 	self._moduleLoginFlow:addWork(LoginGetInfoWork.New())
 	self._moduleLoginFlow:addWork(LoginParseFightConfigWork.New())
 	self._moduleLoginFlow:addWork(LoginFirstGuideWork.New())

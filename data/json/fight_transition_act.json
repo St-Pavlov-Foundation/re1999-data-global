@@ -1198,5 +1198,137 @@
     "fromAct": "posture",
     "endAct": "idle",
     "transitionAct": "0"
+  },
+  {
+    "id": 314601,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 314602,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 315101,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 315101,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 315101,
+    "fromAct": "posture",
+    "endAct": "skill3",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 315101,
+    "fromAct": "posture",
+    "endAct": "skill4",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 315102,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 315102,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 315102,
+    "fromAct": "posture",
+    "endAct": "skill3",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 315102,
+    "fromAct": "posture",
+    "endAct": "skill4",
+    "transitionAct": "change2"
+  },
+  {
+    "id": 310504,
+    "fromAct": "idle",
+    "endAct": "channel_idle",
+    "transitionAct": "change4"
+  },
+  {
+    "id": 310504,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310504,
+    "fromAct": "skill1_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310504,
+    "fromAct": "skill2_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310504,
+    "fromAct": "skill3_1",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310504,
+    "fromAct": "channel_idle",
+    "endAct": "sleep",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310504,
+    "fromAct": "freeze",
+    "endAct": "freeze_channel",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310504,
+    "fromAct": "freeze_channel",
+    "endAct": "hit_channel",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310504,
+    "fromAct": "freeze_channel",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310504,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310504,
+    "fromAct": "channel_idle",
+    "endAct": "posture",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 314901,
+    "fromAct": "idle",
+    "endAct": "unique3",
+    "transitionAct": "0"
   }
 ]

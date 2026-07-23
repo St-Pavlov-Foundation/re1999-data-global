@@ -14,7 +14,8 @@ function VideoController:openFullScreenVideoView(videoPath, videoAudio, videoDur
 		waitViewOpen = params and params.waitViewOpen,
 		noShowBlackBg = params and params.noShowBlackBg,
 		getVideoPlayer = params and params.getVideoPlayer,
-		setVideoPlayer = params and params.setVideoPlayer
+		setVideoPlayer = params and params.setVideoPlayer,
+		couldSkip = params and params.couldSkip
 	})
 end
 

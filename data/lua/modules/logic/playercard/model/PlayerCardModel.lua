@@ -12,6 +12,7 @@ function PlayerCardModel:reInit()
 	self.characterSwitchFlag = nil
 	self._badgeMoDict = nil
 	self._equipType = nil
+	self._enterAnimType = nil
 end
 
 function PlayerCardModel:updateCardInfo(cardInfo, playerInfo)
@@ -170,6 +171,18 @@ function PlayerCardModel:getPlayerCardSkinId()
 	end
 end
 
+function PlayerCardModel:isSpecialCardSkin(skinId)
+	if not self._speialCardSkins then
+		local constCo = lua_playercard_const.configDict[5]
+
+		if constCo and not string.nilorempty(constCo.value2) then
+			self._speialCardSkins = string.splitToNumber(constCo.value2, "#")
+		end
+	end
+
+	return LuaUtil.tableContains(self._speialCardSkins, skinId)
+end
+
 function PlayerCardModel:setSelectSkinMO(skinMO)
 	self.selectSkinMO = skinMO
 end
@@ -264,6 +277,29 @@ function PlayerCardModel:setShowBadgeGetView(isShow)
 	local today = ServerTime.getServerTimeToday(true)
 
 	PlayerPrefsHelper.setNumber(key, isShow and 0 or today)
+end
+
+function PlayerCardModel:isShowEnterAnimSettingNewReddot(skinId)
+	skinId = skinId or self:getPlayerCardSkinId()
+
+	local themeInfo = PlayerCardEnum.Theme[skinId]
+
+	if not themeInfo or not themeInfo.EnterAnim then
+		return false
+	end
+
+	local key = "NewPlayerCardContentView_EnterAnimSettingNewReddot_" .. skinId
+	local isNew = GameUtil.playerPrefsGetNumberByUserId(key, 0) == 0
+
+	return isNew
+end
+
+function PlayerCardModel:cancelShowEnterAnimSettingNewReddot(skinId)
+	skinId = skinId or self:getPlayerCardSkinId()
+
+	local key = "NewPlayerCardContentView_EnterAnimSettingNewReddot_" .. skinId
+
+	GameUtil.playerPrefsSetNumberByUserId(key, 1)
 end
 
 PlayerCardModel.instance = PlayerCardModel.New()

@@ -12,7 +12,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010002,
@@ -27,7 +28,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010003,
@@ -42,7 +44,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010004,
@@ -57,7 +60,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010005,
@@ -72,7 +76,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010006,
@@ -87,7 +92,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010007,
@@ -102,7 +108,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010008,
@@ -117,7 +124,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010009,
@@ -132,7 +140,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010010,
@@ -147,7 +156,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010011,
@@ -162,7 +172,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010012,
@@ -177,7 +188,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010013,
@@ -192,7 +204,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010014,
@@ -207,7 +220,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010015,
@@ -222,7 +236,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010016,
@@ -237,7 +252,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010017,
@@ -252,7 +268,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010018,
@@ -267,7 +284,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010019,
@@ -282,7 +300,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010020,
@@ -297,7 +316,8 @@
     "effectsRotationType": 1,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010021,
@@ -312,7 +332,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010022,
@@ -327,7 +348,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010023,
@@ -342,7 +364,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010024,
@@ -357,7 +380,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010025,
@@ -372,7 +396,8 @@
     "effectsRotationType": 1,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010026,
@@ -387,7 +412,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010027,
@@ -402,7 +428,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010028,
@@ -417,7 +444,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010029,
@@ -432,7 +460,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010030,
@@ -447,7 +476,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010031,
@@ -462,7 +492,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010032,
@@ -477,7 +508,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010033,
@@ -492,7 +524,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010034,
@@ -507,7 +540,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "0.0#0.0",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010035,
@@ -522,7 +556,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "0.0#0.0",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010036,
@@ -537,7 +572,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "0.0#0.0",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010037,
@@ -552,7 +588,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010038,
@@ -567,7 +604,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010039,
@@ -582,7 +620,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010040,
@@ -597,7 +636,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010041,
@@ -612,7 +652,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010042,
@@ -627,7 +668,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010043,
@@ -642,7 +684,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010044,
@@ -657,7 +700,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010045,
@@ -672,7 +716,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010046,
@@ -687,7 +732,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": true
+    "needShake": true,
+    "uiEffect": ""
   },
   {
     "id": 689010047,
@@ -702,7 +748,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010048,
@@ -717,7 +764,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010049,
@@ -732,7 +780,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010050,
@@ -747,7 +796,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010051,
@@ -762,7 +812,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010052,
@@ -777,7 +828,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010053,
@@ -792,7 +844,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010054,
@@ -807,7 +860,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010055,
@@ -822,7 +876,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010056,
@@ -837,7 +892,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010057,
@@ -852,7 +908,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010058,
@@ -867,7 +924,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010059,
@@ -882,7 +940,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010060,
@@ -897,7 +956,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010061,
@@ -912,7 +972,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010062,
@@ -927,7 +988,8 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010063,
@@ -942,7 +1004,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010064,
@@ -957,7 +1020,8 @@
     "effectsRotationType": 0,
     "effectsOffset": "",
     "effectsScale": 0,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
   },
   {
     "id": 689010065,
@@ -972,6 +1036,183 @@
     "effectsRotationType": 2,
     "effectsOffset": "",
     "effectsScale": 1,
-    "needShake": false
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010066,
+    "triggerAnimation": "die_out",
+    "triggerAudio": 330023,
+    "triggerEffects": "v3a7_bfjwl_25_ex10",
+    "isPlayOnGrid": true,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 1,
+    "needShake": true,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010067,
+    "triggerAnimation": "",
+    "triggerAudio": 0,
+    "triggerEffects": "v3a7_bfjwl_19_wave",
+    "isPlayOnGrid": true,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010068,
+    "triggerAnimation": "",
+    "triggerAudio": 370402,
+    "triggerEffects": "v3a7_bfjwl_20_xishou",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010069,
+    "triggerAnimation": "",
+    "triggerAudio": 370403,
+    "triggerEffects": "v3a7_bfjwl_21_shanxing",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 1,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010070,
+    "triggerAnimation": "",
+    "triggerAudio": 370404,
+    "triggerEffects": "v3a7_bfjwl_22_huohuan_born",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010071,
+    "triggerAnimation": "",
+    "triggerAudio": 0,
+    "triggerEffects": "v3a7_bfjwl_22_huohuan_loop",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010072,
+    "triggerAnimation": "",
+    "triggerAudio": 370405,
+    "triggerEffects": "v3a7_bfjwl_23_longjuanfeng",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010073,
+    "triggerAnimation": "reborn",
+    "triggerAudio": 370406,
+    "triggerEffects": "v3a7_bfjwl_24_fuhuo",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010074,
+    "triggerAnimation": "hurt1_▩1%s",
+    "triggerAudio": 330021,
+    "triggerEffects": "v3a3_bfjwl_8_tsgj_lp",
+    "isPlayOnGrid": true,
+    "isNearestGrid": true,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 1,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010075,
+    "triggerAnimation": "",
+    "triggerAudio": 0,
+    "triggerEffects": "v3a7_m_s12_effect_blue",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": ""
+  },
+  {
+    "id": 689010076,
+    "triggerAnimation": "",
+    "triggerAudio": 370408,
+    "triggerEffects": "",
+    "isPlayOnGrid": false,
+    "isNearestGrid": false,
+    "speed": 0,
+    "direction": 0,
+    "isFromBorder": false,
+    "effectsRotationType": 0,
+    "effectsOffset": "",
+    "effectsScale": 0,
+    "needShake": false,
+    "uiEffect": "#go_wave"
   }
 ]

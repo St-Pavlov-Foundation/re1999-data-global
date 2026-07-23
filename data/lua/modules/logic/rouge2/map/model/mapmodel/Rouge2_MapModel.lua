@@ -211,7 +211,7 @@ function Rouge2_MapModel:_changeMapInfo(info)
 	if changeMapEnum == Rouge2_MapEnum.ChangeMapEnum.NormalToMiddle then
 		self._newInfo = info
 
-		self:clearInteractive()
+		self:setMapCurInteractive(info)
 
 		if self:getMapState() == Rouge2_MapEnum.MapState.Normal then
 			Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onBeforeActorMoveToEnd)

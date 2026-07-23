@@ -17,6 +17,7 @@ function YeShuMeiLevelView:onInitView()
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
 	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
 	self._animTask = self._gotaskani:GetComponent(typeof(UnityEngine.Animator))
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/image_TryBtn")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -30,6 +31,7 @@ function YeShuMeiLevelView:addEvents()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, self._onOpenView, self)
 	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 	self._scrollstory:AddOnValueChanged(self.onValueChanged, self)
 end
 
@@ -40,7 +42,34 @@ function YeShuMeiLevelView:removeEvents()
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.ReOpenWhileOpen, self._onOpenView, self)
 	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenSizeChange, self)
+	self._btnTrial:RemoveClickListener()
 	self._scrollstory:RemoveOnValueChanged()
+end
+
+function YeShuMeiLevelView:_btnTrialOnClick()
+	if ActivityHelper.isOpen(self.actId) then
+		local episodeId = self.config.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function YeShuMeiLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.config.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function YeShuMeiLevelView:onValueChanged()
@@ -77,6 +106,7 @@ end
 
 function YeShuMeiLevelView:_editableInitView()
 	self.actId = VersionActivity3_1Enum.ActivityId.YeShuMei
+	self.config = ActivityConfig.instance:getActivityCo(self.actId)
 	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	local width = recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)

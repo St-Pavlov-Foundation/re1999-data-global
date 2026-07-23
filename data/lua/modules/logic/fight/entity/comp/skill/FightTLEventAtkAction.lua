@@ -5,6 +5,10 @@ module("modules.logic.fight.entity.comp.skill.FightTLEventAtkAction", package.se
 local FightTLEventAtkAction = class("FightTLEventAtkAction", FightTimelineTrackItem)
 
 function FightTLEventAtkAction:onTrackStart(fightStepData, duration, paramsArr)
+	if not FightHelper.detectTimelinePlayEffectCondition(fightStepData, paramsArr[11]) then
+		return
+	end
+
 	self._attacker = FightHelper.getEntity(fightStepData.fromId)
 
 	if not string.nilorempty(paramsArr[7]) then
@@ -27,9 +31,34 @@ function FightTLEventAtkAction:onTrackStart(fightStepData, duration, paramsArr)
 	self._monsterEvolution = paramsArr[3] == "1"
 	self._detectCanPlay = paramsArr[4] == "1"
 	self.lockAct = paramsArr[6] == "1"
+	self.isUnlock = paramsArr[6] == "2"
+	self.donotProcess = paramsArr[8] == "1"
+	self.stillLockWhenEnd = paramsArr[10] == "1"
 
 	if paramsArr[5] == "1" then
 		self._attacker = FightHelper.getEntity(fightStepData.toId)
+	end
+
+	if not string.nilorempty(paramsArr[9]) then
+		local arr = string.splitToNumber(paramsArr[9])
+
+		for _, buffId in ipairs(arr) do
+			for entityId, entityData in pairs(FightDataHelper.entityMgr.entityDataDic) do
+				local buffDic = entityData.buffDic
+
+				for _, buffData in pairs(buffDic) do
+					if buffData.id == buffId then
+						self._attacker = FightHelper.getEntity(entityId)
+
+						break
+					end
+				end
+			end
+		end
+	end
+
+	if not string.nilorempty(paramsArr[12]) then
+		self._attacker = FightGameMgr.tokenReleaseEntityMgr:getEntity(paramsArr[12])
 	end
 
 	if self.timelineItem.spineDelayTime then
@@ -37,17 +66,31 @@ function FightTLEventAtkAction:onTrackStart(fightStepData, duration, paramsArr)
 	else
 		self:_playAct()
 	end
+
+	if not string.nilorempty(paramsArr[13]) then
+		self:com_registTimer(self.unLockSpine, tonumber(paramsArr[13]) / FightModel.instance:getSpeed())
+	end
+end
+
+function FightTLEventAtkAction:unLockSpine()
+	if self._attacker and self._attacker.spine then
+		self._attacker.spine.lockAct = false
+	end
 end
 
 function FightTLEventAtkAction:_playAct()
 	if self._attacker and self._attacker.spine then
 		if not string.nilorempty(self._action) then
+			if self.isUnlock then
+				self._attacker.spine.lockAct = false
+			end
+
 			if self._detectCanPlay then
 				if not self._attacker.spine:tryPlay(self._action, self._loop, true) then
 					return
 				end
 			else
-				self._attacker.spine:play(self._action, self._loop, true)
+				self._attacker.spine:play(self._action, self._loop, true, self.donotProcess)
 			end
 
 			if self.timelineItem.spineStartTime then
@@ -72,7 +115,7 @@ function FightTLEventAtkAction:_playAct()
 end
 
 function FightTLEventAtkAction:onTrackEnd()
-	if self.lockAct and self._attacker and self._attacker.spine then
+	if self.lockAct and self._attacker and self._attacker.spine and not self.stillLockWhenEnd then
 		self._attacker.spine.lockAct = false
 	end
 
@@ -80,6 +123,10 @@ function FightTLEventAtkAction:onTrackEnd()
 end
 
 function FightTLEventAtkAction:_onActionFinish()
+	if self.lockAct and self.stillLockWhenEnd then
+		return
+	end
+
 	self._actionFinish = true
 
 	if self._attacker and self._attacker.spine and self._attacker.spine:getAnimState() == self._action then
@@ -95,7 +142,7 @@ function FightTLEventAtkAction:_onActionFinish()
 end
 
 function FightTLEventAtkAction:onDestructor()
-	if self.lockAct and self._attacker and self._attacker.spine then
+	if self.lockAct and self._attacker and self._attacker.spine and not self.stillLockWhenEnd then
 		self._attacker.spine.lockAct = false
 	end
 

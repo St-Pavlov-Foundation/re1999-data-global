@@ -39,6 +39,7 @@ MainUISwitchEnum.MainUIScale = 0.8
 MainUISwitchEnum.Skin = {
 	V3a4 = 4,
 	Sp01 = 2,
+	S02 = 5,
 	V3a2 = 3,
 	Normal = 1
 }
@@ -99,9 +100,15 @@ MainUISwitchEnum.ChildViewComp = {
 		UIId = MainUISwitchEnum.Skin.V3a4
 	}
 }
+MainUISwitchEnum.SkinAnim = {
+	[MainUISwitchEnum.Skin.S02] = {
+		view = MainS02AnimView
+	}
+}
 MainUISwitchEnum.ConstId = {
-	BirdClickSustainTime = 2,
-	BirdClickCount = 1
+	S02AnimTime = 3,
+	BirdClickCount = 1,
+	BirdClickSustainTime = 2
 }
 MainUISwitchEnum.FirstEnterMainView = "MainUISwitchEnum_FirstEnterMainView"
 

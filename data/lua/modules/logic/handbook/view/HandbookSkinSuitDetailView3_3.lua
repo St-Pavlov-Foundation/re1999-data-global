@@ -3,11 +3,9 @@
 module("modules.logic.handbook.view.HandbookSkinSuitDetailView3_3", package.seeall)
 
 local HandbookSkinSuitDetailView3_3 = class("HandbookSkinSuitDetailView3_3", HandbookSkinSuitDetailViewBase)
-local dragRate = 0.0003
-local maxDragProgressPerFrame = 0.1
-local animationProcessSplitCount = 5
-local loopCardCount = 5
-local centerIdxOffset = 2
+local dragSensitivity = 1
+local slideDuration = 0.2
+local authoredBaseXCache = {}
 
 function HandbookSkinSuitDetailView3_3:onInitView()
 	self._skinItemRoot = gohelper.findChild(self.viewGO, "#go_scroll/#go_storyStages")
@@ -21,7 +19,6 @@ function HandbookSkinSuitDetailView3_3:onInitView()
 	self._scrollClick = SLFramework.UGUI.UIClickListener.Get(self._goscroll)
 	self._scrollRect = gohelper.findChildScrollRect(self.viewGO, "#go_scroll")
 	self._goCardStages = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages")
-	self._cardGroupAnimator = self._goCardStages:GetComponent(gohelper.Type_Animator)
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -29,8 +26,7 @@ function HandbookSkinSuitDetailView3_3:onInitView()
 end
 
 function HandbookSkinSuitDetailView3_3:_editableInitView()
-	self._cardAniProgresss = self._cardAniProgresss or 0
-	self._curStartIdx = 1
+	self._scrollValue = 0
 end
 
 function HandbookSkinSuitDetailView3_3:addEvents()
@@ -95,129 +91,113 @@ function HandbookSkinSuitDetailView3_3:_onScrollDragging(param, eventData)
 
 	self.scrollDragPos = eventData.position
 
-	if moveOffset.x ~= 0 then
-		local progressDiff = dragRate * -moveOffset.x
+	if moveOffset.x ~= 0 and self._cardSpacing and self._cardSpacing ~= 0 then
+		self._scrollValue = self._scrollValue - moveOffset.x / self._cardSpacing * dragSensitivity
 
-		progressDiff = Mathf.Clamp(progressDiff, -maxDragProgressPerFrame, maxDragProgressPerFrame)
-		self._cardAniProgresss = self._cardAniProgresss + progressDiff
-
-		if self._cardAniProgresss > 1 then
-			self._cardAniProgresss = self._cardAniProgresss - 1
-		elseif self._cardAniProgresss < 0 then
-			self._cardAniProgresss = 1 + self._cardAniProgresss
-		end
-
-		self:UpdateAnimProgress(self._cardGroupAnimator, "click", self._cardAniProgresss)
+		self:_applyCardLayout()
 	end
 end
 
 function HandbookSkinSuitDetailView3_3:_onScrollDragEnd(param, eventData)
-	UIBlockMgr.instance:startBlock(UIBlockKey.WaitItemAnimeDone)
-
 	self._dragging = false
 
-	self:slideToClosestCardPos()
+	self:_slideScrollTo(self:_roundScroll())
 end
 
-function HandbookSkinSuitDetailView3_3:slideToClosestCardPos()
-	local progressDiff = 1
-	local targetIdx = 0
-	local targetProgress = 0
+function HandbookSkinSuitDetailView3_3:_bindCardSkin(nodeIdx)
+	local item = self._cardItems[nodeIdx]
 
-	for idx = 0, animationProcessSplitCount do
-		local suitProgress = idx / animationProcessSplitCount
-		local diff = math.abs(suitProgress - self._cardAniProgresss)
+	item:refreshItem(self._skinIdList[nodeIdx + 1])
+	item:refreshDestivalData(self._destivalDataList[nodeIdx + 1])
+end
 
-		if diff < progressDiff then
-			progressDiff = diff
-			targetIdx = idx + 1
-			targetProgress = suitProgress
+function HandbookSkinSuitDetailView3_3:_applyCardLayout()
+	local M = self._showCardNum
+	local half = M / 2
+
+	for nodeIdx = 0, M - 1 do
+		local vp = self._cardVP[nodeIdx]
+
+		while vp <= self._scrollValue - half do
+			vp = vp + M
 		end
+
+		while vp > self._scrollValue + half do
+			vp = vp - M
+		end
+
+		self._cardVP[nodeIdx] = vp
+
+		local x = self._centerX + (vp - self._scrollValue) * self._cardSpacing
+		local tr = self._cardItemGos[nodeIdx].transform
+		local lp = tr.localPosition
+
+		transformhelper.setLocalPos(tr, x, lp.y, lp.z)
 	end
-
-	local slideSuitAniTweenId = ZProj.TweenHelper.DOTweenFloat(self._cardAniProgresss, targetProgress, 0.2, self.autoSlideAniUpdate, nil, self)
-
-	self._moveToOtherSuitAni = true
-	self._cardAniProgresss = targetProgress
-	self._curStartIdx = targetIdx
-	self._curStartIdx = self._curStartIdx > 5 and self._curStartIdx - 5 or self._curStartIdx
-
-	TaskDispatcher.runDelay(self._onMoveToCardPosSetAniDone, self, 0.2)
 end
 
-function HandbookSkinSuitDetailView3_3:slideCardToCenter(idx)
+function HandbookSkinSuitDetailView3_3:_roundScroll()
+	return math.floor(self._scrollValue + 0.5)
+end
+
+function HandbookSkinSuitDetailView3_3:_slideScrollTo(targetScroll)
 	UIBlockMgr.instance:startBlock(UIBlockKey.WaitItemAnimeDone)
 
-	local targetProgress = (idx - 1) / animationProcessSplitCount
+	self._slideTargetScroll = targetScroll
 
-	if targetProgress == 0 and self._cardAniProgresss < 0 then
-		self._cardAniProgresss = 1 + self._cardAniProgresss
-		targetProgress = 1
+	if self._scrollTweenId then
+		ZProj.TweenHelper.KillById(self._scrollTweenId)
 	end
 
-	local slideSuitAniTweenId = ZProj.TweenHelper.DOTweenFloat(self._cardAniProgresss, targetProgress, 0.2, self.autoSlideAniUpdate, nil, self)
+	self._scrollTweenId = ZProj.TweenHelper.DOTweenFloat(self._scrollValue, targetScroll, slideDuration, self._onScrollTweenUpdate, nil, self)
 
-	self._moveCardToCenter = true
-	self._cardAniProgresss = targetProgress
-
-	TaskDispatcher.runDelay(self._onMoveToCardPosSetAniDone, self, 0.2)
+	TaskDispatcher.cancelTask(self._onScrollSlideDone, self)
+	TaskDispatcher.runDelay(self._onScrollSlideDone, self, slideDuration)
 end
 
-function HandbookSkinSuitDetailView3_3:_onMoveToCardPosSetAniDone()
+function HandbookSkinSuitDetailView3_3:_onScrollTweenUpdate(value)
+	self._scrollValue = value
+
+	self:_applyCardLayout()
+end
+
+function HandbookSkinSuitDetailView3_3:_onScrollSlideDone()
+	self._scrollValue = self._slideTargetScroll or self._scrollValue
+
+	self:_applyCardLayout()
 	self:UpdateSkinItemSelectedState()
 	UIBlockMgr.instance:endBlock(UIBlockKey.WaitItemAnimeDone)
 end
 
-function HandbookSkinSuitDetailView3_3:_onClickCardItem(idx, skinId)
-	local curCenterIdx = self._curStartIdx + centerIdxOffset
-
-	if curCenterIdx == idx or skinId ~= 0 and skinId == self._skinItemList[curCenterIdx]:getSkinId() then
-		local skinCfg = SkinConfig.instance:getSkinCo(skinId)
-
-		if not skinCfg then
-			return
-		end
-
-		local heroId = skinCfg.characterId
-		local skinId = skinCfg.id
-		local skinViewParams = {
-			handbook = true,
-			storyMode = true,
-			heroId = heroId,
-			skin = skinId,
-			skinSuitId = self._skinSuitId
-		}
-
-		CharacterController.instance:openCharacterSkinView(skinViewParams)
+function HandbookSkinSuitDetailView3_3:_onClickCardItem(nodeIdx, skinId)
+	if not self._cardVP[nodeIdx] then
+		return
 	end
 
-	if curCenterIdx < idx then
-		local oriStartIdx = self._curStartIdx
+	local clickedVp = self._cardVP[nodeIdx]
+	local centerVp = self:_roundScroll()
 
-		self._curStartIdx = idx - 2
+	if clickedVp == centerVp then
+		if skinId and skinId ~= 0 then
+			local skinCfg = SkinConfig.instance:getSkinCo(skinId)
 
-		if self._curStartIdx > 5 then
-			self._curStartIdx = self._curStartIdx - 5
-			self._cardAniProgresss = self._cardAniProgresss - 1
+			if not skinCfg then
+				return
+			end
+
+			CharacterController.instance:openCharacterSkinView({
+				handbook = true,
+				storyMode = true,
+				heroId = skinCfg.characterId,
+				skin = skinCfg.id,
+				skinSuitId = self._skinSuitId
+			})
 		end
-
-		self:slideCardToCenter(self._curStartIdx)
-
-		return
-	else
-		local oriStartIdx = self._curStartIdx
-
-		self._curStartIdx = idx - 2
-
-		if self._curStartIdx <= 0 then
-			self._curStartIdx = self._curStartIdx + 5
-			self._cardAniProgresss = self._cardAniProgresss + 1
-		end
-
-		self:slideCardToCenter(self._curStartIdx)
 
 		return
 	end
+
+	self:_slideScrollTo(clickedVp)
 end
 
 function HandbookSkinSuitDetailView3_3:onOpen()
@@ -230,6 +210,7 @@ function HandbookSkinSuitDetailView3_3:onOpen()
 	local destivalStr = self._skinSuitCfg.festivalParams
 
 	self._skinIdList = string.splitToNumber(skinIdStr, "|")
+	self._cardCount = #self._skinIdList
 	self._destivalDataList = string.split(destivalStr, "|")
 
 	self._viewAnimator:Play(UIAnimationName.Click, 0, 1)
@@ -239,61 +220,98 @@ end
 
 function HandbookSkinSuitDetailView3_3:_refreshSkinItems()
 	self._skinItemList = {}
+	self._cardItems = {}
+	self._cardItemGos = {}
+	self._cardBaseX = {}
+	self._cardVP = {}
 
-	for i = 1, #self._skinIdList do
-		local skinItemGo = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages/#go_handbookskinitem" .. i)
-		local skinItem = MonoHelper.addNoUpdateLuaComOnceToGo(skinItemGo, HandbookSkinItem3_3, self)
+	local baseXCache = authoredBaseXCache[self._skinSuitId]
+	local firstInit = baseXCache == nil
 
-		skinItem:setData(i, self._skinSuitId)
-		skinItem:refreshItem(self._skinIdList[i])
-		skinItem:refreshDestivalData(self._destivalDataList[i])
-		table.insert(self._skinItemList, skinItem)
+	if firstInit then
+		baseXCache = {}
+		authoredBaseXCache[self._skinSuitId] = baseXCache
 	end
 
-	for i = 1 + loopCardCount, #self._skinIdList + loopCardCount do
-		local skinItemGo = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages/#go_handbookskinitem" .. i)
-		local skinItem = MonoHelper.addNoUpdateLuaComOnceToGo(skinItemGo, HandbookSkinItem3_3, self)
+	local wantM = self._cardCount
+	local M = 0
 
-		skinItem:setData(i, self._skinSuitId)
-		skinItem:refreshItem(self._skinIdList[i - loopCardCount])
-		skinItem:refreshDestivalData(self._destivalDataList[i - loopCardCount])
-		table.insert(self._skinItemList, skinItem)
+	for nodeIdx = 0, wantM - 1 do
+		local go = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages/#go_handbookskinitem" .. nodeIdx)
+
+		if gohelper.isNil(go) then
+			break
+		end
+
+		gohelper.setActive(go, true)
+
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, HandbookSkinItem3_3, self)
+
+		item:setData(nodeIdx, self._skinSuitId)
+
+		self._cardItems[nodeIdx] = item
+		self._cardItemGos[nodeIdx] = go
+
+		if firstInit then
+			baseXCache[nodeIdx] = go.transform.localPosition.x
+		end
+
+		self._cardBaseX[nodeIdx] = baseXCache[nodeIdx]
+		self._cardVP[nodeIdx] = nodeIdx
+
+		table.insert(self._skinItemList, item)
+
+		M = M + 1
 	end
 
-	self._curStartIdx = 1
+	self._showCardNum = M
 
+	local extra = M
+
+	while true do
+		local go = gohelper.findChild(self.viewGO, "#go_scroll/Viewport/#go_storyStages/#go_handbookskinitem" .. extra)
+
+		if gohelper.isNil(go) then
+			break
+		end
+
+		gohelper.setActive(go, false)
+
+		extra = extra + 1
+	end
+
+	self._cardSpacing = self._cardBaseX[1] - self._cardBaseX[0]
+	self._centerSlot = math.floor((M - 1) / 2)
+	self._centerX = self._cardBaseX[self._centerSlot]
+	self._scrollValue = self._centerSlot
+
+	for nodeIdx = 0, M - 1 do
+		self:_bindCardSkin(nodeIdx)
+	end
+
+	self:_applyCardLayout()
 	self:UpdateSkinItemSelectedState()
 end
 
 function HandbookSkinSuitDetailView3_3:UpdateSkinItemSelectedState()
-	local curSelectedIdx = self._curStartIdx + centerIdxOffset
+	local centerVp = self:_roundScroll()
 
-	for i = 1, #self._skinItemList do
-		local skinItem = self._skinItemList[i]
-
-		skinItem:refreshSelectedState(false)
-	end
-
-	if curSelectedIdx <= loopCardCount then
-		self._skinItemList[curSelectedIdx]:refreshSelectedState(true)
-		self._skinItemList[curSelectedIdx + loopCardCount]:refreshSelectedState(true)
-	else
-		self._skinItemList[curSelectedIdx]:refreshSelectedState(true)
-		self._skinItemList[curSelectedIdx - loopCardCount]:refreshSelectedState(true)
+	for nodeIdx = 0, self._showCardNum - 1 do
+		self._cardItems[nodeIdx]:refreshSelectedState(self._cardVP[nodeIdx] == centerVp)
 	end
 end
 
 function HandbookSkinSuitDetailView3_3:onClose()
+	TaskDispatcher.cancelTask(self._onScrollSlideDone, self)
+
+	if self._scrollTweenId then
+		ZProj.TweenHelper.KillById(self._scrollTweenId)
+
+		self._scrollTweenId = nil
+	end
+
 	HandbookSkinSuitDetailViewBase.onClose(self)
 	HandbookController.instance:dispatchEvent(HandbookEvent.OnExitToSuitGroup)
-end
-
-function HandbookSkinSuitDetailView3_3:UpdateAnimProgress(animator, aniName, normalizedTime)
-	animator:Play(aniName, 0, normalizedTime)
-end
-
-function HandbookSkinSuitDetailView3_3:autoSlideAniUpdate(value)
-	self:UpdateAnimProgress(self._cardGroupAnimator, "click", value)
 end
 
 return HandbookSkinSuitDetailView3_3

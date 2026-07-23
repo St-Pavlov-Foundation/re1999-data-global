@@ -411,6 +411,12 @@ function FightEntityDataMgr:initOneEntityListByProto(proto, side, sideList)
 	table.insert(sideList, self:addEntityMOByProto(proto, side))
 end
 
+function FightEntityDataMgr:onStageChanged(curStage, preStage)
+	for _, entityMo in pairs(self.entityDataDic) do
+		entityMo:onStageChanged(curStage, preStage)
+	end
+end
+
 function FightEntityDataMgr:updateData(fightData)
 	local mySide = self.sideDic[FightEnum.EntitySide.MySide]
 	local enemySide = self.sideDic[FightEnum.EntitySide.EnemySide]

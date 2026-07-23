@@ -9,6 +9,10 @@ local AnimKey_ReplaceSkill_Click = "CharacterSkillContainer_Click"
 
 function CharacterSkillContainer:ctor(posParam)
 	self._param = posParam
+
+	local deviceType = posParam and posParam.deviceType or 1
+
+	self._deviceViewPath = string.format("ui/viewres/character/characterdeviceview_%s.prefab", deviceType)
 end
 
 function CharacterSkillContainer:init(go)
@@ -41,6 +45,51 @@ function CharacterSkillContainer:init(go)
 	if self._anim then
 		self._animationPlayer = SLFramework.AnimatorPlayer.Get(go)
 	end
+
+	self._godevice = gohelper.findChild(go, "line/#go_device")
+
+	gohelper.setActive(self._godevice, false)
+end
+
+function CharacterSkillContainer:_onLoadFinish()
+	if not self._deviceView then
+		local assetItem = self._loader:getAssetItem(self._deviceViewPath)
+		local viewPrefab = assetItem:GetResource(self._deviceViewPath)
+		local go = gohelper.clone(viewPrefab, self._godevice)
+
+		self._deviceView = MonoHelper.addNoUpdateLuaComOnceToGo(go, CharacterDeviceView)
+	end
+
+	self:_refreshDevice()
+end
+
+function CharacterSkillContainer:_playOpenAni()
+	if not self._isPlayedOpenAnim and self._godevice and self._godevice.activeInHierarchy then
+		local deviceViewParam = CharacterEnum.DeviceViewParam[self._viewType]
+		local aniName = deviceViewParam and deviceViewParam.OpenAniName
+
+		if aniName then
+			self:playDeviceAnim(aniName)
+		end
+
+		self._isPlayedOpenAnim = true
+	end
+end
+
+function CharacterSkillContainer:_refreshDevice()
+	if not self._deviceView then
+		return
+	end
+
+	self._deviceView:onUpdateMO(self._heroId, self._heroMo, self._param, self._isBalance, self._showAttributeOption, self._balanceHelper)
+
+	self._deviceMo = SkillConfig.instance:getHeroDeviceMO(self._heroId, self._heroMo)
+
+	local isDevice = self._deviceMo ~= nil
+
+	gohelper.setActive(self._godevice, isDevice)
+	gohelper.setActive(self._goskills, not isDevice)
+	self:_playOpenAni()
 end
 
 function CharacterSkillContainer:onDestroy()
@@ -53,16 +102,37 @@ function CharacterSkillContainer:onDestroy()
 	if self._animationEvent then
 		self._animationEvent:RemoveEventListener(AnimKey_ReplaceSkillEvent)
 	end
+
+	if self._loader then
+		self._loader:dispose()
+
+		self._loader = nil
+	end
 end
 
-function CharacterSkillContainer:onUpdateMO(heroId, showAttributeOption, heroMo, isBalance)
+function CharacterSkillContainer:onUpdateMO(heroId, showAttributeOption, heroMo, isBalance, viewType)
 	self._heroId = heroId
-	self._heroName = HeroConfig.instance:getHeroCO(self._heroId).name
+
+	local heroCo = HeroConfig.instance:getHeroCO(self._heroId)
+
+	self._heroName = heroCo.name
 	self._heroMo = heroMo
 	self._isBalance = isBalance
 	self._showAttributeOption = showAttributeOption or CharacterEnum.showAttributeOption.ShowCurrent
+	self._viewType = viewType
 
 	self:_refreshSkillUI()
+
+	if self._deviceView then
+		self:_refreshDevice()
+	else
+		if not self._loader then
+			self._loader = MultiAbLoader.New()
+		end
+
+		self._loader:addPath(self._deviceViewPath)
+		self._loader:startLoad(self._onLoadFinish, self)
+	end
 end
 
 function CharacterSkillContainer:setBalanceHelper(balanceHelper)
@@ -174,6 +244,12 @@ function CharacterSkillContainer:checkShowReplaceBeforeSkillUI()
 	end
 end
 
+function CharacterSkillContainer:playDeviceAnim(animName)
+	if self._deviceView then
+		self._deviceView:playAnim(animName)
+	end
+end
+
 function CharacterSkillContainer:clearDelay()
 	TaskDispatcher.cancelTask(self.playNuodikaReplaceSkillAudio, self)
 end
@@ -186,6 +262,10 @@ function CharacterSkillContainer:_showSkillReddot(isNeedPlay)
 	if self._reddot then
 		gohelper.setActive(self._reddot.gameObject, isNeedPlay)
 	end
+end
+
+function CharacterSkillContainer:onClose()
+	self._isPlayedOpenAnim = nil
 end
 
 return CharacterSkillContainer

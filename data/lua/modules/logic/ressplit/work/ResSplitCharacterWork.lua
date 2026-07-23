@@ -131,8 +131,16 @@ function ResSplitCharacterWork:_addSkinRes(config, exclude)
 
 	local limitedCO = lua_character_limited.configDict[config.id]
 
-	if limitedCO and not string.nilorempty(limitedCO.entranceMv) then
-		ResSplitModel.instance:setExclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
+	if limitedCO then
+		if not string.nilorempty(limitedCO.entranceMv) then
+			ResSplitModel.instance:setExclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
+		end
+
+		if not string.nilorempty(limitedCO.spine) then
+			path = ResUrl.getRolesBustPrefab(limitedCO.spine)
+
+			ResSplitModel.instance:setExclude(ResSplitEnum.Path, path, exclude)
+		end
 	end
 
 	if exclude == false then

@@ -26,10 +26,12 @@ end
 function ItemRpc:onReceiveUseItemReply(resultCode, msg)
 	logNormal("Receive Use Item Reply Result Code : " .. resultCode)
 	StoreController.instance:onUseItemInStore(msg)
+	BackpackController.instance:dispatchEvent(BackpackEvent.onUseItemFinished)
 end
 
 function ItemRpc:onReceiveItemChangePush(resultCode, msg)
 	if resultCode == 0 then
+		SummonMainController.instance:checkItemConvert(msg.items)
 		ItemModel.instance:changeItemList(msg.items)
 		ItemPowerModel.instance:changePowerItemList(msg.powerItems)
 		ItemInsightModel.instance:changeInsightItemList(msg.insightItems)

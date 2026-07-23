@@ -1,0 +1,47 @@
+[
+  {
+    "id": 0,
+    "buffTypeId": 31400011,
+    "priority": 1,
+    "effect": "buff/djs_innate1_1",
+    "effectHang": "",
+    "audioId": 431400141,
+    "initEffect": "buff/djs_innate1_1_open",
+    "initEffectHang": "",
+    "initEffectDuration": 3.0,
+    "chargeEffect": "buff/djs_innate2_1",
+    "chargeEffectHang": "",
+    "chargeEffectDuration": 3.0,
+    "chargeAudioId": 431400142
+  },
+  {
+    "id": 0,
+    "buffTypeId": 31400006,
+    "priority": 2,
+    "effect": "buff/djs_innate1_2",
+    "effectHang": "",
+    "audioId": 431400141,
+    "initEffect": "buff/djs_innate1_2_open",
+    "initEffectHang": "",
+    "initEffectDuration": 3.0,
+    "chargeEffect": "buff/djs_innate2_1",
+    "chargeEffectHang": "",
+    "chargeEffectDuration": 3.0,
+    "chargeAudioId": 431400142
+  },
+  {
+    "id": 0,
+    "buffTypeId": 31400007,
+    "priority": 3,
+    "effect": "buff/djs_innate1_3",
+    "effectHang": "",
+    "audioId": 431400141,
+    "initEffect": "buff/djs_innate1_3_open",
+    "initEffectHang": "",
+    "initEffectDuration": 3.0,
+    "chargeEffect": "buff/djs_innate2_2",
+    "chargeEffectHang": "",
+    "chargeEffectDuration": 3.0,
+    "chargeAudioId": 431400142
+  }
+]

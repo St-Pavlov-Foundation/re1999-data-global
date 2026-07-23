@@ -29,6 +29,7 @@ end
 function Rouge2_AttributeConfig:_onLoadAttributeConfigs(configTable)
 	self._id2LevelList = {}
 	self._type2AttributeList = {}
+	self._diff2ExAttrLimit = {}
 
 	for _, attributeCo in ipairs(configTable.configList) do
 		local type = attributeCo.type
@@ -40,6 +41,18 @@ function Rouge2_AttributeConfig:_onLoadAttributeConfigs(configTable)
 		local attrId = attributeCo.id
 
 		self._id2LevelList[attrId] = GameUtil.splitString2(attributeCo.level)
+
+		local exAttrLimitMap = {}
+		local exAttrLimit = GameUtil.splitString2(attributeCo.exAttrLimit, true) or {}
+
+		for _, limitList in ipairs(exAttrLimit) do
+			local diff = limitList[1] or 0
+			local limit = limitList[2] or 0
+
+			exAttrLimitMap[diff] = limit
+		end
+
+		self._diff2ExAttrLimit[attributeCo.id] = exAttrLimitMap
 	end
 
 	for _, attributeList in pairs(self._type2AttributeList) do
@@ -50,7 +63,7 @@ function Rouge2_AttributeConfig:_onLoadAttributeConfigs(configTable)
 
 	for _, levelList in pairs(self._id2LevelList) do
 		table.sort(levelList, function(aLevel, bLevel)
-			return aLevel[1] < bLevel[2]
+			return aLevel[1] < bLevel[1]
 		end)
 	end
 end
@@ -316,7 +329,7 @@ function Rouge2_AttributeConfig:getPassiveSkillUpDescList(careerId, attrId, leve
 		tabletool.addValues(descList, upDescList)
 	end
 
-	local levelUpDesc = skillCo.ImLevelUpDesc
+	local levelUpDesc = skillCo.imLevelUpDesc
 
 	if not string.nilorempty(levelUpDesc) then
 		local levelUpDescList = string.split(levelUpDesc, "|")
@@ -343,16 +356,11 @@ end
 
 function Rouge2_AttributeConfig:getPassiveSkillImLevelUpDesc(skillId, level)
 	local skillCo = self:getPassiveSkillConfig(skillId, level)
+	local imLevelUpDesc = skillCo and skillCo.imLevelUpDesc or ""
 	local imLevelUpDescList = string.split(skillCo.imLevelUpDesc, "|") or {}
 	local imLevelUpDescStr = table.concat(imLevelUpDescList, "\n")
 
 	return imLevelUpDescStr
-end
-
-function Rouge2_AttributeConfig:getAttrMaxValue(attrId)
-	local attrCo = self:getAttributeConfig(attrId)
-
-	return attrCo and attrCo.showMax or 0
 end
 
 function Rouge2_AttributeConfig:getAttrDropConfig(dropId)
@@ -367,8 +375,29 @@ end
 
 function Rouge2_AttributeConfig:getAttrDropList(careerId, attrId)
 	local attrList = self._attrId2DropList and self._attrId2DropList[careerId]
+	local dropList = attrList and attrList[attrId]
 
-	return attrList and attrList[attrId]
+	return dropList
+end
+
+function Rouge2_AttributeConfig:getLimitAttrDropList(careerId, attrId, difficulty)
+	difficulty = difficulty or Rouge2_Model.instance:getDifficulty()
+
+	local minAttrValue, maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(difficulty, attrId)
+	local originDropList = self:getAttrDropList(careerId, attrId)
+	local resultDropList = {}
+
+	if originDropList then
+		for _, dropCo in ipairs(originDropList) do
+			local needNum = dropCo.needNum
+
+			if needNum <= maxAttrValue and minAttrValue <= needNum then
+				table.insert(resultDropList, dropCo)
+			end
+		end
+	end
+
+	return resultDropList
 end
 
 function Rouge2_AttributeConfig:getAttrDropListByAttrValue(careerId, attrId, attrValue)
@@ -405,14 +434,18 @@ function Rouge2_AttributeConfig:getAttrDropConfigByAttrValue(careerId, attrId, a
 	end
 end
 
-function Rouge2_AttributeConfig:getNextAttrDropConfig(careerId, attrId, attrValue)
+function Rouge2_AttributeConfig:getNextAttrDropConfig(careerId, attrId, attrValue, difficulty)
 	attrValue = attrValue or 0
+	difficulty = difficulty or 0
 
+	local minAttrValue, maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(difficulty, attrId)
 	local allDropList = self:getAttrDropList(careerId, attrId)
 
 	if allDropList then
 		for _, dropCo in ipairs(allDropList) do
-			if attrValue < dropCo.needNum then
+			local needNum = dropCo.needNum
+
+			if attrValue < needNum and needNum <= maxAttrValue and minAttrValue <= needNum then
 				return dropCo
 			end
 		end
@@ -425,6 +458,19 @@ function Rouge2_AttributeConfig:getIndexAttrDropConfig(careerId, attrId, index)
 	local dropConfigList = self:getAttrDropList(careerId, attrId)
 
 	return dropConfigList and dropConfigList[index]
+end
+
+function Rouge2_AttributeConfig:getAttrSpriteIndex(attrId)
+	local attrCo = self:getAttributeConfig(attrId)
+
+	return attrCo and attrCo.spriteIndex or 0
+end
+
+function Rouge2_AttributeConfig:getExAttrLimit(difficulty, attrId)
+	local exAttrLimit = self._diff2ExAttrLimit and self._diff2ExAttrLimit[attrId]
+	local exAttrValue = exAttrLimit and exAttrLimit[difficulty]
+
+	return exAttrValue or 0
 end
 
 Rouge2_AttributeConfig.instance = Rouge2_AttributeConfig.New()

@@ -21,7 +21,16 @@ function Activity160Config:onConfigLoaded(configName, configTable)
 end
 
 function Activity160Config:getActivityMissions(actId)
+	actId = actId or ActivityEnum.Activity.NewWelfare
+
 	return self._missionConfig.configDict[actId]
+end
+
+function Activity160Config:getMissionConfig(id, actId)
+	actId = actId or ActivityEnum.Activity.NewWelfare
+	id = id or 1
+
+	return self._missionConfig.configDict[actId][id]
 end
 
 Activity160Config.instance = Activity160Config.New()

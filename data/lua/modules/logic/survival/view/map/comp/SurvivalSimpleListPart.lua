@@ -32,6 +32,18 @@ function SurvivalSimpleListPart:init(go)
 	self._csListScroll = SLFramework.UGUI.ListScrollView.Get(go)
 
 	self._csListScroll:Init(ScrollEnum.ScrollDirV, count, cellSize.x, cellSize.y, spacing.x, spacing.y, padding.top, padding.bottom, ScrollEnum.ScrollSortNone, 10, self._minUpdate, self._onUpdateCell, self.onUpdateFinish, self._onSelectCell, self)
+
+	local trans = gridLayout.transform
+
+	if trans.childCount > 0 then
+		self.firstItem = trans:GetChild(0).gameObject
+		self._instGo = self.firstItem
+
+		gohelper.setActive(self.firstItem, false)
+	end
+
+	self._updateCallback = self.onCellUpdate
+	self._updateCallobj = self
 end
 
 function SurvivalSimpleListPart:setList(list)
@@ -60,6 +72,20 @@ function SurvivalSimpleListPart:setRecycleCallBack(recycleCallback, callobj)
 	self._recycleCallobj = callobj
 end
 
+function SurvivalSimpleListPart:setCellCls(cellCls)
+	self._cellCls = cellCls
+end
+
+function SurvivalSimpleListPart:setCellParam(param)
+	self._cellParam = param
+end
+
+function SurvivalSimpleListPart:onCellUpdate(obj, data, index)
+	if self._cellCls and obj.updateMo then
+		obj:updateMo(data, index)
+	end
+end
+
 function SurvivalSimpleListPart:_onUpdateCell(cellGO, index)
 	local go = gohelper.findChild(cellGO, "instGo")
 	local comp
@@ -71,7 +97,7 @@ function SurvivalSimpleListPart:_onUpdateCell(cellGO, index)
 		transformhelper.setLocalPos(go.transform, self._leftOffset, 0, 0)
 
 		if self._cellCls then
-			comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, self._cellCls)
+			comp = MonoHelper.addNoUpdateLuaComOnceToGo(go, self._cellCls, self._cellParam)
 			self._allCellComps[comp] = index
 		end
 	elseif self._cellCls then

@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_a",
+    "initPos": "0.2#-22.4#172.3",
+    "initRot": "9.986#207.941#5.255",
+    "lightRot": "147.558#-34.80298#37.089",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130431",
+    "unlockDesc": "",
+    "type": 1
+  },
+  {
+    "id": 2,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_c",
+    "initPos": "0.6#-22.5#59.95",
+    "initRot": "9.704#-157.65#4.452",
+    "lightRot": "150#-11.8#38",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130432",
+    "unlockDesc": "language_10130433",
+    "type": 1
+  },
+  {
+    "id": 3,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_b",
+    "initPos": "-0.8#-9.6#89.3",
+    "initRot": "-4.774#-67.482#14.2",
+    "lightRot": "138.9#-23.8#-27.78",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130434",
+    "unlockDesc": "language_10130435",
+    "type": 1
+  },
+  {
+    "id": 4,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_d",
+    "initPos": "3#-10.1#83",
+    "initRot": "11.791#141.178#-9.337",
+    "lightRot": "170.599#5.966003#35.785",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130436",
+    "unlockDesc": "language_10130437",
+    "type": 1
+  },
+  {
+    "id": 5,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_e",
+    "initPos": "1.7#-10.5#75",
+    "initRot": "9#-155#4.16",
+    "lightRot": "142.7#-1.60199#-27.29999",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130438",
+    "unlockDesc": "language_10130439",
+    "type": 1
+  },
+  {
+    "id": 101,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_a",
+    "initPos": "-17.67#9.4#0",
+    "initRot": "0#0#0",
+    "lightRot": "147.558#-34.80298#37.089",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130440",
+    "unlockDesc": "language_10130433",
+    "type": 2
+  },
+  {
+    "id": 102,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_c",
+    "initPos": "-15.28#13.6#0",
+    "initRot": "0#0#0",
+    "lightRot": "150#-11.8#38",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130441",
+    "unlockDesc": "language_10130435",
+    "type": 2
+  },
+  {
+    "id": 103,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_b",
+    "initPos": "-17.34#10.49#0",
+    "initRot": "0#0#0",
+    "lightRot": "138.9#-23.8#-27.78",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130442",
+    "unlockDesc": "language_10130437",
+    "type": 2
+  },
+  {
+    "id": 104,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_d",
+    "initPos": "-12.55#16.4#0",
+    "initRot": "0#0#0",
+    "lightRot": "170.599#5.966003#35.785",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130443",
+    "unlockDesc": "language_10130439",
+    "type": 2
+  },
+  {
+    "id": 105,
+    "res": "sp02_m_s20_zthd/prefab/sp02_m_s20_zthd_obj_01_e",
+    "initPos": "-14.25#7.5#0",
+    "initRot": "0#0#0",
+    "lightRot": "142.7#-1.60199#-27.29999",
+    "lightColor": "FFFFFF",
+    "mapName": "language_10130444",
+    "unlockDesc": "language_10130445",
+    "type": 2
+  }
+]

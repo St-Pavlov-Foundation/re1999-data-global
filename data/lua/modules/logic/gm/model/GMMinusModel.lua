@@ -87,7 +87,9 @@ function GMMinusModel:_addBtnText(parentGO)
 end
 
 function GMMinusModel:addBtnGM(viewObj)
-	viewObj._btngm11235 = self:_addBtnText(viewObj.viewGO)
+	viewObj._btngm11235, viewObj._btntxtgm11235, viewObj._btngogm11235 = self:_addBtnText(viewObj.viewGO)
+
+	gohelper.setActive(viewObj._btngogm11235, GMController.instance:isOpenGM())
 
 	return viewObj._btngm11235
 end
@@ -103,6 +105,13 @@ end
 
 function GMMinusModel:btnGM_AddClickListener(viewObj, customFunc)
 	viewObj._btngm11235:AddClickListener(customFunc or _defaultBtnGmFunc, viewObj)
+	viewObj:addEventCb(MainController.instance, MainEvent.OnChangeGMBtnStatus, function(_viewObj)
+		if not _viewObj then
+			return
+		end
+
+		gohelper.setActive(_viewObj._btngogm11235, GMController.instance:isOpenGM())
+	end, viewObj)
 end
 
 function GMMinusModel:btnGM_RemoveClickListener(viewObj)

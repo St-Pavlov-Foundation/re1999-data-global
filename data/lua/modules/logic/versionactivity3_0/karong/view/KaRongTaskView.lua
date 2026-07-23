@@ -39,6 +39,7 @@ function KaRongTaskView:onOpen()
 	TaskDispatcher.runRepeat(self._showLeftTime, self, TimeUtil.OneMinuteSecond)
 	self:_showLeftTime()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
+	gohelper.setActive(self._txtLimitTime.transform.parent, false)
 end
 
 function KaRongTaskView:_oneClaimReward()

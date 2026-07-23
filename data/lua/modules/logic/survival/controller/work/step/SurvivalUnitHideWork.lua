@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUnitHideWork", packa
 
 local SurvivalUnitHideWork = class("SurvivalUnitHideWork", SurvivalStepBaseWork)
 
-function SurvivalUnitHideWork:onStart(context)
+function SurvivalUnitHideWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local reason
 

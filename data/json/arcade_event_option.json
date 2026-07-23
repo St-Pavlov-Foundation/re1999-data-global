@@ -1022,5 +1022,581 @@
     "condition": "",
     "param": "32006005",
     "descChange": ""
+  },
+  {
+    "id": 32070291,
+    "type": "storePassword",
+    "optionDesc": "language_10120092",
+    "condition": "",
+    "param": "1",
+    "descChange": ""
+  },
+  {
+    "id": 32070301,
+    "type": "storePassword",
+    "optionDesc": "language_10120093",
+    "condition": "",
+    "param": "2",
+    "descChange": ""
+  },
+  {
+    "id": 32070311,
+    "type": "storePassword",
+    "optionDesc": "language_10120094",
+    "condition": "",
+    "param": "3",
+    "descChange": ""
+  },
+  {
+    "id": 32070321,
+    "type": "storePassword",
+    "optionDesc": "language_10120095",
+    "condition": "",
+    "param": "4",
+    "descChange": ""
+  },
+  {
+    "id": 32070331,
+    "type": "storePassword",
+    "optionDesc": "language_10120096",
+    "condition": "",
+    "param": "5",
+    "descChange": ""
+  },
+  {
+    "id": 32070341,
+    "type": "storePassword",
+    "optionDesc": "language_10120097",
+    "condition": "",
+    "param": "6",
+    "descChange": ""
+  },
+  {
+    "id": 32070351,
+    "type": "storePassword",
+    "optionDesc": "language_10120098",
+    "condition": "",
+    "param": "7",
+    "descChange": ""
+  },
+  {
+    "id": 32070361,
+    "type": "storePassword",
+    "optionDesc": "language_10120099",
+    "condition": "",
+    "param": "8",
+    "descChange": ""
+  },
+  {
+    "id": 32070371,
+    "type": "storePassword",
+    "optionDesc": "language_10120100",
+    "condition": "",
+    "param": "9",
+    "descChange": ""
+  },
+  {
+    "id": 32070381,
+    "type": "storePassword",
+    "optionDesc": "language_10120101",
+    "condition": "",
+    "param": "0",
+    "descChange": ""
+  },
+  {
+    "id": 32070391,
+    "type": "confirmPassword",
+    "optionDesc": "language_10120102",
+    "condition": "",
+    "param": "7355608#32070391",
+    "descChange": ""
+  },
+  {
+    "id": 32070392,
+    "type": "resetPassword",
+    "optionDesc": "language_10120103",
+    "condition": "",
+    "param": "",
+    "descChange": ""
+  },
+  {
+    "id": 32070401,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10120104",
+    "condition": "checkAttrValue#201#1000",
+    "param": "32070401",
+    "descChange": "language_10120105"
+  },
+  {
+    "id": 32070402,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10120106",
+    "condition": "checkAttrValue#201#2000",
+    "param": "32070402",
+    "descChange": "language_10120105"
+  },
+  {
+    "id": 32070404,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10120107",
+    "condition": "checkHaveCollection#10010",
+    "param": "32070404",
+    "descChange": "language_10120108"
+  },
+  {
+    "id": 32070405,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "",
+    "condition": "",
+    "param": "32070405",
+    "descChange": "language_10120109"
+  },
+  {
+    "id": 32070431,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10120110",
+    "condition": "checkHaveCollection#10007",
+    "param": "32070431",
+    "descChange": ""
+  },
+  {
+    "id": 32070432,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "",
+    "condition": "",
+    "param": "32070432",
+    "descChange": ""
+  },
+  {
+    "id": 32070411,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10104541",
+    "condition": "",
+    "param": "32070411",
+    "descChange": ""
+  },
+  {
+    "id": 32070421,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10104541",
+    "condition": "",
+    "param": "32070421",
+    "descChange": ""
+  },
+  {
+    "id": 32070422,
+    "type": "triggerPassiveSkill",
+    "optionDesc": "language_10120111",
+    "condition": "",
+    "param": "32070422",
+    "descChange": ""
+  },
+  {
+    "id": 210001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "210001",
+    "descChange": ""
+  },
+  {
+    "id": 37111001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37111001",
+    "descChange": ""
+  },
+  {
+    "id": 37112001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37112001",
+    "descChange": ""
+  },
+  {
+    "id": 37113001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37113001",
+    "descChange": ""
+  },
+  {
+    "id": 37121001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37121001",
+    "descChange": ""
+  },
+  {
+    "id": 37122001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37122001",
+    "descChange": ""
+  },
+  {
+    "id": 37123001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37123001",
+    "descChange": ""
+  },
+  {
+    "id": 37211001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37211001",
+    "descChange": ""
+  },
+  {
+    "id": 37212001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37212001",
+    "descChange": ""
+  },
+  {
+    "id": 37212002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37212002",
+    "descChange": ""
+  },
+  {
+    "id": 37213001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37213001",
+    "descChange": ""
+  },
+  {
+    "id": 37221001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37221001",
+    "descChange": ""
+  },
+  {
+    "id": 37222001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37222001",
+    "descChange": ""
+  },
+  {
+    "id": 37222002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37222002",
+    "descChange": ""
+  },
+  {
+    "id": 37222003,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37222003",
+    "descChange": ""
+  },
+  {
+    "id": 37222004,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37222004",
+    "descChange": ""
+  },
+  {
+    "id": 37222005,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37222005",
+    "descChange": ""
+  },
+  {
+    "id": 37223001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37223001",
+    "descChange": ""
+  },
+  {
+    "id": 37231001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37231001",
+    "descChange": ""
+  },
+  {
+    "id": 37232001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37232001",
+    "descChange": ""
+  },
+  {
+    "id": 37232002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37232002",
+    "descChange": ""
+  },
+  {
+    "id": 37232003,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37232003",
+    "descChange": ""
+  },
+  {
+    "id": 37232004,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37232004",
+    "descChange": ""
+  },
+  {
+    "id": 37233001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37233001",
+    "descChange": ""
+  },
+  {
+    "id": 37311001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37311001",
+    "descChange": ""
+  },
+  {
+    "id": 37312001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37312001",
+    "descChange": ""
+  },
+  {
+    "id": 37312002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37312002",
+    "descChange": ""
+  },
+  {
+    "id": 37313001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37313001",
+    "descChange": ""
+  },
+  {
+    "id": 37321001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37321001",
+    "descChange": ""
+  },
+  {
+    "id": 37322001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37322001",
+    "descChange": ""
+  },
+  {
+    "id": 37322002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37322002",
+    "descChange": ""
+  },
+  {
+    "id": 37322003,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37322003",
+    "descChange": ""
+  },
+  {
+    "id": 37322004,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37322004",
+    "descChange": ""
+  },
+  {
+    "id": 37322005,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37322005",
+    "descChange": ""
+  },
+  {
+    "id": 37323001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37323001",
+    "descChange": ""
+  },
+  {
+    "id": 37331001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37331001",
+    "descChange": ""
+  },
+  {
+    "id": 37332001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37332001",
+    "descChange": ""
+  },
+  {
+    "id": 37332002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37332002",
+    "descChange": ""
+  },
+  {
+    "id": 37332003,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37332003",
+    "descChange": ""
+  },
+  {
+    "id": 37332004,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37332004",
+    "descChange": ""
+  },
+  {
+    "id": 37333001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37333001",
+    "descChange": ""
+  },
+  {
+    "id": 37341001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37341001",
+    "descChange": ""
+  },
+  {
+    "id": 37342001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37342001",
+    "descChange": ""
+  },
+  {
+    "id": 37342002,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37342002",
+    "descChange": ""
+  },
+  {
+    "id": 37342003,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37342003",
+    "descChange": ""
+  },
+  {
+    "id": 37343001,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "37343001",
+    "descChange": ""
+  },
+  {
+    "id": 370701,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "320727",
+    "descChange": ""
+  },
+  {
+    "id": 370702,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "320728",
+    "descChange": ""
+  },
+  {
+    "id": 370703,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "320729",
+    "descChange": ""
+  },
+  {
+    "id": 370704,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "320730",
+    "descChange": ""
+  },
+  {
+    "id": 370705,
+    "type": "transmitRoom",
+    "optionDesc": "language_10032281",
+    "condition": "",
+    "param": "320731",
+    "descChange": ""
   }
 ]

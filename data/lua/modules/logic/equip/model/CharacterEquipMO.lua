@@ -11,7 +11,7 @@ function CharacterEquipMO:setTempMo(equipId)
 	self.uid = self.id
 	self.level = 1
 	self.exp = 1
-	self.breakLv = 1
+	self.breakLv = 0
 	self.count = 1
 	self.refineLv = 1
 	self.isLock = false

@@ -9,6 +9,12 @@ function SurvivalStepBaseWork:ctor(stepMo)
 end
 
 function SurvivalStepBaseWork:onStart(context)
+	context.beginDt = ServerTime.now()
+
+	self:onStart2(context)
+end
+
+function SurvivalStepBaseWork:onStart2(context)
 	self:onDone(true)
 end
 

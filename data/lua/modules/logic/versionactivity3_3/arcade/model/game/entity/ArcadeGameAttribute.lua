@@ -29,6 +29,29 @@ function ArcadeGameAttribute:ctor(id, base)
 	self.increase = 0
 end
 
+function ArcadeGameAttribute:getValue()
+	local initVal = ArcadeConfig.instance:getAttributeInitVal(self.id)
+	local value = math.floor((initVal + self.base) * (1000 + self.rate) / 1000 + self.increase)
+	local min = ArcadeConfig.instance:getAttributeMin(self.id, true)
+	local max = ArcadeConfig.instance:getAttributeMax(self.id, true)
+
+	value = Mathf.Clamp(value, min, max)
+
+	return value
+end
+
+function ArcadeGameAttribute:getBase()
+	return self.base
+end
+
+function ArcadeGameAttribute:getRate()
+	return self.rate
+end
+
+function ArcadeGameAttribute:getIncrease()
+	return self.increase
+end
+
 function ArcadeGameAttribute:setBase(base)
 	local numBase = tonumber(base)
 
@@ -63,29 +86,6 @@ function ArcadeGameAttribute:setIncrease(increase)
 	end
 
 	self.increase = numIncrease
-end
-
-function ArcadeGameAttribute:getValue()
-	local initVal = ArcadeConfig.instance:getAttributeInitVal(self.id)
-	local value = math.floor((initVal + self.base) * (1000 + self.rate) / 1000 + self.increase)
-	local min = ArcadeConfig.instance:getAttributeMin(self.id, true)
-	local max = ArcadeConfig.instance:getAttributeMax(self.id, true)
-
-	value = Mathf.Clamp(value, min, max)
-
-	return value
-end
-
-function ArcadeGameAttribute:getBase()
-	return self.base
-end
-
-function ArcadeGameAttribute:getRate()
-	return self.rate
-end
-
-function ArcadeGameAttribute:getIncrease()
-	return self.increase
 end
 
 function ArcadeGameAttribute:setValByName(keyName, value)

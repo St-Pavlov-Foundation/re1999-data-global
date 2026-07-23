@@ -26,6 +26,11 @@ function SkillTipLevelComp:init(go)
 	self._btnsupplement = gohelper.findChildButtonWithAudio(go, "#btn_supplement")
 	self._goBtnsupplementNormal = gohelper.findChild(self._btnsupplement.gameObject, "#go_normal")
 	self._goBtnsupplement = gohelper.findChild(self._btnsupplement.gameObject, "#go_supplement")
+	self._godevice = gohelper.findChild(go, "skilltipScrollview/Viewport/Content/#go_device")
+	self._goenergytag1 = gohelper.findChild(go, "skilltipScrollview/Viewport/Content/#go_device/frame")
+	self._txtenergy = gohelper.findChildText(go, "skilltipScrollview/Viewport/Content/#go_device/frame/#txt_energy")
+	self._imageIcon = gohelper.findChildImage(go, "skilltipScrollview/Viewport/Content/#go_device/frame/#txt_energy/icon")
+	self._txttongdiao = gohelper.findChildText(go, "skilltipScrollview/Viewport/Content/#go_device/frame_1/#txt_tongdiao")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -79,6 +84,7 @@ function SkillTipLevelComp:_editableInitView()
 		o.btn:AddClickListener(self._skillItemClick, self, o.index)
 
 		o.tag = gohelper.findChildSingleImage(item, "tag/tagIcon")
+		o.gostar = gohelper.findChild(o.go, "star")
 		self._newskillitems[i] = o
 	end
 
@@ -158,7 +164,7 @@ function SkillTipLevelComp:_setNewSkills(skillIdList, super, isCharacter)
 			gohelper.setActive(self._newskillitems[i].selectframe, false)
 			gohelper.setActive(self._newskillitems[i].selectarrow, false)
 			gohelper.setActive(self._newskillitems[i].go, true)
-			gohelper.setActive(self._newskillitems[i].aggrandizement, self._upgradeSelectShow)
+			gohelper.setActive(self._newskillitems[i].aggrandizement, self._upgradeSelectShow and not self._hideSkillEffect)
 		end
 
 		for i = count + 1, 3 do
@@ -182,7 +188,7 @@ function SkillTipLevelComp:_setNewSkills(skillIdList, super, isCharacter)
 			self._newskilldesc.text = desc
 
 			self._fixTmpBreakLine:refreshTmpContent(self._newskilldesc)
-			gohelper.setActive(self._newsuperskill.aggrandizement, self._upgradeSelectShow)
+			gohelper.setActive(self._newsuperskill.aggrandizement, self._upgradeSelectShow and not self._hideSkillEffect)
 			gohelper.setActive(self._gostoryDesc, not string.nilorempty(skillConfig.desc_art))
 
 			self._txtstory.text = skillConfig.desc_art
@@ -234,9 +240,66 @@ function SkillTipLevelComp:_refreshSkill(level)
 		self._scrollSkilltip.verticalNormalizedPosition = 1
 
 		self:_refreshSkillSpecial(skillConfig)
+		self:_refreshDevice(self._skillIdList[level])
 	else
 		logError("找不到技能: " .. tostring(self._skillIdList[level]))
 		gohelper.setActive(self._btnsupplement.gameObject, false)
+		gohelper.setActive(self._godevice, false)
+	end
+end
+
+function SkillTipLevelComp:_refreshDevice(skillId)
+	local deviceMo
+	local heroMo = self.viewParam and self.viewParam.heroMo
+
+	if heroMo then
+		deviceMo = heroMo:getDeviceMo()
+	elseif self.heroId then
+		local heroCo = HeroConfig.instance:getHeroCO(self.heroId)
+
+		if heroCo and heroCo.deviceId > 0 then
+			deviceMo = HeroDeviceMO.New(self.heroId)
+
+			deviceMo:refreshDevice(heroCo.deviceId)
+		end
+	end
+
+	local isDeviceSkillId = false
+
+	if deviceMo then
+		deviceMo:setHeroMo(heroMo)
+
+		local skillInfo = deviceMo:getSkillInfoById(skillId)
+
+		isDeviceSkillId = skillInfo ~= nil
+
+		if self._super then
+			self._txttongdiao.text = "-" .. deviceMo:getUniqueSkillPoint()
+		else
+			local cost = skillInfo and skillInfo.costValue or 0
+
+			self._txtenergy.text = "-" .. cost
+
+			local addExPoint = FightDeviceHelper.getSkillIdAddDeviceExPoint(skillId)
+
+			self._txttongdiao.text = "+" .. addExPoint
+		end
+
+		local costType = skillInfo and skillInfo.costType
+
+		if costType then
+			local url = FightDeviceHelper.getCareerImage(costType)
+
+			UISpriteSetMgr.instance:setFightSprite(self._imageIcon, url, true)
+		end
+
+		gohelper.setActive(self._goenergytag1.gameObject, not self._super)
+	end
+
+	gohelper.setActive(self._godevice, isDeviceSkillId)
+
+	for _, item in pairs(self._newskillitems) do
+		gohelper.setActive(item.gostar, not isDeviceSkillId)
 	end
 end
 
@@ -337,6 +400,7 @@ function SkillTipLevelComp:_refreshSkillSpecial(skillConfig)
 	end
 
 	self:_refreshArrow()
+	self:_refreshDevice(skillConfig.id)
 	self:_refreshSupplement(skillConfig.id)
 end
 
@@ -379,15 +443,19 @@ function SkillTipLevelComp:initInfo(param)
 	self.srcSkillIdList = param.skillIdList
 	self.isSuper = param.super
 	self.viewName = param.viewName
+	self.heroId = param.heroId
+	self.skillIndex = param.skillIndex
 
 	self:updateMonsterName()
 
+	self._hideSkillEffect = CharacterBackpackEnum.CharacterSkillHideEffect[self.heroId]
 	self.srcSkillIdList = param.skillIdList
 	self.isSuper = param.super
 	self.isCharacter = true
 	self.entityMo = FightDataHelper.entityMgr:getById(param.entityId)
 	self.entitySkillIndex = param.entitySkillIndex
 	self._supplement = false
+	self._selectCardGroupIndex = self.viewParam.selectCardGroupIndex or 1
 
 	self:refreshUpgradeBtn(self.isCharacter)
 	self:_setNewSkills(self.srcSkillIdList, self.isSuper, self.isCharacter)

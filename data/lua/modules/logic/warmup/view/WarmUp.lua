@@ -77,6 +77,7 @@ end
 local kBlock_day1ToCover = "WarmUp:_day1ToCover"
 
 function WarmUp:_day1ToCover()
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockHelper.instance:startBlock(kBlock_day1ToCover, kTimeout, self.viewName)
 	self:_setActive_openAndUnopen(false)

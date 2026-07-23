@@ -20,7 +20,7 @@ function VersionActivityFixedDungeonMapEpisodeView:onInitView()
 	self._touch = SLFramework.UGUI.UIClickListener.Get(self.scrollRect.gameObject)
 	self._gochaptercontentitem = gohelper.findChild(self.viewGO, "#scroll_content/#go_chaptercontentitem")
 	self._btnstorymode = gohelper.findChildButtonWithAudio(self.viewGO, "#go_switchmodecontainer/#go_storymode/#btn_storyMode")
-	self._gostorymodeNormal = gohelper.findChild(self.viewGO, "#go_switchmodecoVersionActivityFixedDungeonMapEpisodeViewntainer/#go_storymode/#image_storyModeIcon/go_normal")
+	self._gostorymodeNormal = gohelper.findChild(self.viewGO, "#go_switchmodecontainer/#go_storymode/#image_storyModeIcon/go_normal")
 	self._gostorymodeSelect = gohelper.findChild(self.viewGO, "#go_switchmodecontainer/#go_storymode/#image_storyModeIcon/go_select")
 	self._hardModeBtnAnimator = gohelper.findChildComponent(self.viewGO, "#go_switchmodecontainer/#go_hardmode", gohelper.Type_Animator)
 	self._btnhardmode = gohelper.findChildButtonWithAudio(self.viewGO, "#go_switchmodecontainer/#go_hardmode/#btn_hardMode")
@@ -52,7 +52,10 @@ function VersionActivityFixedDungeonMapEpisodeView:addEvents()
 	self._btnhardmode:AddClickListener(self.btnHardModeClick, self)
 	self._drag:AddDragBeginListener(self._onDragBeginHandler, self)
 	self._drag:AddDragEndListener(self._onDragEndHandler, self)
-	self._touch:AddClickDownListener(self._onClickDownHandler, self)
+
+	if self._touch then
+		self._touch:AddClickDownListener(self._onClickDownHandler, self)
+	end
 end
 
 function VersionActivityFixedDungeonMapEpisodeView:removeEvents()
@@ -69,7 +72,10 @@ function VersionActivityFixedDungeonMapEpisodeView:removeEvents()
 	self._btnhardmode:RemoveClickListener()
 	self._drag:RemoveDragBeginListener()
 	self._drag:RemoveDragEndListener()
-	self._touch:RemoveClickDownListener()
+
+	if self._touch then
+		self._touch:RemoveClickDownListener()
+	end
 end
 
 function VersionActivityFixedDungeonMapEpisodeView:_editableInitView()
@@ -355,6 +361,11 @@ end
 
 function VersionActivityFixedDungeonMapEpisodeView:_refreshHardModeCurrency(isOpen)
 	local num, total = VersionActivityFixedDungeonModel.instance:getHardModeCurrenyNum(self.activityDungeonMo.activityDungeonConfig.hardChapterId)
+
+	if total <= 0 then
+		isOpen = false
+	end
+
 	local format = luaLang("activitymap_hardmode_reward_count")
 
 	self._txthardModeCurrency.text = GameUtil.getSubPlaceholderLuaLangTwoParam(format, num, total)

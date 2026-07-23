@@ -132,6 +132,7 @@ function MainUIPartView:_initMainUIPart()
 
 	self._mainUIParts = self:getUserDataTb_()
 	self._animParts = self:getUserDataTb_()
+	self._skinAnimViews = self:getUserDataTb_()
 
 	for _, skinId in pairs(MainUISwitchEnum.Skin) do
 		local skinTb = self._mainUIParts[skinId]
@@ -180,6 +181,12 @@ function MainUIPartView:_initPartAnim(skinId, part)
 			animSkinTb[part] = anim
 		end
 	end
+
+	local skinAnim = MainUISwitchEnum.SkinAnim[skinId]
+
+	if skinAnim and skinAnim.view and not self._skinAnimViews[skinId] then
+		self._skinAnimViews[skinId] = skinAnim.view.New(skinId, self.viewGO)
+	end
 end
 
 function MainUIPartView:refreshMainUI(id)
@@ -196,7 +203,8 @@ function MainUIPartView:refreshMainUI(id)
 		self:_initMainUIPart()
 	end
 
-	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+	for _, co in ipairs(lua_scene_ui.configList) do
+		local skinId = co.id
 		local skinTb = self._mainUIParts[skinId]
 
 		for _, part in pairs(MainUISwitchEnum.MainUIPart) do
@@ -229,6 +237,10 @@ function MainUIPartView:refreshMainUI(id)
 	end
 
 	self:_enterMainView()
+
+	if self._skinAnimViews[id] then
+		self._skinAnimViews[id]:onShow()
+	end
 end
 
 function MainUIPartView:_checkShowPartObj(skinId, part)
@@ -268,7 +280,9 @@ function MainUIPartView:onClose()
 end
 
 function MainUIPartView:onDestroyView()
-	return
+	for _, view in pairs(self._skinAnimViews) do
+		view:onDestroyView()
+	end
 end
 
 return MainUIPartView

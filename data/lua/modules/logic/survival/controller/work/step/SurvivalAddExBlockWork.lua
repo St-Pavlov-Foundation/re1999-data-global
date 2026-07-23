@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalAddExBlockWork", pac
 
 local SurvivalAddExBlockWork = class("SurvivalAddExBlockWork", SurvivalStepBaseWork)
 
-function SurvivalAddExBlockWork:onStart(context)
+function SurvivalAddExBlockWork:onStart2(context)
 	local scene = SurvivalMapHelper.instance:getScene()
 
 	if scene then

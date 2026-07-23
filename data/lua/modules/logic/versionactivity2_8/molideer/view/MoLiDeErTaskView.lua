@@ -24,6 +24,7 @@ function MoLiDeErTaskView:onOpen()
 	}, self._oneClaimReward, self)
 	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
 	self:showLeftTime()
+	gohelper.setActive(self._txtLimitTime.transform.parent, false)
 end
 
 function MoLiDeErTaskView:_oneClaimReward()

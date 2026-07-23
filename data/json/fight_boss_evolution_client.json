@@ -113,5 +113,25 @@
     "id": 640405,
     "nextSkinId": 6404051,
     "timeline": "v3a5m_640405_change"
+  },
+  {
+    "id": 610414,
+    "nextSkinId": 610415,
+    "timeline": "610414_change"
+  },
+  {
+    "id": 610415,
+    "nextSkinId": 610416,
+    "timeline": "610415_die"
+  },
+  {
+    "id": 610307,
+    "nextSkinId": 610308,
+    "timeline": "610307_die"
+  },
+  {
+    "id": 670411,
+    "nextSkinId": 670412,
+    "timeline": "670411_change"
   }
 ]

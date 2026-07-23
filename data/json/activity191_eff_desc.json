@@ -78,5 +78,15 @@
     "id": 17,
     "name": "language_10090424",
     "desc": "language_10090425"
+  },
+  {
+    "id": 18,
+    "name": "language_10010441",
+    "desc": "language_10120076"
+  },
+  {
+    "id": 19,
+    "name": "language_10120077",
+    "desc": "language_10120078"
   }
 ]

@@ -20,5 +20,6 @@ ChargePackageEnum.OffTagType = {
 ChargePackageEnum.PackageType = {
 	SingleCurrencyPackage = 4
 }
+ChargePackageEnum.DefaultUnderlayParam = "1"
 
 return ChargePackageEnum

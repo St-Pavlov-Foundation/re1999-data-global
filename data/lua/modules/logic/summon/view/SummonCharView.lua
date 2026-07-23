@@ -825,7 +825,7 @@ function SummonCharView:_onCloseView(viewName)
 				SummonController.instance:nextSummonPopupParam()
 			end
 		end
-	elseif viewName == ViewName.CommonPropView and self.summonResult and self.summonResultCount > 1 and self.resultViewIsClose then
+	elseif viewName == ViewName.CommonPropView and self:_isCloseResultView() and self.summonResult and self.summonResultCount > 1 and self.resultViewIsClose then
 		self:_summonEnd()
 	end
 end
@@ -836,6 +836,14 @@ function SummonCharView:_onOpenView(viewName)
 	if viewName == currentResultViewName then
 		self:_refreshIcons()
 	end
+end
+
+function SummonCharView:_isCloseResultView()
+	if ViewMgr.instance:isOpen(ViewName.SummonResultView) or ViewMgr.instance:isOpen(ViewName.SummonSimulationResultView) then
+		return false
+	end
+
+	return true
 end
 
 function SummonCharView:recycleEffect()

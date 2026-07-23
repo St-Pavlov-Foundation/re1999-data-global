@@ -122,25 +122,42 @@ function FightDiceView:_setDiceInfo()
 	local enemyDiceDesc = ""
 	local friendDiceDesc = ""
 
-	for _, tb in ipairs(self.viewParam) do
-		local fightStepData = tb[1]
-		local actEffectData = tb[2]
-		local skillId = actEffectData.effectNum
-		local diceNum = skillId % 10
+	if FightDataHelper.tempMgr.douQuQuNewDice then
+		friendDiceNum = FightDataHelper.tempMgr.douQuQuNewDiceOffset
+		friendDiceDesc = ""
 
-		if actEffectData.effectType == FightEnum.EffectType.RANDOMDICEUSESKILL then
-			diceNum = actEffectData.effectNum
-			skillId = actEffectData.effectNum1
+		local checkNum = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.DOUQUQU_DICE]
+
+		if checkNum >= 1 and checkNum <= 6 then
+			friendDiceDesc = luaLang("fight_douququ_dice_1_6")
+		elseif checkNum >= 7 and checkNum <= 18 then
+			friendDiceDesc = luaLang("fight_douququ_dice_7_18")
+		elseif checkNum >= 19 and checkNum <= 30 then
+			friendDiceDesc = luaLang("fight_douququ_dice_19_30")
+		elseif checkNum >= 31 then
+			friendDiceDesc = luaLang("fight_douququ_dice_31")
 		end
+	else
+		for _, tb in ipairs(self.viewParam) do
+			local fightStepData = tb[1]
+			local actEffectData = tb[2]
+			local skillId = actEffectData.effectNum
+			local diceNum = skillId % 10
 
-		local skillCO = lua_skill.configDict[skillId]
+			if actEffectData.effectType == FightEnum.EffectType.RANDOMDICEUSESKILL then
+				diceNum = actEffectData.effectNum
+				skillId = actEffectData.effectNum1
+			end
 
-		if fightStepData.fromId == FightEntityScene.MySideId then
-			friendDiceNum = diceNum
-			friendDiceDesc = FightConfig.instance:getSkillEffectDesc(nil, skillCO)
-		elseif fightStepData.fromId == FightEntityScene.EnemySideId then
-			enemyDiceNum = diceNum
-			enemyDiceDesc = FightConfig.instance:getSkillEffectDesc(nil, skillCO)
+			local skillCO = lua_skill.configDict[skillId]
+
+			if fightStepData.fromId == FightEntityScene.MySideId then
+				friendDiceNum = diceNum
+				friendDiceDesc = FightConfig.instance:getSkillEffectDesc(nil, skillCO)
+			elseif fightStepData.fromId == FightEntityScene.EnemySideId then
+				enemyDiceNum = diceNum
+				enemyDiceDesc = FightConfig.instance:getSkillEffectDesc(nil, skillCO)
+			end
 		end
 	end
 
@@ -157,6 +174,16 @@ function FightDiceView:_setDiceInfo()
 	self._txtResultEnemyDice2.text = enemyDiceNum
 	self._txtResultFriendDice.text = friendDiceNum
 	self._txtResultFriendDice2.text = friendDiceNum
+
+	if FightDataHelper.tempMgr.douQuQuNewDice then
+		self._txtResultFriendDice.alignment = UnityEngine.TextAnchor.MiddleCenter
+		self._txtResultFriendDice2.alignment = UnityEngine.TextAnchor.MiddleCenter
+		self._txtResultFriendDice.text = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.DOUQUQU_DICE]
+		self._txtResultFriendDice2.text = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.DOUQUQU_DICE]
+
+		recthelper.setAnchorX(self._txtResultFriendDice.transform, 0)
+	end
+
 	self._txtResultEnemyDesc.text = enemyDiceDesc
 	self._txtResultFriendDesc.text = friendDiceDesc
 end

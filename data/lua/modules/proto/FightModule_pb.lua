@@ -26,6 +26,7 @@ FightModule_pb.AUTOROUNDREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.AUTOROUNDREPLYOPERSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.AUTOROUNDREPLYTOIDFIELD = protobuf.FieldDescriptor()
 FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD = protobuf.FieldDescriptor()
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLYTEAMAINFOSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETENTITYDETAILINFOSREPLYTEAMBINFOSFIELD = protobuf.FieldDescriptor()
@@ -46,6 +47,7 @@ FightModule_pb.FIGHTWITHRECORDALLREQUESTGROUPFIELD = protobuf.FieldDescriptor()
 FightModule_pb.BEGINROUNDREQUEST_MSG = protobuf.Descriptor()
 FightModule_pb.BEGINROUNDREQUESTOPERSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD = protobuf.FieldDescriptor()
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.FIGHTWAVEPUSH_MSG = protobuf.Descriptor()
 FightModule_pb.FIGHTWAVEPUSHFIGHTFIELD = protobuf.FieldDescriptor()
 FightModule_pb.MOVECARDREPLY_MSG = protobuf.Descriptor()
@@ -54,6 +56,8 @@ FightModule_pb.BEGINFIGHTREQUESTFIGHTGROUPFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETFIGHTOPERREQUEST_MSG = protobuf.Descriptor()
 FightModule_pb.BEGINROUNDREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.BEGINROUNDREPLYROUNDFIELD = protobuf.FieldDescriptor()
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG = protobuf.Descriptor()
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.FIGHTROUNDRECORDALL_MSG = protobuf.Descriptor()
 FightModule_pb.FIGHTROUNDRECORDALLFIGHTFIELD = protobuf.FieldDescriptor()
 FightModule_pb.FIGHTROUNDRECORDALLROUNDFIELD = protobuf.FieldDescriptor()
@@ -121,6 +125,8 @@ FightModule_pb.GETFIGHTRECORDALLREPLYRECORDALLFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETFIGHTRECORDALLREPLYGROUPFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD = protobuf.FieldDescriptor()
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD = protobuf.FieldDescriptor()
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG = protobuf.Descriptor()
 FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREQUEST_MSG = protobuf.Descriptor()
 FightModule_pb.TESTFIGHTREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.TESTFIGHTREPLYFIGHTFIELD = protobuf.FieldDescriptor()
@@ -144,6 +150,7 @@ FightModule_pb.USECLOTHSKILLREQUESTTOIDFIELD = protobuf.FieldDescriptor()
 FightModule_pb.USECLOTHSKILLREQUESTTYPEFIELD = protobuf.FieldDescriptor()
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD = protobuf.FieldDescriptor()
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD = protobuf.FieldDescriptor()
 FightModule_pb.BEGINFIGHTREPLY_MSG = protobuf.Descriptor()
 FightModule_pb.BEGINFIGHTREPLYFIGHTFIELD = protobuf.FieldDescriptor()
 FightModule_pb.BEGINFIGHTREPLYROUNDFIELD = protobuf.FieldDescriptor()
@@ -304,9 +311,20 @@ FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.number = 3
 FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.index = 2
 FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.label = 1
 FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.has_default_value = false
-FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.default_value = 0
-FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.type = 5
-FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.cpp_type = 1
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.default_value = nil
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.message_type = FightModule_pb.FIGHTDEF_PB.CLOTHSKILLINFO_MSG
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.type = 11
+FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD.cpp_type = 10
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.name = "devicesOpers"
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.full_name = ".AutoRoundReply.devicesOpers"
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.number = 4
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.index = 3
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.label = 3
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.has_default_value = false
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.default_value = {}
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.FIGHTDEVICEOPER_MSG
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.type = 11
+FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD.cpp_type = 10
 FightModule_pb.AUTOROUNDREPLY_MSG.name = "AutoRoundReply"
 FightModule_pb.AUTOROUNDREPLY_MSG.full_name = ".AutoRoundReply"
 FightModule_pb.AUTOROUNDREPLY_MSG.nested_types = {}
@@ -314,7 +332,8 @@ FightModule_pb.AUTOROUNDREPLY_MSG.enum_types = {}
 FightModule_pb.AUTOROUNDREPLY_MSG.fields = {
 	FightModule_pb.AUTOROUNDREPLYOPERSFIELD,
 	FightModule_pb.AUTOROUNDREPLYTOIDFIELD,
-	FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD
+	FightModule_pb.AUTOROUNDREPLYCLOTHSKILLFIELD,
+	FightModule_pb.AUTOROUNDREPLYDEVICESOPERSFIELD
 }
 FightModule_pb.AUTOROUNDREPLY_MSG.is_extendable = false
 FightModule_pb.AUTOROUNDREPLY_MSG.extensions = {}
@@ -499,13 +518,24 @@ FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD.has_default_value = false
 FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD.default_value = false
 FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD.type = 8
 FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD.cpp_type = 7
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.name = "devicesOpers"
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.full_name = ".BeginRoundRequest.devicesOpers"
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.number = 3
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.index = 2
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.label = 3
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.has_default_value = false
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.default_value = {}
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.FIGHTDEVICEOPER_MSG
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.type = 11
+FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD.cpp_type = 10
 FightModule_pb.BEGINROUNDREQUEST_MSG.name = "BeginRoundRequest"
 FightModule_pb.BEGINROUNDREQUEST_MSG.full_name = ".BeginRoundRequest"
 FightModule_pb.BEGINROUNDREQUEST_MSG.nested_types = {}
 FightModule_pb.BEGINROUNDREQUEST_MSG.enum_types = {}
 FightModule_pb.BEGINROUNDREQUEST_MSG.fields = {
 	FightModule_pb.BEGINROUNDREQUESTOPERSFIELD,
-	FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD
+	FightModule_pb.BEGINROUNDREQUESTAUTOOPERFIELD,
+	FightModule_pb.BEGINROUNDREQUESTDEVICESOPERSFIELD
 }
 FightModule_pb.BEGINROUNDREQUEST_MSG.is_extendable = false
 FightModule_pb.BEGINROUNDREQUEST_MSG.extensions = {}
@@ -580,6 +610,25 @@ FightModule_pb.BEGINROUNDREPLY_MSG.fields = {
 }
 FightModule_pb.BEGINROUNDREPLY_MSG.is_extendable = false
 FightModule_pb.BEGINROUNDREPLY_MSG.extensions = {}
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.name = "logs"
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.full_name = ".GetGMFightLogReply.logs"
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.number = 1
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.index = 0
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.label = 3
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.has_default_value = false
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.default_value = {}
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.FNLOG_MSG
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.type = 11
+FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD.cpp_type = 10
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.name = "GetGMFightLogReply"
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.full_name = ".GetGMFightLogReply"
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.nested_types = {}
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.enum_types = {}
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.fields = {
+	FightModule_pb.GETGMFIGHTLOGREPLYLOGSFIELD
+}
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.is_extendable = false
+FightModule_pb.GETGMFIGHTLOGREPLY_MSG.extensions = {}
 FightModule_pb.FIGHTROUNDRECORDALLFIGHTFIELD.name = "fight"
 FightModule_pb.FIGHTROUNDRECORDALLFIGHTFIELD.full_name = ".FightRoundRecordAll.fight"
 FightModule_pb.FIGHTROUNDRECORDALLFIGHTFIELD.number = 1
@@ -1229,15 +1278,33 @@ FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD.default_value = {}
 FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.CARDINFO_MSG
 FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD.type = 11
 FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD.cpp_type = 10
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.name = "deviceInfos"
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.full_name = ".GetFightCardDeckInfoReply.deviceInfos"
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.number = 2
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.index = 1
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.label = 3
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.has_default_value = false
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.default_value = {}
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.CARDINFO_MSG
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.type = 11
+FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD.cpp_type = 10
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.name = "GetFightCardDeckInfoReply"
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.full_name = ".GetFightCardDeckInfoReply"
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.nested_types = {}
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.enum_types = {}
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.fields = {
-	FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD
+	FightModule_pb.GETFIGHTCARDDECKINFOREPLYDECKINFOSFIELD,
+	FightModule_pb.GETFIGHTCARDDECKINFOREPLYDEVICEINFOSFIELD
 }
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.is_extendable = false
 FightModule_pb.GETFIGHTCARDDECKINFOREPLY_MSG.extensions = {}
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.name = "GetGMFightLogRequest"
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.full_name = ".GetGMFightLogRequest"
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.nested_types = {}
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.enum_types = {}
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.fields = {}
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.is_extendable = false
+FightModule_pb.GETGMFIGHTLOGREQUEST_MSG.extensions = {}
 FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREQUEST_MSG.name = "GetGMFightTeamDetailInfosRequest"
 FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREQUEST_MSG.full_name = ".GetGMFightTeamDetailInfosRequest"
 FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREQUEST_MSG.nested_types = {}
@@ -1447,12 +1514,23 @@ FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD.default_value = {}
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.CARDINFO_MSG
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD.type = 11
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD.cpp_type = 10
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.name = "deviceInfos"
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.full_name = ".GetFightCardDeckDetailInfoReply.deviceInfos"
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.number = 2
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.index = 1
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.label = 3
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.has_default_value = false
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.default_value = {}
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.message_type = FightModule_pb.FIGHTDEF_PB.CARDINFO_MSG
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.type = 11
+FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD.cpp_type = 10
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.name = "GetFightCardDeckDetailInfoReply"
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.full_name = ".GetFightCardDeckDetailInfoReply"
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.nested_types = {}
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.enum_types = {}
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.fields = {
-	FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD
+	FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDECKINFOSFIELD,
+	FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLYDEVICEINFOSFIELD
 }
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.is_extendable = false
 FightModule_pb.GETFIGHTCARDDECKDETAILINFOREPLY_MSG.extensions = {}
@@ -1569,6 +1647,8 @@ FightModule_pb.GetFightRecordAllReply = protobuf.Message(FightModule_pb.GETFIGHT
 FightModule_pb.GetFightRecordAllRequest = protobuf.Message(FightModule_pb.GETFIGHTRECORDALLREQUEST_MSG)
 FightModule_pb.GetFightRecordGroupReply = protobuf.Message(FightModule_pb.GETFIGHTRECORDGROUPREPLY_MSG)
 FightModule_pb.GetFightRecordGroupRequest = protobuf.Message(FightModule_pb.GETFIGHTRECORDGROUPREQUEST_MSG)
+FightModule_pb.GetGMFightLogReply = protobuf.Message(FightModule_pb.GETGMFIGHTLOGREPLY_MSG)
+FightModule_pb.GetGMFightLogRequest = protobuf.Message(FightModule_pb.GETGMFIGHTLOGREQUEST_MSG)
 FightModule_pb.GetGMFightTeamDetailInfosReply = protobuf.Message(FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREPLY_MSG)
 FightModule_pb.GetGMFightTeamDetailInfosRequest = protobuf.Message(FightModule_pb.GETGMFIGHTTEAMDETAILINFOSREQUEST_MSG)
 FightModule_pb.MoveCardReply = protobuf.Message(FightModule_pb.MOVECARDREPLY_MSG)

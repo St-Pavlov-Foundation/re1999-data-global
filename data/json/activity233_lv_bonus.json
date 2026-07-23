@@ -1,0 +1,212 @@
+[
+  {
+    "bpId": 1,
+    "level": 1,
+    "freeBonus": "1#110603#2",
+    "payBonus": "1#110603#4",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 2,
+    "freeBonus": "1#120013#1",
+    "payBonus": "1#120013#2",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 3,
+    "freeBonus": "2#5#50000",
+    "payBonus": "2#5#300000",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 4,
+    "freeBonus": "1#115011#2",
+    "payBonus": "1#115011#4",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 5,
+    "freeBonus": "1#111013#1",
+    "payBonus": "1#111013#2",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 6,
+    "freeBonus": "1#110703#1",
+    "payBonus": "1#110703#3",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 7,
+    "freeBonus": "2#3#100000",
+    "payBonus": "2#3#250000",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 8,
+    "freeBonus": "1#110803#4",
+    "payBonus": "1#110803#8",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 9,
+    "freeBonus": "1#115012#4",
+    "payBonus": "1#115012#8",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 10,
+    "freeBonus": "2#5#200000",
+    "payBonus": "2#5#600000",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 11,
+    "freeBonus": "1#120011#5",
+    "payBonus": "1#120011#10",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 12,
+    "freeBonus": "2#3#100000",
+    "payBonus": "2#3#250000",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 13,
+    "freeBonus": "1#120012#10",
+    "payBonus": "1#120012#20",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 14,
+    "freeBonus": "1#115013#6",
+    "payBonus": "1#115013#12",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 15,
+    "freeBonus": "1#111004#1",
+    "payBonus": "1#111004#2",
+    "keyBonus": 1
+  },
+  {
+    "bpId": 1,
+    "level": 16,
+    "freeBonus": "1#110303#1",
+    "payBonus": "1#110303#3",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 17,
+    "freeBonus": "2#3#100000",
+    "payBonus": "2#3#250000",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 18,
+    "freeBonus": "1#111002#1",
+    "payBonus": "1#111002#2",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 19,
+    "freeBonus": "1#110602#1",
+    "payBonus": "1#110602#3",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 20,
+    "freeBonus": "2#5#200000",
+    "payBonus": "1#481010#1",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 21,
+    "freeBonus": "1#111001#1",
+    "payBonus": "1#111001#2",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 22,
+    "freeBonus": "1#110103#1",
+    "payBonus": "1#110103#3",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 23,
+    "freeBonus": "1#110502#2",
+    "payBonus": "1#110502#4",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 24,
+    "freeBonus": "1#110902#3",
+    "payBonus": "1#110902#6",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 25,
+    "freeBonus": "1#111013#1",
+    "payBonus": "1#111013#2",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 26,
+    "freeBonus": "1#110402#3",
+    "payBonus": "1#110402#6",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 27,
+    "freeBonus": "1#110301#4",
+    "payBonus": "1#110301#8",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 28,
+    "freeBonus": "1#111102#2",
+    "payBonus": "1#111102#4",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 29,
+    "freeBonus": "1#110101#2",
+    "payBonus": "1#110101#4",
+    "keyBonus": 0
+  },
+  {
+    "bpId": 1,
+    "level": 30,
+    "freeBonus": "1#120013#1",
+    "payBonus": "2#2#980|1#120013#2",
+    "keyBonus": 1
+  }
+]

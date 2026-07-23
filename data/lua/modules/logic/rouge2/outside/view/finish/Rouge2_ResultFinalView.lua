@@ -8,36 +8,43 @@ function Rouge2_ResultFinalView:onInitView()
 	self._simagefullbg = gohelper.findChildSingleImage(self.viewGO, "#simage_fullbg")
 	self._gofail = gohelper.findChild(self.viewGO, "#go_fail")
 	self._gosuccess = gohelper.findChild(self.viewGO, "#go_success")
-	self._godifficulty = gohelper.findChild(self.viewGO, "Title/#go_difficulty")
-	self._txtdifficulty = gohelper.findChildText(self.viewGO, "Title/image_title/#txt_difficulty")
-	self._txtend = gohelper.findChildText(self.viewGO, "Title/#txt_end")
-	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
-	self._gocareer = gohelper.findChild(self.viewGO, "Left/#go_career")
-	self._gomainCareer = gohelper.findChild(self.viewGO, "Left/#go_career/#go_mainCareer")
-	self._gosubCareer = gohelper.findChild(self.viewGO, "Left/#go_career/#go_subCareer")
-	self._gobase = gohelper.findChild(self.viewGO, "Left/#go_base")
-	self._gobaseitem = gohelper.findChild(self.viewGO, "Left/#go_base/#go_baseitem")
-	self._imageIcon = gohelper.findChildImage(self.viewGO, "Left/#go_base/#go_baseitem/#image_Icon")
-	self._txtName = gohelper.findChildText(self.viewGO, "Left/#go_base/#go_baseitem/#txt_Name")
-	self._txtValue = gohelper.findChildText(self.viewGO, "Left/#go_base/#go_baseitem/#txt_Value")
-	self._scrollherogroup = gohelper.findChildScrollRect(self.viewGO, "Left/#scroll_herogroup")
-	self._godrag = gohelper.findChild(self.viewGO, "Left/#go_drag")
-	self._simagedrag = gohelper.findChildSingleImage(self.viewGO, "Left/#go_drag/has/#image_drag")
-	self._gocollection = gohelper.findChild(self.viewGO, "Left/#go_collection")
-	self._txtcollectionnum = gohelper.findChildText(self.viewGO, "Left/#go_collection/#txt_collectionnum")
-	self._gocoin = gohelper.findChild(self.viewGO, "Left/#go_coin")
-	self._txtcoinnum = gohelper.findChildText(self.viewGO, "Left/#go_coin/#txt_coinnum")
+	self._goDifficulty = gohelper.findChild(self.viewGO, "Title/#go_Difficulty")
+	self._txtDifficulty = gohelper.findChildText(self.viewGO, "Title/title/#txt_Difficulty")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
+	self._simageCareerIcon = gohelper.findChildSingleImage(self.viewGO, "Left/#go_Career/#simage_CareerIcon")
+	self._txtCareerName = gohelper.findChildText(self.viewGO, "Left/#go_Career/#txt_CareerName")
+	self._goAttrList = gohelper.findChild(self.viewGO, "Left/#go_AttrList")
+	self._goAttrItem = gohelper.findChild(self.viewGO, "Left/#go_AttrList/#go_AttrItem")
+	self._goDrug = gohelper.findChild(self.viewGO, "Left/#go_Drug")
+	self._goHasDrug = gohelper.findChild(self.viewGO, "Left/#go_Drug/#go_HasDrug")
+	self._simageDrugIcon = gohelper.findChildSingleImage(self.viewGO, "Left/#go_Drug/#go_HasDrug/#simage_DrugIcon")
+	self._goEmptyDrug = gohelper.findChild(self.viewGO, "Left/#go_Drug/#go_EmptyDrug")
+	self._goHeroGroup = gohelper.findChild(self.viewGO, "Left/#go_HeroGroup")
+	self._goActiveSkill = gohelper.findChild(self.viewGO, "Left/#go_ActiveSkill")
 	self._goplayinfo = gohelper.findChild(self.viewGO, "Left/#go_playinfo")
 	self._txtplayername = gohelper.findChildText(self.viewGO, "Left/#go_playinfo/#txt_playername")
 	self._txttime = gohelper.findChildText(self.viewGO, "Left/#go_playinfo/#txt_time")
 	self._simageplayericon = gohelper.findChildSingleImage(self.viewGO, "Left/#go_playinfo/#simage_playericon")
-	self._scrollcollection = gohelper.findChildScrollRect(self.viewGO, "Right/#scroll_collection")
-	self._gocollectionitem = gohelper.findChild(self.viewGO, "Right/#scroll_collection/Viewport/Content/#go_collectionitem")
-	self._imagebg = gohelper.findChildImage(self.viewGO, "Right/#scroll_collection/Viewport/Content/#go_collectionitem/has/#image_bg")
-	self._imagecollection = gohelper.findChildImage(self.viewGO, "Right/#scroll_collection/Viewport/Content/#go_collectionitem/has/#image_collection")
-	self._gohide = gohelper.findChild(self.viewGO, "#go_hide")
-	self._btnhide = gohelper.findChildButtonWithAudio(self.viewGO, "#go_hide/#btn_hide")
+	self._txtBuffNum = gohelper.findChildText(self.viewGO, "Right/Layout/#go_BuffContainer/#go_BuffTitle/#txt_BuffNum")
+	self._txtAttrBuffNum = gohelper.findChildText(self.viewGO, "Right/Layout/#go_AttrBuffContainer/#go_AttrBuffTitle/#txt_AttrBuffNum")
+	self._goEmptyBuff = gohelper.findChild(self.viewGO, "Right/Layout/#go_BuffContainer/#go_EmptyBuff")
+	self._goEmptyAttrBuff = gohelper.findChild(self.viewGO, "Right/Layout/#go_AttrBuffContainer/#go_EmptyAttrBuff")
+	self._txtScore = gohelper.findChildText(self.viewGO, "Right/#txt_Score")
+	self._imageRare = gohelper.findChildImage(self.viewGO, "Right/#image_Rare")
+	self._imageAssessBg = gohelper.findChildImage(self.viewGO, "Right/#image_AssessBg")
+	self._imageAssess = gohelper.findChildImage(self.viewGO, "Right/#image_AssessBg/#image_Assess")
 	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
+	self._btnShow = gohelper.findChildButton(self.viewGO, "#btn_Show")
+	self._goHide = gohelper.findChild(self.viewGO, "#go_Hide")
+	self._btnHide = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Hide/#btn_Hide")
+	self._goBtnContainer = gohelper.findChild(self.viewGO, "Right/#go_BtnContainer")
+	self._btnSave = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_BtnContainer/#btn_Save")
+	self._goCanSave = gohelper.findChild(self.viewGO, "Right/#go_BtnContainer/#btn_Save/#go_CanSave")
+	self._goNotSave = gohelper.findChild(self.viewGO, "Right/#go_BtnContainer/#btn_Save/#go_NotSave")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_BtnContainer/#btn_Close")
+	self._btnAssessTips = gohelper.findChildButtonWithAudio(self.viewGO, "Right/Assess/#btn_AssessTips")
+	self._goAssessTips = gohelper.findChild(self.viewGO, "#go_AssessTips")
+	self._btnCloseAssess = gohelper.findChildButtonWithAudio(self.viewGO, "#go_AssessTips/#btn_CloseAssess")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -45,27 +52,60 @@ function Rouge2_ResultFinalView:onInitView()
 end
 
 function Rouge2_ResultFinalView:addEvents()
-	self._btnclose:AddClickListener(self._btncloseOnClick, self)
-	self._btnhide:AddClickListener(self._btnhideOnClick, self)
 	self._btnShow:AddClickListener(self._btnShowOnClick, self)
+	self._btnHide:AddClickListener(self._btnHideOnClick, self)
+	self._btnSave:AddClickListener(self._btnSaveOnClick, self)
+	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
+	self._btnAssessTips:AddClickListener(self._btnAssessTipsOnClick, self)
+	self._btnCloseAssess:AddClickListener(self._btnCloseAssessOnClick, self)
+	self:addEventCb(Rouge2_OutsideController.instance, Rouge2_OutsideEvent.OnSaveRecordDone, self._onSaveRecordDone, self)
 end
 
 function Rouge2_ResultFinalView:removeEvents()
-	self._btnclose:RemoveClickListener()
-	self._btnhide:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 	self._btnShow:RemoveClickListener()
+	self._btnHide:RemoveClickListener()
+	self._btnSave:RemoveClickListener()
+	self._btnAssessTips:RemoveClickListener()
+	self._btnCloseAssess:RemoveClickListener()
 end
 
-function Rouge2_ResultFinalView:_btncloseOnClick()
+function Rouge2_ResultFinalView:_btnCloseOnClick()
+	Rouge2_FightRecordController.instance:cancelSaveRecord()
 	self:closeThis()
 end
 
-function Rouge2_ResultFinalView:_btnhideOnClick()
+function Rouge2_ResultFinalView:_btnHideOnClick()
 	self:setBtnActive(false)
 end
 
 function Rouge2_ResultFinalView:_btnShowOnClick()
 	self:setBtnActive(true)
+end
+
+function Rouge2_ResultFinalView:_btnSaveOnClick()
+	if not self._isCanSave then
+		local minDiffName, minDiff = Rouge2_FightRecordController.instance:getMainRecordDifficultyName()
+
+		GameFacade.showToast(ToastEnum.Rouge2CantSave, minDiffName, minDiff)
+
+		return
+	elseif self._isSaveRecordDone then
+		GameFacade.showToast(ToastEnum.Rouge2HasSave)
+
+		return
+	end
+
+	self:refreshBtn()
+	Rouge2_FightRecordController.instance:startSaveRecord()
+end
+
+function Rouge2_ResultFinalView:_btnAssessTipsOnClick()
+	gohelper.setActive(self._goAssessTips, true)
+end
+
+function Rouge2_ResultFinalView:_btnCloseAssessOnClick()
+	gohelper.setActive(self._goAssessTips, false)
 end
 
 function Rouge2_ResultFinalView:checkNewUnlock()
@@ -77,28 +117,15 @@ function Rouge2_ResultFinalView:checkNewUnlock()
 end
 
 function Rouge2_ResultFinalView:setBtnActive(active)
-	gohelper.setActive(self._btnhide, active)
+	gohelper.setActive(self._goHide, active)
 	gohelper.setActive(self._gotopleft, active and self.type == Rouge2_OutsideEnum.ResultFinalDisplayType.Review)
 	gohelper.setActive(self._btnShow, not active)
 end
 
 function Rouge2_ResultFinalView:_editableInitView()
-	self._mainCareerItem = self:_createCareerItem(self._gomainCareer)
-	self._curCareerItem = self:_createCareerItem(self._gosubCareer)
-	self._attributeItemList = {}
-
-	gohelper.setActive(self._gobaseitem, false)
-
-	self._heroItemList = {}
-	self._goHeroItem = gohelper.findChild(self.viewGO, "Left/#scroll_herogroup/Viewport/Content/go_heroitem")
-
-	gohelper.setActive(self._goHeroItem, false)
-
-	self._goDragHas = gohelper.findChild(self._godrag, "has")
-	self._goDragEmpty = gohelper.findChild(self._godrag, "empty")
 	self._difficultyBgList = self:getUserDataTb_()
 
-	local parentGo = self._godifficulty.transform
+	local parentGo = self._goDifficulty.transform
 	local childCount = parentGo.childCount
 
 	for i = 1, childCount do
@@ -107,15 +134,17 @@ function Rouge2_ResultFinalView:_editableInitView()
 		table.insert(self._difficultyBgList, childGo)
 	end
 
-	self._goCollectionEmpty = gohelper.findChild(self.viewGO, "Right/empty")
-	self._btnShow = gohelper.findChildButton(self.viewGO, "#btn_show")
-	self.showCanvas = gohelper.findChildComponent(self._gohide, "", gohelper.Type_CanvasGroup)
-
 	NavigateMgr.instance:addEscape(self.viewName, self.closeThis, self)
-end
 
-function Rouge2_ResultFinalView:_onShowClick()
-	self:setBtnActive(true)
+	self._heroGroupComp = Rouge2_SaveInfoHeroGroupComp.Get(self._goHeroGroup)
+	self._activeSkillComp = Rouge2_SaveInfoActiveSkillComp.Get(self._goActiveSkill, Rouge2_Enum.CommonSkillIconType.Type_3)
+
+	self._activeSkillComp:updateSystemParam(Rouge2_Enum.TeamRecommendParam.IsShowSystemIcon, false)
+	self._activeSkillComp:updateSystemParam(Rouge2_Enum.TeamRecommendParam.Spacing, 35)
+	self._activeSkillComp:setLayoutSpacing(-50)
+	gohelper.setActive(self._goAssessTips, false)
+
+	self._isSaveRecordDone = false
 end
 
 function Rouge2_ResultFinalView:onUpdateParam()
@@ -136,28 +165,48 @@ end
 
 function Rouge2_ResultFinalView:refreshUI(reviewInfo)
 	if not reviewInfo then
-		logError("没有结算数据")
-
 		return
 	end
+
+	self:refreshBaseInfo(reviewInfo)
+	self:refreshCareerInfo(reviewInfo)
+	self:refreshAttrInfo(reviewInfo)
+	self:refreshHeroInfo(reviewInfo)
+	self:refreshSkillInfo(reviewInfo)
+	self:refreshDrug(reviewInfo)
+	self:refreshPlayerInfo(reviewInfo)
+	self:refreshItemList(reviewInfo)
+end
+
+function Rouge2_ResultFinalView:refreshBaseInfo(reviewInfo)
+	self:refreshDifficultyBg(reviewInfo)
 
 	local isSucc = reviewInfo:isSucceed()
 
 	gohelper.setActive(self._gosuccess, isSucc)
 	gohelper.setActive(self._gofail, not isSucc)
 
-	self._txtend.text = Rouge2_ResultFinalView.refreshEndingDesc(reviewInfo)
+	local resultInfo = self.viewParam and self.viewParam.reviewInfo
 
-	self:refreshBaseInfo(reviewInfo)
-	self:refreshCareerInfo(reviewInfo)
-	self:refreshAttributeInfo(reviewInfo)
-	self:refreshHeroInfo(reviewInfo)
-	self:refreshDrag(reviewInfo)
-	self:refreshPlayerInfo(reviewInfo)
-	self:refreshCollectionInfo(reviewInfo)
+	self._isResultType = self.type == Rouge2_OutsideEnum.ResultFinalDisplayType.Result
+	self._isCanSave = self._isResultType and Rouge2_FightRecordController.instance:checkCanSave(resultInfo)
+
+	self:refreshBtn()
+
+	local score = reviewInfo:getScore() or 0
+
+	self._txtScore.text = score
+
+	Rouge2_IconHelper.setResultAssessIcon(score, self._imageAssess, self._imageAssessBg, self._imageRare)
 end
 
-function Rouge2_ResultFinalView.refreshEndingDesc(reviewInfo)
+function Rouge2_ResultFinalView:refreshBtn()
+	gohelper.setActive(self._goBtnContainer, self._isResultType)
+	gohelper.setActive(self._goCanSave, self._isCanSave and not self._isSaveRecordDone)
+	gohelper.setActive(self._goNotSave, not self._isCanSave or self._isSaveRecordDone)
+end
+
+function Rouge2_ResultFinalView.getEndingDesc(reviewInfo)
 	local isSucc = reviewInfo:isSucceed()
 	local desc = ""
 
@@ -190,27 +239,52 @@ function Rouge2_ResultFinalView.refreshEndingDesc(reviewInfo)
 	return desc
 end
 
-function Rouge2_ResultFinalView:refreshBaseInfo(reviewInfo)
-	local collectionCount = reviewInfo.collectionNum
+function Rouge2_ResultFinalView:refreshDifficultyBg(reviewInfo)
+	local difficulty = reviewInfo:getDifficulty()
+	local diffCo = Rouge2_Config.instance:getDifficultyCoById(difficulty)
 
-	self._txtcollectionnum.text = tostring(collectionCount)
-
-	local coin = reviewInfo.gainCoin
-
-	self._txtcoinnum.text = tostring(coin)
-
-	local difficulty = reviewInfo.difficulty
-	local difficultyConfig = Rouge2_Config.instance:getDifficultyCoById(difficulty)
-
-	self._txtdifficulty.text = difficultyConfig.title
+	self._txtDifficulty.text = diffCo and diffCo.title
 
 	local constConfig = Rouge2_Config.instance:getConstCoById(Rouge2_Enum.ConstId.DifficultyIndexDuration)
 	local duration = tonumber(constConfig.value)
-	local bgIndex = math.floor(difficultyConfig.difficulty / duration) + 1 or 1
+	local bgIndex = math.floor(diffCo.difficulty / duration) + 1 or 1
 
 	for index, bg in ipairs(self._difficultyBgList) do
 		gohelper.setActive(bg, index == bgIndex)
 	end
+end
+
+function Rouge2_ResultFinalView:refreshCareerInfo(reviewInfo)
+	local careerId = reviewInfo.curCareer
+
+	Rouge2_IconHelper.setCareerName(careerId, self._txtCareerName, true)
+	Rouge2_IconHelper.setCareerIcon(careerId, self._simageCareerIcon, Rouge2_Enum.CareerIconSuffix.Bag)
+end
+
+function Rouge2_ResultFinalView:refreshAttrInfo(reviewInfo)
+	local attrInfoList = reviewInfo:getLeaderAttrInfoList() or {}
+
+	gohelper.CreateObjList(self, self._refreshAttrItem, attrInfoList, self._goAttrList, self._goAttrItem)
+end
+
+function Rouge2_ResultFinalView:_refreshAttrItem(goItem, attrInfo, index)
+	local imageIcon = gohelper.findChildImage(goItem, "image_Icon")
+	local txtValue = gohelper.findChildText(goItem, "txt_Value")
+	local txtName = gohelper.findChildText(goItem, "txt_Name")
+	local attrId = attrInfo.id
+	local attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(attrId)
+
+	txtValue.text = attrInfo.value
+	txtName.text = attrCo and attrCo.name
+
+	Rouge2_IconHelper.setAttributeIcon(attrId, imageIcon)
+end
+
+function Rouge2_ResultFinalView:refreshHeroInfo(reviewInfo)
+	local lastTeamInfoList = reviewInfo and reviewInfo:getLastTeamInfoList()
+	local systemId = reviewInfo and reviewInfo:getSystemId()
+
+	self._heroGroupComp:onUpdateMO(lastTeamInfoList, systemId)
 end
 
 function Rouge2_ResultFinalView:refreshPlayerInfo(reviewInfo)
@@ -231,178 +305,46 @@ function Rouge2_ResultFinalView:refreshPlayerInfo(reviewInfo)
 	self._liveHeadIcon:setLiveHead(reviewInfo.portrait)
 end
 
-function Rouge2_ResultFinalView:refreshCareerInfo(reviewInfo)
-	local isChangeCareer = reviewInfo.curCareer ~= reviewInfo.mainCareer
+function Rouge2_ResultFinalView:refreshSkillInfo(reviewInfo)
+	local skillList = reviewInfo:getItemList(Rouge2_Enum.BagType.ActiveSkill)
 
-	gohelper.setActive(self._curCareerItem.go, isChangeCareer)
-	self:setSingleCareerInfo(self._mainCareerItem, reviewInfo.mainCareer)
+	self._activeSkillComp:onUpdateMO(Rouge2_Enum.ItemDataType.Config, skillList)
+end
 
-	if isChangeCareer then
-		self:setSingleCareerInfo(self._curCareerItem, reviewInfo.curCareer)
+function Rouge2_ResultFinalView:refreshDrug(reviewInfo)
+	local drugId = reviewInfo:getDrugId()
+	local useDrug = drugId and drugId ~= 0
+
+	gohelper.setActive(self._goHasDrug, useDrug)
+	gohelper.setActive(self._goEmptyDrug, not useDrug)
+
+	if useDrug then
+		Rouge2_IconHelper.setFormulaIcon(drugId, self._simageDrugIcon)
 	end
 end
 
-function Rouge2_ResultFinalView:setSingleCareerInfo(careerInfoItem, careerId)
-	local careerConfig = lua_rouge2_career.configDict[careerId]
+function Rouge2_ResultFinalView:refreshItemList(reviewInfo)
+	local buffList = reviewInfo:getItemList(Rouge2_Enum.BagType.Buff)
+	local buffNum = buffList and #buffList or 0
 
-	careerInfoItem.txtName.text = careerConfig.name
+	self._txtBuffNum.text = buffNum
 
-	Rouge2_IconHelper.setResultCareerIcon(careerId, careerInfoItem.imageIcon)
+	self.viewContainer:setBuffList(buffList)
+	gohelper.setActive(self._goEmptyBuff, buffNum <= 0)
+
+	local attrBuffList = reviewInfo:getItemList(Rouge2_Enum.BagType.AttrBuff)
+	local attrBuffNum = attrBuffList and #attrBuffList or 0
+
+	self._txtAttrBuffNum.text = attrBuffNum
+
+	self.viewContainer:setAttrBuffList(attrBuffList)
+	gohelper.setActive(self._goEmptyAttrBuff, attrBuffNum <= 0)
 end
 
-function Rouge2_ResultFinalView:_createCareerItem(go)
-	local item = self:getUserDataTb_()
+function Rouge2_ResultFinalView:_onSaveRecordDone()
+	self._isSaveRecordDone = true
 
-	item.go = go
-	item.imageIcon = gohelper.findChildImage(go, "main/#image_careerIcon")
-	item.txtName = gohelper.findChildTextMesh(go, "main/image_NameBG/#txt_TypeName")
-
-	return item
-end
-
-function Rouge2_ResultFinalView:refreshAttributeInfo(reviewInfo)
-	local attributeInfo = reviewInfo.leaderAttrInfo
-	local infoCount = #attributeInfo
-
-	for i = 1, infoCount do
-		local info = attributeInfo[i]
-		local item = self:_getAttributeItem(i)
-
-		self:setAttributeInfo(item, info)
-		gohelper.setActive(item.go, true)
-	end
-
-	local itemCount = #self._attributeItemList
-
-	if infoCount < itemCount then
-		for i = infoCount + 1, itemCount do
-			local info = attributeInfo[i]
-			local item = self:_getAttributeItem(i)
-
-			gohelper.setActive(item.go, false)
-		end
-	end
-end
-
-function Rouge2_ResultFinalView:_getAttributeItem(index)
-	local item
-
-	if not self._attributeItemList[index] then
-		item = self:_createAttributeItem()
-
-		table.insert(self._attributeItemList, item)
-	else
-		item = self._attributeItemList[index]
-	end
-
-	return item
-end
-
-function Rouge2_ResultFinalView:setAttributeInfo(item, info)
-	Rouge2_IconHelper.setAttributeIcon(info.id, item.imageIcon)
-
-	item.txtNum.text = tostring(info.value)
-
-	local attributeConfig = Rouge2_AttributeConfig.instance:getAttributeConfig(info.id)
-
-	item.txtName.text = attributeConfig.name
-end
-
-function Rouge2_ResultFinalView:_createAttributeItem()
-	local go = gohelper.cloneInPlace(self._gobaseitem)
-	local item = self:getUserDataTb_()
-
-	item.go = go
-	item.txtNum = gohelper.findChildTextMesh(go, "#txt_Value")
-	item.txtName = gohelper.findChildTextMesh(go, "#txt_Name")
-	item.imageIcon = gohelper.findChildImage(go, "#image_Icon")
-
-	return item
-end
-
-Rouge2_ResultFinalView.MaxShowHeroCount = 4
-
-function Rouge2_ResultFinalView:refreshHeroInfo(reviewInfo)
-	local heroInfoList = reviewInfo.endHeroId
-
-	for i = 1, Rouge2_ResultFinalView.MaxShowHeroCount do
-		local info = heroInfoList[i]
-		local item = self:_getHeroItem(i)
-
-		self:setHeroInfo(item, info)
-		gohelper.setActive(item.go, true)
-	end
-end
-
-function Rouge2_ResultFinalView:_getHeroItem(index)
-	local item
-
-	if not self._heroItemList[index] then
-		item = self:_createHeroItem()
-
-		table.insert(self._heroItemList, item)
-	else
-		item = self._heroItemList[index]
-	end
-
-	return item
-end
-
-function Rouge2_ResultFinalView:setHeroInfo(item, heroId)
-	local showHero = heroId ~= nil
-
-	gohelper.setActive(item.simagerolehead, showHero)
-	gohelper.setActive(item.frame, showHero)
-	gohelper.setActive(item.empty, not showHero)
-
-	if showHero then
-		local skinCfg
-		local heroMO = HeroModel.instance:getByHeroId(heroId)
-
-		if heroMO then
-			skinCfg = HeroModel.instance:getCurrentSkinConfig(heroId)
-		else
-			local heroCfg = HeroConfig.instance:getHeroCO(heroId)
-			local skinId = heroCfg and heroCfg.skinId
-
-			skinCfg = SkinConfig.instance:getSkinCo(skinId)
-		end
-
-		local heroIcon = skinCfg and skinCfg.headIcon
-
-		item.simagerolehead:LoadImage(ResUrl.getHeadIconSmall(heroIcon))
-	end
-end
-
-function Rouge2_ResultFinalView:_createHeroItem()
-	local url = self.viewContainer._viewSetting.otherRes[1]
-	local go = self:getResInst(url, self._goHeroItem.transform.parent.gameObject)
-	local item = self:getUserDataTb_()
-
-	item.go = go
-	item.simagerolehead = gohelper.findChildSingleImage(go, "#go_heroitem/#image_rolehead")
-	item.frame = gohelper.findChild(go, "#go_heroitem/frame")
-	item.empty = gohelper.findChild(go, "#go_heroitem/empty")
-
-	return item
-end
-
-function Rouge2_ResultFinalView:refreshCollectionInfo(reviewInfo)
-	local haveCollection = reviewInfo.collectionBag and reviewInfo.collectionBag.items and #reviewInfo.collectionBag.items > 0
-
-	gohelper.setActive(self._goCollectionEmpty, not haveCollection)
-	Rouge2_ResultCollectionListModel.instance:initList(reviewInfo.collectionBag)
-end
-
-function Rouge2_ResultFinalView:refreshDrag(reviewInfo)
-	local useDrag = reviewInfo.drugId ~= nil and reviewInfo.drugId ~= 0
-
-	gohelper.setActive(self._goDragHas, useDrag)
-	gohelper.setActive(self._goDragEmpty, not useDrag)
-
-	if useDrag then
-		Rouge2_IconHelper.setFormulaIcon(reviewInfo.drugId, self._simagedrag)
-	end
+	self:refreshBtn()
 end
 
 function Rouge2_ResultFinalView:onClose()
@@ -412,7 +354,8 @@ function Rouge2_ResultFinalView:onClose()
 end
 
 function Rouge2_ResultFinalView:onDestroyView()
-	return
+	self._simageDrugIcon:UnLoadImage()
+	self._simageCareerIcon:UnLoadImage()
 end
 
 return Rouge2_ResultFinalView

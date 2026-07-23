@@ -17,6 +17,7 @@ function BpChargeView:onInitView()
 	self._goleftitemup = gohelper.findChild(self.viewGO, "Root/left/#scroll_new/viewport/content/LvUp/#go_Items")
 	self._gorightitem = gohelper.findChild(self.viewGO, "Root/right/#scroll_new/viewport/content/Normal/Items/#go_Items")
 	self._gorightitemup = gohelper.findChild(self.viewGO, "Root/right/#scroll_new/viewport/content/LvUp/#go_Items")
+	self._gorightitem2 = gohelper.findChild(self.viewGO, "Root/right/#scroll_new/viewport/content/Special/Items/#go_Items")
 	self._btnDetail = gohelper.findChildButtonWithAudio(self.viewGO, "Root/center/#txt_centerDesc/#btn_faj", AudioEnum.UI.play_artificial_ui_carddisappear)
 	self._gobtnjapan = gohelper.findChild(self.viewGO, "#go_btnjapan")
 	self._btnJp1 = gohelper.findChildButtonWithAudio(self._gobtnjapan, "#btn_btn1")
@@ -79,7 +80,7 @@ function BpChargeView:_editableInitView()
 	self:createItems(self._goleftitem, normalCo, 1)
 	self:createItems(self._goleftitemup, upLvCo, nil, noShowNum)
 	self:createItems(self._gorightitem, normalCo, 1)
-	self:createItems(self._gorightitem, payCo, 2)
+	self:createItems(self._gorightitem2, payCo, 2)
 	self:createItems(self._gorightitemup, upLvCo, nil, noShowNum)
 end
 
@@ -102,7 +103,7 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 
 	gohelper.setActive(go, false)
 
-	for _, co in ipairs(colist) do
+	for i, co in ipairs(colist) do
 		local dict = GameUtil.splitString2(co.items, true) or {}
 
 		for index, arr in ipairs(dict) do
@@ -110,13 +111,21 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 
 			gohelper.setActive(cloneGo, true)
 
+			if type == 2 and i == 1 then
+				transformhelper.setLocalScale(cloneGo.transform, 0.8, 0.8, 1)
+				transformhelper.setLocalRotation(cloneGo.transform, 0, 0, 13)
+			end
+
 			local limit = gohelper.findChild(cloneGo, "#go_Limit")
+			local limit2 = gohelper.findChild(cloneGo, "#go_Limit_2")
 			local txtLimit = gohelper.findChildTextMesh(cloneGo, "#go_Limit/txt_Limit")
+			local txtLimit2 = gohelper.findChildTextMesh(cloneGo, "#go_Limit_2/txt_Limit")
 			local itemGo = gohelper.findChild(cloneGo, "#go_item")
 			local isGet = gohelper.findChild(cloneGo, "#goHasGet")
 			local isNew = gohelper.findChild(cloneGo, "#go_new")
 			local go_cruise = gohelper.findChild(cloneGo, "#go_cruise")
 			local txtCruise = gohelper.findChildTextMesh(cloneGo, "#go_cruise/txt_Limit")
+			local txt_num = gohelper.findChildTextMesh(cloneGo, "#txt_num")
 			local itemIcon = IconMgr.instance:getCommonPropItemIcon(itemGo)
 
 			itemIcon:setMOValue(arr[1], arr[2], arr[3], nil, true)
@@ -127,6 +136,22 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 				showNum = false
 			end
 
+			if type == 1 or type == 2 then
+				showNum = false
+
+				itemIcon:isShowQuality(false)
+
+				local num = GameUtil.numberDisplay(arr[3])
+
+				if num > 0 then
+					gohelper.setActive(txt_num.gameObject, true)
+
+					txt_num.text = luaLang("multiple") .. num
+				else
+					gohelper.setActive(txt_num.gameObject, false)
+				end
+			end
+
 			itemIcon:isShowEquipAndItemCount(showNum)
 
 			if showNum then
@@ -135,12 +160,20 @@ function BpChargeView:createItems(go, colist, type, noShowNum)
 
 			itemIcon:setCountFontSize(43)
 
-			local isLimit = co.tagType == 1
+			local isLimit = co.tagType == 1 or co.tagType == 3
 
-			gohelper.setActive(limit, isLimit)
+			gohelper.setActive(limit, co.tagType == 1)
+
+			if limit2 then
+				gohelper.setActive(limit2, co.tagType == 3)
+			end
 
 			if isLimit then
-				txtLimit.text = co.tagTxt
+				if co.tagType == 1 then
+					txtLimit.text = co.tagTxt
+				elseif co.tagType == 3 and limit2 then
+					txtLimit2.text = co.tagTxt
+				end
 			end
 
 			gohelper.setActive(isNew, arr[5] == 1)

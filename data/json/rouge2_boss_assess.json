@@ -1,0 +1,82 @@
+[
+  {
+    "level": 1,
+    "strLevel": "C",
+    "needScore": 40000,
+    "spriteName": "bossrush_icon_assess_c",
+    "bossIcon": "bossrush_icon_assess_c4",
+    "isHard": 0
+  },
+  {
+    "level": 2,
+    "strLevel": "C+",
+    "needScore": 80000,
+    "spriteName": "bossrush_icon_assess_c1",
+    "bossIcon": "bossrush_icon_assess_c5",
+    "isHard": 0
+  },
+  {
+    "level": 3,
+    "strLevel": "B",
+    "needScore": 160000,
+    "spriteName": "bossrush_icon_assess_b",
+    "bossIcon": "bossrush_icon_assess_b4",
+    "isHard": 0
+  },
+  {
+    "level": 4,
+    "strLevel": "B+",
+    "needScore": 320000,
+    "spriteName": "bossrush_icon_assess_b1",
+    "bossIcon": "bossrush_icon_assess_b5",
+    "isHard": 0
+  },
+  {
+    "level": 5,
+    "strLevel": "A",
+    "needScore": 480000,
+    "spriteName": "bossrush_icon_assess_a",
+    "bossIcon": "bossrush_icon_assess_a4",
+    "isHard": 0
+  },
+  {
+    "level": 6,
+    "strLevel": "A+",
+    "needScore": 640000,
+    "spriteName": "bossrush_icon_assess_a1",
+    "bossIcon": "bossrush_icon_assess_a5",
+    "isHard": 0
+  },
+  {
+    "level": 7,
+    "strLevel": "S",
+    "needScore": 1000000,
+    "spriteName": "bossrush_icon_assess_s",
+    "bossIcon": "bossrush_icon_assess_s4",
+    "isHard": 0
+  },
+  {
+    "level": 8,
+    "strLevel": "SS",
+    "needScore": 1500000,
+    "spriteName": "bossrush_icon_assess_ss",
+    "bossIcon": "bossrush_icon_assess_ss4",
+    "isHard": 0
+  },
+  {
+    "level": 9,
+    "strLevel": "SSS",
+    "needScore": 2000000,
+    "spriteName": "bossrush_icon_assess_sss",
+    "bossIcon": "bossrush_icon_assess_sss4",
+    "isHard": 0
+  },
+  {
+    "level": 10,
+    "strLevel": "SSSS",
+    "needScore": 3000000,
+    "spriteName": "bossrush_icon_assess_sss2",
+    "bossIcon": "bossrush_icon_assess_sss5",
+    "isHard": 1
+  }
+]

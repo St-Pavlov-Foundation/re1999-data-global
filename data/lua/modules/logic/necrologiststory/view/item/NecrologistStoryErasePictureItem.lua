@@ -10,19 +10,12 @@ function NecrologistStoryErasePictureItem:onInit()
 	self.goErase = gohelper.findChild(self.viewGO, "root/go_erase")
 	self.eraseComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.goErase, NecrologistStoryErasePictureComp)
 
-	local lockMaterialPath = "ui/materials/dynamic/ui_halfgray2.mat"
-	local lockMaterial = self.storyView.viewContainer:getRes(lockMaterialPath)
+	local otherResPaths = NecrologistStoryErasePictureItem.getOtherResPath()
+	local lockMaterialPath = otherResPaths[1]
+	local lockMaterial = self:getRes(lockMaterialPath)
 
 	self.eraseComp:setMaterial(lockMaterial)
 	self.eraseComp:setCallback(self.startDraw, self.showRate, self.endDraw, self.finishDraw, self)
-end
-
-function NecrologistStoryErasePictureItem:addEventListeners()
-	return
-end
-
-function NecrologistStoryErasePictureItem:removeEventListeners()
-	return
 end
 
 function NecrologistStoryErasePictureItem:onPlayStory()
@@ -87,6 +80,12 @@ end
 
 function NecrologistStoryErasePictureItem.getResPath()
 	return "ui/viewres/dungeon/rolestory/item/necrologiststoryerasepictureitem.prefab"
+end
+
+function NecrologistStoryErasePictureItem.getOtherResPath()
+	return {
+		"ui/materials/dynamic/ui_halfgray2.mat"
+	}
 end
 
 return NecrologistStoryErasePictureItem

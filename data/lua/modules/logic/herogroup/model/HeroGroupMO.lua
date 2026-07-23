@@ -455,6 +455,8 @@ function HeroGroupMO:saveData()
 
 	if Activity104Model.instance:isSeasonChapter() then
 		prefsKey = Activity104Model.instance:getSeasonTrialPrefsKey()
+	elseif SodacheUtil.isSodacheEpisode() then
+		prefsKey = PlayerPrefsKey.SodacheTrialHeroGroupKey .. "#" .. tostring(PlayerModel.instance:getMyUserId())
 	else
 		prefsKey = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. battleId
 	end

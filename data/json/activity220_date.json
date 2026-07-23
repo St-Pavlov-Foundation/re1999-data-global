@@ -1,0 +1,1332 @@
+[
+  {
+    "gameId": 1371001,
+    "day": 1,
+    "eventType": 1,
+    "eventParam": "1101#1",
+    "difficult": 1.25
+  },
+  {
+    "gameId": 1371001,
+    "day": 2,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.325
+  },
+  {
+    "gameId": 1371001,
+    "day": 3,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.4
+  },
+  {
+    "gameId": 1371001,
+    "day": 4,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.475
+  },
+  {
+    "gameId": 1371001,
+    "day": 5,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.55
+  },
+  {
+    "gameId": 1371001,
+    "day": 6,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.625
+  },
+  {
+    "gameId": 1371001,
+    "day": 7,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.7
+  },
+  {
+    "gameId": 1371001,
+    "day": 8,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 1.775
+  },
+  {
+    "gameId": 1371001,
+    "day": 9,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.85
+  },
+  {
+    "gameId": 1371001,
+    "day": 10,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.925
+  },
+  {
+    "gameId": 1371001,
+    "day": 11,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.0
+  },
+  {
+    "gameId": 1371001,
+    "day": 12,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.075
+  },
+  {
+    "gameId": 1371001,
+    "day": 13,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.15
+  },
+  {
+    "gameId": 1371001,
+    "day": 14,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.225
+  },
+  {
+    "gameId": 1371001,
+    "day": 15,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 2.3
+  },
+  {
+    "gameId": 1371001,
+    "day": 16,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.375
+  },
+  {
+    "gameId": 1371001,
+    "day": 17,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.45
+  },
+  {
+    "gameId": 1371001,
+    "day": 18,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.525
+  },
+  {
+    "gameId": 1371001,
+    "day": 19,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.6
+  },
+  {
+    "gameId": 1371001,
+    "day": 20,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.675
+  },
+  {
+    "gameId": 1371001,
+    "day": 21,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.75
+  },
+  {
+    "gameId": 1371001,
+    "day": 22,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.825
+  },
+  {
+    "gameId": 1371001,
+    "day": 23,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.9
+  },
+  {
+    "gameId": 1371001,
+    "day": 24,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.975
+  },
+  {
+    "gameId": 1371001,
+    "day": 25,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.05
+  },
+  {
+    "gameId": 1371001,
+    "day": 26,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.125
+  },
+  {
+    "gameId": 1371001,
+    "day": 27,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.2
+  },
+  {
+    "gameId": 1371001,
+    "day": 28,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.275
+  },
+  {
+    "gameId": 1371001,
+    "day": 29,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.35
+  },
+  {
+    "gameId": 1371001,
+    "day": 30,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 3.425
+  },
+  {
+    "gameId": 1371002,
+    "day": 1,
+    "eventType": 1,
+    "eventParam": "1101#1",
+    "difficult": 1.35
+  },
+  {
+    "gameId": 1371002,
+    "day": 2,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.431
+  },
+  {
+    "gameId": 1371002,
+    "day": 3,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.512
+  },
+  {
+    "gameId": 1371002,
+    "day": 4,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.593
+  },
+  {
+    "gameId": 1371002,
+    "day": 5,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.674
+  },
+  {
+    "gameId": 1371002,
+    "day": 6,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.755
+  },
+  {
+    "gameId": 1371002,
+    "day": 7,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.836
+  },
+  {
+    "gameId": 1371002,
+    "day": 8,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.917
+  },
+  {
+    "gameId": 1371002,
+    "day": 9,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 1.998
+  },
+  {
+    "gameId": 1371002,
+    "day": 10,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 2.079
+  },
+  {
+    "gameId": 1371002,
+    "day": 11,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 2.16
+  },
+  {
+    "gameId": 1371002,
+    "day": 12,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 2.241
+  },
+  {
+    "gameId": 1371002,
+    "day": 13,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 2.322
+  },
+  {
+    "gameId": 1371002,
+    "day": 14,
+    "eventType": 0,
+    "eventParam": "0#200|1#150|2#515",
+    "difficult": 2.403
+  },
+  {
+    "gameId": 1371002,
+    "day": 15,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 2.484
+  },
+  {
+    "gameId": 1371002,
+    "day": 16,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.565
+  },
+  {
+    "gameId": 1371002,
+    "day": 17,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.646
+  },
+  {
+    "gameId": 1371002,
+    "day": 18,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.727
+  },
+  {
+    "gameId": 1371002,
+    "day": 19,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.808
+  },
+  {
+    "gameId": 1371002,
+    "day": 20,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 2.889
+  },
+  {
+    "gameId": 1371002,
+    "day": 21,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.97
+  },
+  {
+    "gameId": 1371002,
+    "day": 22,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.051
+  },
+  {
+    "gameId": 1371002,
+    "day": 23,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.132
+  },
+  {
+    "gameId": 1371002,
+    "day": 24,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.213
+  },
+  {
+    "gameId": 1371002,
+    "day": 25,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.294
+  },
+  {
+    "gameId": 1371002,
+    "day": 26,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.375
+  },
+  {
+    "gameId": 1371002,
+    "day": 27,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.456
+  },
+  {
+    "gameId": 1371002,
+    "day": 28,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.537
+  },
+  {
+    "gameId": 1371002,
+    "day": 29,
+    "eventType": 1,
+    "eventParam": "1102#1",
+    "difficult": 3.618
+  },
+  {
+    "gameId": 1371002,
+    "day": 30,
+    "eventType": 1,
+    "eventParam": "16#1|17#1|18#1",
+    "difficult": 3.699
+  },
+  {
+    "gameId": 1371003,
+    "day": 1,
+    "eventType": 1,
+    "eventParam": "1101#1",
+    "difficult": 1.3
+  },
+  {
+    "gameId": 1371003,
+    "day": 2,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.391
+  },
+  {
+    "gameId": 1371003,
+    "day": 3,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.482
+  },
+  {
+    "gameId": 1371003,
+    "day": 4,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.573
+  },
+  {
+    "gameId": 1371003,
+    "day": 5,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.664
+  },
+  {
+    "gameId": 1371003,
+    "day": 6,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.755
+  },
+  {
+    "gameId": 1371003,
+    "day": 7,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.846
+  },
+  {
+    "gameId": 1371003,
+    "day": 8,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.937
+  },
+  {
+    "gameId": 1371003,
+    "day": 9,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.028
+  },
+  {
+    "gameId": 1371003,
+    "day": 10,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.119
+  },
+  {
+    "gameId": 1371003,
+    "day": 11,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.21
+  },
+  {
+    "gameId": 1371003,
+    "day": 12,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.301
+  },
+  {
+    "gameId": 1371003,
+    "day": 13,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.392
+  },
+  {
+    "gameId": 1371003,
+    "day": 14,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.483
+  },
+  {
+    "gameId": 1371003,
+    "day": 15,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 2.574
+  },
+  {
+    "gameId": 1371003,
+    "day": 16,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.665
+  },
+  {
+    "gameId": 1371003,
+    "day": 17,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.756
+  },
+  {
+    "gameId": 1371003,
+    "day": 18,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.847
+  },
+  {
+    "gameId": 1371003,
+    "day": 19,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.938
+  },
+  {
+    "gameId": 1371003,
+    "day": 20,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.029
+  },
+  {
+    "gameId": 1371003,
+    "day": 21,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.12
+  },
+  {
+    "gameId": 1371003,
+    "day": 22,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.211
+  },
+  {
+    "gameId": 1371003,
+    "day": 23,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.302
+  },
+  {
+    "gameId": 1371003,
+    "day": 24,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.393
+  },
+  {
+    "gameId": 1371003,
+    "day": 25,
+    "eventType": 1,
+    "eventParam": "16#1|172#1|182#1",
+    "difficult": 3.484
+  },
+  {
+    "gameId": 1371003,
+    "day": 26,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.575
+  },
+  {
+    "gameId": 1371003,
+    "day": 27,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.666
+  },
+  {
+    "gameId": 1371003,
+    "day": 28,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.757
+  },
+  {
+    "gameId": 1371003,
+    "day": 29,
+    "eventType": 1,
+    "eventParam": "1102#1",
+    "difficult": 3.848
+  },
+  {
+    "gameId": 1371003,
+    "day": 30,
+    "eventType": 1,
+    "eventParam": "16#1|17#1|18#1",
+    "difficult": 3.939
+  },
+  {
+    "gameId": 1371004,
+    "day": 1,
+    "eventType": 1,
+    "eventParam": "1101#1",
+    "difficult": 1.31
+  },
+  {
+    "gameId": 1371004,
+    "day": 2,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.4148
+  },
+  {
+    "gameId": 1371004,
+    "day": 3,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.5196
+  },
+  {
+    "gameId": 1371004,
+    "day": 4,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.6244
+  },
+  {
+    "gameId": 1371004,
+    "day": 5,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.7292
+  },
+  {
+    "gameId": 1371004,
+    "day": 6,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.834
+  },
+  {
+    "gameId": 1371004,
+    "day": 7,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.9388
+  },
+  {
+    "gameId": 1371004,
+    "day": 8,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.0436
+  },
+  {
+    "gameId": 1371004,
+    "day": 9,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.1484
+  },
+  {
+    "gameId": 1371004,
+    "day": 10,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.2532
+  },
+  {
+    "gameId": 1371004,
+    "day": 11,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.358
+  },
+  {
+    "gameId": 1371004,
+    "day": 12,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.4628
+  },
+  {
+    "gameId": 1371004,
+    "day": 13,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.5676
+  },
+  {
+    "gameId": 1371004,
+    "day": 14,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.6724
+  },
+  {
+    "gameId": 1371004,
+    "day": 15,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 2.7772
+  },
+  {
+    "gameId": 1371004,
+    "day": 16,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.882
+  },
+  {
+    "gameId": 1371004,
+    "day": 17,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.9868
+  },
+  {
+    "gameId": 1371004,
+    "day": 18,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.0916
+  },
+  {
+    "gameId": 1371004,
+    "day": 19,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.1964
+  },
+  {
+    "gameId": 1371004,
+    "day": 20,
+    "eventType": 1,
+    "eventParam": "16#1|172#1|182#1",
+    "difficult": 3.3012
+  },
+  {
+    "gameId": 1371004,
+    "day": 21,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.406
+  },
+  {
+    "gameId": 1371004,
+    "day": 22,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.5108
+  },
+  {
+    "gameId": 1371004,
+    "day": 23,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.6156
+  },
+  {
+    "gameId": 1371004,
+    "day": 24,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.7204
+  },
+  {
+    "gameId": 1371004,
+    "day": 25,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.8252
+  },
+  {
+    "gameId": 1371004,
+    "day": 26,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.93
+  },
+  {
+    "gameId": 1371004,
+    "day": 27,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.0348
+  },
+  {
+    "gameId": 1371004,
+    "day": 28,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.1396
+  },
+  {
+    "gameId": 1371004,
+    "day": 29,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.2444
+  },
+  {
+    "gameId": 1371004,
+    "day": 30,
+    "eventType": 1,
+    "eventParam": "16#1|172#1|182#1",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 31,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 32,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 33,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 34,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 35,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 36,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 37,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 38,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 39,
+    "eventType": 1,
+    "eventParam": "1102#1",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371004,
+    "day": 40,
+    "eventType": 1,
+    "eventParam": "16#1|17#1|18#1",
+    "difficult": 4.3492
+  },
+  {
+    "gameId": 1371005,
+    "day": 1,
+    "eventType": 1,
+    "eventParam": "1101#1",
+    "difficult": 1.5
+  },
+  {
+    "gameId": 1371005,
+    "day": 2,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.62
+  },
+  {
+    "gameId": 1371005,
+    "day": 3,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.74
+  },
+  {
+    "gameId": 1371005,
+    "day": 4,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.86
+  },
+  {
+    "gameId": 1371005,
+    "day": 5,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 1.98
+  },
+  {
+    "gameId": 1371005,
+    "day": 6,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.1
+  },
+  {
+    "gameId": 1371005,
+    "day": 7,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.22
+  },
+  {
+    "gameId": 1371005,
+    "day": 8,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.34
+  },
+  {
+    "gameId": 1371005,
+    "day": 9,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.46
+  },
+  {
+    "gameId": 1371005,
+    "day": 10,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.58
+  },
+  {
+    "gameId": 1371005,
+    "day": 11,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.7
+  },
+  {
+    "gameId": 1371005,
+    "day": 12,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.82
+  },
+  {
+    "gameId": 1371005,
+    "day": 13,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 2.94
+  },
+  {
+    "gameId": 1371005,
+    "day": 14,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.06
+  },
+  {
+    "gameId": 1371005,
+    "day": 15,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.18
+  },
+  {
+    "gameId": 1371005,
+    "day": 16,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.3
+  },
+  {
+    "gameId": 1371005,
+    "day": 17,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.42
+  },
+  {
+    "gameId": 1371005,
+    "day": 18,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.54
+  },
+  {
+    "gameId": 1371005,
+    "day": 19,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.66
+  },
+  {
+    "gameId": 1371005,
+    "day": 20,
+    "eventType": 1,
+    "eventParam": "16#1|171#1|181#1",
+    "difficult": 3.78
+  },
+  {
+    "gameId": 1371005,
+    "day": 21,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 3.9
+  },
+  {
+    "gameId": 1371005,
+    "day": 22,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.02
+  },
+  {
+    "gameId": 1371005,
+    "day": 23,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.14
+  },
+  {
+    "gameId": 1371005,
+    "day": 24,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.26
+  },
+  {
+    "gameId": 1371005,
+    "day": 25,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.38
+  },
+  {
+    "gameId": 1371005,
+    "day": 26,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.5
+  },
+  {
+    "gameId": 1371005,
+    "day": 27,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.62
+  },
+  {
+    "gameId": 1371005,
+    "day": 28,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.74
+  },
+  {
+    "gameId": 1371005,
+    "day": 29,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.86
+  },
+  {
+    "gameId": 1371005,
+    "day": 30,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 4.98
+  },
+  {
+    "gameId": 1371005,
+    "day": 31,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.1
+  },
+  {
+    "gameId": 1371005,
+    "day": 32,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.22
+  },
+  {
+    "gameId": 1371005,
+    "day": 33,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.34
+  },
+  {
+    "gameId": 1371005,
+    "day": 34,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.46
+  },
+  {
+    "gameId": 1371005,
+    "day": 35,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.58
+  },
+  {
+    "gameId": 1371005,
+    "day": 36,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.7
+  },
+  {
+    "gameId": 1371005,
+    "day": 37,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.82
+  },
+  {
+    "gameId": 1371005,
+    "day": 38,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 5.94
+  },
+  {
+    "gameId": 1371005,
+    "day": 39,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.06
+  },
+  {
+    "gameId": 1371005,
+    "day": 40,
+    "eventType": 1,
+    "eventParam": "16#1|172#1|182#1",
+    "difficult": 6.18
+  },
+  {
+    "gameId": 1371005,
+    "day": 41,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.3
+  },
+  {
+    "gameId": 1371005,
+    "day": 42,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.42
+  },
+  {
+    "gameId": 1371005,
+    "day": 43,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.54
+  },
+  {
+    "gameId": 1371005,
+    "day": 44,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.66
+  },
+  {
+    "gameId": 1371005,
+    "day": 45,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.78
+  },
+  {
+    "gameId": 1371005,
+    "day": 46,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 6.9
+  },
+  {
+    "gameId": 1371005,
+    "day": 47,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.02
+  },
+  {
+    "gameId": 1371005,
+    "day": 48,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.14
+  },
+  {
+    "gameId": 1371005,
+    "day": 49,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.26
+  },
+  {
+    "gameId": 1371005,
+    "day": 50,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.38
+  },
+  {
+    "gameId": 1371005,
+    "day": 51,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.5
+  },
+  {
+    "gameId": 1371005,
+    "day": 52,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.62
+  },
+  {
+    "gameId": 1371005,
+    "day": 53,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.74
+  },
+  {
+    "gameId": 1371005,
+    "day": 54,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.86
+  },
+  {
+    "gameId": 1371005,
+    "day": 55,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 7.98
+  },
+  {
+    "gameId": 1371005,
+    "day": 56,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 8.1
+  },
+  {
+    "gameId": 1371005,
+    "day": 57,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 8.22
+  },
+  {
+    "gameId": 1371005,
+    "day": 58,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 8.34
+  },
+  {
+    "gameId": 1371005,
+    "day": 59,
+    "eventType": 0,
+    "eventParam": "0#200|1#200|2#515",
+    "difficult": 8.46
+  },
+  {
+    "gameId": 1371005,
+    "day": 60,
+    "eventType": 1,
+    "eventParam": "16#1|172#1|182#1",
+    "difficult": 8.58
+  }
+]

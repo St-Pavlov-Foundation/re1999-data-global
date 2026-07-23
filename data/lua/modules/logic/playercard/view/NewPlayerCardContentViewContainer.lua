@@ -68,4 +68,12 @@ function NewPlayerCardContentViewContainer:_overrideClose()
 	end
 end
 
+function NewPlayerCardContentViewContainer:setShowSkinId(skinId)
+	self._showSkinId = skinId
+end
+
+function NewPlayerCardContentViewContainer:getShowSkinId()
+	return self._showSkinId
+end
+
 return NewPlayerCardContentViewContainer

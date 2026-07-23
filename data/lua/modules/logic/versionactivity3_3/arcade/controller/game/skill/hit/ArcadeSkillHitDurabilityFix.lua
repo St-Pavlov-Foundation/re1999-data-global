@@ -13,26 +13,42 @@ function ArcadeSkillHitDurabilityFix:onCtor()
 end
 
 function ArcadeSkillHitDurabilityFix:onHit()
-	local characterMO = ArcadeGameModel.instance:getCharacterMO()
-
 	self:clearList(self._weaponUIdList)
 
-	if characterMO then
-		characterMO:findUseWeaponUid(self._weaponUIdList)
+	local characterMO = ArcadeGameModel.instance:getCharacterMO()
+
+	if not characterMO then
+		return
 	end
 
-	if self._weaponUIdList and #self._weaponUIdList > 0 then
-		for _, uid in ipairs(self._weaponUIdList) do
-			local collectionMO = characterMO:getCollectionMO(uid)
+	local contextCollectionMO = self._context.collectionMO
 
-			if collectionMO then
-				collectionMO:addDurability(self._durValue)
-			end
-		end
+	if contextCollectionMO then
+		self._weaponUIdList[#self._weaponUIdList + 1] = contextCollectionMO:getUid()
 
+		contextCollectionMO:addDurability(self._durValue)
 		self:addHiter(characterMO)
 		ArcadeGameController.instance:dispatchEvent(ArcadeEvent.OnWeaponDurabilityChange)
+
+		return
 	end
+
+	characterMO:findUseWeaponUid(self._weaponUIdList)
+
+	if #self._weaponUIdList <= 0 then
+		return
+	end
+
+	for _, uid in ipairs(self._weaponUIdList) do
+		local collectionMO = characterMO:getCollectionMO(uid)
+
+		if collectionMO then
+			collectionMO:addDurability(self._durValue)
+		end
+	end
+
+	self:addHiter(characterMO)
+	ArcadeGameController.instance:dispatchEvent(ArcadeEvent.OnWeaponDurabilityChange)
 end
 
 function ArcadeSkillHitDurabilityFix:onHitPrintLog()

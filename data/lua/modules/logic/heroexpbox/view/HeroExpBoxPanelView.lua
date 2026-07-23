@@ -68,7 +68,7 @@ function HeroExpBoxPanelView:_btngetOnClick()
 end
 
 function HeroExpBoxPanelView:_editableInitView()
-	self._actId = ActivityEnum.Activity.V3a4_HeroExpBox
+	self._actId = ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.HeroExpBoxAct, ActivityEnum.Activity.V3a4_HeroExpBox)
 
 	self:_refreshContent()
 end

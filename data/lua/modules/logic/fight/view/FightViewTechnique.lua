@@ -3,7 +3,7 @@
 module("modules.logic.fight.view.FightViewTechnique", package.seeall)
 
 local FightViewTechnique = class("FightViewTechnique", BaseView)
-local buffType2Id, battleId2Id, invalidBuff2Id, resistanceIdList, getCardEnergyList, getASFDSkillList, createBloodPoolList, heatScaleList, weakCareerList
+local buffType2Id, battleId2Id, invalidBuff2Id, resistanceIdList, getCardEnergyList, getASFDSkillList, createBloodPoolList, heatScaleList, weakCareerList, DeviceList
 
 function FightViewTechnique:onInitView()
 	if not buffType2Id then
@@ -15,6 +15,7 @@ function FightViewTechnique:onInitView()
 		createBloodPoolList = {}
 		heatScaleList = {}
 		weakCareerList = {}
+		DeviceList = {}
 
 		for _, co in ipairs(lua_fight_technique.configList) do
 			local array = string.split(co.condition, "|")
@@ -44,6 +45,8 @@ function FightViewTechnique:onInitView()
 					table.insert(heatScaleList, co.id)
 				elseif temp[1] == "9" then
 					table.insert(weakCareerList, co.id)
+				elseif temp[1] == "10" then
+					table.insert(DeviceList, co.id)
 				end
 			end
 		end
@@ -69,6 +72,7 @@ function FightViewTechnique:addEvents()
 	self:addEventCb(FightController.instance, FightEvent.AddUseCard, self.AddUseCard, self)
 	self:addEventCb(FightController.instance, FightEvent.BloodPool_OnCreate, self.onBloodPoolCreate, self)
 	self:addEventCb(FightController.instance, FightEvent.HeatScale_OnCreate, self.onHeatScaleCreate, self)
+	self:addEventCb(FightController.instance, FightEvent.AfterCreateDeviceArea, self.onAfterCreateDeviceArea, self)
 	self:addEventCb(FightController.instance, FightEvent.OnAddNewEntity, self.onAddNewEntity, self)
 end
 
@@ -127,6 +131,14 @@ function FightViewTechnique:onHeatScaleCreate(teamType)
 
 	if heatScaleList then
 		for _, v in ipairs(heatScaleList) do
+			self:_checkAdd(v)
+		end
+	end
+end
+
+function FightViewTechnique:onAfterCreateDeviceArea()
+	if DeviceList then
+		for _, v in ipairs(DeviceList) do
 			self:_checkAdd(v)
 		end
 	end

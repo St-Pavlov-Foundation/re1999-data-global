@@ -97,5 +97,82 @@
     "headIcon": 670105,
     "icon": "act191_boss_3",
     "relation": "lapras"
+  },
+  {
+    "id": 4,
+    "priority": 120,
+    "summonType": 1,
+    "name": "language_10060867",
+    "career": 3,
+    "monsterId": 0,
+    "headIcon": 670404,
+    "icon": "act191_boss_6",
+    "relation": "greenDeer"
+  },
+  {
+    "id": 5,
+    "priority": 121,
+    "summonType": 1,
+    "name": "language_10060867",
+    "career": 3,
+    "monsterId": 0,
+    "headIcon": 670404,
+    "icon": "act191_boss_6",
+    "relation": "greenDeer"
+  },
+  {
+    "id": 6,
+    "priority": 122,
+    "summonType": 1,
+    "name": "language_10060867",
+    "career": 3,
+    "monsterId": 0,
+    "headIcon": 670404,
+    "icon": "act191_boss_6",
+    "relation": "greenDeer"
+  },
+  {
+    "id": 7,
+    "priority": 123,
+    "summonType": 1,
+    "name": "language_10060867",
+    "career": 3,
+    "monsterId": 0,
+    "headIcon": 670404,
+    "icon": "act191_boss_6",
+    "relation": "greenDeer"
+  },
+  {
+    "id": 8,
+    "priority": 120,
+    "summonType": 1,
+    "name": "language_10120075",
+    "career": 4,
+    "monsterId": 0,
+    "headIcon": 610406,
+    "icon": "act191_boss_2",
+    "relation": "counter"
+  },
+  {
+    "id": 9,
+    "priority": 121,
+    "summonType": 1,
+    "name": "language_10120075",
+    "career": 4,
+    "monsterId": 0,
+    "headIcon": 610406,
+    "icon": "act191_boss_2",
+    "relation": "counter"
+  },
+  {
+    "id": 10,
+    "priority": 122,
+    "summonType": 1,
+    "name": "language_10120075",
+    "career": 4,
+    "monsterId": 0,
+    "headIcon": 610406,
+    "icon": "act191_boss_2",
+    "relation": "counter"
   }
 ]

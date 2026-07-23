@@ -7,19 +7,19 @@
   },
   {
     "level": 1,
-    "scope": "101#102",
+    "scope": "37101#37102",
     "addSkill": 3308101,
     "characterTurnTime": 2000
   },
   {
     "level": 2,
-    "scope": "201#202#203",
+    "scope": "37201#37202#37203",
     "addSkill": 3308102,
     "characterTurnTime": 2000
   },
   {
     "level": 3,
-    "scope": "301#302#303#304",
+    "scope": "37301#37302#37303#37304",
     "addSkill": 3308103,
     "characterTurnTime": 2000
   }

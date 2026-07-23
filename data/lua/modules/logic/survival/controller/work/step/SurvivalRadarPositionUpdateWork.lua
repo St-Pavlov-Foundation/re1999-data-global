@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalRadarPositionUpdateW
 
 local SurvivalRadarPositionUpdateWork = class("SurvivalRadarPositionUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalRadarPositionUpdateWork:onStart(context)
+function SurvivalRadarPositionUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.sceneProp.radarPosition = self._stepMo.position

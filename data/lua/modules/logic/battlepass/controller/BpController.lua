@@ -75,10 +75,14 @@ function BpController:_openBpView()
 					return
 				end
 
-				ViewMgr.instance:openView(ViewName.BpChargeView)
+				ViewMgr.instance:openView(self:getBpChargeView())
 			end
 		end)
 	end
+end
+
+function BpController:getBpChargeView()
+	return ViewName.BpChargeABTestView
 end
 
 function BpController:onViewOpen(viewName)
@@ -158,7 +162,7 @@ function BpController:_onBpClose()
 	ViewMgr.instance:closeView(ViewName.BpRuleTipsView, true)
 	ViewMgr.instance:closeView(ViewName.BpSPInformationView, true)
 	ViewMgr.instance:closeView(ViewName.BpSPRuleTipsView, true)
-	ViewMgr.instance:closeView(ViewName.BpChargeView, true)
+	ViewMgr.instance:closeView(BpController.instance:getBpChargeView(), true)
 	ViewMgr.instance:closeView(ViewName.BpPropView2, true)
 	ViewMgr.instance:closeView(ViewName.BPSPFaceView, true)
 
@@ -197,6 +201,16 @@ function BpController:isEmptySkinFaceViewStr(skinId)
 	local data = PlayerPrefsHelper.getString(self:_getSkinFaceViewKey(skinId), "")
 
 	return string.nilorempty(data)
+end
+
+function BpController:isSkinFaceOnlineBySkinId(skinId)
+	local bpsvpCfg = BpConfig.instance:getBpSkinViewParamCO(skinId)
+
+	if bpsvpCfg and bpsvpCfg.online == BpEnum.StoreSkinOnlineState.Online then
+		return true
+	end
+
+	return false
 end
 
 function BpController:setSkinFaceViewStr(skinId)

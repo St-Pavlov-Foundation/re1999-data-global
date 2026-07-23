@@ -17,16 +17,25 @@ Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREWARDINFOFIELD = protobuf.FieldDescriptor(
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREWARDPOINTFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOALCHEMYINFOFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2REWARDINFO_MSG = protobuf.Descriptor()
 Rouge2OutsideDef_pb.ROUGE2REWARDINFOIDFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2REWARDINFOBUYCOUNTFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFO_MSG = protobuf.Descriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFOIDFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFONUMFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG = protobuf.Descriptor()
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFO_MSG = protobuf.Descriptor()
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOFORMULAFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOMAINEFFECTFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOSUBEFFECTFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG = protobuf.Descriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFO_MSG = protobuf.Descriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFOCURALCHEMYINFOFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFOALCHEMYMATERIALINFOFIELD = protobuf.FieldDescriptor()
@@ -42,6 +51,10 @@ Rouge2OutsideDef_pb.ROUGE2TOTALRECORDINFOHOTFIXSTRFIELD = protobuf.FieldDescript
 Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFO_MSG = protobuf.Descriptor()
 Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFOCAREERIDFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFOEXPFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG = protobuf.Descriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD = protobuf.FieldDescriptor()
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD = protobuf.FieldDescriptor()
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOGENIUSPOINTFIELD.name = "geniusPoint"
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOGENIUSPOINTFIELD.full_name = ".Rouge2OutsideInfo.geniusPoint"
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOGENIUSPOINTFIELD.number = 1
@@ -119,6 +132,16 @@ Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD.default_value = {}
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD.message_type = Rouge2OutsideDef_pb.ROUGE2DEF_PB.ROUGE2REVIEWINFO_MSG
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD.type = 11
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD.cpp_type = 10
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.name = "bossBattleInfo"
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.full_name = ".Rouge2OutsideInfo.bossBattleInfo"
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.number = 9
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.index = 8
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.default_value = nil
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.message_type = Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.type = 11
+Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD.cpp_type = 10
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.name = "Rouge2OutsideInfo"
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.full_name = ".Rouge2OutsideInfo"
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.nested_types = {}
@@ -131,7 +154,8 @@ Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.fields = {
 	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREWARDINFOFIELD,
 	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREWARDPOINTFIELD,
 	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOALCHEMYINFOFIELD,
-	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD
+	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOREVIEWFIELD,
+	Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFOBOSSBATTLEINFOFIELD
 }
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.is_extendable = false
 Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG.extensions = {}
@@ -191,6 +215,35 @@ Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFO_MSG.fields = {
 }
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFO_MSG.is_extendable = false
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFO_MSG.extensions = {}
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.name = "index"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.full_name = ".Rouge2SaveInfo.index"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.number = 1
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.index = 0
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.default_value = 0
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.name = "review"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.full_name = ".Rouge2SaveInfo.review"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.number = 2
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.index = 1
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.default_value = nil
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.message_type = Rouge2OutsideDef_pb.ROUGE2DEF_PB.ROUGE2REVIEWINFO_MSG
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.type = 11
+Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD.cpp_type = 10
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.name = "Rouge2SaveInfo"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.full_name = ".Rouge2SaveInfo"
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.nested_types = {}
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.enum_types = {}
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.fields = {
+	Rouge2OutsideDef_pb.ROUGE2SAVEINFOINDEXFIELD,
+	Rouge2OutsideDef_pb.ROUGE2SAVEINFOREVIEWFIELD
+}
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.is_extendable = false
+Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG.extensions = {}
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOFORMULAFIELD.name = "formula"
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOFORMULAFIELD.full_name = ".Rouge2CurAlchemyInfo.formula"
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFOFORMULAFIELD.number = 1
@@ -229,6 +282,54 @@ Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFO_MSG.fields = {
 }
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFO_MSG.is_extendable = false
 Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFO_MSG.extensions = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.name = "bossId"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.full_name = ".Rouge2BossInfo.bossId"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.number = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.index = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.default_value = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.name = "allScore"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.full_name = ".Rouge2BossInfo.allScore"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.number = 2
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.index = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.default_value = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.name = "maxScore"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.full_name = ".Rouge2BossInfo.maxScore"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.number = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.index = 2
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.default_value = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.name = "gainReward"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.full_name = ".Rouge2BossInfo.gainReward"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.number = 4
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.index = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.label = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.default_value = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.name = "Rouge2BossInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.full_name = ".Rouge2BossInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.nested_types = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.enum_types = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.fields = {
+	Rouge2OutsideDef_pb.ROUGE2BOSSINFOBOSSIDFIELD,
+	Rouge2OutsideDef_pb.ROUGE2BOSSINFOALLSCOREFIELD,
+	Rouge2OutsideDef_pb.ROUGE2BOSSINFOMAXSCOREFIELD,
+	Rouge2OutsideDef_pb.ROUGE2BOSSINFOGAINREWARDFIELD
+}
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.is_extendable = false
+Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG.extensions = {}
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFOCURALCHEMYINFOFIELD.name = "curAlchemyInfo"
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFOCURALCHEMYINFOFIELD.full_name = ".Rouge2AlchemyInfo.curAlchemyInfo"
 Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFOCURALCHEMYINFOFIELD.number = 1
@@ -375,12 +476,55 @@ Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFO_MSG.fields = {
 }
 Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFO_MSG.is_extendable = false
 Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFO_MSG.extensions = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.name = "bossInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.full_name = ".Rouge2BossBattleInfo.bossInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.number = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.index = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.label = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.default_value = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.message_type = Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.type = 11
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD.cpp_type = 10
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.name = "saveInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.full_name = ".Rouge2BossBattleInfo.saveInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.number = 2
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.index = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.label = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.default_value = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.message_type = Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.type = 11
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD.cpp_type = 10
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.name = "useSaveIndex"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.full_name = ".Rouge2BossBattleInfo.useSaveIndex"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.number = 3
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.index = 2
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.label = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.has_default_value = false
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.default_value = 0
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.type = 5
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD.cpp_type = 1
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.name = "Rouge2BossBattleInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.full_name = ".Rouge2BossBattleInfo"
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.nested_types = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.enum_types = {}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.fields = {
+	Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOBOSSINFOFIELD,
+	Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOSAVEINFOFIELD,
+	Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFOUSESAVEINDEXFIELD
+}
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.is_extendable = false
+Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG.extensions = {}
 Rouge2OutsideDef_pb.Rouge2AlchemyInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2ALCHEMYINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2AlchemyMaterialInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2ALCHEMYMATERIALINFO_MSG)
+Rouge2OutsideDef_pb.Rouge2BossBattleInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2BOSSBATTLEINFO_MSG)
+Rouge2OutsideDef_pb.Rouge2BossInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2BOSSINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2CareerLevelInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2CAREERLEVELINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2CurAlchemyInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2CURALCHEMYINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2OutsideInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2OUTSIDEINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2RewardInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2REWARDINFO_MSG)
+Rouge2OutsideDef_pb.Rouge2SaveInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2SAVEINFO_MSG)
 Rouge2OutsideDef_pb.Rouge2TotalRecordInfo = protobuf.Message(Rouge2OutsideDef_pb.ROUGE2TOTALRECORDINFO_MSG)
 
 return Rouge2OutsideDef_pb

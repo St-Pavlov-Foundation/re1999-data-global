@@ -14,6 +14,7 @@ function DecorateStoreView:onInitView()
 	self._gotypebg5 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg5")
 	self._gotypebg6 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg6")
 	self._gotypebg7 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg7")
+	self._gotypebg8 = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg8")
 	self._simagetypebg7 = gohelper.findChildSingleImage(self.viewGO, "Bg/typebg/#go_typebg7/#simage_icon")
 	self._gozs = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/zs")
 	self._goskincontainer = gohelper.findChild(self.viewGO, "Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer")
@@ -626,6 +627,10 @@ function DecorateStoreView:_refreshGoodDetail()
 		self:_hideDecorateBuildingVideo()
 	end
 
+	if curItemType ~= DecorateStoreEnum.DecorateItemType.DecorateBundle then
+		self:_hideDecorateBundle()
+	end
+
 	if curItemType == DecorateStoreEnum.DecorateItemType.Default or curItemType == DecorateStoreEnum.DecorateItemType.Icon then
 		self:_updateDecorateDefault()
 	elseif curItemType == DecorateStoreEnum.DecorateItemType.Skin then
@@ -642,6 +647,8 @@ function DecorateStoreView:_refreshGoodDetail()
 		self:_updateDecorateSceneUIPackage()
 	elseif curItemType == DecorateStoreEnum.DecorateItemType.MainUISkin then
 		self:_updateDecorateMainUISkin()
+	elseif curItemType == DecorateStoreEnum.DecorateItemType.DecorateBundle then
+		self:_updateDecorateBundle()
 	end
 
 	local btnCheckShow = curItemType == DecorateStoreEnum.DecorateItemType.SkinGift
@@ -1135,6 +1142,10 @@ function DecorateStoreView:_hideDecorateBuildingVideo()
 	end
 end
 
+function DecorateStoreView:_hideDecorateBundle()
+	gohelper.setActive(self._gotypebg8, false)
+end
+
 function DecorateStoreView:_updateDecorateBuildingVideo()
 	gohelper.setActive(self._gotypebg6, true)
 
@@ -1254,6 +1265,16 @@ function DecorateStoreView:_showDecorateSceneUISkin()
 
 		self:_showMainUI()
 	end
+end
+
+function DecorateStoreView:_updateDecorateBundle()
+	local goodsId = DecorateStoreModel.instance:getCurGood(self._selectSecondTabId)
+
+	gohelper.setActive(self._gotypebg8, true)
+
+	local bundleComp = DecorateStoreBundleComp.Get(self._gotypebg8)
+
+	bundleComp:onUpdateMO(goodsId)
 end
 
 function DecorateStoreView:_checkMainUIScale(isHide)

@@ -64,4 +64,18 @@ function FightHandCardDataMgr:distribute(beforeCards, distribute)
 	FightCardDataHelper.combineCardList(self.handCard, self.dataMgr.entityMgr)
 end
 
+function FightHandCardDataMgr:hasDeviceCard()
+	for _, cardInfo in ipairs(self.handCard) do
+		if self:checkCardIsDeviceCard(cardInfo) then
+			return true
+		end
+	end
+end
+
+function FightHandCardDataMgr:checkCardIsDeviceCard(cardInfo)
+	local skillId = cardInfo and cardInfo.skillId
+
+	return FightHelper.checkIsDevicePowerCard(skillId)
+end
+
 return FightHandCardDataMgr

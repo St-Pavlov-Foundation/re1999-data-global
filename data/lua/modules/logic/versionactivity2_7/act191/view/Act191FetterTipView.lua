@@ -8,6 +8,10 @@ function Act191FetterTipView:onInitView()
 	self._txtName = gohelper.findChildText(self.viewGO, "title/#txt_Name")
 	self._imageIcon = gohelper.findChildImage(self.viewGO, "title/#image_Icon")
 	self._scrollDetails = gohelper.findChildScrollRect(self.viewGO, "#scroll_Details")
+	self._goSpecDesc = gohelper.findChild(self.viewGO, "#scroll_Details/Viewport/Content/#go_SpecDesc")
+	self._goUseTime = gohelper.findChild(self.viewGO, "#scroll_Details/Viewport/Content/#go_SpecDesc/#go_UseTime")
+	self._txtUseTime = gohelper.findChildText(self.viewGO, "#scroll_Details/Viewport/Content/#go_SpecDesc/#go_UseTime/txt_title/#txt_UseTime")
+	self._txtSpecDesc = gohelper.findChildText(self.viewGO, "#scroll_Details/Viewport/Content/#go_SpecDesc/#txt_SpecDesc")
 	self._txtDesc = gohelper.findChildText(self.viewGO, "#scroll_Details/Viewport/Content/#txt_Desc")
 	self._goFetterDesc = gohelper.findChild(self.viewGO, "#scroll_Details/Viewport/Content/#go_FetterDesc")
 	self._scrollHeros = gohelper.findChildScrollRect(self.viewGO, "#scroll_Heros")
@@ -18,12 +22,22 @@ function Act191FetterTipView:onInitView()
 	end
 end
 
+function Act191FetterTipView:addEvents()
+	return
+end
+
+function Act191FetterTipView:removeEvents()
+	return
+end
+
 function Act191FetterTipView:onClickModalMask()
 	AudioMgr.instance:trigger(AudioEnum2_7.Act191.play_ui_yuzhou_dqq_panel_close)
 	self:closeThis()
 end
 
 function Act191FetterTipView:_editableInitView()
+	gohelper.setActive(self._goSpecDesc, false)
+
 	self.actId = Activity191Model.instance:getCurActId()
 
 	SkillHelper.addHyperLinkClick(self._txtDesc, Activity191Helper.clickHyperLinkSkill)
@@ -151,6 +165,17 @@ function Act191FetterTipView:onOpen()
 
 		fetterDesc = string.delBracketContent(self.fetterCoList[0].desc)
 	else
+		local specDesc = simpleCo.specDesc
+
+		if not string.nilorempty(specDesc) then
+			gohelper.setActive(self._goUseTime, simpleCo.tag == Activity191Enum.GreenDeer)
+
+			self._txtUseTime.text = self.gameInfo:getSkillCount(Activity191Enum.GreenDeerSkillIds)
+			self._txtSpecDesc.text = specDesc
+
+			gohelper.setActive(self._goSpecDesc, true)
+		end
+
 		self.fetterHeroList = self.gameInfo:getFetterHeroList(self.tag)
 
 		local fetterCntDic = self.gameInfo:getTeamFetterCntDic()

@@ -35,6 +35,8 @@ function HeroGroupModel:reInit()
 	self._episodeType = nil
 	self.weekwalk = nil
 	self.curGroupSelectIndex = 1
+	self.tempRecommendUseParam = nil
+	self.isAfterUpdateRecommend = nil
 end
 
 function HeroGroupModel:onGetHeroGroupList(groupInfoList)
@@ -223,6 +225,8 @@ function HeroGroupModel:setParam(battleId, episodeId, adventure, isReConnect, ep
 
 		if isSeasonChapter then
 			str = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
+		elseif SodacheUtil.isSodacheEpisode() then
+			str = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.SodacheTrialHeroGroupKey, "")
 		else
 			str = PlayerPrefsHelper.getString(PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. battleCO.id, "")
 		end
@@ -257,10 +261,19 @@ function HeroGroupModel:setParam(battleId, episodeId, adventure, isReConnect, ep
 			tempGroupMO
 		}
 
-		if isTowerEpisode then
+		if isTowerEpisode or self._episodeType == DungeonEnum.EpisodeType.Rouge2 or self._episodeType == DungeonEnum.EpisodeType.AtomicDungeon then
 			self.heroGroupType = ModuleEnum.HeroGroupType.General
 
 			HeroGroupSnapshotModel.instance:setParam(self.episodeId)
+		elseif self._episodeType == DungeonEnum.EpisodeType.Rouge2Boss then
+			self.heroGroupType = ModuleEnum.HeroGroupType.Temp
+			self._heroGroupList = {}
+
+			local tempGroupMo = Rouge2_BossBattleController.instance:generateTempHeroGroup(self.battleId, self.episodeId)
+
+			table.insert(self._heroGroupList, tempGroupMo)
+
+			self._curGroupId = 1
 		end
 	elseif self._episodeType == DungeonEnum.EpisodeType.Odyssey then
 		self.heroGroupType = ModuleEnum.HeroGroupType.Odyssey
@@ -375,6 +388,8 @@ function HeroGroupModel:_convertToPreset()
 				return
 			elseif episdoeConfig.type == DungeonEnum.EpisodeType.Abyss then
 				self._presetHeroGroupType = HeroGroupPresetEnum.HeroGroupType.Abyss
+			elseif episdoeConfig.type == DungeonEnum.EpisodeType.AtomicDungeon then
+				self._presetHeroGroupType = HeroGroupPresetEnum.HeroGroupType.AtomicDungeon
 			end
 		end
 	end
@@ -802,7 +817,7 @@ function HeroGroupModel:saveCurGroupData(callback, callbackObj, heroGroupMO)
 	else
 		local req = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
 
-		if HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(self.episodeId) then
+		if HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(self.episodeId) or self._episodeType == DungeonEnum.EpisodeType.Rouge2 or self._episodeType == DungeonEnum.EpisodeType.AtomicDungeon then
 			FightParam.initTowerFightGroup(req.fightGroup, heroGroupMO.clothId, heroGroupMO:getMainList(), heroGroupMO:getSubList(), heroGroupMO:getAllHeroEquips(), heroGroupMO:getAllHeroActivity104Equips(), heroGroupMO:getAssistBossId())
 		elseif HeroGroupHandler.checkIsTowerComposeEpisodeByEpisodeId(self.episodeId) then
 			local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
@@ -1152,6 +1167,22 @@ end
 function HeroGroupModel:setBattleAndEpisodeId(battleId, episodeId)
 	self.battleId = battleId
 	self.episodeId = episodeId
+end
+
+function HeroGroupModel:setAfterUpdateRecommendState(value)
+	self.isAfterUpdateRecommend = value
+end
+
+function HeroGroupModel:getAfterUpdateRecommendState()
+	return self.isAfterUpdateRecommend
+end
+
+function HeroGroupModel:setTempBattleRecommendParam(param)
+	self.tempRecommendUseParam = param
+end
+
+function HeroGroupModel:getTempBattleRecommendParam()
+	return self.tempRecommendUseParam
 end
 
 HeroGroupModel.instance = HeroGroupModel.New()

@@ -122,7 +122,7 @@ function Act191StoreGoodsItem:refreshRemainBuyCount()
 
 		self.remainBuyCount = 9999
 	else
-		local actId = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
+		local actId = Activity191Controller.instance:getStoreId()
 
 		gohelper.setActive(self.txtLimitBuy.gameObject, true)
 

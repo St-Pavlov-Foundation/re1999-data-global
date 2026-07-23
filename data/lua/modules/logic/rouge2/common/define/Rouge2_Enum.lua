@@ -5,28 +5,41 @@ module("modules.logic.rouge2.common.define.Rouge2_Enum", package.seeall)
 local Rouge2_Enum = _M
 
 Rouge2_Enum.ResPath = {
-	BackpackSkillShowItem = "ui/viewres/rouge2/backpack/rouge2_backpackskillshowitem.prefab",
-	AttributeMap = "ui/viewres/rouge2/rouge2_careerattributemap.prefab",
-	BackpackTalentView = "ui/viewres/rouge2/backpack/rouge2_backpacktalentview.prefab",
-	AttrToolBar = "ui/viewres/rouge2/rouge2_attributetoolbar.prefab",
-	ItemRefreshComp = "ui/viewres/rouge2/map/rouge2_itemrefreshcomp.prefab",
-	MapExploreChoiceItem = "ui/viewres/rouge2/map/rouge2_mapexplorechoiceitem.prefab",
-	ComBuffItem = "ui/viewres/rouge2/backpack/rouge2_commonbuffitem.prefab",
-	CoinView = "ui/viewres/rouge2/map/rouge2_mapcoinview.prefab",
-	ItemDescSpriteAb = "font/bmfont",
+	ActiveSkillAttrUpdateItem = "ui/viewres/rouge2/attribute/rouge2_activeskillattrupdateitem.prefab",
 	BackpackPet = "ui/viewres/rouge2/backpack/rouge2_backpackpet.prefab",
+	BackpackTalentView = "ui/viewres/rouge2/backpack/rouge2_backpacktalentview.prefab",
+	ItemDescSpriteAb = "font/bmfont",
+	ItemRefreshComp = "ui/viewres/rouge2/map/rouge2_itemrefreshcomp.prefab",
+	ComBuffItem = "ui/viewres/rouge2/backpack/rouge2_commonbuffitem.prefab",
+	SaveInfoActiveSkillComp = "ui/viewres/rouge2/bossbattle/rouge2_saveinfoactiveskillcomp.prefab",
+	BackpackSkillView = "ui/viewres/rouge2/backpack/rouge2_backpackskillview.prefab",
+	AttrSplitToolbar = "ui/viewres/rouge2/backpack/rouge2_attrsplittoolbar.prefab",
+	AttributeMap = "ui/viewres/rouge2/rouge2_careerattributemap.prefab",
 	BackpackFormulaItem = "ui/viewres/rouge2/backpack/rouge2_backpackformulaitem.prefab",
-	ChoiceCheckItem = "ui/viewres/rouge2/map/rouge2_mapchoicecheckitem.prefab",
+	BossBattleHeroGroup = "ui/viewres/rouge2/bossbattle/rouge2_bossbattle_herogroup.prefab",
 	CareerAttrActiveItem = "ui/viewres/rouge2/rouge2_careerattributeactiveitem.prefab",
-	BuffDropItem = "ui/viewres/rouge2/map/rouge2_buffdropitem.prefab",
-	DifficultyItem = "ui/viewres/rouge2/rouge2_difficultyitem.prefab",
+	BossBattleHeroGroupItem1 = "ui/viewres/rouge2/bossbattle/rouge2_bossbattle_herogroupitem1.prefab",
+	CareerAttributeTips = "ui/viewres/rouge2/attribute/rouge2_careerattributetipsview.prefab",
+	MapExploreChoiceItem = "ui/viewres/rouge2/map/rouge2_mapexplorechoiceitem.prefab",
 	ItemDescModeSwitcher = "ui/viewres/rouge2/backpack/rouge2_itemdescmodeswitcher.prefab",
 	MapChoiceItem = "ui/viewres/rouge2/map/rouge2_mapchoiceitem.prefab",
 	ItemDescSprite = "font/bmfont/rouge2/rouge2_1.asset",
 	BackpackSkillPanelView = "ui/viewres/rouge2/backpack/rouge2_backpackskillpanelview.prefab",
+	CommonSkillIconItem = "ui/viewres/rouge2/backpack/rouge2_commonskilliconitem.prefab",
+	ResultHeroItem = "ui/viewres/rouge2/result/rouge2_resultheroitem.prefab",
+	RecommendSystemTips = "ui/viewres/rouge2/system/rouge2_teamrecommendtips.prefab",
+	SaveInfoHeroGroupComp = "ui/viewres/rouge2/bossbattle/rouge2_saveinfoherogroupcomp.prefab",
+	CommonSkillItem = "ui/viewres/rouge2/backpack/rouge2_commonskillitem.prefab",
+	BackpackSkillShowItem = "ui/viewres/rouge2/backpack/rouge2_backpackskillshowitem.prefab",
+	AttrToolBar = "ui/viewres/rouge2/attribute/rouge2_attributetoolbar.prefab",
+	CoinView = "ui/viewres/rouge2/map/rouge2_mapcoinview.prefab",
+	BuffDropItem = "ui/viewres/rouge2/map/rouge2_buffdropitem.prefab",
+	DifficultyItem = "ui/viewres/rouge2/rouge2_difficultyitem.prefab",
+	ChoiceCheckItem = "ui/viewres/rouge2/map/rouge2_mapchoicecheckitem.prefab",
+	BossBattleHeroGroupItem2 = "ui/viewres/rouge2/bossbattle/rouge2_bossbattle_herogroupitem2.prefab",
+	SaveInfoListItem = "ui/viewres/rouge2/bossbattle/rouge2_saveinfolistitem.prefab",
 	ComRelicsItem = "ui/viewres/rouge2/backpack/rouge2_commonrelicsitem.prefab",
-	AttrSplitToolbar = "ui/viewres/rouge2/backpack/rouge2_attrsplittoolbar.prefab",
-	RecommendSystemTips = "ui/viewres/rouge2/system/rouge2_teamrecommendtips.prefab"
+	BossBattleResultAssessIcon = "ui/viewres/rouge2/bossbattle/rouge2_bossbattleresultassessicon.prefab"
 }
 Rouge2_Enum.State = {
 	Difficulty = 1,
@@ -45,10 +58,6 @@ Rouge2_Enum.MinSwitchPageOffset = 100
 Rouge2_Enum.BackpackTabContainerId = 2
 Rouge2_Enum.MaxActiveSkillNum = 3
 Rouge2_Enum.EmptyActiveSkill = 0
-Rouge2_Enum.BackpackSkillSortType = {
-	AssembleCost = 2,
-	GetTime = 1
-}
 Rouge2_Enum.BackpackBuffType = 0
 Rouge2_Enum.SkillTipsUsage = {
 	Default = 1,
@@ -65,13 +74,15 @@ Rouge2_Enum.AttributeData = {
 	Custom = 3
 }
 Rouge2_Enum.OutSideConstId = {
-	TalentPointMaxCount = 103,
+	SettleScoreIcon = 116,
 	CollectRotateParam = 121,
 	AlchemySubMaterialCount = 115,
-	SettleScoreIcon = 116,
-	StoreFinalReward = 107,
 	RougeNewGuideStartTime = 122,
-	TalentPointId = 102
+	TalentPointId = 102,
+	TalentPointMaxCount = 103,
+	ActivityUpdateVersion = 123,
+	StoreFinalReward = 107,
+	ActivityUpdateTips = 124
 }
 Rouge2_Enum.RewardGroupConstIdOffset = 116
 Rouge2_Enum.ConstId = {
@@ -90,6 +101,13 @@ Rouge2_Enum.BagType = {
 	Buff = 3,
 	AttrBuff = 5,
 	ActiveSkill = 4
+}
+Rouge2_Enum.BagType2MoCls = {
+	[Rouge2_Enum.BagType.Relics] = Rouge2_BagMO,
+	[Rouge2_Enum.BagType.InVisibleRelics] = Rouge2_BagMO,
+	[Rouge2_Enum.BagType.Buff] = Rouge2_BagMO,
+	[Rouge2_Enum.BagType.ActiveSkill] = Rouge2_ActiveSkillBagMO,
+	[Rouge2_Enum.BagType.AttrBuff] = Rouge2_BagMO
 }
 Rouge2_Enum.ItemType2DescHelper = {
 	[Rouge2_Enum.BagType.Relics] = Rouge2_RelicsDescHelper,
@@ -124,15 +142,17 @@ Rouge2_Enum.ItemExpressionData = {
 	LeaderAttrSum = 3
 }
 Rouge2_Enum.ItemDescModeDataKey = {
-	AttrBuffDrop = 8,
-	SkillDrop = 7,
+	Default = 1,
+	SkillAttrUpdate = 1,
 	RelicsDrop = 1,
-	BackpackBuff = 9,
-	BackpackSkill = 6,
-	RelicsAbandon = 2,
-	BackpackRelics = 3,
-	BuffDrop = 4,
-	BuffAbandon = 5
+	AttrBuffDrop = 1,
+	BackpackBuff = 1,
+	SkillDrop = 1,
+	BackpackSkill = 1,
+	RelicsAbandon = 1,
+	BackpackRelics = 1,
+	BuffDrop = 1,
+	BuffAbandon = 1
 }
 Rouge2_Enum.ItemStatus = {
 	New = 1,
@@ -159,10 +179,10 @@ Rouge2_Enum.TalentType = {
 Rouge2_Enum.SkillEditItemLongPressTime = 0.5
 Rouge2_Enum.BagItemTabId_All = 0
 Rouge2_Enum.BagTabType = {
-	Relics = 3,
-	ActiveSkill = 4,
-	Buff = 2,
-	Career = 1
+	Relics = 4,
+	ActiveSkill = 2,
+	Career = 1,
+	Buff = 3
 }
 Rouge2_Enum.BagTabTypeNameLangId = {
 	[Rouge2_Enum.BagTabType.Career] = "rouge2_backpacktabview_career",
@@ -176,12 +196,28 @@ Rouge2_Enum.BagTabTypeNameEn = {
 	[Rouge2_Enum.BagTabType.Relics] = "Artefacts",
 	[Rouge2_Enum.BagTabType.Buff] = "Harmonic"
 }
+Rouge2_Enum.BagTabType2Reddot = {
+	[Rouge2_Enum.BagTabType.ActiveSkill] = RedDotEnum.DotNode.Rouge2ActiveSkillTab,
+	[Rouge2_Enum.BagTabType.Relics] = RedDotEnum.DotNode.Rouge2RelicsTab,
+	[Rouge2_Enum.BagTabType.Buff] = RedDotEnum.DotNode.Rouge2BuffTab
+}
+Rouge2_Enum.ItemType2Reddot = {
+	[Rouge2_Enum.BagType.ActiveSkill] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.ActiveSkill],
+	[Rouge2_Enum.BagType.Relics] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.Relics],
+	[Rouge2_Enum.BagType.Buff] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.Buff]
+}
 Rouge2_Enum.AttributeToolType = {
 	Default = 1,
 	Enter_Attr_Detail = 3,
+	Enter_Skill_Detail = 6,
 	Enter_Attr = 2,
 	Attr_Detail = 4,
-	Enter = 5
+	Enter = 5,
+	Skill_Detail = 7
+}
+Rouge2_Enum.AttrToolParam = {
+	IsShowEmptySkill = 2,
+	SelectSkillIndex = 1
 }
 Rouge2_Enum.AttrIconSuffix = {
 	Big = "_1",
@@ -193,23 +229,24 @@ Rouge2_Enum.AttrIconSuffix = {
 }
 Rouge2_Enum.CareerIconSuffix = {
 	Bag = "_1",
+	Mini = "_3",
 	Tab = "_2"
 }
 Rouge2_Enum.ItemRareIconType = {
+	TagBg = 3,
+	CircleBg = 4,
 	Default = 0,
+	CircleIcon = 5,
 	Bg = 1,
-	NameBg = 2,
-	TagBg = 3
+	NameBg = 2
 }
-Rouge2_Enum.BagTabType2Reddot = {
-	[Rouge2_Enum.BagTabType.ActiveSkill] = RedDotEnum.DotNode.Rouge2ActiveSkillTab,
-	[Rouge2_Enum.BagTabType.Relics] = RedDotEnum.DotNode.Rouge2RelicsTab,
-	[Rouge2_Enum.BagTabType.Buff] = RedDotEnum.DotNode.Rouge2BuffTab
+Rouge2_Enum.ItemIconType = {
+	Default = "_1",
+	Type2 = "_2"
 }
-Rouge2_Enum.ItemType2Reddot = {
-	[Rouge2_Enum.BagType.ActiveSkill] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.ActiveSkill],
-	[Rouge2_Enum.BagType.Relics] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.Relics],
-	[Rouge2_Enum.BagType.Buff] = Rouge2_Enum.BagTabType2Reddot[Rouge2_Enum.BagTabType.Buff]
+Rouge2_Enum.SystemIconType = {
+	Black = 0,
+	White = 1
 }
 Rouge2_Enum.AttrSplitToolbarEventFlag = {
 	Relics = 1,
@@ -272,24 +309,38 @@ Rouge2_Enum.TeamRecommendTipType = {
 	Default = 1,
 	Single = 3,
 	AttrBuffDrop = 6,
-	HeroCard = 8,
+	HeroCard = 7,
 	System = 4,
-	Drop = 5,
+	MultiItemSystemTag = 9,
 	Default_Layout = 2,
-	HeroGroupEdit = 9,
-	MapStoreGoods = 7
+	ItemRecommend = 5,
+	HeroGroupEdit = 8
+}
+Rouge2_Enum.TeamRecommendParam = {
+	ItemId = 1,
+	IsShowSystemIcon = 3,
+	Pivot = 6,
+	LayoutType = 4,
+	Spacing = 9,
+	Scale = 7,
+	HeroId = 5,
+	IsShowSystemName = 2,
+	MinIconWidth = 8
 }
 Rouge2_Enum.AttrDetailTabGroupType = {
 	Overview = 1,
+	SkillList = 3,
 	AttrList = 2
 }
 Rouge2_Enum.AttrDetailTabGroupCls = {
 	[Rouge2_Enum.AttrDetailTabGroupType.Overview] = Rouge2_AttrDetailTabGroupBaseItem,
-	[Rouge2_Enum.AttrDetailTabGroupType.AttrList] = Rouge2_AttrDetailAttrTabGroupItem
+	[Rouge2_Enum.AttrDetailTabGroupType.AttrList] = Rouge2_AttrDetailAttrTabGroupItem,
+	[Rouge2_Enum.AttrDetailTabGroupType.SkillList] = Rouge2_AttrDetailTabGroupBaseItem
 }
 Rouge2_Enum.AttrDetailTabGroupLangId = {
 	[Rouge2_Enum.AttrDetailTabGroupType.Overview] = "rouge2_attributedetailview_dropoverview",
-	[Rouge2_Enum.AttrDetailTabGroupType.AttrList] = "rouge2_attributedetailview_attroverview"
+	[Rouge2_Enum.AttrDetailTabGroupType.AttrList] = "rouge2_attributedetailview_attroverview",
+	[Rouge2_Enum.AttrDetailTabGroupType.SkillList] = "rouge2_attributedetailview_skilloverview"
 }
 Rouge2_Enum.AttrDropStatus = {
 	HasGet = 3,
@@ -304,9 +355,11 @@ Rouge2_Enum.AttrDropArrowSpriteIndex = {
 	[Rouge2_Enum.AttrDropArrowType.Black] = 6,
 	[Rouge2_Enum.AttrDropArrowType.White] = 1
 }
-Rouge2_Enum.RecordViewType = {
-	Edit = 2,
-	Show = 1
+Rouge2_Enum.CommonSkillIconType = {
+	Type_2 = 2,
+	Type_1 = 1,
+	Type_3 = 3,
+	None = 0
 }
 
 return Rouge2_Enum

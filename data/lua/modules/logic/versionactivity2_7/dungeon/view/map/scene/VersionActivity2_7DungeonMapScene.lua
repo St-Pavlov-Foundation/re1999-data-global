@@ -25,9 +25,12 @@ function VersionActivity2_7DungeonMapScene:onInitView()
 	local _, rotateY = transformhelper.getLocalRotation(self._mainRoot.transform)
 
 	self._ppvalue = {
+		bloomActive = false,
+		BloomThreshold = 0.7,
+		LocalBloomActive = false,
+		localBloomActive = false,
 		BloomActive = false,
-		bloomThreshold = 0.7,
-		localBloomActive = false
+		bloomThreshold = 0.7
 	}
 
 	local unitPPValue = {}

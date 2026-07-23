@@ -11,5 +11,6 @@ CharacterDestinyEvent.OnUseStoneReply = 4
 CharacterDestinyEvent.OnHeroRedDotReadReply = 5
 CharacterDestinyEvent.OnUnlockSlot = 6
 CharacterDestinyEvent.onClickReshapeBtn = 7
+CharacterDestinyEvent.OnShowStone = 8
 
 return CharacterDestinyEvent

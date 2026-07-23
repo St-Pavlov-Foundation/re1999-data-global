@@ -1036,5 +1036,125 @@
     "id": 2,
     "res": "dialogue_qingjiegong_right",
     "pos": "165#0"
+  },
+  {
+    "dialogueId": 3701,
+    "id": 1,
+    "res": "dialogue_chongsushibing_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3701,
+    "id": 2,
+    "res": "dialogue_wumingzhe_center",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3702,
+    "id": 1,
+    "res": "dialogue_ping_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3702,
+    "id": 2,
+    "res": "dialogue_huoduchuan_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 1,
+    "res": "dialogue_nuodika_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 2,
+    "res": "dialogue_npc8_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 3,
+    "res": "dialogue_role9_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 4,
+    "res": "dialogue_xingti01_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 5,
+    "res": "dialogue_hujisheng_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3703,
+    "id": 6,
+    "res": "dialogue_xugouji_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 3704,
+    "id": 1,
+    "res": "dialogue_keleiwusi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 3704,
+    "id": 2,
+    "res": "dialogue_jianchaguan_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 64,
+    "id": 1,
+    "res": "dialogue_lantu_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 64,
+    "id": 2,
+    "res": "dialogue_dianjishi_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 65,
+    "id": 1,
+    "res": "dialogue_dianjishi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 65,
+    "id": 2,
+    "res": "dialogue_kenna_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 66,
+    "id": 1,
+    "res": "dialogue_madun_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 66,
+    "id": 2,
+    "res": "dialogue_lantu_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 67,
+    "id": 1,
+    "res": "dialogue_bolinyidong_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 67,
+    "id": 2,
+    "res": "dialogue_jijinhuguanyuan_right",
+    "pos": "165#0"
   }
 ]

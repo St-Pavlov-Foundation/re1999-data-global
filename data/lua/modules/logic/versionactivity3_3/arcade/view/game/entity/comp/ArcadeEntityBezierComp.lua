@@ -13,7 +13,7 @@ end
 function ArcadeEntityBezierComp:init(go)
 	self.go = go
 	self.trans = go.transform
-	self._bezierY = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectOffectY, true) or 2
+	self._bezierY = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectOffsetY, true) or 2
 	self._bezierTime = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.FlyingEffectTime, true) or 0.3
 end
 

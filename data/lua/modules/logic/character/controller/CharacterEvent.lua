@@ -80,5 +80,6 @@ CharacterEvent.onCloseSkillTalentTipView = 40012
 CharacterEvent.onChoiceHero3123WeaponReply = 40101
 CharacterEvent.onClickWeapon = 40111
 CharacterEvent.onRefreshCharacterSkill = 40111
+CharacterEvent.HeroUpdatePushData = 40201
 
 return CharacterEvent

@@ -75,6 +75,24 @@ function RoomCharacterSpineComp:characterPosChanged()
 	self:_cameraTransformUpdate()
 end
 
+function RoomCharacterSpineComp:resetPhysics()
+	if self._skeletonAnim then
+		self._skeletonAnim:ResetLastPositionAndRotation()
+	end
+end
+
+function RoomCharacterSpineComp:setMixDuration(mixDuration)
+	if self._skeletonAnim then
+		self._skeletonAnim:SetMixDuration(mixDuration)
+	end
+end
+
+function RoomCharacterSpineComp:clearMixDuration()
+	if self._skeletonAnim then
+		self._skeletonAnim:ClearMixDuration()
+	end
+end
+
 function RoomCharacterSpineComp:_cameraTransformUpdate()
 	local focus = self._scene.camera:getCameraFocus()
 	local x, y, z = transformhelper.getPos(self.goTrs)

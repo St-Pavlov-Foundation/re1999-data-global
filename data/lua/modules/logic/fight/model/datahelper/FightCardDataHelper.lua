@@ -242,6 +242,10 @@ function FightCardDataHelper.canCombineWithUniversal(universal_card_info, target
 		return false
 	end
 
+	if FightHelper.checkIsDevicePowerCard(target_card_info.skillId) then
+		return false
+	end
+
 	if FightCardDataHelper.isSkill3(target_card_info) then
 		return false
 	end
@@ -552,6 +556,7 @@ end
 function FightCardDataHelper.playActCost(cardData)
 	local costPoint = 1
 	local uid = cardData.uid
+	local entityData = FightDataHelper.entityMgr:getById(uid)
 	local skillId = cardData.skillId
 	local cardType = cardData.cardType
 
@@ -571,6 +576,10 @@ function FightCardDataHelper.playActCost(cardData)
 		costPoint = 0
 
 		return costPoint
+	end
+
+	if entityData and entityData:hasBuffFeature(FightEnum.BuffFeature.SkillNoUseActPoint) then
+		costPoint = 0
 	end
 
 	local skillCo = lua_skill.configDict[skillId]
@@ -636,6 +645,10 @@ function FightCardDataHelper.canPlayCard(card_info)
 		return false
 	end
 
+	if card_info:checkHasExtraInfo(FightCardExtraInfoData.ExtraKey.NotUse) then
+		return false
+	end
+
 	if FightCardDataHelper.isFrozenCard(card_info) then
 		return false
 	end
@@ -649,6 +662,10 @@ function FightCardDataHelper.canPlayCard(card_info)
 
 			return handCardIndex == 1 or handCardIndex == #handcards
 		end
+	end
+
+	if FightCardDataHelper.hasUnnamedLockState(card_info) then
+		return false
 	end
 
 	return true
@@ -674,8 +691,22 @@ function FightCardDataHelper.checkCanPlayCard(card_info, cardDataList)
 	return true
 end
 
+function FightCardDataHelper.hasUnnamedLockState(cardInfo)
+	if not cardInfo then
+		return false
+	end
+
+	local cardData = cardInfo:getCardData(FightCardInfo_CardData.CardDataKey.Unnamed)
+
+	return cardData and cardData.jsonValue.lock
+end
+
 function FightCardDataHelper.canMoveCard(card_info)
 	if not card_info then
+		return false
+	end
+
+	if card_info:checkHasExtraInfo(FightCardExtraInfoData.ExtraKey.NotMove) then
 		return false
 	end
 
@@ -792,6 +823,16 @@ function FightCardDataHelper.allFrozenCard(handCards)
 	end
 
 	return lock_coun == #handCards
+end
+
+function FightCardDataHelper.allPlayCardCantUse(handCards)
+	for i, v in ipairs(handCards) do
+		if FightCardDataHelper.canPlayCard(v) then
+			return false
+		end
+	end
+
+	return true
 end
 
 function FightCardDataHelper.calcRemoveCardTime(beforeCards, removeIndexes, removeTime)
@@ -1032,7 +1073,11 @@ function FightCardDataHelper.getCardSkin()
 	local config = lua_fight_ui_style.configDict[cardStyleId]
 
 	if not config then
-		return 672800
+		return nil
+	end
+
+	if config.itemId == 672800 then
+		return nil
 	end
 
 	return config.itemId

@@ -48,7 +48,8 @@ FightWorkFightParamChange330.Key2Work = {
 	[FightParamData.ParamKey.DoomsdayClock_Range3] = FightParamChangeWork4,
 	[FightParamData.ParamKey.DoomsdayClock_Range4] = FightParamChangeWork4,
 	[FightParamData.ParamKey.DoomsdayClock_Offset] = FightParamChangeWork4,
-	[FightParamData.ParamKey.ACT191_MIN_HP_RATE] = FightParamChangeWork9
+	[FightParamData.ParamKey.ACT191_MIN_HP_RATE] = FightParamChangeWork9,
+	[FightParamData.ParamKey.DOUQUQU_DICE] = FightParamChangeWork20
 }
 
 local KeyIndex = 0

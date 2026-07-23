@@ -500,6 +500,39 @@ function HeroModel:isMaxExSkill(heroId, withArtificeCount)
 	return result
 end
 
+function HeroModel:getHeroSkillCount(heroId, withArtificeCount)
+	local result = 0
+	local heroMo = HeroModel.instance:getByHeroId(heroId)
+
+	if not heroMo then
+		return result
+	end
+
+	local exSkillLevel = heroMo.exSkillLevel
+
+	if withArtificeCount then
+		local artificeCount = 0
+		local duplicateItem = heroMo.config.duplicateItem
+
+		if not string.nilorempty(duplicateItem) then
+			local items = string.split(duplicateItem, "|")
+			local item = items[1]
+
+			if item then
+				local itemParams = string.splitToNumber(item, "#")
+
+				artificeCount = ItemModel.instance:getItemQuantity(itemParams[1], itemParams[2])
+			end
+		end
+
+		exSkillLevel = exSkillLevel + artificeCount
+	end
+
+	result = exSkillLevel
+
+	return result
+end
+
 HeroModel.instance = HeroModel.New()
 
 return HeroModel

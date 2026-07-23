@@ -4,17 +4,19 @@ module("modules.configs.excel2json.lua_rouge2_system", package.seeall)
 
 local lua_rouge2_system = {}
 local fields = {
+	color = 5,
+	bg = 6,
+	recommendAttribute = 3,
+	visible = 8,
 	id = 1,
-	visible = 5,
-	color = 4,
 	icon = 2,
-	desc = 3
+	bgColor = 7,
+	desc = 4
 }
 local primaryKey = {
 	"id"
 }
 local mlStringKey = {
-	color = 2,
 	desc = 1
 }
 

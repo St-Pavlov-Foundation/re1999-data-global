@@ -8,7 +8,6 @@ function Rouge2_BackpackRelicsView:onInitView()
 	self._goTab = gohelper.findChild(self.viewGO, "#go_Tab")
 	self._goEmpty = gohelper.findChild(self.viewGO, "#go_Relics/#go_Empty")
 	self._scrollRelics = gohelper.findChildScrollRect(self.viewGO, "#go_Relics/#scroll_Relics")
-	self._goAttribute = gohelper.findChild(self.viewGO, "#go_Attribute")
 	self._goMode = gohelper.findChild(self.viewGO, "#go_Mode")
 
 	if self._editableInitView then
@@ -33,7 +32,6 @@ function Rouge2_BackpackRelicsView:_scrollRelicsChanged()
 end
 
 function Rouge2_BackpackRelicsView:_editableInitView()
-	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Attr_Detail)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BackpackRelics)
 
 	self._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.viewGO)

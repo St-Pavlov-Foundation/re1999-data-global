@@ -342,7 +342,7 @@ function ArcadeGameController:triggerEventOption(entityType, entityId, uid, even
 			local checkHandler = ArcadeGameHelper.getEventOptionConditionCheckFunc(conditionType)
 
 			if checkHandler then
-				checkResult = checkHandler(arr)
+				checkResult = checkHandler(eventOptionId, arr)
 			end
 		end
 	end
@@ -427,6 +427,55 @@ function ArcadeGameController:changeRoomFinish()
 	self:dispatchEvent(ArcadeEvent.OnChangeArcadeRoomFinish, roomId)
 end
 
+function ArcadeGameController:_collectFloorTriggerTargetList(floorMOList, includeFloor)
+	local curRoom = self:getCurRoom()
+
+	if not curRoom or not floorMOList or #floorMOList <= 0 then
+		return
+	end
+
+	local resultList = {}
+	local repeatDict = {}
+
+	local function _tryAddTarget(targetMO)
+		if not targetMO then
+			return
+		end
+
+		local key = string.format("%s_%s", targetMO:getEntityType(), targetMO:getUid())
+
+		if repeatDict[key] then
+			return
+		end
+
+		repeatDict[key] = true
+		resultList[#resultList + 1] = targetMO
+	end
+
+	for _, floorMO in ipairs(floorMOList) do
+		if includeFloor then
+			_tryAddTarget(floorMO)
+		end
+
+		local gridX, gridY = floorMO:getGridPos()
+		local sizeX, sizeY = floorMO:getSize()
+
+		for x = gridX, gridX + sizeX - 1 do
+			for y = gridY, gridY + sizeY - 1 do
+				local entityData = curRoom:getEntityDataInTargetGrid(x, y)
+
+				if entityData and entityData.entityType and entityData.uid then
+					local entityMO = ArcadeGameModel.instance:getMOWithType(entityData.entityType, entityData.uid)
+
+					_tryAddTarget(entityMO)
+				end
+			end
+		end
+	end
+
+	return resultList
+end
+
 function ArcadeGameController:tryAddEntityList(entityDataList, needGenUid, canOverY, cb, cbObj)
 	local curRoom = self:getCurRoom()
 
@@ -443,8 +492,23 @@ function ArcadeGameController:tryAddEntityList(entityDataList, needGenUid, canOv
 		self._gameScene.entityMgr:addEntityByList(moList, canOverY, cb, cbObj)
 	end
 
+	local addFloorMOList = {}
+
+	if moList then
+		for _, mo in ipairs(moList) do
+			if mo:getEntityType() == ArcadeGameEnum.EntityType.Floor then
+				addFloorMOList[#addFloorMOList + 1] = mo
+			end
+		end
+	end
+
+	local addFloorTriggerMOList = self:_collectFloorTriggerTargetList(addFloorMOList, true)
+
+	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.AfterAddFloor721, addFloorTriggerMOList)
 	self:checkCharacterNearUnit()
 	self:dispatchEvent(ArcadeEvent.OnAddEntities, moList)
+
+	return moList
 end
 
 function ArcadeGameController:removeEntityListByType(entityType)
@@ -452,6 +516,15 @@ function ArcadeGameController:removeEntityListByType(entityType)
 
 	if not moList or #moList <= 0 then
 		return
+	end
+
+	local isFloor = entityType == ArcadeGameEnum.EntityType.Floor
+	local removeFloorTriggerMOList
+
+	if isFloor then
+		removeFloorTriggerMOList = self:_collectFloorTriggerTargetList(moList)
+
+		ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.BeforeRemoveFloor722, moList)
 	end
 
 	local uidList = {}
@@ -467,16 +540,41 @@ function ArcadeGameController:removeEntityListByType(entityType)
 	end
 
 	ArcadeGameModel.instance:removeEntityMOByType(entityType)
+
+	if isFloor then
+		ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.AfterRemoveFloor723, removeFloorTriggerMOList)
+	end
+
 	self:checkCharacterNearUnit()
 	self:dispatchEvent(ArcadeEvent.OnRemoveEntity, entityType, uidList)
 end
 
 function ArcadeGameController:removeEntity(entityType, uid, needWaitRemoveAnim)
+	local isFloor = entityType == ArcadeGameEnum.EntityType.Floor
+	local removeFloorTriggerMOList
+
+	if isFloor then
+		local floorMO = ArcadeGameModel.instance:getMOWithType(entityType, uid)
+
+		if floorMO then
+			removeFloorTriggerMOList = self:_collectFloorTriggerTargetList({
+				floorMO
+			})
+
+			ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.BeforeRemoveFloor722, floorMO)
+		end
+	end
+
 	if self._gameScene then
 		self._gameScene.entityMgr:removeEntityWithType(entityType, uid, needWaitRemoveAnim)
 	end
 
 	ArcadeGameModel.instance:removeEntityMO(entityType, uid)
+
+	if isFloor then
+		ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.AfterRemoveFloor723, removeFloorTriggerMOList)
+	end
+
 	self:checkCharacterNearUnit()
 	self:dispatchEvent(ArcadeEvent.OnRemoveEntity, entityType, {
 		uid
@@ -490,16 +588,9 @@ function ArcadeGameController:removeDeadEntityAndDrop(mo, isPlay)
 		return
 	end
 
-	local entityType = mo:getEntityType()
-	local uid = mo:getUid()
 	local isRemoving = mo:getIsRemoving()
 
 	if isRemoving then
-		self:_afterPlayRemove({
-			entityType = entityType,
-			uid = uid
-		})
-
 		return
 	end
 
@@ -512,11 +603,23 @@ function ArcadeGameController:removeDeadEntityAndDrop(mo, isPlay)
 		end
 	end
 
+	self:directRemoveEntity(mo, isPlay and ArcadeGameEnum.ActionShowId.Remove)
+end
+
+function ArcadeGameController:directRemoveEntity(mo, actionShowId)
+	local isRemoving = mo:getIsRemoving()
+
+	if isRemoving then
+		return
+	end
+
+	local entityType = mo:getEntityType()
+	local uid = mo:getUid()
 	local scene = self:getGameScene()
 	local entity = scene and scene.entityMgr:getEntityWithType(entityType, uid)
 
-	if isPlay and entity then
-		entity:playActionShow(ArcadeGameEnum.ActionShowId.Remove, nil, nil, self._afterPlayRemove, self, {
+	if actionShowId and entity then
+		entity:playActionShow(actionShowId, nil, nil, self._destroyEntityAfterPlayAnim, self, {
 			entity = entity
 		})
 		mo:setIsRemoving(true)
@@ -526,7 +629,7 @@ function ArcadeGameController:removeDeadEntityAndDrop(mo, isPlay)
 	end
 end
 
-function ArcadeGameController:_afterPlayRemove(param)
+function ArcadeGameController:_destroyEntityAfterPlayAnim(param)
 	if param and param.entity then
 		param.entity:destroy()
 	end
@@ -579,13 +682,25 @@ function ArcadeGameController:gainCollection(collectionId, gainPos)
 			return
 		end
 
+		local type = ArcadeConfig.instance:getCollectionType(collectionId)
+
+		if type == ArcadeGameEnum.CollectionType.Weapon then
+			local typeUidList = characterMO:getCollectionUidListWithType(type)
+			local curWeaponCount = #typeUidList
+			local canCarryWeaponNum = characterMO:getCanCarryWeaponNum()
+
+			if canCarryWeaponNum <= curWeaponCount then
+				self:lossCollection(typeUidList[1])
+			end
+		end
+
 		collectionMO = characterMO:addCollection(collectionId)
 
 		if collectionMO then
 			local name = ArcadeConfig.instance:getCollectionName(collectionId)
 
 			GameFacade.showToast(ToastEnum.V3a3ArcadeGainCollection, name)
-			ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.Collection501, characterMO, {
+			ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.AfterGainCollection501, characterMO, {
 				collectionMO = collectionMO
 			})
 			ArcadeGameModel.instance:addUnlockHandBookItem(ArcadeGameEnum.HandBookType.Collection, collectionId)
@@ -615,11 +730,31 @@ function ArcadeGameController:tryUseCollection(uid, useTime)
 		return
 	end
 
+	local function _isNeedRemoveByDurability(targetCollectionMO)
+		local remainDurability = targetCollectionMO and targetCollectionMO:getRemainDurability()
+
+		return remainDurability and remainDurability <= 0
+	end
+
 	collectionMO:addUsedTimes(useTime)
 
-	local remainDurability = collectionMO:getRemainDurability()
+	if not _isNeedRemoveByDurability(collectionMO) then
+		self:dispatchEvent(ArcadeEvent.OnWeaponDurabilityChange)
 
-	if remainDurability and remainDurability <= 0 then
+		return
+	end
+
+	ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.BeforeRemoveCollection503, characterMO, {
+		collectionMO = collectionMO
+	})
+
+	local latestCollectionMO = characterMO:getCollectionMO(uid)
+
+	if not latestCollectionMO then
+		return
+	end
+
+	if _isNeedRemoveByDurability(latestCollectionMO) then
 		self:lossCollection(uid)
 	else
 		self:dispatchEvent(ArcadeEvent.OnWeaponDurabilityChange)
@@ -630,7 +765,11 @@ function ArcadeGameController:lossCollection(uid)
 	local characterMO = ArcadeGameModel.instance:getCharacterMO()
 
 	if characterMO then
-		characterMO:removeCollection(uid)
+		local collectionMO = characterMO:removeCollection(uid)
+
+		ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.AfterRemoveCollection504, characterMO, {
+			collectionMO = collectionMO
+		})
 	end
 
 	self:dispatchEvent(ArcadeEvent.OnCollectionChange)
@@ -749,17 +888,59 @@ function ArcadeGameController:changeResCount(resId, changeValue, gainPos)
 	})
 end
 
+function ArcadeGameController:setAllEntityVisibility(isShow)
+	local scene = self:getGameScene()
+
+	if scene then
+		scene.entityMgr:setAllEntityIsShow(isShow)
+	end
+
+	self:dispatchEvent(ArcadeEvent.OnSetAllEntityIsShow, isShow)
+end
+
+function ArcadeGameController:changeEntityAttackAttr(entityMO, attackAttrId)
+	if not entityMO then
+		return
+	end
+
+	local oldAttackAttr = entityMO:getAttackAttrId()
+
+	if oldAttackAttr and oldAttackAttr ~= 0 then
+		local oldSkillList = ArcadeConfig.instance:getAttackAttrSkillList(oldAttackAttr)
+
+		if oldSkillList then
+			for _, oldSkillId in ipairs(oldSkillList) do
+				entityMO:removeSkillById(oldSkillId)
+			end
+		end
+	end
+
+	entityMO:setAttackAttr(attackAttrId)
+
+	if attackAttrId and attackAttrId ~= 0 then
+		local skillList = ArcadeConfig.instance:getAttackAttrSkillList(attackAttrId)
+
+		if skillList then
+			for _, skillId in ipairs(skillList) do
+				entityMO:addSkillById(skillId)
+			end
+		end
+	end
+end
+
 function ArcadeGameController:enterAttackFlow(attackType, attackerMO, targetMOList, attackDirection, skillId, notTriggerAtkPoint)
 	if not attackerMO then
 		return
 	end
 
+	local validTargetMOList = self:_filterTargetMOList(targetMOList)
+
 	if notTriggerAtkPoint ~= true then
-		ArcadeGameTriggerController.instance:atkTriggerTarget(ArcadeGameEnum.TriggerPoint.AtkBefor201, attackType, attackerMO, targetMOList)
-		ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.HitBefor202, attackType, attackerMO, targetMOList)
+		ArcadeGameTriggerController.instance:atkTriggerTarget(ArcadeGameEnum.TriggerPoint.AtkBefore201, attackType, attackerMO, validTargetMOList)
+		ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.HitBefore202, attackType, attackerMO, validTargetMOList)
 	end
 
-	ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.HitBefor251, attackType, attackerMO, targetMOList)
+	ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.HitBefore251, attackType, attackerMO, validTargetMOList)
 
 	local attackActionShowId, hitActionShowId, actionShowParam = self:_getAttackAndHitShow(attackerMO, attackType, skillId)
 	local scene = self:getGameScene()
@@ -771,24 +952,50 @@ function ArcadeGameController:enterAttackFlow(attackType, attackerMO, targetMOLi
 		attackerEntity:playActionShow(attackActionShowId, attackDirection, actionShowParam)
 	end
 
-	self:_calAttackDamage(attackerMO, attackType, targetMOList, attackDirection, hitActionShowId, actionShowParam, skillId)
-	self:_updateScoreAndSkillEnergy(attackerMO, attackType, targetMOList, skillId)
+	self:_calAttackDamage(attackerMO, attackType, validTargetMOList, attackDirection, hitActionShowId, actionShowParam, skillId)
+
+	local isBasicAttack = attackType == ArcadeGameEnum.AttackType.Normal or attackType == ArcadeGameEnum.AttackType.Link
+
+	if isBasicAttack then
+		ArcadeGameModel.instance:triggerEntityCounterRecord(attackerEntityType, attackerUid, ArcadeGameEnum.GameCounter.AttackTimesSinceAddSkill)
+	end
+
+	self:_updateScoreAndSkillEnergy(attackerMO, attackType, validTargetMOList, skillId)
 
 	if notTriggerAtkPoint ~= true then
-		ArcadeGameTriggerController.instance:atkTriggerTarget(ArcadeGameEnum.TriggerPoint.Atk203, attackType, attackerMO, targetMOList)
+		ArcadeGameTriggerController.instance:atkTriggerTarget(ArcadeGameEnum.TriggerPoint.Atk203, attackType, attackerMO, validTargetMOList)
 		ArcadeGameTriggerController.instance:clearTargetTempAttr(attackerMO)
-		ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.Hit204, attackType, attackerMO, targetMOList)
-		ArcadeGameTriggerController.instance:clearTargetListTempAttr(targetMOList)
+		ArcadeGameTriggerController.instance:hitTriggerTargetList(ArcadeGameEnum.TriggerPoint.Hit204, attackType, attackerMO, validTargetMOList)
+		ArcadeGameTriggerController.instance:clearTargetListTempAttr(validTargetMOList)
 		ArcadeGameModel.instance:clearGameTempAttribute()
 	end
 
 	self:_enterDeathSettleFlow(attackerMO)
 
-	if targetMOList then
-		for _, targetMO in ipairs(targetMOList) do
+	if validTargetMOList then
+		for _, targetMO in ipairs(validTargetMOList) do
 			self:_enterDeathSettleFlow(targetMO, attackerMO)
 		end
 	end
+end
+
+function ArcadeGameController:_filterTargetMOList(targetMOList)
+	if not targetMOList then
+		return
+	end
+
+	local result = {}
+
+	for _, targetMO in ipairs(targetMOList) do
+		local isAlive = targetMO:getIsAlive()
+		local isRespawning = targetMO:getIsRespawning()
+
+		if isAlive and not isRespawning then
+			result[#result + 1] = targetMO
+		end
+	end
+
+	return result
 end
 
 function ArcadeGameController:_getAttackAndHitShow(attackerMO, attackType, skillId)
@@ -798,6 +1005,16 @@ function ArcadeGameController:_getAttackAndHitShow(attackerMO, attackType, skill
 	if isBasicAttack then
 		attackActionShowId = ArcadeGameEnum.ActionShowId.BaseAttack
 		hitActionShowId = ArcadeGameEnum.ActionShowId.BaseHit
+
+		local attackAttrId = attackerMO:getAttackAttrId()
+
+		if attackAttrId and attackAttrId ~= 0 then
+			local attrHitShowId = ArcadeConfig.instance:getAttackAttrHitActionShow(attackAttrId)
+
+			if attrHitShowId and attrHitShowId ~= 0 then
+				hitActionShowId = attrHitShowId
+			end
+		end
 	elseif attackType == ArcadeGameEnum.AttackType.Bomb then
 		attackActionShowId = ArcadeGameEnum.ActionShowId.BombAttack
 		hitActionShowId = ArcadeGameEnum.ActionShowId.BombHit
@@ -832,7 +1049,7 @@ function ArcadeGameController:_calAttackDamage(attackerMO, attackType, targetMOL
 	if attackType == ArcadeGameEnum.AttackType.Bomb then
 		local addBombDamage = 0
 
-		isCharacterBomb = attackerMO:isCharacterBomb()
+		isCharacterBomb = attackerMO:getIsCharacterBomb()
 
 		if isCharacterBomb then
 			addBombDamage = ArcadeGameModel.instance:getGameAttribute(ArcadeGameEnum.GameAttribute.AddBombDamage)
@@ -855,9 +1072,10 @@ function ArcadeGameController:_calAttackDamage(attackerMO, attackType, targetMOL
 		attackDamage = ArcadeConfig.instance:getActiveSkillDamage(skillId) + addSkillDamage
 	end
 
-	local isBasicAttack = attackType == ArcadeGameEnum.AttackType.Normal or attackType == ArcadeGameEnum.AttackType.Link
-	local attackerX, attackerY = attackerMO:getGridPos()
 	local defenseGridX, defenseGridY, defenseTargetMO
+	local isBasicAttack = attackType == ArcadeGameEnum.AttackType.Normal or attackType == ArcadeGameEnum.AttackType.Link
+	local attackAttrId = attackerMO:getAttackAttrId()
+	local attackerX, attackerY = attackerMO:getGridPos()
 
 	if attackDirection then
 		defenseGridX = attackerX + (ArcadeEnum.DirChangeGridX[attackDirection] or 0)
@@ -875,21 +1093,54 @@ function ArcadeGameController:_calAttackDamage(attackerMO, attackType, targetMOL
 
 		if isBasicAttack then
 			local buffSetMO = targetMO:getBuffSetMO()
-			local buffEffectName = string.format("NotBeAttack_%s", hitDirection)
-			local haveNotBeAttackBuff = buffSetMO:hasEffectParamBuff(ArcadeGameEnum.BuffEffectParam[buffEffectName])
+			local strHitDirection = tostring(hitDirection)
+			local notBeAttackEffect = ArcadeGameEnum.BuffEffectName.NotBeAttack
+			local onlySpecAttackEffect = ArcadeGameEnum.BuffEffectName.OnlySpecAttack
+			local haveNotBeAttackBuff = buffSetMO:hasEffectParamBuff(notBeAttackEffect, strHitDirection)
+			local refuseThisAttackAttr = false
+			local onlySpecAttackBuffDict = buffSetMO:getBuffDictByEffectParam(onlySpecAttackEffect)
 
-			if haveNotBeAttackBuff then
+			if onlySpecAttackBuffDict and next(onlySpecAttackBuffDict) then
+				refuseThisAttackAttr = true
+
+				for _, buff in pairs(onlySpecAttackBuffDict) do
+					local param = buff:getEffectNameParam(onlySpecAttackEffect)
+
+					if tonumber(param) == attackAttrId then
+						refuseThisAttackAttr = false
+
+						break
+					end
+				end
+			end
+
+			if haveNotBeAttackBuff or refuseThisAttackAttr then
 				canBeAttacked = false
 				needPlayActionShow = false
 
-				local removeBuffList = buffSetMO:reduceBuffRoundByEffectParam(ArcadeGameEnum.BuffEffectParam[buffEffectName])
+				local removeBuffList = buffSetMO:reduceBuffRoundByEffectParam(notBeAttackEffect, strHitDirection)
 
 				self:removeEntityBuffs(removeBuffList, targetEntityType, targetUid)
 			else
+				local damageFactor = 1
+				local specAttackDamageFactorEffect = ArcadeGameEnum.BuffEffectName.SpecAttackDamageFactor
+				local specAttackDamageFactorBuffDict = buffSetMO:getBuffDictByEffectParam(specAttackDamageFactorEffect)
+
+				if specAttackDamageFactorBuffDict then
+					for _, buff in pairs(specAttackDamageFactorBuffDict) do
+						local param = buff:getEffectNameParam(specAttackDamageFactorEffect)
+						local paramArr = string.splitToNumber(param, "#")
+
+						if paramArr[1] == attackAttrId then
+							damageFactor = paramArr[2]
+						end
+					end
+				end
+
 				local attackValue = attackerMO:getAttributeValue(ArcadeGameEnum.BaseAttr.attack)
 				local defenseValue = targetMO:getAttributeValue(ArcadeGameEnum.BaseAttr.defense)
 
-				attackDamage = math.max(0, attackValue - defenseValue)
+				attackDamage = math.max(0, attackValue - defenseValue) * damageFactor
 			end
 
 			if isCharacterAttack and targetX <= defenseGridX and defenseGridX <= targetX + targetSizeX - 1 and targetY <= defenseGridY and defenseGridY <= targetY + targetSizeY - 1 then
@@ -924,7 +1175,7 @@ function ArcadeGameController:_calAttackDamage(attackerMO, attackType, targetMOL
 
 	if isCharacterAttack and defenseTargetMO then
 		local buffSetMO = attackerMO:getBuffSetMO()
-		local haveNotBeCounteredBuff = buffSetMO:hasEffectParamBuff(ArcadeGameEnum.BuffEffectParam.NotBeCountered)
+		local haveNotBeCounteredBuff = buffSetMO:hasEffectParamBuff(ArcadeGameEnum.BuffEffectName.NotBeCountered)
 
 		if not haveNotBeCounteredBuff then
 			local curHP = defenseTargetMO:getHp()
@@ -1043,34 +1294,47 @@ function ArcadeGameController:_enterDeathSettleFlow(entityMO, attackerMO)
 	local entityType = entityMO:getEntityType()
 	local uid = entityMO:getUid()
 
-	if entityType == ArcadeGameEnum.EntityType.Monster then
+	if attackerMO and entityType == ArcadeGameEnum.EntityType.Monster then
 		ArcadeGameModel.instance:addKillMonsterNum()
+
+		local buffSetMO = entityMO:getBuffSetMO()
+		local buffList = buffSetMO and buffSetMO:getBuffList()
+
+		if buffList then
+			for _, buffMO in ipairs(buffList) do
+				local buffId = buffMO:getId()
+				local attackerEntityType = attackerMO:getEntityType()
+				local attackerUid = attackerMO:getUid()
+
+				ArcadeGameModel.instance:triggerEntityCounterRecord(attackerEntityType, attackerUid, ArcadeGameEnum.GameCounter.SpecBuffMonsterKillsSinceAddSkill, buffId)
+			end
+		end
 	end
 
-	local scene = self:getGameScene()
-	local entity = scene and scene.entityMgr:getEntityWithType(entityType, uid)
 	local isCanRespawn = entityMO:getIsCanRespawn()
 
 	if isCanRespawn then
 		self:_enterRespawnFlow(entityMO, attackerMO)
-
-		if entity then
-			entity:playActionShow(ArcadeGameEnum.ActionShowId.Respawn)
-		end
 	elseif entityType == ArcadeGameEnum.EntityType.Character then
 		self:endGame(ArcadeGameEnum.SettleType.Fail, false)
 	else
+		local scene = self:getGameScene()
+		local entity = scene and scene.entityMgr:getEntityWithType(entityType, uid)
 		local hasCorpse = entityMO:getHasCorpse()
 
-		if hasCorpse then
-			if entity then
-				entity:playActionShow(ArcadeGameEnum.ActionShowId.EnterDead)
-			end
+		if hasCorpse and entity then
+			entity:playActionShow(ArcadeGameEnum.ActionShowId.EnterDead)
 		else
 			self:removeDeadEntityAndDrop(entityMO, true)
 		end
 
-		ArcadeGameTriggerController.instance:deathTriggerTarget(ArcadeGameEnum.TriggerPoint.DeathAtfer712, entityMO, attackerMO)
+		ArcadeGameTriggerController.instance:deathTriggerTarget(ArcadeGameEnum.TriggerPoint.DeathAfter712, entityMO, attackerMO)
+
+		local characterMO = ArcadeGameModel.instance:getCharacterMO()
+
+		ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.DeathAfter724, characterMO, {
+			specTargetEntityMO = entityMO
+		})
 	end
 end
 
@@ -1081,14 +1345,69 @@ function ArcadeGameController:_enterRespawnFlow(entityMO, attackerMO)
 		return
 	end
 
+	local entityType = entityMO:getEntityType()
+	local attackerEntityType = attackerMO and attackerMO:getEntityType()
+	local attackerUid = attackerMO and attackerMO:getEntityType()
+	local uid = entityMO:getUid()
 	local hpCap = entityMO:getAttributeValue(ArcadeGameEnum.BaseAttr.hpCap)
 
 	entityMO:setHp(hpCap)
 	entityMO:setIsDead(false)
-	self:changeResCount(ArcadeGameEnum.CharacterResource.RespawnTimes, -RESPAWN_COST)
-	ArcadeGameTriggerController.instance:deathTriggerTarget(ArcadeGameEnum.TriggerPoint.DeathAtfer720, entityMO, attackerMO)
-	self:dispatchEvent(ArcadeEvent.OnChangeEntityHp, entityMO, hpCap)
-	ArcadeStatHelper.instance:AddUseRebornTimes()
+
+	local isCharacter = entityType == ArcadeGameEnum.EntityType.Character
+	local scene = self:getGameScene()
+	local entity = scene and scene.entityMgr:getEntityWithType(entityType, uid)
+
+	if isCharacter then
+		self:changeResCount(ArcadeGameEnum.CharacterResource.RespawnTimes, -RESPAWN_COST)
+		ArcadeStatHelper.instance:AddUseRebornTimes()
+	end
+
+	local param = {
+		entityType = entityType,
+		uid = uid,
+		attackerEntityType = attackerEntityType,
+		attackerUid = attackerUid,
+		hpCap = hpCap
+	}
+
+	if not entity then
+		self:_afterRespawnEff(param)
+
+		return
+	end
+
+	if isCharacter then
+		self:pauseGame()
+		entity:playActionShow(ArcadeGameEnum.ActionShowId.Respawn, nil, nil, self._afterRespawnEff, self, param)
+		entityMO:setIsRespawning(true)
+	else
+		entity:playActionShow(ArcadeGameEnum.ActionShowId.Respawn)
+		self:_afterRespawnEff(param)
+	end
+end
+
+function ArcadeGameController:_afterRespawnEff(param)
+	self:resumeGame()
+
+	if not param then
+		return
+	end
+
+	local entityType = param.entityType
+	local uid = param.uid
+	local entityMO = ArcadeGameModel.instance:getMOWithType(entityType, uid)
+
+	if entityMO then
+		entityMO:setIsRespawning(false)
+	end
+
+	local attackerEntityType = param.attackerEntityType
+	local attackerUid = param.attackerUid
+	local attackerMO = ArcadeGameModel.instance:getMOWithType(attackerEntityType, attackerUid)
+
+	ArcadeGameTriggerController.instance:deathTriggerTarget(ArcadeGameEnum.TriggerPoint.DeathAfter720, entityMO, attackerMO)
+	self:dispatchEvent(ArcadeEvent.OnChangeEntityHp, entityMO, param.hpCap)
 end
 
 function ArcadeGameController:resetGoods()
@@ -1213,8 +1532,23 @@ end
 
 local PLACE_BOMB_COST = 1
 
-function ArcadeGameController:placeBomb(bombId, targetGridX, targetGridY)
+function ArcadeGameController:playerPlaceBomb(bombId, targetGridX, targetGridY, extraParam)
+	local cfg = ArcadeConfig.instance:getBombCfg(bombId, true)
+
+	if not cfg then
+		return
+	end
+
 	self:changeResCount(ArcadeGameEnum.CharacterResource.Bomb, -PLACE_BOMB_COST)
+	self:directPlaceBomb(bombId, targetGridX, targetGridY, extraParam)
+end
+
+function ArcadeGameController:directPlaceBomb(bombId, targetGridX, targetGridY, extraParam)
+	local cfg = ArcadeConfig.instance:getBombCfg(bombId, true)
+
+	if not cfg then
+		return
+	end
 
 	local sizeX, sizeY = ArcadeConfig.instance:getBombSize(bombId)
 	local bombData = {
@@ -1223,15 +1557,23 @@ function ArcadeGameController:placeBomb(bombId, targetGridX, targetGridY)
 		x = targetGridX,
 		y = targetGridY,
 		sizeX = sizeX,
-		sizeY = sizeY
+		sizeY = sizeY,
+		extraParam = extraParam
 	}
-
-	self:tryAddEntityList({
+	local moList = self:tryAddEntityList({
 		bombData
 	}, true)
-	ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.Bomb502, ArcadeGameModel.instance:getCharacterMO(), {
-		bombMO = bombData
+	local bombMO = moList and moList[1]
+
+	ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.AfterPlaceBomb502, bombMO)
+
+	local characterMO = ArcadeGameModel.instance:getCharacterMO()
+
+	ArcadeGameTriggerController.instance:triggerTarget(ArcadeGameEnum.TriggerPoint.AfterPlaceBomb502, characterMO, {
+		bombMO = bombMO
 	})
+
+	return bombMO
 end
 
 function ArcadeGameController:playerTryUseSkill()

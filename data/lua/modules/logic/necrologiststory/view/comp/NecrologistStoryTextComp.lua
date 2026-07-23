@@ -36,7 +36,6 @@ function NecrologistStoryTextComp:init(go)
 	self.txtGO = go
 	self.transform = go.transform
 	self.textComponent = gohelper.findChildTextMesh(go, "")
-	self.txtHyperLink = NecrologistStoryHelper.addHyperLinkClick(self.textComponent)
 	self.typewriterSpeed = 30
 	self.typewriterTime = 1 / self.typewriterSpeed
 end

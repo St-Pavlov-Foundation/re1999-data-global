@@ -426,7 +426,7 @@ function FightPlayerOperateMgr:checkAiJiAoQte()
 										return false
 									end
 
-									workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", curSelectEntityId)
+									workFlow:registWork(FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", curSelectEntityId)
 									workFlow:registWork(FightWorkFunction, FightAiJiAoQteView.autoQte, entityId, curSelectEntityId)
 									workFlow:start()
 
@@ -457,7 +457,7 @@ function FightPlayerOperateMgr:checkAiJiAoQte()
 
 									local playEntity = FightHelper.getEntity(entityId)
 
-									workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
+									workFlow:registWork(FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
 								end
 
 								if isAuto then
@@ -492,7 +492,7 @@ function FightPlayerOperateMgr:afterAiJiAoSelectToId(toId)
 	local workFlow = self:com_registFlowSequence()
 	local playEntity = FightHelper.getEntity(self.aiJiAoFromId)
 
-	workFlow:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
+	workFlow:registWork(FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", toId)
 	workFlow:registWork(FightWorkFunction, self.openAiJiAoQteView, self, viewParam)
 	workFlow:start()
 end

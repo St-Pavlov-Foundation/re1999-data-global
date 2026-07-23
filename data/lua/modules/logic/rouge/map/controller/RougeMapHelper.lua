@@ -239,27 +239,26 @@ function RougeMapHelper.backToMainScene()
 	RougeMapModel.instance:clearInteractive()
 	RougePopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
-	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
+	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Rouge)
 	MainController.instance:enterMainScene(true, false)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, RougeMapHelper._onEnterMainSceneDone)
 end
 
 function RougeMapHelper._onEnterMainSceneDone()
-	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.RougeMainView)
+	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.DungeonView)
 
 	local sequence = FlowSequence.New()
 
 	sequence:addWork(OpenViewWork.New({
-		openFunction = DungeonController.openDungeonView,
-		openFunctionObj = DungeonController.instance,
+		openFunction = RougeMapHelper.openEnterView,
 		waitOpenViewName = ViewName.DungeonView
 	}))
-	sequence:addWork(OpenViewWork.New({
-		openFunction = RougeController.openRougeMainView,
-		openFunctionObj = RougeController.instance,
-		waitOpenViewName = ViewName.RougeMainView
-	}))
 	sequence:start()
+end
+
+function RougeMapHelper.openEnterView()
+	RougeController.instance:enterDungeonView()
+	RougeController.instance:openRougeMainView()
 end
 
 function RougeMapHelper.getEpisodeIndex(stage)

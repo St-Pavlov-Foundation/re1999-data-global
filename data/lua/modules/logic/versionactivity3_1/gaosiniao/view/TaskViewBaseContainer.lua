@@ -22,6 +22,36 @@ function TaskViewBaseContainer:getActivityRemainTimeStr()
 	return ActivityHelper.getActivityRemainTimeStr(self:actId())
 end
 
+function TaskViewBaseContainer:startBlock(timeout, key)
+	UIBlockHelper.instance:startBlock(key or self.viewName, timeout or 3)
+end
+
+function TaskViewBaseContainer:endBlock(key)
+	UIBlockHelper.instance:endBlock(key or self.viewName)
+end
+
+function TaskViewBaseContainer:startBlockSlient(timeout, key)
+	UIBlockMgrExtend.setNeedCircleMv(false)
+	self:startBlock(timeout, key)
+end
+
+function TaskViewBaseContainer:endBlockSlient(key)
+	self:endBlock(key)
+	UIBlockMgrExtend.setNeedCircleMv(true)
+end
+
+function TaskViewBaseContainer:simpleLockScreen(bLock)
+	if bLock then
+		self:startBlockSlient()
+	else
+		self:endBlockSlient()
+	end
+end
+
+function TaskViewBaseContainer:getActivityCo()
+	return ActivityConfig.instance:getActivityCo(self:actId())
+end
+
 function TaskViewBaseContainer:actId()
 	assert(false, "please override this function")
 end

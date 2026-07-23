@@ -12,10 +12,11 @@ DecorateStoreEnum.DecorateItemType = {
 	Default = 0,
 	SceneUIPackage = 7,
 	SkinGift = 6,
-	BuildingVideo = 4,
+	DecorateBundle = 9,
 	MainScene = 3,
 	Icon = 1,
 	MainUISkin = 8,
+	BuildingVideo = 4,
 	SelfCard = 5,
 	Skin = 2
 }
@@ -29,6 +30,9 @@ DecorateStoreEnum.MaxBuyTipType = {
 }
 DecorateStoreEnum.TagType = {
 	SpecialSell = 1
+}
+DecorateStoreEnum.LinkTagType = {
+	Show = 1
 }
 DecorateStoreEnum.DiscountItemActId = {
 	[V3a4GiftRecommendEnum.OffItemId] = ActivityEnum.Activity.V3a4_GiftRecommend

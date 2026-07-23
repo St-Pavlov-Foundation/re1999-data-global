@@ -66,7 +66,7 @@ function CharacterSkinTipRightView:refreshView()
 end
 
 function CharacterSkinTipRightView:_jumpBpCharge()
-	if ViewMgr.instance:isOpen(ViewName.BpChargeView) then
+	if ViewMgr.instance:isOpen(BpController.instance:getBpChargeView()) then
 		self:closeThis()
 	else
 		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, self.OnOpenViewFinish, self)
@@ -76,7 +76,7 @@ function CharacterSkinTipRightView:_jumpBpCharge()
 end
 
 function CharacterSkinTipRightView:OnOpenViewFinish(viewName)
-	if viewName == ViewName.BpChargeView then
+	if viewName == BpController.instance:getBpChargeView() then
 		self:closeThis()
 	end
 end

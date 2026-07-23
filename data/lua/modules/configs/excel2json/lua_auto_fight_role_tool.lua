@@ -16,8 +16,7 @@ local fields = {
 	lv = 3
 }
 local primaryKey = {
-	"id",
-	"roleId"
+	"id"
 }
 local mlStringKey = {}
 

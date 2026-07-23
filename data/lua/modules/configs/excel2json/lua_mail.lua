@@ -5,7 +5,7 @@ module("modules.configs.excel2json.lua_mail", package.seeall)
 local lua_mail = {}
 local fields = {
 	jump = 13,
-	needShowToast = 7,
+	locked = 16,
 	sender = 3,
 	type = 2,
 	attachment = 6,
@@ -18,7 +18,8 @@ local fields = {
 	jumpTitle = 12,
 	id = 1,
 	icon = 10,
-	senderType = 15
+	senderType = 15,
+	needShowToast = 7
 }
 local primaryKey = {
 	"id"

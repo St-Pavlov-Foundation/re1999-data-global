@@ -28,6 +28,22 @@ function CharacterDefaultEquipView:_editableInitView()
 	self.equipClick = gohelper.getClickWithAudio(self.goclickarea, AudioEnum.UI.play_ui_admission_open)
 
 	self.equipClick:AddClickListener(self.onClickEquip, self)
+
+	self.gos02twinssychube = gohelper.findChild(self.goequipcontainer, "#go_s02")
+	self.gos02uneffect = gohelper.findChild(self.gos02twinssychube, "#go_uneffect")
+	self.gos02effected = gohelper.findChild(self.gos02twinssychube, "#go_effected")
+	self.simages02equipicon = gohelper.findChildSingleImage(self.gos02effected, "#simage_equipicon")
+	self._btns02 = gohelper.findChildButtonWithAudio(self.gos02twinssychube, "#btn_click")
+
+	self._btns02:AddClickListener(self.onClickS02, self)
+
+	self._s02twinssychubeAnim = self.gos02twinssychube:GetComponent(typeof(UnityEngine.Animator))
+end
+
+function CharacterDefaultEquipView:onClickS02()
+	ViewMgr.instance:openView(ViewName.TwinssychubeEquipInfoView, {
+		heroMo = self.heroMo
+	})
 end
 
 function CharacterDefaultEquipView:onClickEquip()
@@ -130,6 +146,13 @@ function CharacterDefaultEquipView:onOpen()
 	self:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.onHeroUpdatePush, self)
 	self:addEventCb(CharacterController.instance, CharacterEvent.RefreshDefaultEquip, self._onRefreshDefaultEquip, self)
 	self:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.refreshUI, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
+end
+
+function CharacterDefaultEquipView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.TwinssychubeEquipInfoView then
+		self:_checkActivatetTwinssychubeEquip()
+	end
 end
 
 function CharacterDefaultEquipView:refreshUI()
@@ -141,6 +164,39 @@ function CharacterDefaultEquipView:refreshUI()
 		self.simageequipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(self.equipMo.config.icon))
 
 		self.txtlv.text = self.equipMo.level
+	end
+
+	self:_refreshTwinssychube()
+end
+
+function CharacterDefaultEquipView:_refreshTwinssychube()
+	local isTwinssychube = self.heroMo and self.heroMo.heroId == CharacterEnum.TwinssychubeHeroId
+
+	gohelper.setActive(self.gos02twinssychube.gameObject, isTwinssychube)
+
+	local isActivateTwinssychubeEquip = EquipModel.instance:isActivateTwinssychubeEquip(self.heroMo)
+
+	gohelper.setActive(self.gos02uneffect.gameObject, not isActivateTwinssychubeEquip)
+	gohelper.setActive(self.gos02effected.gameObject, isActivateTwinssychubeEquip)
+
+	local otherEquipId = self.equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(self.equipMo.equipId)
+
+	if otherEquipId then
+		local config = EquipConfig.instance:getEquipCo(otherEquipId)
+
+		if config then
+			self.simages02equipicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(config.icon))
+		end
+	end
+
+	self:_checkActivatetTwinssychubeEquip()
+end
+
+function CharacterDefaultEquipView:_checkActivatetTwinssychubeEquip()
+	if EquipModel.instance:isPlayDoubleUnlockAnim() and not ViewMgr.instance:isOpen(ViewName.TwinssychubeEquipInfoView) then
+		self._s02twinssychubeAnim:Play("unlock", 0, 0)
+		EquipModel.instance:setPlayDoubleUnlockAnim(false)
+		AudioMgr.instance:trigger(AudioEnum3_10.Twinssychube.play_ui_langchao_link_special_refresh)
 	end
 end
 
@@ -162,12 +218,15 @@ end
 
 function CharacterDefaultEquipView:onClose()
 	self.equipClick:RemoveClickListener()
+	self._btns02:RemoveClickListener()
 
 	if self.isUnlockEquip then
 		self.simageequipicon:UnLoadImage()
+		self.simages02equipicon:UnLoadImage()
 		self:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, self.onHeroUpdatePush, self)
 		self:removeEventCb(CharacterController.instance, CharacterEvent.RefreshDefaultEquip, self._onRefreshDefaultEquip, self)
 		self:removeEventCb(EquipController.instance, EquipEvent.onUpdateEquip, self.refreshUI, self)
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 	end
 end
 

@@ -357,7 +357,7 @@ function EquipHelper.createMaxLevelEquipMo(equipId, id)
 		equipMo.breakLv = EquipConfig.instance:getEquipMaxBreakLv(equipCo.rare)
 	else
 		equipMo.level = 1
-		equipMo.refineLv = 1
+		equipMo.refineLv = EquipHelper.getRefineLvByEquipCo(equipCo)
 		equipMo.breakLv = 1
 	end
 
@@ -376,10 +376,18 @@ function EquipHelper.createMinLevelEquipMo(equipId, id)
 	end
 
 	equipMo.level = 1
-	equipMo.refineLv = 1
+	equipMo.refineLv = EquipHelper.getRefineLvByEquipCo(equipCo)
 	equipMo.breakLv = 0
 
 	return equipMo
+end
+
+function EquipHelper.getRefineLvByEquipCo(equipCo)
+	if equipCo and equipCo.amplify then
+		return math.max(1, tonumber(equipCo.amplify))
+	end
+
+	return 1
 end
 
 function EquipHelper.sortByLevelFunc(a, b)

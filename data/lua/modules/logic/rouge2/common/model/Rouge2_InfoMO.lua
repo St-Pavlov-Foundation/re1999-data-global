@@ -18,7 +18,11 @@ function Rouge2_InfoMO:init(info)
 end
 
 function Rouge2_InfoMO:isContinueLast()
-	return self.state ~= RougeEnum.State.Empty and self.state ~= RougeEnum.State.isEnd
+	return self.state ~= Rouge2_Enum.State.Empty and self.state ~= Rouge2_Enum.State.isEnd
+end
+
+function Rouge2_InfoMO:isStart()
+	return self.state == Rouge2_Enum.State.Start
 end
 
 function Rouge2_InfoMO:getLeaderInfo()

@@ -12,14 +12,14 @@ function WeatherBehaviourContainer:setSceneId(sceneId)
 	self._sceneId = sceneId
 	self._sceneConfig = lua_scene_switch.configDict[self._sceneId]
 
-	if self._sceneId == MainSceneSwitchEnum.SpSceneId then
+	if MainSceneSwitchEnum.SpSceneMap[self._sceneId] then
 		self:addComp("dayNightChange", WeatherDayNightChange)
 		self.dayNightChange:setSceneConfig(self._sceneConfig)
 	end
 end
 
 function WeatherBehaviourContainer:setLightMats(lightMats)
-	if self._sceneId == MainSceneSwitchEnum.SpSceneId then
+	if MainSceneSwitchEnum.SpSceneMap[self._sceneId] then
 		self.dayNightChange:setLightMats(lightMats)
 	end
 end

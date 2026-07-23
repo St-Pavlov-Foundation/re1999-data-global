@@ -603,12 +603,6 @@ function Rouge2_MapConfig:getLayerMapResPath(layerId, weatherId)
 	return layerMapRes
 end
 
-function Rouge2_MapConfig:getLastLayerEndPointName()
-	local endPointName = lua_rouge2_const.configDict[Rouge2_MapEnum.ConstKey.LastLayerEndPointName]
-
-	return endPointName and endPointName.value2
-end
-
 function Rouge2_MapConfig:getMaxAcceptEntrustNum()
 	local maxEntrustNum = lua_rouge2_const.configDict[Rouge2_MapEnum.ConstKey.MaxAcceptEntrustNum]
 

@@ -110,6 +110,14 @@ function GuiModelAgent:_getLive2d()
 	return self._live2d
 end
 
+function GuiModelAgent:getLive2d()
+	return self._live2d
+end
+
+function GuiModelAgent:getRootTransform()
+	return self._go.transform
+end
+
 function GuiModelAgent:openBloomView(value)
 	self._openBloomView = value
 end
@@ -146,8 +154,10 @@ function GuiModelAgent:setResPath(skinCfg, loadedCb, loadedCbObj, cameraSize)
 		self._curModel:setShareRT(self._shareRT, self._rtViewName)
 
 		if self._shareRT == CharacterVoiceEnum.RTShareType.BloomAuto then
+			self._curModel:setCreateType(CharacterVoiceEnum.CreateType.GuiModelAgent)
 			self._curModel:setCameraSize(CharacterVoiceEnum.BloomFullScreenEffectCameraSize)
 		elseif self._shareRT == CharacterVoiceEnum.RTShareType.Normal then
+			self._curModel:setCreateType(CharacterVoiceEnum.CreateType.GuiModelAgent)
 			self._curModel:setCameraSize(CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 		else
 			self._curModel:setCameraSize(cameraSize or skinCfg.cameraSize)

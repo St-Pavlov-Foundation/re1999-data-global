@@ -138,6 +138,31 @@ function Rouge2_EnterView:onOpen()
 			self:refreshUI()
 		end)
 	end)
+	Rouge2_OutsideController.instance:tryOpenActivityUpdateTips()
+	self:initOpenMainCallback()
+end
+
+function Rouge2_EnterView:initOpenMainCallback()
+	self._openMainCallback = self.viewParam and self.viewParam.openMainCallback
+	self._openMainCallbackObj = self.viewParam and self.viewParam.openMainCallbackObj
+
+	if not self._openMainCallback then
+		return
+	end
+
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+end
+
+function Rouge2_EnterView:_onOpenView(viewName)
+	if viewName ~= ViewName.Rouge2_MainView then
+		return
+	end
+
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+
+	if self._openMainCallback then
+		self._openMainCallback(self._openMainCallbackObj)
+	end
 end
 
 function Rouge2_EnterView:_refreshTime()

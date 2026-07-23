@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1000,
+    "name": "language_10124817",
+    "tagName": "language_10119894",
+    "detail": "language_10124569",
+    "battleTag": "131",
+    "bonus": "2#21#30",
+    "icon": "systemmanual_icon4",
+    "picture": "singlebg/teachnote/bg_tixibeijing1.png"
+  },
+  {
+    "id": 1001,
+    "name": "language_10124818",
+    "tagName": "language_10100054",
+    "detail": "language_10124819",
+    "battleTag": "114",
+    "bonus": "2#21#30",
+    "icon": "systemmanual_icon2",
+    "picture": "singlebg/teachnote/bg_tixibeijing2.png"
+  },
+  {
+    "id": 1002,
+    "name": "language_10124820",
+    "tagName": "language_10074378",
+    "detail": "language_10124821",
+    "battleTag": "111",
+    "bonus": "2#21#30",
+    "icon": "systemmanual_icon1",
+    "picture": "singlebg/teachnote/bg_tixibeijing3.png"
+  },
+  {
+    "id": 1003,
+    "name": "language_10124822",
+    "tagName": "language_10063814",
+    "detail": "language_10124823",
+    "battleTag": "113",
+    "bonus": "2#21#30",
+    "icon": "systemmanual_icon3",
+    "picture": "singlebg/teachnote/bg_tixibeijing4.png"
+  }
+]

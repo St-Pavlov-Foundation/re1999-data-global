@@ -7,10 +7,13 @@ local Rouge2_MapDiceViewContainer = class("Rouge2_MapDiceViewContainer", BaseVie
 function Rouge2_MapDiceViewContainer:buildViews()
 	local views = {}
 
-	table.insert(views, Rouge2_MapDiceView.New())
+	self._mainView = Rouge2_MapDiceView.New()
+	self._rollView = Rouge2_MapDiceReRollView.New()
+
+	table.insert(views, self._mainView)
+	table.insert(views, self._rollView)
 	table.insert(views, Rouge2_MapDiceAnimView.New())
 	table.insert(views, Rouge2_MapDiceChoiceView.New())
-	table.insert(views, Rouge2_MapDiceReRollView.New())
 	table.insert(views, Rouge2_MapCoinView.New())
 	table.insert(views, TabViewGroup.New(1, "root/#go_lefttop"))
 
@@ -77,6 +80,14 @@ function Rouge2_MapDiceViewContainer:onContainerClose()
 
 		self._endCheckCbId = nil
 	end
+end
+
+function Rouge2_MapDiceViewContainer:getMainView()
+	return self._mainView
+end
+
+function Rouge2_MapDiceViewContainer:getRollView()
+	return self._rollView
 end
 
 return Rouge2_MapDiceViewContainer

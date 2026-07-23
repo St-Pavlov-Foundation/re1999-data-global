@@ -110,7 +110,7 @@ function DungeonMapTaskInfo:_doShowTaskList(episodeId)
 		local unfinished = pass and not DungeonMapModel.instance:elementIsFinished(id)
 		local elementConfig = lua_chapter_map_element.configDict[id]
 
-		if unfinished and elementConfig and elementConfig.type ~= DungeonEnum.ElementType.UnLockExplore and elementConfig.type ~= DungeonEnum.ElementType.Investigate and not ToughBattleConfig.instance:isActEleCo(elementConfig) then
+		if unfinished and elementConfig and elementConfig.type ~= DungeonEnum.ElementType.UnLockExplore and elementConfig.type ~= DungeonEnum.ElementType.Investigate and not ToughBattleConfig.instance:isActEleCo(elementConfig) and not DungeonMapModel.instance:isImplicitElementType(elementConfig.type) then
 			index = index + 1
 
 			local item = self:_getItem(index)

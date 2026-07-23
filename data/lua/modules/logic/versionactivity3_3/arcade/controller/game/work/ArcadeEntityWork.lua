@@ -137,15 +137,18 @@ function ArcadeEntityWork:_endEntityWork()
 
 	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.Monster814, masterMOList)
 
-	local floorMOlist = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Floor)
+	local floorMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Floor)
 
-	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.MoveEnd302, floorMOlist)
-	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.MoveEnd302, ArcadeGameModel.instance:getGridMOList())
+	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.MoveEnd302, floorMOList)
 
-	local gameScent = ArcadeGameController.instance:getGameScene()
+	local gridMOList = ArcadeGameModel.instance:getGridMOList()
 
-	if gameScent then
-		gameScent.effectMgr:tryCheckEffectRound()
+	ArcadeGameTriggerController.instance:triggerTargetList(ArcadeGameEnum.TriggerPoint.MoveEnd302, gridMOList)
+
+	local gameScene = ArcadeGameController.instance:getGameScene()
+
+	if gameScene then
+		gameScene.effectMgr:tryCheckEffectRound()
 	end
 
 	if self._isNeedWait then

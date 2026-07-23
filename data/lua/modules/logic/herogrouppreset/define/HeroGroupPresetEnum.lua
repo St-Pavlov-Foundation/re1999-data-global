@@ -13,23 +13,30 @@ HeroGroupPresetEnum.ShowType = {
 HeroGroupPresetEnum.HeroGroupType = {
 	TowerPermanentAndLimit = 10,
 	Common = 2,
-	Abyss = 19
+	Abyss = 19,
+	AtomicDungeon = 21
 }
 HeroGroupPresetEnum.HeroGroupType2SnapshotAllType = {
 	[HeroGroupPresetEnum.HeroGroupType.Common] = ModuleEnum.HeroGroupSnapshotType.Common,
 	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit,
-	[HeroGroupPresetEnum.HeroGroupType.Abyss] = ModuleEnum.HeroGroupSnapshotType.Abyss
+	[HeroGroupPresetEnum.HeroGroupType.Abyss] = ModuleEnum.HeroGroupSnapshotType.Abyss,
+	[HeroGroupPresetEnum.HeroGroupType.AtomicDungeon] = ModuleEnum.HeroGroupSnapshotType.AtomicDungeon
 }
 HeroGroupPresetEnum.HeroGroupType2SnapshotType = {
 	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = ModuleEnum.HeroGroupSnapshotType.TowerPermanentAndLimit,
-	[HeroGroupPresetEnum.HeroGroupType.Abyss] = ModuleEnum.HeroGroupSnapshotType.Abyss
+	[HeroGroupPresetEnum.HeroGroupType.Abyss] = ModuleEnum.HeroGroupSnapshotType.Abyss,
+	[HeroGroupPresetEnum.HeroGroupType.AtomicDungeon] = ModuleEnum.HeroGroupSnapshotType.AtomicDungeon
 }
 HeroGroupPresetEnum.HeroGroupSnapshotTypeOpen = {
 	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = true,
-	[HeroGroupPresetEnum.HeroGroupType.Abyss] = true
+	[HeroGroupPresetEnum.HeroGroupType.Abyss] = true,
+	[HeroGroupPresetEnum.HeroGroupType.AtomicDungeon] = true
 }
 HeroGroupPresetEnum.HeroGroupSnapshotTypeShowBoss = {
 	[HeroGroupPresetEnum.HeroGroupType.TowerPermanentAndLimit] = true
+}
+HeroGroupPresetEnum.HideInThumbnailHeroGroupType = {
+	[HeroGroupPresetEnum.HeroGroupType.AtomicDungeon] = true
 }
 
 return HeroGroupPresetEnum

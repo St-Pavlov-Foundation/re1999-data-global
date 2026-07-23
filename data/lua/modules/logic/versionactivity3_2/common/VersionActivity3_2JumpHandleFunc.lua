@@ -66,14 +66,10 @@ function VersionActivity3_2JumpHandleFunc:jumpTo13231(paramsList)
 end
 
 function VersionActivity3_2JumpHandleFunc:jumpTo13209(paramsList)
-	local episodeId = paramsList and paramsList[3]
 	local actId = VersionActivity3_2Enum.ActivityId.Rouge2
 
-	table.insert(self.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-		Rouge2_Model.instance:setCurActId(actId)
-		Rouge2_ViewHelper.openEnterView()
-	end, nil, actId, false)
+	Rouge2_Model.instance:setCurActId(actId)
+	Rouge2_Controller.instance:enterDungeonView()
 
 	return JumpEnum.JumpResult.Success
 end

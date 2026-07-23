@@ -262,8 +262,10 @@ function GMToolFastAddHeroView:refreshAddItemCoList()
 		tempList = lua_character.configList
 	end
 
-	for _, co in ipairs(tempList) do
-		table.insert(coList, co)
+	local len = #tempList
+
+	for i = len, 1, -1 do
+		table.insert(coList, tempList[i])
 	end
 
 	GMAddItemModel.instance:setList(coList)

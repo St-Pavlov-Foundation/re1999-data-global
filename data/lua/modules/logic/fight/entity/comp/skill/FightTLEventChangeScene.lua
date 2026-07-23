@@ -10,6 +10,27 @@ function FightTLEventChangeScene:onTrackStart(fightStepData, duration, paramsArr
 
 		FightGameMgr.sceneLevelMgr:loadScene(nil, tonumber(paramsArr[1]))
 	end
+
+	if not string.nilorempty(paramsArr[2]) then
+		local arr = string.split(paramsArr[2], "|")
+
+		FightDataHelper.tempMgr.monsterPosList = {}
+
+		for _, v in ipairs(arr) do
+			local list = string.splitToNumber(v, ",")
+
+			table.insert(FightDataHelper.tempMgr.monsterPosList, list)
+		end
+	end
+
+	if not string.nilorempty(paramsArr[3]) then
+		local rgb = string.splitToNumber(paramsArr[3], "#")
+		local color = Color.New(rgb[1], rgb[2], rgb[3], 1)
+
+		FightGameMgr.spineColorBySceneMgr._spineColor = color
+
+		FightGameMgr.spineColorBySceneMgr:_setAllSpineColor()
+	end
 end
 
 function FightTLEventChangeScene:onTrackEnd()

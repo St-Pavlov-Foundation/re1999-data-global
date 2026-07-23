@@ -11,6 +11,9 @@ end
 function StoryBgEffsEnterSplitScreen:init(bgCo)
 	StoryBgEffsEnterSplitScreen.super.init(self, bgCo)
 
+	local bgImgGo = StoryViewMgr.instance:getStoryFrontBgImgGo()
+
+	self._bgFrontImg = bgImgGo:GetComponent(gohelper.Type_Image)
 	self._prefabPath = "ui/viewres/story/bg/v3a6_stencil_beforebg.prefab"
 	self._matPath = "ui/materials/dynamic/ui_default_stencil.mat"
 	self._screenSplitEffsPrefab2 = "ui/viewres/story/bg/v3a6_trans_splitscreen.prefab"
@@ -34,17 +37,17 @@ function StoryBgEffsEnterSplitScreen:start(callback, callbackObj)
 end
 
 function StoryBgEffsEnterSplitScreen:_onOpenView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
 	end
 end
 
 function StoryBgEffsEnterSplitScreen:_onCloseView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 	end
 end
@@ -62,13 +65,9 @@ function StoryBgEffsEnterSplitScreen:onLoadFinished()
 	StoryTool.enablePostProcess(true)
 
 	local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
-
-	self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
-
-	local img = self._rootGo:GetComponent(gohelper.Type_Image)
 	local mat = self._loader:getAssetItem(self._matPath):GetResource()
 
-	img.material = mat
+	self._bgFrontImg.material = mat
 
 	local prefAssetItem = self._loader:getAssetItem(self._prefabPath)
 
@@ -100,14 +99,9 @@ function StoryBgEffsEnterSplitScreen:reset(bgCo)
 		return
 	end
 
-	local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
-
-	self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
-
-	local img = self._rootGo:GetComponent(gohelper.Type_Image)
 	local mat = self._loader:getAssetItem(self._matPath):GetResource()
 
-	img.material = mat
+	self._bgFrontImg.material = mat
 end
 
 function StoryBgEffsEnterSplitScreen:_onEffFinished()

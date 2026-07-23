@@ -18,9 +18,18 @@ function FightWorkSendOperate2Server:onStart()
 	local cardAniWork = FightMsgMgr.sendMsg(FightMsgId.RegistCardEndAniFlow)
 
 	if cardAniWork then
-		flow:addWork(cardAniWork)
+		local parallel = flow:registWork(FightWorkFlowParallel)
+
+		parallel:addWork(cardAniWork)
+
+		local cardSkin = FightCardDataHelper.getCardSkin()
+
+		if cardSkin == 672802 then
+			parallel:registWork(FightWorkSkinDownEffectExit672802)
+		end
 	end
 
+	flow:addWork(self:meiLeierExRoundWork())
 	flow:registFinishCallback(self.onFinish, self)
 	self:playWorkAndDone(flow)
 end
@@ -48,6 +57,26 @@ function FightWorkSendOperate2Server:onFinish()
 
 	FightPlayCardModel.instance:updateClientOps()
 	FightController.instance:dispatchEvent(FightEvent.UpdateWaitingArea)
+end
+
+function FightWorkSendOperate2Server:meiLeierExRoundWork()
+	local isExtraRound = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.CUR_EXTRA_ROUND_FLAG] or 0
+
+	if isExtraRound == 1 then
+		local fightStepData = FightStepData.New(FightDef_pb.FightStep())
+
+		fightStepData.fromId = "0"
+		fightStepData.toId = "0"
+		fightStepData.actId = 0
+		fightStepData.actType = FightEnum.ActType.SKILL
+		fightStepData.stepUid = FightTLEventEntityVisible.latestStepUid or 0
+
+		FightController.instance:dispatchEvent(FightEvent.ShowSimulateClientUsedCard)
+
+		local work = FightGameMgr.entityMgr:getMyVertin().skill:registTimelineWork("xiaoruiannong_314601_special2", fightStepData)
+
+		return work
+	end
 end
 
 return FightWorkSendOperate2Server

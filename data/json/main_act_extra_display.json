@@ -74,7 +74,7 @@
     "name": "",
     "icon": "singlebg_lang/txt_rouge2/main/rouge2_enter_banner.png",
     "sortId": 5,
-    "show": 1
+    "show": 0
   },
   {
     "id": 13,
@@ -88,6 +88,13 @@
     "name": "",
     "icon": "singlebg_lang/txt_v3a4_party_singlebg/v3a4_partygame_enterbanner.png",
     "sortId": 4,
+    "show": 1
+  },
+  {
+    "id": 15,
+    "name": "",
+    "icon": "singlebg_lang/txt_v3a7_sodache_singlebg/v3a7_sodache_banner.png",
+    "sortId": 1,
     "show": 1
   }
 ]

@@ -62,8 +62,22 @@ function CommandStationConfig:onConfigLoaded(configName, configTable)
 		self:_initNpcText()
 	elseif configName == "copost_password_paper" then
 		self:_initPasswordPaper()
+	elseif configName == "copost_character_chain" then
+		self:_initCharacterChain()
 	elseif configName == "copost_character_state" then
 		self:_initCharacterState()
+	elseif configName == "copost_character_camp" then
+		self:_initCharacterCamp()
+	end
+end
+
+function CommandStationConfig:_initCharacterCamp()
+	self._campLocationMap = {}
+
+	for i, v in ipairs(lua_copost_character_camp.configList) do
+		if v.location > 0 then
+			self._campLocationMap[v.location] = v.id
+		end
 	end
 end
 
@@ -343,17 +357,38 @@ function CommandStationConfig:_initPasswordPaper()
 	table.sort(self._paperList, SortUtil.keyLower("versionId"))
 end
 
+function CommandStationConfig:_initCharacterChain()
+	self._page1ChainStateList = {}
+
+	for i, v in ipairs(lua_copost_character_chain.configList) do
+		for _, stateId in ipairs(v.stateId) do
+			if v.id < CommandStationEnum.Page2_ChainId then
+				self._page1ChainStateList[stateId] = true
+			elseif self._page1ChainStateList[stateId] then
+				logError("page2 chain stateId repeat:" .. stateId)
+			end
+		end
+	end
+end
+
 function CommandStationConfig:_initCharacterState()
 	self._characterFirstStateList = {}
 	self._characterLastStateList = {}
 	self._characterPosMap = {}
+	self._characterFirstStateList2 = {}
+	self._characterLastStateList2 = {}
+	self._characterPosMap2 = {}
 
 	for i, v in ipairs(lua_copost_character_state.configList) do
+		local isPage1 = self._page1ChainStateList[v.stateId]
+		local _characterPosMap = isPage1 and self._characterPosMap or self._characterPosMap2
+		local _characterFirstStateList = isPage1 and self._characterFirstStateList or self._characterFirstStateList2
+		local _characterLastStateList = isPage1 and self._characterLastStateList or self._characterLastStateList2
 		local chaId = tonumber(v.chaId)
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			if self._characterPosMap[chaId] and self._characterPosMap[chaId] ~= v.positionId then
-				logError(string.format("CommandStationConfig _initCharacterState chaId:%s stateId:%s oldPos:%s newPos:%s", chaId, v.stateId, self._characterPosMap[chaId], v.positionId))
+			if _characterPosMap[chaId] and _characterPosMap[chaId] ~= v.positionId then
+				logError(string.format("CommandStationConfig _initCharacterState chaId:%s stateId:%s oldPos:%s newPos:%s", chaId, v.stateId, _characterPosMap[chaId], v.positionId))
 			end
 
 			if #v.relationshipCha ~= #v.relationshipTxt then
@@ -361,16 +396,16 @@ function CommandStationConfig:_initCharacterState()
 			end
 		end
 
-		self._characterPosMap[chaId] = v.positionId
+		_characterPosMap[chaId] = v.positionId
 
-		if not self._characterFirstStateList[chaId] then
-			self._characterFirstStateList[chaId] = v.stateId
+		if not _characterFirstStateList[chaId] then
+			_characterFirstStateList[chaId] = v.stateId
 		end
 
-		if not self._characterLastStateList[chaId] then
-			self._characterLastStateList[chaId] = v
-		elseif #v.chaTxt > #self._characterLastStateList[chaId].chaTxt then
-			self._characterLastStateList[chaId] = v
+		if not _characterLastStateList[chaId] then
+			_characterLastStateList[chaId] = v
+		elseif #v.chaTxt > #_characterLastStateList[chaId].chaTxt then
+			_characterLastStateList[chaId] = v
 		end
 	end
 end
@@ -492,12 +527,14 @@ function CommandStationConfig:getVersionList()
 end
 
 function CommandStationConfig:getVersionIndex(versionId, configList)
-	configList = configList or lua_copost_version.configList
-
-	for i, v in ipairs(configList) do
-		if v.versionId == versionId then
-			return i
+	if configList then
+		for i, v in ipairs(configList) do
+			if v.versionId == versionId then
+				return i
+			end
 		end
+	else
+		logError("CommandStationConfig:getVersionIndex configList is nil")
 	end
 
 	return 1
@@ -665,18 +702,36 @@ function CommandStationConfig:getCurVersionId()
 	return self._curVersionId
 end
 
-function CommandStationConfig:getCharacterPos(chaId)
-	return self._characterPosMap[chaId]
+function CommandStationConfig:getCharacterPos(stateId, chaId)
+	if self._page1ChainStateList[stateId] then
+		return self._characterPosMap[chaId]
+	end
+
+	return self._characterPosMap2[chaId]
 end
 
-function CommandStationConfig:getCharacterFirstShowState(chaId)
-	return self._characterFirstStateList[chaId]
+function CommandStationConfig:getCharacterFirstShowState(stateId, chaId)
+	if self._page1ChainStateList[stateId] then
+		return self._characterFirstStateList[chaId]
+	end
+
+	return self._characterFirstStateList2[chaId]
 end
 
-function CommandStationConfig:getCharacterLastShowState(chaId)
-	local config = self._characterLastStateList[chaId]
+function CommandStationConfig:getCharacterLastShowState(stateId, chaId)
+	if self._page1ChainStateList[stateId] then
+		local config = self._characterLastStateList[chaId]
+
+		return config and config.stateId or 0
+	end
+
+	local config = self._characterLastStateList2[chaId]
 
 	return config and config.stateId or 0
+end
+
+function CommandStationConfig:getCampByLocation(location)
+	return self._campLocationMap[location]
 end
 
 function CommandStationConfig:getPaperItemId()

@@ -46,16 +46,16 @@ function FightTLEventPlayEffectByOperation:onTrackStart(fightStepData, duration,
 
 		self.sequenceFlow:registWork(FightWorkDelayTimer, timeOffset)
 
-		local appendTimelineStepData = {
-			actId = 0,
-			playerOperationCountForPlayEffectTimeline = 0,
-			actEffect = self.nuoDiKaTeamAttack,
-			fromId = fightStepData.fromId,
-			toId = fightStepData.toId,
-			actType = FightEnum.ActType.SKILL,
-			stepUid = FightTLEventEntityVisible.latestStepUid or 0,
-			maxPlayerOperationCountForPlayEffectTimeline = fightStepData.maxPlayerOperationCountForPlayEffectTimeline
-		}
+		local appendTimelineStepData = FightStepData.New(FightDef_pb.FightStep())
+
+		appendTimelineStepData.actEffect = self.nuoDiKaTeamAttack
+		appendTimelineStepData.fromId = fightStepData.fromId
+		appendTimelineStepData.toId = fightStepData.toId
+		appendTimelineStepData.actId = 0
+		appendTimelineStepData.actType = FightEnum.ActType.SKILL
+		appendTimelineStepData.stepUid = FightTLEventEntityVisible.latestStepUid or 0
+		appendTimelineStepData.playerOperationCountForPlayEffectTimeline = 0
+		appendTimelineStepData.maxPlayerOperationCountForPlayEffectTimeline = fightStepData.maxPlayerOperationCountForPlayEffectTimeline
 
 		self.sequenceFlow:registWork(FightWorkFunction, self.setOperationCount, self, appendTimelineStepData, fightStepData)
 		self.sequenceFlow:registWork(FightWorkPlayFakeStepTimeline, appendTimelineName, appendTimelineStepData)

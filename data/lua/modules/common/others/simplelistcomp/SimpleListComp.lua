@@ -17,7 +17,8 @@ function SimpleListComp:ctor(param)
 	self.listType = nil
 	self.cellCtorParam = {
 		viewContainer = self.viewContainer,
-		simpleListComp = self
+		simpleListComp = self,
+		cellParam = self.param.cellParam
 	}
 	self.isClickAutoSelect = self.param.isClickAutoSelect
 end
@@ -156,6 +157,10 @@ end
 
 function SimpleListComp:isCustomType()
 	return self.listType == SimpleListType.Custom or self.listType == SimpleListType.Custom_RootIsScrollRect
+end
+
+function SimpleListComp:haveData()
+	return self.datas and #self.datas > 0
 end
 
 function SimpleListComp:setData(datas, isResetSelect)

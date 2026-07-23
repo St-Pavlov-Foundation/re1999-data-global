@@ -123,8 +123,16 @@ function ResSplitSaveCharacterWork:_addSkinRes(config, exclude)
 
 	local limitedCO = lua_character_limited.configDict[config.id]
 
-	if limitedCO and not string.nilorempty(limitedCO.entranceMv) then
-		ResSplitModel.instance:setInclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
+	if limitedCO then
+		if not string.nilorempty(limitedCO.entranceMv) then
+			ResSplitModel.instance:setInclude(ResSplitEnum.Video, limitedCO.entranceMv, true)
+		end
+
+		if not string.nilorempty(limitedCO.spine) then
+			path = ResUrl.getRolesBustPrefab(limitedCO.spine)
+
+			ResSplitModel.instance:setInclude(ResSplitEnum.Path, path, exclude)
+		end
 	end
 
 	local headSkinIconUnique = ResUrl.getHeadSkinIconUnique(config.id)

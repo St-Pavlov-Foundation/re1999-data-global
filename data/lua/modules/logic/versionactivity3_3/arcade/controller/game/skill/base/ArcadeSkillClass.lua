@@ -11,23 +11,58 @@ function ArcadeSkillClass:ctor()
 	self._childInsIdDict = {}
 end
 
-function ArcadeSkillClass:setOwner(owner)
-	self.owner = owner
+function ArcadeSkillClass:setOwner(ownerEntityType, ownerUid)
+	self.ownerEntityType = ownerEntityType
+	self.ownerUid = ownerUid
 
 	for _, child in ipairs(self._childClassList) do
-		child:setOwner(owner)
+		child:setOwner(ownerEntityType, ownerUid)
+	end
+end
+
+function ArcadeSkillClass:setSpecBelongSkillSetMO(skillSetMO)
+	self._specBelongSkillSetMO = skillSetMO
+end
+
+function ArcadeSkillClass:getOwner()
+	local mo = ArcadeGameModel.instance:getMOWithType(self.ownerEntityType, self.ownerUid)
+
+	if not mo then
+		logError(string.format("%s getOwner error, mo is nil, ownerEntityType:%s, ownerUid:%s", self.__cname, tostring(self.ownerEntityType), tostring(self.ownerUid)))
+	end
+
+	return mo
+end
+
+function ArcadeSkillClass:getBelongSkillSetMO()
+	if self._specBelongSkillSetMO then
+		return self._specBelongSkillSetMO
+	end
+
+	local owner = self:getOwner()
+
+	if owner and owner.getSkillSetMO then
+		return owner:getSkillSetMO()
 	end
 end
 
 function ArcadeSkillClass:addChild(child)
-	if child and self._childInsIdDict[child:getInstanceID()] then
-		self._childInsIdDict[child:getInstanceID()] = child
+	if not child then
+		return
+	end
 
-		table.insert(self._childClassList, child)
+	local childInsId = child:getInstanceID()
 
-		if self._skillBase then
-			child:setSkillBase(self._skillBase)
-		end
+	if self._childInsIdDict[childInsId] then
+		return
+	end
+
+	self._childInsIdDict[childInsId] = child
+
+	table.insert(self._childClassList, child)
+
+	if self._skillBase then
+		child:setSkillBase(self._skillBase)
 	end
 end
 

@@ -130,8 +130,8 @@ function Rouge2_MapLayerLineView:refreshEndPointItem(index, layerId)
 
 	gohelper.setActive(lineItem.lineContainer, true)
 
-	lineItem.lineContainer.name = layerCo.id
-	self.layerId2ItemMap[layerCo.id] = lineItem
+	lineItem.lineContainer.name = layerId
+	self.layerId2ItemMap[layerId] = lineItem
 
 	local pathResInfo = string.split(layerCo.pathRes, "#")
 	local pathIconName = pathResInfo[1]
@@ -148,8 +148,6 @@ function Rouge2_MapLayerLineView:refreshEndPointItem(index, layerId)
 		local middleLayerCo = lua_rouge2_middle_layer.configDict[layerCo.middleLayerId]
 
 		endPointName = middleLayerCo.nameWeather
-	else
-		endPointName = Rouge2_MapConfig.instance:getLastLayerEndPointName()
 	end
 
 	lineItem.txtSelectLayerName.text = endPointName

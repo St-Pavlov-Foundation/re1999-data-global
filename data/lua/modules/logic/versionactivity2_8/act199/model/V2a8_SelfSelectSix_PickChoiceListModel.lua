@@ -49,7 +49,7 @@ local function sortFunc(a, b)
 		return aOrder < bOrder
 	end
 
-	return a.id < b.id
+	return a.id > b.id
 end
 
 function V2a8_SelfSelectSix_PickChoiceListModel:initList()

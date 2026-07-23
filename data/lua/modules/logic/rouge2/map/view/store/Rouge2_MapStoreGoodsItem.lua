@@ -25,7 +25,7 @@ function Rouge2_MapStoreGoodsItem:init(go)
 	self._goRecommend = gohelper.findChild(self.go, "go_Recommend")
 	self._stealAnimator = gohelper.onceAddComponent(self._goStealRate, gohelper.Type_Animator)
 	self._teamTipsParam = {}
-	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.MapStoreGoods)
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.ItemRecommend)
 end
 
 function Rouge2_MapStoreGoodsItem:addEventListeners()
@@ -77,7 +77,7 @@ end
 
 function Rouge2_MapStoreGoodsItem:refreshGoods()
 	self._txtName.text = self._itemCo and self._itemCo.name
-	self._teamTipsParam.itemId = self._itemId
+	self._teamTipsParam[Rouge2_Enum.TeamRecommendParam.ItemId] = self._itemId
 
 	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
 	self:refreshIcon()

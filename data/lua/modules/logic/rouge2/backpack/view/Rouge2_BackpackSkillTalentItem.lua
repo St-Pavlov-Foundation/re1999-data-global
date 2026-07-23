@@ -13,15 +13,19 @@ function Rouge2_BackpackSkillTalentItem:init(go)
 end
 
 function Rouge2_BackpackSkillTalentItem:_btnClickOnClick()
-	if self._status ~= Rouge2_Enum.BagTalentStatus.Active then
+	if self._status ~= Rouge2_Enum.ActiveSkillHoleStatus.Equip then
 		self:tryOpenDetailView()
 
 		return
 	end
 
-	if self._skillItem then
-		self._skillItem:_btnClickOnClick()
+	if not self._skillItem then
+		return
 	end
+
+	local dataType, dataId = self._skillItem:getSkillDataTypeAndId()
+
+	Rouge2_ViewHelper.openActiveSkillAttrUpdateTipsView(dataType, dataId)
 end
 
 function Rouge2_BackpackSkillTalentItem:refreshInfo(talentCo)

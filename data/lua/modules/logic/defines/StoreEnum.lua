@@ -20,6 +20,10 @@ StoreEnum.Discount = {
 	Flash = "104",
 	Super = "105"
 }
+StoreEnum.ChargeConditionalGetType = {
+	Auto = 0,
+	SP02 = 1
+}
 StoreEnum.RefreshTime = {
 	Day = 1,
 	Version = 1001,
@@ -122,7 +126,13 @@ StoreEnum.SupplementMonthCardItemId = 2929001
 StoreEnum.V3a3_SkinDiscountItemId = 833003
 StoreEnum.V3a3_SkinDiscountAdvancedItemId = 713301
 StoreEnum.V3a4_DestinySummonPackage = 834005
-StoreEnum.V3a2_SummonSimulationPickItemId = 832005
+StoreEnum.V3a7_MultipleHeroChoiceItemId = 481011
+StoreEnum.AdvancedSkinPackageMap = {
+	[StoreEnum.V3a3_SkinDiscountAdvancedItemId] = true
+}
+StoreEnum.UniqueSkinPackageMap = {
+	[713202] = true
+}
 StoreEnum.NewbiePackId = 811461
 StoreEnum.NormalRoomTicket = 600001
 StoreEnum.TopRoomTicket = 600002
@@ -136,6 +146,7 @@ StoreEnum.MonthCardStatus = {
 StoreEnum.Need4RDEpisodeId = 9999
 StoreEnum.StoreChargeType = {
 	LinkGiftGoods = 8,
+	SceneUIPackage = 21,
 	DailyReleasePackage = 4,
 	NationalGift = 9,
 	MonthCard = 2,
@@ -192,6 +203,18 @@ StoreEnum.ChargeStoreMonthCardDic = {
 	[StoreEnum.MonthCardGoodsId] = true,
 	[StoreEnum.SeasonCardGoodsId] = true,
 	[StoreEnum.LittleMonthCardGoodsId] = true
+}
+StoreEnum.DefaultCurrencyItem = CurrencyEnum.CurrencyType.Diamond
+StoreEnum.CurrencyItemSprite = {
+	[CurrencyEnum.CurrencyType.Diamond] = 0,
+	[CurrencyEnum.CurrencyType.GlowingFilament] = 6
+}
+StoreEnum.ChargeConditionalClientType = {
+	Default = 0,
+	SP02 = 1
+}
+StoreEnum.NewLinkTagType = {
+	SP02 = 1
 }
 StoreEnum.RecommendPackageMaxCount = 8
 

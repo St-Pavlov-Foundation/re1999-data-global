@@ -40,5 +40,19 @@
     "cdBuff": 0,
     "iconNormal": "fight_toughness_reward1_1",
     "iconBreak": ""
+  },
+  {
+    "toughnessskill": 12,
+    "passiveSkill": "117371057",
+    "cdBuff": 117371057,
+    "iconNormal": "fight_toughness_reward1_2",
+    "iconBreak": ""
+  },
+  {
+    "toughnessskill": 114001,
+    "passiveSkill": "114371001",
+    "cdBuff": 0,
+    "iconNormal": "fight_toughness_reward1_1",
+    "iconBreak": ""
   }
 ]

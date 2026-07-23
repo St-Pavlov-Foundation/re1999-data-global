@@ -278,14 +278,16 @@ end
 function StoreHelper.getRemainExpireTimeByStoreId(storeId)
 	local deadlineTimeSec = 0
 	local storeMo = StoreModel.instance:getStoreMO(storeId)
-	local goods = storeMo:getGoodsList()
+	local goods = storeMo and storeMo:getGoodsList()
 
-	for _, v in pairs(goods) do
-		if not string.nilorempty(v.config.offlineTime) and type(v.config.offlineTime) == "string" then
-			local curGoodDeadlineTimeSec = TimeUtil.stringToTimestamp(v.config.offlineTime) - ServerTime.now()
+	if goods and next(goods) then
+		for _, v in pairs(goods) do
+			if not string.nilorempty(v.config.offlineTime) and type(v.config.offlineTime) == "string" then
+				local curGoodDeadlineTimeSec = TimeUtil.stringToTimestamp(v.config.offlineTime) - ServerTime.now()
 
-			if curGoodDeadlineTimeSec > 0 then
-				deadlineTimeSec = deadlineTimeSec == 0 and curGoodDeadlineTimeSec or math.min(curGoodDeadlineTimeSec, deadlineTimeSec)
+				if curGoodDeadlineTimeSec > 0 then
+					deadlineTimeSec = deadlineTimeSec == 0 and curGoodDeadlineTimeSec or math.min(curGoodDeadlineTimeSec, deadlineTimeSec)
+				end
 			end
 		end
 	end
@@ -471,6 +473,177 @@ function StoreHelper.getDailyRefreshStoreList()
 	for _, storeId in ipairs(StoreEnum.DailyRefreshStoreIdList) do
 		table.insert(list, storeId)
 	end
+
+	return list
+end
+
+local function _getSkinGoodsPriceInfo_skinCo(refTbl, skinId)
+	if not skinId then
+		return
+	end
+
+	local skinCo = SkinConfig.instance:getSkinCo(skinId)
+
+	if not skinCo then
+		return
+	end
+
+	local isChargePackageValid = StoreModel.instance:isStoreSkinChargePackageValid(skinId)
+
+	if not isChargePackageValid then
+		return
+	end
+
+	refTbl.rmbCurPrice, refTbl.rmbOriginalPrice = StoreConfig.instance:getSkinChargePrice(skinId)
+end
+
+local function _getSkinGoodsPriceInfo_cost(refTbl, goodsCOcost)
+	if string.nilorempty(goodsCOcost) then
+		return
+	end
+
+	local costItemCO = string.splitToNumber(goodsCOcost, "#")
+
+	refTbl.coinsItemType = costItemCO[1]
+	refTbl.coinsItemId = costItemCO[2]
+	refTbl.coinsCostPrice = costItemCO[3]
+	refTbl.coinsCurPrice = costItemCO[3]
+end
+
+local function _getSkinGoodsPriceInfo_deductionItem(refTbl, goodsCOdeductionItem)
+	if string.nilorempty(goodsCOdeductionItem) then
+		return
+	end
+
+	local info = GameUtil.splitString2(goodsCOdeductionItem, true)
+	local itemCO = info[1]
+	local itemType = itemCO[1]
+	local itemId = itemCO[2]
+	local itemNeedCount = itemCO[3]
+
+	refTbl.coinsReduction = info[2][1] or 0
+	refTbl.hasDeductionItem = itemNeedCount <= ItemModel.instance:getItemQuantity(itemType, itemId)
+	refTbl.deductionItemType = itemType
+	refTbl.deductionItemId = itemId
+
+	if refTbl.hasDeductionItem then
+		local costPrice = refTbl.coinsCostPrice
+
+		refTbl.coinsOriginalPrice = costPrice
+		refTbl.coinsCurPrice = math.max(0, costPrice - refTbl.coinsReduction)
+	end
+end
+
+local function _getSkinGoodsPriceInfo_specialofferItem(refTbl, goodsCOspecialofferItem)
+	if string.nilorempty(goodsCOspecialofferItem) then
+		return
+	end
+
+	local info = GameUtil.splitString2(goodsCOspecialofferItem, true)
+	local itemCO = info[1]
+	local itemType = itemCO[1]
+	local itemId = itemCO[2]
+	local itemNeedCount = itemCO[3]
+	local numList = info[2]
+	local rmbNoSpecialItem = numList[1]
+	local rmbYsSpecialItem = numList[2]
+	local coinsNoSpecialItem = numList[3]
+	local coinsYsSpecialItem = numList[4]
+	local chargeGoodsId = numList[5]
+	local hasSpecialOfferItem = itemNeedCount <= ItemModel.instance:getItemQuantity(itemType, itemId)
+
+	refTbl.specialofferItemType = itemType
+	refTbl.specialofferItemId = itemId
+	refTbl.hasSpecialOfferItem = hasSpecialOfferItem
+
+	if hasSpecialOfferItem then
+		local skinId = refTbl.skinId
+
+		refTbl.rmbCurPrice = StoreConfig.instance:getSkinChargePrice(skinId)
+	elseif chargeGoodsId then
+		refTbl.rmbCurPrice = PayModel.instance:getProductPrice(chargeGoodsId)
+	else
+		refTbl.rmbCurPrice = rmbNoSpecialItem
+	end
+
+	if refTbl.hasDeductionItem then
+		refTbl.coinsOriginalPrice = coinsNoSpecialItem
+		refTbl.coinsCurPrice = hasSpecialOfferItem and coinsYsSpecialItem - refTbl.coinsReduction or coinsNoSpecialItem - refTbl.coinsReduction
+
+		if refTbl.coinsCurPrice < 0 then
+			refTbl.overuseCoinsReductionDt = refTbl.coinsCurPrice
+			refTbl.coinsCurPrice = 0
+		end
+	else
+		refTbl.coinsOriginalPrice = hasSpecialOfferItem and coinsNoSpecialItem or 0
+		refTbl.coinsCurPrice = hasSpecialOfferItem and coinsYsSpecialItem or coinsNoSpecialItem
+	end
+end
+
+function StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
+	local res = {
+		coinsCurPrice = false,
+		specialofferItemId = false,
+		rmbOriginalPrice = false,
+		coinsCostPrice = false,
+		coinsItemId = false,
+		coinsReduction = 0,
+		deductionItemId = false,
+		hasDeductionItem = false,
+		hasSpecialOfferItem = false,
+		rmbCurPrice = false,
+		bCoinsEnough = false,
+		deductionItemType = false,
+		specialofferItemType = false,
+		overuseCoinsReductionDt = 0,
+		coinsItemType = false,
+		coinsOriginalPrice = goodsConfig and goodsConfig.originalCost or 0,
+		goodsId = goodsConfig and goodsConfig.id or 0,
+		skinId = skinId or 0
+	}
+
+	if not goodsConfig then
+		return res
+	end
+
+	_getSkinGoodsPriceInfo_skinCo(res, skinId)
+	_getSkinGoodsPriceInfo_cost(res, goodsConfig.cost)
+	_getSkinGoodsPriceInfo_deductionItem(res, goodsConfig.deductionItem)
+	_getSkinGoodsPriceInfo_specialofferItem(res, goodsConfig.specialofferItem)
+
+	if res.coinsItemType then
+		local hasCoins = ItemModel.instance:getItemQuantity(res.coinsItemType, res.coinsItemId)
+
+		res.bCoinsEnough = hasCoins >= res.coinsCurPrice
+	end
+
+	return res
+end
+
+function StoreHelper.getRewardGroupRateInfoList(itemEffect)
+	itemEffect = tonumber(itemEffect)
+
+	local rewardCO = lua_reward.configDict[itemEffect]
+	local i = 0
+	local list
+
+	repeat
+		i = i + 1
+
+		local rewardGroup = rewardCO["rewardGroup" .. i]
+
+		if string.nilorempty(rewardGroup) then
+			return list
+		end
+
+		local strList = string.split(rewardGroup, ":")
+
+		if strList then
+			local group = strList[1]
+
+			list = DungeonConfig.instance:getRewardGroupCOList(group)
+		end
+	until not strList or #strList == 0
 
 	return list
 end

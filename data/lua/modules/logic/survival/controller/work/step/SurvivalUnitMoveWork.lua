@@ -12,7 +12,7 @@ local moveReasonToFuncName = {
 	[SurvivalEnum.PlayerMoveReason.Rocket] = "rocketTo"
 }
 
-function SurvivalUnitMoveWork:onStart(context)
+function SurvivalUnitMoveWork:onStart2(context)
 	if self.context.fastExecute then
 		self:onDone(true)
 

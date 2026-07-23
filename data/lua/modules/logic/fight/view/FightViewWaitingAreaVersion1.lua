@@ -3,9 +3,14 @@
 module("modules.logic.fight.view.FightViewWaitingAreaVersion1", package.seeall)
 
 local FightViewWaitingAreaVersion1 = class("FightViewWaitingAreaVersion1", BaseViewExtended)
-local ItemWidth = 0
+local UpdateCardFromType = {
+	Server = 2,
+	Client = 1
+}
 
-FightViewWaitingAreaVersion1.StartPosX = 0
+FightViewWaitingAreaVersion1.ScaleInterval = 0.05
+FightViewWaitingAreaVersion1.PrefabWidth = 1270
+FightViewWaitingAreaVersion1.CardItemWidth = 192
 
 function FightViewWaitingAreaVersion1:onInitView()
 	self._waitingAreaTran = gohelper.findChild(self.viewGO, "root/waitingArea").transform
@@ -15,10 +20,17 @@ function FightViewWaitingAreaVersion1:onInitView()
 	self._txtCardDesc = gohelper.findChildText(self._skillTipsGO, "txtTips")
 	self._rectTrCardDesc = self._txtCardDesc:GetComponent(gohelper.Type_RectTransform)
 	self._cardItemList = {}
+	self._cardItemPool = {}
 	self._cardItemGOList = self:getUserDataTb_()
 	self._cardObjModel = gohelper.findChild(self._waitingAreaGO, "cardItemModel")
-	FightViewWaitingAreaVersion1.StartPosX = recthelper.getAnchorX(self._cardObjModel.transform)
+	self.goDeviceCardItem = gohelper.findChild(self._waitingAreaGO, "deviceCardItem")
+	self.rectDeviceCardItem = self.goDeviceCardItem:GetComponent(gohelper.Type_RectTransform)
 
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.RectDeviceCard, self.rectDeviceCardItem)
+
+	self.goCalculatePosObj = gohelper.findChild(self._waitingAreaGO, "calculateposobj")
+
+	self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.GoCalculatePosObj, self.goCalculatePosObj)
 	self:_refreshTipsVisibleState()
 end
 
@@ -38,7 +50,6 @@ function FightViewWaitingAreaVersion1:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.ASFD_OnDone, self.onASFDDone, self)
 	self:addEventCb(FightController.instance, FightEvent.InvalidUsedCard, self._onInvalidUsedCard, self)
 	self:addEventCb(FightController.instance, FightEvent.InvalidPreUsedCard, self._onInvalidPreUsedCard, self)
-	self:addEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, self._fixWaitingAreaItemCount, self)
 	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshTipsVisibleState, self)
 	self:addEventCb(FightController.instance, FightEvent.ParallelPlayNextSkillDoneThis, self._onParallelPlayNextSkillDoneThis, self)
 	self:addEventCb(FightController.instance, FightEvent.ForceEndSkillStep, self._onForceEndSkillStep, self)
@@ -51,6 +62,24 @@ function FightViewWaitingAreaVersion1:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, self._onCardLevelChangeDone, self)
 	self:addEventCb(FightController.instance, FightEvent.ALF_AddCardEffectAppear, self._onAlfAddCardEffectAppear, self)
 	self:addEventCb(FightController.instance, FightEvent.ALF_AddCardEffectEnd, self._onAlfAddCardEffectEnd, self)
+	self:addEventCb(FightController.instance, FightEvent.UpdateOnePlayedCard, self.onUpdateOnePlayedCard, self)
+end
+
+function FightViewWaitingAreaVersion1:onUpdateOnePlayedCard(index, updateFromType)
+	local cardItem = self._cardItemList[index]
+
+	if not cardItem then
+		return
+	end
+
+	local cardList = FightPlayCardModel.instance:getUsedCards()
+	local cardInfo = cardList[index]
+
+	if not cardInfo then
+		return
+	end
+
+	cardItem:updateItem(cardInfo.uid, cardInfo.skillId, cardInfo, updateFromType)
 end
 
 function FightViewWaitingAreaVersion1:_onAlfAddCardEffectAppear()
@@ -76,7 +105,17 @@ function FightViewWaitingAreaVersion1:onDestroyView()
 		v:releaseEffectFlow()
 	end
 
-	self:_releaseScalseTween()
+	for i, v in ipairs(self._cardItemPool) do
+		v:releaseEffectFlow()
+	end
+
+	self:_releaseScaleTween()
+
+	if self.deviceAreaCardItem then
+		self.deviceAreaCardItem:dispose()
+
+		self.deviceAreaCardItem = nil
+	end
 
 	if self.LYCard then
 		self.LYCard:dispose()
@@ -119,33 +158,89 @@ function FightViewWaitingAreaVersion1:_onPlayChangeRankFail(index, failType)
 	end
 end
 
-function FightViewWaitingAreaVersion1:_fixWaitingAreaItemCount(count)
-	for i = 1, count do
-		local cardItemGO = gohelper.findChild(self._waitingAreaGO, "cardItem" .. i)
+function FightViewWaitingAreaVersion1.getCardItemName(index)
+	return "cardItem" .. tostring(index)
+end
 
-		cardItemGO = cardItemGO or gohelper.cloneInPlace(self._cardObjModel, "cardItem" .. i)
+function FightViewWaitingAreaVersion1.getCardPosByServerData(index, totalCount)
+	if not totalCount then
+		local usedCards = FightPlayCardModel.instance:getUsedCards()
 
-		recthelper.setAnchorX(cardItemGO.transform, FightViewWaitingAreaVersion1.getCardPos(i, count))
+		totalCount = #usedCards
+	end
+
+	local anchor = FightViewWaitingAreaVersion1.CardItemWidth * (totalCount - index)
+
+	if FightDataHelper.LYDataMgr:hasCountBuff() then
+		anchor = anchor + FightViewWaitingAreaVersion1.CardItemWidth
+	end
+
+	local deviceIndex = FightPlayCardModel.instance:getDeviceIndex()
+
+	if not deviceIndex then
+		return -anchor
+	end
+
+	local deviceWidth = FightDeviceHelper.getDeviceAreaTotalWidth()
+
+	if index < deviceIndex then
+		anchor = anchor + deviceWidth - FightViewWaitingAreaVersion1.CardItemWidth
+
+		return -anchor
+	elseif index == deviceIndex then
+		return -anchor
+	else
+		return -anchor
 	end
 end
 
-function FightViewWaitingAreaVersion1.getCardPos(index, count)
-	local preSpecialCount = 0
+function FightViewWaitingAreaVersion1.getCardPosByClientData(index)
+	local totalCount = FightDataHelper.operationDataMgr:getPlayCardOpCount()
+	local anchor = FightViewWaitingAreaVersion1.CardItemWidth * (totalCount - index)
 
 	if FightDataHelper.LYDataMgr:hasCountBuff() then
-		preSpecialCount = 1
+		anchor = anchor + FightViewWaitingAreaVersion1.CardItemWidth
 	end
 
-	index = index - preSpecialCount
+	if not FightDataHelper.hasDeviceArea() then
+		return -anchor
+	end
 
-	return FightViewWaitingAreaVersion1.StartPosX - FightViewWaitingAreaVersion1.CardItemWidth * (count - index)
+	local deviceWidth = FightDeviceHelper.getDeviceAreaTotalWidth()
+
+	anchor = anchor + deviceWidth
+
+	return -anchor
+end
+
+function FightViewWaitingAreaVersion1.getDeviceAnchorXByClientData()
+	local anchor = 0
+
+	if FightDataHelper.LYDataMgr:hasCountBuff() then
+		anchor = anchor + FightViewWaitingAreaVersion1.CardItemWidth
+	end
+
+	return -anchor
+end
+
+function FightViewWaitingAreaVersion1.getDeviceAnchorXByServerData()
+	local deviceIndex = FightPlayCardModel.instance:getDeviceIndex()
+
+	if not deviceIndex then
+		return 0
+	end
+
+	local anchor = FightViewWaitingAreaVersion1.getCardPosByServerData(deviceIndex)
+
+	return anchor
+end
+
+function FightViewWaitingAreaVersion1.getLYCardPos()
+	return 0
 end
 
 function FightViewWaitingAreaVersion1:_onSetUseCards()
-	local usedCards = FightPlayCardModel.instance:getUsedCards()
-
-	self:_fixWaitingAreaItemCount(#usedCards)
-	self:_updateView()
+	self:_updateView(nil, nil, UpdateCardFromType.Server)
 	self:updateCardLockObj()
 end
 
@@ -153,26 +248,41 @@ function FightViewWaitingAreaVersion1:updateCardLockObj()
 	local usedCards = FightPlayCardModel.instance:getUsedCards()
 
 	for i, v in ipairs(usedCards) do
-		local lockGO = gohelper.findChild(self._cardItemList[i].tr.parent.gameObject, "lock")
+		local cardItem = self._cardItemList[i]
 
-		v.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(v.uid, v.skillId, lockGO, false)
+		if not cardItem:isDeviceAreaCard() then
+			local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
+
+			v.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(v.uid, v.skillId, lockGO, false)
+		end
 	end
 end
 
-function FightViewWaitingAreaVersion1:_onShowSimulateClientUsedCard()
-	local clientUsedCard = {}
+local TempUseCard = {}
 
-	for i, v in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
+function FightViewWaitingAreaVersion1:_onShowSimulateClientUsedCard()
+	local clientUsedCard = TempUseCard
+
+	tabletool.clear(clientUsedCard)
+
+	for _, v in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
 		table.insert(clientUsedCard, v.cardInfoMO)
 	end
 
-	self:_fixWaitingAreaItemCount(#clientUsedCard)
-	self:_updateView(clientUsedCard, 0)
+	if FightDataHelper.hasDeviceArea() then
+		table.insert(clientUsedCard, FightCardInfoData.getTempDeviceCard())
+	end
+
+	self:_updateView(clientUsedCard, 0, UpdateCardFromType.Client)
 
 	for i, v in ipairs(clientUsedCard) do
-		local lockGO = gohelper.findChild(self._cardItemList[i].tr.parent.gameObject, "lock")
+		local cardItem = self._cardItemList[i]
 
-		v.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(v.uid, v.skillId, lockGO, false)
+		if not cardItem:isDeviceAreaCard() then
+			local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
+
+			v.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(v.uid, v.skillId, lockGO, false)
+		end
 	end
 
 	if self.LYCard then
@@ -192,7 +302,11 @@ function FightViewWaitingAreaVersion1:_onInvalidUsedCard(index, configEffect)
 		return
 	end
 
-	local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+	if cardItem:isDeviceAreaCard() then
+		return
+	end
+
+	local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
 
 	gohelper.setActive(lockGO, false)
 
@@ -225,12 +339,20 @@ function FightViewWaitingAreaVersion1:_onForceEndSkillStep(fightStepData)
 		return
 	end
 
+	if cardItem:isDeviceAreaCard() then
+		return
+	end
+
 	cardItem:releaseEffectFlow()
 	gohelper.setActive(cardItem.go, false)
 	self:_makeTipsOutofSight()
 end
 
 function FightViewWaitingAreaVersion1:_beforePlaySkill(entity, skillId, fightStepData)
+	if fightStepData.actType == FightEnum.ActType.DEVICE then
+		return self:_beforePlayDeviceSkill(entity, skillId, fightStepData)
+	end
+
 	if not FightHelper.isPlayerCardSkill(fightStepData) then
 		return
 	end
@@ -240,12 +362,25 @@ function FightViewWaitingAreaVersion1:_beforePlaySkill(entity, skillId, fightSte
 	end
 
 	FightPlayCardModel.instance:playCard(fightStepData.cardIndex)
-	self:playScaleTween()
+	self:playScaleTweenByServer()
 
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		self:refreshSkillText(skillId, entity.id)
 		self:_displayFlow(entity.id, skillId, FightPlayCardModel.instance:getCurIndex())
 	end
+end
+
+function FightViewWaitingAreaVersion1:_beforePlayDeviceSkill(entity, skillId, fightStepData)
+	if not FightHelper.isPlayerCardSkill(fightStepData) then
+		return
+	end
+
+	local deviceIndex = FightPlayCardModel.instance:getDeviceIndex()
+
+	FightPlayCardModel.instance:playCard(deviceIndex)
+	self:playScaleTweenByServer()
+	self:refreshSkillText(skillId, entity.id)
+	self:_displayFlow(entity.id, skillId, deviceIndex)
 end
 
 function FightViewWaitingAreaVersion1:refreshSkillText(skillId, entityId)
@@ -269,7 +404,9 @@ function FightViewWaitingAreaVersion1:refreshSkillText(skillId, entityId)
 end
 
 function FightViewWaitingAreaVersion1:_displayFlow(entityId, skillId, index)
-	if not self._cardItemList[index] then
+	local cardItem = self._cardItemList[index]
+
+	if not cardItem then
 		return
 	end
 
@@ -277,7 +414,7 @@ function FightViewWaitingAreaVersion1:_displayFlow(entityId, skillId, index)
 		self._cardItemList[i]:releaseEffectFlow()
 		gohelper.setActive(self._cardItemList[i].go, false)
 
-		local lockGO = gohelper.findChild(self._cardItemList[i].tr.parent.gameObject, "lock")
+		local lockGO = gohelper.findChild(self._cardItemList[i].parentGo, "lock")
 
 		gohelper.setActive(lockGO, false)
 	end
@@ -286,15 +423,46 @@ function FightViewWaitingAreaVersion1:_displayFlow(entityId, skillId, index)
 end
 
 function FightViewWaitingAreaVersion1:_onSkillPlayFinish(entity, skillId, fightStepData)
+	if fightStepData.actType == FightEnum.ActType.DEVICE then
+		return self:_onDeviceSkillPlayFinish(entity, skillId, fightStepData)
+	end
+
 	if not FightHelper.isPlayerCardSkill(fightStepData) then
 		return
 	end
 
-	if not self._cardItemList[fightStepData.cardIndex] then
+	local cardItem = self._cardItemList[fightStepData.cardIndex]
+
+	if not cardItem then
 		return
 	end
 
-	self._cardItemList[fightStepData.cardIndex]:playUsedCardFinish(self._skillTipsGO, self._waitingAreaGO)
+	if cardItem:isDeviceAreaCard() then
+		return
+	end
+
+	local param = {}
+
+	if FightHelper.checkIsDevicePowerCard(skillId) then
+		param.noCardFade = true
+	end
+
+	cardItem:playUsedCardFinish(self._skillTipsGO, self._waitingAreaGO, param)
+end
+
+function FightViewWaitingAreaVersion1:_onDeviceSkillPlayFinish(entity, skillId, fightStepData)
+	if not FightHelper.isPlayerCardSkill(fightStepData) then
+		return
+	end
+
+	local deviceIndex = FightPlayCardModel.instance:getDeviceIndex()
+	local cardItem = self._cardItemList[deviceIndex]
+
+	if not cardItem then
+		return
+	end
+
+	cardItem:playUsedCardFinish(self._skillTipsGO, self._waitingAreaGO)
 end
 
 function FightViewWaitingAreaVersion1:onASFDStart(entity, skillId, fightStepData)
@@ -303,7 +471,7 @@ function FightViewWaitingAreaVersion1:onASFDStart(entity, skillId, fightStepData
 	end
 
 	FightPlayCardModel.instance:playCard(fightStepData.cardIndex)
-	self:playScaleTween()
+	self:playScaleTweenByServer()
 
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Play then
 		self:refreshSkillText(skillId, entity.id)
@@ -312,11 +480,17 @@ function FightViewWaitingAreaVersion1:onASFDStart(entity, skillId, fightStepData
 end
 
 function FightViewWaitingAreaVersion1:onASFDDone(cardIndex)
-	if not self._cardItemList[cardIndex] then
+	local cardItem = self._cardItemList[cardIndex]
+
+	if not cardItem then
 		return
 	end
 
-	self._cardItemList[cardIndex]:playUsedCardFinish(self._skillTipsGO, self._waitingAreaGO)
+	if cardItem:isDeviceAreaCard() then
+		return
+	end
+
+	cardItem:playUsedCardFinish(self._skillTipsGO, self._waitingAreaGO)
 end
 
 function FightViewWaitingAreaVersion1:_onBuffUpdate(entityId, effectType, buffId)
@@ -337,13 +511,13 @@ function FightViewWaitingAreaVersion1:_onBuffUpdate(entityId, effectType, buffId
 	for i = curIndex + 1, #usedCards do
 		local cardItem = self._cardItemList[i]
 
-		if cardItem then
+		if cardItem and not cardItem:isDeviceAreaCard() then
 			local cardInfo = usedCards[i]
 			local oldLock = cardInfo.clientData.custom_lock
 			local newLock = not FightViewHandCardItemLock.canUseCardSkill(cardInfo.uid, cardInfo.skillId)
 
 			if oldLock ~= newLock then
-				local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+				local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
 
 				cardInfo.clientData.custom_lock = newLock
 
@@ -367,63 +541,122 @@ function FightViewWaitingAreaVersion1:_makeTipsOutofSight()
 	recthelper.setAnchorX(skillTipsTr, 9999999)
 end
 
-function FightViewWaitingAreaVersion1:_updateView(cus_cards, cus_index)
+function FightViewWaitingAreaVersion1:getCardItem()
+	if #self._cardItemPool > 0 then
+		return table.remove(self._cardItemPool)
+	end
+
+	local targetCardItemGO = gohelper.cloneInPlace(self._cardObjModel)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local cardItemGO = self:getResInst(path, targetCardItemGO, "card")
+
+	gohelper.setAsFirstSibling(cardItemGO)
+
+	local cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(cardItemGO, FightViewCardItem, FightEnum.CardShowType.PlayCard)
+
+	if FightCardDataHelper.getCardSkin() then
+		FightViewHandCardItem.replaceLockBg(gohelper.findChild(targetCardItemGO, "lock"))
+	end
+
+	cardItem.parentGo = targetCardItemGO
+	cardItem.parentTr = targetCardItemGO:GetComponent(gohelper.Type_RectTransform)
+
+	return cardItem
+end
+
+function FightViewWaitingAreaVersion1:hideCardItemPool()
+	for _, cardItem in ipairs(self._cardItemPool) do
+		local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
+
+		gohelper.setActive(lockGO, false)
+		gohelper.setActive(cardItem.go, false)
+		gohelper.setActive(cardItem.parentGo, false)
+	end
+end
+
+function FightViewWaitingAreaVersion1:_updateView(cus_cards, cus_index, formType)
+	formType = formType or UpdateCardFromType.Client
+
 	local usedCards = cus_cards or FightPlayCardModel.instance:getUsedCards()
 	local curIndex = cus_index or FightPlayCardModel.instance:getCurIndex()
 	local count = #usedCards
 
 	gohelper.setActive(self._waitingAreaGO, count > 0)
 
+	for i = #self._cardItemList, 1, -1 do
+		local cardItem = table.remove(self._cardItemList)
+
+		if cardItem:isDeviceAreaCard() then
+			self.deviceAreaCardItem = cardItem
+		else
+			table.insert(self._cardItemPool, cardItem)
+		end
+	end
+
 	for i = 1, count do
 		local usedCard = usedCards[i]
-		local entityId = usedCard.uid
-		local skillId = usedCard.skillId
-		local cardItem = self._cardItemList[i]
+		local cardItem, anchor
 
-		if not cardItem then
-			local targetCardItemGO = gohelper.findChild(self._waitingAreaGO, "cardItem" .. i)
+		if usedCard.cardType == FightEnum.CardType.DEVICE then
+			if not self.deviceAreaCardItem then
+				self.deviceAreaCardItem = FightViewDeviceAreaCardItem.New()
 
-			targetCardItemGO = targetCardItemGO or gohelper.cloneInPlace(self._cardObjModel, "cardItem" .. i)
-
-			local path = self.viewContainer:getSetting().otherRes[1]
-			local cardItemGO = self:getResInst(path, targetCardItemGO, "card")
-
-			gohelper.setAsFirstSibling(cardItemGO)
-
-			cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(cardItemGO, FightViewCardItem, FightEnum.CardShowType.PlayCard)
-
-			if FightCardDataHelper.getCardSkin() == 672801 then
-				FightViewHandCardItem.replaceLockBg(gohelper.findChild(cardItem.tr.parent.gameObject, "lock"))
+				self.deviceAreaCardItem:init(self.goDeviceCardItem)
+				self.viewContainer:setCacheUserData(FightViewContainerCacheKey.UserDataKey.DeviceAreaCardItem, self.deviceAreaCardItem)
 			end
 
-			table.insert(self._cardItemList, cardItem)
+			self.deviceAreaCardItem:resetWidth()
+			self.deviceAreaCardItem:setActive(true)
+			self.deviceAreaCardItem:setCanvasAlpha(1)
+			self.deviceAreaCardItem:refreshUI()
+			self.deviceAreaCardItem:setCardInfo(usedCard)
+			gohelper.setActive(self.deviceAreaCardItem.go, true)
+
+			cardItem = self.deviceAreaCardItem
+
+			if formType == UpdateCardFromType.Client then
+				anchor = FightViewWaitingAreaVersion1.getDeviceAnchorXByClientData()
+			else
+				anchor = FightViewWaitingAreaVersion1.getDeviceAnchorXByServerData()
+			end
+		else
+			local entityId = usedCard.uid
+			local skillId = usedCard.skillId
+
+			cardItem = self:getCardItem()
+			gohelper.onceAddComponent(cardItem.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
+			usedCard.clientData.custom_playedCard = true
+
+			cardItem:updateItem(entityId, skillId, usedCard)
+			cardItem:detectShowBlueStar()
+			self:refreshCardRedAndBlue(cardItem, usedCard)
+			gohelper.setActive(cardItem.go, curIndex < i)
+			gohelper.setActive(cardItem.parentGo, curIndex < i)
+
+			cardItem.parentGo.name = FightViewWaitingAreaVersion1.getCardItemName(i)
+
+			if formType == UpdateCardFromType.Client then
+				anchor = FightViewWaitingAreaVersion1.getCardPosByClientData(i)
+			else
+				anchor = FightViewWaitingAreaVersion1.getCardPosByServerData(i)
+			end
 		end
 
 		transformhelper.setLocalScale(cardItem.tr, 1, 1, 1)
 		recthelper.setAnchor(cardItem.tr, 0, 0)
-
-		gohelper.onceAddComponent(cardItem.go, typeof(UnityEngine.CanvasGroup)).alpha = 1
-
-		gohelper.setActive(cardItem.go, true)
-
-		usedCard.clientData.custom_playedCard = true
-
-		cardItem:updateItem(entityId, skillId, usedCard)
-		cardItem:detectShowBlueStar()
-		self:refreshCardRedAndBlue(cardItem, usedCard)
-		gohelper.setActive(cardItem.go, curIndex < i)
+		table.insert(self._cardItemList, cardItem)
+		recthelper.setAnchorX(cardItem.parentTr, anchor)
 	end
 
-	for i = count + 1, #self._cardItemList do
-		local cardItem = self._cardItemList[i]
-		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+	self:hideCardItemPool()
 
-		gohelper.setActive(lockGO, false)
-		gohelper.setActive(cardItem.go, false)
+	if formType == UpdateCardFromType.Client then
+		self:playScaleTweenByClient()
+	else
+		self:playScaleTweenByServer(count)
 	end
 
-	self:playScaleTween(count)
-	self:refreshLYCard(usedCards)
+	self:refreshLYCard()
 end
 
 function FightViewWaitingAreaVersion1:refreshCardRedAndBlue(cardItem, cardInfoMo)
@@ -434,7 +667,7 @@ function FightViewWaitingAreaVersion1:refreshCardRedAndBlue(cardItem, cardInfoMo
 	cardItem:setActiveBoth(redOrBlue == FightEnum.CardColor.Both)
 end
 
-function FightViewWaitingAreaVersion1:refreshLYCard(usedCards)
+function FightViewWaitingAreaVersion1:refreshLYCard()
 	if FightDataHelper.LYDataMgr:hasCountBuff() then
 		self.LYCard = self.LYCard or FightLYWaitAreaCard.Create(self._waitingAreaGO)
 
@@ -444,24 +677,16 @@ function FightViewWaitingAreaVersion1:refreshLYCard(usedCards)
 	if self.LYCard then
 		self.LYCard:refreshLYCard()
 
-		local len = usedCards and #usedCards or 0
-		local anchorX = FightViewWaitingAreaVersion1.getCardPos(len + 1, len)
+		local anchorX = FightViewWaitingAreaVersion1.getLYCardPos()
 
 		self.LYCard:setAnchorX(anchorX)
 	end
 end
 
-FightViewWaitingAreaVersion1.ScaleInterval = 0.05
-FightViewWaitingAreaVersion1.PrefabWidth = 1270
-FightViewWaitingAreaVersion1.CardItemWidth = 192
+function FightViewWaitingAreaVersion1:_playScaleTweenByFirstCardPos(firstCardAnchorPos)
+	self:_releaseScaleTween()
 
-function FightViewWaitingAreaVersion1:playScaleTween(count)
-	count = count or FightPlayCardModel.instance:getRemainCardCount()
-
-	self:_releaseScalseTween()
-
-	local lastPosX = FightViewWaitingAreaVersion1.getCardPos(1, count)
-	local needWidth = FightViewWaitingAreaVersion1.StartPosX - lastPosX + FightViewWaitingAreaVersion1.CardItemWidth
+	local needWidth = math.abs(firstCardAnchorPos) + FightViewWaitingAreaVersion1.CardItemWidth
 	local toScale = 1
 
 	if needWidth > FightViewWaitingAreaVersion1.PrefabWidth then
@@ -477,7 +702,21 @@ function FightViewWaitingAreaVersion1:playScaleTween(count)
 	self._tweenScale = ZProj.TweenHelper.DOScale(self._waitingAreaTran, toScale, toScale, toScale, 0.1)
 end
 
-function FightViewWaitingAreaVersion1:_releaseScalseTween()
+function FightViewWaitingAreaVersion1:playScaleTweenByClient()
+	local lastPosX = FightViewWaitingAreaVersion1.getCardPosByClientData(1)
+
+	self:_playScaleTweenByFirstCardPos(lastPosX)
+end
+
+function FightViewWaitingAreaVersion1:playScaleTweenByServer(count)
+	count = count or FightPlayCardModel.instance:getRemainCardCount()
+
+	local lastPosX = FightViewWaitingAreaVersion1.getCardPosByServerData(1, count)
+
+	self:_playScaleTweenByFirstCardPos(lastPosX)
+end
+
+function FightViewWaitingAreaVersion1:_releaseScaleTween()
 	if self._tweenScale then
 		ZProj.TweenHelper.KillById(self._tweenScale)
 
@@ -488,8 +727,8 @@ end
 function FightViewWaitingAreaVersion1:_onPlayCardAroundUpRank(index, oldSkillId)
 	local cardItem = self._cardItemList[index]
 
-	if cardItem then
-		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+	if cardItem and not cardItem:isDeviceAreaCard() then
+		local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
 
 		gohelper.setActive(lockGO, false)
 		cardItem:playCardLevelChange(nil, oldSkillId)
@@ -499,8 +738,8 @@ end
 function FightViewWaitingAreaVersion1:_onPlayCardAroundUpRank_Lorentz(index, newCardInfoMo)
 	local cardItem = self._cardItemList[index]
 
-	if cardItem then
-		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+	if cardItem and not cardItem:isDeviceAreaCard() then
+		local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
 
 		gohelper.setActive(lockGO, false)
 		cardItem:playCardLevelChange_Lorentz(newCardInfoMo)
@@ -510,8 +749,8 @@ end
 function FightViewWaitingAreaVersion1:_onPlayCardAroundDownRank(index, oldSkillId)
 	local cardItem = self._cardItemList[index]
 
-	if cardItem then
-		local lockGO = gohelper.findChild(cardItem.tr.parent.gameObject, "lock")
+	if cardItem and not cardItem:isDeviceAreaCard() then
+		local lockGO = gohelper.findChild(cardItem.parentGo, "lock")
 
 		gohelper.setActive(lockGO, false)
 		cardItem:playCardLevelChange(nil, oldSkillId)
@@ -521,8 +760,8 @@ end
 function FightViewWaitingAreaVersion1:_onCardLevelChangeDone(cardInfo)
 	if self._cardItemList then
 		for i, v in ipairs(self._cardItemList) do
-			if v._cardInfoMO == cardInfo and i > FightPlayCardModel.instance:getCurIndex() then
-				local lockGO = gohelper.findChild(v.tr.parent.gameObject, "lock")
+			if not v:isDeviceAreaCard() and v._cardInfoMO == cardInfo and i > FightPlayCardModel.instance:getCurIndex() then
+				local lockGO = gohelper.findChild(v.parentGo, "lock")
 
 				FightViewHandCardItemLock.setCardLock(cardInfo.uid, cardInfo.skillId, lockGO, false)
 
@@ -535,9 +774,13 @@ end
 function FightViewWaitingAreaVersion1:_onPlayCardAroundSetGray(index)
 	local cardItem = self._cardItemList[index]
 
-	if cardItem then
+	if cardItem and not cardItem:isDeviceAreaCard() then
 		cardItem:playCardAroundSetGray()
 	end
+end
+
+function FightViewWaitingAreaVersion1:getCardItemList()
+	return self._cardItemList
 end
 
 return FightViewWaitingAreaVersion1

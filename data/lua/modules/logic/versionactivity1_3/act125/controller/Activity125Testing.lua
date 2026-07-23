@@ -301,7 +301,7 @@ function CTesting:build_test__Act125()
 	function self._cRpc.onReceiveFinishAct125EpisodeReply(thisObj, resultCode, msg)
 		if resultCode == 0 then
 			Activity125Model.instance:refreshActivityInfo(msg)
-			Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
+			Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate, msg)
 			Activity125Controller.instance:dispatchEvent(Activity125Event.EpisodeFinished, msg.episodeId)
 		end
 
@@ -426,7 +426,7 @@ function Activity125Testing:_offline_test()
 		end
 	end
 
-	local myActId = 13612
+	local myActId = 13818
 
 	logError(myActId)
 

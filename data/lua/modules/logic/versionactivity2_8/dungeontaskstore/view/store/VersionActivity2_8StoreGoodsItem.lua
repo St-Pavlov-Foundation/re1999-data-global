@@ -19,6 +19,13 @@ function VersionActivity2_8StoreGoodsItem:init(go)
 	self.simageCoin = gohelper.findChildSingleImage(self.go, "txt_cost/simage_coin")
 	self.imageCoin = gohelper.findChildImage(self.go, "txt_cost/simage_coin")
 	self.goSoldout = gohelper.findChild(self.go, "go_soldout")
+	self._gonode2 = gohelper.findChild(self.go, "node2")
+	self._gospecial = gohelper.findChild(self.go, "go_special")
+	self._goTag2 = gohelper.findChild(self.go, "go_tag2")
+	self._txtTag2 = gohelper.findChildText(self.go, "go_tag2/#txt1")
+	self._txt2 = gohelper.findChildText(self.go, "node2/#txt2")
+	self._imagekeyicon = gohelper.findChildImage(self.go, "node2/icon")
+	self._txtCost2 = gohelper.findChildText(self.go, "txt_cost2")
 	self.goClick = gohelper.getClickWithDefaultAudio(go)
 
 	self.goClick:AddClickListener(self.onClick, self)
@@ -90,6 +97,46 @@ function VersionActivity2_8StoreGoodsItem:refreshUI()
 	self:refreshName()
 	self:refreshQuantity()
 	self:refreshCost()
+	self:refreshSpecProduct()
+end
+
+function VersionActivity2_8StoreGoodsItem:refreshSpecProduct()
+	gohelper.setActive(self._gonode2, self.goodsCo.specProduct == 1)
+	gohelper.setActive(self._gospecial, self.goodsCo.specProduct == 1)
+	gohelper.setActive(self._goTag2, not string.nilorempty(self.goodsCo.offTag))
+
+	if not string.nilorempty(self.goodsCo.offTag) then
+		self._txtTag2.text = tonumber(self.goodsCo.offTag) * 100 .. "%"
+	end
+
+	self._txtCost2.text = self.goodsCo.originalCost
+
+	gohelper.setActive(self._txtCost2.gameObject, self.goodsCo.originalCost > 0)
+
+	if self.goodsCo.specProduct ~= 1 then
+		return
+	end
+
+	local itemType, id, quantity = VersionActivityFixedEnterHelper.getItemTypeIdQuantity(self.goodsCo.product)
+	local itemCo, itemIcon = ItemModel.instance:getItemConfigAndIcon(itemType, id)
+
+	if itemCo.subType == ItemEnum.SubType.HeroExpBox then
+		local keyCount = HeroExpBoxModel.instance:getKeyCount()
+		local needKeyCount = HeroExpBoxModel.instance:getNeedKeyCount(itemCo.id)
+		local icon = HeroExpBoxModel.instance:getKeyIcon()
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagekeyicon, icon .. "_1", true)
+
+		local str = ""
+
+		if needKeyCount <= keyCount then
+			str = string.format("%d/%d", keyCount, needKeyCount)
+		else
+			str = string.format("<color=%s>%d</color>/%d", "#FF0000", keyCount, needKeyCount)
+		end
+
+		self._txt2.text = str
+	end
 end
 
 function VersionActivity2_8StoreGoodsItem:refreshRareBg()

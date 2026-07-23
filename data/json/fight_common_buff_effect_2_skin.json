@@ -30,5 +30,13 @@
     "effectPath": "v3a0_kr/kr_innate_03",
     "audio": 431280153,
     "duration": 2.5
+  },
+  {
+    "buffId": 90071,
+    "skinId": 312803,
+    "effectHang": "mountroot",
+    "effectPath": "v3a7_kr/kr_innate_03",
+    "audio": 431280153,
+    "duration": 2.5
   }
 ]

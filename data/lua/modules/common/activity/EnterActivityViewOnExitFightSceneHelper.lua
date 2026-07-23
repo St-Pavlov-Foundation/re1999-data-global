@@ -16,6 +16,10 @@ function EnterActivityViewOnExitFightSceneHelper.checkIsActivityFight(chapterId)
 	local chapterCo = DungeonConfig.instance:getChapterCO(chapterId)
 	local actId = chapterCo and chapterCo.actId or 0
 
+	if actId ~= 0 and BossRushConfig.instance:getActivityId() == actId then
+		return EnterActivityViewOnExitFightSceneHelper.enterActivityBossRush()
+	end
+
 	return actId ~= 0 and EnterActivityViewOnExitFightSceneHelper["enterActivity" .. actId]
 end
 
@@ -112,6 +116,55 @@ function EnterActivityViewOnExitFightSceneHelper.activeExtend()
 	ActivityHelper.activateClass("EnterActivityViewOnExitFightSceneHelper%d_%d", 1, 1)
 
 	local _ = _G.EnterActivityViewOnExitFightSceneHelper2_9
+	local spVersion = 2
+
+	while true do
+		local cls = _G[string.format("EnterActivityViewOnExitFightSceneHelper_Sp%02d", spVersion)]
+
+		if not cls then
+			break
+		else
+			spVersion = spVersion + 1
+		end
+	end
+end
+
+function EnterActivityViewOnExitFightSceneHelper.enterActivityBossRush(forceStarting, exitFightGroup)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local stage, layer = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(episodeId)
+
+	DungeonModel.instance.curSendEpisodeId = nil
+
+	MainController.instance:enterMainScene(forceStarting)
+	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V3a2_BossRush_LevelDetailView)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
+			BossRushController.instance:openV3a2MainView({
+				isOpenLevelDetail = true,
+				stage = stage,
+				layer = layer
+			})
+		end, nil, BossRushConfig.instance:getActivityId())
+	end)
+end
+
+function EnterActivityViewOnExitFightSceneHelper.enterActivityBossRush(forceStarting, exitFightGroup)
+	local episodeId = DungeonModel.instance.curSendEpisodeId
+	local stage, layer = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(episodeId)
+
+	DungeonModel.instance.curSendEpisodeId = nil
+
+	MainController.instance:enterMainScene(forceStarting)
+	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V3a2_BossRush_LevelDetailView)
+		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
+			BossRushController.instance:openV3a2MainView({
+				isOpenLevelDetail = true,
+				stage = stage,
+				layer = layer
+			})
+		end, nil, BossRushConfig.instance:getActivityId())
+	end)
 end
 
 return EnterActivityViewOnExitFightSceneHelper

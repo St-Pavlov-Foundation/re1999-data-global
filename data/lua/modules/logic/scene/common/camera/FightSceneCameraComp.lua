@@ -11,10 +11,6 @@ function FightSceneCameraComp:onInit()
 end
 
 function FightSceneCameraComp:onSceneStart(sceneId, levelId)
-	FightController.instance:registerCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
-	FightController.instance:registerCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
-	FightController.instance:registerCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
 	FightController.instance:registerCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
 
 	if CameraMgr.instance:hasCameraRootAnimatorPlayer() then
@@ -74,10 +70,6 @@ function FightSceneCameraComp:onSceneClose()
 	self._myTurnOffset = nil
 
 	FightController.instance:unregisterCallback(FightEvent.OnSceneLevelLoaded, self._onLevelLoaded, self)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, self._onRestartStageBefore, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSwitchPlaneClearAsset, self._onSwitchPlaneClearAsset, self)
-	FightController.instance:unregisterCallback(FightEvent.FightRoundStart, self._onFightRoundStart, self)
-	FightController.instance:unregisterCallback(FightEvent.OnMySideRoundEnd, self._onMySideRoundEnd, self)
 	TaskDispatcher.cancelTask(self._delaySetUnitCameraFov, self)
 	TaskDispatcher.cancelTask(self._resetParam, self)
 	self:resetCameraOffset()
@@ -317,13 +309,14 @@ function FightSceneCameraComp:setSceneCameraOffset()
 end
 
 function FightSceneCameraComp:getDefaultCameraOffset()
-	if self._myTurnOffset then
-		return Vector3.New(self._myTurnOffset[1], self._myTurnOffset[2], self._myTurnOffset[3])
-	end
-
 	local levelId = GameSceneMgr.instance:getCurLevelId()
 	local levelConfig = lua_scene_level.configDict[levelId]
 	local cameraOffsetParam = levelConfig and levelConfig.cameraOffset
+	local useMyTurnCamera = FightMsgMgr.sendMsg(FightMsgId.CheckUseMyTurnCamera)
+
+	if useMyTurnCamera then
+		return useMyTurnCamera
+	end
 
 	if not string.nilorempty(cameraOffsetParam) then
 		local offset = Vector3(unpack(cjson.decode(cameraOffsetParam)))
@@ -364,33 +357,6 @@ function FightSceneCameraComp:_onScreenResize(width, height)
 	end
 
 	TaskDispatcher.runDelay(self._delaySetUnitCameraFov, self, 0.01)
-end
-
-function FightSceneCameraComp:_onFightRoundStart()
-	local levelId = GameSceneMgr.instance:getCurLevelId()
-	local config = lua_fight_camera_player_turn_offset.configDict[levelId]
-
-	if config then
-		self._myTurnOffset = config.offset
-
-		self:setSceneCameraOffset()
-	else
-		self._myTurnOffset = nil
-	end
-end
-
-function FightSceneCameraComp:_onMySideRoundEnd()
-	self._myTurnOffset = nil
-
-	self:setSceneCameraOffset()
-end
-
-function FightSceneCameraComp:_onRestartStageBefore()
-	self._myTurnOffset = nil
-end
-
-function FightSceneCameraComp:_onSwitchPlaneClearAsset()
-	self._myTurnOffset = nil
 end
 
 return FightSceneCameraComp

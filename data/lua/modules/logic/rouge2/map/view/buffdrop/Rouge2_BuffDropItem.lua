@@ -18,12 +18,14 @@ function Rouge2_BuffDropItem:init(go)
 	self._btnSelect = gohelper.findChildButtonWithAudio(self.go, "root/#go_Select/#btn_Select", AudioEnum.Rouge2.ConfirmSelectBuff)
 	self._animator = SLFramework.AnimatorPlayer.Get(self.go)
 	self._goTeamTips = gohelper.findChild(self.go, "root/#go_TeamTips")
+	self._goRecommend = gohelper.findChild(self.go, "root/#go_Recommend")
 
 	gohelper.setActive(self._goSelect, false)
 	self:initRareEffectTab()
 
 	self._teamTipsParams = {}
-	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Drop)
+	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.MultiItemSystemTag)
+	self._teamTipsLoader2 = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.ItemRecommend)
 	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go, Rouge2_Enum.ItemDescModeDataKey.BuffDrop)
 
 	self._listener:initCallback(self._refreshItemDesc, self)
@@ -97,9 +99,10 @@ function Rouge2_BuffDropItem:onUpdateMO(index, viewType, dataType, dataId, paren
 	self._dataId = dataId
 	self._buffCo = Rouge2_BackpackHelper.getItemCofigAndMo(dataType, dataId)
 	self._buffId = self._buffCo and self._buffCo.id
-	self._teamTipsParams.itemId = self._buffId
+	self._teamTipsParams[Rouge2_Enum.TeamRecommendParam.ItemId] = self._buffId
 
 	self._teamTipsLoader:initInfo(nil, self._teamTipsParams)
+	self._teamTipsLoader2:initInfo(nil, self._teamTipsParams)
 	self:onSelect(false)
 	self:refreshUI()
 end

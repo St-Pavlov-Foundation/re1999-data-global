@@ -16,6 +16,8 @@ function PermanentActivityListModel:refreshList()
 			else
 				table.insert(lockList, infoMo)
 			end
+		elseif SLFramework.FrameworkSettings.IsEditor then
+			logNormal("PermanentActivityListModel:refreshList online false:", tostring(infoMo.id))
 		end
 	end
 

@@ -5,15 +5,10 @@ module("modules.logic.mainsceneswitch.model.MainSceneSwitchListModel", package.s
 local MainSceneSwitchListModel = class("MainSceneSwitchListModel", MixScrollModel)
 
 function MainSceneSwitchListModel:_getSceneList()
-	local curSceneId = MainSceneSwitchModel.instance:getCurSceneId()
 	local list = {}
 
 	for i, v in ipairs(lua_scene_switch.configList) do
-		if v.id == curSceneId then
-			table.insert(list, 1, v)
-		else
-			table.insert(list, v)
-		end
+		table.insert(list, v)
 	end
 
 	return list
@@ -22,7 +17,38 @@ end
 function MainSceneSwitchListModel:initList()
 	local list = self:_getSceneList()
 
+	table.sort(list, self._sort)
 	self:setList(list)
+end
+
+function MainSceneSwitchListModel._sort(a, b)
+	local curSceneId = MainSceneSwitchModel.instance:getCurSceneId()
+
+	if a.id == curSceneId then
+		return true
+	end
+
+	if b.id == curSceneId then
+		return false
+	end
+
+	local a_status = MainSceneSwitchModel.getSceneStatus(a.id)
+	local b_status = MainSceneSwitchModel.getSceneStatus(b.id)
+
+	if a_status ~= b_status then
+		local a_isUnlock = a_status == MainSceneSwitchEnum.SceneStutas.Unlock
+		local b_isUnlock = b_status == MainSceneSwitchEnum.SceneStutas.Unlock
+
+		if a_isUnlock then
+			return true
+		end
+
+		if b_isUnlock then
+			return false
+		end
+	end
+
+	return a.id > b.id
 end
 
 function MainSceneSwitchListModel:getFirstUnlockSceneIndex()

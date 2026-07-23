@@ -44,6 +44,8 @@ function ClothesStoreView:onInitView()
 	self.btnArrow = gohelper.findChildButtonWithAudio(self.viewGO, "#go_has/#scroll_skin/arrow/ani/image")
 	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self.viewCanvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+	self._goimg_orange = gohelper.findChild(self.viewGO, "#go_has/RightBtn/#btn_buy/bg/#go_img_orange")
+	self._goimg_red = gohelper.findChild(self.viewGO, "#go_has/RightBtn/#btn_buy/bg/#go_img_red")
 
 	StoreClothesGoodsItemListModel.instance:initViewParam()
 
@@ -56,6 +58,7 @@ function ClothesStoreView:addEvents()
 	self:addEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, self._isSkinEmpty, self)
 	self:addEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
 	self:addEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
+	self:addEventCb(self.viewContainer, ViewEvent.ToSwitchTab, self._onToSwitchTab, self)
 	self._drag:AddDragBeginListener(self._onDragBegin, self)
 	self._drag:AddDragEndListener(self._onDragEnd, self)
 	self._scrollprop:AddOnValueChanged(self._onDragging, self)
@@ -65,12 +68,14 @@ function ClothesStoreView:addEvents()
 	self:addClickCb(self.btnDetail, self._onClickBtnDetail, self)
 	self:addClickCb(self.btnBuy, self._onClickBtnBuy, self)
 	self:addClickCb(self.btnArrow, self._onClickBtnArrow, self)
+	self:addEventCb(StoreController.instance, StoreEvent.SkinPlayPriceAnim, self._onSkinPlayPriceAnim, self)
 end
 
 function ClothesStoreView:removeEvents()
 	self:removeEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, self._isSkinEmpty, self)
 	self:removeEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
+	self:removeEventCb(self.viewContainer, ViewEvent.ToSwitchTab, self._onToSwitchTab, self)
 	self._drag:RemoveDragBeginListener()
 	self._drag:RemoveDragEndListener()
 	self._scrollprop:RemoveOnValueChanged()
@@ -80,12 +85,20 @@ function ClothesStoreView:removeEvents()
 	self:removeClickCb(self.btnDetail)
 	self:removeClickCb(self.btnBuy)
 	self:removeClickCb(self.btnArrow)
+	self:removeEventCb(StoreController.instance, StoreEvent.SkinPlayPriceAnim, self._onSkinPlayPriceAnim, self)
 end
+
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
 function ClothesStoreView:_editableInitView()
 	self._categoryItemContainer = {}
 
 	gohelper.setActive(self._goempty, false)
+
+	self._btnBuyAnimPlayer = csAnimatorPlayer.Get(self.btnBuy.gameObject)
+	self._btnBuyAnimator = self._btnBuyAnimPlayer.animator
+
+	self:_setActive_redOrOrange(false)
 end
 
 function ClothesStoreView:_isSkinEmpty(state)
@@ -161,6 +174,10 @@ function ClothesStoreView:_onClickBtnPlay()
 	end
 end
 
+function ClothesStoreView:_onToSwitchTab(tabId)
+	self._lastSkinVideoStoreGoodsId = nil
+end
+
 function ClothesStoreView:playVideo()
 	local isFirstOpen = self.isFirstOpen
 
@@ -172,6 +189,20 @@ function ClothesStoreView:playVideo()
 
 	StoreController.instance:dispatchEvent(StoreEvent.OnPlaySkinVideo, goodsMo)
 	self:hideUI(isFirstOpen)
+end
+
+function ClothesStoreView:_playSkinVideoStoreByMo(goodsMo, skinViewCfg)
+	if goodsMo and goodsMo.goodsId ~= self._lastSkinVideoStoreGoodsId then
+		self._lastSkinVideoStoreGoodsId = goodsMo.goodsId
+
+		if skinViewCfg and StoreClothesGoodsItemListModel.instance:getIsLive2d() and not string.nilorempty(skinViewCfg.storeMv) then
+			StoreClothesGoodsItemListModel.instance:switchIsLive2d()
+			self:refreshSwitchBtn()
+			self.previewComp:setGoods(goodsMo)
+		end
+
+		StoreController.instance:dispatchEvent(StoreEvent.OnPlaySkinVideoStore, goodsMo)
+	end
 end
 
 function ClothesStoreView:_onClickBtnSwitch()
@@ -216,14 +247,32 @@ function ClothesStoreView:_onClickBtnDetail()
 end
 
 function ClothesStoreView:_onClickBtnBuy()
-	local mo = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+	local goodsMO = StoreClothesGoodsItemListModel.instance:getSelectGoods()
 
-	if not mo then
+	if not goodsMO then
 		return
 	end
 
+	local goodsConfig = goodsMO.config
+	local info = self._goodsPriceInfo or StoreHelper.getSkinGoodsPriceInfo(goodsConfig, self.skinId)
+	local specialofferItemType = info.specialofferItemType
+	local specialofferItemId = info.specialofferItemId
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+
+	if specialofferItemType then
+		local specialofferItemCO = ItemModel.instance:getItemConfig(specialofferItemType, specialofferItemId)
+
+		if ItemEnum.Tag.GoldenMilletPresentSkin == specialofferItemCO.clienttag and GoldenMilletPresentModel.instance:isShowRedDot() and not hasSpecialOfferItem then
+			GameFacade.showMessageBox(MessageBoxIdDefine.GoldenMilletPresentSkinBeforeBuy, MsgBoxEnum.BoxType.Yes, function()
+				GoldenMilletPresentController.instance:openGoldenMilletPresentView()
+			end, nil, nil, self, nil, nil)
+
+			return
+		end
+	end
+
 	ViewMgr.instance:openView(ViewName.StoreSkinGoodsView2, {
-		goodsMO = mo
+		goodsMO = goodsMO
 	})
 end
 
@@ -279,16 +328,28 @@ function ClothesStoreView:_refreshTabs(selectTabId, openUpdate)
 	end
 
 	local skinTickets = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.SkinTicket)
+	local skinTicketItemId
 
-	if skinTickets[1] then
+	for _, itemMo in ipairs(skinTickets) do
+		local itemId = itemMo.id
+		local config = lua_item.configDict[itemId]
+
+		if config.clienttag == ItemEnum.Tag.GoldenMilletPresentSkin then
+			-- block empty
+		elseif skinTicketItemId == nil then
+			skinTicketItemId = itemId
+		end
+
 		table.insert(showCurrency, {
 			isCurrencySprite = true,
 			type = MaterialEnum.MaterialType.Item,
-			id = skinTickets[1].id
+			id = itemId
 		})
+	end
 
+	if skinTicketItemId then
 		local deadlineTimeHour = 0
-		local itemCo = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, skinTickets[1].id)
+		local itemCo = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, skinTicketItemId)
 
 		if itemCo and not string.nilorempty(itemCo.expireTime) then
 			local ts = TimeUtil.stringToTimestamp(itemCo.expireTime)
@@ -366,6 +427,12 @@ function ClothesStoreView:onOpen()
 	local jumpGoodsId = self.viewContainer:getJumpGoodsId()
 	local isFocus = self.viewContainer:isJumpFocus()
 
+	if jumpGoodsId then
+		local goodIndex = StoreClothesGoodsItemListModel.instance:getGoodIndex(jumpGoodsId)
+
+		StoreClothesGoodsItemListModel.instance:setSelectIndex(goodIndex)
+	end
+
 	self:_refreshTabs(jumpTabId, true)
 	self:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
 	self:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onStoreInfoChanged, self)
@@ -380,10 +447,6 @@ function ClothesStoreView:onOpen()
 		end
 
 		self:locationGoodsItemByGoodsId(jumpGoodsId)
-
-		local goodIndex = StoreClothesGoodsItemListModel.instance:getGoodIndex(jumpGoodsId)
-
-		StoreClothesGoodsItemListModel.instance:setSelectIndex(goodIndex)
 	end
 end
 
@@ -466,11 +529,11 @@ function ClothesStoreView:onClose()
 	PostProcessingMgr.instance:forceRefreshCloseBlur()
 	self:removeEventCb(StoreController.instance, StoreEvent.CheckSkinViewEmpty, self._isSkinEmpty, self)
 	self:removeEventCb(PayController.instance, PayEvent.PayFinished, self._payFinished, self)
-	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, self._updateItemList, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, self._updateInfo, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, self._onStoreInfoChanged, self)
 	self:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, self._onRefreshRedDot, self)
 	BackpackController.instance:unregisterCallback(BackpackEvent.UpdateItemList, self._updateItemList, self)
+	TaskDispatcher.cancelTask(self._delayRefreshPrice, self)
 end
 
 function ClothesStoreView:onUpdateParam()
@@ -511,7 +574,7 @@ function ClothesStoreView:refreshSkinPreview()
 
 	local bpsvpCo = BpConfig.instance:getBpSkinViewParamCO(skinId)
 
-	if VersionValidator.instance:isInReviewing() == false and bpsvpCo and not goodsMo:alreadyHas() and BpController.instance:isEmptySkinFaceViewStr(skinId) and self:_isCheckCanPlayVideo() then
+	if VersionValidator.instance:isInReviewing() == false and bpsvpCo and BpController.instance:isSkinFaceOnlineBySkinId(skinId) and not goodsMo:alreadyHas() and BpController.instance:isEmptySkinFaceViewStr(skinId) and self:_isCheckCanPlayVideo() then
 		ViewMgr.instance:openView(ViewName.BPSkinFaceView_Store, {
 			skinId = self.skinId,
 			openType = BPSkinFaceView.OPEN_TYPE.StoreSkin,
@@ -550,9 +613,10 @@ function ClothesStoreView:refreshSkinInfo()
 
 	local goodsMo = self._goodsMo
 	local config = goodsMo.config
-	local product = config.product
 	local skinId = self.skinId
 	local skinCo = SkinConfig.instance:getSkinCo(skinId)
+
+	self:refreshChargeInfo()
 
 	if string.nilorempty(skinCo.subTitle) then
 		gohelper.setActive(self._simagetitle.gameObject, false)
@@ -571,21 +635,6 @@ function ClothesStoreView:refreshSkinInfo()
 		end)
 		gohelper.setActive(self._simagelogo.gameObject, true)
 	end
-
-	local costInfo = string.splitToNumber(config.cost, "#")
-	local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(costInfo[1], costInfo[2])
-	local id = costConfig.icon
-	local str = string.format("%s_1", id)
-
-	UISpriteSetMgr.instance:setCurrencyItemSprite(self.imagematerial, str, true)
-	gohelper.setActive(self.goDiscount, config.originalCost > 0)
-
-	local offTag = costInfo[3] / config.originalCost
-
-	offTag = math.ceil(offTag * 100)
-	self.txtDiscount.text = string.format("-%d%%", 100 - offTag)
-
-	self:refreshChargeInfo(goodsMo, skinCo)
 
 	local skinViewCfg = lua_character_limited.configDict[skinId]
 	local isNotInReviewing = not VersionValidator.instance:isInReviewing()
@@ -606,55 +655,98 @@ function ClothesStoreView:refreshSkinInfo()
 	elseif self:checkSkinVideoNotPlayed(0) then
 		self:setSkinVideoPlayed(0)
 		self:hideUI()
+		self:_playSkinVideoStoreByMo(goodsMo, skinViewCfg)
+	else
+		self:_playSkinVideoStoreByMo(goodsMo, skinViewCfg)
 	end
 
 	self.isFirstOpen = false
 end
 
-function ClothesStoreView:refreshChargeInfo(goodsMo, skinCo)
-	local skinId = skinCo.id
-	local price, originalPrice
+function ClothesStoreView:refreshChargeInfo()
+	local goodsMo = self._goodsMo
+	local goodsConfig = goodsMo.config
+	local goodsId = goodsConfig.id
+	local skinId = self.skinId
+	local skinCo = SkinConfig.instance:getSkinCo(skinId)
 
-	if skinCo then
-		local isChargePackageValid = StoreModel.instance:isStoreSkinChargePackageValid(skinId)
+	self._goodsPriceInfo = StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
 
-		if isChargePackageValid then
-			price, originalPrice = StoreConfig.instance:getSkinChargePrice(skinId)
-		end
-	end
-
-	gohelper.setActive(self.goCostCurrency1, price ~= nil)
-
-	if price then
-		local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(price))
-
-		self.txtPrice.text = priceStr
-
-		if originalPrice then
-			self.txtOriginalPrice.text = originalPrice
-
-			local skinChargeGoodsCfg = StoreConfig.instance:getSkinChargeGoodsCfg(skinId)
-
-			if skinChargeGoodsCfg then
-				local num, numStr = PayModel.instance:getProductOriginPriceNum(skinChargeGoodsCfg.originalCostGoodsId)
-
-				self.txtOriginalPrice.text = numStr
-			end
-		end
-
-		gohelper.setActive(self.txtOriginalPrice, originalPrice ~= nil)
-	end
-
+	local info = self._goodsPriceInfo
+	local rmbCurPrice = info.rmbCurPrice
+	local rmbOriginalPrice = info.rmbOriginalPrice
+	local coinsItemType = info.coinsItemType
+	local coinsItemId = info.coinsItemId
+	local coinsCurPrice = info.coinsCurPrice
+	local coinsOriginalPrice = info.coinsOriginalPrice
+	local coinsReduction = info.coinsReduction
+	local hasDeductionItem = info.hasDeductionItem
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
 	local canRepeatBuy = StoreModel.instance:isSkinGoodsCanRepeatBuy(goodsMo)
 	local alreadyHas = goodsMo:alreadyHas() and not canRepeatBuy
 
+	if rmbCurPrice then
+		local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(rmbCurPrice))
+
+		self.txtPrice.text = priceStr
+	end
+
+	gohelper.setActive(self.goCostCurrency1, rmbCurPrice)
+
+	if rmbOriginalPrice then
+		self.txtOriginalPrice.text = rmbOriginalPrice
+
+		local skinChargeGoodsCfg = StoreConfig.instance:getSkinChargeGoodsCfg(skinId)
+
+		if skinChargeGoodsCfg then
+			local num, numStr = PayModel.instance:getProductOriginPriceNum(skinChargeGoodsCfg.originalCostGoodsId)
+
+			self.txtOriginalPrice.text = numStr
+		end
+	end
+
+	gohelper.setActive(self.txtOriginalPrice, rmbOriginalPrice)
+
+	if coinsCurPrice then
+		self.txtMaterialNum.text = coinsCurPrice
+	end
+
+	gohelper.setActive(self.txtOriginalMaterialNum, coinsCurPrice)
+
+	local isShowCoinsOriginalPrice = (hasDeductionItem or hasSpecialOfferItem) and coinsCurPrice and coinsCurPrice < coinsOriginalPrice
+
+	if isShowCoinsOriginalPrice then
+		self.txtOriginalMaterialNum.text = coinsOriginalPrice
+	end
+
+	gohelper.setActive(self.txtOriginalMaterialNum, isShowCoinsOriginalPrice)
+
+	self.txtCostDeduction.text = -coinsReduction
+
+	gohelper.setActive(self.goCostDeduction, hasDeductionItem)
+
+	if coinsItemType then
+		local costConfig = ItemModel.instance:getItemConfig(coinsItemType, coinsItemId)
+		local iconSpriteName = string.format("%s_1", costConfig.icon)
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self.imagematerial, iconSpriteName, true)
+	end
+
+	local isShowOffTag = false
+
+	if isShowOffTag then
+		local offDiscount = math.ceil(coinsCurPrice / coinsOriginalPrice * 100)
+
+		isShowOffTag = offDiscount < 100 and offDiscount > 0
+		self.txtDiscount.text = string.format("-%d%%", 100 - offDiscount)
+	end
+
+	gohelper.setActive(self.goDiscount, isShowOffTag)
 	gohelper.setActive(self.btnBuy, not alreadyHas)
 	gohelper.setActive(self.goHasget, alreadyHas)
 	gohelper.setActive(self.goSkinTips, canRepeatBuy)
 
 	if canRepeatBuy then
-		gohelper.setActive(self.goSkinTips, true)
-
 		local compensate = string.splitToNumber(skinCo.compensate, "#")
 		local text = luaLang("storeskinview_skintips")
 		local str = string.format("<sprite=2>%s", compensate[3])
@@ -662,33 +754,7 @@ function ClothesStoreView:refreshChargeInfo(goodsMo, skinCo)
 		self.txtPropNum.text = GameUtil.getSubPlaceholderLuaLangOneParam(text, str)
 	end
 
-	local deductionItemCount = 0
-	local deductionCost = 0
-
-	if not string.nilorempty(goodsMo.config.deductionItem) then
-		local info = GameUtil.splitString2(goodsMo.config.deductionItem, true)
-
-		deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
-		self.txtCostDeduction.text = -info[2][1]
-
-		if deductionItemCount > 0 then
-			deductionCost = info[2][1]
-		end
-	end
-
-	gohelper.setActive(self.goCostDeduction, deductionItemCount > 0)
-
-	local costInfo = string.splitToNumber(goodsMo.config.cost, "#")
-	local materialNum = costInfo[3]
-	local realCost = math.max(0, materialNum - deductionCost)
-
-	self.txtMaterialNum.text = realCost
-
-	if deductionCost > 0 then
-		self.txtOriginalMaterialNum.text = materialNum
-	else
-		self.txtOriginalMaterialNum.text = ""
-	end
+	self:_setActive_redOrOrange(hasSpecialOfferItem)
 end
 
 function ClothesStoreView:refreshNewArrow()
@@ -743,6 +809,74 @@ function ClothesStoreView:onDestroyView()
 	TaskDispatcher.cancelTask(self._startDefaultShowView, self)
 	TaskDispatcher.cancelTask(self.refreshSkinPreview, self)
 	TaskDispatcher.cancelTask(self.onSwitchAnimDone, self)
+	TaskDispatcher.cancelTask(self._delayRefreshPrice, self)
+end
+
+function ClothesStoreView:_playAnimBtnBuyIdle(cb, cbObj)
+	self:_playAnimBtnBuy(UIAnimationName.Idle, cb, cbObj)
+end
+
+function ClothesStoreView:_playAnimBtnBuySwitch(cb, cbObj)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_bank_open)
+	self:_playAnimBtnBuy(UIAnimationName.Switch, cb, cbObj)
+end
+
+function ClothesStoreView:_playAnimBtnBuy(name, cb, cbObj)
+	self._btnBuyAnimator.enabled = true
+
+	self._btnBuyAnimPlayer:Play(name, cb or function()
+		return
+	end, cbObj)
+end
+
+function ClothesStoreView:_onSkinPlayPriceAnim()
+	TaskDispatcher.cancelTask(self._delayRefreshPrice, self)
+
+	local skinId = self.skinId
+
+	if not skinId then
+		return
+	end
+
+	local goodsMO = StoreClothesGoodsItemListModel.instance:getSelectGoods()
+
+	if not goodsMO then
+		return
+	end
+
+	local alreadyHas = goodsMO:alreadyHas()
+
+	if alreadyHas then
+		return
+	end
+
+	local goodsConfig = goodsMO.config
+
+	if not goodsConfig then
+		return
+	end
+
+	local info = StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+	local hasDeductionItem = info.hasDeductionItem
+	local coinsReduction = info.coinsReduction
+	local bShowAnim = hasSpecialOfferItem or hasDeductionItem or coinsReduction > 0
+
+	if not bShowAnim then
+		return
+	end
+
+	TaskDispatcher.runDelay(self._delayRefreshPrice, self, 0.16)
+	self:_playAnimBtnBuySwitch()
+end
+
+function ClothesStoreView:_delayRefreshPrice()
+	self:refreshChargeInfo()
+end
+
+function ClothesStoreView:_setActive_redOrOrange(bRed)
+	gohelper.setActive(self._goimg_orange, not bRed)
+	gohelper.setActive(self._goimg_red, bRed)
 end
 
 return ClothesStoreView

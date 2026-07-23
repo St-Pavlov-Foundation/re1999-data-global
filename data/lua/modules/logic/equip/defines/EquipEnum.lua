@@ -25,6 +25,7 @@ EquipEnum.FromViewEnum = {
 	FromSeasonFightView = 3,
 	FromHeroGroupFightView = 1,
 	FromTowerComposeHeroGroupView = 12,
+	FromTwinssychubeEquipInfoView = 13,
 	FromRougeHeroGroupFightView = 7,
 	FromCachotHeroGroupFightView = 5,
 	FromPresetPreviewView = 11
@@ -46,5 +47,6 @@ EquipEnum.DecomposeAnimDuration = 0.9
 EquipEnum.EquipEnterAnimWaitTime = 0.2
 EquipEnum.EquipDecomposeMinRare = 2
 EquipEnum.EquipDecomposeMaxRare = 3
+EquipEnum.sp02TwinssychubeUnlockKey = "sp02TwinssychubeUnlockKey"
 
 return EquipEnum

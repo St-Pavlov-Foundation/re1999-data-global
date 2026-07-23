@@ -13,12 +13,11 @@ function Rouge2_FightSuccessView:onInitView()
 	self.uiSpine:useRT()
 	self.uiSpine:setImgPos(0)
 
-	self._txtsayCn = gohelper.findChildText(self.viewGO, "left/#txt_sayCn")
-	self._txtsayEn = gohelper.findChildText(self.viewGO, "left/SayEn/#txt_sayEn")
+	self._txtsayCn = gohelper.findChildText(self.viewGO, "left/layout/txtSayCn")
+	self._txtsayEn = gohelper.findChildText(self.viewGO, "left/layout/txtSayEn")
 	self._btndata = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_data")
 	self._txtepisodeNameEn = gohelper.findChildText(self.viewGO, "right/#txt_episodeNameEn")
 	self._txtepisodeName = gohelper.findChildText(self.viewGO, "right/#txt_episodeName")
-	self._goattribute = gohelper.findChild(self.viewGO, "right/#go_attribute")
 	self._goFunnyTask = gohelper.findChild(self.viewGO, "right/#go_funnytask")
 	self._txtTaskTitle = gohelper.findChildText(self.viewGO, "right/#go_funnytask/level/txt_dec")
 	self._goDescList = gohelper.findChild(self.viewGO, "right/#go_funnytask/#go_descList")
@@ -26,6 +25,8 @@ function Rouge2_FightSuccessView:onInitView()
 	self._imageTaskRare = gohelper.findChildImage(self.viewGO, "right/#go_funnytask/level/#image_rare")
 	self._imageTaskLevelBg = gohelper.findChildImage(self.viewGO, "right/#go_funnytask/level/#image_levelbg")
 	self._imageTaskLevel = gohelper.findChildImage(self.viewGO, "right/#go_funnytask/level/#image_level")
+	self._goMaxDamage = gohelper.findChild(self.viewGO, "right/#go_MaxDamage")
+	self._txtMaxDamage = gohelper.findChildText(self.viewGO, "right/#go_MaxDamage/#txt_MaxDamage")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -52,8 +53,6 @@ function Rouge2_FightSuccessView:_editableInitView()
 	self.spineTr = self._gospine.transform
 	self._txtsayCn.text = ""
 	self._txtsayEn.text = ""
-
-	Rouge2_AttributeToolBar.Load(self._goattribute, Rouge2_Enum.AttributeToolType.Attr_Detail)
 end
 
 function Rouge2_FightSuccessView:onClickBg()
@@ -81,6 +80,7 @@ end
 function Rouge2_FightSuccessView:refreshRight()
 	self:refreshEpisodeInfo()
 	self:refreshRougeInfo()
+	self:refreshMaxDamage()
 end
 
 function Rouge2_FightSuccessView:refreshSpine()
@@ -102,7 +102,7 @@ function Rouge2_FightSuccessView:onSpineLoaded()
 	self.spineLoaded = true
 
 	self.uiSpine:setUIMask(true)
-	self.uiSpine:setAllLayer(UnityLayer.UI)
+	self.uiSpine:setAllLayer(UnityLayer.UI3D)
 	self:setSkinOffset()
 
 	if self.uiSpine:isLive2D() then
@@ -146,7 +146,7 @@ function Rouge2_FightSuccessView:setSkinOffset()
 	local offsetX = tonumber(offsets[1])
 	local offsetY = tonumber(offsets[2])
 
-	recthelper.setAnchor(self.spineTr, offsetX, offsetY)
+	CharacterVoiceEnum.setSpineOffset(self.uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self.spineTr, scale, scale, scale)
 end
 
@@ -237,7 +237,6 @@ function Rouge2_FightSuccessView:refreshFunnyTask()
 	self._hasFunnyTask = self._funnyTaskIdList and #self._funnyTaskIdList > 0
 
 	gohelper.setActive(self._goFunnyTask, self._hasFunnyTask)
-	gohelper.setActive(self._goattribute, not self._hasFunnyTask)
 
 	if not self._hasFunnyTask then
 		return
@@ -299,6 +298,10 @@ function Rouge2_FightSuccessView:_refreshFunnyTaskDesc(obj, desc, index)
 	local txtDesc = obj:GetComponent(gohelper.Type_TextMesh)
 
 	txtDesc.text = desc
+end
+
+function Rouge2_FightSuccessView:refreshMaxDamage()
+	self._txtMaxDamage.text = Rouge2_BossBattleController.instance:getRoundMaxDamage()
 end
 
 function Rouge2_FightSuccessView:onClose()

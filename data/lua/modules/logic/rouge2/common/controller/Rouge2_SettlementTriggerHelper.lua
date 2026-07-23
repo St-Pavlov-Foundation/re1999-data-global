@@ -231,7 +231,7 @@ function Rouge2_SettlementTriggerHelper.triggerType14(endId)
 end
 
 function Rouge2_SettlementTriggerHelper.triggerType15()
-	local isAbort = RougeModel.instance:isAbortRouge()
+	local isAbort = Rouge2_Model.instance:isAbortRouge()
 
 	if isAbort then
 		return

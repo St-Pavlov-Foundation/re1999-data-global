@@ -1,0 +1,42 @@
+[
+  {
+    "gameId": 1371001,
+    "background": "1",
+    "levelDay": 8,
+    "position": "0#0",
+    "winText": "小瑞安侬成功完成了冒险",
+    "baseAttr": "200#60#12"
+  },
+  {
+    "gameId": 1371002,
+    "background": "1",
+    "levelDay": 15,
+    "position": "0#0",
+    "winText": "小瑞安侬成功完成了冒险",
+    "baseAttr": "200#60#14"
+  },
+  {
+    "gameId": 1371003,
+    "background": "2",
+    "levelDay": 15,
+    "position": "0#0",
+    "winText": "小瑞安侬成功完成了冒险",
+    "baseAttr": "200#60#14"
+  },
+  {
+    "gameId": 1371004,
+    "background": "3",
+    "levelDay": 20,
+    "position": "0#0",
+    "winText": "小瑞安侬成功完成了冒险",
+    "baseAttr": "200#60#16"
+  },
+  {
+    "gameId": 1371005,
+    "background": "3",
+    "levelDay": 60,
+    "position": "0#0",
+    "winText": "小瑞安侬成功完成了冒险",
+    "baseAttr": "200#60#16"
+  }
+]

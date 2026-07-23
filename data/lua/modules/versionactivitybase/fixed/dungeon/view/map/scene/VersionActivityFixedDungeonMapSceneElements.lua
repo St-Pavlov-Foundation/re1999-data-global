@@ -35,8 +35,12 @@ function VersionActivityFixedDungeonMapSceneElements:addEvents()
 	self:addEventCb(DungeonController.instance, DungeonMapElementEvent.OnChangeMap, self.onChangeMap, self)
 	self:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, self.onClickElement, self)
 	self:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, self.onHideInteractUI, self)
-	self._click:AddClickUpListener(self.onClickUp, self)
-	self._click:AddClickDownListener(self.onClickDown, self)
+
+	if self._click then
+		self._click:AddClickUpListener(self.onClickUp, self)
+		self._click:AddClickDownListener(self.onClickDown, self)
+	end
+
 	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.showNewElements, self)
 end
 
@@ -56,8 +60,12 @@ function VersionActivityFixedDungeonMapSceneElements:removeEvents()
 	self:removeEventCb(DungeonController.instance, DungeonMapElementEvent.OnChangeMap, self.onChangeMap, self)
 	self:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickElement, self.onClickElement, self)
 	self:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnHideInteractUI, self.onHideInteractUI, self)
-	self._click:RemoveClickUpListener()
-	self._click:RemoveClickDownListener()
+
+	if self._click then
+		self._click:RemoveClickUpListener()
+		self._click:RemoveClickDownListener()
+	end
+
 	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, self.showNewElements, self)
 end
 

@@ -30,6 +30,9 @@ function ArcadeGameEntityIcon:init(go)
 	self._goFrame2 = gohelper.findChild(self.go, "#go_frame/frame2")
 	self._translu2 = gohelper.findChild(self.go, "#go_frame/frame2/leftup").transform
 	self._transrd2 = gohelper.findChild(self.go, "#go_frame/frame2/rightdown").transform
+	self._gopassword = gohelper.findChild(self.go, "#go_pwd")
+	self._transpassword = self._gopassword.transform
+	self._txtpassword = gohelper.findChildText(self.go, "#go_pwd/#txt_pwd")
 
 	gohelper.setActive(self._goportal, false)
 	gohelper.setActive(self._gogoods, false)
@@ -58,6 +61,7 @@ function ArcadeGameEntityIcon:setEntity(entityType, uid, id)
 end
 
 function ArcadeGameEntityIcon:addEventListeners()
+	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.RefreshEntityIcon, self._onRefreshEntityIcon, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.RefreshGameEventTip, self._onRefreshGameEventTip, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.CheckEntityTalk, self._onCheckTalk, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnEntityTweenMove, self._onEntityTweenMove, self)
@@ -66,11 +70,18 @@ function ArcadeGameEntityIcon:addEventListeners()
 end
 
 function ArcadeGameEntityIcon:removeEventListeners()
+	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.RefreshEntityIcon, self._onRefreshEntityIcon, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.RefreshGameEventTip, self._onRefreshGameEventTip, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.CheckEntityTalk, self._onCheckTalk, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnEntityTweenMove, self._onEntityTweenMove, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnCharacterResourceCountUpdate, self._onCharacterResourceUpdate, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnSkillResourceChange, self._onSkillChangeRes, self)
+end
+
+function ArcadeGameEntityIcon:_onRefreshEntityIcon(entityType, uid)
+	if self._entityType and self._uid and entityType == self._entityType and uid == self._uid then
+		self:refresh()
+	end
 end
 
 function ArcadeGameEntityIcon:_onRefreshGameEventTip(entityType, uid, isCharacterMove)
@@ -259,14 +270,61 @@ function ArcadeGameEntityIcon:refresh()
 	self:refreshPortal()
 	self:refreshTalk()
 	self:refreshFrame()
+	self:refreshPassword()
+end
+
+function ArcadeGameEntityIcon:refreshPos()
+	self:checkShow()
+
+	if not self._isShow then
+		return
+	end
+
+	local scene = ArcadeGameController.instance:getGameScene()
+
+	if not self._entityType or not self._uid or not scene then
+		return
+	end
+
+	local entity = scene.entityMgr:getEntityWithType(self._entityType, self._uid)
+
+	if entity then
+		local x, y, z = entity:getPosition()
+		local rectPosX, rectPosY = recthelper.worldPosToAnchorPosXYZ(x, y, z, self.viewTrans)
+
+		recthelper.setAnchor(self.trans, rectPosX, rectPosY)
+	end
+end
+
+function ArcadeGameEntityIcon:checkShow()
+	local isShow = false
+	local gridX, gridY
+
+	if self._entityType and self._uid then
+		local mo = ArcadeGameModel.instance:getMOWithType(self._entityType, self._uid)
+
+		if mo then
+			gridX, gridY = mo:getGridPos()
+		end
+	end
+
+	if gridX and gridX >= ArcadeGameEnum.Const.RoomMinCoordinateValue and gridX <= ArcadeGameEnum.Const.RoomSize and gridY and gridY >= ArcadeGameEnum.Const.RoomMinCoordinateValue and gridY <= ArcadeGameEnum.Const.RoomSize then
+		isShow = true
+	end
+
+	if self._isShow == isShow then
+		return
+	end
+
+	gohelper.setActive(self.go, isShow)
+
+	self._isShow = isShow
 end
 
 function ArcadeGameEntityIcon:refreshGoods(isPlay)
 	local isGoods = self._entityType == ArcadeGameEnum.EntityType.Goods
 
 	if isGoods then
-		gohelper.setActive(self._gogoods, true)
-
 		local characterMO = ArcadeGameModel.instance:getCharacterMO()
 		local hasCoin = characterMO and characterMO:getResourceCount(ArcadeGameEnum.CharacterResource.GameCoin) or 0
 		local mo = ArcadeGameModel.instance:getMOWithType(self._entityType, self._uid)
@@ -292,9 +350,9 @@ function ArcadeGameEntityIcon:refreshGoods(isPlay)
 		if isPlay then
 			self._goodsAnimator:Play("refresh", 0, 0)
 		end
-	else
-		gohelper.setActive(self._gogoods, false)
 	end
+
+	gohelper.setActive(self._gogoods, isGoods)
 end
 
 function ArcadeGameEntityIcon:refreshPortal()
@@ -394,52 +452,22 @@ function ArcadeGameEntityIcon:refreshFrame()
 	gohelper.setActive(self._goFrames, showFrame)
 end
 
-function ArcadeGameEntityIcon:refreshPos()
-	self:checkShow()
+function ArcadeGameEntityIcon:refreshPassword()
+	local isPWDValidator = self._entityType == ArcadeGameEnum.EntityType.PWDValidator
 
-	if not self._isShow then
-		return
-	end
-
-	local scene = ArcadeGameController.instance:getGameScene()
-
-	if not self._entityType or not self._uid or not scene then
-		return
-	end
-
-	local entity = scene.entityMgr:getEntityWithType(self._entityType, self._uid)
-
-	if entity then
-		local x, y, z = entity:getPosition()
-		local rectPosX, rectPosY = recthelper.worldPosToAnchorPosXYZ(x, y, z, self.viewTrans)
-
-		recthelper.setAnchor(self.trans, rectPosX, rectPosY)
-	end
-end
-
-function ArcadeGameEntityIcon:checkShow()
-	local isShow = false
-	local gridX, gridY
-
-	if self._entityType and self._uid then
+	if isPWDValidator then
 		local mo = ArcadeGameModel.instance:getMOWithType(self._entityType, self._uid)
+		local password = mo and mo:getPassword() or ""
 
-		if mo then
-			gridX, gridY = mo:getGridPos()
-		end
+		self._txtpassword.text = password
+
+		local sizeX, sizeY = mo:getSize()
+		local uiGridSize = ArcadeConfig.instance:getArcadeGameUIGridSize()
+
+		transformhelper.setLocalPosXY(self._transpassword, sizeX / 2 * uiGridSize, (sizeY - 1) * uiGridSize)
 	end
 
-	if gridX and gridX >= ArcadeGameEnum.Const.RoomMinCoordinateValue and gridX <= ArcadeGameEnum.Const.RoomSize and gridY and gridY >= ArcadeGameEnum.Const.RoomMinCoordinateValue and gridY <= ArcadeGameEnum.Const.RoomSize then
-		isShow = true
-	end
-
-	if self._isShow == isShow then
-		return
-	end
-
-	gohelper.setActive(self.go, isShow)
-
-	self._isShow = isShow
+	gohelper.setActive(self._gopassword, isPWDValidator)
 end
 
 function ArcadeGameEntityIcon:reset()

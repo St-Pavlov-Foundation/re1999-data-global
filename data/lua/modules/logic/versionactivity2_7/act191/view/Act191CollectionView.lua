@@ -119,9 +119,12 @@ function Act191CollectionView:refreshUI()
 		self.itemUIdMap[i] = info and info.itemUid1 or 0
 	end
 
-	local rankStr = lua_activity191_rank.configDict[self.gameInfo.rank].fightLevel
+	local rankCfg = Activity191Config.instance:getRankCfg(self.gameInfo.rank)
 
-	UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(rankStr))
+	if rankCfg then
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(rankCfg.fightLevel))
+	end
+
 	self:refreshItemList()
 	self:refreshInfo()
 	self:refreshEquipInfo()
@@ -170,8 +173,10 @@ function Act191CollectionView:refreshItemList()
 	table.sort(itemInfoList, function(a, b)
 		local aCfg = Activity191Config.instance:getCollectionCo(a.itemId)
 		local bCfg = Activity191Config.instance:getCollectionCo(b.itemId)
+		local aRare = aCfg and aCfg.rare or 0
+		local bRare = bCfg and bCfg.rare or 0
 
-		return aCfg.rare > bCfg.rare
+		return bRare < aRare
 	end)
 
 	for k, itemInfo in ipairs(itemInfoList) do
@@ -333,7 +338,13 @@ function Act191CollectionView:_endDrag(index, pointerEventData)
 end
 
 function Act191CollectionView:_checkDrag(index)
-	return not self.itemUIdMap[index]
+	local itemUid = self.itemUIdMap[index]
+
+	if itemUid and itemUid ~= 0 then
+		return false
+	else
+		return true
+	end
 end
 
 function Act191CollectionView:onUpdateTeam()

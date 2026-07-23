@@ -69,6 +69,9 @@ end
 function Rouge2_MapDiceAnimView:_btnClickOnClick()
 	gohelper.setActive(self._btnClick.gameObject, false)
 	gohelper.setActive(self._btnJump.gameObject, true)
+
+	self._clickDiceCount = self._clickDiceCount + 1
+
 	self:dice()
 end
 
@@ -88,8 +91,9 @@ function Rouge2_MapDiceAnimView:_editableInitView()
 	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 	self._infoAnimWorkParam = self:getUserDataTb_()
 	self._infoAnimWorkParam.go = self._goInfo
-	self._mainView = self.viewContainer._views[1]
-	self._rollView = self.viewContainer._views[4]
+	self._mainView = self.viewContainer:getMainView()
+	self._rollView = self.viewContainer:getRollView()
+	self._clickDiceCount = 0
 	self._diceType2ItemTab = self:getUserDataTb_()
 
 	self:initDicePrefabTab()
@@ -122,11 +126,36 @@ end
 
 function Rouge2_MapDiceAnimView:onOpen()
 	self:refresh()
+	self:tryForceSetResult()
 end
 
 function Rouge2_MapDiceAnimView:refresh()
 	self:initViewParams()
 	self:initDiceList()
+end
+
+function Rouge2_MapDiceAnimView:tryForceSetResult()
+	if self._clickDiceCount > self._reRollTimes or Rouge2_MapModel.instance:getMapState() ~= Rouge2_MapEnum.MapState.WaitFlow then
+		self._needForceSet = false
+
+		return
+	end
+
+	for _, diceItemList in pairs(self._diceType2ItemTab) do
+		for _, diceItem in pairs(diceItemList) do
+			diceItem:forceSet()
+		end
+	end
+
+	self._needForceSet = true
+end
+
+function Rouge2_MapDiceAnimView:onOpenFinish()
+	if self._needForceSet then
+		self:playFinishAnim(true)
+
+		self._needForceSet = false
+	end
 end
 
 function Rouge2_MapDiceAnimView:initViewParams()
@@ -318,8 +347,9 @@ function Rouge2_MapDiceAnimView:_updateFixValue(fixItem)
 	gohelper.setActive(self._txtMiddle.gameObject, true)
 end
 
-function Rouge2_MapDiceAnimView:playFinishAnim()
+function Rouge2_MapDiceAnimView:playFinishAnim(skipAnim)
 	self:onAllFixItemMoveDone()
+	gohelper.setActive(self._btnClick.gameObject, false)
 	gohelper.setActive(self._btnJump.gameObject, false)
 	gohelper.setActive(self._btnClose.gameObject, self._isSucceed)
 
@@ -331,8 +361,14 @@ function Rouge2_MapDiceAnimView:playFinishAnim()
 	gohelper.setActive(self._goFailure, self._checkRes == Rouge2_MapEnum.AttrCheckResult.Failure)
 	gohelper.setActive(self._goSucceed, self._checkRes == Rouge2_MapEnum.AttrCheckResult.Succeed)
 	gohelper.setActive(self._goBigSucceed, self._checkRes == Rouge2_MapEnum.AttrCheckResult.BigSucceed)
-	self._animator:Play("result", 0, 0)
-	self._animatorPlayer:Play("result", self._onPlayFinishAnimDone, self)
+
+	if skipAnim then
+		self._animator:Play("result", 0, 1)
+		self:_onPlayFinishAnimDone()
+	else
+		self._animator:Play("result", 0, 0)
+		self._animatorPlayer:Play("result", self._onPlayFinishAnimDone, self)
+	end
 
 	if self._checkRes == Rouge2_MapEnum.AttrCheckResult.Failure then
 		AudioMgr.instance:trigger(AudioEnum.Rouge2.DiceFail)

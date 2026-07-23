@@ -18,5 +18,6 @@ SocialEvent.SubTabSwitch = 401
 SocialEvent.InformSuccessReply = 501
 SocialEvent.InformFailReply = 502
 SocialEvent.FriendDescChange = 601
+SocialEvent.CutSelectSocialBg = 602
 
 return SocialEvent

@@ -82,7 +82,7 @@ function Rouge2_ItemDescLinkHelper._systemHandleFunc(infoList)
 		return ""
 	end
 
-	return string.format("<#%s>%s</color>", systemCo.color, battleTagCo.tagName)
+	return battleTagCo and battleTagCo.tagName
 end
 
 return Rouge2_ItemDescLinkHelper

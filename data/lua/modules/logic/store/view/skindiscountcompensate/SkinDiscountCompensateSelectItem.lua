@@ -17,6 +17,7 @@ function SkinDiscountCompensateSelectItem:onInitView()
 	self._goSelected = gohelper.findChild(self.viewGO, "#go_Selected")
 	self._goGarment = gohelper.findChild(self.viewGO, "#go_Garment")
 	self._goAdvance = gohelper.findChild(self.viewGO, "#go_Advance")
+	self._goUnique = gohelper.findChild(self.viewGO, "#go_Unique")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -64,6 +65,13 @@ function SkinDiscountCompensateSelectItem:_editableInitView()
 	self._txtNum = gohelper.findChildTextMesh(self.viewGO, "#go_Get/txt_Num")
 	self._animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
 	self._gotAnimator = gohelper.findChildComponent(self.viewGO, "#go_Get", gohelper.Type_Animator)
+	self._simageUniqueBg = gohelper.findChildSingleImage(self.viewGO, "#go_Unique/#simage_iconbg")
+	self._simageUniqueIcon = gohelper.findChildSingleImage(self.viewGO, "#go_Unique/#simage_icon_1")
+	self._simagedreesing = gohelper.findChildSingleImage(self.viewGO, "#simage_dreesing")
+	self._skinRareGoList = self:getUserDataTb_()
+	self._skinRareGoList[CharacterEnum.SkinRare.Garment] = self._goGarment
+	self._skinRareGoList[CharacterEnum.SkinRare.Advanced] = self._goAdvance
+	self._skinRareGoList[CharacterEnum.SkinRare.Unique] = self._goUnique
 end
 
 function SkinDiscountCompensateSelectItem:_editableAddEvents()
@@ -91,7 +99,17 @@ function SkinDiscountCompensateSelectItem:onUpdateMO(mo)
 	local haveSkin = HeroModel.instance:checkHasSkin(skinId)
 
 	gohelper.setActive(self._goGet, haveSkin)
-	self._simageicon:LoadImage(ResUrl.getStoreSkin(skinId))
+
+	local isUnique = skinConfig.skinLevel == CharacterEnum.SkinRare.Unique
+
+	if isUnique then
+		self._simageUniqueIcon:LoadImage(ResUrl.getHeadSkinIconUnique(skinId))
+		self._simageUniqueBg:LoadImage(ResUrl.getCharacterSkinIcon(skinId))
+	else
+		self._simageicon:LoadImage(ResUrl.getStoreSkin(skinId))
+	end
+
+	gohelper.setActive(self._simageicon, not isUnique)
 
 	self.haveSkin = haveSkin
 
@@ -103,11 +121,38 @@ function SkinDiscountCompensateSelectItem:onUpdateMO(mo)
 	end
 
 	self:refreshGotAnim(haveSkin)
+	self:refreshRare(skinConfig.skinLevel)
+	self:refreshSign(isUnique, skinConfig.skinSignature)
+end
 
-	local isAdvanced = self.mo.itemId == StoreEnum.V3a3_SkinDiscountAdvancedItemId
+function SkinDiscountCompensateSelectItem:refreshSign(isUnique, resPath)
+	gohelper.setActive(self._simagesign, not isUnique)
+	gohelper.setActive(self._simagedreesing, isUnique)
 
-	gohelper.setActive(self._goGarment, not isAdvanced)
-	gohelper.setActive(self._goAdvance, isAdvanced)
+	if isUnique then
+		local name = not string.nilorempty(resPath) and resPath or "img_dressing2"
+		local signTexturePath = ResUrl.getSignature(string.format("color/%s", name))
+
+		self._simagedreesing:LoadImage(signTexturePath)
+	end
+end
+
+function SkinDiscountCompensateSelectItem:refreshRare(rare)
+	if rare == nil or rare == CharacterEnum.SkinRare.None then
+		logError("皮肤品级未配置,使用默认配置 请检查 id: " .. tostring(self.mo.id))
+
+		rare = CharacterEnum.SkinRare.Garment
+	end
+
+	if not self._skinRareGoList[rare] then
+		logError("item缺少对应品级节点,使用默认配置 请检查 id: " .. tostring(self.mo.id) .. " skinLevel: " .. tostring(rare))
+
+		rare = CharacterEnum.SkinRare.Garment
+	end
+
+	for index, rareGo in pairs(self._skinRareGoList) do
+		gohelper.setActive(rareGo, index == rare)
+	end
 end
 
 function SkinDiscountCompensateSelectItem:getAnimator()
@@ -139,6 +184,7 @@ end
 
 function SkinDiscountCompensateSelectItem:onDestroyView()
 	self._simageicon:UnLoadImage()
+	tabletool.clear(self._skinRareGoList)
 end
 
 return SkinDiscountCompensateSelectItem

@@ -112,7 +112,8 @@ function MainActivityEnterView:_editableInitView()
 
 	self.txtChapters = self:getUserDataTb_()
 
-	for _, skinId in pairs(MainUISwitchEnum.Skin) do
+	for _, co in ipairs(lua_scene_ui.configList) do
+		local skinId = co.id
 		local name1 = string.format("right/go_fight/#go_normalfight/#btn_jumpfight/%s/#txt_chapter", skinId)
 		local name2 = string.format("right/go_fight/#go_normalfight/#btn_jumpfight/%s/#txt_chaptername", skinId)
 		local item = self:getUserDataTb_()
@@ -286,6 +287,8 @@ function MainActivityEnterView:getEnterViewActIdList()
 			[ActivityEnum.VersionActivityIdDict.Activity3_4] = VersionActivity3_4Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity3_5] = VersionActivity3_5Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity3_6] = VersionActivity3_6Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity3_7] = VersionActivity3_7Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity3_8] = VersionActivity3_8Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1],
 			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2]
 		}
@@ -335,21 +338,7 @@ end
 function MainActivityEnterView:getActivityEnterHandleFunc(activityId)
 	if not self._activityEnterHandleFuncDict then
 		self._activityEnterHandleFuncDict = {
-			[ActivityEnum.VersionActivityIdDict.Activity1_8] = VersionActivity1_8EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_0] = VersionActivity2_0EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_1] = VersionActivity2_1EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_5] = VersionActivity2_5EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_6] = VersionActivity2_6EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_8] = VersionActivity2_8EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity3_0] = VersionActivity3_0EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity3_2] = VersionActivity3_2EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity3_3] = VersionActivity3_3EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity_sp02] = VersionActivity3_10EnterController.instance
 		}
 	end
 

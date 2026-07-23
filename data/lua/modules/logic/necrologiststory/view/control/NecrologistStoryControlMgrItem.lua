@@ -4,10 +4,11 @@ module("modules.logic.necrologiststory.view.control.NecrologistStoryControlMgrIt
 
 local NecrologistStoryControlMgrItem = class("NecrologistStoryControlMgrItem", UserDataDispose)
 
-function NecrologistStoryControlMgrItem:ctor(mgr)
+function NecrologistStoryControlMgrItem:ctor(mgr, itemCls)
 	self:__onInit()
 
 	self.mgrComp = mgr
+	self.itemCls = itemCls
 end
 
 function NecrologistStoryControlMgrItem:setStoryId(storyId)
@@ -38,6 +39,12 @@ function NecrologistStoryControlMgrItem:playControl()
 end
 
 function NecrologistStoryControlMgrItem:getControlItem(cls)
+	if not cls then
+		self:onPlayControlFinish()
+
+		return
+	end
+
 	self.mgrComp:createControlItem(cls, self.storyId, self.controlParam, self.onPlayControlFinish, self)
 end
 
@@ -46,7 +53,7 @@ function NecrologistStoryControlMgrItem:isFinish()
 end
 
 function NecrologistStoryControlMgrItem:onPlayControl()
-	return
+	self:getControlItem(self.itemCls)
 end
 
 function NecrologistStoryControlMgrItem:onPlayControlFinish()

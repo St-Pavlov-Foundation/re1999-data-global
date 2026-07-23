@@ -218,7 +218,8 @@ function CharacterBackpackHeroView:_updateHeroList()
 			3,
 			4,
 			5,
-			6
+			6,
+			101
 		}
 	end
 

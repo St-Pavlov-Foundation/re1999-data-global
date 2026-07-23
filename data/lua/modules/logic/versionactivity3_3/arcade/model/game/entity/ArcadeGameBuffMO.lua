@@ -23,6 +23,18 @@ function ArcadeGameBuffMO:getRemainLiveRound()
 	return self._liveRound or 0
 end
 
+function ArcadeGameBuffMO:addEffectNameParam(effectName, param)
+	if not self._effectName2ParamDict then
+		self._effectName2ParamDict = {}
+	end
+
+	self._effectName2ParamDict[effectName] = param
+end
+
+function ArcadeGameBuffMO:getEffectNameParam(effectName)
+	return self._effectName2ParamDict and self._effectName2ParamDict[effectName]
+end
+
 function ArcadeGameBuffMO:resetLiveRound()
 	self._liveRound = ArcadeConfig.instance:getArcadeBuffRound(self.id)
 end

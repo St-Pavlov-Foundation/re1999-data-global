@@ -28,15 +28,33 @@ function MainUISwitchListModel:_getUIList()
 end
 
 function MainUISwitchListModel._sort(a, b)
-	if a.id == MainUISwitchModel.instance:getCurUseUI() then
+	local curId = MainUISwitchModel.instance:getCurUseUI()
+
+	if a.id == curId then
 		return true
 	end
 
-	if b.id == MainUISwitchModel.instance:getCurUseUI() then
+	if b.id == curId then
 		return false
 	end
 
-	return a.id < b.id
+	local a_status = MainUISwitchModel.getUIStatus(a.id)
+	local b_status = MainUISwitchModel.getUIStatus(b.id)
+
+	if a_status ~= b_status then
+		local a_isUnlock = a_status == MainSceneSwitchEnum.SceneStutas.Unlock
+		local b_isUnlock = b_status == MainSceneSwitchEnum.SceneStutas.Unlock
+
+		if a_isUnlock then
+			return true
+		end
+
+		if b_isUnlock then
+			return false
+		end
+	end
+
+	return a.id > b.id
 end
 
 function MainUISwitchListModel:initList()

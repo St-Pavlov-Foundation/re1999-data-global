@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalPlayExplodeEffectWor
 
 local SurvivalPlayExplodeEffectWork = class("SurvivalPlayExplodeEffectWork", SurvivalStepBaseWork)
 
-function SurvivalPlayExplodeEffectWork:onStart(context)
+function SurvivalPlayExplodeEffectWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local unitMo = sceneMo.unitsById[self._stepMo.id]
 

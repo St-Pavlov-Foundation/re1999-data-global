@@ -1,8 +1,32 @@
 ﻿-- chunkname: @modules/logic/video/UnityVideoPlayer.lua
 
 module("modules.logic.video.UnityVideoPlayer", package.seeall)
+require("tolua.reflection")
 
 local UnityVideoPlayer = class("UnityVideoPlayer", VideoPlayer)
+local _videoRenderModeType, _videoRenderModeRenderTexture
+
+local function _getVideoRenderModeRenderTexture()
+	if _videoRenderModeRenderTexture then
+		return _videoRenderModeRenderTexture
+	end
+
+	if not _videoRenderModeType then
+		tolua.loadassembly("UnityEngine.VideoModule")
+
+		_videoRenderModeType = tolua.findtype("UnityEngine.Video.VideoRenderMode") or System.Type.GetType("UnityEngine.Video.VideoRenderMode, UnityEngine.VideoModule") or System.Type.GetType("UnityEngine.Video.VideoRenderMode, UnityEngine")
+	end
+
+	if not _videoRenderModeType then
+		logError("UnityVideoPlayer failed to reflect UnityEngine.Video.VideoRenderMode")
+
+		return nil
+	end
+
+	_videoRenderModeRenderTexture = System.Enum.Parse(_videoRenderModeType, "RenderTexture")
+
+	return _videoRenderModeRenderTexture
+end
 
 function UnityVideoPlayer:ctor(param)
 	VideoPlayer.ctor(self, param)
@@ -29,8 +53,13 @@ function UnityVideoPlayer:init(go)
 	self._videoPlayer.playOnAwake = false
 	self._videoPlayer.timeUpdateMode = UnityEngine.Video.VideoTimeUpdateMode.UnscaledGameTime
 
-	if self._needRawImage == true and not self._rtTarget then
-		self._rawImage = gohelper.onceAddComponent(go, gohelper.Type_RawImage)
+	if self._needRawImage == true then
+		if not self._rtTarget then
+			self._rawImage = gohelper.onceAddComponent(go, gohelper.Type_RawImage)
+		else
+			self._videoPlayer.renderMode = _getVideoRenderModeRenderTexture()
+			self._videoPlayer.targetTexture = self._rtTarget
+		end
 	end
 
 	gohelper.onceAddComponent(go, typeof(UnityEngine.CanvasRenderer)).cullTransparentMesh = false
@@ -145,8 +174,19 @@ function UnityVideoPlayer:play(url, loop, callback, callbackObj)
 end
 
 function UnityVideoPlayer:playLoadMedia(value)
+	if value ~= nil then
+		self._loop = value
+		self._videoPlayer.isLooping = self._loop
+	end
+
 	if self._needRawImage then
 		if self._rtTarget then
+			local renderTextureMode = _getVideoRenderModeRenderTexture()
+
+			if renderTextureMode then
+				self._videoPlayer.renderMode = renderTextureMode
+			end
+
 			self._videoPlayer.targetTexture = self._rtTarget
 		else
 			if self._rt == nil then
@@ -237,6 +277,18 @@ function UnityVideoPlayer:ondestroy()
 	end
 
 	self._defaultTexture = nil
+
+	if self.matLoader then
+		self.matLoader:dispose()
+
+		self.matLoader = nil
+	end
+
+	if self.videoMat then
+		gohelper.destroy(self.videoMat)
+
+		self.videoMat = nil
+	end
 end
 
 function UnityVideoPlayer:getVideoPlayer()
@@ -345,6 +397,51 @@ function UnityVideoPlayer:setSkipOnDrop(skipOnDrop)
 	if self._videoPlayer then
 		self._videoPlayer.skipOnDrop = skipOnDrop
 	end
+end
+
+local MatVector = Vector4()
+
+function UnityVideoPlayer:resetEyeModeMat()
+	if not self._rawImage then
+		return
+	end
+
+	local active = EyeProtectionModeMgr.instance:getEyeModeActive()
+
+	if not active then
+		self._rawImage.material = nil
+
+		return
+	end
+
+	if not self.videoMat then
+		return self:loadMatAsset()
+	end
+
+	self._rawImage.material = self.videoMat
+	MatVector.x = EyeProtectionModeMgr.instance:getFactorValue()
+	MatVector.y = EyeProtectionModeMgr.instance:getIntensityValue()
+
+	self.videoMat:SetVector(AvProMgrConfig.MatUberBrightnessId, MatVector)
+end
+
+function UnityVideoPlayer:loadMatAsset()
+	if self.matLoader then
+		return
+	end
+
+	self.matLoader = MultiAbLoader.New()
+
+	self.matLoader:addPath(AvProMgrConfig.VideoMat)
+	self.matLoader:startLoad(self.onMatLoadDone, self)
+end
+
+function UnityVideoPlayer:onMatLoadDone()
+	local mat = self.matLoader:getFirstAssetItem():GetResource()
+
+	self.videoMat = UnityEngine.Material.New(mat)
+
+	self:resetEyeModeMat()
 end
 
 function UnityVideoPlayer:setVerticesDirty()

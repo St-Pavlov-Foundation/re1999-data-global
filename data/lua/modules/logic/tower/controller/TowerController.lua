@@ -261,6 +261,7 @@ function TowerController:openTowerStoreView()
 end
 
 function TowerController:openTowerHeroTrialView(param)
+	TowerHeroTrialListModel.instance:setHeroTrialList(param.trialType)
 	ViewMgr.instance:openView(ViewName.TowerHeroTrialView, param)
 end
 

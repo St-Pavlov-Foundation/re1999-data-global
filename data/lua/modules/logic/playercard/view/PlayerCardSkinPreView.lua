@@ -44,7 +44,9 @@ function PlayerCardSkinPreView:onClickDetail()
 end
 
 function PlayerCardSkinPreView:initView()
-	self._skinId = PlayerCardModel.instance:getPlayerCardSkinId()
+	local skinId = self.viewParam and self.viewParam.skinId
+
+	self._skinId = skinId or PlayerCardModel.instance:getPlayerCardSkinId()
 	self._itemPath = "ui/viewres/social/socialfrienditem.prefab"
 	self._loader = MultiAbLoader.New()
 
@@ -127,7 +129,7 @@ function PlayerCardSkinPreView:_onLoadFinish()
 		level = selfInfo.level,
 		portrait = selfInfo.portrait
 	}
-	local skinId = PlayerCardModel.instance:getPlayerCardSkinId()
+	local skinId = self.viewParam and self.viewParam.skinId or PlayerCardModel.instance:getPlayerCardSkinId()
 
 	self._socialfrienditemcls:onUpdateMO(mo)
 	self._socialfrienditemcls:selectSkin(skinId)
@@ -156,7 +158,7 @@ function PlayerCardSkinPreView:onSwitchView(newSkinId)
 end
 
 function PlayerCardSkinPreView:onHide()
-	local skinId = PlayerCardModel.instance:getPlayerCardSkinId()
+	local skinId = self.viewParam and self.viewParam.skinId or PlayerCardModel.instance:getPlayerCardSkinId()
 
 	if self._skinId ~= skinId then
 		self:switchSkin(skinId)

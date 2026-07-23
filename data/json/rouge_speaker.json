@@ -160,5 +160,47 @@
     "name": "language_10101810",
     "icon": "",
     "nameIcon": ""
+  },
+  {
+    "id": 30,
+    "name": "language_10126004",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 31,
+    "name": "language_10126005",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 32,
+    "name": "language_10126006",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 33,
+    "name": "language_10126007",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 34,
+    "name": "language_10101794",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 35,
+    "name": "language_10101794",
+    "icon": "",
+    "nameIcon": ""
+  },
+  {
+    "id": 36,
+    "name": "language_10126008",
+    "icon": "",
+    "nameIcon": ""
   }
 ]

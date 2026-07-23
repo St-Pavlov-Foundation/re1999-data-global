@@ -97,7 +97,7 @@ function SignInModel:getCurDayBirthdayHeros()
 	for _, v in pairs(heroList) do
 		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if heroCo.roleBirthday ~= "" then
+		if not string.nilorempty(heroCo.roleBirthday) and not heroCo.isSP then
 			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
 			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
 
@@ -127,7 +127,7 @@ function SignInModel:getNoSignBirthdayHeros(month, day)
 	for _, v in ipairs(heroList) do
 		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if heroCo.roleBirthday ~= "" then
+		if not string.nilorempty(heroCo.roleBirthday) and not heroCo.isSP then
 			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
 			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
 			local birthdayCount = self:getHeroBirthdayCount(v)
@@ -164,11 +164,10 @@ end
 
 function SignInModel:getSignBirthdayHeros(year, month, day)
 	local heros = {}
-	local heroIds = {}
 
 	self._curDate = self:getCurDate()
-	heroIds = self:getDayAllBirthdayHeros(month, day)
 
+	local heroIds = self:getDayAllBirthdayHeros(month, day)
 	local isBirthdayPastInThisYear = false
 
 	if month < self._curDate.month or month == self._curDate.month and day < self._curDate.day then
@@ -178,7 +177,7 @@ function SignInModel:getSignBirthdayHeros(year, month, day)
 	for _, v in pairs(heroIds) do
 		local heroCo = HeroConfig.instance:getHeroCO(v)
 
-		if heroCo.roleBirthday ~= "" then
+		if not string.nilorempty(heroCo.roleBirthday) and not heroCo.isSP then
 			local birth = string.splitToNumber(heroCo.roleBirthday, "/")
 			local bonusLength = #string.split(heroCo.birthdayBonus, ";")
 

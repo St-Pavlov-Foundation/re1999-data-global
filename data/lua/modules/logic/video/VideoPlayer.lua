@@ -89,4 +89,8 @@ function VideoPlayer:setDisplayUGUITexture(texture)
 	return
 end
 
+function VideoPlayer:resetEyeModeMat()
+	return
+end
+
 return VideoPlayer

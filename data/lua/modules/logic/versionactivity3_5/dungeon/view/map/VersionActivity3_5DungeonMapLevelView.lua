@@ -190,7 +190,7 @@ function VersionActivity3_5DungeonMapLevelView:_updateMapInfo(episodeId)
 end
 
 function VersionActivity3_5DungeonMapLevelView:onStoryFinished()
-	local isOpenPuzzleView = V3a5PuzzleController.instance:checkOpenPuzzleView(self.showEpisodeCo.beforeStory)
+	local isOpenPuzzleView = V3a5PuzzleController.instance:isOpenPuzzleView(self.showEpisodeCo.beforeStory, true)
 
 	DungeonModel.instance.curSendEpisodeId = nil
 

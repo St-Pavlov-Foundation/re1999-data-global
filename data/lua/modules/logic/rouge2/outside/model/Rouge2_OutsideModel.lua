@@ -11,6 +11,7 @@ end
 function Rouge2_OutsideModel:reInit()
 	self._reviewInfoList = {}
 	self._rougeGameRecord = nil
+	self._bossBattleInfo = nil
 	self.newUnlockCollectionList = {}
 	self.newPassCollectionList = {}
 	self._unlockCollectionDic = {}
@@ -59,9 +60,20 @@ function Rouge2_OutsideModel:updateRougeOutsideInfo(rougeInfo)
 		end
 	end
 
+	self:updateBossBattleInfo(rougeInfo.bossBattleInfo)
 	self:checkAVGRedDot()
 	self:checkIllustrationRedDot()
 	Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnUpdateRougeOutsideInfo)
+end
+
+function Rouge2_OutsideModel:updateBossBattleInfo(bossBattleInfo)
+	if bossBattleInfo then
+		self._bossBattleInfo = self._bossBattleInfo or Rouge2_BossBattleInfoMO.New()
+
+		self._bossBattleInfo:init(bossBattleInfo)
+		self:checkBossBattleRewardRedDot()
+		Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnUpdateBossBattleInfo)
+	end
 end
 
 function Rouge2_OutsideModel:checkFormulaRedDot()
@@ -183,6 +195,29 @@ function Rouge2_OutsideModel:checkCollectionRedDot()
 	Rouge2_OutsideController.instance:setRedDotState(RedDotEnum.DotNode.V3a2_Rouge_Favorite_Collection, redDotInfoList)
 end
 
+function Rouge2_OutsideModel:checkBossBattleRewardRedDot()
+	local battleInfo = self:getBossBattleInfo()
+	local bossInfoList = battleInfo and battleInfo:getBossInfoList()
+	local redDotInfoList = {}
+
+	if bossInfoList then
+		for _, bossInfo in ipairs(bossInfoList) do
+			local bossId = bossInfo:getBossId()
+			local hasAnyRewardCanGet = bossInfo and bossInfo:hasAnyRewardCanGet()
+			local value = hasAnyRewardCanGet and 1 or 0
+			local redDotInfo = {
+				id = RedDotEnum.DotNode.Rouge2BossReward,
+				uid = bossId,
+				value = value
+			}
+
+			table.insert(redDotInfoList, redDotInfo)
+		end
+	end
+
+	RedDotRpc.instance:clientAddRedDotGroupList(redDotInfoList)
+end
+
 function Rouge2_OutsideModel:checkCollectionStat()
 	local haveStatItemDic = self:getLocalDataDic(Rouge2_OutsideEnum.LocalStatData.Collection)
 	local statInfoList = {}
@@ -266,6 +301,10 @@ end
 
 function Rouge2_OutsideModel:getRougeGameRecord()
 	return self._rougeGameRecord
+end
+
+function Rouge2_OutsideModel:getBossBattleInfo()
+	return self._bossBattleInfo
 end
 
 function Rouge2_OutsideModel:_setRougeOutSideInfo()

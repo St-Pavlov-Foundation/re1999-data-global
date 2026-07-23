@@ -468,7 +468,7 @@ function StoreModel:isSummonPoolPackageValid(summonPoolId, order)
 	for _, goodsId in ipairs(goodsIdList) do
 		local goodsMo = self:getGoodsMO(goodsId)
 
-		if goodsMo and not goodsMo:isSoldOut() then
+		if goodsMo and (not goodsMo:isSoldOut() or StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsMo.goodsId)) then
 			return true
 		end
 	end
@@ -518,7 +518,11 @@ function StoreModel:checkShowInRecommand(goodsMO, isChargeGoods)
 	local show = true
 
 	if goodsMO:isSoldOut() then
-		show = false
+		if goodsMO.config.taskid ~= nil and goodsMO.config.taskid ~= 0 then
+			show = StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsMO.goodsId)
+		else
+			show = false
+		end
 	end
 
 	show = show and self:checkPreGoodsId(goodsMO.config.preGoodsId)
@@ -532,8 +536,14 @@ function StoreModel:checkPreGoodsId(goodsId)
 	end
 
 	local preGoodsMO = self:getGoodsMO(goodsId)
+	local isSoldOut = preGoodsMO and preGoodsMO:isSoldOut()
+	local isFinishTask = true
 
-	return preGoodsMO and preGoodsMO:isSoldOut()
+	if isSoldOut and preGoodsMO and preGoodsMO.config.taskid ~= nil and preGoodsMO.config.taskid ~= 0 then
+		isFinishTask = StoreCharageConditionalHelper.isCharageTaskFinish(preGoodsMO.goodsId)
+	end
+
+	return isSoldOut and isFinishTask
 end
 
 function StoreModel:getBuyCount(storeId, goodsId)
@@ -721,7 +731,9 @@ function StoreModel:getAllRedDotInfo()
 
 			dotInfoMo.value = 0
 
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsId) then
+			local hasCanFinishTask = StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsId)
+
+			if hasCanFinishTask then
 				dotInfoMo.value = 1
 
 				table.insert(allInfo, dotInfoMo)
@@ -761,6 +773,42 @@ function StoreModel:getAllRedDotInfo()
 	end
 
 	return allInfo
+end
+
+function StoreModel:checkTaskRewardRedDotType_1(goodsId, taskConfig, haveCanFinishTask)
+	if taskConfig.redDot == nil or taskConfig == 0 then
+		return
+	end
+
+	local redDotId = taskConfig.redDot
+	local redDotInfo = {
+		time = 0,
+		ext = "",
+		id = goodsId,
+		value = haveCanFinishTask and 1 or 0
+	}
+	local reddotItemInfo = {
+		replaceAll = false,
+		defineId = redDotId,
+		infos = {
+			redDotInfo
+		}
+	}
+	local redDotInfos = {
+		reddotItemInfo
+	}
+
+	RedDotModel.instance:updateRedDotInfo(redDotInfos)
+
+	local refreshlist = {}
+	local ids = RedDotModel.instance:_getAssociateRedDots(redDotId)
+
+	for _, id in pairs(ids) do
+		refreshlist[id] = true
+	end
+
+	logNormal("更新连锁礼包红点状态 id:" .. tostring(goodsId) .. " 是否可领取: " .. tostring(haveCanFinishTask))
+	RedDotController.instance:dispatchEvent(RedDotEvent.UpdateRelateDotInfo, refreshlist)
 end
 
 function StoreModel:isHasTaskGoodsReward()

@@ -8,7 +8,7 @@ function Rouge2_MapDiceReRollView:onInitView()
 	self._goRedice = gohelper.findChild(self.viewGO, "root/#go_Redice")
 	self._txtRediceTips = gohelper.findChildText(self.viewGO, "root/#go_Redice/#txt_RediceTips")
 	self._txtStartRediceTips = gohelper.findChildText(self.viewGO, "root/#go_Redice/#btn_StartRedice/#txt_StartRediceTips")
-	self._btnStartRedice = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_Redice/#btn_StartRedice")
+	self._btnStartRedice = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_Redice/#btn_StartRedice", AudioEnum.Rouge2.DiceReRoll)
 	self._btnAbortRedice = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_Redice/#btn_AbortRedice")
 
 	if self._editableInitView then
@@ -42,7 +42,7 @@ function Rouge2_MapDiceReRollView:_btnAbortRediceOnClick()
 end
 
 function Rouge2_MapDiceReRollView:_editableInitView()
-	self._mainView = self.viewContainer._views[1]
+	self._mainView = self.viewContainer:getMainView()
 
 	gohelper.setActive(self._goRedice, false)
 end

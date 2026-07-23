@@ -56,6 +56,18 @@ function FightPlayCardModel:getUsedCards()
 	return self._usedCards
 end
 
+function FightPlayCardModel:getDeviceIndex()
+	local deviceCardType = FightEnum.CardType.DEVICE
+
+	for i = #self._usedCards, 1, -1 do
+		local cardInfo = self._usedCards[i]
+
+		if cardInfo.cardType == deviceCardType then
+			return i
+		end
+	end
+end
+
 function FightPlayCardModel:updateClientOps()
 	self._clientSkillOpAll = {}
 	self._clientSkillOpList = {}

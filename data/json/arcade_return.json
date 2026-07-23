@@ -1,0 +1,26 @@
+[
+  {
+    "activityId": 13720,
+    "difficultyId": 1,
+    "preActivityId": 13309,
+    "coinCount": 500,
+    "rewardLimit": 500,
+    "refundDesc": "单向投币Ⅰ通关▩1%s次"
+  },
+  {
+    "activityId": 13720,
+    "difficultyId": 2,
+    "preActivityId": 13309,
+    "coinCount": 700,
+    "rewardLimit": 700,
+    "refundDesc": "单向投币Ⅱ通关▩1%s次"
+  },
+  {
+    "activityId": 13720,
+    "difficultyId": 3,
+    "preActivityId": 13309,
+    "coinCount": 450,
+    "rewardLimit": 900,
+    "refundDesc": "单向投币Ⅲ通关▩1%s次"
+  }
+]

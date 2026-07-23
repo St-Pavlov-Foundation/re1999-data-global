@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "language_10121120",
+    "type": "10#1|10#2|80#3",
+    "icon": "guessgame_rolechess_8"
+  },
+  {
+    "id": 2,
+    "name": "language_10121118",
+    "type": "20#1|80#2",
+    "icon": "guessgame_rolechess_9"
+  },
+  {
+    "id": 3,
+    "name": "language_10098305",
+    "type": "70#1|30#3",
+    "icon": "guessgame_rolechess_10"
+  },
+  {
+    "id": 4,
+    "name": "language_10005368",
+    "type": "30#2|70#3",
+    "icon": "guessgame_rolechess_4"
+  },
+  {
+    "id": 5,
+    "name": "language_10005348",
+    "type": "70#1|30#3",
+    "icon": "guessgame_rolechess_5"
+  },
+  {
+    "id": 6,
+    "name": "language_10005245",
+    "type": "30#1|70#2",
+    "icon": "guessgame_rolechess_6"
+  },
+  {
+    "id": 7,
+    "name": "language_10058333",
+    "type": "100#1",
+    "icon": "guessgame_rolechess_7"
+  }
+]

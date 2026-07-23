@@ -53,7 +53,7 @@ function Act191NodeListItem:refreshUI()
 	self.gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 	self.nodeInfoList = self.gameInfo:getStageNodeInfoList()
 
-	local stageCo = lua_activity191_stage.configDict[self.actId][self.gameInfo.curStage]
+	local stageCo = Activity191Config.instance:getStageCfg(self.actId, self.gameInfo.curStage)
 
 	self.txtCoin1.text = stageCo.coin
 	self.txtCoin2.text = stageCo.score

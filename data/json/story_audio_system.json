@@ -5113,5 +5113,875 @@
     "id": 923600031,
     "eventName": "play_battle_plot36_hero3143_14",
     "bankName": "hero3143_level_renmen3_6"
+  },
+  {
+    "id": 923700000,
+    "eventName": "play_guide507801_systemvoc_1578",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700001,
+    "eventName": "play_guide507801_systemvoc_1579",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700002,
+    "eventName": "play_guide507801_systemvoc_1580",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700003,
+    "eventName": "play_guide507801_systemvoc_1581",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700004,
+    "eventName": "play_guide507801_systemvoc_1582",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700005,
+    "eventName": "play_guide507801_systemvoc_1584",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700006,
+    "eventName": "play_guide507801_systemvoc_1585",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700007,
+    "eventName": "play_guide507801_systemvoc_1586",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700008,
+    "eventName": "play_guide507801_systemvoc_1588",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700009,
+    "eventName": "play_guide507801_systemvoc_1589",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700010,
+    "eventName": "play_guide507801_systemvoc_1590",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700011,
+    "eventName": "play_guide507801_systemvoc_1591",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700012,
+    "eventName": "play_guide507801_systemvoc_1592",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700013,
+    "eventName": "play_guide507801_systemvoc_1593",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700014,
+    "eventName": "play_guide507801_systemvoc_1594",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700015,
+    "eventName": "play_guide507801_systemvoc_1595",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700016,
+    "eventName": "play_guide507801_systemvoc_1596",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700017,
+    "eventName": "play_guide507801_systemvoc_1597",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700018,
+    "eventName": "play_guide507801_systemvoc_1599",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700019,
+    "eventName": "play_guide507801_systemvoc_1600",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700020,
+    "eventName": "play_guide507801_systemvoc_1601",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700021,
+    "eventName": "play_guide507801_systemvoc_1603",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700022,
+    "eventName": "play_guide507801_systemvoc_1604",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700023,
+    "eventName": "play_guide507801_systemvoc_1605",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700024,
+    "eventName": "play_guide507801_systemvoc_1606",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700025,
+    "eventName": "play_guide507801_systemvoc_1608",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700026,
+    "eventName": "play_guide507801_systemvoc_1609",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700027,
+    "eventName": "play_guide507801_systemvoc_1610",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700028,
+    "eventName": "play_guide507801_systemvoc_1612",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700029,
+    "eventName": "play_guide507801_systemvoc_1613",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700030,
+    "eventName": "play_guide507801_systemvoc_1614",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700031,
+    "eventName": "play_guide507801_systemvoc_1615",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700032,
+    "eventName": "play_guide507801_systemvoc_1616",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700033,
+    "eventName": "play_guide507801_systemvoc_1617",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700034,
+    "eventName": "play_guide507801_systemvoc_1618",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700035,
+    "eventName": "play_guide507801_systemvoc_1620",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700036,
+    "eventName": "play_guide507801_systemvoc_1621",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700037,
+    "eventName": "play_guide507801_systemvoc_1623",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700038,
+    "eventName": "play_guide507801_systemvoc_1624",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700039,
+    "eventName": "play_guide507801_systemvoc_1625",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700040,
+    "eventName": "play_guide507801_systemvoc_1626",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700041,
+    "eventName": "play_guide507801_systemvoc_1627",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700042,
+    "eventName": "play_guide507801_systemvoc_1628",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700043,
+    "eventName": "play_guide507801_systemvoc_1629",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700044,
+    "eventName": "play_guide507801_systemvoc_1630",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700045,
+    "eventName": "play_guide507801_systemvoc_1631",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700046,
+    "eventName": "play_guide507801_systemvoc_1632",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700047,
+    "eventName": "play_guide507801_systemvoc_1633",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700048,
+    "eventName": "play_guide507801_systemvoc_1635",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700049,
+    "eventName": "play_guide507801_systemvoc_1636",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700050,
+    "eventName": "play_guide507801_systemvoc_1637",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700051,
+    "eventName": "play_guide507801_systemvoc_1639",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700052,
+    "eventName": "play_guide507801_systemvoc_1640",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700053,
+    "eventName": "play_guide507801_systemvoc_1641",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700054,
+    "eventName": "play_guide507801_systemvoc_1642",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700055,
+    "eventName": "play_guide507801_systemvoc_1643",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700056,
+    "eventName": "play_guide507801_systemvoc_1644",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700057,
+    "eventName": "play_guide507801_systemvoc_1645",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700058,
+    "eventName": "play_guide507801_systemvoc_1646",
+    "bankName": "guide507801_systemvoc_part31"
+  },
+  {
+    "id": 923700059,
+    "eventName": "play_level_chap13_hero3041_1",
+    "bankName": "hero3041_level_beiai3_7"
+  },
+  {
+    "id": 923700060,
+    "eventName": "play_level_chap13_hero3041_2",
+    "bankName": "hero3041_level_beiai3_7"
+  },
+  {
+    "id": 923700061,
+    "eventName": "play_level_chap13_hero3146_3",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700062,
+    "eventName": "play_level_chap13_hero3041_4",
+    "bankName": "hero3041_level_beiai3_7"
+  },
+  {
+    "id": 923700063,
+    "eventName": "play_level_chap13_hero3146_5",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700064,
+    "eventName": "play_level_chap13_hero3041_6",
+    "bankName": "hero3041_level_beiai3_7"
+  },
+  {
+    "id": 923700065,
+    "eventName": "play_level_chap13_hero3041_7",
+    "bankName": "hero3041_level_beiai3_7"
+  },
+  {
+    "id": 923700066,
+    "eventName": "play_level_chap13_hero3146_8",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700067,
+    "eventName": "play_level_chap13_hero3146_9",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700068,
+    "eventName": "play_level_chap13_hero3146_11",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700069,
+    "eventName": "play_level_chap13_hero3146_12",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700070,
+    "eventName": "play_level_chap13_hero3023_13",
+    "bankName": "hero3023_level_beiai3_7"
+  },
+  {
+    "id": 923700071,
+    "eventName": "play_level_chap13_hero3023_14",
+    "bankName": "hero3023_level_beiai3_7"
+  },
+  {
+    "id": 923700072,
+    "eventName": "play_level_chap13_hero3146_15",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700073,
+    "eventName": "play_level_chap13_hero3146_17",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700074,
+    "eventName": "play_level_chap13_hero3147_18",
+    "bankName": "hero3147_level_beiai3_7"
+  },
+  {
+    "id": 923700075,
+    "eventName": "play_level_chap13_hero3094_19",
+    "bankName": "hero3094_level_beiai3_7"
+  },
+  {
+    "id": 923700076,
+    "eventName": "play_level_chap13_hero3147_20",
+    "bankName": "hero3147_level_beiai3_7"
+  },
+  {
+    "id": 923700077,
+    "eventName": "play_level_chap13_hero3154_21",
+    "bankName": "hero3154_level_beiai3_7"
+  },
+  {
+    "id": 923700078,
+    "eventName": "play_level_chap13_hero3094_22",
+    "bankName": "hero3094_level_beiai3_7"
+  },
+  {
+    "id": 923700079,
+    "eventName": "play_level_chap13_hero3154_23",
+    "bankName": "hero3154_level_beiai3_7"
+  },
+  {
+    "id": 923700080,
+    "eventName": "play_level_chap13_hero3094_24",
+    "bankName": "hero3094_level_beiai3_7"
+  },
+  {
+    "id": 923700081,
+    "eventName": "play_level_chap13_npc510401_25",
+    "bankName": "npc510401_level_beiai3_7"
+  },
+  {
+    "id": 923700082,
+    "eventName": "play_level_chap13_hero3146_26",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700083,
+    "eventName": "play_level_chap13_npc532503_27",
+    "bankName": "npc532503_level_beiai3_7"
+  },
+  {
+    "id": 923700084,
+    "eventName": "play_level_chap13_hero3146_28",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700085,
+    "eventName": "play_level_chap13_hero3146_29",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700086,
+    "eventName": "play_level_chap13_hero3146_30",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700087,
+    "eventName": "play_level_chap13_hero3146_32",
+    "bankName": "hero3146_level_beiai3_7"
+  },
+  {
+    "id": 923700089,
+    "eventName": "play_battle_chap13_npc501901_2",
+    "bankName": "npc501901_level_beiai3_7"
+  },
+  {
+    "id": 923700090,
+    "eventName": "play_battle_chap13_npc501901_3",
+    "bankName": "npc501901_level_beiai3_7"
+  },
+  {
+    "id": 923700091,
+    "eventName": "play_battle_chap13_npcnoname302_4",
+    "bankName": "npcnoname302_level_beiai3_7"
+  },
+  {
+    "id": 923700092,
+    "eventName": "play_battle_chap13_npcnoname301_5",
+    "bankName": "npcnoname301_level_beiai3_7"
+  },
+  {
+    "id": 923700093,
+    "eventName": "play_battle_chap13_npcnoname301_6",
+    "bankName": "npcnoname301_level_beiai3_7"
+  },
+  {
+    "id": 923700095,
+    "eventName": "play_battle_chap13_hero3003_8",
+    "bankName": "hero3003_level_beiai3_7"
+  },
+  {
+    "id": 923700098,
+    "eventName": "play_battle_chap13_hero3127_11",
+    "bankName": "hero3127_level_beiai3_7"
+  },
+  {
+    "id": 923700100,
+    "eventName": "play_battle_chap13_hero3127_13",
+    "bankName": "hero3127_level_beiai3_7"
+  },
+  {
+    "id": 923700103,
+    "eventName": "play_battle_chap13_hero5043_17",
+    "bankName": "hero5043_level_beiai3_7"
+  },
+  {
+    "id": 923700104,
+    "eventName": "play_battle_chap13_hero5043_19",
+    "bankName": "hero5043_level_beiai3_7"
+  },
+  {
+    "id": 923700106,
+    "eventName": "play_battle_chap13_hero5043_21",
+    "bankName": "hero5043_level_beiai3_7"
+  },
+  {
+    "id": 923700108,
+    "eventName": "play_battle_chap13_hero3025_24",
+    "bankName": "hero3025_level_beiai3_7"
+  },
+  {
+    "id": 923700109,
+    "eventName": "play_battle_chap13_hero3003_25",
+    "bankName": "hero3003_level_beiai3_7"
+  },
+  {
+    "id": 923700110,
+    "eventName": "play_battle_chap13_hero3127_26",
+    "bankName": "hero3127_level_beiai3_7"
+  },
+  {
+    "id": 923800001,
+    "eventName": "play_level_plot38_npc650202_1",
+    "bankName": "npc650202_level_shiji3_8"
+  },
+  {
+    "id": 923800002,
+    "eventName": "play_level_plot38_npc649302_2",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800003,
+    "eventName": "play_level_plot38_hero3140_3",
+    "bankName": "hero3140_level_shiji3_8"
+  },
+  {
+    "id": 923800004,
+    "eventName": "play_level_plot38_npc649302_4",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800005,
+    "eventName": "play_level_plot38_npc649302_5",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800006,
+    "eventName": "play_level_plot38_hero3140_6",
+    "bankName": "hero3140_level_shiji3_8"
+  },
+  {
+    "id": 923800007,
+    "eventName": "play_level_plot38_npc649302_7",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800008,
+    "eventName": "play_level_plot38_npcnoname335_8",
+    "bankName": "npcnoname335_level_shiji3_8"
+  },
+  {
+    "id": 923800009,
+    "eventName": "play_level_plot38_npcnoname335_9",
+    "bankName": "npcnoname335_level_shiji3_8"
+  },
+  {
+    "id": 923800010,
+    "eventName": "play_level_plot38_hero3145_10",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800011,
+    "eventName": "play_level_plot38_npcnoname333_11",
+    "bankName": "npcnoname333_level_shiji3_8"
+  },
+  {
+    "id": 923800012,
+    "eventName": "play_level_plot38_hero3145_12",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800013,
+    "eventName": "play_level_plot38_npcnoname333_13",
+    "bankName": "npcnoname333_level_shiji3_8"
+  },
+  {
+    "id": 923800014,
+    "eventName": "play_level_plot38_npcnoname333_14",
+    "bankName": "npcnoname333_level_shiji3_8"
+  },
+  {
+    "id": 923800015,
+    "eventName": "play_level_plot38_npcnoname333_15",
+    "bankName": "npcnoname333_level_shiji3_8"
+  },
+  {
+    "id": 923800016,
+    "eventName": "play_level_plot38_hero3145_16",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800017,
+    "eventName": "play_level_plot38_npc649302_17",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800018,
+    "eventName": "play_level_plot38_npc649302_18",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800019,
+    "eventName": "play_level_plot38_npc649302_19",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800020,
+    "eventName": "play_level_plot38_npc527401_20",
+    "bankName": "npc527401_level_shiji3_8"
+  },
+  {
+    "id": 923800021,
+    "eventName": "play_level_plot38_npc650102_21",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800022,
+    "eventName": "play_level_plot38_npc527401_22",
+    "bankName": "npc527401_level_shiji3_8"
+  },
+  {
+    "id": 923800023,
+    "eventName": "play_level_plot38_npc650102_23",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800024,
+    "eventName": "play_level_plot38_npc650102_24",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800025,
+    "eventName": "play_level_plot38_npc527401_25",
+    "bankName": "npc527401_level_shiji3_8"
+  },
+  {
+    "id": 923800026,
+    "eventName": "play_level_plot38_npc523601_26",
+    "bankName": "npc523601_level_shiji3_8"
+  },
+  {
+    "id": 923800027,
+    "eventName": "play_level_plot38_npc650102_27",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800028,
+    "eventName": "play_level_plot38_npc650102_28",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800029,
+    "eventName": "play_level_plot38_npc527401_29",
+    "bankName": "npc527401_level_shiji3_8"
+  },
+  {
+    "id": 923800030,
+    "eventName": "play_level_plot38_npc650102_30",
+    "bankName": "npc650102_level_shiji3_8"
+  },
+  {
+    "id": 923800031,
+    "eventName": "play_battle_plot38_hero3145_1",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800032,
+    "eventName": "play_battle_plot38_hero3140_2",
+    "bankName": "hero3140_level_shiji3_8"
+  },
+  {
+    "id": 923800033,
+    "eventName": "play_battle_plot38_npcnoname346_3",
+    "bankName": "npcnoname346_level_shiji3_8"
+  },
+  {
+    "id": 923800034,
+    "eventName": "play_battle_plot38_npcnoname346_4",
+    "bankName": "npcnoname346_level_shiji3_8"
+  },
+  {
+    "id": 923800035,
+    "eventName": "play_battle_plot38_npcnoname346_5",
+    "bankName": "npcnoname346_level_shiji3_8"
+  },
+  {
+    "id": 923800036,
+    "eventName": "play_battle_plot38_npc650202_6",
+    "bankName": "npc650202_level_shiji3_8"
+  },
+  {
+    "id": 923800037,
+    "eventName": "play_battle_plot38_npc649003_7",
+    "bankName": "npc649003_level_shiji3_8"
+  },
+  {
+    "id": 923800038,
+    "eventName": "play_battle_plot38_hero3140_8",
+    "bankName": "hero3140_level_shiji3_8"
+  },
+  {
+    "id": 923800039,
+    "eventName": "play_battle_plot38_npcnoname353_9",
+    "bankName": "npcnoname353_level_shiji3_8"
+  },
+  {
+    "id": 923800040,
+    "eventName": "play_battle_plot38_npc649202_10",
+    "bankName": "npc649202_level_shiji3_8"
+  },
+  {
+    "id": 923800041,
+    "eventName": "play_battle_plot38_npcnoname354_11",
+    "bankName": "npcnoname354_level_shiji3_8"
+  },
+  {
+    "id": 923800042,
+    "eventName": "play_battle_plot38_npc564801_12",
+    "bankName": "npc564801_level_shiji3_8"
+  },
+  {
+    "id": 923800043,
+    "eventName": "play_battle_plot38_npc649302_13",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800044,
+    "eventName": "play_battle_plot38_hero3145_14",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800045,
+    "eventName": "play_battle_plot38_hero3145_15",
+    "bankName": "hero3145_level_shiji3_8"
+  },
+  {
+    "id": 923800046,
+    "eventName": "play_battle_plot38_npc649302_16",
+    "bankName": "npc649302_level_shiji3_8"
+  },
+  {
+    "id": 923800047,
+    "eventName": "play_battle_plot38_npcnoname346_17",
+    "bankName": "npcnoname346_level_shiji3_8"
+  },
+  {
+    "id": 923850001,
+    "eventName": "play_level_plots02_npc650503_1",
+    "bankName": "npc650503_level_langchao_s02"
+  },
+  {
+    "id": 923850002,
+    "eventName": "play_level_plots02_npc650503_2",
+    "bankName": "npc650503_level_langchao_s02"
+  },
+  {
+    "id": 923850003,
+    "eventName": "play_level_plots02_hero3057_3",
+    "bankName": "hero3057_level_langchao_s02"
+  },
+  {
+    "id": 923850004,
+    "eventName": "play_level_plots02_hero3010_4",
+    "bankName": "hero3010_level_langchao_s02"
+  },
+  {
+    "id": 923850005,
+    "eventName": "play_level_plots02_npc650503_5",
+    "bankName": "npc650503_level_langchao_s02"
+  },
+  {
+    "id": 923850006,
+    "eventName": "play_level_plots02_npc650503_6",
+    "bankName": "npc650503_level_langchao_s02"
+  },
+  {
+    "id": 923850007,
+    "eventName": "play_battle_plots02_hero3057_1",
+    "bankName": "hero3057_level_langchao_s02"
+  },
+  {
+    "id": 923850008,
+    "eventName": "play_battle_plots02_hero5043_2",
+    "bankName": "hero5043_level_langchao_s02"
+  },
+  {
+    "id": 923850009,
+    "eventName": "play_battle_plots02_npc652103_3",
+    "bankName": "npc652103_level_langchao_s02"
+  },
+  {
+    "id": 923850010,
+    "eventName": "play_battle_plots02_hero5043_4",
+    "bankName": "hero5043_level_langchao_s02"
+  },
+  {
+    "id": 923850011,
+    "eventName": "play_battle_plots02_hero3057_5",
+    "bankName": "hero3057_level_langchao_s02"
+  },
+  {
+    "id": 923850012,
+    "eventName": "play_battle_plots02_npc652103_6",
+    "bankName": "npc652103_level_langchao_s02"
+  },
+  {
+    "id": 923850013,
+    "eventName": "play_battle_plots02_hero5043_7",
+    "bankName": "hero5043_level_langchao_s02"
+  },
+  {
+    "id": 923850014,
+    "eventName": "play_battle_plots02_hero3010_8",
+    "bankName": "hero3010_level_langchao_s02"
+  },
+  {
+    "id": 923850015,
+    "eventName": "play_battle_plots02_hero5043_9",
+    "bankName": "hero5043_level_langchao_s02"
+  },
+  {
+    "id": 923850016,
+    "eventName": "play_battle_plots02_hero3149a_10",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850017,
+    "eventName": "play_battle_plots02_hero3149a_11",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850018,
+    "eventName": "play_battle_plots02_hero3057_12",
+    "bankName": "hero3057_level_langchao_s02"
+  },
+  {
+    "id": 923850019,
+    "eventName": "play_battle_plots02_hero3010_13",
+    "bankName": "hero3010_level_langchao_s02"
+  },
+  {
+    "id": 923850020,
+    "eventName": "play_battle_plots02_hero3149a_14",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850021,
+    "eventName": "play_battle_plots02_hero3149a_15",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850022,
+    "eventName": "play_battle_plots02_hero3149a_16",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850023,
+    "eventName": "play_battle_plots02_hero3149a_17",
+    "bankName": "hero3149a_level_langchao_s02"
+  },
+  {
+    "id": 923850024,
+    "eventName": "play_battle_plots02_npc652103_18",
+    "bankName": "npc652103_level_langchao_s02"
+  },
+  {
+    "id": 923850025,
+    "eventName": "play_battle_plots02_hero5043_19",
+    "bankName": "hero5043_level_langchao_s02"
   }
 ]

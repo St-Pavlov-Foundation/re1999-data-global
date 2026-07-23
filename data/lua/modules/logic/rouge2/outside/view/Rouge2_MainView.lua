@@ -8,7 +8,6 @@ function Rouge2_MainView:onInitView()
 	self._btnEventHandbook = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_EventHandbook")
 	self._btnFormula = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Formula")
 	self._btnRoleHandbook = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_RoleHandbook")
-	self._btnRecord = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_Record")
 	self._gohandbookRedDot = gohelper.findChild(self.viewGO, "Left/#btn_RoleHandbook/#go_handbookRedDot")
 	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_start", AudioEnum.Rouge2.EnterRouge)
 	self._goimagestart = gohelper.findChild(self.viewGO, "Middle/#btn_start/#go_image_start")
@@ -37,7 +36,6 @@ function Rouge2_MainView:addEvents()
 	self._btnEventHandbook:AddClickListener(self._btnEventHandbookOnClick, self)
 	self._btnFormula:AddClickListener(self._btnFormulaOnClick, self)
 	self._btnRoleHandbook:AddClickListener(self._btnRoleHandbookOnClick, self)
-	self._btnRecord:AddClickListener(self._btnRecordOnClick, self)
 	self._btnstart:AddClickListener(self._btnstartOnClick, self)
 	self._btnend:AddClickListener(self._btnendOnClick, self)
 	self._btnAlchemy:AddClickListener(self._btnAlchemyOnClick, self)
@@ -57,7 +55,6 @@ function Rouge2_MainView:removeEvents()
 	self._btnEventHandbook:RemoveClickListener()
 	self._btnFormula:RemoveClickListener()
 	self._btnRoleHandbook:RemoveClickListener()
-	self._btnRecord:RemoveClickListener()
 	self._btnstart:RemoveClickListener()
 	self._btnend:RemoveClickListener()
 	self._btnAlchemy:RemoveClickListener()
@@ -99,20 +96,19 @@ function Rouge2_MainView:_btnRoleHandbookOnClick()
 		return
 	end
 
-	local isUnlockCareer = Rouge2_OutsideController.instance:isCareerUnlock()
+	local saveInfoList = Rouge2_FightRecordController.instance:getSaveInfoList()
+	local saveInfoNum = saveInfoList and #saveInfoList or 0
 
-	if not isUnlockCareer then
-		GameFacade.showToast(ToastEnum.Rouge2CareerLock)
+	if saveInfoNum <= 0 then
+		local minDiffName, minDiff = Rouge2_FightRecordController.instance:getMainRecordDifficultyName()
+
+		GameFacade.showToast(ToastEnum.Rouge2LockBossBattle, minDiffName, minDiff)
 
 		return
 	end
 
-	logNormal("点击领路人图鉴")
-	Rouge2_ViewHelper.openRougeCareerHandBookView()
-end
-
-function Rouge2_MainView:_btnRecordOnClick()
-	ViewMgr.instance:openView(ViewName.Rouge2_FightRecordView)
+	logNormal("点击首领挑战")
+	Rouge2_ViewHelper.openBossBattleView()
 end
 
 function Rouge2_MainView:_btnstartOnClick()
@@ -277,8 +273,9 @@ function Rouge2_MainView:_editableInitView()
 
 	RedDotController.instance:addRedDot(self._goEventDot, RedDotEnum.DotNode.V3a2_Rouge_Review, 0)
 
-	self._gocareerLock = gohelper.findChild(self.viewGO, "Left/#btn_RoleHandbook/#go_careerLock")
 	self._formulaAnimator = gohelper.findChildComponent(self.viewGO, "Right/#btn_Medicine", gohelper.Type_Animator)
+
+	RedDotController.instance:addRedDot(self._gohandbookRedDot, RedDotEnum.DotNode.Rouge2BossEntry)
 end
 
 function Rouge2_MainView:onUpdateParam()
@@ -322,17 +319,10 @@ function Rouge2_MainView:refreshUI()
 	self:_refreshProgress()
 	self:_refreshFormula()
 	self:_refreshCDLocked()
-	self:refreshUnlock()
 
 	if not GuideModel.instance:isGuideFinish(33511) and Rouge2_OutsideModel.instance:isFinishOneRouge() and not Rouge2_Model.instance:inRouge() and not Rouge2_Controller.instance:isEndFlowRunning() then
 		Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnFinishAndNotRouge)
 	end
-end
-
-function Rouge2_MainView:refreshUnlock()
-	local isUnlockCareer = Rouge2_OutsideController.instance:isCareerUnlock()
-
-	gohelper.setActive(self._gocareerLock, not isUnlockCareer)
 end
 
 function Rouge2_MainView:_refreshFormula()

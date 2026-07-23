@@ -169,6 +169,10 @@ function FightWorkEndResultViewShow:_showSuccView()
 			ViewMgr.instance:openView(ViewName.Rouge2_FightSuccessView)
 
 			return
+		elseif episode_config.type == DungeonEnum.EpisodeType.Rouge2Boss then
+			ViewMgr.instance:openView(ViewName.Rouge2_BossBattleResultPanel)
+
+			return
 		elseif episode_config.type == DungeonEnum.EpisodeType.Season166Base or episode_config.type == DungeonEnum.EpisodeType.Season166Train then
 			Season166Controller.instance:openResultPanel()
 
@@ -219,6 +223,14 @@ function FightWorkEndResultViewShow:_showSuccView()
 			return
 		elseif episode_config.type == DungeonEnum.EpisodeType.Abyss then
 			AbyssController.instance:openFightSuccView()
+
+			return
+		elseif episode_config.type == DungeonEnum.EpisodeType.AtomicDungeon then
+			AtomicDungeonController.instance:openAtomicDungeonFightSuccView()
+
+			return
+		elseif VersionActivity2_9DungeonHelper.isTargetActEpisode(episode_config.id, VersionActivity3_10Enum.ActivityId.Dungeon) then
+			VersionActivity3_10DungeonController.instance:openFightSuccView()
 
 			return
 		end
@@ -278,6 +290,10 @@ function FightWorkEndResultViewShow:showFailView()
 
 				return
 			end
+		elseif episode_config.type == DungeonEnum.EpisodeType.Rouge2Boss then
+			ViewMgr.instance:openView(ViewName.Rouge2_BossBattleResultPanel)
+
+			return
 		elseif episode_config.type == DungeonEnum.EpisodeType.TowerCompose then
 			local needShowTowerCompose = TowerComposeModel.instance:checkCanShowResultView()
 
@@ -286,6 +302,10 @@ function FightWorkEndResultViewShow:showFailView()
 
 				return
 			end
+		elseif AtomicDungeonModel.instance:checkIsHardFightEpisode(episode_config.id) then
+			AtomicDungeonController.instance:openAtomicDungeonHardFightResultView()
+
+			return
 		end
 	end
 

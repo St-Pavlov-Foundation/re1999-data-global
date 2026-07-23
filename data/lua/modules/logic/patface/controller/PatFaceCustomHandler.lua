@@ -46,10 +46,6 @@ function PatFaceCustomHandler.decalogPresentCheckCanPat(patFaceId)
 	return DecalogPresentModel.instance:isShowRedDot()
 end
 
-function PatFaceCustomHandler.goldenMilletPresentCheckCanPat(patFaceId)
-	return GoldenMilletPresentModel.instance:isShowRedDot()
-end
-
 function PatFaceCustomHandler.matildaGiftCheckCanPat(patFaceId)
 	return V1a9_MatildaGiftModel.instance:isShowRedDot()
 end
@@ -106,10 +102,6 @@ function PatFaceCustomHandler.decalogPresentPat(patFaceId)
 	DecalogPresentController.instance:openDecalogPresentView(patViewName)
 end
 
-function PatFaceCustomHandler.goldenMilletPresentPat(patFaceId)
-	GoldenMilletPresentController.instance:openGoldenMilletPresentView()
-end
-
 function PatFaceCustomHandler.matildaGiftPat(patFaceId)
 	V1a9_MatildaGiftController.instance:openMatildaGiftView()
 end
@@ -160,7 +152,7 @@ function PatFaceCustomHandler.V2a8_BPSkinFaceViewCanPat(patFaceId)
 		return false
 	end
 
-	if BpController.instance:isEmptySkinFaceViewStr(skinId) then
+	if BpController.instance:isSkinFaceOnlineBySkinId(skinId) and BpController.instance:isEmptySkinFaceViewStr(skinId) then
 		local stroeGoodsMO = StoreClothesGoodsItemListModel.instance:findMOByProduct(MaterialEnum.MaterialType.HeroSkin, skinId)
 
 		if stroeGoodsMO and not stroeGoodsMO:alreadyHas() then
@@ -182,7 +174,7 @@ function PatFaceCustomHandler.V2a8_openBPSkinFaceViewPat()
 end
 
 function PatFaceCustomHandler.PowerMakerPatFaceViewCanPat(patFaceId)
-	local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+	local ofMakerInfo = ItemPowerModel.instance:getCacheFirstPowerMakerInfo()
 
 	if not ofMakerInfo or ofMakerInfo.makeCount <= 0 then
 		return
@@ -219,6 +211,47 @@ end
 
 function PatFaceCustomHandler.V3a3TowerGiftPanelViewPatFaceViewPat()
 	ViewMgr.instance:openView(ViewName.V3a3TowerGiftPanelView)
+end
+
+function PatFaceCustomHandler.V3a8FreeMonthCardCanPat()
+	local actId = VersionActivity3_8Enum.ActivityId.FreeMonthCard
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+	if not actInfoMo then
+		return false
+	end
+
+	local isExpired = actInfoMo:getRealEndTimeStamp() - ServerTime.now() < 1
+	local canPat = actInfoMo:isOnline() and actInfoMo:isOpen() and not isExpired
+
+	if not canPat then
+		return false
+	end
+
+	local curDay = VersionActivity3_8FreeMonthCardModel.instance:getCurSignDay()
+	local couldGet = VersionActivity3_8FreeMonthCardModel.instance:isDayCanSign(curDay)
+
+	return couldGet
+end
+
+function PatFaceCustomHandler.V3a8FreeMonthCardPat()
+	MonthCardController.instance:openV3a8PanelView()
+end
+
+function PatFaceCustomHandler.SP02_OperationActivityPatFaceViewCanPat(patFaceId)
+	local actId = PatFaceConfig.instance:getPatFaceActivityId(patFaceId)
+	local isActOpen = ActivityHelper.isOpen(actId)
+	local haveCanGet = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
+
+	return isActOpen and haveCanGet
+end
+
+function PatFaceCustomHandler.SP02_OperationActivityPatFaceViewPat(patFaceId)
+	local actId = PatFaceConfig.instance:getPatFaceActivityId(patFaceId)
+
+	ViewMgr.instance:openView(ViewName.AtomicOperationActivityEnterPatFaceView, {
+		actId = actId
+	})
 end
 
 return PatFaceCustomHandler

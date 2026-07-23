@@ -287,7 +287,7 @@ function ArcadeHeroView:_refreshInfo()
 	local handbookMo = self._selectHeroMo.handbookMo
 
 	if self._isLock then
-		local tipStr = luaLang(handbookMo:getLockTip())
+		local tipStr = handbookMo:getLockTip()
 
 		self._txtlock.text = tipStr
 		self._txtunlockTips.text = tipStr

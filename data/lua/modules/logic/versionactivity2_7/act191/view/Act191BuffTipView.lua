@@ -86,7 +86,7 @@ function Act191BuffTipView:addBuffTip(effName)
 		return
 	end
 
-	local effectCo = Activity191Config.instance:getEffDescCoByName(effName)
+	local effectCo = Activity191Config.instance:getEffDescCfgByName(effName)
 
 	if not effectCo then
 		return

@@ -2,9 +2,11 @@
 
 module("modules.spine.roleeffect.CommonRoleEffect", package.seeall)
 
-local CommonRoleEffect = class("CommonRoleEffect", BaseSpineRoleEffect)
+local CommonRoleEffect = class("CommonRoleEffect", BaseCommonRoleEffect)
 
 function CommonRoleEffect:init(roleEffectConfig)
+	CommonRoleEffect.super.init(self, roleEffectConfig)
+
 	self._roleEffectConfig = roleEffectConfig
 	self._spineGo = self._spine._spineGo
 	self._motionList = string.split(roleEffectConfig.motion, "|")
@@ -19,6 +21,8 @@ function CommonRoleEffect:isShowEverEffect()
 end
 
 function CommonRoleEffect:showBodyEffect(bodyName, callback, callbackTarget)
+	CommonRoleEffect.super.showBodyEffect(self, bodyName, callback, callbackTarget)
+
 	self._effectVisible = false
 
 	self:_setNodeVisible(self._index, false)
@@ -131,6 +135,8 @@ function CommonRoleEffect:playBodyEffect(showEffect, child, bodyName)
 end
 
 function CommonRoleEffect:onDestroy()
+	CommonRoleEffect.super.onDestroy(self)
+
 	self._spineGo = nil
 
 	TaskDispatcher.cancelTask(self._delayShowEverNodes, self)

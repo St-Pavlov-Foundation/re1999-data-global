@@ -14,6 +14,10 @@ function GMCommand.decryptSuccess()
 	Role37PuzzleModel.instance:Finish(true)
 end
 
+function GMCommand.v3a7towerhp(id, hp)
+	TowerV3a7Controller.instance:dispatchEvent(TowerV3a7Event.GMModifyChessHp, tonumber(id), tonumber(hp))
+end
+
 function GMCommand.dungeon(chapterIndex, episodeIndex)
 	local episodeId
 

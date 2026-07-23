@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdatePointsWork", p
 
 local SurvivalUpdatePointsWork = class("SurvivalUpdatePointsWork", SurvivalStepBaseWork)
 
-function SurvivalUpdatePointsWork:onStart(context)
+function SurvivalUpdatePointsWork:onStart2(context)
 	SurvivalMapModel.instance:addExploredPoint(self._stepMo.hex)
 	SurvivalController.instance:dispatchEvent(SurvivalEvent.OnMapExploredPointUpdate)
 	self:onDone(true)

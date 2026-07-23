@@ -59,7 +59,7 @@ function FightUISwitchEquipView:_editableInitView()
 end
 
 function FightUISwitchEquipView:onUpdateParam()
-	return
+	self:_refreshView()
 end
 
 function FightUISwitchEquipView:onClickModalMask()
@@ -67,8 +67,17 @@ function FightUISwitchEquipView:onClickModalMask()
 end
 
 function FightUISwitchEquipView:onOpen()
+	self:_refreshView()
+end
+
+function FightUISwitchEquipView:_refreshView()
 	self._mo = self.viewParam.mo
-	self._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobottom, FightUISwitchEffectComp)
+
+	if self._effectComp then
+		self._effectComp:init(self._gobottom)
+	else
+		self._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._gobottom, FightUISwitchEffectComp)
+	end
 
 	self:refreshStyle()
 end

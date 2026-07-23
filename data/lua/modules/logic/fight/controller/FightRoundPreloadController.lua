@@ -31,6 +31,10 @@ function FightRoundPreloadController:reInit()
 end
 
 function FightRoundPreloadController:onStageChange(stage)
+	if FightScene.isLowMemory then
+		return
+	end
+
 	if stage == FightStageMgr.StageType.Operate then
 		self:preload()
 	elseif stage == FightStageMgr.StageType.Play then

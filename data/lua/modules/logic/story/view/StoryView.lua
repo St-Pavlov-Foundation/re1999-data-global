@@ -103,7 +103,11 @@ function StoryView:_isUnInteractType()
 	end
 
 	if self._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog then
-		return true
+		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.GostMagic then
+			return false
+		else
+			return true
+		end
 	end
 
 	if self._stepCo.conversation.type == StoryEnum.ConversationType.IrregularShake then
@@ -145,7 +149,9 @@ function StoryView:_btnskipOnClick(isSkipAll)
 
 	StoryTool.enablePostProcess(true)
 
-	if self._curStoryId == SDKMediaEventEnum.FirstStoryId then
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas and self._curStoryId == SDKMediaEventEnum.FirstStoryId then
 		local playerPrefsKey = string.format(PlayerPrefsKey.SDKDataTrackMgr_MediaEvent_first_story_skip, PlayerModel.instance:getMyUserId())
 
 		if PlayerPrefsHelper.getNumber(playerPrefsKey, 0) == 0 then
@@ -170,7 +176,7 @@ function StoryView:addEvent()
 	self:addEventCb(StoryController.instance, StoryEvent.Log, self._btnlogOnClick, self)
 	self:addEventCb(StoryController.instance, StoryEvent.Hide, self._btnhideOnClick, self)
 	self:addEventCb(StoryController.instance, StoryEvent.Auto, self._btnautoOnClick, self)
-	self:addEventCb(StoryController.instance, StoryEvent.Skip, self._btnskipOnClick, self)
+	self:addEventCb(StoryController.instance, StoryEvent.OnSkipConfirm, self._btnskipOnClick, self)
 	self:addEventCb(StoryController.instance, StoryEvent.PvPause, self._btnPvPauseOnClick, self)
 	self:addEventCb(StoryController.instance, StoryEvent.PvPlay, self._btnPvPlayOnClick, self)
 	self:addEventCb(StoryController.instance, StoryEvent.EnterNextStep, self._btnnextOnClick, self)
@@ -191,7 +197,7 @@ function StoryView:removeEvent()
 	self:removeEventCb(StoryController.instance, StoryEvent.Log, self._btnlogOnClick, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.Hide, self._btnhideOnClick, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.Auto, self._btnautoOnClick, self)
-	self:removeEventCb(StoryController.instance, StoryEvent.Skip, self._btnskipOnClick, self)
+	self:removeEventCb(StoryController.instance, StoryEvent.OnSkipConfirm, self._btnskipOnClick, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.PvPause, self._btnPvPauseOnClick, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.PvPlay, self._btnPvPlayOnClick, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.EnterNextStep, self._btnnextOnClick, self)
@@ -460,7 +466,15 @@ function StoryView:_onUpdateUI(param)
 end
 
 function StoryView:_showBranchLeadHero()
-	self._dialogItem:hideDialog()
+	local hasOptionPlayed = StoryModel.instance:hasBranchPlayed(self._stepCo)
+
+	if hasOptionPlayed then
+		self._dialogItem:playHardIn()
+	else
+		StoryModel.instance:setTextShowing(false)
+		self._dialogItem:hideDialog()
+	end
+
 	self._dialogItem:stopConAudio()
 
 	if self._confadeId then
@@ -473,14 +487,32 @@ function StoryView:_showBranchLeadHero()
 	TaskDispatcher.cancelTask(self._shakeStop, self)
 	TaskDispatcher.cancelTask(self._enterNextStep, self)
 
-	self._conCanvasGroup.alpha = 1
+	local showHero = true
 
-	gohelper.setActive(self._goname, true)
-	gohelper.setActive(self._txtnameen.gameObject, true)
-	gohelper.setActive(self._gocontentroot, true)
-	gohelper.setActive(self._gonoconversation, true)
+	for _, v in pairs(self._stepCo.optList) do
+		if v.conditionType == StoryEnum.OptionConditionType.None then
+			local isSpType = StoryModel.instance:isSpOptionType(v.type)
 
-	local normalOptionParam
+			if isSpType then
+				showHero = false
+			end
+		end
+	end
+
+	self._conCanvasGroup.alpha = showHero and 1 or 0
+
+	gohelper.setActive(self._goname, showHero)
+	gohelper.setActive(self._txtnameen.gameObject, showHero)
+	gohelper.setActive(self._gocontentroot, showHero)
+	gohelper.setActive(self._gonoconversation, showHero)
+
+	if not showHero then
+		gohelper.setActive(self._gohead, false)
+		gohelper.setActive(self._gospine, false)
+		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, false, false, false, 0)
+
+		return
+	end
 
 	for _, v in pairs(self._stepCo.optList) do
 		if v.condition and v.conditionType == StoryEnum.OptionConditionType.NormalLead then
@@ -545,7 +577,7 @@ function StoryView:_showSpineLeadHero(param)
 end
 
 function StoryView:_updateStep(stepId)
-	if not StoryModel.instance:isNormalStep() then
+	if not StoryModel.instance:isNormalStep() and not self._skip then
 		return
 	end
 
@@ -638,6 +670,7 @@ function StoryView:_conShowIn()
 	self._diatxt = StoryTool.getFilterDia(self._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
 	self._dialogItem:hideDialog()
+	StoryModel.instance:setTextShowing(false)
 	TaskDispatcher.cancelTask(self._enterNextStep, self)
 	TaskDispatcher.cancelTask(self._onFullTextKeepFinished, self)
 	TaskDispatcher.cancelTask(self._guaranteeEnterNextStep, self)
@@ -665,6 +698,8 @@ function StoryView:_conShowIn()
 		self:_showConversationItem(true)
 	end
 
+	UIBlockMgr.instance:startBlock("waitShowText")
+
 	if StoryModel.instance:isNeedFadeIn() then
 		if self._gospine.activeSelf then
 			StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, true, true, false)
@@ -691,6 +726,8 @@ function StoryView:_onLimitNoInteractFinished()
 end
 
 function StoryView:_startShowText()
+	UIBlockMgr.instance:endBlock("waitShowText")
+
 	if not self._stepCo then
 		return
 	end
@@ -713,7 +750,7 @@ function StoryView:_showConversationItem(show)
 
 	if not show then
 		gohelper.setActive(self._gocontentroot, false)
-		self._simagehead:UnLoadImage()
+		gohelper.setActive(self._simagehead.gameObject, false)
 		StoryController.instance:dispatchEvent(StoryEvent.LeadRoleViewShow, false)
 
 		return
@@ -743,7 +780,7 @@ function StoryView:_showConversationItem(show)
 	if not self._stepCo.conversation.iconShow then
 		gohelper.setActive(self._gohead, false)
 		self:_showLeadRoleSpine(false)
-		self._simagehead:UnLoadImage()
+		gohelper.setActive(self._simagehead.gameObject, false)
 		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, false, false, false)
 
 		return
@@ -804,7 +841,7 @@ function StoryView:_showHeadContentIcon(icon)
 	if self:_isHeroLead() then
 		gohelper.setActive(self._gohead, false)
 		self:_showLeadRoleSpine(true)
-		self._simagehead:UnLoadImage()
+		gohelper.setActive(self._simagehead.gameObject, false)
 		StoryController.instance:dispatchEvent(StoryEvent.ShowLeadRole, self._stepCo, true, false, false)
 	else
 		self:_showLeadRoleSpine(false)
@@ -825,9 +862,12 @@ function StoryView:_showHeadContentIcon(icon)
 
 			table.insert(resList, self._headEffectResPath)
 			self:loadRes(resList, self._headEffectResLoaded, self)
+			gohelper.setActive(self._simagehead.gameObject, false)
 			gohelper.setActive(self._goheadgrey, true)
 		else
 			local path = string.format("singlebg/headicon_small/%s", icon)
+
+			gohelper.setActive(self._simagehead.gameObject, true)
 
 			if self._simagehead.curImageUrl == path then
 				gohelper.setActive(self._goheadgrey, true)
@@ -845,6 +885,8 @@ function StoryView:_headEffectResLoaded()
 		local prefAssetItem = self._loader:getAssetItem(self._headEffectResPath)
 
 		self._goeffectIcon = gohelper.clone(prefAssetItem:GetResource(), self._gohead)
+
+		gohelper.setLayer(self._goeffectIcon, UnityLayer.UISecond, true)
 	end
 end
 
@@ -892,6 +934,10 @@ function StoryView:_isHeroLead()
 end
 
 function StoryView:_showText()
+	if not self._stepCo then
+		return
+	end
+
 	if self._stepCo.conversation.type == StoryEnum.ConversationType.None then
 		self._dialogItem:stopConAudio()
 
@@ -901,7 +947,12 @@ function StoryView:_showText()
 	StoryModel.instance:setTextShowing(true)
 
 	if self._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog then
-		StoryModel.instance:enableClick(false)
+		if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.GostMagic then
+			StoryModel.instance:enableClick(true)
+		else
+			StoryModel.instance:enableClick(false)
+		end
+
 		self:_playDialog()
 		StoryController.instance:dispatchEvent(StoryEvent.PlayFullText, self._stepCo)
 	elseif self._stepCo.conversation.type == StoryEnum.ConversationType.IrregularShake then
@@ -1567,6 +1618,8 @@ function StoryView:_clearItems(noCancel)
 end
 
 function StoryView:onDestroyView()
+	UIBlockMgr.instance:endBlock("waitShowText")
+
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		ViewMgr.instance:closeView(ViewName.MessageBoxView, true)
 	end

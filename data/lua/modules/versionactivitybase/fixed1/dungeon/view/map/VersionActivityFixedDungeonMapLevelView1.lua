@@ -195,16 +195,18 @@ function VersionActivityFixedDungeonMapLevelView1:_updateMapInfo(episodeId)
 end
 
 function VersionActivityFixedDungeonMapLevelView1:onStoryFinished()
-	local isOpenPuzzleView = V3a5PuzzleController.instance:checkOpenPuzzleView(self.showEpisodeCo.beforeStory)
-
 	DungeonModel.instance.curSendEpisodeId = nil
 
 	DungeonModel.instance:setLastSendEpisodeId(self.showEpisodeCo.id)
 	self:closeThis()
 
-	if not isOpenPuzzleView then
+	if not self:_isOpenPuzzleView() then
 		DungeonRpc.instance:sendEndDungeonRequest(false)
 	end
+end
+
+function VersionActivityFixedDungeonMapLevelView1:onReplayStoryFinished()
+	self:_isOpenPuzzleView(true)
 end
 
 return VersionActivityFixedDungeonMapLevelView1

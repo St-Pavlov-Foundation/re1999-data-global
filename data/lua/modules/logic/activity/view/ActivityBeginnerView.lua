@@ -23,7 +23,14 @@ function ActivityBeginnerView:removeEvents()
 end
 
 function ActivityBeginnerView:_editableInitView()
-	return
+	self._goblackloading = gohelper.findChild(self.viewGO, "#blackloading")
+	self._animLoading = self._goblackloading:GetComponent(typeof(UnityEngine.Animator))
+	self._animUI = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	self._actHideTab = {
+		[ActivityEnum.Activity.V3a4_GiftRecommend] = self._isCanOpenV3a4GiftRecommendAct,
+		[ActivityEnum.Activity.V3a7_SelfSelect] = self._isCanOpenV3a7SelfSelectAct,
+		[ActivityEnum.Activity.S02SceneUIPackageAct] = self._isCanOpenV3a4GiftRecommendAct
+	}
 end
 
 local activitySubViewDict = {
@@ -38,6 +45,7 @@ local activitySubViewDict = {
 	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
 	[ActivityEnum.Activity.V3a0_WarmUp] = ViewName.V3a0_WarmUp,
 	[ActivityEnum.Activity.V3a1_AutumnSign] = ViewName.V3a1_AutumnSign_FullView,
+	[ActivityEnum.Activity.V3a6_WarmUp] = ViewName.V3a6_WarmUp,
 	[ActivityEnum.Activity.V3a8_WarmUp] = ViewName.V3a8_WarmUp,
 	[ActivityEnum.Activity.FreeMonthCard] = ViewName.VersionActivity3_8FreeMonthCardFullView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
@@ -68,7 +76,6 @@ local activitySubViewDict = {
 	[ActivityEnum.Activity.RoleSignViewPart2_1_8] = ViewName.V1a8_Role_FullSignView_Part2,
 	[ActivityEnum.Activity.Activity1_8WarmUp] = ViewName.VersionActivity1_8WarmUpView,
 	[ActivityEnum.Activity.Work_SignView_1_8] = ViewName.V1a8_Work_FullSignView,
-	[ActivityEnum.Activity.V1a9_Matildagift] = ViewName.V1a9_ActivityShow_MatildagiftView,
 	[ActivityEnum.Activity.RoleSignViewPart1_1_9] = ViewName.V1a9_Role_FullSignView_Part1,
 	[ActivityEnum.Activity.RoleSignViewPart2_1_9] = ViewName.V1a9_Role_FullSignView_Part2,
 	[ActivityEnum.Activity.DragonBoatFestival] = ViewName.DragonBoatFestivalActivityView,
@@ -121,10 +128,8 @@ local activitySubViewDict = {
 	[ActivityEnum.Activity.V2a9_VersionSummon_Part1] = ViewName.V2a9_VersionSummonFull_Part1,
 	[ActivityEnum.Activity.V2a9_VersionSummon_Part2] = ViewName.V2a9_VersionSummonFull_Part2,
 	[ActivityEnum.Activity.V2a9_TurnBackH5] = ViewName.TurnBackInvitationMainView,
-	[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView,
 	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView,
-	[ActivityEnum.Activity.V2a8_Matildagift] = ViewName.V1a9_ActivityShow_MatildagiftView,
 	[ActivityEnum.Activity.V2a8_DecaLogPresent] = ViewName.V2a8DecalogPresentFullView,
 	[ActivityEnum.Activity.V2a8_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView,
 	[ActivityEnum.Activity.V2a8_DragonBoat] = ViewName.V2a8_DragonBoat_FullView,
@@ -144,7 +149,12 @@ local activitySubViewDict = {
 	[ActivityEnum.Activity.V3a4_GiftRecommend] = ViewName.V3a4GiftRecommendFullview,
 	[ActivityEnum.Activity.V3a4_DestinyGift] = ViewName.V3a4DestinyGiftFullView,
 	[ActivityEnum.Activity.V3a4_GoldenMilletPresent] = ViewName.V3a4_GoldenMilletPresentFullView,
-	[ActivityEnum.Activity.V3a5_SchoolStart] = ViewName.V3a5_SchoolStartView
+	[ActivityEnum.Activity.V3a5_SchoolStart] = ViewName.V3a5_SchoolStartView,
+	[ActivityEnum.Activity.V3a7_SelfSelect] = ViewName.V3a7SelfSelectFullView,
+	[ActivityEnum.Activity.V3a7_SkinGift] = ViewName.V3a7_SkinGiftFullView,
+	[ActivityEnum.Activity.SP02_LinkGift] = ViewName.SP02_LinkGiftFullView,
+	[ActivityEnum.Activity.V3a8_DragonBoatActivity_FullView] = ViewName.V3a8_DragonBoatActivity_FullView,
+	[ActivityEnum.Activity.SP02_WarmUp] = ViewName.WarmUp
 }
 local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -152,6 +162,10 @@ local actTypeSubViewDict = {
 	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView,
 	[ActivityEnum.ActivityTypeID.Act171] = ViewName.TurnBackInvitationMainView,
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView
+}
+local _actCostIdToViewDict = {
+	[ActivityEnum.ConstId.Gifg5StarCharacter] = ViewName.V1a9_ActivityShow_MatildagiftView,
+	[ActivityEnum.ConstId.Gifg6StarCharacter] = ViewName.V2a8_WuErLiXiGiftFullView
 }
 
 function ActivityBeginnerView:onUpdateParam()
@@ -174,6 +188,10 @@ function ActivityBeginnerView:onOpen()
 	self:_initNationalGift()
 	self:_initDoubleDrop()
 	self:_initActivityCollect()
+	self:_initActivity()
+	self:_initGoldenMilletPresent()
+	self:_initFreeMonthCard()
+	self:_initSceneUIPackageAct()
 
 	self._needSetSortInfos = true
 
@@ -226,8 +244,10 @@ function ActivityBeginnerView:_refreshView()
 end
 
 function ActivityBeginnerView:_checkHasAct(id)
-	if id == ActivityEnum.Activity.V3a4_GiftRecommend then
-		local hasAct = self:_isCanOpenV3a4GiftRecommendAct(id)
+	local actHideTab = self._actHideTab[id]
+
+	if actHideTab then
+		local hasAct = actHideTab(self, id)
 
 		return hasAct
 	end
@@ -393,6 +413,12 @@ function ActivityBeginnerView:_initWarmUp()
 	end
 end
 
+function ActivityBeginnerView:_initSceneUIPackageAct()
+	local actId = SceneUIPackageModel.instance:getActId()
+
+	activitySubViewDict[actId] = ViewName.SceneUIPackageFullView
+end
+
 local s_WarmUpH5 = false
 
 function ActivityBeginnerView:_initWarmUpH5()
@@ -520,6 +546,22 @@ function ActivityBeginnerView:_initActivityCollect()
 	end
 end
 
+function ActivityBeginnerView:_initActivity()
+	local tActivityConfig = ActivityConfig.instance
+
+	for actConstId, viewName in pairs(_actCostIdToViewDict) do
+		local actId = tActivityConfig:getConstAsNum(actConstId, 0)
+
+		self:_addActivityDict(actId, viewName)
+	end
+end
+
+function ActivityBeginnerView:_addActivityDict(actId, viewName)
+	if actId and actId ~= 0 then
+		activitySubViewDict[actId] = viewName
+	end
+end
+
 function ActivityBeginnerView:_isCanOpenV3a4GiftRecommendAct(actId)
 	local isOpenAct = ActivityType101Model.instance:isOpen(actId)
 
@@ -537,16 +579,73 @@ function ActivityBeginnerView:_isCanOpenV3a4GiftRecommendAct(actId)
 		end
 	end
 
-	local goodsIds = DecorateStoreModel.instance:getV3a4PackageStoreGoodsIds()
-	local canBuyPackage = DecorateStoreModel.instance:isCanBuySceneUIPackage()
-	local hasScene = DecorateStoreModel.instance:isDecorateGoodItemHas(goodsIds[2])
-	local hasUI = DecorateStoreModel.instance:isDecorateGoodItemHas(goodsIds[3])
+	local hasScene = SceneUIPackageModel.instance:hasScene(actId)
+	local hasUI = SceneUIPackageModel.instance:hasUI(actId)
+	local canBuy = SceneUIPackageModel.instance:canBuy(actId)
 
-	if canBuyPackage or not hasScene or not hasUI then
+	if canBuy or not hasScene or not hasUI then
 		return true
 	end
 
 	return false
+end
+
+function ActivityBeginnerView:_isCanOpenV3a7SelfSelectAct(actId)
+	local isOpenAct = ActivityType101Model.instance:isOpen(actId)
+
+	if not isOpenAct then
+		return false
+	end
+
+	local actCo = ActivityConfig.instance:getActivityCo(actId)
+
+	if not actCo then
+		return false
+	end
+
+	local isCanClaim = ActivityType101Model.instance:isType101RewardCouldGetAnyOne(actId)
+
+	if isCanClaim then
+		return true
+	end
+
+	local goodsId = tonumber(actCo.patFaceParam)
+	local goodsMo = StoreModel.instance:getGoodsMO(goodsId)
+
+	if not goodsMo then
+		return false
+	end
+
+	local isSoldOut = goodsMo:isSoldOut()
+
+	if isSoldOut then
+		return false
+	end
+
+	return true
+end
+
+local s_GoldenMilletPresent = false
+
+function ActivityBeginnerView:_initGoldenMilletPresent()
+	if s_GoldenMilletPresent then
+		return
+	end
+
+	s_GoldenMilletPresent = true
+
+	local actId = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+
+	if actId then
+		local viewName = GameBranchMgr.instance:Vxax_ViewName("GoldenMilletPresentFull", ViewName.GoldenMilletPresentFull)
+
+		activitySubViewDict[actId] = viewName
+	end
+end
+
+function ActivityBeginnerView:_initFreeMonthCard()
+	activitySubViewDict[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView
+	activitySubViewDict[VersionActivity3_8Enum.ActivityId.FreeMonthCard] = ViewName.VersionActivity3_8FreeMonthCardFullView
 end
 
 return ActivityBeginnerView

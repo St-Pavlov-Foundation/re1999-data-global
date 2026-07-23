@@ -15,13 +15,28 @@ function FightWorkAddHandCard:onStart()
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
+	local skillId = self.actEffectData.effectNum
 	local version = FightModel.instance:getVersion()
 
 	if version >= 4 then
-		local delayTime = 0.5
+		local flow = self:com_registFlowParallel()
 
-		self:com_registTimer(self._delayAfterPerformance, delayTime)
-		FightController.instance:dispatchEvent(FightEvent.AddHandCard)
+		if self.actEffectData.reserveId == "10034" then
+			local cardList = FightDataHelper.handCardMgr:getHandCard()
+			local cardData = cardList[#cardList]
+
+			cardData.clientData.custom_addFromRefrigerator = true
+
+			local work = FightMsgMgr.sendMsg(FightMsgId.CardAddRefrieratorTimeline)
+
+			flow:addWork(work)
+		end
+
+		local delayTime = 0.5 / FightModel.instance:getUISpeed()
+
+		flow:registWork(FightWorkDelayTimer, delayTime)
+		flow:registWork(FightWorkSendEvent, FightEvent.AddHandCard)
+		self:playWorkAndDone(flow)
 	else
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
 		self:onDone(true)

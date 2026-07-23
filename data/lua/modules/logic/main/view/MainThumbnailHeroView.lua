@@ -111,11 +111,10 @@ function MainThumbnailHeroView:_initCamera()
 		return
 	end
 
-	local animator = CameraMgr.instance:getCameraRootAnimator()
 	local path = self.viewContainer:getSetting().otherRes[3]
 	local animatorInst = self.viewContainer._abLoader:getAssetItem(path):GetResource()
 
-	animator.runtimeAnimatorController = animatorInst
+	CameraMgr.instance:setCameraRootAnimatorController(animatorInst)
 
 	local targetGo = CameraMgr.instance:getCameraRootGO()
 

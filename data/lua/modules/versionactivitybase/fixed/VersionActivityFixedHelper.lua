@@ -5,7 +5,7 @@ module("modules.versionactivitybase.fixed.VersionActivityFixedHelper", package.s
 local VersionActivityFixedHelper = class("VersionActivityFixedHelper")
 local _version = {
 	big = 3,
-	small = 6
+	small = 10
 }
 local _versionTable
 local foramt1 = "%s_%s"
@@ -49,7 +49,7 @@ function VersionActivityFixedHelper.setMainActivitySprite(image, name, setNative
 	local func = table._MainActivitySpriteFunc
 
 	if not func then
-		func = _getVersionFuncForamt("set%sMainActivitySprite", foramt2, big, small)
+		func = big == 3 and small == 10 and "setSp02AtomicActivityIconSprite" or _getVersionFuncForamt("set%sMainActivitySprite", foramt2, big, small)
 		_versionTable[big][small]._MainActivitySpriteFunc = func
 	end
 
@@ -313,7 +313,12 @@ function VersionActivityFixedHelper.getVersionActivityStoreRareIcon(big, small)
 	local func = table._StoreRareIcon
 
 	if not func then
-		func = _getVersionFuncForamt("%s_store_quality_", foramt3, big, small)
+		if big == 3 and small == 10 then
+			func = string.format("sp02_store_quality_", small)
+		else
+			func = _getVersionFuncForamt("%s_store_quality_", foramt3, big, small)
+		end
+
 		_versionTable[big][small]._StoreRareIcon = func
 	end
 

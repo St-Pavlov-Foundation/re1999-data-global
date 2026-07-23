@@ -13,6 +13,8 @@ function FightEntityExData:onConstructor()
 	self.spineUrl = nil
 	self.needLookCamera = true
 	self.useScaleReplaceSpineScale = false
+	self.skin = nil
+	self.timelineTempEntitySign = {}
 end
 
 function FightEntityExData:getCustomDefaultEntityInitData()

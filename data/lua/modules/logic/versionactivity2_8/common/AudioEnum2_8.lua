@@ -148,5 +148,10 @@ AudioEnum2_8.WarmUp = {
 	play_ui_fuleyuan_yure_open = 20280751,
 	play_ui_fuleyuan_yure_whoosh = 20280753
 }
+AudioEnum2_8.PermanentBgm = {
+	MoLiDeEr = 3280003,
+	EnterView = 3280004,
+	NuoDiKa = 3280002
+}
 
 return AudioEnum2_8

@@ -53,10 +53,22 @@ function Rouge2_MapSixDiceItem:initInfo(diceInfo)
 end
 
 function Rouge2_MapSixDiceItem:dice()
+	self._anim.enabled = true
+
 	self._anim:Play("in", 0, 0)
 	self._anim:Update(0)
 	self:_randomRotation()
 	TaskDispatcher.runDelay(self._checkIsTween2Rotation, self, RandomRotationDuration)
+end
+
+function Rouge2_MapSixDiceItem:forceSet()
+	self._anim.enabled = false
+
+	self:killTween()
+
+	local nowRotation = Rouge2_MapSixDiceItem.rotationDict[self._randomIndex] or Vector3.zero
+
+	transformhelper.setLocalRotation(self._tranNormal, nowRotation.x, nowRotation.y, nowRotation.z)
 end
 
 function Rouge2_MapSixDiceItem:_randomRotation()

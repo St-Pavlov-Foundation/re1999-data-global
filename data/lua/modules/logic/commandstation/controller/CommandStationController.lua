@@ -95,7 +95,7 @@ function CommandStationController:_initializeRedDotInfo(dotInfos, dotNode, prefs
 	end
 end
 
-function CommandStationController.getCommandStationRelationChain()
+function CommandStationController.getCommandStationRelationChain(pageIndex)
 	if CommandStationEnum.TestCharacterChainId then
 		return lua_copost_character_chain.configDict[CommandStationEnum.TestCharacterChainId]
 	end
@@ -104,30 +104,48 @@ function CommandStationController.getCommandStationRelationChain()
 
 	for i = num, 1, -1 do
 		local config = lua_copost_character_chain.configList[i]
+		local page = config.id < CommandStationEnum.Page2_ChainId and CommandStationEnum.RelationShipBoardPage.Default or CommandStationEnum.RelationShipBoardPage.Chapter13
 
-		if config.fightId == 0 or DungeonModel.instance:hasPassLevelAndStory(config.fightId) then
+		if page == pageIndex and (config.fightId == 0 or DungeonModel.instance:hasPassLevelAndStory(config.fightId)) then
 			return config
 		end
 	end
 end
 
 function CommandStationController.getCommandStationRelationShipBoardReddot()
-	local config = CommandStationController.getCommandStationRelationChain()
-	local stateList = config and config.stateId
+	for i, pageIndex in pairs(CommandStationEnum.RelationShipBoardPage) do
+		local config = CommandStationController.getCommandStationRelationChain(pageIndex)
+		local stateList = config and config.stateId
 
-	if stateList then
-		for i, v in ipairs(stateList) do
-			if not CommandStationModel.instance:getCharacterState(v) then
-				local config = lua_copost_character_state.configDict[v]
+		if stateList then
+			for _, v in ipairs(stateList) do
+				if not CommandStationModel.instance:getCharacterState(v) then
+					local config = lua_copost_character_state.configDict[v]
 
-				if config and config.isClick ~= CommandStationEnum.CharacterClickState.NoClick then
-					return true
+					if config and config.isClick ~= CommandStationEnum.CharacterClickState.NoClick then
+						return true
+					end
 				end
 			end
 		end
 	end
 
+	for i = 1, CommandStationEnum.MaxCampLocationIndex do
+		local camp = CommandStationConfig.instance:getCampByLocation(i)
+		local showNew = not CommandStationController.hasOnceActionKey(CommandStationEnum.PrefsKey.CampNewFlag, camp)
+		local config = lua_copost_character_camp.configDict[camp]
+		local visible = config and DungeonModel.instance:hasPassLevelAndStory(config.unlockId)
+
+		if showNew and visible then
+			return true
+		end
+	end
+
 	return false
+end
+
+function CommandStationController.noCharacterCamp(camp)
+	return camp == 11 or camp == 12
 end
 
 function CommandStationController:openCommandStationTimelineEventView(param, isImmediate)
@@ -155,6 +173,18 @@ function CommandStationController:openCommandStationDetailView(param, isImmediat
 end
 
 function CommandStationController:openCommandStationRelationShipBoard(param, isImmediate)
+	param = param or {}
+
+	local index = CommandStationEnum.RelationShipBoardPage.Default
+
+	if CommandStationController.showNewChapterPage() then
+		index = CommandStationEnum.RelationShipBoardPage.Chapter13
+	end
+
+	param.defaultTabIds = {
+		[2] = index
+	}
+
 	ViewMgr.instance:openView(ViewName.CommandStationRelationShipBoard, param, isImmediate)
 end
 
@@ -188,6 +218,10 @@ function CommandStationController:openCommandStationPaperGetView(param, isImmedi
 	ViewMgr.instance:openView(ViewName.CommandStationPaperGetView, param, isImmediate)
 end
 
+function CommandStationController:openCommandStationTeamDetailView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.CommandStationTeamDetailView, param, isImmediate)
+end
+
 function CommandStationController:openCommandStationTaskView(param, isImmediate)
 	CommandStationRpc.instance:sendGetCommandPostInfoRequest(self._onGetPostInfo, self)
 end
@@ -196,6 +230,56 @@ function CommandStationController:_onGetPostInfo(cmd, resultCode, msg)
 	if resultCode == 0 then
 		ViewMgr.instance:openView(ViewName.CommandStationTaskView)
 	end
+end
+
+function CommandStationController.relationShipUnlockByAct()
+	local config = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockAct)
+	local actId = config.value
+	local status = actId > 0 and ActivityHelper.getActivityStatus(actId)
+	local showActivity = status == ActivityEnum.ActivityStatus.Normal
+
+	if showActivity then
+		return true
+	end
+end
+
+function CommandStationController.relationShipUnlockByDungeon()
+	local dungeonUnlockConfig = CommandStationConfig.instance:getConstConfig(CommandStationEnum.ConstId.RelationShipUnlockDungeon)
+	local dungeonId = dungeonUnlockConfig.value
+
+	if DungeonModel.instance:hasPassLevelAndStory(dungeonId) then
+		return true
+	end
+end
+
+function CommandStationController.relationShipUnlockByChapter12()
+	local chapterId = CommandStationEnum.UnlockRelationShipChapterId
+	local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterId)
+
+	for _, config in ipairs(chapterList) do
+		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
+
+		if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevelAndStory(episodeList[1].id) then
+			return true
+		end
+	end
+end
+
+function CommandStationController.relationShipUnlockByChapter13()
+	local chapterId = CommandStationEnum.UnlockRelationShipChapterId2
+	local chapterList = DungeonConfig.instance:getPreviewChapterList(chapterId)
+
+	for _, config in ipairs(chapterList) do
+		local episodeList = DungeonConfig.instance:getChapterEpisodeCOList(config.id)
+
+		if episodeList and episodeList[1] and DungeonModel.instance:hasPassLevelAndStory(episodeList[1].id) then
+			return true
+		end
+	end
+end
+
+function CommandStationController.showNewChapterPage()
+	return CommandStationController.relationShipUnlockByAct() or CommandStationController.relationShipUnlockByChapter13()
 end
 
 function CommandStationController.hasOnceActionKey(type, id)

@@ -33,6 +33,16 @@ function FightCardPlayEffect:onStart(context)
 	self._cardInfoMO = playCardItem.cardInfoMO:clone()
 	self._clonePlayCardGO = gohelper.cloneInPlace(playCardItem.go)
 
+	local param3 = context.fightBeginRoundOp.param3
+
+	if param3 and param3 ~= 0 then
+		local cloneCardItem = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.findChild(self._clonePlayCardGO, "foranim/card"), FightViewCardItem, FightEnum.CardShowType.HandCard)
+
+		if cloneCardItem then
+			cloneCardItem:updateItem(playCardItem.cardInfoMO.uid, param3, self._cardInfoMO)
+		end
+	end
+
 	local playCardTr = self._clonePlayCardGO.transform
 
 	gohelper.setActive(playCardItem.go, false)

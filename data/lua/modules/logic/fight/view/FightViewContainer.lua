@@ -35,6 +35,7 @@ function FightViewContainer:buildViews()
 		self.waitingArea = FightViewWaitingArea.New()
 	end
 
+	self.deviceAreaView = FightViewDeviceArea.New()
 	self.rightElementLayoutView = FightViewRightElementsLayout.New()
 	self.rightBottomElementLayoutView = FightViewRightBottomElementsLayout.New()
 	self.viewMgr = FightViewMgr.New()
@@ -46,6 +47,7 @@ function FightViewContainer:buildViews()
 		FightViewPartVisible.New(),
 		self.fightViewHandCard,
 		self.fightViewPlayCard,
+		self.deviceAreaView,
 		FightViewExPoint.New(),
 		self.waitingArea,
 		FightViewClothSkillMgrView.New(),
@@ -68,7 +70,8 @@ function FightViewContainer:buildViews()
 		FightViewAssistBoss.New(),
 		FightViewDissolveCard.New(),
 		FightViewASFDEnergy.New(),
-		FightViewRedAndBlueArea.New()
+		FightViewRedAndBlueArea.New(),
+		FightViewCounter.New()
 	}
 
 	table.insert(views, FightViewBossHpMgr.New())
@@ -105,6 +108,19 @@ function FightViewContainer:openFightFocusView()
 	end
 
 	ViewMgr.instance:openView(ViewName.FightFocusView)
+end
+
+function FightViewContainer:setCacheUserData(key, value)
+	self.cacheUserDataDict = self.cacheUserDataDict or self:getUserDataTb_()
+	self.cacheUserDataDict[key] = value
+end
+
+function FightViewContainer:getCacheUserData(key)
+	if not self.cacheUserDataDict then
+		return
+	end
+
+	return self.cacheUserDataDict[key]
 end
 
 return FightViewContainer

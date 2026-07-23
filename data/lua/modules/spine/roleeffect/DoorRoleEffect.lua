@@ -122,6 +122,7 @@ function DoorRoleEffect:_playVideo(child, bodyName)
 
 		particleSystem:Stop()
 		avProVideoPlayer:setEventListener(self._videoStatusUpdate, self)
+		gohelper.setActive(child.gameObject, true)
 		avProVideoPlayer:loadMedia(videoName)
 
 		local audioComp = child.gameObject:GetComponent(typeof(UnityEngine.AudioSource))
@@ -138,7 +139,7 @@ function DoorRoleEffect:_playVideo(child, bodyName)
 end
 
 function DoorRoleEffect:_videoStatusUpdate(path, status, errorCode)
-	if status == VideoEnum.PlayerStatus.FirstFrameReady then
+	if status == VideoEnum.PlayerStatus.FirstFrameReady or status == VideoEnum.PlayerStatus.ReadyToPlay then
 		if self._avProVideoPlayer then
 			self._avProVideoPlayer:playLoadMedia(true)
 		end

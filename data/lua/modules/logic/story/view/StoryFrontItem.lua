@@ -7,6 +7,7 @@ local StoryFrontItem = class("StoryFrontItem")
 function StoryFrontItem:init(go)
 	self._frontGO = go
 	self._txtscreentext = gohelper.findChildText(go, "txt_screentext")
+	self._tmpscreentext = gohelper.findChildText(go, "tmp_screentext")
 	self._imagefulltop = gohelper.findChildImage(go, "image_fulltop")
 	self._imageupfade = gohelper.findChildImage(go, "go_upfade")
 	self._imageblock = gohelper.findChildImage(go, "#go_block")
@@ -53,6 +54,8 @@ function StoryFrontItem:showFullScreenText(show, txt)
 			self._copyText = nil
 		end
 	end
+
+	gohelper.setActive(self._txtscreentext.gameObject, show)
 
 	self._diatxt = string.gsub(txt, "<notShowInLog>", "")
 	self._markScreenText = self._txtscreentext
@@ -343,16 +346,11 @@ function StoryFrontItem:playIrregularShakeText(co, callback, callbackobj)
 		self._goshake = viewContainer:getResInst(viewContainer:getSetting().otherRes[1], self._goirregularshake)
 	end
 
-	local txt = gohelper.findChildText(self._goshake, "tex_ani/#tex")
-	local tmpGo = txt.gameObject
-
-	self._tmpMarkTopText = MonoHelper.addNoUpdateLuaComOnceToGo(tmpGo, TMPMarkTopText)
-
-	self._tmpMarkTopText:registerRebuildLayout(tmpGo.transform.parent)
-
 	self._shakeAni = self._goshake:GetComponent(typeof(UnityEngine.Animator))
 
-	self._tmpMarkTopText:setData(self._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
+	local txt = gohelper.findChildText(self._goshake, "tex_ani/#tex")
+
+	txt.text = self._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
 
 	local delayTime = self._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] - 0.17
 
@@ -678,11 +676,6 @@ function StoryFrontItem:playTextFadeIn(co, callback, callbackobj)
 	self:_killFloatTween()
 
 	local txt = self._markScreenText.text
-
-	if string.match(txt, "<color=#%x+>") then
-		txt = string.gsub(txt, "<color=#(%x%x%x%x%x%x)(%x-)>", "<color=#%100>")
-	end
-
 	local markTopList = StoryTool.getMarkTopTextList(txt)
 
 	txt = StoryTool.filterMarkTop(txt)
@@ -701,18 +694,264 @@ function StoryFrontItem:playTextFadeIn(co, callback, callbackobj)
 	end
 end
 
-function StoryFrontItem:_fadeUpdate(value)
-	local txt = self._markScreenText.text
-	local result = math.ceil(255 * value)
-	local alpha = string.format("%02x", result)
+function StoryFrontItem:clickFullScreentText()
+	if self._curScreenTextEndFunc then
+		self._curScreenTextEndFunc(self)
+	end
+end
 
-	if string.match(txt, "<color=#%x+>") then
-		txt = string.gsub(txt, "<color=#(%x%x%x%x%x%x)(%x+)>", "<color=#%1" .. alpha .. ">")
-		self._markScreenText.text = txt
+function StoryFrontItem:playGostMagic(co, callback, callbackobj)
+	StoryTool.enablePostProcess(true)
+
+	self.showingClickableScreenText = true
+	self.showClickableScreenTextEnd = false
+
+	local txt = self._txtscreentext.text
+
+	self._stepCo = co
+
+	gohelper.setActive(self._tmpscreentext.gameObject, true)
+
+	self._finishCallback = callback
+	self._finishCallbackObj = callbackobj
+
+	ZProj.TweenHelper.KillByObj(self._tmpscreentext)
+	ZProj.UGUIHelper.SetColorAlpha(self._tmpscreentext, 1)
+
+	self._tmpscreentext.text = txt
+
+	gohelper.setLayer(self._tmpscreentext.gameObject, UnityLayer.UISecond, true)
+	self:_setDistortMaterial()
+	self._tmpscreentext.fontMaterial:EnableKeyword("UNDERLAY_ON")
+	self._tmpscreentext.fontMaterial:SetFloat("_BloomFactor", 2.5)
+
+	self._tmpscreentext.fontMaterial.renderQueue = 4995
+	self._gostFontGlitchPath = ResUrl.getEffect("story/v3a7_fontglitch")
+	self._effLoader = MultiAbLoader.New()
+
+	self._effLoader:addPath(self._gostFontGlitchPath)
+	self._effLoader:startLoad(self._gostGlitchEffLoaded, self)
+
+	local anchorFlag, posX, posY, realTxt = string.match(txt, "^(L?)(-?%d+),(-?%d+)#(.*)")
+	local rt = self._tmpscreentext.rectTransform
+
+	if posX and posY then
+		self._tmpscreentext.text = realTxt
+
+		if anchorFlag == "L" then
+			rt.anchorMin = Vector2(0, 0.5)
+			rt.anchorMax = Vector2(0, 0.5)
+
+			self._tmpscreentext:ForceMeshUpdate()
+
+			rt.anchoredPosition = Vector2(tonumber(posX) + self._tmpscreentext.preferredWidth * 0.5, tonumber(posY))
+		else
+			rt.anchorMin = Vector2(0.5, 0.5)
+			rt.anchorMax = Vector2(0.5, 0.5)
+			rt.anchoredPosition = Vector2(tonumber(posX), tonumber(posY))
+		end
+	else
+		rt.anchorMin = Vector2(0.5, 0.5)
+		rt.anchorMax = Vector2(0.5, 0.5)
+		rt.anchoredPosition = Vector2(0, 0)
+	end
+
+	self._savedUIPPValues = {
+		localBloomActive = PostProcessingMgr.instance:getUIPPValue("localBloomActive"),
+		bloomDiffusion = PostProcessingMgr.instance:getUIPPValue("bloomDiffusion"),
+		bloomThreshold = PostProcessingMgr.instance:getUIPPValue("bloomThreshold"),
+		bloomPercent = PostProcessingMgr.instance:getUIPPValue("bloomPercent"),
+		localBloomFactor = PostProcessingMgr.instance:getUIPPValue("localBloomFactor"),
+		bloomIntensity = PostProcessingMgr.instance:getUIPPValue("bloomIntensity"),
+		bloomRTDownTimes = PostProcessingMgr.instance:getUIPPValue("bloomRTDownTimes"),
+		localBloomColor = PostProcessingMgr.instance:getUIPPValue("localBloomColor")
+	}
+
+	PostProcessingMgr.instance:setUIPPValue("localBloomActive", true)
+	PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 6.45)
+	PostProcessingMgr.instance:setUIPPValue("bloomThreshold", 1.2)
+	PostProcessingMgr.instance:setUIPPValue("bloomPercent", 1)
+	PostProcessingMgr.instance:setUIPPValue("localBloomFactor", 1)
+	PostProcessingMgr.instance:setUIPPValue("bloomIntensity", 10)
+	PostProcessingMgr.instance:setUIPPValue("bloomRTDownTimes", 1)
+	PostProcessingMgr.instance:setUIPPValue("localBloomColor", Color.New(0.55, 0.61, 1, 1))
+
+	local delayTime = self._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+
+	if delayTime < 0.1 then
+		self:_playGostMagicEnd()
 
 		return
 	end
 
+	TaskDispatcher.cancelTask(self._gostMagicFinished, self)
+	TaskDispatcher.runDelay(self._gostMagicFinished, self, delayTime)
+
+	self._curScreenTextEndFunc = self._playGostMagicEnd
+end
+
+function StoryFrontItem:_setDistortMaterial()
+	local matPath = "font/meshpro/outline_material/hwzs_dynamic_distort.mat"
+
+	if self._distortMat then
+		self._tmpscreentext.fontMaterial = self._distortMat
+
+		self:_startGlitchAmountAnim()
+
+		return
+	end
+
+	if self._distortMatLoader then
+		return
+	end
+
+	local loader = MultiAbLoader.New()
+
+	self._distortMatLoader = loader
+
+	loader:addPath(matPath)
+	loader:startLoad(function()
+		local assetItem = loader:getAssetItem(matPath)
+
+		if assetItem then
+			self._distortMat = assetItem:GetResource(matPath)
+		end
+
+		if self._distortMat and not gohelper.isNil(self._tmpscreentext) then
+			self._tmpscreentext.fontMaterial = self._distortMat
+		end
+
+		self:_startGlitchAmountAnim()
+	end)
+end
+
+function StoryFrontItem:_startGlitchAmountAnim()
+	if not self._distortMat then
+		return
+	end
+
+	local glitchAmountId = UnityEngine.Shader.PropertyToID("_GlitchAmount")
+
+	ZProj.TweenHelper.KillByObj(self._tmpscreentext)
+	self._distortMat:SetFloat(glitchAmountId, 3.5)
+	ZProj.TweenHelper.DOTweenFloat(3.5, 1.8, 1.5, self._glitchAmountUpdate, self._glitchAmountEnd, self, nil, EaseType.Linear)
+end
+
+function StoryFrontItem:_glitchAmountUpdate(value)
+	if self._distortMat then
+		local glitchAmountId = UnityEngine.Shader.PropertyToID("_GlitchAmount")
+
+		self._tmpscreentext.fontMaterial:SetFloat(glitchAmountId, value)
+	end
+end
+
+function StoryFrontItem:_glitchAmountEnd()
+	self.showClickableScreenTextEnd = true
+end
+
+function StoryFrontItem:_playGostMagicEnd()
+	if self.showClickableScreenTextEnd then
+		TaskDispatcher.cancelTask(self._gostMagicFinished, self)
+		self:_gostMagicFinished()
+		StoryController.instance:dispatchEvent(StoryEvent.EnterNextStep)
+
+		return
+	end
+
+	self.showClickableScreenTextEnd = true
+
+	if self._gostFontGlitchGo then
+		gohelper.setActive(self._gostFontGlitchGo, false)
+	end
+end
+
+function StoryFrontItem:_gostMagicFinished()
+	self.showClickableScreenTextEnd = true
+	self.showingClickableScreenText = false
+
+	if self._finishCallback then
+		self._finishCallback(self._finishCallbackObj)
+
+		self._finishCallback = nil
+		self._finishCallbackObj = nil
+	end
+
+	local fadeOutTime = 1
+
+	ZProj.TweenHelper.KillByObj(self._tmpscreentext)
+	ZProj.TweenHelper.DoFade(self._tmpscreentext, 1, 0, fadeOutTime, self._hideTmpScreenTxt, self, nil, EaseType.Linear)
+	ZProj.TweenHelper.DOTweenFloat(1.8, 10, fadeOutTime, self._glitchAmountUpdate, nil, self, nil, EaseType.Linear)
+
+	if self._gostFontGlitchGo then
+		gohelper.destroy(self._gostFontGlitchGo)
+
+		self._gostFontGlitchGo = nil
+	end
+end
+
+function StoryFrontItem:_gostGlitchEffLoaded(loader)
+	local glitchAssetItem = loader:getAssetItem(self._gostFontGlitchPath)
+
+	self._gostFontGlitchGo = gohelper.clone(glitchAssetItem:GetResource(self._gostFontGlitchPath), self._tmpscreentext.gameObject)
+
+	gohelper.setActive(self._gostFontGlitchGo, true)
+
+	local goGlitchLine = gohelper.findChild(self._gostFontGlitchGo, "part_up")
+
+	self._tmpscreentext:ForceMeshUpdate()
+
+	local textInfo = self._tmpscreentext.textInfo
+	local lineCount = textInfo.lineCount
+
+	for i = 0, lineCount - 1 do
+		local lineInfo = textInfo.lineInfo[i]
+		local lineWidth = lineInfo.length * self._tmpscreentext.transform.lossyScale.x
+		local lineY = lineInfo.baseline
+		local lineGo
+
+		if i == 0 then
+			lineGo = goGlitchLine
+		else
+			lineGo = gohelper.clone(goGlitchLine, self._gostFontGlitchGo)
+		end
+
+		gohelper.setActive(lineGo, true)
+
+		local rt = lineGo:GetComponent(typeof(UnityEngine.RectTransform))
+
+		if rt then
+			rt.anchoredPosition = Vector2(0, lineY)
+		else
+			transformhelper.setLocalPosXY(lineGo.transform, 0, lineY)
+		end
+
+		local ps = lineGo:GetComponent(typeof(UnityEngine.ParticleSystem))
+
+		if ps then
+			local shapeModule = ps.shape
+			local s = shapeModule.scale
+
+			shapeModule.scale = Vector3(lineWidth, s.y, s.z)
+		end
+	end
+end
+
+function StoryFrontItem:_hideTmpScreenTxt()
+	if self._savedUIPPValues then
+		for k, v in pairs(self._savedUIPPValues) do
+			PostProcessingMgr.instance:setUIPPValue(k, v)
+		end
+
+		self._savedUIPPValues = nil
+	else
+		PostProcessingMgr.instance:setUIPPValue("localBloomActive", false)
+	end
+
+	ZProj.TweenHelper.KillByObj(self._tmpscreentext)
+	gohelper.setActive(self._tmpscreentext.gameObject, false)
+end
+
+function StoryFrontItem:_fadeUpdate(value)
 	if not self._txtCanvasGroup then
 		self._txtCanvasGroup = gohelper.onceAddComponent(self._markScreenText, typeof(UnityEngine.CanvasGroup))
 	end
@@ -756,8 +995,43 @@ function StoryFrontItem:destroy()
 	TaskDispatcher.cancelTask(self._startStoryViewIn, self)
 	TaskDispatcher.cancelTask(self._viewFadeOut, self)
 	TaskDispatcher.cancelTask(self._onShakeEnd, self)
+	TaskDispatcher.cancelTask(self._gostMagicFinished, self)
+
+	if self._floatTweenId then
+		ZProj.TweenHelper.KillById(self._floatTweenId)
+
+		self._floatTweenId = nil
+	end
+
 	ZProj.TweenHelper.KillByObj(self._imagefulltop)
 	ZProj.TweenHelper.KillByObj(self._goupfade.transform)
+	ZProj.TweenHelper.KillByObj(self._txtscreentext)
+
+	if self._effLoader then
+		self._effLoader:dispose()
+
+		self._effLoader = nil
+	end
+
+	if self._distortMatLoader then
+		self._distortMatLoader:dispose()
+
+		self._distortMatLoader = nil
+	end
+
+	if self._gostFontGlitchGo then
+		gohelper.destroy(self._gostFontGlitchGo)
+
+		self._gostFontGlitchGo = nil
+	end
+
+	if self._savedUIPPValues then
+		for k, v in pairs(self._savedUIPPValues) do
+			PostProcessingMgr.instance:setUIPPValue(k, v)
+		end
+
+		self._savedUIPPValues = nil
+	end
 end
 
 return StoryFrontItem

@@ -32,11 +32,24 @@ function StoreCharageConditionalHelper._getFuncDict()
 				end
 
 				return false
-			end
+			end,
+			TotalLoginDays = StoreCharageConditionalHelper.TotalLoginDays
 		}
 	end
 
 	return StoreCharageConditionalHelper._conditionFunction
+end
+
+function StoreCharageConditionalHelper.TotalLoginDays(goodsId, conCfg)
+	if conCfg and conCfg.maxProgress ~= nil and conCfg.maxProgress ~= 0 then
+		local targetLoginDays = conCfg.maxProgress
+		local playinfo = PlayerModel.instance:getPlayinfo()
+		local totalLoginDays = playinfo.totalLoginDays or 0
+
+		return targetLoginDays <= totalLoginDays
+	end
+
+	return false
 end
 
 function StoreCharageConditionalHelper.isCharageCondition(goodsId)

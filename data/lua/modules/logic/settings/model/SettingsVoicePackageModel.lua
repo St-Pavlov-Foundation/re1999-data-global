@@ -47,6 +47,12 @@ function SettingsVoicePackageModel:getSupportVoiceLangs(noCheck)
 	local needKrJp = false
 
 	if not noCheck and LangSettings.instance:isOverseas() == false then
+		local forceNeedKrJpActivityId = tonumber(CommonConfig.instance:getConstStr(ConstEnum.ForceNeedKrJpActivityId))
+
+		if forceNeedKrJpActivityId == 1 then
+			needKrJp = true
+		end
+
 		local roleList = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.S01SpRole), "#")
 
 		for _, heroId in ipairs(roleList) do

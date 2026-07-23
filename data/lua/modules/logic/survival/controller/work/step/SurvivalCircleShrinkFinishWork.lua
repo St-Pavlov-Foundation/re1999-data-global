@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalCircleShrinkFinishWo
 
 local SurvivalCircleShrinkFinishWork = class("SurvivalCircleShrinkFinishWork", SurvivalStepBaseWork)
 
-function SurvivalCircleShrinkFinishWork:onStart(context)
+function SurvivalCircleShrinkFinishWork:onStart2(context)
 	local round = self._stepMo.paramInt[1] or 0
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 

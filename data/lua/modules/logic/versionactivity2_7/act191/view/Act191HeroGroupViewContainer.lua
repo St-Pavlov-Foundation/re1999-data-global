@@ -35,13 +35,15 @@ function Act191HeroGroupViewContainer:buildTabViews(tabContainerId)
 end
 
 function Act191HeroGroupViewContainer:_closeCallback()
+	local actId = Activity191Controller.instance:getActId()
+
 	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(true)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.Act191MainView)
 		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
 			Activity191Controller.instance:openMainView()
-		end, nil, VersionActivity3_1Enum.ActivityId.DouQuQu3)
+		end, nil, actId)
 	end)
 end
 

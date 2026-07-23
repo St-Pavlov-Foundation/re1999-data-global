@@ -218,5 +218,175 @@
     "position": 3,
     "name": "language_10072679",
     "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 1,
+    "type": "roleShop",
+    "level": 1,
+    "stage": 101,
+    "position": 6,
+    "name": "language_10072673",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13808,
+    "id": 2,
+    "type": "roleShop",
+    "level": 2,
+    "stage": 102,
+    "position": 6,
+    "name": "language_10072677",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13808,
+    "id": 3,
+    "type": "tagShop",
+    "level": 2,
+    "stage": 102,
+    "position": 3,
+    "name": "language_10072677",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 4,
+    "type": "roleShop",
+    "level": 3,
+    "stage": 103,
+    "position": 6,
+    "name": "language_10072679",
+    "desc": "language_10072675"
+  },
+  {
+    "activityId": 13808,
+    "id": 5,
+    "type": "tagShop",
+    "level": 3,
+    "stage": 103,
+    "position": 3,
+    "name": "language_10072679",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 6,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 7,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 8,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 9,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 10,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 11,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 12,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 13,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 14,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 15,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 16,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
+  },
+  {
+    "activityId": 13808,
+    "id": 17,
+    "type": "afterGlowShop",
+    "level": 3,
+    "stage": 0,
+    "position": 3,
+    "name": "language_10120021",
+    "desc": "language_10072678"
   }
 ]

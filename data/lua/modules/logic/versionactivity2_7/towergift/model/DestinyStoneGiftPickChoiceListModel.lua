@@ -24,10 +24,10 @@ local function sortFunc(a, b)
 	return a.heroId > b.heroId
 end
 
-function DestinyStoneGiftPickChoiceListModel:initList(ignoreIds)
+function DestinyStoneGiftPickChoiceListModel:initList(ignoreIds, filterHeroList)
 	self._moList = {}
 
-	local heroList = HeroModel.instance:getAllHero()
+	local heroList = filterHeroList or HeroModel.instance:getAllHero()
 
 	for index, heroMo in pairs(heroList) do
 		if heroMo and self:checkHeroOpenDestinyStone(heroMo) then

@@ -2,36 +2,36 @@
   {
     "id": 4,
     "selectCount": 3,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 5,
     "selectCount": 3,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 6,
-    "selectCount": 2,
-    "refreshCost": "1#2#3"
+    "selectCount": 3,
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 1,
     "selectCount": 1,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 2,
     "selectCount": 1,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 3,
     "selectCount": 1,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   },
   {
     "id": 7,
     "selectCount": 3,
-    "refreshCost": "1#2#3"
+    "refreshCost": "0#1#1#1#1#1#1#1#1"
   }
 ]

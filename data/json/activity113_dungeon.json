@@ -267,7 +267,7 @@
   {
     "chapterId": 31201,
     "activityId": 13103,
-    "openDay": 8
+    "openDay": 1
   },
   {
     "chapterId": 31301,
@@ -357,6 +357,46 @@
   {
     "chapterId": 36401,
     "activityId": 13604,
+    "openDay": 1
+  },
+  {
+    "chapterId": 38101,
+    "activityId": 13802,
+    "openDay": 1
+  },
+  {
+    "chapterId": 38201,
+    "activityId": 13802,
+    "openDay": 8
+  },
+  {
+    "chapterId": 38301,
+    "activityId": 13802,
+    "openDay": 1
+  },
+  {
+    "chapterId": 38401,
+    "activityId": 13802,
+    "openDay": 1
+  },
+  {
+    "chapterId": 385101,
+    "activityId": 138502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 385201,
+    "activityId": 138502,
+    "openDay": 8
+  },
+  {
+    "chapterId": 385301,
+    "activityId": 138502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 385401,
+    "activityId": 138502,
     "openDay": 1
   }
 ]

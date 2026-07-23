@@ -1,7 +1,5 @@
 ﻿-- chunkname: @modules/logic/versionactivity3_3/arcade/controller/game/skill/target/AracdeSkillTargetFloorGrid.lua
 
-local GiftrecommendViewBase = require("modules.logic.store.view.recommend.GiftrecommendViewBase")
-
 module("modules.logic.versionactivity3_3.arcade.controller.game.skill.target.AracdeSkillTargetFloorGrid", package.seeall)
 
 local AracdeSkillTargetFloorGrid = class("AracdeSkillTargetFloorGrid", ArcadeSkillTargetBase)

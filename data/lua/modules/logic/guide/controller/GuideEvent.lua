@@ -20,6 +20,7 @@ GuideEvent.OneKeyFinishGuides = 13
 GuideEvent.FinishGuideFail = 14
 GuideEvent.TriggerActive = 15
 GuideEvent.onReceiveFinishGuideReply = 16
+GuideEvent.ExecuteGuideStep = 17
 GuideEvent.SetMaskOffset = 101
 GuideEvent.FadeView = 102
 GuideEvent.SetMaskPosition = 103

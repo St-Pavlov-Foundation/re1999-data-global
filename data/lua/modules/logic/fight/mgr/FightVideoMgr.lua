@@ -111,6 +111,7 @@ function FightVideoMgr:_playVideo()
 
 	if self._VideoPlayer then
 		gohelper.setActive(self._videoRootGO, true)
+		self._VideoPlayer:resetEyeModeMat()
 		self._VideoPlayer:loadMedia(self._videoName)
 		self._VideoPlayer:play(self._videoName, false)
 		self._VideoPlayer:setPlaybackSpeed(FightModel.instance:getSpeed() * Time.timeScale)

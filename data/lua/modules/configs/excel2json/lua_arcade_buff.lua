@@ -4,15 +4,16 @@ module("modules.configs.excel2json.lua_arcade_buff", package.seeall)
 
 local lua_arcade_buff = {}
 local fields = {
-	showPriority = 7,
+	showPriority = 8,
+	entityType = 5,
+	addPassiveSkillId = 4,
+	round = 6,
+	effectName = 2,
+	loopEffect = 10,
+	gainEffect = 9,
 	id = 1,
-	addPassiveSkillId = 3,
-	round = 5,
-	loopEffect = 9,
-	gainEffect = 8,
-	entityType = 4,
-	notSubInRoundBegin = 6,
-	effectParam = 2
+	notSubInRoundBegin = 7,
+	effectParam = 3
 }
 local primaryKey = {
 	"id"

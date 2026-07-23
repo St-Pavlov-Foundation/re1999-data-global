@@ -12,7 +12,7 @@ function V3A5NecrologistStoryLongPressItem:onInit()
 	self.goFinished = gohelper.findChild(self.viewGO, "root/go_click/finished")
 end
 
-function V3A5NecrologistStoryLongPressItem:addEventListeners()
+function V3A5NecrologistStoryLongPressItem:onAddEvent()
 	self.btnLongPress = SLFramework.UGUI.UIClickListener.Get(self.goClick)
 
 	self.btnLongPress:AddClickDownListener(self._onLongClickDown, self)
@@ -20,7 +20,7 @@ function V3A5NecrologistStoryLongPressItem:addEventListeners()
 	self.animEventWrap:AddEventListener("finish", self.setDone, self)
 end
 
-function V3A5NecrologistStoryLongPressItem:removeEventListeners()
+function V3A5NecrologistStoryLongPressItem:onRemoveEvent()
 	self.btnLongPress:RemoveClickDownListener()
 	self.btnLongPress:RemoveClickUpListener()
 	self.animEventWrap:RemoveAllEventListener()

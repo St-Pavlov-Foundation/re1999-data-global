@@ -21,6 +21,7 @@ RoleActivityEnum.LevelView = {
 	[VersionActivity2_3Enum.ActivityId.ZhiXinQuanEr] = ViewName.ZhiXinQuanErLevelView,
 	[VersionActivity2_3Enum.ActivityId.DuDuGu] = ViewName.ActDuDuGuLevelView,
 	[VersionActivity3_0Enum.ActivityId.KaRong] = ViewName.KaRongLevelView,
+	[VersionActivity3_8Enum.ActivityId.EchoSong] = ViewName.V3a8EchoSongLevelView,
 	[VersionActivity2_4Enum.ActivityId.Pinball] = ViewName.PinballCityView,
 	[VersionActivity2_4Enum.ActivityId.MusicGame] = ViewName.VersionActivity2_4MusicChapterView,
 	[VersionActivity2_2Enum.ActivityId.TianShiNaNa] = ViewName.TianShiNaNaMainView,
@@ -30,7 +31,11 @@ RoleActivityEnum.LevelView = {
 	[VersionActivity2_6Enum.ActivityId.Xugouji] = ViewName.XugoujiLevelView,
 	[VersionActivity2_6Enum.ActivityId.DiceHero] = ViewName.DiceHeroMainView,
 	[VersionActivity2_7Enum.ActivityId.CooperGarland] = ViewName.CooperGarlandLevelView,
-	[VersionActivity2_7Enum.ActivityId.LengZhou6] = ViewName.LengZhou6LevelView
+	[VersionActivity2_7Enum.ActivityId.LengZhou6] = ViewName.LengZhou6LevelView,
+	[VersionActivity2_8Enum.ActivityId.NuoDiKa] = ViewName.NuoDiKaLevelView,
+	[VersionActivity2_8Enum.ActivityId.MoLiDeEr] = ViewName.MoLiDeErLevelView,
+	[VersionActivity3_1Enum.ActivityId.YeShuMei] = ViewName.YeShuMeiLevelView,
+	[VersionActivity3_1Enum.ActivityId.GaoSiNiao] = ViewName.V3a1_GaoSiNiao_LevelView
 }
 
 return RoleActivityEnum

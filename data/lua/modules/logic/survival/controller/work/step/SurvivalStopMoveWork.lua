@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalStopMoveWork", packa
 
 local SurvivalStopMoveWork = class("SurvivalStopMoveWork", SurvivalStepBaseWork)
 
-function SurvivalStopMoveWork:onStart(context)
+function SurvivalStopMoveWork:onStart2(context)
 	SurvivalMapModel.instance:setMoveToTarget()
 	SurvivalMapModel.instance:setShowTarget()
 	self:onDone(true)

@@ -201,5 +201,124 @@
     "actionClass": "SceneEggLightModeShow",
     "actionParams": "4",
     "parallel": 1
+  },
+  {
+    "id": 601,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_kuanmaoyan",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "310604",
+    "parallel": 1
+  },
+  {
+    "id": 602,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_nimengdishi",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "303904",
+    "parallel": 1
+  },
+  {
+    "id": 603,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_zhixinquan",
+    "actionClass": "SceneEggRadio",
+    "actionParams": "310504",
+    "parallel": 1
+  },
+  {
+    "id": 604,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/popo01_night",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 605,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/popo01_1_ninght",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 606,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/m_s01_effect_light_night",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 607,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/m_s01_effect_yuqun01",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 608,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/m_s01_effect_yuqun02",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 609,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light01_day",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "1",
+    "parallel": 1
+  },
+  {
+    "id": 610,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light02_day",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "1",
+    "parallel": 1
+  },
+  {
+    "id": 611,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light01_dusk",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "3",
+    "parallel": 1
+  },
+  {
+    "id": 612,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light02_dusk",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "3",
+    "parallel": 1
+  },
+  {
+    "id": 613,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light01_night",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 614,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_obj_g_light02_ninght",
+    "actionClass": "SceneEggLightModeShow",
+    "actionParams": "4",
+    "parallel": 1
+  },
+  {
+    "id": 615,
+    "path": "s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_rongrong01|s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_rongrong02|s01_obj_a/Anim/Obj/m_s01_caidan/sp02_m_s01_rongrong03",
+    "actionClass": "SceneEggRandomDisplayOne",
+    "actionParams": "",
+    "parallel": 1
+  },
+  {
+    "id": 616,
+    "path": "s01_obj_a/Anim/AppearNode/sp02_ms_trans_day2night",
+    "actionClass": "SceneEggLightModeSceneTransition",
+    "actionParams": "1#3|4|5.5",
+    "parallel": 1
+  },
+  {
+    "id": 617,
+    "path": "s01_obj_a/Anim/AppearNode/sp02_ms_trans_night2day",
+    "actionClass": "SceneEggLightModeSceneTransition",
+    "actionParams": "4|1#3|5.5",
+    "parallel": 1
   }
 ]

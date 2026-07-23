@@ -86,6 +86,14 @@ function Rouge2_MapTwentyDiceItem:dice()
 	self._lastRandomIndex = self._randomIndex
 end
 
+function Rouge2_MapTwentyDiceItem:forceSet()
+	self._animator.enabled = false
+
+	local rotation = Rouge2_MapTwentyDiceItem.rotationDict[self._randomIndex] or Vector3.zero
+
+	transformhelper.setLocalRotation(self._tranrotation, rotation.x, rotation.y, rotation.z)
+end
+
 function Rouge2_MapTwentyDiceItem:_delayTweenRotate()
 	self._animator.enabled = true
 

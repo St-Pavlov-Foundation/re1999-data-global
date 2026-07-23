@@ -31,7 +31,9 @@ function TaskConfigGetDefine:ctor()
 		[TaskEnum.TaskType.MiniParty] = TaskConfigGetDefine._getActivity223Task,
 		[TaskEnum.TaskType.ObserverBox] = TaskConfigGetDefine._getActivity226Task,
 		[TaskEnum.TaskType.Abyss] = TaskConfigGetDefine._getAbyssTask,
-		[TaskEnum.TaskType.Act231] = TaskConfigGetDefine._getAct231Task
+		[TaskEnum.TaskType.Act231] = TaskConfigGetDefine._getAct231Task,
+		[TaskEnum.TaskType.ActBp] = TaskConfigGetDefine._getActBpTask,
+		[TaskEnum.TaskType.Activity220] = TaskConfigGetDefine._getAct220Task
 	}
 end
 
@@ -127,6 +129,14 @@ end
 
 function TaskConfigGetDefine._getAct231Task(id)
 	return V3a6YaMiConfig.instance:getTaskCo(id)
+end
+
+function TaskConfigGetDefine._getActBpTask(id)
+	return Activity233Config.instance:getTaskCo(id)
+end
+
+function TaskConfigGetDefine._getAct220Task(id)
+	return lua_activity220_task.configDict[id]
 end
 
 TaskConfigGetDefine.instance = TaskConfigGetDefine.New()

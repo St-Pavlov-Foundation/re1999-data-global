@@ -76,10 +76,13 @@ function FightCardDragEndEffect:_updateDragHandCards()
 		end
 
 		local item = handCardItemList[i]
-		local curPosX = recthelper.getAnchorX(item.tr)
-		local targetPosX = FightViewHandCard.calcCardPosXDraging(toIndex, cardCount, self._targetIndex, dragScale)
 
-		recthelper.setAnchorX(item.tr, targetPosX)
+		if item then
+			local curPosX = recthelper.getAnchorX(item.tr)
+			local targetPosX = FightViewHandCard.calcCardPosXDraging(toIndex, cardCount, self._targetIndex, dragScale)
+
+			recthelper.setAnchorX(item.tr, targetPosX)
+		end
 	end
 end
 

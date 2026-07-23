@@ -15,6 +15,7 @@ function FightEffectComp:onConstructor(entity)
 	self._roundRelease = {}
 	self._hangEffects = {}
 	self._followCameraRotation = {}
+	self.effectFollowEntityVisible = {}
 
 	self:com_registFightEvent(FightEvent.InvokeFightWorkEffectType, self._onInvokeFightWorkEffectType)
 	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
@@ -22,13 +23,14 @@ function FightEffectComp:onConstructor(entity)
 	self:com_registFightEvent(FightEvent.ChangeRound, self._onChangeRound)
 	self:com_registFightEvent(FightEvent.OnBuffUpdate, self._onBuffUpdate)
 	self:com_registFightEvent(FightEvent.OnSpineLoaded, self._onSpineLoaded)
+	self:com_registFightEvent(FightEvent.SetEntityAlpha, self._onSetEntityAlpha)
 	self:_initSpecialEffectClass()
 end
 
-function FightEffectComp:setActive(isActive)
+function FightEffectComp:setActive(isActive, key)
 	if self._playingEffectDict then
 		for _, effectWrap in pairs(self._playingEffectDict) do
-			effectWrap:setActive(isActive)
+			effectWrap:setActive(isActive, key)
 		end
 	end
 end
@@ -95,6 +97,10 @@ function FightEffectComp:addHangEffect(effectName, hangPoint, side, release_time
 		hangPoint = hangPoint
 	}
 
+	if lua_fight_effect_follow_entity_visible.configDict[effectName] then
+		self.effectFollowEntityVisible[effectWrap.uniqueId] = effectWrap
+	end
+
 	return effectWrap
 end
 
@@ -112,6 +118,10 @@ function FightEffectComp:addGlobalEffect(effectName, side, release_time)
 
 	if release_time then
 		self:_releaseEffectByTime(effectWrap, release_time)
+	end
+
+	if lua_fight_effect_follow_entity_visible.configDict[effectName] then
+		self.effectFollowEntityVisible[effectWrap.uniqueId] = effectWrap
 	end
 
 	return effectWrap
@@ -217,32 +227,36 @@ function FightEffectComp:revertFollowCameraEffectLabel1(effectWrap)
 end
 
 function FightEffectComp:removeEffect(effectWrap)
-	if self._release_by_time[effectWrap.uniqueId] then
+	local uniqueId = effectWrap.uniqueId
+
+	if self._release_by_time[uniqueId] then
 		return
 	end
 
 	if self._followCameraRotation then
 		self:revertFollowCameraEffectLabel1(effectWrap)
 
-		self._followCameraRotation[effectWrap.uniqueId] = nil
+		self._followCameraRotation[uniqueId] = nil
 	end
 
-	if self._playingEffectDict and self._playingEffectDict[effectWrap.uniqueId] then
-		self._playingEffectDict[effectWrap.uniqueId] = nil
+	if self._playingEffectDict and self._playingEffectDict[uniqueId] then
+		self._playingEffectDict[uniqueId] = nil
 	end
 
 	FightEffectPool.returnEffectToPoolContainer(effectWrap)
 	FightEffectPool.returnEffect(effectWrap)
 
 	if self.cache_effect then
-		self.cache_effect[effectWrap.uniqueId] = nil
+		self.cache_effect[uniqueId] = nil
 	end
 
 	if self._hangEffects then
-		self._hangEffects[effectWrap.uniqueId] = nil
+		self._hangEffects[uniqueId] = nil
 	end
 
 	self:_checkDisableEffectLabel(effectWrap)
+
+	self.effectFollowEntityVisible[uniqueId] = nil
 end
 
 function FightEffectComp:_checkDisableEffectLabel(effectWrap)
@@ -430,6 +444,9 @@ function FightEffectComp:isDestroyed()
 end
 
 local skin2skin = {
+	[307305] = 307301,
+	[307304] = 307301,
+	[307306] = 307301,
 	[307303] = 307301,
 	[307302] = 307301
 }
@@ -485,6 +502,14 @@ function FightEffectComp:handleCommonBuffEffect(entityId, effectType, buffId, bu
 
 	if audioId ~= 0 then
 		AudioMgr.instance:trigger(audioId)
+	end
+end
+
+function FightEffectComp:_onSetEntityAlpha(entityId, isShow)
+	if self.entityId == entityId then
+		for _, effectWrap in pairs(self.effectFollowEntityVisible) do
+			effectWrap:setActive(isShow, "EffectFollowEntityVisible")
+		end
 	end
 end
 

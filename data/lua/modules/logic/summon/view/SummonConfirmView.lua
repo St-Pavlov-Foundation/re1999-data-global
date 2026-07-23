@@ -81,6 +81,7 @@ function SummonConfirmView:onOpen()
 	self._yes = false
 	self.needTransform = self.viewParam.needTransform
 
+	local needItemCostStr = self.viewParam.needItemCostStr
 	local isDiamond = false
 
 	if self._type == MaterialEnum.MaterialType.Currency and (self._id == CurrencyEnum.CurrencyType.Diamond or self._id == CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
@@ -104,10 +105,11 @@ function SummonConfirmView:onOpen()
 			isDiamond and luaLang("summon_confirm_quantifier1") or luaLang("summon_confirm_quantifier2"),
 			config.name,
 			self.viewParam.cost_quantity,
-			afterConfig.name
+			afterConfig.name,
+			needItemCostStr
 		}
 
-		self._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("summon_transform_desc"), tag)
+		self._txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang(string.nilorempty(needItemCostStr) and "summon_transform_desc" or "sp02_summon_itemnum_transform_desc"), tag)
 	else
 		self._simagebeforeicon:LoadImage(icon)
 

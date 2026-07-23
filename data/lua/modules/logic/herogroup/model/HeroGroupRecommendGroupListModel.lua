@@ -39,6 +39,14 @@ function HeroGroupRecommendGroupListModel:isShowSampleMo(heroGroupRecommendGroup
 	return self.showGroupId == heroGroupRecommendGroupMo.id
 end
 
+function HeroGroupRecommendGroupListModel:setCurEpisodeId(episodeId)
+	self._curEpisodeId = episodeId
+end
+
+function HeroGroupRecommendGroupListModel:getCurEpisodeId()
+	return self._curEpisodeId
+end
+
 HeroGroupRecommendGroupListModel.instance = HeroGroupRecommendGroupListModel.New()
 
 return HeroGroupRecommendGroupListModel

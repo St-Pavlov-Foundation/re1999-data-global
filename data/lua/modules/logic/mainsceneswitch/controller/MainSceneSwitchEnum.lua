@@ -21,7 +21,14 @@ MainSceneSwitchEnum.ReddotStatus = {
 	Open = 2
 }
 MainSceneSwitchEnum.DefaultScene = 1
-MainSceneSwitchEnum.SpSceneId = 4
+MainSceneSwitchEnum.SpSceneMap = {
+	[4] = true,
+	[6] = true
+}
+MainSceneSwitchEnum.SceneGCTime = {
+	Default = 3,
+	[6] = 5
+}
 MainSceneSwitchEnum.CustomScene = {
 	CommandStation = 33001
 }

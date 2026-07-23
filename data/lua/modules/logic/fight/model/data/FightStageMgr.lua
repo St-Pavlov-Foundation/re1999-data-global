@@ -26,7 +26,8 @@ FightStageMgr.OperateStateType = {
 	DiscardEffect = GameUtil.getEnumId(),
 	SeasonChangeHero = GameUtil.getEnumId(),
 	BindContract = GameUtil.getEnumId(),
-	RecordSkill = GameUtil.getEnumId()
+	RecordSkill = GameUtil.getEnumId(),
+	DeviceDiscard = GameUtil.getEnumId()
 }
 
 function FightStageMgr:onConstructor()

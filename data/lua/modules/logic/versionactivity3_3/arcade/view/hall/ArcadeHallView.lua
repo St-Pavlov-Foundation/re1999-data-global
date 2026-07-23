@@ -341,7 +341,7 @@ end
 local dragOffset = 10
 
 function ArcadeHallView:_onDrag(param, pointerEventData)
-	if self._readyEnterLevel then
+	if self._readyEnterLevel or not self._prePosition or not self._preDirection then
 		return
 	end
 
@@ -525,9 +525,17 @@ function ArcadeHallView:onOpen()
 end
 
 function ArcadeHallView:_onLoadFinishHallScene()
-	self._anim.enabled = true
+	self._animPlayer:Play(UIAnimationName.Open, self._onPlayOpenAnimFinish, self)
+end
 
-	self._anim:Play(UIAnimationName.Open, 0, 0)
+function ArcadeHallView:_onPlayOpenAnimFinish()
+	local strReturnReward = ArcadeOutSizeModel.instance:getStrReturnRewardData()
+
+	if string.nilorempty(strReturnReward) then
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.ArcadeRefundTipView)
 end
 
 function ArcadeHallView:initCamera()

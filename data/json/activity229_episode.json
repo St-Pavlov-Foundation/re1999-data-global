@@ -19,5 +19,68 @@
     "episodeId": 2290103,
     "careerPrefer": "6#5#4",
     "teamRecommend": "114"
+  },
+  {
+    "activityId": 13744,
+    "stage": 1,
+    "episodeId": 2290104,
+    "careerPrefer": "2#1",
+    "teamRecommend": "110#131"
+  },
+  {
+    "activityId": 13744,
+    "stage": 2,
+    "episodeId": 2290105,
+    "careerPrefer": "5#1",
+    "teamRecommend": "111"
+  },
+  {
+    "activityId": 13744,
+    "stage": 3,
+    "episodeId": 2290106,
+    "careerPrefer": "6#5#4",
+    "teamRecommend": "114"
+  },
+  {
+    "activityId": 13810,
+    "stage": 1,
+    "episodeId": 2290107,
+    "careerPrefer": "2#1",
+    "teamRecommend": "110#131"
+  },
+  {
+    "activityId": 13810,
+    "stage": 2,
+    "episodeId": 2290108,
+    "careerPrefer": "5#1",
+    "teamRecommend": "111"
+  },
+  {
+    "activityId": 13810,
+    "stage": 3,
+    "episodeId": 2290109,
+    "careerPrefer": "3#4",
+    "teamRecommend": "113"
+  },
+  {
+    "activityId": 138521,
+    "stage": 1,
+    "episodeId": 2290114,
+    "careerPrefer": "1#2",
+    "teamRecommend": "131#112"
+  },
+  {
+    "activityId": 138521,
+    "stage": 2,
+    "episodeId": 2290112,
+    "careerPrefer": "2#6",
+    "teamRecommend": "110#112"
+  },
+  {
+    "activityId": 138521,
+    "stage": 3,
+    "episodeId": 2290113,
+    "careerPrefer": "3#2",
+    "teamRecommend": "113"
   }
 ]

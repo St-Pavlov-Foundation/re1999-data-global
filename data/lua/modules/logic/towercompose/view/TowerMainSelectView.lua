@@ -5,6 +5,7 @@ module("modules.logic.towercompose.view.TowerMainSelectView", package.seeall)
 local TowerMainSelectView = class("TowerMainSelectView", BaseView)
 
 function TowerMainSelectView:onInitView()
+	self._goheroTrial = gohelper.findChild(self.viewGO, "heroTrial")
 	self._btnheroTrial = gohelper.findChildButtonWithAudio(self.viewGO, "heroTrial/#btn_heroTrial")
 	self._goheroTrialNew = gohelper.findChild(self.viewGO, "heroTrial/#go_heroTrialNew")
 	self._goheroTrialNewEffect = gohelper.findChild(self.viewGO, "heroTrial/#saoguang")
@@ -95,6 +96,7 @@ function TowerMainSelectView:_btnoldEntranceOnClick()
 end
 
 function TowerMainSelectView:_editableInitView()
+	gohelper.setActive(self._goheroTrial, false)
 	gohelper.setActive(self._goheroTrialNewEffect, false)
 
 	self.viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
@@ -178,7 +180,7 @@ function TowerMainSelectView:refreshHeroTrialNew()
 	local saveSeason = TowerController.instance:getPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewHeroTrial, 0)
 	local curSeason = TowerModel.instance:getTrialHeroSeason()
 
-	gohelper.setActive(self._goheroTrial, curSeason > 0)
+	gohelper.setActive(self._goheroTrial, false)
 	gohelper.setActive(self._goheroTrialNew, saveSeason ~= curSeason and curSeason > 0)
 end
 

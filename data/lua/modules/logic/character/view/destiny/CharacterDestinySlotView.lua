@@ -344,6 +344,7 @@ function CharacterDestinySlotView:_addEvents()
 	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, self._OnRankUpReply, self)
 	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, self._onLevelUpReply, self)
 	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnShowStone, self._showReshapeBtn, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
 	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshCurrency, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
@@ -357,6 +358,7 @@ function CharacterDestinySlotView:_removeEvents()
 	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, self._OnRankUpReply, self)
 	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnLevelUpReply, self._onLevelUpReply, self)
 	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
+	self:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnShowStone, self._showReshapeBtn, self)
 	self:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self._refreshCurrency, self)
 	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshCurrency, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
@@ -480,6 +482,27 @@ function CharacterDestinySlotView:onOpen()
 	end
 end
 
+function CharacterDestinySlotView:_showReshapeBtn(stoneId)
+	local destinyStoneMo = self._heroMO.destinyStoneMo
+	local isShowReshape
+
+	if not stoneId or stoneId == 0 then
+		stoneId = destinyStoneMo.curUseStoneId
+	end
+
+	if stoneId and stoneId > 0 then
+		local stoneMo = destinyStoneMo:getStoneMo(stoneId)
+
+		isShowReshape = stoneMo:isReshape()
+	else
+		isShowReshape = destinyStoneMo:isReshapeAllStone()
+	end
+
+	gohelper.setActive(self._goreshape, isShowReshape)
+	gohelper.setActive(self._goreshapeVX, isShowReshape)
+	gohelper.setActive(self._goreshapefullbg, isShowReshape and self._isShowReshape)
+end
+
 function CharacterDestinySlotView:_refreshTrial()
 	local isTrial = self._heroMO:isTrial()
 
@@ -492,6 +515,7 @@ function CharacterDestinySlotView:_playerOpenAnim()
 	local animatorName = isUnlock and CharacterDestinyEnum.SlotViewAnim.OpenUnlock or CharacterDestinyEnum.SlotViewAnim.OpenLock
 
 	self._anim:Play(animatorName, 0, 0)
+	self:_showReshapeBtn()
 end
 
 function CharacterDestinySlotView:_refreshView(isOpenView)
@@ -671,11 +695,7 @@ function CharacterDestinySlotView:_refreshSlot(isOpenView)
 	end
 
 	self._stoneEffectItem:onUpdateMo(destinyStoneMo)
-
-	local hasReshapeStone = destinyStoneMo:hasReshapeStone()
-
-	gohelper.setActive(self._goreshape, hasReshapeStone)
-	gohelper.setActive(self._goreshapeVX, hasReshapeStone)
+	self:_showReshapeBtn(stoneId)
 	self:_showReshape(false, false)
 
 	for _, mat in ipairs(self._slotmats) do

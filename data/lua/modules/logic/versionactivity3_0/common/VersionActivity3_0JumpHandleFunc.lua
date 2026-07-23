@@ -84,7 +84,6 @@ function VersionActivity3_0JumpHandleFunc:jumpTo13011(paramsList)
 	local actId = paramsList[2]
 	local isTrial = paramsList[3]
 
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity3_0EnterView)
 	table.insert(self.closeViewNames, ViewName.Activity201MaLiAnNaTaskView)
 
 	if isTrial and isTrial == 1 then
@@ -115,22 +114,10 @@ function VersionActivity3_0JumpHandleFunc:jumpTo13011(paramsList)
 			return JumpEnum.JumpResult.Success
 		end
 	else
-		VersionActivity3_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			Activity201MaLiAnNaController.instance:enterLevelView()
-		end, nil, actId, true)
+		Activity201MaLiAnNaController.instance:enterLevelView()
 
 		return JumpEnum.JumpResult.Success
 	end
-end
-
-function VersionActivity3_0JumpHandleFunc:jumpTo13015(paramsList)
-	local actId = paramsList[2]
-
-	VersionActivity3_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		ViewMgr.instance:openView(ViewName.KaRongLevelView)
-	end, nil, actId, true)
-
-	return JumpEnum.JumpResult.Success
 end
 
 function VersionActivity3_0JumpHandleFunc:jumpTo13000(paramsList)
@@ -148,8 +135,6 @@ function VersionActivity3_0JumpHandleFunc:jumpTo13015(paramsList)
 	table.insert(self.closeViewNames, ViewName.KaRongLevelView)
 
 	local actId = paramsList[2]
-
-	VersionActivity3_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end

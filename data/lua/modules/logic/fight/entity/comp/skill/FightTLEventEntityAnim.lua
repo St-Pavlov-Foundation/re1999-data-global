@@ -39,6 +39,21 @@ function FightTLEventEntityAnim:onTrackStart(fightStepData, duration, paramsArr)
 		end
 	end
 
+	local tarSkin = paramsArr[6]
+
+	if not string.nilorempty(tarSkin) then
+		self._targetEntitys = {}
+		tarSkin = tonumber(tarSkin)
+
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			local entityData = entity:getMO()
+
+			if entityData and entityData.skin == tarSkin then
+				table.insert(self._targetEntitys, entity)
+			end
+		end
+	end
+
 	self.setAnimEntityList = {}
 	self._ani_path = nil
 	self._leftPath = nil

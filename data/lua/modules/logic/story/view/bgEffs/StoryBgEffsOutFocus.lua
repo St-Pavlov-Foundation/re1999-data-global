@@ -27,7 +27,7 @@ function StoryBgEffsOutFocus:start(callback, callbackObj)
 	self:_setViewTop(true)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, self._onCloseView, self)
-	StoryController.instance:registerCallback(StoryEvent.SkipClick, self._btnskipOnClick, self)
+	StoryController.instance:registerCallback(StoryEvent.OnBtnSkipClick, self._btnskipOnClick, self)
 
 	self._captureGo = PostProcessingMgr.instance:getCaptureView()
 	self._capture = self._captureGo:GetComponent(typeof(UrpCustom.UIGaussianEffect))
@@ -44,17 +44,17 @@ function StoryBgEffsOutFocus:_btnskipOnClick()
 end
 
 function StoryBgEffsOutFocus:_onOpenView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		self:_setViewTop(false)
 	end
 end
 
 function StoryBgEffsOutFocus:_onCloseView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		if self._capture then
 			self._capture.enabled = true
 		end
@@ -164,7 +164,7 @@ function StoryBgEffsOutFocus:destroy()
 	self:_setViewTop(false)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, self._onCloseView, self)
-	StoryController.instance:unregisterCallback(StoryEvent.SkipClick, self._btnskipOnClick, self)
+	StoryController.instance:unregisterCallback(StoryEvent.OnBtnSkipClick, self._btnskipOnClick, self)
 	StoryController.instance:dispatchEvent(StoryEvent.PlayFullBlurOut, 0)
 
 	self._finishedCallback = nil

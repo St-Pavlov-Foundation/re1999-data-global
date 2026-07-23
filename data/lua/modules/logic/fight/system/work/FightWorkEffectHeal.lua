@@ -33,6 +33,12 @@ function FightWorkEffectHeal:onStart()
 		if prevHp <= 0 and nowHp > 0 and not FightSkillMgr.instance:isPlayingAnyTimeline() then
 			entity.nameUI:setActive(true)
 		end
+
+		local configEffect = self.actEffectData.configEffect
+
+		if configEffect == FightEnum.BehaviourId.FakeHpToHeal then
+			FightController.instance:dispatchEvent(FightEvent.OnTrigger_HSY_FakeHPEffect, self.actEffectData.targetId)
+		end
 	end
 
 	FightGameMgr.triggerBuffMgr:triggerBuffEffect(self.actEffectData)

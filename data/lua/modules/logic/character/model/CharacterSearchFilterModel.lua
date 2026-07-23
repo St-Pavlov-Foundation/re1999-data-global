@@ -8,6 +8,7 @@ function CharacterSearchFilterModel:onInit()
 	self:clearSelectTag()
 
 	self._addLowTags = {}
+	self._showMappingTags = nil
 end
 
 function CharacterSearchFilterModel:reInit()
@@ -19,17 +20,59 @@ function CharacterSearchFilterModel:_initLocalTags()
 	self._tagCosDict = {}
 
 	for _, co in ipairs(lua_character_battle_tag.configList) do
-		local type = self:getLocalTagTypeByCo(co)
+		local isHidden = CharacterBackpackEnum.HiddenTags[co.id]
 
-		if type then
-			if not self._tagsDict[type] then
-				self._tagsDict[type] = {}
+		if not isHidden then
+			local type = self:getLocalTagTypeByCo(co)
+
+			if type then
+				if not self._tagsDict[type] then
+					self._tagsDict[type] = {}
+				end
+
+				table.insert(self._tagsDict[type], co)
 			end
 
-			table.insert(self._tagsDict[type], co)
+			self._tagCosDict[co.id] = co
 		end
+	end
 
-		self._tagCosDict[co.id] = co
+	self:_initShowMappingTags()
+end
+
+function CharacterSearchFilterModel:_initShowMappingTags()
+	if self._showMappingTags then
+		return
+	end
+
+	self._showMappingTags = {}
+
+	for tagId, constId in pairs(CharacterBackpackEnum.ShowMappingTags) do
+		local co = lua_fight_const.configDict[constId]
+		local value = co and co.value
+
+		if string.nilorempty(value) then
+			logError("CharacterSearchFilterModel:_initShowMappingTags constId:" .. tostring(constId) .. " value nil")
+		else
+			local list = string.split(value, ",")
+			local tagConfig = lua_character_battle_tag.configDict[tagId]
+			local type = tagConfig and tagConfig.typeid
+
+			if not type then
+				logError("CharacterSearchFilterModel:_initShowMappingTags tagId:" .. tostring(tagId) .. " type nil")
+			end
+
+			local mapList = {}
+
+			for i, id in ipairs(list) do
+				mapList[id] = true
+			end
+
+			self._showMappingTags[tagId] = {
+				type = type,
+				mapList = mapList
+			}
+		end
 	end
 end
 
@@ -89,7 +132,36 @@ function CharacterSearchFilterModel:selectLocalTag(tagId)
 		table.insert(self._selectLocal[type], tagId)
 	end
 
+	self:_onSelectLocalTagChange(type, self._selectLocal[type])
+
 	return not isSelect
+end
+
+function CharacterSearchFilterModel:_onSelectLocalTagChange(type, list)
+	if not self._showMappingTags then
+		return
+	end
+
+	for tagId, info in pairs(self._showMappingTags) do
+		local mapType = info.type
+		local mapList = info.mapList
+
+		if mapType == type then
+			local tagMapping = false
+
+			for i, id in ipairs(list) do
+				if mapList[id] then
+					tagMapping = true
+				end
+			end
+
+			tabletool.removeValue(list, tagId)
+
+			if tagMapping then
+				table.insert(list, tagId)
+			end
+		end
+	end
 end
 
 function CharacterSearchFilterModel:isSelectLocalTag(tagId)

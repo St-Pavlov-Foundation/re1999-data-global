@@ -56,6 +56,7 @@ function NuoDiKaLevelView:onInitView()
 	self._btnendless = gohelper.getClick(self._gobtnendless)
 	self._gostoryStages = gohelper.findChild(self.viewGO, "#go_storyPath/#go_storyScroll/#go_storyStages")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -65,11 +66,39 @@ end
 function NuoDiKaLevelView:addEvents()
 	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
 	self._btnendless:AddClickListener(self._btnEndlessOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 end
 
 function NuoDiKaLevelView:removeEvents()
 	self._btnTask:RemoveClickListener()
 	self._btnendless:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
+end
+
+function NuoDiKaLevelView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function NuoDiKaLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function NuoDiKaLevelView:_btnTaskOnClick()
@@ -171,7 +200,7 @@ function NuoDiKaLevelView:_onBackToLevel()
 end
 
 function NuoDiKaLevelView:_refreshTask()
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a4WuErLiXiTask, 0) then
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V2a4WuErLiXiTask, self.actId) then
 		self._taskAnim:Play("loop", 0, 0)
 	else
 		self._taskAnim:Play("idle", 0, 0)
@@ -196,6 +225,7 @@ end
 
 function NuoDiKaLevelView:_editableInitView()
 	self.actId = VersionActivity2_8Enum.ActivityId.NuoDiKa
+	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
 	self._anim = self.viewGO:GetComponent(gohelper.Type_Animator)
 	self._animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
 	self._endlessAnim = self._goendless:GetComponent(gohelper.Type_Animator)
@@ -214,6 +244,7 @@ function NuoDiKaLevelView:_editableInitView()
 	self:_checkShowBg()
 	self:_refreshUI()
 	self:_addEvents()
+	gohelper.setActive(self._gotime, false)
 end
 
 function NuoDiKaLevelView:_getEpisodeBg(episodeId)

@@ -236,5 +236,19 @@
     "delTime": 0,
     "audio": 411000036,
     "delAudio": 0
+  },
+  {
+    "id": 109371003,
+    "effect": "v3a7_hjgyh/hjgyh_innate1_01",
+    "pos": [
+      0,
+      10,
+      0
+    ],
+    "reverseX": 0,
+    "delEffect": "v3a7_hjgyh/hjgyh_innate1_02",
+    "delTime": 1,
+    "audio": 0,
+    "delAudio": 0
   }
 ]

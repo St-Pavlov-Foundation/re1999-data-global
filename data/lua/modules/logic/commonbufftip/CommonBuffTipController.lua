@@ -39,7 +39,7 @@ function CommonBuffTipController:openCommonTipViewWithCustomPosCallback(effectId
 	self.viewParam.setScrollPosCallback = setScrollPosCallback
 	self.viewParam.setScrollPosCallbackObj = setScrollPosCallbackObj
 	self.viewParam.monsterName = monsterName
-	self.viewParam.defaultVNP = defaultVNP or 0
+	self.viewParam.defaultVNP = defaultVNP or 1
 
 	ViewMgr.instance:openView(ViewName.CommonBuffTipView, self.viewParam)
 end

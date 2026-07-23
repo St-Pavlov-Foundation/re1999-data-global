@@ -13,26 +13,35 @@ function ArcadeSkillHitNormalMove:onCtor()
 end
 
 function ArcadeSkillHitNormalMove:onHit()
-	if not self._distance or self._distance <= 0 then
+	local target = self._context and self._context.target
+
+	if not target or not self._distance or self._distance <= 0 then
 		return
 	end
 
 	local scene = ArcadeGameController.instance:getGameScene()
 	local curRoom = ArcadeGameController.instance:getCurRoom()
 
-	if scene and self._context and self._context.target then
-		local target = self._context.target
+	if not scene or not curRoom then
+		return
+	end
 
-		self:addHiter(target)
+	self:addHiter(target)
 
-		local dir = ArcadeGameHelper.getStr2Dir(self._dirStr)
-		local x, y = ArcadeSkillHitNormalMove.tryMoveGridXY(target, dir, self._distance)
+	local dir
 
-		if x and y then
-			local entity = scene.entityMgr:getEntityWithType(target:getEntityType(), target:getUid())
+	if string.nilorempty(self._dirStr) then
+		dir = target:getDirection()
+	else
+		dir = ArcadeGameHelper.getStr2Dir(self._dirStr)
+	end
 
-			curRoom:tryMoveEntity(entity, x, y)
-		end
+	local x, y = ArcadeSkillHitNormalMove.tryMoveGridXY(target, dir, self._distance)
+
+	if x and y then
+		local entity = scene.entityMgr:getEntityWithType(target:getEntityType(), target:getUid())
+
+		curRoom:tryMoveEntity(entity, x, y)
 	end
 end
 
@@ -41,45 +50,44 @@ function ArcadeSkillHitNormalMove:onHitPrintLog()
 end
 
 function ArcadeSkillHitNormalMove.tryMoveGridXY(target, dir, dis)
-	if target and dis and dis > 0 then
-		local gridX, gridY = target:getGridPos()
-		local sizeX, sizeY = target:getSize()
-		local tArcadeGameSummonController = ArcadeGameSummonController.instance
-		local unitMOList = tArcadeGameSummonController:getRoomUnitMOList()
+	if not target or not dis or dis <= 0 then
+		return
+	end
 
-		tabletool.removeValue(unitMOList, target)
+	local gridX, gridY = target:getGridPos()
+	local sizeX, sizeY = target:getSize()
+	local unitMOList = ArcadeGameSummonController.instance:getRoomUnitMOList()
 
-		if target == ArcadeGameModel.instance:getCharacterMO() then
-			local unitMO
+	tabletool.removeValue(unitMOList, target)
 
-			for i = #unitMOList, 1, -1 do
-				unitMO = unitMOList[i]
+	if target == ArcadeGameModel.instance:getCharacterMO() then
+		local unitMO
 
-				if unitMO:getIsDead() and unitMO:getEntityType() == ArcadeGameEnum.EntityType.Monster then
-					table.remove(unitMOList, i)
-				end
+		for i = #unitMOList, 1, -1 do
+			unitMO = unitMOList[i]
+
+			if unitMO:getIsDead() and unitMO:getEntityType() == ArcadeGameEnum.EntityType.Monster then
+				table.remove(unitMOList, i)
 			end
-		end
-
-		local isMove
-
-		for i = 1, dis do
-			local nextX, nextY = ArcadeGameHelper.getNextXYByDir(gridX, gridY, dir)
-
-			if tArcadeGameSummonController:checkSizeGridXY(nextX, nextY, sizeX, sizeY, unitMOList) then
-				gridX, gridY = nextX, nextY
-				isMove = true
-			else
-				break
-			end
-		end
-
-		if isMove then
-			return gridX, gridY
 		end
 	end
 
-	return nil, nil
+	local isMove
+
+	for _ = 1, dis do
+		local nextX, nextY = ArcadeGameHelper.getNextXYByDir(gridX, gridY, dir)
+
+		if ArcadeGameSummonController.instance:checkSizeGridXY(nextX, nextY, sizeX, sizeY, unitMOList) then
+			gridX, gridY = nextX, nextY
+			isMove = true
+		else
+			break
+		end
+	end
+
+	if isMove then
+		return gridX, gridY
+	end
 end
 
 return ArcadeSkillHitNormalMove

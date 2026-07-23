@@ -5,14 +5,17 @@ module("modules.configs.excel2json.lua_copost_plot_map", package.seeall)
 local lua_copost_plot_map = {}
 local fields = {
 	id = 1,
-	centerPoint = 3,
+	mapName = 5,
 	time = 2,
+	centerPoint = 3,
 	scale = 4
 }
 local primaryKey = {
 	"id"
 }
-local mlStringKey = {}
+local mlStringKey = {
+	mapName = 1
+}
 
 function lua_copost_plot_map.onLoad(json)
 	lua_copost_plot_map.configList, lua_copost_plot_map.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

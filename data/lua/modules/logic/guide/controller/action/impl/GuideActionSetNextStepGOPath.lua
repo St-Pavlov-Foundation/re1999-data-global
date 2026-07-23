@@ -224,7 +224,7 @@ end
 function GuideActionSetNextStepGOPath:getMoveHeroPath()
 	local index = HeroGroupEditListModel.instance:getMoveHeroIndex() or 1
 
-	return string.format("UIRoot/POPUP_TOP/HeroGroupEditView/#go_rolecontainer/#scroll_card/scrollcontent/cell%s", index - 1)
+	return string.format("UIRoot/POPUP_TOP/HeroGroupEditView/#go_rolecontainer/#scroll_card/scrollcontent/cell%s/prefabInst/hero/commonheroitemnew(Clone)", index - 1)
 end
 
 function GuideActionSetNextStepGOPath:getConnectPuzzlePipeEntry()
@@ -470,7 +470,7 @@ end
 function GuideActionSetNextStepGOPath:getRouge2CanActiveTalent()
 	local viewContainer = ViewMgr.instance:getContainer(ViewName.Rouge2_BackpackTabView)
 	local skillTabView = viewContainer and viewContainer:getTabViewByTabType(Rouge2_Enum.BagTabType.ActiveSkill)
-	local talentView = skillTabView and skillTabView:getView(Rouge2_BackpackSkillView.ViewState.Panel)
+	local talentView = skillTabView and skillTabView:getView(Rouge2_BackpackSkillRootView.ViewType.TalentTree)
 
 	if not talentView then
 		return
@@ -508,6 +508,28 @@ function GuideActionSetNextStepGOPath:getAbyssCanClickStagePath()
 			end
 		end
 	end
+end
+
+function GuideActionSetNextStepGOPath:getV3a8DianJiShiMapAreaTagPath()
+	local lastUpdateTagPath = DianJiShiGameModel.instance:getLastUpdateAreaTagPath()
+
+	return lastUpdateTagPath
+end
+
+function GuideActionSetNextStepGOPath:getAtomicDungeonEmergencyElementPath()
+	local isOpen = AtomicDungeonController.instance:isUnlockDungeon()
+
+	if not isOpen then
+		return
+	end
+
+	local elementCo = AtomicDungeonModel.instance:getCurMapEmergencyElement()
+
+	if not elementCo then
+		return
+	end
+
+	return string.format("UIRoot/POPUP_TOP/AtomicDungeonMainView/root/#go_elementClickRoot/%s/btn_click", elementCo.id)
 end
 
 return GuideActionSetNextStepGOPath

@@ -4,10 +4,6 @@ module("modules.logic.versionactivity3_3.arcade.view.game.entity.ArcadeGameChara
 
 local ArcadeGameCharacterEntity = class("ArcadeGameCharacterEntity", ArcadeGameBaseEntity)
 
-function ArcadeGameCharacterEntity:getMO()
-	return ArcadeGameModel.instance:getCharacterMO()
-end
-
 function ArcadeGameCharacterEntity:refreshDirection()
 	local mo = self:getMO()
 
@@ -15,9 +11,16 @@ function ArcadeGameCharacterEntity:refreshDirection()
 		return
 	end
 
+	local prefabItem = self:getCurPrefabItem()
+
+	if not prefabItem then
+		return
+	end
+
+	local transScale = prefabItem.transScale
 	local entityDirection = mo:getDirection(true)
 
-	transformhelper.setLocalRotation(self.transScale, 0, entityDirection == ArcadeEnum.Direction.Right and 180 or 0, 0)
+	transformhelper.setLocalRotation(transScale, 0, entityDirection == ArcadeEnum.Direction.Right and 180 or 0, 0)
 end
 
 return ArcadeGameCharacterEntity

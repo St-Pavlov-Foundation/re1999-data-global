@@ -49,16 +49,17 @@ TowerEnum.JumpId = {
 	TowerPermanent = 1
 }
 TowerEnum.ConstId = {
-	MopUpOpenLayerNum = 113,
-	CustomTalentPlanCount = 119,
-	MaxMopUpTimes = 101,
-	BossHandbookOpen = 116,
 	BalanceBossLevel = 118,
-	MopUpRecoverTime = 102,
-	TimeLimitEasyMulti = 104,
-	BossTowerOpen = 111,
-	HeroTrialRule = 120,
+	CustomTalentPlanCount = 119,
 	TimeLimitOpenLayerNum = 112,
+	BossHandbookOpen = 116,
+	HeroTrialRule = 120,
+	MopUpRecoverTime = 102,
+	MopUpOpenLayerNum = 113,
+	BossTowerOpen = 111,
+	BossHeroTrialList = 123,
+	TimeLimitEasyMulti = 104,
+	MaxMopUpTimes = 101,
 	StoreOpen = 122,
 	MopUpTicketIcon = 114,
 	TimeLimitNormalMulti = 105,
@@ -102,6 +103,16 @@ TowerEnum.AttrKey2AttrId = {
 	[TowerEnum.AttrKey.Attack] = CharacterEnum.AttrId.Attack,
 	[TowerEnum.AttrKey.Cri] = CharacterEnum.AttrId.Cri,
 	[TowerEnum.AttrKey.CriDmg] = CharacterEnum.AttrId.CriDmg
+}
+TowerEnum.HeroTrialEntranceType = {
+	Compose = 2,
+	Normal = 1
+}
+TowerEnum.HeroTrialType = {
+	Permanenet = 1,
+	Compose = 4,
+	Deep = 3,
+	Boss = 2
 }
 
 return TowerEnum

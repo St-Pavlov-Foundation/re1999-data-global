@@ -11,6 +11,8 @@ function FightWorkEffectDeadPerformance:onLogicEnter(fightStepData, fightActEffe
 end
 
 function FightWorkEffectDeadPerformance:onStart()
+	self:com_registFightEvent(FightEvent.BeforeDestroyEntity, self.onBeforeDestroyEntity)
+
 	local flow = self:com_registWorkDoneFlowSequence()
 
 	flow:registWork(FightWorkEffectDeadNew, self.fightStepData, self.actEffectData, self._waitForLastHit)
@@ -22,6 +24,12 @@ function FightWorkEffectDeadPerformance:onStart()
 	end
 
 	flow:start()
+end
+
+function FightWorkEffectDeadPerformance:onBeforeDestroyEntity(entity)
+	if entity.id == self.fightStepData.fromId then
+		-- block empty
+	end
 end
 
 function FightWorkEffectDeadPerformance:clearWork()

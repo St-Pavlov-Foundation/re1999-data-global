@@ -6,10 +6,7 @@ local V2a9_LinkGiftView = class("V2a9_LinkGiftView", BaseView)
 
 function V2a9_LinkGiftView:onInitView()
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "root/#btn_close")
-	self._txttime1 = gohelper.findChildText(self.viewGO, "root/BG/go_bg1/#go_time/#txt_time")
-	self._txttime2 = gohelper.findChildText(self.viewGO, "root/BG/go_bg2/#go_time/#txt_time")
-	self._gobg1 = gohelper.findChild(self.viewGO, "root/BG/go_bg1")
-	self._gobg2 = gohelper.findChild(self.viewGO, "root/BG/go_bg2")
+	self._txtLimitTime = gohelper.findChildText(self.viewGO, "root/Left/simage_timebg/#txt_LimitTime")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -31,8 +28,8 @@ end
 function V2a9_LinkGiftView:_editableInitView()
 	self._linkGiftItemList = {}
 
-	for i = 1, 10 do
-		local go = gohelper.findChild(self.viewGO, "root/Gift/gift" .. i)
+	for i = 1, 9 do
+		local go = gohelper.findChild(self.viewGO, "root/Right/reward_panel0" .. i)
 
 		if go then
 			local linkGiftItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, V2a9_LinkGiftItem, self)
@@ -69,7 +66,13 @@ function V2a9_LinkGiftView:onOpen()
 	self:_refreshUI()
 	self:_refreshOpenTime()
 	TaskDispatcher.runRepeat(self.repeatCallCountdown, self, 10)
-	StoreGoodsTaskController.instance:autoFinishTaskByPoolId(self._poolId)
+
+	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(self._poolId) then
+		StoreGoodsTaskController.instance:clearNewRedDotByPoolId(self._poolId)
+		StoreGoodsTaskController.instance:waitUpdateRedDot()
+	end
+
+	AudioMgr.instance:trigger(AudioEnum3_10.LinkGift.play_ui_qiutu_revelation_open)
 end
 
 function V2a9_LinkGiftView:onClose()
@@ -98,11 +101,6 @@ function V2a9_LinkGiftView:_refreshUI()
 	for i, item in ipairs(self._linkGiftItemList) do
 		item:onUpdateMO(self._goodsCdfList[i])
 	end
-
-	local maxFlag = #self._goodsCdfList >= 3
-
-	gohelper.setActive(self._gobg1, not maxFlag)
-	gohelper.setActive(self._gobg2, maxFlag)
 end
 
 function V2a9_LinkGiftView:repeatCallCountdown()
@@ -121,8 +119,7 @@ function V2a9_LinkGiftView:_refreshOpenTime()
 		textStr = ""
 	end
 
-	self._txttime1.text = textStr
-	self._txttime2.text = textStr
+	self._txtLimitTime.text = textStr
 end
 
 function V2a9_LinkGiftView._sortGoodsCfgList(a, b)

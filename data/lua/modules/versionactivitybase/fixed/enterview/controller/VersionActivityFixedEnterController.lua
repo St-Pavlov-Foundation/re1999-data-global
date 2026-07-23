@@ -91,13 +91,14 @@ function VersionActivityFixedEnterController:openVersionActivityEnterView(openCb
 	self.openEnterViewCb = openCb
 	self.openEnterViewCbObj = openCbObj
 
-	local actId = VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.EnterView
-	local activityIdList = VersionActivityEnterHelper.getActIdList(VersionActivityFixedHelper.getVersionActivityEnum().EnterViewActSetting)
+	local enum = VersionActivityFixedHelper.getVersionActivityEnum()
+	local actId = enum.ActivityId.EnterView
+	local activityIdList = VersionActivityEnterHelper.getActIdList(enum.EnterViewActSetting)
 	local viewParams = {
 		actId = actId,
 		jumpActId = jumpActId,
 		activityIdList = activityIdList,
-		activitySettingList = VersionActivityFixedHelper.getVersionActivityEnum().EnterViewActSetting,
+		activitySettingList = enum.EnterViewActSetting,
 		isExitFight = isExitFight
 	}
 	local openFunc
@@ -106,6 +107,10 @@ function VersionActivityFixedEnterController:openVersionActivityEnterView(openCb
 		viewParams.isDirectOpen = true
 	else
 		openFunc = self._internalOpenEnterView
+
+		if TimeUtil.getDayFirstLoginRed(enum.EnterVideoDayKey) then
+			viewParams.playVideo = true
+		end
 	end
 
 	local viewName = VersionActivityFixedHelper.getVersionActivityEnterViewName()

@@ -31,6 +31,10 @@ function FightQuitTipView:onInitView()
 	self._btnsure = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quittipview/#btn_sure")
 	self._btnno = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quittipview/#btn_no")
 	self._simagenumline = gohelper.findChildSingleImage(self.viewGO, "#go_quittipview/num")
+	self._btnProtectMode = gohelper.findChildButtonWithAudio(self.viewGO, "#go_quitshowview/center/btn/#btn_protectmode")
+	self.goEyeModeOn = gohelper.findChild(self.viewGO, "#go_quitshowview/center/btn/#btn_protectmode/#go_on")
+	self.goEyeModeOff = gohelper.findChild(self.viewGO, "#go_quitshowview/center/btn/#btn_protectmode/#go_off")
+	self._btnbackherogroup = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_backherogroup")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -40,6 +44,7 @@ end
 function FightQuitTipView:addEvents()
 	self._btnquitgame:AddClickListener(self._btnyesOnClick, self)
 	self._btnrestart:AddClickListener(self._btnRestart, self)
+	self._btnbackherogroup:AddClickListener(self._btnBackHeroGroup, self)
 	self._btnfighttechnical:AddClickListener(self._btnfighttechnicalOnClick, self)
 	self._btnrouge:AddClickListener(self._btnrougeOnClick, self)
 	self._btnrouge2:AddClickListener(self._btnrouge2OnClick, self)
@@ -48,6 +53,7 @@ function FightQuitTipView:addEvents()
 	self._btnsure:AddClickListener(self._btnsureOnClick, self)
 	self._btnno:AddClickListener(self._btnnoOnClick, self)
 	self._btncloserule:AddClickListener(self._btncloseruleOnClick, self)
+	self._btnProtectMode:AddClickListener(self._onClickProtectMode, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
 	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._onKeyExit, self)
@@ -56,6 +62,7 @@ end
 function FightQuitTipView:removeEvents()
 	self._btnquitgame:RemoveClickListener()
 	self._btnrestart:RemoveClickListener()
+	self._btnbackherogroup:RemoveClickListener()
 	self._btnfighttechnical:RemoveClickListener()
 	self._btnrouge:RemoveClickListener()
 	self._btnrouge2:RemoveClickListener()
@@ -63,9 +70,37 @@ function FightQuitTipView:removeEvents()
 	self._btnsure:RemoveClickListener()
 	self._btnno:RemoveClickListener()
 	self._btncloserule:RemoveClickListener()
+	self._btnProtectMode:RemoveClickListener()
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonCancel, self._btnnoOnClick, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyCommonConfirm, self._onKeyExit, self)
+end
+
+function FightQuitTipView:_onClickProtectMode()
+	EyeProtectionModeMgr.instance:changeEyeModeActive()
+	self:refreshEyeModeUI()
+end
+
+function FightQuitTipView:refreshEyeModeUI()
+	local active = EyeProtectionModeMgr.instance:getEyeModeActive()
+
+	gohelper.setActive(self.goEyeModeOn, active)
+	gohelper.setActive(self.goEyeModeOff, not active)
+end
+
+function FightQuitTipView:_btnBackHeroGroup()
+	if not isDebugBuild then
+		return
+	end
+
+	FightController.instance:setBackToHeroGroup(true)
+	self:closeThis()
+
+	if not FightModel.instance:getFightParam().isTestFight then
+		DungeonFightController.instance:sendEndFightRequest(true, DungeonEnum.EndType.Exit)
+	else
+		FightRpc.instance:sendEndFightRequest(true)
+	end
 end
 
 function FightQuitTipView:_onOpenView(viewName)
@@ -245,6 +280,8 @@ function FightQuitTipView:onUpdateParam()
 end
 
 function FightQuitTipView:onOpen()
+	gohelper.setActive(self._btnbackherogroup.gameObject, isDebugBuild)
+
 	if self:episodeNeedHideRestart() then
 		gohelper.setActive(self._btnrestart.gameObject, false)
 	else
@@ -264,6 +301,7 @@ function FightQuitTipView:onOpen()
 	NavigateMgr.instance:addEscape(ViewName.FightQuitTipView, self._onBtnContinueGame, self)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_fight_keeporquit)
 	FightAudioMgr.instance:obscureBgm(true)
+	self:refreshEyeModeUI()
 end
 
 function FightQuitTipView:episodeNeedHideRestart()
@@ -496,6 +534,38 @@ end
 
 function FightQuitTipView:_setStarStatus(go, highLight)
 	local star = gohelper.findChildImage(go, "star")
+	local isSP02 = VersionActivity2_9DungeonHelper.isTargetActEpisode(self._episodeId, VersionActivity3_10Enum.ActivityId.Dungeon)
+
+	if isSP02 then
+		gohelper.setActive(star, false)
+
+		local goProgressItem = gohelper.findChild(go, "#go_progressitem")
+
+		gohelper.setActive(goProgressItem, true)
+
+		local mode = ActivityConfig.instance:getChapterIdMode(self._chapterId)
+
+		if mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard then
+			mode = VersionActivityDungeonBaseEnum.DungeonMode.Story3
+		end
+
+		for i = 1, 3 do
+			local goIcon = gohelper.findChild(goProgressItem, "image_icon" .. i)
+
+			if i == mode then
+				gohelper.setActive(goIcon, true)
+
+				local img = gohelper.findChildImage(goIcon, "#image_fg")
+
+				img.fillAmount = highLight and 1 or 0
+			else
+				gohelper.setActive(goIcon, false)
+			end
+		end
+
+		return
+	end
+
 	local starImage = self._hardMode and "zhuxianditu_kn_xingxing_002" or "zhuxianditu_pt_xingxing_001"
 	local starColor = "#87898C"
 

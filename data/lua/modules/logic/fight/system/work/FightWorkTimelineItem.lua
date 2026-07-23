@@ -10,15 +10,19 @@ function FightWorkTimelineItem:onConstructor(entity, timelineName, fightStepData
 	self.fightStepData = fightStepData
 	self.timelineUrl = ResUrl.getSkillTimeline(self.timelineName)
 	self.skillId = self.fightStepData.actId
+
+	FightMsgMgr.sendMsg(FightMsgId.BeforePlayTimeline, self.entity.id, self.skillId, self.fightStepData, self.timelineName)
 end
 
 function FightWorkTimelineItem:onStart()
 	local entityMo = self.entity and self.entity:getMO()
 	local skin = entityMo and entityMo.skin
+	local flow = self:com_registFlowSequence()
 	local work = FightPreloadOneTimelineRefWork.New(self.timelineName, skin, self)
 
-	work:registerDoneListener(self.onLoadTimelineDone, self)
-	work:onStart()
+	flow:addWork(work)
+	flow:registFinishCallback(self.onLoadTimelineDone, self)
+	flow:onStart()
 	self:cancelFightWorkSafeTimer()
 end
 
@@ -30,7 +34,44 @@ function FightWorkTimelineItem:onLoadTimelineDone()
 	end
 
 	FightHelper.logForPCSkillEditor("播放timeline:" .. tostring(self.timelineName))
-	self:startTimeline()
+
+	local flow = self:com_registFlowSequence()
+	local jsonStr = ZProj.SkillTimelineAssetHelper.GeAssetJson(self.timelineAssetItem, self.timelineUrl)
+
+	if not string.nilorempty(jsonStr) then
+		local jsonArr = cjson.decode(jsonStr)
+
+		for i = 1, #jsonArr, 2 do
+			local tlType = tonumber(jsonArr[i])
+			local paramList = jsonArr[i + 1]
+
+			if tlType == 36 then
+				local param1 = paramList[1]
+
+				if not string.nilorempty(param1) then
+					local arr = string.splitToNumber(param1, ",")
+
+					if param1 == "0,0,0" then
+						local config = lua_fight_camera_player_turn_offset.configDict[FightGameMgr.sceneLevelMgr.levelId]
+
+						if config then
+							arr[1] = config.offset[1]
+							arr[2] = config.offset[2]
+							arr[3] = config.offset[3]
+						end
+					end
+
+					local virsualCamerasGO = CameraMgr.instance:getVirtualCameraGO()
+
+					transformhelper.setLocalPos(virsualCamerasGO.transform, arr[1], arr[2], arr[3])
+					flow:registWork(FightWorkDelayTimer, 0.1)
+				end
+			end
+		end
+	end
+
+	flow:registWork(FightWorkFunction, self.startTimeline, self)
+	flow:start()
 end
 
 function FightWorkTimelineItem:dealSpeed()
@@ -239,6 +280,10 @@ end
 
 function FightWorkTimelineItem:clearWork()
 	return
+end
+
+function FightWorkTimelineItem:onDestructor()
+	FightMsgMgr.sendMsg(FightMsgId.OnTimelineWorkDestroyed, self.entity.id, self.skillId, self.fightStepData, self.timelineName)
 end
 
 return FightWorkTimelineItem

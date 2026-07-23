@@ -169,5 +169,230 @@
     "duration": 0.0,
     "effectHangPoint": "mountroot",
     "audio": 431170446
+  },
+  {
+    "effectPath": "v2a8_ndk02/ndk_skill2_02_middle",
+    "target": 1,
+    "skinId": 312003,
+    "changedPath": "v3a7_ndk02/ndk_skill2_02_middle",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 431200361
+  },
+  {
+    "effectPath": "v2a8_ndk02/ndk_hl",
+    "target": 1,
+    "skinId": 312003,
+    "changedPath": "v3a7_ndk02/ndk_hl",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431200362
+  },
+  {
+    "effectPath": "v3a0_kr/kr_innate_02",
+    "target": 1,
+    "skinId": 312803,
+    "changedPath": "v3a7_kr/kr_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431280152
+  },
+  {
+    "effectPath": "v1a4_37/37_innate1",
+    "target": 1,
+    "skinId": 306605,
+    "changedPath": "v3a7_37/37_innate1",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v1a4_37/37_innate2",
+    "target": 1,
+    "skinId": 306605,
+    "changedPath": "v3a7_37/37_innate2",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v1a4_37/37_innate3",
+    "target": 1,
+    "skinId": 306605,
+    "changedPath": "v3a7_37/37_innate3",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v1a4_37/37_innate4",
+    "target": 1,
+    "skinId": 306605,
+    "changedPath": "v3a7_37/37_innate4",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v1a4_37/37_innate5",
+    "target": 1,
+    "skinId": 306605,
+    "changedPath": "v3a7_37/37_innate5",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v2a7_mmr/mmr_innate_1",
+    "target": 1,
+    "skinId": 311803,
+    "changedPath": "v3a7_mmr/mmr_innate_1",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431180141
+  },
+  {
+    "effectPath": "v2a8_mlde/mlde_skill2_innate",
+    "target": 1,
+    "skinId": 312103,
+    "changedPath": "v3a3_mlde/mlde_innate1_01",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v2a8_mlde/mlde_skill2_innate_02",
+    "target": 1,
+    "skinId": 312103,
+    "changedPath": "v3a3_mlde/mlde_innate1_02",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
+  },
+  {
+    "effectPath": "v3a3_yge/yge_innate",
+    "target": 1,
+    "skinId": 309203,
+    "changedPath": "v3a8_yge/yge_innate",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 430920341
+  },
+  {
+    "effectPath": "buff_hudun_fire_01",
+    "target": 1,
+    "skinId": 309403,
+    "changedPath": "buff_hudun_joefire_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 430940341
+  },
+  {
+    "effectPath": "buff_hudun_fire_02",
+    "target": 1,
+    "skinId": 309403,
+    "changedPath": "buff_hudun_joefire_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 430940342
+  },
+  {
+    "effectPath": "v3a5_llzhd/llzhd_innate",
+    "target": 1,
+    "skinId": 313903,
+    "changedPath": "v3a8_llzhd/llzhd_innate",
+    "duration": 0.0,
+    "effectHangPoint": "mountbody",
+    "audio": 431390341
+  },
+  {
+    "effectPath": "v3a5_llzhd/llzhd_innate",
+    "target": 2,
+    "skinId": 313903,
+    "changedPath": "v3a8_llzhd/llzhd_innate",
+    "duration": 0.0,
+    "effectHangPoint": "mountbody",
+    "audio": 431390341
+  },
+  {
+    "effectPath": "buff_hudun_fire_01",
+    "target": 2,
+    "skinId": 309403,
+    "changedPath": "buff_hudun_joefire_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 430940341
+  },
+  {
+    "effectPath": "buff_hudun_fire_02",
+    "target": 2,
+    "skinId": 309403,
+    "changedPath": "buff_hudun_joefire_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountmiddle",
+    "audio": 430940342
+  },
+  {
+    "effectPath": "xingti_innate01",
+    "target": 1,
+    "skinId": 302504,
+    "changedPath": "buff/pre_xt_innate01",
+    "duration": 0.0,
+    "effectHangPoint": "mountbottom",
+    "audio": 430250401
+  },
+  {
+    "effectPath": "v1a8_bfsg/bfsg_start",
+    "target": 1,
+    "skinId": 307705,
+    "changedPath": "buff/pre_s02_bfsg_buff",
+    "duration": 0.0,
+    "effectHangPoint": "special3",
+    "audio": 0
+  },
+  {
+    "effectPath": "buff/nimengdishi_innate_01",
+    "target": 1,
+    "skinId": 303904,
+    "changedPath": "s02_nmds/nmds_innate_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "buff/nimengdishi_innate_02",
+    "target": 1,
+    "skinId": 303904,
+    "changedPath": "s02_nmds/nmds_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "v3a0_mlan/mlan_innate_2_01",
+    "target": 1,
+    "skinId": 312606,
+    "changedPath": "s02_mlan/mlan_innate_2",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431260651
+  },
+  {
+    "effectPath": "v2a2_lopera/lopera_skill2_special1_1",
+    "target": 1,
+    "skinId": 310203,
+    "changedPath": "v2a6_lopera/lopera_skill2_special1_1",
+    "duration": 0.0,
+    "effectHangPoint": "special1",
+    "audio": 0
+  },
+  {
+    "effectPath": "v1a8_bfsg/bfsg_start",
+    "target": 1,
+    "skinId": 307704,
+    "changedPath": "v3a1_bfsg/bfsg_start",
+    "duration": 0.0,
+    "effectHangPoint": "special4",
+    "audio": 0
   }
 ]

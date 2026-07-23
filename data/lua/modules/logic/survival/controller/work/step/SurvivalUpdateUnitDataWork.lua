@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateUnitDataWork",
 
 local SurvivalUpdateUnitDataWork = class("SurvivalUpdateUnitDataWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateUnitDataWork:onStart(context)
+function SurvivalUpdateUnitDataWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	for _, unit in ipairs(self._stepMo.unit) do

@@ -47,6 +47,7 @@ function DecorateGoodsItem:init(go, mo)
 	self._btnClick = gohelper.getClick(self._goclick)
 	self._goreddot = gohelper.findChild(self._goroot, "#go_Item/#go_reddot")
 	self.goSp = gohelper.findChild(self._goroot, "#go_Item/#go_tag/#go_sp")
+	self._goliandong = gohelper.findChild(self._goroot, "#go_Item/#go_tag/#go_liandong")
 
 	self:_addEvents()
 	gohelper.setActive(self.go, false)
@@ -122,6 +123,7 @@ function DecorateGoodsItem:_refreshDetail()
 
 	gohelper.setActive(self._goselect, self._mo.goodsId == curGoodId and self._isFold)
 	gohelper.setActive(self._goselectbuy, self._mo.goodsId == curGoodId and not self._isFold)
+	gohelper.setActive(self._goliandong, self._decorateConfig and self._decorateConfig.linkTag == DecorateStoreEnum.LinkTagType.Show)
 
 	self._txtname.text = self._mo.config.name
 

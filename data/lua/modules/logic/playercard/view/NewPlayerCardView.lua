@@ -163,16 +163,34 @@ function NewPlayerCardView:onOpen(tempSkinId)
 	self:_refreshProgress()
 	self:_refreshBaseInfo()
 	self:_initCritter()
-	AudioMgr.instance:trigger(AudioEnum.PlayerCard.play_ui_diqiu_card_open_1)
 
+	if self._playingAudioId then
+		AudioMgr.instance:stopPlayingID(self._playingAudioId)
+	end
+
+	local themeInfo = PlayerCardEnum.Theme[themeId]
+	local audioId = themeInfo and themeInfo.OpenAudioId or AudioEnum.PlayerCard.play_ui_diqiu_card_open_1
+
+	self._playingAudioId = AudioMgr.instance:trigger(audioId)
 	self.progressopen = false
 	self.baseinfoopen = false
 
 	self:_initBadge()
 	self:_onCutEquipType()
 
+	if themeInfo and themeInfo.EnterAnim then
+		local type = self.playercardinfo:getShowEnterAnimType(themeId)
+		local enterAnim = themeInfo.EnterAnim[type]
+
+		if enterAnim and not string.nilorempty(enterAnim.aniName) then
+			self._animator:Play(enterAnim.aniName)
+		end
+	end
+
 	if self.viewParam and self.viewParam.justOpenBadgeView then
 		self:_btncritterOnClick()
+
+		self.viewParam.justOpenBadgeView = nil
 	end
 end
 
@@ -195,6 +213,12 @@ function NewPlayerCardView:onClose()
 	gohelper.destroy(self.goskinpreview)
 
 	self._scrollView = nil
+
+	if self._playingAudioId then
+		AudioMgr.instance:stopPlayingID(self._playingAudioId)
+	end
+
+	self._playingAudioId = nil
 end
 
 function NewPlayerCardView:_btnroleOnClick()

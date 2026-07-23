@@ -12,6 +12,8 @@ function StatViewController:init()
 	DungeonController.instance:registerCallback(DungeonEvent.OnChangeChapterList, self.onChangeChapterType, self)
 	ExploreController.instance:registerCallback(ExploreEvent.OnChapterClick, self.onExploreChapterClick, self)
 	SummonController.instance:registerCallback(SummonEvent.onSummonTabSet, self.onSwitchPool, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self._onOpenViewTime, self)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self._onCloseViewTime, self)
 	CharacterController.instance:registerCallback(CharacterEvent.OnSwitchSkin, self.onSwitchSkin, self)
 
 	self.viewHandleDict = {
@@ -24,6 +26,7 @@ function StatViewController:init()
 		[ViewName.VersionActivity2_0EnterView] = self.handleVersionActivityEnterView,
 		[ViewName.V3a2_BossRush_LevelDetailView] = self.handleBossRushLevelDetailView
 	}
+	self._viewOpenTimeDict = {}
 end
 
 function StatViewController:onChangeChapterType(type)
@@ -65,6 +68,22 @@ function StatViewController:getLastOpenView()
 				return viewName
 			end
 		end
+	end
+end
+
+function StatViewController:_onOpenViewTime(viewName)
+	if StatViewNameEnum.NeedViewOpenTimeDict[viewName] then
+		self._viewOpenTimeDict[viewName] = Time.time
+	end
+end
+
+function StatViewController:_onCloseViewTime(viewName)
+	if StatViewNameEnum.NeedViewOpenTimeDict[viewName] and self._viewOpenTimeDict[viewName] then
+		local openTime = self._viewOpenTimeDict[viewName]
+
+		self._viewOpenTimeDict[viewName] = nil
+
+		self:trackExit(StatViewNameEnum.ChineseViewName[viewName] or viewName, Time.time - openTime)
 	end
 end
 
@@ -272,6 +291,13 @@ function StatViewController:getMaterialName()
 	local config = ItemConfig.instance:getItemConfig(viewParam.type, viewParam.id)
 
 	return config.name
+end
+
+function StatViewController:trackExit(viewName, useTime)
+	StatController.instance:track(StatEnum.EventName.ExitView, {
+		[StatEnum.EventProperties.ViewName] = viewName,
+		[StatEnum.EventProperties.UseTime] = tonumber(useTime)
+	})
 end
 
 function StatViewController:track(viewName, startView, materialName)

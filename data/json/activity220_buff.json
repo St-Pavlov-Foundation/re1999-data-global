@@ -1,0 +1,662 @@
+[
+  {
+    "buffId": 137101,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3710,
+    "type": 0,
+    "param": 1.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137102,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 2,
+    "type": 0,
+    "param": 10.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137103,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137104,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 1,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137105,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 1,
+    "type": 1,
+    "param": 500.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137106,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": 400.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137107,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 0,
+    "param": 10.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137108,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": 200.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137109,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 1,
+    "param": -5000.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137110,
+    "isShow": 1,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3,
+    "type": 1,
+    "param": 400.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137111,
+    "isShow": 1,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3,
+    "type": 1,
+    "param": 1000.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137112,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": -200.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137113,
+    "isShow": 1,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 4,
+    "type": 1,
+    "param": 400.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137114,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137115,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 0,
+    "param": 5.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137116,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 1,
+    "type": 1,
+    "param": 200.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137117,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 3,
+    "attriId": 3760,
+    "type": 0,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137118,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3760,
+    "type": 0,
+    "param": 20.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137119,
+    "isShow": 1,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137120,
+    "isShow": 1,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 1,
+    "param": 100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137121,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 1,
+    "type": 1,
+    "param": 50.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137122,
+    "isShow": 1,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": -150.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137123,
+    "isShow": 1,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3,
+    "type": 1,
+    "param": 1000.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137124,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 2,
+    "type": 0,
+    "param": -100.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137125,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3760,
+    "type": 0,
+    "param": 50.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137126,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3760,
+    "type": 0,
+    "param": 50.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137127,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3760,
+    "type": 0,
+    "param": 20.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137204,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 0,
+    "param": 5.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137203,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3720,
+    "type": 0,
+    "param": 0.5,
+    "icon": ""
+  },
+  {
+    "buffId": 13720,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3750,
+    "type": 0,
+    "param": 1.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137201,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 4,
+    "type": 1,
+    "param": -300.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137202,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3,
+    "type": 1,
+    "param": -300.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137301,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3730,
+    "type": 0,
+    "param": 0.25,
+    "icon": ""
+  },
+  {
+    "buffId": 137302,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3730,
+    "type": 0,
+    "param": 0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 137303,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 3,
+    "type": 1,
+    "param": -250.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137304,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3730,
+    "type": 0,
+    "param": 0.2,
+    "icon": ""
+  },
+  {
+    "buffId": 137305,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 2,
+    "type": 0,
+    "param": 10.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137306,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 2,
+    "type": 0,
+    "param": 50.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137401,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 11,
+    "type": 0,
+    "param": 0.2,
+    "icon": ""
+  },
+  {
+    "buffId": 137402,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 12,
+    "type": 0,
+    "param": 0.2,
+    "icon": ""
+  },
+  {
+    "buffId": 137403,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 13,
+    "type": 0,
+    "param": 0.2,
+    "icon": ""
+  },
+  {
+    "buffId": 137404,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 11,
+    "type": 0,
+    "param": 0.3,
+    "icon": ""
+  },
+  {
+    "buffId": 137405,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 3740,
+    "type": 0,
+    "param": 2.0,
+    "icon": ""
+  },
+  {
+    "buffId": 1374061,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 13,
+    "type": 0,
+    "param": 0.3,
+    "icon": ""
+  },
+  {
+    "buffId": 1374071,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 2,
+    "attriId": 13,
+    "type": 0,
+    "param": 1.0,
+    "icon": ""
+  },
+  {
+    "buffId": 1374081,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 13,
+    "type": 0,
+    "param": -0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 1374091,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 11,
+    "type": 0,
+    "param": -0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 137406,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 12,
+    "type": 0,
+    "param": 0.3,
+    "icon": ""
+  },
+  {
+    "buffId": 137407,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 15,
+    "type": 0,
+    "param": 0.4,
+    "icon": ""
+  },
+  {
+    "buffId": 137408,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 12,
+    "type": 0,
+    "param": 0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 137409,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 14,
+    "type": 0,
+    "param": 0.5,
+    "icon": ""
+  },
+  {
+    "buffId": 137410,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 16,
+    "type": 0,
+    "param": 20.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137501,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 17,
+    "type": 0,
+    "param": 1.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137502,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 17,
+    "type": 0,
+    "param": -0.25,
+    "icon": ""
+  },
+  {
+    "buffId": 137503,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 17,
+    "type": 0,
+    "param": 0.5,
+    "icon": ""
+  },
+  {
+    "buffId": 137504,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 17,
+    "type": 0,
+    "param": -5.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137601,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 6,
+    "type": 0,
+    "param": 0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 137602,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 6,
+    "type": 0,
+    "param": -5.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137603,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 6,
+    "type": 0,
+    "param": -0.5,
+    "icon": ""
+  },
+  {
+    "buffId": 137604,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 5,
+    "type": 0,
+    "param": 0.6,
+    "icon": ""
+  },
+  {
+    "buffId": 137605,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 5,
+    "type": 0,
+    "param": -0.5,
+    "icon": ""
+  },
+  {
+    "buffId": 137606,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 6,
+    "type": 0,
+    "param": 0.3,
+    "icon": ""
+  },
+  {
+    "buffId": 137607,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 5,
+    "type": 0,
+    "param": 0.3,
+    "icon": ""
+  },
+  {
+    "buffId": 137701,
+    "isShow": 0,
+    "lifeRule": 1,
+    "lifeParam": 1,
+    "attriId": 3,
+    "type": 1,
+    "param": 400.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137703,
+    "isShow": 0,
+    "lifeRule": -1,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 0,
+    "param": 20.0,
+    "icon": ""
+  },
+  {
+    "buffId": 137705,
+    "isShow": 0,
+    "lifeRule": 0,
+    "lifeParam": 0,
+    "attriId": 4,
+    "type": 1,
+    "param": -50.0,
+    "icon": ""
+  }
+]

@@ -15,7 +15,7 @@ end
 function Activity125Rpc:onReceiveGetAct125InfosReply(resultCode, msg)
 	if resultCode == 0 then
 		Activity125Model.instance:setActivityInfo(msg)
-		Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
+		Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate, msg)
 	end
 end
 
@@ -32,7 +32,7 @@ end
 function Activity125Rpc:onReceiveFinishAct125EpisodeReply(resultCode, msg)
 	if resultCode == 0 then
 		Activity125Model.instance:refreshActivityInfo(msg)
-		Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
+		Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate, msg)
 		Activity125Controller.instance:dispatchEvent(Activity125Event.EpisodeFinished, msg.episodeId)
 	end
 end

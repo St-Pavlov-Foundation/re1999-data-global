@@ -95,6 +95,7 @@ function ArcadeHandBookListModel:_calculateAnchorX(lineMoList)
 	for i, mo in ipairs(lineMoList) do
 		local sizeX, _ = mo:getIconSize()
 		local anchorX = 0
+		local isMinSizeX = sizeX == itemParams.MinSize
 		local preMo = lineMoList[i - 1]
 
 		if preMo then
@@ -102,7 +103,7 @@ function ArcadeHandBookListModel:_calculateAnchorX(lineMoList)
 			local preAnchorX, _ = preMo:getAnchor()
 
 			if lineMoCount == 2 then
-				if sizeX == itemParams.MinSize then
+				if isMinSizeX then
 					local itemSizeX = itemParams.MinSize
 					local remain = itemParams.MaxWidth - itemParams.StartX - itemSizeX * itemParams.RowCount
 					local offset = math.max(remain / 2, 0)
@@ -125,7 +126,11 @@ function ArcadeHandBookListModel:_calculateAnchorX(lineMoList)
 				anchorX = preAnchorX + preSizeX + offset
 			end
 		elseif lineMoCount == 1 then
-			anchorX = itemParams.MaxWidth * 0.5 - sizeX * 0.5
+			if isMinSizeX then
+				anchorX = itemParams.StartX
+			else
+				anchorX = itemParams.MaxWidth * 0.5 - sizeX * 0.5
+			end
 		else
 			anchorX = itemParams.StartX
 		end

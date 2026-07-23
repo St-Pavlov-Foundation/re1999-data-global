@@ -181,29 +181,13 @@ function CorvusTaskItem:_refreshRewardItems()
 		if not rewardItem then
 			rewardItem = IconMgr.instance:getCommonPropItemIcon(self._gorewards)
 
-			rewardItem:setMOValue(type, id, quantity, nil, true)
-			rewardItem:setCountFontSize(26)
-			rewardItem:showStackableNum2()
-			rewardItem:isShowEffect(true)
 			table.insert(self._rewardItemList, rewardItem)
-
-			local itemIcon = rewardItem:getItemIcon()
-
-			if itemIcon.getCountBg then
-				local countBg = itemIcon:getCountBg()
-
-				transformhelper.setLocalScale(countBg.transform, 1, 1.5, 1)
-			end
-
-			if itemIcon.getCount then
-				local count = itemIcon:getCount()
-
-				transformhelper.setLocalScale(count.transform, 1.5, 1.5, 1)
-			end
-		else
-			rewardItem:setMOValue(type, id, quantity, nil, true)
 		end
 
+		rewardItem:setMOValue(type, id, quantity, nil, true)
+		rewardItem:setCountFontSize(48)
+		rewardItem:showStackableNum2()
+		rewardItem:isShowEffect(true)
 		gohelper.setActive(rewardItem.go, true)
 	end
 

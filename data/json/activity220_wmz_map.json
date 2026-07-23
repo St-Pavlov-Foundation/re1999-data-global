@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1372301,
+    "mapSizeX": 46,
+    "mapSizeY": 30,
+    "maxEnergy": 200,
+    "guildId": 37500,
+    "zoneId1": 11000,
+    "zoneId2": 12000,
+    "zoneId3": 13000,
+    "zoneId4": 0
+  },
+  {
+    "id": 1372302,
+    "mapSizeX": 46,
+    "mapSizeY": 30,
+    "maxEnergy": 200,
+    "guildId": 0,
+    "zoneId1": 21000,
+    "zoneId2": 22000,
+    "zoneId3": 23000,
+    "zoneId4": 0
+  },
+  {
+    "id": 1372303,
+    "mapSizeX": 46,
+    "mapSizeY": 30,
+    "maxEnergy": 200,
+    "guildId": 0,
+    "zoneId1": 31000,
+    "zoneId2": 32000,
+    "zoneId3": 33000,
+    "zoneId4": 34000
+  },
+  {
+    "id": 1372304,
+    "mapSizeX": 46,
+    "mapSizeY": 30,
+    "maxEnergy": 200,
+    "guildId": 0,
+    "zoneId1": 41000,
+    "zoneId2": 42000,
+    "zoneId3": 43000,
+    "zoneId4": 0
+  },
+  {
+    "id": 1372305,
+    "mapSizeX": 46,
+    "mapSizeY": 30,
+    "maxEnergy": 200,
+    "guildId": 0,
+    "zoneId1": 51000,
+    "zoneId2": 52000,
+    "zoneId3": 53000,
+    "zoneId4": 0
+  }
+]

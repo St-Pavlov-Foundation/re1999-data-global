@@ -31,12 +31,27 @@
   },
   {
     "activityId": 13613,
-    "link": "https://re.bluepoch.com/event/letter/",
+    "link": "en#https://reverse1999.bluepoch.com/en/event/letter/|jp#https://reverse1999.bluepoch.com/jp/event/letter/|ko#https://reverse1999-h5.haoplay.com/event/letter/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Fletter%2Findex.html",
     "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner.png"
+  },
+  {
+    "activityId": 13735,
+    "link": "https://re.bluepoch.com/event/stonebystone/",
+    "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner_3.png"
+  },
+  {
+    "activityId": 13745,
+    "link": "https://re.bluepoch.com/event/3rdanniversary/",
+    "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner_2.png"
   },
   {
     "activityId": 13823,
     "link": "en#https://reverse1999.bluepoch.com/en/event/thepolymerfiles/|jp#https://reverse1999.bluepoch.com/jp/event/thepolymerfiles/|ko#https://reverse1999-h5.haoplay.com/event/thepolymerfiles/|tw#https://www.movergames.com/login-redirect.html?redirectUrl=https%3A%2F%2Fre1999.movergames.com%2Fevent%2Fthepolymerfiles%2Findex.html",
+    "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner.png"
+  },
+  {
+    "activityId": 138526,
+    "link": "https://re.bluepoch.com/event/enigmaoffice/",
     "bgResUrl": "singlebg_lang/txt_activity/activity_h5_banner.png"
   }
 ]

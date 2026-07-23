@@ -17,6 +17,11 @@ function FightWorkNewEntity:onStart()
 	local entityData = self.entityData
 
 	self.entityExData = FightDataHelper.entityExMgr:getById(entityData.id)
+
+	if lua_fight_monster_3d.configDict[entityData.skin] then
+		self.entityExData.needLookCamera = false
+	end
+
 	self.customDefaultEntityInitData = self.entityExData:getCustomDefaultEntityInitData(entityData.id)
 	self.entityExData.customDefaultEntityInitData = nil
 	FightGameMgr.entityMgr.diffEntityIdForCompareUpdate[entityData.id] = true
@@ -57,6 +62,9 @@ function FightWorkNewEntity:onStart()
 
 	entityName = entityName or "entity" .. entityData.id
 	entity = entityMgr:newClass(entityClass, entityName, entityData)
+
+	entity:setSpeed(FightModel.instance:getSpeed())
+
 	entityMgr.entityDic[entity.id] = entity
 
 	entity:setUseGoScaleReplaceSpineScale(self.entityExData.useScaleReplaceSpineScale)
@@ -84,13 +92,8 @@ function FightWorkNewEntity:onStart()
 		flow:registWork(FightWorkFunction, entity.nameUI.load, entity.nameUI, ResUrl.getSceneUIPrefab("fight", "fightname"))
 	end
 
-	flow:registWork(FightWorkFunction, self.setEntitySpeed, self, entity)
 	flow:registWork(FightWorkSendEvent, FightEvent.OnAddNewEntity, entity.id, entityData)
 	self:playWorkAndDone(flow)
-end
-
-function FightWorkNewEntity:setEntitySpeed(entity)
-	entity:setSpeed(FightModel.instance:getSpeed())
 end
 
 function FightWorkNewEntity:getEntityClass()
@@ -100,6 +103,10 @@ function FightWorkNewEntity:getEntityClass()
 
 	if self.entityExData.entityClass then
 		return self.entityExData.entityClass, self.entityExData.entityObjectName
+	end
+
+	if lua_fight_monster_3d.configDict[entityData.skin] then
+		return Fight3DEntityObject, entityData:getIdName()
 	end
 
 	if entityId == FightEntityScene.MySideId or entityId == FightEntityScene.EnemySideId then

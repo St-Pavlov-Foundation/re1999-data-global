@@ -23,6 +23,10 @@ function CommandStationPaperGetView:onOpen()
 
 	gohelper.setActive(self._btnReward, self._hasReward)
 	self._btnReward:AddClickListener(self._onBtnRewardClickHandler, self)
+
+	self._btnClose = gohelper.findChildButton(self.viewGO, "#btn_close")
+
+	self._btnClose:AddClickListener(self.closeThis, self)
 end
 
 function CommandStationPaperGetView:onOpenFinish()
@@ -41,6 +45,7 @@ end
 
 function CommandStationPaperGetView:onClose()
 	self._btnReward:RemoveClickListener()
+	self._btnClose:RemoveClickListener()
 end
 
 return CommandStationPaperGetView

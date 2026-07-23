@@ -47,7 +47,7 @@ function Rouge2_BuffDropView:_editableInitView()
 
 	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BuffDrop)
-	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goToolbar, Rouge2_Enum.TeamRecommendTipType.Default)
+	Rouge2_AttributeToolBar.Load(self._goToolbar, Rouge2_Enum.AttributeToolType.Enter)
 
 	self._goBuffItem = self:getResInst(Rouge2_Enum.ResPath.BuffDropItem, self._goContent)
 	self._tranScrollView = self._scrollView.transform
@@ -75,6 +75,7 @@ function Rouge2_BuffDropView:initViewParam()
 		NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
 	end
 
+	gohelper.setActive(self._goToolbar, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 	self._refreshLoader:show(self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 end
 

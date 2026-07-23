@@ -74,6 +74,18 @@ function MainUISwitchModel.canJump(itemId)
 	return false
 end
 
+function MainUISwitchModel:getUIReddotType(uiId)
+	local cos = lua_scene_ui_reddot.configDict[uiId]
+
+	if cos then
+		local _, co = next(cos)
+
+		if co then
+			return co.style
+		end
+	end
+end
+
 MainUISwitchModel.instance = MainUISwitchModel.New()
 
 return MainUISwitchModel

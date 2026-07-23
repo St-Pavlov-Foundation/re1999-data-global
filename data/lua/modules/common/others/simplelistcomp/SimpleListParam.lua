@@ -6,6 +6,7 @@ local SimpleListParam = pureTable("SimpleListParam")
 
 function SimpleListParam:ctor()
 	self.cellClass = nil
+	self.cellParam = nil
 	self.lineCount = 1
 	self.cellWidth = 0
 	self.cellHeight = 0

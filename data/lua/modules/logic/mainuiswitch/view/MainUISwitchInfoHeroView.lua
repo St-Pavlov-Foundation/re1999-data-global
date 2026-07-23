@@ -43,7 +43,7 @@ function MainUISwitchInfoHeroView:onOpen()
 	local offsets = SkinConfig.instance:getSkinOffset(self._heroSkinConfig.characterViewOffset)
 	local scale = tonumber(offsets[3])
 
-	recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 
 	local spineMountPoint = WeatherController.instance:getSceneNode("s01_obj_a/Anim/Drawing/spine")

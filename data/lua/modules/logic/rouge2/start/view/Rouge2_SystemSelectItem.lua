@@ -7,10 +7,10 @@ local Rouge2_SystemSelectItem = class("Rouge2_SystemSelectItem", ListScrollCell)
 function Rouge2_SystemSelectItem:init(go)
 	self.go = go
 	self._simageSystemIcon = gohelper.findChildSingleImage(self.go, "simage_SystemIcon")
-	self._goSelectSystemName = gohelper.findChild(self.go, "go_SystemName/#go_Select")
-	self._txtSelectSystemName = gohelper.findChildText(self.go, "go_SystemName/#go_Select/#txt_Name")
-	self._goUnselectSystemName = gohelper.findChild(self.go, "go_SystemName/#go_Unselect")
-	self._txtUnselectSystemName = gohelper.findChildText(self.go, "go_SystemName/#go_Unselect/#txt_Name")
+	self._imageBg = gohelper.findChildImage(self.go, "go_SystemTag/image_Bg")
+	self._simageIcon = gohelper.findChildSingleImage(self.go, "go_SystemTag/IconRoot/simage_Icon")
+	self._txtSystemName = gohelper.findChildText(self.go, "go_SystemTag/Name/txt_SystemName")
+	self._goSelect = gohelper.findChild(self.go, "go_SystemTag/Name/go_Select")
 	self._txtSystemDesc = gohelper.findChildText(self.go, "txt_SystemDesc")
 	self._btnConfirm = gohelper.findChildButtonWithAudio(self.go, "btn_Confirm", AudioEnum.Rouge2.SelectSystem)
 	self._btnCancel = gohelper.findChildButtonWithAudio(self.go, "btn_Cancel", AudioEnum.Rouge2.CancelSystem)
@@ -56,15 +56,14 @@ end
 function Rouge2_SystemSelectItem:refreshUI()
 	local tagName = self._tagCo and self._tagCo.tagName
 
-	self._txtSelectSystemName.text = tagName
-	self._txtUnselectSystemName.text = tagName
+	self._txtSystemName.text = tagName
 
-	gohelper.setActive(self._goSelectSystemName, self._isSelectSystem)
-	gohelper.setActive(self._goUnselectSystemName, not self._isSelectSystem)
+	gohelper.setActive(self._goSelect, self._isSelectSystem)
 
 	self._txtSystemDesc.text = self._systemCo and self._systemCo.desc
 
-	Rouge2_IconHelper.setTeamSystemIcon(self._systemId, self._simageSystemIcon)
+	Rouge2_IconHelper.setTeamSystemIcon(self._systemId, self._simageIcon, self._imageBg, Rouge2_Enum.SystemIconType.White)
+	Rouge2_IconHelper.setTeamSystemIcon(self._systemId, self._simageSystemIcon, nil, Rouge2_Enum.SystemIconType.Black)
 	gohelper.CreateObjList(self, self._refreshHeroItem, self._heroList, self._goHeroContent, self._goHeroItem, Rouge2_SystemHeroItem)
 	gohelper.setActive(self._btnCancel.gameObject, self._isSelectSystem)
 	gohelper.setActive(self._btnConfirm.gameObject, not self._isSelectSystem)
@@ -77,8 +76,8 @@ function Rouge2_SystemSelectItem:initHeroList()
 end
 
 function Rouge2_SystemSelectItem._heroSortFunc(aHeroCo, bHeroCo)
-	local aHeroMo = HeroModel.instance:getByHeroId(aHeroCo.id)
-	local bHeroMo = HeroModel.instance:getByHeroId(bHeroCo.id)
+	local aHeroMo = Rouge2_SystemController.instance:getHeroMo(aHeroCo.id)
+	local bHeroMo = Rouge2_SystemController.instance:getHeroMo(bHeroCo.id)
 	local aLevel = aHeroMo and aHeroMo.level or 0
 	local bLevel = bHeroMo and bHeroMo.level or 0
 
@@ -110,6 +109,7 @@ function Rouge2_SystemSelectItem:_onUpdateTeamSystem()
 end
 
 function Rouge2_SystemSelectItem:onDestroy()
+	self._simageIcon:UnLoadImage()
 	self._simageSystemIcon:UnLoadImage()
 end
 

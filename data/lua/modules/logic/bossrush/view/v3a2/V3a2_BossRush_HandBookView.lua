@@ -77,18 +77,72 @@ end
 function V3a2_BossRush_HandBookView:onDestroyView()
 	TaskDispatcher.cancelTask(self._onSelectMonsterCB, self)
 	TaskDispatcher.cancelTask(self._playRankBtnAnimCB, self)
+	TaskDispatcher.cancelTask(self._refreshScroll, self)
 end
 
 function V3a2_BossRush_HandBookView:_refreshBossGroups()
 	local moList = V3a2_BossRush_HandBookListModel.instance:getList()
 
 	self._bossGroupItems = self:getUserDataTb_()
+	self._claimGroupIndex = 0
 
-	for i, mo in ipairs(moList) do
-		local item = self:_getBossGroupItem(i)
+	if moList then
+		local canCliamBossMo
 
-		item:onUpdateMO(mo)
-		gohelper.setActive(item.viewGO, true)
+		for i, mo in ipairs(moList) do
+			local isCanCliam, canCliamMo = self:_hasClaimBounsGroup(mo.bossGroup)
+
+			if isCanCliam and (i < self._claimGroupIndex or self._claimGroupIndex == 0) then
+				self._claimGroupIndex = i
+				canCliamBossMo = canCliamMo
+			end
+		end
+
+		if canCliamBossMo then
+			V3a2_BossRush_HandBookListModel.instance:onSelect(canCliamBossMo)
+		end
+
+		for i, mo in ipairs(moList) do
+			local item = self:_getBossGroupItem(i)
+
+			item:onUpdateMO(mo)
+			gohelper.setActive(item.viewGO, true)
+		end
+	end
+
+	self._moList = moList
+
+	TaskDispatcher.cancelTask(self._refreshScroll, self)
+	TaskDispatcher.runDelay(self._refreshScroll, self, 0)
+end
+
+function V3a2_BossRush_HandBookView:_refreshScroll()
+	local vnp = 0
+	local itemCount = self._moList and #self._moList or 0
+
+	if itemCount > 0 and self._claimGroupIndex > 1 then
+		local lastItem = self:_getBossGroupItem(itemCount)
+		local lastItemHeight = recthelper.getHeight(lastItem.viewGO.transform)
+		local totalHeight = recthelper.getHeight(self._scrollboss.content.transform) - lastItemHeight
+		local claimHeight = 0
+		local item = self:_getBossGroupItem(self._claimGroupIndex)
+
+		if item then
+			claimHeight = -recthelper.getAnchorY(item.viewGO.transform)
+			vnp = claimHeight / totalHeight
+		end
+	end
+
+	self._scrollboss.verticalNormalizedPosition = 1 - vnp
+end
+
+function V3a2_BossRush_HandBookView:_hasClaimBounsGroup(bossGroup)
+	if bossGroup then
+		for _, mo in ipairs(bossGroup) do
+			if mo:hasClaimBonus() then
+				return true, mo
+			end
+		end
 	end
 end
 

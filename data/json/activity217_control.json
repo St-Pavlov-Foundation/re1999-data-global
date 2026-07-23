@@ -30,5 +30,21 @@
     "magnification": 2,
     "limit": 20,
     "dailyLimit": 4
+  },
+  {
+    "activityId": 13719,
+    "type": 1,
+    "showtype": 1,
+    "magnification": 2,
+    "limit": 20,
+    "dailyLimit": 4
+  },
+  {
+    "activityId": 13820,
+    "type": 1,
+    "showtype": 2,
+    "magnification": 2,
+    "limit": 20,
+    "dailyLimit": 4
   }
 ]

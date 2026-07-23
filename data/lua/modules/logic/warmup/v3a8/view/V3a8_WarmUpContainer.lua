@@ -58,7 +58,7 @@ function V3a8_WarmUpContainer:onContainerDestroy()
 	self._isPlaying = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_UI_Bus)
-	V3a8_WarmUpContainer.super:onContainerDestroy()
+	V3a8_WarmUpContainer.super.onContainerDestroy(self)
 end
 
 function V3a8_WarmUpContainer:onContainerCloseFinish()

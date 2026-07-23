@@ -224,6 +224,43 @@ function FightTLEventMove:_getEndPosXYZ(fightStepData, entity, offsetList, selec
 		endX = startX + (offset[1] and (side and offset[1] or -offset[1]) or 0)
 		endY = startY + (offset[2] or 0)
 		endZ = startZ + (offset[3] or 0)
+	elseif targetType == 6 then
+		local side = attacker:isMySide() and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local entityList = {}
+
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			if entity:getSide() == side and entity:getTag() ~= SceneTag.UnitNpc then
+				local isSub = FightDataHelper.entityMgr:isSub(entity.id)
+
+				if not isSub then
+					table.insert(entityList, entity)
+				end
+			end
+		end
+
+		table.sort(entityList, FightTLEventAtkFullEffect.sortByEntityX)
+
+		local listCount = #entityList
+
+		if listCount > 0 then
+			local pos1x, pos1y, pos1z = transformhelper.getLocalPos(entityList[1].go.transform)
+			local pos2x, pos2y, pos2z = transformhelper.getLocalPos(entityList[#entityList].go.transform)
+			local posX = (pos1x + pos2x) / 2
+			local posY = (pos1y + pos2y) / 2
+			local posZ = (pos1z + pos2z) / 2
+
+			endX = posX
+			endY = posY
+			endZ = posZ
+		else
+			endX = 0
+			endY = 0
+			endZ = 0
+		end
+
+		endX = attacker:isMySide() and endX + offsetX or endX - offsetX
+		endY = endY + offsetY
+		endZ = endZ + offsetZ
 	end
 
 	return endX, endY, endZ

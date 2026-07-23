@@ -4,11 +4,11 @@ module("modules.logic.versionactivity3_3.arcade.controller.game.skill.base.Arcad
 
 local ArcadeSkillHitAlertBase = class("ArcadeSkillHitAlertBase", ArcadeSkillHitBase)
 
-function ArcadeSkillHitAlertBase:ctor(params)
+function ArcadeSkillHitAlertBase:ctor(params, entityType, uid)
 	self._alertRound = 0
 	self._curRound = 0
 
-	ArcadeSkillHitAlertBase.super.ctor(self, params)
+	ArcadeSkillHitAlertBase.super.ctor(self, params, entityType, uid)
 end
 
 function ArcadeSkillHitAlertBase:onHit()

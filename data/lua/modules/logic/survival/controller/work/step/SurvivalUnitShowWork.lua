@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUnitShowWork", packa
 
 local SurvivalUnitShowWork = class("SurvivalUnitShowWork", SurvivalStepBaseWork)
 
-function SurvivalUnitShowWork:onStart(context)
+function SurvivalUnitShowWork:onStart2(context)
 	local newUnitIds = {}
 
 	for i, unit in ipairs(self._stepMo.unit) do

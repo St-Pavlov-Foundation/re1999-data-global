@@ -84,7 +84,10 @@ function VersionActivityFixedDungeonMapViewContainer:onContainerInit()
 	end
 
 	VersionActivityFixedDungeonModel.instance:setDungeonBaseMo(self.versionActivityDungeonBaseMo)
-	self.mapElementReward:setShowToastState(true)
+
+	if self.mapElementReward then
+		self.mapElementReward:setShowToastState(true)
+	end
 end
 
 function VersionActivityFixedDungeonMapViewContainer:onUpdateParamInternal(viewParam)

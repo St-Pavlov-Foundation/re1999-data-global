@@ -2,13 +2,13 @@
 
 module("modules.logic.fight.system.work.FightWorkStartBorn", package.seeall)
 
-local FightWorkStartBorn = class("FightWorkStartBorn", BaseWork)
+local FightWorkStartBorn = class("FightWorkStartBorn", FightWorkItem)
 local BornTime = 10
 
 function FightWorkStartBorn:onStart()
 	self.playedVoice = false
 	FightAudioMgr.instance.enterFightVoiceHeroID = nil
-	self._flowParallel = FlowParallel.New()
+	self._flowParallel = self:com_registFlowParallel()
 
 	local entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
 
@@ -53,10 +53,24 @@ function FightWorkStartBorn:onStart()
 		end
 	end
 
+	entityList = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
+
+	for _, entity in ipairs(entityList) do
+		local entityData = entity:getMO()
+
+		if entityData and lua_fight_monster_3d.configDict[entityData.skin] then
+			entity.spine._curAnimState = nil
+
+			local bornWork = entity.spine:registworkPlayAnim("idle")
+
+			self._flowParallel:addWork(bornWork)
+		end
+	end
+
 	TaskDispatcher.runDelay(self._onBornTimeout, self, BornTime)
 	FightController.instance:dispatchEvent(FightEvent.OnStartFightPlayBorn)
-	self._flowParallel:registerDoneListener(self._onBornEnd, self)
-	self._flowParallel:start()
+	self._flowParallel:registFinishCallback(self._onBornEnd, self)
+	self:playWorkAndDone(self._flowParallel)
 end
 
 function FightWorkStartBorn:_playEnterVoice()
@@ -88,11 +102,6 @@ function FightWorkStartBorn:_onBornTimeout()
 end
 
 function FightWorkStartBorn:clearWork()
-	if self._flowParallel then
-		self._flowParallel:stop()
-		self._flowParallel:unregisterDoneListener(self._onBornEnd, self)
-	end
-
 	TaskDispatcher.cancelTask(self._onBornTimeout, self)
 end
 

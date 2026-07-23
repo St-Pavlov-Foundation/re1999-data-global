@@ -166,5 +166,19 @@
     "desc": "language_10073317",
     "attr": "20",
     "progress": 0
+  },
+  {
+    "id": 101,
+    "type": 19,
+    "desc": "language_10121182",
+    "attr": "109371021",
+    "progress": 0
+  },
+  {
+    "id": 102,
+    "type": 19,
+    "desc": "language_10121183",
+    "attr": "109371022",
+    "progress": 0
   }
 ]

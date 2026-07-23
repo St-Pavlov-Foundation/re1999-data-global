@@ -203,11 +203,6 @@ function HeroGroupFightViewLevel:_refreshTarget()
 		gohelper.setActive(self._gonormalcondition, true)
 
 		local condition = DungeonConfig.instance:getFirstEpisodeWinConditionText(normalEpisodeId)
-		local _bossRushCondition = BossRushEnum.LevelCondition[chapterConfig.type]
-
-		if not string.nilorempty(_bossRushCondition) then
-			condition = luaLang(_bossRushCondition)
-		end
 
 		self._txtnormalcondition.text = condition
 

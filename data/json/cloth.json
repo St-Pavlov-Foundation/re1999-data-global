@@ -22,5 +22,13 @@
     "icon": "6",
     "skinId": 300201,
     "desc": "language_10044772"
+  },
+  {
+    "id": 7,
+    "name": "language_10129539",
+    "enname": "Atonal Sequence",
+    "icon": "7",
+    "skinId": 300201,
+    "desc": "language_10129540"
   }
 ]

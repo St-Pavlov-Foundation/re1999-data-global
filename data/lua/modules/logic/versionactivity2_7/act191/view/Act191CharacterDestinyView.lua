@@ -7,6 +7,7 @@ local Act191CharacterDestinyView = class("Act191CharacterDestinyView", BaseView)
 function Act191CharacterDestinyView:onInitView()
 	self._imageicon = gohelper.findChildImage(self.viewGO, "root/#image_icon")
 	self._txtstonename = gohelper.findChildText(self.viewGO, "root/#txt_stonename")
+	self._goEffectItem = gohelper.findChild(self.viewGO, "root/EffectItems/#go_EffectItem")
 	self._simagestone = gohelper.findChildSingleImage(self.viewGO, "root/go_stone/#simage_stone")
 	self._goprestone = gohelper.findChild(self.viewGO, "root/#go_prestone")
 	self._btnprestone = gohelper.findChildButtonWithAudio(self.viewGO, "root/#go_prestone/#btn_prestone")
@@ -36,17 +37,17 @@ end
 function Act191CharacterDestinyView:_btnprestoneOnClick()
 	if self.selectIndex > 1 then
 		self.selectIndex = self.selectIndex - 1
-	end
 
-	self:refreshUI()
+		self:refreshUI()
+	end
 end
 
 function Act191CharacterDestinyView:_btnnextstoneOnClick()
 	if self.selectIndex < #self.stoneIds then
 		self.selectIndex = self.selectIndex + 1
-	end
 
-	self:refreshUI()
+		self:refreshUI()
+	end
 end
 
 function Act191CharacterDestinyView:_btnselectOnClick()
@@ -55,7 +56,8 @@ end
 
 function Act191CharacterDestinyView:_editableInitView()
 	self.actId = Activity191Model.instance:getCurActId()
-	self._goeffect = gohelper.findChild(self.viewGO, "root/effectItem")
+
+	self:buildEffectItem()
 end
 
 function Act191CharacterDestinyView:onOpen()
@@ -77,17 +79,6 @@ function Act191CharacterDestinyView:refreshUI()
 
 	self._levelCos = CharacterDestinyConfig.instance:getDestinyFacetCo(self.stoneId)
 	self.conusmeCo = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(self.stoneId)
-	self._effectItems = self:getUserDataTb_()
-
-	for i = 1, CharacterDestinyEnum.EffectItemCount do
-		local go = gohelper.findChild(self._goeffect, i)
-		local item = self:getUserDataTb_()
-
-		item.go = go
-		item.txt = gohelper.findChildText(go, "txt_dec")
-		item.canvasgroup = go:GetComponent(typeof(UnityEngine.CanvasGroup))
-		self._effectItems[i] = item
-	end
 
 	self:_refreshStoneItem()
 end
@@ -96,10 +87,13 @@ function Act191CharacterDestinyView:_refreshStoneItem()
 	for i, item in ipairs(self._effectItems) do
 		local co = self._levelCos[i]
 
-		item.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, Act191SkillDescComp)
+		if co then
+			local descComp = item.descComp
 
-		item.skillDesc:updateInfo(item.txt, co.desc, self.config)
-		item.skillDesc:setTipParam(0, Vector2(300, 100))
+			descComp:updateInfo(item.txt, co.desc, self.config)
+		end
+
+		gohelper.setActive(item.go, co)
 	end
 
 	self._txtstonename.text = self.conusmeCo.name
@@ -120,6 +114,27 @@ function Act191CharacterDestinyView:onSwitchStone()
 	self.equippingStoneId = self.gameInfo:getStoneId(self.config)
 
 	self:refreshUI()
+end
+
+function Act191CharacterDestinyView:buildEffectItem()
+	self._goeffect = gohelper.findChild(self.viewGO, "root/EffectItems")
+	self._effectItems = self:getUserDataTb_()
+
+	for i = 1, CharacterDestinyEnum.EffectItemCount do
+		local item = self:getUserDataTb_()
+		local go = gohelper.findChild(self._goeffect, i)
+
+		item.go = go
+		item.root = gohelper.clone(self._goEffectItem, go)
+		item.txt = gohelper.findChildText(item.root, "Viewport/Content/go_DescItem/txt_desc")
+		item.descComp = MonoHelper.addNoUpdateLuaComOnceToGo(item.txt.gameObject, Act191SkillDescComp)
+
+		item.descComp:setTipParam(0, Vector2(300, 100))
+
+		self._effectItems[i] = item
+	end
+
+	gohelper.setActive(self._goEffectItem, false)
 end
 
 return Act191CharacterDestinyView

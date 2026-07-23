@@ -225,6 +225,12 @@ function ArcadeHallScene:isCanMove()
 		return
 	end
 
+	local isOpenRefundTipView = ViewMgr.instance:isOpen(ViewName.ArcadeRefundTipView)
+
+	if isOpenRefundTipView then
+		return
+	end
+
 	local container = ViewMgr.instance:getContainer(ViewName.ArcadeQuitTipView)
 
 	if container and container:isOpen() then

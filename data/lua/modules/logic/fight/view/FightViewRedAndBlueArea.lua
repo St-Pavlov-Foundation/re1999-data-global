@@ -229,7 +229,7 @@ function FightViewRedAndBlueArea:getOpRedOrBlueList(opList)
 			end
 		end
 
-		if cardOp and cardOp.cardColor ~= FightEnum.CardColor.None then
+		if cardOp and cardOp.cardColor ~= FightEnum.CardColor.None and not FightHelper.checkIsDevicePowerCard(skillId) then
 			table.insert(self.tempPointList, cardOp.cardColor)
 		end
 	end
@@ -248,8 +248,12 @@ function FightViewRedAndBlueArea:refreshLYContainerAnchorX()
 	contentWidth = math.min(contentWidth, maxContentWidth)
 
 	local halfWidth = contentWidth / 2
+	local cardSkin = FightCardDataHelper.getCardSkin()
+	local offset = FightEnum.SkiId2LYPlayCardAreaOffsetDict[cardSkin]
 
-	recthelper.setAnchorX(self._rectTrLyCardContainer, halfWidth + FightEnum.LYPlayCardAreaOffset)
+	offset = offset or FightEnum.SkiId2LYPlayCardAreaOffsetDict[0]
+
+	recthelper.setAnchorX(self._rectTrLyCardContainer, halfWidth + offset)
 end
 
 function FightViewRedAndBlueArea:onUpdateParam()

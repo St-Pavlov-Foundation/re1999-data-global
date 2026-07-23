@@ -175,6 +175,23 @@ function ActivityCategoryItem:_refreshItem()
 			end
 
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkActivityShowFirstWeekEnter, self)
+		elseif actId == ActivityEnum.Activity.V3a8_DragonBoatActivity_FullView then
+			local redList = {
+				{
+					id = redDotId,
+					uid = actId
+				},
+				{
+					uid = 0,
+					id = RedDotEnum.DotNode.V3a8DragonBoat
+				},
+				{
+					id = RedDotEnum.DotNode.V3a8DragonBoatVoteFinal,
+					uid = V3a8_DragonBoatConfig.instance:getVoteFinalResultActId()
+				}
+			}
+
+			RedDotController.instance:addMultiRedDot(self._goreddot, redList)
 		elseif typeId == ActivityEnum.ActivityTypeID.Act125 then
 			if self._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(actId)
@@ -210,6 +227,21 @@ function ActivityCategoryItem:_refreshItem()
 			RedDotController.instance:addRedDot(self._goreddot, redDotId, nil, self.checkIsAct217NeedReddot, self)
 		elseif actId == ActivityEnum.Activity.V3a5_SchoolStart or actId == VersionActivity3_8Enum.ActivityId.FreeMonthCard then
 			RedDotController.instance:addRedDot(self._goreddot, redDotId)
+		elseif actId == ActivityEnum.Activity.SP02_LinkGift then
+			local infoList_red = {
+				{
+					id = RedDotEnum.DotNode.ActivityNoviceTab,
+					uid = actId
+				},
+				{
+					id = RedDotEnum.DotNode.SPO2LinkGift
+				},
+				{
+					id = RedDotEnum.DotNode.SPO2LinkGiftPackage
+				}
+			}
+
+			RedDotController.instance:addMultiRedDot(self._goreddot, infoList_red, self._checkIsV3a7LinkGiftRed, self)
 		else
 			RedDotController.instance:addRedDot(self._goreddot, dotId, self._mo.id)
 		end
@@ -316,6 +348,16 @@ function ActivityCategoryItem:_checkIsV2a4WarmupRed(redDotIcon)
 	local actId = self._mo.id
 
 	redDotIcon.show = Activity125Controller.instance:checkActRed3(actId)
+
+	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
+end
+
+function ActivityCategoryItem:_checkIsV3a7LinkGiftRed(redDotIcon)
+	redDotIcon:defaultRefreshDot()
+
+	local actId = self._mo.id
+
+	redDotIcon.show = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.ActivityNoviceTab, actId) or ActivityBeginnerController.instance:checkGoodsTaskReward(actId)
 
 	redDotIcon:showRedDot(RedDotEnum.Style.Normal)
 end

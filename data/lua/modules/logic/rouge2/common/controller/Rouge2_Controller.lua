@@ -96,6 +96,11 @@ function Rouge2_Controller:openEnterView(viewParam, isImmediate, callback, callb
 	end
 end
 
+function Rouge2_Controller:enterDungeonView()
+	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Rouge2)
+	DungeonController.instance:enterDungeonView()
+end
+
 function Rouge2_Controller:tryEnd()
 	Rouge2_StatController.instance:setReset()
 	Rouge2_Rpc.instance:sendRouge2AbortRequest(self._onReceiveEndReply, self)
@@ -123,7 +128,6 @@ function Rouge2_Controller:startEndFlow()
 		self.endFlow:addWork(OpenViewAndWaitCloseWork.New(ViewName.Rouge2_SettlementView))
 		self.endFlow:addWork(Rouge2_WaitOpenSettlementUnlockWork.New())
 		self.endFlow:addWork(Rouge2_WaitOpenReviewWork.New())
-		self.endFlow:addWork(Rouge2_WaitResultRecordDoneWork.New())
 		self.endFlow:registerDoneListener(self.onEndFlowDone, self)
 		self.endFlow:start()
 	end

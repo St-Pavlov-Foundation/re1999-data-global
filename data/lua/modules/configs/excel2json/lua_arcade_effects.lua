@@ -15,6 +15,7 @@ local fields = {
 	speed = 7,
 	needShake = 13,
 	direction = 8,
+	uiEffect = 14,
 	id = 1,
 	isPlayOnGrid = 5
 }

@@ -188,6 +188,7 @@ end
 function V3a2_BossRush_MainItem:_onClick()
 	BossRushController.instance:openV3a2LevelDetailView(self._mo)
 	self:_refreshReddot()
+	gohelper.setActive(self._goRed, false)
 end
 
 function V3a2_BossRush_MainItem:_refreshReddot()
@@ -247,7 +248,17 @@ end
 function V3a2_BossRush_MainItem:_refreshRed()
 	local stage = self:_getStage()
 
-	RedDotController.instance:addRedDot(self._goRed, RedDotEnum.DotNode.BossRushBoss, stage)
+	self._reddotItem = RedDotController.instance:addRedDot(self._goRed, RedDotEnum.DotNode.BossRushBoss, stage)
+
+	self._reddotItem:overrideRefreshDotFunc(self._refreshReddotType, self)
+end
+
+function V3a2_BossRush_MainItem:_refreshReddotType()
+	local stage = self:_getStage()
+	local isNew = BossRushRedModel.instance:getIsNewUnlockStage(stage)
+	local type = isNew and RedDotEnum.Style.NewTag or RedDotConfig.instance:getRedDotCO(RedDotEnum.DotNode.BossRushBoss).style
+
+	self._reddotItem:showRedDot(type)
 end
 
 function V3a2_BossRush_MainItem:onDestroy()
@@ -273,6 +284,8 @@ function V3a2_BossRush_MainItem:onDestroyView()
 	if self._simageBG2 then
 		self._simageBG2:UnLoadImage()
 	end
+
+	self:_refreshReddot()
 end
 
 return V3a2_BossRush_MainItem

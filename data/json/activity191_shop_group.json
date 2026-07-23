@@ -138,5 +138,68 @@
     "num": 1,
     "type": "tagShop",
     "groupType": "collection"
+  },
+  {
+    "id": 11501,
+    "coin": 7,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11502,
+    "coin": 10,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11503,
+    "coin": 18,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11601,
+    "coin": 4,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11602,
+    "coin": 7,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11603,
+    "coin": 12,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11701,
+    "coin": 0,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11702,
+    "coin": 0,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
+  },
+  {
+    "id": 11703,
+    "coin": 0,
+    "num": 1,
+    "type": "afterGlowShop",
+    "groupType": "role"
   }
 ]

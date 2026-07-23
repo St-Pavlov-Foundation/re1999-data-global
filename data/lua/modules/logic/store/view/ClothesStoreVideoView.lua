@@ -8,20 +8,27 @@ function ClothesStoreVideoView:onInitView()
 	self._videoRoot = gohelper.findChild(self.viewGO, "#go_has/character/bg/video/videoRoot")
 	self._videoGO = gohelper.findChild(self._videoRoot, "#go_video")
 	self.viewCanvasGroup = gohelper.onceAddComponent(self.viewGO, typeof(UnityEngine.CanvasGroup))
+	self._viewAnim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
 function ClothesStoreVideoView:addEvents()
 	self:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:addEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideoStore, self._onPlaySkinVideoStore, self)
 	self:addEventCb(StoreController.instance, StoreEvent.OnCheckHideSkinVideo, self._onCheckHideSkillVideo, self)
 end
 
 function ClothesStoreVideoView:removeEvents()
 	self:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideo, self._onPlaySkinVideo, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.OnPlaySkinVideoStore, self._onPlaySkinVideoStore, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.OnCheckHideSkinVideo, self._onCheckHideSkillVideo, self)
 end
 
 function ClothesStoreVideoView:_onPlaySkinVideo(goodsMo)
 	self:playSkinVideo(goodsMo)
+end
+
+function ClothesStoreVideoView:_onPlaySkinVideoStore(goodsMo)
+	self:playSkinVideo(goodsMo, true)
 end
 
 function ClothesStoreVideoView:_onCheckHideSkillVideo(goodsId)
@@ -34,7 +41,7 @@ function ClothesStoreVideoView:onOpen()
 	return
 end
 
-function ClothesStoreVideoView:playSkinVideo(goodsMo)
+function ClothesStoreVideoView:playSkinVideo(goodsMo, isStoreMv)
 	self._curPlayGoodsId = nil
 
 	if not goodsMo then
@@ -43,10 +50,7 @@ function ClothesStoreVideoView:playSkinVideo(goodsMo)
 		return
 	end
 
-	local product = goodsMo.config.product
-	local productInfo = string.splitToNumber(product, "#")
-	local skinId = productInfo[2]
-	local skinViewCfg = lua_character_limited.configDict[skinId]
+	local skinViewCfg = self:_getSkinViewCfgByGoodsMo(goodsMo)
 
 	if not skinViewCfg or VersionValidator.instance:isInReviewing() then
 		return
@@ -56,33 +60,79 @@ function ClothesStoreVideoView:playSkinVideo(goodsMo)
 		AudioMgr.instance:trigger(self._stopAudioId)
 	end
 
-	self._hasPlayFinish = false
+	local finishAnimName
 
-	NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
+	self._videoAudioId = 0
+	self._stopAudioId = 0
+	self._mvTime = 0
 
-	self._videoAudioId = skinViewCfg.audio
-	self._stopAudioId = skinViewCfg.stopAudio
+	if isStoreMv == true then
+		self._videoPath = skinViewCfg.storeMv
+		self._videoAudioId = skinViewCfg.storeMvAudio
+		self._stopAudioId = skinViewCfg.storeMvStopAudio
+		finishAnimName = "videoout"
+	else
+		NavigateMgr.instance:addEscape(self.viewName, self._onEscBtnClick, self)
+
+		self._videoAudioId = skinViewCfg.audio
+		self._stopAudioId = skinViewCfg.stopAudio
+		self._mvTime = skinViewCfg.mvtime
+		self._videoPath = string.nilorempty(skinViewCfg.entranceMv) and "" or skinViewCfg.entranceMv
+
+		if not self._videoAudioId or self._videoAudioId == 0 then
+			local limitedVoiceCfg = lua_character_limited_voice.configDict[skinViewCfg.id]
+
+			if limitedVoiceCfg and limitedVoiceCfg.audio then
+				self._videoAudioId = limitedVoiceCfg.audio
+			end
+		end
+	end
+
 	self._stopBgm = self._videoAudioId > 0
-	self._videoPath = string.nilorempty(skinViewCfg.entranceMv) and "" or skinViewCfg.entranceMv
-	self._mvTime = skinViewCfg.mvtime
 
 	if self._stopBgm then
 		self:_stopMainBgm()
 		TaskDispatcher.runDelay(self._stopMainBgm, self, 0.5)
 	end
 
+	if not string.nilorempty(self._videoPath) then
+		self._curPlayGoodsId = goodsMo.goodsId
+	end
+
+	self:_playVideo(self._videoPath, self._mvTime, goodsMo.goodsId, finishAnimName)
+end
+
+function ClothesStoreVideoView:_getSkinViewCfgByGoodsMo(goodsMo)
+	if goodsMo and goodsMo.config then
+		local product = goodsMo.config.product
+		local productInfo = string.splitToNumber(product, "#")
+		local skinId = productInfo[2]
+
+		return lua_character_limited.configDict[skinId]
+	end
+end
+
+function ClothesStoreVideoView:_playVideo(videoPath, mvTime, goodsId, finishAnim)
+	self._hasPlayFinish = false
+	self._mvTime = mvTime
+	self._videoFinishAnim = finishAnim
+
 	gohelper.setActive(self._videoRoot, true)
 
-	if not string.nilorempty(self._videoPath) then
+	if not string.nilorempty(videoPath) then
+		TaskDispatcher.cancelTask(self._hideVideoGo, self)
+
+		self._videoPath = videoPath
+		self._curPlayGoodsId = goodsId
+
 		if not self._videoPlayer then
 			self._videoPlayer, self._videoPlayerGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoGO)
 
 			local uiVideoAdapter = MonoHelper.addNoUpdateLuaComOnceToGo(self._videoPlayerGO, FullScreenVideoAdapter)
 		end
 
-		self._curPlayGoodsId = goodsMo.goodsId
-
-		self._videoPlayer:play(self._videoPath, false, self._videoStatusUpdate, self)
+		self._videoPlayer:play(videoPath, false, self._videoStatusUpdate, self)
+		TaskDispatcher.cancelTask(self._timeout, self)
 
 		if self._mvTime and self._mvTime > 0 then
 			TaskDispatcher.runDelay(self._timeout, self, self._mvTime)
@@ -94,6 +144,7 @@ end
 
 function ClothesStoreVideoView:onClose()
 	self:_stopMovie()
+	TaskDispatcher.cancelTask(self._hideVideoGo, self)
 end
 
 function ClothesStoreVideoView:_onEscBtnClick()
@@ -101,9 +152,13 @@ function ClothesStoreVideoView:_onEscBtnClick()
 end
 
 function ClothesStoreVideoView:_videoStatusUpdate(path, status, errorCode)
-	if status == VideoEnum.PlayerStatus.FinishedPlaying then
+	if status == VideoEnum.PlayerStatus.FinishedPlaying or status == VideoEnum.PlayerStatus.Error then
 		TaskDispatcher.cancelTask(self._timeout, self)
 		self:_playMovieFinish()
+
+		if not string.nilorempty(self._videoFinishAnim) then
+			self._viewAnim:Play(self._videoFinishAnim, 0, 0)
+		end
 	end
 
 	if status == VideoEnum.PlayerStatus.Started or status == VideoEnum.PlayerStatus.StartedSeeking then
@@ -145,6 +200,10 @@ function ClothesStoreVideoView:_stopMovie()
 end
 
 function ClothesStoreVideoView:_playMovieFinish()
+	if self._hasPlayFinish then
+		return
+	end
+
 	self._hasPlayFinish = true
 	self._curPlayGoodsId = nil
 

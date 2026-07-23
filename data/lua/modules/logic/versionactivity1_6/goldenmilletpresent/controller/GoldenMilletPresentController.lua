@@ -48,8 +48,9 @@ end
 
 function GoldenMilletPresentController:_realOpenGoldenMilletPresentView()
 	local isShowRedDot = GoldenMilletPresentModel.instance:isShowRedDot()
+	local viewName = GameBranchMgr.instance:Vxax_ViewName("GoldenMilletPresent", ViewName.GoldenMilletPresent)
 
-	ViewMgr.instance:openView(ViewName.V3a4_GoldenMilletPresentView, {
+	ViewMgr.instance:openView(viewName, {
 		isDisplayView = not isShowRedDot
 	})
 end

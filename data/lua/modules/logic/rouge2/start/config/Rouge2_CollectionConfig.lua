@@ -26,6 +26,8 @@ function Rouge2_CollectionConfig:onConfigLoaded(configName, configTable)
 		self:_onLoadedAttrConfigs(configTable)
 	elseif configName == "rouge2_relics" then
 		self:_onLoadRelicsConfigs(configTable)
+	elseif configName == "rouge2_active_skill" then
+		self:_onLoadActiveSkillConfigs(configTable)
 	end
 end
 
@@ -106,6 +108,54 @@ function Rouge2_CollectionConfig._relicsSortFunc(aInfo, bInfo)
 	end
 
 	return aRelicsCo.id < bRelcisCo.id
+end
+
+function Rouge2_CollectionConfig:_onLoadActiveSkillConfigs(configTable)
+	self._skillId2UpdateAttrList = {}
+	self._skillId2UpdateAttrMap = {}
+	self._skillType2LevelUpSkillList = {}
+	self._skillId2TrialHeroList = {}
+
+	for _, skillCo in ipairs(configTable.configList) do
+		local skillId = skillCo.id
+		local updateAttrList = GameUtil.splitString2(skillCo.updateAttri, true)
+
+		if updateAttrList then
+			local updateAttrMap = {}
+
+			self._skillId2UpdateAttrList[skillId] = updateAttrList
+			self._skillId2UpdateAttrMap[skillId] = updateAttrMap
+
+			for _, attrInfo in ipairs(updateAttrList) do
+				updateAttrMap[attrInfo[1]] = attrInfo[2] or 0
+			end
+		end
+
+		local skillType = skillCo.skillTypeName
+
+		if skillType and skillType ~= 0 then
+			self._skillType2LevelUpSkillList[skillType] = self._skillType2LevelUpSkillList[skillType] or {}
+
+			table.insert(self._skillType2LevelUpSkillList[skillType], skillCo)
+		end
+
+		self._skillId2TrialHeroList[skillId] = GameUtil.splitString2(skillCo.hero_trial, true)
+	end
+
+	for _, skillList in pairs(self._skillType2LevelUpSkillList) do
+		table.sort(skillList, self._levelUpSkillSortFunc)
+	end
+end
+
+function Rouge2_CollectionConfig._levelUpSkillSortFunc(aSkillCo, bSkillCo)
+	local aRare = aSkillCo.rare
+	local bRare = bSkillCo.rare
+
+	if aRare ~= bRare then
+		return aRare < bRare
+	end
+
+	return aSkillCo.id < bSkillCo.id
 end
 
 function Rouge2_CollectionConfig:getRelicsConfig(relicsId)
@@ -213,6 +263,100 @@ function Rouge2_CollectionConfig:getBaseRelicsId(updateId)
 	local baseRelicsId = self._updateId2BaseRelicsMap and self._updateId2BaseRelicsMap[updateId]
 
 	return baseRelicsId
+end
+
+function Rouge2_CollectionConfig:getSkillUpdateAttrList(skillId)
+	local updateAttrList = self._skillId2UpdateAttrList and self._skillId2UpdateAttrList[skillId]
+
+	return updateAttrList
+end
+
+function Rouge2_CollectionConfig:getMaxSkillUpdateAttrList(skillId)
+	local findSkillId = skillId
+	local updateAttrList
+	local maxFindDepth = 10
+
+	while findSkillId and findSkillId ~= 0 and maxFindDepth > 0 do
+		updateAttrList = self:getSkillUpdateAttrList(findSkillId)
+
+		local updateAttrNum = updateAttrList and #updateAttrList or 0
+
+		if updateAttrNum > 0 then
+			break
+		end
+
+		maxFindDepth = maxFindDepth - 1
+		findSkillId = self:getPreLevelActiveSkillId(findSkillId)
+	end
+
+	return updateAttrList or {}
+end
+
+function Rouge2_CollectionConfig:isSkillUpdateAttr(skillId, attrId)
+	local attrUpdateMap = self._skillId2UpdateAttrMap and self._skillId2UpdateAttrMap[skillId]
+	local attrUpdateValue = attrUpdateMap and attrUpdateMap[attrId]
+
+	return attrUpdateValue and attrUpdateValue ~= 0
+end
+
+function Rouge2_CollectionConfig:getSkillListBySkillType(skillType)
+	local skillList = self._skillType2LevelUpSkillList and self._skillType2LevelUpSkillList[skillType]
+
+	return skillList
+end
+
+function Rouge2_CollectionConfig:getPreLevelActiveSkillId(skillId)
+	local skillCo = self:getActiveSkillConfig(skillId)
+	local skillType = skillCo and skillCo.skillTypeName
+	local skillList = self:getSkillListBySkillType(skillType)
+
+	if skillList then
+		for i = 2, #skillList do
+			if skillList[i].id == skillId then
+				return skillList[i - 1].id
+			end
+		end
+	end
+end
+
+function Rouge2_CollectionConfig:getTrialHeroListBySkillId(skillId)
+	return self._skillId2TrialHeroList and self._skillId2TrialHeroList[skillId]
+end
+
+function Rouge2_CollectionConfig:getItemBattleTagMap(itemId)
+	local tagTab = self:_getOrCreateItemBattleTagTab(itemId)
+
+	return tagTab and tagTab.map or {}
+end
+
+function Rouge2_CollectionConfig:getItemBattleTagList(itemId)
+	local tagTab = self:_getOrCreateItemBattleTagTab(itemId)
+
+	return tagTab and tagTab.list or {}
+end
+
+function Rouge2_CollectionConfig:_getOrCreateItemBattleTagTab(itemId)
+	local tagTab = self._itemBattleTagCache and self._itemBattleTagCache[itemId]
+
+	if not tagTab then
+		local itemCo = Rouge2_BackpackHelper.getItemConfig(itemId)
+		local battleTag = itemCo and itemCo.battleTag or ""
+		local tagList = string.splitToNumber(battleTag, "|")
+		local tagMap = {}
+
+		for _, tagId in ipairs(tagList) do
+			tagMap[tagId] = true
+		end
+
+		tagTab = {
+			list = tagList,
+			map = tagMap
+		}
+		self._itemBattleTagCache = self._itemBattleTagCache or {}
+		self._itemBattleTagCache[itemId] = tagTab
+	end
+
+	return tagTab
 end
 
 Rouge2_CollectionConfig.instance = Rouge2_CollectionConfig.New()

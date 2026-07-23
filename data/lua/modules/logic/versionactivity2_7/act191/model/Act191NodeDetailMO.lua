@@ -5,26 +5,33 @@ module("modules.logic.versionactivity2_7.act191.model.Act191NodeDetailMO", packa
 local Act191NodeDetailMO = pureTable("Act191NodeDetailMO")
 
 function Act191NodeDetailMO:init(str)
-	local tbl = cjson.decode(str)
+	local isOk, result = pcall(cjson.decode, str)
 
-	self.type = tbl.type
-	self.shopId = tbl.shopId
-	self.shopFreshNum = tbl.shopFreshNum
-	self.shopPosMap = tbl.shopPosMap
-	self.boughtSet = tbl.boughtSet
-	self.enhanceList = tbl.enhanceList
-	self.enhanceNumList = tbl.enhanceNumList
-	self.eventId = tbl.eventId
-	self.fightEventId = tbl.fightEventId
+	if not isOk then
+		logError("json非法: Act191NodeDetailMO")
 
-	if tbl.matchInfo then
-		self.matchInfo = Act191MatchMO.New()
-
-		self.matchInfo:init(tbl.matchInfo)
+		return
 	end
 
-	self.replaceNum = tbl.replaceNum
-	self.changeItemList = tbl.changeItemList
+	self.type = result.type
+	self.shopId = result.shopId
+	self.shopFreshNum = result.shopFreshNum
+	self.freeRefreshNum = result.freeRefreshNum
+	self.shopPosMap = result.shopPosMap
+	self.boughtSet = result.boughtSet
+	self.enhanceList = result.enhanceList
+	self.enhanceNumList = result.enhanceNumList
+	self.eventId = result.eventId
+	self.fightEventId = result.fightEventId
+
+	if result.matchInfo then
+		self.matchInfo = Act191MatchMO.New()
+
+		self.matchInfo:init(result.matchInfo)
+	end
+
+	self.replaceNum = result.replaceNum
+	self.changeItemList = result.changeItemList
 end
 
 return Act191NodeDetailMO

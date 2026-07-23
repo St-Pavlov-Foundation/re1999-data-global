@@ -12,7 +12,7 @@ function WaitGuideActionFightRoundEnd:onStart(context)
 end
 
 function WaitGuideActionFightRoundEnd:onCheckGuideBeforeOperate()
-	FightMsgMgr.replyMsg(FightMsgId.CheckGuideBeforeOperate, true)
+	FightMsgMgr.replyMsg(FightMsgId.CheckGuideBeforeOperate, self.guideId)
 end
 
 function WaitGuideActionFightRoundEnd:onContinueGuideBeforeOperate()

@@ -80,9 +80,13 @@ function StoryStepBGMo:init(info)
 	self.bgType = info[1]
 
 	if info[2] ~= "" then
-		local path = string.find(info[2], "/") and info[2] or "bg/" .. info[2]
+		if self.bgType == StoryEnum.BgType.Video then
+			self.bgImg = info[2]
+		else
+			local path = string.find(info[2], "/") and info[2] or "bg/" .. info[2]
 
-		self.bgImg = StoryBgZoneModel.instance:getRightBgZonePath(path)
+			self.bgImg = StoryBgZoneModel.instance:getRightBgZonePath(path)
+		end
 	end
 
 	self.transType = info[3]

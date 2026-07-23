@@ -7,6 +7,7 @@ local SimpleListItem = class("SimpleListItem", LuaCompBase)
 function SimpleListItem:ctor(param)
 	self.viewContainer = param.viewContainer
 	self.simpleListComp = param.simpleListComp
+	self.cellParam = param.cellParam
 end
 
 function SimpleListItem:init(viewGO)

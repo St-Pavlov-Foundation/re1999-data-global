@@ -2588,5 +2588,190 @@
     "id": 3360012,
     "eventName": "play_shenyuan_main_music_3_6",
     "bankName": "activity_shenyuan_music"
+  },
+  {
+    "id": 3370001,
+    "eventName": "play_activitymusic_theme_3_7",
+    "bankName": "activity3_7_music"
+  },
+  {
+    "id": 3370002,
+    "eventName": "play_battle_beiai_3_7_merelbattle",
+    "bankName": "activity_beiai_combataudio"
+  },
+  {
+    "id": 3370003,
+    "eventName": "play_activitymusic_lunxian_3_7",
+    "bankName": "activity3_7_music"
+  },
+  {
+    "id": 3370004,
+    "eventName": "play_battle_beiai_3_7_bossfight",
+    "bankName": "activity_beiai_combataudio"
+  },
+  {
+    "id": 3370005,
+    "eventName": "play_battle_beiai_3_7_normalfight",
+    "bankName": "activity_beiai_combataudio"
+  },
+  {
+    "id": 3370006,
+    "eventName": "play_ui_checkpoint_noise_three_stages",
+    "bankName": "activtiy_wulu_combataudio_noise"
+  },
+  {
+    "id": 3370007,
+    "eventName": "play_ui_checkpoint_noise_highland_air_loop",
+    "bankName": "activtiy_gudu_combataudio_noise"
+  },
+  {
+    "id": 3370008,
+    "eventName": "play_ui_checkpoint_noise_wind",
+    "bankName": "activtiy_shiji_combataudio_noise"
+  },
+  {
+    "id": 3370009,
+    "eventName": "play_ui_checkpoint_noise_cache_loop",
+    "bankName": "activtiy_lushang_combataudio_noise"
+  },
+  {
+    "id": 3370010,
+    "eventName": "play_ui_checkpoint_noise_mental_clinic",
+    "bankName": "activtiy_jinyei_combataudio_noise"
+  },
+  {
+    "id": 3370011,
+    "eventName": "play_ui_checkpoint_noise_tosca",
+    "bankName": "activtiy_jinyei_combataudio_noise"
+  },
+  {
+    "id": 3370012,
+    "eventName": "play_ui_checkpoint_noise_wind",
+    "bankName": "activtiy_shiji_combataudio_noise"
+  },
+  {
+    "id": 3370013,
+    "eventName": "play_ui_checkpoint_noise_gate",
+    "bankName": "activtiy_shuori_combataudio_noise"
+  },
+  {
+    "id": 3370014,
+    "eventName": "play_ui_checkpoint_noise_base",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3370015,
+    "eventName": "play_soudache_main_theme_camp_3_7",
+    "bankName": "activity_soudache_music"
+  },
+  {
+    "id": 3370016,
+    "eventName": "play_soudache_explore_3_7",
+    "bankName": "activity_soudache_music"
+  },
+  {
+    "id": 3370017,
+    "eventName": "play_soudache_twist_3_7",
+    "bankName": "activity_soudache_music"
+  },
+  {
+    "id": 3370018,
+    "eventName": "play_battle_beiai_3_7_soudache_normalfight",
+    "bankName": "activity_soudache_combataudio"
+  },
+  {
+    "id": 3370019,
+    "eventName": "stop_activitymusic_soudache_3_7",
+    "bankName": "activity_soudache_music"
+  },
+  {
+    "id": 3380001,
+    "eventName": "play_activitymusic_theme_3_8",
+    "bankName": "activity3_8_music"
+  },
+  {
+    "id": 3380002,
+    "eventName": "play_activitymusic_shensheng_3_8",
+    "bankName": "activity3_8_music"
+  },
+  {
+    "id": 3380003,
+    "eventName": "play_ui_dungeon_music_main",
+    "bankName": "dungeon_1_6_music"
+  },
+  {
+    "id": 3380004,
+    "eventName": "play_battle_shiji_3_8_normalfight",
+    "bankName": "activity_shiji_3_8_combataudio"
+  },
+  {
+    "id": 3380005,
+    "eventName": "play_battle_shiji_3_8_bossfight",
+    "bankName": "activity_shiji_3_8_combataudio"
+  },
+  {
+    "id": 3380006,
+    "eventName": "play_ui_checkpoint_noise_sea_light",
+    "bankName": "activity_shiji_3_8_combataudio_noise"
+  },
+  {
+    "id": 3385001,
+    "eventName": "play_battle_langchao_s02_normalfight",
+    "bankName": "activity_langchao_combataudio"
+  },
+  {
+    "id": 3385002,
+    "eventName": "play_battle_langchao_s02_bossfight",
+    "bankName": "activity_langchao_combataudio"
+  },
+  {
+    "id": 3385003,
+    "eventName": "play_activitymusic_theme_s02",
+    "bankName": "activity_s02_music"
+  },
+  {
+    "id": 3385004,
+    "eventName": "play_qieluomei_qianghua_music",
+    "bankName": "activity_qieluomei_music"
+  },
+  {
+    "id": 3385005,
+    "eventName": "play_qieluomei_map_music",
+    "bankName": "activity_qieluomei_music"
+  },
+  {
+    "id": 3385006,
+    "eventName": "play_qieluomei_xuanguan_music",
+    "bankName": "activity_qieluomei_music"
+  },
+  {
+    "id": 3385007,
+    "eventName": "stop_activitymusic_qieluomei_s02",
+    "bankName": "activity_qieluomei_music"
+  },
+  {
+    "id": 3385008,
+    "eventName": "play_ui_checkpoint_noise_prison_hall",
+    "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3385009,
+    "eventName": "play_ui_checkpoint_noise_base",
+    "bankName": "activtiy_youyu_combataudio_noise"
+  },
+  {
+    "id": 3385010,
+    "eventName": "play_ui_checkpoint_noise_assembly_room",
+    "bankName": "activity_langchao_combataudio_noise"
+  },
+  {
+    "id": 3385011,
+    "eventName": "play_ui_checkpoint_noise_energy_room",
+    "bankName": "activity_langchao_combataudio_noise"
+  },
+  {
+    "id": 3385012,
+    "eventName": "play_ui_checkpoint_noise_subconscious",
+    "bankName": "activity_langchao_combataudio_noise"
   }
 ]

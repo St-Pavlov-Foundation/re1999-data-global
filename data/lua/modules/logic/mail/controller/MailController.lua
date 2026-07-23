@@ -55,7 +55,8 @@ function MailController:initInfo()
 			id = mailMo.id,
 			title = mailMo.title,
 			is_lock = mailMo.isLock == true,
-			is_read = mailMo.state == MailEnum.ReadStatus.Read
+			is_read = mailMo.state == MailEnum.ReadStatus.Read,
+			mail_id = mailMo.mailId
 		}
 
 		if mailMo:haveBonus() then

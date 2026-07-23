@@ -14,7 +14,7 @@ function GuiLive2d.Create(gameObj, isStory)
 	local ret = MonoHelper.addNoUpdateLuaComOnceToGo(gameObj, GuiLive2d)
 
 	ret._isStory = isStory
-	ret._scale = 88
+	ret._scale = CharacterVoiceEnum.Live2dScale
 
 	return ret
 end
@@ -41,6 +41,54 @@ function GuiLive2d:ctor()
 	self._qualityScale, self._adapterScaleOnCreate = GuiLive2d.GetScaleByDevice()
 end
 
+function GuiLive2d:getCreateType()
+	return self._createType
+end
+
+function GuiLive2d:getRawImageLocalPos()
+	return recthelper.getAnchor(self._rawImageTransform)
+end
+
+function GuiLive2d:setCreateType(createType)
+	self._createType = createType
+	self._scale = CharacterVoiceEnum.getLive2dScale(self._createType)
+	self._offsetX = nil
+	self._offsetY = nil
+
+	TaskDispatcher.cancelTask(self._updateRawImagePos, self)
+
+	if not self._rawImageGo then
+		self._rawImageGo = gohelper.create2d(self._gameTr.parent.gameObject, "live2d_rawImage")
+		self._rawImageTransform = self._rawImageGo.transform
+
+		self:setSpineScale(self._rawImageGo)
+		self:refreshRawImagePos()
+	end
+end
+
+function GuiLive2d:refreshRawImagePos()
+	if self._rawImageTransform then
+		CharacterVoiceEnum.setRTRawPos(self._rawImageTransform, self._createType, self._rtViewName)
+	end
+end
+
+function GuiLive2d:setOffsetPos(offsetX, offsetY)
+	self._offsetX = offsetX
+	self._offsetY = offsetY
+
+	TaskDispatcher.cancelTask(self._updateRawImagePos, self)
+	TaskDispatcher.runRepeat(self._updateRawImagePos, self, 0)
+end
+
+function GuiLive2d:_updateRawImagePos()
+	if not self._cameraVisible then
+		return
+	end
+
+	self:refreshRawImagePos()
+	CharacterVoiceEnum.setLive2dOffset(self, self._offsetX, self._offsetY, self._rtViewName)
+end
+
 function GuiLive2d:addEventListeners()
 	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 end
@@ -57,7 +105,7 @@ function GuiLive2d:_onScreenResize()
 	if self:_needChangeRTSize() then
 		local scale = GameUtil.getAdapterScale()
 
-		self._cameraSize = CharacterVoiceEnum.RTCameraSize / scale
+		self._cameraSize = CharacterVoiceEnum.getCameraSize(self._createType) / scale
 
 		if self._cameraSize > 0 and self._camera then
 			self._camera.orthographicSize = self._cameraSize
@@ -258,6 +306,8 @@ function GuiLive2d:_doProcessEffect()
 				self._uiEffectGosClone[i] = goClone
 			end
 		end
+
+		TaskDispatcher.runRepeat(self._realtimeAdjustPos, self, 0.1)
 	end
 
 	self:_initEffectLayer()
@@ -483,6 +533,10 @@ function GuiLive2d:setShareRT(value, viewName)
 	self._rtViewName = viewName
 end
 
+function GuiLive2d:getRTViewName()
+	return self._rtViewName
+end
+
 function GuiLive2d.getTextureSizeByCameraSize(cameraSize)
 	local textureSize = 1600
 
@@ -514,6 +568,18 @@ function GuiLive2d:_loadL2dResFinish()
 
 	self._camera = camera
 
+	if self._openBloomView and camera then
+		camera.nearClipPlane = -30
+		camera.farClipPlane = 30
+	end
+
+	if self._rtViewName == ViewName.CharacterSkinGainView and camera then
+		camera.nearClipPlane = -30
+		camera.farClipPlane = 30
+	end
+
+	transformhelper.setLocalPosXY(self._cameraGo.transform, 0, CharacterVoiceEnum.getCameraOffsetY(self._createType))
+
 	if self._cameraLayer then
 		self:setCameraLayer(self._cameraLayer)
 	end
@@ -521,7 +587,7 @@ function GuiLive2d:_loadL2dResFinish()
 	if self:_needChangeRTSize() then
 		local scale = GameUtil.getAdapterScale()
 
-		self._cameraSize = CharacterVoiceEnum.RTCameraSize / scale
+		self._cameraSize = CharacterVoiceEnum.getCameraSize(self._createType) / scale
 	end
 
 	if self._cameraSize > 0 then
@@ -536,12 +602,13 @@ function GuiLive2d:_loadL2dResFinish()
 		textureSize = maxTextureSize
 	end
 
-	self._rawImageGo = UnityEngine.GameObject.New("live2d_rawImage")
-	self._rawImageTransform = self._rawImageGo.transform
-	self._rawImageTransform.parent = self._gameTr.parent
+	if not self._rawImageGo then
+		self._rawImageGo = gohelper.create2d(self._gameTr.parent.gameObject, "live2d_rawImage")
+		self._rawImageTransform = self._rawImageGo.transform
 
-	self:setSpineScale(self._rawImageGo)
-	transformhelper.setLocalPos(self._rawImageTransform, 0, 1000, 0)
+		self:setSpineScale(self._rawImageGo)
+		self:refreshRawImagePos()
+	end
 
 	local image = gohelper.onceAddComponent(self._rawImageGo, gohelper.Type_RawImage)
 
@@ -669,6 +736,7 @@ function GuiLive2d:onDestroy()
 
 	TaskDispatcher.cancelTask(self._delayProcessEffect, self)
 	TaskDispatcher.cancelTask(self._realtimeAdjustPos, self)
+	TaskDispatcher.cancelTask(self._updateRawImagePos, self)
 
 	self._uiEffectGos = nil
 	self._uiEffectGosClone = nil

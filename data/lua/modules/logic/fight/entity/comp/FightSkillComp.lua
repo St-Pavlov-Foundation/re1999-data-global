@@ -70,8 +70,11 @@ FightSkillComp.FrameEventHandlerCls = {
 	FightTLPlayActionByEffectType,
 	FightTLExecuteEffectType,
 	FightTLSetEffectTexture,
+	FightTLUnnamedEffect,
+	FightTLDeviceCardTriggerPowerEffect,
 	[1001] = FightTLEventObjFly,
-	[1002] = FightTLEventSetSign
+	[1002] = FightTLEventSetSign,
+	[2001] = FightScreenTextByTimeline
 }
 
 function FightSkillComp:onConstructor(entity)

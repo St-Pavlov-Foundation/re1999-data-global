@@ -5,12 +5,13 @@ module("modules.logic.fight.model.data.FightCustomData", package.seeall)
 local FightCustomData = FightDataClass("FightCustomData")
 
 FightCustomData.CustomDataType = {
-	Act191 = 3,
-	WeekwalkVer2 = 2,
 	Act183 = 1,
-	Odyssey = 5,
+	WeekwalkVer2 = 2,
+	Act191 = 3,
+	ShowTaoFuBen = 9,
 	Survival = 4,
 	Rouge2 = 7,
+	Odyssey = 5,
 	TowerCompose = 8,
 	Act128Sp = 6
 }
@@ -22,7 +23,8 @@ local data2Json = {
 	[FightCustomData.CustomDataType.Odyssey] = true,
 	[FightCustomData.CustomDataType.Act128Sp] = true,
 	[FightCustomData.CustomDataType.Rouge2] = true,
-	[FightCustomData.CustomDataType.TowerCompose] = true
+	[FightCustomData.CustomDataType.TowerCompose] = true,
+	[FightCustomData.CustomDataType.ShowTaoFuBen] = true
 }
 
 function FightCustomData:onConstructor(proto)

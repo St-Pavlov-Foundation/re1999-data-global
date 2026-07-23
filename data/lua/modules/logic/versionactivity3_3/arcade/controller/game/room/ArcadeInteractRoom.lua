@@ -12,7 +12,7 @@ function ArcadeInteractRoom:onEnter()
 	return
 end
 
-function ArcadeInteractRoom:initEntities()
+function ArcadeInteractRoom:onInitEntities()
 	local allInitEntityDataList = {}
 
 	self:_fillInteractData(allInitEntityDataList)
@@ -26,8 +26,9 @@ function ArcadeInteractRoom:_fillInteractData(refDataList)
 	for _, interactive in ipairs(interactiveList) do
 		local interactiveId = interactive.id
 		local sizeX, sizeY = ArcadeConfig.instance:getInteractiveGrid(interactiveId)
+		local type = ArcadeConfig.instance:getInteractiveType(interactiveId)
 		local interactiveData = {
-			entityType = ArcadeGameEnum.EntityType.BaseInteractive,
+			entityType = type,
 			id = interactiveId,
 			x = interactive.x,
 			y = interactive.y,
@@ -47,7 +48,7 @@ function ArcadeInteractRoom:_fillInitPortalData(refDataList)
 	local useCoordinateList = portalCoordinateList
 
 	if coordinateCount < portalCount then
-		logError(string.format("ArcadeInteractRoom:_fillInitPortalData error, coordinate not enough, roomId:%s portal:%s coordinate:%s", self.id, portalCount, coordinateCount))
+		logError(string.format("ArcadeInteractRoom:_fillInitPortalData error, coordinate not enough, roomId:%s portal count:%s coordinate count:%s", self.id, portalCount, coordinateCount))
 	elseif portalCount < coordinateCount then
 		useCoordinateList = {}
 

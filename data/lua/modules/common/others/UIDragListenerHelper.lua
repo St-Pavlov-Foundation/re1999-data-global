@@ -93,11 +93,12 @@ function UIDragListenerHelper:create(go, userParams)
 	self:release()
 
 	self._transform = go.transform
+	self._dragInfo.userParams = userParams or {}
 	self._csDragObj = csUIDragListener.Get(go)
 
-	self._csDragObj:AddDragBeginListener(self._onDragBegin, self, userParams)
-	self._csDragObj:AddDragListener(self._onDragging, self, userParams)
-	self._csDragObj:AddDragEndListener(self._onDragEnd, self, userParams)
+	self._csDragObj:AddDragBeginListener(self._onDragBegin, self)
+	self._csDragObj:AddDragListener(self._onDragging, self)
+	self._csDragObj:AddDragEndListener(self._onDragEnd, self)
 end
 
 function UIDragListenerHelper:createByScrollRect(scrollRectCmp, userParams)
@@ -160,7 +161,7 @@ function UIDragListenerHelper:_refreshSwipeDir()
 	end
 end
 
-function UIDragListenerHelper:_onDragBegin(userParams, pointerEventData)
+function UIDragListenerHelper:_onDragBegin(_, pointerEventData)
 	self:clear()
 
 	local t = self._dragInfo
@@ -172,10 +173,10 @@ function UIDragListenerHelper:_onDragBegin(userParams, pointerEventData)
 	t.screenPos_st = t.screenPos
 
 	self:_refreshSwipeDir()
-	self:dispatchEvent(UIDragListenerHelper.EventBegin, self, userParams)
+	self:dispatchEvent(UIDragListenerHelper.EventBegin, self, t.userParams)
 end
 
-function UIDragListenerHelper:_onDragging(userParams, pointerEventData)
+function UIDragListenerHelper:_onDragging(_, pointerEventData)
 	local t = self._dragInfo
 
 	t.screenPos = pointerEventData.position
@@ -183,10 +184,10 @@ function UIDragListenerHelper:_onDragging(userParams, pointerEventData)
 	t.delta = pointerEventData.delta
 
 	self:_refreshSwipeDir()
-	self:dispatchEvent(UIDragListenerHelper.EventDragging, self, userParams)
+	self:dispatchEvent(UIDragListenerHelper.EventDragging, self, t.userParams)
 end
 
-function UIDragListenerHelper:_onDragEnd(userParams, pointerEventData)
+function UIDragListenerHelper:_onDragEnd(_, pointerEventData)
 	local t = self._dragInfo
 
 	t.screenPos = pointerEventData.position
@@ -195,7 +196,7 @@ function UIDragListenerHelper:_onDragEnd(userParams, pointerEventData)
 	t.isDragging = false
 	t.screenPos_ed = t.screenPos
 
-	self:dispatchEvent(UIDragListenerHelper.EventEnd, self, userParams)
+	self:dispatchEvent(UIDragListenerHelper.EventEnd, self, t.userParams)
 end
 
 function UIDragListenerHelper:isStoped()

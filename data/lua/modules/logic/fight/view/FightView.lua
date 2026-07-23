@@ -152,12 +152,16 @@ function FightView:onOpen()
 end
 
 function FightView:_refreshDouQuQu()
-	local isDouQuQu = FightDataHelper.fieldMgr:isDouQuQu()
+	local isDouQuQu = FightDataHelper.fieldMgr:isDouQuQu() or FightDataHelper.fieldMgr:is191DouQuQu()
 
 	if isDouQuQu then
 		gohelper.setActive(self._enemyinfoRoot, false)
 
 		if FightDataModel.instance.douQuQuMgr and FightDataModel.instance.douQuQuMgr.isRecord then
+			return
+		end
+
+		if FightDataHelper.fieldMgr:is191DouQuQu() then
 			return
 		end
 

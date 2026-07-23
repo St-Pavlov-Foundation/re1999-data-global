@@ -5,7 +5,7 @@ module("modules.logic.versionactivity1_6.goldenmilletpresent.model.GoldenMilletP
 local GoldenMilletPresentModel = class("GoldenMilletPresentModel", BaseModel)
 
 function GoldenMilletPresentModel:getGoldenMilletPresentActId()
-	return ActivityEnum.Activity.V3a4_GoldenMilletPresent
+	return ActivityConfig.instance:getConstAsNum(30700, ActivityEnum.Activity.V3a4_GoldenMilletPresent)
 end
 
 function GoldenMilletPresentModel:isGoldenMilletPresentOpen(notOpenToast)

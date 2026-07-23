@@ -26,19 +26,16 @@ function FightPreloadOneTimelineRefWork:onStart()
 	logNormal("加载timeline 资源 .. " .. tostring(self.timelineName))
 	TaskDispatcher.runDelay(self._delayDone, self, 3)
 
-	self.timelineLoader = MultiAbLoader.New()
+	self.loader = self.timelineItem:addComponent(FightLoaderComponent)
 
-	self.timelineLoader:addPath(self.assetUrl)
-	self.timelineLoader:startLoad(self.onLoadTimelineDone, self)
+	self.loader:loadAsset(self.assetUrl, self.onLoadTimelineDone, self)
 end
 
-function FightPreloadOneTimelineRefWork:onLoadTimelineDone()
-	local assetItem = self.timelineLoader:getFirstAssetItem()
+function FightPreloadOneTimelineRefWork:onLoadTimelineDone(success, assetItem)
+	if not success then
+		self.timelineItem:onDone(true)
 
-	if not assetItem then
-		logError(string.format("预加载timeline资源失败，timelineName : ", self.timelineName))
-
-		return self:onDone(true)
+		return
 	end
 
 	self.timelineItem:setTimelineAssetItem(assetItem)
@@ -55,14 +52,7 @@ function FightPreloadOneTimelineRefWork:onLoadTimelineDone()
 	end
 
 	logNormal("开始加载timeline引用的资源")
-
-	self.resLoader = MultiAbLoader.New()
-
-	for _, res in ipairs(refResList) do
-		self.resLoader:addPath(res)
-	end
-
-	self.resLoader:startLoad(self.onLoadTimelineResDone, self)
+	self.loader:loadListAsset(refResList, nil, self.onLoadTimelineResDone, self)
 end
 
 function FightPreloadOneTimelineRefWork:onLoadTimelineResDone()
@@ -73,18 +63,6 @@ end
 
 function FightPreloadOneTimelineRefWork:clearWork()
 	TaskDispatcher.cancelTask(self._delayDone, self)
-
-	if self.timelineLoader then
-		self.timelineLoader:dispose()
-
-		self.timelineLoader = nil
-	end
-
-	if self.resLoader then
-		self.resLoader:dispose()
-
-		self.resLoader = nil
-	end
 end
 
 function FightPreloadOneTimelineRefWork:_delayDone()

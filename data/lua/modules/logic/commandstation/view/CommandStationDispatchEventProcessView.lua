@@ -330,7 +330,14 @@ function CommandStationDispatchEventProcessView:_updateEventInfo(eventConfig)
 	local eventTxtConfig = eventTextId and lua_copost_event_text.configDict[eventTextId]
 
 	self._txtDescr.text = eventTxtConfig and eventTxtConfig.text
+
+	ZProj.UGUIHelper.RebuildLayout(self._txtDescr.transform)
+
 	self._txtspecialtip.text = eventConfig.needchaText
+
+	local showTip = not string.nilorempty(eventConfig.needchaText)
+
+	gohelper.setActive(self._txtspecialtip, showTip)
 end
 
 function CommandStationDispatchEventProcessView:_updateEventState(eventConfig)

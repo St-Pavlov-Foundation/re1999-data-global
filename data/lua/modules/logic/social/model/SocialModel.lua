@@ -340,6 +340,18 @@ function SocialModel:getSelectFriend()
 	end
 end
 
+function SocialModel:isSelectSocialBg()
+	local skinkey = PlayerPrefsKey.SocialFriendsViewSelectOwnSkin .. tostring(PlayerModel.instance:getPlayinfo().userId)
+
+	return PlayerPrefsHelper.getNumber(skinkey, SocialEnum.SelectEnum.Self) == SocialEnum.SelectEnum.Self
+end
+
+function SocialModel:setSelectSocialBg(isSelf)
+	local skinkey = PlayerPrefsKey.SocialFriendsViewSelectOwnSkin .. tostring(PlayerModel.instance:getPlayinfo().userId)
+
+	PlayerPrefsHelper.setNumber(skinkey, isSelf and SocialEnum.SelectEnum.Self or SocialEnum.SelectEnum.Friend)
+end
+
 SocialModel.instance = SocialModel.New()
 
 return SocialModel

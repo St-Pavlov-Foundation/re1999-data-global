@@ -13,6 +13,13 @@ function FightCardChangeEffect:onStart(context)
 	TaskDispatcher.runDelay(self._delayDone, self, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 end
 
+FightCardChangeEffect.cardSkin2LvUpEffectPath = {
+	[672802] = FightPreloadOthersWork.LvUpEffect2Path
+}
+FightCardChangeEffect.cardSkin2LvDownEffectPath = {
+	[672802] = FightPreloadOthersWork.LvDownEffect2Path
+}
+
 function FightCardChangeEffect:_playEffects()
 	self._effectGOList = {}
 	self._effectLoaderList = {}
@@ -35,11 +42,14 @@ function FightCardChangeEffect:_playEffects()
 	}
 
 	local effectPath
+	local cardSkin = FightCardDataHelper.getCardSkin()
+	local lvUpEffectPath = FightCardChangeEffect.cardSkin2LvUpEffectPath[cardSkin] or FightPreloadOthersWork.LvUpEffectPath
+	local lvDownEffectPath = FightCardChangeEffect.cardSkin2LvDownEffectPath[cardSkin] or FightPreloadOthersWork.LvDownEffectPath
 
 	if self._changeFailType then
-		effectPath = self._changeFailType == FightEnum.CardRankChangeFail.UpFail and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
+		effectPath = self._changeFailType == FightEnum.CardRankChangeFail.UpFail and lvUpEffectPath or lvDownEffectPath
 	else
-		effectPath = oldCardLv < newCardLevel and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
+		effectPath = oldCardLv < newCardLevel and lvUpEffectPath or lvDownEffectPath
 	end
 
 	effectLoader:startLoad(effectPath, self._onLvEffectLoaded, self)
@@ -141,6 +151,7 @@ function FightCardChangeEffect:_onLvAnimLoaded(animLoader)
 		self._animCompList = self._animCompList or {}
 
 		table.insert(self._animCompList, animator)
+		recthelper.setAnchor(cardGO.transform, 0, 0)
 	end
 end
 

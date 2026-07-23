@@ -313,7 +313,7 @@ function TowerModel:updateTrialHeroSeason(season)
 end
 
 function TowerModel:getTrialHeroSeason()
-	return self.trialHeroSeason
+	return self.trialHeroSeason or 0
 end
 
 function TowerModel:resetTowerSubEpisode(msg)

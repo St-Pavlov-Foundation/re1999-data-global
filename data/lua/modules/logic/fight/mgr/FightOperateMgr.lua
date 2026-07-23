@@ -22,6 +22,12 @@ function FightOperateMgr:onStageChanged(curStage, preStage)
 	end
 end
 
+function FightOperateMgr:invokeCancelPlayerOperate()
+	FightRpc.instance:sendResetRoundRequest()
+	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightResetCard)
+	FightAudioMgr.instance:stopAllCardAudio()
+end
+
 function FightOperateMgr:cancelAllOperate()
 	self.workComp:disposeAllWork()
 	self:com_sendFightEvent(FightEvent.OnOperateMgrDisposeAllWork)

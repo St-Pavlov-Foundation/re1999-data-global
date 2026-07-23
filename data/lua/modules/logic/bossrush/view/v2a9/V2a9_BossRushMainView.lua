@@ -59,7 +59,7 @@ end
 
 function V2a9_BossRushMainView:_create_V2a9_BossRushMainItem()
 	local itemClass = V2a9_BossRushMainItem
-	local go = self.viewContainer:getResInst(BossRushModel.instance:getActivityMainViewItemPath(), self._goContent, itemClass.__cname)
+	local go = self.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrushmainitem, self._goContent, itemClass.__cname)
 
 	return MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 end

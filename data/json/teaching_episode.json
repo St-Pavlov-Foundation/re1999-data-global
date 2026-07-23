@@ -1,0 +1,74 @@
+[
+  {
+    "id": 493701,
+    "teaching": 1000,
+    "detail": "language_10124824",
+    "type": 1,
+    "battleTasks": "370101|370102|370103",
+    "taskDetail": "language_10124825",
+    "preEpisode": 0
+  },
+  {
+    "id": 493702,
+    "teaching": 1000,
+    "detail": "language_10124826",
+    "type": 2,
+    "battleTasks": "370201|370202|370203",
+    "taskDetail": "language_10124827",
+    "preEpisode": 493701
+  },
+  {
+    "id": 493703,
+    "teaching": 1001,
+    "detail": "language_10124828",
+    "type": 1,
+    "battleTasks": "370301|370302|370303",
+    "taskDetail": "language_10124829",
+    "preEpisode": 0
+  },
+  {
+    "id": 493704,
+    "teaching": 1001,
+    "detail": "language_10124830",
+    "type": 2,
+    "battleTasks": "370401|370402|370403",
+    "taskDetail": "language_10124831",
+    "preEpisode": 493703
+  },
+  {
+    "id": 493705,
+    "teaching": 1002,
+    "detail": "language_10124832",
+    "type": 1,
+    "battleTasks": "370501|370502|370503",
+    "taskDetail": "language_10124833",
+    "preEpisode": 0
+  },
+  {
+    "id": 493706,
+    "teaching": 1002,
+    "detail": "language_10124834",
+    "type": 2,
+    "battleTasks": "370601|370602|370603",
+    "taskDetail": "language_10124835",
+    "preEpisode": 493705
+  },
+  {
+    "id": 493707,
+    "teaching": 1003,
+    "detail": "language_10124836",
+    "type": 1,
+    "battleTasks": "370701|370702|370703",
+    "taskDetail": "language_10124837",
+    "preEpisode": 0
+  },
+  {
+    "id": 493708,
+    "teaching": 1003,
+    "detail": "language_10124838",
+    "type": 2,
+    "battleTasks": "370801|370802|370803",
+    "taskDetail": "language_10124839",
+    "preEpisode": 493707
+  }
+]

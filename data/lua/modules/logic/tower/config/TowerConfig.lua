@@ -27,7 +27,8 @@ function TowerConfig:reqConfigNames()
 		"tower_talent_plan",
 		"tower_hero_trial",
 		"tower_boss_teach",
-		"tower_score_to_star"
+		"tower_score_to_star",
+		"tower_new_hero_trial"
 	}
 end
 
@@ -677,6 +678,45 @@ function TowerConfig:checkIsPermanentFinalStageEpisode(episodeId)
 	end
 
 	return false
+end
+
+function TowerConfig:ontower_new_hero_trialLoaded(configTable)
+	self.newHeroTrialConfig = configTable
+
+	self:buildTowerNewHeroTrialList()
+end
+
+function TowerConfig:buildTowerNewHeroTrialList()
+	self.newHeroTrialMap = {}
+	self.allStageTrialHeroList = {}
+
+	for _, config in ipairs(self.newHeroTrialConfig.configList) do
+		local trialHeroList = string.splitToNumber(config.heroIds, "|")
+
+		self.newHeroTrialMap[config.stageId] = trialHeroList
+	end
+end
+
+function TowerConfig:getStageTrialHeroList(stageId)
+	return self.newHeroTrialMap[stageId] or {}
+end
+
+function TowerConfig:getAllStageTrialHeroList()
+	local sameHeroMap = {}
+
+	if #self.allStageTrialHeroList == 0 then
+		for _, trialHeroList in pairs(self.newHeroTrialMap) do
+			for _, heroId in ipairs(trialHeroList) do
+				if not sameHeroMap[heroId] then
+					sameHeroMap[heroId] = true
+
+					table.insert(self.allStageTrialHeroList, heroId)
+				end
+			end
+		end
+	end
+
+	return self.allStageTrialHeroList
 end
 
 TowerConfig.instance = TowerConfig.New()

@@ -14,7 +14,8 @@ function DungeonViewContainer:buildViews()
 		[DungeonEnum.DungeonViewTabEnum.Explore] = "#go_explore",
 		[DungeonEnum.DungeonViewTabEnum.Permanent] = "#go_permanent",
 		[DungeonEnum.DungeonViewTabEnum.WeekWalk_2] = "#go_weekwalk",
-		[DungeonEnum.DungeonViewTabEnum.AdvPlay] = "#go_advplay"
+		[DungeonEnum.DungeonViewTabEnum.AdvPlay] = "#go_advplay",
+		[DungeonEnum.DungeonViewTabEnum.Rouge] = "#go_rouge"
 	})
 	dynamicGroup:setDynamicNodeResHandlers({
 		[DungeonEnum.DungeonViewTabEnum.Explore] = DungeonViewContainer._getExploreRes
@@ -111,7 +112,8 @@ function DungeonViewContainer:buildTabViews(tabContainerId)
 			[DungeonEnum.DungeonViewTabEnum.Explore] = self._exploreView,
 			[DungeonEnum.DungeonViewTabEnum.Permanent] = PermanentMainView.New(),
 			[DungeonEnum.DungeonViewTabEnum.WeekWalk_2] = DungeonWeekWalk_2View.New(),
-			[DungeonEnum.DungeonViewTabEnum.AdvPlay] = DungeonAdvPlayView.New()
+			[DungeonEnum.DungeonViewTabEnum.AdvPlay] = DungeonAdvPlayView.New(),
+			[DungeonEnum.DungeonViewTabEnum.Rouge] = DungeonRougeView.New()
 		}
 	end
 end

@@ -31,13 +31,9 @@ function ArcadeSkillHitRemoveCollection:onHit()
 		if uidList and #uidList > 0 then
 			local uid = uidList[1]
 
-			characterMO:removeCollection(uid)
+			ArcadeGameController.instance:lossCollection(uid)
 			table.insert(self._collectionUidList, uid)
 		end
-	end
-
-	if #self._collectionUidList > 0 then
-		ArcadeGameController.instance:dispatchEvent(ArcadeEvent.OnCollectionChange)
 	end
 end
 

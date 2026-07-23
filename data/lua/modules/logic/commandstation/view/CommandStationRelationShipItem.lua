@@ -19,11 +19,15 @@ function CommandStationRelationShipItem:onInitView()
 end
 
 function CommandStationRelationShipItem:addEvents()
-	self._btnclickcharacter:AddClickListener(self._btnclickcharacterOnClick, self)
+	if self._btnclickcharacter then
+		self._btnclickcharacter:AddClickListener(self._btnclickcharacterOnClick, self)
+	end
 end
 
 function CommandStationRelationShipItem:removeEvents()
-	self._btnclickcharacter:RemoveClickListener()
+	if self._btnclickcharacter then
+		self._btnclickcharacter:RemoveClickListener()
+	end
 end
 
 function CommandStationRelationShipItem:_btnclickcharacterOnClick()
@@ -48,6 +52,10 @@ function CommandStationRelationShipItem:_editableInitView()
 	self._deadEffect = self._singleImage:GetComponent(typeof(Coffee.UIEffects.BaseMaterialEffect))
 
 	gohelper.setActive(self._goreddot, false)
+
+	if not self._btnclickcharacter then
+		logError("btnclickcharacter is nil", self.viewGO.name)
+	end
 end
 
 function CommandStationRelationShipItem:_editableAddEvents()
@@ -116,11 +124,18 @@ function CommandStationRelationShipItem:_changeCharacterView()
 	self._btnclickcharacter = gohelper.findChildButtonWithAudio(self.viewGO, goName .. "/#btn_click_character")
 
 	gohelper.setActive(self._gocharacter, true)
+
+	if not self._btnclickcharacter then
+		logError("CommandStationRelationShipItem:_changeCharacterView", "btnclickcharacter is nil", self._stateConfig.stateId, self._stateConfig.positionId, goName)
+
+		return
+	end
+
 	self._btnclickcharacter:AddClickListener(self._btnclickcharacterOnClick, self)
 end
 
 function CommandStationRelationShipItem:getAnimator()
-	return self._gocharacter:GetComponent("Animator")
+	return self._gocharacter and self._gocharacter:GetComponent("Animator")
 end
 
 function CommandStationRelationShipItem:_updateHeadIcon()
@@ -141,7 +156,7 @@ function CommandStationRelationShipItem:_updateHeadIcon()
 end
 
 function CommandStationRelationShipItem:_updateReddot()
-	local firstShowStateId = CommandStationConfig.instance:getCharacterFirstShowState(self._characterId)
+	local firstShowStateId = CommandStationConfig.instance:getCharacterFirstShowState(self._stateId, self._characterId)
 	local isFirstShow = firstShowStateId == self._stateId
 
 	self._showReddot = not self._noClick and not CommandStationModel.instance:getCharacterState(self._stateId)

@@ -387,5 +387,32 @@ return {
 		"",
 		0,
 		""
+	},
+	{
+		43,
+		"山路爆炸",
+		"v3a7_shanlu",
+		"v3a7_shanlu.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		44,
+		"山路炸毁",
+		"v3a7_shanlu2",
+		"v3a7_shanlu2.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		45,
+		"翻页最上层",
+		"",
+		"storybg_turn_page1.prefab",
+		"",
+		0,
+		""
 	}
 }

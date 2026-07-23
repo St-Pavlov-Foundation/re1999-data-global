@@ -116,13 +116,10 @@ function V1a4_BossRush_ScoreTaskAchievementListModel:isReddot(stage, tabIndex)
 	end
 end
 
-function V1a4_BossRush_ScoreTaskAchievementListModel:getMoList(stage, tabIndex)
-	local bonusTab = BossRushModel.instance:getActivityBonus()
-
-	tabIndex = tabIndex or V1a6_BossRush_BonusModel.instance:getTab() or 1
-
-	local tab = bonusTab and bonusTab[tabIndex]
-	local moList = tab and BossRushModel.instance:getMoListByStageAndType(stage, tab.TaskListenerType, tab.ScoreDesc)
+function V1a4_BossRush_ScoreTaskAchievementListModel:getMoList(stage)
+	local taskListenerType = BossRushEnum.TaskListenerType.highestPoint
+	local ScoreDesc = "p_v1a4_bossrushleveldetail_txt_ScoreDesc"
+	local moList = BossRushModel.instance:getMoListByStageAndType(stage, taskListenerType, ScoreDesc)
 
 	return moList
 end

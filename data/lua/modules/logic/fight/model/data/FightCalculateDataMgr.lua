@@ -188,9 +188,11 @@ function FightCalculateDataMgr:playEffect6(actEffectData)
 		return
 	end
 
-	self.buffDict[buff.uid] = nil
+	local buffUid = buff.uid
 
-	entityMO:delBuff(buff.uid)
+	self.buffDict[buffUid] = nil
+
+	entityMO:delBuff(buffUid)
 end
 
 function FightCalculateDataMgr:playEffect7(actEffectData)
@@ -863,6 +865,10 @@ function FightCalculateDataMgr:playEffect107(actEffectData)
 		FightHelper.setEffectEntitySide(actEffectData, entityData)
 		self.dataMgr.entityMgr:replaceEntityMO(actEffectData.entity)
 	end
+
+	if actEffectData.entity.teamType == FightEnum.TeamType.MySide then
+		self:playEffect372(actEffectData)
+	end
 end
 
 function FightCalculateDataMgr:playEffect108(actEffectData)
@@ -956,7 +962,7 @@ function FightCalculateDataMgr:playEffect117(actEffectData)
 			indicatorDict[indicatorId] = indicatorInfo
 		end
 
-		if indicatorId == FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips or indicatorId == FightEnum.IndicatorId.ZongMaoTechniqueScore then
+		if indicatorId == FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips or indicatorId == FightEnum.IndicatorId.ZongMaoTechniqueScore or indicatorId == FightEnum.IndicatorId.Rouge2Boss then
 			indicatorInfo.num = indicatorInfo.num + actEffectData.effectNum
 		else
 			indicatorInfo.num = actEffectData.effectNum
@@ -2234,10 +2240,13 @@ end
 
 function FightCalculateDataMgr:playEffect337(actEffectData)
 	local curRound = self.dataMgr.fieldMgr.curRound
+	local param = self.dataMgr.fieldMgr.param
+	local param18OldValue = self.dataMgr.fieldMgr.param[FightParamData.ParamKey.CUR_EXTRA_ROUND_FLAG]
 
 	self.dataMgr:updateFightData(actEffectData.fight)
 
 	self.dataMgr.fieldMgr.curRound = curRound
+	self.dataMgr.fieldMgr.param[FightParamData.ParamKey.CUR_EXTRA_ROUND_FLAG] = param18OldValue
 end
 
 function FightCalculateDataMgr:playEffect338(actEffectData)
@@ -2302,15 +2311,34 @@ function FightCalculateDataMgr:playEffect350(actEffectData)
 	local actInfo = buffMO.actInfo
 	local hasActId = false
 
-	for i = 1, #actInfo do
-		local actInfoData = actInfo[i]
+	if buffActInfo.actId == 1131 then
+		for i = 1, #actInfo do
+			local actInfoData = actInfo[i]
 
-		if actInfoData.actId == buffActInfo.actId then
-			hasActId = true
+			if actInfoData.actId == buffActInfo.actId then
+				local attrId = string.split(actInfoData.strParam, "#")[1]
+				local targetId = string.split(buffActInfo.strParam, "#")[1]
 
-			FightDataUtil.coverData(buffActInfo, actInfoData)
+				if attrId == targetId then
+					hasActId = true
 
-			break
+					FightDataUtil.coverData(buffActInfo, actInfoData)
+
+					break
+				end
+			end
+		end
+	else
+		for i = 1, #actInfo do
+			local actInfoData = actInfo[i]
+
+			if actInfoData.actId == buffActInfo.actId then
+				hasActId = true
+
+				FightDataUtil.coverData(buffActInfo, actInfoData)
+
+				break
+			end
 		end
 	end
 
@@ -2472,7 +2500,7 @@ function FightCalculateDataMgr:playStepDataList(stepDataList)
 end
 
 function FightCalculateDataMgr:playStepData(step)
-	if step.actType == FightEnum.ActType.SKILL or step.actType == FightEnum.ActType.EFFECT then
+	if step.actType == FightEnum.ActType.SKILL or step.actType == FightEnum.ActType.EFFECT or step.actType == FightEnum.ActType.DEVICE then
 		for i, actEffectData in ipairs(step.actEffect) do
 			self:playActEffectData(actEffectData)
 		end
@@ -2480,6 +2508,10 @@ function FightCalculateDataMgr:playStepData(step)
 		self:playChangeWave()
 	elseif step.actType == FightEnum.ActType.CHANGEHERO then
 		self:playChangeHero(step)
+	elseif step.actType == FightEnum.ActType.BUFF then
+		-- block empty
+	else
+		logError("local data not handle type : " .. tostring(step.actType))
 	end
 end
 
@@ -2600,6 +2632,12 @@ function FightCalculateDataMgr:playEffect371(actEffectData)
 	self:playEffect149(actEffectData)
 end
 
+function FightCalculateDataMgr:playEffect372(actEffectData)
+	local teamDataMgr = self.dataMgr.teamDataMgr
+
+	teamDataMgr:setDeviceArea(actEffectData.deviceAreaInfo)
+end
+
 function FightCalculateDataMgr:playEffect368(actEffectData)
 	local entityMO = self:getTarEntityMO(actEffectData)
 
@@ -2641,6 +2679,167 @@ function FightCalculateDataMgr:playEffect370(actEffectData)
 
 	entityMO.toughnessPoint = entityMO.toughnessPoint + arr[1]
 	entityMO.toughnessValue = entityMO.toughnessValue + arr[2]
+end
+
+function FightCalculateDataMgr:playEffect373(actEffectData)
+	local teamDataMgr = self.dataMgr.teamDataMgr
+	local teamType = actEffectData.teamType
+	local teamData = teamDataMgr and teamDataMgr[teamType]
+	local deviceArea = teamData and teamData.deviceArea
+
+	if not deviceArea then
+		return
+	end
+
+	local uid = actEffectData.targetId
+	local index = actEffectData.effectNum
+	local data = deviceArea:getServerDeviceInfo(uid)
+
+	if data then
+		data:actEffectSetIndex(index)
+	end
+
+	data = deviceArea:getClientDeviceInfo(uid)
+
+	if data then
+		data:actEffectSetIndex(index)
+	end
+end
+
+function FightCalculateDataMgr:playEffect374(actEffectData)
+	local teamDataMgr = self.dataMgr.teamDataMgr
+	local teamType = actEffectData.teamType
+	local teamData = teamDataMgr and teamDataMgr[teamType]
+	local deviceArea = teamData and teamData.deviceArea
+
+	if not deviceArea then
+		return
+	end
+
+	deviceArea:changePower(actEffectData.reserveStr)
+end
+
+function FightCalculateDataMgr:playEffect376(actEffectData)
+	local startIndex = actEffectData.effectNum
+	local endIndex = actEffectData.effectNum1
+	local handCard = self:getHandCard()
+
+	if startIndex < endIndex then
+		local tempCard = handCard[startIndex]
+
+		for i = startIndex + 1, endIndex do
+			handCard[i - 1] = handCard[i]
+		end
+
+		handCard[endIndex] = tempCard
+	else
+		local tempCard = handCard[endIndex]
+
+		for i = startIndex - 1, endIndex, -1 do
+			handCard[i + 1] = handCard[i]
+		end
+
+		handCard[endIndex] = tempCard
+	end
+end
+
+function FightCalculateDataMgr:playEffect377(actEffectData)
+	if not FightCardDataHelper.cardChangeIsMySide(actEffectData) then
+		return
+	end
+
+	local areaType = actEffectData.effectNum1
+
+	if areaType == 0 then
+		local cardIndex = actEffectData.effectNum
+		local cardData = FightCardInfoData.New(actEffectData.cardInfo)
+		local handCard = self:getHandCard()
+
+		handCard[cardIndex] = cardData
+	end
+end
+
+function FightCalculateDataMgr:playEffect378(actEffectData)
+	if not FightCardDataHelper.cardChangeIsMySide(actEffectData) then
+		return
+	end
+
+	local cardData = FightCardInfoData.New(actEffectData.cardInfo)
+	local handCard = self:getHandCard()
+	local insertIndex = actEffectData.effectNum
+
+	table.insert(handCard, insertIndex, cardData)
+end
+
+function FightCalculateDataMgr:playEffect379(actEffectData)
+	return
+end
+
+function FightCalculateDataMgr:playEffect375(actEffectData)
+	local entityMO = self:getTarEntityMO(actEffectData)
+
+	if not entityMO then
+		return
+	end
+
+	if string.nilorempty(actEffectData.reserveStr) then
+		entityMO.toughnessPoint = 0
+		entityMO.toughnessValue = 0
+		entityMO.isBroken = false
+	else
+		local arr = string.split(actEffectData.reserveStr, "|")
+
+		entityMO.isBroken = arr[3] == "1"
+		arr = string.splitToNumber(arr[1], ",")
+		entityMO.toughnessPoint = arr[1] or 0
+		entityMO.toughnessValue = arr[2] or 0
+	end
+end
+
+function FightCalculateDataMgr:playEffect380(actEffectData)
+	return
+end
+
+function FightCalculateDataMgr:playEffect381(actEffectData)
+	local counterId = actEffectData.effectNum
+	local counterValue = actEffectData.reserveStr
+
+	self.dataMgr.counterMgr:setCounter(counterId, counterValue)
+end
+
+function FightCalculateDataMgr:playEffect382(actEffectData)
+	local teamDataMgr = self.dataMgr.teamDataMgr
+	local teamType = actEffectData.teamType
+	local teamData = teamDataMgr and teamDataMgr[teamType]
+	local deviceArea = teamData and teamData.deviceArea
+
+	if not deviceArea then
+		return
+	end
+
+	deviceArea:clearPower()
+end
+
+function FightCalculateDataMgr:playEffect383(actEffectData)
+	local teamDataMgr = self.dataMgr.teamDataMgr
+	local teamType = actEffectData.teamType
+
+	teamType = teamType ~= 0 and teamType or FightEnum.TeamType.MySide
+
+	local teamData = teamDataMgr and teamDataMgr[teamType]
+	local deviceArea = teamData and teamData.deviceArea
+
+	if not deviceArea then
+		return
+	end
+
+	local skillId = actEffectData.effectNum
+
+	if skillId ~= 0 then
+		deviceArea:stopSkill(actEffectData.targetId, actEffectData.effectNum)
+	else
+		deviceArea:restartDeviceAttr(actEffectData.targetId)
+	end
 end
 
 return FightCalculateDataMgr

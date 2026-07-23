@@ -180,7 +180,7 @@ function LorentzLevelView:_initLevelItems()
 	for i = 1, #episodeCos do
 		local nodeRoot = gohelper.findChild(self._gostages, "stage" .. i)
 		local cloneGo = self:getResInst(path, nodeRoot)
-		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, LorentzStoryItem, self)
+		local stageItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, LorentzLevelItem, self)
 
 		self._episodeItems[i] = stageItem
 

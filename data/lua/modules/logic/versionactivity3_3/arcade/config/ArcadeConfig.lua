@@ -10,6 +10,8 @@ function ArcadeConfig:reqConfigNames()
 		"arcade_attribute",
 		"arcade_grade",
 		"arcade_reward",
+		"arcade_return",
+		"arcade_attack_attr",
 		"arcade_talent",
 		"arcade_talent_icon",
 		"arcade_difficulty",
@@ -115,6 +117,56 @@ function ArcadeConfig:getArcadeGameUIGridSize()
 	end
 
 	return self._gameUIGridSize
+end
+
+function ArcadeConfig:getReturnRewardCfg(actId, difficultyId, nilError)
+	local actDict = lua_arcade_return.configDict[actId]
+	local cfg = actDict and actDict[difficultyId]
+
+	if not cfg and nilError then
+		logError(string.format("ArcadeConfig:getReturnRewardCfg error, cfg is nil, actId:%s, difficultyId:%s", actId, difficultyId))
+	end
+
+	return cfg
+end
+
+function ArcadeConfig:getRefundDesc(actId, difficultyId)
+	local cfg = self:getReturnRewardCfg(actId, difficultyId, true)
+
+	return cfg and cfg.refundDesc
+end
+
+function ArcadeConfig:getAttackAttrCfg(attackAttrId, nilError)
+	local cfg = lua_arcade_attack_attr.configDict[attackAttrId]
+
+	if not cfg and nilError then
+		logError(string.format("ArcadeConfig:getAttackAttrCfg error, cfg is nil, attackAttrId:%s", attackAttrId))
+	end
+
+	return cfg
+end
+
+function ArcadeConfig:getAttackAttrName(attackAttrId)
+	local cfg = self:getAttackAttrCfg(attackAttrId, true)
+
+	return cfg and cfg.name
+end
+
+function ArcadeConfig:getAttackAttrHitActionShow(attackAttrId)
+	local cfg = self:getAttackAttrCfg(attackAttrId, true)
+
+	return cfg and cfg.hitActionShow
+end
+
+function ArcadeConfig:getAttackAttrSkillList(attackAttrId)
+	local result = {}
+	local cfg = self:getAttackAttrCfg(attackAttrId, true)
+
+	if cfg and not string.nilorempty(cfg.skills) then
+		result = string.splitToNumber(cfg.skills, "#")
+	end
+
+	return result
 end
 
 function ArcadeConfig:getArcadeGradeCfg(score, nilError)
@@ -434,6 +486,27 @@ function ArcadeConfig:getRoomInitInteractiveList(roomId)
 	return result
 end
 
+function ArcadeConfig:getRoomInitFloorList(roomId)
+	local result = {}
+	local cfg = self:getRoomCfg(roomId, true)
+
+	if cfg and not string.nilorempty(cfg.initFloor) then
+		local floorArr = string.split(cfg.initFloor, "|")
+
+		for _, floorStr in ipairs(floorArr) do
+			local data = GameUtil.splitString2(floorStr, true, "#", ",")
+
+			result[#result + 1] = {
+				id = data[1][1],
+				x = data[2][1],
+				y = data[2][2]
+			}
+		end
+	end
+
+	return result
+end
+
 function ArcadeConfig:getRoomInitMonsterGroupList(roomId)
 	local result = {}
 	local cfg = self:getRoomCfg(roomId, true)
@@ -454,6 +527,12 @@ function ArcadeConfig:getRoomPortalCoordinates(roomId)
 	end
 
 	return result
+end
+
+function ArcadeConfig:getRoomSkillList(roomId)
+	local cfg = self:getRoomCfg(roomId, true)
+
+	return cfg and cfg.skills
 end
 
 function ArcadeConfig:getCharacterCfg(characterId, nilError)
@@ -528,6 +607,12 @@ function ArcadeConfig:getCharacterSize(characterId)
 	end
 
 	return sizeX, sizeY
+end
+
+function ArcadeConfig:getCharacterLockTip(characterId)
+	local cfg = self:getCharacterCfg(characterId, true)
+
+	return cfg and cfg.lockTip
 end
 
 function ArcadeConfig:getMonsterGroupRowCfg(groupId, row)
@@ -641,6 +726,12 @@ function ArcadeConfig:getInteractiveName(id)
 	local cfg = self:getInteractiveCfg(id, true)
 
 	return cfg and cfg.name
+end
+
+function ArcadeConfig:getInteractiveType(id)
+	local cfg = self:getInteractiveCfg(id, true)
+
+	return cfg and cfg.type
 end
 
 function ArcadeConfig:getInteractiveRes(id)
@@ -769,6 +860,56 @@ function ArcadeConfig:getPortalLimit(id)
 	return cfg and cfg.nodePortalLimit
 end
 
+function ArcadeConfig:getFloorCfg(id, nilError)
+	local cfg = lua_arcade_floor.configDict[id]
+
+	if not cfg and nilError then
+		logError(string.format("ArcadeConfig:getFloorCfg error, cfg is nil, id:%s", id))
+	end
+
+	return cfg
+end
+
+function ArcadeConfig:getFloorSize(id)
+	local sizeX, sizeY = 0, 0
+	local cfg = self:getFloorCfg(id, true)
+
+	if cfg and not string.nilorempty(cfg.shape) then
+		local arr = string.splitToNumber(cfg.shape, "#")
+
+		sizeX = arr[1] or 0
+		sizeY = arr[2] or 0
+	end
+
+	return sizeX, sizeY
+end
+
+function ArcadeConfig:getFloorRes(id)
+	local cfg = self:getFloorCfg(id, true)
+
+	if cfg and not string.nilorempty(cfg.resPath) then
+		return ResUrl.getArcadeSceneRes(cfg.resPath)
+	end
+end
+
+function ArcadeConfig:getFloorPriority(id)
+	local cfg = self:getFloorCfg(id, true)
+
+	return cfg and cfg.priority or 0
+end
+
+function ArcadeConfig:getFloorSkill(id)
+	local cfg = self:getFloorCfg(id, true)
+
+	return cfg and cfg.skill
+end
+
+function ArcadeConfig:getFloorLimitRound(id)
+	local cfg = self:getFloorCfg(id, true)
+
+	return cfg and cfg.limitRound or -1
+end
+
 function ArcadeConfig:getBombCfg(id, nilError)
 	local cfg = lua_arcade_bomb.configDict[id]
 
@@ -855,6 +996,18 @@ function ArcadeConfig:getBombAlertEffectId(id)
 	return cfg and cfg.alertEffectId
 end
 
+function ArcadeConfig:getBombSkill(id)
+	local cfg = self:getBombCfg(id, true)
+
+	return cfg and cfg.skill
+end
+
+function ArcadeConfig:getBombSkills(id)
+	local cfg = self:getBombCfg(id, true)
+
+	return cfg and cfg.skills
+end
+
 function ArcadeConfig:getActiveSkillCfg(skillId, nilError)
 	local cfg = lua_arcade_active_skill.configDict[skillId]
 
@@ -933,16 +1086,6 @@ function ArcadeConfig:getSkillTargetCfg(id, nilError)
 	return cfg
 end
 
-function ArcadeConfig:getSkillFloorCfg(id, nilError)
-	local cfg = lua_arcade_floor.configDict[id]
-
-	if not cfg and nilError then
-		logError(string.format("ArcadeConfig:getSkillFloorCfg error, cfg is nil, id:%s", id))
-	end
-
-	return cfg
-end
-
 function ArcadeConfig:getArcadeBuffCfg(buffId, nilError)
 	local cfg = lua_arcade_buff.configDict[buffId]
 
@@ -953,12 +1096,23 @@ function ArcadeConfig:getArcadeBuffCfg(buffId, nilError)
 	return cfg
 end
 
+function ArcadeConfig:getArcadeBuffEffectNameList(buffId)
+	local result = {}
+	local cfg = self:getArcadeBuffCfg(buffId, true)
+
+	if cfg and not string.nilorempty(cfg.effectName) then
+		result = string.split(cfg.effectName, "#")
+	end
+
+	return result
+end
+
 function ArcadeConfig:getArcadeBuffEffectParamList(buffId)
 	local result = {}
 	local cfg = self:getArcadeBuffCfg(buffId, true)
 
 	if cfg and not string.nilorempty(cfg.effectParam) then
-		result = string.split(cfg.effectParam, "#")
+		result = string.split(cfg.effectParam, "|")
 	end
 
 	return result
@@ -1292,6 +1446,12 @@ function ArcadeConfig:getIsNearestGrid(effectId)
 	local cfg = self:getArcadeEffectCfg(effectId, true)
 
 	return cfg and cfg.isNearestGrid
+end
+
+function ArcadeConfig:getUIEffect(effectId)
+	local cfg = self:getArcadeEffectCfg(effectId, true)
+
+	return cfg and cfg.uiEffect
 end
 
 function ArcadeConfig:getActionShowCfg(showId, nilError)

@@ -8,7 +8,7 @@
     "monsterDesc": "language_10027323",
     "scoreReward": 100,
     "startView": "",
-    "initCollections": "",
+    "initCollections": "137001",
     "desc": "language_10100857",
     "balanceLevel": "121#10#60"
   },
@@ -21,7 +21,7 @@
     "monsterDesc": "language_10006180",
     "scoreReward": 120,
     "startView": "",
-    "initCollections": "100022",
+    "initCollections": "100022#137001",
     "desc": "language_10100859",
     "balanceLevel": "121#10#60"
   },
@@ -34,7 +34,7 @@
     "monsterDesc": "language_10027326",
     "scoreReward": 140,
     "startView": "",
-    "initCollections": "100022#100023",
+    "initCollections": "100022#100023#137001",
     "desc": "language_10100861",
     "balanceLevel": "121#10#60"
   },
@@ -47,7 +47,7 @@
     "monsterDesc": "language_10027328",
     "scoreReward": 160,
     "startView": "",
-    "initCollections": "100022#100023#100024",
+    "initCollections": "100022#100023#100024#137001",
     "desc": "language_10107641",
     "balanceLevel": "121#10#60"
   },
@@ -60,7 +60,7 @@
     "monsterDesc": "language_10027330",
     "scoreReward": 180,
     "startView": "",
-    "initCollections": "100022#100023#100024#151001",
+    "initCollections": "100022#100023#100024#151001#137001",
     "desc": "language_10107642",
     "balanceLevel": "121#10#60"
   },
@@ -70,11 +70,37 @@
     "title_en": "language_10043534",
     "bg": "rouge2_difficulty_bg3",
     "preDifficulty": 5,
-    "monsterDesc": "language_10027330",
+    "monsterDesc": "language_10017975",
     "scoreReward": 200,
     "startView": "",
-    "initCollections": "100022#100023#100024#151001",
+    "initCollections": "100022#100023#100024#151001#137001",
     "desc": "language_10107643",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 7,
+    "title": "language_10125905",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg3",
+    "preDifficulty": 6,
+    "monsterDesc": "language_10027321",
+    "scoreReward": 200,
+    "startView": "",
+    "initCollections": "100022#100023#100024#151001#137001",
+    "desc": "language_10125906",
+    "balanceLevel": "121#10#60"
+  },
+  {
+    "difficulty": 8,
+    "title": "language_10125907",
+    "title_en": "language_10043534",
+    "bg": "rouge2_difficulty_bg3",
+    "preDifficulty": 7,
+    "monsterDesc": "language_10043553",
+    "scoreReward": 200,
+    "startView": "",
+    "initCollections": "100022#100023#100024#151001#137001",
+    "desc": "language_10125908",
     "balanceLevel": "121#10#60"
   }
 ]

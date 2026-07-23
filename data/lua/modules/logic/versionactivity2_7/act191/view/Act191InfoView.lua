@@ -111,42 +111,7 @@ function Act191InfoView:clickCharacterItem(index)
 end
 
 function Act191InfoView:initCollectionItem()
-	self.collectionItemList = {}
-
-	local collectionCfgList = {}
-
-	for _, v in ipairs(lua_activity191_collection.configList) do
-		if v.activityId == self.actId then
-			collectionCfgList[#collectionCfgList + 1] = v
-		end
-	end
-
-	table.sort(collectionCfgList, function(a, b)
-		return a.rare < b.rare
-	end)
-
-	for index, cfg in ipairs(collectionCfgList) do
-		local item = self:getUserDataTb_()
-
-		item.config = cfg
-
-		local go = gohelper.cloneInPlace(self._gocollectionitem)
-		local btnClick = gohelper.findButtonWithAudio(go)
-
-		self:addClickCb(btnClick, self.clickCollectionItem, self, index)
-
-		local imageRare = gohelper.findChildImage(go, "rare")
-
-		item.collectionIcon = gohelper.findChildSingleImage(go, "collectionicon")
-		item.goSelect = gohelper.findChild(go, "go_select")
-
-		UISpriteSetMgr.instance:setAct174Sprite(imageRare, "act174_propitembg_" .. cfg.rare)
-		item.collectionIcon:LoadImage(ResUrl.getRougeSingleBgCollection(cfg.icon))
-
-		self.collectionItemList[index] = item
-	end
-
-	gohelper.setActive(self._gocollectionitem, false)
+	gohelper.setActive(self._gocollectionitem.transform.parent, false)
 end
 
 function Act191InfoView:clickCollectionItem(index)

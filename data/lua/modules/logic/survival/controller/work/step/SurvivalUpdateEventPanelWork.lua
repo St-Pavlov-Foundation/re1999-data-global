@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateEventPanelWork
 
 local SurvivalUpdateEventPanelWork = class("SurvivalUpdateEventPanelWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateEventPanelWork:onStart(context)
+function SurvivalUpdateEventPanelWork:onStart2(context)
 	local panel = self._stepMo.panel
 	local type = panel.type
 

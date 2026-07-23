@@ -10,7 +10,8 @@ local PropNameList = {
 	"recover",
 	"initial",
 	"defeat",
-	"death"
+	"death",
+	"useDeviceCard"
 }
 
 function PlayerClothView:onInitView()

@@ -68,7 +68,14 @@ function FightCardCombineEffect:onStart(context)
 	FightCardCombineEffect._resetImages(cloneItemGO1)
 	FightCardCombineEffect._resetImages(cloneItemGO2)
 
-	local effectGO = self:_createEffect(containerGO, FightPreloadViewWork.ui_effect_dna_c)
+	local cardSkin = FightCardDataHelper.getCardSkin()
+	local effectUrl = FightPreloadViewWork.ui_effect_dna_c
+
+	if cardSkin == 672802 then
+		effectUrl = FightPreloadViewWork.ui2_effect_dna_c
+	end
+
+	local effectGO = self:_createEffect(containerGO, effectUrl)
 
 	effectGO.name = "CombineEffect"
 

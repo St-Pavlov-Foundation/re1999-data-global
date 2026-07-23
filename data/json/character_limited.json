@@ -16,7 +16,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 308302,
@@ -39,7 +43,11 @@
     "audio": 20161101,
     "stopAudio": 20161102,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 308601,
@@ -58,7 +66,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 308602,
@@ -83,7 +95,11 @@
     "audio": 20191101,
     "stopAudio": 20191102,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 302504,
@@ -106,7 +122,11 @@
     "audio": 20191103,
     "stopAudio": 20191104,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "s02_xt_show",
+    "storeMvAudio": 3853061,
+    "storeMvStopAudio": 3853065
   },
   {
     "id": 306604,
@@ -129,7 +149,11 @@
     "audio": 20221103,
     "stopAudio": 20221104,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "s02_37_show",
+    "storeMvAudio": 3853058,
+    "storeMvStopAudio": 3853065
   },
   {
     "id": 310001,
@@ -148,7 +172,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 310002,
@@ -171,7 +199,11 @@
     "audio": 20221101,
     "stopAudio": 20221102,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 308303,
@@ -194,7 +226,11 @@
     "audio": 20250903,
     "stopAudio": 20250904,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "s02_qn_show",
+    "storeMvAudio": 3853060,
+    "storeMvStopAudio": 3853065
   },
   {
     "id": 311001,
@@ -213,7 +249,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 311002,
@@ -236,7 +276,11 @@
     "audio": 20250901,
     "stopAudio": 20250902,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 312001,
@@ -255,7 +299,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "language_10082552",
-    "specialLive2d": "1#3#diaozhui"
+    "specialLive2d": "1#3#diaozhui",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 312002,
@@ -278,7 +326,11 @@
     "audio": 20280901,
     "stopAudio": 20280902,
     "specialInsightDesc": "language_10082552",
-    "specialLive2d": "1#3#diaozhui"
+    "specialLive2d": "1#3#diaozhui",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 308603,
@@ -303,7 +355,11 @@
     "audio": 20280903,
     "stopAudio": 20280904,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "s02_lx_show",
+    "storeMvAudio": 3853059,
+    "storeMvStopAudio": 3853065
   },
   {
     "id": 313401,
@@ -322,7 +378,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 313402,
@@ -345,7 +405,11 @@
     "audio": 320012,
     "stopAudio": 320013,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 310003,
@@ -368,7 +432,11 @@
     "audio": 320014,
     "stopAudio": 320015,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 314101,
@@ -387,7 +455,11 @@
     "audio": 0,
     "stopAudio": 0,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 314102,
@@ -410,7 +482,11 @@
     "audio": 340025,
     "stopAudio": 340026,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 305305,
@@ -433,7 +509,11 @@
     "audio": 340027,
     "stopAudio": 340028,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
   },
   {
     "id": 311003,
@@ -456,6 +536,141 @@
     "audio": 340029,
     "stopAudio": 340030,
     "specialInsightDesc": "",
-    "specialLive2d": ""
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
+  },
+  {
+    "id": 314601,
+    "spine": "v3a7_314601_xranxx/314601_xranxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "",
+    "mvtime": 0,
+    "voice": [],
+    "actionTime": [],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 0,
+    "specialInsightDesc": "",
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
+  },
+  {
+    "id": 314602,
+    "spine": "v3a7_314602_xranxx/314602_xranxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a7_xran_open",
+    "mvtime": 14,
+    "voice": [
+      1314650
+    ],
+    "actionTime": [
+      14
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 370005,
+    "stopAudio": 370006,
+    "specialInsightDesc": "",
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "",
+    "storeMvAudio": 0,
+    "storeMvStopAudio": 0
+  },
+  {
+    "id": 312003,
+    "spine": "v3a7_312003_ndkxx/312003_ndkxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a7_ndk_open",
+    "mvtime": 12,
+    "voice": [
+      13120122
+    ],
+    "actionTime": [
+      12
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 0,
+    "stopAudio": 370004,
+    "specialInsightDesc": "language_10082552",
+    "specialLive2d": "1#3#diaozhui",
+    "characterVoice": 312003,
+    "storeMv": "v3a7_ndk_show",
+    "storeMvAudio": 3853063,
+    "storeMvStopAudio": 3853065
+  },
+  {
+    "id": 314403,
+    "spine": "v3a7_314403_flyxx/314403_flyxx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "v3a7_fly_open",
+    "mvtime": 15,
+    "voice": [
+      1314472
+    ],
+    "actionTime": [
+      8
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 370001,
+    "stopAudio": 370002,
+    "specialInsightDesc": "",
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "v3a7_fly_show",
+    "storeMvAudio": 3853064,
+    "storeMvStopAudio": 3853065
+  },
+  {
+    "id": 310504,
+    "spine": "s02_310504_zxqexx/310504_zxqexx",
+    "spineParam": [
+      0,
+      0,
+      1
+    ],
+    "entranceMv": "s02_zxqe_open",
+    "mvtime": 13,
+    "voice": [
+      13105104
+    ],
+    "actionTime": [
+      16
+    ],
+    "entranceEffect": "",
+    "effectDuration": 0,
+    "audio": 13105111,
+    "stopAudio": 13105112,
+    "specialInsightDesc": "",
+    "specialLive2d": "",
+    "characterVoice": 0,
+    "storeMv": "s02_zxqe_show",
+    "storeMvAudio": 3853062,
+    "storeMvStopAudio": 3853065
   }
 ]

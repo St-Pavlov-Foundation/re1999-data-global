@@ -153,12 +153,25 @@ function StoreController:openPackageStoreGoodsView(packageGoodsMO)
 			index = 1,
 			goodsMO = packageGoodsMO
 		})
+	elseif goodsType == StoreEnum.StoreChargeType.SceneUIPackage then
+		ViewMgr.instance:openView(ViewName.SceneUIPackageGoodsTipView, {
+			canJump = true,
+			goodsId = packageGoodsMO.config.id
+		})
 	else
 		ViewMgr.instance:openView(ViewName.PackageStoreGoodsView, packageGoodsMO)
 	end
 end
 
 function StoreController:openDecorateStoreGoodsView(decorateGoodsMO)
+	if DecorateStoreConfig.instance:isFatherOrSonGoods(decorateGoodsMO.config.id) then
+		ViewMgr.instance:openView(ViewName.DecorateMultiGoodsTipsView, {
+			goodsId = decorateGoodsMO.config.id
+		})
+
+		return
+	end
+
 	local productsList = GameUtil.splitString2(decorateGoodsMO.config.product, true, "|", "#")
 
 	if #productsList == 1 then

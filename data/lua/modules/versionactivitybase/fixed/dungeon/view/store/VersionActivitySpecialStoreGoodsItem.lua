@@ -22,17 +22,21 @@ function VersionActivitySpecialStoreGoodsItem:updateInfo(storeGoodsCo)
 		local needKeyCount = HeroExpBoxModel.instance:getNeedKeyCount(itemCo.id)
 		local icon = HeroExpBoxModel.instance:getKeyIcon()
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagekeyicon, icon .. "_1", true)
-
-		local str = ""
-
-		if needKeyCount <= keyCount then
-			str = string.format("%d/%d", keyCount, needKeyCount)
-		else
-			str = string.format("<color=%s>%d</color>/%d", "#FF0000", keyCount, needKeyCount)
+		if self._imagekeyicon then
+			UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagekeyicon, icon .. "_1", true)
 		end
 
-		self._txt2.text = str
+		if self._txt2 then
+			local str = ""
+
+			if needKeyCount <= keyCount then
+				str = string.format("%d/%d", keyCount, needKeyCount)
+			else
+				str = string.format("<color=%s>%d</color>/%d", "#FF0000", keyCount, needKeyCount)
+			end
+
+			self._txt2.text = str
+		end
 	end
 end
 

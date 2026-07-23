@@ -36,6 +36,8 @@ function Rouge2_HeroGroupActiveSkillView:onOpen()
 end
 
 function Rouge2_HeroGroupActiveSkillView:refreshSkillList()
+	self._skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+
 	gohelper.CreateNumObjList(self._goActiveSkillList, self._goActiveSkillItem, Rouge2_Enum.MaxActiveSkillNum, self._refreshSingleActiveSkill, self)
 end
 
@@ -54,7 +56,8 @@ function Rouge2_HeroGroupActiveSkillView:_refreshSingleActiveSkill(obj, index)
 
 	self._skillClickTab[index] = btnClick
 
-	local isInUse = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
+	local skillMo = self._skillList and self._skillList[index]
+	local isInUse = skillMo ~= nil
 
 	gohelper.setActive(goUse, isInUse)
 	gohelper.setActive(goEmpty, not isInUse)
@@ -64,14 +67,14 @@ function Rouge2_HeroGroupActiveSkillView:_refreshSingleActiveSkill(obj, index)
 		return
 	end
 
-	local skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(index)
 	local skillId = skillMo and skillMo:getItemId()
 
 	Rouge2_IconHelper.setActiveSkillIcon(skillId, simageIcon)
 end
 
 function Rouge2_HeroGroupActiveSkillView:_onClickSkill(index)
-	local isUse = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
+	local skillMo = self._skillList and self._skillList[index]
+	local isUse = skillMo and skillMo ~= nil
 
 	if not isUse then
 		GameFacade.showToast(ToastEnum.Rouge2NotUseActiveSkill)
@@ -79,10 +82,7 @@ function Rouge2_HeroGroupActiveSkillView:_onClickSkill(index)
 		return
 	end
 
-	local skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(index)
-	local skillUid = skillMo and skillMo:getUid()
-
-	Rouge2_ViewHelper.openCareerSkillTipsView(Rouge2_Enum.ItemDataType.Server, skillUid)
+	Rouge2_ViewHelper.openActiveSkillAttrUpdateTipsView(Rouge2_Enum.ItemDataType.Server, skillMo and skillMo:getUid())
 
 	self._selectSkillIndex = index
 

@@ -73,7 +73,12 @@ function FightBuffGetDescHelper.getBuffFeatureHandle(feature)
 			[FightEnum.BuffFeature.AttrByHeatScale] = FightBuffGetDescHelper.getAttrByHeatScaleDesc,
 			[FightEnum.BuffFeature.HeatScaleUseSkill] = FightBuffGetDescHelper.formatActInfoOneParam,
 			[FightEnum.BuffFeature.TeamShareShield] = FightBuffGetDescHelper.formatActInfoOneParam,
-			[FightEnum.BuffFeature.TeamExElectricTransConsumeValueAttr] = FightBuffGetDescHelper.getTeamExElectricTransConsumeValueAttrDesc
+			[FightEnum.BuffFeature.TeamExElectricTransConsumeValueAttr] = FightBuffGetDescHelper.getTeamExElectricTransConsumeValueAttrDesc,
+			[FightEnum.BuffFeature.EachChangeAttrOneWay] = FightBuffGetDescHelper.getAttrDesc,
+			[FightEnum.BuffFeature.LostHpToFakeHp] = FightBuffGetDescHelper.getLostHpToFakeHpDesc,
+			[FightEnum.BuffFeature.AttrFromEntityNoLayer] = FightBuffGetDescHelper.getAttrDesc,
+			[FightEnum.BuffFeature.FoundationCounter] = FightBuffGetDescHelper.formatActInfoTwoParam,
+			[FightEnum.BuffFeature.FoundationShield] = FightBuffGetDescHelper.onFoundationShield
 		}
 	end
 
@@ -215,6 +220,77 @@ function FightBuffGetDescHelper.getTeamExElectricTransConsumeValueAttrDesc(buffM
 	local param = buffActInfo.param
 
 	return GameUtil.getSubPlaceholderLuaLangOneParam(buffCo.desc, param[1] / 10)
+end
+
+function FightBuffGetDescHelper.getAttrDesc(buffMo, buffCo, buffActCo, paramArray, buffActInfo)
+	local paramList = {}
+	local actInfoList = buffMo.actInfo
+
+	for i = 1, #actInfoList do
+		local actInfoData = actInfoList[i]
+
+		if actInfoData.actId == buffActInfo.actId then
+			local arr = string.split(actInfoData.strParam, "#")
+			local attrId = tonumber(arr[1])
+			local value = tonumber(arr[2])
+
+			if attrId == 101 or attrId == 102 or attrId == 103 or attrId == 104 or attrId == 105 then
+				table.insert(paramList, value)
+			else
+				table.insert(paramList, value / 10 .. "%")
+			end
+		end
+	end
+
+	return GameUtil.getSubPlaceholderLuaLang(buffCo.desc, paramList)
+end
+
+function FightBuffGetDescHelper.getLostHpToFakeHpDesc(buffMo, buffCo, buffActCo, paramArray, buffActInfo)
+	local param = buffActInfo.param
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(buffCo.desc, string.format("%s/%s", param[1], param[2]))
+end
+
+function FightBuffGetDescHelper.onFoundationShield(buffMo, buffCo, buffActCo, paramArray, buffActInfo)
+	local param = buffActInfo.param
+	local value = param[1]
+	local entityData = FightDataHelper.entityMgr:getById(buffMo.entityId)
+
+	if entityData then
+		local hasBuff = false
+		local targetBuffId, xRate, yRate
+		local featuresSplit = entityData:getFeaturesSplitInfoByBuffId(buffCo.id)
+
+		if featuresSplit then
+			for _, oneFeature in ipairs(featuresSplit) do
+				if oneFeature[1] == 1146 then
+					targetBuffId = tonumber(oneFeature[4])
+					xRate = tonumber(oneFeature[3])
+					yRate = tonumber(oneFeature[5])
+
+					break
+				end
+			end
+		end
+
+		for k, buff in pairs(entityData.buffDic) do
+			if buff.buffId == targetBuffId then
+				hasBuff = true
+
+				break
+			end
+		end
+
+		if hasBuff then
+			value = value * yRate
+		else
+			value = value * xRate
+		end
+
+		value = math.floor(value / 1000)
+	end
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(buffCo.desc, value)
 end
 
 return FightBuffGetDescHelper

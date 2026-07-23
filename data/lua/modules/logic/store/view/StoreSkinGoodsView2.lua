@@ -75,6 +75,11 @@ function StoreSkinGoodsView2:onInitView()
 	self.txtStoreSkinTips = gohelper.findChildTextMesh(self.viewGO, "view/#go_storeskin/tips/#txt_tips")
 	self.simageStoreSkinTips = gohelper.findChildSingleImage(self.viewGO, "view/#go_storeskin/#simage_package")
 	self.btnSkinTips = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_storeskin/#simage_package")
+	self._gospecial = gohelper.findChild(self.viewGO, "view/propinfo/content/remain/#go_special")
+	self._gospecialDescGo = gohelper.findChild(self.viewGO, "view/propinfo/content/desc/#go_special")
+	self._goimg_orange = gohelper.findChild(self.viewGO, "view/common/#btn_buy/bg/#go_img_orange")
+	self._goimg_red = gohelper.findChild(self.viewGO, "view/common/#btn_buy/bg/#go_img_red")
+	self.goUniqueMask = gohelper.findChild(self.viewGO, "view/bgroot/mask")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -162,22 +167,48 @@ function StoreSkinGoodsView2:_btnbuyOnClick()
 	end
 
 	local curIndex = self:getCurCostIndex()
-	local product = self._mo.config.product
+	local goodsConfig = self._mo.config
+	local product = goodsConfig.product
 	local productInfo = string.splitToNumber(product, "#")
 	local skinId = productInfo[2]
 	local skinCo = SkinConfig.instance:getSkinCo(skinId)
+	local info = self._goodsPriceInfo or StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
+	local coinsCurPrice = info.coinsCurPrice
+	local deductionItemType = info.deductionItemType
+	local deductionItemId = info.deductionItemId
+	local coinsItemType = info.coinsItemType
+	local coinsItemId = info.coinsItemId
+	local overuseCoinsReductionDt = info.overuseCoinsReductionDt
+	local specialofferItemType = info.specialofferItemType
+	local specialofferItemId = info.specialofferItemId
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+
+	if specialofferItemType then
+		local specialofferItemCO = ItemModel.instance:getItemConfig(specialofferItemType, specialofferItemId)
+
+		if ItemEnum.Tag.GoldenMilletPresentSkin == specialofferItemCO.clienttag and GoldenMilletPresentModel.instance:isShowRedDot() and not hasSpecialOfferItem then
+			GameFacade.showMessageBox(MessageBoxIdDefine.GoldenMilletPresentSkinBeforeBuy, MsgBoxEnum.BoxType.Yes, function()
+				GoldenMilletPresentController.instance:openGoldenMilletPresentView()
+				self:closeThis()
+			end, nil, nil, self, nil, nil)
+
+			return
+		end
+	end
 
 	if StoreModel.instance:isSkinCanShowMessageBox(skinId) then
 		local skinStoreId = skinCo.skinStoreId
 		local skinGoodsMo = StoreModel.instance:getGoodsMO(skinStoreId)
 
-		local function func()
+		GameFacade.showMessageBox(MessageBoxIdDefine.SkinGoodsJumpTips, MsgBoxEnum.BoxType.Yes_No, function()
 			StoreController.instance:openStoreView(StoreEnum.StoreId.VersionPackage, skinStoreId)
 			self:closeThis()
-		end
+		end, nil, nil, self, nil, nil, skinGoodsMo.config.name)
 
-		GameFacade.showMessageBox(MessageBoxIdDefine.SkinGoodsJumpTips, MsgBoxEnum.BoxType.Yes_No, func, nil, nil, nil, nil, nil, skinGoodsMo.config.name)
-	elseif curIndex == 1 then
+		return
+	end
+
+	if curIndex == 1 then
 		local goodsId = StoreConfig.instance:getSkinChargeGoodsId(skinId)
 
 		if goodsId then
@@ -186,48 +217,30 @@ function StoreSkinGoodsView2:_btnbuyOnClick()
 		else
 			GameFacade.showToast(ToastEnum.CanNotBuy)
 		end
-	else
-		local costInfo = string.splitToNumber(self._mo.config.cost, "#")
-		local realCost = costInfo[3]
 
-		if self.deductionInfo then
-			local offset = realCost - self.deductionInfo.deductionCount
-
-			if offset < 0 then
-				local deductionType = self.deductionInfo.currencyType.type
-				local deductionId = self.deductionInfo.currencyType.id
-				local deductionConfig = ItemModel.instance:getItemConfig(deductionType, deductionId)
-				local costConfig = ItemModel.instance:getItemConfig(costInfo[1], costInfo[2])
-				local param1 = deductionConfig.name
-				local param2 = self._mo.config.name
-				local param3 = math.abs(offset)
-				local param4 = costConfig.name
-
-				GameFacade.showMessageBox(MessageBoxIdDefine.SkinStoreDeductionUseTips, MsgBoxEnum.BoxType.Yes_No, self._realbuyGoods, nil, nil, self, nil, nil, param1, param2, param3, param4)
-
-				return
-			end
-
-			realCost = math.max(0, offset)
-		end
-
-		if CurrencyController.instance:checkDiamondEnough(realCost, self.jumpCallBack, self) then
-			self:_buyGoods()
-		end
+		return
 	end
+
+	if overuseCoinsReductionDt < 0 then
+		local deductionConfig = ItemModel.instance:getItemConfig(deductionItemType, deductionItemId)
+		local costConfig = ItemModel.instance:getItemConfig(coinsItemType, coinsItemId)
+		local param1 = deductionConfig.name
+		local param2 = goodsConfig.name
+		local param3 = math.abs(overuseCoinsReductionDt)
+		local param4 = costConfig.name
+
+		GameFacade.showMessageBox(MessageBoxIdDefine.SkinStoreDeductionUseTips, MsgBoxEnum.BoxType.Yes_No, function()
+			self:_checkAndBuyGoods(coinsCurPrice)
+		end, nil, nil, self, nil, nil, param1, param2, param3, param4)
+
+		return
+	end
+
+	self:_checkAndBuyGoods(coinsCurPrice)
 end
 
-function StoreSkinGoodsView2:_realbuyGoods()
-	local costInfo = string.splitToNumber(self._mo.config.cost, "#")
-	local realCost = costInfo[3]
-
-	if self.deductionInfo then
-		local offset = realCost - self.deductionInfo.deductionCount
-
-		realCost = math.max(0, offset)
-	end
-
-	if CurrencyController.instance:checkDiamondEnough(realCost, self.jumpCallBack, self) then
+function StoreSkinGoodsView2:_checkAndBuyGoods(priceNum)
+	if CurrencyController.instance:checkDiamondEnough(priceNum, self.jumpCallBack, self) then
 		self:_buyGoods()
 	end
 end
@@ -252,6 +265,11 @@ function StoreSkinGoodsView2:_editableInitView()
 	self._goremain = gohelper.findChild(self.viewGO, "view/propinfo/content/remain")
 	self._gonormaltitle = gohelper.findChild(self.viewGO, "view/bgroot/#go_normal_title")
 	self._goadvancedtitle = gohelper.findChild(self.viewGO, "view/bgroot/#go_advanced_title")
+
+	self:_setActive_redOrOrange(false)
+
+	self._godiscount2 = gohelper.findChild(self.viewGO, "view/common/#btn_buy/#go_discount2")
+	self._txtdiscount2 = gohelper.findChildText(self._godiscount2, "#txt_cost_price")
 end
 
 function StoreSkinGoodsView2:onUpdateParam()
@@ -272,7 +290,7 @@ function StoreSkinGoodsView2:onOpen()
 end
 
 function StoreSkinGoodsView2:_updateSkinStore()
-	self._mo = self.viewParam.goodsMO
+	self._mo = self.viewParam.goodsMO or self.viewParam.goodsMo
 
 	local product = self._mo.config.product
 	local productInfo = string.splitToNumber(product, "#")
@@ -308,6 +326,7 @@ function StoreSkinGoodsView2:_updateSkinStore()
 	self:refreshCost(skinStoreCfg)
 	self:_refreshSkinIcon(skinStoreCfg)
 	self:refreshStoreSkinTips()
+	self:_refreshSpecial()
 end
 
 function StoreSkinGoodsView2:_refreshSkinDesc(skinGoodCfg, skinCfg)
@@ -339,6 +358,7 @@ function StoreSkinGoodsView2:_refreshSkinIcon(skinStoreCfg)
 	gohelper.setActive(self._goUniqueSkinsSpineRoot, isUniqueSkin)
 	gohelper.setActive(self._goUniqueSkinsSpineRoot2, isUniqueSkin)
 	gohelper.setActive(self._goUniqueSkinsTitle, isUniqueSkin)
+	gohelper.setActive(self.goUniqueMask, isUniqueSkin)
 
 	local signTexturePath = defaultSignaturePng
 
@@ -518,9 +538,9 @@ end
 
 function StoreSkinGoodsView2:refreshCost()
 	local showCurrency = {}
-	local goodConfig = self._mo.config
+	local goodsConfig = self._mo.config
 
-	if string.nilorempty(goodConfig.cost) then
+	if string.nilorempty(goodsConfig.cost) then
 		gohelper.setActive(self._gocost, false)
 
 		return
@@ -529,145 +549,125 @@ function StoreSkinGoodsView2:refreshCost()
 	gohelper.setActive(self._gocost, true)
 
 	local curIndex = self:getCurCostIndex()
-	local productInfo = string.splitToNumber(goodConfig.product, "#")
+	local productInfo = string.splitToNumber(goodsConfig.product, "#")
 	local skinId = productInfo[2]
 	local skinCo = SkinConfig.instance:getSkinCo(skinId)
-	local price, originalPrice
+	local info = StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
 
-	if skinCo then
-		local isChargePackageValid = StoreModel.instance:isStoreSkinChargePackageValid(skinId)
+	self._goodsPriceInfo = info
 
-		if isChargePackageValid then
-			price, originalPrice = StoreConfig.instance:getSkinChargePrice(skinId)
-		end
+	local rmbCurPrice = info.rmbCurPrice
+	local rmbOriginalPrice = info.rmbOriginalPrice
+	local coinsItemType = info.coinsItemType
+	local coinsItemId = info.coinsItemId
+	local coinsCurPrice = info.coinsCurPrice
+	local coinsOriginalPrice = info.coinsOriginalPrice
+	local coinsReduction = info.coinsReduction
+	local hasDeductionItem = info.hasDeductionItem
+	local deductionItemType = info.deductionItemType
+	local deductionItemId = info.deductionItemId
+	local bCoinsEnough = info.bCoinsEnough
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+	local specialofferItemType = info.specialofferItemType
+	local specialofferItemId = info.specialofferItemId
+	local isShowCoinsOriginalPrice = hasDeductionItem and coinsCurPrice and coinsCurPrice < coinsOriginalPrice
+	local coinsItemCO = ItemModel.instance:getItemConfig(coinsItemType, coinsItemId)
+	local imageiconsingleSpriteName = string.format("%s_1", coinsItemCO.icon)
+
+	table.insert(showCurrency, coinsItemId)
+
+	if hasDeductionItem then
+		table.insert(showCurrency, {
+			isCurrencySprite = true,
+			type = deductionItemType,
+			id = deductionItemId
+		})
+
+		local disCntStr = tostring(-coinsReduction)
+
+		self.txtDiscount3.text = disCntStr
+		self._txtdiscount2.text = disCntStr
 	end
 
-	local costs = string.splitToNumber(goodConfig.cost, "#")
-	local costQuantity = costs[3]
-	local realCost = costQuantity
-
-	table.insert(showCurrency, costs[2])
-
-	local deductionItemCount = 0
-	local hasDeductionItem = false
-
-	if not string.nilorempty(goodConfig.deductionItem) then
-		local info = GameUtil.splitString2(goodConfig.deductionItem, true)
-
-		deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
-		self.txtDiscount3.text = -info[2][1]
-
-		if deductionItemCount > 0 then
-			hasDeductionItem = true
-
-			table.insert(showCurrency, {
-				isCurrencySprite = true,
-				type = info[1][1],
-				id = info[1][2]
-			})
-
-			realCost = math.max(0, realCost - info[2][1])
-		end
+	if hasSpecialOfferItem then
+		table.insert(showCurrency, {
+			isCurrencySprite = true,
+			type = specialofferItemType,
+			id = specialofferItemId
+		})
 	end
 
 	gohelper.setActive(self.goDiscount3, hasDeductionItem)
+	gohelper.setActive(self._godiscount2, hasDeductionItem and not rmbCurPrice)
 	self.viewContainer:setCurrencyType(showCurrency)
 
-	local hasOriginalPrice = goodConfig.originalCost > 0
-	local offTag = hasOriginalPrice and costQuantity / goodConfig.originalCost or 0
+	local isShowOffTag = false
 
-	offTag = math.ceil(offTag * 100)
+	if isShowOffTag then
+		local offDiscount = math.ceil(coinsCurPrice / coinsOriginalPrice * 100)
 
-	if offTag > 0 and offTag < 100 then
-		gohelper.setActive(self._godiscount, true)
-
-		self._txtdiscount.text = string.format("-%d%%", 100 - offTag)
-	else
-		gohelper.setActive(self._godiscount, false)
+		isShowOffTag = offDiscount < 100 and offDiscount > 0
+		self._txtdiscount.text = string.format("-%d%%", 100 - offDiscount)
 	end
 
-	if not price then
-		gohelper.setActive(self._gocost, false)
-		gohelper.setActive(self._gocostsingle, true)
+	gohelper.setActive(self._godiscount, isShowOffTag)
 
-		local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
+	if coinsCurPrice then
+		self._txtcurpricesingle.text = coinsCurPrice
+	end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconsingle, costCo.icon .. "_1", true)
+	if coinsOriginalPrice then
+		self._txtoriginalpricesingle.text = coinsOriginalPrice
+	end
 
-		local hadQuantity = ItemModel.instance:getItemQuantity(costs[1], costs[2])
+	gohelper.setActive(self._txtoriginalpricesingle, isShowCoinsOriginalPrice)
+	gohelper.setActive(self._gocost, rmbCurPrice)
+	gohelper.setActive(self._gocostsingle, not rmbCurPrice)
 
-		if realCost <= hadQuantity then
-			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpricesingle, "#393939")
-		else
-			SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpricesingle, "#bf2e11")
+	if not rmbCurPrice then
+		if curIndex == 1 then
+			self:setCurCostIndex(2)
 		end
 
-		self._txtcurpricesingle.text = realCost
-
-		if hasOriginalPrice or hasDeductionItem then
-			gohelper.setActive(self._txtoriginalpricesingle.gameObject, true)
-
-			self._txtoriginalpricesingle.text = hasOriginalPrice and goodConfig.originalCost or costQuantity
-		else
-			gohelper.setActive(self._txtoriginalpricesingle.gameObject, false)
-		end
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconsingle, imageiconsingleSpriteName, true)
+		SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpricesingle, bCoinsEnough and "#393939" or "#bf2e11")
 
 		return
 	end
 
-	gohelper.setActive(self._gocost, true)
-	gohelper.setActive(self._gocostsingle, false)
-
-	local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(price))
+	local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(rmbCurPrice))
 
 	self._txtcurpriceunselect1.text = priceStr
 	self._txtcurpriceselect1.text = priceStr
 
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect1, "#393939")
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect1, "#ffffff")
+	gohelper.setActive(self._txtoriginalpriceselect1, rmbOriginalPrice)
+	gohelper.setActive(self._txtoriginalpriceunselect1, rmbOriginalPrice)
 
-	if originalPrice then
-		gohelper.setActive(self._txtoriginalpriceselect1.gameObject, true)
-		gohelper.setActive(self._txtoriginalpriceunselect1.gameObject, true)
-
-		self._txtoriginalpriceselect1.text = originalPrice
-		self._txtoriginalpriceunselect1.text = originalPrice
-	else
-		gohelper.setActive(self._txtoriginalpriceselect1.gameObject, false)
-		gohelper.setActive(self._txtoriginalpriceunselect1.gameObject, false)
+	if rmbOriginalPrice then
+		self._txtoriginalpriceselect1.text = rmbOriginalPrice
+		self._txtoriginalpriceunselect1.text = rmbOriginalPrice
 	end
 
 	gohelper.setActive(self._goselect1, curIndex == 1)
 	gohelper.setActive(self._gounselect1, curIndex ~= 1)
 
-	local costCo, _ = ItemModel.instance:getItemConfigAndIcon(costs[1], costs[2])
+	self._txtcurpriceunselect2.text = coinsCurPrice
+	self._txtcurpriceselect2.text = coinsCurPrice
 
-	self._txtcurpriceunselect2.text = realCost
-	self._txtcurpriceselect2.text = realCost
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect2, bCoinsEnough and "#393939" or "#bf2e11")
+	SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect2, bCoinsEnough and "#ffffff" or "#bf2e11")
+	gohelper.setActive(self._txtoriginalpriceselect2, isShowCoinsOriginalPrice)
+	gohelper.setActive(self._txtoriginalpriceunselect2, isShowCoinsOriginalPrice)
 
-	local hadQuantity2 = ItemModel.instance:getItemQuantity(costs[1], costs[2])
-
-	if realCost <= hadQuantity2 then
-		SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect2, "#393939")
-		SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect2, "#ffffff")
-	else
-		SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceunselect2, "#bf2e11")
-		SLFramework.UGUI.GuiHelper.SetColor(self._txtcurpriceselect2, "#bf2e11")
+	if coinsOriginalPrice then
+		self._txtoriginalpriceselect2.text = coinsOriginalPrice
+		self._txtoriginalpriceunselect2.text = coinsOriginalPrice
 	end
 
-	if hasOriginalPrice or hasDeductionItem then
-		gohelper.setActive(self._txtoriginalpriceselect2.gameObject, true)
-		gohelper.setActive(self._txtoriginalpriceunselect2.gameObject, true)
-
-		self._txtoriginalpriceselect2.text = hasOriginalPrice and goodConfig.originalCost or costQuantity
-		self._txtoriginalpriceunselect2.text = hasOriginalPrice and goodConfig.originalCost or costQuantity
-	else
-		gohelper.setActive(self._txtoriginalpriceselect2.gameObject, false)
-		gohelper.setActive(self._txtoriginalpriceunselect2.gameObject, false)
-	end
-
-	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconselect2, costCo.icon .. "_1", true)
-	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconunselect2, costCo.icon .. "_1", true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconselect2, imageiconsingleSpriteName, true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(self._imageiconunselect2, imageiconsingleSpriteName, true)
 	gohelper.setActive(self._goselect2, curIndex == 2)
 	gohelper.setActive(self._gounselect2, curIndex ~= 2)
 end
@@ -709,6 +709,20 @@ function StoreSkinGoodsView2:onDestroyView()
 	end
 
 	self.simageStoreSkinTips:UnLoadImage()
+end
+
+function StoreSkinGoodsView2:_refreshSpecial()
+	local info = self._goodsPriceInfo
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+
+	gohelper.setActive(self._gospecial, hasSpecialOfferItem)
+	gohelper.setActive(self._gospecialDescGo, hasSpecialOfferItem)
+	self:_setActive_redOrOrange(hasSpecialOfferItem)
+end
+
+function StoreSkinGoodsView2:_setActive_redOrOrange(bRed)
+	gohelper.setActive(self._goimg_orange, not bRed)
+	gohelper.setActive(self._goimg_red, bRed)
 end
 
 return StoreSkinGoodsView2

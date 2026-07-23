@@ -28,7 +28,7 @@ function SummonResultViewContainer:_buildCurrency()
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item
 		}
-	}, nil, nil, nil, false)
+	}, nil, nil, nil, true)
 
 	return {
 		self._currencyView

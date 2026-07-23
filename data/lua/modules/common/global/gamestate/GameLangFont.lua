@@ -52,17 +52,6 @@ function GameLangFont:_callback(langFont, isRegister)
 		end
 	else
 		self._registerFontDict[langFont] = nil
-
-		local tmpTextId = langFont.id
-
-		if tmpTextId > 0 and (not string.nilorempty(langFont.str1) or langFont.instanceMaterial) then
-			local tmpText = langFont.tmpText
-			local fontAsset = self._id2TmpFontAssetDict[tmpTextId]
-
-			if tmpText and (fontAsset == nil or fontAsset.material ~= tmpText.fontSharedMaterial) then
-				gohelper.destroy(tmpText.fontSharedMaterial)
-			end
-		end
 	end
 end
 
@@ -97,7 +86,7 @@ function GameLangFont:_loadFontAsset()
 	local lang = LangSettings.shortcutTab[GameConfig:GetCurLangType()]
 	local config = lua_setting_lang.configDict[lang]
 
-	for i = 1, 2 do
+	for i = 1, 4 do
 		local fontname = "fontasset" .. i
 
 		if not string.nilorempty(config[fontname]) then
@@ -117,6 +106,26 @@ function GameLangFont:_loadFontAsset()
 
 			self._id2TextFontUrlDict[i] = url
 		end
+	end
+
+	local fontname = "syst_cn_b"
+
+	if not string.nilorempty(config[fontname]) then
+		local url = string.format("font/meshpro/%s.asset", config[fontname])
+
+		table.insert(fontUrlList, url)
+
+		self._id2TmpFontUrlDict[3] = url
+	end
+
+	fontname = "syst_cn_h"
+
+	if not string.nilorempty(config[fontname]) then
+		local url = string.format("font/meshpro/%s.asset", config[fontname])
+
+		table.insert(fontUrlList, url)
+
+		self._id2TmpFontUrlDict[4] = url
 	end
 
 	if self._loader then

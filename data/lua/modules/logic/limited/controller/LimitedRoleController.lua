@@ -156,11 +156,11 @@ function LimitedRoleController:_playAction()
 				if actionTime2 > 0 then
 					if self._stage == LimitedRoleEnum.Stage.FirstLogin then
 						self:_blockMainViewClick(actionTime2)
+						MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, false)
 					end
 
 					self._isPlayingAction = true
 
-					MainController.instance:dispatchEvent(MainEvent.SetMainViewVisible, false)
 					TaskDispatcher.runDelay(self._clearActionState, self, actionTime2)
 				end
 

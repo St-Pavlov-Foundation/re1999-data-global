@@ -20,32 +20,6 @@ function SkillDescComp:init(go)
 end
 
 function SkillDescComp:updateInfo(txtComp, desc, heroId)
-	if LangSettings.instance:isEn() then
-		desc = SkillConfig.replaceHeroName(desc, heroId)
-	end
-
-	self._txtComp = txtComp
-	self._heroId = heroId
-
-	if self._skillNameList ~= nil then
-		tabletool.clear(self._skillNameList)
-	end
-
-	desc = self:_replaceSkillTag(desc, "▩(%d)%%s")
-	desc = self:addLink(desc)
-	desc = self:filterBracketText(desc)
-	desc = self:addNumColor(desc)
-	desc = self:revertBracketText(desc)
-	desc = self:_revertSkillName(desc, 1)
-	self._hyperLinkClick = gohelper.onceAddComponent(self.viewGO, typeof(ZProj.TMPHyperLinkClick))
-
-	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
-
-	self._txtComp.text = desc
-	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO.gameObject, FixTmpBreakLine)
-
-	self._fixTmpBreakLine:refreshTmpContent(self.viewGO)
-
 	self.heroMo = HeroModel.instance:getByHeroId(heroId)
 
 	if not self.heroMo then
@@ -61,6 +35,32 @@ function SkillDescComp:updateInfo(txtComp, desc, heroId)
 			table.insert(self.heroMo.passiveSkillLevel, i)
 		end
 	end
+
+	if LangSettings.instance:isEn() then
+		desc = SkillConfig.replaceHeroName(desc, heroId)
+	end
+
+	self._txtComp = txtComp
+	self._heroId = heroId
+
+	if self._skillNameList ~= nil then
+		tabletool.clear(self._skillNameList)
+	end
+
+	desc = self:_replaceSkillTag(desc, "▩(%d+)%%s")
+	desc = self:addLink(desc)
+	desc = self:filterBracketText(desc)
+	desc = self:addNumColor(desc)
+	desc = self:revertBracketText(desc)
+	desc = self:_revertSkillName(desc, 1)
+	self._hyperLinkClick = gohelper.onceAddComponent(self.viewGO, typeof(ZProj.TMPHyperLinkClick))
+
+	self._hyperLinkClick:SetClickListener(self._onHyperLinkClick, self)
+
+	self._txtComp.text = desc
+	self._fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO.gameObject, FixTmpBreakLine)
+
+	self._fixTmpBreakLine:refreshTmpContent(self.viewGO)
 end
 
 function SkillDescComp:setTipParam(skillTipAnchorX, buffTipAnchor)
@@ -81,20 +81,36 @@ function SkillDescComp:_replaceSkillTag(desc, pattern)
 
 	skillIndex = tonumber(skillIndex)
 
-	local skillId, extraSkillIndex
+	local skillId, extraSkillIndex, specialSkillId
 
 	if skillIndex == 0 then
 		skillId = SkillConfig.instance:getpassiveskillsCO(self._heroId)[1].skillPassive
 	else
-		local _, _, _skillIndex = string.find(desc, "<(%d)>")
-		local skillIds = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(self._heroId, nil, self.heroMo, nil, true)
-		local skillChoice = SkillConfig.instance:getFightCardChoice(skillIds[skillIndex])
+		self._deviceMo = SkillConfig.instance:getHeroDeviceMO(self._heroId, self.heroMo)
 
-		if _skillIndex and skillChoice then
-			extraSkillIndex = tonumber(_skillIndex)
-			skillId = skillChoice[extraSkillIndex][skillIndex]
+		if self._deviceMo then
+			local index = 1
+
+			if skillIndex > 10 then
+				local _tempIndex = skillIndex
+
+				skillIndex = _tempIndex % 10
+				index = math.floor(_tempIndex / 10)
+			end
+
+			skillId = self._deviceMo:getSkillId(skillIndex, index)
+			specialSkillId = skillId
 		else
-			skillId = skillIds[skillIndex][1]
+			local _, _, _skillIndex = string.find(desc, "▩%d%%s<(%d)>")
+			local skillIds = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(self._heroId, nil, self.heroMo, nil, true)
+			local skillChoice = SkillConfig.instance:getFightCardChoice(skillIds[skillIndex])
+
+			if _skillIndex and skillChoice then
+				extraSkillIndex = tonumber(_skillIndex)
+				skillId = skillChoice[extraSkillIndex][skillIndex]
+			else
+				skillId = skillIds[skillIndex][1]
+			end
 		end
 	end
 
@@ -106,7 +122,7 @@ function SkillDescComp:_replaceSkillTag(desc, pattern)
 
 	local skillName = lua_skill.configDict[skillId].name
 	local foramt = luaLang("SkillDescComp_replaceSkillTag_overseas")
-	local _skillName = skillName and string.format(foramt, self:getLinkColor(), skillIndex, extraSkillIndex or -1, skillName) or ""
+	local _skillName = skillName and string.format(foramt, self:getLinkColor(), skillIndex, extraSkillIndex or -1, specialSkillId or -1, skillName) or ""
 
 	if not self._skillNameList then
 		self._skillNameList = {}
@@ -295,7 +311,7 @@ end
 function SkillDescComp:_onHyperLinkClick(data, clickPosition)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local skillIndex, extraSkillIndex = string.match(data, "skillIndex=(.-)|extraSkillIndex=(.+)")
+	local skillIndex, extraSkillIndex, specialSkillId = string.match(data, "skillIndex=(.-)|extraSkillIndex=(.-)|specialSkillId={(.-)}")
 
 	skillIndex = skillIndex and tonumber(skillIndex)
 
@@ -330,6 +346,16 @@ function SkillDescComp:_onHyperLinkClick(data, clickPosition)
 				if skillChoice then
 					skillIds = skillChoice[extraSkillIndex]
 				end
+			end
+		end
+
+		if specialSkillId then
+			specialSkillId = tonumber(specialSkillId)
+
+			if specialSkillId ~= -1 then
+				skillIds = {
+					specialSkillId
+				}
 			end
 		end
 

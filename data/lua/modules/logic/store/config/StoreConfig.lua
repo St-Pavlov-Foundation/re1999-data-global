@@ -33,6 +33,8 @@ function StoreConfig:ctor()
 		self._configCurrencyCodeKey = "currencyCodejp"
 		self._configOriginalCostKey = "originalCostjp"
 	end
+
+	self._storeChargeConditional2GoodsId = nil
 end
 
 function StoreConfig:reqConfigNames()
@@ -241,6 +243,20 @@ function StoreConfig:getCharageGoodsCfgListByPoolId(poolId)
 	end
 
 	return self._poolId2CharageGoodsCfgListDic and self._poolId2CharageGoodsCfgListDic[poolId]
+end
+
+function StoreConfig:getChargeGoodsIdByConditionalId(conditionalId)
+	if not self._storeChargeConditional2GoodsId then
+		self._storeChargeConditional2GoodsId = {}
+
+		for _, chargeConfig in ipairs(self._storeChargeGoodsConfig.configList) do
+			if chargeConfig.taskid then
+				self._storeChargeConditional2GoodsId[chargeConfig.taskid] = chargeConfig.id
+			end
+		end
+	end
+
+	return self._storeChargeConditional2GoodsId[conditionalId]
 end
 
 function StoreConfig:getChargeGoodsConfig(chargeGoodsId, notShowError)

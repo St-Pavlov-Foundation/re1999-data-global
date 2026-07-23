@@ -40,7 +40,16 @@ function SpineDissolveWork:onStart(context)
 end
 
 function SpineDissolveWork:_onAnimationLoaded()
-	local animInst = self._animationLoader:getFirstAssetItem():GetResource(ResUrl.getEntityAnim(self._ani_path))
+	local assetItem = self._animationLoader:getFirstAssetItem()
+
+	if not assetItem then
+		logError(string.format("配置死亡动画 '%s' 不存在，皮肤id : %s ", self._ani_path, self.context.dissolveEntity:getMO().skin))
+
+		return self:_playDissolve()
+	end
+
+	local path = ResUrl.getEntityAnim(self._ani_path)
+	local animInst = assetItem:GetResource(path)
 
 	animInst.legacy = true
 	self._animStateName = animInst.name

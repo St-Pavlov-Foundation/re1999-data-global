@@ -5,6 +5,8 @@ module("modules.logic.fight.view.cardeffect.FightCardEndEffect", package.seeall)
 local FightCardEndEffect = class("FightCardEndEffect", BaseWork)
 local TimeFactor = 1
 local dt = TimeFactor * 0.033
+local delay_frame = 2
+local PlayCardInitFlyWaitDuration = 0.2
 
 function FightCardEndEffect:ctor()
 	return
@@ -31,6 +33,11 @@ function FightCardEndEffect:onStart(context)
 
 	self._flow:addWork(self:_handCardFlow())
 	self._flow:addWork(self:_playCardFlow())
+
+	if self.context.deviceContainer then
+		self._flow:addWork(self:_deviceFlow())
+	end
+
 	self._flow:registerDoneListener(self._onWorkDone, self)
 	self._flow:start()
 end
@@ -116,7 +123,7 @@ function FightCardEndEffect:_playCardFlow()
 		return main_sequence
 	end
 
-	main_sequence:addWork(WorkWaitSeconds.New(0.2))
+	main_sequence:addWork(WorkWaitSeconds.New(PlayCardInitFlyWaitDuration))
 
 	local flow = FlowParallel.New()
 	local playCardGO = gohelper.findChild(self.context.playCardContainer, "#scroll_cards/Viewport/Content")
@@ -162,7 +169,7 @@ function FightCardEndEffect:_playCardFlow()
 
 						tabletool.clear(temp_tab)
 
-						for _, _op in ipairs(fightViewPlayCard._begin_round_ops) do
+						for _, _op in ipairs(FightDataHelper.operationDataMgr:getBeginRoundOpList()) do
 							table.insert(temp_tab, string.format("{operType : %s, toId : %s, skillId : %s, belongToEntityId : %s, costActPoint: %s}", _op.operType, _op.toId, _op.skillId, _op.belongToEntityId, _op.costActPoint))
 						end
 
@@ -201,8 +208,6 @@ function FightCardEndEffect:_playCardFlow()
 		end
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.FixWaitingAreaItemCount, #self._playCardItemGOs)
-
 	local lorentzRecordCardItem = fightView and fightView.fightViewPlayCard and fightView.fightViewPlayCard.lorenzRecordCardItem
 
 	if lorentzRecordCardItem then
@@ -215,15 +220,25 @@ function FightCardEndEffect:_playCardFlow()
 
 	for i, itemGO in ipairs(self._playCardItemGOs) do
 		local itemTr = self._cloneItemGOs[i].transform
-		local waitItemGO = gohelper.findChild(self.context.waitCardContainer, "cardItem" .. #self._playCardItemGOs - i + 1)
+		local pos
 
 		if version >= 1 then
-			waitItemGO = gohelper.findChild(self.context.waitCardContainer, "cardItem" .. i)
+			local calculatePosObj = self.context.goCalculatePosObj
+			local calculatePosTr = calculatePosObj:GetComponent(gohelper.Type_RectTransform)
+			local halfWidth = FightViewWaitingAreaVersion1.CardItemWidth * 0.5
+			local anchorX = FightViewWaitingAreaVersion1.getCardPosByClientData(i)
+
+			recthelper.setAnchorX(calculatePosTr, anchorX)
+
+			pos = recthelper.rectToRelativeAnchorPos(calculatePosTr.position, itemTr.parent)
+			pos.x = pos.x - halfWidth
+		else
+			local waitItemGO = gohelper.findChild(self.context.waitCardContainer, "cardItem" .. #self._playCardItemGOs - i + 1)
+
+			pos = recthelper.rectToRelativeAnchorPos(waitItemGO.transform.position, itemTr.parent)
 		end
 
-		local pos = recthelper.rectToRelativeAnchorPos(waitItemGO.transform.position, itemTr.parent)
 		local sequence = FlowSequence.New()
-		local delay_frame = 2
 
 		sequence:addWork(WorkWaitSeconds.New(self._dt * delay_frame * i))
 		sequence:addWork(FunctionWork.New(function()
@@ -295,6 +310,58 @@ function FightCardEndEffect:_playCardFlow()
 	return main_sequence
 end
 
+function FightCardEndEffect:_deviceFlow()
+	local main_sequence = FlowSequence.New()
+	local deviceContainer = self.context.deviceContainer
+
+	if not deviceContainer then
+		return main_sequence
+	end
+
+	local playItemCount = FightViewPlayCard.getMaxItemCountIncludeExtraMoveAct()
+
+	if playItemCount > FightViewPlayCard.VisibleCount then
+		main_sequence:addWork(WorkWaitSeconds.New(0.1))
+	else
+		local curFlyCount = self._playCardItemGOs and #self._playCardItemGOs + 1 or 0
+		local delay = self._dt * delay_frame * curFlyCount
+
+		main_sequence:addWork(WorkWaitSeconds.New(delay + PlayCardInitFlyWaitDuration))
+	end
+
+	main_sequence:addWork(FunctionWork.New(self.dispatchBeforeFlyDeviceArea, self))
+
+	local rectDevice = deviceContainer:GetComponent(gohelper.Type_RectTransform)
+	local anchorX = FightViewWaitingAreaVersion1.getDeviceAnchorXByClientData()
+	local calculatePosObj = self.context.goCalculatePosObj
+	local calculatePosTr = calculatePosObj:GetComponent(gohelper.Type_RectTransform)
+
+	recthelper.setAnchorX(calculatePosTr, anchorX)
+
+	local pos = recthelper.rectToRelativeAnchorPos(calculatePosTr.position, rectDevice.parent)
+	local targetAnchorX, targetAnchorY = pos.x, pos.y
+	local width = FightDeviceHelper.getDeviceAreaTotalWidth()
+
+	width = width * 0.5
+
+	local offsetY = FightViewDeviceAreaCardItem.DeviceOffsetY
+
+	main_sequence:addWork(TweenWork.New({
+		type = "DOAnchorPos",
+		tr = rectDevice,
+		tox = targetAnchorX - width,
+		toy = targetAnchorY + offsetY,
+		t = self._dt * 15,
+		ease = EaseType.OutCubic
+	}))
+
+	return main_sequence
+end
+
+function FightCardEndEffect:dispatchBeforeFlyDeviceArea()
+	FightController.instance:dispatchEvent(FightEvent.OnDevice_BeforeFly)
+end
+
 function FightCardEndEffect:_onWorkDone()
 	self._flow:unregisterDoneListener(self._onWorkDone, self)
 	gohelper.setActive(self.context.playCardContainer, false)
@@ -323,6 +390,8 @@ function FightCardEndEffect:_onWorkDone()
 			gohelper.destroy(go)
 		end
 	end
+
+	FightController.instance:dispatchEvent(FightEvent.OnDevice_HidePlayArea)
 
 	if self._cloneOperateItemList then
 		for _, item in ipairs(self._cloneOperateItemList) do

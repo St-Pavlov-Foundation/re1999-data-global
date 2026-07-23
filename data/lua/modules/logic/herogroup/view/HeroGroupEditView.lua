@@ -665,7 +665,7 @@ function HeroGroupEditView:_refreshPassiveSkill()
 end
 
 function HeroGroupEditView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial())
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial(), CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function HeroGroupEditView:_refreshBtnIcon()
@@ -1008,6 +1008,10 @@ function HeroGroupEditView:onClose()
 	CommonHeroHelper.instance:resetGrayState()
 	CharacterController.instance:closeCharacterFilterView()
 	CharacterSearchFilterModel.instance:exitParentView()
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
+	end
 end
 
 function HeroGroupEditView:_onAudioTrigger(audioId)

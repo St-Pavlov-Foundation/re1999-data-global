@@ -12,7 +12,8 @@ function TowerDeepConfig:reqConfigNames()
 	return {
 		"tower_deep_const",
 		"tower_deep_task",
-		"tower_deep_monster"
+		"tower_deep_monster",
+		"tower_deep_new_hero_trial"
 	}
 end
 
@@ -23,6 +24,10 @@ function TowerDeepConfig:onConfigLoaded(configName, configTable)
 		self._taskConfig = configTable
 	elseif configName == "tower_deep_monster" then
 		self._deepMonsterConfig = configTable
+	elseif configName == "tower_deep_new_hero_trial" then
+		self._deepHeroTrialConfig = configTable
+
+		self:buildDeepHeroTrialList()
 	end
 end
 
@@ -58,6 +63,39 @@ function TowerDeepConfig:getDeepMonsterId(deepHigh)
 	end
 
 	return self._deepMonsterConfig.configList[1].bossId
+end
+
+function TowerDeepConfig:buildDeepHeroTrialList()
+	self.deepHeroTrialMap = {}
+	self.allDeepTrialHeroList = {}
+
+	for index, config in ipairs(self._deepHeroTrialConfig.configList) do
+		local trialHeroList = string.splitToNumber(config.heroIds, "|")
+
+		self.deepHeroTrialMap[config.id] = trialHeroList
+	end
+end
+
+function TowerDeepConfig:getHeroTrialList(episodeId)
+	return self.deepHeroTrialMap[episodeId]
+end
+
+function TowerDeepConfig:getAllHeroTrialList()
+	local sameHeroMap = {}
+
+	if #self.allDeepTrialHeroList == 0 then
+		for episodeId, trialHeroList in pairs(self.deepHeroTrialMap) do
+			for _, heroId in ipairs(trialHeroList) do
+				if not sameHeroMap[heroId] then
+					sameHeroMap[heroId] = true
+
+					table.insert(self.allDeepTrialHeroList, heroId)
+				end
+			end
+		end
+	end
+
+	return self.allDeepTrialHeroList
 end
 
 TowerDeepConfig.instance = TowerDeepConfig.New()

@@ -14,6 +14,7 @@ local spineDefaultSize = {
 	600
 }
 local defaultSignaturePng = "singlebg/signature/color/img_dressing1.png"
+local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
 function StoreSkinGoodsItem:onInitView()
 	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#go_NormalSkin/image_bg")
@@ -30,10 +31,8 @@ function StoreSkinGoodsItem:onInitView()
 	self._uniqueImagebg = gohelper.findChildSingleImage(self.viewGO, "#go_UniqueSkin/#simage_iconbg")
 	self._goUniqueSkinBubble = gohelper.findChild(self.viewGO, "#go_UniqueSkin/#simage_bubble")
 	self._xtIconbg = gohelper.findChild(self.viewGO, "#go_UniqueSkin/#xingti_iconbg")
-	self._goLinkageLetterG = gohelper.findChild(self.viewGO, "#go_Linkage/#simage_g")
-	self._goLinkageLetterA = gohelper.findChild(self.viewGO, "#go_Linkage/#image_A")
-	self._goLinkageBgG = gohelper.findChildSingleImage(self.viewGO, "#go_Linkage/#simage_bg")
-	self._goLinkageBgA = gohelper.findChildSingleImage(self.viewGO, "#go_Linkage/#simage_bgA")
+	self._goLinkTag = gohelper.findChild(self.viewGO, "go_tagTR/#go_linkTag")
+	self._gocost = gohelper.findChild(self.viewGO, "cost")
 	self._gocostline = gohelper.findChild(self.viewGO, "cost/line")
 	self._goprice = gohelper.findChild(self.viewGO, "cost/#go_price")
 	self._goowned = gohelper.findChild(self.viewGO, "cost/#go_owned")
@@ -52,6 +51,7 @@ function StoreSkinGoodsItem:onInitView()
 	self._goSkinTips = gohelper.findChild(self.viewGO, "#go_SkinTips")
 	self._imgProp = gohelper.findChildImage(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num/#image_Prop")
 	self._txtPropNum = gohelper.findChildTextMesh(self.viewGO, "#go_SkinTips/image/#txt_Tips/#txt_Num")
+	self._goSpecial = gohelper.findChild(self.viewGO, "go_tagTR/#go_Special")
 	self.goSelect = gohelper.findChild(self.viewGO, "#go_select")
 
 	if self._editableInitView then
@@ -62,11 +62,13 @@ end
 function StoreSkinGoodsItem:addEvents()
 	self:addEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, self.refreshChargeInfo, self)
 	self:addEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
+	self:addEventCb(StoreController.instance, StoreEvent.SkinPlayPriceAnim, self._onSkinPlayPriceAnim, self)
 end
 
 function StoreSkinGoodsItem:removeEvents()
 	self:removeEventCb(StoreController.instance, StoreEvent.SkinChargePackageUpdate, self.refreshChargeInfo, self)
 	self:removeEventCb(StoreController.instance, StoreEvent.SkinPreviewChanged, self._onSkinPreviewChanged, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.SkinPlayPriceAnim, self._onSkinPlayPriceAnim, self)
 end
 
 function StoreSkinGoodsItem:_editableInitView()
@@ -74,9 +76,6 @@ function StoreSkinGoodsItem:_editableInitView()
 
 	self._txtmaterialNum = gohelper.findChildText(self._goprice, "txt_materialNum")
 	self._simagematerial = gohelper.findChildImage(self._goprice, "simage_material")
-	self._goLinkage = gohelper.findChild(self.viewGO, "#go_Linkage")
-	self._goLinkageLogo = gohelper.findChild(self.viewGO, "#go_Linkage/image_Logo")
-	self._linkage_simageicon = gohelper.findChildSingleImage(self._goLinkage, "#simage_icon")
 	self._btnGO = gohelper.findChild(self.viewGO, "clickArea")
 	self._btn = gohelper.getClickWithAudio(self._btnGO, AudioEnum.UI.play_ui_rolesopen)
 
@@ -85,6 +84,7 @@ function StoreSkinGoodsItem:_editableInitView()
 	self._animator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self.viewGOTrs = self.viewGO.transform
 	self.parentViewGO = self.viewGO.transform.parent.gameObject
+	self._costAnimator = self._gocost:GetComponent(gohelper.Type_Animator)
 end
 
 function StoreSkinGoodsItem:_onSkinPreviewChanged()
@@ -152,39 +152,30 @@ end
 function StoreSkinGoodsItem:onUpdateMO(mo)
 	self._mo = mo
 
-	local isShowLinkageSkin = self:_isLinkageSkin()
-	local isShowNormalSkin = not isShowLinkageSkin and self:_isNormalSkin()
-	local isShowAdvancedSkin = not isShowLinkageSkin and self:_isAdvanceSkin()
-	local isShowUniqueSkin = not isShowLinkageSkin and self:_isUniqueSkin()
-	local product = self._mo.config.product
+	local goodsConfig = mo.config
+	local product = goodsConfig.product
 	local productInfo = string.splitToNumber(product, "#")
 	local skinId = productInfo[2]
+	local isShowLinkageSkin = self:_isLinkageSkin()
+	local isShowNormalSkin = self:_isNormalSkin()
+	local isShowAdvancedSkin = self:_isAdvanceSkin()
+	local isShowUniqueSkin = self:_isUniqueSkin()
 
 	self._skinId = skinId
 	self.skinCo = SkinConfig.instance:getSkinCo(skinId)
-
-	local heroConfig = HeroConfig.instance:getHeroCO(self.skinCo.characterId)
 
 	self:clearSpine()
 	gohelper.setActive(self._goNormalSkin, isShowNormalSkin)
 	gohelper.setActive(self._goAdvanceSkin, isShowAdvancedSkin)
 	gohelper.setActive(self._goUniqueSkin, isShowUniqueSkin)
-	gohelper.setActive(self._goLinkage, isShowLinkageSkin)
-	gohelper.setActive(self._goLinkageLogo, self:_isShowLinkageLogo())
+	gohelper.setActive(self._goLinkTag, isShowLinkageSkin)
 
 	if isShowUniqueSkin then
 		self:_onUpdateMO_uniqueSkin()
 	else
 		local imageIcon
 
-		if isShowLinkageSkin then
-			imageIcon = self._linkage_simageicon
-
-			gohelper.setActive(self._goLinkageBgA, self:_isAdvanceSkin())
-			gohelper.setActive(self._goLinkageBgG, self:_isNormalSkin())
-			gohelper.setActive(self._goLinkageLetterA, self:_isAdvanceSkin())
-			gohelper.setActive(self._goLinkageLetterG, self:_isNormalSkin())
-		elseif isShowAdvancedSkin then
+		if isShowAdvancedSkin then
 			imageIcon = self._advanceImageicon
 		else
 			imageIcon = self._simageicon
@@ -197,58 +188,97 @@ function StoreSkinGoodsItem:onUpdateMO(mo)
 		end
 	end
 
+	self:refreshChargeInfo()
+	self:refreshSkinTips()
+	self:_refreshSpecial()
+	self:updateNew()
+	self:updateSelect()
+
+	if self._view and self._view.viewContainer then
+		self._view.viewContainer:dispatchEvent(StoreEvent.SkinGoodsItemChanged)
+	end
+end
+
+function StoreSkinGoodsItem:refreshChargeInfo()
+	local mo = self._mo
+	local skinId = self._skinId
+	local goodsConfig = self._mo.config
+
+	self._goodsPriceInfo = StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
+
+	local info = self._goodsPriceInfo
+	local rmbCurPrice = info.rmbCurPrice
+	local rmbOriginalPrice = info.rmbOriginalPrice
+	local coinsItemType = info.coinsItemType
+	local coinsItemId = info.coinsItemId
+	local coinsCurPrice = info.coinsCurPrice
+	local coinsOriginalPrice = info.coinsOriginalPrice
+	local coinsReduction = info.coinsReduction
+	local hasDeductionItem = info.hasDeductionItem
+	local deductionItemType = info.deductionItemType
+	local deductionItemId = info.deductionItemId
+	local bCoinsEnough = info.bCoinsEnough
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
 	local alreadyHas = mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(mo)
-	local deductionNum = 0
 
-	if alreadyHas then
-		gohelper.setActive(self._goowned, true)
-		gohelper.setActive(self._goprice, false)
-		gohelper.setActive(self._godeduction, false)
-		gohelper.setActive(self._gocostline, false)
-	else
-		gohelper.setActive(self._goowned, false)
-		gohelper.setActive(self._goprice, true)
-		gohelper.setActive(self._gocostline, true)
+	gohelper.setActive(self._goowned, alreadyHas)
+	gohelper.setActive(self._goprice, not alreadyHas)
+	gohelper.setActive(self._gocostline, not alreadyHas)
 
-		local deductionItemCount = 0
-
-		if not string.nilorempty(self._mo.config.deductionItem) then
-			local info = GameUtil.splitString2(self._mo.config.deductionItem, true)
-
-			deductionItemCount = ItemModel.instance:getItemCount(info[1][2])
-
-			if deductionItemCount > 0 then
-				deductionNum = info[2][1]
-			end
-
-			self._txtdeduction.text = -info[2][1]
-		end
-
-		gohelper.setActive(self._godeduction, deductionItemCount > 0)
+	if not alreadyHas then
+		recthelper.setAnchorX(self._goprice.transform, rmbCurPrice and 60 or 5)
 	end
 
-	local costInfo = string.splitToNumber(self._mo.config.cost, "#")
+	self._txtdeduction.text = -coinsReduction
 
-	self._costType = costInfo[1]
-	self._costId = costInfo[2]
-	self._costQuantity = costInfo[3]
+	gohelper.setActive(self._godeduction, not alreadyHas and hasDeductionItem)
 
-	local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
-	local id = costConfig.icon
-	local str = string.format("%s_1", id)
+	if rmbCurPrice then
+		local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(rmbCurPrice))
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(self._simagematerial, str, true)
+		self._txtCharge.text = priceStr
+	end
 
-	self._txtmaterialNum.text = math.max(0, self._costQuantity - deductionNum)
+	gohelper.setActive(self._goCharge, rmbCurPrice and not alreadyHas)
+	ZProj.UGUIHelper.RebuildLayout(self._goCharge.transform)
 
-	gohelper.setActive(self._godiscount, mo.config.originalCost > 0)
-	gohelper.setActive(self._txtoriginalprice.gameObject, mo.config.originalCost > 0)
+	if rmbOriginalPrice then
+		self._txtOriginalCharge.text = rmbOriginalPrice
+	end
 
-	local offTag = self._costQuantity / mo.config.originalCost
+	gohelper.setActive(self._txtOriginalCharge, rmbOriginalPrice)
 
-	offTag = math.ceil(offTag * 100)
-	self._txtdiscount.text = string.format("-%d%%", 100 - offTag)
-	self._txtoriginalprice.text = mo.config.originalCost
+	if coinsCurPrice then
+		self._txtmaterialNum.text = coinsCurPrice
+	end
+
+	gohelper.setActive(self._txtmaterialNum, coinsCurPrice)
+
+	local isShowCoinsOriginalPrice = false
+
+	if isShowCoinsOriginalPrice then
+		self._txtoriginalprice.text = coinsOriginalPrice
+	end
+
+	gohelper.setActive(self._txtoriginalprice, isShowCoinsOriginalPrice)
+
+	local isShowOffTag = false
+
+	if isShowOffTag then
+		local offDiscount = math.ceil(coinsCurPrice / coinsOriginalPrice * 100)
+
+		isShowOffTag = offDiscount < 100 and offDiscount > 0
+		self._txtdiscount.text = string.format("-%d%%", 100 - offDiscount)
+	end
+
+	gohelper.setActive(self._godiscount, isShowOffTag)
+
+	if coinsItemType then
+		local costConfig = ItemModel.instance:getItemConfig(coinsItemType, coinsItemId)
+		local iconSpriteName = string.format("%s_1", costConfig.icon)
+
+		UISpriteSetMgr.instance:setCurrencyItemSprite(self._simagematerial, iconSpriteName, true)
+	end
 
 	local offlineTime = mo:getOfflineTime()
 	local offEndTime = offlineTime - ServerTime.now()
@@ -260,49 +290,6 @@ function StoreSkinGoodsItem:onUpdateMO(mo)
 	else
 		self._txtremaintime.text = luaLang("not_enough_one_hour")
 	end
-
-	self:refreshChargeInfo()
-	self:refreshSkinTips()
-	self:updateNew()
-	self:updateSelect()
-
-	if self._view and self._view.viewContainer then
-		self._view.viewContainer:dispatchEvent(StoreEvent.SkinGoodsItemChanged)
-	end
-end
-
-function StoreSkinGoodsItem:refreshChargeInfo()
-	local price, originalPrice
-
-	if self.skinCo then
-		local skinId = self.skinCo.id
-		local isChargePackageValid = StoreModel.instance:isStoreSkinChargePackageValid(skinId)
-
-		if isChargePackageValid then
-			price, originalPrice = StoreConfig.instance:getSkinChargePrice(skinId)
-		end
-	end
-
-	if price then
-		local priceStr = string.format("%s%s", StoreModel.instance:getCostStr(price))
-
-		self._txtCharge.text = priceStr
-
-		if originalPrice then
-			self._txtOriginalCharge.text = originalPrice
-		end
-
-		gohelper.setActive(self._txtOriginalCharge.gameObject, originalPrice)
-	end
-
-	local alreadyHas = false
-
-	if self._mo then
-		alreadyHas = self._mo:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(self._mo)
-	end
-
-	gohelper.setActive(self._goCharge, price and not alreadyHas)
-	ZProj.UGUIHelper.RebuildLayout(self._goCharge.transform)
 end
 
 function StoreSkinGoodsItem:getAnimator()
@@ -325,12 +312,10 @@ function StoreSkinGoodsItem:onDestroyView()
 	self._uniqueImagebg:UnLoadImage()
 	GameUtil.doClearMember(self, "_skinSpine")
 	GameUtil.doClearMember(self, "_skinSpine2")
-
-	if self:_isUniqueSkin() then
-		self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, self._onDraggingBegin, self)
-		self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, self._onDraggingEnd, self)
-		self:removeEventCb(StoreController.instance, StoreEvent.DraggingSkinList, self._onDragging, self)
-	end
+	self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, self._onDraggingBegin, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, self._onDraggingEnd, self)
+	self:removeEventCb(StoreController.instance, StoreEvent.DraggingSkinList, self._onDragging, self)
+	TaskDispatcher.cancelTask(self._delayRefreshPrice, self)
 end
 
 function StoreSkinGoodsItem:_onUpdateMO_uniqueSkin()
@@ -365,6 +350,71 @@ end
 
 function StoreSkinGoodsItem:_isShowLinkageLogo()
 	return self._mo.config.showLinkageLogo or false
+end
+
+function StoreSkinGoodsItem:_refreshSpecial()
+	local info = self._goodsPriceInfo
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+
+	gohelper.setActive(self._goSpecial, hasSpecialOfferItem)
+end
+
+function StoreSkinGoodsItem:_playAnimCostIdle()
+	self:_playAnimCost(UIAnimationName.Idle, 0, 1)
+end
+
+function StoreSkinGoodsItem:_playAnimCostSwitch()
+	self:_playAnimCost(UIAnimationName.Switch, 0, 0)
+end
+
+function StoreSkinGoodsItem:_playAnimCost(name, ...)
+	self._costAnimator:Play(name, ...)
+end
+
+function StoreSkinGoodsItem:_onSkinPlayPriceAnim()
+	TaskDispatcher.cancelTask(self._delayRefreshPrice, self)
+
+	local skinId = self._skinId
+
+	if not skinId then
+		return
+	end
+
+	local goodsMO = self._mo
+
+	if not goodsMO then
+		return
+	end
+
+	local alreadyHas = goodsMO:alreadyHas()
+
+	if alreadyHas then
+		return
+	end
+
+	local goodsConfig = goodsMO.config
+
+	if not goodsConfig then
+		return
+	end
+
+	local info = StoreHelper.getSkinGoodsPriceInfo(goodsConfig, skinId)
+	local hasSpecialOfferItem = info.hasSpecialOfferItem
+	local hasDeductionItem = info.hasDeductionItem
+	local coinsReduction = info.coinsReduction
+	local bShowAnim = hasSpecialOfferItem or hasDeductionItem or coinsReduction > 0
+
+	if not bShowAnim then
+		return
+	end
+
+	TaskDispatcher.runDelay(self._delayRefreshPrice, self, 0.16)
+	self:_playAnimCostSwitch()
+end
+
+function StoreSkinGoodsItem:_delayRefreshPrice()
+	self:refreshChargeInfo()
+	self:_refreshSpecial()
 end
 
 return StoreSkinGoodsItem

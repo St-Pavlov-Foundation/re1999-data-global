@@ -76,7 +76,17 @@ function CustomPickChoiceController:tryChoice(viewParam)
 	end
 
 	if selectCount < maxSelectCount then
-		GameFacade.showToast(ToastEnum.CustomPickMoreSelect)
+		local toastId
+
+		if viewParam and viewParam.id and CustomPickChoiceEnum.SelectHeroToastEnum[viewParam.id] then
+			toastId = CustomPickChoiceEnum.SelectHeroToastEnum[viewParam.id]
+		end
+
+		if toastId == nil then
+			toastId = ToastEnum.CustomPickMoreSelect
+		end
+
+		GameFacade.showToast(toastId)
 
 		return false
 	end
@@ -119,7 +129,19 @@ function CustomPickChoiceController:tryChoice(viewParam)
 			end
 		end
 
-		local msgBoxId = hasHero and MessageBoxIdDefine.CustomPickChoiceHasHero or MessageBoxIdDefine.CustomPickChoiceConfirm
+		local msgBoxId
+
+		if hasHero then
+			if viewParam and viewParam.id and CustomPickChoiceEnum.SelectHasHeroMsgBoxIdEnum[viewParam.id] then
+				msgBoxId = CustomPickChoiceEnum.SelectHasHeroMsgBoxIdEnum[viewParam.id]
+			end
+
+			if msgBoxId == nil then
+				msgBoxId = MessageBoxIdDefine.CustomPickChoiceHasHero
+			end
+		else
+			msgBoxId = MessageBoxIdDefine.CustomPickChoiceConfirm
+		end
 
 		GameFacade.showMessageBox(msgBoxId, MsgBoxEnum.BoxType.Yes_No, self.realChoice, nil, nil, self, nil, nil, heroNames)
 	end

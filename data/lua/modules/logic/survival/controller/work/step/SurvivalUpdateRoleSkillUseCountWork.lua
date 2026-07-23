@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateRoleSkillUseCo
 
 local SurvivalUpdateRoleSkillUseCountWork = class("SurvivalUpdateRoleSkillUseCountWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateRoleSkillUseCountWork:onStart(context)
+function SurvivalUpdateRoleSkillUseCountWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local skillInfo = sceneMo:getRoleSkillInfo()
 	local info = {}

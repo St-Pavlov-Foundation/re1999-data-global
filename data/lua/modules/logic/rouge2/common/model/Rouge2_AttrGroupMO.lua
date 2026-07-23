@@ -17,6 +17,10 @@ function Rouge2_AttrGroupMO:initAttrInfoList(info)
 end
 
 function Rouge2_AttrGroupMO:updateAttrInfoList(updates)
+	if not updates then
+		return
+	end
+
 	for _, updateAttrInfo in ipairs(updates) do
 		self:updateAttrInfo(updateAttrInfo)
 	end
@@ -60,7 +64,7 @@ end
 function Rouge2_AttrGroupMO:getAttrValue(attrId)
 	local attrMo = self:getAttrInfo(attrId)
 
-	return attrMo and attrMo.value
+	return attrMo and attrMo.value or 0
 end
 
 return Rouge2_AttrGroupMO

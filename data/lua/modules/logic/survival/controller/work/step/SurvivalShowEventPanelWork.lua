@@ -15,7 +15,7 @@ function SurvivalShowEventPanelWork:ctor(stepMo)
 	end
 end
 
-function SurvivalShowEventPanelWork:onStart(context)
+function SurvivalShowEventPanelWork:onStart2(context)
 	local source = self._stepMo.paramInt[1]
 	local panel = self._stepMo.panel
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()

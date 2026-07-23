@@ -614,9 +614,15 @@ function CharacterView:_btnattributeOnClick()
 	info.tag = "attribute"
 	info.heroMo = self._heroMO
 	info.heroid = self._heroMO.heroId
-	info.equips = self._heroMO.defaultEquipUid ~= "0" and {
-		self._heroMO.defaultEquipUid
-	} or nil
+
+	local defaultEquipUid = self._heroMO.defaultEquipUid
+
+	if not string.nilorempty(defaultEquipUid) then
+		info.equips = {
+			defaultEquipUid
+		}
+	end
+
 	info.trialEquipMo = self._heroMO.trialEquipMo
 
 	CharacterController.instance:openCharacterTipView(info)
@@ -1085,7 +1091,7 @@ function CharacterView:_refreshSpine()
 
 	local offsets = SkinConfig.instance:getSkinOffset(skinCo.characterViewOffset)
 
-	recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._gospine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 
 	local haloOffset = SkinConfig.instance:getSkinOffset(skinCo.haloOffset)
@@ -1418,17 +1424,49 @@ function CharacterView:_refreshAttribute(level)
 
 		equipMo = equipMo or EquipModel.instance:getEquip(self._heroMO.defaultEquipUid)
 
+		local _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict, otherEquipMo
+
+		if self._heroMO.heroId == CharacterEnum.TwinssychubeHeroId then
+			local trialEquipMo = self._heroMO.trialEquipMo
+
+			if trialEquipMo then
+				local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
+
+				if otherEquipId then
+					otherEquipMo = EquipMO.New()
+
+					local co = {
+						equipId = otherEquipId,
+						equipLv = trialEquipMo.level,
+						equipRefine = trialEquipMo.refineLv
+					}
+
+					otherEquipMo:initByTrialCO(co)
+				end
+			else
+				local otherEquipId = equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(equipMo.equipId)
+
+				otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+			end
+		end
+
+		if otherEquipMo then
+			_equipHp, _equipAtk, _equipDef, _equipMdef = EquipConfig.instance:getEquipAddBaseAttr(otherEquipMo)
+			_equipBreakAddPercentValuesDict = EquipConfig.instance:getEquipBreakAddAttrValueDict(otherEquipMo.config, otherEquipMo.breakLv)
+		end
+
 		local equipHp, equipAtk, equipDef, equipMdef = EquipConfig.instance:getEquipAddBaseAttr(equipMo)
 
-		equipAttrDict[CharacterEnum.AttrId.Attack] = equipAtk
-		equipAttrDict[CharacterEnum.AttrId.Hp] = equipHp
-		equipAttrDict[CharacterEnum.AttrId.Defense] = equipDef
-		equipAttrDict[CharacterEnum.AttrId.Mdefense] = equipMdef
+		equipAttrDict[CharacterEnum.AttrId.Attack] = equipAtk + (_equipAtk or 0)
+		equipAttrDict[CharacterEnum.AttrId.Hp] = equipHp + (_equipHp or 0)
+		equipAttrDict[CharacterEnum.AttrId.Defense] = equipDef + (_equipDef or 0)
+		equipAttrDict[CharacterEnum.AttrId.Mdefense] = equipMdef + (_equipMdef or 0)
 
 		local equipBreakAddPercentValuesDict = EquipConfig.instance:getEquipBreakAddAttrValueDict(equipMo.config, equipMo.breakLv)
 
 		for _, attrId in ipairs(CharacterView.AttrIdList) do
-			local addPercent = equipBreakAddPercentValuesDict[attrId]
+			local _addPercent = _equipBreakAddPercentValuesDict and _equipBreakAddPercentValuesDict[attrId] or 0
+			local addPercent = equipBreakAddPercentValuesDict[attrId] + _addPercent
 
 			if addPercent ~= 0 then
 				equipAttrDict[attrId] = equipAttrDict[attrId] + math.floor(addPercent / 100 * heroAttrDict[attrId])
@@ -1552,7 +1590,7 @@ function CharacterView:_refreshRank()
 end
 
 function CharacterView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO.heroId, nil, self._heroMO)
+	self._skillContainer:onUpdateMO(self._heroMO.heroId, nil, self._heroMO, nil, CharacterEnum.DeviceViewType.CharacterView)
 end
 
 function CharacterView:_onRefreshDestiny(heroId, stoneId)
@@ -1722,6 +1760,7 @@ function CharacterView:onClose()
 	if self._skillContainer then
 		self._skillContainer:onFinishreplaceSkillAnim()
 		self._skillContainer:clearDelay()
+		self._skillContainer:onClose()
 	end
 end
 

@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalClockMaxTimeUpdateWo
 
 local SurvivalClockMaxTimeUpdateWork = class("SurvivalClockMaxTimeUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalClockMaxTimeUpdateWork:onStart(context)
+function SurvivalClockMaxTimeUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.clockMaxTime = self._stepMo.paramInt[1]

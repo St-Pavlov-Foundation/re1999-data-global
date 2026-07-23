@@ -32,13 +32,19 @@ function Rouge2_BackpackSkillShowItemBase:removeEventListeners()
 end
 
 function Rouge2_BackpackSkillShowItemBase:_btnClickOnClick()
-	if self._status < Rouge2_Enum.ActiveSkillHoleStatus.Empty then
-		GameFacade.showToast(ToastEnum.Rouge2SkillHoleLock)
+	if self._status <= Rouge2_Enum.ActiveSkillHoleStatus.Empty then
+		if self._status < Rouge2_Enum.ActiveSkillHoleStatus.Empty then
+			GameFacade.showToast(ToastEnum.Rouge2SkillHoleLock)
+		end
 
 		return
 	end
 
-	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnSwitchSkillViewType, Rouge2_BackpackSkillView.ViewState.Edit, self._index)
+	self:onBtnClickCallback()
+end
+
+function Rouge2_BackpackSkillShowItemBase:onBtnClickCallback()
+	return
 end
 
 function Rouge2_BackpackSkillShowItemBase:onUpdateMO()
@@ -138,6 +144,10 @@ end
 function Rouge2_BackpackSkillShowItemBase:_onUpdateRougeInfo()
 	self:refreshInfo()
 	self:refreshUI()
+end
+
+function Rouge2_BackpackSkillShowItemBase:getSkillDataTypeAndId()
+	return Rouge2_Enum.ItemDataType.Server, self._skillUid
 end
 
 function Rouge2_BackpackSkillShowItemBase:onDestroy()

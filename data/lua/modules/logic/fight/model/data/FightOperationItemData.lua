@@ -80,10 +80,12 @@ function FightOperationItemData:playAssistBossHandCard(skillId, toId)
 
 	self.belongToEntityId = assistBoss.id
 	self.costActPoint = 0
-	self.cardInfoMO = FightCardInfoData.New({
-		skillId = skillId,
-		uid = self.belongToEntityId
-	})
+
+	local cardProto = FightDef_pb.CardInfo()
+
+	cardProto.skillId = skillId
+	cardProto.uid = self.belongToEntityId
+	self.cardInfoMO = FightCardInfoData.New(cardProto)
 end
 
 function FightOperationItemData:playPlayerFinisherSkill(skillId, toId)

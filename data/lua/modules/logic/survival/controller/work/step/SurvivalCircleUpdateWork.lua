@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalCircleUpdateWork", p
 
 local SurvivalCircleUpdateWork = class("SurvivalCircleUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalCircleUpdateWork:onStart(context)
+function SurvivalCircleUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.circle = self._stepMo.paramInt[1] or 0

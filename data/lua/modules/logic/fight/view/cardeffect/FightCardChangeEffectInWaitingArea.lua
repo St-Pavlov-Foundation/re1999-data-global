@@ -56,7 +56,10 @@ function FightCardChangeEffectInWaitingArea:_playEffects()
 					oldCardLevel = oldCardLevel
 				}
 
-				local effectPath = oldCardLevel < newCardLevel and FightPreloadOthersWork.LvUpEffectPath or FightPreloadOthersWork.LvDownEffectPath
+				local cardSkin = FightCardDataHelper.getCardSkin()
+				local lvUpEffectPath = FightCardChangeEffect.cardSkin2LvUpEffectPath[cardSkin] or FightPreloadOthersWork.LvUpEffectPath
+				local lvDownEffectPath = FightCardChangeEffect.cardSkin2LvDownEffectPath[cardSkin] or FightPreloadOthersWork.LvDownEffectPath
+				local effectPath = oldCardLevel < newCardLevel and lvUpEffectPath or lvDownEffectPath
 
 				effectLoader:startLoad(effectPath, self._onLvEffectLoaded, self)
 

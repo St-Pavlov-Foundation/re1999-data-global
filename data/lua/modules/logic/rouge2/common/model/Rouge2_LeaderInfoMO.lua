@@ -16,7 +16,7 @@ function Rouge2_LeaderInfoMO:init(info)
 	self.summonTalentPoint = info.summonTalentPoint
 	self.summonTalentIdList = info.summonTalentId
 	self.summonTalentIdMap = info.summonTalentId and Rouge2_BuffHelper.listToMap(info.summonTalentId)
-	self.sytemTeamId = info.systemTeamId or Rouge2_Enum.UnselectTeamSystemId
+	self.systemTeamId = info.systemTeamId or Rouge2_Enum.UnselectTeamSystemId
 
 	self:initAttrDropIdList(info.attrDropStr)
 end
@@ -106,11 +106,11 @@ function Rouge2_LeaderInfoMO:getActiveTalentIds()
 end
 
 function Rouge2_LeaderInfoMO:getSystemTeamId()
-	return self.sytemTeamId
+	return self.systemTeamId
 end
 
-function Rouge2_LeaderInfoMO:updateSystemTeamId(sytemTeamId)
-	self.sytemTeamId = sytemTeamId or Rouge2_Enum.UnselectTeamSystemId
+function Rouge2_LeaderInfoMO:updateSystemTeamId(systemTeamId)
+	self.systemTeamId = systemTeamId or Rouge2_Enum.UnselectTeamSystemId
 end
 
 function Rouge2_LeaderInfoMO:isGetAttrDrop(dropId)

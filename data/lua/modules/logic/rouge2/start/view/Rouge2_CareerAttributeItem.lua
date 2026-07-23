@@ -59,8 +59,7 @@ function Rouge2_CareerAttributeItem:onUpdateMO(careerId, attrId, attrValue)
 	self._attrId = attrId
 	self._attrValue = attrValue or 0
 	self._config = Rouge2_AttributeConfig.instance:getAttributeConfig(attrId)
-	self._maxAttrValue = self._config and self._config.showMax or 0
-	self._minAttrValue = self._config and self._config.min or 0
+	self._minAttrValue, self._maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(nil, self._attrId)
 	self._attrValueRange = self._maxAttrValue - self._minAttrValue
 	self._attrProgress = self._attrValueRange ~= 0 and self._attrValue / self._attrValueRange or 0
 	self._txtName.text = self._config and self._config.name
@@ -73,7 +72,12 @@ function Rouge2_CareerAttributeItem:onUpdateMO(careerId, attrId, attrValue)
 end
 
 function Rouge2_CareerAttributeItem:checkRecommend()
-	local isRecommend = self._careerId and Rouge2_CareerConfig.instance:isAttrRecommend(self._careerId, self._attrId)
+	local systemId = Rouge2_Model.instance:getCurTeamSystemId()
+	local isSystem = Rouge2_CareerConfig.instance:isCareerRecommendSystem(self._careerId, systemId)
+
+	systemId = isSystem and systemId or Rouge2_Enum.UnselectTeamSystemId
+
+	local isRecommend = Rouge2_BackpackController.instance:isAttrRecommend(self._careerId, self._attrId, systemId)
 
 	gohelper.setActive(self._goRecommand, isRecommend)
 end
@@ -89,9 +93,19 @@ function Rouge2_CareerAttributeItem:isUse()
 end
 
 function Rouge2_CareerAttributeItem:onSelect(isSelect)
+	if self._isSelect == isSelect then
+		return
+	end
+
 	self._isSelect = isSelect
 
 	gohelper.setActive(self._goSelected, isSelect)
+
+	if self._isSelect then
+		Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.onLightAttr, {
+			self._attrId
+		})
+	end
 end
 
 function Rouge2_CareerAttributeItem:_onSelectCareerAttribute(attrId)

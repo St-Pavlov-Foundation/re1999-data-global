@@ -123,6 +123,7 @@ function RoomCharacterInteractActionComp:_frameMoveCallback(value, param)
 
 	self.entity.charactermove:forcePositionAndLookDir(pos, self.entity.charactermove:getMoveToLookDirByPos(fromPosition, pos), RoomCharacterEnum.CharacterMoveState.Move)
 	self:_setMOPosXYZ(pos.x, pos.y, pos.z)
+	self.entity.characterspine:resetPhysics()
 end
 
 function RoomCharacterInteractActionComp:_finishMoveCallback(value, param)
@@ -135,6 +136,8 @@ function RoomCharacterInteractActionComp:_finishCallback(value, param)
 end
 
 function RoomCharacterInteractActionComp:startInteract(buildingUid, siteId, showTime)
+	self.entity.characterspine:setMixDuration(0)
+
 	self._siteId = siteId
 	self._buildingUid = buildingUid
 	self._buildingEntity = self._scene.buildingmgr:getBuildingEntity(buildingUid)
@@ -186,6 +189,8 @@ function RoomCharacterInteractActionComp:_onStartInteract()
 end
 
 function RoomCharacterInteractActionComp:endIneract()
+	self.entity.characterspine:clearMixDuration()
+
 	self._buildingUid = nil
 	self._buildingEntity = nil
 
@@ -301,6 +306,7 @@ function RoomCharacterInteractActionComp:_tryPlacePointByName(heroPointName, isN
 	self:_playPlaceEffect(posX, posY, posZ, rotationY, "left")
 	self.entity.characterspine:playAnim(RoomScenePreloader.ResAnim.PlaceCharacter, self._playingAnimName, 0, self._moveEntity, self)
 	self.entity.charactermove:forcePositionAndLookDir(self._toPosition, lookDir, RoomCharacterEnum.CharacterMoveState.Move)
+	self.entity.characterspine:resetPhysics()
 end
 
 function RoomCharacterInteractActionComp:_moveEntity()

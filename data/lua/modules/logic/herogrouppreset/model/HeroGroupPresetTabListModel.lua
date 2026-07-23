@@ -44,10 +44,9 @@ end
 
 function HeroGroupPresetTabListModel:_getTargetList(list)
 	local targetList = HeroGroupPresetController.instance:getHeroGroupTypeList()
+	local result = {}
 
 	if targetList then
-		local result = {}
-
 		for i, v in ipairs(list) do
 			if tabletool.indexOf(targetList, v.id) then
 				table.insert(result, v)
@@ -57,7 +56,13 @@ function HeroGroupPresetTabListModel:_getTargetList(list)
 		return result
 	end
 
-	return list
+	for i, v in ipairs(list) do
+		if not HeroGroupPresetEnum.HideInThumbnailHeroGroupType[v.id] then
+			table.insert(result, v)
+		end
+	end
+
+	return result
 end
 
 function HeroGroupPresetTabListModel:setSelectedCell(index, value)

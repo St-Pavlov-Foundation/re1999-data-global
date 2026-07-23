@@ -46,7 +46,10 @@ function VersionActivity3_2CanJumpFunc:canJumpTo13223(jumpParamArray)
 end
 
 function VersionActivity3_2CanJumpFunc:canJumpTo13209(jumpParamArray)
-	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(VersionActivity3_2Enum.ActivityId.EnterView)
+	local versionEnum = VersionActivityFixedHelper.getVersionActivityEnum()
+	local activityIdMap = versionEnum and versionEnum.ActivityId
+	local enterViewId = activityIdMap and activityIdMap.EnterView
+	local status, toastId, toastParamList = ActivityHelper.getActivityStatusAndToast(enterViewId)
 
 	if status ~= ActivityEnum.ActivityStatus.Normal then
 		return false, toastId, toastParamList

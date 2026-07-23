@@ -38,11 +38,11 @@ DungeonMapActDropView.ActBtnPosY = {
 }
 
 function DungeonMapActDropView:onClickStore()
-	VersionActivity3_3DungeonController.instance:openStoreView()
+	VersionActivityMainFixedHelper.getVersionActivityDungeonController().instance:openStoreView()
 end
 
 function DungeonMapActDropView:onClickTask()
-	VersionActivity3_3DungeonController.instance:openTaskView()
+	VersionActivityMainFixedHelper.getVersionActivityDungeonController().instance:openTaskView()
 end
 
 function DungeonMapActDropView:_editableInitView()
@@ -71,7 +71,7 @@ function DungeonMapActDropView:onOpen()
 	self.chapterId = self.viewParam.chapterId
 	self.chapterCo = DungeonConfig.instance:getChapterCO(self.chapterId)
 
-	RedDotController.instance:addRedDot(self._gotaskreddot, RedDotEnum.DotNode.V3a3DungeonTask)
+	RedDotController.instance:addRedDot(self._gotaskreddot, VersionActivityMainFixedHelper.getDungeonTaskReddot())
 	self:_showActNode(self:checkCanShowAct())
 end
 
@@ -86,12 +86,18 @@ function DungeonMapActDropView:_showActNode(canShow)
 	canShow = canShow and not ViewMgr.instance:isOpen(ViewName.DungeonMapLevelView)
 
 	gohelper.setActive(self._goact, canShow)
+	TaskDispatcher.cancelTask(self._frameHandler, self)
 
 	if canShow then
 		self:refreshLayout()
 		self:refreshStoreCurrency()
 		self:refreshRemainTime()
+		TaskDispatcher.runRepeat(self._frameHandler, self, 0)
 	end
+end
+
+function DungeonMapActDropView:_frameHandler()
+	self:refreshRemainTime()
 end
 
 function DungeonMapActDropView:refreshLayout()
@@ -112,14 +118,14 @@ function DungeonMapActDropView:refreshLayout()
 end
 
 function DungeonMapActDropView:refreshStoreCurrency()
-	local currencyMO = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a3Dungeon)
+	local currencyMO = CurrencyModel.instance:getCurrency(VersionActivityMainFixedHelper.getActivityCurrency())
 	local quantity = currencyMO and currencyMO.quantity or 0
 
 	self._txtnum.text = GameUtil.numberDisplay(quantity)
 end
 
 function DungeonMapActDropView:refreshRemainTime()
-	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivity3_3Enum.ActivityId.DungeonStore]
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[VersionActivityMainFixedHelper.getVersionActivityEnum().ActivityId.DungeonStore]
 
 	if not actInfoMo then
 		gohelper.setActive(self._goStoreTime, false)
@@ -180,7 +186,7 @@ function DungeonMapActDropView:onRefreshActivityState()
 end
 
 function DungeonMapActDropView:onDestroyView()
-	return
+	TaskDispatcher.cancelTask(self._frameHandler, self)
 end
 
 return DungeonMapActDropView

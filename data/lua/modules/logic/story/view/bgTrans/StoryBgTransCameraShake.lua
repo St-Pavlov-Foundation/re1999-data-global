@@ -38,9 +38,7 @@ function StoryBgTransCameraShake:onLoadFinished()
 	StoryBgTransCameraShake.super.onLoadFinished(self)
 	StoryTool.enablePostProcess(true)
 
-	local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
-
-	self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
+	self._rootGo = StoryViewMgr.instance:getStoryFrontBgImgGo()
 	self._shakeCameraBgGo = gohelper.cloneInPlace(self._rootGo, "shakeCameraBg")
 
 	gohelper.destroyAllChildren(self._shakeCameraBgGo)

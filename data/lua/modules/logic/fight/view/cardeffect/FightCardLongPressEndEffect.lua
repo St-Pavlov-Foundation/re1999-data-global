@@ -62,12 +62,24 @@ function FightCardLongPressEndEffect:_updateDragHandCards()
 
 		for i = 1, cardCount do
 			local item = handCardItemList[i]
-			local curPosX = recthelper.getAnchorX(item.tr)
-			local targetPosX = FightViewHandCard.calcCardPosXDraging(i, cardCount, dragIndex, dragScale)
 
-			recthelper.setAnchorX(item.tr, targetPosX)
+			if item then
+				local targetPosX = FightViewHandCard.calcCardPosXDraging(i, cardCount, dragIndex, dragScale)
+
+				recthelper.setAnchorX(item.tr, targetPosX)
+			end
 		end
 	end
+end
+
+function FightCardLongPressEndEffect:clearWork()
+	if self._sequence == nil then
+		return
+	end
+
+	self._sequence:stop()
+
+	self._sequence = nil
 end
 
 return FightCardLongPressEndEffect

@@ -17,14 +17,11 @@ function Rouge2_WaitSendRpcSuccWork:onStart()
 		return
 	end
 
-	self._flow = FlowSequence.New()
-
-	self._flow:addWork(FunctionWork.New(self._sendMsg, self))
-	self._flow:start()
+	self:_sendMsg()
 end
 
 function Rouge2_WaitSendRpcSuccWork:_sendMsg()
-	self._rpcFunc(self._rpcInstance, self._param, self._onSendRpcDoneCb, self)
+	self._rpcId = self._rpcFunc(self._rpcInstance, self._param, self._onSendRpcDoneCb, self)
 end
 
 function Rouge2_WaitSendRpcSuccWork:_onSendRpcDoneCb()
@@ -32,10 +29,12 @@ function Rouge2_WaitSendRpcSuccWork:_onSendRpcDoneCb()
 end
 
 function Rouge2_WaitSendRpcSuccWork:clearWork()
-	if self._flow then
-		self._flow:destroy()
+	if self._rpcId then
+		if self._rpcInstance then
+			self._rpcInstance:removeCallbackById(self._rpcId)
+		end
 
-		self._flow = nil
+		self._rpcId = nil
 	end
 end
 

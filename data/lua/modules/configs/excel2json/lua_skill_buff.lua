@@ -20,6 +20,7 @@ local fields = {
 	features = 8,
 	triggerAnimationName = 21,
 	delAudio = 24,
+	delAnimator = 25,
 	effect = 11,
 	audio = 17,
 	typeId = 9,

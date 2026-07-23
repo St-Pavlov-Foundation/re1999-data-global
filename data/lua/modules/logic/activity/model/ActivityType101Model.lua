@@ -70,6 +70,20 @@ function ActivityType101Model:setBonusGet(info)
 	self._type101Info[actId].infos[info.id].state = kState_Received
 end
 
+function ActivityType101Model:setBonusListGet(actId, ids)
+	if not self:isInit(actId) then
+		return
+	end
+
+	local infos = self._type101Info[actId].infos
+
+	if ids and next(ids) then
+		for _, id in ipairs(ids) do
+			infos[id].state = kState_Received
+		end
+	end
+end
+
 function ActivityType101Model:getType101LoginCount(actId)
 	if not self:isInit(actId) then
 		return 0

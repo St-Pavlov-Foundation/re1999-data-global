@@ -606,11 +606,11 @@ function RoomActionShowTimeCharacterBuilding:endState()
 end
 
 function RoomActionShowTimeCharacterBuilding:stop()
-	self:endState()
+	self:_killTween()
 end
 
 function RoomActionShowTimeCharacterBuilding:clear()
-	self:endState()
+	self:_killTween()
 	self:_clearLoader()
 	TaskDispatcher.cancelTask(self._onInteractionFinish, self)
 	TaskDispatcher.cancelTask(self._onDelayLoadDone, self)

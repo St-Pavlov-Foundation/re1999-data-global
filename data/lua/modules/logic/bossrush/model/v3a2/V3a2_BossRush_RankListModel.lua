@@ -5,6 +5,8 @@ module("modules.logic.bossrush.model.v3a2.V3a2_BossRush_RankListModel", package.
 local V3a2_BossRush_RankListModel = class("V3a2_BossRush_RankListModel", ListScrollModel)
 
 function V3a2_BossRush_RankListModel:setMoList()
+	self._firstCanGetBouns = 0
+
 	local moList = {}
 
 	for _, mo in pairs(V3a2_BossRushModel.instance:getRankMos()) do
@@ -19,6 +21,10 @@ function V3a2_BossRush_RankListModel:setMoList()
 		local rank = moList[i - 1] and moList[i - 1].config.playerLevel or 0
 
 		moList[i]:setPreRank(rank)
+
+		if moList[i].finishClaim and i > self._firstCanGetBouns then
+			self._firstCanGetBouns = i + 1
+		end
 	end
 
 	for i = 1, V3a2BossRushEnum.BossRankLockCount do
@@ -29,6 +35,10 @@ function V3a2_BossRush_RankListModel:setMoList()
 	end
 
 	self:setList(moList)
+end
+
+function V3a2_BossRush_RankListModel:getFirstCanGetBouns()
+	return self._firstCanGetBouns
 end
 
 function V3a2_BossRush_RankListModel:getLockMo(index)

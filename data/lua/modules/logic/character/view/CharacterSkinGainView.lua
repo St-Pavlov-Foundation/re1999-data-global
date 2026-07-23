@@ -178,7 +178,7 @@ function CharacterSkinGainView:_onUISpineLoaded()
 
 	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(self._golive2dcontainer.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._golive2dcontainer.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
@@ -262,7 +262,9 @@ function CharacterSkinGainView:_playVoice()
 	local voiceConfigs = HeroModel.instance:getVoiceConfig(self._skinCo.characterId, voiceType, nil, self._skinCo.id)
 
 	if not voiceConfigs or #voiceConfigs <= 0 then
-		GameFacade.showToast(ToastEnum.DontHaveCharacter)
+		if not self._heroMo then
+			GameFacade.showToast(ToastEnum.DontHaveCharacter)
+		end
 
 		local voices = CharacterDataConfig.instance:getCharacterVoicesCo(self._skinCo.characterId)
 

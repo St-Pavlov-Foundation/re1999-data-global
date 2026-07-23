@@ -1267,5 +1267,95 @@
     "focusXYZ": "-1.050#0#-1.137",
     "nodesXYZ": "0.581#0.11#0.325",
     "nextCameraParams": ""
+  },
+  {
+    "id": 3701,
+    "angle": "10#10",
+    "distance": "2.8392#2.8392",
+    "rotate": "194.5",
+    "focusXYZ": "0.150#0#-1.913",
+    "nodesXYZ": "0.542#0.11#0.150",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3702,
+    "angle": "10#10",
+    "distance": "2.8392#2.8392",
+    "rotate": "194.5",
+    "focusXYZ": "0.097#0#-2.021",
+    "nodesXYZ": "1.417#0.11#-0.319",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3711,
+    "angle": "10#10",
+    "distance": "2.8392#2.8392",
+    "rotate": "189.7",
+    "focusXYZ": "0.018#0#-2.541",
+    "nodesXYZ": "0.669#0.11#0.113",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3712,
+    "angle": "10#10",
+    "distance": "2.8392#2.8392",
+    "rotate": "193.2",
+    "focusXYZ": "-0.155#0#-2.623",
+    "nodesXYZ": "-0.528#0.11#-0.406",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3801,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "352.5",
+    "focusXYZ": "0.040#-0.05#1.210",
+    "nodesXYZ": "1.181#0.11#-0.774",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3802,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "356",
+    "focusXYZ": "0.165#-0.05#1.178",
+    "nodesXYZ": "0.006#0.11#-1.444",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3811,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "196.7",
+    "focusXYZ": "-0.079#0#-2.200",
+    "nodesXYZ": "-0.542#0.11#-0.410",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 3812,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "198",
+    "focusXYZ": "-0.102#0#-2.219",
+    "nodesXYZ": "1.257#0.11#-0.154",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 38501,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "46",
+    "focusXYZ": "1.354#0.1#0.327",
+    "nodesXYZ": "0.198#0.11#-1.591",
+    "nextCameraParams": ""
+  },
+  {
+    "id": 38502,
+    "angle": "7#7",
+    "distance": "2.8392#2.8392",
+    "rotate": "43.3",
+    "focusXYZ": "1.196#0.1#0.448",
+    "nodesXYZ": "-0.539#0.11#-0.569",
+    "nextCameraParams": ""
   }
 ]

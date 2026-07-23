@@ -152,6 +152,10 @@ function FightViewHandCardItemLock.setCardLock(entityId, skillId, lockGO, hasAni
 		return
 	end
 
+	if FightHelper.checkIsDevicePowerCard(skillId) then
+		return
+	end
+
 	if FightEnum.UniversalCard[skillId] then
 		return
 	end
@@ -190,11 +194,7 @@ function FightViewHandCardItemLock.setCardLock(entityId, skillId, lockGO, hasAni
 			end
 		end
 
-		local name = buffCO and buffCO.name or ""
-
-		if LangSettings.instance:isZh() or LangSettings.instance:isTw() then
-			name = LuaUtil.getCharNum(name) <= 2 and name or LuaUtil.subString(name, 1, 2) .. "\n" .. LuaUtil.subString(name, 3)
-		end
+		local name = FightViewHandCardItemLock.getLockBuffName(buffCO)
 
 		for _, goPath in ipairs(TxtPaths) do
 			local txtLockName = gohelper.findChildText(lockGO, goPath)
@@ -206,6 +206,24 @@ function FightViewHandCardItemLock.setCardLock(entityId, skillId, lockGO, hasAni
 
 		return true
 	end
+end
+
+function FightViewHandCardItemLock.getLockBuffName(buffCo)
+	local name = buffCo and buffCo.name or ""
+
+	if LangSettings.instance:isCn() then
+		name = LuaUtil.getCharNum(name) <= 2 and name or LuaUtil.subString(name, 1, 2) .. "\n" .. LuaUtil.subString(name, 3)
+	elseif LangSettings.instance:isEn() then
+		local words = {}
+
+		for w in name:gmatch("%S+") do
+			table.insert(words, w)
+		end
+
+		name = table.concat(words, "\n")
+	end
+
+	return name
 end
 
 function FightViewHandCardItemLock:_setCardPreRemove(hasAnim, buffList)
@@ -388,6 +406,10 @@ function FightViewHandCardItemLock.canUseCardSkill(entityId, skillId, buffList, 
 	local entityMO = FightDataHelper.entityMgr:getById(entityId)
 
 	if not entityMO then
+		return true
+	end
+
+	if FightHelper.checkIsDevicePowerCard(skillId) then
 		return true
 	end
 

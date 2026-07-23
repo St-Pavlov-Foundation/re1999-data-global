@@ -9,12 +9,29 @@ FullScreenVideoView.DefaultMaxDuration = 3
 function FullScreenVideoView:onInitView()
 	self._goblackbg = gohelper.findChild(self.viewGO, "blackbg")
 	self._govideo = gohelper.findChild(self.viewGO, "#go_video")
+	self._btnskip = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_skip")
+end
+
+function FullScreenVideoView:addEvents()
+	self._btnskip:AddClickListener(self._btnskipOnClick, self)
+end
+
+function FullScreenVideoView:removeEvents()
+	self._btnskip:RemoveClickListener()
+end
+
+function FullScreenVideoView:_btnskipOnClick()
+	self:onPlayVideoDone()
 end
 
 function FullScreenVideoView:onOpen()
 	self.doneCb = self.viewParam.doneCb
 	self.doneCbObj = self.viewParam.doneCbObj
 	self.waitViewOpen = self.viewParam.waitViewOpen
+	self.couldSkip = self.viewParam.couldSkip or false
+
+	gohelper.setActive(self._btnskip.gameObject, self.couldSkip)
+
 	self.videoDone = false
 
 	local getVideoPlayer = self.viewParam.getVideoPlayer

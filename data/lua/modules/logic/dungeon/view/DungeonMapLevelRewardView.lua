@@ -222,6 +222,12 @@ function DungeonMapLevelRewardView:initEpisodeCo()
 end
 
 function DungeonMapLevelRewardView:onUpdateParam()
+	if self.switchInit then
+		self.switchInit = false
+
+		return
+	end
+
 	self:initEpisodeCo()
 	self:initData()
 	self:refreshUI()

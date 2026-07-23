@@ -11,6 +11,7 @@ function NecrologistStoryView:onInitView()
 	self.txtPlace = gohelper.findChildTextMesh(self.viewGO, "Title/#txt_place")
 	self.imageWeather = gohelper.findChildImage(self.viewGO, "Title/#image_weather")
 	self.goWeatherRoot = gohelper.findChild(self.viewGO, "#weather")
+	self.txtNum = gohelper.findChildTextMesh(self.viewGO, "Title/num/#txt_num")
 	self.goLeft = gohelper.findChild(self.viewGO, "left")
 	self.animLeft = self.goLeft:GetComponent(typeof(UnityEngine.Animator))
 	self.txtTitle = gohelper.findChildTextMesh(self.viewGO, "left/#txt_title")
@@ -35,6 +36,7 @@ function NecrologistStoryView:onInitView()
 	self.normalSpace = 20
 	self.paragraphSpace = 40
 	self.bottomSpace = 30
+	self.loaderComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.viewGO, NecrologistStoryLoaderComp)
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -48,6 +50,8 @@ function NecrologistStoryView:addEvents()
 	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnSelectSection, self.onSelectSection, self)
 	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangeWeather, self.onChangeWeather, self)
 	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangePic, self.onChangePic, self)
+	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangeTime, self.onChangeTime, self)
+	self:addEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangePlace, self.onChangePlace, self)
 end
 
 function NecrologistStoryView:removeEvents()
@@ -57,6 +61,8 @@ function NecrologistStoryView:removeEvents()
 	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnSelectSection, self.onSelectSection, self)
 	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangeWeather, self.onChangeWeather, self)
 	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangePic, self.onChangePic, self)
+	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangeTime, self.onChangeTime, self)
+	self:removeEventCb(NecrologistStoryController.instance, NecrologistStoryEvent.OnChangePlace, self.onChangePlace, self)
 end
 
 function NecrologistStoryView:_editableInitView()
@@ -71,8 +77,29 @@ function NecrologistStoryView:onChangePic(picName)
 	self:setLeftPic(picName)
 end
 
-function NecrologistStoryView:onChangeWeather(weather)
-	self:setWeather(weather)
+function NecrologistStoryView:onChangeWeather(weatherType)
+	TaskDispatcher.cancelTask(self._refreshWeather, self)
+
+	self._lastWeather = self._curWeather
+
+	if self._curWeather and self._curWeather ~= weatherType then
+		self._curWeather = weatherType
+
+		self.animTitle:Play("weather", 0, 0)
+		TaskDispatcher.runDelay(self._refreshWeather, self, 0.16)
+	else
+		self._curWeather = weatherType
+
+		self:_refreshWeather()
+	end
+end
+
+function NecrologistStoryView:onChangeTime(time)
+	self.txtTime.text = time
+end
+
+function NecrologistStoryView:onChangePlace(place)
+	self.txtPlace.text = place
 end
 
 function NecrologistStoryView:onSelectSection(sectionId, isSkip)
@@ -133,6 +160,10 @@ function NecrologistStoryView:onAutoChange()
 end
 
 function NecrologistStoryView:onClickSkip()
+	if self._isSkipping then
+		return
+	end
+
 	if self._tweenBottomId then
 		return
 	end
@@ -165,19 +196,61 @@ function NecrologistStoryView:onClickSkip()
 
 	NecrologistStoryStatController.instance:statStorySkip(statParam)
 
-	while not self:isStoryFinish() do
-		self:runNextStep(true)
+	self._isSkipping = true
 
-		local item = self:getLastItem()
+	self:_continueSkip()
+end
 
-		if not item or not item:isDone() then
-			break
-		end
+function NecrologistStoryView:_continueSkip()
+	if not self._isSkipping then
+		return
 	end
 
 	if self:isStoryFinish() then
+		self._isSkipping = false
+
 		self:onFinishStory()
+
+		return
 	end
+
+	self:runNextStep(true)
+end
+
+function NecrologistStoryView:_canContinueSkip()
+	if not self._isSkipping then
+		return false
+	end
+
+	if self:isStoryFinish() then
+		return false
+	end
+
+	if self._isLoadingAsync then
+		return false
+	end
+
+	local item = self:getLastItem()
+
+	if not item then
+		self._isSkipping = false
+
+		return false
+	end
+
+	if not item:isDone() then
+		item:justDone()
+
+		if not item:isDone() then
+			if not item:isAsyncItem() then
+				self._isSkipping = false
+			end
+
+			return false
+		end
+	end
+
+	return true
 end
 
 function NecrologistStoryView:onOpen()
@@ -236,43 +309,24 @@ function NecrologistStoryView:refreshUI(storyGroupId)
 	self.txtTitle.text = plotGroupCo.storyName
 	self.txtTitleEn.text = plotGroupCo.storyNameEn
 
-	local displayHour, minute = NecrologistStoryHelper.getTimeFormat2(plotGroupCo.time)
+	local timeStr = NecrologistStoryHelper.getTimeStrByConfig(plotGroupCo)
 
-	self.txtTime.text = string.format("%d:%02d", displayHour, minute)
-	self.txtPlace.text = plotGroupCo.place
+	self._storyGroupMo:setTime(timeStr)
+	self._storyGroupMo:setPlace(plotGroupCo.place)
+	self._storyGroupMo:setWeather(plotGroupCo.weather)
+
+	self.txtNum.text = string.format("%02d", NecrologistStoryHelper.getStoryGroupIndex(storyGroupId))
 
 	self:setLeftPic(plotGroupCo.storyPic)
-	self:setWeather(plotGroupCo.weather)
-end
 
-function NecrologistStoryView:setWeather(weatherType)
-	TaskDispatcher.cancelTask(self._refreshWeather, self)
+	local storyConfig = self._storyGroupMo:getNextStepConfig()
+	local isHideLeftStyle = storyConfig and string.find(storyConfig.type, "LeftStyle")
 
-	self._lastWeather = self._curWeather
-
-	if self._curWeather and self._curWeather ~= weatherType then
-		self._curWeather = weatherType
-
-		self.animTitle:Play("weather", 0, 0)
-		TaskDispatcher.runDelay(self._refreshWeather, self, 0.16)
-	else
-		self._curWeather = weatherType
-
-		self:_refreshWeather()
-	end
+	self:setLeftStyleVisible(not isHideLeftStyle)
 end
 
 function NecrologistStoryView:_refreshWeather()
-	if self._curWeather and self._curWeather > 0 then
-		gohelper.setActive(self.imageWeather, true)
-
-		if self._curWeather < NecrologistStoryEnum.WeatherType.Flow then
-			UISpriteSetMgr.instance:setRoleStorySprite(self.imageWeather, string.format("rolestory_weather%s", self._curWeather))
-		end
-	else
-		gohelper.setActive(self.imageWeather, false)
-	end
-
+	NecrologistStoryHelper.setWeatherIcon(self.imageWeather, self._storyGroupMo.showWeather)
 	self:playWeather()
 end
 
@@ -293,6 +347,7 @@ function NecrologistStoryView:playWeather()
 
 				gohelper.setActive(item.go, false)
 
+				item.isVisible = false
 				self.weatherList[type] = item
 			end
 		end
@@ -305,26 +360,38 @@ function NecrologistStoryView:playWeather()
 	if self._lastWeather then
 		local item = self.weatherList[self._lastWeather]
 
-		if item then
-			if item.anim then
-				gohelper.setActive(item.go, true)
-				item.anim:Play("close", 0, 0)
-			else
-				gohelper.setActive(item.go, false)
-			end
-		end
+		self:setWeaherVisible(item, false)
 	end
 
 	if self._curWeather then
 		local item = self.weatherList[self._curWeather]
 
-		if item then
-			gohelper.setActive(item.go, true)
+		self:setWeaherVisible(item, true)
+	end
+end
 
-			if item.anim then
-				item.anim:Play("open", 0, 0)
-			end
+function NecrologistStoryView:setWeaherVisible(item, isVisible)
+	if not item then
+		return
+	end
+
+	if item.isVisible == isVisible then
+		return
+	end
+
+	item.isVisible = isVisible
+
+	if isVisible then
+		gohelper.setActive(item.go, true)
+
+		if item.anim then
+			item.anim:Play("open", 0, 0)
 		end
+	elseif item.anim then
+		gohelper.setActive(item.go, true)
+		item.anim:Play("close", 0, 0)
+	else
+		gohelper.setActive(item.go, false)
 	end
 end
 
@@ -409,14 +476,27 @@ function NecrologistStoryView:playStory(storyConfig, isSkip)
 		isSkip = false
 	end
 
+	self:tryEnding(storyConfig)
+
+	local storyPlayView = self:getStoryPlayView()
 	local funcName = string.format("playStory_%s", type)
-	local func = self[funcName]
+	local func = storyPlayView[funcName]
 
 	if func then
-		func(self, storyConfig, isSkip)
+		func(storyPlayView, storyConfig, isSkip)
 	else
 		self:runNextStep()
 	end
+end
+
+function NecrologistStoryView:tryEnding(storyConfig)
+	local endingCo = NecrologistStoryConfig.instance:getEndingCoByStep(storyConfig.id)
+
+	if not endingCo then
+		return
+	end
+
+	self._storyGroupMo:onEndingUnlock(endingCo.id)
 end
 
 function NecrologistStoryView:onItemPlayFinish(isAutoNext)
@@ -432,45 +512,64 @@ function NecrologistStoryView:onItemPlayFinish(isAutoNext)
 end
 
 function NecrologistStoryView:refreshContentSize(curItem)
-	local curIndex = curItem.index
-	local beforeItem = self.storyItemList[curIndex - 1]
-	local posY = 0
-	local endItem = self:getLastItem()
-	local endIndex = endItem.index
-
-	for i = curIndex, endIndex do
-		if beforeItem then
-			posY = beforeItem:getPosY() - beforeItem:getHeight()
-		end
-
-		local tempItem = self.storyItemList[i]
-		local itemSpace = self:getItemSpace(tempItem, beforeItem)
-		local curPosY = posY - itemSpace
-
-		tempItem:setPosY(curPosY)
-		self:tryAddLine(tempItem, beforeItem)
-
-		beforeItem = tempItem
+	if not curItem:getIsContentItem() then
+		return
 	end
 
-	local endItem = self:getLastItem()
-	local endPos = endItem:getPosY()
-	local allHeight = math.abs(endPos) + endItem:getHeight() + self.bottomSpace
-	local noMove = curIndex ~= endIndex
+	local curIndex = curItem.index
+	local beforeItem = self:getBeforeContentItem(curItem)
+	local posY = beforeItem and beforeItem:getPosY() - beforeItem:getHeight() or 0
+	local endItem = self:getLastContentItem()
 
-	self:setContentHeight(allHeight, noMove)
+	if endItem then
+		local endIndex = endItem.index
+
+		for i = curIndex, endIndex do
+			local tempItem = self:getStoryItemView():getItemByIndex(i)
+
+			if tempItem:getIsContentItem() then
+				if beforeItem then
+					posY = beforeItem:getPosY() - beforeItem:getHeight()
+				end
+
+				local itemSpace = self:getItemSpace(tempItem, beforeItem)
+				local curPosY = posY - itemSpace
+
+				tempItem:setPosY(curPosY)
+				self:tryAddLine(tempItem, beforeItem)
+
+				beforeItem = tempItem
+			end
+		end
+	end
+
+	local endPos = endItem and endItem:getPosY() or 0
+	local endHeight = endItem and endItem:getHeight() or 0
+	local allHeight = math.abs(endPos) + endHeight + self.bottomSpace
+
+	self:setContentHeight(allHeight)
 end
 
-function NecrologistStoryView:setContentHeight(height, noMove)
+function NecrologistStoryView:getBeforeContentItem(curItem)
+	local curIndex = curItem.index
+	local storyItemView = self:getStoryItemView()
+
+	for i = curIndex - 1, 1, -1 do
+		local item = storyItemView:getItemByIndex(i)
+
+		if item:getIsContentItem() then
+			return item
+		end
+	end
+end
+
+function NecrologistStoryView:setContentHeight(height)
 	local oldHeight = recthelper.getHeight(self.rectContent)
 
 	if oldHeight ~= height then
 		self:clearTweenBottom()
 		recthelper.setHeight(self.rectContent, height)
-
-		if not noMove then
-			self:moveToContentBottom()
-		end
+		self:moveToContentBottom()
 	end
 end
 
@@ -580,16 +679,21 @@ function NecrologistStoryView:getStoryMo(id)
 end
 
 function NecrologistStoryView:getLastItem()
-	return self.storyItemList[self.itemCount]
+	local storyItemView = self:getStoryItemView()
+
+	return storyItemView:getLastItem()
+end
+
+function NecrologistStoryView:getLastContentItem()
+	local storyItemView = self:getStoryItemView()
+
+	return storyItemView:getLastContentItem()
 end
 
 function NecrologistStoryView:clearStoryItem()
-	for i, v in ipairs(self.storyItemList) do
-		v:destory()
-	end
+	local storyItemView = self:getStoryItemView()
 
-	self.storyItemList = {}
-	self.itemCount = 0
+	storyItemView:clearStoryItem()
 end
 
 function NecrologistStoryView:clearAll()
@@ -601,135 +705,28 @@ function NecrologistStoryView:clearAll()
 	self:clearStoryItem()
 end
 
-function NecrologistStoryView:playStory_location(storyConfig, isSkip)
-	self.txtPlace.text = NecrologistStoryHelper.getDescByConfig(storyConfig)
-
-	self:createStoryItem(NecrologistStoryLocationItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_dialog(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStoryDialogItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_aside(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStoryAsideItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_options(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStoryOptionsItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_system(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStorySystemItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_pause(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStoryPauseItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_control(storyConfig, isSkip)
-	self:addControl(storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_situationValue(storyConfig, isSkip)
-	local arr = GameUtil.splitString2(storyConfig.param, false, "|", "#")
-
-	if arr then
-		for i, v in ipairs(arr) do
-			self._storyGroupMo:addSituationValue(v[1], tonumber(v[2]))
-		end
-	end
-
-	if isSkip and GuideModel.instance:isGuideRunning(31307) then
-		-- block empty
-	else
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnSituationValue)
-	end
-
-	self:runNextStep(isSkip)
-end
-
-function NecrologistStoryView:playStory_situation(storyConfig, isSkip)
-	local sectionId = self._storyGroupMo:compareSituationValue(storyConfig.param)
-
-	if sectionId then
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnSelectSection, sectionId, isSkip)
-	end
-end
-
-function NecrologistStoryView:playStory_v3a2options(storyConfig, isSkip)
-	self:createStoryItem(V3A2NecrologistStoryOptionsItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_v3a4AudioControl(storyConfig, isSkip)
-	self:createStoryItem(NecrologistStoryClickAudioItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_v3a5Item(storyConfig, isSkip)
-	self:createStoryItem(V3A5NecrologistStoryLongPressItem, storyConfig, isSkip)
-end
-
-function NecrologistStoryView:playStory_commontask(storyConfig, isSkip)
-	local arr = GameUtil.splitString2(storyConfig.param, true, "|", "#")
-
-	if arr then
-		for i, v in ipairs(arr) do
-			self._storyGroupMo:addTaskValue(v[1], v[2])
-		end
-	end
-
-	self:runNextStep(isSkip)
-end
-
-function NecrologistStoryView:playStory_time(storyConfig, isSkip)
-	self.txtTime.text = storyConfig.param
-
-	self:runNextStep(isSkip)
-end
-
 function NecrologistStoryView:createStoryItem(cls, storyConfig, isSkip)
-	local resPath = cls.getResPath()
-	local go
-	local storyId = storyConfig.id
+	local storyItemView = self:getStoryItemView()
 
-	if string.nilorempty(resPath) then
-		go = gohelper.create2d(self.goContent, tostring(storyId))
-	else
-		go = self:getResInst(resPath, self.goContent, tostring(storyId))
-	end
+	storyItemView:createStoryItem(cls, storyConfig, isSkip)
+end
 
-	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, cls, self)
+function NecrologistStoryView:createStoryItemAsync(cls, storyConfig, isSkip, parentGO)
+	local storyItemView = self:getStoryItemView()
 
-	self:addItem(item)
-	item:playStory(storyConfig, isSkip, self.onItemPlayFinish, self, self.refreshContentSize, self)
-	self:tryAddLine()
-
-	return item
+	storyItemView:createStoryItemAsync(cls, storyConfig, isSkip, parentGO)
 end
 
 function NecrologistStoryView:addItem(item)
-	self.itemCount = self.itemCount + 1
-	item.index = self.itemCount
-	self.storyItemList[self.itemCount] = item
+	local storyItemView = self:getStoryItemView()
+
+	storyItemView:addItem(item)
 end
 
 function NecrologistStoryView:delItem(item)
-	if not item then
-		return
-	end
+	local storyItemView = self:getStoryItemView()
 
-	local index = item.index
-
-	table.remove(self.storyItemList, index)
-
-	self.itemCount = self.itemCount - 1
-
-	for i, v in ipairs(self.storyItemList) do
-		v.index = i
-	end
-
-	item:destory()
-	self:runNextStep()
+	storyItemView:delItem(item)
 end
 
 function NecrologistStoryView:addControl(storyConfig, isSkip, fromItem)
@@ -748,17 +745,67 @@ function NecrologistStoryView:addControl(storyConfig, isSkip, fromItem)
 	self.controlMgr:playControl(storyConfig, isSkip, fromItem)
 end
 
-function NecrologistStoryView:createControlItem(cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+function NecrologistStoryView:createControlItemAsync(cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
 	local resPath = cls.getResPath()
-	local go = self:getResInst(resPath, self.goContent, tostring(storyId))
-	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, cls, self)
+
+	if string.nilorempty(resPath) then
+		self:_createControlItemGo(nil, nil, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+
+		return
+	end
+
+	local resPathList = {
+		resPath
+	}
+	local otherResPathList = cls.getOtherResPath()
+
+	if otherResPathList then
+		tabletool.addValues(resPathList, otherResPathList)
+	end
+
+	if self.loaderComp then
+		self._isLoadingAsync = true
+
+		self.loaderComp:startLoad(resPathList, self.onControlItemLoaded, self, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+	else
+		self:createControlItem(cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+	end
+end
+
+function NecrologistStoryView:_createControlItemGo(go, resList, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+	go = go or gohelper.create2d(self.goContent, tostring(storyId))
+
+	local itemParam = {
+		isContentItem = true,
+		storyView = self,
+		resList = resList
+	}
+	local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, cls, itemParam)
 
 	self:addItem(item)
 	item:setStoryId(storyId)
 	item:playControl(controlParam, playFinishCallback, playFinishCallbackObj, self.refreshContentSize, self)
 	self:tryAddLine()
 
-	return item
+	local flag = self:_canContinueSkip()
+
+	if flag then
+		self:_continueSkip()
+	end
+end
+
+function NecrologistStoryView:onControlItemLoaded(mainRes, resList, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+	self._isLoadingAsync = false
+
+	if not mainRes then
+		self:_createControlItemGo(nil, resList, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
+
+		return
+	end
+
+	local go = gohelper.clone(mainRes, self.goContent, tostring(storyId))
+
+	self:_createControlItemGo(go, resList, cls, storyId, controlParam, playFinishCallback, playFinishCallbackObj)
 end
 
 function NecrologistStoryView:recycelLines()
@@ -806,10 +853,11 @@ end
 
 function NecrologistStoryView:isNeedAddLine(curItem, beforeItem)
 	if not curItem then
-		local itemCount = self.itemCount
+		local storyItemView = self:getStoryItemView()
+		local itemCount = storyItemView:getItemCount()
 
-		curItem = self.storyItemList[itemCount]
-		beforeItem = self.storyItemList[itemCount - 1]
+		curItem = storyItemView:getItemByIndex(itemCount)
+		beforeItem = storyItemView:getItemByIndex(itemCount - 1)
 	end
 
 	if not curItem or not beforeItem then
@@ -845,6 +893,11 @@ end
 
 function NecrologistStoryView:onDragPicEnable(isEnable)
 	gohelper.setActive(self.goDragPicture, isEnable)
+end
+
+function NecrologistStoryView:setLeftStyleVisible(isVisible)
+	gohelper.setActive(self.goLeft, isVisible)
+	gohelper.setActive(self.goTitle, isVisible)
 end
 
 function NecrologistStoryView:onClose()
@@ -885,8 +938,11 @@ function NecrologistStoryView:isInReview()
 end
 
 function NecrologistStoryView:getLastText()
-	for i = #self.storyItemList, 1, -1 do
-		local item = self.storyItemList[i]
+	local storyItemView = self:getStoryItemView()
+	local itemCount = storyItemView:getItemCount()
+
+	for i = itemCount, 1, -1 do
+		local item = storyItemView:getItemByIndex(i)
 		local lastText = item:getTextStr()
 
 		if not string.nilorempty(lastText) then
@@ -895,6 +951,14 @@ function NecrologistStoryView:getLastText()
 	end
 
 	return ""
+end
+
+function NecrologistStoryView:getStoryItemView()
+	return self.viewContainer:getStoryItemView()
+end
+
+function NecrologistStoryView:getStoryPlayView()
+	return self.viewContainer:getStoryPlayView()
 end
 
 function NecrologistStoryView:onDestroyView()

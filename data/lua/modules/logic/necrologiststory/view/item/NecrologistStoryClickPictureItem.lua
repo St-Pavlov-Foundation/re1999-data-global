@@ -13,11 +13,11 @@ function NecrologistStoryClickPictureItem:onInit()
 	self.goTips = gohelper.findChild(self.viewGO, "root/go_click/tips")
 end
 
-function NecrologistStoryClickPictureItem:addEventListeners()
+function NecrologistStoryClickPictureItem:onAddEvent()
 	self:addClickCb(self.btnClick, self.onClickClick, self)
 end
 
-function NecrologistStoryClickPictureItem:removeEventListeners()
+function NecrologistStoryClickPictureItem:onRemoveEvent()
 	self:removeClickCb(self.btnClick)
 end
 

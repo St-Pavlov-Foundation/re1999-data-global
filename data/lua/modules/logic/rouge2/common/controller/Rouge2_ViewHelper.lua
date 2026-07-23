@@ -38,16 +38,6 @@ function Rouge2_ViewHelper.openCareerAttributeTipsView(careerId, attributeId, at
 	ViewMgr.instance:openView(ViewName.Rouge2_CareerAttributeTipsView, params)
 end
 
-function Rouge2_ViewHelper.openBackpackSkillEditView(selectSkillIndex)
-	selectSkillIndex = selectSkillIndex or 1
-
-	local params = {
-		selectIndex = selectSkillIndex
-	}
-
-	ViewMgr.instance:openView(ViewName.Rouge2_BackpackSkillEditView, params)
-end
-
 function Rouge2_ViewHelper.openMainView(params)
 	ViewMgr.instance:openView(ViewName.Rouge2_MainView, params)
 end
@@ -71,7 +61,7 @@ function Rouge2_ViewHelper.openBackpackTabView(tabId, extraParams)
 	ViewMgr.instance:openView(ViewName.Rouge2_BackpackTabView, params)
 end
 
-function Rouge2_ViewHelper.openAttributeDetailView(careerId, attrInfoList)
+function Rouge2_ViewHelper.openAttributeDetailView(careerId, attrInfoList, otherParams)
 	careerId = careerId or Rouge2_Model.instance:getCareerId()
 	attrInfoList = attrInfoList or Rouge2_Model.instance:getHeroAttrInfoList()
 
@@ -79,6 +69,12 @@ function Rouge2_ViewHelper.openAttributeDetailView(careerId, attrInfoList)
 		careerId = careerId,
 		attrInfoList = attrInfoList
 	}
+
+	if otherParams then
+		for key, value in pairs(otherParams) do
+			params[key] = value
+		end
+	end
 
 	ViewMgr.instance:openView(ViewName.Rouge2_AttributeDetailView, params)
 end
@@ -129,6 +125,31 @@ function Rouge2_ViewHelper.openItemTipsView(dataType, dataIdList, extraParamMap)
 	end
 
 	ViewMgr.instance:openView(showViewName, params)
+end
+
+function Rouge2_ViewHelper.openBossBattleView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.Rouge2_BossBattleView, param, isImmediate)
+end
+
+function Rouge2_ViewHelper.openBossBattleDetailView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.Rouge2_BossBattleDetailView, param, isImmediate)
+end
+
+function Rouge2_ViewHelper.openSaveInfoView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.Rouge2_SaveInfoView, param, isImmediate)
+end
+
+function Rouge2_ViewHelper.openSaveInfoDetailView(param, isImmediate)
+	ViewMgr.instance:openView(ViewName.Rouge2_SaveInfoDetailView, param, isImmediate)
+end
+
+function Rouge2_ViewHelper.openActiveSkillAttrUpdateTipsView(dataType, dataId)
+	local params = {
+		dataType = dataType,
+		dataId = dataId
+	}
+
+	ViewMgr.instance:openView(ViewName.Rouge2_ActiveSkillAttrUpdateTipsView, params)
 end
 
 return Rouge2_ViewHelper

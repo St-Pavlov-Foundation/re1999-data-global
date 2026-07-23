@@ -67,6 +67,10 @@ function FightWorkCompareServerEntityData.compareAttrMO(attrMO1, attrMO2, server
 		return
 	end
 
+	if serverEntityMO:isAct191Boss() then
+		return
+	end
+
 	if attrMO1.hp ~= attrMO2.hp then
 		FightDataUtil.addDiff("hp", FightDataUtil.diffType.difference)
 	end
@@ -118,11 +122,12 @@ local errorDes = {
 	[FightDataUtil.diffType.difference] = "数据不一致"
 }
 local filterCompareKey = {
-	buffFeaturesSplit = true,
+	storedDeviceExPoint = true,
 	playCardExPoint = true,
 	resistanceDict = true,
 	_playCardAddExpoint = true,
 	configMaxExPoint = true,
+	buffFeaturesSplit = true,
 	moveCardExPoint = true,
 	passiveSkillDic = true,
 	_combineCardAddExpoint = true,

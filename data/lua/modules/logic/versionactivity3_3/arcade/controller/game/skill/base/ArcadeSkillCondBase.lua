@@ -12,6 +12,10 @@ function ArcadeSkillCondBase:ctor(params)
 	self:tryCallFunc(self.onCtor)
 end
 
+function ArcadeSkillCondBase:onCtor()
+	return
+end
+
 function ArcadeSkillCondBase:isCondSuccess(context)
 	self._context = context
 
@@ -28,7 +32,7 @@ function ArcadeSkillCondBase:onIsCondSuccess()
 	return true
 end
 
-function ArcadeSkillCondBase:onCtor()
+function ArcadeSkillCondBase:getCondNeedCounter()
 	return
 end
 

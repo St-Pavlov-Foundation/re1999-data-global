@@ -66,9 +66,9 @@ function VersionActivityFixedDungeonModel:getElementCoList(mapId)
 	return normalElementCoList
 end
 
-function VersionActivityFixedDungeonModel:getElementCoListWithFinish(mapId)
+function VersionActivityFixedDungeonModel:getElementCoListWithFinish(mapId, episodeId)
 	local finishElementCoList = {}
-	local mapAllElementList = self:getAllNormalElementCoList(mapId)
+	local mapAllElementList = self:getAllNormalElementCoList(mapId, episodeId)
 	local bigVersion, smallVersion = VersionActivityFixedDungeonController.instance:getEnterVerison()
 
 	for _, elementCo in pairs(mapAllElementList) do
@@ -77,9 +77,8 @@ function VersionActivityFixedDungeonModel:getElementCoListWithFinish(mapId)
 
 		if mapCo and mapCo.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(bigVersion, smallVersion).DungeonChapterId.Story then
 			local isFinish = DungeonMapModel.instance:elementIsFinished(elementId)
-			local elementData = DungeonMapModel.instance:getElementById(elementId)
 
-			if mapId == elementCo.mapId and isFinish and not elementData then
+			if mapId == elementCo.mapId and isFinish then
 				table.insert(finishElementCoList, elementCo)
 			end
 		end
@@ -88,17 +87,31 @@ function VersionActivityFixedDungeonModel:getElementCoListWithFinish(mapId)
 	return finishElementCoList, mapAllElementList
 end
 
-function VersionActivityFixedDungeonModel:getAllNormalElementCoList(mapId)
+function VersionActivityFixedDungeonModel:getAllNormalElementCoList(mapId, episodeId)
 	local elements = {}
 	local mapAllElementList = DungeonConfig.instance:getMapElements(mapId)
 
 	if mapAllElementList then
 		for _, elementCo in pairs(mapAllElementList) do
-			table.insert(elements, elementCo)
+			if DungeonModel.instance:hasPassLevel(episodeId) and self:isElementInEpisode(elementCo, episodeId) then
+				table.insert(elements, elementCo)
+			end
 		end
 	end
 
 	return elements
+end
+
+function VersionActivityFixedDungeonModel:isElementInEpisode(elementCo, episodeId)
+	if episodeId == nil then
+		return true
+	end
+
+	local elementEpisodeId = string.gsub(elementCo.condition, "EpisodeFinish=", "")
+
+	elementEpisodeId = tonumber(elementEpisodeId)
+
+	return elementEpisodeId == episodeId
 end
 
 function VersionActivityFixedDungeonModel:setDungeonBaseMo(dungeonMo)

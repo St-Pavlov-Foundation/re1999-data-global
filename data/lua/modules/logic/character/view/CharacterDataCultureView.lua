@@ -284,7 +284,7 @@ function CharacterDataCultureView:_refreshDesc(index)
 		-282.6,
 		-134.5
 	} or {
-		-320,
+		-254,
 		-151.3
 	}
 
@@ -293,13 +293,20 @@ function CharacterDataCultureView:_refreshDesc(index)
 	gohelper.setActive(self._gocontent, index ~= 3 and self._config.isCustom ~= 1)
 	gohelper.setActive(self._gofirst, index ~= 3 and self._config.isCustom ~= 1)
 	gohelper.setActive(self._txtCustomContent.gameObject, self._config.isCustom == 1)
-	gohelper.setActive(self._goconversation, index == 3 and self._config.isCustom ~= 1)
+	gohelper.setActive(self._goconversation, index == 3)
 	gohelper.setActive(self._goCustomRedIcon, false)
 
 	local content = self._config.text
 
 	if index == 3 then
-		local afterContent = self:_getAfterContent(content)
+		local afterContent
+
+		if self._config.isCustom == 1 then
+			afterContent = content
+		else
+			afterContent = self:_getAfterContent(content)
+		end
+
 		local markText = GameUtil.getMarkText(afterContent)
 		local markIndexList = GameUtil.getMarkIndexList(afterContent)
 

@@ -42,7 +42,7 @@ function V2a8_SelfSelectCharacterFullView:removeEvents()
 end
 
 function V2a8_SelfSelectCharacterFullView:_btncheckOnClick()
-	HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", "待策划补全文案")
+	HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", luaLang("anniversary_bonus_rule"))
 end
 
 function V2a8_SelfSelectCharacterFullView:_btninviteOnClick()

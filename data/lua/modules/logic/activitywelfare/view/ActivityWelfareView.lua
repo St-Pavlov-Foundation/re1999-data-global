@@ -27,12 +27,9 @@ function ActivityWelfareView:_editableInitView()
 end
 
 local activitySubViewDict = {
-	[ActivityEnum.Activity.NewWelfare] = ViewName.NewWelfareView,
-	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.StoryShow] = ViewName.ActivityStoryShowView,
 	[ActivityEnum.Activity.ClassShow] = ViewName.ActivityClassShowView,
-	[ActivityEnum.Activity.V2a7_NewInsight] = ViewName.ActivityInsightShowView_2_7,
-	[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView
+	[ActivityEnum.Activity.V2a7_NewInsight] = ViewName.ActivityInsightShowView_2_7
 }
 
 function ActivityWelfareView:onUpdateParam()
@@ -44,7 +41,37 @@ function ActivityWelfareView:onOpen()
 	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._refreshView, self)
 	self:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, self.setCategoryListInteractable, self)
 	self:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, self._openSubView, self)
+	self:_initActivityNoviceSign()
+	self:_initActivityNewWelfare()
+	self:_initActivitySelfSelectSix()
 	self:_refreshView()
+end
+
+function ActivityWelfareView:_initActivityNoviceSign()
+	local actId = ActivityEnum.Activity.NoviceSign
+	local is3_8NewRegister = ActivityWelfareModel.instance:is3_8NewRegisterPlayer()
+
+	if is3_8NewRegister then
+		activitySubViewDict[actId] = ViewName.VersionActivity3_8NoviceSignView
+	else
+		activitySubViewDict[actId] = ViewName.ActivityNoviceSignView
+	end
+end
+
+function ActivityWelfareView:_initActivityNewWelfare()
+	local actId = ActivityEnum.Activity.NewWelfare
+
+	activitySubViewDict[actId] = ViewName.VersionActivity3_8NewWelfareView
+end
+
+function ActivityWelfareView:_initActivitySelfSelectSix()
+	activitySubViewDict[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView
+
+	local is3_8NewRegister = ActivityWelfareModel.instance:is3_8NewRegisterPlayer()
+
+	if is3_8NewRegister then
+		activitySubViewDict[ActivityEnum.Activity.V3a8_SelfSelectSix] = ViewName.VersionActivity3_8SelfSelectSixView
+	end
 end
 
 function ActivityWelfareView:_refreshView()
@@ -98,6 +125,7 @@ function ActivityWelfareView:_refreshView()
 
 		if c then
 			ViewMgr.instance:openView(self._viewName, c.viewParam, true)
+			self:_statSubViewEnter(self._viewName)
 
 			return
 		end
@@ -133,6 +161,17 @@ function ActivityWelfareView:_openSubView()
 	}
 
 	ViewMgr.instance:openView(self._viewName, viewParam, true)
+	self:_statSubViewEnter(self._viewName)
+end
+
+function ActivityWelfareView:_statSubViewEnter(viewSubName)
+	local isNotSame = self._lastStatName ~= viewSubName
+
+	self._lastStatName = viewSubName
+
+	if isNotSame and viewSubName and StatViewNameEnum.ChineseViewName[viewSubName] then
+		StatViewController.instance:trackViewName(StatViewNameEnum.ChineseViewName[viewSubName])
+	end
 end
 
 function ActivityWelfareView:setCategoryRedDotData(actId)

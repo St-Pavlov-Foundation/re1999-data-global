@@ -288,7 +288,7 @@ function Rouge2_MapChoiceBaseItem:_refreshAttrItem(obj, attrId, index)
 	Rouge2_IconHelper.setAttributeIcon(attrId, imageIcon, Rouge2_Enum.AttrIconSuffix.CircleBg)
 
 	local careerId = Rouge2_Model.instance:getCareerId()
-	local isRecommend = Rouge2_CareerConfig.instance:isAttrRecommend(careerId, attrId)
+	local isRecommend = Rouge2_BackpackController.instance:isAttrRecommend(careerId, attrId)
 
 	gohelper.setActive(goRecommend, isRecommend)
 end

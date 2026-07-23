@@ -514,10 +514,10 @@ function CharacterController:useSkinGiftItem(itemId)
 		return
 	end
 
-	if self:checkHaveCompensate(skinList) then
+	if self:checkHaveCompensate(skinList) and config.clientDisplayType ~= ItemEnum.clientDisplayType.SkinGift then
 		self:handleSkinGiftHasCompensate(itemId)
 	else
-		self:handleSkinGiftNoCompensate(itemId, skinList)
+		self:handleSkinGiftNoCompensate(itemId)
 	end
 end
 
@@ -535,26 +535,13 @@ function CharacterController:checkHaveCompensate(skinList)
 	return false
 end
 
-function CharacterController:handleSkinGiftNoCompensate(itemId, skinList)
-	local isAllHasSkin = true
+function CharacterController:handleSkinGiftNoCompensate(itemId)
+	local param = {}
 
-	for i, v in ipairs(skinList) do
-		if not HeroModel.instance:checkHasSkin(v) then
-			isAllHasSkin = false
+	param.type = SkinDiscountCompensateEnum.SelectDisplayType.Select
+	param.itemId = itemId
 
-			break
-		end
-	end
-
-	if isAllHasSkin then
-		ItemRpc.instance:simpleSendUseItemRequest(itemId, 1, 0, self._onUseSkinGiftItemCallback, self)
-
-		return
-	end
-
-	ViewMgr.instance:openView(ViewName.DecorateSkinSelectView, {
-		itemId = itemId
-	})
+	ViewMgr.instance:openView(ViewName.SkinSelfSelectView, param)
 end
 
 function CharacterController:handleSkinGiftHasCompensate(itemId)

@@ -13,13 +13,13 @@ function ArcadeGameBaseUnitMO:ctor(moData)
 	self._entityType = moData.entityType
 	self._curHp = 0
 	self._corpseTime = 0
+	self._attackAttrId = nil
 
 	self:setGridPos(moData.x, moData.y)
 
 	self._skillSetMO = ArcadeGameSkillSetMO.New(self.id, self)
 	self._buffSetMO = ArcadeGameBuffSetMO.New(self)
 	self._baseAttrSetMO = ArcadeGameAttributeSetMO.New()
-	self._attributeDict = {}
 
 	local cfg = self:getCfg()
 
@@ -39,16 +39,20 @@ function ArcadeGameBaseUnitMO:ctor(moData)
 	self:onCtor(moData.extraParam)
 end
 
+function ArcadeGameBaseUnitMO:getId()
+	return self.id
+end
+
+function ArcadeGameBaseUnitMO:getUid()
+	return self.uid or self.id
+end
+
+function ArcadeGameBaseUnitMO:getEntityType()
+	return self._entityType
+end
+
 function ArcadeGameBaseUnitMO:getSkillSetMO()
 	return self._skillSetMO
-end
-
-function ArcadeGameBaseUnitMO:addSkillById(skillId)
-	self._skillSetMO:addSkillById(skillId)
-end
-
-function ArcadeGameBaseUnitMO:removeSkillById(skillId)
-	self._skillSetMO:removeSkillById(skillId)
 end
 
 function ArcadeGameBaseUnitMO:getSkillList()
@@ -61,18 +65,6 @@ end
 
 function ArcadeGameBaseUnitMO:getAttrSetMO()
 	return self._baseAttrSetMO
-end
-
-function ArcadeGameBaseUnitMO:getId()
-	return self.id
-end
-
-function ArcadeGameBaseUnitMO:getUid()
-	return self.uid or self.id
-end
-
-function ArcadeGameBaseUnitMO:getEntityType()
-	return self._entityType
 end
 
 function ArcadeGameBaseUnitMO:getAttrMO(attrId)
@@ -93,39 +85,6 @@ function ArcadeGameBaseUnitMO:getAttributeValue(attrId)
 	end
 
 	return result
-end
-
-function ArcadeGameBaseUnitMO:addHp(value)
-	local realChangeVal = 0
-	local phVal = tonumber(value)
-
-	if not phVal or phVal == 0 then
-		return realChangeVal
-	end
-
-	local hpCap = self:getAttributeValue(ArcadeGameEnum.BaseAttr.hpCap)
-	local newHp = Mathf.Clamp(phVal + self._curHp, 0, hpCap)
-
-	if phVal < 0 then
-		realChangeVal = phVal
-	else
-		realChangeVal = newHp - self._curHp
-	end
-
-	self._curHp = newHp
-
-	self:setAttributeBaseValue(ArcadeGameEnum.BaseAttr.hp, self._curHp)
-
-	return realChangeVal
-end
-
-function ArcadeGameBaseUnitMO:setHp(value)
-	local phVal = tonumber(value)
-	local hpCap = self:getAttributeValue(ArcadeGameEnum.BaseAttr.hpCap)
-
-	self._curHp = Mathf.Clamp(phVal, 0, hpCap)
-
-	self:setAttributeBaseValue(ArcadeGameEnum.BaseAttr.hp, self._curHp)
 end
 
 function ArcadeGameBaseUnitMO:getHp()
@@ -156,6 +115,10 @@ end
 
 function ArcadeGameBaseUnitMO:getIsRemoving()
 	return self._isRemoving
+end
+
+function ArcadeGameBaseUnitMO:getIsRespawning()
+	return self._isRespawning
 end
 
 function ArcadeGameBaseUnitMO:getBorderGridList()
@@ -252,6 +215,51 @@ function ArcadeGameBaseUnitMO:getStateEffectIdList()
 	return result
 end
 
+function ArcadeGameBaseUnitMO:getAttackAttrId()
+	return self._attackAttrId
+end
+
+function ArcadeGameBaseUnitMO:getIsCanDead()
+	local entityType = self:getEntityType()
+
+	return entityType == ArcadeGameEnum.EntityType.Monster or entityType == ArcadeGameEnum.EntityType.Character
+end
+
+function ArcadeGameBaseUnitMO:getIsHaveHPBar()
+	local entityType = self:getEntityType()
+
+	return entityType == ArcadeGameEnum.EntityType.Monster or entityType == ArcadeGameEnum.EntityType.Character
+end
+
+function ArcadeGameBaseUnitMO:getHpPos()
+	local cfg = self:getCfg()
+	local hpPosArr = cfg and cfg.hpPos
+
+	if hpPosArr then
+		return tonumber(hpPosArr[1]), tonumber(hpPosArr[2])
+	end
+end
+
+function ArcadeGameBaseUnitMO:getIsAlive()
+	local isDead = self:getIsDead()
+	local isRemoving = self:getIsRemoving()
+	local hp = self:getHp()
+
+	return not isDead and not isRemoving and hp > 0
+end
+
+function ArcadeGameBaseUnitMO:getIsCollection()
+	return false
+end
+
+function ArcadeGameBaseUnitMO:addSkillById(skillId)
+	self._skillSetMO:addSkillById(skillId)
+end
+
+function ArcadeGameBaseUnitMO:removeSkillById(skillId)
+	self._skillSetMO:removeSkillById(skillId)
+end
+
 function ArcadeGameBaseUnitMO:setGridPos(gridX, gridY)
 	self._gridX = gridX or self._gridX or 0
 	self._gridY = gridY or self._gridY or 0
@@ -271,6 +279,10 @@ end
 
 function ArcadeGameBaseUnitMO:setIsRemoving(isRemoving)
 	self._isRemoving = isRemoving
+end
+
+function ArcadeGameBaseUnitMO:setIsRespawning(isRespawning)
+	self._isRespawning = isRespawning
 end
 
 function ArcadeGameBaseUnitMO:addCorpseTime()
@@ -293,6 +305,51 @@ function ArcadeGameBaseUnitMO:_setEntityForwardDirection(dir)
 	end
 
 	self.entityForwardDirection = dir
+end
+
+function ArcadeGameBaseUnitMO:setAttackAttr(attackAttrId)
+	self._attackAttrId = attackAttrId
+end
+
+function ArcadeGameBaseUnitMO:addHp(value)
+	local realChangeVal = 0
+	local phVal = tonumber(value)
+
+	if not phVal or phVal == 0 then
+		return realChangeVal
+	end
+
+	local hpCap = self:getAttributeValue(ArcadeGameEnum.BaseAttr.hpCap)
+	local newHp = Mathf.Clamp(phVal + self._curHp, 0, hpCap)
+
+	if phVal < 0 then
+		realChangeVal = phVal
+	else
+		realChangeVal = newHp - self._curHp
+	end
+
+	self._curHp = newHp
+
+	self:setAttributeBaseValue(ArcadeGameEnum.BaseAttr.hp, self._curHp)
+
+	return realChangeVal
+end
+
+function ArcadeGameBaseUnitMO:setHp(value)
+	local phVal = tonumber(value)
+	local hpCap = self:getAttributeValue(ArcadeGameEnum.BaseAttr.hpCap)
+
+	self._curHp = Mathf.Clamp(phVal, 0, hpCap)
+
+	self:setAttributeBaseValue(ArcadeGameEnum.BaseAttr.hp, self._curHp)
+end
+
+function ArcadeGameBaseUnitMO:triggerSkillSetMOCounterRecord(counterName, counterParam, count)
+	local skillSetMO = self:getSkillSetMO()
+
+	if skillSetMO then
+		skillSetMO:triggerSkillCounterRecord(counterName, counterParam, count)
+	end
 end
 
 function ArcadeGameBaseUnitMO:onCtor(extraParam)
@@ -321,12 +378,6 @@ function ArcadeGameBaseUnitMO:getDropList()
 	return
 end
 
-function ArcadeGameBaseUnitMO:getIsCanDead()
-	local entityType = self:getEntityType()
-
-	return entityType == ArcadeGameEnum.EntityType.Monster or entityType == ArcadeGameEnum.EntityType.Character
-end
-
 function ArcadeGameBaseUnitMO:getIsCanRespawn()
 	return false
 end
@@ -346,21 +397,6 @@ function ArcadeGameBaseUnitMO:getPosOffset()
 
 	if posArr and type(posArr) == "table" then
 		return tonumber(posArr[1]), tonumber(posArr[2])
-	end
-end
-
-function ArcadeGameBaseUnitMO:getIsHaveHPBar()
-	local entityType = self:getEntityType()
-
-	return entityType == ArcadeGameEnum.EntityType.Monster or entityType == ArcadeGameEnum.EntityType.Character
-end
-
-function ArcadeGameBaseUnitMO:getHpPos()
-	local cfg = self:getCfg()
-	local hpPosArr = cfg and cfg.hpPos
-
-	if hpPosArr then
-		return tonumber(hpPosArr[1]), tonumber(hpPosArr[2])
 	end
 end
 

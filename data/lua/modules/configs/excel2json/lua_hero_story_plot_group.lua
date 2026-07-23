@@ -10,6 +10,7 @@ local fields = {
 	storyId = 2,
 	preId = 10,
 	time = 5,
+	date = 13,
 	place = 6,
 	roleName = 8,
 	isEnd = 12,

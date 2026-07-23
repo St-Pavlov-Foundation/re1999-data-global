@@ -56,7 +56,8 @@ function SkillConfig:reqConfigNames()
 		"fight_const",
 		"skill_buff_desc",
 		"hero_upgrade_breaklevel",
-		"fight_card_footnote"
+		"fight_card_footnote",
+		"skill_energy"
 	}
 end
 
@@ -600,16 +601,21 @@ function SkillConfig:_matchChioceSkill(skillIndex, choiceSkillIndex, heroId)
 	end
 end
 
-function SkillConfig:getHeroBaseSkillIdDict(heroId, isCheckReplaceRankSkill)
-	local skillStr, exSkillStr, isReplaceSkill = self:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill)
+function SkillConfig:getHeroBaseSkillIdDict(heroId, isCheckReplaceRankSkill, heroMo)
+	local skillStr, exSkillStr, isReplaceSkill = self:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill, heroMo)
 
 	return self:getHeroBaseSkillIdDictByStr(skillStr, exSkillStr), isReplaceSkill
 end
 
-function SkillConfig:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill)
+function SkillConfig:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill, heroMo)
 	local heroCo = HeroConfig.instance:getHeroCO(heroId)
 	local skillStr = heroCo.skill
 	local exSkillStr = heroCo.exSkill
+	local deviceMo = self:getHeroDeviceMO(heroId, heroMo)
+
+	if deviceMo then
+		skillStr, exSkillStr = deviceMo:getSkillIdsStr()
+	end
 
 	if isCheckReplaceRankSkill then
 		local rankReplaceCo = HeroConfig.instance:getHeroRankReplaceConfig(heroId)
@@ -645,7 +651,10 @@ function SkillConfig:getHeroBaseSkillIdDictByStr(skillStr, exSkill)
 		splitSkill = string.splitToNumber(_skillId[1], "#")
 		skillKey = splitSkill[1]
 		skillId = splitSkill[2]
-		skillIdDict[skillKey] = skillId
+
+		if skillKey then
+			skillIdDict[skillKey] = skillId
+		end
 	end
 
 	skillIdDict[3] = exSkill
@@ -653,8 +662,8 @@ function SkillConfig:getHeroBaseSkillIdDictByStr(skillStr, exSkill)
 	return skillIdDict
 end
 
-function SkillConfig:getHeroAllSkillIdDict(heroId, isCheckReplaceRankSkill)
-	local skillStr, exSkillStr, isReplaceSkill = self:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill)
+function SkillConfig:getHeroAllSkillIdDict(heroId, isCheckReplaceRankSkill, heroMo)
+	local skillStr, exSkillStr, isReplaceSkill = self:_getHeroSkillAndExSkill(heroId, isCheckReplaceRankSkill, heroMo)
 
 	return self:getHeroAllSkillIdDictByStr(skillStr, exSkillStr), isReplaceSkill
 end
@@ -717,7 +726,7 @@ function SkillConfig:getHeroBaseSkillIdDictByExSkillLevel(heroId, showAttributeO
 	end
 
 	local isCheckReplaceRankSkill = rank and rank > CharacterModel.instance:getReplaceSkillRank(heroMo) - 1
-	local baseSkillIdDict = self:getHeroBaseSkillIdDict(heroId, isCheckReplaceRankSkill)
+	local baseSkillIdDict = self:getHeroBaseSkillIdDict(heroId, isCheckReplaceRankSkill, heroMo)
 
 	heroMo = heroMo or HeroModel.instance:getByHeroId(heroId)
 
@@ -826,7 +835,7 @@ function SkillConfig:getHeroAllSkillIdDictByExSkillLevel(heroId, showAttributeOp
 	end
 
 	local isCheckOverRank = isCheckOverRank or rank and rank > CharacterModel.instance:getReplaceSkillRank(heroMo) - 1
-	local allSkillIdDict, isReplaceSkill = self:getHeroAllSkillIdDict(heroId, isCheckOverRank)
+	local allSkillIdDict, isReplaceSkill = self:getHeroAllSkillIdDict(heroId, isCheckOverRank, heroMo)
 
 	if isReplaceSkill then
 		return allSkillIdDict
@@ -1029,6 +1038,33 @@ end
 
 function SkillConfig:getFightCardFootnoteConfig(skillId)
 	return self.fightCardFootnoteConfig.configDict[skillId]
+end
+
+function SkillConfig:getHeroDeviceMO(heroId, heroMo)
+	if heroMo and heroMo:getDeviceMo() then
+		return heroMo:getDeviceMo()
+	end
+
+	if not self._heroDeviceMO then
+		self._heroDeviceMO = {}
+	end
+
+	local mo = self._heroDeviceMO[heroId]
+
+	if not mo then
+		local heroCo = HeroConfig.instance:getHeroCO(heroId)
+		local deviceId = heroCo and heroCo.deviceId
+
+		if deviceId and deviceId > 0 then
+			mo = HeroDeviceMO.New(heroId)
+
+			mo:refreshDevice(deviceId)
+
+			self._heroDeviceMO[heroId] = mo
+		end
+	end
+
+	return mo
 end
 
 SkillConfig.instance = SkillConfig.New()

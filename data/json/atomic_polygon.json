@@ -1,0 +1,37 @@
+[
+  {
+    "id": 101,
+    "mapId": 1,
+    "unlockCondition": "finish#101015",
+    "name": "language_10130440",
+    "icon": "polygonfight_listpic1"
+  },
+  {
+    "id": 102,
+    "mapId": 2,
+    "unlockCondition": "finish#102014",
+    "name": "language_10130441",
+    "icon": "polygonfight_listpic2"
+  },
+  {
+    "id": 103,
+    "mapId": 3,
+    "unlockCondition": "finish#103017",
+    "name": "language_10130442",
+    "icon": "polygonfight_listpic3"
+  },
+  {
+    "id": 104,
+    "mapId": 4,
+    "unlockCondition": "finish#104015",
+    "name": "language_10130443",
+    "icon": "polygonfight_listpic4"
+  },
+  {
+    "id": 105,
+    "mapId": 5,
+    "unlockCondition": "finish#105015",
+    "name": "language_10130444",
+    "icon": "polygonfight_listpic5"
+  }
+]

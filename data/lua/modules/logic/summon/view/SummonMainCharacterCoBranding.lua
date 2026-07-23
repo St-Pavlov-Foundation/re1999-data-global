@@ -37,23 +37,15 @@ end
 function SummonMainCharacterCoBranding:addEvents()
 	self._btnsummon1:AddClickListener(self._btnsummon1OnClick, self)
 	self._btnsummon10:AddClickListener(self._btnsummon10OnClick, self)
-	self._btnclaim:AddClickListener(self._btnclaimOnClick, self)
-	self._btngoto:AddClickListener(self._btngotoOnClick, self)
-
-	if self._btngift then
-		self._btngift:AddClickListener(self._btngiftOnClick, self)
-	end
+	self._btnDetail:AddClickListener(self._btndetailOnClick, self)
+	self._btnclaim:AddClickListener(self._btndetailOnClick, self)
 end
 
 function SummonMainCharacterCoBranding:removeEvents()
 	self._btnsummon1:RemoveClickListener()
 	self._btnsummon10:RemoveClickListener()
+	self._btnDetail:RemoveClickListener()
 	self._btnclaim:RemoveClickListener()
-	self._btngoto:RemoveClickListener()
-
-	if self._btngift then
-		self._btngift:RemoveClickListener()
-	end
 end
 
 function SummonMainCharacterCoBranding:_btnsummon1OnClick()
@@ -64,57 +56,66 @@ function SummonMainCharacterCoBranding:_btnsummon10OnClick()
 	SummonMainCharacterCoBranding.super._btnsummon10OnClick(self)
 end
 
-function SummonMainCharacterCoBranding:_btnclaimOnClick()
-	local poolCo = SummonMainModel.instance:getCurPool()
-
-	self._nextRewardsRequestTime = self._nextRewardsRequestTime or 0
-
-	if poolCo and self._nextRewardsRequestTime <= Time.time then
-		self._nextRewardsRequestTime = Time.time + 0.3
-
-		SummonRpc.instance:sendGetSummonProgressRewardsRequest(poolCo.id)
-	end
+function SummonMainCharacterCoBranding:_btndetailOnClick()
+	self:openDetailView()
 end
 
-function SummonMainCharacterCoBranding:_btngotoOnClick()
-	local poolCo = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding.onClickRewardItem(param)
+	local target = param.target
+	local rewardParam = param.rewardParam
 
-	if poolCo then
-		SummonMainController.instance:openpPogressRewardView(poolCo.id)
-	end
+	target:onClickReward(rewardParam)
 end
 
-function SummonMainCharacterCoBranding:_btngiftOnClick()
-	local poolCo = SummonMainModel.instance:getCurPool()
+function SummonMainCharacterCoBranding:onClickReward(rewardParam)
+	MaterialTipController.instance:showMaterialInfo(rewardParam[1], rewardParam[2])
+end
 
-	if poolCo then
-		local poolId = poolCo.id
-		local viewName = SummonEnum.CharacterCoBrandingGiftView[poolCo.customClz]
+function SummonMainCharacterCoBranding:_onClickDetailByIndex(index)
+	if not self._characteritems then
+		return
+	end
 
-		ViewMgr.instance:openView(viewName or ViewName.V2a9_LinkGiftView, {
-			poolId = poolId
+	local characteritem = self._characteritems[index]
+
+	if characteritem then
+		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
+			id = characteritem.characterDetailId
 		})
-
-		if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(poolId) then
-			StoreGoodsTaskController.instance:clearNewRedDotByPoolId(poolId)
-			StoreGoodsTaskController.instance:waitUpdateRedDot(poolId)
-			self:_refreshGift()
-		end
+		AudioMgr.instance:trigger(AudioEnum3_10.SummonProgress.play_ui_langchao_role_open)
 	end
 end
+
+local showRewardCount = 2
 
 function SummonMainCharacterCoBranding:_editableInitView()
 	SummonMainCharacterCoBranding.super._editableInitView(self)
 
-	self._btnclaim = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/current/right/#go_characteritem1/btn_claim")
-	self._btngoto = gohelper.findChildButtonWithAudio(self.viewGO, "#go_ui/current/right/#go_characteritem1/btn_goto")
-	self._goallGet = gohelper.findChild(self.viewGO, "#go_ui/current/right/#go_characteritem1/go_allGet")
-	self._gogifgReddot = gohelper.findChild(self.viewGO, "#go_ui/#btn_gift/go_reddot")
-	self._animcharacter = gohelper.findChildComponent(self.viewGO, "#go_ui/current/right/#go_characteritem1", gohelper.Type_Animator)
+	self._txtDesc = gohelper.findChildTextMesh(self.viewGO, "#go_ui/#go_rewardlayout/#txt_tips")
+	self._goTips = gohelper.findChild(self.viewGO, "#go_ui/#go_rewardlayout/rewardpart/#go_tips")
+	self._btnDetail = gohelper.findChildButton(self.viewGO, "#go_ui/#go_rewardlayout/#btn_detail")
+	self._goRewardItemList = {}
 
-	if self._gogifgReddot then
-		self._redotComp = RedDotController.instance:addNotEventRedDot(self._gogifgReddot, self._checkRedPointFunc, self, RedDotEnum.Style.NewTag)
+	for i = 1, showRewardCount do
+		local itemGo = gohelper.findChild(self.viewGO, "#go_ui/#go_rewardlayout/rewardpart/#simage_reward" .. tostring(i))
+		local item = self:getUserDataTb_()
+
+		item.simageIcon = gohelper.findChildSingleImage(itemGo, "")
+		item.goGet = gohelper.findChild(itemGo, "#go_isget")
+		item.btnclick = SLFramework.UGUI.UIClickListener.Get(itemGo)
+
+		item.btnclick:AddClickListener(self.onClickRewardItem, self)
+		table.insert(self._goRewardItemList, item)
 	end
+
+	gohelper.setActive(self._goTips, false)
+
+	self._goclaim = gohelper.findChild(self.viewGO, "#go_ui/#go_rewardlayout/#go_claim")
+	self._goallget = gohelper.findChild(self.viewGO, "#go_ui/#go_rewardlayout/#go_hasget")
+	self._btnclaim = gohelper.findChildButton(self.viewGO, "#go_ui/#go_rewardlayout/#go_claim/#btn_claim")
+	self._goFreeTip = gohelper.findChild(self.viewGO, "#go_ui/current/tip2")
+
+	gohelper.setActive(self._goFreeTip, false)
 end
 
 function SummonMainCharacterCoBranding:onUpdateParam()
@@ -123,75 +124,45 @@ end
 
 function SummonMainCharacterCoBranding:onOpen()
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self._refreshProgressRewards, self)
-	self:addEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, self._refreshProgressRewards, self)
-	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshGift, self)
-	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshGift, self)
-	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshGift, self)
-	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._checkCanFinishGiftTask, self)
-	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewEvent, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonOptionalProgressRewards, self._refreshProgressRewards, self)
 	SummonMainCharacterCoBranding.super.onOpen(self)
 	self:_refreshProgressRewards()
-	self:_refreshGift()
-
-	if self:_checkCanFinishGiftTask() then
-		StoreGoodsTaskController.instance:autoFinishTaskByPoolId(SummonMainModel.instance:getCurId())
-	end
-
 	self:_refreshPreferentialInfo()
-end
-
-function SummonMainCharacterCoBranding:_checkCanFinishGiftTask()
-	local poolId = SummonMainModel.instance:getCurId()
-
-	if poolId and StoreGoodsTaskController.instance:isHasCanFinishTaskByPoolId(poolId) then
-		self._isHasCanFinishTask = true
-
-		return true
-	end
-
-	return false
+	self:_checkFirstEnter()
 end
 
 function SummonMainCharacterCoBranding:onClose()
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, self._refreshProgressRewards, self)
-	self:removeEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, self._refreshProgressRewards, self)
-	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self._refreshGift, self)
-	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._refreshGift, self)
-	self:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self._refreshGift, self)
-	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self._checkCanFinishGiftTask, self)
-	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseViewEvent, self)
-	TaskDispatcher.cancelTask(self._onRunTaskOpenGiftView, self)
+	self:removeEventCb(SummonController.instance, SummonEvent.onSummonOptionalProgressRewards, self._refreshProgressRewards, self)
 	SummonMainCharacterCoBranding.super.onClose(self)
 	StoreGoodsTaskController.instance:waitUpdateRedDot()
 end
 
 function SummonMainCharacterCoBranding:onDestroyView()
 	SummonMainCharacterCoBranding.super.onDestroyView(self)
+
+	for _, item in ipairs(self._goRewardItemList) do
+		item.simageIcon:UnLoadImage()
+		item.btnclick:RemoveClickListener()
+	end
+
+	tabletool.clear(self._goRewardItemList)
 end
 
 function SummonMainCharacterCoBranding:_adLoaded()
 	return
 end
 
-function SummonMainCharacterCoBranding:_onCloseViewEvent(viewName)
-	if self._isHasCanFinishTask then
-		TaskDispatcher.cancelTask(self._onRunTaskOpenGiftView, self)
-		TaskDispatcher.runDelay(self._onRunTaskOpenGiftView, self, 0.1)
-	end
-end
-
-function SummonMainCharacterCoBranding:_onRunTaskOpenGiftView()
-	if self._isHasCanFinishTask and ViewHelper.instance:checkViewOnTheTop(self.viewName) then
-		self._isHasCanFinishTask = false
-
-		self:_btngiftOnClick()
-	end
-end
+local rewardPropKey = "SummonMainCharacterCoBrandingFirstEnter"
+local rewardPropState = {
+	NotRead = 0,
+	HaveRead = 1
+}
 
 function SummonMainCharacterCoBranding:_refreshProgressRewards()
 	local poolCo = SummonMainModel.instance:getCurPool()
 
-	if not poolCo or string.nilorempty(poolCo.progressRewards) then
+	if not poolCo or string.nilorempty(poolCo.progressChooseGroupId) then
 		return
 	end
 
@@ -203,99 +174,78 @@ function SummonMainCharacterCoBranding:_refreshProgressRewards()
 
 	local isRewardFinish = false
 	local hasReward = false
-	local rewardCount = poolMO.customPickMO:getRewardCount() or 0
+	local rewardCount = poolMO.customPickMO:getOptionalRewardCount() or 0
 	local summonCount = poolMO.summonCount or 0
 	local maxRewardCount = 0
 	local canRewardCount = 0
-	local nextRwardCount
-	local numsList = SummonConfig.instance:getProgressRewardsByPoolId(poolCo.id)
+	local nextRwardCount, curRewardItemList
+	local numsList = SummonConfig.instance:getOptionalProgressRewardByPoolId(poolCo.id)
 
 	if numsList and #numsList > 0 then
 		maxRewardCount = #numsList
 
 		for i, nums in ipairs(numsList) do
 			local count = nums[1]
-			local heroId = nums[2]
+			local rewardParamList = nums[2]
 
 			if count <= summonCount then
 				canRewardCount = canRewardCount + 1
 			elseif not nextRwardCount or count < nextRwardCount then
 				nextRwardCount = count
+				curRewardItemList = rewardParamList
 			end
-		end
-	end
-
-	gohelper.setActive(self._goallGet, maxRewardCount <= rewardCount)
-	gohelper.setActive(self._txtgoto, rewardCount < maxRewardCount)
-	gohelper.setActive(self._btnclaim, rewardCount < canRewardCount)
-
-	if rewardCount < maxRewardCount then
-		if nextRwardCount and summonCount < nextRwardCount then
-			self._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards"), nextRwardCount - summonCount)
-
-			local key = "summonmaincharacter_progress_rewards" .. poolCo.id
-
-			self:_playNumAninByKey(key, summonCount)
-		elseif rewardCount < canRewardCount then
-			self._txtgoto.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("summonmaincharacter_progress_rewards_full"), canRewardCount - rewardCount)
-
-			local key2 = "summonmaincharacter_progress_rewards_full" .. poolCo.id
-
-			self:_playNumAninByKey(key2, 1)
-		else
-			self._txtgoto.text = ""
 		end
 	end
 
 	self:_refreshPreferentialInfo()
-	self:_refreshGift()
+
+	if rewardCount < canRewardCount then
+		self._txtDesc.text = luaLang("sp02_summon_progress_rewards_can_get_tip")
+	elseif nextRwardCount and summonCount < nextRwardCount then
+		self._txtDesc.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("sp02_summon_progress_rewards_tip"), nextRwardCount - summonCount)
+	else
+		self._txtDesc.text = luaLang("sp02_summon_progress_rewards_full_tip")
+	end
+
+	local canClaim = rewardCount < canRewardCount
+
+	gohelper.setActive(self._goclaim, canClaim)
+	gohelper.setActive(self._goallget, maxRewardCount <= rewardCount)
 end
 
-function SummonMainCharacterCoBranding:_playNumAninByKey(key, summonCount)
-	local playerKey = PlayerModel.instance:getPlayerPrefsKey(key)
-	local tempCount = PlayerPrefsHelper.getNumber(playerKey, -1)
+function SummonMainCharacterCoBranding:_checkFirstEnter()
+	if not GuideModel.instance:isGuideFinish(108) then
+		return
+	end
 
-	PlayerPrefsHelper.setNumber(playerKey, summonCount)
+	if GuideModel.instance:isDoingClickGuide() and not GuideController.instance:isForbidGuides() then
+		return
+	end
 
-	if tempCount ~= -1 and tempCount ~= summonCount and self._animcharacter then
-		self._animcharacter:Play("num", 0, 0)
+	local state = GameUtil.playerPrefsGetNumberByUserId(rewardPropKey, rewardPropState.NotRead)
+
+	if state ~= rewardPropState.HaveRead then
+		GameUtil.playerPrefsSetNumberByUserId(rewardPropKey, rewardPropState.HaveRead)
+		self:openDetailView()
 	end
 end
 
-function SummonMainCharacterCoBranding:_refreshGift()
-	local poolId = SummonMainModel.instance:getCurId()
-	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
-	local isShow = false
+function SummonMainCharacterCoBranding:getRewardDesc(curRewardItemList)
+	if curRewardItemList and next(curRewardItemList) then
+		local itemNameList = {}
 
-	if goodsCfgList then
-		for _, goodsCfg in ipairs(goodsCfgList) do
-			local storePackageGoodsMO = StoreModel.instance:getGoodsMO(goodsCfg.id)
+		for _, rewardParam in ipairs(curRewardItemList) do
+			local config = ItemConfig.instance:getItemConfig(rewardParam[1], rewardParam[2])
+			local num = rewardParam[3]
+			local singleDesc = string.format("<#FFEF99>%s*%s</color>", config.name, num)
 
-			if storePackageGoodsMO and (not storePackageGoodsMO:isSoldOut() or StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsCfg.id)) then
-				isShow = true
-
-				break
-			end
+			table.insert(itemNameList, singleDesc)
 		end
+
+		return table.concat(itemNameList, "+")
 	end
 
-	if isShow and SummonModel.instance:getSummonFullExSkillHero(poolId) then
-		isShow = false
-	end
-
-	if self._redotComp then
-		self._redotComp:refreshRedDot()
-
-		if not isShow and self._redotComp.isShowRedDot then
-			isShow = true
-		end
-	end
-
-	gohelper.setActive(self._btngift, isShow)
-end
-
-function SummonMainCharacterCoBranding:_checkRedPointFunc()
-	return StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(SummonMainModel.instance:getCurId())
+	return ""
 end
 
 function SummonMainCharacterCoBranding:_refreshPreferentialInfo()
@@ -316,6 +266,26 @@ function SummonMainCharacterCoBranding:_refreshPreferentialInfo()
 
 			self._txtpreferential.text = preferential
 		end
+	end
+end
+
+function SummonMainCharacterCoBranding:claimReward()
+	local poolCo = SummonMainModel.instance:getCurPool()
+
+	self._nextRewardsRequestTime = self._nextRewardsRequestTime or 0
+
+	if poolCo and self._nextRewardsRequestTime <= Time.time then
+		self._nextRewardsRequestTime = Time.time + 0.3
+
+		SummonRpc.instance:sendGetSummonProgressRewardsRequest(poolCo.id)
+	end
+end
+
+function SummonMainCharacterCoBranding:openDetailView()
+	local poolCo = SummonMainModel.instance:getCurPool()
+
+	if poolCo then
+		SummonMainController.instance:openpPogressRewardView(poolCo.id)
 	end
 end
 

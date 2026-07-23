@@ -5,6 +5,7 @@
     "productType": 1,
     "subType": 24,
     "typeName": "language_10055717",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type3_101",
@@ -20,7 +21,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700002,
@@ -28,6 +30,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_401",
@@ -43,7 +46,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700003,
@@ -51,6 +55,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_101",
@@ -65,8 +70,9 @@
     "decorateskinOffset": "",
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
-    "showskinId": 313402,
-    "tag2": 0
+    "showskinId": 311002,
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700004,
@@ -74,6 +80,7 @@
     "productType": 11,
     "subType": 7,
     "typeName": "language_10065897",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_101",
@@ -89,7 +96,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700005,
@@ -97,6 +105,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_301",
@@ -112,7 +121,8 @@
     "decorateskinl2dOffset": "-32.6#55.5#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750001,
@@ -120,6 +130,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_201",
@@ -135,7 +146,8 @@
     "decorateskinl2dOffset": "0.3#36.3#1.11",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750002,
@@ -143,6 +155,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_101",
@@ -158,7 +171,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750003,
@@ -166,6 +180,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_401",
@@ -181,7 +196,8 @@
     "decorateskinl2dOffset": "21.1#22.6#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750005,
@@ -189,6 +205,7 @@
     "productType": 1,
     "subType": 48,
     "typeName": "language_10065899",
+    "desc": "",
     "rare": 2,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_201",
@@ -204,7 +221,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750006,
@@ -212,6 +230,7 @@
     "productType": 1,
     "subType": 48,
     "typeName": "language_10065899",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_201",
@@ -227,7 +246,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750007,
@@ -235,6 +255,7 @@
     "productType": 1,
     "subType": 53,
     "typeName": "language_10065899",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_201",
@@ -250,7 +271,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750008,
@@ -258,6 +280,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -273,7 +296,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700006,
@@ -281,6 +305,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_501",
@@ -296,7 +321,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700007,
@@ -304,6 +330,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_201",
@@ -319,7 +346,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 313402,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 700008,
@@ -327,6 +355,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_501",
@@ -342,7 +371,8 @@
     "decorateskinl2dOffset": "-146.6#-21.4#0.90",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750009,
@@ -350,6 +380,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_601",
@@ -365,7 +396,8 @@
     "decorateskinl2dOffset": "-32.6#-48.3#1.04",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750010,
@@ -373,6 +405,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_601",
@@ -388,7 +421,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 750011,
@@ -396,6 +430,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -411,7 +446,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770001,
@@ -419,6 +455,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_701",
@@ -434,7 +471,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770002,
@@ -442,6 +480,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_301",
@@ -457,7 +496,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 313402,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770003,
@@ -465,6 +505,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_301",
@@ -480,7 +521,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770004,
@@ -488,6 +530,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_201",
@@ -503,7 +546,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770005,
@@ -511,6 +555,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_901",
@@ -526,7 +571,8 @@
     "decorateskinl2dOffset": "-146.6#-21.4#0.90",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770007,
@@ -534,6 +580,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_801",
@@ -549,7 +596,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770008,
@@ -557,6 +605,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_801",
@@ -572,7 +621,8 @@
     "decorateskinl2dOffset": "-32.6#-48.3#1.04",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 770012,
@@ -580,6 +630,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -595,7 +646,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012801,
@@ -603,6 +655,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_901",
@@ -618,7 +671,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012802,
@@ -626,6 +680,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_401",
@@ -641,7 +696,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 312002,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012803,
@@ -649,6 +705,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1101",
@@ -664,7 +721,8 @@
     "decorateskinl2dOffset": "47.4#-29.5#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022801,
@@ -672,6 +730,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1001",
@@ -687,7 +746,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022802,
@@ -695,6 +755,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1001",
@@ -710,7 +771,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022803,
@@ -718,6 +780,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1101",
@@ -733,7 +796,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022804,
@@ -741,6 +805,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -756,7 +821,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013001,
@@ -764,6 +830,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1701",
@@ -779,7 +846,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013002,
@@ -787,6 +855,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_501",
@@ -802,7 +871,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 312802,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013003,
@@ -810,6 +880,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1301",
@@ -825,7 +896,8 @@
     "decorateskinl2dOffset": "66.5#-56.5#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013004,
@@ -833,6 +905,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_501",
@@ -848,7 +921,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023001,
@@ -856,6 +930,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1201",
@@ -871,7 +946,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023002,
@@ -879,6 +955,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1601",
@@ -894,7 +971,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023003,
@@ -902,6 +980,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_401",
@@ -917,7 +996,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023004,
@@ -925,6 +1005,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -940,7 +1021,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012901,
@@ -948,6 +1030,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1901",
@@ -963,7 +1046,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012902,
@@ -971,6 +1055,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_601",
@@ -986,7 +1071,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 312302,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012903,
@@ -994,6 +1080,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1501",
@@ -1009,7 +1096,8 @@
     "decorateskinl2dOffset": "-58.9#-95.2#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8012904,
@@ -1017,6 +1105,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_701",
@@ -1032,7 +1121,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022901,
@@ -1040,6 +1130,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1401",
@@ -1055,7 +1146,8 @@
     "decorateskinl2dOffset": "-63.9#-69.6#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022902,
@@ -1063,6 +1155,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_1801",
@@ -1078,7 +1171,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022903,
@@ -1086,6 +1180,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_601",
@@ -1101,7 +1196,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022904,
@@ -1109,6 +1205,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -1124,7 +1221,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8022905,
@@ -1132,6 +1230,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2001",
@@ -1147,7 +1246,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013101,
@@ -1155,6 +1255,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2201",
@@ -1170,7 +1271,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013102,
@@ -1178,6 +1280,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_701",
@@ -1193,7 +1296,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 312502,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013103,
@@ -1201,6 +1305,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1601",
@@ -1216,7 +1321,8 @@
     "decorateskinl2dOffset": "-99.7#-2.3#0.88",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013104,
@@ -1224,6 +1330,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_901",
@@ -1239,7 +1346,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023101,
@@ -1247,6 +1355,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1701",
@@ -1262,7 +1371,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023102,
@@ -1270,6 +1380,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2101",
@@ -1285,7 +1396,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023103,
@@ -1293,6 +1405,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_801",
@@ -1308,7 +1421,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023104,
@@ -1316,6 +1430,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -1331,7 +1446,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8032101,
@@ -1339,6 +1455,7 @@
     "productType": 1,
     "subType": 71,
     "typeName": "language_10103709",
+    "desc": "",
     "rare": 5,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_sp_101",
@@ -1354,7 +1471,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 1
+    "tag2": 1,
+    "linkTag": 0
   },
   {
     "id": 803202,
@@ -1362,6 +1480,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2401",
@@ -1377,7 +1496,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803203,
@@ -1385,6 +1505,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_801",
@@ -1400,7 +1521,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 313402,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803205,
@@ -1408,6 +1530,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1101",
@@ -1423,7 +1546,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803206,
@@ -1431,6 +1555,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_1901",
@@ -1446,7 +1571,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803207,
@@ -1454,6 +1580,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2301",
@@ -1469,7 +1596,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803208,
@@ -1477,6 +1605,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1001",
@@ -1492,7 +1621,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 803209,
@@ -1500,6 +1630,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -1515,7 +1646,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013301,
@@ -1523,6 +1655,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2601",
@@ -1538,7 +1671,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013302,
@@ -1546,6 +1680,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_901",
@@ -1561,7 +1696,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 312702,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013303,
@@ -1569,6 +1705,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2101",
@@ -1584,7 +1721,8 @@
     "decorateskinl2dOffset": "-99.7#-2.3#0.88",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013304,
@@ -1592,6 +1730,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1301",
@@ -1607,7 +1746,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023301,
@@ -1615,6 +1755,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2001",
@@ -1630,7 +1771,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023302,
@@ -1638,6 +1780,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2501",
@@ -1653,7 +1796,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023303,
@@ -1661,6 +1805,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1201",
@@ -1676,7 +1821,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023304,
@@ -1684,6 +1830,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -1699,7 +1846,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013401,
@@ -1707,6 +1855,7 @@
     "productType": 1,
     "subType": 76,
     "typeName": "language_10112872",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_sp_201",
@@ -1722,7 +1871,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013402,
@@ -1730,6 +1880,7 @@
     "productType": 1,
     "subType": 24,
     "typeName": "language_10055717",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_sp_202",
@@ -1745,7 +1896,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013403,
@@ -1753,6 +1905,7 @@
     "productType": 1,
     "subType": 35,
     "typeName": "language_10077634",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_sp_203",
@@ -1768,7 +1921,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013404,
@@ -1776,6 +1930,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2801",
@@ -1791,7 +1946,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013405,
@@ -1799,6 +1955,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_1001",
@@ -1814,7 +1971,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 314101,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013406,
@@ -1822,6 +1980,7 @@
     "productType": 1,
     "subType": 71,
     "typeName": "language_10103709",
+    "desc": "",
     "rare": 5,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_sp_101",
@@ -1837,7 +1996,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013407,
@@ -1845,6 +2005,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1401",
@@ -1860,7 +2021,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023401,
@@ -1868,6 +2030,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2201",
@@ -1883,7 +2046,8 @@
     "decorateskinl2dOffset": "-91.4#-11.4#1",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023402,
@@ -1891,6 +2055,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2701",
@@ -1906,7 +2071,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023403,
@@ -1914,6 +2080,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1501",
@@ -1929,7 +2096,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023404,
@@ -1937,6 +2105,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2301",
@@ -1952,7 +2121,8 @@
     "decorateskinl2dOffset": "-55.2#-76.9#0.89",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023405,
@@ -1960,6 +2130,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -1975,7 +2146,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013501,
@@ -1983,6 +2155,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_3001",
@@ -1998,7 +2171,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013502,
@@ -2006,6 +2180,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_1101",
@@ -2021,7 +2196,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 313902,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013503,
@@ -2029,6 +2205,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2401",
@@ -2044,7 +2221,8 @@
     "decorateskinl2dOffset": "-99.7#-2.3#0.88",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013504,
@@ -2052,6 +2230,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1701",
@@ -2067,7 +2246,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023501,
@@ -2075,6 +2255,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2501",
@@ -2090,7 +2271,8 @@
     "decorateskinl2dOffset": "21.5#-50.8#0.86",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023502,
@@ -2098,6 +2280,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_2901",
@@ -2113,7 +2296,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023503,
@@ -2121,6 +2305,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1601",
@@ -2136,7 +2321,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023504,
@@ -2144,6 +2330,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -2159,7 +2346,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013601,
@@ -2167,6 +2355,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_3201",
@@ -2182,7 +2371,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013602,
@@ -2190,6 +2380,7 @@
     "productType": 1,
     "subType": 21,
     "typeName": "language_10062528",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type4_1201",
@@ -2205,7 +2396,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 314302,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013603,
@@ -2213,6 +2405,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2701",
@@ -2228,7 +2421,8 @@
     "decorateskinl2dOffset": "-91.4#-11.4#1",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8013604,
@@ -2236,6 +2430,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1801",
@@ -2251,7 +2446,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023601,
@@ -2259,6 +2455,7 @@
     "productType": 5,
     "subType": 0,
     "typeName": "language_10065898",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type2_2601",
@@ -2274,7 +2471,8 @@
     "decorateskinl2dOffset": "-91.4#-11.4#1",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023602,
@@ -2282,6 +2480,7 @@
     "productType": 1,
     "subType": 17,
     "typeName": "language_10003318",
+    "desc": "",
     "rare": 4,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type1_3101",
@@ -2297,7 +2496,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023603,
@@ -2305,6 +2505,7 @@
     "productType": 11,
     "subType": 17,
     "typeName": "language_10030584",
+    "desc": "",
     "rare": 0,
     "maxbuycountType": 1,
     "smalllmg": "store_decorate_type5_1901",
@@ -2320,7 +2521,8 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 0,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
   },
   {
     "id": 8023604,
@@ -2328,6 +2530,7 @@
     "productType": 1,
     "subType": 2,
     "typeName": "language_10065900",
+    "desc": "",
     "rare": 3,
     "maxbuycountType": 2,
     "smalllmg": "store_decorate_type1_301",
@@ -2343,6 +2546,657 @@
     "decorateskinl2dOffset": "",
     "effectbiglmg": 1,
     "showskinId": 0,
-    "tag2": 0
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013701,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3301",
+    "biglmg": "store_decorate_type1_3302",
+    "buylmg": "store_decorate_type1_3303",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 100,
+    "originalCost2": 150,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013702,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 21,
+    "typeName": "language_10062528",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type4_1301",
+    "biglmg": "",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 750,
+    "originalCost2": 1100,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 314602,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013703,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 71,
+    "typeName": "language_10103709",
+    "desc": "",
+    "rare": 5,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_sp_101",
+    "biglmg": "store_decorate_sp_103",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 1,
+    "linkTag": 0
+  },
+  {
+    "id": 8023701,
+    "storeld": 802,
+    "productType": 5,
+    "subType": 0,
+    "typeName": "language_10065898",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type2_2801",
+    "biglmg": "",
+    "buylmg": "store_decorate_type2_2802",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "-94.0#60.1#0.91",
+    "decorateskinl2dOffset": "-91.4#-11.4#1",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023702,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3401",
+    "biglmg": "store_decorate_type1_3402",
+    "buylmg": "store_decorate_type1_3403",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023703,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 2,
+    "typeName": "language_10065900",
+    "desc": "",
+    "rare": 3,
+    "maxbuycountType": 2,
+    "smalllmg": "store_decorate_type1_301",
+    "biglmg": "store_decorate_type1_302",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013801,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3801",
+    "biglmg": "store_decorate_type1_3802",
+    "buylmg": "store_decorate_type1_3803",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 100,
+    "originalCost2": 150,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013802,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 21,
+    "typeName": "language_10062528",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type4_1501",
+    "biglmg": "",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 750,
+    "originalCost2": 1100,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 314502,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013803,
+    "storeld": 801,
+    "productType": 5,
+    "subType": 0,
+    "typeName": "language_10065898",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type2_3001",
+    "biglmg": "",
+    "buylmg": "store_decorate_type2_3002",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "-94.0#60.1#0.91",
+    "decorateskinl2dOffset": "-91.4#-11.4#1",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013804,
+    "storeld": 801,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2501",
+    "biglmg": "store_decorate_type5_2502",
+    "buylmg": "store_decorate_type5_2503",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023801,
+    "storeld": 802,
+    "productType": 5,
+    "subType": 0,
+    "typeName": "language_10065898",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type2_3101",
+    "biglmg": "",
+    "buylmg": "store_decorate_type2_3102",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "-94.0#60.1#0.91",
+    "decorateskinl2dOffset": "-91.4#-11.4#1",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023802,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3901",
+    "biglmg": "store_decorate_type1_3902",
+    "buylmg": "store_decorate_type1_3903",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023803,
+    "storeld": 802,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2401",
+    "biglmg": "store_decorate_type5_2402",
+    "buylmg": "store_decorate_type5_2403",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023804,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 2,
+    "typeName": "language_10065900",
+    "desc": "",
+    "rare": 3,
+    "maxbuycountType": 2,
+    "smalllmg": "store_decorate_type1_301",
+    "biglmg": "store_decorate_type1_302",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013851,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3501",
+    "biglmg": "store_decorate_type1_3502",
+    "buylmg": "store_decorate_type1_3503",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 100,
+    "originalCost2": 150,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 1
+  },
+  {
+    "id": 8013852,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 21,
+    "typeName": "language_10062528",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type4_1401",
+    "biglmg": "",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 750,
+    "originalCost2": 1100,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 314902,
+    "tag2": 0,
+    "linkTag": 1
+  },
+  {
+    "id": 8013853,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 71,
+    "typeName": "language_10103709",
+    "desc": "",
+    "rare": 5,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_sp_101",
+    "biglmg": "store_decorate_sp_103",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 1,
+    "linkTag": 0
+  },
+  {
+    "id": 8013854,
+    "storeld": 801,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2101",
+    "biglmg": "store_decorate_type5_2102",
+    "buylmg": "store_decorate_type5_2103",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013855,
+    "storeld": 801,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2301",
+    "biglmg": "store_decorate_type5_2302",
+    "buylmg": "store_decorate_type5_2303",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023851,
+    "storeld": 802,
+    "productType": 5,
+    "subType": 0,
+    "typeName": "language_10065898",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type2_2901",
+    "biglmg": "",
+    "buylmg": "store_decorate_type2_2902",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "-94.0#60.1#0.91",
+    "decorateskinl2dOffset": "-91.4#-11.4#1",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023852,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3601",
+    "biglmg": "store_decorate_type1_3602",
+    "buylmg": "store_decorate_type1_3603",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023853,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 17,
+    "typeName": "language_10003318",
+    "desc": "",
+    "rare": 4,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type1_3701",
+    "biglmg": "store_decorate_type1_3702",
+    "buylmg": "store_decorate_type1_3703",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023854,
+    "storeld": 802,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2001",
+    "biglmg": "store_decorate_type5_2002",
+    "buylmg": "store_decorate_type5_2003",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023855,
+    "storeld": 802,
+    "productType": 11,
+    "subType": 17,
+    "typeName": "language_10030584",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type5_2201",
+    "biglmg": "store_decorate_type5_2202",
+    "buylmg": "store_decorate_type5_2203",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8023856,
+    "storeld": 802,
+    "productType": 1,
+    "subType": 2,
+    "typeName": "language_10065900",
+    "desc": "",
+    "rare": 3,
+    "maxbuycountType": 2,
+    "smalllmg": "store_decorate_type1_301",
+    "biglmg": "store_decorate_type1_302",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 0,
+    "originalCost2": 0,
+    "offTag": 0,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 1,
+    "showskinId": 0,
+    "tag2": 0,
+    "linkTag": 0
+  },
+  {
+    "id": 8013857,
+    "storeld": 801,
+    "productType": 1,
+    "subType": 21,
+    "typeName": "language_10062528",
+    "desc": "",
+    "rare": 0,
+    "maxbuycountType": 1,
+    "smalllmg": "store_decorate_type4_1601",
+    "biglmg": "",
+    "buylmg": "",
+    "video": "",
+    "onlineTag": 1,
+    "tag1": "",
+    "originalCost1": 750,
+    "originalCost2": 1100,
+    "offTag": 20,
+    "decorateskinOffset": "",
+    "decorateskinl2dOffset": "",
+    "effectbiglmg": 0,
+    "showskinId": 310504,
+    "tag2": 0,
+    "linkTag": 0
   }
 ]

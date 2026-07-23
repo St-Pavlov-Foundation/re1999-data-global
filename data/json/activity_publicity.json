@@ -58,5 +58,185 @@
     "showItemId": "",
     "jumpId": 3803,
     "activityId": 0
+  },
+  {
+    "id": 13739,
+    "type": 1,
+    "activityBonus": "1#481010#1",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 10013708,
+    "activityId": 13701
+  },
+  {
+    "id": 13739,
+    "type": 2,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 10013707,
+    "activityId": 13720
+  },
+  {
+    "id": 13739,
+    "type": 3,
+    "activityBonus": "",
+    "title": "吼吼点唱机·福利升级",
+    "slogan": "购买典藏光碟立得<color=#AC5320>十连/电池</color>2选1",
+    "showItemId": "823601",
+    "jumpId": 610003,
+    "activityId": 0
+  },
+  {
+    "id": 13739,
+    "type": 4,
+    "activityBonus": "",
+    "title": "咆哮月历·福利升级",
+    "slogan": "每周可获得2次补领机会，可补领错过的月卡奖励",
+    "showItemId": "",
+    "jumpId": 10180,
+    "activityId": 0
+  },
+  {
+    "id": 13739,
+    "type": 5,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3802,
+    "activityId": 0
+  },
+  {
+    "id": 13739,
+    "type": 6,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3803,
+    "activityId": 0
+  },
+  {
+    "id": 13807,
+    "type": 1,
+    "activityBonus": "5#304504#1|1#481010#1",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 10013808,
+    "activityId": 13808
+  },
+  {
+    "id": 13807,
+    "type": 2,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 10013810,
+    "activityId": 13810
+  },
+  {
+    "id": 13807,
+    "type": 3,
+    "activityBonus": "",
+    "title": "吼吼点唱机·福利升级",
+    "slogan": "购买典藏光碟立得<color=#AC5320>十连/电池</color>2选1",
+    "showItemId": "823601",
+    "jumpId": 610003,
+    "activityId": 0
+  },
+  {
+    "id": 13807,
+    "type": 4,
+    "activityBonus": "",
+    "title": "咆哮月历·福利升级",
+    "slogan": "每周可获得2次补领机会，可补领错过的月卡奖励",
+    "showItemId": "",
+    "jumpId": 10180,
+    "activityId": 0
+  },
+  {
+    "id": 13807,
+    "type": 5,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3802,
+    "activityId": 0
+  },
+  {
+    "id": 13807,
+    "type": 6,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3803,
+    "activityId": 0
+  },
+  {
+    "id": 138513,
+    "type": 1,
+    "activityBonus": "9#1572#1|1#3858201#1|5#310604#1",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 100138514,
+    "activityId": 138507
+  },
+  {
+    "id": 138513,
+    "type": 2,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 100138515,
+    "activityId": 138521
+  },
+  {
+    "id": 138513,
+    "type": 3,
+    "activityBonus": "",
+    "title": "吼吼点唱机·福利升级",
+    "slogan": "购买典藏光碟立得<color=#AC5320>十连/电池</color>2选1",
+    "showItemId": "823851",
+    "jumpId": 610003,
+    "activityId": 0
+  },
+  {
+    "id": 138513,
+    "type": 4,
+    "activityBonus": "",
+    "title": "咆哮月历·福利升级",
+    "slogan": "每周可获得2次补领机会，可补领错过的月卡奖励",
+    "showItemId": "",
+    "jumpId": 10180,
+    "activityId": 0
+  },
+  {
+    "id": 138513,
+    "type": 5,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3802,
+    "activityId": 0
+  },
+  {
+    "id": 138513,
+    "type": 6,
+    "activityBonus": "",
+    "title": "",
+    "slogan": "",
+    "showItemId": "",
+    "jumpId": 3803,
+    "activityId": 0
   }
 ]

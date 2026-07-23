@@ -3,8 +3,17 @@
 module("modules.logic.fight.system.work.FightWorkCardRemove", package.seeall)
 
 local FightWorkCardRemove = class("FightWorkCardRemove", FightEffectBase)
+local SKILLID = {
+	DEVICE_REMOVE_CARD = 30010701
+}
+
+function FightWorkCardRemove:onConstructor()
+	self.SAFETIME = 3
+end
 
 function FightWorkCardRemove:beforePlayEffectData()
+	self:setRefrigeratorSign()
+
 	self.oldCardList = FightDataUtil.copyData(FightDataHelper.handCardMgr.handCard)
 end
 
@@ -19,14 +28,13 @@ function FightWorkCardRemove:onStart()
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
+	local skillId = self.actEffectData.effectNum
 	local removeIndexes = string.splitToNumber(self.actEffectData.reserveStr, "#")
 
 	if #removeIndexes > 0 then
 		local cards = self.oldCardList
 
 		table.sort(removeIndexes, FightWorkCardRemove2.sort)
-
-		local delayTime = FightCardDataHelper.calcRemoveCardTime(cards, removeIndexes)
 
 		for i, v in ipairs(removeIndexes) do
 			table.remove(cards, v)
@@ -35,8 +43,21 @@ function FightWorkCardRemove:onStart()
 		local version = FightModel.instance:getVersion()
 
 		if version >= 4 then
-			self:com_registTimer(self._delayAfterPerformance, delayTime / FightModel.instance:getUISpeed())
-			FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes)
+			if skillId == SKILLID.DEVICE_REMOVE_CARD then
+				FightController.instance:registerCallback(FightEvent.OnDevice_RemoveHandCardDone, self._delayAfterPerformance, self)
+				FightController.instance:dispatchEvent(FightEvent.OnDevice_RemoveHandCard, removeIndexes)
+			else
+				local delayTime = FightCardDataHelper.calcRemoveCardTime(cards, removeIndexes)
+
+				delayTime = delayTime / FightModel.instance:getUISpeed()
+
+				if self.timeOffsetRefrigerator then
+					delayTime = delayTime + self.timeOffsetRefrigerator
+				end
+
+				self:com_registTimer(self._delayAfterPerformance, delayTime)
+				FightController.instance:dispatchEvent(FightEvent.CardRemove, removeIndexes)
+			end
 		else
 			FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
 			self:onDone(true)
@@ -46,6 +67,36 @@ function FightWorkCardRemove:onStart()
 	end
 
 	self:onDone(true)
+end
+
+function FightWorkCardRemove:setRefrigeratorSign()
+	local jsonParam = self.actEffectData.jsonParam
+
+	if jsonParam then
+		local buffActActiveIds = jsonParam.buffActActiveIds
+		local arr = string.split(buffActActiveIds, "|")
+
+		for _, v in ipairs(arr) do
+			local value = string.split(v, "#")
+			local buffActId = tonumber(value[1])
+
+			if buffActId == 10034 then
+				local cardList = FightDataHelper.handCardMgr:getHandCard()
+				local indexArr = string.split(value[2], ",")
+
+				for i = 1, #indexArr do
+					local index = tonumber(indexArr[i])
+
+					if cardList[index] then
+						cardList[index].clientData.custom_addToRefrigerator = true
+						self.timeOffsetRefrigerator = 0.5
+
+						FightMsgMgr.sendMsg(FightMsgId.CardRemoveRefrieratorTimeline)
+					end
+				end
+			end
+		end
+	end
 end
 
 function FightWorkCardRemove:_onCombineDone()
@@ -63,6 +114,7 @@ end
 
 function FightWorkCardRemove:clearWork()
 	FightController.instance:unregisterCallback(FightEvent.OnCombineCardEnd, self._onCombineDone, self)
+	FightController.instance:unregisterCallback(FightEvent.OnDevice_RemoveHandCardDone, self._delayAfterPerformance, self)
 
 	if self._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)

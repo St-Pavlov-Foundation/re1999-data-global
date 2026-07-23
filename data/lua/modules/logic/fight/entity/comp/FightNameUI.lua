@@ -21,6 +21,10 @@ function FightNameUI:onConstructor(entity)
 end
 
 function FightNameUI:load(url)
+	if self.entity.isTempEntity then
+		return
+	end
+
 	if self._uiLoader then
 		self._uiLoader:dispose()
 	end
@@ -196,6 +200,7 @@ function FightNameUI:_onLoaded()
 	gohelper.setActive(imgEnemyHp.gameObject, not isMySide)
 
 	self.fictionHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/xuxue")
+	self.fakeHp = gohelper.findChildImage(self._uiGO, "layout/hp/container/fakehp")
 	self._hpGo = gohelper.findChild(self._uiGO, "layout/hp")
 	self._hp_ani = gohelper.findChild(self._uiGO, "layout/hp"):GetComponent(typeof(UnityEngine.Animator))
 	self._hp_container_tran = gohelper.findChild(self._uiGO, "layout/hp/container").transform
@@ -223,6 +228,7 @@ function FightNameUI:_onLoaded()
 	self:initToughnessMgr()
 	self:initToughnessIconMgr()
 	self:initYaMiShieldMgr()
+	self:initMeiLeiErMgr()
 
 	self._opContainerGO = gohelper.findChild(self._uiGO, "layout/top/op")
 	self._opContainerTr = self._opContainerGO.transform
@@ -271,6 +277,7 @@ function FightNameUI:_onLoaded()
 	self:com_registFightEvent(FightEvent.StageChanged, self._onStageChange)
 	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 	self:com_registFightEvent(FightEvent.OnLockHpChange, self._onLockHpChange)
+	self:com_registFightEvent(FightEvent.OnFakeHpChange, self._onFakeHpChange)
 	self:com_registFightEvent(FightEvent.AiJiAoFakeDecreaseHp, self.onAiJiAoFakeDecreaseHp)
 	self._power:onOpen()
 	self:_setPosOffset()
@@ -401,6 +408,10 @@ function FightNameUI:initYaMiShieldMgr()
 	self.yaMiShieldMgr = self:newClass(FightNameUIYaMiShieldMgr, self.entity, self._uiGO)
 end
 
+function FightNameUI:initMeiLeiErMgr()
+	self.meiLeiErMgr = self:newClass(FightNameUIMeiLeiErMgr, self.entity, self._uiGO)
+end
+
 function FightNameUI:initStressMgr()
 	local entityMo = self.entity:getMO()
 
@@ -486,11 +497,17 @@ function FightNameUI:_refreshCareer()
 	local version = FightModel.instance:getVersion()
 
 	if SkillEditorMgr.instance.inEditMode then
-		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO:getCO().career), true)
+		local careerStr = "sx_icon_" .. tostring(entityMO:getCO().career)
+
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, careerStr, true)
 	elseif version >= 2 and entityMO.career ~= 0 then
-		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO.career), true)
+		local careerStr = "sx_icon_" .. tostring(entityMO.career)
+
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, careerStr, true)
 	else
-		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, "sx_icon_" .. tostring(entityMO:getCO().career), true)
+		local careerStr = "sx_icon_" .. tostring(entityMO:getCO().career)
+
+		UISpriteSetMgr.instance:setCommonSprite(self._imgCareerIcon, careerStr, true)
 	end
 end
 
@@ -571,8 +588,14 @@ function FightNameUI:_updateFollow(unitSpine)
 		self._uiFollower:Set(unitCamera, uiCamera, plane, hangPointGO.transform, assembledConfig.hpPos[1] or 0, assembledConfig.hpPos[2] or 0, 0, 0, 0)
 	else
 		local scaleX, scaleY = transformhelper.getLocalScale(self.entity.go.transform)
+		local entityMO = self.entity:getMO()
+		local config3d = entityMO and lua_fight_monster_3d.configDict[entityMO.skin]
 
-		self._uiFollower:Set(unitCamera, uiCamera, plane, hangPointGO.transform, 0 + worldOffsetX, boxHeight + spineY - middleY + worldOffsetY * scaleY, 0, uiOffsetX, uiOffsetY + 15)
+		if config3d then
+			self._uiFollower:Set(unitCamera, uiCamera, plane, self.entity.go.transform, 0 + worldOffsetX - 5, 0, 0, uiOffsetX, uiOffsetY + 15)
+		else
+			self._uiFollower:Set(unitCamera, uiCamera, plane, hangPointGO.transform, 0 + worldOffsetX, boxHeight + spineY - middleY + worldOffsetY * scaleY, 0, uiOffsetX, uiOffsetY + 15)
+		end
 	end
 
 	self._uiFollower:SetEnable(true)
@@ -700,12 +723,12 @@ function FightNameUI:_tweenFillAmount(curHp, curShield)
 	curHp = curHp or self._curHp
 	curShield = curShield or self._curShield
 
-	local hpFillAmount, shieldFillAmount, fictionHpPercent = self:_getFillAmount(curHp, curShield)
+	local hpFillAmount, shieldFillAmount, fictionHpPercent, fakeHpPercent = self:_getFillAmount(curHp, curShield)
 	local hpBgFillAmount = hpFillAmount
 
 	if FightDataHelper.tempMgr.aiJiAoFakeHpOffset[self.entity.id] then
 		curHp, curShield = FightWorkEzioBigSkillDamage1000.calFakeHpAndShield(self.entity.id, curHp, curShield)
-		hpFillAmount, shieldFillAmount, fictionHpPercent = self:_getFillAmount(curHp, curShield)
+		hpFillAmount, shieldFillAmount, fictionHpPercent, fakeHpPercent = self:_getFillAmount(curHp, curShield)
 	end
 
 	self._imgHp.fillAmount = hpFillAmount
@@ -718,6 +741,8 @@ function FightNameUI:_tweenFillAmount(curHp, curShield)
 	ZProj.TweenHelper.KillByObj(self.fictionHp)
 	ZProj.TweenHelper.DOFillAmount(self.fictionHp, fictionHpPercent, 0.5)
 	gohelper.setActive(self._imgHpMinus.gameObject, curShield <= 0)
+	ZProj.TweenHelper.KillByObj(self.fakeHp)
+	ZProj.TweenHelper.DOFillAmount(self.fakeHp, fakeHpPercent, 0.5)
 	self:refreshReduceHp()
 	FightMsgMgr.sendMsg(FightMsgId.UpdateYaMiSliderItem, self.entity.id)
 end
@@ -756,9 +781,9 @@ function FightNameUI.getHpFillAmount(curHp, curShield, entityId)
 		return 0, 0
 	end
 
-	local hpPercent, shieldPercent, fictionHpPercent = entityMO:getHpAndShieldFillAmount(curHp, curShield)
+	local hpPercent, shieldPercent, fictionHpPercent, fakeHpPercent = entityMO:getHpAndShieldFillAmount(curHp, curShield)
 
-	return hpPercent, shieldPercent, fictionHpPercent
+	return hpPercent, shieldPercent, fictionHpPercent, fakeHpPercent
 end
 
 function FightNameUI:_onFloatEquipEffect(id, equip_skill_config)
@@ -961,6 +986,10 @@ function FightNameUI:_onUpdateUIFollower(entityId)
 end
 
 function FightNameUI:_onLockHpChange()
+	self:resetHp()
+end
+
+function FightNameUI:_onFakeHpChange()
 	self:resetHp()
 end
 

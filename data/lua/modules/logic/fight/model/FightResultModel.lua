@@ -33,6 +33,7 @@ function FightResultModel:onEndDungeonPush(msg)
 	self.assistUserId = msg.assistUserId
 	self.assistNickname = msg.assistNickname
 	self.totalRound = msg.totalRound
+	self.extraStr = msg.extraStr
 
 	if BossRushController.instance:isInBossRushFight(true) then
 		BossRushModel.instance:onEndDungeonExtraStr(msg.extraStr)
@@ -163,6 +164,7 @@ function FightResultModel:clear()
 	self._timeFirstList = nil
 	self.updateDungeonRecord = nil
 	self.curSendEpisodePass = nil
+	self.extraStr = nil
 end
 
 function FightResultModel:getChapterId()
@@ -207,6 +209,10 @@ end
 
 function FightResultModel:getAct217MaterialDataList()
 	return self.act217BonusList
+end
+
+function FightResultModel:getExtraStr()
+	return self.extraStr
 end
 
 function FightResultModel:_addExp(materialDataList)

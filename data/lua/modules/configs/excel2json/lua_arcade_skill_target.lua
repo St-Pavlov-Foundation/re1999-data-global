@@ -4,10 +4,11 @@ module("modules.configs.excel2json.lua_arcade_skill_target", package.seeall)
 
 local lua_arcade_skill_target = {}
 local fields = {
-	id = 1,
-	effect = 4,
+	ignoreSelf = 4,
+	effect = 5,
 	targets = 3,
-	clztype = 2
+	clztype = 2,
+	id = 1
 }
 local primaryKey = {
 	"id"

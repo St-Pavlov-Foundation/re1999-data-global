@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "language_10130982",
+    "unlockCondition": "",
+    "unlockTips": "",
+    "skillId": 116385101
+  },
+  {
+    "id": 2,
+    "name": "language_10130983",
+    "unlockCondition": "",
+    "unlockTips": "",
+    "skillId": 116385201
+  },
+  {
+    "id": 3,
+    "name": "language_10122755",
+    "unlockCondition": "",
+    "unlockTips": "",
+    "skillId": 116385301
+  },
+  {
+    "id": 4,
+    "name": "language_10122763",
+    "unlockCondition": "",
+    "unlockTips": "",
+    "skillId": 116385401
+  }
+]

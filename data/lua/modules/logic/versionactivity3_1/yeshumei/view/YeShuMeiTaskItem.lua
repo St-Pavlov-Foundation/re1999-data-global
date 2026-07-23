@@ -134,8 +134,6 @@ function YeShuMeiTaskItem:_refreshUI()
 	if isNormal then
 		if self._playFinishAnin then
 			self._playFinishAnin = false
-
-			self._animator:Play("idle", 0, 1)
 		end
 
 		gohelper.setActive(self._goallfinish, false)

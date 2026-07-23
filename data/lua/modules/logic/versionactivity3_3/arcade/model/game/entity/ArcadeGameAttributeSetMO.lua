@@ -10,7 +10,7 @@ function ArcadeGameAttributeSetMO:ctor(id)
 	self._tempAttrDict = {}
 	self._attrList = {}
 
-	for attrName, attrId in pairs(ArcadeGameEnum.BaseAttr) do
+	for _, attrId in pairs(ArcadeGameEnum.BaseAttr) do
 		if not self._attributeDict[attrId] then
 			local attrMO = ArcadeGameAttribute.New(attrId)
 
@@ -41,10 +41,8 @@ function ArcadeGameAttributeSetMO:getAttrById(attrId)
 	return self._attributeDict[attrId]
 end
 
-function ArcadeGameAttributeSetMO:reset()
-	for _, attr in ipairs(self._attrList) do
-		attr:reset()
-	end
+function ArcadeGameAttributeSetMO:getTempVal(attrId)
+	return self._tempAttrDict and self._tempAttrDict[attrId] or 0
 end
 
 function ArcadeGameAttributeSetMO:setValByName(attrId, keyName, value)
@@ -55,11 +53,55 @@ function ArcadeGameAttributeSetMO:setValByName(attrId, keyName, value)
 	end
 end
 
+function ArcadeGameAttributeSetMO:setByAttr(attr)
+	if attr and attr.id then
+		local tAttr = self:getAttrById(attr.id)
+
+		if tAttr then
+			tAttr:setByAttr(attr)
+		end
+	end
+end
+
+function ArcadeGameAttributeSetMO:setByAttrSet(attrSet)
+	if attrSet then
+		local attrList = attrSet:getAttrList()
+
+		if attrList then
+			for _, attr in ipairs(attrList) do
+				self:setByAttr(attr)
+			end
+		end
+	end
+end
+
 function ArcadeGameAttributeSetMO:addValByName(attrId, keyName, value)
 	local tAttr = self:getAttrById(attrId)
 
 	if tAttr then
 		tAttr:addValByName(keyName, value)
+	end
+end
+
+function ArcadeGameAttributeSetMO:addByAttr(attr)
+	if attr and attr.id then
+		local tAttr = self:getAttrById(attr.id)
+
+		if tAttr then
+			tAttr:addByAttr(attr)
+		end
+	end
+end
+
+function ArcadeGameAttributeSetMO:addByAttrSet(attrSet)
+	if attrSet then
+		local attrList = attrSet:getAttrList()
+
+		if attrList then
+			for _, attr in ipairs(attrList) do
+				self:addByAttr(attr)
+			end
+		end
 	end
 end
 
@@ -85,51 +127,11 @@ function ArcadeGameAttributeSetMO:clearTempVal()
 	end
 end
 
-function ArcadeGameAttributeSetMO:getTempVal(attrId)
-	return self._tempAttrDict and self._tempAttrDict[attrId] or 0
-end
+function ArcadeGameAttributeSetMO:reset()
+	self:clearTempVal()
 
-function ArcadeGameAttributeSetMO:setByAttr(attr)
-	if attr and attr.id then
-		local tAttr = self:getAttrById(attr.id)
-
-		if tAttr then
-			tAttr:setByAttr(attr)
-		end
-	end
-end
-
-function ArcadeGameAttributeSetMO:addByAttr(attr)
-	if attr and attr.id then
-		local tAttr = self:getAttrById(attr.id)
-
-		if tAttr then
-			tAttr:addByAttr(attr)
-		end
-	end
-end
-
-function ArcadeGameAttributeSetMO:setByAttrSet(attrSet)
-	if attrSet then
-		local attrList = attrSet:getAttrList()
-
-		if attrList then
-			for _, attr in ipairs(attrList) do
-				self:setByAttr(attr)
-			end
-		end
-	end
-end
-
-function ArcadeGameAttributeSetMO:addByAttrSet(attrSet)
-	if attrSet then
-		local attrList = attrSet:getAttrList()
-
-		if attrList then
-			for _, attr in ipairs(attrList) do
-				self:addByAttr(attr)
-			end
-		end
+	for _, attr in ipairs(self._attrList) do
+		attr:reset()
 	end
 end
 

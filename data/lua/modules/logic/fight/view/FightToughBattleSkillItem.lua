@@ -6,6 +6,7 @@ local FightToughBattleSkillItem = class("FightToughBattleSkillItem", LuaCompBase
 
 function FightToughBattleSkillItem:init(go)
 	self.go = go
+	self._ani = go:GetComponent(gohelper.Type_Animator)
 	go = gohelper.findChild(go, "anchoroffset")
 	self._goselect = gohelper.findChild(go, "#go_Selected")
 	self._btn = gohelper.getClickWithDefaultAudio(go, "btn")
@@ -16,7 +17,6 @@ function FightToughBattleSkillItem:init(go)
 	self._goDetails = gohelper.findChild(go, "#go_details")
 	self._txtDetailTitle = gohelper.findChildTextMesh(self._goDetails, "details/#scroll_details/Viewport/Content/#txt_title")
 	self._txtDetailContent = gohelper.findChildTextMesh(self._goDetails, "details/#scroll_details/Viewport/Content/#txt_details")
-	self._ani = gohelper.onceAddComponent(go, typeof(UnityEngine.Animator))
 end
 
 function FightToughBattleSkillItem:addEventListeners()

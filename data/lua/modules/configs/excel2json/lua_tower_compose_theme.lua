@@ -15,6 +15,7 @@ local fields = {
 	orderLayer = 6,
 	themeDesc = 11,
 	modNum = 2,
+	heroIds = 15,
 	id = 1,
 	pointIcon = 12,
 	initEnv = 7

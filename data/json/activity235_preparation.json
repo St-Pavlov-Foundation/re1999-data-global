@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "§1级配件",
+    "material": "",
+    "buffdesc": "language_10131004",
+    "buffcond": "1",
+    "buffpara": "2",
+    "unlockdesc": "language_10131005",
+    "unlockcond": 1,
+    "unlockpara": 1
+  },
+  {
+    "id": 2,
+    "name": "§2级配件",
+    "material": "",
+    "buffdesc": "language_10131006",
+    "buffcond": "2",
+    "buffpara": "0",
+    "unlockdesc": "language_10131007",
+    "unlockcond": 2,
+    "unlockpara": 5
+  },
+  {
+    "id": 3,
+    "name": "§3级配件",
+    "material": "",
+    "buffdesc": "language_10131008",
+    "buffcond": "3",
+    "buffpara": "1#2",
+    "unlockdesc": "language_10131009",
+    "unlockcond": 1,
+    "unlockpara": 3
+  },
+  {
+    "id": 4,
+    "name": "§4级配件",
+    "material": "",
+    "buffdesc": "language_10131010",
+    "buffcond": "4",
+    "buffpara": "0.2",
+    "unlockdesc": "language_10131011",
+    "unlockcond": 2,
+    "unlockpara": 10
+  },
+  {
+    "id": 5,
+    "name": "§5级配件",
+    "material": "",
+    "buffdesc": "language_10131012",
+    "buffcond": "5",
+    "buffpara": "3",
+    "unlockdesc": "language_10131013",
+    "unlockcond": 1,
+    "unlockpara": 5
+  }
+]

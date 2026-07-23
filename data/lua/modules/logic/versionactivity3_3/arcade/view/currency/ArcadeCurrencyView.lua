@@ -21,6 +21,7 @@ function ArcadeCurrencyView:onInitView()
 	self._goitem = gohelper.findChild(self.viewGO, "#go_item")
 	self._image = gohelper.findChildImage(self.viewGO, "#go_item/#image")
 	self._txt = gohelper.findChildText(self.viewGO, "#go_item/content/#txt")
+	self._golight = gohelper.findChild(self.viewGO, "#Light")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -32,6 +33,7 @@ function ArcadeCurrencyView:addEvents()
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnCharacterResourceCountUpdate, self._onInSideCharacterResourceUpdate, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnSkillResourceChange, self._onInSideSkillChangeRes, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnResetArcadeGame, self._onResetArcadeGame, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
 function ArcadeCurrencyView:removeEvents()
@@ -39,6 +41,7 @@ function ArcadeCurrencyView:removeEvents()
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnCharacterResourceCountUpdate, self._onInSideCharacterResourceUpdate, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnSkillResourceChange, self._onInSideSkillChangeRes, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnResetArcadeGame, self._onResetArcadeGame, self)
+	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
 function ArcadeCurrencyView:_onOutsideArcadeAttrChangePush()
@@ -71,6 +74,13 @@ function ArcadeCurrencyView:_onResetArcadeGame()
 	end
 
 	self:refreshView()
+end
+
+function ArcadeCurrencyView:_onCloseViewFinish(viewName)
+	if viewName == ViewName.ArcadeRefundTipView then
+		gohelper.setActive(self._golight, false)
+		gohelper.setActive(self._golight, true)
+	end
 end
 
 function ArcadeCurrencyView:_editableInitView()

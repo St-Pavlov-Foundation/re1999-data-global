@@ -50,7 +50,9 @@ function DecorateStoreModel:getDecorateGoodList(storeId)
 		local goodsList = storeMO:getGoodsList()
 
 		for _, mo in pairs(goodsList) do
-			table.insert(allGoods, mo)
+			if self:_isCanShowGoods(mo.goodsId) then
+				table.insert(allGoods, mo)
+			end
 		end
 	end
 
@@ -157,6 +159,8 @@ function DecorateStoreModel.getItemType(storeId)
 			return DecorateStoreEnum.DecorateItemType.SceneUIPackage
 		elseif decorateConfig.subType == ItemEnum.SubType.MainUISkin then
 			return DecorateStoreEnum.DecorateItemType.MainUISkin
+		elseif decorateConfig.subType == ItemEnum.SubType.DecorateBundle then
+			return DecorateStoreEnum.DecorateItemType.DecorateBundle
 		end
 	elseif decorateConfig.productType == MaterialEnum.MaterialType.HeroSkin then
 		return DecorateStoreEnum.DecorateItemType.Skin
@@ -248,6 +252,32 @@ function DecorateStoreModel:isDecorateGoodItemHas(goodId)
 		return not isCanBuy
 	end
 
+	local goodsCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
+
+	if not goodsCo then
+		return
+	end
+
+	local subType = goodsCo.subType
+
+	if subType == ItemEnum.SubType.DecorateBundle then
+		local sonGoodsIdList = DecorateStoreConfig.instance:getSonGoodsIdList(goodId)
+
+		if sonGoodsIdList then
+			for _, sonGoodsId in ipairs(sonGoodsIdList) do
+				if not self:isDecorateGoodItemHas(sonGoodsId) then
+					return
+				end
+			end
+		end
+
+		return true
+	end
+
+	return self:_isDecorateGoodItemHas(goodId)
+end
+
+function DecorateStoreModel:_isDecorateGoodItemHas(goodId)
 	local decorateCo = DecorateStoreConfig.instance:getDecorateConfig(goodId)
 
 	if decorateCo.maxbuycountType ~= DecorateStoreEnum.MaxBuyTipType.Owned then
@@ -381,6 +411,49 @@ function DecorateStoreModel:_initPackageStoreGoodsIds()
 	local str = CommonConfig.instance:getConstStr(ConstEnum.V3a4PackageStoreGoodsId)
 
 	self._v3a4PackageStoreGoodsIds = string.splitToNumber(str, "#")
+end
+
+function DecorateStoreModel:isCanBuyGoods(goodsId)
+	local goodsCo = DecorateStoreConfig.instance:getDecorateConfig(goodsId)
+
+	if not goodsCo then
+		return
+	end
+
+	local isHas = self:isDecorateGoodItemHas(goodsId)
+	local subType = goodsCo.subType
+
+	if not isHas and subType == ItemEnum.SubType.DecorateBundle then
+		local sonGoodsIdList = DecorateStoreConfig.instance:getSonGoodsIdList(goodsId)
+
+		if sonGoodsIdList then
+			for _, sonGoodsId in ipairs(sonGoodsIdList) do
+				if self:isDecorateGoodItemHas(sonGoodsId) then
+					return
+				end
+			end
+		end
+
+		return true
+	end
+
+	return not isHas
+end
+
+function DecorateStoreModel:_isCanShowGoods(goodsId)
+	local goodsCo = DecorateStoreConfig.instance:getDecorateConfig(goodsId)
+
+	if not goodsCo then
+		return
+	end
+
+	local subType = goodsCo.subType
+
+	if subType == ItemEnum.SubType.DecorateBundle then
+		return self:isDecorateGoodItemHas(goodsId) or self:isCanBuyGoods(goodsId)
+	end
+
+	return true
 end
 
 DecorateStoreModel.instance = DecorateStoreModel.New()

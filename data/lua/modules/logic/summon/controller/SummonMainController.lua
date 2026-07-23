@@ -71,6 +71,14 @@ function SummonMainController:openSummonView(param, fromEnterScene, callback, ca
 	end
 
 	SummonModel.instance:clearCacheReward()
+
+	local convertParam = SummonMainModel.instance:getItemConvertTag()
+
+	if convertParam and convertParam.needShowConvert then
+		MaterialRpc.instance:showItemConvertView(convertParam)
+	end
+
+	SummonMainModel.instance:setItemConvertTag(nil)
 end
 
 function SummonMainController:trySetDefaultPoolId(param)
@@ -281,8 +289,16 @@ function SummonMainController:openpPogressRewardView(poolId)
 		return
 	end
 
-	if string.nilorempty(poolCfg.progressRewards) then
-		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewards\"字段为nil", poolId))
+	if string.nilorempty(poolCfg.progressRewards) and string.nilorempty(poolCfg.progressChooseGroupId) then
+		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewards\" 和 \"progressChooseGroupId\" 字段为nil", poolId))
+
+		return
+	end
+
+	if not string.nilorempty(poolCfg.progressRewardClass) then
+		ViewMgr.instance:openView(poolCfg.progressRewardClass, {
+			poolId = poolId
+		})
 
 		return
 	end
@@ -350,12 +366,72 @@ function SummonMainController:setDiamondEnoughTipCb(params)
 	end
 end
 
+function SummonMainController:checkItemConvert(items)
+	if SummonMainModel.instance:getNewbiePoolExist() then
+		local itemConvertParam = SummonMainModel.instance:getItemConvertTag()
+
+		if itemConvertParam then
+			local itemConfig = ItemConfig.instance:getItemConfig(itemConvertParam[1], itemConvertParam[2])
+			local convertParam = string.splitToNumber(itemConfig.effect, "#")
+
+			for _, item in ipairs(items) do
+				if item.quantity > 0 and item.itemId == convertParam[2] then
+					local beforeConvertMo = {}
+
+					beforeConvertMo.materilType = itemConvertParam[1]
+					beforeConvertMo.materilId = itemConvertParam[2]
+
+					local beforeQuantity = ItemModel.instance:getItemCount(item.itemId)
+					local showNum = item.quantity - beforeQuantity
+
+					beforeConvertMo.quantity = tonumber(showNum)
+					beforeConvertMo.needShowConvert = true
+
+					SummonMainModel.instance:setItemConvertTag(beforeConvertMo)
+
+					return
+				end
+			end
+		end
+	else
+		for _, item in ipairs(items) do
+			if item.quantity > 0 then
+				local itemConfig = ItemConfig.instance:getItemCo(item.itemId)
+
+				if itemConfig and itemConfig.subType == ItemEnum.SubType.ItemConvert and ItemConvertHelper.isItemConvert(item.itemId) then
+					local mo = {}
+
+					mo.materilType = MaterialEnum.MaterialType.Item
+					mo.materilId = item.itemId
+					mo.quantity = item.quantity
+
+					MaterialRpc.instance:showItemConvertView(mo)
+				end
+			end
+		end
+	end
+end
+
 function SummonMainController:setSummonPoolPackageProp(poolId, order, callback, callbackObj)
 	SummonRpc.instance:sendPopUpRecommendWindowRequest(poolId, order, callback, callbackObj)
 end
 
 function SummonMainController:setLimitReplicatePoolSelect(poolId, heroIdList, callback, callbackObj)
 	SummonRpc.instance:sendChooseDoubleUpHeroRequest(poolId, heroIdList, callback, callbackObj)
+end
+
+function SummonMainController:summon10Action(param)
+	self:_summonAction(param, true)
+end
+
+function SummonMainController:summon1Action(param)
+	self:_summonAction(param)
+end
+
+function SummonMainController:_summonAction(param, isTen)
+	self._summonActionProcess = self._summonActionProcess or SummonActionProcess.New()
+
+	self._summonActionProcess:summonAction(param, isTen)
 end
 
 SummonMainController.instance = SummonMainController.New()

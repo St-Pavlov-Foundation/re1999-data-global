@@ -283,6 +283,10 @@ function DungeonModel:getEpisodeChallengeCount(episodeId)
 end
 
 function DungeonModel:chapterIsLock(chapterId)
+	if chapterId == 113 then
+		return true
+	end
+
 	local chapterOpen = true
 	local toast, param
 	local co = DungeonConfig.instance:getChapterCO(chapterId)
@@ -632,6 +636,12 @@ function DungeonModel:isUnlock(co)
 		return true
 	end
 
+	local elementId = DungeonConfig.instance:getEpisodeUnlockImplicitElement(co.id)
+
+	if elementId and not DungeonMapModel.instance:elementIsFinished(elementId) then
+		return false
+	end
+
 	local preInfo = self._dungeonEpisodeDic[co.preEpisode]
 
 	if preInfo and preInfo.star > 0 then
@@ -702,6 +712,7 @@ local BattleEpisodeTypes = {
 	[DungeonEnum.EpisodeType.ToughBattleStory] = true,
 	[DungeonEnum.EpisodeType.Rouge] = true,
 	[DungeonEnum.EpisodeType.Rouge2] = true,
+	[DungeonEnum.EpisodeType.Rouge2Boss] = true,
 	[DungeonEnum.EpisodeType.TrialHero] = true,
 	[DungeonEnum.EpisodeType.Season166Base] = true,
 	[DungeonEnum.EpisodeType.Season166Train] = true,
@@ -723,7 +734,10 @@ local BattleEpisodeTypes = {
 	[DungeonEnum.EpisodeType.V3_2SP] = true,
 	[DungeonEnum.EpisodeType.GameJumpFight] = true,
 	[DungeonEnum.EpisodeType.V3_2ZongMao] = true,
-	[DungeonEnum.EpisodeType.Abyss] = true
+	[DungeonEnum.EpisodeType.Abyss] = true,
+	[DungeonEnum.EpisodeType.Sodache] = true,
+	[DungeonEnum.EpisodeType.AtomicDungeon] = true,
+	[DungeonEnum.EpisodeType.SystemFightManual] = true
 }
 
 function DungeonModel.isBattleEpisode(config)
@@ -970,6 +984,16 @@ function DungeonModel:chapterListIsTower(type)
 	return result
 end
 
+function DungeonModel:chapterListIsRouge(type)
+	local curChapterType = type or self.curChapterType
+	local result = curChapterType == DungeonEnum.ChapterType.Rouge
+
+	result = result or curChapterType == DungeonEnum.ChapterType.Rouge2
+	result = result or curChapterType == DungeonEnum.ChapterType.Rouge2Boss
+
+	return result
+end
+
 function DungeonModel:getChapterListTypes(type)
 	return self:chapterListIsNormalType(type), self:chapterListIsResType(type), self:chapterListIsBreakType(type), self:chapterListIsWeekWalkType(type), self:chapterListIsSeasonType(type), self:chapterListIsExploreType(type)
 end
@@ -1096,6 +1120,10 @@ function DungeonModel:hasPassLevelAndStory(episodeId)
 	local episodeCO = DungeonConfig.instance:getEpisodeCO(episodeId)
 
 	if episodeCO.afterStory > 0 and not StoryModel.instance:isStoryFinished(episodeCO.afterStory) then
+		return false
+	end
+
+	if not DungeonMapModel.instance:checkStoryElementFinished(episodeCO.beforeStory) or not DungeonMapModel.instance:checkStoryElementFinished(episodeCO.afterStory) then
 		return false
 	end
 

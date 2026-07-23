@@ -38,6 +38,10 @@ function StoryLogView:onOpen()
 	self:_refreshView()
 end
 
+function StoryLogView:onOpenFinish()
+	PostProcessingMgr.instance:setIgnoreUIBlur(true)
+end
+
 function StoryLogView:_refreshView()
 	local log = StoryModel.instance:getLog()
 
@@ -47,6 +51,7 @@ function StoryLogView:_refreshView()
 end
 
 function StoryLogView:onClose()
+	PostProcessingMgr.instance:setIgnoreUIBlur(false)
 	AudioEffectMgr.instance:stopAudio(StoryLogListModel.instance:getPlayingLogAudioId(), 0)
 end
 

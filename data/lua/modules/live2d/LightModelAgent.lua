@@ -36,6 +36,10 @@ function LightModelAgent:_getLive2d()
 	return self._live2d
 end
 
+function LightModelAgent:getLive2d()
+	return self:_getLive2d()
+end
+
 function LightModelAgent:fadeIn()
 	local go = self:getSpineGo()
 
@@ -211,6 +215,12 @@ end
 function LightModelAgent:removeParameter(name)
 	if self._isLive2D then
 		self._curModel:removeParameter(name)
+	end
+end
+
+function LightModelAgent:changeSortingMode(mode)
+	if self._isLive2D then
+		self._curModel:changeSortingMode(mode)
 	end
 end
 

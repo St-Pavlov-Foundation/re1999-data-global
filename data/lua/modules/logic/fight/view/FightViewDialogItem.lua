@@ -83,7 +83,12 @@ function FightViewDialogItem:showDialogContent(icon, config)
 end
 
 function FightViewDialogItem:onDestroy()
-	GameUtil.onDestroyViewMember(self, "_tmpFadeIn")
+	if self._tmpFadeIn then
+		self._tmpFadeIn:hideDialog()
+
+		self._tmpFadeIn = nil
+	end
+
 	self._simageicon:UnLoadImage()
 end
 

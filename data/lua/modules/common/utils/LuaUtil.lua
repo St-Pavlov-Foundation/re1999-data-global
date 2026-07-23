@@ -5,6 +5,7 @@ module("modules.common.utils.LuaUtil", package.seeall)
 local LuaUtil = {}
 
 LuaUtil.emptyStr = ""
+LuaUtil.emptyTable = {}
 
 function LuaUtil.isFunction(val)
 	return type(val) == "function"

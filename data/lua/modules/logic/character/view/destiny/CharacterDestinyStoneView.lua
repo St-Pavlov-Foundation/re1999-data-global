@@ -382,8 +382,9 @@ function CharacterDestinyStoneView:_refreshStoneItem(curIndex)
 
 		local isReshape = CharacterDestinyModel.instance:getIsShowReshape()
 
-		self:_showReshape(isReshape, false)
+		self:_showReshape(isReshape and isReshapeStone, false)
 		self:_refreshReshape()
+		CharacterDestinyController.instance:dispatchEvent(CharacterDestinyEvent.OnShowStone, self._curStoneMo.stoneId)
 	end
 
 	if not self._pointItems then

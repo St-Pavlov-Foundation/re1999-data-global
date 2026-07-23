@@ -2,7 +2,7 @@
 
 module("modules.logic.rouge.view.RougeMainView", package.seeall)
 
-local RougeMainView = class("RougeMainView", BaseView)
+local RougeMainView = class("RougeMainView", BaseViewExtended)
 
 function RougeMainView:onInitView()
 	self._btnfavorite = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_favorite")
@@ -160,6 +160,7 @@ end
 
 function RougeMainView:onOpenFinish()
 	RougeController.instance:startEndFlow()
+	RougeController.instance:dispatchEvent(RougeEvent.OpenRougeView)
 end
 
 function RougeMainView:onClose()

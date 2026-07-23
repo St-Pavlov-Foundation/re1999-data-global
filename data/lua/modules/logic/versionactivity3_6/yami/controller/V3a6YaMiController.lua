@@ -50,6 +50,14 @@ function V3a6YaMiController:getScene()
 	return self._scene
 end
 
+function V3a6YaMiController:getFloatMgr()
+	if not self._scene then
+		return
+	end
+
+	return self._scene.floatMgr
+end
+
 function V3a6YaMiController:_reallyOpenMainView()
 	ViewMgr.instance:openView(ViewName.V3a6YaMiMainView)
 end

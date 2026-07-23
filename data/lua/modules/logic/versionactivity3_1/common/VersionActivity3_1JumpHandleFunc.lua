@@ -40,25 +40,24 @@ end
 function VersionActivity3_1JumpHandleFunc:jumpTo13103(paramsList)
 	local actId = paramsList[2]
 	local episodeId = paramsList[3]
-	local mapLevelViewName = VersionActivityFixedHelper.getVersionActivityDungeonMapLevelViewName()
 
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity3_1EnterView)
-	table.insert(self.closeViewNames, mapLevelViewName)
-	VersionActivityFixedDungeonModel.instance:setMapNeedTweenState(true)
+	table.insert(self.waitOpenViewNames, ViewName.VersionActivity3_8EnterView)
+	table.insert(self.closeViewNames, ViewName.VersionActivity3_1DungeonMapLevelView)
 
-	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController(3, 8)
+	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController(3, 1)
 
 	if episodeId then
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-			dungeonController.instance:openVersionActivityDungeonMapView(nil, episodeId, function()
-				ViewMgr.instance:openView(mapLevelViewName, {
+		enterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+			dungeonController.instance:openVersionActivityReactivityDungeonMapView(3, 1, nil, episodeId, function()
+				ViewMgr.instance:openView(ViewName.VersionActivity3_1DungeonMapLevelView, {
 					isJump = true,
 					episodeId = episodeId
 				})
 			end)
 		end, nil, actId, true)
 	else
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openVersionActivityDungeonMapView, dungeonController.instance, actId, true)
+		enterController.instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openVersionActivityReactivityDungeonMapView, dungeonController.instance, actId, true)
 	end
 
 	return JumpEnum.JumpResult.Success
@@ -66,8 +65,9 @@ end
 
 function VersionActivity3_1JumpHandleFunc:jumpTo13104(paramsList)
 	local dungeonController = VersionActivityFixedHelper.getVersionActivityDungeonController()
+	local enterController = VersionActivityFixedHelper.getVersionActivityEnterController(3, 1)
 
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openStoreView, dungeonController.instance, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon, true)
+	enterController.instance:openVersionActivityEnterViewIfNotOpened(dungeonController.openStoreView, dungeonController.instance, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon, true)
 
 	return JumpEnum.JumpResult.Success
 end
@@ -76,10 +76,7 @@ function VersionActivity3_1JumpHandleFunc:jumpTo13117(paramsList)
 	local episodeId = paramsList and paramsList[3]
 
 	table.insert(self.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
-	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-		VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity3_1Enum.ActivityId.YeShuMei, true)
-		YeShuMeiController.instance:enterLevelView(episodeId)
-	end)
+	YeShuMeiController.instance:enterLevelView(episodeId)
 
 	return JumpEnum.JumpResult.Success
 end
@@ -95,21 +92,25 @@ function VersionActivity3_1JumpHandleFunc:jumpTo13106(paramsList)
 end
 
 function VersionActivity3_1JumpHandleFunc:jumpTo13105()
+	local actId = Activity191Controller.instance:getActId()
+
 	table.insert(self.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
 	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
 		table.insert(self.waitOpenViewNames, ViewName.Act191MainView)
-		Activity191Controller.instance:enterActivity(VersionActivity3_1Enum.ActivityId.DouQuQu3)
-	end, nil, VersionActivity3_1Enum.ActivityId.DouQuQu3, true)
+		Activity191Controller.instance:enterActivity()
+	end, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end
 
 function VersionActivity3_1JumpHandleFunc:jumpTo13115()
+	local actId = Activity191Controller.instance:getActId()
+
 	table.insert(self.waitOpenViewNames, VersionActivityFixedHelper.getVersionActivityEnterViewName())
 	VersionActivityFixedHelper.getVersionActivityEnterController().instance:openVersionActivityEnterViewIfNotOpened(function()
-		Activity191Controller.instance:enterActivity(VersionActivity3_1Enum.ActivityId.DouQuQu3)
-		Activity191Controller.instance:openStoreView(VersionActivity3_1Enum.ActivityId.DouQuQu3Store)
-	end, nil, VersionActivity3_1Enum.ActivityId.DouQuQu3, true)
+		Activity191Controller.instance:enterActivity()
+		Activity191Controller.instance:openStoreView()
+	end, nil, actId, true)
 
 	return JumpEnum.JumpResult.Success
 end

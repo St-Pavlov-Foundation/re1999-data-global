@@ -203,10 +203,20 @@ function CommandStationViewDefine.init(module_views)
 				{
 					NavigateButtonsView.prefabPath
 				}
+			},
+			{
+				{
+					"ui/viewres/commandstation/commandstation_relationshipboardpage.prefab"
+				},
+				{
+					"ui/viewres/commandstation/commandstation_relationshipboardpage2.prefab"
+				}
 			}
 		},
 		otherRes = {
-			[1] = "ui/animations/dynamic/commandstation_boardeff.controller"
+			"ui/animations/dynamic/commandstation_boardeff.controller",
+			"ui/viewres/commandstation/commandstation_relationshipboardpage.prefab",
+			"ui/viewres/commandstation/commandstation_relationshipboardpage2.prefab"
 		}
 	}
 	module_views.CommandStationRelationShipDetail = {
@@ -231,7 +241,18 @@ function CommandStationViewDefine.init(module_views)
 		mainRes = "ui/viewres/commandstation/commandstation_mapdisplayview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
+		otherRes = {
+			[1] = "ui/viewres/commandstation/commandstation_mapitem.prefab"
+		},
 		preloader = module_views_preloader
+	}
+	module_views.CommandStationTeamDetailView = {
+		destroy = 0,
+		container = "CommandStationTeamDetailViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/commandstation/commandstation_teamprofileview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal
 	}
 end
 

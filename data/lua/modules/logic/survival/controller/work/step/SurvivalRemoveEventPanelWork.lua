@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalRemoveEventPanelWork
 
 local SurvivalRemoveEventPanelWork = class("SurvivalRemoveEventPanelWork", SurvivalStepBaseWork)
 
-function SurvivalRemoveEventPanelWork:onStart(context)
+function SurvivalRemoveEventPanelWork:onStart2(context)
 	local isIceSpEvent = false
 	local source = self._stepMo.paramInt[1]
 

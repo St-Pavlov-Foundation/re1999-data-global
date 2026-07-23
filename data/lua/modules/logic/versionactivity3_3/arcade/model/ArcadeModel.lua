@@ -13,7 +13,7 @@ function ArcadeModel:reInit()
 end
 
 function ArcadeModel:getAct222Id()
-	return VersionActivity3_3Enum.ActivityId.Arcade
+	return VersionActivity3_7Enum.ActivityId.ArcadeV3a7
 end
 
 function ArcadeModel:isAct222Open(isToast)

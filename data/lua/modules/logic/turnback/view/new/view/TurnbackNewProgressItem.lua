@@ -49,8 +49,7 @@ function TurnbackNewProgressItem:initNormalItem()
 end
 
 function TurnbackNewProgressItem:_onClickMainActivity()
-	local version = GameBranchMgr.instance:getV_a()
-	local controller = _G[string.format("VersionActivity%sEnterController", version)]
+	local controller = VersionActivityFixedHelper.getVersionActivityEnterController().instance
 
 	controller:openVersionActivityEnterView()
 end

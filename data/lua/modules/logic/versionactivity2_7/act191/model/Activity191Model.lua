@@ -21,7 +21,7 @@ function Activity191Model:setActInfo(activityId, actInfo)
 
 	self.actMoDic[activityId]:initBadgeInfo(activityId)
 	self.actMoDic[activityId]:init(actInfo)
-	Act191StatController.instance:setActInfo(activityId, self.actMoDic[activityId])
+	Act191StatController.instance:setActInfo(self.actMoDic[activityId])
 end
 
 function Activity191Model:getCurActId()

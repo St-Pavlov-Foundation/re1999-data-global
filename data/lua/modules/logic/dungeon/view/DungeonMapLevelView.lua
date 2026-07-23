@@ -301,6 +301,19 @@ function DungeonMapLevelView:_btnlockOnClick()
 end
 
 function DungeonMapLevelView:_btnstoryOnClick()
+	if self._config.afterStory > 0 and StoryModel.instance:isStoryFinished(self._config.afterStory) and not DungeonMapModel.instance:checkStoryElementFinished(self._config.afterStory) then
+		DungeonController.openStoryElementView(self._config.afterStory)
+		ViewMgr.instance:closeView(self.viewName)
+
+		return
+	end
+
+	if self._config.type == DungeonEnum.EpisodeType.Story then
+		self:_playBeforeStoryElementView(true)
+
+		return
+	end
+
 	local hasAllPass = DungeonModel.instance:hasPassLevelAndStory(self._config.id)
 	local param = {}
 
@@ -384,6 +397,19 @@ function DungeonMapLevelView:onStoryFinished()
 	DungeonModel.instance:setLastSendEpisodeId(self._config.id)
 	DungeonRpc.instance:sendEndDungeonRequest(false)
 	ViewMgr.instance:closeView(self.viewName)
+	self:_playBeforeStoryElementView()
+end
+
+function DungeonMapLevelView:_playBeforeStoryElementView(openStoryElementView)
+	if self._config.type == DungeonEnum.EpisodeType.Story and self._config.beforeStory > 0 and StoryModel.instance:isStoryFinished(self._config.beforeStory) and not DungeonMapModel.instance:checkStoryElementFinished(self._config.beforeStory) then
+		if openStoryElementView then
+			DungeonController.openStoryElementView(self._config.beforeStory)
+		end
+
+		ViewMgr.instance:closeView(self.viewName)
+
+		return true
+	end
 end
 
 function DungeonMapLevelView:_btnequipOnClick()
@@ -419,6 +445,12 @@ end
 function DungeonMapLevelView:_btnstartOnClick()
 	if DungeonEnum.MazeGamePlayEpisode[self._config.id] then
 		self:_playStoryAndOpenMazePlayView()
+
+		return
+	end
+
+	if DungeonMazeV3a7Enum.MazeGamePlayEpisode[self._config.id] then
+		self:_playStoryAndOpenV3a7MazePlayView()
 
 		return
 	end
@@ -480,6 +512,40 @@ function DungeonMapLevelView:_btnstartOnClick()
 	end
 
 	self:_enterFight()
+end
+
+function DungeonMapLevelView:_playStoryAndOpenV3a7MazePlayView()
+	local storyId = self._config.beforeStory
+
+	DungeonRpc.instance:sendStartDungeonRequest(self._config.chapterId, self._config.id)
+
+	local mazeGameProgress = DungeonMazeV3a7Model.instance:HasLocalProgress()
+
+	if mazeGameProgress then
+		self:_openV3a7MazePlayView(true)
+
+		return
+	end
+
+	local param = {}
+
+	param.mark = true
+	param.episodeId = self._config.id
+
+	StoryController.instance:playStory(storyId, param, self._openV3a7MazePlayView, self)
+end
+
+function DungeonMapLevelView:_openV3a7MazePlayView(existProgress)
+	DungeonModel.instance.curSendEpisodeId = nil
+
+	DungeonModel.instance:setLastSendEpisodeId(self._config.id)
+
+	local viewParams = {
+		episodeCfg = self._config,
+		existProgress = existProgress
+	}
+
+	DungeonMazeV3a7Controller.instance:openMazeGameView(viewParams)
 end
 
 function DungeonMapLevelView:_playStoryAndOpenMazePlayView()
@@ -1076,6 +1142,14 @@ function DungeonMapLevelView:onStoryStatus()
 
 	if self._config.afterStory > 0 and not StoryModel.instance:isStoryFinished(self._config.afterStory) and self._episodeInfo.star > DungeonEnum.StarType.None then
 		showStory = true
+	end
+
+	if not showStory and self._episodeInfo.star > DungeonEnum.StarType.None then
+		showStory = not DungeonMapModel.instance:checkStoryElementFinished(self._config.afterStory)
+	end
+
+	if not showStory and self._config.type == DungeonEnum.EpisodeType.Story and self._episodeInfo.star > DungeonEnum.StarType.None then
+		showStory = self._config.beforeStory > 0 and StoryModel.instance:isStoryFinished(self._config.beforeStory) and not DungeonMapModel.instance:checkStoryElementFinished(self._config.beforeStory)
 	end
 
 	gohelper.setActive(self._gooperation, not showStory and not self._enterAfterFreeLimit)

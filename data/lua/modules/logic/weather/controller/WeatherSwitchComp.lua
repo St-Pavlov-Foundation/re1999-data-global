@@ -53,9 +53,15 @@ function WeatherSwitchComp:switchPrevLightMode()
 		return
 	end
 
-	self._lightMode = self._lightMode - 1
+	local nextMode = self:_findValidLightMode(MIN_LIGHT_MODE, -1)
 
-	self:chaneWeatherLightMode(self._lightMode)
+	if nextMode then
+		self._lightMode = nextMode
+
+		self:chaneWeatherLightMode(self._lightMode)
+	else
+		logError("switchPrevLightMode no valid light mode", self._lightMode, self._sceneId)
+	end
 end
 
 function WeatherSwitchComp:switchNextLightMode()
@@ -63,9 +69,25 @@ function WeatherSwitchComp:switchNextLightMode()
 		return
 	end
 
-	self._lightMode = self._lightMode + 1
+	local nextMode = self:_findValidLightMode(MAX_LIGHT_MODE, 1)
 
-	self:chaneWeatherLightMode(self._lightMode)
+	if nextMode then
+		self._lightMode = nextMode
+
+		self:chaneWeatherLightMode(self._lightMode)
+	else
+		logError("switchNextLightMode no valid light mode", self._lightMode, self._sceneId)
+	end
+end
+
+function WeatherSwitchComp:_findValidLightMode(targetMode, step)
+	for i = self._lightMode + step, targetMode, step do
+		local list = WeatherConfig.instance:getReportList(i, self._sceneId)
+
+		if #list > 0 then
+			return i
+		end
+	end
 end
 
 function WeatherSwitchComp:switchNextReport()

@@ -44,6 +44,7 @@ function CharacterDataConfig:reqConfigNames()
 		"episode",
 		"character_motion_cut",
 		"character_motion_effect",
+		"character_motion_effect_animator",
 		"character_motion_effect_layer",
 		"character_motion_play_cut",
 		"character_shop_voice",

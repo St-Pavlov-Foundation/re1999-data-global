@@ -5,11 +5,11 @@ module("modules.logic.versionactivity3_1.nationalgift.controller.NationalGiftCon
 local NationalGiftController = class("NationalGiftController", BaseController)
 
 function NationalGiftController:onInit()
-	return
+	self:reInit()
 end
 
 function NationalGiftController:reInit()
-	return
+	self._hasGet = nil
 end
 
 function NationalGiftController:onInitFinish()
@@ -17,18 +17,40 @@ function NationalGiftController:onInitFinish()
 end
 
 function NationalGiftController:addConstEvents()
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self.checkActivity, self)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self.checkActivity, self)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, self._onDailyRefresh, self)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, self._onRefreshActivity, self)
+	PayController.instance:registerCallback(PayEvent.PayFinished, self._onPayCallback, self)
 end
 
-function NationalGiftController:checkActivity()
-	local actId = NationalGiftModel.instance:getCurVersionActId()
+function NationalGiftController:_onPayCallback()
+	local isGiftHasBuy = NationalGiftModel.instance:isGiftHasBuy()
 
-	if not ActivityModel.instance:isActOnLine(actId) then
+	if not isGiftHasBuy then
+		self._hasGet = nil
+
+		self:_onRefreshActivity()
+	end
+end
+
+function NationalGiftController:_onDailyRefresh()
+	self._hasGet = nil
+end
+
+function NationalGiftController:_onRefreshActivity()
+	local actId = NationalGiftModel.instance:getCurVersionActId()
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+
+	if not actInfoMo then
 		return
 	end
 
-	Activity212Rpc.instance:sendGetAct212InfoRequest(actId)
+	local couldGet = actInfoMo:isOnline()
+
+	if couldGet and self._hasGet ~= couldGet then
+		Activity212Rpc.instance:sendGetAct212InfoRequest(actId)
+	end
+
+	self._hasGet = couldGet
 end
 
 function NationalGiftController:openNationalGiftBuyTipView(param)

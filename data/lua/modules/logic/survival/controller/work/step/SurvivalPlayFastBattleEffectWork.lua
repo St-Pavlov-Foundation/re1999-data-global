@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalPlayFastBattleEffect
 
 local SurvivalPlayFastBattleEffectWork = class("SurvivalPlayFastBattleEffectWork", SurvivalStepBaseWork)
 
-function SurvivalPlayFastBattleEffectWork:onStart(context)
+function SurvivalPlayFastBattleEffectWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local unitMo = sceneMo.unitsById[self._stepMo.id]
 

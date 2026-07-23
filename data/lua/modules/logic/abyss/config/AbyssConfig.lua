@@ -23,6 +23,7 @@ function AbyssConfig:reInit()
 	self._episodeMaxStarDic = nil
 	self._episodeId2ActIdDic = nil
 	self._taskIndexDic = {}
+	self._episodeId2StageIdDic = nil
 end
 
 function AbyssConfig:onConfigLoaded(configName, configTable)
@@ -172,6 +173,30 @@ function AbyssConfig:getTaskIndexById(actId, taskId)
 	end
 
 	return self._taskIndexDic[actId][taskId]
+end
+
+function AbyssConfig:getStageIdByEpisodeId(actId, episodeId)
+	if not self._episodeId2StageIdDic then
+		self._episodeId2StageIdDic = {}
+
+		local stageConfigList = self._episodeConfig.configList
+
+		for _, config in ipairs(stageConfigList) do
+			if not self._episodeId2StageIdDic[config.activityId] then
+				self._episodeId2StageIdDic[config.activityId] = {}
+			end
+
+			if not self._episodeId2StageIdDic[config.activityId][config.episodeId] then
+				self._episodeId2StageIdDic[config.activityId][config.episodeId] = config.stage
+			end
+		end
+	end
+
+	if self._episodeId2StageIdDic[actId] then
+		return self._episodeId2StageIdDic[actId][episodeId]
+	end
+
+	return nil
 end
 
 AbyssConfig.instance = AbyssConfig.New()

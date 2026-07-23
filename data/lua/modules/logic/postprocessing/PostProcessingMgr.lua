@@ -8,9 +8,11 @@ PostProcessingMgr.PPEffectMaskType = typeof(UrpCustom.PPEffectMask)
 PostProcessingMgr.PPCustomCamDataType = typeof(UrpCustom.CustomCameraData)
 PostProcessingMgr.PPVolumeType = typeof(UnityEngine.Rendering.Volume)
 PostProcessingMgr.PPVolumeWrapType = typeof(UrpCustom.PPVolumeWrap)
+PostProcessingMgr.MainAllProfilePath = "ppassets/profiles/main_profile_all.asset"
 PostProcessingMgr.MainHighProfilePath = "ppassets/profiles/main_profile_high.asset"
 PostProcessingMgr.MainMiddleProfilePath = "ppassets/profiles/main_profile_middle.asset"
 PostProcessingMgr.MainLowProfilePath = "ppassets/profiles/main_profile_low.asset"
+PostProcessingMgr.MainLowBrightnessProfilePath = "ppassets/profiles/main_profile_low_brightness.asset"
 PostProcessingMgr.CaptureResPath = "ppassets/capture.prefab"
 PostProcessingMgr.DesamplingRate = {
 	x8 = 8,
@@ -41,6 +43,7 @@ function PostProcessingMgr:init(mainCameraGo, unitCameraGo, uiCameraGo)
 	self._highProfile = ConstAbCache.instance:getRes(PostProcessingMgr.MainHighProfilePath)
 	self._middleProfile = ConstAbCache.instance:getRes(PostProcessingMgr.MainMiddleProfilePath)
 	self._lowProfile = ConstAbCache.instance:getRes(PostProcessingMgr.MainLowProfilePath)
+	self._lowBrightnessProfile = ConstAbCache.instance:getRes(PostProcessingMgr.MainLowBrightnessProfilePath)
 	self._uiCamData = self._uiCameraGo:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 	self._uiPPVolume = gohelper.findChildComponent(self._uiCameraGo, "PPUIVolume", PostProcessingMgr.PPVolumeWrapType)
 
@@ -780,7 +783,7 @@ function PostProcessingMgr:setMainPPLevel(grade)
 
 	local targetProfile = self:getProfile()
 
-	self._unitPPVolume:SetProfile(targetProfile)
+	self:setProfile(targetProfile)
 end
 
 function PostProcessingMgr:getProfile()
@@ -792,10 +795,25 @@ function PostProcessingMgr:getProfile()
 	elseif grade == ModuleEnum.Performance.Middle then
 		targetProfile = self._middleProfile
 	elseif grade == ModuleEnum.Performance.Low then
-		targetProfile = self._lowProfile
+		local eyeModeActive = EyeProtectionModeMgr.instance:getEyeModeActive()
+		local factor = EyeProtectionModeMgr.instance:getFactorValue()
+
+		if eyeModeActive and factor < 1 then
+			targetProfile = self._lowBrightnessProfile
+		else
+			targetProfile = self._lowProfile
+		end
 	end
 
 	return targetProfile
+end
+
+function PostProcessingMgr:setProfile(profile)
+	self._unitPPVolume:SetProfile(profile)
+end
+
+function PostProcessingMgr:getUnitProfile()
+	return self._unitPPVolume.PPVolume.sharedProfile
 end
 
 function PostProcessingMgr:ClearPPRenderRts()

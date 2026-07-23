@@ -5,10 +5,10 @@ module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftFull
 local V2a8_WuErLiXiGiftFullView = class("V2a8_WuErLiXiGiftFullView", BaseView)
 
 function V2a8_WuErLiXiGiftFullView:onInitView()
-	self._txtremainTime = gohelper.findChildText(self.viewGO, "Root/image_TimeBG/#txt_remainTime")
-	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Claim")
-	self._goNormal = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Normal")
-	self._goReceived = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Received")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "image_TimeBG/#txt_remainTime")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Claim")
+	self._goNormal = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Normal")
+	self._goReceived = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Received")
 
 	if self._editableInitView then
 		self:_editableInitView()

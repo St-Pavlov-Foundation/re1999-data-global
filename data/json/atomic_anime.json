@@ -1,0 +1,146 @@
+[
+  {
+    "animeid": 1,
+    "levelid": "38510101",
+    "name": "language_10120733",
+    "res": "chapter_pic16",
+    "video": "sp02_episode_1",
+    "isloop": 1,
+    "place": "language_10119773"
+  },
+  {
+    "animeid": 2,
+    "levelid": "38510102",
+    "name": "language_10120735",
+    "res": "chapter_pic01",
+    "video": "sp02_episode_2",
+    "isloop": 1,
+    "place": "language_10130984"
+  },
+  {
+    "animeid": 3,
+    "levelid": "38510103",
+    "name": "language_10120737",
+    "res": "chapter_pic02",
+    "video": "sp02_episode_3",
+    "isloop": 1,
+    "place": "language_10130985"
+  },
+  {
+    "animeid": 4,
+    "levelid": "38510104|38520104",
+    "name": "language_10120739",
+    "res": "chapter_pic03",
+    "video": "sp02_episode_4",
+    "isloop": 1,
+    "place": "language_10120224"
+  },
+  {
+    "animeid": 5,
+    "levelid": "38510105|38520105",
+    "name": "language_10120741",
+    "res": "chapter_pic04",
+    "video": "sp02_episode_5",
+    "isloop": 1,
+    "place": "language_10120222"
+  },
+  {
+    "animeid": 6,
+    "levelid": "38510106",
+    "name": "language_10120743",
+    "res": "chapter_pic05",
+    "video": "sp02_episode_6",
+    "isloop": 1,
+    "place": "language_10130986"
+  },
+  {
+    "animeid": 7,
+    "levelid": "38510107",
+    "name": "language_10120745",
+    "res": "chapter_pic06",
+    "video": "sp02_episode_7",
+    "isloop": 1,
+    "place": "language_10120223"
+  },
+  {
+    "animeid": 8,
+    "levelid": "38510108|38520108|38530108|38540108",
+    "name": "language_10120747",
+    "res": "chapter_pic07",
+    "video": "sp02_episode_8",
+    "isloop": 1,
+    "place": "language_10130987"
+  },
+  {
+    "animeid": 9,
+    "levelid": "38510109",
+    "name": "language_10120749",
+    "res": "chapter_pic08",
+    "video": "sp02_episode_9",
+    "isloop": 1,
+    "place": "language_10120224"
+  },
+  {
+    "animeid": 10,
+    "levelid": "38510110|38520110",
+    "name": "language_10120751",
+    "res": "chapter_pic09",
+    "video": "sp02_episode_10",
+    "isloop": 1,
+    "place": "language_10120222"
+  },
+  {
+    "animeid": 11,
+    "levelid": "38510111|38520111|38530111|38540111",
+    "name": "language_10120753",
+    "res": "chapter_pic10",
+    "video": "sp02_episode_11",
+    "isloop": 1,
+    "place": "language_10120224"
+  },
+  {
+    "animeid": 12,
+    "levelid": "38510112",
+    "name": "language_10120755",
+    "res": "chapter_pic11",
+    "video": "sp02_episode_12",
+    "isloop": 1,
+    "place": "language_10120225"
+  },
+  {
+    "animeid": 13,
+    "levelid": "38510113|38520113|38530113|38540113",
+    "name": "language_10120757",
+    "res": "chapter_pic12",
+    "video": "sp02_episode_13",
+    "isloop": 1,
+    "place": "language_10120226"
+  },
+  {
+    "animeid": 14,
+    "levelid": "38510114",
+    "name": "language_10120759",
+    "res": "chapter_pic13",
+    "video": "sp02_episode_14",
+    "isloop": 1,
+    "place": "language_10120226"
+  },
+  {
+    "animeid": 15,
+    "levelid": "38510115",
+    "name": "language_10120761",
+    "res": "chapter_pic14",
+    "video": "sp02_episode_15",
+    "isloop": 1,
+    "place": "language_10130988"
+  },
+  {
+    "animeid": 16,
+    "levelid": "38510116",
+    "name": "language_10120763",
+    "res": "chapter_pic15",
+    "video": "sp02_episode_16",
+    "isloop": 1,
+    "place": "language_10130989"
+  }
+]

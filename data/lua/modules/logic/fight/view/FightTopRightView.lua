@@ -19,6 +19,52 @@ end
 function FightTopRightView:onOpen()
 	self:checkAddSurvivalBtn()
 	self:com_openSubView(FightAutoBtnView, gohelper.findChild(self.topRightBtnRoot, "btnAuto"))
+	self:showSystemFightTask()
+	self:showSkipBattleBtn()
+end
+
+function FightTopRightView:showSkipBattleBtn()
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+
+	if not DungeonModel.instance:hasPassLevel(episodeId) then
+		return
+	end
+
+	if not FightDataHelper.fieldMgr:isDungeonType(DungeonEnum.EpisodeType.SystemFightManual) then
+		return
+	end
+
+	local config = lua_fight_direct_switch_battle_when_end.configDict[FightDataHelper.fieldMgr.battleId]
+
+	if not config then
+		return
+	end
+
+	local url = "ui/viewres/fight/fightskipbattlebtn.prefab"
+
+	self:com_loadAsset(url, self.onSkipBattleBtnLoaded)
+end
+
+function FightTopRightView:onSkipBattleBtnLoaded(success, assetItem)
+	if not success then
+		return
+	end
+
+	local resObj = assetItem:GetResource()
+	local obj = gohelper.clone(resObj, self.topRightBtnRoot)
+
+	gohelper.setAsFirstSibling(obj)
+
+	local click = gohelper.getClickWithDefaultAudio(obj)
+
+	self:com_registClick(click, self.onClickSkipBattle)
+end
+
+function FightTopRightView:onClickSkipBattle()
+	FightDataHelper.tempMgr.isSkipBattle = true
+
+	FightRpc.instance:sendEndFightRequest(true)
+	FightGameMgr.restartMgr:directSwitchBattle()
 end
 
 function FightTopRightView:checkAddSurvivalBtn()
@@ -47,6 +93,26 @@ end
 
 function FightTopRightView:onClickCollection()
 	ViewMgr.instance:openView(ViewName.SurvivalEquipOverView)
+end
+
+function FightTopRightView:showSystemFightTask()
+	local episodeId = FightDataHelper.fieldMgr.episodeId
+	local config = lua_teaching_episode.configDict[episodeId]
+
+	if not config then
+		return
+	end
+
+	if string.nilorempty(config.battleTasks) then
+		return
+	end
+
+	local parentRoot = self.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.SystemFightTask)
+	local url = "ui/viewres/teaching/teachingfighttargetview.prefab"
+
+	self.taskView = self:com_openSubView(FightTeachingFightTaskView, url, parentRoot, config)
+
+	self.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.SystemFightTask)
 end
 
 function FightTopRightView:onClose()

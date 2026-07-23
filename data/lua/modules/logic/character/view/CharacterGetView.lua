@@ -278,7 +278,7 @@ function CharacterGetView:_openAnimFinish()
 		return
 	end
 
-	if self._isReplay then
+	if self._isReplay or self.viewParam.hideToast then
 		return
 	end
 
@@ -331,7 +331,7 @@ function CharacterGetView:_loadSpine()
 			offsets = SkinConfig.instance:getAfterRelativeOffset(505, offsets)
 		end
 
-		recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._gospine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 	else
 		logError("找不到角色皮肤: " .. tostring(self._heroId))

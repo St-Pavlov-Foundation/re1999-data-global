@@ -108,6 +108,86 @@ function NecrologistStoryModel:isReviewCanShow(storyId)
 	return hasPlotFinish
 end
 
+function NecrologistStoryModel:isBranchCanShow(storyId)
+	local endingList = NecrologistStoryConfig.instance:getEndingListByStoryId(storyId)
+
+	if not endingList then
+		return false
+	end
+
+	local isCanShow = true
+	local hasEndingUnlock = false
+
+	for i, v in ipairs(endingList) do
+		if self:isEndingUnlock(v.id) then
+			hasEndingUnlock = true
+		end
+	end
+
+	if not hasEndingUnlock then
+		return isCanShow, false
+	end
+
+	local mo = self:getById(storyId)
+
+	if not mo then
+		return false
+	end
+
+	local dataList = NecrologistStoryConfig.instance:getOptionListByStoryId(storyId)
+
+	for _, data in ipairs(dataList) do
+		local plotInfo = mo:getPlotInfo(data.storygroup)
+
+		if not plotInfo then
+			return false
+		end
+
+		for _, options in ipairs(data.optionList) do
+			if not self:hasOptionUnlock(options, plotInfo) then
+				return isCanShow, false
+			end
+		end
+	end
+
+	return isCanShow, true
+end
+
+function NecrologistStoryModel:hasOptionUnlock(options, plotInfo)
+	for i, v in ipairs(options) do
+		if plotInfo:isOptionUnlocked(v.id) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function NecrologistStoryModel:isEndingUnlock(endingId)
+	local endingCo = NecrologistStoryConfig.instance:getEndingCo(endingId)
+
+	if not endingCo then
+		return false
+	end
+
+	local storyId = endingCo.storyId
+	local storyStep = endingCo.storyStep
+	local mo = self:getById(storyId)
+
+	if not mo then
+		return false
+	end
+
+	local storyConfig = NecrologistStoryConfig.instance:getStoryConfig(storyStep)
+	local plotInfo = mo:getPlotInfo(storyConfig.storygroup)
+
+	if not plotInfo then
+		return false
+	end
+
+	return plotInfo:isEndingUnlocked(endingId)
+end
+
 NecrologistStoryModel.instance = NecrologistStoryModel.New()
 
 return NecrologistStoryModel

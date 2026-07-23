@@ -32,17 +32,17 @@ function StoryBgEffsTextureShake:start(callback, callbackObj)
 end
 
 function StoryBgEffsTextureShake:_onOpenView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
 	end
 end
 
 function StoryBgEffsTextureShake:_onCloseView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
 	end
 end
@@ -340,13 +340,10 @@ function StoryBgEffsTextureShake:onLoadFinished()
 	StoryTool.enablePostProcess(true)
 
 	if self._prefabPath then
-		local bgGo = StoryViewMgr.instance:getStoryBackgroundView()
-
-		self._rootGo = gohelper.findChild(bgGo, "#go_upbg/#simage_bgimg")
-
 		local prefAssetItem = self._loader:getAssetItem(self._prefabPath)
+		local bgImgGo = StoryViewMgr.instance:getStoryFrontBgImgGo()
 
-		self._effsGo = gohelper.clone(prefAssetItem:GetResource(), self._rootGo)
+		self._effsGo = gohelper.clone(prefAssetItem:GetResource(), bgImgGo)
 
 		self:_cacheEffectNodes()
 		self:_applyEffectParams()

@@ -54,6 +54,7 @@ function ArcadeRoomMgr:switchRoom()
 		local characterEntity = self._scene.entityMgr:getCharacterEntity()
 
 		characterEntity:refreshPosition()
+		characterEntity:removeAllEffect()
 		room:initEntities()
 		characterEntity:playActionShow(ArcadeGameEnum.ActionShowId.Born)
 		ArcadeStatHelper.instance:onEnterRoom()
@@ -83,6 +84,12 @@ function ArcadeRoomMgr:_exitRoom()
 				removeBuffIdList[i] = buffId
 			end
 		end
+
+		local skillSetMO = characterMO:getSkillSetMO()
+
+		if skillSetMO then
+			skillSetMO:clearSkillCounterRecordOnExitRoom()
+		end
 	end
 
 	ArcadeGameController.instance:removeEntityBuffs(removeBuffIdList, ArcadeGameEnum.EntityType.Character)
@@ -91,6 +98,14 @@ function ArcadeRoomMgr:_exitRoom()
 	ArcadeGameModel.instance:clearAllEntityMO()
 	ArcadeGameModel.instance:resetNegativeOperationRound()
 	ArcadeGameModel.instance:setNearEventEntity()
+
+	local gridMOList = ArcadeGameModel.instance:getGridMOList()
+
+	if gridMOList then
+		for _, gridMO in ipairs(gridMOList) do
+			gridMO:reset()
+		end
+	end
 
 	self._curRoom = nil
 

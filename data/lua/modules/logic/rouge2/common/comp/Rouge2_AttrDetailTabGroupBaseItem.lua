@@ -46,8 +46,12 @@ function Rouge2_AttrDetailTabGroupBaseItem:_btnClickOnClick()
 	self:updateFold(not isFold)
 
 	if isFold and not self._isSelect then
-		Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnSelectAttrTab, self._groupType, 1)
+		self._parentView:playSwitchAnim(self._dispatchEvent2SwitchTab, self)
 	end
+end
+
+function Rouge2_AttrDetailTabGroupBaseItem:_dispatchEvent2SwitchTab()
+	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnSelectAttrTab, self._groupType, 1)
 end
 
 function Rouge2_AttrDetailTabGroupBaseItem:_onSelectAttrTab(groupIndex, subIndex)
@@ -91,6 +95,10 @@ function Rouge2_AttrDetailTabGroupBaseItem:onSelect(isSelect)
 
 	gohelper.setActive(self._goSelect, isSelect)
 	gohelper.setActive(self._goUnselect, not isSelect)
+
+	if isSelect then
+		self:updateFold(false)
+	end
 end
 
 function Rouge2_AttrDetailTabGroupBaseItem:updateFold(isFold)

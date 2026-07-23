@@ -11,17 +11,6 @@
     "iconRes": "skinhandbook_titleicon_07"
   },
   {
-    "id": 10002,
-    "name": "language_10086197",
-    "nameEn": "Behind the Curtain",
-    "show": false,
-    "order": 2,
-    "des": "language_10086198",
-    "scenePath": "",
-    "nameRes": "",
-    "iconRes": ""
-  },
-  {
     "id": 10003,
     "name": "language_10086199",
     "nameEn": "Gathering of Cultures",

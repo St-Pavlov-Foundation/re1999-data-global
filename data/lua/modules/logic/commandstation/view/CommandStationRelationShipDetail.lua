@@ -129,9 +129,9 @@ function CommandStationRelationShipDetail:_addCharacterGo(child, characterId, ma
 end
 
 function CommandStationRelationShipDetail:_initCharacterChain()
-	local config = CommandStationController.getCommandStationRelationChain()
+	local config = CommandStationController.getCommandStationRelationChain(self.viewParam.pageIndex)
 
-	self._stateList = config.stateId
+	self._stateList = config and config.stateId or {}
 end
 
 function CommandStationRelationShipDetail:onUpdateParam()
@@ -346,7 +346,7 @@ function CommandStationRelationShipDetail:_initDesc(list)
 
 	tabletool.clear(self._txtGoList)
 
-	local lastStateId = CommandStationConfig.instance:getCharacterLastShowState(self._characterId)
+	local lastStateId = CommandStationConfig.instance:getCharacterLastShowState(self._stateId, self._characterId)
 	local showMoreDetailTip = lastStateId > self._stateId
 	local num = #list
 

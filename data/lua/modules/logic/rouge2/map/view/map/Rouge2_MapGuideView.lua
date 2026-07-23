@@ -16,8 +16,6 @@ function Rouge2_MapGuideView:addEvents()
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onUpdateBagInfo, self.onUpdateBagInfo, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onPopViewDone, self.onPopViewDone, self)
 	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onClearInteract, self.onClearInteract, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onChangeMapInfo, self.onChangeMapInfo, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onCreateMapDoneFlowDone, self.onCreateMapDoneFlowDone, self)
 end
 
 function Rouge2_MapGuideView:removeEvents()
@@ -26,14 +24,6 @@ end
 
 function Rouge2_MapGuideView:_editableInitView()
 	return
-end
-
-function Rouge2_MapGuideView:onCreateMapDoneFlowDone()
-	self:tryTriggerActiveSkillGuide()
-end
-
-function Rouge2_MapGuideView:onChangeMapInfo()
-	self:tryTriggerActiveSkillGuide()
 end
 
 function Rouge2_MapGuideView:onOpen()
@@ -91,24 +81,6 @@ function Rouge2_MapGuideView:tryTriggerNodeGuide()
 
 		return true
 	end
-end
-
-function Rouge2_MapGuideView:tryTriggerActiveSkillGuide()
-	local isGuideFinish = GuideModel.instance:isGuideFinish(Rouge2_MapEnum.GuideId.ActiveSkill)
-
-	if isGuideFinish then
-		return
-	end
-
-	local hasAnyNotUseSkill = Rouge2_BackpackController.instance:hasAnyActiveSkillCanEquip()
-
-	if not hasAnyNotUseSkill then
-		return
-	end
-
-	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnGuideGetActiveSkill)
-
-	return true
 end
 
 function Rouge2_MapGuideView:tryTriggerTalentTreeGuide()
@@ -175,10 +147,6 @@ function Rouge2_MapGuideView:tryTriggerMapGuides()
 	end
 
 	if self:tryTriggerTalentTreeGuide() then
-		return
-	end
-
-	if self:tryTriggerActiveSkillGuide() then
 		return
 	end
 

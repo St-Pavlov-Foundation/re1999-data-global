@@ -34,25 +34,22 @@ function Act191SettlementView:_editableInitView()
 	self.heroContainer = gohelper.findChild(self.viewGO, "Left/herogroupcontain/heroContainer")
 
 	self:initHeroInfoItem()
-	self:initHeroAndEquipItem()
 
 	self.animEvent = self.viewGO:GetComponent(gohelper.Type_AnimationEventWrap)
 
 	self.animEvent:AddEventListener("PlayBadgeAnim", self.playBadgeAnim, self)
 
 	self.actInfo = Activity191Model.instance:getActInfo()
+	self.gameInfo = self.actInfo:getGameInfo()
+	self.maxTeamSlot = self.gameInfo.mainTeamSize + self.gameInfo.subTeamSize
 
+	self:initHeroAndEquipItem()
 	self:initBadge()
-end
-
-function Act191SettlementView:onUpdateParam()
-	return
 end
 
 function Act191SettlementView:onOpen()
 	Act191StatController.instance:onViewOpen(self.viewName)
 
-	self.gameInfo = self.actInfo:getGameInfo()
 	self.gameEndInfo = self.actInfo:getGameEndInfo()
 
 	self:refreshLeft()
@@ -87,18 +84,16 @@ end
 
 function Act191SettlementView:initHeroAndEquipItem()
 	self.heroPosTrList = self:getUserDataTb_()
-	self.equipPosTrList = self:getUserDataTb_()
 
 	local recordPos = gohelper.findChild(self.viewGO, "Left/herogroupcontain/recordPos")
 
-	for i = 1, 8 do
+	for i = 1, self.maxTeamSlot do
 		local go = gohelper.findChild(recordPos, "heroPos" .. i)
 
-		self.heroPosTrList[i] = go.transform
-
-		if i <= 4 then
-			go = gohelper.findChild(recordPos, "equipPos" .. i)
-			self.equipPosTrList[i] = go.transform
+		if go then
+			self.heroPosTrList[i] = go.transform
+		else
+			logError("缺失Slot节点" .. i)
 		end
 	end
 
@@ -106,9 +101,8 @@ function Act191SettlementView:initHeroAndEquipItem()
 	local goEquipItem = gohelper.findChild(self.heroContainer, "go_EquipItem")
 
 	self.heroItemList = {}
-	self.equipItemList = {}
 
-	for i = 1, 8 do
+	for i = 1, self.maxTeamSlot do
 		local cloneGo = gohelper.cloneInPlace(goHeroItem, "hero" .. i)
 		local heroItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Act191HeroGroupItem1)
 
@@ -117,19 +111,6 @@ function Act191SettlementView:initHeroAndEquipItem()
 		self.heroItemList[i] = heroItem
 
 		self:_setHeroItemPos(heroItem, i)
-
-		if i <= 4 then
-			cloneGo = gohelper.cloneInPlace(goEquipItem, "equip" .. i)
-
-			local equipItem = MonoHelper.addNoUpdateLuaComOnceToGo(cloneGo, Act191HeroGroupItem2)
-
-			equipItem:setIndex(i)
-			equipItem:setOverrideClick(self.clickCollection, self)
-
-			self.equipItemList[i] = equipItem
-
-			self:_setEquipItemPos(equipItem, i)
-		end
 	end
 
 	gohelper.setActive(goHeroItem, false)
@@ -139,23 +120,23 @@ end
 function Act191SettlementView:refreshLeft()
 	local gameInfo = Activity191Model.instance:getActInfo():getGameInfo()
 	local rank = gameInfo.rank ~= 0 and gameInfo.rank or 1
-	local rankStr = lua_activity191_rank.configDict[rank].fightLevel or ""
+	local rankCfg = Activity191Config.instance:getRankCfg(rank)
 
-	UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(rankStr))
+	if rankCfg then
+		UISpriteSetMgr.instance:setAct174Sprite(self._imageLevel, "act191_level_" .. string.lower(rankCfg.fightLevel))
+	end
 
 	local teamInfo = gameInfo:getTeamInfo()
 
 	for i = 1, 4 do
 		local info = Activity191Helper.matchKeyInArray(teamInfo.battleHeroInfo, i)
-		local heroId, itemUid1
+		local heroId
 
 		if info then
 			heroId = info.heroId
-			itemUid1 = info.itemUid1
 		end
 
 		self.heroItemList[i]:setData(heroId)
-		self.equipItemList[i]:setData(itemUid1)
 
 		local infoItem = self.heroInfoItemList[i]
 
@@ -257,7 +238,7 @@ function Act191SettlementView:initBadge()
 			txtScore.text = "+" .. change
 		end
 
-		gohelper.setActive(txtScore, change ~= 0)
+		gohelper.setActive(txtScore, change and change ~= 0)
 
 		local state = badgeMo:getState()
 		local path = ResUrl.getAct174BadgeIcon(badgeMo.config.icon, state)
@@ -266,7 +247,7 @@ function Act191SettlementView:initBadge()
 
 		badgeItem.anim = go:GetComponent(gohelper.Type_Animator)
 		badgeItem.id = badgeMo.id
-		self.badgeItemList[#self.badgeItemList] = badgeItem
+		self.badgeItemList[#self.badgeItemList + 1] = badgeItem
 	end
 
 	gohelper.setActive(self._goBadgeItem, false)

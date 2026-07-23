@@ -25,8 +25,11 @@ MainEvent.OnMainThumbnailGreetingFinish = GameUtil.getEventId()
 MainEvent.OnShowMainThumbnailView = GameUtil.getEventId()
 MainEvent.SetMainViewRootVisible = GameUtil.getEventId()
 MainEvent.HeroShowInScene = GameUtil.getEventId()
+MainEvent.OnPlayViewAnim = GameUtil.getEventId()
+MainEvent.SetHeroInScene = GameUtil.getEventId()
 MainEvent.OnChangeGMBtnStatus = GameUtil.getEventId()
 MainEvent.FocusBGMDevice = GameUtil.getEventId()
 MainEvent.FocusBGMDeviceReset = GameUtil.getEventId()
+MainEvent.OnRefreshSummonTuziRed = GameUtil.getEventId()
 
 return MainEvent

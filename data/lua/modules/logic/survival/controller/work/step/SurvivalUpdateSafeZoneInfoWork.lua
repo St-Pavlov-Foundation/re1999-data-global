@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateSafeZoneInfoWo
 
 local SurvivalUpdateSafeZoneInfoWork = class("SurvivalUpdateSafeZoneInfoWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateSafeZoneInfoWork:onStart(context)
+function SurvivalUpdateSafeZoneInfoWork:onStart2(context)
 	local safeZone = self._stepMo.safeZone.shrinkInfo
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 

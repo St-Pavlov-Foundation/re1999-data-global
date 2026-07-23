@@ -266,6 +266,11 @@ function StoreViewContainer:onContainerOpenFinish()
 	self.navigationView:resetCloseBtnAudioId(AudioEnum.UI.UI_Rolesopen)
 end
 
+function StoreViewContainer:onContainerClose()
+	GameUtil.onDestroyViewMember(self, "_flowGoldenMilletPresent")
+	StoreViewContainer.super.onContainerClose(self)
+end
+
 function StoreViewContainer:setCurrencyType(showCost)
 	local currencyTypeParam = {}
 
@@ -432,6 +437,23 @@ end
 function StoreViewContainer._sortSkinGoodsItem(a, b)
 	if a._index ~= b._index then
 		return a._index < b._index
+	end
+end
+
+function StoreViewContainer:doFlowFromGoldenMilletPresent()
+	GameUtil.onDestroyViewMember(self, "_flowGoldenMilletPresent")
+
+	local StoreControllerInst = StoreController.instance
+	local kViewName = ViewName.CommonPropView
+
+	if ViewMgr.instance:isOpen(kViewName) then
+		self._flowGoldenMilletPresent = GaoSiNiaoFlowSequence_Base.New()
+
+		self._flowGoldenMilletPresent:addWork(GaoSiNiaoWork_WaitCloseView.s_create(kViewName))
+		self._flowGoldenMilletPresent:addWork(FunctionWork.New(StoreControllerInst.dispatchEvent, StoreControllerInst, StoreEvent.SkinPlayPriceAnim))
+		self._flowGoldenMilletPresent:start()
+	else
+		StoreControllerInst:dispatchEvent(StoreEvent.SkinPlayPriceAnim)
 	end
 end
 

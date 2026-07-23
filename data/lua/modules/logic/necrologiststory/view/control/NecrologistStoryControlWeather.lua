@@ -6,8 +6,9 @@ local NecrologistStoryControlWeather = class("NecrologistStoryControlWeather", N
 
 function NecrologistStoryControlWeather:onPlayControl()
 	local weather = tonumber(self.controlParam)
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
 
-	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangeWeather, weather)
+	mo:setWeather(weather)
 	self:onPlayControlFinish()
 end
 

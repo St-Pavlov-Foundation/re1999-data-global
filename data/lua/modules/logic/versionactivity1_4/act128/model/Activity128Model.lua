@@ -9,16 +9,12 @@ function Activity128Model:onInit()
 end
 
 function Activity128Model:reInit()
-	self.__activityId = false
 	self.__config = false
 	self.__stageInfos = {}
 	self.__stageHasGetBonusIds = {}
 	self._layer4Score = {}
 	self._layer4HighestScore = {}
-end
-
-function Activity128Model:_internal_set_activity(activityId)
-	self.__activityId = activityId
+	self._actId = nil
 end
 
 function Activity128Model:_internal_set_config(config)
@@ -32,7 +28,13 @@ function Activity128Model:getConfig()
 end
 
 function Activity128Model:getActivityId()
-	return self.__activityId
+	if not self._actId then
+		local actId = self.__config:getActivityId()
+
+		self._actId = actId
+	end
+
+	return self._actId
 end
 
 function Activity128Model:getStageInfo(stage)
@@ -80,7 +82,9 @@ function Activity128Model:hasGetBonusIds(stage, id)
 end
 
 function Activity128Model:getTaskMoList()
-	return TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity128, self.__activityId)
+	local activityId = self:getActivityId()
+
+	return TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity128, activityId)
 end
 
 function Activity128Model:getHighestPoint(stage)
@@ -135,23 +139,32 @@ function Activity128Model:getStageOpenServerTime(stage)
 end
 
 function Activity128Model:getActMO()
-	return ActivityModel.instance:getActMO(self.__activityId)
+	local activityId = self:getActivityId()
+
+	return ActivityModel.instance:getActMO(activityId)
 end
 
 function Activity128Model:isActOnLine()
-	return ActivityHelper.getActivityStatus(self.__activityId, true) == ActivityEnum.ActivityStatus.Normal
+	local activityId = self:getActivityId()
+
+	return ActivityHelper.getActivityStatus(activityId, true) == ActivityEnum.ActivityStatus.Normal
 end
 
 function Activity128Model:getRealStartTimeStamp()
-	return self:getActMO():getRealStartTimeStamp()
+	local actMo = self:getActMO()
+
+	return actMo and actMo:getRealStartTimeStamp() or 0
 end
 
 function Activity128Model:getRealEndTimeStamp()
-	return self:getActMO():getRealEndTimeStamp()
+	local actMo = self:getActMO()
+
+	return actMo and self:getActMO():getRealEndTimeStamp() or 0
 end
 
 function Activity128Model:getRemainTimeStr()
-	local second = ActivityModel.instance:getRemainTimeSec(self.__activityId)
+	local activityId = self:getActivityId()
+	local second = ActivityModel.instance:getRemainTimeSec(activityId)
 
 	if not self.__config then
 		return

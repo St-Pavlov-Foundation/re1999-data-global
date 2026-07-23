@@ -4,13 +4,14 @@ module("modules.configs.excel2json.lua_rouge2_reward", package.seeall)
 
 local lua_rouge2_reward = {}
 local fields = {
+	group = 6,
+	rewardPriority = 9,
+	value = 3,
+	num = 5,
 	maxBuyCount = 4,
 	rewardImage = 8,
-	num = 5,
-	group = 6,
-	value = 3,
-	stage = 2,
 	id = 1,
+	stage = 2,
 	rewardScore = 7
 }
 local primaryKey = {

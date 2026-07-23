@@ -14,12 +14,19 @@ function FightViewPlayCardItem:init(go)
 	local cardSkin = FightCardDataHelper.getCardSkin()
 	local normalImg = gohelper.findChildImage(go, "imgEmpty/emptyNormal")
 	local moveSingleImg = gohelper.findChildSingleImage(go, "imgMove/Image")
+
+	self.moveImage = gohelper.findChildImage(go, "imgMove/Image")
+
 	local moveImgUrl = "singlebg_lang/txt_fight/change.png"
 
-	if cardSkin == 672801 then
+	if cardSkin then
 		UISpriteSetMgr.instance:setFightSkillCardSprite(normalImg, "card_dz5", true)
 
 		moveImgUrl = "singlebg_lang/txt_fight/change2.png"
+
+		if cardSkin == 672802 then
+			moveImgUrl = "singlebg_lang/txt_fight/change3.png"
+		end
 
 		local emptyDarkBg = gohelper.cloneInPlace(self._emptyNormal.gameObject, "emptyDarkBg")
 
@@ -31,13 +38,13 @@ function FightViewPlayCardItem:init(go)
 	end
 
 	moveSingleImg:UnLoadImage()
-	moveSingleImg:LoadImage(moveImgUrl)
+	moveSingleImg:LoadImage(moveImgUrl, self.onMoveImgLoaded, self)
 
 	self._moveGO = gohelper.findChild(go, "imgMove")
 	self._moveAnimComp = self._moveGO:GetComponent(typeof(UnityEngine.Animation))
 	self._lockGO = gohelper.findChild(go, "lock")
 
-	if FightCardDataHelper.getCardSkin() == 672801 then
+	if cardSkin then
 		FightViewHandCardItem.replaceLockBg(self._lockGO)
 	end
 
@@ -85,6 +92,16 @@ function FightViewPlayCardItem:init(go)
 	self.txtASFDEnergy = gohelper.findChildText(go, "asfd_icon/#txt_Num")
 
 	gohelper.setSiblingAfter(self.goASFD, self._innerGO)
+
+	self.loaderComp = FightGameMgr.entityMgr:addComponent(FightLoaderComponent)
+	self.timerComp = FightGameMgr.entityMgr:addComponent(FightTimerComponent)
+	self.msgComp = FightGameMgr.entityMgr:addComponent(FightMsgComponent)
+
+	self.msgComp:registMsg(FightMsgId.CancelOperateWhenMeiLeiErExRound, self.onCancelOperateWhenMeiLeiErExRound, self)
+end
+
+function FightViewPlayCardItem:onMoveImgLoaded()
+	self.moveImage:SetNativeSize()
 end
 
 function FightViewPlayCardItem:refreshSeasonArrowShow(newActIndex)
@@ -105,6 +122,18 @@ function FightViewPlayCardItem:removeEventListeners()
 end
 
 function FightViewPlayCardItem:onDestroy()
+	if self.msgComp then
+		self.msgComp:disposeSelf()
+	end
+
+	if self.loaderComp then
+		self.loaderComp:disposeSelf()
+	end
+
+	if self.timerComp then
+		self.timerComp:disposeSelf()
+	end
+
 	if self._effectLoader1 then
 		self._effectLoader1:dispose()
 
@@ -362,6 +391,10 @@ function FightViewPlayCardItem:_onClickThis()
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.RecordSkill)
 
 		return self:_resetRoundOp()
+	elseif curOperateState == FightStageMgr.OperateStateType.DeviceDiscard then
+		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.DeviceDiscard)
+
+		return self:_resetRoundOp()
 	end
 
 	if FightDataHelper.operationDataMgr:isCardOpEnd() then
@@ -376,15 +409,45 @@ function FightViewPlayCardItem:_onClickThis()
 end
 
 function FightViewPlayCardItem:_resetRoundOp()
-	FightRpc.instance:sendResetRoundRequest()
-	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightResetCard)
-	FightAudioMgr.instance:stopAllCardAudio()
+	FightGameMgr.operateMgr:invokeCancelPlayerOperate()
 end
 
 function FightViewPlayCardItem:setPreLv(lv)
 	if self._cardItem then
 		self._cardItem:setPreLv(lv)
 	end
+end
+
+function FightViewPlayCardItem:onCancelOperateWhenMeiLeiErExRound()
+	local effectUrl = "ui/viewres/fight/fightmeileierercard.prefab"
+
+	self.loaderComp:loadAsset(effectUrl, self.onMeiLerErEffectLoaded, self)
+end
+
+function FightViewPlayCardItem:onMeiLerErEffectLoaded(success, assetItem)
+	if not success then
+		return
+	end
+
+	local prefab = assetItem:GetResource()
+	local go = gohelper.clone(prefab, self.go)
+	local normal = gohelper.findChild(go, "#nomal")
+	local unique = gohelper.findChild(go, "ultimate")
+
+	gohelper.setActive(normal, true)
+	gohelper.setActive(unique, false)
+
+	if self._cardItem and self._cardItem.isBigSkillShow then
+		gohelper.setActive(normal, false)
+		gohelper.setActive(unique, true)
+	end
+
+	transformhelper.setLocalScale(go.transform, 0.78, 0.78, 0.78)
+	self.timerComp:registRepeatTimer(self.removeMeiLerErEffect, self, 1.2, 1, go)
+end
+
+function FightViewPlayCardItem:removeMeiLerErEffect(go)
+	gohelper.destroy(go)
 end
 
 return FightViewPlayCardItem

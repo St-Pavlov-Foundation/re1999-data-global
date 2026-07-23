@@ -120,15 +120,20 @@ function WeatherEggContainerComp:initSceneGo(sceneGo)
 	for i, id in ipairs(self._eggList) do
 		local eggConfig = lua_scene_eggs.configDict[id]
 		local cls = _G[eggConfig.actionClass]
-		local actionInstance = cls.New()
-		local goList = self:getGoList(eggConfig.path)
 
-		actionInstance:init(self._sceneGo, goList, eggConfig, self._context)
+		if cls then
+			local actionInstance = cls.New()
+			local goList = self:getGoList(eggConfig.path)
 
-		if eggConfig.parallel == 1 then
-			table.insert(self._parallelEggList, actionInstance)
+			actionInstance:init(self._sceneGo, goList, eggConfig, self._context)
+
+			if eggConfig.parallel == 1 then
+				table.insert(self._parallelEggList, actionInstance)
+			else
+				table.insert(self._serialEggList, actionInstance)
+			end
 		else
-			table.insert(self._serialEggList, actionInstance)
+			logError(string.format("WeatherEggContainerComp can not find egg action class by id:%d cls:[%s]", id, eggConfig.actionClass))
 		end
 	end
 

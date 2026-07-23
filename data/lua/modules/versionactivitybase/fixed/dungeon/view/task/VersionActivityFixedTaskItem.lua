@@ -36,14 +36,14 @@ function VersionActivityFixedTaskItem:addEventListeners()
 	self.btnNotFinish:AddClickListener(self._btnNotFinishOnClick, self)
 	self.btnFinish:AddClickListener(self._btnFinishOnClick, self)
 	self.btnFinishAll:AddClickListener(self._btnFinishAllOnClick, self)
-	self:addEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
+	self:addEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
 end
 
 function VersionActivityFixedTaskItem:removeEventListeners()
 	self.btnNotFinish:RemoveClickListener()
 	self.btnFinish:RemoveClickListener()
 	self.btnFinishAll:RemoveClickListener()
-	self:removeEventCb(VersionActivityFixedHelper.getVersionActivityDungeonController(self._bigVersion, self._smallVersion).instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
+	self:removeEventCb(VersionActivityFixedDungeonController.instance, VersionActivityFixedDungeonEvent.OnClickAllTaskFinish, self._OnClickAllTaskFinish, self)
 end
 
 function VersionActivityFixedTaskItem:_btnNotFinishOnClick()
@@ -93,7 +93,9 @@ function VersionActivityFixedTaskItem:secondAnimationDone()
 	self.animatorPlayer:Play(UIAnimationName.Idle)
 
 	if self.taskMo.getAll then
-		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.ActivityDungeon, nil, nil, nil, nil, VersionActivityFixedHelper.getVersionActivityEnum().ActivityId.Dungeon)
+		local dungeonActId = VersionActivityFixedHelper.getVersionActivityEnum(self._bigVersion, self._smallVersion).ActivityId.Dungeon
+
+		TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.ActivityDungeon, nil, nil, nil, nil, dungeonActId)
 	else
 		TaskRpc.instance:sendFinishTaskRequest(self.co.id)
 	end

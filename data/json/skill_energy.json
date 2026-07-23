@@ -1,0 +1,121 @@
+[
+  {
+    "id": 31446011,
+    "name": "language_10122507",
+    "energyType": 1,
+    "count": 1,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31446012,
+    "name": "language_10122508",
+    "energyType": 1,
+    "count": 2,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31446013,
+    "name": "language_10122509",
+    "energyType": 1,
+    "count": 3,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31446021,
+    "name": "language_10122510",
+    "energyType": 2,
+    "count": 1,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31446022,
+    "name": "language_10122511",
+    "energyType": 2,
+    "count": 2,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31446062,
+    "name": "language_10122512",
+    "energyType": 0,
+    "count": 2,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31447001,
+    "name": "language_10122513",
+    "energyType": 1,
+    "count": 2,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31447051,
+    "name": "language_10122513",
+    "energyType": 1,
+    "count": 3,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31447002,
+    "name": "language_10122514",
+    "energyType": 2,
+    "count": 2,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31450181,
+    "name": "language_10122701",
+    "energyType": 0,
+    "count": 1,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31450182,
+    "name": "language_10122702",
+    "energyType": 0,
+    "count": 2,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31446063,
+    "name": "language_10122703",
+    "energyType": 0,
+    "count": 3,
+    "isSpecialCard": 0
+  },
+  {
+    "id": 31490201,
+    "name": "language_10122842",
+    "energyType": 1,
+    "count": 1,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31490211,
+    "name": "language_10122843",
+    "energyType": 2,
+    "count": 1,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31495201,
+    "name": "language_10122842",
+    "energyType": 1,
+    "count": 2,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31495211,
+    "name": "language_10122843",
+    "energyType": 2,
+    "count": 2,
+    "isSpecialCard": 1
+  },
+  {
+    "id": 31446023,
+    "name": "language_10122844",
+    "energyType": 2,
+    "count": 3,
+    "isSpecialCard": 0
+  }
+]

@@ -721,6 +721,16 @@ function FightSkillSelectView:_getEntityMiddlePos(entity)
 
 	if mountMiddleGO and mountMiddleGO.name == ModuleEnum.SpineHangPoint.mountmiddle then
 		local worldPosX, worldPosY, worldPosZ = transformhelper.getPos(mountMiddleGO.transform)
+		local entityMO = entity:getMO()
+
+		if entityMO then
+			local config3d = lua_fight_monster_3d.configDict[entityMO.skin]
+
+			if config3d then
+				worldPosY = worldPosY - 9
+			end
+		end
+
 		local rectPosX, rectPosY = recthelper.worldPosToAnchorPosXYZ(worldPosX, worldPosY, worldPosZ, self._containerTr)
 
 		return rectPosX, rectPosY

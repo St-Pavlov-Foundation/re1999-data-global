@@ -44,7 +44,7 @@ function FightWorkRefreshFightAfterCrash:onFlowFinish()
 			entity.nameUIVisible:ctor(entity)
 		end
 
-		if entity.nameUI then
+		if entity.nameUI and entity.nameUI._uiGO then
 			entity.nameUI:setActive(true)
 
 			entity.nameUI._nameUIVisible = true

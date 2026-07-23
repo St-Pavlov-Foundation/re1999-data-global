@@ -68,31 +68,6 @@ function PayModel_OverseasImpl:setOrderInfo(info)
 	self._orderInfo.currency = info.currency
 end
 
-function PayModel_OverseasImpl:getGamePayInfo()
-	local payInfo = PayModel_OverseasImpl.super.getGamePayInfo(self)
-
-	payInfo.currency = self._orderInfo.currency
-	payInfo.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(self._orderInfo.id))
-
-	if SLFramework.FrameworkSettings.IsEditor then
-		payInfo.productId = ""
-	else
-		local channelId = SDKMgr.instance:getChannelId()
-		local channelIdChargeConfig = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. channelId, true)
-
-		if channelIdChargeConfig then
-			payInfo.productId = channelIdChargeConfig.appStoreProductID
-		else
-			payInfo.productId = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
-		end
-	end
-
-	payInfo.originCurrency = self:getProductOriginCurrency(self._orderInfo.id)
-	payInfo.originAmount = self:getProductOriginAmount(self._orderInfo.id)
-
-	return payInfo
-end
-
 function PayModel_OverseasImpl:getProductInfo(id)
 	return self._productInfos[id]
 end
@@ -277,6 +252,68 @@ function PayModel_OverseasImpl:_getProductOriginAmount(id)
 	end
 
 	self._tmpAmount = num
+end
+
+function PayModel_OverseasImpl:getProductPriceScaledSymbol(lua_store_charge_goods_id, symbolSize)
+	symbolSize = symbolSize or 30
+
+	local symbol = self:getProductOriginPriceSymbol(lua_store_charge_goods_id)
+	local num, numStr = self:getProductOriginPriceNum(lua_store_charge_goods_id)
+	local symbol2 = ""
+
+	if string.nilorempty(symbol) then
+		local reverseStr = string.reverse(numStr)
+		local lastIndex = string.find(reverseStr, "%d")
+
+		lastIndex = string.len(reverseStr) - lastIndex + 1
+		symbol2 = string.sub(numStr, lastIndex + 1, string.len(numStr))
+		numStr = string.sub(numStr, 1, lastIndex)
+
+		return string.format("%s<size=%s>%s</size>", numStr, symbolSize, symbol2)
+	else
+		return string.format("<size=%s>%s</size>%s", symbolSize, symbol, numStr)
+	end
+end
+
+function PayModel_OverseasImpl:getGamePayInfo()
+	if not self._orderInfo.id then
+		return {}
+	end
+
+	local chargeConfig = StoreConfig.instance:getChargeGoodsConfig(self._orderInfo.id)
+	local playerinfo = PlayerModel.instance:getPlayinfo()
+	local payInfo = {}
+
+	payInfo.gameRoleInfo = self:getGameRoleInfo(true)
+	payInfo.gameRoleInfo.roleEstablishTime = tonumber(playerinfo.registerTime)
+	payInfo.currency = self._orderInfo.currency
+	payInfo.amount = math.ceil(100 * StoreConfig.instance:getBaseChargeGoodsPrice(chargeConfig.id))
+	payInfo.goodsId = self._orderInfo.id
+	payInfo.goodsName = chargeConfig.name
+	payInfo.goodsDesc = chargeConfig.desc
+	payInfo.gameOrderId = self._orderInfo.gameOrderId
+	payInfo.passBackParam = self._orderInfo.passBackParam and self._orderInfo.passBackParam or ""
+	payInfo.notifyUrl = self._orderInfo.notifyUrl
+	payInfo.timestamp = self._orderInfo.timestamp
+	payInfo.sign = self._orderInfo.sign
+
+	if SLFramework.FrameworkSettings.IsEditor then
+		payInfo.productId = ""
+	else
+		local channelId = SDKMgr.instance:getChannelId()
+		local channelIdChargeConfig = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName() .. "_" .. channelId, true)
+
+		if channelIdChargeConfig then
+			payInfo.productId = channelIdChargeConfig.appStoreProductID
+		else
+			payInfo.productId = StoreConfig.instance:getStoreChargeConfig(self._orderInfo.id, BootNativeUtil.getPackageName()).appStoreProductID
+		end
+	end
+
+	payInfo.originCurrency = self:getProductOriginCurrency(self._orderInfo.id)
+	payInfo.originAmount = self:getProductOriginAmount(self._orderInfo.id)
+
+	return payInfo
 end
 
 return PayModel_OverseasImpl

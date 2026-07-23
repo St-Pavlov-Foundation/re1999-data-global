@@ -27,7 +27,7 @@ function Act191StoreView:removeEvents()
 end
 
 function Act191StoreView:_editableInitView()
-	self.actId = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
+	self.actId = Activity191Controller.instance:getStoreId()
 
 	gohelper.setActive(self._gostoreItem, false)
 
@@ -46,7 +46,7 @@ function Act191StoreView:onOpen()
 end
 
 function Act191StoreView:refreshCurrency()
-	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a1DouQuQu)
+	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a8DouQuQu)
 
 	self._txtCoin.text = currencyMo.quantity
 end

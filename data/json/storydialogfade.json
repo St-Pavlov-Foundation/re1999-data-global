@@ -414,5 +414,45 @@
   {
     "id": 104,
     "skipvideo": "3_5_activity_04"
+  },
+  {
+    "id": 105,
+    "skipvideo": "3_7_chapter13_01"
+  },
+  {
+    "id": 106,
+    "skipvideo": "3_7_chapter13_02"
+  },
+  {
+    "id": 107,
+    "skipvideo": "3_7_chapter13_03"
+  },
+  {
+    "id": 108,
+    "skipvideo": "3_7_chapter13_04"
+  },
+  {
+    "id": 109,
+    "skipvideo": "3_8_activity_01"
+  },
+  {
+    "id": 110,
+    "skipvideo": "3_8_activity_02"
+  },
+  {
+    "id": 111,
+    "skipvideo": "3_8_activity_03"
+  },
+  {
+    "id": 112,
+    "skipvideo": "3_8_activity_04"
+  },
+  {
+    "id": 113,
+    "skipvideo": "s02_activity_01"
+  },
+  {
+    "id": 114,
+    "skipvideo": "s02_activity_02"
   }
 ]

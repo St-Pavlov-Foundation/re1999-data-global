@@ -60,7 +60,40 @@ PlayerCardEnum.EquipType = {
 }
 PlayerCardEnum.ShowSettingsType = {
 	ShowEquipType = 1,
+	ShowEnterAnimType = 3,
 	HideBadgeFormOther = 2
+}
+PlayerCardEnum.ShowSettingsInfo = {
+	[PlayerCardEnum.ShowSettingsType.ShowEquipType] = {
+		isNumber = true,
+		Defalut = PlayerCardEnum.EquipType.Critter
+	},
+	[PlayerCardEnum.ShowSettingsType.HideBadgeFormOther] = {
+		isNumber = true,
+		Defalut = 0
+	},
+	[PlayerCardEnum.ShowSettingsType.ShowEnterAnimType] = {
+		isNumber = false,
+		Defalut = ""
+	}
+}
+PlayerCardEnum.Theme = {
+	[210015] = {
+		BgmId = 370201,
+		BtnDelayShowTime = 2,
+		isJustEquipedShow = true,
+		OpenAudioId = AudioEnum3_7.PlayCard.play_ui_lvquanji_open1,
+		EnterAnim = {
+			{
+				videoName = "vertin_lqj_1",
+				aniName = "open1"
+			},
+			{
+				videoName = "vertin_lqj_2",
+				aniName = "open2"
+			}
+		}
+	}
 }
 
 return PlayerCardEnum

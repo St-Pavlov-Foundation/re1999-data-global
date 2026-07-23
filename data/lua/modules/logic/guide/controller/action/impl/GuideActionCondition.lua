@@ -71,4 +71,14 @@ function GuideActionCondition:checkSurvivalWeekDay()
 	return weekMo.day > 1
 end
 
+function GuideActionCondition:checkArcadeHaveRefund()
+	local strReturnReward = ArcadeOutSizeModel.instance:getStrReturnRewardData()
+
+	if string.nilorempty(strReturnReward) then
+		return false
+	else
+		return true
+	end
+end
+
 return GuideActionCondition

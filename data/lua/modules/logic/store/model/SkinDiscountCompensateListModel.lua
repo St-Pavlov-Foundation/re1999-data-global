@@ -42,6 +42,7 @@ function SkinDiscountCompensateListModel:initList(itemId)
 			mo.id = id
 			mo.itemId = itemId
 			mo.isOwned = HeroModel.instance:checkHasSkin(id) and 1 or 0
+			mo.skinLevel = -skinConfig.skinLevel
 
 			table.insert(moList, mo)
 		end
@@ -49,6 +50,7 @@ function SkinDiscountCompensateListModel:initList(itemId)
 
 	table.sort(moList, SortUtil.tableKeyLower({
 		"isOwned",
+		"skinLevel",
 		"id"
 	}))
 

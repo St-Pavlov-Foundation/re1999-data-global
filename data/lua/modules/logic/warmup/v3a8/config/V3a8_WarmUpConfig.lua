@@ -47,7 +47,7 @@ function V3a8_WarmUpConfig:__init_v3a8_warmup_play(configTable)
 		table.insert(self.__v3a8_warmup_play[activityId], CO)
 	end
 
-	for _, list in ipairs(self.__v3a8_warmup_play) do
+	for _, list in pairs(self.__v3a8_warmup_play) do
 		table.sort(list, function(a, b)
 			return a.day < b.day
 		end)

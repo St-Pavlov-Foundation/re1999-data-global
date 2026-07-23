@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalTweenCameraWork", pa
 
 local SurvivalTweenCameraWork = class("SurvivalTweenCameraWork", SurvivalStepBaseWork)
 
-function SurvivalTweenCameraWork:onStart(context)
+function SurvivalTweenCameraWork:onStart2(context)
 	self:moveNext()
 end
 

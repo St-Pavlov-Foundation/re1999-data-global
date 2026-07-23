@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalMapTickAfterWork", p
 
 local SurvivalMapTickAfterWork = class("SurvivalMapTickAfterWork", SurvivalStepBaseWork)
 
-function SurvivalMapTickAfterWork:onStart(context)
+function SurvivalMapTickAfterWork:onStart2(context)
 	local curRound = self._stepMo.paramInt[1] or 0
 	local totalRound = self._stepMo.paramInt[2] or 0
 	local reason = self._stepMo.paramInt[3] or 0

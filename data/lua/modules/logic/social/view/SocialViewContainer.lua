@@ -154,7 +154,87 @@ function SocialViewContainer:getMessageListScrollParam()
 end
 
 function SocialViewContainer:switchTab(tabId)
+	local skinId = self.viewParam and self.viewParam.skinId
+
+	if not skinId then
+		local cardInfo = PlayerCardModel.instance:getCardInfo()
+
+		skinId = cardInfo and cardInfo:getThemeId()
+	end
+
+	if tabId ~= 1 then
+		self:_showSkinBG(skinId)
+	else
+		self:_showSkinBG(self._curSkinId or skinId)
+	end
+
 	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, tabId)
+end
+
+function SocialViewContainer:checkBGView(skinId)
+	if not self._socialBGList then
+		self._socialBGList = {}
+	end
+
+	self._curSkinId = skinId
+
+	if skinId ~= 0 and not self._socialBGList[skinId] then
+		local viewResPath = SocialEnum.ThemeViewResPath[skinId]
+
+		if viewResPath and viewResPath.socialViewbg then
+			if not self._bgabLoader then
+				self._bgabLoader = MultiAbLoader.New()
+			end
+
+			self._bgabLoader:addPath(viewResPath.socialViewbg)
+			self._bgabLoader:startLoad(self._onBGLoadFinish, self)
+
+			return
+		end
+	end
+
+	self:_showSkinBG(self._curSkinId)
+end
+
+function SocialViewContainer:_onBGLoadFinish()
+	local viewResPath = SocialEnum.ThemeViewResPath[self._curSkinId]
+
+	if viewResPath and viewResPath.socialViewbg then
+		local assetItem = self._bgabLoader:getAssetItem(viewResPath.socialViewbg)
+		local prefab = assetItem:GetResource(viewResPath.socialViewbg)
+
+		self._socialBGList[self._curSkinId] = gohelper.clone(prefab, gohelper.findChild(self.viewGO, "#simage_bg"), self._curSkinId)
+	end
+
+	self:_showSkinBG(self._curSkinId)
+end
+
+function SocialViewContainer:_showSkinBG(skin)
+	if self._socialBGList then
+		for _skin, go in pairs(self._socialBGList) do
+			gohelper.setActive(go, skin == _skin)
+		end
+	end
+end
+
+function SocialViewContainer:closeInternal(isImmediate)
+	if self._bgabLoader then
+		self._bgabLoader:dispose()
+
+		self._bgabLoader = nil
+	end
+
+	SocialViewContainer.super.closeInternal(self, isImmediate)
+end
+
+function SocialViewContainer:destroyView()
+	if self._bgabLoader then
+		self._bgabLoader:dispose()
+
+		self._bgabLoader = nil
+	end
+
+	SocialViewContainer.super.destroyView(self)
 end
 
 return SocialViewContainer

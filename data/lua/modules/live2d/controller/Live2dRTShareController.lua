@@ -101,7 +101,7 @@ function Live2dRTShareController:_getTextureSizeByCameraSize(orthographicSize)
 	local textureSizeByCamera = GuiLive2d.getTextureSizeByCameraSize(orthographicSize)
 	local textureSize = textureSizeByCamera * _adapterScaleOnCreate * _qualityScale
 
-	return CharacterVoiceEnum.ChangeRTSize and CharacterVoiceEnum.RTWidth or math.floor(textureSize)
+	return CharacterVoiceEnum.ChangeRTSize and CharacterVoiceEnum.getRTWidth() or math.floor(textureSize)
 end
 
 function Live2dRTShareController:_getTextureSize(orthographicSize, shareType, heroId, skinId)
@@ -136,11 +136,13 @@ function Live2dRTShareController:_createRT(orthographicSize, shareType, heroId, 
 		logError(string.format("Live2dRTShareController:_createRT orthographicSize:%s textureSize:%s shareType:%s", orthographicSize, textureSize, shareType))
 	end
 
+	local rtHeight = CharacterVoiceEnum.getRTHeight()
+
 	if shareType == CharacterVoiceEnum.RTShareType.BloomOpen or shareType == CharacterVoiceEnum.RTShareType.Normal then
-		return UnityEngine.RenderTexture.GetTemporary(textureSize, textureSize, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
+		return UnityEngine.RenderTexture.GetTemporary(textureSize, rtHeight, 0, UnityEngine.RenderTextureFormat.ARGBHalf)
 	end
 
-	return UnityEngine.RenderTexture.GetTemporary(textureSize, textureSize, 0, UnityEngine.RenderTextureFormat.ARGB32)
+	return UnityEngine.RenderTexture.GetTemporary(textureSize, rtHeight, 0, UnityEngine.RenderTextureFormat.ARGB32)
 end
 
 function Live2dRTShareController:_getRTInfoList(shareType)
@@ -281,8 +283,8 @@ function Live2dRTShareController:_checkRT()
 			info.image.texture = rt
 
 			local size = info.textureSize
-			local width = size
-			local height = size
+			local width = rt.width
+			local height = rt.height
 
 			recthelper.setSize(info.image.rectTransform, width, height)
 
@@ -297,13 +299,6 @@ function Live2dRTShareController:_checkRT()
 
 			local width = rt.width
 			local height = rt.height
-
-			if self:_isBloomType(shareType) then
-				local size = info.textureSize
-
-				width = size
-				height = size
-			end
 
 			recthelper.setSize(info.image.rectTransform, width, height)
 

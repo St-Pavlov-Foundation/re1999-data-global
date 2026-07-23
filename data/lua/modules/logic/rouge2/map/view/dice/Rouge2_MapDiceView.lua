@@ -81,6 +81,7 @@ function Rouge2_MapDiceView:refreshInfo(checkResInfo)
 	self._attributeId = self._checkCo and self._checkCo.attrType
 	self._attributeCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._attributeId)
 	self._isSucceed = self._checkRes ~= Rouge2_MapEnum.AttrCheckResult.Failure
+	self._reRollTimes = self._checkResInfo and self._checkResInfo:getCheckReRollTimes()
 end
 
 function Rouge2_MapDiceView:refreshTitle()

@@ -1,0 +1,513 @@
+[
+  {
+    "id": 10001,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "",
+    "occur": "2#1001"
+  },
+  {
+    "id": 10001,
+    "order": 2,
+    "head": 300310,
+    "dialogue": "",
+    "occur": ""
+  },
+  {
+    "id": 10002,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "",
+    "occur": "3"
+  },
+  {
+    "id": 10002,
+    "order": 2,
+    "head": 300310,
+    "dialogue": "",
+    "occur": ""
+  },
+  {
+    "id": 10003,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "",
+    "occur": "1#2005"
+  },
+  {
+    "id": 10003,
+    "order": 2,
+    "head": 300310,
+    "dialogue": "",
+    "occur": ""
+  },
+  {
+    "id": 100101,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131135",
+    "occur": "3"
+  },
+  {
+    "id": 100101,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131136",
+    "occur": ""
+  },
+  {
+    "id": 100201,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131137",
+    "occur": "3"
+  },
+  {
+    "id": 100201,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131138",
+    "occur": ""
+  },
+  {
+    "id": 100301,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131139",
+    "occur": "2#100301"
+  },
+  {
+    "id": 100301,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131140",
+    "occur": ""
+  },
+  {
+    "id": 100302,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131141",
+    "occur": "2#100303"
+  },
+  {
+    "id": 100302,
+    "order": 2,
+    "head": 300310,
+    "dialogue": "language_10131142",
+    "occur": ""
+  },
+  {
+    "id": 100302,
+    "order": 3,
+    "head": 302501,
+    "dialogue": "language_10131143",
+    "occur": ""
+  },
+  {
+    "id": 100302,
+    "order": 4,
+    "head": 311401,
+    "dialogue": "language_10131144",
+    "occur": ""
+  },
+  {
+    "id": 100302,
+    "order": 5,
+    "head": 312713,
+    "dialogue": "language_10131145",
+    "occur": ""
+  },
+  {
+    "id": 100303,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131146",
+    "occur": "3"
+  },
+  {
+    "id": 100303,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131147",
+    "occur": ""
+  },
+  {
+    "id": 100304,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "language_10131148",
+    "occur": "1#100303"
+  },
+  {
+    "id": 100305,
+    "order": 1,
+    "head": 302501,
+    "dialogue": "language_10131149",
+    "occur": "1#100304"
+  },
+  {
+    "id": 100306,
+    "order": 1,
+    "head": 311401,
+    "dialogue": "language_10131150",
+    "occur": "1#100305"
+  },
+  {
+    "id": 100307,
+    "order": 1,
+    "head": 312713,
+    "dialogue": "language_10131151",
+    "occur": "1#100306"
+  },
+  {
+    "id": 100401,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131152",
+    "occur": "2#100401"
+  },
+  {
+    "id": 100401,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131153",
+    "occur": ""
+  },
+  {
+    "id": 100402,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131154",
+    "occur": "3"
+  },
+  {
+    "id": 100402,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131155",
+    "occur": ""
+  },
+  {
+    "id": 100403,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "language_10131148",
+    "occur": "1#100403"
+  },
+  {
+    "id": 100404,
+    "order": 1,
+    "head": 302501,
+    "dialogue": "language_10131149",
+    "occur": "1#100404"
+  },
+  {
+    "id": 100405,
+    "order": 1,
+    "head": 311401,
+    "dialogue": "language_10131150",
+    "occur": "1#100405"
+  },
+  {
+    "id": 100406,
+    "order": 1,
+    "head": 312713,
+    "dialogue": "language_10131151",
+    "occur": "1#100406"
+  },
+  {
+    "id": 100501,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131156",
+    "occur": "2#100501"
+  },
+  {
+    "id": 100501,
+    "order": 2,
+    "head": 506101,
+    "dialogue": "language_10131157",
+    "occur": ""
+  },
+  {
+    "id": 100501,
+    "order": 3,
+    "head": 533103,
+    "dialogue": "language_10131158",
+    "occur": ""
+  },
+  {
+    "id": 100502,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131159",
+    "occur": "3"
+  },
+  {
+    "id": 100502,
+    "order": 2,
+    "head": 506101,
+    "dialogue": "language_10131160",
+    "occur": ""
+  },
+  {
+    "id": 100503,
+    "order": 1,
+    "head": 533402,
+    "dialogue": "language_10131161",
+    "occur": "2#100503"
+  },
+  {
+    "id": 100503,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131162",
+    "occur": ""
+  },
+  {
+    "id": 100504,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10131163",
+    "occur": "2#100505"
+  },
+  {
+    "id": 100505,
+    "order": 1,
+    "head": 533202,
+    "dialogue": "language_10131164",
+    "occur": "2#100508"
+  },
+  {
+    "id": 100506,
+    "order": 1,
+    "head": 533402,
+    "dialogue": "language_10131165",
+    "occur": "2#100511"
+  },
+  {
+    "id": 100507,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10131165",
+    "occur": "2#100522"
+  },
+  {
+    "id": 100508,
+    "order": 1,
+    "head": 533202,
+    "dialogue": "language_10131166",
+    "occur": "2#100524"
+  },
+  {
+    "id": 100509,
+    "order": 1,
+    "head": 533402,
+    "dialogue": "language_10131165",
+    "occur": "2#100527"
+  },
+  {
+    "id": 100510,
+    "order": 1,
+    "head": 533402,
+    "dialogue": "language_10131167",
+    "occur": "1#100503"
+  },
+  {
+    "id": 100511,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10045700",
+    "occur": "1#100506"
+  },
+  {
+    "id": 100512,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10131168",
+    "occur": "1#100509"
+  },
+  {
+    "id": 100513,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10131169",
+    "occur": "1#100522"
+  },
+  {
+    "id": 100514,
+    "order": 1,
+    "head": 508601,
+    "dialogue": "language_10131170",
+    "occur": "1#100525"
+  },
+  {
+    "id": 100515,
+    "order": 1,
+    "head": 533202,
+    "dialogue": "language_10131171",
+    "occur": "1#100528"
+  },
+  {
+    "id": 100601,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131172",
+    "occur": "2#100601"
+  },
+  {
+    "id": 100601,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131173",
+    "occur": ""
+  },
+  {
+    "id": 100601,
+    "order": 3,
+    "head": 533103,
+    "dialogue": "language_10131174",
+    "occur": ""
+  },
+  {
+    "id": 100602,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131175",
+    "occur": "1#100610"
+  },
+  {
+    "id": 100602,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131176",
+    "occur": ""
+  },
+  {
+    "id": 100603,
+    "order": 1,
+    "head": 506101,
+    "dialogue": "language_10131177",
+    "occur": "1#100612"
+  },
+  {
+    "id": 100603,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131178",
+    "occur": ""
+  },
+  {
+    "id": 100603,
+    "order": 3,
+    "head": 506101,
+    "dialogue": "language_10131179",
+    "occur": ""
+  },
+  {
+    "id": 100604,
+    "order": 1,
+    "head": 524501,
+    "dialogue": "language_10001221",
+    "occur": "2#100681"
+  },
+  {
+    "id": 100604,
+    "order": 2,
+    "head": 533103,
+    "dialogue": "language_10131180",
+    "occur": ""
+  },
+  {
+    "id": 100604,
+    "order": 3,
+    "head": 533103,
+    "dialogue": "language_10131181",
+    "occur": ""
+  },
+  {
+    "id": 100604,
+    "order": 4,
+    "head": 506101,
+    "dialogue": "language_10131182",
+    "occur": ""
+  },
+  {
+    "id": 100605,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131171",
+    "occur": ""
+  },
+  {
+    "id": 100605,
+    "order": 2,
+    "head": 506101,
+    "dialogue": "language_10131183",
+    "occur": ""
+  },
+  {
+    "id": 100605,
+    "order": 3,
+    "head": 533103,
+    "dialogue": "language_10131184",
+    "occur": ""
+  },
+  {
+    "id": 100606,
+    "order": 1,
+    "head": 533103,
+    "dialogue": "language_10131185",
+    "occur": "1#100602"
+  },
+  {
+    "id": 100606,
+    "order": 2,
+    "head": 524501,
+    "dialogue": "language_10001221",
+    "occur": ""
+  },
+  {
+    "id": 100607,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "language_10131142",
+    "occur": "2#100603"
+  },
+  {
+    "id": 100607,
+    "order": 2,
+    "head": 311401,
+    "dialogue": "language_10131144",
+    "occur": ""
+  },
+  {
+    "id": 100607,
+    "order": 3,
+    "head": 312713,
+    "dialogue": "language_10131145",
+    "occur": ""
+  },
+  {
+    "id": 100608,
+    "order": 1,
+    "head": 300310,
+    "dialogue": "language_10131148",
+    "occur": "1#100603"
+  },
+  {
+    "id": 100609,
+    "order": 1,
+    "head": 311401,
+    "dialogue": "language_10131150",
+    "occur": "1#100605"
+  },
+  {
+    "id": 100610,
+    "order": 1,
+    "head": 312713,
+    "dialogue": "language_10131151",
+    "occur": "1#100606"
+  }
+]

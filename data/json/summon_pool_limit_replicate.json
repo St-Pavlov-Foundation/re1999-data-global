@@ -13,5 +13,10 @@
     "id": 3100,
     "res": "ui/viewres/summon/version_3_2/v3a2_versionsummontianshinanahalfview.prefab",
     "class": ""
+  },
+  {
+    "id": 3110,
+    "res": "ui/viewres/summon/version_3_7/v3a7_versionsummonliangyuehalfview.prefab",
+    "class": ""
   }
 ]

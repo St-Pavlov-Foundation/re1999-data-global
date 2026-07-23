@@ -4878,5 +4878,437 @@
     "titleEn": "Don't Look Back In Anger",
     "labelRes": "14",
     "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 1,
+    "title": "language_10120683",
+    "titleEn": "\"Fin-de-Siècle\"",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 2,
+    "title": "language_10120685",
+    "titleEn": "Eastward",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 3,
+    "title": "language_10120687",
+    "titleEn": "Sound of Silence",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 4,
+    "title": "language_10120689",
+    "titleEn": "Beneath the Shades",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 5,
+    "title": "language_10120691",
+    "titleEn": "A Building's Message",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 6,
+    "title": "language_10120693",
+    "titleEn": "Dream Houses",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 7,
+    "title": "language_10120695",
+    "titleEn": "Fallingwater",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 8,
+    "title": "language_10120697",
+    "titleEn": "The Workings of Light",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 9,
+    "title": "language_10120699",
+    "titleEn": "The Baseline",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 10,
+    "title": "language_10120701",
+    "titleEn": "Memories Look at Me",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 11,
+    "title": "language_10120703",
+    "titleEn": "Promenade Architecturale",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 12,
+    "title": "language_10120705",
+    "titleEn": "Omnipresence",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 13,
+    "title": "language_10120707",
+    "titleEn": "The Immeasurable",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 14,
+    "title": "language_10120709",
+    "titleEn": "Existence-Will",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 15,
+    "title": "language_10120711",
+    "titleEn": "Veins of the City",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 16,
+    "title": "language_10120713",
+    "titleEn": "Volume Zero",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 17,
+    "title": "language_10120715",
+    "titleEn": "Modulor",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 18,
+    "title": "language_10120717",
+    "titleEn": "To Claim Tomorrow",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 19,
+    "title": "language_10120719",
+    "titleEn": "Genius Loci",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 20,
+    "title": "language_10120721",
+    "titleEn": "New Beginnings and the End",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 21,
+    "title": "language_10120723",
+    "titleEn": "Silence and Light",
+    "labelRes": "21",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 22,
+    "title": "language_10120725",
+    "titleEn": "Spring of Nowa Miedź",
+    "labelRes": "22",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 23,
+    "title": "language_10130371",
+    "titleEn": "A Hundred Thousand Billion Sketches",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 24,
+    "title": "language_10130372",
+    "titleEn": "Burning from Both Ends",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 25,
+    "title": "language_10130373",
+    "titleEn": "Fifth Encounter",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 26,
+    "title": "language_10130374",
+    "titleEn": "An Architectural Paradise",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 27,
+    "title": "language_10130375",
+    "titleEn": "Vkhutemas's Tears",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 28,
+    "title": "language_10130376",
+    "titleEn": "The Birth of Architecture",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 29,
+    "title": "language_10130377",
+    "titleEn": "Do Not Be Cruel to Me",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 30,
+    "title": "language_10130378",
+    "titleEn": "Please Watch over Us",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 31,
+    "title": "language_10130362",
+    "titleEn": "Shade Search",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 32,
+    "title": "language_10130363",
+    "titleEn": "Until We Meet Again",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 33,
+    "title": "language_10130364",
+    "titleEn": "The Metamorphosis",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 34,
+    "title": "language_10130365",
+    "titleEn": "The Idiot",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 35,
+    "title": "language_10130366",
+    "titleEn": "An Unknown Familiarity",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 36,
+    "title": "language_10130367",
+    "titleEn": "Disoriented",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 37,
+    "title": "language_10130368",
+    "titleEn": "Dream",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 38,
+    "part": 38,
+    "title": "language_10130369",
+    "titleEn": "The Cosmonaut",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 0,
+    "title": "language_10120733",
+    "titleEn": "A New Gate Opened",
+    "labelRes": "0",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 1,
+    "title": "language_10120735",
+    "titleEn": "Breathing a Different Air",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 2,
+    "title": "language_10120737",
+    "titleEn": "A Bright, Limitless Future",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 3,
+    "title": "language_10120739",
+    "titleEn": "\"Her\"",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 4,
+    "title": "language_10120741",
+    "titleEn": "Only in Modern Times",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 5,
+    "title": "language_10120743",
+    "titleEn": "A Different Definition of \"Hero\"",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 6,
+    "title": "language_10120745",
+    "titleEn": "Home of Forgotten Memories",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 7,
+    "title": "language_10120747",
+    "titleEn": "The Logic behind Nostalgia",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 8,
+    "title": "language_10120749",
+    "titleEn": "The Crazy-to-Be",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 9,
+    "title": "language_10120751",
+    "titleEn": "The Dreadful Truth",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 10,
+    "title": "language_10120753",
+    "titleEn": "Symptoms",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 11,
+    "title": "language_10120755",
+    "titleEn": "Retro-Futurism",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 12,
+    "title": "language_10120757",
+    "titleEn": "Trapped in \"Limbo\"",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 13,
+    "title": "language_10120759",
+    "titleEn": "A Drop in the Ocean",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 14,
+    "title": "language_10120761",
+    "titleEn": "Goodbye, Chelomey",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 3100,
+    "part": 15,
+    "title": "language_10120763",
+    "titleEn": "The Nature of Being",
+    "labelRes": "15",
+    "storyBg": ""
   }
 ]

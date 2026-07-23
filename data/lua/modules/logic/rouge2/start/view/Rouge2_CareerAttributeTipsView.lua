@@ -2,7 +2,7 @@
 
 module("modules.logic.rouge2.start.view.Rouge2_CareerAttributeTipsView", package.seeall)
 
-local Rouge2_CareerAttributeTipsView = class("Rouge2_CareerAttributeTipsView", BaseView)
+local Rouge2_CareerAttributeTipsView = class("Rouge2_CareerAttributeTipsView", BaseViewExtended)
 
 Rouge2_CareerAttributeTipsView.SafeArea = Vector2(0, 200)
 Rouge2_CareerAttributeTipsView.CareerDescPrecentColor = "#FFA854"
@@ -32,6 +32,7 @@ function Rouge2_CareerAttributeTipsView:onInitView()
 	self._tranRoot = self._goRoot.transform
 	self._tranMark = self._goMark.transform
 	self._tranFlag = self._goFlag.transform
+	self._isInitDone = true
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -84,11 +85,22 @@ function Rouge2_CareerAttributeTipsView:onUpdateParam()
 	self:updatePosition()
 end
 
+function Rouge2_CareerAttributeTipsView:onRefreshViewParam(viewParam)
+	self.viewParam = viewParam
+
+	if not self._isInitDone then
+		return
+	end
+
+	self:onUpdateParam()
+end
+
 function Rouge2_CareerAttributeTipsView:refreshParams()
 	self._careerId = self.viewParam and self.viewParam.careerId
 	self._attrId = self.viewParam and self.viewParam.attributeId
 	self._attrValue = self.viewParam and self.viewParam.attributeValue
-	self._pos = self.viewParam and self.viewParam.pos or Vector2.zero
+	self._pos = self.viewParam and self.viewParam.pos
+	self._ignorePos = self.viewParam and self.viewParam.ignorePos
 	self._offset = self.viewParam and self.viewParam.offset or Vector2.zero
 	self._attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._attrId)
 	self._clickCallback = self.viewParam and self.viewParam.clickCallback
@@ -108,7 +120,7 @@ function Rouge2_CareerAttributeTipsView:refreshUI()
 	local skillNameResult = Rouge2_ItemExpressionHelper.getDescResult(nil, nil, skillName)
 
 	Rouge2_ItemDescHelper.buildAndSetDesc(self._txtCareerDesc, skillNameResult, Rouge2_CareerAttributeTipsView.CareerDescPrecentColor)
-	gohelper.setActive(self._goRecommend, Rouge2_CareerConfig.instance:isAttrRecommend(self._careerId, self._attrId))
+	gohelper.setActive(self._goRecommend, Rouge2_BackpackController.instance:isAttrRecommend(self._careerId, self._attrId))
 	self:refreshAttrUpdateRelics()
 	self:refreshSpPassiveSkill()
 end
@@ -131,7 +143,7 @@ function Rouge2_CareerAttributeTipsView:_refreshAttrUpdateRelicsItem(activeItem,
 end
 
 function Rouge2_CareerAttributeTipsView:refreshSpPassiveSkill()
-	self._attrDropList = Rouge2_AttributeConfig.instance:getAttrDropList(self._careerId, self._attrId)
+	self._attrDropList = Rouge2_AttributeConfig.instance:getLimitAttrDropList(self._careerId, self._attrId)
 
 	local hasAttrDrop = self._attrDropList and #self._attrDropList > 0
 
@@ -151,6 +163,10 @@ function Rouge2_CareerAttributeTipsView:_refreshSpPassiveSkillDesc(obj, attrDrop
 end
 
 function Rouge2_CareerAttributeTipsView:updatePosition()
+	if self._ignorePos then
+		return
+	end
+
 	local anchorPosX, anchorPosY = recthelper.screenPosToAnchorPos2(self._pos, self._transform)
 	local offsetX = self._offset and self._offset.x or 0
 	local offsetY = self._offset and self._offset.y or 0

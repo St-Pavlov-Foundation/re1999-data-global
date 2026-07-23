@@ -86,4 +86,20 @@ function SummonMainPoolMO:isHasProgressReward()
 	return rewardCount < canRewardCount
 end
 
+function SummonMainPoolMO:isHasOptionalProgressReward()
+	local numsList = SummonConfig.instance:getOptionalProgressRewardByPoolId(self.id)
+	local canRewardCount = 0
+	local rewardCount = self.customPickMO and self.customPickMO:getOptionalRewardCount() or 0
+
+	if numsList and #numsList > 0 then
+		for i, nums in ipairs(numsList) do
+			if nums[1] <= self.summonCount then
+				canRewardCount = canRewardCount + 1
+			end
+		end
+	end
+
+	return rewardCount < canRewardCount
+end
+
 return SummonMainPoolMO

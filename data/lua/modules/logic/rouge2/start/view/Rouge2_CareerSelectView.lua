@@ -113,7 +113,7 @@ function Rouge2_CareerSelectView:_editableInitView()
 
 	self.animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
 	self._teamTipsParam = {
-		pivot = Rouge2_TeamRecommendTips.Pivot_MiddleCenter
+		[Rouge2_Enum.TeamRecommendParam.Pivot] = Rouge2_TeamRecommendTips.Pivot_MiddleCenter
 	}
 	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goTeamTips, Rouge2_Enum.TeamRecommendTipType.Default)
 
@@ -246,9 +246,7 @@ function Rouge2_CareerSelectView:_refreshRelicsItem(relicsItem, relicsId, index)
 end
 
 function Rouge2_CareerSelectView:refreshCareerIcon()
-	local iconUrl = ResUrl.getRouge2Icon(string.format("backpack/%s%s", self._selectCareerCo.icon, Rouge2_Enum.CareerIconSuffix.Bag))
-
-	self._simageCareerIcon:LoadImage(iconUrl)
+	Rouge2_IconHelper.setCareerIcon(self._selectCareerId, self._simageCareerIcon, Rouge2_Enum.CareerIconSuffix.Bag)
 
 	self._txtCareerName.text = self._selectCareerCo and self._selectCareerCo.name or ""
 

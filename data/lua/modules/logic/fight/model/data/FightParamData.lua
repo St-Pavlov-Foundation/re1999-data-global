@@ -5,20 +5,24 @@ module("modules.logic.fight.model.data.FightParamData", package.seeall)
 local FightParamData = FightDataClass("FightParamData")
 
 FightParamData.ParamKey = {
+	SceneId = 16,
+	DoomsdayClock_Offset = 8,
+	ACT191_HUNTING = 10,
 	ProgressId = 2,
+	DOUQUQU_DICE = 20,
+	DoomsdayClock_Range3 = 6,
+	ACT191_GLOBAL_ACTION_COUNT = 19,
+	ROUGE2_REVIVAL_COIN = 15,
+	ACT191_MIN_HP_RATE = 9,
+	ROUGE2_COIN = 14,
 	DoomsdayClock_Range1 = 4,
 	ACT191_CUR_HP_RATE = 12,
 	DoomsdayClock_Range4 = 7,
-	ACT191_HUNTING = 10,
-	DoomsdayClock_Range3 = 6,
-	ACT191_MIN_HP_RATE = 9,
 	ACT191_COIN = 11,
-	DoomsdayClock_Offset = 8,
-	ROUGE2_COIN = 14,
+	ADD_EXTRA_ROUND = 17,
 	ProgressSkill = 1,
-	ROUGE2_REVIVAL_COIN = 15,
 	DoomsdayClock_Value = 3,
-	SceneId = 16,
+	CUR_EXTRA_ROUND_FLAG = 18,
 	DoomsdayClock_Range2 = 5
 }
 

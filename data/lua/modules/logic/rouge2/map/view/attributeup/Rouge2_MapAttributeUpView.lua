@@ -48,6 +48,7 @@ function Rouge2_MapAttributeUpView:onInitView()
 	self._btnRelicsTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/#scroll_Relics/Viewport")
 	self._btnSkip = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_PassiveSkill/#btn_Skip")
 	self._txtSpLevel = gohelper.findChildText(self.viewGO, "#go_Root/#go_Container/#scroll_Preview/Viewport/Content/txt_SpLevel")
+	self._goToolbar = gohelper.findChild(self.viewGO, "#go_Root/#go_Toolbar")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -135,6 +136,7 @@ end
 
 function Rouge2_MapAttributeUpView:_editableInitView()
 	NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.blockEsc)
+	Rouge2_AttributeToolBar.Load(self._goToolbar, Rouge2_Enum.AttributeToolType.Skill_Detail)
 
 	local goAttributeMap = self:getResInst(Rouge2_Enum.ResPath.AttributeMap, self._goAttributeMapPos)
 
@@ -369,7 +371,7 @@ function Rouge2_MapAttributeUpView:updateSelectInfo()
 	end
 
 	self._selectAttrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._selectAttrId)
-	self._maxAttrValue = Rouge2_AttributeConfig.instance:getAttrMaxValue(self._selectAttrId)
+	self._minAttrValue, self._maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(nil, self._selectAttrId)
 	self._curAttrValue = self._customAttrMap and self._customAttrMap[self._selectAttrId].value or 0
 	self._nextAttrValue = self._curAttrValue + Rouge2_MapEnum.AddAttrStep
 	self._isMax = self._curAttrValue >= self._maxAttrValue
@@ -398,7 +400,7 @@ function Rouge2_MapAttributeUpView:refreshSelectUI()
 	gohelper.setActive(self._txtNextAttribute.gameObject, self._isMax or self._addAttrPoint > 0)
 	Rouge2_AttrDropDescHelper.loadAttrDropLevelList(self._careerId, self._selectAttrId, self._txtSpLevel, false)
 
-	self._attrDropList = Rouge2_AttributeConfig.instance:getAttrDropList(self._careerId, self._selectAttrId) or {}
+	self._attrDropList = Rouge2_AttributeConfig.instance:getLimitAttrDropList(self._careerId, self._selectAttrId) or {}
 	self._attrDropNum = self._attrDropList and #self._attrDropList or 0
 
 	gohelper.setActive(self._goEmptySkillDesc, self._attrDropNum <= 0)

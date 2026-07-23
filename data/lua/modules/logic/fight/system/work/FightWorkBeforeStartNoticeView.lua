@@ -76,6 +76,12 @@ function FightWorkBeforeStartNoticeView.canShowTips()
 
 			show_tips = show_tips or #data_list > 0
 		end
+
+		if episode_config.chapterId == AtomicDungeonEnum.TalentChapterId or episode_config.chapterId == AtomicDungeonEnum.TalentChapterId2 then
+			local alarmRuleList = AtomicDungeonModel.instance:getAlarmRuleList()
+
+			show_tips = show_tips or alarmRuleList and #alarmRuleList > 0
+		end
 	end
 
 	local customData = FightDataHelper.fieldMgr.customData

@@ -15,9 +15,11 @@ function Rouge2_SystemSelectListModel:init(careerId)
 		for index, systemId in ipairs(tempSystemIdList) do
 			local systemCo = Rouge2_CareerConfig.instance:getSystemConfig(systemId)
 
-			table.insert(systemList, systemCo)
+			if systemCo then
+				table.insert(systemList, systemCo)
 
-			self._systemIndexMap[systemId] = index
+				self._systemIndexMap[systemId] = index
+			end
 		end
 	end
 

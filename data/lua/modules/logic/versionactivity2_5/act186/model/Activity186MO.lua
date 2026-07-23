@@ -58,6 +58,12 @@ function Activity186MO:getMilestoneRewardStatus(rewardId)
 		elseif coinNum <= hasCurrencyNum then
 			status = Activity186Enum.RewardStatus.Canget
 		end
+	elseif coinNum == 0 then
+		if self.getMilestoneProgress < 0 then
+			status = Activity186Enum.RewardStatus.Canget
+		else
+			status = Activity186Enum.RewardStatus.Hasget
+		end
 	elseif coinNum <= self.getMilestoneProgress then
 		status = Activity186Enum.RewardStatus.Hasget
 	elseif coinNum <= hasCurrencyNum then
@@ -107,6 +113,7 @@ function Activity186MO:updateTaskInfo(info)
 
 	taskInfo.progress = info.progress
 	taskInfo.hasGetBonus = info.hasGetBonus
+	taskInfo.expireTime = tonumber(info.expireTime)
 end
 
 function Activity186MO:getTaskInfo(taskId, createIfNil)
@@ -118,6 +125,7 @@ function Activity186MO:getTaskInfo(taskId, createIfNil)
 		}
 		taskInfo.progress = 0
 		taskInfo.hasGetBonus = false
+		taskInfo.expireTime = 0
 		self.taskDict[taskId] = taskInfo
 	end
 
@@ -134,6 +142,7 @@ function Activity186MO:getTaskList()
 			taskMo.id = v.taskId
 			taskMo.progress = v.progress
 			taskMo.hasGetBonus = v.hasGetBonus
+			taskMo.expireTime = v.expireTime
 			taskMo.canGetReward = self:checkTaskCanReward(v)
 			taskMo.config = Activity186Config.instance:getTaskConfig(v.taskId)
 			taskMo.missionorder = taskMo.config.missionorder

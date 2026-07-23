@@ -22,12 +22,13 @@ function SummonConfig:reqConfigNames()
 		"lucky_bag_heroes",
 		"summon_pool_package",
 		"summon_pool_limit_replicate",
-		"summon_pool_infallible"
+		"summon_pool_infallible",
+		"summon_progress_choose"
 	}
 end
 
 function SummonConfig:onInit()
-	return
+	self._itemId2CountDict = nil
 end
 
 function SummonConfig:onConfigLoaded(configName, configTable)
@@ -314,12 +315,86 @@ function SummonConfig:getProgressRewardsByPoolId(poolId)
 
 		for _, cfg in ipairs(cfgList) do
 			if cfg and not string.nilorempty(cfg.progressRewards) then
-				self._poolProgressRewardsDic[cfg.id] = GameUtil.splitString2(cfg.progressRewards, true)
+				local totalParamList = GameUtil.splitString2(cfg.progressRewards, false, "|", ",")
+
+				for index, singleTarget in ipairs(totalParamList) do
+					local result = {}
+					local count = tonumber(singleTarget[1])
+
+					result[1] = count
+
+					local rewardItemList = {}
+
+					for i = 2, #singleTarget do
+						local param = singleTarget[i]
+						local singleRewardParam = string.splitToNumber(param, "#")
+
+						table.insert(rewardItemList, singleRewardParam)
+					end
+
+					result[2] = rewardItemList
+					totalParamList[index] = result
+				end
+
+				self._poolProgressRewardsDic[cfg.id] = totalParamList
 			end
 		end
 	end
 
 	return self._poolProgressRewardsDic[poolId]
+end
+
+function SummonConfig:getOptionalProgressRewardByPoolId(poolId)
+	if not self._poolOptionalProgressRewardsDic then
+		self._poolOptionalProgressRewardsDic = {}
+
+		local cfgList = self:getSummonPoolList()
+
+		for _, cfg in ipairs(cfgList) do
+			if cfg and not string.nilorempty(cfg.progressChooseGroupId) then
+				local groupId = tonumber(cfg.progressChooseGroupId)
+				local rewardGroupConfigList = self:getProgressChooseConfigList(groupId)
+				local tempList = {}
+
+				for progress, rewardGroupConfig in pairs(rewardGroupConfigList) do
+					table.insert(tempList, progress)
+				end
+
+				table.sort(tempList, SummonConfig.sortOptionalProgress)
+
+				local totalParamList = {}
+
+				for index, progressId in ipairs(tempList) do
+					local rewardGroupConfig = self:getProgressChooseConfig(groupId, progressId)
+					local result = {}
+					local count = tonumber(rewardGroupConfig.progress)
+
+					result[1] = count
+
+					local rewardItemList = GameUtil.splitString2(rewardGroupConfig.chooseRewards, true)
+
+					result[2] = rewardItemList
+					totalParamList[index] = result
+				end
+
+				self._poolOptionalProgressRewardsDic[cfg.id] = totalParamList
+			end
+		end
+	end
+
+	return self._poolOptionalProgressRewardsDic[poolId]
+end
+
+function SummonConfig.sortOptionalProgress(a, b)
+	return a < b
+end
+
+function SummonConfig:getProgressChooseConfigList(groupId)
+	return lua_summon_progress_choose.configDict[groupId]
+end
+
+function SummonConfig:getProgressChooseConfig(groupId, progressId)
+	return lua_summon_progress_choose.configDict[groupId] and lua_summon_progress_choose.configDict[groupId][progressId]
 end
 
 function SummonConfig:getSummonPoolPackageConfig(poolId, order)
@@ -374,6 +449,30 @@ function SummonConfig:getSummonInfallibleConfig(infallibleItemId)
 	end
 
 	return lua_summon_pool_infallible.configDict[infallibleItemId]
+end
+
+function SummonConfig:getSummonCountByItemId(itemId)
+	if not self._itemId2CountDict then
+		self._itemId2CountDict = {}
+
+		local cfgList = self:getSummonPoolList()
+
+		for _, cfg in ipairs(cfgList) do
+			local cost10Nums = GameUtil.splitString2(cfg.cost10, true, "|", "#")
+
+			if cost10Nums then
+				for _i, nums in ipairs(cost10Nums) do
+					if nums and #nums >= 3 and nums[3] == 1 then
+						local t_id = nums[2]
+
+						self._itemId2CountDict[t_id] = 10
+					end
+				end
+			end
+		end
+	end
+
+	return self._itemId2CountDict[itemId] or 1
 end
 
 SummonConfig.instance = SummonConfig.New()

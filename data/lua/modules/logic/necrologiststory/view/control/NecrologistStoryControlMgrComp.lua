@@ -16,13 +16,16 @@ function NecrologistStoryControlMgrComp:init(go)
 		[NecrologistStoryEnum.StoryControlType.Bgm] = NecrologistStoryControlBgm,
 		[NecrologistStoryEnum.StoryControlType.Audio] = NecrologistStoryControlAudio,
 		[NecrologistStoryEnum.StoryControlType.Effect] = NecrologistStoryControlWeather,
-		[NecrologistStoryEnum.StoryControlType.Magic] = NecrologistStoryControlMagic,
-		[NecrologistStoryEnum.StoryControlType.ErasePic] = NecrologistStoryControlErasePic,
-		[NecrologistStoryEnum.StoryControlType.DragPic] = NecrologistStoryControlDragPic,
 		[NecrologistStoryEnum.StoryControlType.StopAudio] = NecrologistStoryControlStopAudio,
-		[NecrologistStoryEnum.StoryControlType.ClickPic] = NecrologistStoryControlClickPic,
-		[NecrologistStoryEnum.StoryControlType.SlidePic] = NecrologistStoryControlSliderPic,
 		[NecrologistStoryEnum.StoryControlType.ChangeVolume] = NecrologistStoryControlChangeVolume
+	}
+	self.type2ClsItem = {
+		[NecrologistStoryEnum.StoryControlType.ShowPic] = NecrologistStoryShowPictureItem,
+		[NecrologistStoryEnum.StoryControlType.ClickPic] = NecrologistStoryClickPictureItem,
+		[NecrologistStoryEnum.StoryControlType.DragPic] = NecrologistStoryDragPictureItem,
+		[NecrologistStoryEnum.StoryControlType.ErasePic] = NecrologistStoryErasePictureItem,
+		[NecrologistStoryEnum.StoryControlType.Magic] = NecrologistStoryMagicItem,
+		[NecrologistStoryEnum.StoryControlType.SlidePic] = NecrologistStorySliderPictureItem
 	}
 end
 
@@ -53,13 +56,9 @@ function NecrologistStoryControlMgrComp:playControl(storyConfig, isSkip, fromIte
 end
 
 function NecrologistStoryControlMgrComp:setControlParam(controlType, storyId, controlParam, controlDelay, isSkip, fromItem)
-	local controlCls = self.type2Cls[controlType]
-
-	if not controlCls then
-		return
-	end
-
-	local mgrItem = controlCls.New(self)
+	local itemCls = self.type2ClsItem[controlType]
+	local controlCls = self.type2Cls[controlType] or NecrologistStoryControlMgrItem
+	local mgrItem = controlCls.New(self, itemCls)
 
 	self:addControl(storyId, mgrItem)
 	mgrItem:setParam(controlParam, controlDelay, isSkip, fromItem)
@@ -78,9 +77,7 @@ function NecrologistStoryControlMgrComp:addControl(storyId, mgrItem)
 end
 
 function NecrologistStoryControlMgrComp:createControlItem(cls, storyId, controlParam, finishCallback, finishCallbackObj)
-	local item = self.storyView:createControlItem(cls, storyId, controlParam, finishCallback, finishCallbackObj)
-
-	return item
+	self.storyView:createControlItemAsync(cls, storyId, controlParam, finishCallback, finishCallbackObj)
 end
 
 function NecrologistStoryControlMgrComp:onItemFinish(mgrItem)

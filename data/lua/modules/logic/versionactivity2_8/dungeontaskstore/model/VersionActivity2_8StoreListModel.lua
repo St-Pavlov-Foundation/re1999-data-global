@@ -38,6 +38,10 @@ function VersionActivity2_8StoreListModel._sortGoods(goodsCo1, goodsCo2)
 		return true
 	end
 
+	if goodsCo1.specProduct ~= goodsCo2.specProduct then
+		return goodsCo1.specProduct == 1
+	end
+
 	return goodsCo1.id < goodsCo2.id
 end
 

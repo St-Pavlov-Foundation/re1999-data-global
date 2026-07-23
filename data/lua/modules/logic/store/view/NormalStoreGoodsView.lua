@@ -549,7 +549,13 @@ function NormalStoreGoodsView:_refreshLimitTag()
 end
 
 function NormalStoreGoodsView:_buyCountAddToast()
-	local maxBuyCount, limitType = self._mo:getBuyMaxQuantity()
+	local maxBuyCount, limitType
+
+	if self._buyCost2Index == 2 then
+		maxBuyCount, limitType = self._mo:getBuyMaxQuantityByCost2()
+	else
+		maxBuyCount, limitType = self._mo:getBuyMaxQuantity()
+	end
 
 	if self._buyCount + 1 >= CommonConfig.instance:getConstNum(ConstEnum.StoreMaxBuyCount) or limitType == StoreEnum.LimitType.BuyLimit or limitType == StoreEnum.LimitType.Default then
 		GameFacade.showToast(ToastEnum.StoreMaxBuyCount)

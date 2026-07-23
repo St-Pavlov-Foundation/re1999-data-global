@@ -791,5 +791,44 @@
     "showcolor": 0,
     "icon": "",
     "sortId": 0
+  },
+  {
+    "id": 231,
+    "attrType": "deviceSkillRate",
+    "type": 3,
+    "name": "language_10124956",
+    "desc": "language_10124957",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 232,
+    "attrType": "normalSkillFixCluthRate",
+    "type": 3,
+    "name": "language_10124958",
+    "desc": "language_10124959",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 233,
+    "attrType": "careerRatioFix",
+    "type": 3,
+    "name": "language_10124960",
+    "desc": "language_10124960",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
   }
 ]

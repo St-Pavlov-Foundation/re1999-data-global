@@ -56,7 +56,8 @@ FightFailView.CareerToImageName = {
 	"zhandou_icon_mu",
 	"zhandou_icon_shou",
 	"zhandou_icon_ling",
-	"zhandou_icon_zhi"
+	"zhandou_icon_zhi",
+	[101] = "zhandou_icon_101"
 }
 FightFailView.ShowLevelContainerValue = 0.8
 FightFailView.OffsetValue = 1.6
@@ -215,6 +216,12 @@ function FightFailView:refreshTips()
 
 	if self.episodeCo.type == DungeonEnum.EpisodeType.Survival then
 		conditionCoList = SurvivalShelterModel.instance:addExRule(conditionCoList)
+	end
+
+	if self.episodeCo.chapterId == AtomicDungeonEnum.TalentChapterId or self.episodeCo.chapterId == AtomicDungeonEnum.TalentChapterId2 then
+		local alarmRuleList = AtomicDungeonModel.instance:getAlarmRuleList()
+
+		tabletool.addValues(conditionCoList, alarmRuleList)
 	end
 
 	if conditionCoList and #conditionCoList ~= 0 then

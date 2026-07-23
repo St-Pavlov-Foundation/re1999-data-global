@@ -219,5 +219,23 @@ Rouge2_OutsideEnum.DescPercentColor = "#F0B75F"
 Rouge2_OutsideEnum.DescBracketColor = "#7195DF"
 Rouge2_OutsideEnum.DescReplaceColor = "#B84E32"
 Rouge2_OutsideEnum.AttributeShowType = 1
+Rouge2_OutsideEnum.SaveInfoViewType = {
+	Edit = 2,
+	EditDone = 3,
+	Use = 4,
+	Show = 1
+}
+Rouge2_OutsideEnum.BossRewardStatus = {
+	HasGet = 3,
+	CanGet = 2,
+	Lock = 1
+}
+Rouge2_OutsideEnum.RemvoeSaveInfoIndex = 0
+Rouge2_OutsideEnum.BossMultiplication = 1
+Rouge2_OutsideEnum.BossShowHeroCount = 4
+Rouge2_OutsideEnum.AnimEventName = {
+	PlayAudio_Appraise = "PlayAudio_Appraise",
+	RecordScore = "RecordScore"
+}
 
 return Rouge2_OutsideEnum

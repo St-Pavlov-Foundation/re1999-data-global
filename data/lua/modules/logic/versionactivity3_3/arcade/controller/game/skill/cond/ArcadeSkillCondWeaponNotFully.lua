@@ -1,7 +1,5 @@
 ﻿-- chunkname: @modules/logic/versionactivity3_3/arcade/controller/game/skill/cond/ArcadeSkillCondWeaponNotFully.lua
 
-local ArcadeGameModel = require("modules.logic.versionactivity3_3.arcade.model.game.ArcadeGameModel")
-
 module("modules.logic.versionactivity3_3.arcade.controller.game.skill.cond.ArcadeSkillCondWeaponNotFully", package.seeall)
 
 local ArcadeSkillCondWeaponNotFully = class("ArcadeSkillCondWeaponNotFully", ArcadeSkillCondBase)

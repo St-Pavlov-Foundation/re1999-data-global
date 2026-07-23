@@ -25,6 +25,8 @@ function StoryActivityVideoItem:playVideo(name, co)
 	self._videoOutCallbackObj = co.outCallbackObj
 	self._audioId = co.audioId
 	self._audioNoStopByFinish = co.audioNoStopByFinish
+	self._width = co.width or 2592
+	self._height = co.height or 1080
 
 	if self._videoName then
 		if not self._videoGo then
@@ -38,15 +40,12 @@ function StoryActivityVideoItem:playVideo(name, co)
 end
 
 function StoryActivityVideoItem:_build()
-	self._videoGo = gohelper.create2d(self.viewGO, self._videoName)
-	self._videoPlayer, self.videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._videoGo)
+	self._videoPlayer, self._videoGo = VideoPlayerMgr.instance:createGoAndVideoPlayer(self.viewGO, self._videoName, self._loop, self._width, self._height)
 
 	self._videoPlayer:setEventListener(self._onVideoEvent, self)
-	recthelper.setSize(self._videoGo.transform, 2592, 1080)
 end
 
 function StoryActivityVideoItem:_playVideo()
-	gohelper.setActive(self._videoGo, true)
 	self._videoPlayer:loadMedia(self._videoName)
 	StoryModel.instance:setSpecialVideoPlaying(self._videoName)
 	TaskDispatcher.runDelay(self._startVideo, self, 0.1)
@@ -87,7 +86,7 @@ function StoryActivityVideoItem:_onVideoEvent(path, status, errorCode)
 		self:onVideoStart()
 	end
 
-	if status == AvProEnum.PlayerStatus.FinishedPlaying then
+	if status == AvProEnum.PlayerStatus.FinishedPlaying and not self._loop then
 		self:onVideoOut(true)
 	end
 end
@@ -108,8 +107,6 @@ function StoryActivityVideoItem:hide(isFinishPlay)
 	else
 		self:stopAudio()
 	end
-
-	gohelper.setActive(self._videoGo, false)
 end
 
 function StoryActivityVideoItem:_detectPause()
@@ -139,12 +136,6 @@ function StoryActivityVideoItem:onDestroy()
 
 	if BootNativeUtil.isIOS() then
 		TaskDispatcher.cancelTask(self._detectPause, self)
-	end
-
-	if self._videoGo then
-		gohelper.destroy(self._videoGo)
-
-		self._videoGo = nil
 	end
 
 	self._videoOutCallback = nil

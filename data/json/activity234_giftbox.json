@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "type": 0,
+    "name": "language_10131000",
+    "icon": "v3a7_activity3nd_game_cardback_3_1",
+    "iconsmall": "v3a7_activity3nd_game_cardback_3_2"
+  },
+  {
+    "id": 2,
+    "type": 0,
+    "name": "language_10131001",
+    "icon": "v3a7_activity3nd_game_cardback_2_1",
+    "iconsmall": "v3a7_activity3nd_game_cardback_2_2"
+  },
+  {
+    "id": 3,
+    "type": 0,
+    "name": "language_10131002",
+    "icon": "v3a7_activity3nd_game_cardback_4_1",
+    "iconsmall": "v3a7_activity3nd_game_cardback_4_2"
+  }
+]

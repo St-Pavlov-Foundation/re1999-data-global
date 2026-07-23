@@ -52,7 +52,7 @@ function Rouge2_StoreGoodsItem:updateInfo(storeGoodsCo)
 	self:refreshRemainBuyCount()
 
 	local productItemType, productItemId, productItemQuantity = self:getItemTypeIdQuantity(self.storeGoodsCo.value)
-	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId)
+	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId, true)
 	local rare
 
 	if not productItemConfig.rare then

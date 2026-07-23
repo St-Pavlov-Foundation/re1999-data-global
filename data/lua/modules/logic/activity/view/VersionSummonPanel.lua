@@ -8,17 +8,11 @@ function VersionSummonPanel:onInitView()
 	self._txtremainTime = gohelper.findChildText(self.viewGO, "image_TimeBG/#txt_remainTime")
 	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Claim", AudioEnum.UI.Play_UI_Tags)
 	self._goNormal = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Normal")
-	self._txtNormal = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_Claim")
-	self._txtNormalEn = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_ClaimEn")
 	self._goHasReceived = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Received")
 	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
-	self._btnMask = gohelper.findChildButton(self.viewGO, "Mask")
 	self._simageRole = gohelper.findChildSingleImage(self.viewGO, "#simage_Role")
 	self._simageLogo = gohelper.findChildSingleImage(self.viewGO, "#simage_Logo")
 	self._simageTitle = gohelper.findChildSingleImage(self.viewGO, "#simage_Title")
-	self._simageProp = gohelper.findChildSingleImage(self.viewGO, "prop/image_Prop")
-	self._txtTips = gohelper.findChildText(self.viewGO, "txt_Tips")
-	self._gohasget = gohelper.findChild(self.viewGO, "prop/go_hasget")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -44,11 +38,21 @@ function VersionSummonPanel:_btnCloseOnClick()
 end
 
 function VersionSummonPanel:_btnClaimOnClick()
-	self.viewContainer:sendGet101BonusRequest()
+	self.viewContainer:sendGet101BonusRequest(self._onSendGet101BonusRequestCb, self)
 end
 
 function VersionSummonPanel:_btnGoToOnClick()
 	GameFacade.jump(self._jumpId)
+end
+
+function VersionSummonPanel:_editableInitView()
+	self._txtNormal = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_Claim")
+	self._txtNormalEn = gohelper.findChildText(self.viewGO, "#btn_Claim/#go_Normal/txt_ClaimEn")
+	self._simageProp = gohelper.findChildSingleImage(self.viewGO, "prop/image_Prop")
+	self._gohasget = gohelper.findChild(self.viewGO, "prop/go_hasget")
+	self._txtTips = gohelper.findChildText(self.viewGO, "txtbg/txt_Tips")
+	self._btnMask = gohelper.findChildButton(self.viewGO, "Mask")
+	self._txtremainTime.text = ""
 end
 
 function VersionSummonPanel:onOpen()
@@ -95,6 +99,10 @@ end
 
 function VersionSummonPanel:onClickModalMask()
 	self:closeThis()
+end
+
+function VersionSummonPanel:_onSendGet101BonusRequestCb()
+	MainController.instance:dispatchEvent(MainEvent.OnRefreshSummonTuziRed)
 end
 
 return VersionSummonPanel

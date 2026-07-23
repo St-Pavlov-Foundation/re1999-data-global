@@ -58,5 +58,8 @@ E("OnAlchemyFormulaItemClick")
 E("OnAlchemyMaterialItemClick")
 E("OnMainViewInTop")
 E("OnFinishAndNotRouge")
+E("OnSaveRecordDone")
+E("OnUpdateBossBattleInfo")
+E("OnSelectBossBattle")
 
 return Rouge2_OutsideEvent

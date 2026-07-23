@@ -24,6 +24,7 @@ function Activity201MaLiAnNaTaskView:onOpen()
 	}, self._oneClaimReward, self)
 	TaskDispatcher.runRepeat(self.showLeftTime, self, TimeUtil.OneMinuteSecond)
 	self:showLeftTime()
+	gohelper.setActive(self._txtLimitTime.transform.parent, false)
 end
 
 function Activity201MaLiAnNaTaskView:_oneClaimReward()

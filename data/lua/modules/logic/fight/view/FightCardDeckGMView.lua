@@ -12,6 +12,9 @@ function FightCardDeckGMView:onInitView()
 	self._btnCardPre = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_cardpre")
 	self._cardPreSelect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/select")
 	self._cardPreUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/unselect")
+	self._btnDevice = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_device")
+	self._deviceSelect = gohelper.findChild(self.viewGO, "topTab/#btn_device/select")
+	self._deviceUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_device/unselect")
 	self._cardRoot = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content")
 	self._cardItem = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
 	self._nameText = gohelper.findChildText(self.viewGO, "layout/#scroll_card/#txt_skillname")
@@ -42,10 +45,10 @@ end
 
 function FightCardDeckGMView:onOpen()
 	self._proto = self.viewParam
+	self.selectType = FightCardDeckView.SelectType.CardBox
 	self._cardItemDic = {}
 
 	self:_refreshBtn()
-	self:_refreshBtnState()
 
 	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
@@ -53,7 +56,24 @@ function FightCardDeckGMView:onOpen()
 end
 
 function FightCardDeckGMView:_startRefreshUI()
+	self:addClickCb(self._btnCardBox, self._onCardBoxClick, self)
+	self:addClickCb(self._btnDevice, self._onDeviceClick, self)
 	self:_refreshUI()
+	self:_refreshBtnState()
+end
+
+function FightCardDeckGMView:_onCardBoxClick()
+	self.selectType = FightCardDeckView.SelectType.CardBox
+
+	self:_refreshUI()
+	self:_refreshBtnState()
+end
+
+function FightCardDeckGMView:_onDeviceClick()
+	self.selectType = FightCardDeckView.SelectType.Device
+
+	self:_refreshUI()
+	self:_refreshBtnState()
 end
 
 function FightCardDeckGMView:_onCardLoadFinish(loader)
@@ -65,9 +85,13 @@ function FightCardDeckGMView:_onCardLoadFinish(loader)
 end
 
 function FightCardDeckGMView:_refreshUI()
-	self._cardDataList = {}
+	self._cardDataList = self._cardDataList or {}
 
-	for i, v in ipairs(self._proto.deckInfos) do
+	tabletool.clear(self._cardDataList)
+
+	local dataList = self.selectType == FightCardDeckView.SelectType.CardBox and self._proto.deckInfos or self._proto.deviceInfos
+
+	for i, v in ipairs(dataList) do
 		local tab = {}
 
 		tab.entityId = v.uid
@@ -133,14 +157,16 @@ function FightCardDeckGMView:_onCardItemClick(instanceId)
 end
 
 function FightCardDeckGMView:_refreshBtnState()
-	gohelper.setActive(self._cardBoxSelect, true)
-	gohelper.setActive(self._cardBoxUnselect, false)
-	gohelper.setActive(self._cardPreSelect, false)
-	gohelper.setActive(self._cardPreUnselect, false)
+	gohelper.setActive(self._cardBoxSelect, self.selectType == FightCardDeckView.SelectType.CardBox)
+	gohelper.setActive(self._cardBoxUnselect, self.selectType ~= FightCardDeckView.SelectType.CardBox)
+	gohelper.setActive(self._deviceSelect, self.selectType == FightCardDeckView.SelectType.Device)
+	gohelper.setActive(self._deviceUnselect, self.selectType ~= FightCardDeckView.SelectType.Device)
 end
 
 function FightCardDeckGMView:_refreshBtn()
-	return
+	gohelper.setActive(self._btnCardBox.gameObject, true)
+	gohelper.setActive(self._btnCardPre.gameObject, false)
+	gohelper.setActive(self._btnDevice.gameObject, true)
 end
 
 function FightCardDeckGMView:onClose()

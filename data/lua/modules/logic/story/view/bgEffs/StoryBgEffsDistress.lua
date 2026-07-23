@@ -31,17 +31,17 @@ function StoryBgEffsDistress:start(callback, callbackObj)
 end
 
 function StoryBgEffsDistress:_onOpenView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		self:_setViewTop(false)
 	end
 end
 
 function StoryBgEffsDistress:_onCloseView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		self:_setViewTop(true)
 	end
 end

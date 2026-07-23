@@ -31,6 +31,7 @@ function TowerComposeConfig:onConfigLoaded(configName, configTable)
 		self._themeConfig = configTable
 
 		self:buildModNumData()
+		self:buildThemeTrialData()
 	elseif configName == "tower_compose_episode" then
 		self._episodeConfig = configTable
 
@@ -87,6 +88,39 @@ end
 
 function TowerComposeConfig:getModTypeNum(themeId, modType)
 	return self.modNumMap[themeId] and self.modNumMap[themeId][modType]
+end
+
+function TowerComposeConfig:buildThemeTrialData()
+	self.themeHeroTrialMap = {}
+	self.allThemeTrialHeroList = {}
+
+	for _, themeConfig in ipairs(self._themeConfig.configList) do
+		local heroTrialList = string.splitToNumber(themeConfig.heroIds, "|")
+
+		self.themeHeroTrialMap[themeConfig.id] = heroTrialList
+	end
+end
+
+function TowerComposeConfig:getAllThemeTrialHeroList()
+	local sameHeroMap = {}
+
+	if #self.allThemeTrialHeroList == 0 then
+		for themeId, trialHeroList in pairs(self.themeHeroTrialMap) do
+			for _, heroId in ipairs(trialHeroList) do
+				if not sameHeroMap[heroId] then
+					sameHeroMap[heroId] = true
+
+					table.insert(self.allThemeTrialHeroList, heroId)
+				end
+			end
+		end
+	end
+
+	return self.allThemeTrialHeroList
+end
+
+function TowerComposeConfig:getThemeTrialHeroList(themeId)
+	return self.themeHeroTrialMap[themeId] or {}
 end
 
 function TowerComposeConfig:getThemeConfig(themeId)

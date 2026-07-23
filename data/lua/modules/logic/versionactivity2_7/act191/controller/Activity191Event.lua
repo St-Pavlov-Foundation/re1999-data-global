@@ -5,6 +5,7 @@ module("modules.logic.versionactivity2_7.act191.controller.Activity191Event", pa
 local Activity191Event = _M
 local _get = GameUtil.getUniqueTb()
 
+Activity191Event.GameInfoUpdatePush = _get()
 Activity191Event.UpdateGameInfo = _get()
 Activity191Event.UpdateBadgeMo = _get()
 Activity191Event.EndGame = _get()

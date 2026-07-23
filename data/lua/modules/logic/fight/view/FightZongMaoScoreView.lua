@@ -30,7 +30,7 @@ function FightZongMaoScoreView:onOpen()
 end
 
 function FightZongMaoScoreView:onIndicatorChange(indicatorId)
-	if indicatorId == FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips or indicatorId == FightEnum.IndicatorId.ZongMaoTechniqueScore then
+	if indicatorId == FightEnum.IndicatorId.V1a4_BossRush_ig_ScoreTips or indicatorId == FightEnum.IndicatorId.ZongMaoTechniqueScore or indicatorId == FightEnum.IndicatorId.Rouge2Boss then
 		self:refreshScore()
 	end
 end
@@ -41,6 +41,8 @@ function FightZongMaoScoreView:refreshScore()
 
 	score = score + (data and data.num or 0)
 	data = FightDataHelper.fieldMgr.indicatorDict[FightEnum.IndicatorId.ZongMaoTechniqueScore]
+	score = score + (data and data.num or 0)
+	data = FightDataHelper.fieldMgr.indicatorDict[FightEnum.IndicatorId.Rouge2Boss]
 	score = score + (data and data.num or 0)
 
 	local scoreText = BossRushConfig.instance:getScoreStr(score)

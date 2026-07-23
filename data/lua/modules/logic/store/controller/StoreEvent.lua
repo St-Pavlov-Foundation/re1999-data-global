@@ -29,9 +29,13 @@ StoreEvent.PlayHideStoreAnim = GameUtil.getEventId()
 StoreEvent.SkinGoodsItemChanged = GameUtil.getEventId()
 StoreEvent.SkinPreviewChanged = GameUtil.getEventId()
 StoreEvent.OnPlaySkinVideo = GameUtil.getEventId()
+StoreEvent.OnPlaySkinVideoStore = GameUtil.getEventId()
 StoreEvent.OnCheckHideSkinVideo = GameUtil.getEventId()
 StoreEvent.StopRecommendViewAuto = GameUtil.getEventId()
 StoreEvent.DecorateSkinSelectItemClick = GameUtil.getEventId()
 StoreEvent.DecorateStoreSkinSelectItemClick = GameUtil.getEventId()
+StoreEvent.SkinPlayPriceAnim = GameUtil.getEventId()
+StoreEvent.OnSelectDecorateMultiGoods = GameUtil.getEventId()
+StoreEvent.OnSelectDecoratePayItem = GameUtil.getEventId()
 
 return StoreEvent

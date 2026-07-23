@@ -24,7 +24,10 @@ function HeroConfig:reqConfigNames()
 		"hero_trial_attr",
 		"hero_group_type",
 		"character_limited",
-		"character_rank_replace"
+		"character_limited_voice",
+		"character_rank_replace",
+		"fight_device",
+		"device_power"
 	}
 end
 
@@ -386,11 +389,14 @@ end
 function HeroConfig:processHeroConfig()
 	self._battleTag2HeroMap = {}
 	self._heroId2BattleTagList = {}
+	self._sp2OriginalHeroDict = {}
+	self._heroId2SpList = {}
 
 	for _, heroCo in ipairs(self.heroConfig.configList) do
+		local heroId = heroCo.id
 		local battleTagList = string.split(heroCo.battleTag, "#")
 
-		self._heroId2BattleTagList[heroCo.id] = battleTagList
+		self._heroId2BattleTagList[heroId] = battleTagList
 
 		if battleTagList then
 			for _, tagId in ipairs(battleTagList) do
@@ -399,6 +405,58 @@ function HeroConfig:processHeroConfig()
 				table.insert(self._battleTag2HeroMap[tagId], heroCo)
 			end
 		end
+
+		local originalHeroId, spHeroId
+		local isSP = heroCo.isSP
+		local statShareHeroId = heroCo.statShare
+
+		if isSP then
+			originalHeroId = statShareHeroId
+			spHeroId = heroId
+
+			local rewardCheckPattern = MaterialEnum.MaterialType.SpecialBlock .. "#%d+#%d+"
+
+			if string.find(heroCo.birthdayBonus, rewardCheckPattern) then
+				logError(string.format("HeroConfig:processHeroConfig error, SPHero:%s couldn't have birthday block", heroId))
+			end
+		else
+			originalHeroId = heroId
+			spHeroId = statShareHeroId
+		end
+
+		if statShareHeroId and statShareHeroId ~= 0 and not self._sp2OriginalHeroDict[spHeroId] then
+			self._sp2OriginalHeroDict[spHeroId] = originalHeroId
+
+			local spList = GameUtil.tabletool_checkDictTable(self._heroId2SpList, originalHeroId)
+
+			table.insert(spList, spHeroId)
+		end
+	end
+end
+
+function HeroConfig:getSPHeroIdList(heroId, includeOriginalHero)
+	local result = {}
+
+	if includeOriginalHero then
+		table.insert(result, heroId)
+	end
+
+	local spList = self._heroId2SpList[heroId]
+
+	if spList then
+		for _, spHeroId in ipairs(spList) do
+			table.insert(result, spHeroId)
+		end
+	end
+
+	return result
+end
+
+function HeroConfig:getSPOriginalHero(spHeroId)
+	local heroCfg = self:getHeroCO(spHeroId)
+
+	if heroCfg and heroCfg.isSP then
+		return self._sp2OriginalHeroDict[spHeroId]
 	end
 end
 

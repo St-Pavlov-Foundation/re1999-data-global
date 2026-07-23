@@ -51,9 +51,7 @@ end
 function Activity191Helper.getNodeIcon(nodeType)
 	nodeType = tonumber(nodeType)
 
-	if nodeType == 0 then
-		return "act191_progress_largeicon_0"
-	elseif nodeType == Activity191Enum.NodeType.MixStore then
+	if nodeType == Activity191Enum.NodeType.MixStore then
 		return "act191_progress_largeicon_1"
 	elseif Activity191Helper.isPveBattle(nodeType) then
 		return "act191_progress_largeicon_2"
@@ -61,15 +59,17 @@ function Activity191Helper.getNodeIcon(nodeType)
 		return "act191_progress_largeicon_3"
 	elseif nodeType == Activity191Enum.NodeType.RewardEvent or nodeType == Activity191Enum.NodeType.BattleEvent then
 		return "act191_progress_largeicon_4"
-	elseif nodeType == Activity191Enum.NodeType.MixStore then
+	elseif nodeType == Activity191Enum.NodeType.RoleShop or nodeType == Activity191Enum.NodeType.CollectionShop then
 		return "act191_progress_largeicon_5"
-	elseif nodeType == Activity191Enum.NodeType.RoleShop or nodeType == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, nodeType) then
+	elseif nodeType == Activity191Enum.NodeType.TagShop or nodeType == Activity191Enum.NodeType.AfterGlowShop then
 		return "act191_progress_largeicon_6"
 	elseif nodeType == Activity191Enum.NodeType.Enhance then
 		return "act191_progress_largeicon_7"
 	elseif nodeType == Activity191Enum.NodeType.ReplaceEvent or nodeType == Activity191Enum.NodeType.UpgradeEvent then
 		return "act191_progress_largeicon_8"
 	end
+
+	return "act191_progress_largeicon_0"
 end
 
 function Activity191Helper.lockScreen(key, lock)
@@ -133,9 +133,11 @@ function Activity191Helper.isPvpBattle(type)
 end
 
 function Activity191Helper.isShopNode(type)
-	if type == Activity191Enum.NodeType.MixStore or type == Activity191Enum.NodeType.RoleShop or type == Activity191Enum.NodeType.CollectionShop or tabletool.indexOf(Activity191Enum.TagShopField, type) then
+	if tabletool.indexOf(Activity191Enum.ShopFiled, type) then
 		return true
 	end
+
+	return false
 end
 
 function Activity191Helper.getActiveFetterInfoList(fetterCntDic)
@@ -148,7 +150,7 @@ function Activity191Helper.getActiveFetterInfoList(fetterCntDic)
 			for i = #fetterCoList, 0, -1 do
 				local fetterCo = fetterCoList[i]
 
-				if cnt >= fetterCo.activeNum then
+				if fetterCo and cnt >= fetterCo.activeNum then
 					fetterInfoList[#fetterInfoList + 1] = {
 						config = fetterCo,
 						count = cnt
@@ -355,6 +357,40 @@ function Activity191Helper.clickHyperLinkRole(param, clickPosition)
 	else
 		SkillHelper.defaultClick(param, clickPosition)
 	end
+end
+
+function Activity191Helper.addOneCount(countTbl, key)
+	local baseValue = countTbl[key]
+
+	if baseValue then
+		countTbl[key] = baseValue + 1
+	else
+		countTbl[key] = 1
+	end
+end
+
+function Activity191Helper.getFetterActiveLvl(tag, count)
+	local activeLevel = 0
+
+	if count then
+		local coList = Activity191Config.instance:getRelationCoList(tag)
+
+		for i = #coList, 0, -1 do
+			local config = coList[i]
+
+			if config then
+				if count >= config.activeNum then
+					activeLevel = config.level
+
+					break
+				end
+			else
+				logError("斗蛐蛐养成表_羁绊表配置异常,羁绊名: " .. tag)
+			end
+		end
+	end
+
+	return activeLevel
 end
 
 return Activity191Helper

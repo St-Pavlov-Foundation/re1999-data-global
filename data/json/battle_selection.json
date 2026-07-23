@@ -128,5 +128,15 @@
     "nextSelect": "",
     "autoUse1": 10,
     "autoUse2": 10
+  },
+  {
+    "id": 3303016,
+    "title": "language_10129966",
+    "desc": "language_10129967",
+    "icon": 300101,
+    "confirm": "language_10109281",
+    "nextSelect": "",
+    "autoUse1": 10,
+    "autoUse2": 10
   }
 ]

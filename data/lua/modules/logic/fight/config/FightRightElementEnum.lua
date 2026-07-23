@@ -36,9 +36,13 @@ FightRightElementEnum.Elements = {
 	AssistRole = GetEnum(),
 	PaTaComposeScore = GetEnum(),
 	Rouge2Slapstick = GetEnum(),
-	CelebrityCard3_5 = GetEnum()
+	CelebrityCard3_5 = GetEnum(),
+	DeviceLV = GetEnum(),
+	SystemFightTask = GetEnum()
 }
 FightRightElementEnum.Priority = {
+	FightRightElementEnum.Elements.SystemFightTask,
+	FightRightElementEnum.Elements.Rouge2Slapstick,
 	FightRightElementEnum.Elements.CelebrityCard3_5,
 	FightRightElementEnum.Elements.DouQuQuDice,
 	FightRightElementEnum.Elements.Dice,
@@ -60,10 +64,10 @@ FightRightElementEnum.Priority = {
 	FightRightElementEnum.Elements.SurvivalTalent2,
 	FightRightElementEnum.Elements.Rouge2RevivalCoin,
 	FightRightElementEnum.Elements.Rouge2Treasure,
-	FightRightElementEnum.Elements.Rouge2Slapstick,
 	FightRightElementEnum.Elements.Rouge2Task,
 	FightRightElementEnum.Elements.PaTaComposeScore,
-	FightRightElementEnum.Elements.AssistRole
+	FightRightElementEnum.Elements.AssistRole,
+	FightRightElementEnum.Elements.DeviceLV
 }
 FightRightElementEnum.ElementsSizeDict = {
 	[FightRightElementEnum.Elements.CelebrityCard3_5] = Vector2(200, 135),
@@ -90,7 +94,9 @@ FightRightElementEnum.ElementsSizeDict = {
 	[FightRightElementEnum.Elements.Rouge2Task] = Vector2(120, 120),
 	[FightRightElementEnum.Elements.AssistRole] = Vector2(150, 150),
 	[FightRightElementEnum.Elements.PaTaComposeScore] = Vector2(496, 104),
-	[FightRightElementEnum.Elements.Rouge2Slapstick] = Vector2(200, 200)
+	[FightRightElementEnum.Elements.Rouge2Slapstick] = Vector2(200, 200),
+	[FightRightElementEnum.Elements.DeviceLV] = Vector2(340, 130),
+	[FightRightElementEnum.Elements.SystemFightTask] = Vector2(540, 160)
 }
 FightRightElementEnum.ElementsNodeName = {
 	[FightRightElementEnum.Elements.BossRush] = "bossrush_score",
@@ -117,7 +123,9 @@ FightRightElementEnum.ElementsNodeName = {
 	[FightRightElementEnum.Elements.AssistRole] = "assist_role",
 	[FightRightElementEnum.Elements.PaTaComposeScore] = "tower_compose_score",
 	[FightRightElementEnum.Elements.Rouge2Slapstick] = "rouge2_slapstick",
-	[FightRightElementEnum.Elements.CelebrityCard3_5] = "celebrityCard3_5"
+	[FightRightElementEnum.Elements.CelebrityCard3_5] = "celebrityCard3_5",
+	[FightRightElementEnum.Elements.DeviceLV] = "device_lv",
+	[FightRightElementEnum.Elements.SystemFightTask] = "system_fight_task"
 }
 FightRightElementEnum.AnchorTweenDuration = 0.2
 

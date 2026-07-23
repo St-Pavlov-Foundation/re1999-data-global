@@ -10,6 +10,7 @@ end
 
 function Activity217Model:reInit()
 	self._actInfos = {}
+	self._liveId = nil
 end
 
 function Activity217Model:setAct217Info(info)
@@ -20,6 +21,8 @@ function Activity217Model:setAct217Info(info)
 	end
 
 	self._actInfos[actId]:init(info)
+
+	self._liveId = nil
 end
 
 function Activity217Model:updateAct217Info(info)
@@ -152,9 +155,13 @@ function Activity217Model:getLiveActId()
 	end
 
 	for actId, mo in pairs(self._actInfos) do
-		self._liveId = actId
+		local actInfoMo = ActivityModel.instance:getActMO(actId)
 
-		return actId
+		if actInfoMo and actInfoMo:isOnline() and actInfoMo:isOpen() and not actInfoMo:isExpired() then
+			self._liveId = actId
+
+			return actId
+		end
 	end
 
 	return -1

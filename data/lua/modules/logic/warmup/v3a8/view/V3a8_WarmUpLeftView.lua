@@ -85,11 +85,7 @@ function V3a8_WarmUpLeftView:onDataUpdateFirst()
 
 	self._draggedState = isDone and kFirstUnlocked or kFirstLocked
 
-	if isDone then
-		self:_playAnsAnimIdleOpened()
-	else
-		self:_playAnsAnimOpen()
-	end
+	self:_playAnsAnimOpen()
 end
 
 function V3a8_WarmUpLeftView:onDataUpdate()

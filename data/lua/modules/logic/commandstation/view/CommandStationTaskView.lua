@@ -5,6 +5,7 @@ module("modules.logic.commandstation.view.CommandStationTaskView", package.seeal
 local CommandStationTaskView = class("CommandStationTaskView", BaseView)
 
 function CommandStationTaskView:onInitView()
+	self._goempty_overseas = gohelper.findChild(self.viewGO, "Right/#go_empty_overseas")
 	self._imageTitle = gohelper.findChildSingleImage(self.viewGO, "Left/simage_title")
 	self._imageReward = gohelper.findChildSingleImage(self.viewGO, "Left/#simage_reward")
 	self._btnLeft = gohelper.findChildButtonWithAudio(self.viewGO, "Left/#btn_arrowLeft")
@@ -28,6 +29,7 @@ function CommandStationTaskView:onInitView()
 	self._slider = gohelper.findChildImage(self.viewGO, "Right/Progress/#scroll_view/Viewport/Content/progressbg/fill")
 	self._goContent = gohelper.findChild(self.viewGO, "Right/Progress/#scroll_view/Viewport/Content")
 	self._anim = gohelper.findChildAnim(self.viewGO, "")
+	self._goline = gohelper.findChild(self.viewGO, "Right/Top/image_line")
 end
 
 function CommandStationTaskView:addEvents()
@@ -77,6 +79,13 @@ function CommandStationTaskView:onOpen()
 	})
 
 	CommandStationTaskListModel.instance.curSelectType = 1
+
+	if CommandStationEnum.ForceHideCommandStation then
+		CommandStationTaskListModel.instance.curSelectType = 2
+
+		gohelper.setActive(self._btnNormalTask, false)
+	end
+
 	self._bonusCos, self._bonusCountList = CommandStationConfig.instance:getTotalTaskRewards()
 	self._bigBonusCos = {}
 
@@ -141,9 +150,20 @@ end
 function CommandStationTaskView:refreshTask()
 	CommandStationTaskListModel.instance:init()
 
+	local taskDataList = CommandStationTaskListModel.instance:getList() or {}
+
+	gohelper.setActive(self._goTime, #taskDataList > 0)
+	gohelper.setActive(self._goempty_overseas, #taskDataList == 0)
+
 	local haveCatchTask = self:haveCatchTask()
 
 	gohelper.setActive(self._btnCatchTask, haveCatchTask)
+
+	if CommandStationEnum.ForceHideCommandStation then
+		gohelper.setActive(self._btnCatchTask, false)
+		gohelper.setActive(self._goTime, false)
+		gohelper.setActive(self._goline, haveCatchTask)
+	end
 
 	local isCatch = CommandStationTaskListModel.instance.curSelectType == CommandStationEnum.TaskType.Catch
 
@@ -233,6 +253,16 @@ function CommandStationTaskView:_titleLoadCallback()
 	local imageTitle = gohelper.findChildImage(self.viewGO, "Left/simage_title")
 
 	imageTitle:SetNativeSize()
+
+	if self._curBigBonusIndex == 9 then
+		recthelper.setSize(imageTitle.transform, 480, 160)
+	end
+end
+
+function CommandStationTaskView:_rewardCallback()
+	local image = gohelper.findChildImage(self.viewGO, "Left/#simage_reward")
+
+	image:SetNativeSize()
 end
 
 function CommandStationTaskView:refreshBigBonus()
@@ -245,7 +275,7 @@ function CommandStationTaskView:refreshBigBonus()
 	gohelper.setActive(self._btnLeft, self._curBigBonusIndex > 1)
 	gohelper.setActive(self._btnRight, self._curBigBonusIndex < #self._bigBonusCos)
 	self._imageTitle:LoadImage(string.format("singlebg_lang/txt_commandstation_singlebg/commandstation_task_title%s.png", self._curBigBonusIndex), self._titleLoadCallback, self)
-	self._imageReward:LoadImage(string.format("singlebg/commandstation/task/commandstation_task_reward%s.png", self._curBigBonusIndex))
+	self._imageReward:LoadImage(string.format("singlebg/commandstation/task/commandstation_task_reward%s.png", self._curBigBonusIndex), self._rewardCallback, self)
 
 	local itemNames = {}
 	local dict = GameUtil.splitString2(co.bonus, true)

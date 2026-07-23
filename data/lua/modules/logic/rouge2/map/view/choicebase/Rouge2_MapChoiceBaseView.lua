@@ -43,7 +43,7 @@ function Rouge2_MapChoiceBaseView:removeEvents()
 end
 
 function Rouge2_MapChoiceBaseView:_editableInitView()
-	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Enter_Attr_Detail)
+	Rouge2_AttributeToolBar.Load(self._goAttribute, Rouge2_Enum.AttributeToolType.Skill_Detail)
 
 	self.goRight = gohelper.findChild(self.viewGO, "Right")
 	self.choiceItemList = {}
@@ -113,7 +113,6 @@ function Rouge2_MapChoiceBaseView:changeState(state)
 
 	gohelper.setActive(self._godialogueblock, isBlock)
 	gohelper.setActive(self._gochoicecontainer, self.state == Rouge2_MapEnum.ChoiceViewState.WaitSelect)
-	logError("state =" .. tostring(self.state == Rouge2_MapEnum.ChoiceViewState.WaitSelect))
 
 	if state == Rouge2_MapEnum.ChoiceViewState.Finish then
 		self.scrollClick:RemoveClickListener()

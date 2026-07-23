@@ -38,5 +38,6 @@ TowerEvent.OnEnterDeepSuccRewardGuide = 20007
 TowerEvent.OnCloseEnterDeepGuideView = 20008
 TowerEvent.OnShowAssistBossEmpty = 20009
 TowerEvent.OnSuccRewardGetFinish = 20010
+TowerEvent.OnSelectHeroTrialItem = 30000
 
 return TowerEvent

@@ -18,7 +18,7 @@ end
 
 function EquipInfoTipsViewContainer:playCloseTransition()
 	self:startViewCloseBlock()
-	self.tipView.animatorPlayer:Play(UIAnimationName.Close, self.onPlayCloseTransitionFinish, self)
+	self.tipView:playAllPanelCloseAnim(self.onPlayCloseTransitionFinish, self)
 	TaskDispatcher.runDelay(self.onPlayCloseTransitionFinish, self, 2)
 end
 

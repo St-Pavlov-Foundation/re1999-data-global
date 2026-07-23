@@ -887,12 +887,29 @@ FightLogHelper.EffectTypeNameDict = {
 	[FightEnum.EffectType.CHANGESCENE] = "切换场景",
 	[FightEnum.EffectType.ANANFOCUSBUFF] = "(安安狂想)收集全场buff",
 	[FightEnum.EffectType.EMITTEREXTRADEMAGE] = "飞弹额外伤害",
+	[FightEnum.EffectType.EXTCAREERWEAK] = "弱点灵感",
+	[FightEnum.EffectType.TOUGHNESSRECOVER] = "韧性恢复",
+	[FightEnum.EffectType.TOUGHNESSCHANGE] = "韧性变化",
 	[FightEnum.EffectType.BUFFERFLYADDHANDCARD] = "洛伦兹蝴蝶添加卡牌",
+	[FightEnum.EffectType.INITDEVICE] = "初始化装置",
+	[FightEnum.EffectType.DEVICESKILLINDEX] = "装置切换技能",
+	[FightEnum.EffectType.DEVICEPOWERCHANGE] = "装置能量变化",
+	[FightEnum.EffectType.TOUGHNESSRESET] = "韧性重置变化",
+	[FightEnum.EffectType.MOVECARD] = "移动卡牌",
+	[FightEnum.EffectType.UPDATECARDDATA] = "更新卡牌",
+	[FightEnum.EffectType.INSERTHANDCARD] = "插入手牌区",
+	[FightEnum.EffectType.DEVICERUNNING] = "装置是否运行",
+	[FightEnum.EffectType.UNNAMEDSTRENGTHEN] = "无名者强化效果",
+	[FightEnum.EffectType.COUNTERCHANGE] = "计数器变化(变化后的值)",
+	[FightEnum.EffectType.DEVICEPOWERCLEAR] = "装置能量清空",
+	[FightEnum.EffectType.DEVICESTOP] = "装置停止",
 	[FightEnum.EffectType.TRIGGER] = "触发器",
 	[FightEnum.EffectType.EZIOBIGSKILLDAMAGE] = "EZIO大招伤害",
 	[FightEnum.EffectType.EZIOBIGSKILLORIGINDAMAGE] = "EZIO大招本源创伤",
 	[FightEnum.EffectType.UPDATEITEMPLAYERSKILL] = "更新道具主角技能",
-	[FightEnum.EffectType.EZIOBIGSKILLEXIT] = "EZIO大招意外退出"
+	[FightEnum.EffectType.EZIOBIGSKILLEXIT] = "EZIO大招意外退出",
+	[FightEnum.EffectType.TWINSPOWERUPCOUNT] = "TwinsPower双生计数",
+	[FightEnum.EffectType.TWINSUPCOUNTER] = "TwinsUpByCounter双生提升"
 }
 
 function FightLogHelper.getEffectTypeName(effectType)

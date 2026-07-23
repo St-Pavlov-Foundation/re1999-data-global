@@ -280,46 +280,7 @@ function SummonMainLuckyBagView:_btnsummon1OnClick()
 		return
 	end
 
-	local curPool = SummonMainModel.instance:getCurPool()
-
-	if not curPool then
-		return
-	end
-
-	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost1)
-	local param = {}
-
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
-	param.callback = self._summon1Confirm
-	param.callbackObj = self
-	param.notEnough = false
-
-	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
-	local itemEnough = cost_num <= num
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not itemEnough and currencyNum < everyCostCount then
-		param.notEnough = true
-	end
-
-	if itemEnough then
-		param.needTransform = false
-
-		self:_summon1Confirm()
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = everyCostCount
-		param.miss_quantity = 1
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon1Action()
 end
 
 function SummonMainLuckyBagView:_btnsummon10OnClick()
@@ -327,48 +288,7 @@ function SummonMainLuckyBagView:_btnsummon10OnClick()
 		return
 	end
 
-	local curPool = SummonMainModel.instance:getCurPool()
-
-	if not curPool then
-		return
-	end
-
-	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.getCostByConfig(curPool.cost10)
-	local param = {}
-
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
-	param.callback = self._summon10Confirm
-	param.callbackObj = self
-	param.notEnough = false
-	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
-
-	local itemEnough = cost_num <= ownNum
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local remainCount = 10 - ownNum
-	local costRemain = everyCostCount * remainCount
-
-	if not itemEnough and currencyNum < costRemain then
-		param.notEnough = true
-	end
-
-	if itemEnough then
-		param.needTransform = false
-
-		self:_summon10Confirm()
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = costRemain
-		param.miss_quantity = remainCount
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon10Action()
 end
 
 function SummonMainLuckyBagView:_summon10Confirm()

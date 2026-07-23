@@ -178,5 +178,32 @@
     "timeoutVoice": 1311095,
     "protectionTime": 0,
     "statusParams": ""
+  },
+  {
+    "id": 1314469,
+    "time": 6.0,
+    "waitVoice": 1314470,
+    "waitVoiceParams": "",
+    "timeoutVoice": 1314471,
+    "protectionTime": 7,
+    "statusParams": ""
+  },
+  {
+    "id": 13120118,
+    "time": 7.5,
+    "waitVoice": 13120119,
+    "waitVoiceParams": "",
+    "timeoutVoice": 13120120,
+    "protectionTime": 14,
+    "statusParams": ""
+  },
+  {
+    "id": 13105101,
+    "time": 5.0,
+    "waitVoice": 13105102,
+    "waitVoiceParams": "",
+    "timeoutVoice": 13105103,
+    "protectionTime": 3,
+    "statusParams": ""
   }
 ]

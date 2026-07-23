@@ -98,4 +98,14 @@ function Activity220MO:getCurEpisode()
 	return self._curEpisode
 end
 
+function Activity220MO:isEpisodePass(episodeId)
+	local info = self:getEpisodeInfo(episodeId)
+
+	if info then
+		return info:isEpisodePass()
+	end
+
+	return false
+end
+
 return Activity220MO

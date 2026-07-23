@@ -39,7 +39,7 @@ function GMSubViewArcade:_initL1()
 
 	self:addLabel(LStr, "怪物Id")
 
-	self._actMonsterId = self:addInputText(LStr, nil, "怪物id")
+	self._addMonsterText = self:addInputText(LStr, nil, "怪物id[#x#y]")
 
 	self:addButton(LStr, "添加怪物", self._addMonsterId, self)
 	self:addLabel(LStr, "藏品Id")
@@ -74,7 +74,9 @@ function GMSubViewArcade:_addCollectionId()
 end
 
 function GMSubViewArcade:_addMonsterId()
-	local monsterId = tonumber(self._actMonsterId:GetText())
+	local text = self._addMonsterText:GetText()
+	local textArr = string.splitToNumber(text, "#")
+	local monsterId = textArr[1]
 
 	if monsterId == 0 then
 		return
@@ -88,7 +90,7 @@ function GMSubViewArcade:_addMonsterId()
 		return
 	end
 
-	local isSuccess, gridX, gridY = ArcadeGameSummonController.instance:summonMonster(monsterId)
+	local isSuccess, gridX, gridY = ArcadeGameSummonController.instance:summonMonster(monsterId, textArr[2], textArr[3])
 
 	if isSuccess then
 		GameFacade.showToast(94, string.format("成功[%s-%s](%s,%s)", cfg.name, monsterId, gridX, gridY))
@@ -195,8 +197,6 @@ end
 
 function GMSubViewArcade:_onClickCheckSkillOk()
 	local configList = lua_arcade_passive_skill.configList
-	local xpcall = xpcall
-	local __G__TRACKBACK__ = __G__TRACKBACK__
 
 	for _, cfg in ipairs(configList) do
 		xpcall(_createSkillFunc, __G__TRACKBACK__, cfg.id)
@@ -253,6 +253,8 @@ function GMSubViewArcade:_changeRoom()
 	GameFacade.showToast(94, string.format("跳转到房间：%s", roomId))
 end
 
+local PREFS_KEY = "GMSubViewArcadeSelectedResIndex"
+
 function GMSubViewArcade:_initL4()
 	local LStr = "L4"
 	local strList = {
@@ -279,11 +281,14 @@ function GMSubViewArcade:_initL4()
 		strList[#strList + 1] = name
 	end
 
-	self:addDropDown(LStr, "添加资源", strList, self._onResSelectChange, self, {
+	local dropDown = self:addDropDown(LStr, "添加资源", strList, self._onResSelectChange, self, {
 		tempH = 450,
 		total_w = 650,
 		drop_w = 415
 	})
+	local index = PlayerPrefsHelper.getNumber(PREFS_KEY, 0)
+
+	dropDown:SetValue(index)
 
 	self._changeResCountText = self:addInputText(LStr, nil, "更改数量")
 
@@ -291,6 +296,8 @@ function GMSubViewArcade:_initL4()
 end
 
 function GMSubViewArcade:_onResSelectChange(index)
+	PlayerPrefsHelper.setNumber(PREFS_KEY, index)
+
 	self._selectedRes = self._resourceList[index]
 end
 
@@ -340,8 +347,8 @@ function GMSubViewArcade:_getInputFloorId()
 
 	local floorId = tonumber(floorIdStr)
 
-	if not ArcadeConfig.instance:getSkillFloorCfg(floorId) then
-		GameFacade.showToast(94, "不存在地块Id:%s", floorIdStr)
+	if not ArcadeConfig.instance:getFloorCfg(floorId) then
+		GameFacade.showToast(94, string.format("不存在地块Id:%s", floorIdStr))
 
 		return
 	end
@@ -626,14 +633,8 @@ function GMSubViewArcade:_onSelectedEntityTypeChange(index)
 end
 
 function GMSubViewArcade:getLogEntityMO()
-	local mo
 	local uid = tonumber(self._logEntityUidText:GetText())
-
-	if self._selectedEntityType == ArcadeGameEnum.EntityType.Grid then
-		mo = ArcadeGameModel.instance._gridModel:getById(uid)
-	else
-		mo = ArcadeGameModel.instance:getMOWithType(self._selectedEntityType, uid)
-	end
+	local mo = ArcadeGameModel.instance:getMOWithType(self._selectedEntityType, uid)
 
 	if not mo then
 		GameFacade.showToastString(string.format("单位不存在\n类型：%s\n uid：%s", self._selectedEntityType, uid))
@@ -666,6 +667,7 @@ function GMSubViewArcade:_initL9()
 	self:addButton(LStr, "输出Buff", self._onClickLogBuff, self)
 	self:addButton(LStr, "输出被动技能", self._onClickLogPassiveSkill, self)
 	self:addButton(LStr, "输出玩家属性", self._onClickLogAttr, self)
+	self:addButton(LStr, "输出技能计数器", self._onClickLogSkillCounter, self)
 	self:addButton(LStr, "获取当前房间ID", self._onClickCurRoom, self)
 end
 
@@ -733,6 +735,17 @@ function GMSubViewArcade:_onClickLogAttr()
 
 		log = log .. self:_getAttrLog(attrList, maxAttrPrefixLen, characterMO.getAttributeValue, characterMO) .. "\n"
 
+		local attackAttrLog = "\n角色附魔：<color=red>无</color>"
+		local attackAttrId = characterMO:getAttackAttrId()
+
+		if attackAttrId and attackAttrId ~= 0 then
+			local name = ArcadeConfig.instance:getAttackAttrName(attackAttrId)
+
+			attackAttrLog = string.format("\n角色附魔：<color=green>%s-%s</color>", attackAttrId, name)
+		end
+
+		log = log .. attackAttrLog .. "\n"
+
 		local resList = {}
 		local maxResPrefixLen = self:_getAttrList(ArcadeGameEnum.CharacterResource, resList)
 
@@ -795,6 +808,63 @@ function GMSubViewArcade:_getAttrLog(attrList, maxPrefixLen, getValFunc, getValF
 	end
 
 	return log
+end
+
+function GMSubViewArcade:_onClickLogSkillCounter()
+	local mo = self:getLogEntityMO()
+
+	if not mo then
+		return
+	end
+
+	local log = string.format("============================%s-%s-技能计数器============================", self._selectedEntityType, self._logEntityUidText:GetText())
+	local entitySkillSetMO = mo:getSkillSetMO()
+	local skillSetMOList = {
+		entitySkillSetMO
+	}
+
+	if self._selectedEntityType == ArcadeGameEnum.EntityType.Character then
+		local collectionDict = mo:getCollectionDict()
+
+		if collectionDict then
+			for _, collectionMO in pairs(collectionDict) do
+				local collectionSkillSetMO = collectionMO:getSkillSetMO()
+
+				skillSetMOList[#skillSetMOList + 1] = collectionSkillSetMO
+			end
+		end
+	end
+
+	for _, skillSetMO in ipairs(skillSetMOList) do
+		local owner = skillSetMO:getOwner()
+		local skillCounterDict = skillSetMO:getSkillCounterDict()
+		local isCollection = owner:getIsCollection()
+		local hasCounter = next(skillCounterDict) and true or false
+
+		if hasCounter and isCollection then
+			local collectionId = owner:getId()
+
+			log = log .. string.format("\n===========藏品:%s==========", collectionId)
+		end
+
+		for skillId, counterDict in pairs(skillCounterDict) do
+			log = log .. string.format("\n【技能:%s】", skillId)
+
+			for _, counter in pairs(counterDict) do
+				local boxList = counter:getSaveCounterBoxList()
+
+				for _, box in ipairs(boxList) do
+					log = log .. string.format("\nkey: <color=green>%s</color>  count: <color=green>%s</color>", box.key, box.count)
+				end
+			end
+		end
+
+		if hasCounter then
+			log = log .. "\n"
+		end
+	end
+
+	logError(log)
 end
 
 function GMSubViewArcade:_checkInitInteractiveCfg()

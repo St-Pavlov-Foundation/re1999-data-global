@@ -140,7 +140,8 @@ function CharacterDefaultDestinyView:_onRefreshDestinySystem()
 	end
 
 	if isActive then
-		local title = CharacterDestinyEnum.SlotTitle[self.heroMo.config.heroType] or CharacterDestinyEnum.SlotTitle[1]
+		local heroType = self.heroMo:getHeroType()
+		local title = CharacterDestinyEnum.SlotTitle[heroType] or CharacterDestinyEnum.SlotTitle[1]
 
 		self._txtdestiny.text = luaLang(title)
 	end

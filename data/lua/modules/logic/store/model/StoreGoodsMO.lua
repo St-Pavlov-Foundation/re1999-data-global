@@ -132,7 +132,7 @@ function StoreGoodsMO:getBuyMaxQuantity()
 					end
 				end
 
-				currencyLimit = currencyLimit + math.floor(hasQuantity / costQuantity)
+				currencyLimit = math.max(currencyLimit + math.floor(hasQuantity / costQuantity), 0)
 
 				break
 			else
@@ -230,7 +230,7 @@ function StoreGoodsMO:getBuyMaxQuantityByCost2()
 					end
 				end
 
-				currencyLimit = currencyLimit + math.floor(hasQuantity / costQuantity)
+				currencyLimit = math.max(currencyLimit + math.floor(hasQuantity / costQuantity), 0)
 
 				break
 			else

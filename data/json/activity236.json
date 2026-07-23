@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "activityId": 13728,
+    "cost": 0,
+    "reward": "2#2#100",
+    "showReward": "language_10131014",
+    "showWindow": "",
+    "showVideo": ""
+  },
+  {
+    "id": 2,
+    "activityId": 13728,
+    "cost": 300,
+    "reward": "10#21#5",
+    "showReward": "language_10131015",
+    "showWindow": "language_10131016",
+    "showVideo": ""
+  },
+  {
+    "id": 3,
+    "activityId": 13728,
+    "cost": 680,
+    "reward": "1#753203#1",
+    "showReward": "language_10131017",
+    "showWindow": "language_10131018",
+    "showVideo": ""
+  },
+  {
+    "id": 4,
+    "activityId": 13728,
+    "cost": 1280,
+    "reward": "1#140123#1|1#140125#1|1#140127#1|1#140120#1|1#140130#1",
+    "showReward": "language_10131019",
+    "showWindow": "language_10131020",
+    "showVideo": ""
+  },
+  {
+    "id": 5,
+    "activityId": 13728,
+    "cost": 2580,
+    "reward": "1#642801#1",
+    "showReward": "language_10131021",
+    "showWindow": "language_10131022",
+    "showVideo": ""
+  },
+  {
+    "id": 6,
+    "activityId": 13728,
+    "cost": 4280,
+    "reward": "1#713202#1",
+    "showReward": "language_10131023",
+    "showWindow": "language_10131024",
+    "showVideo": ""
+  },
+  {
+    "id": 7,
+    "activityId": 13728,
+    "cost": 6280,
+    "reward": "1#672802#1|1#682803#1",
+    "showReward": "language_10131025",
+    "showWindow": "language_10131026",
+    "showVideo": "language_10131027"
+  },
+  {
+    "id": 8,
+    "activityId": 13728,
+    "cost": 8880,
+    "reward": "1#481011#1",
+    "showReward": "language_10131028",
+    "showWindow": "language_10131029",
+    "showVideo": ""
+  },
+  {
+    "id": 9,
+    "activityId": 13728,
+    "cost": 12880,
+    "reward": "1#210015#1|1#350103#1|1#173806#1",
+    "showReward": "language_10131030",
+    "showWindow": "language_10131031",
+    "showVideo": "language_10131032"
+  }
+]

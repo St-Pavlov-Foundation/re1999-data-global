@@ -1,0 +1,77 @@
+[
+  {
+    "powerType": 1,
+    "powerNum": 1,
+    "powerIcon": "character_device_1_1"
+  },
+  {
+    "powerType": 1,
+    "powerNum": 2,
+    "powerIcon": "character_device_1_2"
+  },
+  {
+    "powerType": 1,
+    "powerNum": 3,
+    "powerIcon": "character_device_1_3"
+  },
+  {
+    "powerType": 1,
+    "powerNum": 4,
+    "powerIcon": "character_device_1_4"
+  },
+  {
+    "powerType": 2,
+    "powerNum": 1,
+    "powerIcon": "character_device_2_1"
+  },
+  {
+    "powerType": 2,
+    "powerNum": 2,
+    "powerIcon": "character_device_2_2"
+  },
+  {
+    "powerType": 2,
+    "powerNum": 3,
+    "powerIcon": "character_device_2_3"
+  },
+  {
+    "powerType": 2,
+    "powerNum": 4,
+    "powerIcon": "character_device_2_4"
+  },
+  {
+    "powerType": 1,
+    "powerNum": 5,
+    "powerIcon": "character_device_1_5"
+  },
+  {
+    "powerType": 2,
+    "powerNum": 5,
+    "powerIcon": "character_device_2_5"
+  },
+  {
+    "powerType": 0,
+    "powerNum": 1,
+    "powerIcon": "character_device_3_1"
+  },
+  {
+    "powerType": 0,
+    "powerNum": 2,
+    "powerIcon": "character_device_3_2"
+  },
+  {
+    "powerType": 0,
+    "powerNum": 3,
+    "powerIcon": "character_device_3_3"
+  },
+  {
+    "powerType": 0,
+    "powerNum": 4,
+    "powerIcon": "character_device_3_4"
+  },
+  {
+    "powerType": 0,
+    "powerNum": 5,
+    "powerIcon": "character_device_3_5"
+  }
+]

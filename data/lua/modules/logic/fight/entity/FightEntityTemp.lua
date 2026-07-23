@@ -14,7 +14,7 @@ end
 
 function FightEntityTemp:initComponents()
 	self.effect = self:addEntityComponent(FightEffectComp)
-	self.spine = self:addEntityComponent(FightSpineComp)
+	self.spine = self:addEntityComponent(FightUnitSpine)
 	self.spineRenderer = self:addEntityComponent(FightSpineRendererComp)
 	self.moveComp = self:addEntityComponent(FightEntityMoveComp)
 	self.variantHeart = self:addEntityComponent(FightVariantHeartComp)

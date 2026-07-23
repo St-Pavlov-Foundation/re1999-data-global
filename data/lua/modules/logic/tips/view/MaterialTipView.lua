@@ -47,6 +47,8 @@ function MaterialTipView:onInitView()
 	self._simagebg1 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg1")
 	self._simagebg2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_bg2")
 	self._goinclude = gohelper.findChild(self.viewGO, "#go_include")
+	self._goincludetxt = gohelper.findChild(self.viewGO, "#go_include/go_includetxt")
+	self._gofilterherotxt = gohelper.findChild(self.viewGO, "#go_include/go_filterherotxt")
 	self._goplayericon = gohelper.findChild(self.viewGO, "iconbg/#go_playericon")
 	self._simageheadicon = gohelper.findChildSingleImage(self.viewGO, "iconbg/#go_playericon/#simage_headicon")
 	self._goupgrade = gohelper.findChild(self.viewGO, "iconbg/#go_upgrade")
@@ -162,12 +164,17 @@ local ti = table.insert
 local FakeIconTab = {
 	[MaterialEnum.MaterialType.Item] = {
 		[BpEnum.ScoreItemId] = true,
+		[Anniversary3ActBpEnum.ScoreItemId] = true,
 		[MaterialEnum.PowerMakerItemId] = true
 	},
 	[MaterialEnum.MaterialType.Currency] = {
 		[CurrencyEnum.CurrencyType.V1a6CachotCoin] = true,
 		[CurrencyEnum.CurrencyType.V1a6CachotCurrency] = true
 	}
+}
+local HideHadnumberSubType = {
+	[ItemEnum.SubType.Portrait] = true,
+	[ItemEnum.SubType.Badge] = true
 }
 
 function MaterialTipView:_btndetailOnClick()
@@ -192,7 +199,16 @@ function MaterialTipView:_btnsummonsimulationOnClick()
 	end
 
 	if self:_isPackageSkin() then
-		HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", self:_getPackageSkinDesc())
+		if self._config.id == V3a7_SkinGiftEnum.ItemId then
+			local param = {}
+
+			param.itemId = self.viewParam.id
+			param.type = self.viewParam.type
+
+			ViewMgr.instance:openView(ViewName.V3a7_SkinGiftCheckView, param)
+		else
+			HelpController.instance:openBpRuleTipsView(luaLang("ruledetail"), "Rule Details", V3a7_SkinGiftHelper.getSkinGiftRareDesc(self._config.id, "material_packageskin_rate_desc_3_7", "MaterialTipViewPackageSkinDescFmt_3_7"))
+		end
 	elseif self._config.activityId then
 		SummonSimulationPickController.instance:openSummonTips(self._config.activityId)
 	end
@@ -701,6 +717,10 @@ function MaterialTipView:_btnuseOnClick()
 		CharacterModel.instance:setGainHeroViewShowState(false)
 		CharacterModel.instance:setGainHeroViewNewShowState(false)
 		ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
+	elseif self:_isGoldenMilletPresentSkin() then
+		local jumpId = self._config.effect
+
+		GameFacade.jump(jumpId)
 	elseif MaterialTipController.instance:isSpecifiedGift(self._config) then
 		local o = {}
 
@@ -717,6 +737,16 @@ function MaterialTipView:_btnuseOnClick()
 		o.subType = self._config.subType
 
 		GiftController.instance:openGiftMultipleChoiceView(o)
+	elseif MaterialTipController.instance:isHeroSelect(self._config) then
+		local o = {}
+
+		o.param = self.viewParam
+		o.quantity = quantity
+		o.subType = self._config.subType
+		o.itemId = self._config.id
+		o.type = SkinDiscountCompensateEnum.SelectDisplayType.Select
+
+		GiftController.instance:openGiftMultipleHeroChoiceView(o)
 	elseif self._config.subType == ItemEnum.SubType.OptionalGift then
 		local o = {}
 
@@ -791,11 +821,22 @@ function MaterialTipView:_btnuseOnClick()
 			end
 		end
 
+		local isAllHasHeroDestinyLvMaxed = self:isAllHasHeroDestinyLvMaxed(ignoreIds)
+
+		if isAllHasHeroDestinyLvMaxed then
+			GameFacade.showToast(ToastEnum.NoHeroCanDestinyUp)
+
+			return
+		end
+
 		local heroList = HeroModel.instance:getAllHero()
 		local list = {}
 
 		for _, heroMo in pairs(heroList) do
-			if heroMo and self:checkHeroOpenDestinyStone(heroMo) and not heroMo.destinyStoneMo:checkAllUnlock() and not self:checkIgnoreAllDestinyStone(heroMo.destinyStoneMo, ignoreIds) then
+			local isHeroOpenDestinyStone = self:checkHeroOpenDestinyStone(heroMo)
+			local isIgnoreDestinyStone = self:checkIgnoreAllDestinyStone(heroMo.destinyStoneMo, ignoreIds)
+
+			if isHeroOpenDestinyStone and not isIgnoreDestinyStone and not heroMo.destinyStoneMo:checkAllUnlock() then
 				table.insert(list, heroMo)
 			end
 		end
@@ -803,7 +844,8 @@ function MaterialTipView:_btnuseOnClick()
 		if #list > 0 then
 			local param = {
 				materialId = materialId,
-				ignoreIds = ignoreIds
+				ignoreIds = ignoreIds,
+				heroList = list
 			}
 
 			ViewMgr.instance:openView(ViewName.DestinyStoneGiftPickChoiceView, param)
@@ -857,6 +899,12 @@ function MaterialTipView:_btnuseOnClick()
 		local param = string.format("%s#%s", JumpEnum.JumpView.SummonView, poolId)
 
 		JumpController.instance:jumpByParam(param)
+	elseif self._config.subType == ItemEnum.SubType.NewDestinyStoneUp then
+		VersionActivity3_8SelfSelectSixController.instance:openHeroChoiceView()
+	elseif self._config.subType == ItemEnum.SubType.EquipLvUp then
+		local itemId = self._config.id
+
+		EquipLvUpController.instance:checkOpenEquipLvUpChooseView(itemId)
 	else
 		ItemRpc.instance:simpleSendUseItemRequest(materialId, quantity)
 	end
@@ -866,6 +914,29 @@ function MaterialTipView:_btnuseOnClick()
 	end
 
 	self:closeThis()
+end
+
+function MaterialTipView:isAllHasHeroDestinyLvMaxed(ignoreIds)
+	local heroList = HeroModel.instance:getAllHero()
+
+	for _, heroMo in pairs(heroList) do
+		local isSlotMaxLevel = heroMo.destinyStoneMo and heroMo.destinyStoneMo:isSlotMaxLevel()
+		local stoneList = heroMo.destinyStoneMo and heroMo.destinyStoneMo:getStoneMoList()
+
+		if not isSlotMaxLevel then
+			return false
+		else
+			for _, stoneMo in pairs(stoneList) do
+				local isIgnore = LuaUtil.tableContains(ignoreIds, stoneMo.stoneId)
+
+				if not stoneMo.isUnlock and not isIgnore then
+					return false
+				end
+			end
+		end
+	end
+
+	return true
 end
 
 function MaterialTipView:checkIgnoreAllDestinyStone(destinyStoneMo, ignoreIds)
@@ -1077,6 +1148,10 @@ function MaterialTipView:_refreshUI()
 			showDetail = false
 
 			recthelper.setAnchorY(self._btnuse.transform, -190)
+		elseif self._config.subType == ItemEnum.SubType.NewDestinyStoneUp then
+			showDetail = false
+
+			recthelper.setAnchorY(self._btnuse.transform, -200)
 		elseif self._config.subType == ItemEnum.SubType.EquipSelectGift then
 			showDetail = false
 
@@ -1183,7 +1258,7 @@ function MaterialTipView:_refreshUI()
 
 	local isExp = self.viewParam.type == MaterialEnum.MaterialType.Exp
 
-	gohelper.setActive(self._gohadnumber, not isExp and self._config.subType ~= ItemEnum.SubType.Portrait and not self:_checkIsFakeIcon())
+	gohelper.setActive(self._gohadnumber, not isExp and not self:_checkHideHadNum() and not self:_checkIsFakeIcon())
 	gohelper.setActive(self._goupgrade, self._config.subType == ItemEnum.SubType.Portrait and not string.nilorempty(self._config.effect))
 
 	local effectArr = string.split(self._config.effect, "#")
@@ -1287,6 +1362,14 @@ function MaterialTipView:_refreshUI()
 	if self.viewContainer.refreshCurrencyView then
 		self.viewContainer:refreshCurrencyView(currency)
 	end
+end
+
+function MaterialTipView:_checkHideHadNum()
+	if HideHadnumberSubType[self._config.subType] then
+		return true
+	end
+
+	return false
 end
 
 function MaterialTipView:_checkIsFakeIcon()
@@ -1432,10 +1515,20 @@ function MaterialTipView:_onLoadCallback()
 end
 
 function MaterialTipView:_refreshItemQuantity()
-	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion and self.viewParam.id == MaterialEnum.PowerId.OverflowPowerId then
-		local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
-		local count = ofMakerInfo and ofMakerInfo.itemTotalCount or ItemPowerModel.instance:getPowerCount(self.viewParam.id)
+	if self.viewParam.type == MaterialEnum.MaterialType.PowerPotion then
+		local count
 
+		if self.viewParam.id == MaterialEnum.PowerId.SmallPower_Expire or self.viewParam.id == MaterialEnum.PowerId.SmallPower then
+			count = ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower_Expire) + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.SmallPower)
+		elseif self.viewParam.id == MaterialEnum.PowerId.BigPower_Expire or self.viewParam.id == MaterialEnum.PowerId.BigPower then
+			count = ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower_Expire) + ItemPowerModel.instance:getPowerCount(MaterialEnum.PowerId.BigPower)
+		elseif self.viewParam.id == MaterialEnum.PowerId.OverflowPowerId then
+			local ofMakerInfo = ItemPowerModel.instance:getPowerMakerInfo()
+
+			count = ofMakerInfo and ofMakerInfo.itemTotalCount
+		end
+
+		count = count or ItemPowerModel.instance:getPowerCount(self.viewParam.id)
 		self._txthadnumber.text = formatLuaLang("materialtipview_itemquantity", count)
 
 		return
@@ -1447,10 +1540,10 @@ function MaterialTipView:_refreshItemQuantity()
 end
 
 function MaterialTipView:_refreshItemQuantityVisible()
-	local isShow = self.viewParam.id ~= BpEnum.ScoreItemId
+	local isShow = self.viewParam.id ~= BpEnum.ScoreItemId and self.viewParam.id ~= Anniversary3ActBpEnum.ScoreItemId
 	local isExp = self.viewParam.type == MaterialEnum.MaterialType.Exp
 
-	gohelper.setActive(self._gohadnumber, isShow and not isExp)
+	gohelper.setActive(self._gohadnumber, isShow and not isExp and not self:_checkHideHadNum())
 	gohelper.setActive(self._txthadnumber, isShow)
 end
 
@@ -1471,6 +1564,10 @@ function MaterialTipView:_refreshInclude()
 	end
 
 	gohelper.setActive(self._goinclude, showInclude)
+
+	if showInclude then
+		gohelper.setActive(self._goincludetxt, true)
+	end
 
 	local count = 0
 	local includetype
@@ -1522,7 +1619,7 @@ function MaterialTipView:_refreshInclude()
 				end
 			end
 		elseif self._config.subType == ItemEnum.SubType.SkinSelelctGift then
-			local effectArr = string.splitToNumber(self._config.effect, "#")
+			local effectArr = GameUtil.splitString2(self._config.effect, true)[1]
 
 			includeItems = {}
 
@@ -1532,6 +1629,24 @@ function MaterialTipView:_refreshInclude()
 				co[1] = MaterialEnum.MaterialType.HeroSkin
 				co[2] = heroSkinId
 				co[3] = 1
+
+				table.insert(includeItems, co)
+			end
+		elseif self._config.subType == ItemEnum.SubType.NewDestinyStoneUp then
+			gohelper.setActive(self._goincludetxt, false)
+			gohelper.setActive(self._gofilterherotxt, true)
+
+			local effectArr = GameUtil.splitString2(self._config.effect, true)[3]
+
+			includeItems = {}
+
+			for _, heroId in ipairs(effectArr) do
+				local co = {}
+
+				co[1] = MaterialEnum.MaterialType.Hero
+				co[2] = heroId
+				co[3] = 1
+				co[4] = ItemEnum.SubType.NewDestinyStoneUp
 
 				table.insert(includeItems, co)
 			end
@@ -1586,6 +1701,7 @@ function MaterialTipView:_refreshInclude()
 				local type = itemco[1]
 				local id = itemco[2]
 				local num = itemco[3]
+				local subType = itemco[4]
 
 				includetype = type
 
@@ -1605,6 +1721,10 @@ function MaterialTipView:_refreshInclude()
 
 					itemIcon:setMOValue(type, id, num, nil, true)
 					itemIcon:isShowCount(false)
+
+					if subType == ItemEnum.SubType.NewDestinyStoneUp then
+						itemIcon:customOnClickCallback(self._onNewDestinyPreveiew, self, id)
+					end
 				elseif type == MaterialEnum.MaterialType.HeroSkin then
 					itemIcon = IconMgr.instance:getCommonItemIcon(self._goincludeContent)
 
@@ -1634,6 +1754,10 @@ function MaterialTipView:_refreshInclude()
 	for i = count + 1, #self._iconItemList do
 		gohelper.setActive(self._iconItemList[i].go, false)
 	end
+end
+
+function MaterialTipView:_onNewDestinyPreveiew(heroId)
+	VersionActivity3_8SelfSelectSixController.instance:openHeroChoicePreview(heroId)
 end
 
 function MaterialTipView:checkOnlyShowEquip()
@@ -1707,6 +1831,10 @@ function MaterialTipView:_isUseBtnShow()
 	end
 
 	if self._config.subType == ItemEnum.SubType.SkinSelelctGift then
+		if self.viewParam.inpack == false or ViewMgr.instance:isOpen(ViewName.StoreView) then
+			return false
+		end
+
 		local itemQuantity = ItemModel.instance:getItemQuantity(self.viewParam.type, self.viewParam.id, self.viewParam.uid, self.viewParam.fakeQuantity)
 
 		return itemQuantity > 0
@@ -1836,6 +1964,10 @@ end
 
 function MaterialTipView:_isRoomBlockGift()
 	return self._config.subType == ItemEnum.SubType.RoomBlockGiftNew or self._config.subType == ItemEnum.SubType.RoomBlockGift
+end
+
+function MaterialTipView:_isGoldenMilletPresentSkin()
+	return self._config.clienttag == ItemEnum.Tag.GoldenMilletPresentSkin
 end
 
 return MaterialTipView

@@ -32,13 +32,13 @@ end
 function StoryPrologueSkipView:_btncloseOnClick()
 	self:_hideStoryViewContent(false)
 	self:closeThis()
-	StoryController.instance:dispatchEvent(StoryEvent.OnSkipClick)
+	StoryController.instance:dispatchEvent(StoryEvent.OnPrologueSkipClick)
 end
 
 function StoryPrologueSkipView:_onBgClick()
 	self:_hideStoryViewContent(false)
 	self:closeThis()
-	StoryController.instance:dispatchEvent(StoryEvent.OnSkipClick)
+	StoryController.instance:dispatchEvent(StoryEvent.OnPrologueSkipClick)
 end
 
 function StoryPrologueSkipView:_editableInitView()

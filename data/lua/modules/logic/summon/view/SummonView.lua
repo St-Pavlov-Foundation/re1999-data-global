@@ -61,6 +61,12 @@ function SummonView:onOpen()
 	self:_handleSelectTab()
 end
 
+function SummonView:onOpenFinish()
+	if Act101VersionSummonController.instance:isOpen() and Act101VersionSummonController.instance:isCliamed() then
+		Act101VersionSummonController.instance:saveTakeALookSummon(true)
+	end
+end
+
 function SummonView:startDraw()
 	gohelper.setActive(self._btnskip.gameObject, not SummonController.instance:isInSummonGuide() and not SummonModel.instance:getSendEquipFreeSummon())
 end

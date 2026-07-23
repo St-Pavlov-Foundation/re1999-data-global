@@ -83,7 +83,7 @@ function SkinConfig:_setFolderName(resName, folderName)
 
 	self._skinFolderNameMap[resName] = folderName
 
-	if not string.match(folderName, "v%d+a%d+_") and not string.match(folderName, "s01_") then
+	if not string.match(folderName, "v%d+a%d+_") and not string.match(folderName, "s0[1-9]_") then
 		logError(string.format("SkinConfig folderName:%s 不符合版本格式", folderName))
 	end
 end

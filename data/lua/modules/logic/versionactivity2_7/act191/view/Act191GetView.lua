@@ -23,11 +23,12 @@ end
 
 function Act191GetView:_editableInitView()
 	self.actInfo = Activity191Model.instance:getActInfo()
-	self.gameInfo = self.actInfo:getGameInfo()
 	self.touchGraphic = self._scrollGet.gameObject:GetComponent(typeof(UnityEngine.UI.Graphic))
 end
 
 function Act191GetView:onOpen()
+	self.gameInfo = self.viewParam or self.actInfo:getGameInfo()
+
 	local heroIdCntDic = {}
 	local itemIdCntDic = {}
 
@@ -38,9 +39,9 @@ function Act191GetView:onOpen()
 			if effectCo then
 				local insertTbl
 
-				if effectCo.type == Activity191Enum.EffectType.Hero or effectCo.type == Activity191Enum.EffectType.HeroByHero or effectCo.type == Activity191Enum.EffectType.HeroByTag then
+				if tabletool.indexOf(Activity191Enum.EffectGetHero, effectCo.type) then
 					insertTbl = heroIdCntDic
-				elseif effectCo.type == Activity191Enum.EffectType.Item or effectCo.type == Activity191Enum.EffectType.ItemByItem or effectCo.type == Activity191Enum.EffectType.ItemByTag then
+				elseif tabletool.indexOf(Activity191Enum.EffectGetItem, effectCo.type) then
 					insertTbl = itemIdCntDic
 				end
 
@@ -79,7 +80,7 @@ function Act191GetView:onOpen()
 			exSkill = true
 		})
 
-		headItem:setData(heroCo.roleId)
+		headItem:setData(nil, heroCo.id)
 
 		local goLvlUp = gohelper.findChild(go, "go_lvlup")
 		local heroInfo = self.gameInfo:getHeroInfoInWarehouse(heroCo.roleId)

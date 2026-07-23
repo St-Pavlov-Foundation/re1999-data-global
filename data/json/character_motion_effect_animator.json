@@ -1,0 +1,30 @@
+[
+  {
+    "heroResName": "311604_lzl",
+    "effectNode": "Drawables/bone8/effect-Bone/roleeffect_lzl_idle8",
+    "defaultState": "roleeffect_lzl_idle",
+    "stateList": "roleeffect_lzl_mj#b_mianju",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "309203_yge",
+    "effectNode": "Drawables/bone/effect-Bone/roleeffect_yge_idle0",
+    "defaultState": "roleeffect_v3a8_yge_idle0",
+    "stateList": "roleeffect_v3a8_yge_idle1#b_men#b_bajian#b_baoxiong#b_tanshou",
+    "delay": 0.25
+  },
+  {
+    "heroResName": "310504_zxqe",
+    "effectNode": "Drawables/bone7/effect-Bone/roleeffect_zxqe_jh01_7",
+    "defaultState": "310504_zxqe_jh01",
+    "stateList": "310504_zxqe_jh03#b_jiaohu03#b_jiaohu04",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "312606_mlan",
+    "effectNode": "Drawables/bone4/effect-Bone/roleeffect_mlan_idle4",
+    "defaultState": "312606_mlan_idle",
+    "stateList": "312606_mlan_hj#b_huijian",
+    "delay": 0.0
+  }
+]

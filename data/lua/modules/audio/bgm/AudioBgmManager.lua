@@ -23,19 +23,40 @@ function AudioBgmManager:_addEvents()
 	GameSceneMgr.instance:registerCallback(SceneEventName.EnterScene, self._onEnterScene, self)
 end
 
+function AudioBgmManager:isIgnoreBGMView(viewName)
+	if not self._ignoreBGMViewList then
+		self._ignoreBGMViewList = {}
+		self._ignoreBGMViewList[ViewName.FullScreenVideoView] = true
+	end
+
+	return self._ignoreBGMViewList[viewName]
+end
+
 function AudioBgmManager:_onEnterScene()
 	self:_forceClearPauseBgm()
 end
 
 function AudioBgmManager:_onReOpenWhileOpen(viewName)
+	if self:isIgnoreBGMView(viewName) then
+		return
+	end
+
 	self:_startCheckBgm()
 end
 
 function AudioBgmManager:_onCloseViewFinish(viewName)
+	if self:isIgnoreBGMView(viewName) then
+		return
+	end
+
 	self:_startCheckBgm()
 end
 
 function AudioBgmManager:_onOpenViewFinsh(viewName)
+	if self:isIgnoreBGMView(viewName) then
+		return
+	end
+
 	self:_startCheckBgm()
 end
 

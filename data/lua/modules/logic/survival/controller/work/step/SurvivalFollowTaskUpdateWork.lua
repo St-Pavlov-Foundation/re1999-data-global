@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalFollowTaskUpdateWork
 
 local SurvivalFollowTaskUpdateWork = class("SurvivalFollowTaskUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalFollowTaskUpdateWork:onStart(context)
+function SurvivalFollowTaskUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local followTask
 

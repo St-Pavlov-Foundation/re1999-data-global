@@ -40,6 +40,8 @@ function Rouge2_BagMO:removeItem(itemInfo)
 	if itemList ~= nil then
 		tabletool.removeValue(itemList, itemMo)
 	end
+
+	self:_onRemoveItemDone(itemMo)
 end
 
 function Rouge2_BagMO:updateItems(items)
@@ -52,6 +54,8 @@ function Rouge2_BagMO:updateItems(items)
 			self:updateItem(item)
 		end
 	end
+
+	self:_onUpdateItemListDone()
 end
 
 function Rouge2_BagMO:updateItem(itemInfo)
@@ -59,20 +63,49 @@ function Rouge2_BagMO:updateItem(itemInfo)
 	local itemMo = self:getItem(uid)
 
 	if not itemMo then
-		itemMo = Rouge2_BagItemMO.New()
-		self._uid2ItemMap[uid] = itemMo
-
-		table.insert(self._itemList, itemMo)
-
-		local itemId = itemInfo.itemId
-		local itemList = self._itemId2ItemList[itemId] or {}
-
-		table.insert(itemList, itemMo)
-
-		self._itemId2ItemList[itemId] = itemList
+		self:_createItem(uid, itemInfo)
+	else
+		itemMo:init(itemInfo)
 	end
 
+	self:_onUpdateItemDone(itemMo)
+end
+
+function Rouge2_BagMO:_createItem(uid, itemInfo)
+	local itemMo = Rouge2_BagItemMO.New()
+
 	itemMo:init(itemInfo)
+
+	self._uid2ItemMap[uid] = itemMo
+
+	table.insert(self._itemList, itemMo)
+
+	local itemId = itemMo:getItemId()
+	local itemList = self._itemId2ItemList[itemId] or {}
+
+	table.insert(itemList, itemMo)
+
+	self._itemId2ItemList[itemId] = itemList
+
+	self:_onCreateItemDone(itemMo)
+
+	return itemMo
+end
+
+function Rouge2_BagMO:_onCreateItemDone(itemMo)
+	return
+end
+
+function Rouge2_BagMO:_onUpdateItemListDone()
+	return
+end
+
+function Rouge2_BagMO:_onUpdateItemDone(itemMo)
+	return
+end
+
+function Rouge2_BagMO:_onRemoveItemDone(itemMo)
+	return
 end
 
 return Rouge2_BagMO

@@ -4,7 +4,7 @@ module("modules.configs.excel2json.lua_skin", package.seeall)
 
 local lua_skin = {}
 local fields = {
-	characterTitleViewStaticOffset = 54,
+	costafterbuy = 95,
 	weatherParam = 37,
 	mainThumbnailViewOffset = 47,
 	skinSwitchLive2dOffset = 92,
@@ -58,7 +58,9 @@ local fields = {
 	guideLeftPortraitOffset = 56,
 	storeTag = 77,
 	headIcon = 26,
+	skinSignature = 94,
 	skinGetDetailViewSpineOffset = 69,
+	characterTitleViewStaticOffset = 54,
 	verticalDrawing = 18,
 	characterGetViewOffset = 51,
 	frameStencilValue = 13,
@@ -91,6 +93,7 @@ local fields = {
 	des = 5,
 	focusOffset = 39,
 	topuiOffset = 38,
+	skinLevel = 93,
 	unavailableStore = 87,
 	skinViewImgOffset = 64,
 	canHide = 73,

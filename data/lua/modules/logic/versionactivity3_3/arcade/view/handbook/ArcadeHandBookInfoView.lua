@@ -211,7 +211,7 @@ function ArcadeHandBookInfoView:_refreshStatus()
 	self:_refreshInfo()
 
 	if self._isLock then
-		local tipStr = luaLang(self._mo:getLockTip())
+		local tipStr = self._mo:getLockTip()
 
 		self._txtlock.text = tipStr
 

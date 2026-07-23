@@ -12,7 +12,7 @@ function ArcadeBossRoom:onEnter()
 	return
 end
 
-function ArcadeBossRoom:initEntities()
+function ArcadeBossRoom:onInitEntities()
 	local allInitEntityDataList = {}
 
 	self:_fillInitMonsterData(allInitEntityDataList)

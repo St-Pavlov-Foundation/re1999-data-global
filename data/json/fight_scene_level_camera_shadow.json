@@ -1,0 +1,15 @@
+[
+  {
+    "id": 35201,
+    "shadowDistance": 140.0,
+    "rotation": [
+      180,
+      40,
+      0
+    ],
+    "invokeRotateImmediately": 1,
+    "shadowDepthBias": 0.0,
+    "shadowNormalBias": 0.0,
+    "lightShadowResolution": 2048
+  }
+]

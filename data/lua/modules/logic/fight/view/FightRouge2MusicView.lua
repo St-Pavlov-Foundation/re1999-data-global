@@ -4,13 +4,12 @@ module("modules.logic.fight.view.FightRouge2MusicView", package.seeall)
 
 local FightRouge2MusicView = class("FightRouge2MusicView", FightBaseView)
 
-FightRouge2MusicView.AnchorX = 0
-FightRouge2MusicView.AnchorY = 380
-
 function FightRouge2MusicView:onInitView()
 	local rectTr = self.viewGO:GetComponent(gohelper.Type_RectTransform)
+	local anchor, scale = FightPlayCardLayoutHelper.getAnchorPosAndScale(FightPlayCardLayoutHelper.PlayCardOperateType.MusicNote)
 
-	recthelper.setAnchor(rectTr, FightRouge2MusicView.AnchorX, FightRouge2MusicView.AnchorY)
+	recthelper.setAnchor(rectTr, anchor.x, anchor.y)
+	transformhelper.setLocalScale(rectTr, scale, scale, scale)
 
 	self.viewAnimator = ZProj.ProjAnimatorPlayer.Get(self.viewGO)
 	self.scrollRectTr = gohelper.findChildComponent(self.viewGO, "root/#scroll_yinfu", gohelper.Type_RectTransform)

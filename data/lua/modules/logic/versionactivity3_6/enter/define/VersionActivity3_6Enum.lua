@@ -4,7 +4,7 @@ module("modules.logic.versionactivity3_6.enter.define.VersionActivity3_6Enum", p
 
 local VersionActivity3_6Enum = _M
 
-if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isVer(3, 6) then
+if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isOnVer(3, 6) then
 	local VersionActivity3_8Enum = rawget(_G, "VersionActivity3_8Enum") or {}
 
 	rawset(_G, "VersionActivity3_8Enum", VersionActivity3_8Enum)

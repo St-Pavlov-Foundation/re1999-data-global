@@ -155,7 +155,17 @@ ConstEnum.LaplaceMiniPartyTipTitle = 34010
 ConstEnum.LaplaceMiniPartyTipDesc = 34011
 ConstEnum.LaplaceChatRoomTipTitle = 34012
 ConstEnum.LaplaceChatRoomTipDesc = 34013
+ConstEnum.Act236HelpTitle = 83705
+ConstEnum.Act236HelpDesc = 83702
+ConstEnum.V3a7SkinConfigWeight = 83706
 ConstEnum.V3a4PackageStoreGoodsId = 34014
 ConstEnum.VersionId = 300
+ConstEnum.V3a8NewRegisterPlayerTime = 83801
+ConstEnum.V3a8FreeMonthCardTitle = 83809
+ConstEnum.V3a8FreeMonthCardDesc = 83810
+ConstEnum.SP02_LinkGiftDesc = 38501
+ConstEnum.SP02_LinkGiftTitle = 38502
+ConstEnum.ForceNeedKrJpActivityId = 38504
+ConstEnum.SP_StoryIdPrefix = 38507
 
 return ConstEnum

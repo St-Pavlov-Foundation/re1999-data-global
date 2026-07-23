@@ -87,5 +87,10 @@ AudioEnum3_0.ActKaRong = {
 	play_ui_lushang_barrier_dispel = 20301059,
 	play_ui_lushang_karong_unlock = 20301053
 }
+AudioEnum3_0.PermanentBgm = {
+	KaRong = 3309050,
+	EnterView = 3309050,
+	MaLiAnNa = 3270001
+}
 
 return AudioEnum3_0

@@ -245,5 +245,31 @@
     "sort": 19,
     "minNum": 4,
     "maxNum": 10
+  },
+  {
+    "id": 20,
+    "actType": 0,
+    "name": "language_10097905",
+    "unlockId": 50,
+    "batNum": 4,
+    "supNum": 0,
+    "isDisplay": 1,
+    "isChangeName": 1,
+    "sort": 20,
+    "minNum": 4,
+    "maxNum": 10
+  },
+  {
+    "id": 21,
+    "actType": 232,
+    "name": "language_10120191",
+    "unlockId": 0,
+    "batNum": 4,
+    "supNum": 0,
+    "isDisplay": 1,
+    "isChangeName": 1,
+    "sort": 21,
+    "minNum": 1,
+    "maxNum": 10
   }
 ]

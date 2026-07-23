@@ -33,6 +33,12 @@ function module_views_preloader.SeasonMainView(allResPath)
 	return
 end
 
+function module_views_preloader.V3a8EchoSongGameView(allResPath)
+	local path = V3a8EchoSongController.instance:getScenePath()
+
+	table.insert(allResPath, path)
+end
+
 function module_views_preloader.VersionActivity2_8BossStoryEyeView(allResPath)
 	local path = FightHelper.getCameraAniPath(VersionActivity2_8BossStoryEyeView.camerControllerPath)
 

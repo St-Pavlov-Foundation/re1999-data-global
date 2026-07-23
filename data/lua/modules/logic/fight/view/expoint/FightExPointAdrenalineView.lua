@@ -72,8 +72,6 @@ function FightExPointAdrenalineView:onResetCard()
 	self:refreshAdrenaline()
 end
 
-local AddAdrenalineBehaviourType = 100004
-
 function FightExPointAdrenalineView:onPlayHandCard(cardMo)
 	local curStage = FightDataHelper.stageMgr:getCurStage()
 
@@ -91,6 +89,8 @@ function FightExPointAdrenalineView:onPlayHandCard(cardMo)
 		return
 	end
 
+	local behaviourId = FightEnum.BehaviourId.AddAdrenaline
+
 	for i = 1, FightEnum.MaxBehavior do
 		local behavior = skillCo["behavior" .. i]
 
@@ -98,7 +98,7 @@ function FightExPointAdrenalineView:onPlayHandCard(cardMo)
 			local array = FightStrUtil.instance:getSplitString2Cache(behavior, true)
 
 			for _, behaviourArray in ipairs(array) do
-				if behaviourArray[1] == AddAdrenalineBehaviourType then
+				if behaviourArray[1] == behaviourId then
 					self.clientAddAdrenaline = self.clientAddAdrenaline + behaviourArray[2]
 				end
 			end

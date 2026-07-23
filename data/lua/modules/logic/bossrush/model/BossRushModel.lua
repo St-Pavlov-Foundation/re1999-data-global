@@ -13,10 +13,8 @@ function BossRushModel:reInit()
 	BossRushModel.super.reInit(self)
 
 	local config = BossRushConfig.instance
-	local activityId = config:getActivityId()
 
 	self:_internal_set_config(config)
-	self:_internal_set_activity(activityId)
 
 	self._stage2LastTotalPoint = {}
 	self._fightLastScore = 0
@@ -311,6 +309,10 @@ function BossRushModel:getStagesInfo()
 	local res = {}
 	local config = self:getConfig()
 	local stages = config:getStages()
+
+	if not stages then
+		return
+	end
 
 	for _, stageCO in pairs(stages) do
 		local stage = stageCO.stage
@@ -650,6 +652,10 @@ function BossRushModel:_initStageLastTotalPoint()
 
 	local stages = BossRushConfig.instance:getStages()
 
+	if not stages then
+		return
+	end
+
 	for _, v in pairs(stages) do
 		local stage = v.stage
 		local info = self:getStageInfo(stage)
@@ -771,38 +777,6 @@ end
 
 function BossRushModel:isSpecialLayer(layer)
 	return layer and layer == 4
-end
-
-function BossRushModel:getActivityBonus()
-	local actId = BossRushConfig.instance:getActivityId()
-	local bonusTab = BossRushEnum.BonusTab[actId] or BossRushEnum.BonusTab[BossRushEnum.DefaultAcitvityId]
-
-	return bonusTab
-end
-
-function BossRushModel:getActivityMainView()
-	local actId = BossRushConfig.instance:getActivityId()
-	local mainView = BossRushEnum.MainView[actId] or BossRushEnum.MainView[BossRushEnum.DefaultAcitvityId]
-
-	return mainView
-end
-
-function BossRushModel:getActivityMainViewPath()
-	local mainView = self:getActivityMainView()
-
-	return mainView and mainView.MainViewPath or BossRushEnum.ResPath.v1a4_bossrushmainview
-end
-
-function BossRushModel:getActivityMainViewItemPath()
-	local mainView = self:getActivityMainView()
-
-	return mainView and mainView.MainViewItemPath or BossRushEnum.ResPath.v1a4_bossrushmainitem
-end
-
-function BossRushModel:getActivityLevelDetailPath()
-	local mainView = self:getActivityMainView()
-
-	return mainView and mainView.LeveldetailViewPath or BossRushEnum.ResPath.v1a4_bossrushleveldetail
 end
 
 BossRushModel.instance = BossRushModel.New()

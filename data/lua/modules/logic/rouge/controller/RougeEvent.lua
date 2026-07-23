@@ -75,5 +75,6 @@ E("OnGetVersionInfo")
 E("UpdateUnlockSkill")
 E("ShowMonsterRuleDesc")
 E("OnSwitchHeroGroupEditMode")
+E("OpenRougeView")
 
 return RougeEvent

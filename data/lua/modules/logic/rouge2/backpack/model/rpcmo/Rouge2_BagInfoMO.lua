@@ -5,10 +5,22 @@ module("modules.logic.rouge2.backpack.model.rpcmo.Rouge2_BagInfoMO", package.see
 local Rouge2_BagInfoMO = pureTable("Rouge2_BagInfoMO")
 
 function Rouge2_BagInfoMO:init(info)
+	self:_initBagMap(info)
+end
+
+function Rouge2_BagInfoMO:_initBagMap(info)
+	self._bagMap = {}
+
 	if info then
-		self._bagMap = GameUtil.rpcInfosToMap(info.bags, Rouge2_BagMO, "_bagType")
-	else
-		self._bagMap = {}
+		for _, bagInfo in ipairs(info.bags) do
+			local bagType = bagInfo.bagType
+			local bagCls = Rouge2_Enum.BagType2MoCls[bagType] or Rouge2_BagMO
+			local bagMo = bagCls.New()
+
+			bagMo:init(bagInfo)
+
+			self._bagMap[bagType] = bagMo
+		end
 	end
 end
 

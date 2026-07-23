@@ -19,6 +19,7 @@ function KaRongLevelView:onInitView()
 	self._txtlimittime = gohelper.findChildText(self.viewGO, "#go_Title/#go_time/image_LimitTimeBG/#txt_limittime")
 	self._btnTask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Task")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -27,10 +28,38 @@ end
 
 function KaRongLevelView:addEvents()
 	self._btnTask:AddClickListener(self._btnTaskOnClick, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 end
 
 function KaRongLevelView:removeEvents()
 	self._btnTask:RemoveClickListener()
+	self._btnTrial:RemoveClickListener()
+end
+
+function KaRongLevelView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function KaRongLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function KaRongLevelView:_btnTaskOnClick()
@@ -74,6 +103,7 @@ function KaRongLevelView:_editableInitView()
 
 	self:_initStageItems()
 	gohelper.setActive(self._btnPlayBtn, self.actConfig.storyId > 0)
+	gohelper.setActive(self._gotime, false)
 end
 
 function KaRongLevelView:onOpen()
@@ -85,7 +115,7 @@ function KaRongLevelView:onOpen()
 
 	local goreddot = gohelper.findChild(self._btnTask.gameObject, "#go_reddot")
 
-	RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
+	RedDotController.instance:addRedDot(goreddot, RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
 	self:OnDotChange()
 	self:_showLeftTime()
 	TaskDispatcher.runRepeat(self._showLeftTime, self, 1)
@@ -198,7 +228,7 @@ function KaRongLevelView:getLatestStoryCo()
 end
 
 function KaRongLevelView:OnDotChange()
-	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, self.actId)
+	local isDotShow = RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, self.actId)
 
 	if isDotShow then
 		self._animTask:Play("loop")

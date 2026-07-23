@@ -43,6 +43,7 @@ function StoryLogListModel:getInfoList(scrollGO)
 			local curCo = StoryStepModel.instance:getStepListById(v).conversation
 			local text = GameUtil.filterRichText(curCo.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
+			text = text:gsub("^%d+,%d+#", "")
 			lineWidth = GameUtil.getTextHeightByLine(textComp, text, 42.35294, 13.96) + 80 - 42.35294 + 31.41
 
 			if type(preInfo) == "number" and preInfo > 0 then
@@ -58,7 +59,7 @@ function StoryLogListModel:getInfoList(scrollGO)
 				mixType = 0
 			end
 		elseif type(v) == "table" then
-			lineWidth = 55 * #StoryModel.instance:getStoryBranchOpts(v.stepId) + 25
+			lineWidth = 55 * #StoryModel.instance:getShowStoryBranchOpts(v.stepId) + 25
 			mixType = 0
 		end
 

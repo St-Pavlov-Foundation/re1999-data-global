@@ -115,7 +115,7 @@ function LamonaLevelItem:playUnlock()
 	local isCurrent = self.id == self:getCurEpisode()
 
 	gohelper.setActive(self._goCurrent, isCurrent)
-	gohelper.setActive(self._golock, not self._isunlock)
+	gohelper.setActive(self._node._golock, not self._isunlock)
 	self._anim:Play("unlock", 0, 0)
 end
 

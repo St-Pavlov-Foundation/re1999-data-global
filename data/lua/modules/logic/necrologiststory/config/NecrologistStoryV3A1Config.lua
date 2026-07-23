@@ -2,7 +2,7 @@
 
 module("modules.logic.necrologiststory.config.NecrologistStoryV3A1Config", package.seeall)
 
-local NecrologistStoryV3A1Config = class("NecrologistStoryV3A1Config", BaseConfig)
+local NecrologistStoryV3A1Config = class("NecrologistStoryV3A1Config", NecrologistStoryVersionConfigBase)
 
 function NecrologistStoryV3A1Config:ctor()
 	self._openConfig = nil
@@ -14,15 +14,6 @@ function NecrologistStoryV3A1Config:reqConfigNames()
 		"hero_story_mode_fugaoren_base",
 		"hero_story_mode_fugaoren_story"
 	}
-end
-
-function NecrologistStoryV3A1Config:onConfigLoaded(configName, configTable)
-	local loadFuncName = string.format("onLoad%s", configName)
-	local func = self[loadFuncName]
-
-	if func then
-		func(self, configTable)
-	end
 end
 
 function NecrologistStoryV3A1Config:onLoadhero_story_mode_fugaoren_story(configTable)

@@ -206,6 +206,44 @@ function MessageBoxController:_showNextMsgBox()
 	return false
 end
 
+function MessageBoxController:showOptionMsgBoxAndSetBtn(messageBoxId, msgBoxType, optionType, yesStr, yesStrEn, noStr, noStrEn, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
+	local canShowView = self:canShowMessageOptionBoxView(messageBoxId, optionType)
+
+	if not canShowView then
+		if yesCallback then
+			yesCallback(yesCallbackObj)
+		end
+
+		return
+	end
+
+	self._isShowSystemMsgBox = false
+
+	local extra = {
+		...
+	}
+	local param = {
+		msg = MessageBoxConfig.instance:getMessage(messageBoxId),
+		title = MessageBoxConfig.instance:getMessageTitle(messageBoxId),
+		messageBoxId = messageBoxId,
+		msgBoxType = msgBoxType,
+		optionType = optionType,
+		yesCallback = yesCallback,
+		noCallback = noCallback,
+		openCallback = openCallback,
+		yesCallbackObj = yesCallbackObj,
+		noCallbackObj = noCallbackObj,
+		openCallbackObj = openCallbackObj,
+		yesStr = yesStr,
+		noStr = noStr,
+		yesStrEn = yesStrEn,
+		noStrEn = noStrEn,
+		extra = extra
+	}
+
+	ViewMgr.instance:openView(ViewName.MessageOptionBoxView, param)
+end
+
 function MessageBoxController:showOptionMsgBox(messageBoxId, msgBoxType, optionType, yesCallback, noCallback, openCallback, yesCallbackObj, noCallbackObj, openCallbackObj, ...)
 	self._isShowSystemMsgBox = false
 

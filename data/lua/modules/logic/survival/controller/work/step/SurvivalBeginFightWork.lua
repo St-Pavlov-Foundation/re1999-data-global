@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalBeginFightWork", pac
 
 local SurvivalBeginFightWork = class("SurvivalBeginFightWork", SurvivalStepBaseWork)
 
-function SurvivalBeginFightWork:onStart(context)
+function SurvivalBeginFightWork:onStart2(context)
 	HeroGroupRpc.instance:sendGetHeroGroupSnapshotListRequest(ModuleEnum.HeroGroupSnapshotType.Survival, self._onRecvMsg, self)
 end
 

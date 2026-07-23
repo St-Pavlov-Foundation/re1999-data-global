@@ -19,6 +19,7 @@ function CharacterModel:reInit()
 	self._showHeroDict = {}
 	self._heroList = nil
 	self._hideGainHeroView = false
+	self._twinssychubeEquipMos = nil
 end
 
 function CharacterModel:getBtnTag(type)
@@ -531,18 +532,14 @@ function CharacterModel:filterCardListByCareerAndCharType(filterParam, isShowHer
 		if allCareerShow and allCharTypeShow and allCharLangType then
 			self._curCardList[#self._curCardList + 1] = v
 		else
-			for _, career in pairs(filterParam.careers) do
-				for _, charType in pairs(filterParam.charTypes) do
-					local careerPass = v.config.career == career
-					local heroTypePass = v.config.heroType == charType
-					local heroId = v.heroId
-					local langId, langStr = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
-					local charLangTypePass = filterParam.charLang == 0 or filterParam.charLang == langId
+			local isCareers = allCareerShow or self:_filterHerobyCareer(filterParam.careers, v.config.career)
+			local heroTypePass = allCharTypeShow or LuaUtil.tableContains(filterParam.charTypes, v.config.heroType)
+			local heroId = v.heroId
+			local langId, langStr = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(heroId)
+			local charLangTypePass = allCharLangType or filterParam.charLang == 0 or filterParam.charLang == langId
 
-					if careerPass and heroTypePass and charLangTypePass then
-						self._curCardList[#self._curCardList + 1] = v
-					end
-				end
+			if isCareers and heroTypePass and charLangTypePass then
+				self._curCardList[#self._curCardList + 1] = v
 			end
 		end
 	end
@@ -559,11 +556,48 @@ function CharacterModel:_filterHeroNewFunc(heroList, filterParam)
 	for _, v in pairs(heroList) do
 		local heroCo = v.config
 		local isDmg = LuaUtil.tableContains(filterParam.dmgs, heroCo.dmgType)
-		local isCareers = LuaUtil.tableContains(filterParam.careers, heroCo.career)
+		local career = heroCo.career
+		local isCareers = self:_filterHerobyCareer(filterParam.careers, career)
 		local isFilterTag = selectTags and self:_isFilterTag(selectTags, v)
 
 		if isDmg and isCareers and isFilterTag and not self:_isHeroInCardList(v.heroId) then
 			table.insert(self._curCardList, v)
+		end
+	end
+end
+
+function CharacterModel:_filterHerobyCareer(list, career)
+	if not list then
+		return
+	end
+
+	if LuaUtil.tableContains(list, career) then
+		return true
+	end
+
+	local careers = FightConfig.instance:getCareerList(career)
+
+	for _, v in ipairs(careers) do
+		if LuaUtil.tableContains(list, v) then
+			return true
+		end
+	end
+end
+
+function CharacterModel:filterHerobyCareer_1(list, career)
+	if not list then
+		return
+	end
+
+	if list[career] then
+		return true
+	end
+
+	local careers = FightConfig.instance:getCareerList(career)
+
+	for _, v in ipairs(careers) do
+		if list[v] then
+			return true
 		end
 	end
 end
@@ -1443,6 +1477,14 @@ end
 
 function CharacterModel:getGainHeroViewShowNewState()
 	return self._hideOldGainHeroView
+end
+
+function CharacterModel:setGainHeroViewToastState(hideToast)
+	self._hideHeroToast = hideToast
+end
+
+function CharacterModel:getGainHeroViewToastState()
+	return self._hideHeroToast
 end
 
 function CharacterModel:getSpecialEffectDesc(skin, rank)

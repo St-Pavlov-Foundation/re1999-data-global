@@ -14,6 +14,7 @@ function Activity201MaLiAnNaLevelView:onInitView()
 	self._gostages = gohelper.findChild(self.viewGO, "#go_path/#go_scrollcontent/#go_stages")
 	self._gotitle = gohelper.findChild(self.viewGO, "#go_title")
 	self._simagetitle = gohelper.findChildSingleImage(self.viewGO, "#go_title/#simage_title")
+	self._txtLimitTimeContainer = gohelper.findChild(self.viewGO, "#go_title/image_LimitTimeBG")
 	self._txtLimitTime = gohelper.findChildText(self.viewGO, "#go_title/image_LimitTimeBG/#txt_LimitTime")
 	self._btntask = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_task")
 	self._btnEndless = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Endless")
@@ -23,6 +24,7 @@ function Activity201MaLiAnNaLevelView:onInitView()
 	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
 	self._animEndless = self._btnEndless.gameObject:GetComponent(typeof(UnityEngine.Animator))
 	self._animTask = self._gotaskani:GetComponent(typeof(UnityEngine.Animator))
+	self._btnTrial = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Try/#btn_Trial")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -36,6 +38,7 @@ function Activity201MaLiAnNaLevelView:addEvents()
 	self:addEventCb(Activity201MaLiAnNaController.instance, Activity201MaLiAnNaEvent.OnBackToLevel, self._onBackToLevel, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self._btnTrial:AddClickListener(self._btnTrialOnClick, self)
 end
 
 function Activity201MaLiAnNaLevelView:removeEvents()
@@ -45,6 +48,33 @@ function Activity201MaLiAnNaLevelView:removeEvents()
 	self:removeEventCb(Activity201MaLiAnNaController.instance, Activity201MaLiAnNaEvent.OnBackToLevel, self._onBackToLevel, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
+	self._btnTrial:RemoveClickListener()
+end
+
+function Activity201MaLiAnNaLevelView:_btnTrialOnClick()
+	if ActivityHelper.getActivityStatus(self.actId) == ActivityEnum.ActivityStatus.Normal then
+		local episodeId = self.actConfig.tryoutEpisode
+
+		if episodeId <= 0 then
+			logError("没有配置对应的试用关卡")
+
+			return
+		end
+
+		local config = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+		DungeonFightController.instance:enterFight(config.chapterId, episodeId)
+	else
+		self:_clickLock()
+	end
+end
+
+function Activity201MaLiAnNaLevelView:_clickLock()
+	local toastId, toastParamList = OpenHelper.getToastIdAndParam(self.actConfig.openId)
+
+	if toastId and toastId ~= 0 then
+		GameFacade.showToastWithTableParam(toastId, toastParamList)
+	end
 end
 
 function Activity201MaLiAnNaLevelView:_btntaskOnClick()
@@ -101,9 +131,11 @@ end
 
 function Activity201MaLiAnNaLevelView:_editableInitView()
 	self.actId = VersionActivity3_0Enum.ActivityId.MaLiAnNa
+	self.actConfig = ActivityConfig.instance:getActivityCo(self.actId)
 	self._viewAnimator = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	RedDotController.instance:addRedDot(self._goreddotreward, RedDotEnum.DotNode.V3a0MaLiAnNaTask)
+	gohelper.setActive(self._txtLimitTimeContainer, false)
 end
 
 function Activity201MaLiAnNaLevelView:onOpen()

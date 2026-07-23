@@ -51,6 +51,7 @@ local deadMonsterId
 function FightViewDialog:onInitView()
 	self._godialogcontainer = gohelper.findChild(self.viewGO, "root/#go_dialogcontainer")
 	self._godialog = gohelper.findChild(self.viewGO, "root/#go_dialogcontainer/#go_dialog")
+	self._godialog2 = gohelper.findChild(self.viewGO, "root/#go_dialogcontainer/#go_dialog2")
 	self._click = gohelper.getClick(self._godialogcontainer)
 
 	if self._editableInitView then
@@ -69,9 +70,11 @@ end
 function FightViewDialog:_editableInitView()
 	gohelper.setActive(self._godialogcontainer, false)
 	gohelper.setActive(self._godialog, false)
+	gohelper.setActive(self._godialog2, false)
 	gohelper.addChild(self.viewGO, self._godialogcontainer)
 
 	self._dialogItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._godialog, FightViewDialogItem, self)
+	self._dialogItem2 = MonoHelper.addNoUpdateLuaComOnceToGo(self._godialog2, FightViewDialogItem2, self)
 	self._toShowConfigList = {}
 	self._showedDialogIdDict = {}
 	self._showingItemList = {}
@@ -182,6 +185,7 @@ function FightViewDialog:_tryShow()
 	if dialogConfig.delay and dialogConfig.delay > 0 then
 		self:_addBlock()
 		gohelper.setActive(self._godialog, false)
+		gohelper.setActive(self._godialog2, false)
 		TaskDispatcher.runDelay(self._playDialogItem, self, dialogConfig.delay)
 	else
 		self:_playDialogItem()
@@ -196,9 +200,15 @@ end
 
 function FightViewDialog:_playDialogItem()
 	self:_removeBlock()
-	gohelper.setActive(self._godialog, true)
 
 	local dialogConfig = self._tempDialogConfig
+
+	if dialogConfig.type == 2 then
+		gohelper.setActive(self._godialog2, true)
+	else
+		gohelper.setActive(self._godialog, true)
+	end
+
 	local icon
 
 	if not string.nilorempty(dialogConfig.icon) then
@@ -206,6 +216,7 @@ function FightViewDialog:_playDialogItem()
 	end
 
 	self._dialogItem:showDialogContent(icon, dialogConfig)
+	self._dialogItem2:showDialogContent(icon, dialogConfig)
 
 	if dialogConfig.audioId and dialogConfig.audioId ~= 0 then
 		self._audioId = dialogConfig.audioId
@@ -243,6 +254,7 @@ function FightViewDialog:_onClickThis()
 	if not self:_tryShow() then
 		gohelper.setActive(self._godialogcontainer, false)
 		gohelper.setActive(self._godialog, false)
+		gohelper.setActive(self._godialog2, false)
 
 		local showTypes = tabletool.copy(self._showingType)
 
@@ -272,6 +284,7 @@ function FightViewDialog:onOpen()
 	FightController.instance:registerCallback(FightEvent.BeforeSkillDialog, self._beforeSkill, self)
 	FightController.instance:registerCallback(FightEvent.FightDialog, self._onFightDialogCheck, self)
 	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	FightController.instance:registerCallback(FightEvent.HideFightDialog, self._onHideFightDialog, self)
 end
 
 function FightViewDialog:onClose()
@@ -288,6 +301,7 @@ function FightViewDialog:onClose()
 	FightController.instance:unregisterCallback(FightEvent.BeforeSkillDialog, self._beforeSkill, self)
 	FightController.instance:unregisterCallback(FightEvent.FightDialog, self._onFightDialogCheck, self)
 	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
+	FightController.instance:unregisterCallback(FightEvent.HideFightDialog, self._onHideFightDialog, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseSpecialView, self)
 end
 
@@ -311,6 +325,10 @@ end
 
 function FightViewDialog:_onRoundSequenceFinish()
 	return
+end
+
+function FightViewDialog:_onHideFightDialog()
+	gohelper.setActive(self._godialogcontainer, false)
 end
 
 function FightViewDialog:_onStartChangeEntity(entityMO)
@@ -481,6 +499,7 @@ function FightViewDialog:onDestroyView()
 	UIBlockMgr.instance:endBlock(UIBlockKey.FightDialog)
 	TaskDispatcher.cancelTask(self._playDialogItem, self)
 	self._dialogItem:onDestroy()
+	self._dialogItem2:onDestroy()
 end
 
 function FightViewDialog:_onSkillPlayStart(entity, skillId, fightStepData)

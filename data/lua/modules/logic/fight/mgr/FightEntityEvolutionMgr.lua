@@ -22,6 +22,10 @@ function FightEntityEvolutionMgr:onConstructor()
 end
 
 function FightEntityEvolutionMgr:_onBeforeDestroyEntity(entity)
+	if not entity then
+		return
+	end
+
 	if self._entityDic[entity.id] == entity then
 		self:_releaseEntity(entity)
 

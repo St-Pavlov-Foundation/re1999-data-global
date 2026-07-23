@@ -131,6 +131,19 @@ function StoryDialogItem:hideDialog()
 		self._conMat:DisableKeyword("_GRADUAL_ON")
 	end
 
+	if self._markTopMat then
+		self._markTopMat:DisableKeyword("_GRADUAL_ON")
+	end
+
+	if self._subMeshs then
+		for _, v in pairs(self._subMeshs) do
+			if v.materialForRendering then
+				v.materialForRendering:DisableKeyword("_GRADUAL_ON")
+			end
+		end
+	end
+
+	UIBlockMgr.instance:endBlock("delayShow")
 	TaskDispatcher.cancelTask(self._delayShow, self)
 	self:_showMagicItem(false)
 
@@ -336,6 +349,9 @@ function StoryDialogItem:playNormalText(txt, callback, callbackobj)
 		StoryTool.enablePostProcess(true)
 		PostProcessingMgr.instance:setUIPPValue("localBloomActive", true)
 		PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 5)
+
+		self._softLightBloomOn = true
+
 		gohelper.setActive(self._goline, false)
 		gohelper.setActive(self._goblackbottom, false)
 		gohelper.setActive(self._gonexticon, false)
@@ -345,8 +361,13 @@ function StoryDialogItem:playNormalText(txt, callback, callbackobj)
 		self._targetTxt.fontSharedMaterial = self._fontNormalMat
 
 		self._targetTxt.fontSharedMaterial:SetFloat("_BloomFactor", 0)
-		PostProcessingMgr.instance:setUIPPValue("localBloomActive", false)
-		PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 7)
+
+		if self._softLightBloomOn then
+			PostProcessingMgr.instance:setUIPPValue("localBloomActive", false)
+			PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 7)
+
+			self._softLightBloomOn = false
+		end
 
 		local showContent = self._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
 
@@ -356,9 +377,9 @@ function StoryDialogItem:playNormalText(txt, callback, callbackobj)
 	end
 
 	if self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Hard then
-		self:_playHardIn()
+		self:playHardIn()
 	else
-		self:_playGradualIn()
+		self:playGradualIn()
 	end
 end
 
@@ -597,10 +618,12 @@ function StoryDialogItem:_checkPlayGlitch(txt)
 		else
 			gohelper.setActive(particleSystems[i].gameObject, true)
 
+			local posY = glitchLinePosYs[#lineDatas][i]
+
 			if lineDatas[i].lineGlitch then
 				local x, y, z = transformhelper.getLocalPos(particleSystems[i].transform)
 
-				transformhelper.setLocalPos(particleSystems[i].transform, 640, y, z)
+				transformhelper.setLocalPos(particleSystems[i].transform, 640, posY, z)
 
 				particleSystems[i].shape.scale = Vector3(12, 0.4, 0)
 
@@ -621,9 +644,8 @@ function StoryDialogItem:_checkPlayGlitch(txt)
 				local scaleA = startTxtLength / lineLength
 				local scaleB = glitchTxtLength / lineLength
 				local posX = 647 * (2 * scaleA + scaleB)
-				local posy = glitchLinePosYs[#lineDatas][i]
 
-				transformhelper.setLocalPos(particleSystems[i].transform, posX, posy, 0)
+				transformhelper.setLocalPos(particleSystems[i].transform, posX, posY, 0)
 
 				local shapeX = 12 * scaleB * percent
 				local shapeY = 0.4 * percent
@@ -636,12 +658,15 @@ function StoryDialogItem:_checkPlayGlitch(txt)
 	end
 end
 
-function StoryDialogItem:_playHardIn()
+function StoryDialogItem:playHardIn()
 	self:_showMagicItem(false)
+	gohelper.setActive(self._gonormalcontent, true)
+	UIBlockMgr.instance:endBlock("delayShow")
+	TaskDispatcher.cancelTask(self._delayShow, self)
 	self:conFinished()
 end
 
-function StoryDialogItem:_playGradualIn()
+function StoryDialogItem:playGradualIn()
 	local height = UnityEngine.Screen.height
 
 	if self._conMat then
@@ -695,11 +720,14 @@ function StoryDialogItem:_playGradualIn()
 		self._conTweenId = nil
 	end
 
+	UIBlockMgr.instance:startBlock("delayShow")
 	TaskDispatcher.cancelTask(self._delayShow, self)
 	TaskDispatcher.runDelay(self._delayShow, self, 0.05)
 end
 
 function StoryDialogItem:_delayShow()
+	UIBlockMgr.instance:endBlock("delayShow")
+
 	local height = UnityEngine.Screen.height
 
 	self._dotMat:SetFloat(self._LineMinYId, height)
@@ -807,7 +835,19 @@ function StoryDialogItem:_playConAudio()
 		param.callbackTarget = self
 		self._playingAudioId = self._conAudioId
 
-		AudioEffectMgr.instance:playAudio(self._conAudioId, param)
+		local isOverseas = SettingsModel.instance:isOverseas()
+		local isSpVersionStory = StoryModel.instance:isSpVersionStory()
+		local curVoice = GameConfig:GetCurVoiceShortcut()
+		local isSpVoiceType = curVoice == LangSettings.shortcutTab[LangSettings.jp] or curVoice == LangSettings.shortcutTab[LangSettings.kr]
+		local playSp = not isOverseas and isSpVersionStory and isSpVoiceType
+
+		if playSp then
+			param.audioLang = curVoice
+
+			AudioEffectMgr.instance:playAudio(self._conAudioId, param, param.audioLang)
+		else
+			AudioEffectMgr.instance:playAudio(self._conAudioId, param)
+		end
 	else
 		self._playingAudioId = 0
 	end
@@ -1070,30 +1110,34 @@ function StoryDialogItem:conFinished()
 		self._conTweenId = nil
 	end
 
-	self._conMat:SetFloat(self._LineMinYId, 0)
-	self._conMat:SetFloat(self._LineMaxYId, 0)
-
-	local x, y, z = transformhelper.getLocalPos(self._targetTxt.transform)
-
-	transformhelper.setLocalPos(self._targetTxt.transform, x, y, 0)
-
-	self._subMeshs = {}
-
-	local subMeshs = self._targetTxt.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
-
-	if subMeshs then
-		local iter = subMeshs:GetEnumerator()
-
-		while iter:MoveNext() do
-			local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
-
-			table.insert(self._subMeshs, subMesh)
-		end
+	if self._conMat then
+		self._conMat:SetFloat(self._LineMinYId, 0)
+		self._conMat:SetFloat(self._LineMaxYId, 0)
 	end
 
-	for _, v in pairs(self._subMeshs) do
-		if v.sharedMaterial then
-			v.sharedMaterial:DisableKeyword("_GRADUAL_ON")
+	if self._targetTxt then
+		local x, y, z = transformhelper.getLocalPos(self._targetTxt.transform)
+
+		transformhelper.setLocalPos(self._targetTxt.transform, x, y, 0)
+
+		self._subMeshs = {}
+
+		local subMeshs = self._targetTxt.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+
+		if subMeshs then
+			local iter = subMeshs:GetEnumerator()
+
+			while iter:MoveNext() do
+				local subMesh = iter.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+
+				table.insert(self._subMeshs, subMesh)
+			end
+		end
+
+		for _, v in pairs(self._subMeshs) do
+			if v.sharedMaterial then
+				v.sharedMaterial:DisableKeyword("_GRADUAL_ON")
+			end
 		end
 	end
 
@@ -1175,6 +1219,8 @@ function StoryDialogItem:_destoryMagic()
 end
 
 function StoryDialogItem:destroy()
+	UIBlockMgr.instance:endBlock("delayShow")
+
 	if self._targetTxt then
 		self._targetTxt.fontSharedMaterial = self._fontNormalMat
 		self._targetTxt = nil

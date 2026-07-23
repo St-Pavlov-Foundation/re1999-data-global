@@ -299,6 +299,10 @@ function MaterialTipController:isBpCustomSelect(config)
 	return config.subType == ItemEnum.SubType.SpecifiedGift and config.clientDisplayType == ItemEnum.clientDisplayType.BpCustomSelect
 end
 
+function MaterialTipController:isHeroSelect(config)
+	return config.subType == ItemEnum.SubType.SpecifiedGift and config.clientDisplayType == ItemEnum.clientDisplayType.HeroSelect
+end
+
 MaterialTipController.instance = MaterialTipController.New()
 
 return MaterialTipController

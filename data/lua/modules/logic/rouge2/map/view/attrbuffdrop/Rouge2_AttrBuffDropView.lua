@@ -19,8 +19,8 @@ function Rouge2_AttrBuffDropView:onInitView()
 	self._goTopLeft = gohelper.findChild(self.viewGO, "#go_Info/#go_topleft")
 	self._goTopRight = gohelper.findChild(self.viewGO, "#go_Info/#go_topright")
 	self._imageTitleBG = gohelper.findChild(self.viewGO, "#go_Info/Title/image_TitleBG")
-	self._goTips = gohelper.findChild(self.viewGO, "#go_Info/#go_tips")
-	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Info/#go_tips/#txt_tips")
+	self._goTips = gohelper.findChild(self.viewGO, "#go_Info/Layout/#go_AttrReason/#go_tips")
+	self._txtTips = gohelper.findChildText(self.viewGO, "#go_Info/Layout/#go_AttrReason/#go_tips/#txt_tips")
 	self._goRefresh = gohelper.findChild(self.viewGO, "#go_Info/#go_Refresh")
 
 	if self._editableInitView then
@@ -45,8 +45,8 @@ function Rouge2_AttrBuffDropView:_editableInitView()
 	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
 
 	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
+	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Enter)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goTopRight, Rouge2_Enum.ItemDescModeDataKey.AttrBuffDrop)
-	Rouge2_TeamRecommendTipsLoader.LoadWithParams(self._goBottomLeft, Rouge2_Enum.TeamRecommendTipType.Default)
 end
 
 function Rouge2_AttrBuffDropView:onOpen()

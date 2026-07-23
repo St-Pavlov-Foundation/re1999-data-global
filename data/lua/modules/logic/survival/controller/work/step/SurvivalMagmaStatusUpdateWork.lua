@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalMagmaStatusUpdateWor
 
 local SurvivalMagmaStatusUpdateWork = class("SurvivalMagmaStatusUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalMagmaStatusUpdateWork:onStart(context)
+function SurvivalMagmaStatusUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.sceneProp.magmaStatus = self._stepMo.paramInt[1] or SurvivalEnum.MagmaStatus.Normal

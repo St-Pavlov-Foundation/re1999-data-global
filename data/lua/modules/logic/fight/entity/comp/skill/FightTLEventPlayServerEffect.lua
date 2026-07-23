@@ -99,8 +99,60 @@ function FightTLEventPlayServerEffect:onTrackStart(fightStepData, duration, para
 		local arr = string.split(noConditionParam, "#")
 		local work = self:com_registWork(Work2FightWork, FightWorkNormalDialog, FightViewDialog.Type.NoCondition, tonumber(arr[2]))
 
-		self:addWork2TimelineFinishWork(work)
+		if arr[4] ~= "1" then
+			self:addWork2TimelineFinishWork(work)
+		end
+
+		if arr[3] == "1" then
+			work:start()
+		end
+
+		if arr[4] == "1" then
+			self.hideDialogWhenEnd = true
+		end
 	end
+
+	local param15 = paramsArr[15]
+
+	if not string.nilorempty(param15) and param15 == "1" then
+		self.hideMySideBuffEffect = true
+
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			if entity:isMySide() and entity.buff then
+				entity.buff:hideBuffEffects("FightTLEventPlayServerEffect15")
+			end
+		end
+	end
+
+	local param16 = paramsArr[16]
+
+	if not string.nilorempty(param16) then
+		local storyId = tonumber(param16)
+		local canPlay = true
+
+		if FightDataHelper.stateMgr.isReplay then
+			canPlay = false
+		end
+
+		if canPlay then
+			local flow = self:com_registFlowSequence()
+
+			flow:registWork(FightWorkWaitMsg, FightMsgId.PlayStoryEndInTimeline)
+
+			local param = {}
+
+			param.mark = true
+			param.episodeId = FightDataHelper.fieldMgr.episodeId
+
+			StoryController.instance:playStory(storyId, param, self._afterPlayStory, self)
+			self:addWork2TimelineFinishWork(flow)
+			flow:start()
+		end
+	end
+end
+
+function FightTLEventPlayServerEffect:_afterPlayStory()
+	FightMsgMgr.sendMsg(FightMsgId.PlayStoryEndInTimeline)
 end
 
 function FightTLEventPlayServerEffect:_playEffect(effectType)
@@ -119,12 +171,24 @@ function FightTLEventPlayServerEffect:onTrackEnd()
 end
 
 function FightTLEventPlayServerEffect:onDestructor()
+	if self.hideMySideBuffEffect then
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			if entity:isMySide() and entity.buff then
+				entity.buff:showBuffEffects("FightTLEventPlayServerEffect15")
+			end
+		end
+	end
+
 	if self._list then
 		for i, v in ipairs(self._list) do
 			v:onStop()
 		end
 
 		self._list = nil
+	end
+
+	if self.hideDialogWhenEnd then
+		FightController.instance:dispatchEvent(FightEvent.HideFightDialog)
 	end
 end
 

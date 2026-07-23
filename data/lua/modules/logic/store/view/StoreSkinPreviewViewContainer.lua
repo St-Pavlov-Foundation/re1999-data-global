@@ -18,6 +18,12 @@ end
 function StoreSkinPreviewViewContainer:buildTabViews(tabContainerId)
 	self.goodsMO = self.viewParam.goodsMO
 
+	local isShowHomeBtn = true
+
+	if self.viewParam.isShowHomeBtn ~= nil then
+		isShowHomeBtn = self.viewParam.isShowHomeBtn
+	end
+
 	local product = self.goodsMO.config.product
 	local productInfo = string.splitToNumber(product, "#")
 	local skinId = productInfo[2]
@@ -25,18 +31,14 @@ function StoreSkinPreviewViewContainer:buildTabViews(tabContainerId)
 	local isInHandbookSkin = suitId ~= nil
 
 	if isInHandbookSkin then
-		self.navigateView = NavigateButtonsView.New({
-			true,
-			false,
-			false
-		})
-	else
-		self.navigateView = NavigateButtonsView.New({
-			true,
-			true,
-			false
-		})
+		isShowHomeBtn = false
 	end
+
+	self.navigateView = NavigateButtonsView.New({
+		true,
+		isShowHomeBtn,
+		false
+	})
 
 	return {
 		self.navigateView

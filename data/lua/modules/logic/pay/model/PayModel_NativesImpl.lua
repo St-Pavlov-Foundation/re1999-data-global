@@ -44,4 +44,13 @@ function PayModel_NativesImpl:getProductOriginPriceSymbol(lua_store_charge_goods
 	return "¥"
 end
 
+function PayModel_NativesImpl:getProductPriceScaledSymbol(lua_store_charge_goods_id, symbolSize)
+	symbolSize = symbolSize or 30
+
+	local symbol = self:getProductOriginPriceSymbol(lua_store_charge_goods_id)
+	local _, numStr = self:getProductOriginPriceNum(lua_store_charge_goods_id)
+
+	return string.format("<size=%s>%s</size>%s", symbolSize, symbol, numStr)
+end
+
 return PayModel_NativesImpl

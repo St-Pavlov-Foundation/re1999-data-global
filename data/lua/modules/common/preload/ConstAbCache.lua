@@ -7,9 +7,11 @@ local ConstAbCache = class("ConstAbCache")
 function ConstAbCache:ctor()
 	self._pathTab = {
 		"ui/viewres/rpcblock/rpcblock.prefab",
+		PostProcessingMgr.MainAllProfilePath,
 		PostProcessingMgr.MainHighProfilePath,
 		PostProcessingMgr.MainMiddleProfilePath,
 		PostProcessingMgr.MainLowProfilePath,
+		PostProcessingMgr.MainLowBrightnessProfilePath,
 		ExploreScenePPVolume.ExploreHighProfilePath,
 		ExploreScenePPVolume.ExploreMiddleProfilePath,
 		ExploreScenePPVolume.ExploreLowProfilePath,

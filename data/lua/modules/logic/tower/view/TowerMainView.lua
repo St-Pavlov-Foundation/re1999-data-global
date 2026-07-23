@@ -154,7 +154,9 @@ function TowerMainView:_btnpermanentOnClick()
 end
 
 function TowerMainView:_btnheroTrialOnClick()
-	TowerController.instance:openTowerHeroTrialView()
+	TowerController.instance:openTowerHeroTrialView({
+		trialType = TowerEnum.HeroTrialEntranceType.Normal
+	})
 	self:saveHeroTrialNew()
 	gohelper.setActive(self._goheroTrialNew, false)
 end
@@ -657,8 +659,9 @@ end
 function TowerMainView:refreshHeroTrialNew()
 	local saveSeason = TowerController.instance:getPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewHeroTrial, 0)
 	local curSeason = TowerModel.instance:getTrialHeroSeason()
+	local heroTrialList = TowerHeroTrialListModel.instance:getEntranceHeroTrialList(TowerEnum.HeroTrialEntranceType.Normal)
 
-	gohelper.setActive(self._goheroTrial, curSeason > 0)
+	gohelper.setActive(self._goheroTrial, #heroTrialList > 0)
 	gohelper.setActive(self._goheroTrialNew, saveSeason ~= curSeason and curSeason > 0)
 end
 

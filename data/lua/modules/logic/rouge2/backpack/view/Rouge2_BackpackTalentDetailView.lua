@@ -33,7 +33,6 @@ function Rouge2_BackpackTalentDetailView:addEvents()
 	self._btnActive:AddClickListener(self._btnActiveOnClick, self)
 	self._btnClose:AddClickListener(self._btnCloseOnClick, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSwitchSkillViewType, self._onSwitchSkillViewType, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
 
 	local tabContainer = ViewMgr.instance:getContainer(ViewName.Rouge2_BackpackTabView)
@@ -90,6 +89,8 @@ function Rouge2_BackpackTalentDetailView:_onReceiveRpc(_, resultCode)
 
 		ViewMgr.instance:openView(ViewName.Rouge2_BackpackPetStageResultView, params)
 	end
+
+	self:closeThis()
 end
 
 function Rouge2_BackpackTalentDetailView:_btnActiveOnClick()
@@ -184,12 +185,6 @@ end
 
 function Rouge2_BackpackTalentDetailView:_onUpdateRougeInfo()
 	self:refreshStatus()
-end
-
-function Rouge2_BackpackTalentDetailView:_onSwitchSkillViewType(state)
-	if state == Rouge2_BackpackSkillView.ViewState.Edit then
-		self:closeThis()
-	end
 end
 
 function Rouge2_BackpackTalentDetailView:onClose()

@@ -34,7 +34,7 @@ end
 
 function NecrologistStoryMO:setSection(sectionId)
 	self._sectionId = sectionId
-	self._storyList = self._storyGroup[self._sectionId]
+	self._storyList = self._storyGroup[self._sectionId] or {}
 	self._stepCount = #self._storyList
 	self._stepIndex = self._stepIndexDict[self._sectionId] or 0
 	self._stepIndexDict[self._sectionId] = self._stepIndex
@@ -65,27 +65,7 @@ function NecrologistStoryMO:isNextStepNeedDelay()
 		return false
 	end
 
-	local stepIndex = self._stepIndex
-	local stepCount = self._stepCount
-	local storyList = self._storyList
-	local sectionId = self._sectionId
-
-	if stepCount <= stepIndex then
-		sectionId = self.mainSection
-		storyList = self._storyGroup[sectionId]
-		stepCount = #storyList
-		stepIndex = self._stepIndexDict[sectionId] or 0
-	end
-
-	stepIndex = stepIndex + 1
-
-	local isStoryFinish = sectionId == 0 and stepCount <= stepIndex
-
-	if isStoryFinish then
-		return false
-	end
-
-	local storyConfig = storyList[stepIndex]
+	local storyConfig = self:getNextStepConfig()
 
 	if not storyConfig then
 		return false
@@ -106,6 +86,24 @@ function NecrologistStoryMO:isNextStepNeedDelay()
 	local needDelayType = NecrologistStoryEnum.NeedDelayType[storyConfig.type]
 
 	return needDelayType ~= nil
+end
+
+function NecrologistStoryMO:getNextStepConfig()
+	local stepIndex = self._stepIndex
+	local stepCount = self._stepCount
+	local storyList = self._storyList
+	local sectionId = self._sectionId
+
+	if stepCount <= stepIndex then
+		sectionId = self.mainSection
+		storyList = self._storyGroup[sectionId] or {}
+		stepCount = #storyList
+		stepIndex = self._stepIndexDict[sectionId] or 0
+	end
+
+	stepIndex = stepIndex + 1
+
+	return storyList and storyList[stepIndex]
 end
 
 function NecrologistStoryMO:runNextStep()
@@ -238,6 +236,50 @@ function NecrologistStoryMO:saveTaskValue()
 			HeroStoryRpc.instance:sendHeroStoryCommonTaskRequest(key, value)
 		end
 	end
+end
+
+function NecrologistStoryMO:onSelectOption(optionId, optionIds)
+	local storyMo = NecrologistStoryModel.instance:getGameMO(self.config.storyId)
+
+	if not storyMo then
+		return
+	end
+
+	storyMo:setPlotOptionSelected(self.id, optionId, optionIds)
+end
+
+function NecrologistStoryMO:onEndingUnlock(endingId)
+	local storyMo = NecrologistStoryModel.instance:getGameMO(self.config.storyId)
+
+	if not storyMo then
+		return
+	end
+
+	storyMo:setPlotEndingUnlock(self.id, endingId)
+end
+
+function NecrologistStoryMO:setPlace(place)
+	self.place = place
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangePlace, place)
+end
+
+function NecrologistStoryMO:setTime(time)
+	self.time = time
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangeTime, time)
+end
+
+function NecrologistStoryMO:setWeather(weather)
+	self.weather = weather
+
+	local resIndex = NecrologistStoryEnum.WeatherType2ResIndex[weather]
+
+	if resIndex ~= nil then
+		self.showWeather = weather
+	end
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnChangeWeather, weather)
 end
 
 return NecrologistStoryMO

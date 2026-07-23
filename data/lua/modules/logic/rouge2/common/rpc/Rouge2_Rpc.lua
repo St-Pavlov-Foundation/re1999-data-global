@@ -4,6 +4,10 @@ module("modules.logic.rouge2.common.rpc.Rouge2_Rpc", package.seeall)
 
 local Rouge2_Rpc = class("Rouge2_Rpc", BaseRpc)
 
+function Rouge2_Rpc:reInit()
+	self._isWaitEquipAciveSkill = false
+end
+
 function Rouge2_Rpc:sendGetRouge2InfoRequest(callback, callbackObj)
 	local req = Rouge2Module_pb.GetRouge2InfoRequest()
 
@@ -55,8 +59,7 @@ function Rouge2_Rpc:onReceiveEnterRouge2SelectCareerReply(resultCode, msg)
 	local rouge2Info = msg.rouge2Info
 
 	Rouge2_Model.instance:updateRougeInfo(rouge2Info)
-	Rouge2_BackpackController.instance:checkCurTeamSystemId()
-	Rouge2_BackpackController.instance:tryEquipSkillsAfterSelectCareer()
+	Rouge2_SystemController.instance:checkCurTeamSystemId()
 	Rouge2_StatController.instance:statSelectCareer()
 end
 
@@ -77,26 +80,6 @@ function Rouge2_Rpc:onReceiveRouge2AddCareerAttrPointReply(resultCode, msg)
 	local map = msg.map
 
 	Rouge2_MapModel.instance:updateMapInfo(map)
-end
-
-function Rouge2_Rpc:sendRouge2EquipCareerActiveSkillRequest(pos, activeSkillUid, callback, callbackObj)
-	local req = Rouge2Module_pb.Rouge2EquipCareerActiveSkillRequest()
-
-	req.pos = pos
-	req.activeSkillUId = activeSkillUid
-
-	self:sendMsg(req, callback, callbackObj)
-end
-
-function Rouge2_Rpc:onReceiveRouge2EquipCareerActiveSkillReply(resultCode, msg)
-	if resultCode ~= 0 then
-		return
-	end
-
-	local leaderInfo = msg.leaderInfo
-
-	Rouge2_Model.instance:updateLeaderInfo(leaderInfo)
-	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnUpdateActiveSkillInfo)
 end
 
 function Rouge2_Rpc:sendRouge2RoundMoveRequest(layer, nodeId, callback, callbackObj)
@@ -201,16 +184,6 @@ function Rouge2_Rpc:sendRouge2StealGoodsEnterFightRequest(layer, nodeId, eventId
 end
 
 function Rouge2_Rpc:onReceiveRouge2StealGoodsEnterFightReply(resultCode, msg)
-	if resultCode ~= 0 then
-		return
-	end
-
-	local map = msg.map
-
-	Rouge2_MapModel.instance:updateMapInfo(msg.map)
-end
-
-function Rouge2_Rpc:onReceiveRouge2StealGoodsReply(resultCode, msg)
 	if resultCode ~= 0 then
 		return
 	end
@@ -656,6 +629,7 @@ function Rouge2_Rpc:onReceiveRouge2ReRollCheckReply(resultCode, msg)
 	end
 
 	Rouge2_MapModel.instance:updateMapInfo(msg.map)
+	Rouge2_StatController.instance:statDiceReRoll()
 end
 
 function Rouge2_Rpc:sendRouge2SummonerActiveTalentRequest(talentId, callback, callbackObj)
@@ -722,6 +696,20 @@ function Rouge2_Rpc:onReceiveRouge2GainCareerAttrDropReply(resultCode, msg)
 	local rouge2Info = msg.rouge2Info
 
 	Rouge2_Model.instance:updateRougeInfo(rouge2Info)
+end
+
+function Rouge2_Rpc:sendRouge2RefreshDropRequest(callback, callbackObj)
+	local req = Rouge2Module_pb.Rouge2RefreshDropRequest()
+
+	return self:sendMsg(req, callback, callbackObj)
+end
+
+function Rouge2_Rpc:onReceiveRouge2RefreshDropReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_MapModel.instance:updateMapInfo(msg.map)
 end
 
 Rouge2_Rpc.instance = Rouge2_Rpc.New()

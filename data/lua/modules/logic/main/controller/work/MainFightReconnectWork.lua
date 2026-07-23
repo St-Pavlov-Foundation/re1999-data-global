@@ -15,7 +15,9 @@ function MainFightReconnectWork:onStart(context)
 
 	if FightModel.instance.needFightReconnect then
 		if FightDataHelper.fieldMgr:is191DouQuQu() then
-			Activity191Rpc.instance:sendGetAct191InfoRequest(VersionActivity3_1Enum.ActivityId.DouQuQu3)
+			local actId = Activity191Controller.instance:getActId()
+
+			Activity191Rpc.instance:sendGetAct191InfoRequest(actId)
 		end
 
 		local fightReason = FightModel.instance:getFightReason()
@@ -119,6 +121,8 @@ function MainFightReconnectWork:_onConfirm()
 		HeroGroupModel.instance:setBattleAndEpisodeId(fightReason.battleId, episodeId)
 		HeroGroupTrialModel.instance:setTrialByBattleId()
 		HeroGroupModel.instance:setParam(fightReason.battleId, episodeId, false, true)
+	elseif co.type == DungeonEnum.EpisodeType.AtomicDungeon then
+		AtomicRpc.instance:sendAtomicGetInfoRequest()
 	else
 		local isSeasonType = SeasonHeroGroupHandler.checkIsSeasonTypeByEpisodeId(episodeId)
 

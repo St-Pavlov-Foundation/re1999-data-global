@@ -169,6 +169,8 @@ function Rouge2_EnterScene:playAnim(animator, animName)
 	local id = UnityEngine.Animator.StringToHash(animName)
 
 	if animator and animator:HasState(0, id) then
+		animator.enabled = true
+
 		animator:Play(animName, 0, 0)
 	end
 end
@@ -438,7 +440,12 @@ function Rouge2_EnterScene:switchOut()
 				local spineName = string.format("%s_front2side", self._curDifficultyIndex)
 
 				logNormal("rouge2 play Difficulty out Anim:  " .. spineName)
-				self._difficultyRoleSpine:PlayAnim(spineName, false, true)
+
+				if self._difficultyRoleSpine:HasAnimation(spineName) then
+					self._difficultyRoleSpine:PlayAnim(spineName, false, true)
+				else
+					logNormal(string.format("肉鸽2难度界面缺少退出动画 difficultyIndex = %s, spineName = %s", self._curDifficultyIndex, spineName))
+				end
 			end
 		end
 	end
@@ -524,7 +531,7 @@ function Rouge2_EnterScene:_onSwitchDifficultyPage(difficultyIndex)
 				self._difficultyRoleSpine:PlayAnim(spineName, false, true)
 			end
 		else
-			logError("肉鸽2 角色Spine缺少难度转换动画: " .. spineName)
+			logNormal(string.format("肉鸽2 角色Spine缺少难度转换动画: %s", spineName))
 		end
 
 		TaskDispatcher.cancelTask(self.onDifficultySpineSwitchFinish, self)
@@ -536,7 +543,13 @@ function Rouge2_EnterScene:_onSwitchDifficultyPage(difficultyIndex)
 			gohelper.setActive(itemGo, index == bgIndex)
 		end
 
-		self._difficultyRoleSpine:PlayAnim(string.format("%s_idle", bgIndex), true, true)
+		local animName = string.format("%s_idle", bgIndex)
+
+		if self._difficultyRoleSpine:HasAnimation(animName) then
+			self._difficultyRoleSpine:PlayAnim(animName, true, true)
+		else
+			logNormal(string.format("肉鸽2 角色Spine缺少动画: %s", animName))
+		end
 	end
 end
 
@@ -553,7 +566,12 @@ end
 
 function Rouge2_EnterScene:onDifficultySpineSwitchFinish()
 	logNormal("肉鸽2 完成Spine切换难度")
-	self._difficultyRoleSpine:PlayAnim(string.format("%s_idle", self._curDifficultyIndex), true, true)
+
+	local spineName = string.format("%s_idle", self._curDifficultyIndex)
+
+	if self._difficultyRoleSpine:HasAnimation(spineName) then
+		self._difficultyRoleSpine:PlayAnim(spineName, true, true)
+	end
 end
 
 function Rouge2_EnterScene:_onSelectCareer(careerId)

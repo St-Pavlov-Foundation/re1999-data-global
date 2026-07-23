@@ -1,0 +1,167 @@
+[
+  {
+    "id": 101,
+    "difficulty": 1,
+    "conditionType": 0,
+    "unlockCondition": "finish#101015",
+    "image": "polygonfight1",
+    "name": "language_10120765",
+    "description": "language_10130729",
+    "episodeId": 38550111,
+    "skillId": "1001#3001"
+  },
+  {
+    "id": 101,
+    "difficulty": 2,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#101#1|arbitraryPolygon#3",
+    "image": "polygonfight1",
+    "name": "language_10120766",
+    "description": "language_10130729",
+    "episodeId": 38550112,
+    "skillId": "1001#3001"
+  },
+  {
+    "id": 101,
+    "difficulty": 3,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#101#2|arbitraryPolygon#3",
+    "image": "polygonfight1",
+    "name": "language_10120767",
+    "description": "language_10130730",
+    "episodeId": 38550113,
+    "skillId": "1001#3001"
+  },
+  {
+    "id": 102,
+    "difficulty": 1,
+    "conditionType": 0,
+    "unlockCondition": "finish#102014",
+    "image": "polygonfight2",
+    "name": "language_10120768",
+    "description": "language_10130731",
+    "episodeId": 38550121,
+    "skillId": "2001#3001"
+  },
+  {
+    "id": 102,
+    "difficulty": 2,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#102#1|arbitraryPolygon#3",
+    "image": "polygonfight2",
+    "name": "language_10120769",
+    "description": "language_10130731",
+    "episodeId": 38550122,
+    "skillId": "2001#3001"
+  },
+  {
+    "id": 102,
+    "difficulty": 3,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#102#2|arbitraryPolygon#3",
+    "image": "polygonfight2",
+    "name": "language_10120770",
+    "description": "language_10130732",
+    "episodeId": 38550123,
+    "skillId": "2001#3001"
+  },
+  {
+    "id": 103,
+    "difficulty": 1,
+    "conditionType": 0,
+    "unlockCondition": "finish#103017",
+    "image": "polygonfight3",
+    "name": "language_10120771",
+    "description": "language_10130733",
+    "episodeId": 38550131,
+    "skillId": "1001#4001"
+  },
+  {
+    "id": 103,
+    "difficulty": 2,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#103#1|arbitraryPolygon#3",
+    "image": "polygonfight3",
+    "name": "language_10120772",
+    "description": "language_10130733",
+    "episodeId": 38550132,
+    "skillId": "1001#4001"
+  },
+  {
+    "id": 103,
+    "difficulty": 3,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#103#2|arbitraryPolygon#3",
+    "image": "polygonfight3",
+    "name": "language_10120773",
+    "description": "language_10130734",
+    "episodeId": 38550133,
+    "skillId": "1001#4001"
+  },
+  {
+    "id": 104,
+    "difficulty": 1,
+    "conditionType": 0,
+    "unlockCondition": "finish#104015",
+    "image": "polygonfight4",
+    "name": "language_10120774",
+    "description": "language_10130735",
+    "episodeId": 38550141,
+    "skillId": "2001#4001"
+  },
+  {
+    "id": 104,
+    "difficulty": 2,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#104#1|arbitraryPolygon#3",
+    "image": "polygonfight4",
+    "name": "language_10120775",
+    "description": "language_10130735",
+    "episodeId": 38550142,
+    "skillId": "2001#4001"
+  },
+  {
+    "id": 104,
+    "difficulty": 3,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#104#2|arbitraryPolygon#3",
+    "image": "polygonfight4",
+    "name": "language_10120776",
+    "description": "language_10130736",
+    "episodeId": 38550143,
+    "skillId": "2001#4001"
+  },
+  {
+    "id": 105,
+    "difficulty": 1,
+    "conditionType": 0,
+    "unlockCondition": "finish#105015",
+    "image": "polygonfight5",
+    "name": "language_10120777",
+    "description": "language_10130737",
+    "episodeId": 38550151,
+    "skillId": "1001#2001"
+  },
+  {
+    "id": 105,
+    "difficulty": 2,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#105#1|arbitraryPolygon#3",
+    "image": "polygonfight5",
+    "name": "language_10120778",
+    "description": "language_10130737",
+    "episodeId": 38550152,
+    "skillId": "1001#2001"
+  },
+  {
+    "id": 105,
+    "difficulty": 3,
+    "conditionType": 1,
+    "unlockCondition": "targetPolygon#105#2|arbitraryPolygon#3",
+    "image": "polygonfight5",
+    "name": "language_10120779",
+    "description": "language_10130738",
+    "episodeId": 38550153,
+    "skillId": "1001#2001"
+  }
+]

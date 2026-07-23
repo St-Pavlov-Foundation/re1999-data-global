@@ -13,7 +13,6 @@ function Rouge2_AttrDetailAttrTabItem:init(go)
 	self._imageUnselectIcon = gohelper.findChildImage(self.go, "go_Root/go_Unselect/image_Icon")
 	self._txtUnselectName = gohelper.findChildText(self.go, "go_Root/go_Unselect/txt_Name")
 	self._txtUnselectSpLevel = gohelper.findChildText(self.go, "go_Root/go_Unselect/txt_SpLevel")
-	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "go_Root/btn_Click")
 end
 
 function Rouge2_AttrDetailAttrTabItem:addEventListeners()
@@ -38,13 +37,13 @@ function Rouge2_AttrDetailAttrTabItem:refreshUI()
 	Rouge2_AttrDropDescHelper.loadAttrDropLevelList(self._careerId, self._attrId, self._txtUnselectSpLevel, false)
 end
 
-function Rouge2_AttrDetailAttrTabItem:onUpdateMO(careerId, attrInfo, groupIndex, index)
+function Rouge2_AttrDetailAttrTabItem:onUpdateMO(careerId, groupIndex, index, parentView, attrInfo)
 	self._attrInfo = attrInfo
 	self._attrId = attrInfo and attrInfo.attrId or 0
 	self._attrValue = attrInfo and attrInfo.value or 0
 	self._attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(self._attrId)
 
-	Rouge2_AttrDetailAttrTabItem.super.onUpdateMO(self, careerId, groupIndex, index)
+	Rouge2_AttrDetailAttrTabItem.super.onUpdateMO(self, careerId, groupIndex, index, parentView, attrInfo)
 end
 
 return Rouge2_AttrDetailAttrTabItem

@@ -203,6 +203,18 @@ end
 function GuideTipsView:initTargetGo()
 	self._targetGO = gohelper.find(self._goPath)
 
+	if not self._targetGO then
+		if string.find(self._goPath, "POPUP_TOP") then
+			self._targetGO = gohelper.find(string.gsub(self._goPath, "POPUP_TOP", "POPUPFour"))
+		elseif string.find(self._goPath, "POPUPFour") then
+			self._targetGO = gohelper.find(string.gsub(self._goPath, "POPUPFour", "POPUP_TOP"))
+		end
+	end
+
+	if not self._targetGO then
+		logNormal("GuideTipsView:targetGO is nil,goPath:", tostring(self._goPath))
+	end
+
 	if self._targetGO then
 		self._targetTrs = self._targetGO.transform
 		self._targetIs2D = self._targetGO:GetComponent("RectTransform") ~= nil

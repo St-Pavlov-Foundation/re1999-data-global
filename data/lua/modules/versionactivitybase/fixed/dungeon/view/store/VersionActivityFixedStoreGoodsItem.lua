@@ -82,6 +82,12 @@ function VersionActivityFixedStoreGoodsItem:updateInfo(storeGoodsCo)
 	local productItemConfig, productIconUrl = ItemModel.instance:getItemConfigAndIcon(productItemType, productItemId, true)
 	local rare = MaterialEnum.ItemRareSSR
 
+	if not productItemConfig then
+		logError("商品内容找不到对应的道具配置：" .. self.storeGoodsCo.id .. "    " .. self.storeGoodsCo.product)
+
+		return
+	end
+
 	if productItemConfig.rare then
 		rare = productItemConfig.rare
 	else

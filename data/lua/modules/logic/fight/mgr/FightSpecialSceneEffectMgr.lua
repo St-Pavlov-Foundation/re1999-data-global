@@ -11,6 +11,7 @@ function FightSpecialSceneEffectMgr:onConstructor()
 	self:com_registFightEvent(FightEvent.OnSkillPlayStart, self._onSkillPlayStart)
 	self:com_registFightEvent(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish)
 	self:com_registFightEvent(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity)
+	self:newClass(FightRefrieratorTimelineMgr)
 end
 
 function FightSpecialSceneEffectMgr:addBuff(tar_entity, buff)

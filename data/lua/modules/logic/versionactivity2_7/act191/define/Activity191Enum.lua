@@ -6,68 +6,76 @@ local Activity191Enum = _M
 
 Activity191Enum.MaxItemLevel = 4
 Activity191Enum.NodeType = {
-	PlayerBattle8 = 27,
-	MonsterBattle3 = 10,
-	MonsterBattle8 = 22,
-	PlayerBattle10 = 29,
-	PlayerBattle5 = 18,
+	playerBattle9 = 28,
+	MonsterBattle11 = 25,
+	playerBattle6 = 19,
 	MonsterBattle2 = 9,
+	MonsterBattle8 = 22,
+	AfterGlowShop = 32,
 	MonsterBattle7 = 21,
 	CollectionShop = 3,
 	MonsterBattle10 = 24,
-	MonsterBattle5 = 15,
+	MonsterBattle3 = 10,
 	MonsterBattle1 = 8,
-	PlayerBattle12 = 31,
+	playerBattle2 = 12,
+	MonsterBattle5 = 15,
+	playerBattle1 = 11,
+	playerBattle8 = 27,
+	playerBattle7 = 20,
 	MixStore = 1,
-	PlayerBattle4 = 17,
+	playerBattle11 = 30,
+	playerBattle3 = 13,
 	BattleEvent = 6,
 	MonsterBattle12 = 26,
 	MonsterBattle6 = 16,
-	PlayerBattle6 = 19,
+	playerBattle10 = 29,
 	RoleShop = 2,
+	playerBattle5 = 18,
 	Enhance = 7,
-	PlayerBattle2 = 12,
 	MonsterBattle4 = 14,
-	PlayerBattle1 = 11,
-	MonsterBattle11 = 25,
-	PlayerBattle7 = 20,
+	playerBattle12 = 31,
 	ReplaceEvent = 101,
 	UpgradeEvent = 102,
 	RewardEvent = 5,
-	PlayerBattle11 = 30,
-	PlayerBattle3 = 13,
+	playerBattle4 = 17,
 	MonsterBattle9 = 23,
-	PlayerBattle9 = 28,
 	TagShop = 4
 }
-Activity191Enum.NodeType2Key = {
-	[Activity191Enum.NodeType.PlayerBattle1] = "playerBattle1",
-	[Activity191Enum.NodeType.PlayerBattle2] = "playerBattle2",
-	[Activity191Enum.NodeType.PlayerBattle3] = "playerBattle3",
-	[Activity191Enum.NodeType.PlayerBattle4] = "playerBattle4",
-	[Activity191Enum.NodeType.PlayerBattle5] = "playerBattle5",
-	[Activity191Enum.NodeType.PlayerBattle6] = "playerBattle6",
-	[Activity191Enum.NodeType.PlayerBattle7] = "playerBattle7",
-	[Activity191Enum.NodeType.PlayerBattle8] = "playerBattle8",
-	[Activity191Enum.NodeType.PlayerBattle9] = "playerBattle9",
-	[Activity191Enum.NodeType.PlayerBattle10] = "playerBattle10",
-	[Activity191Enum.NodeType.PlayerBattle11] = "playerBattle11",
-	[Activity191Enum.NodeType.PlayerBattle12] = "playerBattle12"
-}
+Activity191Enum.NodeType2Key = {}
+
+for k, v in pairs(Activity191Enum.NodeType) do
+	Activity191Enum.NodeType2Key[v] = k
+end
+
 Activity191Enum.EffectType = {
 	ItemByItem = 7,
-	CountEffects = 11,
-	DelayEffect = 10,
-	ExtraFetter = 18,
-	AttrEffect = 19,
-	EnhanceHero = 8,
 	HeroByTag = 3,
+	AddSubTeamSlot = 26,
 	ItemByTag = 6,
-	Money = 1,
+	AttrEffect = 19,
 	Item = 5,
 	EnhanceItem = 9,
 	HeroByHero = 4,
-	Hero = 2
+	Hero = 2,
+	DelayEffect = 10,
+	EnhanceHero = 8,
+	TeamPosExtraFetter = 33,
+	HeroRandomUp = 30,
+	HeroExtraFetter = 18,
+	Money = 1,
+	CountEffects = 11,
+	TeamExtraFetter = 27
+}
+Activity191Enum.EffectGetHero = {
+	Activity191Enum.EffectType.Hero,
+	Activity191Enum.EffectType.HeroByHero,
+	Activity191Enum.EffectType.HeroByTag,
+	Activity191Enum.EffectType.HeroRandomUp
+}
+Activity191Enum.EffectGetItem = {
+	Activity191Enum.EffectType.Item,
+	Activity191Enum.EffectType.ItemByItem,
+	Activity191Enum.EffectType.ItemByTag
 }
 Activity191Enum.PveFiled = {
 	8,
@@ -97,8 +105,12 @@ Activity191Enum.PvpFiled = {
 	30,
 	31
 }
-Activity191Enum.TagShopField = {
-	4
+Activity191Enum.ShopFiled = {
+	Activity191Enum.NodeType.MixStore,
+	Activity191Enum.NodeType.RoleShop,
+	Activity191Enum.NodeType.CollectionShop,
+	Activity191Enum.NodeType.TagShop,
+	Activity191Enum.NodeType.AfterGlowShop
 }
 Activity191Enum.AttrIdList = {
 	CharacterEnum.AttrId.Attack,
@@ -175,6 +187,24 @@ Activity191Enum.InitBuildType = {
 Activity191Enum.SummonType = {
 	Monster = 2,
 	Boss = 1
+}
+Activity191Enum.BadgeState = {
+	Sp = 3,
+	Light = 2,
+	Normal = 1
+}
+Activity191Enum.BaseTeamSlot = {
+	Sub = 4,
+	Main = 4
+}
+Activity191Enum.GreenDeer = "greenDeer"
+Activity191Enum.GreenDeerSkillIds = {
+	118380112,
+	118380116
+}
+Activity191Enum.ActiveBossType = {
+	Remodeling = 1,
+	RelationPerson = 2
 }
 
 return Activity191Enum

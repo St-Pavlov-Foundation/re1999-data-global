@@ -20,7 +20,7 @@ function FightWorkOriginDamage:onStart()
 	local entity = FightHelper.getEntity(self.actEffectData.targetId)
 
 	if entity then
-		local floatType = FightEnum.FloatType.crit_damage_origin
+		local floatType = FightEnum.FloatType.damage_origin
 		local flag = hurtInfo.hurtMergeFlag
 
 		if flag ~= 0 then

@@ -108,7 +108,7 @@ function FightFieldDataMgr:isAct183()
 end
 
 function FightFieldDataMgr:isRouge2()
-	return self:isDungeonType(DungeonEnum.EpisodeType.Rouge2)
+	return self:isDungeonType(DungeonEnum.EpisodeType.Rouge2) or self:isDungeonType(DungeonEnum.EpisodeType.Rouge2Boss)
 end
 
 function FightFieldDataMgr:dirSetDeckNum(value)
@@ -129,6 +129,18 @@ end
 
 function FightFieldDataMgr:isSurvival()
 	return self:isDungeonType(DungeonEnum.EpisodeType.Survival)
+end
+
+function FightFieldDataMgr:isRouge2Boss()
+	return self:isDungeonType(DungeonEnum.EpisodeType.Rouge2Boss)
+end
+
+function FightFieldDataMgr:isV3_2ZongMao()
+	return self:isDungeonType(DungeonEnum.EpisodeType.V3_2ZongMao)
+end
+
+function FightFieldDataMgr:isSouDaChe()
+	return self:isDungeonType(DungeonEnum.EpisodeType.Sodache)
 end
 
 function FightFieldDataMgr:clearData()

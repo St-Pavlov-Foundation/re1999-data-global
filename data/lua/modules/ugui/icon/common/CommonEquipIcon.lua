@@ -208,7 +208,7 @@ function CommonEquipIcon:_initEquipByConfig(equipCo, quantity)
 	self._count = quantity
 	self._level = 1
 	self._breakLv = 1
-	self._refineLv = 1
+	self._refineLv = EquipHelper.getRefineLvByEquipCo(equipCo)
 end
 
 function CommonEquipIcon:setMOValue(type, materilId, quantity, uid)
@@ -275,7 +275,7 @@ function CommonEquipIcon:refreshUI()
 
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtlevelEn, "#E8E7E7")
 	gohelper.setActive(self.gotrial, self._mo and self._mo.equipType == EquipEnum.ClientEquipType.TrialEquip)
-	gohelper.setActive(self._gorefinecontainer, self._mo and self.isNormalEquip)
+	gohelper.setActive(self._gorefinecontainer, self._mo and self.isNormalEquip or self.isNormalEquip and self._refineLv > 1)
 
 	if self.isNormalEquip then
 		if self._refineLv >= EquipConfig.instance:getEquipRefineLvMax() then

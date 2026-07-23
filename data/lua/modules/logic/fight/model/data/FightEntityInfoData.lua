@@ -111,6 +111,7 @@ function FightEntityInfoData:onConstructor(proto)
 	self.toughnessValue = proto.toughnessValue
 	self.toughnessPoint = proto.toughnessPoint
 	self.isBroken = proto.isBroken
+	self.exPointMax = proto.exPointMax
 end
 
 return FightEntityInfoData

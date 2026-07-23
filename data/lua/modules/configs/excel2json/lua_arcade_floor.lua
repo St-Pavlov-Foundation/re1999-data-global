@@ -4,14 +4,18 @@ module("modules.configs.excel2json.lua_arcade_floor", package.seeall)
 
 local lua_arcade_floor = {}
 local fields = {
-	limitRound = 8,
+	scale = 7,
 	name = 2,
+	priority = 9,
+	icon = 11,
+	limitRound = 12,
+	desc = 3,
+	posOffset = 8,
 	skill = 4,
-	category = 6,
+	category = 10,
 	id = 1,
-	icon = 7,
-	resPath = 5,
-	desc = 3
+	shape = 6,
+	resPath = 5
 }
 local primaryKey = {
 	"id"

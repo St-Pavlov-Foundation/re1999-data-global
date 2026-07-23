@@ -51,7 +51,7 @@ function AbyssHelper.getRecommendTeamList(recommendTeamParam)
 			end
 		end
 
-		return table.concat(tempList, "|")
+		return table.concat(tempList, luaLang("AbyssHelper_getRecommendTeamList_delimiter"))
 	end
 
 	return luaLang("new_common_none")

@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalPlayDialogWork", pac
 
 local SurvivalPlayDialogWork = class("SurvivalPlayDialogWork", SurvivalStepBaseWork)
 
-function SurvivalPlayDialogWork:onStart(context)
+function SurvivalPlayDialogWork:onStart2(context)
 	if self.context.fastExecute then
 		self:onDone(true)
 

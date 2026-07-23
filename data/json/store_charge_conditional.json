@@ -10,7 +10,10 @@
     "id": 305111,
     "order2": 85,
     "conDesc": "language_10077978",
-    "idsStr": ""
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
   },
   {
     "goodsId": 83056302,
@@ -23,7 +26,10 @@
     "id": 305111,
     "order2": 190,
     "conDesc": "language_10077978",
-    "idsStr": ""
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
   },
   {
     "goodsId": 83056303,
@@ -36,7 +42,10 @@
     "id": 305121,
     "order2": 85,
     "conDesc": "language_10077979",
-    "idsStr": ""
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
   },
   {
     "goodsId": 83056304,
@@ -49,7 +58,10 @@
     "id": 305121,
     "order2": 190,
     "conDesc": "language_10077979",
-    "idsStr": ""
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
   },
   {
     "goodsId": 83056305,
@@ -62,6 +74,89 @@
     "id": 0,
     "order2": 210,
     "conDesc": "language_10079808",
-    "idsStr": "305121#305111"
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "305121#305111",
+    "clientType": 0
+  },
+  {
+    "goodsId": 83856301,
+    "listenerType": "HasHero",
+    "listenerParam": "3149",
+    "maxProgress": 1,
+    "bonus": "1#140140#2",
+    "bigImg2": "v3a85_chainpacksell_1",
+    "bigImg3": "v3a85_chainpacksell_1",
+    "id": 385111,
+    "order2": 45,
+    "conDesc": "language_10129209",
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
+  },
+  {
+    "goodsId": 83856302,
+    "listenerType": "HasHero",
+    "listenerParam": "3149",
+    "maxProgress": 1,
+    "bonus": "1#140140#3",
+    "bigImg2": "v3a85_chainpacksell_2",
+    "bigImg3": "v3a85_chainpacksell_2",
+    "id": 385111,
+    "order2": 48,
+    "conDesc": "language_10129209",
+    "signInIdParam": "",
+    "redDot": 0,
+    "idsStr": "",
+    "clientType": 0
+  },
+  {
+    "goodsId": 83856303,
+    "listenerType": "TotalLoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "1#140120#1|9#1005#1|1#481007#1|1#120011#1",
+    "bigImg2": "v3a85_linkpack_1sum",
+    "bigImg3": "v3a85_linkpack_1sum",
+    "id": 0,
+    "order2": 42,
+    "conDesc": "",
+    "signInIdParam": "138517#1",
+    "redDot": 38520,
+    "idsStr": "",
+    "clientType": 1
+  },
+  {
+    "goodsId": 83856304,
+    "listenerType": "TotalLoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "1#140120#1|1#510010#1|10#21#1|1#120012#1",
+    "bigImg2": "v3a85_linkpack_2sum",
+    "bigImg3": "v3a85_linkpack_2sum",
+    "id": 0,
+    "order2": 42,
+    "conDesc": "",
+    "signInIdParam": "138517",
+    "redDot": 38520,
+    "idsStr": "",
+    "clientType": 1
+  },
+  {
+    "goodsId": 83856305,
+    "listenerType": "TotalLoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "bonus": "1#140120#1|1#140120#1|1#510010#2|1#120013#1|1#180003#1",
+    "bigImg2": "v3a85_linkpack_3sum",
+    "bigImg3": "v3a85_linkpack_3sum",
+    "id": 0,
+    "order2": 42,
+    "conDesc": "",
+    "signInIdParam": "138517",
+    "redDot": 38520,
+    "idsStr": "",
+    "clientType": 1
   }
 ]

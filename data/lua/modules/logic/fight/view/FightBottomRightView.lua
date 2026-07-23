@@ -17,7 +17,7 @@ function FightBottomRightView:removeEvents()
 end
 
 function FightBottomRightView:onOpen()
-	return
+	self.handCardSkinMgr = self:newClass(FightViewHandCardSkinMgr)
 end
 
 function FightBottomRightView:onClose()

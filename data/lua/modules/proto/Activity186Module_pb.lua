@@ -51,6 +51,7 @@ Activity186Module_pb.ACT186LIKEINFOVALUEFIELD = protobuf.FieldDescriptor()
 Activity186Module_pb.ACT186TASKINFO_MSG = protobuf.Descriptor()
 Activity186Module_pb.ACT186TASKINFOTASKIDFIELD = protobuf.FieldDescriptor()
 Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD = protobuf.FieldDescriptor()
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD = protobuf.FieldDescriptor()
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD = protobuf.FieldDescriptor()
 Activity186Module_pb.FINISHACT186ATYPEGAMEREQUEST_MSG = protobuf.Descriptor()
 Activity186Module_pb.FINISHACT186ATYPEGAMEREQUESTACTIVITYIDFIELD = protobuf.FieldDescriptor()
@@ -491,10 +492,19 @@ Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD.has_default_value = false
 Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD.default_value = 0
 Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD.type = 5
 Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD.cpp_type = 1
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.name = "expireTime"
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.full_name = ".Act186TaskInfo.expireTime"
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.number = 3
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.index = 2
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.label = 1
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.has_default_value = false
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.default_value = 0
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.type = 3
+Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD.cpp_type = 2
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.name = "hasGetBonus"
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.full_name = ".Act186TaskInfo.hasGetBonus"
-Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.number = 3
-Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.index = 2
+Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.number = 4
+Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.index = 3
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.label = 1
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.has_default_value = false
 Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD.default_value = false
@@ -507,6 +517,7 @@ Activity186Module_pb.ACT186TASKINFO_MSG.enum_types = {}
 Activity186Module_pb.ACT186TASKINFO_MSG.fields = {
 	Activity186Module_pb.ACT186TASKINFOTASKIDFIELD,
 	Activity186Module_pb.ACT186TASKINFOPROGRESSFIELD,
+	Activity186Module_pb.ACT186TASKINFOEXPIRETIMEFIELD,
 	Activity186Module_pb.ACT186TASKINFOHASGETBONUSFIELD
 }
 Activity186Module_pb.ACT186TASKINFO_MSG.is_extendable = false

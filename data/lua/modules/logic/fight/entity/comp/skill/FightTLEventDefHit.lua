@@ -33,6 +33,9 @@ end
 function FightTLEventDefHit:onTrackStart(fightStepData, duration, paramsArr)
 	self._paramsArr = paramsArr
 	self.fightStepData = fightStepData
+
+	self.fightStepData:addHitIndex()
+
 	self._duration = duration
 	self._attacker = FightHelper.getEntity(fightStepData.fromId)
 	self._defeAction = paramsArr[1]
@@ -86,6 +89,7 @@ function FightTLEventDefHit:onTrackStart(fightStepData, duration, paramsArr)
 	end
 
 	self._forcePlayHitForOrigin = self._paramsArr[14] == "1"
+	self.mainTargetSplitSubTargetNotSplit = FightTLHelper.getBoolParam(self._paramsArr[15])
 
 	self:_buildSkillEffect(buffIds, behaviorTypeIds, effectTemplate)
 
@@ -466,7 +470,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 		end
 
-		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self._ratio
+		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self:getCurRatio(actEffectData.targetId)
 
 		local curRate = hurtInfo.client_damageRate
 		local floatNum = 0
@@ -475,7 +479,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			floatNum = damageNum - hurtInfo.client_floatNum
 		else
-			floatNum = math.floor(damageNum * self._ratio)
+			floatNum = math.floor(damageNum * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_floatNum = hurtInfo.client_floatNum + floatNum
@@ -495,7 +499,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			reduceHpNum = reduceHp - hurtInfo.client_reduceHp
 		else
-			reduceHpNum = math.floor(reduceHp * self._ratio)
+			reduceHpNum = math.floor(reduceHp * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_reduceHp = hurtInfo.client_reduceHp + reduceHpNum
@@ -509,7 +513,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			reduceShieldNum = reduceShield - hurtInfo.client_reduceShield
 		else
-			reduceShieldNum = math.floor(reduceShield * self._ratio)
+			reduceShieldNum = math.floor(reduceShield * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_reduceShield = hurtInfo.client_reduceShield + reduceShieldNum
@@ -544,7 +548,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 			FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 		end
 
-		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self._ratio
+		hurtInfo.client_damageRate = hurtInfo.client_damageRate + self:getCurRatio(actEffectData.targetId)
 
 		local curRate = hurtInfo.client_damageRate
 		local floatNum = 0
@@ -553,7 +557,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			floatNum = damageNum - hurtInfo.client_floatNum
 		else
-			floatNum = math.floor(damageNum * self._ratio)
+			floatNum = math.floor(damageNum * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_floatNum = hurtInfo.client_floatNum + floatNum
@@ -573,7 +577,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			reduceHpNum = reduceHp - hurtInfo.client_reduceHp
 		else
-			reduceHpNum = math.floor(reduceHp * self._ratio)
+			reduceHpNum = math.floor(reduceHp * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_reduceHp = hurtInfo.client_reduceHp + reduceHpNum
@@ -587,7 +591,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		if curRate >= 1 then
 			reduceShieldNum = reduceShield - hurtInfo.client_reduceShield
 		else
-			reduceShieldNum = math.floor(reduceShield * self._ratio)
+			reduceShieldNum = math.floor(reduceShield * self:getCurRatio(actEffectData.targetId))
 		end
 
 		hurtInfo.client_reduceShield = hurtInfo.client_reduceShield + reduceShieldNum
@@ -615,7 +619,7 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 		self:_playHitVoice(oneDefender)
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, oneDefender, reduceHpNum)
 	elseif actEffectData.effectType == FightEnum.EffectType.MISS then
-		if self._ratio > 0 then
+		if self:getCurRatio(actEffectData.targetId) > 0 then
 			self:_checkPlayAction(oneDefender, self._missAction, actEffectData)
 			FightFloatMgr.instance:float(actEffectData.targetId, FightEnum.FloatType.buff, luaLang("fight_float_miss"), FightEnum.BuffFloatEffectType.Good, false)
 		end
@@ -719,6 +723,14 @@ function FightTLEventDefHit:_playDefHit(oneDefender, actEffectData)
 	end
 
 	FightDataHelper.playEffectData(actEffectData)
+end
+
+function FightTLEventDefHit:getCurRatio(targetId)
+	if self.mainTargetSplitSubTargetNotSplit and not FightHelper.checkIsUnnamedMainTarget(self.fightStepData, targetId) then
+		return self.fightStepData:getHitIndex() == 1 and 1 or 0
+	end
+
+	return self._ratio
 end
 
 function FightTLEventDefHit:_statisticAndFloat()
@@ -863,7 +875,7 @@ end
 function FightTLEventDefHit:_playHitAudio(entity, isCrit)
 	if self._audioId > 0 then
 		FightAudioMgr.instance:playHit(self._audioId, entity:getMO().skin, isCrit)
-	elseif self._ratio > 0 and self.fightStepData.atkAudioId and self.fightStepData.atkAudioId > 0 then
+	elseif self:getCurRatio(entity.id) > 0 and self.fightStepData.atkAudioId and self.fightStepData.atkAudioId > 0 then
 		FightAudioMgr.instance:playHitByAtkAudioId(self.fightStepData.atkAudioId, entity:getMO().skin, isCrit)
 	end
 end

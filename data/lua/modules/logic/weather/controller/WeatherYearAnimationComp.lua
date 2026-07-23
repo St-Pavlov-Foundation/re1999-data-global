@@ -49,12 +49,12 @@ function WeatherYearAnimationComp:initSceneNodeStatus()
 
 	self.materials = {}
 
-	local material = self.node:GetComponent(typeof(UnityEngine.Renderer)).material
+	local material = self.node:GetComponent(typeof(UnityEngine.Renderer)).sharedMaterial
 
 	table.insert(self.materials, material)
 
 	if self.node1 then
-		local material1 = self.node1:GetComponent(typeof(UnityEngine.Renderer)).material
+		local material1 = self.node1:GetComponent(typeof(UnityEngine.Renderer)).sharedMaterial
 
 		table.insert(self.materials, material1)
 	end

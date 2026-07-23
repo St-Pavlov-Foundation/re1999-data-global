@@ -7,7 +7,7 @@ local V2a8_WuErLiXiGiftModel = class("V2a8_WuErLiXiGiftModel", BaseModel)
 V2a8_WuErLiXiGiftModel.REWARD_INDEX = 1
 
 function V2a8_WuErLiXiGiftModel:getV2a8_WuErLiXiGiftActId()
-	return ActivityEnum.Activity.V2a8_WuErLiXiGift
+	return ActivityConfig.instance:getConstAsNum(ActivityEnum.ConstId.Gifg6StarCharacter, ActivityEnum.Activity.V2a8_WuErLiXiGift)
 end
 
 function V2a8_WuErLiXiGiftModel:isV2a8_WuErLiXiGiftOpen()

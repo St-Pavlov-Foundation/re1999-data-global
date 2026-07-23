@@ -407,6 +407,26 @@ function TeachNoteModel:getJumpEpisodeId()
 	return self._jumpEpisodeId
 end
 
+function TeachNoteModel:getAllUnLockRewardCount()
+	local topicCos = TeachNoteConfig.instance:getInstructionTopicCos()
+	local getCount = 0
+	local totalCount = 0
+
+	for _, v in pairs(topicCos) do
+		local bonus = string.splitToNumber(TeachNoteConfig.instance:getInstructionTopicCO(v.id).bonus, "#")
+
+		if tabletool.len(bonus) == 3 then
+			if self:isTopicRewardGet(v.id) then
+				getCount = getCount + bonus[3]
+			end
+
+			totalCount = totalCount + bonus[3]
+		end
+	end
+
+	return getCount, totalCount
+end
+
 TeachNoteModel.instance = TeachNoteModel.New()
 
 return TeachNoteModel

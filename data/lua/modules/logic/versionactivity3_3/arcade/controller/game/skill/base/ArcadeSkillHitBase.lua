@@ -17,6 +17,16 @@ function ArcadeSkillHitBase:ctor(params)
 	self:tryCallFunc(self.onCtor)
 end
 
+function ArcadeSkillHitBase:addHiter(hiter)
+	if hiter then
+		table.insert(self._hiterList, hiter)
+	end
+end
+
+function ArcadeSkillHitBase:addHiterList(hiterList)
+	tabletool.addValues(self._hiterList, hiterList)
+end
+
 function ArcadeSkillHitBase:hit(context)
 	self._context = context
 
@@ -30,46 +40,8 @@ function ArcadeSkillHitBase:hit(context)
 	end
 end
 
-function ArcadeSkillHitBase:isReachMaxLimit()
-	if self.limit ~= 0 and self.limit <= self._curLimit then
-		return true
-	end
-
-	return false
-end
-
 function ArcadeSkillHitBase:onHitLimitCount()
 	self._curLimit = self._curLimit + 1
-end
-
-function ArcadeSkillHitBase:getCurLimit()
-	return self._curLimit
-end
-
-function ArcadeSkillHitBase:addHiter(hiter)
-	if hiter then
-		table.insert(self._hiterList, hiter)
-	end
-end
-
-function ArcadeSkillHitBase:addHiterList(hiterList)
-	tabletool.addValues(self._hiterList, hiterList)
-end
-
-function ArcadeSkillHitBase:getLogPrefixStr()
-	return string.format("%s:onHit() skillId:%s key:%s ", self.__cname, self:getSkillId(), self._changeName or "nil")
-end
-
-function ArcadeSkillHitBase:onHit()
-	return
-end
-
-function ArcadeSkillHitBase:onHitPrintLog()
-	return
-end
-
-function ArcadeSkillHitBase:onCtor()
-	return
 end
 
 function ArcadeSkillHitBase:onPlayEffect()
@@ -80,6 +52,34 @@ function ArcadeSkillHitBase:onPlayEffect()
 	if self.effectId and self.effectId ~= 0 then
 		ArcadeGameSkillController.instance:playEffectByTargetList(self._hiterList, self.effectId)
 	end
+end
+
+function ArcadeSkillHitBase:isReachMaxLimit()
+	if self.limit ~= 0 and self.limit <= self._curLimit then
+		return true
+	end
+
+	return false
+end
+
+function ArcadeSkillHitBase:getCurLimit()
+	return self._curLimit
+end
+
+function ArcadeSkillHitBase:getLogPrefixStr()
+	return string.format("%s:onHit() skillId:%s key:%s ", self.__cname, self:getSkillId(), self._changeName or "nil")
+end
+
+function ArcadeSkillHitBase:onCtor()
+	return
+end
+
+function ArcadeSkillHitBase:onHit()
+	return
+end
+
+function ArcadeSkillHitBase:onHitPrintLog()
+	return
 end
 
 return ArcadeSkillHitBase

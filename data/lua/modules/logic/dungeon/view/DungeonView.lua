@@ -42,6 +42,10 @@ function DungeonView:onInitView()
 	self._btnrouge = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/categorylist/#btn_rouge")
 	self._gorougeUnselectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeUnselectText")
 	self._gorougeSelectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeSelectText")
+	self._gorougeUnRed = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_rouge/#go_rougeUnselectText/redpoint")
+
+	RedDotController.instance:addRedDotTag(self._gorougeUnRed, RedDotEnum.DotNode.DungeonRougeEntry)
+
 	self._goRoleStory = gohelper.findChild(self.viewGO, "#go_RoleStory")
 	self._btnanecdote = gohelper.findChildButtonWithAudio(self.viewGO, "bottom/categorylist/#btn_anecdote")
 	self._goanecdoteUnselectText = gohelper.findChild(self.viewGO, "bottom/categorylist/#btn_anecdote/#go_anecdoteUnselectText")
@@ -181,7 +185,8 @@ function DungeonView:_btnexploreOnClick()
 end
 
 function DungeonView:_btnrougeOnClick()
-	RougeController.instance:openRougeMainView()
+	self:changeCategory(DungeonEnum.ChapterType.Rouge)
+	self:setBtnStatus()
 end
 
 function DungeonView:_btnDramaRewardOnClick()
@@ -369,7 +374,7 @@ function DungeonView:_refreshBtnUnlock()
 	local hasPermanentOnline = PermanentModel.instance:hasActivityOnline()
 
 	gohelper.setActive(self._btnpermanent, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Permanent) and hasPermanentOnline)
-	gohelper.setActive(self._btnrouge, RougeOutsideController.instance:isOpen())
+	gohelper.setActive(self._btnrouge, RougeOutsideController.instance:isOpen() or Rouge2_Controller.instance:checkIsOpen())
 	gohelper.setActive(self._btntower, TowerController.instance:isOpen())
 end
 
@@ -377,7 +382,7 @@ function DungeonView:setBtnStatus()
 	local isNormalType, isResourceType, isBreakType, isWeekWalkType, isSeasonType, isExploreType = DungeonModel.instance:getChapterListTypes()
 	local isRoleStory = DungeonModel.instance:chapterListIsRoleStory()
 	local isPermanent = DungeonModel.instance:chapterListIsPermanent()
-	local isRougeType = false
+	local isRougeType = DungeonModel.instance:chapterListIsRouge()
 	local isTowerType = false
 	local isAdvPlayType = DungeonModel.instance:chapterListIsAdvPlay()
 
@@ -460,6 +465,8 @@ function DungeonView:setBtnStatus()
 		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Permanent)
 	elseif isAdvPlayType then
 		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.AdvPlay)
+	elseif isRougeType then
+		self.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Rouge)
 	else
 		self.viewContainer:switchTab()
 	end

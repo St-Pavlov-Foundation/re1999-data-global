@@ -69,7 +69,9 @@ end
 function Rouge2_StoreModel:checkRedPoint()
 	local finalRewardConstConfig = Rouge2_OutSideConfig.instance:getConstConfigById(Rouge2_Enum.OutSideConstId.StoreFinalReward)
 	local finalRewardConfig = Rouge2_OutSideConfig.instance:getRewardConfigById(tonumber(finalRewardConstConfig.value))
-	local isClaimed = Rouge2_StoreModel.instance:getGoodsBuyCount(finalRewardConfig.id) >= finalRewardConfig.maxBuyCount
+	local finalRewardId = finalRewardConfig and finalRewardConfig.id or 0
+	local maxBuyCount = finalRewardConfig and finalRewardConfig.maxBuyCount or 0
+	local isClaimed = maxBuyCount <= Rouge2_StoreModel.instance:getGoodsBuyCount(finalRewardId)
 	local showRedDot
 
 	if isClaimed then

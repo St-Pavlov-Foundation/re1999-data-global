@@ -28,7 +28,7 @@ function RougeController:enterRouge()
 	GameSceneMgr.instance:startScene(SceneType.Rouge, 1, 1, true)
 end
 
-function RougeController:openRougeMainView(viewParam, isImmediate, callback, callbackTarget)
+function RougeController:openRougeMainView(callback, callbackTarget)
 	if not RougeOutsideModel.instance:isUnlock() then
 		GameFacade.showToast(RougeOutsideModel.instance:openUnlockId())
 
@@ -52,13 +52,18 @@ function RougeController:openRougeMainView(viewParam, isImmediate, callback, cal
 				return
 			end
 
-			ViewMgr.instance:openView(ViewName.RougeMainView, viewParam, isImmediate)
+			ViewMgr.instance:openView(ViewName.RougeMainView)
 
 			if callback then
 				callback(callbackTarget)
 			end
 		end)
 	end)
+end
+
+function RougeController:enterDungeonView()
+	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Rouge)
+	DungeonController.instance:enterDungeonView()
 end
 
 function RougeController:openRougeDifficultyView(viewParam, isImmediate)

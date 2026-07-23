@@ -236,7 +236,12 @@ function EnemyInfoRightView:refreshHeader()
 	gohelper.getSingleImage(self._imageicon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
 	IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPathWithRound(monsterConfig.heartVariantId), self._imageicon)
 	gohelper.setActive(self._gobosstag, self.isBoss)
-	UISpriteSetMgr.instance:setEnemyInfoSprite(self._imagecareer, "sxy_" .. monsterConfig.career)
+
+	if self.viewParam and self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Sodache then
+		gohelper.setActive(self._imagecareer, false)
+	else
+		UISpriteSetMgr.instance:setEnemyInfoSprite(self._imagecareer, "sxy_" .. monsterConfig.career)
+	end
 
 	local levelStr = self.isSimple and "levelEasy" or "level"
 
@@ -254,6 +259,12 @@ function EnemyInfoRightView:refreshHeader()
 		self._txthp.text = hpNumber and math.floor(hpNumber * hpFixRate) or hp
 	elseif self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Survival then
 		local hpFixRate = self.viewParam.hpFixRate
+		local hp = CharacterDataConfig.instance:getMonsterHp(monsterConfig.id, self.isSimple)
+		local hpNumber = tonumber(hp)
+
+		self._txthp.text = hpNumber and math.floor(hpNumber * (1 + hpFixRate)) or hp
+	elseif self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Sodache then
+		local hpFixRate = self.viewParam.hpFixRate or 0
 		local hp = CharacterDataConfig.instance:getMonsterHp(monsterConfig.id, self.isSimple)
 		local hpNumber = tonumber(hp)
 

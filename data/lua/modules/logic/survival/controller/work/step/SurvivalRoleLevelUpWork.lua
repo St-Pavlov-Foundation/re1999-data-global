@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalRoleLevelUpWork", pa
 
 local SurvivalRoleLevelUpWork = class("SurvivalRoleLevelUpWork", SurvivalStepBaseWork)
 
-function SurvivalRoleLevelUpWork:onStart()
+function SurvivalRoleLevelUpWork:onStart2()
 	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
 	local level = survivalShelterRoleMo.level
 

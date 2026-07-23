@@ -20,6 +20,7 @@ function Rouge2_CareerAttributeMap:init(go)
 
 	self:setCareerSelectVisible(false)
 	self:initAttrItemList()
+	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._onUpdateTeamSystem, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateAttrInfo, self._onUpdateAttrInfo, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSelectCareerAttribute, self._onSelectAttr, self)
 
@@ -188,6 +189,10 @@ function Rouge2_CareerAttributeMap:_clickAttributeItemCallback(tipsView, clickPo
 end
 
 function Rouge2_CareerAttributeMap:_onUpdateAttrInfo()
+	self:refresh()
+end
+
+function Rouge2_CareerAttributeMap:_onUpdateTeamSystem()
 	self:refresh()
 end
 

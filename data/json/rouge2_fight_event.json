@@ -2,7 +2,7 @@
   {
     "episodeId": 32452101,
     "title": "遭遇",
-    "interactive": "1#1030:100|1#1100",
+    "interactive": "1#1030:100|1#1100|1#3370100",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -15,7 +15,7 @@
   {
     "episodeId": 32452102,
     "title": "遭遇",
-    "interactive": "1#1030:100|1#1100",
+    "interactive": "1#1030:100|1#1100|1#3370100",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -28,7 +28,7 @@
   {
     "episodeId": 32452103,
     "title": "遭遇",
-    "interactive": "1#1030:100|1#1100",
+    "interactive": "1#1030:100|1#1100|1#3370100",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1003,7 +1003,7 @@
   {
     "episodeId": 32452301,
     "title": "恶战",
-    "interactive": "1#300:101:1090:1050:4400",
+    "interactive": "1#300:101:1090:1050:4400:3370100",
     "dieTwice": 2,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1068,7 +1068,7 @@
   {
     "episodeId": 32452305,
     "title": "恶战",
-    "interactive": "1#300:101:1090:1050:4400",
+    "interactive": "1#300:101:1090:1050:4400:3370100",
     "dieTwice": 2,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1081,7 +1081,7 @@
   {
     "episodeId": 32452306,
     "title": "恶战",
-    "interactive": "1#300:101:1090:1050:4400",
+    "interactive": "1#300:101:1090:1050:4400:3370100",
     "dieTwice": 2,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1157,9 +1157,35 @@
     "fightTaskId": ""
   },
   {
+    "episodeId": 32453711,
+    "title": "提灯的大人",
+    "interactive": "",
+    "dieTwice": 2,
+    "failInteractive": "",
+    "isChangeScene": 0,
+    "monsterMask": "610304",
+    "fightDesc": "",
+    "eliteFightDesc": "",
+    "achievement": "",
+    "fightTaskId": ""
+  },
+  {
+    "episodeId": 32453712,
+    "title": "灵魂的底座",
+    "interactive": "",
+    "dieTwice": 2,
+    "failInteractive": "",
+    "isChangeScene": 0,
+    "monsterMask": "610304",
+    "fightDesc": "",
+    "eliteFightDesc": "",
+    "achievement": "",
+    "fightTaskId": ""
+  },
+  {
     "episodeId": 32452201,
     "title": "冲突",
-    "interactive": "1#4420:150:5420:9030001|2#0:1",
+    "interactive": "1#4420:150:5420:9030001|2#0:1|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1172,7 +1198,7 @@
   {
     "episodeId": 32452202,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1185,7 +1211,7 @@
   {
     "episodeId": 32452203,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1198,7 +1224,7 @@
   {
     "episodeId": 32452204,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1211,7 +1237,7 @@
   {
     "episodeId": 32452205,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1224,7 +1250,7 @@
   {
     "episodeId": 32452206,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1237,7 +1263,7 @@
   {
     "episodeId": 32452207,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1250,7 +1276,7 @@
   {
     "episodeId": 32452208,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1263,7 +1289,7 @@
   {
     "episodeId": 32452209,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1276,7 +1302,7 @@
   {
     "episodeId": 32452210,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1289,7 +1315,7 @@
   {
     "episodeId": 32452211,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1302,7 +1328,7 @@
   {
     "episodeId": 32452212,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1315,7 +1341,7 @@
   {
     "episodeId": 32452213,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1328,7 +1354,7 @@
   {
     "episodeId": 32452214,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1341,7 +1367,7 @@
   {
     "episodeId": 32452215,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1354,7 +1380,7 @@
   {
     "episodeId": 32452216,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1367,7 +1393,7 @@
   {
     "episodeId": 32452217,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1380,7 +1406,7 @@
   {
     "episodeId": 32452218,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1393,7 +1419,7 @@
   {
     "episodeId": 32452219,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1406,7 +1432,7 @@
   {
     "episodeId": 32452220,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1419,7 +1445,7 @@
   {
     "episodeId": 32452221,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1432,7 +1458,7 @@
   {
     "episodeId": 32452222,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1445,7 +1471,7 @@
   {
     "episodeId": 32452223,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1458,7 +1484,7 @@
   {
     "episodeId": 32452224,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,
@@ -1471,7 +1497,7 @@
   {
     "episodeId": 32452225,
     "title": "冲突",
-    "interactive": "1#4420:150:5420|2#0:1",
+    "interactive": "1#4420:150:5420|2#0:1|1#201",
     "dieTwice": 1,
     "failInteractive": "",
     "isChangeScene": 0,

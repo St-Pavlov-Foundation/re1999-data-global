@@ -22,7 +22,11 @@ function DungeonChapterListModel:setFbList()
 			if DungeonMainStoryModel.instance:isPreviewChapter(v.id) then
 				local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
 
-				sectionPreviewStatus[sectionId] = v.id
+				if sectionId then
+					sectionPreviewStatus[sectionId] = v.id
+				else
+					logError("DungeonChapterListModel:setFbList #1 sectionId is nil, chapterId = ", v.id)
+				end
 			end
 		end
 
@@ -34,7 +38,11 @@ function DungeonChapterListModel:setFbList()
 		for i, v in ipairs(list) do
 			local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
 
-			if (sectionId == firstSectionId or firstChapterFinish) and (not sectionStatus[sectionId] or sectionPreviewStatus[sectionId]) then
+			if not sectionId and v.id ~= 113 then
+				logError("DungeonChapterListModel:setFbList #2 sectionId is nil, chapterId = ", v.id)
+			end
+
+			if sectionId and (sectionId == firstSectionId or firstChapterFinish) and (not sectionStatus[sectionId] or sectionPreviewStatus[sectionId]) then
 				if not DungeonModel.instance:isSpecialMainPlot(v.id) then
 					sectionStatus[sectionId] = DungeonModel.instance:chapterIsLock(v.id)
 				end
@@ -152,9 +160,47 @@ function DungeonChapterListModel._getCount(chapterCfg)
 	return maxCount - curCount, maxCount
 end
 
+function DungeonChapterListModel._getAdditionSortIdx(chapterCfg)
+	if DungeonModel.instance:chapterListIsResType(chapterCfg.type) then
+		if DoubleDropModel.instance:isShowDoubleByChapter(chapterCfg.id, true) then
+			return 1
+		end
+
+		local isMultiDrop, limit, total, magnification = Activity217Model.instance:getShowTripleByChapter(chapterCfg.id)
+
+		if isMultiDrop and limit > 0 then
+			return 1
+		end
+
+		if TurnbackModel.instance:isShowTurnBackAddition(chapterCfg.id) then
+			return 1
+		end
+	end
+
+	return 0
+end
+
 function DungeonChapterListModel._sortChapterList(a, b)
 	local countA, maxCountA = DungeonChapterListModel._getCount(a)
 	local countB, maxCountB = DungeonChapterListModel._getCount(b)
+	local freeA = math.max(0, countA)
+	local freeB = math.max(0, countB)
+
+	if freeA ~= freeB then
+		return freeB < freeA
+	end
+
+	local valueA = DungeonModel.instance:getChapterOpenTimeValid(a)
+	local valueB = DungeonModel.instance:getChapterOpenTimeValid(b)
+
+	if valueA == valueB and valueA then
+		local aAdditionIdx = DungeonChapterListModel._getAdditionSortIdx(a)
+		local bAdditionIdx = DungeonChapterListModel._getAdditionSortIdx(b)
+
+		if aAdditionIdx ~= bAdditionIdx then
+			return bAdditionIdx < aAdditionIdx
+		end
+	end
 
 	if countA ~= countB then
 		return countB < countA
@@ -163,9 +209,6 @@ function DungeonChapterListModel._sortChapterList(a, b)
 	if maxCountA ~= maxCountB then
 		return maxCountA < maxCountB
 	end
-
-	local valueA = DungeonModel.instance:getChapterOpenTimeValid(a)
-	local valueB = DungeonModel.instance:getChapterOpenTimeValid(b)
 
 	if valueA == valueB then
 		return a.id < b.id

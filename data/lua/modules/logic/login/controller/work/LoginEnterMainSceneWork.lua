@@ -15,20 +15,26 @@ function LoginEnterMainSceneWork:onStart(context)
 
 	local voiceType = GameConfig:GetCurVoiceShortcut()
 
-	if LangSettings.instance:isOverseas() == false and (voiceType == LangSettings.shortcutTab[LangSettings.jp] or voiceType == LangSettings.shortcutTab[LangSettings.kr]) then
-		local roleList = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.S01SpRole), "#")
-		local hasRole = false
+	if LangSettings.instance:isOverseas() == false then
+		local forceNeedKrJpActivityId = tonumber(CommonConfig.instance:getConstStr(ConstEnum.ForceNeedKrJpActivityId))
 
-		for _, heroId in ipairs(roleList) do
-			if HeroModel.instance:getByHeroId(heroId) then
-				hasRole = true
+		needKrJp = forceNeedKrJpActivityId == 1
 
-				break
+		if not needKrJp and (voiceType == LangSettings.shortcutTab[LangSettings.jp] or voiceType == LangSettings.shortcutTab[LangSettings.kr]) then
+			local roleList = string.splitToNumber(CommonConfig.instance:getConstStr(ConstEnum.S01SpRole), "#")
+			local hasRole = false
+
+			for _, heroId in ipairs(roleList) do
+				if HeroModel.instance:getByHeroId(heroId) then
+					hasRole = true
+
+					break
+				end
 			end
-		end
 
-		if hasRole == false then
-			SettingsVoicePackageController.instance:switchVoiceType(LangSettings.en, "", true)
+			if hasRole == false then
+				SettingsVoicePackageController.instance:switchVoiceType(LangSettings.en, "", true)
+			end
 		end
 	end
 

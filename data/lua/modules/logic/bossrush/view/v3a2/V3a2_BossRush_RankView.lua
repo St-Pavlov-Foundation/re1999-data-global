@@ -113,6 +113,12 @@ function V3a2_BossRush_RankView:refreshUI()
 	for i, item in pairs(self._levels) do
 		gohelper.setActive(item.go, i == spLevelBg)
 	end
+
+	if moList and #moList > 0 then
+		local firstCanGetBouns = V3a2_BossRush_RankListModel.instance:getFirstCanGetBouns()
+
+		self._scrollprogress.horizontalNormalizedPosition = firstCanGetBouns / #moList
+	end
 end
 
 function V3a2_BossRush_RankView:_createItemCB(obj, data, index)

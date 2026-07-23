@@ -75,8 +75,9 @@ function DestinyStoneGiftPickChoiceView:onOpen()
 	self._materialId = self.viewParam and self.viewParam.materialId
 
 	local ignoreIds = self.viewParam.ignoreIds
+	local heroList = self.viewParam.heroList
 
-	DestinyStoneGiftPickChoiceListModel.instance:initList(ignoreIds)
+	DestinyStoneGiftPickChoiceListModel.instance:initList(ignoreIds, heroList)
 	self:refreshUI()
 end
 

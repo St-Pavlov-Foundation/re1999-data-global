@@ -10,6 +10,10 @@ function FightGameMgr:onConstructor()
 
 	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnLostConnect, self.onLostConnect)
 	self:com_registEvent(FightController.instance, FightEvent.BeforeSwitchPlane, self.onSwitchPlane)
+	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnMsgTimeout, self.onMsgTimeout)
+	self:com_registEvent(LoginController.instance, LoginEvent.OnBeginLogout, self.onBeginLogout)
+	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnReconnectSucc, self.onReconnectSucc)
+	self:com_registEvent(ConnectAliveMgr.instance, ConnectEvent.OnReconnectSucc_def, self.onReconnectSucc_def)
 	self:com_registMsg(FightMsgId.RestartGame, self.onRestartGame)
 
 	FightGameMgr.necessaryAssetLoaderMgr = self:newClass(FightNecessaryAssetLoaderMgr)
@@ -30,6 +34,8 @@ function FightGameMgr:registMgr()
 	self.playMgr = self:addMgr(FightPlayMgr)
 	self.operateMgr = self:addMgr(FightOperateMgr)
 	self.checkCrashMgr = self:addMgr(FightCheckCrashMgr)
+	self.cameraMgr = self:addMgr(FightCameraMgr)
+	self.lightMgr = self:addMgr(FightLightMgr)
 	self.entrustEntityMgr = self:addMgr(FightEntrustEntityMgr)
 	self.entrustDeadEntityMgr = self:addMgr(FightEntrustDeadEntityMgr)
 
@@ -54,6 +60,7 @@ function FightGameMgr:registMgr()
 	self.asfdMgr = self:addMgr(FightASFDMgr)
 	self.transitionMgr = self:addMgr(FightTransitionMgr)
 	self.triggerBuffMgr = self:addMgr(FightTriggerBuffMgr)
+	self.tokenReleaseEntityMgr = self:addMgr(FightTokenReleaseEntityMgr)
 end
 
 function FightGameMgr:addMgr(class)
@@ -119,6 +126,22 @@ function FightGameMgr:onLostConnect()
 	end
 
 	logError(str)
+end
+
+function FightGameMgr:onMsgTimeout()
+	NetworkConst.UnresponsiveMsgMaxTime = NetworkConst.UnresponsiveMsgMaxTime + 10
+end
+
+function FightGameMgr:onBeginLogout()
+	NetworkConst.UnresponsiveMsgMaxTime = 10
+end
+
+function FightGameMgr:onReconnectSucc()
+	NetworkConst.UnresponsiveMsgMaxTime = 10
+end
+
+function FightGameMgr:onReconnectSucc_def()
+	NetworkConst.UnresponsiveMsgMaxTime = 10
 end
 
 function FightGameMgr:onDestructor()

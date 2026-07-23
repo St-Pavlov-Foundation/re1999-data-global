@@ -231,6 +231,16 @@ function FightSpecialTipView:onOpen()
 		data_list = SurvivalShelterModel.instance:addExRule(data_list)
 	end
 
+	if episode_config.chapterId == AtomicDungeonEnum.TalentChapterId or episode_config.chapterId == AtomicDungeonEnum.TalentChapterId2 then
+		data_list = data_list or {}
+
+		local alarmRuleList = AtomicDungeonModel.instance:getAlarmRuleList()
+
+		if alarmRuleList and #alarmRuleList > 0 then
+			tabletool.addValues(data_list, alarmRuleList)
+		end
+	end
+
 	if data_list and #data_list > 0 then
 		show_type = FightEnum.FightSpecialTipsType.Addition
 

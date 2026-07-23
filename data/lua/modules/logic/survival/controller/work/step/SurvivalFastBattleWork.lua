@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalFastBattleWork", pac
 
 local SurvivalFastBattleWork = class("SurvivalFastBattleWork", SurvivalStepBaseWork)
 
-function SurvivalFastBattleWork:onStart(context)
+function SurvivalFastBattleWork:onStart2(context)
 	local unitId = self._stepMo.paramInt[1] or 0
 	local entity = SurvivalMapHelper.instance:getEntity(unitId)
 

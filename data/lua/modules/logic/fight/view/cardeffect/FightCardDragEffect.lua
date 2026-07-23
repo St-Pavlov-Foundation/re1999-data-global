@@ -208,12 +208,15 @@ function FightCardDragEffect.setCardsUniversalMatch(handCardItemList, handCards,
 	for i = 1, cardCount do
 		if i ~= dragIndex then
 			local item = handCardItemList[i]
-			local curPosX = recthelper.getAnchorX(item.tr)
-			local offset = dragCardPosX - curPosX
 
-			if offset > 0 and (not nearestCardOffset or offset < nearestCardOffset) and offset < 2 * FightViewHandCard.HandCardWidth then
-				nearestCardOffset = offset
-				nearestCardIndex = i
+			if item then
+				local curPosX = recthelper.getAnchorX(item.tr)
+				local offset = dragCardPosX - curPosX
+
+				if offset > 0 and (not nearestCardOffset or offset < nearestCardOffset) and offset < 2 * FightViewHandCard.HandCardWidth then
+					nearestCardOffset = offset
+					nearestCardIndex = i
+				end
 			end
 		end
 	end
@@ -224,12 +227,14 @@ function FightCardDragEffect.setCardsUniversalMatch(handCardItemList, handCards,
 		if i ~= dragIndex then
 			local item = handCardItemList[i]
 
-			item:setUniversal(false)
+			if item then
+				item:setUniversal(false)
 
-			if isUniversalCard and i == nearestCardIndex and FightCardDataHelper.canCombineWithUniversalForPerformance(dragCardMO, handCards[i]) then
-				item:setUniversal(true)
+				if isUniversalCard and i == nearestCardIndex and FightCardDataHelper.canCombineWithUniversalForPerformance(dragCardMO, handCards[i]) then
+					item:setUniversal(true)
 
-				linkHandCardItem = item
+					linkHandCardItem = item
+				end
 			end
 		end
 	end

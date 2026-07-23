@@ -99,6 +99,14 @@ function FightActEffectData:onConstructor(proto)
 	if proto:HasField("rouge2FightMusicInfo") then
 		self.rouge2MusicInfo = FightRouge2MusicInfo.New(proto.rouge2FightMusicInfo)
 	end
+
+	if proto:HasField("deviceAreaInfo") then
+		self.deviceAreaInfo = FightDeviceAreaInfoData.New(proto.deviceAreaInfo)
+	end
+
+	if proto:HasField("jsonParam") then
+		self.jsonParam = cjson.decode(proto.jsonParam)
+	end
 end
 
 function FightActEffectData:isDone()

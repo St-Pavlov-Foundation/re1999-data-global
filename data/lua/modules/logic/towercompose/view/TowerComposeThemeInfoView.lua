@@ -264,9 +264,9 @@ end
 function TowerComposeThemeInfoView:buildShowHeroCoData()
 	local supportHeroCoList = TowerComposeConfig.instance:getAllSupportCoList(self.curThemeId)
 	local extraHeroCoList = TowerComposeConfig.instance:getAllExtraCoList(self.curThemeId)
-	local seasonId = TowerModel.instance:getTrialHeroSeason()
+	local trialHeroList = TowerComposeConfig.instance:getThemeTrialHeroList(self.curThemeId)
 
-	self.trialHeroCoDataList = TowerModel.instance:getTrialHeroCoDataList(seasonId)
+	self.trialHeroCoDataList = TowerHeroTrialListModel.instance:getTrialHeroCoDataList(trialHeroList)
 	self.showHeroCoMap = self:getUserDataTb_()
 	self.showHeroCoList = self:getUserDataTb_()
 

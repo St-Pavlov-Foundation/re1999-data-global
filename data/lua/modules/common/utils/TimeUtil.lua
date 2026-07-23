@@ -540,4 +540,18 @@ function TimeUtil.getFormatTime(seconds)
 	end
 end
 
+function TimeUtil.getFormatTimeTable(timeStr)
+	local t = {}
+
+	for i = 1, #timeStr do
+		local num = tonumber(string.sub(timeStr, i, i))
+
+		if num then
+			table.insert(t, num)
+		end
+	end
+
+	return t
+end
+
 return TimeUtil

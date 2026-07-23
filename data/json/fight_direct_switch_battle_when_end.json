@@ -1,0 +1,22 @@
+[
+  {
+    "id": 116370010,
+    "nextBattleId": 116370020,
+    "nextEpisodeId": 493702
+  },
+  {
+    "id": 116370030,
+    "nextBattleId": 116370040,
+    "nextEpisodeId": 493704
+  },
+  {
+    "id": 116370050,
+    "nextBattleId": 116370060,
+    "nextEpisodeId": 493706
+  },
+  {
+    "id": 116370070,
+    "nextBattleId": 116370080,
+    "nextEpisodeId": 493708
+  }
+]

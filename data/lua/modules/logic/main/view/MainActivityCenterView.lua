@@ -223,7 +223,11 @@ function MainActivityCenterView:_freshBtns()
 	self:_checkActivityCruiseBtn()
 	self:_checkActivityLaplaceBtn()
 	self:_checkActivity2ndCollectionPageViewBtn()
+	self:_checkAnniversary3Btn()
+	self:_checkActivityAtomicBtn()
 	self:_checkActivityImgVisible()
+	self:_checkAct236Btn()
+	self:_checkActSP02_PaoMianBtn()
 	self:_sortBtns()
 end
 
@@ -586,7 +590,7 @@ function MainActivityCenterView:_checkSpringSignViewBtn()
 end
 
 function MainActivityCenterView:_checkActivity186Btn()
-	local isOnline = Activity186Model.instance:isActivityOnline()
+	local isOnline = ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_Act186) and Activity186Model.instance:isActivityOnline()
 
 	if not isOnline then
 		GameUtil.onDestroyViewMember(self, "_act186Item")
@@ -668,6 +672,90 @@ function MainActivityCenterView:_checkActivityLaplaceBtn()
 	self._actLaplaceItem:refresh()
 end
 
+function MainActivityCenterView:_checkAnniversary3Btn()
+	local actId = VersionActivity3_7Enum.ActivityId.Anniversary3Main
+	local isOnline = ActivityHelper.isOpen(actId)
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_actAnniversary3Item")
+
+		return
+	end
+
+	if not self._actAnniversary3Item then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._actAnniversary3Item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Anniversary3BtnItem)
+
+		self:_addSortBtn(VersionActivity3_7Enum.ActivityId.Anniversary3Main, self._actAnniversary3Item)
+	end
+
+	self._actAnniversary3Item:refresh()
+end
+
+function MainActivityCenterView:_checkAct236Btn()
+	local actId = ActivityEnum.Activity.V3a7_Act236
+	local isOnline = ActivityHelper.isOpen(actId)
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_act236Item")
+
+		return
+	end
+
+	if not self._act236Item then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._act236Item = MonoHelper.addNoUpdateLuaComOnceToGo(go, Act236BtnItem)
+
+		self:_addSortBtn(actId, self._act236Item)
+	end
+
+	self._act236Item:refresh()
+end
+
+function MainActivityCenterView:_checkActivityAtomicBtn()
+	local actId = ActivityEnum.Activity.SP02_AtomicOperationActivityMain
+	local isOnline = ActivityHelper.isOpen(actId)
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_actLaplaceItem")
+
+		return
+	end
+
+	if not self._actAtomicOperationActivityBtnItem then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._actAtomicOperationActivityBtnItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, AtomicOperationActivityBtnItem)
+
+		self:_addSortBtn(ActivityEnum.Activity.SP02_AtomicOperationActivityMain, self._actAtomicOperationActivityBtnItem)
+	end
+
+	self._actAtomicOperationActivityBtnItem:refresh()
+end
+
+function MainActivityCenterView:_checkActSP02_PaoMianBtn()
+	local actId = ActivityEnum.Activity.SP02_PaoMianActivityMain
+	local isOnline = ActivityHelper.isOpen(actId)
+
+	if not isOnline then
+		GameUtil.onDestroyViewMember(self, "_sp02PaoMianItem")
+
+		return
+	end
+
+	if not self._sp02PaoMianItem then
+		local go = gohelper.cloneInPlace(self._itemGo)
+
+		self._sp02PaoMianItem = MonoHelper.addNoUpdateLuaComOnceToGo(go, Sp02_PaoMianBtnItem)
+
+		self:_addSortBtn(actId, self._sp02PaoMianItem)
+	end
+
+	self._sp02PaoMianItem:refresh()
+end
+
 function MainActivityCenterView:_createActCenterItem(class)
 	local go = gohelper.cloneInPlace(self._itemGo)
 
@@ -695,6 +783,10 @@ function MainActivityCenterView:onDestroyView()
 	GameUtil.onDestroyViewMember(self, "_springSignViewBtn")
 	GameUtil.onDestroyViewMember(self, "_2ndItem")
 	GameUtil.onDestroyViewMember(self, "_actLaplaceItem")
+	GameUtil.onDestroyViewMember(self, "_actAnniversary3Item")
+	GameUtil.onDestroyViewMember(self, "_act236Item")
+	GameUtil.onDestroyViewMember(self, "_actAtomicOperationActivityBtnItem")
+	GameUtil.onDestroyViewMember(self, "_sp02PaoMianItem")
 	self:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, self._freshBtns, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, self._onCloseFullView, self)
 	self:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._freshBtns, self)

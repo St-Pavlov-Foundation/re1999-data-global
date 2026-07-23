@@ -23,20 +23,37 @@ function ArcadeEffectMgr:removeEventListeners()
 	return
 end
 
-function ArcadeEffectMgr:playEffect2Grid(effectId, gridX, gridY, direction)
-	self:_playEffect(effectId, gridX, gridY, direction, -1)
-end
-
 function ArcadeEffectMgr:_getGridEffectDict(gridX, gridY)
 	local gridId = ArcadeGameHelper.getGridId(gridX, gridY)
-	local gridDict = self._gridEffectDict[gridId]
-
-	if not gridDict then
-		gridDict = {}
-		self._gridEffectDict[gridId] = gridDict
-	end
+	local gridDict = ArcadeGameHelper.checkDictTable(self._gridEffectDict, gridId)
 
 	return gridDict
+end
+
+function ArcadeEffectMgr:tryCheckEffectRound()
+	xpcall(self._onCheckEffectRound, __G__TRACKBACK__, self)
+end
+
+function ArcadeEffectMgr:_onCheckEffectRound()
+	if not self._initialized then
+		return
+	end
+
+	local list = self._effectList
+
+	for _, effect in ipairs(list) do
+		if effect and effect.round and effect.round ~= -1 then
+			if effect.round <= 0 then
+				effect.round = -1
+
+				if not effect.isPermanent then
+					gohelper.setActive(effect.go, false)
+				end
+			else
+				effect.round = effect.round - 1
+			end
+		end
+	end
 end
 
 function ArcadeEffectMgr:removeEffect(effectId, gridX, gridY, isNotIgnoreAlert, isBullet)
@@ -45,8 +62,12 @@ function ArcadeEffectMgr:removeEffect(effectId, gridX, gridY, isNotIgnoreAlert, 
 
 		self:removeBulletEffect(resName)
 	else
-		local effetcGoDict = self:_getGridEffectDict(gridX, gridY)
-		local effect = effetcGoDict[effectId]
+		local effectGODict = self:_getGridEffectDict(gridX, gridY)
+		local effect = effectGODict[effectId]
+
+		if not effect then
+			return
+		end
 
 		if isNotIgnoreAlert == true and effect.round and effect.round ~= -1 then
 			effect.isPermanent = false
@@ -79,36 +100,6 @@ function ArcadeEffectMgr:removeAllEffect()
 
 	for _, effGO in pairs(self._bulletGODict) do
 		gohelper.setActive(effGO, false)
-	end
-end
-
-function ArcadeEffectMgr:playAlertEffect(effectId, gridX, gridY, direction)
-	self:_playEffect(effectId, gridX, gridY, direction, 1)
-end
-
-function ArcadeEffectMgr:tryCheckEffectRound()
-	xpcall(self._onCheckEffectRound, __G__TRACKBACK__, self)
-end
-
-function ArcadeEffectMgr:_onCheckEffectRound()
-	if not self._initialized then
-		return
-	end
-
-	local list = self._effectList
-
-	for _, effect in ipairs(list) do
-		if effect and effect.round and effect.round ~= -1 then
-			if effect.round <= 0 then
-				effect.round = -1
-
-				if not effect.isPermanent then
-					gohelper.setActive(effect.go, false)
-				end
-			else
-				effect.round = effect.round - 1
-			end
-		end
 	end
 end
 
@@ -278,6 +269,14 @@ function ArcadeEffectMgr:_killAllBulletTween()
 	self._bulletTweenDict = {}
 end
 
+function ArcadeEffectMgr:playEffect2Grid(effectId, gridX, gridY, direction)
+	self:_playEffect(effectId, gridX, gridY, direction, -1)
+end
+
+function ArcadeEffectMgr:playAlertEffect(effectId, gridX, gridY, direction)
+	self:_playEffect(effectId, gridX, gridY, direction, 1)
+end
+
 function ArcadeEffectMgr:_playEffect(effectId, gridX, gridY, direction, round)
 	local scene = ArcadeGameController.instance:getGameScene()
 	local effCfg = ArcadeConfig.instance:getArcadeEffectCfg(effectId, true)
@@ -294,7 +293,7 @@ function ArcadeEffectMgr:_playEffect(effectId, gridX, gridY, direction, round)
 	if effect then
 		gohelper.setActive(effect.go, false)
 		gohelper.setActive(effect.go, true)
-		self:_updateEffectRound(effect, round)
+		self:_setEffectRound(effect, round)
 		self:_setGoRotationByType(effect, rotationType)
 		self:_playEffectAudioId(effectId)
 		scene:checkNeedShake(effectId)
@@ -320,14 +319,6 @@ function ArcadeEffectMgr:_playEffect(effectId, gridX, gridY, direction, round)
 	end
 end
 
-function ArcadeEffectMgr:_updateEffectRound(effect, round)
-	if round ~= -1 then
-		effect.round = round
-	else
-		effect.isPermanent = true
-	end
-end
-
 function ArcadeEffectMgr:_onLoadEffectFinished(param)
 	local scene = ArcadeGameController.instance:getGameScene()
 
@@ -346,25 +337,33 @@ function ArcadeEffectMgr:_onLoadEffectFinished(param)
 	else
 		local gridX = param.gridX
 		local gridY = param.gridY
-		local effetcGoDict = self:_getGridEffectDict(gridX, gridY)
+		local effectGODict = self:_getGridEffectDict(gridX, gridY)
 		local effTrans = effGO.transform
 		local x, y = ArcadeGameHelper.getGridPos(gridX, gridY)
 
 		transformhelper.setLocalPos(effTrans, x, y, 0)
 
-		local effect = {
-			go = effGO,
-			transform = effTrans
-		}
+		local effect = self:getUserDataTb_()
 
-		self:_updateEffectRound(effect, param.round)
+		effect.go = effGO
+		effect.transform = effTrans
 
-		effetcGoDict[effectId] = effect
+		self:_setEffectRound(effect, param.round)
+
+		effectGODict[effectId] = effect
 
 		table.insert(self._effectList, effect)
 		self:_setGoRotationByType(effect, param.rotationType, param.direction)
 		self:_playEffectAudioId(effectId)
 		scene:checkNeedShake(effectId)
+	end
+end
+
+function ArcadeEffectMgr:_setEffectRound(effect, round)
+	if round ~= -1 then
+		effect.round = round
+	else
+		effect.isPermanent = true
 	end
 end
 

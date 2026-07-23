@@ -115,6 +115,10 @@ function CommandStationMapItem:_btnclickcharacterOnClick()
 end
 
 function CommandStationMapItem:_btnclickOnClick(param)
+	if self._disableClick then
+		return
+	end
+
 	if not self._eventConfig or self._isClose then
 		return
 	end
@@ -317,7 +321,7 @@ function CommandStationMapItem:_updateEffect()
 
 	local index = self._characterCategory and self._characterStatus or self._statusInfo[self._eventConfig.eventType]
 
-	gohelper.setActive(self["_goHighLight" .. index], not eventIsRead and not self._isSelected)
+	gohelper.setActive(self["_goHighLight" .. index], not eventIsRead and not self._isSelected and not self._disableClick)
 	gohelper.setActive(self["_goExpand" .. index], self._isSelected)
 
 	if self._characterCategory then
@@ -387,6 +391,19 @@ function CommandStationMapItem:_updatePos()
 	end
 end
 
+function CommandStationMapItem:setFollowParams(camera)
+	self._followerCamera = camera
+	self._disableClick = true
+
+	local list = self.viewGO:GetComponentsInChildren(typeof(UnityEngine.UI.MaskableGraphic), true)
+
+	for i = 0, list.Length - 1 do
+		local graphic = list[i]
+
+		graphic.maskable = true
+	end
+end
+
 function CommandStationMapItem:reset()
 	self._uiFollower = nil
 end
@@ -409,7 +426,7 @@ function CommandStationMapItem:_setPos()
 
 	transformhelper.setLocalPos(entity.transform, posX, posY, 0)
 
-	local mainCamera = CameraMgr.instance:getMainCamera()
+	local mainCamera = self._followerCamera or CameraMgr.instance:getMainCamera()
 	local uiCamera = CameraMgr.instance:getUICamera()
 	local plane = ViewMgr.instance:getUIRoot().transform
 

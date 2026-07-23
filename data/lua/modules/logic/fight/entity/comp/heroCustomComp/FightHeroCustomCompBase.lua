@@ -2,9 +2,11 @@
 
 module("modules.logic.fight.entity.comp.heroCustomComp.FightHeroCustomCompBase", package.seeall)
 
-local FightHeroCustomCompBase = class("FightHeroCustomCompBase")
+local FightHeroCustomCompBase = class("FightHeroCustomCompBase", UserDataDispose)
 
 function FightHeroCustomCompBase:ctor(entity)
+	self:__onInit()
+
 	self.entity = entity
 end
 
@@ -21,7 +23,7 @@ function FightHeroCustomCompBase:removeEventListeners()
 end
 
 function FightHeroCustomCompBase:onDestroy()
-	return
+	self:__onDispose()
 end
 
 return FightHeroCustomCompBase

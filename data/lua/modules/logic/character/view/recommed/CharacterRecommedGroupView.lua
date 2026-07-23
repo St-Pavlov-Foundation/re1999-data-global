@@ -90,8 +90,9 @@ function CharacterRecommedGroupView:_groupItemCB(obj, data, index)
 	obj:setIndex(index)
 
 	local isFormCharacterView = self.viewParam.fromView and self.viewParam.fromView == ViewName.CharacterView
+	local isFromTeachingView = self.viewParam.fromView and self.viewParam.fromView == ViewName.TeachingMainView and self.viewParam.hideTab == nil
 
-	obj:showUseBtn(isFormCharacterView)
+	obj:showUseBtn(isFormCharacterView or isFromTeachingView)
 
 	self._groupItems[index] = obj
 end

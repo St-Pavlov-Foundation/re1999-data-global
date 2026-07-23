@@ -87,6 +87,10 @@ function OptionalGroupChargeView:onOpen()
 	self:createGiftItem()
 	self:refreshUI()
 	self:refreshGiftItemSelectState()
+
+	if self.packageGoodsMO then
+		StoreController.instance:statOpenChargeGoods(self.packageGoodsMO.belongStoreId, self.packageGoodsMO.config)
+	end
 end
 
 function OptionalGroupChargeView:refreshUI()

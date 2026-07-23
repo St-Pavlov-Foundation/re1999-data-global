@@ -4,12 +4,14 @@ module("modules.configs.excel2json.lua_character_destiny_facets", package.seeall
 
 local lua_character_destiny_facets = {}
 local fields = {
-	ex_level_exchange = 6,
-	desc = 5,
+	ex_level_exchange = 8,
+	deviceAdd = 5,
 	powerAdd = 3,
 	facetsId = 1,
-	level = 2,
-	exchangeSkills = 4
+	desc = 7,
+	uniqueSkill_point = 4,
+	exchangeSkills = 6,
+	level = 2
 }
 local primaryKey = {
 	"facetsId",

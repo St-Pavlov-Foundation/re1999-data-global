@@ -150,7 +150,7 @@ function Rouge2_ItemExpressionHelper._getAttrValue_LeaderAttrSum(flagCo, params)
 	local recommendAttrSum = 0
 
 	if careerId and careerId ~= 0 then
-		local recommendAttrList = Rouge2_CareerConfig.instance:getCareerRecommendAttributeIds(careerId)
+		local recommendAttrList = Rouge2_CareerConfig.instance:getCareerRecommendAttrList(careerId)
 
 		if recommendAttrList then
 			for _, attrId in ipairs(recommendAttrList) do

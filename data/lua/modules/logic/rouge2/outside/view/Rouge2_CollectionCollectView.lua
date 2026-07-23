@@ -8,6 +8,7 @@ function Rouge2_CollectionCollectView:onInitView()
 	self._gocollectionitem = gohelper.findChild(self.viewGO, "collection/#go_collectionitem")
 	self._txtcurrent = gohelper.findChildText(self.viewGO, "numbg/#txt_current")
 	self._txttotal = gohelper.findChildText(self.viewGO, "numbg/#txt_total")
+	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 	self._gotopleft = gohelper.findChild(self.viewGO, "#go_topleft")
 
 	if self._editableInitView then
@@ -16,11 +17,15 @@ function Rouge2_CollectionCollectView:onInitView()
 end
 
 function Rouge2_CollectionCollectView:addEvents()
-	return
+	self._btnclose:AddClickListener(self._btncloseOnClick, self)
 end
 
 function Rouge2_CollectionCollectView:removeEvents()
-	return
+	self._btnclose:RemoveClickListener()
+end
+
+function Rouge2_CollectionCollectView:_btncloseOnClick()
+	self:closeThis()
 end
 
 function Rouge2_CollectionCollectView:_editableInitView()

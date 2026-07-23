@@ -117,11 +117,66 @@ function MailView:_btnjumpOnClick()
 
 			SDKMgr.instance:openSoJump(resultJson)
 		else
-			GameUtil.openURL(jump)
+			GameUtil.openURL(self:_analysisJumpUrl(jump))
 		end
 
 		MailRpc.instance:sendMarkMailJumpRequest(self._selectMO.id)
+		self:_onClickUrlTrack(self._selectMO, jump)
 	end
+end
+
+require("tolua.reflection")
+tolua.loadassembly("Assembly-CSharp")
+
+local MailView_SdkNativeUtil_Type = tolua.findtype("gamesdk.SdkNativeUtil")
+local MailView_BoolReturnMethod = tolua.getmethod(MailView_SdkNativeUtil_Type, "BoolReturnMethod", typeof("System.String"), typeof("System.String"), typeof("System.String"))
+
+function MailView:_analysisJumpUrl(url)
+	local arr = string.split(url, "|")
+
+	if #arr > 1 then
+		local urlType = arr[1]
+
+		if urlType == "TrafficJump" then
+			local WXURL = arr[2]
+			local noWXURL = arr[3]
+			local biz_name = arr[4] or ""
+
+			if string.len(biz_name) > 0 then
+				biz_name = string.urlencode(string.urlencode(biz_name))
+			end
+
+			local hasWX = MailView_BoolReturnMethod:Call(SDKNativeUtil.nativeClsName, "isPlatformClientValid", "2")
+			local finalUrl = hasWX and WXURL or noWXURL
+
+			if not string.find(finalUrl, "?") then
+				finalUrl = finalUrl .. "?"
+			else
+				finalUrl = finalUrl .. "&"
+			end
+
+			local timestamp = ServerTime.now()
+			local salt = "881957120b6dc0ce40470e55cd433cd3"
+			local userId = SDKMgr.instance:getGameId() .. "|" .. LoginModel.instance.channelUserId .. "|" .. PlayerModel.instance:getMyUserId()
+
+			userId = Base64Util.encode(userId)
+
+			local signStr = userId .. "|" .. biz_name .. "|" .. LoginModel.instance.channelId .. "|" .. timestamp .. "|" .. salt
+			local sign = GameLuaMD5.sumhexa(signStr)
+			local extend = sign .. "|" .. timestamp .. "|" .. SDKMgr.instance:getChannelId()
+			local extendBase64 = Base64Util.encode(extend)
+
+			finalUrl = finalUrl .. "userid=" .. userId .. "&biz_name=" .. biz_name .. "&extend=" .. extendBase64
+
+			return finalUrl
+		elseif urlType == "H5AutoLogin" then
+			local finalUrl = WebViewController:getRecordUserUrl(arr[2])
+
+			return finalUrl
+		end
+	end
+
+	return url
 end
 
 function MailView:_btnLockOnClick()
@@ -187,6 +242,29 @@ function MailView:_onHyperLinkClick(url)
 			GameUtil.openURL(url)
 		end
 	end
+
+	self:_onClickUrlTrack(nil, url)
+end
+
+function MailView:_onClickUrlTrack(mo, url)
+	local mailMO = mo or self._selectMO
+
+	if not mailMO or string.nilorempty(url) then
+		return
+	end
+
+	local mailInfoList = {
+		{
+			id = mailMO.id,
+			mail_id = mailMO.mailId,
+			title = mailMO.title,
+			url = url
+		}
+	}
+
+	StatController.instance:track(StatEnum.EventName.MailUrClick, {
+		[StatEnum.EventProperties.MailInfo] = mailInfoList
+	})
 end
 
 function MailView:_refreshCount()
@@ -431,7 +509,7 @@ end
 
 function MailView:_getExpireTimeString(time)
 	if time == 0 then
-		return ""
+		return luaLang("mail_not_expire_time")
 	end
 
 	local time1 = time / 1000

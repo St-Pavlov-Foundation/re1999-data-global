@@ -95,6 +95,41 @@ function RoleActivityController:_onRewardTask()
 	self.actId = nil
 end
 
+function RoleActivityController:enterActivity220(actId)
+	local actConfig = ActivityConfig.instance:getActivityCo(actId)
+	local storyId = actConfig.storyId
+
+	if storyId > 0 and not StoryModel.instance:isStoryFinished(storyId) then
+		StoryController.instance:playStory(storyId, nil, self._drirectOpenLevelView220, self, {
+			_actId = actId
+		})
+	else
+		self:_drirectOpenLevelView220({
+			_actId = actId
+		})
+	end
+end
+
+function RoleActivityController:_drirectOpenLevelView220(param)
+	local actId = param._actId
+
+	Activity220Rpc.instance:sendGetAct220InfoRequest(actId, self._onSendGetAct220InfoRequestCb, self)
+end
+
+function RoleActivityController:_onSendGetAct220InfoRequestCb(_, resultCode, msg)
+	if resultCode ~= 0 then
+		logError("RoleActivityController:_drirectOpenLevelView220 resultCode=" .. tostring(resultCode))
+
+		return
+	end
+
+	local activityId = msg.activityId
+	local viewName = RoleActivityEnum.LevelView[activityId]
+
+	ViewMgr.instance:openView(viewName)
+	AudioMgr.instance:trigger(AudioEnum.RoleActivity.level_view_open)
+end
+
 RoleActivityController.instance = RoleActivityController.New()
 
 return RoleActivityController

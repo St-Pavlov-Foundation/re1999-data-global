@@ -278,5 +278,135 @@
     "activityId": 13105,
     "tag": "lineScience",
     "sortIndex": 28
+  },
+  {
+    "activityId": 13808,
+    "tag": "rite",
+    "sortIndex": 1
+  },
+  {
+    "activityId": 13808,
+    "tag": "enlightenment",
+    "sortIndex": 2
+  },
+  {
+    "activityId": 13808,
+    "tag": "lossLife",
+    "sortIndex": 3
+  },
+  {
+    "activityId": 13808,
+    "tag": "electricity",
+    "sortIndex": 4
+  },
+  {
+    "activityId": 13808,
+    "tag": "upgrade",
+    "sortIndex": 5
+  },
+  {
+    "activityId": 13808,
+    "tag": "unusual",
+    "sortIndex": 6
+  },
+  {
+    "activityId": 13808,
+    "tag": "remodeling",
+    "sortIndex": 7
+  },
+  {
+    "activityId": 13808,
+    "tag": "employe",
+    "sortIndex": 8
+  },
+  {
+    "activityId": 13808,
+    "tag": "foundation",
+    "sortIndex": 9
+  },
+  {
+    "activityId": 13808,
+    "tag": "afterglow",
+    "sortIndex": 10
+  },
+  {
+    "activityId": 13808,
+    "tag": "counter",
+    "sortIndex": 11
+  },
+  {
+    "activityId": 13808,
+    "tag": "cure",
+    "sortIndex": 12
+  },
+  {
+    "activityId": 13808,
+    "tag": "lapras",
+    "sortIndex": 13
+  },
+  {
+    "activityId": 13808,
+    "tag": "child",
+    "sortIndex": 14
+  },
+  {
+    "activityId": 13808,
+    "tag": "sportsMeet",
+    "sortIndex": 15
+  },
+  {
+    "activityId": 13808,
+    "tag": "artist",
+    "sortIndex": 16
+  },
+  {
+    "activityId": 13808,
+    "tag": "legend",
+    "sortIndex": 17
+  },
+  {
+    "activityId": 13808,
+    "tag": "warfare",
+    "sortIndex": 18
+  },
+  {
+    "activityId": 13808,
+    "tag": "flashlight",
+    "sortIndex": 19
+  },
+  {
+    "activityId": 13808,
+    "tag": "chess",
+    "sortIndex": 20
+  },
+  {
+    "activityId": 13808,
+    "tag": "tarotCards",
+    "sortIndex": 21
+  },
+  {
+    "activityId": 13808,
+    "tag": "revival",
+    "sortIndex": 22
+  },
+  {
+    "activityId": 13808,
+    "tag": "family",
+    "sortIndex": 23
+  },
+  {
+    "activityId": 13808,
+    "tag": "greenDeer",
+    "sortIndex": 24
+  },
+  {
+    "activityId": 13808,
+    "tag": "omnipotent",
+    "sortIndex": 25
+  },
+  {
+    "activityId": 13808,
+    "tag": "confidant",
+    "sortIndex": 26
   }
 ]

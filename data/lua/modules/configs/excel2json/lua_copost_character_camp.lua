@@ -4,13 +4,18 @@ module("modules.configs.excel2json.lua_copost_character_camp", package.seeall)
 
 local lua_copost_character_camp = {}
 local fields = {
+	text = 5,
+	camp = 2,
+	unlockId = 6,
+	location = 3,
 	id = 1,
-	camp = 2
+	textId = 4
 }
 local primaryKey = {
 	"id"
 }
 local mlStringKey = {
+	text = 2,
 	camp = 1
 }
 

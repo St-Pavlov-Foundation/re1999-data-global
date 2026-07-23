@@ -26,6 +26,7 @@ function Activity217Controller:onRefreshActivity()
 end
 
 function Activity217Controller:dailyRefresh()
+	Activity217Model.instance:reInit()
 	self:_checkAndGetActInfo()
 end
 

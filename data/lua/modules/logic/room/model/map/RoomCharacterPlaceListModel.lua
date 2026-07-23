@@ -151,7 +151,7 @@ function RoomCharacterPlaceListModel:getFilterCareer()
 end
 
 function RoomCharacterPlaceListModel:isFilterCareer(career)
-	return self:isFilterCareerEmpty() or self._filterCareerDict[career]
+	return self:isFilterCareerEmpty() or CharacterModel.instance:filterHerobyCareer_1(self._filterCareerDict, career)
 end
 
 function RoomCharacterPlaceListModel:isFilterCareerEmpty()

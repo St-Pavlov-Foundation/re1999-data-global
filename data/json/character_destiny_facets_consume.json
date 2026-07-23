@@ -526,5 +526,77 @@
     "type": 0,
     "titleName": "",
     "tag": ""
+  },
+  {
+    "facetsId": 302502,
+    "name": "language_10124903",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 1,
+    "icon": "302502",
+    "facetsSort": 100,
+    "keyword": "language_10119894",
+    "type": 1,
+    "titleName": "",
+    "tag": "101#131"
+  },
+  {
+    "facetsId": 312001,
+    "name": "language_10124904",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 1,
+    "icon": "312001",
+    "facetsSort": 100,
+    "keyword": "language_10074378",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 309401,
+    "name": "language_10124905",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111009#3",
+    "tend": 2,
+    "icon": "309401",
+    "facetsSort": 100,
+    "keyword": "language_10017149",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 311601,
+    "name": "language_10124906",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111008#3",
+    "tend": 5,
+    "icon": "311601",
+    "facetsSort": 100,
+    "keyword": "language_10042206",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
+  },
+  {
+    "facetsId": 307701,
+    "name": "language_10124907",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111004#3",
+    "tend": 1,
+    "icon": "307701",
+    "facetsSort": 100,
+    "keyword": "language_10124908",
+    "type": 0,
+    "titleName": "",
+    "tag": "101#110#128"
+  },
+  {
+    "facetsId": 310201,
+    "name": "language_10124909",
+    "consume": "1#620103#12|1#620102#40|1#620101#200|1#111005#3",
+    "tend": 4,
+    "icon": "310201",
+    "facetsSort": 100,
+    "keyword": "language_10017556",
+    "type": 0,
+    "titleName": "",
+    "tag": ""
   }
 ]

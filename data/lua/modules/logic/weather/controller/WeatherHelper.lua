@@ -13,7 +13,7 @@ function WeatherHelper.getNightResourcePrefix(prefix)
 end
 
 function WeatherHelper.skipLightMap(sceneId, name)
-	if sceneId == MainSceneSwitchEnum.SpSceneId and string.find(name, "_colorchange_night") then
+	if MainSceneSwitchEnum.SpSceneMap[sceneId] and string.find(name, "_colorchange_night") then
 		return true
 	end
 

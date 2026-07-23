@@ -163,10 +163,23 @@ function StoryLogItem:_onPlayClick()
 	self:_setItemContentColor("#D56B39")
 	SLFramework.UGUI.GuiHelper.SetColor(self._gonorole:GetComponent(gohelper.Type_Image), "#BD5C2F")
 
-	if self._audioId ~= 0 and StoryLogListModel.instance:getPlayingLogAudioId() ~= self._audioId then
-		AudioEffectMgr.instance:stopAudio(StoryLogListModel.instance:getPlayingLogAudioId(), 0)
-		AudioEffectMgr.instance:stopAudio(self._audioId, 0)
+	if not self._audioId or self._audioId == 0 then
+		return
 	end
+
+	local playLogAudioId = StoryLogListModel.instance:getPlayingLogAudioId()
+
+	if playLogAudioId == self._audioId then
+		return
+	end
+
+	local isPlaying = AudioEffectMgr.instance:isPlaying(self._audioId)
+
+	if isPlaying then
+		return
+	end
+
+	AudioEffectMgr.instance:stopAudio(playLogAudioId, 0)
 
 	local param = {}
 
@@ -222,7 +235,13 @@ function StoryLogItem:_onAudioFinished()
 		StoryLogListModel.instance:setPlayingLogAudio(0)
 	end
 
-	if self._audioId == 0 then
+	if not self._mo or self._audioId == 0 then
+		return
+	end
+
+	if type(self._mo.info) == "table" then
+		StoryLogListModel.instance:setPlayingLogAudio(0)
+
 		return
 	end
 
@@ -379,7 +398,7 @@ function StoryLogItem:onUpdateMO(mo, mixType)
 			false,
 			false
 		}
-		local optList = StoryModel.instance:getStoryBranchOpts(mo.info.stepId)
+		local optList = StoryModel.instance:getShowStoryBranchOpts(mo.info.stepId)
 
 		for i, opt in ipairs(optList) do
 			boolbranchs[i] = true

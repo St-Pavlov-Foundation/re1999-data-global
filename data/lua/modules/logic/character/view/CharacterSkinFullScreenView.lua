@@ -40,6 +40,8 @@ function CharacterSkinFullScreenView:_btncloseOnClick()
 end
 
 function CharacterSkinFullScreenView:_editableInitView()
+	self._changeRTSize = not CharacterVoiceEnum.RTSizeLegacy
+
 	self._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
 
 	self._image = gohelper.findChildImage(self.viewGO, "#go_scroll/#simage_pic")
@@ -101,8 +103,9 @@ function CharacterSkinFullScreenView:_onDrag(param, pointerEventData)
 
 	local endPos = recthelper.screenPosToAnchorPos(pointerEventData.position, self._scrollTransform)
 	local deltaPos = endPos - self._startDragPos
-	local targetX = self._startImagePos.x + deltaPos.x
-	local targetY = self._startImagePos.y + deltaPos.y
+	local scale = self._changeRTSize and self.curScaleX or 1
+	local targetX = self._startImagePos.x + deltaPos.x / scale
+	local targetY = self._startImagePos.y + deltaPos.y / scale
 
 	self:SetAnchor(targetX, targetY)
 end
@@ -198,6 +201,18 @@ function CharacterSkinFullScreenView:refreshDynamicVertical()
 	self.imageHeight = 1400
 	self._uiSpine = GuiModelAgent.Create(self.goSpineSkin, true)
 
+	if self._changeRTSize then
+		self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, self.viewName)
+
+		if self.isLive2D then
+			self._uiSpine:setLive2dCameraLoadedCallback(self.onLive2dCameraLoadedCallback, self)
+		end
+
+		self._uiSpine:setResPath(self._showSkinConfig, self._onUISpineLoaded, self)
+
+		return
+	end
+
 	self._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.FullScreen)
 
 	if self.isLive2D then
@@ -237,7 +252,12 @@ function CharacterSkinFullScreenView:_onUISpineLoaded()
 
 	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(self.goSpineSkin.transform, offsets[1], offsets[2])
+	if self.isLive2D then
+		CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
+	else
+		recthelper.setAnchor(self.goSpineSkin.transform, offsets[1], offsets[2])
+	end
+
 	transformhelper.setLocalScale(self.goSpineSkin.transform, offsets[3], offsets[3], offsets[3])
 
 	if not self.isLive2D then
@@ -254,14 +274,19 @@ function CharacterSkinFullScreenView:_onUISpineLoaded()
 end
 
 function CharacterSkinFullScreenView:onLive2dCameraLoadedCallback(live2d)
+	gohelper.addChild(self.goDynamicContainer, live2d._rawImageGo)
+	gohelper.setAsFirstSibling(live2d._rawImageGo)
+
+	if self._changeRTSize then
+		return
+	end
+
 	self.retainRateW = CharacterSkinFullScreenView.RetainRate.Live2DWidth
 	self.retainRateH = CharacterSkinFullScreenView.RetainRate.Live2DHeight
 	self.interactTr = live2d._rawImageGo.transform
 	self.imageWidth = live2d._rt.width
 	self.imageHeight = live2d._rt.height
 
-	gohelper.addChild(self.goDynamicContainer, live2d._rawImageGo)
-	gohelper.setAsFirstSibling(live2d._rawImageGo)
 	self:calculateDragBorder()
 	self:SetAnchor(0, CharacterSkinFullScreenView.DefaultLive2dOffsetY)
 end
@@ -351,13 +376,14 @@ function CharacterSkinFullScreenView:SetAnchor(anchorX, anchorY)
 
 	recthelper.setAnchor(self.interactTr, anchorX, anchorY)
 
-	if self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and self.isLive2D then
+	if self._showEnum == CharacterEnum.ShowSkinEnum.Dynamic and self.isLive2D and not self._changeRTSize then
 		recthelper.setAnchor(self._spineContainerTransform, anchorX, anchorY)
 	end
 end
 
 function CharacterSkinFullScreenView:onClose()
-	gohelper.setActive(self.goSpineSkin, false)
+	recthelper.setAnchor(self._spineContainerTransform, 10000, 10000)
+	Live2dRTShareController.instance:clearAllRT()
 end
 
 function CharacterSkinFullScreenView:onDestroyView()

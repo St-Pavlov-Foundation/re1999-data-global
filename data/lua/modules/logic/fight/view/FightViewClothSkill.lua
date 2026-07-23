@@ -88,6 +88,7 @@ function FightViewClothSkill:addEvents()
 	end
 
 	self:addEventCb(FightController.instance, FightEvent.DistributeCards, self._updateUI, self)
+	self:addEventCb(FightController.instance, FightEvent.OnClothSkillDataUpdate, self.onClothSkillDataUpdate, self)
 	self:addEventCb(FightController.instance, FightEvent.OnPlayHandCard, self._onPlayHandCard, self)
 	self:addEventCb(FightController.instance, FightEvent.OnMoveHandCard, self._onMoveHandCard, self)
 	self:addEventCb(FightController.instance, FightEvent.OnCombineOneCard, self._onCombineOneCard, self)
@@ -100,6 +101,7 @@ function FightViewClothSkill:addEvents()
 	self:addEventCb(FightController.instance, FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 	self:addEventCb(FightController.instance, FightEvent.MasterPowerChange, self._onMasterPowerChange, self)
 	self:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, self._onStartSequenceFinish, self)
+	self:addEventCb(FightController.instance, FightEvent.OnDevice_DiscardDone, self.onDevice_DiscardDone, self)
 	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, self._onSkillKeyClick, self)
 	self:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, self._onSkillSelect, self)
 end
@@ -108,6 +110,7 @@ function FightViewClothSkill:removeEvents()
 	TaskDispatcher.cancelTask(self._delayDealTouch, self)
 	TaskDispatcher.cancelTask(self._sendChangeSubRequest, self)
 	TaskDispatcher.cancelTask(self._sendUseClothSkillRequest, self)
+	TaskDispatcher.cancelTask(self._sendUseDeviceDiscardSkillRequest, self)
 	TaskDispatcher.cancelTask(self._setState, self)
 	TaskDispatcher.cancelTask(self._checkAnyKey, self)
 	self._click:RemoveClickListener()
@@ -134,6 +137,27 @@ function FightViewClothSkill:removeEvents()
 	self:removeEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, self._cancelBlock, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillOpen, self._onSkillKeyClick, self)
 	self:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSkillIndex, self._onSkillSelect, self)
+end
+
+function FightViewClothSkill:onClothSkillDataUpdate()
+	self._clothSkillList = nil
+end
+
+function FightViewClothSkill:onDevice_DiscardDone(index)
+	if self._dnaAnim then
+		self._dnaAnim:Play("fight_heroskill_icon_click", 0, 0)
+		self._dnaAnim:Update(0)
+	end
+
+	self.discardIndex = index
+
+	TaskDispatcher.cancelTask(self._sendUseDeviceDiscardSkillRequest, self)
+	TaskDispatcher.runDelay(self._sendUseDeviceDiscardSkillRequest, self, 0.33)
+	self:_blockClick()
+end
+
+function FightViewClothSkill:_sendUseDeviceDiscardSkillRequest()
+	FightRpc.instance:sendUseClothSkillRequest(self._toUseSkillId, nil, self.discardIndex)
 end
 
 function FightViewClothSkill:_onClick()
@@ -230,6 +254,12 @@ function FightViewClothSkill:_onTouch()
 	end
 
 	if self._state == State.Detail then
+		local curOperateState = FightDataHelper.stageMgr:getCurOperateState()
+
+		if curOperateState == FightStageMgr.OperateStateType.DeviceDiscard then
+			return
+		end
+
 		local timeScale = Time.timeScale
 
 		TaskDispatcher.runDelay(self._delayDealTouch, self, 0.01)
@@ -396,6 +426,10 @@ function FightViewClothSkill:_onRoundSequenceFinish()
 end
 
 function FightViewClothSkill:_getClothSkillList()
+	if self._clothSkillList then
+		return self._clothSkillList
+	end
+
 	local skillList = tabletool.copy(FightModel.instance:getClothSkillList() or {})
 
 	for i = #skillList, 1, -1 do
@@ -403,6 +437,8 @@ function FightViewClothSkill:_getClothSkillList()
 			table.remove(skillList, i)
 		end
 	end
+
+	self._clothSkillList = skillList
 
 	return skillList
 end
@@ -576,7 +612,33 @@ function FightViewClothSkill:_onClickSkillIcon(index, isReplay)
 	local skillConfig = lua_skill.configDict[self._toUseSkillId]
 	local behaviorId = self:_checkSelectSkillTarget()
 
-	if behaviorId and behaviorId == Behavior_ChangeSub then
+	if self._toUseSkillId == FightEnum.DeviceDiscardSkillId then
+		if not FightDataHelper.handCardMgr:hasDeviceCard() then
+			GameFacade.showToast(374001)
+
+			return
+		end
+
+		FightDataHelper.stageMgr:enterOperateState(FightStageMgr.OperateStateType.DeviceDiscard)
+
+		return
+	elseif self._toUseSkillId == FightEnum.GenerateOneLevelCardSkillId then
+		if FightHelper.allIsDeviceEntity() then
+			GameFacade.showToast(379011)
+
+			return
+		end
+
+		if clothSkillOp then
+			self:_selectCallback(clothSkillOp.toId)
+		else
+			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
+				skillId = self._toUseSkillId,
+				callback = self._selectCallback,
+				callbackObj = self
+			})
+		end
+	elseif behaviorId and behaviorId == Behavior_ChangeSub then
 		if clothSkillOp then
 			self._fromId = clothSkillOp.fromId
 			self._toId = clothSkillOp.toId

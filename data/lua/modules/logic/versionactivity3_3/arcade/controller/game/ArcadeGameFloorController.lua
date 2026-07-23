@@ -3,9 +3,6 @@
 module("modules.logic.versionactivity3_3.arcade.controller.game.ArcadeGameFloorController", package.seeall)
 
 local ArcadeGameFloorController = class("ArcadeGameFloorController", BaseController)
-local __G__TRACKBACK__ = __G__TRACKBACK__
-local xpcall = xpcall
-local rawget = rawget
 
 function ArcadeGameFloorController:onInit()
 	return
@@ -23,32 +20,58 @@ function ArcadeGameFloorController:reInit()
 	return
 end
 
-function ArcadeGameFloorController:tryAddFloor(floorId, gridX, gridY)
-	if ArcadeGameHelper.isOutSideRoom(gridX, gridY) then
-		return nil
+function ArcadeGameFloorController:getFloorMOInGrid(x, y)
+	local curRoom = ArcadeGameController.instance:getCurRoom()
+
+	if not curRoom then
+		return
 	end
 
-	local moData = {
-		sizeY = 1,
-		sizeX = 1,
-		entityType = ArcadeGameEnum.EntityType.Floor,
-		id = floorId,
-		x = gridX,
-		y = gridY
-	}
-	local floorMO = ArcadeGameModel.instance:addEntityMO(moData, true)
+	local occupyData = curRoom:getEntityDataInTargetGrid(x, y, ArcadeGameEnum.EntityLayer.Floor)
 
-	if floorMO then
-		local gameScent = ArcadeGameController.instance:getGameScene()
+	if not occupyData then
+		return
+	end
 
-		if gameScent then
-			gameScent.entityMgr:addEntityByList({
-				floorMO
-			})
+	return ArcadeGameModel.instance:getMOWithType(ArcadeGameEnum.EntityType.Floor, occupyData.uid)
+end
+
+function ArcadeGameFloorController:_checkCanAddFloor(floorId, x, y, sizeX, sizeY)
+	local curRoom = ArcadeGameController.instance:getCurRoom()
+
+	if not curRoom then
+		return
+	end
+
+	local occupyFloorMO = self:getFloorMOInGrid(x, y)
+
+	if occupyFloorMO and occupyFloorMO:getId() == floorId then
+		occupyFloorMO:setCdRound(0)
+
+		return
+	end
+
+	local priority = ArcadeConfig.instance:getFloorPriority(floorId)
+	local needRemoveUids = {}
+
+	for i = x, x + sizeX - 1 do
+		for j = y, y + sizeY - 1 do
+			occupyFloorMO = self:getFloorMOInGrid(i, j)
+
+			if occupyFloorMO then
+				local occupyId = occupyFloorMO:getId()
+				local occupyPriority = ArcadeConfig.instance:getFloorPriority(occupyId)
+
+				if priority < occupyPriority then
+					return
+				end
+
+				needRemoveUids[#needRemoveUids + 1] = occupyFloorMO:getUid()
+			end
 		end
 	end
 
-	return floorMO
+	return true, needRemoveUids
 end
 
 function ArcadeGameFloorController:tryAddFloorByList(dataList)
@@ -56,72 +79,41 @@ function ArcadeGameFloorController:tryAddFloorByList(dataList)
 		return
 	end
 
-	local entityType = ArcadeGameEnum.EntityType.Floor
-	local floorMOList = ArcadeGameModel.instance:getEntityMOList(entityType)
-	local ccupyDict
+	local removeUidList = {}
+	local addFloorEntityDataList = {}
 
-	if floorMOList and #floorMOList > 0 then
-		ccupyDict = {}
+	for _, data in ipairs(dataList) do
+		local floorId = data.id
+		local x = data.x
+		local y = data.y
+		local sizeX, sizeY = ArcadeConfig.instance:getFloorSize(floorId)
+		local canAdd, needRemoveUids = self:_checkCanAddFloor(floorId, x, y, sizeX, sizeY)
 
-		local gridX, gridY
-
-		for _, floorMO in ipairs(floorMOList) do
-			gridX, gridY = floorMO:getGridPos()
-
-			local gridId = ArcadeGameHelper.getGridId(gridX, gridY)
-
-			ccupyDict[gridId] = floorMO
-		end
-	end
-
-	local removeUidList
-
-	for i = #dataList, 1, -1 do
-		local moData = dataList[i]
-		local gridId = ArcadeGameHelper.getGridId(moData.x, moData.y)
-		local isReset = false
-		local floorMO = ccupyDict and ccupyDict[gridId]
-
-		if floorMO then
-			if floorMO:getId() == moData.id then
-				isReset = true
-
-				floorMO:setCdRound(0)
-			else
-				removeUidList = removeUidList or {}
-
-				table.insert(removeUidList, floorMO:getUid())
+		if canAdd then
+			for _, uid in ipairs(needRemoveUids) do
+				removeUidList[#removeUidList + 1] = uid
 			end
-		end
 
-		if isReset or ArcadeGameHelper.isOutSideRoom(moData.x, moData.y) then
-			table.remove(dataList, i)
-		else
-			moData.sizeX = 1
-			moData.sizeY = 1
-			moData.entityType = entityType
-		end
-	end
+			local floorData = {
+				entityType = ArcadeGameEnum.EntityType.Floor,
+				id = floorId,
+				x = x,
+				y = y,
+				sizeX = sizeX,
+				sizeY = sizeY
+			}
 
-	if removeUidList and #removeUidList > 0 then
-		for _, floorUid in ipairs(removeUidList) do
-			ArcadeGameController.instance:removeEntity(entityType, floorUid)
+			addFloorEntityDataList[#addFloorEntityDataList + 1] = floorData
 		end
 	end
 
-	local moList = ArcadeGameModel.instance:addEntityMOByList(dataList, true)
-
-	logNormal(string.format(" ArcadeGameFloorController:tryAddFloorByList %s %s", #dataList, #moList))
-
-	if moList and #moList > 0 then
-		local gameScent = ArcadeGameController.instance:getGameScene()
-
-		if gameScent then
-			gameScent.entityMgr:addEntityByList(moList)
-		end
+	for _, floorUid in ipairs(removeUidList) do
+		ArcadeGameController.instance:removeEntity(ArcadeGameEnum.EntityType.Floor, floorUid)
 	end
 
-	return moList
+	local floorMOList = ArcadeGameController.instance:tryAddEntityList(addFloorEntityDataList, true)
+
+	return floorMOList
 end
 
 ArcadeGameFloorController.instance = ArcadeGameFloorController.New()

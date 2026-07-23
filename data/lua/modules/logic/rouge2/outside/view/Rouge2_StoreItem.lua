@@ -115,6 +115,13 @@ function Rouge2_StoreItem.sortGoods(goodCo1, goodCo2)
 		return true
 	end
 
+	local rewardPriority1 = goodCo1.rewardPriority
+	local rewardPriority2 = goodCo2.rewardPriority
+
+	if rewardPriority1 ~= rewardPriority2 then
+		return rewardPriority2 < rewardPriority1
+	end
+
 	return goodCo1.id < goodCo2.id
 end
 

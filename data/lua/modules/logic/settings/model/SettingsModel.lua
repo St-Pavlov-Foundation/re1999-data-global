@@ -37,6 +37,7 @@ SettingsModel.FrameRate = {
 	120,
 	144
 }
+SettingsModel.PerfectWHrRate = 1.7777777777777777
 
 function SettingsModel:onInit()
 	self._curCategoryId = 1
@@ -131,6 +132,7 @@ function SettingsModel:initResolutionRationDataList()
 
 	local resolution = UnityEngine.Screen.currentResolution
 	local rWidth = resolution.width
+	local rHeight = resolution.height
 
 	if self._resolutionRatioDataList and #self._resolutionRatioDataList >= 1 then
 		local oldMaxWidth = self._resolutionRatioDataList[1]
@@ -146,7 +148,11 @@ function SettingsModel:initResolutionRationDataList()
 
 	for _, width in ipairs(SettingsModel.ResolutionRatioWidthList) do
 		if width <= self._systemScreenWidth and width <= rWidth then
-			local height = math.floor(width / self._curRate)
+			local height = math.floor(width / SettingsModel.PerfectWHrRate)
+
+			if height > self._systemScreenHeight or rHeight < height then
+				height = math.floor(width / self._curRate)
+			end
 
 			self:_appendResolutionData(width, height, false)
 		end
@@ -268,6 +274,14 @@ function SettingsModel.isBilibili()
 	channelId = channelId and tostring(channelId)
 
 	return not string.nilorempty(channelId) and channelId == "101"
+end
+
+function SettingsModel.isOfficial()
+	local channelId = SDKMgr.instance:getChannelId()
+
+	channelId = channelId and tostring(channelId)
+
+	return not string.nilorempty(channelId) and channelId == "100"
 end
 
 function SettingsModel:getScreenshotSwitch()
@@ -768,6 +782,16 @@ function SettingsModel:extractByRegion(str)
 	end
 
 	return str
+end
+
+function SettingsModel:extractByRegionEx(str)
+	if string.nilorempty(str) then
+		return str
+	end
+
+	local curRegion = self:getRegionShortcut()
+
+	return string.match(str, curRegion .. "<([^>]+)>") or str
 end
 
 function SettingsModel:isAvproVideo()

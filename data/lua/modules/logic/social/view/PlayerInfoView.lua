@@ -183,7 +183,7 @@ function PlayerInfoView:_refreshUI()
 	gohelper.setActive(self._btnremark.gameObject, isFriend)
 	gohelper.setActive(self._btnaddblacklist.gameObject, not isBlackList and not isPlayerSelf)
 	gohelper.setActive(self._btnremoveblacklist.gameObject, isBlackList and not isPlayerSelf)
-	gohelper.setActive(self._btnroom.gameObject, true)
+	gohelper.setActive(self._btnroom.gameObject, not self.hideRoomBtn)
 end
 
 function PlayerInfoView:_onLoadFinish()
@@ -200,6 +200,8 @@ function PlayerInfoView:onOpen()
 	if self.viewParam.isSelectInFriend then
 		self._isSelectInFriend = self.viewParam.isSelectInFriend
 	end
+
+	self.hideRoomBtn = self.viewParam.hideRoomBtn
 
 	self:_refreshUI()
 	self:_refreshPos()

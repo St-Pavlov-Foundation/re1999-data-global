@@ -1,0 +1,62 @@
+[
+  {
+    "activityId": 13811,
+    "id": 1381101,
+    "mapid": 1,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  },
+  {
+    "activityId": 13811,
+    "id": 1381102,
+    "mapid": 2,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  },
+  {
+    "activityId": 13811,
+    "id": 1381103,
+    "mapid": 3,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  },
+  {
+    "activityId": 13811,
+    "id": 1381104,
+    "mapid": 4,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  },
+  {
+    "activityId": 13811,
+    "id": 1381105,
+    "mapid": 5,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  },
+  {
+    "activityId": 13811,
+    "id": 1381106,
+    "mapid": 6,
+    "resouce": "",
+    "rolepos": "0#0",
+    "endpos": "20#20",
+    "enemy2Apos": "1#20#20|2#30#30",
+    "enemy2Bpos": "1#12#12|2#14#14"
+  }
+]

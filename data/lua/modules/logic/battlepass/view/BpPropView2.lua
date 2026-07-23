@@ -242,7 +242,7 @@ function BpPropView2:openChargeView()
 	StatController.instance:track(StatEnum.EventName.ClickBPRewardWindowButton, {
 		[StatEnum.EventProperties.ButtonName] = "解锁吼吼典藏光碟"
 	})
-	ViewMgr.instance:openView(ViewName.BpChargeView)
+	ViewMgr.instance:openView(BpController.instance:getBpChargeView())
 	self:closeThis()
 end
 

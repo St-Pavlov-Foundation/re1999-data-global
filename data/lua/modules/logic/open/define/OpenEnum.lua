@@ -61,6 +61,7 @@ OpenEnum.UnlockFunc = {
 	VersionActivity = 50,
 	Summon = 11,
 	AssassinOutside = 3050101,
+	Teaching = 87,
 	FightAutoFocus = 27,
 	BGMSwitch = 76,
 	Act130OpenTips = 66,

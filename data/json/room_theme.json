@@ -322,5 +322,17 @@
     "collectionBonus": "11#13603#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 38501,
+    "name": "language_10129320",
+    "nameEn": "Polymer Utopia",
+    "desc": "language_10129321",
+    "rewardIcon": "17028500",
+    "building": "138501|138502|138503",
+    "packages": "38501|38502|38503|38504",
+    "collectionBonus": "11#138503#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

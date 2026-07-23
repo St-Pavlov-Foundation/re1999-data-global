@@ -46,7 +46,7 @@ function Rouge2_RelicsDropView:_editableInitView()
 	self._refreshLoader = Rouge2_ItemRefreshCompLoader.Get(self._goRefresh)
 
 	self._refreshLoader:initRefreshCallback(self._onRefreshItemCallback, self)
-	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Attr_Detail)
+	Rouge2_AttributeToolBar.Load(self._goBottomLeft, Rouge2_Enum.AttributeToolType.Skill_Detail)
 	Rouge2_CommonItemDescModeSwitcher.Load(self._goTopRight, Rouge2_Enum.ItemDescModeDataKey.RelicsDrop)
 end
 
@@ -111,6 +111,7 @@ function Rouge2_RelicsDropView:refreshTitle()
 	gohelper.setActive(self._goDropBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Drop)
 	gohelper.setActive(self._goLossBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Loss)
 	gohelper.setActive(self._goTipsBG, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Tips)
+	gohelper.setActive(self._goBottomLeft, self._viewEnum == Rouge2_MapEnum.ItemDropViewEnum.Select)
 end
 
 function Rouge2_RelicsDropView:refreshButton()

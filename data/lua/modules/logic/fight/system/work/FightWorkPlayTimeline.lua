@@ -2,9 +2,9 @@
 
 module("modules.logic.fight.system.work.FightWorkPlayTimeline", package.seeall)
 
-local FightWorkPlayTimeline = class("FightWorkPlayTimeline", BaseWork)
+local FightWorkPlayTimeline = class("FightWorkPlayTimeline", FightWorkItem)
 
-function FightWorkPlayTimeline:ctor(entity, timeline, toId)
+function FightWorkPlayTimeline:onConstructor(entity, timeline, toId)
 	self._entity = entity
 	self._entityId = entity.id
 	self._timeline = timeline
@@ -26,7 +26,7 @@ function FightWorkPlayTimeline:_playTimeline()
 		return
 	end
 
-	if self._entity.skill then
+	if self._entity.skill and self._entity:__isActive() then
 		local temp_data = {
 			actId = 0,
 			actEffect = {
@@ -40,10 +40,11 @@ function FightWorkPlayTimeline:_playTimeline()
 			stepUid = FightTLEventEntityVisible.latestStepUid or 0
 		}
 
-		FightController.instance:registerCallback(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity, self)
-		FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self, LuaEventSystem.Low)
-		TaskDispatcher.runDelay(self._delayDone, self, 60)
-		self._entity.skill:playTimeline(self._timeline, temp_data)
+		self:com_registFightEvent(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity)
+
+		local work = self._entity.skill:registTimelineWork(self._timeline, temp_data)
+
+		self:playWorkAndDone(work)
 	else
 		self:onDone(true)
 	end
@@ -55,20 +56,8 @@ function FightWorkPlayTimeline:_onBeforeDestroyEntity(entity)
 	end
 end
 
-function FightWorkPlayTimeline:_delayDone()
-	self:onDone(true)
-end
-
-function FightWorkPlayTimeline:_onSkillPlayFinish(entity)
-	if entity.id == self._entityId then
-		self:_delayDone()
-	end
-end
-
 function FightWorkPlayTimeline:clearWork()
-	TaskDispatcher.cancelTask(self._delayDone, self)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, self._onSkillPlayFinish, self)
-	FightController.instance:unregisterCallback(FightEvent.BeforeDestroyEntity, self._onBeforeDestroyEntity, self)
+	return
 end
 
 return FightWorkPlayTimeline

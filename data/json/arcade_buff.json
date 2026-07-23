@@ -1,6 +1,7 @@
 [
   {
     "id": 101,
+    "effectName": "",
     "effectParam": "StopMove",
     "addPassiveSkillId": 0,
     "entityType": "character#monster",
@@ -12,6 +13,7 @@
   },
   {
     "id": 102,
+    "effectName": "",
     "effectParam": "StopMove",
     "addPassiveSkillId": 0,
     "entityType": "character#monster",
@@ -23,7 +25,8 @@
   },
   {
     "id": 103,
-    "effectParam": "NotBeCountered",
+    "effectName": "NotBeCountered",
+    "effectParam": "",
     "addPassiveSkillId": 33500424,
     "entityType": "monster",
     "round": 5,
@@ -34,7 +37,8 @@
   },
   {
     "id": 104,
-    "effectParam": "NotBeCountered",
+    "effectName": "NotBeCountered",
+    "effectParam": "",
     "addPassiveSkillId": 40001,
     "entityType": "character",
     "round": 16,
@@ -45,6 +49,7 @@
   },
   {
     "id": 201,
+    "effectName": "",
     "effectParam": "",
     "addPassiveSkillId": 0,
     "entityType": "floor",
@@ -56,6 +61,7 @@
   },
   {
     "id": 202,
+    "effectName": "",
     "effectParam": "",
     "addPassiveSkillId": 0,
     "entityType": "floor",
@@ -67,6 +73,7 @@
   },
   {
     "id": 203,
+    "effectName": "",
     "effectParam": "",
     "addPassiveSkillId": 0,
     "entityType": "floor",
@@ -78,7 +85,8 @@
   },
   {
     "id": 301,
-    "effectParam": "NotBeAttack_1",
+    "effectName": "NotBeAttack",
+    "effectParam": "1",
     "addPassiveSkillId": 0,
     "entityType": "monster",
     "round": 999999,
@@ -89,7 +97,8 @@
   },
   {
     "id": 302,
-    "effectParam": "NotBeAttack_2",
+    "effectName": "NotBeAttack",
+    "effectParam": "2",
     "addPassiveSkillId": 0,
     "entityType": "monster",
     "round": 999999,
@@ -100,7 +109,8 @@
   },
   {
     "id": 303,
-    "effectParam": "NotBeAttack_3",
+    "effectName": "NotBeAttack",
+    "effectParam": "3",
     "addPassiveSkillId": 0,
     "entityType": "monster",
     "round": 999999,
@@ -111,7 +121,8 @@
   },
   {
     "id": 304,
-    "effectParam": "NotBeAttack_4",
+    "effectName": "NotBeAttack",
+    "effectParam": "4",
     "addPassiveSkillId": 0,
     "entityType": "monster",
     "round": 999999,
@@ -119,5 +130,77 @@
     "showPriority": 0,
     "gainEffect": 689010033,
     "loopEffect": 689010062
+  },
+  {
+    "id": 9998,
+    "effectName": "",
+    "effectParam": "",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 0,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 9999,
+    "effectName": "OnlySpecAttack#SpecAttackDamageFactor",
+    "effectParam": "1|1#2",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 0,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 204,
+    "effectName": "",
+    "effectParam": "",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 5,
+    "notSubInRoundBegin": false,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 689010075
+  },
+  {
+    "id": 305,
+    "effectName": "OnlySpecAttack#SpecAttackDamageFactor",
+    "effectParam": "1|1#2",
+    "addPassiveSkillId": 0,
+    "entityType": "monster",
+    "round": 0,
+    "notSubInRoundBegin": true,
+    "showPriority": 0,
+    "gainEffect": 0,
+    "loopEffect": 0
+  },
+  {
+    "id": 105,
+    "effectName": "",
+    "effectParam": "",
+    "addPassiveSkillId": 40002,
+    "entityType": "character",
+    "round": 15,
+    "notSubInRoundBegin": false,
+    "showPriority": 1,
+    "gainEffect": 689010068,
+    "loopEffect": 689010031
+  },
+  {
+    "id": 106,
+    "effectName": "",
+    "effectParam": "",
+    "addPassiveSkillId": 40003,
+    "entityType": "character",
+    "round": 15,
+    "notSubInRoundBegin": false,
+    "showPriority": 1,
+    "gainEffect": 689010070,
+    "loopEffect": 689010071
   }
 ]

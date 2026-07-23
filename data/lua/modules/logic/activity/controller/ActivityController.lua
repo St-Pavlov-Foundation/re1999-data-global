@@ -107,14 +107,21 @@ local kAct101RedList = {
 	ActivityEnum.Activity.V2a7_SelfSelectSix1,
 	ActivityEnum.Activity.V2a7_SelfSelectSix2,
 	ActivityEnum.Activity.V2a8_DragonBoat,
-	ActivityEnum.Activity.V2a8_WuErLiXiGift,
 	ActivityEnum.Activity.V2a9_VersionSummon_Part1,
 	ActivityEnum.Activity.V2a9_VersionSummon_Part2,
 	ActivityEnum.Activity.V2a9_FreeMonthCard,
 	ActivityEnum.Activity.V3a0_SummerSign,
 	ActivityEnum.Activity.V3a1_AutumnSign,
 	ActivityEnum.Activity.V3a4_DestinyGift,
-	ActivityEnum.Activity.V3a4_GiftRecommend
+	ActivityEnum.Activity.V3a4_GiftRecommend,
+	ActivityEnum.Activity.V3a7_SelfSelect,
+	ActivityEnum.Activity.V3a7_SkinGift,
+	ActivityEnum.Activity.V3a8_SelfSelectSix,
+	VersionActivity3_5Enum.ActivityId.ActivityCollect,
+	ActivityEnum.Activity.SP02_AtomicOperationActivitySignIn,
+	ActivityEnum.Activity.SP02_PaoMianActivityShop,
+	ActivityEnum.Activity.SP02_LinkGift,
+	ActivityEnum.Activity.S02SceneUIPackageAct
 }
 local kAct125List = {
 	ActivityEnum.Activity.V3a0_WarmUp,
@@ -130,6 +137,9 @@ local kAct125List = {
 	ActivityEnum.Activity.V2a4_WarmUp,
 	ActivityEnum.Activity.V2a5_WarmUp,
 	ActivityEnum.Activity.V2a7_WarmUp
+}
+local _act101CostIdList = {
+	ActivityEnum.ConstId.Gifg6StarCharacter
 }
 
 function ActivityController:checkGetActivityInfo()
@@ -342,7 +352,17 @@ end
 function ActivityController:_initActivityCollect_kAct101RedList()
 	local actId = ActivityCollectModel.instance:getCurActivityId()
 
-	if actId and not LuaUtil.tableContains(kAct101RedList, actId) then
+	self:_addAct101List(actId)
+
+	local tActivityConfig = ActivityConfig.instance
+
+	for _, actConstId in ipairs(_act101CostIdList) do
+		self:_addAct101List(tActivityConfig:getConstAsNum(actConstId, 0))
+	end
+end
+
+function ActivityController:_addAct101List(actId)
+	if actId and actId ~= 0 and not LuaUtil.tableContains(kAct101RedList, actId) then
 		table.insert(kAct101RedList, actId)
 	end
 end

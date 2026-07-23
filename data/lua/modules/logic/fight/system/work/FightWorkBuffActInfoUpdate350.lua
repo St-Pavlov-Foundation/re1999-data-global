@@ -34,7 +34,9 @@ end
 function FightWorkBuffActInfoUpdate350.initBuffActHandle()
 	if not FightWorkBuffActInfoUpdate350.buffActHandleDict then
 		FightWorkBuffActInfoUpdate350.buffActHandleDict = {
-			[FightEnum.BuffActId.Rouge2CheckCount] = FightWorkBuffActInfoUpdate350.handleRouge2CheckCountUpdate
+			[FightEnum.BuffActId.Rouge2CheckCount] = FightWorkBuffActInfoUpdate350.handleRouge2CheckCountUpdate,
+			[FightEnum.BuffActId.LostHpToFakeHp] = FightWorkBuffActInfoUpdate350.handleLostHpToFakeHpUpdate,
+			[FightEnum.BuffActId.DeviceExPointOverflowBank] = FightWorkBuffActInfoUpdate350.handleDeviceExPointOverflowBankUpdate
 		}
 	end
 end
@@ -44,6 +46,25 @@ function FightWorkBuffActInfoUpdate350:defaultHandle()
 	local buffUid = self.actEffectData.reserveId
 
 	self:com_sendFightEvent(FightEvent.UpdateBuffActInfo, entityId, buffUid, self.actEffectData.buffActInfo)
+	self:onDone(true)
+end
+
+function FightWorkBuffActInfoUpdate350:handleLostHpToFakeHpUpdate()
+	local entityId = self.actEffectData.targetId
+
+	self:com_sendFightEvent(FightEvent.OnFakeHpChange, entityId)
+	self:onDone(true)
+end
+
+function FightWorkBuffActInfoUpdate350:handleDeviceExPointOverflowBankUpdate()
+	local entityId = self.actEffectData.targetId
+	local entityMo = FightDataHelper.entityMgr:getById(entityId)
+
+	if entityMo then
+		entityMo:updateStoredDeviceExPoint()
+	end
+
+	self:com_sendFightEvent(FightEvent.OnDevice_StoreExPointChange, entityId)
 	self:onDone(true)
 end
 

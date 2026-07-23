@@ -207,6 +207,14 @@ function FightViewTips:_setPassiveSkillTip(skillgo, skillInfo, entityId)
 	desc.text = desctxt
 end
 
+function FightViewTips.sortShouTaoListById(item1, item2)
+	return item1.id > item2.id
+end
+
+function FightViewTips.sortShouTaoDesList(item1, item2)
+	return item1.descType < item2.descType
+end
+
 function FightViewTips:_setSkillTip(skillId, entityId, cardInfoMO)
 	gohelper.setActive(self._goskilltip, GMFightShowState.playSkillDes)
 
@@ -216,6 +224,51 @@ function FightViewTips:_setSkillTip(skillId, entityId, cardInfoMO)
 	self._txtskilltype.text = self:_formatSkillType(skillCO)
 
 	local desc = FightConfig.instance:getEntitySkillDesc(entityId, skillCO)
+	local shouTaoCustomData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.ShowTaoFuBen]
+
+	if shouTaoCustomData then
+		local dic = shouTaoCustomData.skillId2NodeIds
+
+		if dic then
+			local list = dic[tostring(skillId)]
+
+			if list then
+				local configDic = {}
+				local configList = {}
+
+				for i = 1, #list do
+					local nodeId = list[i]
+					local config = lua_atomic_talent.configDict[nodeId]
+
+					if config then
+						local descType = config.descType
+
+						configDic[descType] = configDic[descType] or {}
+
+						table.insert(configDic[descType], config)
+					end
+				end
+
+				local desList = {}
+
+				for k, v in pairs(configDic) do
+					if k ~= 0 then
+						table.sort(v, FightViewTips.sortShouTaoListById)
+						table.insert(desList, v[1])
+					end
+				end
+
+				table.sort(desList, FightViewTips.sortShouTaoDesList)
+
+				desc = ""
+
+				for i = 1, #desList do
+					desc = desc .. desList[i].skillDesc .. "\n"
+				end
+			end
+		end
+	end
+
 	local linkSkillDesc = self:_buildLinkTag(desc)
 
 	self._txtskilldesc.text = HeroSkillModel.instance:skillDesToSpot(linkSkillDesc, "#c56131", "#7c93ad")

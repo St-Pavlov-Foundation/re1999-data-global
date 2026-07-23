@@ -240,6 +240,8 @@ function FightSceneLevelComp:_onLevelLoaded(levelId)
 end
 
 function FightSceneLevelComp:setFrontVisible(visible)
+	do return end
+
 	if self._frontRendererList and self._visible == visible then
 		return
 	end

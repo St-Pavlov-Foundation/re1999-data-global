@@ -118,6 +118,12 @@ function V3a2_BossRush_HandBookMO:getCanClaimBonus(exp)
 	return bonus
 end
 
+function V3a2_BossRush_HandBookMO:hasClaimBonus()
+	local bouns = self:getCanClaimBonus(self.heightScore)
+
+	return bouns > 0
+end
+
 function V3a2_BossRush_HandBookMO:getStrategy()
 	return self.strategy or {}
 end

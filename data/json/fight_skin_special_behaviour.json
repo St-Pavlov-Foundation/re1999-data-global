@@ -16,5 +16,11 @@
     "hit": "801830144#hit2",
     "die": "",
     "freeze": ""
+  },
+  {
+    "id": 610415,
+    "hit": "117371041#hit_face1_channel|117371042#hit_face2_channel",
+    "die": "",
+    "freeze": ""
   }
 ]

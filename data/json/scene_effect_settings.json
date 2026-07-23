@@ -618,5 +618,129 @@
       107,
       255
     ]
+  },
+  {
+    "sceneId": 6,
+    "id": 1,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_air",
+    "tag": "effectAirStartColor",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      150
+    ],
+    "lightColor2": [
+      255,
+      255,
+      255,
+      150
+    ],
+    "lightColor3": [
+      255,
+      238,
+      178,
+      50
+    ],
+    "lightColor4": [
+      62,
+      124,
+      138,
+      60
+    ]
+  },
+  {
+    "sceneId": 6,
+    "id": 2,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_piaodai",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor3": [
+      204,
+      161,
+      122,
+      230
+    ],
+    "lightColor4": [
+      204,
+      161,
+      122,
+      0
+    ]
+  },
+  {
+    "sceneId": 6,
+    "id": 3,
+    "path": "s01_obj_a/Anim/Drawing/s01_xiangkuang_d_backobj_a/Anim/Drawing/v3a4_xiangkuang_back",
+    "tag": "frame",
+    "colorKey": "",
+    "lightColor1": [
+      183,
+      135,
+      87,
+      33
+    ],
+    "lightColor2": [
+      183,
+      135,
+      87,
+      33
+    ],
+    "lightColor3": [
+      191,
+      84,
+      50,
+      90
+    ],
+    "lightColor4": [
+      97,
+      196,
+      228,
+      126
+    ]
+  },
+  {
+    "sceneId": 6,
+    "id": 4,
+    "path": "s01_obj_a/Anim/Obj/s01_C_Obj_a/year",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      72,
+      360,
+      330,
+      510
+    ],
+    "lightColor2": [
+      72,
+      360,
+      330,
+      510
+    ],
+    "lightColor3": [
+      72,
+      360,
+      330,
+      510
+    ],
+    "lightColor4": [
+      534.8,
+      156.8,
+      39.2,
+      400
+    ]
   }
 ]

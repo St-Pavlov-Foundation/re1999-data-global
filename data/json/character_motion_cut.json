@@ -264,9 +264,45 @@
     "onlyStopCut": 1
   },
   {
-    "heroId": 3143,
+    "heroId": 3146,
     "skinId": 1,
-    "motion": "yansuan1|yansuan2|zhize|baishou",
+    "motion": "chizhang|chizhang_start|chizhang_transition|chizhang_loop|chizhang_end|piaofu",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3154,
+    "skinId": 1,
+    "motion": "sikao",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3092,
+    "skinId": 309203,
+    "motion": "bajian",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3140,
+    "skinId": 1,
+    "motion": "suxie1|suxie2|suxie3|zhihui",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3105,
+    "skinId": 310504,
+    "motion": "ruchang",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3106,
+    "skinId": 310604,
+    "motion": "chongfeng",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3149,
+    "skinId": 1,
+    "motion": "jingjie2|jingjie|jingjie01|jingjie02|jingjie03",
     "onlyStopCut": 1
   }
 ]

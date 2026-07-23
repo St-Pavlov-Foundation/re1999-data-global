@@ -121,7 +121,7 @@ function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faith
 		VersionActivity1_3AstrologyModel.instance:setStarReward(materialDataMOList)
 
 		return
-	elseif getApproach == MaterialEnum.GetApproach.Task or msg.getApproach == MaterialEnum.GetApproach.TaskAct then
+	elseif ItemApproachHelper.isTaskApproach(getApproach) then
 		if ViewMgr.instance:isOpen(ViewName.WeekWalkRewardView) or ViewMgr.instance:isOpen(ViewName.WeekWalkLayerRewardView) then
 			WeekWalkTaskListModel.instance:setTaskRewardList(materialDataMOList)
 
@@ -190,9 +190,18 @@ function MaterialRpc:_onReceiveMaterialChangePush(msg, materialDataMOList, faith
 		PartyClothController.instance:openSummonRewardView(materialDataMOList)
 	elseif getApproach == MaterialEnum.GetApproach.CommandStationPaperReward then
 		-- block empty
+	elseif getApproach == MaterialEnum.GetApproach.ActBp then
+		Anniversary3ActBpModel.instance:setWaitShowRewards(materialDataMOList)
 	else
 		self:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
 	end
+
+	local params = {
+		msg = msg,
+		materialDataMOList = materialDataMOList
+	}
+
+	PopupController.instance:dispatchEvent(PopupEvent.OnMaterialChangePush, params)
 end
 
 function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOList, faithCO, equip_cards, season123EquipCards)
@@ -294,6 +303,10 @@ function MaterialRpc:_onReceiveMaterialChangePush_default(msg, materialDataMOLis
 end
 
 function MaterialRpc:isShowBadgeGetView(materialDataMOList)
+	if not materialDataMOList then
+		return
+	end
+
 	local showBadgeId
 
 	for _, mo in ipairs(materialDataMOList) do
@@ -333,6 +346,18 @@ function MaterialRpc:simpleShowView(materialDataMOList)
 
 	RoomController.instance:popUpRoomBlockPackageView(materialDataMOList)
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.CommonPropView, materialDataMOList)
+end
+
+function MaterialRpc:showItemConvertView(materialDataMO)
+	if not materialDataMO then
+		return
+	end
+
+	local param = {}
+
+	param.convertMaterial = materialDataMO
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropConvertView, ViewName.CommonPropConvertView, param)
 end
 
 MaterialRpc.instance = MaterialRpc.New()

@@ -32,6 +32,14 @@ function GiftController:openGiftInsightHeroChoiceView(param)
 	ViewMgr.instance:openView(ViewName.GiftInsightHeroChoiceView, param)
 end
 
+function GiftController:openGiftMultipleHeroChoiceView(param)
+	ViewMgr.instance:openView(ViewName.GiftMultipleHeroChoiceView, param)
+end
+
+function GiftController:GiftMultipleInspirationHeroPreviewView(param)
+	ViewMgr.instance:openView(ViewName.GiftMultipleInspirationHeroPreviewView, param)
+end
+
 GiftController.instance = GiftController.New()
 
 return GiftController

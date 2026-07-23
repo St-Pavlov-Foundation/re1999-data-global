@@ -33,7 +33,9 @@ function ArcadeGameSkillController:_onUsePassiveSkill(target, skillMO, context)
 end
 
 function ArcadeGameSkillController:useSkill(target, skillId, context)
-	if ArcadeGameHelper.isPassiveSkill(skillId) then
+	local isPassiveSkill = ArcadeGameHelper.getIsPassiveSkill(skillId)
+
+	if isPassiveSkill then
 		local skillSetMO = target:getSkillSetMO()
 		local skillMO = skillSetMO:getSkillById(skillId)
 

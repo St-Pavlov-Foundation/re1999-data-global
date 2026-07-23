@@ -26,12 +26,21 @@ function FightCommonTipView:removeEvents()
 end
 
 function FightCommonTipView:_editableInitView()
+	self.blockGraphic = gohelper.findChildComponent(self.viewGO, "close_block", gohelper.Type_Graphic)
 	self.click = gohelper.findChildClickWithDefaultAudio(self.viewGO, "close_block")
 
 	self.click:AddClickListener(self.closeThis, self)
 end
 
+function FightCommonTipView:onUpdateParam()
+	self:refreshUI()
+end
+
 function FightCommonTipView:onOpen()
+	self:refreshUI()
+end
+
+function FightCommonTipView:refreshUI()
 	self._txttitle.text = self.viewParam.title
 	self._txtdesc.text = self.viewParam.desc
 
@@ -45,6 +54,7 @@ function FightCommonTipView:onOpen()
 
 	recthelper.setWidth(self.rootRect, srcWidth)
 	self:setPos()
+	self:checkIgnoreClick()
 end
 
 function FightCommonTipView:setPos()
@@ -79,6 +89,10 @@ function FightCommonTipView:setPos()
 	anchorY = anchorY + self.offsetPosY
 
 	recthelper.setAnchor(self.rootRect, anchorX, anchorY)
+end
+
+function FightCommonTipView:checkIgnoreClick()
+	self.blockGraphic.raycastTarget = not self.viewParam.ignoreClick
 end
 
 function FightCommonTipView:onDestroyView()

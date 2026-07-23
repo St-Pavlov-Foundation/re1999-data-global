@@ -60,7 +60,9 @@ function StoryController:playStoryByStartStep(storyId, stepId)
 end
 
 function StoryController:playStory(storyId, storyParams, callback, target, param)
-	PostProcessingMgr.instance:setUIActive(true, true)
+	if SettingsModel.instance:isOverseas() then
+		PostProcessingMgr.instance:setUIActive(true, true)
+	end
 
 	local levelId = storyParams and storyParams.levelIdDict and storyParams.levelIdDict[storyId]
 
@@ -108,6 +110,7 @@ function StoryController:playStory(storyId, storyParams, callback, target, param
 				ViewMgr.instance:closeView(ViewName.StoryHeroView, true)
 				ViewMgr.instance:closeView(ViewName.StoryFrontView, true)
 				ViewMgr.instance:closeView(ViewName.StoryLogView, true)
+				ViewMgr.instance:closeView(ViewName.StoryBranchView, true)
 			end
 
 			ViewMgr.instance:openView(ViewName.StoryBackgroundView, nil, true)
@@ -203,7 +206,10 @@ end
 
 function StoryController:playStep(stepId)
 	logNormal("Play storyId : " .. tostring(self._curStoryId) .. " stepId : " .. tostring(stepId))
-	self:statStepStory()
+
+	if SettingsModel.instance:isOverseas() then
+		self:statStepStory()
+	end
 
 	self._curStepId = stepId
 
@@ -236,15 +242,12 @@ function StoryController:playStepChoose(stepId)
 
 	for _, opt in ipairs(optList) do
 		if opt.conditionType == StoryEnum.OptionConditionType.None then
-			local o = {}
-
-			o.name = opt.branchTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
 			index = index + 1
-			o.index = index
-			o.id = opt.followId
-			o.stepId = stepId
 
-			table.insert(list, o)
+			local mo = StorySelectMo.New()
+
+			mo:init(index, opt.followId, opt.branchTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], stepId, opt)
+			table.insert(list, mo)
 		end
 	end
 
@@ -443,7 +446,9 @@ function StoryController:playFinished(isSkip)
 
 	StoryModel.instance:setPlayFnished()
 
-	if self._mark then
+	local isOpenPuzzleView = V3a5PuzzleController.instance:isOpenPuzzleView(self._curStoryId)
+
+	if self._mark and not isOpenPuzzleView then
 		self:setStoryFinished(self._curStoryId)
 		StoryRpc.instance:sendUpdateStoryRequest(self._curStoryId, -1, 0)
 	end
@@ -458,7 +463,9 @@ function StoryController:setStoryFinished(id)
 end
 
 function StoryController:finished(isSkip)
-	PostProcessingMgr.instance:setUIActive(false, true)
+	if SettingsModel.instance:isOverseas() then
+		PostProcessingMgr.instance:setUIActive(false, true)
+	end
 
 	local frameRate = SettingsModel.instance:getModelTargetFrameRate()
 
@@ -467,6 +474,10 @@ function StoryController:finished(isSkip)
 
 	if ViewMgr.instance:isOpen(ViewName.StoryLogView) then
 		ViewMgr.instance:closeView(ViewName.StoryLogView, true)
+	end
+
+	if ViewMgr.instance:isOpen(ViewName.StoryBranchView) then
+		ViewMgr.instance:closeView(ViewName.StoryBranchView, true)
 	end
 
 	if not isSkip then
@@ -579,10 +590,12 @@ function StoryController:statFinishStory()
 end
 
 function StoryController:openStoryLogView()
+	PostProcessingMgr.instance:setIgnoreUIBlur(true)
 	ViewMgr.instance:openView(ViewName.StoryLogView, nil, true)
 end
 
 function StoryController:openStoryBranchView(param)
+	PostProcessingMgr.instance:setIgnoreUIBlur(true)
 	ViewMgr.instance:openView(ViewName.StoryBranchView, param, true)
 end
 
@@ -592,6 +605,10 @@ end
 
 function StoryController:closeStoryBranchView()
 	ViewMgr.instance:closeView(ViewName.StoryBranchView, true)
+end
+
+function StoryController:openStoryHeroPreview()
+	ViewMgr.instance:openView(ViewName.StoryHeroPreview, nil, true)
 end
 
 StoryController.instance = StoryController.New()

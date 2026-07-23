@@ -42,7 +42,23 @@ function V3a5_BossRush_HandBookGroupItem:onUpdateMO(mo)
 		self._itemRes = self.viewContainer:getRes(res)
 	end
 
-	gohelper.CreateObjList(self, self._createItem, mo.bossGroup, self._gobossroot, self._itemRes, V3a2_BossRush_HandBookItem)
+	if mo.bossGroup then
+		local claimIndex = self:_getClaimBouns(mo.bossGroup)
+
+		gohelper.CreateObjList(self, self._createItem, mo.bossGroup, self._gobossroot, self._itemRes, V3a2_BossRush_HandBookItem)
+	end
+end
+
+function V3a5_BossRush_HandBookGroupItem:_getClaimBouns(bossGroup)
+	if bossGroup then
+		for i, mo in ipairs(bossGroup) do
+			if mo:hasClaimBonus() then
+				return i
+			end
+		end
+
+		return 0
+	end
 end
 
 function V3a5_BossRush_HandBookGroupItem:_createItem(obj, data, index)

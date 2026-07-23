@@ -234,6 +234,65 @@ function Rouge2_StatController:statUnlockIllustration(type, itemList)
 	end
 end
 
+function Rouge2_StatController:statDiceReRoll()
+	local info = self:_getDiceAndDropCommonInfo()
+	local interactJson = Rouge2_MapModel.instance:getCurInteractiveJson()
+	local checkResult = interactJson and interactJson.checkRes
+	local fromType = interactJson and interactJson.fromType
+	local fromTypeCn = "事件检定重投"
+
+	if fromType == Rouge2_MapEnum.InteractFromType.Event then
+		local eventCo = Rouge2_MapModel.instance:getCurEvent()
+		local eventId = eventCo and eventCo.id
+		local eventType = eventCo and eventCo.type
+
+		info[StatEnum.EventProperties.DungeonEventId] = eventId
+		info[StatEnum.EventProperties.DungeonEventName] = self:getEventName(eventId)
+		info[StatEnum.EventProperties.DungeonEventType] = self:getEventTypeName(eventId)
+
+		if Rouge2_MapHelper.isStoreEvent(eventType) then
+			fromTypeCn = "商店盗窃检定"
+		end
+	elseif fromType == Rouge2_MapEnum.InteractFromType.Career1Reward then
+		fromTypeCn = "拨弦手-获得宝藏检定"
+	end
+
+	info[StatEnum.EventProperties.ReRollType] = fromTypeCn or ""
+	info[StatEnum.EventProperties.ReRollResult] = checkResult and Rouge2_StatController.ReRollResult[checkResult]
+
+	StatController.instance:track(StatEnum.EventName.Rouge2ReRoll, info)
+end
+
+function Rouge2_StatController:statDropRefresh(dropType, itemDataType, beforeDropList, afterDropList)
+	local info = self:_getDiceAndDropCommonInfo()
+
+	info[StatEnum.EventProperties.ReRollType] = "掉落刷新"
+	info[StatEnum.EventProperties.DropType] = dropType
+	info[StatEnum.EventProperties.BeforeDropList] = Rouge2_BackpackHelper.getItemNameList(itemDataType, beforeDropList)
+	info[StatEnum.EventProperties.AfterDropList] = Rouge2_BackpackHelper.getItemNameList(itemDataType, afterDropList)
+
+	StatController.instance:track(StatEnum.EventName.Rouge2ReRoll, info)
+end
+
+function Rouge2_StatController:_getDiceAndDropCommonInfo()
+	return {
+		[StatEnum.EventProperties.Version] = self:getVersion(),
+		[StatEnum.EventProperties.MatchId] = self:getGameNum(),
+		[StatEnum.EventProperties.Season] = self:getSeason(),
+		[StatEnum.EventProperties.Difficulty] = self:getDifficulty(),
+		[StatEnum.EventProperties.Layer] = self:getCurLayerId(),
+		[StatEnum.EventProperties.Career] = self:getCareerName(),
+		[StatEnum.EventProperties.Attribute] = self:getCurAttrArray(),
+		[StatEnum.EventProperties.ActiveSkill] = self:getActiveSkillNameList(),
+		[StatEnum.EventProperties.CollectList] = self:getRelicsNameList(),
+		[StatEnum.EventProperties.BuffList] = self:getBuffNameList(),
+		[StatEnum.EventProperties.DungeonGold] = self:getCoin(),
+		[StatEnum.EventProperties.ReviveNum] = self:getRevivalCoin(),
+		[StatEnum.EventProperties.OutsideTalentInfomation] = self:getOutsideTalentInfo(),
+		[StatEnum.EventProperties.Formula] = self:getFormulaName()
+	}
+end
+
 function Rouge2_StatController:getSeason()
 	local seasonCo = lua_rouge2_const.configDict[Rouge2_MapEnum.ConstKey.Season]
 	local season = seasonCo and seasonCo.value or 0
@@ -573,7 +632,7 @@ end
 function Rouge2_StatController:getCompletedCollectionNum()
 	local resultInfo = Rouge2_Model.instance:getRougeResult()
 	local reviewInfo = resultInfo and resultInfo.reviewInfo
-	local collectionNum = reviewInfo and reviewInfo.collectionNum or 0
+	local collectionNum = reviewInfo and reviewInfo:getItemCount(Rouge2_Enum.BagType.Relics) or 0
 
 	return tonumber(collectionNum) or 0
 end
@@ -687,6 +746,12 @@ Rouge2_StatController.EndResult = {
 Rouge2_StatController.FavoriteType = {
 	Formula = "配方图鉴",
 	Collection = "造物图鉴"
+}
+Rouge2_StatController.ReRollResult = {
+	[Rouge2_MapEnum.AttrCheckResult.None] = "无检定",
+	[Rouge2_MapEnum.AttrCheckResult.Succeed] = "成功",
+	[Rouge2_MapEnum.AttrCheckResult.Failure] = "失败",
+	[Rouge2_MapEnum.AttrCheckResult.BigSucceed] = "大成功"
 }
 Rouge2_StatController.instance = Rouge2_StatController.New()
 

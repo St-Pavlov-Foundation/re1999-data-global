@@ -86,8 +86,32 @@ function FightController:_delayEnterFightScene()
 	end
 end
 
+function FightController:setBackToHeroGroup(needBack)
+	self.needBackToHeroGroup = needBack
+end
+
+function FightController:backToCurHeroGroup()
+	self:setBackToHeroGroup(nil)
+
+	local preSceneType = GameSceneMgr.instance:getPreSceneType()
+	local preSceneId = GameSceneMgr.instance:getPreSceneId()
+	local preLevelId = GameSceneMgr.instance:getPreLevelId()
+	local episodeId = FightResultModel.instance.episodeId
+	local episodeCo = DungeonConfig.instance:getEpisodeCO(episodeId)
+
+	GameSceneMgr.instance:closeScene(nil, nil, nil, true)
+	GameSceneMgr.instance:setPrevScene(preSceneType, preSceneId, preLevelId)
+	DungeonFightController.instance:enterFight(episodeCo.chapterId, episodeId, DungeonModel.instance.curSelectTicketId)
+end
+
 function FightController:exitFightScene()
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Checkpointend)
+
+	if isDebugBuild and self.needBackToHeroGroup then
+		self:backToCurHeroGroup()
+
+		return
+	end
 
 	if DungeonJumpGameController.instance:checkIsJumpGameBattle() then
 		DungeonJumpGameController.instance:returnToJumpGameView()
@@ -147,6 +171,13 @@ function FightController:exitFightScene()
 			return
 		end
 
+		if episodeCO.type == DungeonEnum.EpisodeType.Sodache then
+			SodacheStatHelper.instance:startEnterFight()
+			SodacheController.instance:enterScene()
+
+			return
+		end
+
 		if episodeCO.type == DungeonEnum.EpisodeType.Shelter then
 			SurvivalController.instance:enterShelterMap(true)
 
@@ -161,6 +192,12 @@ function FightController:exitFightScene()
 
 		if episodeCO.type == DungeonEnum.EpisodeType.Rouge2 then
 			Rouge2_MapController.instance:onExistFight()
+
+			return
+		end
+
+		if episodeCO.type == DungeonEnum.EpisodeType.Rouge2Boss then
+			Rouge2_BossBattleController.instance:onExistFight(episodeCO)
 
 			return
 		end
@@ -329,7 +366,8 @@ function FightController:handleJump()
 				[ViewName.SurvivalHeroGroupEditView] = true,
 				[ViewName.OdysseyHeroGroupView] = true,
 				[ViewName.OdysseyHeroGroupEditView] = true,
-				[ViewName.Rouge2_HeroGroupFightView] = true
+				[ViewName.Rouge2_HeroGroupFightView] = true,
+				[ViewName.SodacheHeroGroupFightView] = true
 			}
 		end
 

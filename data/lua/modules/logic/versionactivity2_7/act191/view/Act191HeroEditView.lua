@@ -96,10 +96,6 @@ function Act191HeroEditView:_btnCloseDetailOnClick()
 	gohelper.setActive(self._goDetail, false)
 end
 
-function Act191HeroEditView:_btncloseFilterViewOnClick()
-	gohelper.setActive(self._gosearchfilter, false)
-end
-
 function Act191HeroEditView:_btnclassifyOnClick()
 	gohelper.setActive(self._gosearchfilter, true)
 end
@@ -341,10 +337,14 @@ end
 
 function Act191HeroEditView:_refreshCharacterInfo()
 	if self.config then
+		if not self.upFetterItemList then
+			self.upFetterItemList = {}
+
+			gohelper.setActive(self._goAttrUpFetter, false)
+		end
+
 		self.attrUpDic, self.attrUpFetterList = self.gameInfo:getAttrUpDicByRoleId(self.config.roleId)
 
-		gohelper.setActive(self._gononecharacter, false)
-		gohelper.setActive(self._gocharacterinfo, true)
 		UISpriteSetMgr.instance:setCommonSprite(self._imagecareericon, "sx_biandui_" .. tostring(self.config.career))
 		UISpriteSetMgr.instance:setCommonSprite(self._imagedmgtype, "dmgtype" .. tostring(self.config.dmgType))
 
@@ -352,15 +352,27 @@ function Act191HeroEditView:_refreshCharacterInfo()
 
 		gohelper.setActive(self._goAttrUp, next(self.attrUpDic))
 
-		for _, tag in ipairs(self.attrUpFetterList) do
-			local cloneGo = gohelper.cloneInPlace(self._goAttrUpFetter)
-			local fetterIcon = gohelper.findChildImage(cloneGo, "image_icon")
+		for k, tag in ipairs(self.attrUpFetterList) do
+			local item = self.upFetterItemList[k]
+
+			if not item then
+				item = self:getUserDataTb_()
+				item.go = gohelper.cloneInPlace(self._goAttrUpFetter)
+				item.icon = gohelper.findChildImage(item.go, "image_icon")
+				self.upFetterItemList[k] = item
+			end
+
 			local relationCo = Activity191Config.instance:getRelationCo(tag)
 
-			Activity191Helper.setFetterIcon(fetterIcon, relationCo.icon)
+			Activity191Helper.setFetterIcon(item.icon, relationCo.icon)
+			gohelper.setActive(item.go, true)
 		end
 
-		gohelper.setActive(self._goAttrUpFetter, false)
+		for i = #self.attrUpFetterList + 1, #self.upFetterItemList do
+			local item = self.upFetterItemList[i]
+
+			gohelper.setActive(item.go, false)
+		end
 
 		for k, attrId in ipairs(CharacterEnum.BaseAttrIdList) do
 			local upText = self._attributevalues[k].txtUp
@@ -375,13 +387,19 @@ function Act191HeroEditView:_refreshCharacterInfo()
 
 		local attrCo = lua_activity191_template.configDict[self.config.id]
 
-		self._attributevalues[1].txtAttr.text = attrCo.attack
-		self._attributevalues[2].txtAttr.text = attrCo.life
-		self._attributevalues[3].txtAttr.text = attrCo.defense
-		self._attributevalues[4].txtAttr.text = attrCo.mdefense
-		self._attributevalues[5].txtAttr.text = attrCo.technic
+		if attrCo then
+			self._attributevalues[1].txtAttr.text = attrCo.attack
+			self._attributevalues[2].txtAttr.text = attrCo.life
+			self._attributevalues[3].txtAttr.text = attrCo.defense
+			self._attributevalues[4].txtAttr.text = attrCo.mdefense
+			self._attributevalues[5].txtAttr.text = attrCo.technic
+		end
+
 		self.passiveSkillIds = Activity191Config.instance:getHeroPassiveSkillIdList(self.config.id)
-		self._txtpassivename.text = lua_skill.configDict[self.passiveSkillIds[1]].name
+
+		local skillCo = lua_skill.configDict[self.passiveSkillIds[1]]
+
+		self._txtpassivename.text = skillCo and skillCo.name or ""
 
 		local maxRank = 0
 
@@ -409,10 +427,10 @@ function Act191HeroEditView:_refreshCharacterInfo()
 		end
 
 		self:refreshDestiny()
-	else
-		gohelper.setActive(self._gononecharacter, true)
-		gohelper.setActive(self._gocharacterinfo, false)
 	end
+
+	gohelper.setActive(self._gononecharacter, not self.config)
+	gohelper.setActive(self._gocharacterinfo, self.config)
 end
 
 function Act191HeroEditView:refreshFetterIcon()

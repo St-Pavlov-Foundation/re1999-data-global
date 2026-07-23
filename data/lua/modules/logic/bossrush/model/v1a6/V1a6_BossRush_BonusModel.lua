@@ -142,19 +142,6 @@ function V1a6_BossRush_BonusModel:getLayer4ProgressWidth(stage, spacing, offset)
 	return grayWidth, gotWidth
 end
 
-function V1a6_BossRush_BonusModel:getBonusViewPath()
-	local viewPath = {}
-	local bonusTab = BossRushModel.instance:getActivityBonus()
-
-	for _, tab in ipairs(bonusTab) do
-		table.insert(viewPath, {
-			tab.ViewPath
-		})
-	end
-
-	return viewPath
-end
-
 function V1a6_BossRush_BonusModel:getTab()
 	return self._selectTab or BossRushEnum.BonusViewTab.AchievementTab
 end

@@ -14,17 +14,16 @@ Rouge2_AttributeDetailAttrView.BracketColor = "#5E7DD9"
 
 function Rouge2_AttributeDetailAttrView:onInitView()
 	self._goRoot = gohelper.findChild(self.viewGO, "#go_Root")
-	self._goContent = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content")
-	self._txtCareerDesc = gohelper.findChildText(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/careerDesc/#txt_CareerDesc")
-	self._goTagList = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#go_TagList")
-	self._goTagItem = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#go_TagList/#go_TagItem")
-	self._goAttrContainer = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer")
-	self._scrollRelics = gohelper.findChildScrollRect(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#scroll_Relics")
-	self._goRelicsContent = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#scroll_Relics/Viewport/Content")
-	self._btnRelicsTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#scroll_Relics/Viewport/#btn_RelicsTips")
-	self._goSpDescList = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#go_SpDescList")
-	self._goSpDescItem = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#go_SpDescList/#go_SpDescItem")
-	self._goSpDescTitle = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_AttrContainer/#go_SpDescTitle")
+	self._goAttrContent = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent")
+	self._txtCareerDesc = gohelper.findChildText(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/careerDesc/#txt_CareerDesc")
+	self._goTagList = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#go_TagList")
+	self._goTagItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#go_TagList/#go_TagItem")
+	self._scrollRelics = gohelper.findChildScrollRect(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#scroll_Relics")
+	self._goRelicsContent = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#scroll_Relics/Viewport/Content")
+	self._btnRelicsTips = gohelper.findChildButtonWithAudio(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#scroll_Relics/Viewport/#btn_RelicsTips")
+	self._goSpDescList = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#go_SpDescList")
+	self._goSpDescItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#go_SpDescList/#go_SpDescItem")
+	self._goSpDescTitle = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_AttrContent/Viewport/Content/#go_AttrContainer/#go_SpDescTitle")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -70,7 +69,7 @@ function Rouge2_AttributeDetailAttrView:refresh(groupType, subId)
 	local isAttrInfo = groupType == Rouge2_Enum.AttrDetailTabGroupType.AttrList
 	local isSelectSub = subId and subId ~= 0
 
-	gohelper.setActive(self._goAttrContainer, isAttrInfo and isSelectSub)
+	gohelper.setActive(self._goAttrContent, isAttrInfo and isSelectSub)
 
 	if not isAttrInfo then
 		return
@@ -90,7 +89,7 @@ end
 
 function Rouge2_AttributeDetailAttrView:refreshUI()
 	self._txtCareerDesc.text = self._selectAttrCo and self._selectAttrCo.careerDesc
-	self._attrDropList = Rouge2_AttributeConfig.instance:getAttrDropList(self._careerId, self._selectAttrId) or {}
+	self._attrDropList = Rouge2_AttributeConfig.instance:getLimitAttrDropList(self._careerId, self._selectAttrId) or {}
 
 	gohelper.CreateObjList(self, self._refreshTagItem, Rouge2_AttributeDetailAttrView.PassiveSkillType, self._goTagList, self._goTagItem, Rouge2_AttributeDetailTagItem)
 	gohelper.setActive(self._goSpDescTitle, self._attrDropList and #self._attrDropList > 0)

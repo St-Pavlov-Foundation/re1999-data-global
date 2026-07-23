@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateRoleExpWork", 
 
 local SurvivalUpdateRoleExpWork = class("SurvivalUpdateRoleExpWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateRoleExpWork:onStart()
+function SurvivalUpdateRoleExpWork:onStart2()
 	local survivalShelterRoleMo = SurvivalShelterModel.instance:getWeekInfo().survivalShelterRoleMo
 	local exp = self._stepMo.paramInt[1] or 0
 

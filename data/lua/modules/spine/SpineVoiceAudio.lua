@@ -15,10 +15,66 @@ function SpineVoiceAudio:onDestroy()
 	self._addAudios = nil
 end
 
+function SpineVoiceAudio:_playAudio()
+	if self._lang then
+		local curVoice = GameConfig:GetCurVoiceShortcut()
+		local audioCfg = AudioConfig.instance:getAudioCOById(self._voiceConfig.audio)
+		local eventName = audioCfg.eventName
+		local bankName = audioCfg.bankName
+
+		if SettingsModel.instance:isZhRegion() == false then
+			if string.nilorempty(audioCfg.eventName_Overseas) == false then
+				eventName = audioCfg.eventName_Overseas
+			end
+
+			if string.nilorempty(audioCfg.bankName_Overseas) == false then
+				bankName = audioCfg.bankName_Overseas
+			end
+		end
+
+		self._emitter:EmitterByName(bankName, eventName, self._lang, self._onEmitterCallback, self)
+	else
+		self._emitter:Emitter(self._voiceConfig.audio, self._onEmitterCallback, self)
+	end
+
+	print("playVoice:", self._voiceConfig.audio)
+	AudioMgr.instance:addAudioLog(self._voiceConfig.audio, "yellow", "播放音效开始")
+end
+
+function SpineVoiceAudio:_initAudio()
+	if not string.nilorempty(self._voiceConfig.effects) then
+		local voiceEffects = string.splitToNumber(self._voiceConfig.effects, "|")
+		local effectParams = GameUtil.splitString2(self._voiceConfig.effectParams, true, "|", "#")
+		local lang = self._lang or AudioMgr.instance:getCurLang()
+		local targetIndex = GameLanguageMgr.instance:getStoryIndexByShortCut(lang)
+
+		for i, effectType in ipairs(voiceEffects) do
+			if effectType == CharacterVoiceEnum.EffectsType.DelayPlayAudio then
+				local duration = effectParams[i][targetIndex]
+
+				if duration then
+					TaskDispatcher.cancelTask(self._playAudio, self)
+					TaskDispatcher.runDelay(self._playAudio, self, duration)
+
+					return
+				else
+					logError(string.format("SpineVoiceAudio _initAudio duration is nil for audio:%s effectType %s targetIndex:%s", config.audio, effectType, targetIndex))
+				end
+			end
+		end
+	end
+
+	self:_playAudio()
+end
+
 function SpineVoiceAudio:init(spineVoice, voiceConfig, spine, lang)
 	self._spineVoice = spineVoice
 	self._voiceConfig = voiceConfig
 	self._spine = spine
+	self._lang = lang
+
+	TaskDispatcher.cancelTask(self._playAudio, self)
+
 	self._hasAudio = AudioConfig.instance:getAudioCOById(voiceConfig.audio)
 
 	if self._hasAudio then
@@ -30,29 +86,7 @@ function SpineVoiceAudio:init(spineVoice, voiceConfig, spine, lang)
 			return
 		end
 
-		if lang then
-			local curVoice = GameConfig:GetCurVoiceShortcut()
-			local audioCfg = AudioConfig.instance:getAudioCOById(voiceConfig.audio)
-			local eventName = audioCfg.eventName
-			local bankName = audioCfg.bankName
-
-			if SettingsModel.instance:isZhRegion() == false then
-				if string.nilorempty(audioCfg.eventName_Overseas) == false then
-					eventName = audioCfg.eventName_Overseas
-				end
-
-				if string.nilorempty(audioCfg.bankName_Overseas) == false then
-					bankName = audioCfg.bankName_Overseas
-				end
-			end
-
-			self._emitter:EmitterByName(bankName, eventName, lang, self._onEmitterCallback, self)
-		else
-			self._emitter:Emitter(voiceConfig.audio, self._onEmitterCallback, self)
-		end
-
-		print("playVoice:", voiceConfig.audio)
-		AudioMgr.instance:addAudioLog(voiceConfig.audio, "yellow", "播放音效开始")
+		self:_initAudio()
 	else
 		print("playVoice no audio:", voiceConfig.audio)
 		self:_onVoiceEnd()
@@ -145,6 +179,8 @@ function SpineVoiceAudio:onVoiceStop()
 
 		self._addAudios = nil
 	end
+
+	TaskDispatcher.cancelTask(self._playAudio, self)
 end
 
 return SpineVoiceAudio

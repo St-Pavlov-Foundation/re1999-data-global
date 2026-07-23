@@ -66,6 +66,7 @@ function StoryTool.filterSpTag(txt)
 	result = string.gsub(result, "<speed=%d[%d.]*>", "")
 	result = string.gsub(result, "<brace>", "{")
 	result = string.gsub(result, "</brace>", "}")
+	result = string.gsub(result, "^L?%-?%d+,%-?%d+#", "")
 
 	return result
 end

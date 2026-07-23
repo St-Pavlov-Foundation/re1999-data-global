@@ -8,10 +8,9 @@ function ArcadeHeroMO:ctor(handbookMo)
 	self.handbookMo = handbookMo
 	self.co = handbookMo:getConfig()
 	self.id = self.co.id
+	self._attributeDict = {}
 
 	local attrList = handbookMo:getAttribute()
-
-	self._attributeDict = {}
 
 	for attrId, info in pairs(attrList) do
 		local attrMO = ArcadeGameAttribute.New(attrId, info.value)

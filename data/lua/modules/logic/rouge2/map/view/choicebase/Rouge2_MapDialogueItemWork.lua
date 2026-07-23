@@ -6,7 +6,6 @@ local Rouge2_MapDialogueItemWork = class("Rouge2_MapDialogueItemWork", BaseWork)
 
 function Rouge2_MapDialogueItemWork:ctor(index)
 	self._index = index
-	self._type = Rouge2_MapEnum.ChoiceDialogueType.None
 	self._tween = false
 end
 

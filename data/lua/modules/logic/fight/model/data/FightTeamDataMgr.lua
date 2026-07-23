@@ -20,8 +20,12 @@ function FightTeamDataMgr:onCancelOperation()
 	self:clearClientSimulationData()
 end
 
-function FightTeamDataMgr:onStageChanged()
+function FightTeamDataMgr:onStageChanged(curStage, preStage)
 	self:clearClientSimulationData()
+
+	if curStage == FightStageMgr.StageType.Play and self.deviceArea then
+		self.deviceArea:resetStopAttr()
+	end
 end
 
 function FightTeamDataMgr:updateData(fightData)
@@ -45,6 +49,7 @@ function FightTeamDataMgr:refreshTeamDataByProto(teamData, sideData)
 	end
 
 	sideData.itemSkillInfos = FightDataUtil.coverData(teamData.itemSkillInfos, sideData.itemSkillInfos)
+	sideData.deviceArea = FightDataUtil.coverData(teamData.deviceArea, sideData.deviceArea)
 end
 
 function FightTeamDataMgr:checkBloodPoolExist(side)
@@ -79,6 +84,18 @@ end
 
 function FightTeamDataMgr:getAssistBossInfo()
 	return
+end
+
+function FightTeamDataMgr:setDeviceArea(deviceArea, side)
+	side = side or FightEnum.TeamType.MySide
+
+	local sideData = self[side]
+
+	if not sideData then
+		return
+	end
+
+	sideData.deviceArea = FightDataUtil.coverData(deviceArea, sideData.deviceArea)
 end
 
 return FightTeamDataMgr

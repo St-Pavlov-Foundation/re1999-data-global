@@ -106,17 +106,17 @@ function StoryBgEffsDiamondLight:_onEffFinished()
 end
 
 function StoryBgEffsDiamondLight:_onOpenView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		self:_setViewTop(false)
 	end
 end
 
 function StoryBgEffsDiamondLight:_onCloseView(viewName)
-	local setting = ViewMgr.instance:getSetting(viewName)
+	local isSetTopView = StoryModel.instance:isSetTopView(viewName)
 
-	if setting.layer == UILayerName.Message or setting.layer == UILayerName.IDCanvasPopUp then
+	if isSetTopView then
 		self:_setViewTop(true)
 	end
 end
@@ -138,6 +138,7 @@ function StoryBgEffsDiamondLight:_setViewTop(set)
 end
 
 function StoryBgEffsDiamondLight:destroy()
+	UIBlockMgr.instance:endBlock("diamondLightEnding")
 	StoryBgEffsDiamondLight.super.destroy(self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self._onOpenView, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self._onCloseView, self)

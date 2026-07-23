@@ -81,9 +81,9 @@ end
 function TowerComposeRoleView:onOpen()
 	self.curThemeId = self.viewParam.themeId
 
-	local seasonId = TowerModel.instance:getTrialHeroSeason()
+	local trialHeroList = TowerComposeConfig.instance:getThemeTrialHeroList(self.curThemeId)
 
-	self.trialHeroCoDataList = TowerModel.instance:getTrialHeroCoDataList(seasonId)
+	self.trialHeroCoDataList = TowerHeroTrialListModel.instance:getTrialHeroCoDataList(trialHeroList)
 
 	self:refreshUI()
 end

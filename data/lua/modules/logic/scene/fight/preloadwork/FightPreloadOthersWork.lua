@@ -10,6 +10,8 @@ FightPreloadOthersWork.die_monster = "rolesbuff/die_monster.controller"
 FightPreloadOthersWork.die_player = "rolesbuff/die_player.controller"
 FightPreloadOthersWork.LvUpEffectPath = "ui/viewres/fight/cardrising.prefab"
 FightPreloadOthersWork.LvDownEffectPath = "ui/viewres/fight/carddescending.prefab"
+FightPreloadOthersWork.LvUpEffect2Path = "ui/viewres/fight/fightskin/0002/cardrising.prefab"
+FightPreloadOthersWork.LvDownEffect2Path = "ui/viewres/fight/fightskin/0002/carddescending.prefab"
 FightPreloadOthersWork.ClothSkillEffectPath = "ui/viewres/fight/ui_effect_flusheddown.prefab"
 
 function FightPreloadOthersWork:onStart(context)

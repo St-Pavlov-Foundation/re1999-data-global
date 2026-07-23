@@ -131,6 +131,7 @@ function VersionActivityFixedDungeonMapChapterLayout:_editableInitView()
 	local uiRootTran = ViewMgr.instance:getUIRoot().transform
 	local width = recthelper.getWidth(uiRootTran)
 
+	self.viewWidth = width
 	self._offsetX = (width - RIGHT_OFFSET_X) / 2 + RIGHT_OFFSET_X
 	self._constDungeonNormalPosX = width - self._offsetX
 	self._constDungeonNormalPosY = CommonConfig.instance:getConstNum(ConstEnum.DungeonNormalPosY)
@@ -178,6 +179,8 @@ function VersionActivityFixedDungeonMapChapterLayout:refreshEpisodeNodes()
 	recthelper.setSize(self.contentTransform, width, self._rawHeight)
 
 	self._contentWidth = width
+	self._showEpisodeCount = index
+	self._allEpisodeCount = #episodeList
 
 	for i = index + 1, #self._episodeContainerItemList do
 		gohelper.setActive(self._episodeContainerItemList[i].containerTr.gameObject, false)

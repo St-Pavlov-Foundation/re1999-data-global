@@ -40,6 +40,12 @@ function FightPlayMgr:playStart()
 end
 
 function FightPlayMgr:playShow()
+	if FightGameMgr.skipPerformance then
+		self:skipFightPerformance()
+
+		return
+	end
+
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
 	local flow = self.workComp:registWork(FightWorkFlowSequence)
@@ -50,6 +56,12 @@ function FightPlayMgr:playShow()
 end
 
 function FightPlayMgr:playCloth()
+	if FightDataHelper.tempMgr.is3_7BossQtePre then
+		FightDataHelper.tempMgr.is3_7BossQtePre = nil
+
+		return
+	end
+
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.ClothSkill)
 	FightDataHelper.stageMgr:setStage(FightStageMgr.StageType.Play)
 
@@ -64,6 +76,10 @@ function FightPlayMgr:playEnd()
 	self.workComp:disposeAllWork()
 
 	FightDataHelper.stateMgr.isFinish = true
+
+	if FightDataHelper.tempMgr.isSkipBattle then
+		return
+	end
 
 	if self:checkTowerComposeHasNextPlane() then
 		FightGameMgr.switchPlaneMgr:switchPlane()
@@ -146,6 +162,20 @@ function FightPlayMgr:playReconnect()
 		flow:registWork(FightWorkPlay2Operate, true)
 		flow:start()
 	end
+end
+
+function FightPlayMgr:skipFightPerformance()
+	if FightModel.instance:isFinish() then
+		FightRpc.instance:sendEndFightRequest(false)
+
+		return
+	end
+
+	local flow = self:com_registFlowSequence()
+
+	flow:registWork(FightWorkRefreshFightAfterCrash)
+	flow:registWork(FightWorkPlay2Operate)
+	flow:start()
 end
 
 function FightPlayMgr:onDestructor()

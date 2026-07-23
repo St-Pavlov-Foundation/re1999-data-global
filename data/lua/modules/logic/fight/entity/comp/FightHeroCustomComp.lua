@@ -5,7 +5,8 @@ module("modules.logic.fight.entity.comp.FightHeroCustomComp", package.seeall)
 local FightHeroCustomComp = class("FightHeroCustomComp", FightBaseClass)
 
 FightHeroCustomComp.HeroId2CustomComp = {
-	[3113] = FightHeroALFComp
+	[3113] = FightHeroALFComp,
+	[3145] = FightHeroHSYComp
 }
 
 function FightHeroCustomComp:onConstructor(entity)

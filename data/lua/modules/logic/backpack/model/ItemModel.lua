@@ -65,6 +65,15 @@ local quantityGetFunc = {
 
 		return scoreInThisLevel
 	end,
+	[MaterialEnum.MaterialType.ActBp] = function(id)
+		local actId = Anniversary3ActBpModel.instancde:getCurActId()
+		local bpId = Activity233Config.instance:getCurBpId()
+		local score = Anniversary3ActBpModel.instance:getActBpScore(bpId, actId)
+		local levelScore = Activity233Config.instance:getLevelScore(bpId)
+		local scoreInThisLevel = score % levelScore
+
+		return scoreInThisLevel
+	end,
 	[MaterialEnum.MaterialType.HeroSkin] = function(id)
 		if HeroModel.instance:checkHasSkin(id) then
 			return 1

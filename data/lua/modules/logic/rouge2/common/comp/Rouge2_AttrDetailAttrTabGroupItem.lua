@@ -12,7 +12,7 @@ function Rouge2_AttrDetailAttrTabGroupItem:refreshTabItemList()
 end
 
 function Rouge2_AttrDetailAttrTabGroupItem:_refreshAttrTabItem(attrTabItem, attrInfo, index)
-	attrTabItem:onUpdateMO(self._careerId, attrInfo, self._groupType, index)
+	attrTabItem:onUpdateMO(self._careerId, self._groupType, index, self._parentView, attrInfo)
 end
 
 return Rouge2_AttrDetailAttrTabGroupItem

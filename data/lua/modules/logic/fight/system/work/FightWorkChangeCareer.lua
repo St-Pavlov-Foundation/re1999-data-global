@@ -40,7 +40,7 @@ function FightWorkChangeCareer:_playCareerChange()
 
 		local entity = FightHelper.getEntity(entityMO.id)
 
-		if entity and entity.effect then
+		if entity and entity.effect and career2EffectPath[entityMO.career] then
 			local effectWrap = entity.effect:addHangEffect(career2EffectPath[entityMO.career], "mounttop", nil, 2)
 
 			FightRenderOrderMgr.instance:onAddEffectWrap(entity.id, effectWrap)

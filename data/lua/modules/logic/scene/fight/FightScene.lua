@@ -14,13 +14,15 @@ function FightScene:_createAllComps()
 end
 
 function FightScene:addLowPhoneMemoryComp()
-	if not SLFramework.FrameworkSettings.IsIOSPlayer() then
-		return
-	end
-
 	local memo_G = UnityEngine.SystemInfo.systemMemorySize / 1024
 
 	if memo_G > 3.6 then
+		return
+	end
+
+	FightScene.isLowMemory = true
+
+	if not SLFramework.FrameworkSettings.IsIOSPlayer() then
 		return
 	end
 

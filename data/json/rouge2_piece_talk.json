@@ -27,7 +27,7 @@
     "id": 11104,
     "title": "language_10101003",
     "content": "100105001",
-    "selectIds": "100105011#100105012#100105013",
+    "selectIds": "100105011#100105012#100105013#100105014",
     "picture": "rouge_mainstory_cg_4",
     "exitDesc": ""
   },
@@ -93,6 +93,94 @@
     "content": "1001090|9#10010901",
     "selectIds": "1001091#1001092",
     "picture": "rouge_mainstory_cg_6",
+    "exitDesc": ""
+  },
+  {
+    "id": 11211,
+    "title": "language_10125972",
+    "content": "11211001|30#11211002",
+    "selectIds": "1121101#1121102",
+    "picture": "rouge_story_cg_6_2",
+    "exitDesc": ""
+  },
+  {
+    "id": 11311,
+    "title": "language_10125973",
+    "content": "11311001|9#11311002",
+    "selectIds": "1131101#1131102",
+    "picture": "rouge_mainstory_cg_6",
+    "exitDesc": ""
+  },
+  {
+    "id": 11401,
+    "title": "language_10125974",
+    "content": "11401001|4#11401002|11401003",
+    "selectIds": "1140101",
+    "picture": "rouge_mainstory_cg_8",
+    "exitDesc": ""
+  },
+  {
+    "id": 11212,
+    "title": "language_10125975",
+    "content": "11212001|11212002|20#11212003|11212004|20#11212005|20#11212006",
+    "selectIds": "1121201#1121202",
+    "picture": "rouge_mainstory_cg_5",
+    "exitDesc": ""
+  },
+  {
+    "id": 11312,
+    "title": "language_10125976",
+    "content": "11312001|9#11312002|30#11312003|5#11312004",
+    "selectIds": "1131201#1131202",
+    "picture": "rouge_mainstory_cg_6",
+    "exitDesc": ""
+  },
+  {
+    "id": 11402,
+    "title": "language_10125977",
+    "content": "11402001",
+    "selectIds": "1140201#1140202#1140203",
+    "picture": "rouge_story_cg_25",
+    "exitDesc": ""
+  },
+  {
+    "id": 11213,
+    "title": "",
+    "content": "1121301|4#1121302|4#1121303",
+    "selectIds": "1121301#1121302#1121303",
+    "picture": "",
+    "exitDesc": ""
+  },
+  {
+    "id": 11313,
+    "title": "",
+    "content": "18#1131301",
+    "selectIds": "1131301#1131302",
+    "picture": "",
+    "exitDesc": ""
+  },
+  {
+    "id": 11314,
+    "title": "",
+    "content": "19#1131401|19#1131402",
+    "selectIds": "1131401#1131402",
+    "picture": "",
+    "exitDesc": ""
+  },
+  {
+    "id": 11216,
+    "title": "",
+    "content": "1121601|36#1121602",
+    "selectIds": "1121601",
+    "picture": "",
+    "exitDesc": ""
+  },
+  {
+    "id": 11217,
+    "title": "",
+    "content": "1121701|1121702",
+    "selectIds": "1121701#1121702",
+    "picture": "",
     "exitDesc": ""
   }
 ]

@@ -18,7 +18,8 @@ OptionPackageEnum.UpdateState = {
 OptionPackageEnum.Package = {
 	Explore = "opexplore",
 	VersionActivity = "opveract",
-	PartyGame = "oppartygame"
+	PartyGame = "oppartygame",
+	Sodache = "opsodache"
 }
 OptionPackageEnum.NeedPackLangList = {
 	"res",

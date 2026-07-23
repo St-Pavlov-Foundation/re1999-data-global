@@ -373,6 +373,8 @@ function GuideController:execNextStep(guideId)
 	if self._enableGuides and self._forbidGuides == false then
 		local guideMO = GuideModel.instance:getById(guideId)
 
+		GuideController.instance:dispatchEvent(GuideEvent.ExecuteGuideStep, guideMO.id, guideMO.currStepId)
+
 		if guideMO.currStepId > 0 then
 			GuideModel.instance:execStep(guideMO.currGuideId, guideMO.currStepId)
 			GuideStepController.instance:execStep(guideId, guideMO.currStepId, guideMO.currGuideId)

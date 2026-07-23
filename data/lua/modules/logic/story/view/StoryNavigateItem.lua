@@ -41,7 +41,11 @@ function StoryNavigateItem:init(go)
 		[StoryEnum.NavigateType.ActivityStart] = self.showActivityChapterStart,
 		[StoryEnum.NavigateType.ActivityEnd] = self.showActivityChapterEnd,
 		[StoryEnum.NavigateType.RoleStoryStart] = self.showRoleStoryStart,
-		[StoryEnum.NavigateType.StormDeadline] = self.showStormDeadline
+		[StoryEnum.NavigateType.StormDeadline] = self.showStormDeadline,
+		[StoryEnum.NavigateType.FullScreenCountdown] = self.showFullScreenCountdown,
+		[StoryEnum.NavigateType.StormTimerStart] = self.showStormTimerStart,
+		[StoryEnum.NavigateType.StormTimerEnd] = self.showStormTimerEnd,
+		[StoryEnum.NavigateType.FullScreenCountdownEnd] = self.showCloseFullScreenCountdown
 	}
 end
 
@@ -96,15 +100,15 @@ function StoryNavigateItem:showEpisode(episodeCo)
 	if self._episodeVideoPlayer then
 		self._episodeVideoPlayer:stop()
 		self._episodeVideoPlayer:clear()
-
-		self._episodeVideoPlayer = nil
 	end
 
 	if gohelper.isNil(self._episodeVideoGO) then
 		self._episodeVideoPlayer, self._episodeVideoGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._goepisodevideo)
 	end
 
-	self._episodeVideoPlayer:play("story_rian_bg", true, nil, nil)
+	if self._episodeVideoPlayer then
+		self._episodeVideoPlayer:play("story_rian_bg", true, nil, nil)
+	end
 
 	self._episodeIconLoader = PrefabInstantiate.Create(self._goepisodeicon)
 
@@ -149,15 +153,16 @@ function StoryNavigateItem:showChapterStart(chapterCo)
 	if self._chapterOpenVideoPlayer then
 		self._chapterOpenVideoPlayer:stop()
 		self._chapterOpenVideoPlayer:clear()
-
-		self._chapterOpenVideoPlayer = nil
 	end
 
 	if gohelper.isNil(self._chapterOpenVideoGO) then
 		self._chapterOpenVideoPlayer, self._chapterOpenVideoGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._gochapteropenvideo)
 	end
 
-	self._chapterOpenVideoPlayer:play("story_rian_bg", true, nil, nil)
+	if self._chapterOpenVideoPlayer then
+		self._chapterOpenVideoPlayer:play("story_rian_bg", true, nil, nil)
+	end
+
 	AudioEffectMgr.instance:playAudio(AudioEnum.Story.Play_Chapter_Start)
 	TaskDispatcher.cancelTask(self._chapterStartOut, self)
 	TaskDispatcher.runDelay(self._chapterStartOut, self, 5.333)
@@ -194,15 +199,16 @@ function StoryNavigateItem:showChapterEnd(chapterCo)
 	if self._chapterCloseVideoPlayer then
 		self._chapterCloseVideoPlayer:stop()
 		self._chapterCloseVideoPlayer:clear()
-
-		self._chapterCloseVideoPlayer = nil
 	end
 
 	if gohelper.isNil(self._chapterCloseVideoGO) then
 		self._chapterCloseVideoPlayer, self._chapterCloseVideoGO = VideoPlayerMgr.instance:createGoAndVideoPlayer(self._gochapterclosevideo)
 	end
 
-	self._chapterCloseVideoPlayer:play("story_rian_bg", true, nil, nil)
+	if self._chapterCloseVideoPlayer then
+		self._chapterCloseVideoPlayer:play("story_rian_bg", true, nil, nil)
+	end
+
 	AudioEffectMgr.instance:playAudio(AudioEnum.Story.Play_Chapter_End)
 	TaskDispatcher.cancelTask(self._chapterEndOut, self)
 	TaskDispatcher.runDelay(self._chapterEndOut, self, 3.2)
@@ -220,30 +226,32 @@ function StoryNavigateItem:_chapterEndOut()
 	TaskDispatcher.cancelTask(self._chapterEndOut, self)
 end
 
-function StoryNavigateItem:showActivityChapterStart(chapterCo)
+function StoryNavigateItem:getActivityChapterPlayer()
 	if not self.activityChapterPlayer then
 		self.activityChapterPlayer = StoryActivityChapterPlayer.New(self._goActivityChapter)
 	end
 
-	self.activityChapterPlayer:playStart(chapterCo)
+	return self.activityChapterPlayer
+end
+
+function StoryNavigateItem:showActivityChapterStart(chapterCo)
+	local player = self:getActivityChapterPlayer()
+
+	player:playStart(chapterCo)
 end
 
 function StoryNavigateItem:showActivityChapterEnd(chapterCo)
 	gohelper.setActive(self._gobg, true)
 
-	if not self.activityChapterPlayer then
-		self.activityChapterPlayer = StoryActivityChapterPlayer.New(self._goActivityChapter)
-	end
+	local player = self:getActivityChapterPlayer()
 
-	self.activityChapterPlayer:playEnd(chapterCo)
+	player:playEnd(chapterCo)
 end
 
 function StoryNavigateItem:showRoleStoryStart(chapterCo)
-	if not self.activityChapterPlayer then
-		self.activityChapterPlayer = StoryActivityChapterPlayer.New(self._goActivityChapter)
-	end
+	local player = self:getActivityChapterPlayer()
 
-	self.activityChapterPlayer:playRoleStoryStart(chapterCo)
+	player:playRoleStoryStart(chapterCo)
 end
 
 function StoryNavigateItem:showStormDeadline(stormCo)
@@ -263,15 +271,75 @@ function StoryNavigateItem:showStormDeadline(stormCo)
 	self._txtTimeEn2.text = string.format(txt, deadlines[1] - deadlines[2])
 end
 
-function StoryNavigateItem:clear()
-	if self.activityChapterPlayer then
-		self.activityChapterPlayer:hide()
+function StoryNavigateItem:showFullScreenCountdown(stormCo)
+	ViewMgr.instance:openView(ViewName.StoryFullScreenStormView, {
+		data = stormCo
+	})
+end
+
+function StoryNavigateItem:showCloseFullScreenCountdown(stormCo)
+	self:realCloseFullScreenCountdown()
+end
+
+function StoryNavigateItem:realCloseFullScreenCountdown(isImmediate)
+	ViewMgr.instance:closeView(ViewName.StoryFullScreenStormView, isImmediate)
+end
+
+function StoryNavigateItem:showStormTimerStart(stormCo)
+	local player = self:getStormTimerPlayer()
+
+	player:setData(stormCo)
+end
+
+function StoryNavigateItem:showStormTimerEnd(stormCo)
+	if not self.stormTimerPlayer then
+		return
 	end
 
+	local player = self:getStormTimerPlayer()
+
+	player:playClose(stormCo)
+end
+
+function StoryNavigateItem:getStormTimerPlayer()
+	if not self.stormTimerPlayer then
+		local logicName = "StoryStormTimer"
+		local logic = _G[logicName]
+		local go = gohelper.findChild(self._go, "#go_storm_timer")
+
+		self.stormTimerPlayer = logic.New(go)
+	end
+
+	return self.stormTimerPlayer
+end
+
+function StoryNavigateItem:clear()
 	gohelper.setActive(self._goepisode, false)
 	gohelper.setActive(self._gochapter, false)
 	gohelper.setActive(self._gomap, false)
 	gohelper.setActive(self._gobg, false)
+
+	if self.activityChapterPlayer then
+		self.activityChapterPlayer:hide()
+	end
+end
+
+function StoryNavigateItem:onFadeOut()
+	self:clear()
+
+	if self.stormTimerPlayer then
+		self.stormTimerPlayer:hide()
+	end
+
+	self:realCloseFullScreenCountdown(true)
+end
+
+function StoryNavigateItem:onSkip()
+	if self.stormTimerPlayer then
+		self.stormTimerPlayer:hide()
+	end
+
+	self:realCloseFullScreenCountdown(true)
 end
 
 function StoryNavigateItem:destroy()
@@ -338,6 +406,13 @@ function StoryNavigateItem:destroy()
 		self.activityChapterPlayer = nil
 	end
 
+	if self.stormTimerPlayer then
+		self.stormTimerPlayer:onDestory()
+
+		self.stormTimerPlayer = nil
+	end
+
+	self:realCloseFullScreenCountdown(true)
 	gohelper.setActive(self._go, false)
 end
 

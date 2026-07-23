@@ -5,10 +5,10 @@ module("modules.logic.rouge2.common.comp.Rouge2_AttributeDetailBuffView", packag
 local Rouge2_AttributeDetailBuffView = class("Rouge2_AttributeDetailBuffView", BaseView)
 
 function Rouge2_AttributeDetailBuffView:onInitView()
-	self._goBuffContainer = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_BuffContainer")
-	self._goBuffList = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_BuffContainer/#go_BuffList")
-	self._goBuffItem = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_BuffContainer/#go_BuffList/#go_BuffItem")
-	self._goEmptyBuff = gohelper.findChild(self.viewGO, "#go_Root/Scroll View/Viewport/Content/#go_BuffContainer/#go_EmptyBuff")
+	self._goBuffContent = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_BuffContent")
+	self._goBuffList = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_BuffContent/Viewport/Content/#go_BuffContainer/#go_BuffList")
+	self._goBuffItem = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_BuffContent/Viewport/Content/#go_BuffContainer/#go_BuffList/#go_BuffItem")
+	self._goEmptyBuff = gohelper.findChild(self.viewGO, "#go_Root/#go_Content/#go_BuffContent/Viewport/Content/#go_BuffContainer/#go_EmptyBuff")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -34,7 +34,7 @@ end
 function Rouge2_AttributeDetailBuffView:refresh(groupType, subId)
 	local isOverview = groupType == Rouge2_Enum.AttrDetailTabGroupType.Overview
 
-	gohelper.setActive(self._goBuffContainer, isOverview)
+	gohelper.setActive(self._goBuffContent, isOverview)
 
 	if not isOverview then
 		return

@@ -71,7 +71,6 @@ function FightViewWaitingArea:onOpen()
 	self:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
 	self:addEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, self._playChangeCardEffect, self)
 	self:addEventCb(FightController.instance, FightEvent.CardDisappear, self._onCardDisappear, self)
-	self:addEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, self._fixWaitingAreaItemCount, self)
 	self:addEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshTipsVisibleState, self)
 end
 
@@ -86,7 +85,6 @@ function FightViewWaitingArea:onClose()
 	self:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, self._onBuffUpdate, self)
 	self:removeEventCb(FightController.instance, FightEvent.PlayChangeCardEffectInWaitingArea, self._playChangeCardEffect, self)
 	self:removeEventCb(FightController.instance, FightEvent.CardDisappear, self._onCardDisappear, self)
-	self:removeEventCb(FightController.instance, FightEvent.FixWaitingAreaItemCount, self._fixWaitingAreaItemCount, self)
 	self:removeEventCb(FightController.instance, FightEvent.GMHideFightView, self._refreshTipsVisibleState, self)
 	self._cardDisplayFlow:stop()
 	self._cardDisplayEndFlow:stop()
@@ -357,6 +355,9 @@ function FightViewWaitingArea:_onSkillPlayFinish(entity, skillId, fightStepData)
 	context.skillTipsGO = self._skillTipsGO
 	context.skillItemGO = skillItemGO
 	context.waitingAreaGO = self._waitingAreaGO
+	context.param = {
+		skillId = skillId
+	}
 
 	self._cardDisplayEndFlow:start(context)
 end

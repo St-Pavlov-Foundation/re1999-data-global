@@ -86,7 +86,15 @@ function PatFaceWorkBase:patView()
 end
 
 function PatFaceWorkBase:patStory()
-	StoryController.instance:playStory(self._patStoryId, nil, self.onPlayPatStoryFinish, self)
+	local storyId = self._patStoryId
+
+	if StoryModel.instance:isStoryHasPlayed(storyId) then
+		self:onPlayPatStoryFinish()
+
+		return
+	end
+
+	StoryController.instance:playStory(storyId, nil, self.onPlayPatStoryFinish, self)
 end
 
 function PatFaceWorkBase:onCloseViewFinish(viewName)

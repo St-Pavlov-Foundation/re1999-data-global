@@ -112,11 +112,17 @@ function SummonDrawComp:updateForDraw()
 		return
 	end
 
+	local deltaTime = Time.deltaTime
+
 	if self._canDraw then
 		if self._updateDragAngle > 0 and self._speed < 0 or self._updateDragAngle < 0 and self._speed > 0 then
 			self._speed = self._accelaration * self._updateDragAngle
 		else
 			self._speed = self._speed + self._accelaration * self._updateDragAngle
+		end
+
+		if self._updateDragAngle ~= 0 and deltaTime < 0.0167 then
+			deltaTime = math.max(0.0167, deltaTime)
 		end
 
 		self._updateDragAngle = 0
@@ -130,8 +136,8 @@ function SummonDrawComp:updateForDraw()
 		end
 	end
 
-	self:_addAngle(self._speed * Time.deltaTime)
-	self:_setSpeedEffect(self._speed, Time.deltaTime)
+	self:_addAngle(self._speed * deltaTime)
+	self:_setSpeedEffect(self._speed, deltaTime)
 
 	if math.abs(self._speed) > 100 then
 		if self._canTrigger then

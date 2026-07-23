@@ -9,55 +9,78 @@ function ArcadeGameCollectionMO:ctor(uid, id, usedTimes, durability)
 	self.id = id
 	self._skillSetMO = ArcadeGameSkillSetMO.New(uid, self)
 	self._usedTimes = usedTimes or 0
-	self._durability = durability or ArcadeConfig.instance:getCollectionDurability(self.id) or 0
-	self._isHasDurability = self._durability > 0
+	self._totalDurability = durability or ArcadeConfig.instance:getCollectionDurability(self.id) or 0
 
-	local skillList = ArcadeConfig.instance:getCollectionPassiveSkillList(id)
+	local skillList = ArcadeConfig.instance:getCollectionPassiveSkillList(self.id)
 
 	for _, skillId in ipairs(skillList) do
-		if ArcadeGameHelper.isPassiveSkill(skillId) then
-			self._skillSetMO:addSkillById(skillId)
-		end
+		self._skillSetMO:addSkillById(skillId)
 	end
 end
 
-function ArcadeGameCollectionMO:getSkillSetMO()
-	return self._skillSetMO
+function ArcadeGameCollectionMO:getUid()
+	return self.uid
 end
 
 function ArcadeGameCollectionMO:getId()
 	return self.id
 end
 
-function ArcadeGameCollectionMO:addUsedTimes(value)
-	self._usedTimes = math.max(0, self._usedTimes + tonumber(value))
-	self._usedTimes = math.min(self._durability, self._usedTimes)
+function ArcadeGameCollectionMO:getType()
+	return ArcadeConfig.instance:getCollectionType(self.id)
+end
+
+function ArcadeGameCollectionMO:getHasDurabilityValue()
+	local type = self:getType()
+	local cfgDurability = ArcadeConfig.instance:getCollectionDurability(self.id) or 0
+
+	return type == ArcadeGameEnum.CollectionType.Weapon and cfgDurability > 0
+end
+
+function ArcadeGameCollectionMO:getSkillSetMO()
+	return self._skillSetMO
 end
 
 function ArcadeGameCollectionMO:getUsedTimes()
 	return self._usedTimes
 end
 
-function ArcadeGameCollectionMO:addDurability(value)
-	if self._isHasDurability then
-		self._durability = math.max(0, self._durability + tonumber(value))
-	end
-end
-
-function ArcadeGameCollectionMO:getDurability()
-	return self._durability
+function ArcadeGameCollectionMO:getTotalDurability()
+	return self._totalDurability
 end
 
 function ArcadeGameCollectionMO:getRemainDurability()
-	if self._isHasDurability then
+	local result = 0
+	local hasDurabilityValue = self:getHasDurabilityValue()
+
+	if hasDurabilityValue then
 		local useTimes = self:getUsedTimes()
 
-		return math.max(0, self._durability - useTimes)
+		result = math.max(0, self._totalDurability - useTimes)
+	end
+
+	return result
+end
+
+function ArcadeGameCollectionMO:addDurability(value)
+	local hasDurabilityValue = self:getHasDurabilityValue()
+
+	if hasDurabilityValue then
+		self._totalDurability = math.max(0, self._totalDurability + tonumber(value))
 	end
 end
 
-function ArcadeGameCollectionMO:getType()
-	return ArcadeConfig.instance:getCollectionType(self.id)
+function ArcadeGameCollectionMO:addUsedTimes(value)
+	local hasDurabilityValue = self:getHasDurabilityValue()
+
+	if hasDurabilityValue then
+		self._usedTimes = math.max(0, self._usedTimes + tonumber(value))
+		self._usedTimes = math.min(self._totalDurability, self._usedTimes)
+	end
+end
+
+function ArcadeGameCollectionMO:getIsCollection()
+	return true
 end
 
 return ArcadeGameCollectionMO

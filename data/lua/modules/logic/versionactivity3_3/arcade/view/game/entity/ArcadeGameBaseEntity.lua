@@ -7,6 +7,10 @@ local ArcadeGameBaseEntity = class("ArcadeGameBaseEntity", LuaCompBase)
 function ArcadeGameBaseEntity:ctor(param)
 	self.id = param.id
 	self.uid = param.uid
+	self.entityType = param.entityType
+	self._prefabNameList = {}
+	self._name2PrefabItemDict = {}
+	self._curPrefabName = nil
 
 	self:onCtor(param)
 end
@@ -14,41 +18,26 @@ end
 function ArcadeGameBaseEntity:init(go)
 	self.go = go
 	self.trans = self.go.transform
-	self.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(self.go)
-	self.animator = self.go:GetComponent(gohelper.Type_Animation)
-	self.goScale = gohelper.findChild(self.go, "ani/scale")
-	self.transScale = self.goScale.transform
+	self._goPrefabParent = gohelper.create3d(self.go, "prefabs")
 	self._playingStateAnimName = nil
 	self._playingStateEffectDict = {}
 
-	self:initComponents()
-
-	local mo = self:getMO()
-	local delayTime = mo and mo.delayTimeShow
-
-	if delayTime and delayTime > 0 then
-		gohelper.setActive(go, false)
-		TaskDispatcher.runDelay(self._onDelayShow, self, delayTime)
-	else
-		self:playStateShow()
-	end
-
-	if mo then
-		local scaleX, scaleY = mo:getScale()
-
-		if scaleX and scaleY then
-			transformhelper.setLocalScale(self.transScale, scaleX, scaleY, 1)
-		end
-
-		local posX, posY = mo:getPosOffset()
-
-		if posX and posY then
-			transformhelper.setLocalPosXY(self.transScale, posX, posY)
-		end
-	end
+	self:_initComponents()
 end
 
-function ArcadeGameBaseEntity:initComponents()
+function ArcadeGameBaseEntity:getEntityType()
+	return self.entityType
+end
+
+function ArcadeGameBaseEntity:getUid()
+	return self.uid
+end
+
+function ArcadeGameBaseEntity:getId()
+	return self.id
+end
+
+function ArcadeGameBaseEntity:_initComponents()
 	self:_clearComps()
 	self:_addComp("effectComp", ArcadeEntityEffectComp, true)
 	self:_addComp("bezierComp", ArcadeEntityBezierComp, false)
@@ -92,9 +81,117 @@ function ArcadeGameBaseEntity:_addComp(compName, compClass, useNewGO)
 	table.insert(self._compList, compInst)
 end
 
+function ArcadeGameBaseEntity:getPrefabParentGO()
+	return self._goPrefabParent
+end
+
+function ArcadeGameBaseEntity:addPrefabGO(prefabGO)
+	if gohelper.isNil(prefabGO) then
+		return
+	end
+
+	local name = prefabGO.name
+
+	if self._name2PrefabItemDict[name] then
+		return
+	end
+
+	gohelper.addChild(self._goPrefabParent, prefabGO)
+
+	local prefabItem = self:getUserDataTb_()
+
+	prefabItem.go = prefabGO
+	prefabItem.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(prefabItem.go)
+	prefabItem.animator = prefabItem.go:GetComponent(gohelper.Type_Animation)
+	prefabItem.goScale = gohelper.findChild(prefabItem.go, "ani/scale")
+	prefabItem.transScale = prefabItem.goScale.transform
+	self._name2PrefabItemDict[name] = prefabItem
+
+	table.insert(self._prefabNameList, name)
+	self:_setPrefabItemTrans(prefabItem)
+
+	if #self._prefabNameList == 1 then
+		self:change2Prefab(name)
+		self:_initStateShow()
+	end
+end
+
+function ArcadeGameBaseEntity:_setPrefabItemTrans(prefabItem)
+	if not prefabItem then
+		return
+	end
+
+	local mo = self:getMO()
+
+	if not mo then
+		return
+	end
+
+	local transScale = prefabItem.transScale
+	local scaleX, scaleY = mo:getScale()
+
+	if scaleX and scaleY then
+		transformhelper.setLocalScale(transScale, scaleX, scaleY, 1)
+	end
+
+	local posX, posY = mo:getPosOffset()
+
+	if posX and posY then
+		transformhelper.setLocalPosXY(transScale, posX, posY)
+	end
+end
+
+function ArcadeGameBaseEntity:_initStateShow()
+	local mo = self:getMO()
+	local delayTime = mo and mo.delayTimeShow
+
+	if delayTime and delayTime > 0 then
+		gohelper.setActive(self.go, false)
+		TaskDispatcher.runDelay(self._onDelayShow, self, delayTime)
+	else
+		self:playStateShow()
+	end
+end
+
 function ArcadeGameBaseEntity:_onDelayShow()
 	gohelper.setActive(self.go, true)
 	self:playStateShow()
+end
+
+function ArcadeGameBaseEntity:change2Prefab(targetPrefabName)
+	local targetPrefabItem = self._name2PrefabItemDict[targetPrefabName]
+
+	if not targetPrefabItem then
+		logError(string.format("ArcadeGameBaseEntity:tryChange2Prefab error, prefabItem is nil, entityType:%s id:%s uid:%s prefabName:%s", self.entityType, self.id, self.uid, targetPrefabName))
+
+		return
+	end
+
+	if self._curPrefabName == targetPrefabName then
+		return
+	end
+
+	self._curPrefabName = targetPrefabName
+
+	for prefabName, prefabItem in pairs(self._name2PrefabItemDict) do
+		gohelper.setActive(prefabItem.go, prefabName == self._curPrefabName)
+	end
+
+	self._playingStateAnimName = nil
+
+	self:playStateShow()
+end
+
+function ArcadeGameBaseEntity:isHasPrefab(prefabName)
+	return self._name2PrefabItemDict[prefabName] ~= nil
+end
+
+function ArcadeGameBaseEntity:getCurPrefabItem()
+	if not self._curPrefabName then
+		return
+	end
+
+	return self._name2PrefabItemDict[self._curPrefabName]
 end
 
 local DEFAULT_IDLE_ANIMA_NAME = "idle_loop"
@@ -127,13 +224,16 @@ function ArcadeGameBaseEntity:playStateShow()
 		end
 	end
 
-	if self.animatorPlayer then
+	local prefabItem = self:getCurPrefabItem()
+	local animatorPlayer = prefabItem and prefabItem.animatorPlayer
+
+	if animatorPlayer then
 		if string.nilorempty(stateAnimName) then
 			stateAnimName = DEFAULT_IDLE_ANIMA_NAME
 		end
 
 		if self._playingStateAnimName ~= stateAnimName then
-			self.animatorPlayer:Play(stateAnimName)
+			animatorPlayer:Play(stateAnimName)
 
 			self._playingStateAnimName = stateAnimName
 		end
@@ -158,9 +258,15 @@ end
 
 function ArcadeGameBaseEntity:playActionShow(showId, direction, showParam, cb, cbObj, cbParam)
 	local mo = self:getMO()
-	local isRemoving = mo and mo:getIsRemoving()
 
-	if isRemoving then
+	if not mo then
+		return
+	end
+
+	local isRemoving = mo:getIsRemoving()
+	local isRespawning = mo:getIsRespawning()
+
+	if isRemoving or isRespawning then
 		return
 	end
 
@@ -206,12 +312,14 @@ function ArcadeGameBaseEntity:_playActionEffect(effectId, animDir, animCb, animC
 		self.effectComp:playEffect(effectId)
 	end
 
+	local prefabItem = self:getCurPrefabItem()
+	local animatorPlayer = prefabItem and prefabItem.animatorPlayer
 	local animName = ArcadeConfig.instance:getEffectAnim(effectId, animDir)
 
-	if self.animatorPlayer and not string.nilorempty(animName) then
+	if animatorPlayer and not string.nilorempty(animName) then
 		self._playingStateAnimName = nil
 
-		self.animatorPlayer:Play(animName, animCb, animCbObj, animCbParam)
+		animatorPlayer:Play(animName, animCb, animCbObj, animCbParam)
 	else
 		ArcadeGameHelper.callCallbackFunc(animCb, animCbObj, animCbObj)
 	end
@@ -223,6 +331,12 @@ function ArcadeGameBaseEntity:_clearActionEffList()
 	self._actionShowFinishCbObj = nil
 	self._actionShowFinishCbParam = nil
 	self._actionEffectIdList = nil
+end
+
+function ArcadeGameBaseEntity:removeAllEffect()
+	if self.effectComp then
+		self.effectComp:removeAllEffect()
+	end
 end
 
 function ArcadeGameBaseEntity:refreshPosition(isPlay, cb, cbObj, cbParam)
@@ -357,7 +471,15 @@ function ArcadeGameBaseEntity:refreshDirection()
 end
 
 function ArcadeGameBaseEntity:getMO()
-	logError("ArcadeGameBaseEntity.getMO error, need override this func")
+	if not self.entityType or not self.uid then
+		logError(string.format("ArcadeGameBaseEntity.getMO error, entityType:%s, uid:%s", self.entityType, self.uid))
+
+		return
+	end
+
+	local mo = ArcadeGameModel.instance:getMOWithType(self.entityType, self.uid)
+
+	return mo
 end
 
 return ArcadeGameBaseEntity

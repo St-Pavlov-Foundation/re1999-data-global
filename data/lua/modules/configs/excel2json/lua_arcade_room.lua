@@ -6,14 +6,16 @@ local lua_arcade_room = {}
 local fields = {
 	dropMethod = 3,
 	initMonster = 8,
+	initFloor = 10,
 	roomType = 2,
 	initInteractive = 9,
 	monsterwaves = 5,
 	spMonster = 7,
 	waveInterval = 6,
 	monsterGroupIds = 4,
+	skills = 12,
 	id = 1,
-	nodePortalCoordinates = 10
+	nodePortalCoordinates = 11
 }
 local primaryKey = {
 	"id"

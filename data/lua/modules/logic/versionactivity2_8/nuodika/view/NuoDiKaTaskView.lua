@@ -22,6 +22,7 @@ function NuoDiKaTaskView:onOpen()
 	}, self._oneClaimReward, self)
 	TaskDispatcher.runRepeat(self._showLeftTime, self, 60)
 	self:_showLeftTime()
+	gohelper.setActive(self._txtLimitTime.transform.parent, false)
 end
 
 function NuoDiKaTaskView:_oneClaimReward()

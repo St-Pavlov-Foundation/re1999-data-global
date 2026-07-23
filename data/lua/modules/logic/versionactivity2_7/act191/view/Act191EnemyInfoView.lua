@@ -29,14 +29,6 @@ function Act191EnemyInfoView:onInitView()
 	end
 end
 
-function Act191EnemyInfoView:addEvents()
-	return
-end
-
-function Act191EnemyInfoView:removeEvents()
-	return
-end
-
 function Act191EnemyInfoView:onClickModalMask()
 	self:closeThis()
 end
@@ -49,10 +41,6 @@ function Act191EnemyInfoView:_editableInitView()
 	self._fetterItemList = {}
 	self.characterItem = MonoHelper.addNoUpdateLuaComOnceToGo(self._goRightContainer, Act191CharacterInfo)
 	self._fetterIconItemList = {}
-end
-
-function Act191EnemyInfoView:onUpdateParam()
-	return
 end
 
 function Act191EnemyInfoView:onOpen()
@@ -98,14 +86,6 @@ function Act191EnemyInfoView:onOpen()
 	gohelper.setActive(self._goHeroItem, false)
 	self:onClickHero(self.selectMain, true)
 	self:refreshFetter()
-end
-
-function Act191EnemyInfoView:onClose()
-	return
-end
-
-function Act191EnemyInfoView:onDestroyView()
-	return
 end
 
 function Act191EnemyInfoView:refreshCharacter(heroId)
@@ -191,16 +171,8 @@ function Act191EnemyInfoView:onClickHero(index, noCheck)
 	local info = self.matchMo.heroMap[index]
 
 	self:refreshCharacter(info.heroId)
-
-	if info.itemUid1 ~= 0 then
-		local co = self.matchMo:getItemCo(info.itemUid1)
-
-		self._simageCIcon1:LoadImage(ResUrl.getRougeSingleBgCollection(co.icon))
-		UISpriteSetMgr.instance:setAct174Sprite(self._imageCRare1, "act174_propitembg_" .. co.rare)
-	end
-
-	gohelper.setActive(self._goCEmpty1, info.itemUid1 == 0)
-	gohelper.setActive(self._goCollection1, info.itemUid1 ~= 0)
+	gohelper.setActive(self._goCEmpty1, false)
+	gohelper.setActive(self._goCollection1, false)
 end
 
 function Act191EnemyInfoView:onClickSubHero(index)

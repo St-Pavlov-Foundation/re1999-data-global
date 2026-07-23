@@ -212,8 +212,26 @@ function DungeonCumulativeRewardsTipsView.getEpisodeList()
 						local episodeInfo = DungeonModel.instance:getEpisodeInfo(episodeConfig.id)
 
 						if episodeInfo and DungeonModel.instance:isFinishElementList(episodeConfig) then
-							if episodeInfo.star == 0 then
-								table.insert(result, episodeConfig)
+							if chapterConfig.type == DungeonEnum.ChapterType.Hard then
+								if episodeInfo.star < DungeonEnum.StarType.Advanced then
+									table.insert(result, episodeConfig)
+								end
+							elseif chapterConfig.type == DungeonEnum.ChapterType.Normal then
+								local config = DungeonConfig.instance:getEpisodeCO(episodeInfo.episodeId)
+
+								if config then
+									if config.type == DungeonEnum.EpisodeType.Normal then
+										if episodeInfo.star < DungeonEnum.StarType.Advanced then
+											table.insert(result, config)
+										end
+									elseif episodeInfo.star == 0 then
+										table.insert(result, config)
+									end
+								else
+									logError("DungeonCumulativeRewardsTipsView._collectElementList config is nil", tostring(episodeInfo.episodeId))
+								end
+							else
+								logError("DungeonCumulativeRewardsTipsView._collectElementList chapterConfig.type error", tostring(chapterConfig.type))
 							end
 
 							DungeonCumulativeRewardsTipsView._collectElementList(episodeConfig, elementResult)

@@ -15,10 +15,8 @@ function FightCardDisplayEffect:onStart(context)
 
 	local tipsTr = context.skillTipsGO.transform
 	local tipsWidth = recthelper.getWidth(tipsTr)
-	local cardTr = context.skillItemGO.transform.parent
-	local itemPosX = recthelper.getAnchorX(cardTr)
-	local itemWidth = recthelper.getWidth(cardTr)
-	local tipsPosX = itemPosX - itemWidth * 0.5
+	local curIndex = FightPlayCardModel.instance:getCurIndex()
+	local tipsPosX = FightViewWaitingAreaVersion1.getCardPosByServerData(curIndex - 1)
 
 	recthelper.setAnchorX(tipsTr, 1100 + tipsWidth)
 

@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalTeleportGateUpdateWo
 
 local SurvivalTeleportGateUpdateWork = class("SurvivalTeleportGateUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalTeleportGateUpdateWork:onStart(context)
+function SurvivalTeleportGateUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.sceneProp.teleportGate = self._stepMo.paramInt[1] or 0

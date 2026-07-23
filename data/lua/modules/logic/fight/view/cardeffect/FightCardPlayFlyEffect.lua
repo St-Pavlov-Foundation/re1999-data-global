@@ -175,30 +175,32 @@ function FightCardPlayFlyEffect:_buildAniFlow_2_1()
 
 			if cardSkin == 672801 then
 				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+			elseif cardSkin == 672802 then
+				url = "ui/viewres/fight/fightskin/0002/ui_chupai_01.prefab"
 			end
-
-			local assetItem = FightHelper.getPreloadAssetItem(url)
 
 			if skillLevel < FightEnum.UniqueSkillCardLv then
 				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
 
 				if cardSkin == 672801 then
 					url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+				elseif cardSkin == 672802 then
+					url = "ui/viewres/fight/fightskin/0002/ui_chupai_02.prefab"
 				end
-
-				assetItem = FightHelper.getPreloadAssetItem(url)
-
-				gohelper.clone(assetItem:GetResource(url), self._card_transform.gameObject)
 			else
 				url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
 
 				if cardSkin == 672801 then
 					url = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin03)
+				elseif cardSkin == 672802 then
+					url = "ui/viewres/fight/fightskin/0002/ui_chupai_03.prefab"
 				end
+			end
 
-				assetItem = FightHelper.getPreloadAssetItem(url)
+			FightGameMgr.loaderMgr.loader:loadAsset(url, self.onPlayEffectLoaded, self)
 
-				gohelper.clone(assetItem:GetResource(url), self._card_transform.gameObject)
+			if cardSkin == 672802 then
+				effect_flow:addWork(WorkWaitSeconds.New(0.3))
 			end
 
 			FightController.instance:dispatchEvent(FightEvent.ShowPlayCardEffect, self._card_mo, self._show_index)
@@ -209,6 +211,15 @@ function FightCardPlayFlyEffect:_buildAniFlow_2_1()
 	main_sequence:addWork(WorkWaitSeconds.New(0.2 / FightModel.instance:getUISpeed()))
 
 	return main_sequence
+end
+
+function FightCardPlayFlyEffect:onPlayEffectLoaded(success, assetItem)
+	if not success then
+		return
+	end
+
+	local resObj = assetItem:GetResource()
+	local obj = gohelper.clone(resObj, self._card_transform.gameObject)
 end
 
 function FightCardPlayFlyEffect:onAnchorTweenFrame(value)

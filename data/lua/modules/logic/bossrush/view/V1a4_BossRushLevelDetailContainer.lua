@@ -9,10 +9,8 @@ function V1a4_BossRushLevelDetailContainer:buildViews()
 
 	local actId = BossRushConfig.instance:getActivityId()
 	local helpId = self:_getHelpId(actId)
-	local activitylevelDetail = BossRushModel.instance:getActivityMainView()
-	local levelDetailClass = activitylevelDetail and activitylevelDetail.LevelDetail or V1a4_BossRushLevelDetail
 
-	self._levelDetail = levelDetailClass.New()
+	self._levelDetail = V1a4_BossRushLevelDetail.New()
 
 	local views = {
 		self._levelDetail,

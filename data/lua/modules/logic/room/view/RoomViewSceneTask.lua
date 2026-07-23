@@ -235,9 +235,17 @@ function RoomViewSceneTask:refreshItemWithTask(itemObj, taskMO, taskCO)
 		local hasFinished, progress = RoomSceneTaskController.getProgressStatus(taskMO)
 
 		if hasFinished then
-			itemObj.txtdesc.text = string.format("%s(%s/%s)", taskCO.desc, progress, taskCO.maxProgress)
+			itemObj.txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("RoomViewSceneTask_txtdesc_finished"), {
+				taskCO.desc,
+				progress,
+				taskCO.maxProgress
+			})
 		else
-			itemObj.txtdesc.text = string.format("%s(<color=#ba6662>%s</color>/%s)", taskCO.desc, progress, taskCO.maxProgress)
+			itemObj.txtdesc.text = GameUtil.getSubPlaceholderLuaLang(luaLang("RoomViewSceneTask_txtdesc_wip"), {
+				taskCO.desc,
+				progress,
+				taskCO.maxProgress
+			})
 		end
 
 		gohelper.setActive(itemObj.gohasreward, hasFinished)

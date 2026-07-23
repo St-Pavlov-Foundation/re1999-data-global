@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "value": "10000000:1000",
+    "mlvalue": ""
+  },
+  {
+    "id": 2,
+    "value": "modules/sodache/scene/prefab/m_s08_hddt_qizi_07.prefab",
+    "mlvalue": ""
+  },
+  {
+    "id": 3,
+    "value": "",
+    "mlvalue": ""
+  },
+  {
+    "id": 7,
+    "value": "6",
+    "mlvalue": ""
+  },
+  {
+    "id": 8,
+    "value": "1,4",
+    "mlvalue": ""
+  },
+  {
+    "id": 9,
+    "value": "3",
+    "mlvalue": ""
+  },
+  {
+    "id": 10,
+    "value": "11",
+    "mlvalue": ""
+  },
+  {
+    "id": 11,
+    "value": "30",
+    "mlvalue": ""
+  },
+  {
+    "id": 12,
+    "value": "100",
+    "mlvalue": ""
+  },
+  {
+    "id": 13,
+    "value": "9",
+    "mlvalue": ""
+  },
+  {
+    "id": 14,
+    "value": "0:60&2000:120&5000:180&10000:200&15000:100&20000:60",
+    "mlvalue": ""
+  },
+  {
+    "id": 15,
+    "value": "20201#20202#40201#40202#40211#40212#40301#40302#40303#40311#40312#40313",
+    "mlvalue": ""
+  },
+  {
+    "id": 16,
+    "value": "10000000:10000",
+    "mlvalue": ""
+  },
+  {
+    "id": 17,
+    "value": "3701",
+    "mlvalue": ""
+  },
+  {
+    "id": 18,
+    "value": "1#2",
+    "mlvalue": ""
+  },
+  {
+    "id": 19,
+    "value": "1#1|2#1.4|4#1.8",
+    "mlvalue": ""
+  },
+  {
+    "id": 1000,
+    "value": "",
+    "mlvalue": ""
+  }
+]

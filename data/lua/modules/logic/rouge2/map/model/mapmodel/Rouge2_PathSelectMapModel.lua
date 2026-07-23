@@ -39,7 +39,7 @@ function Rouge2_PathSelectMapModel:initPathSelectCo()
 		self.pathSelectCo = lua_rouge2_path_select.configDict[self.pathSelectId]
 
 		if not self.pathSelectCo then
-			logError("kong " .. self.pathSelectId)
+			logError(string.format("肉鸽路线配置不存在 middleLayerId = %s, pathSelectId = %s", self.middleLayerId, self.pathSelectId))
 		end
 
 		return
@@ -51,7 +51,7 @@ function Rouge2_PathSelectMapModel:initPathSelectCo()
 			self.pathSelectCo = lua_rouge2_path_select.configDict[self.pathSelectId]
 
 			if not self.pathSelectCo then
-				logError("kong " .. self.pathSelectId)
+				logError(string.format("肉鸽路线配置不存在 middleLayerId = %s, pathSelectId = %s", self.middleLayerId, self.pathSelectId))
 			end
 
 			return
@@ -86,7 +86,7 @@ function Rouge2_PathSelectMapModel:initNextLayerList()
 		local layerCo = lua_rouge2_layer.configDict[layerId]
 
 		if not layerCo then
-			logError("layerId = " .. layerId)
+			logError(string.format("肉鸽路线层配置不存在 layerId = %s ", layerId))
 		end
 
 		if Rouge2_MapUnlockHelper.checkIsUnlock(layerCo.unlock) then
@@ -96,6 +96,10 @@ function Rouge2_PathSelectMapModel:initNextLayerList()
 		end
 
 		table.insert(self.allLayerList, layerId)
+	end
+
+	if #self.nextLayerList <= 0 then
+		logError(string.format("没有可以解锁的下层layer, middleLayerId = %s", self.middleLayerId))
 	end
 end
 

@@ -30,6 +30,10 @@ function FightSkinLuXi_308603CustomComp:onStartFightPlayBornNormal(entityId)
 		return
 	end
 
+	TaskDispatcher.runDelay(self.addBornEffect, self, 0.01)
+end
+
+function FightSkinLuXi_308603CustomComp:addBornEffect()
 	local co = lua_fight_luxi_skin_effect.configDict[self.skinId]
 
 	if not co then
@@ -119,6 +123,7 @@ function FightSkinLuXi_308603CustomComp:removeAllEffect()
 end
 
 function FightSkinLuXi_308603CustomComp:onDestroy()
+	TaskDispatcher.cancelTask(self.addBornEffect, self)
 	self:removeAllEffect()
 end
 

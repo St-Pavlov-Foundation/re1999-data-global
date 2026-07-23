@@ -20,16 +20,19 @@ FightCommonTipController.Pivot = {
 	BottomRight = Vector2.New(1, 0)
 }
 
-function FightCommonTipController:openCommonView(title, desc, screenPos, anchorMinAndMax, pivot, offsetPosX, offsetPosY)
-	ViewMgr.instance:openView(ViewName.FightCommonTipView, {
-		title = title,
-		desc = desc,
-		screenPos = screenPos,
-		anchorMinAndMax = anchorMinAndMax or FightCommonTipController.Pivot.TopLeft,
-		pivot = pivot or FightCommonTipController.Pivot.TopLeft,
-		offsetPosX = offsetPosX or 0,
-		offsetPosY = offsetPosY or 0
-	})
+local TempParam = {}
+
+function FightCommonTipController:openCommonView(title, desc, screenPos, anchorMinAndMax, pivot, offsetPosX, offsetPosY, ignoreClick)
+	TempParam.title = title
+	TempParam.desc = desc
+	TempParam.screenPos = screenPos
+	TempParam.anchorMinAndMax = anchorMinAndMax or FightCommonTipController.Pivot.TopLeft
+	TempParam.pivot = pivot or FightCommonTipController.Pivot.TopLeft
+	TempParam.offsetPosX = offsetPosX or 0
+	TempParam.offsetPosY = offsetPosY or 0
+	TempParam.ignoreClick = ignoreClick
+
+	ViewMgr.instance:openView(ViewName.FightCommonTipView, TempParam)
 end
 
 FightCommonTipController.instance = FightCommonTipController.New()

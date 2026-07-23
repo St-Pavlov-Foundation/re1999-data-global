@@ -1318,5 +1318,250 @@
     "posOffset": [],
     "category": "",
     "icon": "v3a3_m_s12_cp1x1_013"
+  },
+  {
+    "id": 21013,
+    "name": "language_10120154",
+    "type": "weapon",
+    "describe": "language_10120155",
+    "durable": 5,
+    "passiveSkills": "21014",
+    "showTmpAttrChange": 0,
+    "level": 0,
+    "goodsWeight": 0,
+    "isUnique": false,
+    "dropWeight": 0,
+    "price": 500,
+    "resPath": "v3a7_m_s12_jh1x1_005",
+    "scale": [
+      0.92,
+      0.92
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_jh1x1_005"
+  },
+  {
+    "id": 10004,
+    "name": "language_10001807",
+    "type": "jewelry",
+    "describe": "language_10120156",
+    "durable": 0,
+    "passiveSkills": "21013",
+    "showTmpAttrChange": 0,
+    "level": 3,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 0,
+    "price": 2500,
+    "resPath": "v3a7_m_s12_cp1x1_004",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_004"
+  },
+  {
+    "id": 10005,
+    "name": "language_10120157",
+    "type": "jewelry",
+    "describe": "language_10120158",
+    "durable": 0,
+    "passiveSkills": "30001",
+    "showTmpAttrChange": 0,
+    "level": 1,
+    "goodsWeight": 1,
+    "isUnique": true,
+    "dropWeight": 1,
+    "price": 500,
+    "resPath": "v3a7_m_s12_cp1x1_006",
+    "scale": [
+      0.88,
+      0.88
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_006"
+  },
+  {
+    "id": 10006,
+    "name": "language_10120159",
+    "type": "jewelry",
+    "describe": "language_10120160",
+    "durable": 0,
+    "passiveSkills": "30002",
+    "showTmpAttrChange": 0,
+    "level": 2,
+    "goodsWeight": 1,
+    "isUnique": true,
+    "dropWeight": 1,
+    "price": 1500,
+    "resPath": "v3a7_m_s12_cp1x1_001",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_001"
+  },
+  {
+    "id": 10007,
+    "name": "language_10002076",
+    "type": "jewelry",
+    "describe": "language_10120161",
+    "durable": 0,
+    "passiveSkills": "30003",
+    "showTmpAttrChange": 0,
+    "level": 0,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 0,
+    "price": 0,
+    "resPath": "v3a7_m_s12_cp1x1_005",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [
+      0.06,
+      0
+    ],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_005"
+  },
+  {
+    "id": 10008,
+    "name": "language_10002095",
+    "type": "jewelry",
+    "describe": "language_10120162",
+    "durable": 0,
+    "passiveSkills": "30004",
+    "showTmpAttrChange": 0,
+    "level": 1,
+    "goodsWeight": 1,
+    "isUnique": false,
+    "dropWeight": 1,
+    "price": 750,
+    "resPath": "v3a7_m_s12_cp1x1_007",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_007"
+  },
+  {
+    "id": 10009,
+    "name": "language_10044028",
+    "type": "jewelry",
+    "describe": "language_10120163",
+    "durable": 0,
+    "passiveSkills": "30005",
+    "showTmpAttrChange": 0,
+    "level": 2,
+    "goodsWeight": 1,
+    "isUnique": true,
+    "dropWeight": 1,
+    "price": 1500,
+    "resPath": "v3a7_m_s12_cp1x1_002",
+    "scale": [
+      0.87,
+      0.87
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_002"
+  },
+  {
+    "id": 10010,
+    "name": "language_10043918",
+    "type": "jewelry",
+    "describe": "language_10120164",
+    "durable": 0,
+    "passiveSkills": "30006",
+    "showTmpAttrChange": 0,
+    "level": 0,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 0,
+    "price": 0,
+    "resPath": "v3a7_m_s12_cp1x1_003",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_cp1x1_003"
+  },
+  {
+    "id": 10011,
+    "name": "language_10120154",
+    "type": "jewelry",
+    "describe": "language_10120165",
+    "durable": 0,
+    "passiveSkills": "30009",
+    "showTmpAttrChange": 0,
+    "level": 0,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 0,
+    "price": 2000,
+    "resPath": "v3a7_m_s12_jh1x1_005",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_jh1x1_005"
+  },
+  {
+    "id": 10012,
+    "name": "language_10043990",
+    "type": "jewelry",
+    "describe": "language_10120166",
+    "durable": 0,
+    "passiveSkills": "30008",
+    "showTmpAttrChange": 0,
+    "level": 3,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 1,
+    "price": 2000,
+    "resPath": "v3a7_m_s12_jh1x1_004",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_jh1x1_004"
+  },
+  {
+    "id": 10013,
+    "name": "language_10120167",
+    "type": "jewelry",
+    "describe": "language_10120168",
+    "durable": 0,
+    "passiveSkills": "",
+    "showTmpAttrChange": 0,
+    "level": 0,
+    "goodsWeight": 0,
+    "isUnique": true,
+    "dropWeight": 0,
+    "price": 2000,
+    "resPath": "v3a7_m_s12_jh1x1_006",
+    "scale": [
+      1,
+      1
+    ],
+    "posOffset": [],
+    "category": "item",
+    "icon": "v3a7_m_s12_jh1x1_006"
   }
 ]

@@ -33,7 +33,11 @@ function Rouge2_BackpackCareerView:removeEvents()
 end
 
 function Rouge2_BackpackCareerView:_btnSearchOnClick()
-	Rouge2_ViewHelper.openAttributeDetailView()
+	local params = {
+		selectTabType = Rouge2_Enum.AttrDetailTabGroupType.AttrList
+	}
+
+	Rouge2_ViewHelper.openAttributeDetailView(nil, nil, params)
 end
 
 function Rouge2_BackpackCareerView:_editableInitView()
@@ -73,16 +77,14 @@ end
 
 function Rouge2_BackpackCareerView:refreshCareerUI()
 	self._txtDescr.text = self._careerCo and self._careerCo.careerDesc
-	self._txtName.text = self._careerCo and self._careerCo.name
 
-	SLFramework.UGUI.GuiHelper.SetColor(self._txtName, string.format("#%s", self._careerCo.nameColor))
-
-	local iconUrl = ResUrl.getRouge2Icon(string.format("backpack/%s%s", self._careerCo.icon, Rouge2_Enum.CareerIconSuffix.Bag))
-
-	self._simageCareerIcon:LoadImage(iconUrl)
+	Rouge2_IconHelper.setCareerName(self._careerId, self._txtName, true)
+	Rouge2_IconHelper.setCareerIcon(self._careerId, self._simageCareerIcon, Rouge2_Enum.CareerIconSuffix.Bag)
 end
 
 function Rouge2_BackpackCareerView:refreshSkillList()
+	self._skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+
 	gohelper.CreateNumObjList(self._goSkillList, self._goSkillItem, Rouge2_Enum.MaxActiveSkillNum, self._refreshActiveSkill, self)
 end
 
@@ -91,7 +93,8 @@ function Rouge2_BackpackCareerView:_refreshActiveSkill(obj, index)
 	local goUnuse = gohelper.findChild(obj, "go_Unuse")
 	local goSelected = gohelper.findChild(obj, "go_Selected")
 	local simageIcon = gohelper.findChildSingleImage(obj, "go_Use/image_SkillIcon")
-	local isUse = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
+	local skillMo = self._skillList and self._skillList[index]
+	local isUse = skillMo ~= nil
 
 	gohelper.setActive(goUse, isUse)
 	gohelper.setActive(goUnuse, not isUse)
@@ -109,13 +112,12 @@ function Rouge2_BackpackCareerView:_refreshActiveSkill(obj, index)
 		return
 	end
 
-	local skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(index)
-
 	Rouge2_IconHelper.setActiveSkillIcon(skillMo:getItemId(), simageIcon)
 end
 
 function Rouge2_BackpackCareerView:_onClickActiveSkill(index)
-	local isUse = Rouge2_BackpackModel.instance:isActiveSkillIndexInUse(index)
+	local skillMo = self._skillList and self._skillList[index]
+	local isUse = skillMo ~= nil
 
 	if not isUse then
 		GameFacade.showToast(ToastEnum.Rouge2NotUseActiveSkill)
@@ -123,10 +125,7 @@ function Rouge2_BackpackCareerView:_onClickActiveSkill(index)
 		return
 	end
 
-	local skillMo = Rouge2_BackpackModel.instance:index2UseActiveSkill(index)
-	local skillUid = skillMo and skillMo:getUid()
-
-	Rouge2_ViewHelper.openCareerSkillTipsView(Rouge2_Enum.ItemDataType.Server, skillUid)
+	Rouge2_ViewHelper.openActiveSkillAttrUpdateTipsView(Rouge2_Enum.ItemDataType.Server, skillMo and skillMo:getUid())
 
 	self._selectSkillIndex = index
 

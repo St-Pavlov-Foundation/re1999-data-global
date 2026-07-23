@@ -4,23 +4,25 @@ module("modules.logic.versionactivity2_7.act191.controller.Activity191Controller
 
 local Activity191Controller = class("Activity191Controller", BaseController)
 
-function Activity191Controller:onInit()
-	return
+function Activity191Controller:getActId()
+	if not self.actId then
+		self.actId = VersionActivity3_8Enum.ActivityId.DouQuQu4
+	end
+
+	return self.actId
 end
 
-function Activity191Controller:onInitFinish()
-	return
+function Activity191Controller:getStoreId()
+	if not self.storeId then
+		self.storeId = VersionActivity3_8Enum.ActivityId.DouQuQu4Store
+	end
+
+	return self.storeId
 end
 
-function Activity191Controller:addConstEvents()
-	return
-end
+function Activity191Controller:enterActivity()
+	local actId = self:getActId()
 
-function Activity191Controller:reInit()
-	return
-end
-
-function Activity191Controller:enterActivity(actId)
 	Activity191Rpc.instance:sendGetAct191InfoRequest(actId, self.enterReply, self)
 end
 
@@ -38,12 +40,14 @@ function Activity191Controller:openFetterTipView(param)
 	ViewMgr.instance:openView(ViewName.Act191FetterTipView, param)
 end
 
-function Activity191Controller:openStoreView(actId)
-	if not VersionActivityEnterHelper.checkCanOpen(actId) then
+function Activity191Controller:openStoreView()
+	local storeId = self:getStoreId()
+
+	if not VersionActivityEnterHelper.checkCanOpen(storeId) then
 		return
 	end
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(actId, self._openStoreViewAfterRpc, self)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(storeId, self._openStoreViewAfterRpc, self)
 end
 
 function Activity191Controller:openResultPanel(isWin)
@@ -87,6 +91,12 @@ function Activity191Controller:nextStep()
 			ViewMgr.instance:openView(ViewName.Act191InitBuildView)
 		else
 			local nodeInfo = Activity191Helper.matchKeyInArray(gameInfo.nodeInfo, gameInfo.curNode, "nodeId")
+
+			if not nodeInfo then
+				logError("nodeInfos中不存在节点ID: " .. gameInfo.curNode)
+
+				return
+			end
 
 			if string.nilorempty(nodeInfo.nodeStr) then
 				ViewMgr.instance:openView(ViewName.Act191StageView)
@@ -155,15 +165,11 @@ function Activity191Controller:checkOpenGetView()
 		end
 	end
 
-	if hasGet then
-		ViewMgr.instance:openView(ViewName.Act191GetView)
-
-		return true
+	if not hasGet then
+		actInfo:clearTriggerEffectPush()
 	end
 
-	actInfo:clearTriggerEffectPush()
-
-	return false
+	return hasGet
 end
 
 Activity191Controller.instance = Activity191Controller.New()

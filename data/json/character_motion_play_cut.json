@@ -26,5 +26,33 @@
     "motion": "ruchang",
     "whenStopped": 0,
     "whenNotStopped": 1
+  },
+  {
+    "heroId": 3146,
+    "skinId": 1,
+    "motion": "chizhang|chizhang_start|chizhang_transition|chizhang_loop|chizhang_end|piaofu",
+    "whenStopped": 0,
+    "whenNotStopped": 1
+  },
+  {
+    "heroId": 3154,
+    "skinId": 1,
+    "motion": "sikao",
+    "whenStopped": 0,
+    "whenNotStopped": 1
+  },
+  {
+    "heroId": 3105,
+    "skinId": 310504,
+    "motion": "ruchang",
+    "whenStopped": 0,
+    "whenNotStopped": 1
+  },
+  {
+    "heroId": 3106,
+    "skinId": 310604,
+    "motion": "chongfeng",
+    "whenStopped": 0,
+    "whenNotStopped": 1
   }
 ]

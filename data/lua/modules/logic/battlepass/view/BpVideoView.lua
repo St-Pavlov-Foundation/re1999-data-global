@@ -17,9 +17,9 @@ end
 
 function BpVideoView:_videoStatusUpdate(path, status, errorCode)
 	if status == VideoEnum.PlayerStatus.FinishedPlaying then
-		if not ViewMgr.instance:isOpen(ViewName.BpChargeView) then
+		if not ViewMgr.instance:isOpen(BpController.instance:getBpChargeView()) then
 			ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.closeThis, self)
-			ViewMgr.instance:openView(ViewName.BpChargeView, {
+			ViewMgr.instance:openView(BpController.instance:getBpChargeView(), {
 				first = true
 			})
 		else

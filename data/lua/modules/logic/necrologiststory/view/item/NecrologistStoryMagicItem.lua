@@ -18,11 +18,11 @@ function NecrologistStoryMagicItem:onInit()
 	self.imgFill = gohelper.findChildImage(self.goProgress, "fill")
 end
 
-function NecrologistStoryMagicItem:addEventListeners()
+function NecrologistStoryMagicItem:onAddEvent()
 	self:addClickCb(self.btnMagic, self.onClickMagic, self)
 end
 
-function NecrologistStoryMagicItem:removeEventListeners()
+function NecrologistStoryMagicItem:onRemoveEvent()
 	self:removeClickCb(self.btnMagic)
 end
 
@@ -73,6 +73,7 @@ function NecrologistStoryMagicItem:onPlayStory(isSkip)
 	local param = string.split(self._controlParam, "#")
 
 	self.leftTime = param[5] and tonumber(param[5]) or 0
+	self.skillIndex = param[6] and tonumber(param[6]) or 1
 
 	self:loadMagic(param)
 	self:setSkillIcon(true)
@@ -151,10 +152,21 @@ function NecrologistStoryMagicItem:initSkillIcon()
 
 		gohelper.setActive(childGO, false)
 
-		local childVersionId = tonumber(child.name)
+		local name = child.name
+		local splitNames = string.split(name, "_")
+		local childVersionId = tonumber(splitNames[1])
+		local versionIndex = 1
+
+		if splitNames and tabletool.len(splitNames) > 1 then
+			versionIndex = tonumber(splitNames[2])
+		end
 
 		if childVersionId then
-			self.skilIconDict[childVersionId] = self:createSkillItem(childGO, childVersionId)
+			if not self.skilIconDict[childVersionId] then
+				self.skilIconDict[childVersionId] = {}
+			end
+
+			self.skilIconDict[childVersionId][versionIndex] = self:createSkillItem(childGO, childVersionId)
 		end
 	end
 end
@@ -172,7 +184,7 @@ end
 
 function NecrologistStoryMagicItem:setSkillIcon(isAble)
 	local versionId = NecrologistStoryHelper.getPlotRoleStoryId(self._storyId)
-	local item = self.skilIconDict[versionId]
+	local item = self.skilIconDict[versionId][self.skillIndex]
 
 	if item then
 		gohelper.setActive(item.go, true)

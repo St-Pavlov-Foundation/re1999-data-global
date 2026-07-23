@@ -10,6 +10,7 @@ local fields = {
 	random = 6,
 	delay = 11,
 	text = 9,
+	type = 12,
 	insideRepeat = 5,
 	audioId = 8,
 	id = 2,

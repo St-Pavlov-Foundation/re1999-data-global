@@ -36,7 +36,27 @@ function HeroGroupRecommendGroupItem:removeEventListeners()
 end
 
 function HeroGroupRecommendGroupItem:_btnuseOnClick()
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroup)
+	local curEpisodeId = HeroGroupRecommendGroupListModel.instance:getCurEpisodeId()
+
+	HeroGroupController.instance:useRecommendGroup(self._mo, curEpisodeId, curEpisodeId == nil)
+
+	if self._mo then
+		return
+	end
+
+	if HeroGroupModel.instance:getAfterUpdateRecommendState() then
+		local enterEpisodeParam = {}
+
+		enterEpisodeParam.recommendMo = self._mo
+
+		HeroGroupModel.instance:setTempBattleRecommendParam(enterEpisodeParam)
+		HeroGroupModel.instance:setAfterUpdateRecommendState(false)
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroupAfterEnterEpisode)
+
+		return
+	else
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroup)
+	end
 
 	local heroDataList = self._mo.heroDataList
 	local uidList = {}

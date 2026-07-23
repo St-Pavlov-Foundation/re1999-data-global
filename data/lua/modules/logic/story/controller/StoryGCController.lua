@@ -36,14 +36,8 @@ function StoryGCController:_onStart(storyId)
 	self._videoStepCountDown = nil
 	self._stepCount = 0
 
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and FightModel.instance:isFinish() then
-		logNormal("战斗内播放战后剧情，清理战斗资源")
-		FightFloatMgr.instance:dispose()
-		ViewMgr.instance:closeView(ViewName.FightSkillSelectView, true)
-		FightGameMgr.entityMgr:delAllEntity()
-		FightPreloadController.instance:dispose()
-		FightRoundPreloadController.instance:dispose()
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
+		-- block empty
 	end
 end
 
@@ -139,8 +133,6 @@ function StoryGCController:_onStep(o)
 
 	if hasVideo then
 		self._videoStepCountDown = GCStepCount
-
-		GameGlobalMgr.instance:resetTouchTick()
 	elseif self._videoStepCountDown then
 		self._videoStepCountDown = self._videoStepCountDown - 1
 

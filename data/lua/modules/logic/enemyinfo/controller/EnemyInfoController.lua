@@ -95,6 +95,15 @@ function EnemyInfoController:openTowerComposeEnemyInfoView(battleId, themeId, pl
 	})
 end
 
+function EnemyInfoController:openSodacheEnemyInfoView(battleId, careerIds, hpFixRate)
+	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
+		battleId = battleId,
+		careerIds = careerIds,
+		hpFixRate = hpFixRate,
+		tabEnum = EnemyInfoEnum.TabEnum.Sodache
+	})
+end
+
 EnemyInfoController.instance = EnemyInfoController.New()
 
 LuaEventSystem.addEventMechanism(EnemyInfoController.instance)

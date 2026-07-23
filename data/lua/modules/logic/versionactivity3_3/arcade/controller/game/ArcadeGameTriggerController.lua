@@ -92,7 +92,9 @@ function ArcadeGameTriggerController:_onTriggerTarget(triggerPoint, target, cont
 	tabletool.addValues(tempList, skillList)
 
 	for _, skill in ipairs(tempList) do
-		if skill.isActive then
+		local isActive = skill and skill:getIsActive()
+
+		if isActive then
 			skill:trigger(triggerPoint, context)
 		end
 	end

@@ -15,6 +15,7 @@ function DungeonMapViewContainer:buildViews()
 	table.insert(views, DungeonMapView.New())
 	table.insert(views, self._mapTaskInfo)
 	table.insert(views, DungeonMapSceneElements.New())
+	table.insert(views, DungeonMapSceneDecorate.New())
 	table.insert(views, self._mapScene)
 	table.insert(views, DungeonMapEpisode.New())
 	table.insert(views, DungeonMapElementReward.New())
@@ -28,6 +29,7 @@ function DungeonMapViewContainer:buildViews()
 	table.insert(views, DiceHeroDungeonMapView.New())
 	table.insert(views, VersionActivity2_8BossActDungeonMapView.New())
 	table.insert(views, CommandStationDungeonMapView.New())
+	table.insert(views, TowerV3a7DungeonMapView.New())
 
 	return views
 end

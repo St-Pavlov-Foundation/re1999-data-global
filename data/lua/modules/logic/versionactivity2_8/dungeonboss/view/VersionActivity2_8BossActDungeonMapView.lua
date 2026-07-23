@@ -134,7 +134,19 @@ function VersionActivity2_8BossActDungeonMapView:onOpen()
 end
 
 function VersionActivity2_8BossActDungeonMapView:onUpdateParam()
+	self._oldChapterId = self.chapterId
+
+	local newChapterId = self.viewParam.chapterId
+
+	if self._oldChapterId ~= newChapterId then
+		self:_closeBgm()
+	end
+
 	self:refreshView()
+
+	if self._oldChapterId ~= newChapterId then
+		self:_openBgm()
+	end
 end
 
 function VersionActivity2_8BossActDungeonMapView:onOpenView(viewName)

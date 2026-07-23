@@ -6,6 +6,7 @@ local TowerComposePickAssistItem = class("TowerComposePickAssistItem", PickAssis
 
 function TowerComposePickAssistItem:_editableInitView()
 	TowerComposePickAssistItem.super._editableInitView(self)
+	self._playericon:setHideRoomBtn(true)
 	self._playericon:setEnableClick(true)
 end
 

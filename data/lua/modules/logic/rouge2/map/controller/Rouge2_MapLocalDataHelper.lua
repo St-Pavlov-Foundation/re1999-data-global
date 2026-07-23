@@ -100,6 +100,68 @@ function Rouge2_MapLocalDataHelper._initItemReddotStatusMap(key)
 	return itemStatusMap
 end
 
+function Rouge2_MapLocalDataHelper.getActiveSkillDropIndex(skillId)
+	local skillCo = Rouge2_BackpackHelper.getItemConfig(skillId)
+
+	if not skillCo then
+		return 0
+	end
+
+	local skillType = skillCo.skillTypeName or ""
+	local dropIndexInfo = Rouge2_MapLocalDataHelper._getTempData(Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex)
+	local dropIndexMap = dropIndexInfo and dropIndexInfo.map
+	local dropIndex = dropIndexMap and dropIndexMap[skillType]
+
+	dropIndex = dropIndex or 0
+
+	return dropIndex
+end
+
+function Rouge2_MapLocalDataHelper.setActiveSkillDropIndex(skillId)
+	local originIndex = Rouge2_MapLocalDataHelper.getActiveSkillDropIndex(skillId)
+
+	if originIndex and originIndex ~= 0 then
+		return
+	end
+
+	local skillCo = Rouge2_BackpackHelper.getItemConfig(skillId)
+	local skillType = skillCo and skillCo.skillTypeName or ""
+	local dropIndexInfo = Rouge2_MapLocalDataHelper._getTempData(Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex)
+
+	dropIndexInfo = dropIndexInfo or {
+		map = {},
+		list = {}
+	}
+
+	local dropIndexList = dropIndexInfo and dropIndexInfo.list
+	local dropIndexNum = dropIndexList and #dropIndexList or 0
+	local nextDropIndex = dropIndexNum + 1
+
+	dropIndexInfo.map[skillType] = nextDropIndex
+
+	table.insert(dropIndexList, skillType)
+
+	local dropIndexMapStr = table.concat(dropIndexList, "#")
+
+	Rouge2_MapLocalDataHelper._addTempData(Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex, dropIndexInfo)
+	Rouge2_MapLocalDataHelper._saveLocalData(Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex, dropIndexMapStr)
+end
+
+function Rouge2_MapLocalDataHelper._initActiveSkillDropIndexMap()
+	local dropIndexMapStr = Rouge2_MapLocalDataHelper._getLocalData(Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex, "")
+	local dropIndexList = string.splitToNumber(dropIndexMapStr, "#") or {}
+	local dropIndexMap = {}
+
+	for i, skillType in ipairs(dropIndexList) do
+		dropIndexMap[skillType] = i
+	end
+
+	return {
+		map = dropIndexMap,
+		list = dropIndexList
+	}
+end
+
 function Rouge2_MapLocalDataHelper._addTempData(key, value)
 	Rouge2_MapLocalDataHelper._localData = Rouge2_MapLocalDataHelper._localData or {}
 	Rouge2_MapLocalDataHelper._localData[key] = value
@@ -184,11 +246,13 @@ end
 
 Rouge2_MapLocalDataHelper.Key = {
 	UnlockNode = PlayerPrefsKey.Rouge2PlayedUnlockAnimNodeId,
-	ReadItem = PlayerPrefsKey.Rouge2ReadItemId
+	ReadItem = PlayerPrefsKey.Rouge2ReadItemId,
+	ActiveSkillDropIndex = PlayerPrefsKey.Rouge2ActiveSkillDropIndex
 }
 Rouge2_MapLocalDataHelper.InitFunction = {
 	[Rouge2_MapLocalDataHelper.Key.UnlockNode] = Rouge2_MapLocalDataHelper._initUnlockAnimNode,
-	[Rouge2_MapLocalDataHelper.Key.ReadItem] = Rouge2_MapLocalDataHelper._initItemReddotStatusMap
+	[Rouge2_MapLocalDataHelper.Key.ReadItem] = Rouge2_MapLocalDataHelper._initItemReddotStatusMap,
+	[Rouge2_MapLocalDataHelper.Key.ActiveSkillDropIndex] = Rouge2_MapLocalDataHelper._initActiveSkillDropIndexMap
 }
 
 return Rouge2_MapLocalDataHelper

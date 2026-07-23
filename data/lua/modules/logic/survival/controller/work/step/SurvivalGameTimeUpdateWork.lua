@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalGameTimeUpdateWork",
 
 local SurvivalGameTimeUpdateWork = class("SurvivalGameTimeUpdateWork", SurvivalStepBaseWork)
 
-function SurvivalGameTimeUpdateWork:onStart(context)
+function SurvivalGameTimeUpdateWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 
 	sceneMo.gameTime = self._stepMo.paramInt[1] or 0

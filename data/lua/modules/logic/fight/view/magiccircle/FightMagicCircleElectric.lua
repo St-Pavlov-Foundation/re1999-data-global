@@ -230,7 +230,7 @@ function FightMagicCircleElectric:showCurLevelVx()
 	local level = self.magicMo.electricLevel
 
 	for lv, goVx in pairs(self.levelVxDict) do
-		gohelper.setActive(goVx, lv <= level)
+		gohelper.setActive(goVx, level and lv <= level)
 	end
 end
 

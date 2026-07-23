@@ -9,6 +9,7 @@ function Rouge2_AttributeDetailViewContainer:buildViews()
 
 	table.insert(views, Rouge2_AttributeDetailBuffView.New())
 	table.insert(views, Rouge2_AttributeDetailAttrView.New())
+	table.insert(views, Rouge2_AttributeDetailSkillView.New())
 	table.insert(views, Rouge2_AttributeDetailView.New())
 
 	return views

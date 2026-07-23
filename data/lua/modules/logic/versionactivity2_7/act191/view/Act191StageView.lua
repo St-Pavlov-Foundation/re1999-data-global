@@ -33,6 +33,7 @@ function Act191StageView:_btnEnterOnClick()
 		return
 	end
 
+	GameUtil.setActiveUIBlock("Act191StageViewBlock", true, false)
 	Activity191Rpc.instance:sendSelect191NodeRequest(self.actId, self.selectIndex - 1, self.onSelectNode, self)
 end
 
@@ -59,6 +60,13 @@ function Act191StageView:onOpen()
 	self._txtCoin.text = gameInfo.coin
 
 	local nodeInfo = Activity191Helper.matchKeyInArray(gameInfo.nodeInfo, gameInfo.curNode, "nodeId")
+
+	if not nodeInfo then
+		logError("nodeInfos中不存在节点ID: " .. gameInfo.curNode)
+
+		return
+	end
+
 	local stageNum = #nodeInfo.selectNodeStr
 
 	self.stageItemList = {}
@@ -112,7 +120,6 @@ function Act191StageView:onOpen()
 					local imageNodeNum = gohelper.findChildImage(go, "image_NodeNum")
 					local imageLevel = gohelper.findChildImage(go, "info/image_Level")
 					local goAttr = gohelper.findChild(go, "info/go_attribute")
-					local rewardRoot = gohelper.findChild(go, "reward")
 
 					gohelper.setActive(goSpine, isPve)
 					gohelper.setActive(goUnknown, isPvp)
@@ -172,18 +179,20 @@ function Act191StageView:onOpen()
 						gohelper.setActive(goAttr, attrFixList)
 					end
 
-					for k, v in ipairs(rewardList) do
-						local rewardGo = self:getResInst(Activity191Enum.PrefabPath.RewardItem, rewardRoot)
-						local item = MonoHelper.addNoUpdateLuaComOnceToGo(rewardGo, Act191RewardItem)
+					local data = rewardList[1]
 
-						item:setData(v[1], v[2])
+					if data then
+						local txtCoin = gohelper.findChildText(go, "reward/txt_Coin")
 
-						local param = {
-							index = k,
-							fromView = self.viewName
-						}
+						txtCoin.text = data[2] or ""
 
-						item:setExtraParam(param)
+						local config = lua_activity191_item.configDict[data[1]]
+
+						if config then
+							local imageCoin = gohelper.findChildImage(go, "reward/image_Coin")
+
+							UISpriteSetMgr.instance:setAct174Sprite(imageCoin, config.icon)
+						end
 					end
 				else
 					local go = gohelper.clone(self._goNormalStage, rootGo)
@@ -203,6 +212,7 @@ function Act191StageView:onOpen()
 					local txtDesc = gohelper.findChildText(go, "detail/scroll_desc/Viewport/Content/txt_Desc")
 					local goTag = gohelper.findChild(go, "tag")
 					local txtTag = gohelper.findChildText(go, "tag/txt_Tag")
+					local goAfterGlow = gohelper.findChild(go, "go_AfterGlow")
 
 					UISpriteSetMgr.instance:setAct174Sprite(imageNodeNum, "act174_stage_num_0" .. i)
 
@@ -216,7 +226,7 @@ function Act191StageView:onOpen()
 							txtTag.text = lua_activity191_const.configDict[Activity191Enum.ConstKey.RoleTag].value2
 						elseif mo.type == Activity191Enum.NodeType.CollectionShop then
 							txtTag.text = lua_activity191_const.configDict[Activity191Enum.ConstKey.CollectionTag].value2
-						elseif tabletool.indexOf(Activity191Enum.TagShopField, mo.type) then
+						elseif mo.type == Activity191Enum.NodeType.TagShop then
 							txtTag.text = lua_activity191_const.configDict[Activity191Enum.ConstKey.FetterTag].value2
 						end
 
@@ -248,6 +258,7 @@ function Act191StageView:onOpen()
 					local showTag = isShop and mo.type ~= Activity191Enum.NodeType.MixStore or mo.type == Activity191Enum.NodeType.ReplaceEvent or mo.type == Activity191Enum.NodeType.UpgradeEvent
 
 					gohelper.setActive(goTag, showTag)
+					gohelper.setActive(goAfterGlow, mo.type == Activity191Enum.NodeType.AfterGlowShop)
 
 					if resPath then
 						simageStage:LoadImage(resPath)
@@ -285,6 +296,8 @@ end
 
 function Act191StageView:onDestroyView()
 	TaskDispatcher.cancelTask(self.playSalaryAnim, self)
+	TaskDispatcher.cancelTask(self.delayClose, self)
+	GameUtil.setActiveUIBlock("Act191StageViewBlock", false, true)
 end
 
 function Act191StageView:clickStage(index)
@@ -322,11 +335,17 @@ function Act191StageView:clickCheck(index)
 	end
 end
 
-function Act191StageView:onSelectNode(cmd, resultCode)
+function Act191StageView:onSelectNode(_, resultCode)
 	if resultCode == 0 then
 		Activity191Controller.instance:nextStep()
-		ViewMgr.instance:closeView(self.viewName)
+		TaskDispatcher.runDelay(self.delayClose, self, 0.35)
+	else
+		GameUtil.setActiveUIBlock("Act191StageViewBlock", false, true)
 	end
+end
+
+function Act191StageView:delayClose()
+	ViewMgr.instance:closeView(self.viewName)
 end
 
 function Act191StageView:createSpine(parentGo, config)

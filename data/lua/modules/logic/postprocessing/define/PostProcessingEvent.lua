@@ -6,5 +6,6 @@ local PostProcessingEvent = {}
 
 PostProcessingEvent.onRefreshPopUpBlurNotBlur = 1
 PostProcessingEvent.onUnitCameraVisibleChange = 2
+PostProcessingEvent.onCameraRootAnimatorControllerChange = 3
 
 return PostProcessingEvent

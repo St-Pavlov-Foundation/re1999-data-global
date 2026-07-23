@@ -134,6 +134,10 @@ function DungeonMapModel:getElements(mapId)
 				isShowElement = false
 			end
 
+			if DungeonMapModel.instance:isImplicitElementType(cfg.type) then
+				isShowElement = false
+			end
+
 			if isShowElement then
 				table.insert(result, cfg)
 			end
@@ -141,6 +145,25 @@ function DungeonMapModel:getElements(mapId)
 	end
 
 	return result
+end
+
+function DungeonMapModel:isImplicitElementType(type)
+	if not type then
+		logError("isImplicitElementType type is nil")
+	end
+
+	return DungeonEnum.ImplicitElementType[type]
+end
+
+function DungeonMapModel:checkStoryElementFinished(storyId)
+	local elementConfig = storyId and lua_story_element.configDict[storyId]
+	local elementId = elementConfig and elementConfig.elementId
+
+	if elementId then
+		return DungeonMapModel.instance:elementIsFinished(elementId)
+	end
+
+	return true
 end
 
 function DungeonMapModel:initEquipSpChapters(info)

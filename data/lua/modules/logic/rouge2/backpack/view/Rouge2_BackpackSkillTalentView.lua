@@ -2,23 +2,21 @@
 
 module("modules.logic.rouge2.backpack.view.Rouge2_BackpackSkillTalentView", package.seeall)
 
-local Rouge2_BackpackSkillTalentView = class("Rouge2_BackpackSkillTalentView", BaseView)
+local Rouge2_BackpackSkillTalentView = class("Rouge2_BackpackSkillTalentView", BaseViewExtended)
 
 function Rouge2_BackpackSkillTalentView:onInitView()
-	self._goSkillTalent = gohelper.findChild(self.viewGO, "SkillTalent")
-	self._btnCloseDetail = gohelper.findChildButtonWithAudio(self.viewGO, "SkillTalent/#btn_CloseDetail")
-	self._goTalentContainer = gohelper.findChild(self.viewGO, "SkillTalent/#go_TalentContainer")
-	self._btnCloseDetail2 = gohelper.findChildButtonWithAudio(self.viewGO, "SkillTalent/#go_TalentContainer/Viewport/#btn_CloseDetail2")
-	self._goViewPort = gohelper.findChild(self.viewGO, "SkillTalent/#go_TalentContainer/Viewport")
-	self._goContent = gohelper.findChild(self.viewGO, "SkillTalent/#go_TalentContainer/Viewport/Content")
-	self._goPet = gohelper.findChild(self.viewGO, "SkillTalent/#go_Pet")
-	self._goTree = gohelper.findChild(self.viewGO, "SkillTalent/#go_TalentContainer/Viewport/Content/#go_Tree")
-	self._goLineItem = gohelper.findChild(self.viewGO, "SkillTalent/#go_TalentContainer/Viewport/Content/#go_Tree/#go_LineItem")
-	self._txtTalentNum = gohelper.findChildText(self.viewGO, "SkillTalent/layout/#txt_TalentNum")
-	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "SkillTalent/#btn_Reset", AudioEnum.Rouge2.ClickResetTalent)
-	self._goEnableReset = gohelper.findChild(self.viewGO, "SkillTalent/#btn_Reset/#go_EnableReset")
-	self._goDisableReset = gohelper.findChild(self.viewGO, "SkillTalent/#btn_Reset/#go_DisableReset")
-	self._goMode = gohelper.findChild(self.viewGO, "SkillTalent/#go_Mode")
+	self._btnCloseDetail = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_CloseDetail")
+	self._goTalentContainer = gohelper.findChild(self.viewGO, "#go_TalentContainer")
+	self._btnCloseDetail2 = gohelper.findChildButtonWithAudio(self.viewGO, "#go_TalentContainer/Viewport/#btn_CloseDetail2")
+	self._goViewPort = gohelper.findChild(self.viewGO, "#go_TalentContainer/Viewport")
+	self._goContent = gohelper.findChild(self.viewGO, "#go_TalentContainer/Viewport/Content")
+	self._goPet = gohelper.findChild(self.viewGO, "#go_Pet")
+	self._goTree = gohelper.findChild(self.viewGO, "#go_TalentContainer/Viewport/Content/#go_Tree")
+	self._goLineItem = gohelper.findChild(self.viewGO, "#go_TalentContainer/Viewport/Content/#go_Tree/#go_LineItem")
+	self._txtTalentNum = gohelper.findChildText(self.viewGO, "layout/#txt_TalentNum")
+	self._btnReset = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Reset", AudioEnum.Rouge2.ClickResetTalent)
+	self._goEnableReset = gohelper.findChild(self.viewGO, "#btn_Reset/#go_EnableReset")
+	self._goDisableReset = gohelper.findChild(self.viewGO, "#btn_Reset/#go_DisableReset")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -57,9 +55,6 @@ function Rouge2_BackpackSkillTalentView:_editableInitView()
 	self._viewPortWidth = recthelper.getWidth(self._goViewPort.transform)
 	self._halfViewPortWidth = self._viewPortWidth / 2
 	self._treeLayoutElement = gohelper.onceAddComponent(self._goTree, typeof(UnityEngine.UI.LayoutElement))
-
-	Rouge2_CommonItemDescModeSwitcher.Load(self._goMode, Rouge2_Enum.ItemDescModeDataKey.BackpackSkill)
-
 	self._talentItemTab = self:getUserDataTb_()
 	self._talentId2ItemTab = self:getUserDataTb_()
 	self._talentItemUseNumMap = {}
@@ -191,13 +186,11 @@ function Rouge2_BackpackSkillTalentView:recycleLineItem(lineItem)
 	self._lineItemPool:putObject(lineItem)
 end
 
-function Rouge2_BackpackSkillTalentView:onOpenChildView()
-	gohelper.setActive(self._goSkillTalent, true)
+function Rouge2_BackpackSkillTalentView:onOpen()
 	self:refreshUI()
 end
 
-function Rouge2_BackpackSkillTalentView:onCloseChildView()
-	gohelper.setActive(self._goSkillTalent, false)
+function Rouge2_BackpackSkillTalentView:onClose()
 	TaskDispatcher.cancelTask(self.focusNewUnlockTalent, self)
 end
 

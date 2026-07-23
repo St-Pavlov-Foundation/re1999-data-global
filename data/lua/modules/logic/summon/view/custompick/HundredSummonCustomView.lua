@@ -99,46 +99,7 @@ function HundredSummonCustomView:_btnsummon1OnClick()
 end
 
 function HundredSummonCustomView:_btnsummon1OnClick_2()
-	local curPool = SummonMainModel.instance:getCurPool()
-
-	if not curPool then
-		return
-	end
-
-	local cost_type, cost_id, cost_num = SummonMainModel.getCostByConfig(curPool.cost1)
-	local param = {}
-
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
-	param.callback = self._summon1Confirm
-	param.callbackObj = self
-	param.notEnough = false
-
-	local num = ItemModel.instance:getItemQuantity(cost_type, cost_id)
-	local itemEnough = cost_num <= num
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not itemEnough and currencyNum < everyCostCount then
-		param.notEnough = true
-	end
-
-	if itemEnough then
-		param.needTransform = false
-
-		self:_summon1Confirm()
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = everyCostCount
-		param.miss_quantity = 1
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon1Action()
 end
 
 function HundredSummonCustomView:_btnsummon10OnClick()
@@ -168,51 +129,12 @@ function HundredSummonCustomView:_btnsummon10OnClick_2()
 		return
 	end
 
-	local cost_type, cost_id, cost_num, ownNum = SummonMainModel.instance:getCost10ById(curPool.id)
-	local discountCost = SummonMainModel.instance:getDiscountCost10(curPool.id)
-	local discountCostId = SummonMainModel.instance:getDiscountCostId(curPool.id, cost_id)
-
-	if discountCostId == cost_id then
-		cost_num = discountCost < 0 and cost_num or discountCost
-	end
-
 	local param = {}
 
-	param.type = cost_type
-	param.id = cost_id
-	param.quantity = cost_num
 	param.callback = self._summon10Confirm
 	param.callbackObj = self
-	param.notEnough = false
-	ownNum = ownNum or ItemModel.instance:getItemQuantity(cost_type, cost_id)
 
-	local itemEnough = cost_num <= ownNum
-	local everyCostCount = SummonMainModel.instance.everyCostCount
-	local currencyNum = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local remainCount = cost_num - ownNum
-	local costRemain = everyCostCount * remainCount
-	local curPoolId = SummonMainModel.instance:getCurId()
-	local havefree10Count = SummonMainModel.instance:checkHaveFree10Count(curPoolId)
-
-	if not itemEnough and currencyNum < costRemain then
-		param.notEnough = true
-	end
-
-	if itemEnough or havefree10Count then
-		param.needTransform = false
-
-		self:_summon10Confirm()
-
-		return
-	else
-		param.needTransform = true
-		param.cost_type = SummonMainModel.instance.costCurrencyType
-		param.cost_id = SummonMainModel.instance.costCurrencyId
-		param.cost_quantity = costRemain
-		param.miss_quantity = remainCount
-	end
-
-	SummonMainController.instance:openSummonConfirmView(param)
+	SummonMainController.instance:summon10Action(param)
 end
 
 function HundredSummonCustomView:_editableInitView()
@@ -455,7 +377,7 @@ end
 
 function HundredSummonCustomView:refreshCost10(costs)
 	local curPoolId = SummonMainModel.instance:getCurId()
-	local cost_type, cost_id, cost_num = SummonMainModel.instance:getCost10ById(curPoolId)
+	local cost_type, cost_id, cost_num = SummonMainModel.instance:getCost10ById(curPoolId, true)
 	local cost_icon = SummonMainModel.instance.getSummonItemIcon(cost_type, cost_id)
 
 	self._simagecurrency10:LoadImage(cost_icon)

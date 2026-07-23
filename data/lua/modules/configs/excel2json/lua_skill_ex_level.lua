@@ -4,16 +4,17 @@ module("modules.configs.excel2json.lua_skill_ex_level", package.seeall)
 
 local lua_skill_ex_level = {}
 local fields = {
-	skillEx = 8,
-	passiveSkill = 9,
+	skillEx = 9,
+	passiveSkill = 10,
+	consume = 3,
+	skillGroup1 = 7,
+	deviceId = 6,
+	skillGroup2 = 8,
 	desc = 5,
-	skillGroup1 = 6,
-	requirement = 4,
-	skillGroup2 = 7,
 	skillLevel = 2,
 	heroId = 1,
-	consume2 = 10,
-	consume = 3
+	consume2 = 11,
+	requirement = 4
 }
 local primaryKey = {
 	"heroId",

@@ -11,6 +11,7 @@ EnemyInfoEnum.TabEnum = {
 	Season123 = 3,
 	Survival = 8,
 	TowerDeep = 9,
+	Sodache = 11,
 	WeekWalk = 2,
 	BossRush = 4,
 	TowerCompose = 10,

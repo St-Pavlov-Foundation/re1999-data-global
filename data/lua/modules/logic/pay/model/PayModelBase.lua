@@ -187,4 +187,8 @@ function PayModelBase:getProductOriginPriceSymbol(lua_store_charge_goods_id)
 	assert(false, "please override this function!!")
 end
 
+function PayModelBase:getProductPriceScaledSymbol(lua_store_charge_goods_id, symbolSize)
+	assert(false, "please override this function!!")
+end
+
 return PayModelBase

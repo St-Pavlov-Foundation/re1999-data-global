@@ -31,10 +31,9 @@ function FightTLEventUniqueCameraNew:onTrackStart(fightStepData, duration, param
 	end
 
 	if not string.nilorempty(self._cameraResName) then
-		self._loader = MultiAbLoader.New()
+		self._loader = self._attacker:addComponent(FightLoaderComponent)
 
-		self._loader:addPath(FightHelper.getCameraAniPath(self._cameraResName))
-		self._loader:startLoad(self._onLoaded, self)
+		self._loader:loadAsset(FightHelper.getCameraAniPath(self._cameraResName), self._onLoaded, self)
 	end
 
 	FightController.instance:registerCallback(FightEvent.ParallelPlayNextSkillDoneThis, self._parallelSkillDoneThis, self)
@@ -45,7 +44,11 @@ function FightTLEventUniqueCameraNew:onTrackEnd()
 	self:dealFinalValue(self.paramsArr[4])
 end
 
-function FightTLEventUniqueCameraNew:_onLoaded(multiAbLoader)
+function FightTLEventUniqueCameraNew:_onLoaded(success, assetItem)
+	if not success then
+		return
+	end
+
 	self.fightStepData.hasPlayTimelineCamera = true
 
 	local cameraComp = GameSceneMgr.instance:getCurScene().camera
@@ -83,7 +86,7 @@ function FightTLEventUniqueCameraNew:_onLoaded(multiAbLoader)
 		cameraComp:switchNextVirtualCamera()
 	end
 
-	self._animatorInst = self._loader:getFirstAssetItem():GetResource(ResUrl.getCameraAnim(self._cameraResName))
+	self._animatorInst = assetItem:GetResource(ResUrl.getCameraAnim(self._cameraResName))
 	self._animComp = CameraMgr.instance:getCameraRootAnimator()
 	self._animComp.enabled = true
 	self._animComp.runtimeAnimatorController = nil
@@ -217,15 +220,15 @@ function FightTLEventUniqueCameraNew:_clear()
 	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, self._onUpdateSpeed, self)
 
 	if self._animComp and self._animComp.runtimeAnimatorController == self._animatorInst then
-		self._animComp.runtimeAnimatorController = nil
+		if self.paramsArr[6] ~= "1" then
+			self._animComp.runtimeAnimatorController = nil
+		else
+			self.fightStepData.hasPlayTimelineCamera = false
+		end
+
 		self._animComp.enabled = false
 	end
 
-	if self._loader then
-		self._loader:dispose()
-	end
-
-	self._loader = nil
 	self._animComp = nil
 	self._animatorInst = nil
 end

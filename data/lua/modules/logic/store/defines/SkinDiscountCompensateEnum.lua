@@ -8,5 +8,9 @@ SkinDiscountCompensateEnum.SelectDisplayType = {
 	Select = 1,
 	DisplayOnly = 2
 }
+SkinDiscountCompensateEnum.ItemType = {
+	Skin = 1,
+	ExchangeItem = 2
+}
 
 return SkinDiscountCompensateEnum

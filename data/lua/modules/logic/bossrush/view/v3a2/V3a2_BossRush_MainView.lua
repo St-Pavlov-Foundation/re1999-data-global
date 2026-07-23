@@ -159,6 +159,10 @@ function V3a2_BossRush_MainView:_initItemList(dataList)
 
 	self._itemList = {}
 
+	if not dataList then
+		return
+	end
+
 	for i, mo in ipairs(dataList) do
 		local go = gohelper.findChild(self.viewGO, "BOSS" .. i)
 		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, V3a2_BossRush_MainItem)

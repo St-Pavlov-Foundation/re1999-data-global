@@ -49,6 +49,9 @@ end
 function ReactivityEnterview:_editableInitView()
 	self:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, self._onRefreshActivityState, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.refreshCurrency, self)
+
+	self._gobg = gohelper.findChild(self.viewGO, "#simage_bg")
+	self._videoComp = VersionActivityVideoComp.get(self._gobg, self)
 end
 
 function ReactivityEnterview:_onClickAchevementBtn()
@@ -77,7 +80,7 @@ function ReactivityEnterview:initRedDot()
 		return
 	end
 
-	self.actId = VersionActivity3_4Enum.ActivityId.Reactivity
+	self.actId = VersionActivity3_8Enum.ActivityId.Reactivity
 
 	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
@@ -100,6 +103,8 @@ function ReactivityEnterview:onDestroyView()
 
 		self.rewardItems = nil
 	end
+
+	self._videoComp:destroy()
 end
 
 function ReactivityEnterview:refreshUI()
@@ -257,6 +262,38 @@ function ReactivityEnterview:_onRefreshActivityState(actId)
 	end
 
 	self:refreshUI()
+end
+
+function ReactivityEnterview:onOpenFinish()
+	if not string.nilorempty(self._videoPath) then
+		self:checkPlayVideo()
+	end
+end
+
+function ReactivityEnterview:checkPlayVideo()
+	if self.viewParam and self.viewParam.playVideo and self.viewContainer then
+		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
+		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)
+		self._videoComp:loadMedia(self._videoPath)
+
+		self._fullviewParent = nil
+
+		local container = ViewMgr.instance:getContainer(ViewName.FullScreenVideoView)
+
+		if container and container:isOpen() and container.viewGO then
+			self._fullviewParent = container.viewGO.transform.parent
+
+			gohelper.addChildPosStay(self._gobg, container.viewGO)
+		end
+	else
+		self._videoComp:play(self._videoPath, true)
+	end
+end
+
+function ReactivityEnterview:onPlayVideoDone()
+	self:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
+	self:removeEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)
+	self._videoComp:play(self._videoPath, true)
 end
 
 return ReactivityEnterview

@@ -18,7 +18,7 @@ function BpChargeFlow:buildFlow()
 		self:addWork(BpOpenAndWaitCloseWork.New(ViewName.BpLevelupTipView))
 	end
 
-	self:addWork(BpCloseViewWork.New(ViewName.BpChargeView))
+	self:addWork(BpCloseViewWork.New(BpController.instance:getBpChargeView()))
 	self:addWork(BpWaitBonusAnimWork.New())
 	self:start()
 end

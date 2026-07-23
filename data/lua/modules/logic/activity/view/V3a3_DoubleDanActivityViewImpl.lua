@@ -335,7 +335,7 @@ function V3a3_DoubleDanActivityViewImpl:_onBigSpineLoaded()
 
 	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(self._gospineTran, tonumber(offsets[1]), tonumber(offsets[2]))
+	CharacterVoiceEnum.setSpineOffset(self._bigSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._gospineTran, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 

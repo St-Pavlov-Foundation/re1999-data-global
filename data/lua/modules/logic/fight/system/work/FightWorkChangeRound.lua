@@ -13,7 +13,11 @@ function FightWorkChangeRound:onStart()
 		return
 	end
 
-	FightModel.instance._curRoundId = (FightModel.instance._curRoundId or 1) + 1
+	if self.actEffectData.effectNum == 0 then
+		FightModel.instance._curRoundId = (FightModel.instance._curRoundId or 1) + 1
+	else
+		FightModel.instance._curRoundId = self.actEffectData.effectNum
+	end
 
 	FightController.instance:dispatchEvent(FightEvent.ChangeRound)
 

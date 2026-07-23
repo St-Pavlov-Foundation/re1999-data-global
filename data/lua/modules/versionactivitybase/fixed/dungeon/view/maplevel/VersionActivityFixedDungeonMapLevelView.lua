@@ -3,18 +3,23 @@
 module("modules.versionactivitybase.fixed.dungeon.view.maplevel.VersionActivityFixedDungeonMapLevelView", package.seeall)
 
 local VersionActivityFixedDungeonMapLevelView = class("VersionActivityFixedDungeonMapLevelView", BaseView)
-local k_VersionActivity3_5Dungeon = 3510113
+local kEpisodeId2StartSubIndex = {
+	[LangSettings.jp] = {
+		[3510113] = 2
+	}
+}
 
 function VersionActivityFixedDungeonMapLevelView:_buildEpisodeName_overseas(firstSize, firstName, remainName, txtColor, episodeCo, nameLen)
-	local isJp = LangSettings.instance:isJp()
-	local isjpth13 = self.showEpisodeCo.id == k_VersionActivity3_5Dungeon and isJp
+	local episodeId = self.showEpisodeCo.id
+	local specialHandleDict = kEpisodeId2StartSubIndex[LangSettings.instance:getCurLang()]
 
-	if isjpth13 then
+	if specialHandleDict and specialHandleDict[episodeId] then
 		local secondName = ""
+		local stSubIndex = specialHandleDict[episodeId]
 
 		if nameLen > 2 then
-			remainName = GameUtil.utf8sub(episodeCo.name, 3, nameLen - 2)
-			secondName = GameUtil.utf8sub(episodeCo.name, 2, 1)
+			secondName = GameUtil.utf8sub(episodeCo.name, stSubIndex, 1)
+			remainName = GameUtil.utf8sub(episodeCo.name, stSubIndex + 1, nameLen - stSubIndex)
 		end
 
 		return self:buildColorText(string.format("%s<size=%s>%s</size>%s", firstName, firstSize, secondName, remainName), txtColor)
@@ -71,6 +76,8 @@ function VersionActivityFixedDungeonMapLevelView:onInitView()
 	self._btnreplayStory = gohelper.findChildButtonWithAudio(self.viewGO, "anim/versionactivity/right/startBtn/#btn_replayStory")
 	self._gorighttop = gohelper.findChild(self.viewGO, "anim/#go_righttop")
 	self._golefttop = gohelper.findChild(self.viewGO, "anim/#go_lefttop")
+	self.storyPosX = 0
+	self.fightPosX = 121
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -254,7 +261,24 @@ function VersionActivityFixedDungeonMapLevelView:_playStoryAndEnterFight(storyId
 	param.mark = true
 	param.episodeId = self.showEpisodeCo.id
 
-	StoryController.instance:playStory(storyId, param, self._enterFight, self)
+	StoryController.instance:playStory(storyId, param, self._checkStoryFinish, self)
+end
+
+function VersionActivityFixedDungeonMapLevelView:_checkStoryFinish(param)
+	if self:_isOpenPuzzleView() then
+		return
+	end
+
+	self:_enterFight()
+end
+
+function VersionActivityFixedDungeonMapLevelView:_isOpenPuzzleView(isReplay)
+	local co = VersionActivityFixedDungeonConfig.instance:getStoryEpisodeCo(self.originEpisodeId)
+	local storyId = co.beforeStory
+	local afterStory = isReplay and co.afterStory
+	local isOpenPuzzleView = storyId and V3a5PuzzleController.instance:isOpenPuzzleView(storyId, true, co.id, afterStory)
+
+	return isOpenPuzzleView
 end
 
 function VersionActivityFixedDungeonMapLevelView:_enterFight()
@@ -300,7 +324,7 @@ function VersionActivityFixedDungeonMapLevelView:_btnreplayStoryOnClick()
 		return
 	end
 
-	StoryController.instance:playStories(self.storyIdList)
+	StoryController.instance:playStories(self.storyIdList, nil, self.onReplayStoryFinished, self)
 
 	local param = {}
 
@@ -359,9 +383,14 @@ function VersionActivityFixedDungeonMapLevelView:onOpen()
 end
 
 function VersionActivityFixedDungeonMapLevelView:initViewParam()
-	self.originEpisodeId = self.viewParam.episodeId
-	self.originEpisodeConfig = DungeonConfig.instance:getEpisodeCO(self.originEpisodeId)
 	self.isFromJump = self.viewParam.isJump
+
+	self:initViewParamByEpisodeId(self.viewParam.episodeId)
+end
+
+function VersionActivityFixedDungeonMapLevelView:initViewParamByEpisodeId(episodeId)
+	self.originEpisodeId = episodeId
+	self.originEpisodeConfig = DungeonConfig.instance:getEpisodeCO(self.originEpisodeId)
 	self.index = VersionActivityFixedDungeonConfig.instance:getEpisodeIndex(self.originEpisodeId)
 
 	self.viewContainer:setOpenedEpisodeId(self.originEpisodeId)
@@ -486,10 +515,14 @@ function VersionActivityFixedDungeonMapLevelView:refreshStoryIdList()
 		table.insert(self.storyIdList, beforeStory)
 	end
 
-	local afterStory = checkStoryEpisodeCfg.afterStory
+	local isOpenPuzzleView = V3a5PuzzleController.instance:isOpenPuzzleView(beforeStory)
 
-	if afterStory > 0 and StoryModel.instance:isStoryHasPlayed(afterStory) then
-		table.insert(self.storyIdList, afterStory)
+	if not isOpenPuzzleView then
+		local afterStory = checkStoryEpisodeCfg.afterStory
+
+		if afterStory > 0 and StoryModel.instance:isStoryHasPlayed(afterStory) then
+			table.insert(self.storyIdList, afterStory)
+		end
 	end
 end
 
@@ -705,6 +738,7 @@ function VersionActivityFixedDungeonMapLevelView:refreshReward()
 			rewardItem.gofirsthard = gohelper.findChild(rewardItem.go, "rare/#go_rare4")
 			rewardItem.txtnormal = gohelper.findChildText(rewardItem.go, "rare/#go_rare1/txt")
 
+			self:customInitRewardItem(rewardItem)
 			table.insert(self.rewardItems, rewardItem)
 		end
 
@@ -756,11 +790,20 @@ function VersionActivityFixedDungeonMapLevelView:refreshReward()
 		rewardItem.iconItem:hideEquipLvAndBreak(true)
 		rewardItem.iconItem:isShowCount(isShowCount)
 		gohelper.setActive(rewardItem.go, true)
+		self:customRefreshRewardItem(rewardItem, reward)
 	end
 
 	for i = count + 1, #self.rewardItems do
 		gohelper.setActive(self.rewardItems[i].go, false)
 	end
+end
+
+function VersionActivityFixedDungeonMapLevelView:customInitRewardItem(rewardItem)
+	return
+end
+
+function VersionActivityFixedDungeonMapLevelView:customRefreshRewardItem(rewardItem, reward)
+	return
 end
 
 function VersionActivityFixedDungeonMapLevelView:refreshStartBtn()
@@ -797,15 +840,15 @@ function VersionActivityFixedDungeonMapLevelView:refreshStartBtn()
 		if hasPassLevel and self.showEpisodeCo.afterStory > 0 and not isStoryFinished then
 			self._txtnorstarttext.text = luaLang("p_dungeonlevelview_continuestory")
 
-			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, 0)
-			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, 0)
+			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, self.storyPosX)
+			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, self.storyPosX)
 			gohelper.setActive(self._txtusepowernormal.gameObject, false)
 			gohelper.setActive(self._simagepower.gameObject, false)
 		else
 			self._txtnorstarttext.text = luaLang("p_dungeonlevelview_startfight")
 
-			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, 121)
-			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, 121)
+			recthelper.setAnchorX(self._txtnorstarttext.gameObject.transform, self.fightPosX)
+			recthelper.setAnchorX(self._txtnorstarttexten.gameObject.transform, self.fightPosX)
 			gohelper.setActive(self._txtusepowernormal.gameObject, true)
 			gohelper.setActive(self._simagepower.gameObject, true)
 		end

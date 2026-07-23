@@ -75,7 +75,7 @@ function Activity101SignViewBase:_refresh()
 end
 
 function Activity101SignViewBase:getHelpViewParam(goHelp)
-	local co = ActivityConfig.instance:getActivityCo(self._actId)
+	local co = self:getActivityCo()
 	local res = {
 		title = luaLang("rule"),
 		desc = co.actTip,
@@ -446,6 +446,10 @@ function Activity101SignViewBase:focusByIndex(index)
 	else
 		self:_tweenByScrollContent(index)
 	end
+end
+
+function Activity101SignViewBase:getActivityCo()
+	return ActivityConfig.instance:getActivityCo(self._actId)
 end
 
 return Activity101SignViewBase

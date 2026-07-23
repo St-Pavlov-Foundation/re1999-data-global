@@ -86,5 +86,21 @@
     "fullImage": "rouge_mainstory_cg_9_2",
     "stageId": 10,
     "name": "language_10100921"
+  },
+  {
+    "id": 17,
+    "storyIdList": "603701",
+    "eventId": "",
+    "fullImage": "rouge_mainstory_cg_8_1",
+    "stageId": 10,
+    "name": "language_10125269"
+  },
+  {
+    "id": 18,
+    "storyIdList": "603702",
+    "eventId": "",
+    "fullImage": "rouge_story_cg_25_1",
+    "stageId": 10,
+    "name": "language_10125270"
   }
 ]

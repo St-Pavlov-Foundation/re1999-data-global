@@ -26,6 +26,11 @@ function ArcadeGameView:onInitView()
 	self._goselectedframe = gohelper.findChild(self.viewGO, "Game/#go_selectedframe")
 	self._goselectedlu = gohelper.findChild(self.viewGO, "Game/#go_selectedframe/leftup")
 	self._goselectedrd = gohelper.findChild(self.viewGO, "Game/#go_selectedframe/rightdown")
+	self._godangerwarning = gohelper.findChild(self.viewGO, "Game/#go_dangerWarning")
+	self._simagedangericon = gohelper.findChildSingleImage(self.viewGO, "Game/#go_dangerWarning/#simage_icon")
+	self._imagedangericon = self._simagedangericon:GetComponent(gohelper.Type_Image)
+	self._txtdangername = gohelper.findChildText(self.viewGO, "Game/#go_dangerWarning/#txt_name")
+	self._txtdangerdesc = gohelper.findChildText(self.viewGO, "Game/#go_dangerWarning/#txt_desc")
 	self._gotimenode = gohelper.findChild(self.viewGO, "Game/#go_time")
 	self._txttime = gohelper.findChildText(self.viewGO, "Game/#go_time/#txt_time")
 	self._goskilltip = gohelper.findChild(self.viewGO, "Right/#go_skilltip")
@@ -67,6 +72,7 @@ function ArcadeGameView:onInitView()
 	self._goFlyItemContent = gohelper.findChild(self.viewGO, "#go_flyItemContent")
 	self._goFlyItem = gohelper.findChild(self.viewGO, "#go_flyItemContent/#go_flyItem")
 	self._goexcessive = gohelper.findChild(self.viewGO, "#go_excessive")
+	self._gowave = gohelper.findChild(self.viewGO, "#go_wave")
 	self._excessiveAnimEvent = gohelper.findChildComponent(self.viewGO, "#go_excessive/storymode/anim", gohelper.Type_AnimationEventWrap)
 	self._transFlyContent = self._goFlyItemContent.transform
 
@@ -113,6 +119,8 @@ function ArcadeGameView:addEvents()
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnWeaponDurabilityChange, self._onWeaponDurabilityChange, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.PlayChangeRoomExcessive, self._onPlayChangeRoomExcessive, self)
 	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnSkillGameSwitchChange, self._onSkillGameSwitchChange, self)
+	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.OnSetAllEntityIsShow, self._onSetAllEntityIsShow, self)
+	self:addEventCb(ArcadeGameController.instance, ArcadeEvent.PlayUIEffect, self._onPlayUIEffect, self)
 	self:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
@@ -151,6 +159,7 @@ function ArcadeGameView:removeEvents()
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnWeaponDurabilityChange, self._onWeaponDurabilityChange, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.PlayChangeRoomExcessive, self._onPlayChangeRoomExcessive, self)
 	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.OnSkillGameSwitchChange, self._onSkillGameSwitchChange, self)
+	self:removeEventCb(ArcadeGameController.instance, ArcadeEvent.PlayUIEffect, self._onPlayUIEffect, self)
 	self:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, self._onScreenResize, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
 end
@@ -438,9 +447,7 @@ function ArcadeGameView:_onCharacterResourceUpdate(resId, gainPosList)
 end
 
 function ArcadeGameView:_onAddEntities(moList)
-	if not moList then
-		return
-	end
+	return
 end
 
 function ArcadeGameView:_onLoadEntitiesFinish(entityDataList)
@@ -569,7 +576,7 @@ function ArcadeGameView:_onChangeRoomFinish()
 	self:refreshLevelProgress()
 	self:refreshStoreResetBtn()
 	self:checkEntityIcon()
-	self:checkEntityTalk(ArcadeGameEnum.TalkTriggerType.EnterRoom)
+	self:checkDangerWarning()
 end
 
 function ArcadeGameView:_onCollectionChange(weaponGainPosList, collectionGainPosList)
@@ -676,9 +683,9 @@ function ArcadeGameView:_onWeaponDurabilityChange()
 			local remainDurability = weaponMO:getRemainDurability()
 
 			if remainDurability then
-				local durability = weaponMO:getDurability()
+				local totalDurability = weaponMO:getTotalDurability()
 
-				durabilityProgress = remainDurability / durability
+				durabilityProgress = remainDurability / totalDurability
 			end
 
 			weaponItem.imagedurability.fillAmount = durabilityProgress
@@ -760,6 +767,31 @@ function ArcadeGameView:_onSkillGameSwitchChange(attrId, isOn)
 	end
 end
 
+function ArcadeGameView:_onSetAllEntityIsShow(isShow)
+	gohelper.setActive(self._goiconnode, isShow)
+end
+
+function ArcadeGameView:_onPlayUIEffect(effectId, needPlayAudio)
+	local uiEffName = ArcadeConfig.instance:getUIEffect(effectId)
+
+	if string.nilorempty(uiEffName) or gohelper.isNil(self._uiEffectDict[uiEffName]) then
+		return
+	end
+
+	local uiEffect = self._uiEffectDict[uiEffName]
+
+	gohelper.setActive(uiEffect, false)
+	gohelper.setActive(uiEffect, true)
+
+	if needPlayAudio then
+		local audioId = ArcadeConfig.instance:getEffectAudio(effectId)
+
+		if audioId and audioId > 0 then
+			AudioMgr.instance:trigger(audioId)
+		end
+	end
+end
+
 function ArcadeGameView:_onScreenResize()
 	self:_setCamera()
 	self:_setFlayItemEndPos()
@@ -833,6 +865,9 @@ function ArcadeGameView:_editableInitView()
 
 		LateUpdateBeat:Add(self._onLateUpdate, self)
 	end
+
+	self._uiEffectDict = self:getUserDataTb_()
+	self._uiEffectDict[self._gowave.name] = self._gowave
 end
 
 function ArcadeGameView:_onLateUpdate()
@@ -909,7 +944,7 @@ function ArcadeGameView:onOpen()
 	self:setWeapons()
 	self:refresh()
 	self:checkEntityIcon()
-	self:checkEntityTalk(ArcadeGameEnum.TalkTriggerType.EnterRoom)
+	self:checkDangerWarning()
 end
 
 function ArcadeGameView:_setFlayItemEndPos()
@@ -1015,6 +1050,60 @@ function ArcadeGameView:_onCreateWeaponItem(obj, index)
 	self._weaponItemList[index] = weaponItem
 end
 
+function ArcadeGameView:checkDangerWarning()
+	TaskDispatcher.cancelTask(self.closeDangerWarning, self)
+
+	local dangerMonsterMO
+	local monsterMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Monster)
+
+	if monsterMOList then
+		for _, monsterMO in ipairs(monsterMOList) do
+			local monsterId = monsterMO:getId()
+			local race = ArcadeConfig.instance:getMonsterRace(monsterId)
+
+			if race == ArcadeGameEnum.MonsterRace.Boss then
+				dangerMonsterMO = monsterMO
+
+				break
+			end
+		end
+	end
+
+	if dangerMonsterMO then
+		ArcadeGameController.instance:setAllEntityVisibility()
+		ArcadeGameController.instance:pauseGame()
+
+		local icon = dangerMonsterMO:getIcon()
+		local name = dangerMonsterMO:getName()
+		local desc = dangerMonsterMO:getDesc()
+
+		self._simagedangericon:LoadImage(ResUrl.getEliminateIcon(icon), self.setDangerIconNativeSize, self)
+
+		self._txtdangername.text = name
+		self._txtdangerdesc.text = desc
+
+		gohelper.setActive(self._godangerwarning, true)
+		AudioMgr.instance:trigger(AudioEnum3_7.Arcade.play_ui_beiai_boss_dengchang)
+
+		local warningKeepTime = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.DangerWarningKeepTime, true)
+
+		TaskDispatcher.runDelay(self.closeDangerWarning, self, warningKeepTime)
+	else
+		self:closeDangerWarning()
+	end
+end
+
+function ArcadeGameView:setDangerIconNativeSize()
+	self._imagedangericon:SetNativeSize()
+end
+
+function ArcadeGameView:closeDangerWarning()
+	ArcadeGameController.instance:setAllEntityVisibility(true)
+	ArcadeGameController.instance:resumeGame()
+	gohelper.setActive(self._godangerwarning, false)
+	self:checkEntityTalk(ArcadeGameEnum.TalkTriggerType.EnterRoom)
+end
+
 function ArcadeGameView:addFightFloatData(gridX, gridY, value)
 	if not gridX or not gridY or not value then
 		return
@@ -1101,27 +1190,11 @@ function ArcadeGameView:getFightFloatItem(gridX, gridY)
 end
 
 function ArcadeGameView:checkEntityIcon()
-	local characterMO = ArcadeGameModel.instance:getCharacterMO()
+	for _, entityType in ipairs(ArcadeGameEnum.IconEntityTypes) do
+		local moList = ArcadeGameModel.instance:getEntityMOList(entityType)
 
-	self:addIcon2EntityList({
-		characterMO
-	})
-
-	local goodsMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Goods)
-
-	self:addIcon2EntityList(goodsMOList)
-
-	local interactiveMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.BaseInteractive)
-
-	self:addIcon2EntityList(interactiveMOList)
-
-	local portalMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Portal)
-
-	self:addIcon2EntityList(portalMOList)
-
-	local monsterMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.Monster)
-
-	self:addIcon2EntityList(monsterMOList)
+		self:addIcon2EntityList(moList)
+	end
 end
 
 function ArcadeGameView:addIcon2EntityList(moList)
@@ -1460,7 +1533,7 @@ function ArcadeGameView:setEventOptionList()
 		end
 	end
 
-	gohelper.CreateObjList(self, self._onCreateEventOption, optionList, self._goeventcontent, self._gooptionitem)
+	gohelper.CreateObjList(self, self._onCreateEventOption, optionList, self._gooptioncontent, self._gooptionitem)
 	self:refreshEventOptionList()
 end
 
@@ -1655,9 +1728,9 @@ function ArcadeGameView:refreshWeapon()
 			local remainDurability = weaponMO:getRemainDurability()
 
 			if remainDurability then
-				local durability = weaponMO:getDurability()
+				local totalDurability = weaponMO:getTotalDurability()
 
-				durabilityProgress = remainDurability / durability
+				durabilityProgress = remainDurability / totalDurability
 			end
 
 			weaponItem.imagedurability.fillAmount = durabilityProgress
@@ -1924,6 +1997,7 @@ function ArcadeGameView:onClose()
 	TaskDispatcher.cancelTask(self._playExcessiveOverTime, self)
 	TaskDispatcher.cancelTask(self.refreshWeapon, self)
 	TaskDispatcher.cancelTask(self.setCollections, self)
+	TaskDispatcher.cancelTask(self.closeDangerWarning, self)
 	self:recycleAllFlyEffectItem()
 
 	if self._isRunning then
@@ -1981,6 +2055,7 @@ end
 function ArcadeGameView:onDestroyView()
 	self._simageheroicon:UnLoadImage()
 	self._simageeventicon:UnLoadImage()
+	self._simagedangericon:UnLoadImage()
 	self:_clearWeaponItems()
 	self:_clearCollectionItems()
 	self:_clearOptionItemList()

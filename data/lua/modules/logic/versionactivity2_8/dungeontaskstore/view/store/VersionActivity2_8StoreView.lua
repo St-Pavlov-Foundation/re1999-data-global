@@ -36,6 +36,7 @@ end
 
 function VersionActivity2_8StoreView:onOpen()
 	self:refreshUI()
+	TaskDispatcher.runRepeat(self.refreshTime, self, 1)
 end
 
 function VersionActivity2_8StoreView:refreshUI()
@@ -55,7 +56,7 @@ function VersionActivity2_8StoreView:refreshTime()
 end
 
 function VersionActivity2_8StoreView:onClose()
-	return
+	TaskDispatcher.cancelTask(self.refreshTime, self)
 end
 
 function VersionActivity2_8StoreView:onDestroyView()

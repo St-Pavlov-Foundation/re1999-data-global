@@ -5,7 +5,7 @@ module("modules.logic.fight.view.FightBottomLeftView", package.seeall)
 local FightBottomLeftView = class("FightBottomLeftView", FightBaseView)
 
 function FightBottomLeftView:onInitView()
-	return
+	self.goRoot = gohelper.findChild(self.viewGO, "root/heroSkill")
 end
 
 function FightBottomLeftView:addEvents()
@@ -17,7 +17,17 @@ function FightBottomLeftView:removeEvents()
 end
 
 function FightBottomLeftView:onOpen()
-	return
+	self:showShouTaoPart()
+end
+
+function FightBottomLeftView:showShouTaoPart()
+	local shouTaoData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.ShowTaoFuBen]
+
+	if shouTaoData then
+		local url = "ui/viewres/fight/fight_gloves_skillview.prefab"
+
+		self:com_openSubView(FightGlovesSkillViewMgr, url, self.goRoot)
+	end
 end
 
 function FightBottomLeftView:onClose()

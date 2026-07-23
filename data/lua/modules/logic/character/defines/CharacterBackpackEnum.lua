@@ -16,6 +16,16 @@ CharacterBackpackEnum.LocalTags = {
 	CharacterBackpackEnum.TagId.System,
 	CharacterBackpackEnum.TagId.CharacterFeaturesHigh
 }
+CharacterBackpackEnum.Tag10000 = "10000"
+CharacterBackpackEnum.HiddenTags = {
+	[CharacterBackpackEnum.Tag10000] = true
+}
+CharacterBackpackEnum.ShowMappingTags = {
+	[CharacterBackpackEnum.Tag10000] = 61
+}
+CharacterBackpackEnum.CharacterSkillHideEffect = {
+	[3146] = true
+}
 CharacterBackpackEnum.dmgItemCount = 2
 CharacterBackpackEnum.attrItemCount = 6
 

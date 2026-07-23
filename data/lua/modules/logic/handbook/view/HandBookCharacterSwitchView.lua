@@ -19,12 +19,14 @@ function HandBookCharacterSwitchView:onInitView()
 	self._simageswitchbg4 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg4")
 	self._simageswitchbg5 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg5")
 	self._simageswitchbg6 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg6")
+	self._simageswitchbg7 = gohelper.findChildSingleImage(self.viewGO, "#go_characterswitch/#simage_switchbg7")
 	self._btncharacter1 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg1/clickarea")
 	self._btncharacter2 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg2/clickarea")
 	self._btncharacter3 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg3/clickarea")
 	self._btncharacter4 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg4/clickarea")
 	self._btncharacter5 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg5/clickarea")
 	self._btncharacter6 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg6/clickarea")
+	self._btncharacter7 = gohelper.findChildClick(self.viewGO, "#go_characterswitch/#simage_switchbg7/clickarea")
 	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self._btncollection = gohelper.findChildButtonWithAudio(self.viewGO, "#go_characterswitch/#btn_collection")
 
@@ -41,6 +43,7 @@ function HandBookCharacterSwitchView:addEvents()
 	self._btncharacter5:AddClickListener(self._btncharacter5OnClick, self)
 	self._btncharacter6:AddClickListener(self._btncharacter6OnClick, self)
 	self._btncollection:AddClickListener(self._btncollectionOnClick, self)
+	self._btncharacter7:AddClickListener(self._btncharacter7OnClick, self)
 end
 
 function HandBookCharacterSwitchView:removeEvents()
@@ -51,6 +54,7 @@ function HandBookCharacterSwitchView:removeEvents()
 	self._btncharacter5:RemoveClickListener()
 	self._btncharacter6:RemoveClickListener()
 	self._btncollection:RemoveClickListener()
+	self._btncharacter7:RemoveClickListener()
 end
 
 function HandBookCharacterSwitchView:_btncollectionOnClick()
@@ -87,6 +91,11 @@ function HandBookCharacterSwitchView:_btncharacter6OnClick()
 	self:_openSubCharacterView(6)
 end
 
+function HandBookCharacterSwitchView:_btncharacter7OnClick()
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_notice_open)
+	self:_openSubCharacterView(7)
+end
+
 function HandBookCharacterSwitchView:_openSubCharacterView(heroType)
 	HandbookController.instance:dispatchEvent(HandbookController.EventName.OnShowSubCharacterView, heroType)
 end
@@ -105,6 +114,7 @@ function HandBookCharacterSwitchView:_editableInitView()
 	self._simageswitchbg4:LoadImage(ResUrl.getHandbookCharacterImage("zz4"))
 	self._simageswitchbg5:LoadImage(ResUrl.getHandbookCharacterImage("zz5"))
 	self._simageswitchbg6:LoadImage(ResUrl.getHandbookCharacterImage("zz6"))
+	self._simageswitchbg7:LoadImage(ResUrl.getHandbookCharacterImage("zz7"))
 end
 
 function HandBookCharacterSwitchView:_playViewOpenAnim()
@@ -137,6 +147,7 @@ function HandBookCharacterSwitchView:onDestroyView()
 	self._simageswitchbg4:UnLoadImage()
 	self._simageswitchbg5:UnLoadImage()
 	self._simageswitchbg6:UnLoadImage()
+	self._simageswitchbg7:UnLoadImage()
 	self:removeEventCb(HandbookController.instance, HandbookController.EventName.PlayCharacterSwitchOpenAnim, self._playViewOpenAnim, self)
 end
 

@@ -20,6 +20,7 @@ function CharacterDestinyConfig:onInit()
 	self._slotTable = nil
 	self._destinyTable = nil
 	self._skillExlevelTable = nil
+	self._destinyBattleTagHeroIdDic = nil
 end
 
 function CharacterDestinyConfig:onConfigLoaded(configName, configTable)
@@ -241,6 +242,27 @@ function CharacterDestinyConfig:getSkillExlevelCos(facetsId)
 
 		return cos
 	end
+end
+
+function CharacterDestinyConfig:getHeroIdBydDestinyLastBattleTag(battleTag)
+	if self._destinyBattleTagHeroIdDic == nil then
+		self._destinyBattleTagHeroIdDic = {}
+
+		for facetId, heroId in pairs(self._destinyFacetHeroIdDic) do
+			local facetCostCo = self:getDestinyFacetConsumeCo(facetId)
+			local tagList = string.split(facetCostCo.tag, "#")
+
+			for _, tag in ipairs(tagList) do
+				if self._destinyBattleTagHeroIdDic[tag] == nil then
+					self._destinyBattleTagHeroIdDic[tag] = {}
+				end
+
+				table.insert(self._destinyBattleTagHeroIdDic[tag], heroId)
+			end
+		end
+	end
+
+	return self._destinyBattleTagHeroIdDic[battleTag] or nil
 end
 
 CharacterDestinyConfig.instance = CharacterDestinyConfig.New()

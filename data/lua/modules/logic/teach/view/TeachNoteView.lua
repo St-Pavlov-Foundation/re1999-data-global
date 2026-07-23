@@ -127,6 +127,8 @@ function TeachNoteView:_btnrewarddetailcloseOnClick()
 end
 
 function TeachNoteView:_btnrightlearnOnClick()
+	self:checkOpenView()
+
 	local id = TeachNoteModel.instance:getTeachNoticeTopicId()
 	local cos = TeachNoteModel.instance:getTopicLevelCos(id)
 	local rightLevelCo = cos[2 * self._tag + 2]
@@ -153,6 +155,8 @@ function TeachNoteView:_btnrightlearnOnClick()
 end
 
 function TeachNoteView:_btnleftlearnOnClick()
+	self:checkOpenView()
+
 	local id = TeachNoteModel.instance:getTeachNoticeTopicId()
 	local cos = TeachNoteModel.instance:getTopicLevelCos(id)
 	local leftLevelCo = cos[2 * self._tag + 1]
@@ -175,6 +179,12 @@ function TeachNoteView:_btnleftlearnOnClick()
 
 		TeachNoteModel.instance:setTeachNoteEnterFight(true, false)
 		DungeonFightController.instance:enterFight(chapterId, leftLevelCo.episodeId)
+	end
+end
+
+function TeachNoteView:checkOpenView()
+	if ViewMgr.instance:isOpen(ViewName.TeachingEnterView) then
+		TeachingModel.instance:setNeedOpenView(ViewName.TeachNoteView)
 	end
 end
 

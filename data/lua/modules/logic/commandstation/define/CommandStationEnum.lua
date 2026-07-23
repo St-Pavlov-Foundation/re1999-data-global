@@ -54,6 +54,7 @@ CommandStationEnum.PrefsKey = {
 	Version = 3,
 	RelationShipBoardFirstOpenLine = 8,
 	MainViewEntryAnim = 9,
+	CampNewFlag = 10,
 	RelationShipBoardFirstOpenCha = 7,
 	NewMapTip = 1,
 	RelationShipBoardFirstOpenTeam = 6,
@@ -83,6 +84,15 @@ CommandStationEnum.CharacterRelationColor = {
 	SLFramework.UGUI.GuiHelper.ParseColor("#154c98"),
 	(SLFramework.UGUI.GuiHelper.ParseColor("#981528"))
 }
+CommandStationEnum.RelationShipBoardPage = {
+	Default = 1,
+	Chapter13 = 2
+}
+
+if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isOnVer(3, 10) then
+	CommandStationEnum.RelationShipBoardPage.Chapter13 = CommandStationEnum.RelationShipBoardPage.Default
+end
+
 CommandStationEnum.CameraFov = 21
 CommandStationEnum.CameraRotation = -35
 CommandStationEnum.CameraRotaionMax = -90
@@ -98,7 +108,11 @@ CommandStationEnum.TimeItemSpace = 48
 CommandStationEnum.ClickOffset = 30
 CommandStationEnum.NoRelationShipChapterId = 111
 CommandStationEnum.UnlockRelationShipChapterId = 112
+CommandStationEnum.UnlockRelationShipChapterId2 = 113
 CommandStationEnum.ConstId_CurVersion = 300
 CommandStationEnum.ConstId_PaperItemId = 299
+CommandStationEnum.Page2_ChainId = 200000
+CommandStationEnum.MaxCampLocationIndex = 7
+CommandStationEnum.ForceHideCommandStation = false
 
 return CommandStationEnum

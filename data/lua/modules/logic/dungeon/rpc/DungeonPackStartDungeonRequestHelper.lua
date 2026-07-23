@@ -13,7 +13,9 @@ function DungeonPackStartDungeonRequestHelper.initHandle()
 		[DungeonEnum.EpisodeType.Rouge] = DungeonPackStartDungeonRequestHelper.packRougeCustomParam,
 		[DungeonEnum.EpisodeType.WeekWalk_2] = DungeonPackStartDungeonRequestHelper.packWeekWalkCustomParam,
 		[DungeonEnum.EpisodeType.Act183] = DungeonPackStartDungeonRequestHelper.packAct183CustomParam,
-		[DungeonEnum.EpisodeType.TowerCompose] = DungeonPackStartDungeonRequestHelper.packTowerComposeCustomParam
+		[DungeonEnum.EpisodeType.TowerCompose] = DungeonPackStartDungeonRequestHelper.packTowerComposeCustomParam,
+		[DungeonEnum.EpisodeType.Rouge2] = DungeonPackStartDungeonRequestHelper.packRouge2CustomParam,
+		[DungeonEnum.EpisodeType.AtomicDungeon] = DungeonPackStartDungeonRequestHelper.packAtomicDungeonCustomParam
 	}
 end
 
@@ -59,6 +61,41 @@ function DungeonPackStartDungeonRequestHelper.packTowerComposeCustomParam(reques
 	extraParams.supportAssistUid = tonumber(assistData.heroUid or 0)
 	extraParams.supportAssistType = assistData.assistType or 0
 	request.params = cjson.encode(extraParams)
+end
+
+function DungeonPackStartDungeonRequestHelper.packRouge2CustomParam(request, episodeConfig)
+	if request.fightGroup.trialHeroList then
+		for _, hero in pairs(request.fightGroup.trialHeroList) do
+			if hero.pos and hero.pos ~= 0 then
+				local pos = tonumber(hero.pos)
+
+				table.insert(request.fightGroup.heroList, pos, "0")
+			end
+		end
+	end
+end
+
+function DungeonPackStartDungeonRequestHelper.packAtomicDungeonCustomParam(request, episodeConfig)
+	local lastElementFightParam = AtomicDungeonModel.instance:getLastElementFightParam()
+	local elementId = 0
+
+	if lastElementFightParam and lastElementFightParam.lastEpisodeId == episodeConfig.id then
+		elementId = lastElementFightParam.lastElementId
+	end
+
+	local isPolygonEpisode, config = AtomicDungeonConfig.instance:checkIsPolygonEpisode(episodeConfig.id)
+
+	if isPolygonEpisode then
+		request.params = "2"
+	else
+		if elementId == 0 then
+			logError("事件id异常，请检查")
+
+			return
+		end
+
+		request.params = string.format("1#%d", elementId)
+	end
 end
 
 return DungeonPackStartDungeonRequestHelper

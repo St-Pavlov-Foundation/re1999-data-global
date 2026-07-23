@@ -95,7 +95,7 @@ function Rouge2_SystemHeroItem:onUpdateMO(heroCo, index)
 	self._index = index
 	self._heroCo = heroCo
 	self._heroId = heroCo and heroCo.id
-	self._heroMo = HeroModel.instance:getByHeroId(self._heroId)
+	self._heroMo = Rouge2_SystemController.instance:getHeroMo(self._heroId)
 	self._hasHero = self._heroMo ~= nil
 
 	self:refreshUI()
@@ -109,7 +109,7 @@ function Rouge2_SystemHeroItem:refreshUI()
 	if self._hasHero then
 		self:refreshUI_HasHero()
 	else
-		self.refreshUI_Empty()
+		self:refreshUI_Empty()
 	end
 end
 
@@ -161,7 +161,7 @@ function Rouge2_SystemHeroItem:refreshHeroTag()
 		for _, battleTag in ipairs(battleTagList) do
 			local battleTagCo = HeroConfig.instance:getBattleTagConfigCO(battleTag)
 			local systemId = tonumber(battleTag)
-			local systemCo = Rouge2_CareerConfig.instance:getSystemConfig(systemId)
+			local systemCo = Rouge2_CareerConfig.instance:getSystemConfig(systemId, true)
 			local visible = systemCo and systemCo.visible
 
 			if visible and visible ~= 0 then

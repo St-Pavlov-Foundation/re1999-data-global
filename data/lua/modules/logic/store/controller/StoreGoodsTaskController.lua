@@ -5,7 +5,7 @@ module("modules.logic.store.controller.StoreGoodsTaskController", package.seeall
 local StoreGoodsTaskController = class("StoreGoodsTaskController", BaseController)
 
 function StoreGoodsTaskController:onInit()
-	return
+	self._canAutoFinishTaskIdDict = {}
 end
 
 function StoreGoodsTaskController:onInitFinish()
@@ -14,6 +14,7 @@ end
 
 function StoreGoodsTaskController:addConstEvents()
 	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._onUpdateTaskList, self)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self._onSetTaskList, self)
 	StoreController.instance:registerCallback(StoreEvent.StoreInfoChanged, self._onStoreInfoChanged, self)
 	OpenController.instance:registerCallback(OpenEvent.GetOpenInfoSuccess, self._onStoreInfoChanged, self)
 	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, self._onFinishTask, self)
@@ -25,6 +26,7 @@ function StoreGoodsTaskController:reInit()
 	self._isRunUdateInfo = false
 	self._waitRewardtaskIdList = nil
 	self._lockSendTaskTimeDict = nil
+	self._canAutoFinishTaskIdDict = {}
 end
 
 function StoreGoodsTaskController:_onStoreInfoChanged()
@@ -49,6 +51,32 @@ function StoreGoodsTaskController:_onCancelWaitRewardTask()
 	end
 end
 
+function StoreGoodsTaskController:_onSetTaskList(taskTypeList)
+	if not taskTypeList then
+		return
+	end
+
+	for i = 1, #taskTypeList do
+		local type = taskTypeList[i]
+
+		if type == TaskEnum.TaskType.StoreLinkPackage then
+			local tStoreConfig = StoreConfig.instance
+			local taskMoInfoList = TaskModel.instance:getAllUnlockTasks(type)
+
+			for _, taskMo in pairs(taskMoInfoList) do
+				local chargeConditionalConfig = tStoreConfig:getChargeConditionalConfig(taskMo.id)
+
+				if chargeConditionalConfig and chargeConditionalConfig.clientType == StoreEnum.ChargeConditionalGetType.SP02 then
+					local goodsId = StoreConfig.instance:getChargeGoodsIdByConditionalId(taskMo.id)
+					local isClaimable = taskMo and taskMo:isClaimable()
+
+					StoreModel.instance:checkTaskRewardRedDotType_1(goodsId, chargeConditionalConfig, isClaimable)
+				end
+			end
+		end
+	end
+end
+
 function StoreGoodsTaskController:_onUpdateTaskList(msg)
 	local taskInfoList = msg and msg.taskInfo
 
@@ -60,22 +88,35 @@ function StoreGoodsTaskController:_onUpdateTaskList(msg)
 
 	for i = 1, #taskInfoList do
 		local taskInfo = taskInfoList[i]
+		local chargeConditionalConfig = tStoreConfig:getChargeConditionalConfig(taskInfo.id)
 
-		if tStoreConfig:getChargeConditionalConfig(taskInfo.id) then
-			if taskInfo.progress > taskInfo.finishCount then
-				if self._waitRewardtaskIdList == nil then
-					self._waitRewardtaskIdList = {}
-
-					TaskDispatcher.runDelay(self._onRunwaitRewardTask, self, 0.1)
+		if chargeConditionalConfig then
+			if chargeConditionalConfig.clientType == StoreEnum.ChargeConditionalGetType.Auto and taskInfo.progress > taskInfo.finishCount then
+				if self._canAutoFinishTaskIdDict[taskInfo.id] then
+					self:_addWaitRewardTask(taskInfo.id)
 				end
+			elseif chargeConditionalConfig.clientType == StoreEnum.ChargeConditionalGetType.SP02 then
+				local goodsId = StoreConfig.instance:getChargeGoodsIdByConditionalId(taskInfo.id)
+				local taskMo = TaskModel.instance:getTaskById(taskInfo.id)
+				local isClaimable = taskMo and taskMo:isClaimable()
 
-				if not tabletool.indexOf(self._waitRewardtaskIdList) then
-					table.insert(self._waitRewardtaskIdList, taskInfo.id)
-				end
+				StoreModel.instance:checkTaskRewardRedDotType_1(goodsId, chargeConditionalConfig, isClaimable)
 			end
 
 			self:waitUpdateRedDot()
 		end
+	end
+end
+
+function StoreGoodsTaskController:_addWaitRewardTask(taskid)
+	if self._waitRewardtaskIdList == nil then
+		self._waitRewardtaskIdList = {}
+
+		TaskDispatcher.runDelay(self._onRunwaitRewardTask, self, 0.1)
+	end
+
+	if not tabletool.indexOf(self._waitRewardtaskIdList) then
+		table.insert(self._waitRewardtaskIdList, taskid)
 	end
 end
 
@@ -86,12 +127,16 @@ function StoreGoodsTaskController:_onRunwaitRewardTask()
 
 	if taskIdList then
 		for _, taskid in ipairs(taskIdList) do
-			self:_sendFinishTaskRequest(taskid)
+			self:sendFinishTaskRequest(taskid)
 		end
 	end
 end
 
-function StoreGoodsTaskController:_sendFinishTaskRequest(taskid)
+function StoreGoodsTaskController:setAutoFininishTaskId(taskid)
+	self._canAutoFinishTaskIdDict[taskid] = true
+end
+
+function StoreGoodsTaskController:sendFinishTaskRequest(taskid)
 	self._lockSendTaskTimeDict = self._lockSendTaskTimeDict or {}
 
 	if not self._lockSendTaskTimeDict[taskid] or self._lockSendTaskTimeDict[taskid] < Time.time then
@@ -143,17 +188,7 @@ function StoreGoodsTaskController:_onWaitUpdateRedDot()
 end
 
 function StoreGoodsTaskController:isHasCanFinishTaskByPoolId(poolId)
-	local goodsCfgList = StoreConfig.instance:getCharageGoodsCfgListByPoolId(poolId)
-
-	if goodsCfgList then
-		for _, goodsCfg in ipairs(goodsCfgList) do
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsCfg.id) then
-				return true
-			end
-		end
-	end
-
-	return false
+	return SummonMainModel.instance:isHasCanFinishTaskByPoolId(poolId)
 end
 
 function StoreGoodsTaskController:autoFinishTaskByPoolId(poolId)
@@ -165,7 +200,7 @@ function StoreGoodsTaskController:autoFinishTaskByPoolId(poolId)
 			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(goodsCfg.id) then
 				flag = true
 
-				self:_sendFinishTaskRequest(goodsCfg.taskid)
+				self:sendFinishTaskRequest(goodsCfg.taskid)
 			end
 		end
 	end

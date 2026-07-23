@@ -19,8 +19,6 @@ function PlayerCardThemeItem:addEvents()
 	self.btnClick:AddClickListener(self._onClick, self)
 	PlayerCardController.instance:registerCallback(PlayerCardEvent.SwitchTheme, self.refreshUI, self)
 	PlayerCardController.instance:registerCallback(PlayerCardEvent.ChangeSkin, self.refreshUI, self)
-
-	self._bgreddot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._isShowRedDot, self)
 end
 
 function PlayerCardThemeItem:removeEvents()
@@ -62,6 +60,10 @@ function PlayerCardThemeItem:onUpdateMO(mo)
 	self._skinId = self._mo:isEmpty() and 0 or self._mo.id
 	self._config = self._mo:getConfig()
 
+	if not self._bgreddot then
+		self._bgreddot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._isShowRedDot, self)
+	end
+
 	if self._mo:isEmpty() then
 		self:refreshEmpty()
 	else
@@ -89,6 +91,8 @@ function PlayerCardThemeItem:refreshItem()
 
 	self.simageBg:LoadImage(ResUrl.getPlayerCardIcon("banner/" .. self._skinId))
 	gohelper.setActive(self.goLocked, not self._mo:isUnLock())
+	self._bgreddot:setShowType(RedDotEnum.Style.Normal)
+	self._bgreddot:setCheckShowRedDotFunc(self._isShowRedDot, self)
 end
 
 function PlayerCardThemeItem:onDestroy()

@@ -5,11 +5,13 @@ module("modules.logic.rouge2.backpack.view.Rouge2_CommonItemDescModeSwitcher", p
 local Rouge2_CommonItemDescModeSwitcher = class("Rouge2_CommonItemDescModeSwitcher", LuaCompBase)
 
 function Rouge2_CommonItemDescModeSwitcher.Load(go, dataFlag)
-	if string.nilorempty(dataFlag) or gohelper.isNil(go) then
-		logError("Rouge2_CommonItemDescModeSwitcher.Get error  dataFlag or go is nil")
+	if gohelper.isNil(go) then
+		logError("Rouge2_CommonItemDescModeSwitcher.Get error !!! go is nil")
 
 		return
 	end
+
+	dataFlag = dataFlag or Rouge2_Enum.ItemDescModeDataKey.Default
 
 	local loader = PrefabInstantiate.Create(go)
 

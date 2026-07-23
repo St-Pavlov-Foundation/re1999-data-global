@@ -3,8 +3,8 @@
 module("modules.logic.gm.controller.SendWeWorkFileHelper", package.seeall)
 
 local SendWeWorkFileHelper = class("SendWeWorkFileHelper")
-local uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=eea1a1a3-ed85-49a2-9178-449d249f1329&type=file"
-local sendMsgUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=eea1a1a3-ed85-49a2-9178-449d249f1329"
+local uploadUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=a3b431f1-18ee-441b-85fd-6b637aac87e6&type=file"
+local sendMsgUrl = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a3b431f1-18ee-441b-85fd-6b637aac87e6"
 
 function SendWeWorkFileHelper.SendUserInfo(callback, callbackObj)
 	local deviceUser = UnityEngine.SystemInfo.deviceModel

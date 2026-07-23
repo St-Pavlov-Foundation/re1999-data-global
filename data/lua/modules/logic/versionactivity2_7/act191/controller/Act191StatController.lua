@@ -11,11 +11,9 @@ end
 function Act191StatController:reInit()
 	self.viewOpenTimeMap = {}
 	self.startTime = nil
-	self.actId = VersionActivity3_1Enum.ActivityId.DouQuQu3
 end
 
-function Act191StatController:setActInfo(actId, info)
-	self.actId = actId
+function Act191StatController:setActInfo(info)
 	self.actInfo = info
 end
 
@@ -72,7 +70,8 @@ function Act191StatController:statViewClose(viewName, manual, param)
 		end
 	end
 
-	local gameUid = Activity191Helper.getPlayerPrefs(self.actId, "Act191GameCostTime", 1)
+	local actId = Activity191Controller.instance:getActId()
+	local gameUid = Activity191Helper.getPlayerPrefs(actId, "Act191GameCostTime", 1)
 
 	StatController.instance:track(StatEnum.EventName.Act191CloseView, {
 		[StatEnum.EventProperties.Act191GameUid] = tostring(gameUid),
@@ -107,7 +106,8 @@ function Act191StatController:statButtonClick(viewName, buttonName)
 		}
 	end
 
-	local gameUid = Activity191Helper.getPlayerPrefs(self.actId, "Act191GameCostTime", 1)
+	local actId = Activity191Controller.instance:getActId()
+	local gameUid = Activity191Helper.getPlayerPrefs(actId, "Act191GameCostTime", 1)
 
 	StatController.instance:track(StatEnum.EventName.ButtonClick, {
 		[StatEnum.EventProperties.Act191GameUid] = tostring(gameUid),
@@ -124,7 +124,9 @@ function Act191StatController:statGameTime(viewName)
 	if self.startTime then
 		useTime = ServerTime.now() - self.startTime
 	else
-		useTime = ServerTime.now() - FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].createTime
+		local creatTime = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act191].createTime or ServerTime.now()
+
+		useTime = ServerTime.now() - creatTime
 	end
 
 	local baseInfo = {}
@@ -154,7 +156,8 @@ function Act191StatController:statGameTime(viewName)
 		end
 	end
 
-	local gameUid = Activity191Helper.getPlayerPrefs(self.actId, "Act191GameCostTime", 1)
+	local actId = Activity191Controller.instance:getActId()
+	local gameUid = Activity191Helper.getPlayerPrefs(actId, "Act191GameCostTime", 1)
 
 	StatController.instance:track(StatEnum.EventName.Act191GameTime, {
 		[StatEnum.EventProperties.Act191BaseInfo] = baseInfo,

@@ -468,7 +468,7 @@ function SurvivalInitHeroSelectView:_refreshPassiveSkill()
 end
 
 function SurvivalInitHeroSelectView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, true)
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, true, CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function SurvivalInitHeroSelectView:_refreshBtnIcon()
@@ -639,6 +639,10 @@ function SurvivalInitHeroSelectView:onClose()
 	CommonHeroHelper.instance:resetGrayState()
 	CharacterController.instance:closeCharacterFilterView()
 	CharacterSearchFilterModel.instance:exitParentView()
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
+	end
 end
 
 function SurvivalInitHeroSelectView:_onAudioTrigger(audioId)

@@ -8,12 +8,14 @@ function ItemPowerModel:onInit()
 	self._powerItemList = {}
 	self._latestPushItemUids = {}
 	self._powerMakerInfo = {}
+	self._cacheFirstPowerMakerInfo = nil
 end
 
 function ItemPowerModel:reInit()
 	self._powerItemList = {}
 	self._latestPushItemUids = {}
 	self._powerMakerInfo = {}
+	self._cacheFirstPowerMakerInfo = nil
 end
 
 function ItemPowerModel:getPowerItem(uid)
@@ -314,10 +316,20 @@ function ItemPowerModel:onGetPowerMakerInfo(msg)
 		itemTotalCount = itemTotalCount or 0,
 		nowTime = ServerTime.now() or 0
 	}
+
+	self:setPowerMakerItemsList()
+
+	if not self._cacheFirstPowerMakerInfo then
+		self._cacheFirstPowerMakerInfo = tabletool.copy(self._powerMakerInfo)
+	end
 end
 
 function ItemPowerModel:getPowerMakerInfo()
 	return self._powerMakerInfo
+end
+
+function ItemPowerModel:getCacheFirstPowerMakerInfo()
+	return self._cacheFirstPowerMakerInfo
 end
 
 ItemPowerModel.instance = ItemPowerModel.New()

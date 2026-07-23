@@ -1,0 +1,50 @@
+[
+  {
+    "id": 10001,
+    "type": 1,
+    "name": "language_10120213",
+    "group": 0,
+    "desc": "language_10128410",
+    "mapId": 10000,
+    "functionId": 0,
+    "price": "1000101#1000102#1000103#1000104",
+    "icon": "sodache_map_weather_1#sodache_map_weather_2#sodache_map_weather_3",
+    "image": "sodache_map_pic_1",
+    "time": "24000014#24000015#24000016",
+    "faith": 20004,
+    "careerNum": 2,
+    "adoLv": 5
+  },
+  {
+    "id": 10002,
+    "type": 2,
+    "name": "language_10120213",
+    "group": 0,
+    "desc": "language_10128411",
+    "mapId": 10000,
+    "functionId": 3,
+    "price": "2000101#2000102#2000103#2000104",
+    "icon": "sodache_map_weather_1#sodache_map_weather_2#sodache_map_weather_3",
+    "image": "sodache_map_pic_1",
+    "time": "24000014#24000015#24000016",
+    "faith": 20005,
+    "careerNum": 3,
+    "adoLv": 5
+  },
+  {
+    "id": 90000,
+    "type": 9,
+    "name": "language_10120213",
+    "group": 0,
+    "desc": "language_10128410",
+    "mapId": 10001,
+    "functionId": 0,
+    "price": "9000001",
+    "icon": "sodache_map_weather_1#sodache_map_weather_2#sodache_map_weather_3",
+    "image": "sodache_map_pic_1",
+    "time": "24000014#24000015#24000016",
+    "faith": 20003,
+    "careerNum": 1,
+    "adoLv": 5
+  }
+]

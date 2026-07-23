@@ -2,19 +2,14 @@
 
 module("modules.logic.rouge2.backpack.view.Rouge2_BackpackSkillView", package.seeall)
 
-local Rouge2_BackpackSkillView = class("Rouge2_BackpackSkillView", BaseView)
-
-Rouge2_BackpackSkillView.ViewState = {
-	Panel = 1,
-	Edit = 2
-}
-Rouge2_BackpackSkillView.ViewState2AnimName = {
-	[Rouge2_BackpackSkillView.ViewState.Panel] = "toskill",
-	[Rouge2_BackpackSkillView.ViewState.Edit] = "toskilledit"
-}
+local Rouge2_BackpackSkillView = class("Rouge2_BackpackSkillView", BaseViewExtended)
 
 function Rouge2_BackpackSkillView:onInitView()
-	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+	self._goTab = gohelper.findChild(self.viewGO, "#go_Tab")
+	self._goEmpty = gohelper.findChild(self.viewGO, "#go_Prop/#go_Empty")
+	self._scrollSkill = gohelper.findChildScrollRect(self.viewGO, "#go_Prop/#scroll_Skill")
+	self._goSkillItem = gohelper.findChild(self.viewGO, "#go_Prop/#scroll_Skill/Viewport/Content/#go_SkillItem")
+	self._goSkillContent = gohelper.findChild(self.viewGO, "#go_Prop/#scroll_Skill/Viewport/Content")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -22,74 +17,70 @@ function Rouge2_BackpackSkillView:onInitView()
 end
 
 function Rouge2_BackpackSkillView:addEvents()
-	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnSwitchSkillViewType, self._onSwitchSkillViewType, self)
+	self._scrollSkill:AddOnValueChanged(self._scrollSkillChanged, self)
 end
 
 function Rouge2_BackpackSkillView:removeEvents()
-	return
+	self._scrollSkill:RemoveOnValueChanged()
+end
+
+function Rouge2_BackpackSkillView:_scrollSkillChanged()
+	if self.isClose then
+		return
+	end
+
+	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OnScrollSkillBag)
 end
 
 function Rouge2_BackpackSkillView:_editableInitView()
-	self:initChildViews()
-	self._animator:Rebind()
+	self._goScroll = self._scrollSkill.gameObject
+
+	gohelper.setActive(self._goSkillItem, false)
+
+	self._animator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
+
+	Rouge2_BackpackSkillListModel.instance:initList()
+	self:initScrollView()
 end
 
 function Rouge2_BackpackSkillView:onOpen()
+	self.isClose = false
+
+	self:refreshUI()
 	self._animator:Play("open", 0, 0)
-	self:switchState(Rouge2_BackpackSkillView.ViewState.Panel)
 end
 
-function Rouge2_BackpackSkillView:initChildViews()
-	self._childViewMap = {}
-
-	if Rouge2_Model.instance:isUseYBXCareer() then
-		self._goPanel = self:getResInst(Rouge2_Enum.ResPath.BackpackTalentView, self.viewGO, "SkillTalent")
-		self._childViewMap[Rouge2_BackpackSkillView.ViewState.Panel] = Rouge2_BackpackSkillTalentView.New()
-	else
-		self._goPanel = self:getResInst(Rouge2_Enum.ResPath.BackpackSkillPanelView, self.viewGO, "SkillPanel")
-		self._childViewMap[Rouge2_BackpackSkillView.ViewState.Panel] = Rouge2_BackpackSkillPanelView.New()
-	end
-
-	self._childViewMap[Rouge2_BackpackSkillView.ViewState.Edit] = Rouge2_BackpackSkillEditView.New()
-
-	for _, childView in pairs(self._childViewMap) do
-		self:addChildView(childView)
-	end
+function Rouge2_BackpackSkillView:refreshUI()
+	Rouge2_BackpackSkillListModel.instance:initList()
+	gohelper.setActive(self._goEmpty, Rouge2_BackpackSkillListModel.instance:getCount() <= 0)
 end
 
-function Rouge2_BackpackSkillView:switchState(state, params)
-	if self._state == state then
-		return
-	end
+function Rouge2_BackpackSkillView:initScrollView()
+	local scrollParam = ListScrollParam.New()
 
-	local animName = self._state and Rouge2_BackpackSkillView.ViewState2AnimName[state]
+	scrollParam.scrollGOPath = "#go_Prop/#scroll_Skill"
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.prefabUrl = "#go_Prop/#scroll_Skill/Viewport/Content/#go_SkillItem"
+	scrollParam.cellClass = Rouge2_BackpackSkillListItem
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.lineCount = 1
+	scrollParam.cellWidth = 520
+	scrollParam.cellHeight = 780
+	scrollParam.cellSpaceV = 0
 
-	if not string.nilorempty(animName) then
-		self._animator:Play(animName, 0, 0)
-	end
+	local scrollView = LuaListScrollView.New(Rouge2_BackpackSkillListModel.instance, scrollParam)
 
-	local childView = self._childViewMap[state]
+	self:addChildView(scrollView)
 
-	if not childView then
-		return
-	end
-
-	if self._curChildView then
-		self._curChildView:onCloseChildView()
-	end
-
-	self._state = state
-	self._curChildView = childView
-
-	self._curChildView:onOpenChildView(params)
+	self._scrollSkill.verticalNormalizedPosition = 1
 end
 
-function Rouge2_BackpackSkillView:_onSwitchSkillViewType(state, params)
-	self:switchState(state, params)
+function Rouge2_BackpackSkillView:onClose()
+	self.isClose = true
 end
 
-function Rouge2_BackpackSkillView:getView(viewState)
-	return self._childViewMap and self._childViewMap[viewState]
+function Rouge2_BackpackSkillView:onDestroyView()
+	return
 end
 
 return Rouge2_BackpackSkillView

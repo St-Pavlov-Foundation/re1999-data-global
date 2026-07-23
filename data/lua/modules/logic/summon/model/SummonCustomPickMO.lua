@@ -27,6 +27,8 @@ function SummonCustomPickMO:update(info)
 	end
 
 	self.hasGetRewardProgresses = info.hasGetRewardProgresses or {}
+
+	self:initOptionalRewardData(info)
 end
 
 function SummonCustomPickMO:isPicked(poolId)
@@ -43,6 +45,40 @@ function SummonCustomPickMO:getRewardCount()
 	end
 
 	return 0
+end
+
+function SummonCustomPickMO:initOptionalRewardData(info)
+	self.chooseRewardInfos = info.chooseRewardInfos or {}
+	self._optionalRewardSelectDic = {}
+	self._getOptionalRewardCount = 0
+
+	if self.chooseRewardInfos and next(self.chooseRewardInfos) then
+		for i, chooseRewardInfo in ipairs(self.chooseRewardInfos) do
+			self:updateOptionalData(chooseRewardInfo.progress, chooseRewardInfo.chooseIndex)
+		end
+	end
+end
+
+function SummonCustomPickMO:updateOptionalData(progressId, chooseIndex)
+	self._optionalRewardSelectDic[progressId] = chooseIndex
+
+	if chooseIndex ~= 0 then
+		self._getOptionalRewardCount = self._getOptionalRewardCount + 1
+	end
+end
+
+function SummonCustomPickMO:getOptionalRewardCount()
+	return self._getOptionalRewardCount or 0
+end
+
+function SummonCustomPickMO:getOptionalRewardSelect(progressId)
+	return self._optionalRewardSelectDic and self._optionalRewardSelectDic[progressId] or 0
+end
+
+function SummonCustomPickMO:isOptionalRewardGet(progressId)
+	local selectIndex = self:getOptionalRewardSelect(progressId)
+
+	return selectIndex ~= 0
 end
 
 function SummonCustomPickMO:sortPickHeroIdsByRule()

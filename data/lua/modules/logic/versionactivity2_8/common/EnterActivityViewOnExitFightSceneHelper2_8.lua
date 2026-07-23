@@ -4,6 +4,10 @@ module("modules.logic.versionactivity2_8.common.EnterActivityViewOnExitFightScen
 
 local EnterActivityViewOnExitFightSceneHelper = EnterActivityViewOnExitFightSceneHelper
 
+local function _openPermanent_EnterView(viewParam)
+	PermanentController.instance:jump2Activity(VersionActivity2_8Enum.ActivityId.EnterView, viewParam)
+end
+
 function EnterActivityViewOnExitFightSceneHelper.activate()
 	return
 end
@@ -14,8 +18,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12810(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_8EnterView)
-		VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_8Enum.ActivityId.NuoDiKa, true)
+		local actId = VersionActivity2_8Enum.ActivityId.NuoDiKa
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		NuoDiKaController.instance:enterLevelView()
 	end)
 end
 
@@ -25,8 +32,11 @@ function EnterActivityViewOnExitFightSceneHelper.enterActivity12811(forceStartin
 
 	MainController.instance:enterMainScene(forceStarting)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_8EnterView)
-		VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_8Enum.ActivityId.MoLiDeEr, true)
+		local actId = VersionActivity2_8Enum.ActivityId.MoLiDeEr
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, RoleActivityEnum.LevelView[actId])
+		_openPermanent_EnterView()
+		MoLiDeErController.instance:enterLevelView(actId)
 	end)
 end
 

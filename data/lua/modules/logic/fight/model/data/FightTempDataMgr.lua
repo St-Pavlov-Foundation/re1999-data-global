@@ -16,14 +16,39 @@ function FightTempDataMgr:onConstructor()
 	self.douQuQuDice = nil
 	self.canNotSelectEntityIdDic = {}
 	self.battleSelectCount = 0
+	self.monsterPosList = nil
+	self.lockMyturnCamera = false
+	self.myStanceId = nil
+	self.is3_7BossQteing = false
+	self.isSkipBattle = false
+	self.isNdkQteing = false
+	self.is3_7BossQtePre = false
 end
 
 function FightTempDataMgr:onCancelOperation()
 	self.combineCount = 0
+
+	if self.unnamedDataMgr then
+		self.unnamedDataMgr:onCancelOperation()
+	end
 end
 
 function FightTempDataMgr:onStageChanged()
 	self.combineCount = 0
+
+	if self.unnamedDataMgr then
+		self.unnamedDataMgr:onStageChanged()
+	end
+end
+
+function FightTempDataMgr:getUnnamedDataMgr()
+	if not self.unnamedDataMgr then
+		self.unnamedDataMgr = FightUnnamedDataMgr.New()
+
+		self.unnamedDataMgr:init()
+	end
+
+	return self.unnamedDataMgr
 end
 
 function FightTempDataMgr:setAutoSelectedCrystal(selected)
@@ -36,6 +61,24 @@ end
 
 function FightTempDataMgr:clearBattleSelectCount()
 	self.battleSelectCount = 0
+end
+
+function FightTempDataMgr:onInsertHandCard(cardInfoData)
+	if not cardInfoData then
+		return
+	end
+
+	if cardInfoData:checkIsUnnamedCard() then
+		local unnamedDataMgr = self:getUnnamedDataMgr()
+
+		unnamedDataMgr:clearUnnamedSpecialSkillPlayedData()
+	end
+end
+
+function FightTempDataMgr:onPlayHandCard(fightBeginRoundOp)
+	local unnamedMgr = self:getUnnamedDataMgr()
+
+	unnamedMgr:onPlayHandCard(fightBeginRoundOp)
 end
 
 return FightTempDataMgr

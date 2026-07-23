@@ -155,7 +155,7 @@ function StoryFrontView:_onKeyExit()
 	end
 
 	if self._exitBtn and self._goexit.activeInHierarchy then
-		StoryController.instance:dispatchEvent(StoryEvent.SkipClick)
+		StoryController.instance:dispatchEvent(StoryEvent.OnBtnSkipClick)
 		self._exitBtn:onClickExitBtn()
 	end
 end
@@ -222,7 +222,7 @@ function StoryFrontView:_btnskipOnClick()
 		return
 	end
 
-	StoryController.instance:dispatchEvent(StoryEvent.SkipClick)
+	StoryController.instance:dispatchEvent(StoryEvent.OnBtnSkipClick)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_plot_common)
 	StoryModel.instance:setStoryAuto(false)
 
@@ -271,7 +271,7 @@ end
 function StoryFrontView:_onSkipConfirm()
 	gohelper.setActive(self._goepisode, false)
 	gohelper.setActive(self._gochapteropen, false)
-	StoryController.instance:dispatchEvent(StoryEvent.Skip)
+	StoryController.instance:dispatchEvent(StoryEvent.OnSkipConfirm)
 end
 
 function StoryFrontView:_btnnextOnClick()
@@ -333,6 +333,12 @@ function StoryFrontView:_btnnextOnClick()
 		self:setBtnVisible(true)
 	end
 
+	if self._frontItem.showingClickableScreenText then
+		self._frontItem:clickFullScreentText()
+
+		return
+	end
+
 	if not autoSkip then
 		StoryController.instance:dispatchEvent(StoryEvent.EnterNextStep)
 	end
@@ -340,17 +346,30 @@ end
 
 function StoryFrontView:_editableInitView()
 	self._btnnext = gohelper.findChildButton(self.viewGO, "btn_next")
-	self._btnnextMidClick = SLFramework.UGUI.UIMiddleClickListener.Get(self._btnnext.gameObject)
-	self._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self._btnnext.gameObject)
-
-	self._touchEventMgr:SetIgnoreUI(true)
-	self._touchEventMgr:SetOnlyTouch(true)
-	self._touchEventMgr:SetScrollWheelCb(self._btnnextOnMidClick, self)
-
 	self._imagehide = gohelper.findChildImage(self.viewGO, "#go_btns/#go_btnleft/#btn_hide/icon")
 
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	gohelper.setActive(self._txtskip.gameObject, not isOverseas)
+	gohelper.setActive(self._imageskiptxt.gameObject, isOverseas)
+	gohelper.setActive(self._txtauto.gameObject, not isOverseas)
+	gohelper.setActive(self._imageautotxt.gameObject, isOverseas)
 	gohelper.setActive(self._imageautooff.gameObject, true)
 	gohelper.setActive(self._imageautoon.gameObject, false)
+	gohelper.setActive(self._txtexit.gameObject, not isOverseas)
+	gohelper.setActive(self._imageexittxt.gameObject, isOverseas)
+
+	if isOverseas then
+		self._btnnextMidClick = SLFramework.UGUI.UIMiddleClickListener.Get(self._btnnext.gameObject)
+		self._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(self._btnnext.gameObject)
+
+		self._touchEventMgr:SetIgnoreUI(true)
+		self._touchEventMgr:SetOnlyTouch(true)
+		self._touchEventMgr:SetScrollWheelCb(self._btnnextOnMidClick, self)
+		gohelper.removeComponent(self._txtstrategy.gameObject, typeof(SLFramework.LangTxt))
+
+		self._txtstrategy.text = "TACTICAL MAP"
+	end
 
 	if not self._frontItem then
 		self._frontItem = StoryFrontItem.New()
@@ -375,8 +394,14 @@ end
 
 function StoryFrontView:onOpen()
 	self._btnnext:AddClickListener(self._btnnextOnClick, self)
-	self._btnnextMidClick:AddClickListener(self._btnnextOnMidClick, self)
-	self:addEventCb(StoryController.instance, StoryEvent.Skip, self._onSkip, self)
+	self:addEventCb(StoryController.instance, StoryEvent.OnSkipConfirm, self._onSkip, self)
+
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas then
+		self._btnnextMidClick:AddClickListener(self._btnnextOnMidClick, self)
+	end
+
 	self:addEventCb(StoryController.instance, StoryEvent.AutoChange, self._onAutoChange, self)
 	self:addEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, self._reOpenStory, self)
 	self:addEventCb(StoryController.instance, StoryEvent.AllStepFinished, self._screenFadeOut, self)
@@ -391,7 +416,7 @@ function StoryFrontView:onOpen()
 	self:addEventCb(StoryController.instance, StoryEvent.RefreshNavigate, self._refreshNavigate, self)
 	self:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
 	self:addEventCb(StoryController.instance, StoryEvent.HideTopBtns, self._onHideBtns, self)
-	self:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
+	self:addEventCb(StoryController.instance, StoryEvent.OnPrologueSkipClick, self._onPrologueSkip, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._setBtnsVisible, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._setBtnsVisible, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
@@ -428,12 +453,17 @@ end
 
 function StoryFrontView:onClose()
 	self._btnnext:RemoveClickListener()
-	self:removeEventCb(StoryController.instance, StoryEvent.Skip, self._onSkip, self)
+	self:removeEventCb(StoryController.instance, StoryEvent.OnSkipConfirm, self._onSkip, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.AutoChange, self._onAutoChange, self)
-	self._btnnextMidClick:RemoveClickListener()
 
-	if not gohelper.isNil(self._touchEventMgr) then
-		self._touchEventMgr:ClearAllCallback()
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas then
+		self._btnnextMidClick:RemoveClickListener()
+
+		if not gohelper.isNil(self._touchEventMgr) then
+			self._touchEventMgr:ClearAllCallback()
+		end
 	end
 
 	self:removeEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, self._reOpenStory, self)
@@ -449,7 +479,7 @@ function StoryFrontView:onClose()
 	self:removeEventCb(StoryController.instance, StoryEvent.RefreshNavigate, self._refreshNavigate, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
 	self:removeEventCb(StoryController.instance, StoryEvent.HideTopBtns, self._onHideBtns, self)
-	self:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, self._onPrologueSkip, self)
+	self:removeEventCb(StoryController.instance, StoryEvent.OnPrologueSkipClick, self._onPrologueSkip, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, self._setBtnsVisible, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._setBtnsVisible, self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self._onOpenView, self)
@@ -459,6 +489,10 @@ end
 function StoryFrontView:_onSkip()
 	gohelper.setActive(self._goepisode, false)
 	gohelper.setActive(self._gochapteropen, false)
+
+	if self._navigateItem then
+		self._navigateItem:onSkip()
+	end
 end
 
 function StoryFrontView:_onAutoChange()
@@ -492,6 +526,8 @@ function StoryFrontView:_onPlayFullText(stepCo)
 	elseif self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Glitch then
 		self._frontItem:playTextFadeIn(self._stepCo, self._onFullTextShowFinished, self)
 		self._frontItem:playGlitch()
+	elseif self._stepCo.conversation.effType == StoryEnum.ConversationEffectType.GostMagic then
+		self._frontItem:playGostMagic(self._stepCo, self._onFullTextShowFinished, self)
 	end
 end
 
@@ -593,10 +629,10 @@ function StoryFrontView:_onUpdateUI(param)
 
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtskip, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._imageskip, color2)
+	SLFramework.UGUI.GuiHelper.SetColor(self._imageskiptxt, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtauto, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._imageautooff, color2)
 	SLFramework.UGUI.GuiHelper.SetColor(self._imageautoon, color2)
-	SLFramework.UGUI.GuiHelper.SetColor(self._imageskiptxt, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._imageautotxt, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._txtstrategy, color1)
 	SLFramework.UGUI.GuiHelper.SetColor(self._imagestrategy, color2)
@@ -740,7 +776,7 @@ end
 
 function StoryFrontView:_onScreenFadeOut()
 	if self._navigateItem then
-		self._navigateItem:clear()
+		self._navigateItem:onFadeOut()
 	end
 end
 
@@ -779,6 +815,8 @@ function StoryFrontView:setBtnVisible(isVisible)
 
 	if hideTopBtns then
 		gohelper.setActive(self._gobtns, false)
+
+		self.btnVisible = false
 
 		return
 	end

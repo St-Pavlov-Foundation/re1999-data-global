@@ -518,5 +518,80 @@
     "skinId": 314302,
     "animName": "interact",
     "shadow": 1
+  },
+  {
+    "skinId": 314601,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314602,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314701,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314702,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314501,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314502,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314001,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314002,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314901,
+    "animName": "idle_room",
+    "shadow": 1
+  },
+  {
+    "skinId": 314902,
+    "animName": "idle_room",
+    "shadow": 1
+  },
+  {
+    "skinId": 314903,
+    "animName": "idle_room",
+    "shadow": 1
+  },
+  {
+    "skinId": 314901,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314902,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 314903,
+    "animName": "interact",
+    "shadow": 1
+  },
+  {
+    "skinId": 310504,
+    "animName": "interact",
+    "shadow": 1
   }
 ]

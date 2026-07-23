@@ -22,6 +22,7 @@ function VirtualFixedJoystick:init(go)
 	self._transhandle.anchorMax.y = CENTER_PIVOT
 	self._transhandle.pivot.x = CENTER_PIVOT
 	self._transhandle.pivot.y = CENTER_PIVOT
+	self._transhandlePos = Vector2.zero
 	self._input = Vector2.zero
 	self._click = SLFramework.UGUI.UIClickListener.Get(self.go)
 	self._drag = SLFramework.UGUI.UIDragListener.Get(self.go)
@@ -92,6 +93,13 @@ function VirtualFixedJoystick:refreshHandlePos()
 	posY = GameUtil.clamp(posY, -self._radius, self._radius)
 
 	transformhelper.setLocalPosXY(self._transhandle, posX, posY)
+
+	self._transhandlePos.x = posX
+	self._transhandlePos.y = posY
+end
+
+function VirtualFixedJoystick:getStrength()
+	return self._transhandlePos.magnitude / self._radius
 end
 
 function VirtualFixedJoystick:getIsDragging()

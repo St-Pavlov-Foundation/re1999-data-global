@@ -12,13 +12,11 @@ function SocialMessageItem:onInitView()
 	self._goright = gohelper.findChild(self.viewGO, "#go_right")
 	self._goplayericonright = gohelper.findChild(self.viewGO, "#go_right/#go_playericonright")
 	self._txtnameright = gohelper.findChildText(self.viewGO, "#go_right/textcontainer/#txt_nameright")
-	self._txtcontentright = gohelper.findChildText(self.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright")
 	self._gochattime = gohelper.findChild(self.viewGO, "#go_chattime")
 	self._txtchattime = gohelper.findChildText(self.viewGO, "#go_chattime/#txt_chattime")
-	self._btnopright = gohelper.findChildButtonWithAudio(self.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright")
-	self._txtopright = gohelper.findChildText(self.viewGO, "#go_right/textcontainer/content/contentbg/#txt_contentright/#btn_opright/#txt_opright")
 	self._btnopleft = gohelper.findChildButtonWithAudio(self.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft")
 	self._txtopleft = gohelper.findChildText(self.viewGO, "#go_left/textcontainer/content/contentbg/#txt_contentleft/#btn_opleft/#txt_opleft")
+	self._gocontent = gohelper.findChild(self.viewGO, "#go_right/textcontainer/content")
 	self._gowarm = gohelper.findChild(self.viewGO, "#go_warm")
 
 	if self._editableInitView then
@@ -28,14 +26,30 @@ end
 
 function SocialMessageItem:addEvents()
 	self:addEventCb(SocialController.instance, SocialEvent.FriendDescChange, self.updateDesc, self)
+	self:addEventCb(SocialController.instance, SocialEvent.CutSelectSocialBg, self.selectUseSkin, self)
 	self._btnopleft:AddClickListener(self._btnopleftOnClick, self)
 	self._btnopright:AddClickListener(self._btnoprightOnClick, self)
 end
 
 function SocialMessageItem:removeEvents()
 	self:removeEventCb(SocialController.instance, SocialEvent.FriendDescChange, self.updateDesc, self)
+	self:removeEventCb(SocialController.instance, SocialEvent.CutSelectSocialBg, self.selectUseSkin, self)
 	self._btnopleft:RemoveClickListener()
 	self._btnopright:RemoveClickListener()
+end
+
+function SocialMessageItem:selectUseSkin(isSelf)
+	local skinId = self.viewParam and self.viewParam.skinId or PlayerCardModel.instance:getPlayerCardSkinId()
+
+	if not isSelf then
+		local selectFriend = SocialModel.instance:getSelectFriend()
+		local playerMO = SocialModel.instance:getPlayerMO(selectFriend)
+
+		skinId = playerMO.bg
+	end
+
+	self:refreshCountBg(skinId)
+	self:_refreshUI()
 end
 
 function SocialMessageItem:_btnopleftOnClick()
@@ -47,7 +61,49 @@ function SocialMessageItem:_btnoprightOnClick()
 end
 
 function SocialMessageItem:_editableInitView()
-	return
+	self._countentBg = self:getUserDataTb_()
+
+	for i = 1, self._gocontent.transform.childCount do
+		local child = self._gocontent.transform:GetChild(i - 1).gameObject
+		local split = string.split(child.name, "_")
+		local id = tonumber(split[2]) or 0
+
+		self._countentBg[id] = child
+
+		gohelper.setActive(child, false)
+	end
+end
+
+function SocialMessageItem:refreshCountBg(skinId)
+	local showId = skinId
+
+	if not self._countentBg[skinId] then
+		showId = 0
+	end
+
+	if self._btnopright then
+		self._btnopright:RemoveClickListener()
+	end
+
+	for id, bg in pairs(self._countentBg) do
+		if id == showId then
+			self._btnopright = gohelper.findChildButtonWithAudio(bg, "#txt_contentright/#btn_opright")
+			self._txtopright = gohelper.findChildText(bg, "#txt_contentright/#btn_opright/#txt_opright")
+			self._txtcontentright = gohelper.findChildText(bg, "#txt_contentright")
+
+			self._btnopright:AddClickListener(self._btnoprightOnClick, self)
+		end
+
+		gohelper.setActive(bg, id == showId)
+	end
+
+	self:_refreshUI()
+end
+
+function SocialMessageItem:_refresh()
+	local isSelfBg = SocialModel.instance:isSelectSocialBg()
+
+	self:selectUseSkin(isSelfBg)
 end
 
 function SocialMessageItem:_refreshUI()
@@ -148,14 +204,14 @@ end
 
 function SocialMessageItem:updateDesc(id)
 	if id == self._mo.senderId then
-		self:_refreshUI()
+		self:_refresh()
 	end
 end
 
 function SocialMessageItem:onUpdateMO(mo)
 	self._mo = mo
 
-	self:_refreshUI()
+	self:_refresh()
 end
 
 function SocialMessageItem:onDestroy()

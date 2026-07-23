@@ -27,7 +27,7 @@ function V3a1_Act191EnterView:removeEvents()
 end
 
 function V3a1_Act191EnterView:_btnShopOnClick()
-	Activity191Controller.instance:openStoreView(VersionActivity3_1Enum.ActivityId.DouQuQu3Store)
+	Activity191Controller.instance:openStoreView()
 end
 
 function V3a1_Act191EnterView:_btnEnterOnClick()
@@ -35,7 +35,7 @@ function V3a1_Act191EnterView:_btnEnterOnClick()
 end
 
 function V3a1_Act191EnterView:_editableInitView()
-	self.actId = VersionActivity3_1Enum.ActivityId.DouQuQu3
+	self.actId = Activity191Controller.instance:getActId()
 
 	local actCo = ActivityConfig.instance:getActivityCo(self.actId)
 
@@ -53,7 +53,7 @@ function V3a1_Act191EnterView:everySecondCall()
 end
 
 function V3a1_Act191EnterView:refreshCurrency()
-	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a1DouQuQu)
+	local currencyMo = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V3a8DouQuQu)
 
 	self._txtnum.text = currencyMo.quantity
 end

@@ -11,6 +11,9 @@ end
 function NecrologistStoryLocationItem:onPlayStory(isSkip)
 	local storyConfig = self:getStoryConfig()
 	local desc, hasLink = NecrologistStoryHelper.getDescByConfig(storyConfig)
+	local mo = NecrologistStoryModel.instance:getCurStoryMO()
+
+	mo:setPlace(desc)
 
 	self.txtContent.raycastTarget = hasLink
 	self.txtContent.text = desc

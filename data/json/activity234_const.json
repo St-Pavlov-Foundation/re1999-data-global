@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "strValue": "1"
+  },
+  {
+    "id": 2,
+    "strValue": "5"
+  },
+  {
+    "id": 3,
+    "strValue": "5"
+  },
+  {
+    "id": 4,
+    "strValue": "5"
+  },
+  {
+    "id": 5,
+    "strValue": "5"
+  },
+  {
+    "id": 6,
+    "strValue": "2"
+  },
+  {
+    "id": 7,
+    "strValue": "200"
+  },
+  {
+    "id": 8,
+    "strValue": "3"
+  },
+  {
+    "id": 9,
+    "strValue": "5"
+  },
+  {
+    "id": 10,
+    "strValue": "5#5|10#4|15#3|70#0"
+  },
+  {
+    "id": 11,
+    "strValue": "80"
+  },
+  {
+    "id": 12,
+    "strValue": "25"
+  }
+]

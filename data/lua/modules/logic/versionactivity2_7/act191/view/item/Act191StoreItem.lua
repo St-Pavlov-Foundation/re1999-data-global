@@ -5,7 +5,7 @@ module("modules.logic.versionactivity2_7.act191.view.item.Act191StoreItem", pack
 local Act191StoreItem = class("Act191StoreItem", UserDataDispose)
 
 local function sortGoods(goodCo1, goodCo2)
-	local actId = VersionActivity3_1Enum.ActivityId.DouQuQu3Store
+	local actId = Activity191Controller.instance:getStoreId()
 	local goods1SellOut = goodCo1.maxBuyCount ~= 0 and goodCo1.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo1.id) <= 0
 	local goods2SellOut = goodCo2.maxBuyCount ~= 0 and goodCo2.maxBuyCount - ActivityStoreModel.instance:getActivityGoodsBuyCount(actId, goodCo2.id) <= 0
 

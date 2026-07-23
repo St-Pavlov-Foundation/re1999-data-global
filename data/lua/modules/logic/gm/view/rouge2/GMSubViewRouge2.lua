@@ -32,9 +32,11 @@ function GMSubViewRouge2:initViewContent()
 	self.lineIndex = 1
 
 	self:addTitleSplitLine("GM")
-	self:initChangeNextNodeEventGM()
+	self:addButton(self:getLineGroup(), "进入肉鸽", self.onClickEnterRouge, self)
 	self:initFinishCurEventGM()
 	self:initMoveMaxStageGM()
+	self:initBossBattleGM()
+	self:initChangeNextNodeEventGM()
 	self:initAddCoinGM()
 	self:initAddRevivalCoinGM()
 	self:initFixCheckGM()
@@ -339,6 +341,8 @@ function GMSubViewRouge2:_onClickAttrCheck()
 end
 
 function GMSubViewRouge2:initChangeNextNodeEventGM()
+	self:addLineIndex()
+
 	self._eventNameList = {}
 	self._index2EventCoMap = {}
 
@@ -373,7 +377,6 @@ function GMSubViewRouge2:_onClickChangeNextNodeEvent()
 end
 
 function GMSubViewRouge2:initFinishCurEventGM()
-	self:addLineIndex()
 	self:addButton(self:getLineGroup(), "完成当前普通层事件", self._onClickFinishCurEvent, self)
 end
 
@@ -382,7 +385,6 @@ function GMSubViewRouge2:_onClickFinishCurEvent()
 end
 
 function GMSubViewRouge2:initMoveMaxStageGM()
-	self:addLineIndex()
 	self:addButton(self:getLineGroup(), "移动到当前地图最后一个节点", self._onClickMoveMaxStage, self)
 end
 
@@ -646,6 +648,47 @@ end
 
 function GMSubViewRouge2:_onClickDeleteMap()
 	GMRpc.instance:sendGMRequest("rouge2MapDelete")
+end
+
+function GMSubViewRouge2:onClickEnterRouge()
+	Rouge2_ViewHelper.openEnterView()
+end
+
+function GMSubViewRouge2:initBossBattleGM()
+	self:addLineIndex()
+
+	self._bossNameList = {}
+	self._index2BossCoMap = {}
+
+	local index = 0
+
+	for _, bossCo in ipairs(lua_rouge2_boss_rush.configList) do
+		index = index + 1
+
+		local bossId = bossCo.id
+		local episodeCo = Rouge2_BossBattleController.instance:getEpisodeCoByBossId(bossId)
+		local episodeName = episodeCo and episodeCo.name
+
+		table.insert(self._bossNameList, index, string.format("%s_%s", bossId, episodeName))
+
+		self._index2BossCoMap[index] = bossCo
+	end
+
+	self._bossDrop = self:addDropDown(self:getLineGroup(), "首领列表", self._bossNameList, nil, nil, {
+		temp_w = 700,
+		total_w = 900,
+		drop_w = 700
+	})
+
+	self:addButton(self:getLineGroup(), "进入首领战斗", self._onClickEnterBossBattle, self)
+end
+
+function GMSubViewRouge2:_onClickEnterBossBattle()
+	local mathIndex = self._bossDrop:GetValue()
+	local bossCo = self._index2BossCoMap[mathIndex + 1]
+	local bossId = bossCo and bossCo.id
+
+	Rouge2_BossBattleController.instance:enterFight(bossId)
 end
 
 return GMSubViewRouge2

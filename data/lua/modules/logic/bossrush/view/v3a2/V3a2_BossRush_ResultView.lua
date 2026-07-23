@@ -34,6 +34,7 @@ function V3a2_BossRush_ResultView:onInitView()
 	self._scrollTips = gohelper.findChildScrollRect(self.viewGO, "Right/#go_Evaluate/Tips/#scroll_Tips")
 	self._txtAffixDescr = gohelper.findChildText(self.viewGO, "Right/#go_Evaluate/Tips/#scroll_Tips/Viewport/Content/#txt_AffixDescr")
 	self._goAffixTitle = gohelper.findChild(self.viewGO, "Right/#go_Evaluate/Tips/#scroll_Tips/Viewport/Content/#txt_AffixDescr/#go_AffixTitle")
+	self._imagerankIcon = gohelper.findChildImage(self.viewGO, "Right/rank")
 	self._imageSliderFG = gohelper.findChildImage(self.viewGO, "Right/rank/#image_SliderFG")
 	self._txtrank = gohelper.findChildText(self.viewGO, "Right/rank/#txt_rank")
 
@@ -191,7 +192,11 @@ function V3a2_BossRush_ResultView:setAssessIcon()
 end
 
 function V3a2_BossRush_ResultView:refreshRankUI()
-	self._txtrank.text = V3a2_BossRushModel.instance:getRank()
+	local rank = V3a2_BossRushModel.instance:getRank()
+
+	self._txtrank.text = rank
+
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(self._imagerankIcon, V3a2_BossRushModel.instance:getRankLevelBg(rank))
 
 	local exp, needExp = V3a2_BossRushModel.instance:getRankExpProgress()
 	local value = Mathf.Clamp01(exp / needExp)

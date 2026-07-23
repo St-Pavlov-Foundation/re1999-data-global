@@ -18,7 +18,12 @@ function NecrologistStoryCommonView:onInitView()
 	self.txtRewardTime = gohelper.findChildTextMesh(self.rootGO, "#btn_reward/#go_time/#txt_time")
 	self.txtRewardTimeFormat = gohelper.findChildTextMesh(self.rootGO, "#btn_reward/#go_time/#txt_time/#txt_format")
 	self.btnReview = gohelper.findChildButtonWithAudio(self.rootGO, "#btn_review")
+	self.btnBranch = gohelper.findChildButtonWithAudio(self.rootGO, "#btn_branch")
 	self.animReward = self.btnReward.gameObject:GetComponent(typeof(UnityEngine.Animator))
+
+	if self.btnBranch then
+		self.animBranch = gohelper.findComponentAnim(self.btnBranch.gameObject)
+	end
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -28,17 +33,39 @@ end
 function NecrologistStoryCommonView:addEvents()
 	self:addClickCb(self.btnReward, self.onClickBtnReward, self)
 	self:addClickCb(self.btnReview, self.onClickBtnReview, self)
+
+	if self.btnBranch then
+		self:addClickCb(self.btnBranch, self.onClickBtnBranch, self)
+	end
+
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
 function NecrologistStoryCommonView:removeEvents()
 	self:removeClickCb(self.btnReward)
 	self:removeClickCb(self.btnReview)
+
+	if self.btnBranch then
+		self:removeClickCb(self.btnBranch)
+	end
+
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self._onCloseViewFinish, self)
 end
 
 function NecrologistStoryCommonView:_editableInitView()
 	return
+end
+
+function NecrologistStoryCommonView:onClickBtnBranch()
+	if not self._isBranchVisible then
+		return
+	end
+
+	if not self.gameBaseMO then
+		return
+	end
+
+	NecrologistStoryController.instance:openBranchView(self.gameBaseMO.id)
 end
 
 function NecrologistStoryCommonView:onClickBtnReward()
@@ -138,6 +165,42 @@ function NecrologistStoryCommonView:refreshButton()
 	local hasPlotFinish = NecrologistStoryModel.instance:isReviewCanShow(self.gameBaseMO.id)
 
 	gohelper.setActive(self.btnReview, hasPlotFinish)
+
+	local isShowBranch, isUnlockBranch = NecrologistStoryModel.instance:isBranchCanShow(self.gameBaseMO.id)
+
+	if isShowBranch then
+		self:setBranchVisible(isUnlockBranch)
+	else
+		gohelper.setActive(self.btnBranch, false)
+	end
+end
+
+function NecrologistStoryCommonView:setBranchVisible(isShow)
+	if self._isBranchVisible == isShow then
+		return
+	end
+
+	local lastVisible = self._isBranchVisible
+
+	self._isBranchVisible = isShow
+
+	if not self.animBranch then
+		gohelper.setActive(self.btnBranch, isShow)
+
+		return
+	end
+
+	gohelper.setActive(self.btnBranch, true)
+
+	if isShow then
+		if lastVisible == nil then
+			self.animBranch:Play("unlock_idle")
+		else
+			self.animBranch:Play("unlock")
+		end
+	else
+		self.animBranch:Play("idle")
+	end
 end
 
 function NecrologistStoryCommonView:onDestroyView()

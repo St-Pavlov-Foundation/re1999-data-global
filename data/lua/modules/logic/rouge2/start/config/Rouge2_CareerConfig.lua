@@ -26,6 +26,8 @@ function Rouge2_CareerConfig:onConfigLoaded(configName, configTable)
 		self:_onCareerTransferConfigLoaded(configTable)
 	elseif configName == "fight_rouge2_summoner" then
 		self:_onFightRouge2SummonerConfigLoaded(configTable)
+	elseif configName == "rouge2_system" then
+		self:_onSystemConfigLoaded(configTable)
 	end
 end
 
@@ -34,6 +36,8 @@ function Rouge2_CareerConfig:_onCareerConfigLoaded(configTable)
 	self._careerId2ActiveSkillMap = {}
 	self._careerId2AttributeIdMap = {}
 	self._careerId2RecommendTeamMap = {}
+	self._careerRecommendAttrMap = {}
+	self._careerRecommendAttrList = {}
 
 	for _, careerCo in ipairs(configTable.configList) do
 		local passiveSkillMap = {}
@@ -53,6 +57,21 @@ function Rouge2_CareerConfig:_onCareerConfigLoaded(configTable)
 
 		self._careerId2AttributeIdMap[careerCo.id] = attributeList
 		self._careerId2RecommendTeamMap[careerCo.id] = string.splitToNumber(careerCo.recommendTeam, "#")
+
+		self:_initCareerRecommendAttrInfo(careerCo)
+	end
+end
+
+function Rouge2_CareerConfig:_initCareerRecommendAttrInfo(careerCo)
+	local careerId = careerCo.id
+	local attrStr = careerCo and careerCo.recommendAttribute or ""
+	local attrIdList = string.splitToNumber(attrStr, "|") or {}
+
+	self._careerRecommendAttrList[careerId] = attrIdList
+	self._careerRecommendAttrMap[careerId] = {}
+
+	for _, attrId in ipairs(attrIdList) do
+		self._careerRecommendAttrMap[careerId][attrId] = true
 	end
 end
 
@@ -133,6 +152,28 @@ function Rouge2_CareerConfig._talentConfigSortFunc(aTalentCo, bTalentCo)
 	end
 
 	return aTalentCo.talentId < bTalentCo.talentId
+end
+
+function Rouge2_CareerConfig:_onSystemConfigLoaded(configTable)
+	self._systemRecommendAttrList = {}
+	self._systemRecommendAttrMap = {}
+
+	for _, systemCo in ipairs(configTable.configList) do
+		self:_initSystemRecommendAttrInfo(systemCo)
+	end
+end
+
+function Rouge2_CareerConfig:_initSystemRecommendAttrInfo(systemCo)
+	local systemId = systemCo.id
+	local attrStr = systemCo and systemCo.recommendAttribute or ""
+	local attrIdList = string.splitToNumber(attrStr, "|") or {}
+
+	self._systemRecommendAttrList[systemId] = attrIdList
+	self._systemRecommendAttrMap[systemId] = {}
+
+	for _, attrId in ipairs(attrIdList) do
+		self._systemRecommendAttrMap[systemId][attrId] = true
+	end
 end
 
 function Rouge2_CareerConfig:getCareerConfig(careerId)
@@ -222,26 +263,48 @@ function Rouge2_CareerConfig:getAttrSortIndex(careerId, attrId)
 	return sortAttrMap and sortAttrMap[attrId] or 0
 end
 
-function Rouge2_CareerConfig:getCareerRecommendAttributeIds(careerId)
-	local recommendAttrList = self._recommendAttrMap and self._recommendAttrMap[careerId]
-
-	if not recommendAttrList then
-		self._recommendAttrMap = self._recommendAttrMap or {}
-
-		local careerCo = self:getCareerConfig(careerId)
-		local recommendAttrStr = careerCo and careerCo.recommendAttribute or ""
-
-		recommendAttrList = string.splitToNumber(recommendAttrStr, "|") or {}
-		self._recommendAttrMap[careerId] = recommendAttrList
+function Rouge2_CareerConfig:getCareerRecommendAttrList(careerId)
+	if not careerId then
+		return
 	end
 
-	return recommendAttrList
+	return self._careerRecommendAttrList and self._careerRecommendAttrList[careerId]
 end
 
-function Rouge2_CareerConfig:isAttrRecommend(careerId, attrId)
-	local recommendIds = self:getCareerRecommendAttributeIds(careerId)
+function Rouge2_CareerConfig:isCareerRecommendAttr(careerId, attrId)
+	if not careerId or not attrId then
+		return
+	end
 
-	return recommendIds and tabletool.indexOf(recommendIds, attrId)
+	local attrMap = self._careerRecommendAttrMap and self._careerRecommendAttrMap[careerId]
+
+	return attrMap and attrMap[attrId] == true
+end
+
+function Rouge2_CareerConfig:getSystemRecommendAttrMap(systemId)
+	if not systemId then
+		return
+	end
+
+	return self._systemRecommendAttrMap and self._systemRecommendAttrMap[systemId]
+end
+
+function Rouge2_CareerConfig:getSystemRecommendAttrList(systemId)
+	if not systemId then
+		return
+	end
+
+	return self._systemRecommendAttrList and self._systemRecommendAttrList[systemId]
+end
+
+function Rouge2_CareerConfig:isSystemRecommendAttr(systemId, attrId)
+	if not attrId then
+		return
+	end
+
+	local attrMap = self:getSystemRecommendAttrMap(systemId)
+
+	return attrMap and attrMap[attrId] == true
 end
 
 function Rouge2_CareerConfig:getCareerRecommendTeamStr(careerId)
@@ -347,7 +410,13 @@ function Rouge2_CareerConfig:getNextTalentList(talentId)
 end
 
 function Rouge2_CareerConfig:getTalentConfigByHoleIndex(index)
-	return self._holeIndex2TalentMap and self._holeIndex2TalentMap[index]
+	local talentCo = self._holeIndex2TalentMap and self._holeIndex2TalentMap[index]
+
+	if not talentCo then
+		logError(string.format("天赋树共鸣器节点配置不存在, 孔位序号: %s", index))
+	end
+
+	return talentCo
 end
 
 function Rouge2_CareerConfig:getTalentConfigsByStage(stage)
@@ -379,11 +448,11 @@ function Rouge2_CareerConfig:getTalentTransformIdList()
 	return self._talentTransformIdList
 end
 
-function Rouge2_CareerConfig:getSystemConfig(systemId)
+function Rouge2_CareerConfig:getSystemConfig(systemId, noError)
 	local systemCo = systemId and lua_rouge2_system.configDict[systemId]
 
-	if not systemCo then
-		logError(string.format("肉鸽配队体系配置不存在 systemId = %s", systemId))
+	if not systemCo and not noError then
+		logError(string.format("肉鸽体系配置不存在 systemId = %s", systemId))
 	end
 
 	return systemCo
@@ -393,6 +462,20 @@ function Rouge2_CareerConfig:getCareerRecommendTeamList(careerId)
 	local recommendIdLsit = self._careerId2RecommendTeamMap and self._careerId2RecommendTeamMap[careerId]
 
 	return recommendIdLsit
+end
+
+function Rouge2_CareerConfig:isCareerRecommendSystem(careerId, systemId)
+	if not careerId or not systemId or systemId == Rouge2_Enum.UnselectTeamSystemId then
+		return
+	end
+
+	local recommendSystemIdList = self:getCareerRecommendTeamList(careerId) or {}
+
+	for _, recommendSystemId in ipairs(recommendSystemIdList) do
+		if systemId == recommendSystemId then
+			return true
+		end
+	end
 end
 
 function Rouge2_CareerConfig:getBattleTagConfigBySystemId(systemId)

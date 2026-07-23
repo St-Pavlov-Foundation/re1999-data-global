@@ -22,8 +22,8 @@ function ArcadeSkillObject:getInstanceID()
 	return self._instanceID_
 end
 
-function ArcadeSkillObject:tryCallFunc(func)
-	local isOk, result = xpcall(func, __G__TRACKBACK__, self)
+function ArcadeSkillObject:tryCallFunc(func, params)
+	local isOk, result = xpcall(func, __G__TRACKBACK__, self, params)
 
 	return isOk, result
 end

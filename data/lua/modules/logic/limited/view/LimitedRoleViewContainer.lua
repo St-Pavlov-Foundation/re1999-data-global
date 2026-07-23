@@ -6,7 +6,8 @@ local LimitedRoleViewContainer = class("LimitedRoleViewContainer", BaseViewConta
 
 function LimitedRoleViewContainer:buildViews()
 	return {
-		LimitedRoleView.New()
+		LimitedRoleView.New(),
+		LimitedRoleVoiceView.New()
 	}
 end
 

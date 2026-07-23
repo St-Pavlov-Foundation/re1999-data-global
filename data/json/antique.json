@@ -208,5 +208,35 @@
     "storyId": 0,
     "iconArea": 0,
     "effect": "v1a9_caidai"
+  },
+  {
+    "id": 371001,
+    "name": "language_10125519",
+    "nameen": "Miraculous Dove",
+    "icon": "v3a7_antique_icon_1",
+    "gifticon": "v3a7_antique_icon_1",
+    "sign": "501210",
+    "title": "language_10125519",
+    "titleen": "Miraculous Dove",
+    "desc": "language_10129210",
+    "sources": "",
+    "storyId": 0,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
+  },
+  {
+    "id": 3851001,
+    "name": "language_10129211",
+    "nameen": "Ticking Chirper",
+    "icon": "v3a85_antique_icon_1",
+    "gifticon": "v3a85_antique_icon_1",
+    "sign": "501211",
+    "title": "language_10129211",
+    "titleen": "Ticking Chirper",
+    "desc": "language_10129212",
+    "sources": "",
+    "storyId": 800008,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

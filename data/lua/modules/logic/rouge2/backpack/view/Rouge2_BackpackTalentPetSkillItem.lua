@@ -26,6 +26,12 @@ function Rouge2_BackpackTalentPetSkillItem:refreshCommonUI()
 	return
 end
 
+function Rouge2_BackpackTalentPetSkillItem:onBtnClickCallback()
+	local dataType, dataId = self:getSkillDataTypeAndId()
+
+	Rouge2_ViewHelper.openActiveSkillAttrUpdateTipsView(dataType, dataId)
+end
+
 function Rouge2_BackpackTalentPetSkillItem:onDestroy()
 	Rouge2_BackpackTalentPetSkillItem.super.onDestroy(self)
 	self._simageSkillIcon:UnLoadImage()

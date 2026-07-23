@@ -5,7 +5,26 @@ module("modules.logic.versionactivity3_3.arcade.controller.game.ArcadeGameHelper
 local ArcadeGameHelper = _M
 
 function ArcadeGameHelper.getGridId(x, y)
-	return x * 1000 + y
+	if x and y then
+		return x * 1000 + y
+	else
+		logError(string.format("ArcadeGameHelper.getGridId error, invalid param, x:%s, y:%s", x, y))
+	end
+end
+
+function ArcadeGameHelper.getGridXYById(gridId)
+	local numGridId = tonumber(gridId)
+
+	if not numGridId then
+		logError(string.format("ArcadeGameHelper.getGridXYById error, invalid gridId:%s", gridId))
+
+		return 0, 0
+	end
+
+	local gridX = math.floor(numGridId / 1000)
+	local gridY = numGridId - gridX * 1000
+
+	return gridX, gridY
 end
 
 function ArcadeGameHelper.getGridPos(gridX, gridY)
@@ -74,6 +93,12 @@ function ArcadeGameHelper.isRectXYInside(minX, maxX, minY, maxY, bMinX, bMaxX, b
 end
 
 function ArcadeGameHelper.isOutSideRoom(gridX, gridY)
+	if not gridX or not gridY then
+		logError(string.format("ArcadeGameHelper.isOutSideRoom error, invalid coordinate, gridX:%s, gridY:%s", gridX, gridY))
+
+		return false
+	end
+
 	if gridX < 1 or gridX > ArcadeGameEnum.Const.RoomSize or gridY < 1 or gridY > ArcadeGameEnum.Const.RoomSize then
 		return true
 	end
@@ -143,6 +168,23 @@ function ArcadeGameHelper.getFirsXYByDir(gridX, gridY, sizeX, sizeY, dir)
 	return gridX, gridY
 end
 
+function ArcadeGameHelper.getUnitMidXYInDir(x, y, sizeX, sizeY, dir)
+	local midX = x + math.floor(sizeX / 2)
+	local midY = y + math.floor(sizeY / 2)
+
+	if dir == ArcadeEnum.Direction.Up then
+		return midX, y + sizeY - 1
+	elseif dir == ArcadeEnum.Direction.Down then
+		return midX, y
+	elseif dir == ArcadeEnum.Direction.Left then
+		return x, midY
+	elseif dir == ArcadeEnum.Direction.Right then
+		return x + sizeX - 1, midY
+	end
+
+	return x, y
+end
+
 function ArcadeGameHelper.callCallbackFunc(cb, cbObj, cbParam)
 	if cb then
 		if cbObj then
@@ -170,6 +212,12 @@ function ArcadeGameHelper.tryCallFunc(func, funcObj, ...)
 end
 
 function ArcadeGameHelper.checkDictTable(refDict, key)
+	if not refDict or not key then
+		logError(string.format("ArcadeGameHelper.checkDictTable error, invalid param, refDict:%s, key:%s", tostring(refDict), tostring(key)))
+
+		return
+	end
+
 	local table = refDict[key]
 
 	if not table then
@@ -180,7 +228,7 @@ function ArcadeGameHelper.checkDictTable(refDict, key)
 	return table
 end
 
-function ArcadeGameHelper.isPassiveSkill(skillId)
+function ArcadeGameHelper.getIsPassiveSkill(skillId)
 	if ArcadeConfig.instance:getPassiveSkillCfg(skillId) then
 		return true
 	end
@@ -319,7 +367,7 @@ function ArcadeGameHelper.isEntityNeedIcon(entityType, id)
 
 	local result = false
 
-	if entityType == ArcadeGameEnum.EntityType.Goods or entityType == ArcadeGameEnum.EntityType.Portal or hasTalk or showFrame then
+	if entityType == ArcadeGameEnum.EntityType.Goods or entityType == ArcadeGameEnum.EntityType.Portal or entityType == ArcadeGameEnum.EntityType.PWDValidator or hasTalk or showFrame then
 		result = true
 	end
 
@@ -352,14 +400,17 @@ function ArcadeGameHelper.getTalkCharList(strTalk)
 end
 
 function ArcadeGameHelper.checkInGuiding()
-	local isDoingClickGuide = GuideModel.instance:isDoingClickGuide()
 	local isForbid = GuideController.instance:isForbidGuides()
 
-	if isDoingClickGuide and not isForbid then
-		return true
+	if isForbid then
+		return false
 	end
 
-	if GuideController.instance:isGuiding() then
+	local isDoingClickGuide = GuideModel.instance:isDoingClickGuide()
+	local isAnyGuideRunning = GuideController.instance:isAnyGuideRunning()
+	local isGuiding = GuideController.instance:isGuiding()
+
+	if isDoingClickGuide or isAnyGuideRunning or isGuiding then
 		return true
 	end
 end
@@ -569,6 +620,75 @@ function ArcadeGameHelper.getActionShowEffect(showId, showParam)
 	return actionEffectIdList, bulletEffect
 end
 
+ArcadeGameHelper.OpStr2CompareFunc = {
+	lt = function(a, b)
+		return a < b
+	end,
+	ltet = function(a, b)
+		return a <= b
+	end,
+	et = function(a, b)
+		return a == b
+	end,
+	ne = function(a, b)
+		return a ~= b
+	end,
+	gt = function(a, b)
+		return b < a
+	end,
+	gtet = function(a, b)
+		return b <= a
+	end
+}
+
+function ArcadeGameHelper.getCompareFunc(opStr)
+	local func = ArcadeGameHelper.OpStr2CompareFunc[string.lower(opStr or "")]
+
+	if not func then
+		logError(string.format("ArcadeGameHelper.getCompareFunc error, invalid opStr:%s", tostring(opStr)))
+	end
+
+	return func
+end
+
+function ArcadeGameHelper.getBombExplodeTargetList(bombId, bombX, bombY, isCharacterBomb)
+	local targetId = ArcadeConfig.instance:getBombTarget(bombId)
+	local targetSelector = ArcadeSkillFactory.instance:createSkillTargetById(targetId)
+
+	if not targetSelector then
+		return
+	end
+
+	local targetMOList, gridMOList
+
+	if isCharacterBomb then
+		local addBombRange = ArcadeGameModel.instance:getGameAttribute(ArcadeGameEnum.GameAttribute.AddBombRange)
+
+		targetSelector:setRadius(addBombRange)
+	end
+
+	targetSelector:findTarget(bombX, bombY)
+
+	local targetList = targetSelector:getTargetList()
+
+	if targetList then
+		targetMOList = tabletool.copy(targetList)
+	end
+
+	targetSelector:setTargetTypeByList({
+		ArcadeGameEnum.EntityType.Grid
+	})
+	targetSelector:findTarget(bombX, bombY)
+
+	targetList = targetSelector:getTargetList()
+
+	if targetList then
+		gridMOList = tabletool.copy(targetList)
+	end
+
+	return targetMOList, gridMOList
+end
+
 function ArcadeGameHelper.getResultViewInfo(isWin, isReset, serverInfo)
 	local characterId
 	local passLevelCount = 0
@@ -719,9 +839,9 @@ function ArcadeGameHelper.getResultViewInfo(isWin, isReset, serverInfo)
 			for _, weaponUid in ipairs(weaponUidList) do
 				local weaponMO = characterMO:getCollectionMO(weaponUid)
 				local id = weaponMO:getId()
-				local durability = weaponMO:getDurability()
+				local totalDurability = weaponMO:getTotalDurability()
 				local useTimes = weaponMO:getUsedTimes()
-				local newWeaponIndex = ArcadeGameHelper._fillCollection(ArcadeGameEnum.CollectionType.Weapon, id, durability, useTimes, nil, weaponDataList, curWeaponIndex)
+				local newWeaponIndex = ArcadeGameHelper._fillCollection(ArcadeGameEnum.CollectionType.Weapon, id, totalDurability, useTimes, nil, weaponDataList, curWeaponIndex)
 
 				if newWeaponIndex then
 					curWeaponIndex = newWeaponIndex
@@ -746,11 +866,11 @@ function ArcadeGameHelper.getResultViewInfo(isWin, isReset, serverInfo)
 	return result
 end
 
-function ArcadeGameHelper._fillCollection(type, id, durability, useTimes, refCollectionList, refWeaponDataList, curWeaponIndex)
+function ArcadeGameHelper._fillCollection(type, id, totalDurability, useTimes, refCollectionList, refWeaponDataList, curWeaponIndex)
 	if type == ArcadeGameEnum.CollectionType.Jewelry then
 		local collectionData = {
 			id = id,
-			durability = durability
+			durability = totalDurability
 		}
 
 		table.insert(refCollectionList, collectionData)
@@ -759,7 +879,7 @@ function ArcadeGameHelper._fillCollection(type, id, durability, useTimes, refCol
 
 		if weaponData then
 			weaponData.id = id
-			weaponData.durability = durability
+			weaponData.durability = totalDurability
 			weaponData.useTimes = useTimes
 
 			return curWeaponIndex + 1
@@ -790,6 +910,14 @@ function ArcadeGameHelper.getServerArcadePlayerInfo()
 
 	if characterMO then
 		result.id = characterMO:getId()
+
+		local skillSetMO = characterMO:getSkillSetMO()
+
+		if skillSetMO then
+			result.skillCounterBox = skillSetMO:getNeedSaveSkillCounterBox()
+		end
+
+		result.attackAttrId = characterMO:getAttackAttrId()
 	end
 
 	return result
@@ -880,12 +1008,20 @@ function ArcadeGameHelper.getCollectionInfo()
 
 	if collectionDict then
 		for _, collectionMO in pairs(collectionDict) do
+			local skillCounterBox
+			local skillSetMO = collectionMO:getSkillSetMO()
+
+			if skillSetMO then
+				skillCounterBox = skillSetMO:getNeedSaveSkillCounterBox()
+			end
+
 			local data = {
 				type = collectionMO:getType(),
 				collectible = {
 					id = collectionMO:getId(),
-					durability = collectionMO:getDurability(),
-					useTimes = collectionMO:getUsedTimes()
+					durability = collectionMO:getTotalDurability(),
+					useTimes = collectionMO:getUsedTimes(),
+					counterBox = skillCounterBox
 				}
 			}
 
@@ -1212,8 +1348,74 @@ function ArcadeGameHelper._eventTriggerPassiveSkill(entityType, entityId, uid, e
 	return true
 end
 
+function ArcadeGameHelper._eventStorePassword(entityType, entityId, uid, eventOptionParam)
+	local pwdValidatorMOList = ArcadeGameModel.instance:getEntityMOList(ArcadeGameEnum.EntityType.PWDValidator)
+	local pwdValidatorMO = pwdValidatorMOList and pwdValidatorMOList[1]
+
+	if not pwdValidatorMO then
+		return
+	end
+
+	local passwordLength = pwdValidatorMO:getCurPasswordCount()
+	local passwordNum = tonumber(eventOptionParam)
+
+	if passwordLength >= ArcadeGameEnum.Const.MaxPasswordLength or not passwordNum then
+		return
+	end
+
+	pwdValidatorMO:addPasswordNum(passwordNum)
+
+	local pwdValidatorUid = pwdValidatorMO:getUid()
+
+	ArcadeGameController.instance:dispatchEvent(ArcadeEvent.RefreshEntityIcon, ArcadeGameEnum.EntityType.PWDValidator, pwdValidatorUid)
+end
+
+function ArcadeGameHelper._eventConfirmPassword(entityType, entityId, uid, eventOptionParam)
+	local paramArr = string.split(eventOptionParam, "#")
+
+	if entityType ~= ArcadeGameEnum.EntityType.PWDValidator or not paramArr then
+		return
+	end
+
+	local pwdValidatorMO = ArcadeGameModel.instance:getMOWithType(entityType, uid)
+
+	if not pwdValidatorMO then
+		return
+	end
+
+	local correctPassword = paramArr[1]
+	local skillId = tonumber(paramArr[2])
+	local password = pwdValidatorMO:getPassword()
+
+	if password == correctPassword then
+		ArcadeGameSkillController.instance:useSkill(pwdValidatorMO, skillId)
+	else
+		GameFacade.showToast(ToastEnum.V3a7ArcadePwdError)
+	end
+
+	return true
+end
+
+function ArcadeGameHelper._eventResetPassword(entityType, entityId, uid, eventOptionParam)
+	if entityType ~= ArcadeGameEnum.EntityType.PWDValidator then
+		return
+	end
+
+	local pwdValidatorMO = ArcadeGameModel.instance:getMOWithType(entityType, uid)
+
+	if not pwdValidatorMO then
+		return
+	end
+
+	pwdValidatorMO:clearPassword()
+
+	local pwdValidatorUid = pwdValidatorMO:getUid()
+
+	ArcadeGameController.instance:dispatchEvent(ArcadeEvent.RefreshEntityIcon, ArcadeGameEnum.EntityType.PWDValidator, pwdValidatorUid)
+end
+
 function ArcadeGameHelper.getEventOptionConditionCheckFunc(conditionType)
-	local handler = ArcadeGameEnum.EventOptionConditionCheck[conditionType]
+	local handler = ArcadeGameEnum.EventOptionConditionCheckHandler[conditionType]
 
 	if not handler then
 		logError(string.format("ArcadeGameHelper:getEventOptionConditionCheckFunc error, conditionType:%s no handler", conditionType))
@@ -1222,7 +1424,7 @@ function ArcadeGameHelper.getEventOptionConditionCheckFunc(conditionType)
 	return handler
 end
 
-function ArcadeGameHelper._checkAttribute(param)
+function ArcadeGameHelper._checkAttribute(eventOptionId, param)
 	if not param then
 		return
 	end
@@ -1250,7 +1452,7 @@ function ArcadeGameHelper._checkAttribute(param)
 	return targetValue <= curValue
 end
 
-function ArcadeGameHelper._checkCollection(param)
+function ArcadeGameHelper._checkCollection(eventOptionId, param)
 	if not param then
 		return
 	end
@@ -1268,6 +1470,79 @@ function ArcadeGameHelper._checkCollection(param)
 			return true
 		end
 	end
+end
+
+function ArcadeGameHelper._checkSkillCanSummon(eventOptionId, param)
+	if not param then
+		return
+	end
+
+	local curRoom = ArcadeGameController.instance:getCurRoom()
+
+	if not curRoom then
+		return
+	end
+
+	local eventOptionType = ArcadeConfig.instance:getEventOptionType(eventOptionId)
+
+	if eventOptionType ~= ArcadeGameEnum.EventOptionType.TriggerPassiveSkill then
+		return true
+	end
+
+	local summonMonsterDataList = {}
+	local cfgEffList = ArcadeGameEnum.TriggerCfgKeys.Effect
+	local eventOptionParam = ArcadeConfig.instance:getEventOptionParam(eventOptionId)
+	local skillList = string.splitToNumber(eventOptionParam, "#")
+
+	for _, skillId in ipairs(skillList) do
+		local skillCfg = ArcadeConfig.instance:getPassiveSkillCfg(skillId)
+
+		for _, strEffKey in ipairs(cfgEffList) do
+			local effectStr = skillCfg[strEffKey]
+			local params = string.split(effectStr, "#")
+			local hitName = params and params[1]
+
+			if hitName == ArcadeGameEnum.SkillHitName.Summon then
+				for i = 2, #params do
+					local arr = string.splitToNumber(params[i], ",")
+					local monsterId = arr[1]
+					local sizeX, sizeY = ArcadeConfig.instance:getMonsterSize(monsterId)
+
+					if sizeX > 0 and sizeY > 0 then
+						local entityData = {
+							id = monsterId,
+							x = arr[2],
+							y = arr[3],
+							sizeX = sizeX,
+							sizeY = sizeY,
+							entityType = ArcadeGameEnum.EntityType.Monster
+						}
+
+						table.insert(summonMonsterDataList, entityData)
+					end
+				end
+			end
+		end
+	end
+
+	if #summonMonsterDataList <= 0 then
+		return true
+	end
+
+	local canPlaceDataList = curRoom:filterCanPlaceEntityList(summonMonsterDataList, false)
+
+	if not canPlaceDataList or #canPlaceDataList ~= #summonMonsterDataList then
+		return false
+	end
+
+	return true
+end
+
+function ArcadeGameHelper.sortSkillList(aSkill, bSkill)
+	local aOrder = aSkill:getTriggerOrder()
+	local bOrder = bSkill:getTriggerOrder()
+
+	return aOrder < bOrder
 end
 
 return ArcadeGameHelper

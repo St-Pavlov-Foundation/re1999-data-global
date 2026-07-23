@@ -570,7 +570,7 @@ function VersionActivity_1_2_HeroGroupEditView:_refreshPassiveSkill()
 end
 
 function VersionActivity_1_2_HeroGroupEditView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO)
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, nil, CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function VersionActivity_1_2_HeroGroupEditView:_refreshBtnIcon()
@@ -1056,6 +1056,10 @@ function VersionActivity_1_2_HeroGroupEditView:onClose()
 	if self._isStopBgm then
 		TaskDispatcher.cancelTask(self._delyStopBgm, self)
 		self:_delyStopBgm()
+	end
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
 	end
 end
 

@@ -154,5 +154,113 @@
   {
     "skillId": 30865243,
     "upgradeSkillId": 30865143
+  },
+  {
+    "skillId": 31460111,
+    "upgradeSkillId": 31460211
+  },
+  {
+    "skillId": 31460112,
+    "upgradeSkillId": 31460212
+  },
+  {
+    "skillId": 31460113,
+    "upgradeSkillId": 31460213
+  },
+  {
+    "skillId": 31460114,
+    "upgradeSkillId": 31460214
+  },
+  {
+    "skillId": 31460115,
+    "upgradeSkillId": 31460215
+  },
+  {
+    "skillId": 31460116,
+    "upgradeSkillId": 31460216
+  },
+  {
+    "skillId": 31460197,
+    "upgradeSkillId": 31460217
+  },
+  {
+    "skillId": 31460198,
+    "upgradeSkillId": 31460218
+  },
+  {
+    "skillId": 31460199,
+    "upgradeSkillId": 31460219
+  },
+  {
+    "skillId": 31460117,
+    "upgradeSkillId": 31460241
+  },
+  {
+    "skillId": 31460118,
+    "upgradeSkillId": 31460242
+  },
+  {
+    "skillId": 31460119,
+    "upgradeSkillId": 31460243
+  },
+  {
+    "skillId": 31460121,
+    "upgradeSkillId": 31460221
+  },
+  {
+    "skillId": 31460122,
+    "upgradeSkillId": 31460222
+  },
+  {
+    "skillId": 31460123,
+    "upgradeSkillId": 31460223
+  },
+  {
+    "skillId": 31460124,
+    "upgradeSkillId": 31460224
+  },
+  {
+    "skillId": 31460125,
+    "upgradeSkillId": 31460225
+  },
+  {
+    "skillId": 31460126,
+    "upgradeSkillId": 31460226
+  },
+  {
+    "skillId": 31460127,
+    "upgradeSkillId": 31460227
+  },
+  {
+    "skillId": 31460128,
+    "upgradeSkillId": 31460228
+  },
+  {
+    "skillId": 31460129,
+    "upgradeSkillId": 31460229
+  },
+  {
+    "skillId": 31460194,
+    "upgradeSkillId": 31460230
+  },
+  {
+    "skillId": 31460195,
+    "upgradeSkillId": 31460231
+  },
+  {
+    "skillId": 31460196,
+    "upgradeSkillId": 31460232
+  },
+  {
+    "skillId": 31460191,
+    "upgradeSkillId": 31460233
+  },
+  {
+    "skillId": 31460192,
+    "upgradeSkillId": 31460234
+  },
+  {
+    "skillId": 31460193,
+    "upgradeSkillId": 31460235
   }
 ]

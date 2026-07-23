@@ -325,7 +325,7 @@ function GMSubViewActivity:_setXugoujiDebugMode()
 end
 
 function GMSubViewActivity:_initActivityCenter()
-	self._openAllActCenter = self:addToggle("L10", "展示此版本活动中心入口", self._onShowAllActCenterToggleChange, self)
+	self._openAllActCenter = self:addToggle("L10", "展示所有活动中心入口", self._onShowAllActCenterToggleChange, self)
 	self._openAllActCenter.isOn = GMSubViewActivity.isOnOpenAllActCenter
 end
 

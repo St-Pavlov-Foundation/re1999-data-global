@@ -17,4 +17,14 @@ function PlayerInfoViewContainer:onContainerClickModalMask()
 	self:closeThis()
 end
 
+function PlayerInfoViewContainer:openInternal(viewParam, isImmediate)
+	local viewResPath = SocialEnum.ThemeViewResPath[viewParam.mo.bg]
+	local defaultviewResPath = SocialEnum.ThemeViewResPath[0]
+	local playerinfoview = viewResPath and viewResPath.playerinfoview or defaultviewResPath.playerinfoview
+
+	self._viewSetting.mainRes = playerinfoview
+
+	SocialViewContainer.super.openInternal(self, viewParam, isImmediate)
+end
+
 return PlayerInfoViewContainer

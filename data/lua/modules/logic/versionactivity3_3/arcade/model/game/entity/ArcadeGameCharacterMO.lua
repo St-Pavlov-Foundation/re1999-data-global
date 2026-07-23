@@ -27,7 +27,7 @@ function ArcadeGameCharacterMO:onCtor(extraParam)
 	end
 end
 
-function ArcadeGameCharacterMO:setRestartInfo(attrDict, collectibleSlots, passiveSkillIds)
+function ArcadeGameCharacterMO:setDataFromServerInfo(serverInfo, attrDict)
 	for _, attrId in pairs(ArcadeGameEnum.BaseAttr) do
 		local data = attrDict[attrId]
 
@@ -60,22 +60,39 @@ function ArcadeGameCharacterMO:setRestartInfo(attrDict, collectibleSlots, passiv
 		end
 	end
 
+	local collectibleSlots = serverInfo.collectibleSlots
+
 	for _, collectionData in ipairs(collectibleSlots) do
 		local collectible = collectionData.collectible
 		local collectionId = collectible.id
 		local durability = collectible.durability
 		local useTimes = collectible.useTimes
+		local collectionMO = self:addCollection(collectionId, useTimes, durability)
 
-		self:addCollection(collectionId, useTimes, durability)
-	end
+		if collectionMO then
+			local collectionSkillSetMO = collectionMO:getSkillSetMO()
 
-	local skillSetMO = self:getSkillSetMO()
-
-	for _, skillId in ipairs(passiveSkillIds) do
-		if ArcadeGameHelper.isPassiveSkill(skillId) then
-			skillSetMO:addSkillById(skillId)
+			collectionSkillSetMO:setSkillCounterBox(collectible.counterBox)
 		end
 	end
+
+	local passiveSkillIds = serverInfo.passiveSkillIds
+	local characterSkillSetMO = self:getSkillSetMO()
+
+	for _, skillId in ipairs(passiveSkillIds) do
+		characterSkillSetMO:addSkillById(skillId)
+	end
+
+	local playerInfo = serverInfo.player
+	local attackAttrId = playerInfo.attackAttrId
+
+	if attackAttrId and attackAttrId > 0 then
+		self._attackAttrId = attackAttrId
+	else
+		self._attackAttrId = nil
+	end
+
+	characterSkillSetMO:setSkillCounterBox(playerInfo.skillCounterBox)
 end
 
 function ArcadeGameCharacterMO:resetGridPos()
@@ -93,24 +110,21 @@ end
 function ArcadeGameCharacterMO:removeSkillById(skillId)
 	if self._collectionType2UidDict then
 		for type, uidList in pairs(self._collectionType2UidDict) do
+			local uids = uidList
+
 			if type == ArcadeGameEnum.CollectionType.Weapon then
-				local uid = uidList[1]
+				uids = {
+					uidList[1]
+				}
+			end
+
+			for _, uid in ipairs(uids) do
 				local collectionMO = self:getCollectionMO(uid)
 
 				if collectionMO then
 					local skillSetMO = collectionMO:getSkillSetMO()
 
 					skillSetMO:removeSkillById(skillId)
-				end
-			else
-				for _, uid in ipairs(uidList) do
-					local collectionMO = self:getCollectionMO(uid)
-
-					if collectionMO then
-						local skillSetMO = collectionMO:getSkillSetMO()
-
-						skillSetMO:removeSkillById(skillId)
-					end
 				end
 			end
 		end
@@ -121,44 +135,6 @@ function ArcadeGameCharacterMO:removeSkillById(skillId)
 	self._allSkillList = nil
 end
 
-function ArcadeGameCharacterMO:getSkillList()
-	if not self._allSkillList or self._skillSetOpIdx ~= self._skillSetMO:getOpIdx() then
-		local list = {}
-
-		self._allSkillList = list
-		self._skillSetOpIdx = self._skillSetMO:getOpIdx()
-
-		tabletool.addValues(list, self._skillSetMO:getSkillList())
-
-		if self._collectionType2UidDict then
-			for type, uidList in pairs(self._collectionType2UidDict) do
-				if type == ArcadeGameEnum.CollectionType.Weapon then
-					local uid = uidList[1]
-					local collectionMO = self:getCollectionMO(uid)
-
-					if collectionMO then
-						local skillSetMO = collectionMO:getSkillSetMO()
-
-						tabletool.addValues(list, skillSetMO:getSkillList())
-					end
-				else
-					for _, uid in ipairs(uidList) do
-						local collectionMO = self:getCollectionMO(uid)
-
-						if collectionMO then
-							local skillSetMO = collectionMO:getSkillSetMO()
-
-							tabletool.addValues(list, skillSetMO:getSkillList())
-						end
-					end
-				end
-			end
-		end
-	end
-
-	return self._allSkillList
-end
-
 function ArcadeGameCharacterMO:addCollection(collectionId, usedTimes, durability)
 	local type = ArcadeConfig.instance:getCollectionType(collectionId)
 
@@ -166,27 +142,19 @@ function ArcadeGameCharacterMO:addCollection(collectionId, usedTimes, durability
 		return
 	end
 
-	local typeUidList = ArcadeGameHelper.checkDictTable(self._collectionType2UidDict, type)
+	if type == ArcadeGameEnum.CollectionType.Weapon and not durability then
+		local addDurability = ArcadeGameModel.instance:getGameAttribute(ArcadeGameEnum.GameAttribute.AddWeaponDurability)
 
-	if type == ArcadeGameEnum.CollectionType.Weapon then
-		local curWeaponCount = #typeUidList
-		local canCarryWeaponNum = self:getCanCarryWeaponNum()
-
-		if canCarryWeaponNum <= curWeaponCount then
-			self:removeCollection(typeUidList[1])
-		end
-
-		if not durability then
-			local addDurability = ArcadeGameModel.instance:getGameAttribute(ArcadeGameEnum.GameAttribute.AddWeaponDurability)
-
-			durability = ArcadeConfig.instance:getCollectionDurability(collectionId) + addDurability
-		end
+		durability = ArcadeConfig.instance:getCollectionDurability(collectionId) + addDurability
 	end
 
 	local uid = self:_generateUid()
 	local collectionMO = ArcadeGameCollectionMO.New(uid, collectionId, usedTimes, durability)
 
 	self._collectionDict[uid] = collectionMO
+
+	local typeUidList = ArcadeGameHelper.checkDictTable(self._collectionType2UidDict, type)
+
 	typeUidList[#typeUidList + 1] = uid
 
 	local id2UidList = ArcadeGameHelper.checkDictTable(self._collectionId2UidDict, collectionId)
@@ -220,6 +188,40 @@ function ArcadeGameCharacterMO:removeCollection(uid)
 
 	self._collectionDict[uid] = nil
 	self._allSkillList = nil
+
+	return mo
+end
+
+function ArcadeGameCharacterMO:setPlayerActType(actType)
+	self._playerActType = actType
+end
+
+function ArcadeGameCharacterMO:triggerSkillSetMOCounterRecord(counterName, counterParam, count)
+	ArcadeGameCharacterMO.super.triggerSkillSetMOCounterRecord(self, counterName, counterParam, count)
+
+	if not self._collectionType2UidDict then
+		return
+	end
+
+	for type, uidList in pairs(self._collectionType2UidDict) do
+		local uids = uidList
+
+		if type == ArcadeGameEnum.CollectionType.Weapon then
+			uids = {
+				uidList[1]
+			}
+		end
+
+		for _, uid in ipairs(uids) do
+			local collectionMO = self:getCollectionMO(uid)
+
+			if collectionMO then
+				local skillSetMO = collectionMO:getSkillSetMO()
+
+				skillSetMO:triggerSkillCounterRecord(counterName, counterParam, count)
+			end
+		end
+	end
 end
 
 function ArcadeGameCharacterMO:getCfg()
@@ -397,8 +399,47 @@ function ArcadeGameCharacterMO:getPlayerActType()
 	return self._playerActType
 end
 
-function ArcadeGameCharacterMO:setPlayerActType(actType)
-	self._playerActType = actType
+function ArcadeGameCharacterMO:getSkillList()
+	local lastedOpIdx = self._skillSetMO:getOpIdx()
+
+	if self._allSkillList and self._skillSetOpIdx == lastedOpIdx then
+		return self._allSkillList
+	end
+
+	self._allSkillList = {}
+
+	local characterSkillList = self._skillSetMO:getSkillList()
+
+	tabletool.addValues(self._allSkillList, characterSkillList)
+
+	self._skillSetOpIdx = lastedOpIdx
+
+	if self._collectionType2UidDict then
+		for type, uidList in pairs(self._collectionType2UidDict) do
+			local uids = uidList
+
+			if type == ArcadeGameEnum.CollectionType.Weapon then
+				uids = {
+					uidList[1]
+				}
+			end
+
+			for _, uid in ipairs(uids) do
+				local collectionMO = self:getCollectionMO(uid)
+
+				if collectionMO then
+					local skillSetMO = collectionMO:getSkillSetMO()
+					local skillList = skillSetMO:getSkillList()
+
+					tabletool.addValues(self._allSkillList, skillList)
+				end
+			end
+		end
+	end
+
+	table.sort(self._allSkillList, ArcadeGameHelper.sortSkillList)
+
+	return self._allSkillList
 end
 
 return ArcadeGameCharacterMO

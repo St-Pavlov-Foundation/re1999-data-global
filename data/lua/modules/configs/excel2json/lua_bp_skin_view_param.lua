@@ -8,6 +8,7 @@ local fields = {
 	storePrefab = 3,
 	closeAudioId = 5,
 	skinId = 1,
+	online = 6,
 	openAudioId = 4
 }
 local primaryKey = {

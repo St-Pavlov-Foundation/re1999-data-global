@@ -25,6 +25,8 @@ function GMFightEntityInfoView:onInitView()
 	self.health_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/Content/power/health/input")
 	self.health_max = gohelper.findChildText(self.viewGO, "info/Scroll View/Viewport/Content/power/health/max")
 	self.health_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/Content/power/health")
+	self.toughness_go = gohelper.findChild(self.viewGO, "info/Scroll View/Viewport/toughness")
+	self.toughness_input = gohelper.findChildTextMeshInputField(self.viewGO, "info/Scroll View/Viewport/toughness/input")
 	self._icon = gohelper.findChildSingleImage(self.viewGO, "info/image")
 	self._imgIcon = gohelper.findChildImage(self.viewGO, "info/image")
 	self._imgCareer = gohelper.findChildImage(self.viewGO, "info/image/career")
@@ -43,6 +45,7 @@ function GMFightEntityInfoView:addEvents()
 	self.bloodPool_input:AddOnEndEdit(self._onEndEditBloodPool, self)
 	self.heatScale_input:AddOnEndEdit(self._onEndEditHearScale, self)
 	self.health_input:AddOnEndEdit(self._onEndEditHealth, self)
+	self.toughness_input:AddOnEndEdit(self._onEndEditToughness, self)
 end
 
 function GMFightEntityInfoView:removeEvents()
@@ -53,6 +56,7 @@ function GMFightEntityInfoView:removeEvents()
 	self.bloodPool_input:RemoveOnEndEdit()
 	self.heatScale_input:RemoveOnEndEdit()
 	self.health_input:RemoveOnEndEdit()
+	self.toughness_input:RemoveOnEndEdit()
 
 	for _, powerItem in ipairs(self.powerItemList) do
 		powerItem.input:RemoveOnEndEdit()
@@ -134,6 +138,15 @@ function GMFightEntityInfoView:_onSelectHero(entityMO)
 		self.health_max.text = "/" .. tostring(FightHelper.getSurvivalMaxHealth())
 	end
 
+	local monsterConfig = lua_monster.configDict[entityMO.modelId]
+
+	if monsterConfig and not string.nilorempty(monsterConfig.toughness) then
+		gohelper.setActive(self.toughness_go, true)
+		self:showToughness(entityMO, monsterConfig)
+	else
+		gohelper.setActive(self.toughness_go, false)
+	end
+
 	self.shield_input:SetText(entityMO.shieldValue)
 	self._icon:UnLoadImage()
 
@@ -159,6 +172,27 @@ function GMFightEntityInfoView:_onSelectHero(entityMO)
 	self:refreshPowerList(entityMO)
 end
 
+function GMFightEntityInfoView:showToughness(entityMO, monsterConfig)
+	self.toughness_input:SetText(entityMO.toughnessPoint .. "_" .. entityMO.toughnessValue)
+end
+
+function GMFightEntityInfoView:_onEndEditToughness(inputStr)
+	local entityMO = GMFightEntityModel.instance.entityMO
+	local arr = string.splitToNumber(inputStr, "_")
+
+	GMRpc.instance:sendGMRequest(string.format("fightToughness %s %d %d", entityMO.id, arr[1], arr[2]))
+
+	entityMO.toughnessPoint = arr[1]
+	entityMO.toughnessValue = arr[2]
+
+	local localEntityData = FightLocalDataMgr.instance:getEntityById(entityMO.id)
+
+	localEntityData.toughnessPoint = arr[1]
+	localEntityData.toughnessValue = arr[2]
+
+	FightMsgMgr.sendMsg(FightMsgId.ChangeEntityToughness, entityMO.id)
+end
+
 GMFightEntityInfoView.PowerId2Name = {
 	[FightEnum.PowerType.Power] = "灵光",
 	[FightEnum.PowerType.Energy] = "BOSS能量",
@@ -182,7 +216,8 @@ function GMFightEntityInfoView:initPowerOnEndEditHandleDict()
 			[FightEnum.PowerType.AssistBoss] = self._onEndEditAssistBoss,
 			[FightEnum.PowerType.SurvivalDot] = self._onEndEditSurvivalDot,
 			[FightEnum.PowerType.ZongMaoBossEnergy] = self._onEndEditZongMaoBossEnergy,
-			[FightEnum.PowerType.ZongMaoYinNiZhi] = self._onEndEditZongMaoYinNiZhi
+			[FightEnum.PowerType.ZongMaoYinNiZhi] = self._onEndEditZongMaoYinNiZhi,
+			[FightEnum.PowerType.Atomic] = self._onEndEditAtomic
 		}
 	end
 end
@@ -336,6 +371,10 @@ end
 
 function GMFightEntityInfoView:_onEndEditZongMaoYinNiZhi(inputStr)
 	self:onEndEditPower(FightEnum.PowerType.ZongMaoYinNiZhi, inputStr)
+end
+
+function GMFightEntityInfoView:_onEndEditAtomic(inputStr)
+	self:onEndEditPower(FightEnum.PowerType.Atomic, inputStr)
 end
 
 function GMFightEntityInfoView:onEndEditPower(powerId, text)

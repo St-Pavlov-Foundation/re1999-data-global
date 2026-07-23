@@ -46,16 +46,54 @@ end
 function PlayerCardMO:updateShowSetting(showSetting)
 	self._showSettings = {}
 
+	local infoDict = {}
+
 	if showSetting then
 		for i = 1, #showSetting do
 			local setting = showSetting[i]
-			local split = string.splitToNumber(setting, "#")
+			local split = string.split(setting, "#")
+			local key = split[1]
+			local value = split[2]
 
-			self._showSettings[split[1]] = split[2]
+			if key and value then
+				infoDict[tonumber(key)] = value
+			end
 		end
-	else
-		self._showSettings[PlayerCardEnum.ShowSettingsType.ShowEquipType] = PlayerCardEnum.EquipType.Critter
-		self._showSettings[PlayerCardEnum.ShowSettingsType.HideBadgeFormOther] = 0
+
+		for type, info in pairs(PlayerCardEnum.ShowSettingsInfo) do
+			if self["_updateShowSetting_" .. type] then
+				self["_updateShowSetting_" .. type](self, infoDict[type])
+			end
+
+			local value = infoDict[type]
+
+			if value then
+				if info.isNumber then
+					value = tonumber(value)
+				end
+
+				self._showSettings[type] = value
+			else
+				self._showSettings[type] = info.Defalut
+			end
+		end
+	end
+end
+
+function PlayerCardMO:_updateShowSetting_3(value)
+	self._skinShowEnterAnimTypeDict = {}
+
+	if not string.nilorempty(value) then
+		local split = GameUtil.splitString2(value, true, "|", "_")
+
+		for _, v in ipairs(split) do
+			local skinId = v[1]
+			local type = v[2]
+
+			if skinId and type then
+				self._skinShowEnterAnimTypeDict[skinId] = type
+			end
+		end
 	end
 end
 
@@ -182,30 +220,6 @@ end
 
 function PlayerCardMO:getEmptyBaseInfoPosList()
 	return self.emptyBaseInfoPosList
-end
-
-function PlayerCardMO:setEmptyPosList()
-	self.emptyPosList = {
-		true,
-		true,
-		true,
-		true,
-		true
-	}
-
-	if self.progressSettingsDict and #self.progressSettingsDict > 0 then
-		for i = 1, 5 do
-			for _, mo in ipairs(self.progressSettingsDict) do
-				if mo[1] == i then
-					self.emptyPosList[i] = false
-				end
-			end
-		end
-	end
-end
-
-function PlayerCardMO:getEmptyPosList()
-	return self.emptyPosList
 end
 
 function PlayerCardMO:setEmptyPosList()
@@ -474,8 +488,6 @@ function PlayerCardMO:modifyEquipBadges(badgeId)
 		self._badgeList[index] = 0
 		isModify = true
 	else
-		local iscan
-
 		for i, id in ipairs(self._badgeList) do
 			if id <= 0 then
 				self._badgeList[i] = badgeId
@@ -513,6 +525,38 @@ function PlayerCardMO:getEquipIndexBadge(id)
 	end
 
 	return -1
+end
+
+function PlayerCardMO:setShowEnterAnimType(skinId, type)
+	skinId = skinId or self:getThemeId()
+
+	local key = PlayerCardEnum.ShowSettingsType.ShowEnterAnimType
+
+	if self._skinShowEnterAnimTypeDict then
+		self._skinShowEnterAnimTypeDict = {}
+	end
+
+	self._skinShowEnterAnimTypeDict[skinId] = type
+
+	local value = ""
+
+	for _skinId, _type in pairs(self._skinShowEnterAnimTypeDict) do
+		value = value .. _skinId .. "_" .. _type .. "|"
+	end
+
+	local settings = self:setShowSetting(key, value)
+
+	PlayerCardRpc.instance:sendSetPlayerCardShowSettingRequest(settings)
+end
+
+function PlayerCardMO:getShowEnterAnimType(skinId)
+	skinId = skinId or self:getThemeId()
+
+	if self._skinShowEnterAnimTypeDict then
+		return self._skinShowEnterAnimTypeDict[skinId] or 1
+	end
+
+	return 1
 end
 
 return PlayerCardMO

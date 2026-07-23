@@ -7,22 +7,16 @@ local StoreLinkGiftItemComp = class("StoreLinkGiftItemComp", LuaCompBase)
 function StoreLinkGiftItemComp:init(go)
 	self._go = go
 	self.viewGO = go
-	self._txtname = gohelper.findChildText(self.viewGO, "#txt_name")
-	self._txteng = gohelper.findChildText(self.viewGO, "#txt_name/#txt_eng")
-	self._txtremain = gohelper.findChildText(self.viewGO, "txt_remain")
-	self._txttotal = gohelper.findChildText(self.viewGO, "total/txt_total")
-	self._txtmaterialNum = gohelper.findChildText(self.viewGO, "cost/txt_materialNum")
-	self._imagematerial = gohelper.findChildImage(self.viewGO, "cost/simage_material")
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "reward/simage_icon")
 	self._imageicon = gohelper.findChildImage(self.viewGO, "reward/simage_icon")
 	self._goimagedesc = gohelper.findChild(self.viewGO, "reward/image_dec")
-	self._gototal = gohelper.findChild(self.viewGO, "total")
 	self._rewartTb = self:_createRewardTb(gohelper.findChild(self.viewGO, "reward/reward1"), 1)
 	self._rewart2Tb = self:_createRewardTb(gohelper.findChild(self.viewGO, "reward/reward2"), 2)
 	self._golock = gohelper.findChild(self.viewGO, "go_lock")
 	self._gocanget = gohelper.findChild(self.viewGO, "go_canget")
 	self._goreward3 = gohelper.findChild(self.viewGO, "reward/reward3")
 	self._txtrewardnum3 = gohelper.findChildText(self.viewGO, "reward/reward3/normal/num3/txt_num")
+	self._simagecurrency3 = gohelper.findChildSingleImage(self.viewGO, "reward/reward3/normal/num3/icon")
 
 	self:addEventListeners()
 end
@@ -64,6 +58,10 @@ function StoreLinkGiftItemComp:onDestroy()
 		self._simageicon:UnLoadImage()
 	end
 
+	if self._simagecurrency3 then
+		self._simagecurrency3:UnLoadImage()
+	end
+
 	self:removeEventListeners()
 	self:__onDispose()
 end
@@ -78,73 +76,19 @@ function StoreLinkGiftItemComp:onUpdateMO(mo)
 	self._mo = mo
 
 	if self._mo then
-		self._txtname.text = self._mo.config.name
-		self._txteng.text = self._mo.config.nameEn
-
-		self:_refreshPrice()
 		self:_refreshReward()
 	end
 end
 
-function StoreLinkGiftItemComp:_refreshPrice()
-	local mo = self._mo
-	local maxBuyCount = mo.maxBuyCount
-	local remain = maxBuyCount - mo.buyCount
-	local content
+function StoreLinkGiftItemComp:getBuyStateStr()
+	if self._mo and self._mo.buyCount and self._mo.buyCount > 0 then
+		local goodsId = self._mo.goodsId
 
-	if mo.isChargeGoods then
-		content = StoreConfig.instance:getChargeRemainText(maxBuyCount, mo.refreshTime, remain, mo.offlineTime)
-	else
-		local showRefreshTime = StoreHelper.getShowRefreshTimeByGoodsMO(mo)
-
-		content = StoreConfig.instance:getRemainText(maxBuyCount, showRefreshTime, remain, mo.offlineTime)
-	end
-
-	if string.nilorempty(content) then
-		gohelper.setActive(self._txtremain, false)
-	else
-		gohelper.setActive(self._txtremain, true)
-
-		self._txtremain.text = content
-	end
-
-	local cost = mo.cost
-
-	if string.nilorempty(cost) or cost == 0 then
-		self._txtmaterialNum.text = luaLang("store_free")
-
-		gohelper.setActive(self._imagematerial, false)
-	elseif mo.isChargeGoods then
-		self._txtmaterialNum.text = StoreModel.instance:getCostPriceFull(mo.id)
-
-		gohelper.setActive(self._imagematerial, false)
-
-		self._costQuantity = cost
-	else
-		local costs = GameUtil.splitString2(cost, true)
-		local costInfo = costs[mo.buyCount + 1] or costs[#costs]
-
-		self._costType = costInfo[1]
-		self._costId = costInfo[2]
-		self._costQuantity = costInfo[3]
-
-		local costConfig, costIcon = ItemModel.instance:getItemConfigAndIcon(self._costType, self._costId)
-
-		self._txtmaterialNum.text = self._costQuantity
-
-		gohelper.setActive(self._imagematerial, true)
-
-		local id = 0
-
-		if string.len(self._costId) == 1 then
-			id = self._costType .. "0" .. self._costId
-		else
-			id = self._costType .. self._costId
+		if StoreCharageConditionalHelper.isCharageTaskNotFinish(goodsId) and StoreCharageConditionalHelper.isCharageCondition(goodsId) then
+			return luaLang("p_sp02_activitychaingiftpanelview_txt_task2")
 		end
 
-		local str = string.format("%s_1", id)
-
-		UISpriteSetMgr.instance:setCurrencyItemSprite(self._imagematerial, str)
+		return luaLang("p_sp02_activitychaingiftpanelview_txt_task1")
 	end
 end
 
@@ -172,20 +116,18 @@ function StoreLinkGiftItemComp:_refreshReward()
 	gohelper.setActive(self._rewartTb.go, showCondIcon)
 	gohelper.setActive(self._rewart2Tb.go, showCondIcon)
 	gohelper.setActive(self._goimagedesc, showCondIcon)
-	gohelper.setActive(self._gototal, showCondIcon)
 	gohelper.setActive(self._goreward3, not showCondIcon)
-	gohelper.setActive(self._golock, isBuy and not isCond)
 	gohelper.setActive(self._gocanget, isBuy and isCond and isTaskNoFinish)
 
 	if showCondIcon then
-		self._txttotal.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("store_linkgift_totalcount_txt"), bounsCount + condBonusCount)
-
 		self:_setRewardTbNum(self._rewartTb, bounsCount)
 		self:_setRewardTbNum(self._rewart2Tb, condBonusCount)
-		self:_setRewardTbHasget(self._rewartTb, isBuy)
-		self:_setRewardTbHasget(self._rewart2Tb, isBuy and StoreCharageConditionalHelper.isCharageTaskFinish(goodsId))
+		self:_setRewardTbHasget(self._rewartTb, isBuy, bonusList)
+		self:_setRewardTbHasget(self._rewart2Tb, isBuy and StoreCharageConditionalHelper.isCharageTaskFinish(goodsId), condBonusList)
 	else
 		self._txtrewardnum3.text = self:_getRewardNumStr(bounsCount + condBonusCount)
+
+		self:_setCurrencyIcon(self._simagecurrency3, bonusList)
 	end
 end
 
@@ -201,6 +143,7 @@ function StoreLinkGiftItemComp:_createRewardTb(go, iconIndx)
 	tb.gohasget = gohelper.findChild(go, "hasget")
 	tb.txtnum = gohelper.findChildText(go, string.format("normal/num%s/txt_num", iconIndx))
 	tb.txtnum2 = gohelper.findChildText(go, string.format("hasget/num%s/txt_num", iconIndx))
+	tb.simagecurrency = gohelper.findChildSingleImage(go, string.format("normal/num%s/icon", iconIndx))
 
 	return tb
 end
@@ -218,15 +161,22 @@ function StoreLinkGiftItemComp:_setRewardTbNum(rewardTb, num)
 	end
 end
 
-function StoreLinkGiftItemComp:_setRewardTbHasget(rewardTb, isHasget)
+function StoreLinkGiftItemComp:_setRewardTbHasget(rewardTb, isHasget, bonusList)
 	if rewardTb then
 		gohelper.setActive(rewardTb.gonormal, not isHasget)
 		gohelper.setActive(rewardTb.gohasget, isHasget)
+		self:_setCurrencyIcon(rewardTb.simagecurrency, bonusList)
 	end
 end
 
+function StoreLinkGiftItemComp:_setCurrencyIcon(simageIcon, bonusList)
+	StoreLinkGiftGoodsView.setCurrencyIconByBouns(simageIcon, bonusList)
+end
+
 function StoreLinkGiftItemComp:_disposeRewardTb(rewardTb)
-	return
+	if rewardTb and rewardTb.simagecurrency then
+		rewardTb.simagecurrency:UnLoadImage()
+	end
 end
 
 function StoreLinkGiftItemComp:_getRewardCount(bonusList)

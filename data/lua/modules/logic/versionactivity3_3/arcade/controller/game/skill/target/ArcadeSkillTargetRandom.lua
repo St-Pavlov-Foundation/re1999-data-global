@@ -22,18 +22,32 @@ function ArcadeSkillTargetRandom:onFindTarget()
 
 	self:clearList(self._tempMoList)
 
-	local unitMOList = ArcadeGameModel.instance:getMonsterList()
+	local entityType = self._cfgNeedTargetTypeDict and next(self._cfgNeedTargetTypeDict)
+
+	if not entityType then
+		return
+	end
+
+	local unitMOList = ArcadeGameModel.instance:getEntityMOList(entityType)
 
 	if not unitMOList or #unitMOList < 1 then
 		return
 	end
 
-	local gridX, gridY = 1, 1
-
 	for _, unitMO in ipairs(unitMOList) do
-		gridX, gridY = unitMO:getGridPos()
+		local gridX, gridY = unitMO:getGridPos()
+		local isOutSide = ArcadeGameHelper.isOutSideRoom(gridX, gridY)
+		local isAlive = true
+		local isCanDead = unitMO:getIsCanDead()
 
-		if not ArcadeGameHelper.isOutSideRoom(gridX, gridY) and not unitMO:getIsDead() and unitMO:getHp() > 0 then
+		if isCanDead then
+			local isDead = unitMO:getIsDead()
+			local hp = unitMO:getHp()
+
+			isAlive = not isDead and hp > 0
+		end
+
+		if not isOutSide and isAlive then
 			self._tempMoList[#self._tempMoList + 1] = unitMO
 		end
 	end

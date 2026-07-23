@@ -327,5 +327,54 @@
     "condition": "3",
     "param": "",
     "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 20,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 103,
+    "groupId": 21,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200016,
+    "groupId": 320001601,
+    "condition": "3",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200016,
+    "groupId": 320001602,
+    "condition": "2",
+    "param": "",
+    "weight": 200
+  },
+  {
+    "id": 3200016,
+    "groupId": 320001603,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200016,
+    "groupId": 320001604,
+    "condition": "2",
+    "param": "",
+    "weight": 100
+  },
+  {
+    "id": 3200016,
+    "groupId": 320001605,
+    "condition": "2",
+    "param": "",
+    "weight": 100
   }
 ]

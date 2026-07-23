@@ -35,6 +35,32 @@ function Activity101Rpc:onReceiveGet101BonusReply(resultCode, msg)
 	end
 end
 
+function Activity101Rpc:sendGet101BonusListRequest(activityId, ids, callback, callbackObj)
+	local req = Activity101Module_pb.Get101BonusListRequest()
+
+	req.activityId = activityId
+
+	if ids and next(ids) then
+		for _, id in ipairs(ids) do
+			table.insert(req.ids, id)
+		end
+	end
+
+	self:sendMsg(req, callback, callbackObj)
+end
+
+function Activity101Rpc:onReceiveGet101BonusListReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local ids = msg.ids
+	local activityId = msg.activityId
+
+	ActivityType101Model.instance:setBonusListGet(activityId, ids)
+	ActivityController.instance:dispatchEvent(ActivityEvent.RefreshNorSignActivity)
+end
+
 function Activity101Rpc:sendGet101SpBonusRequest(actId, id, cb, cbObj)
 	local req = Activity101Module_pb.Get101SpBonusRequest()
 

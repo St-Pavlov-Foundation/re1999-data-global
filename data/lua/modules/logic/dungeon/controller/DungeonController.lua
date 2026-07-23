@@ -585,6 +585,12 @@ function DungeonController:needShowDungeonView()
 		return
 	end
 
+	local teachingNeedOpenView = TeachingModel.instance:getNeedOpenView()
+
+	if teachingNeedOpenView then
+		return
+	end
+
 	local co = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
 
 	if co then
@@ -931,6 +937,35 @@ function DungeonController.getEpisodeName(episodeConfig)
 
 		return roman
 	end
+end
+
+function DungeonController.openStoryElementView(storyId)
+	local elementConfig = storyId and lua_story_element.configDict[storyId]
+	local elementId = elementConfig and elementConfig.elementId
+
+	if not elementId then
+		logError("openStoryElementView elementId is nil storyId:", tostring(storyId))
+
+		return
+	end
+
+	local elementConfig = lua_chapter_map_element.configDict[elementId]
+
+	if not elementConfig then
+		logError("openStoryElementView elementConfig is nil elementId:", tostring(elementId))
+
+		return
+	end
+
+	if elementConfig.type == DungeonEnum.ElementType.V3a7Tower then
+		TowerV3a7Controller.instance:openTowerV3a7MapView({
+			elementId = elementId
+		})
+
+		return
+	end
+
+	logError("openStoryElementView invalid type elementId:", tostring(elementId))
 end
 
 function DungeonController:openDungeonChangeMapStatusView(param)

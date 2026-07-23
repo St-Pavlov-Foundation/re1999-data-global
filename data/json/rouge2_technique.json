@@ -161,8 +161,8 @@
   },
   {
     "id": 18,
-    "mainTitleId": 6,
-    "subTitleId": 2,
+    "mainTitleId": 0,
+    "subTitleId": 0,
     "mainTitle": "language_10100951",
     "subTitle": "language_10100953",
     "picture": "rouge2_help_3",
@@ -200,16 +200,6 @@
     "pos": "498#160|397#58"
   },
   {
-    "id": 25,
-    "mainTitleId": 8,
-    "subTitleId": 2,
-    "mainTitle": "language_10102918",
-    "subTitle": "language_10107646",
-    "picture": "rouge2_help_21",
-    "content": "language_10107647",
-    "pos": "419#170|406#58"
-  },
-  {
     "id": 22,
     "mainTitleId": 9,
     "subTitleId": 1,
@@ -238,5 +228,35 @@
     "picture": "rouge2_help_22",
     "content": "language_10107653",
     "pos": "378#-204|1050#-126"
+  },
+  {
+    "id": 25,
+    "mainTitleId": 8,
+    "subTitleId": 2,
+    "mainTitle": "language_10102918",
+    "subTitle": "language_10107646",
+    "picture": "rouge2_help_21",
+    "content": "language_10107647",
+    "pos": "419#170|406#58"
+  },
+  {
+    "id": 26,
+    "mainTitleId": 9,
+    "subTitleId": 2,
+    "mainTitle": "language_10107648",
+    "subTitle": "language_10125909",
+    "picture": "v3a7_rouge2_help_1",
+    "content": "language_10125910",
+    "pos": "728#-15|728#-92"
+  },
+  {
+    "id": 27,
+    "mainTitleId": 9,
+    "subTitleId": 3,
+    "mainTitle": "language_10107648",
+    "subTitle": "language_10125911",
+    "picture": "v3a7_rouge2_help_2",
+    "content": "language_10125912",
+    "pos": "587#-303|366#-332"
   }
 ]

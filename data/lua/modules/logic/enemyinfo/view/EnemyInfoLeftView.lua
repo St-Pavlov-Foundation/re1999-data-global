@@ -390,7 +390,13 @@ function EnemyInfoLeftView:addMonsterItem(monsterId, parent, bossIdList)
 	local skinConfig = FightConfig.instance:getSkinCO(monsterConfig.skinId)
 
 	gohelper.getSingleImage(enemyItem.icon.gameObject):LoadImage(ResUrl.monsterHeadIcon(skinConfig.headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItem.career, "sxy_" .. monsterConfig.career)
+
+	if self.viewParam and self.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Sodache then
+		gohelper.setActive(enemyItem.career, false)
+	else
+		UISpriteSetMgr.instance:setEnemyInfoSprite(enemyItem.career, "sxy_" .. monsterConfig.career)
+	end
+
 	gohelper.setActive(enemyItem.bosstag, enemyItem.isBoss)
 end
 

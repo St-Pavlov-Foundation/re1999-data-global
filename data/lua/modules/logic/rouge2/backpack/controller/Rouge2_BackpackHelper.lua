@@ -37,7 +37,7 @@ function Rouge2_BackpackHelper.itemId2BagType(itemId)
 				return Rouge2_Enum.BagType.Buff
 			end
 		end
-	elseif itemId >= 300000 and itemId <= 399999 then
+	elseif itemId >= 300000 and itemId <= 999999999 then
 		return Rouge2_Enum.BagType.ActiveSkill
 	else
 		logError(string.format("肉鸽未定义构筑物类型 itemId = %s", itemId))
@@ -64,7 +64,7 @@ function Rouge2_BackpackHelper.itemId2Tag(itemId)
 		return Rouge2_OutsideEnum.CollectionListType.Collection
 	elseif itemId >= 200000 and itemId <= 299999 then
 		return Rouge2_OutsideEnum.CollectionListType.Buff
-	elseif itemId >= 300000 and itemId <= 399999 then
+	elseif itemId >= 300000 and itemId <= 999999999 then
 		return Rouge2_OutsideEnum.CollectionListType.AutoBuff
 	else
 		logError(string.format("肉鸽未定义构筑物类型 itemId = %s", itemId))
@@ -100,7 +100,7 @@ function Rouge2_BackpackHelper.itemType2ShowViewName(itemType)
 		return ViewName.Rouge2_RelicsDropView
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
 		return ViewName.Rouge2_ActiveSkillDropView
-	elseif itemType == Rouge2_MapEnum.BagType.AttrBuff then
+	elseif itemType == Rouge2_Enum.BagType.AttrBuff then
 		return ViewName.Rouge2_AttrBuffDropView
 	else
 		logError(string.format("肉鸽未定义构筑物显示类型 itemType = " .. itemType))
@@ -191,6 +191,42 @@ function Rouge2_BackpackHelper.getItemSplitTypeList()
 	end
 
 	return attrIdList
+end
+
+function Rouge2_BackpackHelper.setSkillUpdateAttrTips(dataType, dataId, goRoot, txtComp)
+	local itemCo, itemMo = Rouge2_BackpackHelper.getItemCofigAndMo(dataType, dataId)
+	local updateAttrList = Rouge2_CollectionConfig.instance:getSkillUpdateAttrList(itemCo.id)
+	local hasUpdate = updateAttrList and #updateAttrList > 0
+
+	gohelper.setActive(goRoot, hasUpdate)
+
+	if not hasUpdate then
+		return
+	end
+
+	local updateAttrStr = Rouge2_BackpackHelper._skillUpdateAttrList2Str(updateAttrList)
+
+	txtComp.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("rouge2_backpackskillview_attrupdatetips"), updateAttrStr)
+end
+
+function Rouge2_BackpackHelper._skillUpdateAttrList2Str(updateAttrList)
+	local attrStrList = {}
+
+	for _, updateCondition in ipairs(updateAttrList or {}) do
+		local attrId = updateCondition[1]
+		local attrValue = updateCondition[2]
+		local attrSpriteIndex = Rouge2_AttributeConfig.instance:getAttrSpriteIndex(attrId)
+		local curAttrValue = Rouge2_Model.instance:getAttrValue(attrId) or 0
+		local isFit = attrValue <= curAttrValue
+		local valueColor = isFit and "#FFFFFF" or "#C66030"
+		local updateStr = string.format("<sprite=%s><%s>%s→%s</color>", attrSpriteIndex, valueColor, curAttrValue, attrValue)
+
+		table.insert(attrStrList, updateStr)
+	end
+
+	local updateAttrListStr = table.concat(attrStrList, " ")
+
+	return updateAttrListStr
 end
 
 function Rouge2_BackpackHelper.filterItemList(itemList, filterTypeMap)

@@ -102,7 +102,7 @@ function FightLogProtobufHelper.getFightStepString(fightStepData, level, index, 
 	FightLogProtobufHelper.addStack(strTb, pre, stack, className)
 	table.insert(strTb, string.format("%s actType : %s %s", pre, fightStepData.actType, FightLogProtobufHelper.getActTypeName(fightStepData.actType)))
 
-	if fightStepData.actType == FightEnum.ActType.SKILL then
+	if fightStepData.actType == FightEnum.ActTySKILL or fightStepData.actType == FightEnum.ActType.DEVICE then
 		table.insert(strTb, string.format("%s fromId : %s 技能发起者:%s", pre, fightStepData.fromId, FightLogProtobufHelper.getEntityName(fightStepData.fromId)))
 		table.insert(strTb, string.format("%s toId : %s 技能承受者:%s", pre, fightStepData.toId, FightLogProtobufHelper.getEntityName(fightStepData.toId)))
 		table.insert(strTb, string.format("%s actId : %s 技能名字:%s timeline : %s", pre, fightStepData.actId, FightLogProtobufHelper.getSkillName(fightStepData.actId), FightLogProtobufHelper.getTimelineName(fightStepData.fromId, fightStepData.actId)))
@@ -203,6 +203,159 @@ function FightLogProtobufHelper.getFightActEffectString(actEffectData, level, in
 		table.insert(strTb, FightLogProtobufHelper.getHurtInfoString(actEffectData.hurtInfo, level))
 	end
 
+	if actEffectData.deviceAreaInfo then
+		table.insert(strTb, FightLogProtobufHelper.getDeviceAreaInfoString(actEffectData.deviceAreaInfo, level))
+	end
+
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getDeviceAreaInfoString(deviceAreaInfo, level)
+	level = level or 0
+
+	local initPre = FightLogProtobufHelper.getPrefix(level)
+	local className = FightLogProtobufHelper.buildClassNameByIndex("deviceAreaInfo")
+
+	if not deviceAreaInfo then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	table.insert(strTb, FightLogProtobufHelper.getDeviceInfoListString(deviceAreaInfo:getServerDeviceList(), level, "devices"))
+	table.insert(strTb, FightLogProtobufHelper.getDevicePowerListString(deviceAreaInfo.powers, level, "powers"))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getDeviceInfoListString(deviceList, level, name, stack)
+	name = name or "deviceList"
+
+	return FightLogProtobufHelper.getMoListString(deviceList, FightLogProtobufHelper.getDeviceInfoString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getDevicePowerListString(powerList, level, name, stack)
+	name = name or "powerList"
+
+	return FightLogProtobufHelper.getMoListString(powerList, FightLogProtobufHelper.getDevicePowerString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getDeviceSkillGroupListString(skillGroupInfoList, level, name, stack)
+	name = name or "skillGroupInfoList"
+
+	return FightLogProtobufHelper.getMoListString(skillGroupInfoList, FightLogProtobufHelper.getDeviceSkillGroupString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getDeviceSkillInfoListString(skillInfoList, level, name, stack)
+	name = name or "skillInfoList"
+
+	return FightLogProtobufHelper.getMoListString(skillInfoList, FightLogProtobufHelper.getDeviceSkillInfoString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getDeviceInfoString(deviceInfo, level, index)
+	level = level or 0
+
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("deviceInfo", index)
+
+	if not deviceInfo then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogHelper.getPrefix(level)
+
+	table.insert(strTb, string.format("%s index : %s", pre, deviceInfo.index))
+	table.insert(strTb, FightLogProtobufHelper.getDeviceSkillGroupListString(deviceInfo.skills, level, "skills"))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getDevicePowerString(power, level, index)
+	level = level or 0
+
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("devicePower", index)
+
+	if not power then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogHelper.getPrefix(level)
+
+	table.insert(strTb, string.format("%s id : %s", pre, power.id))
+	table.insert(strTb, string.format("%s power : %s", pre, power.power))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getDeviceSkillGroupString(skillGroup, level, index)
+	level = level or 0
+
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("deviceSkillGroup", index)
+
+	if not skillGroup then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogHelper.getPrefix(level)
+
+	table.insert(strTb, FightLogProtobufHelper.getDeviceSkillInfoListString(skillGroup.skills, level, "skills"))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getDeviceSkillInfoString(skillInfo, level, index)
+	level = level or 0
+
+	local initPre = FightLogHelper.getPrefix(level)
+	local className = FightLogHelper.buildClassNameByIndex("deviceSkillInfo", index)
+
+	if not skillInfo then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogHelper.getPrefix(level)
+	local skillCo = lua_skill.configDict[skillInfo.skillId]
+	local skillName = skillCo and skillCo.name
+
+	table.insert(strTb, string.format("%s skillId : %s %s", pre, skillInfo.skillId, skillName))
+	table.insert(strTb, string.format("%s costType : %s", pre, skillInfo.costType))
+	table.insert(strTb, string.format("%s costValue : %s", pre, skillInfo.costValue))
 	table.insert(strTb, initPre .. "}")
 
 	return table.concat(strTb, "\n")
@@ -599,7 +752,9 @@ function FightLogProtobufHelper.getCardInfoString(cardInfo, level, index)
 	table.insert(strTb, string.format("%s areaRedOrBlue : %s", pre, cardInfo.areaRedOrBlue))
 	table.insert(strTb, string.format("%s heatId : %s", pre, cardInfo.heatId))
 	table.insert(strTb, FightLogProtobufHelper.getRouge2MusicNoteString(cardInfo.musicNote, level))
+	table.insert(strTb, FightLogProtobufHelper.getCardExtraInfoDataListString(cardInfo.extraInfos, level))
 	table.insert(strTb, FightLogProtobufHelper.getEnchantListString(cardInfo.enchants, level, "enchants"))
+	table.insert(strTb, FightLogProtobufHelper.getFightCardInfo_CardDataListString(cardInfo.cardDataes, level, "cardDataList"))
 	table.insert(strTb, initPre .. "}")
 
 	return table.concat(strTb, "\n")
@@ -641,6 +796,68 @@ function FightLogProtobufHelper.getEnchantListString(enchantList, level, name, s
 	name = name or "enchantList"
 
 	return FightLogProtobufHelper.getMoListString(enchantList, FightLogProtobufHelper.getCardInfoEnchantString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getFightCardInfo_CardDataString(cardData, level, index)
+	level = level or 0
+
+	local initPre = FightLogProtobufHelper.getPrefix(level)
+	local className = FightLogProtobufHelper.buildClassNameByIndex("cardData", index)
+
+	if not cardData then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogProtobufHelper.getPrefix(level)
+
+	table.insert(strTb, string.format("%s key : %s", pre, cardData.key))
+	table.insert(strTb, string.format("%s value : %s", pre, cardData.value))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getFightCardInfo_CardDataListString(cardDataList, level, name, stack)
+	name = name or "cardDataList"
+
+	return FightLogProtobufHelper.getMoListString(cardDataList, FightLogProtobufHelper.getFightCardInfo_CardDataString, name, level, stack)
+end
+
+function FightLogProtobufHelper.getCardExtraInfoDataString(extraInfo, level, index)
+	level = level or 0
+
+	local initPre = FightLogProtobufHelper.getPrefix(level)
+	local className = FightLogProtobufHelper.buildClassNameByIndex("extraInfo", index)
+
+	if not extraInfo then
+		return string.format("%s %s : nil", initPre, className)
+	end
+
+	local strTb = {
+		string.format("%s %s {", initPre, className)
+	}
+
+	level = level + 1
+
+	local pre = FightLogProtobufHelper.getPrefix(level)
+
+	table.insert(strTb, string.format("%s key : %s %s", pre, extraInfo.key, FightCardExtraInfoData.ExtraKey2Name[extraInfo.key]))
+	table.insert(strTb, string.format("%s value : {%s}", pre, table.concat(extraInfo.values)))
+	table.insert(strTb, initPre .. "}")
+
+	return table.concat(strTb, "\n")
+end
+
+function FightLogProtobufHelper.getCardExtraInfoDataListString(extraInfoList, level, name, stack)
+	name = name or "extraInfoList"
+
+	return FightLogProtobufHelper.getMoListString(extraInfoList, FightLogProtobufHelper.getCardExtraInfoDataString, name, level, stack)
 end
 
 function FightLogProtobufHelper.getNormalTypeListString(list, name, level)

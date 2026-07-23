@@ -18,6 +18,8 @@ function StoryBackgroundView:onInitView()
 	self._goblur = gohelper.findChild(self.viewGO, "#go_upbg/#simage_bgimg/#go_blur")
 	self._gobliteff = gohelper.findChild(self.viewGO, "#go_blitbg")
 	self._gobliteffsecond = gohelper.findChild(self.viewGO, "#go_blitbgsecond")
+	self._goUpVideoRoot = gohelper.findChild(self.viewGO, "#go_upbg/#go_video")
+	self._goBottomVideoRoot = gohelper.findChild(self.viewGO, "#go_bottombg/#go_video")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -145,7 +147,11 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.EnterSplitScreen] = self._actBgEffEnterSplitScreen,
 		[StoryEnum.BgEffectType.ExitSplitScreen] = self._actBgEffExitSplitScreen,
 		[StoryEnum.BgEffectType.TextureShake] = self._actBgEffTextureShake,
-		[StoryEnum.BgEffectType.ShapeMask] = self._actBgEffShapeMask
+		[StoryEnum.BgEffectType.ShapeMask] = self._actBgEffShapeMask,
+		[StoryEnum.BgEffectType.PartialBlur] = self._actBgEffPartialBlur,
+		[StoryEnum.BgEffectType.PerspectiveCamera] = self._actBgEffPerspectiveCamera,
+		[StoryEnum.BgEffectType.TimeStop] = self._actBgEffTimeStop,
+		[StoryEnum.BgEffectType.UpFlow] = self._actBgEffUpFlow
 	}
 	self._handleResetBgEffs = {
 		[StoryEnum.BgEffectType.BgBlur] = self._resetBgEffBlur,
@@ -175,7 +181,11 @@ function StoryBackgroundView:_loadRes()
 		[StoryEnum.BgEffectType.EnterSplitScreen] = self._resetBgEffEnterSplitScreen,
 		[StoryEnum.BgEffectType.ExitSplitScreen] = self._resetBgEffExitSplitScreen,
 		[StoryEnum.BgEffectType.TextureShake] = self._resetBgEffTextureShake,
-		[StoryEnum.BgEffectType.ShapeMask] = self._resetBgEffShapeMask
+		[StoryEnum.BgEffectType.ShapeMask] = self._resetBgEffShapeMask,
+		[StoryEnum.BgEffectType.PartialBlur] = self._resetBgEffPartialBlur,
+		[StoryEnum.BgEffectType.PerspectiveCamera] = self._resetBgEffPerspectiveCamera,
+		[StoryEnum.BgEffectType.TimeStop] = self._resetBgEffTimeStop,
+		[StoryEnum.BgEffectType.UpFlow] = self._resetBgEffUpFlow
 	}
 end
 
@@ -200,6 +210,18 @@ function StoryBackgroundView:onOpen()
 	ViewMgr.instance:openView(ViewName.StoryLeadRoleSpineView, nil, true)
 	ViewMgr.instance:openView(ViewName.StoryView, nil, true)
 	self:_addEvents()
+
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if not isOverseas then
+		local isSpVersionStory = StoryModel.instance:isSpVersionStory()
+
+		self._initVoice = GameConfig:GetCurVoiceShortcut()
+
+		if not isSpVersionStory and (self._initVoice == "jp" or self._initVoice == "kr") then
+			AudioMgr.instance:changeLang("en")
+		end
+	end
 end
 
 function StoryBackgroundView:_addEvents()
@@ -404,6 +426,14 @@ function StoryBackgroundView:_refreshBg()
 		self._lastCaptureTexture = nil
 	end
 
+	if self._bgCo.bgType == StoryEnum.BgType.Video then
+		self:_playVideo()
+
+		return
+	end
+
+	self:_hideVideo()
+
 	if not self._simagebgimg then
 		return
 	end
@@ -441,20 +471,6 @@ function StoryBackgroundView:_refreshBg()
 
 			self._bgRotateId = nil
 		end
-
-		if self._lastBgCo.bgType == StoryEnum.BgType.Picture then
-			if not self._lastBgCo.bgImg or self._lastBgCo.bgImg == "" then
-				self:_showBgBottom(false)
-
-				return
-			end
-
-			self:_loadBottomBg()
-		else
-			gohelper.setActive(self._bottombgSpine, true)
-			self:_showBgBottom(false)
-			self:_onOldBgEffectLoaded()
-		end
 	else
 		self:_showBgTop(false)
 
@@ -469,20 +485,30 @@ function StoryBackgroundView:_refreshBg()
 		self._effectLoader = PrefabInstantiate.Create(self._upbgspine)
 
 		self._effectLoader:startLoad(self._bgCo.bgImg, self._onNewBgEffectLoaded, self)
+	end
+end
 
-		if self._lastBgCo.bgType == StoryEnum.BgType.Picture then
-			if not self._lastBgCo.bgImg or self._lastBgCo.bgImg == "" then
-				self:_showBgBottom(false)
+function StoryBackgroundView:_refreshLastBg()
+	if self._lastBgCo.bgType == StoryEnum.BgType.Video then
+		self:_playVideo(true)
 
-				return
-			end
+		return
+	end
 
-			self:_loadBottomBg()
-		else
+	self:_hideVideo(true)
+
+	if self._lastBgCo.bgType == StoryEnum.BgType.Picture then
+		if string.nilorempty(self._lastBgCo.bgImg) then
 			self:_showBgBottom(false)
-			gohelper.setActive(self._bottombgSpine, true)
-			self:_onOldBgEffectLoaded()
+
+			return
 		end
+
+		self:_loadBottomBg()
+	else
+		self:_showBgBottom(false)
+		gohelper.setActive(self._bottombgSpine, true)
+		self:_onOldBgEffectLoaded()
 	end
 end
 
@@ -638,6 +664,8 @@ function StoryBackgroundView:_onOldBgImgLoaded()
 	end
 
 	self._imagebgold:SetNativeSize()
+
+	self._imagebgold.color = Color.white
 end
 
 function StoryBackgroundView:_onNewBgEffectLoaded()
@@ -840,10 +868,13 @@ end
 
 function StoryBackgroundView:_hideBg()
 	self:_showBgBottom(false)
+	self:_hideVideo(true)
 end
 
 function StoryBackgroundView:_fadeTrans()
 	if self._bgCo.bgType == StoryEnum.BgType.Picture then
+		self:_hideVideo()
+
 		self._imagebg.color.a = 0
 		self._imagebg.color = Color.white
 
@@ -858,35 +889,53 @@ function StoryBackgroundView:_fadeTrans()
 
 		self:_showBgBottom(true)
 		self:_loadTopBg()
+		self:_fadeTransLoadOldBg()
 
-		if not self._lastBgCo or not next(self._lastBgCo) or self._lastBgCo.bgImg == "" then
-			return
+		return
+	end
+
+	if self._bgCo.bgType == StoryEnum.BgType.Video then
+		if self._bgFadeId then
+			ZProj.TweenHelper.KillById(self._bgFadeId)
 		end
 
-		self._simagebgold:UnLoadImage()
-		self._simagebgoldtop:UnLoadImage()
+		self._bgFadeId = ZProj.TweenHelper.DOFadeCanvasGroup(self._goUpVideoRoot, 0, 1, self._bgCo.fadeTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._hideBg, self, nil, EaseType.Linear)
 
-		local bgZoneMo = StoryBgZoneModel.instance:getBgZoneByPath(self._lastBgCo.bgImg)
+		self:_refreshLastBg()
+		self:_refreshBg()
 
-		gohelper.setActive(self._simagebgoldtop.gameObject, bgZoneMo)
+		return
+	end
+end
 
-		if bgZoneMo then
-			self._simagebgoldtop:LoadImage(ResUrl.getStoryRes(bgZoneMo.path), self._onOldBgImgTopLoaded, self)
-			transformhelper.setLocalPosXY(self._simagebgoldtop.gameObject.transform, bgZoneMo.offsetX, bgZoneMo.offsetY)
-			self._simagebgold:LoadImage(ResUrl.getStoryRes(bgZoneMo.sourcePath), function()
-				self._imagebgold.color = Color.white
+function StoryBackgroundView:_fadeTransLoadOldBg()
+	if self._lastBgCo.bgType ~= StoryEnum.BgType.Picture or string.nilorempty(self._lastBgCo.bgImg) then
+		return
+	end
 
-				self:_onOldBgImgLoaded()
-				self:_refreshBg()
-			end)
-		else
-			self._simagebgold:LoadImage(ResUrl.getStoryRes(self._lastBgCo.bgImg), function()
-				self._imagebgold.color = Color.white
+	self._simagebgold:UnLoadImage()
+	self._simagebgoldtop:UnLoadImage()
 
-				self:_onOldBgImgLoaded()
-				self:_refreshBg()
-			end)
-		end
+	local bgZoneMo = StoryBgZoneModel.instance:getBgZoneByPath(self._lastBgCo.bgImg)
+
+	gohelper.setActive(self._simagebgoldtop.gameObject, bgZoneMo)
+
+	if bgZoneMo then
+		self._simagebgoldtop:LoadImage(ResUrl.getStoryRes(bgZoneMo.path), self._onOldBgImgTopLoaded, self)
+		transformhelper.setLocalPosXY(self._simagebgoldtop.gameObject.transform, bgZoneMo.offsetX, bgZoneMo.offsetY)
+		self._simagebgold:LoadImage(ResUrl.getStoryRes(bgZoneMo.sourcePath), function()
+			self._imagebgold.color = Color.white
+
+			self:_onOldBgImgLoaded()
+			self:_refreshBg()
+		end)
+	else
+		self._simagebgold:LoadImage(ResUrl.getStoryRes(self._lastBgCo.bgImg), function()
+			self._imagebgold.color = Color.white
+
+			self:_onOldBgImgLoaded()
+			self:_refreshBg()
+		end)
 	end
 end
 
@@ -1120,7 +1169,7 @@ function StoryBackgroundView:_onTurnPageBgResLoaded()
 	gohelper.setActive(self._turnPageGo, true)
 	StoryTool.enablePostProcess(true)
 
-	local storyViewGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+	local storyViewGo = StoryViewMgr.instance:getStoryView()
 	local imgGo = gohelper.findChild(storyViewGo, "#go_middle/#go_img2")
 
 	self._imgAnim = imgGo:GetComponent(typeof(UnityEngine.Animation))
@@ -1646,98 +1695,31 @@ function StoryBackgroundView:_sketchFinished()
 end
 
 function StoryBackgroundView:_resetBgEffBlindFilter()
-	if self._bgCo.effType == StoryEnum.BgEffectType.BlindFilter then
-		return
+	if self._bgBlindFilterCls then
+		self._bgBlindFilterCls:destroy()
+
+		self._bgBlindFilterCls = nil
 	end
-
-	if self._bgFilterId then
-		ZProj.TweenHelper.KillById(self._bgFilterId)
-
-		self._bgFilterId = nil
-	end
-
-	if self._filterGo then
-		gohelper.destroy(self._filterGo)
-
-		self._filterGo = nil
-	end
-
-	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UISecond)
-	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UIThird)
-	gohelper.setLayer(self._gobliteff, UnityLayer.UI, true)
 end
 
 function StoryBackgroundView:_actBgEffBlindFilter()
-	if self._bgFilterId then
-		ZProj.TweenHelper.KillById(self._bgFilterId)
+	if not self._bgBlindFilterCls then
+		if self._bgCo.effDegree == 0 then
+			return
+		end
 
-		self._bgFilterId = nil
-	end
+		self._bgBlindFilterCls = StoryBgEffsBlindFilter.New()
 
-	if self._bgCo.effDegree == 0 and not self._filterGo then
-		return
-	end
-
-	if self._filterGo then
-		self:_setBlindFilter()
+		self._bgBlindFilterCls:init(self._bgCo)
+		self._bgBlindFilterCls:start(self._resetBgEffBlindFilter, self)
 	else
-		self._filterEffPrefPath = ResUrl.getStoryBgEffect("storybg_blinder")
+		if self._bgCo.effDegree == 0 then
+			self:_resetBgEffBlindFilter()
 
-		local resList = {}
+			return
+		end
 
-		table.insert(resList, self._filterEffPrefPath)
-		self:loadRes(resList, self._onFilterResLoaded, self)
-	end
-end
-
-function StoryBackgroundView:_onFilterResLoaded()
-	if self._filterEffPrefPath then
-		local prefAssetItem = self._loader:getAssetItem(self._filterEffPrefPath)
-		local frontGo = ViewMgr.instance:getContainer(ViewName.StoryFrontView).viewGO
-
-		self._filterGo = gohelper.clone(prefAssetItem:GetResource(), frontGo)
-
-		self:_setBlindFilter()
-	end
-end
-
-local filterEffDegrees = {
-	1,
-	0.4,
-	0.2,
-	0
-}
-
-function StoryBackgroundView:_setBlindFilter()
-	StoryTool.enablePostProcess(true)
-	gohelper.setAsFirstSibling(self._filterGo)
-
-	self._imgFilter = self._filterGo:GetComponent(typeof(UnityEngine.UI.Image))
-
-	self._imgFilter.material:SetTexture("_MainTex", self._blitEff.capturedTexture)
-
-	if self._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		self:_filterUpdate(filterEffDegrees[self._bgCo.effDegree + 1])
-	else
-		local value = self._bgCo.effDegree > 0 and 1 or self._imgFilter.material:GetFloat("_SourceColLerp")
-
-		self._bgFilterId = ZProj.TweenHelper.DOTweenFloat(value, filterEffDegrees[self._bgCo.effDegree + 1], self._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._filterUpdate, self._filterFinished, self)
-	end
-
-	StoryViewMgr.instance:setStoryViewLayer(UnityLayer.UITop)
-	StoryViewMgr.instance:setStoryLeadRoleSpineViewLayer(UnityLayer.UITop)
-	gohelper.setLayer(self._gobliteff, UnityLayer.UISecond, true)
-end
-
-function StoryBackgroundView:_filterUpdate(value)
-	self._imgFilter.material:SetFloat("_SourceColLerp", value)
-end
-
-function StoryBackgroundView:_filterFinished()
-	if self._bgFilterId then
-		ZProj.TweenHelper.KillById(self._bgFilterId)
-
-		self._bgFilterId = nil
+		self._bgBlindFilterCls:reset(self._bgCo)
 	end
 end
 
@@ -2078,6 +2060,48 @@ function StoryBackgroundView:_resetBgEffShapeMask()
 	end
 end
 
+function StoryBackgroundView:_actBgEffPartialBlur()
+	if not self._bgEffPartialBlur then
+		self._bgEffPartialBlur = StoryBgEffsPartialBlur.New()
+
+		self._bgEffPartialBlur:init(self._bgCo)
+		self._bgEffPartialBlur:start(self._resetBgEffPartialBlur, self)
+	else
+		self._bgEffPartialBlur:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffPartialBlur()
+	if self._bgEffPartialBlur then
+		self._bgEffPartialBlur:destroy()
+
+		self._bgEffPartialBlur = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffPerspectiveCamera()
+	if not self._bgEffPerspectiveCamera then
+		if self._bgCo.effDegree == 1 then
+			return
+		end
+
+		self._bgEffPerspectiveCamera = StoryBgEffsPerspectiveCamera.New()
+
+		self._bgEffPerspectiveCamera:init(self._bgCo)
+		self._bgEffPerspectiveCamera:start(self._resetBgEffPerspectiveCamera, self)
+	else
+		self._bgEffPerspectiveCamera:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffPerspectiveCamera()
+	if self._bgEffPerspectiveCamera then
+		self._bgEffPerspectiveCamera:destroy()
+
+		self._bgEffPerspectiveCamera = nil
+	end
+end
+
 function StoryBackgroundView:_resetBgEffOpposition()
 	if self._bgOppositionId then
 		ZProj.TweenHelper.KillById(self._bgOppositionId)
@@ -2091,7 +2115,7 @@ function StoryBackgroundView:_resetBgEffOpposition()
 		self._oppositionGo = nil
 	end
 
-	local storyViewGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+	local storyViewGo = StoryViewMgr.instance:getStoryView()
 
 	gohelper.setLayer(storyViewGo, UnityLayer.UISecond, true)
 
@@ -2159,7 +2183,7 @@ function StoryBackgroundView:_setOpposition()
 		self._bgOppositionId = ZProj.TweenHelper.DOTweenFloat(value, oppositionEffDegrees[self._bgCo.effDegree + 1], self._bgCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], self._oppositionUpdate, self._oppositionFinished, self)
 	end
 
-	local storyViewGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+	local storyViewGo = StoryViewMgr.instance:getStoryView()
 
 	gohelper.setLayer(storyViewGo, UnityLayer.UITop, true)
 
@@ -2388,7 +2412,7 @@ end
 function StoryBackgroundView:_onTransMalfunctionResLoaded()
 	if self._transMalfunctionPrefPath then
 		local prefAssetItem = self._loader:getAssetItem(self._transMalfunctionPrefPath)
-		local frontGo = ViewMgr.instance:getContainer(ViewName.StoryView).viewGO
+		local frontGo = StoryViewMgr.instance:getStoryView()
 
 		self._malfunctionGo = gohelper.clone(prefAssetItem:GetResource(), frontGo)
 
@@ -2427,6 +2451,44 @@ function StoryBackgroundView:_changeMalfunctionLayer()
 	end
 end
 
+function StoryBackgroundView:_actBgEffTimeStop()
+	if not self._bgTimeStopCls then
+		self._bgTimeStopCls = StoryBgEffsTimeStop.New()
+
+		self._bgTimeStopCls:init(self._bgCo)
+		self._bgTimeStopCls:start(self._resetBgEffTimeStop, self)
+	else
+		self._bgTimeStopCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffTimeStop()
+	if self._bgTimeStopCls then
+		self._bgTimeStopCls:destroy()
+
+		self._bgTimeStopCls = nil
+	end
+end
+
+function StoryBackgroundView:_actBgEffUpFlow()
+	if not self._bgUpFlowCls then
+		self._bgUpFlowCls = StoryBgEffsUpFlow.New()
+
+		self._bgUpFlowCls:init(self._bgCo)
+		self._bgUpFlowCls:start(self._resetBgEffUpFlow, self)
+	else
+		self._bgUpFlowCls:reset(self._bgCo)
+	end
+end
+
+function StoryBackgroundView:_resetBgEffUpFlow()
+	if self._bgUpFlowCls then
+		self._bgUpFlowCls:destroy()
+
+		self._bgUpFlowCls = nil
+	end
+end
+
 function StoryBackgroundView:loadRes(resList, callback, callbackObj)
 	if self._loader then
 		self._loader:dispose()
@@ -2444,6 +2506,44 @@ function StoryBackgroundView:loadRes(resList, callback, callbackObj)
 	end
 end
 
+function StoryBackgroundView:_playVideo(isBottom)
+	if isBottom then
+		self:_showBgBottom(false)
+		gohelper.setActive(self._bottombgSpine, false)
+
+		if not self._bottomVideoComp then
+			self._bottomVideoComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._goBottomVideoRoot, StoryBackgroundVideoComp)
+		end
+
+		self._bottomVideoComp:playVideo(self._lastBgCo)
+
+		return
+	end
+
+	self:_showBgTop(false)
+	gohelper.setActive(self._upbgspine, false)
+
+	if not self._bgVideoComp then
+		self._bgVideoComp = MonoHelper.addNoUpdateLuaComOnceToGo(self._goUpVideoRoot, StoryBackgroundVideoComp)
+	end
+
+	self._bgVideoComp:playVideo(self._bgCo)
+end
+
+function StoryBackgroundView:_hideVideo(isBottom)
+	if isBottom then
+		if self._bottomVideoComp then
+			self._bottomVideoComp:setVisible(false)
+		end
+
+		return
+	end
+
+	if self._bgVideoComp then
+		self._bgVideoComp:setVisible(false)
+	end
+end
+
 function StoryBackgroundView:onClose()
 	self:_clearBg()
 
@@ -2454,6 +2554,18 @@ function StoryBackgroundView:onClose()
 	gohelper.setActive(self.viewGO, false)
 	ViewMgr.instance:closeView(ViewName.StoryHeroView)
 	self:_removeEvents()
+
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas then
+		return
+	end
+
+	if not self._initVoice then
+		self._initVoice = GameConfig:GetCurVoiceShortcut()
+	end
+
+	AudioMgr.instance:changeLang(self._initVoice)
 end
 
 function StoryBackgroundView:_clearBg()
@@ -2470,6 +2582,8 @@ function StoryBackgroundView:_clearBg()
 	self:_resetBgEffTextureShake()
 	self:_resetBgEffShapeMask()
 	self:_resetBgEffMalfunction()
+	self:_resetBgEffPartialBlur()
+	self:_resetBgEffPerspectiveCamera()
 
 	if self._blurId then
 		ZProj.TweenHelper.KillById(self._blurId)

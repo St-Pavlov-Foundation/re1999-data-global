@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "condition": "haveItem#10000000:500",
+    "desc": "language_10128570"
+  },
+  {
+    "id": 2,
+    "condition": "haveItem#10000000:1000",
+    "desc": "language_10128571"
+  },
+  {
+    "id": 3,
+    "condition": "buildingLevel#104#1",
+    "desc": "language_10128572"
+  },
+  {
+    "id": 4,
+    "condition": "buildingLevel#104#2",
+    "desc": "language_10128573"
+  },
+  {
+    "id": 5,
+    "condition": "buildingLevel#105#1",
+    "desc": "language_10128574"
+  },
+  {
+    "id": 6,
+    "condition": "buildingLevel#105#2",
+    "desc": "language_10128575"
+  },
+  {
+    "id": 7,
+    "condition": "buildingLevel#105#3",
+    "desc": "language_10128576"
+  },
+  {
+    "id": 8,
+    "condition": "level#7",
+    "desc": "language_10128577"
+  },
+  {
+    "id": 9,
+    "condition": "haveItem#10000000:2000",
+    "desc": "language_10128578"
+  },
+  {
+    "id": 10,
+    "condition": "haveItem#10000000:4000",
+    "desc": "language_10128579"
+  },
+  {
+    "id": 11,
+    "condition": "haveItem#10000000:6000",
+    "desc": "language_10128580"
+  },
+  {
+    "id": 12,
+    "condition": "haveItem#10000000:8000",
+    "desc": "language_10128581"
+  },
+  {
+    "id": 13,
+    "condition": "haveItem#10000000:10000",
+    "desc": "language_10128582"
+  },
+  {
+    "id": 14,
+    "condition": "haveItem#10000000:15000",
+    "desc": "language_10128583"
+  },
+  {
+    "id": 15,
+    "condition": "haveItem#10000000:5000",
+    "desc": "language_10128584"
+  }
+]

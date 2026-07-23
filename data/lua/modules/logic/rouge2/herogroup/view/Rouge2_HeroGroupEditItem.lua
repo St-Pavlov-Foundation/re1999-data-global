@@ -11,6 +11,7 @@ function Rouge2_HeroGroupEditItem:init(go)
 	self._heroItem:addClickListener(self._onItemClick, self)
 
 	self._goRecommend = gohelper.findChild(go, "#go_Recommend")
+	self._tranRecommend = self._goRecommend.transform
 
 	self:_initObj(go)
 end
@@ -87,9 +88,15 @@ function Rouge2_HeroGroupEditItem:updateTrialTag()
 end
 
 function Rouge2_HeroGroupEditItem:updateRecommendTag()
-	self._teamTipsParam.heroId = self._mo.heroId
+	self._teamTipsParam[Rouge2_Enum.TeamRecommendParam.HeroId] = self._mo.heroId
 
 	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
+
+	if self._mo:isTrial() and Rouge2_SystemController.instance:isRecommendHero(self._mo.heroId) then
+		recthelper.setAnchorY(self._tranRecommend, 178.5)
+	else
+		recthelper.setAnchorY(self._tranRecommend, 268)
+	end
 end
 
 function Rouge2_HeroGroupEditItem:updateTrialRepeat()
@@ -135,7 +142,7 @@ function Rouge2_HeroGroupEditItem:_onItemClick()
 	local singleGroupMOId = viewParam and viewParam.singleGroupMOId
 	local singleGroupMO = HeroSingleGroupModel.instance:getById(singleGroupMOId)
 
-	if self._mo:isTrial() and not HeroSingleGroupModel.instance:isInGroup(self._mo.uid) and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and Rouge2_HeroGroupEditListModel.instance:isTrialLimit() then
+	if self._mo:isTrial() and not HeroSingleGroupModel.instance:isInGroup(self._mo.uid) and singleGroupMO and (singleGroupMO:isEmpty() or not singleGroupMO.trial) and Rouge2_HeroGroupEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return

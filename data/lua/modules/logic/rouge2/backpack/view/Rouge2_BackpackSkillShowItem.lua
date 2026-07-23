@@ -23,8 +23,6 @@ function Rouge2_BackpackSkillShowItem:init(go)
 	self._goAssemblyItem = gohelper.findChild(self.go, "#go_UnEmpty/Capacity/#go_AssemblyList/#go_AssemblyItem")
 	self._scrollDesc = gohelper.findChild(self.go, "#go_UnEmpty/Scroll View"):GetComponent(gohelper.Type_LimitedScrollRect)
 	self._txtDescr = gohelper.findChildText(self.go, "#go_UnEmpty/Scroll View/Viewport/#txt_Descr")
-	self._goBXSAttr = gohelper.findChild(self.go, "#go_BXSAttr")
-	self._imageBXSAttrIcon = gohelper.findChildImage(self.go, "#go_BXSAttr/#image_Icon")
 
 	SkillHelper.addHyperLinkClick(self._txtDescr)
 
@@ -39,10 +37,6 @@ end
 
 function Rouge2_BackpackSkillShowItem:removeEventListeners()
 	Rouge2_BackpackSkillShowItem.super.removeEventListeners(self)
-end
-
-function Rouge2_BackpackSkillShowItem:refreshCommonUI()
-	self:refreshBXSAttrIcon()
 end
 
 function Rouge2_BackpackSkillShowItem:refreshEmptyUI()
@@ -79,23 +73,9 @@ function Rouge2_BackpackSkillShowItem:refreshAttrIcon()
 	Rouge2_IconHelper.setAttributeIcon(attrId, self._imageAttribute)
 end
 
-function Rouge2_BackpackSkillShowItem:refreshBXSAttrIcon()
-	local isUseBXS = Rouge2_Model.instance:isUseBXSCareer()
-
-	gohelper.setActive(self._goBXSAttr, isUseBXS)
-
-	if not isUseBXS then
-		return
-	end
-
-	local attrIdList = Rouge2_MapConfig.instance:getBXSAttrIdList()
-	local attrId = attrIdList and attrIdList[self._index]
-
-	Rouge2_IconHelper.setAttributeIcon(attrId, self._imageBXSAttrIcon)
-end
-
 function Rouge2_BackpackSkillShowItem:refreshEmptyTips()
-	local hasAnySkillEquip = Rouge2_BackpackController.instance:isCanEquipAnySkill(self._index)
+	local skillList = Rouge2_BackpackModel.instance:getItemList(Rouge2_Enum.BagType.ActiveSkill)
+	local hasAnySkillEquip = skillList and #skillList > Rouge2_Enum.MaxActiveSkillNum
 
 	gohelper.setActive(self._goTips1, not hasAnySkillEquip)
 	gohelper.setActive(self._goTips2, hasAnySkillEquip)

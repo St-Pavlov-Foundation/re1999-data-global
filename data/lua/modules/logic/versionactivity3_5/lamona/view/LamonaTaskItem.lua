@@ -66,7 +66,7 @@ function LamonaTaskItem:_delayFinishAll()
 end
 
 function LamonaTaskItem:_onOneClickClaimReward(actId)
-	if self.taskMo and self.taskMo.activityId == actId and self.taskMo:alreadyGotReward() then
+	if self._taskMo and self._taskMo.activityId == actId and self._taskMo:alreadyGotReward() then
 		self._playFinishAnin = true
 
 		self._animator:Play("finish", 0, 0)

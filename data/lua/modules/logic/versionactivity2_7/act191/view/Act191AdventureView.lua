@@ -46,11 +46,8 @@ function Act191AdventureView:_btnNextOnClick()
 	end
 end
 
-function Act191AdventureView:_editableInitView()
-	return
-end
-
 function Act191AdventureView:onOpen()
+	self:addEventCb(Activity191Controller.instance, Activity191Event.GameInfoUpdatePush, self.onGameInfoUpdatePush, self)
 	Act191StatController.instance:onViewOpen(self.viewName)
 
 	self.nodeDetailMo = self.viewParam
@@ -115,12 +112,22 @@ end
 
 function Act191AdventureView:onGainRewardReply(_, resultCode)
 	if resultCode == 0 then
-		ViewMgr.instance:closeView(self.viewName)
+		local needOpen = Activity191Controller.instance:checkOpenGetView()
 
-		if not Activity191Controller.instance:checkOpenGetView() then
+		if needOpen then
+			ViewMgr.instance:openView(ViewName.Act191GetView, self.cacheInfo)
+		else
 			Activity191Controller.instance:nextStep()
 		end
+
+		ViewMgr.instance:closeView(self.viewName)
 	end
+end
+
+function Act191AdventureView:onGameInfoUpdatePush(gameInfo)
+	self.cacheInfo = Act191GameMO.New()
+
+	self.cacheInfo:init(gameInfo)
 end
 
 return Act191AdventureView

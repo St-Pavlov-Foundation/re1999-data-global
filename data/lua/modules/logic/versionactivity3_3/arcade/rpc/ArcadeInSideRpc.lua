@@ -16,6 +16,39 @@ function ArcadeInSideRpc:onReceiveArcadeGetInSideInfoReply(resultCode, msg)
 	end
 end
 
+function ArcadeInSideRpc:_fillPlayerData(arcadePlayer, info)
+	if not info then
+		return
+	end
+
+	arcadePlayer.id = info.id
+	arcadePlayer.attackAttrId = info.attackAttrId or 0
+
+	if info.skillCounterBox then
+		for _, boxData in ipairs(info.skillCounterBox) do
+			local skillId = boxData.skillId
+			local counters = boxData.counters
+
+			if skillId and counters then
+				local box = ArcadeDef_pb.ArcadeSkillCounterBox()
+
+				box.skillId = skillId
+
+				for _, counterData in ipairs(counters) do
+					local counter = ArcadeDef_pb.ArcadeSkillCounter()
+
+					counter.key = counterData.key
+					counter.count = counterData.count
+
+					table.insert(box.counters, counter)
+				end
+
+				table.insert(arcadePlayer.skillCounterBox, box)
+			end
+		end
+	end
+end
+
 function ArcadeInSideRpc:_fillAttrData(attrContainer, info)
 	if not info then
 		return
@@ -48,9 +81,36 @@ function ArcadeInSideRpc:_fillCollectionData(collectibleSlots, info)
 		local slot = ArcadeDef_pb.ArcadeCollectibleSlot()
 
 		slot.type = data.type
-		slot.collectible.id = data.collectible.id
-		slot.collectible.durability = data.collectible.durability
-		slot.collectible.useTimes = data.collectible.useTimes
+
+		local collectData = data.collectible
+
+		slot.collectible.id = collectData.id
+		slot.collectible.durability = collectData.durability
+		slot.collectible.useTimes = collectData.useTimes
+
+		if collectData.counterBox then
+			for _, boxData in ipairs(collectData.counterBox) do
+				local skillId = boxData.skillId
+				local counters = boxData.counters
+
+				if skillId and counters then
+					local box = ArcadeDef_pb.ArcadeSkillCounterBox()
+
+					box.skillId = skillId
+
+					for _, counterData in ipairs(counters) do
+						local counter = ArcadeDef_pb.ArcadeSkillCounter()
+
+						counter.key = counterData.key
+						counter.count = counterData.count
+
+						table.insert(box.counters, counter)
+					end
+
+					table.insert(slot.collectible.counterBox, box)
+				end
+			end
+		end
 
 		table.insert(collectibleSlots, slot)
 	end
@@ -120,8 +180,7 @@ end
 function ArcadeInSideRpc:sendArcadeSaveGameRequest(info, callback, callbackObj)
 	local req = ArcadeInSideModule_pb.ArcadeSaveGameRequest()
 
-	req.info.player.id = info.player.id
-
+	self:_fillPlayerData(req.info.player, info.player)
 	self:_fillAttrData(req.info.attrContainer, info.attrContainer)
 	self:_fillCollectionData(req.info.collectibleSlots, info.collectibleSlots)
 	self:_fillPropData(req.info.prop, info.prop)

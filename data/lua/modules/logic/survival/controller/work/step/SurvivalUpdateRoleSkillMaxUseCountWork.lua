@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalUpdateRoleSkillMaxUs
 
 local SurvivalUpdateRoleSkillMaxUseCountWork = class("SurvivalUpdateRoleSkillMaxUseCountWork", SurvivalStepBaseWork)
 
-function SurvivalUpdateRoleSkillMaxUseCountWork:onStart(context)
+function SurvivalUpdateRoleSkillMaxUseCountWork:onStart2(context)
 	local sceneMo = SurvivalMapModel.instance:getSceneMo()
 	local skillInfo = sceneMo:getRoleSkillInfo()
 	local info = {}

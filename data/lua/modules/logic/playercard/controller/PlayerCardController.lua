@@ -6,6 +6,8 @@ local PlayerCardController = class("PlayerCardController", BaseController)
 
 function PlayerCardController:reInit()
 	self.viewParam = nil
+	self._curPlayBgmId = nil
+	self._playingBgmAudioId = nil
 end
 
 function PlayerCardController:openPlayerCardView(param)
@@ -308,9 +310,10 @@ function PlayerCardController:getHeadName()
 	return config.name
 end
 
-function PlayerCardController:ShowChangeBgSkin(id, materialDataMOList)
+function PlayerCardController:ShowChangeBgSkin(id, materialDataMOList, isHideEquipBtn)
 	ViewMgr.instance:openView(ViewName.PlayerCardGetView, {
-		id = id
+		id = id,
+		isHideEquipBtn = isHideEquipBtn
 	})
 
 	self._cacheMaterialDataMOList = materialDataMOList
@@ -331,6 +334,12 @@ end
 
 function PlayerCardController:setPlayerCardSkin(id)
 	PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(id)
+
+	local themeInfo = PlayerCardEnum.Theme[id]
+
+	if themeInfo and themeInfo.isJustEquipedShow then
+		SocialModel.instance:setSelectSocialBg(true)
+	end
 end
 
 function PlayerCardController:getBgSkinRed(id)
@@ -356,6 +365,91 @@ function PlayerCardController:openBadgeGetView(id, getApproach, materials)
 		getApproach = getApproach,
 		materials = materials
 	})
+end
+
+function PlayerCardController:checkPlayCardSpecialBgm(skinId)
+	local themeInfo = PlayerCardEnum.Theme[skinId]
+
+	if themeInfo and themeInfo.BgmId then
+		if self._curPlayBgmId == themeInfo.BgmId then
+			return
+		end
+
+		self._curPlayBgmId = themeInfo.BgmId
+
+		AudioMgr.instance:trigger(AudioEnum.UI.Pause_MainMusic)
+
+		self._playingBgmAudioId = AudioMgr.instance:trigger(themeInfo.BgmId)
+
+		return
+	end
+
+	if self._curPlayBgmId then
+		self:stopCardSpecialBgm()
+	end
+end
+
+function PlayerCardController:stopCardSpecialBgm()
+	local socialViewContainer = ViewMgr.instance:getContainer(ViewName.SocialView)
+	local skinId
+
+	if socialViewContainer and socialViewContainer:isOpen() then
+		skinId = socialViewContainer.viewParam and socialViewContainer.viewParam.skinId
+
+		if not skinId then
+			local selfBg = SocialModel.instance:isSelectSocialBg()
+
+			if selfBg then
+				skinId = PlayerCardModel.instance:getPlayerCardSkinId()
+			else
+				local selectFriend = SocialModel.instance:getSelectFriend()
+
+				if selectFriend then
+					local playerMO = SocialModel.instance:getPlayerMO(selectFriend)
+
+					skinId = playerMO.bg
+				end
+			end
+		end
+	end
+
+	local playerCardView = ViewMgr.instance:getContainer(ViewName.NewPlayerCardContentView)
+
+	if playerCardView and playerCardView:isOpen() then
+		skinId = playerCardView:getShowSkinId()
+	end
+
+	if skinId then
+		local themeInfo = PlayerCardEnum.Theme[skinId]
+
+		if themeInfo and themeInfo.BgmId then
+			if self._curPlayBgmId == themeInfo.BgmId then
+				return
+			end
+
+			self._curPlayBgmId = themeInfo.BgmId
+
+			if self._playingBgmAudioId then
+				AudioMgr.instance:stopPlayingID(self._playingBgmAudioId)
+			end
+
+			AudioMgr.instance:trigger(AudioEnum.UI.Pause_MainMusic)
+
+			self._playingBgmAudioId = AudioMgr.instance:trigger(themeInfo.BgmId)
+
+			return
+		end
+	end
+
+	self._curPlayBgmId = nil
+
+	if self._playingBgmAudioId then
+		AudioMgr.instance:stopPlayingID(self._playingBgmAudioId)
+
+		self._playingBgmAudioId = nil
+	end
+
+	AudioMgr.instance:trigger(AudioEnum.UI.Resume_MainMusic)
 end
 
 PlayerCardController.instance = PlayerCardController.New()

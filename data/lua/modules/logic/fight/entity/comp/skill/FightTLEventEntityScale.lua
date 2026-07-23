@@ -76,16 +76,31 @@ function FightTLEventEntityScale:onTrackStart(fightStepData, duration, paramsArr
 			local spineObj = entity and entity.spine and entity.spine:getSpineGO()
 
 			if spineObj then
-				local mesh = spineObj:GetComponent(typeof(UnityEngine.MeshFilter))
+				local is3DBoss = false
+				local entityData = FightDataHelper.entityMgr:getById(entity.id)
 
-				mesh = mesh and mesh.mesh
+				if entityData then
+					is3DBoss = lua_fight_monster_3d.configDict[entityData.skin]
+				end
 
-				if mesh then
-					local bounds = mesh.bounds
-					local tarScale = standardHeight / bounds.size.y
+				if is3DBoss then
+					local tarScale = standardHeight / is3DBoss.sizeForScale[2]
 
 					if tarScale < 1 then
 						transformhelper.setLocalScale(spineObj.transform, tarScale, tarScale, tarScale)
+					end
+				else
+					local mesh = spineObj:GetComponent(typeof(UnityEngine.MeshFilter))
+
+					mesh = mesh and mesh.mesh
+
+					if mesh then
+						local bounds = mesh.bounds
+						local tarScale = standardHeight / bounds.size.y
+
+						if tarScale < 1 then
+							transformhelper.setLocalScale(spineObj.transform, tarScale, tarScale, tarScale)
+						end
 					end
 				end
 			end

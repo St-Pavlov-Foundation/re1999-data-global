@@ -361,13 +361,13 @@ function JumpController:jumpToBackpackUseTypeView(jumpParam)
 end
 
 function JumpController:jumpToSkinGiftUseTypeView(jumpParam)
-	table.insert(self.waitOpenViewNames, ViewName.DecorateSkinSelectView)
+	table.insert(self.waitOpenViewNames, ViewName.SkinSelfSelectView)
 
 	local jumpArray = string.splitToNumber(jumpParam, "#")
 	local itemId = jumpArray[2]
 
 	CharacterController.instance:useSkinGiftItem(itemId)
-	table.insert(self.remainViewNames, ViewName.DecorateSkinSelectView)
+	table.insert(self.remainViewNames, ViewName.SkinSelfSelectView)
 
 	return JumpEnum.JumpResult.Success
 end
@@ -1569,7 +1569,7 @@ function JumpController:jumpToRougeRewardView(jumpParam)
 	local arg1 = paramsList[2]
 	local arg2 = paramsList[3]
 
-	RougeController.instance:openRougeMainView(nil, nil, function()
+	RougeController.instance:openRougeMainView(function()
 		ViewMgr.instance:openView(ViewName.RougeRewardView, {
 			version = arg1,
 			stage = arg2
@@ -1889,8 +1889,52 @@ function JumpController:jumpToWeekWalk(jumpParam)
 	return JumpEnum.JumpResult.Success
 end
 
+function JumpController:jumpToAnniversary3GameView()
+	local actId = VersionActivity3_7Enum.ActivityId.Anniversary3GuessGame
+	local actInfoMo = ActivityModel.instance:getActivityInfo()[actId]
+	local isExpire = actInfoMo:isExpired()
+
+	if isExpire then
+		GameFacade.showToast(ToastEnum.ActivityEnd)
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local isUnlock = actInfoMo:isOnline() and actInfoMo:isOpen()
+
+	if not isUnlock then
+		GameFacade.showToast(ToastEnum.ActivityNotOpen)
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	Anniversary3Controller.instance:openGuessGameMainView()
+
+	return JumpEnum.JumpResult.Success
+end
+
 function JumpController:_useSupplementMonthCard()
 	SignInRpc.instance:sendSupplementMonthCardRequest()
+end
+
+function JumpController:jumpToAct236()
+	Act236Controller.instance:openMainView(ActivityEnum.Activity.V3a7_Act236)
+
+	return JumpEnum.JumpResult.Success
+end
+
+function JumpController:jumpToAtomicDungeonView(jumpParam)
+	local jumpArray = string.splitToNumber(jumpParam, "#")
+	local jumpType = jumpArray[2]
+	local jumpMapId = jumpArray[3]
+	local param = {
+		jumpType = jumpType,
+		jumpMapId = jumpMapId
+	}
+
+	AtomicDungeonController.instance:jumpView(param)
+
+	return JumpEnum.JumpResult.Success
 end
 
 JumpController.JumpViewToHandleFunc = {
@@ -1956,7 +2000,10 @@ JumpController.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.LaplaceChatRoom] = JumpController.jumpToLaplaceChatRoomView,
 	[JumpEnum.JumpView.SurvivalView] = JumpController.jumpToSurvivalView,
 	[JumpEnum.JumpView.Abyss] = JumpController.jumpToAbyss,
-	[JumpEnum.JumpView.WeekWalk] = JumpController.jumpToWeekWalk
+	[JumpEnum.JumpView.WeekWalk] = JumpController.jumpToWeekWalk,
+	[JumpEnum.JumpView.Anniversary3Game] = JumpController.jumpToAnniversary3GameView,
+	[JumpEnum.JumpView.Act236] = JumpController.jumpToAct236,
+	[JumpEnum.JumpView.AtomicDungeon] = JumpController.jumpToAtomicDungeonView
 }
 JumpController.JumpActViewToHandleFunc = {
 	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = JumpController.V2a4_WuErLiXi,

@@ -62,6 +62,7 @@ function AvProPlayer:init(go)
 		local displayUGUI = gohelper.onceAddComponent(go, VideoPlayerMgr.Type_DisplayUGUI)
 
 		self._displayUGUI = displayUGUI
+		self._srcMat = self._displayUGUI.material
 
 		recthelper.setSize(self._videoGo.transform, self._width, self._height)
 	end
@@ -232,6 +233,28 @@ function AvProPlayer:loadMedia(url)
 	else
 		self._videoPlayer:LoadMedia(url)
 	end
+end
+
+local MatVector = Vector4()
+
+function AvProPlayer:resetEyeModeMat()
+	if not self._displayUGUI then
+		return
+	end
+
+	local active = EyeProtectionModeMgr.instance:getEyeModeActive()
+
+	if not active then
+		self._displayUGUI.material = nil
+
+		return
+	end
+
+	self._displayUGUI.material = self._srcMat
+	MatVector.x = EyeProtectionModeMgr.instance:getFactorValue()
+	MatVector.y = EyeProtectionModeMgr.instance:getIntensityValue()
+
+	self._srcMat:SetVector(AvProMgrConfig.MatUberBrightnessId, MatVector)
 end
 
 function AvProPlayer:ondestroy()

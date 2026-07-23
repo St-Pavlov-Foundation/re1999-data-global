@@ -202,7 +202,19 @@ FightStepBuilder.ActEffectWorkCls = {
 	[FightEnum.EffectType.BUFFERFLYADDHANDCARD] = FightWorkAddHandCard,
 	[FightEnum.EffectType.EXTCAREERWEAK] = FightWorkExtCareerWeak368,
 	[FightEnum.EffectType.TOUGHNESSRECOVER] = FightWorkToughnessRecover369,
-	[FightEnum.EffectType.TOUGHNESSCHANGE] = FightWorkToughnessChange370
+	[FightEnum.EffectType.TOUGHNESSCHANGE] = FightWorkToughnessChange370,
+	[FightEnum.EffectType.INITDEVICE] = FightWorkInitDevice372,
+	[FightEnum.EffectType.DEVICESKILLINDEX] = FightWorkDeviceSkillIndex373,
+	[FightEnum.EffectType.DEVICEPOWERCHANGE] = FightWorkDevicePowerChange374,
+	[FightEnum.EffectType.MOVECARD] = FightWorkMoveCard376,
+	[FightEnum.EffectType.UPDATECARDDATA] = FightWorkUpdateCardData377,
+	[FightEnum.EffectType.INSERTHANDCARD] = FightWorkInsertHandCard378,
+	[FightEnum.EffectType.DEVICERUNNING] = FightWorkDeviceRunning379,
+	[FightEnum.EffectType.TOUGHNESSRESET] = FightWorkToughnessReset375,
+	[FightEnum.EffectType.UNNAMEDSTRENGTHEN] = FightWorkUnnamedStrengthen380,
+	[FightEnum.EffectType.COUNTERCHANGE] = FightWorkCounterChange381,
+	[FightEnum.EffectType.DEVICEPOWERCLEAR] = FightWorkDevicePowerClear382,
+	[FightEnum.EffectType.DEVICESTOP] = FightWorkDeviceStop383
 }
 FightStepBuilder.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.ADDSPHANDCARD] = FightWorkAddSpHandCard320Container,
@@ -309,8 +321,11 @@ function FightStepBuilder.buildStepWorkList(fightStepList)
 
 				FightController.instance:beginWave()
 			end))
+		elseif fightStepData.actType == FightEnum.ActType.DEVICE then
+			preStepData = FightStepBuilder._buildSkillWork(fightStepList, fightStepData, preStepData, fightStepList[i + 1], stepWorkList, skillFlowList)
 		else
 			logError("step actType not implement: " .. fightStepData.actType)
+			tabletool.addValues(stepWorkList, FightStepBuilder._buildEffectWorks(fightStepData, nil))
 		end
 
 		table.insert(stepWorkList, FightWorkAfterSkillEffect.New(fightStepData))
@@ -355,15 +370,17 @@ function FightStepBuilder._buildSkillWork(fightStepList, fightStepData, preStepD
 		tabletool.addValues(stepWorkList, FightStepBuilder._buildEffectWorks(fightStepData))
 	end
 
-	table.insert(stepWorkList, FunctionWork.New(function()
-		fightStepData.hasPlay = true
-
-		FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, fightStepData)
-	end))
+	table.insert(stepWorkList, FunctionWork.New(FightStepBuilder.maskFightStepDataDone, fightStepData))
 	table.insert(stepWorkList, FightWorkSkillDelay.New(fightStepData))
 	table.insert(stepWorkList, FightWorkSpecialDelay.New(fightStepData))
 
 	return preStepData
+end
+
+function FightStepBuilder.maskFightStepDataDone(fightStepData)
+	fightStepData.hasPlay = true
+
+	FightController.instance:dispatchEvent(FightEvent.OnSkillEffectPlayFinish, fightStepData)
 end
 
 FightStepBuilder.ASFDIndex = 0

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "language_10130440",
+    "pos": "-9.28#25.33#6.89",
+    "icon": "sp02_atomicforyou_eventicon5",
+    "mapId": 101
+  },
+  {
+    "id": 2,
+    "name": "language_10130441",
+    "pos": "-4.67#25.3#-1.33",
+    "icon": "sp02_atomicforyou_eventicon5",
+    "mapId": 102
+  },
+  {
+    "id": 3,
+    "name": "language_10130442",
+    "pos": "-6.49#9.79#-2.91",
+    "icon": "sp02_atomicforyou_eventicon5",
+    "mapId": 103
+  },
+  {
+    "id": 4,
+    "name": "language_10130443",
+    "pos": "-4.23#17.15#-2.53",
+    "icon": "sp02_atomicforyou_eventicon5",
+    "mapId": 104
+  },
+  {
+    "id": 5,
+    "name": "language_10130444",
+    "pos": "-0.49#10.97#5.5",
+    "icon": "sp02_atomicforyou_eventicon5",
+    "mapId": 105
+  }
+]

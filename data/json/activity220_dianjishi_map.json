@@ -1,0 +1,191 @@
+[
+  {
+    "mapId": 1001,
+    "id": 1,
+    "value": 1,
+    "position": "3#1",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1001,
+    "id": 2,
+    "value": 1,
+    "position": "1#2",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1001,
+    "id": 3,
+    "value": 4,
+    "position": "2#2|3#2|2#3|3#3",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1001,
+    "id": 4,
+    "value": 1,
+    "position": "4#3",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1001,
+    "id": 5,
+    "value": 1,
+    "position": "2#4",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1002,
+    "id": 1,
+    "value": 5,
+    "position": "1#1|2#1|1#2|2#2",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1002,
+    "id": 2,
+    "value": 5,
+    "position": "3#1|4#1|3#2|4#2",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1002,
+    "id": 3,
+    "value": 2,
+    "position": "1#3|2#3|1#4|2#4",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1002,
+    "id": 4,
+    "value": 2,
+    "position": "3#3|4#3|3#4|4#4",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1003,
+    "id": 1,
+    "value": 1,
+    "position": "2#1|3#1",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1003,
+    "id": 2,
+    "value": 4,
+    "position": "1#2|1#3",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1003,
+    "id": 3,
+    "value": 6,
+    "position": "2#2|3#2|2#3|3#3",
+    "icon": "v3a8_dianjishi_game_tag3",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1003,
+    "id": 4,
+    "value": 2,
+    "position": "2#4|3#4",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 2,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1004,
+    "id": 1,
+    "value": 4,
+    "position": "1#1|2#1|3#1|1#2|2#2|3#2|1#3|2#3|3#3",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1004,
+    "id": 2,
+    "value": 6,
+    "position": "4#1|5#1|6#1|4#2|5#2|6#2|4#3|5#3|6#3",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1004,
+    "id": 3,
+    "value": 6,
+    "position": "1#4|2#4|3#4|1#5|2#5|3#5|1#6|2#6|3#6",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 1,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1004,
+    "id": 4,
+    "value": 6,
+    "position": "4#4|5#4|6#4|4#5|5#5|6#5|4#6|5#6|6#6",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 3,
+    "offset": "0#0"
+  },
+  {
+    "mapId": 1005,
+    "id": 1,
+    "value": 4,
+    "position": "3#1|2#2|3#2|1#3|2#3|3#3",
+    "icon": "v3a8_dianjishi_game_tag2",
+    "direction": 1,
+    "offset": "0#-362"
+  },
+  {
+    "mapId": 1005,
+    "id": 2,
+    "value": 6,
+    "position": "4#1|4#2|5#2|4#3|5#3|6#3",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 3,
+    "offset": "0#-362"
+  },
+  {
+    "mapId": 1005,
+    "id": 3,
+    "value": 6,
+    "position": "1#4|2#4|3#4|2#5|3#5|3#6",
+    "icon": "v3a8_dianjishi_game_tag1",
+    "direction": 2,
+    "offset": "0#362"
+  },
+  {
+    "mapId": 1005,
+    "id": 4,
+    "value": 5,
+    "position": "4#4|5#4|6#4|4#5|5#5|4#6",
+    "icon": "v3a8_dianjishi_game_tag3",
+    "direction": 4,
+    "offset": "0#362"
+  }
+]

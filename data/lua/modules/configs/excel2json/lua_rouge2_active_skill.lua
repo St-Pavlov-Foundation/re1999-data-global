@@ -12,21 +12,29 @@ local fields = {
 	unlock = 14,
 	career = 12,
 	desc = 15,
-	battleTag = 18,
-	descSimply = 16,
 	narrativeDesc = 19,
+	descSimply = 16,
+	updateAttri = 26,
 	skillId = 8,
 	tag = 10,
 	icon = 13,
 	attributeTag = 11,
 	useLimit = 21,
 	sortId = 4,
-	cost = 22,
-	assembleCost = 23,
+	battleTag = 23,
+	skillTypeName = 24,
 	outUnlockDesc = 6,
+	updateSkill = 25,
+	cost = 22,
+	rare = 18,
+	newDesc = 27,
 	keyWord = 17,
+	countTitle = 28,
 	coolDown = 20,
-	id = 1
+	countParam = 29,
+	id = 1,
+	hero_trial = 30,
+	assembleCost = 31
 }
 local primaryKey = {
 	"id"
@@ -37,6 +45,8 @@ local mlStringKey = {
 	name = 1,
 	outUnlockDesc = 2,
 	narrativeDesc = 6,
+	newDesc = 7,
+	countTitle = 8,
 	desc = 3
 }
 

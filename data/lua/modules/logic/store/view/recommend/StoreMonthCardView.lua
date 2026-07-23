@@ -132,7 +132,7 @@ function StoreMonthCardView:_editableInitView()
 	self._txtcost.text = PayModel.instance:getProductOriginPriceNum(StoreEnum.MonthCardGoodsId)
 
 	local clickCount = 4
-	local offset = 2
+	local offset = 4
 
 	self._itemClickList = self:getUserDataTb_()
 
@@ -141,6 +141,9 @@ function StoreMonthCardView:_editableInitView()
 	for i = 1, clickCount do
 		local subTipGo = tipGo.transform:GetChild(i + offset - 1).gameObject
 		local bgGo = subTipGo.transform:GetChild(0).gameObject
+		local image = gohelper.findChildImage(bgGo, "")
+
+		image.raycastTarget = true
 
 		table.insert(self._itemClickList, gohelper.getClick(bgGo))
 	end
@@ -157,6 +160,10 @@ function StoreMonthCardView:_editableInitView()
 	self._btnsupplement:AddClickListener(self.onClickSupplementItem, self)
 
 	self.supplementRedDot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._checkSupplementRedDot, self)
+	self.supplementTipsGo = gohelper.findChild(self.viewGO, "view/tips/patchtips")
+
+	gohelper.setActive(self.supplementTipsGo, false)
+
 	self._txtcosticon.text = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
 
 	local symbol = PayModel.instance:getProductOriginPriceSymbol(StoreEnum.MonthCardGoodsId)
@@ -357,10 +364,10 @@ end
 function StoreMonthCardView:_refreshSupplement()
 	if StoreModel.instance:hasPurchaseMonthCard() then
 		gohelper.setActive(self._goyuekapatch, true)
-		gohelper.setActive(self._gopatchtips, false)
 
 		local showBtn = SignInModel.instance:getCanSupplementMonthCardDays() > 0
 
+		gohelper.setActive(self._gopatchtips, false)
 		gohelper.setActive(self._gocanpatch, showBtn)
 		gohelper.setActive(self._gonopatch, not showBtn)
 	else

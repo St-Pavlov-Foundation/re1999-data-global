@@ -20,6 +20,16 @@ function MainSceneViewComp:onScenePrepared(sceneId, levelId)
 	elseif GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
 		-- block empty
 	else
+		local teachingNeedOpenView = TeachingModel.instance:getNeedOpenView()
+
+		if teachingNeedOpenView ~= nil then
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, teachingNeedOpenView)
+			ViewMgr.instance:openView(ViewName.MainView)
+			TeachingController.instance:openCacheTeachingView()
+
+			return
+		end
+
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.MainView)
 		ViewMgr.instance:openView(ViewName.MainView)
 	end

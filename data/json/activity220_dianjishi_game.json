@@ -1,0 +1,42 @@
+[
+  {
+    "gameId": 1001,
+    "targetDesc": "language_10130135",
+    "mapIcon": "v3a8_dianjishi_game_box1",
+    "startPos": "84.2#-162.7",
+    "mapScale": 1000,
+    "areaSplitSize": "14#14"
+  },
+  {
+    "gameId": 1002,
+    "targetDesc": "language_10130135",
+    "mapIcon": "v3a8_dianjishi_game_box2",
+    "startPos": "89.4#-162.9",
+    "mapScale": 1000,
+    "areaSplitSize": "14#17"
+  },
+  {
+    "gameId": 1003,
+    "targetDesc": "language_10130135",
+    "mapIcon": "v3a8_dianjishi_game_box3",
+    "startPos": "67#-176.5",
+    "mapScale": 1000,
+    "areaSplitSize": "14#16"
+  },
+  {
+    "gameId": 1004,
+    "targetDesc": "language_10130135",
+    "mapIcon": "v3a8_dianjishi_game_box4",
+    "startPos": "92#-171.5",
+    "mapScale": 750,
+    "areaSplitSize": "13#17"
+  },
+  {
+    "gameId": 1005,
+    "targetDesc": "language_10130135",
+    "mapIcon": "v3a8_dianjishi_game_box5",
+    "startPos": "92#-238.5",
+    "mapScale": 750,
+    "areaSplitSize": "13#16"
+  }
+]

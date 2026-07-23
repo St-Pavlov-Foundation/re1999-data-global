@@ -80,9 +80,7 @@ function ArcadeGameModel:_initCharacterMO()
 	local difficulty = self:getDifficulty()
 	local difficultyAddSkillId = ArcadeConfig.instance:getDifficultyAddSkill(difficulty)
 
-	if ArcadeGameHelper.isPassiveSkill(difficultyAddSkillId) then
-		skillSetMO:addSkillById(difficultyAddSkillId)
-	end
+	skillSetMO:addSkillById(difficultyAddSkillId)
 
 	local talentMOList = ArcadeHeroModel.instance:getTalentMoList()
 
@@ -92,9 +90,7 @@ function ArcadeGameModel:_initCharacterMO()
 
 		if skillList then
 			for _, skillId in ipairs(skillList) do
-				if ArcadeGameHelper.isPassiveSkill(skillId) then
-					skillSetMO:addSkillById(skillId)
-				end
+				skillSetMO:addSkillById(skillId)
 			end
 		end
 	end
@@ -124,20 +120,12 @@ function ArcadeGameModel:onRestartArcadeGame(serverInfo)
 		}
 	end
 
-	self:_setGameData(serverInfo, attrDict)
-	self:_setCharacterData(serverInfo, attrDict)
+	self:_setRestartGameData(serverInfo, attrDict)
+	self:_setRestartCharacterData(serverInfo, attrDict)
 	self:setGameIsEnd(false)
 end
 
-function ArcadeGameModel:onResetArcadeGame()
-	local difficulty = self:getDifficulty()
-
-	self:clearAllData()
-	self:setDifficulty(difficulty)
-	self:onEnterArcadeGame()
-end
-
-function ArcadeGameModel:_setGameData(serverInfo, serverAttrDict)
+function ArcadeGameModel:_setRestartGameData(serverInfo, serverAttrDict)
 	local prop = serverInfo.prop
 	local jsonPortalExtract = prop.hotfix[1]
 
@@ -204,11 +192,10 @@ function ArcadeGameModel:_setGameData(serverInfo, serverAttrDict)
 	self:_initGridMO()
 end
 
-function ArcadeGameModel:_setCharacterData(serverInfo, serverAttrDict)
-	local characterId = serverInfo.player.id
+function ArcadeGameModel:_setRestartCharacterData(serverInfo, serverAttrDict)
 	local characterData = {
 		entityType = ArcadeGameEnum.EntityType.Character,
-		id = characterId,
+		id = serverInfo.player.id,
 		extraParam = {
 			restart = true
 		}
@@ -216,7 +203,15 @@ function ArcadeGameModel:_setCharacterData(serverInfo, serverAttrDict)
 
 	self._arcadeGameCharacterMO = ArcadeGameCharacterMO.New(characterData)
 
-	self._arcadeGameCharacterMO:setRestartInfo(serverAttrDict, serverInfo.collectibleSlots, serverInfo.passiveSkillIds)
+	self._arcadeGameCharacterMO:setDataFromServerInfo(serverInfo, serverAttrDict)
+end
+
+function ArcadeGameModel:onResetArcadeGame()
+	local difficulty = self:getDifficulty()
+
+	self:clearAllData()
+	self:setDifficulty(difficulty)
+	self:onEnterArcadeGame()
 end
 
 function ArcadeGameModel:_generateUid()
@@ -277,19 +272,8 @@ function ArcadeGameModel:addEntityMO(moData, needGenUid)
 	moData.uid = uid
 
 	local mo = moCls.New(moData)
-	local typeDict = self._moDict[entityType]
-
-	if not typeDict then
-		typeDict = {}
-		self._moDict[entityType] = typeDict
-	end
-
-	local typeList = self._moList[entityType]
-
-	if not typeList then
-		typeList = {}
-		self._moList[entityType] = typeList
-	end
+	local typeDict = ArcadeGameHelper.checkDictTable(self._moDict, entityType)
+	local typeList = ArcadeGameHelper.checkDictTable(self._moList, entityType)
 
 	typeDict[uid] = mo
 	typeList[#typeList + 1] = mo
@@ -407,6 +391,36 @@ end
 function ArcadeGameModel:addKillMonsterNum(count)
 	count = count or 1
 	self._killMonsterNum = (self._killMonsterNum or 0) + count
+
+	self:triggerEntityCounterRecord(ArcadeGameEnum.EntityType.Character, nil, ArcadeGameEnum.GameCounter.MonsterKillsSinceAddSkill, nil, count)
+end
+
+function ArcadeGameModel:triggerEntityCounterRecord(entityType, uid, counterName, counterParam, count)
+	local mo = self:getMOWithType(entityType, uid)
+
+	if not mo then
+		return
+	end
+
+	mo:triggerSkillSetMOCounterRecord(counterName, counterParam, count)
+end
+
+function ArcadeGameModel:triggerEntityTypeCounterRecord(targetEntityType, counterName, counterParam, count)
+	local gridMOList = self:getGridMOList()
+
+	for _, gridMO in ipairs(gridMOList) do
+		gridMO:triggerSkillSetMOCounterRecord(counterName, counterParam, count)
+	end
+
+	if self._moList then
+		for entityType, typeList in pairs(self._moList) do
+			if not targetEntityType or entityType == targetEntityType then
+				for _, mo in ipairs(typeList) do
+					mo:triggerSkillSetMOCounterRecord(counterName, counterParam, count)
+				end
+			end
+		end
+	end
 end
 
 function ArcadeGameModel:addGainCoinNum(count)
@@ -608,6 +622,10 @@ function ArcadeGameModel:getMOWithType(entityType, uid)
 
 	if entityType == ArcadeGameEnum.EntityType.Character then
 		return self:getCharacterMO()
+	elseif entityType == ArcadeGameEnum.EntityType.Grid then
+		local gridMo = self._gridModel:getById(uid)
+
+		return gridMo
 	else
 		local dict = self._moDict[entityType]
 
@@ -619,15 +637,44 @@ function ArcadeGameModel:getCharacterMO()
 	return self._arcadeGameCharacterMO
 end
 
+function ArcadeGameModel:getGridMOByXY(gridX, gridY)
+	local gridId = ArcadeGameHelper.getGridId(gridX, gridY)
+	local gridMO = self._gridModel:getById(gridId)
+
+	if not gridMO then
+		gridMO = ArcadeGameFloorGridMO.New(gridX, gridY)
+
+		self._gridModel:addAtLast(gridMO)
+	end
+
+	return gridMO
+end
+
+function ArcadeGameModel:getGridMOList()
+	return self._gridModel:getList()
+end
+
 function ArcadeGameModel:getEntityMOList(entityType)
-	local list = self._moList[entityType]
+	local list
+
+	if entityType == ArcadeGameEnum.EntityType.Grid then
+		list = self:getGridMOList()
+	elseif entityType == ArcadeGameEnum.EntityType.Character then
+		local characterMO = self:getCharacterMO()
+
+		list = {
+			characterMO
+		}
+	else
+		list = self._moList[entityType]
+	end
 
 	return list
 end
 
 function ArcadeGameModel:getEntityUidList(entityType)
 	local result = {}
-	local list = self._moList[entityType]
+	local list = self:getEntityMOList(entityType)
 
 	if list then
 		for i, mo in ipairs(list) do
@@ -658,23 +705,6 @@ end
 
 function ArcadeGameModel:getAllCoinNum()
 	return self._allCoinNum or 0
-end
-
-function ArcadeGameModel:getGridMOByXY(gridX, gridY)
-	local gridId = ArcadeGameHelper.getGridId(gridX, gridY)
-	local gridMO = self._gridModel:getById(gridId)
-
-	if not gridMO then
-		gridMO = ArcadeGameFloorGridMO.New(gridX, gridY)
-
-		self._gridModel:addAtLast(gridMO)
-	end
-
-	return gridMO
-end
-
-function ArcadeGameModel:getGridMOList()
-	return self._gridModel:getList()
 end
 
 function ArcadeGameModel:getGameAttribute(attrId)

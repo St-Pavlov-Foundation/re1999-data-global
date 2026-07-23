@@ -16,7 +16,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 15
+    "missionorder": 15,
+    "showDay": 0
   },
   {
     "id": 500003,
@@ -35,7 +36,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#40|26#4#40",
-    "missionorder": 16
+    "missionorder": 16,
+    "showDay": 0
   },
   {
     "id": 500004,
@@ -54,7 +56,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 17
+    "missionorder": 17,
+    "showDay": 0
   },
   {
     "id": 500005,
@@ -73,7 +76,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 18
+    "missionorder": 18,
+    "showDay": 0
   },
   {
     "id": 500006,
@@ -92,7 +96,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#40|26#4#40",
-    "missionorder": 19
+    "missionorder": 19,
+    "showDay": 0
   },
   {
     "id": 500007,
@@ -111,7 +116,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 20
+    "missionorder": 20,
+    "showDay": 0
   },
   {
     "id": 500008,
@@ -130,7 +136,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 21
+    "missionorder": 21,
+    "showDay": 0
   },
   {
     "id": 500009,
@@ -149,7 +156,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 22
+    "missionorder": 22,
+    "showDay": 0
   },
   {
     "id": 500010,
@@ -168,7 +176,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 23
+    "missionorder": 23,
+    "showDay": 0
   },
   {
     "id": 500011,
@@ -187,7 +196,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#35|26#4#35",
-    "missionorder": 24
+    "missionorder": 24,
+    "showDay": 0
   },
   {
     "id": 500012,
@@ -206,7 +216,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#40|26#4#40",
-    "missionorder": 25
+    "missionorder": 25,
+    "showDay": 0
   },
   {
     "id": 500013,
@@ -225,7 +236,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#45|26#4#45",
-    "missionorder": 26
+    "missionorder": 26,
+    "showDay": 0
   },
   {
     "id": 500014,
@@ -244,7 +256,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#45|26#4#45",
-    "missionorder": 26
+    "missionorder": 26,
+    "showDay": 0
   },
   {
     "id": 500015,
@@ -263,7 +276,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#45|26#4#45",
-    "missionorder": 26
+    "missionorder": 26,
+    "showDay": 0
   },
   {
     "id": 500016,
@@ -282,7 +296,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 27
+    "missionorder": 27,
+    "showDay": 0
   },
   {
     "id": 500017,
@@ -301,7 +316,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 9
+    "missionorder": 9,
+    "showDay": 0
   },
   {
     "id": 500018,
@@ -320,7 +336,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 10
+    "missionorder": 10,
+    "showDay": 0
   },
   {
     "id": 500019,
@@ -339,7 +356,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 11
+    "missionorder": 11,
+    "showDay": 0
   },
   {
     "id": 500020,
@@ -358,7 +376,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 12
+    "missionorder": 12,
+    "showDay": 0
   },
   {
     "id": 500021,
@@ -377,7 +396,8 @@
     "openLimit": "",
     "jumpId": 13,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 1
+    "missionorder": 1,
+    "showDay": 0
   },
   {
     "id": 500022,
@@ -396,7 +416,8 @@
     "openLimit": "",
     "jumpId": 13,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 2
+    "missionorder": 2,
+    "showDay": 0
   },
   {
     "id": 500023,
@@ -415,7 +436,8 @@
     "openLimit": "",
     "jumpId": 13,
     "bonus": "2#2503#30|26#4#30",
-    "missionorder": 3
+    "missionorder": 3,
+    "showDay": 0
   },
   {
     "id": 500024,
@@ -434,7 +456,8 @@
     "openLimit": "",
     "jumpId": 10176,
     "bonus": "2#2503#20|26#4#20",
-    "missionorder": 4
+    "missionorder": 4,
+    "showDay": 0
   },
   {
     "id": 500025,
@@ -453,7 +476,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 13
+    "missionorder": 13,
+    "showDay": 0
   },
   {
     "id": 500026,
@@ -472,7 +496,8 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#50|26#4#50",
-    "missionorder": 14
+    "missionorder": 14,
+    "showDay": 0
   },
   {
     "id": 500027,
@@ -491,7 +516,8 @@
     "openLimit": "",
     "jumpId": 10012505,
     "bonus": "2#2503#100|26#4#100",
-    "missionorder": 5
+    "missionorder": 5,
+    "showDay": 0
   },
   {
     "id": 500028,
@@ -510,7 +536,8 @@
     "openLimit": "",
     "jumpId": 10012510,
     "bonus": "2#2503#100|26#4#100",
-    "missionorder": 6
+    "missionorder": 6,
+    "showDay": 0
   },
   {
     "id": 500029,
@@ -529,7 +556,8 @@
     "openLimit": "",
     "jumpId": 10012511,
     "bonus": "2#2503#100|26#4#100",
-    "missionorder": 7
+    "missionorder": 7,
+    "showDay": 0
   },
   {
     "id": 500030,
@@ -548,6 +576,507 @@
     "openLimit": "",
     "jumpId": 0,
     "bonus": "2#2503#100|26#4#100",
-    "missionorder": 30
+    "missionorder": 30,
+    "showDay": 0
+  },
+  {
+    "id": 500031,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 1,
+    "acceptStage": "1",
+    "minType": "language_10027746",
+    "name": "language_10027746",
+    "desc": "language_10115215",
+    "bonusMail": 0,
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 1,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#20|2#3#1000|2#5#1000",
+    "missionorder": 1,
+    "showDay": 1
+  },
+  {
+    "id": 500032,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130120",
+    "bonusMail": 0,
+    "listenerType": "DungeonPass",
+    "listenerParam": "6",
+    "maxProgress": 4,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 3601,
+    "bonus": "2#38503#20|1#491004#1|9#1003#1",
+    "missionorder": 3,
+    "showDay": 1
+  },
+  {
+    "id": 500055,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130121",
+    "bonusMail": 0,
+    "listenerType": "DungeonPass",
+    "listenerParam": "6",
+    "maxProgress": 6,
+    "prepose": "500032",
+    "openLimit": "",
+    "jumpId": 3601,
+    "bonus": "2#38503#20|1#491004#2|9#1003#2",
+    "missionorder": 3,
+    "showDay": 1
+  },
+  {
+    "id": 500033,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130122",
+    "bonusMail": 0,
+    "listenerType": "TowerMopUpTime",
+    "listenerParam": "",
+    "maxProgress": 4,
+    "prepose": "",
+    "openLimit": "OpenFunction=78",
+    "jumpId": 42350000,
+    "bonus": "2#38503#20|2#3#1000|2#5#1000",
+    "missionorder": 2,
+    "showDay": 1
+  },
+  {
+    "id": 500034,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10052426",
+    "bonusMail": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 200,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#30|1#491004#1|2#3#1000",
+    "missionorder": 4,
+    "showDay": 1
+  },
+  {
+    "id": 500035,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10052427",
+    "bonusMail": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 500,
+    "prepose": "500034",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#30|1#491004#1|2#5#1000",
+    "missionorder": 4,
+    "showDay": 1
+  },
+  {
+    "id": 500036,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10023384",
+    "bonusMail": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 800,
+    "prepose": "500035",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#30|1#491007#1|2#3#2000",
+    "missionorder": 4,
+    "showDay": 1
+  },
+  {
+    "id": 500037,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10023385",
+    "bonusMail": 0,
+    "listenerType": "CurrencyDec",
+    "listenerParam": "4",
+    "maxProgress": 1200,
+    "prepose": "500036",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#40|1#491007#2|2#5#2000",
+    "missionorder": 4,
+    "showDay": 1
+  },
+  {
+    "id": 500038,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130123",
+    "bonusMail": 0,
+    "listenerType": "DoneCount",
+    "listenerParam": "KillEnemy",
+    "maxProgress": 15,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#20|1#491004#1|2#5#1000",
+    "missionorder": 5,
+    "showDay": 1
+  },
+  {
+    "id": 500039,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130124",
+    "bonusMail": 0,
+    "listenerType": "DoneCount",
+    "listenerParam": "KillEnemy",
+    "maxProgress": 40,
+    "prepose": "500038",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#30|1#491004#1|2#5#2000",
+    "missionorder": 5,
+    "showDay": 1
+  },
+  {
+    "id": 500040,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130125",
+    "bonusMail": 0,
+    "listenerType": "DoneCount",
+    "listenerParam": "UseClothSkill",
+    "maxProgress": 5,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#20|1#491004#1|2#3#1000",
+    "missionorder": 6,
+    "showDay": 1
+  },
+  {
+    "id": 500041,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 2,
+    "acceptStage": "1",
+    "minType": "language_90016063",
+    "name": "language_90016063",
+    "desc": "language_10130126",
+    "bonusMail": 0,
+    "listenerType": "DoneCount",
+    "listenerParam": "UseClothSkill",
+    "maxProgress": 15,
+    "prepose": "500040",
+    "openLimit": "",
+    "jumpId": 51,
+    "bonus": "2#38503#30|1#491004#1|2#3#2000",
+    "missionorder": 6,
+    "showDay": 1
+  },
+  {
+    "id": 500042,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10026325",
+    "bonusMail": 0,
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 2,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#20|10#10#1|1#491004#1",
+    "missionorder": 17,
+    "showDay": 1
+  },
+  {
+    "id": 500043,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10057323",
+    "bonusMail": 0,
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 5,
+    "prepose": "500042",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#50|10#10#1|1#491004#2",
+    "missionorder": 18,
+    "showDay": 1
+  },
+  {
+    "id": 500044,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10104088",
+    "bonusMail": 0,
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 7,
+    "prepose": "500043",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#40|10#10#1|1#491007#1",
+    "missionorder": 19,
+    "showDay": 1
+  },
+  {
+    "id": 500045,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10079380",
+    "bonusMail": 0,
+    "listenerType": "LoginDays",
+    "listenerParam": "",
+    "maxProgress": 10,
+    "prepose": "500044",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#50|10#10#1|1#491007#2",
+    "missionorder": 20,
+    "showDay": 1
+  },
+  {
+    "id": 500046,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130127",
+    "bonusMail": 0,
+    "listenerType": "Summon",
+    "listenerParam": "385111",
+    "maxProgress": 10,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#10|2#3#5000|2#5#5000",
+    "missionorder": 8,
+    "showDay": 1
+  },
+  {
+    "id": 500047,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10129577",
+    "bonusMail": 0,
+    "listenerType": "Act229Star",
+    "listenerParam": "138521",
+    "maxProgress": 1,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 100138515,
+    "bonus": "2#38503#20|1#491007#1|9#1003#1",
+    "missionorder": 10,
+    "showDay": 1
+  },
+  {
+    "id": 500048,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130128",
+    "bonusMail": 0,
+    "listenerType": "Act235FinishGame",
+    "listenerParam": "4000",
+    "maxProgress": 1,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 0,
+    "bonus": "2#38503#10|2#3#5000|2#5#5000",
+    "missionorder": 9,
+    "showDay": 1
+  },
+  {
+    "id": 500049,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130129",
+    "bonusMail": 0,
+    "listenerType": "Act128BossHighestPoint",
+    "listenerParam": "1#138520",
+    "maxProgress": 50000,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 460001,
+    "bonus": "2#38503#100|1#491007#1|9#1003#1",
+    "missionorder": 11,
+    "showDay": 1
+  },
+  {
+    "id": 500050,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130130",
+    "bonusMail": 0,
+    "listenerType": "Act128BossHighestPoint",
+    "listenerParam": "2#138520",
+    "maxProgress": 50000,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 460001,
+    "bonus": "2#38503#100|1#491007#1|9#1003#1",
+    "missionorder": 12,
+    "showDay": 8
+  },
+  {
+    "id": 500051,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130131",
+    "bonusMail": 0,
+    "listenerType": "Act128BossHighestPoint",
+    "listenerParam": "3#138520",
+    "maxProgress": 50000,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 460001,
+    "bonus": "2#38503#100|1#491007#1|9#1003#1",
+    "missionorder": 13,
+    "showDay": 15
+  },
+  {
+    "id": 500052,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130132",
+    "bonusMail": 0,
+    "listenerType": "Act125",
+    "listenerParam": "13612",
+    "maxProgress": 1,
+    "prepose": "",
+    "openLimit": "",
+    "jumpId": 100138517,
+    "bonus": "2#38503#50|2#3#2000|2#5#2000",
+    "missionorder": 14,
+    "showDay": 15
+  },
+  {
+    "id": 500053,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130133",
+    "bonusMail": 0,
+    "listenerType": "Act125",
+    "listenerParam": "13612",
+    "maxProgress": 3,
+    "prepose": "500052",
+    "openLimit": "",
+    "jumpId": 100138517,
+    "bonus": "2#38503#50|2#3#2000|2#5#2000",
+    "missionorder": 15,
+    "showDay": 15
+  },
+  {
+    "id": 500054,
+    "activityId": 138504,
+    "isOnline": 1,
+    "loopType": 3,
+    "acceptStage": "1",
+    "minType": "language_90016062",
+    "name": "language_90016062",
+    "desc": "language_10130134",
+    "bonusMail": 0,
+    "listenerType": "Act125",
+    "listenerParam": "13612",
+    "maxProgress": 5,
+    "prepose": "500053",
+    "openLimit": "",
+    "jumpId": 100138517,
+    "bonus": "2#38503#50|2#3#2000|2#5#2000",
+    "missionorder": 16,
+    "showDay": 15
   }
 ]

@@ -140,6 +140,55 @@ function Rouge2OutsideRpc:onReceiveRouge2UpdateGeniusPointPush(resultCode, msg)
 	Rouge2_TalentModel.instance:updateTalentUpdatePoint(geniusPoint)
 end
 
+function Rouge2OutsideRpc:sendRouge2SaveContextRequest(index)
+	local req = Rouge2OutsideModule_pb.Rouge2SaveContextRequest()
+
+	req.index = index
+
+	return self:sendMsg(req)
+end
+
+function Rouge2OutsideRpc:onReceiveRouge2SaveContextReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_OutsideModel.instance:updateBossBattleInfo(msg.bossBattleInfo)
+	Rouge2_OutsideController.instance:dispatchEvent(Rouge2_OutsideEvent.OnSaveRecordDone)
+end
+
+function Rouge2OutsideRpc:sendRouge2BossRewardRequest(bossId)
+	local req = Rouge2OutsideModule_pb.Rouge2BossRewardRequest()
+
+	req.bossId = bossId
+
+	return self:sendMsg(req)
+end
+
+function Rouge2OutsideRpc:onReceiveRouge2BossRewardReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_OutsideModel.instance:updateBossBattleInfo(msg.bossBattleInfo)
+end
+
+function Rouge2OutsideRpc:sendRouge2ChoiceSaveRequest(index)
+	local req = Rouge2OutsideModule_pb.Rouge2ChoiceSaveRequest()
+
+	req.index = index
+
+	return self:sendMsg(req)
+end
+
+function Rouge2OutsideRpc:onReceiveRouge2ChoiceSaveReply(resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	Rouge2_OutsideModel.instance:updateBossBattleInfo(msg.bossBattleInfo)
+end
+
 Rouge2OutsideRpc.instance = Rouge2OutsideRpc.New()
 
 return Rouge2OutsideRpc

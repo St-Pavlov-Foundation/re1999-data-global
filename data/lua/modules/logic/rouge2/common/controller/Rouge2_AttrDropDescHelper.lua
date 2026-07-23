@@ -81,8 +81,8 @@ function Rouge2_AttrDropDescHelper.isAttrOverDropCondition(dropId)
 	return level <= attrValue
 end
 
-function Rouge2_AttrDropDescHelper.loadAttrDropLevelList(careerId, attrId, txtComp, include, arrowType, unlockColor, lockColor)
-	local contentList = Rouge2_AttrDropDescHelper.getAttrDropLevelList(careerId, attrId, arrowType, unlockColor, lockColor)
+function Rouge2_AttrDropDescHelper.loadAttrDropLevelList(careerId, attrId, txtComp, include, arrowType, unlockColor, lockColor, difficulty)
+	local contentList = Rouge2_AttrDropDescHelper.getAttrDropLevelList(careerId, attrId, arrowType, unlockColor, lockColor, difficulty)
 	local contentNum = contentList and #contentList or 0
 
 	gohelper.setActive(txtComp.gameObject, contentNum > 0)
@@ -99,10 +99,11 @@ function Rouge2_AttrDropDescHelper.loadAttrDropLevelList(careerId, attrId, txtCo
 	txtComp.text = table.concat(contentList, "")
 end
 
-function Rouge2_AttrDropDescHelper.getAttrDropLevelList(careerId, attrId, arrowType, unlockColor, lockColor)
+function Rouge2_AttrDropDescHelper.getAttrDropLevelList(careerId, attrId, arrowType, unlockColor, lockColor, difficulty)
 	lockColor = lockColor or unlockColor
 
-	local attrDropList = Rouge2_AttributeConfig.instance:getAttrDropList(careerId, attrId) or {}
+	local minAttrValue, maxAttrValue = Rouge2_BackpackController.instance:getAttrValueRange(difficulty, attrId)
+	local attrDropList = Rouge2_AttributeConfig.instance:getLimitAttrDropList(careerId, attrId, difficulty) or {}
 	local attrDropNum = attrDropList and #attrDropList or 0
 	local contentList = {}
 

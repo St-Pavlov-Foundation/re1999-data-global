@@ -6,10 +6,12 @@ local lua_setting_lang = {}
 local fields = {
 	fontasset2 = 4,
 	lang = 2,
-	textfontasset1 = 5,
+	syst_cn_h = 7,
 	textfontasset2 = 6,
 	shortcuts = 1,
-	fontasset1 = 3
+	textfontasset1 = 5,
+	fontasset1 = 3,
+	syst_cn_b = 8
 }
 local primaryKey = {
 	"shortcuts"

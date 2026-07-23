@@ -234,6 +234,7 @@ function WarmUpContainer:onAnimDone()
 		return
 	end
 
+	self:setLocalIsPlayCur()
 	self._warmUp:_refreshRightView(true)
 end
 

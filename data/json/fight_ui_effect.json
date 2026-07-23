@@ -108,5 +108,55 @@
     "id": 10306,
     "name": "language_10086472",
     "res": "root/fightfloat/total_damage"
+  },
+  {
+    "id": 20301,
+    "name": "language_10086473",
+    "res": "root/#fapai"
+  },
+  {
+    "id": 20302,
+    "name": "language_10071668",
+    "res": "root/#chupai"
+  },
+  {
+    "id": 20303,
+    "name": "language_10072746",
+    "res": "root/#cardrising"
+  },
+  {
+    "id": 20304,
+    "name": "language_10033400",
+    "res": "root/#cardmerging"
+  },
+  {
+    "id": 10401,
+    "name": "language_10086468",
+    "res": "root/fightfloat/crit_damage"
+  },
+  {
+    "id": 10402,
+    "name": "language_10086469",
+    "res": "root/fightfloat/crit_restrain"
+  },
+  {
+    "id": 10403,
+    "name": "language_10017009",
+    "res": "root/fightfloat/crit_heal"
+  },
+  {
+    "id": 10404,
+    "name": "language_10086470",
+    "res": "root/fightfloat/crit_damage_origin"
+  },
+  {
+    "id": 10405,
+    "name": "language_10086471",
+    "res": "root/fightfloat/crit_additional_damage"
+  },
+  {
+    "id": 10406,
+    "name": "language_10086472",
+    "res": "root/fightfloat/total_damage"
   }
 ]

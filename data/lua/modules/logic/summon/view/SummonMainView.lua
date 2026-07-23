@@ -89,6 +89,7 @@ function SummonMainView:_editableInitView()
 	gohelper.addUIClickAudio(self._btndetail.gameObject, AudioEnum.UI.play_ui_checkpoint_click)
 
 	self._summonPoolBtnDic = self:getUserDataTb_()
+	self._summonPoolBtnLoadDic = {}
 	self._summonPoolPackageLoader = PrefabInstantiate.Create(self._gopoolPackage)
 end
 
@@ -111,7 +112,7 @@ function SummonMainView:_handleTabSet()
 		self._txtrecord:SetText(luaLang("p_summonpool_record"))
 	end
 
-	self:checkSummonPoolPackage()
+	self:checkProgressRewardAndPackage()
 
 	local showHightStoreBtn = false
 	local poolMO = SummonMainModel.instance:getPoolServerMO(curPool.id)
@@ -151,8 +152,12 @@ function SummonMainView:onOpen()
 	self:addEventCb(SummonController.instance, SummonEvent.summonMainCloseImmediately, self.closeThis, self)
 	self:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, self.onItemChanged, self)
 	self:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, self.onItemChanged, self)
-	self:addEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkSummonPoolPackage, self)
+	self:addEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkProgressRewardAndPackage, self)
 	self:addEventCb(SummonController.instance, SummonEvent.onSummonPoolPackageRedDotChange, self.onSummonPoolPackageRedDotChange, self)
+	self:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.checkSummonPoolPackage, self)
+	self:addEventCb(TaskController.instance, TaskEvent.SetTaskList, self.checkSummonPoolPackage, self)
+	self:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.checkSummonPoolPackage, self)
+	self:addEventCb(SummonController.instance, SummonEvent.onSummonPoolPackageProp, self._summonPoolPackageProp, self)
 	TaskDispatcher.runRepeat(self.repeatCallCountdown, self, 10)
 
 	if PatFaceModel.instance:getIsPatting() then
@@ -311,9 +316,13 @@ function SummonMainView:checkSummonPoolPackage()
 	local type = poolPackageConfig.packageEffect
 
 	if not self._summonPoolBtnDic[type] then
-		local prefabPath = ResUrl.getSummonPoolPackageItemPath(poolPackageConfig.packageEffect)
+		if not self._summonPoolBtnLoadDic[type] then
+			self._summonPoolBtnLoadDic[type] = true
 
-		self._summonPoolPackageLoader:startLoad(prefabPath, self.onSummonPoolPackageBtnLoad, self)
+			local prefabPath = ResUrl.getSummonPoolPackageItemPath(poolPackageConfig.packageEffect)
+
+			self._summonPoolPackageLoader:startLoad(prefabPath, self.onSummonPoolPackageBtnLoad, self)
+		end
 	else
 		self:refreshSummonPoolState(type)
 		self:checkSummonPoolPackageProp()
@@ -321,8 +330,10 @@ function SummonMainView:checkSummonPoolPackage()
 end
 
 function SummonMainView:checkSummonPoolPackageProp()
-	local getHeroDic = self.viewParam.getHeroDic
+	self:_summonPoolPackageProp(self.viewParam.getHeroDic)
+end
 
+function SummonMainView:_summonPoolPackageProp(getHeroDic)
 	if getHeroDic == nil or next(getHeroDic) == nil then
 		return
 	end
@@ -332,6 +343,17 @@ function SummonMainView:checkSummonPoolPackageProp()
 
 	if not SummonMainModel.instance:isSummonPoolPackageProp(poolId, orderId) and SummonPoolPackageHelper.checkSummonPoolCanProp(poolId, orderId, getHeroDic) then
 		SummonMainController.instance:setSummonPoolPackageProp(poolId, orderId, self.openPackageView, self)
+	end
+end
+
+function SummonMainView:checkProgressRewardAndPackage()
+	local curPoolConfig = SummonMainModel.instance:getCurPool()
+	local curPool = SummonMainModel.instance:getPoolServerMO(curPoolConfig.id)
+
+	if curPoolConfig and curPoolConfig.type == SummonEnum.Type.CoBranding and curPool and curPool:isOpening() and curPool:isHasProgressReward() then
+		SummonRpc.instance:sendGetSummonProgressRewardsRequest(curPool.id, self.checkSummonPoolPackage, self)
+	else
+		self:checkSummonPoolPackage()
 	end
 end
 
@@ -365,6 +387,7 @@ function SummonMainView:onSummonPoolPackageBtnLoad()
 	local btnDetail = gohelper.findChildButton(itemGo, "")
 
 	item.btnDetail = btnDetail
+	item.gocantget = gohelper.findChild(itemGo, "canget")
 
 	local redDotParent = gohelper.findChild(itemGo, "go_reddot")
 
@@ -376,10 +399,17 @@ function SummonMainView:onSummonPoolPackageBtnLoad()
 
 	self:refreshSummonPoolState(type)
 	self:checkSummonPoolPackageProp()
+
+	self._summonPoolBtnLoadDic[type] = nil
 end
 
 function SummonMainView:checkSummonPoolRedDot()
 	local poolId = self.poolPackageConfig.id
+	local item = self._curShowPoolBtnType and self._summonPoolBtnDic and self._summonPoolBtnDic[self._curShowPoolBtnType]
+
+	if item and not gohelper.isNil(item.gocantget) then
+		gohelper.setActive(item.gocantget, self:_isSummonPoolPackageCangetFlag(poolId))
+	end
 
 	if not SummonModel.instance:isSummonPoolPackageRedDotShow(poolId) then
 		return true
@@ -388,7 +418,17 @@ function SummonMainView:checkSummonPoolRedDot()
 	return false
 end
 
+function SummonMainView:_isSummonPoolPackageCangetFlag(poolId)
+	if StoreGoodsTaskController.instance:isHasCanFinishTaskByPoolId(poolId) then
+		return true
+	end
+
+	return false
+end
+
 function SummonMainView:refreshSummonPoolState(type)
+	self._curShowPoolBtnType = type
+
 	if self._summonPoolBtnDic and next(self._summonPoolBtnDic) then
 		for effectType, item in pairs(self._summonPoolBtnDic) do
 			gohelper.setActive(item.gameObject, effectType == type)
@@ -416,7 +456,7 @@ function SummonMainView:openPackageView(cmd, resultCode)
 			SummonModel.instance:setSummonPoolPackageRedDotShow(self.poolPackageConfig.id)
 		end
 
-		SummonController.instance:openSummonPoolPackageView(curPool.id, self.poolPackageConfig.order)
+		SummonController.instance:openSummonPoolPackageView(curPool.id, self.poolPackageConfig.order, false)
 	end
 end
 
@@ -426,8 +466,11 @@ function SummonMainView:onClose()
 	TaskDispatcher.cancelTask(self.checkCallPreloader, self)
 	TaskDispatcher.cancelTask(self.repeatCallCountdown, self)
 	TaskDispatcher.cancelTask(self.returnToMainScene, self)
-	self:removeEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkSummonPoolPackage, self)
+	self:removeEventCb(PayController.instance, PayEvent.PayInfoChanged, self.checkProgressRewardAndPackage, self)
 	self:removeEventCb(SummonController.instance, SummonEvent.onSummonPoolPackageRedDotChange, self.onSummonPoolPackageRedDotChange, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, self.checkSummonPoolPackage, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, self.checkSummonPoolPackage, self)
+	self:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, self.checkSummonPoolPackage, self)
 end
 
 function SummonMainView:onDestroyView()

@@ -1,0 +1,32 @@
+[
+  {
+    "level": 1,
+    "needScore": 0,
+    "spriteName": "rouge2_level_4",
+    "spriteBgName": "rouge2_levelrare_4"
+  },
+  {
+    "level": 2,
+    "needScore": 200,
+    "spriteName": "rouge2_level_4",
+    "spriteBgName": "rouge2_levelrare_4"
+  },
+  {
+    "level": 3,
+    "needScore": 400,
+    "spriteName": "rouge2_level_3",
+    "spriteBgName": "rouge2_levelrare_3"
+  },
+  {
+    "level": 4,
+    "needScore": 600,
+    "spriteName": "rouge2_level_2",
+    "spriteBgName": "rouge2_levelrare_2"
+  },
+  {
+    "level": 5,
+    "needScore": 800,
+    "spriteName": "rouge2_level_1",
+    "spriteBgName": "rouge2_levelrare_1"
+  }
+]

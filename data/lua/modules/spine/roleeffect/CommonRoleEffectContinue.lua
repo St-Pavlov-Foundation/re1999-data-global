@@ -2,9 +2,11 @@
 
 module("modules.spine.roleeffect.CommonRoleEffectContinue", package.seeall)
 
-local CommonRoleEffectContinue = class("CommonRoleEffectContinue", BaseSpineRoleEffect)
+local CommonRoleEffectContinue = class("CommonRoleEffectContinue", BaseCommonRoleEffect)
 
 function CommonRoleEffectContinue:init(roleEffectConfig)
+	CommonRoleEffectContinue.super.init(self, roleEffectConfig)
+
 	self._roleEffectConfig = roleEffectConfig
 	self._spineGo = self._spine._spineGo
 	self._motionList = string.split(roleEffectConfig.motion, "|")
@@ -19,6 +21,8 @@ function CommonRoleEffectContinue:isShowEverEffect()
 end
 
 function CommonRoleEffectContinue:showBodyEffect(bodyName, callback, callbackTarget)
+	CommonRoleEffectContinue.super.showBodyEffect(self, bodyName, callback, callbackTarget)
+
 	self._effectVisible = false
 
 	local nextIndex = tabletool.indexOf(self._motionList, bodyName)
@@ -136,6 +140,8 @@ function CommonRoleEffectContinue:playBodyEffect(showEffect, child, bodyName)
 end
 
 function CommonRoleEffectContinue:onDestroy()
+	CommonRoleEffectContinue.super.onDestroy(self)
+
 	self._spineGo = nil
 
 	TaskDispatcher.cancelTask(self._delayShowEverNodes, self)

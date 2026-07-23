@@ -58,6 +58,12 @@ function FightRestartMgr:directStartNewFight()
 	work:start()
 end
 
+function FightRestartMgr:directSwitchBattle()
+	local work = self:com_registWork(FightWorkDirectSwitchBattleAfterEndFight)
+
+	work:start()
+end
+
 function FightRestartMgr:fastRestart()
 	self:_startRestart()
 

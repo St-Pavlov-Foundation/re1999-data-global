@@ -17,10 +17,14 @@ function FightWorkRequestAutoFight:onStart()
 end
 
 function FightWorkRequestAutoFight:onAutoRoundReply(msg)
-	if msg.clothSkill ~= 0 then
-		FightRpc.instance:sendUseClothSkillRequest(msg.clothSkill, nil, nil, 0)
+	if msg:HasField("clothSkill") ~= 0 then
+		local clothSkill = msg.clothSkill
 
-		return
+		if clothSkill.skillId ~= 0 then
+			FightRpc.instance:sendUseClothSkillRequest(clothSkill.skillId, clothSkill.fromId, clothSkill.toId, clothSkill.type)
+
+			return
+		end
 	end
 
 	local autoPlayCardList = {}
@@ -32,43 +36,49 @@ function FightWorkRequestAutoFight:onAutoRoundReply(msg)
 		table.insert(autoPlayCardList, beginRoundOp)
 	end
 
-	if #autoPlayCardList > 0 then
-		local flow = self:com_registFlowSequence()
+	local flow = self:com_registFlowSequence()
 
+	flow:addWork(FightWorkAutoSwitchDeviceSkill.New(msg.devicesOpers))
+
+	if #autoPlayCardList > 0 then
 		flow:registWork(FightWorkCheckUseAiJiAoQte)
 		flow:registWork(FightWorkClearAiJiAoQteTempData)
 		flow:registWork(FightAutoBindContractWork)
 		flow:registWork(FightAutoDetectUpgradeWork)
+		flow:registWork(FightAutoMeiLeiErExRoundWork)
 		flow:registWork(FightAutoSelectCrystalWork)
+		flow:registWork(FightSSWLAutoSelectCardWork)
 		flow:registWork(FightWorkSelectBattleEvent)
 		flow:registWork(FightWorkWaitAllOperateDone)
 
-		local season2Index = 0
+		if FightGameMgr.skipPerformance then
+			for i, beginRoundOp in ipairs(autoPlayCardList) do
+				FightDataHelper.operationDataMgr:addOperation(beginRoundOp)
+			end
+		else
+			local season2Index = 0
 
-		for i, beginRoundOp in ipairs(autoPlayCardList) do
-			if beginRoundOp:isAssistBossPlayCard() then
-				flow:addWork(WorkWaitSeconds.New(0.3))
-				flow:addWork(FightAutoPlayAssistBossCardWork.New(beginRoundOp))
-			elseif beginRoundOp:isSeason2ChangeHero() then
-				-- block empty
-			elseif beginRoundOp:isPlayerFinisherSkill() then
-				flow:addWork(WorkWaitSeconds.New(0.1))
-				flow:addWork(FightWorkAutoPlayerFinisherSkill.New(beginRoundOp))
-			elseif beginRoundOp:isBloodPoolSkill() then
-				logError("自动打牌  血池牌 todo")
-			elseif beginRoundOp:isPlayCard() then
-				flow:addWork(WorkWaitSeconds.New(0.01))
-				flow:addWork(FightAutoPlayCardWork.New(beginRoundOp))
+			for i, beginRoundOp in ipairs(autoPlayCardList) do
+				if beginRoundOp:isAssistBossPlayCard() then
+					flow:addWork(WorkWaitSeconds.New(0.3))
+					flow:addWork(FightAutoPlayAssistBossCardWork.New(beginRoundOp))
+				elseif beginRoundOp:isSeason2ChangeHero() then
+					-- block empty
+				elseif beginRoundOp:isPlayerFinisherSkill() then
+					flow:addWork(WorkWaitSeconds.New(0.1))
+					flow:addWork(FightWorkAutoPlayerFinisherSkill.New(beginRoundOp))
+				elseif beginRoundOp:isBloodPoolSkill() then
+					logError("自动打牌  血池牌 todo")
+				elseif beginRoundOp:isPlayCard() then
+					flow:addWork(WorkWaitSeconds.New(0.01))
+					flow:addWork(FightAutoPlayCardWork.New(beginRoundOp))
+				end
 			end
 		end
-
-		flow:registWork(FightWorkSendOperate2Server)
-		self:playWorkAndDone(flow)
-	else
-		local work = self:com_registWork(FightWorkSendOperate2Server)
-
-		self:playWorkAndDone(work)
 	end
+
+	flow:registWork(FightWorkSendOperate2Server)
+	self:playWorkAndDone(flow)
 end
 
 function FightWorkRequestAutoFight:onAutoRoundReplyFail()

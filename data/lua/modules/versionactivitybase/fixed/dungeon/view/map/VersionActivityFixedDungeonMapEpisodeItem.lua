@@ -131,6 +131,12 @@ function VersionActivityFixedDungeonMapEpisodeItem:getMapAllElementList()
 	return normalElementCoList
 end
 
+function VersionActivityFixedDungeonMapEpisodeItem:getMapAllElementListWithFinish()
+	local finishElementCoList, mapAllElementList = VersionActivityFixedDungeonModel.instance:getElementCoListWithFinish(self._map.id)
+
+	return finishElementCoList, mapAllElementList
+end
+
 function VersionActivityFixedDungeonMapEpisodeItem:_showAllElementTipView()
 	if not self._map or self._config.chapterId == VersionActivityFixedHelper.getVersionActivityDungeonEnum(self._bigVersion, self._smallVersion).DungeonChapterId.Hard then
 		gohelper.setActive(self._gotipcontent, false)
@@ -142,7 +148,7 @@ function VersionActivityFixedDungeonMapEpisodeItem:_showAllElementTipView()
 		return
 	end
 
-	local finishElementCoList, mapAllElementList = VersionActivityFixedDungeonModel.instance:getElementCoListWithFinish(self._map.id)
+	local finishElementCoList, mapAllElementList = self:getMapAllElementListWithFinish()
 
 	if not mapAllElementList or #mapAllElementList < 1 then
 		gohelper.setActive(self._gotipcontent, false)
@@ -175,7 +181,11 @@ function VersionActivityFixedDungeonMapEpisodeItem:_showAllElementTipView()
 
 			if elementItem.status == false and isFinish then
 				gohelper.setActive(elementItem.goNotFinish, true)
-				elementItem.animator:Play("switch", 0, 0)
+
+				if elementItem.animator then
+					elementItem.animator:Play("switch", 0, 0)
+				end
+
 				AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_light_up)
 			end
 

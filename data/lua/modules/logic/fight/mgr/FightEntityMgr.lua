@@ -27,6 +27,10 @@ function FightEntityMgr:getAllEntity()
 	return self.entityDic
 end
 
+function FightEntityMgr:getMyVertin()
+	return self.entityDic[FightEntityScene.MySideId]
+end
+
 function FightEntityMgr:newEntity(entityData, ...)
 	local work = self:registNewEntityWork(entityData, ...)
 
@@ -290,14 +294,20 @@ function FightEntityMgr:showSubEntity()
 	self._showSubWork:start()
 end
 
-function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror, skin, param, reverseLookDir, useScaleReplaceSpineScale)
+function FightEntityMgr:getTempEntityIdBySpineNameOrSpecificId(spineName, specificId)
 	local id = tostring(specificId)
 
 	id = string.nilorempty(id) and spineName or id
 
-	if self:getEntity(id) then
+	if FightGameMgr.entityMgr:getEntity(id) then
 		id = id .. "_1"
 	end
+
+	return id
+end
+
+function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide, mirror, skin, param, reverseLookDir, useScaleReplaceSpineScale)
+	local id = self:getTempEntityIdBySpineNameOrSpecificId(spineName, specificId)
 
 	if self.entityDic[id] then
 		self.diffEntityIdForCompareUpdate[id] = true
@@ -306,16 +316,22 @@ function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide
 	end
 
 	local entityData = FightEntityMO.New()
+	local entityExData = FightDataHelper.entityExMgr:getById(id)
 	local entityProto = FightDef_pb.FightEntityInfo()
 
 	entityProto.uid = id
 	entityProto.teamType = specificSide == FightEnum.EntitySide.MySide and FightEnum.TeamType.MySide or FightEnum.TeamType.EnemySide
 
+	if entityExData.skin then
+		entityProto.skin = entityExData.skin
+	end
+
 	entityData:init(entityProto, specificSide)
 
-	local entityExData = FightDataHelper.entityExMgr:getById(id)
+	if not entityExData.entityClass then
+		entityExData.entityClass = FightEntityTemp
+	end
 
-	entityExData.entityClass = FightEntityTemp
 	entityExData.entityObjectName = id
 	entityExData.useScaleReplaceSpineScale = useScaleReplaceSpineScale
 	entityExData.lookDir = mirror and specificSide and FightHelper.getSpineLookDir(specificSide) or SpineLookDir.Left
@@ -326,10 +342,12 @@ function FightEntityMgr:buildTempSpineByName(spineName, specificId, specificSide
 
 	entityExData.needLookCamera = false
 
-	if skin then
-		entityExData.spineUrl = ResUrl.getSpineFightPrefabBySkin(skin)
-	else
-		entityExData.spineUrl = ResUrl.getSpineFightPrefab(spineName)
+	if not entityExData.spineUrl then
+		if skin then
+			entityExData.spineUrl = ResUrl.getSpineFightPrefabBySkin(skin)
+		else
+			entityExData.spineUrl = ResUrl.getSpineFightPrefab(spineName)
+		end
 	end
 
 	local entity = self:newEntity(entityData)

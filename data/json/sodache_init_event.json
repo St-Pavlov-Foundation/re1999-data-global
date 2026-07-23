@@ -1,0 +1,11639 @@
+[
+  {
+    "id": 301,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 80002,
+    "plot": 78
+  },
+  {
+    "id": 302,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 60003,
+    "plot": 77
+  },
+  {
+    "id": 303,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 70010,
+    "plot": 75
+  },
+  {
+    "id": 305,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 10007,
+    "plot": 69
+  },
+  {
+    "id": 306,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 20003,
+    "plot": 67
+  },
+  {
+    "id": 307,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 49999,
+    "plot": 66
+  },
+  {
+    "id": 308,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 30005,
+    "plot": 64
+  },
+  {
+    "id": 309,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 30005,
+    "plot": 63
+  },
+  {
+    "id": 310,
+    "group": 1,
+    "difficulty": 9,
+    "example": 10001,
+    "eventGroup": 0,
+    "eventId": 30005,
+    "plot": 59
+  },
+  {
+    "id": 20001,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 27
+  },
+  {
+    "id": 20002,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20003,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20004,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20005,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20006,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20007,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20008,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20009,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20010,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20011,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 0,
+    "eventId": 70028,
+    "plot": 42
+  },
+  {
+    "id": 20012,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20013,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20014,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20015,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20016,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20017,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 27
+  },
+  {
+    "id": 20018,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20019,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20020,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20021,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 35
+  },
+  {
+    "id": 20022,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20023,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 30
+  },
+  {
+    "id": 20024,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20025,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20026,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 74005,
+    "plot": 34
+  },
+  {
+    "id": 20027,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 0,
+    "eventId": 70044,
+    "plot": 40
+  },
+  {
+    "id": 20028,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20029,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20030,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20031,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20032,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20033,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20034,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20035,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20036,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 27
+  },
+  {
+    "id": 20037,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20038,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20039,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20040,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20041,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20042,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20043,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20044,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20045,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 70021,
+    "plot": 38
+  },
+  {
+    "id": 20046,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 20047,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20048,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20049,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20050,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20051,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20052,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20053,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20054,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20055,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 27
+  },
+  {
+    "id": 20056,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20057,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20058,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20059,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20060,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20061,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20062,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20063,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20064,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 70044,
+    "plot": 29
+  },
+  {
+    "id": 20065,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 20066,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20067,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20068,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20069,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20070,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20071,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20072,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20073,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20074,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 36
+  },
+  {
+    "id": 20075,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20076,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20077,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20078,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 35
+  },
+  {
+    "id": 20079,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20080,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 34
+  },
+  {
+    "id": 20081,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20082,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20083,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20084,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 70021,
+    "plot": 34
+  },
+  {
+    "id": 20085,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 0,
+    "eventId": 70030,
+    "plot": 30
+  },
+  {
+    "id": 20086,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20087,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20088,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 20089,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20090,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20091,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20092,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20093,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20094,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 36
+  },
+  {
+    "id": 20095,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20096,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20097,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20098,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 35
+  },
+  {
+    "id": 20099,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20100,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 37
+  },
+  {
+    "id": 20101,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20102,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20103,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 20104,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 0,
+    "eventId": 70027,
+    "plot": 30
+  },
+  {
+    "id": 20105,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20106,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20107,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 20108,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20109,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20110,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20111,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20112,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20113,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 36
+  },
+  {
+    "id": 20114,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20115,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20116,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20117,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20118,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20119,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20120,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20121,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20122,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 20123,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 40
+  },
+  {
+    "id": 20124,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20125,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20126,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 20127,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20128,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20129,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20130,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20131,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20132,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 36
+  },
+  {
+    "id": 20133,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20134,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20135,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20136,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20137,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20138,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20139,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20140,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20141,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20142,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 20143,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 27
+  },
+  {
+    "id": 20144,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20145,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20146,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 20147,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20148,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20149,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20150,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20151,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70008,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20152,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 36
+  },
+  {
+    "id": 20153,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20154,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20155,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20156,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20157,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20158,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 35
+  },
+  {
+    "id": 20159,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 20160,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20161,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 20162,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 27
+  },
+  {
+    "id": 20163,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20164,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20165,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 20166,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20167,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20168,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20169,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20170,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70009,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 20171,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 41
+  },
+  {
+    "id": 20172,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20173,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20174,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20175,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20176,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20177,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 28
+  },
+  {
+    "id": 20178,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20179,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20180,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20181,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 70027,
+    "plot": 27
+  },
+  {
+    "id": 20182,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 20183,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20184,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20185,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20186,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 35
+  },
+  {
+    "id": 20187,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20188,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20189,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20190,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70010,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20191,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 41
+  },
+  {
+    "id": 20192,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20193,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20194,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20195,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 35
+  },
+  {
+    "id": 20196,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20197,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 28
+  },
+  {
+    "id": 20198,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20199,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20200,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 74011,
+    "plot": 27
+  },
+  {
+    "id": 20201,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 0,
+    "eventId": 70022,
+    "plot": 38
+  },
+  {
+    "id": 20202,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 20203,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20204,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20205,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20206,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20207,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20208,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20209,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70011,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20210,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 41
+  },
+  {
+    "id": 20211,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 20212,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20213,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 20214,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 11212,
+    "plot": 34
+  },
+  {
+    "id": 20215,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 20216,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 28
+  },
+  {
+    "id": 20217,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 20218,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 20219,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 20220,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 74005,
+    "plot": 34
+  },
+  {
+    "id": 20221,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 0,
+    "eventId": 70028,
+    "plot": 38
+  },
+  {
+    "id": 20222,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20223,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 20224,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 20225,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 35
+  },
+  {
+    "id": 20226,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 20227,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 20228,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 20229,
+    "group": 7,
+    "difficulty": 2,
+    "example": 70012,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 20230,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 54
+  },
+  {
+    "id": 20231,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20232,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 20233,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 20234,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 11211,
+    "plot": 53
+  },
+  {
+    "id": 20235,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20236,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 49
+  },
+  {
+    "id": 20237,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20238,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20239,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 52
+  },
+  {
+    "id": 20240,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20241,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 0,
+    "eventId": 70024,
+    "plot": 50
+  },
+  {
+    "id": 20242,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20243,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 20244,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20245,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20246,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20247,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20248,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20249,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 54
+  },
+  {
+    "id": 20250,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20251,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 20252,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 20253,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 11211,
+    "plot": 45
+  },
+  {
+    "id": 20254,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20255,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 58
+  },
+  {
+    "id": 20256,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 20257,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20258,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 70035,
+    "plot": 50
+  },
+  {
+    "id": 20259,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20260,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 0,
+    "eventId": 70042,
+    "plot": 49
+  },
+  {
+    "id": 20261,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20262,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 20263,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20264,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20265,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 20266,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20267,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20268,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 56
+  },
+  {
+    "id": 20269,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20270,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20271,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20272,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 20273,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20274,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 49
+  },
+  {
+    "id": 20275,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20276,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 48
+  },
+  {
+    "id": 20277,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20278,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 0,
+    "eventId": 74007,
+    "plot": 51
+  },
+  {
+    "id": 20279,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20280,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20281,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20282,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 20283,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20284,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20285,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20286,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 56
+  },
+  {
+    "id": 20287,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20288,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20289,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20290,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 11211,
+    "plot": 53
+  },
+  {
+    "id": 20291,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20292,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 49
+  },
+  {
+    "id": 20293,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 20294,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 20295,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 48
+  },
+  {
+    "id": 20296,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 20297,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 0,
+    "eventId": 74007,
+    "plot": 51
+  },
+  {
+    "id": 20298,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20299,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20300,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20301,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 20302,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20303,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 20304,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20305,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 44
+  },
+  {
+    "id": 20306,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20307,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20308,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 20309,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 20310,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20311,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 46
+  },
+  {
+    "id": 20312,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 20313,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 0,
+    "eventId": 70036,
+    "plot": 43
+  },
+  {
+    "id": 20314,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20315,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 0,
+    "eventId": 70017,
+    "plot": 58
+  },
+  {
+    "id": 20316,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 20317,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 20318,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20319,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20320,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 20321,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20322,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20323,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 44
+  },
+  {
+    "id": 20324,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 20325,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20326,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 20327,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 20328,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20329,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 46
+  },
+  {
+    "id": 20330,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20331,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 0,
+    "eventId": 70047,
+    "plot": 52
+  },
+  {
+    "id": 20332,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20333,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 0,
+    "eventId": 74004,
+    "plot": 54
+  },
+  {
+    "id": 20334,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 20335,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 20336,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20337,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 49
+  },
+  {
+    "id": 20338,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 20339,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 20340,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 20341,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 44
+  },
+  {
+    "id": 20342,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 20343,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 20344,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 20345,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 11211,
+    "plot": 53
+  },
+  {
+    "id": 20346,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 20347,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 46
+  },
+  {
+    "id": 20348,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 20349,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 20350,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 74012,
+    "plot": 47
+  },
+  {
+    "id": 20351,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20352,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 0,
+    "eventId": 74004,
+    "plot": 45
+  },
+  {
+    "id": 20353,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 20354,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 20355,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 20356,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 49
+  },
+  {
+    "id": 20357,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 20358,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 20359,
+    "group": 8,
+    "difficulty": 2,
+    "example": 80007,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 20360,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 64
+  },
+  {
+    "id": 20361,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 20362,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 20363,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 20364,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 0,
+    "eventId": 11205,
+    "plot": 68
+  },
+  {
+    "id": 20365,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 20366,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 61
+  },
+  {
+    "id": 20367,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20368,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 20369,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 0,
+    "eventId": 70024,
+    "plot": 78
+  },
+  {
+    "id": 20370,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20371,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 20372,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20373,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 20374,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20375,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 20376,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 20377,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 66
+  },
+  {
+    "id": 20378,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 78
+  },
+  {
+    "id": 20379,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 20380,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 20381,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 20382,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20383,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 20384,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 61
+  },
+  {
+    "id": 20385,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 20386,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 20387,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 0,
+    "eventId": 70040,
+    "plot": 64
+  },
+  {
+    "id": 20388,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20389,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 20390,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20391,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 20392,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20393,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 20394,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20395,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 20396,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 61
+  },
+  {
+    "id": 20397,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 20398,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20399,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 78
+  },
+  {
+    "id": 20400,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20401,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 20402,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 75
+  },
+  {
+    "id": 20403,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 20404,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 0,
+    "eventId": 70045,
+    "plot": 70
+  },
+  {
+    "id": 20405,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20406,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 20407,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 20408,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 20409,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 20410,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20411,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 20412,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 20413,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 62
+  },
+  {
+    "id": 20414,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 20415,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 78
+  },
+  {
+    "id": 20416,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 20417,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 0,
+    "eventId": 11205,
+    "plot": 67
+  },
+  {
+    "id": 20418,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 20419,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 76
+  },
+  {
+    "id": 20420,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 20421,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 20422,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 0,
+    "eventId": 70031,
+    "plot": 77
+  },
+  {
+    "id": 20423,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 20424,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 20425,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 20426,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 20427,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 20428,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 61
+  },
+  {
+    "id": 20429,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 20430,
+    "group": 9,
+    "difficulty": 2,
+    "example": 90004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 20431,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 91
+  },
+  {
+    "id": 20432,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20433,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20434,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20435,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 20436,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20437,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 102
+  },
+  {
+    "id": 20438,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20439,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 0,
+    "eventId": 70019,
+    "plot": 81
+  },
+  {
+    "id": 20440,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 0,
+    "eventId": 70011,
+    "plot": 87
+  },
+  {
+    "id": 20441,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20442,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 20443,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20444,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 20445,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 20446,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20447,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 20448,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 91
+  },
+  {
+    "id": 20449,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20450,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20451,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20452,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 11207,
+    "plot": 102
+  },
+  {
+    "id": 20453,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20454,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 83
+  },
+  {
+    "id": 20455,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20456,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 70036,
+    "plot": 92
+  },
+  {
+    "id": 20457,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 0,
+    "eventId": 70038,
+    "plot": 85
+  },
+  {
+    "id": 20458,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20459,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 20460,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20461,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20462,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 20463,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20464,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 20465,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 85
+  },
+  {
+    "id": 20466,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20467,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20468,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20469,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 20470,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20471,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 88
+  },
+  {
+    "id": 20472,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20473,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20474,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 0,
+    "eventId": 70043,
+    "plot": 91
+  },
+  {
+    "id": 20475,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 0,
+    "eventId": 70046,
+    "plot": 92
+  },
+  {
+    "id": 20476,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20477,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 102
+  },
+  {
+    "id": 20478,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20479,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20480,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 20481,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 91
+  },
+  {
+    "id": 20482,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 20483,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 85
+  },
+  {
+    "id": 20484,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20485,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20486,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20487,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 11207,
+    "plot": 102
+  },
+  {
+    "id": 20488,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20489,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 86
+  },
+  {
+    "id": 20490,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20491,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20492,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 74006,
+    "plot": 91
+  },
+  {
+    "id": 20493,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 0,
+    "eventId": 74010,
+    "plot": 92
+  },
+  {
+    "id": 20494,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20495,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 20496,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20497,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20498,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 20499,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20500,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20501,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 85
+  },
+  {
+    "id": 20502,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20503,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 20504,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20505,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20506,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20507,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 88
+  },
+  {
+    "id": 20508,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20509,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 0,
+    "eventId": 70046,
+    "plot": 91
+  },
+  {
+    "id": 20510,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 0,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20511,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 20512,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 102
+  },
+  {
+    "id": 20513,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20514,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20515,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 20516,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20517,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 20518,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 90
+  },
+  {
+    "id": 20519,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20520,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 20521,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 20522,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 11207,
+    "plot": 102
+  },
+  {
+    "id": 20523,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 20524,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 84
+  },
+  {
+    "id": 20525,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 20526,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 20527,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 70038,
+    "plot": 89
+  },
+  {
+    "id": 20528,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 0,
+    "eventId": 70043,
+    "plot": 91
+  },
+  {
+    "id": 20529,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 20530,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 20531,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 20532,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 20533,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 20534,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 20535,
+    "group": 10,
+    "difficulty": 2,
+    "example": 100006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 20536,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 95
+  },
+  {
+    "id": 20537,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20538,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20539,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 20540,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 11209,
+    "plot": 98
+  },
+  {
+    "id": 20541,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 103
+  },
+  {
+    "id": 20542,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 20543,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 20544,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20545,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 70025,
+    "plot": 106
+  },
+  {
+    "id": 20546,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 0,
+    "eventId": 70013,
+    "plot": 100
+  },
+  {
+    "id": 20547,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 20548,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 20549,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20550,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 20551,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 100
+  },
+  {
+    "id": 20552,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110001,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 20553,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 105
+  },
+  {
+    "id": 20554,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20555,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20556,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 20557,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 11210,
+    "plot": 109
+  },
+  {
+    "id": 20558,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 100
+  },
+  {
+    "id": 20559,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 20560,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 20561,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 20562,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 70026,
+    "plot": 98
+  },
+  {
+    "id": 20563,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 0,
+    "eventId": 74013,
+    "plot": 103
+  },
+  {
+    "id": 20564,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 20565,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 20566,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20567,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 103
+  },
+  {
+    "id": 20568,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 20569,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110002,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20570,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 104
+  },
+  {
+    "id": 20571,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 20572,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 20573,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20574,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 11209,
+    "plot": 98
+  },
+  {
+    "id": 20575,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 97
+  },
+  {
+    "id": 20576,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 20577,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20578,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20579,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 74008,
+    "plot": 101
+  },
+  {
+    "id": 20580,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 20581,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 20582,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 109
+  },
+  {
+    "id": 20583,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20584,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20585,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 20586,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110003,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 20587,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 104
+  },
+  {
+    "id": 20588,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 20589,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 20590,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20591,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 11210,
+    "plot": 95
+  },
+  {
+    "id": 20592,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 97
+  },
+  {
+    "id": 20593,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 20594,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20595,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20596,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 20597,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 0,
+    "eventId": 70013,
+    "plot": 105
+  },
+  {
+    "id": 20598,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 20599,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 109
+  },
+  {
+    "id": 20600,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 20601,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20602,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 105
+  },
+  {
+    "id": 20603,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110004,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 20604,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 108
+  },
+  {
+    "id": 20605,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 20606,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20607,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20608,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 11210,
+    "plot": 95
+  },
+  {
+    "id": 20609,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 109
+  },
+  {
+    "id": 20610,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 96
+  },
+  {
+    "id": 20611,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 92
+  },
+  {
+    "id": 20612,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20613,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 70025,
+    "plot": 106
+  },
+  {
+    "id": 20614,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 20615,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20616,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 100
+  },
+  {
+    "id": 20617,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 20618,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 92
+  },
+  {
+    "id": 20619,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20620,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110005,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20621,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 80004,
+    "plot": 108
+  },
+  {
+    "id": 20622,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 20623,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 20624,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 20625,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 11210,
+    "plot": 109
+  },
+  {
+    "id": 20626,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 20004,
+    "plot": 100
+  },
+  {
+    "id": 20627,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 20628,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 20629,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20630,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 74008,
+    "plot": 101
+  },
+  {
+    "id": 20631,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 0,
+    "eventId": 74013,
+    "plot": 106
+  },
+  {
+    "id": 20632,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 20633,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 20634,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 20635,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 20636,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 20637,
+    "group": 11,
+    "difficulty": 2,
+    "example": 110006,
+    "eventGroup": 602,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 20638,
+    "group": 12,
+    "difficulty": 2,
+    "example": 120001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 93
+  },
+  {
+    "id": 20639,
+    "group": 12,
+    "difficulty": 2,
+    "example": 120001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 69
+  },
+  {
+    "id": 20640,
+    "group": 12,
+    "difficulty": 2,
+    "example": 120001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 61
+  },
+  {
+    "id": 20641,
+    "group": 12,
+    "difficulty": 2,
+    "example": 120001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 56
+  },
+  {
+    "id": 20642,
+    "group": 12,
+    "difficulty": 2,
+    "example": 120001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 33
+  },
+  {
+    "id": 30001,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 27
+  },
+  {
+    "id": 30002,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30003,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30004,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30005,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30006,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30007,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30008,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30009,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30010,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30011,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 0,
+    "eventId": 70028,
+    "plot": 42
+  },
+  {
+    "id": 30012,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30013,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30014,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30015,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30016,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30017,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 27
+  },
+  {
+    "id": 30018,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30019,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30020,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30021,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 35
+  },
+  {
+    "id": 30022,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30023,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 30
+  },
+  {
+    "id": 30024,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30025,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30026,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 74005,
+    "plot": 34
+  },
+  {
+    "id": 30027,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 0,
+    "eventId": 70044,
+    "plot": 40
+  },
+  {
+    "id": 30028,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30029,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30030,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30031,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30032,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30033,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30034,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30035,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30036,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 27
+  },
+  {
+    "id": 30037,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30038,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30039,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30040,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30041,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30042,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30043,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30044,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30045,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 70021,
+    "plot": 38
+  },
+  {
+    "id": 30046,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 30047,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30048,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30049,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30050,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30051,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30052,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30053,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30054,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30055,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 27
+  },
+  {
+    "id": 30056,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30057,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30058,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30059,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30060,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30061,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30062,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30063,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30064,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 70044,
+    "plot": 29
+  },
+  {
+    "id": 30065,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 30066,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30067,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30068,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30069,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30070,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30071,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30072,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30073,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30074,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 36
+  },
+  {
+    "id": 30075,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30076,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30077,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30078,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 35
+  },
+  {
+    "id": 30079,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30080,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 34
+  },
+  {
+    "id": 30081,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30082,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30083,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30084,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 70021,
+    "plot": 34
+  },
+  {
+    "id": 30085,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 0,
+    "eventId": 70030,
+    "plot": 30
+  },
+  {
+    "id": 30086,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30087,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30088,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 30089,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30090,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30091,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30092,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30093,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30094,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 36
+  },
+  {
+    "id": 30095,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30096,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30097,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30098,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 35
+  },
+  {
+    "id": 30099,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30100,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 37
+  },
+  {
+    "id": 30101,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30102,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30103,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 30104,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 0,
+    "eventId": 70027,
+    "plot": 30
+  },
+  {
+    "id": 30105,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30106,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30107,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 30108,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30109,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30110,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30111,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30112,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30113,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 36
+  },
+  {
+    "id": 30114,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30115,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30116,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30117,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30118,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30119,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30120,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30121,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30122,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 30123,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 40
+  },
+  {
+    "id": 30124,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30125,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30126,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 30127,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30128,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30129,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30130,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30131,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30132,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 36
+  },
+  {
+    "id": 30133,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30134,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30135,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30136,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30137,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30138,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30139,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30140,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30141,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30142,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 30143,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 27
+  },
+  {
+    "id": 30144,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30145,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30146,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 30147,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30148,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30149,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30150,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30151,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170008,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30152,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 36
+  },
+  {
+    "id": 30153,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30154,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30155,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30156,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30157,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30158,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 35
+  },
+  {
+    "id": 30159,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 28
+  },
+  {
+    "id": 30160,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30161,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 70037,
+    "plot": 37
+  },
+  {
+    "id": 30162,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 0,
+    "eventId": 74001,
+    "plot": 27
+  },
+  {
+    "id": 30163,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30164,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30165,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 39
+  },
+  {
+    "id": 30166,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30167,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30168,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30169,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30170,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170009,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 41
+  },
+  {
+    "id": 30171,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 41
+  },
+  {
+    "id": 30172,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30173,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30174,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30175,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30176,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30177,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 28
+  },
+  {
+    "id": 30178,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30179,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30180,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30181,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 70027,
+    "plot": 27
+  },
+  {
+    "id": 30182,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 0,
+    "eventId": 74014,
+    "plot": 34
+  },
+  {
+    "id": 30183,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30184,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30185,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30186,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 35
+  },
+  {
+    "id": 30187,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30188,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30189,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30190,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170010,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30191,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 41
+  },
+  {
+    "id": 30192,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30193,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30194,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30195,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 35
+  },
+  {
+    "id": 30196,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30197,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 28
+  },
+  {
+    "id": 30198,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30199,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30200,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 74011,
+    "plot": 27
+  },
+  {
+    "id": 30201,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 0,
+    "eventId": 70022,
+    "plot": 38
+  },
+  {
+    "id": 30202,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 34
+  },
+  {
+    "id": 30203,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30204,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30205,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30206,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30207,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30208,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30209,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170011,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30210,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 41
+  },
+  {
+    "id": 30211,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 42
+  },
+  {
+    "id": 30212,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30213,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 31
+  },
+  {
+    "id": 30214,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 10212,
+    "plot": 34
+  },
+  {
+    "id": 30215,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 31
+  },
+  {
+    "id": 30216,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 28
+  },
+  {
+    "id": 30217,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 40
+  },
+  {
+    "id": 30218,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 29
+  },
+  {
+    "id": 30219,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 37
+  },
+  {
+    "id": 30220,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 74005,
+    "plot": 34
+  },
+  {
+    "id": 30221,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 0,
+    "eventId": 70028,
+    "plot": 38
+  },
+  {
+    "id": 30222,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30223,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 30
+  },
+  {
+    "id": 30224,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 36
+  },
+  {
+    "id": 30225,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 35
+  },
+  {
+    "id": 30226,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 33
+  },
+  {
+    "id": 30227,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 27
+  },
+  {
+    "id": 30228,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 38
+  },
+  {
+    "id": 30229,
+    "group": 17,
+    "difficulty": 1,
+    "example": 170012,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 32
+  },
+  {
+    "id": 30230,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 54
+  },
+  {
+    "id": 30231,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30232,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 30233,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 30234,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 10211,
+    "plot": 53
+  },
+  {
+    "id": 30235,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30236,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 49
+  },
+  {
+    "id": 30237,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30238,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30239,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 52
+  },
+  {
+    "id": 30240,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30241,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 0,
+    "eventId": 70024,
+    "plot": 50
+  },
+  {
+    "id": 30242,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30243,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 30244,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30245,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30246,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30247,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30248,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30249,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 54
+  },
+  {
+    "id": 30250,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30251,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 30252,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 30253,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 10211,
+    "plot": 45
+  },
+  {
+    "id": 30254,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30255,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 58
+  },
+  {
+    "id": 30256,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 30257,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30258,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 70035,
+    "plot": 50
+  },
+  {
+    "id": 30259,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30260,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 0,
+    "eventId": 70042,
+    "plot": 49
+  },
+  {
+    "id": 30261,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30262,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 30263,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30264,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30265,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 30266,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30267,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30268,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 56
+  },
+  {
+    "id": 30269,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30270,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30271,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30272,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 30273,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30274,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 49
+  },
+  {
+    "id": 30275,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30276,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 48
+  },
+  {
+    "id": 30277,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30278,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 0,
+    "eventId": 74007,
+    "plot": 51
+  },
+  {
+    "id": 30279,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30280,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30281,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30282,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 30283,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30284,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30285,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30286,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 56
+  },
+  {
+    "id": 30287,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30288,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30289,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30290,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 10211,
+    "plot": 53
+  },
+  {
+    "id": 30291,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30292,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 49
+  },
+  {
+    "id": 30293,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 43
+  },
+  {
+    "id": 30294,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 30295,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 70023,
+    "plot": 48
+  },
+  {
+    "id": 30296,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 44
+  },
+  {
+    "id": 30297,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 0,
+    "eventId": 74007,
+    "plot": 51
+  },
+  {
+    "id": 30298,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30299,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30300,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30301,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 46
+  },
+  {
+    "id": 30302,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30303,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 30304,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30305,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 44
+  },
+  {
+    "id": 30306,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30307,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30308,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 30309,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 30310,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30311,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 46
+  },
+  {
+    "id": 30312,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 30313,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 0,
+    "eventId": 70036,
+    "plot": 43
+  },
+  {
+    "id": 30314,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30315,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 0,
+    "eventId": 70017,
+    "plot": 58
+  },
+  {
+    "id": 30316,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 30317,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 30318,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30319,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30320,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 30321,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30322,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30323,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 44
+  },
+  {
+    "id": 30324,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 47
+  },
+  {
+    "id": 30325,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30326,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 30327,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 30328,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30329,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 46
+  },
+  {
+    "id": 30330,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30331,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 0,
+    "eventId": 70047,
+    "plot": 52
+  },
+  {
+    "id": 30332,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30333,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 0,
+    "eventId": 74004,
+    "plot": 54
+  },
+  {
+    "id": 30334,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 30335,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 30336,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30337,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 49
+  },
+  {
+    "id": 30338,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 53
+  },
+  {
+    "id": 30339,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 30340,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 30341,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 44
+  },
+  {
+    "id": 30342,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 52
+  },
+  {
+    "id": 30343,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 50
+  },
+  {
+    "id": 30344,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 57
+  },
+  {
+    "id": 30345,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 10211,
+    "plot": 53
+  },
+  {
+    "id": 30346,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 57
+  },
+  {
+    "id": 30347,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 46
+  },
+  {
+    "id": 30348,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 30349,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 55
+  },
+  {
+    "id": 30350,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 74012,
+    "plot": 47
+  },
+  {
+    "id": 30351,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30352,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 0,
+    "eventId": 74004,
+    "plot": 45
+  },
+  {
+    "id": 30353,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 48
+  },
+  {
+    "id": 30354,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 56
+  },
+  {
+    "id": 30355,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 58
+  },
+  {
+    "id": 30356,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 49
+  },
+  {
+    "id": 30357,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 54
+  },
+  {
+    "id": 30358,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 51
+  },
+  {
+    "id": 30359,
+    "group": 18,
+    "difficulty": 1,
+    "example": 180007,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 45
+  },
+  {
+    "id": 30360,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 64
+  },
+  {
+    "id": 30361,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 30362,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 30363,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 30364,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 0,
+    "eventId": 10205,
+    "plot": 68
+  },
+  {
+    "id": 30365,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 30366,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 61
+  },
+  {
+    "id": 30367,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30368,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 30369,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 0,
+    "eventId": 70024,
+    "plot": 78
+  },
+  {
+    "id": 30370,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30371,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 30372,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30373,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 30374,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30375,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 30376,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 30377,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 66
+  },
+  {
+    "id": 30378,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 78
+  },
+  {
+    "id": 30379,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 30380,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 76
+  },
+  {
+    "id": 30381,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 30382,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30383,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 30384,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 61
+  },
+  {
+    "id": 30385,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 30386,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 30387,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 0,
+    "eventId": 70040,
+    "plot": 64
+  },
+  {
+    "id": 30388,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30389,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 30390,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30391,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 30392,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30393,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 30394,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30395,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 30396,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 61
+  },
+  {
+    "id": 30397,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 30398,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30399,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 78
+  },
+  {
+    "id": 30400,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30401,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 30402,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 75
+  },
+  {
+    "id": 30403,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 30404,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 0,
+    "eventId": 70045,
+    "plot": 70
+  },
+  {
+    "id": 30405,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30406,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 62
+  },
+  {
+    "id": 30407,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 30408,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 67
+  },
+  {
+    "id": 30409,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 30410,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30411,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 30412,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 30413,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 62
+  },
+  {
+    "id": 30414,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 30415,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 78
+  },
+  {
+    "id": 30416,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 75
+  },
+  {
+    "id": 30417,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 0,
+    "eventId": 10205,
+    "plot": 67
+  },
+  {
+    "id": 30418,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 59
+  },
+  {
+    "id": 30419,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 76
+  },
+  {
+    "id": 30420,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 59
+  },
+  {
+    "id": 30421,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 63
+  },
+  {
+    "id": 30422,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 0,
+    "eventId": 70031,
+    "plot": 77
+  },
+  {
+    "id": 30423,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 30424,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 65
+  },
+  {
+    "id": 30425,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 70
+  },
+  {
+    "id": 30426,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 68
+  },
+  {
+    "id": 30427,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 69
+  },
+  {
+    "id": 30428,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 61
+  },
+  {
+    "id": 30429,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 77
+  },
+  {
+    "id": 30430,
+    "group": 19,
+    "difficulty": 1,
+    "example": 190004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 64
+  },
+  {
+    "id": 30431,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 91
+  },
+  {
+    "id": 30432,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30433,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30434,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30435,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 30436,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30437,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 102
+  },
+  {
+    "id": 30438,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30439,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 0,
+    "eventId": 70019,
+    "plot": 81
+  },
+  {
+    "id": 30440,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 0,
+    "eventId": 70011,
+    "plot": 87
+  },
+  {
+    "id": 30441,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30442,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 30443,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30444,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 30445,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 30446,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30447,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 30448,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 91
+  },
+  {
+    "id": 30449,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30450,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30451,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30452,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 10207,
+    "plot": 102
+  },
+  {
+    "id": 30453,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30454,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 83
+  },
+  {
+    "id": 30455,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30456,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 70036,
+    "plot": 92
+  },
+  {
+    "id": 30457,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 0,
+    "eventId": 70038,
+    "plot": 85
+  },
+  {
+    "id": 30458,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30459,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 30460,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30461,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30462,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 30463,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30464,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 30465,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 85
+  },
+  {
+    "id": 30466,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30467,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30468,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30469,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 30470,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30471,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 88
+  },
+  {
+    "id": 30472,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30473,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30474,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 0,
+    "eventId": 70043,
+    "plot": 91
+  },
+  {
+    "id": 30475,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 0,
+    "eventId": 70046,
+    "plot": 92
+  },
+  {
+    "id": 30476,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30477,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 102
+  },
+  {
+    "id": 30478,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30479,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30480,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 30481,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 91
+  },
+  {
+    "id": 30482,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 30483,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 85
+  },
+  {
+    "id": 30484,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30485,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30486,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30487,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 10207,
+    "plot": 102
+  },
+  {
+    "id": 30488,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30489,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 86
+  },
+  {
+    "id": 30490,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30491,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30492,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 74006,
+    "plot": 91
+  },
+  {
+    "id": 30493,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 0,
+    "eventId": 74010,
+    "plot": 92
+  },
+  {
+    "id": 30494,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30495,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 30496,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30497,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30498,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 30499,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30500,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30501,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 85
+  },
+  {
+    "id": 30502,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30503,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 30504,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30505,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30506,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30507,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 88
+  },
+  {
+    "id": 30508,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30509,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 0,
+    "eventId": 70046,
+    "plot": 91
+  },
+  {
+    "id": 30510,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 0,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30511,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 89
+  },
+  {
+    "id": 30512,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 102
+  },
+  {
+    "id": 30513,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30514,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30515,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 84
+  },
+  {
+    "id": 30516,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30517,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 30518,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 90
+  },
+  {
+    "id": 30519,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30520,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 30521,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 30522,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 10207,
+    "plot": 102
+  },
+  {
+    "id": 30523,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 30007,
+    "plot": 79
+  },
+  {
+    "id": 30524,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 84
+  },
+  {
+    "id": 30525,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 86
+  },
+  {
+    "id": 30526,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 110
+  },
+  {
+    "id": 30527,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 70038,
+    "plot": 89
+  },
+  {
+    "id": 30528,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 0,
+    "eventId": 70043,
+    "plot": 91
+  },
+  {
+    "id": 30529,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 83
+  },
+  {
+    "id": 30530,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 87
+  },
+  {
+    "id": 30531,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 82
+  },
+  {
+    "id": 30532,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 80
+  },
+  {
+    "id": 30533,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 88
+  },
+  {
+    "id": 30534,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 85
+  },
+  {
+    "id": 30535,
+    "group": 20,
+    "difficulty": 1,
+    "example": 200006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 81
+  },
+  {
+    "id": 30536,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 95
+  },
+  {
+    "id": 30537,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30538,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30539,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 30540,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 10209,
+    "plot": 98
+  },
+  {
+    "id": 30541,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 103
+  },
+  {
+    "id": 30542,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 30543,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 30544,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30545,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 70025,
+    "plot": 106
+  },
+  {
+    "id": 30546,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 0,
+    "eventId": 70013,
+    "plot": 100
+  },
+  {
+    "id": 30547,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 30548,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 30549,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30550,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 30551,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 100
+  },
+  {
+    "id": 30552,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210001,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 30553,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 105
+  },
+  {
+    "id": 30554,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30555,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30556,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 30557,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 10210,
+    "plot": 109
+  },
+  {
+    "id": 30558,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 100
+  },
+  {
+    "id": 30559,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 30560,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 30561,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 30562,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 70026,
+    "plot": 98
+  },
+  {
+    "id": 30563,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 0,
+    "eventId": 74013,
+    "plot": 103
+  },
+  {
+    "id": 30564,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 30565,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 30566,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30567,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 103
+  },
+  {
+    "id": 30568,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 30569,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210002,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30570,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 104
+  },
+  {
+    "id": 30571,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 30572,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 30573,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30574,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 10209,
+    "plot": 98
+  },
+  {
+    "id": 30575,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 97
+  },
+  {
+    "id": 30576,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 30577,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30578,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30579,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 74008,
+    "plot": 101
+  },
+  {
+    "id": 30580,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 30581,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 30582,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 109
+  },
+  {
+    "id": 30583,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30584,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30585,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 30586,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210003,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 30587,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 104
+  },
+  {
+    "id": 30588,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 30589,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 108
+  },
+  {
+    "id": 30590,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30591,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 10210,
+    "plot": 95
+  },
+  {
+    "id": 30592,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 97
+  },
+  {
+    "id": 30593,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 30594,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30595,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30596,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 30597,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 0,
+    "eventId": 70013,
+    "plot": 105
+  },
+  {
+    "id": 30598,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 30599,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 109
+  },
+  {
+    "id": 30600,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 101
+  },
+  {
+    "id": 30601,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30602,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 105
+  },
+  {
+    "id": 30603,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210004,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 106
+  },
+  {
+    "id": 30604,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 108
+  },
+  {
+    "id": 30605,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 30606,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30607,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30608,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 10210,
+    "plot": 95
+  },
+  {
+    "id": 30609,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 109
+  },
+  {
+    "id": 30610,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 96
+  },
+  {
+    "id": 30611,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 92
+  },
+  {
+    "id": 30612,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30613,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 70025,
+    "plot": 106
+  },
+  {
+    "id": 30614,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 0,
+    "eventId": 74003,
+    "plot": 98
+  },
+  {
+    "id": 30615,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30616,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 100
+  },
+  {
+    "id": 30617,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 30618,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 92
+  },
+  {
+    "id": 30619,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30620,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210005,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30621,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 80003,
+    "plot": 108
+  },
+  {
+    "id": 30622,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 97
+  },
+  {
+    "id": 30623,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 94
+  },
+  {
+    "id": 30624,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 98
+  },
+  {
+    "id": 30625,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 10210,
+    "plot": 109
+  },
+  {
+    "id": 30626,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 20005,
+    "plot": 100
+  },
+  {
+    "id": 30627,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 30006,
+    "plot": 92
+  },
+  {
+    "id": 30628,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 105,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 30629,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 402,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30630,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 74008,
+    "plot": 101
+  },
+  {
+    "id": 30631,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 0,
+    "eventId": 74013,
+    "plot": 106
+  },
+  {
+    "id": 30632,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 703,
+    "eventId": 0,
+    "plot": 107
+  },
+  {
+    "id": 30633,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 95
+  },
+  {
+    "id": 30634,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 96
+  },
+  {
+    "id": 30635,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 104
+  },
+  {
+    "id": 30636,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 93
+  },
+  {
+    "id": 30637,
+    "group": 21,
+    "difficulty": 1,
+    "example": 210006,
+    "eventGroup": 601,
+    "eventId": 0,
+    "plot": 99
+  },
+  {
+    "id": 30638,
+    "group": 22,
+    "difficulty": 1,
+    "example": 220001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 93
+  },
+  {
+    "id": 30639,
+    "group": 22,
+    "difficulty": 1,
+    "example": 220001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 69
+  },
+  {
+    "id": 30640,
+    "group": 22,
+    "difficulty": 1,
+    "example": 220001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 61
+  },
+  {
+    "id": 30641,
+    "group": 22,
+    "difficulty": 1,
+    "example": 220001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 56
+  },
+  {
+    "id": 30642,
+    "group": 22,
+    "difficulty": 1,
+    "example": 220001,
+    "eventGroup": 0,
+    "eventId": 50001,
+    "plot": 33
+  }
+]

@@ -31,14 +31,6 @@ function NecrologistStoryDragPictureItem:onInit()
 	self.simageSelect = gohelper.findChildSingleImage(self.viewGO, "root/go_drag/#select/glow")
 end
 
-function NecrologistStoryDragPictureItem:addEventListeners()
-	return
-end
-
-function NecrologistStoryDragPictureItem:removeEventListeners()
-	return
-end
-
 function NecrologistStoryDragPictureItem:addDrag(go)
 	if self._drag then
 		return

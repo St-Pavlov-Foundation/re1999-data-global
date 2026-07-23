@@ -23,14 +23,16 @@ function ArcadeGameScene:onEnterArcadeGame(isRestartGame)
 
 	self:_disposeSceneLoader()
 
-	local sceneUrl = ResUrl.getArcadeSceneRes(ArcadeGameEnum.Const.GameSceneResName)
+	local gameSceneResName = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.GameSceneResName)
+	local sceneUrl = ResUrl.getArcadeSceneRes(gameSceneResName)
 
 	if not string.nilorempty(sceneUrl) then
 		UIBlockMgr.instance:startBlock(ArcadeEnum.BlockKey.LoadGameScene)
 
+		local sceneAnimUrl = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.GameSceneAnimationControllerRes)
 		local _resList = {
 			sceneUrl,
-			ArcadeGameEnum.Const.GameSceneAnim
+			sceneAnimUrl
 		}
 
 		self._sceneLoader = MultiAbLoader.New()
@@ -47,7 +49,8 @@ function ArcadeGameScene:_onLoadSceneFinish()
 		return
 	end
 
-	local sceneUrl = ResUrl.getArcadeSceneRes(ArcadeGameEnum.Const.GameSceneResName)
+	local gameSceneResName = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.GameSceneResName)
+	local sceneUrl = ResUrl.getArcadeSceneRes(gameSceneResName)
 	local sceneAsset = self._sceneLoader:getAssetItem(sceneUrl)
 	local sceneRes = sceneAsset and sceneAsset:GetResource(sceneUrl)
 
@@ -55,7 +58,7 @@ function ArcadeGameScene:_onLoadSceneFinish()
 		self._goScene = gohelper.clone(sceneRes, self._sceneRoot)
 	end
 
-	local animUrl = ArcadeGameEnum.Const.GameSceneAnim
+	local animUrl = ArcadeConfig.instance:getArcadeConst(ArcadeEnum.ConstId.GameSceneAnimationControllerRes)
 	local animAsset = self._sceneLoader:getAssetItem(animUrl)
 	local animRes = animAsset and animAsset:GetResource(animUrl)
 
@@ -79,6 +82,14 @@ function ArcadeGameScene:_initScene()
 	self._preGameStartFlow = FlowSequence.New()
 
 	self._preGameStartFlow:addWork(ArcadePreGameStartWork.New(self.entityMgr, ArcadeGameController.instance, ArcadeEvent.OnLoadFinishGameCharacter))
+
+	local gameViewName = ViewName.ArcadeGameView
+	local isOpen = ViewMgr.instance:isOpen(gameViewName)
+
+	if not isOpen then
+		self._preGameStartFlow:addWork(WaitEventWork.New("ViewMgr;ViewEvent;OnOpenView;" .. gameViewName))
+	end
+
 	self._preGameStartFlow:registerDoneListener(self._initSceneFinish, self)
 	self._preGameStartFlow:start()
 end

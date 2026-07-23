@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalAddTalentWork", pack
 
 local SurvivalAddTalentWork = class("SurvivalAddTalentWork", SurvivalStepBaseWork)
 
-function SurvivalAddTalentWork:onStart(context)
+function SurvivalAddTalentWork:onStart2(context)
 	local weekInfo = SurvivalShelterModel.instance:getWeekInfo()
 
 	tabletool.addValues(weekInfo.talents, self._stepMo.paramInt)

@@ -27,6 +27,14 @@ end
 function SwitchMainUIReddotIcon:_onSwitchMainUI(id)
 	self._curMainUIId = id
 
+	if self._showCb then
+		self.show = self._showCb(self._showCbObj)
+
+		self:showCurUIRedDot()
+
+		return
+	end
+
 	self:defaultRefreshDot()
 end
 
@@ -82,12 +90,41 @@ function SwitchMainUIReddotIcon:defaultRefreshDot()
 end
 
 function SwitchMainUIReddotIcon:showRedDot(type)
+	self._showType = type
+
 	gohelper.setActive(self.go, self.show)
 
 	if self.show then
 		for _, v in pairs(RedDotEnum.Style) do
 			gohelper.setActive(self.typeGoDict[v], type == v)
 		end
+	end
+end
+
+function SwitchMainUIReddotIcon:showCurUIRedDot(uiId)
+	uiId = uiId or self._curMainUIId
+
+	local style = MainUISwitchModel.instance:getUIReddotType(uiId)
+
+	style = style or RedDotEnum.Style.Normal
+
+	self:showRedDot(style)
+end
+
+function SwitchMainUIReddotIcon:setShowReddotCb(cb, cbObj)
+	self._showCb = cb
+	self._showCbObj = cbObj
+
+	if self._showCb then
+		self.show = self._showCb(self._showCbObj)
+	end
+end
+
+function SwitchMainUIReddotIcon:refreshRedDot()
+	if self._showCb then
+		self.show = self._showCb(self._showCbObj)
+
+		self:showCurUIRedDot()
 	end
 end
 

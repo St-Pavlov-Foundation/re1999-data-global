@@ -113,6 +113,22 @@ function Activity160Model:isMissionFinish(actId, missionId)
 	return actInfo[missionId] and actInfo[missionId].state == 2
 end
 
+function Activity160Model:getFinishCount(actId)
+	local count = 0
+	local missionCos = Activity160Config.instance:getActivityMissions(actId)
+
+	for index, missionCo in ipairs(missionCos) do
+		local isFinish = self:isMissionFinish(actId, missionCo.id)
+		local canGet = self:isMissionCanGet(actId, missionCo.id)
+
+		if isFinish or canGet then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
 Activity160Model.instance = Activity160Model.New()
 
 return Activity160Model

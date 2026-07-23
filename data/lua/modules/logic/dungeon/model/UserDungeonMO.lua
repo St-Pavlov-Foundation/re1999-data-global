@@ -29,4 +29,8 @@ function UserDungeonMO:initFromManual(chapterId, episodeId, star, challengeCount
 	self.todayTotalNum = episodeConfig.dayNum
 end
 
+function UserDungeonMO:setNewStatus(isNew)
+	self.isNew = isNew
+end
+
 return UserDungeonMO

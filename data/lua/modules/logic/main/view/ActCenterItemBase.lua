@@ -55,6 +55,8 @@ function ActCenterItemBase:_onOpen(...)
 end
 
 function ActCenterItemBase:refresh(...)
+	self:_gm_Show_Activitycenter()
+
 	if not self.__isFirst then
 		self:_onOpen(...)
 
@@ -255,6 +257,21 @@ end
 function ActCenterItemBase:_setActive_act_iconbg(isActive)
 	gohelper.setActive(self._act_iconbgGo, isActive)
 	gohelper.setActive(self._act_iconbg_effGo, isActive)
+end
+
+function ActCenterItemBase:_checkRedotShowType(reddotId)
+	local curMainUIId = MainUISwitchModel.instance:getCurUseUI()
+	local switchReddotCo = MainUISwitchConfig.instance:getUIReddotStyle(curMainUIId, reddotId)
+
+	if switchReddotCo then
+		local type = switchReddotCo.style
+
+		if type then
+			self:setReddotShowType(type)
+		end
+	else
+		self:setReddotShowType(RedDotEnum.Style.Normal)
+	end
 end
 
 return ActCenterItemBase

@@ -33,6 +33,31 @@ function NecrologistStoryGameBaseMO:updateInfo(info)
 	self:onUpdateData()
 
 	self.dataIsDirty = false
+
+	self:fixStoryData()
+end
+
+function NecrologistStoryGameBaseMO:fixStoryData()
+	local isDirty = false
+
+	for k, v in pairs(self.plotInfoDict) do
+		local curState = v:getState()
+
+		if curState == NecrologistStoryEnum.StoryState.Lock then
+			local config = v.config
+			local state = self:calStoryStateByPreId(config.preId)
+
+			if state ~= curState then
+				v:setState(state)
+
+				isDirty = true
+			end
+		end
+	end
+
+	if isDirty then
+		self:setDataDirty()
+	end
 end
 
 function NecrologistStoryGameBaseMO:getPlotInfo(plotId, createIfNotExist)
@@ -91,17 +116,25 @@ function NecrologistStoryGameBaseMO:getStoryState(storyId)
 	if state == nil then
 		local config = NecrologistStoryConfig.instance:getPlotGroupCo(storyId)
 
-		if config.preId == 0 then
+		state = self:calStoryStateByPreId(config.preId)
+	end
+
+	return state
+end
+
+function NecrologistStoryGameBaseMO:calStoryStateByPreId(preId)
+	local state
+
+	if preId == 0 then
+		state = NecrologistStoryEnum.StoryState.Normal
+	else
+		local prePlotMo = self:getPlotInfo(preId)
+		local preState = prePlotMo and prePlotMo:getState()
+
+		if preState == NecrologistStoryEnum.StoryState.Finish then
 			state = NecrologistStoryEnum.StoryState.Normal
 		else
-			local prePlotMo = self:getPlotInfo(config.preId)
-			local preState = prePlotMo and prePlotMo:getState()
-
-			if preState == NecrologistStoryEnum.StoryState.Finish then
-				state = NecrologistStoryEnum.StoryState.Normal
-			else
-				state = NecrologistStoryEnum.StoryState.Lock
-			end
+			state = NecrologistStoryEnum.StoryState.Lock
 		end
 	end
 
@@ -115,13 +148,17 @@ function NecrologistStoryGameBaseMO:isStoryFinish(storyId)
 end
 
 function NecrologistStoryGameBaseMO:setStoryState(storyId, state)
-	local curState = self:getStoryState(storyId)
+	local plotMo = self:getPlotInfo(storyId)
 
-	if state <= curState then
-		return
+	if plotMo then
+		local curState = self:getStoryState(storyId)
+
+		if curState == state then
+			return
+		end
+	else
+		plotMo = self:getPlotInfo(storyId, true)
 	end
-
-	local plotMo = self:getPlotInfo(storyId, true)
 
 	plotMo:setState(state)
 	self:onStoryStateChange(storyId, state)
@@ -159,6 +196,76 @@ function NecrologistStoryGameBaseMO:setPlotSituationTab(plotId, dict)
 
 	plotMo:setSituationValueTab(dict)
 	self:setDataDirty()
+end
+
+function NecrologistStoryGameBaseMO:setPlotOptionSelected(plotId, optionId, optionIds)
+	local plotMo = self:getPlotInfo(plotId, true)
+	local isDirty = false
+
+	if not plotMo:isOptionUnlocked(optionId) then
+		plotMo:setOptionUnlocked(optionId)
+
+		isDirty = true
+	end
+
+	if self:resetOtherOption(plotId, optionId, optionIds) then
+		isDirty = true
+	end
+
+	if isDirty then
+		self:setDataDirty()
+	end
+end
+
+function NecrologistStoryGameBaseMO:setPlotEndingUnlock(plotId, endingId)
+	local plotMo = self:getPlotInfo(plotId, true)
+	local isDirty = false
+
+	if not plotMo:isEndingUnlocked(endingId) then
+		plotMo:setEndingUnlock(endingId)
+
+		isDirty = true
+	end
+
+	if self:resetOtherEnding(plotId, endingId) then
+		isDirty = true
+	end
+
+	if isDirty then
+		self:setDataDirty()
+	end
+end
+
+function NecrologistStoryGameBaseMO:resetOtherOption(plotId, optionId, optionIds)
+	local isDirty = false
+
+	for id, info in pairs(self.plotInfoDict) do
+		if plotId < id then
+			if info:resetOptionAndEnding() then
+				isDirty = true
+			end
+		elseif id == plotId and info:resetOptionAndEnding(optionId, optionIds) then
+			isDirty = true
+		end
+	end
+
+	return isDirty
+end
+
+function NecrologistStoryGameBaseMO:resetOtherEnding(plotId, endingId)
+	local isDirty = false
+
+	for id, info in pairs(self.plotInfoDict) do
+		if id == plotId then
+			if info:resetEnding(endingId) then
+				isDirty = true
+			end
+		elseif info:resetEnding(0) then
+			isDirty = true
+		end
+	end
+
+	return isDirty
 end
 
 function NecrologistStoryGameBaseMO:toString()

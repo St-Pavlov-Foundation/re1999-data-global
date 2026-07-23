@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalSearchItemSublimatio
 
 local SurvivalSearchItemSublimationWork = class("SurvivalSearchItemSublimationWork", SurvivalStepBaseWork)
 
-function SurvivalSearchItemSublimationWork:onStart()
+function SurvivalSearchItemSublimationWork:onStart2()
 	local t = {
 		items = self._stepMo.items,
 		panelUid = self._stepMo.paramLong[1],

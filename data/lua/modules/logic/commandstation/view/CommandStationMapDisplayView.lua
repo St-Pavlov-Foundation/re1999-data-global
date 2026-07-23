@@ -6,6 +6,9 @@ local CommandStationMapDisplayView = class("CommandStationMapDisplayView", BaseV
 
 function CommandStationMapDisplayView:onInitView()
 	self._gomap = gohelper.findChild(self.viewGO, "map/#go_map")
+	self._goevents = gohelper.findChild(self.viewGO, "map/#go_events")
+	self._gomaptag = gohelper.findChild(self.viewGO, "#go_maptag")
+	self._txttag = gohelper.findChildText(self.viewGO, "#go_maptag/#txt_tag")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_close")
 
 	if self._editableInitView then
@@ -53,19 +56,28 @@ function CommandStationMapDisplayView.getScenePath(param)
 	local sceneConfig = CommandStationConfig.instance:getSceneConfig(sceneId)
 	local scenePath = sceneConfig.scene
 
-	return scenePath, plotConfig
+	return scenePath, plotConfig, timeId
 end
 
 function CommandStationMapDisplayView:onOpen()
 	NavigateMgr.instance:addEscape(self.viewName, self._btncloseOnClick, self)
 
-	local scenePath, plotConfig = CommandStationMapDisplayView.getScenePath(self.viewParam)
+	local scenePath, plotConfig, timeId = CommandStationMapDisplayView.getScenePath(self.viewParam)
 
 	if not scenePath then
 		return
 	end
 
 	self._plotConfig = plotConfig
+	self._timeId = timeId
+
+	local showMapName = not string.nilorempty(plotConfig.mapName)
+
+	if showMapName then
+		self._txttag.text = plotConfig.mapName
+	end
+
+	gohelper.setActive(self._gomaptag, showMapName)
 
 	local switchSceneId = MainSceneSwitchEnum.CustomScene.CommandStation
 	local customSceneInfo = MainSceneSwitchEnum.getCustomSceneInfo[switchSceneId]
@@ -96,6 +108,8 @@ function CommandStationMapDisplayView:_initScene()
 	local sceneGo = MainSceneSwitchCameraDisplayController.instance:getSceneGo(self._sceneInsName)
 
 	if sceneGo then
+		CommandStationMapModel.instance:setSceneGo(sceneGo)
+
 		local pos = self._plotConfig.centerPoint
 
 		transformhelper.setLocalPosXY(sceneGo.transform, pos[1], pos[2])
@@ -104,6 +118,31 @@ function CommandStationMapDisplayView:_initScene()
 
 		transformhelper.setLocalScale(sceneGo.transform, scale[1] or 1, scale[2] or 1, 1)
 		self:_addDecoration(sceneGo, self._plotConfig.time)
+		self:_updateEventItems()
+	end
+end
+
+function CommandStationMapDisplayView:_updateEventItems()
+	local list = {}
+	local timeId = self._timeId
+	local characterList = CommandStationConfig.instance:getEventList(timeId, nil, CommandStationEnum.EventCategoryKey.Character)
+
+	tabletool.addValues(list, characterList)
+	self:_addEventItems(list, 0)
+end
+
+function CommandStationMapDisplayView:_addEventItems(list, normalCatetoryMaxIndex)
+	local path = self.viewContainer:getSetting().otherRes[1]
+	local category
+
+	for i, v in ipairs(list) do
+		category = i <= normalCatetoryMaxIndex and CommandStationEnum.EventCategory.Normal or CommandStationEnum.EventCategory.Character
+
+		local go = self:getResInst(path, self._goevents)
+		local item = MonoHelper.addNoUpdateLuaComOnceToGo(go, CommandStationMapItem)
+
+		item:setFollowParams(MainSceneSwitchCameraController.instance:getMainCamera())
+		item:onUpdateMO(v, category)
 	end
 end
 
@@ -198,6 +237,7 @@ end
 function CommandStationMapDisplayView:onClose()
 	MainSceneSwitchCameraController.instance:clear()
 	TaskDispatcher.cancelTask(self._delayShowScene, self)
+	CommandStationMapModel.instance:clearSceneInfo()
 end
 
 function CommandStationMapDisplayView:onDestroyView()

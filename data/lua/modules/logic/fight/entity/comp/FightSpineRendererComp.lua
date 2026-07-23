@@ -11,6 +11,7 @@ function FightSpineRendererComp:onConstructor(entity)
 	self._unitSpine = nil
 	self._alphaTweenId = nil
 	self.go = entity.go
+	self.waitingReplaceMat = false
 end
 
 function FightSpineRendererComp:onDestructor()
@@ -25,6 +26,9 @@ function FightSpineRendererComp:onDestructor()
 	self._replaceMat = nil
 	self._sharedMaterial = nil
 	self._cloneOriginMat = nil
+	self.waitingReplaceMat = nil
+
+	TaskDispatcher.cancelTask(self.resetWaitFlag, self)
 end
 
 function FightSpineRendererComp:setSpine(unitSpine)
@@ -42,7 +46,7 @@ function FightSpineRendererComp:setSpine(unitSpine)
 end
 
 function FightSpineRendererComp:hasSkeletonAnim()
-	return gohelper.isNil(self._skeletonAnim) ~= nil
+	return not gohelper.isNil(self._skeletonAnim)
 end
 
 function FightSpineRendererComp:_getSpinePrimaryMaterial()
@@ -77,7 +81,15 @@ function FightSpineRendererComp:getCloneOriginMat()
 end
 
 function FightSpineRendererComp:getSpineRenderMat()
-	return self._spineRenderer and self._spineRenderer.material
+	if not self._spineRenderer then
+		return
+	end
+
+	if self.waitingReplaceMat then
+		logError("spine 替换材质球之后，还未等LateUpdate生效，就再次获取了材质球")
+	end
+
+	return self._spineRenderer.material
 end
 
 function FightSpineRendererComp:_setReplaceMat(originMat, replaceMat)
@@ -93,9 +105,26 @@ function FightSpineRendererComp:_setReplaceMat(originMat, replaceMat)
 
 			if not gohelper.isNil(replaceMat) then
 				dict:Add(originMat, replaceMat)
+				self:setWaitFlag()
 			end
 		end
 	end
+end
+
+function FightSpineRendererComp:setWaitFlag()
+	self.waitingReplaceMat = true
+
+	TaskDispatcher.cancelTask(self.resetWaitFlag, self)
+	TaskDispatcher.runDelay(self.resetWaitFlag, self, 0.01)
+
+	if isDebugBuild then
+		logNormal(string.format("[%s] set waitingReplaceMat true", Time.frameCount))
+		logNormal(debug.traceback())
+	end
+end
+
+function FightSpineRendererComp:resetWaitFlag()
+	self.waitingReplaceMat = false
 end
 
 function FightSpineRendererComp:replaceSpineMat(mat)

@@ -90,5 +90,35 @@ return {
 		0,
 		0,
 		1
+	},
+	{
+		6,
+		"圆形3",
+		0.5,
+		"ui/viewres/story/v3a7/v3a6_shapemask_circle.prefab",
+		-30,
+		9,
+		2.9,
+		-3,
+		0,
+		2.9,
+		-3,
+		0,
+		31
+	},
+	{
+		7,
+		"圆形4",
+		0,
+		"ui/viewres/story/v3a6/v3a6_shapemask_circle.prefab",
+		-70,
+		9,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		1
 	}
 }

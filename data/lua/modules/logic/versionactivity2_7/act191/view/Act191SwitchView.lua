@@ -40,7 +40,7 @@ function Act191SwitchView:onOpen()
 	self.nodeInfoList = self.gameInfo:getStageNodeInfoList()
 	self.gameInfo.nodeChange = false
 
-	local stageCo = lua_activity191_stage.configDict[self.actId][self.gameInfo.curStage]
+	local stageCo = Activity191Config.instance:getStageCfg(self.actId, self.gameInfo.curStage)
 	local nodeCoDic = lua_activity191_node.configDict[tonumber(stageCo.rule)]
 
 	for k, v in ipairs(self.nodeInfoList) do

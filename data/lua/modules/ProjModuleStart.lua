@@ -49,7 +49,7 @@ function ProjModuleStart:initFramework()
 end
 
 function ProjModuleStart:initModuleLogic()
-	GameBranchMgr.instance:init()
+	GameBranchMgr.instance:init(3, 10)
 
 	local moduleMvc = addGlobalModule("modules.setting.module_mvc", "module_mvc")
 

@@ -12,6 +12,7 @@ gohelper.Type_LimitedScrollRect = typeof(ZProj.LimitedScrollRect)
 gohelper.Type_RectTransform = typeof(UnityEngine.RectTransform)
 gohelper.Type_Transform = typeof(UnityEngine.Transform)
 gohelper.Type_ParticleSystem = typeof(UnityEngine.ParticleSystem)
+gohelper.Type_ParticleSpeedModify = typeof(ZProj.ParticleSpeedModify)
 gohelper.Type_AnimationEventWrap = typeof(ZProj.AnimationEventWrap)
 gohelper.Type_Animation = typeof(UnityEngine.Animation)
 gohelper.Type_TMP_SubMeshUI = typeof(TMPro.TMP_SubMeshUI)
@@ -257,13 +258,28 @@ end
 function gohelper.CreateNumObjList(parent_obj, model_obj, count, callback, callbackObj)
 	local parent_transform = parent_obj.transform
 	local child_num = parent_transform.childCount
+	local offsetNum = 0
+
+	for i = 1, child_num do
+		if parent_transform:GetChild(i - 1).gameObject == model_obj then
+			offsetNum = offsetNum + 1
+
+			gohelper.setAsFirstSibling(model_obj)
+			gohelper.setActive(model_obj, false)
+
+			break
+		end
+	end
+
+	child_num = child_num - offsetNum
+
 	local max_num = child_num <= count and count or child_num
 
 	for i = 1, max_num do
 		local child_obj
 
 		if i <= count then
-			child_obj = i <= child_num and parent_transform:GetChild(i - 1).gameObject or gohelper.clone(model_obj, parent_obj, i)
+			child_obj = i <= child_num and parent_transform:GetChild(i - 1 + offsetNum).gameObject or gohelper.clone(model_obj, parent_obj, i)
 
 			gohelper.setActive(child_obj, true)
 
@@ -271,7 +287,7 @@ function gohelper.CreateNumObjList(parent_obj, model_obj, count, callback, callb
 				callback(callbackObj, child_obj, i)
 			end
 		else
-			child_obj = i <= child_num and parent_transform:GetChild(i - 1).gameObject
+			child_obj = i <= child_num and parent_transform:GetChild(i - 1 + offsetNum).gameObject
 
 			if child_obj then
 				gohelper.setActive(child_obj, false)

@@ -172,6 +172,8 @@ function PayController:_onPayCallback(code, msg)
 		-- block empty
 	elseif code == PayEnum.PayResultCode.PayChannelFail then
 		-- block empty
+	elseif code == -2 and BootNativeUtil.isWindows() then
+		-- block empty
 	else
 		logNormal("支付异常 : " .. code .. ":" .. msg)
 		GameFacade.showToast(ToastEnum.PayError, msg, code)

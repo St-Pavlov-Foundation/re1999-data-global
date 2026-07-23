@@ -28,6 +28,13 @@ end
 
 function FightSpineColorBySceneMgr:_onSpineLoaded(unitSpine)
 	if self._spineColor and unitSpine then
+		local entity = unitSpine.unitSpawn
+		local entityExData = FightDataHelper.entityExMgr:getById(entity.id)
+
+		if entityExData and entityExData.timelineTempEntitySign.donotsetcolor then
+			return
+		end
+
 		local mat = unitSpine.unitSpawn.spineRenderer:getReplaceMat()
 
 		MaterialUtil.setMainColor(mat, self._spineColor)

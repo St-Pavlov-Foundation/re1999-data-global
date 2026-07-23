@@ -118,6 +118,14 @@ function Rouge2_MapLayerRightView:initData()
 
 	self.layerCo = lua_rouge2_layer.configDict[selectLayerId]
 
+	if not self.layerCo then
+		self.nextLayerList = self.nextLayerList or {}
+
+		local middleLayerId = Rouge2_MapModel.instance:getMiddleLayerId()
+
+		logError(string.format("路线层配置不存在 curMiddleLayerId = %s, selectLayerId = %s, nextLayerList = %s, nextLayerLen = %s", middleLayerId, selectLayerId, table.concat(self.nextLayerList, "#"), self.nextLayerLen))
+	end
+
 	self:updateSelectIndex()
 end
 

@@ -4,22 +4,22 @@ module("modules.logic.rouge2.common.controller.Rouge2_IconHelper", package.seeal
 
 local Rouge2_IconHelper = class("Rouge2_IconHelper")
 
-function Rouge2_IconHelper.setItemIconAndRare(itemId, simageIcon, imageRare, rareIconType)
-	Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon)
+function Rouge2_IconHelper.setItemIconAndRare(itemId, simageIcon, imageRare, rareIconType, itemIconType)
+	Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon, itemIconType)
 	Rouge2_IconHelper.setGameItemRare(itemId, imageRare, rareIconType)
 end
 
-function Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon)
+function Rouge2_IconHelper.setGameItemIcon(itemId, simageIcon, itemIconType)
 	local itemType = Rouge2_BackpackHelper.itemId2BagType(itemId)
 
 	if itemType == Rouge2_Enum.BagType.Relics then
 		Rouge2_IconHelper.setRelicsIcon(itemId, simageIcon)
 	elseif itemType == Rouge2_Enum.BagType.Buff then
-		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon)
+		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon, itemIconType)
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
 		Rouge2_IconHelper.setActiveSkillIcon(itemId, simageIcon)
 	elseif itemType == Rouge2_Enum.BagType.AttrBuff then
-		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon)
+		Rouge2_IconHelper.setBuffIcon(itemId, simageIcon, itemIconType)
 	else
 		logError(string.format("肉鸽构筑物图标加载失败: 未定义的构筑物类型: itemId = %s, itemType = %s", itemId, itemType))
 	end
@@ -33,7 +33,7 @@ function Rouge2_IconHelper.setGameItemRare(itemId, imageRare, rareIconType)
 	elseif itemType == Rouge2_Enum.BagType.Buff then
 		Rouge2_IconHelper.setBuffRareIcon(itemId, imageRare, rareIconType)
 	elseif itemType == Rouge2_Enum.BagType.ActiveSkill then
-		gohelper.setActive(imageRare.gameObject, false)
+		Rouge2_IconHelper.setActiveSkillRareIcon(itemId, imageRare, rareIconType)
 	elseif itemType == Rouge2_Enum.BagType.AttrBuff then
 		Rouge2_IconHelper.setAttrBuffRareIcon(itemId, imageRare, rareIconType)
 	else
@@ -42,6 +42,12 @@ function Rouge2_IconHelper.setGameItemRare(itemId, imageRare, rareIconType)
 end
 
 function Rouge2_IconHelper.setAttributeIcon(attrId, imageIcon, suffix)
+	if not imageIcon then
+		logError("Rouge2_IconHelper.setAttributeIcon error imageIcon is nil")
+
+		return
+	end
+
 	if not attrId or string.nilorempty(attrId) or tonumber(attrId) == 0 then
 		gohelper.setActive(imageIcon.gameObject, false)
 
@@ -53,12 +59,6 @@ function Rouge2_IconHelper.setAttributeIcon(attrId, imageIcon, suffix)
 	local attrCo = Rouge2_AttributeConfig.instance:getAttributeConfig(attrId)
 
 	if not attrCo then
-		return
-	end
-
-	if not imageIcon then
-		logError("Rouge2_IconHelper.setAttributeIcon error imageIcon is nil")
-
 		return
 	end
 
@@ -156,8 +156,44 @@ function Rouge2_IconHelper.setAttrBuffRareIcon(attrBuffId, imageIcon, iconType)
 		imageIcon:LoadImage(ResUrl.getRouge2Icon("new/rouge2_new_rare_" .. rare))
 	elseif iconType == Rouge2_Enum.ItemRareIconType.TagBg then
 		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_1", rare))
+	elseif iconType == Rouge2_Enum.ItemRareIconType.CircleBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_3", rare))
 	else
 		logError(string.format("肉鸽未定义属性谐波品质图标类型 buffId = %s, iconType = %s", attrBuffId, iconType))
+	end
+end
+
+function Rouge2_IconHelper.setActiveSkillRareIcon(skillId, imageIcon, iconType)
+	local skillCo = Rouge2_BackpackHelper.getItemConfig(skillId)
+
+	if not skillCo then
+		return
+	end
+
+	if not imageIcon then
+		logError("Rouge2_IconHelper.setActiveSkillRareIcon error imageIcon is nil")
+
+		return
+	end
+
+	iconType = iconType or Rouge2_Enum.ItemRareIconType.Default
+
+	local rare = skillCo.rare
+
+	if iconType == Rouge2_Enum.ItemRareIconType.Default then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_2", rare), true)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.NameBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, "rouge2_new_rare_" .. rare, true)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.Bg then
+		imageIcon:LoadImage(ResUrl.getRouge2Icon("new/rouge2_new_rare_" .. rare .. "_2"))
+	elseif iconType == Rouge2_Enum.ItemRareIconType.TagBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_1", rare), true)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.CircleBg then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_3", rare), true)
+	elseif iconType == Rouge2_Enum.ItemRareIconType.CircleIcon then
+		UISpriteSetMgr.instance:setRouge8Sprite(imageIcon, string.format("rouge2_new_rare_%s_4", rare), true)
+	else
+		logError(string.format("肉鸽未定义主动技能品质图标类型 skillId = %s, iconType = %s", skillId, iconType))
 	end
 end
 
@@ -176,30 +212,32 @@ function Rouge2_IconHelper.setCareerIcon(careerId, imageIcon, suffix)
 
 	suffix = suffix or Rouge2_Enum.CareerIconSuffix.Tab
 
-	local iconName = string.format("%s%s", careerCo.icon, suffix)
+	if suffix == Rouge2_Enum.CareerIconSuffix.Bag then
+		local iconUrl = ResUrl.getRouge2Icon(string.format("backpack/%s%s", careerCo.icon, Rouge2_Enum.CareerIconSuffix.Bag))
 
-	UISpriteSetMgr.instance:setRouge6Sprite(imageIcon, iconName, true)
+		imageIcon:LoadImage(iconUrl)
+	else
+		local iconName = string.format("%s%s", careerCo.icon, suffix)
+
+		UISpriteSetMgr.instance:setRouge6Sprite(imageIcon, iconName, true)
+	end
 end
 
-function Rouge2_IconHelper.setResultCareerIcon(careerId, imageIcon)
+function Rouge2_IconHelper.setCareerName(careerId, txtName, setColor)
 	local careerCo = Rouge2_CareerConfig.instance:getCareerConfig(careerId)
 
 	if not careerCo then
 		return
 	end
 
-	if not imageIcon then
-		logError("Rouge2_IconHelper.setResultCareerIcon error imageIcon is nil")
+	txtName.text = careerCo and careerCo.name
 
-		return
+	if setColor then
+		SLFramework.UGUI.GuiHelper.SetColor(txtName, string.format("#%s", careerCo.nameColor))
 	end
-
-	local iconName = string.format("rouge2_career_icon_%s", careerId)
-
-	UISpriteSetMgr.instance:setRouge6Sprite(imageIcon, iconName, true)
 end
 
-function Rouge2_IconHelper.setBuffIcon(buffId, simageIcon)
+function Rouge2_IconHelper.setBuffIcon(buffId, simageIcon, iconType)
 	local buffCo = Rouge2_BackpackHelper.getItemConfig(buffId)
 
 	if not buffCo then
@@ -212,7 +250,9 @@ function Rouge2_IconHelper.setBuffIcon(buffId, simageIcon)
 		return
 	end
 
-	simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. buffCo.icon))
+	iconType = iconType or Rouge2_Enum.ItemIconType.Default
+
+	simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. buffCo.icon .. iconType))
 end
 
 function Rouge2_IconHelper.setBuffRareIcon(buffId, imageIcon, iconType)
@@ -314,20 +354,29 @@ function Rouge2_IconHelper.setSummonerTalentStageIcon(talentId, simageIcon)
 	simageIcon:LoadImage(ResUrl.getRouge2Icon("talent/" .. talentCo.petIcon))
 end
 
-function Rouge2_IconHelper.setTeamSystemIcon(systemId, simageIcon)
+function Rouge2_IconHelper.setTeamSystemIcon(systemId, simageIcon, imageBg, iconType)
 	local systemCo = Rouge2_CareerConfig.instance:getSystemConfig(systemId)
 
 	if not systemCo then
 		return
 	end
 
-	if not simageIcon then
-		logError("Rouge2_IconHelper.setTeamSystemIcon error simageIcon is nil")
+	iconType = iconType or Rouge2_Enum.SystemIconType.Black
 
-		return
+	if iconType == Rouge2_Enum.SystemIconType.Black then
+		simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. systemCo.icon .. "_1"))
+	elseif iconType == Rouge2_Enum.SystemIconType.White then
+		simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. systemCo.icon .. "_2"))
+
+		local imageIcon = gohelper.onceAddComponent(simageIcon.gameObject, gohelper.Type_Image)
+		local iconColor = string.format("#%s", systemCo.color or "FFFFFF")
+
+		SLFramework.UGUI.GuiHelper.SetColor(imageIcon, iconColor)
+
+		local bgColor = string.format("#%s", systemCo.bgColor or "FFFFFF")
+
+		SLFramework.UGUI.GuiHelper.SetColor(imageBg, bgColor)
 	end
-
-	simageIcon:LoadImage(ResUrl.getRouge2Icon("buff/" .. systemCo.icon))
 end
 
 function Rouge2_IconHelper.setTalentIcon(talentId, simageIcon)
@@ -492,6 +541,59 @@ function Rouge2_IconHelper.setRougeAchievementIcon(id, simageIcon)
 	end
 
 	simageIcon:LoadImage(ResUrl.getRouge2Icon("achieve/" .. config.icon))
+end
+
+function Rouge2_IconHelper.setResultAssessIcon(score, imageAssess, imageAssess2, imageAssessBg)
+	local assessCo = Rouge2_Config.instance:getAssessConfigByScore(score)
+	local iconName = assessCo and assessCo.spriteName or ""
+
+	UISpriteSetMgr.instance:setRouge7Sprite(imageAssess, string.format("%s_2", iconName), true)
+	UISpriteSetMgr.instance:setRouge7Sprite(imageAssess2, string.format("%s_3", iconName), true)
+
+	if imageAssessBg then
+		local iconBgName = assessCo and assessCo.spriteBgName or ""
+
+		UISpriteSetMgr.instance:setRouge7Sprite(imageAssessBg, iconBgName, true)
+	end
+end
+
+function Rouge2_IconHelper.setBossAssessIcon(score, simageAssess)
+	local assessCo = Rouge2_BossBattleConfig.instance:getAssessConfigByScore(score)
+	local hasAssess = assessCo ~= nil
+
+	gohelper.setActive(simageAssess.gameObject, hasAssess)
+
+	if not hasAssess then
+		return
+	end
+
+	simageAssess:LoadImage(ResUrl.getV1a4BossRushAssessIcon(assessCo.bossIcon))
+end
+
+function Rouge2_IconHelper.getScoreStr(num, symbol)
+	assert(num >= 0)
+
+	local a = math.modf(num / 10)
+	local b = math.fmod(num, 10)
+	local c = 1
+	local str = tostring(b)
+
+	symbol = symbol or ","
+
+	while a > 0 do
+		b = math.fmod(a, 10)
+
+		if c >= 3 then
+			str = symbol .. str
+			c = 0
+		end
+
+		str = tostring(b) .. str
+		a = math.modf(a / 10)
+		c = c + 1
+	end
+
+	return str
 end
 
 return Rouge2_IconHelper

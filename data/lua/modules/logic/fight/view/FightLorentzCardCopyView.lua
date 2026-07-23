@@ -113,7 +113,9 @@ function FightLorentzCardCopyView:createCardItem()
 
 		local img = gohelper.onceAddComponent(backBgRoot, gohelper.Type_Image)
 
-		UISpriteSetMgr.instance:setFightSkillCardSprite(img, "card_dz3", true)
+		if self.useSkin == 672801 then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(img, "card_dz3", true)
+		end
 
 		for i, starGo in ipairs(item.starList) do
 			local transform = starGo.transform
@@ -149,7 +151,7 @@ end
 function FightLorentzCardCopyView:onOpen()
 	local cardSkin = FightCardDataHelper.getCardSkin()
 
-	self.useSkin = cardSkin == 672801
+	self.useSkin = cardSkin
 
 	self:hideViewAndCopyNode()
 	self:refreshCardItem()
@@ -217,13 +219,13 @@ function FightLorentzCardCopyView:refreshCardItem()
 				gohelper.setActive(cardItem.goLvList[j], j == curLv)
 			end
 
-			local pre = self.useSkin and "v2a8_skin/attribute_" or "attribute_"
+			local pre = FightViewCardItem.attributePrefix[self.useSkin] or "attribute_"
 			local tagUrl = ResUrl.getAttributeIcon(pre .. skillCo.showTag)
 
 			cardItem.tag:LoadImage(tagUrl)
 
-			local tagWidth = self.useSkin and 180 or 168
-			local tagHeight = self.useSkin and 64 or 56
+			local tagWidth = FightViewCardItem.cardTagWidth[self.useSkin] or 168
+			local tagHeight = FightViewCardItem.cardTagHeight[self.useSkin] or 56
 
 			recthelper.setSize(cardItem.tagTransform, tagWidth, tagHeight)
 		end

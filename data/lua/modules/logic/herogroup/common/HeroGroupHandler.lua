@@ -12,7 +12,8 @@ HeroGroupHandler.EpisodeTypeDict = {
 	[DungeonEnum.EpisodeType.TowerDeep] = 1,
 	[DungeonEnum.EpisodeType.Act183] = 1,
 	[DungeonEnum.EpisodeType.Survival] = 1,
-	[DungeonEnum.EpisodeType.Shelter] = 1
+	[DungeonEnum.EpisodeType.Shelter] = 1,
+	[DungeonEnum.EpisodeType.Rouge2] = 1
 }
 
 function HeroGroupHandler.checkIsEpisodeType(episodeType)
@@ -147,6 +148,21 @@ function HeroGroupHandler.getAbyssSnapShot()
 	}
 end
 
+function HeroGroupHandler.getRouge2Snapshot()
+	return ModuleEnum.HeroGroupSnapshotType.Rouge2, {
+		1
+	}
+end
+
+function HeroGroupHandler.getAtomicDungeonSnapshot()
+	return ModuleEnum.HeroGroupSnapshotType.AtomicDungeon, {
+		1,
+		2,
+		3,
+		4
+	}
+end
+
 HeroGroupHandler.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.getTowerPermanentSnapShot,
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerBossSnapShot,
@@ -156,7 +172,9 @@ HeroGroupHandler.getSnapShotHandleFunc = {
 	[DungeonEnum.EpisodeType.Act183] = HeroGroupHandler.getAct183SnapShot,
 	[DungeonEnum.EpisodeType.Shelter] = HeroGroupHandler.getShelterSnapShot,
 	[DungeonEnum.EpisodeType.Survival] = HeroGroupHandler.getSurvivalSnapShot,
-	[DungeonEnum.EpisodeType.Abyss] = HeroGroupHandler.getAbyssSnapShot
+	[DungeonEnum.EpisodeType.Abyss] = HeroGroupHandler.getAbyssSnapShot,
+	[DungeonEnum.EpisodeType.Rouge2] = HeroGroupHandler.getRouge2Snapshot,
+	[DungeonEnum.EpisodeType.AtomicDungeon] = HeroGroupHandler.getAtomicDungeonSnapshot
 }
 
 function HeroGroupHandler.getSnapShot(episodeId)
@@ -180,23 +198,74 @@ function HeroGroupHandler.getTowerTrialHeros(episodeId)
 	return trialConfig and trialConfig.heroIds
 end
 
-function HeroGroupHandler.getTowerComposeTrialHeros(episodeId)
-	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
-	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(recordFightParam.themeId, recordFightParam.layerId)
+function HeroGroupHandler.getTowerPermanentTrialHeros(episodeId)
+	local fightParam = TowerModel.instance:getRecordFightParam()
+	local permanentCo = TowerConfig.instance:getPermanentEpisodeCo(fightParam.layerId)
 
-	if towerEpisodeConfig then
-		return HeroGroupHandler.getTowerTrialHeros(episodeId)
+	if permanentCo then
+		local trialHeroList = TowerConfig.instance:getStageTrialHeroList(permanentCo.stageId)
+
+		return table.concat(trialHeroList, "|")
 	end
 
 	return ""
 end
 
+function HeroGroupHandler.getTowerBossTrialHeros(episodeId)
+	local bossHeroTrialStr = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossHeroTrialList)
+
+	return bossHeroTrialStr or ""
+end
+
+function HeroGroupHandler.getTowerDeepTrialHeros(episodeId)
+	local trialHeroList = TowerDeepConfig.instance:getHeroTrialList(episodeId)
+
+	return #trialHeroList > 0 and table.concat(trialHeroList, "|") or ""
+end
+
+function HeroGroupHandler.getTowerComposeTrialHeros(episodeId)
+	local recordFightParam = TowerComposeModel.instance:getRecordFightParam()
+	local towerEpisodeConfig = TowerComposeConfig.instance:getEpisodeConfig(recordFightParam.themeId, recordFightParam.layerId)
+
+	if towerEpisodeConfig then
+		local trialHeroList = TowerComposeConfig.instance:getThemeTrialHeroList(recordFightParam.themeId)
+
+		return #trialHeroList > 0 and table.concat(trialHeroList, "|") or ""
+	end
+
+	return ""
+end
+
+function HeroGroupHandler.getRouge2TrialHeros(episodeId)
+	local trialInfoList = Rouge2_BackpackController.instance:getActiveSkillTrialHeroList()
+
+	if not trialInfoList or #trialInfoList <= 0 then
+		return ""
+	end
+
+	local trialStrList = {}
+
+	for _, trialInfo in ipairs(trialInfoList) do
+		local trialStr = table.concat(trialInfo, "#")
+
+		table.insert(trialStrList, trialStr)
+	end
+
+	return table.concat(trialStrList, "|")
+end
+
+function HeroGroupHandler.getRouge2BossTrialHeros(episodeId)
+	return Rouge2_BossBattleController.instance:getCurSaveTrialHeroIdStr() or ""
+end
+
 HeroGroupHandler.getTrialHerosHandleFunc = {
-	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.getTowerTrialHeros,
-	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerTrialHeros,
+	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.getTowerPermanentTrialHeros,
+	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.getTowerBossTrialHeros,
 	[DungeonEnum.EpisodeType.TowerLimited] = HeroGroupHandler.getTowerTrialHeros,
-	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.getTowerTrialHeros,
-	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeTrialHeros
+	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.getTowerDeepTrialHeros,
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.getTowerComposeTrialHeros,
+	[DungeonEnum.EpisodeType.Rouge2] = HeroGroupHandler.getRouge2TrialHeros,
+	[DungeonEnum.EpisodeType.Rouge2Boss] = HeroGroupHandler.getRouge2BossTrialHeros
 }
 
 function HeroGroupHandler.getTrialHeros(episodeId)
@@ -232,9 +301,9 @@ function HeroGroupHandler.setTowerHeroListData(episodeId, groupMO)
 					trialHeroId = heroMO.trialCo.id
 				end
 
-				local haveTrialHero = TowerModel.instance:getTrialHeroSeason() > 0
-				local heroTrialConfig = TowerConfig.instance:getHeroTrialConfig(TowerModel.instance:getTrialHeroSeason())
-				local trialHeroList = haveTrialHero and string.splitToNumber(heroTrialConfig.heroIds, "|") or {}
+				local haveTrialHero = true
+				local trialHeroIds = HeroGroupHandler.getTrialHeros(episodeId)
+				local trialHeroList = haveTrialHero and string.splitToNumber(trialHeroIds, "|") or {}
 				local isHeroOnline = haveTrialHero and tabletool.indexOf(trialHeroList, trialHeroId) and tonumber(trialHeroId) > 0
 				local trialCo = isHeroOnline and lua_hero_trial.configDict[trialHeroId][0] or {}
 				local trialHeroUid = isHeroOnline and tostring(tonumber(trialCo.id .. "." .. trialCo.trialTemplate) - 1099511627776) or "0"
@@ -257,12 +326,47 @@ function HeroGroupHandler.setTowerHeroListData(episodeId, groupMO)
 	end
 end
 
+function HeroGroupHandler.setRouge2HeroListData(episodeId)
+	local groupMO = HeroGroupSnapshotModel.instance:getCurGroup()
+
+	if not groupMO or not groupMO.heroList then
+		return
+	end
+
+	for index, heroId in ipairs(groupMO.heroList) do
+		if tonumber(heroId) < 0 then
+			local trialHeroId = -tonumber(heroId)
+			local heroMO = HeroGroupTrialModel.instance:getById(heroId)
+
+			if heroMO then
+				trialHeroId = heroMO.trialCo.id
+			end
+
+			local isHeroOnline = Rouge2_BackpackController.instance:isHasTrialHero(trialHeroId)
+			local trialCo = isHeroOnline and lua_hero_trial.configDict[trialHeroId][0] or {}
+			local trialHeroUid = isHeroOnline and HeroGroupHandler.getTrialHeroUID(trialCo.id, trialCo.trialTemplate) or "0"
+
+			groupMO.heroList[index] = trialHeroUid
+
+			if isHeroOnline then
+				groupMO.trialDict = groupMO.trialDict or {}
+				groupMO.trialDict[index] = groupMO.trialDict[index] or {}
+				groupMO.trialDict[index][1] = trialCo.id
+			elseif groupMO.trialDict and groupMO.trialDict[index] then
+				groupMO.trialDict[index] = nil
+			end
+		end
+	end
+end
+
 HeroGroupHandler.getHeroListDataHandlerFunc = {
 	[DungeonEnum.EpisodeType.TowerPermanent] = HeroGroupHandler.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerBoss] = HeroGroupHandler.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerLimited] = HeroGroupHandler.setTowerHeroListData,
 	[DungeonEnum.EpisodeType.TowerDeep] = HeroGroupHandler.setTowerHeroListData,
-	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.setTowerHeroListData
+	[DungeonEnum.EpisodeType.TowerCompose] = HeroGroupHandler.setTowerHeroListData,
+	[DungeonEnum.EpisodeType.Rouge2] = HeroGroupHandler.setRouge2HeroListData,
+	[DungeonEnum.EpisodeType.AtomicDungeon] = HeroGroupHandler.setTowerHeroListData
 }
 
 function HeroGroupHandler.hanldeHeroListData(episodeId)

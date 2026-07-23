@@ -64,7 +64,7 @@ function Rouge2_MapCareerTransferView:_onSelectTransferCareer(careerCo)
 
 	gohelper.CreateNumObjList(self._goDifficultyList, self._goDifficultyItem, difficulty)
 
-	local recommendAttrIdList = Rouge2_CareerConfig.instance:getCareerRecommendAttributeIds(careerCo.id)
+	local recommendAttrIdList = Rouge2_CareerConfig.instance:getCareerRecommendAttrList(careerCo.id)
 
 	gohelper.CreateObjList(self, self._refreshRecommendAttrItem, recommendAttrIdList, self._goRecommendAttrList, self._goRecommendAttrItem)
 end

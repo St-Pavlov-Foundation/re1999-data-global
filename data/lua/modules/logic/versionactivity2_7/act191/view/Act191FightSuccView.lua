@@ -9,8 +9,8 @@ function Act191FightSuccView:onInitView()
 	self._simagecharacterbg = gohelper.findChildSingleImage(self.viewGO, "#go_Left/#simage_characterbg")
 	self._goSpine = gohelper.findChild(self.viewGO, "#go_Left/spineContainer/#go_Spine")
 	self._simagemaskImage = gohelper.findChildSingleImage(self.viewGO, "#go_Left/#simage_maskImage")
-	self._txtSayCn = gohelper.findChildText(self.viewGO, "#go_Left/#txt_SayCn")
-	self._txtSayEn = gohelper.findChildText(self.viewGO, "#go_Left/SayEn/#txt_SayEn")
+	self._txtSayCn = gohelper.findChildText(self.viewGO, "#go_Left/layout/txtSayCn")
+	self._txtSayEn = gohelper.findChildText(self.viewGO, "#go_Left/layout/txtSayEn")
 	self._goRight = gohelper.findChild(self.viewGO, "#go_Right")
 	self._goWin = gohelper.findChild(self.viewGO, "#go_Right/#go_Win")
 	self._goFail = gohelper.findChild(self.viewGO, "#go_Right/#go_Fail")
@@ -59,14 +59,18 @@ end
 function Act191FightSuccView:onOpen()
 	self.actInfo = Activity191Model.instance:getActInfo()
 	self.gameInfo = self.actInfo:getGameInfo()
+	self.nodeInfo = self.actInfo.lastNodeInfo
 
-	if self.gameInfo.state == Activity191Enum.GameState.End then
-		self.curNode = self.gameInfo.curNode
-	else
-		self.curNode = self.gameInfo.curNode - 1
+	if not self.nodeInfo then
+		logError("缓存节点信息数据异常")
+
+		return
 	end
 
-	self.nodeInfo = self.gameInfo:getNodeInfoById(self.curNode)
+	self.nodeDetailMo = Act191NodeDetailMO.New()
+
+	self.nodeDetailMo:init(self.nodeInfo.nodeStr)
+
 	self.isWin = self.viewParam
 
 	if self.isWin then
@@ -100,14 +104,17 @@ function Act191FightSuccView:onOpen()
 	local nodeInfoList = self.gameInfo:getStageNodeInfoList(self.nodeInfo.stage)
 
 	for k, v in ipairs(nodeInfoList) do
-		if v.nodeId == self.curNode then
-			local stageCo = lua_activity191_stage.configDict[self.actId][v.stage]
+		if v.nodeId == self.nodeInfo.nodeId then
+			local stageCo = Activity191Config.instance:getStageCfg(self.actId, v.stage)
 
-			self._txtStage.text = string.format("<#FAB459>%s</color>-%d", stageCo.name, k)
+			if stageCo then
+				self._txtStage.text = string.format("<#FAB459>%s</color>-%d", stageCo.name, k)
+			end
+
+			break
 		end
 	end
 
-	self.nodeDetailMo = self.gameInfo:getNodeDetailMo(self.curNode)
 	self.isPvp = Activity191Helper.isPvpBattle(self.nodeDetailMo.type)
 	self.isPve = Activity191Helper.isPveBattle(self.nodeDetailMo.type)
 
@@ -155,12 +162,13 @@ function Act191FightSuccView:onClose()
 	self._canPlayVoice = false
 
 	gohelper.setActive(self._goSpine, false)
-	FightController.onResultViewClose()
 	Act191StatController.instance:statGameTime(self.viewName)
+	FightController.onResultViewClose()
 end
 
 function Act191FightSuccView:onDestroyView()
 	TaskDispatcher.cancelTask(self._setCanPlayVoice, self)
+	self.actInfo:clearLastNodeInfo()
 end
 
 function Act191FightSuccView:_getRandomEntityMO()

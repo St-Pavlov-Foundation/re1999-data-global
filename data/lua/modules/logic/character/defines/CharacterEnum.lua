@@ -215,5 +215,30 @@ setmetatable(CharacterEnum.TalentTxtByHeroType, {
 })
 
 CharacterEnum.HumanHeroType = 6
+CharacterEnum.DeviceViewType = {
+	HeroGroupEditView = 2,
+	CharacterView = 1
+}
+CharacterEnum.DeviceViewParam = {
+	[CharacterEnum.DeviceViewType.CharacterView] = {
+		OpenAniName = "characterview_open"
+	},
+	[CharacterEnum.DeviceViewType.HeroGroupEditView] = {
+		OpenAniName = "herogroupeditview_open"
+	}
+}
+CharacterEnum.SkinRare = {
+	Common = 1,
+	Garment = 3,
+	Good = 2,
+	Unique = 5,
+	Advanced = 4,
+	None = 0
+}
+CharacterEnum.TwinssychubeEquip = {
+	1571,
+	1572
+}
+CharacterEnum.TwinssychubeHeroId = 3149
 
 return CharacterEnum

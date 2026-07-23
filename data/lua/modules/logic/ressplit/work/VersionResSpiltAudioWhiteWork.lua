@@ -17,7 +17,7 @@ local _GameCfgAudioWhiteList = {
 }
 
 function VersionResSpiltAudioWhiteWork:onStart(context)
-	logError(string.format("VersionResSpiltAudioWhiteWork:onStart(context) =====>"))
+	logNormal(string.format("VersionResSpiltAudioWhiteWork:onStart(context) =====>"))
 
 	local allAudioDic = AudioConfig.instance:getAudioCO()
 	local audioIdWhiteDic = self:_getAuidoIdWhiteListDict() or {}
@@ -76,7 +76,41 @@ function VersionResSpiltAudioWhiteWork:_getAuidoIdWhiteListDict()
 		end
 	end
 
+	self:_addHeroStoryPlot(audioIdWhiteDic)
+
 	return audioIdWhiteDic
+end
+
+function VersionResSpiltAudioWhiteWork:_addHeroStoryPlot(whiteDic)
+	local cfgList = lua_hero_story_plot.configList
+	local audioCtl = {
+		[NecrologistStoryEnum.StoryControlType.Bgm] = true,
+		[NecrologistStoryEnum.StoryControlType.Audio] = true,
+		[NecrologistStoryEnum.StoryControlType.StopAudio] = true
+	}
+
+	if whiteDic and cfgList and #cfgList > 0 then
+		for i = 1, #cfgList do
+			local cfg = cfgList[i]
+
+			if cfg and not string.nilorempty(cfg.addControl) and not string.nilorempty(cfg.controlParam) then
+				local ctlIds = string.splitToNumber(cfg.addControl, "|")
+				local params = string.split(cfg.controlParam, "|")
+
+				if ctlIds and params then
+					for idx, ctlId in ipairs(ctlIds) do
+						if audioCtl[ctlId] and params[idx] and not string.nilorempty(params[idx]) then
+							local audioParams = string.splitToNumber(params[idx], "#")
+
+							if audioParams and audioParams[1] then
+								whiteDic[audioParams[1]] = true
+							end
+						end
+					end
+				end
+			end
+		end
+	end
 end
 
 function VersionResSpiltAudioWhiteWork._gameCfgWhiteSplitToNumber(whiteDic, res, separation)

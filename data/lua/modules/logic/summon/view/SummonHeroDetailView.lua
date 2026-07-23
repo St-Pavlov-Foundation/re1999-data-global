@@ -114,7 +114,9 @@ function SummonHeroDetailView:_btnuniqueSkillOnClick()
 end
 
 function SummonHeroDetailView:_btnrecommedOnClick()
-	CharacterRecommedController.instance:openRecommedView(self._heroId, self.viewName)
+	local sourceFromViewName = self._fromViewName or self.viewName
+
+	CharacterRecommedController.instance:openRecommedView(self._heroId, sourceFromViewName, nil, self._hideTab)
 end
 
 function SummonHeroDetailView:_onDelayRefeshSkill()
@@ -135,7 +137,11 @@ function SummonHeroDetailView:_editableInitView()
 		self["_gostar" .. i] = gohelper.findChild(self._gostarList, "star" .. i)
 	end
 
-	self._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(self._goskill, CharacterSkillContainer)
+	local param = {
+		deviceType = 2
+	}
+
+	self._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(self._goskill, CharacterSkillContainer, param)
 	self._attributevalues = {}
 
 	for i = 1, 5 do
@@ -182,6 +188,8 @@ function SummonHeroDetailView:_refreshUI()
 
 		isShowRecommed = isShowRecommedView and not isFormRecommedView
 	end
+
+	isShowRecommed = isShowRecommed or self._isShowRecommed and true or false
 
 	gohelper.setActive(self._btnrecommed.gameObject, isShowRecommed)
 end
@@ -420,6 +428,9 @@ function SummonHeroDetailView:_onImageLoaded()
 end
 
 function SummonHeroDetailView:_initViewParam()
+	self._hideTab = self.viewParam.hideTab
+	self._fromViewName = self.viewParam.fromView
+	self._isShowRecommed = self.viewParam.isShowRecommed
 	self._characterDetailId = self.viewParam.id
 	self._heroId = self.viewParam.heroId
 	self._skinId = self.viewParam.skinId
@@ -475,11 +486,13 @@ end
 function SummonHeroDetailView:onUpdateParam()
 	self:_initViewParam()
 	self:_refreshUI()
+	self:_statEnterView(self._heroId)
 end
 
 function SummonHeroDetailView:onOpen()
 	self:_initViewParam()
 	self:_refreshUI()
+	self:_statEnterView(self._heroId)
 end
 
 function SummonHeroDetailView:onClose()
@@ -489,6 +502,19 @@ end
 function SummonHeroDetailView:onDestroyView()
 	self._simageredlight:UnLoadImage()
 	self._simagebg:UnLoadImage()
+end
+
+function SummonHeroDetailView:_statEnterView(heroId)
+	if self._lasHeroId == heroId then
+		return
+	end
+
+	self._lasHeroId = heroId
+
+	local heroCfg = HeroConfig.instance:getHeroCO(heroId)
+	local chineseViewNameStr = (StatViewNameEnum.ChineseViewName[self.viewName] or self.viewName) .. "-" .. (heroCfg and heroCfg.name or "")
+
+	StatViewController.instance:trackViewName(chineseViewNameStr)
 end
 
 return SummonHeroDetailView

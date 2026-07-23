@@ -107,6 +107,7 @@ function FightWorkPlayStart:_buildFocusBorn(flow)
 	flow:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)
 	end))
+	flow:addWork(FightWorkSystemFightNoticeView.New())
 
 	if FightController.instance:canOpenRoundView() then
 		flow:addWork(FightWorkBeforeStartNoticeView.New())
@@ -155,6 +156,8 @@ function FightWorkPlayStart:_buildNormalBorn(flow)
 			flow:addWork(work)
 		end
 	end
+
+	flow:addWork(FightWorkSystemFightNoticeView.New())
 
 	if FightController.instance:canOpenRoundView() then
 		flow:addWork(FightWorkBeforeStartNoticeView.New())

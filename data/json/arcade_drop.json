@@ -460,5 +460,47 @@
     "resourcedrop": "",
     "collectiondrop": "1000:16005",
     "characterunlock": 0
+  },
+  {
+    "id": 10011,
+    "resourcedrop": "",
+    "collectiondrop": "1000:10011",
+    "characterunlock": 0
+  },
+  {
+    "id": 10012,
+    "resourcedrop": "",
+    "collectiondrop": "1000:10012",
+    "characterunlock": 0
+  },
+  {
+    "id": 10013,
+    "resourcedrop": "",
+    "collectiondrop": "1000:10013",
+    "characterunlock": 0
+  },
+  {
+    "id": 10004,
+    "resourcedrop": "",
+    "collectiondrop": "1000:10004",
+    "characterunlock": 0
+  },
+  {
+    "id": 21013,
+    "resourcedrop": "",
+    "collectiondrop": "1000:21013",
+    "characterunlock": 0
+  },
+  {
+    "id": 106,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 106
+  },
+  {
+    "id": 107,
+    "resourcedrop": "",
+    "collectiondrop": "",
+    "characterunlock": 107
   }
 ]

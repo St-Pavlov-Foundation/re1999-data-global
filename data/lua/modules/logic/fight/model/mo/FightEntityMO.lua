@@ -114,6 +114,7 @@ function FightEntityMO:init(info, side)
 	self.career = info.career
 
 	self:updateStoredExPoint()
+	self:updateStoredDeviceExPoint()
 
 	self.status = info.status
 	self.guard = info.guard
@@ -132,6 +133,12 @@ function FightEntityMO:init(info, side)
 	self.toughnessValue = info.toughnessValue
 	self.toughnessPoint = info.toughnessPoint
 	self.isBroken = info.isBroken
+	self.exPointMax = info.exPointMax
+end
+
+function FightEntityMO:onStageChanged(curStage, preStage)
+	self:updateStoredDeviceExPoint()
+	self:updateStoredExPoint()
 end
 
 function FightEntityMO:_buildAttr(attr)
@@ -670,7 +677,7 @@ function FightEntityMO:hasBuffActId(buffActId)
 		if featuresSplit then
 			for _, oneFeature in ipairs(featuresSplit) do
 				if oneFeature[1] == buffActId then
-					return true
+					return true, buffMO
 				end
 			end
 		end
@@ -832,7 +839,7 @@ end
 function FightEntityMO:updateStoredExPoint()
 	self.storedExPoint = 0
 
-	for _, buffMo in ipairs(self:getBuffList()) do
+	for _, buffMo in pairs(self:getBuffDic()) do
 		local params = buffMo.actCommonParams
 
 		if not string.nilorempty(params) then
@@ -862,6 +869,49 @@ end
 
 function FightEntityMO:hadStoredExPoint()
 	return self.storedExPoint > 0
+end
+
+function FightEntityMO:updateStoredDeviceExPoint()
+	self.storedDeviceExPoint = 0
+
+	self:logStoredDeviceExPoint("update Stored Device Ex Point")
+
+	local targetId = FightEnum.BuffActId.DeviceExPointOverflowBank
+
+	for _, buffMo in pairs(self:getBuffDic()) do
+		for _, actInfo in ipairs(buffMo.actInfo) do
+			if actInfo.actId == targetId then
+				self:changeStoredDeviceExPoint(actInfo.param[1])
+			end
+		end
+	end
+end
+
+function FightEntityMO:setStoredDeviceExPoint(num)
+	self:logStoredDeviceExPoint("setStoredDeviceExPoint .." .. num)
+
+	self.storedDeviceExPoint = num
+end
+
+function FightEntityMO:changeStoredDeviceExPoint(offsetNum)
+	self:logStoredDeviceExPoint(string.format("changeStoredDeviceExPoint .. before %s, after %s", self.storedDeviceExPoint, self.storedDeviceExPoint + offsetNum))
+
+	self.storedDeviceExPoint = self.storedDeviceExPoint + offsetNum
+end
+
+function FightEntityMO:logStoredDeviceExPoint(msg)
+	if isDebugBuild then
+		logNormal(string.format("[device store ex point][%s] %s", self:getEntityName(), msg))
+		logNormal(string.format("[device store ex point][%s] %s", self:getEntityName(), debug.traceback()))
+	end
+end
+
+function FightEntityMO:getStoredDeviceExPoint()
+	return self.storedDeviceExPoint
+end
+
+function FightEntityMO:hadStoredDeviceExPoint()
+	return self.storedDeviceExPoint > 0
 end
 
 function FightEntityMO:getResistanceDict()
@@ -964,6 +1014,10 @@ function FightEntityMO:getASFDCareer()
 end
 
 function FightEntityMO:getConfigMaxExPoint()
+	if self.exPointMax and self.exPointMax > 0 then
+		return self.exPointMax
+	end
+
 	if self.configMaxExPoint then
 		return self.configMaxExPoint
 	end
@@ -1032,7 +1086,122 @@ function FightEntityMO:initSkin(info)
 		end
 	end
 
+	if string.sub(skin, 1, 4) == "3120" and lua_skin.configDict[skin] then
+		local showLevel, rank = HeroConfig.instance:getShowLevel(info.level)
+
+		if rank then
+			rank = rank - 1
+
+			if rank < 2 then
+				skin = 312001
+			end
+		end
+	end
+
 	return skin
+end
+
+function FightEntityMO:getHeroExtraMo()
+	if self.trialId and self.trialId > 0 then
+		local trialCo = lua_hero_trial.configDict[self.trialId][0]
+
+		if trialCo then
+			local extraStr = trialCo.extraStr
+
+			if not string.nilorempty(extraStr) then
+				local config = HeroConfig.instance:getHeroCO(self.modelId)
+				local heroMo = HeroMo.New()
+
+				heroMo:init(trialCo, config)
+
+				self.extraMo = self.extraMo or CharacterExtraMO.New(heroMo)
+
+				self.extraMo:refreshMo(extraStr)
+			end
+		end
+	else
+		local heroMo = HeroModel.instance:getByHeroId(self.modelId)
+
+		self.extraMo = heroMo and heroMo.extraMo
+	end
+
+	return self.extraMo
+end
+
+function FightEntityMO:checkReplaceSkill(skillIdList)
+	if skillIdList then
+		local destinyStoneMo = self:getHeroDestinyStoneMo()
+
+		if destinyStoneMo then
+			skillIdList = destinyStoneMo:_replaceSkill(skillIdList)
+		end
+
+		local extraMo = self:getHeroExtraMo()
+
+		if extraMo then
+			skillIdList = extraMo:getReplaceSkills(skillIdList)
+		end
+	end
+
+	return skillIdList
+end
+
+function FightEntityMO:getDeviceMo()
+	if self.trialId and self.trialId > 0 then
+		local deviceId = self:getTrialDeviceId()
+
+		if deviceId and deviceId > 0 then
+			self.deviceMo = self.deviceMo or HeroDeviceMO.New(self.modelId)
+
+			self.deviceMo:refreshDevice(deviceId)
+		end
+	else
+		local heroMo = HeroModel.instance:getByHeroId(self.modelId)
+
+		self.deviceMo = SkillConfig.instance:getHeroDeviceMO(self.modelId, heroMo)
+	end
+
+	return self.deviceMo
+end
+
+function FightEntityMO:getTrialDeviceId()
+	if not self.trialId or self.trialId == 0 then
+		return
+	end
+
+	local trialCo = lua_hero_trial.configDict[self.trialId][0]
+	local destinyStoneMo = self:getHeroDestinyStoneMo()
+
+	if destinyStoneMo then
+		local exSkillCo = destinyStoneMo:getExpExchangeSkillCo(trialCo.exSkillLv)
+
+		if exSkillCo and exSkillCo.deviceId > 0 then
+			return exSkillCo.deviceId
+		end
+
+		local stoneCo = destinyStoneMo:getCurUseStoneCo()
+
+		if stoneCo and not string.nilorempty(stoneCo.deviceAdd) then
+			local devices = GameUtil.splitString2(stoneCo.deviceAdd, true)
+
+			for _, v in pairs(devices) do
+				if v[1] == self.exSkillLevel then
+					return
+				end
+			end
+		end
+	end
+
+	local exSkillCos = SkillConfig.instance:getheroexskillco(self.modelId)
+	local exSkillCo = exSkillCos and exSkillCos[self.exSkillLevel]
+
+	if exSkillCo and exSkillCo.deviceId > 0 then
+		return exSkillCo.deviceId
+	end
+
+	local heroCo = HeroConfig.instance:getHeroCO(self.modelId)
+
+	return heroCo and heroCo.deviceId
 end
 
 function FightEntityMO:getEquipMo()
@@ -1096,8 +1265,16 @@ function FightEntityMO:getHpAndShieldFillAmount(hp, shield)
 	shieldPercent = shieldPercent * maxHpLockRate
 
 	local realHpPercent, fictionHpPercent = self:getHpPercentAndFictionHpPercent(hpPercent, currHp)
+	local fakeHp = self:getFakeHp()
+	local fakeHpPercent = fakeHp < 0 and 0 or Mathf.Clamp01(fakeHp / lockedMaxHp)
 
-	return realHpPercent, shieldPercent, fictionHpPercent
+	if fakeHpPercent > 0 then
+		fakeHpPercent = fakeHpPercent + shieldPercent
+	else
+		fakeHpPercent = 0
+	end
+
+	return realHpPercent, shieldPercent, fictionHpPercent, fakeHpPercent
 end
 
 function FightEntityMO:getHpPercentAndFictionHpPercent(hpPercent, currHp)
@@ -1118,12 +1295,14 @@ function FightEntityMO:getHpPercentAndFictionHpPercent(hpPercent, currHp)
 end
 
 function FightEntityMO:getFictionHp()
+	local actId = FightEnum.BuffActId.FictionHp
+
 	for _, buffMo in pairs(self.buffDic) do
 		local actInfo = buffMo.actInfo
 
 		if actInfo then
 			for _, buffActInfo in pairs(actInfo) do
-				if buffActInfo.actId == FightEnum.BuffActId.FictionHp then
+				if buffActInfo.actId == actId then
 					local fictionHp = buffActInfo.param[1]
 
 					return fictionHp or -1
@@ -1135,49 +1314,24 @@ function FightEntityMO:getFictionHp()
 	return -1
 end
 
-function FightEntityMO:getHeroExtraMo()
-	if self.trialId and self.trialId > 0 then
-		local trialCo = lua_hero_trial.configDict[self.trialId][0]
+function FightEntityMO:getFakeHp()
+	local actId = FightEnum.BuffActId.LostHpToFakeHp
 
-		if trialCo then
-			local extraStr = trialCo.extraStr
+	for _, buffMo in pairs(self.buffDic) do
+		local actInfo = buffMo.actInfo
 
-			if not string.nilorempty(extraStr) then
-				local config = HeroConfig.instance:getHeroCO(self.modelId)
-				local heroMo = HeroMo.New()
+		if actInfo then
+			for _, buffActInfo in pairs(actInfo) do
+				if buffActInfo.actId == actId then
+					local fakeHp = buffActInfo.param[1]
 
-				heroMo:init(trialCo, config)
-
-				self.extraMo = self.extraMo or CharacterExtraMO.New(heroMo)
-
-				self.extraMo:refreshMo(extraStr)
+					return fakeHp or -1
+				end
 			end
 		end
-	else
-		local heroMo = HeroModel.instance:getByHeroId(self.modelId)
-
-		self.extraMo = heroMo and heroMo.extraMo
 	end
 
-	return self.extraMo
-end
-
-function FightEntityMO:checkReplaceSkill(skillIdList)
-	if skillIdList then
-		local destinyStoneMo = self:getHeroDestinyStoneMo()
-
-		if destinyStoneMo then
-			skillIdList = destinyStoneMo:_replaceSkill(skillIdList)
-		end
-
-		local extraMo = self:getHeroExtraMo()
-
-		if extraMo then
-			skillIdList = extraMo:getReplaceSkills(skillIdList)
-		end
-	end
-
-	return skillIdList
+	return -1, -1
 end
 
 function FightEntityMO:set_position(key, position)

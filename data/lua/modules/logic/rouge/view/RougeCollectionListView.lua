@@ -181,7 +181,11 @@ function RougeCollectionListView:_onScrollChange()
 		end
 	end
 
-	curType = curType or model:getFirstType() or typeList[1].type
+	if not curType then
+		local firstType = typeList[1] and typeList[1].type
+
+		curType = model:getFirstType() or firstType
+	end
 
 	local showTitle = curType ~= nil and #RougeCollectionListModel.instance:getList() > 0
 

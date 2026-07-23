@@ -37,7 +37,7 @@ function ArcadeSkillHitRemoveBuff:onHitPrintLog()
 	if unitMOList and #unitMOList > 0 then
 		local target = unitMOList[1]
 
-		logNormal(string.format("%s ==> 添加目标一个特定BUFF:%s  type:%s id:%s uid:%s", self:getLogPrefixStr(), self._buffId, target:getEntityType(), target:getUid(), target:getId()))
+		logNormal(string.format("%s ==> 添加目标一个特定BUFF:%s  type:%s id:%s uid:%s", self:getLogPrefixStr(), self._buffId, target:getEntityType(), target:getId(), target:getUid()))
 	end
 end
 

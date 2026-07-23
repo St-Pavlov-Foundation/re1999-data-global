@@ -33,6 +33,7 @@ function GMSubViewBase:onInitView()
 end
 
 function GMSubViewBase:_editableInitView()
+	self._goTitles = self:getUserDataTb_()
 	self._horizontalGroups = self:getUserDataTb_()
 	self._buttons = self:getUserDataTb_()
 	self._inputTexts = self:getUserDataTb_()
@@ -483,6 +484,9 @@ function GMSubViewBase:addTitleSplitLine(title)
 	titleText.text = title
 
 	gohelper.setActive(titleText.gameObject, not string.nilorempty(title))
+	table.insert(self._goTitles, titleSplitLineGo)
+
+	return titleSplitLineGo
 end
 
 function GMSubViewBase._setGraphicsColor(graphicsComnp, params)

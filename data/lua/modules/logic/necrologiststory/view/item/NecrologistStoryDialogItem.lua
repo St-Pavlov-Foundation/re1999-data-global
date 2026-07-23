@@ -5,11 +5,11 @@ module("modules.logic.necrologiststory.view.item.NecrologistStoryDialogItem", pa
 local NecrologistStoryDialogItem = class("NecrologistStoryDialogItem", NecrologistStoryTextItem)
 
 function NecrologistStoryDialogItem:onInit()
+	NecrologistStoryDialogItem.super.onInit(self)
+
 	self.heroBg = gohelper.findChild(self.viewGO, "descer/herobg")
 	self.npcBg = gohelper.findChild(self.viewGO, "descer/npcbg")
 	self.txtDescer = gohelper.findChildTextMesh(self.viewGO, "descer/txtDescer")
-	self.txtContent = gohelper.findChildTextMesh(self.viewGO, "content/txtContent")
-	self.txtComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtContent.gameObject, NecrologistStoryTextComp)
 	self.space = 62
 end
 

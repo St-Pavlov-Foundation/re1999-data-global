@@ -171,6 +171,25 @@ function ActivityBeginnerController:checkActivityNewStage(activityId)
 	return ActivityModel.instance:getActivityInfo()[activityId]:isNewStageOpen()
 end
 
+function ActivityBeginnerController:checkGoodsTaskReward(activityId)
+	local activityConfig = ActivityConfig.instance:getActivityCo(activityId)
+	local packageGoodsList = string.splitToNumber(activityConfig.patFaceParam, "#")
+
+	if not packageGoodsList or next(packageGoodsList) == nil then
+		return false
+	end
+
+	for _, packageGoodsId in ipairs(packageGoodsList) do
+		local haveCanGetReward = StoreCharageConditionalHelper.isHasCanFinishGoodsTask(packageGoodsId)
+
+		if haveCanGetReward then
+			return true
+		end
+	end
+
+	return false
+end
+
 ActivityBeginnerController.instance = ActivityBeginnerController.New()
 
 return ActivityBeginnerController

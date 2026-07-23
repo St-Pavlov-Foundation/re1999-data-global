@@ -44,6 +44,16 @@ function ClickUISwitchModel:getCurUseUICo()
 	return self:getClickUICoById(self:getCurUseUI())
 end
 
+function ClickUISwitchModel:getCurUseSkinParam()
+	local curId = self:getCurUseUI()
+
+	for _, param in pairs(ClickUISwitchEnum.SkinParams) do
+		if param.id == curId then
+			return param
+		end
+	end
+end
+
 function ClickUISwitchModel:getClickUICoById(id)
 	return lua_scene_click.configDict[id]
 end

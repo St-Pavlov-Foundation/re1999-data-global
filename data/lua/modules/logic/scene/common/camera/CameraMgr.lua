@@ -235,13 +235,7 @@ function CameraMgr:switchVirtualCamera(setIndex)
 	end
 end
 
-function CameraMgr:setSceneCameraActive(active, key)
-	if not self._unitCameraGO then
-		return
-	end
-
-	self._showUnitCameraKeyDict[key] = active and true or false
-
+function CameraMgr:getSceneCameraActive()
 	local show = true
 
 	for _, value in pairs(self._showUnitCameraKeyDict) do
@@ -251,6 +245,18 @@ function CameraMgr:setSceneCameraActive(active, key)
 			break
 		end
 	end
+
+	return show
+end
+
+function CameraMgr:setSceneCameraActive(active, key)
+	if not self._unitCameraGO then
+		return
+	end
+
+	self._showUnitCameraKeyDict[key] = active and true or false
+
+	local show = self:getSceneCameraActive()
 
 	gohelper.setActive(self._unitCameraGO, show)
 	PostProcessingMgr.instance:dispatchEvent(PostProcessingEvent.onUnitCameraVisibleChange, show)
@@ -278,10 +284,28 @@ function CameraMgr:getCameraRootAnimator()
 	return self._cameraRootAnimator
 end
 
+function CameraMgr:setCameraRootAnimatorController(controller)
+	local animator = self:getCameraRootAnimator()
+
+	if animator.runtimeAnimatorController ~= controller then
+		local controllerName = controller and controller.name
+
+		PostProcessingMgr.instance:dispatchEvent(PostProcessingEvent.onCameraRootAnimatorControllerChange, controllerName)
+	end
+
+	animator.runtimeAnimatorController = controller
+end
+
 function CameraMgr:getCameraRootAnimatorPlayer()
 	self._cameraRootAnimatorPlayer = self._cameraRootAnimatorPlayer or SLFramework.AnimatorPlayer.Get(self._cameraRootGO)
 
 	return self._cameraRootAnimatorPlayer
+end
+
+function CameraMgr:getCameraRootAnimationEventWrap()
+	self._cameraRootAnimationEventWrap = self._cameraRootAnimationEventWrap or gohelper.onceAddComponent(self._cameraRootGO, typeof(ZProj.AnimationEventWrap))
+
+	return self._cameraRootAnimationEventWrap
 end
 
 function CameraMgr:hasCameraRootAnimatorPlayer()
@@ -415,6 +439,54 @@ end
 function CameraMgr:getRenderScale()
 	if self._urpProfileAsset then
 		return self._urpProfileAsset.renderScale
+	end
+end
+
+function CameraMgr:setShadowDistance(distance)
+	if self._urpProfileAsset then
+		self._urpProfileAsset.shadowDistance = distance
+	end
+end
+
+function CameraMgr:getShadowDistance()
+	if self._urpProfileAsset then
+		return self._urpProfileAsset.shadowDistance
+	end
+end
+
+function CameraMgr:setMainLightShadowmapResolution(resolution)
+	if self._urpProfileAsset then
+		self._urpProfileAsset.mainLightShadowmapResolution = resolution
+	end
+end
+
+function CameraMgr:getMainLightShadowmapResolution()
+	if self._urpProfileAsset then
+		return self._urpProfileAsset.mainLightShadowmapResolution
+	end
+end
+
+function CameraMgr:setShadowDepthBias(num)
+	if self._urpProfileAsset then
+		self._urpProfileAsset.shadowDepthBias = num
+	end
+end
+
+function CameraMgr:getShadowDepthBias()
+	if self._urpProfileAsset then
+		return self._urpProfileAsset.shadowDepthBias
+	end
+end
+
+function CameraMgr:setShadowNormalBias(num)
+	if self._urpProfileAsset then
+		self._urpProfileAsset.shadowNormalBias = num
+	end
+end
+
+function CameraMgr:getShadowNormalBias()
+	if self._urpProfileAsset then
+		return self._urpProfileAsset.shadowNormalBias
 	end
 end
 

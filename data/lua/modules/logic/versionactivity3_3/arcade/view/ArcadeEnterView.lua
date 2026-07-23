@@ -63,7 +63,7 @@ function ArcadeEnterView:_btntaskOnClick()
 end
 
 function ArcadeEnterView:_editableInitView()
-	self.actId = VersionActivity3_3Enum.ActivityId.Arcade
+	self.actId = ArcadeModel.instance:getAct222Id()
 	self.actCo = ActivityConfig.instance:getActivityCo(self.actId)
 	self._txtDescr.text = self.actCo.actDesc
 	self._animPlayer = SLFramework.AnimatorPlayer.Get(self.viewGO.gameObject)

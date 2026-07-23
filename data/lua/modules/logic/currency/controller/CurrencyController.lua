@@ -225,25 +225,6 @@ function CurrencyController:getPowerItemDeadLineTime()
 	return minDeadline
 end
 
-function CurrencyController:getExpireItemDeadLineTime()
-	local minDeadline
-	local expireitemlist = ItemExpireModel.instance:getExpireItemList() or {}
-
-	for _, expireitem in pairs(expireitemlist) do
-		local config = ItemConfig.instance:getItemSpecialExpiredItemCo(expireitem.expireId)
-
-		if config.expireType ~= 0 and ItemExpireModel.instance:getExpireItemCount(expireitem.uid) > 0 then
-			local time = ItemExpireModel.instance:getExpireItemDeadline(expireitem.uid)
-
-			if not minDeadline or time < minDeadline then
-				minDeadline = time
-			end
-		end
-	end
-
-	return minDeadline
-end
-
 function CurrencyController:checkToUseExpirePowerItem()
 	TaskDispatcher.runRepeat(self._autoUseExpirePowerItem, self, 1)
 end

@@ -11,21 +11,34 @@ function FightWorkEffectCardEffectChange:onStart()
 		return
 	end
 
+	local flow = self:com_registFlowSequence()
+	local needRemoveEffect = FightMsgMgr.sendMsg(FightMsgId.CheckCardRemoveRefrieratorEffect)
+
+	if needRemoveEffect then
+		self._revertVisible = true
+
+		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
+		FightMsgMgr.sendMsg(FightMsgId.CardRemoveRefrieratorEffect)
+		flow:registWork(FightWorkDelayTimer, 0.7 / FightModel.instance:getUISpeed())
+	end
+
 	local indexs = string.splitToNumber(self.actEffectData.reserveStr, "#")
 	local handCards = FightDataHelper.handCardMgr.handCard
 
 	for i, v in ipairs(indexs) do
 		if handCards[v] then
-			FightController.instance:dispatchEvent(FightEvent.RefreshOneHandCard, v)
-			FightController.instance:dispatchEvent(FightEvent.CardEffectChange, v)
+			flow:registWork(FightWorkSendEvent, FightEvent.RefreshOneHandCard, v)
+			flow:registWork(FightWorkSendEvent, FightEvent.CardEffectChange, v)
 		end
 	end
 
-	self:onDone(true)
+	self:playWorkAndDone(flow)
 end
 
 function FightWorkEffectCardEffectChange:clearWork()
-	return
+	if self._revertVisible then
+		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
+	end
 end
 
 return FightWorkEffectCardEffectChange

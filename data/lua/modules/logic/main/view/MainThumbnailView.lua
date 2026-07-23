@@ -69,7 +69,7 @@ function MainThumbnailView:_btndetailOnClick()
 end
 
 function MainThumbnailView:_btnswitchOnClick()
-	UIBlockMgr.instance:startBlock("MainThumbnailView_CloseAnim")
+	UIBlockHelper.instance:startBlock("MainThumbnailView_CloseAnim", 0.8)
 
 	local player = SLFramework.AnimatorPlayer.Get(self.viewGO)
 
@@ -80,7 +80,6 @@ end
 
 function MainThumbnailView:onPlayCloseTransitionFinish()
 	TaskDispatcher.cancelTask(self.onPlayCloseTransitionFinish, self)
-	UIBlockMgr.instance:endBlock("MainThumbnailView_CloseAnim")
 	ViewMgr.instance:openTabView(ViewName.MainSwitchView, nil, nil, 1)
 end
 

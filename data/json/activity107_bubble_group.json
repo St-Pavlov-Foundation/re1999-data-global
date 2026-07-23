@@ -46,5 +46,11 @@
     "actId": 13307,
     "resource": "v3a0_store_chess",
     "unlockCondition": 0
+  },
+  {
+    "groupId": 10,
+    "actId": 13704,
+    "resource": "v3a7_store_chess",
+    "unlockCondition": 0
   }
 ]

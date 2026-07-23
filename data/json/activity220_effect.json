@@ -1,0 +1,110 @@
+[
+  {
+    "effectId": 3710,
+    "isShow": 3710,
+    "isHurt": 0,
+    "effect": "ui/viewres/versionactivity_3_7/v3a7_xiaoruiannong/effect/uttu_v3a5_attack_1.prefab",
+    "effectSpeed": 1.0,
+    "effectTime": 1.0,
+    "audio": "play_ui_yuanzheng_leipi",
+    "keyTime": 0.1,
+    "damage": 0.5,
+    "percent": 1
+  },
+  {
+    "effectId": 37101,
+    "isShow": 3710,
+    "isHurt": 0,
+    "effect": "ui/viewres/versionactivity_3_7/v3a7_xiaoruiannong/effect/xiali_skill1_1.prefab",
+    "effectSpeed": 1.0,
+    "effectTime": 3.0,
+    "audio": "play_ui_beiai_xran_leibao",
+    "keyTime": 2.0,
+    "damage": 2.0,
+    "percent": 1
+  },
+  {
+    "effectId": 3720,
+    "isShow": 3720,
+    "isHurt": 0,
+    "effect": "",
+    "effectSpeed": 0.0,
+    "effectTime": 0.0,
+    "audio": "",
+    "keyTime": 0.0,
+    "damage": 0.4,
+    "percent": 0
+  },
+  {
+    "effectId": 37201,
+    "isShow": 3720,
+    "isHurt": 0,
+    "effect": "ui/viewres/versionactivity_3_7/v3a7_xiaoruiannong/effect/madierda_skill1_02.prefab",
+    "effectSpeed": 1.0,
+    "effectTime": 2.0,
+    "audio": "play_ui_beiai_xran_bingci",
+    "keyTime": 1.0,
+    "damage": 0.4,
+    "percent": 1
+  },
+  {
+    "effectId": 3730,
+    "isShow": 3730,
+    "isHurt": 0,
+    "effect": "ui/viewres/versionactivity_3_7/v3a7_xiaoruiannong/effect/lt_skill1.prefab",
+    "effectSpeed": 1.0,
+    "effectTime": 1.0,
+    "audio": "play_ui_beiai_xran_feiguang",
+    "keyTime": 0.3,
+    "damage": 0.3,
+    "percent": 1
+  },
+  {
+    "effectId": 37301,
+    "isShow": 1,
+    "isHurt": 1,
+    "effect": "",
+    "effectSpeed": 0.0,
+    "effectTime": 0.0,
+    "audio": "",
+    "keyTime": 0.0,
+    "damage": 20.0,
+    "percent": 1
+  },
+  {
+    "effectId": 37701,
+    "isShow": 1,
+    "isHurt": 1,
+    "effect": "",
+    "effectSpeed": 0.0,
+    "effectTime": 0.0,
+    "audio": "",
+    "keyTime": 0.0,
+    "damage": 50.0,
+    "percent": 1
+  },
+  {
+    "effectId": 1701,
+    "isShow": 17,
+    "isHurt": 0,
+    "effect": "ui/viewres/versionactivity_3_7/v3a7_xiaoruiannong/effect/xran_skill3_02.prefab",
+    "effectSpeed": 0.0,
+    "effectTime": 1.0,
+    "audio": "play_ui_beiai_xran_skill",
+    "keyTime": 1.2,
+    "damage": 2.0,
+    "percent": 1
+  },
+  {
+    "effectId": 1702,
+    "isShow": 1,
+    "isHurt": 1,
+    "effect": "",
+    "effectSpeed": 0.0,
+    "effectTime": 1.0,
+    "audio": "",
+    "keyTime": 0.5,
+    "damage": 150.0,
+    "percent": 1
+  }
+]

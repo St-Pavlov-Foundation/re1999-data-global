@@ -10,6 +10,11 @@ function CommandStationRelationShipBoardContainer:buildViews()
 	table.insert(views, CommandStationRelationShipBoard.New())
 	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
 
+	local fit = TabViewGroupFit.New(2, "#go_page")
+
+	fit:keepCloseVisible(true)
+	table.insert(views, fit)
+
 	return views
 end
 
@@ -25,6 +30,27 @@ function CommandStationRelationShipBoardContainer:buildTabViews(tabContainerId)
 			self.navigateView
 		}
 	end
+
+	if tabContainerId == 2 then
+		if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isOnVer(3, 10) then
+			local t = {
+				CommandStationRelationShipBoardPage.New(CommandStationEnum.RelationShipBoardPage.Default)
+			}
+
+			return t
+		end
+
+		local t = {
+			CommandStationRelationShipBoardPage.New(CommandStationEnum.RelationShipBoardPage.Default),
+			CommandStationRelationShipBoardPage2.New(CommandStationEnum.RelationShipBoardPage.Chapter13)
+		}
+
+		return t
+	end
+end
+
+function CommandStationRelationShipBoardContainer:changePage(index)
+	self:dispatchEvent(ViewEvent.ToSwitchTab, 2, index)
 end
 
 return CommandStationRelationShipBoardContainer

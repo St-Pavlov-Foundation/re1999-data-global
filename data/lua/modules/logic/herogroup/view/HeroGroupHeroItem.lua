@@ -671,10 +671,34 @@ function HeroGroupHeroItem:showCounterSign()
 		career = self.monsterCO.career
 	end
 
+	local careerList = FightConfig.instance:getCareerList(career)
 	local recommended, counter = FightHelper.detectAttributeCounter()
 
-	gohelper.setActive(self._gorecommended, tabletool.indexOf(recommended, career))
-	gohelper.setActive(self._gocounter, tabletool.indexOf(counter, career))
+	if careerList then
+		for _, _career in ipairs(careerList) do
+			if tabletool.indexOf(recommended, _career) then
+				gohelper.setActive(self._gorecommended, true)
+				gohelper.setActive(self._gocounter, false)
+
+				return
+			end
+		end
+
+		gohelper.setActive(self._gorecommended, false)
+
+		for _, _career in ipairs(careerList) do
+			if tabletool.indexOf(counter, _career) then
+				gohelper.setActive(self._gocounter, true)
+
+				return
+			end
+		end
+
+		gohelper.setActive(self._gocounter, false)
+	else
+		gohelper.setActive(self._gorecommended, false)
+		gohelper.setActive(self._gocounter, false)
+	end
 end
 
 function HeroGroupHeroItem:_setUIPressState(graphicCompArr, isPress, oriColorMap)

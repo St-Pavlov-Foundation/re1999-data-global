@@ -194,7 +194,20 @@ end
 
 function OptionPackageController:_checkNeedDownloadNew(packName)
 	if GameResMgr.IsFromEditorDir and not HotUpdateOptionPackageMgr.EnableEditorDebug then
-		return false
+		require("tolua.reflection")
+		tolua.loadassembly("UnityEditor")
+
+		local editorPrefs = tolua.findtype("UnityEditor.EditorPrefs")
+		local method = tolua.getmethod(editorPrefs, "GetBool", typeof("System.String"))
+		local allowOptionalRes = method:Call("AllowOptionalRes")
+
+		if not allowOptionalRes then
+			MessageBoxController.instance:showMsgBoxByStr("当前未允许加载可选资源,请前往编辑器任务栏《SLTools/Asset Manager/允许加载可选资源》设置之后再进入")
+
+			return true
+		else
+			return false
+		end
 	end
 
 	local diffList, allSize, dlcTypeList = OptionPackageDownloadMgr.instance:getDLCDiff(packName)

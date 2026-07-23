@@ -8,5 +8,15 @@
     "desc": "language_10097901",
     "useTitle": "language_10097902",
     "effect": "1#15#5#1"
+  },
+  {
+    "id": 490002,
+    "name": "language_10120589",
+    "icon": "490002",
+    "expireSeconds": 0,
+    "useDesc": "language_10120590",
+    "desc": "language_10120591",
+    "useTitle": "language_10120592",
+    "effect": "1#15#5#15"
   }
 ]

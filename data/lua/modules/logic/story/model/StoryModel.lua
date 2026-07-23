@@ -218,15 +218,15 @@ function StoryModel:updateStoryList(info)
 end
 
 function StoryModel:isStoryHasPlayed(storyId)
-	local played = false
-
-	if self._storyState.finishList[storyId] then
+	if self:isStoryFinished(storyId) then
 		return true
 	end
 
-	for _, v in pairs(self._storyState.processList) do
-		if v.storyId == storyId then
-			return true
+	if self._storyState and self._storyState.processList then
+		for _, v in pairs(self._storyState.processList) do
+			if v.storyId == storyId then
+				return true
+			end
 		end
 	end
 
@@ -620,21 +620,19 @@ function StoryModel:setPrologueSkipId(storyId)
 	self._skipStoryId = storyId
 end
 
-function StoryModel:getStoryBranchOpts(stepId)
+function StoryModel:getShowStoryBranchOpts(stepId)
 	local opts = {}
 	local optList = StoryStepModel.instance:getStepListById(stepId).optList
 
 	for _, opt in ipairs(optList) do
-		if opt.conditionType == StoryEnum.OptionConditionType.None then
+		local isSpType = StoryModel.instance:isSpOptionType(opt.type)
+
+		if opt.conditionType == StoryEnum.OptionConditionType.None and not isSpType then
 			table.insert(opts, opt)
 		end
 	end
 
 	return opts
-end
-
-function StoryModel:addStepClickTime()
-	self._statStepClickTime = self._statStepClickTime + 1
 end
 
 function StoryModel:hasConfigNotExist()
@@ -655,6 +653,10 @@ function StoryModel:hasConfigNotExist()
 	end
 
 	return false
+end
+
+function StoryModel:addStepClickTime()
+	self._statStepClickTime = self._statStepClickTime + 1
 end
 
 function StoryModel:getStepClickTime()
@@ -722,6 +724,20 @@ function StoryModel:getCurStepId()
 	return self._curStepId
 end
 
+function StoryModel:isSpVersionStory(storyId)
+	local curStoryId = storyId or self:getCurStoryId()
+	local storyPrefixs = CommonConfig.instance:getConstStr(ConstEnum.SP_StoryIdPrefix)
+	local prefixs = string.splitToNumber(storyPrefixs, "#")
+
+	for _, prefix in pairs(prefixs) do
+		if math.floor(curStoryId / 100) == prefix then
+			return true
+		end
+	end
+
+	return false
+end
+
 function StoryModel:isStoryPvPause()
 	return self._pvPause
 end
@@ -747,6 +763,12 @@ function StoryModel:isMagicType(stepCo)
 		return false
 	end
 
+	local isSpMagicType = self:isSpMagicType(stepCo)
+
+	if isSpMagicType then
+		return true
+	end
+
 	if stepCo.conversation.effType == StoryEnum.ConversationEffectType.CommonMagic then
 		return true
 	end
@@ -759,6 +781,42 @@ function StoryModel:isMagicType(stepCo)
 		return true
 	end
 
+	if stepCo.conversation.effType == StoryEnum.ConversationEffectType.XranMagic then
+		return true
+	end
+
+	return false
+end
+
+function StoryModel:isSpMagicType(stepCo)
+	if not stepCo then
+		return false
+	end
+
+	if stepCo.conversation.effType == StoryEnum.ConversationEffectType.SandMagic then
+		return true
+	end
+
+	if stepCo.conversation.effType == StoryEnum.ConversationEffectType.GoldlineMagic then
+		return true
+	end
+
+	return false
+end
+
+function StoryModel:isSpOptionType(optionType)
+	if optionType == StoryEnum.OptionType.SpClick then
+		return true
+	end
+
+	if optionType == StoryEnum.OptionType.SpSlide then
+		return true
+	end
+
+	if optionType == StoryEnum.OptionType.SpLongClick then
+		return true
+	end
+
 	return false
 end
 
@@ -768,6 +826,48 @@ end
 
 function StoryModel:isInScreenSplitMode()
 	return self._inScreenSplit
+end
+
+function StoryModel:hasBranchPlayed(stepCo)
+	if not stepCo then
+		return false
+	end
+
+	if #stepCo.optList <= 0 then
+		return false
+	end
+
+	for _, v in ipairs(stepCo.optList) do
+		if v.type == StoryEnum.OptionType.EndAsk then
+			local logs = StoryModel.instance:getLog()
+
+			for _, option in pairs(stepCo.optList) do
+				if LuaUtil.tableContains(logs, option.followId) then
+					return true
+				end
+			end
+		end
+	end
+
+	return false
+end
+
+function StoryModel:isSetTopView(viewName)
+	local setting = ViewMgr.instance:getSetting(viewName)
+
+	if setting.layer == UILayerName.Message then
+		return true
+	end
+
+	if setting.layer == UILayerName.IDCanvasPopUp then
+		return true
+	end
+
+	if setting.layer == UILayerName.PopUpTop and setting.bgBlur and setting.bgBlur > 0 then
+		return true
+	end
+
+	return false
 end
 
 StoryModel.instance = StoryModel.New()

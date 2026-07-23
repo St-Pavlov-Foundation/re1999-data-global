@@ -12,8 +12,10 @@ FightViewBossHp.VariantIdToMaterialPath = {
 }
 
 function FightViewBossHp:onInitView()
+	self.viewAnimator = gohelper.onceAddComponent(self.viewGO, gohelper.Type_Animator)
 	self._bossHpGO = gohelper.findChild(self.viewGO, "Alpha/bossHp")
 	self._imgbossHpbg = gohelper.findChildImage(self.viewGO, "Alpha/bossHp")
+	self.maskRoot = gohelper.findChild(self.viewGO, "Alpha/bossHp/mask")
 	self._hp_container_tran = gohelper.findChild(self.viewGO, "Alpha/bossHp/mask/container").transform
 	self._aniBossHp = self._bossHpGO:GetComponent(typeof(UnityEngine.Animator))
 	self._imgHp = gohelper.findChildImage(self.viewGO, "Alpha/bossHp/mask/container/imgHp")
@@ -62,6 +64,7 @@ end
 
 function FightViewBossHp:onOpen()
 	self._btnpassiveSkill:AddClickListener(self._onClickPassiveSkill, self)
+	self:com_registMsg(FightMsgId.GetBossHpRootAnimator, self.onGetBossHpRootAnimator)
 	self:com_registFightEvent(FightEvent.RespBeginRound, self._checkBossAndUpdate)
 	self:com_registFightEvent(FightEvent.OnChangeEntity, self._checkBossAndUpdate)
 	self:com_registFightEvent(FightEvent.OnEntityDead, self._onEntityDead)
@@ -150,6 +153,22 @@ function FightViewBossHp:_checkBossAndUpdate()
 		if self._bossEntityMO then
 			self:newClass(FightBossHpToughness, self.toughnessObj, self._bossEntityMO)
 			self:newClass(FightBossHpWeakCareers, self.weakCareerObj, self._bossEntityMO)
+		end
+
+		local battleCo = lua_battle.configDict[FightDataHelper.fieldMgr.battleId]
+		local isBalance = battleCo and not string.nilorempty(battleCo.balance) or false
+
+		if self._bossEntityMO and self._bossEntityMO.skin == 610414 and not self.bossHpFor610414 then
+			self.lockHpBySkin = true
+
+			gohelper.setActive(self.maskRoot, false)
+
+			self.bossHpFor610414 = self:com_openSubView(FightMonsterBossHpFor610414, "ui/viewres/fight/fight3_7qteview.prefab", self._bossHpGO, self, self._bossHpGO, self._bossEntityMO)
+		end
+
+		if self._bossEntityMO and self._bossEntityMO.skin == 610416 and not self.bossHpFor610416 and isBalance then
+			self.lockHpBySkin = true
+			self.bossHpFor610416 = self:com_openSubView(FightMonsterBossHpFor610416, "ui/viewres/fight/fight3_7qteview.prefab", self._bossHpGO, self, self._bossHpGO, self._bossEntityMO)
 		end
 	end
 
@@ -552,6 +571,12 @@ function FightViewBossHp:_tweenFillAmount(duration, curHp, curShield)
 	self:_changeShieldPos(hpFillAmount)
 	ZProj.TweenHelper.KillByObj(self._imgHp)
 	ZProj.TweenHelper.KillByObj(self._imgHpShield)
+
+	if self.lockHpBySkin then
+		hpFillAmount = 1
+		shieldFillAmount = 0
+	end
+
 	ZProj.TweenHelper.DOFillAmount(self._imgHp, hpFillAmount, duration / FightModel.instance:getUISpeed())
 	ZProj.TweenHelper.DOFillAmount(self._imgHpShield, shieldFillAmount, duration / FightModel.instance:getUISpeed())
 	self:setAiJiAoFakeHp(hpBgFillAmount)
@@ -779,6 +804,10 @@ end
 
 function FightViewBossHp:onFightReconnectLastWork()
 	self:checkAiJiAoFakeDecreaseHp()
+end
+
+function FightViewBossHp:onGetBossHpRootAnimator()
+	FightMsgMgr.replyMsg(FightMsgId.GetBossHpRootAnimator, self.viewAnimator)
 end
 
 return FightViewBossHp

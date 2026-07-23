@@ -20,7 +20,7 @@
     "chapterId": 101,
     "rewardPointNum": 40,
     "reward": "2#2#200|2#3#2000|2#5#2000",
-    "unlockChapter": 102,
+    "unlockChapter": 0,
     "display": 1
   },
   {
@@ -44,7 +44,7 @@
     "chapterId": 102,
     "rewardPointNum": 85,
     "reward": "2#2#200|1#133023#1|2#3#3000",
-    "unlockChapter": 103,
+    "unlockChapter": 0,
     "display": 1
   },
   {

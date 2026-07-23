@@ -526,12 +526,33 @@ function HeroGroupPresetEditView:_refreshMainInfo()
 			tags = string.split(self._heroMO.config.battleTag, "#")
 		end
 
+		if self._go_pos_overseas_1 == nil then
+			self._go_pos_overseas_1 = gohelper.findChild(self.viewGO, "characterinfo/#go_characterinfo/special/#go_pos_overseas")
+			self._go_pos_overseas_2 = gohelper.cloneInPlace(self._go_pos_overseas_1, "#go_pos_overseas_2")
+		end
+
+		gohelper.setActive(self._go_pos_overseas_2, #tags >= 4)
+
 		for i = 1, #tags do
 			local careerTable = self._careerGOs[i]
 
 			if not careerTable then
 				careerTable = self:getUserDataTb_()
-				careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+
+				local parentGO
+
+				if i > 3 then
+					parentGO = self._go_pos_overseas_2
+				else
+					parentGO = self._go_pos_overseas_1
+				end
+
+				if parentGO then
+					careerTable.go = gohelper.clone(self._gospecialitem, parentGO, "item" .. i)
+				else
+					careerTable.go = gohelper.cloneInPlace(self._gospecialitem, "item" .. i)
+				end
+
 				careerTable.textfour = gohelper.findChildText(careerTable.go, "#go_fourword/name")
 				careerTable.textthree = gohelper.findChildText(careerTable.go, "#go_threeword/name")
 				careerTable.texttwo = gohelper.findChildText(careerTable.go, "#go_twoword/name")
@@ -637,7 +658,7 @@ function HeroGroupPresetEditView:_refreshPassiveSkill()
 end
 
 function HeroGroupPresetEditView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial())
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial(), CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function HeroGroupPresetEditView:_refreshBtnIcon()
@@ -994,6 +1015,10 @@ function HeroGroupPresetEditView:onClose()
 	CommonHeroHelper.instance:resetGrayState()
 	CharacterController.instance:closeCharacterFilterView()
 	CharacterSearchFilterModel.instance:exitParentView()
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
+	end
 end
 
 function HeroGroupPresetEditView:_onAudioTrigger(audioId)

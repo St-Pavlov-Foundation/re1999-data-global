@@ -1,0 +1,74 @@
+[
+  {
+    "activityId": 13717,
+    "rewardId": 1,
+    "coinNum": 250,
+    "bonus": "1#110503#3"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 2,
+    "coinNum": 500,
+    "bonus": "2#3#100000"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 3,
+    "coinNum": 750,
+    "bonus": "1#110403#3"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 4,
+    "coinNum": 1000,
+    "bonus": "1#110104#1"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 5,
+    "coinNum": 1250,
+    "bonus": "2#5#50000"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 6,
+    "coinNum": 1500,
+    "bonus": "1#111003#1"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 7,
+    "coinNum": 1750,
+    "bonus": "1#110103#3"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 8,
+    "coinNum": 2000,
+    "bonus": "1#110304#1"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 9,
+    "coinNum": 2250,
+    "bonus": "1#110303#3"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 10,
+    "coinNum": 2500,
+    "bonus": "11#13712#1"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 11,
+    "coinNum": 2750,
+    "bonus": "1#110404#1"
+  },
+  {
+    "activityId": 13717,
+    "rewardId": 12,
+    "coinNum": 3000,
+    "bonus": "1#110203#3"
+  }
+]

@@ -14,9 +14,7 @@ function ArcadeGameMonsterMO:onCtor(extraParam)
 		local skillIds = string.splitToNumber(self.config.skillIds, "#")
 
 		for _, skillId in ipairs(skillIds) do
-			if ArcadeGameHelper.isPassiveSkill(skillId) then
-				skillSetMO:addSkillById(skillId)
-			end
+			skillSetMO:addSkillById(skillId)
 		end
 	end
 end

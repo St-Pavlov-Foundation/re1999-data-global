@@ -45,14 +45,11 @@ function Permanent1_4EnterView:_btnPlayOnClick()
 end
 
 function Permanent1_4EnterView:_btnEntranceDungeonOnClick()
-	local unLock = DungeonModel.instance:chapterIsUnLock(105)
-
-	if unLock then
-		JumpController.instance:jumpTo("3#105", function()
-			DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.PermanentActivity)
-		end)
+	if DungeonModel.instance:chapterIsLock(DungeonEnum.ChapterId.Main1_5) then
+		self:closeThis()
+		DungeonController.instance:enterDungeonView(true, true)
 	else
-		JumpController.instance:jumpTo("5#1", self.closeThis, self)
+		JumpController.instance:jumpTo("3#" .. tostring(DungeonEnum.ChapterId.Main1_5), self.closeThis, self)
 	end
 end
 

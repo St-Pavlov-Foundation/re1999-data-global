@@ -46,6 +46,9 @@ function EquipInfoTeamShowViewContainer:buildViews()
 	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTowerComposeHeroGroupView then
 		self.listModel = EquipInfoTeamListModel.instance
 		equipScrollParam.cellClass = TowerComposeEquipInfoTeamItem
+	elseif self.viewParam.fromView == EquipEnum.FromViewEnum.FromTwinssychubeEquipInfoView then
+		self.listModel = CharacterEquipSettingListModel.instance
+		equipScrollParam.cellClass = CharacterEquipSettingItem
 	else
 		logError("not found from view ...")
 

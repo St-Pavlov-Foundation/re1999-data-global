@@ -52,6 +52,18 @@ function StoryViewMgr:getStoryFrontBgGo()
 	return go
 end
 
+function StoryViewMgr:getStoryFrontBgImgGo()
+	local frontBgGo = self:getStoryFrontBgGo()
+
+	if not frontBgGo then
+		return nil
+	end
+
+	local go = gohelper.findChild(frontBgGo, "#simage_bgimg")
+
+	return go
+end
+
 function StoryViewMgr:getStoryHeroView()
 	local viewContainer = ViewMgr.instance:getContainer(ViewName.StoryHeroView)
 

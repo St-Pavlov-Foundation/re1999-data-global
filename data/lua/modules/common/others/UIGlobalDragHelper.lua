@@ -10,6 +10,7 @@ local _B = Bitwise
 UIGlobalDragHelper.EventBegin = 1
 UIGlobalDragHelper.EventDragging = 2
 UIGlobalDragHelper.EventEnd = 3
+UIGlobalDragHelper.EventMouseScrollWheel = 4
 
 local Dir = {
 	None = 0,
@@ -47,6 +48,32 @@ local function _isHorizontal(eDir)
 end
 
 UIGlobalDragHelper.isHorizontal = _isHorizontal
+
+local function _deltaV2ToSimpleDir(deltaV2)
+	assert(deltaV2.x and deltaV2.y)
+
+	local absX = abs(deltaV2.x)
+	local absY = abs(deltaV2.y)
+	local bHor = absY < absX
+
+	if bHor then
+		if _approximately(deltaV2.x, 0) then
+			return Dir.None
+		end
+
+		return deltaV2.x > 0 and Dir.Right or Dir.Left
+	else
+		if _approximately(deltaV2.y, 0) then
+			return Dir.None
+		end
+
+		return deltaV2.y > 0 and Dir.Up or Dir.Down
+	end
+
+	return Dir.None
+end
+
+UIGlobalDragHelper.deltaV2ToSimpleDir = _deltaV2ToSimpleDir
 
 local function _deltaV2ToDeltaDistance(eDir, deltaV2)
 	assert(deltaV2.x and deltaV2.y)
@@ -130,12 +157,18 @@ function UIGlobalDragHelper:create(go, userParams)
 	self._csDragObj:SetOnDragBeginCb(self._onDragBegin, self)
 	self._csDragObj:SetOnDragCb(self._onDragging, self)
 	self._csDragObj:SetOnDragEndCb(self._onDragEnd, self)
+	self._csDragObj:SetScrollWheelCb(self._onMouseScrollWheelChanged, self)
+
+	if BootNativeUtil.isMobilePlayer() then
+		self._csDragObj:SetOnMultiDragCb(self._onMultiDrag, self)
+	end
 end
 
 function UIGlobalDragHelper:release()
 	self:unregisterAllCallback(UIGlobalDragHelper.EventBegin)
 	self:unregisterAllCallback(UIGlobalDragHelper.EventDragging)
 	self:unregisterAllCallback(UIGlobalDragHelper.EventEnd)
+	self:unregisterAllCallback(UIGlobalDragHelper.EventMouseScrollWheel)
 
 	if self._csDragObj then
 		TouchEventMgrHepler.remove(self._csDragObj)
@@ -157,6 +190,7 @@ function UIGlobalDragHelper:clear()
 
 	t.dir = Dir.None
 	t.dirHorV = Dir.None
+	t.scrollDelta = 0
 end
 
 function UIGlobalDragHelper:dragInfo()
@@ -291,6 +325,18 @@ function UIGlobalDragHelper:_onDragEnd(screenPosV3)
 	t.isDragging = false
 
 	self:dispatchEvent(UIGlobalDragHelper.EventEnd, self, t.userParams)
+end
+
+function UIGlobalDragHelper:_onMouseScrollWheelChanged(delta)
+	local t = self._dragInfo
+
+	t.scrollDelta = delta
+
+	self:dispatchEvent(UIGlobalDragHelper.EventMouseScrollWheel, self, t.userParams)
+end
+
+function UIGlobalDragHelper:_onMultiDrag(isEnLarger, delta)
+	self:_onMouseScrollWheelChanged(delta * 0.01)
 end
 
 function UIGlobalDragHelper:isStoped()

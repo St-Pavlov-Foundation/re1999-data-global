@@ -100,6 +100,12 @@ function FightTeamData:onConstructor(proto)
 	if proto:HasField("musicInfo") then
 		self.rouge2MusicInfo = FightRouge2MusicInfo.New(proto.musicInfo)
 	end
+
+	self.deviceCardDeckSize = proto.deviceCardDeckSize
+
+	if proto:HasField("deviceArea") then
+		self.deviceArea = FightDeviceAreaInfoData.New(proto.deviceArea)
+	end
 end
 
 return FightTeamData

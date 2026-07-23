@@ -19,7 +19,11 @@ function StoryVideoPlayList:init(go, parent)
 	self.parentGO = parent
 	self.viewGO = go
 
-	if SettingsModel.instance:getVideoEnabled() == false then
+	local isOverseas = SettingsModel.instance:isOverseas()
+	local isVideoEnabled = SettingsModel.instance:getVideoEnabled()
+	local unableVideo = not isVideoEnabled and isOverseas
+
+	if unableVideo then
 		self._uguiPlayList = AvProUGUIListPlayer_adjust.New()
 		self._mediaPlayList = PlaylistMediaPlayer_adjust.New()
 	else
@@ -110,8 +114,9 @@ function StoryVideoPlayList:stop(targetName)
 	end
 
 	local playName = self._currentPlayNameMap[curPlayIndex]
+	local isVideoEnabled = SettingsModel.instance:getVideoEnabled()
 
-	if playName == targetName or SettingsModel.instance:getVideoEnabled() == false then
+	if playName == targetName or not isVideoEnabled then
 		logNormal("targetName = " .. tostring(targetName) .. " stop!")
 		self:_stopIOSDetectPause()
 

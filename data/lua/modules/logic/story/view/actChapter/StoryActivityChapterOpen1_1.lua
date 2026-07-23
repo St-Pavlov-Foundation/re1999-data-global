@@ -64,7 +64,13 @@ function StoryActivityChapterOpen1_1:onUpdateView()
 end
 
 function StoryActivityChapterOpen1_1:getVideoName(part)
-	return part % 100 == 1 and "1_1_opening_0" or "1_1_opening_1"
+	local isOverseas = SettingsModel.instance:isOverseas()
+
+	if isOverseas then
+		return part % 100 == 1 and "1_1_opening_0" or "1_1_opening_1"
+	else
+		return part % 100 == 1 and "dajiekaimu1" or "xiaojiekaimu1"
+	end
 end
 
 function StoryActivityChapterOpen1_1:getAudioId(part)

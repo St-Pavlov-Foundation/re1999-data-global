@@ -29,6 +29,7 @@ function ArcadeOutSizeModel:refreshInfo(info)
 	ArcadeHandBookModel.instance:refreshInfo(info.bookInfo)
 	self:refreshAttribute(info.attrContainer.attrValues)
 	self:refreshHotfixInfo(info.prop.hotfix)
+	self:refreshReturnRewardData(info.prop.returnRewardData)
 end
 
 function ArcadeOutSizeModel:refreshHotfixInfo(hotfix)
@@ -60,6 +61,10 @@ function ArcadeOutSizeModel:refreshAttribute(attrValues)
 	end
 end
 
+function ArcadeOutSizeModel:refreshReturnRewardData(strReturnRewardData)
+	self._strReturnRewardData = strReturnRewardData
+end
+
 function ArcadeOutSizeModel:_refreshRewardInfo(gain)
 	local list = {}
 
@@ -78,10 +83,14 @@ function ArcadeOutSizeModel:getRewardModel()
 	if not self._rewardModel then
 		self._rewardModel = BaseModel.New()
 
-		for _, co in ipairs(lua_arcade_reward.configList) do
-			local mo = ArcadeRewardMO.New(co)
+		local actId = ArcadeModel.instance:getAct222Id()
 
-			self._rewardModel:addAtLast(mo)
+		for _, co in ipairs(lua_arcade_reward.configList) do
+			if co.activityId == actId then
+				local mo = ArcadeRewardMO.New(co)
+
+				self._rewardModel:addAtLast(mo)
+			end
 		end
 	end
 
@@ -180,6 +189,10 @@ function ArcadeOutSizeModel:getAttrValues(attrId)
 	local value = self._attrValues[attrId]
 
 	return value and value.base or 0
+end
+
+function ArcadeOutSizeModel:getStrReturnRewardData()
+	return self._strReturnRewardData
 end
 
 function ArcadeOutSizeModel:clearAllPrefs()

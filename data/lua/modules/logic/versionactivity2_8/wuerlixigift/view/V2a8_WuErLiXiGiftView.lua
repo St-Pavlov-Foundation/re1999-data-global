@@ -5,11 +5,11 @@ module("modules.logic.versionactivity2_8.wuerlixigift.view.V2a8_WuErLiXiGiftView
 local V2a8_WuErLiXiGiftView = class("V2a8_WuErLiXiGiftView", DecalogPresentView)
 
 function V2a8_WuErLiXiGiftView:onInitView()
-	self._txtremainTime = gohelper.findChildText(self.viewGO, "Root/image_TimeBG/#txt_remainTime")
-	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Claim")
-	self._goNormal = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Normal")
-	self._goHasReceived = gohelper.findChild(self.viewGO, "Root/#btn_Claim/#go_Received")
-	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "Root/#btn_Close")
+	self._txtremainTime = gohelper.findChildText(self.viewGO, "image_TimeBG/#txt_remainTime")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Claim")
+	self._goNormal = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Normal")
+	self._goHasReceived = gohelper.findChild(self.viewGO, "#btn_Claim/#go_Received")
+	self._btnClose = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_Close")
 
 	if self._editableInitView then
 		self:_editableInitView()

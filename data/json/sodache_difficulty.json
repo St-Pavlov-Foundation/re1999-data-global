@@ -1,0 +1,62 @@
+[
+  {
+    "difficulty": 1,
+    "evil": 0,
+    "stepAttr": "hp#0|attack#0"
+  },
+  {
+    "difficulty": 1,
+    "evil": 1,
+    "stepAttr": "hp#100|attack#0"
+  },
+  {
+    "difficulty": 1,
+    "evil": 2,
+    "stepAttr": "hp#200|attack#0"
+  },
+  {
+    "difficulty": 1,
+    "evil": 3,
+    "stepAttr": "hp#300|attack#0"
+  },
+  {
+    "difficulty": 1,
+    "evil": 4,
+    "stepAttr": "hp#400|attack#0"
+  },
+  {
+    "difficulty": 1,
+    "evil": 5,
+    "stepAttr": "hp#500|attack#0"
+  },
+  {
+    "difficulty": 2,
+    "evil": 0,
+    "stepAttr": "hp#2000|attack#1400"
+  },
+  {
+    "difficulty": 2,
+    "evil": 1,
+    "stepAttr": "hp#2300|attack#1400"
+  },
+  {
+    "difficulty": 2,
+    "evil": 2,
+    "stepAttr": "hp#2600|attack#1400"
+  },
+  {
+    "difficulty": 2,
+    "evil": 3,
+    "stepAttr": "hp#2900|attack#1400"
+  },
+  {
+    "difficulty": 2,
+    "evil": 4,
+    "stepAttr": "hp#3200|attack#1400"
+  },
+  {
+    "difficulty": 2,
+    "evil": 5,
+    "stepAttr": "hp#3500|attack#1400"
+  }
+]

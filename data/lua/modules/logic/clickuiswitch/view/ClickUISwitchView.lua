@@ -35,6 +35,7 @@ function ClickUISwitchView:addEvents()
 	self:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.UseClickUI, self._onUseClickUI, self)
 	self:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.LoadUIPrefabs, self._loadUIPrefabs, self)
 	self:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.LoadUIPrefabs, self._loadUIPrefabs, self)
+	self:addEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.UseClickUI, self._showBtnStatus, self)
 	self.viewContainer:registerCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
@@ -47,6 +48,7 @@ function ClickUISwitchView:removeEvents()
 	self:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.SwitchClickUI, self._onSwitchClickUI, self)
 	self:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.LoadUIPrefabs, self._loadUIPrefabs, self)
 	self:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.LoadUIPrefabs, self._loadUIPrefabs, self)
+	self:removeEventCb(ClickUISwitchController.instance, ClickUISwitchEvent.UseClickUI, self._showBtnStatus, self)
 	self.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, self._toSwitchTab, self)
 end
 
@@ -65,7 +67,7 @@ function ClickUISwitchView:_toSwitchTab(tabContainerId, tabId)
 end
 
 function ClickUISwitchView:_btnchangeOnClick()
-	ClickUISwitchController.instance:setCurClickUIStyle(self._selectSkinId, self._showBtnStatus, self)
+	ClickUISwitchController.instance:setCurClickUIStyle(self._selectSkinId)
 	ClickUISwitchListModel.instance:refreshScroll()
 end
 

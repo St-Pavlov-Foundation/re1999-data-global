@@ -69,6 +69,11 @@ local module_cmd = {
 		"AcceptAct186SpBonusRequest",
 		"AcceptAct186SpBonusReply"
 	},
+	[22643] = {
+		"Activity101",
+		"Get101BonusListRequest",
+		"Get101BonusListReply"
+	},
 	[30322] = {
 		"Activity104",
 		"Get104InfosRequest",
@@ -2611,6 +2616,99 @@ local module_cmd = {
 		"Activity231",
 		"Act231MissionPush"
 	},
+	[-15260] = {
+		"Activity233",
+		"GetAct233BpInfoRequest",
+		"GetAct233BpInfoReply"
+	},
+	[21759] = {
+		"Activity233",
+		"GetAct233BpBonusRequest",
+		"GetAct233BpBonusReply"
+	},
+	[-11625] = {
+		"Activity233",
+		"Act233BpScoreUpdatePush"
+	},
+	[-5694] = {
+		"Activity233",
+		"Act233BpPayRequest",
+		"Act233BpPayReply"
+	},
+	[3420] = {
+		"Activity234",
+		"Get234InfoRequest",
+		"Get234InfoReply"
+	},
+	[1123] = {
+		"Activity234",
+		"Act234FinishGameRequest",
+		"Act234FinishGameReply"
+	},
+	[18055] = {
+		"Activity234",
+		"Act234ExploreRequest",
+		"Act234ExploreReply"
+	},
+	[-29827] = {
+		"Activity234",
+		"Act234AcceptRewardRequest",
+		"Act234AcceptRewardReply"
+	},
+	[-6026] = {
+		"Activity235",
+		"GetAct235InfoRequest",
+		"GetAct235InfoReply"
+	},
+	[20473] = {
+		"Activity235",
+		"ActivePreparationRequest",
+		"ActivePreparationReply"
+	},
+	[-19456] = {
+		"Activity235",
+		"FinishMiniGameRequest",
+		"FinishMiniGameReply"
+	},
+	[6200] = {
+		"Activity236",
+		"GetAct236InfoRequest",
+		"GetAct236InfoReply"
+	},
+	[30249] = {
+		"Activity236",
+		"Act236GetAutoGainRewardRequest",
+		"Act236GetAutoGainRewardReply"
+	},
+	[-5541] = {
+		"Activity236",
+		"Act236UpdateInfoPush"
+	},
+	[30652] = {
+		"Activity238",
+		"GetAct238InfoRequest",
+		"GetAct238InfoReply"
+	},
+	[1152] = {
+		"Activity238",
+		"Act238AnswerRequest",
+		"Act238AnswerReply"
+	},
+	[18871] = {
+		"Activity238",
+		"Act238BonusRequest",
+		"Act238BonusReply"
+	},
+	[-22658] = {
+		"Activity239",
+		"GetAct239InfoRequest",
+		"GetAct239InfoReply"
+	},
+	[-15000] = {
+		"Activity239",
+		"Act239BonusRequest",
+		"Act239BonusReply"
+	},
 	[-22802] = {
 		"Activity240",
 		"Act240GetInfoRequest",
@@ -2625,6 +2723,21 @@ local module_cmd = {
 		"Activity240",
 		"Act240BackdateRequest",
 		"Act240BackdateReply"
+	},
+	[-27888] = {
+		"Activity241",
+		"Act241GetInfoRequest",
+		"Act241GetInfoReply"
+	},
+	[-18174] = {
+		"Activity241",
+		"Act241VoteRequest",
+		"Act241VoteReply"
+	},
+	[-1749] = {
+		"Activity241",
+		"Act241GetBonusRequest",
+		"Act241GetBonusReply"
 	},
 	[-14582] = {
 		"Activity",
@@ -2716,6 +2829,11 @@ local module_cmd = {
 	[4399] = {
 		"ArcadeOutSide",
 		"ArcadeAttrChangePush"
+	},
+	[-3207] = {
+		"ArcadeOutSide",
+		"ArcadeCloseRewardPanelRequest",
+		"ArcadeCloseRewardPanelReply"
 	},
 	[-415] = {
 		"AssassinOutSide",
@@ -2866,6 +2984,96 @@ local module_cmd = {
 	[-32619] = {
 		"AssassinScene",
 		"HeroUpdatePush"
+	},
+	[27511] = {
+		"Atomic",
+		"AtomicGetInfoRequest",
+		"AtomicGetInfoReply"
+	},
+	[-8806] = {
+		"Atomic",
+		"AtomicUpdateInfoPush"
+	},
+	[12330] = {
+		"Atomic",
+		"AtomicUpdateAlarmPush"
+	},
+	[27579] = {
+		"Atomic",
+		"AtomicMapSetCurrElementRequest",
+		"AtomicMapSetCurrElementReply"
+	},
+	[-2365] = {
+		"Atomic",
+		"AtomicMapInteractRequest",
+		"AtomicMapInteractReply"
+	},
+	[14492] = {
+		"Atomic",
+		"AtomicUpdateEmergencyTimeRequest",
+		"AtomicUpdateEmergencyTimeReply"
+	},
+	[-7326] = {
+		"Atomic",
+		"AtomicMapSaveElementRequest",
+		"AtomicMapSaveElementReply"
+	},
+	[5718] = {
+		"Atomic",
+		"AtomicMapElementUpdatePush"
+	},
+	[32140] = {
+		"Atomic",
+		"AtomicMapUpdatePush"
+	},
+	[19045] = {
+		"Atomic",
+		"AtomicPolygonUpdatePush"
+	},
+	[10949] = {
+		"Atomic",
+		"AtomicTalentNodeUnlockRequest",
+		"AtomicTalentNodeUnlockReply"
+	},
+	[-13706] = {
+		"Atomic",
+		"AtomicTalentResetRequest",
+		"AtomicTalentResetReply"
+	},
+	[17683] = {
+		"Atomic",
+		"AtomicTalentSkillChooseRequest",
+		"AtomicTalentSkillChooseReply"
+	},
+	[28822] = {
+		"Atomic",
+		"AtomicTalentUpdatePush"
+	},
+	[16444] = {
+		"Atomic",
+		"AtomicFightResultPush"
+	},
+	[1452] = {
+		"Atomic",
+		"AtomicUnlockLibraryPush"
+	},
+	[4686] = {
+		"Atomic",
+		"AtomicHotfix1Request",
+		"AtomicHotfix1Reply"
+	},
+	[4687] = {
+		"Atomic",
+		"AtomicHotfix2Request",
+		"AtomicHotfix2Reply"
+	},
+	[-24562] = {
+		"Atomic",
+		"AtomicHotfix1Push"
+	},
+	[-24561] = {
+		"Atomic",
+		"AtomicHotfix2Push"
 	},
 	[-10819] = {
 		"AutoChess",
@@ -3744,6 +3952,11 @@ local module_cmd = {
 		"GetGMFightTeamDetailInfosRequest",
 		"GetGMFightTeamDetailInfosReply"
 	},
+	[2347] = {
+		"Fight",
+		"GetGMFightLogRequest",
+		"GetGMFightLogReply"
+	},
 	[-8980] = {
 		"FightTool",
 		"EnterCustomFightRequest",
@@ -3857,6 +4070,11 @@ local module_cmd = {
 		"GetRecommendedFriendsRequest",
 		"GetRecommendedFriendsReply"
 	},
+	[-22437] = {
+		"GlobalVote",
+		"GlobalVoteGetInfoRequest",
+		"GlobalVoteGetInfoReply"
+	},
 	[9762] = {
 		"GM",
 		"GMRequest",
@@ -3882,6 +4100,11 @@ local module_cmd = {
 	[28434] = {
 		"GM",
 		"ServerErrorInfoPush"
+	},
+	[19592] = {
+		"GM",
+		"GmModuleRequest",
+		"GmModuleReply"
 	},
 	[18894] = {
 		"Guide",
@@ -4379,6 +4602,16 @@ local module_cmd = {
 	[22389] = {
 		"Material",
 		"MaterialChangePush"
+	},
+	[25533] = {
+		"Milestone",
+		"GetMilestoneInfoRequest",
+		"GetMilestoneInfoReply"
+	},
+	[-8328] = {
+		"Milestone",
+		"GetMilestoneBonusRequest",
+		"GetMilestoneBonusReply"
 	},
 	[-32123] = {
 		"NecrologistStory",
@@ -5811,6 +6044,21 @@ local module_cmd = {
 		"Rouge2Outside",
 		"Rouge2UpdateGeniusPointPush"
 	},
+	[16362] = {
+		"Rouge2Outside",
+		"Rouge2SaveContextRequest",
+		"Rouge2SaveContextReply"
+	},
+	[-32592] = {
+		"Rouge2Outside",
+		"Rouge2ChoiceSaveRequest",
+		"Rouge2ChoiceSaveReply"
+	},
+	[22226] = {
+		"Rouge2Outside",
+		"Rouge2BossRewardRequest",
+		"Rouge2BossRewardReply"
+	},
 	[-7647] = {
 		"Rouge",
 		"GetRougeInfoRequest",
@@ -6243,6 +6491,146 @@ local module_cmd = {
 		"SupplementMonthCardRequest",
 		"SupplementMonthCardReply"
 	},
+	[30499] = {
+		"SodacheInside",
+		"SodacheInsideEnterSceneRequest",
+		"SodacheInsideEnterSceneReply"
+	},
+	[-16985] = {
+		"SodacheInside",
+		"SodacheInsideBuyRequest",
+		"SodacheInsideBuyReply"
+	},
+	[32105] = {
+		"SodacheInside",
+		"SodacheInsideBatchBuyRequest",
+		"SodacheInsideBatchBuyReply"
+	},
+	[32679] = {
+		"SodacheInside",
+		"SodacheInsideSellRequest",
+		"SodacheInsideSellReply"
+	},
+	[-6459] = {
+		"SodacheInside",
+		"SodacheInsideGetSceneRequest",
+		"SodacheInsideGetSceneReply"
+	},
+	[19478] = {
+		"SodacheInside",
+		"SodacheInsideSceneOperationRequest",
+		"SodacheInsideSceneOperationReply"
+	},
+	[6136] = {
+		"SodacheInside",
+		"SodacheInsideAbandonSceneRequest",
+		"SodacheInsideAbandonSceneReply"
+	},
+	[-26453] = {
+		"SodacheInside",
+		"SodacheInsideSubmitMaterialSettleRequest",
+		"SodacheInsideSubmitMaterialSettleReply"
+	},
+	[-11017] = {
+		"SodacheInside",
+		"SodacheInsideSceneFinishSettlePush"
+	},
+	[20413] = {
+		"SodacheInside",
+		"SodacheInsideClosePanelRequest",
+		"SodacheInsideClosePanelReply"
+	},
+	[-2982] = {
+		"SodacheInside",
+		"SodacheInsideHotfix1Request",
+		"SodacheInsideHotfix1Reply"
+	},
+	[-2981] = {
+		"SodacheInside",
+		"SodacheInsideHotfix2Request",
+		"SodacheInsideHotfix2Reply"
+	},
+	[-2980] = {
+		"SodacheInside",
+		"SodacheInsideHotfix3Request",
+		"SodacheInsideHotfix3Reply"
+	},
+	[-14193] = {
+		"SodacheInside",
+		"SodacheInsideStatisticPush"
+	},
+	[-18705] = {
+		"SodacheInside",
+		"SodacheInsideStatisticGetRequest",
+		"SodacheInsideStatisticGetReply"
+	},
+	[-31417] = {
+		"SodacheOutside",
+		"SodacheOutsideGetSceneRequest",
+		"SodacheOutsideGetSceneReply"
+	},
+	[32690] = {
+		"SodacheOutside",
+		"SodacheBuildingUpgradeRequest",
+		"SodacheBuildingUpgradeReply"
+	},
+	[-20173] = {
+		"SodacheOutside",
+		"SodacheRelicUpgradeRequest",
+		"SodacheRelicUpgradeReply"
+	},
+	[20222] = {
+		"SodacheOutside",
+		"SodacheRelicOneKeyUpgradeRequest",
+		"SodacheRelicOneKeyUpgradeReply"
+	},
+	[22985] = {
+		"SodacheOutside",
+		"SodacheBagUpdatePush"
+	},
+	[8504] = {
+		"SodacheOutside",
+		"SodacheStepPush"
+	},
+	[-17449] = {
+		"SodacheOutside",
+		"SodacheAttrPush"
+	},
+	[2579] = {
+		"SodacheOutside",
+		"SodacheTaskGainRewardRequest",
+		"SodacheTaskGainRewardReply"
+	},
+	[-7742] = {
+		"SodacheOutside",
+		"SodacheTaskAbandonRequest",
+		"SodacheTaskAbandonReply"
+	},
+	[4959] = {
+		"SodacheOutside",
+		"SodacheTaskAcceptRequest",
+		"SodacheTaskAcceptReply"
+	},
+	[15491] = {
+		"SodacheOutside",
+		"SodacheTaskSubmitRequest",
+		"SodacheTaskSubmitReply"
+	},
+	[-13668] = {
+		"SodacheOutside",
+		"SodacheOutsideHotfix1Request",
+		"SodacheOutsideHotfix1Reply"
+	},
+	[-13667] = {
+		"SodacheOutside",
+		"SodacheOutsideHotfix2Request",
+		"SodacheOutsideHotfix2Reply"
+	},
+	[-13666] = {
+		"SodacheOutside",
+		"SodacheOutsideHotfix3Request",
+		"SodacheOutsideHotfix3Reply"
+	},
 	[-28177] = {
 		"Stat",
 		"ClientStatBaseInfoRequest",
@@ -6325,6 +6713,11 @@ local module_cmd = {
 		"Summon",
 		"GetSummonProgressRewardsRequest",
 		"GetSummonProgressRewardsReply"
+	},
+	[-21980] = {
+		"Summon",
+		"SelectSummonchoosableRewardRequest",
+		"SelectSummonchoosableRewardReply"
 	},
 	[-5258] = {
 		"Summon",
@@ -6812,6 +7205,20 @@ local module_cmd = {
 		"Task",
 		"FinishReadTaskRequest",
 		"FinishReadTaskReply"
+	},
+	[9952] = {
+		"Teaching",
+		"TeachingGetInfoRequest",
+		"TeachingGetInfoReply"
+	},
+	[1787] = {
+		"Teaching",
+		"TeachingGetBonusRequest",
+		"TeachingGetBonusReply"
+	},
+	[20515] = {
+		"Teaching",
+		"TeachingUpdateInfoPush"
 	},
 	[13540] = {
 		"TowerCompose",

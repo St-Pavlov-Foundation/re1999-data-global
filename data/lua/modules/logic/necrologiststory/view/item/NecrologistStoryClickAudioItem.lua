@@ -18,13 +18,13 @@ function NecrologistStoryClickAudioItem:onClickClick()
 	})
 end
 
-function NecrologistStoryClickAudioItem:addEventListeners()
-	NecrologistStoryClickAudioItem.super.addEventListeners(self)
+function NecrologistStoryClickAudioItem:onAddEvent()
+	NecrologistStoryClickAudioItem.super.onAddEvent(self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 end
 
-function NecrologistStoryClickAudioItem:removeEventListeners()
-	NecrologistStoryClickAudioItem.super.removeEventListeners(self)
+function NecrologistStoryClickAudioItem:onRemoveEvent()
+	NecrologistStoryClickAudioItem.super.onRemoveEvent(self)
 	self:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, self.onCloseViewFinish, self)
 end
 

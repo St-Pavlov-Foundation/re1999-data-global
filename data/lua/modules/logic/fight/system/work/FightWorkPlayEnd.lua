@@ -43,6 +43,13 @@ function FightWorkPlayEnd:onStart()
 		return
 	end
 
+	if fightRecordMO.fightResult == FightEnum.FightResult.Succ and lua_fight_direct_switch_battle_when_end.configDict[FightDataHelper.fieldMgr.battleId] then
+		flow:registWork(FightWorkFunction, FightGameMgr.restartMgr.directSwitchBattle, FightGameMgr.restartMgr)
+		self:playWorkAndDone(flow, {})
+
+		return
+	end
+
 	flow:addWork(FightWorkEndResultViewShow.New())
 	flow:addWork(FightWorkSeasonPopupAndStory.New())
 	flow:addWork(FightWorkWeekWalkRevive.New())

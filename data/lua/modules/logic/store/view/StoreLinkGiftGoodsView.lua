@@ -74,6 +74,10 @@ function StoreLinkGiftGoodsView:_editableInitView()
 	self._txtnum = gohelper.findChildText(self.viewGO, "view/left/num1/txt_num")
 	self._txtnum2 = gohelper.findChildText(self.viewGO, "view/left/num2/txt_num")
 	self._txtnum3 = gohelper.findChildText(self.viewGO, "view/left/num3/txt_num")
+	self._txttipnum = gohelper.findChildText(self.viewGO, "view/left/Tips/#txt_num")
+	self._simagecurrency = gohelper.findChildSingleImage(self.viewGO, "view/left/num1/icon")
+	self._simagecurrency2 = gohelper.findChildSingleImage(self.viewGO, "view/left/num2/icon")
+	self._simagecurrency3 = gohelper.findChildSingleImage(self.viewGO, "view/left/num3/icon")
 	self._gonum = gohelper.findChild(self.viewGO, "view/left/num1")
 	self._gonum2 = gohelper.findChild(self.viewGO, "view/left/num2")
 	self._gonum3 = gohelper.findChild(self.viewGO, "view/left/num3")
@@ -116,6 +120,9 @@ end
 
 function StoreLinkGiftGoodsView:onDestroyView()
 	self._simageicon:UnLoadImage()
+	self._simagecurrency:UnLoadImage()
+	self._simagecurrency2:UnLoadImage()
+	self._simagecurrency3:UnLoadImage()
 end
 
 function StoreLinkGiftGoodsView:_payFinished()
@@ -129,8 +136,18 @@ function StoreLinkGiftGoodsView:_updateNormal()
 	local isUnlock = StoreCharageConditionalHelper.isCharageCondition(self._mo.id)
 	local isTaskNotFinish = StoreCharageConditionalHelper.isCharageTaskNotFinish(self._mo.id)
 	local condCfg = StoreConfig.instance:getChargeConditionalConfig(self._mo.config.taskid)
+
+	if not isAlreadyBuy and isUnlock then
+		StoreGoodsTaskController.instance:setAutoFininishTaskId(self._mo.config.taskid)
+	end
+
 	local iconName = condCfg.bigImg2
 	local showCondIcon = true
+
+	if isCanBuy and isUnlock then
+		showCondIcon = false
+		iconName = self._mo.config.bigImg
+	end
 
 	gohelper.setActive(self._btnbuy, isLevelOpen and isCanBuy)
 	gohelper.setActive(self._gohasget, not isCanBuy)
@@ -150,8 +167,6 @@ function StoreLinkGiftGoodsView:_updateNormal()
 	else
 		self._txtlock.text = condCfg and condCfg.conDesc
 	end
-
-	self._canvasGroup.alpha = isUnlock and 1 or 0.5
 
 	self._simageicon:LoadImage(ResUrl.getStorePackageIcon(iconName), self._onIconLoadFinish, self)
 
@@ -176,11 +191,19 @@ function StoreLinkGiftGoodsView:_updateNormal()
 	gohelper.setActive(self._goimagedec, showCondIcon)
 	gohelper.setActive(self._gonum3, not showCondIcon)
 
+	local bounsCount, summonCount = self:_getRewardCount(bonusList)
+	local condBonusCount, condSummonCount = self:_getRewardCount(condBonusList)
+
 	if showCondIcon then
-		self._txtnum.text = self:_getNumStr(self:_getRewardCount(bonusList))
-		self._txtnum2.text = self:_getNumStr(self:_getRewardCount(condBonusList))
+		self._txtnum.text = self:_getNumStr(bounsCount)
+		self._txtnum2.text = self:_getNumStr(condBonusCount)
+
+		StoreLinkGiftGoodsView.setCurrencyIconByBouns(self._simagecurrency, bonusList)
+		StoreLinkGiftGoodsView.setCurrencyIconByBouns(self._simagecurrency2, condBonusList)
 	else
-		self._txtnum3.text = self:_getNumStr(self:_getRewardCount(condBonusList) + self:_getRewardCount(bonusList))
+		self._txtnum3.text = self:_getNumStr(bounsCount + condBonusCount)
+
+		StoreLinkGiftGoodsView.setCurrencyIconByBouns(self._simagecurrency3, bonusList)
 	end
 
 	self._iconItemList = self._iconItemList or self:getUserDataTb_()
@@ -188,6 +211,8 @@ function StoreLinkGiftGoodsView:_updateNormal()
 
 	self:_setIconBouns(self._iconItemList, bonusList, self._goleftIcon)
 	self:_setIconBouns(self._iconItem2List, condBonusList, self._gorightIcon)
+
+	self._txttipnum.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("sp02_store_linkgift_totalcount2_txt"), summonCount + condSummonCount)
 end
 
 function StoreLinkGiftGoodsView:_getNumStr(num)
@@ -249,16 +274,18 @@ end
 
 function StoreLinkGiftGoodsView:_getRewardCount(bonusList)
 	local count = 0
+	local summonCount = 0
 
 	if bonusList and #bonusList > 0 then
 		for i, bonus in ipairs(bonusList) do
-			if bonus and #bonus >= 2 then
+			if bonus and #bonus >= 3 then
 				count = count + bonus[3]
+				summonCount = summonCount + SummonConfig.instance:getSummonCountByItemId(bonus[2]) * bonus[3]
 			end
 		end
 	end
 
-	return count
+	return count, summonCount
 end
 
 function StoreLinkGiftGoodsView:_updateNormalPackCommon(leftbg, txtremain, goremain)
@@ -340,6 +367,21 @@ end
 
 function StoreLinkGiftGoodsView:_payFinished()
 	self:closeThis()
+end
+
+function StoreLinkGiftGoodsView.setCurrencyIconByBouns(simageIcon, bonusList)
+	if not bonusList or not simageIcon then
+		return
+	end
+
+	for i, bonus in ipairs(bonusList) do
+		if bonus and #bonus >= 2 then
+			local itemType = bonus[1]
+			local itemId = bonus[2]
+
+			simageIcon:LoadImage(SummonMainModel.getSummonItemIcon(itemType, itemId))
+		end
+	end
 end
 
 return StoreLinkGiftGoodsView

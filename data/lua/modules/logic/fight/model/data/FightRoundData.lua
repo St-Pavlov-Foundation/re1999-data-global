@@ -3,6 +3,52 @@
 module("modules.logic.fight.model.data.FightRoundData", package.seeall)
 
 local FightRoundData = FightDataClass("FightRoundData")
+local stringSub = string.sub
+local stringByte = string.byte
+local stringChar = string.char
+local tableConcat = table.concat
+local UnzipBuffer = SLFramework.GameUpdate.UnityZipUtil.UnzipBuffer
+local fightStepFunc = FightDef_pb.FightStep
+
+local function readInt(bytes, idx)
+	local b1, b2, b3, b4 = stringByte(bytes, idx, idx + 3)
+	local val = b1 * 16777216 + b2 * 65536 + b3 * 256 + b4
+
+	return val, idx + 4
+end
+
+local function decodeStep(bytes)
+	if not bytes or #bytes == 0 then
+		return {}
+	end
+
+	local idx = 1
+	local count, newIdx = readInt(bytes, idx)
+
+	idx = newIdx
+
+	local steps = {}
+	local stepIndex = 1
+
+	for _ = 1, count do
+		local len
+
+		len, idx = readInt(bytes, idx)
+
+		local stepBytes = stringSub(bytes, idx, idx + len - 1)
+
+		idx = idx + len
+
+		local fightStep = fightStepFunc()
+
+		fightStep:ParseFromString(stepBytes)
+
+		steps[stepIndex] = fightStep
+		stepIndex = stepIndex + 1
+	end
+
+	return steps
+end
 
 function FightRoundData:onConstructor(proto)
 	if not proto then
@@ -10,7 +56,30 @@ function FightRoundData:onConstructor(proto)
 	end
 
 	self.hurtMergeFlag = {}
-	self.fightStep = self:buildFightStep(proto.fightStep)
+
+	if proto:HasField("fightStepBytes") then
+		local fightStepBytes = UnzipBuffer(proto.fightStepBytes)
+		local charList = {}
+		local charIndex = 1
+
+		for i = 0, fightStepBytes.Length - 1 do
+			charList[charIndex] = stringChar(fightStepBytes[i])
+			charIndex = charIndex + 1
+		end
+
+		local list = decodeStep(tableConcat(charList, ""))
+
+		self.fightStep = self:buildFightStep(list)
+		proto.fightStepBytes = ""
+
+		if isDebugBuild then
+			for i = 1, #list do
+				table.insert(proto.fightStep, list[i])
+			end
+		end
+	else
+		self.fightStep = self:buildFightStep(proto.fightStep)
+	end
 
 	if proto:HasField("actPoint") then
 		self.actPoint = proto.actPoint
@@ -105,6 +174,79 @@ end
 function FightRoundData:processRoundData()
 	self.fightStep = self:processStepList(self.fightStep)
 	self.nextRoundBeginStep = self:processStepList(self.nextRoundBeginStep)
+
+	self:maskDeviceDone()
+	self:buildStepDeviceInnerIndex()
+	self:calculateTimelineCount()
+
+	if FightDataHelper.fieldMgr:isRouge2() then
+		FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
+	end
+end
+
+function FightRoundData:buildStepDeviceInnerIndex()
+	local wrapType = FightStepData.StepType.Wrap
+	local deviceType = FightEnum.ActType.DEVICE
+	local innerIndex = 1
+
+	for _, step in ipairs(self.fightStep) do
+		if step.actType == deviceType then
+			if step:getStepType() == wrapType then
+				innerIndex = step.supportHeroId
+			else
+				step:setDeviceInnerIndex(innerIndex)
+			end
+		end
+	end
+end
+
+function FightRoundData:calculateTimelineCount()
+	local count = 0
+
+	for _, stepMo in ipairs(self.fightStep) do
+		if self:checkIsTimeLineStep(stepMo) then
+			count = count + 1
+		end
+	end
+
+	for _, stepMo in ipairs(self.nextRoundBeginStep) do
+		if self:checkIsTimeLineStep(stepMo) then
+			count = count + 1
+		end
+	end
+
+	self.timelineCount = count
+end
+
+function FightRoundData:checkIsTimeLineStep(stepMo)
+	local actType = stepMo.actType
+
+	if actType == FightEnum.ActType.SKILL or actType == FightEnum.ActType.DEVICE then
+		if FightHelper.isASFDSkill(stepMo.actId) then
+			return true
+		else
+			local entityMo = FightDataHelper.entityMgr:getById(stepMo.fromId)
+			local skinId = entityMo and entityMo.skin
+			local timeline = FightConfig.instance:getSkinSkillTimeline(skinId, stepMo.actId)
+
+			return not string.nilorempty(timeline)
+		end
+	end
+end
+
+function FightRoundData:maskDeviceDone()
+	local deviceActType = FightEnum.ActType.DEVICE
+	local count = #self.fightStep
+
+	for i = count, 1, -1 do
+		local fightStep = self.fightStep[i]
+
+		if fightStep.actType == deviceActType then
+			fightStep:setCustomDeviceDone(true)
+
+			return
+		end
+	end
 end
 
 function FightRoundData:processStepList(stepList)
@@ -114,16 +256,17 @@ function FightRoundData:processStepList(stepList)
 	self.effectStepDeep = 0
 
 	for i, v in ipairs(stepList) do
-		self:addStep(v)
+		self:addStep(v, FightStepData.StepType.Wrap)
 	end
 
 	return self.stepList
 end
 
-function FightRoundData:addStep(step)
+function FightRoundData:addStep(step, stepType)
 	self.stepIndex = self.stepIndex + 1
 	step.custom_stepIndex = self.stepIndex
 
+	step:setStepType(stepType)
 	table.insert(self.stepList, step)
 	self:detectStepEffect(step.actEffect)
 end
@@ -171,7 +314,7 @@ function FightRoundData:detectStepEffect(actEffect)
 				index = index - 1
 				self.effectStepDeep = self.effectStepDeep + 1
 
-				self:addStep(actEffectData.fightStep)
+				self:addStep(actEffectData.fightStep, FightStepData.StepType.Inner)
 
 				self.effectStepDeep = self.effectStepDeep - 1
 			else
@@ -182,7 +325,7 @@ function FightRoundData:detectStepEffect(actEffect)
 
 					index = index - 1
 
-					self:addStep(fightStepData)
+					self:addStep(fightStepData, FightStepData.StepType.Inner)
 				else
 					self:detectStepEffect(fightStepData.actEffect)
 				end

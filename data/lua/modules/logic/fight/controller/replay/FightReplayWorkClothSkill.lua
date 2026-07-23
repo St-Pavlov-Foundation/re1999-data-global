@@ -30,7 +30,7 @@ function FightReplayWorkClothSkill:onStart()
 			FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline = true
 			self.aiJiAoPreTimeline = FightWorkFlowSequence.New()
 
-			self.aiJiAoPreTimeline:registWork(Work2FightWork, FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", self.clothSkillOp.toId)
+			self.aiJiAoPreTimeline:registWork(FightWorkPlayTimeline, playEntity, "aijiao_312301_unique_pre", self.clothSkillOp.toId)
 			self.aiJiAoPreTimeline:registFinishCallback(self._aiJiAoPreTimelineFinish, self)
 			self.aiJiAoPreTimeline:start()
 		else
@@ -56,6 +56,20 @@ function FightReplayWorkClothSkill:onStart()
 		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
 		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
 		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, "0", "0", FightEnum.ClothSkillType.BattleSelection)
+
+		return
+	elseif self.clothSkillOp.type == FightEnum.ClothSkillType.TwinsSelect then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, self.clothSkillOp.fromId, self.clothSkillOp.toId, FightEnum.ClothSkillType.TwinsSelect)
+
+		return
+	end
+
+	if self.clothSkillOp.skillId == FightEnum.DeviceDiscardSkillId then
+		FightController.instance:registerCallback(FightEvent.RespUseClothSkillFail, self._failDone, self)
+		FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, self._onClothSkillDone, self)
+		FightRpc.instance:sendUseClothSkillRequest(self.clothSkillOp.skillId, nil, self.clothSkillOp.toId)
 
 		return
 	end

@@ -13,37 +13,10 @@ function Rouge2_BackpackModel:reInit()
 end
 
 function Rouge2_BackpackModel:getActiveSkillHoleStatus(index)
-	local status = Rouge2_Enum.ActiveSkillHoleStatus.Lock
-	local isUseYBX = Rouge2_Model.instance:isUseYBXCareer()
-
-	if isUseYBX then
-		local talentCo = Rouge2_CareerConfig.instance:getTalentConfigByHoleIndex(index)
-		local talentId = talentCo and talentCo.talentId
-
-		status = self:getTalentStatus(talentId)
-	else
-		status = Rouge2_Enum.ActiveSkillHoleStatus.Empty
-	end
-
-	if status >= Rouge2_Enum.ActiveSkillHoleStatus.Empty then
-		local isUse = self:isActiveSkillIndexInUse(index)
-
-		status = isUse and Rouge2_Enum.ActiveSkillHoleStatus.Equip or Rouge2_Enum.ActiveSkillHoleStatus.Empty
-	end
+	local isUse = self:isActiveSkillIndexInUse(index)
+	local status = isUse and Rouge2_Enum.ActiveSkillHoleStatus.Equip or Rouge2_Enum.ActiveSkillHoleStatus.Empty
 
 	return status
-end
-
-function Rouge2_BackpackModel:isActiveSkillHoleUnlock(index)
-	local status = self:getActiveSkillHoleStatus(index)
-
-	return status >= Rouge2_Enum.ActiveSkillHoleStatus.Empty
-end
-
-function Rouge2_BackpackModel:isActiveSkillInUse(skillUid)
-	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
-
-	return leaderInfo and leaderInfo:isActiveSkillInUse(skillUid)
 end
 
 function Rouge2_BackpackModel:isActiveSkillIndexInUse(index)
@@ -53,73 +26,13 @@ function Rouge2_BackpackModel:isActiveSkillIndexInUse(index)
 end
 
 function Rouge2_BackpackModel:index2UseActiveSkill(index)
-	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
-	local skillUid = leaderInfo and leaderInfo:getEquipActiveSkill(index)
-
-	if skillUid and skillUid ~= Rouge2_Enum.EmptyActiveSkill then
-		return self:getItem(skillUid)
-	end
-end
-
-function Rouge2_BackpackModel:uid2UseActiveSkillIndex(skillUid)
-	if not self:isActiveSkillInUse(skillUid) then
+	if not index then
 		return
 	end
 
-	for i = 1, Rouge2_Enum.MaxActiveSkillNum do
-		local skillMo = self:index2UseActiveSkill(i)
+	local itemList = self:getItemList(Rouge2_Enum.BagType.ActiveSkill)
 
-		if skillMo and skillMo:getUid() == skillUid then
-			return i
-		end
-	end
-end
-
-function Rouge2_BackpackModel:getAllNotUseActiveSkillList()
-	local notUseSkillList = {}
-	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
-	local allSkillList = self:getItemList(Rouge2_Enum.BagType.ActiveSkill)
-
-	if allSkillList then
-		for _, skillMo in ipairs(allSkillList) do
-			if not leaderInfo:isActiveSkillInUse(skillMo:getUid()) then
-				table.insert(notUseSkillList, skillMo)
-			end
-		end
-	end
-
-	return notUseSkillList
-end
-
-function Rouge2_BackpackModel:hasAnyNotUseActiveSkill()
-	local leaderInfo = Rouge2_Model.instance:getLeaderInfo()
-	local allSkillList = self:getItemList(Rouge2_Enum.BagType.ActiveSkill)
-
-	if allSkillList then
-		for _, skillMo in ipairs(allSkillList) do
-			if not leaderInfo:isActiveSkillInUse(skillMo:getUid()) then
-				return true
-			end
-		end
-	end
-end
-
-function Rouge2_BackpackModel:getUseActiveSkillAssembleCost()
-	local allCost = 0
-
-	for i = 1, Rouge2_Enum.MaxActiveSkillNum do
-		local skillMo = self:index2UseActiveSkill(i)
-
-		if skillMo ~= nil then
-			local skillId = skillMo:getItemId()
-			local skillCo = Rouge2_CollectionConfig.instance:getActiveSkillConfig(skillId)
-			local assembleCost = skillCo and skillCo.assembleCost or 0
-
-			allCost = allCost + assembleCost
-		end
-	end
-
-	return allCost
+	return itemList and itemList[index]
 end
 
 function Rouge2_BackpackModel:updateBagInfo(bagInfo)
@@ -147,6 +60,8 @@ function Rouge2_BackpackModel:removeItems(itemInfoList)
 	if bagInfo then
 		bagInfo:removeItems(itemInfoList)
 	end
+
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onUpdateBagInfo)
 end
 
 function Rouge2_BackpackModel:getBagInfo()
@@ -241,6 +156,10 @@ function Rouge2_BackpackModel:getTalentStatus(talentId)
 	end
 
 	if self:isTalentActive(talentId) then
+		if self:isActiveSkillIndexInUse(talentCo.ordinal) then
+			return Rouge2_Enum.ActiveSkillHoleStatus.Equip
+		end
+
 		return Rouge2_Enum.BagTalentStatus.Active, Rouge2_Enum.BagTalentNotActiveReason.HasActive
 	end
 

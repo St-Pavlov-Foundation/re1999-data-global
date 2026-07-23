@@ -5,7 +5,9 @@
     "fontasset1": "regularpro",
     "fontasset2": "regularpro",
     "textfontasset1": "regular.ttf",
-    "textfontasset2": "regular.ttf"
+    "textfontasset2": "regular.ttf",
+    "syst_cn_h": "syst_cn_h_en",
+    "syst_cn_b": "syst_cn_b_en"
   },
   {
     "shortcuts": "jp",
@@ -13,7 +15,9 @@
     "fontasset1": "japanpro",
     "fontasset2": "japankot",
     "textfontasset1": "japan.otf",
-    "textfontasset2": "japankot.otf"
+    "textfontasset2": "japankot.otf",
+    "syst_cn_h": "syst_cn_h_jp",
+    "syst_cn_b": "syst_cn_b_jp"
   },
   {
     "shortcuts": "zh",
@@ -21,7 +25,9 @@
     "fontasset1": "hwzs_dynamic",
     "fontasset2": "hkxzyt_dynamic",
     "textfontasset1": "hwzs.ttf",
-    "textfontasset2": "hkxzyt.ttf"
+    "textfontasset2": "hkxzyt.ttf",
+    "syst_cn_h": "syst_cn_h",
+    "syst_cn_b": "syst_cn_b"
   },
   {
     "shortcuts": "kr",
@@ -29,7 +35,9 @@
     "fontasset1": "koreapro",
     "fontasset2": "koreapro",
     "textfontasset1": "korea.ttf",
-    "textfontasset2": "korea.ttf"
+    "textfontasset2": "korea.ttf",
+    "syst_cn_h": "syst_cn_h_kr",
+    "syst_cn_b": "syst_cn_b_kr"
   },
   {
     "shortcuts": "thai",
@@ -37,7 +45,9 @@
     "fontasset1": "thaipro",
     "fontasset2": "thaipro",
     "textfontasset1": "thaittf.ttf",
-    "textfontasset2": "thaittf.ttf"
+    "textfontasset2": "thaittf.ttf",
+    "syst_cn_h": "syst_cn_h_thai",
+    "syst_cn_b": "syst_cn_b_thai"
   },
   {
     "shortcuts": "tw",
@@ -45,7 +55,9 @@
     "fontasset1": "hwzs_dynamic",
     "fontasset2": "hwzs_dynamic",
     "textfontasset1": "hwzs.ttf",
-    "textfontasset2": "hwzs.ttf"
+    "textfontasset2": "hwzs.ttf",
+    "syst_cn_h": "syst_cn_h_tw",
+    "syst_cn_b": "syst_cn_b_tw"
   },
   {
     "shortcuts": "de",
@@ -53,7 +65,9 @@
     "fontasset1": "regularpro",
     "fontasset2": "regularpro",
     "textfontasset1": "hwzs.ttf",
-    "textfontasset2": "hwzs.ttf"
+    "textfontasset2": "hwzs.ttf",
+    "syst_cn_h": "syst_cn_h_de",
+    "syst_cn_b": "syst_cn_b_de"
   },
   {
     "shortcuts": "fr",
@@ -61,6 +75,8 @@
     "fontasset1": "regularpro",
     "fontasset2": "regularpro",
     "textfontasset1": "hwzs.ttf",
-    "textfontasset2": "hwzs.ttf"
+    "textfontasset2": "hwzs.ttf",
+    "syst_cn_h": "syst_cn_h_fr",
+    "syst_cn_b": "syst_cn_b_fr"
   }
 ]

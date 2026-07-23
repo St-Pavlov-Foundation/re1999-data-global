@@ -7,6 +7,7 @@ local NecrologistStoryTextItem = class("NecrologistStoryTextItem", NecrologistSt
 function NecrologistStoryTextItem:onInit()
 	self.txtContent = gohelper.findChildTextMesh(self.viewGO, "content/txtContent")
 	self.txtComp = MonoHelper.addNoUpdateLuaComOnceToGo(self.txtContent.gameObject, NecrologistStoryTextComp)
+	self.linkItemList = {}
 end
 
 function NecrologistStoryTextItem:onPlayStory(isSkip)
@@ -18,9 +19,8 @@ function NecrologistStoryTextItem:refreshText(isSkip)
 	local desc, hasLink = NecrologistStoryHelper.getDescByConfig(storyConfig)
 
 	self.hasLink = hasLink
-	self.txtContent.raycastTarget = hasLink
 
-	if self.hasLink and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(GuideEnum.GuideId.NecrologistStoryLinkText) then
+	if self:hasLinkGuide() then
 		isSkip = false
 
 		local mo = NecrologistStoryModel.instance:getCurStoryMO()
@@ -29,16 +29,25 @@ function NecrologistStoryTextItem:refreshText(isSkip)
 	end
 
 	if isSkip then
-		self.txtComp:setTextNormal(desc)
+		self.txtComp:setTextNormal(desc, self.onTextFinish, self)
 	else
-		self.txtComp:setTextWithTypewriter(desc, self.refreshHeight, self.onTextFinish, self)
+		self.txtComp:setTextWithTypewriter(desc, self.onFrameUpdateText, self.onTextFinish, self)
+	end
+end
+
+function NecrologistStoryTextItem:onFrameUpdateText()
+	local height = self:caleHeight()
+
+	if not self.lastHeight or math.abs(self.lastHeight - height) > 0.1 then
+		self.lastHeight = height
+
+		self:refreshHeight()
 	end
 end
 
 function NecrologistStoryTextItem:onTextFinish()
 	if self.hasLink then
-		self:createLinksRect()
-		NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnLinkText)
+		TaskDispatcher.runDelay(self.createLinksRect, self, 0.02)
 	end
 
 	self:onPlayFinish()
@@ -49,15 +58,44 @@ function NecrologistStoryTextItem:createLinksRect()
 	local tmpGO = self.txtContent.gameObject
 
 	for i, v in ipairs(list) do
-		local centerPos, width, height, linkId = unpack(v)
-		local name = "link" .. linkId
-		local linkGO = gohelper.findChild(tmpGO, name)
-
-		linkGO = linkGO or gohelper.create2d(tmpGO, name)
-
-		recthelper.setAnchor(linkGO.transform, centerPos.x, centerPos.y)
-		recthelper.setSize(linkGO.transform, width, height)
+		self:createLinkRectItem(v)
 	end
+
+	NecrologistStoryController.instance:dispatchEvent(NecrologistStoryEvent.OnLinkText)
+end
+
+function NecrologistStoryTextItem:createLinkRectItem(data)
+	local centerPos, width, height, linkId = unpack(data)
+
+	if self.linkItemList[linkId] then
+		return
+	end
+
+	local item = self:getUserDataTb_()
+
+	item.linkId = linkId
+	item.go = gohelper.create2d(self.txtContent.gameObject, "link" .. linkId)
+	item.transform = item.go.transform
+
+	recthelper.setAnchor(item.transform, centerPos.x, centerPos.y)
+	recthelper.setSize(item.transform, width, height)
+
+	item.image = gohelper.onceAddComponent(item.go, gohelper.Type_Image)
+	item.image.raycastTarget = true
+
+	ZProj.UGUIHelper.SetColorAlpha(item.image, 0)
+
+	item.btn = gohelper.getClick(item.go)
+
+	item.btn:AddClickListener(self.onClickLink, self, linkId)
+
+	self.linkItemList[linkId] = item
+
+	return item
+end
+
+function NecrologistStoryTextItem:onClickLink(linkId)
+	NecrologistStoryHelper.defaultClick(linkId)
 end
 
 function NecrologistStoryTextItem:getLinkRectGO()
@@ -66,11 +104,10 @@ function NecrologistStoryTextItem:getLinkRectGO()
 
 	for i, v in ipairs(list) do
 		local _, _, _, linkId = unpack(v)
-		local name = "link" .. linkId
-		local linkGO = gohelper.findChild(tmpGO, name)
+		local item = self.linkItemList[linkId]
 
-		if linkGO then
-			return linkGO
+		if item then
+			return item.go
 		end
 	end
 end
@@ -83,8 +120,12 @@ function NecrologistStoryTextItem:isDone()
 	return self.txtComp:isDone()
 end
 
+function NecrologistStoryTextItem:hasLinkGuide()
+	return self.hasLink and not GuideController.instance:isForbidGuides() and not GuideModel.instance:isGuideFinish(GuideEnum.GuideId.NecrologistStoryLinkText)
+end
+
 function NecrologistStoryTextItem:justDone()
-	if self.hasLink and not GuideModel.instance:isGuideFinish(GuideEnum.GuideId.NecrologistStoryLinkText) then
+	if self:hasLinkGuide() then
 		return
 	end
 
@@ -93,6 +134,18 @@ end
 
 function NecrologistStoryTextItem:getTextStr()
 	return self.txtComp and self.txtComp:getTextStr()
+end
+
+function NecrologistStoryTextItem:onDestroy()
+	if self.hasLink then
+		TaskDispatcher.cancelTask(self.createLinksRect, self)
+	end
+
+	if self.linkItemList then
+		for k, v in pairs(self.linkItemList) do
+			v.btn:RemoveClickListener()
+		end
+	end
 end
 
 return NecrologistStoryTextItem

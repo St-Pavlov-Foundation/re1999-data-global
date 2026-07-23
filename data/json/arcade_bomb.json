@@ -16,6 +16,7 @@
     "target": 703,
     "addFloor": 101,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_3_2"
   },
   {
@@ -35,6 +36,7 @@
     "target": 10,
     "addFloor": 101,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_4_2"
   },
   {
@@ -54,6 +56,7 @@
     "target": 11,
     "addFloor": 101,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_5_2"
   },
   {
@@ -73,6 +76,7 @@
     "target": 101,
     "addFloor": 0,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_1_2"
   },
   {
@@ -92,6 +96,7 @@
     "target": 12,
     "addFloor": 101,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_2_2"
   },
   {
@@ -111,6 +116,107 @@
     "target": 13,
     "addFloor": 0,
     "skill": 0,
+    "skills": "",
     "icon": "v3a3_eliminate_skillicon_2_2"
+  },
+  {
+    "id": 9998,
+    "name": "language_10120173",
+    "skillDesc": "",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_002",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 3,
+    "target": 703,
+    "addFloor": 0,
+    "skill": 9999994,
+    "skills": "",
+    "icon": "v3a3_eliminate_skillicon_3_2"
+  },
+  {
+    "id": 9999,
+    "name": "language_10120174",
+    "skillDesc": "",
+    "shape": "1#1",
+    "resPath": "v3a3_m_s12_jn1x1_002",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 3,
+    "countdown": 1,
+    "target": 703,
+    "addFloor": 0,
+    "skill": 0,
+    "skills": "9999995#9999994",
+    "icon": "v3a3_eliminate_skillicon_3_2"
+  },
+  {
+    "id": 107,
+    "name": "language_10120175",
+    "skillDesc": "language_10120176",
+    "shape": "1#1",
+    "resPath": "v3a7_m_s12_jh1x1_002",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 4,
+    "countdown": 3,
+    "target": 703,
+    "addFloor": 106,
+    "skill": 0,
+    "skills": "",
+    "icon": "v3a3_eliminate_skillicon_7_2"
+  },
+  {
+    "id": 108,
+    "name": "language_10120177",
+    "skillDesc": "language_10120178",
+    "shape": "1#1",
+    "resPath": "v3a7_m_s12_jh1x1_003",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 1,
+    "countdown": 3,
+    "target": 703,
+    "addFloor": 101,
+    "skill": 100035,
+    "skills": "",
+    "icon": "v3a3_eliminate_skillicon_6_2"
+  },
+  {
+    "id": 1081,
+    "name": "language_10120177",
+    "skillDesc": "language_10120178",
+    "shape": "1#1",
+    "resPath": "v3a7_m_s12_jh1x1_003",
+    "alertEffectId": 689010065,
+    "effectDefault": 689010051,
+    "scale": [
+      1,
+      1
+    ],
+    "damage": 1,
+    "countdown": 1,
+    "target": 703,
+    "addFloor": 101,
+    "skill": 0,
+    "skills": "100036#100035",
+    "icon": "v3a3_eliminate_skillicon_6_2"
   }
 ]

@@ -4,52 +4,94 @@ module("modules.logic.rouge2.map.view.skilldrop.Rouge2_ActiveSkillDropItem", pac
 
 local Rouge2_ActiveSkillDropItem = class("Rouge2_ActiveSkillDropItem", LuaCompBase)
 
-Rouge2_ActiveSkillDropItem.PercentColor = "#F3A055"
-Rouge2_ActiveSkillDropItem.BracketColor = "#5E7DD9"
-
 function Rouge2_ActiveSkillDropItem:init(go)
 	self.go = go
-	self._simageIcon = gohelper.findChildSingleImage(self.go, "go_Info/image_Icon")
-	self._imageAttribute = gohelper.findChildImage(self.go, "go_Info/image_Attribute")
-	self._goCostList = gohelper.findChild(self.go, "go_Info/go_CostList")
-	self._goCostItem = gohelper.findChild(self.go, "go_Info/go_CostList/go_CostItem")
-	self._txtName = gohelper.findChildText(self.go, "go_Info/txt_Name")
-	self._goSelect = gohelper.findChild(self.go, "go_Info/go_Select")
-	self._scrollDesc = gohelper.findChild(self.go, "scroll_Desc"):GetComponent(gohelper.Type_LimitedScrollRect)
-	self._goContainer = gohelper.findChild(self.go, "scroll_Desc/Viewport/go_Container")
-	self._txtDesc = gohelper.findChildText(self.go, "scroll_Desc/Viewport/go_Container/txt_Desc")
-	self._btnClick = gohelper.findChildButtonWithAudio(self.go, "btn_Click", AudioEnum.Rouge2.SelectActiveSkill)
-	self._btnClick2 = gohelper.findChildClickWithDefaultAudio(self.go, "scroll_Desc/Viewport/go_Container/txt_Desc", AudioEnum.Rouge2.SelectActiveSkill)
-	self._goRecommend = gohelper.findChild(self.go, "go_Info/go_Recommend")
-	self._teamTipsParam = {}
-	self._teamTipsLoader = Rouge2_TeamRecommendTipsLoader.Load(self._goRecommend, Rouge2_Enum.TeamRecommendTipType.AttrBuffDrop)
-	self._listener = Rouge2_CommonItemDescModeListener.Get(self.go, Rouge2_Enum.ItemDescModeDataKey.SkillDrop)
-
-	self._listener:initCallback(self.refreshItemDesc, self)
-	self:onSelect(false)
+	self._goRoot = gohelper.findChild(self.go, "go_Root")
+	self._goSelect = gohelper.findChild(self.go, "go_Select")
+	self._btnSelect = gohelper.findChildButtonWithAudio(self.go, "go_Select/btn_Select", AudioEnum.Rouge2.SelectActiveSkill)
 end
 
 function Rouge2_ActiveSkillDropItem:addEventListeners()
-	self._btnClick:AddClickListener(self._btnClickOnClick, self)
-	self._btnClick2:AddClickListener(self._btnClickOnClick, self)
-	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.OnSelectDropSkillItem, self._onSelectDropSkillItem, self)
+	self._btnSelect:AddClickListener(self._btnSelectOnClick, self)
+	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self._onCloseView, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.onConfirmSelectDrop, self.onConfirmSelectDrop, self)
+	self:addEventCb(Rouge2_MapController.instance, Rouge2_MapEvent.OnSelectDropSkillItem, self._onSelectSkillDropItem, self)
 end
 
 function Rouge2_ActiveSkillDropItem:removeEventListeners()
-	self._btnClick:RemoveClickListener()
-	self._btnClick2:RemoveClickListener()
+	self._btnSelect:RemoveClickListener()
 end
 
-function Rouge2_ActiveSkillDropItem:_btnClickOnClick()
+function Rouge2_ActiveSkillDropItem:_btnSelectOnClick()
 	if self._viewType ~= Rouge2_MapEnum.ItemDropViewEnum.Select then
 		return
 	end
 
-	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnSelectDropSkillItem, self._index)
+	GameFacade.showOptionMessageBox(MessageBoxIdDefine.Rouge2SelectActiveSkill, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.NotShow, self._reallySelect, nil, nil, self)
 end
 
-function Rouge2_ActiveSkillDropItem:setParentScroll(goParentScroll)
-	self._scrollDesc.parentGameObject = goParentScroll
+function Rouge2_ActiveSkillDropItem:_reallySelect()
+	if not self._isSelect then
+		return
+	end
+
+	GameUtil.setActiveUIBlock("Rouge2_ActiveSkillDropItem", true, false)
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onConfirmSelectDrop, self._index)
+	self._commonSkillItem:playAnim("light", self._onSelectAnimDone, self)
+end
+
+function Rouge2_ActiveSkillDropItem:_onSelectAnimDone()
+	self:_tryStatDrop()
+	GameUtil.setActiveUIBlock("Rouge2_ActiveSkillDropItem", false, true)
+
+	self._rpcCallback = Rouge2_Rpc.instance:sendRouge2SelectDropRequest({
+		self._index
+	}, self._rpcReceiveCallback, self)
+end
+
+function Rouge2_ActiveSkillDropItem:_rpcReceiveCallback(_, resultCode)
+	if resultCode ~= 0 then
+		return
+	end
+
+	self._rpcCallback = nil
+
+	ViewMgr.instance:closeView(ViewName.Rouge2_ActiveSkillDropView)
+end
+
+function Rouge2_ActiveSkillDropItem:_tryStatDrop()
+	if self._viewType ~= Rouge2_MapEnum.ItemDropViewEnum.Select then
+		return
+	end
+
+	local itemNameList = Rouge2_BackpackHelper.getItemNameList(self._dataType, self._parentView._skillList)
+	local skillName = self._skillCo and self._skillCo.name
+
+	Rouge2_StatController.instance:statSelectDrop(Rouge2_MapEnum.DropType.ActiveSkill, self._skillId, skillName, itemNameList)
+end
+
+function Rouge2_ActiveSkillDropItem:onConfirmSelectDrop(index)
+	if index == self._index then
+		return
+	end
+
+	self._isClsoe = true
+
+	self._commonSkillItem:playAnim("close")
+end
+
+function Rouge2_ActiveSkillDropItem:setParentView(parentView, goParentScroll)
+	self._parentView = parentView
+
+	if not self._commonSkillItem then
+		local goCommonSkill = self._parentView:getResInst(Rouge2_Enum.ResPath.CommonSkillItem, self._goRoot)
+
+		self._commonSkillItem = Rouge2_CommonSkillItem.Get(goCommonSkill)
+
+		self._commonSkillItem:initClickCallback(self.onClickSelf, self)
+		self._commonSkillItem:initDescModeFlag(Rouge2_Enum.ItemDescModeDataKey.SkillDrop)
+		self._commonSkillItem:setParentScroll(goParentScroll)
+	end
 end
 
 function Rouge2_ActiveSkillDropItem:onUpdateMO(index, viewType, dataType, dataId)
@@ -57,46 +99,57 @@ function Rouge2_ActiveSkillDropItem:onUpdateMO(index, viewType, dataType, dataId
 	self._viewType = viewType
 	self._dataType = dataType
 	self._dataId = dataId
-	self._skillCo, self._skillMo = Rouge2_BackpackHelper.getItemCofigAndMo(dataType, dataId)
+	self._skillCo = Rouge2_BackpackHelper.getItemCofigAndMo(self._dataType, self._dataId)
 	self._skillId = self._skillCo and self._skillCo.id
-	self._attributeId = self._skillCo and self._skillCo.attributeTag
-	self._assembleCost = self._skillCo and self._skillCo.assembleCost or 0
 
-	self:refreshUI()
-end
+	self._commonSkillItem:onUpdateMO(index, viewType, dataType, dataId)
+	self._commonSkillItem:playAnim("open")
 
-function Rouge2_ActiveSkillDropItem:refreshUI()
-	self._listener:startListen()
+	self._isClsoe = false
+	self._isSelect = false
 
-	self._teamTipsParam.itemId = self._skillId
-
-	self._teamTipsLoader:initInfo(nil, self._teamTipsParam)
-
-	self._txtName.text = self._skillCo and self._skillCo.name
-
-	Rouge2_IconHelper.setActiveSkillIcon(self._skillId, self._simageIcon)
-	Rouge2_IconHelper.setAttributeIcon(self._attributeId, self._imageAttribute)
-	gohelper.setActive(self._goCostList, self._assembleCost > 0)
-	gohelper.CreateNumObjList(self._goCostList, self._goCostItem, self._assembleCost)
-	gohelper.setActive(self._btnClick.gameObject, self._viewType == Rouge2_MapEnum.ItemDropViewEnum.Select)
-end
-
-function Rouge2_ActiveSkillDropItem:refreshItemDesc(descMode)
-	Rouge2_ItemDescHelper.setItemDescStr(self._dataType, self._dataId, self._txtDesc, descMode, nil, Rouge2_ActiveSkillDropItem.PercentColor, Rouge2_ActiveSkillDropItem.BracketColor)
+	gohelper.setActive(self._goSelect, false)
 end
 
 function Rouge2_ActiveSkillDropItem:onSelect(isSelect)
+	if self._isSelect == isSelect then
+		return
+	end
+
 	self._isSelect = isSelect
 
 	gohelper.setActive(self._goSelect, isSelect)
+	self._commonSkillItem:onSelect(isSelect)
 end
 
-function Rouge2_ActiveSkillDropItem:_onSelectDropSkillItem(index)
+function Rouge2_ActiveSkillDropItem:_onSelectSkillDropItem(index)
 	self:onSelect(index == self._index)
 end
 
+function Rouge2_ActiveSkillDropItem:onClickSelf()
+	if self._viewType ~= Rouge2_MapEnum.ItemDropViewEnum.Select and self._viewType ~= Rouge2_MapEnum.ItemDropViewEnum.LevelUp then
+		return
+	end
+
+	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.OnSelectDropSkillItem, self._index)
+end
+
+function Rouge2_ActiveSkillDropItem:_onCloseView(viewName)
+	if viewName ~= ViewName.Rouge2_ActiveSkillDropView or self._isClsoe then
+		return
+	end
+
+	self._commonSkillItem:playAnim("close")
+end
+
 function Rouge2_ActiveSkillDropItem:onDestroy()
-	self._simageIcon:UnLoadImage()
+	GameUtil.setActiveUIBlock("Rouge2_ActiveSkillDropItem", false, true)
+
+	if self._rpcCallback then
+		Rouge2_Rpc.instance:removeCallbackById(self._rpcCallback)
+
+		self._rpcCallback = nil
+	end
 end
 
 return Rouge2_ActiveSkillDropItem

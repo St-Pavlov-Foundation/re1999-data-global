@@ -32,6 +32,10 @@ function FightTLEventEffectVisible:onTrackStart(fightStepData, duration, paramsA
 			end
 		end
 	end
+
+	local dianJiShiEffectVisible = paramsArr[5]
+
+	self:com_sendFightEvent(FightEvent.SetDianJiShiEffectVisible, dianJiShiEffectVisible == "1", "FightTLEventEffectVisible")
 end
 
 function FightTLEventEffectVisible:onTrackEnd()

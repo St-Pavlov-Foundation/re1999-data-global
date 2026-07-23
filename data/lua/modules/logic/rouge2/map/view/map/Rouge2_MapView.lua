@@ -42,7 +42,7 @@ function Rouge2_MapView:_editableInitView()
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, self.onOpenView, self)
 	self:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, self.onCloseView, self)
 	NavigateMgr.instance:addEscape(self.viewName, Rouge2_MapHelper.backToMainScene, nil)
-	Rouge2_AttributeToolBar.Load(self._goNormalAttribute, Rouge2_Enum.AttributeToolType.Enter_Attr_Detail)
+	Rouge2_AttributeToolBar.Load(self._goNormalAttribute, Rouge2_Enum.AttributeToolType.Enter_Skill_Detail)
 	Rouge2_AttributeToolBar.Load(self._goPathSelectAttribute, Rouge2_Enum.AttributeToolType.Enter)
 end
 

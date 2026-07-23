@@ -350,6 +350,16 @@ function HeroDestinyStoneMO:hasReshapeStone()
 	end
 end
 
+function HeroDestinyStoneMO:isReshapeAllStone()
+	for _, mo in pairs(self.stoneMoList) do
+		if not mo:isReshape() then
+			return false
+		end
+	end
+
+	return true
+end
+
 function HeroDestinyStoneMO:getReshapeDesc()
 	for _, mo in pairs(self.stoneMoList) do
 		if mo:getReshapeDesc() then

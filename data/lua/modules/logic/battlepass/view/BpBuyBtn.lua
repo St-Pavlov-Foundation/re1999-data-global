@@ -78,7 +78,7 @@ function BpBuyBtn:_onClickbtnPay()
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.BpChargeView)
+	ViewMgr.instance:openView(BpController.instance:getBpChargeView())
 end
 
 function BpBuyBtn:_onClickSwitch()

@@ -436,8 +436,10 @@ function CharacterTipView:getEquipAddBaseValues(equips, baseAttrDict)
 	local heroMo = self.viewParam.heroMo or HeroModel.instance:getByHeroId(self.heroId)
 
 	if equips then
-		if self.viewParam.trialEquipMo then
-			heroMo:_calcEquipAttr(self.viewParam.trialEquipMo, equipAddValues, equipBreakAddAttrDict)
+		local trialEquipMo = self.viewParam.trialEquipMo
+
+		if trialEquipMo then
+			heroMo:_calcEquipAttr(trialEquipMo, equipAddValues, equipBreakAddAttrDict)
 		end
 
 		for i = 1, #equips do
@@ -446,6 +448,32 @@ function CharacterTipView:getEquipAddBaseValues(equips, baseAttrDict)
 			equipMo = equipMo and self:_modifyEquipInfo(equipMo)
 
 			heroMo:_calcEquipAttr(equipMo, equipAddValues, equipBreakAddAttrDict, equipLv)
+
+			local otherEquipMo
+
+			if trialEquipMo then
+				local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
+
+				if otherEquipId then
+					otherEquipMo = EquipMO.New()
+
+					local co = {
+						equipId = otherEquipId,
+						equipLv = trialEquipMo.level,
+						equipRefine = trialEquipMo.refineLv
+					}
+
+					otherEquipMo:initByTrialCO(co)
+				end
+			else
+				local otherEquipId = equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(equipMo.equipId)
+
+				otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+			end
+
+			if otherEquipMo then
+				heroMo:_calcEquipAttr(otherEquipMo, equipAddValues, equipBreakAddAttrDict, equipLv)
+			end
 		end
 	end
 
@@ -799,7 +827,7 @@ function CharacterTipView:_checkReplaceSkill(skillIdList, heroMo)
 end
 
 function CharacterTipView:_setTipPos(tipTran, tipPos, anchorParams)
-	if not tipTran then
+	if not tipTran or not self._goBuffItem then
 		return
 	end
 

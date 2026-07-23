@@ -109,7 +109,7 @@ end
 Rouge2_ResultReportItem.MaxShowHeroCount = 4
 
 function Rouge2_ResultReportItem:refreshHeroInfo()
-	local heroInfoList = self.reviewInfo.endHeroId
+	local heroInfoList = self.reviewInfo:getHeroIdList()
 
 	for i = 1, Rouge2_ResultReportItem.MaxShowHeroCount do
 		local info = heroInfoList[i]

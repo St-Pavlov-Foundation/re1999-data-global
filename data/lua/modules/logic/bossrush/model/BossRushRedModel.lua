@@ -175,6 +175,10 @@ function BossRushRedModel:_initBossRed(refList)
 	local config = self:_getConfig()
 	local stages = config:getStages()
 
+	if not stages then
+		return
+	end
+
 	for _, v in pairs(stages) do
 		local stage = v.stage
 		local episodeStages = config:getEpisodeStages(stage)
@@ -301,6 +305,10 @@ function BossRushRedModel:refreshAllStageLayerUnlockState()
 	local config = self:_getConfig()
 	local stages = config:getStages()
 
+	if not stages then
+		return
+	end
+
 	for stage, _ in pairs(stages) do
 		local stageInfo = BossRushModel.instance:getStageLayersInfo(stage)
 
@@ -407,6 +415,10 @@ function BossRushRedModel:_refreshRoot()
 	local config = self:_getConfig()
 	local stages = config:getStages()
 	local dict = {}
+
+	if not stages then
+		return
+	end
 
 	for _, v in pairs(stages) do
 		local stage = v.stage
@@ -536,6 +548,10 @@ function BossRushRedModel:_startTick()
 	local stages = config:getStages()
 	local list = {}
 
+	if not stages then
+		return
+	end
+
 	for _, v in pairs(stages) do
 		local stage = v.stage
 		local isOnline = BossRushModel.instance:isBossOnline(stage)
@@ -565,6 +581,10 @@ function BossRushRedModel:_tryUpdateMissingRed()
 		end
 	elseif not isOnline and oldValue == 1 then
 		self:setIsOpenActivity(false, true)
+	end
+
+	if not stages then
+		return
 	end
 
 	for _, v in pairs(stages) do
@@ -654,7 +674,7 @@ function BossRushRedModel:updateRelateDotInfo(dict)
 		self._flushCacheFrameTimer:Start()
 	end
 
-	if not next(newDict) then
+	if not newDict or not next(newDict) then
 		return
 	end
 

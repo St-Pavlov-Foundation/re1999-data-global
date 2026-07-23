@@ -192,6 +192,9 @@ function V3a6_WarmUp:onOpenFinish()
 end
 
 function V3a6_WarmUp:onOpen()
+	local parentGO = self.viewParam.parent
+
+	gohelper.addChild(parentGO, self.viewGO)
 	TaskController.instance:registerCallback(TaskEvent.SetTaskList, self._refreshTaskInfo, self)
 	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, self._refreshTaskInfo, self)
 end

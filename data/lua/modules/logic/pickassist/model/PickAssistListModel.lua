@@ -100,13 +100,25 @@ function PickAssistListModel:setListByCareer()
 	if dungeonAssistList then
 		for _, dungeonAssistHeroMo in ipairs(dungeonAssistList) do
 			local mo = createPickAssistHeroMO(dungeonAssistHeroMo)
-			local career = mo and mo:getCareer()
 
-			if mo and (career == self.career or self._notNeedCareer) then
-				table.insert(list, mo)
+			if mo then
+				local career = mo:getCareer()
+				local isCareer = career == self.career or self._notNeedCareer
 
-				if lastSelectMO and lastSelectMO:isSameHero(mo) then
-					self:setHeroSelect(mo, true)
+				if not isCareer then
+					local careerList = FightConfig.instance:getCareerList(career)
+
+					if careerList and LuaUtil.tableContains(careerList, self.career) then
+						isCareer = true
+					end
+				end
+
+				if isCareer then
+					table.insert(list, mo)
+
+					if lastSelectMO and lastSelectMO:isSameHero(mo) then
+						self:setHeroSelect(mo, true)
+					end
 				end
 			end
 		end

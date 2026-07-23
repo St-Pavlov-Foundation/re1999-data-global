@@ -14,6 +14,7 @@ function UISpriteSetMgr:ctor()
 	self._critter = self:newSpriteSetUnit("ui/spriteassets/critter.asset")
 	self._fight = self:newSpriteSetUnit("ui/spriteassets/fight.asset")
 	self._fightSkillCard = self:newSpriteSetUnit("ui/spriteassets/fight_skillcard.asset")
+	self._fightSkillCard2 = self:newSpriteSetUnit("ui/spriteassets/fight_skillcard_2.asset")
 	self._fightpassive = self:newSpriteSetUnit("ui/spriteassets/fightpassive.asset")
 	self._explore = self:newSpriteSetUnit("ui/spriteassets/explore.asset")
 	self._weekwalk = self:newSpriteSetUnit("ui/spriteassets/weekwalk.asset")
@@ -199,7 +200,22 @@ function UISpriteSetMgr:ctor()
 	self._v3a6_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a6_mainactivity_spriteset.asset")
 	self._v3a6_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
 	self._v3a6_dormitorymode_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a6_dormitorymode_spriteset.asset")
+	self._v3a7_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a7_mainactivity_spriteset.asset")
 	self._avg_spelling_sprite = self:newSpriteSetUnit("ui/spriteassets/avg_spelling_spriteset.asset")
+	self._sodache = self:newSpriteSetUnit("modules/sodache/ui/spriteassets/sodache.asset")
+	self._sodache2 = self:newSpriteSetUnit("modules/sodache/ui/spriteassets/sodache_2.asset")
+	self._sodache3 = self:newSpriteSetUnit("modules/sodache/ui/spriteassets/sodache_3.asset")
+	self._v3a7_activity3nd_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a7_activity3nd_spriteset.asset")
+	self._v3a7_teaching_system = self:newSpriteSetUnit("ui/spriteassets/v3a7_teaching_spriteset.asset")
+	self.v3a7_xiaoruiannong_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a7_xiaoruiannong_spriteset.asset")
+	self._v3a7_wmz_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a7_wmz_spriteset.asset")
+	self._v3a8_dianjishi_spriteset = self:newSpriteSetUnit("ui/spriteassets/v3a8_dianjishi_spriteset.asset")
+	self._v3a8_main_activity = self:newSpriteSetUnit("ui/spriteassets/v3a8_mainactivity_spriteset.asset")
+	self._v3a8_dungeon_sprite = self:newSpriteSetUnit("ui/spriteassets/v3a2_dungeon.asset")
+	self._sp02_atomicdungeonelement = self:newSpriteSetUnit("ui/spriteassets/sp02_atomicdungeonelement.asset")
+	self._sp02_atomicIcon = self:newSpriteSetUnit("ui/spriteassets/sp02_atomicforyou.asset")
+	self._sp02_atomicActivityIcon = self:newSpriteSetUnit("ui/spriteassets/sp02_atomic_activity.asset")
+	self._sp02_paomian = self:newSpriteSetUnit("ui/spriteassets/sp02_paomian.asset")
 end
 
 function UISpriteSetMgr:newSpriteSetUnit(path)
@@ -248,7 +264,14 @@ function UISpriteSetMgr:setFightSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:setFightSkillCardSprite(image, name, setNativeSize)
-	self._fightSkillCard:setSprite(image, name, setNativeSize)
+	local cardSkin = FightCardDataHelper.getCardSkin()
+	local spriteMgr = self._fightSkillCard
+
+	if cardSkin == 672802 then
+		spriteMgr = self._fightSkillCard2
+	end
+
+	spriteMgr:setSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:setFightPassiveSprite(image, name, setNativeSize)
@@ -993,6 +1016,66 @@ end
 
 function UISpriteSetMgr:setAVGSpellingSprite(image, name, setNativeSize)
 	self._avg_spelling_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a7MainActivitySprite(image, name, setNativeSize)
+	self._v3a7_main_activity:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSodacheSprite(image, name, setNativeSize)
+	self._sodache:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSodache2Sprite(image, name, setNativeSize)
+	self._sodache2:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSodache3Sprite(image, name, setNativeSize)
+	self._sodache3:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a7Activity3ndSprite(image, name, setNativeSize)
+	self._v3a7_activity3nd_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a7TeachingSystemSprite(image, name, setNativeSize)
+	self._v3a7_teaching_system:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setTravelGoSprite(image, name, setNativeSize)
+	self.v3a7_xiaoruiannong_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a7WmzSprite(image, name, setNativeSize)
+	self._v3a7_wmz_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a8MainActivitySprite(image, name, setNativeSize)
+	self._v3a8_main_activity:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a8DungeonSprite(image, name, setNativeSize)
+	self._v3a8_dungeon_sprite:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setV3a8DianJiShiSprite(image, name, setNativeSize)
+	self._v3a8_dianjishi_spriteset:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSp02AtomicDungeonElementSprite(image, name, setNativeSize)
+	self._sp02_atomicdungeonelement:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSp02AtomicIconSprite(image, name, setNativeSize)
+	self._sp02_atomicIcon:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSp02AtomicActivityIconSprite(image, name, setNativeSize)
+	self._sp02_atomicActivityIcon:setSprite(image, name, setNativeSize)
+end
+
+function UISpriteSetMgr:setSp02PaoMianIconSprite(image, name, setNativeSize)
+	self._sp02_paomian:setSprite(image, name, setNativeSize)
 end
 
 function UISpriteSetMgr:tryDispose()

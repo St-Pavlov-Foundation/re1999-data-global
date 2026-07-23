@@ -6,15 +6,17 @@ local Rouge2_StoreView = class("Rouge2_StoreView", BaseView)
 
 function Rouge2_StoreView:onInitView()
 	self._simagebg = gohelper.findChildSingleImage(self.viewGO, "#simage_bg")
-	self._txttime = gohelper.findChildText(self.viewGO, "Right/image_LimitTimeBG/#txt_time")
+	self._goRight = gohelper.findChild(self.viewGO, "Right")
+	self._goFinalInfo = gohelper.findChild(self.viewGO, "Right/#go_FinalInfo")
+	self._txttime = gohelper.findChildText(self.viewGO, "Right/#go_FinalInfo/image_LimitTimeBG/#txt_time")
 	self._simageReward = gohelper.findChildSingleImage(self.viewGO, "Right/#simage_Reward")
 	self._btnfinalRewardDetail = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#simage_Reward/#btn_finalRewardDetail")
-	self._txtRewardName = gohelper.findChildText(self.viewGO, "Right/image_RewardNameBG/#txt_RewardName")
-	self._txtScoreNum = gohelper.findChildText(self.viewGO, "Right/Slider/txt_Score/#txt_ScoreNum")
-	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Claim")
-	self._gofinalRewardNormalBg = gohelper.findChild(self.viewGO, "Right/#btn_Claim/#go_finalRewardNormalBg")
-	self._gofinalRewardSpecialBg = gohelper.findChild(self.viewGO, "Right/#btn_Claim/#go_finalRewardSpecialBg")
-	self._gohasget = gohelper.findChild(self.viewGO, "Right/#go_hasget")
+	self._txtRewardName = gohelper.findChildText(self.viewGO, "Right/#go_FinalInfo/image_RewardNameBG/#txt_RewardName")
+	self._txtScoreNum = gohelper.findChildText(self.viewGO, "Right/#go_FinalInfo/Slider/txt_Score/#txt_ScoreNum")
+	self._btnClaim = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#go_FinalInfo/#btn_Claim")
+	self._gofinalRewardNormalBg = gohelper.findChild(self.viewGO, "Right/#go_FinalInfo/#btn_Claim/#go_finalRewardNormalBg")
+	self._gofinalRewardSpecialBg = gohelper.findChild(self.viewGO, "Right/#go_FinalInfo/#btn_Claim/#go_finalRewardSpecialBg")
+	self._gohasget = gohelper.findChild(self.viewGO, "Right/#go_FinalInfo/#go_hasget")
 	self._scrollRewardNode = gohelper.findChildScrollRect(self.viewGO, "#scroll_RewardNode")
 	self._goStageItem = gohelper.findChild(self.viewGO, "#scroll_RewardNode/Viewport/content/#go_StageItem")
 	self._scrollstore = gohelper.findChildScrollRect(self.viewGO, "#scroll_store")
@@ -50,6 +52,11 @@ end
 
 function Rouge2_StoreView:_btnfinalRewardDetailOnClick()
 	local finalRewardConfig = self.finalRewardConfig
+
+	if not finalRewardConfig then
+		return
+	end
+
 	local isClaimed = Rouge2_StoreModel.instance:getGoodsBuyCount(finalRewardConfig.id) >= finalRewardConfig.maxBuyCount
 
 	if not isClaimed then
@@ -76,8 +83,8 @@ function Rouge2_StoreView:_editableInitView()
 	self.storeItemList = self:getUserDataTb_()
 	self.rectTrContent = self._goContent:GetComponent(gohelper.Type_RectTransform)
 	self.storeStageItemList = self:getUserDataTb_()
-	self.finalRewardProgress = gohelper.findChildImage(self.viewGO, "Right/Slider/Slider/FG")
-	self._gofinalReddot = gohelper.findChild(self.viewGO, "Right/#btn_Claim/#go_reddot")
+	self.finalRewardProgress = gohelper.findChildImage(self.viewGO, "Right/#go_FinalInfo/Slider/Slider/FG")
+	self._gofinalReddot = gohelper.findChild(self.viewGO, "Right/#go_FinalInfo/#btn_Claim/#go_reddot")
 
 	RedDotController.instance:addRedDot(self._gofinalReddot, RedDotEnum.DotNode.V3a2_Rouge_Store_FinalReward, 0)
 end
@@ -195,7 +202,7 @@ function Rouge2_StoreView:onStageSelect(stageId)
 end
 
 function Rouge2_StoreView:OnBuyStoreGoodsSuccess(id)
-	if id == self.finalRewardConfig.id then
+	if self.finalRewardConfig and id == self.finalRewardConfig.id then
 		self:refreshFinalReward()
 	end
 end
@@ -226,9 +233,18 @@ end
 
 function Rouge2_StoreView:refreshFinalReward()
 	local finalRewardConstConfig = Rouge2_OutSideConfig.instance:getConstConfigById(Rouge2_Enum.OutSideConstId.StoreFinalReward)
-	local finalRewardConfig = Rouge2_OutSideConfig.instance:getRewardConfigById(tonumber(finalRewardConstConfig.value))
+	local finalRewardId = finalRewardConstConfig and tonumber(finalRewardConstConfig.value) or 0
+	local finalRewardConfig = Rouge2_OutSideConfig.instance:getRewardConfigById(finalRewardId)
 
 	self.finalRewardConfig = finalRewardConfig
+
+	local hasFinalReward = self.finalRewardConfig ~= nil
+
+	gohelper.setActive(self._goFinalInfo, hasFinalReward)
+
+	if not hasFinalReward then
+		return
+	end
 
 	local isClaimed = Rouge2_StoreModel.instance:getGoodsBuyCount(finalRewardConfig.id) >= finalRewardConfig.maxBuyCount
 	local curScore = Rouge2_StoreModel.instance:getCurUseScore()
@@ -329,7 +345,14 @@ function Rouge2_StoreView:refreshTime()
 
 	local stageConfig = Rouge2_OutSideConfig.instance:getRewardStageConfigById(self._curState)
 	local curStageEndTime = TimeUtil.stringToTimestamp(stageConfig.endTime)
-	local offsetSecond = curStageEndTime - ServerTime.now()
+	local offsetSecond = math.max(0, curStageEndTime - ServerTime.now())
+
+	if offsetSecond <= 0 then
+		self._txttime.text = luaLang("ended")
+
+		return
+	end
+
 	local day = Mathf.Floor(offsetSecond / TimeUtil.OneDaySecond)
 	local hourSecond = offsetSecond % TimeUtil.OneDaySecond
 	local hour = Mathf.Floor(hourSecond / TimeUtil.OneHourSecond)

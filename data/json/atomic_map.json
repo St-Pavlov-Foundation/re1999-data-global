@@ -1,0 +1,212 @@
+[
+  {
+    "id": 11,
+    "arenaId": 1,
+    "unlockCondition": "",
+    "infoId": 1,
+    "maptype": 0
+  },
+  {
+    "id": 12,
+    "arenaId": 1,
+    "unlockCondition": "explore#11#100",
+    "infoId": 1,
+    "maptype": 0
+  },
+  {
+    "id": 13,
+    "arenaId": 1,
+    "unlockCondition": "explore#12#60",
+    "infoId": 1,
+    "maptype": 0
+  },
+  {
+    "id": 14,
+    "arenaId": 1,
+    "unlockCondition": "explore#13#60",
+    "infoId": 1,
+    "maptype": 0
+  },
+  {
+    "id": 15,
+    "arenaId": 1,
+    "unlockCondition": "explore#14#60",
+    "infoId": 1,
+    "maptype": 0
+  },
+  {
+    "id": 21,
+    "arenaId": 2,
+    "unlockCondition": "finish#101015",
+    "infoId": 2,
+    "maptype": 0
+  },
+  {
+    "id": 22,
+    "arenaId": 2,
+    "unlockCondition": "explore#21#100",
+    "infoId": 2,
+    "maptype": 0
+  },
+  {
+    "id": 23,
+    "arenaId": 2,
+    "unlockCondition": "explore#22#60",
+    "infoId": 2,
+    "maptype": 0
+  },
+  {
+    "id": 24,
+    "arenaId": 2,
+    "unlockCondition": "explore#23#60",
+    "infoId": 2,
+    "maptype": 0
+  },
+  {
+    "id": 25,
+    "arenaId": 2,
+    "unlockCondition": "explore#24#60",
+    "infoId": 2,
+    "maptype": 0
+  },
+  {
+    "id": 31,
+    "arenaId": 3,
+    "unlockCondition": "finish#102014",
+    "infoId": 3,
+    "maptype": 0
+  },
+  {
+    "id": 32,
+    "arenaId": 3,
+    "unlockCondition": "explore#31#100",
+    "infoId": 3,
+    "maptype": 0
+  },
+  {
+    "id": 33,
+    "arenaId": 3,
+    "unlockCondition": "explore#32#60",
+    "infoId": 3,
+    "maptype": 0
+  },
+  {
+    "id": 34,
+    "arenaId": 3,
+    "unlockCondition": "explore#33#60",
+    "infoId": 3,
+    "maptype": 0
+  },
+  {
+    "id": 35,
+    "arenaId": 3,
+    "unlockCondition": "explore#34#60",
+    "infoId": 3,
+    "maptype": 0
+  },
+  {
+    "id": 41,
+    "arenaId": 4,
+    "unlockCondition": "finish#103017",
+    "infoId": 4,
+    "maptype": 0
+  },
+  {
+    "id": 42,
+    "arenaId": 4,
+    "unlockCondition": "explore#41#100",
+    "infoId": 4,
+    "maptype": 0
+  },
+  {
+    "id": 43,
+    "arenaId": 4,
+    "unlockCondition": "explore#42#60",
+    "infoId": 4,
+    "maptype": 0
+  },
+  {
+    "id": 44,
+    "arenaId": 4,
+    "unlockCondition": "explore#43#60",
+    "infoId": 4,
+    "maptype": 0
+  },
+  {
+    "id": 45,
+    "arenaId": 4,
+    "unlockCondition": "explore#44#60",
+    "infoId": 4,
+    "maptype": 0
+  },
+  {
+    "id": 51,
+    "arenaId": 5,
+    "unlockCondition": "finish#104015",
+    "infoId": 5,
+    "maptype": 0
+  },
+  {
+    "id": 52,
+    "arenaId": 5,
+    "unlockCondition": "explore#51#100",
+    "infoId": 5,
+    "maptype": 0
+  },
+  {
+    "id": 53,
+    "arenaId": 5,
+    "unlockCondition": "explore#52#60",
+    "infoId": 5,
+    "maptype": 0
+  },
+  {
+    "id": 54,
+    "arenaId": 5,
+    "unlockCondition": "explore#53#60",
+    "infoId": 5,
+    "maptype": 0
+  },
+  {
+    "id": 55,
+    "arenaId": 5,
+    "unlockCondition": "explore#54#60",
+    "infoId": 5,
+    "maptype": 0
+  },
+  {
+    "id": 101,
+    "arenaId": 1,
+    "unlockCondition": "explore#15#100",
+    "infoId": 101,
+    "maptype": 1
+  },
+  {
+    "id": 102,
+    "arenaId": 2,
+    "unlockCondition": "explore#25#100",
+    "infoId": 102,
+    "maptype": 1
+  },
+  {
+    "id": 103,
+    "arenaId": 3,
+    "unlockCondition": "explore#35#100",
+    "infoId": 103,
+    "maptype": 1
+  },
+  {
+    "id": 104,
+    "arenaId": 4,
+    "unlockCondition": "explore#45#100",
+    "infoId": 104,
+    "maptype": 1
+  },
+  {
+    "id": 105,
+    "arenaId": 5,
+    "unlockCondition": "explore#55#100",
+    "infoId": 105,
+    "maptype": 1
+  }
+]

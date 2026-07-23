@@ -9,21 +9,8 @@ function Rouge2_ResultFinalViewContainer:buildViews()
 
 	table.insert(views, Rouge2_ResultFinalView.New())
 	table.insert(views, TabViewGroup.New(1, "#go_topleft"))
-
-	local scrollParam = ListScrollParam.New()
-
-	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
-	scrollParam.scrollGOPath = "Right/#scroll_collection"
-	scrollParam.prefabUrl = "Right/#scroll_collection/Viewport/Content/#go_collectionitem"
-	scrollParam.scrollDir = ScrollEnum.ScrollDirV
-	scrollParam.cellClass = Rouge2_ResultCollectionListItem
-	scrollParam.cellWidth = 180
-	scrollParam.cellHeight = 180
-	scrollParam.startSpace = 6
-	scrollParam.endSpace = 0
-	scrollParam.lineCount = 5
-
-	table.insert(views, LuaListScrollView.New(Rouge2_ResultCollectionListModel.instance, scrollParam))
+	table.insert(views, self:_buildBuffListScrollView())
+	table.insert(views, self:_buildAttrBuffListScrollView())
 
 	return views
 end
@@ -40,6 +27,92 @@ function Rouge2_ResultFinalViewContainer:buildTabViews(tabContainerId)
 			self.navigateView
 		}
 	end
+end
+
+function Rouge2_ResultFinalViewContainer:_buildBuffListScrollView()
+	self._buffListModel = ListScrollModel.New()
+
+	local reviewInfo = self.viewParam and self.viewParam.reviewInfo
+	local buffList = reviewInfo and reviewInfo:getItemList(Rouge2_Enum.BagType.Buff)
+	local buffNum = buffList and #buffList or 0
+	local scrollDir = buffNum > 12 and ScrollEnum.ScrollDirH or ScrollEnum.ScrollDirV
+	local lineCount = buffNum > 12 and 2 or 6
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.scrollGOPath = "Right/Layout/#go_BuffContainer/#scroll_Buff"
+	scrollParam.prefabUrl = "Right/Layout/#go_BuffContainer/#scroll_Buff/Viewport/Content/#go_BuffItem"
+	scrollParam.scrollDir = scrollDir
+	scrollParam.cellClass = Rouge2_SaveInfoDetailBuffListItem
+	scrollParam.cellWidth = 144
+	scrollParam.cellHeight = 136
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
+	scrollParam.lineCount = lineCount
+
+	return LuaListScrollView.New(self._buffListModel, scrollParam)
+end
+
+function Rouge2_ResultFinalViewContainer:_buildAttrBuffListScrollView()
+	self._attrBuffListModel = ListScrollModel.New()
+
+	local scrollParam = ListScrollParam.New()
+
+	scrollParam.prefabType = ScrollEnum.ScrollPrefabFromView
+	scrollParam.scrollGOPath = "Right/Layout/#go_AttrBuffContainer/#scroll_AttrBuff"
+	scrollParam.prefabUrl = "Right/Layout/#go_AttrBuffContainer/#scroll_AttrBuff/Viewport/Content/#go_AttrBuffItem"
+	scrollParam.scrollDir = ScrollEnum.ScrollDirH
+	scrollParam.cellClass = Rouge2_SaveInfoDetailAttrBuffListItem
+	scrollParam.cellWidth = 162
+	scrollParam.cellHeight = 150
+	scrollParam.startSpace = 0
+	scrollParam.endSpace = 0
+	scrollParam.lineCount = 1
+
+	return LuaListScrollView.New(self._attrBuffListModel, scrollParam)
+end
+
+function Rouge2_ResultFinalViewContainer:setBuffList(buffIdList)
+	local moList = {}
+
+	if buffIdList then
+		for _, buffId in ipairs(buffIdList) do
+			table.insert(moList, {
+				itemId = buffId
+			})
+		end
+	end
+
+	table.sort(moList, self._itemSortFunc)
+	self._buffListModel:setList(moList)
+end
+
+function Rouge2_ResultFinalViewContainer._itemSortFunc(aItemMo, bItemMo)
+	local aItemId = aItemMo.itemId
+	local bItemId = bItemMo.itemId
+	local aItemCo = Rouge2_BackpackHelper.getItemConfig(aItemId)
+	local bItemCo = Rouge2_BackpackHelper.getItemConfig(bItemId)
+
+	if aItemCo.rare ~= bItemCo.rare then
+		return aItemCo.rare > bItemCo.rare
+	end
+
+	return aItemId < bItemId
+end
+
+function Rouge2_ResultFinalViewContainer:setAttrBuffList(attrBuffIdList)
+	local moList = {}
+
+	if attrBuffIdList then
+		for _, buffId in ipairs(attrBuffIdList) do
+			table.insert(moList, {
+				itemId = buffId
+			})
+		end
+	end
+
+	table.sort(moList, self._itemSortFunc)
+	self._attrBuffListModel:setList(moList)
 end
 
 return Rouge2_ResultFinalViewContainer

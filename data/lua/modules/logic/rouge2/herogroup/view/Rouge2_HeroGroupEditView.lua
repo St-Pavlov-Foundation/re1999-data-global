@@ -501,7 +501,9 @@ function Rouge2_HeroGroupEditView:_refreshMainInfo()
 				table.insert(self._careerGOs, careerTable)
 			end
 
-			local desc = HeroConfig.instance:getBattleTagConfigCO(tags[i]).tagName
+			local tagId = tags[i]
+			local tagCo = HeroConfig.instance:getBattleTagConfigCO()
+			local desc = tagCo and tagCo.tagName
 			local wordCount = GameUtil.utf8len(desc)
 
 			gohelper.setActive(careerTable.containertwo, wordCount <= 2)
@@ -598,7 +600,7 @@ function Rouge2_HeroGroupEditView:_refreshPassiveSkill()
 end
 
 function Rouge2_HeroGroupEditView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, Rouge2_HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial())
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, Rouge2_HeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial(), CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function Rouge2_HeroGroupEditView:_refreshBtnIcon()
@@ -879,13 +881,12 @@ function Rouge2_HeroGroupEditView:onOpen()
 	self._adventure = self.viewParam and self.viewParam.adventure
 	self._equips = self.viewParam and self.viewParam.equips
 	self._isTowerBattle = TowerModel.instance:isInTowerBattle()
-	self._activityId = self.viewParam and self.viewParam.activityId
-	self._episodeId = self.viewParam and self.viewParam.episodeId
+	self._episodeId = HeroGroupModel.instance.episodeId
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
-	Rouge2_HeroGroupEditListModel.instance:init(self._activityId, self._episodeId)
+	Rouge2_HeroGroupEditListModel.instance:init(self._episodeId)
 	Rouge2_HeroGroupEditListModel.instance:setParam(self._originalHeroUid, self._adventure, self._isTowerBattle)
-	Rouge2_HeroGroupQuickEditListModel.instance:init(self._activityId, self._episodeId)
+	Rouge2_HeroGroupQuickEditListModel.instance:init(self._episodeId)
 	Rouge2_HeroGroupQuickEditListModel.instance:setParam(self._adventure, self._isTowerBattle)
 
 	self._attrBuffId = self.viewParam and self.viewParam.attrBuffId
@@ -959,6 +960,10 @@ function Rouge2_HeroGroupEditView:onClose()
 	CommonHeroHelper.instance:resetGrayState()
 	CharacterController.instance:closeCharacterFilterView()
 	CharacterSearchFilterModel.instance:exitParentView()
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
+	end
 end
 
 function Rouge2_HeroGroupEditView:_onAudioTrigger(audioId)

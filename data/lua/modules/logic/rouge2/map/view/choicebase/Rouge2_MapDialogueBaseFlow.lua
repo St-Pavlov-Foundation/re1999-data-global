@@ -45,6 +45,7 @@ function Rouge2_MapDialogueBaseFlow:addAfterPlayWork(flow)
 end
 
 function Rouge2_MapDialogueBaseFlow:_onPlayDialogueDone()
+	Rouge2_MapModel.instance:setPlayingDialogue(false)
 	Rouge2_MapController.instance:dispatchEvent(Rouge2_MapEvent.onPlayDialogueDone)
 end
 

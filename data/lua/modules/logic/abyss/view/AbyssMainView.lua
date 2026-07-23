@@ -17,13 +17,68 @@ function AbyssMainView:onInitView()
 end
 
 function AbyssMainView:addEvents()
+	self._btnRecommend:AddClickListener(self._btnRecommendOnClick, self)
 	self:addEventCb(AbyssController.instance, AbyssEvent.OnResetStage, self.refreshEpisode, self)
 	self:addEventCb(AbyssController.instance, AbyssEvent.OnUpdateStageInfo, self.refreshEpisode, self)
+	self:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroupAfterEnterEpisode, self._onUseRecommendGroup, self)
 end
 
 function AbyssMainView:removeEvents()
+	self._btnRecommend:RemoveClickListener()
 	self:removeEventCb(AbyssController.instance, AbyssEvent.OnResetStage, self.refreshEpisode, self)
 	self:removeEventCb(AbyssController.instance, AbyssEvent.OnUpdateStageInfo, self.refreshEpisode, self)
+	self:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroupAfterEnterEpisode, self._onUseRecommendGroup, self)
+end
+
+function AbyssMainView:_btnRecommendOnClick()
+	local stageConfigList = AbyssConfig.instance:getStageConfigListByActId(AbyssModel.instance:getCurActId())
+
+	if not stageConfigList or next(stageConfigList) == nil then
+		return
+	end
+
+	local episodeId = stageConfigList[1].episodeId
+
+	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(episodeId, self._receiveRecommend, self)
+end
+
+function AbyssMainView:_receiveRecommend(cmd, resultCode, msg)
+	if resultCode ~= 0 then
+		return
+	end
+
+	local stageConfigList = AbyssConfig.instance:getStageConfigListByActId(AbyssModel.instance:getCurActId())
+	local episodeIdList = {}
+
+	for _, stageConfig in ipairs(stageConfigList) do
+		table.insert(episodeIdList, stageConfig.episodeId)
+	end
+
+	local param = {}
+
+	param.msg = msg
+	param.episodeId = episodeIdList[1]
+	param.episodeIdList = episodeIdList
+
+	HeroGroupModel.instance:setAfterUpdateRecommendState(true)
+	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, param)
+end
+
+function AbyssMainView:_onUseRecommendGroup(episodeId)
+	if not AbyssModel.instance:isCurActOpen(true) then
+		return
+	end
+
+	local actId = AbyssModel.instance:getCurActId()
+	local stageId
+
+	if not episodeId then
+		stageId = AbyssModel.instance:getCurStageId()
+	else
+		stageId = AbyssConfig.instance:getStageIdByEpisodeId(actId, episodeId)
+	end
+
+	AbyssController.instance:startFight(actId, stageId)
 end
 
 function AbyssMainView:_editableInitView()
@@ -43,6 +98,7 @@ function AbyssMainView:_editableInitView()
 
 	self.rewardItem = MonoHelper.addNoUpdateLuaComOnceToGo(rewardGo, AbyssRewardItem)
 	self._animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+	self._btnRecommend = gohelper.findChildButton(self.viewGO, "#btn_tuijian")
 end
 
 function AbyssMainView:onUpdateParam()

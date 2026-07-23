@@ -12,6 +12,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -36,7 +37,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017870",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3004,
@@ -51,6 +54,7 @@
     "equipRec": "1513#1521#1526",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -75,7 +79,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017873",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3005,
@@ -90,6 +96,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -114,7 +121,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3006,
@@ -129,6 +138,7 @@
     "equipRec": "1429",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -153,7 +163,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3007,
@@ -168,6 +180,7 @@
     "equipRec": "1514",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -192,7 +205,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017878",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3009,
@@ -207,6 +222,7 @@
     "equipRec": "1430",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -231,7 +247,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017881",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3010,
@@ -246,6 +264,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -265,12 +284,14 @@
     "actor": "——",
     "roleBirthday": "5/30",
     "trust": 0,
-    "birthdayBonus": "14#10079#1;14#10079#1;14#10079#1",
-    "desc": "language_10017882",
+    "birthdayBonus": "14#10079#1;14#10079#1;14#10079#1;14#10079#1;14#10079#1",
+    "desc": "language_10124917",
     "useDesc": "language_10017869",
     "desc2": "language_10017883",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3011,
@@ -285,6 +306,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -304,12 +326,14 @@
     "actor": "——",
     "roleBirthday": "6/1",
     "trust": 0,
-    "birthdayBonus": "14#10054#1;14#10054#1;14#10054#1",
-    "desc": "language_10017884",
+    "birthdayBonus": "14#10054#1;14#10054#1;14#10054#1;14#10054#1;14#10054#1",
+    "desc": "language_10124918",
     "useDesc": "language_10017869",
     "desc2": "language_10017885",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3012,
@@ -324,6 +348,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -343,12 +368,14 @@
     "actor": "——",
     "roleBirthday": "9/4",
     "trust": 0,
-    "birthdayBonus": "14#10060#1;14#10060#1;14#10060#1",
-    "desc": "language_10017886",
+    "birthdayBonus": "14#10060#1;14#10060#1;14#10060#1;14#10060#1;14#10060#1",
+    "desc": "language_10124919",
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3013,
@@ -363,6 +390,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -387,7 +415,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3014,
@@ -402,6 +432,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -426,7 +457,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3015,
@@ -441,6 +474,7 @@
     "equipRec": "1413",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -465,7 +499,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3016,
@@ -480,6 +516,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -504,7 +541,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017891",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3017,
@@ -519,6 +558,7 @@
     "equipRec": "1413",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -543,7 +583,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017893",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3018,
@@ -558,6 +600,7 @@
     "equipRec": "1414",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -582,7 +625,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3020,
@@ -597,6 +642,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -621,7 +667,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017896",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3022,
@@ -636,6 +684,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -660,7 +709,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017898",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3023,
@@ -675,6 +726,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -699,7 +751,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3024,
@@ -714,6 +768,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -738,7 +793,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017901",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3025,
@@ -753,6 +810,7 @@
     "equipRec": "1437",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -772,12 +830,14 @@
     "actor": "——",
     "roleBirthday": "8/15",
     "trust": 0,
-    "birthdayBonus": "14#10090#1;14#10090#1;14#10090#1",
-    "desc": "language_10017902",
+    "birthdayBonus": "14#10090#1;14#10090#1;14#10090#1;14#10090#1;14#10090#1",
+    "desc": "language_10124920",
     "useDesc": "language_10017869",
     "desc2": "language_10017903",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3026,
@@ -792,6 +852,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -816,7 +877,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3027,
@@ -831,6 +894,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -855,7 +919,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3028,
@@ -870,6 +936,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -894,7 +961,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3029,
@@ -909,6 +978,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -933,7 +1003,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3030,
@@ -948,6 +1020,7 @@
     "equipRec": "1431",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -972,7 +1045,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3031,
@@ -987,6 +1062,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1011,7 +1087,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3032,
@@ -1026,6 +1104,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1045,12 +1124,14 @@
     "actor": "——",
     "roleBirthday": "8/13",
     "trust": 0,
-    "birthdayBonus": "14#10031#1;14#10031#1;14#10031#1",
-    "desc": "language_10017909",
+    "birthdayBonus": "14#10031#1;14#10031#1;14#10031#1;14#10031#1;14#10031#1",
+    "desc": "language_10124921",
     "useDesc": "language_10017869",
     "desc2": "language_10035462",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3033,
@@ -1065,6 +1146,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1089,7 +1171,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3034,
@@ -1104,6 +1188,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1128,7 +1213,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3035,
@@ -1143,6 +1230,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1162,12 +1250,14 @@
     "actor": "——",
     "roleBirthday": "9/23",
     "trust": 0,
-    "birthdayBonus": "14#10051#1;14#10051#1;14#10051#1",
-    "desc": "language_10017912",
+    "birthdayBonus": "14#10051#1;14#10051#1;14#10051#1;14#10051#1;14#10051#1",
+    "desc": "language_10124922",
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3036,
@@ -1182,6 +1272,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1206,7 +1297,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3037,
@@ -1221,6 +1314,7 @@
     "equipRec": "1443",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1245,7 +1339,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017915",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3038,
@@ -1260,6 +1356,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1284,7 +1381,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017917",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3039,
@@ -1299,6 +1398,7 @@
     "equipRec": "1515#1438",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1323,7 +1423,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017919",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3040,
@@ -1338,6 +1440,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1362,7 +1465,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3041,
@@ -1377,6 +1482,7 @@
     "equipRec": "1444",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1401,7 +1507,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3042,
@@ -1416,6 +1524,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1440,7 +1549,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3043,
@@ -1455,6 +1566,7 @@
     "equipRec": "1414",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1474,12 +1586,14 @@
     "actor": "——",
     "roleBirthday": "9/8",
     "trust": 0,
-    "birthdayBonus": "14#10069#1;14#10069#1;14#10069#1",
-    "desc": "language_10017924",
+    "birthdayBonus": "14#10069#1;14#10069#1;14#10069#1;14#10069#1;14#10069#1",
+    "desc": "language_10124923",
     "useDesc": "language_10017869",
     "desc2": "language_10017925",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3044,
@@ -1494,6 +1608,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1518,7 +1633,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3045,
@@ -1533,6 +1650,7 @@
     "equipRec": "1439",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1557,7 +1675,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3046,
@@ -1572,6 +1692,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1596,7 +1717,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3047,
@@ -1611,6 +1734,7 @@
     "equipRec": "1431",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1635,7 +1759,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017932",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3048,
@@ -1650,6 +1776,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1674,7 +1801,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017934",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3049,
@@ -1689,6 +1818,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1713,7 +1843,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017937",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3050,
@@ -1728,6 +1860,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1752,7 +1885,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3051,
@@ -1767,6 +1902,7 @@
     "equipRec": "1413#1426#1555",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1791,7 +1927,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017940",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3052,
@@ -1806,6 +1944,7 @@
     "equipRec": "1439#1513#1529#1414",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1830,7 +1969,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017942",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3053,
@@ -1845,6 +1986,7 @@
     "equipRec": "1511#1540",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1869,7 +2011,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017944",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3054,
@@ -1884,6 +2028,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1908,7 +2053,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3055,
@@ -1923,6 +2070,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1947,7 +2095,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3056,
@@ -1962,6 +2112,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -1986,7 +2137,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10053323",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3057,
@@ -2001,6 +2154,7 @@
     "equipRec": "1435",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2020,12 +2174,14 @@
     "actor": "——",
     "roleBirthday": "9/20",
     "trust": 0,
-    "birthdayBonus": "14#10082#1;14#10082#1;14#10082#1",
-    "desc": "language_10017950",
+    "birthdayBonus": "14#10082#1;14#10082#1;14#10082#1;14#10082#1;14#10082#1",
+    "desc": "language_10124924",
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3058,
@@ -2040,6 +2196,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2064,7 +2221,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3059,
@@ -2079,6 +2238,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2098,12 +2258,14 @@
     "actor": "——",
     "roleBirthday": "8/2",
     "trust": 0,
-    "birthdayBonus": "14#10056#1;14#10056#1;14#10056#1",
-    "desc": "language_10006105",
+    "birthdayBonus": "14#10056#1;14#10056#1;14#10056#1;14#10056#1;14#10056#1",
+    "desc": "language_10124925",
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3060,
@@ -2118,6 +2280,7 @@
     "equipRec": "1432",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2142,7 +2305,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017954",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3061,
@@ -2157,6 +2322,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2181,7 +2347,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017957",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3062,
@@ -2196,6 +2364,7 @@
     "equipRec": "1509",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2220,7 +2389,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017959",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3063,
@@ -2235,6 +2406,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2259,7 +2431,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017961",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3064,
@@ -2274,6 +2448,7 @@
     "equipRec": "1433",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2298,7 +2473,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017963",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 9998,
@@ -2313,6 +2490,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "2#11#1",
@@ -2337,7 +2515,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3070,
@@ -2352,6 +2532,7 @@
     "equipRec": "1521",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2376,7 +2557,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10053324",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3071,
@@ -2391,6 +2574,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2415,7 +2599,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017968",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3072,
@@ -2430,6 +2616,7 @@
     "equipRec": "1512",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2454,7 +2641,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017971",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3066,
@@ -2469,6 +2658,7 @@
     "equipRec": "1513#1434",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2493,7 +2683,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017974",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3079,
@@ -2508,6 +2700,7 @@
     "equipRec": "1514",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2532,7 +2725,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017977",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3073,
@@ -2547,6 +2742,7 @@
     "equipRec": "1515",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2571,7 +2767,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017980",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3074,
@@ -2586,6 +2784,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2605,12 +2804,14 @@
     "actor": "——",
     "roleBirthday": "6/1",
     "trust": 0,
-    "birthdayBonus": "14#31060#1;14#31060#1;14#31060#1",
-    "desc": "language_10017981",
+    "birthdayBonus": "14#31060#1;14#31060#1;14#31060#1;14#31060#1;14#31060#1",
+    "desc": "language_10124926",
     "useDesc": "language_10077502",
     "desc2": "language_10017982",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3075,
@@ -2625,6 +2826,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2644,12 +2846,14 @@
     "actor": "——",
     "roleBirthday": "9/22",
     "trust": 0,
-    "birthdayBonus": "14#31063#1;14#31063#1;14#31063#1",
-    "desc": "language_10017983",
+    "birthdayBonus": "14#31063#1;14#31063#1;14#31063#1;14#31063#1;14#31063#1",
+    "desc": "language_10124927",
     "useDesc": "language_10017869",
     "desc2": "language_10017984",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3076,
@@ -2664,6 +2868,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2688,7 +2893,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017987",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3082,
@@ -2703,6 +2910,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2727,7 +2935,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017990",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3083,
@@ -2742,6 +2952,7 @@
     "equipRec": "1521",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2766,7 +2977,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017992",
     "mvskinId": 308302,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3084,
@@ -2781,6 +2994,7 @@
     "equipRec": "1522#1446",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2805,7 +3019,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10017994",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3065,
@@ -2820,6 +3036,7 @@
     "equipRec": "1524",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2844,7 +3061,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10035466",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3081,
@@ -2859,6 +3078,7 @@
     "equipRec": "1523#1560",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2883,7 +3103,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10035468",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3077,
@@ -2898,6 +3120,7 @@
     "equipRec": "1526",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -2922,7 +3145,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10038240",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3078,
@@ -2937,6 +3162,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -2956,12 +3182,14 @@
     "actor": "——",
     "roleBirthday": "8/7",
     "trust": 0,
-    "birthdayBonus": "14#31965#1;14#31965#1;14#31965#1",
-    "desc": "language_10038241",
+    "birthdayBonus": "14#31965#1;14#31965#1;14#31965#1;14#31965#1;14#31965#1",
+    "desc": "language_10124928",
     "useDesc": "language_10017869",
     "desc2": "language_10038242",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3087,
@@ -2976,6 +3204,7 @@
     "equipRec": "1525",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3000,7 +3229,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10038244",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3086,
@@ -3015,6 +3246,7 @@
     "equipRec": "1527",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3039,7 +3271,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10041766",
     "mvskinId": 308602,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3088,
@@ -3054,6 +3288,7 @@
     "equipRec": "1530#1428",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3073,12 +3308,14 @@
     "actor": "——",
     "roleBirthday": "8/19",
     "trust": 0,
-    "birthdayBonus": "14#33691#1;14#33691#1;14#33691#1",
-    "desc": "language_10041767",
+    "birthdayBonus": "14#33691#1;14#33691#1;14#33691#1;14#33691#1;14#33691#1",
+    "desc": "language_10124929",
     "useDesc": "language_10017869",
     "desc2": "language_10041768",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3080,
@@ -3093,6 +3330,7 @@
     "equipRec": "1528",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3117,7 +3355,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10041770",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3091,
@@ -3132,6 +3372,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3156,7 +3397,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10041772",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3094,
@@ -3171,6 +3414,7 @@
     "equipRec": "1531",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3195,7 +3439,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10047667",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3095,
@@ -3210,6 +3456,7 @@
     "equipRec": "1532#1436",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3234,7 +3481,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10047669",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3096,
@@ -3249,6 +3498,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3273,7 +3523,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3097,
@@ -3288,6 +3540,7 @@
     "equipRec": "1534",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3312,7 +3565,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10051083",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3098,
@@ -3327,6 +3582,7 @@
     "equipRec": "1533",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3351,7 +3607,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10051085",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3099,
@@ -3366,6 +3624,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3390,7 +3649,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10051087",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3100,
@@ -3405,6 +3666,7 @@
     "equipRec": "1536",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3429,7 +3691,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10055459",
     "mvskinId": 310002,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3101,
@@ -3444,6 +3708,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3468,7 +3733,9 @@
     "useDesc": "",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3102,
@@ -3483,6 +3750,7 @@
     "equipRec": "1537",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3507,7 +3775,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10055462",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3103,
@@ -3522,6 +3792,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3546,7 +3817,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10055464",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3104,
@@ -3561,6 +3834,7 @@
     "equipRec": "1538",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3585,7 +3859,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10060989",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3105,
@@ -3600,6 +3876,7 @@
     "equipRec": "1539",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#6",
     "ai": 5,
     "firstItem": "",
@@ -3624,7 +3901,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10060991",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3106,
@@ -3639,6 +3918,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3663,7 +3943,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10060993",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3108,
@@ -3678,6 +3960,7 @@
     "equipRec": "1540",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -3702,7 +3985,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10063972",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3109,
@@ -3717,6 +4002,7 @@
     "equipRec": "1541",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3736,12 +4022,14 @@
     "actor": "——",
     "roleBirthday": "9/28",
     "trust": 0,
-    "birthdayBonus": "14#44535#1;14#44535#1;14#44535#1",
-    "desc": "language_10063974",
+    "birthdayBonus": "14#44535#1;14#44535#1;14#44535#1;14#44535#1;14#44535#1",
+    "desc": "language_10124930",
     "useDesc": "language_10017869",
     "desc2": "language_10063975",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3110,
@@ -3756,6 +4044,7 @@
     "equipRec": "1542",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3780,7 +4069,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10068247",
     "mvskinId": 311002,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3111,
@@ -3795,6 +4086,7 @@
     "equipRec": "1543",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3819,7 +4111,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10068249",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3112,
@@ -3834,6 +4128,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3853,12 +4148,14 @@
     "actor": "——",
     "roleBirthday": "6/1",
     "trust": 0,
-    "birthdayBonus": "14#46437#1;14#46437#1;14#46437#1",
-    "desc": "language_10068250",
+    "birthdayBonus": "14#46437#1;14#46437#1;14#46437#1;14#46437#1;14#46437#1",
+    "desc": "language_10124931",
     "useDesc": "language_10017869",
     "desc2": "language_10068251",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3114,
@@ -3873,6 +4170,7 @@
     "equipRec": "1544",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3897,7 +4195,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10071535",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3113,
@@ -3912,6 +4212,7 @@
     "equipRec": "1545",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -3936,7 +4237,9 @@
     "useDesc": "language_10077502",
     "desc2": "language_10071537",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3116,
@@ -3951,6 +4254,7 @@
     "equipRec": "1546",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -3975,7 +4279,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10074481",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3117,
@@ -3990,6 +4296,7 @@
     "equipRec": "1547",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -4014,7 +4321,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10074483",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3118,
@@ -4029,6 +4338,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4053,7 +4363,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10074485",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3107,
@@ -4068,6 +4380,7 @@
     "equipRec": "1550",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4087,12 +4400,14 @@
     "actor": "——",
     "roleBirthday": "5/30",
     "trust": 0,
-    "birthdayBonus": "14#55012#1;14#55012#1;14#55012#1",
-    "desc": "language_10082451",
+    "birthdayBonus": "14#55012#1;14#55012#1;14#55012#1;14#55012#1;14#55012#1",
+    "desc": "language_10124932",
     "useDesc": "language_10017869",
     "desc2": "language_10082452",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3115,
@@ -4107,6 +4422,7 @@
     "equipRec": "1438",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4131,7 +4447,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10082454",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3120,
@@ -4146,6 +4464,7 @@
     "equipRec": "1548",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4170,7 +4489,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10080934",
     "mvskinId": 312002,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3121,
@@ -4185,6 +4506,7 @@
     "equipRec": "1549",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4204,12 +4526,14 @@
     "actor": "——",
     "roleBirthday": "9/13",
     "trust": 0,
-    "birthdayBonus": "14#55010#1;14#55010#1;14#55010#1",
-    "desc": "language_10082456",
+    "birthdayBonus": "14#55010#1;14#55010#1;14#55010#1;14#55010#1;14#55010#1",
+    "desc": "language_10124933",
     "useDesc": "language_10017869",
     "desc2": "language_10082457",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3126,
@@ -4224,6 +4548,7 @@
     "equipRec": "1553",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4248,7 +4573,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10088985",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3128,
@@ -4263,6 +4590,7 @@
     "equipRec": "1554",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4287,7 +4615,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10088988",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3122,
@@ -4302,6 +4632,7 @@
     "equipRec": "",
     "rank": 1,
     "uniqueSkill_point": "3#8",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4321,12 +4652,14 @@
     "actor": "——",
     "roleBirthday": "8/7",
     "trust": 0,
-    "birthdayBonus": "14#65129#1;14#65129#1;14#65129#1",
-    "desc": "language_10077501",
+    "birthdayBonus": "14#65129#1;14#65129#1;14#65129#1;14#65129#1;14#65129#1",
+    "desc": "language_10124934",
     "useDesc": "language_10077502",
     "desc2": "language_10077503",
     "mvskinId": 0,
-    "stat": 1
+    "stat": 1,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3123,
@@ -4341,6 +4674,7 @@
     "equipRec": "1551",
     "rank": 1,
     "uniqueSkill_point": "2#100",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4365,7 +4699,9 @@
     "useDesc": "language_10077502",
     "desc2": "language_10077506",
     "mvskinId": 0,
-    "stat": 1
+    "stat": 1,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3124,
@@ -4380,6 +4716,7 @@
     "equipRec": "1552",
     "rank": 1,
     "uniqueSkill_point": "3#10",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4399,12 +4736,14 @@
     "actor": "——",
     "roleBirthday": "8/7",
     "trust": 0,
-    "birthdayBonus": "14#65130#1;14#65130#1;14#65130#1",
-    "desc": "language_10077507",
+    "birthdayBonus": "14#65130#1;14#65130#1;14#65130#1;14#65130#1;14#65130#1",
+    "desc": "language_10124935",
     "useDesc": "language_10077502",
     "desc2": "language_10077508",
     "mvskinId": 0,
-    "stat": 1
+    "stat": 1,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3125,
@@ -4419,6 +4758,7 @@
     "equipRec": "1556",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4438,12 +4778,14 @@
     "actor": "——",
     "roleBirthday": "5/29",
     "trust": 0,
-    "birthdayBonus": "14#68109#1;14#68109#1;14#68109#1",
-    "desc": "language_10093578",
+    "birthdayBonus": "14#68109#1;14#68109#1;14#68109#1;14#68109#1;14#68109#1",
+    "desc": "language_10124936",
     "useDesc": "language_10017869",
     "desc2": "language_10093579",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3132,
@@ -4458,6 +4800,7 @@
     "equipRec": "1557",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4477,12 +4820,14 @@
     "actor": "——",
     "roleBirthday": "8/2",
     "trust": 0,
-    "birthdayBonus": "14#68108#1;14#68108#1;14#68108#1",
-    "desc": "language_10093580",
+    "birthdayBonus": "14#68108#1;14#68108#1;14#68108#1;14#68108#1;14#68108#1",
+    "desc": "language_10124937",
     "useDesc": "language_10017869",
     "desc2": "language_10093581",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3134,
@@ -4497,6 +4842,7 @@
     "equipRec": "1558",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4521,7 +4867,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10100279",
     "mvskinId": 313402,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3135,
@@ -4536,6 +4884,7 @@
     "equipRec": "1559",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4560,7 +4909,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10100281",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3127,
@@ -4575,6 +4926,7 @@
     "equipRec": "1561",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4595,11 +4947,13 @@
     "roleBirthday": "4/10",
     "trust": 0,
     "birthdayBonus": "14#72073#1;14#72073#1;14#72073#1",
-    "desc": "language_10107115",
+    "desc": "language_10124938",
     "useDesc": "language_10017869",
     "desc2": "language_10107116",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3092,
@@ -4614,6 +4968,7 @@
     "equipRec": "1562",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4638,7 +4993,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10107118",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3141,
@@ -4653,6 +5010,7 @@
     "equipRec": "1563",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "1#5",
     "ai": 5,
     "firstItem": "",
@@ -4672,12 +5030,14 @@
     "actor": "——",
     "roleBirthday": "8/15",
     "trust": 0,
-    "birthdayBonus": "14#74122#1;14#74122#1;14#74122#1",
-    "desc": "language_10112551",
+    "birthdayBonus": "14#74122#1;14#74122#1;14#74122#1;14#74122#1;14#74122#1",
+    "desc": "language_10124939",
     "useDesc": "language_10017869",
     "desc2": "language_10112552",
     "mvskinId": 314102,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3137,
@@ -4692,6 +5052,7 @@
     "equipRec": "1564",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4716,7 +5077,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10112554",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3138,
@@ -4731,6 +5094,7 @@
     "equipRec": "1438",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4755,7 +5119,9 @@
     "useDesc": "language_10017869",
     "desc2": "",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3139,
@@ -4770,6 +5136,7 @@
     "equipRec": "1565",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4789,12 +5156,14 @@
     "actor": "——",
     "roleBirthday": "9/19",
     "trust": 0,
-    "birthdayBonus": "14#76138#1;14#76138#1;14#76138#1",
-    "desc": "language_10117478",
+    "birthdayBonus": "14#76138#1;14#76138#1;14#76138#1;14#76138#1;14#76138#1",
+    "desc": "language_10124940",
     "useDesc": "language_10017869",
     "desc2": "language_10117479",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3142,
@@ -4809,6 +5178,7 @@
     "equipRec": "1566",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4833,7 +5203,9 @@
     "useDesc": "language_10017869",
     "desc2": "language_10117481",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3136,
@@ -4848,6 +5220,7 @@
     "equipRec": "1445",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4862,7 +5235,7 @@
     "nameEng": "Lady by the Lake",
     "signature": "3136",
     "photoFrameBg": 0,
-    "isOnline": "1",
+    "isOnline": "0",
     "heroType": 5,
     "actor": "——",
     "roleBirthday": "4/7",
@@ -4870,9 +5243,11 @@
     "birthdayBonus": "14#76141#1;14#76141#1;14#76141#1",
     "desc": "language_10117483",
     "useDesc": "",
-    "desc2": "",
+    "desc2": "language_10017869",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
   },
   {
     "id": 3143,
@@ -4887,6 +5262,7 @@
     "equipRec": "1567",
     "rank": 1,
     "uniqueSkill_point": "0#5",
+    "deviceId": 0,
     "powerMax": "",
     "ai": 5,
     "firstItem": "",
@@ -4911,6 +5287,302 @@
     "useDesc": "language_10077502",
     "desc2": "language_10119235",
     "mvskinId": 0,
-    "stat": 0
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3146,
+    "name": "language_10120028",
+    "initials": "X",
+    "skinId": 314601,
+    "career": 4,
+    "rare": 5,
+    "dmgType": 2,
+    "gender": 2,
+    "battleTag": "102#10000",
+    "equipRec": "1568",
+    "rank": 1,
+    "uniqueSkill_point": "0#5",
+    "deviceId": 0,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133146#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31460111#31460112#31460113|2#31460121#31460122#31460123",
+    "exSkill": 31460131,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "Rhiannon",
+    "signature": "3146",
+    "photoFrameBg": 0,
+    "isOnline": "0",
+    "heroType": 1,
+    "actor": "——",
+    "roleBirthday": "3/1",
+    "trust": 0,
+    "birthdayBonus": "14#83122#1;14#83122#1;14#83122#1",
+    "desc": "language_10124941",
+    "useDesc": "language_10017869",
+    "desc2": "language_10124942",
+    "mvskinId": 314602,
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3147,
+    "name": "language_10120029",
+    "initials": "W",
+    "skinId": 314701,
+    "career": 1,
+    "rare": 5,
+    "dmgType": 2,
+    "gender": 2,
+    "battleTag": "101#108",
+    "equipRec": "1569",
+    "rank": 1,
+    "uniqueSkill_point": "0#5",
+    "deviceId": 0,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133147#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31470111#31470112#31470113|2#31470121#31470122#31470123",
+    "exSkill": 31470141,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "Ms. Stranger",
+    "signature": "3147",
+    "photoFrameBg": 0,
+    "isOnline": "0",
+    "heroType": 1,
+    "actor": "——",
+    "roleBirthday": "4/13",
+    "trust": 0,
+    "birthdayBonus": "14#83123#1;14#83123#1;14#83123#1",
+    "desc": "language_10124943",
+    "useDesc": "language_10017869",
+    "desc2": "language_10124944",
+    "mvskinId": 0,
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3144,
+    "name": "language_10101788",
+    "initials": "F",
+    "skinId": 314401,
+    "career": 1,
+    "rare": 5,
+    "dmgType": 1,
+    "gender": 2,
+    "battleTag": "101#131#117",
+    "equipRec": "1570",
+    "rank": 1,
+    "uniqueSkill_point": "4#100",
+    "deviceId": 31440001,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133144#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31440111#31440112#31440113|2#31440121#31440122#31440123",
+    "exSkill": 31440131,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "Coppélia",
+    "signature": "3144",
+    "photoFrameBg": 0,
+    "isOnline": "0",
+    "heroType": 1,
+    "actor": "——",
+    "roleBirthday": "4/11",
+    "trust": 0,
+    "birthdayBonus": "14#83121#1;14#83121#1;14#83121#1",
+    "desc": "language_10124947",
+    "useDesc": "language_10017869",
+    "desc2": "language_10124948",
+    "mvskinId": 0,
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3145,
+    "name": "language_10121144",
+    "initials": "H",
+    "skinId": 314501,
+    "career": 1,
+    "rare": 5,
+    "dmgType": 1,
+    "gender": 2,
+    "battleTag": "103#131#117",
+    "equipRec": "1573",
+    "rank": 1,
+    "uniqueSkill_point": "4#100",
+    "deviceId": 31450001,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133145#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31450111#31450112#31450113|2#31450121#31450122#31450123",
+    "exSkill": 31450131,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "Everecho",
+    "signature": "3145",
+    "photoFrameBg": 0,
+    "isOnline": "0",
+    "heroType": 1,
+    "actor": "——",
+    "roleBirthday": "4/16",
+    "trust": 0,
+    "birthdayBonus": "14#85052#1;14#85052#1;14#85052#1",
+    "desc": "language_10124949",
+    "useDesc": "language_10017869",
+    "desc2": "language_10121145",
+    "mvskinId": 0,
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3140,
+    "name": "language_10120027",
+    "initials": "D",
+    "skinId": 314001,
+    "career": 1,
+    "rare": 5,
+    "dmgType": 1,
+    "gender": 2,
+    "battleTag": "101#118",
+    "equipRec": "1574",
+    "rank": 1,
+    "uniqueSkill_point": "0#5",
+    "deviceId": 0,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133140#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31400111#31400112#31400113|2#31400121#31400122#31400123",
+    "exSkill": 31400141,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "Cornerstone",
+    "signature": "3140",
+    "photoFrameBg": 0,
+    "isOnline": "0",
+    "heroType": 1,
+    "actor": "——",
+    "roleBirthday": "2/9",
+    "trust": 0,
+    "birthdayBonus": "14#85051#1;14#85051#1;14#85051#1",
+    "desc": "language_10124950",
+    "useDesc": "language_10017869",
+    "desc2": "language_10124951",
+    "mvskinId": 0,
+    "stat": 0,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3149,
+    "name": "language_10124952",
+    "initials": "S",
+    "skinId": 314901,
+    "career": 101,
+    "rare": 5,
+    "dmgType": 1,
+    "gender": 2,
+    "battleTag": "101#131",
+    "equipRec": "1571#1572",
+    "rank": 1,
+    "uniqueSkill_point": "4#100",
+    "deviceId": 31490001,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133149#1",
+    "duplicateItemSpecial": "2#11#12",
+    "duplicateItem2": "2#11#28|1#780001#10",
+    "skill": "1#31490111#31490121#31490121|2#31490131#31490141#31490141",
+    "exSkill": 31490151,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "The Twins",
+    "signature": "3149",
+    "photoFrameBg": 0,
+    "isOnline": "1",
+    "heroType": 7,
+    "actor": "——",
+    "roleBirthday": "6/19",
+    "trust": 0,
+    "birthdayBonus": "14#89128#1;14#89128#1;14#89128#1",
+    "desc": "language_10124953",
+    "useDesc": "language_10017869",
+    "desc2": "language_10124954",
+    "mvskinId": 0,
+    "stat": 1,
+    "statShare": 0,
+    "isSP": false
+  },
+  {
+    "id": 3151,
+    "name": "language_10121161",
+    "initials": "N",
+    "skinId": 315101,
+    "career": 5,
+    "rare": 3,
+    "dmgType": 2,
+    "gender": 2,
+    "battleTag": "102#116",
+    "equipRec": "1514",
+    "rank": 1,
+    "uniqueSkill_point": "0#5",
+    "deviceId": 0,
+    "powerMax": "",
+    "ai": 5,
+    "firstItem": "",
+    "duplicateItem": "1#133151#1",
+    "duplicateItemSpecial": "2#10#8",
+    "duplicateItem2": "2#10#12",
+    "skill": "1#31510111#31510112#31510113|2#31510121#31510122#31510123",
+    "exSkill": 31510131,
+    "resistance": 0,
+    "school": 0,
+    "characterTag": "",
+    "nameEng": "NORA",
+    "signature": "3151",
+    "photoFrameBg": 0,
+    "isOnline": "1",
+    "heroType": 7,
+    "actor": "——",
+    "roleBirthday": "4/22",
+    "trust": 0,
+    "birthdayBonus": "14#89127#1;14#89127#1;14#89127#1",
+    "desc": "language_10124955",
+    "useDesc": "language_10017869",
+    "desc2": "",
+    "mvskinId": 0,
+    "stat": 1,
+    "statShare": 0,
+    "isSP": false
   }
 ]

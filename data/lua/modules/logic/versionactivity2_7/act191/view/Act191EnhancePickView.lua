@@ -12,7 +12,7 @@ function Act191EnhancePickView:onInitView()
 	end
 end
 
-function Act174ForcePickView:_onEscBtnClick()
+function Act191EnhancePickView:_onEscBtnClick()
 	return
 end
 
@@ -21,10 +21,6 @@ function Act191EnhancePickView:_editableInitView()
 
 	self.actId = Activity191Model.instance:getCurActId()
 	self.maxFreshNum = tonumber(lua_activity191_const.configDict[Activity191Enum.ConstKey.MaxFreshNum].value)
-end
-
-function Act191EnhancePickView:onUpdateParam()
-	return
 end
 
 function Act191EnhancePickView:onOpen()
@@ -140,7 +136,11 @@ end
 function Act191EnhancePickView:delayClose()
 	self.selectIndex = nil
 
-	if not Activity191Controller.instance:checkOpenGetView() then
+	local needOpen = Activity191Controller.instance:checkOpenGetView()
+
+	if needOpen then
+		ViewMgr.instance:openView(ViewName.Act191GetView)
+	else
 		Activity191Controller.instance:nextStep()
 	end
 

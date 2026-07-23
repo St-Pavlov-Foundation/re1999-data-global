@@ -36,6 +36,10 @@ function V3a2_BossRushModel:getSortStages()
 	local infoList = BossRushModel.instance:getStagesInfo()
 	local newOpenStage
 
+	if not infoList then
+		return
+	end
+
 	for _, info in ipairs(infoList) do
 		local isOpen = BossRushModel.instance:isBossOnline(info.stage) and BossRushModel.instance:isBossOpen(info.stage)
 

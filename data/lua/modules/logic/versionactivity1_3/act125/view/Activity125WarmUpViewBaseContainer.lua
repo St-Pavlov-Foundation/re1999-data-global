@@ -36,7 +36,11 @@ function Activity125WarmUpViewBaseContainer:onContainerDestroy()
 	Activity125WarmUpViewBaseContainer.super.onContainerDestroy(self)
 end
 
-function Activity125WarmUpViewBaseContainer:_onDataUpdate()
+function Activity125WarmUpViewBaseContainer:_onDataUpdate(msg)
+	if msg and msg.activityId ~= self:actId() then
+		return
+	end
+
 	local first = self._isInited
 
 	if not self._isInited then

@@ -104,7 +104,14 @@ function FightBuffTypeId2EffectMgr:removeDelEffect(tab)
 	end
 
 	vertin.effect:removeEffect(effectWrap)
-	AudioMgr.instance:trigger(config.delAudio)
+
+	local delAudio = config.delAudio
+
+	if delAudio == 0 then
+		return
+	end
+
+	AudioMgr.instance:trigger(delAudio)
 end
 
 function FightBuffTypeId2EffectMgr:addBuff(entityId, buffTypeId)

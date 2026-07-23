@@ -81,13 +81,7 @@ function V1a6_BossRush_AchievementView:_initAssessIcon()
 		self._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(go, itemClass)
 	end
 
-	local bonusTab = BossRushModel.instance:getActivityBonus()
-	local tab = bonusTab and bonusTab[V1a6_BossRush_BonusModel.instance:getTab()]
 	local highestPoint = BossRushModel.instance:getHighestPoint(self.stage)
-
-	if tab.SpModel and tab.SpModel.instance.getHighestPoint then
-		highestPoint = tab.SpModel.instance:getHighestPoint(self.stage)
-	end
 
 	self._assessIcon:setData(self.stage, highestPoint, false)
 

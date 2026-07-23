@@ -8,25 +8,23 @@ function VersionActivity2_8JumpHandleFunc:jumpTo12810(paramsList)
 	local actId = paramsList[2]
 	local episodeId = paramsList[3]
 
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
 	table.insert(self.closeViewNames, ViewName.NuoDiKaTaskView)
-	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		if ViewMgr.instance:isOpen(ViewName.NuoDiKaLevelView) then
-			local data = {}
 
-			data.actId = actId
-			data.episodeId = episodeId
+	if ViewMgr.instance:isOpen(ViewName.NuoDiKaLevelView) then
+		local data = {}
 
-			NuoDiKaController.instance:enterEpisode(data)
-		else
-			local data = {}
+		data.actId = actId
+		data.episodeId = episodeId
 
-			data.actId = actId
-			data.episodeId = episodeId
+		NuoDiKaController.instance:enterEpisode(data)
+	else
+		local data = {}
 
-			NuoDiKaController.instance:enterLevelView(data)
-		end
-	end, nil, actId, true)
+		data.actId = actId
+		data.episodeId = episodeId
+
+		NuoDiKaController.instance:enterLevelView(data)
+	end
 
 	return JumpEnum.JumpResult.Success
 end
@@ -35,15 +33,13 @@ function VersionActivity2_8JumpHandleFunc:jumpTo12811(paramsList)
 	local actId = paramsList[2]
 	local episodeId = paramsList[3]
 
-	table.insert(self.waitOpenViewNames, ViewName.VersionActivity2_8EnterView)
 	table.insert(self.closeViewNames, ViewName.MoLiDeErTaskView)
-	VersionActivity2_8EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-		if ViewMgr.instance:isOpen(ViewName.MoLiDeErLevelView) then
-			MoLiDeErController.instance:enterEpisode(actId, episodeId)
-		else
-			MoLiDeErController.instance:enterLevelView(actId, episodeId)
-		end
-	end, nil, actId, true)
+
+	if ViewMgr.instance:isOpen(ViewName.MoLiDeErLevelView) then
+		MoLiDeErController.instance:enterEpisode(actId, episodeId)
+	else
+		MoLiDeErController.instance:enterLevelView(actId, episodeId)
+	end
 
 	return JumpEnum.JumpResult.Success
 end

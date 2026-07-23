@@ -144,7 +144,7 @@ function StoreSeasonCardView:_editableInitView()
 	end
 
 	local clickCount = 4
-	local offset = 2
+	local offset = 4
 
 	self._itemClickList = self:getUserDataTb_()
 
@@ -153,6 +153,9 @@ function StoreSeasonCardView:_editableInitView()
 	for i = 1, clickCount do
 		local subTipGo = tipGo.transform:GetChild(i + offset - 1).gameObject
 		local bgGo = subTipGo.transform:GetChild(0).gameObject
+		local image = gohelper.findChildImage(bgGo, "")
+
+		image.raycastTarget = true
 
 		table.insert(self._itemClickList, gohelper.getClick(bgGo))
 	end
@@ -169,6 +172,9 @@ function StoreSeasonCardView:_editableInitView()
 	self._btnsupplement:AddClickListener(self.onClickSupplementItem, self)
 
 	self.supplementRedDot = RedDotController.instance:addNotEventRedDot(self._goreddot, self._checkSupplementRedDot, self)
+	self.supplementTipsGo = gohelper.findChild(self.viewGO, "view/tips/patchtips")
+
+	gohelper.setActive(self.supplementTipsGo, false)
 end
 
 function StoreSeasonCardView:onClickSupplementItem()

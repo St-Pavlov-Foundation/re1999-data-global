@@ -22,7 +22,6 @@ end
 function ArcadeSkillTargetRect:onFindTarget()
 	local gridX = self.gridX
 	local gridY = self.gridY
-	local radius = self._radius
 	local offX1, offX2 = ArcadeGameHelper.getRectOffsetVal(self:getSizeX() + self._radius - 1)
 	local offY1, offY2 = ArcadeGameHelper.getRectOffsetVal(self:getSizeY() + self._radius - 1)
 

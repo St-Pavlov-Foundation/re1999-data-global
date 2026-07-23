@@ -12,9 +12,13 @@ function AbyssStageItem:init(go)
 	self._txtcliptitle = gohelper.findChildText(self.viewGO, "#txt_cliptitle")
 	self._gocurherogroup = gohelper.findChild(self.viewGO, "#go_curherogroup")
 	self._goherogItem = gohelper.findChild(self.viewGO, "#go_curherogroup/#go_herogItem")
+	self._goenemygroup = gohelper.findChild(self.viewGO, "#go_enemygroup")
+	self._goenemyItem = gohelper.findChild(self.viewGO, "#go_enemygroup/#go_enemyitem")
 	self._simagehero = gohelper.findChildSingleImage(self.viewGO, "#go_curherogroup/#go_herogItem/#simage_hero")
+	self._txtrecommonddes = gohelper.findChildText(self.viewGO, "#go_enemygroup/#txt_recommonddes")
 	self._txtstarMaxtxt = gohelper.findChildText(self.viewGO, "#txt_starMaxtxt")
 	self._btnclick = gohelper.findChildButtonWithAudio(self.viewGO, "#btn_click")
+	self._txtenemy = gohelper.findChildTextMesh(self.viewGO, "#txt_enemy")
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -45,7 +49,11 @@ end
 function AbyssStageItem:_editableInitView()
 	self._goPlayerBg = gohelper.findChild(self.viewGO, "img_playerbg")
 	self._animator = gohelper.findChildComponent(self.viewGO, "", gohelper.Type_Animator)
+	self._goRecommendTitle = gohelper.findChild(self.viewGO, "clip1_title")
 	self._starItemList = self:getUserDataTb_()
+
+	gohelper.setActive(self._goenemyItem, false)
+	gohelper.setActive(self._goherogItem, false)
 end
 
 function AbyssStageItem:setInfo(stageConfig)
@@ -73,9 +81,12 @@ function AbyssStageItem:refreshUI()
 
 	self.haveChallenge = haveChallenge
 
-	gohelper.setActive(self._gocurherogroup, false)
-	gohelper.setActive(self._txtstarMaxtxt, false)
-	gohelper.setActive(self._goPlayerBg, false)
+	gohelper.setActive(self._gocurherogroup, haveChallenge)
+	gohelper.setActive(self._txtstarMaxtxt, haveChallenge)
+	gohelper.setActive(self._goPlayerBg, true)
+	gohelper.setActive(self._goRecommendTitle, not haveChallenge)
+	gohelper.setActive(self._goenemygroup, not haveChallenge)
+	gohelper.setActive(self._txtenemy, not haveChallenge)
 
 	local fightParam = AbyssModel.instance:getCurFightResultParam()
 
@@ -91,6 +102,8 @@ function AbyssStageItem:refreshUI()
 		self._txtstarMaxtxt.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("v3a6_abyss_stage_round_desc"), stageInfo.round)
 
 		self:refreshHeroState(stageInfo.heroList)
+	else
+		self:refreshRecommendInfo()
 	end
 
 	if self.isPreviousChallenged == false then
@@ -146,16 +159,42 @@ function AbyssStageItem:onStarItemCreate(itemGo, state, index)
 end
 
 function AbyssStageItem:refreshHeroState(heroList)
-	gohelper.CreateObjList(self, self.onHeroItemCreate, heroList, nil, self._goherogItem, AbyssStageHeroItem)
+	gohelper.CreateObjList(self, self.onHeroItemCreate, heroList, nil, self._goherogItem, AbyssStageHeroItem, nil, nil, 1)
+end
+
+function AbyssStageItem:refreshRecommendInfo()
+	local text = AbyssHelper.getRecommendTeamList(self.stageConfig.teamRecommend)
+
+	self._txtenemy.text = text
+
+	local recommended
+
+	if not string.nilorempty(self.stageConfig.careerPrefer) then
+		recommended = string.splitToNumber(self.stageConfig.careerPrefer, "#")
+	else
+		logError("新深渊 关卡推荐属性为空 活动id: " .. tostring(self.stageConfig.activityId) .. " 关卡id: " .. tostring(self.stageConfig.stage))
+
+		recommended = {}
+	end
+
+	gohelper.CreateObjList(self, self._onRecommendCareerItemShow, recommended, nil, self._goenemyItem, nil, nil, nil, 1)
+
+	local isEmpty = not recommended and next(recommended) == nil
+
+	gohelper.setActive(self._txtrecommonddes, isEmpty)
+
+	if isEmpty and self._txtrecommonddes then
+		self._txtrecommonddes.text = luaLang("new_common_none")
+	end
+end
+
+function AbyssStageItem:_onRecommendCareerItemShow(obj, data, index)
+	local icon = gohelper.findChildImage(obj, "")
+
+	UISpriteSetMgr.instance:setHeroGroupSprite(icon, "career_" .. data)
 end
 
 function AbyssStageItem:playAnim()
-	local haveChallenge = self.haveChallenge
-
-	gohelper.setActive(self._gocurherogroup, haveChallenge)
-	gohelper.setActive(self._txtstarMaxtxt, haveChallenge)
-	gohelper.setActive(self._goPlayerBg, haveChallenge)
-
 	local animName = self.isPreviousChallenged and "finish" or "idle"
 
 	self._animator:Play(animName, 0, 0)

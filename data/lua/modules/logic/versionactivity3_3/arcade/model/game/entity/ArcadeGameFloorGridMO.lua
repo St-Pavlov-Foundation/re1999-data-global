@@ -18,6 +18,12 @@ function ArcadeGameFloorGridMO:ctor(x, y)
 	ArcadeGameFloorGridMO.super.ctor(self, self._cfg)
 end
 
+function ArcadeGameFloorGridMO:reset()
+	self._skillSetMO:reset()
+	self._buffSetMO:reset()
+	self._baseAttrSetMO:reset()
+end
+
 function ArcadeGameFloorGridMO:onCtor()
 	return
 end

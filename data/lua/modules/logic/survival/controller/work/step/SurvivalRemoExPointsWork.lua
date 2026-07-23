@@ -4,7 +4,7 @@ module("modules.logic.survival.controller.work.step.SurvivalRemoExPointsWork", p
 
 local SurvivalRemoExPointsWork = class("SurvivalRemoExPointsWork", SurvivalStepBaseWork)
 
-function SurvivalRemoExPointsWork:onStart(context)
+function SurvivalRemoExPointsWork:onStart2(context)
 	SurvivalMapModel.instance:removeExploredPoint2(self._stepMo.hex)
 	self:onDone(true)
 end

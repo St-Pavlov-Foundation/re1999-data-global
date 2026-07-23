@@ -17,12 +17,32 @@ function NecrologistStoryController:reInit()
 end
 
 function NecrologistStoryController:openTipView(tagId, clickPosition)
+	local tagCo = NecrologistStoryConfig.instance:getIntroduceCo(tonumber(tagId))
+
+	if not tagCo then
+		return
+	end
+
 	local viewParam = {}
 
 	viewParam.tagId = tagId
 	viewParam.clickPosition = clickPosition
 
-	ViewMgr.instance:openView(ViewName.NecrologistStoryTipView, viewParam)
+	if string.nilorempty(tagCo.resource) then
+		ViewMgr.instance:openView(ViewName.NecrologistStoryTipView, viewParam)
+
+		return
+	end
+
+	local viewName = ViewName[tagCo.resource]
+
+	if not viewName then
+		ViewMgr.instance:openView(ViewName.NecrologistStoryTipView, viewParam)
+
+		return
+	end
+
+	ViewMgr.instance:openView(viewName, viewParam)
 end
 
 function NecrologistStoryController:closeGameView(storyId)
@@ -163,6 +183,12 @@ end
 
 function NecrologistStoryController:getNecrologistStoryActivityRed(storyId)
 	return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.NecrologistStoryTask, storyId)
+end
+
+function NecrologistStoryController:openBranchView(roleStoryId)
+	ViewMgr.instance:openView(ViewName.NecrologistStoryBranchView, {
+		roleStoryId = roleStoryId
+	})
 end
 
 NecrologistStoryController.instance = NecrologistStoryController.New()

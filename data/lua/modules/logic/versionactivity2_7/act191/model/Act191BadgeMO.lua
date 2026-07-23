@@ -20,12 +20,12 @@ end
 
 function Act191BadgeMO:getState()
 	if self.sp then
-		return Activity174Enum.BadgeState.Sp
+		return Activity191Enum.BadgeState.Sp
 	elseif self.act then
-		return Activity174Enum.BadgeState.Light
+		return Activity191Enum.BadgeState.Light
 	end
 
-	return Activity174Enum.BadgeState.Normal
+	return Activity191Enum.BadgeState.Normal
 end
 
 return Act191BadgeMO

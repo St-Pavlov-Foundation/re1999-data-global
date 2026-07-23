@@ -12,11 +12,15 @@ function FightCardDeckView:onInitView()
 	self._btnCardPre = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_cardpre")
 	self._cardPreSelect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/select")
 	self._cardPreUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_cardpre/unselect")
+	self._btnDevice = gohelper.findChildClickWithDefaultAudio(self.viewGO, "topTab/#btn_device")
+	self._deviceSelect = gohelper.findChild(self.viewGO, "topTab/#btn_device/select")
+	self._deviceUnselect = gohelper.findChild(self.viewGO, "topTab/#btn_device/unselect")
 	self._cardRoot = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content")
 	self._cardItem = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport/Content/#go_carditem")
 	self._nameText = gohelper.findChildText(self.viewGO, "layout/#scroll_card/#txt_skillname")
 	self._skillText = gohelper.findChildText(self.viewGO, "layout/#scroll_card/#scroll_skill/viewport/content/#txt_skilldec")
 	self._cardMask = gohelper.findChild(self.viewGO, "layout/#scroll_card/Viewport").transform
+	self.cardDataTabPool = {}
 
 	if self._editableInitView then
 		self:_editableInitView()
@@ -42,25 +46,67 @@ function FightCardDeckView:_onViewClick()
 end
 
 FightCardDeckView.SelectType = {
-	CardBox = 1,
-	PreCard = 2
+	Device = 3,
+	PreCard = 2,
+	CardBox = 1
 }
 
 function FightCardDeckView:onOpen()
 	self._cardItemDic = {}
 	self._selectType = self.viewParam and self.viewParam.selectType or FightCardDeckView.SelectType.CardBox
 
-	self:_refreshBtn()
-	self:_refreshBtnState()
-
 	local cardPath = "ui/viewres/fight/fightcarditem.prefab"
 
 	self:com_loadAsset(cardPath, self._onCardLoadFinish)
+	FightRpc.instance:sendGetFightCardDeckInfoRequest(FightRpc.DeckInfoRequestType.MySide)
 end
 
+local CanSelectTypeList = {}
+
 function FightCardDeckView:_startRefreshUI()
+	if not self.assetLoaded then
+		return
+	end
+
+	if not self.replyMsg then
+		return
+	end
+
+	tabletool.clear(CanSelectTypeList)
+
+	if not FightHelper.allIsDeviceEntity() then
+		table.insert(CanSelectTypeList, FightCardDeckView.SelectType.CardBox)
+	end
+
+	if FightDataHelper.hasDeviceArea() then
+		table.insert(CanSelectTypeList, FightCardDeckView.SelectType.Device)
+	end
+
+	self._preCardList = FightHelper.getNextRoundGetCardList()
+
+	if self._preCardList and #self._preCardList > 0 then
+		table.insert(CanSelectTypeList, FightCardDeckView.SelectType.PreCard)
+	end
+
+	local findSelect = false
+
+	for _, type in ipairs(CanSelectTypeList) do
+		if type == self._selectType then
+			findSelect = true
+
+			break
+		end
+	end
+
+	if not findSelect then
+		self._selectType = CanSelectTypeList[1]
+	end
+
+	self:_refreshBtn()
+	self:_refreshBtnState()
 	self:addClickCb(self._btnCardBox, self._onCardBoxClick, self)
 	self:addClickCb(self._btnCardPre, self._onCardPreClick, self)
+	self:addClickCb(self._btnDevice, self._onDeviceClick, self)
 	self:_refreshUI()
 end
 
@@ -78,71 +124,124 @@ function FightCardDeckView:_onCardPreClick()
 	self:_refreshBtnState()
 end
 
+function FightCardDeckView:_onDeviceClick()
+	self._selectType = FightCardDeckView.SelectType.Device
+
+	self:_refreshUI()
+	self:_refreshBtnState()
+end
+
 function FightCardDeckView:_onCardLoadFinish(loader)
 	local tarPrefab = loader:GetResource()
 
 	gohelper.clone(tarPrefab, gohelper.findChild(self._cardItem, "card"), "card")
 	gohelper.setActive(gohelper.findChild(self._cardItem, "select"), false)
+
+	self.assetLoaded = true
+
 	self:_startRefreshUI()
 end
 
 function FightCardDeckView:_onGetFightCardDeckInfoReply(msg)
-	self._boxList = {}
+	if self._boxList then
+		for _, cardDataTab in ipairs(self._boxList) do
+			self:recycleCardDataTab(cardDataTab)
+		end
 
-	local entityDic = {}
+		tabletool.clear(self._boxList)
+	end
+
+	if self._deviceBoxList then
+		for _, cardDataTab in ipairs(self._deviceBoxList) do
+			self:recycleCardDataTab(cardDataTab)
+		end
+
+		tabletool.clear(self._deviceBoxList)
+	end
+
+	self:buildBoxList(msg)
+	self:buildDeviceBoxList(msg)
+
+	self.replyMsg = true
+
+	self:_startRefreshUI()
+end
+
+function FightCardDeckView:getCardDataTab()
+	local cardDataTab = table.remove(self.cardDataTabPool)
+
+	cardDataTab = cardDataTab or {}
+
+	return cardDataTab
+end
+
+function FightCardDeckView:recycleCardDataTab(cardDataTab)
+	table.insert(self.cardDataTabPool, cardDataTab)
+end
+
+function FightCardDeckView:getTempKey(cardData)
+	local key = string.format("%s_%s", cardData.skillId, cardData.tempCard and "1" or "0")
+
+	return key
+end
+
+local TempDict = {}
+
+function FightCardDeckView:buildBoxList(msg)
+	tabletool.clear(TempDict)
+
+	self._boxList = self._boxList or {}
+
+	tabletool.clear(self._boxList)
 
 	for _, v in ipairs(msg.deckInfos) do
-		local cardInfo = FightCardInfoData.New(v)
-		local entityId = cardInfo.uid
-		local tab = entityDic[entityId]
+		local cardData = v
+		local key = self:getTempKey(cardData)
+		local cardDataTab = TempDict[key]
 
-		if not tab then
-			tab = {}
-			entityDic[entityId] = tab
+		if not cardDataTab then
+			cardDataTab = self:getCardDataTab()
+			cardDataTab.skillId = cardData.skillId
+			cardDataTab.tempCard = cardData.tempCard
+			cardDataTab.entityId = cardData.uid
+			cardDataTab.num = 0
+			TempDict[key] = cardDataTab
 		end
 
-		local skillId = cardInfo.skillId
-
-		if not tab[skillId] then
-			tab[skillId] = {}
-			tab[skillId][1] = {}
-			tab[skillId][2] = {}
-		end
-
-		if cardInfo.tempCard then
-			table.insert(tab[skillId][1], cardInfo)
-		else
-			table.insert(tab[skillId][2], cardInfo)
-		end
+		cardDataTab.num = cardDataTab.num + 1
 	end
 
-	for entityId, v in pairs(entityDic) do
-		for skillId, dic in pairs(v) do
-			if #dic[1] > 0 then
-				local tab = {}
+	for _, cardDataTab in pairs(TempDict) do
+		table.insert(self._boxList, cardDataTab)
+	end
+end
 
-				tab.skillId = skillId
-				tab.tempCard = true
-				tab.entityId = entityId
-				tab.num = #dic[1]
+function FightCardDeckView:buildDeviceBoxList(msg)
+	tabletool.clear(TempDict)
 
-				table.insert(self._boxList, tab)
-			end
+	self._deviceBoxList = self._deviceBoxList or {}
 
-			if #dic[2] > 0 then
-				local tab = {}
+	tabletool.clear(self._deviceBoxList)
 
-				tab.skillId = skillId
-				tab.entityId = entityId
-				tab.num = #dic[2]
+	for _, v in ipairs(msg.deviceInfos) do
+		local cardData = v
+		local key = self:getTempKey(cardData)
+		local cardDataTab = TempDict[key]
 
-				table.insert(self._boxList, tab)
-			end
+		if not cardDataTab then
+			cardDataTab = self:getCardDataTab()
+			cardDataTab.skillId = cardData.skillId
+			cardDataTab.tempCard = cardData.tempCard
+			cardDataTab.entityId = cardData.uid
+			cardDataTab.num = 0
+			TempDict[key] = cardDataTab
 		end
+
+		cardDataTab.num = cardDataTab.num + 1
 	end
 
-	if self._selectType == FightCardDeckView.SelectType.CardBox then
-		self:_refreshCardBox()
+	for _, cardDataTab in pairs(TempDict) do
+		table.insert(self._deviceBoxList, cardDataTab)
 	end
 end
 
@@ -150,8 +249,10 @@ function FightCardDeckView:_refreshUI()
 	if self._selectType == FightCardDeckView.SelectType.CardBox then
 		if self._boxList then
 			self:_refreshCardBox()
-		else
-			FightRpc.instance:sendGetFightCardDeckInfoRequest(FightRpc.DeckInfoRequestType.MySide)
+		end
+	elseif self._selectType == FightCardDeckView.SelectType.Device then
+		if self._deviceBoxList then
+			self:_refreshDeviceCardBox()
 		end
 	else
 		self:_refreshPreCard()
@@ -187,6 +288,22 @@ function FightCardDeckView.sortCardBox(item1, item2)
 		else
 			return item1.skillId < item2.skillId
 		end
+	end
+end
+
+function FightCardDeckView:_refreshDeviceCardBox()
+	table.sort(self._deviceBoxList, FightCardDeckView.sortCardBox)
+	self:com_createObjList(self._onCardItemShow, self._deviceBoxList, self._cardRoot, self._cardItem)
+
+	if #self._deviceBoxList == 0 then
+		self._nameText.text = ""
+		self._skillText.text = ""
+	end
+
+	if #self._deviceBoxList > 6 then
+		recthelper.setHeight(self._cardMask, 480)
+	else
+		recthelper.setHeight(self._cardMask, 320)
 	end
 end
 
@@ -237,7 +354,7 @@ function FightCardDeckView:_onCardItemShow(obj, data, index)
 
 	cardItem:refreshItem(data)
 
-	if self._selectType == FightCardDeckView.SelectType.CardBox then
+	if self._selectType == FightCardDeckView.SelectType.CardBox or self._selectType == FightCardDeckView.SelectType.Device then
 		cardItem:showCount(data.num)
 	end
 
@@ -271,12 +388,14 @@ function FightCardDeckView:_refreshBtnState()
 	gohelper.setActive(self._cardBoxUnselect, self._selectType ~= FightCardDeckView.SelectType.CardBox)
 	gohelper.setActive(self._cardPreSelect, self._selectType == FightCardDeckView.SelectType.PreCard)
 	gohelper.setActive(self._cardPreUnselect, self._selectType ~= FightCardDeckView.SelectType.PreCard)
+	gohelper.setActive(self._deviceSelect, self._selectType == FightCardDeckView.SelectType.Device)
+	gohelper.setActive(self._deviceUnselect, self._selectType ~= FightCardDeckView.SelectType.Device)
 end
 
 function FightCardDeckView:_refreshBtn()
-	self._preCardList = FightHelper.getNextRoundGetCardList()
-
-	gohelper.setActive(self._btnCardPre.gameObject, #self._preCardList > 0)
+	gohelper.setActive(self._btnCardBox.gameObject, tabletool.indexOf(CanSelectTypeList, FightCardDeckView.SelectType.CardBox))
+	gohelper.setActive(self._btnCardPre.gameObject, tabletool.indexOf(CanSelectTypeList, FightCardDeckView.SelectType.PreCard))
+	gohelper.setActive(self._btnDevice.gameObject, tabletool.indexOf(CanSelectTypeList, FightCardDeckView.SelectType.Device))
 end
 
 function FightCardDeckView:onClose()

@@ -412,60 +412,57 @@ function SkillEditorStepBuilder._buildActEffect(actEffect, targetId, effectType,
 
 	local targetEntityMO = FightDataHelper.entityMgr:getById(targetId)
 
-	if effectType == FightEnum.EffectType.DAMAGE and targetEntityMO.shieldValue > 0 then
-		actEffectData.effectType = FightEnum.EffectType.SHIELD
-		actEffectData.effectNum = Mathf.Clamp(targetEntityMO.shieldValue - effectNum, 0, targetEntityMO.shieldValue)
-		actEffectData.configEffect = 0
+	if effectType == FightEnum.EffectType.DAMAGE or effectType == FightEnum.EffectType.CRIT or effectType == FightEnum.EffectType.ORIGINDAMAGE or effectType == FightEnum.EffectType.ORIGINCRIT or effectType == FightEnum.EffectType.ADDITIONALDAMAGE or effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
+		local hurtInfo = FightHurtInfoData.New(FightDef_pb.FightHurtInfo())
 
-		local extraActEffectData = FightActEffectData.New()
+		actEffectData.hurtInfo = hurtInfo
+		hurtInfo.damage = effectNum
+		hurtInfo.reduceHp = -effectNum
 
-		extraActEffectData.targetId = targetId
-		extraActEffectData.effectType = effectType
-		extraActEffectData.effectNum = effectNum < targetEntityMO.shieldValue and 0 or effectNum - targetEntityMO.shieldValue
-		extraActEffectData.fromSide = fromSide
+		if targetEntityMO.shieldValue > 0 then
+			local absorbHurtParam = {}
+			local shieldOffset = Mathf.Clamp(targetEntityMO.shieldValue - effectNum, 0, targetEntityMO.shieldValue)
 
-		if DirectDamageType[effectType] then
-			extraActEffectData.configEffect = FightEnum.DirectDamageType
-		end
+			absorbHurtParam.reduceShieldBuffMap = "1#" .. shieldOffset
+			hurtInfo.reduceHp = effectNum < targetEntityMO.shieldValue and 0 or effectNum - targetEntityMO.shieldValue
 
-		table.insert(actEffect, extraActEffectData)
+			if effectNum >= targetEntityMO.shieldValue then
+				local delShieldActEffectData = FightActEffectData.New()
 
-		if effectNum >= targetEntityMO.shieldValue then
-			local delShieldActEffectData = FightActEffectData.New()
+				delShieldActEffectData.targetId = targetId
+				delShieldActEffectData.effectType = FightEnum.EffectType.SHIELDDEL
+				delShieldActEffectData.effectNum = 0
+				delShieldActEffectData.fromSide = fromSide
+				delShieldActEffectData.configEffect = 0
 
-			delShieldActEffectData.targetId = targetId
-			delShieldActEffectData.effectType = FightEnum.EffectType.SHIELDDEL
-			delShieldActEffectData.effectNum = 0
-			delShieldActEffectData.fromSide = fromSide
-			delShieldActEffectData.configEffect = 0
+				table.insert(actEffect, delShieldActEffectData)
 
-			table.insert(actEffect, delShieldActEffectData)
+				local buffDic = targetEntityMO:getBuffDic()
 
-			local buffDic = targetEntityMO:getBuffDic()
+				for _, buffMO in pairs(buffDic) do
+					local buffCO = lua_skill_buff.configDict[buffMO.buffId]
 
-			for _, buffMO in pairs(buffDic) do
-				local buffCO = lua_skill_buff.configDict[buffMO.buffId]
+					if buffCO and not string.nilorempty(buffCO.features) then
+						local featureSp = GameUtil.splitString2(buffCO.features, true)
 
-				if buffCO and not string.nilorempty(buffCO.features) then
-					local featureSp = GameUtil.splitString2(buffCO.features, true)
+						for _, oneFeatureSp in ipairs(featureSp) do
+							local featureId = oneFeatureSp[1]
+							local buffActCO1 = featureId and lua_buff_act.configDict[featureId]
+							local feature = buffActCO1 and buffActCO1.type
 
-					for _, oneFeatureSp in ipairs(featureSp) do
-						local featureId = oneFeatureSp[1]
-						local buffActCO1 = featureId and lua_buff_act.configDict[featureId]
-						local feature = buffActCO1 and buffActCO1.type
+							if feature == "Shield" then
+								local delShieldBuffActEffectData = FightActEffectData.New()
 
-						if feature == "Shield" then
-							local delShieldBuffActEffectData = FightActEffectData.New()
+								delShieldBuffActEffectData.targetId = buffMO.entityId
+								delShieldBuffActEffectData.effectType = FightEnum.EffectType.BUFFDEL
+								delShieldBuffActEffectData.effectNum = 0
+								delShieldBuffActEffectData.buff = buffMO
+								delShieldBuffActEffectData.configEffect = 0
 
-							delShieldBuffActEffectData.targetId = buffMO.entityId
-							delShieldBuffActEffectData.effectType = FightEnum.EffectType.BUFFDEL
-							delShieldBuffActEffectData.effectNum = 0
-							delShieldBuffActEffectData.buff = buffMO
-							delShieldBuffActEffectData.configEffect = 0
+								table.insert(actEffect, delShieldBuffActEffectData)
 
-							table.insert(actEffect, delShieldBuffActEffectData)
-
-							break
+								break
+							end
 						end
 					end
 				end

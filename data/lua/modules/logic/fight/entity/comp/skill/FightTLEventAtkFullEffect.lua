@@ -15,8 +15,16 @@ function FightTLEventAtkFullEffect:onTrackStart(fightStepData, duration, paramsA
 		return
 	end
 
-	if not string.nilorempty(paramsArr[10]) then
-		self._attacker.effect:_onInvokeTokenRelease(paramsArr[10])
+	local token = paramsArr[10]
+
+	if not string.nilorempty(token) then
+		local entityDic = FightGameMgr.entityMgr.entityDic
+
+		for k, v in pairs(entityDic) do
+			if v.effect then
+				v.effect:_onInvokeTokenRelease(token)
+			end
+		end
 
 		return
 	end
@@ -69,6 +77,41 @@ function FightTLEventAtkFullEffect:onTrackStart(fightStepData, duration, paramsA
 					offsetZ = offsetZ + v[5] or 0
 				end
 			end
+		end
+	end
+
+	if not string.nilorempty(paramsArr[15]) then
+		local side = paramsArr[15] == "1" and self._attacker:getSide() or self._attacker:getSide() == FightEnum.EntitySide.MySide and FightEnum.EntitySide.EnemySide or FightEnum.EntitySide.MySide
+		local entityList = {}
+
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			if entity:getSide() == side and entity:getTag() ~= SceneTag.UnitNpc then
+				local isSub = FightDataHelper.entityMgr:isSub(entity.id)
+
+				if not isSub then
+					table.insert(entityList, entity)
+				end
+			end
+		end
+
+		table.sort(entityList, self.sortByEntityX)
+
+		local listCount = #entityList
+
+		if listCount > 0 then
+			local pos1x, pos1y, pos1z = transformhelper.getLocalPos(entityList[1].go.transform)
+			local pos2x, pos2y, pos2z = transformhelper.getLocalPos(entityList[#entityList].go.transform)
+			local posX = (pos1x + pos2x) / 2
+			local posY = (pos1y + pos2y) / 2
+			local posZ = (pos1z + pos2z) / 2
+
+			offsetX = posX + (side == FightEnum.EntitySide.MySide and offsetX or -offsetX)
+			offsetY = posY + offsetY
+			offsetZ = posZ + offsetZ
+		else
+			offsetX = 0 + offsetX
+			offsetY = 0 + offsetY
+			offsetZ = 0 + offsetZ
 		end
 	end
 
@@ -167,6 +210,13 @@ function FightTLEventAtkFullEffect:_removeEffect()
 
 	self._effectWrap = nil
 	self._attacker = nil
+end
+
+function FightTLEventAtkFullEffect.sortByEntityX(a, b)
+	local x1 = transformhelper.getLocalPos(a.go.transform)
+	local x2 = transformhelper.getLocalPos(b.go.transform)
+
+	return x1 < x2
 end
 
 return FightTLEventAtkFullEffect

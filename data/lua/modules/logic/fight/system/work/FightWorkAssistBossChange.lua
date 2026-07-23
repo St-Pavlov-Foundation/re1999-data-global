@@ -35,7 +35,7 @@ function FightWorkAssistBossChange:onStart()
 	if bossEvolutionConfig then
 		oldEntity.beforeMonsterChangeSkin = self._oldEntityMO.skin
 
-		switchBossFlow:addWork(Work2FightWork.New(FightWorkPlayTimeline, oldEntity, bossEvolutionConfig.timeline))
+		switchBossFlow:registWork(FightWorkPlayTimeline, oldEntity, bossEvolutionConfig.timeline)
 		switchBossFlow:registWork(FightWorkFunction, self._removeOldEntity, self, oldEntity)
 		switchBossFlow:addWork(FightWorkFunction.New(self._buildNewEntity, self))
 		switchBossFlow:registWork(FightWorkDelayTimer, 0.01)

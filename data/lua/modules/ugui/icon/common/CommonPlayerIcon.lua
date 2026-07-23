@@ -64,6 +64,8 @@ function CommonPlayerIcon:_onClick()
 		param.isSelectInFriend = self._isSelectInFriend
 	end
 
+	param.hideRoomBtn = self.hideRoomBtn
+
 	ViewMgr.instance:openView(self._playerInfoViewName or ViewName.PlayerInfoView, param)
 end
 
@@ -168,6 +170,10 @@ end
 
 function CommonPlayerIcon:getLevelBg()
 	return self._imgLevelbg
+end
+
+function CommonPlayerIcon:setHideRoomBtn(isHide)
+	self.hideRoomBtn = isHide
 end
 
 function CommonPlayerIcon:onDestroy()

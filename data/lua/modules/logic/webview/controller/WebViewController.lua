@@ -53,12 +53,17 @@ function WebViewController:getRecordUserUrl(baseUrl)
 		isKr = isKr or SettingsModel.instance:isKrRegion()
 	end
 
+	if not string.find(baseUrl, "?") then
+		baseUrl = baseUrl .. "?"
+	else
+		baseUrl = baseUrl .. "&"
+	end
+
 	if isTw then
 		local extraParams = SDKMgr.instance:getUserInfoExtraParams()
 		local roleInfo = PayModel.instance:getGameRoleInfo()
 
-		ti(strBuf, baseUrl)
-		ti(strBuf, sf("userId=%s", extraParams.userId))
+		ti(strBuf, baseUrl .. sf("userId=%s", extraParams.userId))
 		ti(strBuf, sf("sign=%s", extraParams.sign))
 		ti(strBuf, sf("timestamp=%s", extraParams.timestamp))
 		ti(strBuf, "gameCode=twcfwl")
@@ -71,9 +76,9 @@ function WebViewController:getRecordUserUrl(baseUrl)
 		local extraParams = SDKMgr.instance:getUserInfoExtraParams()
 		local ko_jwt = extraParams and extraParams.ko_jwt or "nil"
 
-		ti(strBuf, baseUrl .. "?" .. sf("jwt=%s", ko_jwt))
+		ti(strBuf, baseUrl .. sf("jwt=%s", ko_jwt))
 	else
-		ti(strBuf, baseUrl .. "?" .. sf("timestamp=%s", ServerTime.now() * 1000))
+		ti(strBuf, baseUrl .. sf("timestamp=%s", ServerTime.now() * 1000))
 		ti(strBuf, sf("gameId=%s", SDKMgr.instance:getGameId()))
 		ti(strBuf, sf("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
 		ti(strBuf, sf("channelUserId=%s", LoginModel.instance.channelUserId))

@@ -56,6 +56,18 @@ function FightTLEventSetSpinePos:onTrackStart(fightStepData, duration, paramsArr
 				end
 			end
 		end
+	elseif targetType == "7" then
+		for entityId, entity in pairs(FightGameMgr.entityMgr.entityDic) do
+			local entityData = FightDataHelper.entityMgr:getById(entity.id)
+
+			if entityData then
+				local config3D = lua_fight_monster_3d.configDict[entityData.skin]
+
+				if config3D then
+					table.insert(targetEntitys, entity)
+				end
+			end
+		end
 	end
 
 	if not string.nilorempty(paramsArr[4]) then

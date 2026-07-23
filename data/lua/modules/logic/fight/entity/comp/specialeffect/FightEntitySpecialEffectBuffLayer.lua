@@ -345,8 +345,6 @@ function FightEntitySpecialEffectBuffLayer:_releaseAllEffect()
 		for k, v in pairs(self._effectWraps) do
 			self:_releaseBuffIdEffect(k)
 		end
-
-		self._effectWraps = nil
 	end
 end
 

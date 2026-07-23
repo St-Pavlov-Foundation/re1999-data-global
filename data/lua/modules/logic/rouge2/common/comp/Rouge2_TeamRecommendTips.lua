@@ -51,6 +51,7 @@ function Rouge2_TeamRecommendTips:init(go)
 	self._Default_Layout_endPosX = 0
 	self.go = go
 	self._goRoot = gohelper.findChild(self.go, "#go_Root")
+	self._simageTab = self:getUserDataTb_()
 
 	self:_initTypeList()
 	self:_initButtons()
@@ -75,10 +76,10 @@ end
 function Rouge2_TeamRecommendTips:_initButtons()
 	self._btnDetail1 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type1/go_Detail/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
 	self._btnDetail2 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type2/go_Title/title/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
-	self._btnDetail3_1 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type3/#go_Unselect/title/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
+	self._btnDetail3_1 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type3/#go_Unselect/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
 	self._btnDetail3_2 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type3/#go_Select/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
-	self._btnDetail9_1 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type9/#go_Unselect/title/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
-	self._btnDetail9_2 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type9/#go_Select/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
+	self._btnDetail8_1 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type8/#go_Unselect/title/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
+	self._btnDetail8_2 = gohelper.findChildButtonWithAudio(self.go, "#go_Root/#go_Type8/#go_Select/#btn_Detail", AudioEnum.Rouge2.OpenAttrDetail)
 end
 
 function Rouge2_TeamRecommendTips:addEventListeners()
@@ -86,8 +87,8 @@ function Rouge2_TeamRecommendTips:addEventListeners()
 	self._btnDetail2:AddClickListener(self._btnDetailOnClick, self)
 	self._btnDetail3_1:AddClickListener(self._btnDetailOnClick, self)
 	self._btnDetail3_2:AddClickListener(self._btnDetailOnClick, self)
-	self._btnDetail9_1:AddClickListener(self._btnDetailOnClick, self)
-	self._btnDetail9_2:AddClickListener(self._btnDetailOnClick, self)
+	self._btnDetail8_1:AddClickListener(self._btnDetailOnClick, self)
+	self._btnDetail8_2:AddClickListener(self._btnDetailOnClick, self)
 	self:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, self._onUseStoneReply, self)
 	self:addEventCb(Rouge2_Controller.instance, Rouge2_Event.OnUpdateTeamSystem, self._onUpdateTeamSystem, self)
 end
@@ -97,8 +98,8 @@ function Rouge2_TeamRecommendTips:removeEventListeners()
 	self._btnDetail2:RemoveClickListener()
 	self._btnDetail3_1:RemoveClickListener()
 	self._btnDetail3_2:RemoveClickListener()
-	self._btnDetail9_1:RemoveClickListener()
-	self._btnDetail9_2:RemoveClickListener()
+	self._btnDetail8_1:RemoveClickListener()
+	self._btnDetail8_2:RemoveClickListener()
 end
 
 function Rouge2_TeamRecommendTips:_btnDetailOnClick()
@@ -149,30 +150,34 @@ function Rouge2_TeamRecommendTips:_showType2RefreshUIFunc(showType)
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.Default_Layout] = self._refresh_Default_Layout
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.Single] = self._refresh_Single
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.System] = self._refresh_System
-		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.Drop] = self._refresh_Drop
+		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.ItemRecommend] = self._refresh_ItemRecommend
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.AttrBuffDrop] = self._refresh_AttrBuffDrop
-		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.MapStoreGoods] = self._refresh_MapStoreGoods
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.HeroCard] = self._refresh_HeroCard
 		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.HeroGroupEdit] = self._refresh_HeroGroupEdit
+		self._showTypeFunc[Rouge2_Enum.TeamRecommendTipType.MultiItemSystemTag] = self._refresh_MultiItemSystemTag
 	end
 
 	return self._showTypeFunc[showType]
 end
 
 function Rouge2_TeamRecommendTips:_refresh_Default(goType)
-	local pivot = self._params and self._params.pivot
+	local pivot = self:getParam(Rouge2_Enum.TeamRecommendParam.Pivot) or Rouge2_TeamRecommendTips.Pivot_LeftCenter
 
-	pivot = pivot or Rouge2_TeamRecommendTips.Pivot_LeftCenter
 	goType.transform.pivot = pivot
 
+	local goSelect = gohelper.findChild(goType, "go_Select")
+	local goUnselect = gohelper.findChild(goType, "go_Unselect")
 	local goLight = gohelper.findChild(goType, "go_Detail/#btn_Detail/icon/#light")
 
+	gohelper.setActive(goSelect, self._isSelectSystem)
+	gohelper.setActive(goUnselect, not self._isSelectSystem)
 	gohelper.setActive(goLight, not self._isSelectSystem)
 
-	local goTypeList = gohelper.findChild(goType, "#go_TypeList")
-	local goTypeItem = gohelper.findChild(goType, "#go_TypeList/#go_TypeItem")
+	if self._isSelectSystem then
+		local txtName = gohelper.findChildText(goType, "go_Select/go_Tag/txt_Name")
 
-	gohelper.CreateObjList(self, self._refreshTeamTypeItem, self._recommendSystemIdList, goTypeList, goTypeItem)
+		txtName.text = self._selectTagCo and self._selectTagCo.tagName
+	end
 end
 
 function Rouge2_TeamRecommendTips:_refreshTeamTypeItem(obj, systemId, index)
@@ -194,42 +199,17 @@ function Rouge2_TeamRecommendTips:_refreshTeamTypeItem(obj, systemId, index)
 end
 
 function Rouge2_TeamRecommendTips:_refresh_Default_Layout(goType)
-	local goTypeList_overseas = gohelper.findChild(goType, "#go_TypeList_overseas")
-	local goTypeListContent = gohelper.findChild(goTypeList_overseas, "viewport/content")
-	local goTypeItem_overseas = gohelper.findChild(goTypeListContent, "#go_TypeItem")
+	local goSelect = gohelper.findChild(goType, "go_Select")
+	local goUnselect = gohelper.findChild(goType, "go_Unselect")
 
-	self._Default_Layout_transform = goTypeListContent.transform
+	gohelper.setActive(goSelect, self._isSelectSystem)
+	gohelper.setActive(goUnselect, not self._isSelectSystem)
 
-	local goTypeList = gohelper.findChild(goType, "#go_TypeList")
-	local goTypeItem = gohelper.findChild(goType, "#go_TypeList/#go_TypeItem")
-	local isUseScroll = true
+	if self._isSelectSystem then
+		local txtName = gohelper.findChildText(goType, "go_Select/txt_Name")
 
-	gohelper.setActive(goTypeList, not isUseScroll)
-	gohelper.setActive(goTypeList_overseas, isUseScroll)
-
-	if isUseScroll then
-		goTypeList = goTypeListContent
-		goTypeItem = goTypeItem_overseas
+		txtName.text = self._selectTagCo and self._selectTagCo.tagName
 	end
-
-	gohelper.CreateObjList(self, self._refreshTeamTypeItem, self._recommendSystemIdList, goTypeList, goTypeItem)
-
-	local goLight = gohelper.findChild(goType, "go_Title/title/#btn_Detail/#light")
-
-	gohelper.setActive(goLight, not self._isSelectSystem)
-
-	if isUseScroll then
-		ZProj.UGUIHelper.RebuildLayout(self._Default_Layout_transform)
-
-		local contentW = recthelper.getWidth(self._Default_Layout_transform)
-		local viewportW = recthelper.getWidth(goTypeList_overseas.transform)
-
-		self._Default_Layout_endPosX = viewportW - contentW
-	else
-		self._Default_Layout_endPosX = 0
-	end
-
-	self:_tweenDefault_Layout()
 end
 
 function Rouge2_TeamRecommendTips:_refresh_Single(goType)
@@ -253,53 +233,25 @@ function Rouge2_TeamRecommendTips:_refresh_System(goType)
 	gohelper.CreateObjList(self, self._refreshTeamTypeItem, self._recommendSystemIdList, goTypeList, goTypeItem)
 end
 
-function Rouge2_TeamRecommendTips:_refresh_Drop(goType)
-	local goSelect = gohelper.findChild(goType, "#go_Select")
-	local goUnselect = gohelper.findChild(goType, "#go_Unselect")
-	local txtSelectName = gohelper.findChildText(goType, "#go_Select/#txt_Name")
-	local txtUnselectName = gohelper.findChildText(goType, "#go_Unselect/#txt_Name")
-	local itemId = self._params and self._params.itemId
-	local itemCo = Rouge2_BackpackHelper.getItemConfig(itemId)
-	local battleTag = itemCo and itemCo.battleTag
-	local isSelectSystem = battleTag == tostring(self._curSystemId)
-	local tagCo = HeroConfig.instance:getBattleTagConfigCO(battleTag)
-
-	txtSelectName.text = tagCo and tagCo.tagName
-	txtUnselectName.text = tagCo and tagCo.tagName
-
-	gohelper.setActive(goSelect, isSelectSystem)
-	gohelper.setActive(goUnselect, not isSelectSystem)
-end
-
-function Rouge2_TeamRecommendTips:_refresh_AttrBuffDrop(goType)
-	local heroNum = HeroModel.instance:getCount() or 0
-	local itemId = self._params and self._params.itemId
-	local itemCo = Rouge2_BackpackHelper.getItemConfig(itemId)
-	local battleTag = itemCo and itemCo.battleTag
-	local isSelectSystem = battleTag == tostring(self._curSystemId)
-
-	gohelper.setActive(goType, heroNum > 0 and isSelectSystem)
-end
-
-function Rouge2_TeamRecommendTips:_refresh_MapStoreGoods(goType)
-	local itemId = self._params and self._params.itemId
-	local isBuff = Rouge2_BackpackHelper.isBuff(Rouge2_Enum.ItemDataType.Config, itemId)
-
-	if not isBuff then
-		gohelper.setActive(goType, false)
-
-		return
-	end
-
-	local itemCo = Rouge2_BackpackHelper.getItemConfig(itemId)
-	local battleTag = itemCo and itemCo.battleTag
-	local isSelectSystem = battleTag == tostring(self._curSystemId)
+function Rouge2_TeamRecommendTips:_refresh_ItemRecommend(goType)
+	local itemId = self:getParam(Rouge2_Enum.TeamRecommendParam.ItemId)
+	local tagMap = Rouge2_CollectionConfig.instance:getItemBattleTagMap(itemId)
+	local isSelectSystem = tagMap and tagMap[self._curSystemId] == true
 
 	gohelper.setActive(goType, isSelectSystem)
 end
 
+function Rouge2_TeamRecommendTips:_refresh_AttrBuffDrop(goType)
+	local heroNum = HeroModel.instance:getCount() or 0
+	local itemId = self:getParam(Rouge2_Enum.TeamRecommendParam.ItemId)
+	local tagMap = Rouge2_CollectionConfig.instance:getItemBattleTagMap(itemId)
+	local isSelectSystem = tagMap and tagMap[self._curSystemId] == true
+
+	gohelper.setActive(goType, heroNum > 0 and isSelectSystem)
+end
+
 function Rouge2_TeamRecommendTips:_refresh_HeroCard(goType)
-	local heroId = self._params and self._params.heroId
+	local heroId = self:getParam(Rouge2_Enum.TeamRecommendParam.HeroId)
 	local isRecommend = Rouge2_SystemController.instance:isRecommendHero(heroId)
 
 	gohelper.setActive(goType, isRecommend)
@@ -320,6 +272,70 @@ function Rouge2_TeamRecommendTips:_refresh_HeroGroupEdit(goType)
 	end
 end
 
+function Rouge2_TeamRecommendTips:_refresh_MultiItemSystemTag(goType)
+	local goLayout = gohelper.findChild(goType, "#go_Layout")
+	local goItem = gohelper.findChild(goType, "#go_Layout/#go_Item")
+	local itemId = self:getParam(Rouge2_Enum.TeamRecommendParam.ItemId)
+	local battleTagList = Rouge2_CollectionConfig.instance:getItemBattleTagList(itemId)
+
+	gohelper.CreateObjList(self, self._refreshItemSystemTag, battleTagList, goLayout, goItem)
+
+	local layoutType = self:getParam(Rouge2_Enum.TeamRecommendParam.LayoutType)
+
+	if layoutType ~= nil then
+		local layoutGroup = gohelper.onceAddComponent(goLayout, gohelper.Type_HorizontalLayoutGroup)
+
+		layoutGroup.childAlignment = layoutType
+	end
+
+	local spacing = self:getParam(Rouge2_Enum.TeamRecommendParam.Spacing)
+
+	if spacing ~= nil then
+		local layoutGroup = gohelper.onceAddComponent(goLayout, gohelper.Type_HorizontalLayoutGroup)
+
+		layoutGroup.spacing = spacing
+	end
+
+	local scale = self:getParam(Rouge2_Enum.TeamRecommendParam.Scale)
+
+	if scale ~= nil then
+		transformhelper.setLocalScale(goLayout.transform, scale.x or 1, scale.y or 1, scale.z or 1)
+	end
+end
+
+function Rouge2_TeamRecommendTips:_refreshItemSystemTag(goItem, systemId, index)
+	local imageBg = gohelper.findChildImage(goItem, "#image_Bg")
+	local goIconRoot = gohelper.findChild(goItem, "IconRoot")
+	local simageIcon = gohelper.findChildSingleImage(goItem, "IconRoot/#image_Icon")
+	local txtName = gohelper.findChildText(goItem, "Name/#txt_Name")
+	local tagCo = Rouge2_CareerConfig.instance:getBattleTagConfigBySystemId(systemId)
+
+	self._simageTab[simageIcon] = true
+	txtName.text = tagCo and tagCo.tagName
+
+	Rouge2_IconHelper.setTeamSystemIcon(systemId, simageIcon, imageBg, Rouge2_Enum.SystemIconType.White)
+
+	local isShowName = self:getParam(Rouge2_Enum.TeamRecommendParam.IsShowSystemName)
+
+	gohelper.setActive(txtName.gameObject, isShowName == nil or isShowName)
+
+	local isShowIcon = self:getParam(Rouge2_Enum.TeamRecommendParam.IsShowSystemIcon)
+
+	gohelper.setActive(goIconRoot, isShowIcon == nil or isShowIcon)
+
+	local minIconWidth = self:getParam(Rouge2_Enum.TeamRecommendParam.MinIconWidth)
+
+	if minIconWidth ~= nil then
+		local layoutElement = gohelper.onceAddComponent(goIconRoot, typeof(UnityEngine.UI.LayoutElement))
+
+		layoutElement.minWidth = minIconWidth
+	end
+end
+
+function Rouge2_TeamRecommendTips:getParam(key)
+	return self._params and self._params[key]
+end
+
 function Rouge2_TeamRecommendTips:_onUpdateTeamSystem()
 	self:refreshUI()
 end
@@ -329,6 +345,12 @@ function Rouge2_TeamRecommendTips:_onUseStoneReply()
 end
 
 function Rouge2_TeamRecommendTips:onDestroy()
+	if self._simageTab then
+		for simageIcon in pairs(self._simageTab) do
+			simageIcon:UnLoadImage()
+		end
+	end
+
 	GameUtil.onDestroyViewMember_TweenId(self, "_Default_LayoutTweenId")
 	TaskDispatcher.cancelTask(self._tweenDefault_LayoutFlip, self)
 	TaskDispatcher.cancelTask(self._tweenDefault_Layout, self)

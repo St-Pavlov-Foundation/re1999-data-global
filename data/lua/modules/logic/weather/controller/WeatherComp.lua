@@ -686,7 +686,10 @@ function WeatherComp:_loadTexturesFinish(srcLoader, targetLoader, lightMapPathLi
 
 	self:_setMatReportLightMap(targetLoader)
 	self:_setSceneMatMapCfg(1, 1)
-	TaskDispatcher.runDelay(self._resGC, self, 3)
+
+	local gcTime = MainSceneSwitchEnum.SceneGCTime[self._sceneId] or MainSceneSwitchEnum.SceneGCTime.Default
+
+	TaskDispatcher.runDelay(self._resGC, self, gcTime)
 
 	if src then
 		self:startLightBlend()
@@ -733,7 +736,7 @@ function WeatherComp:_resetMats()
 end
 
 function WeatherComp:_resetGoMats(go)
-	local meshRenderer = go:GetComponentsInChildren(typeof(UnityEngine.MeshRenderer), true)
+	local meshRenderer = go:GetComponentsInChildren(typeof(UnityEngine.Renderer), true)
 
 	if meshRenderer then
 		for index = 0, meshRenderer.Length - 1 do
@@ -1035,13 +1038,33 @@ function WeatherComp:lerpVector4(a, b, t)
 	return self._tempVector4
 end
 
+function WeatherComp.getEffectAirColor(lightMode, sceneId)
+	local targetTintColor
+	local config = MainSceneSwitchConfig.instance:getSceneEffect(sceneId, WeatherEnum.EffectTag.EffectAirStartColor)
+
+	if config then
+		local color = config["lightColor" .. lightMode]
+
+		targetTintColor = {
+			color[1],
+			color[2],
+			color[3],
+			color[4]
+		}
+	end
+
+	targetTintColor = targetTintColor or WeatherEnum.EffectAirColor[lightMode]
+
+	return targetTintColor
+end
+
 function WeatherComp:changeLightEffectColor()
 	if not self._effectLightPs or not self._effectAirPs then
 		return
 	end
 
 	local lightColor = MainSceneSwitchController.getLightColor(self._curReport.lightMode, self._sceneId)
-	local airColor = WeatherEnum.EffectAirColor[self._curReport.lightMode]
+	local airColor = WeatherComp.getEffectAirColor(self._curReport.lightMode, self._sceneId)
 	local psHelper = ZProj.ParticleSystemHelper
 
 	psHelper.SetStartColor(self._effectLightPs, lightColor[1] / 255, lightColor[2] / 255, lightColor[3] / 255, lightColor[4] / 255)

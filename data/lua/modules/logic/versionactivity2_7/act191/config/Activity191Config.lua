@@ -38,104 +38,142 @@ end
 
 function Activity191Config:onConfigLoaded(configName, configTable)
 	if configName == "activity191_role" then
-		self._roleConfig = configTable
+		self._roleCfgList = {}
+		self._roleId2CfgMap = {}
+
+		for _, v in ipairs(configTable.configList) do
+			local actId = v.activityId
+
+			self._roleCfgList[actId] = self._roleCfgList[actId] or {}
+
+			table.insert(self._roleCfgList[actId], v)
+
+			self._roleId2CfgMap[actId] = self._roleId2CfgMap[actId] or {}
+			self._roleId2CfgMap[actId][v.roleId] = self._roleId2CfgMap[actId][v.roleId] or {}
+			self._roleId2CfgMap[actId][v.roleId][v.star] = v
+		end
+	elseif configName == "activity191_enhance" then
+		self._enhanceCfgMap = {}
+
+		for _, v in ipairs(configTable.configList) do
+			local actId = v.activityId
+
+			self._enhanceCfgMap[actId] = self._enhanceCfgMap[actId] or {}
+			self._enhanceCfgMap[actId][v.id] = v
+		end
+	elseif configName == "activity191_relation" then
+		self._relationCfgMap = {}
+
+		for _, v in ipairs(configTable.configList) do
+			local actId = v.activityId
+
+			self._relationCfgMap[actId] = self._relationCfgMap[actId] or {}
+			self._relationCfgMap[actId][v.tag] = self._relationCfgMap[actId][v.tag] or {}
+			self._relationCfgMap[actId][v.tag][v.level] = v
+		end
+	elseif configName == "activity191_assist_boss" then
+		self._bossCfgMap = {}
+
+		for _, v in ipairs(configTable.configList) do
+			local actId = v.activityId
+			local tag = v.relation
+
+			self._bossCfgMap[actId] = self._bossCfgMap[actId] or {}
+			self._bossCfgMap[actId][tag] = self._bossCfgMap[actId][tag] or {}
+
+			table.insert(self._bossCfgMap[actId][tag], v)
+		end
+
+		for _, v1 in pairs(self._bossCfgMap) do
+			for _, v2 in pairs(v1) do
+				table.sort(v2, function(a, b)
+					return a.bossId < b.bossId
+				end)
+			end
+		end
 	end
 end
 
-function Activity191Config:getRoleCoByNativeId(roleId, star, tryGet)
+function Activity191Config:getRoleCoByNativeId(roleId, star, try)
 	local actId = Activity191Model.instance:getCurActId()
+	local actCfgs = self._roleId2CfgMap[actId]
 
-	for _, v in ipairs(lua_activity191_role.configList) do
-		if v.activityId == actId and v.roleId == roleId and v.star == star then
-			return v
-		end
-	end
-
-	if not tryGet then
-		logError(string.format("找不到角色配置 : 活动ID %s 角色ID %s 角色星级 %s", actId, roleId, star))
+	if actCfgs and actCfgs[roleId] and actCfgs[roleId][star] then
+		return actCfgs[roleId][star]
+	elseif not try then
+		logError(string.format("斗蛐蛐养成表_角色表找不到配置 : 活动ID %s 角色ID %s 星级 %s", actId, roleId, star))
 	end
 end
 
 function Activity191Config:getRoleCo(id)
 	id = tonumber(id)
 
-	local co = self._roleConfig.configDict[id]
+	local config = lua_activity191_role.configDict[id]
 
-	if not co then
-		logError(string.format("找不到角色配置 ： 玩法角色ID %s", id))
+	if config then
+		return config
+	else
+		logError(string.format("斗蛐蛐养成表_角色表找不到配置ID: %s", id))
 	end
-
-	return co
 end
 
 function Activity191Config:getShowRoleCoList(actId)
 	local list = {}
 
-	for _, co in ipairs(self._roleConfig.configList) do
-		if co.activityId == actId and co.star == 1 then
-			list[#list + 1] = co
+	if self._roleCfgList[actId] then
+		for _, config in ipairs(self._roleCfgList[actId]) do
+			if config.star == 1 then
+				list[#list + 1] = config
+			end
 		end
-	end
 
-	table.sort(list, Activity191Helper.sortRoleCo)
+		table.sort(list, Activity191Helper.sortRoleCo)
+	end
 
 	return list
 end
 
 function Activity191Config:getCollectionCo(itemId)
-	local co = lua_activity191_collection.configDict[itemId]
+	local config = lua_activity191_collection.configDict[itemId]
 
-	if not co then
+	if config then
+		return config
+	else
 		logError(string.format("找不到造物配置 ： 造物ID %s", itemId))
 	end
-
-	return co
 end
 
 function Activity191Config:getEnhanceCo(actId, enhanceId)
-	local co
+	local actCfgs = self._enhanceCfgMap[actId]
 
-	for _, v in ipairs(lua_activity191_enhance.configList) do
-		if v.activityId == actId and v.id == enhanceId then
-			co = v
-
-			break
-		end
-	end
-
-	if not co then
+	if actCfgs and actCfgs[enhanceId] then
+		return actCfgs[enhanceId]
+	else
 		logError(string.format("找不到强化配置 ： 强化ID %s", enhanceId))
 	end
-
-	return co
 end
 
 function Activity191Config:getRelationCoList(tag)
-	local coList = {}
 	local actId = Activity191Model.instance:getCurActId()
+	local actCfgs = self._relationCfgMap[actId]
 
-	for _, co in ipairs(lua_activity191_relation.configList) do
-		if co.activityId == actId and co.tag == tag then
-			coList[co.level] = co
-		end
-	end
-
-	if next(coList) then
-		return coList
+	if actCfgs and actCfgs[tag] then
+		return actCfgs[tag]
 	else
-		logError(string.format("找不到羁绊配置 ： 羁绊ID %s", tag))
+		logError(string.format("找不到羁绊配置 ： 羁绊Tag %s", tag))
 	end
 end
 
 function Activity191Config:getRelationCo(tag, level)
 	level = level or 0
 
-	local coList = self:getRelationCoList(tag)
+	local actId = Activity191Model.instance:getCurActId()
+	local cfgMap = self._relationCfgMap[actId]
 
-	if coList and coList[level] then
-		return coList[level]
+	if cfgMap and cfgMap[tag] and cfgMap[tag][level] then
+		return cfgMap[tag][level]
 	else
-		logError(string.format("找不到羁绊配置 ： 羁绊ID %s   羁绊等级 %s", tag, level))
+		logError(string.format("找不到羁绊配置 ： 羁绊Tag %s   羁绊等级 %s", tag, level))
 	end
 end
 
@@ -332,14 +370,14 @@ function Activity191Config:getFetterHeroList(tag, actId)
 	return list
 end
 
-function Activity191Config:getEffDescCoByName(name)
+function Activity191Config:getEffDescCfgByName(name)
 	for _, v in ipairs(lua_activity191_eff_desc.configList) do
 		if v.name == name then
 			return v
 		end
 	end
 
-	logError("not fount skillId, skillIndex : " .. name)
+	logError(string.format("斗蛐蛐显示表_效果概要表找不到配置Name: %s", name))
 end
 
 Activity191Config.AttrIdToFieldName = {
@@ -350,20 +388,14 @@ Activity191Config.AttrIdToFieldName = {
 	[CharacterEnum.AttrId.Mdefense] = "mdefense"
 }
 
-function Activity191Config:getBossCfgListByTag(tag)
-	local bossCfgList = {}
+function Activity191Config:getBossCfgMap()
+	local actId = Activity191Model.instance:getCurActId()
 
-	for _, v in ipairs(lua_activity191_assist_boss.configList) do
-		if v.relation == tag then
-			bossCfgList[#bossCfgList + 1] = v
-		end
+	if self._bossCfgMap[actId] then
+		return self._bossCfgMap[actId]
+	else
+		logError("协战Boss无配置,活动ID: " .. actId)
 	end
-
-	table.sort(bossCfgList, function(a, b)
-		return a.bossId > b.bossId
-	end)
-
-	return bossCfgList
 end
 
 function Activity191Config:getSummonCfg(bossId)
@@ -373,6 +405,26 @@ function Activity191Config:getSummonCfg(bossId)
 		return summonCfg
 	else
 		logError(string.format("斗蛐蛐召唤物表 id : %s 找不到对应配置", bossId))
+	end
+end
+
+function Activity191Config:getStageCfg(actId, stageId)
+	local stageMap = lua_activity191_stage.configDict[actId]
+
+	if stageMap and stageMap[stageId] then
+		return stageMap[stageId]
+	else
+		logError(string.format("斗蛐蛐流程表_阶段表不存在配置 活动ID: %s 阶段ID: %s", actId, stageId))
+	end
+end
+
+function Activity191Config:getRankCfg(rank)
+	local rankCfg = lua_activity191_rank.configDict[rank]
+
+	if rankCfg then
+		return rankCfg
+	else
+		logError(string.format("斗蛐蛐事件表_战力等级表不存在配置 战力等级: %s", rank))
 	end
 end
 

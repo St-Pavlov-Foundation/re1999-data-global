@@ -64,7 +64,7 @@ function MainUISwitchView:_toSwitchTab(tabContainerId, tabId)
 end
 
 function MainUISwitchView:_btnchangeOnClick()
-	MainUISwitchController.instance:setCurMainUIStyle(self._selectSkinId, self._showBtnStatus, self)
+	MainUISwitchController.instance:setCurMainUIStyle(self._selectSkinId)
 	MainUISwitchListModel.instance:refreshScroll()
 end
 

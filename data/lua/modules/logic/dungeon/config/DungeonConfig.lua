@@ -23,6 +23,7 @@ function DungeonConfig:reqConfigNames()
 	return {
 		"chapter_map_element",
 		"chapter_map",
+		"story_element",
 		"chapter",
 		"episode",
 		"bonus",
@@ -97,6 +98,7 @@ function DungeonConfig:_initElement()
 	self._elementFightList = {}
 	self._mapGuidepostDict = {}
 	self._mapIdToElements = {}
+	self._v3a7TowerTypeElements = {}
 
 	for i, v in ipairs(lua_chapter_map_element.configList) do
 		if v.type == DungeonEnum.ElementType.Fight then
@@ -113,6 +115,8 @@ function DungeonConfig:_initElement()
 			end
 		elseif v.type == DungeonEnum.ElementType.Guidepost then
 			self._mapGuidepostDict[v.mapId] = v.id
+		elseif v.type == DungeonEnum.ElementType.V3a7Tower then
+			table.insert(self._v3a7TowerTypeElements, v)
 		end
 
 		local mapElementList = self._mapIdToElements[v.mapId]
@@ -122,12 +126,18 @@ function DungeonConfig:_initElement()
 			self._mapIdToElements[v.mapId] = mapElementList
 		end
 
-		table.insert(mapElementList, v)
+		if not DungeonEnum.ImplicitElementType[v.type] then
+			table.insert(mapElementList, v)
+		end
 	end
 end
 
 function DungeonConfig:getMapElements(mapId)
 	return self._mapIdToElements and self._mapIdToElements[mapId]
+end
+
+function DungeonConfig:getV3a7TowerTypeElements()
+	return self._v3a7TowerTypeElements
 end
 
 function DungeonConfig:getMapElementByFragmentId(fragmentId)
@@ -204,6 +214,27 @@ function DungeonConfig:_initDialog()
 			group[sectionId] = group[sectionId] or {}
 
 			table.insert(group[sectionId], v)
+		end
+	end
+
+	if SLFramework.FrameworkSettings.IsEditor then
+		for i, v in ipairs(lua_chapter_map_element_dialog.configList) do
+			if v.type == "options" then
+				local optionList = string.split(rawget(v, 7), "#")
+				local sectionIdList = string.split(v.param, "#")
+
+				if #optionList ~= #sectionIdList then
+					logError("_initDialog dialog config error, optionList and sectionIdList length not equal", v.id, v.stepId)
+				end
+
+				for j, sectionId in ipairs(sectionIdList) do
+					local section = self:getDialog(v.id, sectionId)
+
+					if not section then
+						logError("_initDialog dialog config error, section not exist", v.id, v.stepId, sectionId)
+					end
+				end
+			end
 		end
 	end
 end
@@ -1000,6 +1031,10 @@ function DungeonConfig:getChainEpisodeDict()
 	return self._chainEpisodeDict
 end
 
+function DungeonConfig:getNormalEpisodeIdBySimple(id)
+	return self._chainEpisodeDict[id]
+end
+
 function DungeonConfig:_initEpisodeList()
 	self._unlockEpisodeList = {}
 	self._chapterSpStats = {}
@@ -1007,6 +1042,7 @@ function DungeonConfig:_initEpisodeList()
 	self._chpaterNonSpEpisodeDict = {}
 	self._episodeElementListDict = {}
 	self._episodeUnlockDict = {}
+	self._episodeUnlockImplicitElementDict = {}
 
 	local episodeCOList = self._episodeConfig.configList
 
@@ -1024,6 +1060,24 @@ function DungeonConfig:_initEpisodeList()
 		if episodeCO.preEpisode > 0 then
 			if not string.nilorempty(episodeCO.elementList) then
 				self._episodeElementListDict[episodeCO.preEpisode] = episodeCO.elementList
+
+				local list = string.splitToNumber(episodeCO.elementList, "#")
+
+				for i, id in ipairs(list) do
+					local elementConfig = lua_chapter_map_element.configDict[id]
+
+					if elementConfig then
+						if DungeonEnum.ImplicitElementType[elementConfig.type] then
+							if self._episodeUnlockImplicitElementDict[episodeCO.id] then
+								logError(string.format("_initEpisodeList 关卡id：%s，元件id：%s重复", episodeCO.id, id))
+							end
+
+							self._episodeUnlockImplicitElementDict[episodeCO.id] = id
+						end
+					else
+						logError(string.format("_initEpisodeList 关卡id：%s，元件id：%s不存在", episodeCO.id, id))
+					end
+				end
 			end
 
 			local chapterConfig = self:getChapterCO(episodeCO.chapterId)
@@ -1091,15 +1145,21 @@ function DungeonConfig:_initVersionActivityEpisodeList()
 		VersionActivity3_5DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity3_5DungeonEnum.DungeonChapterId.Story3,
 		VersionActivity3_6DungeonEnum.DungeonChapterId.Story2,
-		VersionActivity3_6DungeonEnum.DungeonChapterId.Story3
+		VersionActivity3_6DungeonEnum.DungeonChapterId.Story3,
+		VersionActivity3_8DungeonEnum.DungeonChapterId.Story2,
+		VersionActivity3_8DungeonEnum.DungeonChapterId.Story3,
+		VersionActivity3_10DungeonEnum.DungeonChapterId.Story2,
+		VersionActivity3_10DungeonEnum.DungeonChapterId.Story3
 	}
 	local chapterEpisodeList
 
 	for _, chapterId in ipairs(chapterIdList) do
 		chapterEpisodeList = self._chapterEpisodeDict[chapterId]
 
-		for _, episodeCo in ipairs(chapterEpisodeList) do
-			self.versionActivityPreEpisodeDict[episodeCo.preEpisode] = episodeCo
+		if chapterEpisodeList then
+			for _, episodeCo in ipairs(chapterEpisodeList) do
+				self.versionActivityPreEpisodeDict[episodeCo.preEpisode] = episodeCo
+			end
 		end
 	end
 end
@@ -1959,6 +2019,10 @@ function DungeonConfig:getEpisodeByElement(elementId)
 	local episodeId = self:getEpisodeIdByMapCo(mapCfg)
 
 	return episodeId
+end
+
+function DungeonConfig:getEpisodeUnlockImplicitElement(episodeId)
+	return self._episodeUnlockImplicitElementDict[episodeId]
 end
 
 function DungeonConfig:getRewardGroupCOList(group)

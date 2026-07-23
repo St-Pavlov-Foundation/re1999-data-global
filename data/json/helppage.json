@@ -5560,6 +5560,186 @@
     "isCn": 0
   },
   {
+    "id": 3701001,
+    "title": "",
+    "type": 2,
+    "text": "小瑞安侬引导图",
+    "icon": "v3a7_xiaoruiannong_help_1",
+    "iconText": "v3a7_xiaoruiannong_help_1",
+    "unlockGuideId": 37300,
+    "isCn": 0
+  },
+  {
+    "id": 3702001,
+    "title": "",
+    "type": 2,
+    "text": "无名者引导图1",
+    "icon": "v3a7_wmz_help_1",
+    "iconText": "v3a7_wmz_help_1",
+    "unlockGuideId": 37500,
+    "isCn": 0
+  },
+  {
+    "id": 3702002,
+    "title": "",
+    "type": 2,
+    "text": "无名者引导图2",
+    "icon": "v3a7_wmz_help_2",
+    "iconText": "v3a7_wmz_help_2",
+    "unlockGuideId": 37500,
+    "isCn": 0
+  },
+  {
+    "id": 3702003,
+    "title": "",
+    "type": 2,
+    "text": "无名者引导图3",
+    "icon": "v3a7_wmz_help_3",
+    "iconText": "v3a7_wmz_help_3",
+    "unlockGuideId": 37500,
+    "isCn": 0
+  },
+  {
+    "id": 3851001,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图1",
+    "icon": "v3a8_huishengyao_help_1",
+    "iconText": "v3a8_huishengyao_help_1",
+    "unlockGuideId": 38201,
+    "isCn": 0
+  },
+  {
+    "id": 3851002,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图2",
+    "icon": "v3a8_huishengyao_help_2",
+    "iconText": "v3a8_huishengyao_help_2",
+    "unlockGuideId": 38201,
+    "isCn": 0
+  },
+  {
+    "id": 3851003,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图3",
+    "icon": "v3a8_huishengyao_help_5",
+    "iconText": "v3a8_huishengyao_help_5",
+    "unlockGuideId": 38201,
+    "isCn": 0
+  },
+  {
+    "id": 3851004,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图4（初始）",
+    "icon": "v3a8_huishengyao_help_6",
+    "iconText": "v3a8_huishengyao_help_6",
+    "unlockGuideId": 38201,
+    "isCn": 0
+  },
+  {
+    "id": 3851005,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图4（新增）",
+    "icon": "v3a8_huishengyao_help_7_2",
+    "iconText": "v3a8_huishengyao_help_7_2",
+    "unlockGuideId": 38202,
+    "isCn": 0
+  },
+  {
+    "id": 3851006,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图4（全量）",
+    "icon": "v3a8_huishengyao_help_7",
+    "iconText": "v3a8_huishengyao_help_7",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 3851007,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图5（初始）",
+    "icon": "v3a8_huishengyao_help_3",
+    "iconText": "v3a8_huishengyao_help_3",
+    "unlockGuideId": 38203,
+    "isCn": 0
+  },
+  {
+    "id": 3851008,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图5（新增）",
+    "icon": "v3a8_huishengyao_help_4_2",
+    "iconText": "v3a8_huishengyao_help_4_2",
+    "unlockGuideId": 38204,
+    "isCn": 0
+  },
+  {
+    "id": 3851009,
+    "title": "",
+    "type": 2,
+    "text": "回声谣引导图5（全量）",
+    "icon": "v3a8_huishengyao_help_4",
+    "iconText": "v3a8_huishengyao_help_4",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 38500101,
+    "title": "",
+    "type": 2,
+    "text": "外围基础指引图1",
+    "icon": "sp02_game_help_1",
+    "iconText": "sp02_game_help_1",
+    "unlockGuideId": 38510,
+    "isCn": 0
+  },
+  {
+    "id": 38500102,
+    "title": "",
+    "type": 2,
+    "text": "外围基础指引图2",
+    "icon": "sp02_game_help_2",
+    "iconText": "sp02_game_help_2",
+    "unlockGuideId": 38510,
+    "isCn": 0
+  },
+  {
+    "id": 38500201,
+    "title": "",
+    "type": 2,
+    "text": "外围玩法计时锁说明1",
+    "icon": "sp02_game_help_3",
+    "iconText": "sp02_game_help_3",
+    "unlockGuideId": 38506,
+    "isCn": 0
+  },
+  {
+    "id": 38500301,
+    "title": "",
+    "type": 2,
+    "text": "外围玩法射线锁说明1",
+    "icon": "sp02_game_help_4",
+    "iconText": "sp02_game_help_4",
+    "unlockGuideId": 38507,
+    "isCn": 0
+  },
+  {
+    "id": 38500401,
+    "title": "",
+    "type": 2,
+    "text": "外围玩法颜色锁说明1",
+    "icon": "sp02_game_help_5",
+    "iconText": "sp02_game_help_5",
+    "unlockGuideId": 38508,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

@@ -56,14 +56,9 @@ function FightViewClothSkillMgrView:_onBeforeEnterStepBehaviour()
 		return
 	end
 
-	if curChapterType == DungeonEnum.ChapterType.Rouge2 then
+	if FightDataHelper.fieldMgr:isRouge2() then
 		gohelper.setActive(self._goSimple, false)
-
-		local career = FightHelper.getRouge2Career()
-
-		if career == FightEnum.Rouge2Career.TubularBell then
-			self:openSubView(FightViewRougeSkill2, "ui/viewres/fight/fight_rouge2/fight_rouge2_skillview.prefab", self._rogueSkillRoot)
-		end
+		self:openSubView(FightViewRougeSkill2_3_7, "ui/viewres/fight/fight_rouge2/fight_rouge2_effectview.prefab", self._rogueSkillRoot)
 
 		return
 	end
@@ -78,6 +73,14 @@ function FightViewClothSkillMgrView:_onBeforeEnterStepBehaviour()
 	local myTeamData = FightDataHelper.teamDataMgr.myData
 
 	if myTeamData.itemSkillInfos then
+		gohelper.setActive(self._goSimple, false)
+
+		return
+	end
+
+	local shouTaoData = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.ShowTaoFuBen]
+
+	if shouTaoData then
 		gohelper.setActive(self._goSimple, false)
 
 		return

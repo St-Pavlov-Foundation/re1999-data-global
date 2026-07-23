@@ -24,6 +24,7 @@ function CharacterSkinLeftView:onInitView()
 	self._btnvideo = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_video")
 	self._txtswitch = gohelper.findChildText(self.viewGO, "desc/#btn_switch/#txt_switch")
 	self._goLeftStoryInfo = gohelper.findChild(self.viewGO, "#go_left")
+	self._scrollContent = gohelper.findChild(self.viewGO, "#go_left/#scroll_contentlist/viewport/content")
 	self._textStoryDesc = gohelper.findChildText(self.viewGO, "#go_left/#scroll_contentlist/viewport/content/#txt_dec")
 	self._imageStoryDescBg = gohelper.findChildSingleImage(self.viewGO, "#go_left/simage_leftbg")
 	self._btnStoryDesc = gohelper.findChildButtonWithAudio(self.viewGO, "desc/#btn_detail")
@@ -334,7 +335,7 @@ function CharacterSkinLeftView:onBigSpineLoaded()
 
 	local offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 
-	recthelper.setAnchor(self._gobigspine.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+	CharacterVoiceEnum.setSpineOffset(self.bigSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._gobigspine.transform, tonumber(offsets[3]), tonumber(offsets[3]), tonumber(offsets[3]))
 end
 
@@ -386,6 +387,9 @@ function CharacterSkinLeftView:refreshSkinStoryView(active)
 		if self._enterStoryMode then
 			gohelper.setActive(self._btnStoryReturn.gameObject, true)
 		end
+
+		ZProj.UGUIHelper.RebuildLayout(self._scrollContent.transform)
+		ZProj.UGUIHelper.RebuildLayout(self._textStoryDesc.transform)
 	else
 		gohelper.setActive(self._goskinItemListRoot, true)
 		gohelper.setActive(self._goLeftStoryInfo, false)

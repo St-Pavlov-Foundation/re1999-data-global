@@ -132,10 +132,10 @@ function CharacterRecommedHeroView:_setHeroTransform()
 	local scale = tonumber(offsets[3])
 
 	if self._spineGo then
-		recthelper.setAnchor(self._uiSpine._go.transform, tonumber(offsets[1]), tonumber(offsets[2]))
+		CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._uiSpine._go.transform, scale, scale, scale)
 	else
-		recthelper.setAnchor(self._gospine.transform, tonumber(offsets[1]) - 69, tonumber(offsets[2]))
+		CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]) - 69, tonumber(offsets[2]))
 		transformhelper.setLocalScale(self._gospine.transform, scale, scale, scale)
 	end
 end

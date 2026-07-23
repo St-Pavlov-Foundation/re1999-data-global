@@ -108,7 +108,22 @@ function StorePackageGoodsItemListModel:checkPreGoodsId(goodsId)
 
 	local preGoodsMO = StoreModel.instance:getGoodsMO(goodsId)
 
-	return preGoodsMO and preGoodsMO:isSoldOut()
+	if not preGoodsMO then
+		return false
+	end
+
+	local isSoldOut = preGoodsMO:isSoldOut()
+	local chargeConditionConfig = StoreConfig.instance:getChargeConditionalConfig(preGoodsMO.config.taskid)
+
+	if chargeConditionConfig == nil then
+		return isSoldOut
+	end
+
+	if chargeConditionConfig.clientType == StoreEnum.ChargeConditionalClientType.SP02 then
+		return isSoldOut and StoreCharageConditionalHelper.isCharageTaskFinish(preGoodsMO.goodsId)
+	else
+		return isSoldOut
+	end
 end
 
 function StorePackageGoodsItemListModel:moveToNewGoods()

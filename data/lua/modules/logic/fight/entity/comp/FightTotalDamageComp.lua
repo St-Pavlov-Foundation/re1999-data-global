@@ -64,6 +64,7 @@ function FightTotalDamageComp:_showTotalFloat()
 			local hasOrigin = false
 			local hasAssassinate = false
 			local floatNum = 0
+			local isRestrain = FightHelper.isRestrain(data.fromId, self.entity.id)
 
 			for _, actEffectData in ipairs(fightStepData.actEffect) do
 				if actEffectData.targetId == self.entity.id then
@@ -71,10 +72,6 @@ function FightTotalDamageComp:_showTotalFloat()
 
 					if FightTLEventDefHit.originHitEffectType[et] then
 						hasOrigin = true
-					end
-
-					if actEffectData.effectNum1 == 1 then
-						hasAssassinate = true
 					end
 				end
 			end
@@ -89,6 +86,10 @@ function FightTotalDamageComp:_showTotalFloat()
 						if actEffectData.effectNum1 == 1 then
 							hasAssassinate = true
 						end
+
+						if actEffectData.hurtInfo then
+							isRestrain = actEffectData.hurtInfo.careerRestraint
+						end
 					elseif ShieldTypes[et] then
 						floatNum = 0
 
@@ -98,6 +99,10 @@ function FightTotalDamageComp:_showTotalFloat()
 
 						if actEffectData.effectNum1 == 1 then
 							hasAssassinate = true
+						end
+
+						if actEffectData.hurtInfo then
+							isRestrain = actEffectData.hurtInfo.careerRestraint
 						end
 
 						break
@@ -110,6 +115,7 @@ function FightTotalDamageComp:_showTotalFloat()
 
 				param.fromId = data.fromId
 				param.defenderId = self.entity.id
+				param.isRestrain = isRestrain
 
 				if self._fixedPos then
 					param.pos_x = self._fixedPos[1]

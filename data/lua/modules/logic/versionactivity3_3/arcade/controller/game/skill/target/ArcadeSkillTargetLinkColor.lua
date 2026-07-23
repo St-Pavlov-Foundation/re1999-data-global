@@ -5,97 +5,93 @@ module("modules.logic.versionactivity3_3.arcade.controller.game.skill.target.Arc
 local ArcadeSkillTargetLinkColor = class("ArcadeSkillTargetLinkColor", ArcadeSkillTargetBase)
 
 function ArcadeSkillTargetLinkColor:onFindTarget()
-	local curRoom = ArcadeGameController.instance:getCurRoom()
+	if not self.gridX or not self.gridY then
+		logError("ArcadeSkillTargetLinkColor:onFindTarget error, gridX or gridY is nil")
 
-	if not curRoom or not self.gridX or not self.gridY then
 		return
 	end
 
-	local entityData = curRoom:getEntityDataInTargetGrid(self.gridX, self.gridY)
+	self:_beginFindLinkedMonster(self.gridX, self.gridY)
+end
 
-	if not entityData then
-		return
-	end
-
-	local entityType = entityData.entityType
-	local uid = entityData.uid
-	local mo = ArcadeGameModel.instance:getMOWithType(entityType, uid)
-	local targetRace = mo and ArcadeConfig.instance:getMonsterRace(mo:getId())
+function ArcadeSkillTargetLinkColor:_beginFindLinkedMonster(gridX, gridY)
+	local hasCheckGridDict = {}
+	local waitCheckMODict = {}
+	local targetRace = self:_tryAddLinkedMonster(gridX, gridY, nil, hasCheckGridDict, waitCheckMODict)
 
 	if not targetRace then
 		return
 	end
 
-	local isDead = mo:getIsDead()
-	local isRemoving = mo:getIsRemoving()
-	local hp = mo:getHp()
+	while true do
+		local nextUid, nextMO = next(waitCheckMODict)
 
-	if isDead or isRemoving or hp <= 0 then
-		return
-	end
-
-	self:addTarget(mo)
-
-	local hasCheckGridDict = {}
-	local occupyGridList = curRoom:getEntityOccupyGridList(entityType, uid)
-
-	for _, occupyGridId in ipairs(occupyGridList) do
-		hasCheckGridDict[occupyGridId] = true
-	end
-
-	local nextMOKey = uid
-	local waitCheckMODict = {
-		[uid] = mo
-	}
-
-	while nextMOKey do
-		local nextMO = waitCheckMODict[nextMOKey]
-
-		if not nextMO then
+		if not nextUid then
 			break
 		end
 
-		local nextMOUid = nextMO:getUid()
-
-		waitCheckMODict[nextMOUid] = nil
+		waitCheckMODict[nextUid] = nil
 
 		local borderGridList = nextMO:getBorderGridList()
 
 		for _, gridData in ipairs(borderGridList) do
 			local borderGridX = gridData.gridX
 			local borderGridY = gridData.gridY
-			local adjEntityData = curRoom:getEntityDataInTargetGrid(borderGridX, borderGridY)
-			local adjEntityType = adjEntityData and adjEntityData.entityType
 			local gridId = ArcadeGameHelper.getGridId(borderGridX, borderGridY)
 
-			if adjEntityData and not hasCheckGridDict[gridId] and adjEntityType == ArcadeGameEnum.EntityType.Monster then
-				local adjUid = adjEntityData.uid
-				local adjMO = ArcadeGameModel.instance:getMOWithType(adjEntityType, adjUid)
-
-				if adjMO and not self._targetIdDict[adjUid] then
-					local adjId = adjMO:getId()
-					local race = ArcadeConfig.instance:getMonsterRace(adjId)
-					local adjIsDead = adjMO:getIsDead()
-					local adjIsRemoving = adjMO:getIsRemoving()
-					local adjHp = adjMO:getHp()
-
-					if not adjIsDead and not adjIsRemoving and adjHp > 0 and race == targetRace then
-						self:addTarget(adjMO)
-
-						local adjOccupyGridList = curRoom:getEntityOccupyGridList(adjEntityType, adjUid)
-
-						for _, adjGridId in ipairs(adjOccupyGridList) do
-							hasCheckGridDict[adjGridId] = true
-						end
-
-						waitCheckMODict[adjUid] = adjMO
-					end
-				end
+			if not hasCheckGridDict[gridId] then
+				self:_tryAddLinkedMonster(borderGridX, borderGridY, targetRace, hasCheckGridDict, waitCheckMODict)
 			end
 		end
-
-		nextMOKey = next(waitCheckMODict)
 	end
+end
+
+function ArcadeSkillTargetLinkColor:_tryAddLinkedMonster(gridX, gridY, targetRace, refHasCheckGridDict, refWaitCheckMODict)
+	local curRoom = ArcadeGameController.instance:getCurRoom()
+
+	if not curRoom then
+		return
+	end
+
+	local adjEntityData = curRoom:getEntityDataInTargetGrid(gridX, gridY)
+	local adjEntityType = adjEntityData and adjEntityData.entityType
+
+	if adjEntityType ~= ArcadeGameEnum.EntityType.Monster then
+		return
+	end
+
+	local adjUid = adjEntityData.uid
+	local adjMO = ArcadeGameModel.instance:getMOWithType(adjEntityType, adjUid)
+	local isAlive = adjMO and adjMO:getIsAlive()
+
+	if not isAlive then
+		return
+	end
+
+	local alreadyHas = self:isHasTarget(adjMO)
+
+	if alreadyHas then
+		return
+	end
+
+	local ajdId = adjMO:getId()
+	local adjRace = ArcadeConfig.instance:getMonsterRace(ajdId)
+
+	if not adjRace or targetRace and adjRace ~= targetRace then
+		return
+	end
+
+	self:addTarget(adjMO)
+
+	local occupyGridList = curRoom:getEntityOccupyGridList(adjEntityType, adjUid)
+
+	for _, gridId in ipairs(occupyGridList) do
+		refHasCheckGridDict[gridId] = true
+	end
+
+	refWaitCheckMODict[adjUid] = adjMO
+
+	return adjRace
 end
 
 return ArcadeSkillTargetLinkColor

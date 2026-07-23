@@ -16,7 +16,7 @@ function PlayerCardView:onInitView()
 	self:loadRight()
 	self:initRightLayout()
 
-	self.gotips = gohelper.findChild(self.viewGO, "#go_tips")
+	self.gotips = gohelper.fiNewPlayerCardContentViewndChild(self.viewGO, "#go_tips")
 	self.btnCloseTips = gohelper.findChildButtonWithAudio(self.gotips, "#btn_close")
 	self.goTipsNode = gohelper.findChild(self.gotips, "node")
 	self.btnLayout = gohelper.findChildButtonWithAudio(self.goTipsNode, "#btn_layout")

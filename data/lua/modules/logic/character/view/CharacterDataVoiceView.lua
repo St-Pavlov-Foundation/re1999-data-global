@@ -85,8 +85,8 @@ function CharacterDataVoiceView:onInitView()
 	self._simagerighticon2 = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_righticon2")
 	self._simagemask = gohelper.findChildSingleImage(self.viewGO, "bg/#simage_mask")
 	self._simagevoicebg = gohelper.findChildSingleImage(self.viewGO, "content/#simage_voicebg")
-	self._txtvoicecontent = gohelper.findChildText(self.viewGO, "content/#txt_voicecontent")
-	self._txtvoiceengcontent = gohelper.findChildText(self.viewGO, "content/#txt_voicecontent/#txt_voiceengcontent")
+	self._txtvoicecontent = gohelper.findChildText(self.viewGO, "content/layout/#txt_voicecontent")
+	self._txtvoiceengcontent = gohelper.findChildText(self.viewGO, "content/layout/#txt_voiceengcontent")
 	self._txtcast = gohelper.findChildText(self.viewGO, "content/cast/#txt_cast")
 	self._gospine = gohelper.findChild(self.viewGO, "content/#simage_characterbg/charactercontainer/#go_spine")
 	self._dropfilter = gohelper.findChildDropdown(self.viewGO, "dropvoicelang")
@@ -256,7 +256,7 @@ function CharacterDataVoiceView:_refreshSpine()
 		offsets = SkinConfig.instance:getSkinOffset(offsetStr)
 	end
 
-	recthelper.setAnchor(self._gospine.transform, offsets[1], offsets[2])
+	CharacterVoiceEnum.setSpineOffset(self._uiSpine, tonumber(offsets[1]), tonumber(offsets[2]))
 	transformhelper.setLocalScale(self._gospine.transform, offsets[3], offsets[3], offsets[3])
 end
 

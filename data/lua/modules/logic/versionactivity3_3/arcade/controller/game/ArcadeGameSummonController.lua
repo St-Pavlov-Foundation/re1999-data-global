@@ -77,10 +77,17 @@ end
 
 function ArcadeGameSummonController:_getOtherEntityTypeList()
 	if not self._otherEntityTypeList then
+		local excludeDict = {
+			[ArcadeGameEnum.EntityType.Floor] = true,
+			[ArcadeGameEnum.EntityType.Grid] = true,
+			[ArcadeGameEnum.EntityType.Monster] = true,
+			[ArcadeGameEnum.EntityType.Character] = true
+		}
+
 		self._otherEntityTypeList = {}
 
 		for _, eType in pairs(ArcadeGameEnum.EntityType) do
-			if not ArcadeGameEnum.EntityTypeNotOccupyDict[eType] and eType ~= ArcadeGameEnum.EntityType.Grid and eType ~= ArcadeGameEnum.EntityType.Monster and eType ~= ArcadeGameEnum.EntityType.Character then
+			if not excludeDict[eType] then
 				table.insert(self._otherEntityTypeList, eType)
 			end
 		end
@@ -154,18 +161,26 @@ function ArcadeGameSummonController:_getEntitySize(id, entityType)
 	return 1, 1
 end
 
-function ArcadeGameSummonController:summonMonster(monsterId)
+function ArcadeGameSummonController:summonMonster(monsterId, targetGridX, targetGridY)
 	local cfg = ArcadeConfig.instance:getMonsterCfg(monsterId)
 
 	if not cfg then
 		return false
 	end
 
-	RoomHelper.randomArray(self:getGridList())
-
+	local gridX, gridY
 	local sizeX, sizeY = ArcadeConfig.instance:getMonsterSize(monsterId)
-	local unitMOList = self:getRoomUnitMOList()
-	local gridX, gridY = self:_tryfindSizeGridXY(sizeX, sizeY, unitMOList)
+
+	if not targetGridX or not targetGridY then
+		RoomHelper.randomArray(self:getGridList())
+
+		local unitMOList = self:getRoomUnitMOList()
+
+		gridX, gridY = self:_tryfindSizeGridXY(sizeX, sizeY, unitMOList)
+	else
+		gridX = targetGridX
+		gridY = targetGridY
+	end
 
 	if gridX and gridY then
 		local entityData = {
@@ -179,12 +194,13 @@ function ArcadeGameSummonController:summonMonster(monsterId)
 				groupId = 0
 			}
 		}
-
-		ArcadeGameController.instance:tryAddEntityList({
+		local moList = ArcadeGameController.instance:tryAddEntityList({
 			entityData
 		}, true)
 
-		return true, gridX, gridY
+		if moList and #moList > 0 then
+			return true, gridX, gridY
+		end
 	end
 
 	return false
@@ -221,6 +237,32 @@ function ArcadeGameSummonController:summonMonsterByXY(monsterId, gridX, gridY)
 	end
 
 	return false
+end
+
+function ArcadeGameSummonController:summonInteractiveByXY(interactiveId, gridX, gridY)
+	if not gridX or not gridY then
+		return
+	end
+
+	local type = ArcadeConfig.instance:getInteractiveType(interactiveId)
+
+	if not type then
+		return
+	end
+
+	local sizeX, sizeY = ArcadeConfig.instance:getInteractiveGrid(interactiveId)
+	local interactiveData = {
+		entityType = type,
+		id = interactiveId,
+		x = gridX,
+		y = gridY,
+		sizeX = sizeX,
+		sizeY = sizeY
+	}
+
+	ArcadeGameController.instance:tryAddEntityList({
+		interactiveData
+	}, true)
 end
 
 function ArcadeGameSummonController:getGridList()

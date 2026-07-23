@@ -128,11 +128,12 @@ function GameFacade.createSimpleListComp(gameObject, listParam, res, viewContain
 	return list
 end
 
-function GameFacade.createSimpleListParam(cellClass, isClickAutoSelect)
+function GameFacade.createSimpleListParam(cellClass, isClickAutoSelect, cellParam)
 	local listParam = SimpleListParam.New()
 
 	listParam.cellClass = cellClass
 	listParam.isClickAutoSelect = isClickAutoSelect
+	listParam.cellParam = cellParam
 
 	return listParam
 end

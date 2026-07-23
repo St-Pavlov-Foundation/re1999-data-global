@@ -8,12 +8,13 @@ local fields = {
 	name = 4,
 	activeNum = 7,
 	levelDesc = 9,
-	summon = 12,
+	specDesc = 10,
+	summon = 13,
 	tagBg = 6,
 	desc = 8,
-	effects = 10,
+	effects = 11,
 	tag = 3,
-	icon = 11,
+	icon = 12,
 	activityId = 2,
 	level = 5
 }
@@ -21,6 +22,7 @@ local primaryKey = {
 	"id"
 }
 local mlStringKey = {
+	specDesc = 4,
 	name = 1,
 	levelDesc = 3,
 	desc = 2

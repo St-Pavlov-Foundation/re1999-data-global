@@ -32,6 +32,7 @@ HandbookEnum.BookBGRes = {
 HandbookEnum.SkinSceneAsset = {
 	"ui/animations/dynamic/skinbook_camerar.controller",
 	"scenes/v2a8_m_s17_pftj/prefab/skin_sence_01.prefab",
+	"scenes/v2a8_m_s17_pftj/prefab/sence_10002.prefab",
 	"scenes/v2a8_m_s17_pftj/prefab/sence_10003.prefab",
 	"scenes/v2a8_m_s17_pftj/prefab/sence_10004.prefab",
 	"scenes/v2a8_m_s17_pftj/prefab/sence_10005.prefab",

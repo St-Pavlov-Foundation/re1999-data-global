@@ -681,7 +681,7 @@ function RougeHeroGroupEditView:_refreshPassiveSkill()
 end
 
 function RougeHeroGroupEditView:_refreshSkill()
-	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, RougeHeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial())
+	self._skillContainer:onUpdateMO(self._heroMO and self._heroMO.heroId, nil, self._heroMO, RougeHeroGroupBalanceHelper.getIsBalanceMode() and not self._heroMO:isTrial(), CharacterEnum.DeviceViewType.HeroGroupEditView)
 end
 
 function RougeHeroGroupEditView:_refreshBtnIcon()
@@ -1169,6 +1169,10 @@ function RougeHeroGroupEditView:onClose()
 	if self._isStopBgm then
 		TaskDispatcher.cancelTask(self._delyStopBgm, self)
 		self:_delyStopBgm()
+	end
+
+	if self._skillContainer then
+		self._skillContainer:onClose()
 	end
 end
 

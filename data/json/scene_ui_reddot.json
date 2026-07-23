@@ -118,5 +118,170 @@
     "id": 2,
     "reddotId": 1090,
     "style": 10
+  },
+  {
+    "id": 2,
+    "reddotId": 3707,
+    "style": 10
+  },
+  {
+    "id": 2,
+    "reddotId": 3714,
+    "style": 10
+  },
+  {
+    "id": 4,
+    "reddotId": 3707,
+    "style": 13
+  },
+  {
+    "id": 4,
+    "reddotId": 3714,
+    "style": 13
+  },
+  {
+    "id": 2,
+    "reddotId": 17,
+    "style": 10
+  },
+  {
+    "id": 2,
+    "reddotId": 18,
+    "style": 10
+  },
+  {
+    "id": 2,
+    "reddotId": 19,
+    "style": 10
+  },
+  {
+    "id": 4,
+    "reddotId": 17,
+    "style": 13
+  },
+  {
+    "id": 4,
+    "reddotId": 18,
+    "style": 13
+  },
+  {
+    "id": 4,
+    "reddotId": 19,
+    "style": 13
+  },
+  {
+    "id": 5,
+    "reddotId": 1,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 2,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 11,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 12,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 13,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 14,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 15,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 16,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 3010,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 3409,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 1002,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 1090,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 3707,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 3714,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 17,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 18,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 19,
+    "style": 14
+  },
+  {
+    "id": 2,
+    "reddotId": 38505,
+    "style": 10
+  },
+  {
+    "id": 2,
+    "reddotId": 38514,
+    "style": 10
+  },
+  {
+    "id": 4,
+    "reddotId": 38505,
+    "style": 13
+  },
+  {
+    "id": 4,
+    "reddotId": 38514,
+    "style": 13
+  },
+  {
+    "id": 5,
+    "reddotId": 38505,
+    "style": 14
+  },
+  {
+    "id": 5,
+    "reddotId": 38514,
+    "style": 14
   }
 ]

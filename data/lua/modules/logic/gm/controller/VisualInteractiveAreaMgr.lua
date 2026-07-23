@@ -21,6 +21,20 @@ VisualInteractiveAreaMgr.CloneMaskGoName = "cloneMaskItem"
 VisualInteractiveAreaMgr.TextSizeGoName = "textSizeItem"
 VisualInteractiveAreaMgr.MaxStackLevel = 50
 
+local blueColor = Color.blue
+
+blueColor.a = 0.5
+
+local redColor = Color.red
+
+redColor.a = 0.5
+
+local TextColor = {
+	Normal = blueColor,
+	Min = redColor
+}
+local TextSize = 28
+
 function VisualInteractiveAreaMgr:init()
 	self:loadMaskItem()
 	self:createPool()
@@ -114,10 +128,16 @@ function VisualInteractiveAreaMgr:tryStart()
 
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, self.onOpenView, self)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, self.onCloseView, self)
+	TaskDispatcher.runRepeat(self.tickRefresh, self, 1)
+end
+
+function VisualInteractiveAreaMgr:tickRefresh()
+	self:showAllViewMaskGo()
 end
 
 function VisualInteractiveAreaMgr:stop()
 	self:beforeStop()
+	TaskDispatcher.cancelTask(self.tickRefresh, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, self.onOpenView, self)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, self.onCloseView, self)
 
@@ -200,7 +220,7 @@ function VisualInteractiveAreaMgr:showTextSizeByGo(go, viewName, level)
 	local text = go:GetComponent(gohelper.Type_Text) or go:GetComponent(gohelper.Type_TextMesh)
 
 	if text then
-		self:addTextSizeItemGo(go, text.fontSize)
+		self:addTextSizeItemGo(go, text.fontSize, text.font)
 	end
 end
 
@@ -302,28 +322,36 @@ function VisualInteractiveAreaMgr:addMaskItemGo(parentGo)
 	return maskGo
 end
 
-function VisualInteractiveAreaMgr:addTextSizeItemGo(parentGo, fontSize)
-	if gohelper.findChild(parentGo, VisualInteractiveAreaMgr.TextSizeGoName) then
-		return nil
+function VisualInteractiveAreaMgr:addTextSizeItemGo(parentGo, fontSize, font)
+	local textSizeGo = gohelper.findChild(parentGo, VisualInteractiveAreaMgr.TextSizeGoName)
+
+	if not textSizeGo then
+		textSizeGo = table.remove(self.textSizeGoPool)
+		textSizeGo = textSizeGo or gohelper.clone(self.textSizeItemGo, parentGo, VisualInteractiveAreaMgr.TextSizeGoName)
+
+		table.insert(self.currentViewNameTextGoList, textSizeGo)
+		textSizeGo.transform:SetParent(parentGo.transform)
+
+		textSizeGo.transform.offsetMax = Vector2.zero
+		textSizeGo.transform.offsetMin = Vector2.zero
+
+		transformhelper.setLocalRotation(textSizeGo.transform, 0, 0, 0)
+		transformhelper.setLocalScale(textSizeGo.transform, 1, 1, 1)
 	end
-
-	local textSizeGo = table.remove(self.textSizeGoPool)
-
-	textSizeGo = textSizeGo or gohelper.clone(self.textSizeItemGo, parentGo, VisualInteractiveAreaMgr.TextSizeGoName)
-
-	table.insert(self.currentViewNameTextGoList, textSizeGo)
-	textSizeGo.transform:SetParent(parentGo.transform)
-
-	textSizeGo.transform.offsetMax = Vector2.zero
-	textSizeGo.transform.offsetMin = Vector2.zero
-
-	transformhelper.setLocalRotation(textSizeGo.transform, 0, 0, 0)
-	transformhelper.setLocalScale(textSizeGo.transform, 1, 1, 1)
 
 	local txtSize = gohelper.findChildText(textSizeGo, "txt_size")
 
 	if txtSize then
 		txtSize.text = tostring(fontSize)
+	end
+
+	local image = textSizeGo:GetComponent(gohelper.Type_Image)
+	local isHwzs = font and string.find(font.name, "hwzs")
+
+	if isHwzs and fontSize < TextSize then
+		image.color = TextColor.Min
+	else
+		image.color = TextColor.Normal
 	end
 
 	gohelper.setActive(textSizeGo, true)

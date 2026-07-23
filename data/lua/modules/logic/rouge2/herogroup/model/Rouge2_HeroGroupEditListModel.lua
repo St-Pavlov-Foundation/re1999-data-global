@@ -4,8 +4,7 @@ module("modules.logic.rouge2.herogroup.model.Rouge2_HeroGroupEditListModel", pac
 
 local Rouge2_HeroGroupEditListModel = class("Rouge2_HeroGroupEditListModel", MixScrollModel)
 
-function Rouge2_HeroGroupEditListModel:init(actId, episodeId)
-	self.activityId = actId
+function Rouge2_HeroGroupEditListModel:init(episodeId)
 	self.episodeId = episodeId
 	self.episodeCo = DungeonConfig.instance:getEpisodeCO(self.episodeId)
 end
@@ -34,6 +33,31 @@ function Rouge2_HeroGroupEditListModel:_initRecommendTeamHeroList(init)
 			table.insert(newMOList, heroMo)
 
 			self.sortIndexMap[heroMo] = i
+		end
+	end
+
+	local heroNum = moList and #moList or 0
+	local trialInfoList = Rouge2_BackpackController.instance:getActiveSkillTrialHeroList()
+
+	if trialInfoList then
+		for i, trialInfo in ipairs(trialInfoList) do
+			local trialId = trialInfo[1]
+			local templateId = trialInfo[2] or 0
+			local trialCo = lua_hero_trial.configDict[trialId][templateId]
+			local heroId = trialCo and trialCo.heroId
+
+			if heroId and heroId ~= 0 then
+				local hasBattleTag = Rouge2_SystemController.instance:checkHeroContainBattleTag(heroId, self._battleTag)
+
+				if hasBattleTag then
+					local heroMo = HeroMo.New()
+
+					heroMo:initFromTrial(trialId, templateId)
+					table.insert(newMOList, heroMo)
+
+					self.sortIndexMap[heroMo] = heroNum + i
+				end
+			end
 		end
 	end
 
@@ -144,6 +168,13 @@ function Rouge2_HeroGroupEditListModel.indexMapSortFunc(a, b)
 
 	if isRecommend_A ~= isRecommend_B then
 		return isRecommend_A
+	elseif isRecommend_A and isRecommend_B then
+		local isTrial_A = a:isTrial()
+		local isTrial_B = b:isTrial()
+
+		if isTrial_A ~= isTrial_B then
+			return isTrial_A
+		end
 	end
 
 	return aIndex < bIndex

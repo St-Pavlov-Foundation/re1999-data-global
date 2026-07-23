@@ -43,9 +43,8 @@ function SwitchMainUIShowView:onInitView()
 	self._btnpower = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_power")
 	self._btnrole = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_role")
 	self._btnsummon = gohelper.findChildButtonWithAudio(self.viewGO, "right/#btn_summon")
-	self._imagesummonfree = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free")
-	self._imagesummonfree2 = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_free2")
-	self._imagesummonreddot = gohelper.findChildImage(self.viewGO, "right/#btn_summon/#image_summonreddot")
+	self._btncopost = gohelper.findChild(self.viewGO, "right/#btn_copost")
+	self._gocopostred = gohelper.findChild(self.viewGO, "right/#btn_copost/#go_reddot")
 	self._txtpower = gohelper.findChildText(self.viewGO, "right/txtContainer/#txt_power")
 	self._gospinescale = gohelper.findChild(self.viewGO, "#go_spine_scale")
 	self._golightspine = gohelper.findChild(self.viewGO, "#go_spine_scale/lightspine/#go_lightspine")
@@ -123,13 +122,57 @@ function SwitchMainUIShowView:_editableInitView()
 	gohelper.setActive(self._goactivity.gameObject, false)
 
 	self._imagesummonnews = self:getUserDataTb_()
+	self._tuziGoList = self:getUserDataTb_()
 
 	for _, skinId in pairs(MainUISwitchEnum.Skin) do
-		local newName = string.format("right/#btn_summon/%s/#image_summonnew", skinId)
+		local newName = string.format("right/#btn_summon/%s/layout/#image_summonnew", skinId)
+		local tuziName = string.format("right/#btn_summon/%s/layout/#image_tuzi", skinId)
 		local new = gohelper.findChild(self.viewGO, newName)
 
 		table.insert(self._imagesummonnews, new)
+		table.insert(self._tuziGoList, gohelper.findChild(self.viewGO, tuziName))
 	end
+
+	self:initFreeTag()
+	self:_refreshSummonTuziRed()
+end
+
+function SwitchMainUIShowView:_isShowSummonReddot()
+	local isSummonUnlock = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
+	local needReddot = SummonMainModel.instance:entryNeedReddot()
+
+	return isSummonUnlock and needReddot
+end
+
+function SwitchMainUIShowView:initFreeTag()
+	self._goFreeTag = gohelper.findChild(self.viewGO, "right/#btn_summon/Tag")
+	self._gosummonreddot = gohelper.findChild(self.viewGO, "right/#btn_summon/#go_summonreddot")
+	self._goSummonFreeOne = gohelper.findChild(self.viewGO, "right/#btn_summon/Tag/single")
+	self._goSummonFreeTen = gohelper.findChild(self.viewGO, "right/#btn_summon/Tag/ten")
+	self._summonFreeSingleTagList = self:getUserDataTb_()
+	self._summonFreeTenTagList = self:getUserDataTb_()
+
+	local childCount = self._goSummonFreeOne.transform.childCount
+
+	for i = 1, childCount do
+		local singleTagTran = self._goSummonFreeOne.transform:GetChild(i - 1)
+
+		table.insert(self._summonFreeSingleTagList, singleTagTran.gameObject)
+	end
+
+	childCount = self._goSummonFreeTen.transform.childCount
+
+	for i = 1, childCount do
+		local singleTagTran = self._goSummonFreeTen.transform:GetChild(i - 1)
+
+		table.insert(self._summonFreeTenTagList, singleTagTran.gameObject)
+	end
+
+	gohelper.setActive(self._gosummonreddot, true)
+
+	self._summonreddot = MonoHelper.addNoUpdateLuaComOnceToGo(self._gosummonreddot, SwitchMainUIReddotIcon)
+
+	self._summonreddot:setShowReddotCb(self._isShowSummonReddot, self)
 end
 
 function SwitchMainUIShowView:_loadFinishCurrency()
@@ -181,6 +224,12 @@ function SwitchMainUIShowView:_refreshBtns()
 	gohelper.setActive(self._btnsummon.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon))
 	gohelper.setActive(self._btnrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Role))
 	gohelper.setActive(self._btnswitchrole.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.MainThumbnail))
+
+	if CommandStationEnum.ForceHideCommandStation then
+		gohelper.setActive(self._btncopost.gameObject, false)
+	else
+		gohelper.setActive(self._btncopost.gameObject, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.CommandStation) and not VersionValidator.instance:isInReviewing())
+	end
 end
 
 function SwitchMainUIShowView:_initOffsetGos()
@@ -275,23 +324,52 @@ function SwitchMainUIShowView:_setPlayerInfo(playerinfo)
 	self:_refreshPower()
 end
 
+function SwitchMainUIShowView:_refreshSummonNewFlagStyle()
+	local skinId = self.viewParam and self.viewParam.SkinId or MainUISwitchModel.instance:getCurUseUI()
+
+	self._summonreddot:showCurUIRedDot(skinId)
+end
+
 function SwitchMainUIShowView:_refreshSummonNewFlag()
+	self:_refreshSummonNewFlagStyle()
+
 	local isSummonUnlock = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
 	local needReddot = SummonMainModel.instance:entryNeedReddot()
 
-	gohelper.setActive(self._imagesummonreddot, isSummonUnlock and needReddot)
+	self._summonreddot:refreshRedDot()
 
-	local hasFree10Count = SummonMainModel.instance:entryHasFree10Count()
+	local hasFree, freeSinglePoolId = SummonMainModel.instance:entryHasFree()
+	local hasFree10Count, freeTenPoolId = SummonMainModel.instance:entryHasFree10Count()
 	local hasNew = SummonMainModel.instance:entryHasNew()
+	local hasCanget = SummonMainModel.instance:entryHasCanget()
+	local showNew = isSummonUnlock and not needReddot and not hasFree10Count and hasNew
 
 	for _, new in ipairs(self._imagesummonnews) do
-		gohelper.setActive(new, isSummonUnlock and hasNew and not needReddot and not hasFree10Count)
+		gohelper.setActive(new, showNew)
 	end
 
-	local hasFree = SummonMainModel.instance:entryHasFree()
+	gohelper.setActive(self._goFreeTag, isSummonUnlock and (hasFree or hasFree10Count or hasCanget))
+	gohelper.setActive(self._goSummonFreeOne.gameObject, isSummonUnlock and hasFree and not hasFree10Count)
+	gohelper.setActive(self._goSummonFreeTen.gameObject, isSummonUnlock and hasFree10Count)
+	gohelper.setActive(self._goSummonCanget, isSummonUnlock and hasCanget and not hasFree and not hasFree10Count)
 
-	gohelper.setActive(self._imagesummonfree, isSummonUnlock and hasFree)
-	gohelper.setActive(self._imagesummonfree2.gameObject, isSummonUnlock and hasFree10Count)
+	if not isSummonUnlock or not hasFree and not hasFree10Count then
+		return
+	end
+
+	local showSingle = hasFree and not hasFree10Count
+	local poolId = showSingle and freeSinglePoolId or freeTenPoolId
+	local poolConfig = SummonConfig.instance:getSummonPool(poolId)
+	local tagStyleParam = string.splitToNumber(poolConfig.freeTagStyle, "#")
+	local styleId = showSingle and tagStyleParam[1] or tagStyleParam[2]
+
+	styleId = styleId or SummonEnum.DefaultTagStyle
+
+	local tagItemList = showSingle and self._summonFreeSingleTagList or self._summonFreeTenTagList
+
+	for index, itemGo in ipairs(tagItemList) do
+		gohelper.setActive(itemGo, index == styleId)
+	end
 end
 
 function SwitchMainUIShowView:_refreshRedDot()
@@ -306,6 +384,8 @@ function SwitchMainUIShowView:_refreshRedDot()
 	RedDotController.instance:addRedDotTag(self._goreddot, RedDotEnum.DotNode.MainRoomProductionFull)
 	RedDotController.instance:addRedDotTag(self._gogreendot, RedDotEnum.DotNode.MainRoomCharacterFaithGetFull)
 	RedDotController.instance:addRedDotTag(self._goroomgiftreddot, RedDotEnum.DotNode.RoomGift)
+	self._bankreddot:showRedDot()
+	self:_refreshSummonNewFlagStyle()
 end
 
 function SwitchMainUIShowView:_refreshPower()
@@ -395,10 +475,19 @@ function SwitchMainUIShowView:showStoreDeadline(needShow)
 			end
 		end
 
-		local decorateSec = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
+		local decorateSec = 0
+		local decorateStoreCfg = StoreConfig.instance:getTabConfig(StoreEnum.StoreId.DecorateStore)
 
-		if decorateSec > 0 then
-			deadlineTimeSec = deadlineTimeSec == 0 and decorateSec or Mathf.Min(decorateSec, deadlineTimeSec)
+		if decorateStoreCfg and decorateStoreCfg.openId ~= nil and decorateStoreCfg.openId ~= 0 then
+			if OpenModel.instance:isFunctionUnlock(decorateStoreCfg.openId) then
+				decorateSec = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
+			end
+		else
+			decorateSec = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
+		end
+
+		if decorateSec > 0 and decorateSec < TimeUtil.OneWeekSecond then
+			deadlineTimeSec = deadlineTimeSec <= 0 and decorateSec or Mathf.Min(decorateSec, deadlineTimeSec)
 		end
 
 		if deadlineTimeSec > 0 then
@@ -473,8 +562,10 @@ function SwitchMainUIShowView:getCurrencyItem(index)
 		currencyObj.image = gohelper.findChildImage(go, "#btn_currency/#image")
 		currencyObj.simage = gohelper.findChildSingleImage(go, "#btn_currency/#simage")
 		currencyObj.txt = gohelper.findChildText(go, "#btn_currency/content/#txt")
+		currencyObj.exchangetip = gohelper.findChild(go, "#btn_currency/#btn_exchangetip")
 
 		gohelper.setActive(currencyObj.simage, false)
+		gohelper.setActive(currencyObj.exchangetip, false)
 
 		self._currencyObjs[index] = currencyObj
 	end
@@ -494,6 +585,38 @@ function SwitchMainUIShowView:onClose()
 	end
 
 	self._festivalAtmosphereComp:onDestroy()
+	tabletool.clear(self._summonFreeSingleTagList)
+	tabletool.clear(self._summonFreeTenTagList)
+
+	self._summonFreeSingleTagList = nil
+	self._summonFreeTenTagList = nil
+end
+
+function SwitchMainUIShowView:_refreshSummonTuziRed()
+	local bLooked = Act101VersionSummonController.instance:getSavedTakeALookSummon()
+	local bShowRed = not bLooked
+
+	if not bLooked then
+		bShowRed = Act101VersionSummonController.instance:isCliamed()
+
+		local actId = Act101VersionSummonController.instance:actId()
+		local dayBonusList = ActivityType101Config.instance:getDayBonusList(actId, 1)
+
+		if bShowRed and dayBonusList and #dayBonusList > 0 then
+			local itemCO = dayBonusList[1]
+			local materilType = itemCO[1]
+			local materilId = itemCO[2]
+			local has = ItemModel.instance:getItemQuantity(materilType, materilId)
+
+			bShowRed = has > 0
+		else
+			bShowRed = false
+		end
+	end
+
+	for _, go in ipairs(self._tuziGoList) do
+		gohelper.setActive(go, bShowRed)
+	end
 end
 
 return SwitchMainUIShowView

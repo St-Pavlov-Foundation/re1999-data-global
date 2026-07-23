@@ -267,6 +267,61 @@ function Rouge2_OutsideController:checkNewUnlock()
 	return false
 end
 
+function Rouge2_OutsideController:tryOpenActivityUpdateTips()
+	local actId = Rouge2_Model.instance:getCurActId()
+
+	if not ActivityModel.instance:isActOnLine(actId) then
+		return
+	end
+
+	local hasTips, openMajorVersion, openMinorVersion = self:checkHasNewUpdateTips()
+
+	if not hasTips then
+		return
+	end
+
+	local saveStr = GameUtil.playerPrefsGetStringByUserId(PlayerPrefsKey.Rouge2ActivityUpdateTips, "")
+	local saveVersionList = string.splitToNumber(saveStr, "#")
+	local saveMajorVersion = saveVersionList[1] or 0
+	local saveMinorVersion = saveVersionList[2] or 0
+	local canOpen = false
+
+	if saveMajorVersion == openMajorVersion then
+		canOpen = saveMinorVersion < openMinorVersion
+	else
+		canOpen = saveMajorVersion < openMajorVersion
+	end
+
+	if canOpen then
+		if GuideController.instance:isAnyGuideRunning() then
+			GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Rouge2ActivityUpdateTips, openMajorVersion .. "#" .. openMinorVersion)
+
+			return
+		end
+
+		ViewMgr.instance:openView(ViewName.Rouge2_ActivityUpdateTipsView)
+		GameUtil.playerPrefsSetStringByUserId(PlayerPrefsKey.Rouge2ActivityUpdateTips, openMajorVersion .. "#" .. openMinorVersion)
+
+		return true
+	end
+end
+
+function Rouge2_OutsideController:checkHasNewUpdateTips()
+	local updateVersionCo = Rouge2_OutSideConfig.instance:getConstConfigById(Rouge2_Enum.OutSideConstId.ActivityUpdateVersion)
+	local updateVersionStr = updateVersionCo and updateVersionCo.value
+
+	if string.nilorempty(updateVersionStr) then
+		return
+	end
+
+	local updateVersion = string.splitToNumber(updateVersionStr, "#")
+	local openMajorVersion = updateVersion[1] or 0
+	local openMinorVersion = updateVersion[2] or 0
+	local hasTips = GameBranchMgr.instance:isVer(openMajorVersion, openMinorVersion)
+
+	return hasTips, openMajorVersion, openMinorVersion
+end
+
 Rouge2_OutsideController.instance = Rouge2_OutsideController.New()
 
 return Rouge2_OutsideController

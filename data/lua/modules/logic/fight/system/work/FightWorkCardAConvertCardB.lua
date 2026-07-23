@@ -19,7 +19,7 @@ function FightWorkCardAConvertCardB:onStart()
 	local version = FightModel.instance:getVersion()
 
 	if version >= 4 then
-		FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, self.actEffectData.effectNum)
+		FightController.instance:dispatchEvent(FightEvent.CardAConvertCardB, self.actEffectData.effectNum, self.actEffectData)
 		self:com_registTimer(self._delayAfterPerformance, FightEnum.PerformanceTime.CardAConvertCardB / FightModel.instance:getUISpeed())
 	else
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)

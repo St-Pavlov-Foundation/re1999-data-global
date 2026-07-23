@@ -63,6 +63,7 @@ end
 
 function MainController:_onLoginEnterMainScene()
 	MainController.instance:dispatchEvent(MainEvent.OnFirstEnterMain)
+	EyeProtectionModeMgr.instance:active()
 	self:_startPopupFlow()
 end
 

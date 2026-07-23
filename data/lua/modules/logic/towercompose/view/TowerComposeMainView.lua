@@ -60,7 +60,9 @@ function TowerComposeMainView:removeEvents()
 end
 
 function TowerComposeMainView:_btnheroTrialOnClick()
-	TowerController.instance:openTowerHeroTrialView()
+	TowerController.instance:openTowerHeroTrialView({
+		trialType = TowerEnum.HeroTrialEntranceType.Compose
+	})
 	self:saveHeroTrialNew()
 	gohelper.setActive(self._goheroTrialNew, false)
 end
@@ -150,8 +152,9 @@ end
 function TowerComposeMainView:refreshHeroTrialNew()
 	local saveSeason = TowerController.instance:getPlayerPrefs(TowerEnum.LocalPrefsKey.ReddotNewHeroTrial, 0)
 	local curSeason = TowerModel.instance:getTrialHeroSeason()
+	local heroTrialList = TowerHeroTrialListModel.instance:getEntranceHeroTrialList(TowerEnum.HeroTrialEntranceType.Compose)
 
-	gohelper.setActive(self._goheroTrial, curSeason > 0)
+	gohelper.setActive(self._goheroTrial, #heroTrialList > 0)
 	gohelper.setActive(self._goheroTrialNew, saveSeason ~= curSeason and curSeason > 0)
 end
 

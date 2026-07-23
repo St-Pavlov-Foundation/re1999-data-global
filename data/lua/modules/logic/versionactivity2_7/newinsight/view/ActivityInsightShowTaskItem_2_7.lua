@@ -48,10 +48,17 @@ function ActivityInsightShowTaskItem_2_7:_btncangetOnClick()
 end
 
 function ActivityInsightShowTaskItem_2_7:_btnuseOnClick()
+	local id = self._config.itemId
+	local earliestInsight = ItemInsightModel.instance:getEarliestExpireInsight(id)
+
+	if not earliestInsight or not earliestInsight.uid or earliestInsight.uid == 0 then
+		return
+	end
+
 	local data = {}
 
-	data.id = self._config.itemId
-	data.uid = ItemInsightModel.instance:getEarliestExpireInsight(data.id).uid
+	data.id = id
+	data.uid = earliestInsight.uid
 
 	GiftController.instance:openGiftInsightHeroChoiceView(data)
 end
@@ -84,7 +91,7 @@ function ActivityInsightShowTaskItem_2_7:_refreshBtns()
 	gohelper.setActive(self._btngoto.gameObject, false)
 
 	if self._taskMO.finishCount >= 1 then
-		local activityId = ActivityEnum.Activity.V2a6_NewInsight
+		local activityId = ActivityEnum.Activity.V2a7_NewInsight
 		local hasUse = ActivityType172Model.instance:isTaskHasUsed(activityId, self._taskId)
 
 		if not hasUse and self._config.itemId ~= 0 then

@@ -14,6 +14,7 @@ function Act191FetterItem:init(go)
 	self.imageIcon = gohelper.findChildImage(go, "icon")
 	self.txtCnt = gohelper.findChildText(go, "count")
 	self.btnClick = gohelper.findChildButtonWithAudio(go, "clickArea")
+	self.goGreenDeer = gohelper.findChild(go, "go_GreenDeer")
 end
 
 function Act191FetterItem:addEventListeners()
@@ -25,11 +26,7 @@ function Act191FetterItem:setData(config, count)
 
 	local maxCo = Activity191Config.instance:getRelationMaxCo(self.config.tag)
 
-	if config.level ~= 0 then
-		self.txtCnt.text = string.format("%d/%d", count, maxCo.activeNum)
-	else
-		self.txtCnt.text = string.format("<color=#ed7f7f>%d</color><color=#838383>/%d</color>", count, maxCo.activeNum)
-	end
+	self.txtCnt.text = string.format("%d/%d", count, maxCo.activeNum)
 
 	UISpriteSetMgr.instance:setAct174Sprite(self.imageRare, "act174_shop_tag_" .. self.config.tagBg)
 
@@ -46,6 +43,7 @@ function Act191FetterItem:setData(config, count)
 	self.imageIcon.color = color
 
 	Activity191Helper.setFetterIcon(self.imageIcon, self.config.icon)
+	gohelper.setActive(self.goGreenDeer, self.config.tag == Activity191Enum.GreenDeer)
 end
 
 function Act191FetterItem:onClick()

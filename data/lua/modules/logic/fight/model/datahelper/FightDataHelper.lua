@@ -100,6 +100,54 @@ function FightDataHelper.getCustomData(customType)
 	return data
 end
 
+function FightDataHelper.getDeviceArea(teamType)
+	teamType = teamType or FightEnum.TeamType.MySide
+
+	local teamDataMgr = FightDataHelper.teamDataMgr
+	local teamData = teamDataMgr and teamDataMgr[teamType]
+
+	return teamData and teamData.deviceArea
+end
+
+function FightDataHelper.hasDeviceArea(teamType)
+	local deviceArea = FightDataHelper.getDeviceArea(teamType)
+
+	if not deviceArea then
+		return
+	end
+
+	local count = deviceArea:getCount()
+
+	return count > 0
+end
+
+function FightDataHelper.getClientDeviceInfo(uid)
+	local areaInfo = FightDataHelper.getDeviceArea()
+
+	return areaInfo and areaInfo:getClientDeviceInfo(uid)
+end
+
+function FightDataHelper.getCounterValue(counterId)
+	local counterMgr = FightDataHelper.counterMgr
+
+	return counterMgr and counterMgr:getCounter(counterId)
+end
+
+function FightDataHelper.setCounterValue(counterId, value)
+	local counterMgr = FightDataHelper.counterMgr
+
+	return counterMgr and counterMgr:setCounter(counterId, value)
+end
+
+function FightDataHelper.hasMusicInfo(teamType)
+	teamType = teamType or FightEnum.TeamType.MySide
+
+	local teamDataMgr = FightDataHelper.teamDataMgr[teamType]
+	local rouge2MusicInfo = teamDataMgr and teamDataMgr.rouge2MusicInfo
+
+	return rouge2MusicInfo ~= nil
+end
+
 FightDataHelper.initDataMgr()
 
 return FightDataHelper

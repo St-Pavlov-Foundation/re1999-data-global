@@ -2,7 +2,7 @@
 
 module("modules.logic.rouge2.outside.view.Rouge2_ActivityView", package.seeall)
 
-local Rouge2_ActivityView = class("Rouge2_ActivityView", BaseView)
+local Rouge2_ActivityView = class("Rouge2_ActivityView", BaseViewExtended)
 
 function Rouge2_ActivityView:onInitView()
 	self._txttime = gohelper.findChildText(self.viewGO, "title/LimitTime/#txt_time")
@@ -18,6 +18,7 @@ function Rouge2_ActivityView:onInitView()
 	self._btnStore = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Store")
 	self._txtRewardNum = gohelper.findChildText(self.viewGO, "Right/#btn_Store/#txt_RewardNum")
 	self._goreddot = gohelper.findChild(self.viewGO, "Right/#btn_Store/#go_reddot")
+	self._btnTips = gohelper.findChildButtonWithAudio(self.viewGO, "Right/#btn_Tips")
 	self._golefttop = gohelper.findChild(self.viewGO, "#go_lefttop")
 
 	if self._editableInitView then
@@ -30,6 +31,7 @@ function Rouge2_ActivityView:addEvents()
 	self._btnend:AddClickListener(self._btnendOnClick, self)
 	self._btnachievementpreview:AddClickListener(self._btnachievementpreviewOnClick, self)
 	self._btnStore:AddClickListener(self._btnStoreOnClick, self)
+	self._btnTips:AddClickListener(self._btnTipsOnClick, self)
 	Rouge2_Controller.instance:registerCallback(Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
 	Rouge2_OutsideController.instance:registerCallback(Rouge2_OutsideEvent.onAlchemyInfoUpdate, self._onUpdateRougeInfo, self)
 	Rouge2_OutsideController.instance:registerCallback(Rouge2_OutsideEvent.OnUpdateRougeOutsideInfo, self._onUpdateRougeInfo, self)
@@ -41,6 +43,7 @@ function Rouge2_ActivityView:removeEvents()
 	self._btnend:RemoveClickListener()
 	self._btnachievementpreview:RemoveClickListener()
 	self._btnStore:RemoveClickListener()
+	self._btnTips:RemoveClickListener()
 	Rouge2_Controller.instance:unregisterCallback(Rouge2_Event.OnUpdateRougeInfo, self._onUpdateRougeInfo, self)
 	Rouge2_OutsideController.instance:unregisterCallback(Rouge2_OutsideEvent.onAlchemyInfoUpdate, self._onUpdateRougeInfo, self)
 	Rouge2_OutsideController.instance:unregisterCallback(Rouge2_OutsideEvent.OnUpdateRougeOutsideInfo, self._onUpdateRougeInfo, self)
@@ -76,6 +79,10 @@ function Rouge2_ActivityView:_btnStoreOnClick()
 	Rouge2_ViewHelper.openStoreView()
 end
 
+function Rouge2_ActivityView:_btnTipsOnClick()
+	ViewMgr.instance:openView(ViewName.Rouge2_ActivityUpdateTipsView)
+end
+
 function Rouge2_ActivityView:onSceneSwitchFinish()
 	Rouge2_OutsideController.instance:unregisterCallback(Rouge2_OutsideEvent.SceneSwitchFinish, self.onSceneSwitchFinish, self)
 	Rouge2_Controller.instance:openMainView()
@@ -87,6 +94,10 @@ function Rouge2_ActivityView:_editableInitView()
 	RedDotController.instance:addRedDot(self._goreddot, RedDotEnum.DotNode.V3a2_Rouge_Store_Main, 0)
 	gohelper.setActive(self._golocked, false)
 	gohelper.setActive(self._btnachievementpreview, false)
+
+	local hasUpdateTips = Rouge2_OutsideController.instance:checkHasNewUpdateTips()
+
+	gohelper.setActive(self._btnTips.gameObject, hasUpdateTips)
 end
 
 function Rouge2_ActivityView:onUpdateParam()
@@ -102,14 +113,15 @@ function Rouge2_ActivityView:onOpen()
 	Rouge2_Model.instance:setCurActId(self.actId)
 	self:_refreshTime()
 	TaskDispatcher.runRepeat(self._refreshTime, self, TimeUtil.OneSecond)
-	Rouge2OutsideRpc.instance:sendGetRouge2OutsideInfoRequest(function(_, resultCode)
+
+	self._outsideRpcId = Rouge2OutsideRpc.instance:sendGetRouge2OutsideInfoRequest(function(_, resultCode)
 		if resultCode ~= 0 then
 			logError("openRouge2ActivityView sendGetRouge2OutsideInfoRequest resultCode=" .. tostring(resultCode))
 
 			return
 		end
 
-		Rouge2_Rpc.instance:sendGetRouge2InfoRequest(function(_, resultCode2)
+		self._infoRpcId = Rouge2_Rpc.instance:sendGetRouge2InfoRequest(function(_, resultCode2)
 			if resultCode2 ~= 0 then
 				logError("openRouge2ActivityView sendGetRouge2InfoRequest resultCode=" .. tostring(resultCode2))
 
@@ -119,7 +131,9 @@ function Rouge2_ActivityView:onOpen()
 			self:refreshUI()
 		end)
 	end)
+
 	Rouge2_Controller.instance:dispatchEvent(Rouge2_Event.OpenRougeView, Rouge2_Enum.GuideView.ActivityView)
+	Rouge2_OutsideController.instance:tryOpenActivityUpdateTips()
 end
 
 function Rouge2_ActivityView:_onUpdateRougeInfo()
@@ -195,6 +209,18 @@ end
 
 function Rouge2_ActivityView:onClose()
 	TaskDispatcher.cancelTask(self._refreshTime, self)
+
+	if self._outsideRpcId then
+		Rouge2OutsideRpc.instance:removeCallbackById(self._outsideRpcId)
+
+		self._outsideRpcId = nil
+	end
+
+	if self._infoRpcId then
+		Rouge2_Rpc.instance:removeCallbackById(self._infoRpcId)
+
+		self._infoRpcId = nil
+	end
 end
 
 function Rouge2_ActivityView:onDestroyView()

@@ -66,10 +66,12 @@ end
 
 function CharacterRecommedView:_hideChageHero()
 	gohelper.setActive(self._gochangehero.gameObject, false)
+	gohelper.setActive(self._golv, self._hideTab ~= CharacterRecommedEnum.TabSubType.DevelopGoals)
 end
 
 function CharacterRecommedView:onOpen()
 	self._selectTab = self.viewParam.defaultTabId or CharacterRecommedEnum.TabSubType.RecommedGroup
+	self._hideTab = self.viewParam.hideTab
 
 	self:_initTab()
 	self:_refreshHero(self.viewParam.heroId)
@@ -151,6 +153,7 @@ function CharacterRecommedView:_initTab()
 	for _, tab in pairs(CharacterRecommedEnum.TabSubType) do
 		local item = self:_getTabItem(tab)
 
+		gohelper.setActive(item.go, self._hideTab ~= tab)
 		gohelper.setActive(item.goselect, tab == self._selectTab)
 	end
 end

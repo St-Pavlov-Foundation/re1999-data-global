@@ -12,7 +12,7 @@ function ArcadeNormalRoom:onEnter()
 	return
 end
 
-function ArcadeNormalRoom:initEntities()
+function ArcadeNormalRoom:onInitEntities()
 	self._curWaveIndex = 0
 	self._monsterGroupList = self:_getInitMonsterGroups()
 	self._extraMonsterWaveDict = self:_getExtraMonsterWaveDict(#self._monsterGroupList)

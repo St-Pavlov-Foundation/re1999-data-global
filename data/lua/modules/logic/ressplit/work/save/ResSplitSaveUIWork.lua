@@ -121,7 +121,7 @@ function ResSplitSaveUIWork:onStart(context)
 	end
 
 	for i, v in pairs(excludeViewDicList) do
-		ResSplitModel.instance:setInclude(ResSplitEnum.Folder, v, true)
+		ResSplitModel.instance:setInclude(ResSplitEnum.SinglebgFolder, v, true)
 	end
 
 	for i, v in pairs(excludeSinglebgDicList) do

@@ -8,5 +8,6 @@ FightNameActiveKey.DefaultKey = "Default"
 FightNameActiveKey.OpenFightQuitTipViewKey = "OpenFightQuitTipView"
 FightNameActiveKey.PlayingTimelineKey = "PlayingTimeline"
 FightNameActiveKey.ReplacedAssistRoleKey = "ReplacedAssistRole"
+FightNameActiveKey.Fight3_7qteKey = "Fight3_7qte"
 
 return FightNameActiveKey

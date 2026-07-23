@@ -5,22 +5,23 @@ module("modules.logic.popup.define.PopupEnum", package.seeall)
 local PopupEnum = _M
 
 PopupEnum.PriorityType = {
-	GainSkinView = 400,
-	RoomBlockPackageGetView = 701,
-	DungeonFragmentInfoView = 200,
-	CachotTips = 100001,
-	RoomBuildingGetView = 700,
-	SummonResultView = 500,
-	ChargeStoreQuickUseTip = 2,
-	SkinCouponTipView = 399,
-	SigninPropView = 1001,
-	GainCharacterView = 600,
-	SpecialEquipOpenTip = 1,
-	RoomGetCritterView = 801,
-	CollectionGet = 100002,
 	CommonPropView = 300,
+	RoomBuildingGetView = 700,
+	DungeonFragmentInfoView = 200,
+	SpecialEquipOpenTip = 1,
+	GainSkinView = 400,
+	SummonResultView = 500,
 	NuoDiKaUnitTip = 100003,
-	AdventureCompleteView = 100
+	RoomGetCritterView = 801,
+	SigninPropView = 1001,
+	AdventureCompleteView = 100,
+	CollectionGet = 100002,
+	RoomBlockPackageGetView = 701,
+	CommonPropConvertView = 299,
+	CachotTips = 100001,
+	GainCharacterView = 600,
+	SkinCouponTipView = 399,
+	ChargeStoreQuickUseTip = 2
 }
 PopupEnum.CacheType = {
 	Fight = 1,

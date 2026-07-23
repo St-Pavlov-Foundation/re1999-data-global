@@ -62,15 +62,16 @@ function CharacterRecommedController:_onCurrencyChange()
 	self:dispatchEvent(CharacterRecommedEvent.OnRefreshTraced)
 end
 
-function CharacterRecommedController:openRecommedView(heroId, fromView, uiSpine)
+function CharacterRecommedController:openRecommedView(heroId, fromView, uiSpine, hideRecommedEnum)
 	local heroRecommendMO = CharacterRecommedModel.instance:getHeroRecommendMo(heroId)
-	local isShowRecommendTab = heroRecommendMO:isShowTeam() or heroRecommendMO:isShowEquip()
+	local isShowRecommendTab = heroRecommendMO and (heroRecommendMO:isShowTeam() or heroRecommendMO:isShowEquip())
 	local defaultTabId = isShowRecommendTab and CharacterRecommedEnum.TabSubType.RecommedGroup or CharacterRecommedEnum.TabSubType.DevelopGoals
 	local param = {
 		heroId = heroId,
 		fromView = fromView,
 		defaultTabId = defaultTabId,
-		uiSpine = uiSpine
+		uiSpine = uiSpine,
+		hideTab = hideRecommedEnum
 	}
 
 	ViewMgr.instance:openView(ViewName.CharacterRecommedView, param)

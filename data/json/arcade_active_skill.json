@@ -207,5 +207,27 @@
     "spellEffect": 0,
     "bulletEffect": 0,
     "hitEffect": 689010040
+  },
+  {
+    "id": 201,
+    "skillName": "language_10120123",
+    "skillDesc": "language_10120124",
+    "damage": 0,
+    "target": 101,
+    "icon": "v3a3_eliminate_skillicon_7_1",
+    "spellEffect": 689010023,
+    "bulletEffect": 0,
+    "hitEffect": 0
+  },
+  {
+    "id": 202,
+    "skillName": "language_10120125",
+    "skillDesc": "language_10120126",
+    "damage": 0,
+    "target": 101,
+    "icon": "v3a3_eliminate_skillicon_6_1",
+    "spellEffect": 689010023,
+    "bulletEffect": 0,
+    "hitEffect": 689010039
   }
 ]

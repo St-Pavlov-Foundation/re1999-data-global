@@ -29,7 +29,11 @@ function FightPreloadHelper.getTimelineRefRes(assetItem, timelineUrl, skinId)
 				local spineName = FightTLEventCreateSpine.getSkinSpineName(paramList[1], skinId)
 
 				if not string.nilorempty(spineName) then
-					table.insert(resList, ResUrl.getSpineFightPrefab(spineName))
+					if string.sub(spineName, 1, 8) == "roles_3d" then
+						table.insert(resList, string.format("%s.prefab", spineName))
+					else
+						table.insert(resList, ResUrl.getSpineFightPrefab(spineName))
+					end
 				end
 			end
 		end

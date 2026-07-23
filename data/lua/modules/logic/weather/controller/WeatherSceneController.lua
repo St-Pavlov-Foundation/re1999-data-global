@@ -28,7 +28,7 @@ function WeatherSceneController:addConstEvents()
 end
 
 function WeatherSceneController:_onOpenView(viewName)
-	if MainSceneSwitchModel.instance:getCurSceneId() ~= MainSceneSwitchEnum.SpSceneId then
+	if not MainSceneSwitchEnum.SpSceneMap[MainSceneSwitchModel.instance:getCurSceneId()] then
 		self:clearInfo()
 
 		return
@@ -40,7 +40,7 @@ function WeatherSceneController:_onOpenView(viewName)
 end
 
 function WeatherSceneController:_onCloseView(viewName)
-	if MainSceneSwitchModel.instance:getCurSceneId() ~= MainSceneSwitchEnum.SpSceneId then
+	if not MainSceneSwitchEnum.SpSceneMap[MainSceneSwitchModel.instance:getCurSceneId()] then
 		self:clearInfo()
 
 		return

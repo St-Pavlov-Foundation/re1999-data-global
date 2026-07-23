@@ -118,5 +118,125 @@
     "showLimit": "",
     "className": "",
     "posOffset": "0#0"
+  },
+  {
+    "id": 37111,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837008#811327#837012#837013#837014#837015#837016#837017#811315#610004#610006#837020#837021",
+    "packageEffect": 1,
+    "showLimit": "1:3146",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 37121,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837008#811327#837013#837015#837017#811315#610004#610006#837020#837021",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 37161,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837032#811327#837012#837013#837014#837015#837016#837017#811315#610004#610006#837020#837021",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 37171,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837009#811327#837012#837013#837014#837015#837016#837017#811315#610004#610006#837020#837021",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 37181,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837011#811327#837013#837015#837017#811315#610004#610006#837020#837021",
+    "packageEffect": 1,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 37191,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "837010#811327#837012#837014#837016#811315#610004#610006#837020#837021",
+    "packageEffect": 1,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 38161,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "838015#811327#838003#838004#838005#838006#838007#838008#811315#610004#610006#838017#838011#838018#838012",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 38111,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#838003#838005#838007#811315#610004#610006#838017#838011#838018#838012",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 38121,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#838004#838006#838008#811315#610004#610006#838011#838012",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 385111,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "838508#838509",
+    "packageEffect": 4,
+    "showLimit": "1:3149",
+    "className": "V2a9_LinkGiftView",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 385111,
+    "order": 2,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "811327#838511#838512#838513#811315#610004#610006#838516#838517",
+    "packageEffect": 1,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
+  },
+  {
+    "id": 385131,
+    "order": 1,
+    "packageRecommendSwitch": true,
+    "packageRecommend": "838520#811327#838511#838512#838513#811315#610004#610006#838516#838517",
+    "packageEffect": 2,
+    "showLimit": "",
+    "className": "",
+    "posOffset": "0#0"
   }
 ]
