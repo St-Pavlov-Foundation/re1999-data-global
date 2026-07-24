@@ -88,6 +88,11 @@ end
 function MainS02AnimView:onShow()
 	self._isPlayingAnim = false
 
+	if self.viewParam then
+		self._sceneId = self.viewParam.sceneId
+	end
+
+	self:_refreshWeatherRoot()
 	self:_onRandomPlayAnim()
 end
 
@@ -103,8 +108,7 @@ function MainS02AnimView:_playAnim(name, time)
 		return
 	end
 
-	local report = WeatherController.instance:getCurrReport()
-	local isNight = report and report.lightMode == WeatherEnum.LightModeNight
+	local isNight = self:_isNight()
 
 	for _, anim in ipairs(self._anim) do
 		if isNight then
@@ -121,6 +125,32 @@ function MainS02AnimView:_playAnim(name, time)
 
 	self._isPlayingAnim = true
 	self._playAnimName = name
+end
+
+function MainS02AnimView:_refreshWeatherRoot()
+	local isNight = self:_isNight()
+
+	for _, anim in ipairs(self._anim) do
+		gohelper.setActive(anim.nightAnim.gameObject, isNight)
+		gohelper.setActive(anim.dayAnim.gameObject, not isNight)
+	end
+end
+
+function MainS02AnimView:_isNight()
+	local report
+
+	if self._sceneId then
+		local co = lua_scene_switch.configDict[self._sceneId]
+		local reportId = co and co.initReportId or 1
+
+		report = lua_weather_report.configDict[reportId]
+	else
+		report = WeatherController.instance:getCurrReport()
+	end
+
+	local isNight = report and report.lightMode == WeatherEnum.LightModeNight
+
+	return isNight
 end
 
 function MainS02AnimView:_onEndAnim()

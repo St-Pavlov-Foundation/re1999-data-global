@@ -283,7 +283,7 @@ function DungeonModel:getEpisodeChallengeCount(episodeId)
 end
 
 function DungeonModel:chapterIsLock(chapterId)
-	if chapterId == 113 then
+	if chapterId == 113 or chapterId == 213 then
 		return true
 	end
 

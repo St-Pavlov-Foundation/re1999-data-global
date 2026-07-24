@@ -2360,7 +2360,7 @@
   {
     "id": 100061,
     "name": "language_10056513",
-    "desc": "language_10129213",
+    "desc": "language_10131226",
     "uiType": 0,
     "round": 3,
     "consumeType": -1,
@@ -2391,7 +2391,7 @@
   {
     "id": 100071,
     "name": "language_10056513",
-    "desc": "language_10129214",
+    "desc": "language_10131227",
     "uiType": 0,
     "round": 3,
     "consumeType": -1,
@@ -2422,7 +2422,7 @@
   {
     "id": 100081,
     "name": "language_10056513",
-    "desc": "language_10129214",
+    "desc": "language_10131227",
     "uiType": 0,
     "round": 4,
     "consumeType": -1,

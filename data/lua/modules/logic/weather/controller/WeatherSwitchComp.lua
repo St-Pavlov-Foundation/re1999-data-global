@@ -106,12 +106,12 @@ function WeatherSwitchComp:switchReport(index)
 	self:chaneWeatherLightMode(self._lightMode, self._reportList[self._reportIndex])
 end
 
-function WeatherSwitchComp:onInit(sceneId, weatherComp)
+function WeatherSwitchComp:onInit(sceneId, weatherComp, reportId)
 	self._sceneId = sceneId
 
 	local sceneConfig = lua_scene_switch.configDict[sceneId]
 
-	self._initReportId = sceneConfig.initReportId
+	self._initReportId = reportId or sceneConfig.initReportId
 	self._initReport = lua_weather_report.configDict[self._initReportId]
 	self._reportList = {}
 	self._changeTime = sceneConfig.reportSwitchTime

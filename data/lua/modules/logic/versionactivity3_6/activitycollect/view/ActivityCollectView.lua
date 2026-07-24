@@ -352,10 +352,7 @@ function ActivityCollectView:_refreshAct1Time()
 		local isUnlock = OpenModel.instance:isFunctionUnlock(openId)
 
 		if not isUnlock then
-			local episodeId = OpenConfig.instance:getOpenCo(openId).episodeId
-			local episodetxt = DungeonConfig.instance:getEpisodeDisplay(episodeId)
-
-			self._txtact1opentime.text = formatLuaLang("dungeon_unlock_episode_mode", episodetxt)
+			self._txtact1opentime.text = luaLang("sp02_calendar_periphery_locked")
 
 			gohelper.setActive(self._btnact1jump.gameObject, false)
 			gohelper.setActive(self._goact1opentime, true)

@@ -19,7 +19,7 @@ function DungeonChapterListModel:setFbList()
 		local sectionPreviewStatus = {}
 
 		for i, v in ipairs(list) do
-			if DungeonMainStoryModel.instance:isPreviewChapter(v.id) then
+			if DungeonMainStoryModel.instance:isPreviewChapter(v.id) and v.id ~= 113 then
 				local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
 
 				if sectionId then

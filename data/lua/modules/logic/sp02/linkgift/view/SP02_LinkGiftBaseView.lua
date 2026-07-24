@@ -103,7 +103,10 @@ function SP02_LinkGiftBaseView:_initItemList()
 			rewardItem.btnClick = gohelper.findChildButton(itemGo, "bg/#btn_select")
 			rewardItem.btnClaim = gohelper.findChildButton(itemGo, "#go_claim/#btn_claim")
 			rewardItem.btnBuy = SLFramework.UGUI.UIClickListener.Get(rewardItem.goPrice)
-			rewardItem.hasGetImageIcon = gohelper.findChildImage(rewardItem.goHasGet.transform:GetChild(0).gameObject, "")
+
+			local hasGetChild = rewardItem.goHasGet.transform.childCount > 0 and rewardItem.goHasGet.transform:GetChild(0).gameObject or rewardItem.goHasGet
+
+			rewardItem.hasGetImageIcon = gohelper.findChildImage(hasGetChild, "")
 			rewardItem.imageIcon = gohelper.findChildImage(itemGo, "bg/icon")
 			rewardItem.imageBuyBg = gohelper.findChildImage(itemGo, "bg/txtbg")
 			rewardItem.hasGetImageIcon.raycastTarget = false
@@ -315,7 +318,7 @@ function SP02_LinkGiftBaseView:onGetFreeReward()
 	for index, rewardData in ipairs(singleRewardList) do
 		local item = singleItemList[index]
 
-		if rewardData.type == itemType.Free and ActivityType101Model.instance:isType101RewardGet(self._actId, rewardData.signInDay) and item.previousParam.isGet == false then
+		if rewardData.type == itemType.Free and ActivityType101Model.instance:isType101RewardGet(self._actId, rewardData.signInDay) and item.previousParam and item.previousParam.isGet == false then
 			isGetReward = true
 
 			break
@@ -557,11 +560,14 @@ end
 
 function SP02_LinkGiftBaseView:setProgressLine(value)
 	local lineComp = self.totalRewardLineCompList[self.curRewardIndex]
-	local material = lineComp.material
 
-	self._tempVector4.x = value
+	if lineComp then
+		local material = lineComp.material
 
-	material:SetVector("_DissolveControl", self._tempVector4)
+		self._tempVector4.x = value
+
+		material:SetVector("_DissolveControl", self._tempVector4)
+	end
 end
 
 function SP02_LinkGiftBaseView:tweenProgressLine(from, to, duration)
@@ -626,15 +632,20 @@ function SP02_LinkGiftBaseView:refreshRewardState()
 		gohelper.setActive(item.goSelect, index == curSelectIndex)
 	end
 
+	curSelectIndex = curSelectIndex or #rewardDataList + 1
+
 	local lineComp = self.totalRewardLineCompList[curRewardIndex]
-	local material = lineComp.material
-	local tempVector4 = material:GetVector("_DissolveControl")
 	local progressValue = SP02_LinkGiftEnum.LineProgress[curRewardIndex][curSelectIndex]
 
-	self._tempVector4.x = tempVector4.x
-	self._tempVector4.y = tempVector4.y
-	self._tempVector4.z = tempVector4.z
-	self._tempVector4.w = tempVector4.w
+	if lineComp then
+		local material = lineComp.material
+		local tempVector4 = material:GetVector("_DissolveControl")
+
+		self._tempVector4.x = tempVector4.x
+		self._tempVector4.y = tempVector4.y
+		self._tempVector4.z = tempVector4.z
+		self._tempVector4.w = tempVector4.w
+	end
 
 	self:setProgressLine(progressValue)
 	self:refreshGoodsInfo()

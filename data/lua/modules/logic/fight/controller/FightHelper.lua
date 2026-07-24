@@ -2592,16 +2592,18 @@ function FightHelper.getSSWLUniqueTimeline(timelineName, fightStepData)
 		return timelineName
 	end
 
-	local effect = FightHelper.getActEffectData(FightEnum.EffectType.TWINSPOWERUPCOUNT, fightStepData)
-
-	if not effect then
-		return timelineName
-	end
-
 	local skin = entityMo.skin
 	local configDict = lua_fight_sswl_unique_effect.configDict[skin]
 
 	configDict = configDict or lua_fight_sswl_unique_effect.configDict[0]
+
+	local effect = FightHelper.getActEffectData(FightEnum.EffectType.TWINSPOWERUPCOUNT, fightStepData)
+
+	if not effect then
+		local co = configDict[0]
+
+		return co and co.timeline or timelineName
+	end
 
 	tabletool.clear(SortTable)
 
@@ -2621,9 +2623,9 @@ function FightHelper.getSSWLUniqueTimeline(timelineName, fightStepData)
 		end
 	end
 
-	tabletool.clear(SortTable)
+	local co = configDict[0]
 
-	return timelineName
+	return co and co.timeline or timelineName
 end
 
 function FightHelper.getSSWLNormalTimeline(timelineName, fightStepData)
@@ -2633,16 +2635,18 @@ function FightHelper.getSSWLNormalTimeline(timelineName, fightStepData)
 		return timelineName
 	end
 
-	local effect = FightHelper.getActEffectData(FightEnum.EffectType.TWINSUPCOUNTER, fightStepData)
-
-	if not effect then
-		return timelineName
-	end
-
 	local skin = entityMo.skin
 	local configDict = lua_fight_sswl_skill2_effect.configDict[skin]
 
 	configDict = configDict or lua_fight_sswl_skill2_effect.configDict[0]
+
+	local effect = FightHelper.getActEffectData(FightEnum.EffectType.TWINSUPCOUNTER, fightStepData)
+
+	if not effect then
+		local co = configDict[0]
+
+		return co and co.timeline or timelineName
+	end
 
 	tabletool.clear(SortTable)
 
@@ -2662,7 +2666,9 @@ function FightHelper.getSSWLNormalTimeline(timelineName, fightStepData)
 		end
 	end
 
-	return timelineName
+	local co = configDict[0]
+
+	return co and co.timeline or timelineName
 end
 
 function FightHelper.getSSWLXingNormalTimeline(timelineName, fightStepData)

@@ -70,11 +70,12 @@ function MainSceneSwitchCameraController:hideScene()
 	gohelper.setActive(self._cameraRootGO, false)
 end
 
-function MainSceneSwitchCameraController:showScene(id, callback, callbackTarget)
+function MainSceneSwitchCameraController:showScene(id, callback, callbackTarget, params)
 	self._showSceneId = id
 	self._callback = callback
 	self._callbackTarget = callbackTarget
 	self._isShowScene = true
+	self._params = params
 
 	if not self._callback or not self._callbackTarget then
 		logError("MainSceneSwitchCameraController showScene callback or callbackTarget is nil")
@@ -98,7 +99,7 @@ function MainSceneSwitchCameraController:_showScene()
 			MainSceneSwitchCameraDisplayController.instance:setSceneRoot(self._mainSceneRoot)
 		end
 
-		MainSceneSwitchCameraDisplayController.instance:showScene(self._showSceneId, self._onShowSceneFinish, self)
+		MainSceneSwitchCameraDisplayController.instance:showScene(self._showSceneId, self._onShowSceneFinish, self, self._params)
 	else
 		self:_loadCamera()
 	end

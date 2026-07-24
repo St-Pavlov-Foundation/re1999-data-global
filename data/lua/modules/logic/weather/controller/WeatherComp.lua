@@ -479,6 +479,10 @@ function WeatherComp:getCurLightMode()
 	return self._curReport and self._curReport.lightMode
 end
 
+function WeatherComp:getReportId()
+	return self._curReport and self._curReport.id
+end
+
 function WeatherComp:_finishAllUpdate()
 	if self._effectStartTime then
 		self:_onEffectUpdateHandler(self._effectStartTime + 5)

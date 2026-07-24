@@ -122,7 +122,7 @@ function AudioBgmInfo:_initBgmDatas()
 	self:_addBgmData(AudioBgmEnum.Layer.KaRongBGM, AudioEnum3_0.PermanentBgm.KaRong, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.CommanStationEnterView, AudioEnum3_0.Bgm.play_ui_zhihuisuo_music, AudioEnum.UI.Stop_UIMusic)
 	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_0MainAmbientSound, 0, 0)
-	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_1Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_1Main, AudioEnum3_1.PermanentBgm.EnterView, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.NecrologistStoryView, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.VersionActivity3_2Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	self:_addBgmData(AudioBgmEnum.Layer.Udimo, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
@@ -730,7 +730,8 @@ function AudioBgmInfo:_initBgmUsage()
 	self:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity3_1Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity3_1EnterView
+		ViewName.VersionActivity3_1EnterView,
+		ViewName.Permanent3_1EnterView
 	}, nil, nil, true)
 	self:_addBgmUsage({
 		AudioBgmEnum.Layer.NecrologistStoryView

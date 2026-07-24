@@ -481,6 +481,7 @@ function StoryView:_showBranchLeadHero()
 		ZProj.TweenHelper.KillById(self._confadeId)
 	end
 
+	UIBlockMgr.instance:endBlock("waitShowText")
 	TaskDispatcher.cancelTask(self._conShowIn, self)
 	TaskDispatcher.cancelTask(self._startShowText, self)
 	TaskDispatcher.cancelTask(self._startShake, self)

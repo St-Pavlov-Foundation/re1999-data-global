@@ -60,7 +60,7 @@ function SceneUIPackageBaseView:btnframeOnClick()
 
 	local uiSkinId = UICo.id
 
-	MainUISwitchController.instance:openMainUISwitchInfoView(uiSkinId, true, false, true)
+	MainUISwitchController.instance:openMainUISwitchInfoView(uiSkinId, true, false, false)
 end
 
 function SceneUIPackageBaseView:_btncheckOnClick()

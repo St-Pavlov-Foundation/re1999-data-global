@@ -59,6 +59,10 @@ function FightViewExPoint:_onMoveHandCard(operation, cardInfoMO)
 end
 
 function FightViewExPoint:_onCombineOneCard(cardInfoMO, isUniversalCombine)
+	if not cardInfoMO then
+		return
+	end
+
 	if not cardInfoMO.combineCanAddExpoint then
 		return
 	end

@@ -98,11 +98,6 @@ end
 
 function VersionActivityEnterVideoView:onFullScreenVideoPlayFinished()
 	self:refreshLoopVideo()
-	self:playBgm()
-
-	if self._noVideoAudioId and self._noVideoAudioId ~= 0 then
-		AudioMgr.instance:trigger(self._noVideoAudioId)
-	end
 end
 
 function VersionActivityEnterVideoView:refreshLoopVideo()
@@ -116,12 +111,21 @@ function VersionActivityEnterVideoView:refreshLoopVideo()
 
 	self:getVideoComp():play(videoName, true)
 	self:getVideoComp():setStartCallback(self.onLoopVideoStarted, self)
+	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
+	TaskDispatcher.runDelay(self.onVideoOverTime, self, 2)
+end
+
+function VersionActivityEnterVideoView:onVideoOverTime()
+	self:onLoopVideoStarted()
 end
 
 function VersionActivityEnterVideoView:onLoopVideoStarted()
+	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
+
 	local animName = self._needPlayVideo and "open1" or "open"
 
 	self:setAnimPause(false, animName)
+	self:playBgm()
 end
 
 function VersionActivityEnterVideoView:onPlayVideoDone()
@@ -157,12 +161,28 @@ function VersionActivityEnterVideoView:setAnimPause(pause, animName)
 end
 
 function VersionActivityEnterVideoView:playBgm()
+	if self._hasPlayBgm then
+		return
+	end
+
+	self._hasPlayBgm = true
+
 	if self._bgmLayer and self._bgmLayer ~= 0 then
 		AudioBgmManager.instance:playBgm(self._bgmLayer)
+	end
+
+	if self._noVideoAudioId and self._noVideoAudioId ~= 0 then
+		AudioMgr.instance:trigger(self._noVideoAudioId)
 	end
 end
 
 function VersionActivityEnterVideoView:stopBgm()
+	if not self._hasPlayBgm then
+		return
+	end
+
+	self._hasPlayBgm = false
+
 	if self._bgmLayer and self._bgmLayer ~= 0 then
 		AudioBgmManager.instance:stopBgm(self._bgmLayer)
 	end
@@ -182,6 +202,8 @@ function VersionActivityEnterVideoView:onClose()
 
 		self._videoComp = nil
 	end
+
+	TaskDispatcher.cancelTask(self.onVideoOverTime, self)
 end
 
 return VersionActivityEnterVideoView

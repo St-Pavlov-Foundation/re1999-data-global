@@ -179,7 +179,7 @@ function HeroGroupEditListModel:isTrialLimit()
 	for inTeamUid in pairs(self._inTeamHeroUids) do
 		local mo = self:getById(inTeamUid)
 
-		if mo:isTrial() then
+		if mo and mo:isTrial() then
 			curNum = curNum + 1
 		end
 	end

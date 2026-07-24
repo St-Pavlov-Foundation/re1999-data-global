@@ -88,7 +88,9 @@ function VersionActivity3_10EnterView:onClickActivity138502()
 end
 
 function VersionActivity3_10EnterView:onClickActivity138521()
-	AbyssController.instance:openMainView(VersionActivity3_10Enum.ActivityId.Abyss)
+	AbyssController.instance:getTaskInfo(function()
+		AbyssController.instance:openMainView(VersionActivity3_10Enum.ActivityId.Abyss)
+	end)
 end
 
 function VersionActivity3_10EnterView:refreshUI()

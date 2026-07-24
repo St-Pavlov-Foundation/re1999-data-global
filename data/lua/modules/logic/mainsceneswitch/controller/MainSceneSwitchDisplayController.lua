@@ -131,7 +131,7 @@ end
 
 local blockKey = "MainSceneSwitchDisplayController_showScene"
 
-function MainSceneSwitchDisplayController:showScene(sceneId, callback, callbackTarget)
+function MainSceneSwitchDisplayController:showScene(sceneId, callback, callbackTarget, params)
 	self._curSceneId = sceneId
 	self._isShowScene = true
 	self._callback = callback
@@ -153,6 +153,7 @@ function MainSceneSwitchDisplayController:showScene(sceneId, callback, callbackT
 		loader = MultiAbLoader.New()
 		self._loaderMap[instName] = loader
 		loader._sceneId = sceneId
+		loader._sceneParams = params
 
 		loader:addPath(resPath)
 		loader:startLoad(self._loadSceneFinish, self)
@@ -163,6 +164,7 @@ function MainSceneSwitchDisplayController:_loadSceneFinish(loader)
 	UIBlockHelper.instance:endBlock(blockKey)
 
 	local sceneId = loader._sceneId
+	local params = loader._sceneParams
 	local resPath, instName, resName = self:_getSceneConfig(sceneId)
 	local assetItem = loader:getFirstAssetItem()
 	local sceneGo = gohelper.clone(assetItem:GetResource(resPath), self._sceneRoot)
@@ -193,7 +195,7 @@ function MainSceneSwitchDisplayController:_loadSceneFinish(loader)
 		weatherEffectComp
 	}
 
-	switchComp:onInit(sceneId, weatherComp)
+	switchComp:onInit(sceneId, weatherComp, params and params.reportId)
 	eggContainerComp:onInit(sceneId)
 	eggContainerComp:initSceneGo(sceneGo)
 	weatherEffectComp:onInit(sceneId)

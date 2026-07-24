@@ -59,7 +59,9 @@ end
 function MainUISwitchInfoBlurMaskView:_onShowSceneInfo(id)
 	self._sceneId = id
 
-	MainSceneSwitchCameraController.instance:showScene(id, self._showSceneFinished, self)
+	MainSceneSwitchCameraController.instance:showScene(id, self._showSceneFinished, self, {
+		reportId = WeatherController.instance:getReportId()
+	})
 end
 
 function MainUISwitchInfoBlurMaskView:_showSceneFinished(rt)

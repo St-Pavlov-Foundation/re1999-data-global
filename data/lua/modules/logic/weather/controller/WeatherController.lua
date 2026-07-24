@@ -91,6 +91,10 @@ function WeatherController:setReportId(id)
 	self._weatherComp:setReportId(id)
 end
 
+function WeatherController:getReportId()
+	return self._weatherComp:getReportId()
+end
+
 function WeatherController:getPrevLightMode()
 	return self._weatherComp:getPrevLightMode()
 end

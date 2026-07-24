@@ -218,11 +218,11 @@ function AtomicDataBaseViewModel:saveLibraryNew()
 end
 
 function AtomicDataBaseViewModel:isPlayedUnlockAnim(id)
-	return self.unlockFlagDict[id]
+	return self.unlockFlagDict and self.unlockFlagDict[id]
 end
 
 function AtomicDataBaseViewModel:setPlayedUnlockAnim(id)
-	if self.unlockFlagDict[id] then
+	if not self.unlockFlagDict or self.unlockFlagDict[id] then
 		return
 	end
 

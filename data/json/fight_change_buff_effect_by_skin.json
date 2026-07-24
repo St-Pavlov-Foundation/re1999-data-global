@@ -351,7 +351,7 @@
     "audio": 0
   },
   {
-    "effectPath": "buff/nimengdishi_innate_01",
+    "effectPath": "nimengdishi_innate_01",
     "target": 1,
     "skinId": 303904,
     "changedPath": "s02_nmds/nmds_innate_01",
@@ -360,8 +360,26 @@
     "audio": 0
   },
   {
-    "effectPath": "buff/nimengdishi_innate_02",
+    "effectPath": "nimengdishi_innate_01",
+    "target": 2,
+    "skinId": 303904,
+    "changedPath": "s02_nmds/nmds_innate_01",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "nimengdishi_innate_02",
     "target": 1,
+    "skinId": 303904,
+    "changedPath": "s02_nmds/nmds_innate_02",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 0
+  },
+  {
+    "effectPath": "nimengdishi_innate_02",
+    "target": 2,
     "skinId": 303904,
     "changedPath": "s02_nmds/nmds_innate_02",
     "duration": 0.0,

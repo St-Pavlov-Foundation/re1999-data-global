@@ -72,5 +72,8 @@ AudioEnum3_1.YeShuMei = {
 	play_ui_mingdi_ysm_wipe = 316007,
 	play_ui_mingdi_ysm_wrong = 316005
 }
+AudioEnum3_1.PermanentBgm = {
+	EnterView = 3310012
+}
 
 return AudioEnum3_1

@@ -1404,6 +1404,41 @@ function CharacterView:onEquipChange()
 	self:_refreshAttribute()
 end
 
+function CharacterView:_getOtherEquipAddValues(equipMo)
+	local _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict, otherEquipMo
+
+	if self._heroMO.heroId == CharacterEnum.TwinssychubeHeroId then
+		local trialEquipMo = self._heroMO.trialEquipMo
+
+		if trialEquipMo then
+			local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
+
+			if otherEquipId then
+				otherEquipMo = EquipMO.New()
+
+				local co = {
+					equipId = otherEquipId,
+					equipLv = trialEquipMo.level,
+					equipRefine = trialEquipMo.refineLv
+				}
+
+				otherEquipMo:initByTrialCO(co)
+			end
+		else
+			local otherEquipId = equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(equipMo.equipId)
+
+			otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+		end
+	end
+
+	if otherEquipMo then
+		_equipHp, _equipAtk, _equipDef, _equipMdef = EquipConfig.instance:getEquipAddBaseAttr(otherEquipMo)
+		_equipBreakAddPercentValuesDict = EquipConfig.instance:getEquipBreakAddAttrValueDict(otherEquipMo.config, otherEquipMo.breakLv)
+	end
+
+	return _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict
+end
+
 function CharacterView:_refreshAttribute(level)
 	local heroMo = self._heroMO
 	local heroAttrDict = heroMo:getHeroBaseAttrDict(level)
@@ -1424,37 +1459,7 @@ function CharacterView:_refreshAttribute(level)
 
 		equipMo = equipMo or EquipModel.instance:getEquip(self._heroMO.defaultEquipUid)
 
-		local _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict, otherEquipMo
-
-		if self._heroMO.heroId == CharacterEnum.TwinssychubeHeroId then
-			local trialEquipMo = self._heroMO.trialEquipMo
-
-			if trialEquipMo then
-				local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
-
-				if otherEquipId then
-					otherEquipMo = EquipMO.New()
-
-					local co = {
-						equipId = otherEquipId,
-						equipLv = trialEquipMo.level,
-						equipRefine = trialEquipMo.refineLv
-					}
-
-					otherEquipMo:initByTrialCO(co)
-				end
-			else
-				local otherEquipId = equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(equipMo.equipId)
-
-				otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
-			end
-		end
-
-		if otherEquipMo then
-			_equipHp, _equipAtk, _equipDef, _equipMdef = EquipConfig.instance:getEquipAddBaseAttr(otherEquipMo)
-			_equipBreakAddPercentValuesDict = EquipConfig.instance:getEquipBreakAddAttrValueDict(otherEquipMo.config, otherEquipMo.breakLv)
-		end
-
+		local _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict = self:_getOtherEquipAddValues(equipMo)
 		local equipHp, equipAtk, equipDef, equipMdef = EquipConfig.instance:getEquipAddBaseAttr(equipMo)
 
 		equipAttrDict[CharacterEnum.AttrId.Attack] = equipAtk + (_equipAtk or 0)
@@ -1523,17 +1528,19 @@ function CharacterView:_refreshAttributeTips(level)
 
 	if hasDefaultEquip then
 		local equipMo = EquipModel.instance:getEquip(heroMo.defaultEquipUid)
+		local _equipHp, _equipAtk, _equipDef, _equipMdef, _equipBreakAddPercentValuesDict = self:_getOtherEquipAddValues(equipMo)
 		local equipHp, equipAtk, equipDef, equipMdef = EquipConfig.instance:getEquipAddBaseAttr(equipMo)
 
-		equipAttrDict[CharacterEnum.AttrId.Attack] = equipAtk
-		equipAttrDict[CharacterEnum.AttrId.Hp] = equipHp
-		equipAttrDict[CharacterEnum.AttrId.Defense] = equipDef
-		equipAttrDict[CharacterEnum.AttrId.Mdefense] = equipMdef
+		equipAttrDict[CharacterEnum.AttrId.Attack] = equipAtk + (_equipAtk or 0)
+		equipAttrDict[CharacterEnum.AttrId.Hp] = equipHp + (_equipHp or 0)
+		equipAttrDict[CharacterEnum.AttrId.Defense] = equipDef + (_equipDef or 0)
+		equipAttrDict[CharacterEnum.AttrId.Mdefense] = equipMdef + (_equipMdef or 0)
 
 		local equipBreakAddPercentValuesDict = EquipConfig.instance:getEquipBreakAddAttrValueDict(equipMo.config, equipMo.breakLv)
 
 		for _, attrId in ipairs(CharacterView.AttrIdList) do
-			local addPercent = equipBreakAddPercentValuesDict[attrId]
+			local _addPercent = _equipBreakAddPercentValuesDict and _equipBreakAddPercentValuesDict[attrId] or 0
+			local addPercent = equipBreakAddPercentValuesDict[attrId] + _addPercent
 
 			if addPercent ~= 0 then
 				equipAttrDict[attrId] = equipAttrDict[attrId] + math.floor(addPercent / 100 * heroAttrDict[attrId])

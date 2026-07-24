@@ -502,6 +502,8 @@ function AtomicDungeonSceneView:initScene()
 	self.viewWidth = math.abs(posBR.x - posTL.x)
 	self.viewHeight = math.abs(posBR.y - posTL.y)
 
+	local baseViewWidth = self.viewWidth
+	local baseViewHeight = self.viewHeight
 	local boundTL_x = posTL.x
 	local boundTL_y = posTL.y
 
@@ -514,17 +516,28 @@ function AtomicDungeonSceneView:initScene()
 		boundTL_y = posTL.y * zoomRate
 	end
 
-	self.mapMinX = boundTL_x - (box.size.x * boxScaleX - self.viewWidth)
+	local moveRangeX = box.size.x * boxScaleX - self.viewWidth
+
+	if moveRangeX < 0 then
+		moveRangeX = 0
+	end
+
+	local moveRangeY = box.size.y * boxScaleY - self.viewHeight
+
+	if moveRangeY < 0 then
+		moveRangeY = 0
+	end
+
+	self.mapMinX = boundTL_x - moveRangeX
 	self.mapMaxX = boundTL_x
 	self.mapMinY = boundTL_y
-	self.mapMaxY = boundTL_y + (box.size.y * boxScaleY - self.viewHeight)
+	self.mapMaxY = boundTL_y + moveRangeY
 
 	if self.isInPolygonState then
 		local mapWidth = box.size.x * boxScaleX
 		local mapHeight = box.size.y * boxScaleY
-		local aspect = self.mainCamera.aspect
 
-		self.maxOrthoSize = math.min(mapHeight / 2, mapWidth / (2 * aspect))
+		self.maxOrthoSize = AtomicDungeonEnum.DungeonMapCameraSize * math.min(mapWidth / baseViewWidth, mapHeight / baseViewHeight)
 		self.minOrthoSize = AtomicDungeonEnum.DungeonMapCameraSize * scale
 		self.minOrthoSize = math.min(self.minOrthoSize, self.maxOrthoSize)
 		self.mainCamera.orthographicSize = Mathf.Lerp(self.maxOrthoSize, self.minOrthoSize, self._sliderPolygon:GetValue())

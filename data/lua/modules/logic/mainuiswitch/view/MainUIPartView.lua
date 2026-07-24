@@ -184,8 +184,12 @@ function MainUIPartView:_initPartAnim(skinId, part)
 
 	local skinAnim = MainUISwitchEnum.SkinAnim[skinId]
 
-	if skinAnim and skinAnim.view and not self._skinAnimViews[skinId] then
-		self._skinAnimViews[skinId] = skinAnim.view.New(skinId, self.viewGO)
+	if skinAnim then
+		if skinAnim.view and not self._skinAnimViews[skinId] then
+			self._skinAnimViews[skinId] = skinAnim.view.New(skinId, self.viewGO)
+		end
+
+		self._skinAnimViews[skinId].viewParam = self.viewParam
 	end
 end
 

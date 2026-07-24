@@ -833,7 +833,7 @@ function DungeonConfig:getMaterialSource(type, materialId)
 		for k, co in ipairs(lua_episode.configList) do
 			local chapterCo = lua_chapter.configDict[co.chapterId]
 
-			if chapterCo and (chapterCo.type == DungeonEnum.ChapterType.Normal or chapterCo.type == DungeonEnum.ChapterType.Hard or chapterCo.type == DungeonEnum.ChapterType.Simple) then
+			if co.chapterId ~= 113 and co.chapterId ~= 213 and chapterCo and (chapterCo.type == DungeonEnum.ChapterType.Normal or chapterCo.type == DungeonEnum.ChapterType.Hard or chapterCo.type == DungeonEnum.ChapterType.Simple) then
 				local rewardId = co.reward
 				local rewardCo = lua_reward.configDict[rewardId]
 
