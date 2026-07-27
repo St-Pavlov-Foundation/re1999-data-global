@@ -12,6 +12,7 @@ function AtomicDungeonPolygonElement:ctor(param)
 	self.type = self.config.type
 	self.touchKeyElementMap = {}
 	self.keyPointItemList = {}
+	self.isHasSendFinishRequest = false
 end
 
 function AtomicDungeonPolygonElement:init(go)
@@ -68,6 +69,7 @@ function AtomicDungeonPolygonElement:init(go)
 	self:addEventCb(AtomicDungeonController.instance, AtomicDungeonEvent.OnInitTouchKeyElement, self.refreshKeyTouch, self)
 	self:updateInfo()
 	self:setName()
+	self:checkDoorNotFinishButKeyFull()
 end
 
 function AtomicDungeonPolygonElement.addBoxColliderListener(go, callback, callbackTarget)
@@ -147,6 +149,26 @@ function AtomicDungeonPolygonElement:updateInfo()
 
 	UISpriteSetMgr.instance:setSp02AtomicDungeonElementSprite(self.itemRootMap[self.type].icon, self.config.icon)
 	self:refreshKeyPoint()
+end
+
+function AtomicDungeonPolygonElement:checkDoorNotFinishButKeyFull()
+	if self.isHasSendFinishRequest then
+		return
+	end
+
+	local elementMo = AtomicDungeonModel.instance:getElementMo(self.config.id)
+	local isAllKeyElementPut = elementMo:checkIsAllKeyElementPut()
+	local isElementFinish = AtomicDungeonModel.instance:isElementFinish(self.config.id)
+
+	if isAllKeyElementPut and not isElementFinish and self.type == AtomicDungeonEnum.ElementType.KeyDoor then
+		AtomicRpc.instance:sendAtomicMapInteractRequest(self.config.id, {})
+
+		local elementData = AtomicDungeonModel.instance:getElementStatData(self.config.id)
+
+		AtomicDungeonStatHelper.instance:sendElementInteractInfo(elementData)
+
+		self.isHasSendFinishRequest = true
+	end
 end
 
 function AtomicDungeonPolygonElement:setName()

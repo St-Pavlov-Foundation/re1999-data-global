@@ -508,7 +508,7 @@ function AtomicDungeonSceneView:initScene()
 	local boundTL_y = posTL.y
 
 	if self.isInPolygonState and self.mainCamera then
-		local zoomRate = self.mainCamera.orthographicSize / AtomicDungeonEnum.DungeonMapCameraSize
+		local zoomRate = self.mainCamera.orthographicSize / (AtomicDungeonEnum.DungeonMapCameraSize * scale)
 
 		self.viewWidth = self.viewWidth * zoomRate
 		self.viewHeight = self.viewHeight * zoomRate
