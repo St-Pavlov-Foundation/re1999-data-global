@@ -10,5 +10,6 @@ ConnectEvent.OnReconnectFail = 3
 ConnectEvent.OnServerKickedOut = 4
 ConnectEvent.OnLostMessage = 5
 ConnectEvent.OnMsgTimeout = 6
+ConnectEvent.OnReconnectSucc_def = 7
 
 return ConnectEvent

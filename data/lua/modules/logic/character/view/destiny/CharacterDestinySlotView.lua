@@ -458,7 +458,8 @@ function CharacterDestinySlotView:onOpen()
 		self._itemConsumeList = {}
 	end
 
-	local title = CharacterDestinyEnum.SlotTitle[self._heroMO.config.heroType] or CharacterDestinyEnum.SlotTitle[1]
+	local heroType = self._heroMO:getHeroType()
+	local title = CharacterDestinyEnum.SlotTitle[heroType] or CharacterDestinyEnum.SlotTitle[1]
 
 	self._txttitle.text = luaLang(title)
 

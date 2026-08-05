@@ -1,18 +1,13 @@
-﻿local var_0_0 = type
-local var_0_1 = string.byte
-local var_0_2 = string.format
-local var_0_3 = string.match
-local var_0_4 = string.gmatch
-local var_0_5 = string.gsub
-local var_0_6 = table.concat
-local var_0_7 = require("bit")
-local var_0_8 = var_0_7.band
-local var_0_9 = var_0_7.bor
-local var_0_10 = var_0_7.tohex
-local var_0_11 = var_0_7.lshift
-local var_0_12 = var_0_7.rshift
-local var_0_13 = var_0_7.arshift
-local var_0_14 = {
+﻿-- chunkname: @jit/dis_ppc.lua
+
+local type = type
+local byte, format = string.byte, string.format
+local match, gmatch, gsub = string.match, string.gmatch, string.gsub
+local concat = table.concat
+local bit = require("bit")
+local band, bor, tohex = bit.band, bit.bor, bit.tohex
+local lshift, rshift, arshift = bit.lshift, bit.rshift, bit.arshift
+local map_crops = {
 	[0] = "mcrfXX",
 	[289] = "creqv|crsetCCC%",
 	[257] = "crandCCC",
@@ -28,25 +23,25 @@ local var_0_14 = {
 	[193] = "crxor|crclrCCC%",
 	shift = 1
 }
-local var_0_15 = setmetatable({
+local map_rlwinm = setmetatable({
 	shift = 0,
 	mask = -1
 }, {
-	__index = function(arg_1_0, arg_1_1)
-		local var_1_0 = var_0_8(var_0_12(arg_1_1, 11), 31)
-		local var_1_1 = var_0_8(var_0_12(arg_1_1, 6), 31)
-		local var_1_2 = var_0_8(var_0_12(arg_1_1, 1), 31)
+	__index = function(t, x)
+		local rot = band(rshift(x, 11), 31)
+		local mb = band(rshift(x, 6), 31)
+		local me = band(rshift(x, 1), 31)
 
-		if var_1_1 == 0 and var_1_2 == 31 - var_1_0 then
+		if mb == 0 and me == 31 - rot then
 			return "slwiRR~A."
-		elseif var_1_2 == 31 and var_1_1 == 32 - var_1_0 then
+		elseif me == 31 and mb == 32 - rot then
 			return "srwiRR~-A."
 		else
 			return "rlwinmRR~AAA."
 		end
 	end
 })
-local var_0_16 = {
+local map_rld = {
 	[0] = "rldiclRR~HM.",
 	"rldicrRR~HM.",
 	"rldicRR~HM.",
@@ -60,7 +55,7 @@ local var_0_16 = {
 	shift = 2,
 	mask = 7
 }
-local var_0_17 = setmetatable({
+local map_ext = setmetatable({
 	[0] = "cmp_YLRR",
 	nil,
 	nil,
@@ -249,26 +244,26 @@ local var_0_17 = setmetatable({
 		mask = 3
 	}
 }, {
-	__index = function(arg_2_0, arg_2_1)
-		if var_0_8(arg_2_1, 31) == 15 then
+	__index = function(t, x)
+		if band(x, 31) == 15 then
 			return "iselRRRC"
 		end
 	end
 })
-local var_0_18 = {
+local map_ld = {
 	[0] = "ldRRE",
 	"lduRRE",
 	"lwaRRE",
 	shift = 0,
 	mask = 3
 }
-local var_0_19 = {
+local map_std = {
 	[0] = "stdRRE",
 	"stduRRE",
 	shift = 0,
 	mask = 3
 }
-local var_0_20 = {
+local map_fps = {
 	{
 		[0] = false,
 		false,
@@ -292,7 +287,7 @@ local var_0_20 = {
 	shift = 5,
 	mask = 1
 }
-local var_0_21 = {
+local map_fpd = {
 	[0] = {
 		[0] = "fcmpuXFF",
 		nil,
@@ -354,7 +349,7 @@ local var_0_21 = {
 	shift = 5,
 	mask = 1
 }
-local var_0_22 = {
+local map_spe = {
 	[765] = "efdtstltYRR",
 	[759] = "efdctsfR-R",
 	[725] = "efsctsiR-R",
@@ -613,12 +608,12 @@ local var_0_22 = {
 	[1293] = "evmhosmiaawRRR",
 	[802] = "evstdwxRR0R"
 }
-local var_0_23 = {
+local map_pri = {
 	[0] = false,
 	false,
 	"tdiARI",
 	"twiARI",
-	var_0_22,
+	map_spe,
 	false,
 	false,
 	"mulliRRI",
@@ -633,9 +628,9 @@ local var_0_23 = {
 	"b_KBJ",
 	"sc",
 	"bKJ",
-	var_0_14,
+	map_crops,
 	"rlwimiRR~AAA.",
-	var_0_15,
+	map_rlwinm,
 	false,
 	"rlwnmRR~RAA.",
 	"oriNRR~U",
@@ -644,8 +639,8 @@ local var_0_23 = {
 	"xorisRR~U",
 	"andi.RR~U",
 	"andis.RR~U",
-	var_0_16,
-	var_0_17,
+	map_rld,
+	map_ext,
 	"lwzRRD",
 	"lwzuRRD",
 	"lbzRRD",
@@ -672,14 +667,14 @@ local var_0_23 = {
 	"stfduFRD",
 	false,
 	false,
-	var_0_18,
-	var_0_20,
+	map_ld,
+	map_fps,
 	false,
 	false,
-	var_0_19,
-	var_0_21
+	map_std,
+	map_fpd
 }
-local var_0_24 = {
+local map_gpr = {
 	[0] = "r0",
 	"sp",
 	"r2",
@@ -713,7 +708,7 @@ local var_0_24 = {
 	"r30",
 	"r31"
 }
-local var_0_25 = {
+local map_cond = {
 	[0] = "lt",
 	"gt",
 	"eq",
@@ -724,270 +719,269 @@ local var_0_25 = {
 	"ns"
 }
 
-local function var_0_26(arg_3_0)
-	if arg_3_0 <= 3 then
-		return var_0_25[var_0_8(arg_3_0, 3)]
+local function condfmt(cond)
+	if cond <= 3 then
+		return map_cond[band(cond, 3)]
 	else
-		return var_0_2("4*cr%d+%s", var_0_12(arg_3_0, 2), var_0_25[var_0_8(arg_3_0, 3)])
+		return format("4*cr%d+%s", rshift(cond, 2), map_cond[band(cond, 3)])
 	end
 end
 
-local function var_0_27(arg_4_0, arg_4_1, arg_4_2)
-	local var_4_0 = arg_4_0.pos
-	local var_4_1 = ""
+local function putop(ctx, text, operands)
+	local pos = ctx.pos
+	local extra = ""
 
-	if arg_4_0.rel then
-		local var_4_2 = arg_4_0.symtab[arg_4_0.rel]
+	if ctx.rel then
+		local sym = ctx.symtab[ctx.rel]
 
-		if var_4_2 then
-			var_4_1 = "\t->" .. var_4_2
+		if sym then
+			extra = "\t->" .. sym
 		end
 	end
 
-	if arg_4_0.hexdump > 0 then
-		arg_4_0.out(var_0_2("%08x  %s  %-7s %s%s\n", arg_4_0.addr + var_4_0, var_0_10(arg_4_0.op), arg_4_1, var_0_6(arg_4_2, ", "), var_4_1))
+	if ctx.hexdump > 0 then
+		ctx.out(format("%08x  %s  %-7s %s%s\n", ctx.addr + pos, tohex(ctx.op), text, concat(operands, ", "), extra))
 	else
-		arg_4_0.out(var_0_2("%08x  %-7s %s%s\n", arg_4_0.addr + var_4_0, arg_4_1, var_0_6(arg_4_2, ", "), var_4_1))
+		ctx.out(format("%08x  %-7s %s%s\n", ctx.addr + pos, text, concat(operands, ", "), extra))
 	end
 
-	arg_4_0.pos = var_4_0 + 4
+	ctx.pos = pos + 4
 end
 
-local function var_0_28(arg_5_0)
-	return var_0_27(arg_5_0, ".long", {
-		"0x" .. var_0_10(arg_5_0.op)
+local function unknown(ctx)
+	return putop(ctx, ".long", {
+		"0x" .. tohex(ctx.op)
 	})
 end
 
-local function var_0_29(arg_6_0)
-	local var_6_0 = arg_6_0.pos
-	local var_6_1, var_6_2, var_6_3, var_6_4 = var_0_1(arg_6_0.code, var_6_0 + 1, var_6_0 + 4)
-	local var_6_5 = var_0_9(var_0_11(var_6_1, 24), var_0_11(var_6_2, 16), var_0_11(var_6_3, 8), var_6_4)
-	local var_6_6 = {}
-	local var_6_7
-	local var_6_8 = 21
+local function disass_ins(ctx)
+	local pos = ctx.pos
+	local b0, b1, b2, b3 = byte(ctx.code, pos + 1, pos + 4)
+	local op = bor(lshift(b0, 24), lshift(b1, 16), lshift(b2, 8), b3)
+	local operands = {}
+	local last
+	local rs = 21
 
-	arg_6_0.op = var_6_5
-	arg_6_0.rel = nil
+	ctx.op = op
+	ctx.rel = nil
 
-	local var_6_9 = var_0_23[var_0_12(var_6_1, 2)]
+	local opat = map_pri[rshift(b0, 2)]
 
-	while var_0_0(var_6_9) ~= "string" do
-		if not var_6_9 then
-			return var_0_28(arg_6_0)
+	while type(opat) ~= "string" do
+		if not opat then
+			return unknown(ctx)
 		end
 
-		var_6_9 = var_6_9[var_0_8(var_0_12(var_6_5, var_6_9.shift), var_6_9.mask)]
+		opat = opat[band(rshift(op, opat.shift), opat.mask)]
 	end
 
-	local var_6_10, var_6_11 = var_0_3(var_6_9, "^([a-z0-9_.]*)(.*)")
-	local var_6_12, var_6_13 = var_0_3(var_6_11, "|([a-z0-9_.]*)(.*)")
+	local name, pat = match(opat, "^([a-z0-9_.]*)(.*)")
+	local altname, pat2 = match(pat, "|([a-z0-9_.]*)(.*)")
 
-	if var_6_12 then
-		var_6_11 = var_6_13
+	if altname then
+		pat = pat2
 	end
 
-	for iter_6_0 in var_0_4(var_6_11, ".") do
-		local var_6_14
+	for p in gmatch(pat, ".") do
+		local x
 
-		if iter_6_0 == "R" then
-			var_6_14 = var_0_24[var_0_8(var_0_12(var_6_5, var_6_8), 31)]
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "F" then
-			var_6_14 = "f" .. var_0_8(var_0_12(var_6_5, var_6_8), 31)
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "A" then
-			var_6_14 = var_0_8(var_0_12(var_6_5, var_6_8), 31)
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "S" then
-			var_6_14 = var_0_13(var_0_11(var_6_5, 27 - var_6_8), 27)
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "I" then
-			var_6_14 = var_0_13(var_0_11(var_6_5, 16), 16)
-		elseif iter_6_0 == "U" then
-			var_6_14 = var_0_8(var_6_5, 65535)
-		elseif iter_6_0 == "D" or iter_6_0 == "E" then
-			local var_6_15 = var_0_13(var_0_11(var_6_5, 16), 16)
+		if p == "R" then
+			x = map_gpr[band(rshift(op, rs), 31)]
+			rs = rs - 5
+		elseif p == "F" then
+			x = "f" .. band(rshift(op, rs), 31)
+			rs = rs - 5
+		elseif p == "A" then
+			x = band(rshift(op, rs), 31)
+			rs = rs - 5
+		elseif p == "S" then
+			x = arshift(lshift(op, 27 - rs), 27)
+			rs = rs - 5
+		elseif p == "I" then
+			x = arshift(lshift(op, 16), 16)
+		elseif p == "U" then
+			x = band(op, 65535)
+		elseif p == "D" or p == "E" then
+			local disp = arshift(lshift(op, 16), 16)
 
-			if iter_6_0 == "E" then
-				var_6_15 = var_0_8(var_6_15, -4)
+			if p == "E" then
+				disp = band(disp, -4)
 			end
 
-			if var_6_7 == "r0" then
-				var_6_7 = "0"
+			if last == "r0" then
+				last = "0"
 			end
 
-			var_6_6[#var_6_6] = var_0_2("%d(%s)", var_6_15, var_6_7)
-		elseif iter_6_0 >= "2" and iter_6_0 <= "8" then
-			local var_6_16 = var_0_8(var_0_12(var_6_5, var_6_8), 31) * iter_6_0
+			operands[#operands] = format("%d(%s)", disp, last)
+		elseif p >= "2" and p <= "8" then
+			local disp = band(rshift(op, rs), 31) * p
 
-			if var_6_7 == "r0" then
-				var_6_7 = "0"
+			if last == "r0" then
+				last = "0"
 			end
 
-			var_6_6[#var_6_6] = var_0_2("%d(%s)", var_6_16, var_6_7)
-		elseif iter_6_0 == "H" then
-			var_6_14 = var_0_8(var_0_12(var_6_5, var_6_8), 31) + var_0_11(var_0_8(var_6_5, 2), 4)
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "M" then
-			var_6_14 = var_0_8(var_0_12(var_6_5, var_6_8), 31) + var_0_8(var_6_5, 32)
-		elseif iter_6_0 == "C" then
-			var_6_14 = var_0_26(var_0_8(var_0_12(var_6_5, var_6_8), 31))
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "B" then
-			local var_6_17 = var_0_12(var_6_5, 21)
-			local var_6_18 = var_0_8(var_0_12(var_6_5, 16), 31)
-			local var_6_19 = ""
+			operands[#operands] = format("%d(%s)", disp, last)
+		elseif p == "H" then
+			x = band(rshift(op, rs), 31) + lshift(band(op, 2), 4)
+			rs = rs - 5
+		elseif p == "M" then
+			x = band(rshift(op, rs), 31) + band(op, 32)
+		elseif p == "C" then
+			x = condfmt(band(rshift(op, rs), 31))
+			rs = rs - 5
+		elseif p == "B" then
+			local bo = rshift(op, 21)
+			local cond = band(rshift(op, 16), 31)
+			local cn = ""
 
-			var_6_8 = var_6_8 - 10
+			rs = rs - 10
 
-			if var_0_8(var_6_17, 4) == 0 then
-				var_6_19 = var_0_8(var_6_17, 2) == 0 and "dnz" or "dz"
+			if band(bo, 4) == 0 then
+				cn = band(bo, 2) == 0 and "dnz" or "dz"
 
-				if var_0_8(var_6_17, 16) == 0 then
-					var_6_19 = var_6_19 .. (var_0_8(var_6_17, 8) == 0 and "f" or "t")
+				if band(bo, 16) == 0 then
+					cn = cn .. (band(bo, 8) == 0 and "f" or "t")
 				end
 
-				if var_0_8(var_6_17, 16) == 0 then
-					var_6_14 = var_0_26(var_6_18)
+				if band(bo, 16) == 0 then
+					x = condfmt(cond)
 				end
 
-				var_6_10 = var_6_10 .. (var_0_8(var_6_17, 1) == var_0_8(var_0_12(var_6_5, 15), 1) and "-" or "+")
-			elseif var_0_8(var_6_17, 16) == 0 then
-				var_6_19 = var_0_25[var_0_8(var_6_18, 3) + (var_0_8(var_6_17, 8) == 0 and 4 or 0)]
+				name = name .. (band(bo, 1) == band(rshift(op, 15), 1) and "-" or "+")
+			elseif band(bo, 16) == 0 then
+				cn = map_cond[band(cond, 3) + (band(bo, 8) == 0 and 4 or 0)]
 
-				if var_6_18 > 3 then
-					var_6_14 = "cr" .. var_0_12(var_6_18, 2)
+				if cond > 3 then
+					x = "cr" .. rshift(cond, 2)
 				end
 
-				var_6_10 = var_6_10 .. (var_0_8(var_6_17, 1) == var_0_8(var_0_12(var_6_5, 15), 1) and "-" or "+")
+				name = name .. (band(bo, 1) == band(rshift(op, 15), 1) and "-" or "+")
 			end
 
-			var_6_10 = var_0_5(var_6_10, "_", var_6_19)
-		elseif iter_6_0 == "J" then
-			var_6_14 = var_0_13(var_0_11(var_6_5, 27 - var_6_8), 29 - var_6_8) * 4
+			name = gsub(name, "_", cn)
+		elseif p == "J" then
+			x = arshift(lshift(op, 27 - rs), 29 - rs) * 4
 
-			if var_0_8(var_6_5, 2) == 0 then
-				var_6_14 = arg_6_0.addr + var_6_0 + var_6_14
+			if band(op, 2) == 0 then
+				x = ctx.addr + pos + x
 			end
 
-			arg_6_0.rel = var_6_14
-			var_6_14 = "0x" .. var_0_10(var_6_14)
-		elseif iter_6_0 == "K" then
-			if var_0_8(var_6_5, 1) ~= 0 then
-				var_6_10 = var_6_10 .. "l"
+			ctx.rel = x
+			x = "0x" .. tohex(x)
+		elseif p == "K" then
+			if band(op, 1) ~= 0 then
+				name = name .. "l"
 			end
 
-			if var_0_8(var_6_5, 2) ~= 0 then
-				var_6_10 = var_6_10 .. "a"
+			if band(op, 2) ~= 0 then
+				name = name .. "a"
 			end
-		elseif iter_6_0 == "X" or iter_6_0 == "Y" then
-			var_6_14 = var_0_8(var_0_12(var_6_5, var_6_8 + 2), 7)
-			var_6_14 = (var_6_14 ~= 0 or iter_6_0 ~= "Y" or nil) and "cr" .. var_6_14
-			var_6_8 = var_6_8 - 5
-		elseif iter_6_0 == "W" then
-			var_6_14 = "cr" .. var_0_8(var_6_5, 7)
-		elseif iter_6_0 == "Z" then
-			var_6_14 = var_0_8(var_0_12(var_6_5, var_6_8 - 4), 255)
-			var_6_8 = var_6_8 - 10
-		elseif iter_6_0 == ">" then
-			var_6_6[#var_6_6] = var_0_12(var_6_6[#var_6_6], 1)
-		elseif iter_6_0 == "0" then
-			if var_6_7 == "r0" then
-				var_6_6[#var_6_6] = nil
+		elseif p == "X" or p == "Y" then
+			x = band(rshift(op, rs + 2), 7)
+			x = (x ~= 0 or p ~= "Y" or nil) and "cr" .. x
+			rs = rs - 5
+		elseif p == "W" then
+			x = "cr" .. band(op, 7)
+		elseif p == "Z" then
+			x = band(rshift(op, rs - 4), 255)
+			rs = rs - 10
+		elseif p == ">" then
+			operands[#operands] = rshift(operands[#operands], 1)
+		elseif p == "0" then
+			if last == "r0" then
+				operands[#operands] = nil
 
-				if var_6_12 then
-					var_6_10 = var_6_12
+				if altname then
+					name = altname
 				end
 			end
-		elseif iter_6_0 == "L" then
-			var_6_10 = var_0_5(var_6_10, "_", var_0_8(var_6_5, 2097152) ~= 0 and "d" or "w")
-		elseif iter_6_0 == "." then
-			if var_0_8(var_6_5, 1) == 1 then
-				var_6_10 = var_6_10 .. "."
+		elseif p == "L" then
+			name = gsub(name, "_", band(op, 2097152) ~= 0 and "d" or "w")
+		elseif p == "." then
+			if band(op, 1) == 1 then
+				name = name .. "."
 			end
-		elseif iter_6_0 == "N" then
-			if var_6_5 == 1610612736 then
-				var_6_10 = "nop"
+		elseif p == "N" then
+			if op == 1610612736 then
+				name = "nop"
 
 				break
 			end
-		elseif iter_6_0 == "~" then
-			local var_6_20 = #var_6_6
+		elseif p == "~" then
+			local n = #operands
 
-			var_6_6[var_6_20 - 1], var_6_6[var_6_20] = var_6_6[var_6_20], var_6_6[var_6_20 - 1]
-		elseif iter_6_0 == "=" then
-			local var_6_21 = #var_6_6
+			operands[n - 1], operands[n] = operands[n], operands[n - 1]
+		elseif p == "=" then
+			local n = #operands
 
-			if var_6_7 == var_6_6[var_6_21 - 1] then
-				var_6_6[var_6_21] = nil
-				var_6_10 = var_6_12
+			if last == operands[n - 1] then
+				operands[n] = nil
+				name = altname
 			end
-		elseif iter_6_0 == "%" then
-			local var_6_22 = #var_6_6
+		elseif p == "%" then
+			local n = #operands
 
-			if var_6_7 == var_6_6[var_6_22 - 1] and var_6_7 == var_6_6[var_6_22 - 2] then
-				var_6_6[var_6_22] = nil
-				var_6_6[var_6_22 - 1] = nil
-				var_6_10 = var_6_12
+			if last == operands[n - 1] and last == operands[n - 2] then
+				operands[n] = nil
+				operands[n - 1] = nil
+				name = altname
 			end
-		elseif iter_6_0 == "-" then
-			var_6_8 = var_6_8 - 5
+		elseif p == "-" then
+			rs = rs - 5
 		else
 			assert(false)
 		end
 
-		if var_6_14 then
-			var_6_6[#var_6_6 + 1] = var_6_14
-			var_6_7 = var_6_14
+		if x then
+			operands[#operands + 1] = x
+			last = x
 		end
 	end
 
-	return var_0_27(arg_6_0, var_6_10, var_6_6)
+	return putop(ctx, name, operands)
 end
 
-local function var_0_30(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_1 = arg_7_1 or 0
+local function disass_block(ctx, ofs, len)
+	ofs = ofs or 0
 
-	local var_7_0 = arg_7_2 and arg_7_1 + arg_7_2 or #arg_7_0.code
-	local var_7_1 = var_7_0 - var_7_0 % 4
+	local stop = len and ofs + len or #ctx.code
 
-	arg_7_0.pos = arg_7_1 - arg_7_1 % 4
-	arg_7_0.rel = nil
+	stop = stop - stop % 4
+	ctx.pos = ofs - ofs % 4
+	ctx.rel = nil
 
-	while var_7_1 > arg_7_0.pos do
-		var_0_29(arg_7_0)
+	while stop > ctx.pos do
+		disass_ins(ctx)
 	end
 end
 
-local function var_0_31(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = {
-		code = arg_8_0,
-		addr = arg_8_1 or 0,
-		out = arg_8_2 or io.write,
-		symtab = {},
-		disass = var_0_30
-	}
+local function create(code, addr, out)
+	local ctx = {}
 
-	var_8_0.hexdump = 8
+	ctx.code = code
+	ctx.addr = addr or 0
+	ctx.out = out or io.write
+	ctx.symtab = {}
+	ctx.disass = disass_block
+	ctx.hexdump = 8
 
-	return var_8_0
+	return ctx
 end
 
-local function var_0_32(arg_9_0, arg_9_1, arg_9_2)
-	var_0_31(arg_9_0, arg_9_1, arg_9_2):disass()
+local function disass(code, addr, out)
+	create(code, addr, out):disass()
 end
 
-local function var_0_33(arg_10_0)
-	if arg_10_0 < 32 then
-		return var_0_24[arg_10_0]
+local function regname(r)
+	if r < 32 then
+		return map_gpr[r]
 	end
 
-	return "f" .. arg_10_0 - 32
+	return "f" .. r - 32
 end
 
 return {
-	create = var_0_31,
-	disass = var_0_32,
-	regname = var_0_33
+	create = create,
+	disass = disass,
+	regname = regname
 }

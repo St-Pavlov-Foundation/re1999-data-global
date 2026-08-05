@@ -1,143 +1,144 @@
-﻿module("booter.base.string", package.seeall)
+﻿-- chunkname: @booter/base/string.lua
 
-local var_0_0 = {
-	_htmlspecialchars_set = {}
-}
+module("booter.base.string", package.seeall)
 
-var_0_0._htmlspecialchars_set["&"] = "&amp;"
-var_0_0._htmlspecialchars_set["\""] = "&quot;"
-var_0_0._htmlspecialchars_set["'"] = "&#039;"
-var_0_0._htmlspecialchars_set["<"] = "&lt;"
-var_0_0._htmlspecialchars_set[">"] = "&gt;"
+local string = {}
 
-function var_0_0.nilorempty(arg_1_0)
-	return arg_1_0 == nil or var_0_0.len(arg_1_0) == 0
+string._htmlspecialchars_set = {}
+string._htmlspecialchars_set["&"] = "&amp;"
+string._htmlspecialchars_set["\""] = "&quot;"
+string._htmlspecialchars_set["'"] = "&#039;"
+string._htmlspecialchars_set["<"] = "&lt;"
+string._htmlspecialchars_set[">"] = "&gt;"
+
+function string.nilorempty(input)
+	return input == nil or string.len(input) == 0
 end
 
-function var_0_0.htmlspecialchars(arg_2_0)
-	for iter_2_0, iter_2_1 in pairs(var_0_0._htmlspecialchars_set) do
-		arg_2_0 = var_0_0.gsub(arg_2_0, iter_2_0, iter_2_1)
+function string.htmlspecialchars(input)
+	for k, v in pairs(string._htmlspecialchars_set) do
+		input = string.gsub(input, k, v)
 	end
 
-	return arg_2_0
+	return input
 end
 
-function var_0_0.restorehtmlspecialchars(arg_3_0)
-	for iter_3_0, iter_3_1 in pairs(var_0_0._htmlspecialchars_set) do
-		arg_3_0 = var_0_0.gsub(arg_3_0, iter_3_1, iter_3_0)
+function string.restorehtmlspecialchars(input)
+	for k, v in pairs(string._htmlspecialchars_set) do
+		input = string.gsub(input, v, k)
 	end
 
-	return arg_3_0
+	return input
 end
 
-function var_0_0.nl2br(arg_4_0)
-	return var_0_0.gsub(arg_4_0, "\n", "<br />")
+function string.nl2br(input)
+	return string.gsub(input, "\n", "<br />")
 end
 
-function var_0_0.text2html(arg_5_0)
-	arg_5_0 = var_0_0.gsub(arg_5_0, "\t", "    ")
-	arg_5_0 = var_0_0.htmlspecialchars(arg_5_0)
-	arg_5_0 = var_0_0.gsub(arg_5_0, " ", "&nbsp;")
-	arg_5_0 = var_0_0.nl2br(arg_5_0)
+function string.text2html(input)
+	input = string.gsub(input, "\t", "    ")
+	input = string.htmlspecialchars(input)
+	input = string.gsub(input, " ", "&nbsp;")
+	input = string.nl2br(input)
 
-	return arg_5_0
+	return input
 end
 
-function var_0_0.split(arg_6_0, arg_6_1)
-	arg_6_0 = tostring(arg_6_0)
-	arg_6_1 = tostring(arg_6_1)
+function string.split(input, delimiter)
+	input = tostring(input)
+	delimiter = tostring(delimiter)
 
-	if arg_6_1 == "" then
+	if delimiter == "" then
 		return false
 	end
 
-	local var_6_0 = 0
-	local var_6_1 = {}
+	local pos, arr = 0, {}
 
-	for iter_6_0, iter_6_1 in function()
-		return var_0_0.find(arg_6_0, arg_6_1, var_6_0, true)
+	for st, sp in function()
+		return string.find(input, delimiter, pos, true)
 	end do
-		table.insert(var_6_1, var_0_0.sub(arg_6_0, var_6_0, iter_6_0 - 1))
+		table.insert(arr, string.sub(input, pos, st - 1))
 
-		var_6_0 = iter_6_1 + 1
+		pos = sp + 1
 	end
 
-	table.insert(var_6_1, var_0_0.sub(arg_6_0, var_6_0))
+	table.insert(arr, string.sub(input, pos))
 
-	return var_6_1
+	return arr
 end
 
-function var_0_0.splitToNumber(arg_8_0, arg_8_1)
-	local var_8_0 = {}
+function string.splitToNumber(input, delimiter)
+	local arr = {}
 
-	for iter_8_0, iter_8_1 in ipairs(var_0_0.split(arg_8_0, arg_8_1)) do
-		var_8_0[iter_8_0] = tonumber(iter_8_1)
+	for i, v in ipairs(string.split(input, delimiter)) do
+		arr[i] = tonumber(v)
 	end
 
-	return var_8_0
+	return arr
 end
 
-function var_0_0.splitToVector2(arg_9_0, arg_9_1)
-	if arg_9_0 == nil or arg_9_1 == nil then
+function string.splitToVector2(input, delimiter)
+	if input == nil or delimiter == nil then
 		return nil
 	end
 
-	local var_9_0 = var_0_0.split(arg_9_0, arg_9_1)
+	local arr = string.split(input, delimiter)
 
-	if #var_9_0 == 2 then
-		return Vector2.New(var_9_0[1], var_9_0[2])
+	if #arr == 2 then
+		return Vector2.New(arr[1], arr[2])
 	end
 
 	return nil
 end
 
-function var_0_0.splitToVector3(arg_10_0, arg_10_1)
-	if arg_10_0 == nil or arg_10_1 == nil then
+function string.splitToVector3(input, delimiter)
+	if input == nil or delimiter == nil then
 		return nil
 	end
 
-	local var_10_0 = var_0_0.split(arg_10_0, arg_10_1)
+	local arr = string.split(input, delimiter)
 
-	if #var_10_0 == 3 then
-		return Vector3.New(var_10_0[1], var_10_0[2], var_10_0[3])
+	if #arr == 3 then
+		return Vector3.New(arr[1], arr[2], arr[3])
 	end
 
 	return nil
 end
 
-function var_0_0.trim(arg_11_0)
-	return (var_0_0.gsub(arg_11_0, "^%s*(.-)%s*$", "%1"))
+function string.trim(input)
+	return (string.gsub(input, "^%s*(.-)%s*$", "%1"))
 end
 
-function var_0_0.ucfirst(arg_12_0)
-	return var_0_0.upper(var_0_0.sub(arg_12_0, 1, 1)) .. var_0_0.sub(arg_12_0, 2)
+function string.ucfirst(input)
+	return string.upper(string.sub(input, 1, 1)) .. string.sub(input, 2)
 end
 
-local function var_0_1(arg_13_0)
-	return "%" .. var_0_0.format("%02X", var_0_0.byte(arg_13_0))
+local function urlencodechar(char)
+	return "%" .. string.format("%02X", string.byte(char))
 end
 
-function var_0_0.urlencode(arg_14_0)
-	arg_14_0 = var_0_0.gsub(tostring(arg_14_0), "\n", "\r\n")
-	arg_14_0 = var_0_0.gsub(arg_14_0, "([^%w%.%- ])", var_0_1)
+function string.urlencode(input)
+	input = string.gsub(tostring(input), "\n", "\r\n")
+	input = string.gsub(input, "([^%w%.%- ])", urlencodechar)
 
-	return var_0_0.gsub(arg_14_0, " ", "+")
+	return string.gsub(input, " ", "+")
 end
 
-function var_0_0.urldecode(arg_15_0)
-	arg_15_0 = var_0_0.gsub(arg_15_0, "+", " ")
-	arg_15_0 = var_0_0.gsub(arg_15_0, "%%(%x%x)", function(arg_16_0)
-		return var_0_0.char(checknumber(arg_16_0, 16))
+function string.urldecode(input)
+	input = string.gsub(input, "+", " ")
+	input = string.gsub(input, "%%(%x%x)", function(h)
+		return string.char(checknumber(h, 16))
 	end)
-	arg_15_0 = var_0_0.gsub(arg_15_0, "\r\n", "\n")
+	input = string.gsub(input, "\r\n", "\n")
 
-	return arg_15_0
+	return input
 end
 
-function var_0_0.utf8len(arg_17_0)
-	local var_17_0 = var_0_0.len(arg_17_0)
-	local var_17_1 = 0
-	local var_17_2 = {
+function string.utf8len(input)
+	local len = string.len(input)
+	local left = len
+	local cnt = 0
+	local arr = {
 		0,
 		192,
 		224,
@@ -146,101 +147,99 @@ function var_0_0.utf8len(arg_17_0)
 		252
 	}
 
-	while var_17_0 ~= 0 do
-		local var_17_3 = var_0_0.byte(arg_17_0, -var_17_0)
-		local var_17_4 = #var_17_2
+	while left ~= 0 do
+		local tmp = string.byte(input, -left)
+		local i = #arr
 
-		while var_17_2[var_17_4] do
-			if var_17_3 >= var_17_2[var_17_4] then
-				var_17_0 = var_17_0 - var_17_4
+		while arr[i] do
+			if tmp >= arr[i] then
+				left = left - i
 
 				break
 			end
 
-			var_17_4 = var_17_4 - 1
+			i = i - 1
 		end
 
-		var_17_1 = var_17_1 + 1
+		cnt = cnt + 1
 	end
 
-	return var_17_1
+	return cnt
 end
 
-function var_0_0.formatnumberthousands(arg_18_0)
-	local var_18_0 = tostring(checknumber(arg_18_0))
-	local var_18_1
+function string.formatnumberthousands(num)
+	local formatted = tostring(checknumber(num))
+	local k
 
 	repeat
-		local var_18_2
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", "%1,%2")
+	until k == 0
 
-		var_18_0, var_18_2 = var_0_0.gsub(var_18_0, "^(-?%d+)(%d%d%d)", "%1,%2")
-	until var_18_2 == 0
-
-	return var_18_0
+	return formatted
 end
 
-function var_0_0.getValueByType(arg_19_0, arg_19_1)
-	if arg_19_1 == "string" then
-		return arg_19_0
-	elseif arg_19_1 == "number" then
-		return tonumber(arg_19_0)
-	elseif arg_19_1 == "boolean" then
-		return arg_19_0 == "1" or var_0_0.lower(arg_19_0) == "true"
+function string.getValueByType(value, type)
+	if type == "string" then
+		return value
+	elseif type == "number" then
+		return tonumber(value)
+	elseif type == "boolean" then
+		return value == "1" or string.lower(value) == "true"
 	end
 end
 
-function var_0_0.getFirstNum(arg_20_0)
-	local var_20_0 = var_0_0.len(arg_20_0)
-	local var_20_1
-	local var_20_2
+function string.getFirstNum(str)
+	local len = string.len(str)
+	local ans, num
 
-	for iter_20_0 = 1, var_20_0 do
-		local var_20_3 = var_0_0.sub(arg_20_0, iter_20_0, iter_20_0)
-		local var_20_4 = tonumber(var_20_3)
+	for i = 1, len do
+		local char = string.sub(str, i, i)
 
-		if var_20_4 then
-			if var_20_1 then
-				var_20_1 = var_20_1 * 10 + var_20_4
+		num = tonumber(char)
+
+		if num then
+			if ans then
+				ans = ans * 10 + num
 			else
-				var_20_1 = var_20_4
+				ans = num
 			end
-		elseif var_20_1 then
+		elseif ans then
 			break
 		end
 	end
 
-	return var_20_1
+	return ans
 end
 
-function var_0_0.getLastNum(arg_21_0)
-	local var_21_0 = var_0_0.len(arg_21_0)
-	local var_21_1
-	local var_21_2
-	local var_21_3 = 1
+function string.getLastNum(str)
+	local len = string.len(str)
+	local ans, num
+	local pow10 = 1
 
-	for iter_21_0 = var_21_0, 1, -1 do
-		local var_21_4 = var_0_0.sub(arg_21_0, iter_21_0, iter_21_0)
-		local var_21_5 = tonumber(var_21_4)
+	for i = len, 1, -1 do
+		local char = string.sub(str, i, i)
 
-		if var_21_5 then
-			if var_21_1 then
-				var_21_1 = var_21_5 * var_21_3 + var_21_1
+		num = tonumber(char)
+
+		if num then
+			if ans then
+				ans = num * pow10 + ans
 			else
-				var_21_1 = var_21_5
+				ans = num
 			end
 
-			var_21_3 = var_21_3 * 10
-		elseif var_21_1 then
+			pow10 = pow10 * 10
+		elseif ans then
 			break
 		end
 	end
 
-	return var_21_1
+	return ans
 end
 
-setmetatable(var_0_0, {
+setmetatable(string, {
 	__index = _G.string
 })
-setGlobal("string", var_0_0)
+setGlobal("string", string)
 
-return var_0_0
+return string

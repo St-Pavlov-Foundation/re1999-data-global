@@ -1,6 +1,8 @@
-﻿local var_0_0 = Vector2.zero
-local var_0_1 = rawget
-local var_0_2 = setmetatable
+﻿-- chunkname: @UnityEngine/Touch.lua
+
+local zero = Vector2.zero
+local rawget = rawget
+local setmetatable = setmetatable
 
 TouchPhase = {
 	Stationary = 2,
@@ -16,77 +18,77 @@ TouchBits = {
 	ALL = 7
 }
 
-local var_0_3 = TouchPhase
-local var_0_4 = TouchBits
-local var_0_5 = {}
-local var_0_6 = tolua.initget(var_0_5)
+local TouchPhase = TouchPhase
+local TouchBits = TouchBits
+local Touch = {}
+local get = tolua.initget(Touch)
 
-function var_0_5.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_1(var_0_5, arg_1_1)
+function Touch.__index(t, k)
+	local var = rawget(Touch, k)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_1(var_0_6, arg_1_1)
+	if var == nil then
+		var = rawget(get, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_5.New(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5, arg_2_6)
-	return var_0_2({
-		fingerId = arg_2_0 or 0,
-		position = arg_2_1 or var_0_0,
-		rawPosition = arg_2_2 or var_0_0,
-		deltaPosition = arg_2_3 or var_0_0,
-		deltaTime = arg_2_4 or 0,
-		tapCount = arg_2_5 or 0,
-		phase = arg_2_6 or 0
-	}, var_0_5)
+function Touch.New(fingerId, position, rawPosition, deltaPosition, deltaTime, tapCount, phase)
+	return setmetatable({
+		fingerId = fingerId or 0,
+		position = position or zero,
+		rawPosition = rawPosition or zero,
+		deltaPosition = deltaPosition or zero,
+		deltaTime = deltaTime or 0,
+		tapCount = tapCount or 0,
+		phase = phase or 0
+	}, Touch)
 end
 
-function var_0_5.Init(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
-	arg_3_0.fingerId = arg_3_1
-	arg_3_0.position = arg_3_2
-	arg_3_0.rawPosition = arg_3_3
-	arg_3_0.deltaPosition = arg_3_4
-	arg_3_0.deltaTime = arg_3_5
-	arg_3_0.tapCount = arg_3_6
-	arg_3_0.phase = arg_3_7
+function Touch:Init(fingerId, position, rawPosition, deltaPosition, deltaTime, tapCount, phase)
+	self.fingerId = fingerId
+	self.position = position
+	self.rawPosition = rawPosition
+	self.deltaPosition = deltaPosition
+	self.deltaTime = deltaTime
+	self.tapCount = tapCount
+	self.phase = phase
 end
 
-function var_0_5.Destroy(arg_4_0)
-	arg_4_0.position = nil
-	arg_4_0.rawPosition = nil
-	arg_4_0.deltaPosition = nil
+function Touch:Destroy()
+	self.position = nil
+	self.rawPosition = nil
+	self.deltaPosition = nil
 end
 
-function var_0_5.GetMask(...)
-	local var_5_0 = {
+function Touch.GetMask(...)
+	local arg = {
 		...
 	}
-	local var_5_1 = 0
+	local value = 0
 
-	for iter_5_0 = 1, #var_5_0 do
-		local var_5_2 = var_0_4[var_5_0[iter_5_0]] or 0
+	for i = 1, #arg do
+		local n = TouchBits[arg[i]] or 0
 
-		if var_5_2 ~= 0 then
-			var_5_1 = var_5_1 + var_5_2
+		if n ~= 0 then
+			value = value + n
 		end
 	end
 
-	if var_5_1 == 0 then
-		var_5_1 = var_0_4.all
+	if value == 0 then
+		value = TouchBits.all
 	end
 
-	return var_5_1
+	return value
 end
 
-UnityEngine.TouchPhase = var_0_3
-UnityEngine.Touch = var_0_5
+UnityEngine.TouchPhase = TouchPhase
+UnityEngine.Touch = Touch
 
-var_0_2(var_0_5, var_0_5)
+setmetatable(Touch, Touch)
 
-return var_0_5
+return Touch

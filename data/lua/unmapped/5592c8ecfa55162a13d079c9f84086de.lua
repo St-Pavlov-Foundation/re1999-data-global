@@ -1,73 +1,74 @@
-﻿local var_0_0 = require
-local var_0_1 = string
-local var_0_2 = table
+﻿-- chunkname: @misc/functions.lua
+
+local require = require
+local string = string
+local table = table
 
 int64.zero = int64.new(0, 0)
 uint64.zero = uint64.new(0, 0)
 
-function var_0_1.split(arg_1_0, arg_1_1)
-	arg_1_0 = tostring(arg_1_0)
-	arg_1_1 = tostring(arg_1_1)
+function string.split(input, delimiter)
+	input = tostring(input)
+	delimiter = tostring(delimiter)
 
-	if arg_1_1 == "" then
+	if delimiter == "" then
 		return false
 	end
 
-	local var_1_0 = 0
-	local var_1_1 = {}
+	local pos, arr = 0, {}
 
-	for iter_1_0, iter_1_1 in function()
-		return var_0_1.find(arg_1_0, arg_1_1, var_1_0, true)
+	for st, sp in function()
+		return string.find(input, delimiter, pos, true)
 	end do
-		var_0_2.insert(var_1_1, var_0_1.sub(arg_1_0, var_1_0, iter_1_0 - 1))
+		table.insert(arr, string.sub(input, pos, st - 1))
 
-		var_1_0 = iter_1_1 + 1
+		pos = sp + 1
 	end
 
-	var_0_2.insert(var_1_1, var_0_1.sub(arg_1_0, var_1_0))
+	table.insert(arr, string.sub(input, pos))
 
-	return var_1_1
+	return arr
 end
 
-function import(arg_3_0, arg_3_1)
-	local var_3_0
-	local var_3_1 = arg_3_0
-	local var_3_2 = 1
+function import(moduleName, currentModuleName)
+	local currentModuleNameParts
+	local moduleFullName = moduleName
+	local offset = 1
 
 	while true do
-		if var_0_1.byte(arg_3_0, var_3_2) ~= 46 then
-			var_3_1 = var_0_1.sub(arg_3_0, var_3_2)
+		if string.byte(moduleName, offset) ~= 46 then
+			moduleFullName = string.sub(moduleName, offset)
 
-			if var_3_0 and #var_3_0 > 0 then
-				var_3_1 = var_0_2.concat(var_3_0, ".") .. "." .. var_3_1
+			if currentModuleNameParts and #currentModuleNameParts > 0 then
+				moduleFullName = table.concat(currentModuleNameParts, ".") .. "." .. moduleFullName
 			end
 
 			break
 		end
 
-		var_3_2 = var_3_2 + 1
+		offset = offset + 1
 
-		if not var_3_0 then
-			if not arg_3_1 then
-				local var_3_3, var_3_4 = debug.getlocal(3, 1)
+		if not currentModuleNameParts then
+			if not currentModuleName then
+				local n, v = debug.getlocal(3, 1)
 
-				arg_3_1 = var_3_4
+				currentModuleName = v
 			end
 
-			var_3_0 = var_0_1.split(arg_3_1, ".")
+			currentModuleNameParts = string.split(currentModuleName, ".")
 		end
 
-		var_0_2.remove(var_3_0, #var_3_0)
+		table.remove(currentModuleNameParts, #currentModuleNameParts)
 	end
 
-	return var_0_0(var_3_1)
+	return require(moduleFullName)
 end
 
-function reimport(arg_4_0)
-	local var_4_0 = package
+function reimport(name)
+	local package = package
 
-	var_4_0.loaded[arg_4_0] = nil
-	var_4_0.preload[arg_4_0] = nil
+	package.loaded[name] = nil
+	package.preload[name] = nil
 
-	return var_0_0(arg_4_0)
+	return require(name)
 end

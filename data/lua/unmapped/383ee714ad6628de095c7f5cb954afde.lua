@@ -1,7 +1,9 @@
-﻿local var_0_0 = require((string.match(..., ".*%.") or "") .. "dis_mips")
+﻿-- chunkname: @jit/dis_mipsel.lua
+
+local dis_mips = require((string.match(..., ".*%.") or "") .. "dis_mips")
 
 return {
-	create = var_0_0.create_el,
-	disass = var_0_0.disass_el,
-	regname = var_0_0.regname
+	create = dis_mips.create_el,
+	disass = dis_mips.disass_el,
+	regname = dis_mips.regname
 }

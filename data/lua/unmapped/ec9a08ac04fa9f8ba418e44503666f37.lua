@@ -1,250 +1,251 @@
-﻿local var_0_0 = tonumber
-local var_0_1 = type
-local var_0_2 = print
-local var_0_3 = error
-local var_0_4 = setmetatable
-local var_0_5 = require("lpeg")
-local var_0_6 = var_0_5
-local var_0_7 = getmetatable(var_0_6.P(0))
-local var_0_8 = _VERSION
+﻿-- chunkname: @lpeg/re.lua
 
-if var_0_8 == "Lua 5.2" then
+local tonumber, type, print, error = tonumber, type, print, error
+local setmetatable = setmetatable
+local m = require("lpeg")
+local mm = m
+local mt = getmetatable(mm.P(0))
+local version = _VERSION
+
+if version == "Lua 5.2" then
 	_ENV = nil
 end
 
-local var_0_9 = var_0_5.P(1)
-local var_0_10 = {
-	nl = var_0_5.P("\n")
+local any = m.P(1)
+local Predef = {
+	nl = m.P("\n")
 }
-local var_0_11
-local var_0_12
-local var_0_13
+local mem, fmem, gmem
 
-local function var_0_14()
-	var_0_6.locale(var_0_10)
+local function updatelocale()
+	mm.locale(Predef)
 
-	var_0_10.a = var_0_10.alpha
-	var_0_10.c = var_0_10.cntrl
-	var_0_10.d = var_0_10.digit
-	var_0_10.g = var_0_10.graph
-	var_0_10.l = var_0_10.lower
-	var_0_10.p = var_0_10.punct
-	var_0_10.s = var_0_10.space
-	var_0_10.u = var_0_10.upper
-	var_0_10.w = var_0_10.alnum
-	var_0_10.x = var_0_10.xdigit
-	var_0_10.A = var_0_9 - var_0_10.a
-	var_0_10.C = var_0_9 - var_0_10.c
-	var_0_10.D = var_0_9 - var_0_10.d
-	var_0_10.G = var_0_9 - var_0_10.g
-	var_0_10.L = var_0_9 - var_0_10.l
-	var_0_10.P = var_0_9 - var_0_10.p
-	var_0_10.S = var_0_9 - var_0_10.s
-	var_0_10.U = var_0_9 - var_0_10.u
-	var_0_10.W = var_0_9 - var_0_10.w
-	var_0_10.X = var_0_9 - var_0_10.x
-	var_0_11 = {}
-	var_0_12 = {}
-	var_0_13 = {}
+	Predef.a = Predef.alpha
+	Predef.c = Predef.cntrl
+	Predef.d = Predef.digit
+	Predef.g = Predef.graph
+	Predef.l = Predef.lower
+	Predef.p = Predef.punct
+	Predef.s = Predef.space
+	Predef.u = Predef.upper
+	Predef.w = Predef.alnum
+	Predef.x = Predef.xdigit
+	Predef.A = any - Predef.a
+	Predef.C = any - Predef.c
+	Predef.D = any - Predef.d
+	Predef.G = any - Predef.g
+	Predef.L = any - Predef.l
+	Predef.P = any - Predef.p
+	Predef.S = any - Predef.s
+	Predef.U = any - Predef.u
+	Predef.W = any - Predef.w
+	Predef.X = any - Predef.x
+	mem = {}
+	fmem = {}
+	gmem = {}
 
-	local var_1_0 = {
+	local mt = {
 		__mode = "v"
 	}
 
-	var_0_4(var_0_11, var_1_0)
-	var_0_4(var_0_12, var_1_0)
-	var_0_4(var_0_13, var_1_0)
+	setmetatable(mem, mt)
+	setmetatable(fmem, mt)
+	setmetatable(gmem, mt)
 end
 
-var_0_14()
+updatelocale()
 
-local var_0_15 = var_0_5.P(function(arg_2_0, arg_2_1)
-	var_0_2(arg_2_1, arg_2_0:sub(1, arg_2_1 - 1))
+local I = m.P(function(s, i)
+	print(i, s:sub(1, i - 1))
 
-	return arg_2_1
+	return i
 end)
 
-local function var_0_16(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_1 and arg_3_1[arg_3_0]
+local function getdef(id, defs)
+	local c = defs and defs[id]
 
-	if not var_3_0 then
-		var_0_3("undefined name: " .. arg_3_0)
+	if not c then
+		error("undefined name: " .. id)
 	end
 
-	return var_3_0
+	return c
 end
 
-local function var_0_17(arg_4_0, arg_4_1)
-	local var_4_0 = #arg_4_0 < arg_4_1 + 20 and arg_4_0:sub(arg_4_1) or arg_4_0:sub(arg_4_1, arg_4_1 + 20) .. "..."
-	local var_4_1 = ("pattern error near '%s'"):format(var_4_0)
+local function patt_error(s, i)
+	local msg = #s < i + 20 and s:sub(i) or s:sub(i, i + 20) .. "..."
 
-	var_0_3(var_4_1, 2)
+	msg = ("pattern error near '%s'"):format(msg)
+
+	error(msg, 2)
 end
 
-local function var_0_18(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_6.P(true)
+local function mult(p, n)
+	local np = mm.P(true)
 
-	while arg_5_1 >= 1 do
-		if arg_5_1 % 2 >= 1 then
-			var_5_0 = var_5_0 * arg_5_0
+	while n >= 1 do
+		if n % 2 >= 1 then
+			np = np * p
 		end
 
-		arg_5_0 = arg_5_0 * arg_5_0
-		arg_5_1 = arg_5_1 / 2
+		p = p * p
+		n = n / 2
 	end
 
-	return var_5_0
+	return np
 end
 
-local function var_0_19(arg_6_0, arg_6_1, arg_6_2)
-	if var_0_1(arg_6_2) ~= "string" then
+local function equalcap(s, i, c)
+	if type(c) ~= "string" then
 		return nil
 	end
 
-	local var_6_0 = #arg_6_2 + arg_6_1
+	local e = #c + i
 
-	if arg_6_0:sub(arg_6_1, var_6_0 - 1) == arg_6_2 then
-		return var_6_0
+	if s:sub(i, e - 1) == c then
+		return e
 	else
 		return nil
 	end
 end
 
-local var_0_20 = (var_0_10.space + "--" * (var_0_9 - var_0_10.nl)^0)^0
-local var_0_21 = var_0_5.R("AZ", "az", "__") * var_0_5.R("AZ", "az", "__", "09")^0
-local var_0_22 = var_0_20 * "<-"
-local var_0_23 = var_0_5.P("/") + ")" + "}" + ":}" + "~}" + "|}" + var_0_21 * var_0_22 + -1
-local var_0_24 = var_0_5.C(var_0_21)
-local var_0_25 = var_0_24 * var_0_5.Carg(1)
-local var_0_26 = var_0_5.C(var_0_5.R("09")^1) * var_0_20 / var_0_0
-local var_0_27 = "'" * var_0_5.C((var_0_9 - "'")^0) * "'" + "\"" * var_0_5.C((var_0_9 - "\"")^0) * "\""
-local var_0_28 = "%" * var_0_25 / function(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1 and arg_7_1[arg_7_0] or var_0_10[arg_7_0]
+local S = (Predef.space + "--" * (any - Predef.nl)^0)^0
+local name = m.R("AZ", "az", "__") * m.R("AZ", "az", "__", "09")^0
+local arrow = S * "<-"
+local seq_follow = m.P("/") + ")" + "}" + ":}" + "~}" + "|}" + name * arrow + -1
 
-	if not var_7_0 then
-		var_0_3("name '" .. arg_7_0 .. "' undefined")
+name = m.C(name)
+
+local Def = name * m.Carg(1)
+local num = m.C(m.R("09")^1) * S / tonumber
+local String = "'" * m.C((any - "'")^0) * "'" + "\"" * m.C((any - "\"")^0) * "\""
+local defined = "%" * Def / function(c, Defs)
+	local cat = Defs and Defs[c] or Predef[c]
+
+	if not cat then
+		error("name '" .. c .. "' undefined")
 	end
 
-	return var_7_0
+	return cat
 end
-local var_0_29 = var_0_28 + var_0_5.Cs(var_0_9 * (var_0_5.P("-") / "") * (var_0_9 - "]")) / var_0_6.R + var_0_5.C(var_0_9)
-local var_0_30 = "[" * var_0_5.C(var_0_5.P("^")^-1) * var_0_5.Cf(var_0_29 * (var_0_29 - "]")^0, var_0_7.__add) / function(arg_8_0, arg_8_1)
-	return arg_8_0 == "^" and var_0_9 - arg_8_1 or arg_8_1
+local Range = m.Cs(any * (m.P("-") / "") * (any - "]")) / mm.R
+local item = defined + Range + m.C(any)
+local Class = "[" * m.C(m.P("^")^-1) * m.Cf(item * (item - "]")^0, mt.__add) / function(c, p)
+	return c == "^" and any - p or p
 end * "]"
 
-local function var_0_31(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0[arg_9_1] then
-		var_0_3("'" .. arg_9_1 .. "' already defined as a rule")
+local function adddef(t, k, exp)
+	if t[k] then
+		error("'" .. k .. "' already defined as a rule")
 	else
-		arg_9_0[arg_9_1] = arg_9_2
+		t[k] = exp
 	end
 
-	return arg_9_0
+	return t
 end
 
-local function var_0_32(arg_10_0, arg_10_1)
-	return var_0_31({
-		arg_10_0
-	}, arg_10_0, arg_10_1)
+local function firstdef(n, r)
+	return adddef({
+		n
+	}, n, r)
 end
 
-local function var_0_33(arg_11_0, arg_11_1)
-	if not arg_11_1 then
-		var_0_3("rule '" .. arg_11_0 .. "' used outside a grammar")
+local function NT(n, b)
+	if not b then
+		error("rule '" .. n .. "' used outside a grammar")
 	else
-		return var_0_6.V(arg_11_0)
+		return mm.V(n)
 	end
 end
 
-local var_0_34 = var_0_5.P({
+local exp = m.P({
 	"Exp",
-	Exp = var_0_20 * (var_0_5.V("Grammar") + var_0_5.Cf(var_0_5.V("Seq") * ("/" * var_0_20 * var_0_5.V("Seq"))^0, var_0_7.__add)),
-	Seq = var_0_5.Cf(var_0_5.Cc(var_0_5.P("")) * var_0_5.V("Prefix")^0, var_0_7.__mul) * (#var_0_23 + var_0_17),
-	Prefix = "&" * var_0_20 * var_0_5.V("Prefix") / var_0_7.__len + "!" * var_0_20 * var_0_5.V("Prefix") / var_0_7.__unm + var_0_5.V("Suffix"),
-	Suffix = var_0_5.Cf(var_0_5.V("Primary") * var_0_20 * ((var_0_5.P("+") * var_0_5.Cc(1, var_0_7.__pow) + var_0_5.P("*") * var_0_5.Cc(0, var_0_7.__pow) + var_0_5.P("?") * var_0_5.Cc(-1, var_0_7.__pow) + "^" * (var_0_5.Cg(var_0_26 * var_0_5.Cc(var_0_18)) + var_0_5.Cg(var_0_5.C(var_0_5.S("+-") * var_0_5.R("09")^1) * var_0_5.Cc(var_0_7.__pow))) + "->" * var_0_20 * (var_0_5.Cg((var_0_27 + var_0_26) * var_0_5.Cc(var_0_7.__div)) + var_0_5.P("{}") * var_0_5.Cc(nil, var_0_5.Ct) + var_0_5.Cg(var_0_25 / var_0_16 * var_0_5.Cc(var_0_7.__div))) + "=>" * var_0_20 * var_0_5.Cg(var_0_25 / var_0_16 * var_0_5.Cc(var_0_5.Cmt))) * var_0_20)^0, function(arg_12_0, arg_12_1, arg_12_2)
-		return arg_12_2(arg_12_0, arg_12_1)
+	Exp = S * (m.V("Grammar") + m.Cf(m.V("Seq") * ("/" * S * m.V("Seq"))^0, mt.__add)),
+	Seq = m.Cf(m.Cc(m.P("")) * m.V("Prefix")^0, mt.__mul) * (#seq_follow + patt_error),
+	Prefix = "&" * S * m.V("Prefix") / mt.__len + "!" * S * m.V("Prefix") / mt.__unm + m.V("Suffix"),
+	Suffix = m.Cf(m.V("Primary") * S * ((m.P("+") * m.Cc(1, mt.__pow) + m.P("*") * m.Cc(0, mt.__pow) + m.P("?") * m.Cc(-1, mt.__pow) + "^" * (m.Cg(num * m.Cc(mult)) + m.Cg(m.C(m.S("+-") * m.R("09")^1) * m.Cc(mt.__pow))) + "->" * S * (m.Cg((String + num) * m.Cc(mt.__div)) + m.P("{}") * m.Cc(nil, m.Ct) + m.Cg(Def / getdef * m.Cc(mt.__div))) + "=>" * S * m.Cg(Def / getdef * m.Cc(m.Cmt))) * S)^0, function(a, b, f)
+		return f(a, b)
 	end),
-	Primary = "(" * var_0_5.V("Exp") * ")" + var_0_27 / var_0_6.P + var_0_30 + var_0_28 + "{:" * (var_0_24 * ":" + var_0_5.Cc(nil)) * var_0_5.V("Exp") * ":}" / function(arg_13_0, arg_13_1)
-		return var_0_6.Cg(arg_13_1, arg_13_0)
-	end + "=" * var_0_24 / function(arg_14_0)
-		return var_0_6.Cmt(var_0_6.Cb(arg_14_0), var_0_19)
-	end + var_0_5.P("{}") / var_0_6.Cp + "{~" * var_0_5.V("Exp") * "~}" / var_0_6.Cs + "{|" * var_0_5.V("Exp") * "|}" / var_0_6.Ct + "{" * var_0_5.V("Exp") * "}" / var_0_6.C + var_0_5.P(".") * var_0_5.Cc(var_0_9) + (var_0_24 * -var_0_22 + "<" * var_0_24 * ">") * var_0_5.Cb("G") / var_0_33,
-	Definition = var_0_24 * var_0_22 * var_0_5.V("Exp"),
-	Grammar = var_0_5.Cg(var_0_5.Cc(true), "G") * var_0_5.Cf(var_0_5.V("Definition") / var_0_32 * var_0_5.Cg(var_0_5.V("Definition"))^0, var_0_31) / var_0_6.P
+	Primary = "(" * m.V("Exp") * ")" + String / mm.P + Class + defined + "{:" * (name * ":" + m.Cc(nil)) * m.V("Exp") * ":}" / function(n, p)
+		return mm.Cg(p, n)
+	end + "=" * name / function(n)
+		return mm.Cmt(mm.Cb(n), equalcap)
+	end + m.P("{}") / mm.Cp + "{~" * m.V("Exp") * "~}" / mm.Cs + "{|" * m.V("Exp") * "|}" / mm.Ct + "{" * m.V("Exp") * "}" / mm.C + m.P(".") * m.Cc(any) + (name * -arrow + "<" * name * ">") * m.Cb("G") / NT,
+	Definition = name * arrow * m.V("Exp"),
+	Grammar = m.Cg(m.Cc(true), "G") * m.Cf(m.V("Definition") / firstdef * m.Cg(m.V("Definition"))^0, adddef) / mm.P
 })
-local var_0_35 = var_0_20 * var_0_5.Cg(var_0_5.Cc(false), "G") * var_0_34 / var_0_6.P * (-var_0_9 + var_0_17)
+local pattern = S * m.Cg(m.Cc(false), "G") * exp / mm.P * (-any + patt_error)
 
-local function var_0_36(arg_15_0, arg_15_1)
-	if var_0_6.type(arg_15_0) == "pattern" then
-		return arg_15_0
+local function compile(p, defs)
+	if mm.type(p) == "pattern" then
+		return p
 	end
 
-	local var_15_0 = var_0_35:match(arg_15_0, 1, arg_15_1)
+	local cp = pattern:match(p, 1, defs)
 
-	if not var_15_0 then
-		var_0_3("incorrect pattern", 3)
+	if not cp then
+		error("incorrect pattern", 3)
 	end
 
-	return var_15_0
+	return cp
 end
 
-local function var_0_37(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = var_0_11[arg_16_1]
+local function match(s, p, i)
+	local cp = mem[p]
 
-	if not var_16_0 then
-		var_16_0 = var_0_36(arg_16_1)
-		var_0_11[arg_16_1] = var_16_0
+	if not cp then
+		cp = compile(p)
+		mem[p] = cp
 	end
 
-	return var_16_0:match(arg_16_0, arg_16_2 or 1)
+	return cp:match(s, i or 1)
 end
 
-local function var_0_38(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = var_0_12[arg_17_1]
+local function find(s, p, i)
+	local cp = fmem[p]
 
-	if not var_17_0 then
-		var_17_0 = var_0_36(arg_17_1) / 0
-		var_17_0 = var_0_6.P({
-			var_0_6.Cp() * var_17_0 * var_0_6.Cp() + 1 * var_0_6.V(1)
+	if not cp then
+		cp = compile(p) / 0
+		cp = mm.P({
+			mm.Cp() * cp * mm.Cp() + 1 * mm.V(1)
 		})
-		var_0_12[arg_17_1] = var_17_0
+		fmem[p] = cp
 	end
 
-	local var_17_1, var_17_2 = var_17_0:match(arg_17_0, arg_17_2 or 1)
+	local i, e = cp:match(s, i or 1)
 
-	if var_17_1 then
-		return var_17_1, var_17_2 - 1
+	if i then
+		return i, e - 1
 	else
-		return var_17_1
+		return i
 	end
 end
 
-local function var_0_39(arg_18_0, arg_18_1, arg_18_2)
-	local var_18_0 = var_0_13[arg_18_1] or {}
+local function gsub(s, p, rep)
+	local g = gmem[p] or {}
 
-	var_0_13[arg_18_1] = var_18_0
+	gmem[p] = g
 
-	local var_18_1 = var_18_0[arg_18_2]
+	local cp = g[rep]
 
-	if not var_18_1 then
-		var_18_1 = var_0_36(arg_18_1)
-		var_18_1 = var_0_6.Cs((var_18_1 / arg_18_2 + 1)^0)
-		var_18_0[arg_18_2] = var_18_1
+	if not cp then
+		cp = compile(p)
+		cp = mm.Cs((cp / rep + 1)^0)
+		g[rep] = cp
 	end
 
-	return var_18_1:match(arg_18_0)
+	return cp:match(s)
 end
 
-local var_0_40 = {
-	compile = var_0_36,
-	match = var_0_37,
-	find = var_0_38,
-	gsub = var_0_39,
-	updatelocale = var_0_14
+local re = {
+	compile = compile,
+	match = match,
+	find = find,
+	gsub = gsub,
+	updatelocale = updatelocale
 }
 
-if var_0_8 == "Lua 5.1" then
+if version == "Lua 5.1" then
 	-- block empty
 end
 
-return var_0_40
+return re

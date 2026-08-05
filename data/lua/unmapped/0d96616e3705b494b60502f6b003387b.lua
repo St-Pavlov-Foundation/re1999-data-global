@@ -1,27 +1,20 @@
-﻿local var_0_0 = type
-local var_0_1 = string.sub
-local var_0_2 = string.byte
-local var_0_3 = string.format
-local var_0_4 = string.match
-local var_0_5 = string.gmatch
-local var_0_6 = string.gsub
-local var_0_7 = table.concat
-local var_0_8 = require("bit")
-local var_0_9 = var_0_8.band
-local var_0_10 = var_0_8.bor
-local var_0_11 = var_0_8.bxor
-local var_0_12 = var_0_8.tohex
-local var_0_13 = var_0_8.lshift
-local var_0_14 = var_0_8.rshift
-local var_0_15 = var_0_8.arshift
-local var_0_16 = var_0_8.ror
-local var_0_17 = {
+﻿-- chunkname: @jit/dis_arm64.lua
+
+local type = type
+local sub, byte, format = string.sub, string.byte, string.format
+local match, gmatch, gsub = string.match, string.gmatch, string.gsub
+local concat = table.concat
+local bit = require("bit")
+local band, bor, bxor, tohex = bit.band, bit.bor, bit.bxor, bit.tohex
+local lshift, rshift, arshift = bit.lshift, bit.rshift, bit.arshift
+local ror = bit.ror
+local map_adr = {
 	[0] = "adrDBx",
 	"adrpDBx",
 	shift = 31,
 	mask = 1
 }
-local var_0_18 = {
+local map_addsubi = {
 	[0] = "add|movDNIg",
 	"adds|cmnD0NIg",
 	"subDNIg",
@@ -29,7 +22,7 @@ local var_0_18 = {
 	shift = 29,
 	mask = 3
 }
-local var_0_19 = {
+local map_logi = {
 	[0] = {
 		false,
 		shift = 22,
@@ -54,7 +47,7 @@ local var_0_19 = {
 	shift = 31,
 	mask = 1
 }
-local var_0_20 = {
+local map_movwi = {
 	[0] = {
 		false,
 		shift = 22,
@@ -79,7 +72,7 @@ local var_0_20 = {
 	shift = 31,
 	mask = 1
 }
-local var_0_21 = {
+local map_bitf = {
 	[0] = {
 		shift = 22,
 		mask = 1,
@@ -105,14 +98,14 @@ local var_0_21 = {
 	shift = 31,
 	mask = 1
 }
-local var_0_22 = {
-	[0] = var_0_17,
-	var_0_17,
-	var_0_18,
+local map_datai = {
+	[0] = map_adr,
+	map_adr,
+	map_addsubi,
 	false,
-	var_0_19,
-	var_0_20,
-	var_0_21,
+	map_logi,
+	map_movwi,
+	map_bitf,
 	{
 		[0] = "extr|rorDNM4w",
 		[65664] = "extr|rorDNM4x",
@@ -123,7 +116,7 @@ local var_0_22 = {
 	shift = 23,
 	mask = 7
 }
-local var_0_23 = {
+local map_logsr = {
 	[0] = {
 		false,
 		shift = 15,
@@ -236,7 +229,7 @@ local var_0_23 = {
 	shift = 31,
 	mask = 1
 }
-local var_0_24 = {
+local map_assh = {
 	[0] = {
 		false,
 		shift = 15,
@@ -317,14 +310,14 @@ local var_0_24 = {
 	shift = 31,
 	mask = 1
 }
-local var_0_25 = {
-	[0] = var_0_24,
-	var_0_24,
-	var_0_24,
+local map_addsubsh = {
+	[0] = map_assh,
+	map_assh,
+	map_assh,
 	shift = 22,
 	mask = 3
 }
-local var_0_26 = {
+local map_addsubex = {
 	shift = 22,
 	mask = 3,
 	[0] = {
@@ -336,7 +329,7 @@ local var_0_26 = {
 		mask = 3
 	}
 }
-local var_0_27 = {
+local map_addsubc = {
 	shift = 10,
 	mask = 63,
 	[0] = {
@@ -348,7 +341,7 @@ local var_0_27 = {
 		mask = 3
 	}
 }
-local var_0_28 = {
+local map_ccomp = {
 	shift = 4,
 	mask = 1,
 	[0] = {
@@ -370,7 +363,7 @@ local var_0_28 = {
 		}
 	}
 }
-local var_0_29 = {
+local map_csel = {
 	shift = 11,
 	mask = 1,
 	[0] = {
@@ -394,7 +387,7 @@ local var_0_29 = {
 		mask = 1
 	}
 }
-local var_0_30 = {
+local map_data1s = {
 	shift = 29,
 	mask = 1,
 	[0] = {
@@ -422,7 +415,7 @@ local var_0_30 = {
 		mask = 1
 	}
 }
-local var_0_31 = {
+local map_data2s = {
 	shift = 29,
 	mask = 1,
 	[0] = {
@@ -441,7 +434,7 @@ local var_0_31 = {
 		mask = 63
 	}
 }
-local var_0_32 = {
+local map_data3s = {
 	false,
 	false,
 	false,
@@ -483,12 +476,12 @@ local var_0_32 = {
 	shift = 29,
 	mask = 7
 }
-local var_0_33 = {
+local map_datar = {
 	[0] = {
-		[0] = var_0_23,
+		[0] = map_logsr,
 		{
-			[0] = var_0_25,
-			var_0_26,
+			[0] = map_addsubsh,
+			map_addsubex,
 			shift = 21,
 			mask = 1
 		},
@@ -497,33 +490,33 @@ local var_0_33 = {
 	},
 	{
 		false,
-		[0] = var_0_27,
-		var_0_28,
+		[0] = map_addsubc,
+		map_ccomp,
 		false,
-		var_0_29,
+		map_csel,
 		false,
 		{
-			[0] = var_0_31,
-			var_0_30,
+			[0] = map_data2s,
+			map_data1s,
 			shift = 30,
 			mask = 1
 		},
 		false,
-		var_0_32,
-		var_0_32,
-		var_0_32,
-		var_0_32,
-		var_0_32,
-		var_0_32,
-		var_0_32,
-		var_0_32,
+		map_data3s,
+		map_data3s,
+		map_data3s,
+		map_data3s,
+		map_data3s,
+		map_data3s,
+		map_data3s,
+		map_data3s,
 		shift = 21,
 		mask = 15
 	},
 	shift = 28,
 	mask = 1
 }
-local var_0_34 = {
+local map_lrl = {
 	[0] = {
 		[0] = "ldrDwB",
 		"ldrDxB",
@@ -540,7 +533,7 @@ local var_0_34 = {
 	shift = 26,
 	mask = 1
 }
-local var_0_35 = {
+local map_lsriind = {
 	[0] = {
 		shift = 26,
 		mask = 1,
@@ -601,7 +594,7 @@ local var_0_35 = {
 	shift = 30,
 	mask = 3
 }
-local var_0_36 = {
+local map_lsriro = {
 	[0] = {
 		[0] = {
 			shift = 26,
@@ -635,9 +628,9 @@ local var_0_36 = {
 				mask = 3
 			}
 		},
-		var_0_35,
+		map_lsriind,
 		false,
-		var_0_35,
+		map_lsriind,
 		shift = 10,
 		mask = 3
 	},
@@ -701,7 +694,7 @@ local var_0_36 = {
 	shift = 21,
 	mask = 1
 }
-local var_0_37 = {
+local map_lsp = {
 	[0] = {
 		[0] = {
 			[0] = "stpDzAzwP",
@@ -746,22 +739,22 @@ local var_0_37 = {
 	shift = 22,
 	mask = 1
 }
-local var_0_38 = {
+local map_ls = {
 	shift = 24,
 	mask = 49,
-	[16] = var_0_34,
-	[48] = var_0_36,
+	[16] = map_lrl,
+	[48] = map_lsriro,
 	[32] = {
-		var_0_37,
-		var_0_37,
-		var_0_37,
+		map_lsp,
+		map_lsp,
+		map_lsp,
 		shift = 23,
 		mask = 3
 	},
 	[33] = {
-		var_0_37,
-		var_0_37,
-		var_0_37,
+		map_lsp,
+		map_lsp,
+		map_lsp,
 		shift = 23,
 		mask = 3
 	},
@@ -814,7 +807,7 @@ local var_0_38 = {
 		mask = 1
 	}
 }
-local var_0_39 = {
+local map_datafp = {
 	{
 		[0] = {
 			{
@@ -1055,7 +1048,7 @@ local var_0_39 = {
 	shift = 28,
 	mask = 7
 }
-local var_0_40 = {
+local map_br = {
 	[0] = "bB",
 	{
 		[0] = "cbzDBg",
@@ -1126,46 +1119,46 @@ local var_0_40 = {
 	shift = 29,
 	mask = 7
 }
-local var_0_41 = {
+local map_init = {
 	[0] = false,
 	false,
 	false,
 	false,
-	var_0_38,
-	var_0_33,
-	var_0_38,
-	var_0_39,
-	var_0_22,
-	var_0_22,
-	var_0_40,
-	var_0_40,
-	var_0_38,
-	var_0_33,
-	var_0_38,
-	var_0_39,
+	map_ls,
+	map_datar,
+	map_ls,
+	map_datafp,
+	map_datai,
+	map_datai,
+	map_br,
+	map_br,
+	map_ls,
+	map_datar,
+	map_ls,
+	map_datafp,
 	shift = 25,
 	mask = 15
 }
-local var_0_42 = {
+local map_regs = {
 	x = {},
 	w = {},
 	d = {},
 	s = {}
 }
 
-for iter_0_0 = 0, 30 do
-	var_0_42.x[iter_0_0] = "x" .. iter_0_0
-	var_0_42.w[iter_0_0] = "w" .. iter_0_0
-	var_0_42.d[iter_0_0] = "d" .. iter_0_0
-	var_0_42.s[iter_0_0] = "s" .. iter_0_0
+for i = 0, 30 do
+	map_regs.x[i] = "x" .. i
+	map_regs.w[i] = "w" .. i
+	map_regs.d[i] = "d" .. i
+	map_regs.s[i] = "s" .. i
 end
 
-var_0_42.x[31] = "sp"
-var_0_42.w[31] = "wsp"
-var_0_42.d[31] = "d31"
-var_0_42.s[31] = "s31"
+map_regs.x[31] = "sp"
+map_regs.w[31] = "wsp"
+map_regs.d[31] = "d31"
+map_regs.s[31] = "s31"
 
-local var_0_43 = {
+local map_cond = {
 	[0] = "eq",
 	"ne",
 	"cs",
@@ -1182,12 +1175,12 @@ local var_0_43 = {
 	"le",
 	"al"
 }
-local var_0_44 = {
+local map_shift = {
 	[0] = "lsl",
 	"lsr",
 	"asr"
 }
-local var_0_45 = {
+local map_extend = {
 	[0] = "uxtb",
 	"uxth",
 	"uxtw",
@@ -1198,46 +1191,46 @@ local var_0_45 = {
 	"sxtx"
 }
 
-local function var_0_46(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = arg_1_0.pos
-	local var_1_1 = ""
+local function putop(ctx, text, operands)
+	local pos = ctx.pos
+	local extra = ""
 
-	if arg_1_0.rel then
-		local var_1_2 = arg_1_0.symtab[arg_1_0.rel]
+	if ctx.rel then
+		local sym = ctx.symtab[ctx.rel]
 
-		if var_1_2 then
-			var_1_1 = "\t->" .. var_1_2
+		if sym then
+			extra = "\t->" .. sym
 		end
 	end
 
-	if arg_1_0.hexdump > 0 then
-		arg_1_0.out(var_0_3("%08x  %s  %-5s %s%s\n", arg_1_0.addr + var_1_0, var_0_12(arg_1_0.op), arg_1_1, var_0_7(arg_1_2, ", "), var_1_1))
+	if ctx.hexdump > 0 then
+		ctx.out(format("%08x  %s  %-5s %s%s\n", ctx.addr + pos, tohex(ctx.op), text, concat(operands, ", "), extra))
 	else
-		arg_1_0.out(var_0_3("%08x  %-5s %s%s\n", arg_1_0.addr + var_1_0, arg_1_1, var_0_7(arg_1_2, ", "), var_1_1))
+		ctx.out(format("%08x  %-5s %s%s\n", ctx.addr + pos, text, concat(operands, ", "), extra))
 	end
 
-	arg_1_0.pos = var_1_0 + 4
+	ctx.pos = pos + 4
 end
 
-local function var_0_47(arg_2_0)
-	return var_0_46(arg_2_0, ".long", {
-		"0x" .. var_0_12(arg_2_0.op)
+local function unknown(ctx)
+	return putop(ctx, ".long", {
+		"0x" .. tohex(ctx.op)
 	})
 end
 
-local function var_0_48(arg_3_0, arg_3_1, arg_3_2)
-	return var_0_42[var_0_4(arg_3_1, arg_3_0 .. "%w-([xwds])")][arg_3_2]
+local function match_reg(p, pat, regnum)
+	return map_regs[match(pat, p .. "%w-([xwds])")][regnum]
 end
 
-local function var_0_49(arg_4_0)
-	if arg_4_0 < 0 then
-		return var_0_12(arg_4_0)
+local function fmt_hex32(x)
+	if x < 0 then
+		return tohex(x)
 	else
-		return var_0_3("%x", arg_4_0)
+		return format("%x", x)
 	end
 end
 
-local var_0_50 = {
+local imm13_rep = {
 	1431655765,
 	286331153,
 	16843009,
@@ -1245,105 +1238,106 @@ local var_0_50 = {
 	1
 }
 
-local function var_0_51(arg_5_0)
-	local var_5_0 = var_0_9(var_0_14(arg_5_0, 10), 63)
-	local var_5_1 = var_0_9(var_0_14(arg_5_0, 16), 63)
+local function decode_imm13(op)
+	local imms = band(rshift(op, 10), 63)
+	local immr = band(rshift(op, 16), 63)
 
-	if var_0_9(arg_5_0, 4194304) == 0 then
-		local var_5_2 = 5
+	if band(op, 4194304) == 0 then
+		local len = 5
 
-		if var_5_0 >= 56 then
-			if var_5_0 >= 60 then
-				var_5_2 = 1
+		if imms >= 56 then
+			if imms >= 60 then
+				len = 1
 			else
-				var_5_2 = 2
+				len = 2
 			end
-		elseif var_5_0 >= 48 then
-			var_5_2 = 3
-		elseif var_5_0 >= 32 then
-			var_5_2 = 4
+		elseif imms >= 48 then
+			len = 3
+		elseif imms >= 32 then
+			len = 4
 		end
 
-		local var_5_3 = var_0_13(1, var_5_2) - 1
-		local var_5_4 = var_0_9(var_5_0, var_5_3)
-		local var_5_5 = var_0_9(var_5_1, var_5_3)
-		local var_5_6 = var_0_16(var_0_14(-1, 31 - var_5_4), var_5_5)
+		local l = lshift(1, len) - 1
+		local s = band(imms, l)
+		local r = band(immr, l)
+		local imm = ror(rshift(-1, 31 - s), r)
 
-		if var_5_2 ~= 5 then
-			var_5_6 = var_0_9(var_5_6, var_0_13(1, var_5_3) - 1) + var_0_14(var_5_6, 31 - var_5_3)
+		if len ~= 5 then
+			imm = band(imm, lshift(1, l) - 1) + rshift(imm, 31 - l)
 		end
 
-		local var_5_7 = var_5_6 * var_0_50[var_5_2]
-		local var_5_8 = var_0_49(var_5_7)
+		imm = imm * imm13_rep[len]
 
-		if var_0_14(arg_5_0, 31) ~= 0 then
-			return var_5_8 .. var_0_12(var_5_7)
+		local ix = fmt_hex32(imm)
+
+		if rshift(op, 31) ~= 0 then
+			return ix .. tohex(imm)
 		else
-			return var_5_8
+			return ix
 		end
 	else
-		local var_5_9 = -1
-		local var_5_10 = 0
+		local lo, hi = -1, 0
 
-		if var_5_0 < 32 then
-			var_5_9 = var_0_14(-1, 31 - var_5_0)
+		if imms < 32 then
+			lo = rshift(-1, 31 - imms)
 		else
-			var_5_10 = var_0_14(-1, 63 - var_5_0)
+			hi = rshift(-1, 63 - imms)
 		end
 
-		if var_5_1 ~= 0 then
-			var_5_9, var_5_10 = var_0_16(var_5_9, var_5_1), var_0_16(var_5_10, var_5_1)
+		if immr ~= 0 then
+			lo, hi = ror(lo, immr), ror(hi, immr)
 
-			local var_5_11 = var_5_1 == 32 and 0 or var_0_9(var_0_11(var_5_9, var_5_10), var_0_13(-1, 32 - var_5_1))
+			local x = immr == 32 and 0 or band(bxor(lo, hi), lshift(-1, 32 - immr))
 
-			var_5_9, var_5_10 = var_0_11(var_5_9, var_5_11), var_0_11(var_5_10, var_5_11)
+			lo, hi = bxor(lo, x), bxor(hi, x)
 
-			if var_5_1 >= 32 then
-				var_5_9, var_5_10 = var_5_10, var_5_9
+			if immr >= 32 then
+				lo, hi = hi, lo
 			end
 		end
 
-		if var_5_10 ~= 0 then
-			return var_0_49(var_5_10) .. var_0_12(var_5_9)
+		if hi ~= 0 then
+			return fmt_hex32(hi) .. tohex(lo)
 		else
-			return var_0_49(var_5_9)
+			return fmt_hex32(lo)
 		end
 	end
 end
 
-local function var_0_52(arg_6_0, arg_6_1)
-	if arg_6_1 == "b" or arg_6_1 == "bl" then
-		return var_0_15(var_0_13(arg_6_0, 6), 4)
-	elseif arg_6_1 == "adr" or arg_6_1 == "adrp" then
-		local var_6_0 = var_0_9(var_0_14(arg_6_0, 29), 3)
-		local var_6_1 = var_0_13(var_0_15(var_0_13(arg_6_0, 8), 13), 2)
+local function parse_immpc(op, name)
+	if name == "b" or name == "bl" then
+		return arshift(lshift(op, 6), 4)
+	elseif name == "adr" or name == "adrp" then
+		local immlo = band(rshift(op, 29), 3)
+		local immhi = lshift(arshift(lshift(op, 8), 13), 2)
 
-		return var_0_10(var_6_1, var_6_0)
-	elseif arg_6_1 == "tbz" or arg_6_1 == "tbnz" then
-		return var_0_13(var_0_15(var_0_13(arg_6_0, 13), 18), 2)
+		return bor(immhi, immlo)
+	elseif name == "tbz" or name == "tbnz" then
+		return lshift(arshift(lshift(op, 13), 18), 2)
 	else
-		return var_0_13(var_0_15(var_0_13(arg_6_0, 8), 13), 2)
+		return lshift(arshift(lshift(op, 8), 13), 2)
 	end
 end
 
-local function var_0_53(arg_7_0)
-	local var_7_0 = var_0_9(arg_7_0, 1048576) == 0 and 1 or -1
-	local var_7_1 = var_0_11(var_0_14(var_0_15(var_0_13(arg_7_0, 12), 5), 24), 128) - 131
+local function parse_fpimm8(op)
+	local sign = band(op, 1048576) == 0 and 1 or -1
+	local exp = bxor(rshift(arshift(lshift(op, 12), 5), 24), 128) - 131
+	local frac = 16 + band(rshift(op, 13), 15)
 
-	return var_7_0 * (16 + var_0_9(var_0_14(arg_7_0, 13), 15)) * 2^var_7_1
+	return sign * frac * 2^exp
 end
 
-local function var_0_54(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	if arg_8_2 < arg_8_3 or arg_8_2 == 31 or arg_8_2 == 63 then
+local function prefer_bfx(sf, uns, imms, immr)
+	if imms < immr or imms == 31 or imms == 63 then
 		return false
 	end
 
-	if arg_8_3 == 0 then
-		if arg_8_0 == 0 and (arg_8_2 == 7 or arg_8_2 == 15) then
+	if immr == 0 then
+		if sf == 0 and (imms == 7 or imms == 15) then
 			return false
 		end
 
-		if arg_8_0 ~= 0 and arg_8_1 == 0 and (arg_8_2 == 7 or arg_8_2 == 15 or arg_8_2 == 31) then
+		if sf ~= 0 and uns == 0 and (imms == 7 or imms == 15 or imms == 31) then
 			return false
 		end
 	end
@@ -1351,461 +1345,456 @@ local function var_0_54(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	return true
 end
 
-local function var_0_55(arg_9_0)
-	local var_9_0 = arg_9_0.pos
-	local var_9_1, var_9_2, var_9_3, var_9_4 = var_0_2(arg_9_0.code, var_9_0 + 1, var_9_0 + 4)
-	local var_9_5 = var_0_10(var_0_13(var_9_4, 24), var_0_13(var_9_3, 16), var_0_13(var_9_2, 8), var_9_1)
-	local var_9_6 = {}
-	local var_9_7 = ""
-	local var_9_8
-	local var_9_9
-	local var_9_10
-	local var_9_11
+local function disass_ins(ctx)
+	local pos = ctx.pos
+	local b0, b1, b2, b3 = byte(ctx.code, pos + 1, pos + 4)
+	local op = bor(lshift(b3, 24), lshift(b2, 16), lshift(b1, 8), b0)
+	local operands = {}
+	local suffix = ""
+	local last, name, pat, map_reg
 
-	arg_9_0.op = var_9_5
-	arg_9_0.rel = nil
+	ctx.op = op
+	ctx.rel = nil
+	last = nil
 
-	local var_9_12
-	local var_9_13
-	local var_9_14 = var_0_41[var_0_9(var_0_14(var_9_5, 25), 15)]
+	local opat
 
-	while var_0_0(var_9_14) ~= "string" do
-		if not var_9_14 then
-			return var_0_47(arg_9_0)
+	opat = map_init[band(rshift(op, 25), 15)]
+
+	while type(opat) ~= "string" do
+		if not opat then
+			return unknown(ctx)
 		end
 
-		var_9_14 = var_9_14[var_0_9(var_0_14(var_9_5, var_9_14.shift), var_9_14.mask)] or var_9_14._
+		opat = opat[band(rshift(op, opat.shift), opat.mask)] or opat._
 	end
 
-	local var_9_15, var_9_16 = var_0_4(var_9_14, "^([a-z0-9]*)(.*)")
-	local var_9_17, var_9_18 = var_0_4(var_9_16, "|([a-z0-9_.|]*)(.*)")
+	name, pat = match(opat, "^([a-z0-9]*)(.*)")
 
-	if var_9_17 then
-		var_9_16 = var_9_18
+	local altname, pat2 = match(pat, "|([a-z0-9_.|]*)(.*)")
+
+	if altname then
+		pat = pat2
 	end
 
-	if var_0_1(var_9_16, 1, 1) == "." then
-		local var_9_19, var_9_20 = var_0_4(var_9_16, "^([a-z0-9.]*)(.*)")
+	if sub(pat, 1, 1) == "." then
+		local s2, p2 = match(pat, "^([a-z0-9.]*)(.*)")
 
-		var_9_7 = var_9_7 .. var_9_19
-		var_9_16 = var_9_20
+		suffix = suffix .. s2
+		pat = p2
 	end
 
-	local var_9_21 = var_0_4(var_9_16, "[gf]")
+	local rt = match(pat, "[gf]")
 
-	if var_9_21 then
-		if var_9_21 == "g" then
-			var_9_11 = var_0_9(var_9_5, 2147483648) ~= 0 and var_0_42.x or var_0_42.w
+	if rt then
+		if rt == "g" then
+			map_reg = band(op, 2147483648) ~= 0 and map_regs.x or map_regs.w
 		else
-			var_9_11 = var_0_9(var_9_5, 4194304) ~= 0 and var_0_42.d or var_0_42.s
+			map_reg = band(op, 4194304) ~= 0 and map_regs.d or map_regs.s
 		end
 	end
 
-	local var_9_22
-	local var_9_23
+	local second0, immr
 
-	for iter_9_0 in var_0_5(var_9_16, ".") do
-		local var_9_24
+	for p in gmatch(pat, ".") do
+		local x
 
-		if iter_9_0 == "D" then
-			local var_9_25 = var_0_9(var_9_5, 31)
+		if p == "D" then
+			local regnum = band(op, 31)
 
-			var_9_24 = var_9_21 and var_9_11[var_9_25] or var_0_48(iter_9_0, var_9_16, var_9_25)
-		elseif iter_9_0 == "N" then
-			local var_9_26 = var_0_9(var_0_14(var_9_5, 5), 31)
+			x = rt and map_reg[regnum] or match_reg(p, pat, regnum)
+		elseif p == "N" then
+			local regnum = band(rshift(op, 5), 31)
 
-			var_9_24 = var_9_21 and var_9_11[var_9_26] or var_0_48(iter_9_0, var_9_16, var_9_26)
-		elseif iter_9_0 == "M" then
-			local var_9_27 = var_0_9(var_0_14(var_9_5, 16), 31)
+			x = rt and map_reg[regnum] or match_reg(p, pat, regnum)
+		elseif p == "M" then
+			local regnum = band(rshift(op, 16), 31)
 
-			var_9_24 = var_9_21 and var_9_11[var_9_27] or var_0_48(iter_9_0, var_9_16, var_9_27)
-		elseif iter_9_0 == "A" then
-			local var_9_28 = var_0_9(var_0_14(var_9_5, 10), 31)
+			x = rt and map_reg[regnum] or match_reg(p, pat, regnum)
+		elseif p == "A" then
+			local regnum = band(rshift(op, 10), 31)
 
-			var_9_24 = var_9_21 and var_9_11[var_9_28] or var_0_48(iter_9_0, var_9_16, var_9_28)
-		elseif iter_9_0 == "B" then
-			local var_9_29 = arg_9_0.addr + var_9_0 + var_0_52(var_9_5, var_9_15)
+			x = rt and map_reg[regnum] or match_reg(p, pat, regnum)
+		elseif p == "B" then
+			local addr = ctx.addr + pos + parse_immpc(op, name)
 
-			arg_9_0.rel = var_9_29
-			var_9_24 = "0x" .. var_0_12(var_9_29)
-		elseif iter_9_0 == "T" then
-			var_9_24 = var_0_10(var_0_9(var_0_14(var_9_5, 26), 32), var_0_9(var_0_14(var_9_5, 19), 31))
-		elseif iter_9_0 == "V" then
-			var_9_24 = var_0_9(var_9_5, 15)
-		elseif iter_9_0 == "C" then
-			var_9_24 = var_0_43[var_0_9(var_0_14(var_9_5, 12), 15)]
-		elseif iter_9_0 == "c" then
-			local var_9_30 = var_0_9(var_0_14(var_9_5, 5), 31)
-			local var_9_31 = var_0_9(var_0_14(var_9_5, 16), 31)
-			local var_9_32 = var_0_9(var_0_14(var_9_5, 12), 15)
-			local var_9_33 = var_0_11(var_9_32, 1)
+			ctx.rel = addr
+			x = "0x" .. tohex(addr)
+		elseif p == "T" then
+			x = bor(band(rshift(op, 26), 32), band(rshift(op, 19), 31))
+		elseif p == "V" then
+			x = band(op, 15)
+		elseif p == "C" then
+			x = map_cond[band(rshift(op, 12), 15)]
+		elseif p == "c" then
+			local rn = band(rshift(op, 5), 31)
+			local rm = band(rshift(op, 16), 31)
+			local cond = band(rshift(op, 12), 15)
+			local invc = bxor(cond, 1)
 
-			var_9_24 = var_0_43[var_9_32]
+			x = map_cond[cond]
 
-			if var_9_17 and var_9_32 ~= 14 and var_9_32 ~= 15 then
-				local var_9_34, var_9_35 = var_0_4(var_9_17, "([^|]*)|(.*)")
+			if altname and cond ~= 14 and cond ~= 15 then
+				local a1, a2 = match(altname, "([^|]*)|(.*)")
 
-				if var_9_30 == var_9_31 then
-					local var_9_36 = #var_9_6
+				if rn == rm then
+					local n = #operands
 
-					var_9_6[var_9_36] = nil
-					var_9_24 = var_0_43[var_9_33]
+					operands[n] = nil
+					x = map_cond[invc]
 
-					if var_9_30 ~= 31 then
-						if var_9_34 then
-							var_9_15 = var_9_34
+					if rn ~= 31 then
+						if a1 then
+							name = a1
 						else
-							var_9_15 = var_9_17
+							name = altname
 						end
 					else
-						var_9_6[var_9_36 - 1] = nil
-						var_9_15 = var_9_35
+						operands[n - 1] = nil
+						name = a2
 					end
 				end
 			end
-		elseif iter_9_0 == "W" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 5), 65535)
-		elseif iter_9_0 == "Y" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 5), 65535)
+		elseif p == "W" then
+			x = band(rshift(op, 5), 65535)
+		elseif p == "Y" then
+			x = band(rshift(op, 5), 65535)
 
-			local var_9_37 = var_0_9(var_0_14(var_9_5, 21), 3)
+			local hw = band(rshift(op, 21), 3)
 
-			if var_9_17 and (var_9_37 == 0 or var_9_24 ~= 0) then
-				var_9_15 = var_9_17
+			if altname and (hw == 0 or x ~= 0) then
+				name = altname
 			end
-		elseif iter_9_0 == "L" then
-			local var_9_38 = var_0_42.x[var_0_9(var_0_14(var_9_5, 5), 31)]
-			local var_9_39 = var_0_15(var_0_13(var_9_5, 11), 23)
+		elseif p == "L" then
+			local rn = map_regs.x[band(rshift(op, 5), 31)]
+			local imm9 = arshift(lshift(op, 11), 23)
 
-			if var_0_9(var_9_5, 2048) ~= 0 then
-				var_9_24 = "[" .. var_9_38 .. ", #" .. var_9_39 .. "]!"
+			if band(op, 2048) ~= 0 then
+				x = "[" .. rn .. ", #" .. imm9 .. "]!"
 			else
-				var_9_24 = "[" .. var_9_38 .. "], #" .. var_9_39
+				x = "[" .. rn .. "], #" .. imm9
 			end
-		elseif iter_9_0 == "U" then
-			local var_9_40 = var_0_42.x[var_0_9(var_0_14(var_9_5, 5), 31)]
-			local var_9_41 = var_0_9(var_0_14(var_9_5, 30), 3)
-			local var_9_42 = var_0_13(var_0_15(var_0_13(var_9_5, 10), 20), var_9_41)
+		elseif p == "U" then
+			local rn = map_regs.x[band(rshift(op, 5), 31)]
+			local sz = band(rshift(op, 30), 3)
+			local imm12 = lshift(arshift(lshift(op, 10), 20), sz)
 
-			if var_9_42 ~= 0 then
-				var_9_24 = "[" .. var_9_40 .. ", #" .. var_9_42 .. "]"
+			if imm12 ~= 0 then
+				x = "[" .. rn .. ", #" .. imm12 .. "]"
 			else
-				var_9_24 = "[" .. var_9_40 .. "]"
+				x = "[" .. rn .. "]"
 			end
-		elseif iter_9_0 == "K" then
-			local var_9_43 = var_0_42.x[var_0_9(var_0_14(var_9_5, 5), 31)]
-			local var_9_44 = var_0_15(var_0_13(var_9_5, 11), 23)
+		elseif p == "K" then
+			local rn = map_regs.x[band(rshift(op, 5), 31)]
+			local imm9 = arshift(lshift(op, 11), 23)
 
-			if var_9_44 ~= 0 then
-				var_9_24 = "[" .. var_9_43 .. ", #" .. var_9_44 .. "]"
+			if imm9 ~= 0 then
+				x = "[" .. rn .. ", #" .. imm9 .. "]"
 			else
-				var_9_24 = "[" .. var_9_43 .. "]"
+				x = "[" .. rn .. "]"
 			end
-		elseif iter_9_0 == "O" then
-			local var_9_45 = var_0_42.x[var_0_9(var_0_14(var_9_5, 5), 31)]
-			local var_9_46
+		elseif p == "O" then
+			local rn, rm = map_regs.x[band(rshift(op, 5), 31)]
+			local m = band(rshift(op, 13), 1)
 
-			if var_0_9(var_0_14(var_9_5, 13), 1) == 0 then
-				var_9_46 = var_0_42.w[var_0_9(var_0_14(var_9_5, 16), 31)]
+			if m == 0 then
+				rm = map_regs.w[band(rshift(op, 16), 31)]
 			else
-				var_9_46 = var_0_42.x[var_0_9(var_0_14(var_9_5, 16), 31)]
+				rm = map_regs.x[band(rshift(op, 16), 31)]
 			end
 
-			var_9_24 = "[" .. var_9_45 .. ", " .. var_9_46
+			x = "[" .. rn .. ", " .. rm
 
-			local var_9_47 = var_0_9(var_0_14(var_9_5, 13), 7)
-			local var_9_48 = var_0_9(var_0_14(var_9_5, 12), 1)
-			local var_9_49 = var_0_9(var_0_14(var_9_5, 30), 3)
+			local opt = band(rshift(op, 13), 7)
+			local s = band(rshift(op, 12), 1)
+			local sz = band(rshift(op, 30), 3)
 
-			if var_9_47 == 3 then
-				if var_9_48 == 0 then
-					var_9_24 = var_9_24 .. "]"
+			if opt == 3 then
+				if s == 0 then
+					x = x .. "]"
 				else
-					var_9_24 = var_9_24 .. ", lsl #" .. var_9_49 .. "]"
+					x = x .. ", lsl #" .. sz .. "]"
 				end
-			elseif var_9_47 == 2 or var_9_47 == 6 or var_9_47 == 7 then
-				if var_9_48 == 0 then
-					var_9_24 = var_9_24 .. ", " .. var_0_45[var_9_47] .. "]"
+			elseif opt == 2 or opt == 6 or opt == 7 then
+				if s == 0 then
+					x = x .. ", " .. map_extend[opt] .. "]"
 				else
-					var_9_24 = var_9_24 .. ", " .. var_0_45[var_9_47] .. " #" .. var_9_49 .. "]"
+					x = x .. ", " .. map_extend[opt] .. " #" .. sz .. "]"
 				end
 			else
-				var_9_24 = var_9_24 .. "]"
+				x = x .. "]"
 			end
-		elseif iter_9_0 == "P" then
-			local var_9_50 = var_0_14(var_9_5, 26)
-			local var_9_51 = 2
+		elseif p == "P" then
+			local opcv, sh = rshift(op, 26), 2
 
-			if var_9_50 >= 42 then
-				var_9_51 = 4
-			elseif var_9_50 >= 27 then
-				var_9_51 = 3
+			if opcv >= 42 then
+				sh = 4
+			elseif opcv >= 27 then
+				sh = 3
 			end
 
-			local var_9_52 = var_0_13(var_0_15(var_0_13(var_9_5, 10), 25), var_9_51)
-			local var_9_53 = var_0_42.x[var_0_9(var_0_14(var_9_5, 5), 31)]
-			local var_9_54 = var_0_9(var_0_14(var_9_5, 23), 3)
+			local imm7 = lshift(arshift(lshift(op, 10), 25), sh)
+			local rn = map_regs.x[band(rshift(op, 5), 31)]
+			local ind = band(rshift(op, 23), 3)
 
-			if var_9_54 == 1 then
-				var_9_24 = "[" .. var_9_53 .. "], #" .. var_9_52
-			elseif var_9_54 == 2 then
-				if var_9_52 == 0 then
-					var_9_24 = "[" .. var_9_53 .. "]"
+			if ind == 1 then
+				x = "[" .. rn .. "], #" .. imm7
+			elseif ind == 2 then
+				if imm7 == 0 then
+					x = "[" .. rn .. "]"
 				else
-					var_9_24 = "[" .. var_9_53 .. ", #" .. var_9_52 .. "]"
+					x = "[" .. rn .. ", #" .. imm7 .. "]"
 				end
-			elseif var_9_54 == 3 then
-				var_9_24 = "[" .. var_9_53 .. ", #" .. var_9_52 .. "]!"
+			elseif ind == 3 then
+				x = "[" .. rn .. ", #" .. imm7 .. "]!"
 			end
-		elseif iter_9_0 == "I" then
-			local var_9_55 = var_0_9(var_0_14(var_9_5, 22), 3)
-			local var_9_56 = var_0_9(var_0_14(var_9_5, 10), 4095)
-			local var_9_57 = var_0_9(var_0_14(var_9_5, 5), 31)
-			local var_9_58 = var_0_9(var_9_5, 31)
+		elseif p == "I" then
+			local shf = band(rshift(op, 22), 3)
+			local imm12 = band(rshift(op, 10), 4095)
+			local rn, rd = band(rshift(op, 5), 31), band(op, 31)
 
-			if var_9_17 == "mov" and var_9_55 == 0 and var_9_56 == 0 and (var_9_57 == 31 or var_9_58 == 31) then
-				var_9_15 = var_9_17
-				var_9_24 = nil
-			elseif var_9_55 == 0 then
-				var_9_24 = var_9_56
-			elseif var_9_55 == 1 then
-				var_9_24 = var_9_56 .. ", lsl #12"
+			if altname == "mov" and shf == 0 and imm12 == 0 and (rn == 31 or rd == 31) then
+				name = altname
+				x = nil
+			elseif shf == 0 then
+				x = imm12
+			elseif shf == 1 then
+				x = imm12 .. ", lsl #12"
 			end
-		elseif iter_9_0 == "i" then
-			var_9_24 = "#0x" .. var_0_51(var_9_5)
-		elseif iter_9_0 == "1" then
-			var_9_23 = var_0_9(var_0_14(var_9_5, 16), 63)
-			var_9_24 = var_9_23
-		elseif iter_9_0 == "2" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 10), 63)
+		elseif p == "i" then
+			x = "#0x" .. decode_imm13(op)
+		elseif p == "1" then
+			immr = band(rshift(op, 16), 63)
+			x = immr
+		elseif p == "2" then
+			x = band(rshift(op, 10), 63)
 
-			if var_9_17 then
-				local var_9_59, var_9_60, var_9_61, var_9_62, var_9_63, var_9_64 = var_0_4(var_9_17, "([^|]*)|([^|]*)|([^|]*)|([^|]*)|([^|]*)|(.*)")
-				local var_9_65 = var_0_9(var_0_14(var_9_5, 26), 32)
-				local var_9_66 = var_0_9(var_0_14(var_9_5, 30), 1)
+			if altname then
+				local a1, a2, a3, a4, a5, a6 = match(altname, "([^|]*)|([^|]*)|([^|]*)|([^|]*)|([^|]*)|(.*)")
+				local sf = band(rshift(op, 26), 32)
+				local uns = band(rshift(op, 30), 1)
 
-				if var_0_54(var_9_65, var_9_66, var_9_24, var_9_23) then
-					var_9_15 = var_9_60
-					var_9_24 = var_9_24 - var_9_23 + 1
-				elseif var_9_23 == 0 and var_9_24 == 7 then
-					local var_9_67 = #var_9_6
+				if prefer_bfx(sf, uns, x, immr) then
+					name = a2
+					x = x - immr + 1
+				elseif immr == 0 and x == 7 then
+					local n = #operands
 
-					var_9_6[var_9_67] = nil
+					operands[n] = nil
 
-					if var_9_65 ~= 0 then
-						var_9_6[var_9_67 - 1] = var_0_6(var_9_6[var_9_67 - 1], "x", "w")
+					if sf ~= 0 then
+						operands[n - 1] = gsub(operands[n - 1], "x", "w")
 					end
 
-					var_9_12 = var_9_6[var_9_67 - 1]
-					var_9_15 = var_9_64
-					var_9_24 = nil
-				elseif var_9_23 == 0 and var_9_24 == 15 then
-					local var_9_68 = #var_9_6
+					last = operands[n - 1]
+					name = a6
+					x = nil
+				elseif immr == 0 and x == 15 then
+					local n = #operands
 
-					var_9_6[var_9_68] = nil
+					operands[n] = nil
 
-					if var_9_65 ~= 0 then
-						var_9_6[var_9_68 - 1] = var_0_6(var_9_6[var_9_68 - 1], "x", "w")
+					if sf ~= 0 then
+						operands[n - 1] = gsub(operands[n - 1], "x", "w")
 					end
 
-					var_9_12 = var_9_6[var_9_68 - 1]
-					var_9_15 = var_9_63
-					var_9_24 = nil
-				elseif var_9_24 == 31 or var_9_24 == 63 then
-					if var_9_24 == 31 and var_9_23 == 0 and var_9_15 == "sbfm" then
-						var_9_15 = var_9_62
+					last = operands[n - 1]
+					name = a5
+					x = nil
+				elseif x == 31 or x == 63 then
+					if x == 31 and immr == 0 and name == "sbfm" then
+						name = a4
 
-						local var_9_69 = #var_9_6
+						local n = #operands
 
-						var_9_6[var_9_69] = nil
+						operands[n] = nil
 
-						if var_9_65 ~= 0 then
-							var_9_6[var_9_69 - 1] = var_0_6(var_9_6[var_9_69 - 1], "x", "w")
+						if sf ~= 0 then
+							operands[n - 1] = gsub(operands[n - 1], "x", "w")
 						end
 
-						var_9_12 = var_9_6[var_9_69 - 1]
+						last = operands[n - 1]
 					else
-						var_9_15 = var_9_61
+						name = a3
 					end
 
-					var_9_24 = nil
-				elseif var_0_9(var_9_24, 31) ~= 31 and var_9_23 == var_9_24 + 1 and var_9_15 == "ubfm" then
-					var_9_15 = var_9_62
-					var_9_12 = "#" .. var_9_65 + 32 - var_9_23
-					var_9_6[#var_9_6] = var_9_12
-					var_9_24 = nil
-				elseif var_9_24 < var_9_23 then
-					var_9_15 = var_9_59
-					var_9_12 = "#" .. var_9_65 + 32 - var_9_23
-					var_9_6[#var_9_6] = var_9_12
-					var_9_24 = var_9_24 + 1
+					x = nil
+				elseif band(x, 31) ~= 31 and immr == x + 1 and name == "ubfm" then
+					name = a4
+					last = "#" .. sf + 32 - immr
+					operands[#operands] = last
+					x = nil
+				elseif x < immr then
+					name = a1
+					last = "#" .. sf + 32 - immr
+					operands[#operands] = last
+					x = x + 1
 				end
 			end
-		elseif iter_9_0 == "3" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 10), 63)
+		elseif p == "3" then
+			x = band(rshift(op, 10), 63)
 
-			if var_9_17 then
-				local var_9_70, var_9_71 = var_0_4(var_9_17, "([^|]*)|(.*)")
+			if altname then
+				local a1, a2 = match(altname, "([^|]*)|(.*)")
 
-				if var_9_24 < var_9_23 then
-					var_9_15 = var_9_70
+				if x < immr then
+					name = a1
 
-					local var_9_72 = var_0_9(var_0_14(var_9_5, 26), 32)
+					local sf = band(rshift(op, 26), 32)
 
-					var_9_12 = "#" .. var_9_72 + 32 - var_9_23
-					var_9_6[#var_9_6] = var_9_12
-					var_9_24 = var_9_24 + 1
-				elseif var_9_23 <= var_9_24 then
-					var_9_15 = var_9_71
-					var_9_24 = var_9_24 - var_9_23 + 1
+					last = "#" .. sf + 32 - immr
+					operands[#operands] = last
+					x = x + 1
+				elseif immr <= x then
+					name = a2
+					x = x - immr + 1
 				end
 			end
-		elseif iter_9_0 == "4" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 10), 63)
+		elseif p == "4" then
+			x = band(rshift(op, 10), 63)
 
-			local var_9_73 = var_0_9(var_0_14(var_9_5, 5), 31)
-			local var_9_74 = var_0_9(var_0_14(var_9_5, 16), 31)
+			local rn = band(rshift(op, 5), 31)
+			local rm = band(rshift(op, 16), 31)
 
-			if var_9_17 and var_9_73 == var_9_74 then
-				local var_9_75 = #var_9_6
+			if altname and rn == rm then
+				local n = #operands
 
-				var_9_6[var_9_75] = nil
-				var_9_12 = var_9_6[var_9_75 - 1]
-				var_9_15 = var_9_17
+				operands[n] = nil
+				last = operands[n - 1]
+				name = altname
 			end
-		elseif iter_9_0 == "5" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 16), 31)
-		elseif iter_9_0 == "S" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 10), 63)
+		elseif p == "5" then
+			x = band(rshift(op, 16), 31)
+		elseif p == "S" then
+			x = band(rshift(op, 10), 63)
 
-			if var_9_24 == 0 then
-				var_9_24 = nil
+			if x == 0 then
+				x = nil
 			else
-				var_9_24 = var_0_44[var_0_9(var_0_14(var_9_5, 22), 3)] .. " #" .. var_9_24
+				x = map_shift[band(rshift(op, 22), 3)] .. " #" .. x
 			end
-		elseif iter_9_0 == "X" then
-			local var_9_76 = var_0_9(var_0_14(var_9_5, 13), 7)
+		elseif p == "X" then
+			local opt = band(rshift(op, 13), 7)
 
-			if var_9_76 ~= 3 and var_9_76 ~= 7 then
-				var_9_12 = var_0_42.w[var_0_9(var_0_14(var_9_5, 16), 31)]
-				var_9_6[#var_9_6] = var_9_12
+			if opt ~= 3 and opt ~= 7 then
+				last = map_regs.w[band(rshift(op, 16), 31)]
+				operands[#operands] = last
 			end
 
-			var_9_24 = var_0_9(var_0_14(var_9_5, 10), 7)
+			x = band(rshift(op, 10), 7)
 
-			if var_9_76 == 2 + var_0_9(var_0_14(var_9_5, 31), 1) and var_0_9(var_0_14(var_9_5, var_9_22 and 5 or 0), 31) == 31 then
-				if var_9_24 == 0 then
-					var_9_24 = nil
+			if opt == 2 + band(rshift(op, 31), 1) and band(rshift(op, second0 and 5 or 0), 31) == 31 then
+				if x == 0 then
+					x = nil
 				else
-					var_9_24 = "lsl #" .. var_9_24
+					x = "lsl #" .. x
 				end
-			elseif var_9_24 == 0 then
-				var_9_24 = var_0_45[var_0_9(var_0_14(var_9_5, 13), 7)]
+			elseif x == 0 then
+				x = map_extend[band(rshift(op, 13), 7)]
 			else
-				var_9_24 = var_0_45[var_0_9(var_0_14(var_9_5, 13), 7)] .. " #" .. var_9_24
+				x = map_extend[band(rshift(op, 13), 7)] .. " #" .. x
 			end
-		elseif iter_9_0 == "R" then
-			var_9_24 = var_0_9(var_0_14(var_9_5, 21), 3)
+		elseif p == "R" then
+			x = band(rshift(op, 21), 3)
 
-			if var_9_24 == 0 then
-				var_9_24 = nil
+			if x == 0 then
+				x = nil
 			else
-				var_9_24 = "lsl #" .. var_9_24 * 16
+				x = "lsl #" .. x * 16
 			end
-		elseif iter_9_0 == "z" then
-			local var_9_77 = #var_9_6
+		elseif p == "z" then
+			local n = #operands
 
-			if var_9_6[var_9_77] == "sp" then
-				var_9_6[var_9_77] = "xzr"
-			elseif var_9_6[var_9_77] == "wsp" then
-				var_9_6[var_9_77] = "wzr"
+			if operands[n] == "sp" then
+				operands[n] = "xzr"
+			elseif operands[n] == "wsp" then
+				operands[n] = "wzr"
 			end
-		elseif iter_9_0 == "Z" then
-			var_9_24 = 0
-		elseif iter_9_0 == "F" then
-			var_9_24 = var_0_53(var_9_5)
-		elseif iter_9_0 == "g" or iter_9_0 == "f" or iter_9_0 == "x" or iter_9_0 == "w" or iter_9_0 == "d" or iter_9_0 == "s" then
+		elseif p == "Z" then
+			x = 0
+		elseif p == "F" then
+			x = parse_fpimm8(op)
+		elseif p == "g" or p == "f" or p == "x" or p == "w" or p == "d" or p == "s" then
 			-- block empty
-		elseif iter_9_0 == "0" then
-			if var_9_12 == "sp" or var_9_12 == "wsp" then
-				local var_9_78 = #var_9_6
+		elseif p == "0" then
+			if last == "sp" or last == "wsp" then
+				local n = #operands
 
-				var_9_6[var_9_78] = nil
-				var_9_12 = var_9_6[var_9_78 - 1]
+				operands[n] = nil
+				last = operands[n - 1]
 
-				if var_9_17 then
-					local var_9_79, var_9_80 = var_0_4(var_9_17, "([^|]*)|(.*)")
+				if altname then
+					local a1, a2 = match(altname, "([^|]*)|(.*)")
 
-					if not var_9_79 then
-						var_9_15 = var_9_17
-					elseif var_9_22 then
-						var_9_15, var_9_17 = var_9_80, var_9_79
+					if not a1 then
+						name = altname
+					elseif second0 then
+						name, altname = a2, a1
 					else
-						var_9_15, var_9_17 = var_9_79, var_9_80
+						name, altname = a1, a2
 					end
 				end
 			end
 
-			var_9_22 = true
+			second0 = true
 		else
 			assert(false)
 		end
 
-		if var_9_24 then
-			var_9_12 = var_9_24
+		if x then
+			last = x
 
-			if var_0_0(var_9_24) == "number" then
-				var_9_24 = "#" .. var_9_24
+			if type(x) == "number" then
+				x = "#" .. x
 			end
 
-			var_9_6[#var_9_6 + 1] = var_9_24
+			operands[#operands + 1] = x
 		end
 	end
 
-	return var_0_46(arg_9_0, var_9_15 .. var_9_7, var_9_6)
+	return putop(ctx, name .. suffix, operands)
 end
 
-local function var_0_56(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_1 = arg_10_1 or 0
+local function disass_block(ctx, ofs, len)
+	ofs = ofs or 0
 
-	local var_10_0 = arg_10_2 and arg_10_1 + arg_10_2 or #arg_10_0.code
+	local stop = len and ofs + len or #ctx.code
 
-	arg_10_0.pos = arg_10_1
-	arg_10_0.rel = nil
+	ctx.pos = ofs
+	ctx.rel = nil
 
-	while var_10_0 > arg_10_0.pos do
-		var_0_55(arg_10_0)
+	while stop > ctx.pos do
+		disass_ins(ctx)
 	end
 end
 
-local function var_0_57(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = {
-		code = arg_11_0,
-		addr = arg_11_1 or 0,
-		out = arg_11_2 or io.write,
-		symtab = {},
-		disass = var_0_56
-	}
+local function create(code, addr, out)
+	local ctx = {}
 
-	var_11_0.hexdump = 8
+	ctx.code = code
+	ctx.addr = addr or 0
+	ctx.out = out or io.write
+	ctx.symtab = {}
+	ctx.disass = disass_block
+	ctx.hexdump = 8
 
-	return var_11_0
+	return ctx
 end
 
-local function var_0_58(arg_12_0, arg_12_1, arg_12_2)
-	var_0_57(arg_12_0, arg_12_1, arg_12_2):disass()
+local function disass(code, addr, out)
+	create(code, addr, out):disass()
 end
 
-local function var_0_59(arg_13_0)
-	if arg_13_0 < 32 then
-		return var_0_42.x[arg_13_0]
+local function regname(r)
+	if r < 32 then
+		return map_regs.x[r]
 	end
 
-	return var_0_42.d[arg_13_0 - 32]
+	return map_regs.d[r - 32]
 end
 
 return {
-	create = var_0_57,
-	disass = var_0_58,
-	regname = var_0_59
+	create = create,
+	disass = disass,
+	regname = regname
 }

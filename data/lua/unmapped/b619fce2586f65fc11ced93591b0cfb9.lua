@@ -1,215 +1,222 @@
-﻿local var_0_0 = Mathf.Clamp
-local var_0_1 = Mathf.Sqrt
-local var_0_2 = Mathf.Min
-local var_0_3 = Mathf.Max
-local var_0_4 = setmetatable
-local var_0_5 = rawget
-local var_0_6 = {}
-local var_0_7 = tolua.initget(var_0_6)
+﻿-- chunkname: @UnityEngine/Vector4.lua
 
-function var_0_6.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_5(var_0_6, arg_1_1)
+local clamp = Mathf.Clamp
+local sqrt = Mathf.Sqrt
+local min = Mathf.Min
+local max = Mathf.Max
+local setmetatable = setmetatable
+local rawget = rawget
+local Vector4 = {}
+local get = tolua.initget(Vector4)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_5(var_0_7, arg_1_1)
+function Vector4.__index(t, k)
+	local var = rawget(Vector4, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+	if var == nil then
+		var = rawget(get, k)
+
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_6.__call(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	return var_0_4({
-		x = arg_2_1 or 0,
-		y = arg_2_2 or 0,
-		z = arg_2_3 or 0,
-		w = arg_2_4 or 0
-	}, var_0_6)
+function Vector4.__call(t, x, y, z, w)
+	return setmetatable({
+		x = x or 0,
+		y = y or 0,
+		z = z or 0,
+		w = w or 0
+	}, Vector4)
 end
 
-function var_0_6.New(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	return var_0_4({
-		x = arg_3_0 or 0,
-		y = arg_3_1 or 0,
-		z = arg_3_2 or 0,
-		w = arg_3_3 or 0
-	}, var_0_6)
+function Vector4.New(x, y, z, w)
+	return setmetatable({
+		x = x or 0,
+		y = y or 0,
+		z = z or 0,
+		w = w or 0
+	}, Vector4)
 end
 
-function var_0_6.Set(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0.x = arg_4_1 or 0
-	arg_4_0.y = arg_4_2 or 0
-	arg_4_0.z = arg_4_3 or 0
-	arg_4_0.w = arg_4_4 or 0
+function Vector4:Set(x, y, z, w)
+	self.x = x or 0
+	self.y = y or 0
+	self.z = z or 0
+	self.w = w or 0
 end
 
-function var_0_6.Get(arg_5_0)
-	return arg_5_0.x, arg_5_0.y, arg_5_0.z, arg_5_0.w
+function Vector4:Get()
+	return self.x, self.y, self.z, self.w
 end
 
-function var_0_6.Lerp(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_2 = var_0_0(arg_6_2, 0, 1)
+function Vector4.Lerp(from, to, t)
+	t = clamp(t, 0, 1)
 
-	return var_0_6.New(arg_6_0.x + (arg_6_1.x - arg_6_0.x) * arg_6_2, arg_6_0.y + (arg_6_1.y - arg_6_0.y) * arg_6_2, arg_6_0.z + (arg_6_1.z - arg_6_0.z) * arg_6_2, arg_6_0.w + (arg_6_1.w - arg_6_0.w) * arg_6_2)
+	return Vector4.New(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, from.z + (to.z - from.z) * t, from.w + (to.w - from.w) * t)
 end
 
-function var_0_6.MoveTowards(arg_7_0, arg_7_1, arg_7_2)
-	local var_7_0 = arg_7_1 - arg_7_0
-	local var_7_1 = var_7_0:Magnitude()
+function Vector4.MoveTowards(current, target, maxDistanceDelta)
+	local vector = target - current
+	local magnitude = vector:Magnitude()
 
-	if arg_7_2 < var_7_1 and var_7_1 ~= 0 then
-		arg_7_2 = arg_7_2 / var_7_1
+	if maxDistanceDelta < magnitude and magnitude ~= 0 then
+		maxDistanceDelta = maxDistanceDelta / magnitude
 
-		var_7_0:Mul(arg_7_2)
-		var_7_0:Add(arg_7_0)
+		vector:Mul(maxDistanceDelta)
+		vector:Add(current)
 
-		return var_7_0
+		return vector
 	end
 
-	return arg_7_1
+	return target
 end
 
-function var_0_6.Scale(arg_8_0, arg_8_1)
-	return var_0_6.New(arg_8_0.x * arg_8_1.x, arg_8_0.y * arg_8_1.y, arg_8_0.z * arg_8_1.z, arg_8_0.w * arg_8_1.w)
+function Vector4.Scale(a, b)
+	return Vector4.New(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w)
 end
 
-function var_0_6.SetScale(arg_9_0, arg_9_1)
-	arg_9_0.x = arg_9_0.x * arg_9_1.x
-	arg_9_0.y = arg_9_0.y * arg_9_1.y
-	arg_9_0.z = arg_9_0.z * arg_9_1.z
-	arg_9_0.w = arg_9_0.w * arg_9_1.w
+function Vector4:SetScale(scale)
+	self.x = self.x * scale.x
+	self.y = self.y * scale.y
+	self.z = self.z * scale.z
+	self.w = self.w * scale.w
 end
 
-function var_0_6.Normalize(arg_10_0)
-	return vector4.New(arg_10_0.x, arg_10_0.y, arg_10_0.z, arg_10_0.w):SetNormalize()
+function Vector4:Normalize()
+	local v = vector4.New(self.x, self.y, self.z, self.w)
+
+	return v:SetNormalize()
 end
 
-function var_0_6.SetNormalize(arg_11_0)
-	local var_11_0 = arg_11_0:Magnitude()
+function Vector4:SetNormalize()
+	local num = self:Magnitude()
 
-	if var_11_0 == 1 then
-		return arg_11_0
-	elseif var_11_0 > 1e-05 then
-		arg_11_0:Div(var_11_0)
+	if num == 1 then
+		return self
+	elseif num > 1e-05 then
+		self:Div(num)
 	else
-		arg_11_0:Set(0, 0, 0, 0)
+		self:Set(0, 0, 0, 0)
 	end
 
-	return arg_11_0
+	return self
 end
 
-function var_0_6.Div(arg_12_0, arg_12_1)
-	arg_12_0.x = arg_12_0.x / arg_12_1
-	arg_12_0.y = arg_12_0.y / arg_12_1
-	arg_12_0.z = arg_12_0.z / arg_12_1
-	arg_12_0.w = arg_12_0.w / arg_12_1
+function Vector4:Div(d)
+	self.x = self.x / d
+	self.y = self.y / d
+	self.z = self.z / d
+	self.w = self.w / d
 
-	return arg_12_0
+	return self
 end
 
-function var_0_6.Mul(arg_13_0, arg_13_1)
-	arg_13_0.x = arg_13_0.x * arg_13_1
-	arg_13_0.y = arg_13_0.y * arg_13_1
-	arg_13_0.z = arg_13_0.z * arg_13_1
-	arg_13_0.w = arg_13_0.w * arg_13_1
+function Vector4:Mul(d)
+	self.x = self.x * d
+	self.y = self.y * d
+	self.z = self.z * d
+	self.w = self.w * d
 
-	return arg_13_0
+	return self
 end
 
-function var_0_6.Add(arg_14_0, arg_14_1)
-	arg_14_0.x = arg_14_0.x + arg_14_1.x
-	arg_14_0.y = arg_14_0.y + arg_14_1.y
-	arg_14_0.z = arg_14_0.z + arg_14_1.z
-	arg_14_0.w = arg_14_0.w + arg_14_1.w
+function Vector4:Add(b)
+	self.x = self.x + b.x
+	self.y = self.y + b.y
+	self.z = self.z + b.z
+	self.w = self.w + b.w
 
-	return arg_14_0
+	return self
 end
 
-function var_0_6.Sub(arg_15_0, arg_15_1)
-	arg_15_0.x = arg_15_0.x - arg_15_1.x
-	arg_15_0.y = arg_15_0.y - arg_15_1.y
-	arg_15_0.z = arg_15_0.z - arg_15_1.z
-	arg_15_0.w = arg_15_0.w - arg_15_1.w
+function Vector4:Sub(b)
+	self.x = self.x - b.x
+	self.y = self.y - b.y
+	self.z = self.z - b.z
+	self.w = self.w - b.w
 
-	return arg_15_0
+	return self
 end
 
-function var_0_6.Dot(arg_16_0, arg_16_1)
-	return arg_16_0.x * arg_16_1.x + arg_16_0.y * arg_16_1.y + arg_16_0.z * arg_16_1.z + arg_16_0.w * arg_16_1.w
+function Vector4.Dot(a, b)
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 end
 
-function var_0_6.Project(arg_17_0, arg_17_1)
-	return arg_17_1 * (var_0_6.Dot(arg_17_0, arg_17_1) / var_0_6.Dot(arg_17_1, arg_17_1))
+function Vector4.Project(a, b)
+	local s = Vector4.Dot(a, b) / Vector4.Dot(b, b)
+
+	return b * s
 end
 
-function var_0_6.Distance(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0 - arg_18_1
+function Vector4.Distance(a, b)
+	local v = a - b
 
-	return var_0_6.Magnitude(var_18_0)
+	return Vector4.Magnitude(v)
 end
 
-function var_0_6.Magnitude(arg_19_0)
-	return var_0_1(arg_19_0.x * arg_19_0.x + arg_19_0.y * arg_19_0.y + arg_19_0.z * arg_19_0.z + arg_19_0.w * arg_19_0.w)
+function Vector4.Magnitude(a)
+	return sqrt(a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w)
 end
 
-function var_0_6.SqrMagnitude(arg_20_0)
-	return arg_20_0.x * arg_20_0.x + arg_20_0.y * arg_20_0.y + arg_20_0.z * arg_20_0.z + arg_20_0.w * arg_20_0.w
+function Vector4.SqrMagnitude(a)
+	return a.x * a.x + a.y * a.y + a.z * a.z + a.w * a.w
 end
 
-function var_0_6.Min(arg_21_0, arg_21_1)
-	return var_0_6.New(var_0_3(arg_21_0.x, arg_21_1.x), var_0_3(arg_21_0.y, arg_21_1.y), var_0_3(arg_21_0.z, arg_21_1.z), var_0_3(arg_21_0.w, arg_21_1.w))
+function Vector4.Min(lhs, rhs)
+	return Vector4.New(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z), max(lhs.w, rhs.w))
 end
 
-function var_0_6.Max(arg_22_0, arg_22_1)
-	return var_0_6.New(var_0_2(arg_22_0.x, arg_22_1.x), var_0_2(arg_22_0.y, arg_22_1.y), var_0_2(arg_22_0.z, arg_22_1.z), var_0_2(arg_22_0.w, arg_22_1.w))
+function Vector4.Max(lhs, rhs)
+	return Vector4.New(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z), min(lhs.w, rhs.w))
 end
 
-function var_0_6.__tostring(arg_23_0)
-	return string.format("[%f,%f,%f,%f]", arg_23_0.x, arg_23_0.y, arg_23_0.z, arg_23_0.w)
+function Vector4:__tostring()
+	return string.format("[%f,%f,%f,%f]", self.x, self.y, self.z, self.w)
 end
 
-function var_0_6.__div(arg_24_0, arg_24_1)
-	return var_0_6.New(arg_24_0.x / arg_24_1, arg_24_0.y / arg_24_1, arg_24_0.z / arg_24_1, arg_24_0.w / arg_24_1)
+function Vector4.__div(va, d)
+	return Vector4.New(va.x / d, va.y / d, va.z / d, va.w / d)
 end
 
-function var_0_6.__mul(arg_25_0, arg_25_1)
-	return var_0_6.New(arg_25_0.x * arg_25_1, arg_25_0.y * arg_25_1, arg_25_0.z * arg_25_1, arg_25_0.w * arg_25_1)
+function Vector4.__mul(va, d)
+	return Vector4.New(va.x * d, va.y * d, va.z * d, va.w * d)
 end
 
-function var_0_6.__add(arg_26_0, arg_26_1)
-	return var_0_6.New(arg_26_0.x + arg_26_1.x, arg_26_0.y + arg_26_1.y, arg_26_0.z + arg_26_1.z, arg_26_0.w + arg_26_1.w)
+function Vector4.__add(va, vb)
+	return Vector4.New(va.x + vb.x, va.y + vb.y, va.z + vb.z, va.w + vb.w)
 end
 
-function var_0_6.__sub(arg_27_0, arg_27_1)
-	return var_0_6.New(arg_27_0.x - arg_27_1.x, arg_27_0.y - arg_27_1.y, arg_27_0.z - arg_27_1.z, arg_27_0.w - arg_27_1.w)
+function Vector4.__sub(va, vb)
+	return Vector4.New(va.x - vb.x, va.y - vb.y, va.z - vb.z, va.w - vb.w)
 end
 
-function var_0_6.__unm(arg_28_0)
-	return var_0_6.New(-arg_28_0.x, -arg_28_0.y, -arg_28_0.z, -arg_28_0.w)
+function Vector4.__unm(va)
+	return Vector4.New(-va.x, -va.y, -va.z, -va.w)
 end
 
-function var_0_6.__eq(arg_29_0, arg_29_1)
-	local var_29_0 = arg_29_0 - arg_29_1
+function Vector4.__eq(va, vb)
+	local v = va - vb
+	local delta = Vector4.SqrMagnitude(v)
 
-	return var_0_6.SqrMagnitude(var_29_0) < 1e-10
+	return delta < 1e-10
 end
 
-function var_0_7.zero()
-	return var_0_6.New(0, 0, 0, 0)
+function get.zero()
+	return Vector4.New(0, 0, 0, 0)
 end
 
-function var_0_7.one()
-	return var_0_6.New(1, 1, 1, 1)
+function get.one()
+	return Vector4.New(1, 1, 1, 1)
 end
 
-var_0_7.magnitude = var_0_6.Magnitude
-var_0_7.normalized = var_0_6.Normalize
-var_0_7.sqrMagnitude = var_0_6.SqrMagnitude
-UnityEngine.Vector4 = var_0_6
+get.magnitude = Vector4.Magnitude
+get.normalized = Vector4.Normalize
+get.sqrMagnitude = Vector4.SqrMagnitude
+UnityEngine.Vector4 = Vector4
 
-var_0_4(var_0_6, var_0_6)
+setmetatable(Vector4, Vector4)
 
-return var_0_6
+return Vector4

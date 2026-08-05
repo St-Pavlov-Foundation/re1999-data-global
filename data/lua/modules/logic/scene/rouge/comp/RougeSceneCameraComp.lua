@@ -14,6 +14,10 @@ function RougeSceneCameraComp:onSceneStart(sceneId, levelId)
 	RougeMapController.instance:registerCallback(RougeMapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
 	RougeMapController.instance:registerCallback(RougeMapEvent.onPathSelectMapFocus, self.onPathSelectMapFocus, self)
 	RougeMapController.instance:registerCallback(RougeMapEvent.focusChangeCameraSize, self.focusChangeCameraSize, self)
+
+	self._tranCameraTrace = CameraMgr.instance:getCameraTraceGO().transform
+
+	TaskDispatcher.runRepeat(self._resetCamera, self, 1)
 end
 
 function RougeSceneCameraComp:focusChangeCameraSize()
@@ -24,6 +28,33 @@ end
 
 function RougeSceneCameraComp:onLoadMapDone()
 	self:initCameraSize()
+end
+
+local fixCount = 0
+local fixDt
+
+function RougeSceneCameraComp:_resetCamera()
+	local posX, posY, posZ = transformhelper.getLocalPos(self._tranCameraTrace)
+
+	if posX ~= 0 or posY ~= 0 or posZ ~= 0 then
+		local cameraTrace = CameraMgr.instance:getCameraTrace()
+		local isEnableTrace = cameraTrace and cameraTrace.EnableTrace
+
+		if fixDt and os.clock() - fixDt > 10 then
+			fixCount = 0
+		end
+
+		fixCount = fixCount + 1
+		fixDt = os.clock()
+
+		logError(string.format("重置相机！！！  当前相机追踪状态: %s, 当前相机坐标 : %s, %s, %s, 修复次数：%s", isEnableTrace, posX, posY, posZ, fixCount))
+
+		if isEnableTrace then
+			cameraTrace.EnableTrace = false
+		end
+
+		transformhelper.setLocalPos(self._tranCameraTrace, 0, 0, 0)
+	end
 end
 
 function RougeSceneCameraComp:initCameraSize()
@@ -59,6 +90,7 @@ function RougeSceneCameraComp:onSceneClose()
 	RougeMapController.instance:unregisterCallback(RougeMapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
 	RougeMapController.instance:unregisterCallback(RougeMapEvent.onPathSelectMapFocus, self.onPathSelectMapFocus, self)
 	RougeMapController.instance:unregisterCallback(RougeMapEvent.focusChangeCameraSize, self.focusChangeCameraSize, self)
+	TaskDispatcher.cancelTask(self._resetCamera, self)
 	self:clearTween()
 end
 

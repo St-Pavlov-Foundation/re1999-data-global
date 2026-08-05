@@ -1,101 +1,103 @@
-﻿module("booter.base.oop", package.seeall)
+﻿-- chunkname: @booter/base/oop.lua
 
-function class(arg_1_0, arg_1_1)
-	local var_1_0 = type(arg_1_1)
-	local var_1_1
+module("booter.base.oop", package.seeall)
 
-	if var_1_0 ~= "function" and var_1_0 ~= "table" then
-		var_1_0 = nil
-		arg_1_1 = nil
+function class(classname, super)
+	local superType = type(super)
+	local cls
+
+	if superType ~= "function" and superType ~= "table" then
+		superType = nil
+		super = nil
 	end
 
-	if var_1_0 == "function" or arg_1_1 and arg_1_1.__ctype == 1 then
-		var_1_1 = {}
+	if superType == "function" or super and super.__ctype == 1 then
+		cls = {}
 
-		if var_1_0 == "table" then
-			for iter_1_0, iter_1_1 in pairs(arg_1_1) do
-				var_1_1[iter_1_0] = iter_1_1
+		if superType == "table" then
+			for k, v in pairs(super) do
+				cls[k] = v
 			end
 
-			var_1_1.__create = arg_1_1.__create
-			var_1_1.super = arg_1_1
+			cls.__create = super.__create
+			cls.super = super
 		else
-			var_1_1.__create = arg_1_1
+			cls.__create = super
 
-			function var_1_1.ctor()
+			function cls.ctor()
 				return
 			end
 		end
 
-		var_1_1.__cname = arg_1_0
-		var_1_1.__ctype = 1
+		cls.__cname = classname
+		cls.__ctype = 1
 
-		function var_1_1.New(...)
-			local var_3_0 = var_1_1.__create(...)
+		function cls.New(...)
+			local instance = cls.__create(...)
 
-			for iter_3_0, iter_3_1 in pairs(var_1_1) do
-				var_3_0[iter_3_0] = iter_3_1
+			for k, v in pairs(cls) do
+				instance[k] = v
 			end
 
-			var_3_0.class = var_1_1
+			instance.class = cls
 
-			var_3_0:ctor(...)
+			instance:ctor(...)
 
-			return var_3_0
+			return instance
 		end
 	else
-		if arg_1_1 then
-			var_1_1 = {}
+		if super then
+			cls = {}
 
-			setmetatable(var_1_1, {
-				__index = arg_1_1
+			setmetatable(cls, {
+				__index = super
 			})
 
-			var_1_1.super = arg_1_1
+			cls.super = super
 		else
-			var_1_1 = {
+			cls = {
 				ctor = function()
 					return
 				end
 			}
 		end
 
-		var_1_1.__cname = arg_1_0
-		var_1_1.__ctype = 2
-		var_1_1.__index = var_1_1
+		cls.__cname = classname
+		cls.__ctype = 2
+		cls.__index = cls
 
-		function var_1_1.New(...)
-			local var_5_0 = setmetatable({}, var_1_1)
+		function cls.New(...)
+			local instance = setmetatable({}, cls)
 
-			var_5_0.class = var_1_1
+			instance.class = cls
 
-			var_5_0:ctor(...)
+			instance:ctor(...)
 
-			return var_5_0
+			return instance
 		end
 	end
 
-	return var_1_1
+	return cls
 end
 
-function isTypeOf(arg_6_0, arg_6_1)
-	if arg_6_1 == nil then
+function isTypeOf(luaObj, clsDefine)
+	if clsDefine == nil then
 		error("istypeof clsDefine can not be nil! ")
 	end
 
-	if arg_6_0 == nil then
+	if luaObj == nil then
 		return false
 	end
 
-	local var_6_0 = arg_6_1.__cname
-	local var_6_1 = arg_6_0
+	local clsName = clsDefine.__cname
+	local tmp = luaObj
 
-	while var_6_1 ~= nil do
-		if var_6_1.__cname == var_6_0 then
+	while tmp ~= nil do
+		if tmp.__cname == clsName then
 			return true
 		end
 
-		var_6_1 = var_6_1.super
+		tmp = tmp.super
 	end
 
 	return false

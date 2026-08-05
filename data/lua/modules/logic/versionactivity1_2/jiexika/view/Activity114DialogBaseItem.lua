@@ -478,9 +478,6 @@ function Activity114DialogBaseItem:_showMagicItem(show)
 end
 
 function Activity114DialogBaseItem:_delayShow()
-	self._conMark:SetMarks(self._markIndexs)
-	self._conMark:SetMarksTop(self._markTop, self._markContent)
-
 	self._textInfo = self._txtcontentcn:GetTextInfo(self._subemtext)
 	self._lineInfoList = {}
 

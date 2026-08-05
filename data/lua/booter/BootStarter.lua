@@ -1,4 +1,6 @@
-﻿if jit and SLFramework.FrameworkSettings.Is64Bit then
+﻿-- chunkname: @booter/BootStarter.lua
+
+if jit and SLFramework.FrameworkSettings.Is64Bit then
 	jit.off()
 end
 
@@ -8,66 +10,69 @@ canLogError = SLFramework.SLLogger.CanLogError
 isDebugBuild = SLFramework.UnityHelper.IsDebugBuild()
 _xpcall = xpcall
 
-function __G__TRACKBACK__(arg_1_0)
+function __G__TRACKBACK__(msg)
 	if canLogError then
-		printError(arg_1_0 .. "\n" .. debug.traceback())
+		printError(msg .. "\n" .. debug.traceback())
 	end
 end
 
-function callWithCatch(arg_2_0, ...)
-	if (... ~= nil and select("#", ...) or 0) > 0 then
-		return _xpcall(arg_2_0, __G__TRACKBACK__, select(1, ...))
+function callWithCatch(func, ...)
+	local args = ...
+	local len = args ~= nil and select("#", ...) or 0
+
+	if len > 0 then
+		return _xpcall(func, __G__TRACKBACK__, select(1, ...))
 	else
-		return _xpcall(arg_2_0, __G__TRACKBACK__)
+		return _xpcall(func, __G__TRACKBACK__)
 	end
 end
 
-function setGlobal(arg_3_0, arg_3_1)
-	if arg_3_0 == nil then
+function setGlobal(key, value)
+	if key == nil then
 		error("BootStarter setGlobal, key should not be nil!")
 
 		return
 	end
 
-	rawset(_G, arg_3_0, arg_3_1)
+	rawset(_G, key, value)
 end
 
-function getGlobal(arg_4_0)
-	return rawget(_G, arg_4_0)
+function getGlobal(key)
+	return rawget(_G, key)
 end
 
 moduleNameToTables = {}
 moduleNameToPath = {}
 
-function getModuleDef(arg_5_0)
-	return moduleNameToTables[arg_5_0]
+function getModuleDef(moduleName)
+	return moduleNameToTables[moduleName]
 end
 
-function getModulePath(arg_6_0)
-	return moduleNameToPath[arg_6_0]
+function getModulePath(moduleName)
+	return moduleNameToPath[moduleName]
 end
 
-function addGlobalModule(arg_7_0, arg_7_1)
-	local var_7_0 = require(arg_7_0)
+function addGlobalModule(modulePath, moduleName)
+	local moduleDef = require(modulePath)
 
-	if arg_7_1 and not moduleNameToTables[arg_7_1] then
-		if type(var_7_0) ~= "table" then
-			moduleNameToTables[arg_7_1] = true
+	if moduleName and not moduleNameToTables[moduleName] then
+		if type(moduleDef) ~= "table" then
+			moduleNameToTables[moduleName] = true
 
-			error("BootStarter addGlobalModule, can not find module define, module path = " .. arg_7_0)
+			error("BootStarter addGlobalModule, can not find module define, module path = " .. modulePath)
 		else
-			moduleNameToTables[arg_7_1] = var_7_0
+			moduleNameToTables[moduleName] = moduleDef
 
-			setGlobal(arg_7_1, var_7_0)
+			setGlobal(moduleName, moduleDef)
 		end
 	end
 
-	return var_7_0
+	return moduleDef
 end
 
-function setNeedLoadModule(arg_8_0, arg_8_1)
-	if arg_8_1 and not moduleNameToPath[arg_8_1] then
-		moduleNameToPath[arg_8_1] = arg_8_0
+function setNeedLoadModule(modulePath, moduleName)
+	if moduleName and not moduleNameToPath[moduleName] then
+		moduleNameToPath[moduleName] = modulePath
 	end
 
 	return true
@@ -75,39 +80,39 @@ end
 
 gMetaTable = {}
 
-function gMetaTable.__index(arg_9_0, arg_9_1)
-	local var_9_0 = moduleNameToTables[arg_9_1]
+function gMetaTable.__index(_, key)
+	local moduleDef = moduleNameToTables[key]
 
-	if not var_9_0 then
-		local var_9_1 = moduleNameToPath[arg_9_1]
+	if not moduleDef then
+		local modulePath = moduleNameToPath[key]
 
-		if var_9_1 then
-			var_9_0 = require(var_9_1)
+		if modulePath then
+			moduleDef = require(modulePath)
 
-			if type(var_9_0) ~= "table" then
-				moduleNameToTables[arg_9_1] = true
+			if type(moduleDef) ~= "table" then
+				moduleNameToTables[key] = true
 
-				error("BootStarter __index, can not find module define, module path = " .. var_9_1)
+				error("BootStarter __index, can not find module define, module path = " .. modulePath)
 			else
-				moduleNameToTables[arg_9_1] = var_9_0
+				moduleNameToTables[key] = moduleDef
 
-				setGlobal(arg_9_1, var_9_0)
+				setGlobal(key, moduleDef)
 			end
 		end
 	end
 
-	return var_9_0
+	return moduleDef
 end
 
-function gMetaTable.__newindex(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 ~= "booter" and arg_10_1 ~= "projbooter" and arg_10_1 ~= "framework" and arg_10_1 ~= "modules" and arg_10_1 ~= "protobuf" then
-		error("BootStarter gMetaTable.__newindex, can not set _G table value from other module, use setGlobal function instead! key = " .. arg_10_1)
+function gMetaTable.__newindex(_, key, value)
+	if key ~= "booter" and key ~= "projbooter" and key ~= "framework" and key ~= "modules" and key ~= "protobuf" then
+		error("BootStarter gMetaTable.__newindex, can not set _G table value from other module, use setGlobal function instead! key = " .. key)
 	end
 end
 
 setmetatable(_G, gMetaTable)
 
-local function var_0_0()
+local function main()
 	addGlobalModule("booter.base.cjson")
 	addGlobalModule("booter.base.logger")
 	addGlobalModule("booter.base.oop")
@@ -116,10 +121,10 @@ local function var_0_0()
 	forceLog("SLFramework, lua start!")
 	addGlobalModule("booter.LuaResMgr")
 
-	local var_11_0 = SLFramework.GameConfig.Instance
+	local GameConfig = SLFramework.GameConfig.Instance
 
-	setGlobal("GameConfig", var_11_0)
+	setGlobal("GameConfig", GameConfig)
 	addGlobalModule("projbooter.ProjBooter", "ProjBooter")
 end
 
-local var_0_1, var_0_2 = callWithCatch(var_0_0)
+local result, errorMsg = callWithCatch(main)

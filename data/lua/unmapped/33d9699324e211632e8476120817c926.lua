@@ -1,62 +1,64 @@
-﻿local var_0_0 = rawget
-local var_0_1 = setmetatable
-local var_0_2 = Vector3
-local var_0_3 = {
-	direction = var_0_2.zero,
-	origin = var_0_2.zero
+﻿-- chunkname: @UnityEngine/Ray.lua
+
+local rawget = rawget
+local setmetatable = setmetatable
+local Vector3 = Vector3
+local Ray = {
+	direction = Vector3.zero,
+	origin = Vector3.zero
 }
-local var_0_4 = tolua.initget(var_0_3)
+local get = tolua.initget(Ray)
 
-function var_0_3.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0(var_0_3, arg_1_1)
+function Ray.__index(t, k)
+	local var = rawget(Ray, k)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_0(var_0_4, arg_1_1)
+	if var == nil then
+		var = rawget(get, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_3.__call(arg_2_0, arg_2_1, arg_2_2)
-	return var_0_3.New(arg_2_1, arg_2_2)
+function Ray.__call(t, direction, origin)
+	return Ray.New(direction, origin)
 end
 
-function var_0_3.New(arg_3_0, arg_3_1)
-	local var_3_0 = {
-		direction = arg_3_0:Normalize(),
-		origin = arg_3_1
-	}
+function Ray.New(direction, origin)
+	local ray = {}
 
-	var_0_1(var_3_0, var_0_3)
+	ray.direction = direction:Normalize()
+	ray.origin = origin
 
-	return var_3_0
+	setmetatable(ray, Ray)
+
+	return ray
 end
 
-function var_0_3.GetPoint(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_0.direction * arg_4_1
+function Ray:GetPoint(distance)
+	local dir = self.direction * distance
 
-	var_4_0:Add(arg_4_0.origin)
+	dir:Add(self.origin)
 
-	return var_4_0
+	return dir
 end
 
-function var_0_3.Get(arg_5_0)
-	local var_5_0 = arg_5_0.origin
-	local var_5_1 = arg_5_0.direction
+function Ray:Get()
+	local o = self.origin
+	local d = self.direction
 
-	return var_5_0.x, var_5_0.y, var_5_0.z, var_5_1.x, var_5_1.y, var_5_1.z
+	return o.x, o.y, o.z, d.x, d.y, d.z
 end
 
-function var_0_3.__tostring(arg_6_0)
-	return string.format("Origin:(%f,%f,%f),Dir:(%f,%f, %f)", arg_6_0.origin.x, arg_6_0.origin.y, arg_6_0.origin.z, arg_6_0.direction.x, arg_6_0.direction.y, arg_6_0.direction.z)
+function Ray:__tostring()
+	return string.format("Origin:(%f,%f,%f),Dir:(%f,%f, %f)", self.origin.x, self.origin.y, self.origin.z, self.direction.x, self.direction.y, self.direction.z)
 end
 
-UnityEngine.Ray = var_0_3
+UnityEngine.Ray = Ray
 
-var_0_1(var_0_3, var_0_3)
+setmetatable(Ray, Ray)
 
-return var_0_3
+return Ray

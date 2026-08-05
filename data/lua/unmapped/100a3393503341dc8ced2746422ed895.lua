@@ -1,259 +1,261 @@
-﻿local var_0_0 = _G
-local var_0_1 = require("coroutine")
-local var_0_2 = require("string")
-local var_0_3 = require("math")
-local var_0_4 = require("os")
-local var_0_5 = require("socket")
-local var_0_6 = require("socket.tp")
-local var_0_7 = require("ltn12")
-local var_0_8 = require("socket.headers")
-local var_0_9 = require("mime")
+﻿-- chunkname: @socket/smtp.lua
 
-var_0_5.smtp = {}
+local base = _G
+local coroutine = require("coroutine")
+local string = require("string")
+local math = require("math")
+local os = require("os")
+local socket = require("socket")
+local tp = require("socket.tp")
+local ltn12 = require("ltn12")
+local headers = require("socket.headers")
+local mime = require("mime")
 
-local var_0_10 = var_0_5.smtp
+socket.smtp = {}
 
-var_0_10.TIMEOUT = 60
-var_0_10.SERVER = "localhost"
-var_0_10.PORT = 25
-var_0_10.DOMAIN = var_0_4.getenv("SERVER_NAME") or "localhost"
-var_0_10.ZONE = "-0000"
+local _M = socket.smtp
 
-local var_0_11 = {
+_M.TIMEOUT = 60
+_M.SERVER = "localhost"
+_M.PORT = 25
+_M.DOMAIN = os.getenv("SERVER_NAME") or "localhost"
+_M.ZONE = "-0000"
+
+local metat = {
 	__index = {}
 }
 
-function var_0_11.__index.greet(arg_1_0, arg_1_1)
-	arg_1_0.try(arg_1_0.tp:check("2.."))
-	arg_1_0.try(arg_1_0.tp:command("EHLO", arg_1_1 or var_0_10.DOMAIN))
+function metat.__index:greet(domain)
+	self.try(self.tp:check("2.."))
+	self.try(self.tp:command("EHLO", domain or _M.DOMAIN))
 
-	return var_0_5.skip(1, arg_1_0.try(arg_1_0.tp:check("2..")))
+	return socket.skip(1, self.try(self.tp:check("2..")))
 end
 
-function var_0_11.__index.mail(arg_2_0, arg_2_1)
-	arg_2_0.try(arg_2_0.tp:command("MAIL", "FROM:" .. arg_2_1))
+function metat.__index:mail(from)
+	self.try(self.tp:command("MAIL", "FROM:" .. from))
 
-	return arg_2_0.try(arg_2_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.rcpt(arg_3_0, arg_3_1)
-	arg_3_0.try(arg_3_0.tp:command("RCPT", "TO:" .. arg_3_1))
+function metat.__index:rcpt(to)
+	self.try(self.tp:command("RCPT", "TO:" .. to))
 
-	return arg_3_0.try(arg_3_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.data(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.try(arg_4_0.tp:command("DATA"))
-	arg_4_0.try(arg_4_0.tp:check("3.."))
-	arg_4_0.try(arg_4_0.tp:source(arg_4_1, arg_4_2))
-	arg_4_0.try(arg_4_0.tp:send("\r\n.\r\n"))
+function metat.__index:data(src, step)
+	self.try(self.tp:command("DATA"))
+	self.try(self.tp:check("3.."))
+	self.try(self.tp:source(src, step))
+	self.try(self.tp:send("\r\n.\r\n"))
 
-	return arg_4_0.try(arg_4_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.quit(arg_5_0)
-	arg_5_0.try(arg_5_0.tp:command("QUIT"))
+function metat.__index:quit()
+	self.try(self.tp:command("QUIT"))
 
-	return arg_5_0.try(arg_5_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.close(arg_6_0)
-	return arg_6_0.tp:close()
+function metat.__index:close()
+	return self.tp:close()
 end
 
-function var_0_11.__index.login(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_0.try(arg_7_0.tp:command("AUTH", "LOGIN"))
-	arg_7_0.try(arg_7_0.tp:check("3.."))
-	arg_7_0.try(arg_7_0.tp:send(var_0_9.b64(arg_7_1) .. "\r\n"))
-	arg_7_0.try(arg_7_0.tp:check("3.."))
-	arg_7_0.try(arg_7_0.tp:send(var_0_9.b64(arg_7_2) .. "\r\n"))
+function metat.__index:login(user, password)
+	self.try(self.tp:command("AUTH", "LOGIN"))
+	self.try(self.tp:check("3.."))
+	self.try(self.tp:send(mime.b64(user) .. "\r\n"))
+	self.try(self.tp:check("3.."))
+	self.try(self.tp:send(mime.b64(password) .. "\r\n"))
 
-	return arg_7_0.try(arg_7_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.plain(arg_8_0, arg_8_1, arg_8_2)
-	local var_8_0 = "PLAIN " .. var_0_9.b64("\x00" .. arg_8_1 .. "\x00" .. arg_8_2)
+function metat.__index:plain(user, password)
+	local auth = "PLAIN " .. mime.b64("\x00" .. user .. "\x00" .. password)
 
-	arg_8_0.try(arg_8_0.tp:command("AUTH", var_8_0))
+	self.try(self.tp:command("AUTH", auth))
 
-	return arg_8_0.try(arg_8_0.tp:check("2.."))
+	return self.try(self.tp:check("2.."))
 end
 
-function var_0_11.__index.auth(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_1 or not arg_9_2 then
+function metat.__index:auth(user, password, ext)
+	if not user or not password then
 		return 1
 	end
 
-	if var_0_2.find(arg_9_3, "AUTH[^\n]+LOGIN") then
-		return arg_9_0:login(arg_9_1, arg_9_2)
-	elseif var_0_2.find(arg_9_3, "AUTH[^\n]+PLAIN") then
-		return arg_9_0:plain(arg_9_1, arg_9_2)
+	if string.find(ext, "AUTH[^\n]+LOGIN") then
+		return self:login(user, password)
+	elseif string.find(ext, "AUTH[^\n]+PLAIN") then
+		return self:plain(user, password)
 	else
-		arg_9_0.try(nil, "authentication not supported")
+		self.try(nil, "authentication not supported")
 	end
 end
 
-function var_0_11.__index.send(arg_10_0, arg_10_1)
-	arg_10_0:mail(arg_10_1.from)
+function metat.__index:send(mailt)
+	self:mail(mailt.from)
 
-	if var_0_0.type(arg_10_1.rcpt) == "table" then
-		for iter_10_0, iter_10_1 in var_0_0.ipairs(arg_10_1.rcpt) do
-			arg_10_0:rcpt(iter_10_1)
+	if base.type(mailt.rcpt) == "table" then
+		for i, v in base.ipairs(mailt.rcpt) do
+			self:rcpt(v)
 		end
 	else
-		arg_10_0:rcpt(arg_10_1.rcpt)
+		self:rcpt(mailt.rcpt)
 	end
 
-	arg_10_0:data(var_0_7.source.chain(arg_10_1.source, var_0_9.stuff()), arg_10_1.step)
+	self:data(ltn12.source.chain(mailt.source, mime.stuff()), mailt.step)
 end
 
-function var_0_10.open(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = var_0_5.try(var_0_6.connect(arg_11_0 or var_0_10.SERVER, arg_11_1 or var_0_10.PORT, var_0_10.TIMEOUT, arg_11_2))
-	local var_11_1 = var_0_0.setmetatable({
-		tp = var_11_0
-	}, var_0_11)
+function _M.open(server, port, create)
+	local tp = socket.try(tp.connect(server or _M.SERVER, port or _M.PORT, _M.TIMEOUT, create))
+	local s = base.setmetatable({
+		tp = tp
+	}, metat)
 
-	var_11_1.try = var_0_5.newtry(function()
-		var_11_1:close()
+	s.try = socket.newtry(function()
+		s:close()
 	end)
 
-	return var_11_1
+	return s
 end
 
-local function var_0_12(arg_13_0)
-	local var_13_0 = {}
+local function lower_headers(headers)
+	local lower = {}
 
-	for iter_13_0, iter_13_1 in var_0_0.pairs(arg_13_0 or var_13_0) do
-		var_13_0[var_0_2.lower(iter_13_0)] = iter_13_1
+	for i, v in base.pairs(headers or lower) do
+		lower[string.lower(i)] = v
 	end
 
-	return var_13_0
+	return lower
 end
 
-local var_0_13 = 0
+local seqno = 0
 
-local function var_0_14()
-	var_0_13 = var_0_13 + 1
+local function newboundary()
+	seqno = seqno + 1
 
-	return var_0_2.format("%s%05d==%05u", var_0_4.date("%d%m%Y%H%M%S"), var_0_3.random(0, 99999), var_0_13)
+	return string.format("%s%05d==%05u", os.date("%d%m%Y%H%M%S"), math.random(0, 99999), seqno)
 end
 
-local var_0_15
+local send_message
 
-local function var_0_16(arg_15_0)
-	local var_15_0 = var_0_8.canonic
-	local var_15_1 = "\r\n"
+local function send_headers(tosend)
+	local canonic = headers.canonic
+	local h = "\r\n"
 
-	for iter_15_0, iter_15_1 in var_0_0.pairs(arg_15_0) do
-		var_15_1 = (var_15_0[iter_15_0] or iter_15_0) .. ": " .. iter_15_1 .. "\r\n" .. var_15_1
+	for f, v in base.pairs(tosend) do
+		h = (canonic[f] or f) .. ": " .. v .. "\r\n" .. h
 	end
 
-	var_0_1.yield(var_15_1)
+	coroutine.yield(h)
 end
 
-local function var_0_17(arg_16_0)
-	local var_16_0 = var_0_14()
-	local var_16_1 = var_0_12(arg_16_0.headers or {})
+local function send_multipart(mesgt)
+	local bd = newboundary()
+	local headers = lower_headers(mesgt.headers or {})
 
-	var_16_1["content-type"] = var_16_1["content-type"] or "multipart/mixed"
-	var_16_1["content-type"] = var_16_1["content-type"] .. "; boundary=\"" .. var_16_0 .. "\""
+	headers["content-type"] = headers["content-type"] or "multipart/mixed"
+	headers["content-type"] = headers["content-type"] .. "; boundary=\"" .. bd .. "\""
 
-	var_0_16(var_16_1)
+	send_headers(headers)
 
-	if arg_16_0.body.preamble then
-		var_0_1.yield(arg_16_0.body.preamble)
-		var_0_1.yield("\r\n")
+	if mesgt.body.preamble then
+		coroutine.yield(mesgt.body.preamble)
+		coroutine.yield("\r\n")
 	end
 
-	for iter_16_0, iter_16_1 in var_0_0.ipairs(arg_16_0.body) do
-		var_0_1.yield("\r\n--" .. var_16_0 .. "\r\n")
-		var_0_15(iter_16_1)
+	for i, m in base.ipairs(mesgt.body) do
+		coroutine.yield("\r\n--" .. bd .. "\r\n")
+		send_message(m)
 	end
 
-	var_0_1.yield("\r\n--" .. var_16_0 .. "--\r\n\r\n")
+	coroutine.yield("\r\n--" .. bd .. "--\r\n\r\n")
 
-	if arg_16_0.body.epilogue then
-		var_0_1.yield(arg_16_0.body.epilogue)
-		var_0_1.yield("\r\n")
+	if mesgt.body.epilogue then
+		coroutine.yield(mesgt.body.epilogue)
+		coroutine.yield("\r\n")
 	end
 end
 
-local function var_0_18(arg_17_0)
-	local var_17_0 = var_0_12(arg_17_0.headers or {})
+local function send_source(mesgt)
+	local headers = lower_headers(mesgt.headers or {})
 
-	var_17_0["content-type"] = var_17_0["content-type"] or "text/plain; charset=\"iso-8859-1\""
+	headers["content-type"] = headers["content-type"] or "text/plain; charset=\"iso-8859-1\""
 
-	var_0_16(var_17_0)
+	send_headers(headers)
 
 	while true do
-		local var_17_1, var_17_2 = arg_17_0.body()
+		local chunk, err = mesgt.body()
 
-		if var_17_2 then
-			var_0_1.yield(nil, var_17_2)
-		elseif var_17_1 then
-			var_0_1.yield(var_17_1)
+		if err then
+			coroutine.yield(nil, err)
+		elseif chunk then
+			coroutine.yield(chunk)
 		else
 			break
 		end
 	end
 end
 
-local function var_0_19(arg_18_0)
-	local var_18_0 = var_0_12(arg_18_0.headers or {})
+local function send_string(mesgt)
+	local headers = lower_headers(mesgt.headers or {})
 
-	var_18_0["content-type"] = var_18_0["content-type"] or "text/plain; charset=\"iso-8859-1\""
+	headers["content-type"] = headers["content-type"] or "text/plain; charset=\"iso-8859-1\""
 
-	var_0_16(var_18_0)
-	var_0_1.yield(arg_18_0.body)
+	send_headers(headers)
+	coroutine.yield(mesgt.body)
 end
 
-function var_0_15(arg_19_0)
-	if var_0_0.type(arg_19_0.body) == "table" then
-		var_0_17(arg_19_0)
-	elseif var_0_0.type(arg_19_0.body) == "function" then
-		var_0_18(arg_19_0)
+function send_message(mesgt)
+	if base.type(mesgt.body) == "table" then
+		send_multipart(mesgt)
+	elseif base.type(mesgt.body) == "function" then
+		send_source(mesgt)
 	else
-		var_0_19(arg_19_0)
+		send_string(mesgt)
 	end
 end
 
-local function var_0_20(arg_20_0)
-	local var_20_0 = var_0_12(arg_20_0.headers)
+local function adjust_headers(mesgt)
+	local lower = lower_headers(mesgt.headers)
 
-	var_20_0.date = var_20_0.date or var_0_4.date("!%a, %d %b %Y %H:%M:%S ") .. (arg_20_0.zone or var_0_10.ZONE)
-	var_20_0["x-mailer"] = var_20_0["x-mailer"] or var_0_5._VERSION
-	var_20_0["mime-version"] = "1.0"
+	lower.date = lower.date or os.date("!%a, %d %b %Y %H:%M:%S ") .. (mesgt.zone or _M.ZONE)
+	lower["x-mailer"] = lower["x-mailer"] or socket._VERSION
+	lower["mime-version"] = "1.0"
 
-	return var_20_0
+	return lower
 end
 
-function var_0_10.message(arg_21_0)
-	arg_21_0.headers = var_0_20(arg_21_0)
+function _M.message(mesgt)
+	mesgt.headers = adjust_headers(mesgt)
 
-	local var_21_0 = var_0_1.create(function()
-		var_0_15(arg_21_0)
+	local co = coroutine.create(function()
+		send_message(mesgt)
 	end)
 
 	return function()
-		local var_23_0, var_23_1, var_23_2 = var_0_1.resume(var_21_0)
+		local ret, a, b = coroutine.resume(co)
 
-		if var_23_0 then
-			return var_23_1, var_23_2
+		if ret then
+			return a, b
 		else
-			return nil, var_23_1
+			return nil, a
 		end
 	end
 end
 
-var_0_10.send = var_0_5.protect(function(arg_24_0)
-	local var_24_0 = var_0_10.open(arg_24_0.server, arg_24_0.port, arg_24_0.create)
-	local var_24_1 = var_24_0:greet(arg_24_0.domain)
+_M.send = socket.protect(function(mailt)
+	local s = _M.open(mailt.server, mailt.port, mailt.create)
+	local ext = s:greet(mailt.domain)
 
-	var_24_0:auth(arg_24_0.user, arg_24_0.password, var_24_1)
-	var_24_0:send(arg_24_0)
-	var_24_0:quit()
+	s:auth(mailt.user, mailt.password, ext)
+	s:send(mailt)
+	s:quit()
 
-	return var_24_0:close()
+	return s:close()
 end)
 
-return var_0_10
+return _M

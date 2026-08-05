@@ -12,6 +12,12 @@ function MassHotUpdateMgr:ctor()
 end
 
 function MassHotUpdateMgr:_needShowChangeZipDownload()
+	local regionType = GameConfig:GetCurRegionType()
+
+	if regionType == 4 or regionType == 5 then
+		return false
+	end
+
 	return self._downloadFailAlertNum > 3
 end
 

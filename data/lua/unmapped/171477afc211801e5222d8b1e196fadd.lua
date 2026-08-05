@@ -1,82 +1,82 @@
-﻿local var_0_0 = _G
-local var_0_1 = require("ltn12")
-local var_0_2 = require("mime.core")
-local var_0_3 = require("io")
-local var_0_4 = require("string")
-local var_0_5 = var_0_2
-local var_0_6 = {}
-local var_0_7 = {}
-local var_0_8 = {}
+﻿-- chunkname: @mime.lua
 
-var_0_5.encodet = var_0_6
-var_0_5.decodet = var_0_7
-var_0_5.wrapt = var_0_8
+local base = _G
+local ltn12 = require("ltn12")
+local mime = require("mime.core")
+local io = require("io")
+local string = require("string")
+local _M = mime
+local encodet, decodet, wrapt = {}, {}, {}
 
-local function var_0_9(arg_1_0)
-	return function(arg_2_0, arg_2_1, arg_2_2)
-		if var_0_0.type(arg_2_0) ~= "string" then
-			arg_2_0, arg_2_1, arg_2_2 = "default", arg_2_0, arg_2_1
+_M.encodet = encodet
+_M.decodet = decodet
+_M.wrapt = wrapt
+
+local function choose(table)
+	return function(name, opt1, opt2)
+		if base.type(name) ~= "string" then
+			name, opt1, opt2 = "default", name, opt1
 		end
 
-		local var_2_0 = arg_1_0[arg_2_0 or "nil"]
+		local f = table[name or "nil"]
 
-		if not var_2_0 then
-			var_0_0.error("unknown key (" .. var_0_0.tostring(arg_2_0) .. ")", 3)
+		if not f then
+			base.error("unknown key (" .. base.tostring(name) .. ")", 3)
 		else
-			return var_2_0(arg_2_1, arg_2_2)
+			return f(opt1, opt2)
 		end
 	end
 end
 
-function var_0_6.base64()
-	return var_0_1.filter.cycle(var_0_5.b64, "")
+function encodet.base64()
+	return ltn12.filter.cycle(_M.b64, "")
 end
 
-var_0_6["quoted-printable"] = function(arg_4_0)
-	return var_0_1.filter.cycle(var_0_5.qp, "", arg_4_0 == "binary" and "=0D=0A" or "\r\n")
+encodet["quoted-printable"] = function(mode)
+	return ltn12.filter.cycle(_M.qp, "", mode == "binary" and "=0D=0A" or "\r\n")
 end
 
-function var_0_7.base64()
-	return var_0_1.filter.cycle(var_0_5.unb64, "")
+function decodet.base64()
+	return ltn12.filter.cycle(_M.unb64, "")
 end
 
-var_0_7["quoted-printable"] = function()
-	return var_0_1.filter.cycle(var_0_5.unqp, "")
+decodet["quoted-printable"] = function()
+	return ltn12.filter.cycle(_M.unqp, "")
 end
 
-local function var_0_10(arg_7_0)
-	if arg_7_0 then
-		if arg_7_0 == "" then
+local function format(chunk)
+	if chunk then
+		if chunk == "" then
 			return "''"
 		else
-			return var_0_4.len(arg_7_0)
+			return string.len(chunk)
 		end
 	else
 		return "nil"
 	end
 end
 
-function var_0_8.text(arg_8_0)
-	arg_8_0 = arg_8_0 or 76
+function wrapt.text(length)
+	length = length or 76
 
-	return var_0_1.filter.cycle(var_0_5.wrp, arg_8_0, arg_8_0)
+	return ltn12.filter.cycle(_M.wrp, length, length)
 end
 
-var_0_8.base64 = var_0_8.text
-var_0_8.default = var_0_8.text
-var_0_8["quoted-printable"] = function()
-	return var_0_1.filter.cycle(var_0_5.qpwrp, 76, 76)
+wrapt.base64 = wrapt.text
+wrapt.default = wrapt.text
+wrapt["quoted-printable"] = function()
+	return ltn12.filter.cycle(_M.qpwrp, 76, 76)
 end
-var_0_5.encode = var_0_9(var_0_6)
-var_0_5.decode = var_0_9(var_0_7)
-var_0_5.wrap = var_0_9(var_0_8)
+_M.encode = choose(encodet)
+_M.decode = choose(decodet)
+_M.wrap = choose(wrapt)
 
-function var_0_5.normalize(arg_10_0)
-	return var_0_1.filter.cycle(var_0_5.eol, 0, arg_10_0)
-end
-
-function var_0_5.stuff()
-	return var_0_1.filter.cycle(var_0_5.dot, 2)
+function _M.normalize(marker)
+	return ltn12.filter.cycle(_M.eol, 0, marker)
 end
 
-return var_0_5
+function _M.stuff()
+	return ltn12.filter.cycle(_M.dot, 2)
+end
+
+return _M

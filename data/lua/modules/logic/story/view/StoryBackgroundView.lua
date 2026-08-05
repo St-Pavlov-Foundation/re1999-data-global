@@ -544,6 +544,10 @@ function StoryBackgroundView:_showBgBottom(show)
 end
 
 function StoryBackgroundView:_showBgTop(show)
+	if not self._simagebgimg then
+		return
+	end
+
 	gohelper.setActive(self._simagebgimg.gameObject, show)
 
 	if not show then

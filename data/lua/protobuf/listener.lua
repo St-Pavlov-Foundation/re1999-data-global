@@ -1,37 +1,39 @@
-﻿local var_0_0 = setmetatable
+﻿-- chunkname: @protobuf/listener.lua
+
+local setmetatable = setmetatable
 
 module("protobuf.listener")
 
-local var_0_1 = {
+local _null_listener = {
 	Modified = function()
 		return
 	end
 }
 
 function NullMessageListener()
-	return var_0_1
+	return _null_listener
 end
 
-local var_0_2 = {
-	Modified = function(arg_3_0)
-		if arg_3_0.dirty then
+local _listener_meta = {
+	Modified = function(self)
+		if self.dirty then
 			return
 		end
 
-		if arg_3_0._parent_message then
-			arg_3_0._parent_message:_Modified()
+		if self._parent_message then
+			self._parent_message:_Modified()
 		end
 	end
 }
 
-var_0_2.__index = var_0_2
+_listener_meta.__index = _listener_meta
 
-function Listener(arg_4_0)
-	local var_4_0 = {}
+function Listener(parent_message)
+	local o = {}
 
-	var_4_0.__mode = "v"
-	var_4_0._parent_message = arg_4_0
-	var_4_0.dirty = false
+	o.__mode = "v"
+	o._parent_message = parent_message
+	o.dirty = false
 
-	return var_0_0(var_4_0, var_0_2)
+	return setmetatable(o, _listener_meta)
 end

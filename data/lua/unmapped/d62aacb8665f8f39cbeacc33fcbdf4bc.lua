@@ -1,185 +1,186 @@
-﻿local var_0_0 = {
-	next_raw = function(arg_1_0, arg_1_1)
-		if not arg_1_1 then
-			if #arg_1_0 == 0 then
-				return nil
-			end
+﻿-- chunkname: @misc/utf8.lua
 
-			return 1, true
+local utf8 = {}
+
+function utf8.next_raw(s, i)
+	if not i then
+		if #s == 0 then
+			return nil
 		end
 
-		if arg_1_1 > #arg_1_0 then
-			return
-		end
-
-		local var_1_0 = arg_1_0:byte(arg_1_1)
-
-		if var_1_0 >= 0 and var_1_0 <= 127 then
-			arg_1_1 = arg_1_1 + 1
-		elseif var_1_0 >= 194 and var_1_0 <= 223 then
-			arg_1_1 = arg_1_1 + 2
-		elseif var_1_0 >= 224 and var_1_0 <= 239 then
-			arg_1_1 = arg_1_1 + 3
-		elseif var_1_0 >= 240 and var_1_0 <= 244 then
-			arg_1_1 = arg_1_1 + 4
-		else
-			return arg_1_1 + 1, false
-		end
-
-		if arg_1_1 > #arg_1_0 then
-			return
-		end
-
-		return arg_1_1, true
-	end
-}
-
-var_0_0.next = var_0_0.next_raw
-
-function var_0_0.byte_indices(arg_2_0, arg_2_1)
-	return var_0_0.next, arg_2_0, arg_2_1
-end
-
-function var_0_0.len(arg_3_0)
-	assert(arg_3_0, "bad argument #1 to 'len' (string expected, got nil)")
-
-	local var_3_0 = 0
-
-	for iter_3_0 in var_0_0.byte_indices(arg_3_0) do
-		var_3_0 = var_3_0 + 1
+		return 1, true
 	end
 
-	return var_3_0
-end
-
-function var_0_0.byte_index(arg_4_0, arg_4_1)
-	if arg_4_1 < 1 then
+	if i > #s then
 		return
 	end
 
-	local var_4_0 = 0
+	local c = s:byte(i)
 
-	for iter_4_0 in var_0_0.byte_indices(arg_4_0) do
-		var_4_0 = var_4_0 + 1
-
-		if var_4_0 == arg_4_1 then
-			return iter_4_0
-		end
-	end
-
-	assert(var_4_0 < arg_4_1, "invalid index")
-end
-
-function var_0_0.char_index(arg_5_0, arg_5_1)
-	if arg_5_1 < 1 or arg_5_1 > #arg_5_0 then
-		return
-	end
-
-	local var_5_0 = 0
-
-	for iter_5_0 in var_0_0.byte_indices(arg_5_0) do
-		var_5_0 = var_5_0 + 1
-
-		if iter_5_0 == arg_5_1 then
-			return var_5_0
-		end
-	end
-
-	error("invalid index")
-end
-
-function var_0_0.prev(arg_6_0, arg_6_1)
-	arg_6_1 = arg_6_1 or #arg_6_0 + 1
-
-	if arg_6_1 <= 1 or arg_6_1 > #arg_6_0 + 1 then
-		return
-	end
-
-	local var_6_0, var_6_1 = var_0_0.next(arg_6_0)
-
-	for iter_6_0, iter_6_1 in var_0_0.byte_indices(arg_6_0) do
-		if iter_6_0 == arg_6_1 then
-			return var_6_0, var_6_1
-		end
-
-		var_6_0, var_6_1 = iter_6_0, iter_6_1
-	end
-
-	if arg_6_1 == #arg_6_0 + 1 then
-		return var_6_0, var_6_1
-	end
-
-	error("invalid index")
-end
-
-function var_0_0.byte_indices_reverse(arg_7_0, arg_7_1)
-	if #arg_7_0 < 200 then
-		return var_0_0.prev, arg_7_0, arg_7_1
+	if c >= 0 and c <= 127 then
+		i = i + 1
+	elseif c >= 194 and c <= 223 then
+		i = i + 2
+	elseif c >= 224 and c <= 239 then
+		i = i + 3
+	elseif c >= 240 and c <= 244 then
+		i = i + 4
 	else
-		local var_7_0 = {}
+		return i + 1, false
+	end
 
-		for iter_7_0 in var_0_0.byte_indices(arg_7_0) do
-			if arg_7_1 and arg_7_1 <= iter_7_0 then
+	if i > #s then
+		return
+	end
+
+	return i, true
+end
+
+utf8.next = utf8.next_raw
+
+function utf8.byte_indices(s, previ)
+	return utf8.next, s, previ
+end
+
+function utf8.len(s)
+	assert(s, "bad argument #1 to 'len' (string expected, got nil)")
+
+	local len = 0
+
+	for _ in utf8.byte_indices(s) do
+		len = len + 1
+	end
+
+	return len
+end
+
+function utf8.byte_index(s, target_ci)
+	if target_ci < 1 then
+		return
+	end
+
+	local ci = 0
+
+	for i in utf8.byte_indices(s) do
+		ci = ci + 1
+
+		if ci == target_ci then
+			return i
+		end
+	end
+
+	assert(ci < target_ci, "invalid index")
+end
+
+function utf8.char_index(s, target_i)
+	if target_i < 1 or target_i > #s then
+		return
+	end
+
+	local ci = 0
+
+	for i in utf8.byte_indices(s) do
+		ci = ci + 1
+
+		if i == target_i then
+			return ci
+		end
+	end
+
+	error("invalid index")
+end
+
+function utf8.prev(s, nexti)
+	nexti = nexti or #s + 1
+
+	if nexti <= 1 or nexti > #s + 1 then
+		return
+	end
+
+	local lasti, lastvalid = utf8.next(s)
+
+	for i, valid in utf8.byte_indices(s) do
+		if i == nexti then
+			return lasti, lastvalid
+		end
+
+		lasti, lastvalid = i, valid
+	end
+
+	if nexti == #s + 1 then
+		return lasti, lastvalid
+	end
+
+	error("invalid index")
+end
+
+function utf8.byte_indices_reverse(s, nexti)
+	if #s < 200 then
+		return utf8.prev, s, nexti
+	else
+		local t = {}
+
+		for i in utf8.byte_indices(s) do
+			if nexti and nexti <= i then
 				break
 			end
 
-			table.insert(var_7_0, iter_7_0)
+			table.insert(t, i)
 		end
 
-		local var_7_1 = #var_7_0 + 1
+		local i = #t + 1
 
 		return function()
-			var_7_1 = var_7_1 - 1
+			i = i - 1
 
-			return var_7_0[var_7_1]
+			return t[i]
 		end
 	end
 end
 
-function var_0_0.sub(arg_9_0, arg_9_1, arg_9_2)
-	assert(arg_9_1 >= 1)
-	assert(not arg_9_2 or arg_9_2 >= 0)
+function utf8.sub(s, start_ci, end_ci)
+	assert(start_ci >= 1)
+	assert(not end_ci or end_ci >= 0)
 
-	local var_9_0 = 0
-	local var_9_1
-	local var_9_2
+	local ci = 0
+	local start_i, end_i
 
-	for iter_9_0 in var_0_0.byte_indices(arg_9_0) do
-		var_9_0 = var_9_0 + 1
+	for i in utf8.byte_indices(s) do
+		ci = ci + 1
 
-		if var_9_0 == arg_9_1 then
-			var_9_1 = iter_9_0
+		if ci == start_ci then
+			start_i = i
 		end
 
-		if var_9_0 == arg_9_2 then
-			var_9_2 = iter_9_0
+		if ci == end_ci then
+			end_i = i
 		end
 	end
 
-	if not var_9_1 then
-		assert(var_9_0 < arg_9_1, "invalid index")
+	if not start_i then
+		assert(ci < start_ci, "invalid index")
 
 		return ""
 	end
 
-	if arg_9_2 and not var_9_2 then
-		if arg_9_2 < arg_9_1 then
+	if end_ci and not end_i then
+		if end_ci < start_ci then
 			return ""
 		end
 
-		assert(var_9_0 < arg_9_2, "invalid index")
+		assert(ci < end_ci, "invalid index")
 	end
 
-	return arg_9_0:sub(var_9_1, var_9_2 and var_9_2 - 1)
+	return s:sub(start_i, end_i and end_i - 1)
 end
 
-function var_0_0.contains(arg_10_0, arg_10_1, arg_10_2)
-	if arg_10_1 < 1 or arg_10_1 > #arg_10_0 then
+function utf8.contains(s, i, sub)
+	if i < 1 or i > #s then
 		return nil
 	end
 
-	for iter_10_0 = 1, #arg_10_2 do
-		if arg_10_0:byte(arg_10_1 + iter_10_0 - 1) ~= arg_10_2:byte(iter_10_0) then
+	for si = 1, #sub do
+		if s:byte(i + si - 1) ~= sub:byte(si) then
 			return false
 		end
 	end
@@ -187,141 +188,140 @@ function var_0_0.contains(arg_10_0, arg_10_1, arg_10_2)
 	return true
 end
 
-function var_0_0.count(arg_11_0, arg_11_1)
-	assert(#arg_11_1 > 0)
+function utf8.count(s, sub)
+	assert(#sub > 0)
 
-	local var_11_0 = 0
-	local var_11_1 = 1
+	local count = 0
+	local i = 1
 
-	while var_11_1 do
-		if var_0_0.contains(arg_11_0, var_11_1, arg_11_1) then
-			var_11_0 = var_11_0 + 1
-			var_11_1 = var_11_1 + #arg_11_1
+	while i do
+		if utf8.contains(s, i, sub) then
+			count = count + 1
+			i = i + #sub
 
-			if var_11_1 > #arg_11_0 then
+			if i > #s then
 				break
 			end
 		else
-			var_11_1 = var_0_0.next(arg_11_0, var_11_1)
+			i = utf8.next(s, i)
 		end
 	end
 
-	return var_11_0
+	return count
 end
 
-function var_0_0.isvalid(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_0:byte(arg_12_1)
+function utf8.isvalid(s, i)
+	local c = s:byte(i)
 
-	if not var_12_0 then
+	if not c then
 		return false
-	elseif var_12_0 >= 0 and var_12_0 <= 127 then
+	elseif c >= 0 and c <= 127 then
 		return true
-	elseif var_12_0 >= 194 and var_12_0 <= 223 then
-		local var_12_1 = arg_12_0:byte(arg_12_1 + 1)
+	elseif c >= 194 and c <= 223 then
+		local c2 = s:byte(i + 1)
 
-		return var_12_1 and var_12_1 >= 128 and var_12_1 <= 191
-	elseif var_12_0 >= 224 and var_12_0 <= 239 then
-		local var_12_2 = arg_12_0:byte(arg_12_1 + 1)
-		local var_12_3 = arg_12_0:byte(arg_12_1 + 2)
+		return c2 and c2 >= 128 and c2 <= 191
+	elseif c >= 224 and c <= 239 then
+		local c2 = s:byte(i + 1)
+		local c3 = s:byte(i + 2)
 
-		if var_12_0 == 224 then
-			return var_12_2 and var_12_3 and var_12_2 >= 160 and var_12_2 <= 191 and var_12_3 >= 128 and var_12_3 <= 191
-		elseif var_12_0 >= 225 and var_12_0 <= 236 then
-			return var_12_2 and var_12_3 and var_12_2 >= 128 and var_12_2 <= 191 and var_12_3 >= 128 and var_12_3 <= 191
-		elseif var_12_0 == 237 then
-			return var_12_2 and var_12_3 and var_12_2 >= 128 and var_12_2 <= 159 and var_12_3 >= 128 and var_12_3 <= 191
-		elseif var_12_0 >= 238 and var_12_0 <= 239 then
-			if var_12_0 == 239 and var_12_2 == 191 and (var_12_3 == 190 or var_12_3 == 191) then
+		if c == 224 then
+			return c2 and c3 and c2 >= 160 and c2 <= 191 and c3 >= 128 and c3 <= 191
+		elseif c >= 225 and c <= 236 then
+			return c2 and c3 and c2 >= 128 and c2 <= 191 and c3 >= 128 and c3 <= 191
+		elseif c == 237 then
+			return c2 and c3 and c2 >= 128 and c2 <= 159 and c3 >= 128 and c3 <= 191
+		elseif c >= 238 and c <= 239 then
+			if c == 239 and c2 == 191 and (c3 == 190 or c3 == 191) then
 				return false
 			end
 
-			return var_12_2 and var_12_3 and var_12_2 >= 128 and var_12_2 <= 191 and var_12_3 >= 128 and var_12_3 <= 191
+			return c2 and c3 and c2 >= 128 and c2 <= 191 and c3 >= 128 and c3 <= 191
 		end
-	elseif var_12_0 >= 240 and var_12_0 <= 244 then
-		local var_12_4 = arg_12_0:byte(arg_12_1 + 1)
-		local var_12_5 = arg_12_0:byte(arg_12_1 + 2)
-		local var_12_6 = arg_12_0:byte(arg_12_1 + 3)
+	elseif c >= 240 and c <= 244 then
+		local c2 = s:byte(i + 1)
+		local c3 = s:byte(i + 2)
+		local c4 = s:byte(i + 3)
 
-		if var_12_0 == 240 then
-			return var_12_4 and var_12_5 and var_12_6 and var_12_4 >= 144 and var_12_4 <= 191 and var_12_5 >= 128 and var_12_5 <= 191 and var_12_6 >= 128 and var_12_6 <= 191
-		elseif var_12_0 >= 241 and var_12_0 <= 243 then
-			return var_12_4 and var_12_5 and var_12_6 and var_12_4 >= 128 and var_12_4 <= 191 and var_12_5 >= 128 and var_12_5 <= 191 and var_12_6 >= 128 and var_12_6 <= 191
-		elseif var_12_0 == 244 then
-			return var_12_4 and var_12_5 and var_12_6 and var_12_4 >= 128 and var_12_4 <= 143 and var_12_5 >= 128 and var_12_5 <= 191 and var_12_6 >= 128 and var_12_6 <= 191
+		if c == 240 then
+			return c2 and c3 and c4 and c2 >= 144 and c2 <= 191 and c3 >= 128 and c3 <= 191 and c4 >= 128 and c4 <= 191
+		elseif c >= 241 and c <= 243 then
+			return c2 and c3 and c4 and c2 >= 128 and c2 <= 191 and c3 >= 128 and c3 <= 191 and c4 >= 128 and c4 <= 191
+		elseif c == 244 then
+			return c2 and c3 and c4 and c2 >= 128 and c2 <= 143 and c3 >= 128 and c3 <= 191 and c4 >= 128 and c4 <= 191
 		end
 	end
 
 	return false
 end
 
-function var_0_0.next_valid(arg_13_0, arg_13_1)
-	local var_13_0
-	local var_13_1
+function utf8.next_valid(s, i)
+	local valid
 
-	arg_13_1, var_13_1 = var_0_0.next_raw(arg_13_0, arg_13_1)
+	i, valid = utf8.next_raw(s, i)
 
-	while arg_13_1 and (not var_13_1 or not var_0_0.isvalid(arg_13_0, arg_13_1)) do
-		arg_13_1, var_13_1 = var_0_0.next(arg_13_0, arg_13_1)
+	while i and (not valid or not utf8.isvalid(s, i)) do
+		i, valid = utf8.next(s, i)
 	end
 
-	return arg_13_1
+	return i
 end
 
-function var_0_0.valid_byte_indices(arg_14_0)
-	return var_0_0.next_valid, arg_14_0
+function utf8.valid_byte_indices(s)
+	return utf8.next_valid, s
 end
 
-function var_0_0.validate(arg_15_0)
-	for iter_15_0, iter_15_1 in var_0_0.byte_indices(arg_15_0) do
-		if not iter_15_1 or not var_0_0.isvalid(arg_15_0, iter_15_0) then
-			error(string.format("invalid utf8 char at #%d", iter_15_0))
+function utf8.validate(s)
+	for i, valid in utf8.byte_indices(s) do
+		if not valid or not utf8.isvalid(s, i) then
+			error(string.format("invalid utf8 char at #%d", i))
 		end
 	end
 end
 
-local function var_0_1(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	return arg_16_3[arg_16_0:sub(arg_16_1, arg_16_2)]
+local function table_lookup(s, i, j, t)
+	return t[s:sub(i, j)]
 end
 
-function var_0_0.replace(arg_17_0, arg_17_1, ...)
-	if type(arg_17_1) == "table" then
-		return var_0_0.replace(arg_17_0, var_0_1, arg_17_1)
+function utf8.replace(s, f, ...)
+	if type(f) == "table" then
+		return utf8.replace(s, table_lookup, f)
 	end
 
-	if arg_17_0 == "" then
-		return arg_17_0
+	if s == "" then
+		return s
 	end
 
-	local var_17_0 = {}
-	local var_17_1 = 1
+	local t = {}
+	local lasti = 1
 
-	for iter_17_0 in var_0_0.byte_indices(arg_17_0) do
-		local var_17_2 = var_0_0.next(arg_17_0, iter_17_0) or #arg_17_0 + 1
-		local var_17_3 = arg_17_1(arg_17_0, iter_17_0, var_17_2 - 1, ...)
+	for i in utf8.byte_indices(s) do
+		local nexti = utf8.next(s, i) or #s + 1
+		local repl = f(s, i, nexti - 1, ...)
 
-		if var_17_3 then
-			table.insert(var_17_0, arg_17_0:sub(var_17_1, iter_17_0 - 1))
-			table.insert(var_17_0, var_17_3)
+		if repl then
+			table.insert(t, s:sub(lasti, i - 1))
+			table.insert(t, repl)
 
-			var_17_1 = var_17_2
+			lasti = nexti
 		end
 	end
 
-	table.insert(var_17_0, arg_17_0:sub(var_17_1))
+	table.insert(t, s:sub(lasti))
 
-	return table.concat(var_17_0)
+	return table.concat(t)
 end
 
-local function var_0_2(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if not var_0_0.isvalid(arg_18_0, arg_18_1) then
-		return arg_18_3
+local function replace_invalid(s, i, j, repl_char)
+	if not utf8.isvalid(s, i) then
+		return repl_char
 	end
 end
 
-function var_0_0.sanitize(arg_19_0, arg_19_1)
-	arg_19_1 = arg_19_1 or "�"
+function utf8.sanitize(s, repl_char)
+	repl_char = repl_char or "�"
 
-	return var_0_0.replace(arg_19_0, var_0_2, arg_19_1)
+	return utf8.replace(s, replace_invalid, repl_char)
 end
 
-return var_0_0
+return utf8

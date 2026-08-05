@@ -1,457 +1,450 @@
-﻿local var_0_0 = require("socket")
-local var_0_1 = require("socket.url")
-local var_0_2 = require("ltn12")
-local var_0_3 = require("mime")
-local var_0_4 = require("string")
-local var_0_5 = require("socket.headers")
-local var_0_6 = _G
-local var_0_7 = require("table")
+﻿-- chunkname: @socket/http.lua
 
-var_0_0.http = {}
+local socket = require("socket")
+local url = require("socket.url")
+local ltn12 = require("ltn12")
+local mime = require("mime")
+local string = require("string")
+local headers = require("socket.headers")
+local base = _G
+local table = require("table")
 
-local var_0_8 = var_0_0.http
+socket.http = {}
 
-var_0_8.TIMEOUT = 60
-var_0_8.USERAGENT = var_0_0._VERSION
+local _M = socket.http
 
-local var_0_9 = {
+_M.TIMEOUT = 60
+_M.USERAGENT = socket._VERSION
+
+local SCHEMES = {
 	http = true
 }
-local var_0_10 = 80
+local PORT = 80
 
-local function var_0_11(arg_1_0, arg_1_1)
-	local var_1_0
-	local var_1_1
-	local var_1_2
-	local var_1_3
+local function receiveheaders(sock, headers)
+	local line, name, value, err
 
-	arg_1_1 = arg_1_1 or {}
+	headers = headers or {}
+	line, err = sock:receive()
 
-	local var_1_4, var_1_5 = arg_1_0:receive()
-
-	if var_1_5 then
-		return nil, var_1_5
+	if err then
+		return nil, err
 	end
 
-	while var_1_4 ~= "" do
-		local var_1_6, var_1_7 = var_0_0.skip(2, var_0_4.find(var_1_4, "^(.-):%s*(.*)"))
+	while line ~= "" do
+		name, value = socket.skip(2, string.find(line, "^(.-):%s*(.*)"))
 
-		if not var_1_6 or not var_1_7 then
+		if not name or not value then
 			return nil, "malformed reponse headers"
 		end
 
-		local var_1_8 = var_0_4.lower(var_1_6)
-		local var_1_9
+		name = string.lower(name)
+		line, err = sock:receive()
 
-		var_1_4, var_1_9 = arg_1_0:receive()
-
-		if var_1_9 then
-			return nil, var_1_9
+		if err then
+			return nil, err
 		end
 
-		while var_0_4.find(var_1_4, "^%s") do
-			var_1_7 = var_1_7 .. var_1_4
-			var_1_4 = arg_1_0:receive()
+		while string.find(line, "^%s") do
+			value = value .. line
+			line = sock:receive()
 
-			if var_1_9 then
-				return nil, var_1_9
+			if err then
+				return nil, err
 			end
 		end
 
-		if arg_1_1[var_1_8] then
-			arg_1_1[var_1_8] = arg_1_1[var_1_8] .. ", " .. var_1_7
+		if headers[name] then
+			headers[name] = headers[name] .. ", " .. value
 		else
-			arg_1_1[var_1_8] = var_1_7
+			headers[name] = value
 		end
 	end
 
-	return arg_1_1
+	return headers
 end
 
-var_0_0.sourcet["http-chunked"] = function(arg_2_0, arg_2_1)
-	return var_0_6.setmetatable({
+socket.sourcet["http-chunked"] = function(sock, headers)
+	return base.setmetatable({
 		getfd = function()
-			return arg_2_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_2_0:dirty()
+			return sock:dirty()
 		end
 	}, {
 		__call = function()
-			local var_5_0, var_5_1 = arg_2_0:receive()
+			local line, err = sock:receive()
 
-			if var_5_1 then
-				return nil, var_5_1
+			if err then
+				return nil, err
 			end
 
-			local var_5_2 = var_0_6.tonumber(var_0_4.gsub(var_5_0, ";.*", ""), 16)
+			local size = base.tonumber(string.gsub(line, ";.*", ""), 16)
 
-			if not var_5_2 then
+			if not size then
 				return nil, "invalid chunk size"
 			end
 
-			if var_5_2 > 0 then
-				local var_5_3, var_5_4, var_5_5 = arg_2_0:receive(var_5_2)
+			if size > 0 then
+				local chunk, err, part = sock:receive(size)
 
-				if var_5_3 then
-					arg_2_0:receive()
+				if chunk then
+					sock:receive()
 				end
 
-				return var_5_3, var_5_4
+				return chunk, err
 			else
-				local var_5_6
+				headers, err = receiveheaders(sock, headers)
 
-				arg_2_1, var_5_6 = var_0_11(arg_2_0, arg_2_1)
-
-				if not arg_2_1 then
-					return nil, var_5_6
+				if not headers then
+					return nil, err
 				end
 			end
 		end
 	})
 end
-var_0_0.sinkt["http-chunked"] = function(arg_6_0)
-	return var_0_6.setmetatable({
+socket.sinkt["http-chunked"] = function(sock)
+	return base.setmetatable({
 		getfd = function()
-			return arg_6_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_6_0:dirty()
+			return sock:dirty()
 		end
 	}, {
-		__call = function(arg_9_0, arg_9_1, arg_9_2)
-			if not arg_9_1 then
-				return arg_6_0:send("0\r\n\r\n")
+		__call = function(self, chunk, err)
+			if not chunk then
+				return sock:send("0\r\n\r\n")
 			end
 
-			local var_9_0 = var_0_4.format("%X\r\n", var_0_4.len(arg_9_1))
+			local size = string.format("%X\r\n", string.len(chunk))
 
-			return arg_6_0:send(var_9_0 .. arg_9_1 .. "\r\n")
+			return sock:send(size .. chunk .. "\r\n")
 		end
 	})
 end
 
-local var_0_12 = {
+local metat = {
 	__index = {}
 }
 
-function var_0_8.open(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = var_0_0.try((arg_10_2 or var_0_0.tcp)())
-	local var_10_1 = var_0_6.setmetatable({
-		c = var_10_0
-	}, var_0_12)
+function _M.open(host, port, create)
+	local c = socket.try((create or socket.tcp)())
+	local h = base.setmetatable({
+		c = c
+	}, metat)
 
-	var_10_1.try = var_0_0.newtry(function()
-		var_10_1:close()
+	h.try = socket.newtry(function()
+		h:close()
 	end)
 
-	var_10_1.try(var_10_0:settimeout(var_0_8.TIMEOUT))
-	var_10_1.try(var_10_0:connect(arg_10_0, arg_10_1 or var_0_10))
+	h.try(c:settimeout(_M.TIMEOUT))
+	h.try(c:connect(host, port or PORT))
 
-	return var_10_1
+	return h
 end
 
-function var_0_12.__index.sendrequestline(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = var_0_4.format("%s %s HTTP/1.1\r\n", arg_12_1 or "GET", arg_12_2)
+function metat.__index:sendrequestline(method, uri)
+	local reqline = string.format("%s %s HTTP/1.1\r\n", method or "GET", uri)
 
-	return arg_12_0.try(arg_12_0.c:send(var_12_0))
+	return self.try(self.c:send(reqline))
 end
 
-function var_0_12.__index.sendheaders(arg_13_0, arg_13_1)
-	local var_13_0 = var_0_5.canonic
-	local var_13_1 = "\r\n"
+function metat.__index:sendheaders(tosend)
+	local canonic = headers.canonic
+	local h = "\r\n"
 
-	for iter_13_0, iter_13_1 in var_0_6.pairs(arg_13_1) do
-		var_13_1 = (var_13_0[iter_13_0] or iter_13_0) .. ": " .. iter_13_1 .. "\r\n" .. var_13_1
+	for f, v in base.pairs(tosend) do
+		h = (canonic[f] or f) .. ": " .. v .. "\r\n" .. h
 	end
 
-	arg_13_0.try(arg_13_0.c:send(var_13_1))
+	self.try(self.c:send(h))
 
 	return 1
 end
 
-function var_0_12.__index.sendbody(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	arg_14_2 = arg_14_2 or var_0_2.source.empty()
-	arg_14_3 = arg_14_3 or var_0_2.pump.step
+function metat.__index:sendbody(headers, source, step)
+	source = source or ltn12.source.empty()
+	step = step or ltn12.pump.step
 
-	local var_14_0 = "http-chunked"
+	local mode = "http-chunked"
 
-	if arg_14_1["content-length"] then
-		var_14_0 = "keep-open"
+	if headers["content-length"] then
+		mode = "keep-open"
 	end
 
-	return arg_14_0.try(var_0_2.pump.all(arg_14_2, var_0_0.sink(var_14_0, arg_14_0.c), arg_14_3))
+	return self.try(ltn12.pump.all(source, socket.sink(mode, self.c), step))
 end
 
-function var_0_12.__index.receivestatusline(arg_15_0)
-	local var_15_0 = arg_15_0.try(arg_15_0.c:receive(5))
+function metat.__index:receivestatusline()
+	local status = self.try(self.c:receive(5))
 
-	if var_15_0 ~= "HTTP/" then
-		return nil, var_15_0
+	if status ~= "HTTP/" then
+		return nil, status
 	end
 
-	local var_15_1 = arg_15_0.try(arg_15_0.c:receive("*l", var_15_0))
-	local var_15_2 = var_0_0.skip(2, var_0_4.find(var_15_1, "HTTP/%d*%.%d* (%d%d%d)"))
+	status = self.try(self.c:receive("*l", status))
 
-	return arg_15_0.try(var_0_6.tonumber(var_15_2), var_15_1)
+	local code = socket.skip(2, string.find(status, "HTTP/%d*%.%d* (%d%d%d)"))
+
+	return self.try(base.tonumber(code), status)
 end
 
-function var_0_12.__index.receiveheaders(arg_16_0)
-	return arg_16_0.try(var_0_11(arg_16_0.c))
+function metat.__index:receiveheaders()
+	return self.try(receiveheaders(self.c))
 end
 
-function var_0_12.__index.receivebody(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	arg_17_2 = arg_17_2 or var_0_2.sink.null()
-	arg_17_3 = arg_17_3 or var_0_2.pump.step
+function metat.__index:receivebody(headers, sink, step)
+	sink = sink or ltn12.sink.null()
+	step = step or ltn12.pump.step
 
-	local var_17_0 = var_0_6.tonumber(arg_17_1["content-length"])
-	local var_17_1 = arg_17_1["transfer-encoding"]
-	local var_17_2 = "default"
+	local length = base.tonumber(headers["content-length"])
+	local t = headers["transfer-encoding"]
+	local mode = "default"
 
-	if var_17_1 and var_17_1 ~= "identity" then
-		var_17_2 = "http-chunked"
-	elseif var_0_6.tonumber(arg_17_1["content-length"]) then
-		var_17_2 = "by-length"
+	if t and t ~= "identity" then
+		mode = "http-chunked"
+	elseif base.tonumber(headers["content-length"]) then
+		mode = "by-length"
 	end
 
-	return arg_17_0.try(var_0_2.pump.all(var_0_0.source(var_17_2, arg_17_0.c, var_17_0), arg_17_2, arg_17_3))
+	return self.try(ltn12.pump.all(socket.source(mode, self.c, length), sink, step))
 end
 
-function var_0_12.__index.receive09body(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = var_0_2.source.rewind(var_0_0.source("until-closed", arg_18_0.c))
+function metat.__index:receive09body(status, sink, step)
+	local source = ltn12.source.rewind(socket.source("until-closed", self.c))
 
-	var_18_0(arg_18_1)
+	source(status)
 
-	return arg_18_0.try(var_0_2.pump.all(var_18_0, arg_18_2, arg_18_3))
+	return self.try(ltn12.pump.all(source, sink, step))
 end
 
-function var_0_12.__index.close(arg_19_0)
-	return arg_19_0.c:close()
+function metat.__index:close()
+	return self.c:close()
 end
 
-local function var_0_13(arg_20_0)
-	local var_20_0 = arg_20_0
+local function adjusturi(reqt)
+	local u = reqt
 
-	if not arg_20_0.proxy and not var_0_8.PROXY then
-		var_20_0 = {
-			path = var_0_0.try(arg_20_0.path, "invalid path 'nil'"),
-			params = arg_20_0.params,
-			query = arg_20_0.query,
-			fragment = arg_20_0.fragment
+	if not reqt.proxy and not _M.PROXY then
+		u = {
+			path = socket.try(reqt.path, "invalid path 'nil'"),
+			params = reqt.params,
+			query = reqt.query,
+			fragment = reqt.fragment
 		}
 	end
 
-	return var_0_1.build(var_20_0)
+	return url.build(u)
 end
 
-local function var_0_14(arg_21_0)
-	local var_21_0 = arg_21_0.proxy or var_0_8.PROXY
+local function adjustproxy(reqt)
+	local proxy = reqt.proxy or _M.PROXY
 
-	if var_21_0 then
-		local var_21_1 = var_0_1.parse(var_21_0)
+	if proxy then
+		proxy = url.parse(proxy)
 
-		return var_21_1.host, var_21_1.port or 3128
+		return proxy.host, proxy.port or 3128
 	else
-		return arg_21_0.host, arg_21_0.port
+		return reqt.host, reqt.port
 	end
 end
 
-local function var_0_15(arg_22_0)
-	local var_22_0 = var_0_4.gsub(arg_22_0.authority, "^.-@", "")
-	local var_22_1 = {
+local function adjustheaders(reqt)
+	local host = string.gsub(reqt.authority, "^.-@", "")
+	local lower = {
 		te = "trailers",
 		connection = "close, TE",
-		["user-agent"] = var_0_8.USERAGENT,
-		host = var_22_0
+		["user-agent"] = _M.USERAGENT,
+		host = host
 	}
 
-	if arg_22_0.user and arg_22_0.password then
-		var_22_1.authorization = "Basic " .. var_0_3.b64(arg_22_0.user .. ":" .. arg_22_0.password)
+	if reqt.user and reqt.password then
+		lower.authorization = "Basic " .. mime.b64(reqt.user .. ":" .. reqt.password)
 	end
 
-	local var_22_2 = arg_22_0.proxy or var_0_8.PROXY
+	local proxy = reqt.proxy or _M.PROXY
 
-	if var_22_2 then
-		local var_22_3 = var_0_1.parse(var_22_2)
+	if proxy then
+		proxy = url.parse(proxy)
 
-		if var_22_3.user and var_22_3.password then
-			var_22_1["proxy-authorization"] = "Basic " .. var_0_3.b64(var_22_3.user .. ":" .. var_22_3.password)
+		if proxy.user and proxy.password then
+			lower["proxy-authorization"] = "Basic " .. mime.b64(proxy.user .. ":" .. proxy.password)
 		end
 	end
 
-	for iter_22_0, iter_22_1 in var_0_6.pairs(arg_22_0.headers or var_22_1) do
-		var_22_1[var_0_4.lower(iter_22_0)] = iter_22_1
+	for i, v in base.pairs(reqt.headers or lower) do
+		lower[string.lower(i)] = v
 	end
 
-	return var_22_1
+	return lower
 end
 
-local var_0_16 = {
+local default = {
 	scheme = "http",
 	path = "/",
 	host = "",
-	port = var_0_10
+	port = PORT
 }
 
-local function var_0_17(arg_23_0)
-	local var_23_0 = arg_23_0.url and var_0_1.parse(arg_23_0.url, var_0_16) or {}
+local function adjustrequest(reqt)
+	local nreqt = reqt.url and url.parse(reqt.url, default) or {}
 
-	for iter_23_0, iter_23_1 in var_0_6.pairs(arg_23_0) do
-		var_23_0[iter_23_0] = iter_23_1
+	for i, v in base.pairs(reqt) do
+		nreqt[i] = v
 	end
 
-	if var_23_0.port == "" then
-		var_23_0.port = var_0_10
+	if nreqt.port == "" then
+		nreqt.port = PORT
 	end
 
-	if not var_23_0.host or var_23_0.host == "" then
-		var_0_0.try(nil, "invalid host '" .. var_0_6.tostring(var_23_0.host) .. "'")
+	if not nreqt.host or nreqt.host == "" then
+		socket.try(nil, "invalid host '" .. base.tostring(nreqt.host) .. "'")
 	end
 
-	var_23_0.uri = arg_23_0.uri or var_0_13(var_23_0)
-	var_23_0.headers = var_0_15(var_23_0)
-	var_23_0.host, var_23_0.port = var_0_14(var_23_0)
+	nreqt.uri = reqt.uri or adjusturi(nreqt)
+	nreqt.headers = adjustheaders(nreqt)
+	nreqt.host, nreqt.port = adjustproxy(nreqt)
 
-	return var_23_0
+	return nreqt
 end
 
-local function var_0_18(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_2.location
+local function shouldredirect(reqt, code, headers)
+	local location = headers.location
 
-	if not var_24_0 then
+	if not location then
 		return false
 	end
 
-	local var_24_1 = var_0_4.gsub(var_24_0, "%s", "")
+	location = string.gsub(location, "%s", "")
 
-	if var_24_1 == "" then
+	if location == "" then
 		return false
 	end
 
-	local var_24_2 = var_0_4.match(var_24_1, "^([%w][%w%+%-%.]*)%:")
+	local scheme = string.match(location, "^([%w][%w%+%-%.]*)%:")
 
-	if var_24_2 and not var_0_9[var_24_2] then
+	if scheme and not SCHEMES[scheme] then
 		return false
 	end
 
-	return arg_24_0.redirect ~= false and (arg_24_1 == 301 or arg_24_1 == 302 or arg_24_1 == 303 or arg_24_1 == 307) and (not arg_24_0.method or arg_24_0.method == "GET" or arg_24_0.method == "HEAD") and (not arg_24_0.nredirects or arg_24_0.nredirects < 5)
+	return reqt.redirect ~= false and (code == 301 or code == 302 or code == 303 or code == 307) and (not reqt.method or reqt.method == "GET" or reqt.method == "HEAD") and (not reqt.nredirects or reqt.nredirects < 5)
 end
 
-local function var_0_19(arg_25_0, arg_25_1)
-	if arg_25_0.method == "HEAD" then
+local function shouldreceivebody(reqt, code)
+	if reqt.method == "HEAD" then
 		return nil
 	end
 
-	if arg_25_1 == 204 or arg_25_1 == 304 then
+	if code == 204 or code == 304 then
 		return nil
 	end
 
-	if arg_25_1 >= 100 and arg_25_1 < 200 then
+	if code >= 100 and code < 200 then
 		return nil
 	end
 
 	return 1
 end
 
-local var_0_20
-local var_0_21
+local trequest, tredirect
 
-local function var_0_22(arg_26_0, arg_26_1)
-	local var_26_0, var_26_1, var_26_2, var_26_3 = var_0_20({
-		url = var_0_1.absolute(arg_26_0.url, arg_26_1),
-		source = arg_26_0.source,
-		sink = arg_26_0.sink,
-		headers = arg_26_0.headers,
-		proxy = arg_26_0.proxy,
-		nredirects = (arg_26_0.nredirects or 0) + 1,
-		create = arg_26_0.create
+function tredirect(reqt, location)
+	local result, code, headers, status = trequest({
+		url = url.absolute(reqt.url, location),
+		source = reqt.source,
+		sink = reqt.sink,
+		headers = reqt.headers,
+		proxy = reqt.proxy,
+		nredirects = (reqt.nredirects or 0) + 1,
+		create = reqt.create
 	})
 
-	var_26_2 = var_26_2 or {}
-	var_26_2.location = var_26_2.location or arg_26_1
+	headers = headers or {}
+	headers.location = headers.location or location
 
-	return var_26_0, var_26_1, var_26_2, var_26_3
+	return result, code, headers, status
 end
 
-function var_0_20(arg_27_0)
-	local var_27_0 = var_0_17(arg_27_0)
-	local var_27_1 = var_0_8.open(var_27_0.host, var_27_0.port, var_27_0.create)
+function trequest(reqt)
+	local nreqt = adjustrequest(reqt)
+	local h = _M.open(nreqt.host, nreqt.port, nreqt.create)
 
-	var_27_1:sendrequestline(var_27_0.method, var_27_0.uri)
-	var_27_1:sendheaders(var_27_0.headers)
+	h:sendrequestline(nreqt.method, nreqt.uri)
+	h:sendheaders(nreqt.headers)
 
-	if var_27_0.source then
-		var_27_1:sendbody(var_27_0.headers, var_27_0.source, var_27_0.step)
+	if nreqt.source then
+		h:sendbody(nreqt.headers, nreqt.source, nreqt.step)
 	end
 
-	local var_27_2, var_27_3 = var_27_1:receivestatusline()
+	local code, status = h:receivestatusline()
 
-	if not var_27_2 then
-		var_27_1:receive09body(var_27_3, var_27_0.sink, var_27_0.step)
+	if not code then
+		h:receive09body(status, nreqt.sink, nreqt.step)
 
 		return 1, 200
 	end
 
-	local var_27_4
+	local headers
 
-	while var_27_2 == 100 do
-		local var_27_5 = var_27_1:receiveheaders()
-
-		var_27_2, var_27_3 = var_27_1:receivestatusline()
+	while code == 100 do
+		headers = h:receiveheaders()
+		code, status = h:receivestatusline()
 	end
 
-	local var_27_6 = var_27_1:receiveheaders()
+	headers = h:receiveheaders()
 
-	if var_0_18(var_27_0, var_27_2, var_27_6) and not var_27_0.source then
-		var_27_1:close()
+	if shouldredirect(nreqt, code, headers) and not nreqt.source then
+		h:close()
 
-		return var_0_22(arg_27_0, var_27_6.location)
+		return tredirect(reqt, headers.location)
 	end
 
-	if var_0_19(var_27_0, var_27_2) then
-		var_27_1:receivebody(var_27_6, var_27_0.sink, var_27_0.step)
+	if shouldreceivebody(nreqt, code) then
+		h:receivebody(headers, nreqt.sink, nreqt.step)
 	end
 
-	var_27_1:close()
+	h:close()
 
-	return 1, var_27_2, var_27_6, var_27_3
+	return 1, code, headers, status
 end
 
-local function var_0_23(arg_28_0, arg_28_1)
-	local var_28_0 = {}
-	local var_28_1 = {
-		url = arg_28_0,
-		sink = var_0_2.sink.table(var_28_0),
-		target = var_28_0
+local function genericform(u, b)
+	local t = {}
+	local reqt = {
+		url = u,
+		sink = ltn12.sink.table(t),
+		target = t
 	}
 
-	if arg_28_1 then
-		var_28_1.source = var_0_2.source.string(arg_28_1)
-		var_28_1.headers = {
+	if b then
+		reqt.source = ltn12.source.string(b)
+		reqt.headers = {
 			["content-type"] = "application/x-www-form-urlencoded",
-			["content-length"] = var_0_4.len(arg_28_1)
+			["content-length"] = string.len(b)
 		}
-		var_28_1.method = "POST"
+		reqt.method = "POST"
 	end
 
-	return var_28_1
+	return reqt
 end
 
-var_0_8.genericform = var_0_23
+_M.genericform = genericform
 
-local function var_0_24(arg_29_0, arg_29_1)
-	local var_29_0 = var_0_23(arg_29_0, arg_29_1)
-	local var_29_1, var_29_2, var_29_3, var_29_4 = var_0_20(var_29_0)
+local function srequest(u, b)
+	local reqt = genericform(u, b)
+	local _, code, headers, status = trequest(reqt)
 
-	return var_0_7.concat(var_29_0.target), var_29_2, var_29_3, var_29_4
+	return table.concat(reqt.target), code, headers, status
 end
 
-var_0_8.request = var_0_0.protect(function(arg_30_0, arg_30_1)
-	if var_0_6.type(arg_30_0) == "string" then
-		return var_0_24(arg_30_0, arg_30_1)
+_M.request = socket.protect(function(reqt, body)
+	if base.type(reqt) == "string" then
+		return srequest(reqt, body)
 	else
-		return var_0_20(arg_30_0)
+		return trequest(reqt)
 	end
 end)
 
-return var_0_8
+return _M

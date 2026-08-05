@@ -393,6 +393,7 @@ function AtomicOperationActivityGameController:exitGame()
 	self.logicData = nil
 
 	logNormal("exitGame")
+	ViewMgr.instance:closeView(ViewName.AtomicOperationActivityGameCountDownView)
 	ViewMgr.instance:closeView(ViewName.AtomicOperationActivityGameView)
 	ViewMgr.instance:closeView(ViewName.AtomicOperationActivityResultGameView)
 end

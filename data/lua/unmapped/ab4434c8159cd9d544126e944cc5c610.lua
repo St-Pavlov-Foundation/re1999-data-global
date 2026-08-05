@@ -1,297 +1,296 @@
-﻿local var_0_0 = require("cjson")
+﻿-- chunkname: @cjson/util.lua
 
-local function var_0_1(arg_1_0)
-	local var_1_0 = 0
-	local var_1_1 = 0
+local json = require("cjson")
 
-	for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-		if type(iter_1_0) == "number" then
-			if var_1_0 < iter_1_0 then
-				var_1_0 = iter_1_0
+local function is_array(table)
+	local max = 0
+	local count = 0
+
+	for k, v in pairs(table) do
+		if type(k) == "number" then
+			if max < k then
+				max = k
 			end
 
-			var_1_1 = var_1_1 + 1
+			count = count + 1
 		else
 			return -1
 		end
 	end
 
-	if var_1_0 > var_1_1 * 2 then
+	if max > count * 2 then
 		return -1
 	end
 
-	return var_1_0
+	return max
 end
 
-local var_0_2
+local serialise_value
 
-local function var_0_3(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0
-	local var_2_1
-	local var_2_2
+local function serialise_table(value, indent, depth)
+	local spacing, spacing2, indent2
 
-	if arg_2_1 then
-		var_2_0 = "\n" .. arg_2_1
-		var_2_1 = var_2_0 .. "  "
-		var_2_2 = arg_2_1 .. "  "
+	if indent then
+		spacing = "\n" .. indent
+		spacing2 = spacing .. "  "
+		indent2 = indent .. "  "
 	else
-		var_2_0, var_2_1, var_2_2 = " ", " ", false
+		spacing, spacing2, indent2 = " ", " ", false
 	end
 
-	arg_2_2 = arg_2_2 + 1
+	depth = depth + 1
 
-	if arg_2_2 > 50 then
+	if depth > 50 then
 		return "Cannot serialise any further: too many nested tables"
 	end
 
-	local var_2_3 = var_0_1(arg_2_0)
-	local var_2_4 = false
-	local var_2_5 = {
-		"{" .. var_2_1
+	local max = is_array(value)
+	local comma = false
+	local fragment = {
+		"{" .. spacing2
 	}
 
-	if var_2_3 > 0 then
-		for iter_2_0 = 1, var_2_3 do
-			if var_2_4 then
-				table.insert(var_2_5, "," .. var_2_1)
+	if max > 0 then
+		for i = 1, max do
+			if comma then
+				table.insert(fragment, "," .. spacing2)
 			end
 
-			table.insert(var_2_5, var_0_2(arg_2_0[iter_2_0], var_2_2, arg_2_2))
+			table.insert(fragment, serialise_value(value[i], indent2, depth))
 
-			var_2_4 = true
+			comma = true
 		end
-	elseif var_2_3 < 0 then
-		for iter_2_1, iter_2_2 in pairs(arg_2_0) do
-			if var_2_4 then
-				table.insert(var_2_5, "," .. var_2_1)
+	elseif max < 0 then
+		for k, v in pairs(value) do
+			if comma then
+				table.insert(fragment, "," .. spacing2)
 			end
 
-			table.insert(var_2_5, ("[%s] = %s"):format(var_0_2(iter_2_1, var_2_2, arg_2_2), var_0_2(iter_2_2, var_2_2, arg_2_2)))
+			table.insert(fragment, ("[%s] = %s"):format(serialise_value(k, indent2, depth), serialise_value(v, indent2, depth)))
 
-			var_2_4 = true
+			comma = true
 		end
 	end
 
-	table.insert(var_2_5, var_2_0 .. "}")
+	table.insert(fragment, spacing .. "}")
 
-	return table.concat(var_2_5)
+	return table.concat(fragment)
 end
 
-function var_0_2(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_1 == nil then
-		arg_3_1 = ""
+function serialise_value(value, indent, depth)
+	if indent == nil then
+		indent = ""
 	end
 
-	if arg_3_2 == nil then
-		arg_3_2 = 0
+	if depth == nil then
+		depth = 0
 	end
 
-	if arg_3_0 == var_0_0.null then
+	if value == json.null then
 		return "json.null"
-	elseif type(arg_3_0) == "string" then
-		return ("%q"):format(arg_3_0)
-	elseif type(arg_3_0) == "nil" or type(arg_3_0) == "number" or type(arg_3_0) == "boolean" then
-		return tostring(arg_3_0)
-	elseif type(arg_3_0) == "table" then
-		return var_0_3(arg_3_0, arg_3_1, arg_3_2)
+	elseif type(value) == "string" then
+		return ("%q"):format(value)
+	elseif type(value) == "nil" or type(value) == "number" or type(value) == "boolean" then
+		return tostring(value)
+	elseif type(value) == "table" then
+		return serialise_table(value, indent, depth)
 	else
-		return "\"<" .. type(arg_3_0) .. ">\""
+		return "\"<" .. type(value) .. ">\""
 	end
 end
 
-local function var_0_4(arg_4_0)
-	local var_4_0
+local function file_load(filename)
+	local file
 
-	if arg_4_0 == nil then
-		var_4_0 = io.stdin
+	if filename == nil then
+		file = io.stdin
 	else
-		local var_4_1
-		local var_4_2
+		local err
 
-		var_4_0, var_4_2 = io.open(arg_4_0, "rb")
+		file, err = io.open(filename, "rb")
 
-		if var_4_0 == nil then
-			error(("Unable to read '%s': %s"):format(arg_4_0, var_4_2))
+		if file == nil then
+			error(("Unable to read '%s': %s"):format(filename, err))
 		end
 	end
 
-	local var_4_3 = var_4_0:read("*a")
+	local data = file:read("*a")
 
-	if arg_4_0 ~= nil then
-		var_4_0:close()
+	if filename ~= nil then
+		file:close()
 	end
 
-	if var_4_3 == nil then
-		error("Failed to read " .. arg_4_0)
+	if data == nil then
+		error("Failed to read " .. filename)
 	end
 
-	return var_4_3
+	return data
 end
 
-local function var_0_5(arg_5_0, arg_5_1)
-	local var_5_0
+local function file_save(filename, data)
+	local file
 
-	if arg_5_0 == nil then
-		var_5_0 = io.stdout
+	if filename == nil then
+		file = io.stdout
 	else
-		local var_5_1
-		local var_5_2
+		local err
 
-		var_5_0, var_5_2 = io.open(arg_5_0, "wb")
+		file, err = io.open(filename, "wb")
 
-		if var_5_0 == nil then
-			error(("Unable to write '%s': %s"):format(arg_5_0, var_5_2))
+		if file == nil then
+			error(("Unable to write '%s': %s"):format(filename, err))
 		end
 	end
 
-	var_5_0:write(arg_5_1)
+	file:write(data)
 
-	if arg_5_0 ~= nil then
-		var_5_0:close()
+	if filename ~= nil then
+		file:close()
 	end
 end
 
-local function var_0_6(arg_6_0, arg_6_1)
-	local var_6_0 = type(arg_6_0)
+local function compare_values(val1, val2)
+	local type1 = type(val1)
+	local type2 = type(val2)
 
-	if var_6_0 ~= type(arg_6_1) then
+	if type1 ~= type2 then
 		return false
 	end
 
-	if var_6_0 == "number" and arg_6_0 ~= arg_6_0 and arg_6_1 ~= arg_6_1 then
+	if type1 == "number" and val1 ~= val1 and val2 ~= val2 then
 		return true
 	end
 
-	if var_6_0 ~= "table" then
-		return arg_6_0 == arg_6_1
+	if type1 ~= "table" then
+		return val1 == val2
 	end
 
-	local var_6_1 = {}
+	local check_keys = {}
 
-	for iter_6_0, iter_6_1 in pairs(arg_6_0) do
-		var_6_1[iter_6_0] = true
+	for k, _ in pairs(val1) do
+		check_keys[k] = true
 	end
 
-	for iter_6_2, iter_6_3 in pairs(arg_6_1) do
-		if not var_6_1[iter_6_2] then
+	for k, v in pairs(val2) do
+		if not check_keys[k] then
 			return false
 		end
 
-		if not var_0_6(arg_6_0[iter_6_2], arg_6_1[iter_6_2]) then
+		if not compare_values(val1[k], val2[k]) then
 			return false
 		end
 
-		var_6_1[iter_6_2] = nil
+		check_keys[k] = nil
 	end
 
-	for iter_6_4, iter_6_5 in pairs(var_6_1) do
+	for k, _ in pairs(check_keys) do
 		return false
 	end
 
 	return true
 end
 
-local var_0_7 = 0
-local var_0_8 = 0
+local test_count_pass = 0
+local test_count_total = 0
 
-local function var_0_9()
-	return var_0_7, var_0_8
+local function run_test_summary()
+	return test_count_pass, test_count_total
 end
 
-local function var_0_10(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
-	local function var_8_0(arg_9_0, arg_9_1, arg_9_2)
-		local var_9_0 = {
+local function run_test(testname, func, input, should_work, output)
+	local function status_line(name, status, value)
+		local statusmap = {
 			[true] = ":success",
 			[false] = ":error"
 		}
 
-		if arg_9_1 ~= nil then
-			arg_9_0 = arg_9_0 .. var_9_0[arg_9_1]
+		if status ~= nil then
+			name = name .. statusmap[status]
 		end
 
-		print(("[%s] %s"):format(arg_9_0, var_0_2(arg_9_2, false)))
+		print(("[%s] %s"):format(name, serialise_value(value, false)))
 	end
 
-	local var_8_1 = {
-		pcall(arg_8_1, unpack(arg_8_2))
+	local result = {
+		pcall(func, unpack(input))
 	}
-	local var_8_2 = table.remove(var_8_1, 1)
-	local var_8_3 = false
+	local success = table.remove(result, 1)
+	local correct = false
 
-	if var_8_2 == arg_8_3 and var_0_6(var_8_1, arg_8_4) then
-		var_8_3 = true
-		var_0_7 = var_0_7 + 1
+	if success == should_work and compare_values(result, output) then
+		correct = true
+		test_count_pass = test_count_pass + 1
 	end
 
-	var_0_8 = var_0_8 + 1
+	test_count_total = test_count_total + 1
 
-	local var_8_4 = {
+	local teststatus = {
 		[true] = "PASS",
 		[false] = "FAIL"
 	}
 
-	print(("==> Test [%d] %s: %s"):format(var_0_8, arg_8_0, var_8_4[var_8_3]))
-	var_8_0("Input", nil, arg_8_2)
+	print(("==> Test [%d] %s: %s"):format(test_count_total, testname, teststatus[correct]))
+	status_line("Input", nil, input)
 
-	if not var_8_3 then
-		var_8_0("Expected", arg_8_3, arg_8_4)
+	if not correct then
+		status_line("Expected", should_work, output)
 	end
 
-	var_8_0("Received", var_8_2, var_8_1)
+	status_line("Received", success, result)
 	print()
 
-	return var_8_3, var_8_1
+	return correct, result
 end
 
-local function var_0_11(arg_10_0)
-	local function var_10_0(arg_11_0, arg_11_1, arg_11_2)
-		if type(arg_11_0) == "string" and #arg_11_0 > 0 then
-			print("==> " .. arg_11_0)
+local function run_test_group(tests)
+	local function run_helper(name, func, input)
+		if type(name) == "string" and #name > 0 then
+			print("==> " .. name)
 		end
 
-		arg_11_1(unpack(arg_11_2 or {}))
+		func(unpack(input or {}))
 		print()
 	end
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_0) do
-		if iter_10_1[4] == nil then
-			var_10_0(unpack(iter_10_1))
+	for _, v in ipairs(tests) do
+		if v[4] == nil then
+			run_helper(unpack(v))
 		else
-			var_0_10(unpack(iter_10_1))
+			run_test(unpack(v))
 		end
 	end
 end
 
-local function var_0_12(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1 or {}
-	local var_12_1
+local function run_script(script, env)
+	local env = env or {}
+	local func
 
 	if _G.setfenv then
-		var_12_1 = loadstring(arg_12_0)
+		func = loadstring(script)
 
-		if var_12_1 then
-			setfenv(var_12_1, var_12_0)
+		if func then
+			setfenv(func, env)
 		end
 	else
-		var_12_1 = load(arg_12_0, nil, nil, var_12_0)
+		func = load(script, nil, nil, env)
 	end
 
-	if var_12_1 == nil then
+	if func == nil then
 		error("Invalid syntax.")
 	end
 
-	var_12_1()
+	func()
 
-	return var_12_0
+	return env
 end
 
 return {
-	serialise_value = var_0_2,
-	file_load = var_0_4,
-	file_save = var_0_5,
-	compare_values = var_0_6,
-	run_test_summary = var_0_9,
-	run_test = var_0_10,
-	run_test_group = var_0_11,
-	run_script = var_0_12
+	serialise_value = serialise_value,
+	file_load = file_load,
+	file_save = file_save,
+	compare_values = compare_values,
+	run_test_summary = run_test_summary,
+	run_test = run_test,
+	run_test_group = run_test_group,
+	run_script = run_script
 }

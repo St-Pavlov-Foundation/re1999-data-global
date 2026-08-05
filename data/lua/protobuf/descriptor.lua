@@ -1,4 +1,6 @@
-﻿module("protobuf.descriptor")
+﻿-- chunkname: @protobuf/descriptor.lua
+
+module("protobuf.descriptor")
 
 FieldDescriptor = {
 	MAX_CPPTYPE = 10,

@@ -64,7 +64,7 @@ function BaseScene:onPrepared()
 		end
 	end
 
-	if not self._onPreparedOneCb then
+	if not self._onPreparedCb then
 		return
 	end
 

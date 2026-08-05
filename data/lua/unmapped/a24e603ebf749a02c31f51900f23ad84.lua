@@ -1,21 +1,23 @@
-﻿if System.Reflection == nil then
+﻿-- chunkname: @System/Reflection/BindingFlags.lua
+
+if System.Reflection == nil then
 	System.Reflection = {}
 end
 
-local function var_0_0(...)
-	local var_1_0 = {
+local function GetMask(...)
+	local arg = {
 		...
 	}
-	local var_1_1 = 0
+	local value = 0
 
-	for iter_1_0 = 1, #var_1_0 do
-		var_1_1 = var_1_1 + var_1_0[iter_1_0]
+	for i = 1, #arg do
+		value = value + arg[i]
 	end
 
-	return var_1_1
+	return value
 end
 
-local var_0_1 = {
+local BindingFlags = {
 	Default = 0,
 	SetField = 2048,
 	GetField = 1024,
@@ -38,7 +40,7 @@ local var_0_1 = {
 	IgnoreCase = 1
 }
 
-System.Reflection.BindingFlags = var_0_1
-System.Reflection.BindingFlags.GetMask = var_0_0
+System.Reflection.BindingFlags = BindingFlags
+System.Reflection.BindingFlags.GetMask = GetMask
 
-return var_0_1
+return BindingFlags

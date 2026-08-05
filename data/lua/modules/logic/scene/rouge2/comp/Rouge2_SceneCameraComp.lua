@@ -13,6 +13,9 @@ function Rouge2_SceneCameraComp:onSceneStart(sceneId, levelId)
 	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.onExitPieceChoiceEvent, self.onExitPieceChoiceEvent, self)
 	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
 	Rouge2_MapController.instance:registerCallback(Rouge2_MapEvent.focusChangeCameraSize, self.focusChangeCameraSize, self)
+
+	self._cameraTrace = CameraMgr.instance:getCameraTrace()
+	self._tranCameraTrace = CameraMgr.instance:getCameraTraceGO().transform
 end
 
 function Rouge2_SceneCameraComp:focusChangeCameraSize()
@@ -23,6 +26,50 @@ end
 
 function Rouge2_SceneCameraComp:onLoadMapDone()
 	self:initCameraSize()
+	self:_resetCamera()
+	TaskDispatcher.runRepeat(self._resetCamera, self, 1)
+
+	if not self._sourceMt then
+		self._sourceMt = getmetatable(self._cameraTrace)
+
+		if self._sourceMt then
+			self.__rawfunc = self._sourceMt.__newindex
+
+			function self._sourceMt.__newindex(t, k, v)
+				if k == "EnableTrace" then
+					logError(string.format("尝试修改相机数据:%s %s", tostring(k), tostring(v)))
+					self.__rawfunc(t, k, v)
+				end
+			end
+		end
+	end
+end
+
+local fixCount = 0
+local fixDt
+
+function Rouge2_SceneCameraComp:_resetCamera()
+	local posX, posY, posZ = transformhelper.getLocalPos(self._tranCameraTrace)
+
+	if posX ~= 0 or posY ~= 0 or posZ ~= 0 then
+		local cameraTrace = CameraMgr.instance:getCameraTrace()
+		local isEnableTrace = cameraTrace and cameraTrace.EnableTrace
+
+		if fixDt and os.clock() - fixDt > 10 then
+			fixCount = 0
+		end
+
+		fixCount = fixCount + 1
+		fixDt = os.clock()
+
+		logError(string.format("重置相机！！！  当前相机追踪状态: %s, 当前相机坐标 : %s, %s, %s, 修复次数：%s", isEnableTrace, posX, posY, posZ, fixCount))
+
+		if isEnableTrace then
+			cameraTrace.EnableTrace = false
+		end
+
+		transformhelper.setLocalPos(self._tranCameraTrace, 0, 0, 0)
+	end
 end
 
 function Rouge2_SceneCameraComp:initCameraSize()
@@ -53,10 +100,17 @@ function Rouge2_SceneCameraComp:onSceneClose()
 
 	self.camera = nil
 
+	if self._sourceMt then
+		self._sourceMt.__newindex = self.__rawfunc
+		self._sourceMt = nil
+		self.__rawfunc = nil
+	end
+
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.onLoadMapDone, self.onLoadMapDone, self)
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.onExitPieceChoiceEvent, self.onExitPieceChoiceEvent, self)
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.onMiddleActorBeforeMove, self.onMiddleActorBeforeMove, self)
 	Rouge2_MapController.instance:unregisterCallback(Rouge2_MapEvent.focusChangeCameraSize, self.focusChangeCameraSize, self)
+	TaskDispatcher.cancelTask(self._resetCamera, self)
 	self:clearTween()
 end
 

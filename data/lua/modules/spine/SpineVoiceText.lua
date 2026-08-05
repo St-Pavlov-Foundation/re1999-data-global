@@ -47,6 +47,12 @@ function SpineVoiceText:init(spineVoice, voiceConfig, txtContent, txtEnContent, 
 		gohelper.setActive(self._txtEnContent.gameObject, self._showEnContent)
 	end
 
+	self._isSpecialAudio = voiceConfig.audio == 13105104
+
+	if not self._showBg and self._isSpecialAudio then
+		self._spineVoice:setBgVisible(false)
+	end
+
 	if self:_contentListEmpty() then
 		self._spineVoice:setBgVisible(false)
 	end
@@ -121,6 +127,10 @@ function SpineVoiceText:_showOneLang(contentList, startTime, txtContent)
 				end
 			end, nil, 0.01)
 			table.remove(contentList, 1)
+
+			if not self._showBg and self._isSpecialAudio then
+				self._spineVoice:setBgVisible(true)
+			end
 		end
 	end
 end

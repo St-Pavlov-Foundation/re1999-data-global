@@ -1,395 +1,397 @@
-﻿local var_0_0 = math.sqrt
-local var_0_1 = setmetatable
-local var_0_2 = rawget
-local var_0_3 = math
-local var_0_4 = var_0_3.acos
-local var_0_5 = var_0_3.max
-local var_0_6 = {}
-local var_0_7 = tolua.initget(var_0_6)
+﻿-- chunkname: @UnityEngine/Vector2.lua
 
-function var_0_6.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_2(var_0_6, arg_1_1)
+local sqrt = math.sqrt
+local setmetatable = setmetatable
+local rawget = rawget
+local math = math
+local acos = math.acos
+local max = math.max
+local Vector2 = {}
+local get = tolua.initget(Vector2)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_2(var_0_7, arg_1_1)
+function Vector2.__index(t, k)
+	local var = rawget(Vector2, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+	if var == nil then
+		var = rawget(get, k)
+
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_6.__call(arg_2_0, arg_2_1, arg_2_2)
-	return var_0_1({
-		x = arg_2_1 or 0,
-		y = arg_2_2 or 0
-	}, var_0_6)
+function Vector2.__call(t, x, y)
+	return setmetatable({
+		x = x or 0,
+		y = y or 0
+	}, Vector2)
 end
 
-function var_0_6.New(arg_3_0, arg_3_1)
-	return var_0_1({
-		x = arg_3_0 or 0,
-		y = arg_3_1 or 0
-	}, var_0_6)
+function Vector2.New(x, y)
+	return setmetatable({
+		x = x or 0,
+		y = y or 0
+	}, Vector2)
 end
 
-function var_0_6.Set(arg_4_0, arg_4_1, arg_4_2)
-	arg_4_0.x = arg_4_1 or 0
-	arg_4_0.y = arg_4_2 or 0
+function Vector2:Set(x, y)
+	self.x = x or 0
+	self.y = y or 0
 end
 
-function var_0_6.Get(arg_5_0)
-	return arg_5_0.x, arg_5_0.y
+function Vector2:Get()
+	return self.x, self.y
 end
 
-function var_0_6.SqrMagnitude(arg_6_0)
-	return arg_6_0.x * arg_6_0.x + arg_6_0.y * arg_6_0.y
+function Vector2:SqrMagnitude()
+	return self.x * self.x + self.y * self.y
 end
 
-function var_0_6.Clone(arg_7_0)
-	return var_0_1({
-		x = arg_7_0.x,
-		y = arg_7_0.y
-	}, var_0_6)
+function Vector2:Clone()
+	return setmetatable({
+		x = self.x,
+		y = self.y
+	}, Vector2)
 end
 
-function var_0_6.Normalize(arg_8_0)
-	local var_8_0 = arg_8_0.x
-	local var_8_1 = arg_8_0.y
-	local var_8_2 = var_0_0(var_8_0 * var_8_0 + var_8_1 * var_8_1)
+function Vector2.Normalize(v)
+	local x = v.x
+	local y = v.y
+	local magnitude = sqrt(x * x + y * y)
 
-	if var_8_2 > 1e-05 then
-		var_8_0 = var_8_0 / var_8_2
-		var_8_1 = var_8_1 / var_8_2
+	if magnitude > 1e-05 then
+		x = x / magnitude
+		y = y / magnitude
 	else
-		var_8_0 = 0
-		var_8_1 = 0
+		x = 0
+		y = 0
 	end
 
-	return var_0_1({
-		x = var_8_0,
-		y = var_8_1
-	}, var_0_6)
+	return setmetatable({
+		x = x,
+		y = y
+	}, Vector2)
 end
 
-function var_0_6.SetNormalize(arg_9_0)
-	local var_9_0 = var_0_0(arg_9_0.x * arg_9_0.x + arg_9_0.y * arg_9_0.y)
+function Vector2:SetNormalize()
+	local magnitude = sqrt(self.x * self.x + self.y * self.y)
 
-	if var_9_0 > 1e-05 then
-		arg_9_0.x = arg_9_0.x / var_9_0
-		arg_9_0.y = arg_9_0.y / var_9_0
+	if magnitude > 1e-05 then
+		self.x = self.x / magnitude
+		self.y = self.y / magnitude
 	else
-		arg_9_0.x = 0
-		arg_9_0.y = 0
+		self.x = 0
+		self.y = 0
 	end
 
-	return arg_9_0
+	return self
 end
 
-function var_0_6.Dot(arg_10_0, arg_10_1)
-	return arg_10_0.x * arg_10_1.x + arg_10_0.y * arg_10_1.y
+function Vector2.Dot(lhs, rhs)
+	return lhs.x * rhs.x + lhs.y * rhs.y
 end
 
-function var_0_6.Angle(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.x
-	local var_11_1 = arg_11_0.y
-	local var_11_2 = var_0_0(var_11_0 * var_11_0 + var_11_1 * var_11_1)
+function Vector2.Angle(from, to)
+	local x1, y1 = from.x, from.y
+	local d = sqrt(x1 * x1 + y1 * y1)
 
-	if var_11_2 > 1e-05 then
-		var_11_0 = var_11_0 / var_11_2
-		var_11_1 = var_11_1 / var_11_2
+	if d > 1e-05 then
+		x1 = x1 / d
+		y1 = y1 / d
 	else
-		var_11_0, var_11_1 = 0, 0
+		x1, y1 = 0, 0
 	end
 
-	local var_11_3 = arg_11_1.x
-	local var_11_4 = arg_11_1.y
-	local var_11_5 = var_0_0(var_11_3 * var_11_3 + var_11_4 * var_11_4)
+	local x2, y2 = to.x, to.y
 
-	if var_11_5 > 1e-05 then
-		var_11_3 = var_11_3 / var_11_5
-		var_11_4 = var_11_4 / var_11_5
+	d = sqrt(x2 * x2 + y2 * y2)
+
+	if d > 1e-05 then
+		x2 = x2 / d
+		y2 = y2 / d
 	else
-		var_11_3, var_11_4 = 0, 0
+		x2, y2 = 0, 0
 	end
 
-	local var_11_6 = var_11_0 * var_11_3 + var_11_1 * var_11_4
+	d = x1 * x2 + y1 * y2
 
-	if var_11_6 < -1 then
-		var_11_6 = -1
-	elseif var_11_6 > 1 then
-		var_11_6 = 1
+	if d < -1 then
+		d = -1
+	elseif d > 1 then
+		d = 1
 	end
 
-	return var_0_4(var_11_6) * 57.29578
+	return acos(d) * 57.29578
 end
 
-function var_0_6.Magnitude(arg_12_0)
-	return var_0_0(arg_12_0.x * arg_12_0.x + arg_12_0.y * arg_12_0.y)
+function Vector2.Magnitude(v)
+	return sqrt(v.x * v.x + v.y * v.y)
 end
 
-function var_0_6.Reflect(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0.x
-	local var_13_1 = arg_13_0.y
-	local var_13_2 = arg_13_1.x
-	local var_13_3 = arg_13_1.y
-	local var_13_4 = -2 * (var_13_0 * var_13_2 + var_13_1 * var_13_3)
+function Vector2.Reflect(dir, normal)
+	local dx = dir.x
+	local dy = dir.y
+	local nx = normal.x
+	local ny = normal.y
+	local s = -2 * (dx * nx + dy * ny)
 
-	return var_0_1({
-		x = var_13_4 * var_13_2 + var_13_0,
-		y = var_13_4 * var_13_3 + var_13_1
-	}, var_0_6)
+	return setmetatable({
+		x = s * nx + dx,
+		y = s * ny + dy
+	}, Vector2)
 end
 
-function var_0_6.Distance(arg_14_0, arg_14_1)
-	return var_0_0((arg_14_0.x - arg_14_1.x)^2 + (arg_14_0.y - arg_14_1.y)^2)
+function Vector2.Distance(a, b)
+	return sqrt((a.x - b.x)^2 + (a.y - b.y)^2)
 end
 
-function var_0_6.Lerp(arg_15_0, arg_15_1, arg_15_2)
-	if arg_15_2 < 0 then
-		arg_15_2 = 0
-	elseif arg_15_2 > 1 then
-		arg_15_2 = 1
+function Vector2.Lerp(a, b, t)
+	if t < 0 then
+		t = 0
+	elseif t > 1 then
+		t = 1
 	end
 
-	return var_0_1({
-		x = arg_15_0.x + (arg_15_1.x - arg_15_0.x) * arg_15_2,
-		y = arg_15_0.y + (arg_15_1.y - arg_15_0.y) * arg_15_2
-	}, var_0_6)
+	return setmetatable({
+		x = a.x + (b.x - a.x) * t,
+		y = a.y + (b.y - a.y) * t
+	}, Vector2)
 end
 
-function var_0_6.LerpUnclamped(arg_16_0, arg_16_1, arg_16_2)
-	return var_0_1({
-		x = arg_16_0.x + (arg_16_1.x - arg_16_0.x) * arg_16_2,
-		y = arg_16_0.y + (arg_16_1.y - arg_16_0.y) * arg_16_2
-	}, var_0_6)
+function Vector2.LerpUnclamped(a, b, t)
+	return setmetatable({
+		x = a.x + (b.x - a.x) * t,
+		y = a.y + (b.y - a.y) * t
+	}, Vector2)
 end
 
-function var_0_6.MoveTowards(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0.x
-	local var_17_1 = arg_17_0.y
-	local var_17_2 = arg_17_1.x - var_17_0
-	local var_17_3 = arg_17_1.y - var_17_1
-	local var_17_4 = var_17_2 * var_17_2 + var_17_3 * var_17_3
+function Vector2.MoveTowards(current, target, maxDistanceDelta)
+	local cx = current.x
+	local cy = current.y
+	local x = target.x - cx
+	local y = target.y - cy
+	local s = x * x + y * y
 
-	if var_17_4 > arg_17_2 * arg_17_2 and var_17_4 ~= 0 then
-		local var_17_5 = arg_17_2 / var_0_0(var_17_4)
+	if s > maxDistanceDelta * maxDistanceDelta and s ~= 0 then
+		s = maxDistanceDelta / sqrt(s)
 
-		return var_0_1({
-			x = var_17_0 + var_17_2 * var_17_5,
-			y = var_17_1 + var_17_3 * var_17_5
-		}, var_0_6)
+		return setmetatable({
+			x = cx + x * s,
+			y = cy + y * s
+		}, Vector2)
 	end
 
-	return var_0_1({
-		x = arg_17_1.x,
-		y = arg_17_1.y
-	}, var_0_6)
+	return setmetatable({
+		x = target.x,
+		y = target.y
+	}, Vector2)
 end
 
-function var_0_6.ClampMagnitude(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.x
-	local var_18_1 = arg_18_0.y
-	local var_18_2 = var_18_0 * var_18_0 + var_18_1 * var_18_1
+function Vector2.ClampMagnitude(v, maxLength)
+	local x = v.x
+	local y = v.y
+	local sqrMag = x * x + y * y
 
-	if var_18_2 > arg_18_1 * arg_18_1 then
-		local var_18_3 = arg_18_1 / var_0_0(var_18_2)
+	if sqrMag > maxLength * maxLength then
+		local mag = maxLength / sqrt(sqrMag)
 
-		var_18_0 = var_18_0 * var_18_3
-		var_18_1 = var_18_1 * var_18_3
+		x = x * mag
+		y = y * mag
 
-		return var_0_1({
-			x = var_18_0,
-			y = var_18_1
-		}, var_0_6)
+		return setmetatable({
+			x = x,
+			y = y
+		}, Vector2)
 	end
 
-	return var_0_1({
-		x = var_18_0,
-		y = var_18_1
-	}, var_0_6)
+	return setmetatable({
+		x = x,
+		y = y
+	}, Vector2)
 end
 
-function var_0_6.SmoothDamp(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
-	arg_19_5 = arg_19_5 or Time.deltaTime
-	arg_19_4 = arg_19_4 or var_0_3.huge
-	arg_19_3 = var_0_3.max(0.0001, arg_19_3)
+function Vector2.SmoothDamp(current, target, Velocity, smoothTime, maxSpeed, deltaTime)
+	deltaTime = deltaTime or Time.deltaTime
+	maxSpeed = maxSpeed or math.huge
+	smoothTime = math.max(0.0001, smoothTime)
 
-	local var_19_0 = 2 / arg_19_3
-	local var_19_1 = var_19_0 * arg_19_5
-	local var_19_2 = 1 / (1 + var_19_1 + 0.48 * var_19_1 * var_19_1 + 0.235 * var_19_1 * var_19_1 * var_19_1)
-	local var_19_3 = arg_19_1.x
-	local var_19_4 = arg_19_1.y
-	local var_19_5 = arg_19_0.x
-	local var_19_6 = arg_19_0.y
-	local var_19_7 = var_19_5 - var_19_3
-	local var_19_8 = var_19_6 - var_19_4
-	local var_19_9 = var_19_7 * var_19_7 + var_19_8 * var_19_8
-	local var_19_10 = arg_19_4 * arg_19_3
+	local num = 2 / smoothTime
+	local num2 = num * deltaTime
 
-	if var_19_9 > var_19_10 * var_19_10 then
-		local var_19_11 = var_19_10 / var_0_0(var_19_9)
+	num2 = 1 / (1 + num2 + 0.48 * num2 * num2 + 0.235 * num2 * num2 * num2)
 
-		var_19_7 = var_19_7 * var_19_11
-		var_19_8 = var_19_8 * var_19_11
+	local tx = target.x
+	local ty = target.y
+	local cx = current.x
+	local cy = current.y
+	local vecx = cx - tx
+	local vecy = cy - ty
+	local m = vecx * vecx + vecy * vecy
+	local n = maxSpeed * smoothTime
+
+	if m > n * n then
+		m = n / sqrt(m)
+		vecx = vecx * m
+		vecy = vecy * m
 	end
 
-	local var_19_12 = arg_19_2.x
-	local var_19_13 = arg_19_2.y
-	local var_19_14 = (var_19_12 + var_19_0 * var_19_7) * arg_19_5
-	local var_19_15 = (var_19_13 + var_19_0 * var_19_8) * arg_19_5
+	m = Velocity.x
+	n = Velocity.y
 
-	arg_19_2.x = (var_19_12 - var_19_0 * var_19_14) * var_19_2
-	arg_19_2.y = (var_19_13 - var_19_0 * var_19_15) * var_19_2
+	local vec3x = (m + num * vecx) * deltaTime
+	local vec3y = (n + num * vecy) * deltaTime
 
-	local var_19_16 = var_19_5 - var_19_7 + (var_19_7 + var_19_14) * var_19_2
-	local var_19_17 = var_19_6 - var_19_8 + (var_19_8 + var_19_15) * var_19_2
+	Velocity.x = (m - num * vec3x) * num2
+	Velocity.y = (n - num * vec3y) * num2
+	m = cx - vecx + (vecx + vec3x) * num2
+	n = cy - vecy + (vecy + vec3y) * num2
 
-	if (var_19_3 - var_19_5) * (var_19_16 - var_19_3) + (var_19_4 - var_19_6) * (var_19_17 - var_19_4) > 0 then
-		var_19_16 = var_19_3
-		var_19_17 = var_19_4
-		arg_19_2.x = 0
-		arg_19_2.y = 0
+	if (tx - cx) * (m - tx) + (ty - cy) * (n - ty) > 0 then
+		m = tx
+		n = ty
+		Velocity.x = 0
+		Velocity.y = 0
 	end
 
-	return var_0_1({
-		x = var_19_16,
-		y = var_19_17
-	}, var_0_6), arg_19_2
+	return setmetatable({
+		x = m,
+		y = n
+	}, Vector2), Velocity
 end
 
-function var_0_6.Max(arg_20_0, arg_20_1)
-	return var_0_1({
-		x = var_0_3.max(arg_20_0.x, arg_20_1.x),
-		y = var_0_3.max(arg_20_0.y, arg_20_1.y)
-	}, var_0_6)
+function Vector2.Max(a, b)
+	return setmetatable({
+		x = math.max(a.x, b.x),
+		y = math.max(a.y, b.y)
+	}, Vector2)
 end
 
-function var_0_6.Min(arg_21_0, arg_21_1)
-	return var_0_1({
-		x = var_0_3.min(arg_21_0.x, arg_21_1.x),
-		y = var_0_3.min(arg_21_0.y, arg_21_1.y)
-	}, var_0_6)
+function Vector2.Min(a, b)
+	return setmetatable({
+		x = math.min(a.x, b.x),
+		y = math.min(a.y, b.y)
+	}, Vector2)
 end
 
-function var_0_6.Scale(arg_22_0, arg_22_1)
-	return var_0_1({
-		x = arg_22_0.x * arg_22_1.x,
-		y = arg_22_0.y * arg_22_1.y
-	}, var_0_6)
+function Vector2.Scale(a, b)
+	return setmetatable({
+		x = a.x * b.x,
+		y = a.y * b.y
+	}, Vector2)
 end
 
-function var_0_6.Div(arg_23_0, arg_23_1)
-	arg_23_0.x = arg_23_0.x / arg_23_1
-	arg_23_0.y = arg_23_0.y / arg_23_1
+function Vector2:Div(d)
+	self.x = self.x / d
+	self.y = self.y / d
 
-	return arg_23_0
+	return self
 end
 
-function var_0_6.Mul(arg_24_0, arg_24_1)
-	arg_24_0.x = arg_24_0.x * arg_24_1
-	arg_24_0.y = arg_24_0.y * arg_24_1
+function Vector2:Mul(d)
+	self.x = self.x * d
+	self.y = self.y * d
 
-	return arg_24_0
+	return self
 end
 
-function var_0_6.Add(arg_25_0, arg_25_1)
-	arg_25_0.x = arg_25_0.x + arg_25_1.x
-	arg_25_0.y = arg_25_0.y + arg_25_1.y
+function Vector2:Add(b)
+	self.x = self.x + b.x
+	self.y = self.y + b.y
 
-	return arg_25_0
+	return self
 end
 
-function var_0_6.Sub(arg_26_0, arg_26_1)
-	arg_26_0.x = arg_26_0.x - arg_26_1.x
-	arg_26_0.y = arg_26_0.y - arg_26_1.y
+function Vector2:Sub(b)
+	self.x = self.x - b.x
+	self.y = self.y - b.y
 end
 
-function var_0_6.__tostring(arg_27_0)
-	return string.format("(%f,%f)", arg_27_0.x, arg_27_0.y)
+function Vector2:__tostring()
+	return string.format("(%f,%f)", self.x, self.y)
 end
 
-function var_0_6.__div(arg_28_0, arg_28_1)
-	return var_0_1({
-		x = arg_28_0.x / arg_28_1,
-		y = arg_28_0.y / arg_28_1
-	}, var_0_6)
+function Vector2.__div(va, d)
+	return setmetatable({
+		x = va.x / d,
+		y = va.y / d
+	}, Vector2)
 end
 
-function var_0_6.__mul(arg_29_0, arg_29_1)
-	if type(arg_29_1) == "number" then
-		return var_0_1({
-			x = arg_29_0.x * arg_29_1,
-			y = arg_29_0.y * arg_29_1
-		}, var_0_6)
+function Vector2.__mul(a, d)
+	if type(d) == "number" then
+		return setmetatable({
+			x = a.x * d,
+			y = a.y * d
+		}, Vector2)
 	else
-		return var_0_1({
-			x = arg_29_0 * arg_29_1.x,
-			y = arg_29_0 * arg_29_1.y
-		}, var_0_6)
+		return setmetatable({
+			x = a * d.x,
+			y = a * d.y
+		}, Vector2)
 	end
 end
 
-function var_0_6.__add(arg_30_0, arg_30_1)
-	return var_0_1({
-		x = arg_30_0.x + arg_30_1.x,
-		y = arg_30_0.y + arg_30_1.y
-	}, var_0_6)
+function Vector2.__add(a, b)
+	return setmetatable({
+		x = a.x + b.x,
+		y = a.y + b.y
+	}, Vector2)
 end
 
-function var_0_6.__sub(arg_31_0, arg_31_1)
-	return var_0_1({
-		x = arg_31_0.x - arg_31_1.x,
-		y = arg_31_0.y - arg_31_1.y
-	}, var_0_6)
+function Vector2.__sub(a, b)
+	return setmetatable({
+		x = a.x - b.x,
+		y = a.y - b.y
+	}, Vector2)
 end
 
-function var_0_6.__unm(arg_32_0)
-	return var_0_1({
-		x = -arg_32_0.x,
-		y = -arg_32_0.y
-	}, var_0_6)
+function Vector2.__unm(v)
+	return setmetatable({
+		x = -v.x,
+		y = -v.y
+	}, Vector2)
 end
 
-function var_0_6.__eq(arg_33_0, arg_33_1)
-	return (arg_33_0.x - arg_33_1.x)^2 + (arg_33_0.y - arg_33_1.y)^2 < 9.999999e-11
+function Vector2.__eq(a, b)
+	return (a.x - b.x)^2 + (a.y - b.y)^2 < 9.999999e-11
 end
 
-function var_0_7.up()
-	return var_0_1({
+function get.up()
+	return setmetatable({
 		x = 0,
 		y = 1
-	}, var_0_6)
+	}, Vector2)
 end
 
-function var_0_7.right()
-	return var_0_1({
+function get.right()
+	return setmetatable({
 		x = 1,
 		y = 0
-	}, var_0_6)
+	}, Vector2)
 end
 
-function var_0_7.zero()
-	return var_0_1({
+function get.zero()
+	return setmetatable({
 		x = 0,
 		y = 0
-	}, var_0_6)
+	}, Vector2)
 end
 
-function var_0_7.one()
-	return var_0_1({
+function get.one()
+	return setmetatable({
 		x = 1,
 		y = 1
-	}, var_0_6)
+	}, Vector2)
 end
 
-var_0_7.magnitude = var_0_6.Magnitude
-var_0_7.normalized = var_0_6.Normalize
-var_0_7.sqrMagnitude = var_0_6.SqrMagnitude
-UnityEngine.Vector2 = var_0_6
+get.magnitude = Vector2.Magnitude
+get.normalized = Vector2.Normalize
+get.sqrMagnitude = Vector2.SqrMagnitude
+UnityEngine.Vector2 = Vector2
 
-var_0_1(var_0_6, var_0_6)
+setmetatable(Vector2, Vector2)
 
-return var_0_6
+return Vector2

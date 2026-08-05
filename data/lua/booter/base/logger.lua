@@ -1,30 +1,36 @@
-﻿module("booter.base.logger", package.seeall)
+﻿-- chunkname: @booter/base/logger.lua
+
+module("booter.base.logger", package.seeall)
 
 function concatMsg(...)
-	local var_1_0 = {
+	local msg = {
 		...
 	}
 
-	return table.concat(var_1_0, " ")
+	return table.concat(msg, " ")
 end
 
 function _addTraceback(...)
-	return concatMsg(...) .. debug.traceback("", 2)
+	local log = concatMsg(...)
+
+	log = log .. debug.traceback("", 2)
+
+	return log
 end
 
 function logNormal(...)
-	local var_3_0 = concatMsg(...)
+	local msg = concatMsg(...)
 
-	if canLogNormal and var_3_0 then
-		print(var_3_0)
+	if canLogNormal and msg then
+		print(msg)
 	end
 end
 
 function logWarn(...)
-	local var_4_0 = concatMsg(...)
+	local msg = concatMsg(...)
 
-	if canLogWarn and var_4_0 then
-		printWarn(var_4_0)
+	if canLogWarn and msg then
+		printWarn(msg)
 	end
 end
 
@@ -35,90 +41,90 @@ function logError(...)
 end
 
 function forceLog(...)
-	local var_6_0 = ...
+	local msg = ...
 
-	forcePrint(var_6_0)
+	forcePrint(msg)
 end
 
-function dump(arg_7_0, arg_7_1, arg_7_2)
-	if type(arg_7_2) ~= "number" then
-		arg_7_2 = 3
+function dump(value, desciption, nesting)
+	if type(nesting) ~= "number" then
+		nesting = 3
 	end
 
-	local var_7_0 = {}
-	local var_7_1 = {}
+	local lookupTable = {}
+	local result = {}
 
-	local function var_7_2(arg_8_0)
-		if type(arg_8_0) == "string" then
-			arg_8_0 = "\"" .. arg_8_0 .. "\""
+	local function _v(v)
+		if type(v) == "string" then
+			v = "\"" .. v .. "\""
 		end
 
-		return tostring(arg_8_0)
+		return tostring(v)
 	end
 
-	local var_7_3 = string.split(debug.traceback("", 2), "\n")
+	local traceback = string.split(debug.traceback("", 2), "\n")
 
-	print("dump from: " .. string.trim(var_7_3[3]))
+	print("dump from: " .. string.trim(traceback[3]))
 
-	local function var_7_4(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
-		arg_9_1 = arg_9_1 or "<var>"
+	local function _dump(value, desciption, indent, nest, keylen)
+		desciption = desciption or "<var>"
 		spc = ""
 
-		if type(arg_9_4) == "number" then
-			spc = string.rep(" ", arg_9_4 - string.len(var_7_2(arg_9_1)))
+		if type(keylen) == "number" then
+			spc = string.rep(" ", keylen - string.len(_v(desciption)))
 		end
 
-		if type(arg_9_0) ~= "table" then
-			var_7_1[#var_7_1 + 1] = string.format("%s%s%s = %s", arg_9_2, var_7_2(arg_9_1), spc, var_7_2(arg_9_0))
-		elseif var_7_0[arg_9_0] then
-			var_7_1[#var_7_1 + 1] = string.format("%s%s%s = *REF*", arg_9_2, arg_9_1, spc)
+		if type(value) ~= "table" then
+			result[#result + 1] = string.format("%s%s%s = %s", indent, _v(desciption), spc, _v(value))
+		elseif lookupTable[value] then
+			result[#result + 1] = string.format("%s%s%s = *REF*", indent, desciption, spc)
 		else
-			var_7_0[arg_9_0] = true
+			lookupTable[value] = true
 
-			if arg_9_3 > arg_7_2 then
-				var_7_1[#var_7_1 + 1] = string.format("%s%s = *MAX NESTING*", arg_9_2, arg_9_1)
+			if nest > nesting then
+				result[#result + 1] = string.format("%s%s = *MAX NESTING*", indent, desciption)
 			else
-				var_7_1[#var_7_1 + 1] = string.format("%s%s = {", arg_9_2, var_7_2(arg_9_1))
+				result[#result + 1] = string.format("%s%s = {", indent, _v(desciption))
 
-				local var_9_0 = arg_9_2 .. "    "
-				local var_9_1 = {}
-				local var_9_2 = 0
-				local var_9_3 = {}
+				local indent2 = indent .. "    "
+				local keys = {}
+				local keylen = 0
+				local values = {}
 
-				for iter_9_0, iter_9_1 in pairs(arg_9_0) do
-					var_9_1[#var_9_1 + 1] = iter_9_0
+				for k, v in pairs(value) do
+					keys[#keys + 1] = k
 
-					local var_9_4 = var_7_2(iter_9_0)
-					local var_9_5 = string.len(var_9_4)
+					local vk = _v(k)
+					local vkl = string.len(vk)
 
-					if var_9_2 < var_9_5 then
-						var_9_2 = var_9_5
+					if keylen < vkl then
+						keylen = vkl
 					end
 
-					var_9_3[iter_9_0] = iter_9_1
+					values[k] = v
 				end
 
-				table.sort(var_9_1, function(arg_10_0, arg_10_1)
-					if type(arg_10_0) == "number" and type(arg_10_1) == "number" then
-						return arg_10_0 < arg_10_1
+				table.sort(keys, function(a, b)
+					if type(a) == "number" and type(b) == "number" then
+						return a < b
 					else
-						return tostring(arg_10_0) < tostring(arg_10_1)
+						return tostring(a) < tostring(b)
 					end
 				end)
 
-				for iter_9_2, iter_9_3 in ipairs(var_9_1) do
-					var_7_4(var_9_3[iter_9_3], iter_9_3, var_9_0, arg_9_3 + 1, var_9_2)
+				for i, k in ipairs(keys) do
+					_dump(values[k], k, indent2, nest + 1, keylen)
 				end
 
-				var_7_1[#var_7_1 + 1] = string.format("%s}", arg_9_2)
+				result[#result + 1] = string.format("%s}", indent)
 			end
 		end
 	end
 
-	var_7_4(arg_7_0, arg_7_1, "- ", 1)
+	_dump(value, desciption, "- ", 1)
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		print(iter_7_1)
+	for i, line in ipairs(result) do
+		print(line)
 	end
 end
 

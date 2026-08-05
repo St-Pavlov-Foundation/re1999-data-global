@@ -105,6 +105,12 @@ function ProjBooter:checkSystemLanguage()
 end
 
 function ProjBooter:_checkUseBigZip()
+	local regionType = GameConfig:GetCurRegionType()
+
+	if regionType == 4 or regionType == 5 then
+		return false
+	end
+
 	local key = "UpdateListInfo_UseBigZip"
 
 	return UnityEngine.PlayerPrefs.GetFloat(key, 0) == 1

@@ -1,4 +1,6 @@
-﻿return {
+﻿-- chunkname: @System/Injection/InjectionBridgeInfo.lua
+
+return {
 	AccessingArray = {
 		OnApplicationQuit = 54,
 		ShowTips = 52,

@@ -1,540 +1,547 @@
-﻿local var_0_0 = math
-local var_0_1 = var_0_0.acos
-local var_0_2 = var_0_0.sqrt
-local var_0_3 = var_0_0.max
-local var_0_4 = var_0_0.min
-local var_0_5 = Mathf.Clamp
-local var_0_6 = var_0_0.cos
-local var_0_7 = var_0_0.sin
-local var_0_8 = var_0_0.abs
-local var_0_9 = Mathf.Sign
-local var_0_10 = setmetatable
-local var_0_11 = rawset
-local var_0_12 = rawget
-local var_0_13 = type
-local var_0_14 = 57.295779513082
-local var_0_15 = 0.017453292519943
-local var_0_16 = {}
-local var_0_17 = tolua.initget(var_0_16)
+﻿-- chunkname: @UnityEngine/Vector3.lua
 
-function var_0_16.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_12(var_0_16, arg_1_1)
+local math = math
+local acos = math.acos
+local sqrt = math.sqrt
+local max = math.max
+local min = math.min
+local clamp = Mathf.Clamp
+local cos = math.cos
+local sin = math.sin
+local abs = math.abs
+local sign = Mathf.Sign
+local setmetatable = setmetatable
+local rawset = rawset
+local rawget = rawget
+local type = type
+local rad2Deg = 57.295779513082
+local deg2Rad = 0.017453292519943
+local Vector3 = {}
+local get = tolua.initget(Vector3)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_12(var_0_17, arg_1_1)
+function Vector3.__index(t, k)
+	local var = rawget(Vector3, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+	if var == nil then
+		var = rawget(get, k)
+
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_16.New(arg_2_0, arg_2_1, arg_2_2)
-	local var_2_0 = {
-		x = arg_2_0 or 0,
-		y = arg_2_1 or 0,
-		z = arg_2_2 or 0
+function Vector3.New(x, y, z)
+	local t = {
+		x = x or 0,
+		y = y or 0,
+		z = z or 0
 	}
 
-	var_0_10(var_2_0, var_0_16)
+	setmetatable(t, Vector3)
 
-	return var_2_0
+	return t
 end
 
-local var_0_18 = var_0_16.New
+local _new = Vector3.New
 
-function var_0_16.__call(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = {
-		x = arg_3_1 or 0,
-		y = arg_3_2 or 0,
-		z = arg_3_3 or 0
+function Vector3.__call(t, x, y, z)
+	local t = {
+		x = x or 0,
+		y = y or 0,
+		z = z or 0
 	}
 
-	var_0_10(var_3_0, var_0_16)
+	setmetatable(t, Vector3)
 
-	return var_3_0
+	return t
 end
 
-function var_0_16.Set(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_0.x = arg_4_1 or 0
-	arg_4_0.y = arg_4_2 or 0
-	arg_4_0.z = arg_4_3 or 0
+function Vector3:Set(x, y, z)
+	self.x = x or 0
+	self.y = y or 0
+	self.z = z or 0
 end
 
-function var_0_16.Get(arg_5_0)
-	return arg_5_0.x, arg_5_0.y, arg_5_0.z
+function Vector3.Get(v)
+	return v.x, v.y, v.z
 end
 
-function var_0_16.Clone(arg_6_0)
-	return var_0_10({
-		x = arg_6_0.x,
-		y = arg_6_0.y,
-		z = arg_6_0.z
-	}, var_0_16)
+function Vector3:Clone()
+	return setmetatable({
+		x = self.x,
+		y = self.y,
+		z = self.z
+	}, Vector3)
 end
 
-function var_0_16.Distance(arg_7_0, arg_7_1)
-	return var_0_2((arg_7_0.x - arg_7_1.x)^2 + (arg_7_0.y - arg_7_1.y)^2 + (arg_7_0.z - arg_7_1.z)^2)
+function Vector3.Distance(va, vb)
+	return sqrt((va.x - vb.x)^2 + (va.y - vb.y)^2 + (va.z - vb.z)^2)
 end
 
-function var_0_16.Dot(arg_8_0, arg_8_1)
-	return arg_8_0.x * arg_8_1.x + arg_8_0.y * arg_8_1.y + arg_8_0.z * arg_8_1.z
+function Vector3.Dot(lhs, rhs)
+	return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z
 end
 
-function var_0_16.Lerp(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_2 = var_0_5(arg_9_2, 0, 1)
+function Vector3.Lerp(from, to, t)
+	t = clamp(t, 0, 1)
 
-	return var_0_18(arg_9_0.x + (arg_9_1.x - arg_9_0.x) * arg_9_2, arg_9_0.y + (arg_9_1.y - arg_9_0.y) * arg_9_2, arg_9_0.z + (arg_9_1.z - arg_9_0.z) * arg_9_2)
+	return _new(from.x + (to.x - from.x) * t, from.y + (to.y - from.y) * t, from.z + (to.z - from.z) * t)
 end
 
-function var_0_16.Magnitude(arg_10_0)
-	return var_0_2(arg_10_0.x * arg_10_0.x + arg_10_0.y * arg_10_0.y + arg_10_0.z * arg_10_0.z)
+function Vector3:Magnitude()
+	return sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 end
 
-function var_0_16.Max(arg_11_0, arg_11_1)
-	return var_0_18(var_0_3(arg_11_0.x, arg_11_1.x), var_0_3(arg_11_0.y, arg_11_1.y), var_0_3(arg_11_0.z, arg_11_1.z))
+function Vector3.Max(lhs, rhs)
+	return _new(max(lhs.x, rhs.x), max(lhs.y, rhs.y), max(lhs.z, rhs.z))
 end
 
-function var_0_16.Min(arg_12_0, arg_12_1)
-	return var_0_18(var_0_4(arg_12_0.x, arg_12_1.x), var_0_4(arg_12_0.y, arg_12_1.y), var_0_4(arg_12_0.z, arg_12_1.z))
+function Vector3.Min(lhs, rhs)
+	return _new(min(lhs.x, rhs.x), min(lhs.y, rhs.y), min(lhs.z, rhs.z))
 end
 
-function var_0_16.Normalize(arg_13_0)
-	local var_13_0 = arg_13_0.x
-	local var_13_1 = arg_13_0.y
-	local var_13_2 = arg_13_0.z
-	local var_13_3 = var_0_2(var_13_0 * var_13_0 + var_13_1 * var_13_1 + var_13_2 * var_13_2)
+function Vector3.Normalize(v)
+	local x, y, z = v.x, v.y, v.z
+	local num = sqrt(x * x + y * y + z * z)
 
-	if var_13_3 > 1e-05 then
-		return var_0_10({
-			x = var_13_0 / var_13_3,
-			y = var_13_1 / var_13_3,
-			z = var_13_2 / var_13_3
-		}, var_0_16)
+	if num > 1e-05 then
+		return setmetatable({
+			x = x / num,
+			y = y / num,
+			z = z / num
+		}, Vector3)
 	end
 
-	return var_0_10({
+	return setmetatable({
 		z = 0,
 		x = 0,
 		y = 0
-	}, var_0_16)
+	}, Vector3)
 end
 
-function var_0_16.SetNormalize(arg_14_0)
-	local var_14_0 = var_0_2(arg_14_0.x * arg_14_0.x + arg_14_0.y * arg_14_0.y + arg_14_0.z * arg_14_0.z)
+function Vector3:SetNormalize()
+	local num = sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 
-	if var_14_0 > 1e-05 then
-		arg_14_0.x = arg_14_0.x / var_14_0
-		arg_14_0.y = arg_14_0.y / var_14_0
-		arg_14_0.z = arg_14_0.z / var_14_0
+	if num > 1e-05 then
+		self.x = self.x / num
+		self.y = self.y / num
+		self.z = self.z / num
 	else
-		arg_14_0.x = 0
-		arg_14_0.y = 0
-		arg_14_0.z = 0
+		self.x = 0
+		self.y = 0
+		self.z = 0
 	end
 
-	return arg_14_0
+	return self
 end
 
-function var_0_16.SqrMagnitude(arg_15_0)
-	return arg_15_0.x * arg_15_0.x + arg_15_0.y * arg_15_0.y + arg_15_0.z * arg_15_0.z
+function Vector3:SqrMagnitude()
+	return self.x * self.x + self.y * self.y + self.z * self.z
 end
 
-local var_0_19 = var_0_16.Dot
+local dot = Vector3.Dot
 
-function var_0_16.Angle(arg_16_0, arg_16_1)
-	return var_0_1(var_0_5(var_0_19(arg_16_0:Normalize(), arg_16_1:Normalize()), -1, 1)) * var_0_14
+function Vector3.Angle(from, to)
+	return acos(clamp(dot(from:Normalize(), to:Normalize()), -1, 1)) * rad2Deg
 end
 
-function var_0_16.ClampMagnitude(arg_17_0, arg_17_1)
-	if arg_17_0:SqrMagnitude() > arg_17_1 * arg_17_1 then
-		arg_17_0:SetNormalize()
-		arg_17_0:Mul(arg_17_1)
+function Vector3:ClampMagnitude(maxLength)
+	if self:SqrMagnitude() > maxLength * maxLength then
+		self:SetNormalize()
+		self:Mul(maxLength)
 	end
 
-	return arg_17_0
+	return self
 end
 
-function var_0_16.OrthoNormalize(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0:SetNormalize()
-	arg_18_1:Sub(arg_18_1:Project(arg_18_0))
-	arg_18_1:SetNormalize()
+function Vector3.OrthoNormalize(va, vb, vc)
+	va:SetNormalize()
+	vb:Sub(vb:Project(va))
+	vb:SetNormalize()
 
-	if arg_18_2 == nil then
-		return arg_18_0, arg_18_1
+	if vc == nil then
+		return va, vb
 	end
 
-	arg_18_2:Sub(arg_18_2:Project(arg_18_0))
-	arg_18_2:Sub(arg_18_2:Project(arg_18_1))
-	arg_18_2:SetNormalize()
+	vc:Sub(vc:Project(va))
+	vc:Sub(vc:Project(vb))
+	vc:SetNormalize()
 
-	return arg_18_0, arg_18_1, arg_18_2
+	return va, vb, vc
 end
 
-function var_0_16.MoveTowards(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_1 - arg_19_0
-	local var_19_1 = var_19_0:SqrMagnitude()
+function Vector3.MoveTowards(current, target, maxDistanceDelta)
+	local delta = target - current
+	local sqrDelta = delta:SqrMagnitude()
+	local sqrDistance = maxDistanceDelta * maxDistanceDelta
 
-	if var_19_1 > arg_19_2 * arg_19_2 then
-		local var_19_2 = var_0_2(var_19_1)
+	if sqrDistance < sqrDelta then
+		local magnitude = sqrt(sqrDelta)
 
-		if var_19_2 > 1e-06 then
-			var_19_0:Mul(arg_19_2 / var_19_2)
-			var_19_0:Add(arg_19_0)
+		if magnitude > 1e-06 then
+			delta:Mul(maxDistanceDelta / magnitude)
+			delta:Add(current)
 
-			return var_19_0
+			return delta
 		else
-			return arg_19_0:Clone()
+			return current:Clone()
 		end
 	end
 
-	return arg_19_1:Clone()
+	return target:Clone()
 end
 
-function ClampedMove(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_1 - arg_20_0
+function ClampedMove(lhs, rhs, clampedDelta)
+	local delta = rhs - lhs
 
-	if var_20_0 > 0 then
-		return arg_20_0 + var_0_4(var_20_0, arg_20_2)
+	if delta > 0 then
+		return lhs + min(delta, clampedDelta)
 	else
-		return arg_20_0 - var_0_4(-var_20_0, arg_20_2)
+		return lhs - min(-delta, clampedDelta)
 	end
 end
 
-local var_0_20 = 0.7071067811865476
+local overSqrt2 = 0.7071067811865476
 
-local function var_0_21(arg_21_0)
-	local var_21_0 = var_0_18()
+local function OrthoNormalVector(vec)
+	local res = _new()
 
-	if var_0_8(arg_21_0.z) > var_0_20 then
-		local var_21_1 = arg_21_0.y * arg_21_0.y + arg_21_0.z * arg_21_0.z
-		local var_21_2 = 1 / var_0_2(var_21_1)
+	if abs(vec.z) > overSqrt2 then
+		local a = vec.y * vec.y + vec.z * vec.z
+		local k = 1 / sqrt(a)
 
-		var_21_0.x = 0
-		var_21_0.y = -arg_21_0.z * var_21_2
-		var_21_0.z = arg_21_0.y * var_21_2
+		res.x = 0
+		res.y = -vec.z * k
+		res.z = vec.y * k
 	else
-		local var_21_3 = arg_21_0.x * arg_21_0.x + arg_21_0.y * arg_21_0.y
-		local var_21_4 = 1 / var_0_2(var_21_3)
+		local a = vec.x * vec.x + vec.y * vec.y
+		local k = 1 / sqrt(a)
 
-		var_21_0.x = -arg_21_0.y * var_21_4
-		var_21_0.y = arg_21_0.x * var_21_4
-		var_21_0.z = 0
+		res.x = -vec.y * k
+		res.y = vec.x * k
+		res.z = 0
 	end
 
-	return var_21_0
+	return res
 end
 
-function var_0_16.RotateTowards(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	local var_22_0 = arg_22_0:Magnitude()
-	local var_22_1 = arg_22_1:Magnitude()
+function Vector3.RotateTowards(current, target, maxRadiansDelta, maxMagnitudeDelta)
+	local len1 = current:Magnitude()
+	local len2 = target:Magnitude()
 
-	if var_22_0 > 1e-06 and var_22_1 > 1e-06 then
-		local var_22_2 = arg_22_0 / var_22_0
-		local var_22_3 = arg_22_1 / var_22_1
-		local var_22_4 = var_0_19(var_22_2, var_22_3)
+	if len1 > 1e-06 and len2 > 1e-06 then
+		local from = current / len1
+		local to = target / len2
+		local cosom = dot(from, to)
 
-		if var_22_4 > 0.999999 then
-			return var_0_16.MoveTowards(arg_22_0, arg_22_1, arg_22_3)
-		elseif var_22_4 < -0.999999 then
-			local var_22_5 = var_0_21(var_22_2)
-			local var_22_6 = Quaternion.AngleAxis(arg_22_2 * var_0_14, var_22_5):MulVec3(var_22_2)
-			local var_22_7 = ClampedMove(var_22_0, var_22_1, arg_22_3)
+		if cosom > 0.999999 then
+			return Vector3.MoveTowards(current, target, maxMagnitudeDelta)
+		elseif cosom < -0.999999 then
+			local axis = OrthoNormalVector(from)
+			local q = Quaternion.AngleAxis(maxRadiansDelta * rad2Deg, axis)
+			local rotated = q:MulVec3(from)
+			local delta = ClampedMove(len1, len2, maxMagnitudeDelta)
 
-			var_22_6:Mul(var_22_7)
+			rotated:Mul(delta)
 
-			return var_22_6
+			return rotated
 		else
-			local var_22_8 = var_0_1(var_22_4)
-			local var_22_9 = var_0_16.Cross(var_22_2, var_22_3)
+			local angle = acos(cosom)
+			local axis = Vector3.Cross(from, to)
 
-			var_22_9:SetNormalize()
+			axis:SetNormalize()
 
-			local var_22_10 = Quaternion.AngleAxis(var_0_4(arg_22_2, var_22_8) * var_0_14, var_22_9):MulVec3(var_22_2)
-			local var_22_11 = ClampedMove(var_22_0, var_22_1, arg_22_3)
+			local q = Quaternion.AngleAxis(min(maxRadiansDelta, angle) * rad2Deg, axis)
+			local rotated = q:MulVec3(from)
+			local delta = ClampedMove(len1, len2, maxMagnitudeDelta)
 
-			var_22_10:Mul(var_22_11)
+			rotated:Mul(delta)
 
-			return var_22_10
+			return rotated
 		end
 	end
 
-	return var_0_16.MoveTowards(arg_22_0, arg_22_1, arg_22_3)
+	return Vector3.MoveTowards(current, target, maxMagnitudeDelta)
 end
 
-function var_0_16.SmoothDamp(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = Mathf.Infinity
-	local var_23_1 = Time.deltaTime
+function Vector3.SmoothDamp(current, target, currentVelocity, smoothTime)
+	local maxSpeed = Mathf.Infinity
+	local deltaTime = Time.deltaTime
 
-	arg_23_3 = var_0_3(0.0001, arg_23_3)
+	smoothTime = max(0.0001, smoothTime)
 
-	local var_23_2 = 2 / arg_23_3
-	local var_23_3 = var_23_2 * var_23_1
-	local var_23_4 = 1 / (1 + var_23_3 + 0.48 * var_23_3 * var_23_3 + 0.235 * var_23_3 * var_23_3 * var_23_3)
-	local var_23_5 = arg_23_1:Clone()
-	local var_23_6 = var_23_0 * arg_23_3
-	local var_23_7 = arg_23_0 - arg_23_1
+	local num = 2 / smoothTime
+	local num2 = num * deltaTime
+	local num3 = 1 / (1 + num2 + 0.48 * num2 * num2 + 0.235 * num2 * num2 * num2)
+	local vector2 = target:Clone()
+	local maxLength = maxSpeed * smoothTime
+	local vector = current - target
 
-	var_23_7:ClampMagnitude(var_23_6)
+	vector:ClampMagnitude(maxLength)
 
-	arg_23_1 = arg_23_0 - var_23_7
+	target = current - vector
 
-	local var_23_8 = (arg_23_2 + var_23_7 * var_23_2) * var_23_1
+	local vec3 = (currentVelocity + vector * num) * deltaTime
 
-	arg_23_2 = (arg_23_2 - var_23_8 * var_23_2) * var_23_4
+	currentVelocity = (currentVelocity - vec3 * num) * num3
 
-	local var_23_9 = arg_23_1 + (var_23_7 + var_23_8) * var_23_4
+	local vector4 = target + (vector + vec3) * num3
 
-	if var_0_16.Dot(var_23_5 - arg_23_0, var_23_9 - var_23_5) > 0 then
-		var_23_9 = var_23_5
+	if Vector3.Dot(vector2 - current, vector4 - vector2) > 0 then
+		vector4 = vector2
 
-		arg_23_2:Set(0, 0, 0)
+		currentVelocity:Set(0, 0, 0)
 	end
 
-	return var_23_9, arg_23_2
+	return vector4, currentVelocity
 end
 
-function var_0_16.Scale(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0.x * arg_24_1.x
-	local var_24_1 = arg_24_0.y * arg_24_1.y
-	local var_24_2 = arg_24_0.z * arg_24_1.z
+function Vector3.Scale(a, b)
+	local x = a.x * b.x
+	local y = a.y * b.y
+	local z = a.z * b.z
 
-	return var_0_18(var_24_0, var_24_1, var_24_2)
+	return _new(x, y, z)
 end
 
-function var_0_16.Cross(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0.y * arg_25_1.z - arg_25_0.z * arg_25_1.y
-	local var_25_1 = arg_25_0.z * arg_25_1.x - arg_25_0.x * arg_25_1.z
-	local var_25_2 = arg_25_0.x * arg_25_1.y - arg_25_0.y * arg_25_1.x
+function Vector3.Cross(lhs, rhs)
+	local x = lhs.y * rhs.z - lhs.z * rhs.y
+	local y = lhs.z * rhs.x - lhs.x * rhs.z
+	local z = lhs.x * rhs.y - lhs.y * rhs.x
 
-	return var_0_18(var_25_0, var_25_1, var_25_2)
+	return _new(x, y, z)
 end
 
-function var_0_16.Equals(arg_26_0, arg_26_1)
-	return arg_26_0.x == arg_26_1.x and arg_26_0.y == arg_26_1.y and arg_26_0.z == arg_26_1.z
+function Vector3:Equals(other)
+	return self.x == other.x and self.y == other.y and self.z == other.z
 end
 
-function var_0_16.Reflect(arg_27_0, arg_27_1)
-	arg_27_1 = arg_27_1 * (-2 * var_0_19(arg_27_1, arg_27_0))
+function Vector3.Reflect(inDirection, inNormal)
+	local num = -2 * dot(inNormal, inDirection)
 
-	arg_27_1:Add(arg_27_0)
+	inNormal = inNormal * num
 
-	return arg_27_1
+	inNormal:Add(inDirection)
+
+	return inNormal
 end
 
-function var_0_16.Project(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_1:SqrMagnitude()
+function Vector3.Project(vector, onNormal)
+	local num = onNormal:SqrMagnitude()
 
-	if var_28_0 < 1.175494e-38 then
-		return var_0_18(0, 0, 0)
+	if num < 1.175494e-38 then
+		return _new(0, 0, 0)
 	end
 
-	local var_28_1 = var_0_19(arg_28_0, arg_28_1)
-	local var_28_2 = arg_28_1:Clone()
+	local num2 = dot(vector, onNormal)
+	local v3 = onNormal:Clone()
 
-	var_28_2:Mul(var_28_1 / var_28_0)
+	v3:Mul(num2 / num)
 
-	return var_28_2
+	return v3
 end
 
-function var_0_16.ProjectOnPlane(arg_29_0, arg_29_1)
-	local var_29_0 = var_0_16.Project(arg_29_0, arg_29_1)
+function Vector3.ProjectOnPlane(vector, planeNormal)
+	local v3 = Vector3.Project(vector, planeNormal)
 
-	var_29_0:Mul(-1)
-	var_29_0:Add(arg_29_0)
+	v3:Mul(-1)
+	v3:Add(vector)
 
-	return var_29_0
+	return v3
 end
 
-function var_0_16.Slerp(arg_30_0, arg_30_1, arg_30_2)
-	local var_30_0
-	local var_30_1
-	local var_30_2
-	local var_30_3
+function Vector3.Slerp(from, to, t)
+	local omega, sinom, scale0, scale1
 
-	if arg_30_2 <= 0 then
-		return arg_30_0:Clone()
-	elseif arg_30_2 >= 1 then
-		return arg_30_1:Clone()
+	if t <= 0 then
+		return from:Clone()
+	elseif t >= 1 then
+		return to:Clone()
 	end
 
-	local var_30_4 = arg_30_1:Clone()
-	local var_30_5 = arg_30_0:Clone()
-	local var_30_6 = arg_30_1:Magnitude()
-	local var_30_7 = arg_30_0:Magnitude()
+	local v2 = to:Clone()
+	local v1 = from:Clone()
+	local len2 = to:Magnitude()
+	local len1 = from:Magnitude()
 
-	var_30_4:Div(var_30_6)
-	var_30_5:Div(var_30_7)
+	v2:Div(len2)
+	v1:Div(len1)
 
-	local var_30_8 = (var_30_6 - var_30_7) * arg_30_2 + var_30_7
-	local var_30_9 = var_30_5.x * var_30_4.x + var_30_5.y * var_30_4.y + var_30_5.z * var_30_4.z
+	local len = (len2 - len1) * t + len1
+	local cosom = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
 
-	if var_30_9 > 0.999999 then
-		var_30_2 = 1 - arg_30_2
-		var_30_3 = arg_30_2
-	elseif var_30_9 < -0.999999 then
-		local var_30_10 = var_0_21(arg_30_0)
-		local var_30_11 = Quaternion.AngleAxis(180 * arg_30_2, var_30_10):MulVec3(arg_30_0)
+	if cosom > 0.999999 then
+		scale0 = 1 - t
+		scale1 = t
+	elseif cosom < -0.999999 then
+		local axis = OrthoNormalVector(from)
+		local q = Quaternion.AngleAxis(180 * t, axis)
+		local v = q:MulVec3(from)
 
-		var_30_11:Mul(var_30_8)
+		v:Mul(len)
 
-		return var_30_11
+		return v
 	else
-		local var_30_12 = var_0_1(var_30_9)
-		local var_30_13 = var_0_7(var_30_12)
-
-		var_30_2 = var_0_7((1 - arg_30_2) * var_30_12) / var_30_13
-		var_30_3 = var_0_7(arg_30_2 * var_30_12) / var_30_13
+		omega = acos(cosom)
+		sinom = sin(omega)
+		scale0 = sin((1 - t) * omega) / sinom
+		scale1 = sin(t * omega) / sinom
 	end
 
-	var_30_5:Mul(var_30_2)
-	var_30_4:Mul(var_30_3)
-	var_30_4:Add(var_30_5)
-	var_30_4:Mul(var_30_8)
+	v1:Mul(scale0)
+	v2:Mul(scale1)
+	v2:Add(v1)
+	v2:Mul(len)
 
-	return var_30_4
+	return v2
 end
 
-function var_0_16.Mul(arg_31_0, arg_31_1)
-	if var_0_13(arg_31_1) == "number" then
-		arg_31_0.x = arg_31_0.x * arg_31_1
-		arg_31_0.y = arg_31_0.y * arg_31_1
-		arg_31_0.z = arg_31_0.z * arg_31_1
+function Vector3:Mul(q)
+	if type(q) == "number" then
+		self.x = self.x * q
+		self.y = self.y * q
+		self.z = self.z * q
 	else
-		arg_31_0:MulQuat(arg_31_1)
+		self:MulQuat(q)
 	end
 
-	return arg_31_0
+	return self
 end
 
-function var_0_16.Div(arg_32_0, arg_32_1)
-	arg_32_0.x = arg_32_0.x / arg_32_1
-	arg_32_0.y = arg_32_0.y / arg_32_1
-	arg_32_0.z = arg_32_0.z / arg_32_1
+function Vector3:Div(d)
+	self.x = self.x / d
+	self.y = self.y / d
+	self.z = self.z / d
 
-	return arg_32_0
+	return self
 end
 
-function var_0_16.Add(arg_33_0, arg_33_1)
-	arg_33_0.x = arg_33_0.x + arg_33_1.x
-	arg_33_0.y = arg_33_0.y + arg_33_1.y
-	arg_33_0.z = arg_33_0.z + arg_33_1.z
+function Vector3:Add(vb)
+	self.x = self.x + vb.x
+	self.y = self.y + vb.y
+	self.z = self.z + vb.z
 
-	return arg_33_0
+	return self
 end
 
-function var_0_16.Sub(arg_34_0, arg_34_1)
-	arg_34_0.x = arg_34_0.x - arg_34_1.x
-	arg_34_0.y = arg_34_0.y - arg_34_1.y
-	arg_34_0.z = arg_34_0.z - arg_34_1.z
+function Vector3:Sub(vb)
+	self.x = self.x - vb.x
+	self.y = self.y - vb.y
+	self.z = self.z - vb.z
 
-	return arg_34_0
+	return self
 end
 
-function var_0_16.MulQuat(arg_35_0, arg_35_1)
-	local var_35_0 = arg_35_1.x * 2
-	local var_35_1 = arg_35_1.y * 2
-	local var_35_2 = arg_35_1.z * 2
-	local var_35_3 = arg_35_1.x * var_35_0
-	local var_35_4 = arg_35_1.y * var_35_1
-	local var_35_5 = arg_35_1.z * var_35_2
-	local var_35_6 = arg_35_1.x * var_35_1
-	local var_35_7 = arg_35_1.x * var_35_2
-	local var_35_8 = arg_35_1.y * var_35_2
-	local var_35_9 = arg_35_1.w * var_35_0
-	local var_35_10 = arg_35_1.w * var_35_1
-	local var_35_11 = arg_35_1.w * var_35_2
-	local var_35_12 = (1 - (var_35_4 + var_35_5)) * arg_35_0.x + (var_35_6 - var_35_11) * arg_35_0.y + (var_35_7 + var_35_10) * arg_35_0.z
-	local var_35_13 = (var_35_6 + var_35_11) * arg_35_0.x + (1 - (var_35_3 + var_35_5)) * arg_35_0.y + (var_35_8 - var_35_9) * arg_35_0.z
-	local var_35_14 = (var_35_7 - var_35_10) * arg_35_0.x + (var_35_8 + var_35_9) * arg_35_0.y + (1 - (var_35_3 + var_35_4)) * arg_35_0.z
+function Vector3:MulQuat(quat)
+	local num = quat.x * 2
+	local num2 = quat.y * 2
+	local num3 = quat.z * 2
+	local num4 = quat.x * num
+	local num5 = quat.y * num2
+	local num6 = quat.z * num3
+	local num7 = quat.x * num2
+	local num8 = quat.x * num3
+	local num9 = quat.y * num3
+	local num10 = quat.w * num
+	local num11 = quat.w * num2
+	local num12 = quat.w * num3
+	local x = (1 - (num5 + num6)) * self.x + (num7 - num12) * self.y + (num8 + num11) * self.z
+	local y = (num7 + num12) * self.x + (1 - (num4 + num6)) * self.y + (num9 - num10) * self.z
+	local z = (num8 - num11) * self.x + (num9 + num10) * self.y + (1 - (num4 + num5)) * self.z
 
-	arg_35_0:Set(var_35_12, var_35_13, var_35_14)
+	self:Set(x, y, z)
 
-	return arg_35_0
+	return self
 end
 
-function var_0_16.AngleAroundAxis(arg_36_0, arg_36_1, arg_36_2)
-	arg_36_0 = arg_36_0 - var_0_16.Project(arg_36_0, arg_36_2)
-	arg_36_1 = arg_36_1 - var_0_16.Project(arg_36_1, arg_36_2)
+function Vector3.AngleAroundAxis(from, to, axis)
+	from = from - Vector3.Project(from, axis)
+	to = to - Vector3.Project(to, axis)
 
-	return var_0_16.Angle(arg_36_0, arg_36_1) * (var_0_16.Dot(arg_36_2, var_0_16.Cross(arg_36_0, arg_36_1)) < 0 and -1 or 1)
+	local angle = Vector3.Angle(from, to)
+
+	return angle * (Vector3.Dot(axis, Vector3.Cross(from, to)) < 0 and -1 or 1)
 end
 
-function var_0_16.__tostring(arg_37_0)
-	return "[" .. arg_37_0.x .. "," .. arg_37_0.y .. "," .. arg_37_0.z .. "]"
+function Vector3:__tostring()
+	return "[" .. self.x .. "," .. self.y .. "," .. self.z .. "]"
 end
 
-function var_0_16.__div(arg_38_0, arg_38_1)
-	return var_0_18(arg_38_0.x / arg_38_1, arg_38_0.y / arg_38_1, arg_38_0.z / arg_38_1)
+function Vector3.__div(va, d)
+	return _new(va.x / d, va.y / d, va.z / d)
 end
 
-function var_0_16.__mul(arg_39_0, arg_39_1)
-	if var_0_13(arg_39_1) == "number" then
-		return var_0_18(arg_39_0.x * arg_39_1, arg_39_0.y * arg_39_1, arg_39_0.z * arg_39_1)
+function Vector3.__mul(va, d)
+	if type(d) == "number" then
+		return _new(va.x * d, va.y * d, va.z * d)
 	else
-		local var_39_0 = arg_39_0:Clone()
+		local vec = va:Clone()
 
-		var_39_0:MulQuat(arg_39_1)
+		vec:MulQuat(d)
 
-		return var_39_0
+		return vec
 	end
 end
 
-function var_0_16.__add(arg_40_0, arg_40_1)
-	return var_0_18(arg_40_0.x + arg_40_1.x, arg_40_0.y + arg_40_1.y, arg_40_0.z + arg_40_1.z)
+function Vector3.__add(va, vb)
+	return _new(va.x + vb.x, va.y + vb.y, va.z + vb.z)
 end
 
-function var_0_16.__sub(arg_41_0, arg_41_1)
-	return var_0_18(arg_41_0.x - arg_41_1.x, arg_41_0.y - arg_41_1.y, arg_41_0.z - arg_41_1.z)
+function Vector3.__sub(va, vb)
+	return _new(va.x - vb.x, va.y - vb.y, va.z - vb.z)
 end
 
-function var_0_16.__unm(arg_42_0)
-	return var_0_18(-arg_42_0.x, -arg_42_0.y, -arg_42_0.z)
+function Vector3.__unm(va)
+	return _new(-va.x, -va.y, -va.z)
 end
 
-function var_0_16.__eq(arg_43_0, arg_43_1)
-	return (arg_43_0 - arg_43_1):SqrMagnitude() < 1e-10
+function Vector3.__eq(a, b)
+	local v = a - b
+	local delta = v:SqrMagnitude()
+
+	return delta < 1e-10
 end
 
-function var_0_17.up()
-	return var_0_18(0, 1, 0)
+function get.up()
+	return _new(0, 1, 0)
 end
 
-function var_0_17.down()
-	return var_0_18(0, -1, 0)
+function get.down()
+	return _new(0, -1, 0)
 end
 
-function var_0_17.right()
-	return var_0_18(1, 0, 0)
+function get.right()
+	return _new(1, 0, 0)
 end
 
-function var_0_17.left()
-	return var_0_18(-1, 0, 0)
+function get.left()
+	return _new(-1, 0, 0)
 end
 
-function var_0_17.forward()
-	return var_0_18(0, 0, 1)
+function get.forward()
+	return _new(0, 0, 1)
 end
 
-function var_0_17.back()
-	return var_0_18(0, 0, -1)
+function get.back()
+	return _new(0, 0, -1)
 end
 
-function var_0_17.zero()
-	return var_0_18(0, 0, 0)
+function get.zero()
+	return _new(0, 0, 0)
 end
 
-function var_0_17.one()
-	return var_0_18(1, 1, 1)
+function get.one()
+	return _new(1, 1, 1)
 end
 
-var_0_17.magnitude = var_0_16.Magnitude
-var_0_17.normalized = var_0_16.Normalize
-var_0_17.sqrMagnitude = var_0_16.SqrMagnitude
-UnityEngine.Vector3 = var_0_16
+get.magnitude = Vector3.Magnitude
+get.normalized = Vector3.Normalize
+get.sqrMagnitude = Vector3.SqrMagnitude
+UnityEngine.Vector3 = Vector3
 
-var_0_10(var_0_16, var_0_16)
+setmetatable(Vector3, Vector3)
 
-return var_0_16
+return Vector3

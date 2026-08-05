@@ -1,202 +1,204 @@
-﻿local var_0_0 = string
-local var_0_1 = table
-local var_0_2 = ipairs
-local var_0_3 = assert
-local var_0_4 = require("pb")
-local var_0_5 = require("protobuf.wire_format")
+﻿-- chunkname: @protobuf/encoder.lua
+
+local string = string
+local table = table
+local ipairs = ipairs
+local assert = assert
+local pb = require("pb")
+local wire_format = require("protobuf.wire_format")
 
 module("protobuf.encoder")
 
-function _VarintSize(arg_1_0)
-	if arg_1_0 <= 127 then
+function _VarintSize(value)
+	if value <= 127 then
 		return 1
 	end
 
-	if arg_1_0 <= 16383 then
+	if value <= 16383 then
 		return 2
 	end
 
-	if arg_1_0 <= 2097151 then
+	if value <= 2097151 then
 		return 3
 	end
 
-	if arg_1_0 <= 268435455 then
+	if value <= 268435455 then
 		return 4
 	end
 
-	if arg_1_0 <= 34359738367 then
+	if value <= 34359738367 then
 		return 5
 	end
 
-	if arg_1_0 <= 4398046511103 then
+	if value <= 4398046511103 then
 		return 6
 	end
 
-	if arg_1_0 <= 562949953421311 then
+	if value <= 562949953421311 then
 		return 7
 	end
 
-	if arg_1_0 <= 7.205759403792794e+16 then
+	if value <= 7.205759403792794e+16 then
 		return 8
 	end
 
-	if arg_1_0 <= 9.223372036854776e+18 then
+	if value <= 9.223372036854776e+18 then
 		return 9
 	end
 
 	return 10
 end
 
-function _SignedVarintSize(arg_2_0)
-	if arg_2_0 < 0 then
+function _SignedVarintSize(value)
+	if value < 0 then
 		return 10
 	end
 
-	if arg_2_0 <= 127 then
+	if value <= 127 then
 		return 1
 	end
 
-	if arg_2_0 <= 16383 then
+	if value <= 16383 then
 		return 2
 	end
 
-	if arg_2_0 <= 2097151 then
+	if value <= 2097151 then
 		return 3
 	end
 
-	if arg_2_0 <= 268435455 then
+	if value <= 268435455 then
 		return 4
 	end
 
-	if arg_2_0 <= 34359738367 then
+	if value <= 34359738367 then
 		return 5
 	end
 
-	if arg_2_0 <= 4398046511103 then
+	if value <= 4398046511103 then
 		return 6
 	end
 
-	if arg_2_0 <= 562949953421311 then
+	if value <= 562949953421311 then
 		return 7
 	end
 
-	if arg_2_0 <= 7.205759403792794e+16 then
+	if value <= 7.205759403792794e+16 then
 		return 8
 	end
 
-	if arg_2_0 <= 9.223372036854776e+18 then
+	if value <= 9.223372036854776e+18 then
 		return 9
 	end
 
 	return 10
 end
 
-function _TagSize(arg_3_0)
-	return _VarintSize(var_0_5.PackTag(arg_3_0, 0))
+function _TagSize(field_number)
+	return _VarintSize(wire_format.PackTag(field_number, 0))
 end
 
-function _SimpleSizer(arg_4_0)
-	return function(arg_5_0, arg_5_1, arg_5_2)
-		local var_5_0 = _TagSize(arg_5_0)
+function _SimpleSizer(compute_value_size)
+	return function(field_number, is_repeated, is_packed)
+		local tag_size = _TagSize(field_number)
 
-		if arg_5_2 then
-			local var_5_1 = _VarintSize
+		if is_packed then
+			local VarintSize = _VarintSize
 
-			return function(arg_6_0)
-				local var_6_0 = 0
+			return function(value)
+				local result = 0
 
-				for iter_6_0, iter_6_1 in var_0_2(arg_6_0) do
-					var_6_0 = var_6_0 + arg_4_0(iter_6_1)
+				for _, element in ipairs(value) do
+					result = result + compute_value_size(element)
 				end
 
-				return var_6_0 + var_5_1(var_6_0) + var_5_0
+				return result + VarintSize(result) + tag_size
 			end
-		elseif arg_5_1 then
-			return function(arg_7_0)
-				local var_7_0 = var_5_0 * #arg_7_0
+		elseif is_repeated then
+			return function(value)
+				local result = tag_size * #value
 
-				for iter_7_0, iter_7_1 in var_0_2(arg_7_0) do
-					var_7_0 = var_7_0 + arg_4_0(iter_7_1)
+				for _, element in ipairs(value) do
+					result = result + compute_value_size(element)
 				end
 
-				return var_7_0
+				return result
 			end
 		else
-			return function(arg_8_0)
-				return var_5_0 + arg_4_0(arg_8_0)
+			return function(value)
+				return tag_size + compute_value_size(value)
 			end
 		end
 	end
 end
 
-function _ModifiedSizer(arg_9_0, arg_9_1)
-	return function(arg_10_0, arg_10_1, arg_10_2)
-		local var_10_0 = _TagSize(arg_10_0)
+function _ModifiedSizer(compute_value_size, modify_value)
+	return function(field_number, is_repeated, is_packed)
+		local tag_size = _TagSize(field_number)
 
-		if arg_10_2 then
-			local var_10_1 = _VarintSize
+		if is_packed then
+			local VarintSize = _VarintSize
 
-			return function(arg_11_0)
-				local var_11_0 = 0
+			return function(value)
+				local result = 0
 
-				for iter_11_0, iter_11_1 in var_0_2(arg_11_0) do
-					var_11_0 = var_11_0 + arg_9_0(arg_9_1(iter_11_1))
+				for _, element in ipairs(value) do
+					result = result + compute_value_size(modify_value(element))
 				end
 
-				return var_11_0 + var_10_1(var_11_0) + var_10_0
+				return result + VarintSize(result) + tag_size
 			end
-		elseif arg_10_1 then
-			return function(arg_12_0)
-				local var_12_0 = var_10_0 * #arg_12_0
+		elseif is_repeated then
+			return function(value)
+				local result = tag_size * #value
 
-				for iter_12_0, iter_12_1 in var_0_2(arg_12_0) do
-					var_12_0 = var_12_0 + arg_9_0(arg_9_1(iter_12_1))
+				for _, element in ipairs(value) do
+					result = result + compute_value_size(modify_value(element))
 				end
 
-				return var_12_0
+				return result
 			end
 		else
-			return function(arg_13_0)
-				return var_10_0 + arg_9_0(arg_9_1(arg_13_0))
+			return function(value)
+				return tag_size + compute_value_size(modify_value(value))
 			end
 		end
 	end
 end
 
-function _FixedSizer(arg_14_0)
-	return function(arg_15_0, arg_15_1, arg_15_2)
-		local var_15_0 = _TagSize(arg_15_0)
+function _FixedSizer(value_size)
+	return function(field_number, is_repeated, is_packed)
+		local tag_size = _TagSize(field_number)
 
-		if arg_15_2 then
-			local var_15_1 = _VarintSize
+		if is_packed then
+			local VarintSize = _VarintSize
 
-			return function(arg_16_0)
-				local var_16_0 = #arg_16_0 * arg_14_0
+			return function(value)
+				local result = #value * value_size
 
-				return var_16_0 + var_15_1(var_16_0) + var_15_0
+				return result + VarintSize(result) + tag_size
 			end
-		elseif arg_15_1 then
-			local var_15_2 = arg_14_0 + var_15_0
+		elseif is_repeated then
+			local element_size = value_size + tag_size
 
-			return function(arg_17_0)
-				return #arg_17_0 * var_15_2
+			return function(value)
+				return #value * element_size
 			end
 		else
-			local var_15_3 = arg_14_0 + var_15_0
+			local field_size = value_size + tag_size
 
-			return function(arg_18_0)
-				return var_15_3
+			return function(value)
+				return field_size
 			end
 		end
 	end
 end
 
 Int32Sizer = _SimpleSizer(_SignedVarintSize)
-Int64Sizer = _SimpleSizer(var_0_4.signed_varint_size)
+Int64Sizer = _SimpleSizer(pb.signed_varint_size)
 EnumSizer = Int32Sizer
 UInt32Sizer = _SimpleSizer(_VarintSize)
-UInt64Sizer = _SimpleSizer(var_0_4.varint_size)
-SInt32Sizer = _ModifiedSizer(_SignedVarintSize, var_0_5.ZigZagEncode32)
+UInt64Sizer = _SimpleSizer(pb.varint_size)
+SInt32Sizer = _ModifiedSizer(_SignedVarintSize, wire_format.ZigZagEncode32)
 SInt64Sizer = SInt32Sizer
 Fixed32Sizer = _FixedSizer(4)
 SFixed32Sizer = Fixed32Sizer
@@ -206,357 +208,357 @@ SFixed64Sizer = Fixed64Sizer
 DoubleSizer = Fixed64Sizer
 BoolSizer = _FixedSizer(1)
 
-function StringSizer(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = _TagSize(arg_19_0)
-	local var_19_1 = _VarintSize
+function StringSizer(field_number, is_repeated, is_packed)
+	local tag_size = _TagSize(field_number)
+	local VarintSize = _VarintSize
 
-	var_0_3(not arg_19_2)
+	assert(not is_packed)
 
-	if arg_19_1 then
-		return function(arg_20_0)
-			local var_20_0 = var_19_0 * #arg_20_0
+	if is_repeated then
+		return function(value)
+			local result = tag_size * #value
 
-			for iter_20_0, iter_20_1 in var_0_2(arg_20_0) do
-				local var_20_1 = #iter_20_1
+			for _, element in ipairs(value) do
+				local l = #element
 
-				var_20_0 = var_20_0 + var_19_1(var_20_1) + var_20_1
+				result = result + VarintSize(l) + l
 			end
 
-			return var_20_0
+			return result
 		end
 	else
-		return function(arg_21_0)
-			local var_21_0 = #arg_21_0
+		return function(value)
+			local l = #value
 
-			return var_19_0 + var_19_1(var_21_0) + var_21_0
+			return tag_size + VarintSize(l) + l
 		end
 	end
 end
 
-function BytesSizer(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = _TagSize(arg_22_0)
-	local var_22_1 = _VarintSize
+function BytesSizer(field_number, is_repeated, is_packed)
+	local tag_size = _TagSize(field_number)
+	local VarintSize = _VarintSize
 
-	var_0_3(not arg_22_2)
+	assert(not is_packed)
 
-	if arg_22_1 then
-		return function(arg_23_0)
-			local var_23_0 = var_22_0 * #arg_23_0
+	if is_repeated then
+		return function(value)
+			local result = tag_size * #value
 
-			for iter_23_0, iter_23_1 in var_0_2(arg_23_0) do
-				local var_23_1 = #iter_23_1
+			for _, element in ipairs(value) do
+				local l = #element
 
-				var_23_0 = var_23_0 + var_22_1(var_23_1) + var_23_1
+				result = result + VarintSize(l) + l
 			end
 
-			return var_23_0
+			return result
 		end
 	else
-		return function(arg_24_0)
-			local var_24_0 = #arg_24_0
+		return function(value)
+			local l = #value
 
-			return var_22_0 + var_22_1(var_24_0) + var_24_0
+			return tag_size + VarintSize(l) + l
 		end
 	end
 end
 
-function MessageSizer(arg_25_0, arg_25_1, arg_25_2)
-	local var_25_0 = _TagSize(arg_25_0)
-	local var_25_1 = _VarintSize
+function MessageSizer(field_number, is_repeated, is_packed)
+	local tag_size = _TagSize(field_number)
+	local VarintSize = _VarintSize
 
-	var_0_3(not arg_25_2)
+	assert(not is_packed)
 
-	if arg_25_1 then
-		return function(arg_26_0)
-			local var_26_0 = var_25_0 * #arg_26_0
+	if is_repeated then
+		return function(value)
+			local result = tag_size * #value
 
-			for iter_26_0, iter_26_1 in var_0_2(arg_26_0) do
-				local var_26_1 = iter_26_1:ByteSize()
+			for _, element in ipairs(value) do
+				local l = element:ByteSize()
 
-				var_26_0 = var_26_0 + var_25_1(var_26_1) + var_26_1
+				result = result + VarintSize(l) + l
 			end
 
-			return var_26_0
+			return result
 		end
 	else
-		return function(arg_27_0)
-			local var_27_0 = arg_27_0:ByteSize()
+		return function(value)
+			local l = value:ByteSize()
 
-			return var_25_0 + var_25_1(var_27_0) + var_27_0
+			return tag_size + VarintSize(l) + l
 		end
 	end
 end
 
-local var_0_6 = var_0_4.varint_encoder
-local var_0_7 = var_0_4.signed_varint_encoder
-local var_0_8 = var_0_4.varint_encoder64
-local var_0_9 = var_0_4.signed_varint_encoder64
+local _EncodeVarint = pb.varint_encoder
+local _EncodeSignedVarint = pb.signed_varint_encoder
+local _EncodeVarint64 = pb.varint_encoder64
+local _EncodeSignedVarint64 = pb.signed_varint_encoder64
 
-function _VarintBytes(arg_28_0)
-	local var_28_0 = {}
+function _VarintBytes(value)
+	local out = {}
 
-	local function var_28_1(arg_29_0)
-		var_28_0[#var_28_0 + 1] = arg_29_0
+	local function write(value)
+		out[#out + 1] = value
 	end
 
-	var_0_7(var_28_1, arg_28_0)
+	_EncodeSignedVarint(write, value)
 
-	return var_0_1.concat(var_28_0)
+	return table.concat(out)
 end
 
-function TagBytes(arg_30_0, arg_30_1)
-	return _VarintBytes(var_0_5.PackTag(arg_30_0, arg_30_1))
+function TagBytes(field_number, wire_type)
+	return _VarintBytes(wire_format.PackTag(field_number, wire_type))
 end
 
-function _SimpleEncoder(arg_31_0, arg_31_1, arg_31_2)
-	return function(arg_32_0, arg_32_1, arg_32_2)
-		if arg_32_2 then
-			local var_32_0 = TagBytes(arg_32_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-			local var_32_1 = var_0_6
+function _SimpleEncoder(wire_type, encode_value, compute_value_size)
+	return function(field_number, is_repeated, is_packed)
+		if is_packed then
+			local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+			local EncodeVarint = _EncodeVarint
 
-			return function(arg_33_0, arg_33_1)
-				arg_33_0(var_32_0)
+			return function(write, value)
+				write(tag_bytes)
 
-				local var_33_0 = 0
+				local size = 0
 
-				for iter_33_0, iter_33_1 in var_0_2(arg_33_1) do
-					var_33_0 = var_33_0 + arg_31_2(iter_33_1)
+				for _, element in ipairs(value) do
+					size = size + compute_value_size(element)
 				end
 
-				var_32_1(arg_33_0, var_33_0)
+				EncodeVarint(write, size)
 
-				for iter_33_2 in arg_33_1 do
-					arg_31_1(arg_33_0, iter_33_2)
+				for element in value do
+					encode_value(write, element)
 				end
 			end
-		elseif arg_32_1 then
-			local var_32_2 = TagBytes(arg_32_0, arg_31_0)
+		elseif is_repeated then
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_34_0, arg_34_1)
-				for iter_34_0, iter_34_1 in var_0_2(arg_34_1) do
-					arg_34_0(var_32_2)
-					arg_31_1(arg_34_0, iter_34_1)
+			return function(write, value)
+				for _, element in ipairs(value) do
+					write(tag_bytes)
+					encode_value(write, element)
 				end
 			end
 		else
-			local var_32_3 = TagBytes(arg_32_0, arg_31_0)
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_35_0, arg_35_1)
-				arg_35_0(var_32_3)
-				arg_31_1(arg_35_0, arg_35_1)
+			return function(write, value)
+				write(tag_bytes)
+				encode_value(write, value)
 			end
 		end
 	end
 end
 
-function _ModifiedEncoder(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	return function(arg_37_0, arg_37_1, arg_37_2)
-		if arg_37_2 then
-			local var_37_0 = TagBytes(arg_37_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-			local var_37_1 = var_0_6
+function _ModifiedEncoder(wire_type, encode_value, compute_value_size, modify_value)
+	return function(field_number, is_repeated, is_packed)
+		if is_packed then
+			local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+			local EncodeVarint = _EncodeVarint
 
-			return function(arg_38_0, arg_38_1)
-				arg_38_0(var_37_0)
+			return function(write, value)
+				write(tag_bytes)
 
-				local var_38_0 = 0
+				local size = 0
 
-				for iter_38_0, iter_38_1 in var_0_2(arg_38_1) do
-					var_38_0 = var_38_0 + arg_36_2(arg_36_3(iter_38_1))
+				for _, element in ipairs(value) do
+					size = size + compute_value_size(modify_value(element))
 				end
 
-				var_37_1(arg_38_0, var_38_0)
+				EncodeVarint(write, size)
 
-				for iter_38_2, iter_38_3 in var_0_2(arg_38_1) do
-					arg_36_1(arg_38_0, arg_36_3(iter_38_3))
+				for _, element in ipairs(value) do
+					encode_value(write, modify_value(element))
 				end
 			end
-		elseif arg_37_1 then
-			local var_37_2 = TagBytes(arg_37_0, arg_36_0)
+		elseif is_repeated then
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_39_0, arg_39_1)
-				for iter_39_0, iter_39_1 in var_0_2(arg_39_1) do
-					arg_39_0(var_37_2)
-					arg_36_1(arg_39_0, arg_36_3(iter_39_1))
+			return function(write, value)
+				for _, element in ipairs(value) do
+					write(tag_bytes)
+					encode_value(write, modify_value(element))
 				end
 			end
 		else
-			local var_37_3 = TagBytes(arg_37_0, arg_36_0)
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_40_0, arg_40_1)
-				arg_40_0(var_37_3)
-				arg_36_1(arg_40_0, arg_36_3(arg_40_1))
+			return function(write, value)
+				write(tag_bytes)
+				encode_value(write, modify_value(value))
 			end
 		end
 	end
 end
 
-function _StructPackEncoder(arg_41_0, arg_41_1, arg_41_2)
-	return function(arg_42_0, arg_42_1, arg_42_2)
-		local var_42_0 = var_0_4.struct_pack
+function _StructPackEncoder(wire_type, value_size, format)
+	return function(field_number, is_repeated, is_packed)
+		local struct_pack = pb.struct_pack
 
-		if arg_42_2 then
-			local var_42_1 = TagBytes(arg_42_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-			local var_42_2 = var_0_6
+		if is_packed then
+			local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+			local EncodeVarint = _EncodeVarint
 
-			return function(arg_43_0, arg_43_1)
-				arg_43_0(var_42_1)
-				var_42_2(arg_43_0, #arg_43_1 * arg_41_1)
+			return function(write, value)
+				write(tag_bytes)
+				EncodeVarint(write, #value * value_size)
 
-				for iter_43_0, iter_43_1 in var_0_2(arg_43_1) do
-					var_42_0(arg_43_0, arg_41_2, iter_43_1)
+				for _, element in ipairs(value) do
+					struct_pack(write, format, element)
 				end
 			end
-		elseif arg_42_1 then
-			local var_42_3 = TagBytes(arg_42_0, arg_41_0)
+		elseif is_repeated then
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_44_0, arg_44_1)
-				for iter_44_0, iter_44_1 in var_0_2(arg_44_1) do
-					arg_44_0(var_42_3)
-					var_42_0(arg_44_0, arg_41_2, iter_44_1)
+			return function(write, value)
+				for _, element in ipairs(value) do
+					write(tag_bytes)
+					struct_pack(write, format, element)
 				end
 			end
 		else
-			local var_42_4 = TagBytes(arg_42_0, arg_41_0)
+			local tag_bytes = TagBytes(field_number, wire_type)
 
-			return function(arg_45_0, arg_45_1)
-				arg_45_0(var_42_4)
-				var_42_0(arg_45_0, arg_41_2, arg_45_1)
+			return function(write, value)
+				write(tag_bytes)
+				struct_pack(write, format, value)
 			end
 		end
 	end
 end
 
-Int32Encoder = _SimpleEncoder(var_0_5.WIRETYPE_VARINT, var_0_7, _SignedVarintSize)
-Int64Encoder = _SimpleEncoder(var_0_5.WIRETYPE_VARINT, var_0_9, _SignedVarintSize)
+Int32Encoder = _SimpleEncoder(wire_format.WIRETYPE_VARINT, _EncodeSignedVarint, _SignedVarintSize)
+Int64Encoder = _SimpleEncoder(wire_format.WIRETYPE_VARINT, _EncodeSignedVarint64, _SignedVarintSize)
 EnumEncoder = Int32Encoder
-UInt32Encoder = _SimpleEncoder(var_0_5.WIRETYPE_VARINT, var_0_6, _VarintSize)
-UInt64Encoder = _SimpleEncoder(var_0_5.WIRETYPE_VARINT, var_0_8, _VarintSize)
-SInt32Encoder = _ModifiedEncoder(var_0_5.WIRETYPE_VARINT, var_0_6, _VarintSize, var_0_5.ZigZagEncode32)
-SInt64Encoder = _ModifiedEncoder(var_0_5.WIRETYPE_VARINT, var_0_8, _VarintSize, var_0_5.ZigZagEncode64)
-Fixed32Encoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED32, 4, var_0_0.byte("I"))
-Fixed64Encoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED64, 8, var_0_0.byte("Q"))
-SFixed32Encoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED32, 4, var_0_0.byte("i"))
-SFixed64Encoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED64, 8, var_0_0.byte("q"))
-FloatEncoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED32, 4, var_0_0.byte("f"))
-DoubleEncoder = _StructPackEncoder(var_0_5.WIRETYPE_FIXED64, 8, var_0_0.byte("d"))
+UInt32Encoder = _SimpleEncoder(wire_format.WIRETYPE_VARINT, _EncodeVarint, _VarintSize)
+UInt64Encoder = _SimpleEncoder(wire_format.WIRETYPE_VARINT, _EncodeVarint64, _VarintSize)
+SInt32Encoder = _ModifiedEncoder(wire_format.WIRETYPE_VARINT, _EncodeVarint, _VarintSize, wire_format.ZigZagEncode32)
+SInt64Encoder = _ModifiedEncoder(wire_format.WIRETYPE_VARINT, _EncodeVarint64, _VarintSize, wire_format.ZigZagEncode64)
+Fixed32Encoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED32, 4, string.byte("I"))
+Fixed64Encoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED64, 8, string.byte("Q"))
+SFixed32Encoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED32, 4, string.byte("i"))
+SFixed64Encoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED64, 8, string.byte("q"))
+FloatEncoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED32, 4, string.byte("f"))
+DoubleEncoder = _StructPackEncoder(wire_format.WIRETYPE_FIXED64, 8, string.byte("d"))
 
-function BoolEncoder(arg_46_0, arg_46_1, arg_46_2)
-	local var_46_0 = "\x00"
-	local var_46_1 = "\x01"
+function BoolEncoder(field_number, is_repeated, is_packed)
+	local false_byte = "\x00"
+	local true_byte = "\x01"
 
-	if arg_46_2 then
-		local var_46_2 = TagBytes(arg_46_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-		local var_46_3 = var_0_6
+	if is_packed then
+		local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+		local EncodeVarint = _EncodeVarint
 
-		return function(arg_47_0, arg_47_1)
-			arg_47_0(var_46_2)
-			var_46_3(arg_47_0, #arg_47_1)
+		return function(write, value)
+			write(tag_bytes)
+			EncodeVarint(write, #value)
 
-			for iter_47_0, iter_47_1 in var_0_2(arg_47_1) do
-				if iter_47_1 then
-					arg_47_0(var_46_1)
+			for _, element in ipairs(value) do
+				if element then
+					write(true_byte)
 				else
-					arg_47_0(var_46_0)
+					write(false_byte)
 				end
 			end
 		end
-	elseif arg_46_1 then
-		local var_46_4 = TagBytes(arg_46_0, var_0_5.WIRETYPE_VARINT)
+	elseif is_repeated then
+		local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_VARINT)
 
-		return function(arg_48_0, arg_48_1)
-			for iter_48_0, iter_48_1 in var_0_2(arg_48_1) do
-				arg_48_0(var_46_4)
+		return function(write, value)
+			for _, element in ipairs(value) do
+				write(tag_bytes)
 
-				if iter_48_1 then
-					arg_48_0(var_46_1)
+				if element then
+					write(true_byte)
 				else
-					arg_48_0(var_46_0)
+					write(false_byte)
 				end
 			end
 		end
 	else
-		local var_46_5 = TagBytes(arg_46_0, var_0_5.WIRETYPE_VARINT)
+		local tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_VARINT)
 
-		return function(arg_49_0, arg_49_1)
-			arg_49_0(var_46_5)
+		return function(write, value)
+			write(tag_bytes)
 
-			if arg_49_1 then
-				return arg_49_0(var_46_1)
+			if value then
+				return write(true_byte)
 			end
 
-			return arg_49_0(var_46_0)
+			return write(false_byte)
 		end
 	end
 end
 
-function StringEncoder(arg_50_0, arg_50_1, arg_50_2)
-	local var_50_0 = TagBytes(arg_50_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-	local var_50_1 = var_0_6
+function StringEncoder(field_number, is_repeated, is_packed)
+	local tag = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+	local EncodeVarint = _EncodeVarint
 
-	var_0_3(not arg_50_2)
+	assert(not is_packed)
 
-	if arg_50_1 then
-		return function(arg_51_0, arg_51_1)
-			for iter_51_0, iter_51_1 in var_0_2(arg_51_1) do
-				arg_51_0(var_50_0)
-				var_50_1(arg_51_0, #iter_51_1)
-				arg_51_0(iter_51_1)
+	if is_repeated then
+		return function(write, value)
+			for _, element in ipairs(value) do
+				write(tag)
+				EncodeVarint(write, #element)
+				write(element)
 			end
 		end
 	else
-		return function(arg_52_0, arg_52_1)
-			arg_52_0(var_50_0)
-			var_50_1(arg_52_0, #arg_52_1)
+		return function(write, value)
+			write(tag)
+			EncodeVarint(write, #value)
 
-			return arg_52_0(arg_52_1)
+			return write(value)
 		end
 	end
 end
 
-function BytesEncoder(arg_53_0, arg_53_1, arg_53_2)
-	local var_53_0 = TagBytes(arg_53_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-	local var_53_1 = var_0_6
+function BytesEncoder(field_number, is_repeated, is_packed)
+	local tag = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+	local EncodeVarint = _EncodeVarint
 
-	var_0_3(not arg_53_2)
+	assert(not is_packed)
 
-	if arg_53_1 then
-		return function(arg_54_0, arg_54_1)
-			for iter_54_0, iter_54_1 in var_0_2(arg_54_1) do
-				arg_54_0(var_53_0)
-				var_53_1(arg_54_0, #iter_54_1)
-				arg_54_0(iter_54_1)
+	if is_repeated then
+		return function(write, value)
+			for _, element in ipairs(value) do
+				write(tag)
+				EncodeVarint(write, #element)
+				write(element)
 			end
 		end
 	else
-		return function(arg_55_0, arg_55_1)
-			arg_55_0(var_53_0)
-			var_53_1(arg_55_0, #arg_55_1)
+		return function(write, value)
+			write(tag)
+			EncodeVarint(write, #value)
 
-			return arg_55_0(arg_55_1)
+			return write(value)
 		end
 	end
 end
 
-function MessageEncoder(arg_56_0, arg_56_1, arg_56_2)
-	local var_56_0 = TagBytes(arg_56_0, var_0_5.WIRETYPE_LENGTH_DELIMITED)
-	local var_56_1 = var_0_6
+function MessageEncoder(field_number, is_repeated, is_packed)
+	local tag = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+	local EncodeVarint = _EncodeVarint
 
-	var_0_3(not arg_56_2)
+	assert(not is_packed)
 
-	if arg_56_1 then
-		return function(arg_57_0, arg_57_1)
-			for iter_57_0, iter_57_1 in var_0_2(arg_57_1) do
-				arg_57_0(var_56_0)
-				var_56_1(arg_57_0, iter_57_1:ByteSize())
-				iter_57_1:_InternalSerialize(arg_57_0)
+	if is_repeated then
+		return function(write, value)
+			for _, element in ipairs(value) do
+				write(tag)
+				EncodeVarint(write, element:ByteSize())
+				element:_InternalSerialize(write)
 			end
 		end
 	else
-		return function(arg_58_0, arg_58_1)
-			arg_58_0(var_56_0)
-			var_56_1(arg_58_0, arg_58_1:ByteSize())
+		return function(write, value)
+			write(tag)
+			EncodeVarint(write, value:ByteSize())
 
-			return arg_58_1:_InternalSerialize(arg_58_0)
+			return value:_InternalSerialize(write)
 		end
 	end
 end

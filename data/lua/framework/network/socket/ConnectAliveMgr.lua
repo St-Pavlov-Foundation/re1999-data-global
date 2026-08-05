@@ -252,6 +252,7 @@ function ConnectAliveMgr:_onLostConnect(isSuccess)
 		self._isConnected = true
 
 		self._keepAliveFlow:start(self._connectLoginContext)
+		ConnectAliveMgr.instance:dispatchEvent(ConnectEvent.OnReconnectSucc_def)
 	else
 		self._isConnected = false
 

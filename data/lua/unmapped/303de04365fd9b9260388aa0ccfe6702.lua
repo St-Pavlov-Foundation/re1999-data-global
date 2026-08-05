@@ -1,185 +1,187 @@
-﻿local var_0_0 = coroutine.create
-local var_0_1 = coroutine.running
-local var_0_2 = coroutine.resume
-local var_0_3 = coroutine.yield
-local var_0_4 = error
-local var_0_5 = unpack
-local var_0_6 = debug
-local var_0_7 = FrameTimer
-local var_0_8 = CoTimer
-local var_0_9 = {}
-local var_0_10 = {}
+﻿-- chunkname: @System/coroutine.lua
 
-setmetatable(var_0_9, {
+local create = coroutine.create
+local running = coroutine.running
+local resume = coroutine.resume
+local yield = coroutine.yield
+local error = error
+local unpack = unpack
+local debug = debug
+local FrameTimer = FrameTimer
+local CoTimer = CoTimer
+local comap = {}
+local pool = {}
+
+setmetatable(comap, {
 	__mode = "kv"
 })
 
-function coroutine.start(arg_1_0, ...)
-	local var_1_0 = var_0_0(arg_1_0)
+function coroutine.start(f, ...)
+	local co = create(f)
 
-	if var_0_1() == nil then
-		local var_1_1, var_1_2 = var_0_2(var_1_0, ...)
+	if running() == nil then
+		local flag, msg = resume(co, ...)
 
-		if not var_1_1 then
-			var_0_4(var_0_6.traceback(var_1_0, var_1_2))
+		if not flag then
+			error(debug.traceback(co, msg))
 		end
 	else
-		local var_1_3 = {
+		local args = {
 			...
 		}
-		local var_1_4
+		local timer
 
-		local function var_1_5()
-			var_0_9[var_1_0] = nil
-			var_1_4.func = nil
+		local function action()
+			comap[co] = nil
+			timer.func = nil
 
-			local var_2_0, var_2_1 = var_0_2(var_1_0, var_0_5(var_1_3, 1, table.maxn(var_1_3)))
+			local flag, msg = resume(co, unpack(args, 1, table.maxn(args)))
 
-			table.insert(var_0_10, var_1_4)
+			table.insert(pool, timer)
 
-			if not var_2_0 then
-				var_1_4:Stop()
-				var_0_4(var_0_6.traceback(var_1_0, var_2_1))
+			if not flag then
+				timer:Stop()
+				error(debug.traceback(co, msg))
 			end
 		end
 
-		if #var_0_10 > 0 then
-			var_1_4 = table.remove(var_0_10)
+		if #pool > 0 then
+			timer = table.remove(pool)
 
-			var_1_4:Reset(var_1_5, 0, 1)
+			timer:Reset(action, 0, 1)
 		else
-			var_1_4 = var_0_7.New(var_1_5, 0, 1)
+			timer = FrameTimer.New(action, 0, 1)
 		end
 
-		var_0_9[var_1_0] = var_1_4
+		comap[co] = timer
 
-		var_1_4:Start()
+		timer:Start()
 	end
 
-	return var_1_0
+	return co
 end
 
-function coroutine.wait(arg_3_0, arg_3_1, ...)
-	local var_3_0 = {
+function coroutine.wait(t, co, ...)
+	local args = {
 		...
 	}
 
-	arg_3_1 = arg_3_1 or var_0_1()
+	co = co or running()
 
-	local var_3_1
+	local timer
 
-	local function var_3_2()
-		var_0_9[arg_3_1] = nil
-		var_3_1.func = nil
+	local function action()
+		comap[co] = nil
+		timer.func = nil
 
-		local var_4_0, var_4_1 = var_0_2(arg_3_1, var_0_5(var_3_0, 1, table.maxn(var_3_0)))
+		local flag, msg = resume(co, unpack(args, 1, table.maxn(args)))
 
-		if not var_4_0 then
-			var_3_1:Stop()
-			var_0_4(var_0_6.traceback(arg_3_1, var_4_1))
+		if not flag then
+			timer:Stop()
+			error(debug.traceback(co, msg))
 
 			return
 		end
 	end
 
-	var_3_1 = var_0_8.New(var_3_2, arg_3_0, 1)
-	var_0_9[arg_3_1] = var_3_1
+	timer = CoTimer.New(action, t, 1)
+	comap[co] = timer
 
-	var_3_1:Start()
+	timer:Start()
 
-	return var_0_3()
+	return yield()
 end
 
-function coroutine.step(arg_5_0, arg_5_1, ...)
-	local var_5_0 = {
+function coroutine.step(t, co, ...)
+	local args = {
 		...
 	}
 
-	arg_5_1 = arg_5_1 or var_0_1()
+	co = co or running()
 
-	local var_5_1
+	local timer
 
-	local function var_5_2()
-		var_0_9[arg_5_1] = nil
-		var_5_1.func = nil
+	local function action()
+		comap[co] = nil
+		timer.func = nil
 
-		local var_6_0, var_6_1 = var_0_2(arg_5_1, var_0_5(var_5_0, 1, table.maxn(var_5_0)))
+		local flag, msg = resume(co, unpack(args, 1, table.maxn(args)))
 
-		table.insert(var_0_10, var_5_1)
+		table.insert(pool, timer)
 
-		if not var_6_0 then
-			var_5_1:Stop()
-			var_0_4(var_0_6.traceback(arg_5_1, var_6_1))
+		if not flag then
+			timer:Stop()
+			error(debug.traceback(co, msg))
 
 			return
 		end
 	end
 
-	if #var_0_10 > 0 then
-		var_5_1 = table.remove(var_0_10)
+	if #pool > 0 then
+		timer = table.remove(pool)
 
-		var_5_1:Reset(var_5_2, arg_5_0 or 1, 1)
+		timer:Reset(action, t or 1, 1)
 	else
-		var_5_1 = var_0_7.New(var_5_2, arg_5_0 or 1, 1)
+		timer = FrameTimer.New(action, t or 1, 1)
 	end
 
-	var_0_9[arg_5_1] = var_5_1
+	comap[co] = timer
 
-	var_5_1:Start()
+	timer:Start()
 
-	return var_0_3()
+	return yield()
 end
 
-function coroutine.www(arg_7_0, arg_7_1)
-	arg_7_1 = arg_7_1 or var_0_1()
+function coroutine.www(www, co)
+	co = co or running()
 
-	local var_7_0
+	local timer
 
-	local function var_7_1()
-		if not arg_7_0.isDone then
+	local function action()
+		if not www.isDone then
 			return
 		end
 
-		var_0_9[arg_7_1] = nil
+		comap[co] = nil
 
-		var_7_0:Stop()
+		timer:Stop()
 
-		var_7_0.func = nil
+		timer.func = nil
 
-		local var_8_0, var_8_1 = var_0_2(arg_7_1)
+		local flag, msg = resume(co)
 
-		table.insert(var_0_10, var_7_0)
+		table.insert(pool, timer)
 
-		if not var_8_0 then
-			var_0_4(var_0_6.traceback(arg_7_1, var_8_1))
+		if not flag then
+			error(debug.traceback(co, msg))
 
 			return
 		end
 	end
 
-	if #var_0_10 > 0 then
-		var_7_0 = table.remove(var_0_10)
+	if #pool > 0 then
+		timer = table.remove(pool)
 
-		var_7_0:Reset(var_7_1, 1, -1)
+		timer:Reset(action, 1, -1)
 	else
-		var_7_0 = var_0_7.New(var_7_1, 1, -1)
+		timer = FrameTimer.New(action, 1, -1)
 	end
 
-	var_0_9[arg_7_1] = var_7_0
+	comap[co] = timer
 
-	var_7_0:Start()
+	timer:Start()
 
-	return var_0_3()
+	return yield()
 end
 
-function coroutine.stop(arg_9_0)
-	local var_9_0 = var_0_9[arg_9_0]
+function coroutine.stop(co)
+	local timer = comap[co]
 
-	if var_9_0 ~= nil then
-		var_0_9[arg_9_0] = nil
+	if timer ~= nil then
+		comap[co] = nil
 
-		var_9_0:Stop()
+		timer:Stop()
 
-		var_9_0.func = nil
+		timer.func = nil
 	end
 end

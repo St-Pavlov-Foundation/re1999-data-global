@@ -1,51 +1,53 @@
-﻿local var_0_0 = Layer
-local var_0_1 = rawget
-local var_0_2 = setmetatable
-local var_0_3 = {}
+﻿-- chunkname: @UnityEngine/LayerMask.lua
 
-function var_0_3.__index(arg_1_0, arg_1_1)
-	return var_0_1(var_0_3, arg_1_1)
+local Layer = Layer
+local rawget = rawget
+local setmetatable = setmetatable
+local LayerMask = {}
+
+function LayerMask.__index(t, k)
+	return rawget(LayerMask, k)
 end
 
-function var_0_3.__call(arg_2_0, arg_2_1)
-	return var_0_2({
+function LayerMask.__call(t, v)
+	return setmetatable({
 		value = value or 0
-	}, var_0_3)
+	}, LayerMask)
 end
 
-function var_0_3.New(arg_3_0)
-	return var_0_2({
-		value = arg_3_0 or 0
-	}, var_0_3)
+function LayerMask.New(value)
+	return setmetatable({
+		value = value or 0
+	}, LayerMask)
 end
 
-function var_0_3.Get(arg_4_0)
-	return arg_4_0.value
+function LayerMask:Get()
+	return self.value
 end
 
-function var_0_3.NameToLayer(arg_5_0)
-	return var_0_0[arg_5_0]
+function LayerMask.NameToLayer(name)
+	return Layer[name]
 end
 
-function var_0_3.GetMask(...)
-	local var_6_0 = {
+function LayerMask.GetMask(...)
+	local arg = {
 		...
 	}
-	local var_6_1 = 0
+	local value = 0
 
-	for iter_6_0 = 1, #var_6_0 do
-		local var_6_2 = var_0_3.NameToLayer(var_6_0[iter_6_0])
+	for i = 1, #arg do
+		local n = LayerMask.NameToLayer(arg[i])
 
-		if var_6_2 ~= nil then
-			var_6_1 = var_6_1 + 2^var_6_2
+		if n ~= nil then
+			value = value + 2^n
 		end
 	end
 
-	return var_6_1
+	return value
 end
 
-UnityEngine.LayerMask = var_0_3
+UnityEngine.LayerMask = LayerMask
 
-var_0_2(var_0_3, var_0_3)
+setmetatable(LayerMask, LayerMask)
 
-return var_0_3
+return LayerMask

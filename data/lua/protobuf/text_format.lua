@@ -1,70 +1,74 @@
-﻿local var_0_0 = string
-local var_0_1 = math
-local var_0_2 = print
-local var_0_3 = getmetatable
-local var_0_4 = table
-local var_0_5 = ipairs
-local var_0_6 = tostring
-local var_0_7 = require("protobuf.descriptor")
+﻿-- chunkname: @protobuf/text_format.lua
+
+local string = string
+local math = math
+local print = print
+local getmetatable = getmetatable
+local table = table
+local ipairs = ipairs
+local tostring = tostring
+local descriptor = require("protobuf.descriptor")
 
 module("protobuf.text_format")
 
-function format(arg_1_0)
-	local var_1_0 = var_0_0.len(arg_1_0)
+function format(buffer)
+	local len = string.len(buffer)
 
-	for iter_1_0 = 1, var_1_0, 16 do
-		local var_1_1 = ""
+	for i = 1, len, 16 do
+		local text = ""
 
-		for iter_1_1 = iter_1_0, var_0_1.min(iter_1_0 + 16 - 1, var_1_0) do
-			var_1_1 = var_0_0.format("%s  %02x", var_1_1, var_0_0.byte(arg_1_0, iter_1_1))
+		for j = i, math.min(i + 16 - 1, len) do
+			text = string.format("%s  %02x", text, string.byte(buffer, j))
 		end
 
-		var_0_2(var_1_1)
+		print(text)
 	end
 end
 
-local var_0_8 = var_0_7.FieldDescriptor
+local FieldDescriptor = descriptor.FieldDescriptor
 
-function msg_format_indent(arg_2_0, arg_2_1, arg_2_2)
-	for iter_2_0, iter_2_1 in arg_2_1:ListFields() do
-		local function var_2_0(arg_3_0)
-			local var_3_0 = iter_2_0.name
+function msg_format_indent(write, msg, indent)
+	for field, value in msg:ListFields() do
+		local function print_field(field_value)
+			local name = field.name
 
-			arg_2_0(var_0_0.rep(" ", arg_2_2))
+			write(string.rep(" ", indent))
 
-			if iter_2_0.type == var_0_8.TYPE_MESSAGE then
-				if var_0_3(arg_2_1)._extensions_by_name[iter_2_0.full_name] then
-					arg_2_0("[" .. var_3_0 .. "] {\n")
+			if field.type == FieldDescriptor.TYPE_MESSAGE then
+				local extensions = getmetatable(msg)._extensions_by_name
+
+				if extensions[field.full_name] then
+					write("[" .. name .. "] {\n")
 				else
-					arg_2_0(var_3_0 .. " {\n")
+					write(name .. " {\n")
 				end
 
-				msg_format_indent(arg_2_0, arg_3_0, arg_2_2 + 4)
-				arg_2_0(var_0_0.rep(" ", arg_2_2))
-				arg_2_0("}\n")
+				msg_format_indent(write, field_value, indent + 4)
+				write(string.rep(" ", indent))
+				write("}\n")
 			else
-				arg_2_0(var_0_0.format("%s: %s\n", var_3_0, var_0_6(arg_3_0)))
+				write(string.format("%s: %s\n", name, tostring(field_value)))
 			end
 		end
 
-		if iter_2_0.label == var_0_8.LABEL_REPEATED then
-			for iter_2_2, iter_2_3 in var_0_5(iter_2_1) do
-				var_2_0(iter_2_3)
+		if field.label == FieldDescriptor.LABEL_REPEATED then
+			for _, k in ipairs(value) do
+				print_field(k)
 			end
 		else
-			var_2_0(iter_2_1)
+			print_field(value)
 		end
 	end
 end
 
-function msg_format(arg_4_0)
-	local var_4_0 = {}
+function msg_format(msg)
+	local out = {}
 
-	local function var_4_1(arg_5_0)
-		var_4_0[#var_4_0 + 1] = arg_5_0
+	local function write(value)
+		out[#out + 1] = value
 	end
 
-	msg_format_indent(var_4_1, arg_4_0, 0)
+	msg_format_indent(write, msg, 0)
 
-	return var_0_4.concat(var_4_0)
+	return table.concat(out)
 end

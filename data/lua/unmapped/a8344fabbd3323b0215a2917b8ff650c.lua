@@ -1,729 +1,731 @@
-﻿local var_0_0 = math
-local var_0_1 = var_0_0.sin
-local var_0_2 = var_0_0.cos
-local var_0_3 = var_0_0.acos
-local var_0_4 = var_0_0.asin
-local var_0_5 = var_0_0.sqrt
-local var_0_6 = var_0_0.min
-local var_0_7 = var_0_0.max
-local var_0_8 = var_0_0.sign
-local var_0_9 = var_0_0.atan2
-local var_0_10 = Mathf.Clamp
-local var_0_11 = var_0_0.abs
-local var_0_12 = setmetatable
-local var_0_13 = getmetatable
-local var_0_14 = rawget
-local var_0_15 = rawset
-local var_0_16 = Vector3
-local var_0_17 = Mathf.Rad2Deg
-local var_0_18 = 0.5 * Mathf.Deg2Rad
-local var_0_19 = var_0_16.forward
-local var_0_20 = var_0_16.up
-local var_0_21 = {
+﻿-- chunkname: @UnityEngine/Quaternion.lua
+
+local math = math
+local sin = math.sin
+local cos = math.cos
+local acos = math.acos
+local asin = math.asin
+local sqrt = math.sqrt
+local min = math.min
+local max = math.max
+local sign = math.sign
+local atan2 = math.atan2
+local clamp = Mathf.Clamp
+local abs = math.abs
+local setmetatable = setmetatable
+local getmetatable = getmetatable
+local rawget = rawget
+local rawset = rawset
+local Vector3 = Vector3
+local rad2Deg = Mathf.Rad2Deg
+local halfDegToRad = 0.5 * Mathf.Deg2Rad
+local _forward = Vector3.forward
+local _up = Vector3.up
+local _next = {
 	2,
 	3,
 	1
 }
-local var_0_22 = {}
-local var_0_23 = tolua.initget(var_0_22)
+local Quaternion = {}
+local get = tolua.initget(Quaternion)
 
-function var_0_22.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_14(var_0_22, arg_1_1)
+function Quaternion.__index(t, k)
+	local var = rawget(Quaternion, k)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_14(var_0_23, arg_1_1)
+	if var == nil then
+		var = rawget(get, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_22.__newindex(arg_2_0, arg_2_1, arg_2_2)
-	if arg_2_1 == "eulerAngles" then
-		arg_2_0:SetEuler(arg_2_2)
+function Quaternion.__newindex(t, name, k)
+	if name == "eulerAngles" then
+		t:SetEuler(k)
 	else
-		var_0_15(arg_2_0, arg_2_1, arg_2_2)
+		rawset(t, name, k)
 	end
 end
 
-function var_0_22.New(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	local var_3_0 = {
-		x = arg_3_0 or 0,
-		y = arg_3_1 or 0,
-		z = arg_3_2 or 0,
-		w = arg_3_3 or 0
+function Quaternion.New(x, y, z, w)
+	local t = {
+		x = x or 0,
+		y = y or 0,
+		z = z or 0,
+		w = w or 0
 	}
 
-	var_0_12(var_3_0, var_0_22)
+	setmetatable(t, Quaternion)
 
-	return var_3_0
+	return t
 end
 
-local var_0_24 = var_0_22.New
+local _new = Quaternion.New
 
-function var_0_22.__call(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = {
-		x = arg_4_1 or 0,
-		y = arg_4_2 or 0,
-		z = arg_4_3 or 0,
-		w = arg_4_4 or 0
+function Quaternion.__call(t, x, y, z, w)
+	local t = {
+		x = x or 0,
+		y = y or 0,
+		z = z or 0,
+		w = w or 0
 	}
 
-	var_0_12(var_4_0, var_0_22)
+	setmetatable(t, Quaternion)
 
-	return var_4_0
+	return t
 end
 
-function var_0_22.Set(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
-	arg_5_0.x = arg_5_1 or 0
-	arg_5_0.y = arg_5_2 or 0
-	arg_5_0.z = arg_5_3 or 0
-	arg_5_0.w = arg_5_4 or 0
+function Quaternion:Set(x, y, z, w)
+	self.x = x or 0
+	self.y = y or 0
+	self.z = z or 0
+	self.w = w or 0
 end
 
-function var_0_22.Clone(arg_6_0)
-	return var_0_24(arg_6_0.x, arg_6_0.y, arg_6_0.z, arg_6_0.w)
+function Quaternion:Clone()
+	return _new(self.x, self.y, self.z, self.w)
 end
 
-function var_0_22.Get(arg_7_0)
-	return arg_7_0.x, arg_7_0.y, arg_7_0.z, arg_7_0.w
+function Quaternion:Get()
+	return self.x, self.y, self.z, self.w
 end
 
-function var_0_22.Dot(arg_8_0, arg_8_1)
-	return arg_8_0.x * arg_8_1.x + arg_8_0.y * arg_8_1.y + arg_8_0.z * arg_8_1.z + arg_8_0.w * arg_8_1.w
+function Quaternion.Dot(a, b)
+	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 end
 
-function var_0_22.Angle(arg_9_0, arg_9_1)
-	local var_9_0 = var_0_22.Dot(arg_9_0, arg_9_1)
+function Quaternion.Angle(a, b)
+	local dot = Quaternion.Dot(a, b)
 
-	if var_9_0 < 0 then
-		var_9_0 = -var_9_0
+	if dot < 0 then
+		dot = -dot
 	end
 
-	return var_0_3(var_0_6(var_9_0, 1)) * 2 * 57.29578
+	return acos(min(dot, 1)) * 2 * 57.29578
 end
 
-function var_0_22.AngleAxis(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_1:Normalize()
+function Quaternion.AngleAxis(angle, axis)
+	local normAxis = axis:Normalize()
 
-	arg_10_0 = arg_10_0 * var_0_18
+	angle = angle * halfDegToRad
 
-	local var_10_1 = var_0_1(arg_10_0)
-	local var_10_2 = var_0_2(arg_10_0)
-	local var_10_3 = var_10_0.x * var_10_1
-	local var_10_4 = var_10_0.y * var_10_1
-	local var_10_5 = var_10_0.z * var_10_1
+	local s = sin(angle)
+	local w = cos(angle)
+	local x = normAxis.x * s
+	local y = normAxis.y * s
+	local z = normAxis.z * s
 
-	return var_0_24(var_10_3, var_10_4, var_10_5, var_10_2)
+	return _new(x, y, z, w)
 end
 
-function var_0_22.Equals(arg_11_0, arg_11_1)
-	return arg_11_0.x == arg_11_1.x and arg_11_0.y == arg_11_1.y and arg_11_0.z == arg_11_1.z and arg_11_0.w == arg_11_1.w
+function Quaternion.Equals(a, b)
+	return a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
 end
 
-function var_0_22.Euler(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_1 == nil and arg_12_2 == nil then
-		arg_12_1 = arg_12_0.y
-		arg_12_2 = arg_12_0.z
-		arg_12_0 = arg_12_0.x
+function Quaternion.Euler(x, y, z)
+	if y == nil and z == nil then
+		y = x.y
+		z = x.z
+		x = x.x
 	end
 
-	arg_12_0 = arg_12_0 * 0.0087266462599716
-	arg_12_1 = arg_12_1 * 0.0087266462599716
-	arg_12_2 = arg_12_2 * 0.0087266462599716
+	x = x * 0.0087266462599716
+	y = y * 0.0087266462599716
+	z = z * 0.0087266462599716
 
-	local var_12_0 = var_0_1(arg_12_0)
+	local sinX = sin(x)
 
-	arg_12_0 = var_0_2(arg_12_0)
+	x = cos(x)
 
-	local var_12_1 = var_0_1(arg_12_1)
+	local sinY = sin(y)
 
-	arg_12_1 = var_0_2(arg_12_1)
+	y = cos(y)
 
-	local var_12_2 = var_0_1(arg_12_2)
+	local sinZ = sin(z)
 
-	arg_12_2 = var_0_2(arg_12_2)
+	z = cos(z)
 
-	local var_12_3 = {
-		x = arg_12_1 * var_12_0 * arg_12_2 + var_12_1 * arg_12_0 * var_12_2,
-		y = var_12_1 * arg_12_0 * arg_12_2 - arg_12_1 * var_12_0 * var_12_2,
-		z = arg_12_1 * arg_12_0 * var_12_2 - var_12_1 * var_12_0 * arg_12_2,
-		w = arg_12_1 * arg_12_0 * arg_12_2 + var_12_1 * var_12_0 * var_12_2
+	local q = {
+		x = y * sinX * z + sinY * x * sinZ,
+		y = sinY * x * z - y * sinX * sinZ,
+		z = y * x * sinZ - sinY * sinX * z,
+		w = y * x * z + sinY * sinX * sinZ
 	}
 
-	var_0_12(var_12_3, var_0_22)
+	setmetatable(q, Quaternion)
 
-	return var_12_3
+	return q
 end
 
-function var_0_22.SetEuler(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	if arg_13_2 == nil and arg_13_3 == nil then
-		arg_13_2 = arg_13_1.y
-		arg_13_3 = arg_13_1.z
-		arg_13_1 = arg_13_1.x
+function Quaternion:SetEuler(x, y, z)
+	if y == nil and z == nil then
+		y = x.y
+		z = x.z
+		x = x.x
 	end
 
-	arg_13_1 = arg_13_1 * 0.0087266462599716
-	arg_13_2 = arg_13_2 * 0.0087266462599716
-	arg_13_3 = arg_13_3 * 0.0087266462599716
+	x = x * 0.0087266462599716
+	y = y * 0.0087266462599716
+	z = z * 0.0087266462599716
 
-	local var_13_0 = var_0_1(arg_13_1)
-	local var_13_1 = var_0_2(arg_13_1)
-	local var_13_2 = var_0_1(arg_13_2)
-	local var_13_3 = var_0_2(arg_13_2)
-	local var_13_4 = var_0_1(arg_13_3)
-	local var_13_5 = var_0_2(arg_13_3)
+	local sinX = sin(x)
+	local cosX = cos(x)
+	local sinY = sin(y)
+	local cosY = cos(y)
+	local sinZ = sin(z)
+	local cosZ = cos(z)
 
-	arg_13_0.w = var_13_3 * var_13_1 * var_13_5 + var_13_2 * var_13_0 * var_13_4
-	arg_13_0.x = var_13_3 * var_13_0 * var_13_5 + var_13_2 * var_13_1 * var_13_4
-	arg_13_0.y = var_13_2 * var_13_1 * var_13_5 - var_13_3 * var_13_0 * var_13_4
-	arg_13_0.z = var_13_3 * var_13_1 * var_13_4 - var_13_2 * var_13_0 * var_13_5
+	self.w = cosY * cosX * cosZ + sinY * sinX * sinZ
+	self.x = cosY * sinX * cosZ + sinY * cosX * sinZ
+	self.y = sinY * cosX * cosZ - cosY * sinX * sinZ
+	self.z = cosY * cosX * sinZ - sinY * sinX * cosZ
 
-	return arg_13_0
+	return self
 end
 
-function var_0_22.Normalize(arg_14_0)
-	local var_14_0 = arg_14_0:Clone()
+function Quaternion:Normalize()
+	local quat = self:Clone()
 
-	var_14_0:SetNormalize()
+	quat:SetNormalize()
 
-	return var_14_0
+	return quat
 end
 
-function var_0_22.SetNormalize(arg_15_0)
-	local var_15_0 = arg_15_0.x * arg_15_0.x + arg_15_0.y * arg_15_0.y + arg_15_0.z * arg_15_0.z + arg_15_0.w * arg_15_0.w
+function Quaternion:SetNormalize()
+	local n = self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w
 
-	if var_15_0 ~= 1 and var_15_0 > 0 then
-		local var_15_1 = 1 / var_0_5(var_15_0)
-
-		arg_15_0.x = arg_15_0.x * var_15_1
-		arg_15_0.y = arg_15_0.y * var_15_1
-		arg_15_0.z = arg_15_0.z * var_15_1
-		arg_15_0.w = arg_15_0.w * var_15_1
+	if n ~= 1 and n > 0 then
+		n = 1 / sqrt(n)
+		self.x = self.x * n
+		self.y = self.y * n
+		self.z = self.z * n
+		self.w = self.w * n
 	end
 end
 
-function var_0_22.FromToRotation(arg_16_0, arg_16_1)
-	local var_16_0 = var_0_22.New()
+function Quaternion.FromToRotation(from, to)
+	local quat = Quaternion.New()
 
-	var_16_0:SetFromToRotation(arg_16_0, arg_16_1)
+	quat:SetFromToRotation(from, to)
 
-	return var_16_0
+	return quat
 end
 
-function var_0_22.SetFromToRotation1(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_1:Normalize()
-	local var_17_1 = arg_17_2:Normalize()
-	local var_17_2 = var_0_16.Dot(var_17_0, var_17_1)
+function Quaternion:SetFromToRotation1(from, to)
+	local v0 = from:Normalize()
+	local v1 = to:Normalize()
+	local d = Vector3.Dot(v0, v1)
 
-	if var_17_2 > -0.999999 then
-		local var_17_3 = var_0_5((1 + var_17_2) * 2)
-		local var_17_4 = 1 / var_17_3
-		local var_17_5 = var_0_16.Cross(var_17_0, var_17_1) * var_17_4
+	if d > -0.999999 then
+		local s = sqrt((1 + d) * 2)
+		local invs = 1 / s
+		local c = Vector3.Cross(v0, v1) * invs
 
-		arg_17_0:Set(var_17_5.x, var_17_5.y, var_17_5.z, var_17_3 * 0.5)
-	elseif var_17_2 > 0.999999 then
-		return var_0_24(0, 0, 0, 1)
+		self:Set(c.x, c.y, c.z, s * 0.5)
+	elseif d > 0.999999 then
+		return _new(0, 0, 0, 1)
 	else
-		local var_17_6 = var_0_16.Cross(var_0_16.right, var_17_0)
+		local axis = Vector3.Cross(Vector3.right, v0)
 
-		if var_17_6:SqrMagnitude() < 1e-06 then
-			var_17_6 = var_0_16.Cross(var_0_16.forward, var_17_0)
+		if axis:SqrMagnitude() < 1e-06 then
+			axis = Vector3.Cross(Vector3.forward, v0)
 		end
 
-		arg_17_0:Set(var_17_6.x, var_17_6.y, var_17_6.z, 0)
+		self:Set(axis.x, axis.y, axis.z, 0)
 
-		return arg_17_0
+		return self
 	end
 
-	return arg_17_0
+	return self
 end
 
-local function var_0_25(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0[1][1] + arg_18_0[2][2] + arg_18_0[3][3]
+local function MatrixToQuaternion(rot, quat)
+	local trace = rot[1][1] + rot[2][2] + rot[3][3]
 
-	if var_18_0 > 0 then
-		local var_18_1 = var_0_5(var_18_0 + 1)
+	if trace > 0 then
+		local s = sqrt(trace + 1)
 
-		arg_18_1.w = 0.5 * var_18_1
+		quat.w = 0.5 * s
+		s = 0.5 / s
+		quat.x = (rot[3][2] - rot[2][3]) * s
+		quat.y = (rot[1][3] - rot[3][1]) * s
+		quat.z = (rot[2][1] - rot[1][2]) * s
 
-		local var_18_2 = 0.5 / var_18_1
-
-		arg_18_1.x = (arg_18_0[3][2] - arg_18_0[2][3]) * var_18_2
-		arg_18_1.y = (arg_18_0[1][3] - arg_18_0[3][1]) * var_18_2
-		arg_18_1.z = (arg_18_0[2][1] - arg_18_0[1][2]) * var_18_2
-
-		arg_18_1:SetNormalize()
+		quat:SetNormalize()
 	else
-		local var_18_3 = 1
-		local var_18_4 = {
+		local i = 1
+		local q = {
 			0,
 			0,
 			0
 		}
 
-		if arg_18_0[2][2] > arg_18_0[1][1] then
-			var_18_3 = 2
+		if rot[2][2] > rot[1][1] then
+			i = 2
 		end
 
-		if arg_18_0[3][3] > arg_18_0[var_18_3][var_18_3] then
-			var_18_3 = 3
+		if rot[3][3] > rot[i][i] then
+			i = 3
 		end
 
-		local var_18_5 = var_0_21[var_18_3]
-		local var_18_6 = var_0_21[var_18_5]
-		local var_18_7 = arg_18_0[var_18_3][var_18_3] - arg_18_0[var_18_5][var_18_5] - arg_18_0[var_18_6][var_18_6] + 1
-		local var_18_8 = 0.5 / var_0_5(var_18_7)
+		local j = _next[i]
+		local k = _next[j]
+		local t = rot[i][i] - rot[j][j] - rot[k][k] + 1
+		local s = 0.5 / sqrt(t)
 
-		var_18_4[var_18_3] = var_18_8 * var_18_7
+		q[i] = s * t
 
-		local var_18_9 = (arg_18_0[var_18_6][var_18_5] - arg_18_0[var_18_5][var_18_6]) * var_18_8
+		local w = (rot[k][j] - rot[j][k]) * s
 
-		var_18_4[var_18_5] = (arg_18_0[var_18_5][var_18_3] + arg_18_0[var_18_3][var_18_5]) * var_18_8
-		var_18_4[var_18_6] = (arg_18_0[var_18_6][var_18_3] + arg_18_0[var_18_3][var_18_6]) * var_18_8
+		q[j] = (rot[j][i] + rot[i][j]) * s
+		q[k] = (rot[k][i] + rot[i][k]) * s
 
-		arg_18_1:Set(var_18_4[1], var_18_4[2], var_18_4[3], var_18_9)
-		arg_18_1:SetNormalize()
+		quat:Set(q[1], q[2], q[3], w)
+		quat:SetNormalize()
 	end
 end
 
-function var_0_22.SetFromToRotation(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_1 = arg_19_1:Normalize()
-	arg_19_2 = arg_19_2:Normalize()
+function Quaternion:SetFromToRotation(from, to)
+	from = from:Normalize()
+	to = to:Normalize()
 
-	local var_19_0 = var_0_16.Dot(arg_19_1, arg_19_2)
+	local e = Vector3.Dot(from, to)
 
-	if var_19_0 > 0.999999 then
-		arg_19_0:Set(0, 0, 0, 1)
-	elseif var_19_0 < -0.999999 then
-		local var_19_1 = {
+	if e > 0.999999 then
+		self:Set(0, 0, 0, 1)
+	elseif e < -0.999999 then
+		local left = {
 			0,
-			arg_19_1.z,
-			arg_19_1.y
+			from.z,
+			from.y
 		}
-		local var_19_2 = var_19_1[2] * var_19_1[2] + var_19_1[3] * var_19_1[3]
+		local mag = left[2] * left[2] + left[3] * left[3]
 
-		if var_19_2 < 1e-06 then
-			var_19_1[1] = -arg_19_1.z
-			var_19_1[2] = 0
-			var_19_1[3] = arg_19_1.x
-			var_19_2 = var_19_1[1] * var_19_1[1] + var_19_1[3] * var_19_1[3]
+		if mag < 1e-06 then
+			left[1] = -from.z
+			left[2] = 0
+			left[3] = from.x
+			mag = left[1] * left[1] + left[3] * left[3]
 		end
 
-		local var_19_3 = 1 / var_0_5(var_19_2)
+		local invlen = 1 / sqrt(mag)
 
-		var_19_1[1] = var_19_1[1] * var_19_3
-		var_19_1[2] = var_19_1[2] * var_19_3
-		var_19_1[3] = var_19_1[3] * var_19_3
+		left[1] = left[1] * invlen
+		left[2] = left[2] * invlen
+		left[3] = left[3] * invlen
 
-		local var_19_4 = {
+		local up = {
 			0,
 			0,
-			0,
-			[1] = var_19_1[2] * arg_19_1.z - var_19_1[3] * arg_19_1.y,
-			[2] = var_19_1[3] * arg_19_1.x - var_19_1[1] * arg_19_1.z,
-			[3] = var_19_1[1] * arg_19_1.y - var_19_1[2] * arg_19_1.x
+			0
 		}
-		local var_19_5 = -arg_19_1.x * arg_19_1.x
-		local var_19_6 = -arg_19_1.y * arg_19_1.y
-		local var_19_7 = -arg_19_1.z * arg_19_1.z
-		local var_19_8 = -arg_19_1.x * arg_19_1.y
-		local var_19_9 = -arg_19_1.x * arg_19_1.z
-		local var_19_10 = -arg_19_1.y * arg_19_1.z
-		local var_19_11 = var_19_4[1] * var_19_4[1]
-		local var_19_12 = var_19_4[2] * var_19_4[2]
-		local var_19_13 = var_19_4[3] * var_19_4[3]
-		local var_19_14 = var_19_4[1] * var_19_4[2]
-		local var_19_15 = var_19_4[1] * var_19_4[3]
-		local var_19_16 = var_19_4[2] * var_19_4[3]
-		local var_19_17 = -var_19_1[1] * var_19_1[1]
-		local var_19_18 = -var_19_1[2] * var_19_1[2]
-		local var_19_19 = -var_19_1[3] * var_19_1[3]
-		local var_19_20 = -var_19_1[1] * var_19_1[2]
-		local var_19_21 = -var_19_1[1] * var_19_1[3]
-		local var_19_22 = -var_19_1[2] * var_19_1[3]
-		local var_19_23 = {
+
+		up[1] = left[2] * from.z - left[3] * from.y
+		up[2] = left[3] * from.x - left[1] * from.z
+		up[3] = left[1] * from.y - left[2] * from.x
+
+		local fxx = -from.x * from.x
+		local fyy = -from.y * from.y
+		local fzz = -from.z * from.z
+		local fxy = -from.x * from.y
+		local fxz = -from.x * from.z
+		local fyz = -from.y * from.z
+		local uxx = up[1] * up[1]
+		local uyy = up[2] * up[2]
+		local uzz = up[3] * up[3]
+		local uxy = up[1] * up[2]
+		local uxz = up[1] * up[3]
+		local uyz = up[2] * up[3]
+		local lxx = -left[1] * left[1]
+		local lyy = -left[2] * left[2]
+		local lzz = -left[3] * left[3]
+		local lxy = -left[1] * left[2]
+		local lxz = -left[1] * left[3]
+		local lyz = -left[2] * left[3]
+		local rot = {
 			{
-				var_19_5 + var_19_11 + var_19_17,
-				var_19_8 + var_19_14 + var_19_20,
-				var_19_9 + var_19_15 + var_19_21
+				fxx + uxx + lxx,
+				fxy + uxy + lxy,
+				fxz + uxz + lxz
 			},
 			{
-				var_19_8 + var_19_14 + var_19_20,
-				var_19_6 + var_19_12 + var_19_18,
-				var_19_10 + var_19_16 + var_19_22
+				fxy + uxy + lxy,
+				fyy + uyy + lyy,
+				fyz + uyz + lyz
 			},
 			{
-				var_19_9 + var_19_15 + var_19_21,
-				var_19_10 + var_19_16 + var_19_22,
-				var_19_7 + var_19_13 + var_19_19
+				fxz + uxz + lxz,
+				fyz + uyz + lyz,
+				fzz + uzz + lzz
 			}
 		}
 
-		var_0_25(var_19_23, arg_19_0)
+		MatrixToQuaternion(rot, self)
 	else
-		local var_19_24 = var_0_16.Cross(arg_19_1, arg_19_2)
-		local var_19_25 = (1 - var_19_0) / var_0_16.Dot(var_19_24, var_19_24)
-		local var_19_26 = var_19_25 * var_19_24.x
-		local var_19_27 = var_19_25 * var_19_24.z
-		local var_19_28 = var_19_26 * var_19_24.y
-		local var_19_29 = var_19_26 * var_19_24.z
-		local var_19_30 = var_19_27 * var_19_24.y
-		local var_19_31 = {
+		local v = Vector3.Cross(from, to)
+		local h = (1 - e) / Vector3.Dot(v, v)
+		local hx = h * v.x
+		local hz = h * v.z
+		local hxy = hx * v.y
+		local hxz = hx * v.z
+		local hyz = hz * v.y
+		local rot = {
 			{
-				var_19_0 + var_19_26 * var_19_24.x,
-				var_19_28 - var_19_24.z,
-				var_19_29 + var_19_24.y
+				e + hx * v.x,
+				hxy - v.z,
+				hxz + v.y
 			},
 			{
-				var_19_28 + var_19_24.z,
-				var_19_0 + var_19_25 * var_19_24.y * var_19_24.y,
-				var_19_30 - var_19_24.x
+				hxy + v.z,
+				e + h * v.y * v.y,
+				hyz - v.x
 			},
 			{
-				var_19_29 - var_19_24.y,
-				var_19_30 + var_19_24.x,
-				var_19_0 + var_19_27 * var_19_24.z
+				hxz - v.y,
+				hyz + v.x,
+				e + hz * v.z
 			}
 		}
 
-		var_0_25(var_19_31, arg_19_0)
+		MatrixToQuaternion(rot, self)
 	end
 end
 
-function var_0_22.Inverse(arg_20_0)
-	local var_20_0 = var_0_22.New()
+function Quaternion:Inverse()
+	local quat = Quaternion.New()
 
-	var_20_0.x = -arg_20_0.x
-	var_20_0.y = -arg_20_0.y
-	var_20_0.z = -arg_20_0.z
-	var_20_0.w = arg_20_0.w
+	quat.x = -self.x
+	quat.y = -self.y
+	quat.z = -self.z
+	quat.w = self.w
 
-	return var_20_0
+	return quat
 end
 
-function var_0_22.Lerp(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_2 = var_0_10(arg_21_2, 0, 1)
+function Quaternion.Lerp(q1, q2, t)
+	t = clamp(t, 0, 1)
 
-	local var_21_0 = {
+	local q = {
 		w = 1,
 		z = 0,
 		x = 0,
 		y = 0
 	}
 
-	if var_0_22.Dot(arg_21_0, arg_21_1) < 0 then
-		var_21_0.x = arg_21_0.x + arg_21_2 * (-arg_21_1.x - arg_21_0.x)
-		var_21_0.y = arg_21_0.y + arg_21_2 * (-arg_21_1.y - arg_21_0.y)
-		var_21_0.z = arg_21_0.z + arg_21_2 * (-arg_21_1.z - arg_21_0.z)
-		var_21_0.w = arg_21_0.w + arg_21_2 * (-arg_21_1.w - arg_21_0.w)
+	if Quaternion.Dot(q1, q2) < 0 then
+		q.x = q1.x + t * (-q2.x - q1.x)
+		q.y = q1.y + t * (-q2.y - q1.y)
+		q.z = q1.z + t * (-q2.z - q1.z)
+		q.w = q1.w + t * (-q2.w - q1.w)
 	else
-		var_21_0.x = arg_21_0.x + (arg_21_1.x - arg_21_0.x) * arg_21_2
-		var_21_0.y = arg_21_0.y + (arg_21_1.y - arg_21_0.y) * arg_21_2
-		var_21_0.z = arg_21_0.z + (arg_21_1.z - arg_21_0.z) * arg_21_2
-		var_21_0.w = arg_21_0.w + (arg_21_1.w - arg_21_0.w) * arg_21_2
+		q.x = q1.x + (q2.x - q1.x) * t
+		q.y = q1.y + (q2.y - q1.y) * t
+		q.z = q1.z + (q2.z - q1.z) * t
+		q.w = q1.w + (q2.w - q1.w) * t
 	end
 
-	var_0_22.SetNormalize(var_21_0)
-	var_0_12(var_21_0, var_0_22)
+	Quaternion.SetNormalize(q)
+	setmetatable(q, Quaternion)
 
-	return var_21_0
+	return q
 end
 
-function var_0_22.LookRotation(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0:Magnitude()
+function Quaternion.LookRotation(forward, up)
+	local mag = forward:Magnitude()
 
-	if var_22_0 < 1e-06 then
-		error("error input forward to Quaternion.LookRotation" .. tostring(arg_22_0))
+	if mag < 1e-06 then
+		error("error input forward to Quaternion.LookRotation" .. tostring(forward))
 
 		return nil
 	end
 
-	arg_22_0 = arg_22_0 / var_22_0
-	arg_22_1 = arg_22_1 or var_0_20
+	forward = forward / mag
+	up = up or _up
 
-	local var_22_1 = var_0_16.Cross(arg_22_1, arg_22_0)
+	local right = Vector3.Cross(up, forward)
 
-	var_22_1:SetNormalize()
+	right:SetNormalize()
 
-	arg_22_1 = var_0_16.Cross(arg_22_0, var_22_1)
+	up = Vector3.Cross(forward, right)
+	right = Vector3.Cross(up, forward)
 
-	local var_22_2 = var_0_16.Cross(arg_22_1, arg_22_0)
-	local var_22_3 = var_22_2.x + arg_22_1.y + arg_22_0.z
+	local t = right.x + up.y + forward.z
 
-	if var_22_3 > 0 then
-		local var_22_4
-		local var_22_5
-		local var_22_6
-		local var_22_7
-		local var_22_8 = var_22_3 + 1
-		local var_22_9 = 0.5 / var_0_5(var_22_8)
-		local var_22_10 = var_22_9 * var_22_8
-		local var_22_11 = (arg_22_1.z - arg_22_0.y) * var_22_9
-		local var_22_12 = (arg_22_0.x - var_22_2.z) * var_22_9
-		local var_22_13 = (var_22_2.y - arg_22_1.x) * var_22_9
-		local var_22_14 = var_0_24(var_22_11, var_22_12, var_22_13, var_22_10)
+	if t > 0 then
+		local x, y, z, w
 
-		var_22_14:SetNormalize()
+		t = t + 1
 
-		return var_22_14
+		local s = 0.5 / sqrt(t)
+
+		w = s * t
+		x = (up.z - forward.y) * s
+		y = (forward.x - right.z) * s
+		z = (right.y - up.x) * s
+
+		local ret = _new(x, y, z, w)
+
+		ret:SetNormalize()
+
+		return ret
 	else
-		local var_22_15 = {
+		local rot = {
 			{
-				var_22_2.x,
-				arg_22_1.x,
-				arg_22_0.x
+				right.x,
+				up.x,
+				forward.x
 			},
 			{
-				var_22_2.y,
-				arg_22_1.y,
-				arg_22_0.y
+				right.y,
+				up.y,
+				forward.y
 			},
 			{
-				var_22_2.z,
-				arg_22_1.z,
-				arg_22_0.z
+				right.z,
+				up.z,
+				forward.z
 			}
 		}
-		local var_22_16 = {
+		local q = {
 			0,
 			0,
 			0
 		}
-		local var_22_17 = 1
+		local i = 1
 
-		if arg_22_1.y > var_22_2.x then
-			var_22_17 = 2
+		if up.y > right.x then
+			i = 2
 		end
 
-		if arg_22_0.z > var_22_15[var_22_17][var_22_17] then
-			var_22_17 = 3
+		if forward.z > rot[i][i] then
+			i = 3
 		end
 
-		local var_22_18 = var_0_21[var_22_17]
-		local var_22_19 = var_0_21[var_22_18]
-		local var_22_20 = var_22_15[var_22_17][var_22_17] - var_22_15[var_22_18][var_22_18] - var_22_15[var_22_19][var_22_19] + 1
-		local var_22_21 = 0.5 / var_0_5(var_22_20)
+		local j = _next[i]
+		local k = _next[j]
+		local t = rot[i][i] - rot[j][j] - rot[k][k] + 1
+		local s = 0.5 / sqrt(t)
 
-		var_22_16[var_22_17] = var_22_21 * var_22_20
+		q[i] = s * t
 
-		local var_22_22 = (var_22_15[var_22_19][var_22_18] - var_22_15[var_22_18][var_22_19]) * var_22_21
+		local w = (rot[k][j] - rot[j][k]) * s
 
-		var_22_16[var_22_18] = (var_22_15[var_22_18][var_22_17] + var_22_15[var_22_17][var_22_18]) * var_22_21
-		var_22_16[var_22_19] = (var_22_15[var_22_19][var_22_17] + var_22_15[var_22_17][var_22_19]) * var_22_21
+		q[j] = (rot[j][i] + rot[i][j]) * s
+		q[k] = (rot[k][i] + rot[i][k]) * s
 
-		local var_22_23 = var_0_24(var_22_16[1], var_22_16[2], var_22_16[3], var_22_22)
+		local ret = _new(q[1], q[2], q[3], w)
 
-		var_22_23:SetNormalize()
+		ret:SetNormalize()
 
-		return var_22_23
+		return ret
 	end
 end
 
-function var_0_22.SetIdentity(arg_23_0)
-	arg_23_0.x = 0
-	arg_23_0.y = 0
-	arg_23_0.z = 0
-	arg_23_0.w = 1
+function Quaternion:SetIdentity()
+	self.x = 0
+	self.y = 0
+	self.z = 0
+	self.w = 1
 end
 
-local function var_0_26(arg_24_0, arg_24_1, arg_24_2)
-	local var_24_0 = arg_24_0.x * arg_24_1.x + arg_24_0.y * arg_24_1.y + arg_24_0.z * arg_24_1.z + arg_24_0.w * arg_24_1.w
+local function UnclampedSlerp(q1, q2, t)
+	local dot = q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w
 
-	if var_24_0 < 0 then
-		var_24_0 = -var_24_0
-		arg_24_1 = var_0_12({
-			x = -arg_24_1.x,
-			y = -arg_24_1.y,
-			z = -arg_24_1.z,
-			w = -arg_24_1.w
-		}, var_0_22)
+	if dot < 0 then
+		dot = -dot
+		q2 = setmetatable({
+			x = -q2.x,
+			y = -q2.y,
+			z = -q2.z,
+			w = -q2.w
+		}, Quaternion)
 	end
 
-	if var_24_0 < 0.95 then
-		local var_24_1 = var_0_3(var_24_0)
-		local var_24_2 = 1 / var_0_1(var_24_1)
-		local var_24_3 = var_0_1((1 - arg_24_2) * var_24_1) * var_24_2
-		local var_24_4 = var_0_1(arg_24_2 * var_24_1) * var_24_2
+	if dot < 0.95 then
+		local angle = acos(dot)
+		local invSinAngle = 1 / sin(angle)
+		local t1 = sin((1 - t) * angle) * invSinAngle
+		local t2 = sin(t * angle) * invSinAngle
 
-		arg_24_0 = {
-			x = arg_24_0.x * var_24_3 + arg_24_1.x * var_24_4,
-			y = arg_24_0.y * var_24_3 + arg_24_1.y * var_24_4,
-			z = arg_24_0.z * var_24_3 + arg_24_1.z * var_24_4,
-			w = arg_24_0.w * var_24_3 + arg_24_1.w * var_24_4
+		q1 = {
+			x = q1.x * t1 + q2.x * t2,
+			y = q1.y * t1 + q2.y * t2,
+			z = q1.z * t1 + q2.z * t2,
+			w = q1.w * t1 + q2.w * t2
 		}
 
-		var_0_12(arg_24_0, var_0_22)
+		setmetatable(q1, Quaternion)
 
-		return arg_24_0
+		return q1
 	else
-		arg_24_0 = {
-			x = arg_24_0.x + arg_24_2 * (arg_24_1.x - arg_24_0.x),
-			y = arg_24_0.y + arg_24_2 * (arg_24_1.y - arg_24_0.y),
-			z = arg_24_0.z + arg_24_2 * (arg_24_1.z - arg_24_0.z),
-			w = arg_24_0.w + arg_24_2 * (arg_24_1.w - arg_24_0.w)
+		q1 = {
+			x = q1.x + t * (q2.x - q1.x),
+			y = q1.y + t * (q2.y - q1.y),
+			z = q1.z + t * (q2.z - q1.z),
+			w = q1.w + t * (q2.w - q1.w)
 		}
 
-		var_0_22.SetNormalize(arg_24_0)
-		var_0_12(arg_24_0, var_0_22)
+		Quaternion.SetNormalize(q1)
+		setmetatable(q1, Quaternion)
 
-		return arg_24_0
+		return q1
 	end
 end
 
-function var_0_22.Slerp(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_2 < 0 then
-		arg_25_2 = 0
-	elseif arg_25_2 > 1 then
-		arg_25_2 = 1
+function Quaternion.Slerp(from, to, t)
+	if t < 0 then
+		t = 0
+	elseif t > 1 then
+		t = 1
 	end
 
-	return var_0_26(arg_25_0, arg_25_1, arg_25_2)
+	return UnclampedSlerp(from, to, t)
 end
 
-function var_0_22.RotateTowards(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = var_0_22.Angle(arg_26_0, arg_26_1)
+function Quaternion.RotateTowards(from, to, maxDegreesDelta)
+	local angle = Quaternion.Angle(from, to)
 
-	if var_26_0 == 0 then
-		return arg_26_1
+	if angle == 0 then
+		return to
 	end
 
-	local var_26_1 = var_0_6(1, arg_26_2 / var_26_0)
+	local t = min(1, maxDegreesDelta / angle)
 
-	return var_0_26(arg_26_0, arg_26_1, var_26_1)
+	return UnclampedSlerp(from, to, t)
 end
 
-local function var_0_27(arg_27_0, arg_27_1)
-	return var_0_11(arg_27_0 - arg_27_1) < 1e-06
+local function Approximately(f0, f1)
+	return abs(f0 - f1) < 1e-06
 end
 
-function var_0_22.ToAngleAxis(arg_28_0)
-	local var_28_0 = 2 * var_0_3(arg_28_0.w)
+function Quaternion:ToAngleAxis()
+	local angle = 2 * acos(self.w)
 
-	if var_0_27(var_28_0, 0) then
-		return var_28_0 * 57.29578, var_0_16.New(1, 0, 0)
+	if Approximately(angle, 0) then
+		return angle * 57.29578, Vector3.New(1, 0, 0)
 	end
 
-	local var_28_1 = 1 / var_0_5(1 - var_0_5(arg_28_0.w))
+	local div = 1 / sqrt(1 - sqrt(self.w))
 
-	return var_28_0 * 57.29578, var_0_16.New(arg_28_0.x * var_28_1, arg_28_0.y * var_28_1, arg_28_0.z * var_28_1)
+	return angle * 57.29578, Vector3.New(self.x * div, self.y * div, self.z * div)
 end
 
-local var_0_28 = Mathf.PI
-local var_0_29 = var_0_28 * 0.5
-local var_0_30 = 2 * var_0_28
-local var_0_31 = -0.0001
-local var_0_32 = var_0_30 - 0.0001
+local pi = Mathf.PI
+local half_pi = pi * 0.5
+local two_pi = 2 * pi
+local negativeFlip = -0.0001
+local positiveFlip = two_pi - 0.0001
 
-local function var_0_33(arg_29_0)
-	if arg_29_0.x < var_0_31 then
-		arg_29_0.x = arg_29_0.x + var_0_30
-	elseif arg_29_0.x > var_0_32 then
-		arg_29_0.x = arg_29_0.x - var_0_30
+local function SanitizeEuler(euler)
+	if euler.x < negativeFlip then
+		euler.x = euler.x + two_pi
+	elseif euler.x > positiveFlip then
+		euler.x = euler.x - two_pi
 	end
 
-	if arg_29_0.y < var_0_31 then
-		arg_29_0.y = arg_29_0.y + var_0_30
-	elseif arg_29_0.y > var_0_32 then
-		arg_29_0.y = arg_29_0.y - var_0_30
+	if euler.y < negativeFlip then
+		euler.y = euler.y + two_pi
+	elseif euler.y > positiveFlip then
+		euler.y = euler.y - two_pi
 	end
 
-	if arg_29_0.z < var_0_31 then
-		arg_29_0.z = arg_29_0.z + var_0_30
-	elseif arg_29_0.z > var_0_32 then
-		arg_29_0.z = arg_29_0.z + var_0_30
+	if euler.z < negativeFlip then
+		euler.z = euler.z + two_pi
+	elseif euler.z > positiveFlip then
+		euler.z = euler.z + two_pi
 	end
 end
 
-function var_0_22.ToEulerAngles(arg_30_0)
-	local var_30_0 = arg_30_0.x
-	local var_30_1 = arg_30_0.y
-	local var_30_2 = arg_30_0.z
-	local var_30_3 = arg_30_0.w
-	local var_30_4 = 2 * (var_30_1 * var_30_2 - var_30_3 * var_30_0)
+function Quaternion:ToEulerAngles()
+	local x = self.x
+	local y = self.y
+	local z = self.z
+	local w = self.w
+	local check = 2 * (y * z - w * x)
 
-	if var_30_4 < 0.999 then
-		if var_30_4 > -0.999 then
-			local var_30_5 = var_0_16.New(-var_0_4(var_30_4), var_0_9(2 * (var_30_0 * var_30_2 + var_30_3 * var_30_1), 1 - 2 * (var_30_0 * var_30_0 + var_30_1 * var_30_1)), var_0_9(2 * (var_30_0 * var_30_1 + var_30_3 * var_30_2), 1 - 2 * (var_30_0 * var_30_0 + var_30_2 * var_30_2)))
+	if check < 0.999 then
+		if check > -0.999 then
+			local v = Vector3.New(-asin(check), atan2(2 * (x * z + w * y), 1 - 2 * (x * x + y * y)), atan2(2 * (x * y + w * z), 1 - 2 * (x * x + z * z)))
 
-			var_0_33(var_30_5)
-			var_30_5:Mul(var_0_17)
+			SanitizeEuler(v)
+			v:Mul(rad2Deg)
 
-			return var_30_5
+			return v
 		else
-			local var_30_6 = var_0_16.New(var_0_29, var_0_9(2 * (var_30_0 * var_30_1 - var_30_3 * var_30_2), 1 - 2 * (var_30_1 * var_30_1 + var_30_2 * var_30_2)), 0)
+			local v = Vector3.New(half_pi, atan2(2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
 
-			var_0_33(var_30_6)
-			var_30_6:Mul(var_0_17)
+			SanitizeEuler(v)
+			v:Mul(rad2Deg)
 
-			return var_30_6
+			return v
 		end
 	else
-		local var_30_7 = var_0_16.New(-var_0_29, var_0_9(-2 * (var_30_0 * var_30_1 - var_30_3 * var_30_2), 1 - 2 * (var_30_1 * var_30_1 + var_30_2 * var_30_2)), 0)
+		local v = Vector3.New(-half_pi, atan2(-2 * (x * y - w * z), 1 - 2 * (y * y + z * z)), 0)
 
-		var_0_33(var_30_7)
-		var_30_7:Mul(var_0_17)
+		SanitizeEuler(v)
+		v:Mul(rad2Deg)
 
-		return var_30_7
+		return v
 	end
 end
 
-function var_0_22.Forward(arg_31_0)
-	return arg_31_0:MulVec3(var_0_19)
+function Quaternion:Forward()
+	return self:MulVec3(_forward)
 end
 
-function var_0_22.MulVec3(arg_32_0, arg_32_1)
-	local var_32_0 = var_0_16.New()
-	local var_32_1 = arg_32_0.x * 2
-	local var_32_2 = arg_32_0.y * 2
-	local var_32_3 = arg_32_0.z * 2
-	local var_32_4 = arg_32_0.x * var_32_1
-	local var_32_5 = arg_32_0.y * var_32_2
-	local var_32_6 = arg_32_0.z * var_32_3
-	local var_32_7 = arg_32_0.x * var_32_2
-	local var_32_8 = arg_32_0.x * var_32_3
-	local var_32_9 = arg_32_0.y * var_32_3
-	local var_32_10 = arg_32_0.w * var_32_1
-	local var_32_11 = arg_32_0.w * var_32_2
-	local var_32_12 = arg_32_0.w * var_32_3
+function Quaternion:MulVec3(point)
+	local vec = Vector3.New()
+	local num = self.x * 2
+	local num2 = self.y * 2
+	local num3 = self.z * 2
+	local num4 = self.x * num
+	local num5 = self.y * num2
+	local num6 = self.z * num3
+	local num7 = self.x * num2
+	local num8 = self.x * num3
+	local num9 = self.y * num3
+	local num10 = self.w * num
+	local num11 = self.w * num2
+	local num12 = self.w * num3
 
-	var_32_0.x = (1 - (var_32_5 + var_32_6)) * arg_32_1.x + (var_32_7 - var_32_12) * arg_32_1.y + (var_32_8 + var_32_11) * arg_32_1.z
-	var_32_0.y = (var_32_7 + var_32_12) * arg_32_1.x + (1 - (var_32_4 + var_32_6)) * arg_32_1.y + (var_32_9 - var_32_10) * arg_32_1.z
-	var_32_0.z = (var_32_8 - var_32_11) * arg_32_1.x + (var_32_9 + var_32_10) * arg_32_1.y + (1 - (var_32_4 + var_32_5)) * arg_32_1.z
+	vec.x = (1 - (num5 + num6)) * point.x + (num7 - num12) * point.y + (num8 + num11) * point.z
+	vec.y = (num7 + num12) * point.x + (1 - (num4 + num6)) * point.y + (num9 - num10) * point.z
+	vec.z = (num8 - num11) * point.x + (num9 + num10) * point.y + (1 - (num4 + num5)) * point.z
 
-	return var_32_0
+	return vec
 end
 
-function var_0_22.__mul(arg_33_0, arg_33_1)
-	if var_0_22 == var_0_13(arg_33_1) then
-		return var_0_22.New(arg_33_0.w * arg_33_1.x + arg_33_0.x * arg_33_1.w + arg_33_0.y * arg_33_1.z - arg_33_0.z * arg_33_1.y, arg_33_0.w * arg_33_1.y + arg_33_0.y * arg_33_1.w + arg_33_0.z * arg_33_1.x - arg_33_0.x * arg_33_1.z, arg_33_0.w * arg_33_1.z + arg_33_0.z * arg_33_1.w + arg_33_0.x * arg_33_1.y - arg_33_0.y * arg_33_1.x, arg_33_0.w * arg_33_1.w - arg_33_0.x * arg_33_1.x - arg_33_0.y * arg_33_1.y - arg_33_0.z * arg_33_1.z)
-	elseif var_0_16 == var_0_13(arg_33_1) then
-		return arg_33_0:MulVec3(arg_33_1)
+function Quaternion.__mul(lhs, rhs)
+	if Quaternion == getmetatable(rhs) then
+		return Quaternion.New(lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y, lhs.w * rhs.y + lhs.y * rhs.w + lhs.z * rhs.x - lhs.x * rhs.z, lhs.w * rhs.z + lhs.z * rhs.w + lhs.x * rhs.y - lhs.y * rhs.x, lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z)
+	elseif Vector3 == getmetatable(rhs) then
+		return lhs:MulVec3(rhs)
 	end
 end
 
-function var_0_22.__unm(arg_34_0)
-	return var_0_22.New(-arg_34_0.x, -arg_34_0.y, -arg_34_0.z, -arg_34_0.w)
+function Quaternion.__unm(q)
+	return Quaternion.New(-q.x, -q.y, -q.z, -q.w)
 end
 
-function var_0_22.__eq(arg_35_0, arg_35_1)
-	return var_0_22.Dot(arg_35_0, arg_35_1) > 0.999999
+function Quaternion.__eq(lhs, rhs)
+	return Quaternion.Dot(lhs, rhs) > 0.999999
 end
 
-function var_0_22.__tostring(arg_36_0)
-	return "[" .. arg_36_0.x .. "," .. arg_36_0.y .. "," .. arg_36_0.z .. "," .. arg_36_0.w .. "]"
+function Quaternion:__tostring()
+	return "[" .. self.x .. "," .. self.y .. "," .. self.z .. "," .. self.w .. "]"
 end
 
-function var_0_23.identity()
-	return var_0_24(0, 0, 0, 1)
+function get.identity()
+	return _new(0, 0, 0, 1)
 end
 
-var_0_23.eulerAngles = var_0_22.ToEulerAngles
-UnityEngine.Quaternion = var_0_22
+get.eulerAngles = Quaternion.ToEulerAngles
+UnityEngine.Quaternion = Quaternion
 
-var_0_12(var_0_22, var_0_22)
+setmetatable(Quaternion, Quaternion)
 
-return var_0_22
+return Quaternion

@@ -197,8 +197,6 @@ function CharacterDeviceView:_refreshUI()
 		self._specialPowerSkillItems = self:getUserDataTb_()
 	end
 
-	local count1 = 0
-
 	if self._powerSkills then
 		for i, info in ipairs(self._powerSkills) do
 			local item = self:_getPowerSkillItem(i)
@@ -214,10 +212,10 @@ function CharacterDeviceView:_refreshUI()
 			item.txtnum.text = string.format("<size=18>%s</size>%s", luaLang("multiple"), info.count)
 
 			item.btn:AddClickListener(self._onDeviceNormalSkillCardClick, self, i)
-
-			count1 = count1 + 1
 		end
 	end
+
+	local count1 = self._powerSkills and #self._powerSkills
 
 	if self._normalPowerSkillItems then
 		for i = 1, #self._normalPowerSkillItems do
@@ -226,8 +224,6 @@ function CharacterDeviceView:_refreshUI()
 			gohelper.setActive(item.go, i <= count1)
 		end
 	end
-
-	local count2 = 0
 
 	if self._specialPowerSkill then
 		for i, info in ipairs(self._specialPowerSkill) do
@@ -240,11 +236,10 @@ function CharacterDeviceView:_refreshUI()
 			item.txtnum.text = string.format("<size=18>%s</size>%s", luaLang("multiple"), info.count)
 
 			item.btn:AddClickListener(self._onDeviceSecialSkillCardClick, self, i)
-
-			count2 = count2 + 1
-			count2 = count2 + 1
 		end
 	end
+
+	local count2 = self._specialPowerSkill and #self._specialPowerSkill
 
 	if self._specialPowerSkillItems then
 		for i = 1, #self._specialPowerSkillItems do

@@ -25,6 +25,7 @@ function ClothesStorePreviewSkinComp:init(go)
 	self._txtskinNameEn = gohelper.findChildText(self.viewGO, "#txt_skinNameEn")
 	self.special2dBgScale = {
 		[305305] = 2,
+		[310504] = 0.954,
 		[312003] = 2,
 		[311003] = 2,
 		[308303] = 2,

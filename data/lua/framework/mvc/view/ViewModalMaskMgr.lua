@@ -54,13 +54,25 @@ function ViewModalMaskMgr:_onCloseViewFinish(viewName, viewParam)
 end
 
 function ViewModalMaskMgr:_checkCreateMask()
-	if not self._maskGO then
-		self._maskGO = gohelper.find("UIRoot/POPUP/ViewMask")
+	if gohelper.isNil(self._maskGO) then
+		if self._isMaskCloneInit ~= true then
+			self._isMaskCloneInit = true
+			self._maskGO = gohelper.find("UIRoot/POPUP/ViewMask")
+			self._maskCloneGO = gohelper.cloneInPlace(self._maskGO, "ViewMask_cloneGO")
+
+			gohelper.setActive(self._maskCloneGO, false)
+		else
+			logError("ViewModalMaskMgr ViewMask 被销毁")
+
+			self._maskGO = gohelper.cloneInPlace(self._maskCloneGO, "ViewMask")
+		end
+
 		self._imgMask = self._maskGO:GetComponent(gohelper.Type_Image)
-		self.DefaultMaskAlpha = self._imgMask.color.a
 
 		gohelper.setActive(self._maskGO, true)
 		SLFramework.UGUI.UIClickListener.Get(self._maskGO):AddClickListener(self._onClickModalMask, self)
+
+		self.DefaultMaskAlpha = self._imgMask.color.a
 	end
 end
 

@@ -31,7 +31,7 @@ end
 
 function TaskDispatcher.runRepeat(callback, cbObj, interval, repeatCount)
 	if not callback or not interval then
-		logError("TaskDispatcher.runDelay, callback or interval should not be null!")
+		logError("TaskDispatcher.runRepeat, callback or interval should not be null!")
 
 		return
 	end
@@ -125,8 +125,11 @@ function TaskDispatcher._doAddOrRemove()
 
 		if TaskDispatcher.ToDelete == tmpTask.status then
 			TaskDispatcher._directDelete(tmpTask.callback, tmpTask.cbObj)
+			TaskDispatcher._taskPool:putObject(tmpTask)
 		elseif TaskDispatcher.ToInsert == tmpTask.status then
 			TaskDispatcher._directAdd(tmpTask)
+		else
+			TaskDispatcher._taskPool:putObject(tmpTask)
 		end
 
 		TaskDispatcher._deltaTasks[idx] = nil
@@ -153,6 +156,10 @@ function TaskDispatcher._directAdd(taskItem)
 	local alreadyTask, index = TaskDispatcher._getTaskWhichCbInDispatch(taskItem.callback, taskItem.cbObj)
 
 	if alreadyTask and alreadyTask.status ~= TaskDispatcher.ToDelete then
+		if isDebugBuild then
+			logWarn("TaskDispatcher._directAdd, task already exists, add ignored! please call cancelTask first. callback = " .. tostring(taskItem.callback) .. " cbObj = " .. tostring(taskItem.cbObj))
+		end
+
 		TaskDispatcher._taskPool:putObject(taskItem)
 
 		return
@@ -163,6 +170,14 @@ function TaskDispatcher._directAdd(taskItem)
 	end
 
 	taskItem.status = TaskDispatcher.Active
+
+	for i, v in ipairs(TaskDispatcher._allTasks) do
+		if v.interval > taskItem.interval then
+			table.insert(TaskDispatcher._allTasks, i, taskItem)
+
+			return
+		end
+	end
 
 	table.insert(TaskDispatcher._allTasks, taskItem)
 end

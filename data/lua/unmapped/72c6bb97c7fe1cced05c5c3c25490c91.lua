@@ -1,139 +1,139 @@
-﻿local var_0_0 = {}
+﻿-- chunkname: @socket/mbox.lua
+
+local _M = {}
 
 if module then
-	mbox = var_0_0
+	mbox = _M
 end
 
-function var_0_0.split_message(arg_1_0)
-	local var_1_0 = {}
+function _M.split_message(message_s)
+	local message = {}
 
-	arg_1_0 = string.gsub(arg_1_0, "\r\n", "\n")
+	message_s = string.gsub(message_s, "\r\n", "\n")
 
-	string.gsub(arg_1_0, "^(.-\n)\n", function(arg_2_0)
-		var_1_0.headers = arg_2_0
+	string.gsub(message_s, "^(.-\n)\n", function(h)
+		message.headers = h
 	end)
-	string.gsub(arg_1_0, "^.-\n\n(.*)", function(arg_3_0)
-		var_1_0.body = arg_3_0
+	string.gsub(message_s, "^.-\n\n(.*)", function(b)
+		message.body = b
 	end)
 
-	if not var_1_0.body then
-		string.gsub(arg_1_0, "^\n(.*)", function(arg_4_0)
-			var_1_0.body = arg_4_0
+	if not message.body then
+		string.gsub(message_s, "^\n(.*)", function(b)
+			message.body = b
 		end)
 	end
 
-	if not var_1_0.headers and not var_1_0.body then
-		var_1_0.headers = arg_1_0
+	if not message.headers and not message.body then
+		message.headers = message_s
 	end
 
-	return var_1_0.headers or "", var_1_0.body or ""
+	return message.headers or "", message.body or ""
 end
 
-function var_0_0.split_headers(arg_5_0)
-	local var_5_0 = {}
+function _M.split_headers(headers_s)
+	local headers = {}
 
-	arg_5_0 = string.gsub(arg_5_0, "\r\n", "\n")
-	arg_5_0 = string.gsub(arg_5_0, "\n[ ]+", " ")
+	headers_s = string.gsub(headers_s, "\r\n", "\n")
+	headers_s = string.gsub(headers_s, "\n[ ]+", " ")
 
-	string.gsub("\n" .. arg_5_0, "\n([^\n]+)", function(arg_6_0)
-		table.insert(var_5_0, arg_6_0)
+	string.gsub("\n" .. headers_s, "\n([^\n]+)", function(h)
+		table.insert(headers, h)
 	end)
 
-	return var_5_0
+	return headers
 end
 
-function var_0_0.parse_header(arg_7_0)
-	arg_7_0 = string.gsub(arg_7_0, "\n[ ]+", " ")
-	arg_7_0 = string.gsub(arg_7_0, "\n+", "")
+function _M.parse_header(header_s)
+	header_s = string.gsub(header_s, "\n[ ]+", " ")
+	header_s = string.gsub(header_s, "\n+", "")
 
-	local var_7_0, var_7_1, var_7_2, var_7_3 = string.find(arg_7_0, "([^%s:]-):%s*(.*)")
+	local _, __, name, value = string.find(header_s, "([^%s:]-):%s*(.*)")
 
-	return var_7_2, var_7_3
+	return name, value
 end
 
-function var_0_0.parse_headers(arg_8_0)
-	local var_8_0 = var_0_0.split_headers(arg_8_0)
-	local var_8_1 = {}
+function _M.parse_headers(headers_s)
+	local headers_t = _M.split_headers(headers_s)
+	local headers = {}
 
-	for iter_8_0 = 1, #var_8_0 do
-		local var_8_2, var_8_3 = var_0_0.parse_header(var_8_0[iter_8_0])
+	for i = 1, #headers_t do
+		local name, value = _M.parse_header(headers_t[i])
 
-		if var_8_2 then
-			local var_8_4 = string.lower(var_8_2)
+		if name then
+			name = string.lower(name)
 
-			if var_8_1[var_8_4] then
-				var_8_1[var_8_4] = var_8_1[var_8_4] .. ", " .. var_8_3
+			if headers[name] then
+				headers[name] = headers[name] .. ", " .. value
 			else
-				var_8_1[var_8_4] = var_8_3
+				headers[name] = value
 			end
 		end
 	end
 
-	return var_8_1
+	return headers
 end
 
-function var_0_0.parse_from(arg_9_0)
-	local var_9_0, var_9_1, var_9_2, var_9_3 = string.find(arg_9_0, "^%s*(.-)%s*%<(.-)%>")
+function _M.parse_from(from)
+	local _, __, name, address = string.find(from, "^%s*(.-)%s*%<(.-)%>")
 
-	if not var_9_3 then
-		local var_9_4, var_9_5
-
-		var_9_4, var_9_5, var_9_3 = string.find(arg_9_0, "%s*(.+)%s*")
+	if not address then
+		_, __, address = string.find(from, "%s*(.+)%s*")
 	end
 
-	var_9_2 = var_9_2 or ""
-	var_9_3 = var_9_3 or ""
+	name = name or ""
+	address = address or ""
 
-	if var_9_2 == "" then
-		var_9_2 = var_9_3
+	if name == "" then
+		name = address
 	end
 
-	return string.gsub(var_9_2, "\"", ""), var_9_3
+	name = string.gsub(name, "\"", "")
+
+	return name, address
 end
 
-function var_0_0.split_mbox(arg_10_0)
-	local var_10_0 = {}
+function _M.split_mbox(mbox_s)
+	local mbox = {}
 
-	arg_10_0 = string.gsub(arg_10_0, "\r\n", "\n") .. "\n\nFrom \n"
+	mbox_s = string.gsub(mbox_s, "\r\n", "\n") .. "\n\nFrom \n"
 
-	local var_10_1 = 1
-	local var_10_2 = 1
-	local var_10_3 = 1
+	local nj, i, j = 1, 1, 1
 
 	while true do
-		local var_10_4, var_10_5 = string.find(arg_10_0, "\n\nFrom .-\n", var_10_3)
+		i, nj = string.find(mbox_s, "\n\nFrom .-\n", j)
 
-		if not var_10_4 then
+		if not i then
 			break
 		end
 
-		local var_10_6 = string.sub(arg_10_0, var_10_3, var_10_4 - 1)
+		local message = string.sub(mbox_s, j, i - 1)
 
-		table.insert(var_10_0, var_10_6)
+		table.insert(mbox, message)
 
-		var_10_3 = var_10_5 + 1
+		j = nj + 1
 	end
 
-	return var_10_0
+	return mbox
 end
 
-function var_0_0.parse(arg_11_0)
-	local var_11_0 = var_0_0.split_mbox(arg_11_0)
+function _M.parse(mbox_s)
+	local mbox = _M.split_mbox(mbox_s)
 
-	for iter_11_0 = 1, #var_11_0 do
-		var_11_0[iter_11_0] = var_0_0.parse_message(var_11_0[iter_11_0])
+	for i = 1, #mbox do
+		mbox[i] = _M.parse_message(mbox[i])
 	end
 
-	return var_11_0
+	return mbox
 end
 
-function var_0_0.parse_message(arg_12_0)
-	local var_12_0 = {}
+function _M.parse_message(message_s)
+	local message = {}
 
-	var_12_0.headers, var_12_0.body = var_0_0.split_message(arg_12_0)
-	var_12_0.headers = var_0_0.parse_headers(var_12_0.headers)
+	message.headers, message.body = _M.split_message(message_s)
+	message.headers = _M.parse_headers(message.headers)
 
-	return var_12_0
+	return message
 end
 
-return var_0_0
+return _M

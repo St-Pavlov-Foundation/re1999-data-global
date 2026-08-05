@@ -446,11 +446,47 @@ function SettingsModel:getResolutionRatio()
 	return self._resolutionRatio
 end
 
+require("tolua.reflection")
+tolua.loadassembly("Assembly-CSharp")
+
+local GameEventDispatcher_type = tolua.findtype("SLFramework.GameEventDispatcher")
+local OnWindowSizeChangedArgs_type = tolua.findtype("ZProj.OnWindowSizeChangedArgs")
+local OnWindowSizeChangedArgs = tolua.createinstance(OnWindowSizeChangedArgs_type)
+local eventTabField = tolua.getfield(GameEventDispatcher_type, "_eventTab", 40)
+local Delegate_type = tolua.findtype("System.Delegate")
+local Type_type = tolua.findtype("System.Type")
+
 function SettingsModel:setResolutionRatio()
 	PlayerPrefsHelper.setString(PlayerPrefsKey.ResolutionRatio, self._resolutionRatio)
 	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FullScreenKey, self._isFullScreen)
 	ZProj.GameHelper.SetResolutionRatio(self._screenWidth, self._screenHeight, self:isFullScreen())
 	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnScreenResize, self._screenWidth, self._screenHeight)
+
+	if BootNativeUtil.isWindows() then
+		local eventTab = eventTabField:Get(nil)
+
+		if eventTab ~= nil then
+			if self._containsKeyMethod == nil then
+				local dictType = tolua.findtype("System.Collections.Generic.Dictionary`2")
+				local closedDictType = dictType:MakeGenericType(Type_type, Delegate_type)
+
+				self._containsKeyMethod = tolua.getmethod(closedDictType, "ContainsKey", Type_type)
+				self._getItemMethod = tolua.getmethod(closedDictType, "get_Item", Type_type)
+			end
+
+			local hasKey = self._containsKeyMethod:Call(eventTab, OnWindowSizeChangedArgs_type)
+
+			if hasKey then
+				local evtDelegate = self._getItemMethod:Call(eventTab, OnWindowSizeChangedArgs_type)
+
+				if evtDelegate ~= nil then
+					TaskDispatcher.runDelay(function()
+						evtDelegate:DynamicInvoke(OnWindowSizeChangedArgs)
+					end, nil, 0.1)
+				end
+			end
+		end
+	end
 end
 
 function SettingsModel:getCurrentScreenResolutionRatio()

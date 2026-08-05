@@ -1,10 +1,12 @@
-﻿local var_0_0 = require("socket")
+﻿-- chunkname: @socket/headers.lua
 
-var_0_0.headers = {}
+local socket = require("socket")
 
-local var_0_1 = var_0_0.headers
+socket.headers = {}
 
-var_0_1.canonic = {
+local _M = socket.headers
+
+_M.canonic = {
 	["last-attempt-date"] = "Last-Attempt-Date",
 	received = "Received",
 	["mime-version"] = "MIME-Version",
@@ -98,4 +100,4 @@ var_0_1.canonic = {
 	server = "Server"
 }
 
-return var_0_1
+return _M

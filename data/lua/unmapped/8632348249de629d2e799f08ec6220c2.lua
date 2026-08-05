@@ -1,282 +1,285 @@
-﻿local var_0_0 = rawget
-local var_0_1 = setmetatable
-local var_0_2 = type
-local var_0_3 = Mathf
-local var_0_4 = {}
-local var_0_5 = tolua.initget(var_0_4)
+﻿-- chunkname: @UnityEngine/Color.lua
 
-function var_0_4.__index(arg_1_0, arg_1_1)
-	local var_1_0 = var_0_0(var_0_4, arg_1_1)
+local rawget = rawget
+local setmetatable = setmetatable
+local type = type
+local Mathf = Mathf
+local Color = {}
+local get = tolua.initget(Color)
 
-	if var_1_0 == nil then
-		var_1_0 = var_0_0(var_0_5, arg_1_1)
+function Color.__index(t, k)
+	local var = rawget(Color, k)
 
-		if var_1_0 ~= nil then
-			return var_1_0(arg_1_0)
+	if var == nil then
+		var = rawget(get, k)
+
+		if var ~= nil then
+			return var(t)
 		end
 	end
 
-	return var_1_0
+	return var
 end
 
-function var_0_4.__call(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	return var_0_1({
-		r = arg_2_1 or 0,
-		g = arg_2_2 or 0,
-		b = arg_2_3 or 0,
-		a = arg_2_4 or 1
-	}, var_0_4)
+function Color.__call(t, r, g, b, a)
+	return setmetatable({
+		r = r or 0,
+		g = g or 0,
+		b = b or 0,
+		a = a or 1
+	}, Color)
 end
 
-function var_0_4.New(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
-	return var_0_1({
-		r = arg_3_0 or 0,
-		g = arg_3_1 or 0,
-		b = arg_3_2 or 0,
-		a = arg_3_3 or 1
-	}, var_0_4)
+function Color.New(r, g, b, a)
+	return setmetatable({
+		r = r or 0,
+		g = g or 0,
+		b = b or 0,
+		a = a or 1
+	}, Color)
 end
 
-function var_0_4.Set(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	arg_4_0.r = arg_4_1
-	arg_4_0.g = arg_4_2
-	arg_4_0.b = arg_4_3
-	arg_4_0.a = arg_4_4 or 1
+function Color:Set(r, g, b, a)
+	self.r = r
+	self.g = g
+	self.b = b
+	self.a = a or 1
 end
 
-function var_0_4.Get(arg_5_0)
-	return arg_5_0.r, arg_5_0.g, arg_5_0.b, arg_5_0.a
+function Color:Get()
+	return self.r, self.g, self.b, self.a
 end
 
-function var_0_4.Equals(arg_6_0, arg_6_1)
-	return arg_6_0.r == arg_6_1.r and arg_6_0.g == arg_6_1.g and arg_6_0.b == arg_6_1.b and arg_6_0.a == arg_6_1.a
+function Color:Equals(other)
+	return self.r == other.r and self.g == other.g and self.b == other.b and self.a == other.a
 end
 
-function var_0_4.Lerp(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_2 = var_0_3.Clamp01(arg_7_2)
+function Color.Lerp(a, b, t)
+	t = Mathf.Clamp01(t)
 
-	return var_0_4.New(arg_7_0.r + arg_7_2 * (arg_7_1.r - arg_7_0.r), arg_7_0.g + arg_7_2 * (arg_7_1.g - arg_7_0.g), arg_7_0.b + arg_7_2 * (arg_7_1.b - arg_7_0.b), arg_7_0.a + arg_7_2 * (arg_7_1.a - arg_7_0.a))
+	return Color.New(a.r + t * (b.r - a.r), a.g + t * (b.g - a.g), a.b + t * (b.b - a.b), a.a + t * (b.a - a.a))
 end
 
-function var_0_4.LerpUnclamped(arg_8_0, arg_8_1, arg_8_2)
-	return var_0_4.New(arg_8_0.r + arg_8_2 * (arg_8_1.r - arg_8_0.r), arg_8_0.g + arg_8_2 * (arg_8_1.g - arg_8_0.g), arg_8_0.b + arg_8_2 * (arg_8_1.b - arg_8_0.b), arg_8_0.a + arg_8_2 * (arg_8_1.a - arg_8_0.a))
+function Color.LerpUnclamped(a, b, t)
+	return Color.New(a.r + t * (b.r - a.r), a.g + t * (b.g - a.g), a.b + t * (b.b - a.b), a.a + t * (b.a - a.a))
 end
 
-function var_0_4.HSVToRGB(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if arg_9_3 then
+function Color.HSVToRGB(H, S, V, hdr)
+	if hdr then
 		-- block empty
 	end
 
-	arg_9_3 = true
+	hdr = true
 
-	local var_9_0 = var_0_4.New(1, 1, 1, 1)
+	local white = Color.New(1, 1, 1, 1)
 
-	if arg_9_1 == 0 then
-		var_9_0.r = arg_9_2
-		var_9_0.g = arg_9_2
-		var_9_0.b = arg_9_2
+	if S == 0 then
+		white.r = V
+		white.g = V
+		white.b = V
 
-		return var_9_0
+		return white
 	end
 
-	if arg_9_2 == 0 then
-		var_9_0.r = 0
-		var_9_0.g = 0
-		var_9_0.b = 0
+	if V == 0 then
+		white.r = 0
+		white.g = 0
+		white.b = 0
 
-		return var_9_0
+		return white
 	end
 
-	var_9_0.r = 0
-	var_9_0.g = 0
-	var_9_0.b = 0
+	white.r = 0
+	white.g = 0
+	white.b = 0
 
-	local var_9_1 = arg_9_1
-	local var_9_2 = arg_9_2
-	local var_9_3 = arg_9_0 * 6
-	local var_9_4 = var_0_3.Floor(var_9_3)
-	local var_9_5 = var_9_3 - var_9_4
-	local var_9_6 = var_9_2 * (1 - var_9_1)
-	local var_9_7 = var_9_2 * (1 - var_9_1 * var_9_5)
-	local var_9_8 = var_9_2 * (1 - var_9_1 * (1 - var_9_5))
-	local var_9_9 = var_9_4 + 1
+	local num = S
+	local num2 = V
+	local f = H * 6
+	local num4 = Mathf.Floor(f)
+	local num5 = f - num4
+	local num6 = num2 * (1 - num)
+	local num7 = num2 * (1 - num * num5)
+	local num8 = num2 * (1 - num * (1 - num5))
+	local num9 = num4
+	local flag = num9 + 1
 
-	if var_9_9 == 0 then
-		var_9_0.r = var_9_2
-		var_9_0.g = var_9_6
-		var_9_0.b = var_9_7
-	elseif var_9_9 == 1 then
-		var_9_0.r = var_9_2
-		var_9_0.g = var_9_8
-		var_9_0.b = var_9_6
-	elseif var_9_9 == 2 then
-		var_9_0.r = var_9_7
-		var_9_0.g = var_9_2
-		var_9_0.b = var_9_6
-	elseif var_9_9 == 3 then
-		var_9_0.r = var_9_6
-		var_9_0.g = var_9_2
-		var_9_0.b = var_9_8
-	elseif var_9_9 == 4 then
-		var_9_0.r = var_9_6
-		var_9_0.g = var_9_7
-		var_9_0.b = var_9_2
-	elseif var_9_9 == 5 then
-		var_9_0.r = var_9_8
-		var_9_0.g = var_9_6
-		var_9_0.b = var_9_2
-	elseif var_9_9 == 6 then
-		var_9_0.r = var_9_2
-		var_9_0.g = var_9_6
-		var_9_0.b = var_9_7
-	elseif var_9_9 == 7 then
-		var_9_0.r = var_9_2
-		var_9_0.g = var_9_8
-		var_9_0.b = var_9_6
+	if flag == 0 then
+		white.r = num2
+		white.g = num6
+		white.b = num7
+	elseif flag == 1 then
+		white.r = num2
+		white.g = num8
+		white.b = num6
+	elseif flag == 2 then
+		white.r = num7
+		white.g = num2
+		white.b = num6
+	elseif flag == 3 then
+		white.r = num6
+		white.g = num2
+		white.b = num8
+	elseif flag == 4 then
+		white.r = num6
+		white.g = num7
+		white.b = num2
+	elseif flag == 5 then
+		white.r = num8
+		white.g = num6
+		white.b = num2
+	elseif flag == 6 then
+		white.r = num2
+		white.g = num6
+		white.b = num7
+	elseif flag == 7 then
+		white.r = num2
+		white.g = num8
+		white.b = num6
 	end
 
-	if not arg_9_3 then
-		var_9_0.r = var_0_3.Clamp(var_9_0.r, 0, 1)
-		var_9_0.g = var_0_3.Clamp(var_9_0.g, 0, 1)
-		var_9_0.b = var_0_3.Clamp(var_9_0.b, 0, 1)
+	if not hdr then
+		white.r = Mathf.Clamp(white.r, 0, 1)
+		white.g = Mathf.Clamp(white.g, 0, 1)
+		white.b = Mathf.Clamp(white.b, 0, 1)
 	end
 
-	return var_9_0
+	return white
 end
 
-local function var_0_6(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_1
+local function RGBToHSVHelper(offset, dominantcolor, colorone, colortwo)
+	local V = dominantcolor
 
-	if var_10_0 ~= 0 then
-		local var_10_1 = 0
+	if V ~= 0 then
+		local num = 0
 
-		if arg_10_3 < arg_10_2 then
-			var_10_1 = arg_10_3
+		if colortwo < colorone then
+			num = colortwo
 		else
-			var_10_1 = arg_10_2
+			num = colorone
 		end
 
-		local var_10_2 = var_10_0 - var_10_1
-		local var_10_3 = 0
-		local var_10_4 = 0
+		local num2 = V - num
+		local H = 0
+		local S = 0
 
-		if var_10_2 ~= 0 then
-			var_10_4 = var_10_2 / var_10_0
-			var_10_3 = arg_10_0 + (arg_10_2 - arg_10_3) / var_10_2
+		if num2 ~= 0 then
+			S = num2 / V
+			H = offset + (colorone - colortwo) / num2
 		else
-			var_10_4 = 0
-			var_10_3 = arg_10_0 + (arg_10_2 - arg_10_3)
+			S = 0
+			H = offset + (colorone - colortwo)
 		end
 
-		local var_10_5 = var_10_3 / 6
+		H = H / 6
 
-		if var_10_5 < 0 then
-			var_10_5 = var_10_5 + 1
+		if H < 0 then
+			H = H + 1
 		end
 
-		return var_10_5, var_10_4, var_10_0
+		return H, S, V
 	end
 
-	return 0, 0, var_10_0
+	return 0, 0, V
 end
 
-function var_0_4.RGBToHSV(arg_11_0)
-	if arg_11_0.b > arg_11_0.g and arg_11_0.b > arg_11_0.r then
-		return var_0_6(4, arg_11_0.b, arg_11_0.r, arg_11_0.g)
-	elseif arg_11_0.g > arg_11_0.r then
-		return var_0_6(2, arg_11_0.g, arg_11_0.b, arg_11_0.r)
+function Color.RGBToHSV(rgbColor)
+	if rgbColor.b > rgbColor.g and rgbColor.b > rgbColor.r then
+		return RGBToHSVHelper(4, rgbColor.b, rgbColor.r, rgbColor.g)
+	elseif rgbColor.g > rgbColor.r then
+		return RGBToHSVHelper(2, rgbColor.g, rgbColor.b, rgbColor.r)
 	else
-		return var_0_6(0, arg_11_0.r, arg_11_0.g, arg_11_0.b)
+		return RGBToHSVHelper(0, rgbColor.r, rgbColor.g, rgbColor.b)
 	end
 end
 
-function var_0_4.GrayScale(arg_12_0)
-	return 0.299 * arg_12_0.r + 0.587 * arg_12_0.g + 0.114 * arg_12_0.b
+function Color.GrayScale(a)
+	return 0.299 * a.r + 0.587 * a.g + 0.114 * a.b
 end
 
-function var_0_4.__tostring(arg_13_0)
-	return string.format("RGBA(%f,%f,%f,%f)", arg_13_0.r, arg_13_0.g, arg_13_0.b, arg_13_0.a)
+function Color:__tostring()
+	return string.format("RGBA(%f,%f,%f,%f)", self.r, self.g, self.b, self.a)
 end
 
-function var_0_4.__add(arg_14_0, arg_14_1)
-	return var_0_4.New(arg_14_0.r + arg_14_1.r, arg_14_0.g + arg_14_1.g, arg_14_0.b + arg_14_1.b, arg_14_0.a + arg_14_1.a)
+function Color.__add(a, b)
+	return Color.New(a.r + b.r, a.g + b.g, a.b + b.b, a.a + b.a)
 end
 
-function var_0_4.__sub(arg_15_0, arg_15_1)
-	return var_0_4.New(arg_15_0.r - arg_15_1.r, arg_15_0.g - arg_15_1.g, arg_15_0.b - arg_15_1.b, arg_15_0.a - arg_15_1.a)
+function Color.__sub(a, b)
+	return Color.New(a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a)
 end
 
-function var_0_4.__mul(arg_16_0, arg_16_1)
-	if var_0_2(arg_16_1) == "number" then
-		return var_0_4.New(arg_16_0.r * arg_16_1, arg_16_0.g * arg_16_1, arg_16_0.b * arg_16_1, arg_16_0.a * arg_16_1)
-	elseif getmetatable(arg_16_1) == var_0_4 then
-		return var_0_4.New(arg_16_0.r * arg_16_1.r, arg_16_0.g * arg_16_1.g, arg_16_0.b * arg_16_1.b, arg_16_0.a * arg_16_1.a)
+function Color.__mul(a, b)
+	if type(b) == "number" then
+		return Color.New(a.r * b, a.g * b, a.b * b, a.a * b)
+	elseif getmetatable(b) == Color then
+		return Color.New(a.r * b.r, a.g * b.g, a.b * b.b, a.a * b.a)
 	end
 end
 
-function var_0_4.__div(arg_17_0, arg_17_1)
-	return var_0_4.New(arg_17_0.r / arg_17_1, arg_17_0.g / arg_17_1, arg_17_0.b / arg_17_1, arg_17_0.a / arg_17_1)
+function Color.__div(a, d)
+	return Color.New(a.r / d, a.g / d, a.b / d, a.a / d)
 end
 
-function var_0_4.__eq(arg_18_0, arg_18_1)
-	return arg_18_0.r == arg_18_1.r and arg_18_0.g == arg_18_1.g and arg_18_0.b == arg_18_1.b and arg_18_0.a == arg_18_1.a
+function Color.__eq(a, b)
+	return a.r == b.r and a.g == b.g and a.b == b.b and a.a == b.a
 end
 
-function var_0_5.red()
-	return var_0_4.New(1, 0, 0, 1)
+function get.red()
+	return Color.New(1, 0, 0, 1)
 end
 
-function var_0_5.green()
-	return var_0_4.New(0, 1, 0, 1)
+function get.green()
+	return Color.New(0, 1, 0, 1)
 end
 
-function var_0_5.blue()
-	return var_0_4.New(0, 0, 1, 1)
+function get.blue()
+	return Color.New(0, 0, 1, 1)
 end
 
-function var_0_5.white()
-	return var_0_4.New(1, 1, 1, 1)
+function get.white()
+	return Color.New(1, 1, 1, 1)
 end
 
-function var_0_5.black()
-	return var_0_4.New(0, 0, 0, 1)
+function get.black()
+	return Color.New(0, 0, 0, 1)
 end
 
-function var_0_5.yellow()
-	return var_0_4.New(1, 0.9215686, 0.01568628, 1)
+function get.yellow()
+	return Color.New(1, 0.9215686, 0.01568628, 1)
 end
 
-function var_0_5.cyan()
-	return var_0_4.New(0, 1, 1, 1)
+function get.cyan()
+	return Color.New(0, 1, 1, 1)
 end
 
-function var_0_5.magenta()
-	return var_0_4.New(1, 0, 1, 1)
+function get.magenta()
+	return Color.New(1, 0, 1, 1)
 end
 
-function var_0_5.gray()
-	return var_0_4.New(0.5, 0.5, 0.5, 1)
+function get.gray()
+	return Color.New(0.5, 0.5, 0.5, 1)
 end
 
-function var_0_5.clear()
-	return var_0_4.New(0, 0, 0, 0)
+function get.clear()
+	return Color.New(0, 0, 0, 0)
 end
 
-function var_0_5.gamma(arg_29_0)
-	return var_0_4.New(var_0_3.LinearToGammaSpace(arg_29_0.r), var_0_3.LinearToGammaSpace(arg_29_0.g), var_0_3.LinearToGammaSpace(arg_29_0.b), arg_29_0.a)
+function get.gamma(c)
+	return Color.New(Mathf.LinearToGammaSpace(c.r), Mathf.LinearToGammaSpace(c.g), Mathf.LinearToGammaSpace(c.b), c.a)
 end
 
-function var_0_5.linear(arg_30_0)
-	return var_0_4.New(var_0_3.GammaToLinearSpace(arg_30_0.r), var_0_3.GammaToLinearSpace(arg_30_0.g), var_0_3.GammaToLinearSpace(arg_30_0.b), arg_30_0.a)
+function get.linear(c)
+	return Color.New(Mathf.GammaToLinearSpace(c.r), Mathf.GammaToLinearSpace(c.g), Mathf.GammaToLinearSpace(c.b), c.a)
 end
 
-function var_0_5.maxColorComponent(arg_31_0)
-	return var_0_3.Max(var_0_3.Max(arg_31_0.r, arg_31_0.g), arg_31_0.b)
+function get.maxColorComponent(c)
+	return Mathf.Max(Mathf.Max(c.r, c.g), c.b)
 end
 
-var_0_5.grayscale = var_0_4.GrayScale
-UnityEngine.Color = var_0_4
+get.grayscale = Color.GrayScale
+UnityEngine.Color = Color
 
-var_0_1(var_0_4, var_0_4)
+setmetatable(Color, Color)
 
-return var_0_4
+return Color

@@ -1,39 +1,38 @@
-﻿local var_0_0 = debug.getinfo
-local var_0_1 = error
-local var_0_2 = rawset
-local var_0_3 = rawget
-local var_0_4 = getmetatable(_G)
+﻿-- chunkname: @misc/strict.lua
 
-if var_0_4 == nil then
-	var_0_4 = {}
+local getinfo, error, rawset, rawget = debug.getinfo, error, rawset, rawget
+local mt = getmetatable(_G)
 
-	setmetatable(_G, var_0_4)
+if mt == nil then
+	mt = {}
+
+	setmetatable(_G, mt)
 end
 
-var_0_4.__declared = {}
+mt.__declared = {}
 
-function var_0_4.__newindex(arg_1_0, arg_1_1, arg_1_2)
-	if not var_0_4.__declared[arg_1_1] then
-		local var_1_0 = var_0_0(2, "S")
+function mt.__newindex(t, n, v)
+	if not mt.__declared[n] then
+		local info = getinfo(2, "S")
 
-		if var_1_0 and var_1_0.linedefined > 0 then
-			var_0_1("assign to undeclared variable '" .. arg_1_1 .. "'", 2)
+		if info and info.linedefined > 0 then
+			error("assign to undeclared variable '" .. n .. "'", 2)
 		end
 
-		var_0_4.__declared[arg_1_1] = true
+		mt.__declared[n] = true
 	end
 
-	var_0_2(arg_1_0, arg_1_1, arg_1_2)
+	rawset(t, n, v)
 end
 
-function var_0_4.__index(arg_2_0, arg_2_1)
-	if not var_0_4.__declared[arg_2_1] then
-		local var_2_0 = var_0_0(2, "S")
+function mt.__index(t, n)
+	if not mt.__declared[n] then
+		local info = getinfo(2, "S")
 
-		if var_2_0 and var_2_0.linedefined > 0 then
-			var_0_1("variable '" .. arg_2_1 .. "' is not declared", 2)
+		if info and info.linedefined > 0 then
+			error("variable '" .. n .. "' is not declared", 2)
 		end
 	end
 
-	return var_0_3(arg_2_0, arg_2_1)
+	return rawget(t, n)
 end

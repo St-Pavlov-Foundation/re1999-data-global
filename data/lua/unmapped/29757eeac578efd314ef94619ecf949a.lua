@@ -1,214 +1,216 @@
-﻿local var_0_0 = setmetatable
-local var_0_1 = {}
+﻿-- chunkname: @list.lua
 
-var_0_1.__index = var_0_1
+local setmetatable = setmetatable
+local list = {}
 
-function var_0_1.new(arg_1_0)
-	local var_1_0 = {
+list.__index = list
+
+function list:new()
+	local t = {
 		_next = 0,
 		length = 0,
 		_prev = 0
 	}
 
-	var_1_0._prev = var_1_0
-	var_1_0._next = var_1_0
+	t._prev = t
+	t._next = t
 
-	return var_0_0(var_1_0, var_0_1)
+	return setmetatable(t, list)
 end
 
-function var_0_1.clear(arg_2_0)
-	arg_2_0._next = arg_2_0
-	arg_2_0._prev = arg_2_0
-	arg_2_0.length = 0
+function list:clear()
+	self._next = self
+	self._prev = self
+	self.length = 0
 end
 
-function var_0_1.push(arg_3_0, arg_3_1)
-	local var_3_0 = {
+function list:push(value)
+	local node = {
 		_next = 0,
 		removed = false,
 		_prev = 0,
-		value = arg_3_1
+		value = value
 	}
 
-	arg_3_0._prev._next = var_3_0
-	var_3_0._next = arg_3_0
-	var_3_0._prev = arg_3_0._prev
-	arg_3_0._prev = var_3_0
-	arg_3_0.length = arg_3_0.length + 1
+	self._prev._next = node
+	node._next = self
+	node._prev = self._prev
+	self._prev = node
+	self.length = self.length + 1
 
-	return var_3_0
+	return node
 end
 
-function var_0_1.pushnode(arg_4_0, arg_4_1)
-	if not arg_4_1.removed then
+function list:pushnode(node)
+	if not node.removed then
 		return
 	end
 
-	arg_4_0._prev._next = arg_4_1
-	arg_4_1._next = arg_4_0
-	arg_4_1._prev = arg_4_0._prev
-	arg_4_0._prev = arg_4_1
-	arg_4_1.removed = false
-	arg_4_0.length = arg_4_0.length + 1
+	self._prev._next = node
+	node._next = self
+	node._prev = self._prev
+	self._prev = node
+	node.removed = false
+	self.length = self.length + 1
 end
 
-function var_0_1.pop(arg_5_0)
-	local var_5_0 = arg_5_0._prev
+function list:pop()
+	local _prev = self._prev
 
-	arg_5_0:remove(var_5_0)
+	self:remove(_prev)
 
-	return var_5_0.value
+	return _prev.value
 end
 
-function var_0_1.unshift(arg_6_0, arg_6_1)
-	local var_6_0 = {
+function list:unshift(v)
+	local node = {
 		_next = 0,
 		removed = false,
 		_prev = 0,
-		value = arg_6_1
+		value = v
 	}
 
-	arg_6_0._next._prev = var_6_0
-	var_6_0._prev = arg_6_0
-	var_6_0._next = arg_6_0._next
-	arg_6_0._next = var_6_0
-	arg_6_0.length = arg_6_0.length + 1
+	self._next._prev = node
+	node._prev = self
+	node._next = self._next
+	self._next = node
+	self.length = self.length + 1
 
-	return var_6_0
+	return node
 end
 
-function var_0_1.shift(arg_7_0)
-	local var_7_0 = arg_7_0._next
+function list:shift()
+	local _next = self._next
 
-	arg_7_0:remove(var_7_0)
+	self:remove(_next)
 
-	return var_7_0.value
+	return _next.value
 end
 
-function var_0_1.remove(arg_8_0, arg_8_1)
-	if arg_8_1.removed then
+function list:remove(iter)
+	if iter.removed then
 		return
 	end
 
-	local var_8_0 = arg_8_1._prev
-	local var_8_1 = arg_8_1._next
+	local _prev = iter._prev
+	local _next = iter._next
 
-	var_8_1._prev = var_8_0
-	var_8_0._next = var_8_1
-	arg_8_0.length = math.max(0, arg_8_0.length - 1)
-	arg_8_1.removed = true
+	_next._prev = _prev
+	_prev._next = _next
+	self.length = math.max(0, self.length - 1)
+	iter.removed = true
 end
 
-function var_0_1.find(arg_9_0, arg_9_1, arg_9_2)
-	arg_9_2 = arg_9_2 or arg_9_0
+function list:find(v, iter)
+	iter = iter or self
 
 	repeat
-		if arg_9_1 == arg_9_2.value then
-			return arg_9_2
+		if v == iter.value then
+			return iter
 		else
-			arg_9_2 = arg_9_2._next
+			iter = iter._next
 		end
-	until arg_9_2 == arg_9_0
+	until iter == self
 
 	return nil
 end
 
-function var_0_1.findlast(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_2 = arg_10_2 or arg_10_0
+function list:findlast(v, iter)
+	iter = iter or self
 
 	repeat
-		if arg_10_1 == arg_10_2.value then
-			return arg_10_2
+		if v == iter.value then
+			return iter
 		end
 
-		arg_10_2 = arg_10_2._prev
-	until arg_10_2 == arg_10_0
+		iter = iter._prev
+	until iter == self
 
 	return nil
 end
 
-function var_0_1.next(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1._next
+function list:next(iter)
+	local _next = iter._next
 
-	if var_11_0 ~= arg_11_0 then
-		return var_11_0, var_11_0.value
-	end
-
-	return nil
-end
-
-function var_0_1.prev(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1._prev
-
-	if var_12_0 ~= arg_12_0 then
-		return var_12_0, var_12_0.value
+	if _next ~= self then
+		return _next, _next.value
 	end
 
 	return nil
 end
 
-function var_0_1.erase(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:find(arg_13_1)
+function list:prev(iter)
+	local _prev = iter._prev
 
-	if var_13_0 then
-		arg_13_0:remove(var_13_0)
+	if _prev ~= self then
+		return _prev, _prev.value
+	end
+
+	return nil
+end
+
+function list:erase(v)
+	local iter = self:find(v)
+
+	if iter then
+		self:remove(iter)
 	end
 end
 
-function var_0_1.insert(arg_14_0, arg_14_1, arg_14_2)
-	if not arg_14_2 then
-		return arg_14_0:push(arg_14_1)
+function list:insert(v, iter)
+	if not iter then
+		return self:push(v)
 	end
 
-	local var_14_0 = {
+	local node = {
 		_next = 0,
 		removed = false,
 		_prev = 0,
-		value = arg_14_1
+		value = v
 	}
 
-	if arg_14_2._next then
-		arg_14_2._next._prev = var_14_0
-		var_14_0._next = arg_14_2._next
+	if iter._next then
+		iter._next._prev = node
+		node._next = iter._next
 	else
-		arg_14_0.last = var_14_0
+		self.last = node
 	end
 
-	var_14_0._prev = arg_14_2
-	arg_14_2._next = var_14_0
-	arg_14_0.length = arg_14_0.length + 1
+	node._prev = iter
+	iter._next = node
+	self.length = self.length + 1
 
-	return var_14_0
+	return node
 end
 
-function var_0_1.head(arg_15_0)
-	return arg_15_0._next.value
+function list:head()
+	return self._next.value
 end
 
-function var_0_1.tail(arg_16_0)
-	return arg_16_0._prev.value
+function list:tail()
+	return self._prev.value
 end
 
-function var_0_1.clone(arg_17_0)
-	local var_17_0 = var_0_1:new()
+function list:clone()
+	local t = list:new()
 
-	for iter_17_0, iter_17_1 in var_0_1.next, arg_17_0, arg_17_0 do
-		var_17_0:push(iter_17_1)
+	for i, v in list.next, self, self do
+		t:push(v)
 	end
 
-	return var_17_0
+	return t
 end
 
-function ilist(arg_18_0)
-	return var_0_1.next, arg_18_0, arg_18_0
+function ilist(_list)
+	return list.next, _list, _list
 end
 
-function rilist(arg_19_0)
-	return var_0_1.prev, arg_19_0, arg_19_0
+function rilist(_list)
+	return list.prev, _list, _list
 end
 
-var_0_0(var_0_1, {
-	__call = var_0_1.new
+setmetatable(list, {
+	__call = list.new
 })
 
-return var_0_1
+return list

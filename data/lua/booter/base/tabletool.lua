@@ -1,125 +1,136 @@
-﻿module("booter.base.tabletool", package.seeall)
+﻿-- chunkname: @booter/base/tabletool.lua
 
-local var_0_0 = {
-	copy = function(arg_1_0)
-		local var_1_0 = {}
+module("booter.base.tabletool", package.seeall)
 
-		for iter_1_0, iter_1_1 in pairs(arg_1_0) do
-			var_1_0[iter_1_0] = iter_1_1
-		end
+local tabletool = {}
 
-		return var_1_0
-	end,
-	indexOf = function(arg_2_0, arg_2_1, arg_2_2)
-		for iter_2_0 = arg_2_2 or 1, #arg_2_0 do
-			if arg_2_0[iter_2_0] == arg_2_1 then
-				return iter_2_0
-			end
-		end
-	end,
-	removeValue = function(arg_3_0, arg_3_1)
-		for iter_3_0, iter_3_1 in ipairs(arg_3_0) do
-			if iter_3_1 == arg_3_1 then
-				table.remove(arg_3_0, iter_3_0)
+function tabletool.copy(sourceTb)
+	local destTb = {}
 
-				return
-			end
-		end
-	end,
-	addValues = function(arg_4_0, arg_4_1)
-		if arg_4_0 and arg_4_1 then
-			for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
-				table.insert(arg_4_0, iter_4_1)
-			end
-		end
-	end,
-	clear = function(arg_5_0)
-		for iter_5_0, iter_5_1 in pairs(arg_5_0) do
-			arg_5_0[iter_5_0] = nil
-		end
-	end,
-	revert = function(arg_6_0)
-		if not arg_6_0 then
-			return
-		end
-
-		local var_6_0 = 1
-		local var_6_1 = #arg_6_0
-
-		while var_6_0 < var_6_1 do
-			arg_6_0[var_6_1], arg_6_0[var_6_0] = arg_6_0[var_6_0], arg_6_0[var_6_1]
-			var_6_0 = var_6_0 + 1
-			var_6_1 = var_6_1 - 1
-		end
-	end,
-	len = function(arg_7_0)
-		local var_7_0 = 0
-
-		for iter_7_0, iter_7_1 in pairs(arg_7_0) do
-			if arg_7_0[iter_7_0] ~= nil then
-				var_7_0 = var_7_0 + 1
-			end
-		end
-
-		return var_7_0
-	end,
-	pureTable = function(arg_8_0, arg_8_1)
-		local var_8_0 = {
-			__cname = arg_8_0
-		}
-
-		var_8_0.__index = var_8_0
-
-		if arg_8_1 then
-			var_8_0.__newindex = arg_8_1.__newindex
-		else
-			function var_8_0.__newindex(arg_9_0, arg_9_1, arg_9_2)
-				if type(arg_9_2) == "userdata" or type(arg_9_2) == "function" then
-					error("pureTable instance object field not support userdata or function,key=" .. arg_9_1)
-				else
-					rawset(arg_9_0, arg_9_1, arg_9_2)
-				end
-			end
-		end
-
-		function var_8_0.ctor(arg_10_0)
-			return
-		end
-
-		function var_8_0.New()
-			local var_11_0 = {
-				__cname = arg_8_0
-			}
-
-			var_8_0.ctor(var_11_0)
-			setmetatable(var_11_0, var_8_0)
-
-			return var_11_0
-		end
-
-		setmetatable(var_8_0, {
-			__index = arg_8_1,
-			__newindex = function(arg_12_0, arg_12_1, arg_12_2)
-				if type(arg_12_2) ~= "function" then
-					error("pureTable table only support function!key=" .. arg_12_1)
-				else
-					rawset(arg_12_0, arg_12_1, arg_12_2)
-				end
-			end
-		})
-
-		return var_8_0
-	end,
-	getDictJsonStr = function(arg_13_0)
-		local var_13_0 = {}
-
-		for iter_13_0, iter_13_1 in pairs(arg_13_0) do
-			table.insert(var_13_0, cjson.encode(iter_13_0) .. ":" .. cjson.encode(iter_13_1))
-		end
-
-		return string.format("{%s}", table.concat(var_13_0, ","))
+	for k, v in pairs(sourceTb) do
+		destTb[k] = v
 	end
-}
 
-setGlobal("pureTable", var_0_0.pureTable)
-setGlobal("tabletool", var_0_0)
+	return destTb
+end
+
+function tabletool.indexOf(array, value, begin)
+	for i = begin or 1, #array do
+		if array[i] == value then
+			return i
+		end
+	end
+end
+
+function tabletool.removeValue(array, value)
+	for i, v in ipairs(array) do
+		if v == value then
+			table.remove(array, i)
+
+			return
+		end
+	end
+end
+
+function tabletool.addValues(targetArray, addArray)
+	if targetArray and addArray then
+		for _, value in ipairs(addArray) do
+			table.insert(targetArray, value)
+		end
+	end
+end
+
+function tabletool.clear(tb)
+	for k, _ in pairs(tb) do
+		tb[k] = nil
+	end
+end
+
+function tabletool.revert(array)
+	if not array then
+		return
+	end
+
+	local low, high = 1, #array
+
+	while low < high do
+		local temp = array[low]
+
+		array[low] = array[high]
+		array[high] = temp
+		low = low + 1
+		high = high - 1
+	end
+end
+
+function tabletool.len(tb)
+	local count = 0
+
+	for k, v in pairs(tb) do
+		if tb[k] ~= nil then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+function tabletool.pureTable(tableName, super)
+	local M = {}
+
+	M.__cname = tableName
+	M.__index = M
+
+	if super then
+		M.__newindex = super.__newindex
+	else
+		function M.__newindex(t, key, value)
+			if type(value) == "userdata" or type(value) == "function" then
+				error("pureTable instance object field not support userdata or function,key=" .. key)
+			else
+				rawset(t, key, value)
+			end
+		end
+	end
+
+	function M.ctor(object)
+		return
+	end
+
+	function M.New()
+		local object = {}
+
+		object.__cname = tableName
+
+		M.ctor(object)
+		setmetatable(object, M)
+
+		return object
+	end
+
+	setmetatable(M, {
+		__index = super,
+		__newindex = function(t, key, value)
+			if type(value) ~= "function" then
+				error("pureTable table only support function!key=" .. key)
+			else
+				rawset(t, key, value)
+			end
+		end
+	})
+
+	return M
+end
+
+function tabletool.getDictJsonStr(dictTable)
+	local temp = {}
+
+	for k, v in pairs(dictTable) do
+		table.insert(temp, cjson.encode(k) .. ":" .. cjson.encode(v))
+	end
+
+	return string.format("{%s}", table.concat(temp, ","))
+end
+
+setGlobal("pureTable", tabletool.pureTable)
+setGlobal("tabletool", tabletool)

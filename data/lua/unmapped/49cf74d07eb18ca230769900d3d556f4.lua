@@ -1,87 +1,89 @@
-﻿local var_0_0 = pcall
-local var_0_1 = pairs
-local var_0_2 = error
-local var_0_3 = rawset
-local var_0_4 = rawget
-local var_0_5 = string
-local var_0_6 = tolua_tag
-local var_0_7 = getmetatable
-local var_0_8
-local var_0_9 = require("System.Injection.InjectionBridgeInfo")
+﻿-- chunkname: @System/Injection/LuaInjectionStation.lua
 
-local function var_0_10(arg_1_0)
-	local var_1_0 = var_0_7(arg_1_0)
+local pcall = pcall
+local pairs = pairs
+local error = error
+local rawset = rawset
+local rawget = rawget
+local string = string
+local tolua_tag = tolua_tag
+local getmetatable = getmetatable
+local CSLuaInjectStation
+local bridgeInfo = require("System.Injection.InjectionBridgeInfo")
 
-	if var_0_4(var_1_0, var_0_6) ~= 1 then
-		var_0_2("Can't Inject")
+local function Check(csModule)
+	local existmt = getmetatable(csModule)
+
+	if rawget(existmt, tolua_tag) ~= 1 then
+		error("Can't Inject")
 	end
 
-	return var_1_0
+	return existmt
 end
 
-local function var_0_11()
-	if var_0_8 == nil then
-		var_0_8 = LuaInterface.LuaInjectionStation
+local function CacheCSLuaInjectStation()
+	if CSLuaInjectStation == nil then
+		CSLuaInjectStation = LuaInterface.LuaInjectionStation
 	end
 end
 
-local function var_0_12(arg_3_0, arg_3_1)
-	local var_3_0 = arg_3_0.__index
-	local var_3_1 = {}
+local function UpdateFunctionReference(metatable, injectInfo)
+	local oldIndexMetamethod = metatable.__index
+	local newMethodGroup = {}
 
-	for iter_3_0, iter_3_1 in var_0_1(arg_3_1) do
-		local var_3_2, var_3_3 = iter_3_1()
+	for funcName, infoPipeline in pairs(injectInfo) do
+		local injectFunction, injectFlag = infoPipeline()
 
-		if var_3_3 == LuaInterface.InjectType.Replace or var_3_3 == LuaInterface.InjectType.ReplaceWithPostInvokeBase or var_3_3 == LuaInterface.InjectType.ReplaceWithPreInvokeBase then
-			var_0_3(var_3_1, iter_3_0, var_3_2)
+		if injectFlag == LuaInterface.InjectType.Replace or injectFlag == LuaInterface.InjectType.ReplaceWithPostInvokeBase or injectFlag == LuaInterface.InjectType.ReplaceWithPreInvokeBase then
+			rawset(newMethodGroup, funcName, injectFunction)
 		end
 	end
 
-	function arg_3_0.__index(arg_4_0, arg_4_1)
-		local var_4_0 = var_0_4(var_3_1, arg_4_1)
+	function metatable.__index(t, k)
+		local injectFunc = rawget(newMethodGroup, k)
 
-		if var_4_0 ~= nil then
-			return var_4_0
+		if injectFunc ~= nil then
+			return injectFunc
 		end
 
-		local var_4_1, var_4_2 = var_0_0(var_3_0, arg_4_0, arg_4_1)
+		local status, result = pcall(oldIndexMetamethod, t, k)
 
-		if var_4_1 then
-			return var_4_2
+		if status then
+			return result
 		else
-			var_0_2(var_4_2)
+			error(result)
 
 			return nil
 		end
 	end
 end
 
-function InjectByModule(arg_5_0, arg_5_1)
-	local var_5_0 = var_0_10(arg_5_0)
-	local var_5_1 = var_5_0[".name"]
+function InjectByModule(csModule, injectInfo)
+	local mt = Check(csModule)
+	local moduleName = mt[".name"]
 
-	InjectByName(var_5_1, arg_5_1)
-	var_0_12(var_5_0, arg_5_1)
+	InjectByName(moduleName, injectInfo)
+	UpdateFunctionReference(mt, injectInfo)
 end
 
-function InjectByName(arg_6_0, arg_6_1)
-	var_0_11()
+function InjectByName(moduleName, injectInfo)
+	CacheCSLuaInjectStation()
 
-	local var_6_0 = var_0_4(var_0_9, arg_6_0)
+	local moduleBridgeInfo = rawget(bridgeInfo, moduleName)
 
-	if var_6_0 == nil then
-		var_0_2(var_0_5.format("Module %s Can't Inject", arg_6_0))
+	if moduleBridgeInfo == nil then
+		error(string.format("Module %s Can't Inject", moduleName))
 	end
 
-	for iter_6_0, iter_6_1 in var_0_1(arg_6_1) do
-		local var_6_1, var_6_2 = iter_6_1()
-		local var_6_3 = var_0_4(var_6_0, iter_6_0)
+	for funcName, infoPipeline in pairs(injectInfo) do
+		local injectFunction, injectFlag = infoPipeline()
+		local injectIndex = rawget(moduleBridgeInfo, funcName)
 
-		if var_6_3 == nil then
-			var_0_2(var_0_5.format("Function %s Doesn't Exist In Module %s", iter_6_0, arg_6_0))
+		if injectIndex == nil then
+			error(string.format("Function %s Doesn't Exist In Module %s", funcName, moduleName))
 		end
 
-		var_0_8.CacheInjectFunction(var_6_3, var_6_2:ToInt(), var_6_1)
+		CSLuaInjectStation.CacheInjectFunction(injectIndex, injectFlag:ToInt(), injectFunction)
 	end
 end
 

@@ -1,457 +1,461 @@
-﻿local var_0_0 = _G
-local var_0_1 = require("table")
-local var_0_2 = require("string")
-local var_0_3 = require("math")
-local var_0_4 = require("socket")
-local var_0_5 = require("socket.url")
-local var_0_6 = require("socket.tp")
-local var_0_7 = require("ltn12")
+﻿-- chunkname: @socket/ftp.lua
 
-var_0_4.ftp = {}
+local base = _G
+local table = require("table")
+local string = require("string")
+local math = require("math")
+local socket = require("socket")
+local url = require("socket.url")
+local tp = require("socket.tp")
+local ltn12 = require("ltn12")
 
-local var_0_8 = var_0_4.ftp
+socket.ftp = {}
 
-var_0_8.TIMEOUT = 60
+local _M = socket.ftp
 
-local var_0_9 = 21
+_M.TIMEOUT = 60
 
-var_0_8.USER = "ftp"
-var_0_8.PASSWORD = "anonymous@anonymous.org"
+local PORT = 21
 
-local var_0_10 = {
+_M.USER = "ftp"
+_M.PASSWORD = "anonymous@anonymous.org"
+
+local metat = {
 	__index = {}
 }
 
-function var_0_8.open(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = var_0_4.try(var_0_6.connect(arg_1_0, arg_1_1 or var_0_9, var_0_8.TIMEOUT, arg_1_2))
-	local var_1_1 = var_0_0.setmetatable({
-		tp = var_1_0
-	}, var_0_10)
+function _M.open(server, port, create)
+	local tp = socket.try(tp.connect(server, port or PORT, _M.TIMEOUT, create))
+	local f = base.setmetatable({
+		tp = tp
+	}, metat)
 
-	var_1_1.try = var_0_4.newtry(function()
-		var_1_1:close()
+	f.try = socket.newtry(function()
+		f:close()
 	end)
 
-	return var_1_1
+	return f
 end
 
-function var_0_10.__index.portconnect(arg_3_0)
-	arg_3_0.try(arg_3_0.server:settimeout(var_0_8.TIMEOUT))
+function metat.__index:portconnect()
+	self.try(self.server:settimeout(_M.TIMEOUT))
 
-	arg_3_0.data = arg_3_0.try(arg_3_0.server:accept())
+	self.data = self.try(self.server:accept())
 
-	arg_3_0.try(arg_3_0.data:settimeout(var_0_8.TIMEOUT))
+	self.try(self.data:settimeout(_M.TIMEOUT))
 end
 
-function var_0_10.__index.pasvconnect(arg_4_0)
-	arg_4_0.data = arg_4_0.try(var_0_4.tcp())
+function metat.__index:pasvconnect()
+	self.data = self.try(socket.tcp())
 
-	arg_4_0.try(arg_4_0.data:settimeout(var_0_8.TIMEOUT))
-	arg_4_0.try(arg_4_0.data:connect(arg_4_0.pasvt.address, arg_4_0.pasvt.port))
+	self.try(self.data:settimeout(_M.TIMEOUT))
+	self.try(self.data:connect(self.pasvt.address, self.pasvt.port))
 end
 
-function var_0_10.__index.login(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0.try(arg_5_0.tp:command("user", arg_5_1 or var_0_8.USER))
+function metat.__index:login(user, password)
+	self.try(self.tp:command("user", user or _M.USER))
 
-	local var_5_0, var_5_1 = arg_5_0.try(arg_5_0.tp:check({
+	local code, reply = self.try(self.tp:check({
 		"2..",
 		331
 	}))
 
-	if var_5_0 == 331 then
-		arg_5_0.try(arg_5_0.tp:command("pass", arg_5_2 or var_0_8.PASSWORD))
-		arg_5_0.try(arg_5_0.tp:check("2.."))
+	if code == 331 then
+		self.try(self.tp:command("pass", password or _M.PASSWORD))
+		self.try(self.tp:check("2.."))
 	end
 
 	return 1
 end
 
-function var_0_10.__index.pasv(arg_6_0)
-	arg_6_0.try(arg_6_0.tp:command("pasv"))
+function metat.__index:pasv()
+	self.try(self.tp:command("pasv"))
 
-	local var_6_0, var_6_1 = arg_6_0.try(arg_6_0.tp:check("2.."))
-	local var_6_2 = "(%d+)%D(%d+)%D(%d+)%D(%d+)%D(%d+)%D(%d+)"
-	local var_6_3, var_6_4, var_6_5, var_6_6, var_6_7, var_6_8 = var_0_4.skip(2, var_0_2.find(var_6_1, var_6_2))
+	local code, reply = self.try(self.tp:check("2.."))
+	local pattern = "(%d+)%D(%d+)%D(%d+)%D(%d+)%D(%d+)%D(%d+)"
+	local a, b, c, d, p1, p2 = socket.skip(2, string.find(reply, pattern))
 
-	arg_6_0.try(var_6_3 and var_6_4 and var_6_5 and var_6_6 and var_6_7 and var_6_8, var_6_1)
+	self.try(a and b and c and d and p1 and p2, reply)
 
-	arg_6_0.pasvt = {
-		address = var_0_2.format("%d.%d.%d.%d", var_6_3, var_6_4, var_6_5, var_6_6),
-		port = var_6_7 * 256 + var_6_8
+	self.pasvt = {
+		address = string.format("%d.%d.%d.%d", a, b, c, d),
+		port = p1 * 256 + p2
 	}
 
-	if arg_6_0.server then
-		arg_6_0.server:close()
+	if self.server then
+		self.server:close()
 
-		arg_6_0.server = nil
+		self.server = nil
 	end
 
-	return arg_6_0.pasvt.address, arg_6_0.pasvt.port
+	return self.pasvt.address, self.pasvt.port
 end
 
-function var_0_10.__index.epsv(arg_7_0)
-	arg_7_0.try(arg_7_0.tp:command("epsv"))
+function metat.__index:epsv()
+	self.try(self.tp:command("epsv"))
 
-	local var_7_0, var_7_1 = arg_7_0.try(arg_7_0.tp:check("229"))
-	local var_7_2 = "%((.)(.-)%1(.-)%1(.-)%1%)"
-	local var_7_3, var_7_4, var_7_5, var_7_6 = var_0_2.match(var_7_1, var_7_2)
+	local code, reply = self.try(self.tp:check("229"))
+	local pattern = "%((.)(.-)%1(.-)%1(.-)%1%)"
+	local d, prt, address, port = string.match(reply, pattern)
 
-	arg_7_0.try(var_7_6, "invalid epsv response")
+	self.try(port, "invalid epsv response")
 
-	arg_7_0.pasvt = {
-		address = arg_7_0.tp:getpeername(),
-		port = var_7_6
+	self.pasvt = {
+		address = self.tp:getpeername(),
+		port = port
 	}
 
-	if arg_7_0.server then
-		arg_7_0.server:close()
+	if self.server then
+		self.server:close()
 
-		arg_7_0.server = nil
+		self.server = nil
 	end
 
-	return arg_7_0.pasvt.address, arg_7_0.pasvt.port
+	return self.pasvt.address, self.pasvt.port
 end
 
-function var_0_10.__index.port(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0.pasvt = nil
+function metat.__index:port(address, port)
+	self.pasvt = nil
 
-	if not arg_8_1 then
-		arg_8_1, arg_8_2 = arg_8_0.try(arg_8_0.tp:getsockname())
-		arg_8_0.server = arg_8_0.try(var_0_4.bind(arg_8_1, 0))
-		arg_8_1, arg_8_2 = arg_8_0.try(arg_8_0.server:getsockname())
+	if not address then
+		address, port = self.try(self.tp:getsockname())
+		self.server = self.try(socket.bind(address, 0))
+		address, port = self.try(self.server:getsockname())
 
-		arg_8_0.try(arg_8_0.server:settimeout(var_0_8.TIMEOUT))
+		self.try(self.server:settimeout(_M.TIMEOUT))
 	end
 
-	local var_8_0 = arg_8_2 % 256
-	local var_8_1 = (arg_8_2 - var_8_0) / 256
-	local var_8_2 = var_0_2.gsub(var_0_2.format("%s,%d,%d", arg_8_1, var_8_1, var_8_0), "%.", ",")
+	local pl = port % 256
+	local ph = (port - pl) / 256
+	local arg = string.gsub(string.format("%s,%d,%d", address, ph, pl), "%.", ",")
 
-	arg_8_0.try(arg_8_0.tp:command("port", var_8_2))
-	arg_8_0.try(arg_8_0.tp:check("2.."))
+	self.try(self.tp:command("port", arg))
+	self.try(self.tp:check("2.."))
 
 	return 1
 end
 
-function var_0_10.__index.eprt(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	arg_9_0.pasvt = nil
+function metat.__index:eprt(family, address, port)
+	self.pasvt = nil
 
-	if not arg_9_2 then
-		arg_9_2, arg_9_3 = arg_9_0.try(arg_9_0.tp:getsockname())
-		arg_9_0.server = arg_9_0.try(var_0_4.bind(arg_9_2, 0))
-		arg_9_2, arg_9_3 = arg_9_0.try(arg_9_0.server:getsockname())
+	if not address then
+		address, port = self.try(self.tp:getsockname())
+		self.server = self.try(socket.bind(address, 0))
+		address, port = self.try(self.server:getsockname())
 
-		arg_9_0.try(arg_9_0.server:settimeout(var_0_8.TIMEOUT))
+		self.try(self.server:settimeout(_M.TIMEOUT))
 	end
 
-	local var_9_0 = var_0_2.format("|%s|%s|%d|", arg_9_1, arg_9_2, arg_9_3)
+	local arg = string.format("|%s|%s|%d|", family, address, port)
 
-	arg_9_0.try(arg_9_0.tp:command("eprt", var_9_0))
-	arg_9_0.try(arg_9_0.tp:check("2.."))
+	self.try(self.tp:command("eprt", arg))
+	self.try(self.tp:check("2.."))
 
 	return 1
 end
 
-function var_0_10.__index.send(arg_10_0, arg_10_1)
-	arg_10_0.try(arg_10_0.pasvt or arg_10_0.server, "need port or pasv first")
+function metat.__index:send(sendt)
+	self.try(self.pasvt or self.server, "need port or pasv first")
 
-	if arg_10_0.pasvt then
-		arg_10_0:pasvconnect()
+	if self.pasvt then
+		self:pasvconnect()
 	end
 
-	local var_10_0 = arg_10_1.argument or var_0_5.unescape(var_0_2.gsub(arg_10_1.path or "", "^[/\\]", ""))
+	local argument = sendt.argument or url.unescape(string.gsub(sendt.path or "", "^[/\\]", ""))
 
-	if var_10_0 == "" then
-		var_10_0 = nil
+	if argument == "" then
+		argument = nil
 	end
 
-	local var_10_1 = arg_10_1.command or "stor"
+	local command = sendt.command or "stor"
 
-	arg_10_0.try(arg_10_0.tp:command(var_10_1, var_10_0))
+	self.try(self.tp:command(command, argument))
 
-	local var_10_2, var_10_3 = arg_10_0.try(arg_10_0.tp:check({
+	local code, reply = self.try(self.tp:check({
 		"2..",
 		"1.."
 	}))
 
-	if not arg_10_0.pasvt then
-		arg_10_0:portconnect()
+	if not self.pasvt then
+		self:portconnect()
 	end
 
-	local var_10_4 = arg_10_1.step or var_0_7.pump.step
-	local var_10_5 = {
-		arg_10_0.tp
+	local step = sendt.step or ltn12.pump.step
+	local readt = {
+		self.tp
 	}
 
-	local function var_10_6(arg_11_0, arg_11_1)
-		if var_0_4.select(var_10_5, nil, 0)[var_0_6] then
-			var_10_2 = arg_10_0.try(arg_10_0.tp:check("2.."))
+	local function checkstep(src, snk)
+		local readyt = socket.select(readt, nil, 0)
+
+		if readyt[tp] then
+			code = self.try(self.tp:check("2.."))
 		end
 
-		return var_10_4(arg_11_0, arg_11_1)
+		return step(src, snk)
 	end
 
-	local var_10_7 = var_0_4.sink("close-when-done", arg_10_0.data)
+	local sink = socket.sink("close-when-done", self.data)
 
-	arg_10_0.try(var_0_7.pump.all(arg_10_1.source, var_10_7, var_10_6))
+	self.try(ltn12.pump.all(sendt.source, sink, checkstep))
 
-	if var_0_2.find(var_10_2, "1..") then
-		arg_10_0.try(arg_10_0.tp:check("2.."))
+	if string.find(code, "1..") then
+		self.try(self.tp:check("2.."))
 	end
 
-	arg_10_0.data:close()
+	self.data:close()
 
-	local var_10_8 = var_0_4.skip(1, arg_10_0.data:getstats())
+	local sent = socket.skip(1, self.data:getstats())
 
-	arg_10_0.data = nil
+	self.data = nil
 
-	return var_10_8
+	return sent
 end
 
-function var_0_10.__index.receive(arg_12_0, arg_12_1)
-	arg_12_0.try(arg_12_0.pasvt or arg_12_0.server, "need port or pasv first")
+function metat.__index:receive(recvt)
+	self.try(self.pasvt or self.server, "need port or pasv first")
 
-	if arg_12_0.pasvt then
-		arg_12_0:pasvconnect()
+	if self.pasvt then
+		self:pasvconnect()
 	end
 
-	local var_12_0 = arg_12_1.argument or var_0_5.unescape(var_0_2.gsub(arg_12_1.path or "", "^[/\\]", ""))
+	local argument = recvt.argument or url.unescape(string.gsub(recvt.path or "", "^[/\\]", ""))
 
-	if var_12_0 == "" then
-		var_12_0 = nil
+	if argument == "" then
+		argument = nil
 	end
 
-	local var_12_1 = arg_12_1.command or "retr"
+	local command = recvt.command or "retr"
 
-	arg_12_0.try(arg_12_0.tp:command(var_12_1, var_12_0))
+	self.try(self.tp:command(command, argument))
 
-	local var_12_2, var_12_3 = arg_12_0.try(arg_12_0.tp:check({
+	local code, reply = self.try(self.tp:check({
 		"1..",
 		"2.."
 	}))
 
-	if var_12_2 >= 200 and var_12_2 <= 299 then
-		arg_12_1.sink(var_12_3)
+	if code >= 200 and code <= 299 then
+		recvt.sink(reply)
 
 		return 1
 	end
 
-	if not arg_12_0.pasvt then
-		arg_12_0:portconnect()
+	if not self.pasvt then
+		self:portconnect()
 	end
 
-	local var_12_4 = var_0_4.source("until-closed", arg_12_0.data)
-	local var_12_5 = arg_12_1.step or var_0_7.pump.step
+	local source = socket.source("until-closed", self.data)
+	local step = recvt.step or ltn12.pump.step
 
-	arg_12_0.try(var_0_7.pump.all(var_12_4, arg_12_1.sink, var_12_5))
+	self.try(ltn12.pump.all(source, recvt.sink, step))
 
-	if var_0_2.find(var_12_2, "1..") then
-		arg_12_0.try(arg_12_0.tp:check("2.."))
+	if string.find(code, "1..") then
+		self.try(self.tp:check("2.."))
 	end
 
-	arg_12_0.data:close()
+	self.data:close()
 
-	arg_12_0.data = nil
-
-	return 1
-end
-
-function var_0_10.__index.cwd(arg_13_0, arg_13_1)
-	arg_13_0.try(arg_13_0.tp:command("cwd", arg_13_1))
-	arg_13_0.try(arg_13_0.tp:check(250))
+	self.data = nil
 
 	return 1
 end
 
-function var_0_10.__index.type(arg_14_0, arg_14_1)
-	arg_14_0.try(arg_14_0.tp:command("type", arg_14_1))
-	arg_14_0.try(arg_14_0.tp:check(200))
+function metat.__index:cwd(dir)
+	self.try(self.tp:command("cwd", dir))
+	self.try(self.tp:check(250))
 
 	return 1
 end
 
-function var_0_10.__index.greet(arg_15_0)
-	local var_15_0 = arg_15_0.try(arg_15_0.tp:check({
+function metat.__index:type(type)
+	self.try(self.tp:command("type", type))
+	self.try(self.tp:check(200))
+
+	return 1
+end
+
+function metat.__index:greet()
+	local code = self.try(self.tp:check({
 		"1..",
 		"2.."
 	}))
 
-	if var_0_2.find(var_15_0, "1..") then
-		arg_15_0.try(arg_15_0.tp:check("2.."))
+	if string.find(code, "1..") then
+		self.try(self.tp:check("2.."))
 	end
 
 	return 1
 end
 
-function var_0_10.__index.quit(arg_16_0)
-	arg_16_0.try(arg_16_0.tp:command("quit"))
-	arg_16_0.try(arg_16_0.tp:check("2.."))
+function metat.__index:quit()
+	self.try(self.tp:command("quit"))
+	self.try(self.tp:check("2.."))
 
 	return 1
 end
 
-function var_0_10.__index.close(arg_17_0)
-	if arg_17_0.data then
-		arg_17_0.data:close()
+function metat.__index:close()
+	if self.data then
+		self.data:close()
 	end
 
-	if arg_17_0.server then
-		arg_17_0.server:close()
+	if self.server then
+		self.server:close()
 	end
 
-	return arg_17_0.tp:close()
+	return self.tp:close()
 end
 
-local function var_0_11(arg_18_0)
-	if arg_18_0.url then
-		local var_18_0 = var_0_5.parse(arg_18_0.url)
+local function override(t)
+	if t.url then
+		local u = url.parse(t.url)
 
-		for iter_18_0, iter_18_1 in var_0_0.pairs(arg_18_0) do
-			var_18_0[iter_18_0] = iter_18_1
+		for i, v in base.pairs(t) do
+			u[i] = v
 		end
 
-		return var_18_0
+		return u
 	else
-		return arg_18_0
+		return t
 	end
 end
 
-local function var_0_12(arg_19_0)
-	arg_19_0 = var_0_11(arg_19_0)
+local function tput(putt)
+	putt = override(putt)
 
-	var_0_4.try(arg_19_0.host, "missing hostname")
+	socket.try(putt.host, "missing hostname")
 
-	local var_19_0 = var_0_8.open(arg_19_0.host, arg_19_0.port, arg_19_0.create)
+	local f = _M.open(putt.host, putt.port, putt.create)
 
-	var_19_0:greet()
-	var_19_0:login(arg_19_0.user, arg_19_0.password)
+	f:greet()
+	f:login(putt.user, putt.password)
 
-	if arg_19_0.type then
-		var_19_0:type(arg_19_0.type)
+	if putt.type then
+		f:type(putt.type)
 	end
 
-	var_19_0:epsv()
+	f:epsv()
 
-	local var_19_1 = var_19_0:send(arg_19_0)
+	local sent = f:send(putt)
 
-	var_19_0:quit()
-	var_19_0:close()
+	f:quit()
+	f:close()
 
-	return var_19_1
+	return sent
 end
 
-local var_0_13 = {
+local default = {
 	scheme = "ftp",
 	path = "/"
 }
 
-local function var_0_14(arg_20_0)
-	local var_20_0 = var_0_4.try(var_0_5.parse(arg_20_0, var_0_13))
+local function genericform(u)
+	local t = socket.try(url.parse(u, default))
 
-	var_0_4.try(var_20_0.scheme == "ftp", "wrong scheme '" .. var_20_0.scheme .. "'")
-	var_0_4.try(var_20_0.host, "missing hostname")
+	socket.try(t.scheme == "ftp", "wrong scheme '" .. t.scheme .. "'")
+	socket.try(t.host, "missing hostname")
 
-	local var_20_1 = "^type=(.)$"
+	local pat = "^type=(.)$"
 
-	if var_20_0.params then
-		var_20_0.type = var_0_4.skip(2, var_0_2.find(var_20_0.params, var_20_1))
+	if t.params then
+		t.type = socket.skip(2, string.find(t.params, pat))
 
-		var_0_4.try(var_20_0.type == "a" or var_20_0.type == "i", "invalid type '" .. var_20_0.type .. "'")
+		socket.try(t.type == "a" or t.type == "i", "invalid type '" .. t.type .. "'")
 	end
 
-	return var_20_0
+	return t
 end
 
-var_0_8.genericform = var_0_14
+_M.genericform = genericform
 
-local function var_0_15(arg_21_0, arg_21_1)
-	local var_21_0 = var_0_14(arg_21_0)
+local function sput(u, body)
+	local putt = genericform(u)
 
-	var_21_0.source = var_0_7.source.string(arg_21_1)
+	putt.source = ltn12.source.string(body)
 
-	return var_0_12(var_21_0)
+	return tput(putt)
 end
 
-var_0_8.put = var_0_4.protect(function(arg_22_0, arg_22_1)
-	if var_0_0.type(arg_22_0) == "string" then
-		return var_0_15(arg_22_0, arg_22_1)
+_M.put = socket.protect(function(putt, body)
+	if base.type(putt) == "string" then
+		return sput(putt, body)
 	else
-		return var_0_12(arg_22_0)
+		return tput(putt)
 	end
 end)
 
-local function var_0_16(arg_23_0)
-	arg_23_0 = var_0_11(arg_23_0)
+local function tget(gett)
+	gett = override(gett)
 
-	var_0_4.try(arg_23_0.host, "missing hostname")
+	socket.try(gett.host, "missing hostname")
 
-	local var_23_0 = var_0_8.open(arg_23_0.host, arg_23_0.port, arg_23_0.create)
+	local f = _M.open(gett.host, gett.port, gett.create)
 
-	var_23_0:greet()
-	var_23_0:login(arg_23_0.user, arg_23_0.password)
+	f:greet()
+	f:login(gett.user, gett.password)
 
-	if arg_23_0.type then
-		var_23_0:type(arg_23_0.type)
+	if gett.type then
+		f:type(gett.type)
 	end
 
-	var_23_0:epsv()
-	var_23_0:receive(arg_23_0)
-	var_23_0:quit()
+	f:epsv()
+	f:receive(gett)
+	f:quit()
 
-	return var_23_0:close()
+	return f:close()
 end
 
-local function var_0_17(arg_24_0)
-	local var_24_0 = var_0_14(arg_24_0)
-	local var_24_1 = {}
+local function sget(u)
+	local gett = genericform(u)
+	local t = {}
 
-	var_24_0.sink = var_0_7.sink.table(var_24_1)
+	gett.sink = ltn12.sink.table(t)
 
-	var_0_16(var_24_0)
+	tget(gett)
 
-	return var_0_1.concat(var_24_1)
+	return table.concat(t)
 end
 
-var_0_8.command = var_0_4.protect(function(arg_25_0)
-	arg_25_0 = var_0_11(arg_25_0)
+_M.command = socket.protect(function(cmdt)
+	cmdt = override(cmdt)
 
-	var_0_4.try(arg_25_0.host, "missing hostname")
-	var_0_4.try(arg_25_0.command, "missing command")
+	socket.try(cmdt.host, "missing hostname")
+	socket.try(cmdt.command, "missing command")
 
-	local var_25_0 = var_0_8.open(arg_25_0.host, arg_25_0.port, arg_25_0.create)
+	local f = _M.open(cmdt.host, cmdt.port, cmdt.create)
 
-	var_25_0:greet()
-	var_25_0:login(arg_25_0.user, arg_25_0.password)
+	f:greet()
+	f:login(cmdt.user, cmdt.password)
 
-	if type(arg_25_0.command) == "table" then
-		local var_25_1 = arg_25_0.argument or {}
-		local var_25_2 = arg_25_0.check or {}
+	if type(cmdt.command) == "table" then
+		local argument = cmdt.argument or {}
+		local check = cmdt.check or {}
 
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0.command) do
-			var_25_0.try(var_25_0.tp:command(iter_25_1, var_25_1[iter_25_0]))
+		for i, cmd in ipairs(cmdt.command) do
+			f.try(f.tp:command(cmd, argument[i]))
 
-			if var_25_2[iter_25_0] then
-				var_25_0.try(var_25_0.tp:check(var_25_2[iter_25_0]))
+			if check[i] then
+				f.try(f.tp:check(check[i]))
 			end
 		end
 	else
-		var_25_0.try(var_25_0.tp:command(arg_25_0.command, arg_25_0.argument))
+		f.try(f.tp:command(cmdt.command, cmdt.argument))
 
-		if arg_25_0.check then
-			var_25_0.try(var_25_0.tp:check(arg_25_0.check))
+		if cmdt.check then
+			f.try(f.tp:check(cmdt.check))
 		end
 	end
 
-	var_25_0:quit()
+	f:quit()
 
-	return var_25_0:close()
+	return f:close()
 end)
-var_0_8.get = var_0_4.protect(function(arg_26_0)
-	if var_0_0.type(arg_26_0) == "string" then
-		return var_0_17(arg_26_0)
+_M.get = socket.protect(function(gett)
+	if base.type(gett) == "string" then
+		return sget(gett)
 	else
-		return var_0_16(arg_26_0)
+		return tget(gett)
 	end
 end)
 
-return var_0_8
+return _M

@@ -1,262 +1,254 @@
-﻿local var_0_0 = require("jit")
+﻿-- chunkname: @jit/bc.lua
 
-assert(var_0_0.version_num == 20100, "LuaJIT core/library version mismatch")
+local jit = require("jit")
 
-local var_0_1 = require("jit.util")
-local var_0_2 = require("jit.vmdef")
-local var_0_3 = require("bit")
-local var_0_4 = string.sub
-local var_0_5 = string.gsub
-local var_0_6 = string.format
-local var_0_7 = string.byte
-local var_0_8 = var_0_3.band
-local var_0_9 = var_0_3.rshift
-local var_0_10 = var_0_1.funcinfo
-local var_0_11 = var_0_1.funcbc
-local var_0_12 = var_0_1.funck
-local var_0_13 = var_0_1.funcuvname
-local var_0_14 = var_0_2.bcnames
-local var_0_15 = io.stdout
-local var_0_16 = io.stderr
+assert(jit.version_num == 20100, "LuaJIT core/library version mismatch")
 
-local function var_0_17(arg_1_0)
-	if arg_1_0 == "\n" then
+local jutil = require("jit.util")
+local vmdef = require("jit.vmdef")
+local bit = require("bit")
+local sub, gsub, format = string.sub, string.gsub, string.format
+local byte, band, shr = string.byte, bit.band, bit.rshift
+local funcinfo, funcbc, funck = jutil.funcinfo, jutil.funcbc, jutil.funck
+local funcuvname = jutil.funcuvname
+local bcnames = vmdef.bcnames
+local stdout, stderr = io.stdout, io.stderr
+
+local function ctlsub(c)
+	if c == "\n" then
 		return "\\n"
-	elseif arg_1_0 == "\r" then
+	elseif c == "\r" then
 		return "\\r"
-	elseif arg_1_0 == "\t" then
+	elseif c == "\t" then
 		return "\\t"
 	else
-		return var_0_6("\\%03d", var_0_7(arg_1_0))
+		return format("\\%03d", byte(c))
 	end
 end
 
-local function var_0_18(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	local var_2_0, var_2_1, var_2_2 = var_0_11(arg_2_0, arg_2_1, arg_2_3 and 1 or 0)
+local function bcline(func, pc, prefix, lineinfo)
+	local ins, m, l = funcbc(func, pc, lineinfo and 1 or 0)
 
-	if not var_2_0 then
+	if not ins then
 		return
 	end
 
-	local var_2_3 = var_0_8(var_2_1, 7)
-	local var_2_4 = var_0_8(var_2_1, 120)
-	local var_2_5 = var_0_8(var_2_1, 1920)
-	local var_2_6 = var_0_8(var_0_9(var_2_0, 8), 255)
-	local var_2_7 = 6 * var_0_8(var_2_0, 255)
-	local var_2_8 = var_0_4(var_0_14, var_2_7 + 1, var_2_7 + 6)
-	local var_2_9
+	local ma, mb, mc = band(m, 7), band(m, 120), band(m, 1920)
+	local a = band(shr(ins, 8), 255)
+	local oidx = 6 * band(ins, 255)
+	local op = sub(bcnames, oidx + 1, oidx + 6)
+	local s
 
-	if arg_2_3 then
-		var_2_9 = var_0_6("%04d %7s %s %-6s %3s ", arg_2_1, "[" .. var_2_2 .. "]", arg_2_2 or "  ", var_2_8, var_2_3 == 0 and "" or var_2_6)
+	if lineinfo then
+		s = format("%04d %7s %s %-6s %3s ", pc, "[" .. l .. "]", prefix or "  ", op, ma == 0 and "" or a)
 	else
-		var_2_9 = var_0_6("%04d %s %-6s %3s ", arg_2_1, arg_2_2 or "  ", var_2_8, var_2_3 == 0 and "" or var_2_6)
+		s = format("%04d %s %-6s %3s ", pc, prefix or "  ", op, ma == 0 and "" or a)
 	end
 
-	local var_2_10 = var_0_9(var_2_0, 16)
+	local d = shr(ins, 16)
 
-	if var_2_5 == 1664 then
-		return var_0_6("%s=> %04d\n", var_2_9, arg_2_1 + var_2_10 - 32767)
+	if mc == 1664 then
+		return format("%s=> %04d\n", s, pc + d - 32767)
 	end
 
-	if var_2_4 ~= 0 then
-		var_2_10 = var_0_8(var_2_10, 255)
-	elseif var_2_5 == 0 then
-		return var_2_9 .. "\n"
+	if mb ~= 0 then
+		d = band(d, 255)
+	elseif mc == 0 then
+		return s .. "\n"
 	end
 
-	local var_2_11
+	local kc
 
-	if var_2_5 == 1280 then
-		var_2_11 = var_0_12(arg_2_0, -var_2_10 - 1)
-		var_2_11 = var_0_6(#var_2_11 > 40 and "\"%.40s\"~" or "\"%s\"", var_0_5(var_2_11, "%c", var_0_17))
-	elseif var_2_5 == 1152 then
-		var_2_11 = var_0_12(arg_2_0, var_2_10)
+	if mc == 1280 then
+		kc = funck(func, -d - 1)
+		kc = format(#kc > 40 and "\"%.40s\"~" or "\"%s\"", gsub(kc, "%c", ctlsub))
+	elseif mc == 1152 then
+		kc = funck(func, d)
 
-		if var_2_8 == "TSETM " then
-			var_2_11 = var_2_11 - 4503599627370496
+		if op == "TSETM " then
+			kc = kc - 4503599627370496
 		end
-	elseif var_2_5 == 1536 then
-		local var_2_12 = var_0_10(var_0_12(arg_2_0, -var_2_10 - 1))
+	elseif mc == 1536 then
+		local fi = funcinfo(funck(func, -d - 1))
 
-		if var_2_12.ffid then
-			var_2_11 = var_0_2.ffnames[var_2_12.ffid]
+		if fi.ffid then
+			kc = vmdef.ffnames[fi.ffid]
 		else
-			var_2_11 = var_2_12.loc
+			kc = fi.loc
 		end
-	elseif var_2_5 == 640 then
-		var_2_11 = var_0_13(arg_2_0, var_2_10)
+	elseif mc == 640 then
+		kc = funcuvname(func, d)
 	end
 
-	if var_2_3 == 5 then
-		local var_2_13 = var_0_13(arg_2_0, var_2_6)
+	if ma == 5 then
+		local ka = funcuvname(func, a)
 
-		if var_2_11 then
-			var_2_11 = var_2_13 .. " ; " .. var_2_11
+		if kc then
+			kc = ka .. " ; " .. kc
 		else
-			var_2_11 = var_2_13
+			kc = ka
 		end
 	end
 
-	if var_2_4 ~= 0 then
-		local var_2_14 = var_0_9(var_2_0, 24)
+	if mb ~= 0 then
+		local b = shr(ins, 24)
 
-		if var_2_11 then
-			return var_0_6("%s%3d %3d  ; %s\n", var_2_9, var_2_14, var_2_10, var_2_11)
+		if kc then
+			return format("%s%3d %3d  ; %s\n", s, b, d, kc)
 		end
 
-		return var_0_6("%s%3d %3d\n", var_2_9, var_2_14, var_2_10)
+		return format("%s%3d %3d\n", s, b, d)
 	end
 
-	if var_2_11 then
-		return var_0_6("%s%3d      ; %s\n", var_2_9, var_2_10, var_2_11)
+	if kc then
+		return format("%s%3d      ; %s\n", s, d, kc)
 	end
 
-	if var_2_5 == 896 and var_2_10 > 32767 then
-		var_2_10 = var_2_10 - 65536
+	if mc == 896 and d > 32767 then
+		d = d - 65536
 	end
 
-	return var_0_6("%s%3d\n", var_2_9, var_2_10)
+	return format("%s%3d\n", s, d)
 end
 
-local function var_0_19(arg_3_0)
-	local var_3_0 = {}
+local function bctargets(func)
+	local target = {}
 
-	for iter_3_0 = 1, 1000000000 do
-		local var_3_1, var_3_2 = var_0_11(arg_3_0, iter_3_0)
+	for pc = 1, 1000000000 do
+		local ins, m = funcbc(func, pc)
 
-		if not var_3_1 then
+		if not ins then
 			break
 		end
 
-		if var_0_8(var_3_2, 1920) == 1664 then
-			var_3_0[iter_3_0 + var_0_9(var_3_1, 16) - 32767] = true
+		if band(m, 1920) == 1664 then
+			target[pc + shr(ins, 16) - 32767] = true
 		end
 	end
 
-	return var_3_0
+	return target
 end
 
-local function var_0_20(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	arg_4_1 = arg_4_1 or var_0_15
+local function bcdump(func, out, all, lineinfo)
+	out = out or stdout
 
-	local var_4_0 = var_0_10(arg_4_0)
+	local fi = funcinfo(func)
 
-	if arg_4_2 and var_4_0.children then
-		for iter_4_0 = -1, -1000000000, -1 do
-			local var_4_1 = var_0_12(arg_4_0, iter_4_0)
+	if all and fi.children then
+		for n = -1, -1000000000, -1 do
+			local k = funck(func, n)
 
-			if not var_4_1 then
+			if not k then
 				break
 			end
 
-			if type(var_4_1) == "proto" then
-				var_0_20(var_4_1, arg_4_1, true, arg_4_3)
+			if type(k) == "proto" then
+				bcdump(k, out, true, lineinfo)
 			end
 		end
 	end
 
-	arg_4_1:write(var_0_6("-- BYTECODE -- %s-%d\n", var_4_0.loc, var_4_0.lastlinedefined))
+	out:write(format("-- BYTECODE -- %s-%d\n", fi.loc, fi.lastlinedefined))
 
-	for iter_4_1 = -1, -1000000000, -1 do
-		local var_4_2 = var_0_12(arg_4_0, iter_4_1)
+	for n = -1, -1000000000, -1 do
+		local kc = funck(func, n)
 
-		if not var_4_2 then
+		if not kc then
 			break
 		end
 
-		local var_4_3 = type(var_4_2)
+		local typ = type(kc)
 
-		if var_4_3 == "string" then
-			var_4_2 = var_0_6(#var_4_2 > 40 and "\"%.40s\"~" or "\"%s\"", var_0_5(var_4_2, "%c", var_0_17))
+		if typ == "string" then
+			kc = format(#kc > 40 and "\"%.40s\"~" or "\"%s\"", gsub(kc, "%c", ctlsub))
 
-			arg_4_1:write(var_0_6("KGC    %d    %s\n", -(iter_4_1 + 1), var_4_2))
-		elseif var_4_3 == "proto" then
-			local var_4_4 = var_0_10(var_4_2)
+			out:write(format("KGC    %d    %s\n", -(n + 1), kc))
+		elseif typ == "proto" then
+			local fi = funcinfo(kc)
 
-			if var_4_4.ffid then
-				var_4_2 = var_0_2.ffnames[var_4_4.ffid]
+			if fi.ffid then
+				kc = vmdef.ffnames[fi.ffid]
 			else
-				var_4_2 = var_4_4.loc
+				kc = fi.loc
 			end
 
-			arg_4_1:write(var_0_6("KGC    %d    %s\n", -(iter_4_1 + 1), var_4_2))
-		elseif var_4_3 == "table" then
-			arg_4_1:write(var_0_6("KGC    %d    table\n", -(iter_4_1 + 1)))
+			out:write(format("KGC    %d    %s\n", -(n + 1), kc))
+		elseif typ == "table" then
+			out:write(format("KGC    %d    table\n", -(n + 1)))
 		end
 	end
 
-	for iter_4_2 = 1, 1000000000 do
-		local var_4_5 = var_0_12(arg_4_0, iter_4_2)
+	for n = 1, 1000000000 do
+		local kc = funck(func, n)
 
-		if not var_4_5 then
+		if not kc then
 			break
 		end
 
-		if type(var_4_5) == "number" then
-			arg_4_1:write(var_0_6("KN    %d    %s\n", iter_4_2, var_4_5))
+		if type(kc) == "number" then
+			out:write(format("KN    %d    %s\n", n, kc))
 		end
 	end
 
-	local var_4_6 = var_0_19(arg_4_0)
+	local target = bctargets(func)
 
-	for iter_4_3 = 1, 1000000000 do
-		local var_4_7 = var_0_18(arg_4_0, iter_4_3, var_4_6[iter_4_3] and "=>", arg_4_3)
+	for pc = 1, 1000000000 do
+		local s = bcline(func, pc, target[pc] and "=>", lineinfo)
 
-		if not var_4_7 then
+		if not s then
 			break
 		end
 
-		arg_4_1:write(var_4_7)
+		out:write(s)
 	end
 
-	arg_4_1:write("\n")
-	arg_4_1:flush()
+	out:write("\n")
+	out:flush()
 end
 
-local var_0_21
-local var_0_22
+local active, out
 
-local function var_0_23(arg_5_0)
-	return var_0_20(arg_5_0, var_0_22)
+local function h_list(func)
+	return bcdump(func, out)
 end
 
-local function var_0_24()
-	if var_0_21 then
-		var_0_21 = false
+local function bclistoff()
+	if active then
+		active = false
 
-		var_0_0.attach(var_0_23)
+		jit.attach(h_list)
 
-		if var_0_22 and var_0_22 ~= var_0_15 and var_0_22 ~= var_0_16 then
-			var_0_22:close()
+		if out and out ~= stdout and out ~= stderr then
+			out:close()
 		end
 
-		var_0_22 = nil
+		out = nil
 	end
 end
 
-local function var_0_25(arg_7_0)
-	if var_0_21 then
-		var_0_24()
+local function bcliston(outfile)
+	if active then
+		bclistoff()
 	end
 
-	arg_7_0 = arg_7_0 or os.getenv("LUAJIT_LISTFILE")
+	outfile = outfile or os.getenv("LUAJIT_LISTFILE")
 
-	if arg_7_0 then
-		var_0_22 = arg_7_0 == "-" and var_0_15 or assert(io.open(arg_7_0, "w"))
+	if outfile then
+		out = outfile == "-" and stdout or assert(io.open(outfile, "w"))
 	else
-		var_0_22 = var_0_16
+		out = stderr
 	end
 
-	var_0_0.attach(var_0_23, "bc")
+	jit.attach(h_list, "bc")
 
-	var_0_21 = true
+	active = true
 end
 
 return {
-	line = var_0_18,
-	dump = var_0_20,
-	targets = var_0_19,
-	on = var_0_25,
-	off = var_0_24,
-	start = var_0_25
+	line = bcline,
+	dump = bcdump,
+	targets = bctargets,
+	on = bcliston,
+	off = bclistoff,
+	start = bcliston
 }

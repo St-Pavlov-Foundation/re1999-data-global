@@ -1,191 +1,188 @@
-﻿local var_0_0 = _G
-local var_0_1 = require("string")
-local var_0_2 = require("math")
-local var_0_3 = require("socket.core")
-local var_0_4 = var_0_3
+﻿-- chunkname: @socket.lua
 
-function var_0_4.connect4(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	return var_0_3.connect(arg_1_0, arg_1_1, arg_1_2, arg_1_3, "inet")
+local base = _G
+local string = require("string")
+local math = require("math")
+local socket = require("socket.core")
+local _M = socket
+
+function _M.connect4(address, port, laddress, lport)
+	return socket.connect(address, port, laddress, lport, "inet")
 end
 
-function var_0_4.connect6(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	return var_0_3.connect(arg_2_0, arg_2_1, arg_2_2, arg_2_3, "inet6")
+function _M.connect6(address, port, laddress, lport)
+	return socket.connect(address, port, laddress, lport, "inet6")
 end
 
-function var_0_4.bind(arg_3_0, arg_3_1, arg_3_2)
-	if arg_3_0 == "*" then
-		arg_3_0 = "0.0.0.0"
+function _M.bind(host, port, backlog)
+	if host == "*" then
+		host = "0.0.0.0"
 	end
 
-	local var_3_0, var_3_1 = var_0_3.dns.getaddrinfo(arg_3_0)
+	local addrinfo, err = socket.dns.getaddrinfo(host)
 
-	if not var_3_0 then
-		return nil, var_3_1
+	if not addrinfo then
+		return nil, err
 	end
 
-	local var_3_2
-	local var_3_3
-	local var_3_4 = "no info on address"
+	local sock, res
 
-	for iter_3_0, iter_3_1 in var_0_0.ipairs(var_3_0) do
-		if iter_3_1.family == "inet" then
-			var_3_2, var_3_4 = var_0_3.tcp4()
+	err = "no info on address"
+
+	for i, alt in base.ipairs(addrinfo) do
+		if alt.family == "inet" then
+			sock, err = socket.tcp4()
 		else
-			var_3_2, var_3_4 = var_0_3.tcp6()
+			sock, err = socket.tcp6()
 		end
 
-		if not var_3_2 then
-			return nil, var_3_4
+		if not sock then
+			return nil, err
 		end
 
-		var_3_2:setoption("reuseaddr", true)
+		sock:setoption("reuseaddr", true)
 
-		local var_3_5, var_3_6 = var_3_2:bind(iter_3_1.addr, arg_3_1)
+		res, err = sock:bind(alt.addr, port)
 
-		var_3_4 = var_3_6
-
-		if not var_3_5 then
-			var_3_2:close()
+		if not res then
+			sock:close()
 		else
-			local var_3_7, var_3_8 = var_3_2:listen(arg_3_2)
+			res, err = sock:listen(backlog)
 
-			var_3_4 = var_3_8
-
-			if not var_3_7 then
-				var_3_2:close()
+			if not res then
+				sock:close()
 			else
-				return var_3_2
+				return sock
 			end
 		end
 	end
 
-	return nil, var_3_4
+	return nil, err
 end
 
-var_0_4.try = var_0_4.newtry()
+_M.try = _M.newtry()
 
-function var_0_4.choose(arg_4_0)
-	return function(arg_5_0, arg_5_1, arg_5_2)
-		if var_0_0.type(arg_5_0) ~= "string" then
-			arg_5_0, arg_5_1, arg_5_2 = "default", arg_5_0, arg_5_1
+function _M.choose(table)
+	return function(name, opt1, opt2)
+		if base.type(name) ~= "string" then
+			name, opt1, opt2 = "default", name, opt1
 		end
 
-		local var_5_0 = arg_4_0[arg_5_0 or "nil"]
+		local f = table[name or "nil"]
 
-		if not var_5_0 then
-			var_0_0.error("unknown key (" .. var_0_0.tostring(arg_5_0) .. ")", 3)
+		if not f then
+			base.error("unknown key (" .. base.tostring(name) .. ")", 3)
 		else
-			return var_5_0(arg_5_1, arg_5_2)
+			return f(opt1, opt2)
 		end
 	end
 end
 
-local var_0_5 = {}
-local var_0_6 = {}
+local sourcet, sinkt = {}, {}
 
-var_0_4.sourcet = var_0_5
-var_0_4.sinkt = var_0_6
-var_0_4.BLOCKSIZE = 2048
-var_0_6["close-when-done"] = function(arg_6_0)
-	return var_0_0.setmetatable({
+_M.sourcet = sourcet
+_M.sinkt = sinkt
+_M.BLOCKSIZE = 2048
+sinkt["close-when-done"] = function(sock)
+	return base.setmetatable({
 		getfd = function()
-			return arg_6_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_6_0:dirty()
+			return sock:dirty()
 		end
 	}, {
-		__call = function(arg_9_0, arg_9_1, arg_9_2)
-			if not arg_9_1 then
-				arg_6_0:close()
+		__call = function(self, chunk, err)
+			if not chunk then
+				sock:close()
 
 				return 1
 			else
-				return arg_6_0:send(arg_9_1)
+				return sock:send(chunk)
 			end
 		end
 	})
 end
-var_0_6["keep-open"] = function(arg_10_0)
-	return var_0_0.setmetatable({
+sinkt["keep-open"] = function(sock)
+	return base.setmetatable({
 		getfd = function()
-			return arg_10_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_10_0:dirty()
+			return sock:dirty()
 		end
 	}, {
-		__call = function(arg_13_0, arg_13_1, arg_13_2)
-			if arg_13_1 then
-				return arg_10_0:send(arg_13_1)
+		__call = function(self, chunk, err)
+			if chunk then
+				return sock:send(chunk)
 			else
 				return 1
 			end
 		end
 	})
 end
-var_0_6.default = var_0_6["keep-open"]
-var_0_4.sink = var_0_4.choose(var_0_6)
-var_0_5["by-length"] = function(arg_14_0, arg_14_1)
-	return var_0_0.setmetatable({
+sinkt.default = sinkt["keep-open"]
+_M.sink = _M.choose(sinkt)
+sourcet["by-length"] = function(sock, length)
+	return base.setmetatable({
 		getfd = function()
-			return arg_14_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_14_0:dirty()
+			return sock:dirty()
 		end
 	}, {
 		__call = function()
-			if arg_14_1 <= 0 then
+			if length <= 0 then
 				return nil
 			end
 
-			local var_17_0 = var_0_2.min(var_0_3.BLOCKSIZE, arg_14_1)
-			local var_17_1, var_17_2 = arg_14_0:receive(var_17_0)
+			local size = math.min(socket.BLOCKSIZE, length)
+			local chunk, err = sock:receive(size)
 
-			if var_17_2 then
-				return nil, var_17_2
+			if err then
+				return nil, err
 			end
 
-			arg_14_1 = arg_14_1 - var_0_1.len(var_17_1)
+			length = length - string.len(chunk)
 
-			return var_17_1
+			return chunk
 		end
 	})
 end
-var_0_5["until-closed"] = function(arg_18_0)
-	local var_18_0
+sourcet["until-closed"] = function(sock)
+	local done
 
-	return var_0_0.setmetatable({
+	return base.setmetatable({
 		getfd = function()
-			return arg_18_0:getfd()
+			return sock:getfd()
 		end,
 		dirty = function()
-			return arg_18_0:dirty()
+			return sock:dirty()
 		end
 	}, {
 		__call = function()
-			if var_18_0 then
+			if done then
 				return nil
 			end
 
-			local var_21_0, var_21_1, var_21_2 = arg_18_0:receive(var_0_3.BLOCKSIZE)
+			local chunk, err, partial = sock:receive(socket.BLOCKSIZE)
 
-			if not var_21_1 then
-				return var_21_0
-			elseif var_21_1 == "closed" then
-				arg_18_0:close()
+			if not err then
+				return chunk
+			elseif err == "closed" then
+				sock:close()
 
-				var_18_0 = 1
+				done = 1
 
-				return var_21_2
+				return partial
 			else
-				return nil, var_21_1
+				return nil, err
 			end
 		end
 	})
 end
-var_0_5.default = var_0_5["until-closed"]
-var_0_4.source = var_0_4.choose(var_0_5)
+sourcet.default = sourcet["until-closed"]
+_M.source = _M.choose(sourcet)
 
-return var_0_4
+return _M

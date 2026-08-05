@@ -1,5 +1,7 @@
-﻿module("booter.base.cjson", package.seeall)
+﻿-- chunkname: @booter/base/cjson.lua
 
-local var_0_0 = require("cjson")
+module("booter.base.cjson", package.seeall)
 
-setGlobal("cjson", var_0_0)
+local cjson = require("cjson")
+
+setGlobal("cjson", cjson)

@@ -1,48 +1,51 @@
-﻿local var_0_0 = setmetatable
-local var_0_1 = rawset
-local var_0_2 = rawget
-local var_0_3 = error
-local var_0_4 = ipairs
-local var_0_5 = pairs
-local var_0_6 = print
-local var_0_7 = table
-local var_0_8 = string
-local var_0_9 = tostring
-local var_0_10 = type
-local var_0_11 = logError
-local var_0_12 = require("pb")
-local var_0_13 = require("protobuf.wire_format")
-local var_0_14 = require("protobuf.type_checkers")
-local var_0_15 = require("protobuf.encoder")
-local var_0_16 = require("protobuf.decoder")
-local var_0_17 = require("protobuf.listener")
-local var_0_18 = require("protobuf.containers")
-local var_0_19 = require("protobuf.descriptor").FieldDescriptor
-local var_0_20 = require("protobuf.text_format")
+﻿-- chunkname: @protobuf/protobuf.lua
+
+local setmetatable = setmetatable
+local rawset = rawset
+local rawget = rawget
+local error = error
+local ipairs = ipairs
+local pairs = pairs
+local print = print
+local table = table
+local string = string
+local tostring = tostring
+local type = type
+local logError = logError
+local pb = require("pb")
+local wire_format = require("protobuf.wire_format")
+local type_checkers = require("protobuf.type_checkers")
+local encoder = require("protobuf.encoder")
+local decoder = require("protobuf.decoder")
+local listener_mod = require("protobuf.listener")
+local containers = require("protobuf.containers")
+local descriptor = require("protobuf.descriptor")
+local FieldDescriptor = descriptor.FieldDescriptor
+local text_format = require("protobuf.text_format")
 
 module("protobuf.protobuf")
 
-local function var_0_21(arg_1_0, arg_1_1, arg_1_2)
-	local var_1_0 = {
-		__newindex = function(arg_2_0, arg_2_1, arg_2_2)
-			if arg_1_2[arg_2_1] then
-				var_0_1(arg_2_0, arg_2_1, arg_2_2)
+local function make_descriptor(name, descriptor, usable_key)
+	local meta = {
+		__newindex = function(self, key, value)
+			if usable_key[key] then
+				rawset(self, key, value)
 			else
-				var_0_3("error key: " .. arg_2_1)
+				error("error key: " .. key)
 			end
 		end
 	}
 
-	var_1_0.__index = var_1_0
+	meta.__index = meta
 
-	function var_1_0.__call()
-		return var_0_0({}, var_1_0)
+	function meta.__call()
+		return setmetatable({}, meta)
 	end
 
-	_M[arg_1_0] = var_0_0(arg_1_1, var_1_0)
+	_M[name] = setmetatable(descriptor, meta)
 end
 
-var_0_21("Descriptor", {}, {
+make_descriptor("Descriptor", {}, {
 	full_name = true,
 	name = true,
 	containing_type = true,
@@ -55,7 +58,7 @@ var_0_21("Descriptor", {}, {
 	enum_types = true,
 	filename = true
 })
-var_0_21("FieldDescriptor", var_0_19, {
+make_descriptor("FieldDescriptor", FieldDescriptor, {
 	full_name = true,
 	name = true,
 	containing_type = true,
@@ -71,14 +74,14 @@ var_0_21("FieldDescriptor", var_0_19, {
 	message_type = true,
 	cpp_type = true
 })
-var_0_21("EnumDescriptor", {}, {
+make_descriptor("EnumDescriptor", {}, {
 	full_name = true,
 	values = true,
 	containing_type = true,
 	name = true,
 	options = true
 })
-var_0_21("EnumValueDescriptor", {}, {
+make_descriptor("EnumValueDescriptor", {}, {
 	options = true,
 	name = true,
 	type = true,
@@ -86,751 +89,761 @@ var_0_21("EnumValueDescriptor", {}, {
 	number = true
 })
 
-local var_0_22 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_FLOAT] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_INT64] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_UINT64] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_INT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_FIXED64] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_FIXED32] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_BOOL] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_STRING] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_GROUP] = var_0_13.WIRETYPE_START_GROUP,
-	[var_0_19.TYPE_MESSAGE] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_BYTES] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_UINT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_ENUM] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_SFIXED32] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_SFIXED64] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_SINT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_SINT64] = var_0_13.WIRETYPE_VARINT
+local FIELD_TYPE_TO_WIRE_TYPE = {
+	[FieldDescriptor.TYPE_DOUBLE] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_FLOAT] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_INT64] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_UINT64] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_INT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_FIXED64] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_FIXED32] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_BOOL] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_STRING] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_GROUP] = wire_format.WIRETYPE_START_GROUP,
+	[FieldDescriptor.TYPE_MESSAGE] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_BYTES] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_UINT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_ENUM] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_SFIXED32] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_SFIXED64] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_SINT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_SINT64] = wire_format.WIRETYPE_VARINT
 }
-local var_0_23 = {
-	[var_0_19.TYPE_STRING] = true,
-	[var_0_19.TYPE_GROUP] = true,
-	[var_0_19.TYPE_MESSAGE] = true,
-	[var_0_19.TYPE_BYTES] = true
+local NON_PACKABLE_TYPES = {
+	[FieldDescriptor.TYPE_STRING] = true,
+	[FieldDescriptor.TYPE_GROUP] = true,
+	[FieldDescriptor.TYPE_MESSAGE] = true,
+	[FieldDescriptor.TYPE_BYTES] = true
 }
-local var_0_24 = {
-	[var_0_19.CPPTYPE_INT32] = var_0_14.Int32ValueChecker(),
-	[var_0_19.CPPTYPE_INT64] = var_0_14.TypeChecker({
+local _VALUE_CHECKERS = {
+	[FieldDescriptor.CPPTYPE_INT32] = type_checkers.Int32ValueChecker(),
+	[FieldDescriptor.CPPTYPE_INT64] = type_checkers.TypeChecker({
 		string = true,
 		number = true
 	}),
-	[var_0_19.CPPTYPE_UINT32] = var_0_14.Uint32ValueChecker(),
-	[var_0_19.CPPTYPE_UINT64] = var_0_14.TypeChecker({
+	[FieldDescriptor.CPPTYPE_UINT32] = type_checkers.Uint32ValueChecker(),
+	[FieldDescriptor.CPPTYPE_UINT64] = type_checkers.TypeChecker({
 		string = true,
 		number = true
 	}),
-	[var_0_19.CPPTYPE_DOUBLE] = var_0_14.TypeChecker({
+	[FieldDescriptor.CPPTYPE_DOUBLE] = type_checkers.TypeChecker({
 		number = true
 	}),
-	[var_0_19.CPPTYPE_FLOAT] = var_0_14.TypeChecker({
+	[FieldDescriptor.CPPTYPE_FLOAT] = type_checkers.TypeChecker({
 		number = true
 	}),
-	[var_0_19.CPPTYPE_BOOL] = var_0_14.TypeChecker({
+	[FieldDescriptor.CPPTYPE_BOOL] = type_checkers.TypeChecker({
 		boolean = true,
 		int = true,
 		bool = true
 	}),
-	[var_0_19.CPPTYPE_ENUM] = var_0_14.Int32ValueChecker(),
-	[var_0_19.CPPTYPE_STRING] = var_0_14.TypeChecker({
+	[FieldDescriptor.CPPTYPE_ENUM] = type_checkers.Int32ValueChecker(),
+	[FieldDescriptor.CPPTYPE_STRING] = type_checkers.TypeChecker({
 		string = true
 	})
 }
-local var_0_25 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_13.DoubleByteSize,
-	[var_0_19.TYPE_FLOAT] = var_0_13.FloatByteSize,
-	[var_0_19.TYPE_INT64] = var_0_13.Int64ByteSize,
-	[var_0_19.TYPE_UINT64] = var_0_13.UInt64ByteSize,
-	[var_0_19.TYPE_INT32] = var_0_13.Int32ByteSize,
-	[var_0_19.TYPE_FIXED64] = var_0_13.Fixed64ByteSize,
-	[var_0_19.TYPE_FIXED32] = var_0_13.Fixed32ByteSize,
-	[var_0_19.TYPE_BOOL] = var_0_13.BoolByteSize,
-	[var_0_19.TYPE_STRING] = var_0_13.StringByteSize,
-	[var_0_19.TYPE_GROUP] = var_0_13.GroupByteSize,
-	[var_0_19.TYPE_MESSAGE] = var_0_13.MessageByteSize,
-	[var_0_19.TYPE_BYTES] = var_0_13.BytesByteSize,
-	[var_0_19.TYPE_UINT32] = var_0_13.UInt32ByteSize,
-	[var_0_19.TYPE_ENUM] = var_0_13.EnumByteSize,
-	[var_0_19.TYPE_SFIXED32] = var_0_13.SFixed32ByteSize,
-	[var_0_19.TYPE_SFIXED64] = var_0_13.SFixed64ByteSize,
-	[var_0_19.TYPE_SINT32] = var_0_13.SInt32ByteSize,
-	[var_0_19.TYPE_SINT64] = var_0_13.SInt64ByteSize
+local TYPE_TO_BYTE_SIZE_FN = {
+	[FieldDescriptor.TYPE_DOUBLE] = wire_format.DoubleByteSize,
+	[FieldDescriptor.TYPE_FLOAT] = wire_format.FloatByteSize,
+	[FieldDescriptor.TYPE_INT64] = wire_format.Int64ByteSize,
+	[FieldDescriptor.TYPE_UINT64] = wire_format.UInt64ByteSize,
+	[FieldDescriptor.TYPE_INT32] = wire_format.Int32ByteSize,
+	[FieldDescriptor.TYPE_FIXED64] = wire_format.Fixed64ByteSize,
+	[FieldDescriptor.TYPE_FIXED32] = wire_format.Fixed32ByteSize,
+	[FieldDescriptor.TYPE_BOOL] = wire_format.BoolByteSize,
+	[FieldDescriptor.TYPE_STRING] = wire_format.StringByteSize,
+	[FieldDescriptor.TYPE_GROUP] = wire_format.GroupByteSize,
+	[FieldDescriptor.TYPE_MESSAGE] = wire_format.MessageByteSize,
+	[FieldDescriptor.TYPE_BYTES] = wire_format.BytesByteSize,
+	[FieldDescriptor.TYPE_UINT32] = wire_format.UInt32ByteSize,
+	[FieldDescriptor.TYPE_ENUM] = wire_format.EnumByteSize,
+	[FieldDescriptor.TYPE_SFIXED32] = wire_format.SFixed32ByteSize,
+	[FieldDescriptor.TYPE_SFIXED64] = wire_format.SFixed64ByteSize,
+	[FieldDescriptor.TYPE_SINT32] = wire_format.SInt32ByteSize,
+	[FieldDescriptor.TYPE_SINT64] = wire_format.SInt64ByteSize
 }
-local var_0_26 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_15.DoubleEncoder,
-	[var_0_19.TYPE_FLOAT] = var_0_15.FloatEncoder,
-	[var_0_19.TYPE_INT64] = var_0_15.Int64Encoder,
-	[var_0_19.TYPE_UINT64] = var_0_15.UInt64Encoder,
-	[var_0_19.TYPE_INT32] = var_0_15.Int32Encoder,
-	[var_0_19.TYPE_FIXED64] = var_0_15.Fixed64Encoder,
-	[var_0_19.TYPE_FIXED32] = var_0_15.Fixed32Encoder,
-	[var_0_19.TYPE_BOOL] = var_0_15.BoolEncoder,
-	[var_0_19.TYPE_STRING] = var_0_15.StringEncoder,
-	[var_0_19.TYPE_GROUP] = var_0_15.GroupEncoder,
-	[var_0_19.TYPE_MESSAGE] = var_0_15.MessageEncoder,
-	[var_0_19.TYPE_BYTES] = var_0_15.BytesEncoder,
-	[var_0_19.TYPE_UINT32] = var_0_15.UInt32Encoder,
-	[var_0_19.TYPE_ENUM] = var_0_15.EnumEncoder,
-	[var_0_19.TYPE_SFIXED32] = var_0_15.SFixed32Encoder,
-	[var_0_19.TYPE_SFIXED64] = var_0_15.SFixed64Encoder,
-	[var_0_19.TYPE_SINT32] = var_0_15.SInt32Encoder,
-	[var_0_19.TYPE_SINT64] = var_0_15.SInt64Encoder
+local TYPE_TO_ENCODER = {
+	[FieldDescriptor.TYPE_DOUBLE] = encoder.DoubleEncoder,
+	[FieldDescriptor.TYPE_FLOAT] = encoder.FloatEncoder,
+	[FieldDescriptor.TYPE_INT64] = encoder.Int64Encoder,
+	[FieldDescriptor.TYPE_UINT64] = encoder.UInt64Encoder,
+	[FieldDescriptor.TYPE_INT32] = encoder.Int32Encoder,
+	[FieldDescriptor.TYPE_FIXED64] = encoder.Fixed64Encoder,
+	[FieldDescriptor.TYPE_FIXED32] = encoder.Fixed32Encoder,
+	[FieldDescriptor.TYPE_BOOL] = encoder.BoolEncoder,
+	[FieldDescriptor.TYPE_STRING] = encoder.StringEncoder,
+	[FieldDescriptor.TYPE_GROUP] = encoder.GroupEncoder,
+	[FieldDescriptor.TYPE_MESSAGE] = encoder.MessageEncoder,
+	[FieldDescriptor.TYPE_BYTES] = encoder.BytesEncoder,
+	[FieldDescriptor.TYPE_UINT32] = encoder.UInt32Encoder,
+	[FieldDescriptor.TYPE_ENUM] = encoder.EnumEncoder,
+	[FieldDescriptor.TYPE_SFIXED32] = encoder.SFixed32Encoder,
+	[FieldDescriptor.TYPE_SFIXED64] = encoder.SFixed64Encoder,
+	[FieldDescriptor.TYPE_SINT32] = encoder.SInt32Encoder,
+	[FieldDescriptor.TYPE_SINT64] = encoder.SInt64Encoder
 }
-local var_0_27 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_15.DoubleSizer,
-	[var_0_19.TYPE_FLOAT] = var_0_15.FloatSizer,
-	[var_0_19.TYPE_INT64] = var_0_15.Int64Sizer,
-	[var_0_19.TYPE_UINT64] = var_0_15.UInt64Sizer,
-	[var_0_19.TYPE_INT32] = var_0_15.Int32Sizer,
-	[var_0_19.TYPE_FIXED64] = var_0_15.Fixed64Sizer,
-	[var_0_19.TYPE_FIXED32] = var_0_15.Fixed32Sizer,
-	[var_0_19.TYPE_BOOL] = var_0_15.BoolSizer,
-	[var_0_19.TYPE_STRING] = var_0_15.StringSizer,
-	[var_0_19.TYPE_GROUP] = var_0_15.GroupSizer,
-	[var_0_19.TYPE_MESSAGE] = var_0_15.MessageSizer,
-	[var_0_19.TYPE_BYTES] = var_0_15.BytesSizer,
-	[var_0_19.TYPE_UINT32] = var_0_15.UInt32Sizer,
-	[var_0_19.TYPE_ENUM] = var_0_15.EnumSizer,
-	[var_0_19.TYPE_SFIXED32] = var_0_15.SFixed32Sizer,
-	[var_0_19.TYPE_SFIXED64] = var_0_15.SFixed64Sizer,
-	[var_0_19.TYPE_SINT32] = var_0_15.SInt32Sizer,
-	[var_0_19.TYPE_SINT64] = var_0_15.SInt64Sizer
+local TYPE_TO_SIZER = {
+	[FieldDescriptor.TYPE_DOUBLE] = encoder.DoubleSizer,
+	[FieldDescriptor.TYPE_FLOAT] = encoder.FloatSizer,
+	[FieldDescriptor.TYPE_INT64] = encoder.Int64Sizer,
+	[FieldDescriptor.TYPE_UINT64] = encoder.UInt64Sizer,
+	[FieldDescriptor.TYPE_INT32] = encoder.Int32Sizer,
+	[FieldDescriptor.TYPE_FIXED64] = encoder.Fixed64Sizer,
+	[FieldDescriptor.TYPE_FIXED32] = encoder.Fixed32Sizer,
+	[FieldDescriptor.TYPE_BOOL] = encoder.BoolSizer,
+	[FieldDescriptor.TYPE_STRING] = encoder.StringSizer,
+	[FieldDescriptor.TYPE_GROUP] = encoder.GroupSizer,
+	[FieldDescriptor.TYPE_MESSAGE] = encoder.MessageSizer,
+	[FieldDescriptor.TYPE_BYTES] = encoder.BytesSizer,
+	[FieldDescriptor.TYPE_UINT32] = encoder.UInt32Sizer,
+	[FieldDescriptor.TYPE_ENUM] = encoder.EnumSizer,
+	[FieldDescriptor.TYPE_SFIXED32] = encoder.SFixed32Sizer,
+	[FieldDescriptor.TYPE_SFIXED64] = encoder.SFixed64Sizer,
+	[FieldDescriptor.TYPE_SINT32] = encoder.SInt32Sizer,
+	[FieldDescriptor.TYPE_SINT64] = encoder.SInt64Sizer
 }
-local var_0_28 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_16.DoubleDecoder,
-	[var_0_19.TYPE_FLOAT] = var_0_16.FloatDecoder,
-	[var_0_19.TYPE_INT64] = var_0_16.Int64Decoder,
-	[var_0_19.TYPE_UINT64] = var_0_16.UInt64Decoder,
-	[var_0_19.TYPE_INT32] = var_0_16.Int32Decoder,
-	[var_0_19.TYPE_FIXED64] = var_0_16.Fixed64Decoder,
-	[var_0_19.TYPE_FIXED32] = var_0_16.Fixed32Decoder,
-	[var_0_19.TYPE_BOOL] = var_0_16.BoolDecoder,
-	[var_0_19.TYPE_STRING] = var_0_16.StringDecoder,
-	[var_0_19.TYPE_GROUP] = var_0_16.GroupDecoder,
-	[var_0_19.TYPE_MESSAGE] = var_0_16.MessageDecoder,
-	[var_0_19.TYPE_BYTES] = var_0_16.BytesDecoder,
-	[var_0_19.TYPE_UINT32] = var_0_16.UInt32Decoder,
-	[var_0_19.TYPE_ENUM] = var_0_16.EnumDecoder,
-	[var_0_19.TYPE_SFIXED32] = var_0_16.SFixed32Decoder,
-	[var_0_19.TYPE_SFIXED64] = var_0_16.SFixed64Decoder,
-	[var_0_19.TYPE_SINT32] = var_0_16.SInt32Decoder,
-	[var_0_19.TYPE_SINT64] = var_0_16.SInt64Decoder
+local TYPE_TO_DECODER = {
+	[FieldDescriptor.TYPE_DOUBLE] = decoder.DoubleDecoder,
+	[FieldDescriptor.TYPE_FLOAT] = decoder.FloatDecoder,
+	[FieldDescriptor.TYPE_INT64] = decoder.Int64Decoder,
+	[FieldDescriptor.TYPE_UINT64] = decoder.UInt64Decoder,
+	[FieldDescriptor.TYPE_INT32] = decoder.Int32Decoder,
+	[FieldDescriptor.TYPE_FIXED64] = decoder.Fixed64Decoder,
+	[FieldDescriptor.TYPE_FIXED32] = decoder.Fixed32Decoder,
+	[FieldDescriptor.TYPE_BOOL] = decoder.BoolDecoder,
+	[FieldDescriptor.TYPE_STRING] = decoder.StringDecoder,
+	[FieldDescriptor.TYPE_GROUP] = decoder.GroupDecoder,
+	[FieldDescriptor.TYPE_MESSAGE] = decoder.MessageDecoder,
+	[FieldDescriptor.TYPE_BYTES] = decoder.BytesDecoder,
+	[FieldDescriptor.TYPE_UINT32] = decoder.UInt32Decoder,
+	[FieldDescriptor.TYPE_ENUM] = decoder.EnumDecoder,
+	[FieldDescriptor.TYPE_SFIXED32] = decoder.SFixed32Decoder,
+	[FieldDescriptor.TYPE_SFIXED64] = decoder.SFixed64Decoder,
+	[FieldDescriptor.TYPE_SINT32] = decoder.SInt32Decoder,
+	[FieldDescriptor.TYPE_SINT64] = decoder.SInt64Decoder
 }
-local var_0_29 = {
-	[var_0_19.TYPE_DOUBLE] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_FLOAT] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_INT64] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_UINT64] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_INT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_FIXED64] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_FIXED32] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_BOOL] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_STRING] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_GROUP] = var_0_13.WIRETYPE_START_GROUP,
-	[var_0_19.TYPE_MESSAGE] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_BYTES] = var_0_13.WIRETYPE_LENGTH_DELIMITED,
-	[var_0_19.TYPE_UINT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_ENUM] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_SFIXED32] = var_0_13.WIRETYPE_FIXED32,
-	[var_0_19.TYPE_SFIXED64] = var_0_13.WIRETYPE_FIXED64,
-	[var_0_19.TYPE_SINT32] = var_0_13.WIRETYPE_VARINT,
-	[var_0_19.TYPE_SINT64] = var_0_13.WIRETYPE_VARINT
+local FIELD_TYPE_TO_WIRE_TYPE = {
+	[FieldDescriptor.TYPE_DOUBLE] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_FLOAT] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_INT64] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_UINT64] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_INT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_FIXED64] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_FIXED32] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_BOOL] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_STRING] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_GROUP] = wire_format.WIRETYPE_START_GROUP,
+	[FieldDescriptor.TYPE_MESSAGE] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_BYTES] = wire_format.WIRETYPE_LENGTH_DELIMITED,
+	[FieldDescriptor.TYPE_UINT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_ENUM] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_SFIXED32] = wire_format.WIRETYPE_FIXED32,
+	[FieldDescriptor.TYPE_SFIXED64] = wire_format.WIRETYPE_FIXED64,
+	[FieldDescriptor.TYPE_SINT32] = wire_format.WIRETYPE_VARINT,
+	[FieldDescriptor.TYPE_SINT64] = wire_format.WIRETYPE_VARINT
 }
 
-local function var_0_30(arg_4_0)
-	return var_0_23[arg_4_0] == nil
+local function IsTypePackable(field_type)
+	return NON_PACKABLE_TYPES[field_type] == nil
 end
 
-local function var_0_31(arg_5_0, arg_5_1)
-	if arg_5_0 == var_0_19.CPPTYPE_STRING and arg_5_1 == var_0_19.TYPE_STRING then
-		return var_0_14.UnicodeValueChecker()
+local function GetTypeChecker(cpp_type, field_type)
+	if cpp_type == FieldDescriptor.CPPTYPE_STRING and field_type == FieldDescriptor.TYPE_STRING then
+		return type_checkers.UnicodeValueChecker()
 	end
 
-	return var_0_24[arg_5_0]
+	return _VALUE_CHECKERS[cpp_type]
 end
 
-local function var_0_32(arg_6_0)
-	if arg_6_0.label == var_0_19.LABEL_REPEATED then
-		if var_0_10(arg_6_0.default_value) ~= "table" or #arg_6_0.default_value ~= 0 then
-			var_0_3("Repeated field default value not empty list:" .. var_0_9(arg_6_0.default_value))
+local function _DefaultValueConstructorForField(field)
+	if field.label == FieldDescriptor.LABEL_REPEATED then
+		if type(field.default_value) ~= "table" or #field.default_value ~= 0 then
+			error("Repeated field default value not empty list:" .. tostring(field.default_value))
 		end
 
-		if arg_6_0.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-			local var_6_0 = arg_6_0.message_type
+		if field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+			local message_type = field.message_type
 
-			return function(arg_7_0)
-				return var_0_18.RepeatedCompositeFieldContainer(arg_7_0._listener_for_children, var_6_0)
+			return function(message)
+				return containers.RepeatedCompositeFieldContainer(message._listener_for_children, message_type)
 			end
 		else
-			local var_6_1 = var_0_31(arg_6_0.cpp_type, arg_6_0.type)
+			local type_checker = GetTypeChecker(field.cpp_type, field.type)
 
-			return function(arg_8_0)
-				return var_0_18.RepeatedScalarFieldContainer(arg_8_0._listener_for_children, var_6_1)
+			return function(message)
+				return containers.RepeatedScalarFieldContainer(message._listener_for_children, type_checker)
 			end
 		end
 	end
 
-	if arg_6_0.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-		local var_6_2 = arg_6_0.message_type
+	if field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+		local message_type = field.message_type
 
-		return function(arg_9_0)
-			result = var_6_2._concrete_class()
+		return function(message)
+			result = message_type._concrete_class()
 
-			result._SetListener(arg_9_0._listener_for_children)
+			result._SetListener(message._listener_for_children)
 
 			return result
 		end
 	end
 
-	return function(arg_10_0)
-		return arg_6_0.default_value
+	return function(message)
+		return field.default_value
 	end
 end
 
-local function var_0_33(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.label == var_0_19.LABEL_REPEATED
-	local var_11_1 = arg_11_1.has_options and arg_11_1.GetOptions().packed
+local function _AttachFieldHelpers(message_meta, field_descriptor)
+	local is_repeated = field_descriptor.label == FieldDescriptor.LABEL_REPEATED
+	local is_packed = field_descriptor.has_options and field_descriptor.GetOptions().packed
 
-	var_0_1(arg_11_1, "_encoder", var_0_26[arg_11_1.type](arg_11_1.number, var_11_0, var_11_1))
-	var_0_1(arg_11_1, "_sizer", var_0_27[arg_11_1.type](arg_11_1.number, var_11_0, var_11_1))
-	var_0_1(arg_11_1, "_default_constructor", var_0_32(arg_11_1))
+	rawset(field_descriptor, "_encoder", TYPE_TO_ENCODER[field_descriptor.type](field_descriptor.number, is_repeated, is_packed))
+	rawset(field_descriptor, "_sizer", TYPE_TO_SIZER[field_descriptor.type](field_descriptor.number, is_repeated, is_packed))
+	rawset(field_descriptor, "_default_constructor", _DefaultValueConstructorForField(field_descriptor))
 
-	local function var_11_2(arg_12_0, arg_12_1)
-		local var_12_0 = var_0_15.TagBytes(arg_11_1.number, arg_12_0)
+	local function AddDecoder(wiretype, is_packed)
+		local tag_bytes = encoder.TagBytes(field_descriptor.number, wiretype)
 
-		arg_11_0._decoders_by_tag[var_12_0] = var_0_28[arg_11_1.type](arg_11_1.number, var_11_0, arg_12_1, arg_11_1, arg_11_1._default_constructor)
+		message_meta._decoders_by_tag[tag_bytes] = TYPE_TO_DECODER[field_descriptor.type](field_descriptor.number, is_repeated, is_packed, field_descriptor, field_descriptor._default_constructor)
 	end
 
-	var_11_2(var_0_29[arg_11_1.type], False)
+	AddDecoder(FIELD_TYPE_TO_WIRE_TYPE[field_descriptor.type], False)
 
-	if var_11_0 and var_0_30(arg_11_1.type) then
-		var_11_2(var_0_13.WIRETYPE_LENGTH_DELIMITED, True)
+	if is_repeated and IsTypePackable(field_descriptor.type) then
+		AddDecoder(wire_format.WIRETYPE_LENGTH_DELIMITED, True)
 	end
 end
 
-local function var_0_34(arg_13_0, arg_13_1)
-	for iter_13_0, iter_13_1 in var_0_4(arg_13_0.enum_types) do
-		for iter_13_2, iter_13_3 in var_0_4(iter_13_1.values) do
-			arg_13_1._member[iter_13_3.name] = iter_13_3.number
+local function _AddEnumValues(descriptor, message_meta)
+	for _, enum_type in ipairs(descriptor.enum_types) do
+		for _, enum_value in ipairs(enum_type.values) do
+			message_meta._member[enum_value.name] = enum_value.number
 		end
 	end
 end
 
-local function var_0_35(arg_14_0)
+local function _InitMethod(message_meta)
 	return function()
-		local var_15_0 = {}
+		local self = {}
 
-		var_15_0._cached_byte_size = 0
-		var_15_0._cached_byte_size_dirty = false
-		var_15_0._fields = {}
-		var_15_0._is_present_in_parent = false
-		var_15_0._listener = var_0_17.NullMessageListener()
-		var_15_0._listener_for_children = var_0_17.Listener(var_15_0)
-		var_15_0.__cname = arg_14_0._descriptor.name
+		self._cached_byte_size = 0
+		self._cached_byte_size_dirty = false
+		self._fields = {}
+		self._is_present_in_parent = false
+		self._listener = listener_mod.NullMessageListener()
+		self._listener_for_children = listener_mod.Listener(self)
+		self.__cname = message_meta._descriptor.name
 
-		return var_0_0(var_15_0, arg_14_0)
+		return setmetatable(self, message_meta)
 	end
 end
 
-local function var_0_36(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0.name
+local function _AddPropertiesForRepeatedField(field, message_meta)
+	local property_name = field.name
 
-	arg_16_1._getter[var_16_0] = function(arg_17_0)
-		local var_17_0 = arg_17_0._fields[arg_16_0]
+	message_meta._getter[property_name] = function(self)
+		local field_value = self._fields[field]
 
-		if var_17_0 == nil then
-			var_17_0 = arg_16_0._default_constructor(arg_17_0)
-			arg_17_0._fields[arg_16_0] = var_17_0
+		if field_value == nil then
+			field_value = field._default_constructor(self)
+			self._fields[field] = field_value
 
-			if not arg_17_0._cached_byte_size_dirty then
-				arg_16_1._member._Modified(arg_17_0)
+			if not self._cached_byte_size_dirty then
+				message_meta._member._Modified(self)
 			end
 		end
 
-		return var_17_0
+		return field_value
 	end
-	arg_16_1._setter[var_16_0] = function(arg_18_0)
-		var_0_3("Assignment not allowed to repeated field \"" .. var_16_0 .. "\" in protocol message object.")
+	message_meta._setter[property_name] = function(self)
+		error("Assignment not allowed to repeated field \"" .. property_name .. "\" in protocol message object.")
 	end
 end
 
-local function var_0_37(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.name
-	local var_19_1 = arg_19_0.message_type
+local function _AddPropertiesForNonRepeatedCompositeField(field, message_meta)
+	local property_name = field.name
+	local message_type = field.message_type
 
-	arg_19_1._getter[var_19_0] = function(arg_20_0)
-		local var_20_0 = arg_20_0._fields[arg_19_0]
+	message_meta._getter[property_name] = function(self)
+		local field_value = self._fields[field]
 
-		if var_20_0 == nil then
-			var_20_0 = var_19_1._concrete_class()
+		if field_value == nil then
+			field_value = message_type._concrete_class()
 
-			var_20_0:_SetListener(arg_20_0._listener_for_children)
+			field_value:_SetListener(self._listener_for_children)
 
-			arg_20_0._fields[arg_19_0] = var_20_0
+			self._fields[field] = field_value
 
-			if not arg_20_0._cached_byte_size_dirty then
-				arg_19_1._member._Modified(arg_20_0)
+			if not self._cached_byte_size_dirty then
+				message_meta._member._Modified(self)
 			end
 		end
 
-		return var_20_0
+		return field_value
 	end
-	arg_19_1._setter[var_19_0] = function(arg_21_0, arg_21_1)
-		var_0_3("Assignment not allowed to composite field" .. var_19_0 .. "in protocol message object.")
+	message_meta._setter[property_name] = function(self, new_value)
+		error("Assignment not allowed to composite field" .. property_name .. "in protocol message object.")
 	end
 end
 
-local function var_0_38(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0.name
-	local var_22_1 = var_0_31(arg_22_0.cpp_type, arg_22_0.type)
-	local var_22_2 = arg_22_0.default_value
+local function _AddPropertiesForNonRepeatedScalarField(field, message)
+	local property_name = field.name
+	local type_checker = GetTypeChecker(field.cpp_type, field.type)
+	local default_value = field.default_value
 
-	arg_22_1._getter[var_22_0] = function(arg_23_0)
-		if arg_23_0._fields[arg_22_0] ~= nil then
-			return arg_23_0._fields[arg_22_0]
+	message._getter[property_name] = function(self)
+		local value = self._fields[field]
+
+		if value ~= nil then
+			return self._fields[field]
 		else
-			return var_22_2
+			return default_value
 		end
 	end
-	arg_22_1._setter[var_22_0] = function(arg_24_0, arg_24_1)
-		var_22_1(arg_24_1)
+	message._setter[property_name] = function(self, new_value)
+		type_checker(new_value)
 
-		arg_24_0._fields[arg_22_0] = arg_24_1
+		self._fields[field] = new_value
 
-		if not arg_24_0._cached_byte_size_dirty then
-			arg_22_1._member._Modified(arg_24_0)
+		if not self._cached_byte_size_dirty then
+			message._member._Modified(self)
 		end
 	end
 end
 
-local function var_0_39(arg_25_0, arg_25_1)
-	constant_name = arg_25_0.name:upper() .. "_FIELD_NUMBER"
-	arg_25_1._member[constant_name] = arg_25_0.number
+local function _AddPropertiesForField(field, message_meta)
+	constant_name = field.name:upper() .. "_FIELD_NUMBER"
+	message_meta._member[constant_name] = field.number
 
-	if arg_25_0.label == var_0_19.LABEL_REPEATED then
-		var_0_36(arg_25_0, arg_25_1)
-	elseif arg_25_0.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-		var_0_37(arg_25_0, arg_25_1)
+	if field.label == FieldDescriptor.LABEL_REPEATED then
+		_AddPropertiesForRepeatedField(field, message_meta)
+	elseif field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+		_AddPropertiesForNonRepeatedCompositeField(field, message_meta)
 	else
-		var_0_38(arg_25_0, arg_25_1)
+		_AddPropertiesForNonRepeatedScalarField(field, message_meta)
 	end
 end
 
-local var_0_40 = {
-	__index = function(arg_26_0, arg_26_1)
-		local var_26_0 = var_0_2(arg_26_0, "_extended_message")
-		local var_26_1 = var_26_0._fields[arg_26_1]
+local _ED_meta = {
+	__index = function(self, extension_handle)
+		local _extended_message = rawget(self, "_extended_message")
+		local value = _extended_message._fields[extension_handle]
 
-		if var_26_1 ~= nil then
-			return var_26_1
+		if value ~= nil then
+			return value
 		end
 
-		if arg_26_1.label == var_0_19.LABEL_REPEATED then
-			var_26_1 = arg_26_1._default_constructor(arg_26_0._extended_message)
-		elseif arg_26_1.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-			var_26_1 = arg_26_1.message_type._concrete_class()
+		if extension_handle.label == FieldDescriptor.LABEL_REPEATED then
+			value = extension_handle._default_constructor(self._extended_message)
+		elseif extension_handle.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+			value = extension_handle.message_type._concrete_class()
 
-			var_26_1:_SetListener(var_26_0._listener_for_children)
+			value:_SetListener(_extended_message._listener_for_children)
 		else
-			return arg_26_1.default_value
+			return extension_handle.default_value
 		end
 
-		var_26_0._fields[arg_26_1] = var_26_1
+		_extended_message._fields[extension_handle] = value
 
-		return var_26_1
+		return value
 	end,
-	__newindex = function(arg_27_0, arg_27_1, arg_27_2)
-		local var_27_0 = var_0_2(arg_27_0, "_extended_message")
+	__newindex = function(self, extension_handle, value)
+		local _extended_message = rawget(self, "_extended_message")
 
-		if arg_27_1.label == var_0_19.LABEL_REPEATED or arg_27_1.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-			var_0_3("Cannot assign to extension \"" .. arg_27_1.full_name .. "\" because it is a repeated or composite type.")
+		if extension_handle.label == FieldDescriptor.LABEL_REPEATED or extension_handle.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+			error("Cannot assign to extension \"" .. extension_handle.full_name .. "\" because it is a repeated or composite type.")
 		end
 
-		var_0_31(arg_27_1.cpp_type, arg_27_1.type).CheckValue(arg_27_2)
+		local type_checker = GetTypeChecker(extension_handle.cpp_type, extension_handle.type)
 
-		var_27_0._fields[arg_27_1] = arg_27_2
+		type_checker.CheckValue(value)
 
-		var_27_0._Modified()
+		_extended_message._fields[extension_handle] = value
+
+		_extended_message._Modified()
 	end
 }
 
-local function var_0_41(arg_28_0)
-	local var_28_0 = {
-		_extended_message = arg_28_0
-	}
+local function _ExtensionDict(message)
+	local o = {}
 
-	return var_0_0(var_28_0, var_0_40)
+	o._extended_message = message
+
+	return setmetatable(o, _ED_meta)
 end
 
-local function var_0_42(arg_29_0, arg_29_1)
-	for iter_29_0, iter_29_1 in var_0_4(arg_29_0.fields) do
-		var_0_39(iter_29_1, arg_29_1)
+local function _AddPropertiesForFields(descriptor, message_meta)
+	for _, field in ipairs(descriptor.fields) do
+		_AddPropertiesForField(field, message_meta)
 	end
 
-	if arg_29_0.is_extendable then
-		function arg_29_1._getter.Extensions(arg_30_0)
-			return var_0_41(arg_30_0)
+	if descriptor.is_extendable then
+		function message_meta._getter:Extensions()
+			return _ExtensionDict(self)
 		end
 	end
 end
 
-local function var_0_43(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0._extensions_by_name
+local function _AddPropertiesForExtensions(descriptor, message_meta)
+	local extension_dict = descriptor._extensions_by_name
 
-	for iter_31_0, iter_31_1 in var_0_5(var_31_0) do
-		local var_31_1 = var_0_8.upper(iter_31_0) .. "_FIELD_NUMBER"
+	for extension_name, extension_field in pairs(extension_dict) do
+		local constant_name = string.upper(extension_name) .. "_FIELD_NUMBER"
 
-		arg_31_1._member[var_31_1] = iter_31_1.number
+		message_meta._member[constant_name] = extension_field.number
 	end
 end
 
-local function var_0_44(arg_32_0)
-	function arg_32_0._member.RegisterExtension(arg_33_0)
-		arg_33_0.containing_type = arg_32_0._descriptor
+local function _AddStaticMethods(message_meta)
+	function message_meta._member.RegisterExtension(extension_handle)
+		extension_handle.containing_type = message_meta._descriptor
 
-		var_0_33(arg_32_0, arg_33_0)
+		_AttachFieldHelpers(message_meta, extension_handle)
 
-		if arg_32_0._extensions_by_number[arg_33_0.number] == nil then
-			arg_32_0._extensions_by_number[arg_33_0.number] = arg_33_0
+		if message_meta._extensions_by_number[extension_handle.number] == nil then
+			message_meta._extensions_by_number[extension_handle.number] = extension_handle
 		else
-			var_0_3(var_0_8.format("Extensions \"%s\" and \"%s\" both try to extend message type \"%s\" with field number %d.", arg_33_0.full_name, actual_handle.full_name, arg_32_0._descriptor.full_name, arg_33_0.number))
+			error(string.format("Extensions \"%s\" and \"%s\" both try to extend message type \"%s\" with field number %d.", extension_handle.full_name, actual_handle.full_name, message_meta._descriptor.full_name, extension_handle.number))
 		end
 
-		arg_32_0._extensions_by_name[arg_33_0.full_name] = arg_33_0
+		message_meta._extensions_by_name[extension_handle.full_name] = extension_handle
 	end
 
-	function arg_32_0._member.FromString(arg_34_0)
-		local var_34_0 = arg_32_0._member.__call()
+	function message_meta._member.FromString(s)
+		local message = message_meta._member.__call()
 
-		var_34_0.MergeFromString(arg_34_0)
+		message.MergeFromString(s)
 
-		return var_34_0
+		return message
 	end
 end
 
-local function var_0_45(arg_35_0, arg_35_1)
-	if arg_35_0.label == var_0_19.LABEL_REPEATED then
-		return arg_35_1
-	elseif arg_35_0.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-		return arg_35_1._is_present_in_parent
+local function _IsPresent(descriptor, value)
+	if descriptor.label == FieldDescriptor.LABEL_REPEATED then
+		return value
+	elseif descriptor.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+		return value._is_present_in_parent
 	else
 		return true
 	end
 end
 
-function sortFunc(arg_36_0, arg_36_1)
-	return arg_36_0.index < arg_36_1.index
+function sortFunc(a, b)
+	return a.index < b.index
 end
 
-function pairsByKeys(arg_37_0, arg_37_1)
-	local var_37_0 = {}
+function pairsByKeys(t, f)
+	local a = {}
 
-	for iter_37_0 in var_0_5(arg_37_0) do
-		var_0_7.insert(var_37_0, iter_37_0)
+	for n in pairs(t) do
+		table.insert(a, n)
 	end
 
-	var_0_7.sort(var_37_0, arg_37_1)
+	table.sort(a, f)
 
-	local var_37_1 = 0
+	local i = 0
 
-	return function()
-		var_37_1 = var_37_1 + 1
+	local function iter()
+		i = i + 1
 
-		if var_37_0[var_37_1] == nil then
+		if a[i] == nil then
 			return nil
 		else
-			return var_37_0[var_37_1], arg_37_0[var_37_0[var_37_1]]
+			return a[i], t[a[i]]
 		end
 	end
+
+	return iter
 end
 
-local function var_0_46(arg_39_0, arg_39_1)
-	function arg_39_1._member.ListFields(arg_40_0)
-		return (function(arg_41_0)
-			local var_41_0, var_41_1, var_41_2 = pairsByKeys(arg_40_0._fields, sortFunc)
+local function _AddListFieldsMethod(message_descriptor, message_meta)
+	function message_meta._member:ListFields()
+		local function list_field(fields)
+			local f, s, v = pairsByKeys(self._fields, sortFunc)
 
-			return function(arg_42_0, arg_42_1)
+			local function iter(a, i)
 				while true do
-					local var_42_0, var_42_1 = var_41_0(arg_42_0, arg_42_1)
+					local descriptor, value = f(a, i)
 
-					if var_42_0 == nil then
+					if descriptor == nil then
 						return
-					elseif var_0_45(var_42_0, var_42_1) then
-						return var_42_0, var_42_1
+					elseif _IsPresent(descriptor, value) then
+						return descriptor, value
 					end
 				end
-			end, var_41_1, var_41_2
-		end)(arg_40_0._fields)
+			end
+
+			return iter, s, v
+		end
+
+		return list_field(self._fields)
 	end
 end
 
-local function var_0_47(arg_43_0, arg_43_1)
-	local var_43_0 = {}
+local function _AddHasFieldMethod(message_descriptor, message_meta)
+	local singular_fields = {}
 
-	for iter_43_0, iter_43_1 in var_0_4(arg_43_0.fields) do
-		if iter_43_1.label ~= var_0_19.LABEL_REPEATED then
-			var_43_0[iter_43_1.name] = iter_43_1
+	for _, field in ipairs(message_descriptor.fields) do
+		if field.label ~= FieldDescriptor.LABEL_REPEATED then
+			singular_fields[field.name] = field
 		end
 	end
 
-	function arg_43_1._member.HasField(arg_44_0, arg_44_1)
-		field = var_43_0[arg_44_1]
+	function message_meta._member:HasField(field_name)
+		field = singular_fields[field_name]
 
 		if field == nil then
-			var_0_3("Protocol message has no singular \"" .. arg_44_1 .. "\" field.")
+			error("Protocol message has no singular \"" .. field_name .. "\" field.")
 		end
 
-		if field.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-			value = arg_44_0._fields[field]
+		if field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+			value = self._fields[field]
 
 			return value ~= nil and value._is_present_in_parent
 		else
-			return arg_44_0._fields[field] ~= nil
+			local valueTmp = self._fields[field]
+
+			return valueTmp ~= nil
 		end
 	end
 end
 
-local function var_0_48(arg_45_0, arg_45_1)
-	local var_45_0 = {}
+local function _AddClearFieldMethod(message_descriptor, message_meta)
+	local singular_fields = {}
 
-	for iter_45_0, iter_45_1 in var_0_4(arg_45_0.fields) do
-		if iter_45_1.label ~= var_0_19.LABEL_REPEATED then
-			var_45_0[iter_45_1.name] = iter_45_1
+	for _, field in ipairs(message_descriptor.fields) do
+		if field.label ~= FieldDescriptor.LABEL_REPEATED then
+			singular_fields[field.name] = field
 		end
 	end
 
-	function arg_45_1._member.ClearField(arg_46_0, arg_46_1)
-		field = var_45_0[arg_46_1]
+	function message_meta._member:ClearField(field_name)
+		field = singular_fields[field_name]
 
 		if field == nil then
-			var_0_3("Protocol message has no singular \"" .. arg_46_1 .. "\" field.")
+			error("Protocol message has no singular \"" .. field_name .. "\" field.")
 		end
 
-		if arg_46_0._fields[field] then
-			arg_46_0._fields[field] = nil
+		if self._fields[field] then
+			self._fields[field] = nil
 		end
 
-		arg_45_1._member._Modified(arg_46_0)
+		message_meta._member._Modified(self)
 	end
 end
 
-local function var_0_49(arg_47_0)
-	function arg_47_0._member.ClearExtension(arg_48_0, arg_48_1)
-		if arg_48_0._fields[arg_48_1] == nil then
-			arg_48_0._fields[arg_48_1] = nil
+local function _AddClearExtensionMethod(message_meta)
+	function message_meta._member:ClearExtension(extension_handle)
+		if self._fields[extension_handle] == nil then
+			self._fields[extension_handle] = nil
 		end
 
-		arg_47_0._member._Modified(arg_48_0)
+		message_meta._member._Modified(self)
 	end
 end
 
-local function var_0_50(arg_49_0, arg_49_1)
-	function arg_49_1._member.Clear(arg_50_0)
-		arg_50_0._fields = {}
+local function _AddClearMethod(message_descriptor, message_meta)
+	function message_meta._member:Clear()
+		self._fields = {}
 
-		arg_49_1._member._Modified(arg_50_0)
+		message_meta._member._Modified(self)
 	end
 end
 
-local function var_0_51(arg_51_0)
-	local var_51_0 = var_0_20.msg_format
+local function _AddStrMethod(message_meta)
+	local format = text_format.msg_format
 
-	function arg_51_0.__tostring(arg_52_0)
-		return var_51_0(arg_52_0)
+	function message_meta:__tostring()
+		return format(self)
 	end
 end
 
-local function var_0_52(arg_53_0)
-	function arg_53_0._member.HasExtension(arg_54_0, arg_54_1)
-		if arg_54_1.label == var_0_19.LABEL_REPEATED then
-			var_0_3(arg_54_1.full_name .. " is repeated.")
+local function _AddHasExtensionMethod(message_meta)
+	function message_meta._member:HasExtension(extension_handle)
+		if extension_handle.label == FieldDescriptor.LABEL_REPEATED then
+			error(extension_handle.full_name .. " is repeated.")
 		end
 
-		if arg_54_1.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-			value = arg_54_0._fields[arg_54_1]
+		if extension_handle.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+			value = self._fields[extension_handle]
 
 			return value ~= nil and value._is_present_in_parent
 		else
-			return arg_54_0._fields[arg_54_1]
+			return self._fields[extension_handle]
 		end
 	end
 end
 
-local function var_0_53(arg_55_0)
-	function arg_55_0._member._SetListener(arg_56_0, arg_56_1)
-		if arg_56_1 ~= nil then
-			arg_56_0._listener = var_0_17.NullMessageListener()
+local function _AddSetListenerMethod(message_meta)
+	function message_meta._member:_SetListener(listener)
+		if listener ~= nil then
+			self._listener = listener_mod.NullMessageListener()
 		else
-			arg_56_0._listener = arg_56_1
+			self._listener = listener
 		end
 	end
 end
 
-local function var_0_54(arg_57_0, arg_57_1)
-	function arg_57_1._member.ByteSize(arg_58_0)
-		if not arg_58_0._cached_byte_size_dirty and arg_58_0._cached_byte_size > 0 then
-			return arg_58_0._cached_byte_size
+local function _AddByteSizeMethod(message_descriptor, message_meta)
+	function message_meta._member:ByteSize()
+		if not self._cached_byte_size_dirty and self._cached_byte_size > 0 then
+			return self._cached_byte_size
 		end
 
-		local var_58_0 = 0
+		local size = 0
 
-		for iter_58_0, iter_58_1 in arg_57_1._member.ListFields(arg_58_0) do
-			var_58_0 = iter_58_0._sizer(iter_58_1) + var_58_0
+		for field_descriptor, field_value in message_meta._member.ListFields(self) do
+			size = field_descriptor._sizer(field_value) + size
 		end
 
-		arg_58_0._cached_byte_size = var_58_0
-		arg_58_0._cached_byte_size_dirty = false
-		arg_58_0._listener_for_children.dirty = false
+		self._cached_byte_size = size
+		self._cached_byte_size_dirty = false
+		self._listener_for_children.dirty = false
 
-		return var_58_0
+		return size
 	end
 end
 
-local function var_0_55(arg_59_0, arg_59_1)
-	function arg_59_1._member.SerializeToString(arg_60_0)
-		if not arg_59_1._member.IsInitialized(arg_60_0) then
-			var_0_3("Message is missing required fields: " .. var_0_7.concat(arg_59_1._member.FindInitializationErrors(arg_60_0), ","))
+local function _AddSerializeToStringMethod(message_descriptor, message_meta)
+	function message_meta._member:SerializeToString()
+		if not message_meta._member.IsInitialized(self) then
+			error("Message is missing required fields: " .. table.concat(message_meta._member.FindInitializationErrors(self), ","))
 		end
 
-		return arg_59_1._member.SerializePartialToString(arg_60_0)
+		return message_meta._member.SerializePartialToString(self)
 	end
 
-	function arg_59_1._member.SerializeToIOString(arg_61_0, arg_61_1)
-		if not arg_59_1._member.IsInitialized(arg_61_0) then
-			var_0_3("Message is missing required fields: " .. var_0_7.concat(arg_59_1._member.FindInitializationErrors(arg_61_0), ","))
+	function message_meta._member:SerializeToIOString(iostring)
+		if not message_meta._member.IsInitialized(self) then
+			error("Message is missing required fields: " .. table.concat(message_meta._member.FindInitializationErrors(self), ","))
 		end
 
-		return arg_59_1._member.SerializePartialToIOString(arg_61_0, arg_61_1)
+		return message_meta._member.SerializePartialToIOString(self, iostring)
 	end
 end
 
-local function var_0_56(arg_62_0, arg_62_1)
-	local var_62_0 = var_0_7.concat
+local function _AddSerializePartialToStringMethod(message_descriptor, message_meta)
+	local concat = table.concat
 
-	local function var_62_1(arg_63_0, arg_63_1)
-		for iter_63_0, iter_63_1 in arg_62_1._member.ListFields(arg_63_0) do
-			iter_63_0._encoder(arg_63_1, iter_63_1)
+	local function _internal_serialize(self, write_bytes)
+		for field_descriptor, field_value in message_meta._member.ListFields(self) do
+			field_descriptor._encoder(write_bytes, field_value)
 		end
 	end
 
-	local function var_62_2(arg_64_0, arg_64_1)
-		local var_64_0 = arg_64_1.write
+	local function _serialize_partial_to_iostring(self, iostring)
+		local w = iostring.write
 
-		local function var_64_1(arg_65_0)
-			var_64_0(arg_64_1, arg_65_0)
+		local function write(value)
+			w(iostring, value)
 		end
 
-		var_62_1(arg_64_0, var_64_1)
+		_internal_serialize(self, write)
 	end
 
-	local function var_62_3(arg_66_0)
-		local var_66_0 = {}
+	local function _serialize_partial_to_string(self)
+		local out = {}
 
-		local function var_66_1(arg_67_0)
-			var_66_0[#var_66_0 + 1] = arg_67_0
+		local function write(value)
+			out[#out + 1] = value
 		end
 
-		var_62_1(arg_66_0, var_66_1)
+		_internal_serialize(self, write)
 
-		return var_62_0(var_66_0)
+		return concat(out)
 	end
 
-	arg_62_1._member._InternalSerialize = var_62_1
-	arg_62_1._member.SerializePartialToIOString = var_62_2
-	arg_62_1._member.SerializePartialToString = var_62_3
+	message_meta._member._InternalSerialize = _internal_serialize
+	message_meta._member.SerializePartialToIOString = _serialize_partial_to_iostring
+	message_meta._member.SerializePartialToString = _serialize_partial_to_string
 end
 
-local function var_0_57(arg_68_0, arg_68_1)
-	local var_68_0 = var_0_16.ReadTag
-	local var_68_1 = var_0_16.SkipField
-	local var_68_2 = arg_68_1._decoders_by_tag
+local function _AddMergeFromStringMethod(message_descriptor, message_meta)
+	local ReadTag = decoder.ReadTag
+	local SkipField = decoder.SkipField
+	local decoders_by_tag = message_meta._decoders_by_tag
 
-	local function var_68_3(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
-		arg_68_1._member._Modified(arg_69_0)
+	local function _internal_parse(self, buffer, pos, pend)
+		message_meta._member._Modified(self)
 
-		local var_69_0 = arg_69_0._fields
-		local var_69_1
-		local var_69_2
-		local var_69_3
+		local field_dict = self._fields
+		local tag_bytes, new_pos, field_decoder
 
-		while arg_69_2 ~= arg_69_3 do
-			local var_69_4, var_69_5 = var_68_0(arg_69_1, arg_69_2)
-			local var_69_6 = var_68_2[var_69_4]
+		while pos ~= pend do
+			tag_bytes, new_pos = ReadTag(buffer, pos)
+			field_decoder = decoders_by_tag[tag_bytes]
 
-			if var_69_6 == nil then
-				var_69_5 = var_68_1(arg_69_1, var_69_5, arg_69_3, var_69_4)
+			if field_decoder == nil then
+				new_pos = SkipField(buffer, new_pos, pend, tag_bytes)
 
-				if var_69_5 == -1 then
-					return arg_69_2
+				if new_pos == -1 then
+					return pos
 				end
 
-				arg_69_2 = var_69_5
+				pos = new_pos
 			else
-				arg_69_2 = var_69_6(arg_69_1, var_69_5, arg_69_3, arg_69_0, var_69_0)
+				pos = field_decoder(buffer, new_pos, pend, self, field_dict)
 			end
 		end
 
-		return arg_69_2
+		return pos
 	end
 
-	arg_68_1._member._InternalParse = var_68_3
+	message_meta._member._InternalParse = _internal_parse
 
-	local function var_68_4(arg_70_0, arg_70_1)
-		local var_70_0 = #arg_70_1
+	local function merge_from_string(self, serialized)
+		local length = #serialized
 
-		if var_68_3(arg_70_0, arg_70_1, 0, var_70_0) ~= var_70_0 then
-			var_0_3("Unexpected end-group tag.")
+		if _internal_parse(self, serialized, 0, length) ~= length then
+			error("Unexpected end-group tag.")
 		end
 
-		return var_70_0
+		return length
 	end
 
-	arg_68_1._member.MergeFromString = var_68_4
+	message_meta._member.MergeFromString = merge_from_string
 
-	function arg_68_1._member.ParseFromString(arg_71_0, arg_71_1)
-		arg_68_1._member.Clear(arg_71_0)
-		var_68_4(arg_71_0, arg_71_1)
+	function message_meta._member:ParseFromString(serialized)
+		message_meta._member.Clear(self)
+		merge_from_string(self, serialized)
 	end
 end
 
-local function var_0_58(arg_72_0, arg_72_1)
-	local var_72_0 = {}
+local function _AddIsInitializedMethod(message_descriptor, message_meta)
+	local required_fields = {}
 
-	for iter_72_0, iter_72_1 in var_0_4(arg_72_0.fields) do
-		if iter_72_1.label == var_0_19.LABEL_REQUIRED then
-			var_72_0[#var_72_0 + 1] = iter_72_1
+	for _, field in ipairs(message_descriptor.fields) do
+		if field.label == FieldDescriptor.LABEL_REQUIRED then
+			required_fields[#required_fields + 1] = field
 		end
 	end
 
-	function arg_72_1._member.IsInitialized(arg_73_0, arg_73_1)
-		for iter_73_0, iter_73_1 in var_0_4(var_72_0) do
-			if arg_73_0._fields[iter_73_1] == nil or iter_73_1.cpp_type == var_0_19.CPPTYPE_MESSAGE and not arg_73_0._fields[iter_73_1]._is_present_in_parent then
-				if arg_73_1 ~= nil then
-					arg_73_1[#arg_73_1 + 1] = arg_72_1._member.FindInitializationErrors(arg_73_0)
+	function message_meta._member:IsInitialized(errors)
+		for _, field in ipairs(required_fields) do
+			if self._fields[field] == nil or field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE and not self._fields[field]._is_present_in_parent then
+				if errors ~= nil then
+					errors[#errors + 1] = message_meta._member.FindInitializationErrors(self)
 				end
 
 				return false
 			end
 		end
 
-		for iter_73_2, iter_73_3 in var_0_5(arg_73_0._fields) do
-			if iter_73_2.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-				if iter_73_2.label == var_0_19.LABEL_REPEATED then
-					for iter_73_4, iter_73_5 in var_0_4(iter_73_3) do
-						if not iter_73_5:IsInitialized() then
-							if arg_73_1 ~= nil then
-								arg_73_1[#arg_73_1 + 1] = arg_72_1._member.FindInitializationErrors(arg_73_0)
+		for field, value in pairs(self._fields) do
+			if field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+				if field.label == FieldDescriptor.LABEL_REPEATED then
+					for _, element in ipairs(value) do
+						if not element:IsInitialized() then
+							if errors ~= nil then
+								errors[#errors + 1] = message_meta._member.FindInitializationErrors(self)
 							end
 
 							return false
 						end
 					end
-				elseif iter_73_3._is_present_in_parent and not iter_73_3:IsInitialized() then
-					if arg_73_1 ~= nil then
-						arg_73_1[#arg_73_1 + 1] = arg_72_1._member.FindInitializationErrors(arg_73_0)
+				elseif value._is_present_in_parent and not value:IsInitialized() then
+					if errors ~= nil then
+						errors[#errors + 1] = message_meta._member.FindInitializationErrors(self)
 					end
 
 					return false
@@ -841,199 +854,199 @@ local function var_0_58(arg_72_0, arg_72_1)
 		return true
 	end
 
-	function arg_72_1._member.FindInitializationErrors(arg_74_0)
-		local var_74_0 = {}
+	function message_meta._member:FindInitializationErrors()
+		local errors = {}
 
-		for iter_74_0, iter_74_1 in var_0_4(var_72_0) do
-			if not arg_72_1._member.HasField(arg_74_0, iter_74_1.name) then
-				var_74_0[#var_74_0 + 1] = iter_74_1.name
+		for _, field in ipairs(required_fields) do
+			if not message_meta._member.HasField(self, field.name) then
+				errors[#errors + 1] = field.name
 			end
 		end
 
-		for iter_74_2, iter_74_3 in arg_72_1._member.ListFields(arg_74_0) do
-			if iter_74_2.cpp_type == var_0_19.CPPTYPE_MESSAGE then
-				if iter_74_2.is_extension then
-					name = var_0_8.format("(%s)", iter_74_2.full_name)
+		for field, value in message_meta._member.ListFields(self) do
+			if field.cpp_type == FieldDescriptor.CPPTYPE_MESSAGE then
+				if field.is_extension then
+					name = string.format("(%s)", field.full_name)
 				else
-					name = iter_74_2.name
+					name = field.name
 				end
 
-				if iter_74_2.label == var_0_19.LABEL_REPEATED then
-					for iter_74_4, iter_74_5 in var_0_4(iter_74_3) do
-						prefix = var_0_8.format("%s[%d].", name, iter_74_4)
-						sub_errors = iter_74_5:FindInitializationErrors()
+				if field.label == FieldDescriptor.LABEL_REPEATED then
+					for i, element in ipairs(value) do
+						prefix = string.format("%s[%d].", name, i)
+						sub_errors = element:FindInitializationErrors()
 
-						for iter_74_6, iter_74_7 in var_0_4(sub_errors) do
-							var_74_0[#var_74_0 + 1] = prefix .. iter_74_7
+						for _, e in ipairs(sub_errors) do
+							errors[#errors + 1] = prefix .. e
 						end
 					end
 				else
 					prefix = name .. "."
-					sub_errors = iter_74_3:FindInitializationErrors()
+					sub_errors = value:FindInitializationErrors()
 
-					for iter_74_8, iter_74_9 in var_0_4(sub_errors) do
-						var_74_0[#var_74_0 + 1] = prefix .. iter_74_9
+					for _, e in ipairs(sub_errors) do
+						errors[#errors + 1] = prefix .. e
 					end
 				end
 			end
 		end
 
-		return var_74_0
+		return errors
 	end
 end
 
-local function var_0_59(arg_75_0)
-	local var_75_0 = var_0_19.LABEL_REPEATED
-	local var_75_1 = var_0_19.CPPTYPE_MESSAGE
+local function _AddMergeFromMethod(message_meta)
+	local LABEL_REPEATED = FieldDescriptor.LABEL_REPEATED
+	local CPPTYPE_MESSAGE = FieldDescriptor.CPPTYPE_MESSAGE
 
-	function arg_75_0._member.MergeFrom(arg_76_0, arg_76_1)
-		assert(arg_76_1 ~= arg_76_0)
-		arg_75_0._member._Modified(arg_76_0)
+	function message_meta._member:MergeFrom(msg)
+		assert(msg ~= self)
+		message_meta._member._Modified(self)
 
-		local var_76_0 = arg_76_0._fields
+		local fields = self._fields
 
-		for iter_76_0, iter_76_1 in var_0_5(arg_76_1._fields) do
-			if iter_76_0.label == var_75_0 or iter_76_0.cpp_type == var_75_1 then
-				field_value = var_76_0[iter_76_0]
+		for field, value in pairs(msg._fields) do
+			if field.label == LABEL_REPEATED or field.cpp_type == CPPTYPE_MESSAGE then
+				field_value = fields[field]
 
 				if field_value == nil then
-					field_value = iter_76_0._default_constructor(arg_76_0)
-					var_76_0[iter_76_0] = field_value
+					field_value = field._default_constructor(self)
+					fields[field] = field_value
 				end
 
-				field_value:MergeFrom(iter_76_1)
+				field_value:MergeFrom(value)
 			else
-				arg_76_0._fields[iter_76_0] = iter_76_1
+				self._fields[field] = value
 			end
 		end
 	end
 end
 
-local function var_0_60(arg_77_0, arg_77_1)
-	var_0_46(arg_77_0, arg_77_1)
-	var_0_47(arg_77_0, arg_77_1)
-	var_0_48(arg_77_0, arg_77_1)
+local function _AddMessageMethods(message_descriptor, message_meta)
+	_AddListFieldsMethod(message_descriptor, message_meta)
+	_AddHasFieldMethod(message_descriptor, message_meta)
+	_AddClearFieldMethod(message_descriptor, message_meta)
 
-	if arg_77_0.is_extendable then
-		var_0_49(arg_77_1)
-		var_0_52(arg_77_1)
+	if message_descriptor.is_extendable then
+		_AddClearExtensionMethod(message_meta)
+		_AddHasExtensionMethod(message_meta)
 	end
 
-	var_0_50(arg_77_0, arg_77_1)
-	var_0_51(arg_77_1)
-	var_0_53(arg_77_1)
-	var_0_54(arg_77_0, arg_77_1)
-	var_0_55(arg_77_0, arg_77_1)
-	var_0_56(arg_77_0, arg_77_1)
-	var_0_57(arg_77_0, arg_77_1)
-	var_0_58(arg_77_0, arg_77_1)
-	var_0_59(arg_77_1)
+	_AddClearMethod(message_descriptor, message_meta)
+	_AddStrMethod(message_meta)
+	_AddSetListenerMethod(message_meta)
+	_AddByteSizeMethod(message_descriptor, message_meta)
+	_AddSerializeToStringMethod(message_descriptor, message_meta)
+	_AddSerializePartialToStringMethod(message_descriptor, message_meta)
+	_AddMergeFromStringMethod(message_descriptor, message_meta)
+	_AddIsInitializedMethod(message_descriptor, message_meta)
+	_AddMergeFromMethod(message_meta)
 end
 
-local function var_0_61(arg_78_0)
-	local function var_78_0(arg_79_0)
-		if not arg_79_0._cached_byte_size_dirty then
-			arg_79_0._cached_byte_size_dirty = true
-			arg_79_0._listener_for_children.dirty = true
-			arg_79_0._is_present_in_parent = true
+local function _AddPrivateHelperMethods(message_meta)
+	local function Modified(self)
+		if not self._cached_byte_size_dirty then
+			self._cached_byte_size_dirty = true
+			self._listener_for_children.dirty = true
+			self._is_present_in_parent = true
 
-			arg_79_0._listener:Modified()
+			self._listener:Modified()
 		end
 	end
 
-	arg_78_0._member._Modified = var_78_0
-	arg_78_0._member.SetInParent = var_78_0
+	message_meta._member._Modified = Modified
+	message_meta._member.SetInParent = Modified
 end
 
-local function var_0_62(arg_80_0)
-	local var_80_0 = arg_80_0._getter
-	local var_80_1 = arg_80_0._member
+local function property_getter(message_meta)
+	local getter = message_meta._getter
+	local member = message_meta._member
 
-	return function(arg_81_0, arg_81_1)
-		local var_81_0 = var_80_0[arg_81_1]
+	return function(self, property)
+		local g = getter[property]
 
-		if var_81_0 then
-			return var_81_0(arg_81_0)
+		if g then
+			return g(self)
 		else
-			return var_80_1[arg_81_1]
+			return member[property]
 		end
 	end
 end
 
-local function var_0_63(arg_82_0)
-	local var_82_0 = arg_82_0._setter
+local function property_setter(message_meta)
+	local setter = message_meta._setter
 
-	return function(arg_83_0, arg_83_1, arg_83_2)
-		local var_83_0 = var_82_0[arg_83_1]
+	return function(self, property, value)
+		local s = setter[property]
 
-		if var_83_0 then
-			var_83_0(arg_83_0, arg_83_2)
-		elseif var_0_11 then
-			var_0_11(arg_83_1 .. " not found")
+		if s then
+			s(self, value)
+		elseif logError then
+			logError(property .. " not found")
 		else
-			var_0_3(arg_83_1 .. " not found")
+			error(property .. " not found")
 		end
 	end
 end
 
-function _AddClassAttributesForNestedExtensions(arg_84_0, arg_84_1)
-	local var_84_0 = arg_84_0._extensions_by_name
+function _AddClassAttributesForNestedExtensions(descriptor, message_meta)
+	local extension_dict = descriptor._extensions_by_name
 
-	for iter_84_0, iter_84_1 in var_0_5(var_84_0) do
-		arg_84_1._member[iter_84_0] = iter_84_1
+	for extension_name, extension_field in pairs(extension_dict) do
+		message_meta._member[extension_name] = extension_field
 	end
 end
 
-local function var_0_64(arg_85_0)
-	local var_85_0 = {
-		_decoders_by_tag = {}
-	}
+local function Message(descriptor)
+	local message_meta = {}
 
-	var_0_1(arg_85_0, "_extensions_by_name", {})
+	message_meta._decoders_by_tag = {}
 
-	for iter_85_0, iter_85_1 in var_0_4(arg_85_0.extensions) do
-		arg_85_0._extensions_by_name[iter_85_1.name] = iter_85_1
+	rawset(descriptor, "_extensions_by_name", {})
+
+	for _, k in ipairs(descriptor.extensions) do
+		descriptor._extensions_by_name[k.name] = k
 	end
 
-	var_0_1(arg_85_0, "_extensions_by_number", {})
+	rawset(descriptor, "_extensions_by_number", {})
 
-	for iter_85_2, iter_85_3 in var_0_4(arg_85_0.extensions) do
-		arg_85_0._extensions_by_number[iter_85_3.number] = iter_85_3
+	for _, k in ipairs(descriptor.extensions) do
+		descriptor._extensions_by_number[k.number] = k
 	end
 
-	var_85_0._descriptor = arg_85_0
-	var_85_0._extensions_by_name = {}
-	var_85_0._extensions_by_number = {}
-	var_85_0._getter = {}
-	var_85_0._setter = {}
-	var_85_0._member = {}
+	message_meta._descriptor = descriptor
+	message_meta._extensions_by_name = {}
+	message_meta._extensions_by_number = {}
+	message_meta._getter = {}
+	message_meta._setter = {}
+	message_meta._member = {}
 
-	local var_85_1 = var_0_0({}, var_85_0._member)
+	local ns = setmetatable({}, message_meta._member)
 
-	var_85_0._member.__call = var_0_35(var_85_0)
-	var_85_0._member.__index = var_85_0._member
-	var_85_0._member.type = var_85_1
+	message_meta._member.__call = _InitMethod(message_meta)
+	message_meta._member.__index = message_meta._member
+	message_meta._member.type = ns
 
-	if var_0_2(arg_85_0, "_concrete_class") == nil then
-		var_0_1(arg_85_0, "_concrete_class", var_85_1)
+	if rawget(descriptor, "_concrete_class") == nil then
+		rawset(descriptor, "_concrete_class", ns)
 
-		for iter_85_4, iter_85_5 in var_0_4(arg_85_0.fields) do
-			var_0_33(var_85_0, iter_85_5)
+		for k, field in ipairs(descriptor.fields) do
+			_AttachFieldHelpers(message_meta, field)
 		end
 	end
 
-	var_0_34(arg_85_0, var_85_0)
-	_AddClassAttributesForNestedExtensions(arg_85_0, var_85_0)
-	var_0_42(arg_85_0, var_85_0)
-	var_0_43(arg_85_0, var_85_0)
-	var_0_44(var_85_0)
-	var_0_60(arg_85_0, var_85_0)
-	var_0_61(var_85_0)
+	_AddEnumValues(descriptor, message_meta)
+	_AddClassAttributesForNestedExtensions(descriptor, message_meta)
+	_AddPropertiesForFields(descriptor, message_meta)
+	_AddPropertiesForExtensions(descriptor, message_meta)
+	_AddStaticMethods(message_meta)
+	_AddMessageMethods(descriptor, message_meta)
+	_AddPrivateHelperMethods(message_meta)
 
-	var_85_0.__index = var_0_62(var_85_0)
-	var_85_0.__newindex = var_0_63(var_85_0)
+	message_meta.__index = property_getter(message_meta)
+	message_meta.__newindex = property_setter(message_meta)
 
-	return var_85_1
+	return ns
 end
 
-_M.Message = var_0_64
+_M.Message = Message

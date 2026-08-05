@@ -78,7 +78,7 @@ function StoryViewDefine.init(module_views)
 		}
 	}
 	module_views.StoryBackgroundView = {
-		destroy = 0.1,
+		destroy = 0,
 		container = "StoryBackgroundViewContainer",
 		mainRes = "ui/viewres/story/view/storybackgroundview.prefab",
 		layer = "POPUP",
