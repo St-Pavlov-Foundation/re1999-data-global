@@ -139,7 +139,9 @@ function StoryConfig:loadStoryConfig(storyId, callback, callbackObj)
 			local json = cjson.decode(assetItem.TextAsset)
 
 			StoryStepModel.instance:setStepList(json[3])
-			assetItem:Retain()
+			TaskDispatcher.runDelay(function()
+				SLFramework.ResMgr.Instance:ClearItem(assetItem)
+			end, nil, 0.1)
 
 			isStepLoaded = true
 
@@ -160,7 +162,9 @@ function StoryConfig:loadStoryConfig(storyId, callback, callbackObj)
 			local json = cjson.decode(assetItem.TextAsset)
 
 			StoryGroupModel.instance:setGroupList(json)
-			assetItem:Retain()
+			TaskDispatcher.runDelay(function()
+				SLFramework.ResMgr.Instance:ClearItem(assetItem)
+			end, nil, 0.1)
 
 			isGroupLoaded = true
 

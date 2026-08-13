@@ -4,7 +4,7 @@ module("modules.logic.versionactivity3_7.skingift.define.V3a7_SkinGiftEnum", pac
 
 local V3a7_SkinGiftEnum = _M
 
-V3a7_SkinGiftEnum.PackageId = 837031
+V3a7_SkinGiftEnum.PackageId = 837005
 V3a7_SkinGiftEnum.ItemId = 491012
 V3a7_SkinGiftEnum.RewardIndex = 1
 V3a7_SkinGiftEnum.UniqueSkinDic = {

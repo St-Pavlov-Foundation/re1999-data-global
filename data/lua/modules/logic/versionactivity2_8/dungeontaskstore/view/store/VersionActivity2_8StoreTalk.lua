@@ -135,7 +135,7 @@ function VersionActivity2_8StoreTalk:_onFrameLateUpdate()
 		talkHeight = talkHeight + VersionActivity2_8StoreTalk.TipHeight
 	end
 
-	recthelper.setHeight(self.rectTrTalk, talkHeight)
+	recthelper.setHeight(self.rectTrTalk, math.min(350, talkHeight))
 end
 
 function VersionActivity2_8StoreTalk:_onFrame()

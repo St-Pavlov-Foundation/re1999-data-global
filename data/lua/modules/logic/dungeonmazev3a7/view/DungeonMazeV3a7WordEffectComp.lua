@@ -151,4 +151,4 @@ function DungeonMazeV3a7WordEffectComp:onDestroy()
 	TaskDispatcher.cancelTask(self.nextStep, self)
 end
 
-return DungeonMazeV3a7WordEffectComp
+return DungeonMazeWordEffectComp

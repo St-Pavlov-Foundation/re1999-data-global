@@ -161,15 +161,28 @@
     "isOnline": 1,
     "minType": "language_10119590",
     "name": "language_10119590",
-    "desc": "language_10119594",
+    "desc": "language_10119535",
     "listenerType": "Act229Star",
     "listenerParam": "13744",
-    "maxProgress": 3,
+    "maxProgress": 2,
     "maxFinishCount": 1,
     "bonus": "1#140120#1"
   },
   {
     "id": 760014,
+    "activityId": 13744,
+    "isOnline": 1,
+    "minType": "language_10119590",
+    "name": "language_10119590",
+    "desc": "language_10119536",
+    "listenerType": "Act229Star",
+    "listenerParam": "13744",
+    "maxProgress": 4,
+    "maxFinishCount": 1,
+    "bonus": "1#140120#1"
+  },
+  {
+    "id": 760015,
     "activityId": 13744,
     "isOnline": 1,
     "minType": "language_10119590",
@@ -182,7 +195,7 @@
     "bonus": "1#140120#1"
   },
   {
-    "id": 760015,
+    "id": 760016,
     "activityId": 13744,
     "isOnline": 1,
     "minType": "language_10119590",
@@ -192,10 +205,10 @@
     "listenerParam": "13744",
     "maxProgress": 9,
     "maxFinishCount": 1,
-    "bonus": "1#140120#1"
+    "bonus": "1#510010#5"
   },
   {
-    "id": 760016,
+    "id": 760017,
     "activityId": 13744,
     "isOnline": 1,
     "minType": "language_10119590",
@@ -208,7 +221,7 @@
     "bonus": "2#28#3200"
   },
   {
-    "id": 760017,
+    "id": 760018,
     "activityId": 13744,
     "isOnline": 1,
     "minType": "language_10119590",
@@ -216,19 +229,6 @@
     "desc": "language_10119847",
     "listenerType": "Act229EpisodeStar",
     "listenerParam": "13744#2",
-    "maxProgress": 1,
-    "maxFinishCount": 1,
-    "bonus": "2#28#3200"
-  },
-  {
-    "id": 760018,
-    "activityId": 13744,
-    "isOnline": 1,
-    "minType": "language_10119590",
-    "name": "language_10119590",
-    "desc": "language_10119848",
-    "listenerType": "Act229EpisodeStar",
-    "listenerParam": "13744#3",
     "maxProgress": 1,
     "maxFinishCount": 1,
     "bonus": "2#28#3200"
@@ -489,6 +489,19 @@
     "desc": "language_10119848",
     "listenerType": "Act229EpisodeStar",
     "listenerParam": "138521#3",
+    "maxProgress": 1,
+    "maxFinishCount": 1,
+    "bonus": "2#28#3200"
+  },
+  {
+    "id": 769919,
+    "activityId": 13744,
+    "isOnline": 1,
+    "minType": "language_10119590",
+    "name": "language_10119590",
+    "desc": "language_10119848",
+    "listenerType": "Act229EpisodeStar",
+    "listenerParam": "13744#3",
     "maxProgress": 1,
     "maxFinishCount": 1,
     "bonus": "2#28#3200"

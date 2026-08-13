@@ -4,8 +4,8 @@ module("modules.logic.versionactivity3_7.travelgo.controller.work.event.TravelGo
 
 local TravelGoSettleWork = class("TravelGoSettleWork", BaseWork)
 
-function TravelGoSettleWork:ctor()
-	return
+function TravelGoSettleWork:ctor(isOnlyPlayer)
+	self.isOnlyPlayer = isOnlyPlayer
 end
 
 function TravelGoSettleWork:onStart()
@@ -15,7 +15,7 @@ function TravelGoSettleWork:onStart()
 		TravelGoModel.instance:setSettle(false)
 		TravelGoController.instance:settle()
 		self:onDone(false)
-	elseif TravelGoModel.instance.day >= TravelGoModel.instance.maxDay then
+	elseif not self.isOnlyPlayer and TravelGoModel.instance.day >= TravelGoModel.instance.maxDay then
 		TravelGoModel.instance:setSettle(true)
 		TravelGoController.instance:settle()
 		self:onDone(false)

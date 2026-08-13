@@ -602,6 +602,8 @@ function SignInView:_waitCloseView()
 end
 
 function SignInView:_editableInitView()
+	self._txtdecoScrollRect = gohelper.findChildScrollRect(self._gorewarditem, "#go_birthdayrewarditem/#go_birthday/ScrollView")
+
 	gohelper.addUIClickAudio(self._btnqiehuan.gameObject, AudioEnum.UI.play_ui_sign_in_qiehuan)
 	gohelper.addUIClickAudio(self._btnswitch.gameObject, AudioEnum.UI.play_ui_sign_in_switch)
 
@@ -1174,6 +1176,9 @@ function SignInView:_setBirthdayInfo()
 	ZProj.UGUIHelper.RebuildLayout(self._txtdeco.gameObject.transform)
 	gohelper.setActive(self._txtdeco.gameObject, false)
 	gohelper.setActive(self._txtdeco.gameObject, true)
+
+	self._txtdecoScrollRect.verticalNormalizedPosition = 1
+
 	self._simagesignature:LoadImage(ResUrl.getSignature(tostring(heroId)))
 
 	local giftGet = true

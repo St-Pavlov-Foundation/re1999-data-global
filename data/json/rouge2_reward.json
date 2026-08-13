@@ -397,7 +397,7 @@
   },
   {
     "id": 3000,
-    "stage": 4,
+    "stage": 3,
     "value": "9#1570#1",
     "maxBuyCount": 1,
     "num": 8000,
@@ -408,7 +408,7 @@
   },
   {
     "id": 3001,
-    "stage": 4,
+    "stage": 3,
     "value": "4#3136#1",
     "maxBuyCount": 1,
     "num": 10000,
@@ -419,7 +419,7 @@
   },
   {
     "id": 3002,
-    "stage": 4,
+    "stage": 3,
     "value": "1#133136#1",
     "maxBuyCount": 5,
     "num": 2000,

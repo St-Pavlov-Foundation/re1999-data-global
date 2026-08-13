@@ -265,7 +265,7 @@ function SodacheWorshipView:_createDesc(obj, data, index)
 
 	local txt = gohelper.findChildTextMesh(obj, "")
 
-	txt.text = string.format("<#F0E8BB>%s：</color>%s", mo.itemCo.name, SodacheUtil.changeDescColor(mo.relicCo.effect2Desc))
+	txt.text = string.format(luaLang("SodacheWorshipView_createDesc"), mo.itemCo.name, SodacheUtil.changeDescColor(mo.relicCo.effect2Desc))
 end
 
 function SodacheWorshipView:isUnitChecked()

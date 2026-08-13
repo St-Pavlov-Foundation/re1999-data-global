@@ -334,5 +334,17 @@
     "collectionBonus": "11#138503#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 3701,
+    "name": "language_10129237",
+    "nameEn": "The Kingdom of Order",
+    "desc": "language_10131209",
+    "rewardIcon": "1702700",
+    "building": "13701|13702|13703",
+    "packages": "3701|3702|3703|3704",
+    "collectionBonus": "11#13703#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

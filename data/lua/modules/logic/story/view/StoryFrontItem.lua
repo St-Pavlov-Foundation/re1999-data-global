@@ -349,8 +349,12 @@ function StoryFrontItem:playIrregularShakeText(co, callback, callbackobj)
 	self._shakeAni = self._goshake:GetComponent(typeof(UnityEngine.Animator))
 
 	local txt = gohelper.findChildText(self._goshake, "tex_ani/#tex")
+	local tmpGo = txt.gameObject
 
-	txt.text = self._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
+	self._tmpMarkTopText = MonoHelper.addNoUpdateLuaComOnceToGo(tmpGo, TMPMarkTopText)
+
+	self._tmpMarkTopText:registerRebuildLayout(tmpGo.transform.parent)
+	self._tmpMarkTopText:setData(self._stepCo.conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
 	local delayTime = self._stepCo.conversation.showTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] - 0.17
 
@@ -790,6 +794,58 @@ function StoryFrontItem:playGostMagic(co, callback, callbackobj)
 	self._curScreenTextEndFunc = self._playGostMagicEnd
 end
 
+local _distortOwnFloatProps = {
+	"_TextureWidth",
+	"_TextureHeight",
+	"_GlitchBandHeight",
+	"_GlitchDensity",
+	"_GlitchSpeed",
+	"_GlitchGhost",
+	"_GlitchGhostOffset",
+	"_BloomFactor",
+	"_UnderlayOffsetX",
+	"_UnderlayOffsetY",
+	"_UnderlayDilate",
+	"_UnderlaySoftness"
+}
+local _distortOwnColorProps = {
+	"_UnderlayColor"
+}
+
+function StoryFrontItem:_buildDistortMaterial(templateMat)
+	if gohelper.isNil(self._tmpscreentext) or gohelper.isNil(templateMat) then
+		return nil
+	end
+
+	local baseMat = self._tmpscreentext.fontSharedMaterial
+
+	if gohelper.isNil(baseMat) then
+		return nil
+	end
+
+	local mat = UnityEngine.Object.Instantiate(baseMat)
+
+	mat.shader = templateMat.shader
+
+	mat:EnableKeyword("UNDERLAY_ON")
+
+	for _, name in ipairs(_distortOwnFloatProps) do
+		local id = UnityEngine.Shader.PropertyToID(name)
+
+		mat:SetFloat(id, templateMat:GetFloat(id))
+	end
+
+	for _, name in ipairs(_distortOwnColorProps) do
+		local id = UnityEngine.Shader.PropertyToID(name)
+
+		mat:SetColor(id, templateMat:GetColor(id))
+	end
+
+	mat.renderQueue = templateMat.renderQueue
+
+	return mat
+end
+
 function StoryFrontItem:_setDistortMaterial()
 	local matPath = "font/meshpro/outline_material/hwzs_dynamic_distort.mat"
 
@@ -812,9 +868,10 @@ function StoryFrontItem:_setDistortMaterial()
 	loader:addPath(matPath)
 	loader:startLoad(function()
 		local assetItem = loader:getAssetItem(matPath)
+		local templateMat = assetItem and assetItem:GetResource(matPath)
 
-		if assetItem then
-			self._distortMat = assetItem:GetResource(matPath)
+		if templateMat then
+			self._distortMat = self:_buildDistortMaterial(templateMat)
 		end
 
 		if self._distortMat and not gohelper.isNil(self._tmpscreentext) then
@@ -1017,6 +1074,12 @@ function StoryFrontItem:destroy()
 		self._distortMatLoader:dispose()
 
 		self._distortMatLoader = nil
+	end
+
+	if self._distortMat then
+		gohelper.destroy(self._distortMat)
+
+		self._distortMat = nil
 	end
 
 	if self._gostFontGlitchGo then

@@ -229,18 +229,20 @@ function V3a2_BossRushModel:getHandBookGroupMos()
 
 		if mos then
 			for i, mo in pairs(mos) do
-				local minType = mo.config.minType
-				local groupMos = self._handbookGroupMOs[minType]
+				if mo.config.offline == 0 then
+					local minType = mo.config.minType
+					local groupMos = self._handbookGroupMOs[minType]
 
-				if not groupMos then
-					groupMos = {
-						bossGroup = {},
-						config = lua_activity128_bosstype.configDict[minType]
-					}
-					self._handbookGroupMOs[minType] = groupMos
+					if not groupMos then
+						groupMos = {
+							bossGroup = {},
+							config = lua_activity128_bosstype.configDict[minType]
+						}
+						self._handbookGroupMOs[minType] = groupMos
+					end
+
+					table.insert(groupMos.bossGroup, mo)
 				end
-
-				table.insert(groupMos.bossGroup, mo)
 			end
 		end
 	end

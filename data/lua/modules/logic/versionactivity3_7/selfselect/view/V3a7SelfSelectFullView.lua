@@ -95,7 +95,8 @@ function V3a7SelfSelectFullView:_btnbuyOnClick()
 end
 
 function V3a7SelfSelectFullView:_editableInitView()
-	return
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "Root/Btn/#btn_buy/overseas_cumulativerebate"))
+	self._txtget = gohelper.findChildText(self.viewGO, "Root/Btn/#btn_buy/txt_get")
 end
 
 function V3a7SelfSelectFullView:onUpdateParam()
@@ -114,6 +115,7 @@ function V3a7SelfSelectFullView:onOpen()
 
 	if not actCo or string.nilorempty(actCo.patFaceParam) then
 		logError("未配置该活动对应的商品id:actId = " .. self.actId)
+		self._overseas_cumulativerebate:setActive(false)
 
 		return
 	end
@@ -139,6 +141,12 @@ function V3a7SelfSelectFullView:_refreshTime()
 end
 
 function V3a7SelfSelectFullView:_refreshView()
+	self._overseas_cumulativerebate:onUpdateMO(self._goodsCo and {
+		lua_store_charge_goods_id = self._goodsCo.id
+	} or nil)
+
+	self._txtget.text = PayModel.instance:getProductPriceScaledSymbol(self._goodsCo and self._goodsCo.id, 31)
+
 	local co = ActivityType101Config.instance:getDayCO(self.actId, self._index)
 
 	if co and not string.nilorempty(co.bonus) then
@@ -165,6 +173,10 @@ end
 function V3a7SelfSelectFullView:_refreshPay()
 	local isSoldOut = self._goodsMo and self._goodsMo:isSoldOut()
 
+	if isSoldOut then
+		self._overseas_cumulativerebate:setActive(false)
+	end
+
 	gohelper.setActive(self._gohasbuy, isSoldOut)
 	gohelper.setActive(self._btnbuy.gameObject, not isSoldOut)
 end
@@ -188,6 +200,7 @@ function V3a7SelfSelectFullView:onClose()
 end
 
 function V3a7SelfSelectFullView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	TaskDispatcher.cancelTask(self._refreshTime, self)
 	self._simageicon:UnLoadImage()
 end

@@ -22,12 +22,12 @@ function StoreSkinGoodsView2:onInitView()
 	self._simageicon = gohelper.findChildSingleImage(self.viewGO, "view/bgroot/#simage_icon")
 	self._simagedreesing = gohelper.findChildSingleImage(self.viewGO, "view/bgroot/#simage_dreesing")
 	self._txtskinname = gohelper.findChildText(self.viewGO, "view/propinfo/#txt_skinname")
-	self._txtdesc = gohelper.findChildText(self.viewGO, "view/propinfo/content/desc/#txt_desc")
-	self._txtusedesc = gohelper.findChildText(self.viewGO, "view/propinfo/content/desc/usedesc")
-	self._goleftbg = gohelper.findChild(self.viewGO, "view/propinfo/content/remain/#go_leftbg")
-	self._txtremainday = gohelper.findChildText(self.viewGO, "view/propinfo/content/remain/#go_leftbg/#txt_remainday")
-	self._gorightbg = gohelper.findChild(self.viewGO, "view/propinfo/content/remain/#go_rightbg")
-	self._txtremain = gohelper.findChildText(self.viewGO, "view/propinfo/content/remain/#go_rightbg/#txt_remain")
+	self._txtdesc = gohelper.findChildText(self.viewGO, "view/propinfo/#scroll_info/viewport/content/desc/#txt_desc")
+	self._txtusedesc = gohelper.findChildText(self.viewGO, "view/propinfo/#scroll_info/viewport/content/desc/usedesc")
+	self._goleftbg = gohelper.findChild(self.viewGO, "view/propinfo/#scroll_info/viewport/content/remain/#go_leftbg")
+	self._txtremainday = gohelper.findChildText(self.viewGO, "view/propinfo/#scroll_info/viewport/content/remain/#go_leftbg/#txt_remainday")
+	self._gorightbg = gohelper.findChild(self.viewGO, "view/propinfo/#scroll_info/viewport/content/remain/#go_rightbg")
+	self._txtremain = gohelper.findChildText(self.viewGO, "view/propinfo/#scroll_info/viewport/content/remain/#go_rightbg/#txt_remain")
 	self._scrollproduct = gohelper.findChildScrollRect(self.viewGO, "view/propinfo/#scroll_product")
 	self._goicon = gohelper.findChild(self.viewGO, "view/propinfo/#scroll_product/product/go_goods/#go_icon")
 	self._btnclose = gohelper.findChildButtonWithAudio(self.viewGO, "view/#btn_close")
@@ -75,8 +75,8 @@ function StoreSkinGoodsView2:onInitView()
 	self.txtStoreSkinTips = gohelper.findChildTextMesh(self.viewGO, "view/#go_storeskin/tips/#txt_tips")
 	self.simageStoreSkinTips = gohelper.findChildSingleImage(self.viewGO, "view/#go_storeskin/#simage_package")
 	self.btnSkinTips = gohelper.findChildButtonWithAudio(self.viewGO, "view/#go_storeskin/#simage_package")
-	self._gospecial = gohelper.findChild(self.viewGO, "view/propinfo/content/remain/#go_special")
-	self._gospecialDescGo = gohelper.findChild(self.viewGO, "view/propinfo/content/desc/#go_special")
+	self._gospecial = gohelper.findChild(self.viewGO, "view/propinfo/#scroll_info/viewport/content/remain/#go_special")
+	self._gospecialDescGo = gohelper.findChild(self.viewGO, "view/propinfo/#scroll_info/viewport/content/desc/#go_special")
 	self._goimg_orange = gohelper.findChild(self.viewGO, "view/common/#btn_buy/bg/#go_img_orange")
 	self._goimg_red = gohelper.findChild(self.viewGO, "view/common/#btn_buy/bg/#go_img_red")
 	self.goUniqueMask = gohelper.findChild(self.viewGO, "view/bgroot/mask")
@@ -259,6 +259,8 @@ function StoreSkinGoodsView2:_btncloseOnClick()
 end
 
 function StoreSkinGoodsView2:_editableInitView()
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "view/common/cost/#btn_cost1/overseas_cumulativerebate"))
+
 	self._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
 	self._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
@@ -557,6 +559,13 @@ function StoreSkinGoodsView2:refreshCost()
 	self._goodsPriceInfo = info
 
 	local rmbCurPrice = info.rmbCurPrice
+	local skinChargeGoodsCfg = StoreConfig.instance:getSkinChargeGoodsCfg(skinId)
+	local chargeGoodsId = skinChargeGoodsCfg and skinChargeGoodsCfg.id or nil
+
+	self._overseas_cumulativerebate:onUpdateMO(rmbCurPrice and {
+		lua_store_charge_goods_id = chargeGoodsId
+	} or nil)
+
 	local rmbOriginalPrice = info.rmbOriginalPrice
 	local coinsItemType = info.coinsItemType
 	local coinsItemId = info.coinsItemId
@@ -692,6 +701,7 @@ function StoreSkinGoodsView2:onClose()
 end
 
 function StoreSkinGoodsView2:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	self._simageleftbg:UnLoadImage()
 	self._simagerightbg:UnLoadImage()
 	self._simagedreesing:UnLoadImage()

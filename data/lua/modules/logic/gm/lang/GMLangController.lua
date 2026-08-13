@@ -304,9 +304,32 @@ function GMLangController:_formatLuaLang(shortcut, ...)
 		return LangSettings.empty
 	end
 
-	local moudle = self:getLangTxtFromeKey(shortcut, key)
+	local langTxtValue = self:getLangTxtFromeKey(shortcut, key)
 
-	return string.format(moudle, unpack(args, 2))
+	if langTxtValue == nil then
+		logError(string.format("LangSettings._formatLuaLang langTxtValue not found: shortcut=%s, key=%s", shortcut, key))
+
+		return LangSettings.empty
+	end
+
+	local success, result = xpcall(function()
+		return string.format(langTxtValue, unpack(args, 2))
+	end, function(errMsg)
+		local tbl = {
+			[1] = "[GMLangController:_formatLuaLang] =========== begin",
+			[6] = "[GMLangController:_formatLuaLang] =========== end",
+			[2] = "shortcut: " .. shortcut,
+			[3] = "key: " .. key,
+			[4] = "langTxtValue: " .. langTxtValue,
+			[5] = "errMsg: " .. tostring(errMsg)
+		}
+
+		logError(table.concat(tbl, "\n"))
+
+		return LangSettings.empty
+	end)
+
+	return success and result or LangSettings.empty
 end
 
 GMLangController.instance = GMLangController.New()

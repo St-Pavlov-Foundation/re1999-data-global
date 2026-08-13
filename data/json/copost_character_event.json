@@ -1984,5 +1984,742 @@
       -6.2
     ],
     "eventTextId": "51071"
+  },
+  {
+    "id": 3000,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      9,
+      1
+    ],
+    "changeChasId": [
+      76,
+      1
+    ],
+    "eventCoordinate": [
+      13.51,
+      -6.6
+    ],
+    "eventTextId": "52000"
+  },
+  {
+    "id": 3001,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      9,
+      1
+    ],
+    "changeChasId": [
+      76,
+      1
+    ],
+    "eventCoordinate": [
+      13.48,
+      -4.8
+    ],
+    "eventTextId": "52001"
+  },
+  {
+    "id": 3002,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      9,
+      1
+    ],
+    "changeChasId": [
+      76,
+      1
+    ],
+    "eventCoordinate": [
+      13.84,
+      -5.2
+    ],
+    "eventTextId": "52002"
+  },
+  {
+    "id": 3003,
+    "frontEventId": [],
+    "chaId": 1,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.6,
+      -5.3
+    ],
+    "eventTextId": "52003"
+  },
+  {
+    "id": 3004,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      9,
+      1
+    ],
+    "changeChasId": [
+      76,
+      1
+    ],
+    "eventCoordinate": [
+      14.15,
+      -4.5
+    ],
+    "eventTextId": "52004"
+  },
+  {
+    "id": 3005,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      9,
+      1
+    ],
+    "changeChasId": [
+      76,
+      1
+    ],
+    "eventCoordinate": [
+      14.15,
+      -4.75
+    ],
+    "eventTextId": "52005"
+  },
+  {
+    "id": 3006,
+    "frontEventId": [],
+    "chaId": 1,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      14.5,
+      -4.5
+    ],
+    "eventTextId": "52006"
+  },
+  {
+    "id": 3007,
+    "frontEventId": [],
+    "chaId": 1,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.99,
+      -5.4
+    ],
+    "eventTextId": "52007"
+  },
+  {
+    "id": 3008,
+    "frontEventId": [],
+    "chaId": 1,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.3,
+      -6.6
+    ],
+    "eventTextId": "52008"
+  },
+  {
+    "id": 3009,
+    "frontEventId": [],
+    "chaId": 1,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.77,
+      -6.4
+    ],
+    "eventTextId": "52009"
+  },
+  {
+    "id": 3010,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      63,
+      1,
+      58
+    ],
+    "changeChasId": [
+      63,
+      1,
+      81
+    ],
+    "eventCoordinate": [
+      9.1,
+      -6.72
+    ],
+    "eventTextId": "52010"
+  },
+  {
+    "id": 3011,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 81,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.92,
+      -6.95
+    ],
+    "eventTextId": "52011"
+  },
+  {
+    "id": 3012,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      77,
+      58
+    ],
+    "changeChasId": [
+      77,
+      81
+    ],
+    "eventCoordinate": [
+      10.17,
+      -6.05
+    ],
+    "eventTextId": "52012"
+  },
+  {
+    "id": 3013,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      78,
+      58
+    ],
+    "changeChasId": [
+      78,
+      81
+    ],
+    "eventCoordinate": [
+      10.19,
+      -6.65
+    ],
+    "eventTextId": "52013"
+  },
+  {
+    "id": 3014,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.41,
+      -6.78
+    ],
+    "eventTextId": "52014"
+  },
+  {
+    "id": 3015,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.22,
+      -7.03
+    ],
+    "eventTextId": "52015"
+  },
+  {
+    "id": 3016,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.25,
+      -6.96
+    ],
+    "eventTextId": "52016"
+  },
+  {
+    "id": 3017,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      8.77,
+      -6.82
+    ],
+    "eventTextId": "52017"
+  },
+  {
+    "id": 3018,
+    "frontEventId": [],
+    "chaId": 58,
+    "changeChaId": 81,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      8.78,
+      -6.82
+    ],
+    "eventTextId": "52018"
+  },
+  {
+    "id": 3019,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.7,
+      -5
+    ],
+    "eventTextId": "52019"
+  },
+  {
+    "id": 3020,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.5,
+      -4.25
+    ],
+    "eventTextId": "52020"
+  },
+  {
+    "id": 3021,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.45,
+      -4.84
+    ],
+    "eventTextId": "52021"
+  },
+  {
+    "id": 3022,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.95,
+      -5.5
+    ],
+    "eventTextId": "52022"
+  },
+  {
+    "id": 3023,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      14.07,
+      -4.8
+    ],
+    "eventTextId": "52023"
+  },
+  {
+    "id": 3024,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      14,
+      -4.58
+    ],
+    "eventTextId": "52024"
+  },
+  {
+    "id": 3025,
+    "frontEventId": [],
+    "chaId": 9,
+    "changeChaId": 76,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.95,
+      -4.85
+    ],
+    "eventTextId": "52025"
+  },
+  {
+    "id": 3026,
+    "frontEventId": [],
+    "chaId": 78,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      8.73,
+      -6.58
+    ],
+    "eventTextId": "52026"
+  },
+  {
+    "id": 3027,
+    "frontEventId": [],
+    "chaId": 78,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9,
+      -6.51
+    ],
+    "eventTextId": "52027"
+  },
+  {
+    "id": 3028,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      11,
+      78
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.59,
+      -6.37
+    ],
+    "eventTextId": "52028"
+  },
+  {
+    "id": 3029,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      58,
+      63
+    ],
+    "changeChasId": [
+      81,
+      63
+    ],
+    "eventCoordinate": [
+      9.99,
+      -6.72
+    ],
+    "eventTextId": "52029"
+  },
+  {
+    "id": 3030,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      77,
+      63
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.41,
+      -5.46
+    ],
+    "eventTextId": "52030"
+  },
+  {
+    "id": 3031,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      11,
+      7
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.4,
+      -6.65
+    ],
+    "eventTextId": "52031"
+  },
+  {
+    "id": 3032,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      11,
+      7
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9,
+      -6.58
+    ],
+    "eventTextId": "52032"
+  },
+  {
+    "id": 3033,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      77,
+      7
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      10.07,
+      -5.84
+    ],
+    "eventTextId": "52033"
+  },
+  {
+    "id": 3034,
+    "frontEventId": [],
+    "chaId": 7,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.17,
+      -6.7
+    ],
+    "eventTextId": "52034"
+  },
+  {
+    "id": 3035,
+    "frontEventId": [],
+    "chaId": 77,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      10.29,
+      -5.88
+    ],
+    "eventTextId": "52035"
+  },
+  {
+    "id": 3036,
+    "frontEventId": [],
+    "chaId": 77,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      10.46,
+      -6.23
+    ],
+    "eventTextId": "52036"
+  },
+  {
+    "id": 3037,
+    "frontEventId": [],
+    "chaId": 77,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.02,
+      -6.5
+    ],
+    "eventTextId": "52037"
+  },
+  {
+    "id": 3038,
+    "frontEventId": [],
+    "chaId": 77,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.4,
+      -5.68
+    ],
+    "eventTextId": "52038"
+  },
+  {
+    "id": 3039,
+    "frontEventId": [],
+    "chaId": 11,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.5,
+      -5.9
+    ],
+    "eventTextId": "52039"
+  },
+  {
+    "id": 3040,
+    "frontEventId": [],
+    "chaId": 11,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.08,
+      -6.06
+    ],
+    "eventTextId": "52040"
+  },
+  {
+    "id": 3041,
+    "frontEventId": [],
+    "chaId": 11,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.24,
+      -6.03
+    ],
+    "eventTextId": "52041"
+  },
+  {
+    "id": 3042,
+    "frontEventId": [],
+    "chaId": 11,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.4,
+      -5.68
+    ],
+    "eventTextId": "52042"
+  },
+  {
+    "id": 3043,
+    "frontEventId": [],
+    "chaId": 79,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.52,
+      -6.56
+    ],
+    "eventTextId": "52043"
+  },
+  {
+    "id": 3044,
+    "frontEventId": [],
+    "chaId": 79,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.52,
+      -6.56
+    ],
+    "eventTextId": "52044"
+  },
+  {
+    "id": 3045,
+    "frontEventId": [],
+    "chaId": 0,
+    "changeChaId": 0,
+    "chasId": [
+      63,
+      79
+    ],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.74,
+      -6.56
+    ],
+    "eventTextId": "52045"
+  },
+  {
+    "id": 3046,
+    "frontEventId": [],
+    "chaId": 79,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.3,
+      -7
+    ],
+    "eventTextId": "52046"
+  },
+  {
+    "id": 3047,
+    "frontEventId": [],
+    "chaId": 80,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      8.74,
+      -6.84
+    ],
+    "eventTextId": "52047"
+  },
+  {
+    "id": 3048,
+    "frontEventId": [],
+    "chaId": 80,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      9.08,
+      -6.61
+    ],
+    "eventTextId": "52048"
+  },
+  {
+    "id": 3049,
+    "frontEventId": [],
+    "chaId": 80,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      8.74,
+      -6.84
+    ],
+    "eventTextId": "52049"
+  },
+  {
+    "id": 3050,
+    "frontEventId": [],
+    "chaId": 80,
+    "changeChaId": 0,
+    "chasId": [],
+    "changeChasId": [],
+    "eventCoordinate": [
+      13.76,
+      -6.9
+    ],
+    "eventTextId": "52050"
   }
 ]

@@ -15,6 +15,7 @@ function TravelGoDescItem:init(viewGO)
 	self._imageBG = gohelper.findChildImage(self.viewGO, "Image_BG")
 	self._txtDescr = gohelper.findChildText(self.viewGO, "Image_BG/#txt_Descr")
 	self._gorewardScroll = gohelper.findChild(self.viewGO, "Image_BG/Scroll View")
+	self._gorewardScroll_overseas = gohelper.findChildScrollRect(self._gorewardScroll, "")
 	self._goReward = gohelper.findChild(self.viewGO, "Image_BG/Scroll View/Viewport/Rewards")
 
 	local scrollParam = SimpleListParam.New()
@@ -67,6 +68,8 @@ function TravelGoDescItem:refreshReward()
 
 	if self.rewardMOs then
 		self.rewardList:setData(self.rewardMOs)
+
+		self._gorewardScroll_overseas.horizontalNormalizedPosition = 0
 	end
 end
 

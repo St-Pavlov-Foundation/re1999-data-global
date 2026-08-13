@@ -132,7 +132,7 @@ function V3a7_SkinGiftFullView:_btnbuyOnClick()
 end
 
 function V3a7_SkinGiftFullView:_editableInitView()
-	return
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "Root/right/Btn/#btn_buy/overseas_cumulativerebate"))
 end
 
 function V3a7_SkinGiftFullView:onUpdateParam()
@@ -236,6 +236,8 @@ function V3a7_SkinGiftFullView:refreshPackageInfo()
 	local packageConfig = StoreConfig.instance:getChargeGoodsConfig(self.packageId)
 
 	if not packageConfig then
+		self._overseas_cumulativerebate:setActive(false)
+
 		return
 	end
 
@@ -252,6 +254,10 @@ function V3a7_SkinGiftFullView:refreshPackageInfo()
 	gohelper.setActive(self._btnbuy, not isSoldOut)
 
 	self._txtget.text = PayModel.instance:getProductPriceScaledSymbol(packageConfig.id, 31)
+
+	self._overseas_cumulativerebate:onUpdateMO(not isSoldOut and {
+		lua_store_charge_goods_id = packageConfig.id
+	} or nil)
 end
 
 function V3a7_SkinGiftFullView:onClose()
@@ -259,6 +265,7 @@ function V3a7_SkinGiftFullView:onClose()
 end
 
 function V3a7_SkinGiftFullView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	TaskDispatcher.cancelTask(self.refreshTime, self)
 end
 

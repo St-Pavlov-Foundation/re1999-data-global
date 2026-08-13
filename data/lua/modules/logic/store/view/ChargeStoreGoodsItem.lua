@@ -61,6 +61,10 @@ function ChargeStoreGoodsItem:_onClick()
 end
 
 function ChargeStoreGoodsItem:onUpdateMO(mo)
+	if not self._overseas_cumulativerebate then
+		self._overseas_cumulativerebate = CumulativeRebateItem.s_createByListScrollCellExtend(self, gohelper.findChild(self.viewGO, "#image_icon/overseas_cumulativerebate"))
+	end
+
 	self._mo = mo
 
 	self:_refreshGoods()
@@ -70,6 +74,10 @@ end
 local biggestId = 210006
 
 function ChargeStoreGoodsItem:_refreshGoods()
+	self._overseas_cumulativerebate:onUpdateMO({
+		lua_store_charge_goods_id = self._mo.id
+	})
+
 	local product = self._mo.config.product
 	local productParams = string.splitToNumber(product, "#")
 	local quantity = productParams[3]
@@ -117,6 +125,7 @@ function ChargeStoreGoodsItem:getAnimator()
 end
 
 function ChargeStoreGoodsItem:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	self._btn:RemoveClickListener()
 end
 

@@ -4,7 +4,7 @@
     "background": "1",
     "levelDay": 8,
     "position": "0#0",
-    "winText": "小瑞安侬成功完成了冒险",
+    "winText": "language_10131675",
     "baseAttr": "200#60#12"
   },
   {
@@ -12,7 +12,7 @@
     "background": "1",
     "levelDay": 15,
     "position": "0#0",
-    "winText": "小瑞安侬成功完成了冒险",
+    "winText": "language_10131675",
     "baseAttr": "200#60#14"
   },
   {
@@ -20,7 +20,7 @@
     "background": "2",
     "levelDay": 15,
     "position": "0#0",
-    "winText": "小瑞安侬成功完成了冒险",
+    "winText": "language_10131675",
     "baseAttr": "200#60#14"
   },
   {
@@ -28,7 +28,7 @@
     "background": "3",
     "levelDay": 20,
     "position": "0#0",
-    "winText": "小瑞安侬成功完成了冒险",
+    "winText": "language_10131675",
     "baseAttr": "200#60#16"
   },
   {
@@ -36,7 +36,7 @@
     "background": "3",
     "levelDay": 60,
     "position": "0#0",
-    "winText": "小瑞安侬成功完成了冒险",
+    "winText": "language_10131675",
     "baseAttr": "200#60#16"
   }
 ]

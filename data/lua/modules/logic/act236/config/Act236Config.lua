@@ -6,7 +6,8 @@ local Act236Config = class("Act236Config", BaseConfig)
 
 function Act236Config:reqConfigNames()
 	return {
-		"activity236"
+		"activity236",
+		"activity236_control"
 	}
 end
 

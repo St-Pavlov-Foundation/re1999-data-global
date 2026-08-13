@@ -4,12 +4,20 @@ module("modules.logic.rouge2.common.controller.Rouge2_Controller", package.seeal
 
 local Rouge2_Controller = class("Rouge2_Controller", BaseController)
 
+function Rouge2_Controller:setBackToVersionActivity(b)
+	self._bBackToVersionActivity = b
+end
+
+function Rouge2_Controller:bBackToVersionActivity()
+	return self._bBackToVersionActivity
+end
+
 function Rouge2_Controller:onInit()
 	return
 end
 
 function Rouge2_Controller:reInit()
-	return
+	self._bBackToVersionActivity = false
 end
 
 function Rouge2_Controller:addConstEvents()

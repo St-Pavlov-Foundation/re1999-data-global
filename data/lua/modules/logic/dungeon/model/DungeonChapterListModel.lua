@@ -38,7 +38,7 @@ function DungeonChapterListModel:setFbList()
 		for i, v in ipairs(list) do
 			local sectionId = DungeonConfig.instance:getChapterDivideSectionId(v.id)
 
-			if not sectionId and v.id ~= 113 then
+			if not sectionId then
 				logError("DungeonChapterListModel:setFbList #2 sectionId is nil, chapterId = ", v.id)
 			end
 

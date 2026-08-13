@@ -168,7 +168,7 @@ function SummonCustomPickDescView:checkBuildProbUp(descTabItem)
 	desc = self:descReplace(desc, "%[sr_up_rate%]", CommonConfig.instance:getConstNum(ConstEnum.SummonSRUpProb) / 10 .. "%%")
 
 	if self._nameDict and self._nameDict[SummonEnum.CustomPickRare] then
-		desc = self:descReplace(desc, "%[all_six_star%]", table.concat(self._nameDict[SummonEnum.CustomPickRare], "|"))
+		desc = self:descReplace(desc, "%[all_six_star%]", table.concat(self._nameDict[SummonEnum.CustomPickRare], "​|​"))
 	else
 		desc = self:descReplace(desc, "%[all_six_star%]", "")
 	end
@@ -279,7 +279,7 @@ function SummonCustomPickDescView:buildRareNameDict(summonPoolConfig)
 
 		for _, summonId in ipairs(summonIds) do
 			local heroConfig = HeroConfig.instance:getHeroCO(summonId)
-			local heroName = heroConfig.name
+			local heroName = string.gsub(heroConfig.name, " ", " ")
 
 			table.insert(rareHeroNames[SummonEnum.CustomPickRare], heroName)
 		end
@@ -289,7 +289,7 @@ function SummonCustomPickDescView:buildRareNameDict(summonPoolConfig)
 
 		for _, summonId in ipairs(summonIds) do
 			local heroConfig = HeroConfig.instance:getHeroCO(summonId)
-			local heroName = heroConfig.name
+			local heroName = string.gsub(heroConfig.name, " ", " ")
 
 			table.insert(rareHeroNames[SummonEnum.CustomPickRare], heroName)
 		end
@@ -303,7 +303,7 @@ function SummonCustomPickDescView:buildRareNameDict(summonPoolConfig)
 			for _, summonId in ipairs(summonIds) do
 				if resultType == SummonEnum.ResultType.Char then
 					local heroConfig = HeroConfig.instance:getHeroCO(summonId)
-					local heroName = heroConfig.name
+					local heroName = string.gsub(heroConfig.name, " ", " ")
 
 					table.insert(rareHeroNames[rare], heroName)
 				elseif resultType == SummonEnum.ResultType.Equip then

@@ -4,6 +4,7 @@ module("modules.logic.versionactivity3_7.enter.define.VersionActivity3_7Enum", p
 
 local VersionActivity3_7Enum = _M
 
+VersionActivity3_7Enum.EnterVideoFirstKey = "v3a7_EnterVideoFirstKey"
 VersionActivity3_7Enum.ActivityId = {
 	DungeonStore = 13704,
 	Anniversary3Sign = 13712,

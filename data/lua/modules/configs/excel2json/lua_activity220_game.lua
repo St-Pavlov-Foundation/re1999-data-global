@@ -14,7 +14,9 @@ local fields = {
 local primaryKey = {
 	"gameId"
 }
-local mlStringKey = {}
+local mlStringKey = {
+	winText = 1
+}
 
 function lua_activity220_game.onLoad(json)
 	lua_activity220_game.configList, lua_activity220_game.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

@@ -26,5 +26,19 @@
     ],
     "scene_ui": "",
     "scene_node": "root/BackGround/v3a3_m_s18_zhb/v3a3_m_s18_zhb_ground"
+  },
+  {
+    "id": 3,
+    "scene": "scenes/v3a7_m_s18_zhb/v3a7_m_s18_zhb_p.prefab",
+    "leftUpRange": [
+      3.2,
+      -1.2
+    ],
+    "rightDownRange": [
+      15.5,
+      -8.5
+    ],
+    "scene_ui": "",
+    "scene_node": "root/BackGround/v3a7_m_s18_zhb/v3a7_m_s18_zhb_ground"
   }
 ]

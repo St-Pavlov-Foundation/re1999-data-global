@@ -63,7 +63,6 @@ end
 
 function StoryLeadRoleSpineView:_showView(show, heroIcon)
 	gohelper.setActive(self.viewGO, show)
-	self:_hideAll()
 
 	if heroIcon then
 		gohelper.setActive(self._gospineroot, true)
@@ -89,6 +88,8 @@ function StoryLeadRoleSpineView:_hideAll()
 end
 
 function StoryLeadRoleSpineView:_showLeadHeroByRoleType(roleType)
+	self:_hideAll()
+
 	if self._heroSpines[roleType] then
 		local goSpine = self._heroSpines[roleType]:getSpineGo()
 

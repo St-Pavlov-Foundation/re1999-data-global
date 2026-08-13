@@ -6525,7 +6525,7 @@
   },
   {
     "id": "anniversary_bonus_rule",
-    "lang": "language_10082644"
+    "lang": "language_10131285"
   },
   {
     "id": "anniversary_activity_tip2",
@@ -9005,7 +9005,7 @@
   },
   {
     "id": "sodache_cardtype_3",
-    "lang": "language_10072135"
+    "lang": "language_90016086"
   },
   {
     "id": "sodache_cardtype_4",
@@ -9105,7 +9105,7 @@
   },
   {
     "id": "TravelGo_1",
-    "lang": "language_10077092"
+    "lang": "language_90016095"
   },
   {
     "id": "TravelGo_2",
@@ -9201,7 +9201,7 @@
   },
   {
     "id": "sodache_cardquality_5",
-    "lang": "language_10042096"
+    "lang": "language_90016084"
   },
   {
     "id": "sodache_cardquality_6",
@@ -9802,6 +9802,66 @@
   {
     "id": "sp02_calendar_periphery_locked",
     "lang": "language_10131228"
+  },
+  {
+    "id": "SodacheTaskView_txtCurrency",
+    "lang": "language_10118664"
+  },
+  {
+    "id": "SodacheBuildingItem_txtLevel",
+    "lang": "language_10131667"
+  },
+  {
+    "id": "SodacheAltarView_createDesc",
+    "lang": "language_10131668"
+  },
+  {
+    "id": "SodacheWorshipView_createDesc",
+    "lang": "language_10131669"
+  },
+  {
+    "id": "SodacheUpgradeView_effectStr1",
+    "lang": "language_10131670"
+  },
+  {
+    "id": "SodacheUpgradeView_effectStr2",
+    "lang": "language_10131671"
+  },
+  {
+    "id": "TeachingTopicItem_txtItemName_comingsoon",
+    "lang": "language_10090101"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescPercentAdd0",
+    "lang": "language_10131688"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescPercentAdd1",
+    "lang": "language_10131689"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescPercentSub0",
+    "lang": "language_10131690"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescPercentSub1",
+    "lang": "language_10131691"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescValueAdd0",
+    "lang": "language_10131692"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescValueAdd1",
+    "lang": "language_10131693"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescValueSub0",
+    "lang": "language_10131694"
+  },
+  {
+    "id": "TravelGoAttrReward_getRewardDescValueSub1",
+    "lang": "language_10131695"
   },
   {
     "id": "VersionActivity3_10DungeonMapLevelView_txt_mapName",

@@ -136,7 +136,7 @@ function VersionActivityMainFixedDungeonEnterView:_editableInitView()
 end
 
 function VersionActivityMainFixedDungeonEnterView:_updateBg()
-	local versionFormat3 = VersionActivityMainFixedHelper.getVersionActivityVerFormat3(3, 8)
+	local versionFormat3 = VersionActivityMainFixedHelper.getVersionActivityVerFormat3()
 
 	if DungeonModel.instance:hasPassLevelAndStory(11115) then
 		self._simagebg:LoadImage(string.format("singlebg/%s_mainactivity_singlebg/%s_enterview_fullbg.png", versionFormat3, versionFormat3))

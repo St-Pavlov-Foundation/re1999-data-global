@@ -249,15 +249,24 @@ function SodacheUtil.isSodacheEpisode()
 end
 
 local colorDict = {
-	["3"] = "#CC38D9",
-	["6"] = "#D70F0F",
 	["2"] = "#2C62FF",
-	["5"] = "#D45100",
 	["1"] = "#068E15",
+	["6"] = "#D70F0F",
+	["999"] = "#f6ae7c",
+	["5"] = "#D45100",
+	["998"] = "#98b0ec",
+	["3"] = "#CC38D9",
 	["4"] = "#C56D08"
 }
 
 function SodacheUtil.changeDescColor(desc)
+	desc = string.gsub(desc, "%[(.-)<([^<>]-)>%]", function(content, colorIndex)
+		if colorDict[colorIndex] then
+			return string.format("<color=%s>[%s]</color>", colorDict[colorIndex], content)
+		end
+
+		return string.format("[%s<%s>]", content, colorIndex)
+	end)
 	desc = string.gsub(desc, "【(.-)<([^<>]-)>】", function(content, colorIndex)
 		if colorDict[colorIndex] then
 			return string.format("<color=%s>【%s】</color>", colorDict[colorIndex], content)

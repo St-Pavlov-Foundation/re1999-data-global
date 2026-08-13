@@ -8576,7 +8576,7 @@
     "rewindChapterBg": 0,
     "ambientMusic": 0,
     "isHeroRecommend": 0,
-    "actId": 138520,
+    "actId": 13742,
     "episodeId": 0
   },
   {
@@ -9236,7 +9236,7 @@
     "rewindChapterBg": 0,
     "ambientMusic": 0,
     "isHeroRecommend": 1,
-    "actId": 138521,
+    "actId": 13744,
     "episodeId": 0
   },
   {
@@ -9434,7 +9434,7 @@
     "openDay": "",
     "openLevel": 1,
     "rewardPoint": 0,
-    "preChapter": 0,
+    "preChapter": 12,
     "elementList": "",
     "canPlayOpenMv": 1,
     "canUseDouble": 1,
@@ -9464,7 +9464,7 @@
     "openDay": "",
     "openLevel": 1,
     "rewardPoint": 0,
-    "preChapter": 0,
+    "preChapter": 112,
     "elementList": "",
     "canPlayOpenMv": 1,
     "canUseDouble": 1,

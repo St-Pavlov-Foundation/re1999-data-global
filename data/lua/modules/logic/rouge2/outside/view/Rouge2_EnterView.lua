@@ -64,6 +64,12 @@ function Rouge2_EnterView:_btnstartOnClick()
 		return
 	end
 
+	if self.viewParam and self.viewParam.fromVersionActivity == true then
+		Rouge2_Controller.instance:setBackToVersionActivity(true)
+	else
+		Rouge2_Controller.instance:setBackToVersionActivity(false)
+	end
+
 	AudioMgr.instance:trigger(AudioEnum.Rouge2.play_ui_dungeon3_2_start_2_1)
 	self.animator:Play("close", 0, 0)
 	gohelper.setActive(self._golefttop, false)

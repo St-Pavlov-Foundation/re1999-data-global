@@ -1552,6 +1552,32 @@
     "packName": ""
   },
   {
+    "id": 33,
+    "audio": [
+      373006,
+      373007,
+      373008,
+      373009,
+      373010,
+      373011,
+      373012,
+      373017,
+      373018,
+      373020
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [],
+    "folderPath": [
+      "modules/sodache"
+    ],
+    "videoPath": [],
+    "path": [],
+    "uiFolder": [],
+    "uiPath": [],
+    "packName": "opsodache"
+  },
+  {
     "id": 23,
     "audio": [],
     "chapter": [],

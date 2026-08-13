@@ -91,7 +91,7 @@ function SodacheBuildingItem:refreshUI()
 			gohelper.setActive(self._btnBuild, levelEnough and curLvl == 0)
 			gohelper.setActive(self._btnUp, levelEnough and curLvl ~= 0)
 
-			self._txtLevel.text = "Lv" .. curLvl
+			self._txtLevel.text = string.format(luaLang("SodacheBuildingItem_txtLevel"), curLvl)
 
 			gohelper.setActive(self._goLevel, true)
 		end

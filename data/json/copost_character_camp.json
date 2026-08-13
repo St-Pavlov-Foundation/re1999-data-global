@@ -38,5 +38,61 @@
     "textId": 0,
     "text": "",
     "unlockId": 0
+  },
+  {
+    "id": 6,
+    "camp": "language_10072893",
+    "location": 5,
+    "textId": 0,
+    "text": "language_10131653",
+    "unlockId": 11323
+  },
+  {
+    "id": 7,
+    "camp": "language_10125504",
+    "location": 3,
+    "textId": 0,
+    "text": "language_10131654",
+    "unlockId": 11323
+  },
+  {
+    "id": 8,
+    "camp": "language_10125503",
+    "location": 1,
+    "textId": 0,
+    "text": "language_10131655",
+    "unlockId": 11324
+  },
+  {
+    "id": 9,
+    "camp": "language_10098288",
+    "location": 2,
+    "textId": 0,
+    "text": "language_10131656",
+    "unlockId": 11323
+  },
+  {
+    "id": 10,
+    "camp": "language_10003456",
+    "location": 4,
+    "textId": 0,
+    "text": "language_10131657",
+    "unlockId": 1325
+  },
+  {
+    "id": 11,
+    "camp": "language_10106055",
+    "location": 7,
+    "textId": 0,
+    "text": "language_10131658",
+    "unlockId": 1325
+  },
+  {
+    "id": 12,
+    "camp": "language_10125505",
+    "location": 6,
+    "textId": 0,
+    "text": "language_10131659",
+    "unlockId": 1325
   }
 ]

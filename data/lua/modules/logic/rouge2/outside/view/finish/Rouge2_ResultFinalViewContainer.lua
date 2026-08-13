@@ -45,7 +45,7 @@ function Rouge2_ResultFinalViewContainer:_buildBuffListScrollView()
 	scrollParam.scrollDir = scrollDir
 	scrollParam.cellClass = Rouge2_SaveInfoDetailBuffListItem
 	scrollParam.cellWidth = 144
-	scrollParam.cellHeight = 136
+	scrollParam.cellHeight = 147
 	scrollParam.startSpace = 0
 	scrollParam.endSpace = 0
 	scrollParam.lineCount = lineCount

@@ -193,13 +193,13 @@ function SodacheCardInfoLeft:refreshType5()
 		if not self.isNoShowPassive and not string.nilorempty(config.effectDesc) then
 			local passive = luaLang("sodache_relicupgrade_passive")
 
-			passiveDesc = string.format("%s%s", passive, config.effectDesc)
+			passiveDesc = string.format("%s%s", passive, SodacheUtil.changeDescColor(config.effectDesc))
 		end
 
 		if not string.nilorempty(config.effect2Desc) then
 			local active = luaLang("sodache_relicupgrade_active")
 
-			activeDesc = string.format("%s%s", active, config.effect2Desc)
+			activeDesc = string.format("%s%s", active, SodacheUtil.changeDescColor(config.effect2Desc))
 		end
 
 		local arr = {}
@@ -207,7 +207,7 @@ function SodacheCardInfoLeft:refreshType5()
 		table.insert(arr, passiveDesc)
 		table.insert(arr, activeDesc)
 
-		item.txtDesc.text = SodacheUtil.changeDescColor(table.concat(arr, "<br>"))
+		item.txtDesc.text = table.concat(arr, "<br>")
 
 		gohelper.setActive(item.goSelect, relicLv == config.level)
 		gohelper.setActive(item.go, true)

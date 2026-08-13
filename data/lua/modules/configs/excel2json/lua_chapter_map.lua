@@ -19,9 +19,7 @@ local fields = {
 local primaryKey = {
 	"id"
 }
-local mlStringKey = {
-	desc = 1
-}
+local mlStringKey = {}
 
 function lua_chapter_map.onLoad(json)
 	lua_chapter_map.configList, lua_chapter_map.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

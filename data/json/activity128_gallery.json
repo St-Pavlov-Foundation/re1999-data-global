@@ -9,7 +9,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#11",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 1,
+    "offline": 0
   },
   {
     "type": 102,
@@ -21,7 +22,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#13",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 1,
+    "offline": 0
   },
   {
     "type": 103,
@@ -33,7 +35,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "3#9",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 1,
+    "offline": 0
   },
   {
     "type": 104,
@@ -45,7 +48,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#19",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 1,
+    "offline": 0
   },
   {
     "type": 105,
@@ -57,7 +61,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#18",
     "lurkNumber": 100,
-    "sort": 1
+    "sort": 1,
+    "offline": 0
   },
   {
     "type": 106,
@@ -69,7 +74,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#11",
     "lurkNumber": 0,
-    "sort": 2
+    "sort": 2,
+    "offline": 0
   },
   {
     "type": 107,
@@ -81,7 +87,8 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "3#9",
     "lurkNumber": 0,
-    "sort": 2
+    "sort": 2,
+    "offline": 0
   },
   {
     "type": 110,
@@ -93,6 +100,20 @@
     "pointExp": "200|200|50|50",
     "recommendStrategy": "4#15",
     "lurkNumber": 0,
-    "sort": 0
+    "sort": 0,
+    "offline": 1
+  },
+  {
+    "type": 108,
+    "id": 103370111,
+    "typeName": "language_10121110",
+    "minType": 6,
+    "galleryBg": "v3a7_bossrush_handbook_boss1",
+    "point": "2500000|5000000|10000000|30000000",
+    "pointExp": "200|200|50|50",
+    "recommendStrategy": "3#9",
+    "lurkNumber": 0,
+    "sort": 1,
+    "offline": 0
   }
 ]

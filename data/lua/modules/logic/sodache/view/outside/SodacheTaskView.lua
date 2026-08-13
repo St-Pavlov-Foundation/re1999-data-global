@@ -260,7 +260,7 @@ function SodacheTaskView:refreshTaskInfo()
 	self._txtName.text = config.name
 
 	if taskMo.state == SodacheEnum.TaskState.Processing or taskMo.state == SodacheEnum.TaskState.Finished then
-		self._txtTarget.text = string.format("%s(%s/%s)", config.desc, taskMo.progress, config.maxProgress)
+		self._txtTarget.text = string.format(luaLang("ObserverBoxTaskItem_txttaskdes"), config.desc, taskMo.progress, config.maxProgress)
 	else
 		self._txtTarget.text = config.desc
 	end
@@ -276,7 +276,7 @@ function SodacheTaskView:refreshTaskInfo()
 
 		if v[1] == SodacheEnum.CurrencyId.Coin then
 			hasCoin = true
-			self._txtCurrency.text = string.format("%s%s%d", cardMo.serverMo.itemCo.name, luaLang("multiple"), v[2])
+			self._txtCurrency.text = string.format(luaLang("SodacheTaskView_txtCurrency"), cardMo.serverMo.itemCo.name, v[2])
 		elseif cardMo.serverMo.itemType == SodacheEnum.ItemType.Card then
 			count = count + 1
 
@@ -315,7 +315,7 @@ function SodacheTaskView:refreshTaskInfo()
 		local hasCnt = SodacheUtil.getItemCount(itemId)
 
 		self.canSubmit = needCnt <= hasCnt
-		self._txtTarget.text = string.format("%s(%s/%s)", config.desc, hasCnt, needCnt)
+		self._txtTarget.text = string.format(luaLang("ObserverBoxTaskItem_txttaskdes"), config.desc, hasCnt, needCnt)
 
 		ZProj.UGUIHelper.SetGrayscale(self._btnSubmit.gameObject, not self.canSubmit)
 		gohelper.setActive(self._btnSubmit, true)

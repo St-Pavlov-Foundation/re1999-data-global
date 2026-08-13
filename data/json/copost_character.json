@@ -310,5 +310,179 @@
     "chaPicture": "",
     "chaName": "language_10109245",
     "chaCamp": 0
+  },
+  {
+    "chaId": 53,
+    "chaPicture": "300301",
+    "chaName": "language_10003434",
+    "chaCamp": 8
+  },
+  {
+    "chaId": 54,
+    "chaPicture": "302501",
+    "chaName": "language_10005352",
+    "chaCamp": 8
+  },
+  {
+    "chaId": 55,
+    "chaPicture": "302801",
+    "chaName": "language_10005358",
+    "chaCamp": 8
+  },
+  {
+    "chaId": 56,
+    "chaPicture": "509005",
+    "chaName": "language_10131629",
+    "chaCamp": 6
+  },
+  {
+    "chaId": 57,
+    "chaPicture": "506801",
+    "chaName": "language_10080437",
+    "chaCamp": 6
+  },
+  {
+    "chaId": 58,
+    "chaPicture": "314701",
+    "chaName": "language_10120029",
+    "chaCamp": 6
+  },
+  {
+    "chaId": 59,
+    "chaPicture": "531701",
+    "chaName": "language_10089760",
+    "chaCamp": 9
+  },
+  {
+    "chaId": 60,
+    "chaPicture": "304101",
+    "chaName": "language_10005368",
+    "chaCamp": 9
+  },
+  {
+    "chaId": 61,
+    "chaPicture": "532203",
+    "chaName": "language_10098305",
+    "chaCamp": 9
+  },
+  {
+    "chaId": 62,
+    "chaPicture": "524501",
+    "chaName": "language_10044938",
+    "chaCamp": 10
+  },
+  {
+    "chaId": 63,
+    "chaPicture": "315401",
+    "chaName": "language_10005336",
+    "chaCamp": 7
+  },
+  {
+    "chaId": 64,
+    "chaPicture": "300101",
+    "chaName": "language_10000321",
+    "chaCamp": 8
+  },
+  {
+    "chaId": 65,
+    "chaPicture": "302301",
+    "chaName": "language_10005348",
+    "chaCamp": 8
+  },
+  {
+    "chaId": 66,
+    "chaPicture": "523701",
+    "chaName": "language_10080435",
+    "chaCamp": 6
+  },
+  {
+    "chaId": 67,
+    "chaPicture": "501201",
+    "chaName": "language_10098269",
+    "chaCamp": 6
+  },
+  {
+    "chaId": 68,
+    "chaPicture": "529701",
+    "chaName": "language_10105257",
+    "chaCamp": 10
+  },
+  {
+    "chaId": 69,
+    "chaPicture": "530101",
+    "chaName": "language_10109237",
+    "chaCamp": 10
+  },
+  {
+    "chaId": 70,
+    "chaPicture": "",
+    "chaName": "language_10131630",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 71,
+    "chaPicture": "",
+    "chaName": "language_10131631",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 72,
+    "chaPicture": "",
+    "chaName": "language_10131632",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 73,
+    "chaPicture": "",
+    "chaName": "language_10131633",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 74,
+    "chaPicture": "",
+    "chaName": "language_10131634",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 75,
+    "chaPicture": "",
+    "chaName": "language_10131635",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 76,
+    "chaPicture": "531701",
+    "chaName": "language_10089760",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 77,
+    "chaPicture": "535903",
+    "chaName": "language_10125503",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 78,
+    "chaPicture": "524501",
+    "chaName": "language_10044938",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 79,
+    "chaPicture": "536001",
+    "chaName": "language_10125504",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 80,
+    "chaPicture": "536102",
+    "chaName": "language_10003456",
+    "chaCamp": 0
+  },
+  {
+    "chaId": 81,
+    "chaPicture": "314722",
+    "chaName": "language_10120029",
+    "chaCamp": 0
   }
 ]

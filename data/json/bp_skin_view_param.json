@@ -21,7 +21,7 @@
     "storePrefab": "bpface_skintaluoview",
     "openAudioId": 0,
     "closeAudioId": 0,
-    "online": 0
+    "online": 1
   },
   {
     "skinId": 309203,
@@ -37,6 +37,6 @@
     "storePrefab": "bpface_skintaluoview",
     "openAudioId": 0,
     "closeAudioId": 0,
-    "online": 1
+    "online": 0
   }
 ]

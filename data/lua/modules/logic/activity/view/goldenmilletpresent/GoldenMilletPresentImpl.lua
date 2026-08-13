@@ -261,6 +261,11 @@ function GoldenMilletPresentImpl:_editableInitView_itemList()
 
 	repeat
 		local go = gohelper.findChild(self.viewGO, string.format("present%s", i))
+
+		if SettingsModel.instance:isOverseas() and (GameBranchMgr.instance:isOnVer(3, 7) or GameBranchMgr.instance:isOnVer(3, 8)) then
+			go = gohelper.findChild(self.viewGO, string.format("PlayView/present%s", i))
+		end
+
 		local isNil = gohelper.isNil(go)
 
 		if not isNil then

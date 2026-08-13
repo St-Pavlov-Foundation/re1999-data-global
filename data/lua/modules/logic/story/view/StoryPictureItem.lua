@@ -159,12 +159,23 @@ function StoryPictureItem:_onPicPrefabLoaded()
 		if self._picCo.inType == StoryEnum.PictureInType.FadeIn or self._picCo.inType == StoryEnum.PictureInType.TxtFadeIn then
 			if fontType == 0 then
 				fontType = picTxtCo.fontType + 1
+				self._txtmarktop = IconMgr.instance:getCommonTextMarkTop(self._useTxts[fontType].gameObject):GetComponent(gohelper.Type_TextMesh)
+				self._conMark = gohelper.onceAddComponent(self._useTxts[fontType].gameObject, typeof(ZProj.TMPMark))
+
+				self._conMark:SetMarkTopGo(self._txtmarktop.gameObject)
 
 				local filterResult = StoryTool.filterMarkTop(txt)
 
 				gohelper.setActive(self._useTxts[fontType].gameObject, true)
 
 				self._useTxts[fontType].text = filterResult
+
+				self._conMark:SetTopOffset(0, -0.5971)
+				TaskDispatcher.runDelay(function()
+					local markTopList = StoryTool.getMarkTopTextList(txt)
+
+					self._conMark:SetMarksTop(markTopList)
+				end, nil, 0.01)
 			else
 				self._useTxts[fontType].text = txt
 			end

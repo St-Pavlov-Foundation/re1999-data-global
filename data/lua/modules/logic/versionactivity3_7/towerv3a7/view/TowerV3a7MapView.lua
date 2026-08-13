@@ -117,7 +117,7 @@ function TowerV3a7MapView:_onSelectChessMan(mo)
 		if string.nilorempty(mo.chessConfig.desc1) then
 			self._txtTips.text = mo.chessConfig.name
 		else
-			self._txtTips.text = string.format("%s:%s", mo.chessConfig.name, mo.chessConfig.desc1)
+			self._txtTips.text = string.format(luaLang("SurvivalDecreeSelectItem_descItem_txtDesc"), mo.chessConfig.name, mo.chessConfig.desc1)
 		end
 	end
 end

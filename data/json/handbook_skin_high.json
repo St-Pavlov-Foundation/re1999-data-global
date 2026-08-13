@@ -119,5 +119,16 @@
     "scenePath": "scenes/v3a3_m_s17_pftj/prefab/sence_13001.prefab",
     "nameRes": "",
     "iconRes": ""
+  },
+  {
+    "id": 10002,
+    "name": "language_10086197",
+    "nameEn": "Behind the Curtain",
+    "show": true,
+    "order": 2,
+    "des": "language_10086198",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10002.prefab",
+    "nameRes": "skinhandbook_titletxt_10",
+    "iconRes": "skinhandbook_titleicon_10"
   }
 ]

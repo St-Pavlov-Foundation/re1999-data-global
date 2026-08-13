@@ -342,7 +342,7 @@ end
 
 function TravelGoBattleBar:onDestroy()
 	if self.attrAnim then
-		for i, v in ipairs(self.attrAnim) do
+		for i, v in pairs(self.attrAnim) do
 			if v.flow then
 				v.flow:destroy()
 			end

@@ -13,9 +13,7 @@ local fields = {
 local primaryKey = {
 	"id"
 }
-local mlStringKey = {
-	name = 1
-}
+local mlStringKey = {}
 
 function lua_atomic_polygon.onLoad(json)
 	lua_atomic_polygon.configList, lua_atomic_polygon.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

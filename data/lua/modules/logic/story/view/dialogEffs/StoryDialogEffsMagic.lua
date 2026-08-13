@@ -19,24 +19,40 @@ function StoryDialogEffsMagic:init(conGo)
 	self._goreshapefireroot = gohelper.findChild(self._gomagiccontent, "txt_reshape/go_firework")
 	self._txtsilver = gohelper.findChildText(self._gomagiccontent, "txt_silver")
 	self._gosilverfireroot = gohelper.findChild(self._gomagiccontent, "txt_silver/go_firework")
+	self._gosand = gohelper.findChild(self._gomagiccontent, "txt_sand")
+	self._gogoldline = gohelper.findChild(self._gomagiccontent, "txt_goldline")
+	self._txtxran = gohelper.findChildText(self._gomagiccontent, "txt_xran")
+	self._goxranfireroot = gohelper.findChild(self._gomagiccontent, "txt_xran/go_firework")
 	self._commonMagicFirePath = ResUrl.getEffect("story/story_magicfont_particle")
 	self._reshapeMagicFirePath = ResUrl.getEffect("story/story_magicfont_particle_dark")
 	self._silverMagicFirePath = ResUrl.getSceneUIPrefab("story", "story_magicfont_particle_silver")
+	self._xranMagicFirePath = ResUrl.getSceneUIPrefab("story", "story_magicfont_particle_feather")
 	self._magicTab = {
+		gos = {
+			[StoryEnum.ConversationEffectType.CommonMagic] = self._txtcommon.gameObject,
+			[StoryEnum.ConversationEffectType.ReshapeMagic] = self._txtreshape.gameObject,
+			[StoryEnum.ConversationEffectType.SilverMagic] = self._txtsilver.gameObject,
+			[StoryEnum.ConversationEffectType.SandMagic] = self._gosand,
+			[StoryEnum.ConversationEffectType.GoldlineMagic] = self._gogoldline,
+			[StoryEnum.ConversationEffectType.XranMagic] = self._txtxran
+		},
 		txts = {
 			[StoryEnum.ConversationEffectType.CommonMagic] = self._txtcommon,
 			[StoryEnum.ConversationEffectType.ReshapeMagic] = self._txtreshape,
-			[StoryEnum.ConversationEffectType.SilverMagic] = self._txtsilver
+			[StoryEnum.ConversationEffectType.SilverMagic] = self._txtsilver,
+			[StoryEnum.ConversationEffectType.XranMagic] = self._txtxran
 		},
 		paths = {
 			[StoryEnum.ConversationEffectType.CommonMagic] = self._commonMagicFirePath,
 			[StoryEnum.ConversationEffectType.ReshapeMagic] = self._reshapeMagicFirePath,
-			[StoryEnum.ConversationEffectType.SilverMagic] = self._silverMagicFirePath
+			[StoryEnum.ConversationEffectType.SilverMagic] = self._silverMagicFirePath,
+			[StoryEnum.ConversationEffectType.XranMagic] = self._xranMagicFirePath
 		},
 		fireroots = {
 			[StoryEnum.ConversationEffectType.CommonMagic] = self._gocommonfireroot,
 			[StoryEnum.ConversationEffectType.ReshapeMagic] = self._goreshapefireroot,
-			[StoryEnum.ConversationEffectType.SilverMagic] = self._gosilverfireroot
+			[StoryEnum.ConversationEffectType.SilverMagic] = self._gosilverfireroot,
+			[StoryEnum.ConversationEffectType.XranMagic] = self._goxranfireroot
 		}
 	}
 
@@ -60,8 +76,25 @@ function StoryDialogEffsMagic:start(stepCo, txt, callback, callbackObj)
 	self._finishedCallback = callback
 	self._finishedCallbackObj = callbackObj
 	self._stepCo = stepCo
+
+	for _, go in pairs(self._magicTab.gos) do
+		gohelper.setActive(go, false)
+	end
+
+	self._initTxt = txt
 	self._txt = StoryTool.filterSpTag(txt)
-	self._magicTab.txts[self._stepCo.conversation.effType].text = self._txt
+
+	local isSpMagicType = StoryModel.instance:isSpMagicType(self._stepCo)
+
+	if not isSpMagicType then
+		self._magicTab.txts[self._stepCo.conversation.effType].text = self._txt
+	else
+		gohelper.setActive(self._magicTab.gos[self._stepCo.conversation.effType], true)
+		GameUtil.setActiveUIBlock("spMagicShow", true, false)
+		TaskDispatcher.runDelay(self._magicConFinished, self, 2)
+
+		return
+	end
 
 	self:loadRes()
 end
@@ -103,7 +136,7 @@ function StoryDialogEffsMagic:_startEffectShow()
 
 	transformhelper.setLocalPos(self._magicTab.txts[self._stepCo.conversation.effType].transform, x, y, 1)
 
-	local delay = self:_getMagicWordShowTime(self._txt)
+	local delay = self:_getMagicWordShowTime(self._initTxt)
 
 	self._magicConTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, delay, self._magicConUpdate, self._magicConFinished, self, nil, EaseType.Linear)
 
@@ -117,8 +150,8 @@ function StoryDialogEffsMagic:_startEffectShow()
 		gohelper.setActive(goroot, self._stepCo.conversation.effType == index)
 	end
 
-	for index, txt in pairs(self._magicTab.txts) do
-		gohelper.setActive(txt, self._stepCo.conversation.effType == index)
+	for index, go in pairs(self._magicTab.gos) do
+		gohelper.setActive(go, self._stepCo.conversation.effType == index)
 	end
 
 	if delay > 0 then
@@ -202,6 +235,8 @@ function StoryDialogEffsMagic:_magicConUpdate(value)
 end
 
 function StoryDialogEffsMagic:_magicConFinished()
+	GameUtil.setActiveUIBlock("spMagicShow", false)
+
 	for _, txt in pairs(self._magicTab.txts) do
 		local x, y, _ = transformhelper.getLocalPos(txt.gameObject.transform)
 
@@ -248,7 +283,9 @@ function StoryDialogEffsMagic:_killTween()
 end
 
 function StoryDialogEffsMagic:destroy()
+	GameUtil.setActiveUIBlock("spMagicShow", false)
 	StoryDialogEffsMagic.super.destroy(self)
+	TaskDispatcher.cancelTask(self._magicConFinished, self)
 
 	if self._magicTab and self._magicTab.anims then
 		for _, anim in pairs(self._magicTab.anims) do

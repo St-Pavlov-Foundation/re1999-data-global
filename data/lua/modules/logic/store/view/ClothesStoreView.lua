@@ -91,6 +91,7 @@ end
 local csAnimatorPlayer = SLFramework.AnimatorPlayer
 
 function ClothesStoreView:_editableInitView()
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "#go_has/RightBtn/#btn_buy/overseas_cumulativerebate"))
 	self._categoryItemContainer = {}
 
 	gohelper.setActive(self._goempty, false)
@@ -691,12 +692,16 @@ function ClothesStoreView:refreshChargeInfo()
 		self.txtPrice.text = priceStr
 	end
 
+	local skinChargeGoodsCfg = StoreConfig.instance:getSkinChargeGoodsCfg(skinId)
+	local chargeGoodsId = skinChargeGoodsCfg and skinChargeGoodsCfg.id or nil
+
+	self._overseas_cumulativerebate:onUpdateMO(rmbCurPrice and {
+		lua_store_charge_goods_id = chargeGoodsId
+	} or nil)
 	gohelper.setActive(self.goCostCurrency1, rmbCurPrice)
 
 	if rmbOriginalPrice then
 		self.txtOriginalPrice.text = rmbOriginalPrice
-
-		local skinChargeGoodsCfg = StoreConfig.instance:getSkinChargeGoodsCfg(skinId)
 
 		if skinChargeGoodsCfg then
 			local num, numStr = PayModel.instance:getProductOriginPriceNum(skinChargeGoodsCfg.originalCostGoodsId)
@@ -789,6 +794,7 @@ function ClothesStoreView:checkSkinVideoNotPlayed(skinId)
 end
 
 function ClothesStoreView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	self._simagetitle:UnLoadImage()
 	self._simagelogo:UnLoadImage()
 

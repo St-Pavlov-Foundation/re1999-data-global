@@ -3,6 +3,105 @@
 module("modules.logic.necrologiststory.view.comp.NecrologistStoryTextComp", package.seeall)
 
 local NecrologistStoryTextComp = class("NecrologistStoryTextComp", LuaCompBase)
+local kStyleTags = {
+	mark = true,
+	a = true,
+	smallcaps = true,
+	indent = true,
+	quad = true,
+	align = true,
+	allcaps = true,
+	nobr = true,
+	mspace = true,
+	noparse = true,
+	cspace = true,
+	style = true,
+	sub = true,
+	size = true,
+	uppercase = true,
+	lowercase = true,
+	width = true,
+	space = true,
+	alpha = true,
+	link = true,
+	sup = true,
+	br = true,
+	color = true,
+	sprite = true,
+	i = true,
+	["line-height"] = true,
+	rotate = true,
+	pos = true,
+	margin = true,
+	gradient = true,
+	u = true,
+	["font-weight"] = true,
+	marktop = true,
+	s = true,
+	material = true,
+	b = true,
+	strikethrough = true,
+	font = true,
+	["line-indent"] = true,
+	voffset = true
+}
+
+function NecrologistStoryTextComp:getTypewriterShowText_overseas()
+	if self:isDone() then
+		return self.metaText
+	end
+
+	local retText = self.curText or ""
+	local index = self.charIndex
+	local char = self.charList[index]
+	local tagStackCount = #self.tagStack
+
+	if string.sub(char, 1, 1) == "<" then
+		local isStyleTag = false
+
+		if string.sub(char, 2, 2) == "/" then
+			isStyleTag = true
+		else
+			local tagName = string.match(char, "^<([^=/>]+)")
+
+			if tagName and kStyleTags[tagName] then
+				isStyleTag = true
+			end
+		end
+
+		if isStyleTag then
+			if string.sub(char, 2, 2) ~= "/" then
+				table.insert(self.tagStack, char)
+			elseif tagStackCount > 0 then
+				table.remove(self.tagStack)
+			end
+		else
+			retText = retText .. char
+		end
+	elseif tagStackCount > 0 then
+		local startTags = ""
+		local endTags = ""
+
+		for _, tag in ipairs(self.tagStack) do
+			startTags = startTags .. tag
+		end
+
+		for j = tagStackCount, 1, -1 do
+			local tag = self.tagStack[j]
+
+			endTags = endTags .. string.gsub(tag, "<", "</")
+		end
+
+		retText = retText .. startTags .. char .. endTags
+	else
+		retText = retText .. char
+	end
+
+	self.charIndex = self.charIndex + 1
+	self.curText = retText
+
+	return retText
+end
 
 function NecrologistStoryTextComp:_onSetMarksTop()
 	if self._txtmarktop and not gohelper.isNil(self._txtmarktopGo) then
@@ -122,6 +221,8 @@ function NecrologistStoryTextComp:doFinishCallback()
 end
 
 function NecrologistStoryTextComp:getTypewriterShowText()
+	do return self:getTypewriterShowText_overseas() end
+
 	if self:isDone() then
 		return self.metaText
 	end

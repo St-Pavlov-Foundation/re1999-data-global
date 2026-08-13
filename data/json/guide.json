@@ -9451,7 +9451,7 @@
   {
     "id": 37200,
     "desc": "体系手册主界面引导",
-    "isOnline": 0,
+    "isOnline": 1,
     "trigger": "EpisodeFinishAndInMainScene#10115",
     "invalid": "",
     "interruptFinish": 1,

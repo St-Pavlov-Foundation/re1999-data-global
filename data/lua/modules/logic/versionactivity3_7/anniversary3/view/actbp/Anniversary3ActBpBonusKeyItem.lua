@@ -80,7 +80,7 @@ function Anniversary3ActBpBonusKeyItem:refresh(co)
 	gohelper.setActive(self._gopayunlock2, #payBonusList == 2)
 	self:_setBonus(payBonusList, self._payBonusList, self._gopayitem, hasGetPay)
 
-	self._txtlv.text = self._config.level .. luaLang("level")
+	self._txtlv.text = string.format(luaLang("v1a5_aizila_level"), self._config.level)
 end
 
 function Anniversary3ActBpBonusKeyItem:_setBonus(itemSp, itemIconList, itemPrefab, hasGet)

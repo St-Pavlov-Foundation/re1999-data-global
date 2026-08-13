@@ -82,9 +82,9 @@ function SodacheUpgradeView:onOpen()
 
 		for k, config in ipairs(buildCfgs) do
 			if k == 1 then
-				effectStr = string.format("Lv.%d.%s", k, config.unlockDesc)
+				effectStr = string.format(luaLang("SodacheUpgradeView_effectStr1"), k, config.unlockDesc)
 			else
-				effectStr = string.format("%s<br>Lv.%d.%s", effectStr, k, config.unlockDesc)
+				effectStr = string.format(luaLang("SodacheUpgradeView_effectStr2"), effectStr, k, config.unlockDesc)
 			end
 		end
 

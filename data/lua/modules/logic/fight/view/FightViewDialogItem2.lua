@@ -35,8 +35,13 @@ function FightViewDialogItem2:showDialogContent(icon, config)
 
 	self._txtdialog.text = config.text
 
+	self._txtdialog:GetPreferredValues()
+
 	if not self._tmpFadeIn then
 		self._tmpFadeIn = MonoHelper.addLuaComOnceToGo(self._gocontainer, TMPFadeIn)
+
+		self._tmpFadeIn:setTopOffset(0, -2.4)
+		self._tmpFadeIn:setLineSpacing(26)
 	end
 
 	self._tmpFadeIn:playNormalText(config.text)

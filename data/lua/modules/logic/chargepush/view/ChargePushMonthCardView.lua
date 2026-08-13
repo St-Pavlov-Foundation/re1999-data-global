@@ -46,7 +46,7 @@ function ChargePushMonthCardView:removeEvents()
 end
 
 function ChargePushMonthCardView:_editableInitView()
-	return
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "root/buy/overseas_cumulativerebate"))
 end
 
 function ChargePushMonthCardView:_payFinished()
@@ -82,6 +82,10 @@ function ChargePushMonthCardView:refreshView()
 	if not self.config then
 		return
 	end
+
+	self._overseas_cumulativerebate:onUpdateMO({
+		lua_store_charge_goods_id = self.goodsId
+	})
 
 	self.txtDesc.text = self.config.desc
 
@@ -195,7 +199,7 @@ function ChargePushMonthCardView:onClose()
 end
 
 function ChargePushMonthCardView:onDestroyView()
-	return
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 end
 
 function ChargePushMonthCardView:onClickClose()

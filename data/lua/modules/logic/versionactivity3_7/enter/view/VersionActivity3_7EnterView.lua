@@ -235,18 +235,26 @@ function VersionActivity3_7EnterView:playVideo()
 	TaskDispatcher.cancelTask(self._playOpen1Anim, self)
 
 	if self.viewParam and self.viewParam.playVideo then
+		local isCanSkip = GameUtil.playerPrefsGetNumberByUserId(VersionActivity3_7Enum.EnterVideoFirstKey, 0) ~= 0
+
+		if not isCanSkip then
+			GameUtil.playerPrefsSetNumberByUserId(VersionActivity3_7Enum.EnterVideoFirstKey, 1)
+		end
+
 		self:_playOpenAnim("open1")
 
 		self.viewAnim.speed = 0
 		self.cgviewgo = self.viewGO:GetComponent(gohelper.Type_CanvasGroup)
 
-		if self.cgviewgo then
+		if self.cgviewgo and not isCanSkip then
 			self.cgviewgo.interactable = false
 		end
 
 		self.gosubviewCanvasGroup.alpha = 0
 
-		VideoController.instance:openFullScreenVideoView(VersionActivity3_7Enum.EnterAnimVideoName, nil, VIDEO_DURATION)
+		VideoController.instance:openFullScreenVideoView(VersionActivity3_7Enum.EnterAnimVideoName, nil, VIDEO_DURATION, nil, nil, {
+			couldSkip = isCanSkip
+		})
 		TimeUtil.setDayFirstLoginRed(VersionActivity3_7Enum.EnterVideoDayKey)
 		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayFinished, self.onPlayVideoDone, self)
 		self:addEventCb(VideoController.instance, VideoEvent.OnVideoPlayOverTime, self.onPlayVideoDone, self)

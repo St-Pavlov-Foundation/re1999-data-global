@@ -101,7 +101,7 @@ function SodacheInsideTaskView:_createTask(obj, data, index)
 	gohelper.setActive(sub, data.config.type == SodacheEnum.TaskType.Branch)
 
 	if data.state == SodacheEnum.TaskState.Processing then
-		txtDesc.text = string.format("%s(%s/%s)", data.config.desc, data.progress, data.config.maxProgress)
+		txtDesc.text = string.format(luaLang("ObserverBoxTaskItem_txttaskdes"), data.config.desc, data.progress, data.config.maxProgress)
 	else
 		txtDesc.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("sodache_inside_taskdesc"), data.config.desc)
 	end

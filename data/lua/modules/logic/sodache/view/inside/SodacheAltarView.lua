@@ -191,7 +191,7 @@ function SodacheAltarView:_createDesc(obj, data, index)
 
 	gohelper.setActive(arrow, data.isCur)
 
-	txt.text = index .. "." .. SodacheUtil.changeDescColor(data.desc)
+	txt.text = string.format(luaLang("SodacheAltarView_createDesc"), index, SodacheUtil.changeDescColor(data.desc))
 
 	local anim = gohelper.findComponentAnim(obj)
 

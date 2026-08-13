@@ -16,7 +16,10 @@ local primaryKey = {
 	"activityId",
 	"day"
 }
-local mlStringKey = {}
+local mlStringKey = {
+	content = 2,
+	name = 1
+}
 
 function lua_anniversary_sign_in.onLoad(json)
 	lua_anniversary_sign_in.configList, lua_anniversary_sign_in.configDict = JsonToLuaParser.parse(json, fields, primaryKey, mlStringKey)

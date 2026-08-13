@@ -320,7 +320,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "v3a8_enterview_smy_1#v3a8_enterview_smy_0",
+    "tabBgPath": "v3a7_enterview_smy_1#v3a7_enterview_smy_0",
     "tabButton": "",
     "tabBgmId": 3200065,
     "achievementJumpId": 0,
@@ -11531,7 +11531,7 @@
     "permanentParentAcitivityId": 0,
     "achievementGroupPath": "",
     "activityBonus": "",
-    "tabBgPath": "v3a8_enterview_xmy_1#v3a8_enterview_xmy_0",
+    "tabBgPath": "v3a7_enterview_xmy_1#v3a7_enterview_xmy_0",
     "tabButton": "",
     "tabBgmId": 3200065,
     "achievementJumpId": 0,
@@ -22567,7 +22567,7 @@
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
     "tryoutcharacter": 0,
-    "patFaceParam": "837007"
+    "patFaceParam": "837008"
   },
   {
     "id": 13739,
@@ -22826,7 +22826,7 @@
     "extraDisplayIcon": "",
     "tryoutEpisode": 0,
     "tryoutcharacter": 0,
-    "patFaceParam": "837031"
+    "patFaceParam": "837005"
   },
   {
     "id": 13801,
@@ -24569,8 +24569,8 @@
   },
   {
     "id": 138526,
-    "tabName": "language_10122403",
-    "name": "language_10122404",
+    "tabName": "language_10131707",
+    "name": "language_10131707",
     "nameEn": "",
     "actDesc": "",
     "actTip": "",

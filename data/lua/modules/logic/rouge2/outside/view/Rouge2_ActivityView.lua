@@ -4,6 +4,10 @@ module("modules.logic.rouge2.outside.view.Rouge2_ActivityView", package.seeall)
 
 local Rouge2_ActivityView = class("Rouge2_ActivityView", BaseViewExtended)
 
+function Rouge2_ActivityView:onOpenFinish()
+	Rouge2_Controller.instance:startEndFlow()
+end
+
 function Rouge2_ActivityView:onInitView()
 	self._txttime = gohelper.findChildText(self.viewGO, "title/LimitTime/#txt_time")
 	self._btnstart = gohelper.findChildButtonWithAudio(self.viewGO, "Middle/#btn_start")
@@ -63,11 +67,20 @@ function Rouge2_ActivityView:_btnstartOnClick()
 		return
 	end
 
+	local viewName = VersionActivityFixedHelper.getVersionActivityEnterViewName()
+
+	if ViewMgr.instance:isOpen(viewName) then
+		fromVersionActivity = true
+	end
+
 	if Rouge2_Model.instance:isStarted() then
+		Rouge2_Controller.instance:setBackToVersionActivity(fromVersionActivity)
 		Rouge2_Controller.instance:startRouge()
 		self:closeThis()
 	else
-		Rouge2_ViewHelper.openEnterView()
+		Rouge2_ViewHelper.openEnterView({
+			fromVersionActivity = fromVersionActivity
+		})
 	end
 end
 

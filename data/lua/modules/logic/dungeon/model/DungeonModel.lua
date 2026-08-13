@@ -283,10 +283,6 @@ function DungeonModel:getEpisodeChallengeCount(episodeId)
 end
 
 function DungeonModel:chapterIsLock(chapterId)
-	if chapterId == 113 or chapterId == 213 then
-		return true
-	end
-
 	local chapterOpen = true
 	local toast, param
 	local co = DungeonConfig.instance:getChapterCO(chapterId)

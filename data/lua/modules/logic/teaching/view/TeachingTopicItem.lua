@@ -71,8 +71,8 @@ function TeachingTopicItem:refreshItem(teachingId, index)
 		gohelper.setActive(self._goNewdot, TeachingModel.instance:needShowNew(teachingId))
 		gohelper.setActive(self._goReddot, isFinish == TeachingEnum.TeachingStatus.FinishNotReward)
 	else
-		self._txtItemName1.text = "敬请期待"
-		self._txtItemName2.text = "敬请期待"
+		self._txtItemName1.text = luaLang("TeachingTopicItem_txtItemName_comingsoon")
+		self._txtItemName2.text = luaLang("TeachingTopicItem_txtItemName_comingsoon")
 
 		gohelper.setActive(self._goUnSelect, true)
 		gohelper.setActive(self._goSelect, false)

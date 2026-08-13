@@ -10,6 +10,7 @@ local fields = {
 	type = 1,
 	pointExp = 7,
 	galleryBg = 5,
+	offline = 11,
 	minType = 4,
 	recommendStrategy = 8,
 	id = 2,

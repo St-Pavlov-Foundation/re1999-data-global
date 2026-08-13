@@ -108,6 +108,7 @@ function StoreMonthCardView:_btnItemDetailClick(index)
 end
 
 function StoreMonthCardView:_editableInitView()
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "view/buy/overseas_cumulativerebate"))
 	self.godecorate = gohelper.findChild(self.viewGO, "view/decorateicon")
 	self.wenhaoClick = gohelper.getClick(self.godecorate)
 
@@ -181,6 +182,10 @@ function StoreMonthCardView:_editableInitView()
 	else
 		self._txtcosthw.text = string.format("<size=30>%s</size>%s", symbol, numStr)
 	end
+
+	self._overseas_cumulativerebate:onUpdateMO({
+		lua_store_charge_goods_id = StoreEnum.MonthCardGoodsId
+	})
 end
 
 function StoreMonthCardView:onClickSupplementItem()
@@ -478,6 +483,7 @@ function StoreMonthCardView:_tryPatFaceMonthCardView()
 end
 
 function StoreMonthCardView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	self._simagegoods:UnLoadImage()
 	self._simageicon1:UnLoadImage()
 	self._simageicon2:UnLoadImage()

@@ -24917,7 +24917,7 @@
   },
   {
     "id": "p_rouge2_teamrecommendtips_txt_title",
-    "lang": "language_10107228"
+    "lang": "language_90016091"
   },
   {
     "id": "p_rouge2_backpackboxtipsview_txt_progresstitle",
@@ -25265,7 +25265,7 @@
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title2",
-    "lang": "language_10125350"
+    "lang": "language_10131679"
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title3",
@@ -27097,7 +27097,7 @@
   },
   {
     "id": "p_warmup_txt_title",
-    "lang": "language_10125351"
+    "lang": "language_10131681"
   },
   {
     "id": "p_warmup_txt_reward",
@@ -27673,11 +27673,11 @@
   },
   {
     "id": "p_sodache_mainview_txt_task",
-    "lang": "language_10017057"
+    "lang": "language_90016087"
   },
   {
     "id": "p_sodache_mainview_txt_handbook",
-    "lang": "language_10005062"
+    "lang": "language_90016098"
   },
   {
     "id": "p_sodache_mainview_txt_warehouse",
@@ -27721,7 +27721,7 @@
   },
   {
     "id": "p_sodache_handbookview_txt_title",
-    "lang": "language_10125376"
+    "lang": "language_90016081"
   },
   {
     "id": "p_sodache_cardsubmitview_txt_title",
@@ -27849,7 +27849,7 @@
   },
   {
     "id": "p_sodache_takeview_txt_mutiselect",
-    "lang": "language_10041932"
+    "lang": "language_90016093"
   },
   {
     "id": "p_sodache_takeview_txt_cantake",
@@ -27897,7 +27897,7 @@
   },
   {
     "id": "p_sodache_mapview_txt_hero",
-    "lang": "language_10032283"
+    "lang": "language_90016088"
   },
   {
     "id": "p_sodache_mapview_txt_bag",
@@ -27973,7 +27973,7 @@
   },
   {
     "id": "p_v3a7_goldenmilletpresentfull_txt_desc",
-    "lang": "language_10125416"
+    "lang": "language_10131286"
   },
   {
     "id": "p_v3a7_cumulativerecharge_maintxt1",
@@ -28149,7 +28149,7 @@
   },
   {
     "id": "p_bpfaceview_txt_desc",
-    "lang": "language_10125449"
+    "lang": "language_10131682"
   },
   {
     "id": "p_bpfaceview_txt_title",
@@ -28417,7 +28417,7 @@
   },
   {
     "id": "p_v3a7_anniversary3_guessgame_playguessview_cn1",
-    "lang": "language_10003325"
+    "lang": "language_90016085"
   },
   {
     "id": "p_v3a7_anniversary3_guessgame_playguessview_cn2",
@@ -28561,7 +28561,7 @@
   },
   {
     "id": "p_v3a7_anniversary3_signview_txt3",
-    "lang": "language_10110038"
+    "lang": "language_90016080"
   },
   {
     "id": "p_v3a7_anniversary3_signview_txt4",
@@ -28601,7 +28601,7 @@
   },
   {
     "id": "p_v3a7_skinstore_kaorng_01",
-    "lang": "language_10125525"
+    "lang": "language_10131287"
   },
   {
     "id": "p_v3a7_anniversary3_guessgame_playtasktipview_txt_rest",
@@ -28681,7 +28681,7 @@
   },
   {
     "id": "p_v3a7_skinstore_kaorng_10",
-    "lang": "language_10125540"
+    "lang": "language_10131287"
   },
   {
     "id": "p_rouge2_teamrecommendtips_gotype1_unselect",
@@ -29596,8 +29596,16 @@
     "lang": "language_10125705"
   },
   {
+    "id": "p_overseas_txt_review2",
+    "lang": "language_90016099"
+  },
+  {
     "id": "p_scopost_version_task_s02_overseas_tip",
     "lang": "language_10019847"
+  },
+  {
+    "id": "p_SodacheEscapeView_btn_retreat_txt_overseas",
+    "lang": "language_10030043"
   },
   {
     "id": "p_s02_AtomicCultivateView_btntxt_overseas",

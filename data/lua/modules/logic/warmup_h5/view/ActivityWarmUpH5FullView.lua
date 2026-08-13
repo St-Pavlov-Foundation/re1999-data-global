@@ -32,6 +32,12 @@ function ActivityWarmUpH5FullView:_btnclickOnClick()
 
 	local baseUrl = self.viewContainer:getH5BaseUrl()
 
+	if GameChannelConfig.isLongCheng() and BootNativeUtil.isIOS() then
+		WebViewController.instance:simpleOpenWebBrowser(baseUrl)
+
+		return
+	end
+
 	WebViewController.instance:simpleOpenWebView(baseUrl, self._onWebViewCb, self)
 end
 

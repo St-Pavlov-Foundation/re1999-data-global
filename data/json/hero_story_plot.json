@@ -47236,9 +47236,9 @@
     "name": "language_10005352",
     "desc": "language_10121501",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "612400397#1",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -49823,9 +49823,9 @@
     "name": "language_10005339",
     "desc": "language_10121689",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6201002#0.85",
+    "controlParam": "",
     "level": ""
   },
   {

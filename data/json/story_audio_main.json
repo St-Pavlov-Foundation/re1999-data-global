@@ -67889,8 +67889,8 @@
     "id": 613700347,
     "eventName": "play_plotvoc_chap13_hero3094_34173",
     "bankName": "plotvoc_hero3094chapter13",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
+    "eventName_Overseas": "play_plotvoc_chap13_hero3094_34173_mute",
+    "bankName_Overseas": "plotvoc_hero3094chapter13"
   },
   {
     "id": 613700348,
@@ -76044,8 +76044,8 @@
     "id": 613701512,
     "eventName": "play_plotvoc_chap13_npc526401_33887",
     "bankName": "plotvoc_npc526401chapter13",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
+    "eventName_Overseas": "play_plotvoc_chap13_npc526401_33887_mute",
+    "bankName_Overseas": "plotvoc_npc526401chapter13"
   },
   {
     "id": 613701513,

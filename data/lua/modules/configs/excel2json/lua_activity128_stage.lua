@@ -4,24 +4,25 @@ module("modules.configs.excel2json.lua_activity128_stage", package.seeall)
 
 local lua_activity128_stage = {}
 local fields = {
-	skinIds = 15,
-	name = 4,
-	bossRushLevelDetailFullBgSimage = 12,
-	type = 6,
-	maxPoints = 7,
-	name_en = 5,
-	bossRushMainBg = 11,
-	bossRushMainItemBossSprite = 10,
-	skinOffsetXYs = 18,
-	resultViewNameSImage = 14,
-	layer4MaxPoints = 8,
-	stage = 2,
 	activityId = 1,
-	openDay = 9,
-	heartVariantId = 16,
-	skinScales = 17,
-	resultViewFullBgSImage = 13,
-	version = 3
+	name = 5,
+	version = 3,
+	type = 7,
+	maxPoints = 8,
+	bossRushLevelDetailFullBgSimage = 13,
+	bossRushMainBg = 12,
+	bossRushMainItemBossSprite = 11,
+	name_en = 6,
+	skinOffsetXYs = 19,
+	resultViewNameSImage = 15,
+	layer4MaxPoints = 9,
+	stage = 2,
+	skinIds = 16,
+	openDay = 10,
+	heartVariantId = 17,
+	skinScales = 18,
+	resultViewFullBgSImage = 14,
+	isActivity = 4
 }
 local primaryKey = {
 	"activityId",

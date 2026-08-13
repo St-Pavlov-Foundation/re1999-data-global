@@ -15,15 +15,15 @@
   },
   {
     "id": 3,
-    "startTime": "2026-04-22 05:00:00",
-    "endTime": "2026-06-11 05:00:00",
+    "startTime": "2026-08-13 05:00:00",
+    "endTime": "2026-09-24 05:00:00",
     "shopTitle": "language_10126245",
     "currencyMax": 78350
   },
   {
     "id": 4,
     "startTime": "2026-06-09 05:00:00",
-    "endTime": "2038-00-00 00:00:00",
+    "endTime": "2026-07-09 05:00:00",
     "shopTitle": "language_10107287",
     "currencyMax": 167350
   }

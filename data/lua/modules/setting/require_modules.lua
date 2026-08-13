@@ -5567,6 +5567,7 @@ setNeedLoadModule("modules.logic.minors.controller.MinorsController", "MinorsCon
 setNeedLoadModule("modules.logic.minors.controller.MinorsEvent", "MinorsEvent")
 setNeedLoadModule("modules.logic.minors.model.DateOfBirthSelectionViewListModel", "DateOfBirthSelectionViewListModel")
 setNeedLoadModule("modules.logic.minors.model.MinorsModel", "MinorsModel")
+setNeedLoadModule("modules.logic.minors.view.CumulativeRebateItem", "CumulativeRebateItem")
 setNeedLoadModule("modules.logic.minors.view.DateOfBirthSelectionView", "DateOfBirthSelectionView")
 setNeedLoadModule("modules.logic.minors.view.DateOfBirthSelectionViewContainer", "DateOfBirthSelectionViewContainer")
 setNeedLoadModule("modules.logic.minors.view.DateOfBirthSelectionViewItem", "DateOfBirthSelectionViewItem")

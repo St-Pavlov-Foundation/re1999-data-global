@@ -40,6 +40,7 @@ function TwinssychubeEquipInfoPanel:init(go)
 	self._btnImprint = gohelper.findChildButtonWithAudio(self.viewGO, "btn/btn_Imprint")
 	self._txtImprint = gohelper.findChildText(self._btnImprint.gameObject, "txt_Imprint")
 	self._btnEquip = gohelper.findChildButtonWithAudio(self.viewGO, "btn/btn_Equip")
+	self._btnBuy = gohelper.findChildButtonWithAudio(self.viewGO, "btn/btn_Buy")
 	self._anim = self.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	self._animEvent = self.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
@@ -55,6 +56,7 @@ function TwinssychubeEquipInfoPanel:addEventListeners()
 	self._btnmaxlevel:AddClickListener(self._btnmaxlevelOnClick, self)
 	self._btnImprint:AddClickListener(self._btnjumpOnClick, self)
 	self._btnEquip:AddClickListener(self._btnEquipOnClick, self)
+	self._btnBuy:AddClickListener(self._btnBuyOnClick, self)
 end
 
 function TwinssychubeEquipInfoPanel:removeEventListeners()
@@ -64,6 +66,7 @@ function TwinssychubeEquipInfoPanel:removeEventListeners()
 	self._btnmaxlevel:RemoveClickListener()
 	self._btnImprint:RemoveClickListener()
 	self._btnEquip:RemoveClickListener()
+	self._btnBuy:RemoveClickListener()
 	self._animEvent:RemoveEventListener(self._animkey)
 end
 
@@ -108,6 +111,16 @@ end
 
 function TwinssychubeEquipInfoPanel:_btnnotownedOnClick()
 	return
+end
+
+function TwinssychubeEquipInfoPanel:_btnBuyOnClick()
+	local goods = self:_getEquipGoodsMo()
+
+	if not goods then
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.NormalStoreGoodsView, goods)
 end
 
 function TwinssychubeEquipInfoPanel:_editableInitView()
@@ -203,20 +216,49 @@ function TwinssychubeEquipInfoPanel:_refreshView(isOpen)
 
 	local level = equipMo and equipMo.level or 1
 	local isMaxLevel = false
+	local isShowBuy = false
 
 	if had then
 		local maxLv = EquipConfig.instance:getMaxLevel(self._quipConfig)
 
 		isMaxLevel = maxLv <= level
+	else
+		local storeActId = VersionActivity3_10Enum.ActivityId.DungeonStore
+
+		if not ActivityHelper.isOpen(storeActId) and self:_getEquipGoodsMo() then
+			isShowBuy = true
+		end
 	end
 
 	gohelper.setActive(self._btnImprint.gameObject, (isActivate or isEquiped) and not isMaxLevel)
 	gohelper.setActive(self._btnEquip.gameObject, had and not isActivate and not isEquiped)
+	gohelper.setActive(self._btnBuy.gameObject, isShowBuy)
 
 	if (isActivate or isEquiped) and not isMaxLevel then
 		local txtImprint = level == EquipConfig.instance:getCurrentBreakLevelMaxLevel(equipMo) and "p_equipstrengthen_break" or "p_equip_11"
 
 		self._txtImprint.text = luaLang(txtImprint)
+	end
+end
+
+function TwinssychubeEquipInfoPanel:_getEquipGoodsMo()
+	local storeMo = StoreModel.instance:getStoreMO(StoreEnum.StoreId.TwinssychubeEquipStore)
+
+	if storeMo then
+		local goodsList = storeMo:getGoodsList()
+
+		if goodsList then
+			for _, goods in ipairs(goodsList) do
+				local product = goods.config.product
+				local productArr = GameUtil.splitString2(product, true)
+				local itemType = productArr[1][1]
+				local itemId = productArr[1][2]
+
+				if itemType == MaterialEnum.MaterialType.Equip and itemId == self._euqipId then
+					return goods
+				end
+			end
+		end
 	end
 end
 

@@ -294,8 +294,7 @@ ActivityEnum.VersionActivityIdDict = {
 	Activity3_2 = 13222
 }
 ActivityEnum.VersionActivityIdList = {
-	ActivityEnum.VersionActivityIdDict.Activity3_8,
-	ActivityEnum.VersionActivityIdDict.Activity_sp02
+	ActivityEnum.VersionActivityIdDict.Activity3_7
 }
 ActivityEnum.MainIcon = {
 	[ActivityEnum.VersionActivityIdDict.Activity1_1] = "rk1111",

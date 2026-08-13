@@ -51,9 +51,6 @@ function Fight3_7QteView:onInitView()
 	self.text = gohelper.findChildText(self.dialogueView, "#go_dialog/container/go_normalcontent/txt_contentcn")
 	self.simageicon = gohelper.findChildSingleImage(self.dialogueView, "#go_dialog/container/headframe/headicon")
 	self.simageBg = gohelper.findChildSingleImage(self.dialogueView, "#go_dialog/container/simagebg")
-
-	self.simageBg:LoadImage(ResUrl.getFightBattleDialogBg("duihuak_002"))
-
 	self.dialogClickRoot = gohelper.findChild(self.viewGO, "dialogClick")
 	self.dialogClick = gohelper.findChildClick(self.viewGO, "dialogClick")
 

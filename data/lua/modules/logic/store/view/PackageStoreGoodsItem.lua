@@ -195,6 +195,12 @@ function PackageStoreGoodsItem:_onUpdateProductDetails(mo)
 end
 
 function PackageStoreGoodsItem:onUpdateMO(mo)
+	if not self._overseas_cumulativerebate then
+		self._overseas_cumulativerebate = CumulativeRebateItem.s_createByListScrollCellExtend(self, gohelper.findChild(self.viewGO, "overseas_cumulativerebate"))
+	end
+
+	self._overseas_cumulativerebate:setActive(false)
+
 	self._mo = mo
 	self._cfgType = mo and mo.config and mo.config.type
 
@@ -307,6 +313,10 @@ function PackageStoreGoodsItem:onUpdateMO(mo)
 
 		gohelper.setActive(self._imagematerial.gameObject, false)
 	elseif self._mo.isChargeGoods then
+		self._overseas_cumulativerebate:onUpdateMO({
+			lua_store_charge_goods_id = self._mo.id
+		})
+
 		self._txtmaterialNum.text = PayModel.instance:getProductPrice(self._mo.id)
 
 		gohelper.setActive(self._imagematerial.gameObject, false)
@@ -514,6 +524,7 @@ function PackageStoreGoodsItem:refreshSkinTips(goodsMO)
 end
 
 function PackageStoreGoodsItem:onDestroy()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 	self._btn:RemoveClickListener()
 	self._btnCost:RemoveClickListener()
 	GameUtil.onDestroyViewMember_ClickListener(self, "_wenhaoClick")

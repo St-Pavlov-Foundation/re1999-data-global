@@ -8,6 +8,16 @@ function Rouge2_MapHelper.blockEsc()
 	return
 end
 
+function Rouge2_MapHelper._onEnterMainSceneDone_overseas()
+	local actId = Rouge2_Model.instance:getCurActId()
+	local enterCtrlInst = VersionActivityFixedHelper.getVersionActivityEnterController().instance
+
+	enterCtrlInst:openVersionActivityEnterViewIfNotOpened(function()
+		Rouge2_Controller.instance:startEndFlow()
+		GameSceneMgr.instance:hideLoading()
+	end, nil, actId, true)
+end
+
 Rouge2_MapHelper.StandardRate = 1.7777777777777777
 
 function Rouge2_MapHelper.getMiddleLayerCameraSize()
@@ -202,6 +212,20 @@ function Rouge2_MapHelper.backToMainScene()
 	Rouge2_PopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
 	Rouge2_StatController.instance:quitMap()
+
+	if SettingsModel.instance:isOverseas() and GameBranchMgr.instance:isOnVer(3, 7) and Rouge2_Controller.instance:bBackToVersionActivity() then
+		Rouge2_Controller.instance:setBackToVersionActivity(false)
+
+		local actId = Rouge2_Model.instance:getCurActId()
+
+		DungeonModel.instance:resetSendChapterEpisodeId()
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.Rouge2_MapLoadingView)
+		MainController.instance:enterMainScene(true, false)
+		SceneHelper.instance:waitSceneDone(SceneType.Main, Rouge2_MapHelper._onEnterMainSceneDone_overseas)
+
+		return
+	end
+
 	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Rouge2)
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.Rouge2_MapLoadingView)
 	MainController.instance:enterMainScene(true, false)

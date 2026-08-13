@@ -141,7 +141,7 @@ function Rouge2_ResultFinalView:_editableInitView()
 
 	self._activeSkillComp:updateSystemParam(Rouge2_Enum.TeamRecommendParam.IsShowSystemIcon, false)
 	self._activeSkillComp:updateSystemParam(Rouge2_Enum.TeamRecommendParam.Spacing, 35)
-	self._activeSkillComp:setLayoutSpacing(-50)
+	self._activeSkillComp:setLayoutSpacing(50)
 	gohelper.setActive(self._goAssessTips, false)
 
 	self._isSaveRecordDone = false

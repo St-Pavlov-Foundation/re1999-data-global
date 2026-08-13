@@ -39,6 +39,9 @@ function BpChargeABTestView:removeEvents()
 end
 
 function BpChargeABTestView:_editableInitView()
+	self._overseas_cumulativerebateL = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "Root/left/#btnBuy/overseas_cumulativerebate"))
+	self._overseas_cumulativerebateR = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "Root/right/#btnBuy/overseas_cumulativerebate"))
+
 	local skinId = BpConfig.instance:getCurSkinId(BpModel.instance.id)
 	local heroId = lua_skin.configDict[skinId].characterId
 	local heroCo = lua_character.configDict[heroId]
@@ -154,6 +157,8 @@ function BpChargeABTestView:createItems(go, colist, type, noShowNum)
 end
 
 function BpChargeABTestView:onDestroyView()
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebateL")
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebateR")
 	self._simagesignature:UnLoadImage()
 end
 
@@ -190,6 +195,12 @@ function BpChargeABTestView:_onUpdatePayStatus()
 
 		self._txtPayStatus3.text = string.format("<s>%s</s>", originalPrice3)
 
+		self._overseas_cumulativerebateL:onUpdateMO({
+			lua_store_charge_goods_id = shopCo1.id
+		})
+		self._overseas_cumulativerebateR:onUpdateMO({
+			lua_store_charge_goods_id = shopCo2.id
+		})
 		gohelper.setActive(self._btnBuyNormal.gameObject, true)
 		gohelper.setActive(self._btnBuy2.gameObject, true)
 		gohelper.setActive(self._goBuyedNormal, false)
@@ -205,6 +216,14 @@ function BpChargeABTestView:_onUpdatePayStatus()
 		local price1 = PayModel.instance:getProductPrice(shopCo.id)
 
 		self._txtPayStatus2.text = string.format("%s", price1)
+
+		self._overseas_cumulativerebateL:onUpdateMO({
+			lua_store_charge_goods_id = shopCo.id
+		})
+		self._overseas_cumulativerebateR:onUpdateMO({
+			lua_store_charge_goods_id = shopCo.id
+		})
+
 		self._txtPayStatus3.text = ""
 	else
 		gohelper.setActive(self._btnBuyNormal.gameObject, false)

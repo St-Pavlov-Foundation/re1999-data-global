@@ -190,5 +190,11 @@
     "autoRefreshTime": "",
     "refreshCost": "",
     "needClearStore": 0
+  },
+  {
+    "id": 304,
+    "autoRefreshTime": "",
+    "refreshCost": "",
+    "needClearStore": 0
   }
 ]

@@ -57,6 +57,7 @@ function NationalGiftFullView:_buyCallback(cmd, resultCode, msg)
 end
 
 function NationalGiftFullView:_editableInitView()
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "#btn_Buy/overseas_cumulativerebate"))
 	self._anim = self._gonode1:GetComponent(typeof(UnityEngine.Animator))
 end
 
@@ -98,6 +99,10 @@ end
 
 function NationalGiftFullView:_initView()
 	local packageStoreId = NationalGiftModel.instance:getNationalGiftStoreId()
+
+	self._overseas_cumulativerebate:onUpdateMO({
+		lua_store_charge_goods_id = packageStoreId
+	})
 
 	self._txtPrice.text = PayModel.instance:getProductPrice(packageStoreId)
 
@@ -177,7 +182,7 @@ function NationalGiftFullView:onClose()
 end
 
 function NationalGiftFullView:onDestroyView()
-	return
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 end
 
 return NationalGiftFullView

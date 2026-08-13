@@ -23,7 +23,7 @@ end
 
 function SodacheEventLeftDialogItem:calculateHeight()
 	local height = self.txtContent.preferredHeight
-	local contentBgHeight = height + 20
+	local contentBgHeight = height + 50
 
 	recthelper.setHeight(self.txtRectTr, height)
 

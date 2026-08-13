@@ -14,5 +14,13 @@
     "icon": "mainsceneswitch_clickbg_02",
     "previewIcon": "mainsceneswitch_clickbg_pic02",
     "effect": "laplace_click"
+  },
+  {
+    "id": 20003,
+    "defaultUnlock": 0,
+    "itemId": 350103,
+    "icon": "mainsceneswitch_clickbg_03",
+    "previewIcon": "mainsceneswitch_clickbg_pic03",
+    "effect": "vertin_click"
   }
 ]

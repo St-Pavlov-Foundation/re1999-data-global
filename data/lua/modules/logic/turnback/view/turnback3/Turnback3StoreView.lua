@@ -83,7 +83,7 @@ function Turnback3StoreView:_btnbuyOnClick()
 end
 
 function Turnback3StoreView:_editableInitView()
-	return
+	self._overseas_cumulativerebate = CumulativeRebateItem.s_createByView(self, gohelper.findChild(self.viewGO, "root/yueka/overseas_cumulativerebate"))
 end
 
 function Turnback3StoreView:onUpdateParam()
@@ -103,6 +103,9 @@ function Turnback3StoreView:onOpen()
 
 	self.txtpriceNum.text = _getPriceStr(goodsId)
 
+	self._overseas_cumulativerebate:onUpdateMO({
+		lua_store_charge_goods_id = goodsId
+	})
 	self:_initMiniMonthCard()
 	self:_refreshLeftBottom()
 	self:_initDayFree()
@@ -219,6 +222,7 @@ function Turnback3StoreView:_refreshLeftBottom()
 		if not item then
 			item = self:getUserDataTb_()
 			item.go = gohelper.findChild(self.viewGO, "root/packagestore/pos" .. i)
+			item._overseas_cumulativerebate = CumulativeRebateItem.s_create(self, gohelper.findChild(item.go, "#go_item/overseas_cumulativerebate"), self.viewContainer)
 			item.goempty = gohelper.findChild(item.go, "#go_empty")
 			item.goitem = gohelper.findChild(item.go, "#go_item")
 			item.btnclick = gohelper.findChildButton(item.go, "#go_item/#btn_click")
@@ -276,6 +280,8 @@ function Turnback3StoreView:_getGoodMoList()
 end
 
 function Turnback3StoreView:_updateStoreItem(item)
+	item._overseas_cumulativerebate:setActive(false)
+
 	local mo = item.mo
 
 	item.imageicon.preserveAspect = true
@@ -337,6 +343,10 @@ function Turnback3StoreView:_updateStoreItem(item)
 	if string.nilorempty(cost) or cost == 0 then
 		item.txtpriceNum.text = luaLang("store_free")
 	elseif mo.isChargeGoods then
+		item._overseas_cumulativerebate:onUpdateMO({
+			lua_store_charge_goods_id = mo.id
+		})
+
 		item.txtpriceNum.text = _getPriceStr(mo.id)
 	else
 		local costs = string.split(cost, "|")
@@ -434,12 +444,13 @@ end
 
 function Turnback3StoreView:onClose()
 	for index, item in ipairs(self._bottomItemList) do
+		GameUtil.onDestroyViewMember(item, "_overseas_cumulativerebate")
 		item.btnclick:RemoveClickListener()
 	end
 end
 
 function Turnback3StoreView:onDestroyView()
-	return
+	GameUtil.onDestroyViewMember(self, "_overseas_cumulativerebate")
 end
 
 return Turnback3StoreView

@@ -14,6 +14,7 @@ function TravelGoDayEventWork:onStart()
 	self.flow:addWork(TravelGoEventRewardWork.New())
 	self.flow:addWork(TravelGoLevelUpWork.New())
 	self.flow:start()
+	self.flow:addWork(TravelGoSettleWork.New(true))
 end
 
 function TravelGoDayEventWork:onOk()

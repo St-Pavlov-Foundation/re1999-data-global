@@ -424,6 +424,12 @@ function Act236MainView:showVideoContent(contentIndex)
 	local offsetParam = Act236Enum.EffectOffsetParam[self.curRewardIndex] and Act236Enum.EffectOffsetParam[self.curRewardIndex][self.curTabIndex] or nil
 
 	if type == Act236Enum.DisplayType.Video then
+		if SettingsModel.instance:isOverseas() and not LangSettings.instance:isZh() and name == "v3a7_leichong2" then
+			local langShortcut = LangSettings.instance:getCurLangShortcut()
+
+			name = name .. "_" .. langShortcut
+		end
+
 		local posX = offsetParam and offsetParam.x or Act236Enum.DefaultValue
 		local posY = offsetParam and offsetParam.y or Act236Enum.DefaultValue
 

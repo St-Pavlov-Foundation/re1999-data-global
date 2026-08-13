@@ -191,6 +191,26 @@ function BootVoiceNewView:_initView()
 	txtDownload1.text = booterLang("download")
 	txtDownload2.text = booterLang("download")
 
+	local _enTxt1 = self._rootTr:Find("view/btn/#btn_next/Text en").gameObject
+	local _enTxt2 = self._rootTr:Find("view/btn/#btn_downloadall/Text en").gameObject
+	local _enTxt3 = self._rootTr:Find("view/btn/#btn_lock/Text en").gameObject
+	local _enTxt4 = self._rootTr:Find("view/btn/#btn_back/Text en").gameObject
+	local shortcut = GameConfig:GetCurLangShortcut()
+	local ishide = true
+
+	if shortcut ~= "zh" then
+		ishide = false
+
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtNext.transform, 50)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtBack.transform, 50)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload1.transform, 50)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload2.transform, 50)
+	end
+
+	_enTxt1:SetActive(ishide)
+	_enTxt2:SetActive(ishide)
+	_enTxt3:SetActive(ishide)
+	_enTxt4:SetActive(ishide)
 	self:_initChoose()
 end
 

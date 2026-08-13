@@ -47,8 +47,6 @@ function RougeSceneCameraComp:_resetCamera()
 		fixCount = fixCount + 1
 		fixDt = os.clock()
 
-		logError(string.format("重置相机！！！  当前相机追踪状态: %s, 当前相机坐标 : %s, %s, %s, 修复次数：%s", isEnableTrace, posX, posY, posZ, fixCount))
-
 		if isEnableTrace then
 			cameraTrace.EnableTrace = false
 		end

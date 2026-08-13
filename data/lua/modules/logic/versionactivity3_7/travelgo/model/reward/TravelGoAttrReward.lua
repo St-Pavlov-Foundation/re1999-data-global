@@ -28,29 +28,29 @@ function TravelGoAttrReward:getRewardDesc(isStoryEvent)
 			local v = math.abs(self.value / 1000 * 100)
 
 			if isStoryEvent then
-				str = string.format("%s<color=#B0E3A4>+%s%%</color>", cfg.name, v)
+				str = string.format(luaLang("TravelGoAttrReward_getRewardDescPercentAdd0"), cfg.name, v)
 			else
-				str = string.format("%s+%s%%", cfg.name, v)
+				str = string.format(luaLang("TravelGoAttrReward_getRewardDescPercentAdd1"), cfg.name, v)
 			end
 		else
 			local v = math.abs(self.value / 1000 * 100)
 
 			if isStoryEvent then
-				str = string.format("%s<color=#B0E3A4>-%s%%</color>", cfg.name, v)
+				str = string.format(luaLang("TravelGoAttrReward_getRewardDescPercentSub0"), cfg.name, v)
 			else
-				str = string.format("%s-%s%%", cfg.name, v)
+				str = string.format(luaLang("TravelGoAttrReward_getRewardDescPercentSub1"), cfg.name, v)
 			end
 		end
 	elseif self.value >= 0 then
 		if isStoryEvent then
-			str = cfg.name .. "<color=#B0E3A4>" .. "+" .. self.value .. "</color>"
+			str = string.format(luaLang("TravelGoAttrReward_getRewardDescValueAdd0"), cfg.name, self.value)
 		else
-			str = cfg.name .. "+" .. self.value
+			str = string.format(luaLang("TravelGoAttrReward_getRewardDescValueAdd1"), cfg.name, self.value)
 		end
 	elseif isStoryEvent then
-		str = cfg.name .. "<color=#B0E3A4>" .. "-" .. math.abs(self.value) .. "</color>"
+		str = string.format(luaLang("TravelGoAttrReward_getRewardDescValueSub0"), cfg.name, math.abs(self.value))
 	else
-		str = cfg.name .. "-" .. math.abs(self.value)
+		str = string.format(luaLang("TravelGoAttrReward_getRewardDescValueSub1"), cfg.name, math.abs(self.value))
 	end
 
 	return str

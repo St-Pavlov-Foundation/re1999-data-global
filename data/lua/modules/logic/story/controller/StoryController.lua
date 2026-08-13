@@ -245,8 +245,10 @@ function StoryController:playStepChoose(stepId)
 			index = index + 1
 
 			local mo = StorySelectMo.New()
+			local isSpType = StoryModel.instance:isSpOptionType(opt.type)
+			local branchTxt = isSpType and opt.branchTxts[LanguageEnum.LanguageStoryType.CN] or opt.branchTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
 
-			mo:init(index, opt.followId, opt.branchTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()], stepId, opt)
+			mo:init(index, opt.followId, branchTxt, stepId, opt)
 			table.insert(list, mo)
 		end
 	end
