@@ -50,6 +50,8 @@ function TMPFadeIn:init(go)
 end
 
 function TMPFadeIn:hideDialog()
+	TaskDispatcher.cancelTask(self._delayShow, self)
+
 	if self._conTweenId then
 		ZProj.TweenHelper.KillById(self._conTweenId)
 
@@ -64,6 +66,10 @@ function TMPFadeIn:hideDialog()
 end
 
 function TMPFadeIn:playNormalText(txt, callback, callbackobj)
+	if gohelper.isNil(self._txtcontentcn) or not self._txtcontentcn.gameObject.activeInHierarchy then
+		return
+	end
+
 	self._conMat:EnableKeyword("_GRADUAL_ON")
 
 	local height = UnityEngine.Screen.height
@@ -90,6 +96,10 @@ function TMPFadeIn:playNormalText(txt, callback, callbackobj)
 end
 
 function TMPFadeIn:_delayShow()
+	if gohelper.isNil(self._txtcontentcn) or not self._txtcontentcn.gameObject.activeInHierarchy then
+		return
+	end
+
 	self._lastBottomLeft = 0
 	self._lineSpace = 0
 	self._hasUnderline = string.find(self._txt, "<u>") and string.find(self._txt, "</u>")

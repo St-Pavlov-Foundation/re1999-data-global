@@ -112,6 +112,16 @@ end
 function Rouge2_SettlementTriggerHelper.triggerType1()
 	local rougeInfo = Rouge2_Model.instance:getRougeInfo()
 	local difficultyCfg = lua_rouge2_difficulty.configDict[rougeInfo.difficulty]
+
+	if not difficultyCfg then
+		local resultInfo = Rouge2_Model.instance:getRougeResult()
+		local difficulty_ = resultInfo and resultInfo:getDifficulty()
+
+		if difficulty_ then
+			difficultyCfg = lua_rouge2_difficulty.configDict[difficulty_]
+		end
+	end
+
 	local difficultyTitle = difficultyCfg and difficultyCfg.title
 
 	return difficultyTitle

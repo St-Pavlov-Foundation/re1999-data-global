@@ -588,6 +588,8 @@ function DungeonController:needShowDungeonView()
 	local teachingNeedOpenView = TeachingModel.instance:getNeedOpenView()
 
 	if teachingNeedOpenView then
+		DungeonModel.instance.curSendEpisodeId = nil
+
 		return
 	end
 

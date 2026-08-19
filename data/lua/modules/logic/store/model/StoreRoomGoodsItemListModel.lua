@@ -51,10 +51,12 @@ function StoreRoomGoodsItemListModel:setMOList(moList)
 		end
 	end
 
-	self:addRoot({
-		update = true,
-		type = 0
-	}, treeRootParam, #moList + 1)
+	if next(moList) then
+		self:addRoot({
+			update = true,
+			type = 0
+		}, treeRootParam, #moList + 1)
+	end
 end
 
 function StoreRoomGoodsItemListModel:getInfoList()

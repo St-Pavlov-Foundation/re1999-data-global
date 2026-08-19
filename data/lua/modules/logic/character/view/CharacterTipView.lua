@@ -563,6 +563,9 @@ function CharacterTipView:getEquipBreakAddAttrValues(equips)
 		end
 	end
 
+	local trialEquipMo = self.viewParam.trialEquipMo
+	local otherEquipMo
+
 	if equips and #equips > 0 then
 		for _, equipUid in ipairs(equips) do
 			local equipMo = EquipModel.instance:getEquip(equipUid)
@@ -570,10 +573,36 @@ function CharacterTipView:getEquipBreakAddAttrValues(equips)
 			if equipMo then
 				equipMo = self:_modifyEquipInfo(equipMo)
 
+				if trialEquipMo then
+					local otherEquipId = EquipModel.instance:getOtherTwinssychubeEquipId(trialEquipMo.equipId)
+
+					if otherEquipId then
+						otherEquipMo = EquipMO.New()
+
+						local co = {
+							equipId = otherEquipId,
+							equipLv = trialEquipMo.level,
+							equipRefine = trialEquipMo.refineLv
+						}
+
+						otherEquipMo:initByTrialCO(co)
+					end
+				else
+					local otherEquipId = equipMo and EquipModel.instance:getOtherTwinssychubeEquipId(equipMo.equipId)
+
+					otherEquipMo = EquipModel.instance:getTwinssychubeEquipMo(otherEquipId)
+				end
+
 				local attrId, value = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(equipMo.config, equipMo.breakLv)
 
 				if attrId then
 					upAddValues[attrId] = upAddValues[attrId] + value
+				end
+
+				if otherEquipMo then
+					local _attrId, otherEquipValue = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(otherEquipMo.config, otherEquipMo.breakLv)
+
+					upAddValues[_attrId] = upAddValues[_attrId] + otherEquipValue
 				end
 			end
 		end

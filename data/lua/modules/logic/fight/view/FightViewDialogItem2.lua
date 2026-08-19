@@ -4,6 +4,34 @@ module("modules.logic.fight.view.FightViewDialogItem2", package.seeall)
 
 local FightViewDialogItem2 = class("FightViewDialogItem2", LuaCompBase)
 
+function FightViewDialogItem2:_init_overseas(go)
+	self.go = go
+	self._gocontainer = gohelper.findChild(go, "container/simagebg")
+	self._simageicon = gohelper.findChildSingleImage(go, "container/simagebg/headframe/headicon")
+	self._goframe = gohelper.findChild(go, "container/simagebg/headframe")
+	self._txtdialog = gohelper.findChildText(go, "container/simagebg/go_normalcontent/txt_contentcn")
+	self._goNormalContent = gohelper.findChild(go, "container/simagebg/go_normalcontent")
+	self._simagebg = gohelper.findChildSingleImage(go, "container/simagebg")
+
+	if self._simageicon == nil then
+		self._simageicon = gohelper.findChildSingleImage(go, "container/headframe/headicon")
+	end
+
+	if self._goframe == nil then
+		self._goframe = gohelper.findChild(go, "container/headframe")
+	end
+
+	if self._txtdialog == nil then
+		self._txtdialog = gohelper.findChildText(go, "container/go_normalcontent/txt_contentcn")
+	end
+
+	if self._goNormalContent == nil then
+		self._goNormalContent = gohelper.findChild(go, "container/go_normalcontent")
+	end
+
+	self._canvasGroup = self._gocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+end
+
 function FightViewDialogItem2:ctor(fightViewDialog)
 	FightViewDialogItem2.super.ctor(self)
 
@@ -11,6 +39,8 @@ function FightViewDialogItem2:ctor(fightViewDialog)
 end
 
 function FightViewDialogItem2:init(go)
+	do return self:_init_overseas(go) end
+
 	self.go = go
 	self._gocontainer = gohelper.findChild(go, "container")
 	self._simageicon = gohelper.findChildSingleImage(go, "container/headframe/headicon")

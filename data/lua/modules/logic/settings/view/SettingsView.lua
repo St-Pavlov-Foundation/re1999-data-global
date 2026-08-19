@@ -5,6 +5,8 @@ module("modules.logic.settings.view.SettingsView", package.seeall)
 local SettingsView = class("SettingsView", BaseView)
 
 function SettingsView:onInitView()
+	MainController.instance:dispatchEvent(MainEvent.OnClickSwitchRole)
+
 	self._gosettingscontent = gohelper.findChild(self.viewGO, "#go_settingscontent")
 	self._scrollcategory = gohelper.findChildScrollRect(self.viewGO, "#scroll_category")
 	self._gobtns = gohelper.findChild(self.viewGO, "#go_btns")
