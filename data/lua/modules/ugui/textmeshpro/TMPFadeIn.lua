@@ -66,10 +66,6 @@ function TMPFadeIn:hideDialog()
 end
 
 function TMPFadeIn:playNormalText(txt, callback, callbackobj)
-	if gohelper.isNil(self._txtcontentcn) or not self._txtcontentcn.gameObject.activeInHierarchy then
-		return
-	end
-
 	self._conMat:EnableKeyword("_GRADUAL_ON")
 
 	local height = UnityEngine.Screen.height
