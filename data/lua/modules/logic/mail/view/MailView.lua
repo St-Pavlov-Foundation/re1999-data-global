@@ -385,7 +385,7 @@ function MailView:_updateSelectMail(mo)
 		gohelper.setActive(self._gorewardsBg.gameObject, false)
 	end
 
-	local scrollContentHeight = 335
+	local scrollContentHeight = 320
 
 	if string.nilorempty(mo:getJumpLink()) then
 		scrollContentHeight = not mo:haveBonus() and mo.specialTag ~= MailEnum.SpecialTag.MonthExpired and 570 or 375

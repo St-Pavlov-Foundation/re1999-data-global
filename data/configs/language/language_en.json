@@ -290445,7 +290445,7 @@
   },
   {
     "key": "language_10072614",
-    "content": "In this Dream, collect 2<size=70><voffset=-0.35em><sprite=2></voffset></size>"
+    "content": "In this Dream, collect 2<size=70><voffset=-0.35em><sprite=3></voffset></size>"
   },
   {
     "key": "language_10072615",
@@ -500773,7 +500773,7 @@
   },
   {
     "key": "language_10125196",
-    "content": "Pray to recieve Special Effects."
+    "content": "Pray to receive Special Effects."
   },
   {
     "key": "language_10125197",
@@ -514905,7 +514905,7 @@
   },
   {
     "key": "language_10128729",
-    "content": "[Scavenger Tent<998> can be upgraded to {Lv.5<999>}.\nUnlocks {Hard<6>} Mode for Expedition Maps.\nOld Goodies Shop now offers all Action Cards of {Fabled<4>} quality."
+    "content": "[Scavenger Tent<998>] can be upgraded to {Lv.5<999>}.\nUnlocks {Hard<6>} Mode for Expedition Maps.\nOld Goodies Shop now offers all Action Cards of {Fabled<4>} quality."
   },
   {
     "key": "language_10128730",
@@ -526817,11 +526817,15 @@
   },
   {
     "key": "language_10131707",
-    "content": ""
+    "content": "Team Up! Pre-Game Prep"
   },
   {
     "key": "language_10131708",
     "content": "Records events and stories encountered during the journey.|Records artefacts, Resonators, and Harmonics obtained during the journey as well as Keepsake Recipes.|Enter Boss Challenge to take on powerful enemies using your Saved Progress."
+  },
+  {
+    "key": "language_10131709",
+    "content": "When entering battle, if Ally #1 is a Star Afflatus character, grants 1 stack of [Scale Resonance] to all allies each round. If Ally #1 is a Mineral Afflatus character, at the start of round 2 and every other round thereafter, generate 1 Precast - Star Energy I. At the start of round 3 and every other round thereafter, generate 1 Precast - Mineral Energy I."
   },
   {
     "key": "language_90016080",

@@ -133,7 +133,7 @@ function StoryPictureItem:_onPicPrefabLoaded()
 			return
 		end
 
-		local useTmp = self._picCo.inType == StoryEnum.PictureInType.SoftLight or self._picCo.inType == StoryEnum.PictureInType.GostMagic
+		local useTmp = fontType == 0 or self._picCo.inType == StoryEnum.PictureInType.SoftLight or self._picCo.inType == StoryEnum.PictureInType.GostMagic
 
 		gohelper.setActive(self._gotmptxt, useTmp)
 		gohelper.setActive(self._gosptxt, not useTmp)

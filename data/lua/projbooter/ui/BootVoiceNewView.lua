@@ -201,10 +201,10 @@ function BootVoiceNewView:_initView()
 	if shortcut ~= "zh" then
 		ishide = false
 
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtNext.transform, 50)
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtBack.transform, 50)
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload1.transform, 50)
-		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload2.transform, 50)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtNext.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtBack.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload1.transform, 0)
+		SLFramework.UGUI.RectTrHelper.SetAnchorY(txtDownload2.transform, 0)
 	end
 
 	_enTxt1:SetActive(ishide)

@@ -82198,11 +82198,13 @@
     "abName": "lang/common/ui/viewres/story/view",
     "assets": [
       "lang/common/ui/viewres/story/view/storybranchview.prefab",
-      "lang/common/ui/viewres/story/view/storyfrontview.prefab"
+      "lang/common/ui/viewres/story/view/storyfrontview.prefab",
+      "lang/common/ui/viewres/story/view/storynormalpicitem.prefab"
     ],
     "directDependencies": [
       "atlas/ui_common.spriteatlas.dat",
       "atlas/ui_story.spriteatlas.dat",
+      "font.dat",
       "font/bmfont.dat",
       "font/meshpro.dat",
       "shaders.dat",
@@ -191023,6 +191025,86 @@
       "singlebg/storybg/smallbg/story_bg/3_7/3_7_bg_23.jpg",
       "singlebg/storybg/smallbg/story_bg/3_7/3_7_bg_24.jpg",
       "singlebg/storybg/smallbg/story_bg/3_7/3_7_bg_25.jpg"
+    ],
+    "directDependencies": []
+  },
+  {
+    "abName": "singlebg/storybg_45",
+    "assets": [
+      "singlebg/storybg/story_atcg/3_1/3_1_at_aimaxixue.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_baolisideyouhuo.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_baolisishangche.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_caxue.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_gaosiniao.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_gaosiniaochuchang.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_gaosiniaofenxi.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_huochekaimen.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_huochekaimen2_zone.png",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_kongbugaosiniao.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_kongxinmuxiahu.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_liechexueshou1.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_liechexueshou2_zone.png",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_liechezhangzhanshi.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_linqiyeshumei.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_meigula.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_tongdao.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_tongdao2_zone.png",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_xixueguijiazu1.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeibeibang.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeibeibang1.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeibiyan_zone.png",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeichujian.jpg"
+    ],
+    "directDependencies": []
+  },
+  {
+    "abName": "singlebg/storybg_46",
+    "assets": [
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeidanren.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeigenban.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeiguancai.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeimuyuan_zone.png",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeimuyuan2.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeimuyuan3.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeitiaowu.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeitietie.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_yeshumeizhengyan.jpg",
+      "singlebg/storybg/story_atcg/3_1/3_1_at_ys_fugaoren.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_aimafangjian.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_bangongchexiang.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_cangku.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_cangkubaolisi_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_chexiang.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_chexiangyewa.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_chezhan1.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_chezhan2.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_chezhan3.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_ganranchexiang.jpg"
+    ],
+    "directDependencies": []
+  },
+  {
+    "abName": "singlebg/storybg_47",
+    "assets": [
+      "singlebg/storybg/story_bg/3_1/3_1_bg_nanminchexiang.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_senglin1.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_tingkaodian.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_waijiechexiang.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_waijing.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_wurenchezhan.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xiaowu_ye.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi_ye.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi1_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi2_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi3_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi4_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi5_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi6_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi7_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi8_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuedi9_zone.png",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_xuesemuyuan.jpg",
+      "singlebg/storybg/story_bg/3_1/3_1_bg_yizi.jpg"
     ],
     "directDependencies": []
   },

@@ -4,6 +4,14 @@ module("modules.logic.versionactivity3_7.travelgo.view.TravelGoDayComp", package
 
 local TravelGoDayComp = class("TravelGoDayComp", LuaCompBase)
 
+function TravelGoDayComp:_refreshSkillListLayout()
+	self.skillList:rebuildLayout()
+
+	local contentHeight = recthelper.getHeight(self.skillList.customMode_content.transform)
+
+	recthelper.setHeight(self._skillListViewport, math.min(contentHeight, self._skillListMaxHeight))
+end
+
 function TravelGoDayComp:ctor(goView)
 	self.goView = goView
 end
@@ -79,6 +87,8 @@ function TravelGoDayComp:init(viewGO)
 
 	scrollParam.cellClass = TravelGoSkillItem
 	self.skillList = GameFacade.createSimpleListComp(self.goSkillList, scrollParam, nil, self.viewContainer)
+	self._skillListViewport = self.skillList.scrollRect.viewport
+	self._skillListMaxHeight = recthelper.getHeight(self.goSkillList.transform)
 	self.controller = TravelGoController.instance
 	self.model = TravelGoModel.instance
 	self.items = {}
@@ -200,6 +210,8 @@ function TravelGoDayComp:onClickBtnSkill()
 	gohelper.setActive(self.goSkill, newIsShow)
 
 	if newIsShow then
+		self:_refreshSkillListLayout()
+
 		self.isShowSkill = true
 
 		gohelper.setActive(self.btnCloseSkill, true)
@@ -233,6 +245,7 @@ function TravelGoDayComp:refreshSkill()
 	end
 
 	self.skillList:setData(data)
+	self:_refreshSkillListLayout()
 
 	local newHaveData = self.skillList:haveData()
 
