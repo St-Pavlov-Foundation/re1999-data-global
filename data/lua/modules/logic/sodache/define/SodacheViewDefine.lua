@@ -88,7 +88,7 @@ function SodacheViewDefine.init(module_views)
 		container = "SodacheLevelUpViewContainer",
 		mainRes = "modules/sodache/ui/viewres/sodache_levelupview.prefab",
 		layer = "POPUP_TOP",
-		viewType = ViewType.Modal
+		viewType = ViewType.Full
 	}
 	module_views.SodacheRelicView = {
 		destroy = 0,
