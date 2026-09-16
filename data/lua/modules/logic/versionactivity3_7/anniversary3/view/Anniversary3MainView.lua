@@ -592,7 +592,11 @@ function Anniversary3MainView:_refreshGameBtn()
 end
 
 function Anniversary3MainView:_getLockStr(second)
-	return string.format(luaLang("seasonmainview_timeopencondition"), string.format("%s%s", TimeUtil.secondToRoughTime2(second)))
+	if second <= 0 then
+		return luaLang("turnback_end")
+	else
+		return string.format(luaLang("seasonmainview_timeopencondition"), string.format("%s%s", TimeUtil.secondToRoughTime2(second)))
+	end
 end
 
 function Anniversary3MainView:onClose()
