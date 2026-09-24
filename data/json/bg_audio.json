@@ -2773,5 +2773,115 @@
     "id": 3385012,
     "eventName": "play_ui_checkpoint_noise_subconscious",
     "bankName": "activity_langchao_combataudio_noise"
+  },
+  {
+    "id": 431450311,
+    "eventName": "play_hero314503_skill01",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450312,
+    "eventName": "play_hero314503_skill01_voc",
+    "bankName": "hero314503_vo_skin"
+  },
+  {
+    "id": 431450321,
+    "eventName": "play_hero314503_skill02",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450322,
+    "eventName": "play_hero314503_skill02_voc",
+    "bankName": "hero314503_vo_skin"
+  },
+  {
+    "id": 431450331,
+    "eventName": "play_hero314503_skillmax",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450332,
+    "eventName": "play_hero314503_fightingvoc_65",
+    "bankName": "hero314503_vo_skin"
+  },
+  {
+    "id": 431450341,
+    "eventName": "play_buff_hero314503_passtive01",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450342,
+    "eventName": "play_buff_hero314503_debuff01",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450391,
+    "eventName": "play_hero314503_born",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431450392,
+    "eventName": "play_hero314503_death",
+    "bankName": "hero314503_skill_skin"
+  },
+  {
+    "id": 431400311,
+    "eventName": "play_hero314003_skill01",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400312,
+    "eventName": "play_hero314003_skill01_voc",
+    "bankName": "hero314003_vo_skin"
+  },
+  {
+    "id": 431400321,
+    "eventName": "play_hero314003_skill02_2",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400322,
+    "eventName": "play_hero314003_skill02_voc",
+    "bankName": "hero314003_vo_skin"
+  },
+  {
+    "id": 431400323,
+    "eventName": "play_hero314003_skill02_1",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400331,
+    "eventName": "play_hero314003_skillmax01",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400332,
+    "eventName": "play_hero314003_fightingvoc_68",
+    "bankName": "hero314003_vo_skin"
+  },
+  {
+    "id": 431400333,
+    "eventName": "play_hero314003_skillmax02",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400341,
+    "eventName": "play_buff_hero314003_possive02",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400342,
+    "eventName": "play_buff_hero314003_possive01",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400391,
+    "eventName": "play_hero314003_born",
+    "bankName": "hero314003_skill_skin"
+  },
+  {
+    "id": 431400392,
+    "eventName": "play_hero314003_death",
+    "bankName": "hero314003_skill_skin"
   }
 ]

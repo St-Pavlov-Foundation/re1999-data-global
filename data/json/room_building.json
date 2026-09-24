@@ -8771,7 +8771,7 @@
     "reflerction": 0,
     "canLevelUp": false,
     "isAreaMainBuilding": false,
-    "canExchange": false
+    "canExchange": true
   },
   {
     "id": 13702,
@@ -8812,7 +8812,7 @@
     "reflerction": 0,
     "canLevelUp": false,
     "isAreaMainBuilding": false,
-    "canExchange": false
+    "canExchange": true
   },
   {
     "id": 13703,
@@ -8943,7 +8943,7 @@
     "center": "0#0",
     "name": "language_10129273",
     "useDesc": "language_10022695",
-    "desc": "language_10129274",
+    "desc": "language_10131951",
     "buildingType": 0,
     "icon": "13801",
     "rewardIcon": "13801",

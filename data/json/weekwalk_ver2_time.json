@@ -121,11 +121,11 @@
   },
   {
     "timeId": 16,
-    "issueId": 13,
-    "optionalSkills": "2039#2032#2010#2033#2015#2026",
-    "ruleIcon": "shen_guize_18",
-    "ruleFront": "1#117342005",
-    "ruleRear": "1#117342006"
+    "issueId": 16,
+    "optionalSkills": "2026#2016#2015#2018#2006#2017",
+    "ruleIcon": "shen_guize_19",
+    "ruleFront": "1#117333506",
+    "ruleRear": "1#8300110"
   },
   {
     "timeId": 17,
@@ -137,6 +137,22 @@
   },
   {
     "timeId": 18,
+    "issueId": 18,
+    "optionalSkills": "2017#2019#2010#2016#2033#2006",
+    "ruleIcon": "shen_guize_17",
+    "ruleFront": "1#120380044",
+    "ruleRear": "1#120380045"
+  },
+  {
+    "timeId": 20,
+    "issueId": 16,
+    "optionalSkills": "2026#2016#2015#2018#2006#2017",
+    "ruleIcon": "shen_guize_19",
+    "ruleFront": "1#117333506",
+    "ruleRear": "1#8300110"
+  },
+  {
+    "timeId": 21,
     "issueId": 18,
     "optionalSkills": "2017#2019#2010#2016#2033#2006",
     "ruleIcon": "shen_guize_17",

@@ -219,7 +219,16 @@ function RoleStoryView:_btncurrencyOnClick()
 end
 
 function RoleStoryView:refreshTabList()
-	for _, v in pairs(RoleStoryEnum.RoleStoryType) do
+	local list = {}
+
+	for _, tabType in pairs(RoleStoryEnum.RoleStoryType) do
+		table.insert(list, tabType)
+	end
+
+	table.sort(list)
+
+	for i = #list, 1, -1 do
+		local v = list[i]
 		local tab = self:getTabItem(v)
 
 		self:refreshTabItem(tab)

@@ -5,7 +5,7 @@
     "icon": "playercard_socialbadge_1",
     "group": 1,
     "level": 1,
-    "taskId": 760012
+    "taskId": 760021
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "icon": "playercard_socialbadge_2",
     "group": 1,
     "level": 2,
-    "taskId": 760011
+    "taskId": 760020
   },
   {
     "id": 3,
@@ -21,6 +21,6 @@
     "icon": "playercard_socialbadge_3",
     "group": 1,
     "level": 3,
-    "taskId": 760010
+    "taskId": 760019
   }
 ]

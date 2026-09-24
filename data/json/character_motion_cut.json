@@ -304,5 +304,11 @@
     "skinId": 1,
     "motion": "jingjie2|jingjie|jingjie01|jingjie02|jingjie03",
     "onlyStopCut": 1
+  },
+  {
+    "heroId": 3145,
+    "skinId": 314503,
+    "motion": "youling",
+    "onlyStopCut": 1
   }
 ]

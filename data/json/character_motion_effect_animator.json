@@ -26,5 +26,61 @@
     "defaultState": "312606_mlan_idle",
     "stateList": "312606_mlan_hj#b_huijian",
     "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone20/effect-Bone/roleeffect_hsy_pf20",
+    "defaultState": "roleeffect_314503_hsy_pf20_1",
+    "stateList": "roleeffect_314503_hsy_pf20_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone23/effect-Bone/roleeffect_hsy_pf23",
+    "defaultState": "roleeffect_314503_hsy_pf23_1",
+    "stateList": "roleeffect_314503_hsy_pf23_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone25/effect-Bone/roleeffect_hsy_pf25",
+    "defaultState": "roleeffect_314503_hsy_pf25_1",
+    "stateList": "roleeffect_314503_hsy_pf25_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone25/effect-Bone/roleeffect_hsy_pf25a",
+    "defaultState": "roleeffect_314503_hsy_pf25a_1",
+    "stateList": "roleeffect_314503_hsy_pf25a_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone27/effect-Bone/roleeffect_hsy_pf27",
+    "defaultState": "roleeffect_314503_hsy_pf27_1",
+    "stateList": "roleeffect_314503_hsy_pf27_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone28/effect-Bone/roleeffect_hsy_pf28",
+    "defaultState": "roleeffect_314503_hsy_pf28_1",
+    "stateList": "roleeffect_314503_hsy_pf28_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone29/effect-Bone/roleeffect_hsy_pf29",
+    "defaultState": "roleeffect_314503_hsy_pf29_1",
+    "stateList": "roleeffect_314503_hsy_pf29_2#b_piaofu3#b_fuxiong#b_fuxiong1#b_shenshou#b_shouou1#b_penghua#b_youling#b_diantou#b_yaotou#b_penghua1#b_jingxia#b_piaofu",
+    "delay": 0.0
+  },
+  {
+    "heroResName": "314503_hsy",
+    "effectNode": "Drawables/bone18/effect-Bone/roleeffect_hsy_cz18",
+    "defaultState": "roleeffect_314503_hsy_cz18_1",
+    "stateList": "roleeffect_314503_hsy_cz18_2#b_youling",
+    "delay": 0.0
   }
 ]

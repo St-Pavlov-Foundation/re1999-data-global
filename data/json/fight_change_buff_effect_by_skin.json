@@ -412,5 +412,23 @@
     "duration": 0.0,
     "effectHangPoint": "special4",
     "audio": 0
+  },
+  {
+    "effectPath": "v3a8_hsy/hsy_innate2",
+    "target": 2,
+    "skinId": 314503,
+    "changedPath": "v4a0_hsy/hsy_innate2",
+    "duration": 0.0,
+    "effectHangPoint": "mountroot",
+    "audio": 431450342
+  },
+  {
+    "effectPath": "buff/djs_innate3",
+    "target": 1,
+    "skinId": 314003,
+    "changedPath": "buff/v4a0_djs_innate3",
+    "duration": 0.0,
+    "effectHangPoint": "",
+    "audio": 0
   }
 ]

@@ -53671,9 +53671,9 @@
     "name": "",
     "desc": "language_10121948",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6202005#0.6",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -56258,9 +56258,9 @@
     "name": "",
     "desc": "language_10122066",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6202005#0.6",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -56843,9 +56843,9 @@
     "name": "language_10122071",
     "desc": "language_10122096",
     "pause": 0,
-    "addControl": "3",
-    "controlDelay": "0.6",
-    "controlParam": "7208558#1",
+    "addControl": "",
+    "controlDelay": "",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -56908,9 +56908,9 @@
     "name": "language_10091019",
     "desc": "language_10122101",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6202005#1",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -58351,9 +58351,9 @@
     "name": "language_10091019",
     "desc": "language_10122163",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6202005#1",
+    "controlParam": "",
     "level": ""
   },
   {
@@ -61107,9 +61107,9 @@
     "name": "",
     "desc": "",
     "pause": 0,
-    "addControl": "3",
+    "addControl": "",
     "controlDelay": "",
-    "controlParam": "6202005#1",
+    "controlParam": "",
     "level": ""
   },
   {

@@ -3497,7 +3497,7 @@
   },
   {
     "key": "language_10000875",
-    "content": "A thug from the Rock City. A marksman? That's nothing."
+    "content": "\nA thug from the Rock City. Splitting an arrow is just another Tuesday for him."
   },
   {
     "key": "language_10000876",
@@ -3625,11 +3625,11 @@
   },
   {
     "key": "language_10000907",
-    "content": "A normal and dedicated in-staff member of the Foundation.\nHe thinks nothing could be more serious than a shredder violent. Unlike bubbles which break and leave no sign behind, shreds has a longer and more obvious existence."
+    "content": "A normal and dedicated in-staff member of the Foundation.\nHe thinks there's nothing more terrifying than a violent paper shredder. While bubbles break and leave nothing behind, shredded paper lingers as a shadow of its former self."
   },
   {
     "key": "language_10000908",
-    "content": "A normal and dedicated in-staff member of the Foundation.\nHe suggests not take any chances and considers child locks are necessary for shredders. Of course he said that AFTER that incident."
+    "content": "A normal and dedicated in-staff member of the Foundation.\nHe suggests not taking any chances and believes child locks are necessary for paper shredders. Of course, he only started saying so AFTER that incident."
   },
   {
     "key": "language_10000909",
@@ -3761,7 +3761,7 @@
   },
   {
     "key": "language_10000941",
-    "content": "Snarling and drooling, it has no intension to hide its desire ..."
+    "content": "Snarling and drooling, it has no intention to hide its desire ..."
   },
   {
     "key": "language_10000942",
@@ -3909,7 +3909,7 @@
   },
   {
     "key": "language_10000978",
-    "content": "A special device installed in the tunnel by the Foundation. Archaeologists attempted to study its pattern, but they passed out the next second. Honestly, it's not out of excitement."
+    "content": "A special device installed in the tunnel by the Foundation. Archaeologists attempted to study its pattern, but they passed out the next second. Apparently, it wasn't out of excitement."
   },
   {
     "key": "language_10000979",
@@ -13997,11 +13997,11 @@
   },
   {
     "key": "language_10003501",
-    "content": "Decatone - [The First Milestone]"
+    "content": "Decatone · [The First Milestone]"
   },
   {
     "key": "language_10003502",
-    "content": "Purchase to get Decatone - [The First Milestone]. Can be used to Summon x10 in [Abundance of the Water].\n<color=#AC5320>Usable in [Abundance of the Water: The First Milestone] summoning event. </color> <color=#AC5320>Expires when the event ends.</color>"
+    "content": "Purchase to get Decatone · The First Milestone. Can be used to Summon x10 in [Abundance of the Water].\n<color=#AC5320>Usable in the [Abundance of the Water: The First Milestone] summoning event. </color> <color=#AC5320>Expires when the event ends.</color>"
   },
   {
     "key": "language_10003503",
@@ -14501,7 +14501,7 @@
   },
   {
     "key": "language_10003627",
-    "content": "The culmination of the Manus Vindictae's will, enveloped in an unstoppable aura.\nAt the brink of madness, they embrace each other, yearning to reduce everything they see to nothingness."
+    "content": "The culmination of Manus Vindictae's will, enveloped in an unstoppable aura.\nAt the brink of madness, they embrace each other, yearning to reduce everything they see to nothingness."
   },
   {
     "key": "language_10003628",
@@ -20685,7 +20685,7 @@
   },
   {
     "key": "language_10005174",
-    "content": "Unitone - [Till the Last Drop]"
+    "content": "Unitone · [Till the Last Drop]"
   },
   {
     "key": "language_10005175",
@@ -20693,7 +20693,7 @@
   },
   {
     "key": "language_10005176",
-    "content": "Decatone - [Till the Last Drop]"
+    "content": "Decatone · [Till the Last Drop]"
   },
   {
     "key": "language_10005177",
@@ -22997,87 +22997,87 @@
   },
   {
     "key": "language_10005752",
-    "content": "<nobr>1-target</nobr> attack. Deals 180% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 40% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 180% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 40% Mental DMG."
   },
   {
     "key": "language_10005753",
-    "content": "<nobr>1-target</nobr> attack. Deals 270% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 60% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 270% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 60% Mental DMG."
   },
   {
     "key": "language_10005754",
-    "content": "<nobr>1-target</nobr> attack. Deals 450% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 100% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 450% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 100% Mental DMG."
   },
   {
     "key": "language_10005755",
-    "content": "<nobr>1-target</nobr> attack. Deals 180% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 60% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 180% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 60% Mental DMG."
   },
   {
     "key": "language_10005756",
-    "content": "<nobr>1-target</nobr> attack. Deals 270% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 90% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 270% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 90% Mental DMG."
   },
   {
     "key": "language_10005757",
-    "content": "<nobr>1-target</nobr> attack. Deals 450% Mental DMG. If the caster is in [Stats Up] or [Pos Status] statuses, this attack deals 150% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 450% Mental DMG. If the user has a [Stats Up] or [Pos Status] effect, this attack deals an additional 150% Mental DMG."
   },
   {
     "key": "language_10005758",
-    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the caster's HP is above 50%, this attack deals 60% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the user's HP is above 50%, this attack deals an additional 60% Mental DMG."
   },
   {
     "key": "language_10005759",
-    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the caster's HP is above 50%, this attack deals 90% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the user's HP is above 50%, this attack deals an additional 90% Mental DMG."
   },
   {
     "key": "language_10005760",
-    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the caster's HP is above 50%, this attack deals 150% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the user's HP is above 50%, this attack deals an additional 150% Mental DMG."
   },
   {
     "key": "language_10005761",
-    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the caster's HP is above 40%, this attack deals 60% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the user's HP is above 40%, this attack deals an additional 60% Mental DMG."
   },
   {
     "key": "language_10005762",
-    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the caster's HP is above 40%, this attack deals 90% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the user's HP is above 40%, this attack deals an additional 90% Mental DMG."
   },
   {
     "key": "language_10005763",
-    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the caster's HP is above 40%, this attack deals 150% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the user's HP is above 40%, this attack deals an additional 150% Mental DMG."
   },
   {
     "key": "language_10005764",
-    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the caster's HP is above 30%, this attack deals 60% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 160% Mental DMG. If the user's HP is above 30%, this attack deals an additional 60% Mental DMG."
   },
   {
     "key": "language_10005765",
-    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the caster's HP is above 30%, this attack deals 90% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 240% Mental DMG. If the user's HP is above 30%, this attack deals an additional 90% Mental DMG."
   },
   {
     "key": "language_10005766",
-    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the caster's HP is above 30%, this attack deals 150% more Mental DMG."
+    "content": "<nobr>1-target</nobr> attack. Deals 400% Mental DMG. If the user's HP is above 30%, this attack deals an additional 150% Mental DMG."
   },
   {
     "key": "language_10005767",
-    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 50% more Mental DMG."
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 50% Mental DMG."
   },
   {
     "key": "language_10005768",
-    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 75% more Mental DMG."
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 75% Mental DMG."
   },
   {
     "key": "language_10005769",
-    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 125% more Mental DMG."
+    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 125% Mental DMG."
   },
   {
     "key": "language_10005770",
-    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 65% more Mental DMG."
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 65% Mental DMG."
   },
   {
     "key": "language_10005771",
-    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 95% more Mental DMG."
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 95% Mental DMG."
   },
   {
     "key": "language_10005772",
-    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies. If the caster's HP is above 50%, this attack deals 155% more Mental DMG."
+    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies. If the user's HP is above 50%, this attack deals an additional 155% Mental DMG."
   },
   {
     "key": "language_10005773",
@@ -23169,15 +23169,15 @@
   },
   {
     "key": "language_10005795",
-    "content": "Mass attack. Deals 110% Mental DMG to 2 enemies. HP +(the caster's ATK ×40%) for the ally with lowest percentage of HP."
+    "content": "Mass attack. Deals 110% Mental DMG to 2 enemies. Recovers (the user's ATK ×40%) HP for the ally with lowest percentage of HP."
   },
   {
     "key": "language_10005796",
-    "content": "Mass attack. Deals 165% Mental DMG to 2 enemies. HP +(the caster's ATK ×60%) for the ally with lowest percentage of HP."
+    "content": "Mass attack. Deals 165% Mental DMG to 2 enemies. Recovers (the user's ATK ×60%) HP for the ally with lowest percentage of HP."
   },
   {
     "key": "language_10005797",
-    "content": "Mass attack. Deals 275% Mental DMG to 2 enemies. HP +(the caster's ATK ×100%) for the ally with lowest percentage of HP."
+    "content": "Mass attack. Deals 275% Mental DMG to 2 enemies. Recovers (the user's ATK ×100%) HP for the ally with lowest percentage of HP."
   },
   {
     "key": "language_10005798",
@@ -24237,23 +24237,23 @@
   },
   {
     "key": "language_10006062",
-    "content": "Mass debuff. All enemies suffer 1 round of [Terror]."
+    "content": "Mass debuff. Inflicts [Terror] on all enemies for 1 round."
   },
   {
     "key": "language_10006063",
-    "content": "Mass debuff. All enemies suffer [Terror] and take 25% more DMG. Lasts 1 round."
+    "content": "Mass debuff. Inflicts [Terror] and DMG Taken +25% on all enemies for 1 round."
   },
   {
     "key": "language_10006064",
-    "content": "Mass debuff. All enemies suffer [Terror] and take 25% more DMG. Lasts 2 rounds."
+    "content": "Mass debuff. Inflicts [Terror] and DMG Taken +25% on all enemies for 2 rounds."
   },
   {
     "key": "language_10006065",
-    "content": "Mass debuff. All enemies suffer [Terror] and take 35% more DMG. Lasts 1 round."
+    "content": "Mass debuff. Inflicts [Terror] and DMG Taken +35% on all enemies for 1 round."
   },
   {
     "key": "language_10006066",
-    "content": "Mass debuff. All enemies suffer [Terror] and take 35% more DMG. Lasts 2 rounds."
+    "content": "Mass debuff. Inflicts [Terror] and DMG Taken +35% on all enemies for 2 rounds."
   },
   {
     "key": "language_10006067",
@@ -24829,23 +24829,23 @@
   },
   {
     "key": "language_10006210",
-    "content": "Self counter. Enters [Taunt] for 1 round. When the caster is attacked, the attacker suffers 2 rounds of [Corrode]: when a round ends, takes (Target's Current HP ×15%) Genesis DMG, capped at 15% of Caster's Max HP."
+    "content": "Self counter. Enters [Taunt] for 1 round. When attacked, inflicts [Corrode] on the attacker for 2 rounds: at the end of the round, takes (the holder's Current HP ×15%) Genesis DMG, up to (the user's Max HP x15%) Genesis DMG."
   },
   {
     "key": "language_10006211",
-    "content": "Self counter. Enters [Taunt] for 1 round. When the caster is attacked, the attacker suffers 2 rounds of [Corrode]: when a round ends, takes (Target's Current HP ×25%) Genesis DMG, capped at 25% of Caster's Max HP."
+    "content": "Self counter. Enters [Taunt] for 1 round. When attacked, inflicts [Corrode] on the attacker for 2 rounds: at the end of the round, takes (the holder's Current HP ×25%) Genesis DMG, up to (the user's Max HP x25%) Genesis DMG."
   },
   {
     "key": "language_10006212",
-    "content": "Self counter. Enters [Taunt] for 1 round. When the caster is attacked, the attacker suffers 2 rounds of [Corrode]: when a round ends, takes (Target's Current HP ×35%) Genesis DMG, capped at 35% of Caster's Max HP."
+    "content": "Self counter. Enters [Taunt] for 1 round. When attacked, inflicts [Corrode] on the attacker for 2 rounds: at the end of the round, takes (the holder's Current HP ×35%) Genesis DMG, up to (the user's Max HP x35%) Genesis DMG."
   },
   {
     "key": "language_10006213",
-    "content": "Self counter. Enters [Taunt] for 1 round. When the caster is attacked, the attacker suffers 2 rounds of [Corrode]: when a round ends, takes (Target's Current HP ×20%) Genesis DMG, capped at 20% of Caster's Max HP."
+    "content": "Self counter. Enters [Taunt] for 1 round. When attacked, inflicts [Corrode] on the attacker for 2 rounds: at the end of the round, takes (the holder's Current HP ×20%) Genesis DMG, up to (the user's Max HP x20%) Genesis DMG."
   },
   {
     "key": "language_10006214",
-    "content": "Self counter. Enters [Taunt] for 1 round. When the caster is attacked, the attacker suffers 2 rounds of [Corrode]: when a round ends, takes (Target's Current HP ×30%) Genesis DMG, capped at 30% of Caster's Max HP."
+    "content": "Self counter. Enters [Taunt] for 1 round. When attacked, inflicts [Corrode] on the attacker for 2 rounds: at the end of the round, takes (the holder's Current HP ×30%) Genesis DMG, up to (the user's Max HP x30%) Genesis DMG."
   },
   {
     "key": "language_10006215",
@@ -27221,27 +27221,27 @@
   },
   {
     "key": "language_10006808",
-    "content": "Mass attack. Deals 270% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 135% more Reality DMG."
+    "content": "Mass attack. Deals 270% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 135% Reality DMG."
   },
   {
     "key": "language_10006809",
-    "content": "Mass attack. Deals 340% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 170% more Reality DMG."
+    "content": "Mass attack. Deals 340% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 170% Reality DMG."
   },
   {
     "key": "language_10006810",
-    "content": "Mass attack. Deals 375% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 187% more Reality DMG."
+    "content": "Mass attack. Deals 375% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 187% Reality DMG."
   },
   {
     "key": "language_10006811",
-    "content": "Mass attack. Deals 410% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 205% more Reality DMG."
+    "content": "Mass attack. Deals 410% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 205% Reality DMG."
   },
   {
     "key": "language_10006812",
-    "content": "Mass attack. Deals 445% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 222% more Reality DMG."
+    "content": "Mass attack. Deals 445% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 222% Reality DMG."
   },
   {
     "key": "language_10006813",
-    "content": "Mass attack. Deals 480% Reality DMG to all enemies. If the targets' HP is below 50%, then deals 240% more Reality DMG."
+    "content": "Mass attack. Deals 480% Reality DMG to all enemies. If a target's HP is below 50%, deals an additional 240% Reality DMG."
   },
   {
     "key": "language_10006814",
@@ -28453,7 +28453,7 @@
   },
   {
     "key": "language_10007116",
-    "content": "When a round ends, DMG Dealt +5%, DMG Taken -5%. Can stack."
+    "content": "At the end of the round, DMG Dealt +5%, DMG Taken -5% (stackable)."
   },
   {
     "key": "language_10007117",
@@ -28481,7 +28481,7 @@
   },
   {
     "key": "language_10007123",
-    "content": "When a round ends, DMG Dealt +10%. Can stack."
+    "content": "At the end of the round, DMG Dealt +10% (stackable)."
   },
   {
     "key": "language_10007124",
@@ -28505,11 +28505,11 @@
   },
   {
     "key": "language_10007129",
-    "content": "When a round starts, ATK and DMG Dealt +1%. Can stack."
+    "content": "At the start of the round, ATK and DMG Dealt +1% (stackable)."
   },
   {
     "key": "language_10007130",
-    "content": "When a round starts, ATK and DMG Dealt +3%. Can stack."
+    "content": "At the start of the round, ATK and DMG Dealt +3% (stackable)."
   },
   {
     "key": "language_10007131",
@@ -28525,31 +28525,31 @@
   },
   {
     "key": "language_10007134",
-    "content": "When the caster's HP is below 30%, Penetration Rate +30%."
+    "content": "When HP is below 30%, Penetration Rate +30%."
   },
   {
     "key": "language_10007135",
-    "content": "When the caster's HP is below 30%, Critical Rate and Critical DMG +30%."
+    "content": "When HP is below 30%, Critical Rate and Critical DMG +30%."
   },
   {
     "key": "language_10007136",
-    "content": "When the caster's HP is below 50%, Penetration Rate +20%."
+    "content": "When HP is below 50%, Penetration Rate +20%."
   },
   {
     "key": "language_10007137",
-    "content": "When the caster's HP is below 50%, Critical Rate +30%."
+    "content": "When HP is below 50%, Critical Rate +30%."
   },
   {
     "key": "language_10007138",
-    "content": "DMG Dealt +15% when the caster's HP is above 50%."
+    "content": "When HP is above 50%, DMG Dealt +15%."
   },
   {
     "key": "language_10007139",
-    "content": "When the caster's HP is above 50%, Critical Rate +20%."
+    "content": "When HP is above 50%, Critical Rate +20%."
   },
   {
     "key": "language_10007140",
-    "content": "When the caster attacks, inflicts 1 stack of [Erosion] on the target."
+    "content": "When attacking, inflicts 1 stack of [Erosion] on the target."
   },
   {
     "key": "language_10007141",
@@ -28725,7 +28725,7 @@
   },
   {
     "key": "language_10007184",
-    "content": "AP +1"
+    "content": "AP +1."
   },
   {
     "key": "language_10007185",
@@ -28793,7 +28793,7 @@
   },
   {
     "key": "language_10007201",
-    "content": "When an ally dies, Moxie +2 for the caster."
+    "content": "When an ally is defeated, Moxie +2."
   },
   {
     "key": "language_10007202",
@@ -28841,7 +28841,7 @@
   },
   {
     "key": "language_10007213",
-    "content": "When a round ends, inflicts 1 stack of [Growth] on the caster. Can stack."
+    "content": "At the end of the round, gains 1 stack of [Growth] (stackable)."
   },
   {
     "key": "language_10007214",
@@ -28937,7 +28937,7 @@
   },
   {
     "key": "language_10007237",
-    "content": "Upon death, grants 2 stacks of [Sturdiness] to all allies, dispels [Stats Up] and [Pos Status] effects from all enemies, and inflicts [Disconcert] on all enemies for 3 rounds."
+    "content": "When defeated, grants 2 stacks of [Sturdiness] to all allies, dispels [Stats Up] and [Pos Status] effects from all enemies, and inflicts [Disconcert] on all enemies for 3 rounds."
   },
   {
     "key": "language_10007238",
@@ -29117,7 +29117,7 @@
   },
   {
     "key": "language_10007282",
-    "content": "When entering battle, Moxie +1 and gives 1 stack of [Sturdiness] to all allies. Upon death, Moxie -1 from the ally with the most Moxie."
+    "content": "When entering battle, gains Moxie +1 and grants 1 stack of [Sturdiness] to all allies. When defeated, inflicts Moxie -1 on the ally with the most Moxie."
   },
   {
     "key": "language_10007283",
@@ -29129,7 +29129,7 @@
   },
   {
     "key": "language_10007285",
-    "content": "On death, recover (Missing HP x100%) HP for all characters."
+    "content": "When defeated, recovers (Missing HP x100%) HP for all characters."
   },
   {
     "key": "language_10007286",
@@ -29161,11 +29161,11 @@
   },
   {
     "key": "language_10007293",
-    "content": "When entering battle, inflicts [Attack Mark] on all allies. Upon death, dispels [Attack Mark] from other allies and inflicts [Attack Mark] and [Rousing Morale] on all enemies."
+    "content": "When entering battle, grants [Attack Mark] to all allies. When defeated, dispels [Attack Mark] from other allies and grants [Attack Mark] and [Rousing Morale] to all enemies."
   },
   {
     "key": "language_10007294",
-    "content": "When entering battle, applies [Heal Tag] on all allies. On death, dispels [Heal Tag] from other allies, applies [Heal Tag] on all enemies, and recovers (Missing HP x50%) HP for the enemies."
+    "content": "When entering battle, grants [Heal Tag] to all allies. When defeated, dispels [Heal Tag] from other allies, grants [Heal Tag] to all enemies, and recovers (Missing HP x50%) HP for all enemies."
   },
   {
     "key": "language_10007295",
@@ -29173,15 +29173,15 @@
   },
   {
     "key": "language_10007296",
-    "content": "At the end of the round, inflict 1 stack of [Curse Ⅰ: Blood Siphon] on all enemies. Upon death, purify all [Curse Ⅰ: Blood Siphon] statuses and inflict 1 stack of [Wilting End] on all enemies."
+    "content": "At the end of the round, inflicts 1 stack of [Curse Ⅰ: Blood Siphon] on all enemies. When defeated, dispels all [Curse Ⅰ: Blood Siphon] statuses and inflicts 1 stack of [Wilting End] on all enemies."
   },
   {
     "key": "language_10007297",
-    "content": "At the end of the round, inflict 1 stack of [Curse Ⅱ: Senescence] on all enemies. Upon death, purify all [Curse Ⅱ: Senescence] statuses and inflict 1 stack of [Wilting End] on all enemies."
+    "content": "At the end of the round, inflicts 1 stack of [Curse Ⅱ: Senescence] on all enemies. When defeated, dispels all [Curse Ⅱ: Senescence] statuses and inflicts 1 stack of [Wilting End] on all enemies."
   },
   {
     "key": "language_10007298",
-    "content": "At the end of the round, inflict 1 stack of [Curse Ⅲ: Blind] on all enemies. Upon death, purify all [Curse Ⅲ: Blind] statuses and inflict 1 stack of [Wilting End] on all enemies."
+    "content": "At the end of the round, inflicts 1 stack of [Curse Ⅲ: Blind] on all enemies. When defeated, dispels all [Curse Ⅲ: Blind] statuses and inflicts 1 stack of [Wilting End] on all enemies."
   },
   {
     "key": "language_10007299",
@@ -29189,19 +29189,19 @@
   },
   {
     "key": "language_10007300",
-    "content": "Gives other allies [Feral Pack] status when entering battle. Moxie -1 and DMG Dealt -50% for all allies for 1 round, and dispels [Feral Pack] status from them upon death."
+    "content": "When entering battle, grants [Feral Pack] to all other allies. When defeated, dispels [Feral Pack] and inflicts Moxie -1 and DMG Dealt -50% on all allies for 1 round."
   },
   {
     "key": "language_10007301",
-    "content": "Gives other allies [Verdant Blessing] status when entering battle. Moxie -1 and DMG Dealt -50% for all allies for 1 round, and dispels [Verdant Blessing] status from them upon death."
+    "content": "When entering battle, grants [Verdant Blessing] to all other allies. When defeated, dispels [Verdant Blessing] and inflicts Moxie -1 and DMG Dealt -50% on all allies for 1 round."
   },
   {
     "key": "language_10007302",
-    "content": "Gives other allies [Star Mirror] status when entering battle. Moxie -1 and DMG Dealt -50% for all allies for 1 round, and dispels [Star Mirror] status from them upon death."
+    "content": "When entering battle, grants [Star Mirror] to all other allies. When defeated, dispels [Star Mirror] and inflicts Moxie -1 and DMG Dealt -50% on all allies for 1 round."
   },
   {
     "key": "language_10007303",
-    "content": "Gives other allies [Rock Tomb] status when entering battle. Moxie -1 and DMG Dealt -50% for all allies for 1 round, and dispels [Rock Tomb] status from them upon death."
+    "content": "When entering battle, grants [Rock Tomb] to all other allies. When defeated, dispels [Rock Tomb] and inflicts Moxie -1 and DMG Dealt -50% on all allies for 1 round."
   },
   {
     "key": "language_10007304",
@@ -29369,7 +29369,7 @@
   },
   {
     "key": "language_10007345",
-    "content": "On death, recover (Missing Max HP x25%) HP for other allies, and grant ATK +50%, Reality DEF +50%, and Mental DEF +50% to other allies (stackable, undispellable)."
+    "content": "When defeated, recovers (Missing HP x25%) HP for all other allies and grants ATK +50%, Reality DEF +50%, and Mental DEF +50% to all other allies (stackable, undispellable)."
   },
   {
     "key": "language_10007346",
@@ -29433,15 +29433,15 @@
   },
   {
     "key": "language_10007361",
-    "content": "Critical Resist +25%. When entering battle, enters [Watchful Greed] status. When HP is below 75% after being attacked, enters [Alerted Ears] status. When HP is below 25% after being attacked, enters [Desperate Fight] status (each phase only triggers 1 time)."
+    "content": "Critical Resist Rate +25%. When entering battle, enters the [Watchful Greed] status. When HP is below 75% after being attacked, enters the [Alerted Ears] status. When HP is below 25% after being attacked, enters the [Desperate Fight] status (each phase only triggers 1 time)."
   },
   {
     "key": "language_10007362",
-    "content": "Leech Rate +25%. When entering battle, enters [Watchful Greed] status. When HP is below 75% after being attacked, enters [Alerted Ears] status. When HP is below 25% after being attacked, enters [Desperate Fight] status (each phase only triggers 1 time)."
+    "content": "Leech Rate +25%. When entering battle, enters the [Watchful Greed] status. When HP is below 75% after being attacked, enters the [Alerted Ears] status. When HP is below 25% after being attacked, enters the [Desperate Fight] status (each phase only triggers 1 time)."
   },
   {
     "key": "language_10007363",
-    "content": "DMG Heal +25%. When entering battle, enters [Watchful Greed] status. When HP is below 75% after being attacked, enters [Alerted Ears] status. When HP is below 25% after being attacked, enters [Desperate Fight] status (each phase only triggers 1 time)."
+    "content": "DMG Heal +25%. When entering battle, enters the [Watchful Greed] status. When HP is below 75% after being attacked, enters the [Alerted Ears] status. When HP is below 25% after being attacked, enters the [Desperate Fight] status (each phase only triggers 1 time)."
   },
   {
     "key": "language_10007364",
@@ -29713,7 +29713,7 @@
   },
   {
     "key": "language_10007431",
-    "content": "HP +(Max HP ×15%) for all allies when dying and enters [Shackled Rebirth] status. Lasts 4 rounds."
+    "content": "When defeated, recovers (Max HP ×15%) HP for all allies and enters the [Shackled Rebirth] status for 4 rounds."
   },
   {
     "key": "language_10007432",
@@ -29793,11 +29793,11 @@
   },
   {
     "key": "language_10007451",
-    "content": "When this unit dies, grants Moxie +1 to the ally with the lowest Moxie."
+    "content": "When defeated, grants Moxie +1 to the ally with the lowest Moxie."
   },
   {
     "key": "language_10007452",
-    "content": "When the user dies, other allies gain 1 stack of [Sturdiness]."
+    "content": "When defeated, other allies gain 1 stack of [Sturdiness]."
   },
   {
     "key": "language_10007453",
@@ -29825,7 +29825,7 @@
   },
   {
     "key": "language_10007459",
-    "content": "When dying, recovers 30% of HP and enters [Staggered] status for 3 rounds, during which the character cannot gain [Correct Position]. Leaves the field when Fan leaves."
+    "content": "When defeated, recovers (Max HP x30%) HP and enters the [Staggered] status for 3 rounds, during which this unit cannot gain [Correct Position]. Defeated when Fan is defeated."
   },
   {
     "key": "language_10007460",
@@ -29841,7 +29841,7 @@
   },
   {
     "key": "language_10007463",
-    "content": "After taking action, Fan loses 5% of current HP. When dying, Fan loses 30% of Max HP and this character recovers 100% of HP."
+    "content": "After taking an action, Fan loses (Current HP x5%) HP. When defeated, Fan loses (Max HP x30%) HP and this unit recovers 100% of HP."
   },
   {
     "key": "language_10007464",
@@ -29857,7 +29857,7 @@
   },
   {
     "key": "language_10007467",
-    "content": "When dying, if <nobr>Calamity-inducer</nobr> is not in [Staggered] status, recovers 20% of HP."
+    "content": "When defeated, if <nobr>Calamity-inducer</nobr> is not in the [Staggered] status, recovers 20% of HP."
   },
   {
     "key": "language_10007468",
@@ -29945,7 +29945,7 @@
   },
   {
     "key": "language_10007489",
-    "content": "Inflicts [Sense Weakness] status on the enemy with the highest ATK when entering battle. Upon death, dispels [Sense Weakness] status."
+    "content": "Inflicts [Sense Weakness] status on the enemy with the highest ATK when entering battle. When defeated, dispels [Sense Weakness]."
   },
   {
     "key": "language_10007490",
@@ -30089,7 +30089,7 @@
   },
   {
     "key": "language_10007525",
-    "content": "When an ally dies, Moxie +2."
+    "content": "When an ally is defeated, Moxie +2."
   },
   {
     "key": "language_10007526",
@@ -30133,7 +30133,7 @@
   },
   {
     "key": "language_10007536",
-    "content": "When entering battle, inflicts 1 stack of [Rigidity] on all enemies (only triggers 1 time). Upon death, inflicts [Petrify] status on the enemy with the highest ATK for 2 rounds."
+    "content": "When entering battle, inflicts 1 stack of [Rigidity] on all enemies (only triggers 1 time). When defeated, inflicts [Petrify] on the enemy with the highest ATK for 2 rounds."
   },
   {
     "key": "language_10007537",
@@ -30289,7 +30289,7 @@
   },
   {
     "key": "language_10007575",
-    "content": "When an enemy dies, DMG Dealt +10% for all allies for 2 rounds."
+    "content": "When an enemy is defeated, DMG Dealt +10% for all allies for 2 rounds."
   },
   {
     "key": "language_10007576",
@@ -30797,7 +30797,7 @@
   },
   {
     "key": "language_10007702",
-    "content": "DMG Dealt +30% for characters that have not acted this round (can stack; dispelled after the next attack)."
+    "content": "DMG Dealt +30% for characters that have not acted this round (stackable, removed after attacking)."
   },
   {
     "key": "language_10007703",
@@ -31589,15 +31589,15 @@
   },
   {
     "key": "language_10007900",
-    "content": "When dying, recover (Missing HP x50%) HP (triggers only 1 time)."
+    "content": "When defeated, recovers (Missing HP x50%) HP (triggers only 1 time)."
   },
   {
     "key": "language_10007901",
-    "content": "When dying, recover (Missing HP x50%) HP, then gain DMG Dealt +20% (triggers only 1 time)."
+    "content": "When defeated, recovers (Missing HP x50%) HP, then gains DMG Dealt +20% (triggers only 1 time)."
   },
   {
     "key": "language_10007902",
-    "content": "When dying, recover (Missing HP x50%) HP, then gain DMG Dealt +40% (triggers only 1 time)."
+    "content": "When defeated, recovers (Missing HP x50%) HP, then gains DMG Dealt +40% (triggers only 1 time)."
   },
   {
     "key": "language_10007903",
@@ -31893,7 +31893,7 @@
   },
   {
     "key": "language_10007976",
-    "content": "When dying, recover (Missing HP x30%) HP (triggers only 1 time)."
+    "content": "When defeated, recovers (Missing HP x30%) HP (triggers only 1 time)."
   },
   {
     "key": "language_10007977",
@@ -32781,7 +32781,7 @@
   },
   {
     "key": "language_10008198",
-    "content": "After the caster takes an action, Critical Rate and Critical DMG increase by 5%. (Can stack.)"
+    "content": "After taking an action, Critical Rate and Critical DMG +5% (stackable)."
   },
   {
     "key": "language_10008199",
@@ -33397,7 +33397,7 @@
   },
   {
     "key": "language_10008352",
-    "content": "DMG Taken -50%. When attacked, DMG Taken +20% for the next 2 rounds (can stack; Ultimate attacks apply 1 additional stack)."
+    "content": "DMG Taken -50%. When attacked, DMG Taken +20% for the next 2 rounds (stackable; Ultimate attacks apply 1 additional stack)."
   },
   {
     "key": "language_10008353",
@@ -33417,7 +33417,7 @@
   },
   {
     "key": "language_10008357",
-    "content": "When performing an extra action, ATK and Leech Rate +2% (can stack)."
+    "content": "When performing an extra action, ATK and Leech Rate +2% (stackable)."
   },
   {
     "key": "language_10008358",
@@ -34617,7 +34617,7 @@
   },
   {
     "key": "language_10008657",
-    "content": "When any enemy dies, destroys all enemy targets."
+    "content": "When an enemy is defeated, defeat all enemies."
   },
   {
     "key": "language_10008658",
@@ -35069,11 +35069,11 @@
   },
   {
     "key": "language_10008770",
-    "content": "Does not gain Moxie. When dying, retracts into shell, purifies and gains immunity to all debuffs, recovers 1% of Max HP, and takes no damage. At the end of the round, uses Ultimate and dies."
+    "content": "Does not gain Moxie. When defeated, retracts into shell, dispels and gains immunity to all debuffs, recovers (Max HP x1%) HP, and takes no damage. At the end of the round, casts an Ultimate and is defeated."
   },
   {
     "key": "language_10008771",
-    "content": "Does not gain Moxie. When dying, becomes infuriated, purifies and gains immunity to all debuffs, recovers 1% of Max HP, and takes no damage. At the end of the round, uses Ultimate and dies."
+    "content": "Does not gain Moxie. When defeated, becomes infuriated, dispels and gains immunity to all debuffs, recovers (Max HP x1%) HP, and takes no damage. At the end of the round, casts an Ultimate and is defeated."
   },
   {
     "key": "language_10008772",
@@ -35081,7 +35081,7 @@
   },
   {
     "key": "language_10008773",
-    "content": "When dying, other tentacles immediately die, and recovers 50% Max HP and enters the [Deepsea Terror] state for 2 rounds. Also exposes the core."
+    "content": "When defeated, other tentacles are immediately defeated, recovers (Max HP x50%) HP, and enters the [Deepsea Terror] status for 2 rounds. Also exposes the core."
   },
   {
     "key": "language_10008774",
@@ -35225,7 +35225,7 @@
   },
   {
     "key": "language_10008809",
-    "content": "Moxie +1 for other allies upon death."
+    "content": "When defeated, grants Moxie +1 to all other allies."
   },
   {
     "key": "language_10008810",
@@ -35565,11 +35565,11 @@
   },
   {
     "key": "language_10008894",
-    "content": "Mass DMG taken increases by 15%. After death, restores 15% of Max HP for the enemy with the highest ATK (does not take effect when eliminated by Gold in the Cave)."
+    "content": "Mass DMG taken increases by 15%. When defeated, restores 15% of Max HP for the enemy with the highest ATK (does not take effect when defeated by Gold in the Cave)."
   },
   {
     "key": "language_10008895",
-    "content": "Mass DMG taken increases by 15%. After death, restores 15% of Max HP for the enemy with the highest ATK."
+    "content": "Mass DMG taken increases by 15%. When defeated, restores 15% of Max HP for the enemy with the highest ATK."
   },
   {
     "key": "language_10008896",
@@ -35661,7 +35661,7 @@
   },
   {
     "key": "language_10008918",
-    "content": "On death, recover (Missing HP x50%) HP for all characters on the field."
+    "content": "When defeated, recovers (Missing HP x50%) HP for all characters on the field."
   },
   {
     "key": "language_10008919",
@@ -35681,7 +35681,7 @@
   },
   {
     "key": "language_10008923",
-    "content": "After death, grants all enemies Moxie +5 and purifies all [Stats Down], [Neg Status], and [Control] effects from all enemies, and enters [Immunity] for 3 rounds."
+    "content": "When defeated, grants Moxie +5 to all enemies, dispels all [Stats Down], [Neg Status], and [Control] effects from all enemies, and enters [Immunity] for 3 rounds."
   },
   {
     "key": "language_10008924",
@@ -35729,7 +35729,7 @@
   },
   {
     "key": "language_10008935",
-    "content": "After death, all enemies gain Moxie +5."
+    "content": "When defeated, all enemies gain Moxie +5."
   },
   {
     "key": "language_10008936",
@@ -36017,11 +36017,11 @@
   },
   {
     "key": "language_10009007",
-    "content": "[Eagerness]: Critical Rate +3%, Critical DMG +3%. (Can stack. Cannot be dispelled)"
+    "content": "[Eagerness]: Critical Rate +3%, Critical DMG +3% (stackable, undispellable)."
   },
   {
     "key": "language_10009008",
-    "content": "[Unsparing]: DMG Bonus +4%. (Can stack. Cannot be dispelled.)"
+    "content": "[Unsparing]: DMG Bonus +4% (stackable, undispellable)."
   },
   {
     "key": "language_10009009",
@@ -36201,7 +36201,7 @@
   },
   {
     "key": "language_10009053",
-    "content": "[Pollution]: After taking an action, takes (the user's ATK x20%) Genesis DMG (Can stack)."
+    "content": "[Pollution]: After taking an action, takes (the user's ATK x20%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10009054",
@@ -36449,7 +36449,7 @@
   },
   {
     "key": "language_10009115",
-    "content": "When the enemy dies, grants all allies 1 stack of [Growth]. Gains 1 additional stack of [Growth]."
+    "content": "When an enemy is defeated, grants 1 stack of [Growth] to all allies. Gains 1 additional stack of [Growth]."
   },
   {
     "key": "language_10009116",
@@ -36513,7 +36513,7 @@
   },
   {
     "key": "language_10009131",
-    "content": "Upon death, purifies [Neg Status], [Stats Down] and [Control] effects from all characters, and the ally with the highest ATK enters [Fainted] for 1 round."
+    "content": "When defeated, dispels [Neg Status], [Stats Down] and [Control] effects from all characters and inflicts [Fainted] on the ally with the highest ATK for 1 round."
   },
   {
     "key": "language_10009132",
@@ -36525,7 +36525,7 @@
   },
   {
     "key": "language_10009134",
-    "content": "AP +1. Upon death, restores other bubbles to Max HP. Upon death, causes the enemy with the highest ATK to enter [Nightmare] for 2 rounds."
+    "content": "AP +1. When defeated, restores other bubbles to Max HP. When defeated, inflicts [Nightmare] on the enemy with the highest ATK for 2 rounds."
   },
   {
     "key": "language_10009135",
@@ -36545,7 +36545,7 @@
   },
   {
     "key": "language_10009139",
-    "content": "When entering battle, puts all enemies into [Silence] for 1 round. Upon death, puts the enemy with the highest ATK into [Disconcert] for 2 rounds."
+    "content": "When entering battle, inflicts [Silence] on all enemies for 1 round. When defeated, inflicts [Disconcert] on the enemy with the highest ATK for 2 rounds."
   },
   {
     "key": "language_10009140",
@@ -37133,15 +37133,15 @@
   },
   {
     "key": "language_10009286",
-    "content": "At the end of each round, inflicts 2 stacks of [Main Lock Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks after death."
+    "content": "At the end of each round, inflicts 2 stacks of [Main Lock Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks when defeated."
   },
   {
     "key": "language_10009287",
-    "content": "At the end of each round, inflicts 2 stacks of [Quickdraw Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks after death."
+    "content": "At the end of each round, inflicts 2 stacks of [Quickdraw Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks when defeated."
   },
   {
     "key": "language_10009288",
-    "content": "At the end of each round, inflicts 2 stacks of [Main Rope Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks after death."
+    "content": "At the end of each round, inflicts 2 stacks of [Main Rope Malfunction] on all enemies. When attacked, removes 1 stack from all enemies. Removes all stacks when defeated."
   },
   {
     "key": "language_10009289",
@@ -37205,7 +37205,7 @@
   },
   {
     "key": "language_10009304",
-    "content": "On death, cause other allies to lose (Max HP x25%) HP, grant DMG Dealt +30%, Reality DEF +30%, and Mental DEF +30% to other allies (stackable, undispellable)."
+    "content": "When defeated, all other allies lose (Max HP x25%) HP and gain DMG Dealt +30%, Reality DEF +30%, and Mental DEF +30% (stackable, undispellable)."
   },
   {
     "key": "language_10009305",
@@ -37517,7 +37517,7 @@
   },
   {
     "key": "language_10009382",
-    "content": "Automatically loses HP each round. Cannot act. Cannot receive healing. Lost upon death."
+    "content": "Automatically loses HP each round. Cannot act. Cannot receive healing. Lose when defeated."
   },
   {
     "key": "language_10009383",
@@ -38069,23 +38069,23 @@
   },
   {
     "key": "language_10009520",
-    "content": "Grants Moxie +5 to all allies on death."
+    "content": "Grants Moxie +5 to all allies when defeated."
   },
   {
     "key": "language_10009521",
-    "content": "Grants a random ally DMG Dealt +30% on death."
+    "content": "Grants DMG Dealt +30% to a random ally when defeated."
   },
   {
     "key": "language_10009522",
-    "content": "Grants a random ally DMG Taken -30% on death."
+    "content": "Grants DMG Taken -30% to a random ally when defeated."
   },
   {
     "key": "language_10009523",
-    "content": "Grants a random ally DMG Dealt +30% on death. Undispellable."
+    "content": "Grants DMG Dealt +30% to a random ally when defeated (undispellable)."
   },
   {
     "key": "language_10009524",
-    "content": "Grants a random ally DMG Taken -30% on death. Undispellable."
+    "content": "Grants DMG Taken -30% to a random ally when defeated (undispellable)."
   },
   {
     "key": "language_10009525",
@@ -38217,7 +38217,7 @@
   },
   {
     "key": "language_10009557",
-    "content": "Purifies [Stats Down], [Neg Status], and [Control] statuses on all enemies upon death."
+    "content": "When defeated, dispels [Stats Down], [Neg Status], and [Control] effects from all enemies."
   },
   {
     "key": "language_10009558",
@@ -38869,7 +38869,7 @@
   },
   {
     "key": "language_10009720",
-    "content": "When dying, recover (Max HP x30%) HP (triggers only 1 time)."
+    "content": "When defeated, recovers (Max HP x30%) HP (triggers only 1 time)."
   },
   {
     "key": "language_10009721",
@@ -38881,7 +38881,7 @@
   },
   {
     "key": "language_10009723",
-    "content": "Cannot be killed at the same time. Upon death, recover (Max HP x100%) HP for other allies."
+    "content": "Cannot be defeated at the same time. When defeated, recovers (Max HP x100%) HP for other allies."
   },
   {
     "key": "language_10009724",
@@ -39125,7 +39125,7 @@
   },
   {
     "key": "language_10009784",
-    "content": "At the end of the round, gain 1 stack of [Ceremonious]. Upon death, other allies lose Moxie -1, and grant 2 stacks of [Ceremonious] to all characters."
+    "content": "At the end of the round, gains 1 stack of [Ceremonious]. When defeated, inflicts Moxie -1 on all other allies and grants 2 stacks of [Ceremonious] to all characters."
   },
   {
     "key": "language_10009785",
@@ -39157,7 +39157,7 @@
   },
   {
     "key": "language_10009792",
-    "content": "When entering battle, gain 1 stack of [Dynamo]. At the end of the round, lose 1 stack of [Dynamo]. Upon death, grant 1 stack of [Dynamo] to all enemies."
+    "content": "When entering battle, gains 1 stack of [Dynamo]. At the end of the round, loses 1 stack of [Dynamo]. When defeated, grants 1 stack of [Dynamo] to all enemies."
   },
   {
     "key": "language_10009793",
@@ -39705,7 +39705,7 @@
   },
   {
     "key": "language_10009929",
-    "content": "At the end of the round, grant 6 Goldfinch Coins (triggers only 5 times), and DMG Dealt -30% for other allies for 1 round. Upon death, inflict Moxie -5 on all enemies."
+    "content": "At the end of the round, grants 6 Goldfinch Coins (triggers up to 5 times) and inflicts DMG Dealt -30% on other allies for 1 round. When defeated, inflicts Moxie -5 on all enemies."
   },
   {
     "key": "language_10009930",
@@ -39817,7 +39817,7 @@
   },
   {
     "key": "language_10009957",
-    "content": "At the start of the round, if own HP is above 50%, hatch 1 Garden Sprite with 100% initial HP. After death, hatch 1 Garden Sprite at 30% initial HP."
+    "content": "At the start of the round, if HP is above 50%, hatches 1 Garden Sprite with 100% initial HP. When defeated, hatches 1 Garden Sprite at 30% initial HP."
   },
   {
     "key": "language_10009958",
@@ -40149,7 +40149,7 @@
   },
   {
     "key": "language_10010040",
-    "content": "After death, grants Moxie +1 to all enemies and grants 3 stacks of [Zany] to all allies."
+    "content": "When defeated, grants Moxie +1 to all enemies and inflicts 3 stacks of [Zany] on all allies."
   },
   {
     "key": "language_10010041",
@@ -40189,7 +40189,7 @@
   },
   {
     "key": "language_10010050",
-    "content": "After death, grants all enemies a Shield with (their Max HP x30%) HP for 1 round."
+    "content": "When defeated, grants a Shield with (Max HP x30%) HP to all enemies for 1 round."
   },
   {
     "key": "language_10010051",
@@ -40421,7 +40421,7 @@
   },
   {
     "key": "language_10010108",
-    "content": "Upon death, grants Moxie +1 to the enemy with the lowest Moxie (does not trigger when destroyed by the Symbol of Nightmares)."
+    "content": "When defeated, grants Moxie +1 to the enemy with the lowest Moxie (does not trigger when destroyed by the Symbol of Nightmares)."
   },
   {
     "key": "language_10010109",
@@ -42517,7 +42517,7 @@
   },
   {
     "key": "language_10010632",
-    "content": "Cannot act"
+    "content": "Cannot act."
   },
   {
     "key": "language_10010633",
@@ -42617,7 +42617,7 @@
   },
   {
     "key": "language_10010657",
-    "content": "Critical Resist -25% (can stack; each stack is timed independently)."
+    "content": "Critical Resist -25% (stackable, each stack timed independently)."
   },
   {
     "key": "language_10010658",
@@ -42661,19 +42661,19 @@
   },
   {
     "key": "language_10010668",
-    "content": "After a round ends, takes (the caster's ATK ×30%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x30%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010669",
-    "content": "Leech Rate +10%. Can stack."
+    "content": "Leech Rate +10% (stackable)."
   },
   {
     "key": "language_10010670",
-    "content": "Reality DEF and Mental DEF +10%. Can stack."
+    "content": "Reality DEF and Mental DEF +10% (stackable)."
   },
   {
     "key": "language_10010671",
-    "content": "DMG bonus and DMG Taken Reduction +5%. Can stack."
+    "content": "DMG Bonus and DMG Taken Reduction +5% (stackable)."
   },
   {
     "key": "language_10010672",
@@ -42685,11 +42685,11 @@
   },
   {
     "key": "language_10010674",
-    "content": "Healing Done +20%. Can stack."
+    "content": "Healing Done +20% (stackable)."
   },
   {
     "key": "language_10010675",
-    "content": "ATK +5%. Can stack."
+    "content": "ATK +5% (stackable)."
   },
   {
     "key": "language_10010676",
@@ -42697,15 +42697,15 @@
   },
   {
     "key": "language_10010677",
-    "content": "After a round ends, takes (the caster's ATK ×50%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x50%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010678",
-    "content": "After a round ends, takes (the caster's ATK ×75%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x75%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010679",
-    "content": "After a round ends, takes (the caster's ATK ×125%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x125%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010680",
@@ -42773,11 +42773,11 @@
   },
   {
     "key": "language_10010696",
-    "content": "After a round ends, takes (the caster's ATK ×40%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x40%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010697",
-    "content": "When a round ends, takes (the caster's ATK ×50%) Genesis DMG (can stack)."
+    "content": "At the end of the round, takes (the user's ATK x50%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010698",
@@ -42801,7 +42801,7 @@
   },
   {
     "key": "language_10010703",
-    "content": "DMG Dealt -10% to Sweetheart (can stack; each stack is timed independently)."
+    "content": "DMG Dealt -10% to Sweetheart (stackable, each stack timed independently)."
   },
   {
     "key": "language_10010704",
@@ -42873,7 +42873,7 @@
   },
   {
     "key": "language_10010721",
-    "content": "Critical Resist -10% (can stack)."
+    "content": "Critical Resist Rate -10% (stackable)."
   },
   {
     "key": "language_10010722",
@@ -43345,11 +43345,11 @@
   },
   {
     "key": "language_10010839",
-    "content": "When a round ends, takes (the caster's ATK ×30%) Genesis DMG (can stack)."
+    "content": "At the end of the round, takes (the user's ATK x30%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010840",
-    "content": "After a round ends, takes (the caster's ATK ×30%) Genesis DMG (can stack)."
+    "content": "At the end of the round, takes (the user's ATK x30%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010841",
@@ -43625,7 +43625,7 @@
   },
   {
     "key": "language_10010909",
-    "content": "After a round ends, takes (the caster's ATK ×50%) Genesis DMG (can stack)."
+    "content": "At the end of the round, takes (the user's ATK x50%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010910",
@@ -43653,7 +43653,7 @@
   },
   {
     "key": "language_10010916",
-    "content": "DMG Bonus +10%. Can stack."
+    "content": "DMG Bonus +10% (stackable)."
   },
   {
     "key": "language_10010917",
@@ -43677,7 +43677,7 @@
   },
   {
     "key": "language_10010922",
-    "content": "At the end of a round, takes (the caster's ATK ×30%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x30%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10010923",
@@ -43685,7 +43685,7 @@
   },
   {
     "key": "language_10010924",
-    "content": "Reality DEF -5%. Can stack."
+    "content": "Reality DEF -5% (stackable)."
   },
   {
     "key": "language_10010925",
@@ -43765,7 +43765,7 @@
   },
   {
     "key": "language_10010944",
-    "content": "ATK, Reality DEF, and Mental DEF +25% (can stack; cannot be dispelled)."
+    "content": "ATK, Reality DEF, and Mental DEF +25% (stackable, undispellable)."
   },
   {
     "key": "language_10010945",
@@ -43845,7 +43845,7 @@
   },
   {
     "key": "language_10010964",
-    "content": "DMG Taken Reduction -15% (can stack)."
+    "content": "DMG Taken Reduction -15% (stackable)."
   },
   {
     "key": "language_10010965",
@@ -43869,7 +43869,7 @@
   },
   {
     "key": "language_10010970",
-    "content": "Reality DEF, Mental DEF, and DMG Taken Reduction -5% (can stack; cannot be dispelled)."
+    "content": "Reality DEF, Mental DEF, and DMG Taken Reduction -5% (stackable, undispellable)."
   },
   {
     "key": "language_10010971",
@@ -43957,15 +43957,15 @@
   },
   {
     "key": "language_10010992",
-    "content": "ATK +10% and Reality DEF -10%. Can stack."
+    "content": "ATK +10% and Reality DEF -10% (stackable)."
   },
   {
     "key": "language_10010993",
-    "content": "Ultimate Might +20%. Can stack."
+    "content": "Ultimate Might +20% (stackable)."
   },
   {
     "key": "language_10010994",
-    "content": "Ultimate Might -20%. Can stack."
+    "content": "Ultimate Might -20% (stackable)."
   },
   {
     "key": "language_10010995",
@@ -44029,7 +44029,7 @@
   },
   {
     "key": "language_10011010",
-    "content": "ATK, Reality DEF, and Mental DEF +50% (can stack; cannot be dispelled)."
+    "content": "ATK, Reality DEF, and Mental DEF +50% (stackable, undispellable)."
   },
   {
     "key": "language_10011011",
@@ -44133,7 +44133,7 @@
   },
   {
     "key": "language_10011036",
-    "content": "At the end of a round, takes (the caster's ATK ×10%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x10%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011037",
@@ -44313,7 +44313,7 @@
   },
   {
     "key": "language_10011081",
-    "content": "DMG Bonus +30%, Leech Rate +30%, and HP -(current HP ×15%) after the carrier takes action. Can stack. Cannot be dispelled."
+    "content": "DMG Bonus +30%, Leech Rate +30%, and loses (Current HP x15%) HP after taking an action (stackable, undispellable)."
   },
   {
     "key": "language_10011082",
@@ -44345,7 +44345,7 @@
   },
   {
     "key": "language_10011089",
-    "content": "DMG Bonus -10% (can stack; each stack is timed independently)."
+    "content": "DMG Bonus -10% (stackable, each stack timed independently)."
   },
   {
     "key": "language_10011090",
@@ -44717,7 +44717,7 @@
   },
   {
     "key": "language_10011182",
-    "content": "(DO NOT SHOW) DMG Bonus +30%. Can stack. Disappears after the caster is attacked."
+    "content": "(DO NOT SHOW) DMG Bonus +30% (stackable, removed after attacking)."
   },
   {
     "key": "language_10011183",
@@ -45057,43 +45057,43 @@
   },
   {
     "key": "language_10011267",
-    "content": "Critical Rate +1%, Critical DMG +1% (can stack)."
+    "content": "Critical Rate +1%, Critical DMG +1% (stackable)."
   },
   {
     "key": "language_10011268",
-    "content": "Critical Rate +2%, Critical DMG +2% (can stack)."
+    "content": "Critical Rate +2%, Critical DMG +2% (stackable)."
   },
   {
     "key": "language_10011269",
-    "content": "Critical Rate +3%, Critical DMG +3% (can stack)."
+    "content": "Critical Rate +3%, Critical DMG +3% (stackable)."
   },
   {
     "key": "language_10011270",
-    "content": "Critical Rate +4%, Critical DMG +4%. (Can stack.)"
+    "content": "Critical Rate +4%, Critical DMG +4% (stackable)."
   },
   {
     "key": "language_10011271",
-    "content": "Critical Rate +5%, Critical DMG +5% (can stack)."
+    "content": "Critical Rate +5%, Critical DMG +5% (stackable)."
   },
   {
     "key": "language_10011272",
-    "content": "Critical Rate +1%, Critical DMG +1%. (Can stack. Cannot be dispelled.)"
+    "content": "Critical Rate +1%, Critical DMG +1% (stackable, undispellable)."
   },
   {
     "key": "language_10011273",
-    "content": "Critical Rate +2%, Critical DMG +2%. (Can stack. Cannot be dispelled.)"
+    "content": "Critical Rate +2%, Critical DMG +2% (stackable, undispellable)."
   },
   {
     "key": "language_10011274",
-    "content": "Critical Rate +3%, Critical DMG +3%. (Can stack. Cannot be dispelled.)"
+    "content": "Critical Rate +3%, Critical DMG +3% (stackable, undispellable)."
   },
   {
     "key": "language_10011275",
-    "content": "Critical Rate +4%, Critical DMG +4%. (Can stack. Cannot be dispelled.)"
+    "content": "Critical Rate +4%, Critical DMG +4% (stackable, undispellable)."
   },
   {
     "key": "language_10011276",
-    "content": "Critical Rate +5%, Critical DMG +5%. (Can stack. Cannot be dispelled.)"
+    "content": "Critical Rate +5%, Critical DMG +5% (stackable, undispellable)."
   },
   {
     "key": "language_10011277",
@@ -45101,43 +45101,43 @@
   },
   {
     "key": "language_10011278",
-    "content": "DMG Bonus +1% (can stack)."
+    "content": "DMG Bonus +1% (stackable)."
   },
   {
     "key": "language_10011279",
-    "content": "DMG Bonus +2% (can stack)."
+    "content": "DMG Bonus +2% (stackable)."
   },
   {
     "key": "language_10011280",
-    "content": "DMG Bonus +3% (can stack)."
+    "content": "DMG Bonus +3% (stackable)."
   },
   {
     "key": "language_10011281",
-    "content": "DMG Bonus +4% (can stack)."
+    "content": "DMG Bonus +4% (stackable)."
   },
   {
     "key": "language_10011282",
-    "content": "DMG Bonus +5%. (Can stack.)"
+    "content": "DMG Bonus +5% (stackable)."
   },
   {
     "key": "language_10011283",
-    "content": "DMG Bonus +1%. (Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +1% (stackable, undispellable)."
   },
   {
     "key": "language_10011284",
-    "content": "DMG Bonus +2%. (Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +2% (stackable, undispellable)."
   },
   {
     "key": "language_10011285",
-    "content": "DMG Bonus +3%. (Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +3% (stackable, undispellable)."
   },
   {
     "key": "language_10011286",
-    "content": "DMG Bonus +4%. (Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +4% (stackable, undispellable)."
   },
   {
     "key": "language_10011287",
-    "content": "DMG Bonus +5%. (Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +5% (stackable, undispellable)."
   },
   {
     "key": "language_10011288",
@@ -45145,7 +45145,7 @@
   },
   {
     "key": "language_10011289",
-    "content": "Shield that blocks DMG (can stack)."
+    "content": "Shield that blocks DMG (stackable)."
   },
   {
     "key": "language_10011290",
@@ -45269,7 +45269,7 @@
   },
   {
     "key": "language_10011320",
-    "content": "(DO NOT SHOW) DMG Dealt +8% to all allies. Can stack."
+    "content": "(DO NOT SHOW) DMG Dealt +8% to all allies (stackable)."
   },
   {
     "key": "language_10011321",
@@ -45281,7 +45281,7 @@
   },
   {
     "key": "language_10011323",
-    "content": "After taking action, takes (the user's ATK x20%) Genesis DMG. (Can stack.)"
+    "content": "After taking action, takes (the user's ATK x20%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011324",
@@ -45473,7 +45473,7 @@
   },
   {
     "key": "language_10011371",
-    "content": "DMG bonus is increased by 20% and DMG taken is reduced by 20%(Can stack. Cannot be dispelled.)"
+    "content": "DMG Bonus +20% and DMG Taken Reduction +20% (stackable, undispellable)."
   },
   {
     "key": "language_10011372",
@@ -45489,7 +45489,7 @@
   },
   {
     "key": "language_10011375",
-    "content": "DMG Taken Reduction -20%. Can stack."
+    "content": "DMG Taken Reduction -20% (stackable)."
   },
   {
     "key": "language_10011376",
@@ -45805,7 +45805,7 @@
   },
   {
     "key": "language_10011454",
-    "content": "Critical Rate +5%. Can stack."
+    "content": "Critical Rate +5% (stackable)."
   },
   {
     "key": "language_10011455",
@@ -45989,7 +45989,7 @@
   },
   {
     "key": "language_10011500",
-    "content": "After the round ends, takes (the user's ATK x30%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x30%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011501",
@@ -46017,7 +46017,7 @@
   },
   {
     "key": "language_10011507",
-    "content": "At the end of the round, takes (Max HP x5%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (Max HP x5%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011508",
@@ -46085,7 +46085,7 @@
   },
   {
     "key": "language_10011524",
-    "content": "At the end of the round, takes (Current HP x20%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (Current HP x20%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011525",
@@ -46221,7 +46221,7 @@
   },
   {
     "key": "language_10011558",
-    "content": "DMG Taken Reduction -5% (can stack)."
+    "content": "DMG Taken Reduction -5% (stackable)."
   },
   {
     "key": "language_10011559",
@@ -46265,7 +46265,7 @@
   },
   {
     "key": "language_10011569",
-    "content": "DMG Bonus +30% (can stack)."
+    "content": "DMG Bonus +30% (stackable)."
   },
   {
     "key": "language_10011570",
@@ -46469,11 +46469,11 @@
   },
   {
     "key": "language_10011620",
-    "content": "After the round ends, takes (the user's ATK x10%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x10%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011621",
-    "content": "After the round ends, takes (the user's ATK x20%) Genesis DMG. Can stack."
+    "content": "At the end of the round, takes (the user's ATK x20%) Genesis DMG (stackable)."
   },
   {
     "key": "language_10011622",
@@ -49205,7 +49205,7 @@
   },
   {
     "key": "language_10012304",
-    "content": "After attacking, inflicts the [Poison] status on the target for 1 round: at the end of the round, takes (the user's ATK x30%) Genesis DMG. On death, purifies all [Poison] statuses from all enemies."
+    "content": "After attacking, inflicts [Poison] on the target for 1 round: at the end of the round, takes (the user's ATK x30%) Genesis DMG. When defeated, dispels [Poison] from all enemies."
   },
   {
     "key": "language_10012305",
@@ -49809,7 +49809,7 @@
   },
   {
     "key": "language_10012455",
-    "content": "On death, inflict 6 stacks of [Burn] on other allies; other allies lose all HP when entering the [Embers] status."
+    "content": "When defeated, inflicts 6 stacks of [Burn] on other allies; other allies lose all HP when entering the [Embers] status."
   },
   {
     "key": "language_10012456",
@@ -49893,7 +49893,7 @@
   },
   {
     "key": "language_10012476",
-    "content": "On death, dispel all [Spore Powder] statuses from all enemies."
+    "content": "When defeated, dispels [Spore Powder] from all enemies."
   },
   {
     "key": "language_10012477",
@@ -49909,19 +49909,19 @@
   },
   {
     "key": "language_10012480",
-    "content": "On death, reduces the source of attack's Moxie and Eureka to 0."
+    "content": "When defeated, the attacker loses all Moxie and Eureka."
   },
   {
     "key": "language_10012481",
-    "content": "When entering battle, gain the [Legacy: Badge] status. On death, grants this status to other allies."
+    "content": "When entering battle, gains the [Legacy: Badge] status. When defeated, grants this status to other allies."
   },
   {
     "key": "language_10012482",
-    "content": "When entering battle, gain the [Legacy: Gun] status. On death, grants this status to other allies."
+    "content": "When entering battle, gains the [Legacy: Gun] status. When defeated, grants this status to other allies."
   },
   {
     "key": "language_10012483",
-    "content": "When entering battle, gain the [Legacy: Horn] status. On death, grants this status to other allies."
+    "content": "When entering battle, gains the [Legacy: Horn] status. When defeated, grants this status to other allies."
   },
   {
     "key": "language_10012484",
@@ -50125,7 +50125,7 @@
   },
   {
     "key": "language_10012534",
-    "content": "When an enemy dies, deal (ATK x400%) Genesis DMG to a random enemy."
+    "content": "When an enemy is defeated, deals (ATK x400%) Genesis DMG to a random enemy."
   },
   {
     "key": "language_10012535",
@@ -50137,7 +50137,7 @@
   },
   {
     "key": "language_10012537",
-    "content": "When an enemy dies, gain 2 stacks of [Unsparing]."
+    "content": "When an enemy is defeated, gains 2 stacks of [Unsparing]."
   },
   {
     "key": "language_10012538",
@@ -50497,7 +50497,7 @@
   },
   {
     "key": "language_10012627",
-    "content": "Incantation Limit +4. At the start of each round, gain 4 stacks of [Anticipation · Enkindle] (no effect after death)."
+    "content": "Incantation Limit +4. At the start of each round, gains 4 stacks of [Anticipation · Enkindle] (disappears when defeated)."
   },
   {
     "key": "language_10012628",
@@ -50525,7 +50525,7 @@
   },
   {
     "key": "language_10012634",
-    "content": "Gain AP +1. After being attacked, if own HP percentage is below 90%, lose all HP (expires after death)."
+    "content": "AP +1. After being attacked, if own HP percentage is below 90%, lose all HP (disappears when defeated)."
   },
   {
     "key": "language_10012635",
@@ -50813,15 +50813,15 @@
   },
   {
     "key": "language_10012706",
-    "content": "On death, other allies gain Moxie +1."
+    "content": "When defeated, other allies gain Moxie +1."
   },
   {
     "key": "language_10012707",
-    "content": "On death, inflict 2 random effects from [Collection of Debuffs<id:91510060>] on all characters for 2 rounds."
+    "content": "When defeated, inflicts 2 random effects from [Collection of Debuffs<id:91510060>] on all characters for 2 rounds."
   },
   {
     "key": "language_10012708",
-    "content": "On death, grant AP +1 to the ally with the highest ATK."
+    "content": "When defeated, grants AP +1 to the ally with the highest ATK."
   },
   {
     "key": "language_10012709",
@@ -50829,7 +50829,7 @@
   },
   {
     "key": "language_10012710",
-    "content": "On death, grant AP +1 and 5 stacks of [Regen] to the ally with the highest ATK."
+    "content": "When defeated, grants AP +1 and 5 stacks of [Regen] to the ally with the highest ATK."
   },
   {
     "key": "language_10012711",
@@ -53681,7 +53681,7 @@
   },
   {
     "key": "language_10013423",
-    "content": "When casting an Ultimate, allies gain 1 stack of [Military Order]. On death, dispel all [Stats Up] and [Pos Status] from allies."
+    "content": "When casting an Ultimate, allies gain 1 stack of [Military Order]. When defeated, dispels all [Stats Up] and [Pos Status] from allies."
   },
   {
     "key": "language_10013424",
@@ -53697,7 +53697,7 @@
   },
   {
     "key": "language_10013427",
-    "content": "After death, lose all Moxie, clear all statuses, recover to (Max HP x100%) HP, and get an all around power increase."
+    "content": "When defeated, loses all Moxie, dispels all statuses, recovers (Max HP x100%) HP, and becomes more powerful."
   },
   {
     "key": "language_10013428",
@@ -53709,7 +53709,7 @@
   },
   {
     "key": "language_10013430",
-    "content": "DMG Taken Reduction +15%. After being attacked, get DMG Taken Reduction -15%, stacking up to 4 times. Dispel this status at the end of the round. On death, inflict DMG Taken Reduction -30% on other allies for 2 rounds."
+    "content": "DMG Taken Reduction +15%. After being attacked, DMG Taken Reduction -15% (stackable up to 4 times). Dispels this status at the end of the round. When defeated, inflicts DMG Taken Reduction -30% on other allies for 2 rounds."
   },
   {
     "key": "language_10013431",
@@ -53953,7 +53953,7 @@
   },
   {
     "key": "language_10013491",
-    "content": "On death, grant Moxie +2 to Mob Leader."
+    "content": "When defeated, grants Moxie +2 to Mob Leader."
   },
   {
     "key": "language_10013492",
@@ -54069,7 +54069,7 @@
   },
   {
     "key": "language_10013520",
-    "content": "On death, all allies get Moxie -1."
+    "content": "When defeated, inflicts Moxie -1 on all allies."
   },
   {
     "key": "language_10013521",
@@ -54093,7 +54093,7 @@
   },
   {
     "key": "language_10013526",
-    "content": "After death, all Eureka fragments on the field also die."
+    "content": "When defeated, all Eureka fragments on the field are also defeated."
   },
   {
     "key": "language_10013527",
@@ -54149,7 +54149,7 @@
   },
   {
     "key": "language_10013540",
-    "content": "After death, dispel all [Counter] statuses from all allies and gain 2 stack of [Energy Point]."
+    "content": "When defeated, dispels all [Counter] effects from all allies and gains 2 stacks of [Energy Point]."
   },
   {
     "key": "language_10013541",
@@ -54181,7 +54181,7 @@
   },
   {
     "key": "language_10013548",
-    "content": "After death, if there is an ally on the field, recover to (Max HP x50%) HP and get an all around power increase. If there isn't an ally on the field, recover to (Max HP x100%) HP and get an all around power increase."
+    "content": "When defeated, if there is an ally on the field, recovers (Max HP x50%) HP and becomes more powerful. If there isn't an ally on the field, recovers (Max HP x100%) HP and becomes more powerful."
   },
   {
     "key": "language_10013549",
@@ -54201,11 +54201,11 @@
   },
   {
     "key": "language_10013553",
-    "content": "On death, if there is an ally on the field, sacrifice all allies and recover to (own Max HP x100%) HP (triggers only 1 time)."
+    "content": "When defeated, if there is an ally on the field, sacrifices all allies and recovers (own Max HP x100%) HP (triggers only 1 time)."
   },
   {
     "key": "language_10013554",
-    "content": "After death, if there is an ally on the field, recover to (Max HP x50%) HP and get an all around power increase. If there isn't an ally on the field, recover to (Max HP x100%) HP and get an all around power increase. (triggers only 1 time)."
+    "content": "When defeated, if there is an ally on the field, recovers (Max HP x50%) HP and becomes more powerful. If there isn't an ally on the field, recovers (Max HP x100%) HP and becomes more powerful (triggers only 1 time)."
   },
   {
     "key": "language_10013555",
@@ -54365,7 +54365,7 @@
   },
   {
     "key": "language_10013594",
-    "content": "DMG Taken Reduction -15% (can stack)."
+    "content": "DMG Taken Reduction -15% (stackable)."
   },
   {
     "key": "language_10013595",
@@ -55281,7 +55281,7 @@
   },
   {
     "key": "language_10013823",
-    "content": "Unitone - [Promise of the Water]"
+    "content": "Unitone · [Promise of the Water]"
   },
   {
     "key": "language_10013824",
@@ -55289,7 +55289,7 @@
   },
   {
     "key": "language_10013825",
-    "content": "Decatone - [Promise of the Water]"
+    "content": "Decatone · [Promise of the Water]"
   },
   {
     "key": "language_10013826",
@@ -55297,7 +55297,7 @@
   },
   {
     "key": "language_10013827",
-    "content": "Decatone - [Thoughts in Cylinder]"
+    "content": "Decatone · [Thoughts in Cylinder]"
   },
   {
     "key": "language_10013828",
@@ -55345,35 +55345,35 @@
   },
   {
     "key": "language_10013839",
-    "content": "A magnetic medium with a recorded memory. About Truth has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>About Truth</i> to the Mood Switch."
   },
   {
     "key": "language_10013840",
-    "content": "A magnetic medium with a recorded memory. Beyond Phenomenal has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Beyond Phenomenal</i> to the Mood Switch."
   },
   {
     "key": "language_10013841",
-    "content": "A magnetic medium with a recorded memory. Thoughts of Atonality has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Thoughts of Atonality</i> to the Mood Switch."
   },
   {
     "key": "language_10013842",
-    "content": "A magnetic medium with a recorded memory. Memories in the Mirror has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Memories in the Mirror</i> to the Mood Switch."
   },
   {
     "key": "language_10013843",
-    "content": "A magnetic medium with a recorded memory. <nobr>Cutting-edge</nobr> Technology has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i><nobr>Cutting-edge</nobr> Technology</i> to the Mood Switch."
   },
   {
     "key": "language_10013844",
-    "content": "A magnetic medium with a recorded memory. Me in a Bottle has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Me in a Bottle</i> to the Mood Switch."
   },
   {
     "key": "language_10013845",
-    "content": "A magnetic medium with a recorded memory. Vereinsamt has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Vereinsamt</i> to the Mood Switch."
   },
   {
     "key": "language_10013846",
-    "content": "A magnetic medium with a recorded memory. Fire Thieves has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Fire Thieves</i> to the Mood Switch."
   },
   {
     "key": "language_10013847",
@@ -56405,7 +56405,7 @@
   },
   {
     "key": "language_10014104",
-    "content": "A follower of the Manus Vindictae from the School of Apeiron.\nHe spent decades trying to turn the proof of dreams into reality, until yesterday."
+    "content": "A follower of Manus Vindictae from the School of Apeiron.\nHe spent decades trying to turn the proof of dreams into reality, until yesterday."
   },
   {
     "key": "language_10014105",
@@ -56413,7 +56413,7 @@
   },
   {
     "key": "language_10014106",
-    "content": "A follower of the Manus Vindictae from the School of Apeiron.\nShe wanders through the tomes, absorbing the light of wisdom. Now, at last, she understands that the knowledge she should worship lies elsewhere."
+    "content": "A follower of Manus Vindictae from the School of Apeiron.\nShe wanders through the tomes, absorbing the light of wisdom. Now, at last, she understands that the knowledge she should worship lies elsewhere."
   },
   {
     "key": "language_10014107",
@@ -56445,7 +56445,7 @@
   },
   {
     "key": "language_10014114",
-    "content": "An airship crafted by the Manus Vindictae.\nIts heavy heart throbs above the clouds, pumping blue blood to its four limbs. It is foolish and vibrant, forever oblivious, forever dutifully loyal."
+    "content": "An airship crafted by Manus Vindictae.\nIts heavy heart throbs above the clouds, pumping blue blood to its four limbs. It is foolish and vibrant, forever oblivious, forever dutifully loyal."
   },
   {
     "key": "language_10014115",
@@ -70877,7 +70877,7 @@
   },
   {
     "key": "language_10017722",
-    "content": "<nobr>1-target</nobr> attack. Deals 120% Mental DMG plus (the target's ATK x40%) Genesis DMG. When in the [Irrational Ascension] status, this attack inflicts 1 stack of [Paralyze] on the target."
+    "content": "<nobr>1-target</nobr> attack. Deals 120% Mental DMG plus (the target's ATK x40%) Genesis DMG. When in the [Irrational Ascension] status, inflicts 1 stack of [Paralyze] on the target."
   },
   {
     "key": "language_10017723",
@@ -71161,7 +71161,7 @@
   },
   {
     "key": "language_10017793",
-    "content": "On death, inflicts Moxie -1 on other allies and grants 5 stacks of [Ceremonious] to all characters."
+    "content": "When defeated, inflicts Moxie -1 on other allies and grants 5 stacks of [Ceremonious] to all characters."
   },
   {
     "key": "language_10017794",
@@ -71965,7 +71965,7 @@
   },
   {
     "key": "language_10017994",
-    "content": "On death, deals (Old Miner's Max HP x15%) Genesis DMG to the Old Miner."
+    "content": "When defeated, deals (Old Miner's Max HP x15%) Genesis DMG to the Old Miner."
   },
   {
     "key": "language_10017995",
@@ -72197,7 +72197,7 @@
   },
   {
     "key": "language_10018052",
-    "content": "At the start of the round, if own HP is above 50%, hatches 1 Garden Sprite with 100% initial HP (3 Max Moxie). After death, hatches 1 Garden Sprite at 30% initial HP (5 Max Moxie)."
+    "content": "At the start of the round, if HP is above 50%, hatches 1 Garden Sprite with 100% initial HP (3 Max Moxie). When defeated, hatches 1 Garden Sprite at 30% initial HP (5 Max Moxie)."
   },
   {
     "key": "language_10018053",
@@ -72305,7 +72305,7 @@
   },
   {
     "key": "language_10018079",
-    "content": "On death, removes 5 stacks of [Saturn Divination] from the Wandering Morning Star."
+    "content": "When defeated, removes 5 stacks of [Saturn Divination] from the Wandering Morning Star."
   },
   {
     "key": "language_10018080",
@@ -72313,11 +72313,11 @@
   },
   {
     "key": "language_10018081",
-    "content": "Enters battle with 50% initial HP. On death, sacrifices all allies and summons the Seeking Morning Star."
+    "content": "Enters battle with 50% initial HP. When defeated, sacrifices all allies and summons the Seeking Morning Star."
   },
   {
     "key": "language_10018082",
-    "content": "Enters battle with 100% initial HP. On death, sacrifices all allies and summons the Wandering Morning Star."
+    "content": "Enters battle with 100% initial HP. When defeated, sacrifices all allies and summons the Wandering Morning Star."
   },
   {
     "key": "language_10018083",
@@ -75769,11 +75769,11 @@
   },
   {
     "key": "language_10018945",
-    "content": "A magnetic medium with a recorded memory. \"Floor It! To the Golden City\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Floor It! To the Golden City</i> to the Mood Switch."
   },
   {
     "key": "language_10018946",
-    "content": "A magnetic medium with a recorded memory. \"Midnight Mayhem\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Midnight Mayhem</i> to the Mood Switch."
   },
   {
     "key": "language_10018947",
@@ -79393,7 +79393,7 @@
   },
   {
     "key": "language_10019851",
-    "content": "When attacking, inflicts [Poison] for 1 round on the target hit: at the end of the round, deals (the user's ATK x30%) Genesis DMG to the target. On death, dispels [Poison] on all enemies."
+    "content": "When attacking, inflicts [Poison] for 1 round on the target hit: at the end of the round, deals (the user's ATK x30%) Genesis DMG to the target. When defeated, dispels [Poison] from all enemies."
   },
   {
     "key": "language_10019852",
@@ -79425,7 +79425,7 @@
   },
   {
     "key": "language_10019859",
-    "content": "After attacking, inflict 1 stack of [Pollution] on the target for 1 round. On death, dispel [Pollution] on all enemies."
+    "content": "After attacking, inflicts 1 stack of [Pollution] on the target for 1 round. When defeated, dispels [Pollution] from all enemies."
   },
   {
     "key": "language_10019860",
@@ -82361,11 +82361,11 @@
   },
   {
     "key": "language_10020593",
-    "content": "A magnetic medium with a recorded memory. Route 77: The Haunted Highway has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Route 77: The Haunted Highway</i> to the Mood Switch."
   },
   {
     "key": "language_10020594",
-    "content": "A magnetic medium with a recorded memory. Stories on the Route has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Stories on the Route</i> to the Mood Switch."
   },
   {
     "key": "language_10020595",
@@ -86281,7 +86281,7 @@
   },
   {
     "key": "language_10021573",
-    "content": "When entering battle and after being attacked 3 times while not in [Stasis Lock], gain [Stasis Lock]; on death, apply Stress -10 on all enemies."
+    "content": "When entering battle and after being attacked 3 times while not in [Stasis Lock], gain [Stasis Lock]; when defeated, grants Stress -10 to all enemies."
   },
   {
     "key": "language_10021574",
@@ -86309,7 +86309,7 @@
   },
   {
     "key": "language_10021580",
-    "content": "At the end of the round, a random enemy gets Stress +2. On death, all enemies get Stress -5."
+    "content": "At the end of the round, inflicts Stress +2 on a random enemy. When defeated, grants Stress -5 to all enemies."
   },
   {
     "key": "language_10021581",
@@ -86317,7 +86317,7 @@
   },
   {
     "key": "language_10021582",
-    "content": "When entering battle, grant [Phasmagoria] to the enemy unit with the highest ATK. On death, remove all [Phasmagoria] on all enemies."
+    "content": "When entering battle, grants [Phasmagoria] to the enemy unit with the highest ATK. When defeated, dispels [Phasmagoria] from all enemies."
   },
   {
     "key": "language_10021583",
@@ -86397,11 +86397,11 @@
   },
   {
     "key": "language_10021602",
-    "content": "At the start of the round, if the enemies are holding 10 or more instances of [Poison] combined, gain 1 [Poison Fusion] incantation.\nIf the enemies are holding 20 or more instances of [Poison] combined, the enemy [Poison] statuses do not decrease in duration on resolve for this round.\nAfter an enemy dies, cast an additional [Poison Fusion] on a random enemy (triggers once per round)."
+    "content": "At the start of the round, if enemies are holding 10 or more instances of [Poison] combined, generate 1 [Poison Fusion] incantation.\nIf enemies are holding 20 or more instances of [Poison] combined, enemy [Poison] instances do not decrease in duration when resolved for this round.\nWhen an enemy is defeated, cast [Poison Fusion] on a random enemy an additional time (triggers once per round)."
   },
   {
     "key": "language_10021603",
-    "content": "At the start of the round, if the enemies are holding 10 or more instances of [Poison] combined, gain 1 [Poison Fusion] incantation. If the enemies are holding 20 or more instances of [Poison] combined, the enemy [Poison] statuses do not decrease in duration on resolve for this round.\nAfter an enemy dies, cast an additional [Poison Fusion] on a random enemy (triggers up to 2 times per round)."
+    "content": "At the start of the round, if enemies are holding 10 or more instances of [Poison] combined, generate 1 [Poison Fusion] incantation. If enemies are holding 20 or more instances of [Poison] combined, enemy [Poison] instances do not decrease in duration when resolved for this round.\nWhen an enemy is defeated, cast [Poison Fusion] on a random enemy an additional time (triggers up to 2 times per round)."
   },
   {
     "key": "language_10021604",
@@ -86465,7 +86465,7 @@
   },
   {
     "key": "language_10021619",
-    "content": "When casting at least three incantations of the same type this round, trigger [Incantation Syntony]; for every 1 additional incantation of the same type casted this way, [Incantation Syntony] Level +1."
+    "content": "When casting at least three incantations of the same type this round, trigger [Incantation Syntony]; for each additional incantation of the same type cast this way, [Incantation Syntony] level +1."
   },
   {
     "key": "language_10021620",
@@ -86681,7 +86681,7 @@
   },
   {
     "key": "language_10021673",
-    "content": "After death, transform into Dwindling Fire and recover (own Max HP x20%) HP."
+    "content": "When defeated, transforms into Dwindling Fire and recovers (Max HP x20%) HP."
   },
   {
     "key": "language_10021674",
@@ -87669,7 +87669,7 @@
   },
   {
     "key": "language_10021920",
-    "content": "When an enemy dies, get Stress -5 for self.\nWhen a character defeats an enemy, get Stress -10 for self.\nWhen another ally dies, get Stress +25 for self."
+    "content": "When an enemy is defeated, gain Stress -5 for self.\nWhen an ally defeats an enemy, gain Stress -10 for self.\nWhen an ally is defeated, gain Stress +25 for self."
   },
   {
     "key": "language_10021921",
@@ -87829,11 +87829,11 @@
   },
   {
     "key": "language_10021960",
-    "content": "In Minor Obstacle, when an enemy dies, deal (that enemy's ATK x100%) Genesis DMG to all allies."
+    "content": "In Minor Obstacle, when an enemy is defeated, deals (the attacker's ATK x100%) Genesis DMG to all allies."
   },
   {
     "key": "language_10021961",
-    "content": "In Minor Obstacle, when an enemy dies, deal (that enemy's ATK x200%) Genesis DMG to all allies."
+    "content": "In Minor Obstacle, when an enemy is defeated, deal (the attacker's ATK x200%) Genesis DMG to all allies."
   },
   {
     "key": "language_10021962",
@@ -88105,11 +88105,11 @@
   },
   {
     "key": "language_10022029",
-    "content": "On death, recover (Missing HP x50%) HP for all allies."
+    "content": "When defeated, recovers (Missing HP x50%) HP for all allies."
   },
   {
     "key": "language_10022030",
-    "content": "On death, grant Moxie +1 to other allies and recover (the target's Max HP x10%) HP for other allies."
+    "content": "When defeated, grants Moxie +1 to other allies and recovers (the target's Max HP x10%) HP for other allies."
   },
   {
     "key": "language_10022031",
@@ -88117,7 +88117,7 @@
   },
   {
     "key": "language_10022032",
-    "content": "On death, all enemies get Moxie -5 and get [Disconcert] for 1 round."
+    "content": "When defeated, inflicts Moxie -5 and [Disconcert] on all enemies for 1 round."
   },
   {
     "key": "language_10022033",
@@ -88125,7 +88125,7 @@
   },
   {
     "key": "language_10022034",
-    "content": "On death, a random enemy gets Stress +10."
+    "content": "When defeated, inflicts Stress +10 on a random enemy."
   },
   {
     "key": "language_10022035",
@@ -89377,7 +89377,7 @@
   },
   {
     "key": "language_10022347",
-    "content": "Supply"
+    "content": "Resource"
   },
   {
     "key": "language_10022348",
@@ -90645,7 +90645,7 @@
   },
   {
     "key": "language_10022664",
-    "content": "Decatone - [Longing for Innocence]"
+    "content": "Decatone · [Longing for Innocence]"
   },
   {
     "key": "language_10022665",
@@ -90653,7 +90653,7 @@
   },
   {
     "key": "language_10022666",
-    "content": "Decatone - [Boon of the Water]"
+    "content": "Decatone · [Boon of the Water]"
   },
   {
     "key": "language_10022667",
@@ -90685,23 +90685,23 @@
   },
   {
     "key": "language_10022674",
-    "content": "A magnetic medium with a recorded memory. \"Sunset in São Paulo\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Sunset in São Paulo</i> to the Mood Switch."
   },
   {
     "key": "language_10022675",
-    "content": "A magnetic medium with a recorded memory. \"A Suspended Lute\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>A Suspended Lute</i> to the Mood Switch."
   },
   {
     "key": "language_10022676",
-    "content": "A magnetic medium with a recorded memory. \"Tristes Tropiques\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Tristes Tropiques</i> to the Mood Switch."
   },
   {
     "key": "language_10022677",
-    "content": "A magnetic medium with a recorded memory. \"Phototaxis in Study\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Phototaxis in Study</i> to the Mood Switch."
   },
   {
     "key": "language_10022678",
-    "content": "A magnetic medium with a recorded memory. \"Critter Center\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Critter Center</i> to the Mood Switch."
   },
   {
     "key": "language_10022679",
@@ -92865,7 +92865,7 @@
   },
   {
     "key": "language_10023219",
-    "content": "After death, the other monsters fully recover their Memory Shells and their Memory Shells no longer decrease in stacks; they also gain AP +2 and DMG Dealt +200%."
+    "content": "When defeated, all other enemies fully recover their Memory Shells and their Memory Shells no longer decrease in stacks; they also gain AP +2 and DMG Dealt +200%."
   },
   {
     "key": "language_10023220",
@@ -93285,7 +93285,7 @@
   },
   {
     "key": "language_10023324",
-    "content": "When entering battle, gain 1 stack of [Whirlstorm]. At the end of each round, double the stacks of [Whirlstorm]. After death, grant 10 stacks of [Whirlstorm] to Santos.\nIf [Whirlstorm] has reached 8 stacks, grant 5 stacks of [Weal] to all allies (triggers only once).\nIf [Whirlstorm] has reached 16 stacks, grant 8 stacks of [Regen] to all allies (triggers only once).\nIf [Whirlstorm] has reached 32 stacks, grant 8 stacks of [Unsparing<id:90001>] to all allies (triggers only once)."
+    "content": "When entering battle, gains 1 stack of [Whirlstorm]. At the end of each round, doubles the stacks of [Whirlstorm]. When defeated, grants 10 stacks of [Whirlstorm] to Santos.\nIf [Whirlstorm] has reached 8 stacks, grants 5 stacks of [Weal] to all allies (triggers only once).\nIf [Whirlstorm] has reached 16 stacks, grants 8 stacks of [Regen] to all allies (triggers only once).\nIf [Whirlstorm] has reached 32 stacks, grants 8 stacks of [Unsparing<id:90001>] to all allies (triggers only once)."
   },
   {
     "key": "language_10023325",
@@ -96761,7 +96761,7 @@
   },
   {
     "key": "language_10024193",
-    "content": "Decatone - Ripples on the Water"
+    "content": "Decatone · [Ripples on the Water]"
   },
   {
     "key": "language_10024194",
@@ -96769,15 +96769,15 @@
   },
   {
     "key": "language_10024195",
-    "content": "A magnetic medium with a recorded memory. \"London Dawning\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>London Dawning</i> to the Mood Switch."
   },
   {
     "key": "language_10024196",
-    "content": "A magnetic medium with a recorded memory. \"Tourney in the Fog\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Tourney in the Fog</i> to the Mood Switch."
   },
   {
     "key": "language_10024197",
-    "content": "A magnetic medium with a recorded memory. \"Reveries in the Rain\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Reveries in the Rain</i> to the Mood Switch."
   },
   {
     "key": "language_10024198",
@@ -99513,7 +99513,7 @@
   },
   {
     "key": "language_10024881",
-    "content": "When entering battle, grants DMG Dealt +20% to other allies (stackable, undispellable). On death, this effect is lost."
+    "content": "When entering battle, grants DMG Dealt +20% to other allies (stackable, undispellable). When defeated, this effect is lost."
   },
   {
     "key": "language_10024882",
@@ -99557,7 +99557,7 @@
   },
   {
     "key": "language_10024892",
-    "content": "When casting at least three incantations of the same type this round, trigger Incantation Syntony; for every 1 additional incantation of the same type casted this way, Incantation Syntony level +1."
+    "content": "When casting at least three incantations of the same type this round, trigger Incantation Syntony; for each additional incantation of the same type cast this way, Incantation Syntony level +1."
   },
   {
     "key": "language_10024893",
@@ -99801,7 +99801,7 @@
   },
   {
     "key": "language_10024953",
-    "content": "On death, other allies recover (Missing HP x50%) HP, and all enemies get 1 stack of [Infected Wound]."
+    "content": "When defeated, recovers (Missing HP x50%) HP for all other allies and inflicts 1 stack of [Infected Wound] on all enemies."
   },
   {
     "key": "language_10024954",
@@ -100009,7 +100009,7 @@
   },
   {
     "key": "language_10025005",
-    "content": "Damage taken is fixed at 1. After casting an ultimate, grant 2 stacks of [Vow of Protection] to the ally with the highest ATK; on death, grant 3 stacks of [Vow of Protection] to the ally with the highest ATK."
+    "content": "DMG taken is fixed at 1. After casting an Ultimate, grants 2 stacks of [Vow of Protection] to the ally with the highest ATK; when defeated, grants 3 stacks of [Vow of Protection] to the ally with the highest ATK."
   },
   {
     "key": "language_10025006",
@@ -100045,7 +100045,7 @@
   },
   {
     "key": "language_10025014",
-    "content": "When attacking, inflicts 1 stack of [Pollution] on the target for 1 round; on death, inflict 1 stack of [Pollution] on all enemies for 2 rounds."
+    "content": "When attacking, inflicts 1 stack of [Pollution] on the target for 1 round; when defeated, inflicts 1 stack of [Pollution] on all enemies for 2 rounds."
   },
   {
     "key": "language_10025015",
@@ -101805,7 +101805,7 @@
   },
   {
     "key": "language_10025454",
-    "content": "On death, inflict Moxie -2 on all allies."
+    "content": "When defeated, inflicts Moxie -2 on all allies."
   },
   {
     "key": "language_10025455",
@@ -101869,7 +101869,7 @@
   },
   {
     "key": "language_10025470",
-    "content": "On death, grants Moxie +5 and [Dodge] to other allies for 1 round."
+    "content": "When defeated, grants Moxie +5 and [Dodge] to other allies for 1 round."
   },
   {
     "key": "language_10025471",
@@ -101953,7 +101953,7 @@
   },
   {
     "key": "language_10025491",
-    "content": "After entering battle, casts an ultimate and grants 50% of this unit's Reality DEF and Mental DEF to Anjo Nala (removed after death)."
+    "content": "After entering battle, casts an Ultimate and grants 50% of this unit's Reality DEF and Mental DEF to Anjo Nala (removed when defeated)."
   },
   {
     "key": "language_10025492",
@@ -102209,7 +102209,7 @@
   },
   {
     "key": "language_10025555",
-    "content": "After death, inflict 5 stacks of [Pollution] on all enemies for 1 round."
+    "content": "When defeated, inflicts 5 stacks of [Pollution] on all enemies for 1 round."
   },
   {
     "key": "language_10025556",
@@ -102257,7 +102257,7 @@
   },
   {
     "key": "language_10025567",
-    "content": "After death, inflict 5 stacks of [Pollution] on all enemies for 1 round; at the end of the round, Moxie +1."
+    "content": "When defeated, inflicts 5 stacks of [Pollution] on all enemies for 1 round; at the end of the round, Moxie +1."
   },
   {
     "key": "language_10025568",
@@ -102549,7 +102549,7 @@
   },
   {
     "key": "language_10025640",
-    "content": "When entering battle, inflict [Curse] on self and gain Moxie +2; when being hit by a critical hit, lose the [Curse] status; on death, if holding the [Curse] status, deal (the target's Max HP x35%) Genesis DMG to a random enemy."
+    "content": "When entering battle, inflicts [Curse] on self and gains Moxie +2; when being hit by a critical hit, loses the [Curse] status; when defeated, if in the [Curse] status, deals (the target's Max HP x35%) Genesis DMG to a random enemy."
   },
   {
     "key": "language_10025641",
@@ -103113,15 +103113,15 @@
   },
   {
     "key": "language_10025781",
-    "content": "On death, deal (the attacker's ATK x50%) Genesis DMG to all enemies."
+    "content": "When defeated, deals (the attacker's ATK x50%) Genesis DMG to all enemies."
   },
   {
     "key": "language_10025782",
-    "content": "On death, deal (the attacker's ATK x100%) Genesis DMG to all enemies."
+    "content": "When defeated, deals (the attacker's ATK x100%) Genesis DMG to all enemies."
   },
   {
     "key": "language_10025783",
-    "content": "On death, deal (the attacker's ATK x200%) Genesis DMG to all enemies."
+    "content": "When defeated, deals (the attacker's ATK x200%) Genesis DMG to all enemies."
   },
   {
     "key": "language_10025784",
@@ -103409,23 +103409,23 @@
   },
   {
     "key": "language_10025855",
-    "content": "On death, recover (Missing HP x25%) HP for all allies."
+    "content": "When defeated, recovers (Missing HP x25%) HP for all allies."
   },
   {
     "key": "language_10025856",
-    "content": "On death, recover (Missing HP x100%) HP for all allies."
+    "content": "When defeated, recovers (Missing HP x100%) HP for all allies."
   },
   {
     "key": "language_10025857",
-    "content": "On death, grant Moxie +1 to other allies and recover (their Max HP x5%) HP to other allies."
+    "content": "When defeated, grants Moxie +1 to other allies and recovers (their Max HP x5%) HP for other allies."
   },
   {
     "key": "language_10025858",
-    "content": "On death, grant Moxie +2 to other allies and recover (their Max HP x10%) HP to other allies."
+    "content": "When defeated, grants Moxie +2 to other allies and recovers (their Max HP x10%) HP for other allies."
   },
   {
     "key": "language_10025859",
-    "content": "On death, grant Moxie +3 to other allies and recover (their Max HP x15%) HP to other allies."
+    "content": "When defeated, grants Moxie +3 to other allies and recovers (their Max HP x15%) HP for other allies."
   },
   {
     "key": "language_10025860",
@@ -103437,15 +103437,15 @@
   },
   {
     "key": "language_10025862",
-    "content": "On death, all enemies get Moxie -2 and get [Disconcert] for 1 round."
+    "content": "When defeated, inflicts Moxie -2 and [Disconcert] on all enemies for 1 round."
   },
   {
     "key": "language_10025863",
-    "content": "On death, all enemies get Moxie -3 and get [Disconcert] for 2 rounds."
+    "content": "When defeated, inflicts Moxie -3 and [Disconcert] on all enemies for 2 rounds."
   },
   {
     "key": "language_10025864",
-    "content": "On death, all enemies get Moxie -5 and get [Disconcert] for 2 rounds."
+    "content": "When defeated, inflicts Moxie -5 and [Disconcert] on all enemies for 3 rounds."
   },
   {
     "key": "language_10025865",
@@ -103501,7 +103501,7 @@
   },
   {
     "key": "language_10025878",
-    "content": "On death, inflict 1 stack of [Sluggish] on all enemies."
+    "content": "When defeated, inflicts 1 stack of [Sluggish] on all enemies."
   },
   {
     "key": "language_10025879",
@@ -104365,7 +104365,7 @@
   },
   {
     "key": "language_10026094",
-    "content": "On death, if holding the [Curse] status, deal (the target's Max HP x35%) Genesis DMG to a random enemy."
+    "content": "When defeated, if in the [Curse] status, deals (the target's Max HP x35%) Genesis DMG to a random enemy."
   },
   {
     "key": "language_10026095",
@@ -104705,7 +104705,7 @@
   },
   {
     "key": "language_10026179",
-    "content": "Unlocks after clearing Depths of Myth stage ▩1%s."
+    "content": "Unlocks after clearing Depths of Myth ▩1%s0M"
   },
   {
     "key": "language_10026180",
@@ -104769,7 +104769,7 @@
   },
   {
     "key": "language_10026195",
-    "content": "Decatone - Ripples on the Water"
+    "content": "Decatone · Ripples on the Water"
   },
   {
     "key": "language_10026196",
@@ -105141,31 +105141,31 @@
   },
   {
     "key": "language_10026288",
-    "content": "A magnetic medium with a recorded memory. Last Evenings on Earth has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Last Evenings on Earth</i> to the Mood Switch."
   },
   {
     "key": "language_10026289",
-    "content": "A magnetic medium with a recorded memory. Campbell has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Campbell</i> to the Mood Switch."
   },
   {
     "key": "language_10026290",
-    "content": "A magnetic medium with a recorded memory. Thus Spoken 37 has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Thus Spoken 37</i> to the Mood Switch."
   },
   {
     "key": "language_10026291",
-    "content": "A magnetic medium with a recorded memory. Fortune Walk has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Fortune Walk</i> to the Mood Switch."
   },
   {
     "key": "language_10026292",
-    "content": "A magnetic medium with a recorded memory. The Doors has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Doors</i> to the Mood Switch."
   },
   {
     "key": "language_10026293",
-    "content": "A magnetic medium with a recorded memory. Polar Night (Полярная ночь) has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Polar Night (Полярная ночь)</i> to the Mood Switch."
   },
   {
     "key": "language_10026294",
-    "content": "A magnetic medium with a recorded memory. Hymnus Ad Bacchum has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Hymnus Ad Bacchum</i> to the Mood Switch."
   },
   {
     "key": "language_10026295",
@@ -107233,7 +107233,7 @@
   },
   {
     "key": "language_10026811",
-    "content": "On death, all other allies immediately gain 4 stacks of [Mutation<id:342440170>]."
+    "content": "When defeated, all other allies immediately gain 4 stacks of [Mutation<id:342440170>]."
   },
   {
     "key": "language_10026812",
@@ -107781,7 +107781,7 @@
   },
   {
     "key": "language_10026948",
-    "content": "When entering battle, creates a status enabling the Emitter; this status is removed after death."
+    "content": "When entering battle, creates a status enabling the Emitter; this status is removed when defeated."
   },
   {
     "key": "language_10026949",
@@ -108853,7 +108853,7 @@
   },
   {
     "key": "language_10027216",
-    "content": "At the end of the round, if this unit has not taken damage for the round and is not in the [Chitinous] status, gains 1 stack of [Chitinous]; after death, the frontmost enemy gains 1 stack of [Chitinous]."
+    "content": "At the end of the round, if this unit has not taken damage for the round and is not in the [Chitinous] status, gains 1 stack of [Chitinous]; when defeated, the frontmost enemy gains 1 stack of [Chitinous]."
   },
   {
     "key": "language_10027217",
@@ -110637,7 +110637,7 @@
   },
   {
     "key": "language_10027662",
-    "content": "Decatone - Revelation of the Water"
+    "content": "Decatone · [Revelation of the Water]"
   },
   {
     "key": "language_10027663",
@@ -110681,7 +110681,7 @@
   },
   {
     "key": "language_10027673",
-    "content": "Decatone - [Moonbeam Guardian]"
+    "content": "Decatone · [Moonbeam Guardian]"
   },
   {
     "key": "language_10027674",
@@ -110713,7 +110713,7 @@
   },
   {
     "key": "language_10027681",
-    "content": "A magnetic medium with a recorded memory. \"Showdown in Chinatown\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Showdown in Chinatown</i> to the Mood Switch."
   },
   {
     "key": "language_10027682",
@@ -112217,7 +112217,7 @@
   },
   {
     "key": "language_10028057",
-    "content": "After death, inflict a Failure buff on the target."
+    "content": "When defeated, inflict a Failure buff on the target."
   },
   {
     "key": "language_10028058",
@@ -112697,7 +112697,7 @@
   },
   {
     "key": "language_10028177",
-    "content": "On death, grants 10 stacks of [Glory of the Past] to other allies."
+    "content": "When defeated, grants 10 stacks of [Glory of the Past] to other allies."
   },
   {
     "key": "language_10028178",
@@ -112845,7 +112845,7 @@
   },
   {
     "key": "language_10028214",
-    "content": "For each ally present, deal an additional (ATK x30%) Genesis DMG to the targets hit; when attacking, if a target has a Shield, DMG Dealt +50% for self. On death, recovers (their Missing HP x20%) HP for other allies, and grants Moxie +1 to other allies."
+    "content": "For each ally present, deals an additional (ATK x30%) Genesis DMG to the targets hit; when attacking, if a target has a Shield, gains DMG Dealt +50%. When defeated, recovers (Missing HP x20%) HP for other allies and grants Moxie +1 to other allies."
   },
   {
     "key": "language_10028215",
@@ -113385,7 +113385,7 @@
   },
   {
     "key": "language_10028349",
-    "content": "On death, grants a Battle End buff to Vertin."
+    "content": "When defeated, grants a Battle End buff to Vertin."
   },
   {
     "key": "language_10028350",
@@ -113709,7 +113709,7 @@
   },
   {
     "key": "language_10028430",
-    "content": "After attacking, inflict 1 stack of [Pollution] on the target for 2 rounds. On death, dispel [Pollution] on all enemies."
+    "content": "After attacking, inflicts 1 stack of [Pollution] on the target for 2 rounds. When defeated, dispels [Pollution] from all enemies."
   },
   {
     "key": "language_10028431",
@@ -114169,7 +114169,7 @@
   },
   {
     "key": "language_10028545",
-    "content": "On death, dispels [Still Frame] from all enemies."
+    "content": "When defeated, dispels [Still Frame] from all enemies."
   },
   {
     "key": "language_10028546",
@@ -114189,7 +114189,7 @@
   },
   {
     "key": "language_10028550",
-    "content": "Cannot be affected by statuses, cannot receive healing, and all damage taken is set to 1. On death, dispels all [Still Frame] on enemies."
+    "content": "Cannot be affected by statuses, cannot receive healing, and all DMG taken is set to 1. When defeated, dispels all [Still Frame] from enemies."
   },
   {
     "key": "language_10028551",
@@ -114429,11 +114429,11 @@
   },
   {
     "key": "language_10028610",
-    "content": "After being attacked, gains [Concealment] for self for 1 round (triggers up to 1 time per round); after death, applies 10 stacks of [Overstrain] on other allies."
+    "content": "After being attacked, gains [Concealment] for 1 round (triggers up to 1 time per round). When defeated, inflicts 10 stacks of [Overstrain] on other allies."
   },
   {
     "key": "language_10028611",
-    "content": "After being attacked, gains [Steadfast] for self for 1 round (triggers up to 1 time per round); after death, applies 10 stacks of [Overstrain] on other allies."
+    "content": "After being attacked, gains [Steadfast] for 1 round (triggers up to 1 time per round). When defeated, inflicts 10 stacks of [Overstrain] on other allies."
   },
   {
     "key": "language_10028612",
@@ -116089,7 +116089,7 @@
   },
   {
     "key": "language_10029025",
-    "content": "Decatone - Till the Last Drop"
+    "content": "Decatone · Till the Last Drop"
   },
   {
     "key": "language_10029026",
@@ -116841,7 +116841,7 @@
   },
   {
     "key": "language_10029213",
-    "content": "On death, deal 5 DMG to an enemy."
+    "content": "When defeated, deals 5 DMG to an enemy."
   },
   {
     "key": "language_10029214",
@@ -116953,11 +116953,11 @@
   },
   {
     "key": "language_10029241",
-    "content": "A magnetic medium with a recorded memory. \"Folie et Déraison\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Folie et Déraison</i> to the Mood Switch."
   },
   {
     "key": "language_10029242",
-    "content": "A magnetic medium with a recorded memory. \"Limen\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Limen</i> to the Mood Switch."
   },
   {
     "key": "language_10029243",
@@ -116965,7 +116965,7 @@
   },
   {
     "key": "language_10029244",
-    "content": "A magnetic medium with a recorded memory. \"Comala's Callers\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Comala's Callers</i> to the Mood Switch."
   },
   {
     "key": "language_10029245",
@@ -119205,7 +119205,7 @@
   },
   {
     "key": "language_10029804",
-    "content": "After death, the substitute list is cleared, and all remaining allies are eliminated."
+    "content": "When defeated, the substitute list is cleared, and all remaining allies are eliminated."
   },
   {
     "key": "language_10029805",
@@ -119225,11 +119225,11 @@
   },
   {
     "key": "language_10029809",
-    "content": "After death, the boss loses 100% of own Max HP."
+    "content": "When defeated, the boss loses 100% of own Max HP."
   },
   {
     "key": "language_10029810",
-    "content": "After death, Passion Gauge +5%."
+    "content": "When defeated, Passion Gauge +5%."
   },
   {
     "key": "language_10029811",
@@ -119621,7 +119621,7 @@
   },
   {
     "key": "language_10029908",
-    "content": "A random enemy dies."
+    "content": "Defeat one random enemy."
   },
   {
     "key": "language_10029909",
@@ -119657,7 +119657,7 @@
   },
   {
     "key": "language_10029917",
-    "content": "On death, eliminates all allies."
+    "content": "When defeated, eliminates all allies."
   },
   {
     "key": "language_10029918",
@@ -119689,15 +119689,15 @@
   },
   {
     "key": "language_10029925",
-    "content": "On death, grants Moxie +1 to the enemy with the lowest Moxie."
+    "content": "When defeated, grants Moxie +1 to the enemy with the lowest Moxie."
   },
   {
     "key": "language_10029926",
-    "content": "On death, recovers 20% Max HP to the enemy with the lowest HP percentage."
+    "content": "When defeated, recovers (Max HP x20%) HP for the enemy with the lowest HP percentage."
   },
   {
     "key": "language_10029927",
-    "content": "On death, grants ATK +20% to the enemy with the highest ATK."
+    "content": "When defeated, grants ATK +20% to the enemy with the highest ATK."
   },
   {
     "key": "language_10029928",
@@ -121021,7 +121021,7 @@
   },
   {
     "key": "language_10030258",
-    "content": "A magnetic medium with a recorded memory. \"1987 Cosmic Overture\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>1987 Cosmic Overture</i> to the Mood Switch."
   },
   {
     "key": "language_10030259",
@@ -122225,7 +122225,7 @@
   },
   {
     "key": "language_10030559",
-    "content": "On death, a random ally gains [Inherited Will]."
+    "content": "When defeated, a random ally gains [Inherited Will]."
   },
   {
     "key": "language_10030560",
@@ -122509,11 +122509,11 @@
   },
   {
     "key": "language_10030630",
-    "content": "On death, inflict Moxie -1 on all enemies and allies."
+    "content": "When defeated, inflicts Moxie -1 on all enemies and allies."
   },
   {
     "key": "language_10030631",
-    "content": "On death, grants Moxie +2 to the ally with the lowest Moxie."
+    "content": "When defeated, grants Moxie +2 to the ally with the lowest Moxie."
   },
   {
     "key": "language_10030632",
@@ -122897,7 +122897,7 @@
   },
   {
     "key": "language_10030727",
-    "content": "On death, transfers all stacks of [Limited Protection] onto a random ally."
+    "content": "When defeated, transfers all stacks of [Limited Protection] onto a random ally."
   },
   {
     "key": "language_10030728",
@@ -123013,7 +123013,7 @@
   },
   {
     "key": "language_10030756",
-    "content": "On death, deal (own ATK x400%) Genesis DMG to targets holding the [Gaze from the Expanse] status."
+    "content": "When defeated, deals (own ATK x400%) Genesis DMG to targets in the [Gaze from the Expanse] status."
   },
   {
     "key": "language_10030757",
@@ -123725,7 +123725,7 @@
   },
   {
     "key": "language_10030934",
-    "content": "When allies cast three incantations of the same type in one round, trigger [Homophones]; for each additional incantation of the same type casted this way, [Homophones] level +1."
+    "content": "When allies cast three incantations of the same type in one round, trigger [Homophones]; for each additional incantation of the same type cast this way, [Homophones] level +1."
   },
   {
     "key": "language_10030935",
@@ -125469,7 +125469,7 @@
   },
   {
     "key": "language_10031370",
-    "content": "Unitone - Legacy of Isu"
+    "content": "Unitone · Legacy of Isu"
   },
   {
     "key": "language_10031371",
@@ -125477,7 +125477,7 @@
   },
   {
     "key": "language_10031372",
-    "content": "Unitone - [A Prophet Guided by Time]"
+    "content": "Unitone · [A Prophet Guided by Time]"
   },
   {
     "key": "language_10031373",
@@ -125485,7 +125485,7 @@
   },
   {
     "key": "language_10031374",
-    "content": "Unitone - [Wine-Dark Reflections of the Eagle]"
+    "content": "Unitone · [Wine-Dark Reflections of the Eagle]"
   },
   {
     "key": "language_10031375",
@@ -125493,7 +125493,7 @@
   },
   {
     "key": "language_10031376",
-    "content": "Decatone - [A Prophet Guided by Time]"
+    "content": "Decatone · [A Prophet Guided by Time]"
   },
   {
     "key": "language_10031377",
@@ -125501,7 +125501,7 @@
   },
   {
     "key": "language_10031378",
-    "content": "Decatone - [Wine-Dark Reflections of the Eagle]"
+    "content": "Decatone · [Wine-Dark Reflections of the Eagle]"
   },
   {
     "key": "language_10031379",
@@ -125557,11 +125557,11 @@
   },
   {
     "key": "language_10031392",
-    "content": "A magnetic medium with a recorded memory. \"On Sun-Kissed Vines\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>On Sun-Kissed Vines</i> to the Mood Switch."
   },
   {
     "key": "language_10031393",
-    "content": "A magnetic medium with a recorded memory. \"My Heart and Light\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>My Heart and Light</i> to the Mood Switch."
   },
   {
     "key": "language_10031394",
@@ -130065,7 +130065,7 @@
   },
   {
     "key": "language_10032519",
-    "content": "At the start of the round, if there are other allies, gains DMG Taken -20% for 1 round.\nOn death, inflicts DMG Taken +50% on other allies for 2 rounds."
+    "content": "At the start of the round, if there are other allies, gains DMG Taken -20% for 1 round.\nWhen defeated, inflicts DMG Taken +50% on other allies for 2 rounds."
   },
   {
     "key": "language_10032520",
@@ -131237,7 +131237,7 @@
   },
   {
     "key": "language_10032812",
-    "content": "Unitone: Legacy of Isu Expiration Notice"
+    "content": "Unitone · Legacy of Isu Expiration Notice"
   },
   {
     "key": "language_10032813",
@@ -131725,7 +131725,7 @@
   },
   {
     "key": "language_10032934",
-    "content": "A magnetic medium with a recorded memory. \"On Sun-Kissed Vines\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>On Sun-Kissed Vines</i> to the Mood Switch."
   },
   {
     "key": "language_10032935",
@@ -132717,7 +132717,7 @@
   },
   {
     "key": "language_10033182",
-    "content": "Decatone - [The Myth at Her Fingertips]"
+    "content": "Decatone · [The Myth at Her Fingertips]"
   },
   {
     "key": "language_10033183",
@@ -132781,15 +132781,15 @@
   },
   {
     "key": "language_10033198",
-    "content": "A magnetic medium with a recorded memory. \"Paradise Regained\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Paradise Regained</i> to the Mood Switch."
   },
   {
     "key": "language_10033199",
-    "content": "A magnetic medium with a recorded memory. \"An Ominous Presence\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>An Ominous Presence</i> to the Mood Switch."
   },
   {
     "key": "language_10033200",
-    "content": "A magnetic medium with a recorded memory. \"An Audience with the Mother\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>An Audience with the Mother</i> to the Mood Switch."
   },
   {
     "key": "language_10033201",
@@ -135393,7 +135393,7 @@
   },
   {
     "key": "language_10033851",
-    "content": "On death, other allies recover (the target's Max HP x15%) HP."
+    "content": "When defeated, recovers (Max HP x15%) HP for all other allies."
   },
   {
     "key": "language_10033852",
@@ -135421,7 +135421,7 @@
   },
   {
     "key": "language_10033858",
-    "content": "On death, inflicts [Shattered Plumage] on allies for 2 rounds."
+    "content": "When defeated, inflicts [Shattered Plumage] on allies for 2 rounds."
   },
   {
     "key": "language_10033859",
@@ -135725,7 +135725,7 @@
   },
   {
     "key": "language_10033934",
-    "content": "When casting an Ultimate, grant Moxie +1 to a random ally. On death, dispel all [Stats Up] and [Pos Status] from allies."
+    "content": "When casting an Ultimate, grants Moxie +1 to a random ally. When defeated, dispels all [Stats Up] and [Pos Status] from allies."
   },
   {
     "key": "language_10033935",
@@ -135733,7 +135733,7 @@
   },
   {
     "key": "language_10033936",
-    "content": "On death, inflicts 1 stack of [Freeze] on a random enemy for 1 round."
+    "content": "When defeated, inflicts 1 stack of [Freeze] on a random enemy for 1 round."
   },
   {
     "key": "language_10033937",
@@ -135897,7 +135897,7 @@
   },
   {
     "key": "language_10033977",
-    "content": "On death, The Guiding One Reanimated gains Moxie -1. Inflicts 1 random effect from [Collection of Neg Status] on all enemies for 2 rounds."
+    "content": "When defeated, inflicts Moxie -1 on The Guiding One Reanimated. Inflicts 1 random effect from [Collection of Neg Status] on all enemies for 2 rounds."
   },
   {
     "key": "language_10033978",
@@ -135909,7 +135909,7 @@
   },
   {
     "key": "language_10033980",
-    "content": "On death, grants [Last Ode] to The Guiding One Reanimated."
+    "content": "When defeated, grants [Last Ode] to The Guiding One Reanimated."
   },
   {
     "key": "language_10033981",
@@ -136097,7 +136097,7 @@
   },
   {
     "key": "language_10034027",
-    "content": "On death, grants 1 stack of [Cooperation Over] to all other allies."
+    "content": "When defeated, grants 1 stack of [Cooperation Over] to all other allies."
   },
   {
     "key": "language_10034028",
@@ -136165,7 +136165,7 @@
   },
   {
     "key": "language_10034044",
-    "content": "When entering battle, if The Mother and Child of Fear's HP is below 75%/50%/25%, gains DMG Taken Reduction +15%/30%/45%.\nAfter death, inflict 1 stack of [Moribund] to all enemies."
+    "content": "When entering battle, if The Mother and Child of Fear's HP is below 75%/50%/25%, gains DMG Taken Reduction +15%/30%/45%.\nWhen defeated, grants 1 stack of [Moribund] to all enemies."
   },
   {
     "key": "language_10034045",
@@ -141245,7 +141245,7 @@
   },
   {
     "key": "language_10035314",
-    "content": "Decatone - Thoughts in Cylinder"
+    "content": "Decatone · Thoughts in Cylinder"
   },
   {
     "key": "language_10035315",
@@ -141477,7 +141477,7 @@
   },
   {
     "key": "language_10035372",
-    "content": "<b><color=#9C3E09>Once selected, squad will be unable to explore other goals.</color></b>"
+    "content": "<color=#9C3E09>Once selected, squad will be unable to explore other goals.</color>"
   },
   {
     "key": "language_10035373",
@@ -141713,15 +141713,15 @@
   },
   {
     "key": "language_10035431",
-    "content": "A magnetic medium with a recorded memory. \"A Long Long Way\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>A Long Long Way</i> to the Mood Switch."
   },
   {
     "key": "language_10035432",
-    "content": "A magnetic medium with a recorded memory. \"Once the Smoke Clears\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Once the Smoke Clears</i> to the Mood Switch."
   },
   {
     "key": "language_10035433",
-    "content": "A magnetic medium with a recorded memory. \"Bullets and Blood\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Bullets and Blood</i> to the Mood Switch."
   },
   {
     "key": "language_10035434",
@@ -144209,7 +144209,7 @@
   },
   {
     "key": "language_10036055",
-    "content": "After death, revives and grows bigger. Gains Max HP, ATK, DEF, and DMG Taken Reduction boosts, but reduces AP (cannot act during the revival round)."
+    "content": "When defeated, revives and grows bigger. Gains Max HP, ATK, DEF, and DMG Taken Reduction boosts, but reduces AP (cannot act during the revival round)."
   },
   {
     "key": "language_10036056",
@@ -147161,11 +147161,11 @@
   },
   {
     "key": "language_10036793",
-    "content": "A magnetic medium with a recorded memory. \"The Midnight Whistle\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Midnight Whistle</i> to the Mood Switch."
   },
   {
     "key": "language_10036794",
-    "content": "A magnetic medium with a recorded memory. \"The Empty Carriage\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Empty Carriage</i> to the Mood Switch."
   },
   {
     "key": "language_10036795",
@@ -152413,7 +152413,7 @@
   },
   {
     "key": "language_10038106",
-    "content": "On death, grants death tags to all allies. When entering battle, dispels death tags from all allies."
+    "content": "When defeated, grants death tags to all allies. When entering battle, dispels death tags from all allies."
   },
   {
     "key": "language_10038107",
@@ -153053,7 +153053,7 @@
   },
   {
     "key": "language_10038266",
-    "content": "When entering battle or at the end of the round, gains 20 stacks of [Dynamo] for self. At the end of the round or on death, transfers all stacks of [Dynamo] to Servant of War."
+    "content": "When entering battle or at the end of the round, gains 20 stacks of [Dynamo]. At the end of the round or when defeated, transfers all stacks of [Dynamo] to Servant of War."
   },
   {
     "key": "language_10038267",
@@ -153409,7 +153409,7 @@
   },
   {
     "key": "language_10038355",
-    "content": "At the start of the round, inflicts 3 instances of [Poison<id:3110>] on all enemies.\nOn death, removes [Shield] from other allies."
+    "content": "At the start of the round, inflicts 3 instances of [Poison<id:3110>] on all enemies.\nWhen defeated, removes [Shield] from other allies."
   },
   {
     "key": "language_10038356",
@@ -154521,7 +154521,7 @@
   },
   {
     "key": "language_10038633",
-    "content": "Gains Reality DEF +50% and Mental DEF +50%, and this attack ignores dodge effects."
+    "content": "Gains Reality DEF +50% and Mental DEF +50%, and attacks ignore dodge effects."
   },
   {
     "key": "language_10038634",
@@ -159245,7 +159245,7 @@
   },
   {
     "key": "language_10039814",
-    "content": "Decatone - [On Fate's Cue]"
+    "content": "Decatone · [On Fate's Cue]"
   },
   {
     "key": "language_10039815",
@@ -159413,7 +159413,7 @@
   },
   {
     "key": "language_10039856",
-    "content": "A magnetic medium with a recorded memory. \"A Flowing Feast\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>A Flowing Feast</i> to the Mood Switch."
   },
   {
     "key": "language_10039857",
@@ -161801,7 +161801,7 @@
   },
   {
     "key": "language_10040453",
-    "content": "On death, the Brats are driven off."
+    "content": "When defeated, the Brats are driven off."
   },
   {
     "key": "language_10040454",
@@ -161833,7 +161833,7 @@
   },
   {
     "key": "language_10040461",
-    "content": "At the start of the round, gains 1 stack of [Incorporeal]. Upon death or retreat, grants 2 stacks of [Incorporeal] to all other teammates."
+    "content": "At the start of the round, gains 1 stack of [Incorporeal]. When defeated, grants 2 stacks of [Incorporeal] to all other teammates."
   },
   {
     "key": "language_10040462",
@@ -163901,7 +163901,7 @@
   },
   {
     "key": "language_10040978",
-    "content": "On death, the kids are driven off."
+    "content": "When defeated, the kids are driven off."
   },
   {
     "key": "language_10040979",
@@ -166485,7 +166485,7 @@
   },
   {
     "key": "language_10041624",
-    "content": "Decatone - Longing for Innocence"
+    "content": "Decatone · Longing for Innocence"
   },
   {
     "key": "language_10041625",
@@ -167261,7 +167261,7 @@
   },
   {
     "key": "language_10041818",
-    "content": "Decatone - The Snow of Dushuo"
+    "content": "Decatone · [The Snow of Dushuo]"
   },
   {
     "key": "language_10041819",
@@ -167277,39 +167277,39 @@
   },
   {
     "key": "language_10041822",
-    "content": "A magnetic medium with a recorded memory. The Campaign's Tale has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Campaign's Tale</i> to the Mood Switch."
   },
   {
     "key": "language_10041823",
-    "content": "A magnetic medium with a recorded memory. The Gathering Fires has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Gathering Fires</i> to the Mood Switch."
   },
   {
     "key": "language_10041824",
-    "content": "A magnetic medium with a recorded memory. Talk by the Riverside has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Talk by the Riverside</i> to the Mood Switch."
   },
   {
     "key": "language_10041825",
-    "content": "A magnetic medium with a recorded memory. Paganini: Cantabile has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Paganini: Cantabile</i> to the Mood Switch."
   },
   {
     "key": "language_10041826",
-    "content": "A magnetic medium with a recorded memory. Go Together has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Go Together</i> to the Mood Switch."
   },
   {
     "key": "language_10041827",
-    "content": "A magnetic medium with a recorded memory. Dust to Dust has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Dust to Dust</i> to the Mood Switch."
   },
   {
     "key": "language_10041828",
-    "content": "A magnetic medium with a recorded memory. Disco Through the Night! has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Disco Through the Night!</i> to the Mood Switch."
   },
   {
     "key": "language_10041829",
-    "content": "A magnetic medium with a recorded memory. Jingle Bell, Motel Hell has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Jingle Bell, Motel Hell</i> to the Mood Switch."
   },
   {
     "key": "language_10041830",
-    "content": "A magnetic medium with a recorded memory. Goodbye has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Goodbye</i> to the Mood Switch."
   },
   {
     "key": "language_10041831",
@@ -171705,7 +171705,7 @@
   },
   {
     "key": "language_10042929",
-    "content": "<color=#D2C197>[Difficulty Level and Tier]</color> 1. Apply <color=#C66030>Boss Parts, Modifiers, and Environments</color> of various levels to change the challenge's difficulty level. 2. The difficulty tier is determined by the side with the higher <color=#C66030>Difficulty Level</color> between <color=#C66030>Original and Variant</color>. 3. The higher the difficulty tier, the higher the enemy stats in the challenge. <color=#D2C197>[Difficulty Table]</color> Difficulty Tier B           Lv.0-Lv.10           Base stats Difficulty Tier A           Lv.11-Lv.16         Higher stats Difficulty Tier S           Lv.17-Lv.20         Much higher stats Difficulty Tier SS         Lv.21+                  Significantly higher stats <color=#D2C197>[Challenge Rating]</color> 1. Successfully defeating Original/Variant bosses grants the corresponding <color=#C66030>Challenge Rating</color> separately. 2. Challenge Rating increases with the total difficulty level of the challenge. 3. The fewer <color=#C66030>rounds</color> taken to defeat the boss, the higher the Challenge Rating earned. 4. Deploying <color=#C66030>designated bonus characters</color> increases Challenge Rating earned. Each team can gain this bonus up to 2 times, prioritizing characters with higher bonuses."
+    "content": "<color=#D2C197>[Difficulty Level and Tier]</color>\n1. Apply <color=#C66030>Boss Parts, Modifiers, and Environments</color> of various levels to change the challenge's difficulty level.\n2. The difficulty tier is determined by the side with the higher <color=#C66030>Difficulty Level</color> between <color=#C66030>Original and Variant</color>.\n3. The higher the difficulty tier, the higher the enemy stats in the challenge.\n<color=#D2C197>[Difficulty Table]</color>\nDifficultyTier B           Lv.0-Lv.10           Base stats\nDifficulty Tier A           Lv.11-Lv.16         Higher stats\nDifficulty Tier S           Lv.17-Lv.20         Much higher stats\nDifficulty Tier SS         Lv.21+                  Significantly higher stats\n<color=#D2C197>[Challenge Rating]</color>\n1. Successfully defeating Original/Variant bosses grants the corresponding <color=#C66030>Challenge Rating</color> separately.\n2. Challenge Rating increases with the total difficulty level of the challenge.\n3. The fewer <color=#C66030>rounds</color> taken to defeat the boss, the higher the Challenge Rating earned.\n4. Deploying <color=#C66030>designated bonus characters</color> increases Challenge Rating earned. Each team can gain this bonus up to 2 times, prioritizing characters with higher bonuses."
   },
   {
     "key": "language_10042930",
@@ -172933,7 +172933,7 @@
   },
   {
     "key": "language_10043236",
-    "content": "Decatone - [Her Heart-Cut Spring]"
+    "content": "Decatone · [Her Heart-Cut Spring]"
   },
   {
     "key": "language_10043237",
@@ -172945,7 +172945,7 @@
   },
   {
     "key": "language_10043239",
-    "content": "Decatone - [From the Lake's Heart]"
+    "content": "Decatone · [From the Lake's Heart]"
   },
   {
     "key": "language_10043240",
@@ -173009,7 +173009,7 @@
   },
   {
     "key": "language_10043255",
-    "content": "A magnetic medium with a recorded memory. Spring Unending has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Spring Unending</i> to the Mood Switch."
   },
   {
     "key": "language_10043256",
@@ -173037,11 +173037,11 @@
   },
   {
     "key": "language_10043262",
-    "content": "Polilog - [Ripples on the Water]"
+    "content": "Polilog · [Ripples on the Water]"
   },
   {
     "key": "language_10043263",
-    "content": "Their origin unknown, they rise and fall endlessly as they keep the wheel spinning. Used in [Ripples on the Water] to give unlimited summons until you obtain a 6-star character. All characters obtained through Polilog - [Ripples on the Water] will be invited. Duplicate characters will be converted to Tracks of the Lost and Albums of the Lost."
+    "content": "Their origin unknown, they rise and fall endlessly as they keep the wheel spinning. Used in [Ripples on the Water] to give unlimited summons until you obtain a 6-star character. All characters obtained through Polilog · [Ripples on the Water] will be invited. Duplicate characters will be converted to Tracks of the Lost and Albums of the Lost."
   },
   {
     "key": "language_10043264",
@@ -175201,7 +175201,7 @@
   },
   {
     "key": "language_10043803",
-    "content": "When entering battle, gains 1 stack of [Deceptive Facade<id:116340010>]. At the start of the round, gains 1 stack of [Victory Obsession]. On death, converts [Victory Obsession] into the same number of stacks of [Resentful Roar] and inflicts them on Caterpillar of Destruction."
+    "content": "When entering battle, gains 1 stack of [Deceptive Facade<id:116340010>]. At the start of the round, gains 1 stack of [Victory Obsession]. When defeated, converts [Victory Obsession] into the same number of stacks of [Resentful Roar] and inflicts them on Caterpillar of Destruction."
   },
   {
     "key": "language_10043804",
@@ -175713,7 +175713,7 @@
   },
   {
     "key": "language_10043931",
-    "content": "Mental DMG Taken -30%. On death, inflicts 1 stack of [Rigidity] on a random enemy."
+    "content": "Mental DMG Taken -30%. When defeated, inflicts 1 stack of [Rigidity] on a random enemy."
   },
   {
     "key": "language_10043932",
@@ -177509,7 +177509,7 @@
   },
   {
     "key": "language_10044380",
-    "content": "On death, converts into the same number of stacks of [Resentful Roar] and inflicts them on Caterpillar of Destruction (up to 8 stacks)."
+    "content": "When defeated, converts into the same number of stacks of [Resentful Roar] and inflicts them on Caterpillar of Destruction (up to 8 stacks)."
   },
   {
     "key": "language_10044381",
@@ -179513,7 +179513,7 @@
   },
   {
     "key": "language_10044881",
-    "content": "Exploration time +▩1%s hours ▩2%s minutes. Item price when selling +▩3%s."
+    "content": "Exploration time +▩1%sh ▩2%sm. Item price when selling +▩3%s."
   },
   {
     "key": "language_10044882",
@@ -179685,11 +179685,11 @@
   },
   {
     "key": "language_10044924",
-    "content": "Decatone - Moonbeam Guardian"
+    "content": "Decatone · Moonbeam Guardian"
   },
   {
     "key": "language_10044925",
-    "content": "Decatone - From the Lake's Heart"
+    "content": "Decatone · From the Lake's Heart"
   },
   {
     "key": "language_10044926",
@@ -179753,11 +179753,11 @@
   },
   {
     "key": "language_10044941",
-    "content": "\"Polilog - Ripples on the Water\" Use Reminder"
+    "content": "\"Polilog · Ripples on the Water\" Use Reminder"
   },
   {
     "key": "language_10044942",
-    "content": "\"Polilog - Ripples on the Water\" Expiry Notice"
+    "content": "\"Polilog · Ripples on the Water\" Expiry Notice"
   },
   {
     "key": "language_10044943",
@@ -180005,7 +180005,7 @@
   },
   {
     "key": "language_10045004",
-    "content": "Decatone - [Conduit of the Unseen]"
+    "content": "Decatone · [Conduit of the Unseen]"
   },
   {
     "key": "language_10045005",
@@ -180045,11 +180045,11 @@
   },
   {
     "key": "language_10045014",
-    "content": "A magnetic medium with a recorded memory. <i>The Turquoise Serpent Club</i> has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Turquoise Serpent Club</i> to the Mood Switch."
   },
   {
     "key": "language_10045015",
-    "content": "A magnetic medium with a recorded memory. <i>Bitter Tequila</i> has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Bitter Tequila</i> to the Mood Switch."
   },
   {
     "key": "language_10045016",
@@ -180069,7 +180069,7 @@
   },
   {
     "key": "language_10045020",
-    "content": "A dainty suitcase holding one of many possible futures. Open to select either <color=#AC5320>Decatone - Ripples on the Water (Time-limited) x1</color> or <color=#AC5320>Immaterial Battery x1</color>.\nIf unused before expiration, this item will automatically convert into <color=#AC5320>Immaterial Battery x1</color>."
+    "content": "A dainty suitcase holding one of many possible futures. Open to select either <color=#AC5320>Decatone · [Ripples on the Water] (Time-limited) x1</color> or <color=#AC5320>Immaterial Battery x1</color>.\nIf unused before expiration, this item will automatically convert into <color=#AC5320>Immaterial Battery x1</color>."
   },
   {
     "key": "language_10045021",
@@ -183345,7 +183345,7 @@
   },
   {
     "key": "language_10045839",
-    "content": "Decatone - Conduit of the Unseen"
+    "content": "Decatone · Conduit of the Unseen"
   },
   {
     "key": "language_10045840",
@@ -183869,11 +183869,11 @@
   },
   {
     "key": "language_10045970",
-    "content": "A magnetic medium with a recorded memory. \"Last and First Principles\" has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Last and First Principles</i> to the Mood Switch."
   },
   {
     "key": "language_10045971",
-    "content": "A magnetic medium with a recorded memory. ■■■■■■■■ has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>■■■■■■■■</i> to the Mood Switch."
   },
   {
     "key": "language_10045972",
@@ -184345,27 +184345,27 @@
   },
   {
     "key": "language_10046089",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x200%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x200%) HP for all allies."
   },
   {
     "key": "language_10046090",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x220%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x220%) HP for all allies."
   },
   {
     "key": "language_10046091",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x240%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x240%) HP for all allies."
   },
   {
     "key": "language_10046092",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x260%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x260%) HP for all allies."
   },
   {
     "key": "language_10046093",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x300%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x300%) HP for all allies."
   },
   {
     "key": "language_10046094",
-    "content": "Mass healing. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x320%) HP for all allies."
+    "content": "Mass heal. Dispels [Stats Down], [Neg Status], and [Control] effects from all allies and recovers (the user's ATK x320%) HP for all allies."
   },
   {
     "key": "language_10046095",
@@ -185593,7 +185593,7 @@
   },
   {
     "key": "language_10046401",
-    "content": "{Summon Rules}\nThe <color=#B65223>[▩1%s]</color> time-limited summoning event has begun. During the event, you can select 1 out of a designated group of 6-star characters as the rate-up character in this <color=#B65223>[▩1%s]</color> banner. Note that you can re-select your rate-up character at any time, and doing so won't reset your guarantee count.\n<color=#B65223>[▩1%s]</color> is a <color=#B65223>[Time-Limited Event Banner]</color> and does NOT share its guarantee count with other similar banners.\nRate-up 6-star Character Selection:\n[all_six_star]\nThis is a <color=#B65223>[▩1%s]</color> banner and shares the same guarantee with summoning events of the same name.\nAfter the event, the guarantee count of <color=#B65223>[▩1%s]</color> will NOT be cleared and will carry over to the next <color=#B65223>[▩1%s]</color> banner.\n\n▪ In this event, the first Summon x10 attempt only costs Unilog x7.\n▪ In this event, every 10 summons guarantees at least one 4-star or higher character.\n▪ If you have any Unitones - [Ripples on the Water], they will be consumed first whenever you Summon x1 or Summon x10. If you don't have enough Unitones - [Ripples on the Water] for a Summon x10, the remaining summons will consume regular Unilogs.\n▪ Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\nIn the <color=#B65223>[▩1%s]</color> banner:\nBasic rate of summoning 6-star characters: 1.5%; overall rate (including Guarantee): 2.36%.\nBasic rate of summoning 5-star characters: 8.5%.\nBasic rate of summoning 4-star characters: 40%.\nBasic rate of summoning 3-star characters: 45%.\nBasic rate of summoning 2-star characters: 5%.\n\nFor one time only, the first 6-star character you summon in this event is guaranteed to be the 6-star rate-up character you selected.\nFor subsequent 6-star summons, there's a 50% chance to get your selected 6-star rate-up character. If the summoned 6-star is not your selected character, the next 6-star summoned is guaranteed to be your selected 6-star rate-up character.\nFor 5-star summons, all the available 5-star characters have equal rates.\n\n{Special Rules}\nIn the <color=#B65223>[▩1%s]</color> banner, if you have not obtained any 6-star characters after 60 consecutive summons, the rate of summoning a 6-star character in the next summon will increase from 1.5% to 4%. If you still have not obtained any 6-star character, then every next summon that doesn't grant a 6-star character will increase the rate by 2.5%.\nEvery 70 summons guarantees one 6-star character.\nP.S. After you have obtained a 6-star character, the rate of summoning 6-star characters in <color=#B65223>[▩1%s]</color> events will be reset to 1.5%.\n\n\n{Duplicate Characters}\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪ When you obtain the same 6-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪ When you obtain the same 5-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪ When you obtain the same 4-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 3-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 2-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
+    "content": "{Summon Rules}\nThe <color=#B65223>[▩1%s]</color> time-limited summoning event has begun. During the event, you can select 1 out of a designated group of 6-star characters as the rate-up character in this <color=#B65223>[▩1%s]</color> banner. Note that you can re-select your rate-up character at any time, and doing so won't reset your guarantee count.\n<color=#B65223>[▩1%s]</color> is a <color=#B65223>[Time-Limited Event Banner]</color> and does NOT share its guarantee count with other similar banners.\nRate-up 6-star Character Selection:\n[all_six_star]\nThis is a <color=#B65223>[▩1%s]</color> banner and shares the same guarantee with summoning events of the same name.\nAfter the event, the guarantee count of <color=#B65223>[▩1%s]</color> will NOT be cleared and will carry over to the next <color=#B65223>[▩1%s]</color> banner.\n\n▪ In this event, the first Summon x10 attempt only costs Unilog x7.\n▪ In this event, every 10 summons guarantees at least one 4-star or higher character.\n▪ If you have any Unitones · [Ripples on the Water], they will be consumed first whenever you Summon x1 or Summon x10. If you don't have enough Unitones · [Ripples on the Water] for a Summon x10, the remaining summons will consume regular Unilogs.\n▪ Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\nIn the <color=#B65223>[▩1%s]</color> banner:\nBasic rate of summoning 6-star characters: 1.5%; overall rate (including Guarantee): 2.36%.\nBasic rate of summoning 5-star characters: 8.5%.\nBasic rate of summoning 4-star characters: 40%.\nBasic rate of summoning 3-star characters: 45%.\nBasic rate of summoning 2-star characters: 5%.\n\nFor one time only, the first 6-star character you summon in this event is guaranteed to be the 6-star rate-up character you selected.\nFor subsequent 6-star summons, there's a 50% chance to get your selected 6-star rate-up character. If the summoned 6-star is not your selected character, the next 6-star summoned is guaranteed to be your selected 6-star rate-up character.\nFor 5-star summons, all the available 5-star characters have equal rates.\n\n{Special Rules}\nIn the <color=#B65223>[▩1%s]</color> banner, if you have not obtained any 6-star character after 60 consecutive summons, the rate of summoning a 6-star character in the next summon will increase from 1.5% to 4%. If you still have not obtained any 6-star character, then every next summon that doesn't grant a 6-star character will increase the rate by 2.5%.\nEvery 70 summons guarantees one 6-star character.\nP.S. After you have obtained a 6-star character, the rate of summoning 6-star characters in <color=#B65223>[▩1%s]</color> events will be reset to 1.5%.\n\n\n{Duplicate Characters}\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪ When you obtain the same 6-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪ When you obtain the same 5-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪ When you obtain the same 4-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 3-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 2-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
   },
   {
     "key": "language_10046402",
@@ -185617,7 +185617,7 @@
   },
   {
     "key": "language_10046407",
-    "content": "{Summon Rules}\n<color=#B65223>[▩1%s]</color> is a permanent banner for new players which includes a designated pool of characters. You can check the rates below for more details.\n\n▪ In this banner, every 10 summons guarantee at least one 4-star or higher character.\n▪ You can perform up to <color=#B65223>30 summons</color> in this banner. Once you have completed the 30 summons, the banner will end.\n▪ Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\nIn the [▩1%s] banner:\nBasic rate of summoning 6<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩3%s</color>;\nBasic rate of summoning 5<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩4%s</color>;\nBasic rate of summoning 4<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩5%s</color>;\nBasic rate of summoning 3<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩6%s</color>;\nBasic rate of summoning 2<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩7%s</color>.\n\n\n▪ Every <color=#B65223>▩8%s</color> summons guarantee one 6-star character.\n{Duplicate Characters}\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪ When you obtain the same 6-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪ When you obtain the same 5-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪ When you obtain the same 4-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 3-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 2-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
+    "content": "{Summon Rules}\n<color=#B65223>[▩1%s]</color> is a permanent banner for new players which includes a designated pool of characters. You can check the rates below for more details.\n\n▪ In this banner, every 10 summons guarantee at least one 4-star or higher character.\n▪ You can perform up to <color=#B65223>30 summons</color> in this banner. Once you have completed the 30 summons, the banner will end.\n▪ Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\nIn the [▩1%s] banner:\nBasic rate of summoning 6<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩3%s</color>;\nBasic rate of summoning 5<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩4%s</color>;\nBasic rate of summoning 4<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩5%s</color>;\nBasic rate of summoning 3<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩6%s</color>;\nBasic rate of summoning 2<sprite name=\"zhengji_xingxing\"> characters: <color=#B65223>▩7%s</color>.\n\n\n▪ Every <color=#B65223>▩8%s</color> summons guarantees one 6-star character.\n{Duplicate Characters}\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪ When you obtain the same 6-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪ When you obtain the same 5-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪ When you obtain the same 4-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 3-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪ When you obtain the same 2-star character for the 2nd-6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
   },
   {
     "key": "language_10046408",
@@ -185665,7 +185665,7 @@
   },
   {
     "key": "language_10046419",
-    "content": "Unitone - [Ripples on the Water]"
+    "content": "Unitone · [Ripples on the Water]"
   },
   {
     "key": "language_10046420",
@@ -185801,7 +185801,7 @@
   },
   {
     "key": "language_10046453",
-    "content": "Unitone - [From the Lake's Heart]"
+    "content": "Unitone · [From the Lake's Heart]"
   },
   {
     "key": "language_10046454",
@@ -185873,15 +185873,15 @@
   },
   {
     "key": "language_10046471",
-    "content": "A magnetic medium with a recorded memory. On Another's Sorrow has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>On Another's Sorrow</i> to the Mood Switch."
   },
   {
     "key": "language_10046472",
-    "content": "A magnetic medium with a recorded memory. Fear & Courage has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Fear & Courage</i> to the Mood Switch."
   },
   {
     "key": "language_10046473",
-    "content": "A magnetic medium with a recorded memory. The Unyielding Front has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Unyielding Front</i> to the Mood Switch."
   },
   {
     "key": "language_10046474",
@@ -185909,7 +185909,7 @@
   },
   {
     "key": "language_10046480",
-    "content": "Collection Chest: Sincere Gratitude"
+    "content": "Garment Chest: Sincere Gratitude"
   },
   {
     "key": "language_10046481",
@@ -185917,7 +185917,7 @@
   },
   {
     "key": "language_10046482",
-    "content": "Unitone - [The First Drop of Rain]"
+    "content": "Unitone · [The First Drop of Rain]"
   },
   {
     "key": "language_10046483",
@@ -185969,7 +185969,7 @@
   },
   {
     "key": "language_10046495",
-    "content": "A magnetic medium with a recorded memory. The Temporal Scale has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>The Temporal Scale</i> to the Mood Switch."
   },
   {
     "key": "language_10046496",
@@ -186005,7 +186005,7 @@
   },
   {
     "key": "language_10046504",
-    "content": "Unitone - [Analysis of Metallic Dramaturgy]"
+    "content": "Unitone · [Analysis of Metallic Dramaturgy]"
   },
   {
     "key": "language_10046505",
@@ -186013,7 +186013,7 @@
   },
   {
     "key": "language_10046506",
-    "content": "Decatone - [Analysis of Metallic Dramaturgy]"
+    "content": "Decatone · [Analysis of Metallic Dramaturgy]"
   },
   {
     "key": "language_10046507",
@@ -186117,7 +186117,7 @@
   },
   {
     "key": "language_10046532",
-    "content": "A magnetic medium with a recorded memory. Excerpt from <i>Waltz of the Flowers</i> has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Waltz of the Flowers</i> (excerpt) to the Mood Switch."
   },
   {
     "key": "language_10046533",
@@ -186157,7 +186157,7 @@
   },
   {
     "key": "language_10046542",
-    "content": "Can be used in \"Fluffs, Shells and Waves!\" to support your favorite team."
+    "content": "Can be used in \"Fluffs, Shells, and Waves!\" to support your favorite team."
   },
   {
     "key": "language_10046543",
@@ -186985,7 +186985,7 @@
   },
   {
     "key": "language_10046749",
-    "content": "A song of homesickness that echoes through the ruins. A \"ghostly\" girl who preserves old memories. One of your most cherished friends."
+    "content": "A song of homesickness that echoes through the ruins. A \"ghostly\" girl who preserves old memories."
   },
   {
     "key": "language_10046750",
@@ -186993,7 +186993,7 @@
   },
   {
     "key": "language_10046751",
-    "content": "A group of Critters living at the construction site.\nMaybe we should upgrade the <i>Safety Manual</i> into <i>A Safety Manual Even Critters Can Understand</i>."
+    "content": "A group of Critters living at the construction site.\nMaybe we should upgrade the \"Safety Manual\" into \"A Safety Manual Even Critters Can Understand.\""
   },
   {
     "key": "language_10046752",
@@ -187037,7 +187037,7 @@
   },
   {
     "key": "language_10046762",
-    "content": "Reliving A Memory"
+    "content": "Reliving a Memory"
   },
   {
     "key": "language_10046763",
@@ -187217,7 +187217,7 @@
   },
   {
     "key": "language_10046807",
-    "content": "Fluffs, Shells and Waves!"
+    "content": "Fluffs, Shells, and Waves!"
   },
   {
     "key": "language_10046808",
@@ -188265,7 +188265,7 @@
   },
   {
     "key": "language_10047069",
-    "content": "\"This is Goodbye.\""
+    "content": "\"This is Goodbye\""
   },
   {
     "key": "language_10047070",
@@ -191893,7 +191893,7 @@
   },
   {
     "key": "language_10047976",
-    "content": "Upon death, transforms into 2 Resonant Echo Stones."
+    "content": "When defeated, transforms into 2 Resonant Echo Stones."
   },
   {
     "key": "language_10047977",
@@ -191917,7 +191917,7 @@
   },
   {
     "key": "language_10047982",
-    "content": "Upon death, transforms into 3 Resonant Echo Stones."
+    "content": "When defeated, transforms into 3 Resonant Echo Stones."
   },
   {
     "key": "language_10047983",
@@ -191969,11 +191969,11 @@
   },
   {
     "key": "language_10047995",
-    "content": "At the end of the round or upon death, if Echo Volume is at 100%, casts the Ultimate [Please Remember Us<id:1>] 2 times and resets Echo Volume to 0%."
+    "content": "At the end of the round or when defeated, if Echo Volume is at 100%, casts the Ultimate [Please Remember Us<id:1>] 2 times and resets Echo Volume to 0%."
   },
   {
     "key": "language_10047996",
-    "content": "At the end of the round or upon death, if Echo Volume is between 30% and 59%, casts [Fragments of Memories<id:1>] 1 time."
+    "content": "At the end of the round or when defeated, if Echo Volume is between 30% and 59%, casts [Fragments of Memories<id:1>] 1 time."
   },
   {
     "key": "language_10047997",
@@ -191989,23 +191989,23 @@
   },
   {
     "key": "language_10048000",
-    "content": "At the end of the round or upon death, if Echo Volume is between 60% and 99%, casts the Ultimate [Please Remember Us<id:1>] 1 time."
+    "content": "At the end of the round or when defeated, if Echo Volume is between 60% and 99%, casts the Ultimate [Please Remember Us<id:1>] 1 time."
   },
   {
     "key": "language_10048001",
-    "content": "Upon death, if own progress bar is at 100, casts an Ultimate and resets progress to 0. When casting an Ultimate, casts the Ultimate an additional time."
+    "content": "When defeated, if own progress bar is at 100, casts an Ultimate and resets progress to 0. When casting an Ultimate, casts the Ultimate an additional time."
   },
   {
     "key": "language_10048002",
-    "content": "Upon death, if the progress bar is at [30,59], casts Skill 2 1 time."
+    "content": "When defeated, if the progress bar is at [30,59], casts Skill 2 1 time."
   },
   {
     "key": "language_10048003",
-    "content": "Upon death, if the progress bar is at [60,99], casts Ultimate 1 time."
+    "content": "When defeated, if the progress bar is at [60,99], casts Ultimate 1 time."
   },
   {
     "key": "language_10048004",
-    "content": "Upon death, gains an invulnerability buff."
+    "content": "When defeated, gains an invulnerability buff."
   },
   {
     "key": "language_10048005",
@@ -192033,19 +192033,19 @@
   },
   {
     "key": "language_10048011",
-    "content": "Upon death, if the progress bar is below 30, casts this skill to self-destruct."
+    "content": "When defeated, if the progress bar is below 30, casts this skill to self-destruct."
   },
   {
     "key": "language_10048012",
-    "content": "At the end of the round or upon death, if Echo Volume is at 100%, casts the Ultimate [Please Remember Us<id:2>] 2 times and resets Echo Volume to 0%."
+    "content": "At the end of the round or when defeated, if Echo Volume is at 100%, casts the Ultimate [Please Remember Us<id:2>] 2 times and resets Echo Volume to 0%."
   },
   {
     "key": "language_10048013",
-    "content": "At the end of the round or upon death, if Echo Volume is between 30% and 59%, casts [Fragments of Memories<id:2>] 1 time."
+    "content": "At the end of the round or when defeated, if Echo Volume is between 30% and 59%, casts [Fragments of Memories<id:2>] 1 time."
   },
   {
     "key": "language_10048014",
-    "content": "At the end of the round or upon death, if Echo Volume is between 60% and 99%, casts the Ultimate [Please Remember Us<id:2>] 1 time."
+    "content": "At the end of the round or when defeated, if Echo Volume is between 60% and 99%, casts the Ultimate [Please Remember Us<id:2>] 1 time."
   },
   {
     "key": "language_10048015",
@@ -192341,7 +192341,7 @@
   },
   {
     "key": "language_10048088",
-    "content": "1-6: Ally #1 cannot cast their Ultimate. 7-18: When entering battle, inflicts [Disarm] and [Silence] on all enemies for 1 round. 19-30: Critical Rate +50%, Critical DMG +50%. 31+: When an ally actively casts an incantation, there's a 40% chance to cast it again."
+    "content": "1-6: Ally #1 cannot cast their Ultimate. 7-18: When entering battle, inflicts [Disarm] and [Silence] on all enemies for 1 round. 19-30: All allies gain Critical Rate +50% and Critical DMG +50%. 31+: When an ally actively casts an incantation, there's a 40% chance to cast it again."
   },
   {
     "key": "language_10048089",
@@ -192369,7 +192369,7 @@
   },
   {
     "key": "language_10048095",
-    "content": "The Gryphon Legion requires 1 fewer Moxie to cast Ultimates."
+    "content": "Gryphon Legion puppets require 1 fewer Moxie to cast their Ultimates."
   },
   {
     "key": "language_10048096",
@@ -192385,7 +192385,7 @@
   },
   {
     "key": "language_10048099",
-    "content": "Whenever an ally is attacked, Cocooned Stranger gains Energy +5."
+    "content": "Whenever an ally is attacked, Cocooned Stranger gains 5 Energy."
   },
   {
     "key": "language_10048100",
@@ -192393,7 +192393,7 @@
   },
   {
     "key": "language_10048101",
-    "content": "Whenever an ally is attacked, Cocooned Stranger gains Energy +10."
+    "content": "Whenever an ally is attacked, Cocooned Stranger gains 10 Energy."
   },
   {
     "key": "language_10048102",
@@ -198485,7 +198485,7 @@
   },
   {
     "key": "language_10049624",
-    "content": "Complete TTS-22 of \"The Temporal Scale\" on [Hard] Mode."
+    "content": "Complete TTS-22 of \"The Temporal Scale [Crisis]\" on Hard Mode."
   },
   {
     "key": "language_10049625",
@@ -198537,7 +198537,7 @@
   },
   {
     "key": "language_10049637",
-    "content": "Softly, I drift to sleep ...\nA gentle, dim light warms my face.\nIt spills down into my dream, bringing sweet old memories.\nMy dearest friends, the daisies are awake in the fields.\nThe yesterdays are gone, but I will hold their echoes close ...\nAnd I will walk with you into unknown tomorrows."
+    "content": "Softly, I drift to sleep ...\nA gentle, dim light warms my face.\nIt spills down into my dream,<br>bringing sweet old memories.\nMy dearest friends,<br>the daisies are awake in the fields.\nThe yesterdays are gone,<br>but I will hold their echoes close ...\nAnd I will walk with you into unknown tomorrows."
   },
   {
     "key": "language_10049638",
@@ -198753,11 +198753,11 @@
   },
   {
     "key": "language_10049691",
-    "content": "A magnetic medium with a recorded memory. Excerpt from <i>Waltz of the Flowers</i> has been added to the Mood Switch."
+    "content": "A magnetic medium with a recorded memory. Obtain to add <i>Waltz of the Flowers</i> (excerpt) to the Mood Switch."
   },
   {
     "key": "language_10049692",
-    "content": "{Summon Rules}\n\n<color=#B65223>[▩1%s]</color> time-limited summoning event has begun. During the event, 6-star characters <color=#B65223>[upname=1]</color> and <color=#B65223>[upname=2]</color> enjoy rate up!\n\n<color=#B65223>[▩1%s]</color> is a <color=#B65223>[Time-Limited Event Banner]</color> and does NOT share guarantee count with other similar banners.\n\nThis is a <color=#B65223>[▩1%s]</color> banner. The guarantee count is calculated independently and is NOT shared with other similar banners.\n\nAfter the event, the guarantee count of <color=#B65223>[▩1%s]</color> will be cleared and will NOT carry over to other similar banners.\n\n▪  In this event, every 10 summons guarantees at least one 4-star or higher character.\n\n▪  Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\n\nIn banner <color=#B65223>[▩1%s]</color>:\nBasic rate of summoning 6-star characters: 1.5%. Overall rate (including Guarantee): 2.36%;\nBasic rate of summoning 5-star characters: 8.5%;\nBasic rate of summoning 4-star characters: 40%;\nBasic rate of summoning 3-star characters: 45%;\nBasic rate of summoning 2-star characters: 5%.\n\nFor 6-star summons, there's a 70% chance to get one of the rate-up characters, with both having equal chances. If the summoned 6-star is not one of the rate-up characters, the next 6-star summon will guarantee a rate-up character.\n\nFor 5-star summons, all characters have equal rates.\n\n{Special Rules}\n\nIn banner <color=#B65223>[▩1%s]</color>, if you have not obtained any 6-star character after 60 consecutive summons, the rate of summoning a 6-star character in the next summon will rise from 1.5% to 4%. If you still have not obtained any 6-star character, then every next summon that doesn't grant a 6-star character will increase the rate by 2.5%.\n\nEvery 70 summons guarantees a 6-star character.\n\nP.S. After you have obtained a 6-star character, the rate of summoning 6-star characters in <color=#B65223>[▩1%s]</color> type events will be reset to 1.5%.\n\n{Duplicate Characters}\n\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪  When you obtain the same 6-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪  When you obtain the same 5-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪  When you obtain the same 4-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪  When you obtain the same 3-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪  When you obtain the same 2-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
+    "content": "{Summon Rules}\n\nThe <color=#B65223>[▩1%s]</color> time-limited summoning event has begun. During the event, 6-star characters <color=#B65223>[upname=1]</color> and <color=#B65223>[upname=2]</color> enjoy rate up!\n\n<color=#B65223>[▩1%s]</color> is a <color=#B65223>[Time-Limited Event Banner]</color> and does NOT share its guarantee count with other similar banners.\n\nThis is a <color=#B65223>[▩1%s]</color> banner. The guarantee count is calculated independently and is NOT shared with other similar banners.\n\nAfter the event, the guarantee count of <color=#B65223>[▩1%s]</color> will be cleared and will NOT carry over to other similar banners.\n\n▪  In this event, every 10 summons guarantees at least one 4-star or higher character.\n\n▪  Generally, the basic rate applies to all characters. Under certain circumstances, such as Rate Up or Guarantee, please refer to the specific rules.\n\n{Summon Rates}\n\nIn the <color=#B65223>[▩1%s]</color> banner:\nBasic rate of summoning 6-star characters: 1.5%. Overall rate (including Guarantee): 2.36%;\nBasic rate of summoning 5-star characters: 8.5%;\nBasic rate of summoning 4-star characters: 40%;\nBasic rate of summoning 3-star characters: 45%;\nBasic rate of summoning 2-star characters: 5%.\n\nFor 6-star summons, there's a 70% chance to get one of the rate-up characters, with both having equal rates. If the summoned 6-star is not one of the rate-up characters, the next 6-star character summoned is guaranteed to be one of the rate-up characters.\n\nFor 5-star summons, all characters have equal rates.\n\n{Special Rules}\n\nIn the <color=#B65223>[▩1%s]</color> banner, if you have not obtained any 6-star character after 60 consecutive summons, the rate of summoning a 6-star character in the next summon will increase from 1.5% to 4%. If you still have not obtained any 6-star character, then every next summon that doesn't grant a 6-star character will increase the rate by 2.5%.\n\nEvery 70 summons guarantees a 6-star character.\n\nP.S. After you have obtained a 6-star character, the rate of summoning 6-star characters in <color=#B65223>[▩1%s]</color> type events will be reset to 1.5%.\n\n{Duplicate Characters}\n\nRegardless of source, including but not limited to banners, Bank, and system gifts:\n\n▪  When you obtain the same 6-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>12</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>28</color> Albums of the Lost and <color=#B65223>10</color> Pneuma Film Developers every time.\n\n▪  When you obtain the same 5-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Albums of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Albums of the Lost every time.\n\n▪  When you obtain the same 4-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>8</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>12</color> Tracks of the Lost every time.\n\n▪  When you obtain the same 3-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>4</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>7</color> Tracks of the Lost every time.\n\n▪  When you obtain the same 2-star character for the 2nd–6th time, the duplicate character will be converted into <color=#B65223>1</color> Artifice of the character and <color=#B65223>3</color> Tracks of the Lost every time; starting from the 7th time, the duplicate character will be converted into <color=#B65223>5</color> Tracks of the Lost every time."
   },
   {
     "key": "language_10049693",
@@ -198845,7 +198845,7 @@
   },
   {
     "key": "language_10049714",
-    "content": "Use to select one garment of your choice. Duplicate garments will be converted into Crystal Drops of equivalent value. This item expires on <color=#AC5320>2027-03-03 04:59:59 (UTC+8)</color>.\nOnce expired, this item will be converted into [Sincere Gratitude Chest: Unique] and delivered via mail. When obtained, the [Sincere Gratitude Chest: Unique] will automatically open and convert into a random Unique Garment that you don't own within the [Collection Chest: Sincere Gratitude] selection pool. If you already own all Unique Garments, it will be converted into Crystal Drop x1,680."
+    "content": "Use to select one garment of your choice. Duplicate garments will be converted into Crystal Drops of equivalent value. This item expires on <color=#AC5320>2027-03-03 04:59:59 (UTC+8)</color>.\nOnce expired, this item will be converted into [Sincere Gratitude Chest: Unique] and delivered via mail. When obtained, the [Sincere Gratitude Chest: Unique] will automatically open and convert into a random Unique Garment that you don't own within the [Garment Chest: Sincere Gratitude] selection pool. If you already own all Unique Garments, it will be converted into Crystal Drop x1,680."
   },
   {
     "key": "language_10049715",
@@ -198972,6 +198972,350 @@
     "content": "Team Up! Pre-Game Prep"
   },
   {
+    "key": "language_10049746",
+    "content": "Finale in Silver"
+  },
+  {
+    "key": "language_10049747",
+    "content": "Returning Nevermore"
+  },
+  {
+    "key": "language_10049748",
+    "content": ""
+  },
+  {
+    "key": "language_10049749",
+    "content": ""
+  },
+  {
+    "key": "language_10049750",
+    "content": ""
+  },
+  {
+    "key": "language_10049751",
+    "content": ""
+  },
+  {
+    "key": "language_10049752",
+    "content": ""
+  },
+  {
+    "key": "language_10049753",
+    "content": "Verses to Heaven"
+  },
+  {
+    "key": "language_10049754",
+    "content": "In Praise of Poetry"
+  },
+  {
+    "key": "language_10049755",
+    "content": "A Life in Frames"
+  },
+  {
+    "key": "language_10049756",
+    "content": "Becoming Great"
+  },
+  {
+    "key": "language_10049757",
+    "content": "Beyond the Curtains"
+  },
+  {
+    "key": "language_10049758",
+    "content": "A tiny tag that captures the view from a fourth perspective and stores it in your suitcase.\nUsed to change Appearances at the Travel Scrapbook."
+  },
+  {
+    "key": "language_10049759",
+    "content": "Standing and Listening"
+  },
+  {
+    "key": "language_10049760",
+    "content": "Sun-Printed Blueprints"
+  },
+  {
+    "key": "language_10049761",
+    "content": "The Will to Be"
+  },
+  {
+    "key": "language_10049762",
+    "content": "Reconstruction Guide"
+  },
+  {
+    "key": "language_10049763",
+    "content": "Magnificent Cornerstone"
+  },
+  {
+    "key": "language_10049764",
+    "content": "Undying Gladiator"
+  },
+  {
+    "key": "language_10049765",
+    "content": "Blue Radio"
+  },
+  {
+    "key": "language_10049766",
+    "content": "The Immeasurable"
+  },
+  {
+    "key": "language_10049767",
+    "content": "The Aesthetics of Space"
+  },
+  {
+    "key": "language_10049768",
+    "content": "Sunlit Sheaf Special"
+  },
+  {
+    "key": "language_10049769",
+    "content": "Golden Autumn Gift Pack"
+  },
+  {
+    "key": "language_10049770",
+    "content": "Bountiful Harvest Offer"
+  },
+  {
+    "key": "language_10049771",
+    "content": "A Lullaby for the Spirits"
+  },
+  {
+    "key": "language_10049772",
+    "content": "The Cabinet of Vivification"
+  },
+  {
+    "key": "language_10049773",
+    "content": "1-target attack. Deals 200% Reality DMG. If in the [Inspection Process<id:2>] status, this attack deals an additional 200% Reality DMG and gains Critical DMG +40%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049774",
+    "content": "1-target attack. Deals 300% Reality DMG. If in the [Inspection Process<id:2>] status, this attack deals an additional 300% Reality DMG and gains Critical DMG +60%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049775",
+    "content": "1-target attack. Deals 500% Reality DMG. If in the [Inspection Process<id:2>] status, this attack deals an additional 500% Reality DMG and gains Critical DMG +100%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049776",
+    "content": "1-target attack. Deals 200% Reality DMG. If in the [Inspection Process<id:3>] status, this attack deals an additional 200% Reality DMG and gains Critical DMG +40%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049777",
+    "content": "1-target attack. Deals 300% Reality DMG. If in the [Inspection Process<id:3>] status, this attack deals an additional 300% Reality DMG and gains Critical DMG +60%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049778",
+    "content": "1-target attack. Deals 500% Reality DMG. If in the [Inspection Process<id:3>] status, this attack deals an additional 500% Reality DMG and gains Critical DMG +100%.\nThis attack counts as 1 riposte."
+  },
+  {
+    "key": "language_10049779",
+    "content": "Self counter. Enters the [Inspection Process<id:2>] status for 2 rounds. Gains 2 stacks of [Progressive Iteration<id:1>]."
+  },
+  {
+    "key": "language_10049780",
+    "content": "Self counter. Enters the [Inspection Process<id:2>] status for 2 rounds. Gains 3 stacks of [Progressive Iteration<id:1>]."
+  },
+  {
+    "key": "language_10049781",
+    "content": "Self counter. Enters the [Inspection Process<id:2>] status for 2 rounds. Gains 5 stacks of [Progressive Iteration<id:1>]."
+  },
+  {
+    "key": "language_10049782",
+    "content": "1-target attack. Deals 100% Mental DMG. Inflicts 1 stack of [Serpentine Scales<id:311601>]. This incantation counts as an Ultimate and benefits from Ultimate Might at a +30% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049783",
+    "content": "1-target attack. Deals 200% Mental DMG. Inflicts 2 stacks of [Serpentine Scales<id:311601>] and gains Moxie +1. This incantation counts as an Ultimate and benefits from Ultimate Might at a +60% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049784",
+    "content": "1-target attack. Deals 500% Mental DMG. Inflicts 4 stacks of [Serpentine Scales<id:311601>] and gains Moxie +2. This incantation counts as an Ultimate and benefits from Ultimate Might at a +100% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049785",
+    "content": "1-target attack. Deals 150% Mental DMG. Inflicts 1 stack of [Serpentine Scales<id:311601>]. This incantation counts as an Ultimate and benefits from Ultimate Might at a +30% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049786",
+    "content": "1-target attack. Deals 300% Mental DMG. Inflicts 2 stacks of [Serpentine Scales<id:311601>] and gains Moxie +1. This incantation counts as an Ultimate and benefits from Ultimate Might at a +60% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049787",
+    "content": "1-target attack. Deals 750% Mental DMG. Inflicts 4 stacks of [Serpentine Scales<id:311601>] and gains Moxie +2. This incantation counts as an Ultimate and benefits from Ultimate Might at a +100% rate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049788",
+    "content": "Self buff. Consumes 2 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 2 rank 1 copies of [Hiss!<id:2>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +1. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049789",
+    "content": "Self buff. Consumes 3 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 3 rank 1 copies of [Hiss!<id:2>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +2. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049790",
+    "content": "Self buff. Consumes 4 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 4 rank 1 copies of [Hiss!<id:2>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +3. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049791",
+    "content": "Self buff. Consumes 2 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 2 rank 1 copies of [Hiss!<id:3>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +1. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049792",
+    "content": "Self buff. Consumes 3 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 3 rank 1 copies of [Hiss!<id:3>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +2. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049793",
+    "content": "Self buff. Consumes 4 stacks of [Snake's Den<id:311601>]. At the end of the round, generates 4 rank 1 copies of [Hiss!<id:3>] that do not take up the allied Incantation Limit; if there aren't enough stacks of [Snake's Den<id:311601>], gains Moxie +3. Grants [Stream of Consciousness] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10049794",
+    "content": "When entering battle, gains 8 stacks of [Snake's Den<id:311601>]. At the start of the round, if holding at least 1 stack of [Snake's Den<id:311601>], gains Moxie +1, consumes 1 stack of [Snake's Den<id:311601>], and generates 1 rank 1 copy of [Hiss!<id:2>]; this effect can trigger up to 1 time per round. [Hiss!<id:2>] and this unit's Ultimates do not take up the allied Incantation Limit."
+  },
+  {
+    "key": "language_10049795",
+    "content": "When entering battle, gains 8 stacks of [Snake's Den<id:311601>]. At the start of the round, if holding at least 1 stack of [Snake's Den<id:311601>], gains Moxie +1, consumes 1 stack of [Snake's Den<id:311601>], and generates 1 rank 1 copy of [Hiss!<id:3>]; this effect can trigger up to 2 times per round. [Hiss!<id:3>] and this unit's Ultimates do not take up the allied Incantation Limit."
+  },
+  {
+    "key": "language_10049796",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 70%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:2>]."
+  },
+  {
+    "key": "language_10049797",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 70%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049798",
+    "content": "Mass attack. Deals 750% Mental DMG to all enemies. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 100%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049799",
+    "content": "Mass attack. Deals 750% Mental DMG to all enemies. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 130%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049800",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 100%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049801",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. For each type of [Neg Status] on the targets (counting up to 10 types), deals an additional 100% Mental DMG; if there are at least 5 types, this attack gains Penetration Rate +20% and benefits from Ultimate Might at a +60% rate. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 70%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:2>]."
+  },
+  {
+    "key": "language_10049802",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. For each type of [Neg Status] on the targets (counting up to 10 types), deals an additional 100% Mental DMG; if there are at least 5 types, this attack gains Penetration Rate +20% and benefits from Ultimate Might at a +60% rate. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 70%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049803",
+    "content": "Mass attack. Deals 750% Mental DMG to all enemies. For each type of [Neg Status] on the targets (counting up to 10 types), deals an additional 150% Mental DMG; if there are at least 5 types, this attack gains Penetration Rate +20% and benefits from Ultimate Might at a +60% rate. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 100%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049804",
+    "content": "Mass attack. Deals 750% Mental DMG to all enemies. For each type of [Neg Status] on the targets (counting up to 10 types), deals an additional 150% Mental DMG; if there are at least 5 types, this attack gains Penetration Rate +20% and benefits from Ultimate Might at a +60% rate. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 130%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049805",
+    "content": "Mass attack. Deals 500% Mental DMG to all enemies. For each type of [Neg Status] on the targets (counting up to 10 types), deals an additional 100% Mental DMG; if there are at least 5 types, this attack gains Penetration Rate +20% and benefits from Ultimate Might at a +60% rate. Increases the Genesis DMG dealt by each stack of [Serpentine Scales<id:311601>] at the end of this round to the targets hit from 20% to 100%. At the end of the round, converts all [Serpentine Scales<id:311601>] into an equivalent number of rank 1 copies of [Hiss!<id:3>]."
+  },
+  {
+    "key": "language_10049806",
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies, and deals an additional 60% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049807",
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies, and deals an additional 100% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049808",
+    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies, and deals an additional 150% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049809",
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies, and deals an additional 100% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049810",
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies, and deals an additional 150% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049811",
+    "content": "Mass attack. Deals 300% Mental DMG to 2 enemies, and deals an additional 225% Mental DMG to targets holding the [Serpentine Scales<id:311601>] status. After attacking, inflicts 1 random effect from [Collection of Debuffs<id:3116>] on all enemies."
+  },
+  {
+    "key": "language_10049812",
+    "content": "When attacking an enemy that's holding [Serpentine Scales<id:311601>], Hissabeth gains Moxie +1, inflicts [Rigidity] on the target, and inflicts 2 random effects from [Collection of Debuffs<id:3116>] on the target for 2 rounds (triggers up to 1 time per round)."
+  },
+  {
+    "key": "language_10049813",
+    "content": "When attacking an enemy that's holding [Serpentine Scales<id:311601>], Hissabeth gains Moxie +1, inflicts [Rigidity] on the target, and inflicts 2 random effects from [Collection of Debuffs<id:3116>] on the target for 2 rounds (triggers up to 2 times per round)."
+  },
+  {
+    "key": "language_10049814",
+    "content": "A place where the siblings nestle. This status can stack up to 8 times and is undispellable. At the start of the round, this unit adjusts the stacks of [Snake's Den<id:311601>] on self so that the combined total of [Snake's Den<id:311601>], [Serpentine Scales<id:311601>], and [Hiss!<id:311601>] on the field equals 8."
+  },
+  {
+    "key": "language_10049815",
+    "content": "At the end of the round, takes ((50% + (number of stacks x20)%) x Hissabeth's ATK) Genesis DMG. This effect can critically hit and benefits from Ultimate Might bonuses. After each trigger of this effect, 1 stack of Serpentine Scales is converted into 1 stack of [Snake's Den<id:311601>] and granted to Hissabeth. When the holder of this status is defeated, the remaining stacks of [Serpentine Scales<id:311601>] are transferred onto the ally with the highest ATK. This status can stack up to 8 times and is undispellable."
+  },
+  {
+    "key": "language_10049816",
+    "content": "1-target attack. Deals 750% Reality DMG. This attack counts as an [Assassination] and an Ultimate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049817",
+    "content": "1-target attack. Deals 750% Reality DMG. Inflicts [Assassination Gash<id:0>] for 3 rounds on the target hit. This attack counts as an [Assassination] and an Ultimate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049818",
+    "content": "1-target attack. Deals 1250% Reality DMG. This attack counts as an [Assassination] and an Ultimate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049819",
+    "content": "1-target attack. Deals 1250% Reality DMG. Inflicts [Assassination Gash<id:0>] for 3 rounds on the target hit. This attack counts as an [Assassination] and an Ultimate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_10049820",
+    "content": "1-target attack. Deals 1250% Reality DMG. Inflicts [Assassination Gash<id:50>] for 3 rounds on the target hit. This attack counts as an [Assassination] and an Ultimate.\nThis incantation is a [Sovereign Incantation]."
+  },
+  {
+    "key": "language_90016100",
+    "content": "Mend"
+  },
+  {
+    "key": "language_90016101",
+    "content": "Skyward Gaze"
+  },
+  {
+    "key": "language_90016102",
+    "content": "Exit"
+  },
+  {
+    "key": "language_90016103",
+    "content": "Hint"
+  },
+  {
+    "key": "language_90016104",
+    "content": "ATK"
+  },
+  {
+    "key": "language_90016105",
+    "content": "Tune In"
+  },
+  {
+    "key": "language_90016106",
+    "content": "Cloudy"
+  },
+  {
+    "key": "language_90016107",
+    "content": "Rainy"
+  },
+  {
+    "key": "language_90016108",
+    "content": "Goal"
+  },
+  {
+    "key": "language_90016109",
+    "content": "Give Up"
+  },
+  {
+    "key": "language_90016110",
+    "content": "Track"
+  },
+  {
     "key": "language_90016080",
     "content": "Decatone - <br>[From the Lake's Heart]"
   },
@@ -199013,7 +199357,7 @@
   },
   {
     "key": "language_90016090",
-    "content": "Special Tribunal Officer"
+    "content": "Special Prosecutor"
   },
   {
     "key": "language_90016091",
@@ -258733,7 +259077,7 @@
   },
   {
     "key": "language_90001157",
-    "content": "Ultimate"
+    "content": "Ritual"
   },
   {
     "key": "language_90001158",

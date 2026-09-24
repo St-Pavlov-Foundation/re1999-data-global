@@ -93,7 +93,7 @@ function VersionActivityFixedDungeonModel:getAllNormalElementCoList(mapId, episo
 
 	if mapAllElementList then
 		for _, elementCo in pairs(mapAllElementList) do
-			if DungeonModel.instance:hasPassLevel(episodeId) and self:isElementInEpisode(elementCo, episodeId) then
+			if self:isElementInEpisode(elementCo, episodeId) then
 				table.insert(elements, elementCo)
 			end
 		end

@@ -15817,7 +15817,7 @@
   },
   {
     "id": "p_act174mainview_txt_endgame",
-    "lang": "language_90001162"
+    "lang": "language_90016109"
   },
   {
     "id": "p_act174endlessview_txt_Escape",
@@ -22557,7 +22557,7 @@
   },
   {
     "id": "p_goalsitem_txt_trace",
-    "lang": "language_10055851"
+    "lang": "language_90016110"
   },
   {
     "id": "p_characterrecommendview_txt_tab1",
@@ -25265,7 +25265,7 @@
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title2",
-    "lang": "language_10131679"
+    "lang": "language_10131709"
   },
   {
     "id": "p_bpface_skinfestivalview_txt_title3",
@@ -27097,7 +27097,7 @@
   },
   {
     "id": "p_warmup_txt_title",
-    "lang": "language_10131681"
+    "lang": "language_10125351"
   },
   {
     "id": "p_warmup_txt_reward",
@@ -27653,7 +27653,7 @@
   },
   {
     "id": "p_sodache_relicview_txt_tab3",
-    "lang": "language_10042096"
+    "lang": "language_90016084"
   },
   {
     "id": "p_sodache_relicview_txt_tab4",
@@ -28149,7 +28149,7 @@
   },
   {
     "id": "p_bpfaceview_txt_desc",
-    "lang": "language_10131682"
+    "lang": "language_10131710"
   },
   {
     "id": "p_bpfaceview_txt_title",
@@ -28845,7 +28845,7 @@
   },
   {
     "id": "p_v3a8_dianjishi_gameview_txt_help",
-    "lang": "language_10029603"
+    "lang": "language_90016103"
   },
   {
     "id": "p_v3a8_versionsummonluolunzihalfview_txt_name",
@@ -29594,6 +29594,26 @@
   {
     "id": "p_sp02_atomicheart_colorgameview_txt_title3",
     "lang": "language_10125705"
+  },
+  {
+    "id": "p_rouge2_resultreview_txt_confirm_overseas",
+    "lang": "language_90016102"
+  },
+  {
+    "id": "p_Act191StageView_go_attribute_txt_name_overseas",
+    "lang": "language_90016104"
+  },
+  {
+    "id": "p_V3A8_RoleStoryGameView_txt_goto_overseas",
+    "lang": "language_90016105"
+  },
+  {
+    "id": "p_V3a8PuzzleView_Target_txt_Title_overseas",
+    "lang": "language_90016108"
+  },
+  {
+    "id": "handbookskin_festival_Halloween",
+    "lang": "language_10131945"
   },
   {
     "id": "p_overseas_txt_review2",

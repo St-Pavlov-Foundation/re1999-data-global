@@ -194541,7 +194541,7 @@
     "permanentRewardList": "",
     "reward": 31101011,
     "retroReward": 31101011,
-    "permanentReward": 331101011
+    "permanentReward": 31101011
   },
   {
     "id": 3110102,
@@ -194821,7 +194821,7 @@
     "permanentRewardList": "",
     "reward": 31101021,
     "retroReward": 31101021,
-    "permanentReward": 331101021
+    "permanentReward": 31101021
   },
   {
     "id": 3110107,
@@ -194989,7 +194989,7 @@
     "permanentRewardList": "",
     "reward": 31101031,
     "retroReward": 31101031,
-    "permanentReward": 331101031
+    "permanentReward": 31101031
   },
   {
     "id": 3110110,
@@ -195045,7 +195045,7 @@
     "permanentRewardList": "",
     "reward": 31101041,
     "retroReward": 31101041,
-    "permanentReward": 331101041
+    "permanentReward": 31101041
   },
   {
     "id": 3110111,
@@ -195101,7 +195101,7 @@
     "permanentRewardList": "",
     "reward": 31101051,
     "retroReward": 31101051,
-    "permanentReward": 331101051
+    "permanentReward": 31101051
   },
   {
     "id": 3110112,
@@ -195213,7 +195213,7 @@
     "permanentRewardList": "",
     "reward": 31101061,
     "retroReward": 31101061,
-    "permanentReward": 331101061
+    "permanentReward": 31101061
   },
   {
     "id": 3110114,
@@ -195381,7 +195381,7 @@
     "permanentRewardList": "",
     "reward": 31101071,
     "retroReward": 31101071,
-    "permanentReward": 331101071
+    "permanentReward": 31101071
   },
   {
     "id": 3110117,
@@ -195437,7 +195437,7 @@
     "permanentRewardList": "",
     "reward": 31101081,
     "retroReward": 31101081,
-    "permanentReward": 331101081
+    "permanentReward": 31101081
   },
   {
     "id": 3110118,
@@ -195493,7 +195493,7 @@
     "permanentRewardList": "",
     "reward": 31101091,
     "retroReward": 31101091,
-    "permanentReward": 331101091
+    "permanentReward": 31101091
   },
   {
     "id": 3110119,
@@ -195538,18 +195538,18 @@
     "lockTime": "",
     "retroFirstBonus": 0,
     "retroBonus": 0,
-    "retroAdvancedBonus": 0,
+    "retroAdvancedBonus": 1000099,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
     "permanentFirstBonus": 0,
     "permanentBonus": 0,
-    "permanentAdvancedBonus": 0,
+    "permanentAdvancedBonus": 1000099,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31101101,
-    "retroReward": 0,
-    "permanentReward": 0
+    "retroReward": 31101101,
+    "permanentReward": 31101101
   },
   {
     "id": 3110120,
@@ -195594,18 +195594,18 @@
     "lockTime": "",
     "retroFirstBonus": 0,
     "retroBonus": 0,
-    "retroAdvancedBonus": 0,
+    "retroAdvancedBonus": 1000099,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
     "permanentFirstBonus": 0,
     "permanentBonus": 0,
-    "permanentAdvancedBonus": 0,
+    "permanentAdvancedBonus": 1000099,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31101111,
-    "retroReward": 0,
-    "permanentReward": 0
+    "retroReward": 31101111,
+    "permanentReward": 31101111
   },
   {
     "id": 3110121,
@@ -196208,13 +196208,13 @@
     "saveDayNum": 0,
     "displayMark": 0,
     "lockTime": "",
-    "retroFirstBonus": 0,
+    "retroFirstBonus": 1000099,
     "retroBonus": 0,
     "retroAdvancedBonus": 0,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 1000099,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
@@ -196264,13 +196264,13 @@
     "saveDayNum": 0,
     "displayMark": 0,
     "lockTime": "",
-    "retroFirstBonus": 0,
+    "retroFirstBonus": 1000099,
     "retroBonus": 0,
     "retroAdvancedBonus": 0,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 1000099,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
@@ -196299,7 +196299,7 @@
     "preEpisodeId": 0,
     "unlockEpisode": 0,
     "elementList": "",
-    "cost": "2#4#0",
+    "cost": "2#4#15",
     "failCost": "2#4#0",
     "firstBattleId": 0,
     "battleId": 104313060,
@@ -196326,14 +196326,14 @@
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31301012,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31301011,
     "retroReward": 31301011,
-    "permanentReward": 0
+    "permanentReward": 31301011
   },
   {
     "id": 3130118,
@@ -196355,7 +196355,7 @@
     "preEpisodeId": 0,
     "unlockEpisode": 0,
     "elementList": "",
-    "cost": "2#4#0",
+    "cost": "2#4#15",
     "failCost": "2#4#0",
     "firstBattleId": 0,
     "battleId": 104313090,
@@ -196382,14 +196382,14 @@
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31301022,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31301021,
     "retroReward": 31301021,
-    "permanentReward": 0
+    "permanentReward": 31301021
   },
   {
     "id": 3130119,
@@ -196432,20 +196432,20 @@
     "saveDayNum": 0,
     "displayMark": 1,
     "lockTime": "",
-    "retroFirstBonus": 0,
+    "retroFirstBonus": 31301032,
     "retroBonus": 0,
     "retroAdvancedBonus": 0,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31301032,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31301031,
-    "retroReward": 0,
-    "permanentReward": 0
+    "retroReward": 31301031,
+    "permanentReward": 31301031
   },
   {
     "id": 3140113,
@@ -196467,7 +196467,7 @@
     "preEpisodeId": 0,
     "unlockEpisode": 0,
     "elementList": "",
-    "cost": "2#4#0",
+    "cost": "2#4#20",
     "failCost": "2#4#0",
     "firstBattleId": 0,
     "battleId": 104314060,
@@ -196494,14 +196494,14 @@
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31401012,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31401011,
     "retroReward": 31401011,
-    "permanentReward": 0
+    "permanentReward": 31401011
   },
   {
     "id": 3140118,
@@ -196523,7 +196523,7 @@
     "preEpisodeId": 0,
     "unlockEpisode": 0,
     "elementList": "",
-    "cost": "2#4#0",
+    "cost": "2#4#20",
     "failCost": "2#4#0",
     "firstBattleId": 0,
     "battleId": 104314090,
@@ -196550,14 +196550,14 @@
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31401022,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31401021,
     "retroReward": 31401021,
-    "permanentReward": 0
+    "permanentReward": 31401021
   },
   {
     "id": 3140119,
@@ -196600,20 +196600,20 @@
     "saveDayNum": 0,
     "displayMark": 1,
     "lockTime": "",
-    "retroFirstBonus": 0,
+    "retroFirstBonus": 31401032,
     "retroBonus": 0,
     "retroAdvancedBonus": 0,
     "retroRewardDisplayList": "",
     "retroRewardList": "",
     "chainEpisode": 0,
-    "permanentFirstBonus": 0,
+    "permanentFirstBonus": 31401032,
     "permanentBonus": 0,
     "permanentAdvancedBonus": 0,
     "permanentRewardDisplayList": "",
     "permanentRewardList": "",
     "reward": 31401031,
-    "retroReward": 0,
-    "permanentReward": 0
+    "retroReward": 31401031,
+    "permanentReward": 31401031
   },
   {
     "id": 90005090,

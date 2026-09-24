@@ -282,6 +282,11 @@ function HandbookSkinSuitDetailView3_3:_refreshSkinItems()
 
 	self._cardSpacing = self._cardBaseX[1] - self._cardBaseX[0]
 	self._centerSlot = math.floor((M - 1) / 2)
+
+	if GameBranchMgr.instance:isOnVer(3, 8) and self._centerSlot > 2 then
+		self._centerSlot = 2
+	end
+
 	self._centerX = self._cardBaseX[self._centerSlot]
 	self._scrollValue = self._centerSlot
 

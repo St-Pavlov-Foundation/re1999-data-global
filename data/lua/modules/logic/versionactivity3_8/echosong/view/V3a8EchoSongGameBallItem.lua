@@ -55,7 +55,7 @@ end
 
 function V3a8EchoSongGameBallItem:_initReflection()
 	require("tolua.reflection")
-	tolua.loadassembly("SL_AS")
+	tolua.loadassembly("Assembly-CSharp")
 
 	local type = tolua.findtype("UnityEngine.LineRenderer")
 	local property = tolua.getproperty(type, "positionCount")

@@ -816,6 +816,24 @@
     "desc": "language_10124952"
   },
   {
+    "id": 5073,
+    "order": 0,
+    "equipId": 1573,
+    "desc": "language_10121144"
+  },
+  {
+    "id": 5074,
+    "order": 0,
+    "equipId": 1574,
+    "desc": "language_10120027"
+  },
+  {
+    "id": 4049,
+    "order": 0,
+    "equipId": 1449,
+    "desc": "language_10005346"
+  },
+  {
     "id": 5070,
     "order": 0,
     "equipId": 1568,

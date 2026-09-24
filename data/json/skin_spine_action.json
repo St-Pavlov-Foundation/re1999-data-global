@@ -9034,5 +9034,41 @@
     "effectRemoveTime": 0.0,
     "audioId": 431490392,
     "dieAnim": ""
+  },
+  {
+    "skinId": 314503,
+    "actionName": "born",
+    "effect": "buff/born/pre_v4a0_hsy_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431450391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314503,
+    "actionName": "die",
+    "effect": "v4a0_hsy/hsy_die_01",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431450392,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314003,
+    "actionName": "born",
+    "effect": "buff/born/pre_v4a0_djs_born",
+    "effectHangPoint": "mountroot",
+    "effectRemoveTime": 0.0,
+    "audioId": 431400391,
+    "dieAnim": ""
+  },
+  {
+    "skinId": 314003,
+    "actionName": "die",
+    "effect": "",
+    "effectHangPoint": "",
+    "effectRemoveTime": 0.0,
+    "audioId": 431400392,
+    "dieAnim": ""
   }
 ]

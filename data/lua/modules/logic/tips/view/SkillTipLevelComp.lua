@@ -265,6 +265,7 @@ function SkillTipLevelComp:_refreshDevice(skillId)
 	end
 
 	local isDeviceSkillId = false
+	local isShowStar = true
 
 	if deviceMo then
 		deviceMo:setHeroMo(heroMo)
@@ -273,33 +274,40 @@ function SkillTipLevelComp:_refreshDevice(skillId)
 
 		isDeviceSkillId = skillInfo ~= nil
 
-		if self._super then
-			self._txttongdiao.text = "-" .. deviceMo:getUniqueSkillPoint()
-		else
-			local cost = skillInfo and skillInfo.costValue or 0
+		if skillInfo then
+			if self._super then
+				self._txttongdiao.text = "-" .. deviceMo:getUniqueSkillPoint()
+			else
+				local cost = skillInfo.costValue or 0
 
-			self._txtenergy.text = "-" .. cost
+				self._txtenergy.text = "-" .. cost
 
-			local addExPoint = FightDeviceHelper.getSkillIdAddDeviceExPoint(skillId)
+				local addExPoint = FightDeviceHelper.getSkillIdAddDeviceExPoint(skillId)
 
-			self._txttongdiao.text = "+" .. addExPoint
-		end
+				self._txttongdiao.text = "+" .. addExPoint
+			end
 
-		local costType = skillInfo and skillInfo.costType
+			local costType = skillInfo.costType
 
-		if costType then
-			local url = FightDeviceHelper.getCareerImage(costType)
+			if costType then
+				local url = FightDeviceHelper.getCareerImage(costType)
 
-			UISpriteSetMgr.instance:setFightSprite(self._imageIcon, url, true)
+				UISpriteSetMgr.instance:setFightSprite(self._imageIcon, url, true)
+			end
 		end
 
 		gohelper.setActive(self._goenergytag1.gameObject, not self._super)
+
+		local powerSkillInfo = deviceMo:getPowerSkillInfoById(skillId)
+		local specailPowerSkillInfo = deviceMo:getSpecialPowerSkillInfoById(skillId)
+
+		isShowStar = not isDeviceSkillId and not powerSkillInfo and not specailPowerSkillInfo
 	end
 
 	gohelper.setActive(self._godevice, isDeviceSkillId)
 
 	for _, item in pairs(self._newskillitems) do
-		gohelper.setActive(item.gostar, not isDeviceSkillId)
+		gohelper.setActive(item.gostar, isShowStar)
 	end
 end
 

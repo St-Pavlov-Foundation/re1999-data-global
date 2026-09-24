@@ -603,12 +603,16 @@ function VersionActivityFixedDungeonMapLevelView:buildEpisodeName(episodeCo)
 
 	local _firstSize = 112
 
-	if GameConfig:GetCurLangType() == LangSettings.en or GameConfig:GetCurLangType() == LangSettings.jp then
+	if GameConfig:GetCurLangType() == LangSettings.en then
 		if episodeCo.name == "Determinism and Chaos Theory" then
 			_firstSize = 50
+		elseif string.len(episodeCo.name) > 20 then
+			_firstSize = 65
 		else
 			_firstSize = 90
 		end
+	elseif GameConfig:GetCurLangType() == LangSettings.jp then
+		_firstSize = 90
 	elseif GameConfig:GetCurLangType() == LangSettings.kr then
 		_firstSize = 100
 	end

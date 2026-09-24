@@ -1213,14 +1213,14 @@ function FightEntityMO:getEquipMo()
 		self.equipMo = EquipMO.New()
 
 		self.equipMo:init({
-			count = 1,
 			exp = 0,
+			count = 1,
 			uid = self.equipRecord.equipUid,
 			equipId = self.equipRecord.equipId,
 			level = self.equipRecord.equipLv,
-			refineLv = self.equipRecord.refineLv
+			refineLv = self.equipRecord.refineLv,
+			breakLv = self.equipRecord.breakLv
 		})
-		self.equipMo:setBreakLvByLevel()
 	end
 
 	return self.equipMo

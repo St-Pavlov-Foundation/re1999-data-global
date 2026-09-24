@@ -5,7 +5,7 @@ module("modules.versionactivitybase.mainfixed.VersionActivityMainFixedHelper", p
 local VersionActivityMainFixedHelper = class("VersionActivityMainFixedHelper")
 local _version = {
 	big = 3,
-	small = 7
+	small = 8
 }
 
 function VersionActivityMainFixedHelper.getActivityChapter()

@@ -95878,5 +95878,39 @@
     "aniSort": 0,
     "playEffect": 0,
     "sortPriority": 0
+  },
+  {
+    "id": 311600993,
+    "type": 8,
+    "group": 0,
+    "includeTypes": "10#8",
+    "excludeTypes": "",
+    "takeStage": 0,
+    "takeAct": "",
+    "cannotRemove": true,
+    "dontShowFloat": 0,
+    "removeNum": 0,
+    "skipDelay": 0,
+    "matSort": 0,
+    "aniSort": 0,
+    "playEffect": 0,
+    "sortPriority": 0
+  },
+  {
+    "id": 311601003,
+    "type": 8,
+    "group": 0,
+    "includeTypes": "10#8",
+    "excludeTypes": "",
+    "takeStage": 0,
+    "takeAct": "",
+    "cannotRemove": true,
+    "dontShowFloat": 0,
+    "removeNum": 0,
+    "skipDelay": 0,
+    "matSort": 0,
+    "aniSort": 0,
+    "playEffect": 0,
+    "sortPriority": 0
   }
 ]

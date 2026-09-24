@@ -74,10 +74,10 @@ function Act191EnhanceView:onOpen()
 
 					SkillHelper.addHyperLinkClick(txtSkill, Activity191Helper.clickHyperLinkRole)
 				else
-					txtSkill.text = desc
+					txtSkill.text = Activity191Helper.replaceSymbol(desc)
 				end
 			else
-				txtSkill.text = desc
+				txtSkill.text = Activity191Helper.replaceSymbol(desc)
 			end
 		end
 	end

@@ -799,5 +799,23 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "3_8_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "3_8_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

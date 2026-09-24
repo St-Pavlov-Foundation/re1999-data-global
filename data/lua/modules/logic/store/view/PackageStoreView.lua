@@ -294,13 +294,7 @@ function PackageStoreView:_refreshGoods(update, scrollToRadDot)
 	elseif update then
 		StoreModel.instance:setCurPackageStore(self.storeId)
 		StoreModel.instance:setPackageStoreRpcNum(2)
-
-		self._ignoreEmpty = true
-
-		StorePackageGoodsItemListModel.instance:setMOList()
-
-		self._ignoreEmpty = false
-
+		StorePackageGoodsItemListModel.instance:setMOList(nil, nil, nil, true)
 		StoreRpc.instance:sendGetStoreInfosRequest({
 			self.storeId
 		})
@@ -444,10 +438,6 @@ function PackageStoreView:updateRecommendPackageList(scrollToRadDot)
 end
 
 function PackageStoreView:onPackageGoodsListEmpty()
-	if self._ignoreEmpty then
-		return
-	end
-
 	self:_refreshTabs(StoreEnum.StoreId.Package, true)
 end
 

@@ -81,6 +81,10 @@ function GameFullViewState:_gc()
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, self)
 end
 
+function GameFullViewState:isBanGC()
+	return next(self._banGcKey)
+end
+
 function GameFullViewState:_needGC()
 	for _, _ in pairs(self._callGCViews) do
 		return true

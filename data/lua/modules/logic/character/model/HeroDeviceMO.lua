@@ -131,6 +131,22 @@ function HeroDeviceMO:getSkillInfoById(skillId)
 	end
 end
 
+function HeroDeviceMO:getPowerSkillInfoById(skillId)
+	for _, v in ipairs(self._powerSkill) do
+		if skillId == v.skillId then
+			return v
+		end
+	end
+end
+
+function HeroDeviceMO:getSpecialPowerSkillInfoById(skillId)
+	for _, v in ipairs(self._specialPowerSkill) do
+		if skillId == v.skillId then
+			return v
+		end
+	end
+end
+
 function HeroDeviceMO:getSelectCardGroupIndex()
 	return self._selectCardGroupIndex
 end

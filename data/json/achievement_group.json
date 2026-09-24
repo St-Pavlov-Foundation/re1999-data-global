@@ -290,6 +290,16 @@
     "unLockAchievement": 41340701
   },
   {
+    "id": 133,
+    "category": 4,
+    "order": 970,
+    "name": "language_10131770",
+    "desc": "",
+    "uiListParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/list/133.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/list/133_1.png\",\"id\":[1,2,3,4,5,6,7,8],\"pX\":[14.5,194.7,375.8,553.5,-110.0,81.3,299.0,504.3],\"pY\":[108.7,118.6,109.1,117.7,-63.0,-62.3,-62.4,-62.4],\"sX\":[0.82,1.0,0.82,1.0,0.78,1.18,1.18,1.0],\"sY\":[0.82,1.0,0.82,1.0,0.78,1.18,1.18,1.0]}",
+    "uiPlayerParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/player/133.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/player/133_1.png\",\"groupTitleColor\":\"#E2DACAFF\",\"id\":[1,2,3,4,5,6,7,8],\"pX\":[-18.7,53.5,126.09,198.9,-69.0,8.38,95.6,178.4],\"pY\":[13.8,17.4,13.81,17.64,-55.9,-55.14,-54.4,-57.2],\"sX\":[0.32,0.4,0.32,0.4,0.32,0.48,0.46,0.42],\"sY\":[0.32,0.4,0.32,0.4,0.32,0.48,0.46,0.42]}",
+    "unLockAchievement": 41330801
+  },
+  {
     "id": 132,
     "category": 4,
     "order": 971,

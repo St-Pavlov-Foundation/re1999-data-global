@@ -152,7 +152,7 @@ function CommandStationTaskView:refreshTask()
 
 	local taskDataList = CommandStationTaskListModel.instance:getList() or {}
 
-	gohelper.setActive(self._goTime, #taskDataList > 0)
+	gohelper.setActive(self._goTime, false and #taskDataList > 0)
 	gohelper.setActive(self._goempty_overseas, #taskDataList == 0)
 
 	local haveCatchTask = self:haveCatchTask()

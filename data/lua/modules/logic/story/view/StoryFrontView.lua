@@ -604,8 +604,6 @@ function StoryFrontView:_fadeUpdate(value)
 end
 
 function StoryFrontView:_fadeBlurOutFinished()
-	PostProcessingMgr.instance:setUIBlurActive(0)
-	PostProcessingMgr.instance:setFreezeVisble(false)
 	self:_killBlurId()
 	self:_fadeUpdate(0)
 end

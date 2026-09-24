@@ -6570,6 +6570,24 @@
     "locked": 0
   },
   {
+    "id": 500058,
+    "type": 1,
+    "sender": "language_10023025",
+    "title": "language_10048396",
+    "content": "language_10089326",
+    "attachment": "2#2#60|10#10#1|1#491004#2|1#491003#4|2#3#4000|2#5#4000",
+    "needShowToast": 1,
+    "addressee": "",
+    "copy": "",
+    "icon": "",
+    "specialTag": 0,
+    "jumpTitle": "",
+    "jump": "",
+    "image": "",
+    "senderType": 2,
+    "locked": 0
+  },
+  {
     "id": 500060,
     "type": 1,
     "sender": "language_10023025",

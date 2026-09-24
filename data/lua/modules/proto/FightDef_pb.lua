@@ -78,6 +78,7 @@ FightDef_pb.EQUIPRECORDEQUIPUIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.EQUIPRECORDEQUIPIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.EQUIPRECORDEQUIPLVFIELD = protobuf.FieldDescriptor()
 FightDef_pb.EQUIPRECORDREFINELVFIELD = protobuf.FieldDescriptor()
+FightDef_pb.EQUIPRECORDBREAKLVFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTPROGRESSINFO_MSG = protobuf.Descriptor()
 FightDef_pb.FIGHTPROGRESSINFOIDFIELD = protobuf.FieldDescriptor()
 FightDef_pb.FIGHTPROGRESSINFOMAXFIELD = protobuf.FieldDescriptor()
@@ -1255,6 +1256,15 @@ FightDef_pb.EQUIPRECORDREFINELVFIELD.has_default_value = false
 FightDef_pb.EQUIPRECORDREFINELVFIELD.default_value = 0
 FightDef_pb.EQUIPRECORDREFINELVFIELD.type = 5
 FightDef_pb.EQUIPRECORDREFINELVFIELD.cpp_type = 1
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.name = "breakLv"
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.full_name = ".EquipRecord.breakLv"
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.number = 5
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.index = 4
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.label = 1
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.has_default_value = false
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.default_value = 0
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.type = 5
+FightDef_pb.EQUIPRECORDBREAKLVFIELD.cpp_type = 1
 FightDef_pb.EQUIPRECORD_MSG.name = "EquipRecord"
 FightDef_pb.EQUIPRECORD_MSG.full_name = ".EquipRecord"
 FightDef_pb.EQUIPRECORD_MSG.nested_types = {}
@@ -1263,7 +1273,8 @@ FightDef_pb.EQUIPRECORD_MSG.fields = {
 	FightDef_pb.EQUIPRECORDEQUIPUIDFIELD,
 	FightDef_pb.EQUIPRECORDEQUIPIDFIELD,
 	FightDef_pb.EQUIPRECORDEQUIPLVFIELD,
-	FightDef_pb.EQUIPRECORDREFINELVFIELD
+	FightDef_pb.EQUIPRECORDREFINELVFIELD,
+	FightDef_pb.EQUIPRECORDBREAKLVFIELD
 }
 FightDef_pb.EQUIPRECORD_MSG.is_extendable = false
 FightDef_pb.EQUIPRECORD_MSG.extensions = {}

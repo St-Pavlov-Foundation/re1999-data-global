@@ -325,5 +325,27 @@ StoryEnum.FullScreenCountdownAnimType = {
 	Up = 1,
 	Direct = 3
 }
+StoryEnum.TextAlignmentOptions = {
+	bottomleft = "BottomLeft",
+	center = "Center",
+	topright = "TopRight",
+	bottomright = "BottomRight",
+	left = "Left",
+	top = "Top",
+	topleft = "TopLeft",
+	bottom = "Bottom",
+	right = "Right"
+}
+StoryEnum.TextAnchor = {
+	bottomleft = "LowerLeft",
+	center = "MiddleCenter",
+	topright = "UpperRight",
+	bottomright = "LowerRight",
+	left = "MiddleLeft",
+	top = "UpperCenter",
+	topleft = "UpperLeft",
+	bottom = "LowerCenter",
+	right = "MiddleRight"
+}
 
 return StoryEnum

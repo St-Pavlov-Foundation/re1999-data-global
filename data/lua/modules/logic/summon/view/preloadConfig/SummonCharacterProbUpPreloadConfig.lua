@@ -15,6 +15,27 @@ function SummonCharacterProbUpPreloadConfig.getCharacterItemCountByName(name)
 	return SummonCharacterProbUpPreloadConfig.characterItemCounts[name] or 1
 end
 
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3213 = {
+	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_role4.png",
+	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_role3.png",
+	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_fullbg.png"
+}
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3812 = {
+	"singlebg/summon/heroversion_2_6/dicehero/v2a6_dicehero_summon_role4.png",
+	"singlebg/summon/heroversion_2_6/dicehero/v2a6_dicehero_summon_role3.png",
+	"singlebg/summon/heroversion_2_6/dicehero/v2a6_dicehero_fullbg.png"
+}
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3811 = {
+	"singlebg/summon/heroversion_3_3/v3a3_yigeer/v3a3_yigerer_role1.png",
+	"singlebg/summon/heroversion_3_3/v3a3_yigeer/v3a3_yigerer_fullbg.png"
+}
+SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3810 = {
+	"singlebg/summon/heroversion_3_8/v3a8_lake/v3a8_lake_role2.png",
+	"singlebg/summon/heroversion_3_8/v3a8_lake/v3a8_lake_dec.png",
+	"singlebg/summon/heroversion_3_8/v3a8_lake/v3a8_lake_fullmask.png",
+	"singlebg/summon/heroversion_3_8/v3a8_lake/v3a8_lake_role1.png",
+	"singlebg/summon/heroversion_3_8/v3a8_lake/v3a8_lake_fullbg.png"
+}
 SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3711 = {
 	"singlebg/summon/heroversion_3_5/v3a5_lamona/v3a5_lamona_fullbg.png"
 }
@@ -196,11 +217,6 @@ SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer332 = {
 	"singlebg/summon/heroversion_2_8/v2a8_molideer/v2a8_summon_molideer_fontbg.png",
 	"singlebg/summon/heroversion_2_8/v2a8_molideer/v2a8_summon_molideer_role.png",
 	"singlebg/summon/heroversion_2_8/v2a8_molideer/v2a8_summon_molideer_fullbg.png"
-}
-SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3213 = {
-	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_role4.png",
-	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_role3.png",
-	"singlebg/summon/heroversion_3_2/v3a2_wuerlixi/v3a2_summon_wuerlixi_fullbg.png"
 }
 SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVer3212 = {
 	"singlebg/summon/heroversion_1_2/yaxian/v1a2_yaxian_summon_fontbg.png",
@@ -873,6 +889,7 @@ SummonCharacterProbUpPreloadConfig.preloadLists.SummonCharacterProbUpVerBeta1 = 
 	ResUrl.getSummonCoverBg("hero/leftdown"),
 	ResUrl.getSummonCoverBg("hero/rightup")
 }
+SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer3810 = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer38511 = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts.SummonCharacterProbUpVer3510 = 2
 SummonCharacterProbUpPreloadConfig.characterItemCounts["version_3_5/v3a5_versionsummonlakehalfview"] = 2

@@ -173,7 +173,7 @@ function StoryHeroNode:_getExpressionsViaReflection(cubctrl)
 	end
 
 	require("tolua.reflection")
-	tolua.loadassembly("SL_AS")
+	tolua.loadassembly("Assembly-CSharp")
 
 	local type_CubismController = typeof(ZProj.CubismController)
 	local method = tolua.getmethod(type_CubismController, "getExpressions")

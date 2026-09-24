@@ -62,10 +62,10 @@ function Act191EnhancePickView:refreshUI()
 
 				SkillHelper.addHyperLinkClick(item.txtDesc, Activity191Helper.clickHyperLinkRole)
 			else
-				item.txtDesc.text = desc
+				item.txtDesc.text = Activity191Helper.replaceSymbol(desc)
 			end
 		else
-			item.txtDesc.text = desc
+			item.txtDesc.text = Activity191Helper.replaceSymbol(desc)
 		end
 
 		local num = self.nodeDetailMo.enhanceNumList[k]

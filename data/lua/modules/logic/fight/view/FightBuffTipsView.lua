@@ -248,6 +248,10 @@ function FightBuffTipsView:updateBuffDesc(entityMo, buffItemList, goBuffItem, vi
 
 				scrollMaxWidth = math.max(scrollMaxWidth, totalWidth)
 				maxTotalWidth = math.max(maxTotalWidth, totalWidth)
+
+				if maxTotalWidth < scrollMaxWidth then
+					scrollMaxWidth = maxTotalWidth
+				end
 			end
 		end
 	end

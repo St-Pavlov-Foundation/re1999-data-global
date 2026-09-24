@@ -113,6 +113,6 @@ CommandStationEnum.ConstId_CurVersion = 300
 CommandStationEnum.ConstId_PaperItemId = 299
 CommandStationEnum.Page2_ChainId = 200000
 CommandStationEnum.MaxCampLocationIndex = 7
-CommandStationEnum.ForceHideCommandStation = false
+CommandStationEnum.ForceHideCommandStation = true
 
 return CommandStationEnum

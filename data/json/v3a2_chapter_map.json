@@ -2518,7 +2518,7 @@
       -43.05,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -220,
     "isShow": 0
   },
   {
@@ -2545,7 +2545,7 @@
       -100.6,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   },
   {
@@ -2653,7 +2653,7 @@
       -39.7,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   },
   {
@@ -2680,7 +2680,7 @@
       -10.9,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   },
   {
@@ -2869,7 +2869,7 @@
       -98.3,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   },
   {
@@ -2950,7 +2950,7 @@
       121.2,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   },
   {
@@ -2977,7 +2977,7 @@
       -145.5,
       259.2492
     ],
-    "descOffset": 60,
+    "descOffset": -250,
     "isShow": 0
   }
 ]

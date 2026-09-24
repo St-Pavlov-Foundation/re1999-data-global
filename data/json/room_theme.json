@@ -336,6 +336,18 @@
     "sourcesType": ""
   },
   {
+    "id": 3801,
+    "name": "language_10131210",
+    "nameEn": "Verses in the Brick",
+    "desc": "language_10131211",
+    "rewardIcon": "1702800",
+    "building": "13801|13802|13803",
+    "packages": "3801|3802|3803|3804",
+    "collectionBonus": "11#13803#1",
+    "extraShowBuilding": "13811|13812",
+    "sourcesType": ""
+  },
+  {
     "id": 3701,
     "name": "language_10129237",
     "nameEn": "The Kingdom of Order",

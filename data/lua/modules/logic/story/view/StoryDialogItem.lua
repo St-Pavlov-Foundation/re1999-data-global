@@ -350,7 +350,9 @@ function StoryDialogItem:playNormalText(txt, callback, callbackobj)
 		PostProcessingMgr.instance:setUIPPValue("localBloomActive", true)
 		PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 5)
 
-		self._softLightBloomOn = true
+		if self._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract then
+			self._softLightBloomOn = true
+		end
 
 		gohelper.setActive(self._goline, false)
 		gohelper.setActive(self._goblackbottom, false)

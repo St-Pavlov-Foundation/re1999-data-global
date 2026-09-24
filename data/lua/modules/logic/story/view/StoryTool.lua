@@ -34,6 +34,23 @@ function StoryTool.getTxtAlignment(txt, type)
 	return align
 end
 
+function StoryTool.getFilterFullAlignTxt(txt)
+	local cleaned = string.gsub(txt, "</?align%s*=?%s*\"?[^\">]*\"?>", "")
+
+	return cleaned
+end
+
+function StoryTool.getTxtFullAlignment(txt, type)
+	local value = string.match(txt, "<align%s*=%s*\"?([^\">]+)\"?>")
+	local align = type == gohelper.Type_TextMesh and StoryEnum.TextAlignmentOptions[value] or StoryEnum.TextAnchor[value]
+
+	if align then
+		return type == gohelper.Type_TextMesh and TMPro.TextAlignmentOptions[align] or UnityEngine.TextAnchor[align]
+	end
+
+	return nil
+end
+
 function StoryTool.filterMarkTop(txt)
 	local result = ""
 	local tops = string.split(txt, "</marktop>")

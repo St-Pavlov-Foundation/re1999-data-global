@@ -5953,5 +5953,35 @@
     "waterDistance": 0,
     "roleVoice": "6210605|6210606|6210612|6210614",
     "hideFootprint": 0
+  },
+  {
+    "skinId": 314503,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6214502|6214504|6214509|6214511",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 314003,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6214001|6214004|6214008|6214011",
+    "hideFootprint": 0
   }
 ]

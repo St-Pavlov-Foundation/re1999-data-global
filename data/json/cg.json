@@ -3552,6 +3552,18 @@
     "herostoryId": 30
   },
   {
+    "id": 103201,
+    "order": 0,
+    "storyChapterId": 1032,
+    "name": "language_10131719",
+    "nameEn": "The Silent Listener's Soliloquy",
+    "desc": "language_10131720",
+    "episodeId": 0,
+    "image": "story_atcg/3_8/3_8_at_ys_bolinyidong.jpg",
+    "preCgId": 0,
+    "herostoryId": 32
+  },
+  {
     "id": 2001501,
     "order": 0,
     "storyChapterId": 15,

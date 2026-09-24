@@ -6965,7 +6965,7 @@
   {
     "id": 31005,
     "desc": "主界面指挥所开启",
-    "isOnline": 1,
+    "isOnline": 0,
     "trigger": "EpisodeFinish#10115",
     "invalid": "",
     "interruptFinish": 1,

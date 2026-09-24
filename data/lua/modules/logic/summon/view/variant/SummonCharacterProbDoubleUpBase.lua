@@ -141,7 +141,7 @@ function SummonCharacterProbDoubleUpBase:_btnsummon10OnClick()
 		param.miss_quantity = remainCount
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, param)
+	SummonMainController.instance:openSummonConfirmView(param)
 end
 
 function SummonCharacterProbDoubleUpBase:_refreshCost()

@@ -33,6 +33,12 @@ function GameScreenTouch:_onTick()
 	if self._lastTime and now - self._lastTime > GCInterval then
 		self._lastTime = now
 
+		if GameGlobalMgr.instance:isBanGC() then
+			logNormal("GameScreenTouch DelayFullGC ban gc")
+
+			return
+		end
+
 		GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, self)
 	end
 end

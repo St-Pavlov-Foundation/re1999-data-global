@@ -291,6 +291,11 @@ function ClothesStorePreviewSkinComp:_loadedImage()
 	local offsetStr = self.skinCo.skinViewImgOffset
 	local defaultScale = self.special2dBgScale[self.skinCo.id] or 1
 
+	if not string.nilorempty(self.skinCo.skinStoreViewImgOffset) then
+		offsetStr = self.skinCo.skinStoreViewImgOffset
+		defaultScale = 1
+	end
+
 	if not string.nilorempty(offsetStr) then
 		local offsets = string.splitToNumber(offsetStr, "#")
 
